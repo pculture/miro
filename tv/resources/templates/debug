@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://www.participatorypolitics.org/">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style type="text/css">
+	@import url(resource:css/style.css);
+</style>
+<t:include filename="dynamic.js" />
+
+<t:dynamicviews>
+ <t:view name="feeds" key="global database">
+  <t:filter functionkey="global filter class" parameter="RSSFeed" />
+ </t:view>
+</t:dynamicviews>
+
+</head>
+
+<body>
+  <div id="main_window"> 
+    <div class="channel_title">Debug<a class="settings_button" href="#">Settings</a></div> 
+  <div class="channel_tabs"> 
+    <a href="#"><div class="tab emptytab"><span /></div></a>
+    <a href="#"><div class="tab emptytab"><span /></div></a>
+    <a href="#"><div class="tab emptytab"><span /></div></a>
+    <a href="#"><div class="tab emptytab"><span /></div></a>
+  </div> 
+  <div id="content_window">
+  Add a feed:
+    <form method="GET" action="action:addFeed">
+      <input name="url" type="text" />
+      <input type="submit" />
+    </form>
+<br/><br/>
+  Remove a feed:<br/>
+  <a t:repeatForView="feeds" href="action:removeFeed?url=@@@this getURL@@@">
+    <span t:replace="this title" />
+   </a>
+<br/><br/>
+  Play a video file in a new window:
+    <form method="GET" action="action:playFile">
+      Filename on local disk: <input name="filename" type="text" />
+      <input type="submit" value="play"/>
+    </form>
+<br/><br/>
+  <a href="action:playView?viewName=feeds">
+  Play a dummy view
+  </a>
+  </div>
+  </div> 
+
+</body>
+</html>

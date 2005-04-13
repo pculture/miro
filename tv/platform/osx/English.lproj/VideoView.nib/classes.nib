@@ -1,0 +1,42 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                back = id; 
+                changeVolume = id; 
+                deleteItem = id; 
+                donate = id; 
+                fastForward = id; 
+                forward = id; 
+                goFullscreen = id; 
+                play = id; 
+                rewind = id; 
+                saveItem = id; 
+            }; 
+            CLASS = PlayerController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                backButton = id; 
+                bottomText = id; 
+                deleteButton = id; 
+                donateButton = id; 
+                fastForwardButton = id; 
+                forwardButton = id; 
+                fullscreenButton = id; 
+                licenseImage = id; 
+                licenseText = id; 
+                playButton = id; 
+                rewindButton = id; 
+                rootView = id; 
+                saveButton = id; 
+                topText = id; 
+                videoView = id; 
+                volumeSlider = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = VLBrushedMetalImageView; LANGUAGE = ObjC; SUPERCLASS = NSImageView; }
+    ); 
+    IBVersion = 1; 
+}

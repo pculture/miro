@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://www.participatorypolitics.org/">
+<head>
+<title>video player interface</title>
+<style type="text/css">
+	@import url(resource:css/style.css);
+</style>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<t:include filename="dynamic.js" />
+
+<t:dynamicviews>
+ <t:view name="tabs" key="tabs" />
+</t:dynamicviews>
+
+</head>
+<body> 
+
+<div id="sidebar">
+  <div id="channels">
+    <span t:hideIfViewNotEmpty="tabs">There are no tabs. Something is wrong. Please, contact tech support</span>
+    <ul t:hideIfViewEmpty="tabs">
+      <li t:repeatForView="tabs" onclick="eventURL('action:selectTab?id=@@@this id@@@')">
+        <span t:replaceMarkup="this markup" />
+      </li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {onButtonClicked = id; }; 
+            CLASS = MainController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {tabView = id; webView = id; }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

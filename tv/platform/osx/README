@@ -1,0 +1,11 @@
+On the development machine, you will need to have installed PyObjC,
+available here:
+http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.2-python2.3-macosx10.3.dmg?download
+
+To build for distribution, run build.sh in this directory. The result
+is DTV.app, which is self-contained and should be safe to distribute.
+
+To run the application quickly, without generating a distribution-safe
+package, run ./test.sh. DTV.app, if it exists, is in the process
+overwritten with a non-distribution-safe bundle tree that contains
+symlinks that point outside the bundle.

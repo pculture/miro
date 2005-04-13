@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://www.participatorypolitics.org/">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<t:include filename="dynamic.js" />
+
+<t:dynamicviews>
+ <t:view name="tabs" key="global database" >
+  <t:filter key="" functionkey="global filter class" parameter="StaticTab" />
+ </t:view>
+</t:dynamicviews>
+
+</head>
+<body>
+
+<h1>Tab list editor</h1>
+
+Current static tabs (reloaded at program start from statictabs.xml):
+
+<ul>
+<li t:hideIfViewNotEmpty="tabs">None. There are no static tabs.</li>
+<li t:repeatForView="tabs">
+  Tab base: "<span t:replace="this tabTemplateBase" />";
+  contents: "<span t:replace="this contentsTemplate" />";
+  order: "<span t:replace="this order" />"
+  [<a href="action:deleteTab?base=@@@this tabTemplateBase@@@">remove</a>]
+</li>
+</ul>
+
+<h2>Add a new tab</h2>
+
+<form method="get" action="action:createTab">
+Tab base: <input type="text" name="tabTemplateBase" /><br />
+Contents: <input type="text" name="contentsTemplate" /><br />
+Order: <input type="text" name="order" /><br />
+<input type="submit" value="Create" />
+</form>
+
+</body>
+</html>

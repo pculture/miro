@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://www.participatorypolitics.org/">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<t:include filename="dynamic.js" />
+
+<t:dynamicviews>
+ <t:view name="results" key="global testArray">
+  <t:filter key="name" functionkey="global filter all" parameter="" />
+  <t:sort key="number" functionkey="global sort number" invert="false" />
+ </t:view>
+</t:dynamicviews>
+
+</head>
+<body>
+
+This is the second tab. (<a href="template:test/nest1">Go to nested
+template.</a>) 
+
+<ul>
+<li><a href="#" onclick="return setViewSort('results','number','global sort number',false)">Sort on ascending number</a></li>
+<li><a href="#" onclick="return setViewSort('results','number','global sort number',true)">Sort on descending number</a></li>
+<li><a href="#" onclick="return setViewSort('results','name','global sort text',0)">Sort on ascending name</a></li>
+<li><a href="#" onclick="return setViewSort('results','name','global sort text',1)">Sort on descending name</a></li>
+</ul>
+
+Incremental search:
+<input name="search" type="text"
+onfocus="startEditFilter(this,'results','name','global filter substring',0)"
+onblur="endEditFilter()" />
+
+<p>
+Names containing "k'k'", if any, will be shown in bold.
+</p>
+
+<div t:hideIfViewNotEmpty="results">No matching search results.</div>
+<table t:hideIfViewEmpty="results">
+
+<tr><td>Name</td><td>Number</td></tr>
+<tr t:repeatForView="results">
+
+<td t:hideIfKey="this name" t:hideFunctionKey="global filter substring" t:hideParameter="k'k'">
+<span t:replace="this name" />
+</td>
+<td t:hideIfNotKey="this name" t:hideFunctionKey="global filter substring" t:hideParameter="k'k'">
+<b t:replace="this name" />
+</td>
+
+<td t:replace="this number">Number placeholder</td>
+</tr><tr><td>Name Footer</td><td>Number Footer</td></tr>
+</table>
+
+</body>
+</html>

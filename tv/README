@@ -1,0 +1,17 @@
+To run the application, run launch.py in the appropriate platform
+subdirectory (platform/$YOUR_PLATFORM/launch.py, where $YOUR_PLATFORM
+is 'windows', 'linux', or 'osx'.) This sets the module search path
+correctly and runs main() in the app module.
+
+Put platform-specific code in 'platform/$PLATFORM'; this is searched
+first when importing modules. Put platform-independent code in
+'portable'. If you have code that isn't used on all platforms, but is
+the same on two platforms -- for example, wxPython widgets -- put it
+in (a subdirectory of?) 'platform/shared'. Then, supposing your module
+is myModule.py, create a 'platform/$PLATFORM/myModule.py' for each
+platform that uses the module that contains a line like "from
+shared.myModule import *". Then users of your code can simply "import
+myModule" and it will be transparent to them.
+
+Put resource files that should be distributed with the application in
+'resources.' They can be accessed with resource.path().
