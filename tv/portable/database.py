@@ -674,6 +674,9 @@ class DynamicDatabase:
                 except UnpicklingError:
                     handle.close()
                     return (self.restore(filename+".bak"))
+                except EOFError:
+                    handle.close()
+                    return (self.restore(filename+".bak"))
                 handle.close()
                 self.objects = temp
 		try:
