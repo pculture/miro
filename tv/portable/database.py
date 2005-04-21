@@ -676,7 +676,11 @@ class DynamicDatabase:
                     return (self.restore(filename+".bak"))
                 handle.close()
                 self.objects = temp
-                DDBObject.lastID = max([DDBObject.lastID,max(map(lambda x:x.getID(),map(lambda x:x[0],self.objects)))])
+		try:
+		    DDBObject.lastID = max([DDBObject.lastID,max(map(lambda x:x.getID(),map(lambda x:x[0],self.objects)))])
+		except ValueError: #For the weird case where we're not
+		    pass	   #restoring anything
+
  		#for object in self.objects:
 		#    print str(object[0].__class__.__name__)+" of id "+str(object[0].getID())
             finally:
