@@ -4,6 +4,7 @@ import random
 import copy
 import re
 import types
+import traceback
 
 # Limitations:
 # - t:hideIf tags are only dynamically updated whenever there is dynamic
@@ -267,9 +268,13 @@ def performSubstitutions(node, data):
 	for child in node.childNodes:
 	    node.removeChild(child)
 	markup = evalKey(replaceKey, data)
-	newDocument = parseString(markup)
-	newNode = newDocument.documentElement.cloneNode(True)
-	node.appendChild(newNode)
+	try:
+	    newDocument = parseString(markup)
+	    newNode = newDocument.documentElement.cloneNode(True)
+	    node.appendChild(newNode)
+	except:
+	    print "Invalid XHTML: "+markup
+	    traceback.print_exc()
 
     # Substitute Replacements in attribute values
     attrs = node.attributes

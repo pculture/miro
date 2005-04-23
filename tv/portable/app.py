@@ -12,6 +12,8 @@ import cgi
 import types
 import feed
 import traceback
+import config
+import datetime
 
 ###############################################################################
 #### TemplateDisplay: a HTML-template-driven right-hand display panel      ####
@@ -92,6 +94,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
 	    if match:
 		# Parse arguments
 		(filename, ) = getURLParameters('playFile', match.group(1), 'filename')
+		print "Playing "+filename
 		# Use a quick hack to play the file. (NEEDS)
 		frontend.playVideoFileHack(filename)
 		return False
@@ -232,41 +235,45 @@ def stringToBoolean(string):
 
 class Controller(frontend.Application):
     def OnStartup(self):
-	#Restoring
-	database.defaultDatabase.restore()
-	database.defaultDatabase.recomputeFilters()
+	try:
+	    #Restoring
+	    database.defaultDatabase.restore()
+	    database.defaultDatabase.recomputeFilters()
 
-	reloadStaticTabs()
-	globalData = {
-	    'database': database.defaultDatabase,
-	    'filter': globalFilterList,
-	    'sort': globalSortList,
-	    'favoriteColor': 'azure', # NEEDS: test data, remove
-	    }
+	    reloadStaticTabs()
+	    globalData = {
+		'database': database.defaultDatabase,
+		'filter': globalFilterList,
+		'sort': globalSortList,
+		'favoriteColor': 'azure', # NEEDS: test data, remove
+	     }
 
-	# Set up tab list
-	mapFunc = makeMapToTabFunction(globalData)
-	self.tabs = database.defaultDatabase.filter(mappableToTab).map(mapFunc).sort(sortTabs)
+	    # Set up tab list
+	    mapFunc = makeMapToTabFunction(globalData)
+	    self.tabs = database.defaultDatabase.filter(mappableToTab).map(mapFunc).sort(sortTabs)
 
-	# Put cursor on first tab to indicate that it should be initially
-	# selected
-	self.tabs.resetCursor()
-	self.tabs.getNext()
+	    # Put cursor on first tab to indicate that it should be initially
+	    # selected
+	    self.tabs.resetCursor()
+	    self.tabs.getNext()
 
-	# Create a test array (NEEDS: remove)
- 	#[NameNumberObject() for i in range(0,50)]
- 	#testArray = database.DDBObject.dd.filter(lambda x: x.__class__ == NameNumberObject)
- 	#globalData['testArray'] = testArray
+	    # Create a test array (NEEDS: remove)
+ 	    #[NameNumberObject() for i in range(0,50)]
+            #testArray = database.DDBObject.dd.filter(lambda x: x.__class__ == NameNumberObject)
+	    #globalData['testArray'] = testArray
 
-	hasFeed = False
-	for obj in database.defaultDatabase.objects:
-	    if obj[0].__class__.__name__ == 'RSSFeed':
-		hasFeed = True
-		break
-	if not hasFeed:
-	    feed.RSSFeed("http://blogtorrent.com/demo/rss.php")
+	    hasFeed = False
+	    for obj in database.defaultDatabase.objects:
+		if obj[0].__class__.__name__ == 'RSSFeed':
+		    hasFeed = True
+		    break
+	    if not hasFeed:
+		feed.RSSFeed("http://blogtorrent.com/demo/rss.php")
 
-	self.frame = frontend.MainFrame(self.tabs)
+	    self.frame = frontend.MainFrame(self.tabs)
+	except:
+	    print "Exception on startup:"
+	    traceback.print_exc()
 
     def OnShutdown(self):
 	database.defaultDatabase.removeMatching(lambda x:str(x.__class__.__name__) == "StaticTab")
@@ -428,7 +435,46 @@ def compare(x, y):
 	return 1
     return 0
 
+def itemSort(x,y):
+    if x.getReleaseDate() < y.getReleaseDate():
+	return -1
+    elif x.getReleaseDate() > y.getReleaseDate():
+	return 1
+    elif x.getID() < y.getID():
+	return -1
+    elif x.getID() > y.getID():
+	return 1
+    else:
+	return 0
+
+def alphabeticalSort(x,y):
+    if x.getTitle() < y.getTitle():
+	return -1
+    elif x.getTitle() > y.getTitle():
+	return 1
+    elif x.getDescription() < y.getDescription():
+	return -1
+    elif x.getDescription() > y.getDescription():
+	return 1
+    else:
+	return 0
+
+def downloadStartedSort(x,y):
+    if x.getTitle() < y.getTitle():
+	return -1
+    elif x.getTitle() > y.getTitle():
+	return 1
+    elif x.getDescription() < y.getDescription():
+	return -1
+    elif x.getDescription() > y.getDescription():
+	return 1
+    else:
+	return 0
+
 globalSortList = {
+    'item': itemSort,
+    'alphabetical': alphabeticalSort,
+    'downloadStarted': downloadStartedSort,
     'text': (lambda x, y: compare(str(x), str(y))),
     'number': (lambda x, y: compare(float(x), float(y))),
 }
@@ -447,10 +493,13 @@ def filterClass(obj, parameter):
 
 globalFilterList = {
     'substring': (lambda x, y: str(y) in str(x)),
-    'seen': (lambda x, y: isinstance(x,item.Item) and x.downloadState() == 'finished' and x.getSeen()),
-    'unseen': (lambda x, y: isinstance(x,item.Item) and x.downloadState() == 'finished' and not x.getSeen()),
-    'downloaded': (lambda x, y: isinstance(x,item.Item) and x.downloadState() == 'finished'),
-    'downloading': (lambda x, y: isinstance(x,item.Item) and x.downloadState() == 'downloading'),
+    #FIXME make this look at the feed's time until expiration
+    'recentItems': (lambda x, y: isinstance(x,item.Item) and x.getState() == 'finished' and x.getDownloadedTime()+config.get('DefaultTimeUntilExpiration')>datetime.datetime.now() and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
+    'oldItems': (lambda x, y:  isinstance(x,item.Item) and x.getState() == 'finished' and x.getDownloadedTime()+config.get('DefaultTimeUntilExpiration')<=datetime.datetime.now() and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
+
+    'downloadedItems': (lambda x, y: isinstance(x,item.Item) and x.getState() == 'finished' and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
+    'unDownloadedItems': (lambda x, y: isinstance(x,item.Item) and (not x.getState() == 'finished') and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
+    'downloadingItems': (lambda x, y: isinstance(x,item.Item) and x.getState() == 'downloading' and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
     'class': filterClass,
     'all': (lambda x, y: True),
 }

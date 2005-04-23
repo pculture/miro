@@ -83,37 +83,43 @@ function playView(viewName, firstItemId) {
 var editFilterTimers = new Array();
 var editFilterField = null;
 var editFilterOldValue = '';
+var editFilterCount = 0;
 var editFilterViews = new Array();
-var editFilterFieldKey = '';
-var editFilterFunctionKey = '';
-var editFilterInvert = '';
+var editFilterFieldKeys = new Array();
+var editFilterFunctionKeys = new Array();
+var editFilterInverts = new Array();
 var editCurView = 0;
 
-function startEditFilter(obj, views, fieldKey, functionKey, invert) {
+function startEditFilter(obj, views, fieldKeys, functionKeys, inverts) {
   editFilterOldValue = obj.value;
 
   editFilterField = obj;
   editFilterViews = views;
-  editFilterFieldKey = fieldKey;
-  editFilterFunctionKey = functionKey;
-  editFilterInvert = invert;
+  editFilterFieldKeys = fieldKeys;
+  editFilterFunctionKeys = functionKeys;
+  editFilterInverts = inverts;
   editCurView = 0;
 
-  editFilterTimerTick();
+  editFilterTimerTick(editCurView);
 }
 
-function editFilterUpdate(viewName) {
-    if (editFilterOldValue != editFilterField.value) {
-      setViewFilter(viewName, editFilterFieldKey,
-		    editFilterFunctionKey, editFilterField.value,
-		    editFilterInvert);
-      if (editCurView == editFilterViews.length - 1)
-	  editFilterOldValue = editFilterField.value;
-      }
+function editFilterUpdate(viewName,functionName,fieldName,invert) {
+    value = editFilterField.value;
+    if (editFilterOldValue != value ||
+	editFilterCount < editFilterViews.length) {
+	if (editFilterOldValue != value) 
+	    editFilterCount = 0;
+	else
+	    editFilterCount++;
+	setViewFilter(viewName, fieldName,
+		      functionName, value,
+		      invert);
+	editFilterOldValue = value;
+    }
 }
 
-function editFilterTimerTick() {
-    editFilterUpdate(editFilterViews[editCurView]);
+function editFilterTimerTick(curView) {
+    editFilterUpdate(editFilterViews[editCurView],editFilterFunctionKeys[editCurView],editFilterFieldKeys[editCurView],editFilterInverts[editCurView]);
     editCurView++;
     if (editCurView >= editFilterViews.length) {
 	editCurView = 0;
@@ -123,6 +129,7 @@ function editFilterTimerTick() {
 
 function endEditFilter() {
   clearTimeout(editFilterTimer);
+  editFilterCount = 0;
   editFilterUpdate();
 }
 

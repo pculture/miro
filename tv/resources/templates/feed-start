@@ -11,10 +11,12 @@
 
 <t:dynamicviews>
  <t:view name="newitems" key="feed itemlist">
-  <t:filter functionkey="global filter unseen" parameter="" />
+  <t:filter functionkey="global filter recentItems" parameter="" />
+  <t:sort functionkey="global sort item" parameter="" />
  </t:view>
  <t:view name="mylibrary" key="feed itemlist">
-  <t:filter functionkey="global filter seen" parameter="" />
+  <t:filter functionkey="global filter oldItems" parameter="" />
+  <t:sort functionkey="global sort item" parameter="" />
  </t:view>
 </t:dynamicviews>
 
@@ -28,28 +30,28 @@
     <a href="template:feed-choose"><div class="tab">Choose</div></a>
     <a href="#"><div class="tab emptytab"><span /></div></a>
     <a href="#"><div class="tab">Library</div></a>
-    <div id="searchfield"><input type="text" size="20" onfocus="startEditFilter(this,new Array('newitems','mylibrary'),'title','global filter substring',0)" onblur="endEditFilter()"  /></div>
+    <div id="searchfield"><input type="text" size="20" onfocus="startEditFilter(this,new Array('newitems','mylibrary'),new Array('',''),new Array('global filter recentItems','global filter oldItems'),new Array(0,0))" onblur="endEditFilter()"  /></div>
   </div> 
   <div id="content_window">
     <ul> 
         <li class="divider">New</li>
 <div class="no_new" t:hideIfViewNotEmpty="newitems">No New Videos</div>        
 <li t:repeatForView="newitems">
-          <img class="thumb" src="resource:images/thumb.gif" />
+          <img class="thumb" src="@@@this getThumbnail @@@" />
           <div class="desc" >
-            <div class="video_title" t:replace="this title"><a href="action:startDownload?item=@@@this getID@@@">Title</a></div>
-            <div class="short_description" t:replace="this summary"></div> 
-            <div class="file_size">Feb 18, 2005 - 2 hours -100 mb</div>
+            <div class="video_title" t:replace="this getTitle"><a href="action:startDownload?item=@@@this getID@@@">Title</a></div>
+            <div class="short_description" t:replaceMarkup="this getDescription"></div> 
+            <div class="file_size"><span t:replace="this getReleaseDate" /> - <span t:replace="this getDuration" /> - <span t:replace="this getTotalSize" /></div>
           </div>
-          <a href="action:playFile?filename=@@@this getFilenameHack@@@" class="one_click play_item"><span/></a>
+          <a href="action:playFile?filename=@@@this getFilename@@@" class="one_click play_item"><span/></a>
         </li> 
         <li class="divider">In My Library</li> 
         <li t:repeatForView="mylibrary">
-          <img class="thumb" src="resource:images/thumb.gif" />
+          <img class="thumb" src="@@@this getThumbnail @@@" />
           <div class="desc" >
             <div class="video_title" t:replace="this title">Title</div>
-            <div class="short_description" t:replace="this summary"></div> 
-            <div class="file_size">Feb 18, 2005 - 2 hours -100 mb</div>
+            <div class="short_description" t:replaceMarkup="this getDescription"></div> 
+            <div class="file_size"><span t:replace="this getReleaseDate" /> - <span t:replace="this getDuration" /> - <span t:replace="this getTotalSize" /></div>
           </div>
           <a href="action:playFile?filename=@@@this getFilenameHack@@@" class="one_click play_item"><span/></a>
        </li> 

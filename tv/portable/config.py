@@ -2,6 +2,7 @@ from database import DDBObject
 from os.path import expanduser, join
 from os import makedirs
 from threading import RLock
+from datetime import timedelta
 
 configData = {}
 configLock = RLock()
@@ -13,6 +14,7 @@ def get(key):
 	    ret = configData[key]
 	except KeyError:
 	    if key == 'DataDirectory':
+		#FIXME add Windows support
 		path = expanduser("~/Movies")
 		try:
 		    makedirs(join(path,'Incomplete Downloads'))
@@ -23,6 +25,12 @@ def get(key):
 	    elif key == 'FreeSpaceTarget':
 		configData[key] = '2000000000'
 		ret = '2000000000'
+	    elif key == 'DownloadsTarget':
+		configData[key] = 3
+		ret = 3
+	    elif key == 'DefaultTimeUntilExpiration':
+		configData[key] = timedelta(days=7)
+		ret = timedelta(days=7)
 	    else:
 		raise KeyError
     finally:

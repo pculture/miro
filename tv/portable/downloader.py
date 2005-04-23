@@ -8,6 +8,7 @@ from time import sleep,time
 from urlparse import urlparse
 from os import remove, rename, access, F_OK
 import re
+import math
 from copy import copy
 
 from BitTorrent import configfile
@@ -188,24 +189,30 @@ class HTTPDownloader(Downloader):
     def __init__(self, url,item, conn = None,info = None):
 	self.conn = conn
 	self.info = info
+	self.lastUpdated = 0
+	self.lastSize = 0
 	Downloader.__init__(self,url,item)
 
     ##
     # Update the download rate and eta based on recieving length bytes
     def updateRateAndETA(self,length):
-        now = time()
+        now = math.floor(time())
+	updated = False
         self.lock.acquire()
         try:
             self.currentSize = self.currentSize + length
-            totalSize = self.totalSize
-            self.blockTimes.append((now,  self.currentSize))
-            #Only keep the last 100 packets
-            if len(self.blockTimes)>100:
-                self.blockTimes.pop(0)
+	    if self.lastUpdated < now:
+		self.blockTimes.append((now,  self.currentSize))
+	        #Only keep the last 100 packets
+		if len(self.blockTimes)>100:
+		    self.blockTimes.pop(0)
+	        updated = True
+		self.lastUpdated = now
         finally:
-            self.lock.release()        
-	self.item.beginChange()
-	self.item.endChange()
+            self.lock.release()
+	if updated:
+	    self.item.beginChange()
+	    self.item.endChange()
 
     ##
     # Grabs the next block from the HTTP connection
@@ -214,14 +221,15 @@ class HTTPDownloader(Downloader):
         state = self.state
         self.lock.release()
         if (state == "paused") or (state == "stopped"):
-            return ""
-        try:
-            data = handle.read(1024)
-        except:
-            self.lock.acquire()
-            self.state = "failed"
-            self.lock.release()
-            return ""
+            data = ""
+	else:
+	    try:
+		data = handle.read(1024)
+	    except:
+		self.lock.acquire()
+		self.state = "failed"
+		self.lock.release()
+		data = ""
         self.updateRateAndETA(len(data))
         return data
 
@@ -242,7 +250,24 @@ class HTTPDownloader(Downloader):
 		conn.request("HEAD",path)
 		download = conn.getresponse()
 		if download.status != 200:
-		    raise DownloaderError, "File not found"
+		    if download.status == 302 or download.status == 307 or download.status == 301:
+			info = download.msg
+			download.close()
+			conn.close()
+			if download.status == 301:
+			    self.url = info['Location']
+			(scheme, host, path, params, query, fragment) = urlparse(info['Location'])
+			if len(params):
+			    path += ';'+params
+			if len(query):
+			    path += '?'+query
+			conn = HTTPConnection(host)
+			conn.request("HEAD",path)
+			download = conn.getresponse()
+			if download.status != 200:
+			    raise DownloaderError, "File not found"
+		    else:
+			raise DownloaderError, "File not found"
 	    else:
 		conn = self.conn
         except:
@@ -291,11 +316,22 @@ class HTTPDownloader(Downloader):
 		filehandle.write(' ')
 		filehandle.seek(0)
 	else:
-	    filehandle = file(self.filename,"r+b")
-	    self.lock.acquire()
-	    pos = self.currentSize
-	    self.lock.release()
-	    filehandle.seek(pos)
+	    try:
+		filehandle = file(self.filename,"r+b")
+		self.lock.acquire()
+		pos = self.currentSize
+		self.lock.release()
+		filehandle.seek(pos)
+	    except:
+		filehandle = file(self.filename,"w+b")
+		self.lock.acquire()
+		self.currentSize = 0
+		self.lock.release()
+		pos = 0
+		if totalSize > 0:
+		    filehandle.seek(totalSize-1)
+		    filehandle.write(' ')
+		    filehandle.seek(0)
         # If we're recovering a download give a range request
         if (pos > 0) and (pos != totalSize):
             conn.request("GET",path,headers = {"Range":"bytes="+str(pos)+"-"})
@@ -332,6 +368,7 @@ class HTTPDownloader(Downloader):
         try:
             if self.state == "downloading":
                 self.state = "finished"
+		self.item.setDownloadedTime()
 		newfilename = os.path.join(config.get('DataDirectory'),self.shortFilename)
 		newfilename = self.nextFreeFilename(newfilename)
 		rename(self.filename,newfilename)
@@ -402,8 +439,10 @@ class BTDisplay:
     def __init__(self,dler):
         self.dler = dler
 	self.lastUpTotal = 0
+	self.lastUpdated = 0
 
     def finished(self):
+	self.dler.item.setDownloadedTime()
         self.dler.lock.acquire()
 	try:
 	    if not self.dler.state == "finished":
@@ -428,25 +467,33 @@ class BTDisplay:
 	print errormsg
             
     def display(self, statistics):
+	update = False
+	now = math.floor(time())
 	self.dler.lock.acquire()
-	if statistics.get('upTotal') != None:
-	    if self.lastUpTotal > statistics.get('upTotal'):
-		self.dler.uploaded += statistics.get('upTotal')
-	    else:
-		self.dler.uploaded += statistics.get('upTotal') - self.lastUpTotal
-	    self.lastUpTotal = statistics.get('upTotal')
-	if self.dler.state != "paused":
-	    self.dler.currentSize = int(self.dler.totalSize*statistics.get('fractionDone'))
-	if self.dler.state != "finished":
-	    self.dler.rate = statistics.get('downRate')
-	if self.dler.rate == None:
-	    self.dler.rate = 0.0
-	self.dler.eta = statistics.get('timeEst')
-	if self.dler.eta == None:
-	    self.dler.eta = 0
-	self.dler.lock.release()
-	self.dler.item.beginChange()
-	self.dler.item.endChange()
+	try:
+	    if statistics.get('upTotal') != None:
+		if self.lastUpTotal > statistics.get('upTotal'):
+		    self.dler.uploaded += statistics.get('upTotal')
+		else:
+		    self.dler.uploaded += statistics.get('upTotal') - self.lastUpTotal
+		self.lastUpTotal = statistics.get('upTotal')
+	    if self.dler.state != "paused":
+		self.dler.currentSize = int(self.dler.totalSize*statistics.get('fractionDone'))
+	    if self.dler.state != "finished":
+		self.dler.rate = statistics.get('downRate')
+	    if self.dler.rate == None:
+		self.dler.rate = 0.0
+	    self.dler.eta = statistics.get('timeEst')
+	    if self.dler.eta == None:
+		self.dler.eta = 0
+	    if self.lastUpdated < now:
+		update = True
+		self.lastUpdated = now
+	finally:
+	    self.dler.lock.release()
+	    if update:
+		self.dler.item.beginChange()
+		self.dler.item.endChange()
 
     ##
     # Called by pickle during serialization
@@ -548,14 +595,16 @@ class BTDownloader(Downloader):
 	    h.close()
         try:
             # raises BTFailure if bad
-            metainfo = ConvertedMetainfo(bdecode(metainfo))
-
+	    if self.metainfo == None:
+		metainfo = ConvertedMetainfo(bdecode(metainfo))
+	    else:
+		metainfo = self.metainfo
             self.shortFilename = metainfo.name_fs
 	    if not done:
 		self.filename = os.path.join(config.get('DataDirectory'),'Incomplete Downloads',self.shortFilename+".part")
 		self.filename = self.nextFreeFilename(self.filename)
-
-	    self.metainfo = metainfo
+	    if self.metainfo == None:
+		self.metainfo = metainfo
             self.set_torrent_values(self.metainfo.name, self.filename,
                                 self.metainfo.total_bytes, len(self.metainfo.hashes))
             self.torrent = self.multitorrent.start_torrent(self.metainfo,
@@ -582,6 +631,7 @@ class BTDownloader(Downloader):
 
 
     def get_status(self):
+	#print str(self.getID()) + ": "+str(self.metainfo.infohash).encode('hex')
         self.multitorrent.rawserver.add_task(self.get_status,
                                              self.torrentConfig['display_interval'])
         status = self.torrent.get_status(False)
@@ -591,8 +641,7 @@ class BTDownloader(Downloader):
         self.d.error(text)
 
     def failed(self, torrent, is_external):
-	#FIXME: should I do this?
-        self.doneflag.set()
+        pass
 
     def finished(self, torrent):
         self.d.finished()
@@ -646,11 +695,40 @@ class DownloaderFactory:
 	    path += ';'+params
 	if len(query):
 	    path += '?'+query
-	conn.request("HEAD",path)
+
+	#FIXME: do something smarter on failure
+	try:
+	    conn.request("HEAD",path)
+	except:
+	    #print "Couldn't connect"
+	    return None
 	download = conn.getresponse()
 	if download.status != 200:
-	    print download.status
-	    return None
+	    #print "Got "+str(download.status)
+	    if download.status == 301:
+		info = download.msg
+		download.close()
+		conn.close()
+		return self.getDownloader(info['Location'])
+	    #FIXME allow several redirects
+	    elif download.status == 302 or download.status == 307:
+		info = download.msg
+		download.close()
+		conn.close()
+		(scheme, host, path, params, query, fragment) = urlparse(url)
+		conn = HTTPConnection(host)
+		if len(params):
+		    path += ';'+params
+		if len(query):
+		    path += '?'+query
+	        #FIXME: catch exception here
+		conn.request("HEAD",path)
+		download = conn.getresponse()
+		if download.status != 200:
+		    #print "Got "+str(download.status)
+		    return None
+	    else:
+		return None
         info = download.msg
 	download.close()
 	if info['Content-Type'] == 'application/x-bittorrent':
@@ -658,7 +736,12 @@ class DownloaderFactory:
             download = conn.getresponse()
 	    metainfo = download.read()
 	    conn.close()
-	    return BTDownloader(url,self.item,metainfo)
+	    try:
+		metainfo = ConvertedMetainfo(bdecode(metainfo))
+		return BTDownloader(url,self.item,metainfo)
+	    except BTFailure, e:
+		print str(e)
+		return None
 	else:
 	    return HTTPDownloader(url,self.item,conn,info)
 

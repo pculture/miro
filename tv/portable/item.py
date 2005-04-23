@@ -3,6 +3,7 @@ from database import DDBObject
 from threading import RLock
 from downloader import DownloaderFactory
 from copy import copy
+from xhtmltools import unescape,xhtmlify
 
 ##
 # An item corresponds to a single entry in a feed. Generally, it has
@@ -15,15 +16,16 @@ class Item(DDBObject):
         self.feed = feed
         self.seen = False
         self.state =  'unselected'
-	self.downloadTime = datetime.now()
         self.exirpiration = datetime.now()
         self.downloaders = []
         self.vidinfo = None
         self.autoDownloadable = autodl
         self.autoDownloaded = False
+	self.startingDownload = False
         self.entry = entry
         self.lock = RLock()
 	self.dlFactory = DownloaderFactory(self)
+	self.DLStartTime = datetime.now()
         DDBObject.__init__(self)
 
     ##
@@ -48,28 +50,6 @@ class Item(DDBObject):
         self.lock.acquire()
         self.seen = True
         self.lock.release()
-
-    ##
-    # Gets the state of this item
-    def getState(self):
-        ret = None
-        self.lock.acquire()
-        try:
-            if self.state in ['unselected','unwatched','expirable','saved','expired','deleted']:
-                ret = self.state
-        finally:
-            self.lock.release()
-        return ret
-
-    ##
-    # Sets the state of this item
-    def setState(self,state):
-        if not state in ['unselected','unwatched','expirable','saved','expired','deleted']:
-            raise TypeError
-        else:
-            self.lock.acquire()
-            self.state = state
-            self.lock.release()
 
     ##
     # Gets the expiration time for this item
@@ -154,75 +134,140 @@ class Item(DDBObject):
         self.lock.acquire()
         try:
             downloadURLs = map(lambda x:x.getURL(),self.downloaders)
+	    self.startingDownload = True
 	    try:
-		for enclosure in self.entry["enclosures"]:
-		    try:
-			if not enclosure["url"] in downloadURLs:
-			    dler = self.dlFactory.getDownloader(enclosure["url"])
-			    if dler != None:
-				self.downloaders.append(dler)
-		    except KeyError:
-			pass
-	    except KeyError:
-		pass
+		enclosures = self.entry["enclosures"]
+	    except:
+		enclosures = []
         finally:
             self.lock.release()
+	self.beginChange()
+	self.endChange()
+	try:
+	    for enclosure in enclosures:
+		try:
+		    if not enclosure["url"] in downloadURLs:
+			dler = self.dlFactory.getDownloader(enclosure["url"])
+			if dler != None:
+			    self.lock.acquire()
+			    try:
+				self.downloaders.append(dler)
+			    finally:
+				self.lock.release()
+		except KeyError:
+		    pass
+	except KeyError:
+	    pass
+        self.lock.acquire()
+        try:
+	    self.startingDownload = False
+        finally:
+            self.lock.release()
+	self.beginChange()
+	self.endChange()
+
+    ##
+    # Returns a link to the thumbnail of the video
+    def getThumbnail(self):
+        #FIXME update this when we update the XML
+	return "resource:images/thumb.gif"
+
+    ##
+    # returns the title of the item
+    def getTitle(self):
+	self.lock.acquire()
+	try:
+	    ret = self.entry.title
+	except:
+	    try:
+		ret = self.entry.enclosures[0]["url"]
+	    except:
+		ret = ""
+	self.lock.release()
+	return ret
+
+    ##
+    # Returns valid XHTML containing a description of the video
+    def getDescription(self):
+	self.lock.acquire()
+	try:
+	    ret = xhtmlify('<span>'+unescape(self.entry.enclosures[0]["text"])+'</span>')
+	except:
+	    try:
+		ret = xhtmlify('<span>'+unescape(self.entry.description)+'</span>')
+	    except:
+		ret = ''
+	self.lock.release()
+	return ret
 
     ##
     # Stops downloading the item
     def stopDownload(self):
+	for dler in self.downloaders:
+	    dler.stop()
+	    dler.remove()
         self.lock.acquire()
         try:
-	    for dler in self.downloaders:
-		dler.stop()
 	    self.downloaders = []
         finally:
             self.lock.release()
-    
+
     ##
     # returns status of the download in plain text
-    def downloadState(self):
-	if len(self.downloaders) == 0:
-	    state = "stopped"
-	else:
-	    state = "finished"
-	    for dler in self.downloaders:
-		newState = dler.getState()
-		if newState == "failed":
-		    return "failed"
-		elif newState != "finished":
-		    state = newState
+    def getState(self):
+	self.lock.acquire()
+	try:
+	    if self.startingDownload:
+		state = "downloading"
+	    elif len(self.downloaders) == 0:
+		state = "stopped"
+	    else:
+		state = "finished"
+		for dler in self.downloaders:
+		    newState = dler.getState()
+		    if newState != "finished":
+			state = newState
+		    if state == "failed":
+			break
+	finally:
+	    self.lock.release()
 	return state
 
     ##
     # returns status of the download in plain text
-    def downloadState(self):
-	if len(self.downloaders) == 0:
-	    state = "stopped"
-	else:
-	    state = "finished"
-	    for dler in self.downloaders:
-		newState = dler.getState()
-		if newState == "failed":
-		    return "failed"
-		elif newState != "finished":
-		    state = newState
-	return state
-
-    ##
-    # returns status of the download in plain text
-    def downloadTotalSize(self):
+    def getTotalSize(self):
 	size = 0
 	for dler in self.downloaders:
-	    size += dler.getTotalSize()
+	    try:
+		size += dler.getTotalSize()
+	    except:
+		pass
+	if size == 0:
+	    return ""
+	mb = size / 1000000
+	if mb <  100:
+	    return '%1.1f' % mb + " MB"
+	elif mb < 1000:
+	    return '%1.0f' % mb + " MB"
+	else:
+	    return '%1.1f' % (mb/1000) + " GB"
 	return size
 
     ##
     # returns status of the download in plain text
-    def downloadCurrentSize(self):
+    def getCurrentSize(self):
 	size = 0
 	for dler in self.downloaders:
 	    size += dler.getCurrentSize()
+	if size == 0:
+	    return ""
+	mb = size / 1000000
+	if mb <  100:
+	    return '%1.1f' % mb + " MB"
+	elif mb < 1000:
+	    return '%1.0f' % mb + " MB"
+	else:
+	    return '%1.1f' % (mb/1000) + " GB"
 	return size
 
     ##
@@ -232,11 +277,124 @@ class Item(DDBObject):
 	for dler in self.downloaders:
 	    secs += dler.getETA()
 	if (secs < 120):
-	    return "~"+'%1.1f' % secs+" secs"
+	    return '%1.0f' % secs+" secs"
 	elif (secs < 6000):
-	    return "~"+'%1.1f' % (secs/60)+" mins"
+	    return '%1.0f' % (secs/60)+" mins"
 	else:
-	    return "~"+'%1.1f' % (secs/3600)+" hours"
+	    return '%1.1f' % (secs/3600)+" hours"
+
+    ##
+    # returns the date this video was released or when it was published
+    def getReleaseDate(self):
+	try:
+	    ret = datetime(*self.entry.enclosures[0].modified_parsed[0:7]).strftime("%b %d %Y")
+	except:
+	    ret = datetime(*self.entry.modified_parsed[0:7]).strftime("%b %d %Y")
+	    try:
+		pass
+	    except:
+		ret = ""
+	return ret
+
+    ##
+    # returns string with the play length of the video
+    def getDuration(self):
+	secs = 0
+	#FIXME get this from VideoInfo
+	if secs == 0:
+	    return ""
+	if (secs < 120):
+	    return '%1.0f' % secs+" secs"
+	elif (secs < 6000):
+	    return '%1.0f' % (secs/60)+" mins"
+	else:
+	    return '%1.1f' % (secs/3600)+" hours"
+
+    ##
+    # return keyword tags associated with the video separated by commas
+    def getTags(self):
+	#FIXME: fix this when we update the RSS
+	self.lock.acquire()
+	try:
+	    try:
+		ret = self.entry.enclosures[0]["tags"]
+	    except:
+		ret = ""
+	finally:
+	    self.lock.release()
+	return ret
+
+    ##
+    # return the license associated with the video
+    def getLicence(self):
+	self.lock.acquire()
+	try:
+	    try:
+		ret = self.entry.license
+	    except:
+		try:
+		    ret = self.feed.getLicense()
+		except:
+		    ret = ""
+	finally:
+	    self.lock.release()
+	return ret
+
+    ##
+    # return the people associated with the video, separated by commas
+    def getPeople(self):
+	#FIXME update this when we update the XML
+	self.lock.acquire()
+	try:
+	    try:
+		ret = self.entry.enclosures[0].people.split('|').join(', ')
+	    except:
+		ret = ""
+	finally:
+	    self.lock.release()
+	return ret
+
+    ##
+    # returns the URL of the webpage associated with the item
+    def getLink(self):
+	self.lock.acquire()
+	try:
+	    try:
+		ret = self.entry.link
+	    except:
+		ret = ""
+	finally:
+	    self.lock.release()
+	return ret
+
+    ##
+    # returns the URL of the payment page associated with the item
+    def getPaymentLink(self):
+	#FIXME: fix this when we update the RSS
+	self.lock.acquire()
+	try:
+	    try:
+		ret = self.entry.paymentLink
+	    except:
+		ret = ""
+	finally:
+	    self.lock.release()
+	return ret
+
+    ##
+    # returns a snippet of HTML containing a link to the payment page
+    # FIXME is this a security risk?
+    def getPaymentHTML(self):
+	#FIXME: fix this when we update the RSS
+	self.lock.acquire()
+	try:
+	    try:
+		ret = self.entry.paymentHTML
+	    except:
+		ret = ""
+	finally:
+	    self.lock.release()
+	return ret
 
     ##
     # Updates an item with new data
@@ -249,8 +407,54 @@ class Item(DDBObject):
         finally:
             self.endChange()
 
-    def getFilenameHack(self):
-	return self.downloaders[0].getFilename()
+    ##
+    # marks the item as having been downloaded now
+    def setDownloadedTime(self):
+	self.lock.acquire()
+	try:
+	    self.downloadedTime = datetime.now()
+	finally:
+	    self.lock.release()
+
+    ##
+    # gets the time the video was downloaded
+    # Only valid if the state of this item is "finished"
+    def getDownloadedTime(self):
+	self.lock.acquire()
+	try:
+	    try:
+		ret = self.downloadedTime
+	    except:
+		ret = None
+	finally:
+	    self.lock.release()
+	return ret
+
+    ##
+    # gets the time the video started downloading
+    def getDLStartTime(self):
+	self.lock.acquire()
+	try:
+	    try:
+		ret = self.DLStartTime
+	    except:
+		ret = None
+	finally:
+	    self.lock.release()
+	return ret
+
+    ##
+    # Returns the filename of the first downloaded video or the empty string
+    def getFilename(self):
+	self.lock.acquire()
+	try:
+	    try:
+		ret = self.downloaders[0].getFilename()
+	    except:
+		ret = ""
+	finally:
+	    self.lock.release()
+	return ret
 
     ##
     # Called by pickle during serialization

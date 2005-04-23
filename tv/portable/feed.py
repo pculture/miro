@@ -5,6 +5,9 @@ from database import defaultDatabase
 from item import *
 from scheduler import ScheduleEvent
 from copy import copy
+from xhtmltools import unescape,xhtmlify
+
+#FIXME: Add support for HTTP caching and redirects
 
 # Universal Feed Parser http://feedparser.org/
 # Licensed under Python license
@@ -55,12 +58,51 @@ class Feed(DDBObject):
         return ret
 
     ##
-    # Returns the title of the feed
+    # Returns the URL of the feed
     def getURL(self):
         self.lock.acquire()
         ret = self.url
         self.lock.release()
         return ret
+
+    ##
+    # Returns the description of the feed
+    def getDescription(self):
+        return ""
+
+    ##
+    # Returns a link to a webpage associated with the feed
+    def getLink(self):
+        return ""
+
+    ##
+    # Returns the URL of the library associated with the feed
+    def getLibraryLink(self):
+        return ""
+
+    ##
+    # Returns the URL of a thumbnail associated with the feed
+    def getThumbnail(self):
+	return ""
+
+    ##
+    # Returns URL of license assocaited with the feed
+    def getLicense(self):
+	return ""
+
+    ##
+    # Returns the number of new items with the feed
+    def getNewItems(self):
+        self.lock.acquire()
+	count = 0
+	for item in self.items:
+	    try:
+		if item.getState() == 'finished' and not item.getSeen():
+		    count += 1
+	    except:
+		pass
+        self.lock.release()
+        return count
 
     ##
     # Removes a feed from the database
@@ -81,20 +123,65 @@ class RSSFeed(Feed):
 	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
 
     ##
+    # Returns the description of the feed
+    def getDescription(self):
+	self.lock.acquire()
+	try:
+	    ret = xhtmlify('<span>'+unescape(self.parsed.summary)+'</span>')
+	except:
+	    ret = ""
+	self.lock.release()
+        return ret
+
+    ##
+    # Returns a link to a webpage associated with the feed
+    def getLink(self):
+	self.lock.acquire()
+	try:
+	    ret = self.parsed.link
+	except:
+	    ret = ""
+	self.lock.release()
+        return ret
+
+    ##
+    # Returns the URL of the library associated with the feed
+    def getLibraryLink(self):
+        self.lock.acquire()
+	try:
+	    ret = self.parsed.libraryLink
+	except:
+	    ret = ""
+        self.lock.release()
+        return ret
+
+    ##
+    # Returns the URL of a thumbnail associated with the feed
+    def getThumbnail(self):
+        self.lock.acquire()
+	try:
+	    ret = self.parsed.image.url
+	except:
+	    ret = ""
+        self.lock.release()
+        return ret
+	
+
+    ##
     # Updates a feed
     def update(self):
-        parsed = feedparser.parse(self.url)
+        self.parsed = feedparser.parse(self.url)
         self.lock.acquire()
         self.beginChange()
         try:
             try:
-                self.title = parsed["feed"]["title"]
+                self.title = self.parsed["feed"]["title"]
             except KeyError:
                 try:
-                    self.title = parsed["channel"]["title"]
+                    self.title = self.parsed["channel"]["title"]
                 except KeyError:
                     pass
-            for entry in parsed.entries:
+            for entry in self.parsed.entries:
                 new = True
                 for item in self.items:
                     try:
@@ -110,16 +197,27 @@ class RSSFeed(Feed):
                 if new:
                     self.items.append(Item(self,entry))
             try:
-                self.updateFreq = min(15*60,parsed["feed"]["ttl"]*60)
+                self.updateFreq = min(15*60,self.parsed["feed"]["ttl"]*60)
             except KeyError:
                 self.updateFreq = 60*60
         finally:
             self.endChange()
             self.lock.release()
 
+    ##
+    # Overrides the DDBObject remove()
     def remove(self):
         self.scheduler.remove()
         Feed.remove(self)
+
+    ##
+    # Returns the URL of the license associated with the feed
+    def getLicense(self):
+	try:
+	    ret = self.parsed.license
+	except:
+	    ret = ""
+	return ret
 
     ##
     # Called by pickle during serialization
@@ -137,3 +235,4 @@ class RSSFeed(Feed):
 	self.lock = RLock()
 	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
         self.scheduler = ScheduleEvent(self.updateFreq, self.update)
+        self.scheduler = ScheduleEvent(1, self.update,False)

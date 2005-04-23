@@ -35,7 +35,7 @@
 <br/><br/>
   Remove a feed:<br/>
   <a t:repeatForView="feeds" href="action:removeFeed?url=@@@this getURL@@@">
-    <span t:replace="this title" />
+    <span t:replace="this title" /><br />
    </a>
 <br/><br/>
   Play a video file in a new window:
