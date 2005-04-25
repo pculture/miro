@@ -567,6 +567,7 @@ class ManagedWebView(NSObject):
 	    return NSURLRequest.requestWithURL_(urlObject)
 	return request
 
+
 ###############################################################################
 #### Right-hand pane video display                                         ####
 ###############################################################################
