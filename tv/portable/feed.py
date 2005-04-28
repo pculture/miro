@@ -1,11 +1,12 @@
 from urllib import urlopen
-from datetime import datetime
+from datetime import datetime,timedelta
 from threading import RLock
 from database import defaultDatabase
 from item import *
 from scheduler import ScheduleEvent
 from copy import copy
 from xhtmltools import unescape,xhtmlify
+import config
 
 #FIXME: Add support for HTTP caching and redirects
 
@@ -20,7 +21,7 @@ import feedparser
 class FeedFactory:
     def __init__(self, config = None):
         self.config = config
-
+	
     ##
     # Returns an appropriate feed for the given URL
     #
@@ -46,8 +47,87 @@ class Feed(DDBObject):
         self.title = title
         self.created = datetime.now()
         self.lock = RLock()
+	self.autoDownloadable = False
+	self.maxNew = -1
+	self.fallbehind = -1
+	self.expire = "system"
         self.updateFreq = 60*60
         DDBObject.__init__(self)
+
+    def saveSettings(self,automatic,maxnew,fallbehind,expire,expireDays,expireHours):
+	self.lock.acquire()
+	try:
+	    self.autoDownloadable = (automatic == "1")
+	    if maxnew == "unlimited":
+		self.maxnew = -1
+	    else:
+		self.maxnew = int(maxnew)
+	    if fallbehind == "unlimited":
+		self.fallbehind = -1
+	    else:
+		self.fallbehind = int(fallbehind)
+	    self.expire = expire
+	    self.expireTime = timedelta(days=int(expireDays),hours=int(expireHours))
+	finally:
+	    self.lock.release()
+
+    def getExpirationType(self):
+	self.lock.acquire()
+	ret = self.expire
+	self.lock.release()
+	return ret
+
+    def getMaxFallBehind(self):
+	self.lock.acquire()
+	if self.fallbehind < 0:
+	    ret = "unlimited"
+	else:
+	    ret = self.fallbehind
+	self.lock.release()
+	return ret
+
+    def getMaxNew(self):
+	self.lock.acquire()
+	if self.maxnew < 0:
+	    ret = "unlimited"
+	else:
+	    ret = self.maxnew
+	self.lock.release()
+	return ret
+
+    def getExpireDays(self):
+	ret = 0
+	self.lock.acquire()
+	try:
+	    try:
+		ret = self.expireTime.days
+	    except:
+		ret = config.get('DefaultTimeUntilExpiration').days
+	finally:
+	    self.lock.release()
+	return ret
+
+    def getExpireHours(self):
+	ret = 0
+	self.lock.acquire()
+	try:
+	    try:
+		ret = int(self.expireTime.seconds/3600)
+	    except:
+		ret = int(config.get('DefaultTimeUntilExpiration').seconds/3600)
+	finally:
+	    self.lock.release()
+	return ret
+	
+
+    ##
+    # Returns true iff item is autodownloadable
+    def isAutoDownloadable(self):
+        self.lock.acquire()
+        ret = self.autoDownloadable
+        self.lock.release()
+        return ret
+
 
     ##
     # Returns the title of the feed

@@ -78,6 +78,19 @@ class TemplateDisplay(frontend.HTMLDisplay):
 		database.defaultDatabase.recomputeFilters()
 		return False
 
+	    match = re.compile(r"^action:changeFeedSettings\?(.*)$").match(url)
+	    if match:
+		# Parse arguments
+		(feed,maxnew,fallbehind,automatic,expireDays,expireHours,expire) = getURLParameters('setViewFilter', match.group(1), 'feed', 'maxnew', 'fallbehind', 'automatic', 'expireDays','expireHours','expire')
+
+		database.defaultDatabase.saveCursor()
+		for obj in database.defaultDatabase:
+		    if obj.getID() == int(feed):
+			obj.saveSettings(automatic,maxnew,fallbehind,expire,expireDays,expireHours)
+			break
+		database.defaultDatabase.restoreCursor()
+
+
 	    match = re.compile(r"^action:setViewSort\?(.*)$").match(url)
 	    if match:
 		# Parse arguments
@@ -493,6 +506,8 @@ def filterClass(obj, parameter):
 
 globalFilterList = {
     'substring': (lambda x, y: str(y) in str(x)),
+    'boolean': (lambda x, y: x),
+
     #FIXME make this look at the feed's time until expiration
     'recentItems': (lambda x, y: isinstance(x,item.Item) and x.getState() == 'finished' and x.getDownloadedTime()+config.get('DefaultTimeUntilExpiration')>datetime.datetime.now() and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
     'oldItems': (lambda x, y:  isinstance(x,item.Item) and x.getState() == 'finished' and x.getDownloadedTime()+config.get('DefaultTimeUntilExpiration')<=datetime.datetime.now() and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
@@ -500,6 +515,7 @@ globalFilterList = {
     'downloadedItems': (lambda x, y: isinstance(x,item.Item) and x.getState() == 'finished' and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
     'unDownloadedItems': (lambda x, y: isinstance(x,item.Item) and (not x.getState() == 'finished') and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
     'downloadingItems': (lambda x, y: isinstance(x,item.Item) and x.getState() == 'downloading' and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
+       
     'class': filterClass,
     'all': (lambda x, y: True),
 }

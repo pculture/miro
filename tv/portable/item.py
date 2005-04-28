@@ -12,14 +12,13 @@ from xhtmltools import unescape,xhtmlify
 # Item data is accessed by using the item as a dict. We use the same
 # structure as the universal feed parser entry structure.
 class Item(DDBObject):
-    def __init__(self, feed, entry, autodl = True):
+    def __init__(self, feed, entry):
         self.feed = feed
         self.seen = False
         self.state =  'unselected'
         self.exirpiration = datetime.now()
         self.downloaders = []
         self.vidinfo = None
-        self.autoDownloadable = autodl
         self.autoDownloaded = False
 	self.startingDownload = False
         self.entry = entry
@@ -35,6 +34,17 @@ class Item(DDBObject):
         ret = self.feed
         self.lock.release()
         return ret
+
+    ##
+    # Returns the number of videos associated with this item
+    def getAvailableVideos(self):
+	ret = 0
+	self.lock.acquire()
+	try:
+	    ret = len(self.entry.enclosures)
+	finally:
+	    self.lock.release()
+	return ret
 
     ##
     # returns true iff item has been seen
@@ -109,14 +119,6 @@ class Item(DDBObject):
     def getVidInfo(self):
         self.lock.acquire()
         ret = self.vidinfo
-        self.lock.release()
-        return ret
-
-    ##
-    # Returns true iff item is autodownloadable
-    def isAutoDownloadable(self):
-        self.lock.acquire()
-        ret = self.autoDownloadable
         self.lock.release()
         return ret
 
