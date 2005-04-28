@@ -15,7 +15,6 @@ class Item(DDBObject):
     def __init__(self, feed, entry):
         self.feed = feed
         self.seen = False
-        self.state =  'unselected'
         self.exirpiration = datetime.now()
         self.downloaders = []
         self.vidinfo = None
@@ -24,7 +23,6 @@ class Item(DDBObject):
         self.entry = entry
         self.lock = RLock()
 	self.dlFactory = DownloaderFactory(self)
-	self.DLStartTime = datetime.now()
         DDBObject.__init__(self)
 
     ##
@@ -60,24 +58,6 @@ class Item(DDBObject):
         self.lock.acquire()
         self.seen = True
         self.lock.release()
-
-    ##
-    # Gets the expiration time for this item
-    def getExpiration(self):
-        self.lock.acquire()
-        ret = self.expiration
-        self.lock.release()
-        return ret
-
-    ##
-    # Sets the expiration time for this item
-    def setExpiration(self, exp):
-        if exp.__class__.__name__ != 'datetime':
-            raise TypeError
-        else:
-            self.lock.acquire()
-            self.expiration = exp
-            self.lock.release()
 
     ##
     # Returns the item data associated with n
@@ -286,16 +266,45 @@ class Item(DDBObject):
 	    return '%1.1f' % (secs/3600)+" hours"
 
     ##
-    # returns the date this video was released or when it was published
-    def getReleaseDate(self):
+    # Returns the published date of the item
+    def getPubDate(self):
+	self.lock.acquire()
 	try:
-	    ret = datetime(*self.entry.enclosures[0].modified_parsed[0:7]).strftime("%b %d %Y")
-	except:
-	    ret = datetime(*self.entry.modified_parsed[0:7]).strftime("%b %d %Y")
 	    try:
-		pass
+		ret = datetime(*self.entry.modified_parsed[0:7]).strftime("%b %d %Y")
 	    except:
 		ret = ""
+        finally:
+	    self.lock.release()
+	return ret
+    
+    ##
+    # Returns the published date of the item as a datetime object
+    def getPubDateParsed(self):
+	self.lock.acquire()
+	try:
+	    try:
+		ret = datetime(*self.entry.modified_parsed[0:7])
+	    except:
+		ret = ""
+        finally:
+	    self.lock.release()
+	return ret
+
+    ##
+    # returns the date this video was released or when it was published
+    def getReleaseDate(self):
+	self.lock.acquire()
+	try:
+	    try:
+		ret = datetime(*self.entry.enclosures[0].modified_parsed[0:7]).strftime("%b %d %Y")
+	    except:
+		try:
+		    ret = datetime(*self.entry.modified_parsed[0:7]).strftime("%b %d %Y")
+		except:
+		    ret = ""
+	finally:
+	    self.lock.release()
 	return ret
 
     ##
