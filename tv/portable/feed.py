@@ -41,60 +41,132 @@ class FeedFactory:
 ##
 # A feed contains a set of of downloadable items
 class Feed(DDBObject):
-    def __init__(self, url, title = 'unknown'):
+    def __init__(self, url, title = 'unknown', visible = True):
         self.url = url
         self.items = []
         self.title = title
         self.created = datetime.now()
         self.lock = RLock()
 	self.autoDownloadable = False
+	self.getEverything = False
 	self.maxNew = -1
-	self.fallbehind = -1
+	self.fallBehind = -1
 	self.expire = "system"
         self.updateFreq = 60*60
+	self.startfrom = datetime.min
+	self.visible = True
         DDBObject.__init__(self)
 
-    def saveSettings(self,automatic,maxnew,fallbehind,expire,expireDays,expireHours):
+    ##
+    # Downloads the next available item taking into account maxNew,
+    # fallbehind, and getEverything
+    def downloadNext(self, dontUse = []):
+	self.lock.acquire()
+	try:
+	    next = None
+
+	    #The number of items downloading from this feed
+	    dling = 0
+	    #The number of items eligibile to download
+	    eligibile = 0
+	    #The number of unwatched, downloaded items
+	    newitems = 0
+
+	    #Find the next item we should get
+	    for item in self.items:
+		if (self.getEverything or item.getPubDateParsed() >= self.startfrom) and item.getState() == "stopped" and not item in dontUse:
+		    eligibile += 1
+		    if next == None:
+			next = item
+		    elif item.getPubDateParsed() < next.getPubDateParsed():
+			next = item
+		if item.getState() == "downloading":
+		    dling += 1
+		if item.getState() == "finished" or item.getState() == "uploading" and not item.getSeen():
+		    newitems += 1
+
+	finally:
+	    self.lock.release()
+
+	if self.maxNew >= 0 and newItems >= self.maxNew:
+	    return False
+	elif self.fallBehind>=0 and eligibile > self.fallBehind:
+	    dontUse.append(next)
+	    print "."
+	    return self.downloadNext(dontUse)
+	elif next != None:
+	    print "downloading "+str(next.getID())
+	    self.lock.acquire()
+	    try:
+		self.startfrom = next.getPubDateParsed()
+	    finally:
+		self.lock.release()
+	    next.download()
+	    return True
+	else:
+	    print "Can't download!"
+	    return False
+
+    def isVisible(self):
+	self.lock.acquire()
+	try:
+	    ret = self.visible
+	finally:
+	    self.lock.release()
+	return ret
+
+    ##
+    # Takes in parameters from the save settings page and saves them
+    def saveSettings(self,automatic,maxnew,fallBehind,expire,expireDays,expireHours,getEverything):
 	self.lock.acquire()
 	try:
 	    self.autoDownloadable = (automatic == "1")
+	    self.getEverything = (getEverything == "1")
 	    if maxnew == "unlimited":
-		self.maxnew = -1
+		self.maxNew = -1
 	    else:
-		self.maxnew = int(maxnew)
-	    if fallbehind == "unlimited":
-		self.fallbehind = -1
+		self.maxNew = int(maxnew)
+	    if fallBehind == "unlimited":
+		self.fallBehind = -1
 	    else:
-		self.fallbehind = int(fallbehind)
+		self.fallBehind = int(fallBehind)
 	    self.expire = expire
 	    self.expireTime = timedelta(days=int(expireDays),hours=int(expireHours))
 	finally:
 	    self.lock.release()
 
+    ##
+    # Returns "feed," "system," or "never"
     def getExpirationType(self):
 	self.lock.acquire()
 	ret = self.expire
 	self.lock.release()
 	return ret
 
+    ##
+    # Returns"unlimited" or the maximum number of items this feed can fall behind
     def getMaxFallBehind(self):
 	self.lock.acquire()
-	if self.fallbehind < 0:
+	if self.fallBehind < 0:
 	    ret = "unlimited"
 	else:
-	    ret = self.fallbehind
+	    ret = self.fallBehind
 	self.lock.release()
 	return ret
 
+    ##
+    # Returns "unlimited" or the maximum number of items this feed wants
     def getMaxNew(self):
 	self.lock.acquire()
-	if self.maxnew < 0:
+	if self.maxNew < 0:
 	    ret = "unlimited"
 	else:
-	    ret = self.maxnew
+	    ret = self.maxNew
 	self.lock.release()
 	return ret
 
+    ##
+    # Returns the number of days until a video expires
     def getExpireDays(self):
 	ret = 0
 	self.lock.acquire()
@@ -107,6 +179,8 @@ class Feed(DDBObject):
 	    self.lock.release()
 	return ret
 
+    ##
+    # Returns the number of hours until a video expires
     def getExpireHours(self):
 	ret = 0
 	self.lock.acquire()
