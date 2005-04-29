@@ -5,6 +5,10 @@ import copy
 import re
 import types
 import traceback
+import gettext
+
+#Setup gettext
+gettext.install('dtv', 'resources/gettext')
 
 # Limitations:
 # - t:hideIf tags are only dynamically updated whenever there is dynamic
@@ -129,6 +133,44 @@ class idAssignment:
 # some nodes may get processed twice.
 def transformTopNode(node, data, handle):
     if node.nodeType == node.ELEMENT_NODE:
+
+	# Handle i18n translation
+	#
+	# For now, we're using the translate and name attributes found on this
+	# page to handle translation. 
+	# http://www.zope.org/DevHome/Wikis/DevSite/Projects/ComponentArchitecture/ZPTInternationalizationSupport
+	#
+	# Eventually, we may add support for more attributes
+	if 'i18n:translate' in node.attributes.keys():
+
+	    # Convert the node's children to a string, storing child
+	    # elements for later
+	    translateString = ''
+	    children = {}
+	    for child in node.childNodes:
+		if child.nodeType == child.TEXT_NODE:
+		    translateString += child.nodeValue
+		if child.nodeType == child.ELEMENT_NODE and 'i18n:name' in child.attributes.keys():
+		    translateString += '${'+child.getAttribute('i18n:name')+'}'
+		    children[child.getAttribute('i18n:name')] = child.cloneNode(True)
+
+	    # Remove all of the children
+	    while len(node.childNodes)>0:
+		node.removeChild(node.firstChild)
+
+	    # Perform the actual translation
+	    translation = _(translateString)
+
+	    # Recreate the node's children based on the translation
+	    nameReg = re.compile('^\$\{.*?\}$')
+	    m = re.compile('(.*?)(\$\{.*?\})(.*?)').findall(translation)
+	    for regMatch in m:
+		for text in regMatch:
+		    if None == nameReg.search(text) and len(text)>0:
+			node.appendChild(node.ownerDocument.createTextNode(text))
+		    elif len(text)>0:
+			node.appendChild(children[text[2:-1]])
+		
 	# Handle t:include element
 	if node.nodeName == "t:include":
 	    newNode = parse(resource.path("templates/%s" % node.getAttribute('filename'))).documentElement
