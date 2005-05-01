@@ -1,3 +1,15 @@
+/*/////////////////////////////////////////////
+
+CSS For the Desktop Player
+-----------------------------------------------
+Participatoryculture.org
+
+///////////////////////////////////////////////
+
+Some common HTML
+ 
+/////////////////////////////////////////////*/
+
 
 a img{
 	border: none;
@@ -11,24 +23,6 @@ body {
 	padding: 0;
 	}
 
-
-#rap {
-	background-image: url(resource:images/desktop4.gif);
-	
-	margin: 0 auto;
-	width: 780px;
-	height: 429px;
-	padding: 16px 25px 55px 25px;
-	}
-
-#app_title {
-	color: #333;
-	margin: 0 0 6px 350px;
-	font-size: 14px;
-	height: 18px;
-	overflow: hidden;
-	}
-
 /*/////////////////////////////////////////////
 
 SIDEBAR
@@ -39,6 +33,7 @@ Contains the channels
 
 #sidebar {
 	padding: 0;
+	overflow: auto;
 	}
 
 #sidebar a.download_queue{
@@ -235,7 +230,8 @@ Title of each channel
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 100%
+	width: 100%;
+	z-index: 100;
 	}
 	
 #main_window:hover .channel_title {
@@ -244,9 +240,9 @@ Title of each channel
 
 /*/////////////////////////////////////////////
 
- Channel Specific Tabs
+Channel Specific Tabs
 -----------------------------------------------
-watch,choose...
+watch, choose...
  
 /////////////////////////////////////////////*/
 
@@ -262,6 +258,7 @@ watch,choose...
 	top: 24px;
 	width: 100%;
 	left: 0;
+	z-index: 200;
 	}
 
 .channel_tabs a{
@@ -308,7 +305,14 @@ watch,choose...
 	margin: 0 3px;
 	}
 
-/* --- Main List Items ---*/
+
+/*/////////////////////////////////////////////
+
+Main List Items
+-----------------------------------------------
+Where the videos show up
+ 
+/////////////////////////////////////////////*/
 
 
 #main_window ul li {
@@ -317,9 +321,18 @@ watch,choose...
 	display: block;
 	clear: both;
 	padding-top: 7px;
-	height: 66px;
 	list-style: none;
-	
+	height: 73px;
+	}
+
+#main_window li:hover, #main_window li:hover .short_description, #main_window li:hover .video_title{
+	background: #007AFA;
+	cursor: pointer;
+	color: #fff;
+	}
+
+#main_window li:hover .file_size, #main_window li:hover .length{
+	color: #000;
 	}
 
 #main_window ul li.alt {
@@ -348,10 +361,7 @@ watch,choose...
 	padding: 0;	
 	}
 
-#main_window li:hover {
-	background: #f9f9f9 url(resource:images/listback.gif) repeat-x;
-	cursor: pointer;
-	}
+
 
 #main_window li img.thumb{
 	display: block;
@@ -366,8 +376,7 @@ watch,choose...
 
 .desc{
 	float:left;
-
-width: 55%;
+	width: 55%;
 	}
 
 .file_size{
@@ -388,6 +397,9 @@ width: 55%;
 .video_title {
 	font-weight: bold;
 	color: #222;
+	width: 100%;
+	overflow: hidden;
+	height: 15px;
 	}
 
 .video_creator {
@@ -395,7 +407,8 @@ width: 55%;
 
 .short_description {
 	color: #222;  
-        display: inline;
+	height: 30px;
+	overflow: hidden;
 	}
 
 .one_click {
@@ -466,38 +479,6 @@ width: 55%;
 
 	}
 
-
-
-/* ---------- MENUS ------------- */
-
-
-#menus {
-	display: none;
-	position: absolute;
-	top: 540px;
-	left: 20px;
-	
-	
-	}
-
-/* #menus ul, #menus li {
-	list-style-type: none;
-	margin: 0;
-	padding: 5px 1px 1px 5px;
-	background: #fff;
-	}
-
-.menu {
-	width: 200px;
-	float: left;
-	border: 1px solid black;
-	margin-right: 3px;
-	margin-bottom: 3px;
-	font-weight: bold;
-	}
-
-
-*/
 
 
 /* --- Settings Section ---- */
