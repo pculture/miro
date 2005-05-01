@@ -159,7 +159,7 @@ def transformTopNode(node, data, handle):
 		node.removeChild(node.firstChild)
 
 	    # Perform the actual translation
-	    translateString = translateString.strip()
+	    translateString = translateString.strip().replace("\r\n"," ").replace("\r"," ").replace("\n"," ")
 	    translation = _(translateString)
 
 	    print "Translating "+translateString+" to "+translation
