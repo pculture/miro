@@ -22,6 +22,7 @@ class GettextParser(ContentHandler):
 	self.output = ''
 	self.tagStack = []
 	self.attrStack = []
+	self.transStack = []
 
     def inTranslate(self):
 	ret = False
@@ -36,21 +37,24 @@ class GettextParser(ContentHandler):
 
     def startElement(self,name,attrs):
 	if self.inTranslate():
-	    self.output += '${'+attrs['i18n:name']+'}'
-	elif 'i18n:translate' in attrs.keys():
-	    self.output += "msgid \""
+	    self.transStack[-1] += '${'+attrs['i18n:name']+'}'
+	if 'i18n:translate' in attrs.keys():
+	    self.transStack.append("")
 	self.tagStack.append(name)
 	self.attrStack.append(attrs)
 
     def endElement(self,name):
 	if self.inTranslate():
+	    self.output += "msgid \""
+	    self.output += self.transStack[-1].strip().replace("\r\n"," ").replace("\r"," ").replace("\n"," ")
 	    self.output += "\"\nmsgstr \"\"\n\n"
+	    self.transStack.pop()
 	self.tagStack.pop()
 	self.attrStack.pop()
 
     def characters(self, data):
 	if self.inTranslate():
-	    self.output += data.replace('"','\\"')
+	    self.transStack[-1] += data.replace('"','\\"')
 
 if __name__ == "__main__":
     parser = make_parser()
