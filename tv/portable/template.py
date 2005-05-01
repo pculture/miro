@@ -159,17 +159,21 @@ def transformTopNode(node, data, handle):
 		node.removeChild(node.firstChild)
 
 	    # Perform the actual translation
+	    translateString = translateString.strip()
 	    translation = _(translateString)
 
+	    print "Translating "+translateString+" to "+translation
 	    # Recreate the node's children based on the translation
 	    nameReg = re.compile('^\$\{.*?\}$')
-	    m = re.compile('(.*?)(\$\{.*?\})(.*?)').findall(translation)
+	    m = re.compile('(.*?)(\$\{.*?\})(.*)').findall(translation)
 	    for regMatch in m:
 		for text in regMatch:
 		    if None == nameReg.search(text) and len(text)>0:
 			node.appendChild(node.ownerDocument.createTextNode(text))
 		    elif len(text)>0:
 			node.appendChild(children[text[2:-1]])
+	    if len(m) == 0:
+		node.appendChild(node.ownerDocument.createTextNode(translation))
 		
 	# Handle t:include element
 	if node.nodeName == "t:include":
