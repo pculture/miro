@@ -109,16 +109,6 @@ class ScheduleEvent(DDBObject):
         return ret
 
     ##
-    # Removes the object from the scheduler, then recalculates the
-    # update interval based on the new list of events7
-    def remove(self):
-        self.dd.beginUpdate()
-        try:
-            DDBObject.remove(self)
-            self.dd.updateInterval()
-        finally:
-            self.dd.endUpdate()
-    ##
     # Makes an event happen
     def execute(self):
         self.scheduler.beginUpdate()
