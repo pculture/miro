@@ -8,8 +8,6 @@ from copy import copy
 from xhtmltools import unescape,xhtmlify
 import config
 
-#FIXME: Add support for HTTP caching and redirects
-
 # Universal Feed Parser http://feedparser.org/
 # Licensed under Python license
 import feedparser
@@ -92,21 +90,33 @@ class Feed(DDBObject):
 	    return False
 	elif self.fallBehind>=0 and eligibile > self.fallBehind:
 	    dontUse.append(next)
-	    print "."
 	    return self.downloadNext(dontUse)
 	elif next != None:
-	    print "downloading "+str(next.getID())
 	    self.lock.acquire()
 	    try:
 		self.startfrom = next.getPubDateParsed()
 	    finally:
 		self.lock.release()
-	    next.download()
+	    next.download(autodl = True)
 	    return True
 	else:
-	    print "Can't download!"
 	    return False
 
+    ##
+    # Returns marks expired items as expired
+    def expireItems(self):
+	if self.expire == "feed":
+	    expireTime = self.expireTime
+	elif self.expire == "system":
+	    expireTime = config.get('DefaultTimeUntilExpiration')
+	elif self.expire == "never":
+	    return
+	for item in self.items:
+	    if item.getState() == "finished" and datetime.now() - item.getDownloadedTime() > expireTime:
+		item.expire()
+
+    ##
+    # Returns true iff feed should be visible
     def isVisible(self):
 	self.lock.acquire()
 	try:
@@ -324,10 +334,19 @@ class RSSFeed(Feed):
     ##
     # Updates a feed
     def update(self):
-        self.parsed = feedparser.parse(self.url)
+	try:
+	    d = feedparser.parse(self.url,etag=self.parsed.etag,modified=self.parsed.modified)
+	    if d.status == 304:
+		return ""
+	    else:
+		self.parsed = d
+	except:
+	    self.parsed = feedparser.parse(self.url)
         self.lock.acquire()
         self.beginChange()
         try:
+	    if self.parsed.status == 301: #permanent redirect
+                self.url = self.parsed.url
             try:
                 self.title = self.parsed["feed"]["title"]
             except KeyError:
