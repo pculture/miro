@@ -114,11 +114,8 @@ class ScheduleEvent(DDBObject):
     def remove(self):
         self.dd.beginUpdate()
         try:
-	    print "removing"
             DDBObject.remove(self)
-	    print "updating update interval"
             self.dd.updateInterval()
-	    print "done"
         finally:
             self.dd.endUpdate()
     ##
