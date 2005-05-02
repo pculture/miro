@@ -39,10 +39,13 @@ class FeedFactory:
 ##
 # A feed contains a set of of downloadable items
 class Feed(DDBObject):
-    def __init__(self, url, title = 'unknown', visible = True):
+    def __init__(self, url, title = None, visible = True):
         self.url = url
         self.items = []
-        self.title = title
+	if title == None:
+	    self.title = url
+	else:
+	    self.title = title
         self.created = datetime.now()
         self.lock = RLock()
 	self.autoDownloadable = False
@@ -280,11 +283,11 @@ class Feed(DDBObject):
         self.remove()
 
 class RSSFeed(Feed):
-    def __init__(self,url,title = 'unknown'):
+    def __init__(self,url,title = None):
         Feed.__init__(self,url,title)
-        self.update()
         self.scheduler = ScheduleEvent(self.updateFreq, self.update)
 	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
+        self.scheduler = ScheduleEvent(0, self.update,False)
 
     ##
     # Returns the description of the feed
@@ -343,10 +346,12 @@ class RSSFeed(Feed):
 	except:
 	    self.parsed = feedparser.parse(self.url)
         self.lock.acquire()
-        self.beginChange()
         try:
-	    if self.parsed.status == 301: #permanent redirect
-                self.url = self.parsed.url
+	    try:
+		if self.parsed.status == 301: #permanent redirect
+                    self.url = self.parsed.url
+	    except:
+		pass
             try:
                 self.title = self.parsed["feed"]["title"]
             except KeyError:
@@ -358,13 +363,13 @@ class RSSFeed(Feed):
                 new = True
                 for item in self.items:
                     try:
-                        if item["id"] == entry["id"]:
+                        if item.getRSSID() == entry["id"]:
                             item.update(entry)
                             new = False
                     except KeyError:
                         # If the item changes at all, it results in a
                         # new entry
-                        if (item.entry == entry):
+                        if (item.getRSSEntry() == entry):
                             item.update(entry)
                             new = False
                 if new:
@@ -374,9 +379,9 @@ class RSSFeed(Feed):
             except KeyError:
                 self.updateFreq = 60*60
         finally:
-            self.endChange()
             self.lock.release()
-
+	    self.beginChange()
+	    self.endChange()
     ##
     # Overrides the DDBObject remove()
     def remove(self):
@@ -408,4 +413,7 @@ class RSSFeed(Feed):
 	self.lock = RLock()
 	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
         self.scheduler = ScheduleEvent(self.updateFreq, self.update)
-        self.scheduler = ScheduleEvent(1, self.update,False)
+
+	#FIXME: the update dies if all of the items aren't restored, so we 
+        # wait a little while before we start the update
+        self.scheduler = ScheduleEvent(5, self.update,False)
