@@ -23,6 +23,7 @@ class Item(DDBObject):
         self.entry = entry
         self.lock = RLock()
 	self.dlFactory = DownloaderFactory(self)
+	self.expired = False
         DDBObject.__init__(self)
 
     ##
@@ -45,6 +46,17 @@ class Item(DDBObject):
 	return ret
 
     ##
+    # Marks this item as expired
+    def expire(self):
+        self.lock.acquire()
+	try:
+	    self.stopDownload()
+	    self.markItemSeen()
+	    self.expired = True
+	finally:
+	    self.lock.release()	
+
+    ##
     # returns true iff item has been seen
     def getSeen(self):
         self.lock.acquire()
@@ -60,39 +72,20 @@ class Item(DDBObject):
         self.lock.release()
 
     ##
-    # Returns the item data associated with n
-    def __getitem__(self,n):
-        ret = None
-        self.lock.acquire()
-        try:
-            ret = self.entry[n]
-        finally:
-            self.lock.release()
-        return ret
-
-    ##
-    # Returns the item data associated with n
-    def __getattr__(self,n):
-        ret = None
-	if not (self.lock == None):
-	    self.lock.acquire()
-        try:
-	    try:
-		ret = self.entry[n]
-	    except KeyError:
-		raise AttributeError
-        finally:
-	    if not (self.lock == None):
-		self.lock.release()
-        return ret
-
-    ##
     # Returns a list of downloaders associated with this object
     def getDownloaders(self):
         self.lock.acquire()
         ret = self.downloaders
         self.lock.release()
         return ret
+
+    def getRSSID(self):
+	self.lock.acquire()
+	try:
+	    ret = self.entry["id"]
+	finally:
+	    self.lock.release()
+	return ret
 
     ##
     # Returns the vidinfo object associated with this item
@@ -101,6 +94,11 @@ class Item(DDBObject):
         ret = self.vidinfo
         self.lock.release()
         return ret
+
+    def setAutoDownloaded(self,autodl = True):
+	self.lock.acquire()
+	self.autoDownloaded = autodl
+	self.lock.release()
 
     ##
     # Returns true iff item was auto downloaded
@@ -112,9 +110,10 @@ class Item(DDBObject):
 
     ##
     # Starts downloading the item
-    def download(self):
+    def download(self,autodl=False):
         self.lock.acquire()
         try:
+	    self.setAutoDownloaded(autodl)
             downloadURLs = map(lambda x:x.getURL(),self.downloaders)
 	    self.startingDownload = True
 	    try:
@@ -199,7 +198,9 @@ class Item(DDBObject):
     def getState(self):
 	self.lock.acquire()
 	try:
-	    if self.startingDownload:
+	    if self.expired:
+		state = "expired"
+	    elif self.startingDownload:
 		state = "downloading"
 	    elif len(self.downloaders) == 0:
 		state = "stopped"
@@ -463,6 +464,14 @@ class Item(DDBObject):
 		ret = self.downloaders[0].getFilename()
 	    except:
 		ret = ""
+	finally:
+	    self.lock.release()
+	return ret
+
+    def getRSSEntry(self):
+	self.lock.acquire()
+	try:
+	    ret = self.entry
 	finally:
 	    self.lock.release()
 	return ret
