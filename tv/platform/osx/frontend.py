@@ -500,8 +500,43 @@ class ManagedWebView(NSObject):
 	self.view.setPolicyDelegate_(self)
 	self.view.setResourceLoadDelegate_(self)
 	self.view.setFrameLoadDelegate_(self)
+	self.view.setUIDelegate_(self)
 	self.view.mainFrame().loadHTMLString_baseURL_(initialHTML, None)
 	return self
+
+    ##
+    # Create CTRL-click menu on the fly
+    def webView_contextMenuItemsForElement_defaultMenuItems_(self,webView,contextMenu,defaultMenuItems):
+	if self.initialLoadFinished:
+	    menuItems = []
+
+	    exists = webView.windowScriptObject().evaluateWebScript_("typeof(getContextClickMenu)") == "function"
+	    if exists:
+		x = webView.windowScriptObject().callWebScriptMethod_withArguments_("getContextClickMenu",[contextMenu['WebElementDOMNode']])
+		
+		# getContextClickMenu returns a string with one menu
+		# item on each line in the format
+		# "URL|description" Blank lines are separators
+		for menuEntry in x.split("\n"):
+		    menuEntry = menuEntry.strip()
+		    if len(menuEntry) == 0:
+			menuItems.append(NSMenuItem.separatorItem())
+		    else:
+			(url, name) = menuEntry.split('|',1)
+			menuItem = NSMenuItem.alloc()
+			menuItem.initWithTitle_action_keyEquivalent_(name,self.processContextClick_,"")
+			menuItem.setEnabled_(True)
+			menuItem.setRepresentedObject_(url)
+			menuItem.setTarget_(self)
+			menuItems.append(menuItem)
+		return menuItems
+	else:
+	    return []
+
+    ##
+    # Process a click on an item in a context menu
+    def processContextClick_(self,item):
+	self.execJS("document.location.href = \""+item.representedObject()+"\";")
 
     # Return the actual WebView that we're managing
     def getView(self):
