@@ -162,7 +162,7 @@ def transformTopNode(node, data, handle):
 	    translateString = translateString.strip().replace("\r\n"," ").replace("\r"," ").replace("\n"," ")
 	    translation = _(translateString)
 
-	    print "Translating "+translateString+" to "+translation
+	    #print "Translating "+translateString+" to "+translation
 	    # Recreate the node's children based on the translation
 	    nameReg = re.compile('^\$\{.*?\}$')
 	    m = re.compile('(.*?)(\$\{.*?\})(.*)').findall(translation)
