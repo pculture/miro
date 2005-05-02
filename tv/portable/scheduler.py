@@ -1,4 +1,4 @@
-from threading import Timer,currentThread
+from threading import Timer, currentThread, RLock
 from database import DynamicDatabase,DDBObject
 from time import time
 
@@ -14,43 +14,72 @@ class Scheduler(DynamicDatabase):
         self.timer.start()
         self.timer.cancel()
         self.timer.join()
+	self.lock = RLock()
         self.updateInterval()
         
     ##
+    # Scheduler uses it's own lock
+    def beginUpdate(self):
+	self.lock.acquire()
+    def endUpdate(self):
+	self.lock.release()
+    def beginRead(self):
+	self.lock.acquire()
+    def endRead(self):
+	self.lock.release()
+	
+    ##
     # Determines when we next need to update and sets the timer appropriately
     def updateInterval(self):
+	self.beginUpdate()
+	try:
+	    theTimer = self.timer
+	finally:
+	    self.endUpdate()
+
+	# Notice that we let go of the lock here. This could take a while...
+	theTimer.cancel()
+	if theTimer != currentThread():
+	    theTimer.join()
+
         self.beginUpdate()
         try:
-            self.timer.cancel()
-            if self.timer != currentThread():
-                self.timer.join()
-            if self.len() > 0:
+	    # If the timer has already been updated or there's nothing
+	    # to do, don't do anything
+	    if theTimer == self.timer and self.len() > 0:
                 nextRun = 2000000000
                 self.resetCursor()
                 for event in self:
                     nextRun = min(nextRun,event.nextRun())
-                if nextRun <= 0:
-                    self.executeEvents()
-                    self.updateInterval()
-                else:
-                    self.timer = Timer(nextRun,self.executeEvents)
-                    self.timer.setDaemon(True)
-                    self.timer.start()
+		self.timer = Timer(nextRun,self.executeEvents)
+		self.timer.setDaemon(True)
+		self.timer.start()
         finally:
             self.endUpdate()
 
     ##
     # Executes all pending events
     def executeEvents(self):
-        self.beginUpdate()
-        try:
-            self.resetCursor()
-            for event in self:
-                if event.nextRun() <= 0:
-                    event.execute()
-            self.updateInterval()
-        finally:
-            self.endUpdate()
+	self.resetCursor()
+	for event in self:
+	    if event.nextRun() <= 0:
+		event.execute()
+	self.updateInterval()
+
+    ##
+    # Called by pickle during serialization
+    def __getstate__(self):
+	temp = copy(self.__dict__)
+	temp["lock"] = None
+	return temp
+
+    ##
+    # Called by pickle during deserialization
+    def __setstate__(self,state):
+	self.__dict__ = state
+	self.lock = RLock()
+
+
 ##
 # a ScheduleEvent corresponds to something that happens in the
 # future, possibly periodically
@@ -85,8 +114,11 @@ class ScheduleEvent(DDBObject):
     def remove(self):
         self.dd.beginUpdate()
         try:
+	    print "removing"
             DDBObject.remove(self)
+	    print "updating update interval"
             self.dd.updateInterval()
+	    print "done"
         finally:
             self.dd.endUpdate()
     ##
@@ -94,9 +126,10 @@ class ScheduleEvent(DDBObject):
     def execute(self):
         self.scheduler.beginUpdate()
         try:
-            self.event()
             self.lastRun = now()
             if not self.repeat:
                 self.remove()
         finally:
             self.scheduler.endUpdate()
+	self.event()
+
