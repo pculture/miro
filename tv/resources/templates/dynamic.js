@@ -143,6 +143,15 @@ function URLencode(str) {
 //// For calling by host templating code                                   ////
 ///////////////////////////////////////////////////////////////////////////////
 
+// For calling by host templating code: Returns items that should
+// appear in the context click menu in the format url|description with
+// one item on each line. Blank lines are separators
+function getContextClickMenu(element) {
+     return "http://downhillbattle.org|Downhill Battle\n\nhttp://slashdot.org|Slashdot";
+}
+
+
+
 // For calling by host templating code: Set CSS styles on the item
 // with the given ID to make it disappear.
 function hideItem(id) {
