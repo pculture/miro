@@ -147,7 +147,18 @@ function URLencode(str) {
 // appear in the context click menu in the format url|description with
 // one item on each line. Blank lines are separators
 function getContextClickMenu(element) {
-     return "http://downhillbattle.org|Downhill Battle\n\nhttp://slashdot.org|Slashdot";
+    while (1) {
+	if (element.nodeType == 1 && element.getAttribute('t:contextMenu')) {
+	    ret = element.getAttribute('t:contextMenu');
+	    ret = ret.replace(/\\n/g,"\n");
+	    ret = ret.replace(/\\\\/g,"\\");
+	    return ret;
+	}
+	if (element.parentNode)
+	    element = element.parentNode;
+	else
+	    return "";
+    }
 }
 
 
