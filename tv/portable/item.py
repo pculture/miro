@@ -4,6 +4,7 @@ from threading import RLock
 from downloader import DownloaderFactory
 from copy import copy
 from xhtmltools import unescape,xhtmlify
+from scheduler import ScheduleEvent
 
 ##
 # An item corresponds to a single entry in a feed. Generally, it has
@@ -108,9 +109,12 @@ class Item(DDBObject):
         self.lock.release()
         return ret
 
+    def download(self,autodl=False):
+	ScheduleEvent(0,lambda:self.actualDownload(autodl),False)
+
     ##
     # Starts downloading the item
-    def download(self,autodl=False):
+    def actualDownload(self,autodl=False):
         self.lock.acquire()
         try:
 	    self.setAutoDownloaded(autodl)
