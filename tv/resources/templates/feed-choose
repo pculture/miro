@@ -34,7 +34,7 @@
   </div>
   <div id="content_window">
     <ul> 
-        <li t:repeatForView="pendingitems">
+        <li t:contextMenu="action:startDownload?item=@@@this getID@@@|Download" t:repeatForView="pendingitems">
           <img class="thumb" src="@@@this getThumbnail@@@" />
           <div class="desc" >
             <div class="video_title" t:replace="this getTitle" />
@@ -48,7 +48,7 @@
        	     <div class="progress"><span t:replace="this getState"/><br/><span t:replace="this downloadETA" /><a href="action:stopDownload?item=@@@this getID@@@"><img src="resource:images/cancel_button.png" /></a></div>
           </div> 
         </li> 
-        <li t:repeatForView="downloadeditems">
+        <li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="downloadeditems">
           <img class="thumb" src="@@@this getThumbnail @@@" />
           <div class="desc" >
             <div class="video_title" t:replace="this getTitle" />

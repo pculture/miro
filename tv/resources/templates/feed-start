@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:t="http://www.participatorypolitics.org/">
+      xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <style type="text/css">
@@ -24,32 +25,32 @@
 
 <body>
   <div id="main_window"> 
-    <div class="channel_title"><span t:replace="feed getTitle"/><a class="settings_button" href="template:feed-settings">Settings</a></div> 
+    <div class="channel_title"><span t:replace="feed getTitle"/><a i18n:translate="" class="settings_button" href="template:feed-settings">Settings</a></div> 
   <div class="channel_tabs"> 
-    <a href="#"><div class="tab active_tab">Watch</div></a>
-    <a href="template:feed-choose"><div class="tab">Choose</div></a>
+    <a href="#"><div class="tab active_tab" i18n:translate="">Watch</div></a>
+    <a href="template:feed-choose"><div class="tab" i18n:translate="">Choose</div></a>
     <a href="#"><div class="tab emptytab"><span /></div></a>
-    <a href="#"><div class="tab">Library</div></a>
+    <a href="#"><div class="tab" i18n:translate="">Library</div></a>
     <div id="searchfield"><input type="text" size="20" onfocus="startEditFilter(this,new Array('newitems','mylibrary'),new Array('',''),new Array('global filter recentItems','global filter oldItems'),new Array(0,0))" onblur="endEditFilter()"  /></div>
   </div> 
   <div id="content_window">
     <ul> 
-        <li class="divider">New</li>
-<div class="no_new" t:hideIfViewNotEmpty="newitems">No New Videos</div>        
-<li t:repeatForView="newitems">
+        <li class="divider" i18n:translate="">New Videos</li>
+<div class="no_new" t:hideIfViewNotEmpty="newitems" i18n:translate="">No New Videos Available</div>        
+<li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="newitems">
           <img class="thumb" src="@@@this getThumbnail @@@" />
           <div class="desc" >
-            <div class="video_title" t:replace="this getTitle"><a href="action:startDownload?item=@@@this getID@@@">Title</a></div>
+            <div class="video_title" t:replace="this getTitle" />
             <div class="short_description" t:replaceMarkup="this getDescription"></div> 
             <div class="file_size"><span t:replace="this getReleaseDate" /> - <span t:replace="this getDuration" /> - <span t:replace="this getTotalSize" /></div>
           </div>
           <a href="action:playFile?filename=@@@this getFilename@@@" class="one_click play_item"><span/></a>
         </li> 
-        <li class="divider">In My Library</li> 
-        <li t:repeatForView="mylibrary">
+        <li class="divider" i18n:translate="">In My Library</li> 
+        <li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="mylibrary">
           <img class="thumb" src="@@@this getThumbnail @@@" />
           <div class="desc" >
-            <div class="video_title" t:replace="this title">Title</div>
+            <div class="video_title" t:replace="this title" />
             <div class="short_description" t:replaceMarkup="this getDescription"></div> 
             <div class="file_size"><span t:replace="this getReleaseDate" /> - <span t:replace="this getDuration" /> - <span t:replace="this getTotalSize" /></div>
           </div>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:t="http://www.participatorypolitics.org/">
+      xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <style type="text/css">
@@ -23,51 +24,55 @@
 
 <body>
   <div id="main_window"> 
-    <div class="channel_title"><span t:replace="feed getTitle"/><a class="settings_button" href="template:feed-settings">Settings</a></div> 
+    <div class="channel_title"><span t:replace="feed getTitle"/><a class="settings_button" href="template:feed-settings" i18n:translate="">Settings</a></div> 
   <div class="channel_tabs"> 
-    <a href="template:feed-start"><div class="tab">Watch</div></a>
-    <a href="#"><div class="tab  active_tab">Choose</div></a>
+    <a href="template:feed-start"><div class="tab" i18n:translate="">Watch</div></a>
+    <a href="#"><div class="tab  active_tab" i18n:translate="">Choose</div></a>
     <a href="#"><div class="tab emptytab"><span /></div></a>
-    <a href="#"><div class="tab">Library</div></a>
+    <a href="#"><div class="tab" i18n:translate="">Library</div></a>
     <div id="searchfield"><input type="text" size="20" onfocus="startEditFilter(this,new Array('pendingitems','downloadeditems'),new Array('',''),new Array('global filter unDownloadedItems','global filter downloadedItems'),new Array(0,0))" onblur="endEditFilter()"  /></div>
   </div> 
   <div id="content_window">
 
-<p>
-These settings control what the video player downloads from this channel. If you fill up your hard drive's cache, the video player won't download files from any channel until there is more room. <a href="cache_settings">Edit My Cache Settings</a></p>
+<p i18n:translate="">
+These settings control what the video player downloads from this channel. If you fill up your hard drive's cache, the video player won't download files from any channel until there is more room. <a href="cache_settings" i18n:name="edit_link" i18n:translate="">Edit My Cache Settings</a></p>
 
 <form action="action:changeFeedSettings" method="GET" name="settings">
 <input type="hidden" name="feed" value="@@@feed getID@@@" />
 <input name="automatic" type="radio" t:hideIfNotKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" onClick="javascript:form.submit()" value="1" checked="checked" />
 <input name="automatic" type="radio" t:hideIfKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" onClick="javascript:form.submit()" value="1"/>
- Automatic Downloading.<br />
-Automatically download all new videos on this channel.
+ <span i18n:translate="">Automatic Downloading.</span><br />
+<span i18n:translate="">Automatically download all new videos on this channel.</span>
 
 <ul>
-<li>Never have more than <input type="text" size="8" name="maxnew" value="@@@feed getMaxNew@@@" onFocus="javascript:if (document.settings['maxnew'].value == 'unlimited') document.settings['maxnew'].value = '';" onBlur="javascript:if (document.settings['maxnew'].value == '') document.settings['maxnew'].value = 'unlimited';form.submit()"  /> new videos at a time from this channel (helpful if one channel is hogging disk space).</li>
-<li>If DTV falls behind this channel by more than <input name="fallbehind" type="text" size="8" value="@@@feed getMaxFallBehind@@@" onFocus="javascript:if (document.settings['fallbehind'].value == 'unlimited') document.settings['fallbehind'].value = '';" onBlur="javascript:if (document.settings['fallbehind'].value == '') document.settings['fallbehind'].value = 'unlimited';form.submit()" /> videos, skip some to catch up.</li>
+<li i18n:translate="">Never have more than <input i18n:name="maxnew" type="text" size="8" name="maxnew" value="@@@feed getMaxNew@@@" onFocus="javascript:if (document.settings['maxnew'].value == 'unlimited') document.settings['maxnew'].value = '';" onBlur="javascript:if (document.settings['maxnew'].value == '') document.settings['maxnew'].value = 'unlimited';form.submit()"  /> new videos at a time from this channel (helpful if one channel is hogging disk space).</li>
+<li i18n:translate="">If DTV falls behind this channel by more than <input i18n:name="fallbehind" name="fallbehind" type="text" size="8" value="@@@feed getMaxFallBehind@@@" onFocus="javascript:if (document.settings['fallbehind'].value == 'unlimited') document.settings['fallbehind'].value = '';" onBlur="javascript:if (document.settings['fallbehind'].value == '') document.settings['fallbehind'].value = 'unlimited';form.submit()" /> videos, skip some to catch up.</li>
+<li>
+  <input type="checkbox" name="getEverything" value="1" onClick="javascript:form.submit()" t:hideIfKey="feed getEverything" t:hideFunctionKey="global filter boolean"/>
+  <input type="checkbox" name="getEverything" value="1" onClick="javascript:form.submit()" t:hideIfNotKey="feed getEverything" t:hideFunctionKey="global filter boolean" checked="checked"/>
+<span i18n:translate="">Get Eveything</span>
+</li>
 </ul>
 
 <input name="automatic" type="radio" t:hideIfKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" onClick="javascript:form.submit()" value="0" checked="checked" />
 <input name="automatic" type="radio" t:hideIfNotKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" onClick="javascript:form.submit()" value="0"/>
-Browse Mode.<br />
-Don't download videos automatically. I will browse the channel and choose which videos I want to get.
+<span i18n:translate="">Browse Mode.</span><br />
+<span i18n:translate="">Don't download videos automatically. I will browse the channel and choose which videos I want to get.</span>
 
 
-<h3>Speed of Expiration of <span t:replace="feed getTitle" /></h3>
-<p>On channels with more fleeting content (for example, music videos or video blogs), you might want videos that you've watched to expire more quickly to make way for new content. Remember, you can permanently keep any video that hasn't expired yet by clicking 'save'.</p>
+<h3 i18n:translate="">Speed of Expiration of <span i18n:name="feed_title" t:replace="feed getTitle" /></h3>
+<p i18n:translate="">On channels with more fleeting content (for example, music videos or video blogs), you might want videos that you've watched to expire more quickly to make way for new content. Remember, you can permanently keep any video that hasn't expired yet by clicking 'save'.</p>
 
 <input type="radio" name="expire" value="feed"  onClick="javascript:form.submit()"  t:hideIfNotKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="feed" checked="checked"/>
 <input type="radio" name="expire" value="feed"  onClick="javascript:form.submit()"  t:hideIfKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="feed"/>
- Downloads in this channel expire in <input type="text" size="3" value="@@@feed getExpireDays@@@" name="expireDays" onBlur="javascript:form.submit()" /> days and <input type="text" size="3" value="@@@feed getExpireHours@@@" name="expireHours" onBlur="javascript:form.submit()"/> hours after I watch them.<Br />
+<span i18n:translate="">Downloads in this channel expire in <input i18n:name="days" type="text" size="3" value="@@@feed getExpireDays@@@" name="expireDays" onBlur="javascript:form.submit()" /> days and <input  i18n:name="hours" type="text" size="3" value="@@@feed getExpireHours@@@" name="expireHours" onBlur="javascript:form.submit()"/> hours after I watch them.</span><br />
 
 <input type="radio" name="expire" value="system" checked="checked"  onClick="javascript:form.submit()"  t:hideIfNotKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="system"/>
 <input type="radio" name="expire" value="system" onClick="javascript:form.submit()"  t:hideIfKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="system"/>
-Use system default (currently XX days).<Br />
+<span i18n:translate="">Use system default (currently XX days).</span><br />
 <input type="radio" name="expire" value="never" onClick="javascript:form.submit()"  t:hideIfNotKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="never" checked="checked"/>
 <input type="radio" name="expire" value="never" onClick="javascript:form.submit()"  t:hideIfKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="never"/>
- Items in this feed never expire (they are automatically archived).  WARNING: Not recommended for most channels-- can use up disk space very quickly.
-
+<span i18n:translate="">Items in this feed never expire (they are automatically archived).  WARNING: Not recommended for most channels-- can use up disk space very quickly.</span>
   </form>
   </div>
   </div> 

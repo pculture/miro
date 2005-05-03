@@ -20,9 +20,9 @@
 
 <body>
   <div id="main_window"> 
-    <div class="channel_title">New<a class="settings_button" href="#">Settings</a></div> 
+    <div class="channel_title"  i18n:translate="">New<a i18n:translate="" i18n:name="" class="settings_button" href="#">Settings</a></div> 
   <div class="channel_tabs"> 
-    <a href="#"><div class="tab active_tab">Watch</div></a>
+    <a href="#"><div class="tab active_tab" i18n:translate="">Watch</div></a>
     <a href="#"><div class="tab emptytab"><span /></div></a>
     <a href="#"><div class="tab emptytab"><span /></div></a>
     <a href="#"><div class="tab emptytab"><span /></div></a>
@@ -30,8 +30,8 @@
   </div> 
   <div id="content_window">
     <ul> 
-        <li t:repeatForView="newitems">
-          <img class="thumb" src="resource:images/thumb.gif" />
+        <li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="newitems">
+          <img class="thumb" src="@@@this getThumbnail@@@" />
           <div class="desc" >
             <div class="video_title" t:replace="this getTitle"></div>
             <div class="short_description" t:replaceMarkup="this getDescription"></div> 

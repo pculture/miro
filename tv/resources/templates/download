@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:t="http://www.participatorypolitics.org/">
+      xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <style type="text/css">
@@ -20,9 +21,9 @@
 
 <body>
   <div id="main_window"> 
-    <div class="channel_title">Download Queue<a class="settings_button" href="#">Settings</a></div> 
+    <div class="channel_title" i18n:translate="">Download Queue <a class="settings_button" href="#" i18n:name="settings" i18n:translate="">Settings</a></div> 
   <div class="channel_tabs"> 
-    <a href="#"><div class="tab active_tab">Watch</div></a>
+    <a href="#"><div class="tab active_tab" i18n:translate="">Watch</div></a>
     <a href="#"><div class="tab emptytab"><span /></div></a>
     <a href="#"><div class="tab emptytab"><span /></div></a>
     <a href="#"><div class="tab emptytab"><span /></div></a>
@@ -32,7 +33,7 @@
   <div id="content_window">
     <ul> 
         <li t:repeatForView="dlitems">
-          <img class="thumb" src="resource:images/thumb.gif" />
+          <img class="thumb" src="@@@this getThumbnail@@@" />
           <div class="desc" >
             <div class="video_title" t:replace="this getTitle"></div>
             <div class="short_description" t:replaceMarkup="this getDescription"></div> 
