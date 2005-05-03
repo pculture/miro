@@ -14,6 +14,7 @@ import os
 NibClassBuilder.extractClasses("MainMenu")
 NibClassBuilder.extractClasses("MainWindow")
 NibClassBuilder.extractClasses("VideoView")
+NibClassBuilder.extractClasses("AddChannelSheet")
 
 ###############################################################################
 #### Application object                                                    ####
@@ -114,6 +115,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
 	self.currentDisplayView = None
 	self.templateHandle = None
 	self.lastSelectedTab = None
+	self.addChannelSheet = None
 
 	# NEEDS: set cursor to first item (presently map doesn't preserve
 	# cursors; remove when this changes)
@@ -298,6 +300,28 @@ class MainController (NibClassBuilder.AutoBaseClass):
 	self.active = active
 	if self.tabs.cur():
 	    self.tabs.cur().redraw()
+
+    def openAddChannelSheet_(self, sender):
+	if not self.addChannelSheet:
+	    NSBundle.loadNibNamed_owner_("AddChannelSheet", self)
+	if not self.addChannelSheet:
+	    raise NotImplementedError, "Missing or defective AddChannelSheet nib"
+	self.addChannelSheetURL.setStringValue_("")
+	NSApplication.sharedApplication().beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(self.addChannelSheet, self.mainWindow, self, self.addChannelSheetDidEnd, 0)
+	# Sheet's now visible and function returns.
+
+    def addChannelSheetDidEnd(self, sheet, returnCode, contextInfo):
+	sheet.orderOut_(self)
+    # decorate with appropriate selector
+    addChannelSheetDidEnd = AppHelper.endSheetMethod(addChannelSheetDidEnd)
+
+    def addChannelSheetDone_(self, sender):
+	sheetURL = self.addChannelSheetURL.stringValue()
+	print "NEEDS: add the sheet '%s'" % sheetURL
+	NSApplication.sharedApplication().endSheet_(self.addChannelSheet)
+
+    def addChannelSheetCancel_(self, sender):
+	NSApplication.sharedApplication().endSheet_(self.addChannelSheet)
 
 ###############################################################################
 #### Tabs                                                                  ####

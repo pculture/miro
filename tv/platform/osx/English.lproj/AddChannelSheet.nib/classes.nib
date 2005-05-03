@@ -2,10 +2,10 @@
     IBClasses = (
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
-            ACTIONS = {openAddChannelSheet = id; }; 
+            ACTIONS = {addChannelSheetCancel = id; addChannelSheetDone = id; }; 
             CLASS = MainController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {contentTemplateView = id; mainWindow = id; tabView = id; }; 
+            OUTLETS = {addChannelSheet = id; addChannelSheetURL = id; }; 
             SUPERCLASS = NSObject; 
         }
     ); 
