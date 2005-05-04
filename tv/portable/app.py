@@ -258,7 +258,9 @@ class Controller(frontend.Application):
     def OnStartup(self):
 	try:
 	    #Restoring
+	    print "Restoring database..."
 	    database.defaultDatabase.restore()
+	    print "Recomputing filters..."
 	    database.defaultDatabase.recomputeFilters()
 
 	    reloadStaticTabs()
@@ -283,6 +285,7 @@ class Controller(frontend.Application):
             #testArray = database.DDBObject.dd.filter(lambda x: x.__class__ == NameNumberObject)
 	    #globalData['testArray'] = testArray
 
+	    print "Spawning first feed..."
 	    hasFeed = False
 	    for obj in database.defaultDatabase.objects:
 		if obj[0].__class__.__name__ == 'RSSFeed':
@@ -291,24 +294,31 @@ class Controller(frontend.Application):
 	    if not hasFeed:
 		f = feed.RSSFeed("http://blogtorrent.com/demo/rss.php")
 	    
+	    print "Spawning auto downloader..."
 	    #Start the automatic downloader daemon
 	    autodler.AutoDownloader()
 
-	    self.frame = frontend.MainFrame(self.tabs)
+	    print "Displaying main frame..."
+	    self.frame = frontend.MainFrame(self.tabs,globalData)
 	except:
 	    print "Exception on startup:"
 	    traceback.print_exc()
 
     def OnShutdown(self):
+	print "Removing static tabs..."
 	database.defaultDatabase.removeMatching(lambda x:str(x.__class__.__name__) == "StaticTab")
 	#for item in database.defaultDatabase:
 	#    print str(item.__class__.__name__) + " of id "+str(item.getID())
+	print "Saving database..."
 	database.defaultDatabase.save()
 
          #FIXME closing BitTorrent is slow and makes the application seem hung...
+	print "Shutting down BitTorrent..."
 	downloader.shutdownBTDownloader()
 
+	print "Removing remaining items in database..."
 	database.defaultDatabase.removeMatching(lambda x:True)
+	print "Done shutting down..."
 
 def main():
     Controller().Run()
@@ -518,6 +528,13 @@ def filterClass(obj, parameter):
 
     return name == parameter
 
+def filterHasKey(obj,parameter):
+    try:
+	obj[parameter]
+    except KeyError:
+	return False
+    return True
+
 globalFilterList = {
     'substring': (lambda x, y: str(y) in str(x)),
     'boolean': (lambda x, y: x),
@@ -532,6 +549,7 @@ globalFilterList = {
        
     'class': filterClass,
     'all': (lambda x, y: True),
+    'hasKey':  filterHasKey,
 }
 
 ###############################################################################
