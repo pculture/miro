@@ -72,14 +72,14 @@ class AppController(NSObject):
 # callbacks.
 
 class MainFrame:
-    def __init__(self, tabs):
+    def __init__(self, tabs,globalData=None):
 	"""'tabs' is a View containing Tab subclasses. The initially
 	selected tab is given by the cursor. The initially active display
 	will be an instance of NullDisplay."""
 	# Do this in two steps so that self.obj is set when self.obj.init
 	# is called. That way, init can turn around and call selectDisplay.
 	self.obj = MainController.alloc()
-	self.obj.init(tabs, self)
+	self.obj.init(tabs, self,globalData)
 
     def selectDisplay(self, display):
 	"""Install the provided 'display' in the right-hand side
@@ -103,7 +103,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
     # Outlets: tabView, contentTemplateView, mainWindow
     # Is the delegate for the split view
 
-    def init(self, tabs, owner):
+    def init(self, tabs, owner, globalData = None):
 	# owner is the actual frame object (the argument to onSelected, etc)
 	NSObject.init(self)
 	NSBundle.loadNibNamed_owner_("MainWindow", self)
@@ -123,7 +123,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
 	self.tabs.getNext()
 	
 	# Initalize tab view
-	(html, self.templateHandle) = template.fillTemplate('tablist', {'tabs': self.tabs}, lambda js:self.execTabJS(js)) # NEEDS: lock
+	(html, self.templateHandle) = template.fillTemplate('tablist', {'tabs': self.tabs, 'global':globalData}, lambda js:self.execTabJS(js)) # NEEDS: lock
 	self.web = ManagedWebView.alloc().init(html, self.tabView, None, lambda x:self.onTabURLLoad(x))
 
 	self.checkSelectedTab()
@@ -268,6 +268,12 @@ class MainController (NibClassBuilder.AutoBaseClass):
 	    # Handle case where a different tab was clicked
 	    self.checkSelectedTab()
 	    return False
+	elif re.compile(r"^action:").match(url):
+	    # Pass Action URL to the HTML display
+	    if isinstance(self.currentDisplay,HTMLDisplay):
+		#NEEDS: if currentDisplay isn't HTML we should still
+		#deal with this...
+		self.currentDisplay.onURLLoad(url)
 	return True
 
     def checkSelectedTab(self):
