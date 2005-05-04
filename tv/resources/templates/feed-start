@@ -50,7 +50,7 @@
         <li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="mylibrary">
           <img class="thumb" src="@@@this getThumbnail @@@" />
           <div class="desc" >
-            <div class="video_title" t:replace="this title" />
+            <div class="video_title" t:replace="this getTitle" />
             <div class="short_description" t:replaceMarkup="this getDescription"></div> 
             <div class="file_size"><span t:replace="this getReleaseDate" /> - <span t:replace="this getDuration" /> - <span t:replace="this getTotalSize" /></div>
           </div>

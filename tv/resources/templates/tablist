@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:t="http://www.participatorypolitics.org/">
+      xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n">
 <head>
 <title>video player interface</title>
 <style type="text/css">
@@ -20,10 +21,15 @@
 
 <div id="sidebar">
   <div id="channels">
-    <span t:hideIfViewNotEmpty="tabs">There are no tabs. Something is wrong. Please, contact tech support</span>
+    <span t:hideIfViewNotEmpty="tabs" i18n:translate="">There are no tabs. Something is wrong. Please, contact tech support</span>
     <ul t:hideIfViewEmpty="tabs">
       <li t:repeatForView="tabs" onclick="eventURL('action:selectTab?id=@@@this id@@@')">
-        <span t:replaceMarkup="this markup" />
+        <span t:hideIfNotKey="this tab tabData" t:hideFunctionKey="global filter hasKey" t:hideParameter="feed">
+        <span t:replaceMarkup="this markup"  t:contextMenu="action:selectTab?id=@@@this id@@@|Open\naction:removeFeed?url=@@@this tab tabData feed getURL@@@|Remove"/>
+        </span>
+        <span t:hideIfKey="this tab tabData" t:hideFunctionKey="global filter hasKey" t:hideParameter="feed">
+        <span t:replaceMarkup="this markup" t:hideParameter="Feed" t:contextMenu="action:selectTab?id=@@@this id@@@|Open"/>
+        </span>
       </li>
     </ul>
   </div>
