@@ -275,10 +275,11 @@ def transformTopNode(node, data, handle):
 		    node.setAttribute("style","display:none")
 
     # Handle t:Replace and @@@attribute value replacements@@@
-    performSubstitutions(node, data)
+    erased = performSubstitutions(node, data)
 
-    for child in node.childNodes:
-	transformTopNode(child, data, handle)
+    if not erased:
+	for child in node.childNodes:
+	    transformTopNode(child, data, handle)
 
 # As transformTopNode, but perform only transformations that don't
 # install JS hooks and thus are appropriate even if we are inside a
@@ -292,14 +293,19 @@ def transformInnerNode(node, data):
 	return
 
     # Handle t:Replace and @@@attribute value replacements@@@
-    performSubstitutions(node, data)
+    erased = performSubstitutions(node, data)
 
-    for child in node.childNodes:
-	transformInnerNode(child, data)
+    if not erased:
+	for child in node.childNodes:
+	    transformInnerNode(child, data)
 
 # Common code (t:Replace and @@@-substitutions) between the two recursive
 # transformation functions.
+#
+# Returns true if the node was erased in the process of substitution,
+# false otherwise
 def performSubstitutions(node, data):
+    erased = False
     if node.nodeType != node.ELEMENT_NODE:
 	return
 
@@ -370,6 +376,7 @@ def performSubstitutions(node, data):
 	# a node gets deleted that has an 'id' attribute that we're
 	# expecting to reference later?
 	if hide:
+	    erased = True
 	    node.parentNode.removeChild(node)
 	else:
 	    # Didn't need to delete it. Just strip off the processing
@@ -378,6 +385,8 @@ def performSubstitutions(node, data):
 	    node.removeAttribute("t:hideFunctionKey")
 	    if parameter:
 		node.removeAttribute("t:hideParameter")
+
+    return erased
 
 ###############################################################################
 #### Generating Javascript callbacks to keep document updated              ####
