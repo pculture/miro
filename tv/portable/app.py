@@ -14,6 +14,7 @@ import feed
 import traceback
 import config
 import datetime
+import autodler
 
 ###############################################################################
 #### TemplateDisplay: a HTML-template-driven right-hand display panel      ####
@@ -37,7 +38,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
 	    self.currentFrame.selectDisplay(TemplateDisplay(self.homeTemplate, self.homeData, frameHint=self.currentFrame))
 
     def onURLLoad(self, url):
-	#print url
+	print url
 	try:
 	    # Switching to a new template in this tab
 	    match = re.compile(r"^template:(.*)$").match(url)
@@ -81,12 +82,12 @@ class TemplateDisplay(frontend.HTMLDisplay):
 	    match = re.compile(r"^action:changeFeedSettings\?(.*)$").match(url)
 	    if match:
 		# Parse arguments
-		(feed,maxnew,fallbehind,automatic,expireDays,expireHours,expire) = getURLParameters('setViewFilter', match.group(1), 'feed', 'maxnew', 'fallbehind', 'automatic', 'expireDays','expireHours','expire')
+		(myFeed,maxnew,fallbehind,automatic,expireDays,expireHours,expire,getEverything) = getURLParameters('setViewFilter', match.group(1), 'feed', 'maxnew', 'fallbehind', 'automatic', 'expireDays','expireHours','expire','getEverything')
 
 		database.defaultDatabase.saveCursor()
 		for obj in database.defaultDatabase:
-		    if obj.getID() == int(feed):
-			obj.saveSettings(automatic,maxnew,fallbehind,expire,expireDays,expireHours)
+		    if obj.getID() == int(myFeed):
+			obj.saveSettings(automatic,maxnew,fallbehind,expire,expireDays,expireHours,getEverything)
 			break
 		database.defaultDatabase.restoreCursor()
 
@@ -168,7 +169,14 @@ class TemplateDisplay(frontend.HTMLDisplay):
 			break
 		database.defaultDatabase.restoreCursor()
 		if not exists:
-		    feed.RSSFeed(url)
+		    myFeed = feed.RSSFeed(url)
+		print self.templateData
+		self.templateData = {'global' : {
+		    'database': database.defaultDatabase,
+		    'filter': globalFilterList,
+		    'sort': globalSortList },
+				     'feed' : myFeed}
+		self.execJS('document.location.href = "template:feed-settings";')
 		return False
 
 	    match = re.compile(r"^action:removeFeed\?(.*)$").match(url)
@@ -281,7 +289,10 @@ class Controller(frontend.Application):
 		    hasFeed = True
 		    break
 	    if not hasFeed:
-		feed.RSSFeed("http://blogtorrent.com/demo/rss.php")
+		f = feed.RSSFeed("http://blogtorrent.com/demo/rss.php")
+	    
+	    #Start the automatic downloader daemon
+	    autodler.AutoDownloader()
 
 	    self.frame = frontend.MainFrame(self.tabs)
 	except:
@@ -293,7 +304,10 @@ class Controller(frontend.Application):
 	#for item in database.defaultDatabase:
 	#    print str(item.__class__.__name__) + " of id "+str(item.getID())
 	database.defaultDatabase.save()
+
+         #FIXME closing BitTorrent is slow and makes the application seem hung...
 	downloader.shutdownBTDownloader()
+
 	database.defaultDatabase.removeMatching(lambda x:True)
 
 def main():
