@@ -316,8 +316,6 @@ class Controller(frontend.Application):
 	print "Shutting down BitTorrent..."
 	downloader.shutdownBTDownloader()
 
-	print "Removing remaining items in database..."
-	database.defaultDatabase.removeMatching(lambda x:True)
 	print "Done shutting down..."
 
 def main():
