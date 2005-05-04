@@ -317,7 +317,9 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     def addChannelSheetDone_(self, sender):
 	sheetURL = self.addChannelSheetURL.stringValue()
-	print "NEEDS: add the sheet '%s'" % sheetURL
+	# NEEDS: change display to HTML view if not in it already
+	if (isinstance(self.currentDisplay,HTMLDisplay)):
+	    self.currentDisplay.execJS('document.location.href = "action:addFeed?url='+sheetURL+'";')
 	NSApplication.sharedApplication().endSheet_(self.addChannelSheet)
 
     def addChannelSheetCancel_(self, sender):
