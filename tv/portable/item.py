@@ -154,8 +154,13 @@ class Item(DDBObject):
     ##
     # Returns a link to the thumbnail of the video
     def getThumbnail(self):
-        #FIXME update this when we update the XML
-	return "resource:images/thumb.gif"
+	try:
+	    return self.entry.enclosures[0]["thumbnail"]["url"]
+	except:
+	    try:
+		return self.entry["thumbnail"]["url"]
+	    except:
+		return "resource:images/thumb.gif"
 
     ##
     # returns the title of the item
