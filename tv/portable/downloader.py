@@ -592,14 +592,12 @@ class BTDownloader(Downloader):
         DDBObject.remove(self)
 
     def runDownloader(self,done=False):
-	print "Starting BT Downloader"
 	self.item.beginChange()
 	self.item.endChange()
 	if self.metainfo == None:
 	    h = urlopen(self.getURL())
 	    metainfo = h.read()
 	    h.close()
-	    print "Getting new metainfo"
         try:
             # raises BTFailure if bad
 	    if self.metainfo == None:
@@ -708,7 +706,6 @@ class DownloaderFactory:
 	try:
 	    conn.request("HEAD",path)
 	except:
-	    print "Couldn't connect"
 	    return None
 	download = conn.getresponse()
 	depth = 0
@@ -731,14 +728,12 @@ class DownloaderFactory:
 		conn.request("HEAD",path)
 		download = conn.getresponse()
 	    else:
-		print download.status
 		return None
 	if depth == 10:
 	    return None
         info = download.msg
 	download.close()
 	if info['Content-Type'] == 'application/x-bittorrent':
-	    print "Starting BT downloader"
             conn.request("GET",path)
             download = conn.getresponse()
 	    metainfo = download.read()
@@ -750,7 +745,6 @@ class DownloaderFactory:
 		print str(e)
 		return None
 	else:
-	    print "Starting http downloader"
 	    return HTTPDownloader(url,self.item,conn,download,redirURL)
 
 if __name__ == "__main__":
