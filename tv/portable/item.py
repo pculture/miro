@@ -332,15 +332,17 @@ class Item(DDBObject):
 	    return '%1.1f' % (secs/3600)+" hours"
 
     ##
-    # return keyword tags associated with the video separated by commas
+    # return keyword tags associated with the video
     def getTags(self):
-	#FIXME: fix this when we update the RSS
 	self.lock.acquire()
 	try:
 	    try:
-		ret = self.entry.enclosures[0]["tags"]
+		ret = self.entry.enclosures[0]["category"]
 	    except:
-		ret = ""
+		try:
+		    ret = self.entry["category"]
+		except:
+		    ret = ""
 	finally:
 	    self.lock.release()
 	return ret
@@ -364,16 +366,21 @@ class Item(DDBObject):
     ##
     # return the people associated with the video, separated by commas
     def getPeople(self):
-	#FIXME update this when we update the XML
+	ret = []
 	self.lock.acquire()
 	try:
 	    try:
-		ret = self.entry.enclosures[0].people.split('|').join(', ')
+		for role in self.entry.enclosures[0].roles:
+		    for person in self.entry.enclosures[0].roles[role]:
+			ret.append(person)
+		for role in self.entry.roles:
+		    for person in self.entry.roles[role]:
+			ret.append(person)
 	    except:
-		ret = ""
+		pass
 	finally:
 	    self.lock.release()
-	return ret
+	return ret.join(', ')
 
     ##
     # returns the URL of the webpage associated with the item
@@ -391,31 +398,35 @@ class Item(DDBObject):
     ##
     # returns the URL of the payment page associated with the item
     def getPaymentLink(self):
-	#FIXME: fix this when we update the RSS
 	self.lock.acquire()
 	try:
 	    try:
-		ret = self.entry.paymentLink
+		ret = self.entry.enclosures[0].payment_url
 	    except:
-		ret = ""
+		try:
+		    ret = self.entry.payment_url
+		except:
+		    ret = ""
 	finally:
 	    self.lock.release()
 	return ret
 
     ##
     # returns a snippet of HTML containing a link to the payment page
-    # FIXME is this a security risk?
+    # HTML has already been sanitized by feedparser
     def getPaymentHTML(self):
-	#FIXME: fix this when we update the RSS
 	self.lock.acquire()
 	try:
 	    try:
-		ret = self.entry.paymentHTML
+		ret = self.entry.enclosures[0].payment_html
 	    except:
-		ret = ""
+		try:
+		    ret = self.entry.payment_html
+		except:
+		    ret = ""
 	finally:
 	    self.lock.release()
-	return ret
+	return '<span>'+ret+'</span>'
 
     ##
     # Updates an item with new data
