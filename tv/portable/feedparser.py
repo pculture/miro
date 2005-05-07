@@ -277,7 +277,8 @@ class _FeedParserMixin:
                   "http://schemas.xmlsoap.org/soap/envelope/":            "soap",
                   "http://www.w3.org/1999/xhtml":                         "xhtml",
                   "http://www.w3.org/XML/1998/namespace":                 "xml",
-		  "http://tools.search.yahoo.com/mrss/":                  "media"
+		  "http://tools.search.yahoo.com/mrss/":                  "media",
+		  "http://participatoryculture.org/RSSModules/dtv/1.0":   "dtv"
 }
 
     can_be_relative_uri = ['link', 'id', 'wfw_comment', 'wfw_commentrss', 'docs', 'url', 'comments', 'license']
@@ -1181,6 +1182,53 @@ class _FeedParserMixin:
 	    else:
 		self.entries[-1].setdefault('roles', {})
 		self.entries[-1].roles[self.peoplerole]=value
+
+    def _start_dtv_startnback(self,attrsD):
+	self.push('dtv:startnback',1)	
+
+    def _end_dtv_startnback(self):
+	self.feeddata['startnback'] = self.pop('dtv:startnback')
+
+    def _start_dtv_librarylink(self,attrsD):
+	self.push('dtv:librarylink',1)	
+
+    def _end_dtv_librarylink(self):
+	self.feeddata['librarylink'] = self.pop('dtv:librarylink')
+
+    def _start_dtv_releasedate(self,attrsD):
+	self.push('dtv:releasedate',1)	
+
+    def _end_dtv_releasedate(self):
+	value = self.pop('dtv:releasedate')
+	if self.inentry:
+	    if self.inenclosure:
+		self.entries[-1]['enclosures'][-1]['releasedate'] = value
+		self.entries[-1]['enclosures'][-1]['releasedate_parsed'] = _parse_date(value)
+	    else:
+		self.entries[-1]['releasedate'] = value
+		self.entries[-1]['releasedate_parsed'] = _parse_date(value)
+	
+    def _start_dtv_paymentlink(self,attrsD):
+	self.incontent += 1
+	self.contentparams['mode'] = 'xml'
+	self.contentparams['type'] = 'application/xhtml+xml'
+	self.push('dtv:paymentlink',1)
+	if self.inentry:
+	    if self.inenclosure:
+		self.entries[-1]['enclosures'][-1]['payment_url'] = attrsD['url']
+	    else:
+		self.entries[-1]['payment_url'] = attrsD['url']
+
+    def _end_dtv_paymentlink(self):
+	value = _sanitizeHTML(self.pop('dtv:paymentlink'),self.encoding)
+	self.incontent -= 1
+	self.contentparams.clear()
+	if self.inentry:
+	    if self.inenclosure:
+		self.entries[-1]['enclosures'][-1]['payment_html'] = value
+	    else:
+		self.entries[-1]['payment_html'] = value
+	
 
     def _start_source(self, attrsD):
         if self.inentry:
