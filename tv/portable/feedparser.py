@@ -953,11 +953,13 @@ class _FeedParserMixin:
         cats.append((domain, None))
     _start_dc_subject = _start_category
     _start_keywords = _start_category
-        
+    _start_media_category = _start_category
+
     def _end_category(self):
         self.pop('category')
     _end_dc_subject = _end_category
     _end_keywords = _end_category
+    _end_media_category = _end_category
         
     def _start_cloud(self, attrsD):
         self.feeddata['cloud'] = FeedParserDict(attrsD)
@@ -1144,17 +1146,6 @@ class _FeedParserMixin:
 	    else:
 		self.entries[-1]['thumbnail']['url'] = value
 	
-    def _start_media_category(self,attrsD):
-	self.push('media:category',1)
-
-    def _end_media_category(self):
-	value = self.pop('media:category')
-	if self.inentry:
-	    if self.inenclosure:
-		self.entries[-1]['enclosures'][-1]['category'] = value
-	    else:
-		self.entries[-1]['category'] = value    
-
     def _start_media_text(self,attrsD):
 	self.push('media:text',1)
 
