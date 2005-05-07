@@ -21,6 +21,7 @@ class Item(DDBObject):
         self.vidinfo = None
         self.autoDownloaded = False
 	self.startingDownload = False
+	self.lastDownloadFailed = False
         self.entry = entry
         self.lock = RLock()
 	self.dlFactory = DownloaderFactory(self)
@@ -118,6 +119,7 @@ class Item(DDBObject):
         self.lock.acquire()
         try:
 	    self.setAutoDownloaded(autodl)
+	    self.lastDownloadFailed = False
             downloadURLs = map(lambda x:x.getURL(),self.downloaders)
 	    self.startingDownload = True
 	    try:
@@ -137,6 +139,12 @@ class Item(DDBObject):
 			    self.lock.acquire()
 			    try:
 				self.downloaders.append(dler)
+			    finally:
+				self.lock.release()
+			else:
+			    self.lock.acquire()
+			    try:
+				self.lastDownloadFailed = True
 			    finally:
 				self.lock.release()
 		except KeyError:
@@ -212,7 +220,10 @@ class Item(DDBObject):
 	    elif self.startingDownload:
 		state = "downloading"
 	    elif len(self.downloaders) == 0:
-		state = "stopped"
+		if self.lastDownloadFailed:
+		    state = "failed"
+		else:
+		    state = "stopped"
 	    else:
 		state = "finished"
 		for dler in self.downloaders:
@@ -332,17 +343,14 @@ class Item(DDBObject):
 	    return '%1.1f' % (secs/3600)+" hours"
 
     ##
-    # return keyword tags associated with the video
+    # return keyword tags associated with the video separated by commas
     def getTags(self):
 	self.lock.acquire()
 	try:
 	    try:
-		ret = self.entry.enclosures[0]["category"]
+		ret = self.entry.categories.join(", ")
 	    except:
-		try:
-		    ret = self.entry["category"]
-		except:
-		    ret = ""
+		ret = ""
 	finally:
 	    self.lock.release()
 	return ret
