@@ -186,9 +186,10 @@ class Downloader(DDBObject):
 
 
 class HTTPDownloader(Downloader):
-    def __init__(self, url,item, conn = None,info = None):
+    def __init__(self, url,item, conn = None,download = None,redirURL = None):
 	self.conn = conn
-	self.info = info
+	self.download = download
+	self.redirURL = redirURL
 	self.lastUpdated = 0
 	self.lastSize = 0
 	Downloader.__init__(self,url,item)
@@ -249,27 +250,32 @@ class HTTPDownloader(Downloader):
 		conn = HTTPConnection(host)
 		conn.request("HEAD",path)
 		download = conn.getresponse()
-		if download.status != 200:
-		    if download.status == 302 or download.status == 307 or download.status == 301:
-			info = download.msg
-			download.close()
-			conn.close()
-			if download.status == 301:
-			    self.url = info['Location']
-			(scheme, host, path, params, query, fragment) = urlparse(info['Location'])
-			if len(params):
-			    path += ';'+params
-			if len(query):
-			    path += '?'+query
-			conn = HTTPConnection(host)
-			conn.request("HEAD",path)
-			download = conn.getresponse()
-			if download.status != 200:
-			    raise DownloaderError, "File not found"
-		    else:
-			raise DownloaderError, "File not found"
+		depth = 0
 	    else:
 		conn = self.conn
+		download = self.download
+		(scheme, host, path, params, query, fragment) = urlparse(self.redirURL)
+		depth = 0
+	    while download.status != 200 and depth < 10:
+		depth += 1
+		if download.status == 302 or download.status == 307 or download.status == 301:
+		    info = download.msg
+		    download.close()
+		    conn.close()
+		    if download.status == 301:
+			self.url = info['Location']
+		    (scheme, host, path, params, query, fragment) = urlparse(info['Location'])
+		    if len(params):
+			path += ';'+params
+		    if len(query):
+			path += '?'+query
+		    conn = HTTPConnection(host)
+		    conn.request("HEAD",path)
+		    download = conn.getresponse()
+		else:
+		    raise DownloaderError, "File not found"
+	    if depth == 10:
+		raise DownloaderError, "Maximum redirect depth"
         except:
             self.lock.acquire()
             try:
@@ -278,10 +284,8 @@ class HTTPDownloader(Downloader):
                 self.lock.release()
             return False
 
-	if self.info == None:
-	    info = download.msg
-	else:
-	    info = self.info
+	info = download.msg
+	download.close()
 
         #Get the length of the file
         self.lock.acquire()
@@ -337,6 +341,7 @@ class HTTPDownloader(Downloader):
             conn.request("GET",path,headers = {"Range":"bytes="+str(pos)+"-"})
             download = conn.getresponse()
             if download.status != 206:
+		download.close()
                 #Range is not supported, start the download from 0
                 self.lock.acquire()
                 self.currentSize = 0
@@ -353,7 +358,7 @@ class HTTPDownloader(Downloader):
             conn.request("GET",path)
             download = conn.getresponse()
             if download.status != 200:
-                raise DownloaderError, "File not found"
+                raise DownloaderError, "Failed with "+str(download.status)
             
         #Download the file
         if pos != totalSize:
@@ -587,12 +592,14 @@ class BTDownloader(Downloader):
         DDBObject.remove(self)
 
     def runDownloader(self,done=False):
+	print "Starting BT Downloader"
 	self.item.beginChange()
 	self.item.endChange()
 	if self.metainfo == None:
 	    h = urlopen(self.getURL())
 	    metainfo = h.read()
 	    h.close()
+	    print "Getting new metainfo"
         try:
             # raises BTFailure if bad
 	    if self.metainfo == None:
@@ -689,6 +696,7 @@ class DownloaderFactory:
     def __init__(self,item):
 	self.item = item
     def getDownloader(self,url):
+	redirURL = url
 	(scheme, host, path, params, query, fragment) = urlparse(url)
 	conn = HTTPConnection(host)
 	if len(params):
@@ -700,22 +708,20 @@ class DownloaderFactory:
 	try:
 	    conn.request("HEAD",path)
 	except:
-	    #print "Couldn't connect"
+	    print "Couldn't connect"
 	    return None
 	download = conn.getresponse()
-	if download.status != 200:
-	    #print "Got "+str(download.status)
-	    if download.status == 301:
+	depth = 0
+	while download.status != 200 and depth < 10:
+	    depth += 1
+	    if download.status == 302 or download.status == 307 or download.status == 301:
 		info = download.msg
 		download.close()
 		conn.close()
-		return self.getDownloader(info['Location'])
-	    #FIXME allow several redirects
-	    elif download.status == 302 or download.status == 307:
-		info = download.msg
-		download.close()
-		conn.close()
-		(scheme, host, path, params, query, fragment) = urlparse(url)
+		redirURL = info['Location']
+		if download.status == 301:
+		    url = redirURL
+		(scheme, host, path, params, query, fragment) = urlparse(info['Location'])
 		conn = HTTPConnection(host)
 		if len(params):
 		    path += ';'+params
@@ -724,14 +730,15 @@ class DownloaderFactory:
 	        #FIXME: catch exception here
 		conn.request("HEAD",path)
 		download = conn.getresponse()
-		if download.status != 200:
-		    #print "Got "+str(download.status)
-		    return None
 	    else:
+		print download.status
 		return None
+	if depth == 10:
+	    return None
         info = download.msg
 	download.close()
 	if info['Content-Type'] == 'application/x-bittorrent':
+	    print "Starting BT downloader"
             conn.request("GET",path)
             download = conn.getresponse()
 	    metainfo = download.read()
@@ -743,7 +750,8 @@ class DownloaderFactory:
 		print str(e)
 		return None
 	else:
-	    return HTTPDownloader(url,self.item,conn,info)
+	    print "Starting http downloader"
+	    return HTTPDownloader(url,self.item,conn,download,redirURL)
 
 if __name__ == "__main__":
     def printsaved():
