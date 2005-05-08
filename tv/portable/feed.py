@@ -436,8 +436,6 @@ class RSSFeed(Feed):
 class Collection(Feed):
     def __init__(self,title = None):
         Feed.__init__(self,url = "dtv:collection",title = title,visible = False)
-	if self.isVisible():
-	    print "Whoa! visible collection == bad mojo!"
 
     ##
     # Adds an item to the collection
