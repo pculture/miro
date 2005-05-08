@@ -214,6 +214,54 @@ class TemplateDisplay(frontend.HTMLDisplay):
 		database.defaultDatabase.recomputeFilters()
 		return False
 
+	    match = re.compile(r"^action:addCollection\?(.*)$").match(url)
+	    if match:
+		(title,) = getURLParameters('addCollection', match.group(1), 'title')
+		x = feed.Collection(title)
+
+	    match = re.compile(r"^action:removeCollection\?(.*)$").match(url)
+	    if match:
+		(id,) = getURLParameters('removeCollection', match.group(1), 'id')
+		database.defaultDatabase.removeMatching(lambda x: isinstance(x, feed.Collection) and x.getID() == int(id))
+
+	    match = re.compile(r"^action:addToCollection\?(.*)$").match(url)
+	    if match:
+		(id,myitem) = getURLParameters('addToCollection', match.group(1), 'id','item')
+		obj = None
+		for x in database.defaultDatabase:
+		    if isinstance(x,feed.Collection) and x.getID() == int(id):
+			obj = x
+			break
+		if obj != None:
+		    for x in database.defaultDatabase:
+			if isinstance(x,item.Item) and x.getID() == int(myitem):
+			    obj.addItem(x)
+
+	    match = re.compile(r"^action:removeFromCollection\?(.*)$").match(url)
+	    if match:
+		(id,myitem) = getURLParameters('removeFromCollection', match.group(1), 'id','item')
+		obj = None
+		for x in database.defaultDatabase:
+		    if isinstance(x,feed.Collection) and x.getID() == int(id):
+			obj = x
+			break
+		if obj != None:
+		    for x in database.defaultDatabase:
+			if isinstance(x,item.Item) and x.getID() == int(myitem):
+			    obj.removeItem(x)
+
+	    match = re.compile(r"^action:moveInCollection\?(.*)$").match(url)
+	    if match:
+		(id,myitem,pos) = getURLParameters('moveInCollection', match.group(1), 'id','item','pos')
+		obj = None
+		for x in database.defaultDatabase:
+		    if isinstance(x,feed.Collection) and x.getID() == int(id):
+			obj = x
+			break
+		if obj != None:
+		    for x in database.defaultDatabase:
+			if isinstance(x,item.Item) and x.getID() == int(myitem):
+			    obj.moveItem(x,int(pos))
 	except:
 	    print "Exception in URL action handler (for URL '%s'):" % url
 	    traceback.print_exc()
@@ -316,7 +364,7 @@ class Controller(frontend.Application):
 	print "Shutting down BitTorrent..."
 	downloader.shutdownBTDownloader()
 
-	print "Done shutting down..."
+	print "Done shutting down."
 
 def main():
     Controller().Run()
@@ -374,7 +422,7 @@ class TemplateTab(frontend.HTMLTab):
 # Return True if a tab should be shown for obj in the frontend. The filter
 # used on the database to get the list of tabs.
 def mappableToTab(obj):
-    return isinstance(obj, StaticTab) or isinstance(obj, feed.Feed)
+    return isinstance(obj, StaticTab) or (isinstance(obj, feed.Feed) and obj.isVisible())
 
 # Generate a function that, given an object for which mappableToTab
 # returns true, return a HTMLTab subclass. This is used to turn the
