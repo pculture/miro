@@ -282,6 +282,19 @@ class Feed(DDBObject):
             self.lock.release()
         self.remove()
 
+    ##
+    # Called by pickle during serialization
+    def __getstate__(self):
+	temp = copy(self.__dict__)
+	temp["lock"] = None
+	return temp
+
+    ##
+    # Called by pickle during deserialization
+    def __setstate__(self,state):
+	self.__dict__ = state
+	self.lock = RLock()
+
 class RSSFeed(Feed):
     def __init__(self,url,title = None):
         Feed.__init__(self,url,title)
@@ -417,3 +430,49 @@ class RSSFeed(Feed):
 	#FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
         self.scheduler = ScheduleEvent(5, self.update,False)
+
+##
+# A DTV Collection of items -- similar to a playlist
+class Collection(Feed):
+    def __init__(self,title = None):
+        Feed.__init__(self,url = "dtv:collection",title = title,visible = False)
+
+    ##
+    # Adds an item to the collection
+    def addItem(self,item):
+	if isinstance(item,Item):
+	    self.lock.acquire()
+	    try:
+		self.removeItem(item)
+		self.items.append(item)
+	    finally:
+		self.lock.release()
+	    return True
+	else:
+	    return False
+
+    ##
+    # Moves an item to another spot in the collection
+    def moveItem(self,item,pos):
+	self.lock.acquire()
+	try:
+	    self.removeItem(item)
+	    if pos < len(self.items):
+		self.items[pos:pos] = [item]
+	    else:
+		self.items.append(item)
+	finally:
+	    self.lock.release()
+
+    ##
+    # Removes an item from the collection
+    def removeItem(self,item):
+	self.lock.acquire()
+	try:
+	    for x in range(0,len(self.items)):
+		if self.items[x] == item:
+		    self.items[x:x+1] = []
+		    break
+	finally:
+	    self.lock.release()
+	return True
