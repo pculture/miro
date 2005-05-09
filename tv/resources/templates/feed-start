@@ -54,7 +54,7 @@
             <div class="short_description" t:replaceMarkup="this getDescription"></div> 
             <div class="file_size"><span t:replace="this getReleaseDate" /> - <span t:replace="this getDuration" /> - <span t:replace="this getTotalSize" /></div>
           </div>
-          <a href="action:playFile?filename=@@@this getFilenameHack@@@" class="one_click play_item"><span/></a>
+          <a href="action:playFile?filename=@@@this getFilename@@@" class="one_click play_item"><span/></a>
        </li> 
    </ul>
   </div>
