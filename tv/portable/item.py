@@ -5,6 +5,7 @@ from downloader import DownloaderFactory
 from copy import copy
 from xhtmltools import unescape,xhtmlify
 from scheduler import ScheduleEvent
+from feedparser import FeedParserDict
 
 ##
 # An item corresponds to a single entry in a feed. Generally, it has
@@ -194,7 +195,7 @@ class Item(DDBObject):
 	    try:
 		ret = xhtmlify('<span>'+unescape(self.entry.description)+'</span>')
 	    except:
-		ret = ''
+		ret = '<span />'
 	self.lock.release()
 	return ret
 
@@ -465,7 +466,7 @@ class Item(DDBObject):
 	    try:
 		ret = self.downloadedTime
 	    except:
-		ret = None
+		ret = datetime.min
 	finally:
 	    self.lock.release()
 	return ret
@@ -496,6 +497,21 @@ class Item(DDBObject):
 	    self.lock.release()
 	return ret
 
+    ##
+    # Returns a list with the filenames of all of the videos in the item
+    def getFilenames(self):
+	ret = []
+	self.lock.acquire()
+	try:
+	    try:
+		for dl in self.downloaders:
+		    ret.append(dl.getFilename())
+	    except:
+		pass
+	finally:
+	    self.lock.release()
+	return ret
+
     def getRSSEntry(self):
 	self.lock.acquire()
 	try:
@@ -516,3 +532,32 @@ class Item(DDBObject):
     def __setstate__(self,state):
 	self.__dict__ = state
 	self.lock = RLock()
+
+##
+# An Item that exists as a file, but not
+class FileItem(Item):
+    def getEntry(self,filename):
+	return FeedParserDict({'title':filename,'enclosures':[{'url':filename}]})
+
+    def __init__(self,feed,filename):
+	Item.__init__(self,feed,self.getEntry(filename))
+	self.filename = filename
+
+    def getState(self):
+	return "finished"
+
+    def getDownloadedTime(self):
+	self.lock.acquire()
+	try:
+	    try:
+		time = datetime.fromtimestamp(os.getctime(self.filename))
+	    except:
+		return datetime.min
+	finally:
+	    self.lock.release()
+
+    def getFilename(self):
+	return self.filename
+
+    def getFilenames(self):
+	return [self.filename]

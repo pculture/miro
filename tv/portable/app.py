@@ -341,6 +341,15 @@ class Controller(frontend.Application):
 		    break
 	    if not hasFeed:
 		f = feed.RSSFeed("http://blogtorrent.com/demo/rss.php")
+
+	    print "Spawning file system videos feed"
+	    hasDirFeed = False
+	    for obj in database.defaultDatabase.objects:
+		if obj[0].__class__.__name__ == 'DirectoryFeed':
+		    hasDirFeed = True
+		    break
+	    if not hasDirFeed:
+		d = feed.DirectoryFeed()
 	    
 	    print "Spawning auto downloader..."
 	    #Start the automatic downloader daemon

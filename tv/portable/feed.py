@@ -6,6 +6,7 @@ from item import *
 from scheduler import ScheduleEvent
 from copy import copy
 from xhtmltools import unescape,xhtmlify
+import os
 import config
 
 # Universal Feed Parser http://feedparser.org/
@@ -235,7 +236,7 @@ class Feed(DDBObject):
     ##
     # Returns the description of the feed
     def getDescription(self):
-        return ""
+        return "<span />"
 
     ##
     # Returns a link to a webpage associated with the feed
@@ -309,7 +310,7 @@ class RSSFeed(Feed):
 	try:
 	    ret = xhtmlify('<span>'+unescape(self.parsed.summary)+'</span>')
 	except:
-	    ret = ""
+	    ret = "<span />"
 	self.lock.release()
         return ret
 
@@ -476,3 +477,93 @@ class Collection(Feed):
 	finally:
 	    self.lock.release()
 	return True
+
+##
+# A feed of all of the Movies we find in the movie folder that don't
+# belong to a "real" feed
+#
+# FIXME: How do we trigger updates on this feed?
+class DirectoryFeed(Feed):
+    def __init__(self):
+        Feed.__init__(self,url = "dtv:directoryfeed",title = "Feedless Videos",visible = False)
+
+	#A database query of all of the filenames of all of the downloads
+	self.RSSFilenames = defaultDatabase.filter(lambda x:isinstance(x,Item) and isinstance(x.feed,RSSFeed)).map(lambda x:x.getFilenames())
+	self.updateFreq = 30
+        self.scheduler = ScheduleEvent(self.updateFreq, self.update,True)
+	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,FileItem) and x.feed is self)
+        self.scheduler = ScheduleEvent(0, self.update,False)
+    ##
+    # Returns a list of all of the files in a given directory
+    def getFileList(self,dir):
+	allthefiles = []
+	for root, dirs, files in os.walk(dir,topdown=True):
+	    if root == dir and 'Incomplete Downloads' in dirs:
+		dirs.remove('Incomplete Downloads')
+	    toRemove = []
+	    for curdir in dirs:
+		if curdir[0] == '.':
+		    toRemove.append(curdir)
+	    for curdir in toRemove:
+		dirs.remove(curdir)
+	    toRemove = []
+	    for curfile in files:
+		if curfile[0] == '.':
+		    toRemove.append(curfile)
+	    for curfile in toRemove:
+		files.remove(curfile)
+	    
+	    allthefiles[:0] = map(lambda x:os.path.normcase(os.path.join(root,x)),files)
+	return allthefiles
+
+    def update(self):
+	knownFiles = []
+	self.lock.acquire()
+	try:
+	    #Files on the filesystem
+	    existingFiles = self.getFileList(config.get('DataDirectory'))
+	    #Files known about by real feeds
+	    for item in self.RSSFilenames:
+		knownFiles[:0] = item
+	    knownFiles = map(os.path.normcase,knownFiles)
+
+	    #Remove items that are in feeds, but we have in our list
+	    for x in range(0,len(self.items)):
+		try:
+		    while (self.items[x].getFilename() in knownFiles) or (not self.items[x].getFilename() in existingFiles):
+			self.items[x].remove()
+			self.items[x:x+1] = []
+		except IndexError:
+		    pass
+
+	    #Files on the filesystem that we known about
+	    myFiles = map(lambda x:x.getFilename(),self.items)
+
+	    #Adds any files we don't know about
+	    for file in existingFiles:
+		if not file in knownFiles and not file in myFiles:
+		    self.items.append(FileItem(self,file))
+		    
+	finally:
+	    self.lock.release()
+
+    ##
+    # Called by pickle during serialization
+    def __getstate__(self):
+	temp = copy(self.__dict__)
+	temp["lock"] = None
+	temp["itemlist"] = None
+	temp["scheduler"] = None
+	return temp
+
+    ##
+    # Called by pickle during deserialization
+    def __setstate__(self,state):
+	self.__dict__ = state
+	self.lock = RLock()
+	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,FileItem) and x.feed is self)
+        self.scheduler = ScheduleEvent(self.updateFreq, self.update)
+
+	#FIXME: the update dies if all of the items aren't restored, so we 
+        # wait a little while before we start the update
+        self.scheduler = ScheduleEvent(5, self.update,False)
