@@ -20,7 +20,7 @@
 
 <body>
   <div id="main_window"> 
-    <div class="channel_title"  i18n:translate="">New<a i18n:translate="" i18n:name="" class="settings_button" href="#">Settings</a></div> 
+    <div class="channel_title" i18n:translate="">New<a i18n:translate="" i18n:name="" class="settings_button" href="#">Settings</a></div> 
   <div class="channel_tabs"> 
     <a href="#"><div class="tab active_tab" i18n:translate="">Watch</div></a>
     <a href="#"><div class="tab emptytab"><span /></div></a>

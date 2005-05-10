@@ -23,7 +23,7 @@
     <div id="searchfield"><input type="text" size="20" onfocus="startEditFilter(this,'newitems','title','global filter substring',0)" onblur="endEditFilter()"  /></div>
   </div> 
   <div id="content_window">
-  Folders don't work in version 0. Sorry.
+   Hey, we need HTML to go here
   </div>
   </div> 
 

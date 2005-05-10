@@ -10,8 +10,11 @@
 <t:include filename="dynamic.js" />
 
 <t:dynamicviews>
- <t:view name="feeds" key="global database">
-  <t:filter functionkey="global filter class" parameter="RSSFeed" />
+ <t:view name="collections" key="global database">
+  <t:filter functionkey="global filter class" parameter="Collection" />
+ </t:view>
+ <t:view name="items" key="global database">
+  <t:filter functionkey="global filter class" parameter="Item" />
  </t:view>
 </t:dynamicviews>
 
@@ -27,16 +30,44 @@
     <a href="#"><div class="tab emptytab"><span /></div></a>
   </div> 
   <div id="content_window">
-  Add a feed:
-    <form method="GET" action="action:addFeed">
-      <input name="url" type="text" />
+  Add a collection:
+    <form method="GET" action="action:addCollection">
+      <input name="title" type="text" />
       <input type="submit" />
     </form>
 <br/><br/>
-  Remove a feed:<br/>
-  <a t:repeatForView="feeds" href="action:removeFeed?url=@@@this getURL@@@">
+  Remove a collection:<br/>
+  <a t:repeatForView="collections" href="action:removeCollection?id=@@@this getID@@@">
     <span t:replace="this title" /><br />
    </a>
+<br/><br/>
+  Add to a collection:<br/>
+  <form t:repeatForView="collections" action="action:addToCollection" method="GET">
+    <span t:replace="this title" />
+      <input name="id" type="hidden" value="@@@this getID@@@"/>
+      <input name="item" type="text" />
+      <input type="submit" />
+      <br />
+   </form>
+<br/><br/>
+  Remove from a collection:<br/>
+  <form t:repeatForView="collections" action="action:removeFromCollection" method="GET">
+    <span t:replace="this title" />
+      <input name="id" type="hidden" value="@@@this getID@@@"/>
+      <input name="item" type="text" />
+      <input type="submit" />
+      <br />
+   </form>
+<br/><br/>
+  Move within a collection:<br/>
+  <form t:repeatForView="collections" action="action:moveInCollection" method="GET">
+    <span t:replace="this title" />
+      <input name="id" type="hidden" value="@@@this getID@@@"/>
+      <input name="item" type="text" />
+      <input name="pos" type="text" />
+      <input type="submit" />
+      <br />
+   </form>
 <br/><br/>
   Play a video file in a new window:
     <form method="GET" action="action:playFile">

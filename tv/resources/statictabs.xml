@@ -4,9 +4,5 @@
 <statictab tabtemplatebase="newtab" contentstemplate="new" order="3"/>
 
 <statictab tabtemplatebase="debugtab" contentstemplate="debug" order="1000000"/>
-<statictab tabtemplatebase="fakefoldertab" contentstemplate="folder" order="1000001"/>
-<statictab tabtemplatebase="fakefoldertab1" contentstemplate="folder" order="1000002"/>
-<statictab tabtemplatebase="fakefoldertab2" contentstemplate="folder" order="1000003"/>
-<statictab tabtemplatebase="fakefoldertab3" contentstemplate="folder" order="1000004"/>
 <statictab tabtemplatebase="downloadtab" contentstemplate="download" order="10000000"/>
 </tabs>
