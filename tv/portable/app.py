@@ -15,6 +15,7 @@ import traceback
 import config
 import datetime
 import autodler
+import folder
 
 ###############################################################################
 #### TemplateDisplay: a HTML-template-driven right-hand display panel      ####
@@ -170,7 +171,6 @@ class TemplateDisplay(frontend.HTMLDisplay):
 		database.defaultDatabase.restoreCursor()
 		if not exists:
 		    myFeed = feed.RSSFeed(url)
-		print self.templateData
 		self.templateData = {'global' : {
 		    'database': database.defaultDatabase,
 		    'filter': globalFilterList,
@@ -341,6 +341,8 @@ class Controller(frontend.Application):
 		    break
 	    if not hasFeed:
 		f = feed.RSSFeed("http://blogtorrent.com/demo/rss.php")
+		fold = folder.Folder('Test folder')
+		fold.addFeed(f)
 
 	    print "Spawning file system videos feed"
 	    hasDirFeed = False
@@ -431,7 +433,7 @@ class TemplateTab(frontend.HTMLTab):
 # Return True if a tab should be shown for obj in the frontend. The filter
 # used on the database to get the list of tabs.
 def mappableToTab(obj):
-    return isinstance(obj, StaticTab) or (isinstance(obj, feed.Feed) and obj.isVisible())
+    return isinstance(obj, StaticTab) or isinstance(obj, folder.Folder) or (isinstance(obj, feed.Feed) and obj.isVisible())
 
 # Generate a function that, given an object for which mappableToTab
 # returns true, return a HTMLTab subclass. This is used to turn the
@@ -456,6 +458,10 @@ def makeMapToTabFunction(globalTemplateData):
 		# Change this to sort feeds on a different value
 		sortKey = obj.getTitle()
 	    	return TemplateTab('feedtab', data, 'feed-start', data, [100, sortKey], obj)
+	    elif isinstance(obj, folder.Folder):
+		data['folder'] = obj
+		sortKey = obj.getTitle()
+		return TemplateTab('foldertab',data,'folder',data,[500,sortKey],obj)
 	    else:
 		assert(0) # NEEDS: clean up (signal internal error)
 
