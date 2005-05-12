@@ -1,4 +1,5 @@
 import feed
+from copy import copy
 from database import DDBObject,defaultDatabase
 
 ##
@@ -25,6 +26,19 @@ class Folder(DDBObject):
 	    self.feeds.append(theFeed)
 	finally:
 	    self.endChange()
+
+    ##
+    # Called by pickle during serialization
+    def __getstate__(self):
+	temp = copy(self.__dict__)
+	temp["feedlist"] = None
+	return temp
+
+    ##
+    # Called by pickle during deserialization
+    def __setstate__(self,state):
+	self.__dict__ = state
+	self.feedlist = defaultDatabase.filter(lambda x:isinstance(x,feed.Feed) and x.getID() in self.feeds)
 
     ##
     # Removes a feed from the folder
