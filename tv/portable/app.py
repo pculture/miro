@@ -16,6 +16,7 @@ import config
 import datetime
 import autodler
 import folder
+import scheduler
 
 ###############################################################################
 #### TemplateDisplay: a HTML-template-driven right-hand display panel      ####
@@ -39,7 +40,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
 	    self.currentFrame.selectDisplay(TemplateDisplay(self.homeTemplate, self.homeData, frameHint=self.currentFrame))
 
     def onURLLoad(self, url):
-	print url
+	#print url
 	try:
 	    # Switching to a new template in this tab
 	    match = re.compile(r"^template:(.*)$").match(url)
@@ -306,9 +307,9 @@ class Controller(frontend.Application):
     def OnStartup(self):
 	try:
 	    #Restoring
-	    print "Restoring database..."
+	    print "DTV: Restoring database..."
 	    database.defaultDatabase.restore()
-	    print "Recomputing filters..."
+	    print "DTV: Recomputing filters..."
 	    database.defaultDatabase.recomputeFilters()
 
 	    reloadStaticTabs()
@@ -333,49 +334,55 @@ class Controller(frontend.Application):
             #testArray = database.DDBObject.dd.filter(lambda x: x.__class__ == NameNumberObject)
 	    #globalData['testArray'] = testArray
 
-	    print "Spawning first feed..."
 	    hasFeed = False
 	    for obj in database.defaultDatabase.objects:
 		if obj[0].__class__.__name__ == 'RSSFeed':
 		    hasFeed = True
 		    break
-	    if not hasFeed:
-		f = feed.RSSFeed("http://blogtorrent.com/demo/rss.php")
-		fold = folder.Folder('Test folder')
-		fold.addFeed(f)
+	    #if not hasFeed:
+		#print "Spawning first feed..."
+		#f = feed.RSSFeed("http://blogtorrent.com/demo/rss.php")
+		#fold = folder.Folder('Test folder')
+		#fold.addFeed(f)
 
-	    print "Spawning file system videos feed"
 	    hasDirFeed = False
 	    for obj in database.defaultDatabase.objects:
 		if obj[0].__class__.__name__ == 'DirectoryFeed':
 		    hasDirFeed = True
 		    break
 	    if not hasDirFeed:
+		print "DTV: Spawning file system videos feed"
 		d = feed.DirectoryFeed()
 	    
-	    print "Spawning auto downloader..."
+	    print "DTV: Spawning auto downloader..."
 	    #Start the automatic downloader daemon
 	    autodler.AutoDownloader()
 
-	    print "Displaying main frame..."
+	    print "DTV: Displaying main frame..."
 	    self.frame = frontend.MainFrame(self.tabs,globalData)
 	except:
-	    print "Exception on startup:"
+	    print "DTV: Exception on startup:"
 	    traceback.print_exc()
 
     def OnShutdown(self):
-	print "Removing static tabs..."
+	print "DTV: Stopping scheduler"
+	#This doesn't hurt and probably prevents issuses with
+	#scheduled events screwing up on shutdown
+	scheduler.ScheduleEvent.scheduler.timer.cancel()
+	scheduler.ScheduleEvent.scheduler.timer.join()
+
+	print "DTV: Removing static tabs..."
 	database.defaultDatabase.removeMatching(lambda x:str(x.__class__.__name__) == "StaticTab")
 	#for item in database.defaultDatabase:
 	#    print str(item.__class__.__name__) + " of id "+str(item.getID())
-	print "Saving database..."
+	print "DTV: Saving database..."
 	database.defaultDatabase.save()
 
          #FIXME closing BitTorrent is slow and makes the application seem hung...
-	print "Shutting down BitTorrent..."
+	print "DTV: Shutting down BitTorrent..."
 	downloader.shutdownBTDownloader()
 
-	print "Done shutting down."
+	print "DTV: Done shutting down."
 
 def main():
     Controller().Run()
