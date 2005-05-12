@@ -33,32 +33,8 @@ Contains the channels
 
 #sidebar {
 	padding: 0;
-	overflow: auto;
 	}
 
-#sidebar a.download_queue{
-	display: block;
-	padding: 0;
-	text-align: center;
-	background: #eee;
-	text-decoration: none;
-	color: #333;
-	border-top: 1px solid #ddd;
-	position: fixed;
-	display: none;
-	bottom: 0;
-	left: 0; 
-	}
-
-#sidebar a.download_queue img{
-	border: none;
-	position: relative;
-	right: -9px;
-	top: 5px;
-	}
-
-#sidebar #channels{
-	}
 
 #sidebar h2{
 	font: 14px Arial, Helvetica, sans-serif;
@@ -80,7 +56,7 @@ Contains the channels
 
 
 #sidebar ul ul li {
-	padding: 7px 0px 7px 20px;
+	padding: 7px 0px 7px 0px;
 	color: #333;
 	text-decoration: none;
 	clear: both;
@@ -89,8 +65,9 @@ Contains the channels
 
 
 #sidebar ul ul {
-	padding: 0px;
+	padding: 0;
 	margin: 0;
+	display: none;
 	}
 
 .alt{
@@ -143,10 +120,14 @@ a.feeditem:hover{
 	color: #fff;
 	}
 
+/*
+
 #sidebar:hover a.selected_feeditem {
 	background: #eee url(resource:images/selectedback.png) 0% 0% repeat-x; 
 	color: #fff;
-	}
+	} 
+	
+*/
 
 a.selected_feeditem span {
 	color: #fff;
@@ -182,15 +163,38 @@ Various Buttons
 
 a.queuebutton{
 	position: fixed;
+	display: block;
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+	color: #333;
+	border-top: 1px solid #ddd;
 	bottom: 0;
+	left: 0; 
+	width: 100%;
 	}
+
+
+
+a.queuebutton span.name{
+	margin: 0 0 0 -10px;
+	padding: 0;
+	display: block;
+	}
+
+
+a.queuebutton img{
+	display: none;
+	}
+
+
 
 
 /*/////////////////////////////////////////////
 
 MAIN WINDOW
 -----------------------------------------------
-A wrapper around the conten
+A wrapper around the content
  
 /////////////////////////////////////////////*/
 
@@ -225,7 +229,7 @@ Title of each channel
 	color: white;
 	font-size: 13px;
 	font-weight: bold;
-	background: #666 url(resource:images/channel_gradient.gif);
+	background: #666 url(resource:images/blue.gif);
 	text-shadow: 0px 1px 0px black;
 	position: fixed;
 	top: 0;
@@ -318,6 +322,8 @@ Where the videos show up
 #main_window ul li {
 	border-bottom: 1px solid #f9f9f9;
 	border-top: 1px solid #eee;
+	border-right: 1px solid #eee;
+	border-left: 1px solid #fff;
 	display: block;
 	clear: both;
 	padding-top: 7px;
@@ -325,10 +331,16 @@ Where the videos show up
 	height: 73px;
 	}
 
-#main_window li:hover, #main_window li:hover .short_description, #main_window li:hover .video_title{
-	background: #007AFA;
+#main_window li:hover{
+	border: 1px solid #007AFA;
 	cursor: pointer;
 	color: #fff;
+	background: #C6D6F2;
+	}
+
+
+#main_window li:hover, #main_window li:hover .short_description, #main_window li:hover .video_title{
+
 	}
 
 #main_window li:hover .file_size, #main_window li:hover .length{
@@ -387,7 +399,6 @@ Where the videos show up
 	}
 
 .file_size span{
-	display: block;
 	}
 
 .file_size span strong.length{
@@ -470,13 +481,13 @@ Where the videos show up
 
 
 .progress{
-	color: #999;
-	font-size: 8px;
-	padding-top: 4px 0;
+	color: #666;
+	font-size: 9px;
+	padding-top: 7px 0;
 	}
 
 .progress a{
-
+    margin: 3px 0 0 9px;
 	}
 
 
