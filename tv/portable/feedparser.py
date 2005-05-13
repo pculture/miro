@@ -278,6 +278,7 @@ class _FeedParserMixin:
                   "http://www.w3.org/1999/xhtml":                         "xhtml",
                   "http://www.w3.org/XML/1998/namespace":                 "xml",
 		  "http://tools.search.yahoo.com/mrss/":                  "media",
+		  "http://docs.yahoo.com/mediaModule":                  "media",
 		  "http://participatoryculture.org/RSSModules/dtv/1.0":   "dtv"
 }
 
