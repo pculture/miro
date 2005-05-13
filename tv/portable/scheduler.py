@@ -9,7 +9,7 @@ def now():
 class Scheduler(DynamicDatabase):
     def __init__(self):
         DynamicDatabase.__init__(self)
-        self.timer = Timer(5,self.executeEvents)
+        self.timer = Timer(1,self.executeEvents)
 	self.lock = RLock()
 	self.timer.start()
         
@@ -32,22 +32,8 @@ class Scheduler(DynamicDatabase):
 	    if event.nextRun() <= 0:
 		event.execute()
 	self.timer.cancel()
-	self.timer = Timer(5,self.executeEvents)
+	self.timer = Timer(1,self.executeEvents)
 	self.timer.start()
-
-    ##
-    # Called by pickle during serialization
-    def __getstate__(self):
-	temp = copy(self.__dict__)
-	temp["lock"] = None
-	return temp
-
-    ##
-    # Called by pickle during deserialization
-    def __setstate__(self,state):
-	self.__dict__ = state
-	self.lock = RLock()
-
 
 ##
 # a ScheduleEvent corresponds to something that happens in the
