@@ -177,7 +177,9 @@ class TemplateDisplay(frontend.HTMLDisplay):
 		    'filter': globalFilterList,
 		    'sort': globalSortList },
 				     'feed' : myFeed}
-		self.execJS('document.location.href = "template:feed-settings";')
+		# NEEDS: changed temporarily for demo
+#		self.execJS('document.location.href = "template:feed-settings";')
+		self.execJS('document.location.href = "template:feed-start";')
 		return False
 
 	    match = re.compile(r"^action:removeFeed\?(.*)$").match(url)
@@ -464,7 +466,8 @@ def makeMapToTabFunction(globalTemplateData):
 	    	data['feed'] = obj
 		# Change this to sort feeds on a different value
 		sortKey = obj.getTitle()
-	    	return TemplateTab('feedtab', data, 'feed-start', data, [100, sortKey], obj)
+		# NEEDS: replaced feed-start with feed-choose for demo
+	    	return TemplateTab('feedtab', data, 'feed-choose', data, [100, sortKey], obj)
 	    elif isinstance(obj, folder.Folder):
 		data['folder'] = obj
 		sortKey = obj.getTitle()

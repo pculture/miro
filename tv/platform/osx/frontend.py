@@ -8,13 +8,20 @@ import resource
 import template
 import database
 import threading
-import vlc
+#import vlc
 import os
+import struct
+import time
+import feed
 
 NibClassBuilder.extractClasses("MainMenu")
 NibClassBuilder.extractClasses("MainWindow")
 NibClassBuilder.extractClasses("VideoView")
 NibClassBuilder.extractClasses("AddChannelSheet")
+
+# NEEDS: hack to find a MainController instance for handling URL open
+# events. make this go away!
+theMainControllerHack = None
 
 ###############################################################################
 #### Application object                                                    ####
@@ -54,11 +61,47 @@ class AppController(NSObject):
     def noop(self):
 	return
 
-    def applicationDidFinishLaunching_(self, notification):
+    def applicationWillFinishLaunching_(self, notification):
+	man = NSAppleEventManager.sharedAppleEventManager()
+	man.setEventHandler_andSelector_forEventClass_andEventID_(
+	    self,
+	    "openURL:withReplyEvent:",
+	    struct.unpack(">i", "GURL")[0],
+	    struct.unpack(">i", "GURL")[0])
+	# Call the startup hook before any events (such as instructions
+	# to open files...) are delivered.
 	self.onStartupHook()
+
+    def applicationDidFinishLaunching_(self, notification):
+	pass
 
     def applicationWillTerminate_(self, notification):
 	self.onShutdownHook()
+
+    def application_openFile_(self, app, filename):
+	#print "**** openFile %s" % filename
+	return False
+
+    def openURL_withReplyEvent_(self, event, replyEvent):
+	print "**** got open URL event"
+	global theMainControllerHack
+	print "tMCH = %s" % theMainControllerHack
+	print "tMCH.cD = %s" % theMainControllerHack.currentDisplay
+	keyDirectObject = struct.unpack(">i", "----")[0]
+	url = event.paramDescriptorForKeyword_(keyDirectObject).stringValue()
+
+	# Convert feed: URL to http:
+	# (we only get here if the URL is a feed: URL, because of what
+	# we've claimed in Info.plist)
+	match = re.compile(r"^feed:(.*)$").match(url)
+	if match:
+	    url = "http:%s" % match.group(1)
+
+	theMainControllerHack.hackAddAndSelectFeed(url)
+	#if (isinstance(theMainControllerHack.currentDisplay,HTMLDisplay)):
+	#    theMainControllerHack.currentDisplay.execJS('document.location.href = "action:addFeed?url='+url+'";')
+    openURL_withReplyEvent_ = objc.selector(openURL_withReplyEvent_,
+					    signature="v@:@@")
 
 ###############################################################################
 #### Main window                                                           ####
@@ -104,6 +147,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
     # Is the delegate for the split view
 
     def init(self, tabs, owner, globalData = None):
+	print "*** MainController init"
+
 	# owner is the actual frame object (the argument to onSelected, etc)
 	NSObject.init(self)
 	NSBundle.loadNibNamed_owner_("MainWindow", self)
@@ -130,6 +175,14 @@ class MainController (NibClassBuilder.AutoBaseClass):
 	# NEEDS: Cursor hasn't been updated yet, and I'm not sure how
 	# to predict this. Mail sent to Nick.
 	self.tabs.addRemoveCallback(lambda oldObject, oldIndex: self.checkSelectedTab())
+
+	global theMainControllerHack
+	print "tMCH = %s" % theMainControllerHack
+	if not theMainControllerHack: # NEEDS: remove
+	    print "tMCH update to %s" % self
+	    theMainControllerHack = self 
+	print "tMCH now = %s" % theMainControllerHack
+
 	return self
 
     def execTabJS(self, js):
@@ -240,6 +293,35 @@ class MainController (NibClassBuilder.AutoBaseClass):
 	else:
 	    return 'normal'
 
+    # NEEDS: for demo. remove
+    def hackAddAndSelectFeed(self, feedURL):
+	exists = False
+	database.defaultDatabase.saveCursor()
+	for obj in database.defaultDatabase:
+	    if isinstance(obj,feed.Feed) and obj.getURL() == feedURL:
+		exists = True
+		break
+	database.defaultDatabase.restoreCursor()
+	if not exists:
+	    myFeed = feed.RSSFeed(feedURL)
+
+	# Race condition -- hope that addition is reflected in tab list
+	# by now
+	
+	# Move the tab cursor to the added/selected tab
+	self.tabs.resetCursor()
+	while True:
+	    cur = self.tabs.getNext()
+	    if cur == None:
+		assert(0) # NEEDS: better error (failed to add tab)
+	    actualTabObj = cur.tab.obj # NEEDS: horrible hack
+	    if isinstance(actualTabObj, feed.Feed) and actualTabObj.getURL() == feedURL:
+		break
+
+	# Handle switching tabs if necessary (doesn't send Reselected
+	# messages for now -- we actually like that, in a horrible hacky way)
+	self.checkSelectedTab()
+
     def onTabURLLoad(self, url):
 	match = re.compile(r"^action:selectTab\?id=(.*)$").match(url)
 	if match:
@@ -324,6 +406,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
     def addChannelSheetDone_(self, sender):
 	sheetURL = self.addChannelSheetURL.stringValue()
 	# NEEDS: change display to HTML view if not in it already
+	# NEEDS: properly escape URL
+	# NEEDS: doesn't work on cold start
 	if (isinstance(self.currentDisplay,HTMLDisplay)):
 	    self.currentDisplay.execJS('document.location.href = "action:addFeed?url='+sheetURL+'";')
 	NSApplication.sharedApplication().endSheet_(self.addChannelSheet)
@@ -639,6 +723,43 @@ class ManagedWebView(NSObject):
 #### Right-hand pane video display                                         ####
 ###############################################################################
 
+import sys
+# Given a Unix PID, give focus to the corresponding process. Requires rooting
+# around in Carbon APIs.
+def darkVoodooMakePidFront(pid):
+    # See http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/Scripts/wmEnable.py
+    def S(*args):
+	return ''.join(args)
+    OSErr = objc._C_SHT
+    OUTPID = 'o^L'
+    INPID = 'L'
+    OUTPSN = 'o^{ProcessSerialNumber=LL}'
+    INPSN = 'n^{ProcessSerialNumber=LL}'	
+    FUNCTIONS=[
+	( u'GetCurrentProcess', S(OSErr, OUTPSN) ),
+	( u'GetProcessForPID', S(OSErr, INPID, OUTPSN) ),
+	( u'SetFrontProcess', S(OSErr, INPSN) ),
+	]	
+
+    bndl = NSBundle.bundleWithPath_(objc.pathForFramework('/System/Library/Frameworks/ApplicationServices.framework'))
+    if bndl is None:
+	print >>sys.stderr, 'ApplicationServices missing'
+	assert(0)
+    d = {}
+    objc.loadBundleFunctions(bndl, d, FUNCTIONS)
+    for (fn, sig) in FUNCTIONS:
+	if fn not in d:
+	    print >>sys.stderr, 'Missing', fn
+	    assert(0)
+    err, psn = d['GetProcessForPID'](pid)
+    if err:
+        print >>sys.stderr, 'GetProcessForPID', (err, psn)
+	assert(0)
+    err = d['SetFrontProcess'](psn)
+    if err:
+        print >>sys.stderr, 'SetFrontProcess', (err, psn)
+	assert(0)
+
 def playVideoFileHack(filename):
     # Old way
     #	vlch = vlcext.create()
@@ -647,11 +768,20 @@ def playVideoFileHack(filename):
     #	print vlcext.play(vlch)
     
     # New way
-    pluginRoot = os.path.join(NSBundle.mainBundle().bundlePath(), 'Contents/MacOS/modules')
-    print pluginRoot
-    mc = vlc.MediaControl(['--verbose', '1', '--plugin-path', pluginRoot])
-    mc.playlist_add_item(filename)
-    mc.start(0)
+    # pluginRoot = os.path.join(NSBundle.mainBundle().bundlePath(), 'Contents/MacOS/modules')
+    # print pluginRoot
+    # mc = vlc.MediaControl(['--verbose', '1', '--plugin-path', pluginRoot])
+    # mc.playlist_add_item(filename)
+    # mc.start(0)
+    print "Hack play: %s" % filename
+    app = "/Applications/VLC-no-controls.app"
+    path = "%s/Contents/MacOS/VLC" % app
+    pid = os.spawnl(os.P_NOWAIT, path, path, 
+		    "--fullscreen", filename)
+    print "pid: %s" % pid
+    # Give VLC a chance to connect to the process server.
+    time.sleep(1)
+    darkVoodooMakePidFront(pid)
 
 class VideoDisplay(Display):
     "Video player that can be shown in a MainFrame's right-hand pane."
@@ -688,8 +818,9 @@ class PlayerController(NibClassBuilder.AutoBaseClass):
 	NSBundle.loadNibNamed_owner_("VideoView", self)
 
 	# Start a VLC instance
-	pluginRoot = os.path.join(NSBundle.mainBundle().bundlePath(), 'Contents/MacOS/modules')
-	mc = vlc.MediaControl(['--verbose', '1', '--plugin-path', pluginRoot])
+	# (Removed for fullscreen demo hack)
+	# pluginRoot = os.path.join(NSBundle.mainBundle().bundlePath(), 'Contents/MacOS/modules')
+	# mc = vlc.MediaControl(['--verbose', '1', '--plugin-path', pluginRoot])
 
 	# Set up initial playlist state and start playing
 	# NEEDS: lock from observation to callback registration

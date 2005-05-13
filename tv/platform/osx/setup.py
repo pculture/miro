@@ -20,13 +20,15 @@ resourceFiles.append('English.lproj')
 
 py2app_options = dict(
     resources='%s/resources' % root, 
+    plist='Info.plist',
     iconfile='%s/platform/%s/check.icns' % (root, platform),
 )
 
 setup(
     app=['DTV.py'],
     data_files= resourceFiles,
-    ext_modules = [vlchelper.info.getExtension(root)],
+# NEEDS XXXX
+#    ext_modules = [vlchelper.info.getExtension(root)],
     options=dict(
         py2app=py2app_options,
     )
@@ -51,7 +53,7 @@ setup(
 VLC_LIBRARY_SUBDIR = 'extras/contrib/vlc-lib'
 BUNDLE_LIB_DIRECTORY = 'Contents/MacOS/lib'
 BUNDLE_MODULE_DIRECTORY = 'Contents/MacOS'
-if 'py2app' in sys.argv:
+if 'py2app' in sys.argv and False: ## NEEDS XXXX
     # Create symlinks or copy files?
     alias = '-A' in sys.argv
     
