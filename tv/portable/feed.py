@@ -1,3 +1,7 @@
+from formatter import AbstractFormatter, NullWriter
+from httplib import HTTPConnection
+from htmllib import HTMLParser
+from urlparse import urlparse, urljoin
 from urllib import urlopen
 from datetime import datetime,timedelta
 from threading import RLock
@@ -477,6 +481,206 @@ class Collection(Feed):
 	finally:
 	    self.lock.release()
 	return True
+
+##
+# A feed based on un unformatted HTML
+class HTMLScraperFeed(Feed):
+    def __init__(self,url,title = None, visible = True):
+	Feed.__init__(self,url,title,visible)
+	self.scheduler = ScheduleEvent(self.updateFreq, self.update)
+	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
+	self.scheduler = ScheduleEvent(0, self.update,False)
+	self.mainHTML = ''
+	self.secondaryHTML = {}
+
+    def getMimeType(self,link):
+	(linkScheme, linkHost, linkPath, linkParams, linkQuery, linkFragment) = urlparse(link)
+	if len(linkParams):
+	    linkPath += ';'+linkParams
+	if len(linkQuery):
+	    linkPath += '?'+linkQuery
+	linkConn = HTTPConnection(linkHost)
+	linkConn.connect()
+	linkConn.request('HEAD',linkPath)
+	linkDownload = linkConn.getresponse()
+	depth = 0
+	while linkDownload.status != 200 and depth < 10:
+	    depth += 1
+	    if linkDownload.status == 302 or linkDownload.status == 307 or linkDownload.status == 301:
+		info = linkDownload.msg
+		linkDownload.close()
+		linkConn.close()
+		redirURL = info['Location']
+		if linkDownload.status == 301:
+		    link = redirURL
+		(linkScheme, linkHost, linkPath, linkParams, linkQuery, linkFragment) = urlparse(info['Location'])
+		linkConn = HTTPConnection(linkHost)
+		if len(linkParams):
+		    linkPath += ';'+linkParams
+		if len(linkQuery):
+		    linkPath += '?'+linkQuery
+		#FIXME: catch exception here
+		linkConn.request("HEAD",linkPath)
+		linkDownload = linkConn.getresponse()
+	    else:
+		return None
+	info = linkDownload.msg
+	linkDownload.close()
+	return info['Content-Type']
+
+    ##
+    # returns a tuple containing the text of the URL, the url (in case
+    # of a permanent redirect), and a redirected URL (in case of
+    # temporary redirect)
+    def getHTML(self, url):
+	redirURL = url
+	(scheme, host, path, params, query, fragment) = urlparse(url)
+	conn = HTTPConnection(host)
+	conn.connect()
+	if len(params):
+	    path += ';'+params
+	if len(query):
+	    path += '?'+query
+	conn.request('GET',path)
+	download = conn.getresponse()
+	depth = 0
+	while download.status != 200 and depth < 10:
+	    depth += 1
+	    if download.status == 302 or download.status == 307 or download.status == 301:
+		info = download.msg
+		download.close()
+		conn.close()
+		redirURL = info['Location']
+		if download.status == 301:
+		    url = redirURL
+		(scheme, host, path, params, query, fragment) = urlparse(info['Location'])
+		conn = HTTPConnection(host)
+		if len(params):
+		    path += ';'+params
+		if len(query):
+		    path += '?'+query
+	        #FIXME: catch exception here
+		conn.request("GET",path)
+		download = conn.getresponse()
+	    else:
+		return None
+	html = download.read()
+	download.close()
+	conn.close()
+	return (html, url, redirURL)
+
+    def addVideoItem(self,link,title):
+	#FIXME: make this work
+	print "Adding "+str(link)+' "'+str(title)+'"'
+
+    #FIXME: compound names for titles at each depth
+    def processLinks(self,links, depth = 0):
+	if depth<2:
+	    for (link, title) in links:
+		#FIXME keep the connection open
+		mimetype = self.getMimeType(link)
+		if mimetype != None:
+                     #This is text of some sort: HTML, XML, etc.
+		    if mimetype[0:9] == 'text/html' or mimetype[0:21] == 'application/xhtml+xml' or mimetype[0:9] == 'text/xml' or mimetype[0:15] == 'application/xml':
+			(html, url, redirURL) = self.getHTML(link)
+			subLinks = self.scrapeLinks(html, redirURL)
+			self.processLinks(subLinks, depth+1)
+		    #This is probably a video
+		    else:
+			self.addVideoItem(link, title)
+
+
+    #FIXME: go through and add error handling
+    def update(self):
+	(self.mainHTML,self.url, redirURL) = self.getHTML(self.url)
+	links = self.scrapeLinks(self.mainHTML, redirURL)
+	self.processLinks(links)
+	#Download the HTML associated with each page
+
+
+    ##
+    # Given a string containing an HTML file, return a list of tuples
+    # of titles and links
+    def scrapeLinks(self,html, baseurl):
+	class LinkGrabber(HTMLParser):
+	    def getLinks(self,data, baseurl):
+		self.links = []
+		self.lastLink = None
+		self.inLink = False
+		self.inObject = False
+		self.baseurl = baseurl
+		self.feed(data)
+		self.close()
+		return self.links
+
+	    #FIXME Handle title and baseurl
+	    def handle_starttag(self, tag, method, attrs):
+		if tag.lower() == 'object':
+		    self.inObject = True
+		    return
+		elif tag.lower() == 'a':
+		    for attr in attrs:
+			if attr[0].lower() == 'href':
+			    self.links.append( (urljoin(self.baseurl,attr[1]),''))
+			    self.inLink = True
+			    break
+		elif tag.lower() == 'embed':
+		    for attr in attrs:
+			if attr[0].lower() == 'src':
+			    self.links.append( (urljoin(self.baseurl,attr[1]),''))
+			    break
+		elif tag.lower() == 'param' and self.inObject:
+		    srcParam = False
+		    for attr in attrs:
+			if attr[0].lower() == 'name' and attr[1].lower() == 'src':
+			    srcParam = True
+			    break
+		    if srcParam:
+			for attr in attrs:
+			    if attr[0].lower() == 'value':
+				self.links.append( (urljoin(self.baseurl,attr[1]),''))
+				break
+		
+	    def handle_endtag(self, tag, method):
+		if tag.lower() == 'a':
+		    if self.inLink:
+			if len(self.links[-1][1]) == 0:
+			    self.links[-1] = (self.links[-1][0], self.links[-1][0])
+			self.inLink = False
+		if tag.lower() == 'object':
+		    self.inObject = False
+	    def handle_data(self, data):
+		if self.inLink:
+		    self.links[-1] = (self.links[-1][0],self.links[-1][1]+data)
+	lg = LinkGrabber(AbstractFormatter(NullWriter))
+	links = lg.getLinks(html, baseurl)
+	links2 = []
+	for link in links:
+	    if link[0][0:7] == 'http://':
+		links2.append((link[0],link[1].strip()))
+	return links2
+	
+    ##
+    # Called by pickle during serialization
+    def __getstate__(self):
+	temp = copy(self.__dict__)
+	temp["lock"] = None
+	temp["itemlist"] = None
+	temp["scheduler"] = None
+	return temp
+
+    ##
+    # Called by pickle during deserialization
+    def __setstate__(self,state):
+	self.__dict__ = state
+	self.lock = RLock()
+	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,FileItem) and x.feed is self)
+        self.scheduler = ScheduleEvent(self.updateFreq, self.update)
+
+	#FIXME: the update dies if all of the items aren't restored, so we 
+        # wait a little while before we start the update
+        self.scheduler = ScheduleEvent(5, self.update,False)
+
 
 ##
 # A feed of all of the Movies we find in the movie folder that don't
