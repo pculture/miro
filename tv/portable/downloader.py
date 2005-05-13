@@ -5,7 +5,7 @@ from scheduler import ScheduleEvent
 import config
 
 from time import sleep,time
-from urlparse import urlparse
+from urlparse import urlparse,urljoin
 from os import remove, rename, access, F_OK
 import re
 import math
@@ -262,9 +262,10 @@ class HTTPDownloader(Downloader):
 		    info = download.msg
 		    download.close()
 		    conn.close()
+		    self.redirURL = urljoin(redirURL,info['Location'])
 		    if download.status == 301:
-			self.url = info['Location']
-		    (scheme, host, path, params, query, fragment) = urlparse(info['Location'])
+			self.url = self.redirURL
+		    (scheme, host, path, params, query, fragment) = urlparse(self.redirURL)
 		    if len(params):
 			path += ';'+params
 		    if len(query):
@@ -715,10 +716,10 @@ class DownloaderFactory:
 		info = download.msg
 		download.close()
 		conn.close()
-		redirURL = info['Location']
+		redirURL = urljoin(redirURL,info['Location'])
 		if download.status == 301:
 		    url = redirURL
-		(scheme, host, path, params, query, fragment) = urlparse(info['Location'])
+		(scheme, host, path, params, query, fragment) = urlparse(redirURL)
 		conn = HTTPConnection(host)
 		if len(params):
 		    path += ';'+params
