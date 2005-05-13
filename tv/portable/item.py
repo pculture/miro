@@ -163,9 +163,11 @@ class Item(DDBObject):
     ##
     # Returns a link to the thumbnail of the video
     def getThumbnail(self):
-	try:
-	    return self.entry.enclosures[0]["thumbnail"]["url"]
-	except:
+	    for enc in self.entry.enclosures:
+	    	try:
+		    return enc["thumbnail"]["url"]
+		except:
+		    pass
 	    try:
 		return self.entry["thumbnail"]["url"]
 	    except:
