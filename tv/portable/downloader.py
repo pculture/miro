@@ -237,6 +237,11 @@ class HTTPDownloader(Downloader):
     ##
     # This is the actual download thread. Connects to the 
     def runDownloader(self, retry = False):
+	if self.redirURL != None:
+	    self.shortFilename = self.filenameFromURL(self.redirURL)
+	    self.filename = os.path.join(config.get('DataDirectory'),'Incomplete Downloads',self.shortFilename+".part")
+	    self.filename = self.nextFreeFilename(self.filename)
+
 	self.item.beginChange()
 	self.item.endChange()
         try:
@@ -265,6 +270,9 @@ class HTTPDownloader(Downloader):
 		    self.redirURL = urljoin(redirURL,info['Location'])
 		    if download.status == 301:
 			self.url = self.redirURL
+		    self.shortFilename = self.filenameFromURL(self.redirURL)
+		    self.filename = os.path.join(config.get('DataDirectory'),'Incomplete Downloads',self.shortFilename+".part")
+		    self.filename = self.nextFreeFilename(self.filename)
 		    (scheme, host, path, params, query, fragment) = urlparse(self.redirURL)
 		    if len(params):
 			path += ';'+params
