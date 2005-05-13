@@ -31,7 +31,7 @@
   <div id="content_window">
     <ul> 
         <li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="newitems">
-          <img class="thumb" src="@@@this getThumbnail@@@" />
+          <img width="80" height="60" class="thumb" src="@@@this getThumbnail@@@" />
           <div class="desc" >
             <div class="video_title" t:replace="this getTitle"></div>
             <div class="short_description" t:replaceMarkup="this getDescription"></div> 
