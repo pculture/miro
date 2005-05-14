@@ -162,16 +162,24 @@ class Item(DDBObject):
 
     ##
     # Returns a link to the thumbnail of the video
-    def getThumbnail(self):
-	    for enc in self.entry.enclosures:
-	    	try:
-		    return enc["thumbnail"]["url"]
-		except:
-		    pass
+    def getThumbnail(self):	
+        self.lock.acquire()
+	try:
 	    try:
-		return self.entry["thumbnail"]["url"]
+		for enc in self.entry.enclosures:
+		    try:
+			ret = enc["thumbnail"]["url"]
+			break
+		    except:
+			pass
 	    except:
-		return "resource:images/thumb.gif"
+		try:
+		    ret =  self.entry["thumbnail"]["url"]
+		except:
+		    ret = "resource:images/thumb.gif"
+	    return ret
+	finally:
+	    self.lock.release()
 
     ##
     # returns the title of the item
