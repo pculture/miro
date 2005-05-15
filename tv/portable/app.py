@@ -368,10 +368,7 @@ class Controller(frontend.Application):
 
     def OnShutdown(self):
 	print "DTV: Stopping scheduler"
-	#This doesn't hurt and probably prevents issuses with
-	#scheduled events screwing up on shutdown
-	scheduler.ScheduleEvent.scheduler.timer.cancel()
-	scheduler.ScheduleEvent.scheduler.timer.join()
+	scheduler.ScheduleEvent.scheduler.shutdown()
 
 	print "DTV: Removing static tabs..."
 	database.defaultDatabase.removeMatching(lambda x:str(x.__class__.__name__) == "StaticTab")
