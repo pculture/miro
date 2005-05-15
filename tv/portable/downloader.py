@@ -597,7 +597,7 @@ class BTDownloader(Downloader):
     ##
     # Removes downloader from the database
     def remove(self):
-        self.pause()
+        ScheduleEvent(0,self.pause,False)
         DDBObject.remove(self)
 
     def runDownloader(self,done=False):
