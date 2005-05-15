@@ -1,4 +1,4 @@
-from threading import Timer, currentThread, RLock
+from threading import Timer, currentThread, RLock, Thread
 from database import DynamicDatabase,DDBObject
 from time import time
 
@@ -28,9 +28,17 @@ class Scheduler(DynamicDatabase):
     # Executes all pending events
     def executeEvents(self):
 	self.resetCursor()
-	for event in self:
-	    if event.nextRun() <= 0:
-		event.execute()
+	self.beginUpdate()
+	try:
+	    for event in self:
+		if event.nextRun() <= 0:
+		    event.lastRun = now()
+		    if not event.repeat:
+			event.remove()
+		    t = Thread(target = event.execute)
+		    t.start()
+	finally:
+	    self.endUpdate()
 	self.timer.cancel()
 	self.timer = Timer(1,self.executeEvents)
 	self.timer.start()
@@ -65,12 +73,5 @@ class ScheduleEvent(DDBObject):
     ##
     # Makes an event happen
     def execute(self):
-        self.scheduler.beginUpdate()
-        try:
-            self.lastRun = now()
-            if not self.repeat:
-                self.remove()
-        finally:
-            self.scheduler.endUpdate()
 	self.event()
 
