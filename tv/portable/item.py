@@ -30,6 +30,16 @@ class Item(DDBObject):
         DDBObject.__init__(self)
 
     ##
+    # Returns the URL associated with the first enclosure in the item
+    def getURL(self):
+	ret = ''
+	self.lock.acquire()
+	try:
+	    ret = self.entry.enclosures[0].url
+	finally:
+	    self.lock.release()
+	return ret
+    ##
     # Returns the feed this item came from
     def getFeed(self):
         self.lock.acquire()
@@ -162,7 +172,8 @@ class Item(DDBObject):
 
     ##
     # Returns a link to the thumbnail of the video
-    def getThumbnail(self):	
+    def getThumbnail(self):
+	ret = "resource:images/thumb.gif"	
         self.lock.acquire()
 	try:
 	    try:
@@ -176,7 +187,7 @@ class Item(DDBObject):
 		try:
 		    ret =  self.entry["thumbnail"]["url"]
 		except:
-		    ret = "resource:images/thumb.gif"
+		    pass
 	    return ret
 	finally:
 	    self.lock.release()
@@ -544,7 +555,7 @@ class Item(DDBObject):
 	self.lock = RLock()
 
 ##
-# An Item that exists as a file, but not
+# An Item that exists as a file, but not as a download
 class FileItem(Item):
     def getEntry(self,filename):
 	return FeedParserDict({'title':filename,'enclosures':[{'url':filename}]})
