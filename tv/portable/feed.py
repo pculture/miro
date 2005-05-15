@@ -501,7 +501,11 @@ class HTMLScraperFeed(Feed):
 	    linkPath += '?'+linkQuery
 	linkConn = HTTPConnection(linkHost)
 	linkConn.connect()
-	linkConn.request('HEAD',linkPath)
+	try:
+	    linkConn.request('HEAD',linkPath)
+	except:
+	    linkConn.close()
+	    return None
 	linkDownload = linkConn.getresponse()
 	depth = 0
 	while linkDownload.status != 200 and depth < 10:
@@ -519,8 +523,11 @@ class HTMLScraperFeed(Feed):
 		    linkPath += ';'+linkParams
 		if len(linkQuery):
 		    linkPath += '?'+linkQuery
-		#FIXME: catch exception here
-		linkConn.request("HEAD",linkPath)
+		try:
+		    linkConn.request('HEAD',linkPath)
+		except:
+		    linkConn.close()
+		    return None
 		linkDownload = linkConn.getresponse()
 	    else:
 		return None
@@ -570,8 +577,17 @@ class HTMLScraperFeed(Feed):
 	return (html, url, redirURL)
 
     def addVideoItem(self,link,title):
-	#FIXME: make this work
-	print "Adding "+str(link)+' "'+str(title)+'"'
+	link = link.strip()
+	for item in self.items:
+	    if item.getURL() == link:
+		return
+	if len(title) > 0:
+	    i=Item(self, FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link})]}))
+	else:
+	    i=Item(self, FeedParserDict({'title':link,'enclosures':[FeedParserDict({'url':link})]}))
+	self.items.append(i)
+	self.beginChange()
+	self.endChange()
 
     #FIXME: compound names for titles at each depth
     def processLinks(self,links, depth = 0):
@@ -591,6 +607,7 @@ class HTMLScraperFeed(Feed):
 
 
     #FIXME: go through and add error handling
+    #FIXME: perform HTTP caching
     def update(self):
 	(self.mainHTML,self.url, redirURL) = self.getHTML(self.url)
 	links = self.scrapeLinks(self.mainHTML, redirURL)
@@ -674,7 +691,7 @@ class HTMLScraperFeed(Feed):
     def __setstate__(self,state):
 	self.__dict__ = state
 	self.lock = RLock()
-	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,FileItem) and x.feed is self)
+	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
         self.scheduler = ScheduleEvent(self.updateFreq, self.update)
 
 	#FIXME: the update dies if all of the items aren't restored, so we 
