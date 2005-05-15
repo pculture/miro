@@ -1,6 +1,6 @@
-from threading import Timer, currentThread, RLock, Thread
+from threading import RLock, Thread
 from database import DynamicDatabase,DDBObject
-from time import time
+from time import time, sleep
 
 def now():
     return int(time())
@@ -9,10 +9,12 @@ def now():
 class Scheduler(DynamicDatabase):
     def __init__(self):
         DynamicDatabase.__init__(self)
-        self.timer = Timer(1,self.executeEvents)
+        self.isShutdown = False
 	self.lock = RLock()
-	self.timer.start()
-        
+        self.thread = Thread(target = self.executeEvents)
+	self.thread.setDaemon(False)
+	self.thread.start()
+
     ##
     # Scheduler uses it's own lock
     def beginUpdate(self):
@@ -23,26 +25,30 @@ class Scheduler(DynamicDatabase):
 	self.lock.acquire()
     def endRead(self):
 	self.lock.release()
+
+    ##
+    # Call this to shutdown the scheduler
+    def shutdown(self):
+	self.isShutdown = True
 	
     ##
     # Executes all pending events
     def executeEvents(self):
-	self.resetCursor()
-	self.beginUpdate()
-	try:
-	    for event in self:
-		if event.nextRun() <= 0:
-		    event.lastRun = now()
-		    if not event.repeat:
-			event.remove()
-		    t = Thread(target = event.execute)
-		    t.start()
-	finally:
-	    self.endUpdate()
-	self.timer.cancel()
-	self.timer = Timer(1,self.executeEvents)
-	self.timer.start()
-
+	while not self.isShutdown:
+	    self.beginUpdate()
+	    try:
+		self.resetCursor()
+		for event in self:
+		    if event.nextRun() <= 0:
+			event.lastRun = now()
+			if not event.repeat:
+			    event.remove()
+			t = Thread(target = event.execute)
+			t.setDaemon(False)
+			t.start()
+	    finally:
+		self.endUpdate()
+	    sleep(1)
 ##
 # a ScheduleEvent corresponds to something that happens in the
 # future, possibly periodically
