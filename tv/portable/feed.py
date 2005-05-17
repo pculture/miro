@@ -1,6 +1,7 @@
 from formatter import AbstractFormatter, NullWriter
 from httplib import HTTPConnection
 from htmllib import HTMLParser
+import xml
 from urlparse import urlparse, urljoin
 from urllib import urlopen
 from datetime import datetime,timedelta
@@ -483,8 +484,8 @@ class Collection(Feed):
 	return True
 
 ##
-# A feed based on un unformatted HTML
-class HTMLScraperFeed(Feed):
+# A feed based on un unformatted HTML or pre-enclosure RSS
+class ScraperFeed(Feed):
     def __init__(self,url,title = None, visible = True):
 	Feed.__init__(self,url,title,visible)
 	self.scheduler = ScheduleEvent(self.updateFreq, self.update)
@@ -503,10 +504,10 @@ class HTMLScraperFeed(Feed):
 	linkConn.connect()
 	try:
 	    linkConn.request('HEAD',linkPath)
+	    linkDownload = linkConn.getresponse()
 	except:
 	    linkConn.close()
 	    return None
-	linkDownload = linkConn.getresponse()
 	depth = 0
 	while linkDownload.status != 200 and depth < 10:
 	    depth += 1
@@ -593,6 +594,7 @@ class HTMLScraperFeed(Feed):
     def processLinks(self,links, depth = 0):
 	if depth<2:
 	    for (link, title) in links:
+		print "Got link:" + link
 		#FIXME keep the connection open
 		mimetype = self.getMimeType(link)
 		if mimetype != None:
@@ -614,62 +616,25 @@ class HTMLScraperFeed(Feed):
 	self.processLinks(links)
 	#Download the HTML associated with each page
 
-
+    def scrapeLinks(self,html,baseurl):
+	try:
+	    handler = RSSLinkGrabber(html,baseurl)
+	    xml.sax.parseString(html,handler)
+	    links = handler.links
+	    links2 = []
+	    for link in links:
+		if link[0][0:7] == 'http://':
+		    links2.append((link[0],link[1].strip()))
+	    return links2
+	except xml.sax.SAXNotRecognizedException:
+	    return self.scrapeHTMLLinks(html,baseurl)
+	except xml.sax.SAXParseException:	    
+	    return self.scrapeHTMLLinks(html,baseurl)
     ##
     # Given a string containing an HTML file, return a list of tuples
     # of titles and links
-    def scrapeLinks(self,html, baseurl):
-	class LinkGrabber(HTMLParser):
-	    def getLinks(self,data, baseurl):
-		self.links = []
-		self.lastLink = None
-		self.inLink = False
-		self.inObject = False
-		self.baseurl = baseurl
-		self.feed(data)
-		self.close()
-		return self.links
-
-	    #FIXME Handle title and baseurl
-	    def handle_starttag(self, tag, method, attrs):
-		if tag.lower() == 'object':
-		    self.inObject = True
-		    return
-		elif tag.lower() == 'a':
-		    for attr in attrs:
-			if attr[0].lower() == 'href':
-			    self.links.append( (urljoin(self.baseurl,attr[1]),''))
-			    self.inLink = True
-			    break
-		elif tag.lower() == 'embed':
-		    for attr in attrs:
-			if attr[0].lower() == 'src':
-			    self.links.append( (urljoin(self.baseurl,attr[1]),''))
-			    break
-		elif tag.lower() == 'param' and self.inObject:
-		    srcParam = False
-		    for attr in attrs:
-			if attr[0].lower() == 'name' and attr[1].lower() == 'src':
-			    srcParam = True
-			    break
-		    if srcParam:
-			for attr in attrs:
-			    if attr[0].lower() == 'value':
-				self.links.append( (urljoin(self.baseurl,attr[1]),''))
-				break
-		
-	    def handle_endtag(self, tag, method):
-		if tag.lower() == 'a':
-		    if self.inLink:
-			if len(self.links[-1][1]) == 0:
-			    self.links[-1] = (self.links[-1][0], self.links[-1][0])
-			self.inLink = False
-		if tag.lower() == 'object':
-		    self.inObject = False
-	    def handle_data(self, data):
-		if self.inLink:
-		    self.links[-1] = (self.links[-1][0],self.links[-1][1]+data)
-	lg = LinkGrabber(AbstractFormatter(NullWriter))
+    def scrapeHTMLLinks(self,html, baseurl):
+	lg = HTMLLinkGrabber(AbstractFormatter(NullWriter))
 	links = lg.getLinks(html, baseurl)
 	links2 = []
 	for link in links:
@@ -788,3 +753,95 @@ class DirectoryFeed(Feed):
 	#FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
         self.scheduler = ScheduleEvent(5, self.update,False)
+
+##
+# Parse HTML document and grab all of the links and their titles
+class HTMLLinkGrabber(HTMLParser):
+    def getLinks(self,data, baseurl):
+	self.links = []
+	self.lastLink = None
+	self.inLink = False
+	self.inObject = False
+	self.baseurl = baseurl
+	self.feed(data)
+	self.close()
+	return self.links
+
+    #FIXME Handle title and baseurl
+    def handle_starttag(self, tag, method, attrs):
+	if tag.lower() == 'object':
+	    self.inObject = True
+	elif tag.lower() == 'a':
+	    for attr in attrs:
+		if attr[0].lower() == 'href':
+		    self.links.append( (urljoin(self.baseurl,attr[1]),''))
+		    self.inLink = True
+		    break
+	elif tag.lower() == 'embed':
+		for attr in attrs:
+		    if attr[0].lower() == 'src':
+			self.links.append( (urljoin(self.baseurl,attr[1]),''))
+			break
+	elif tag.lower() == 'param' and self.inObject:
+	    srcParam = False
+	    for attr in attrs:
+		if attr[0].lower() == 'name' and attr[1].lower() == 'src':
+		    srcParam = True
+		    break
+	    if srcParam:
+		for attr in attrs:
+		    if attr[0].lower() == 'value':
+			self.links.append( (urljoin(self.baseurl,attr[1]),''))
+			break
+		
+    def handle_endtag(self, tag, method):
+	if tag.lower() == 'a':
+	    if self.inLink:
+		if len(self.links[-1][1]) == 0:
+		    self.links[-1] = (self.links[-1][0], self.links[-1][0])
+		    self.inLink = False
+	if tag.lower() == 'object':
+	    self.inObject = False
+    def handle_data(self, data):
+	if self.inLink:
+	    self.links[-1] = (self.links[-1][0],self.links[-1][1]+data)
+
+class RSSLinkGrabber(xml.sax.handler.ContentHandler):
+    def __init__(self,html,baseurl):
+	self.html = html
+	self.baseurl = baseurl
+    def startDocument(self):
+	self.links = []
+	self.inLink = False
+	self.inDescription = True
+	self.descHTML = ''
+	self.theLink = ''
+	self.firstTag = True
+
+    def startElement(self, tag, attrs):
+	if self.firstTag:
+	    self.firstTag = False
+	    if tag != 'rss':
+		raise xml.sax.SAXNotRecognizedException, "Not an RSS file"
+	if tag.lower() == 'link':
+	    self.inLink = True
+	    self.theLink = ''
+	    return
+	elif tag.lower() == 'description':
+	    self.inDescription = True
+	    self.descHTML = ''
+		
+    def endElement(self, tag):
+	if tag.lower() == 'description':
+	    lg = HTMLLinkGrabber(self.html,self.baseurl)
+	    self.links[:0] = lg.getLinks(unescape(self.descHTML),self.baseurl)
+	    self.inDescription = False
+	elif tag.lower() == 'link':
+	    print "Got link "
+	    self.links.append((self.theLink,self.theLink))
+	    self.inLink = False
+    def characters(self, data):
+	if self.inDescription:
+	    self.descHTML += data
+	elif self.inLink:
+	    self.theLink += data
