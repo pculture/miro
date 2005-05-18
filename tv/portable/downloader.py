@@ -1,5 +1,5 @@
 from database import DDBObject
-from threading import RLock, Thread, Event
+from threading import Thread, Event
 from httplib import HTTPConnection
 from scheduler import ScheduleEvent
 import config
@@ -54,7 +54,6 @@ class Downloader(DDBObject):
         self.totalSize = -1
         self.blockTimes = []
         self.headers = None
-        self.lock = RLock()
         DDBObject.__init__(self)
         self.thread = Thread(target=self.runDownloader)
         self.thread.setDaemon(True)
@@ -81,39 +80,39 @@ class Downloader(DDBObject):
     ##
     # Returns the URL we're downloading
     def getURL(self):
-        self.lock.acquire()
+        self.beginRead()
         ret = self.url
-        self.lock.release()
+        self.endRead()
         return ret
     ##    
     # Returns the state of the download: downloading, paused, stopped,
     # failed, or finished
     def getState(self):
-        self.lock.acquire()
+        self.beginRead()
         ret = self.state
-        self.lock.release()
+        self.endRead()
         return ret
 
     ##
     # Returns the total size of the download in bytes
     def getTotalSize(self):
-        self.lock.acquire()
+        self.beginRead()
         ret = self.totalSize
-        self.lock.release()
+        self.endRead()
         return ret
 
     ##
     # Returns the current amount downloaded in bytes
     def getCurrentSize(self):
-        self.lock.acquire()
+        self.beginRead()
         ret = self.currentSize
-        self.lock.release()
+        self.endRead()
         return ret
 
     ##
     # Returns a float with the estimated number of seconds left
     def getETA(self):
-        self.lock.acquire()
+        self.beginRead()
         try:
             rate = self.getRate()
             if rate != 0:
@@ -123,14 +122,14 @@ class Downloader(DDBObject):
             else:
                 eta = 0
         finally:
-            self.lock.release()
+            self.endRead()
         return eta
 
     ##
     # Returns a float with the download rate in bytes per second
     def getRate(self):
         now = time()
-        self.lock.acquire()
+        self.beginRead()
         try:
             if self.endTime != self.startTime:
                 rate = self.currentSize/(self.endTime-self.startTime)
@@ -143,16 +142,16 @@ class Downloader(DDBObject):
                 except IndexError:
                     rate = 0
         finally:
-            self.lock.release()
+            self.endRead()
         return rate
 
     ##
     # Returns the filename that we're downloading to. Should not be
     # called until state is "finished."
     def getFilename(self):
-        self.lock.acquire()
+        self.beginRead()
         ret = self.filename
-        self.lock.release()
+        self.endRead()
         return ret
 
     ##
@@ -171,7 +170,6 @@ class Downloader(DDBObject):
     # Called by pickle during serialization
     def __getstate__(self):
 	temp = copy(self.__dict__)
-	temp["lock"] = None
 	temp["thread"] = None
 	return temp
 
@@ -179,7 +177,6 @@ class Downloader(DDBObject):
     # Called by pickle during deserialization
     def __setstate__(self,state):
 	self.__dict__ = state
-	self.lock = RLock()
         self.thread = Thread(target=lambda :self.runDownloader(retry = True))
         self.thread.setDaemon(True)
         self.thread.start()
@@ -199,7 +196,7 @@ class HTTPDownloader(Downloader):
     def updateRateAndETA(self,length):
         now = math.floor(time())
 	updated = False
-        self.lock.acquire()
+        self.beginRead()
         try:
             self.currentSize = self.currentSize + length
 	    if self.lastUpdated < now:
@@ -210,7 +207,7 @@ class HTTPDownloader(Downloader):
 	        updated = True
 		self.lastUpdated = now
         finally:
-            self.lock.release()
+            self.endRead()
 	if updated:
 	    self.item.beginChange()
 	    self.item.endChange()
@@ -218,18 +215,18 @@ class HTTPDownloader(Downloader):
     ##
     # Grabs the next block from the HTTP connection
     def getNextBlock(self,handle):
-        self.lock.acquire()
+        self.beginRead()
         state = self.state
-        self.lock.release()
+        self.endRead()
         if (state == "paused") or (state == "stopped"):
             data = ""
 	else:
 	    try:
 		data = handle.read(1024)
 	    except:
-		self.lock.acquire()
+		self.beginRead()
 		self.state = "failed"
-		self.lock.release()
+		self.endRead()
 		data = ""
         self.updateRateAndETA(len(data))
         return data
@@ -286,18 +283,18 @@ class HTTPDownloader(Downloader):
 	    if depth == 10:
 		raise DownloaderError, "Maximum redirect depth"
         except:
-            self.lock.acquire()
+            self.beginRead()
             try:
                 self.state = "failed"
             finally:
-                self.lock.release()
+                self.endRead()
             return False
 
 	info = download.msg
 	download.close()
 
         #Get the length of the file
-        self.lock.acquire()
+        self.beginRead()
         try:
             try:
                 totalSize = int(info['Content-Length'])
@@ -305,13 +302,13 @@ class HTTPDownloader(Downloader):
                 totalSize = -1
             self.totalSize = totalSize
         finally:
-            self.lock.release()
+            self.endRead()
 
 	if not retry:
 	    try:
                 #Get the filename, if an alternate one is given
 		disposition = info['Content-Disposition']
-		self.lock.acquire()
+		self.beginRead()
 		try:
 		    self.shortFilename = re.compile("^.*filename\s*=\s*\"(.*?)\"$").search(disposition).expand("\\1")
 		    self.shortFilename.replace ("/","")
@@ -319,7 +316,7 @@ class HTTPDownloader(Downloader):
 		    self.filename = os.path.join(config.get('DataDirectory'),'Incomplete Downloads',self.shortFilename+".part")
 		    self.filename = self.nextFreeFilename(self.filename)
 		finally:
-		    self.lock.release()
+		    self.endRead()
 	    except KeyError:
 		pass
 	    filehandle = file(self.filename,"w+b")
@@ -331,15 +328,15 @@ class HTTPDownloader(Downloader):
 	else:
 	    try:
 		filehandle = file(self.filename,"r+b")
-		self.lock.acquire()
+		self.beginRead()
 		pos = self.currentSize
-		self.lock.release()
+		self.endRead()
 		filehandle.seek(pos)
 	    except:
 		filehandle = file(self.filename,"w+b")
-		self.lock.acquire()
+		self.beginRead()
 		self.currentSize = 0
-		self.lock.release()
+		self.endRead()
 		pos = 0
 		if totalSize > 0:
 		    filehandle.seek(totalSize-1)
@@ -352,9 +349,9 @@ class HTTPDownloader(Downloader):
             if download.status != 206:
 		download.close()
                 #Range is not supported, start the download from 0
-                self.lock.acquire()
+                self.beginRead()
                 self.currentSize = 0
-                self.lock.release()
+                self.endRead()
                 filehandle.close()
                 filehandle = file(self.filename,"wb")
                 conn.request("GET",path)
@@ -378,7 +375,7 @@ class HTTPDownloader(Downloader):
             filehandle.close()
             download.close()
         #Update the status
-        self.lock.acquire()
+        self.beginRead()
         try:
             if self.state == "downloading":
                 self.state = "finished"
@@ -391,7 +388,7 @@ class HTTPDownloader(Downloader):
                     self.totalSize = self.currentSize
                 self.endTime = time()
         finally:
-            self.lock.release()
+            self.endRead()
 	    self.item.beginChange()
 	    self.item.endChange()
  
@@ -401,9 +398,9 @@ class HTTPDownloader(Downloader):
     # implementation where this will block until the next packet is
     # received
     def pause(self):
-        self.lock.acquire()
+        self.beginRead()
         self.state = "paused"
-        self.lock.release()
+        self.endRead()
 	self.item.beginChange()
 	self.item.endChange()
         self.thread.join()
@@ -413,9 +410,9 @@ class HTTPDownloader(Downloader):
     # file. Currently there's a flaw in the implementation where this
     # will block until the next packet is received
     def stop(self):
-        self.lock.acquire()
+        self.beginRead()
         self.state = "stopped"
-        self.lock.release()
+        self.endRead()
 	self.item.beginChange()
 	self.item.endChange()
         self.thread.join()
@@ -428,9 +425,9 @@ class HTTPDownloader(Downloader):
     # Continues a paused or stopped download thread
     def start(self):
         self.pause() #Pause the download thread
-        self.lock.acquire()
+        self.beginRead()
         self.state = "downloading"
-        self.lock.release()
+        self.endRead()
 	self.item.beginChange()
 	self.item.endChange()
 	self.runDownloader(True)
@@ -457,7 +454,7 @@ class BTDisplay:
 
     def finished(self):
 	self.dler.item.setDownloadedTime()
-        self.dler.lock.acquire()
+        self.dler.beginRead()
 	try:
 	    if not self.dler.state == "finished":
 		self.dler.state = "finished"
@@ -473,7 +470,7 @@ class BTDisplay:
 		self.dler.torrent = self.dler.multitorrent.start_torrent(self.dler.metainfo,self.dler.torrentConfig, self.dler, self.dler.filename)
 
 	finally:
-	    self.dler.lock.release()
+	    self.dler.endRead()
 	    self.dler.item.beginChange()
 	    self.dler.item.endChange()
 	    
@@ -483,7 +480,7 @@ class BTDisplay:
     def display(self, statistics):
 	update = False
 	now = math.floor(time())
-	self.dler.lock.acquire()
+	self.dler.beginRead()
 	try:
 	    if statistics.get('upTotal') != None:
 		if self.lastUpTotal > statistics.get('upTotal'):
@@ -504,7 +501,7 @@ class BTDisplay:
 		update = True
 		self.lastUpdated = now
 	finally:
-	    self.dler.lock.release()
+	    self.dler.endRead()
 	    if update:
 		self.dler.item.beginChange()
 		self.dler.item.endChange()
@@ -513,14 +510,12 @@ class BTDisplay:
     # Called by pickle during serialization
     def __getstate__(self):
 	temp = copy(self.__dict__)
-	temp["lock"] = None
 	return temp
 
     ##
     # Called by pickle during deserialization
     def __setstate__(self,state):
 	self.__dict__ = state
-	self.lock = RLock()
 
 class BTDownloader(Downloader):
     def global_error(self, level, text):
@@ -539,21 +534,21 @@ class BTDownloader(Downloader):
         Downloader.__init__(self,url,item)
 
     def getRate(self):
-        self.lock.acquire()
+        self.beginRead()
         ret = self.rate
-        self.lock.release()
+        self.endRead()
         return ret
 
     def getETA(self):
-        self.lock.acquire()
+        self.beginRead()
         ret = self.eta
-        self.lock.release()
+        self.endRead()
         return ret
         
     def pause(self):
-        self.lock.acquire()
+        self.beginRead()
         self.state = "paused"
-        self.lock.release()
+        self.endRead()
 	self.item.beginChange()
 	self.item.endChange()
 	try:
@@ -562,9 +557,9 @@ class BTDownloader(Downloader):
 	    pass
 
     def stop(self):
-        self.lock.acquire()
+        self.beginRead()
         self.state = "stopped"
-        self.lock.release()
+        self.endRead()
 	self.item.beginChange()
 	self.item.endChange()
 	self.torrent.shutdown()
@@ -581,13 +576,13 @@ class BTDownloader(Downloader):
 
     def start(self):
         self.pause()
-        self.lock.acquire()
+        self.beginRead()
 	metainfo = self.metainfo
 	if metainfo == None:
 	    self.state = "failed"
 	else:
 	    self.state = "downloading"
-        self.lock.release()
+        self.endRead()
 	self.item.beginChange()
 	self.item.endChange()
 	if metainfo != None:
@@ -631,11 +626,11 @@ class BTDownloader(Downloader):
     ##
     # Functions below this point are needed by BitTorrent
     def set_torrent_values(self, name, path, size, numpieces):
-        self.lock.acquire()
+        self.beginRead()
         try:
             self.totalSize = size
         finally:
-            self.lock.release()
+            self.endRead()
 
     def exception(self, torrent, text):
         self.error(torrent, CRITICAL, text)
@@ -672,7 +667,6 @@ class BTDownloader(Downloader):
 
     def __getstate__(self):
 	temp = copy(self.__dict__)
-	temp["lock"] = None
 	temp["thread"] = None
 	try:
 	    temp["torrent"] = None
@@ -682,7 +676,6 @@ class BTDownloader(Downloader):
 
     def __setstate__(self,state):
 	self.__dict__ = state
-	self.lock = RLock()
         self.thread = Thread(target=self.restartDL)
         self.thread.setDaemon(True)
         self.thread.start()

@@ -1,6 +1,5 @@
 from datetime import datetime
 from database import DDBObject
-from threading import RLock
 from downloader import DownloaderFactory
 from copy import copy
 from xhtmltools import unescape,xhtmlify
@@ -24,7 +23,6 @@ class Item(DDBObject):
 	self.startingDownload = False
 	self.lastDownloadFailed = False
         self.entry = entry
-        self.lock = RLock()
 	self.dlFactory = DownloaderFactory(self)
 	self.expired = False
         DDBObject.__init__(self)
@@ -33,92 +31,92 @@ class Item(DDBObject):
     # Returns the URL associated with the first enclosure in the item
     def getURL(self):
 	ret = ''
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    ret = self.entry.enclosures[0].url
 	finally:
-	    self.lock.release()
+	    self.endRead()
 	return ret
     ##
     # Returns the feed this item came from
     def getFeed(self):
-        self.lock.acquire()
+        self.beginRead()
         ret = self.feed
-        self.lock.release()
+        self.endRead()
         return ret
 
     ##
     # Returns the number of videos associated with this item
     def getAvailableVideos(self):
 	ret = 0
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    ret = len(self.entry.enclosures)
 	finally:
-	    self.lock.release()
+	    self.endRead()
 	return ret
 
     ##
     # Marks this item as expired
     def expire(self):
-        self.lock.acquire()
+        self.beginRead()
 	try:
 	    self.stopDownload()
 	    self.markItemSeen()
 	    self.expired = True
 	finally:
-	    self.lock.release()	
+	    self.endRead()	
 
     ##
     # returns true iff item has been seen
     def getSeen(self):
-        self.lock.acquire()
+        self.beginRead()
         ret = self.seen
-        self.lock.release()
+        self.endRead()
         return ret
 
     ##
     # Marks the item as seen
     def markItemSeen(self):
-        self.lock.acquire()
+        self.beginRead()
         self.seen = True
-        self.lock.release()
+        self.endRead()
 
     ##
     # Returns a list of downloaders associated with this object
     def getDownloaders(self):
-        self.lock.acquire()
+        self.beginRead()
         ret = self.downloaders
-        self.lock.release()
+        self.endRead()
         return ret
 
     def getRSSID(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    ret = self.entry["id"]
 	finally:
-	    self.lock.release()
+	    self.endRead()
 	return ret
 
     ##
     # Returns the vidinfo object associated with this item
     def getVidInfo(self):
-        self.lock.acquire()
+        self.beginRead()
         ret = self.vidinfo
-        self.lock.release()
+        self.endRead()
         return ret
 
     def setAutoDownloaded(self,autodl = True):
-	self.lock.acquire()
+	self.beginRead()
 	self.autoDownloaded = autodl
-	self.lock.release()
+	self.endRead()
 
     ##
     # Returns true iff item was auto downloaded
     def autoDownloaded(self):
-        self.lock.acquire()
+        self.beginRead()
         ret = self.autoDownloaded
-        self.lock.release()
+        self.endRead()
         return ret
 
     def download(self,autodl=False):
@@ -127,7 +125,7 @@ class Item(DDBObject):
     ##
     # Starts downloading the item
     def actualDownload(self,autodl=False):
-        self.lock.acquire()
+        self.beginRead()
         try:
 	    self.setAutoDownloaded(autodl)
 	    self.lastDownloadFailed = False
@@ -138,7 +136,7 @@ class Item(DDBObject):
 	    except:
 		enclosures = []
         finally:
-            self.lock.release()
+            self.endRead()
 	self.beginChange()
 	self.endChange()
 	try:
@@ -147,26 +145,26 @@ class Item(DDBObject):
 		    if not enclosure["url"] in downloadURLs:
 			dler = self.dlFactory.getDownloader(enclosure["url"])
 			if dler != None:
-			    self.lock.acquire()
+			    self.beginRead()
 			    try:
 				self.downloaders.append(dler)
 			    finally:
-				self.lock.release()
+				self.endRead()
 			else:
-			    self.lock.acquire()
+			    self.beginRead()
 			    try:
 				self.lastDownloadFailed = True
 			    finally:
-				self.lock.release()
+				self.endRead()
 		except KeyError:
 		    pass
 	except KeyError:
 	    pass
-        self.lock.acquire()
+        self.beginRead()
         try:
 	    self.startingDownload = False
         finally:
-            self.lock.release()
+            self.endRead()
 	self.beginChange()
 	self.endChange()
 
@@ -174,7 +172,7 @@ class Item(DDBObject):
     # Returns a link to the thumbnail of the video
     def getThumbnail(self):
 	ret = "resource:images/thumb.gif"	
-        self.lock.acquire()
+        self.beginRead()
 	try:
 	    try:
 		for enc in self.entry.enclosures:
@@ -190,12 +188,12 @@ class Item(DDBObject):
 		    pass
 	    return ret
 	finally:
-	    self.lock.release()
+	    self.endRead()
 
     ##
     # returns the title of the item
     def getTitle(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    ret = self.entry.title
 	except:
@@ -203,13 +201,13 @@ class Item(DDBObject):
 		ret = self.entry.enclosures[0]["url"]
 	    except:
 		ret = ""
-	self.lock.release()
+	self.endRead()
 	return ret
 
     ##
     # Returns valid XHTML containing a description of the video
     def getDescription(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    ret = xhtmlify('<span>'+unescape(self.entry.enclosures[0]["text"])+'</span>')
 	except:
@@ -217,7 +215,7 @@ class Item(DDBObject):
 		ret = xhtmlify('<span>'+unescape(self.entry.description)+'</span>')
 	    except:
 		ret = '<span />'
-	self.lock.release()
+	self.endRead()
 	return ret
 
     ##
@@ -226,16 +224,16 @@ class Item(DDBObject):
 	for dler in self.downloaders:
 	    dler.stop()
 	    dler.remove()
-        self.lock.acquire()
+        self.beginRead()
         try:
 	    self.downloaders = []
         finally:
-            self.lock.release()
+            self.endRead()
 
     ##
     # returns status of the download in plain text
     def getState(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    if self.expired:
 		state = "expired"
@@ -255,7 +253,7 @@ class Item(DDBObject):
 		    if state == "failed":
 			break
 	finally:
-	    self.lock.release()
+	    self.endRead()
 	return state
 
     ##
@@ -311,33 +309,33 @@ class Item(DDBObject):
     ##
     # Returns the published date of the item
     def getPubDate(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    try:
 		ret = datetime(*self.entry.modified_parsed[0:7]).strftime("%b %d %Y")
 	    except:
 		ret = ""
         finally:
-	    self.lock.release()
+	    self.endRead()
 	return ret
     
     ##
     # Returns the published date of the item as a datetime object
     def getPubDateParsed(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    try:
 		ret = datetime(*self.entry.modified_parsed[0:7])
 	    except:
 		ret = ""
         finally:
-	    self.lock.release()
+	    self.endRead()
 	return ret
 
     ##
     # returns the date this video was released or when it was published
     def getReleaseDate(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    try:
 		ret = datetime(*self.entry.enclosures[0].modified_parsed[0:7]).strftime("%b %d %Y")
@@ -347,7 +345,7 @@ class Item(DDBObject):
 		except:
 		    ret = ""
 	finally:
-	    self.lock.release()
+	    self.endRead()
 	return ret
 
     ##
@@ -367,20 +365,20 @@ class Item(DDBObject):
     ##
     # return keyword tags associated with the video separated by commas
     def getTags(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    try:
 		ret = self.entry.categories.join(", ")
 	    except:
 		ret = ""
 	finally:
-	    self.lock.release()
+	    self.endRead()
 	return ret
 
     ##
     # return the license associated with the video
     def getLicence(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    try:
 		ret = self.entry.license
@@ -390,14 +388,14 @@ class Item(DDBObject):
 		except:
 		    ret = ""
 	finally:
-	    self.lock.release()
+	    self.endRead()
 	return ret
 
     ##
     # return the people associated with the video, separated by commas
     def getPeople(self):
 	ret = []
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    try:
 		for role in self.entry.enclosures[0].roles:
@@ -409,26 +407,26 @@ class Item(DDBObject):
 	    except:
 		pass
 	finally:
-	    self.lock.release()
+	    self.endRead()
 	return ret.join(', ')
 
     ##
     # returns the URL of the webpage associated with the item
     def getLink(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    try:
 		ret = self.entry.link
 	    except:
 		ret = ""
 	finally:
-	    self.lock.release()
+	    self.endRead()
 	return ret
 
     ##
     # returns the URL of the payment page associated with the item
     def getPaymentLink(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    try:
 		ret = self.entry.enclosures[0].payment_url
@@ -438,14 +436,14 @@ class Item(DDBObject):
 		except:
 		    ret = ""
 	finally:
-	    self.lock.release()
+	    self.endRead()
 	return ret
 
     ##
     # returns a snippet of HTML containing a link to the payment page
     # HTML has already been sanitized by feedparser
     def getPaymentHTML(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    try:
 		ret = self.entry.enclosures[0].payment_html
@@ -455,7 +453,7 @@ class Item(DDBObject):
 		except:
 		    ret = ""
 	finally:
-	    self.lock.release()
+	    self.endRead()
 	return '<span>'+ret+'</span>'
 
     ##
@@ -472,57 +470,57 @@ class Item(DDBObject):
     ##
     # marks the item as having been downloaded now
     def setDownloadedTime(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    self.downloadedTime = datetime.now()
 	finally:
-	    self.lock.release()
+	    self.endRead()
 
     ##
     # gets the time the video was downloaded
     # Only valid if the state of this item is "finished"
     def getDownloadedTime(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    try:
 		ret = self.downloadedTime
 	    except:
 		ret = datetime.min
 	finally:
-	    self.lock.release()
+	    self.endRead()
 	return ret
 
     ##
     # gets the time the video started downloading
     def getDLStartTime(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    try:
 		ret = self.DLStartTime
 	    except:
 		ret = None
 	finally:
-	    self.lock.release()
+	    self.endRead()
 	return ret
 
     ##
     # Returns the filename of the first downloaded video or the empty string
     def getFilename(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    try:
 		ret = self.downloaders[0].getFilename()
 	    except:
 		ret = ""
 	finally:
-	    self.lock.release()
+	    self.endRead()
 	return ret
 
     ##
     # Returns a list with the filenames of all of the videos in the item
     def getFilenames(self):
 	ret = []
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    try:
 		for dl in self.downloaders:
@@ -530,29 +528,27 @@ class Item(DDBObject):
 	    except:
 		pass
 	finally:
-	    self.lock.release()
+	    self.endRead()
 	return ret
 
     def getRSSEntry(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    ret = self.entry
 	finally:
-	    self.lock.release()
+	    self.endRead()
 	return ret
 
     ##
     # Called by pickle during serialization
     def __getstate__(self):
 	temp = copy(self.__dict__)
-	temp["lock"] = None
 	return temp
 
     ##
     # Called by pickle during serialization
     def __setstate__(self,state):
 	self.__dict__ = state
-	self.lock = RLock()
 
 ##
 # An Item that exists as a file, but not as a download
@@ -568,14 +564,14 @@ class FileItem(Item):
 	return "finished"
 
     def getDownloadedTime(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    try:
 		time = datetime.fromtimestamp(os.getctime(self.filename))
 	    except:
 		return datetime.min
 	finally:
-	    self.lock.release()
+	    self.endRead()
 
     def getFilename(self):
 	return self.filename

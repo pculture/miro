@@ -745,6 +745,25 @@ class DDBObject:
             self.dd.endUpdate()
 
     ##
+    # Call this before you grab data from an object
+    #
+    # Usage:
+    #
+    # view.beginRead()
+    # try:
+    #     ...
+    # finally:
+    #     endRead()
+    #
+    def beginRead(self):
+	globalLock.acquire()
+
+    ##
+    # Used with beginRead()
+    def endRead(self):
+	globalLock.release()
+
+    ##
     # Call this before you change the object
     #
     # Usage:

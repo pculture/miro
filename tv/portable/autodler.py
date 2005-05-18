@@ -35,7 +35,9 @@ class AutoDownloader:
     # gets the next thing it can
     # 
     def spawnDownloads(self):
+	print "Spawning auto downloader..."
 	database.defaultDatabase.recomputeFilters()
+	print "done recomputing..."
 	attempts = 0
 	target = config.get('DownloadsTarget')
 	while self.downloads() < target and self.feeds.len() > attempts:

@@ -5,7 +5,6 @@ import xml
 from urlparse import urlparse, urljoin
 from urllib import urlopen
 from datetime import datetime,timedelta
-from threading import RLock
 from database import defaultDatabase
 from item import *
 from scheduler import ScheduleEvent
@@ -53,7 +52,6 @@ class Feed(DDBObject):
 	else:
 	    self.title = title
         self.created = datetime.now()
-        self.lock = RLock()
 	self.autoDownloadable = False
 	self.getEverything = False
 	self.maxNew = -1
@@ -68,7 +66,7 @@ class Feed(DDBObject):
     # Downloads the next available item taking into account maxNew,
     # fallbehind, and getEverything
     def downloadNext(self, dontUse = []):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    next = None
 
@@ -93,7 +91,7 @@ class Feed(DDBObject):
 		    newitems += 1
 
 	finally:
-	    self.lock.release()
+	    self.endRead()
 
 	if self.maxNew >= 0 and newItems >= self.maxNew:
 	    return False
@@ -101,11 +99,11 @@ class Feed(DDBObject):
 	    dontUse.append(next)
 	    return self.downloadNext(dontUse)
 	elif next != None:
-	    self.lock.acquire()
+	    self.beginRead()
 	    try:
 		self.startfrom = next.getPubDateParsed()
 	    finally:
-		self.lock.release()
+		self.endRead()
 	    next.download(autodl = True)
 	    return True
 	else:
@@ -127,17 +125,17 @@ class Feed(DDBObject):
     ##
     # Returns true iff feed should be visible
     def isVisible(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    ret = self.visible
 	finally:
-	    self.lock.release()
+	    self.endRead()
 	return ret
 
     ##
     # Takes in parameters from the save settings page and saves them
     def saveSettings(self,automatic,maxnew,fallBehind,expire,expireDays,expireHours,getEverything):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    self.autoDownloadable = (automatic == "1")
 	    self.getEverything = (getEverything == "1")
@@ -152,90 +150,90 @@ class Feed(DDBObject):
 	    self.expire = expire
 	    self.expireTime = timedelta(days=int(expireDays),hours=int(expireHours))
 	finally:
-	    self.lock.release()
+	    self.endRead()
 
     ##
     # Returns "feed," "system," or "never"
     def getExpirationType(self):
-	self.lock.acquire()
+	self.beginRead()
 	ret = self.expire
-	self.lock.release()
+	self.endRead()
 	return ret
 
     ##
     # Returns"unlimited" or the maximum number of items this feed can fall behind
     def getMaxFallBehind(self):
-	self.lock.acquire()
+	self.beginRead()
 	if self.fallBehind < 0:
 	    ret = "unlimited"
 	else:
 	    ret = self.fallBehind
-	self.lock.release()
+	self.endRead()
 	return ret
 
     ##
     # Returns "unlimited" or the maximum number of items this feed wants
     def getMaxNew(self):
-	self.lock.acquire()
+	self.beginRead()
 	if self.maxNew < 0:
 	    ret = "unlimited"
 	else:
 	    ret = self.maxNew
-	self.lock.release()
+	self.endRead()
 	return ret
 
     ##
     # Returns the number of days until a video expires
     def getExpireDays(self):
 	ret = 0
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    try:
 		ret = self.expireTime.days
 	    except:
 		ret = config.get('DefaultTimeUntilExpiration').days
 	finally:
-	    self.lock.release()
+	    self.endRead()
 	return ret
 
     ##
     # Returns the number of hours until a video expires
     def getExpireHours(self):
 	ret = 0
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    try:
 		ret = int(self.expireTime.seconds/3600)
 	    except:
 		ret = int(config.get('DefaultTimeUntilExpiration').seconds/3600)
 	finally:
-	    self.lock.release()
+	    self.endRead()
 	return ret
 	
 
     ##
     # Returns true iff item is autodownloadable
     def isAutoDownloadable(self):
-        self.lock.acquire()
+        self.beginRead()
         ret = self.autoDownloadable
-        self.lock.release()
+        self.endRead()
         return ret
 
 
     ##
     # Returns the title of the feed
     def getTitle(self):
-        self.lock.acquire()
+        self.beginRead()
         ret = self.title
-        self.lock.release()
+        self.endRead()
         return ret
 
     ##
     # Returns the URL of the feed
     def getURL(self):
-        self.lock.acquire()
+        self.beginRead()
         ret = self.url
-        self.lock.release()
+        self.endRead()
         return ret
 
     ##
@@ -266,7 +264,7 @@ class Feed(DDBObject):
     ##
     # Returns the number of new items with the feed
     def getNewItems(self):
-        self.lock.acquire()
+        self.beginRead()
 	count = 0
 	for item in self.items:
 	    try:
@@ -274,32 +272,30 @@ class Feed(DDBObject):
 		    count += 1
 	    except:
 		pass
-        self.lock.release()
+        self.endRead()
         return count
 
     ##
     # Removes a feed from the database
     def removeFeed(self,url):
-        self.lock.acquire()
+        self.beginRead()
         try:
             for item in self.items:
                 item.remove()
         finally:
-            self.lock.release()
+            self.endRead()
         self.remove()
 
     ##
     # Called by pickle during serialization
     def __getstate__(self):
 	temp = copy(self.__dict__)
-	temp["lock"] = None
 	return temp
 
     ##
     # Called by pickle during deserialization
     def __setstate__(self,state):
 	self.__dict__ = state
-	self.lock = RLock()
 
 class RSSFeed(Feed):
     def __init__(self,url,title = None):
@@ -311,45 +307,45 @@ class RSSFeed(Feed):
     ##
     # Returns the description of the feed
     def getDescription(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    ret = xhtmlify('<span>'+unescape(self.parsed.summary)+'</span>')
 	except:
 	    ret = "<span />"
-	self.lock.release()
+	self.endRead()
         return ret
 
     ##
     # Returns a link to a webpage associated with the feed
     def getLink(self):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    ret = self.parsed.link
 	except:
 	    ret = ""
-	self.lock.release()
+	self.endRead()
         return ret
 
     ##
     # Returns the URL of the library associated with the feed
     def getLibraryLink(self):
-        self.lock.acquire()
+        self.beginRead()
 	try:
 	    ret = self.parsed.libraryLink
 	except:
 	    ret = ""
-        self.lock.release()
+        self.endRead()
         return ret
 
     ##
     # Returns the URL of a thumbnail associated with the feed
     def getThumbnail(self):
-        self.lock.acquire()
+        self.beginRead()
 	try:
 	    ret = self.parsed.image.url
 	except:
 	    ret = ""
-        self.lock.release()
+        self.endRead()
         return ret
 	
 
@@ -364,7 +360,7 @@ class RSSFeed(Feed):
 		self.parsed = d
 	except:
 	    self.parsed = feedparser.parse(self.url)
-        self.lock.acquire()
+        self.beginRead()
         try:
 	    try:
 		if self.parsed.status == 301: #permanent redirect
@@ -398,7 +394,7 @@ class RSSFeed(Feed):
             except KeyError:
                 self.updateFreq = 60*60
         finally:
-            self.lock.release()
+            self.endRead()
 	    self.beginChange()
 	    self.endChange()
     ##
@@ -420,7 +416,6 @@ class RSSFeed(Feed):
     # Called by pickle during serialization
     def __getstate__(self):
 	temp = copy(self.__dict__)
-	temp["lock"] = None
 	temp["itemlist"] = None
 	temp["scheduler"] = None
 	return temp
@@ -429,7 +424,6 @@ class RSSFeed(Feed):
     # Called by pickle during deserialization
     def __setstate__(self,state):
 	self.__dict__ = state
-	self.lock = RLock()
 	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
         self.scheduler = ScheduleEvent(self.updateFreq, self.update)
 
@@ -447,12 +441,12 @@ class Collection(Feed):
     # Adds an item to the collection
     def addItem(self,item):
 	if isinstance(item,Item):
-	    self.lock.acquire()
+	    self.beginRead()
 	    try:
 		self.removeItem(item)
 		self.items.append(item)
 	    finally:
-		self.lock.release()
+		self.endRead()
 	    return True
 	else:
 	    return False
@@ -460,7 +454,7 @@ class Collection(Feed):
     ##
     # Moves an item to another spot in the collection
     def moveItem(self,item,pos):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    self.removeItem(item)
 	    if pos < len(self.items):
@@ -468,23 +462,25 @@ class Collection(Feed):
 	    else:
 		self.items.append(item)
 	finally:
-	    self.lock.release()
+	    self.endRead()
 
     ##
     # Removes an item from the collection
     def removeItem(self,item):
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    for x in range(0,len(self.items)):
 		if self.items[x] == item:
 		    self.items[x:x+1] = []
 		    break
 	finally:
-	    self.lock.release()
+	    self.endRead()
 	return True
 
 ##
 # A feed based on un unformatted HTML or pre-enclosure RSS
+#
+# 
 class ScraperFeed(Feed):
     def __init__(self,url,title = None, visible = True):
 	Feed.__init__(self,url,title,visible)
@@ -594,7 +590,6 @@ class ScraperFeed(Feed):
     def processLinks(self,links, depth = 0):
 	if depth<2:
 	    for (link, title) in links:
-		print "Got link:" + link
 		#FIXME keep the connection open
 		mimetype = self.getMimeType(link)
 		if mimetype != None:
@@ -646,7 +641,6 @@ class ScraperFeed(Feed):
     # Called by pickle during serialization
     def __getstate__(self):
 	temp = copy(self.__dict__)
-	temp["lock"] = None
 	temp["itemlist"] = None
 	temp["scheduler"] = None
 	return temp
@@ -655,7 +649,6 @@ class ScraperFeed(Feed):
     # Called by pickle during deserialization
     def __setstate__(self,state):
 	self.__dict__ = state
-	self.lock = RLock()
 	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
         self.scheduler = ScheduleEvent(self.updateFreq, self.update)
 
@@ -704,7 +697,7 @@ class DirectoryFeed(Feed):
 
     def update(self):
 	knownFiles = []
-	self.lock.acquire()
+	self.beginRead()
 	try:
 	    #Files on the filesystem
 	    existingFiles = self.getFileList(config.get('DataDirectory'))
@@ -731,13 +724,12 @@ class DirectoryFeed(Feed):
 		    self.items.append(FileItem(self,file))
 		    
 	finally:
-	    self.lock.release()
+	    self.endRead()
 
     ##
     # Called by pickle during serialization
     def __getstate__(self):
 	temp = copy(self.__dict__)
-	temp["lock"] = None
 	temp["itemlist"] = None
 	temp["scheduler"] = None
 	return temp
@@ -746,7 +738,6 @@ class DirectoryFeed(Feed):
     # Called by pickle during deserialization
     def __setstate__(self,state):
 	self.__dict__ = state
-	self.lock = RLock()
 	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,FileItem) and x.feed is self)
         self.scheduler = ScheduleEvent(self.updateFreq, self.update)
 
@@ -755,7 +746,9 @@ class DirectoryFeed(Feed):
         self.scheduler = ScheduleEvent(5, self.update,False)
 
 ##
-# Parse HTML document and grab all of the links and their titles
+# Parse HTML document and grab all of the links and their title
+# FIXME: get titles from a tag, then title. Get thumbnail from img
+#        inside a tag
 class HTMLLinkGrabber(HTMLParser):
     def getLinks(self,data, baseurl):
 	self.links = []
@@ -806,6 +799,8 @@ class HTMLLinkGrabber(HTMLParser):
 	if self.inLink:
 	    self.links[-1] = (self.links[-1][0],self.links[-1][1]+data)
 
+##
+# Get title from item title
 class RSSLinkGrabber(xml.sax.handler.ContentHandler):
     def __init__(self,html,baseurl):
 	self.html = html
@@ -837,7 +832,6 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler):
 	    self.links[:0] = lg.getLinks(unescape(self.descHTML),self.baseurl)
 	    self.inDescription = False
 	elif tag.lower() == 'link':
-	    print "Got link "
 	    self.links.append((self.theLink,self.theLink))
 	    self.inLink = False
     def characters(self, data):

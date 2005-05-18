@@ -1,4 +1,4 @@
-from threading import RLock, Thread
+from threading import Thread
 from database import DynamicDatabase,DDBObject
 from time import time, sleep
 
@@ -10,21 +10,9 @@ class Scheduler(DynamicDatabase):
     def __init__(self):
         DynamicDatabase.__init__(self)
         self.isShutdown = False
-	self.lock = RLock()
         self.thread = Thread(target = self.executeEvents)
 	self.thread.setDaemon(False)
 	self.thread.start()
-
-    ##
-    # Scheduler uses it's own lock
-    def beginUpdate(self):
-	self.lock.acquire()
-    def endUpdate(self):
-	self.lock.release()
-    def beginRead(self):
-	self.lock.acquire()
-    def endRead(self):
-	self.lock.release()
 
     ##
     # Call this to shutdown the scheduler
@@ -69,11 +57,11 @@ class ScheduleEvent(DDBObject):
     ##
     # Returns number of seconds until next run
     def nextRun(self):
-        self.scheduler.beginRead()
+        self.beginRead()
         try:
             ret = self.interval + self.lastRun - now()
         finally:
-            self.scheduler.endRead()
+            self.endRead()
         return ret
 
     ##

@@ -1,11 +1,11 @@
 from database import DDBObject
 from os.path import expanduser, join
 from os import makedirs
-from threading import RLock
 from datetime import timedelta
+import database
 
 configData = {}
-configLock = RLock()
+configLock = database.globalLock
 
 def get(key):
     configLock.acquire()
