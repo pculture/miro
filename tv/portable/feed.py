@@ -567,7 +567,7 @@ class ScraperFeed(Feed):
 		conn.request("GET",path)
 		download = conn.getresponse()
 	    else:
-		return None
+		return (None, url, redirURL)
 	html = download.read()
 	download.close()
 	conn.close()
