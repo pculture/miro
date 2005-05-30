@@ -24,10 +24,10 @@
     <span t:hideIfViewNotEmpty="tabs" i18n:translate="">There are no tabs. Something is wrong. Please, contact tech support</span>
     <ul t:hideIfViewEmpty="tabs">
       <li t:repeatForView="tabs" onclick="eventURL('action:selectTab?id=@@@this id@@@')">
-        <span t:hideIfNotKey="this tab tabData" t:hideFunctionKey="global filter hasKey" t:hideParameter="feed">
-        <span t:replaceMarkup="this markup"  t:contextMenu="action:selectTab?id=@@@this id@@@|Open\naction:removeFeed?url=@@@this tab tabData feed getURL@@@|Remove"/>
+        <span t:hideIfNotKey="this isFeed" t:hideFunctionKey="global filter boolean">
+        <span t:replaceMarkup="this markup"  t:contextMenu="action:selectTab?id=@@@this id@@@|Open\naction:removeFeed?url=@@@this feedURL@@@|Remove"/>
         </span>
-        <span t:hideIfKey="this tab tabData" t:hideFunctionKey="global filter hasKey" t:hideParameter="feed">
+        <span t:hideIfKey="this isFeed" t:hideFunctionKey="global filter boolean">
         <span t:replaceMarkup="this markup" t:hideParameter="Feed" t:contextMenu="action:selectTab?id=@@@this id@@@|Open"/>
         </span>
       </li>

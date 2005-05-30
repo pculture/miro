@@ -1,4 +1,5 @@
 from xml.dom.minidom import parse, parseString
+import sys
 import frontend
 import template
 import database
@@ -18,326 +19,56 @@ import autodler
 import folder
 import scheduler
 
-###############################################################################
-#### TemplateDisplay: a HTML-template-driven right-hand display panel      ####
-###############################################################################
-
-class TemplateDisplay(frontend.HTMLDisplay):
-
-    def __init__(self, templateName, data, homeTemplate=None, homeData=None, frameHint=None):
-	"'templateName' is the name of the inital template file. 'data' is keys for the template. If given, 'homeTemplate' and 'homeData' indicate the template to return to when onSelectedTabClicked is called."
-
-	self.templateName = templateName
-	self.templateData = data
-	self.homeTemplate = homeTemplate
-	self.homeData = homeData
-	(html, self.templateHandle) = template.fillTemplate(templateName, data, lambda js:self.execJS(js))
- 	frontend.HTMLDisplay.__init__(self, html, frameHint=frameHint)
-
-    def onSelectedTabClicked(self):
-	if self.homeTemplate:
-	    self.currentFrame.setTabListActive(True)
-	    self.currentFrame.selectDisplay(TemplateDisplay(self.homeTemplate, self.homeData, frameHint=self.currentFrame))
-
-    def onURLLoad(self, url):
-	#print url
-	try:
-	    # Switching to a new template in this tab
-	    match = re.compile(r"^template:(.*)$").match(url)
-	    if match:
-		# Graphically indicate that we're not at the home
-		# template anymore
-		self.currentFrame.setTabListActive(False)
-		
-		# Compute where onSelectedTabClicked should go when it
-		# is pressed in the new display
-		newHomeTemplate = None
-		newHomeData = None
-		if self.homeTemplate:
-		    newHomeTemplate = self.homeTemplate
-		    newHomeData = self.homeData
-		else:
-		    newHomeTemplate = self.templateName
-		    newHomeData = self.templateData
-
-		# Switch to new template. It get the same variable
-		# dictionary as we have.
-		self.currentFrame.selectDisplay(TemplateDisplay(match.group(1), self.templateData, newHomeTemplate, newHomeData, frameHint=self.currentFrame))
-		return False
-		
-	    if url == "action:goHome":
-		self.onSelectedTabClicked()
-		return False
-
-	    match = re.compile(r"^action:setViewFilter\?(.*)$").match(url)
-	    if match:
-		# Parse arguments
-		(name, fieldKey, funcKey, parameter, invert) = getURLParameters('setViewFilter', match.group(1), 'viewName', 'fieldKey', 'functionKey', 'parameter', 'invert')
-		invert = stringToBoolean(invert)
-	    	    
-		# Change the filter
-		namedView = self.templateHandle.findNamedView(name)
-		namedView.setFilter(fieldKey, funcKey, parameter, invert)
-		database.defaultDatabase.recomputeFilters()
-		return False
-
-	    match = re.compile(r"^action:changeFeedSettings\?(.*)$").match(url)
-	    if match:
-		# Parse arguments
-		(myFeed,maxnew,fallbehind,automatic,expireDays,expireHours,expire,getEverything) = getURLParameters('setViewFilter', match.group(1), 'feed', 'maxnew', 'fallbehind', 'automatic', 'expireDays','expireHours','expire','getEverything')
-
-		database.defaultDatabase.saveCursor()
-		for obj in database.defaultDatabase:
-		    if obj.getID() == int(myFeed):
-			obj.saveSettings(automatic,maxnew,fallbehind,expire,expireDays,expireHours,getEverything)
-			break
-		database.defaultDatabase.restoreCursor()
-
-
-	    match = re.compile(r"^action:setViewSort\?(.*)$").match(url)
-	    if match:
-		# Parse arguments
-		(name, fieldKey, funcKey, reverse) = getURLParameters('setViewSort', match.group(1), 'viewName', 'fieldKey', 'functionKey', 'reverse')
-		reverse = stringToBoolean(reverse)
-		
-		# Change the sort
-		namedView = self.templateHandle.findNamedView(name)
-		namedView.setSort(fieldKey, funcKey, reverse)
-		database.defaultDatabase.recomputeFilters()
-		return False
-
-	    match = re.compile(r"^action:playFile\?(.*)$").match(url)
-	    if match:
-		# Parse arguments
-		(filename, ) = getURLParameters('playFile', match.group(1), 'filename')
-		print "Playing "+filename
-		# Use a quick hack to play the file. (NEEDS)
-		frontend.playVideoFileHack(filename)
-		return False
-
-	    match = re.compile(r"^action:playView\?(.*)$").match(url)
-	    if match:
-		# Parse arguments
-		(viewName, firstItemId) = getURLParameters('playView', match.group(1), 'viewName', 'firstItemId')
-
-		# Find the database view that we're supposed to be
-		# playing; take out items that aren't playable video
-		# clips and put it in the format the frontend expects.
-		namedView = self.templateHandle.findNamedView(viewName)
-		view = namedView.getView()
-		view = view.filter(mappableToPlaylistItem)
-		view = view.map(mapToPlaylistItem)
-
-		# Move the cursor to the requested item; if there's no
-		# such item in the view, move the cursor to the first
-		# item
-		view.resetCursor()
-		while True:
-		    cur = view.getNext()
-		    if cur == None:
-			# Item not found in view. Put cursor at the first
-			# item, if any.
-			view.resetCursor()
-			view.getNext()
-			break
-		    if str(cur.getID()) == firstItemId:
-			# The cursor is now on the requested item.
-			break
-
-		# Construct playback display and switch to it, arranging
-		# to switch back to ourself when playback mode is exited
-		self.currentFrame.selectDisplay(frontend.VideoDisplay(view, self))
-		return False
-
-	    match = re.compile(r"^action:startDownload\?(.*)$").match(url)
-	    if match:
-		(myitem,) = getURLParameters('startDownload', match.group(1), 'item')
-		database.defaultDatabase.saveCursor()
-		for obj in database.defaultDatabase:
-		    if obj.getID() == int(myitem):
-			obj.download()
-			break
-		database.defaultDatabase.restoreCursor()
-		return False
-
-	    match = re.compile(r"^action:addFeed\?(.*)$").match(url)
-	    if match:
-		(url,) = getURLParameters('addFeed', match.group(1), 'url')
-		exists = False
-		database.defaultDatabase.saveCursor()
-		for obj in database.defaultDatabase:
-		    if isinstance(obj,feed.Feed) and obj.getURL() == url:
-			exists = True
-			break
-		database.defaultDatabase.restoreCursor()
-		if not exists:
-		    myFeed = feed.RSSFeed(url)
-		self.templateData = {'global' : {
-		    'database': database.defaultDatabase,
-		    'filter': globalFilterList,
-		    'sort': globalSortList },
-				     'feed' : myFeed}
-		# NEEDS: changed temporarily for demo
-#		self.execJS('document.location.href = "template:feed-settings";')
-		self.execJS('document.location.href = "template:feed-start";')
-		return False
-
-	    match = re.compile(r"^action:removeFeed\?(.*)$").match(url)
-	    if match:
-		(url,) = getURLParameters('removeFeed', match.group(1), 'url')
-		database.defaultDatabase.removeMatching(lambda x: isinstance(x,feed.Feed) and x.getURL() == url)
-
-	    match = re.compile(r"^action:stopDownload\?(.*)$").match(url)
-	    if match:
-		(myitem,) = getURLParameters('stopDownload', match.group(1), 'item')
-		database.defaultDatabase.saveCursor()
-		for obj in database.defaultDatabase:
-		    if obj.getID() == int(myitem):
-			obj.stopDownload()
-			break
-		database.defaultDatabase.restoreCursor()
-		return False
-
-	    # Following are just for debugging/testing.
-	    match = re.compile(r"^action:deleteTab\?(.*)$").match(url)
-	    if match:
-		(base, ) = getURLParameters('deleteTab', match.group(1), 'base')
-		database.defaultDatabase.removeMatching(lambda x: isinstance(x, StaticTab) and x.tabTemplateBase == base)
-		return False
-
-	    match = re.compile(r"^action:createTab\?(.*)$").match(url)
-	    if match:
-		(tabTemplateBase, contentsTemplate, order) = getURLParameters('createTab', match.group(1), 'tabTemplateBase', 'contentsTemplate', 'order')
-		order = int(order)
-		StaticTab(tabTemplateBase, contentsTemplate, order)
-		return False
-
-	    match = re.compile(r"^action:recomputeFilters(\?(.*))?$").match(url)
-	    if match:
-		database.defaultDatabase.recomputeFilters()
-		return False
-
-	    match = re.compile(r"^action:addCollection\?(.*)$").match(url)
-	    if match:
-		(title,) = getURLParameters('addCollection', match.group(1), 'title')
-		x = feed.Collection(title)
-
-	    match = re.compile(r"^action:removeCollection\?(.*)$").match(url)
-	    if match:
-		(id,) = getURLParameters('removeCollection', match.group(1), 'id')
-		database.defaultDatabase.removeMatching(lambda x: isinstance(x, feed.Collection) and x.getID() == int(id))
-
-	    match = re.compile(r"^action:addToCollection\?(.*)$").match(url)
-	    if match:
-		(id,myitem) = getURLParameters('addToCollection', match.group(1), 'id','item')
-		obj = None
-		for x in database.defaultDatabase:
-		    if isinstance(x,feed.Collection) and x.getID() == int(id):
-			obj = x
-			break
-		if obj != None:
-		    for x in database.defaultDatabase:
-			if isinstance(x,item.Item) and x.getID() == int(myitem):
-			    obj.addItem(x)
-
-	    match = re.compile(r"^action:removeFromCollection\?(.*)$").match(url)
-	    if match:
-		(id,myitem) = getURLParameters('removeFromCollection', match.group(1), 'id','item')
-		obj = None
-		for x in database.defaultDatabase:
-		    if isinstance(x,feed.Collection) and x.getID() == int(id):
-			obj = x
-			break
-		if obj != None:
-		    for x in database.defaultDatabase:
-			if isinstance(x,item.Item) and x.getID() == int(myitem):
-			    obj.removeItem(x)
-
-	    match = re.compile(r"^action:moveInCollection\?(.*)$").match(url)
-	    if match:
-		(id,myitem,pos) = getURLParameters('moveInCollection', match.group(1), 'id','item','pos')
-		obj = None
-		for x in database.defaultDatabase:
-		    if isinstance(x,feed.Collection) and x.getID() == int(id):
-			obj = x
-			break
-		if obj != None:
-		    for x in database.defaultDatabase:
-			if isinstance(x,item.Item) and x.getID() == int(myitem):
-			    obj.moveItem(x,int(pos))
-	except:
-	    print "Exception in URL action handler (for URL '%s'):" % url
-	    traceback.print_exc()
-
-	# print "Template display URL action: '%s'" % url
-	return True
-
-# Helper: parse the given URL queryString and find the arguments with
-# the names given by the 'names' arguments. Return a tuple with those
-# the values of those arguments in the order they were supplied. If a
-# requested argument is not present, an empty string is returned for
-# it. (The parser we're using now can't distinguish the two cases.)
-# actionName should be the name of the action being invoked and is
-# used only to format excetpion error messages.
-def getURLParameters(actionName, queryString, *names):
-    result = []
-    args = cgi.parse_qs(queryString)
-    for name in names:
-	if not args.has_key(name):
-	    # cgi.parse_qs unfortunately cannot distinguish between a
-	    # missing argument and an argument that is present but set to
-	    # the empty string
-	    result.append("")
-	elif len(args[name]) != 1:
-	    raise template.TemplateError, "Multiple values of '%s' argument passend to '%s' action" % (name, actionName)
-	else:
-	    result.append(args[name][0])
-    return tuple(result)
-
-# Helper: liberally interpret the provided string as a boolean
-def stringToBoolean(string):
-    if string == "" or string == "0" or string == "false":
-	return False
-    else:
-	return True
+db = database.defaultDatabase
 
 ###############################################################################
-#### The application object, managing startup and shutdown                 ####
+#### The main application controller object, binding model to view         ####
 ###############################################################################
 
 class Controller(frontend.Application):
-    def OnStartup(self):
+    def __init__(self):
+	frontend.Application.__init__(self)
+
+    ### Startup and shutdown ###
+
+    def onStartup(self):
 	try:
+	    # NEEDS: Set backend delegate with something like:
+	    # backend.setDelegate(self.getBackendDelegate())
+
 	    #Restoring
 	    print "DTV: Restoring database..."
-	    database.defaultDatabase.restore()
+	    db.restore()
 	    print "DTV: Recomputing filters..."
-	    database.defaultDatabase.recomputeFilters()
+	    db.recomputeFilters()
 
-	    reloadStaticTabs()
+	    # Define variables for templates
+	    # NEEDS: reorganize this, and update templates
 	    globalData = {
-		'database': database.defaultDatabase,
+		'database': db,
 		'filter': globalFilterList,
 		'sort': globalSortList,
-		'favoriteColor': 'azure', # NEEDS: test data, remove
-	     }
+		}
+	    tabPaneData = {
+		'global': globalData,
+		}
 
 	    # Set up tab list
-	    mapFunc = makeMapToTabFunction(globalData)
-	    self.tabs = database.defaultDatabase.filter(mappableToTab).map(mapFunc).sort(sortTabs)
+	    reloadStaticTabs()
+	    mapFunc = makeMapToTabFunction(globalData, self)
+	    self.tabs = db.filter(mappableToTab).map(mapFunc).sort(sortTabs)
+	    self.currentSelectedTab = None
+	    self.tabListActive = True
+	    tabPaneData['tabs'] = self.tabs
 
 	    # Put cursor on first tab to indicate that it should be initially
 	    # selected
 	    self.tabs.resetCursor()
 	    self.tabs.getNext()
 
-	    # Create a test array (NEEDS: remove)
- 	    #[NameNumberObject() for i in range(0,50)]
-            #testArray = database.DDBObject.dd.filter(lambda x: x.__class__ == NameNumberObject)
-	    #globalData['testArray'] = testArray
-
+	    # If there are no feeds in the database, create a test feed
 	    hasFeed = False
-	    for obj in database.defaultDatabase.objects:
+	    for obj in db.objects:
 		if obj[0].__class__.__name__ == 'RSSFeed':
 		    hasFeed = True
 		    break
@@ -347,8 +78,9 @@ class Controller(frontend.Application):
 		#fold = folder.Folder('Test folder')
 		#fold.addFeed(f)
 
+	    # If we're missing the file system videos feed, create it
 	    hasDirFeed = False
-	    for obj in database.defaultDatabase.objects:
+	    for obj in db.objects:
 		if obj[0].__class__.__name__ == 'DirectoryFeed':
 		    hasDirFeed = True
 		    break
@@ -356,39 +88,531 @@ class Controller(frontend.Application):
 		print "DTV: Spawning file system videos feed"
 		d = feed.DirectoryFeed()
 	    
+	    # Start the automatic downloader daemon
 	    print "DTV: Spawning auto downloader..."
-	    #Start the automatic downloader daemon
 	    autodler.AutoDownloader()
 
+	    # Put up the main frame
 	    print "DTV: Displaying main frame..."
-	    self.frame = frontend.MainFrame(self.tabs,globalData)
+	    self.frame = frontend.MainFrame(self)
+
+	    # Set up tab list (on left); this will automatically set up the
+	    # display area (on right) and currentSelectedTab
+	    self.tabDisplay = TemplateDisplay('tablist', tabPaneData, self)
+	    self.frame.selectDisplay(self.tabDisplay, 0)
+	    self.tabs.addRemoveCallback(lambda oldObject, oldIndex: self.checkSelectedTab())
+	    self.checkSelectedTab()
+	    
+	    # NEEDS: our strategy above with addRemoveCallback doesn't
+	    # work. I'm not sure why, but it seems to have to do with the
+	    # reentrant call back into the database when checkSelectedTab ends 
+	    # up calling endChange to force a tab to get rerendered.
+
 	except:
 	    print "DTV: Exception on startup:"
 	    traceback.print_exc()
+	    sys.exit(1)
 
-    def OnShutdown(self):
-	print "DTV: Stopping scheduler"
-	scheduler.ScheduleEvent.scheduler.shutdown()
+    def onShutdown(self):
+	try:
+	    print "DTV: Stopping scheduler"
+	    scheduler.ScheduleEvent.scheduler.shutdown()
 
-	print "DTV: Removing static tabs..."
-	database.defaultDatabase.removeMatching(lambda x:str(x.__class__.__name__) == "StaticTab")
-	#for item in database.defaultDatabase:
-	#    print str(item.__class__.__name__) + " of id "+str(item.getID())
-	print "DTV: Saving database..."
-	database.defaultDatabase.save()
+	    print "DTV: Removing static tabs..."
+	    db.removeMatching(lambda x:str(x.__class__.__name__) == "StaticTab")
+	    # for item in db:
+	    #    print str(item.__class__.__name__) + " of id "+str(item.getID())
+	    print "DTV: Saving database..."
+	    db.save()
 
-         #FIXME closing BitTorrent is slow and makes the application seem hung...
-	print "DTV: Shutting down BitTorrent..."
-	downloader.shutdownBTDownloader()
+	    # FIXME closing BitTorrent is slow and makes the application seem hung...
+	    print "DTV: Shutting down BitTorrent..."
+	    downloader.shutdownBTDownloader()
 
-	print "DTV: Done shutting down."
+	    print "DTV: Done shutting down."
+
+	except:
+	    print "DTV: Exception on shutdown:"
+	    traceback.print_exc()
+	    sys.exit(1)
+
+    ### Handling events received from the OS (via our base class) ###
+
+    # Called by Frontend via Application base class in response to OS request.
+    def addAndSelectFeed(self, url, showTemplate = None):
+	return GUIActionHandler(self).addFeed(url, showTemplate)
+
+    ### Keeping track of the selected tab and showing the right template ###
+
+    def getTabState(self, tabId):
+	# Determine if this tab is selected
+	isSelected = False
+	if self.currentSelectedTab:
+	    isSelected = (self.currentSelectedTab.id == tabId)
+
+	# Compute status string
+	if isSelected:
+	    if self.tabListActive:
+		return 'selected'
+	    else:
+		return 'selected-inactive'
+	else:
+	    return 'normal'
+
+    def checkSelectedTab(self, templateNameHint = None):
+	# NEEDS: locking ...
+	# NEEDS: ensure is reentrant (as in two threads calling it simultaneously by accident)
+
+	# We'd like to track the currently selected tab entirely with
+	# the cursor on self.tabs. Alas, it is not to be -- when
+	# getTabState is called from the database code in response to
+	# a change to a tab object (say), the cursor has been
+	# temporarily moved by the database code. Long-term, we should
+	# make the database code not do this. But short-term, we track
+	# the the currently selected tab separately too, synchronizing
+	# it to the cursor here. This isn't really wasted effort,
+	# because this variable is also the mechanism by which we
+	# check to see if the cursor has moved since the last call to
+	# checkSelectedTab.
+	#
+	# Why use the cursor at all? It's necessary because we want
+	# the database code to handle moving the cursor on a deleted
+	# record automatically for us.
+
+	oldSelected = self.currentSelectedTab
+	newSelected = self.tabs.cur()
+	self.currentSelectedTab = newSelected 
+
+	tabChanged = ((oldSelected == None) != (newSelected == None)) or (oldSelected and newSelected and oldSelected.id != newSelected.id)
+	if tabChanged: # Tab selection has changed! Deal.
+
+	    # Redraw the old and new tabs
+	    if oldSelected:
+		oldSelected.redraw()
+	    if newSelected:
+		newSelected.redraw()
+
+	    # Boot up the new tab's template.
+	    if newSelected:
+		newSelected.start(self.frame, templateNameHint)
+	    else:
+		self.selectDisplay(NullDisplay())
+
+    def setTabListActive(self, active):
+	"""If active is true, show the tab list normally. If active is
+	false, show the tab list a different way to indicate that it
+	doesn't pertain directly to what is going on (for example, a
+	video is playing) but that it can still be clicked on."""
+	self.tabListActive = active
+	if self.tabs.cur():
+	    self.tabs.cur().redraw()
 
 def main():
     Controller().Run()
 
 ###############################################################################
+#### TemplateDisplay: a HTML-template-driven right-hand display panel      ####
+###############################################################################
+
+class TemplateDisplay(frontend.HTMLDisplay):
+
+    def __init__(self, templateName, data, controller, frameHint=None, indexHint=None):
+	"'templateName' is the name of the inital template file. 'data' is keys for the template."
+
+	self.controller = controller
+	self.templateName = templateName
+	self.templateData = data
+	(html, self.templateHandle) = template.fillTemplate(templateName, data, lambda js:self.execJS(js))
+
+	self.actionHandlers = [
+	    ModelActionHandler(),
+	    GUIActionHandler(self.controller),
+	    TemplateActionHandler(self.controller, self, self.templateHandle),
+	    ]
+
+ 	frontend.HTMLDisplay.__init__(self, html, frameHint=frameHint, indexHint=indexHint)
+
+    def onURLLoad(self, url):
+	try:
+	    # Special-case non-'action:'-format URL
+	    match = re.compile(r"^template:(.*)$").match(url)
+	    if match:
+		self.dispatchAction('switchTemplate', name = match.group(1))
+		return False
+
+	    # Standard 'action:' URL
+	    match = re.compile(r"^action:([^?]+)\?(.*)$").match(url)
+	    if match:
+		action = match.group(1)
+		argString = match.group(2)
+		argLists = cgi.parse_qs(argString, keep_blank_values=True)
+
+		# argLists is a dictionary from parameter names to a list
+		# of values given for that parameter. Take just one value
+		# for each parameter, raising an error if more than one
+		# was given.
+		args = {}
+		for key in argLists.keys():
+		    value = argLists[key]
+		    if len(value) != 1:
+			raise template.TemplateError, "Multiple values of '%s' argument passend to '%s' action" % (key, action)
+		    args[key] = value[0]
+
+		if self.dispatchAction(action, **args):
+		    return False
+		else:
+		    print "Ignored bad action URL: %s" % url
+		    return False
+
+	except:
+	    print "Exception in URL action handler (for URL '%s'):" % url
+	    traceback.print_exc()
+	    sys.exit(1)
+
+	return True
+
+    def dispatchAction(self, action, **kwargs):
+	for handler in self.actionHandlers:
+	    if hasattr(handler, action):
+		getattr(handler, action)(**kwargs)
+		return True
+
+	return False
+
+###############################################################################
+#### Handlers for actions generated from templates, the OS, etc            ####
+###############################################################################
+
+# Functions that are safe to call from action: URLs that do nothing
+# but manipulate the database.
+class ModelActionHandler:
+    def changeFeedSettings(self, myFeed, maxnew, fallbehind, automatic, exprieDays, expireHours, expire, getEverything):
+	
+	db.beginUpdate()
+	db.saveCursor()
+	try:
+	    for obj in db:
+		if obj.getID() == int(myFeed):
+		    obj.saveSettings(automatic,maxnew,fallbehind,expire,expireDays,expireHours,getEverything)
+		    break
+	finally:
+	    db.restoreCursor()
+	    db.endUpdate()
+	
+    def playFile(self, filename):
+	print "Playing "+filename
+	# Use a quick hack to play the file. (NEEDS)
+	frontend.playVideoFileHack(filename)
+
+    def startDownload(self, item):
+	db.beginUpdate()
+	db.saveCursor()
+	try:
+	    for obj in db:
+		if obj.getID() == int(item):
+		    obj.download()
+		    break
+	finally:
+	    db.restoreCursor()
+	    db.endUpdate()
+
+    def removeFeed(self, url):
+	db.beginUpdate()
+	try:
+	    db.removeMatching(lambda x: isinstance(x,feed.Feed) and x.getURL() == url)
+	finally:
+	    db.endUpdate()
+
+    def stopDownload(self, item):
+	db.beginUpdate()
+	db.saveCursor()
+	try:
+	    for obj in db:
+		if obj.getID() == int(item):
+		    obj.stopDownload()
+		    break
+	finally:
+	    db.restoreCursor()
+	    db.endUpdate()
+
+    # Collections
+
+    def addCollection(self, title):
+	x = feed.Collection(title)
+
+    def removeCollection(self, id):
+	db.beginUpdate()
+	db.removeMatching(lambda x: isinstance(x, feed.Collection) and x.getID() == int(id))
+	db.endUpdate()
+
+    def addToCollection(self, id, item):
+	db.beginUpdate()
+	try:
+
+	    obj = None
+	    for x in db:
+		if isinstance(x,feed.Collection) and x.getID() == int(id):
+		    obj = x
+		    break
+	
+	    if obj != None:
+		for x in db:
+		    if isinstance(x,item.Item) and x.getID() == int(item):
+			obj.addItem(x)
+
+	finally:
+	    db.endUpdate()
+
+    def removeFromCollection(self, id, item):
+	db.beginUpdate()
+	try:
+
+	    obj = None
+	    for x in db:
+		if isinstance(x,feed.Collection) and x.getID() == int(id):
+		    obj = x
+		    break
+
+	    if obj != None:
+		for x in db:
+		    if isinstance(x,item.Item) and x.getID() == int(item):
+			obj.removeItem(x)
+
+	finally:
+	    db.endUpdate()
+
+    def moveInCollection(self, id, item, pos):
+	db.beginUpdate()
+	try:
+
+	    obj = None
+	    for x in db:
+		if isinstance(x,feed.Collection) and x.getID() == int(id):
+		    obj = x
+		    break
+
+	    if obj != None:
+		for x in db:
+		    if isinstance(x,item.Item) and x.getID() == int(item):
+			obj.moveItem(x,int(pos))
+
+	finally:
+	    db.endUpdate()
+
+    # Following are just for debugging/testing.
+
+    def deleteTab(self, base):
+	db.beginUpdate()
+	try:
+	    db.removeMatching(lambda x: isinstance(x, StaticTab) and x.tabTemplateBase == base)
+	finally:
+	    db.endUpdate()
+    
+    def createTab(self, tabTemplateBase, contentsTemplate, order):
+	db.beginUpdate()
+	try:
+	    order = int(order)
+	    StaticTab(tabTemplateBase, contentsTemplate, order)
+	finally:
+	    db.endUpdate()
+
+    def recomputeFilters(self):
+	db.recomputeFilters()
+
+# Functions that are safe to call from action: URLs that can change
+# the GUI presentation (and may or may not manipulate the database.)
+class GUIActionHandler:
+    def __init__(self, controller):
+	self.controller = controller
+
+    def selectTab(self, id, templateNameHint = None):
+	db.beginRead()
+	# NEEDS: lock on controller state
+	
+	try:
+	    # Move the cursor to the newly selected object
+	    self.controller.tabs.resetCursor()
+	    while True:
+		cur = self.controller.tabs.getNext()
+		if cur == None:
+		    assert(0) # NEEDS: better error (JS sent bad tab id)
+		if cur.id == id:
+		    break
+
+	finally:
+	    db.endRead() # NEEDS: dropping this prematurely?
+
+	# Figure out what happened
+	oldSelected = self.controller.currentSelectedTab
+	newSelected = self.controller.tabs.cur()
+
+	# Handle reselection action (checkSelectedTab won't; it doesn't
+	# see a difference)
+	if oldSelected and oldSelected.id == newSelected.id:
+	    newSelected.start(self.controller.frame, templateNameHint)
+
+	# Handle case where a different tab was clicked
+	self.controller.checkSelectedTab(templateNameHint)
+
+    # NEEDS: name should change to addAndSelectFeed; then we should create
+    # a non-GUI addFeed to match removeFeed. (requires template updates)
+
+    def addFeed(self, url, showTemplate = None):
+	db.beginUpdate()
+	db.saveCursor()
+
+	try:
+	    exists = False
+	    for obj in db:
+		if isinstance(obj,feed.Feed) and obj.getURL() == url:
+		    exists = True
+		    break
+		
+	    if not exists:
+		myFeed = feed.RSSFeed(url)
+
+		# At this point, the addition is guaranteed to be reflected
+		# in the tab list.
+
+		tabs = self.controller.tabs
+		tabs.resetCursor()
+		while True:
+		    cur = tabs.getNext()
+		    if cur == None:
+			assert(0) # NEEDS: better error (failed to add tab)
+		    if cur.feedURL() == url:
+			break
+
+		self.controller.checkSelectedTab(showTemplate)
+
+	finally:
+	    db.restoreCursor()
+	    db.endUpdate()
+
+# Functions that are safe to call from action: URLs that change state
+# specific to a particular instantiation of a template, and so have to
+# be scoped to a particular HTML display widget.
+class TemplateActionHandler:
+    def __init__(self, controller, display, templateHandle):
+	self.controller = controller
+	self.display = display
+	self.templateHandle = templateHandle
+
+    def switchTemplate(self, name):
+	# Graphically indicate that we're not at the home
+	# template anymore
+	self.controller.setTabListActive(False)
+
+	# Switch to new template. It get the same variable
+	# dictionary as we have.
+	# NEEDS: currently we hardcode the display index. This means
+	# that these links always affect the right-hand 'content'
+	# area, even if they are loaded from the left-hand 'tab'
+	# area. Actually this whole invocation is pretty hacky.
+	self.controller.frame.selectDisplay(TemplateDisplay(name, self.display.templateData, self.controller, frameHint=self.controller.frame, indexHint=1), 1)
+
+    def setViewFilter(self, viewName, fieldKey, functionKey, parameter, invert):
+	invert = stringToBoolean(invert)
+	namedView = self.templateHandle.findNamedView(viewName)
+	namedView.setFilter(fieldKey, functionKey, parameter, invert)
+	db.recomputeFilters()
+
+    def setViewSort(self, viewName, fieldKey, functionKey, reverse):
+	reverse = stringToBoolean(reverse)
+	namedView = self.templateHandle.findNamedView(viewName)
+	namedView.setSort(fieldKey, functionKey, reverse)
+	db.recomputeFilters()
+	
+    def playView(self, viewName, firstItemId):
+	# Find the database view that we're supposed to be
+	# playing; take out items that aren't playable video
+	# clips and put it in the format the frontend expects.
+	namedView = self.templateHandle.findNamedView(viewName)
+	view = namedView.getView()
+	view = view.filter(mappableToPlaylistItem)
+	view = view.map(mapToPlaylistItem)
+
+	# Move the cursor to the requested item; if there's no
+	# such item in the view, move the cursor to the first
+	# item
+	db.beginRead()
+	try:
+	    view.resetCursor()
+	    while True:
+		cur = view.getNext()
+		if cur == None:
+		    # Item not found in view. Put cursor at the first
+		    # item, if any.
+		    view.resetCursor()
+		    view.getNext()
+		    break
+		if str(cur.getID()) == firstItemId:
+		    # The cursor is now on the requested item.
+		    break
+	finally:
+	    db.endRead()
+	    
+	# Construct playback display and switch to it, arranging
+	# to switch back to ourself when playback mode is exited
+	self.controller.frame.selectDisplay(frontend.VideoDisplay(view, self.display), 1)
+
+# Helper: liberally interpret the provided string as a boolean
+def stringToBoolean(string):
+    if string == "" or string == "0" or string == "false":
+	return False
+    else:
+	return True
+
+###############################################################################
 #### Tabs                                                                  ####
 ###############################################################################
+
+class Tab:
+    idCounter = 0
+
+    def __init__(self, tabTemplateBase, tabData, contentsTemplate, contentsData, sortKey, obj, controller):
+	self.tabTemplateBase = tabTemplateBase
+	self.tabData = tabData
+	self.contentsTemplate = contentsTemplate
+	self.contentsData = contentsData
+	self.sortKey = sortKey
+	self.controller = controller
+	self.id = "tab%d" % Tab.idCounter
+	Tab.idCounter += 1
+	self.obj = obj
+
+    def start(self, frame, templateNameHint):
+	self.controller.setTabListActive(True) 
+	# '1' means 'right hand side of the window, in the display area.'
+	frame.selectDisplay(TemplateDisplay(templateNameHint or self.contentsTemplate, self.contentsData, self.controller, frameHint=frame, indexHint=1), 1)
+    
+    def markup(self):
+	"""Get HTML giving the visual appearance of the tab. 'state' is
+	one of 'selected' (tab is currently selected), 'normal' (tab is
+	not selected), or 'selected-inactive' (tab is selected but
+	setTabListActive was called with a false value on the MainFrame
+	for which the tab is being rendered.) The HTML should be returned
+	as a xml.dom.minidom element or document fragment."""
+	state = self.controller.getTabState(self.id)
+	file = "%s-%s" % (self.tabTemplateBase, state)
+	return template.fillStaticTemplate(file, self.tabData)
+	
+    def redraw(self):
+	# Force a redraw by sending a change notification on the underlying
+	# DB object.
+	self.obj.beginChange()
+	self.obj.endChange()
+
+    def isFeed(self):
+	"""True if this Tab represents a Feed."""
+	return isinstance(self.obj, feed.Feed)
+
+    def feedURL(self):
+	"""If this Tab represents a Feed, the feed's URL. Otherwise None."""
+	if isinstance(self.obj, feed.Feed):
+	    return self.obj.getURL()
+	else:
+	    return None	
 
 # Database object representing a static (non-feed-associated) tab.
 class StaticTab(database.DDBObject):
@@ -400,41 +624,21 @@ class StaticTab(database.DDBObject):
 
 # Reload the StaticTabs in the database from the statictabs.xml resource file.
 def reloadStaticTabs():
-    # Wipe all of the StaticTabs currently in the database.
-    database.defaultDatabase.removeMatching(lambda x: x.__class__ == StaticTab)
+    db.beginUpdate()
+    try:
+	# Wipe all of the StaticTabs currently in the database.
+	db.removeMatching(lambda x: x.__class__ == StaticTab)
 
-    # Load them anew from the resource file.
-    # NEEDS: maybe better error reporting?
-    document = parse(resource.path('statictabs.xml'))
-    for n in document.getElementsByTagName('statictab'):
-	tabTemplateBase = n.getAttribute('tabtemplatebase')
-	contentsTemplate = n.getAttribute('contentstemplate')
-	order = int(n.getAttribute('order'))
-	StaticTab(tabTemplateBase, contentsTemplate, order)
-
-# The HTMLTab subclass we use for presenting tabs to the frontend. This is
-# where we define the logic to render and activate a tab.
-class TemplateTab(frontend.HTMLTab):
-    def __init__(self, tabTemplateBase, tabData, contentsTemplate, contentsData, sortKey, obj):
-	self.tabTemplateBase = tabTemplateBase
-	self.tabData = tabData
-	self.contentsTemplate = contentsTemplate
-	self.contentsData = contentsData
-	self.sortKey = sortKey
-	self.obj = obj # NEEDS: for redraw hack; make this go away
-	frontend.HTMLTab.__init__(self)
-
-    def getHTML(self, state):
-	file = "%s-%s" % (self.tabTemplateBase, state)
-	return template.fillStaticTemplate(file, self.tabData)
-
-    def start(self, frame):
-	frame.setTabListActive(True) 
-	frame.selectDisplay(TemplateDisplay(self.contentsTemplate, self.contentsData, frameHint=frame))
-
-    def redraw(self):
-	self.obj.beginChange()
-	self.obj.endChange()
+	# Load them anew from the resource file.
+	# NEEDS: maybe better error reporting?
+	document = parse(resource.path('statictabs.xml'))
+	for n in document.getElementsByTagName('statictab'):
+	    tabTemplateBase = n.getAttribute('tabtemplatebase')
+	    contentsTemplate = n.getAttribute('contentstemplate')
+	    order = int(n.getAttribute('order'))
+	    StaticTab(tabTemplateBase, contentsTemplate, order)
+    finally:
+	db.endUpdate()
 
 # Return True if a tab should be shown for obj in the frontend. The filter
 # used on the database to get the list of tabs.
@@ -442,15 +646,14 @@ def mappableToTab(obj):
     return isinstance(obj, StaticTab) or isinstance(obj, folder.Folder) or (isinstance(obj, feed.Feed) and obj.isVisible())
 
 # Generate a function that, given an object for which mappableToTab
-# returns true, return a HTMLTab subclass. This is used to turn the
-# database objects that should be represented with tabs (the model)
-# into frontend tab objects (the view.)
+# returns true, return a Tab instance -- mapping a model object into
+# a UI objet that can be rendered and selected.
 #
 # By 'generate a function', we mean that you give makeMapToTabFunction
 # the global data that you want to always be available in both the tab
 # templates and the contents page template, and it returns a function
 # that maps objects to tabs such that that request is satisified.
-def makeMapToTabFunction(globalTemplateData):
+def makeMapToTabFunction(globalTemplateData, controller):
     class MapToTab:
 	def __init__(self, globalTemplateData):
 	    self.globalTemplateData = globalTemplateData
@@ -458,30 +661,30 @@ def makeMapToTabFunction(globalTemplateData):
 	def mapToTab(self,obj):
 	    data = {'global': self.globalTemplateData};
 	    if isinstance(obj, StaticTab):
-		return TemplateTab(obj.tabTemplateBase, data, obj.contentsTemplate, data, [obj.order], obj)
+		return Tab(obj.tabTemplateBase, data, obj.contentsTemplate, data, [obj.order], obj, controller)
 	    elif isinstance(obj, feed.Feed):
 	    	data['feed'] = obj
 		# Change this to sort feeds on a different value
 		sortKey = obj.getTitle()
-		# NEEDS: replaced feed-start with feed-choose for demo
-	    	return TemplateTab('feedtab', data, 'feed-choose', data, [100, sortKey], obj)
+	    	return Tab('feedtab', data, 'feed-start', data, [100, sortKey], obj, controller)
 	    elif isinstance(obj, folder.Folder):
 		data['folder'] = obj
 		sortKey = obj.getTitle()
-		return TemplateTab('foldertab',data,'folder',data,[500,sortKey],obj)
+		return Tab('foldertab',data,'folder',data,[500,sortKey],obj,controller)
 	    else:
 		assert(0) # NEEDS: clean up (signal internal error)
 
     return MapToTab(globalTemplateData).mapToTab
 
-# The sort function used to order tabs in the tab list. Just use the sort
-# keys provided when mapToTab created the TemplateTabs. These can be lists,
-# which are tested left-to-right in the way you'd expect. Generally, the way
-# this is used is that static tabs are assigned a numeric priority, and get
-# a single-element list with that number as their sort key; feeds get a
-# list with '100' in the first position, and a value that determines the
-# order of the feeds in the second position. This way all of the feeds are
-# together, and the static tabs can be positioned around them.
+# The sort function used to order tabs in the tab list: just use the
+# sort keys provided when mapToTab created the Tabs. These can be
+# lists, which are tested left-to-right in the way you'd
+# expect. Generally, the way this is used is that static tabs are
+# assigned a numeric priority, and get a single-element list with that
+# number as their sort key; feeds get a list with '100' in the first
+# position, and a value that determines the order of the feeds in the
+# second position. This way all of the feeds are together, and the
+# static tabs can be positioned around them.
 def sortTabs(x, y):
     if x.sortKey < y.sortKey:
 	return -1
@@ -619,16 +822,3 @@ globalFilterList = {
     'all': (lambda x, y: True),
     'hasKey':  filterHasKey,
 }
-
-###############################################################################
-#### Test data                                                             ####
-###############################################################################
-
-class NameNumberObject(database.DDBObject):
-    def __init__(self):
-	parts = ["ae ", "thi", "ok ", "nin", "yt", "k'", "sem", "oo", "er", "p "]
-	idx = [random.randint(0,len(parts)-1) for i in range(0,random.randint(3, 10))]
-       	self.name = "".join([parts[i] for i in idx])
-	self.number = random.randint(0,100000)
-	database.DDBObject.__init__(self)
-

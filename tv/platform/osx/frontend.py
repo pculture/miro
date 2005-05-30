@@ -19,10 +19,6 @@ NibClassBuilder.extractClasses("MainWindow")
 NibClassBuilder.extractClasses("VideoView")
 NibClassBuilder.extractClasses("AddChannelSheet")
 
-# NEEDS: hack to find a MainController instance for handling URL open
-# events. make this go away!
-theMainControllerHack = None
-
 ###############################################################################
 #### Application object                                                    ####
 ###############################################################################
@@ -30,7 +26,7 @@ theMainControllerHack = None
 class Application:
     def __init__(self):
 	self.app = NSApplication.sharedApplication()
-	self.ctrl = AppController.alloc().init(self.OnStartup, self.OnShutdown)
+	self.ctrl = AppController.alloc().init(self)
 	self.app.setDelegate_(self.ctrl)
 	NSBundle.loadNibNamed_owner_("MainMenu", self.app)
 
@@ -42,18 +38,24 @@ class Application:
     def Run(self):
 	AppHelper.runEventLoop()
 
-    def OnStartup(self):
+    def getBackendDelegate(self):
+	return UIBackendDelegate()
+
+    def onStartup(self):
 	# For overriding
 	None
 
-    def OnShutdown(self):
+    def onShutdown(self):
+	# For overriding
+	None
+
+    def addAndSelectFeed(self, url):
 	# For overriding
 	None
 
 class AppController(NSObject):
-    def init(self, onStartupHook, onShutdownHook):
-	self.onStartupHook = onStartupHook
-	self.onShutdownHook = onShutdownHook
+    def init(self, actualApp):
+	self.actualApp = actualApp
 	return self
     
     # Do nothing. A dummy method called by Application to force Cocoa into
@@ -70,13 +72,13 @@ class AppController(NSObject):
 	    struct.unpack(">i", "GURL")[0])
 	# Call the startup hook before any events (such as instructions
 	# to open files...) are delivered.
-	self.onStartupHook()
+	self.actualApp.onStartup()
 
     def applicationDidFinishLaunching_(self, notification):
 	pass
 
     def applicationWillTerminate_(self, notification):
-	self.onShutdownHook()
+	self.actualApp.onShutdown()
 
     def application_openFile_(self, app, filename):
 	#print "**** openFile %s" % filename
@@ -84,9 +86,6 @@ class AppController(NSObject):
 
     def openURL_withReplyEvent_(self, event, replyEvent):
 	print "**** got open URL event"
-	global theMainControllerHack
-	print "tMCH = %s" % theMainControllerHack
-	print "tMCH.cD = %s" % theMainControllerHack.currentDisplay
 	keyDirectObject = struct.unpack(">i", "----")[0]
 	url = event.paramDescriptorForKeyword_(keyDirectObject).stringValue()
 
@@ -97,9 +96,7 @@ class AppController(NSObject):
 	if match:
 	    url = "http:%s" % match.group(1)
 
-	theMainControllerHack.hackAddAndSelectFeed(url)
-	#if (isinstance(theMainControllerHack.currentDisplay,HTMLDisplay)):
-	#    theMainControllerHack.currentDisplay.execJS('document.location.href = "action:addFeed?url='+url+'";')
+	self.actualApp.addAndSelectFeed(url)
     openURL_withReplyEvent_ = objc.selector(openURL_withReplyEvent_,
 					    signature="v@:@@")
 
@@ -115,109 +112,70 @@ class AppController(NSObject):
 # callbacks.
 
 class MainFrame:
-    def __init__(self, tabs,globalData=None):
-	"""'tabs' is a View containing Tab subclasses. The initially
-	selected tab is given by the cursor. The initially active display
-	will be an instance of NullDisplay."""
+    def __init__(self, app):
+	"""The initially active display will be an instance of NullDisplay."""
 	# Do this in two steps so that self.obj is set when self.obj.init
 	# is called. That way, init can turn around and call selectDisplay.
 	self.obj = MainController.alloc()
-	self.obj.init(tabs, self,globalData)
+	self.obj.init(self, app)
 
-    def selectDisplay(self, display):
-	"""Install the provided 'display' in the right-hand side
-	of the window."""
-	self.obj.selectDisplay(display)
+    def selectDisplay(self, display, index):
+	"""Install the provided 'display' in the left-hand side (index == 0)
+	or right-hand side (index == 1) of the window."""
+	self.obj.selectDisplay(display, index)
 
-    def setTabListActive(self, active):
-	"""If active is true, show the tab list normally. If active is
-	false, show the tab list a different way to indicate that it
-	doesn't pertain directly to what is going on (for example, a
-	video is playing) but that it can still be clicked on."""
-	self.obj.setTabListActive(active)
-	None
-
-    # Internal use: return an estimate of the size of the display area as
+    # Internal use: return an estimate of the size of a given display area as
     # a Cocoa frame object.
-    def getDisplaySizeHint(self):
-	return self.obj.getDisplaySizeHint()
+    def getDisplaySizeHint(self, index):
+	return self.obj.getDisplaySizeHint(index)
 
 class MainController (NibClassBuilder.AutoBaseClass):
     # Outlets: tabView, contentTemplateView, mainWindow
     # Is the delegate for the split view
 
-    def init(self, tabs, owner, globalData = None):
-	print "*** MainController init"
-
+    def init(self, owner, app):
 	# owner is the actual frame object (the argument to onSelected, etc)
 	NSObject.init(self)
 	NSBundle.loadNibNamed_owner_("MainWindow", self)
 	
-	self.tabs = tabs.map(lambda x: TabAdaptor(x, self.getTabState))
 	self.owner = owner
-	self.active = True
-	self.currentDisplay = None
-	self.currentDisplayView = None
-	self.templateHandle = None
-	self.lastSelectedTab = None
+	self.app = app
+	self.currentDisplay = [None, None]
+	self.currentDisplayView = [None, None]
 	self.addChannelSheet = None
-
-	# NEEDS: set cursor to first item (presently map doesn't preserve
-	# cursors; remove when this changes)
-	self.tabs.resetCursor()
-	self.tabs.getNext()
-	
-	# Initalize tab view
-	(html, self.templateHandle) = template.fillTemplate('tablist', {'tabs': self.tabs, 'global':globalData}, lambda js:self.execTabJS(js)) # NEEDS: lock
-	self.web = ManagedWebView.alloc().init(html, self.tabView, None, lambda x:self.onTabURLLoad(x))
-
-	self.checkSelectedTab()
-	# NEEDS: Cursor hasn't been updated yet, and I'm not sure how
-	# to predict this. Mail sent to Nick.
-	self.tabs.addRemoveCallback(lambda oldObject, oldIndex: self.checkSelectedTab())
-
-	global theMainControllerHack
-	print "tMCH = %s" % theMainControllerHack
-	if not theMainControllerHack: # NEEDS: remove
-	    print "tMCH update to %s" % self
-	    theMainControllerHack = self 
-	print "tMCH now = %s" % theMainControllerHack
-
 	return self
-
-    def execTabJS(self, js):
-	self.web.execJS(js)
-
-    def __del__(self):
-	self.templateHandle and self.templateHandle.unlinkTemplate()
 
     def awakeFromNib(self):
 	self.mainWindow.makeKeyAndOrderFront_(None)
 
-    def selectDisplay(self, display):
+    ### Switching displays ###
+
+    def selectDisplay(self, display, index):
 	# Tell the new display we want to switch to it. It'll call us
 	# back when it's ready to display without flickering.
-	display.callWhenReadyToDisplay(lambda: self.doSelectDisplay(display))
+	display.callWhenReadyToDisplay(lambda: self.doSelectDisplay(display, index))
 
-    def doSelectDisplay(self, display):
+    def doSelectDisplay(self, display, index):
 	pool = NSAutoreleasePool.alloc().init()
 
 	# Send notification to old display if any
-	if self.currentDisplay:
-	    self.currentDisplay.onDeselected_private(self.owner)
-	    self.currentDisplay.onDeselected(self.owner)
-	oldView = self.currentDisplayView
+	if self.currentDisplay[index]:
+	    self.currentDisplay[index].onDeselected_private(self.owner)
+	    self.currentDisplay[index].onDeselected(self.owner)
+	oldView = self.currentDisplayView[index]
 
 	# Switch to new display
-	self.currentDisplay = display
-	view = self.currentDisplayView = display and display.getView() or None
+	self.currentDisplay[index] = display
+	view = self.currentDisplayView[index] = display and display.getView() or None
 	if display is None:
 	    return
 
 	# Figure out where to put the content area
-	frame = self.contentTemplateView.bounds()
-	parent = self.contentTemplateView
-	mask = self.contentTemplateView.autoresizingMask()
+	# NEEDS: clean up outlet names/types in nib
+	theTemplate = (index == 0) and self.tabView or self.contentTemplateView
+	frame = theTemplate.bounds()
+	parent = theTemplate
+	mask = theTemplate.autoresizingMask()
 
 	# Arrange to cover the template that marks the content area
 	view.setFrame_(frame)
@@ -240,6 +198,12 @@ class MainController (NibClassBuilder.AutoBaseClass):
 	display.onSelected(self.owner)
 
 	pool.release()
+
+    def getDisplaySizeHint(self, index):
+	theTemplate = (index == 0) and self.tabView or self.contentTemplateView
+	return theTemplate.frame()
+
+    ### Size contraints on splitview ###
 
     minimumTabListWidth = 150 # pixels
     minimumContentWidth = 300 # pixels
@@ -274,120 +238,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
 	self.contentTemplateView.setFrameSize_(contentSize)
 	self.contentTemplateView.setFrameOrigin_(NSPoint(tabSize.width + sender.dividerThickness(), 0))
 
-    def getDisplaySizeHint(self):
-	return self.contentTemplateView.frame()
-
-    def getTabState(self, tabId):
-	# Determine if this tab is selected
-	cur = self.tabs.cur()
-	isSelected = False
-	if cur:
-	    isSelected = (cur.id == tabId)
-
-	# Compute status string
-	if isSelected:
-	    if self.active:
-		return 'selected'
-	    else:
-		return 'selected-inactive'
-	else:
-	    return 'normal'
-
-    # NEEDS: for demo. remove
-    def hackAddAndSelectFeed(self, feedURL):
-	exists = False
-	database.defaultDatabase.saveCursor()
-	for obj in database.defaultDatabase:
-	    if isinstance(obj,feed.Feed) and obj.getURL() == feedURL:
-		exists = True
-		break
-	database.defaultDatabase.restoreCursor()
-	if not exists:
-	    myFeed = feed.RSSFeed(feedURL)
-
-	# Race condition -- hope that addition is reflected in tab list
-	# by now
-	
-	# Move the tab cursor to the added/selected tab
-	self.tabs.resetCursor()
-	while True:
-	    cur = self.tabs.getNext()
-	    if cur == None:
-		assert(0) # NEEDS: better error (failed to add tab)
-	    actualTabObj = cur.tab.obj # NEEDS: horrible hack
-	    if isinstance(actualTabObj, feed.Feed) and actualTabObj.getURL() == feedURL:
-		break
-
-	# Handle switching tabs if necessary (doesn't send Reselected
-	# messages for now -- we actually like that, in a horrible hacky way)
-	self.checkSelectedTab()
-
-    def onTabURLLoad(self, url):
-	match = re.compile(r"^action:selectTab\?id=(.*)$").match(url)
-	if match:
-	    # NEEDS: take lock
-
-	    # Move the cursor to the newly selected object
-	    newId = match.group(1)
-	    self.tabs.resetCursor()
-	    while True:
-		cur = self.tabs.getNext()
-		if cur == None:
-		    assert(0) # NEEDS: better error (JS sent bad tab id)
-		if cur.id == newId:
-		    break
-
-	    # Figure out what happened
-	    oldSelected = self.lastSelectedTab
-	    newSelected = self.tabs.cur()
-
-	    # Handle reselection action
-	    if oldSelected and oldSelected.id == newSelected.id:
-		# Tab was reselected
-		if self.currentDisplay:
-		    self.currentDisplay.onSelectedTabClicked()
-
-	    # Handle case where a different tab was clicked
-	    self.checkSelectedTab()
-	    return False
-	elif re.compile(r"^action:").match(url):
-	    # Pass Action URL to the HTML display
-	    if isinstance(self.currentDisplay,HTMLDisplay):
-		#NEEDS: if currentDisplay isn't HTML we should still
-		#deal with this...
-		self.currentDisplay.onURLLoad(url)
-	return True
-
-    def checkSelectedTab(self):
-	# NEEDS: locking ...
-	oldSelected = self.lastSelectedTab
-	newSelected = self.tabs.cur()
-
-	#print "OldSelected %s NewSelected %s" % (oldSelected, newSelected)
-
-	tabChanged = ((oldSelected == None) != (newSelected == None)) or (oldSelected and newSelected and oldSelected.id != newSelected.id)
-	if tabChanged: # Tab selection has changed! Deal.
-
-	    # Redraw the old and new objects (remember, these are TabAdaptors,
-	    # not actual database objects)
-	    if oldSelected:
-		oldSelected.redraw()
-	    if newSelected:
-		newSelected.redraw()
-
-	    # Boot up the new tab's template.
-	    if newSelected:
-		newSelected.start(self.owner)
-	    else:
-		self.selectDisplay(NullDisplay())
-
-	    # Record that we're up to date
-	    self.lastSelectedTab = newSelected
-
-    def setTabListActive(self, active):
-	self.active = active
-	if self.tabs.cur():
-	    self.tabs.cur().redraw()
+    ### 'Add Channel' sheet ###
 
     def openAddChannelSheet_(self, sender):
 	if not self.addChannelSheet:
@@ -405,76 +256,34 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     def addChannelSheetDone_(self, sender):
 	sheetURL = self.addChannelSheetURL.stringValue()
-	# NEEDS: change display to HTML view if not in it already
-	# NEEDS: properly escape URL
-	# NEEDS: doesn't work on cold start
-	if (isinstance(self.currentDisplay,HTMLDisplay)):
-	    self.currentDisplay.execJS('document.location.href = "action:addFeed?url='+sheetURL+'";')
+	# NEEDS: pass a non-default template name?
+	self.app.addAndSelectFeed(sheetURL)
 	NSApplication.sharedApplication().endSheet_(self.addChannelSheet)
 
     def addChannelSheetCancel_(self, sender):
 	NSApplication.sharedApplication().endSheet_(self.addChannelSheet)
 
 ###############################################################################
-#### Tabs                                                                  ####
+#### 'Delegate' objects for asynchronously asking the user questions       ####
 ###############################################################################
 
-class Tab:
-    """Base class for the records that makes up the list of left-hand
-    tabs to show. Cannot be put into a MainFrame directly -- you must
-    use a subclass, such as HTMLTab, that knows how to render itself."""
+class UIBackendDelegate:
+    def getHTTPAuth(self, url, domain, prefillUser = None, prefillPassword = None):
+	"""Ask the user for HTTP login information for a location, identified
+	to the user by its URL and the domain string provided by the
+	server requesting the authorization. Default values can be
+	provided for prefilling the form. If the user submits
+	information, it's returned as a (user, password)
+	tuple. Otherwise, if the user presses Cancel or similar, None
+	is returned."""
+	raise NotImplementedError
 
-    def __init__(self):
-	pass
+    def isScrapeAllowed(self, url):
+	"""Tell the user that URL wasn't a valid feed and ask if it should be
+	scraped for links instead. Returns True if the user gives
+	permission, or False if not."""
+	raise NotImplementedError
 
-    def start(self, frame):
-	"""Called when the tab is clicked on in a MainFrame where it was
-	not already the selected tab (or when it becomes selected by other
-	means, eg, the selected tab was deleted and this tab has become
-	selected by default.) 'frame' is the MainFrame where the tab is
-	selected. Should usually result in a call to
-	frame.selectDisplay()."""
-	None
-
-class HTMLTab(Tab):
-    """A Tab whose appearance is defined by HTML."""
-
-    def __init__(self):
-	pass
-    
-    def getHTML(self, state):
-	"""Get HTML giving the visual appearance of the tab. 'state' is
-	one of 'selected' (tab is currently selected), 'normal' (tab is
-	not selected), or 'selected-inactive' (tab is selected but
-	setTabListActive was called with a false value on the MainFrame
-	for which the tab is being rendered.) The HTML should be returned
-	as a xml.dom.minidom element or document fragment."""
-	None
-	
-    def redraw(self):
-	# Force a redraw by sending a change notification on the underlying
-	# DB object.
-	# NEEDS: make this go away.
-	None
-
-class TabAdaptor:
-    tabIdCounter = 0
-
-    def __init__(self, tab, getTabState):
-	self.tab = tab
-	self.getTabState = getTabState
-	self.id = "tab%d" % TabAdaptor.tabIdCounter
-	TabAdaptor.tabIdCounter += 1
-    
-    def markup(self):
-	return self.tab.getHTML(self.getTabState(self.id))
-
-    def start(self, frame):
-	return self.tab.start(frame)
-
-    def redraw(self):
-	self.tab.redraw()
-	
 ###############################################################################
 #### Right-hand pane displays generally                                    ####
 ###############################################################################
@@ -492,11 +301,6 @@ class Display:
 	MainFrame. This function is called on the Display losing the
 	selection before onSelected is called on the Display gaining the
 	selection."""
-	None
-
-    def onSelectedTabClicked(self):
-	"""Called on the Display shown in the current MainFrame when the
-	selected tab is clicked again by the user."""
 	None
 
     def __init__(self):
@@ -539,9 +343,9 @@ class NullDisplay(Display):
 class HTMLDisplay(Display):
     "HTML browser that can be shown in a MainFrame's right-hand pane."
 
-    # We don't need to override onSelected, onDeselected, onSelectedTabClicked
+    # We don't need to override onSelected, onDeselected
       
-    def __init__(self, html, frameHint=None):
+    def __init__(self, html, frameHint=None, indexHint=None):
 	"""'html' is the initial contents of the display, as a string. If
 	frameHint is provided, it is used to guess the initial size the HTML
 	display will be rendered at, which might reduce flicker when the
@@ -550,7 +354,7 @@ class HTMLDisplay(Display):
 
 	self.readyToDisplayHook = None
 	self.readyToDisplay = False
-	self.web = ManagedWebView.alloc().init(html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(x), frameHint and frameHint.getDisplaySizeHint() or None)
+	self.web = ManagedWebView.alloc().init(html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(x), frameHint and indexHint and frameHint.getDisplaySizeHint(indexHint) or None)
 	Display.__init__(self)
 	pool.release()
 
@@ -802,10 +606,6 @@ class VideoDisplay(Display):
 
     def getView(self):
 	return self.obj.rootView
-
-    def onSelectedTabClicked(self):
-	self.currentFrame.setTabListActive(True)
-	self.currentFrame.selectDisplay(self.previousDisplay)
 
 class PlayerController(NibClassBuilder.AutoBaseClass):
     # Has outlets for most of the GUI widgets
