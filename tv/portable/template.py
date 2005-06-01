@@ -193,11 +193,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                 if not (key in ['t:replace','t:replaceMarkup','t:hideIfKey',
                                't:hideIfNotKey','t:hideFunctionKey',
                                't:hideParameter','style']):
-                    addKey = key
-                    self.repeatList.append(lambda x, y:' ')
-                    self.repeatList.append(lambda x, y:addKey)
-                    self.repeatList.append(lambda x, y:'=')
-                    self.repeatList.append(lambda x, y:self.quoteAndFillAttr(attrs[addKey],x))
+                    self.repeatList.append(self.makeReplaceFunc(key,attrs[key]))
             if hide:
                 self.repeatList.append(lambda x, y:self.returnIf(hideFunc(x,y),' style="display:none"'))
 
@@ -349,6 +345,9 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             self.repeatList.append(lambda x,y: sax.saxutils.escape(data))
         else:
             self.output.append(sax.saxutils.escape(data))
+
+    def makeReplaceFunc(self,key,value):
+        return lambda x, y:' '+key+'='+self.quoteAndFillAttr(value,x)
 
 
 # View mapping function used to assign ID attributes to records so
