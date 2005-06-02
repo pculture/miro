@@ -1,14 +1,18 @@
-from threading import Thread
+from threading import Thread, Semaphore
 from database import DynamicDatabase,DDBObject
 from time import time, sleep
 
 def now():
     return int(time())
+
+maxThreads = 30
+
 ##
 # Database of background tasks to be periodically run
 class Scheduler(DynamicDatabase):
     def __init__(self):
         DynamicDatabase.__init__(self)
+        self.semaphore = Semaphore(maxThreads)
         self.isShutdown = False
         self.thread = Thread(target = self.executeEvents)
 	self.thread.setDaemon(False)
@@ -67,5 +71,9 @@ class ScheduleEvent(DDBObject):
     ##
     # Makes an event happen
     def execute(self):
-	self.event()
+        ScheduleEvent.scheduler.semaphore.acquire()
+        try:
+            self.event()
+        finally:
+            ScheduleEvent.scheduler.semaphore.release()
 
