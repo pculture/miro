@@ -69,6 +69,10 @@
       <br />
    </form>
 <br/><br/>
+  Test dialogs:
+   <a href="action:testGetHTTPAuth?url=myurl&amp;domain=mydomain&amp;prefillUser=myusername&amp;prefillPassword=mypassword">getHTTPAuth</a>,
+   <a href="action:testIsScrapeAllowed?url=myurl">isScrapeAllowed</a>
+<br/><br/>
   Play a video file in a new window:
     <form method="GET" action="action:playFile">
       Filename on local disk: <input name="filename" type="text" />

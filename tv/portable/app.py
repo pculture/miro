@@ -18,6 +18,7 @@ import datetime
 import autodler
 import folder
 import scheduler
+import threading
 
 db = database.defaultDatabase
 
@@ -419,6 +420,15 @@ class ModelActionHandler:
     def recomputeFilters(self):
 	db.recomputeFilters()
 
+# Test shim for test* functions on GUIActionHandler
+class printResultThread(threading.Thread):
+    def __init__(self, format, func):
+	self.format = format
+	self.func = func
+	threading.Thread.__init__(self)
+    def run(self):
+	print (self.format % (self.func(), ))
+
 # Functions that are safe to call from action: URLs that can change
 # the GUI presentation (and may or may not manipulate the database.)
 class GUIActionHandler:
@@ -488,6 +498,14 @@ class GUIActionHandler:
 	finally:
 	    db.restoreCursor()
 	    db.endUpdate()
+
+    # Following for testing/debugging
+
+    def testGetHTTPAuth(self, **args):
+	printResultThread("testGetHTTPAuth: got %s", lambda: self.controller.getBackendDelegate().getHTTPAuth(**args)).start()
+
+    def testIsScrapeAllowed(self, url):
+	printResultThread("testIsScrapeAllowed: got %s", lambda: self.controller.getBackendDelegate().isScrapeAllowed(url)).start()
 
 # Functions that are safe to call from action: URLs that change state
 # specific to a particular instantiation of a template, and so have to

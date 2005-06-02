@@ -18,6 +18,10 @@ NibClassBuilder.extractClasses("MainMenu")
 NibClassBuilder.extractClasses("MainWindow")
 NibClassBuilder.extractClasses("VideoView")
 NibClassBuilder.extractClasses("AddChannelSheet")
+NibClassBuilder.extractClasses("PasswordWindow")
+NibClassBuilder.extractClasses("QuestionWindow")
+
+doNotCollect = {}
 
 ###############################################################################
 #### Application object                                                    ####
@@ -276,13 +280,123 @@ class UIBackendDelegate:
 	information, it's returned as a (user, password)
 	tuple. Otherwise, if the user presses Cancel or similar, None
 	is returned."""
-	raise NotImplementedError
+	message = "Location %s requires a username and password for \"%s\"." % (url, domain)
+	return PasswordController.alloc().init(message, prefillUser, prefillPassword).getAnswer()
 
     def isScrapeAllowed(self, url):
 	"""Tell the user that URL wasn't a valid feed and ask if it should be
 	scraped for links instead. Returns True if the user gives
 	permission, or False if not."""
-	raise NotImplementedError
+	# This message could use some serious work.
+	message = """No RSS information found at %s. Automatically 'scrape'
+links from this location?""" % url
+	return QuestionController.alloc().init(message).getAnswer()
+
+# NEEDS: Factor code common between PasswordController and
+# QuestionController out into a superclass
+
+class PasswordController(NibClassBuilder.AutoBaseClass):
+    def init(self, message, prefillUser = None, prefillPassword = None):
+	pool = NSAutoreleasePool.alloc().init()
+	# sets passwordField, textArea, usernameField, window
+	NSBundle.loadNibNamed_owner_("PasswordWindow", self)
+
+	self.usernameField.setStringValue_(prefillUser or "")
+	self.passwordField.setStringValue_(prefillPassword or "")
+	self.textArea.setStringValue_(message)
+	self.result = None
+	self.condition = threading.Condition()
+
+	# Ensure we're not deallocated until the window that has actions
+	# that point at us is closed
+	self.retain() 
+
+	pool.release()
+	return self
+
+    def getAnswer(self):
+	"""Present the dialog and wait for user answer. Returns (username,
+password) if the user pressed OK, or None if the user pressed
+Cancel."""
+	# PasswordController is likely to get release()d by Python in response
+	# to getAnswer returning.
+	self.performSelectorOnMainThread_withObject_waitUntilDone_("showAtModalLevel:", None, False)
+	self.condition.acquire()
+	self.condition.wait()
+	self.condition.release()
+	self.release()
+	return self.result
+
+    # executes in GUI thread
+    def showAtModalLevel_(self, sender):
+	self.window.setLevel_(NSModalPanelWindowLevel)
+	self.window.makeKeyAndOrderFront_(None)
+
+    # bound to button in nib
+    def acceptEntry_(self, sender):
+	self.condition.acquire()
+	self.result = (self.usernameField.stringValue(),
+		       self.passwordField.stringValue())
+	self.window.close()
+	self.condition.notify()
+	self.condition.release()
+
+    # bound to button in nib
+    def cancelEntry_(self, sender):
+	self.condition.acquire()
+	self.result = None
+	self.window.close()
+	self.condition.notify()
+	self.condition.release()
+
+class QuestionController(NibClassBuilder.AutoBaseClass):
+    def init(self, message):
+	# as loaded, button titles are "Yes" and "No" and window title is
+	# "Question", but these could be made arguments to init()
+	pool = NSAutoreleasePool.alloc().init()
+	# sets defaultButton, alternateButton, textArea, window
+	NSBundle.loadNibNamed_owner_("QuestionWindow", self)
+	self.textArea.setStringValue_(message)
+	self.result = None
+	self.condition = threading.Condition()
+
+	# Ensure we're not deallocated until the window that has actions
+	# that point at us is closed
+	self.retain()
+
+	pool.release()
+	return self
+
+    def getAnswer(self):
+	"""Present the dialog and wait for user answer. Returns True or False
+depending on the button selected."""
+	self.performSelectorOnMainThread_withObject_waitUntilDone_("showAtModalLevel:", None, False)
+	self.condition.acquire()
+	self.condition.wait()
+	self.condition.release()
+	self.release()
+	return self.result
+
+    # executes in GUI thread
+    def showAtModalLevel_(self, sender):
+	self.window.setLevel_(NSModalPanelWindowLevel)
+	self.window.makeKeyAndOrderFront_(None)
+
+    # bound to button in nib
+    def defaultAction_(self, sender):
+	self.condition.acquire()
+	self.result = True
+	self.window.close()
+	self.condition.notify()
+	self.condition.release()
+
+    # bound to button in nib
+    def alternateAction_(self, sender):
+	self.condition.acquire()
+	self.result = False
+	self.window.close()
+	self.condition.notify()
+	self.condition.release()
 
 ###############################################################################
 #### Right-hand pane displays generally                                    ####
