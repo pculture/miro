@@ -479,7 +479,7 @@ class GUIActionHandler:
 		    break
 		
 	    if not exists:
-		myFeed = feed.RSSFeed(url)
+		myFeed = feed.generateFeed(url)
 
 		# At this point, the addition is guaranteed to be reflected
 		# in the tab list.

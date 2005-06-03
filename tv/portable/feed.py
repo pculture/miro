@@ -1,5 +1,5 @@
 from formatter import AbstractFormatter, NullWriter
-from httplib import HTTPConnection
+from downloader import grabURL
 from htmllib import HTMLParser
 import xml
 from urlparse import urlparse, urljoin
@@ -10,6 +10,7 @@ from item import *
 from scheduler import ScheduleEvent
 from copy import copy
 from xhtmltools import unescape,xhtmlify
+from cStringIO import StringIO
 import os
 import config
 
@@ -20,26 +21,68 @@ import feedparser
 ##
 # Generates an appropriate feed for a URL
 #
-# Eventually, we can use this to determine the type of feed automatically
-class FeedFactory:
-    def __init__(self, config = None):
-        self.config = config
-	
-    ##
-    # Returns an appropriate feed for the given URL
-    #
-    # @param url The URL of the feed
-    def gen(self, url):
-        if self.isRSSURL(url):
-            return RSSFeed(url)
-        else:
-            return None
+# @param url The URL of the feed
+# FIXME: avoid downloading feeds twice
+def generateFeed(url):
+    info = grabURL(url,"GET")
+    if info is None:
+        return None
+    try:
+        modified = info['last-modified']
+    except KeyError:
+        modified = None
+    try:
+        etag = info['etag']
+    except KeyError:
+        etag = None
+    #Definitely an HTML feed
+    if (info['content-type'].startswith('text/html') or 
+        info['content-type'].startswith('application/xhtml+xml')):
+        #print "Scraping HTML"
+        html = info['file-handle'].read()
+        info['file-handle'].close()
+        return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified)
 
-    ##
-    # Determines the mime type of the URL
-    # Returns true IFF url is RSS URL
-    def isRSSURL(self,url):
-        return True
+    #It's some sort of feed we don't know how to scrape
+    elif (info['content-type'].startswith('application/rdf+xml') or
+          info['content-type'].startswith('application/atom+xml')):
+        #print "ATOM or RDF"
+        html = info['file-handle'].read()
+        info['file-handle'].close()
+        return RSSFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified)
+    # If it's not HTML, we can't be sure what it is.
+    #
+    # If we get generic XML, it's probably RSS, but it still could be
+    # XHTML.
+    #
+    # application/rss+xml links are definitely feeds. However, they
+    # might be pre-enclosure RSS, so we still have to download them
+    # and parse them before we can deal with them correctly.
+    elif (info['content-type'].startswith('application/rss+xml') or
+          info['content-type'].startswith('text/xml') or 
+          info['content-type'].startswith('application/xml')):
+        #print " It's doesn't look like HTML..."
+        html = info["file-handle"].read()
+        info["file-handle"].close()
+        try:
+            parser = xml.sax.make_parser()
+            parser.setFeature(xml.sax.handler.feature_namespaces, 1)
+            handler = RSSLinkGrabber(html,info['redirected-url'])
+            parser.setContentHandler(handler)
+            parser.parse(StringIO(html))
+        except xml.sax.SAXException: #it doesn't parse as RSS, so it must be HTML
+            #print " Nevermind! it's HTML"
+            return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified)
+        if handler.enclosureCount > 0:
+            #print " It's RSS with enclosures"
+            return RSSFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified)
+        else:
+            #print " It's pre-enclosure RSS"
+            return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified)
+    else:  #What the fuck kinda feed is this, asshole?
+        print "DTV doesn't know how to deal with "+info['content-type']+" feeds"
+        return None
+
 
 ##
 # A feed contains a set of of downloadable items
@@ -298,8 +341,11 @@ class Feed(DDBObject):
 	self.__dict__ = state
 
 class RSSFeed(Feed):
-    def __init__(self,url,title = None):
+    def __init__(self,url,title = None,initialHTML = None, etag = None, modified = None):
         Feed.__init__(self,url,title)
+        self.initialHTML = initialHTML
+        self.etag = etag
+        self.modified = modified
         self.scheduler = ScheduleEvent(self.updateFreq, self.update)
 	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
         self.scheduler = ScheduleEvent(0, self.update,False)
@@ -352,21 +398,28 @@ class RSSFeed(Feed):
     ##
     # Updates a feed
     def update(self):
-	try:
-	    d = feedparser.parse(self.url,etag=self.parsed.etag,modified=self.parsed.modified)
-	    if d.status == 304:
-		return ""
-	    else:
-		self.parsed = d
-	except:
-	    self.parsed = feedparser.parse(self.url)
+        if not self.initialHTML is None:
+            html = self.initialHTML
+            self.initialHTML = None
+        else:
+            info = grabURL(self.url,etag=self.etag,modified=self.modified)
+            if info is None:
+                return None
+            
+            html = info['file-handle'].read()
+            info['file-handle'].close()
+            if info['status'] == 304:
+                return
+            if info.has_key('etag'):
+                self.etag = info['etag']
+            if info.has_key('last-modified'):
+                self.modified = info['last-modified']
+            self.url = info['updated-url']
+        d = feedparser.parse(html)
+        self.parsed = d
+
         self.beginRead()
         try:
-	    try:
-		if self.parsed.status == 301: #permanent redirect
-                    self.url = self.parsed.url
-	    except:
-		pass
             try:
                 self.title = self.parsed["feed"]["title"]
             except KeyError:
@@ -480,162 +533,175 @@ class Collection(Feed):
 ##
 # A feed based on un unformatted HTML or pre-enclosure RSS
 #
-# 
+# FIXME: Don't save any HTML, but save etag and last modified and
+# don't re-download things we've already looked at
 class ScraperFeed(Feed):
-    def __init__(self,url,title = None, visible = True):
+    def __init__(self,url,title = None, visible = True, initialHTML = None,etag=None,modified = None):
 	Feed.__init__(self,url,title,visible)
+        self.initialHTML = initialHTML
 	self.scheduler = ScheduleEvent(self.updateFreq, self.update)
 	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
 	self.scheduler = ScheduleEvent(0, self.update,False)
-	self.mainHTML = ''
-	self.secondaryHTML = {}
+        self.linkHistory = {}
+        self.linkHistory[url] = {}
+        if not etag is None:
+            self.linkHistory[url]['etag'] = etag
+        if not modified is None:
+            self.linkHistory[url]['modified'] = modified
 
     def getMimeType(self,link):
-	(linkScheme, linkHost, linkPath, linkParams, linkQuery, linkFragment) = urlparse(link)
-	if len(linkParams):
-	    linkPath += ';'+linkParams
-	if len(linkQuery):
-	    linkPath += '?'+linkQuery
-	linkConn = HTTPConnection(linkHost)
-	linkConn.connect()
-	try:
-	    linkConn.request('HEAD',linkPath)
-	    linkDownload = linkConn.getresponse()
-	except:
-	    linkConn.close()
-	    return None
-	depth = 0
-	while linkDownload.status != 200 and depth < 10:
-	    depth += 1
-	    if linkDownload.status == 302 or linkDownload.status == 307 or linkDownload.status == 301:
-		info = linkDownload.msg
-		linkDownload.close()
-		linkConn.close()
-		redirURL = info['Location']
-		if linkDownload.status == 301:
-		    link = redirURL
-		(linkScheme, linkHost, linkPath, linkParams, linkQuery, linkFragment) = urlparse(info['Location'])
-		linkConn = HTTPConnection(linkHost)
-		if len(linkParams):
-		    linkPath += ';'+linkParams
-		if len(linkQuery):
-		    linkPath += '?'+linkQuery
-		try:
-		    linkConn.request('HEAD',linkPath)
-		except:
-		    linkConn.close()
-		    return None
-		linkDownload = linkConn.getresponse()
-	    else:
-		return None
-	info = linkDownload.msg
-	linkDownload.close()
-	return info['Content-Type']
+        info = grabURL(link,"HEAD")
+        if info is None:
+            return ''
+        else:
+            return info['content-type']
 
     ##
     # returns a tuple containing the text of the URL, the url (in case
-    # of a permanent redirect), and a redirected URL (in case of
-    # temporary redirect)
+    # of a permanent redirect), a redirected URL (in case of
+    # temporary redirect)m and the download status
     def getHTML(self, url):
-	redirURL = url
-	(scheme, host, path, params, query, fragment) = urlparse(url)
-	conn = HTTPConnection(host)
-	conn.connect()
-	if len(params):
-	    path += ';'+params
-	if len(query):
-	    path += '?'+query
-	conn.request('GET',path)
-	download = conn.getresponse()
-	depth = 0
-	while download.status != 200 and depth < 10:
-	    depth += 1
-	    if download.status == 302 or download.status == 307 or download.status == 301:
-		info = download.msg
-		download.close()
-		conn.close()
-		redirURL = info['Location']
-		if download.status == 301:
-		    url = redirURL
-		(scheme, host, path, params, query, fragment) = urlparse(info['Location'])
-		conn = HTTPConnection(host)
-		if len(params):
-		    path += ';'+params
-		if len(query):
-		    path += '?'+query
-	        #FIXME: catch exception here
-		conn.request("GET",path)
-		download = conn.getresponse()
-	    else:
-		return (None, url, redirURL)
-	html = download.read()
-	download.close()
-	conn.close()
-	return (html, url, redirURL)
+        etag = None
+        modified = None
+        if self.linkHistory.has_key(url):
+            if self.linkHistory[url].has_key('etag'):
+                etag = self.linkHistory[url]['etag']
+            if self.linkHistory[url].has_key('modified'):
+                modified = self.linkHistory[url]['modified']
+        info = grabURL(url, etag=etag, modified=modified)
+        if info is None:
+            return (None, url, url,404)
+        else:
+            if not self.linkHistory.has_key(info['updated-url']):
+                self.linkHistory[info['updated-url']] = {}
+            if info.has_key('etag'):
+                self.linkHistory[info['updated-url']]['etag'] = info['etag']
+            if info.has_key('last-modified'):
+                self.linkHistory[info['updated-url']]['modified'] = info['last-modified']
 
-    def addVideoItem(self,link,title):
+            html = info['file-handle'].read()
+            #print "Scraper got HTML of length "+str(len(html))
+            info['file-handle'].close()
+            #print "Closed"
+            return (html, info['updated-url'],info['redirected-url'],info['status'])
+
+    def addVideoItem(self,link,dict):
 	link = link.strip()
+        if dict.has_key('title'):
+            title = dict['title']
+        else:
+            title = link
 	for item in self.items:
 	    if item.getURL() == link:
 		return
-	if len(title) > 0:
-	    i=Item(self, FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link})]}))
+	if dict.has_key('thumbnail') > 0:
+	    i=Item(self, FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link,'thumbnail':FeedParserDict({'url':dict['thumbnail']})})]}))
 	else:
-	    i=Item(self, FeedParserDict({'title':link,'enclosures':[FeedParserDict({'url':link})]}))
+	    i=Item(self, FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link})]}))
 	self.items.append(i)
 	self.beginChange()
 	self.endChange()
 
-    #FIXME: compound names for titles at each depth
+    #FIXME: compound names for titles at each depth??
     def processLinks(self,links, depth = 0):
-	if depth<2:
-	    for (link, title) in links:
+        maxDepth = 2
+	if depth<maxDepth:
+	    for link in links.keys():
+                #print "Processing "+title+" ("+link+")"
 		#FIXME keep the connection open
 		mimetype = self.getMimeType(link)
+                #print " mimetype is "+mimetype
 		if mimetype != None:
                      #This is text of some sort: HTML, XML, etc.
-		    if mimetype[0:9] == 'text/html' or mimetype[0:21] == 'application/xhtml+xml' or mimetype[0:9] == 'text/xml' or mimetype[0:15] == 'application/xml':
-			(html, url, redirURL) = self.getHTML(link)
-			subLinks = self.scrapeLinks(html, redirURL)
-			self.processLinks(subLinks, depth+1)
+		    if (mimetype.startswith('text/html') or
+                      mimetype.startswith('application/xhtml+xml') or 
+                      mimetype.startswith('text/xml')  or
+                      mimetype.startswith('application/xml') or
+                      mimetype.startswith('application/rss+xml') or
+                      mimetype.startswith('application/atom+xml') or
+                      mimetype.startswith('application/rdf+xml') ):
+			(html, url, redirURL,status) = self.getHTML(link)
+                        if status == 304: #It's cached
+                            pass
+                        elif not html is None:
+                            subLinks = self.scrapeLinks(html, redirURL)
+                            self.processLinks(subLinks, depth+1)
+                        else:
+                            pass
+                            #print link+" seems to be bogus..."
 		    #This is probably a video
 		    else:
-			self.addVideoItem(link, title)
-
+			self.addVideoItem(link, links[link])
 
     #FIXME: go through and add error handling
-    #FIXME: perform HTTP caching
     def update(self):
-	(self.mainHTML,self.url, redirURL) = self.getHTML(self.url)
-	links = self.scrapeLinks(self.mainHTML, redirURL)
-	self.processLinks(links)
-	#Download the HTML associated with each page
+        if not self.initialHTML is None:
+            html = self.initialHTML
+            self.initialHTML = None
+            redirURL=self.url
+            status = 200
+        else:
+            (html,url, redirURL, status) = self.getHTML(self.url)
+        if status == 304:
+            #pass
+        else:
+            if not html is None:
+                links = self.scrapeLinks(html, redirURL, setTitle=True)
+                self.processLinks(links)
+            #Download the HTML associated with each page
 
-    def scrapeLinks(self,html,baseurl):
+    def scrapeLinks(self,html,baseurl,setTitle = False):
 	try:
-	    handler = RSSLinkGrabber(html,baseurl)
-	    xml.sax.parseString(html,handler)
+            parser = xml.sax.make_parser()
+            parser.setFeature(xml.sax.handler.feature_namespaces, 1)
+            handler = RSSLinkGrabber(html,baseurl)
+            parser.setContentHandler(handler)
+            parser.parse(StringIO(html))
 	    links = handler.links
-	    links2 = []
-	    for link in links:
-		if link[0][0:7] == 'http://':
-		    links2.append((link[0],link[1].strip()))
-	    return links2
-	except xml.sax.SAXNotRecognizedException:
-	    return self.scrapeHTMLLinks(html,baseurl)
-	except xml.sax.SAXParseException:	    
-	    return self.scrapeHTMLLinks(html,baseurl)
+            linkDict = {}
+            for link in links:
+                if link[0].startswith('http://') or link[0].startswith('https://'):
+                    if not linkDict.has_key(link[0]):
+                        linkDict[link[0]] = {}
+                    if not link[1] is None:
+                        linkDict[link[0]]['title'] = link[1].strip()
+                    if not link[2] is None:
+                        linkDict[link[0]]['thumbnail'] = link[2]
+            if setTitle and not handler.title is None:
+                self.beginChange()
+                try:
+                    self.title = handler.title
+                finally:
+                    self.endChange()
+            return linkDict
+	except xml.sax.SAXException:
+	    linkDict = self.scrapeHTMLLinks(html,baseurl,setTitle=setTitle)
+            return linkDict
+
     ##
-    # Given a string containing an HTML file, return a list of tuples
-    # of titles and links
-    def scrapeHTMLLinks(self,html, baseurl):
+    # Given a string containing an HTML file, return a dictionary of
+    # links to titles and thumbnails
+    def scrapeHTMLLinks(self,html, baseurl,setTitle=False):
+        #print "Scraping "+baseurl+" as HTML"
 	lg = HTMLLinkGrabber(AbstractFormatter(NullWriter))
 	links = lg.getLinks(html, baseurl)
-	links2 = []
+        if setTitle and not lg.title is None:
+            self.beginChange()
+            try:
+                self.title = lg.title
+            finally:
+                self.endChange()
+            
+        linkDict = {}
 	for link in links:
-	    if link[0][0:7] == 'http://':
-		links2.append((link[0],link[1].strip()))
-	return links2
+	    if link[0].startswith('http://') or link[0].startswith('https://'):
+                if not linkDict.has_key(link[0]):
+                    linkDict[link[0]] = {}
+                if not link[1] is None:
+                    linkDict[link[0]]['title'] = link[1].strip()
+                if not link[2] is None:
+                    linkDict[link[0]]['thumbnail'] = link[2]
+	return linkDict
 	
     ##
     # Called by pickle during serialization
@@ -747,8 +813,6 @@ class DirectoryFeed(Feed):
 
 ##
 # Parse HTML document and grab all of the links and their title
-# FIXME: get titles from a tag, then title. Get thumbnail from img
-#        inside a tag
 class HTMLLinkGrabber(HTMLParser):
     def getLinks(self,data, baseurl):
 	self.links = []
@@ -756,24 +820,36 @@ class HTMLLinkGrabber(HTMLParser):
 	self.inLink = False
 	self.inObject = False
 	self.baseurl = baseurl
+        self.inTitle = False
+        self.title = None
+        self.thumbnailUrl = None
 	self.feed(data)
 	self.close()
 	return self.links
 
-    #FIXME Handle title and baseurl
     def handle_starttag(self, tag, method, attrs):
-	if tag.lower() == 'object':
+        if tag.lower() == 'title':
+            self.inTitle = True
+        elif tag.lower() == 'base':
+            for attr in attrs:
+                if attr[0].lower() == 'href':
+                    self.baseurl = attr[1]
+	elif tag.lower() == 'object':
 	    self.inObject = True
+        elif self.inLink and tag.lower() == 'img':
+            for attr in attrs:
+                if attr[0].lower() == 'src':
+                    self.links[-1] = (self.links[-1][0],self.links[-1][1],urljoin(self.baseurl,attr[1]))
 	elif tag.lower() == 'a':
 	    for attr in attrs:
 		if attr[0].lower() == 'href':
-		    self.links.append( (urljoin(self.baseurl,attr[1]),''))
+		    self.links.append( (urljoin(self.baseurl,attr[1]),None,None))
 		    self.inLink = True
 		    break
 	elif tag.lower() == 'embed':
 		for attr in attrs:
 		    if attr[0].lower() == 'src':
-			self.links.append( (urljoin(self.baseurl,attr[1]),''))
+			self.links.append( (urljoin(self.baseurl,attr[1]),None,None))
 			break
 	elif tag.lower() == 'param' and self.inObject:
 	    srcParam = False
@@ -784,20 +860,29 @@ class HTMLLinkGrabber(HTMLParser):
 	    if srcParam:
 		for attr in attrs:
 		    if attr[0].lower() == 'value':
-			self.links.append( (urljoin(self.baseurl,attr[1]),''))
+			self.links.append( (urljoin(self.baseurl,attr[1]),None,None))
 			break
 		
     def handle_endtag(self, tag, method):
 	if tag.lower() == 'a':
 	    if self.inLink:
-		if len(self.links[-1][1]) == 0:
-		    self.links[-1] = (self.links[-1][0], self.links[-1][0])
+		if self.links[-1][1] is None:
+		    self.links[-1] = (self.links[-1][0], self.links[-1][0],self.links[-1][2])
 		    self.inLink = False
-	if tag.lower() == 'object':
+	elif tag.lower() == 'object':
 	    self.inObject = False
+        elif tag.lower() == 'title':
+            self.inTitle = False
     def handle_data(self, data):
-	if self.inLink:
-	    self.links[-1] = (self.links[-1][0],self.links[-1][1]+data)
+        if self.inLink:
+            if self.links[-1][1] is None:
+                self.links[-1] = (self.links[-1][0], '',self.links[-1][2])
+            self.links[-1] = (self.links[-1][0],self.links[-1][1]+data,self.links[-1][2])
+        elif self.inTitle:
+            if self.title is None:
+                self.title = data
+            else:
+                self.title += data
 
 ##
 # Get title from item title
@@ -806,36 +891,59 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler):
 	self.html = html
 	self.baseurl = baseurl
     def startDocument(self):
+        #print "Got start document"
+        self.enclosureCount = 0
 	self.links = []
 	self.inLink = False
-	self.inDescription = True
+	self.inDescription = False
+        self.inTitle = False
+        self.inItem = False
 	self.descHTML = ''
 	self.theLink = ''
+        self.title = None
 	self.firstTag = True
 
-    def startElement(self, tag, attrs):
+    def startElementNS(self, name, qname, attrs):
+        (uri, tag) = name
 	if self.firstTag:
 	    self.firstTag = False
 	    if tag != 'rss':
 		raise xml.sax.SAXNotRecognizedException, "Not an RSS file"
-	if tag.lower() == 'link':
+        if tag.lower() == 'enclosure' or tag.lower() == 'content':
+            self.enclosureCount += 1
+	elif tag.lower() == 'link':
 	    self.inLink = True
 	    self.theLink = ''
 	    return
 	elif tag.lower() == 'description':
 	    self.inDescription = True
 	    self.descHTML = ''
-		
-    def endElement(self, tag):
+        elif tag.lower() == 'item':
+            self.inItem = True
+        elif tag.lower() == 'title' and not self.inItem:
+            self.inTitle = True
+    def endElementNS(self, name, qname):
+        (uri, tag) = name
 	if tag.lower() == 'description':
 	    lg = HTMLLinkGrabber(self.html,self.baseurl)
+
 	    self.links[:0] = lg.getLinks(unescape(self.descHTML),self.baseurl)
 	    self.inDescription = False
 	elif tag.lower() == 'link':
-	    self.links.append((self.theLink,self.theLink))
+	    self.links.append((self.theLink,None,None))
 	    self.inLink = False
+        elif tag.lower() == 'item':
+            self.inItem == False
+        elif tag.lower() == 'title' and not self.inItem:
+            self.inTitle = False
+
     def characters(self, data):
 	if self.inDescription:
 	    self.descHTML += data
 	elif self.inLink:
 	    self.theLink += data
+        elif self.inTitle:
+            if self.title is None:
+                self.title = data
+            else:
+                self.title += data
