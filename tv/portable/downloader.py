@@ -993,15 +993,21 @@ class BTDownloader(Downloader):
     def runDownloader(self,done=False):
 	self.item.beginChange()
 	self.item.endChange()
-	if self.metainfo == None:
-            #FIXME use grabURL
-            
-	    h = urlopen(self.getURL())
-	    metainfo = h.read()
-	    h.close()
+	if self.metainfo is None:
+	    h = grabURL(self.getURL(),"GET")
+            if h is None:
+                self.beginChange()
+                try:
+                    self.state = "failed"
+                finally:
+                    self.endChange()
+                return
+            else:
+                metainfo = h['file-handle'].read()
+                h['file-handle'].close()
         try:
             # raises BTFailure if bad
-	    if self.metainfo == None:
+	    if self.metainfo is None:
 		metainfo = ConvertedMetainfo(bdecode(metainfo))
 	    else:
 		metainfo = self.metainfo
@@ -1009,7 +1015,7 @@ class BTDownloader(Downloader):
 	    if not done:
 		self.filename = os.path.join(config.get('DataDirectory'),'Incomplete Downloads',self.shortFilename+".part")
 		self.filename = self.nextFreeFilename(self.filename)
-	    if self.metainfo == None:
+	    if self.metainfo is None:
 		self.metainfo = metainfo
             self.set_torrent_values(self.metainfo.name, self.filename,
                                 self.metainfo.total_bytes, len(self.metainfo.hashes))
