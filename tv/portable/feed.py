@@ -642,9 +642,7 @@ class ScraperFeed(Feed):
             status = 200
         else:
             (html,url, redirURL, status) = self.getHTML(self.url)
-        if status == 304:
-            #pass
-        else:
+        if not status == 304:
             if not html is None:
                 links = self.scrapeLinks(html, redirURL, setTitle=True)
                 self.processLinks(links)
