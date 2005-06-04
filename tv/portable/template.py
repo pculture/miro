@@ -54,7 +54,17 @@ def fillTemplate(file, data, execJS):
         p.parse(resource.path("templates/%s" % file))
     except:
         traceback.print_exc()        
-    x = ''.join(tch.output)
+
+    try:
+        x = ''.join(tch.output)
+    except UnicodeDecodeError:
+        x = ''
+        for string in tch.output:
+            try:
+                x += string
+            except:
+                pass
+
     #print '-----\n%s\n-----'%x
     stopTime = time.clock()
     print ("SAX Template for %s took about "%file)+str(stopTime-startTime)+" secs to complete"
@@ -507,7 +517,16 @@ class TrackedView:
         data['this'] = item.object
         for func in self.templateFuncs:
             output.append(func(data,item.tid))
-        return ''.join(output)
+        try:
+            return ''.join(output) 
+        except UnicodeDecodeError:
+            ret = ''
+            for string in output:
+                try:
+                    ret += string
+                except:
+                    pass
+            return ret
 
     def onChange(self, index):
         if self.parent.execJS:

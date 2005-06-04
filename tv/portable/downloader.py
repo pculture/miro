@@ -4,6 +4,7 @@ from httplib import HTTPConnection, HTTPSConnection,HTTPException
 from scheduler import ScheduleEvent
 import config
 import traceback
+import socket
 from base64 import b64encode
 
 from time import sleep,time
@@ -267,12 +268,16 @@ class PooledHTTPResponse:
     def close(self):
         if not self.beenRead:
             #print "Closing unread response..."+str(self.response)
-            out = self.response.read(8192)
-            while len(out)>0:
-                #print "still closing "+str(self.response)
+            try:
                 out = self.response.read(8192)
-            #print "done closing"
-        self.connPool.freeConn(self.conn)
+                while len(out)>0:
+                     #print "still closing "+str(self.response)
+                    out = self.response.read(8192)
+                #print "done closing"
+                self.connPool.freeConn(self.conn)
+            except ValueError:
+                print "Caught error in httplib"
+                self.connPool.removeConn(self.conn)
 
     ##
     # Called by pickle during serialization
@@ -472,11 +477,21 @@ class HTTPConnectionPool:
                 self.lock.release()
 
         #print "Making request..."
-        conn.request(method,url,*args,**keywords)
+        try:
+            conn.request(method,url,*args,**keywords)
+        except socket.error:
+            if madeNewConn:
+                return None
+            else: # We had a connection before. Maybe the connection
+                  # just timed out...
+                #print "An old connection may have timed out. Trying again."
+                self.removeConn(conn)
+                return self.getRequest(protocol,host,method,url,*args,**keywords)
+
         #print "Getting response..."
         try:
             response = conn.getresponse()
-        except HTTPException:
+        except (HTTPException, socket.timeout):
             if madeNewConn:
                 return None
             else: # We had a connection before. Maybe the connection

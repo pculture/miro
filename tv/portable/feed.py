@@ -1,6 +1,6 @@
 from formatter import AbstractFormatter, NullWriter
 from downloader import grabURL
-from htmllib import HTMLParser
+from htmllib import HTMLParser,HTMLParseError
 import xml
 from urlparse import urlparse, urljoin
 from urllib import urlopen
@@ -11,6 +11,7 @@ from scheduler import ScheduleEvent
 from copy import copy
 from xhtmltools import unescape,xhtmlify
 from cStringIO import StringIO
+from threading import Thread, Semaphore
 import os
 import config
 
@@ -536,6 +537,8 @@ class Collection(Feed):
 # FIXME: Don't save any HTML, but save etag and last modified and
 # don't re-download things we've already looked at
 class ScraperFeed(Feed):
+    maxThreads = 5
+
     def __init__(self,url,title = None, visible = True, initialHTML = None,etag=None,modified = None):
 	Feed.__init__(self,url,title,visible)
         self.initialHTML = initialHTML
@@ -548,6 +551,7 @@ class ScraperFeed(Feed):
             self.linkHistory[url]['etag'] = etag
         if not modified is None:
             self.linkHistory[url]['modified'] = modified
+        self.semaphore = Semaphore(ScraperFeed.maxThreads)
 
     def getMimeType(self,link):
         info = grabURL(link,"HEAD")
@@ -602,36 +606,53 @@ class ScraperFeed(Feed):
 	self.beginChange()
 	self.endChange()
 
+    def makeProcessLinkFunc(self,subLinks,depth):
+        return lambda: self.processLinksThenFreeSem(subLinks,depth)
+
+    def processLinksThenFreeSem(self,subLinks,depth):
+        try:
+            self.processLinks(subLinks, depth)
+        finally:
+            print "Releasing semaphore"
+            self.semaphore.release()
+
     #FIXME: compound names for titles at each depth??
     def processLinks(self,links, depth = 0):
         maxDepth = 2
-	if depth<maxDepth:
-	    for link in links.keys():
-                #print "Processing "+title+" ("+link+")"
-		#FIXME keep the connection open
-		mimetype = self.getMimeType(link)
+        if depth<maxDepth:
+            for link in links.keys():
+                print "Processing ("+link+")"
+                #FIXME keep the connection open
+                mimetype = self.getMimeType(link)
                 #print " mimetype is "+mimetype
-		if mimetype != None:
-                     #This is text of some sort: HTML, XML, etc.
-		    if (mimetype.startswith('text/html') or
-                      mimetype.startswith('application/xhtml+xml') or 
-                      mimetype.startswith('text/xml')  or
-                      mimetype.startswith('application/xml') or
-                      mimetype.startswith('application/rss+xml') or
-                      mimetype.startswith('application/atom+xml') or
-                      mimetype.startswith('application/rdf+xml') ):
-			(html, url, redirURL,status) = self.getHTML(link)
+                if mimetype != None:
+                    #This is text of some sort: HTML, XML, etc.
+                    if (mimetype.startswith('text/html') or
+                        mimetype.startswith('application/xhtml+xml') or 
+                        mimetype.startswith('text/xml')  or
+                        mimetype.startswith('application/xml') or
+                        mimetype.startswith('application/rss+xml') or
+                        mimetype.startswith('application/atom+xml') or
+                        mimetype.startswith('application/rdf+xml') ):
+                        (html, url, redirURL,status) = self.getHTML(link)
                         if status == 304: #It's cached
                             pass
                         elif not html is None:
                             subLinks = self.scrapeLinks(html, redirURL)
-                            self.processLinks(subLinks, depth+1)
+                            if depth == 0:
+                                self.semaphore.acquire()
+                                print "Acquiring semaphore"
+                                thread = Thread(target = self.makeProcessLinkFunc(subLinks,depth+1))
+                                thread.setDaemon(False)
+                                thread.start()
+                            else:
+                                self.processLinks(subLinks,depth+1)
                         else:
                             pass
                             #print link+" seems to be bogus..."
-		    #This is probably a video
-		    else:
-			self.addVideoItem(link, links[link])
+                    #This is probably a video
+                    else:
+                        self.addVideoItem(link, links[link])
 
     #FIXME: go through and add error handling
     def update(self):
@@ -654,7 +675,10 @@ class ScraperFeed(Feed):
             parser.setFeature(xml.sax.handler.feature_namespaces, 1)
             handler = RSSLinkGrabber(html,baseurl)
             parser.setContentHandler(handler)
-            parser.parse(StringIO(html))
+            try:
+                parser.parse(StringIO(html))
+            except IOError, e:
+                pass
 	    links = handler.links
             linkDict = {}
             for link in links:
@@ -672,7 +696,7 @@ class ScraperFeed(Feed):
                 finally:
                     self.endChange()
             return linkDict
-	except xml.sax.SAXException:
+	except (xml.sax.SAXException, IOError):
 	    linkDict = self.scrapeHTMLLinks(html,baseurl,setTitle=setTitle)
             return linkDict
 
@@ -811,6 +835,7 @@ class DirectoryFeed(Feed):
 
 ##
 # Parse HTML document and grab all of the links and their title
+# FIXME: Grab link title from ALT tags in images
 class HTMLLinkGrabber(HTMLParser):
     def getLinks(self,data, baseurl):
 	self.links = []
@@ -821,8 +846,14 @@ class HTMLLinkGrabber(HTMLParser):
         self.inTitle = False
         self.title = None
         self.thumbnailUrl = None
-	self.feed(data)
-	self.close()
+        try:
+            self.feed(data)
+        except HTMLParseError:
+            print "DTV: error parsing "+str(baseurl)
+        try:
+            self.close()
+        except HTMLParseError:
+            print "DTV: error closing "+str(baseurl)
 	return self.links
 
     def handle_starttag(self, tag, method, attrs):
