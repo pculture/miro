@@ -1,5 +1,6 @@
 from xml.dom.minidom import parse, parseString
 from xml import sax
+from cStringIO import StringIO
 import time
 import resource
 import random
@@ -55,20 +56,10 @@ def fillTemplate(file, data, execJS):
     except:
         traceback.print_exc()        
 
-    try:
-        x = ''.join(tch.output)
-    except UnicodeDecodeError:
-        x = ''
-        for string in tch.output:
-            try:
-                x += string
-            except:
-                pass
-
     #print '-----\n%s\n-----'%x
     stopTime = time.clock()
     print ("SAX Template for %s took about "%file)+str(stopTime-startTime)+" secs to complete"
-    return x, handle
+    return tch.output, handle
     #return (document.toxml(), handle)
 
 # As fillTemplate, but no Javascript calls are made, and no template
@@ -124,13 +115,16 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         self.repeatDepth = 0
         self.replaceDepth = 0
         self.repeatView = None
-        self.output = []
+        self.outString = StringIO()
         self.depth = 0
 
         # When we're in repeat mode, we store output as a set of
         # functions that, given an object and tid return the correct
         # output
         self.repeatList = []
+
+    def endDocument(self):
+        self.output = self.outString.getvalue()
 
     def startElement(self,name, attrs):
         self.depth += 1
@@ -147,20 +141,20 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             view = self.handle.findNamedView(viewName).getView()
             hide = (not ifInvert and view.len() == 0) or (ifInvert and view.len() > 0)
 
-            self.output.append('<')
-            self.output.append(name)
+            self.outString.write('<')
+            self.outString.write(name)
             for key in attrs.keys():
                 if not key in ['t:hideIfViewEmpty','t:hideIfViewNotEmpty','style']:
-                    self.output.append(' ')
-                    self.output.append(key)
-                    self.output.append('=')
-                    self.output.append(self.quoteAndFillAttr(attrs[key],self.data))
-            self.output.append(' id=')
-            self.output.append(sax.saxutils.quoteattr(nodeId))
+                    self.outString.write(' ')
+                    self.outString.write(key)
+                    self.outString.write('=')
+                    self.outString.write(self.quoteAndFillAttr(attrs[key],self.data))
+            self.outString.write(' id=')
+            self.outString.write(sax.saxutils.quoteattr(nodeId))
             if hide:
-                self.output.append(' style="display:none">')
+                self.outString.write(' style="display:none">')
             else:
-                self.output.append('>')
+                self.outString.write('>')
             if not ifInvert:
                 self.handle.addHideCondition(nodeId, lambda:self.handle.findNamedView(viewName).getView().len()==0)
             else:
@@ -190,6 +184,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                 except KeyError:
                     parameter = ''
                 if ifInvert:
+                    print "evaluating "+functionKey
                     hideFunc = lambda x, y:not evalKey(functionKey, x)(evalKey(ifKey, x), parameter)
                 else:
                     hideFunc = lambda x, y:evalKey(functionKey, x)(evalKey(ifKey, x), parameter)
@@ -238,23 +233,23 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             hide = function(evalKey(ifKey, self.data), parameter)
             if ifInvert:
                 hide = not hide
-            self.output.append('<'+name)
+            self.outString.write('<'+name)
             for key in attrs.keys():
                 if not (key in ['t:hideIfKey','t:hideIfNotKey','t:hideFunctionKey','t:hideParameter','style']):
-                    self.output.append(' '+key+'='+self.quoteAndFillAttr(attrs[key],self.data))
+                    self.outString.write(' '+key+'='+self.quoteAndFillAttr(attrs[key],self.data))
             if hide:
-                self.output.append(' style="display:none">')
+                self.outString.write(' style="display:none">')
             else:
-                self.output.append('>')
+                self.outString.write('>')
                 
         elif 't:replace' in attrs.keys():
                 replace = attrs['t:replace']
-                self.output.append(sax.saxutils.escape(str(evalKey(replace,self.data))))
+                self.outString.write(sax.saxutils.escape(str(evalKey(replace,self.data))))
                 self.inReplace = True
                 self.replaceDepth = self.depth      
         elif 't:replaceMarkup' in attrs.keys():
                 replace = attrs['t:replaceMarkup']
-                self.output.append(str(evalKey(replace,self.data)))
+                self.outString.write(str(evalKey(replace,self.data)))
                 self.inReplace = True
                 self.replaceDepth = self.depth      
         elif name == 't:dynamicviews':
@@ -295,19 +290,19 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             f = open(resource.path('templates/'+attrs['filename']),'r')
             html = f.read()
             f.close()
-            self.output.append(html)
+            self.outString.write(html)
         else:
-            self.output.append('<'+name)
+            self.outString.write('<'+name)
             for key in attrs.keys():
-                self.output.append(' '+key+'='+self.quoteAndFillAttr(attrs[key],self.data))
-            self.output.append('>')
+                self.outString.write(' '+key+'='+self.quoteAndFillAttr(attrs[key],self.data))
+            self.outString.write('>')
 
     def endElement(self,name):
         if self.inReplace and self.depth == self.replaceDepth:
             if self.inRepeatView:
                 self.repeatList.append(lambda x,y: '</'+name+'>')
             else:
-                self.output.append('</'+name+'>')
+                self.outString.write('</'+name+'>')
             self.inReplace = False
         elif self.inRepeatView and self.depth == self.repeatDepth:
             self.inRepeatView = False
@@ -318,11 +313,11 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             localData = copy.copy(self.data)
             for item in self.repeatView:
                 localData['this'] = item.object
-                self.output[len(self.output):] = map(lambda x:x(localData,item.tid),self.repeatList)
+                self.outString.write(''.join([x(localData,item.tid) for x in self.repeatList]))
             endTime = time.clock()
             print "Repeat took "+str(endTime-startTime)
             repeatId = generateId()
-            self.output.append('<span id='+sax.saxutils.quoteattr(repeatId)+'/>')
+            self.outString.write('<span id='+sax.saxutils.quoteattr(repeatId)+'/>')
             repeatView = self.repeatView
             repeatList = self.repeatList
             localData = copy.copy(self.data)
@@ -345,7 +340,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         elif name == 't:sort':
             pass
         else:
-            self.output .append('</'+name+'>')
+            self.outString.write('</'+name+'>')
         self.depth -= 1
 
     def characters(self,data):
@@ -354,7 +349,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         elif self.inRepeatView:
             self.repeatList.append(lambda x,y: sax.saxutils.escape(data))
         else:
-            self.output.append(sax.saxutils.escape(data))
+            self.outString.write(sax.saxutils.escape(data))
 
     def makeReplaceFunc(self,key,value):
         return lambda x, y:' '+key+'='+self.quoteAndFillAttr(value,x)
