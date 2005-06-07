@@ -34,8 +34,9 @@ class Controller(frontend.Application):
 
     def onStartup(self):
 	try:
-	    # NEEDS: Set backend delegate with something like:
-	    # backend.setDelegate(self.getBackendDelegate())
+            delegate = self.getBackendDelegate()
+	    feed.setDelegate(delegate)
+	    downloader.setDelegate(delegate)
 
 	    #Restoring
 	    print "DTV: Restoring database..."
@@ -484,16 +485,16 @@ class GUIActionHandler:
 		# At this point, the addition is guaranteed to be reflected
 		# in the tab list.
 
-		tabs = self.controller.tabs
-		tabs.resetCursor()
-		while True:
-		    cur = tabs.getNext()
-		    if cur == None:
-			assert(0) # NEEDS: better error (failed to add tab)
-		    if cur.feedURL() == url:
-			break
+# 		tabs = self.controller.tabs
+# 		tabs.resetCursor()
+# 		while True:
+# 		    cur = tabs.getNext()
+# 		    if cur == None:
+# 			assert(0) # NEEDS: better error (failed to add tab)
+# 		    if cur.feedURL() == url:
+# 			break
 
-		self.controller.checkSelectedTab(showTemplate)
+# 		self.controller.checkSelectedTab(showTemplate)
 
 	finally:
 	    db.restoreCursor()

@@ -35,6 +35,11 @@ defaults = get_defaults('btdownloadheadless')
 defaults.extend((('donated', '', ''),
                  ))
 
+# Pass in a connection to the frontend
+def setDelegate(newDelegate):
+    global delegate
+    delegate = newDelegate
+
 #FIXME: check for free space and failed connection to tracker and fail
 #on those cases
 
@@ -44,6 +49,7 @@ class DownloaderError(Exception):
 # Returns an HTTP auth object corresponding to the given host, path or
 # None if it doesn't exist
 def findHTTPAuth(host,path,realm = None,scheme = None):
+    #print "Trying to find HTTPAuth with host %s, path %s, realm %s, and scheme %s" %(host,path,realm,scheme)
     ret = None
     defaultDatabase.beginRead()
     try:
@@ -156,6 +162,11 @@ def grabURL(url, type="GET",start = 0, etag=None,modified=None):
                 authScheme = regExp.expand("\\1")
                 realm = regExp.expand("\\2")
                 #print "Trying to authenticate "+host+" realm:"+realm
+                result = delegate.getHTTPAuth(host,realm)
+                if not result is None:
+                    auth = HTTPAuthPassword(result[0],result[1],host, realm, path, authScheme)
+                    myHeaders["Authorization"] = auth.getAuthScheme()+' '+auth.getAuthToken()
+                    download = connectionPool.getRequest(scheme,host,type,path, headers=myHeaders)
                 #This is where we would do our magic to prompt for a password
                 #If we get a good password, we save it
             else:
@@ -197,13 +208,18 @@ def grabURL(url, type="GET",start = 0, etag=None,modified=None):
 
 class HTTPAuthPassword(DDBObject):
     def __init__(self,username,password,host, realm, path, authScheme="Basic"):
+        oldAuth = findHTTPAuth(host,path,realm,authScheme)
+        while not oldAuth is None:
+            oldAuth.remove()
+            oldAuth = findHTTPAuth(host,path,realm,authScheme)
         self.username = username
         self.password = password
         self.host = host
         self.realm = realm
         self.path = os.path.dirname(path)
-        self.authScheme == authScheme
-    
+        self.authScheme = authScheme
+        DDBObject.__init__(self)
+
     def getAuthToken(self):
         authString = ':'
         self.beginRead()

@@ -19,12 +19,22 @@ import config
 # Licensed under Python license
 import feedparser
 
+# Pass in a connection to the frontend
+def setDelegate(newDelegate):
+    global delegate
+    delegate = newDelegate
+
 ##
 # Generates an appropriate feed for a URL
 #
 # @param url The URL of the feed
 # FIXME: avoid downloading feeds twice
 def generateFeed(url):
+    thread = Thread(target=lambda: _generateFeed(url))
+    thread.setDaemon(False)
+    thread.start()
+
+def _generateFeed(url):
     info = grabURL(url,"GET")
     if info is None:
         return None
@@ -42,7 +52,10 @@ def generateFeed(url):
         #print "Scraping HTML"
         html = info['file-handle'].read()
         info['file-handle'].close()
-        return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified)
+        if delegate.isScrapeAllowed(url):
+            return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified)
+        else:
+            return None
 
     #It's some sort of feed we don't know how to scrape
     elif (info['content-type'].startswith('application/rdf+xml') or
@@ -73,13 +86,19 @@ def generateFeed(url):
             parser.parse(StringIO(html))
         except xml.sax.SAXException: #it doesn't parse as RSS, so it must be HTML
             #print " Nevermind! it's HTML"
-            return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified)
+            if delegate.isScrapeAllowed(url):
+                return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified)
+            else:
+                return None
         if handler.enclosureCount > 0:
             #print " It's RSS with enclosures"
             return RSSFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified)
         else:
             #print " It's pre-enclosure RSS"
-            return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified)
+            if delegate.isScrapeAllowed(url):
+                return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified)
+            else:
+                return None
     else:  #What the fuck kinda feed is this, asshole?
         print "DTV doesn't know how to deal with "+info['content-type']+" feeds"
         return None

@@ -58,7 +58,7 @@ def fillTemplate(file, data, execJS):
 
     #print '-----\n%s\n-----'%x
     stopTime = time.clock()
-    print ("SAX Template for %s took about "%file)+str(stopTime-startTime)+" secs to complete"
+    print ("SAX Template for %s took about %s seconds to complete"%(file,str(stopTime-startTime)))
     return tch.output, handle
     #return (document.toxml(), handle)
 
@@ -102,7 +102,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             match = self.attrPattern.match(value)
             if not match:
                 break
-            value = match.group(1) + str(evalKey(match.group(2), data)) + match.group(3)
+            value = ''.join((match.group(1), str(evalKey(match.group(2), data)), match.group(3)))
         return sax.saxutils.quoteattr(value)
         
     def startDocument(self):
@@ -162,12 +162,12 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         elif 't:repeatForView' in attrs.keys():
             self.inRepeatView = True
             self.repeatDepth = self.depth
-            self.repeatList = [lambda x,y: '<'+name,]
+            self.repeatList = [lambda x,y: '<%s'%name,]
             for key in attrs.keys():
                 if key != 't:repeatForView':
                     addKey = key
-                    self.repeatList.append(lambda x,y:' '+addKey+'='+self.quoteAndFillAttr(attrs[addKey],x))
-            self.repeatList.append(lambda x,y:' id='+sax.saxutils.quoteattr(y)+'>')
+                    self.repeatList.append(lambda x,y:' %s=%s'%(addKey,self.quoteAndFillAttr(attrs[addKey],x)))
+            self.repeatList.append(lambda x,y:' id=%s>'%sax.saxutils.quoteattr(y))
 
             self.repeatView = self.handle.findNamedView(attrs['t:repeatForView']).getView().map(idAssignment)
         elif self.inRepeatView:
@@ -233,10 +233,10 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             hide = function(evalKey(ifKey, self.data), parameter)
             if ifInvert:
                 hide = not hide
-            self.outString.write('<'+name)
+            self.outString.write('<%s'%name)
             for key in attrs.keys():
                 if not (key in ['t:hideIfKey','t:hideIfNotKey','t:hideFunctionKey','t:hideParameter','style']):
-                    self.outString.write(' '+key+'='+self.quoteAndFillAttr(attrs[key],self.data))
+                    self.outString.write(' %s=%s'%(key,self.quoteAndFillAttr(attrs[key],self.data)))
             if hide:
                 self.outString.write(' style="display:none">')
             else:
@@ -287,26 +287,26 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                 pass
             self.sortFunc = attrs['functionkey']
         elif name == 't:include':
-            f = open(resource.path('templates/'+attrs['filename']),'r')
+            f = open(resource.path('templates/%s'%attrs['filename']),'r')
             html = f.read()
             f.close()
             self.outString.write(html)
         else:
-            self.outString.write('<'+name)
+            self.outString.write('<%s'%name)
             for key in attrs.keys():
-                self.outString.write(' '+key+'='+self.quoteAndFillAttr(attrs[key],self.data))
+                self.outString.write(' %s=%s'%(key,self.quoteAndFillAttr(attrs[key],self.data)))
             self.outString.write('>')
 
     def endElement(self,name):
         if self.inReplace and self.depth == self.replaceDepth:
             if self.inRepeatView:
-                self.repeatList.append(lambda x,y: '</'+name+'>')
+                self.repeatList.append(lambda x,y: '</%s>'%name)
             else:
-                self.outString.write('</'+name+'>')
+                self.outString.write('</%s>'%name)
             self.inReplace = False
         elif self.inRepeatView and self.depth == self.repeatDepth:
             self.inRepeatView = False
-            self.repeatList.append(lambda x,y: '</'+name+'>')
+            self.repeatList.append(lambda x,y: '</%s>'%name)
 
             #FIXME: This loop may be worth optimizing--we spend 40% of our time here
             startTime = time.clock()
@@ -317,13 +317,13 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             endTime = time.clock()
             print "Repeat took "+str(endTime-startTime)
             repeatId = generateId()
-            self.outString.write('<span id='+sax.saxutils.quoteattr(repeatId)+'/>')
+            self.outString.write('<span id=%s/>'%sax.saxutils.quoteattr(repeatId))
             repeatView = self.repeatView
             repeatList = self.repeatList
             localData = copy.copy(self.data)
             self.handle.addView(repeatId, 'nextSibling', repeatView, repeatList, localData)
         elif self.inRepeatView:
-            self.repeatList.append(lambda x,y: '</'+name+'>')
+            self.repeatList.append(lambda x,y: '</%s>'%name)
         elif name == 't:dynamicviews':
             self.inDynamicViews = False
         elif name == 't:view':
@@ -340,7 +340,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         elif name == 't:sort':
             pass
         else:
-            self.outString.write('</'+name+'>')
+            self.outString.write('</%s>'%name)
         self.depth -= 1
 
     def characters(self,data):
@@ -352,7 +352,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             self.outString.write(sax.saxutils.escape(data))
 
     def makeReplaceFunc(self,key,value):
-        return lambda x, y:' '+key+'='+self.quoteAndFillAttr(value,x)
+        return lambda x, y:' %s=%s'%(key,self.quoteAndFillAttr(value,x))
 
 
 # View mapping function used to assign ID attributes to records so
