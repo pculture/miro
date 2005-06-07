@@ -274,6 +274,9 @@ class TemplateDisplay(frontend.HTMLDisplay):
 	return True
 
     def dispatchAction(self, action, **kwargs):
+        print action
+        for key in kwargs.keys():
+            print key
 	for handler in self.actionHandlers:
 	    if hasattr(handler, action):
 		getattr(handler, action)(**kwargs)
@@ -288,13 +291,13 @@ class TemplateDisplay(frontend.HTMLDisplay):
 # Functions that are safe to call from action: URLs that do nothing
 # but manipulate the database.
 class ModelActionHandler:
-    def changeFeedSettings(self, myFeed, maxnew, fallbehind, automatic, exprieDays, expireHours, expire, getEverything):
+    def changeFeedSettings(self, feed, maxnew, fallbehind, automatic, expireDays, expireHours, expire, getEverything="0"):
 	
 	db.beginUpdate()
 	db.saveCursor()
 	try:
 	    for obj in db:
-		if obj.getID() == int(myFeed):
+		if obj.getID() == int(feed):
 		    obj.saveSettings(automatic,maxnew,fallbehind,expire,expireDays,expireHours,getEverything)
 		    break
 	finally:
