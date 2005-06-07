@@ -233,13 +233,12 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             hide = function(evalKey(ifKey, self.data), parameter)
             if ifInvert:
                 hide = not hide
-            self.outString.write('<%s'%name)
-            for key in attrs.keys():
-                if not (key in ['t:hideIfKey','t:hideIfNotKey','t:hideFunctionKey','t:hideParameter','style']):
-                    self.outString.write(' %s=%s'%(key,self.quoteAndFillAttr(attrs[key],self.data)))
-            if hide:
-                self.outString.write(' style="display:none">')
-            else:
+
+            if not hide:
+                self.outString.write('<%s'%name)
+                for key in attrs.keys():
+                    if not (key in ['t:hideIfKey','t:hideIfNotKey','t:hideFunctionKey','t:hideParameter','style']):
+                        self.outString.write(' %s=%s'%(key,self.quoteAndFillAttr(attrs[key],self.data)))
                 self.outString.write('>')
                 
         elif 't:replace' in attrs.keys():
