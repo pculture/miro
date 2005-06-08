@@ -274,9 +274,6 @@ class TemplateDisplay(frontend.HTMLDisplay):
 	return True
 
     def dispatchAction(self, action, **kwargs):
-        print action
-        for key in kwargs.keys():
-            print key
 	for handler in self.actionHandlers:
 	    if hasattr(handler, action):
 		getattr(handler, action)(**kwargs)

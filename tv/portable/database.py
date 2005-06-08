@@ -562,6 +562,7 @@ class DynamicDatabase:
             for [view, f] in self.subSorts:
                 view.beginUpdate()
                 try:
+                    #FIXME: Sorting every time is really slow
                     g = lambda x,y:f(x[1],y[1])
                     temp = self.make_sorter(g)(self.objects)
                     view.beginUpdate()

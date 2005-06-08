@@ -9,9 +9,10 @@ from database import defaultDatabase
 from item import *
 from scheduler import ScheduleEvent
 from copy import copy
-from xhtmltools import unescape,xhtmlify
+from xhtmltools import unescape,xhtmlify,fixXMLHeader
 from cStringIO import StringIO
 from threading import Thread, Semaphore
+import traceback #FIXME get rid of this
 import os
 import config
 
@@ -63,7 +64,11 @@ def _generateFeed(url):
         #print "ATOM or RDF"
         html = info['file-handle'].read()
         info['file-handle'].close()
-        return RSSFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified)
+        if info.has_key('charset'):
+            xmldata = fixXMLHeader(html,info['charset'])
+        else:
+            xmldata = html
+        return RSSFeed(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified)
     # If it's not HTML, we can't be sure what it is.
     #
     # If we get generic XML, it's probably RSS, but it still could be
@@ -78,25 +83,35 @@ def _generateFeed(url):
         #print " It's doesn't look like HTML..."
         html = info["file-handle"].read()
         info["file-handle"].close()
+        if info.has_key('charset'):
+            xmldata = fixXMLHeader(html,info['charset'])
+        else:
+            xmldata = html
         try:
             parser = xml.sax.make_parser()
             parser.setFeature(xml.sax.handler.feature_namespaces, 1)
-            handler = RSSLinkGrabber(html,info['redirected-url'])
+            handler = RSSLinkGrabber(info['redirected-url'])
             parser.setContentHandler(handler)
-            parser.parse(StringIO(html))
+            print "Parsing..."
+            parser.parse(StringIO(xmldata))
+            print "Done"
         except xml.sax.SAXException: #it doesn't parse as RSS, so it must be HTML
-            #print " Nevermind! it's HTML"
+            print " Nevermind! it's HTML"
             if delegate.isScrapeAllowed(url):
-                return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified)
+                 return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified)
             else:
-                return None
+                 return None
+        except UnicodeDecodeError:
+            print "Unicode issue parsing... %s" % xmldata[0:300]
+	    traceback.print_exc()
+            return None
         if handler.enclosureCount > 0:
             #print " It's RSS with enclosures"
-            return RSSFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified)
+            return RSSFeed(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified)
         else:
             #print " It's pre-enclosure RSS"
             if delegate.isScrapeAllowed(url):
-                return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified)
+                return ScraperFeed(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified)
             else:
                 return None
     else:  #What the fuck kinda feed is this, asshole?
@@ -428,6 +443,8 @@ class RSSFeed(Feed):
             
             html = info['file-handle'].read()
             info['file-handle'].close()
+            if info.has_key('charset'):
+                html = fixXMLHeader(html,info['charset'])
             if info['status'] == 304:
                 return
             if info.has_key('etag'):
@@ -556,7 +573,7 @@ class Collection(Feed):
 # FIXME: Don't save any HTML, but save etag and last modified and
 # don't re-download things we've already looked at
 class ScraperFeed(Feed):
-    maxThreads = 5
+    maxThreads = 2
 
     def __init__(self,url,title = None, visible = True, initialHTML = None,etag=None,modified = None):
 	Feed.__init__(self,url,title,visible)
@@ -606,7 +623,10 @@ class ScraperFeed(Feed):
             #print "Scraper got HTML of length "+str(len(html))
             info['file-handle'].close()
             #print "Closed"
-            return (html, info['updated-url'],info['redirected-url'],info['status'])
+            if info.has_key('charset'):
+                return (html, info['updated-url'],info['redirected-url'],info['status'],info['charset'])
+            else:
+                return (html, info['updated-url'],info['redirected-url'],info['status'],None)
 
     def addVideoItem(self,link,dict):
 	link = link.strip()
@@ -632,7 +652,7 @@ class ScraperFeed(Feed):
         try:
             self.processLinks(subLinks, depth)
         finally:
-            print "Releasing semaphore"
+            #print "Releasing semaphore"
             self.semaphore.release()
 
     #FIXME: compound names for titles at each depth??
@@ -653,14 +673,14 @@ class ScraperFeed(Feed):
                         mimetype.startswith('application/rss+xml') or
                         mimetype.startswith('application/atom+xml') or
                         mimetype.startswith('application/rdf+xml') ):
-                        (html, url, redirURL,status) = self.getHTML(link)
+                        (html, url, redirURL,status,charset) = self.getHTML(link)
                         if status == 304: #It's cached
                             pass
                         elif not html is None:
-                            subLinks = self.scrapeLinks(html, redirURL)
+                            subLinks = self.scrapeLinks(html, redirURL,charset=charset)
                             if depth == 0:
                                 self.semaphore.acquire()
-                                print "Acquiring semaphore"
+                                #print "Acquiring semaphore"
                                 thread = Thread(target = self.makeProcessLinkFunc(subLinks,depth+1))
                                 thread.setDaemon(False)
                                 thread.start()
@@ -680,22 +700,27 @@ class ScraperFeed(Feed):
             self.initialHTML = None
             redirURL=self.url
             status = 200
+            charset = None
         else:
-            (html,url, redirURL, status) = self.getHTML(self.url)
+            (html,url, redirURL, status,charset) = self.getHTML(self.url)
         if not status == 304:
             if not html is None:
-                links = self.scrapeLinks(html, redirURL, setTitle=True)
+                links = self.scrapeLinks(html, redirURL, setTitle=True,charset=charset)
                 self.processLinks(links)
             #Download the HTML associated with each page
 
-    def scrapeLinks(self,html,baseurl,setTitle = False):
+    def scrapeLinks(self,html,baseurl,setTitle = False,charset = None):
 	try:
+            if not charset is None:
+                xmldata = fixXMLHeader(html,charset)
+            else:
+                xmldata = html
             parser = xml.sax.make_parser()
             parser.setFeature(xml.sax.handler.feature_namespaces, 1)
-            handler = RSSLinkGrabber(html,baseurl)
+            handler = RSSLinkGrabber(baseurl)
             parser.setContentHandler(handler)
             try:
-                parser.parse(StringIO(html))
+                parser.parse(StringIO(xmldata))
             except IOError, e:
                 pass
 	    links = handler.links
@@ -935,8 +960,7 @@ class HTMLLinkGrabber(HTMLParser):
 ##
 # Get title from item title
 class RSSLinkGrabber(xml.sax.handler.ContentHandler):
-    def __init__(self,html,baseurl):
-	self.html = html
+    def __init__(self,baseurl):
 	self.baseurl = baseurl
     def startDocument(self):
         #print "Got start document"
@@ -973,9 +997,9 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler):
     def endElementNS(self, name, qname):
         (uri, tag) = name
 	if tag.lower() == 'description':
-	    lg = HTMLLinkGrabber(self.html,self.baseurl)
-
-	    self.links[:0] = lg.getLinks(unescape(self.descHTML),self.baseurl)
+            #FIXME: Get links from description
+	    #lg = HTMLLinkGrabber(AbstractFormatter(NullWriter))
+	    #self.links[:0] = lg.getLinks(unescape(self.descHTML),self.baseurl)
 	    self.inDescription = False
 	elif tag.lower() == 'link':
 	    self.links.append((self.theLink,None,None))

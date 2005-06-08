@@ -1,4 +1,5 @@
 import xml.sax.saxutils
+import re
 from HTMLParser import HTMLParser
 
 ##
@@ -54,3 +55,21 @@ def unescape(data):
 def xhtmlify(data):
     x = XHTMLifier()
     return x.convert(data)
+
+xmlheaderRE = re.compile("^\<\?xml\s*(.*?)\s*\?\>(.*)")
+##
+# Adds a <?xml ?> header to the given xml data or replaces an
+# existing one without a charset with one that has a charset
+def fixXMLHeader(data,charset):
+    header = xmlheaderRE.match(data)
+    if header is None:
+        print "Adding header %s" % charset
+        return '<?xml version="1.0" encoding="%s"?>%s' % (charset,data)
+    else:
+        xmlDecl = header.expand('\\1')
+        theRest = header.expand('\\2')
+        if xmlDecl.find('encoding'):
+            return data
+        else:
+            print "Changing header to include charset"
+            return '<?xml %s encoding="%s"?>%s' % (xmlDecl,charset,theRest)

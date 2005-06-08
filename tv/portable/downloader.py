@@ -204,6 +204,11 @@ def grabURL(url, type="GET",start = 0, etag=None,modified=None):
     info['redirected-url'] = redirURL
     info['updated-url'] = url
     info['status'] = download.status
+    try:
+        info['charset'] = re.compile("^.*charset\s*=\s*(\S+)/?$").search(info['content-type']).expand("\\1")
+        print "%s has charset %s" %(url,info['charset'])
+    except (AttributeError, KeyError):
+        print "%s has no charset" % url
     return info
 
 class HTTPAuthPassword(DDBObject):
@@ -528,7 +533,7 @@ connectionPool = HTTPConnectionPool()
 class Downloader(DDBObject):
     def __init__(self, url,item):
         self.url = url
-	self.item = item
+	self.itemList = [item]
         self.startTime = time()
         self.endTime = self.startTime
 	self.shortFilename = self.filenameFromURL(url)
@@ -543,6 +548,11 @@ class Downloader(DDBObject):
         self.thread = Thread(target=self.runDownloader)
         self.thread.setDaemon(True)
         self.thread.start()
+
+    ##
+    # In case multiple downloaders are getting the same file, we can support multiple items
+    def addItem(self,item):
+        self.itemList.append(item)
 
     ##
     # Finds a filename that's unused and similar the the file we want
@@ -694,8 +704,9 @@ class HTTPDownloader(Downloader):
         finally:
             self.endRead()
 	if updated:
-	    self.item.beginChange()
-	    self.item.endChange()
+            for item in self.itemList:
+                item.beginChange()
+                item.endChange()
 
     ##
     # Grabs the next block from the HTTP connection
@@ -807,7 +818,8 @@ class HTTPDownloader(Downloader):
         try:
             if self.state == "downloading":
                 self.state = "finished"
-		self.item.setDownloadedTime()
+                for item in self.itemList:
+                    item.setDownloadedTime()
 		newfilename = os.path.join(config.get('DataDirectory'),self.shortFilename)
 		newfilename = self.nextFreeFilename(newfilename)
 		rename(self.filename,newfilename)
@@ -828,8 +840,9 @@ class HTTPDownloader(Downloader):
         self.beginRead()
         self.state = "paused"
         self.endRead()
-	self.item.beginChange()
-	self.item.endChange()
+        for item in self.itemList:
+            item.beginChange()
+            item.endChange()
         self.thread.join()
 
     ##
@@ -840,8 +853,9 @@ class HTTPDownloader(Downloader):
         self.beginRead()
         self.state = "stopped"
         self.endRead()
-	self.item.beginChange()
-	self.item.endChange()
+        for item in self.itemList:
+            item.beginChange()
+            item.endChange()
         self.thread.join()
         try:
             remove(self.filename)
@@ -855,8 +869,9 @@ class HTTPDownloader(Downloader):
         self.beginRead()
         self.state = "downloading"
         self.endRead()
-	self.item.beginChange()
-	self.item.endChange()
+        for item in self.itemList:
+            item.beginChange()
+            item.endChange()
 	self.runDownloader(True)
 
     ##
@@ -975,8 +990,9 @@ class BTDownloader(Downloader):
         self.beginRead()
         self.state = "paused"
         self.endRead()
-	self.item.beginChange()
-	self.item.endChange()
+        for item in self.itemList:
+            item.beginChange()
+            item.endChange()
 	try:
 	    self.torrent.shutdown()
 	except KeyError:
@@ -986,8 +1002,9 @@ class BTDownloader(Downloader):
         self.beginRead()
         self.state = "stopped"
         self.endRead()
-	self.item.beginChange()
-	self.item.endChange()
+        for item in self.itemList:
+            item.beginChange()
+            item.endChange()
 	self.torrent.shutdown()
 	try:
 	    self.torrent.shutdown()
@@ -1009,8 +1026,9 @@ class BTDownloader(Downloader):
 	else:
 	    self.state = "downloading"
         self.endRead()
-	self.item.beginChange()
-	self.item.endChange()
+        for item in self.itemList:
+            item.beginChange()
+            item.endChange()
 	if metainfo != None:
 	    self.torrent = self.multitorrent.start_torrent(metainfo,
                                 self.torrentConfig, self, self.filename)
@@ -1022,8 +1040,9 @@ class BTDownloader(Downloader):
         DDBObject.remove(self)
 
     def runDownloader(self,done=False):
-	self.item.beginChange()
-	self.item.endChange()
+        for item in self.itemList:
+            item.beginChange()
+            item.endChange()
 	if self.metainfo is None:
 	    h = grabURL(self.getURL(),"GET")
             if h is None:
@@ -1127,18 +1146,40 @@ BTDownloader.dlthread = Thread(target=BTDownloader.multitorrent.rawserver.listen
 BTDownloader.dlthread.start()
 
 class DownloaderFactory:
+    lock = RLock()
     def __init__(self,item):
 	self.item = item
+
     def getDownloader(self,url):
         info = grabURL(url,'GET')
         if info is None:
             return None
-	if info['content-type'] == 'application/x-bittorrent':
-            #print "Got BT Download"
-            return BTDownloader(info['updated-url'],self.item)
-	else:
-            #print "Got HTTP download"
-	    return HTTPDownloader(info['updated-url'],self.item)
+        self.lock.acquire()
+        try:
+            ret = None
+            defaultDatabase.beginUpdate()
+            defaultDatabase.saveCursor()
+            try:
+                defaultDatabase.resetCursor()
+                for obj in defaultDatabase:
+                    if isinstance(obj,Downloader) and obj.url == info['updated-url']:
+                        ret = obj
+                        break
+            finally:
+                defaultDatabase.restoreCursor()
+                defaultDatabase.endUpdate()
+            if not ret is None:
+                ret.addItem(self.item)
+            else:
+                if info['content-type'] == 'application/x-bittorrent':
+                    #print "Got BT Download"
+                    ret = BTDownloader(info['updated-url'],self.item)
+                else:
+                    #print "Got HTTP download"
+                    ret = HTTPDownloader(info['updated-url'],self.item)
+        finally:
+            self.lock.release()
+        return ret
 
 
 if __name__ == "__main__":
