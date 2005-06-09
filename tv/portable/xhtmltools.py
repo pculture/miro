@@ -1,10 +1,13 @@
 import xml.sax.saxutils
+import xml.dom
 import re
 from HTMLParser import HTMLParser
 
 ##
 # very simple parser to convert HTML to XHTML
-class XHTMLifier(HTMLParser):
+#
+# FIXME: add in HTML and HEAD tags if they don't exist
+class XHTMLifier(HTMLParser, addTopTags=False):
     def convert(self,data):
 	self.output = ''
 	self.stack = []
@@ -56,7 +59,7 @@ def xhtmlify(data):
     x = XHTMLifier()
     return x.convert(data)
 
-xmlheaderRE = re.compile("^\<\?xml\s*(.*?)\s*\?\>(.*)")
+xmlheaderRE = re.compile("^\<\?xml\s*(.*?)\s*\?\>(.*)", re.S)
 ##
 # Adds a <?xml ?> header to the given xml data or replaces an
 # existing one without a charset with one that has a charset
@@ -73,3 +76,26 @@ def fixXMLHeader(data,charset):
         else:
             print "Changing header to include charset"
             return '<?xml %s encoding="%s"?>%s' % (xmlDecl,charset,theRest)
+
+
+HTMLHeaderRE = re.compile("^(.*)\<\s*head\s*(.*?)\s*\>(.*?)\</\s*head\s*\>(.*)",re.I | re.S)
+
+##
+# Adds a <meta http-equiv="Content-Type" content="text/html;
+# charset=blah"> tag to an HTML document
+#
+# Since we're only feeding this to our own HTML Parser anyway, we
+# don't care that it might bung up XHTML
+def fixHTMLHeader(data,charset):
+    header = HTMLHeaderRE.match(data)
+    if header is None:
+        #Something is very wrong with this HTML
+        return data
+    else:
+        headTags = header.expand('\\3')
+        #This isn't exactly robust, but neither is scraping HTML
+        if headTags.lower().find('content-type') != -1:
+            return data
+        else:
+            print " adding %s Content-Type to HTML" % charset
+            return header.expand('\\1<head \\2><meta http-equiv="Content-Type" content="text/html; charset=')+charset+header.expand('">\\3</head>\\4')
