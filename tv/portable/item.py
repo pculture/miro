@@ -545,12 +545,14 @@ class Item(DDBObject):
     # Called by pickle during serialization
     def __getstate__(self):
 	temp = copy(self.__dict__)
-	return temp
+	return (0,temp)
 
     ##
     # Called by pickle during serialization
     def __setstate__(self,state):
-	self.__dict__ = state
+        (version, data) = state
+        assert(version == 0)
+	self.__dict__ = data
 
 ##
 # An Item that exists as a file, but not as a download

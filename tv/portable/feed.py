@@ -1,6 +1,5 @@
-from formatter import AbstractFormatter, NullWriter
 from downloader import grabURL
-from htmllib import HTMLParser,HTMLParseError
+from HTMLParser import HTMLParser,HTMLParseError
 import xml
 from urlparse import urlparse, urljoin
 from urllib import urlopen
@@ -24,6 +23,37 @@ import feedparser
 def setDelegate(newDelegate):
     global delegate
     delegate = newDelegate
+
+#
+# Adds a new feed using USM
+def addFeedFromFile(file):
+    d = feedparser.parse(file)
+    if d.feed.has_key('links'):
+        for link in d.feed['links']:
+            if link['rel'] == 'start':
+                generateFeed(link['href'])
+                return
+    if d.feed.has_key('link'):
+        addFeedFromWebPage(d.feed.link)
+
+#
+# Adds a new feed based on a link tag in a web page
+def addFeedFromWebPage(url):
+    feedURL = getFeedURLFromWebPage(url)
+    if not feedURL is None:
+        generateFeed(feedURL)
+
+def getFeedURLFromWebPage(url):
+    data = ''
+    info = grabURL(url,"GET")
+    if info is None:
+        return None
+    try:
+        data = info['file-handle'].read()
+        info['file-handle'].close()
+    except:
+        pass
+    return HTMLFeedURLParser().getLink(info['updated-url'],data)
 
 ##
 # Generates an appropriate feed for a URL
@@ -375,12 +405,14 @@ class Feed(DDBObject):
     # Called by pickle during serialization
     def __getstate__(self):
 	temp = copy(self.__dict__)
-	return temp
+	return (0,temp)
 
     ##
     # Called by pickle during deserialization
     def __setstate__(self,state):
-	self.__dict__ = state
+        (version, data) = state
+        assert(version == 0)
+	self.__dict__ = data
 
 class RSSFeed(Feed):
     def __init__(self,url,title = None,initialHTML = None, etag = None, modified = None):
@@ -513,20 +545,23 @@ class RSSFeed(Feed):
     # Called by pickle during serialization
     def __getstate__(self):
 	temp = copy(self.__dict__)
-	temp["itemlist"] = None
 	temp["scheduler"] = None
-	return temp
+        temp["itemlist"] = None
+	return (0,temp)
 
     ##
     # Called by pickle during deserialization
     def __setstate__(self,state):
-	self.__dict__ = state
+        (version, data) = state
+        assert(version == 0)
+	self.__dict__ = data
 	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
-        self.scheduler = ScheduleEvent(self.updateFreq, self.update)
-
 	#FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
         self.scheduler = ScheduleEvent(5, self.update,False)
+
+        self.scheduler = ScheduleEvent(self.updateFreq, self.update)
+
 
 ##
 # A DTV Collection of items -- similar to a playlist
@@ -762,7 +797,7 @@ class ScraperFeed(Feed):
     # links to titles and thumbnails
     def scrapeHTMLLinks(self,html, baseurl,setTitle=False):
         #print "Scraping "+baseurl+" as HTML"
-	lg = HTMLLinkGrabber(AbstractFormatter(NullWriter))
+	lg = HTMLLinkGrabber()
 	links = lg.getLinks(html, baseurl)
         if setTitle and not lg.title is None:
             self.beginChange()
@@ -786,21 +821,24 @@ class ScraperFeed(Feed):
     # Called by pickle during serialization
     def __getstate__(self):
 	temp = copy(self.__dict__)
-	temp["itemlist"] = None
+        temp['semaphore'] = None
 	temp["scheduler"] = None
-	return temp
+        temp["itemlist"] = None
+	return (0,temp)
 
     ##
     # Called by pickle during deserialization
     def __setstate__(self,state):
-	self.__dict__ = state
+        (version, data) = state
+        assert(version == 0)
+	self.__dict__ = data
 	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
-        self.scheduler = ScheduleEvent(self.updateFreq, self.update)
-
 	#FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
-        self.scheduler = ScheduleEvent(5, self.update,False)
+        ScheduleEvent(5, self.update,False)
 
+        self.scheduler = ScheduleEvent(self.updateFreq, self.update)
+        self.semaphore = Semaphore(ScraperFeed.maxThreads)
 
 ##
 # A feed of all of the Movies we find in the movie folder that don't
@@ -875,20 +913,22 @@ class DirectoryFeed(Feed):
     # Called by pickle during serialization
     def __getstate__(self):
 	temp = copy(self.__dict__)
-	temp["itemlist"] = None
 	temp["scheduler"] = None
-	return temp
+        temp['itemlist'] = None
+	return (0,temp)
 
     ##
     # Called by pickle during deserialization
     def __setstate__(self,state):
-	self.__dict__ = state
-	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,FileItem) and x.feed is self)
-        self.scheduler = ScheduleEvent(self.updateFreq, self.update)
-
+        (version, data) = state
+        assert(version == 0)
+	self.__dict__ = data
+	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
 	#FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
         self.scheduler = ScheduleEvent(5, self.update,False)
+
+        self.scheduler = ScheduleEvent(self.updateFreq, self.update)
 
 ##
 # Parse HTML document and grab all of the links and their title
@@ -913,7 +953,7 @@ class HTMLLinkGrabber(HTMLParser):
             print "DTV: error closing "+str(baseurl)
 	return self.links
 
-    def handle_starttag(self, tag, method, attrs):
+    def handle_starttag(self, tag, attrs):
         if tag.lower() == 'title':
             self.inTitle = True
         elif tag.lower() == 'base':
@@ -949,7 +989,7 @@ class HTMLLinkGrabber(HTMLParser):
 			self.links.append( (urljoin(self.baseurl,attr[1]),None,None))
 			break
 		
-    def handle_endtag(self, tag, method):
+    def handle_endtag(self, tag):
 	if tag.lower() == 'a':
 	    if self.inLink:
 		if self.links[-1][1] is None:
@@ -1009,12 +1049,14 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler):
     def endElementNS(self, name, qname):
         (uri, tag) = name
 	if tag.lower() == 'description':
-            #FIXME: Get links from description"
-	    #lg = HTMLLinkGrabber(AbstractFormatter(NullWriter))
-            #html = xhtmlify(unescape(self.descHTML),addTopTags=True)
-            #if not self.charset is None:
-                #html = fixHTMLHeader(html,self.charset)
-	    #self.links[:0] = lg.getLinks(html,self.baseurl)
+	    lg = HTMLLinkGrabber()
+            try:
+                html = xhtmlify(unescape(self.descHTML),addTopTags=True)
+                if not self.charset is None:
+                    html = fixHTMLHeader(html,self.charset)
+                self.links[:0] = lg.getLinks(html,self.baseurl)
+            except HTMLParseError: # Don't bother with bad HTML
+                print "DTV: bad HTML in %s" % self.baseurl
 	    self.inDescription = False
 	elif tag.lower() == 'link':
 	    self.links.append((self.theLink,None,None))
@@ -1034,3 +1076,33 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler):
                 self.title = data
             else:
                 self.title += data
+
+# Grabs the feed link from the given webpage
+class HTMLFeedURLParser(HTMLParser):
+    def getLink(self,baseurl,data):
+        self.baseurl = baseurl
+	self.link = None
+        try:
+            self.feed(data)
+        except HTMLParseError:
+            print "DTV: error parsing "+str(baseurl)
+        try:
+            self.close()
+        except HTMLParseError:
+            print "DTV: error closing "+str(baseurl)
+	return self.link
+
+    def handle_starttag(self, tag, attrs):
+        attrdict = {}
+        for (key, value) in attrs:
+            attrdict[key.lower()] = value
+        if (tag.lower() == 'link' and attrdict.has_key('rel') and 
+            attrdict.has_key('type') and attrdict.has_key('href') and
+            attrdict['rel'].lower() == 'alternate' and 
+            attrdict['type'].lower() in ['application/rss+xml',
+                                         'application/rdf+xml',
+                                         'application/atom+xml',
+                                         'text/xml',
+                                         'application/xml']):
+            print "Got Link %s" % attrdict['href']
+            self.link = urljoin(self.baseurl,attrdict['href'])

@@ -147,7 +147,7 @@ class Controller(frontend.Application):
 	return GUIActionHandler(self).addFeed(url, showTemplate)
 
     def addFeedFromFile(self,file):
-        print "DTV: Would be adding %s if I knew how" % file
+        feed.addFeedFromFile(file)
         return False
 
     ### Keeping track of the selected tab and showing the right template ###

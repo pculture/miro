@@ -5,18 +5,20 @@ from HTMLParser import HTMLParser
 
 ##
 # very simple parser to convert HTML to XHTML
-#
-# FIXME: add in HTML and HEAD tags if they don't exist
-class XHTMLifier(HTMLParser, addTopTags=False):
-    def convert(self,data):
-	self.output = ''
+class XHTMLifier(HTMLParser):
+    def convert(self,data, addTopTags=False):
+        if addTopTags:
+            self.output = '<html><head></head><body>'
+        else:
+            self.output = ''
 	self.stack = []
 	self.feed(data)
 	self.close()
 	while len(self.stack) > 0:
 	    temp = self.stack.pop()
 	    self.output += '</'+temp+'>'
-
+        if addTopTags:
+            self.output += '</body></html>'
 	return self.output
     def handle_starttag(self, tag, attrs):
 	if tag.lower() == 'br':
@@ -55,9 +57,9 @@ def unescape(data):
 
 ##
 # Returns XHTMLified version of HTML document
-def xhtmlify(data):
+def xhtmlify(data,addTopTags = False):
     x = XHTMLifier()
-    return x.convert(data)
+    return x.convert(data, addTopTags)
 
 xmlheaderRE = re.compile("^\<\?xml\s*(.*?)\s*\?\>(.*)", re.S)
 ##

@@ -669,12 +669,14 @@ class Downloader(DDBObject):
     def __getstate__(self):
 	temp = copy(self.__dict__)
 	temp["thread"] = None
-	return temp
+	return (0,temp)
 
     ##
     # Called by pickle during deserialization
     def __setstate__(self,state):
-	self.__dict__ = state
+        (version, data) = state
+        assert(version == 0)
+	self.__dict__ = data
         self.thread = Thread(target=lambda :self.runDownloader(retry = True))
         self.thread.setDaemon(True)
         self.thread.start()
@@ -895,7 +897,8 @@ class BTDisplay:
 	self.lastUpdated = 0
 
     def finished(self):
-	self.dler.item.setDownloadedTime()
+        for item in self.dler.itemList:
+            item.setDownloadedTime()
         self.dler.beginRead()
 	try:
 	    if not self.dler.state == "finished":
@@ -944,19 +947,21 @@ class BTDisplay:
 	finally:
 	    self.dler.endRead()
 	    if update:
-		self.dler.item.beginChange()
-		self.dler.item.endChange()
+                for item in self.dler.itemList:
+                    item.beginChange()
+                    item.endChange()
 
     ##
     # Called by pickle during serialization
     def __getstate__(self):
 	temp = copy(self.__dict__)
-	return temp
+	return (0,temp)
 
     ##
     # Called by pickle during deserialization
     def __setstate__(self,state):
-	self.__dict__ = state
+        (version, data) = stat
+	self.__dict__ = data
 
 class BTDownloader(Downloader):
     def global_error(self, level, text):
@@ -1125,10 +1130,11 @@ class BTDownloader(Downloader):
 	    temp["torrent"] = None
 	except:
 	    pass
-	return temp
+	return (0,temp)
 
     def __setstate__(self,state):
-	self.__dict__ = state
+        (version, data) = state
+	self.__dict__ = data
         self.thread = Thread(target=self.restartDL)
         self.thread.setDaemon(True)
         self.thread.start()
