@@ -98,6 +98,8 @@ class Controller(frontend.Application):
 	    print "DTV: Displaying main frame..."
 	    self.frame = frontend.MainFrame(self)
 
+	    scheduler.ScheduleEvent(300,db.save)            
+
 	    # Set up tab list (on left); this will automatically set up the
 	    # display area (on right) and currentSelectedTab
 	    self.tabDisplay = TemplateDisplay('tablist', tabPaneData, self)
@@ -143,6 +145,10 @@ class Controller(frontend.Application):
     # Called by Frontend via Application base class in response to OS request.
     def addAndSelectFeed(self, url, showTemplate = None):
 	return GUIActionHandler(self).addFeed(url, showTemplate)
+
+    def addFeedFromFile(self,file):
+        print "DTV: Would be adding %s if I knew how" % file
+        return False
 
     ### Keeping track of the selected tab and showing the right template ###
 
