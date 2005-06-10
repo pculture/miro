@@ -137,6 +137,7 @@ def _generateFeed(url):
             charset = info['charset']
         else:
             xmldata = html
+            charset = None
         try:
             parser = xml.sax.make_parser()
             parser.setFeature(xml.sax.handler.feature_namespaces, 1)
@@ -405,14 +406,20 @@ class Feed(DDBObject):
 
     ##
     # Removes a feed from the database
-    def removeFeed(self,url):
+    def remove(self):
+        print "Removing feed %s" % self.url
         self.beginRead()
         try:
-            for item in self.items:
+            items = []
+            self.itemlist.resetCursor()
+            for item in self.itemlist:
+                items.append(item)
+            for item in items:
                 item.remove()
         finally:
             self.endRead()
-        self.remove()
+        del self.itemlist
+        DDBObject.remove(self)
 
     ##
     # Called by pickle during serialization
@@ -791,9 +798,9 @@ class ScraperFeed(Feed):
                     if not linkDict.has_key(toUTF8Bytes(link[0],charset)):
                         linkDict[toUTF8Bytes(link[0])] = {}
                     if not link[1] is None:
-                        linkDict[link[0]]['title'] = toUTF8Bytes(link[1],charset).strip()
+                        linkDict[toUTF8Bytes(link[0])]['title'] = toUTF8Bytes(link[1],charset).strip()
                     if not link[2] is None:
-                        linkDict[link[0]]['thumbnail'] = toUTF8Bytes(link[2],charset)
+                        linkDict[toUTF8Bytes(link[0])]['thumbnail'] = toUTF8Bytes(link[2],charset)
             if setTitle and not handler.title is None:
                 self.beginChange()
                 try:
@@ -825,9 +832,9 @@ class ScraperFeed(Feed):
                 if not linkDict.has_key(toUTF8Bytes(link[0],charset)):
                     linkDict[toUTF8Bytes(link[0])] = {}
                 if not link[1] is None:
-                    linkDict[link[0]]['title'] = toUTF8Bytes(link[1],charset).strip()
+                    linkDict[toUTF8Bytes(link[0])]['title'] = toUTF8Bytes(link[1],charset).strip()
                 if not link[2] is None:
-                    linkDict[link[0]]['thumbnail'] = toUTF8Bytes(link[2],charset)
+                    linkDict[toUTF8Bytes(link[0])]['thumbnail'] = toUTF8Bytes(link[2],charset)
 	return linkDict
 	
     ##

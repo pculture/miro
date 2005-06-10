@@ -541,6 +541,12 @@ class Item(DDBObject):
 	    self.endRead()
 	return ret
 
+    def remove(self):
+        del self.feed
+        del self.downloaders
+        del self.dlFactory
+        DDBObject.remove(self)
+
     ##
     # Called by pickle during serialization
     def __getstate__(self):

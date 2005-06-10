@@ -571,6 +571,9 @@ class Downloader(DDBObject):
 	    newname = '.'.join(parts)
 	return newname
 
+    def remove(self):
+        del self.itemList
+        DDBObject.remove(self)
 
     ##
     # Returns the URL we're downloading
@@ -880,7 +883,7 @@ class HTTPDownloader(Downloader):
     # Removes downloader from the database
     def remove(self):
         self.pause()
-        DDBObject.remove(self)
+        Downloader.remove(self)
 
 ##
 # BitTorrent uses this class to display status information. We use
@@ -1042,7 +1045,7 @@ class BTDownloader(Downloader):
     # Removes downloader from the database
     def remove(self):
         ScheduleEvent(0,self.pause,False)
-        DDBObject.remove(self)
+        Downloader.remove(self)
 
     def runDownloader(self,done=False):
         for item in self.itemList:
