@@ -204,7 +204,10 @@ class Controller(frontend.Application):
 	    if newSelected:
 		newSelected.start(self.frame, templateNameHint)
 	    else:
-		self.selectDisplay(NullDisplay())
+                # If we're in the middle of a shutdown, selectDisplay
+                # might not be there... I'm not sure why...
+                if hasattr(self,'selectDisplay'):
+                    self.selectDisplay(NullDisplay())
 
     def setTabListActive(self, active):
 	"""If active is true, show the tab list normally. If active is
