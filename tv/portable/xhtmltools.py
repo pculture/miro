@@ -101,3 +101,17 @@ def fixHTMLHeader(data,charset):
         else:
             print " adding %s Content-Type to HTML" % charset
             return header.expand('\\1<head \\2><meta http-equiv="Content-Type" content="text/html; charset=')+charset+header.expand('">\\3</head>\\4')
+
+# Takes in a unicode string or a byte string and charset and converts
+# it to utf-8
+def toUTF8Bytes(string,charset=None):
+    try:
+        if hasattr(string,'encode'):
+            return string.encode('utf-8')
+    except UnicodeDecodeError:
+        return string.decode('iso-8859-1')
+
+    if not charset is None:
+        return unicode(string,charset).encode('utf-8')
+    else:
+        return string
