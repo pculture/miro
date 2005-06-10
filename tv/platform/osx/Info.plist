@@ -2,6 +2,33 @@
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>rdf</string>
+				<string>rss</string>
+				<string>atom</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>check.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/rss+xml</string>
+				<string>application/rdf+xml</string>
+				<string>application/atom+xml</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Syndicated Content</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>TEXT</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+		</dict>
+	</array>
 	<key>CFBundleGetInfoString</key>
 	<string>0.0, Copyright 2005 Participatory Culture Foundation</string>
 	<key>CFBundleIdentifier</key>
