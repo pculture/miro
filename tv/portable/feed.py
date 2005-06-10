@@ -8,12 +8,25 @@ from database import defaultDatabase
 from item import *
 from scheduler import ScheduleEvent
 from copy import copy
-from xhtmltools import unescape,xhtmlify,fixXMLHeader, fixHTMLHeader
+from xhtmltools import unescape,xhtmlify,fixXMLHeader, fixHTMLHeader, toUTF8Bytes
 from cStringIO import StringIO
 from threading import Thread, Semaphore
 import traceback #FIXME get rid of this
 import os
 import config
+
+# Notes on character set encoding of feeds:
+#
+# The parsing libraries built into Python mostly use byte strings
+# instead of unicode strings.  However, sometimes they get "smart" and
+# try to convert the byte stream to a unicode stream automatically.
+#
+# What does what when isn't clearly documented
+#
+# We use the function toUTF8Bytes() to fix those smart conversions
+#
+# If you run into Unicode crashes, adding that function in the
+# appropriate place should fix it.
 
 # Universal Feed Parser http://feedparser.org/
 # Licensed under Python license
@@ -775,12 +788,12 @@ class ScraperFeed(Feed):
             linkDict = {}
             for link in links:
                 if link[0].startswith('http://') or link[0].startswith('https://'):
-                    if not linkDict.has_key(link[0]):
-                        linkDict[link[0]] = {}
+                    if not linkDict.has_key(toUTF8Bytes(link[0],charset)):
+                        linkDict[toUTF8Bytes(link[0])] = {}
                     if not link[1] is None:
-                        linkDict[link[0]]['title'] = link[1].strip()
+                        linkDict[link[0]]['title'] = toUTF8Bytes(link[1],charset).strip()
                     if not link[2] is None:
-                        linkDict[link[0]]['thumbnail'] = link[2]
+                        linkDict[link[0]]['thumbnail'] = toUTF8Bytes(link[2],charset)
             if setTitle and not handler.title is None:
                 self.beginChange()
                 try:
@@ -789,13 +802,13 @@ class ScraperFeed(Feed):
                     self.endChange()
             return linkDict
 	except (xml.sax.SAXException, IOError):
-	    linkDict = self.scrapeHTMLLinks(html,baseurl,setTitle=setTitle)
+	    linkDict = self.scrapeHTMLLinks(html,baseurl,setTitle=setTitle, charset=charset)
             return linkDict
 
     ##
     # Given a string containing an HTML file, return a dictionary of
     # links to titles and thumbnails
-    def scrapeHTMLLinks(self,html, baseurl,setTitle=False):
+    def scrapeHTMLLinks(self,html, baseurl,setTitle=False, charset = None):
         #print "Scraping "+baseurl+" as HTML"
 	lg = HTMLLinkGrabber()
 	links = lg.getLinks(html, baseurl)
@@ -809,12 +822,12 @@ class ScraperFeed(Feed):
         linkDict = {}
 	for link in links:
 	    if link[0].startswith('http://') or link[0].startswith('https://'):
-                if not linkDict.has_key(link[0]):
-                    linkDict[link[0]] = {}
+                if not linkDict.has_key(toUTF8Bytes(link[0],charset)):
+                    linkDict[toUTF8Bytes(link[0])] = {}
                 if not link[1] is None:
-                    linkDict[link[0]]['title'] = link[1].strip()
+                    linkDict[link[0]]['title'] = toUTF8Bytes(link[1],charset).strip()
                 if not link[2] is None:
-                    linkDict[link[0]]['thumbnail'] = link[2]
+                    linkDict[link[0]]['thumbnail'] = toUTF8Bytes(link[2],charset)
 	return linkDict
 	
     ##
