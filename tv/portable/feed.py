@@ -666,7 +666,7 @@ class ScraperFeed(Feed):
                 modified = self.linkHistory[url]['modified']
         info = grabURL(url, etag=etag, modified=modified)
         if info is None:
-            return (None, url, url,404)
+            return (None, url, url,404, None)
         else:
             if not self.linkHistory.has_key(info['updated-url']):
                 self.linkHistory[info['updated-url']] = {}
