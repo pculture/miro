@@ -85,8 +85,7 @@ class AppController(NSObject):
 	self.actualApp.onShutdown()
 
     def application_openFile_(self, app, filename):
-	#print "**** openFile %s" % filename
-	return False
+        return self.actualApp.addFeedFromFile(filename)
 
     def openURL_withReplyEvent_(self, event, replyEvent):
 	print "**** got open URL event"
@@ -99,8 +98,8 @@ class AppController(NSObject):
 	match = re.compile(r"^feed:(.*)$").match(url)
 	if match:
 	    url = "http:%s" % match.group(1)
+            self.actualApp.addAndSelectFeed(url)
 
-	self.actualApp.addAndSelectFeed(url)
     openURL_withReplyEvent_ = objc.selector(openURL_withReplyEvent_,
 					    signature="v@:@@")
 
@@ -280,7 +279,7 @@ class UIBackendDelegate:
 	information, it's returned as a (user, password)
 	tuple. Otherwise, if the user presses Cancel or similar, None
 	is returned."""
-	message = "Location %s requires a username and password for \"%s\"." % (url, domain)
+	message = "%s requires a username and password for \"%s\"." % (url, domain)
 	return PasswordController.alloc().init(message, prefillUser, prefillPassword).getAnswer()
 
     def isScrapeAllowed(self, url):
@@ -288,8 +287,9 @@ class UIBackendDelegate:
 	scraped for links instead. Returns True if the user gives
 	permission, or False if not."""
 	# This message could use some serious work.
-	message = """No RSS information found at %s. Automatically 'scrape'
-links from this location?""" % url
+	message = """%s is not a DTV-style channel.  DTV can try to subscribe, but videos may lack proper descriptions and thumbnails.
+
+Please notify the publisher if you want this channel to be fully supported""" % url
 	return QuestionController.alloc().init(message).getAnswer()
 
 # NEEDS: Factor code common between PasswordController and
@@ -692,7 +692,7 @@ def playVideoFileHack(filename):
     # mc.playlist_add_item(filename)
     # mc.start(0)
     print "Hack play: %s" % filename
-    app = "/Applications/VLC-no-controls.app"
+    app = resource.path("VLC.app")
     path = "%s/Contents/MacOS/VLC" % app
     pid = os.spawnl(os.P_NOWAIT, path, path, 
 		    "--fullscreen", filename)
