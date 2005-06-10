@@ -32,8 +32,12 @@ function setViewFilter(viewName, fieldKey, functionKey, parameter, invert) {
     url = url + '&functionKey=' + URLencode(functionKey);
     if (parameter)
 	url = url + '&parameter=' + URLencode(parameter);
+    else
+	url = url + '&parameter=';
     if (invert)
 	url = url + '&invert=true';
+    else
+	url = url + '&invert=false';
     eventURL(url);
     return false;
 }
