@@ -106,12 +106,14 @@ def fixHTMLHeader(data,charset):
 # it to utf-8
 def toUTF8Bytes(string,charset=None):
     try:
-        if hasattr(string,'encode'):
-            return string.encode('utf-8')
-    except UnicodeDecodeError:
-        return string.decode('iso-8859-1')
+        return string.encode('utf-8')  #Turn whatever we have into utf-8
 
-    if not charset is None:
-        return unicode(string,charset).encode('utf-8')
-    else:
-        return string
+    except UnicodeDecodeError: #There's a problem
+        try:
+            #Maybe it's a byte string encoded in some other format
+            if not charset is None:
+                return unicode(string.decode(charset),charset).encode('utf-8')
+            else:
+                return unicode(string.decode('iso-8859-1'),'iso-8859-1').encode('utf-8')
+        except TypeError: #It's screwy unicode. Assume it's really latin-1
+            return string.decode('iso-8859-1')
