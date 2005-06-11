@@ -838,9 +838,7 @@ class HTTPDownloader(Downloader):
  
 
     ##
-    # Pauses the download. Currently there's a flaw in the
-    # implementation where this will block until the next packet is
-    # received
+    # Pauses the download.
     def pause(self):
         self.beginRead()
         self.state = "paused"
@@ -848,12 +846,10 @@ class HTTPDownloader(Downloader):
         for item in self.itemList:
             item.beginChange()
             item.endChange()
-        self.thread.join()
 
     ##
     # Stops the download and removes the partially downloaded
-    # file. Currently there's a flaw in the implementation where this
-    # will block until the next packet is received
+    # file.
     def stop(self):
         self.beginRead()
         self.state = "stopped"
@@ -861,7 +857,6 @@ class HTTPDownloader(Downloader):
         for item in self.itemList:
             item.beginChange()
             item.endChange()
-        self.thread.join()
         try:
             remove(self.filename)
         except:
