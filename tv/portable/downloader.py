@@ -832,6 +832,8 @@ class HTTPDownloader(Downloader):
                 if self.totalSize == -1:
                     self.totalSize = self.currentSize
                 self.endTime = time()
+            elif self.state == "stopped":
+                remove(self.filename)
         finally:
             self.endRead()
             defaultDatabase.recomputeFilters()
@@ -841,8 +843,11 @@ class HTTPDownloader(Downloader):
     # Pauses the download.
     def pause(self):
         self.beginRead()
-        self.state = "paused"
-        self.endRead()
+        try:
+            if self.state != "stopped":
+                self.state = "paused"
+        finally:
+            self.endRead()
         for item in self.itemList:
             item.beginChange()
             item.endChange()
@@ -857,10 +862,6 @@ class HTTPDownloader(Downloader):
         for item in self.itemList:
             item.beginChange()
             item.endChange()
-        try:
-            remove(self.filename)
-        except:
-            pass
 
     ##
     # Continues a paused or stopped download thread
