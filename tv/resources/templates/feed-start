@@ -38,7 +38,7 @@
         <li class="divider" i18n:translate="">New Videos</li>
 <div class="no_new" t:hideIfViewNotEmpty="newitems" i18n:translate="">No New Videos Available</div>        
 <li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="newitems">
-          <div class="thumbnail_placeholder"><img width="80" height="60" class="thumb" src="@@@this getThumbnail@@@" /></div>
+          <div class="thumbnail_placeholder"><img width="80" height="60" class="thumb" src="***this getThumbnail***" /></div>
           <div class="desc" >
             <div class="video_title" t:replace="this getTitle" />
             <div class="short_description" t:replaceMarkup="this getDescription"></div> 
@@ -51,7 +51,7 @@
         </li> 
         <li class="divider" i18n:translate="">In My Library</li> 
         <li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="mylibrary">
-          <div class="thumbnail_placeholder"><img width="80" height="60" class="thumb" src="@@@this getThumbnail@@@" /></div>
+          <div class="thumbnail_placeholder"><img width="80" height="60" class="thumb" src="***this getThumbnail***" /></div>
           <div class="desc" >
             <div class="video_title" t:replace="this getTitle" />
             <div class="short_description" t:replaceMarkup="this getDescription"></div> 
