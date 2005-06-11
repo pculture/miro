@@ -1,6 +1,7 @@
 import xml.sax.saxutils
 import xml.dom
 import re
+from urllib import quote_plus
 from HTMLParser import HTMLParser
 
 ##
@@ -54,6 +55,11 @@ class XHTMLifier(HTMLParser):
 # Parses HTML entities in data
 def unescape(data):
     return xml.sax.saxutils.unescape(data)
+
+#
+# encodes string for use in a URL
+def urlencode(data):
+    return quote_plus(data)
 
 ##
 # Returns XHTMLified version of HTML document
