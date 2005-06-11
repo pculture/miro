@@ -156,7 +156,7 @@ def _generateFeed(url):
             print "Unicode issue parsing... %s" % xmldata[0:300]
 	    traceback.print_exc()
             return None
-        if handler.enclosureCount > 0:
+        if handler.enclosureCount > 0 or handler.itemCount == 0:
             #print " It's RSS with enclosures"
             return RSSFeed(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified)
         else:
@@ -1037,6 +1037,7 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler):
     def startDocument(self):
         #print "Got start document"
         self.enclosureCount = 0
+        self.itemCount = 0
 	self.links = []
 	self.inLink = False
 	self.inDescription = False
@@ -1063,6 +1064,7 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler):
 	    self.inDescription = True
 	    self.descHTML = ''
         elif tag.lower() == 'item':
+            self.itemCount += 1
             self.inItem = True
         elif tag.lower() == 'title' and not self.inItem:
             self.inTitle = True
