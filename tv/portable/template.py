@@ -86,6 +86,7 @@ class TemplateError(Exception):
 # SAX version of templating code
 class TemplateContentHandler(sax.handler.ContentHandler):
     attrPattern = re.compile("^(.*)@@@(.*?)@@@(.*)$");
+    rawAttrPattern = re.compile("^(.*)\*\*\*(.*?)\*\*\*(.*)$");
     def __init__(self, data, handle, debug = False):
         self.data = data
         self.handle = handle
@@ -104,6 +105,11 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             if not match:
                 break
             value = ''.join((match.group(1), urlencode(str(evalKey(match.group(2), data))), match.group(3)))
+        while True:
+            match = self.rawAttrPattern.match(value)
+            if not match:
+                break
+            value = ''.join((match.group(1), str(evalKey(match.group(2), data)), match.group(3)))
         return sax.saxutils.quoteattr(value)
         
     def startDocument(self):
