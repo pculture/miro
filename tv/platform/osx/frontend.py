@@ -292,6 +292,17 @@ class UIBackendDelegate:
 Please notify the publisher if you want this channel to be fully supported""" % url
 	return QuestionController.alloc().init(message).getAnswer()
 
+    def updateAvailable(self, url):
+        """Tell the user that an update is available and ask them if they'd
+        like to download it now"""
+        message = """A new version of DTV is available.
+
+Would you like to download it now?"""
+
+	if QuestionController.alloc().init(message).getAnswer():
+            pass
+            #NEEDS: open the URL
+
 # NEEDS: Factor code common between PasswordController and
 # QuestionController out into a superclass
 
