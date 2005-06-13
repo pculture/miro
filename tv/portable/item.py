@@ -171,7 +171,7 @@ class Item(DDBObject):
     ##
     # Returns a link to the thumbnail of the video
     def getThumbnail(self):
-	ret = "resource:images/thumb.gif"	
+	ret = "resource:images/thumb.png"
         self.beginRead()
 	try:
 	    try:
