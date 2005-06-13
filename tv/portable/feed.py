@@ -14,6 +14,7 @@ from threading import Thread, Semaphore
 import traceback #FIXME get rid of this
 import os
 import config
+import re
 
 # Notes on character set encoding of feeds:
 #
@@ -435,6 +436,8 @@ class Feed(DDBObject):
 	self.__dict__ = data
 
 class RSSFeed(Feed):
+    firstImageRE = re.compile('\<\s*img\s+[^>]*src\s*=\s*"(.*?)"[^>]*\>',re.I|re.M)
+    
     def __init__(self,url,title = None,initialHTML = None, etag = None, modified = None):
         Feed.__init__(self,url,title)
         self.initialHTML = initialHTML
@@ -524,6 +527,7 @@ class RSSFeed(Feed):
                 except KeyError:
                     pass
             for entry in self.parsed.entries:
+                entry = self.addScrapedThumbnail(entry)
                 new = True
                 for item in self.items:
                     try:
@@ -546,6 +550,18 @@ class RSSFeed(Feed):
             self.endRead()
 	    self.beginChange()
 	    self.endChange()
+
+    def addScrapedThumbnail(self,entry):
+        if (len(entry['enclosures'])>0 and
+            entry.has_key('description') and 
+            not entry['enclosures'][0].has_key('thumbnail')):
+                print "I could scrape "+entry['title']
+                desc = RSSFeed.firstImageRE.search(unescape(entry['description']))
+                if not desc is None:
+                    print "adding scraped thumb at %s" % desc.expand("\\1")
+                    entry['enclosures'][0]['thumbnail'] = FeedParserDict({'url': desc.expand("\\1")})
+        return entry
+
     ##
     # Overrides the DDBObject remove()
     def remove(self):
