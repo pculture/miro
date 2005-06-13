@@ -19,6 +19,7 @@ import autodler
 import folder
 import scheduler
 import threading
+import autoupdate
 
 db = database.defaultDatabase
 
@@ -37,6 +38,7 @@ class Controller(frontend.Application):
             delegate = self.getBackendDelegate()
 	    feed.setDelegate(delegate)
 	    downloader.setDelegate(delegate)
+            autoupdate.setDelegate(delegate)
 
 	    #Restoring
 	    print "DTV: Restoring database..."
@@ -98,7 +100,10 @@ class Controller(frontend.Application):
 	    print "DTV: Displaying main frame..."
 	    self.frame = frontend.MainFrame(self)
 
-	    scheduler.ScheduleEvent(300,db.save)            
+            scheduler.ScheduleEvent(300,db.save)
+
+            autoupdate.checkForUpdates()
+            scheduler.ScheduleEvent(86400,autoupdate.checkForUpdates)
 
 	    # Set up tab list (on left); this will automatically set up the
 	    # display area (on right) and currentSelectedTab
