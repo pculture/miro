@@ -34,6 +34,7 @@
   </div>
   <div id="content_window">
     <ul> 
+        <div class="no_new" t:hideIfViewNotEmpty="pendingitems" i18n:translate="">There are no videos available on this channel.  This could mean that you have the wrong address for the channel or that the publisher of the channel is having problems.</div>    
         <li t:contextMenu="action:startDownload?item=@@@this getID@@@|Download" t:repeatForView="pendingitems">
           <div class="thumbnail_placeholder"><img width="80" height="60" class="thumb" src="***this getThumbnail***" /></div>
           <div class="desc" >

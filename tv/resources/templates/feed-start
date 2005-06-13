@@ -35,8 +35,8 @@
   </div> 
   <div id="content_window">
     <ul> 
-        <li class="divider" i18n:translate="">New Videos</li>
-<div class="no_new" t:hideIfViewNotEmpty="newitems" i18n:translate="">No New Videos Available</div>        
+        <li class="divider" i18n:translate="">New</li>
+<div class="no_new" t:hideIfViewNotEmpty="newitems" i18n:translate="">No new videos.  You can see what's available on this channel by clicking on the 'Choose' tab above.</div>        
 <li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="newitems">
           <div class="thumbnail_placeholder"><img width="80" height="60" class="thumb" src="***this getThumbnail***" /></div>
           <div class="desc" >
@@ -49,7 +49,7 @@
           <a href="OOOHHHH_NOOOOO">keep this</a> | <a href="WHOOOAAAA">delete it</a>
           </div> 
         </li> 
-        <li class="divider" i18n:translate="">In My Library</li> 
+        <li class="divider" i18n:translate="">Saved in My Library</li> 
         <li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="mylibrary">
           <div class="thumbnail_placeholder"><img width="80" height="60" class="thumb" src="***this getThumbnail***" /></div>
           <div class="desc" >
@@ -68,8 +68,10 @@
   </div>
   </div> 
 
+<div class="no_new">
 DEBUG: <a href="action:playView?viewName=newitems">Play unseen items</a>,
 <a href="action:playView?viewName=mylibrary">Play seen items</a>
+</div>
 
 </body>
 </html>

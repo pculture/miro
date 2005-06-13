@@ -10,7 +10,6 @@ Some common HTML
  
 /////////////////////////////////////////////*/
 
-
 a img{
 	border: none;
 	}
@@ -22,6 +21,50 @@ body {
 	margin: 0;
 	padding: 0;
 	}
+
+/*///////////////////////////////////////////////
+
+Some common classes
+ 
+/////////////////////////////////////////////*/
+
+
+.topbox{
+	padding: 10px;
+	background: #666;
+	text-shadow: 0px 1px 0px black;
+	color: #fff;
+	text-align: center;
+	text-align: left;
+	margin: 0;
+	}
+
+.lighttopbox{
+	padding: 10px;
+	background: #ddd;
+	text-shadow: 0px 1px 0px white;
+	color: #333;
+	margin: 0;
+	}
+
+
+
+.displayblock{
+	display: block;
+	}
+	
+.alignright{
+	text-align: right;
+	}
+
+.warning{
+	color: #D4A100;
+	padding: 3px;
+/*	color: #fff;
+	display: block;  */
+	}
+
+
 
 /*/////////////////////////////////////////////
 
@@ -75,11 +118,11 @@ Contains the channels
 	}
 
 #sidebar ul li:hover{
-	cursor: pointer;
+	cursor: default;
 	}
 
 #sidebar ul li a{
-	padding: 8px 10px;
+	padding: 8px 6px;
 	color: #333;
 	text-decoration: none;
 	clear: both;
@@ -88,8 +131,7 @@ Contains the channels
 
 #sidebar ul li a span{
 	display: block;
-	padding: 4px 0 9px 28px;
-
+	padding: 4px 0 9px 26px;
 	}
 
 
@@ -103,7 +145,8 @@ Contains the channels
 
 #sidebar ul li a img.icon{
 	border: 0;
-	float: left;
+    float: left;
+	margin-right: 8px;
 	}
 
 	
@@ -137,7 +180,9 @@ a.infolder {
  margin-left: 20px
 }
 
-
+.name {
+    vertical-align: bottom;
+}
 
 
 
@@ -154,7 +199,7 @@ Various Buttons
 	position: absolute;
 	right: 10px;
 	top: 5px;
-	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	font: 12px Verdana, Arial, Helvetica, sans-serif;
 	color: #fff;
 	text-decoration: none;
 	}
@@ -225,9 +270,9 @@ Title of each channel
 /////////////////////////////////////////////*/
 
 .channel_title {
-	padding: 4px 2px 4px 5px;
+	padding: 3px 2px 4px 5px;
 	color: white;
-	font-size: 13px;
+	font-size: 14px;
 	font-weight: bold;
 	background: #666 url(resource:images/blue.gif);
 	text-shadow: 0px 1px 0px black;
@@ -270,25 +315,24 @@ watch, choose...
 	}
 
 .tab {
-	padding: 7px 8px;
-	font-size: 10px;
+	padding: 6px 8px;
+	font-size: 12px;
 	float: left;
 	color: #333;
-	height: 11px;
+	height: 13px;
 	font-weight: bold;
 	text-shadow: 0px 1px 0px white;
-	width: 40px;
+/*	width: 45px;  */
 	text-align: center;
 	margin:0;
 	}
 	
 .tab:hover {
-	
 	cursor: default;
 	}
 	
 .tab:active {
-	background: url(resource:images/tab_hover.png) repeat-x;	
+	background: url(resource:images/tab_active.png) repeat-x;	
 	}
 	
 .emptytab {
@@ -300,7 +344,6 @@ watch, choose...
 	text-shadow: 0px 1px 0px white;
 	}
 
-
 #searchfield{
 	position: absolute;
 	right: 10px;
@@ -311,6 +354,11 @@ watch, choose...
 	font-size: 11px;	
 	margin: 0 3px;
 	}
+	
+.no_new {
+	padding: 10px;
+	color: #900;
+}
 
 
 /*/////////////////////////////////////////////
@@ -335,10 +383,7 @@ Where the videos show up
 	}
 
 #main_window li:hover{
-	border: 1px solid #007AFA;
-	cursor: pointer;
-	color: #fff;
-	background: #C6D6F2;
+	cursor: default;
 	}
 
 
@@ -347,7 +392,6 @@ Where the videos show up
 	}
 
 #main_window li:hover .file_size, #main_window li:hover .length{
-	color: #000;
 	}
 
 #main_window ul li.alt {
@@ -378,7 +422,7 @@ Where the videos show up
 
 
 
-#main_window li img.thumb{
+#main_window li .thumbnail_placeholder{
 	display: block;
 	float: left;
 	padding: 1px;
@@ -386,6 +430,9 @@ Where the videos show up
 	margin-top: 0px;
 	margin-right: 8px;
 	margin-left: 10px;
+	width: 80px;
+	height: 60px;
+/*	background: url(resource:images/nothumbnail.png) 1px 1px no-repeat;  */
 	}
 
 
@@ -425,29 +472,54 @@ Where the videos show up
 	overflow: hidden;
 	}
 
-.one_click {
-	color: #339933;
-	padding: 0px 2px 0 0px;
+.download_button {
+	width: 30px;
+	height: 30px;
+	display: block;
 	float: right;
-	margin: 12px 6px 5px 0px;
-	background: url(resource:images/download_arrow_gray.gif) top left no-repeat;
-	width: 42px;
-	height: 32px;
+	margin-right: 58px;
+	/* background: url(resource:images/download_button.png) top left no-repeat; */
+	}
+
+/*
+
+.download_button:hover {
+	background: url(resource:images/download_button_hover.png)  top left no-repeat;
+	}
+	
+	*/
+
+.play_item {
+	background: url(resource:images/play_button.png)  top left no-repeat;
+	width: 30px;
+	height: 30px;
+	display: block;
+	margin: 10px auto;
+	}
+
+
+.play_item:hover {
+	background: url(resource:images/play_button_hover.png)  top left no-repeat;
+	}
+
+
+.play_box{
+	float: right;
+	text-align: center;
+	width: 150px;
+	}
+
+.play_box a{
+	color: dark blue;
+	font-size: 11px;
 	text-decoration: none;
 	}
 
-.one_click:hover {
-	background: url(resource:images/download_arrow.gif)  top left no-repeat;
+.play_box a:hover{
+	color: blue;
+	font-size: 11px;
+	text-decoration: underline;
 	}
-
-.play_item {
-	background: url(resource:images/play_item_gray.gif)  top left no-repeat;
-	}
-
-.play_item:hover {
-	background: url(resource:images/play_item.gif)  top left no-repeat;
-	}
-
 
 .in_progress {
 	background: url(resource:images/in_progress_gray.gif)  top left no-repeat;
@@ -459,14 +531,6 @@ Where the videos show up
 
 
 
-.download_button {
-	width: 54px;
-	color: #339933;
-	padding: 0px 2px 0 3px;
-	float: right;
-	font-size: 11px;
-	margin: 10px 25px 10px 6px;
-	}
 
 .download_button a {
 	color: #339933;
@@ -509,6 +573,15 @@ Where the videos show up
 	padding: 5px;
 	}
 
+.settings_title {
+	background-color: #ddd;
+	padding: 8px;
+	margin: 0;
+	font-size: 18px;
+}
+
+
+
 /* ---- Play Button --- */
 
 
@@ -533,3 +606,68 @@ a#playbutton img{
 	text-align:center;
 	margin-top: 30px;
 	}
+
+
+
+
+/*/////////////////////////////////////////////
+
+Settings Section
+-----------------------------------------------
+Where the videos show up
+ 
+/////////////////////////////////////////////*/
+
+div.settings{
+	background: #eee;
+	}
+
+
+div.settings div{
+	display: block;
+	padding: 5px 5px 5px 25px;
+	border-bottom: 1px solid white;
+	border-top: 1px solid #f9f9f9;
+	}
+
+
+#editcachelink{
+	padding: 0;
+	margin: 0;
+	text-shadow: none;
+	color: #333;
+	}
+	
+	
+.setting_heading{
+	background: #bbb;
+	padding: 5px;
+	margin-bottom: 2px;
+	}
+	
+.setting_heading h2{
+	display: inline;
+	padding: 0;
+	margin: 0;
+	font-size: 13px;
+	}
+	
+.heading_desc{
+	padding-left: 5px;
+	color: #666;
+	font-size: 10px;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

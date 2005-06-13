@@ -21,9 +21,9 @@
 
 <body>
   <div id="main_window"> 
-    <div class="channel_title" i18n:translate="">Download Queue <a class="settings_button" href="#" i18n:name="settings" i18n:translate="">Settings</a></div> 
-  <div class="channel_tabs"> 
-    <a href="#"><div class="tab active_tab" i18n:translate="">Watch</div></a>
+    <div class="channel_title" i18n:translate="">Download Queue <a class="settings_button" href="#" i18n:name="settings" i18n:translate="">Cache Settings</a></div> 
+  <div class="channel_tabs">
+    <a href="#"><div class="tab emptytab"><span /></div></a>
     <a href="#"><div class="tab emptytab"><span /></div></a>
     <a href="#"><div class="tab emptytab"><span /></div></a>
     <a href="#"><div class="tab emptytab"><span /></div></a>
@@ -33,7 +33,7 @@
   <div id="content_window">
     <ul> 
         <li t:repeatForView="dlitems">
-          <div class="thumbnail_placeholder"><img width="80" height="60" class="thumb" src="***this getThumbnail***" /></div>
+          <div class="thumbnail_placeholder"><img width="80" height="60" class="thumb" src="@@@this getThumbnail@@@" /></div>
           <div class="desc" >
             <div class="video_title" t:replace="this getTitle"></div>
             <div class="short_description" t:replaceMarkup="this getDescription"></div> 
