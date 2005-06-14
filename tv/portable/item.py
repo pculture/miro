@@ -538,9 +538,8 @@ class Item(DDBObject):
 	return ret
 
     def remove(self):
-        del self.feed
-        del self.downloaders
-        del self.dlFactory
+        for dler in self.downloaders:
+            dler.remove()
         DDBObject.remove(self)
 
     ##
