@@ -571,7 +571,6 @@ class Downloader(DDBObject):
 	return newname
 
     def remove(self):
-        del self.itemList
         DDBObject.remove(self)
 
     ##
@@ -958,7 +957,7 @@ class BTDisplay:
     ##
     # Called by pickle during deserialization
     def __setstate__(self,state):
-        (version, data) = stat
+        (version, data) = state
 	self.__dict__ = data
 
 class BTDownloader(Downloader):
