@@ -25,7 +25,7 @@
     <ul t:hideIfViewEmpty="tabs">
       <li t:repeatForView="tabs" onclick="eventURL('action:selectTab?id=@@@this id@@@')">
         <span t:hideIfNotKey="this isFeed" t:hideFunctionKey="global filter boolean">
-        <span t:replaceMarkup="this markup"  t:contextMenu="action:selectTab?id=@@@this id@@@|Open\naction:removeFeed?url=@@@this feedURL@@@|Remove"/>
+        <span t:replaceMarkup="this markup"  t:contextMenu="action:selectTab?id=@@@this id@@@|Open\naction:removeFeed?url=@@@this feedURL@@@|Remove\naction:updateFeed?url=@@@this feedURL@@@|Update Channel Now"/>
         </span>
         <span t:hideIfKey="this isFeed" t:hideFunctionKey="global filter boolean">
         <span t:replaceMarkup="this markup" t:hideParameter="Feed" t:contextMenu="action:selectTab?id=@@@this id@@@|Open"/>
