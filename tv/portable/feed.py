@@ -667,7 +667,7 @@ class Collection(Feed):
 ##
 # A feed based on un unformatted HTML or pre-enclosure RSS
 class ScraperFeed(Feed):
-    maxThreads = 5
+    maxThreads = 2
 
     def __init__(self,url,title = None, visible = True, initialHTML = None,etag=None,modified = None,charset = None):
 	Feed.__init__(self,url,title,visible)
@@ -797,8 +797,8 @@ class ScraperFeed(Feed):
                         else:
                             pass
                             #print link+" seems to be bogus..."
-                    #This is probably a video
-                    else:
+                    #This is a video
+                    elif mimetype.startswith('video/'):
                         self.addVideoItem(link, links[link])
 
     #FIXME: go through and add error handling
