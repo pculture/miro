@@ -1138,15 +1138,13 @@ class _FeedParserMixin:
 	    if self.inenclosure:
 		self.entries[-1]['enclosures'][-1]['thumbnail']=FeedParserDict(attrsD)
 	    else:
+                print "Adding thumbnail"
+                print attrsD['url']
 		self.entries[-1]['thumbnail'] = FeedParserDict(attrsD)
+                print self.entries[-1]['thumbnail']['url']
 
     def _end_media_thumbnail(self):
-	value = self.pop('media:thumbnail')
-	if self.inentry:
-	    if self.inenclosure:
-		self.entries[-1]['enclosures'][-1]['thumbnail']['url'] = value
-	    else:
-		self.entries[-1]['thumbnail']['url'] = value
+	self.pop('media:thumbnail')
 	
     def _start_media_text(self,attrsD):
 	self.push('media:text',1)
