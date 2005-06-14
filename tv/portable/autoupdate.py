@@ -15,8 +15,11 @@ def checkForUpdates():
 def _checkForUpdates():
     info = grabURL('http://www.participatoryculture.org/DTV-version.txt')
     if not info is None:
-        data = info['file-handle'].read()
-        info['file-handle'].close()
-        (version, url) = data.split()
-        if version != 'CVS-06-12-2005':
-            delegate.updateAvailable(url)
+        try:
+            data = info['file-handle'].read()
+            info['file-handle'].close()
+            (version, url) = data.split()
+            if version != 'CVS-06-12-2005':
+                delegate.updateAvailable(url)
+        except:
+            pass
