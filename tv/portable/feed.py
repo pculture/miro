@@ -144,11 +144,9 @@ def _generateFeed(url):
             parser.setFeature(xml.sax.handler.feature_namespaces, 1)
             handler = RSSLinkGrabber(info['redirected-url'],charset)
             parser.setContentHandler(handler)
-            print "Parsing..."
             parser.parse(StringIO(xmldata))
-            print "Done"
         except xml.sax.SAXException: #it doesn't parse as RSS, so it must be HTML
-            print " Nevermind! it's HTML"
+            #print " Nevermind! it's HTML"
             if delegate.isScrapeAllowed(url):
                  return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified, charset=charset)
             else:
@@ -190,6 +188,7 @@ class Feed(DDBObject):
         self.updateFreq = 60*60
 	self.startfrom = datetime.min
 	self.visible = visible
+        self.updating = False
         DDBObject.__init__(self)
 
     ##
@@ -433,6 +432,7 @@ class Feed(DDBObject):
     def __setstate__(self,state):
         (version, data) = state
         assert(version == 0)
+        data['updating'] = False
 	self.__dict__ = data
 
 class RSSFeed(Feed):
@@ -495,12 +495,26 @@ class RSSFeed(Feed):
     ##
     # Updates a feed
     def update(self):
+        info = {}
+        self.beginRead()
+        try:
+            if self.updating:
+                return
+            else:
+                self.updating = True
+        finally:
+            self.endRead()
         if not self.initialHTML is None:
             html = self.initialHTML
             self.initialHTML = None
         else:
             info = grabURL(self.url,etag=self.etag,modified=self.modified)
             if info is None:
+                self.beginRead()
+                try:
+                    self.updating = False
+                finally:
+                    self.endRead()
                 return None
             
             html = info['file-handle'].read()
@@ -508,11 +522,12 @@ class RSSFeed(Feed):
             if info.has_key('charset'):
                 html = fixXMLHeader(html,info['charset'])
             if info['status'] == 304:
+                self.beginRead()
+                try:
+                    self.updating = False
+                finally:
+                    self.endRead()
                 return
-            if info.has_key('etag'):
-                self.etag = info['etag']
-            if info.has_key('last-modified'):
-                self.modified = info['last-modified']
             self.url = info['updated-url']
         d = feedparser.parse(html)
         self.parsed = d
@@ -546,7 +561,12 @@ class RSSFeed(Feed):
                 self.updateFreq = min(15*60,self.parsed["feed"]["ttl"]*60)
             except KeyError:
                 self.updateFreq = 60*60
+            self.updating = False
         finally:
+            if info.has_key('etag'):
+                self.etag = info['etag']
+            if info.has_key('last-modified'):
+                self.modified = info['last-modified']
             self.endRead()
 	    self.beginChange()
 	    self.endChange()
@@ -555,10 +575,8 @@ class RSSFeed(Feed):
         if (len(entry['enclosures'])>0 and
             entry.has_key('description') and 
             not entry['enclosures'][0].has_key('thumbnail')):
-                print "I could scrape "+entry['title']
                 desc = RSSFeed.firstImageRE.search(unescape(entry['description']))
                 if not desc is None:
-                    print "adding scraped thumb at %s" % desc.expand("\\1")
                     entry['enclosures'][0]['thumbnail'] = FeedParserDict({'url': desc.expand("\\1")})
         return entry
 
@@ -590,6 +608,7 @@ class RSSFeed(Feed):
     def __setstate__(self,state):
         (version, data) = state
         assert(version == 0)
+        data['updating'] = False
 	self.__dict__ = data
 	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
 	#FIXME: the update dies if all of the items aren't restored, so we 
@@ -647,11 +666,8 @@ class Collection(Feed):
 
 ##
 # A feed based on un unformatted HTML or pre-enclosure RSS
-#
-# FIXME: Don't save any HTML, but save etag and last modified and
-# don't re-download things we've already looked at
 class ScraperFeed(Feed):
-    maxThreads = 2
+    maxThreads = 5
 
     def __init__(self,url,title = None, visible = True, initialHTML = None,etag=None,modified = None,charset = None):
 	Feed.__init__(self,url,title,visible)
@@ -662,6 +678,7 @@ class ScraperFeed(Feed):
 	self.scheduler = ScheduleEvent(0, self.update,False)
         self.linkHistory = {}
         self.linkHistory[url] = {}
+        self.tempHistory = {}
         if not etag is None:
             self.linkHistory[url]['etag'] = etag
         if not modified is None:
@@ -676,10 +693,22 @@ class ScraperFeed(Feed):
             return info['content-type']
 
     ##
+    # This puts all of the caching information in tempHistory into the
+    # linkHistory. This should be called at the end of an updated so that
+    # the next time we update we don't unnecessarily follow old links
+    def saveCacheHistory(self):
+        self.beginRead()
+        try:
+            for url in self.tempHistory.keys():
+                self.linkHistory[url] = self.tempHistory[url]
+            self.tempHistory = {}
+        finally:
+            self.endRead()
+    ##
     # returns a tuple containing the text of the URL, the url (in case
     # of a permanent redirect), a redirected URL (in case of
     # temporary redirect)m and the download status
-    def getHTML(self, url):
+    def getHTML(self, url, useActualHistory = True):
         etag = None
         modified = None
         if self.linkHistory.has_key(url):
@@ -691,12 +720,12 @@ class ScraperFeed(Feed):
         if info is None:
             return (None, url, url,404, None)
         else:
-            if not self.linkHistory.has_key(info['updated-url']):
-                self.linkHistory[info['updated-url']] = {}
+            if not self.tempHistory.has_key(info['updated-url']):
+                self.tempHistory[info['updated-url']] = {}
             if info.has_key('etag'):
-                self.linkHistory[info['updated-url']]['etag'] = info['etag']
+                self.tempHistory[info['updated-url']]['etag'] = info['etag']
             if info.has_key('last-modified'):
-                self.linkHistory[info['updated-url']]['modified'] = info['last-modified']
+                self.tempHistory[info['updated-url']]['modified'] = info['last-modified']
 
             html = info['file-handle'].read()
             #print "Scraper got HTML of length "+str(len(html))
@@ -774,6 +803,14 @@ class ScraperFeed(Feed):
 
     #FIXME: go through and add error handling
     def update(self):
+        self.beginRead()
+        try:
+            if self.updating:
+                return
+            else:
+                self.updating = True
+        finally:
+            self.endRead()
         if not self.initialHTML is None:
             html = self.initialHTML
             self.initialHTML = None
@@ -788,6 +825,12 @@ class ScraperFeed(Feed):
                 links = self.scrapeLinks(html, redirURL, setTitle=True,charset=charset)
                 self.processLinks(links)
             #Download the HTML associated with each page
+        self.beginRead()
+        try:
+            self.saveCacheHistory()
+            self.updating = False
+        finally:
+            self.endRead()
 
     def scrapeLinks(self,html,baseurl,setTitle = False,charset = None):
 	try:
@@ -867,6 +910,8 @@ class ScraperFeed(Feed):
     def __setstate__(self,state):
         (version, data) = state
         assert(version == 0)
+        data['updating'] = False
+        data['tempHistory'] = {}
 	self.__dict__ = data
 	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
 	#FIXME: the update dies if all of the items aren't restored, so we 
@@ -915,6 +960,14 @@ class DirectoryFeed(Feed):
 	return allthefiles
 
     def update(self):
+        self.beginRead()
+        try:
+            if self.updating:
+                return
+            else:
+                self.updating = True
+        finally:
+            self.endRead()
 	knownFiles = []
 	self.beginRead()
 	try:
@@ -941,7 +994,7 @@ class DirectoryFeed(Feed):
 	    for file in existingFiles:
 		if not file in knownFiles and not file in myFiles:
 		    self.items.append(FileItem(self,file))
-		    
+            self.updating = False
 	finally:
 	    self.endRead()
 
@@ -958,6 +1011,7 @@ class DirectoryFeed(Feed):
     def __setstate__(self,state):
         (version, data) = state
         assert(version == 0)
+        data['updating'] = False
 	self.__dict__ = data
 	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
 	#FIXME: the update dies if all of the items aren't restored, so we 
