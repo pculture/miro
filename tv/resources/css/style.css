@@ -553,6 +553,10 @@ Where the videos show up
 	padding-top: 7px 0;
 	}
 
+img.progressbar {
+        margin-left: -30px
+}
+
 .progress a{
     margin: 3px 0 0 9px;
 	}

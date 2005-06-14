@@ -40,7 +40,7 @@
             <div class="file_size"><span t:replace="this getReleaseDate" /> - <span t:replace="this getDuration" /> - <span t:replace="this getTotalSize" /></div>
           </div>
           <div class="download_button dling">
-       	     <div class="progress"><img src="resource:images/statusbar/@@@this threeDigitPercentDone@@@.png"/><br/><span t:replace="this downloadETA" /><a href="action:stopDownload?item=@@@this getID@@@"><img src="resource:images/cancel_button.png" /></a></div>
+       	     <div class="progress"><img class="progressbar" src="resource:images/statusbar/@@@this threeDigitPercentDone@@@.png"/><br/><span t:replace="this downloadETA" /><a href="action:stopDownload?item=@@@this getID@@@"><img src="resource:images/cancel_button.png" /></a></div>
           </div> 
         </li> 
    </ul>

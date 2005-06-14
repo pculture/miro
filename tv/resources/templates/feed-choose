@@ -46,7 +46,7 @@
             <div class="download_button queue"><img src="resource:images/download_button.png" /></div>
 	  </a>
           <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="downloading" class="download_button dling">
-       	     <div class="progress"><img src="resource:images/statusbar/@@@this threeDigitPercentDone@@@.png"/><br/><span t:replace="this downloadETA" /><a href="action:stopDownload?item=@@@this getID@@@"><img src="resource:images/cancel_button.png" /></a></div>
+       	     <div class="progress"><img class="progressbar" src="resource:images/statusbar/@@@this threeDigitPercentDone@@@.png"/><br/><span t:replace="this downloadETA" /><a href="action:stopDownload?item=@@@this getID@@@"><img src="resource:images/cancel_button.png" /></a></div>
           </div> 
         </li> 
         <li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="downloadeditems">
