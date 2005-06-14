@@ -339,6 +339,18 @@ class ModelActionHandler:
 	finally:
 	    db.endUpdate()
 
+    def updateFeed(self, url):
+	db.beginUpdate()
+	db.saveCursor()
+	try:
+	    for obj in db:
+		if isinstance(obj,feed.Feed) and obj.getURL() == url:
+		    obj.update()
+		    break
+	finally:
+	    db.restoreCursor()
+	    db.endUpdate()
+
     def stopDownload(self, item):
 	db.beginUpdate()
 	db.saveCursor()
