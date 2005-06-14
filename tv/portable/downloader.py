@@ -206,9 +206,8 @@ def grabURL(url, type="GET",start = 0, etag=None,modified=None):
     info['status'] = download.status
     try:
         info['charset'] = re.compile("^.*charset\s*=\s*(\S+)/?$").search(info['content-type']).expand("\\1")
-        print "%s has charset %s" %(url,info['charset'])
     except (AttributeError, KeyError):
-        print "%s has no charset" % url
+        pass
     return info
 
 class HTTPAuthPassword(DDBObject):

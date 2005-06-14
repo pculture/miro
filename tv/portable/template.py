@@ -59,7 +59,7 @@ def fillTemplate(file, data, execJS):
 
     #print '-----\n%s\n-----'%x
     stopTime = time.clock()
-    print ("SAX Template for %s took about %s seconds to complete"%(file,str(stopTime-startTime)))
+    #print ("SAX Template for %s took about %s seconds to complete"%(file,str(stopTime-startTime)))
     return tch.output, handle
     #return (document.toxml(), handle)
 
@@ -191,7 +191,6 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                 except KeyError:
                     parameter = ''
                 if ifInvert:
-                    print "evaluating "+functionKey
                     hideFunc = lambda x, y:not evalKey(functionKey, x)(evalKey(ifKey, x), parameter)
                 else:
                     hideFunc = lambda x, y:evalKey(functionKey, x)(evalKey(ifKey, x), parameter)
@@ -321,7 +320,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                 localData['this'] = item.object
                 self.outString.write(''.join([x(localData,item.tid) for x in self.repeatList]))
             endTime = time.clock()
-            print "Repeat took "+str(endTime-startTime)
+            #print "Repeat took "+str(endTime-startTime)
             repeatId = generateId()
             self.outString.write('<span id=%s/>'%sax.saxutils.quoteattr(repeatId))
             repeatView = self.repeatView
