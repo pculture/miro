@@ -74,7 +74,7 @@ xmlheaderRE = re.compile("^\<\?xml\s*(.*?)\s*\?\>(.*)", re.S)
 def fixXMLHeader(data,charset):
     header = xmlheaderRE.match(data)
     if header is None:
-        print "Adding header %s" % charset
+        #print "Adding header %s" % charset
         return '<?xml version="1.0" encoding="%s"?>%s' % (charset,data)
     else:
         xmlDecl = header.expand('\\1')
@@ -82,7 +82,7 @@ def fixXMLHeader(data,charset):
         if xmlDecl.find('encoding'):
             return data
         else:
-            print "Changing header to include charset"
+            #print "Changing header to include charset"
             return '<?xml %s encoding="%s"?>%s' % (xmlDecl,charset,theRest)
 
 
@@ -105,7 +105,7 @@ def fixHTMLHeader(data,charset):
         if headTags.lower().find('content-type') != -1:
             return data
         else:
-            print " adding %s Content-Type to HTML" % charset
+            #print " adding %s Content-Type to HTML" % charset
             return header.expand('\\1<head \\2><meta http-equiv="Content-Type" content="text/html; charset=')+charset+header.expand('">\\3</head>\\4')
 
 # Takes in a unicode string or a byte string and charset and converts
