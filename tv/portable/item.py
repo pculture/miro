@@ -180,13 +180,11 @@ class Item(DDBObject):
                     break
             if (ret is None and self.entry.has_key('thumbnail') and
                 self.entry['thumbnail'].has_key('url')):
-                print "Got item level thumb"
                 ret =  self.entry["thumbnail"]["url"]
 	finally:
 	    self.endRead()
         if ret is None:
             ret = "resource:images/thumb.png"
-        print "REturning thumbnail %s" % ret
         return ret
     ##
     # returns the title of the item
