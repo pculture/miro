@@ -290,6 +290,27 @@ class Item(DDBObject):
 	return size
 
     ##
+    # Returns string containing three digit percent finished
+    # "000" through "100" This is used to choose an image for the progress bar
+    def threeDigitPercentDone(self):
+        ret = "000"
+        self.beginRead()
+        try:
+            size = 0
+            dled = 0
+            for dler in self.downloaders:
+                try:
+                    size += dler.getTotalSize()
+                    dled += dler.getCurrentSize()
+                except:
+                    pass
+            if size > 0:
+                percent = (100*dled)/size
+                ret = '%03d' % percent
+        finally:
+            self.endRead()
+        return ret
+    ##
     # returns string with estimate time until download completes
     def downloadETA(self):
 	secs = 0
