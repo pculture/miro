@@ -13,7 +13,7 @@ from feedparser import FeedParserDict
 # Item data is accessed by using the item as a dict. We use the same
 # structure as the universal feed parser entry structure.
 class Item(DDBObject):
-    def __init__(self, feed, entry):
+    def __init__(self, feed, entry, linkNumber = 0):
         self.feed = feed
         self.seen = False
         self.exirpiration = datetime.now()
@@ -25,6 +25,10 @@ class Item(DDBObject):
         self.entry = entry
 	self.dlFactory = DownloaderFactory(self)
 	self.expired = False
+        # linkNumber is a hack to make sure that scraped items at the
+        # top of a page show up before scraped items at the bottom of
+        # a page. 0 is the topmost, 1 is the next, and so on
+        self.linkNumber = linkNumber
         DDBObject.__init__(self)
 
     ##
@@ -117,6 +121,16 @@ class Item(DDBObject):
         self.beginRead()
         ret = self.autoDownloaded
         self.endRead()
+        return ret
+
+    ##
+    # Returns the linkNumber
+    def getLinkNumber(self):
+        self.beginRead()
+        try:
+            ret = self.linkNumber
+        finally:
+            self.endRead()
         return ret
 
     def download(self,autodl=False):
@@ -574,6 +588,8 @@ class Item(DDBObject):
     def __setstate__(self,state):
         (version, data) = state
         assert(version == 0)
+        if not data.has_key('linkNumber'):
+            data['linkNumber'] = 0
 	self.__dict__ = data
 
 ##
