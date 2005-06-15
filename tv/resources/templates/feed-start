@@ -38,32 +38,13 @@
         <li class="divider" i18n:translate="">New</li>
 <div class="no_new" t:hideIfViewNotEmpty="newitems" i18n:translate="">No new videos.  You can see what's available on this channel by clicking on the 'Choose' tab above.</div>        
 <li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="newitems">
-          <div class="thumbnail_placeholder"><img width="80" height="60" class="thumb" src="***this getThumbnail***" /></div>
-          <div class="desc" >
-            <div class="video_title" t:replace="this getTitle" />
-            <div class="short_description" t:replaceMarkup="this getDescription"></div> 
-            <div class="file_size"><span t:replace="this getReleaseDate" /> - <span t:replace="this getDuration" /> - <span t:replace="this getTotalSize" /></div>
-          </div>
-          <div class="play_box">
-          <a href="action:playFile?filename=@@@this getFilename@@@" class="play_item"><span/></a>
-          <a href="OOOHHHH_NOOOOO">keep this</a> | <a href="WHOOOAAAA">delete it</a>
-          </div> 
+        <t:includeTemplate filename="download-item" />
         </li> 
         <li class="divider" i18n:translate="">Saved in My Library</li> 
         <li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="mylibrary">
-          <div class="thumbnail_placeholder"><img width="80" height="60" class="thumb" src="***this getThumbnail***" /></div>
-          <div class="desc" >
-            <div class="video_title" t:replace="this getTitle" />
-            <div class="short_description" t:replaceMarkup="this getDescription"></div> 
-            <div class="file_size"><span t:replace="this getReleaseDate" /> - <span t:replace="this getDuration" /> - <span t:replace="this getTotalSize" /></div>
-          </div>
-		  
-		  <div class="play_box">
-          <a href="action:playFile?filename=@@@this getFilename@@@" class="play_item"><span/></a>
-          <a href="OOOHHHH_NOOOOO">keep this</a> | <a href="WHOOOAAAA">delete it</a>
-          </div>       
+        <t:includeTemplate filename="download-item" />
           
-          </li> 
+        </li> 
    </ul>
   </div>
   </div> 

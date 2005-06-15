@@ -36,31 +36,10 @@
     <ul> 
         <div class="no_new" t:hideIfViewNotEmpty="pendingitems" i18n:translate="">There are no videos available on this channel.  This could mean that you have the wrong address for the channel or that the publisher of the channel is having problems.</div>    
         <li t:contextMenu="action:startDownload?item=@@@this getID@@@|Download" t:repeatForView="pendingitems">
-          <div class="thumbnail_placeholder"><img width="80" height="60" class="thumb" src="***this getThumbnail***" /></div>
-          <div class="desc" >
-            <div class="video_title" t:replace="this getTitle" />
-            <div class="short_description" t:replaceMarkup="this getDescription"></div> 
-            <div class="file_size"><span t:replace="this getReleaseDate" /> - <span t:replace="this getDuration" /> - <span t:replace="this getTotalSize" /></div>
-          </div>
-	  <a t:hideIfKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="downloading" href="action:startDownload?item=@@@this getID@@@">
-            <div class="download_button queue"><img src="resource:images/download_button.png" /></div>
-	  </a>
-          <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="downloading" class="download_button dling">
-       	     <div class="progress"><img class="progressbar" src="resource:images/statusbar/@@@this threeDigitPercentDone@@@.png"/><br/><span t:replace="this downloadETA" /><a href="action:stopDownload?item=@@@this getID@@@"><img src="resource:images/cancel_button.png" /></a></div>
-          </div> 
+        <t:includeTemplate filename="download-item" />
         </li> 
         <li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="downloadeditems">
-          <div class="thumbnail_placeholder"><img width="80" height="60" class="thumb" src="***this getThumbnail***" /></div>
-          <div class="desc" >
-            <div class="video_title" t:replace="this getTitle" />
-            <div class="short_description" t:replaceMarkup="this getDescription"></div> 
-            <div class="file_size"><span t:replace="this getReleaseDate" /> - <span t:replace="this getDuration" /> - <span t:replace="this getTotalSize" /></div>
-          </div>
-          
-          <div class="play_box">
-          <a href="action:playFile?filename=@@@this getFilename@@@" class="play_item"><span/></a>
-          <a href="OOOHHHH_NOOOOO">keep this</a> | <a href="WHOOOAAAA">delete it</a>
-          </div>
+        <t:includeTemplate filename="download-item" />
         </li> 
    </ul>
   </div>
