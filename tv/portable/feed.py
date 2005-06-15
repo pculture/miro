@@ -407,7 +407,6 @@ class Feed(DDBObject):
     ##
     # Removes a feed from the database
     def remove(self):
-        print "Removing feed %s" % self.url
         self.beginRead()
         try:
             items = []
@@ -667,6 +666,7 @@ class Collection(Feed):
 ##
 # A feed based on un unformatted HTML or pre-enclosure RSS
 class ScraperFeed(Feed):
+    #FIXME: change this to a higher number once we optimize shit a bit
     maxThreads = 2
 
     def __init__(self,url,title = None, visible = True, initialHTML = None,etag=None,modified = None,charset = None):
@@ -736,7 +736,7 @@ class ScraperFeed(Feed):
             else:
                 return (html, info['updated-url'],info['redirected-url'],info['status'],None)
 
-    def addVideoItem(self,link,dict):
+    def addVideoItem(self,link,dict,linkNumber):
 	link = link.strip()
         if dict.has_key('title'):
             title = dict['title']
@@ -746,29 +746,33 @@ class ScraperFeed(Feed):
 	    if item.getURL() == link:
 		return
 	if dict.has_key('thumbnail') > 0:
-	    i=Item(self, FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link,'thumbnail':FeedParserDict({'url':dict['thumbnail']})})]}))
+	    i=Item(self, FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link,'thumbnail':FeedParserDict({'url':dict['thumbnail']})})]}),linkNumber = linkNumber)
 	else:
-	    i=Item(self, FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link})]}))
+	    i=Item(self, FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link})]}),linkNumber = linkNumber)
 	self.items.append(i)
 	self.beginChange()
 	self.endChange()
 
-    def makeProcessLinkFunc(self,subLinks,depth):
-        return lambda: self.processLinksThenFreeSem(subLinks,depth)
+    def makeProcessLinkFunc(self,subLinks,depth,linkNumber):
+        return lambda: self.processLinksThenFreeSem(subLinks,depth,linkNumber)
 
-    def processLinksThenFreeSem(self,subLinks,depth):
+    def processLinksThenFreeSem(self,subLinks,depth,linkNumber):
         try:
-            self.processLinks(subLinks, depth)
+            self.processLinks(subLinks, depth,linkNumber)
         finally:
             #print "Releasing semaphore"
             self.semaphore.release()
 
     #FIXME: compound names for titles at each depth??
-    def processLinks(self,links, depth = 0):
+    def processLinks(self,links, depth = 0,linkNumber = 0):
         maxDepth = 2
+        urls = links[0]
+        links = links[1]
         if depth<maxDepth:
-            for link in links.keys():
-                print "Processing ("+link+")"
+            for link in urls:
+                if depth == 0:
+                    linkNumber += 1
+                print "Processing %s (%d)" % (link,linkNumber)
                 #FIXME keep the connection open
                 mimetype = self.getMimeType(link)
                 #print " mimetype is "+mimetype
@@ -789,17 +793,17 @@ class ScraperFeed(Feed):
                             if depth == 0:
                                 self.semaphore.acquire()
                                 #print "Acquiring semaphore"
-                                thread = Thread(target = self.makeProcessLinkFunc(subLinks,depth+1))
+                                thread = Thread(target = self.makeProcessLinkFunc(subLinks,depth+1,linkNumber))
                                 thread.setDaemon(False)
                                 thread.start()
                             else:
-                                self.processLinks(subLinks,depth+1)
+                                self.processLinks(subLinks,depth+1,linkNumber)
                         else:
                             pass
                             #print link+" seems to be bogus..."
                     #This is a video
                     elif mimetype.startswith('video/'):
-                        self.addVideoItem(link, links[link])
+                        self.addVideoItem(link, links[link],linkNumber)
 
     #FIXME: go through and add error handling
     def update(self):
@@ -866,10 +870,10 @@ class ScraperFeed(Feed):
                     self.title = handler.title
                 finally:
                     self.endChange()
-            return linkDict
+            return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')], linkDict)
 	except (xml.sax.SAXException, IOError):
-	    linkDict = self.scrapeHTMLLinks(html,baseurl,setTitle=setTitle, charset=charset)
-            return linkDict
+	    (links, linkDict) = self.scrapeHTMLLinks(html,baseurl,setTitle=setTitle, charset=charset)
+            return (links, linkDict)
 
     ##
     # Given a string containing an HTML file, return a dictionary of
@@ -894,7 +898,7 @@ class ScraperFeed(Feed):
                     linkDict[toUTF8Bytes(link[0])]['title'] = toUTF8Bytes(link[1],charset).strip()
                 if not link[2] is None:
                     linkDict[toUTF8Bytes(link[0])]['thumbnail'] = toUTF8Bytes(link[2],charset)
-	return linkDict
+	return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')],linkDict)
 	
     ##
     # Called by pickle during serialization
