@@ -793,6 +793,10 @@ def itemSort(x,y):
 	return -1
     elif x.getReleaseDate() > y.getReleaseDate():
 	return 1
+    elif x.getLinkNumber() < y.getLinkNumber():
+	return -1
+    elif x.getLinkNumber() > y.getLinkNumber():
+	return 1
     elif x.getID() < y.getID():
 	return -1
     elif x.getID() > y.getID():
