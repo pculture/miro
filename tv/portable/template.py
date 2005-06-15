@@ -85,8 +85,9 @@ class TemplateError(Exception):
 ##
 # SAX version of templating code
 class TemplateContentHandler(sax.handler.ContentHandler):
-    attrPattern = re.compile("^(.*)@@@(.*?)@@@(.*)$");
-    rawAttrPattern = re.compile("^(.*)\*\*\*(.*?)\*\*\*(.*)$");
+    attrPattern = re.compile("^(.*)@@@(.*?)@@@(.*)$")
+    rawAttrPattern = re.compile("^(.*)\*\*\*(.*?)\*\*\*(.*)$")
+    HTMLPattern = re.compile("^.*<body.*?>(.*)</body\s*>", re.S)
     def __init__(self, data, handle, debug = False):
         self.data = data
         self.handle = handle
@@ -97,6 +98,11 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             return value
         else:
             return ''
+
+    def fillTemplate(self,name,data):
+        (html,handle) = fillTemplate(name,data,lambda: None)
+        html = self.HTMLPattern.match(html).group(1)
+        return html
 
     # Returns a quoted, filled version of attribute text
     def quoteAndFillAttr(self,value,data):
@@ -197,32 +203,38 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                 hide = True
             else:
                 hide = False
-                
-            self.repeatList.append(lambda x,y:'<')
-            self.repeatList.append(lambda x,y:name)
-            for key in attrs.keys():
-                if not (key in ['t:replace','t:replaceMarkup','t:hideIfKey',
+
+            if name == 't:includeTemplate':
+                if hide: 
+                    self.repeatList.append(lambda x,y: self.returnIf(hideFunc(x,y),self.fillTemplate(attrs['filename'],x)))
+                else:
+                    self.repeatList.append(lambda x,y: self.fillTemplate(attrs['filename'],x))
+            else:
+                self.repeatList.append(lambda x,y:'<')
+                self.repeatList.append(lambda x,y:name)
+                for key in attrs.keys():
+                    if not (key in ['t:replace','t:replaceMarkup','t:hideIfKey',
                                't:hideIfNotKey','t:hideFunctionKey',
                                't:hideParameter','style']):
-                    self.repeatList.append(self.makeReplaceFunc(key,attrs[key]))
-            if hide:
-                self.repeatList.append(lambda x, y:self.returnIf(hideFunc(x,y),' style="display:none"'))
+                        self.repeatList.append(self.makeReplaceFunc(key,attrs[key]))
+                if hide:
+                    self.repeatList.append(lambda x, y:self.returnIf(hideFunc(x,y),' style="display:none"'))
 
-            self.repeatList.append(lambda x,y: '>')
-            try:
-                replace = attrs['t:replace']
-                self.repeatList.append(lambda x,y: sax.saxutils.escape(str(evalKey(replace,x))))
-                self.inReplace = True
-                self.replaceDepth = self.depth
-            except KeyError:
-                pass
-            try:
-                replace = attrs['t:replaceMarkup']
-                self.repeatList.append(lambda x,y: str(evalKey(replace,x)))
-                self.inReplace = True
-                self.replaceDepth = self.depth
-            except KeyError:
-                pass
+                self.repeatList.append(lambda x,y: '>')
+                try:
+                    replace = attrs['t:replace']
+                    self.repeatList.append(lambda x,y: sax.saxutils.escape(str(evalKey(replace,x))))
+                    self.inReplace = True
+                    self.replaceDepth = self.depth
+                except KeyError:
+                    pass
+                try:
+                    replace = attrs['t:replaceMarkup']
+                    self.repeatList.append(lambda x,y: str(evalKey(replace,x)))
+                    self.inReplace = True
+                    self.replaceDepth = self.depth
+                except KeyError:
+                    pass
         elif 't:hideIfKey' in attrs.keys() or 't:hideIfNotKey' in attrs.keys():
             try:
                 ifKey = attrs['t:hideIfKey']
@@ -248,11 +260,21 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                 self.outString.write('>')
                 
         elif 't:replace' in attrs.keys():
+                self.outString.write('<%s'%name)
+                for key in attrs.keys():
+                    if key != 't:replace':
+                        self.outString.write(' %s=%s'%(key,self.quoteAndFillAttr(attrs[key],self.data)))
+                self.outString.write('>')
                 replace = attrs['t:replace']
                 self.outString.write(sax.saxutils.escape(str(evalKey(replace,self.data))))
                 self.inReplace = True
                 self.replaceDepth = self.depth      
         elif 't:replaceMarkup' in attrs.keys():
+                self.outString.write('<%s'%name)
+                for key in attrs.keys():
+                    if key != 't:replaceMarkup':
+                        self.outString.write(' %s=%s'%(key,self.quoteAndFillAttr(attrs[key],self.data)))
+                self.outString.write('>')
                 replace = attrs['t:replaceMarkup']
                 self.outString.write(str(evalKey(replace,self.data)))
                 self.inReplace = True
@@ -296,6 +318,8 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             html = f.read()
             f.close()
             self.outString.write(html)
+        elif name == 't:includeTemplate':
+            self.outString.write(self.fillTemplate(attrs['filename']),self.data)
         else:
             self.outString.write('<%s'%name)
             for key in attrs.keys():
@@ -303,7 +327,15 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             self.outString.write('>')
 
     def endElement(self,name):
-        if self.inReplace and self.depth == self.replaceDepth:
+        if name == 't:include':
+            pass
+        elif name == 't:filter':
+            pass
+        elif name == 't:sort':
+            pass
+        elif name == 't:includeTemplate':
+            pass
+        elif self.inReplace and self.depth == self.replaceDepth:
             if self.inRepeatView:
                 self.repeatList.append(lambda x,y: '</%s>'%name)
             else:
@@ -338,12 +370,6 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                                  self.filterParam, self.filterInvert,
                                  self.sortKey, self.sortFunc, self.sortInvert,
                                  self.data)
-        elif name == 't:include':
-            pass
-        elif name == 't:filter':
-            pass
-        elif name == 't:sort':
-            pass
         else:
             self.outString.write('</%s>'%name)
         self.depth -= 1
