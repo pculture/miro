@@ -128,6 +128,8 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         self.repeatDepth = 0
         self.replaceDepth = 0
         self.repeatView = None
+        self.hiding = False
+        self.hideDepth = 0
         self.outString = StringIO()
         self.depth = 0
 
@@ -141,7 +143,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
 
     def startElement(self,name, attrs):
         self.depth += 1
-        if self.inReplace:
+        if self.inReplace or self.hiding:
             pass
         elif 't:hideIfViewEmpty' in attrs.keys() or 't:hideIfViewNotEmpty' in attrs.keys():
             nodeId = generateId()
@@ -247,6 +249,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                 parameter = attrs['t:hideParameter']
             except KeyError:
                 parameter = ''
+
             function = evalKey(functionKey, self.data)
             hide = function(evalKey(ifKey, self.data), parameter)
             if ifInvert:
@@ -255,10 +258,13 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             if not hide:
                 self.outString.write('<%s'%name)
                 for key in attrs.keys():
-                    if not (key in ['t:hideIfKey','t:hideIfNotKey','t:hideFunctionKey','t:hideParameter','style']):
+                    if not (key in ['t:hideIfKey','t:hideIfNotKey','t:hideFunctionKey','t:hideParameter']):
                         self.outString.write(' %s=%s'%(key,self.quoteAndFillAttr(attrs[key],self.data)))
                 self.outString.write('>')
-                
+            else:
+                self.hiding = True
+                self.hideDepth = self.depth
+
         elif 't:replace' in attrs.keys():
                 self.outString.write('<%s'%name)
                 for key in attrs.keys():
@@ -335,6 +341,9 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             pass
         elif name == 't:includeTemplate':
             pass
+        elif self.hiding:
+            if self.depth == self.hideDepth:
+                self.hiding = False
         elif self.inReplace and self.depth == self.replaceDepth:
             if self.inRepeatView:
                 self.repeatList.append(lambda x,y: '</%s>'%name)
@@ -375,7 +384,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         self.depth -= 1
 
     def characters(self,data):
-        if self.inReplace:
+        if self.inReplace or self.hiding:
             pass
         elif self.inRepeatView:
             self.repeatList.append(lambda x,y: sax.saxutils.escape(data))
