@@ -15,18 +15,66 @@
     <div class="file_size"><span t:replace="this getReleaseDate" /> - <span t:replace="this getDuration" /> - <span t:replace="this getTotalSize" /></div>
   </div>
 
+  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="autopending" class="pending_download">
+    Pending Automatic Download<br/>
+    <a href="action:startDownload?item=@@@this getID@@@">
+      <div class="download_button queue"><img src="resource:images/download_button.png" /></div>
+    </a>
+  </div>
+
+  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="manualpending" class="pending_download">
+    Pending Manual Download<br/>
+    <span t:replace="this getPendingReason" />
+  </div>
+
   <a t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="stopped" href="action:startDownload?item=@@@this getID@@@">
     <div class="download_button queue"><img src="resource:images/download_button.png" /></div>
   </a>
   
   <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="downloading" class="download_button dling">
-    <div class="progress"><img src="resource:images/statusbar/@@@this threeDigitPercentDone@@@.png"/><br/><span t:replace="this downloadETA" /><a href="action:stopDownload?item=@@@this getID@@@"><img src="resource:images/cancel_button.png" /></a></div>
+    <div class="progress"><img src="resource:images/statusbar/@@@this threeDigitPercentDone@@@.png"/><br/><span t:replace="this downloadETA" /><a href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/cancel_button.png" /></a></div>
   </div> 
+
+  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="failed" class="failed_download">
+    Download Error
+    <span t:replace="this getFailureReason" />
+    <a href="action:startDownload?item=@@@this getID@@@">
+      <div class="download_button queue"><img src="resource:images/download_button.png" /></div>
+    </a>
+  </div>
 
   <div class="play_box" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="finished">
     <a href="action:playFile?filename=@@@this getFilename@@@" class="play_item"><span/></a>
-    <a href="OOOHHHH_NOOOOO">keep this</a> | <a href="WHOOOAAAA">delete it</a>
+    <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> | <a href="action:expireItem?item=@@@this getID@@@">delete</a>
+  </div>
+
+  <div class="play_box" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="uploading">
+    <a href="action:playFile?filename=@@@this getFilename@@@" class="play_item"><span/></a>
+    <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> | <a href="action:expireItem?item=@@@this getID@@@">delete</a>
   </div>
   
+  <div class="play_box" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="watched">
+    Expires in <span t:replace="this getExpirationTime"/><br/>
+    <a href="action:playFile?filename=@@@this getFilename@@@" class="play_item"><span/></a>
+    <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> | <a href="action:expireItem?item=@@@this getID@@@">delete</a>
+  </div>
+
+  <div class="play_box" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="saved">
+    Expires in <span t:replace="this getExpirationTime"/><br/>
+    <a href="action:playFile?filename=@@@this getFilename@@@" class="play_item"><span/></a>
+    <a href="action:expireItem?item=@@@this getID@@@">delete</a>
+  </div>
+  
+  <div class="play_box" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="paused">
+    Downloads Paused
+  </div>
+
+  <div class="play_box" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="expired">
+    Expired
+    <a href="action:startDownload?item=@@@this getID@@@">
+      <div class="download_button queue"><img src="resource:images/download_button.png" /></div>
+    </a>
+  </div>
+
 </body>
 </html>
