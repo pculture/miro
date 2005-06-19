@@ -1,18 +1,18 @@
 from datetime import datetime
-from database import DDBObject
+from database import DDBObject, defaultDatabase
 from downloader import DownloaderFactory
 from copy import copy
 from xhtmltools import unescape,xhtmlify
 from scheduler import ScheduleEvent
 from feedparser import FeedParserDict
+import config
 
 ##
 # An item corresponds to a single entry in a feed. Generally, it has
 # a single url associated with ti
-#
-# Item data is accessed by using the item as a dict. We use the same
-# structure as the universal feed parser entry structure.
 class Item(DDBObject):
+    manualDownloads = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.getState() == "downloading" and not x.getAutoDownloaded())
+
     def __init__(self, feed, entry, linkNumber = 0):
         self.feed = feed
         self.seen = False
@@ -22,9 +22,12 @@ class Item(DDBObject):
         self.autoDownloaded = False
 	self.startingDownload = False
 	self.lastDownloadFailed = False
+        self.pendingManualDL = False
+        self.pendingReason = ""
         self.entry = entry
 	self.dlFactory = DownloaderFactory(self)
 	self.expired = False
+        self.keep = False
         # linkNumber is a hack to make sure that scraped items at the
         # top of a page show up before scraped items at the bottom of
         # a page. 0 is the topmost, 1 is the next, and so on
@@ -70,6 +73,14 @@ class Item(DDBObject):
 	    self.expired = True
 	finally:
 	    self.endRead()	
+        self.beginChange()
+        self.endChange()
+
+    def getKeep(self):
+        self.beginRead()
+        ret = self.keep
+        self.endRead()
+        return ret
 
     ##
     # returns true iff item has been seen
@@ -115,9 +126,16 @@ class Item(DDBObject):
 	self.autoDownloaded = autodl
 	self.endRead()
 
+    def getPendingReason(self):
+        ret = ""
+        self.beginRead()
+        ret = self.pendingReason
+        self.endRead()
+        return ret
+
     ##
     # Returns true iff item was auto downloaded
-    def autoDownloaded(self):
+    def getAutoDownloaded(self):
         self.beginRead()
         ret = self.autoDownloaded
         self.endRead()
@@ -139,12 +157,29 @@ class Item(DDBObject):
     ##
     # Starts downloading the item
     def actualDownload(self,autodl=False):
+        spawn = True
         self.beginRead()
         try:
-	    self.setAutoDownloaded(autodl)
-	    self.lastDownloadFailed = False
-            downloadURLs = map(lambda x:x.getURL(),self.downloaders)
-	    self.startingDownload = True
+            defaultDatabase.recomputeFilters()
+            if ((not autodl) and 
+                self.manualDownloads.len() >= config.get("MaxManualDownloads")):
+                self.pendingManualDL = True
+                self.pendingReason = "Too many manual downloads"
+                spawn = False
+                self.expired = False
+                print "queueing manual dl"
+            else:
+                #Don't spawn two downloaders
+                if self.startingDownload:
+                    spawn = False
+                else:
+                    self.setAutoDownloaded(autodl)
+                    self.expired = False
+                    self.keep = False
+                    self.pendingManualDL = False
+                    self.lastDownloadFailed = False
+                    downloadURLs = map(lambda x:x.getURL(),self.downloaders)
+                    self.startingDownload = True
 	    try:
 		enclosures = self.entry["enclosures"]
 	    except:
@@ -153,6 +188,10 @@ class Item(DDBObject):
             self.endRead()
 	self.beginChange()
 	self.endChange()
+
+        if not spawn:
+            return
+
 	try:
 	    for enclosure in enclosures:
 		try:
@@ -181,6 +220,7 @@ class Item(DDBObject):
             self.endRead()
 	self.beginChange()
 	self.endChange()
+
 
     ##
     # Returns a link to the thumbnail of the video
@@ -237,18 +277,44 @@ class Item(DDBObject):
         self.beginRead()
         try:
 	    self.downloaders = []
+            self.keep = False
+            self.pendingManualDL = False
         finally:
             self.endRead()
 
     ##
     # returns status of the download in plain text
     def getState(self):
+        self.beginRead()
+        self.feed.beginRead()
+        try:
+            state = self.getStateNoAuto()
+            if ((state == "stopped") and 
+                self.feed.isAutoDownloadable() and 
+                (self.feed.getEverything or 
+                 self.getPubDateParsed() >= self.feed.startfrom)):
+                state = "autopending"
+        finally:
+            self.feed.endRead()
+            self.endRead()
+            
+        return state
+    
+
+    ##
+    # returns the state of the download, without checking automatic dl
+    # eligibility
+    def getStateNoAuto(self):
 	self.beginRead()
 	try:
-	    if self.expired:
-		state = "expired"
-	    elif self.startingDownload:
+	    if self.startingDownload:
 		state = "downloading"
+	    elif self.expired:
+		state = "expired"
+            elif self.keep:
+                state = "saved"
+            elif self.pendingManualDL:
+                state = "manualpending"
 	    elif len(self.downloaders) == 0:
 		if self.lastDownloadFailed:
 		    state = "failed"
@@ -262,9 +328,27 @@ class Item(DDBObject):
 			state = newState
 		    if state == "failed":
 			break
+            if (state == "finished" or state=="uploading") and self.seen:
+                state = "watched"
 	finally:
 	    self.endRead()
 	return state
+
+    def getFailureReason(self):
+        ret = ""
+        self.beginRead()
+        try:
+            if self.lastDownloadFailed:
+                ret = "Could not connect to server"
+            else:
+		for dler in self.downloaders:
+		    if dler.getState() == "failed":
+                        ret = dler.getReasonFailed()
+			break
+        finally:
+            self.endRead()
+        return ret
+                
 
     ##
     # returns status of the download in plain text
@@ -581,15 +665,23 @@ class Item(DDBObject):
     # Called by pickle during serialization
     def __getstate__(self):
 	temp = copy(self.__dict__)
-	return (0,temp)
+	return (2,temp)
 
     ##
     # Called by pickle during serialization
     def __setstate__(self,state):
         (version, data) = state
-        assert(version == 0)
-        if not data.has_key('linkNumber'):
-            data['linkNumber'] = 0
+        if version == 0:
+            data['pendingManualDL'] = False
+            if not data.has_key('linkNumber'):
+                data['linkNumber'] = 0
+            version += 1
+        if version == 1:
+            data['keep'] = False
+            data['pendingReason'] = ""
+            version += 1
+        assert(version == 2)
+        data['startingDownload'] = False
 	self.__dict__ = data
 
 ##

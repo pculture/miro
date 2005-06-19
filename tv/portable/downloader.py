@@ -43,6 +43,8 @@ def setDelegate(newDelegate):
 #FIXME: check for free space and failed connection to tracker and fail
 #on those cases
 
+#FIXME: Trigger pending Manual Download in item when if we run out of disk space
+
 class DownloaderError(Exception):
     pass
 
@@ -542,6 +544,7 @@ class Downloader(DDBObject):
         self.currentSize = 0
         self.totalSize = -1
         self.blockTimes = []
+        self.reasonFailed = "No Error"
         self.headers = None
         DDBObject.__init__(self)
         self.thread = Thread(target=self.runDownloader)
@@ -552,6 +555,18 @@ class Downloader(DDBObject):
     # In case multiple downloaders are getting the same file, we can support multiple items
     def addItem(self,item):
         self.itemList.append(item)
+
+    ##
+    # Returns the reason for the failure of this download
+    # This should only be called when the download is in the failed state
+    def getReasonFailed(self):
+        ret = ""
+        self.beginRead()
+        try:
+            ret = self.reasonFailed
+        finally:
+            self.endRead()
+        return ret
 
     ##
     # Finds a filename that's unused and similar the the file we want
@@ -725,6 +740,7 @@ class HTTPDownloader(Downloader):
 	    except:
 		self.beginRead()
 		self.state = "failed"
+                self.reasonFailed = "Lost connection to server"
 		self.endRead()
 		data = ""
         self.updateRateAndETA(len(data))
@@ -763,6 +779,7 @@ class HTTPDownloader(Downloader):
                 self.beginRead()
                 try:
                     self.state = "failed"
+                    self.reasonFailed = "Could not connect to server"
                 finally:
                     self.endRead()
                 return False
@@ -773,6 +790,7 @@ class HTTPDownloader(Downloader):
                 self.beginRead()
                 try:
                     self.state = "failed"
+                    self.reasonFailed = "Could not connect to server"
                 finally:
                     self.endRead()
                 return False
@@ -1025,6 +1043,7 @@ class BTDownloader(Downloader):
 	metainfo = self.metainfo
 	if metainfo == None:
 	    self.state = "failed"
+            self.reasonFailed = "Could not read BitTorrent metadata"
 	else:
 	    self.state = "downloading"
         self.endRead()
@@ -1051,6 +1070,7 @@ class BTDownloader(Downloader):
                 self.beginChange()
                 try:
                     self.state = "failed"
+                    self.reasonFailed = "Could not connect to server"
                 finally:
                     self.endChange()
                 return

@@ -351,13 +351,13 @@ class ModelActionHandler:
 	    db.restoreCursor()
 	    db.endUpdate()
 
-    def stopDownload(self, item):
+    def expireItem(self, item):
 	db.beginUpdate()
 	db.saveCursor()
 	try:
 	    for obj in db:
 		if obj.getID() == int(item):
-		    obj.stopDownload()
+		    obj.expire()
 		    break
 	finally:
 	    db.restoreCursor()

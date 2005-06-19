@@ -73,7 +73,6 @@ def getFeedURLFromWebPage(url):
 # Generates an appropriate feed for a URL
 #
 # @param url The URL of the feed
-# FIXME: avoid downloading feeds twice
 def generateFeed(url):
     thread = Thread(target=lambda: _generateFeed(url))
     thread.setDaemon(False)
@@ -194,7 +193,8 @@ class Feed(DDBObject):
     ##
     # Downloads the next available item taking into account maxNew,
     # fallbehind, and getEverything
-    def downloadNext(self, dontUse = []):
+    def downloadNextAuto(self, dontUse = []):
+        print "Downloading next auto"
 	self.beginRead()
 	try:
 	    next = None
@@ -208,7 +208,7 @@ class Feed(DDBObject):
 
 	    #Find the next item we should get
 	    for item in self.items:
-		if (self.getEverything or item.getPubDateParsed() >= self.startfrom) and item.getState() == "stopped" and not item in dontUse:
+		if (item.getState() == "autopending") and not item in dontUse:
 		    eligibile += 1
 		    if next == None:
 			next = item
@@ -238,6 +238,18 @@ class Feed(DDBObject):
 	else:
 	    return False
 
+    def downloadNextManual(self):
+        next = None
+        for item in self.items:
+            if item.getState() == "manualpending":
+                if next is None:
+                    next = item
+                elif item.getPubDateParsed() < next.getPubDateParsed():
+                    next = item
+        if not next is None:
+            next.download(autodl = False)
+
+
     ##
     # Returns marks expired items as expired
     def expireItems(self):
@@ -248,7 +260,7 @@ class Feed(DDBObject):
 	elif self.expire == "never":
 	    return
 	for item in self.items:
-	    if item.getState() == "finished" and datetime.now() - item.getDownloadedTime() > expireTime:
+	    if (not item.getKeep()) and item.getState() == "finished" and datetime.now() - item.getDownloadedTime() > expireTime:
 		item.expire()
 
     ##
