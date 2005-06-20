@@ -2,6 +2,7 @@ from threading import RLock
 from os.path import expanduser, exists
 from cPickle import dump, load, HIGHEST_PROTOCOL, UnpicklingError
 from shutil import copyfile
+from copy import copy
 import traceback
 
 ##
@@ -259,10 +260,10 @@ class DynamicDatabase:
         self.beginUpdate()
         try:
             g = lambda x,y:f(x[1],y[1])
-            sorter = self.make_sorter(g)
             obsmap = lambda x:x[0]
             valsmap = lambda x:x[1]
-            both = sorter(self.objects)
+            both = copy(self.objects)
+            both.sort(g)
             objs = map(obsmap,both)
             vals = map(valsmap,both)
             new = DynamicDatabase(objs,False,vals)
@@ -564,7 +565,8 @@ class DynamicDatabase:
                 try:
                     #FIXME: Sorting every time is really slow
                     g = lambda x,y:f(x[1],y[1])
-                    temp = self.make_sorter(g)(self.objects)
+                    temp = copy(self.objects)
+                    temp.sort(g)
                     view.beginUpdate()
                     try:
                         view.saveCursor()
@@ -604,36 +606,6 @@ class DynamicDatabase:
             self.restoreCursor()
         finally:
             self.endUpdate()        
-    ##
-    # Returns a function that sorts on cmp
-    #
-    # Adapted from http://www.python.org/tim_one/000236.html
-    #
-    # @param cmp Comparison function should return < 0 if a < b
-    # 0 if a = b and > 0 if a > b
-    def make_sorter(self,cmp):
-        class Sorter:
-            def __init__( self, cmp ):
-                self.Cmp = cmp
-
-            def sort( self, list ):
-                # simple quicksort
-                if len(list) <= 1: return list
-                key = list[0]
-                less, same, greater = [], [], []
-                for thing in list:
-                    outcome = self.Cmp( thing, key )
-                    if outcome < 0:
-                        which = less
-                    elif outcome > 0:
-                        which = greater
-                    else: which = same
-                    which.append( thing )
-                return self.sort(less) + same + self.sort(greater)
-
-        # return a sorting function that sorts a list according to comparator
-        # function `cmp' # cmp(a,b) 
-        return Sorter(cmp).sort 
 
     ##
     # Saves this database to disk
