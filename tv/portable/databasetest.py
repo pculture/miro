@@ -213,7 +213,9 @@ class SortTestCase(unittest.TestCase):
         self.higher = self.x
         self.sorted = self.everything.sort(self.sortFunc)
     def sortFunc(self,x,y):
-        if x == self.higher:
+        if x is y:
+            return 0
+        elif x == self.higher:
             return 1
         else:
             return -1
