@@ -1020,6 +1020,7 @@ class DirectoryFeed(Feed):
 	temp = copy(self.__dict__)
 	temp["scheduler"] = None
         temp['itemlist'] = None
+        temp['RSSFilenames'] = None
 	return (0,temp)
 
     ##
@@ -1030,6 +1031,7 @@ class DirectoryFeed(Feed):
         data['updating'] = False
 	self.__dict__ = data
 	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
+	self.RSSFilenames = defaultDatabase.filter(lambda x:isinstance(x,Item) and isinstance(x.feed,RSSFeed)).map(lambda x:x.getFilenames())
 	#FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
         self.scheduler = ScheduleEvent(5, self.update,False)
