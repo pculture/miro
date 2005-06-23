@@ -693,7 +693,8 @@ class Downloader(DDBObject):
         (version, data) = state
         assert(version == 0)
 	self.__dict__ = data
-        ScheduleEvent(0, lambda :self.runDownloader(retry = True),False)
+        if self.getState() == "downloading":
+            ScheduleEvent(0, lambda :self.runDownloader(retry = True),False)
 
 
 class HTTPDownloader(Downloader):
