@@ -343,6 +343,8 @@ cdef class CDynamicDatabase:
     #
     # @param f function to use as a map
     def map(self, f):
+        assert(not self.rootDB) # Dude! Don't map the entire DB! Are you crazy?
+
         self.beginUpdate()
         try:
             temp = []
@@ -363,6 +365,8 @@ cdef class CDynamicDatabase:
     # returns a View of the data filtered through a sort function
     # @param f comparision function to use for sorting
     def sort(self, f):
+        assert(not self.rootDB) # Dude! Don't sort the entire DB! Are you crazy?
+
         self.beginUpdate()
         try:
             temp = copy(self.objects)
@@ -684,12 +688,151 @@ cdef class CDynamicDatabase:
         finally:
             self.endUpdate()
 
-    
+    # Recomputes a single filter in the database
+    def recomputeFilter(self,filter):
+        # FIXME: This is copy-and-paste from recomputeFilters
+        cdef int count
+        cdef int count2
+        cdef int viewPos
+        cdef int viewSize
+        cdef object view
+        cdef object f
+        cdef object obj
+        cdef object viewObj
+        cdef object myObj
+        cdef object myObjObj
+        cdef object myObjVal
+
+        self.beginUpdate()
+        try:
+            # Go through each one of the filter subviews
+            for count from 0 <= count < PyList_GET_SIZE(self.subFilters):
+
+                obj = <object>PyList_GET_ITEM(self.subFilters,count)
+
+                view = <object>PyList_GET_ITEM(obj,0)
+                if view is filter:
+                    viewSize = PyList_GET_SIZE(view.objects)
+                    
+                    f = <object>PyList_GET_ITEM(obj,1)
+
+                    view.beginUpdate()
+                    try:
+                        self.saveCursor()
+                        self.resetCursor()
+                        view.saveCursor()
+                        view.resetCursor()
+                        viewPos = 0
+                        #Go through all the objects and recompute the filters
+                        for count2 from 0 <= count2 < PyList_GET_SIZE(self.objects):
+                            # Get the next item from the list as both the
+                            # original object and mapped value
+                            myObj = <object>PyList_GET_ITEM(self.objects,count2)
+                            myObjObj = <object>PyTuple_GET_ITEM(myObj,0)
+                            myObjVal = <object>PyTuple_GET_ITEM(myObj,1)
+
+                            # Get the next item in the view
+                            if viewPos < viewSize:
+                                viewObj = <object>PyList_GET_ITEM(view.objects,viewPos)
+                            else:
+                                viewObj = (NoValue, NoValue)
+
+                            if (<object>PyTuple_GET_ITEM(viewObj,0) is 
+                                 myObjObj):
+                                if <object>PyObject_CallObject(f,(myObjVal,)):
+                                    # The object passes the filter and is
+                                    # already in the subView
+                                    viewPos = viewPos + 1
+                                else:
+                                    view.remove(viewPos) #The object
+                                                     #doesn't pass,
+                                                     #but is in the
+                                                     #subView, so we
+                                                     #remove it
+                                    viewSize = viewSize - 1
+                            else:
+                                if <object>PyObject_CallObject(f,(myObjVal,)): 
+                                    # The object is not in the subview,
+                                    # but should be
+                                    view.cursor = viewPos
+                                    view.addBeforeCursor(myObjObj,myObjVal)
+                                    viewPos = viewPos + 1
+                                    viewSize = viewSize + 1
+                        self.restoreCursor()
+                        view.restoreCursor()
+                        view.recomputeFilters()
+                    finally:
+                        view.endUpdate()
+        finally:
+            self.endUpdate()
+
+    #Recompute a single subSort
+    def recomputeSort(self,sort):
+        # FIXME: This is copy-and-paste from recomputeFilters
+        cdef int count
+        cdef int count2
+        cdef int viewSize
+        cdef int madeSwap
+        cdef object view
+        cdef object f
+        cdef object obj
+        cdef object viewObj
+        cdef object myObj
+        cdef object myObjObj
+        cdef object myObjVal
+        cdef object myObj2
+        cdef object myObj2Obj
+        cdef object myObj2Val
+
+        self.beginUpdate()
+        try:
+
+            for count from 0 <= count < PyList_GET_SIZE(self.subSorts):
+                obj = <object>PyList_GET_ITEM(self.subSorts,count)
+
+                view = <object>PyList_GET_ITEM(obj,0)
+                if view is sort:
+                    viewSize = PyList_GET_SIZE(view.objects)
+
+                    f = <object>PyList_GET_ITEM(obj,1)
+
+                    view.beginUpdate()
+                    try:
+                            view.saveCursor()
+
+                            # Bubble sort -- used based on the assumption
+                            # that most of the time nothing has changed
+                            madeSwap = True
+                            while madeSwap:
+                                madeSwap = False
+                                for count2 from 0 <= count2 < PyList_GET_SIZE(view.objects)-1:
+                                    myObj = <object>PyList_GET_ITEM(view.objects,count2)
+                                    myObjVal = <object>PyTuple_GET_ITEM(myObj,1)
+
+                                    myObj2 = <object>PyList_GET_ITEM(view.objects,count2+1)
+                                    myObj2Val = <object>PyTuple_GET_ITEM(myObj2,1)
+
+                                    if <object>PyObject_CallObject(f,(myObjVal,myObj2Val)) > 0:
+                                        #FIXME: add an optimized swap
+                                        #function, rather than adding and
+                                        #removing
+                                        madeSwap = True
+                                        myObjObj = <object>PyTuple_GET_ITEM(myObj,0)
+                                        view.cursor = count2+1
+                                        view.remove(count2)
+                                        view.addAfterCursor(myObjObj,myObjVal)
+                            view.restoreCursor()
+                            view.recomputeFilters()
+                    finally:
+                        view.endUpdate()
+        finally:
+            self.endUpdate()
+
     ##
     # This is called when the criteria for one of the filters changes. It
     # calls the appropriate add callbacks to deal with objects that have
     # appeared and disappeared.
-    def recomputeFilters(self, top = True):
+    def recomputeFilters(self):
         cdef int count
         cdef int count2
         cdef int viewPos
@@ -763,7 +906,7 @@ cdef class CDynamicDatabase:
                                 viewSize = viewSize + 1
                     self.restoreCursor()
                     view.restoreCursor()
-                    view.recomputeFilters(False)
+                    view.recomputeFilters()
                 finally:
                     view.endUpdate()
 
@@ -785,8 +928,6 @@ cdef class CDynamicDatabase:
 
                 view.beginUpdate()
                 try:
-                    view.beginUpdate()
-                    try:
                         view.saveCursor()
 
                         # Bubble sort -- used based on the assumption
@@ -811,9 +952,7 @@ cdef class CDynamicDatabase:
                                     view.remove(count2)
                                     view.addAfterCursor(myObjObj,myObjVal)
                         view.restoreCursor()
-                        view.recomputeFilters(False)
-                    finally:
-                        view.endUpdate()
+                        view.recomputeFilters()
                 finally:
                     view.endUpdate()
 
@@ -821,7 +960,7 @@ cdef class CDynamicDatabase:
             for count from 0 <= count < PyList_GET_SIZE(self.subMaps):
                 view = <object>PyList_GET_ITEM(self.subMaps,count)
                 view = <object>PyList_GET_ITEM(view,0)
-                view.recomputeFilters(False)
+                view.recomputeFilters()
         finally:
             self.endUpdate()
         #self.checkObjLocs()
@@ -934,6 +1073,36 @@ cdef class CDynamicDatabase:
         finally:
             self.endUpdate()
         return last
+
+    ##
+    # Removes a filter that's currently not being used from the database
+    # This should be called when a filter is no longer in use
+    def removeView(self,oldView):
+        cdef int count
+        cdef object view
+
+        self.beginUpdate()
+        try:
+            for count from 0 <= count < PyList_GET_SIZE(self.subFilters):
+                view = <object>PyList_GET_ITEM(self.subFilters,count)
+                view = <object>PyList_GET_ITEM(view, 0)
+                if view is oldView:
+                    PyList_SetSlice(self.subFilters, count, count+1, [])
+                    return
+            for count from 0 <= count < PyList_GET_SIZE(self.subSorts):
+                view = <object>PyList_GET_ITEM(self.subSorts,count)
+                view = <object>PyList_GET_ITEM(view, 0)
+                if view is oldView:
+                    PyList_SetSlice(self.subSorts, count, count+1, [])
+                    return
+            for count from 0 <= count < PyList_GET_SIZE(self.subMaps):
+                view = <object>PyList_GET_ITEM(self.subMaps,count)
+                view = <object>PyList_GET_ITEM(view, 0)
+                if view is oldView:
+                    PyList_SetSlice(self.subMaps, count, count+1, [])
+                    return
+        finally:
+            self.endUpdate()
 
 ##
 # Global default database
