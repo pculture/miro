@@ -194,7 +194,6 @@ class Feed(DDBObject):
     # Downloads the next available item taking into account maxNew,
     # fallbehind, and getEverything
     def downloadNextAuto(self, dontUse = []):
-        print "Downloading next auto"
 	self.beginRead()
 	try:
 	    next = None
@@ -429,6 +428,7 @@ class Feed(DDBObject):
                 item.remove()
         finally:
             self.endRead()
+        defaultDatabase.removeView(self.itemlist)
         del self.itemlist
         DDBObject.remove(self)
 
@@ -569,7 +569,7 @@ class RSSFeed(Feed):
                 if new:
                     self.items.append(Item(self,entry))
             try:
-                self.updateFreq = min(15*60,self.parsed["feed"]["ttl"]*60)
+                self.updateFreq = max(15*60,self.parsed["feed"]["ttl"]*60)
             except KeyError:
                 self.updateFreq = 60*60
             self.updating = False
@@ -683,6 +683,7 @@ class ScraperFeed(Feed):
 
     def __init__(self,url,title = None, visible = True, initialHTML = None,etag=None,modified = None,charset = None):
 	Feed.__init__(self,url,title,visible)
+        self.updateFreq = 60*60*24
         self.initialHTML = initialHTML
         self.initialCharset = charset
 	self.scheduler = ScheduleEvent(self.updateFreq, self.update)
@@ -930,6 +931,7 @@ class ScraperFeed(Feed):
         data['tempHistory'] = {}
 	self.__dict__ = data
 	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
+
 	#FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
         ScheduleEvent(5, self.update,False)
@@ -1214,5 +1216,4 @@ class HTMLFeedURLParser(HTMLParser):
                                          'application/atom+xml',
                                          'text/xml',
                                          'application/xml']):
-            print "Got Link %s" % attrdict['href']
             self.link = urljoin(self.baseurl,attrdict['href'])

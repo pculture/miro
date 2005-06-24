@@ -5,6 +5,7 @@ from copy import copy
 from xhtmltools import unescape,xhtmlify
 from scheduler import ScheduleEvent
 from feedparser import FeedParserDict
+from threading import Thread
 import config
 
 ##
@@ -16,7 +17,6 @@ class Item(DDBObject):
     def __init__(self, feed, entry, linkNumber = 0):
         self.feed = feed
         self.seen = False
-        self.exirpiration = datetime.now()
         self.downloaders = []
         self.vidinfo = None
         self.autoDownloaded = False
@@ -76,11 +76,45 @@ class Item(DDBObject):
         self.beginChange()
         self.endChange()
 
+    ##
+    # Returns string with days or hours until this gets deleted
+    def getExpirationTime(self):
+        ret = "???"
+        self.beginRead()
+        self.feed.beginRead()
+        try:
+            if self.feed.expire == "never":
+                ret = "never"
+            else:
+                if self.feed.expire == "feed":
+                    expireTime = self.feed.expireTime
+                elif self.feed.expire == "system":
+                    expireTime = config.get('DefaultTimeUntilExpiration')
+                
+                    exp = expireTime - (datetime.now() - self.getDownloadedTime())
+                    if exp.days > 0:
+                        ret = "%d days" % exp.days
+                    elif exp.hours > 0:
+                        ret = "%d hours" % exp.hours
+                    else:
+                        ret = "%d minutes" % exp.minutes
+        finally:
+            self.feed.endRead()
+            self.endRead()
+        return ret
+
     def getKeep(self):
         self.beginRead()
         ret = self.keep
         self.endRead()
         return ret
+
+    def setKeep(self,val):
+        self.beginRead()
+        self.keep = val
+        self.endRead()
+        self.beginChange()
+        self.endChange()
 
     ##
     # returns true iff item has been seen
@@ -152,7 +186,9 @@ class Item(DDBObject):
         return ret
 
     def download(self,autodl=False):
-	ScheduleEvent(0,lambda:self.actualDownload(autodl),False)
+        thread = Thread(target = lambda:self.actualDownload(autodl))
+	thread.setDaemon(False)
+	thread.start()
 
     ##
     # Starts downloading the item
@@ -160,14 +196,16 @@ class Item(DDBObject):
         spawn = True
         self.beginRead()
         try:
-            defaultDatabase.recomputeFilters()
+            # FIXME: For locking reasons, downloaders don't always
+            #        call beginChange() and endChange(), so we have to
+            #        recompute this filter
+            defaultDatabase.recomputeFilter(self.manualDownloads)
             if ((not autodl) and 
                 self.manualDownloads.len() >= config.get("MaxManualDownloads")):
                 self.pendingManualDL = True
                 self.pendingReason = "Too many manual downloads"
                 spawn = False
                 self.expired = False
-                print "queueing manual dl"
             else:
                 #Don't spawn two downloaders
                 if self.startingDownload:
@@ -307,10 +345,10 @@ class Item(DDBObject):
     def getStateNoAuto(self):
 	self.beginRead()
 	try:
-	    if self.startingDownload:
-		state = "downloading"
-	    elif self.expired:
+            if self.expired:
 		state = "expired"
+	    elif self.startingDownload:
+		state = "downloading"
             elif self.keep:
                 state = "saved"
             elif self.pendingManualDL:

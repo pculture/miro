@@ -851,7 +851,13 @@ class HTTPDownloader(Downloader):
                 remove(self.filename)
         finally:
             self.endRead()
-            defaultDatabase.recomputeFilters()
+            #FIXME: Really, this change should trigger a change in the item,
+            #so we don't have to manually change each item
+            self.beginChange()
+            self.endChange()
+            for item in self.itemList:
+                item.beginChange()
+                item.endChange()
  
 
     ##
@@ -930,8 +936,14 @@ class BTDisplay:
 
 	finally:
 	    self.dler.endRead()
-            defaultDatabase.recomputeFilters()
-	    
+            #FIXME: Really, this change should trigger a change in the item,
+            #so we don't have to manually change each item
+            self.beginChange()
+            self.endChange()
+            for item in self.itemList:
+                item.beginChange()
+                item.endChange()
+
     def error(self, errormsg):
 	print errormsg
             

@@ -213,6 +213,8 @@ class Controller(frontend.Application):
                 # might not be there... I'm not sure why...
                 if hasattr(self,'selectDisplay'):
                     self.selectDisplay(NullDisplay())
+            if not oldSelected is None:
+                oldSelected.onDeselect()
 
     def setTabListActive(self, active):
 	"""If active is true, show the tab list normally. If active is
@@ -295,6 +297,9 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
 	return False
 
+    def onDeselect(self):
+        self.templateHandle.unlinkTemplate()
+
 ###############################################################################
 #### Handlers for actions generated from templates, the OS, etc            ####
 ###############################################################################
@@ -358,6 +363,18 @@ class ModelActionHandler:
 	    for obj in db:
 		if obj.getID() == int(item):
 		    obj.expire()
+		    break
+	finally:
+	    db.restoreCursor()
+	    db.endUpdate()
+
+    def keepItem(self,item):
+	db.beginUpdate()
+	db.saveCursor()
+	try:
+	    for obj in db:
+		if obj.getID() == int(item):
+		    obj.setKeep(True)
 		    break
 	finally:
 	    db.restoreCursor()
@@ -548,6 +565,7 @@ class TemplateActionHandler:
 	# template anymore
 	self.controller.setTabListActive(False)
 
+        self.templateHandle.unlinkTemplate()
 	# Switch to new template. It get the same variable
 	# dictionary as we have.
 	# NEEDS: currently we hardcode the display index. This means
@@ -557,16 +575,15 @@ class TemplateActionHandler:
 	self.controller.frame.selectDisplay(TemplateDisplay(name, self.display.templateData, self.controller, frameHint=self.controller.frame, indexHint=1), 1)
 
     def setViewFilter(self, viewName, fieldKey, functionKey, parameter, invert):
-	invert = stringToBoolean(invert)
-	namedView = self.templateHandle.findNamedView(viewName)
-	namedView.setFilter(fieldKey, functionKey, parameter, invert)
-	db.recomputeFilters()
+        if viewName != "undefined":
+            invert = stringToBoolean(invert)
+            namedView = self.templateHandle.findNamedView(viewName)
+            namedView.setFilter(fieldKey, functionKey, parameter, invert)
 
     def setViewSort(self, viewName, fieldKey, functionKey, reverse):
 	reverse = stringToBoolean(reverse)
 	namedView = self.templateHandle.findNamedView(viewName)
 	namedView.setSort(fieldKey, functionKey, reverse)
-	db.recomputeFilters()
 	
     def playView(self, viewName, firstItemId):
 	# Find the database view that we're supposed to be
@@ -622,14 +639,18 @@ class Tab:
 	self.contentsData = contentsData
 	self.sortKey = sortKey
 	self.controller = controller
+        self.display = None
 	self.id = "tab%d" % Tab.idCounter
 	Tab.idCounter += 1
 	self.obj = obj
 
     def start(self, frame, templateNameHint):
 	self.controller.setTabListActive(True) 
+
+        self.display = TemplateDisplay(templateNameHint or self.contentsTemplate, self.contentsData, self.controller, frameHint=frame, indexHint=1)
+
 	# '1' means 'right hand side of the window, in the display area.'
-	frame.selectDisplay(TemplateDisplay(templateNameHint or self.contentsTemplate, self.contentsData, self.controller, frameHint=frame, indexHint=1), 1)
+	frame.selectDisplay(self.display, 1)
     
     def markup(self):
 	"""Get HTML giving the visual appearance of the tab. 'state' is
@@ -658,6 +679,9 @@ class Tab:
 	    return self.obj.getURL()
 	else:
 	    return None	
+
+    def onDeselect(self):
+        self.display.onDeselect()
 
 # Database object representing a static (non-feed-associated) tab.
 class StaticTab(database.DDBObject):

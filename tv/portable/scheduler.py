@@ -6,17 +6,17 @@ def now():
     return int(time())
 
 maxThreads = 30
+semaphore = Semaphore(maxThreads)
 
 ##
 # Database of background tasks to be periodically run
 class Scheduler(DynamicDatabase):
     def __init__(self):
         DynamicDatabase.__init__(self)
-        self.semaphore = Semaphore(maxThreads)
         self.isShutdown = False
-        self.thread = Thread(target = self.executeEvents)
-	self.thread.setDaemon(False)
-	self.thread.start()
+        thread = Thread(target = self.executeEvents)
+	thread.setDaemon(False)
+	thread.start()
 
     ##
     # Call this to shutdown the scheduler
@@ -75,11 +75,11 @@ class ScheduleEvent(DDBObject):
     ##
     # Makes an event happen
     def execute(self):
-        ScheduleEvent.scheduler.semaphore.acquire()
+        semaphore.acquire()
         try:
             self.event()
         finally:
-            ScheduleEvent.scheduler.semaphore.release()
+            semaphore.release()
 
     def __getstate(self):
         assert(0) #This should never be serialized
