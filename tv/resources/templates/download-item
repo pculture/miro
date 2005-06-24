@@ -60,7 +60,6 @@
   </div>
 
   <div class="play_box" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="saved">
-    Expires in <span t:replace="this getExpirationTime"/><br/>
     <a href="action:playFile?filename=@@@this getFilename@@@" class="play_item"><span/></a>
     <a href="action:expireItem?item=@@@this getID@@@">delete</a>
   </div>
