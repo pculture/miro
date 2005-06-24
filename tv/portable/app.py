@@ -21,6 +21,9 @@ import scheduler
 import threading
 import autoupdate
 
+# Something needs to import this outside of Pyrex. Might as well be app
+import templatehelper
+
 db = database.defaultDatabase
 
 ###############################################################################
