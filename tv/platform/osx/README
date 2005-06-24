@@ -2,6 +2,20 @@ On the development machine, you will need to have installed PyObjC,
 available here:
 http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.2-python2.3-macosx10.3.dmg?download
 
+You'll also need Pyrex, which is available here:
+http://www.cosc.canterbury.ac.nz/~greg/python/Pyrex/
+http://www.cosc.canterbury.ac.nz/~greg/python/Pyrex/Pyrex-0.9.3.tar.gz
+
+There's a bug in Pyrex distutils version 0.9.3, so you'll have to
+change line 35 in build_ext.py from
+
+    def swig_sources (self,sources):
+to 
+    def swig_sources (self, sources, extension):
+
+before you can start building. I already sent an email to Greg about
+it, so hopefully, it'll get fixed in the next release.
+
 To build for distribution, run build.sh in this directory. The result
 is DTV.app, which is self-contained and should be safe to distribute.
 
