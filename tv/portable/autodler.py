@@ -106,7 +106,7 @@ class AutoDownloader:
         numDownloads = self.manualDownloads()
 	target = config.get('MaxManualDownloads')
         #print "I have %d manual downloads in %d feeds. I'm looking for %d" % (
-            numDownloads,numFeeds,target)
+        #    numDownloads,numFeeds,target)
         while (numDownloads < target and 
                numFeeds > attempts):
             #print "."
