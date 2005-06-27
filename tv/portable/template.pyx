@@ -113,11 +113,11 @@ def fillTemplate(file, data, execJS, top = True):
     except:
         traceback.print_exc()        
 
-    #print '-----\n%s\n-----'%x
+    print '-----\n%s\n-----'%tch.output
 #     if top:
 #         stopTime = time.clock()
 #         print ("SAX Template for %s took about %s seconds to complete"%(file,str(stopTime-startTime)))
-    return tch.output, handle
+    return ''.join(('<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">\n',tch.output)), handle
     #return (document.toxml(), handle)
 
 # As fillTemplate, but no Javascript calls are made, and no template
