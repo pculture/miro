@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  <div class="thumbnail_placeholder"><img width="80" height="60" class="thumb" src="***this getThumbnail***" /></div>
+  <div class="thumbnail_placeholder"><img width="92" height="69" class="thumb" src="***this getThumbnail***" /></div>
   <div class="desc" >
     <div class="video_title" t:replace="this getTitle" />
     <div class="short_description" t:replaceMarkup="this getDescription"/> 
@@ -44,11 +44,13 @@
   </div>
 
   <div class="play_box" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="finished">
+    Expires in <span t:replace="this getExpirationTime"/><br/>
     <a href="action:playFile?filename=@@@this getFilename@@@" class="play_item"><span/></a>
     <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> | <a href="action:expireItem?item=@@@this getID@@@">delete</a>
   </div>
 
   <div class="play_box" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="uploading">
+    Expires in <span t:replace="this getExpirationTime"/><br/>
     <a href="action:playFile?filename=@@@this getFilename@@@" class="play_item"><span/></a>
     <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> | <a href="action:expireItem?item=@@@this getID@@@">delete</a>
   </div>
