@@ -113,7 +113,7 @@ def fillTemplate(file, data, execJS, top = True):
     except:
         traceback.print_exc()        
 
-    print '-----\n%s\n-----'%tch.output
+    #print '-----\n%s\n-----'%tch.output
 #     if top:
 #         stopTime = time.clock()
 #         print ("SAX Template for %s took about %s seconds to complete"%(file,str(stopTime-startTime)))
