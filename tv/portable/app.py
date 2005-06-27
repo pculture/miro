@@ -40,6 +40,7 @@ class Controller(frontend.Application):
 	try:
             delegate = self.getBackendDelegate()
 	    feed.setDelegate(delegate)
+            feed.setSortFunc(itemSort)
 	    downloader.setDelegate(delegate)
             autoupdate.setDelegate(delegate)
 
