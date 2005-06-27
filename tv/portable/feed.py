@@ -38,6 +38,11 @@ def setDelegate(newDelegate):
     global delegate
     delegate = newDelegate
 
+# Pass in a feed sorting function 
+def setSortFunc(newFunc):
+    global sortFunc
+    sortFunc = newFunc
+
 #
 # Adds a new feed using USM
 def addFeedFromFile(file):
@@ -188,6 +193,7 @@ class Feed(DDBObject):
 	self.startfrom = datetime.min
 	self.visible = visible
         self.updating = False
+        self.thumbURL = "resource:images/feedicon.png"
         DDBObject.__init__(self)
 
     ##
@@ -206,6 +212,7 @@ class Feed(DDBObject):
 	    newitems = 0
 
 	    #Find the next item we should get
+            self.items.sort(sortFunc)
 	    for item in self.items:
 		if (item.getState() == "autopending") and not item in dontUse:
 		    eligibile += 1
@@ -225,7 +232,7 @@ class Feed(DDBObject):
 	    return False
 	elif self.fallBehind>=0 and eligibile > self.fallBehind:
 	    dontUse.append(next)
-	    return self.downloadNext(dontUse)
+	    return self.downloadNextAuto(dontUse)
 	elif next != None:
 	    self.beginRead()
 	    try:
@@ -238,7 +245,9 @@ class Feed(DDBObject):
 	    return False
 
     def downloadNextManual(self):
+        self.beginRead()
         next = None
+        self.items.sort(sortFunc)
         for item in self.items:
             if item.getState() == "manualpending":
                 if next is None:
@@ -247,7 +256,7 @@ class Feed(DDBObject):
                     next = item
         if not next is None:
             next.download(autodl = False)
-
+        self.endRead()
 
     ##
     # Returns marks expired items as expired
@@ -394,7 +403,7 @@ class Feed(DDBObject):
     ##
     # Returns the URL of a thumbnail associated with the feed
     def getThumbnail(self):
-	return ""
+        return self.thumbURL
 
     ##
     # Returns URL of license assocaited with the feed
@@ -425,6 +434,8 @@ class Feed(DDBObject):
             for item in self.itemlist:
                 items.append(item)
             for item in items:
+                if not item.getKeep():
+                    item.expire()
                 item.remove()
         finally:
             self.endRead()
@@ -436,13 +447,18 @@ class Feed(DDBObject):
     # Called by pickle during serialization
     def __getstate__(self):
 	temp = copy(self.__dict__)
-	return (0,temp)
+	return (2,temp)
 
     ##
     # Called by pickle during deserialization
     def __setstate__(self,state):
         (version, data) = state
-        assert(version == 0)
+        if version == 0:
+            version += 1
+        if version == 1:
+            data['thumbURL'] = "resource:images/feedicon.png"
+            version += 1
+        assert(version == 2)
         data['updating'] = False
 	self.__dict__ = data
 
@@ -489,19 +505,7 @@ class RSSFeed(Feed):
 	except:
 	    ret = ""
         self.endRead()
-        return ret
-
-    ##
-    # Returns the URL of a thumbnail associated with the feed
-    def getThumbnail(self):
-        self.beginRead()
-	try:
-	    ret = self.parsed.image.url
-	except:
-	    ret = ""
-        self.endRead()
-        return ret
-	
+        return ret	
 
     ##
     # Updates a feed
@@ -552,6 +556,9 @@ class RSSFeed(Feed):
                     self.title = self.parsed["channel"]["title"]
                 except KeyError:
                     pass
+            if (self.parsed.feed.has_key('image') and 
+                self.parsed.feed.image.has_key('url')):
+                self.thumbURL = self.parsed.feed.image.url
             for entry in self.parsed.entries:
                 entry = self.addScrapedThumbnail(entry)
                 new = True
@@ -583,7 +590,7 @@ class RSSFeed(Feed):
 	    self.endChange()
 
     def addScrapedThumbnail(self,entry):
-        if (len(entry['enclosures'])>0 and
+        if (entry.has_key('enclosures') and len(entry['enclosures'])>0 and
             entry.has_key('description') and 
             not entry['enclosures'][0].has_key('thumbnail')):
                 desc = RSSFeed.firstImageRE.search(unescape(entry['description']))
@@ -612,13 +619,18 @@ class RSSFeed(Feed):
 	temp = copy(self.__dict__)
 	temp["scheduler"] = None
         temp["itemlist"] = None
-	return (0,temp)
+	return (2,temp)
 
     ##
     # Called by pickle during deserialization
     def __setstate__(self,state):
         (version, data) = state
-        assert(version == 0)
+        if version == 0:
+            version += 1
+        if version == 1:
+            data['thumbURL'] = "resource:images/feedicon.png"
+            version += 1
+        assert(version == 2)
         data['updating'] = False
 	self.__dict__ = data
 	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
@@ -920,13 +932,18 @@ class ScraperFeed(Feed):
         temp['semaphore'] = None
 	temp["scheduler"] = None
         temp["itemlist"] = None
-	return (0,temp)
+	return (2,temp)
 
     ##
     # Called by pickle during deserialization
     def __setstate__(self,state):
         (version, data) = state
-        assert(version == 0)
+        if version == 0:
+            version += 1
+        if version == 1:
+            data['thumbURL'] = "resource:images/feedicon.png"
+            version += 1
+        assert(version == 2)
         data['updating'] = False
         data['tempHistory'] = {}
 	self.__dict__ = data
@@ -1023,13 +1040,16 @@ class DirectoryFeed(Feed):
 	temp["scheduler"] = None
         temp['itemlist'] = None
         temp['RSSFilenames'] = None
-	return (0,temp)
+	return (1,temp)
 
     ##
     # Called by pickle during deserialization
     def __setstate__(self,state):
         (version, data) = state
-        assert(version == 0)
+        if version == 0:
+            data['thumbURL'] = "resource:images/feedicon.png"
+            version += 1
+        assert(version == 1)
         data['updating'] = False
 	self.__dict__ = data
 	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
