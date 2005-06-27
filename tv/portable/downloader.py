@@ -860,7 +860,10 @@ class HTTPDownloader(Downloader):
                     self.totalSize = self.currentSize
                 self.endTime = time()
             elif self.state == "stopped":
-                remove(self.filename)
+                try:
+                    remove(self.filename)
+                except:
+                    pass
         finally:
             self.endRead()
             #FIXME: Really, this change should trigger a change in the item,
@@ -890,8 +893,15 @@ class HTTPDownloader(Downloader):
     # file.
     def stop(self):
         self.beginRead()
-        self.state = "stopped"
-        self.endRead()
+        try:
+            if self.state != "downloading":
+                try:
+                    remove(self.filename)
+                except:
+                    pass
+            self.state = "stopped"
+        finally:
+            self.endRead()
         for item in self.itemList:
             item.beginChange()
             item.endChange()
