@@ -422,7 +422,7 @@ class HTTPConnectionPool:
         finally:
             self.lock.release()
         #print "...done"
-
+ 
     def expireOldConnections(self):
         now = time()
         self.lock.acquire()
@@ -817,7 +817,16 @@ class HTTPDownloader(Downloader):
                 self.totalSize = totalSize
             finally:
                 self.endRead()
-            filehandle = file(self.filename,"w+b")
+            try:
+                filehandle = file(self.filename,"w+b")
+            except IOError:
+                self.beginRead()
+                try:
+                    self.state = "faied"
+                    self.reasonFailed = "Could not write file to disk"
+                finally:
+                    self.endRead()
+                    return false
             self.beginRead()
             self.currentSize = 0
             self.endRead()
