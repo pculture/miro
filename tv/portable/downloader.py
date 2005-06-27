@@ -169,6 +169,9 @@ def grabURL(url, type="GET",start = 0, etag=None,modified=None):
                     auth = HTTPAuthPassword(result[0],result[1],host, realm, path, authScheme)
                     myHeaders["Authorization"] = auth.getAuthScheme()+' '+auth.getAuthToken()
                     download = connectionPool.getRequest(scheme,host,type,path, headers=myHeaders)
+                else:
+                    return None #The user hit Cancel
+
                 #This is where we would do our magic to prompt for a password
                 #If we get a good password, we save it
             else:
