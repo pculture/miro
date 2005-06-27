@@ -452,12 +452,14 @@ class Item(DDBObject):
 	secs = 0
 	for dler in self.downloaders:
 	    secs += dler.getETA()
-	if (secs < 120):
-	    return '%1.0f' % secs+" secs"
+        if secs == 0:
+            return 'starting up...'
+	elif (secs < 120):
+	    return '%1.0f' % secs+" secs left"
 	elif (secs < 6000):
-	    return '%1.0f' % (secs/60)+" mins"
+	    return '%1.0f' % (secs/60)+" mins left"
 	else:
-	    return '%1.1f' % (secs/3600)+" hours"
+	    return '%1.1f' % (secs/3600)+" hours left"
 
     ##
     # Returns the published date of the item
