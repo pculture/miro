@@ -10,18 +10,14 @@
 </style>
 <t:include filename="dynamic.js" />
 
-<t:dynamicviews>
- <t:view name="thisFeed" key="global database">
-  <t:filter functionkey="global filter equal" key="getID" parameter="@@@feed getID@@@" />
- </t:view>
-</t:dynamicviews>
-
 </head>
 
 <body>
-<span t:repeatForView="thisFeed">
-<span t:hideIfKey="feed isLoading" t:hideFunctionKey="global filter boolean"><t:includeTemplate filename="feed-watch" /></span>
-<span t:hideIfNotKey="feed isLoading" t:hideFunctionKey="global filter boolean" ><t:includeTemplate filename="feed-loading" /></span>
-</span>
+  <div id="loading_channel">
+
+Loading Channel<br />
+<img src="resource:images/loader.gif" alt="" />
+
+</div>
 </body>
 </html>

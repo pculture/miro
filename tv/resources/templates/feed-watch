@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style type="text/css">
+	@import url(resource:css/style.css);
+</style>
+<t:include filename="dynamic.js" />
+
+<t:dynamicviews>
+ <t:view name="newitems" key="feed itemlist">
+  <t:filter functionkey="global filter recentItems" parameter="" />
+  <t:sort functionkey="global sort item" parameter="" />
+ </t:view>
+ <t:view name="mylibrary" key="feed itemlist">
+  <t:filter functionkey="global filter oldItems" parameter="" />
+  <t:sort functionkey="global sort item" parameter="" />
+ </t:view>
+</t:dynamicviews>
+
+</head>
+
+<body>
+  <div id="main_window">  
+  
+<div id="ultra_top_wrapper">
+
+<div id="top_wrapper">
+
+<div id="channel_info">
+	<img src="***feed getThumbnail***" />
+	<h2 i18n:translate=""><span t:replace="feed getTitle"/></h2>
+	<a href="" class="recommend_link" i18n:translate="">Recommend to Friends</a>
+</div>
+
+<div id="right_half">
+	<div class="auto_link" i18n:translate="">AUTO DOWNLOAD: ON</div>
+	<a class="settings_link" i18n:translate="" href="template:feed-settings">Change Settings</a>
+	<input type="text" size="20" class="search_field" onfocus="startEditFilter(this,new Array('newitems','mylibrary'),new Array('',''),new Array('global filter recentItems','global filter oldItems'),new Array(0,0))" onblur="endEditFilter()"  />
+</div>
+
+	<br style="clear: both; height: 0; padding: 0; margin: 0;" />
+</div>
+
+
+
+<div id="navigation_wrapper">
+	<div id="navigation">
+		<a href="" class="watch_active">Watch</a>
+		<a href="template:feed-choose" class="browse" t:hideIfNotKey="feed hasLibrary" t:hideFunctionKey="global filter boolean">Browse</a>
+		<a href="template:feed-choose" class="browse_nolibrary" t:hideIfKey="feed hasLibrary" t:hideFunctionKey="global filter boolean">Browse</a>
+		<a href="" class="library" t:hideIfNotKey="feed hasLibrary" t:hideFunctionKey="global filter boolean">Library</a>
+	</div>
+</div>
+
+</div>
+
+   
+   
+  
+  
+  <div id="content_window">
+    <ul> 
+
+<div class="no_new" t:hideIfViewNotEmpty="newitems" i18n:translate="">No new videos.  You can see what's available on this channel by clicking on the 'Choose' tab above.</div>        
+<li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="newitems">
+        <t:includeTemplate filename="download-item" />
+        </li> 
+        <li class="divider" i18n:translate="">SAVED IN MY COLLECTION</li> 
+        <li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="mylibrary">
+        <t:includeTemplate filename="download-item" />
+          
+        </li> 
+   </ul>
+  </div>
+  </div> 
+
+<div class="no_new">
+DEBUG: <a href="action:playView?viewName=newitems">Play unseen items</a>,
+<a href="action:playView?viewName=mylibrary">Play seen items</a>
+</div>
+
+</body>
+</html>
