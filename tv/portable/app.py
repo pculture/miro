@@ -900,4 +900,5 @@ globalFilterList = {
     'class': filterClass,
     'all': (lambda x, y: True),
     'hasKey':  filterHasKey,
+    'equal':(lambda x, y: str(x) == str(y))
 }
