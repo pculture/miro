@@ -29,7 +29,7 @@ def get(key):
 		configData[key] = 3
 		ret = 3
 	    elif key == 'MaxManualDownloads':
-		configData[key] = 2
+		configData[key] = 10
 		ret = 2
 	    elif key == 'DefaultTimeUntilExpiration':
 		configData[key] = timedelta(days=7)
