@@ -19,7 +19,15 @@
 </head>
 <body> 
 
+
+ <ul id="sidebar_tabs">
+  	<li><a href="" class="active">Channels</a></li>
+  	<li><a href="">Collection</a></li>
+  </ul>
+
 <div id="sidebar">
+
+
   <div id="channels">
     <span t:hideIfViewNotEmpty="tabs" i18n:translate="">There are no tabs. Something is wrong. Please, contact tech support</span>
     <ul t:hideIfViewEmpty="tabs">

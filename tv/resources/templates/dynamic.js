@@ -234,14 +234,6 @@ function forceRedisplay(elt) {
     r.insertNode(frag);
 }
 
-// Preload images for the download status bar
-var images = new Array();
-var i = 0;
-for (i=0;i<=100;i++) {
-  images[i] = new Image();
-  images[i].src = "resource:images/statusbar/" + sprintf("%03d",i) +".png"
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 

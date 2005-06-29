@@ -20,15 +20,38 @@
 </head>
 
 <body>
-  <div id="main_window"> 
-    <div class="channel_title" i18n:translate="">New Videos</div> 
-  <div class="channel_tabs"> 
-    <a href="#"><div class="tab" i18n:translate="">Unwatched</div></a>
-    <a href="#"><div class="tab active_tab" i18n:translate="">Recent</div></a>
-    <a href="#"><div class="tab emptytab"><span /></div></a>
-    <a href="#"><div class="tab emptytab"><span /></div></a>
-    <div id="searchfield"><input type="text" size="20" onfocus="startEditFilter(this,new Array('newitems'),new Array(''),new Array('global filter recentItems'),new Array(0))" onblur="endEditFilter()"  /></div>
-  </div> 
+
+ <div id="main_window">  
+  
+<div id="ultra_top_wrapper">
+
+<div id="top_wrapper">
+
+<div id="channel_info">
+	<img src="resource:images/thumbnail.png" />
+	<h2 i18n:translate="">New Videos</h2>
+</div>
+
+<div id="right_half">
+	<input type="text" size="20" class="search_field" onfocus="startEditFilter(this,new Array('newitems'),new Array(''),new Array('global filter recentItems'),new Array(0))" onblur="endEditFilter()"  />
+</div>
+
+	<br style="clear: both; height: 0; padding: 0; margin: 0;" />
+</div>
+
+
+
+<div id="navigation_wrapper">
+	<div id="navigation">
+		<a href="" class="watch_active">Watch</a>
+		<a href="" class="browse">Browse</a>
+	</div>
+</div>
+
+</div>
+
+
+
   <div id="content_window">
     <ul> 
         <li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="newitems">

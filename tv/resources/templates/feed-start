@@ -24,23 +24,52 @@
 </head>
 
 <body>
-  <div id="main_window"> 
-    <div class="channel_title"><span t:replace="feed getTitle"/><a i18n:translate="" class="settings_button" href="template:feed-settings">Settings</a></div> 
-  <div class="channel_tabs"> 
-    <a href="#"><div class="tab active_tab" i18n:translate="">Watch</div></a>
-    <a href="template:feed-choose"><div class="tab" i18n:translate="">Choose</div></a>
-    <a href="#"><div class="tab emptytab"><span /></div></a>
-    <a href="#"><div class="tab" i18n:translate="">Library</div></a>
-    <div id="searchfield"><input type="text" size="20" onfocus="startEditFilter(this,new Array('newitems','mylibrary'),new Array('',''),new Array('global filter recentItems','global filter oldItems'),new Array(0,0))" onblur="endEditFilter()"  /></div>
-  </div> 
+  <div id="main_window">  
+  
+<div id="ultra_top_wrapper">
+
+<div id="top_wrapper">
+
+<div id="channel_info">
+	<img src="***feed getThumbnail***" />
+	<h2 i18n:translate=""><span t:replace="feed getTitle"/></h2>
+	<a href="" class="recommend_link" i18n:translate="">Recommend to Friends</a>
+</div>
+
+<div id="right_half">
+	<div class="auto_link" i18n:translate="">AUTO DOWNLOAD: ON</div>
+	<a class="settings_link" i18n:translate="" href="template:feed-settings">Change Settings</a>
+	<input type="text" size="20" class="search_field" onfocus="startEditFilter(this,new Array('newitems','mylibrary'),new Array('',''),new Array('global filter recentItems','global filter oldItems'),new Array(0,0))" onblur="endEditFilter()"  />
+</div>
+
+	<br style="clear: both; height: 0; padding: 0; margin: 0;" />
+</div>
+
+
+
+<div id="navigation_wrapper">
+	<div id="navigation">
+		<a href="" class="watch_active">Watch</a>
+		<a href="template:feed-choose" class="browse" t:hideIfNotKey="feed hasLibrary" t:hideFunctionKey="global filter boolean">Browse</a>
+		<a href="template:feed-choose" class="browse_nolibrary" t:hideIfKey="feed hasLibrary" t:hideFunctionKey="global filter boolean">Browse</a>
+		<a href="" class="library" t:hideIfNotKey="feed hasLibrary" t:hideFunctionKey="global filter boolean">Library</a>
+	</div>
+</div>
+
+</div>
+
+   
+   
+  
+  
   <div id="content_window">
     <ul> 
-        <li class="divider" i18n:translate="">New</li>
+
 <div class="no_new" t:hideIfViewNotEmpty="newitems" i18n:translate="">No new videos.  You can see what's available on this channel by clicking on the 'Choose' tab above.</div>        
 <li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="newitems">
         <t:includeTemplate filename="download-item" />
         </li> 
-        <li class="divider" i18n:translate="">Saved in My Library</li> 
+        <li class="divider" i18n:translate="">SAVED IN MY COLLECTION</li> 
         <li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="mylibrary">
         <t:includeTemplate filename="download-item" />
           

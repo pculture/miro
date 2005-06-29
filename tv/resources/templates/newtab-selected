@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <a class="feeditem selected_feeditem" xmlns:t="http://www.participatorypolitics.org/"
       xmlns:i18n="http://www.participatoryculture.org/i18n">
-<img class="icon" src="resource:images/tree.png" /><span class="name" i18n:translate="">New Videos</span>
+<img class="icon" src="resource:images/new.png" /><span class="name" i18n:translate="">New Videos</span>
 </a>
