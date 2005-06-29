@@ -266,10 +266,11 @@ class Item(DDBObject):
 	ret = None
         self.beginRead()
         try:
-            for enc in self.entry.enclosures:
-                if enc.has_key('thumbnail') and enc['thumbnail'].has_key('url'):
-                    ret = enc["thumbnail"]["url"]
-                    break
+            if self.entry.has_key('enclosures'):
+                for enc in self.entry.enclosures:
+                    if enc.has_key('thumbnail') and enc['thumbnail'].has_key('url'):
+                        ret = enc["thumbnail"]["url"]
+                        break
             if (ret is None and self.entry.has_key('thumbnail') and
                 self.entry['thumbnail'].has_key('url')):
                 ret =  self.entry["thumbnail"]["url"]
