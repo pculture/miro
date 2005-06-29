@@ -20,6 +20,7 @@ import folder
 import scheduler
 import threading
 import autoupdate
+import xhtmltools
 
 # Something needs to import this outside of Pyrex. Might as well be app
 import templatehelper
@@ -65,6 +66,7 @@ class Controller(frontend.Application):
 	    reloadStaticTabs()
 	    mapFunc = makeMapToTabFunction(globalData, self)
 	    self.tabs = db.filter(mappableToTab).map(mapFunc).sort(sortTabs)
+
 	    self.currentSelectedTab = None
 	    self.tabListActive = True
 	    tabPaneData['tabs'] = self.tabs
@@ -344,7 +346,7 @@ class ModelActionHandler:
     def removeFeed(self, url):
 	db.beginUpdate()
 	try:
-	    db.removeMatching(lambda x: isinstance(x,feed.Feed) and x.getURL() == url)
+	    db.removeMatching(lambda x: (isinstance(x,feed.Feed) or isinstance(x,feed.UniversalFeed)) and x.getURL() == url)
 	finally:
 	    db.endUpdate()
 
@@ -353,7 +355,7 @@ class ModelActionHandler:
 	db.saveCursor()
 	try:
 	    for obj in db:
-		if isinstance(obj,feed.Feed) and obj.getURL() == url:
+		if (isinstance(obj,feed.Feed) or isinstance(obj,feed.UniversalFeed)) and obj.getURL() == url:
 		    obj.update()
 		    break
 	finally:
@@ -522,26 +524,26 @@ class GUIActionHandler:
 	try:
 	    exists = False
 	    for obj in db:
-		if isinstance(obj,feed.Feed) and obj.getURL() == url:
+		if isinstance(obj,feed.UniversalFeed) and obj.getURL() == url:
 		    exists = True
 		    break
 		
 	    if not exists:
-		myFeed = feed.generateFeed(url)
+		myFeed = feed.UniversalFeed(url)
 
 		# At this point, the addition is guaranteed to be reflected
 		# in the tab list.
 
-# 		tabs = self.controller.tabs
-# 		tabs.resetCursor()
-# 		while True:
-# 		    cur = tabs.getNext()
-# 		    if cur == None:
-# 			assert(0) # NEEDS: better error (failed to add tab)
-# 		    if cur.feedURL() == url:
-# 			break
+ 		tabs = self.controller.tabs
+ 		tabs.resetCursor()
+ 		while True:
+ 		    cur = tabs.getNext()
+ 		    if cur == None:
+ 			assert(0) # NEEDS: better error (failed to add tab)
+ 		    if cur.feedURL() == url:
+ 			break
 
-# 		self.controller.checkSelectedTab(showTemplate)
+ 		self.controller.checkSelectedTab(showTemplate)
 
 	finally:
 	    db.restoreCursor()
@@ -675,11 +677,11 @@ class Tab:
 
     def isFeed(self):
 	"""True if this Tab represents a Feed."""
-	return isinstance(self.obj, feed.Feed)
+	return isinstance(self.obj, feed.Feed) or isinstance(self.obj, feed.UniversalFeed)
 
     def feedURL(self):
 	"""If this Tab represents a Feed, the feed's URL. Otherwise None."""
-	if isinstance(self.obj, feed.Feed):
+	if self.isFeed():
 	    return self.obj.getURL()
 	else:
 	    return None	
@@ -716,7 +718,7 @@ def reloadStaticTabs():
 # Return True if a tab should be shown for obj in the frontend. The filter
 # used on the database to get the list of tabs.
 def mappableToTab(obj):
-    return isinstance(obj, StaticTab) or isinstance(obj, folder.Folder) or (isinstance(obj, feed.Feed) and obj.isVisible())
+    return isinstance(obj, StaticTab) or isinstance(obj, folder.Folder) or (isinstance(obj, feed.Feed) and obj.isVisible()) or isinstance(obj, feed.UniversalFeed)
 
 # Generate a function that, given an object for which mappableToTab
 # returns true, return a Tab instance -- mapping a model object into
@@ -735,7 +737,7 @@ def makeMapToTabFunction(globalTemplateData, controller):
 	    data = {'global': self.globalTemplateData};
 	    if isinstance(obj, StaticTab):
 		return Tab(obj.tabTemplateBase, data, obj.contentsTemplate, data, [obj.order], obj, controller)
-	    elif isinstance(obj, feed.Feed):
+	    elif isinstance(obj, feed.Feed) or isinstance(obj, feed.UniversalFeed):
 	    	data['feed'] = obj
 		# Change this to sort feeds on a different value
 		sortKey = obj.getTitle()

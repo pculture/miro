@@ -83,7 +83,7 @@ def generateFeed(url):
     thread.setDaemon(False)
     thread.start()
 
-def _generateFeed(url):
+def _generateFeed(url, visible=True):
     info = grabURL(url,"GET")
     if info is None:
         return None
@@ -107,7 +107,7 @@ def _generateFeed(url):
             charset = None
         info['file-handle'].close()
         if delegate.isScrapeAllowed(url):
-            return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified, charset=charset)
+            return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified, charset=charset, visible=visible)
         else:
             return None
 
@@ -121,7 +121,7 @@ def _generateFeed(url):
             xmldata = fixXMLHeader(html,info['charset'])
         else:
             xmldata = html
-        return RSSFeed(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified)
+        return RSSFeed(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, visible=visible)
     # If it's not HTML, we can't be sure what it is.
     #
     # If we get generic XML, it's probably RSS, but it still could be
@@ -152,7 +152,7 @@ def _generateFeed(url):
         except xml.sax.SAXException: #it doesn't parse as RSS, so it must be HTML
             #print " Nevermind! it's HTML"
             if delegate.isScrapeAllowed(url):
-                 return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified, charset=charset)
+                 return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified, charset=charset, visible=visible)
             else:
                  return None
         except UnicodeDecodeError:
@@ -161,11 +161,11 @@ def _generateFeed(url):
             return None
         if handler.enclosureCount > 0 or handler.itemCount == 0:
             #print " It's RSS with enclosures"
-            return RSSFeed(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified)
+            return RSSFeed(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, visible=visible)
         else:
             #print " It's pre-enclosure RSS"
             if delegate.isScrapeAllowed(url):
-                return ScraperFeed(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, charset=charset)
+                return ScraperFeed(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, charset=charset, visible=visible)
             else:
                 return None
     else:  #What the fuck kinda feed is this, asshole?
@@ -194,7 +194,16 @@ class Feed(DDBObject):
 	self.visible = visible
         self.updating = False
         self.thumbURL = "resource:images/feedicon.png"
+        self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self) #FIXME free this later
         DDBObject.__init__(self)
+
+    def isLoading(self):
+        return False
+
+    ##
+    # Returns true iff this feed has a library
+    def hasLibrary(self):
+        return False
 
     ##
     # Downloads the next available item taking into account maxNew,
@@ -447,6 +456,7 @@ class Feed(DDBObject):
     # Called by pickle during serialization
     def __getstate__(self):
 	temp = copy(self.__dict__)
+        temp["itemlist"] = None
 	return (2,temp)
 
     ##
@@ -461,12 +471,72 @@ class Feed(DDBObject):
         assert(version == 2)
         data['updating'] = False
 	self.__dict__ = data
+	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
+
+##
+# This class is a magic class that can become any type of feed it wants
+class UniversalFeed(DDBObject):
+    def __init__(self,url):
+        self.origURL = url
+        self.loading = True
+        self.actualFeed = Feed(url,visible=False)
+        self.feedView = defaultDatabase.filter(lambda x:x is self.getActualFeed())
+        self.feedView.addChangeCallback(self.onSubChange)
+        DDBObject.__init__(self)
+        thread = Thread(target=lambda: self.generateFeed())
+        thread.setDaemon(False)
+        thread.start()
+
+    def isLoading(self):
+        return self.loading
+
+    def generateFeed(self):
+        oldFeed = self.actualFeed
+        self.actualFeed = _generateFeed(self.url,visible=False)
+        self.loading = False
+        oldFeed.remove()
+        defaultDatabase.recomputeFilter(self.feedView)
+        self.beginChange()
+        self.endChange()
+        
+    def onSubChange(self,pos):
+        self.beginChange()
+        self.endChange()
+        for item in self.itemlist:
+            item.beginChange()
+            item.endChange()
+
+    def getActualFeed(self):
+        return self.__dict__['actualFeed']
+
+    def remove(self):
+        print "Removing UF"
+        defaultDatabase.removeView(self.feedView)
+        DDBObject.remove(self)
+        self.getActualFeed().remove()
+
+    def __getattr__(self,attr):
+        return getattr(self.getActualFeed(),attr)
+
+    def __getstate__(self):
+	temp = copy(self.__dict__)
+	temp["feedView"] = None
+	return (0,temp)
+
+    ##
+    # Called by pickle during deserialization
+    def __setstate__(self,state):
+        (version, data) = state
+        assert(version == 0)
+	self.__dict__ = data
+	self.feedView = defaultDatabase.filter(lambda x:x is self.getActualFeed())
+
 
 class RSSFeed(Feed):
     firstImageRE = re.compile('\<\s*img\s+[^>]*src\s*=\s*"(.*?)"[^>]*\>',re.I|re.M)
     
-    def __init__(self,url,title = None,initialHTML = None, etag = None, modified = None):
-        Feed.__init__(self,url,title)
+    def __init__(self,url,title = None,initialHTML = None, etag = None, modified = None, visible=True):
+        Feed.__init__(self,url,title,visible=visible)
         self.initialHTML = initialHTML
         self.etag = etag
         self.modified = modified
@@ -573,7 +643,8 @@ class RSSFeed(Feed):
                         if (item.getRSSEntry() == entry):
                             item.update(entry)
                             new = False
-                if new:
+                if (new and entry.has_key('enclosures') and
+                               len(entry.enclosures)>0):
                     self.items.append(Item(self,entry))
             try:
                 self.updateFreq = max(15*60,self.parsed["feed"]["ttl"]*60)
@@ -892,7 +963,7 @@ class ScraperFeed(Feed):
             if setTitle and not handler.title is None:
                 self.beginChange()
                 try:
-                    self.title = handler.title
+                    self.title = toUTF8Bytes(handler.title)
                 finally:
                     self.endChange()
             return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')], linkDict)
@@ -910,7 +981,7 @@ class ScraperFeed(Feed):
         if setTitle and not lg.title is None:
             self.beginChange()
             try:
-                self.title = lg.title
+                self.title = toUTF8Bytes(lg.title)
             finally:
                 self.endChange()
             
