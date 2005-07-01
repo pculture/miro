@@ -146,6 +146,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         self.data = data
         self.handle = handle
         self.debug = debug
+        clearEvalCache()
 
     def returnIf(self,bool,value):
         if bool:
@@ -283,8 +284,8 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             except KeyError:
                 parameter = ''
 
-            function = evalKeyC(functionKey, self.data, None)
-            hide = function(evalKeyC(ifKey, self.data, None), parameter)
+            function = evalKeyC(functionKey, self.data, None, True)
+            hide = function(evalKeyC(ifKey, self.data, None, True), parameter)
             if ifInvert:
                 hide = not hide
 
@@ -305,7 +306,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                         self.outString.write(' %s=%s'%(key,quoteAndFillAttr(attrs[key],self.data)))
                 self.outString.write('>')
                 replace = attrs['t:replace']
-                self.outString.write(sax.saxutils.escape(str(evalKeyC(replace,self.data, None))))
+                self.outString.write(sax.saxutils.escape(str(evalKeyC(replace,self.data, None, True))))
                 self.inReplace = True
                 self.replaceDepth = self.depth      
         elif 't:replaceMarkup' in attrs.keys():
@@ -315,7 +316,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                         self.outString.write(' %s=%s'%(key,quoteAndFillAttr(attrs[key],self.data)))
                 self.outString.write('>')
                 replace = attrs['t:replaceMarkup']
-                self.outString.write(str(evalKeyC(replace,self.data,None)))
+                self.outString.write(str(evalKeyC(replace,self.data,None, True)))
                 self.inReplace = True
                 self.replaceDepth = self.depth      
         elif name == 't:dynamicviews':
@@ -433,6 +434,7 @@ cdef processRepeat(data,repeatView,repeatList,write):
     while itemtemp != NULL:
         item = <object>itemtemp
         PyDict_SetItemString(data,'this',PyObject_GetAttrString(item,'object'))
+        clearEvalCache()
         for count from 0 <= count < PyList_GET_SIZE(repeatList):
             temp = <object>PyList_GET_ITEM(repeatList,count)
             func = <object>PyTuple_GET_ITEM(temp,0)
@@ -486,11 +488,13 @@ class TrackedView:
             return ret
 
     def onChange(self, index):
+        clearEvalCache()
         if self.parent.execJS:
             self.parent.execJS("changeItem(\"%s\",\"%s\")" % (self.view[index].tid, quoteJS(self.currentXML(index))))
         self.parent.checkHides()
 
     def onAdd(self, newIndex):
+        clearEvalCache()
         if self.parent.execJS:
             if newIndex + 1 == self.view.len():
                 # Adding it at the end of the list. Must add it relative to
@@ -505,6 +509,7 @@ class TrackedView:
         self.parent.checkHides()
 
     def onRemove(self, oldObject, oldIndex):
+        clearEvalCache()
         if self.parent.execJS:
             self.parent.execJS("removeItem(\"%s\")" % oldObject.tid)
         self.parent.checkHides()
@@ -517,7 +522,7 @@ class NamedView:
     def __init__(self, name, viewKey, filterKey, filterFunc, filterParameter, invertFilter, sortKey, sortFunc, invertSort, data):
         self.name = name
         self.data = data
-        self.origView = evalKeyC(viewKey, data, None)
+        self.origView = evalKeyC(viewKey, data, None, True)
         if not filterKey is None:
             self.filter = templatehelper.makeFilter(filterKey, filterFunc, filterParameter, invertFilter,self.data)
             self.view = self.origView.filter(templatehelper.getFilterFunc(self))
@@ -565,7 +570,7 @@ def getRepeatTextEscape(data, tid, text):
 # Returns text if function does not evaluate to true
 def getRepeatTextHide(data, tid, args):
     (functionKey,ifKey,parameter,invert, text) = args
-    hide = evalKeyC(functionKey, data, None)(evalKeyC(ifKey, data, None), parameter)
+    hide = evalKeyC(functionKey, data, None, True)(evalKeyC(ifKey, data, None, True), parameter)
     if (not invert and hide) or (invert and not hide):
         return text
     else:
@@ -581,11 +586,11 @@ def getRepeatAddIdAndClose(data,tid,args):
 
 # Evaluates key with data
 def getRepeatEvalEscape(data, tid, replace):
-    return sax.saxutils.escape(str(evalKeyC(replace,data,None)))
+    return sax.saxutils.escape(str(evalKeyC(replace,data,None, True)))
 
 # Evaluates key with data
 def getRepeatEval(data, tid, replace):
-    return str(evalKeyC(replace,data,None))
+    return str(evalKeyC(replace,data,None, True))
 
 # Evaluates template and returns it
 def getRepeatFillTemplate(data,tid,name):
@@ -596,7 +601,7 @@ def getRepeatFillTemplate(data,tid,name):
 # Evaluates template and returns it iff function does not evaluate to true
 def getRepeatFillTemplateHide(data,tid,args):
     (functionKey,ifKey,parameter,invert, name) = args
-    hide = evalKeyC(functionKey, data, None)(evalKeyC(ifKey, data, None), parameter)
+    hide = evalKeyC(functionKey, data, None, True)(evalKeyC(ifKey, data, None, True), parameter)
     if (not invert and hide) or (invert and not hide):
         return getRepeatFillTemplate(data,tid,name)
     else:
@@ -612,12 +617,12 @@ def fillAttr(value,data):
         match = attrPattern.match(value)
         if not match:
             break
-        value = ''.join((match.group(1), urlencode(str(evalKeyC(match.group(2), data, None))), match.group(3)))
+        value = ''.join((match.group(1), urlencode(str(evalKeyC(match.group(2), data, None, True))), match.group(3)))
     while True:
         match = rawAttrPattern.match(value)
         if not match:
             break
-        value = ''.join((match.group(1), str(evalKeyC(match.group(2), data, None)), match.group(3)))
+        value = ''.join((match.group(1), str(evalKeyC(match.group(2), data, None, True)), match.group(3)))
     return value
 
 # View mapping function used to assign ID attributes to records so
@@ -719,13 +724,22 @@ class Handle:
 #### Utility routines                                                      ####
 ###############################################################################
 
+cdef object evalCache
+def clearEvalCache():
+    global evalCache
+    evalCache = {}
 
 # 'key' is a key name in the template language. Resolve it relative to 'data.'
 # For example, 'this feed name' might become data['this'].feed.name().
-cdef object evalKeyC(object keyString, object data, object originalKey):
+cdef object evalKeyC(object keyString, object data, object originalKey, int cache):
     cdef object keys
     cdef object key
     cdef int    count
+
+    global evalCache
+
+    if cache and PyDict_Contains(evalCache,keyString):
+        return <object>PyDict_GetItem(evalCache,keyString)
 
 #    print "eval %s against %s" % (str(key),str(data))
     # Save the original expression for use in error messages
@@ -758,12 +772,14 @@ cdef object evalKeyC(object keyString, object data, object originalKey):
             # 'this feed name contents')
             return 'Bad key'
             #raise TemplateError, "Bad key '%s': object '%s' has no subkeys. (Remainder of expression: '%s'." % (originalKey, data, key)
-
+        
+    if cache:
+        PyDict_SetItem(evalCache,keyString,data)
     return data
 
 #Python version of evalKeyC function for use in sub views
 def evalKey(key, data, originalKey = None):
-    return evalKeyC(key, data, originalKey)
+    return evalKeyC(key, data, originalKey, False)
 
 # Perform escapes needed for Javascript string contents.
 def quoteJS(x):
