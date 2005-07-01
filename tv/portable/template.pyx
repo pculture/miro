@@ -341,7 +341,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             except KeyError:
                 pass
             self.filterFunc = attrs['functionkey']
-            self.filterParam = attrs['parameter']
+            self.filterParam = fillAttr(attrs['parameter'],self.data)
         elif name  == 't:sort' and self.inView:
             try:
                 self.sortKey = attrs['key']
@@ -604,6 +604,10 @@ def getRepeatFillTemplateHide(data,tid,args):
         
 # Returns a quoted, filled version of attribute text
 def quoteAndFillAttr(value,data):
+    return sax.saxutils.quoteattr(fillAttr(value,data))
+
+# Returns a filled version of attribute text
+def fillAttr(value,data):
     while True:
         match = attrPattern.match(value)
         if not match:
@@ -614,8 +618,7 @@ def quoteAndFillAttr(value,data):
         if not match:
             break
         value = ''.join((match.group(1), str(evalKeyC(match.group(2), data, None)), match.group(3)))
-    return sax.saxutils.quoteattr(value)
-
+    return value
 
 # View mapping function used to assign ID attributes to records so
 # that we can find them in the page after we generate them if we need
