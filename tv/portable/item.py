@@ -94,10 +94,10 @@ class Item(DDBObject):
                     exp = expireTime - (datetime.now() - self.getDownloadedTime())
                     if exp.days > 0:
                         ret = "%d days" % exp.days
-                    elif exp.hours > 0:
-                        ret = "%d hours" % exp.hours
+                    elif exp.seconds > 3600:
+                        ret = "%d hours" % (exp.seconds/3600)
                     else:
-                        ret = "%d minutes" % exp.minutes
+                        ret = "%d minutes" % (exp.seconds/60)
         finally:
             self.feed.endRead()
             self.endRead()
