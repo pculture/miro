@@ -19,9 +19,9 @@
 </head>
 
 <body>
-<span t:repeatForView="thisFeed">
-<span t:hideIfKey="feed isLoading" t:hideFunctionKey="global filter boolean"><t:includeTemplate filename="feed-watch" /></span>
-<span t:hideIfNotKey="feed isLoading" t:hideFunctionKey="global filter boolean" ><t:includeTemplate filename="feed-loading" /></span>
+<span t:repeatForView="thisFeed">!
+<span t:hideIfKey="feed isLoading" t:hideFunctionKey="global filter boolean">!<t:includeTemplate filename="feed-watch" /></span>
+<span t:hideIfNotKey="feed isLoading" t:hideFunctionKey="global filter boolean" ><t:includeTemplate filename="feed-loading" />!</span>!
 </span>
 </body>
 </html>
