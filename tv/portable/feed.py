@@ -194,7 +194,7 @@ class Feed(DDBObject):
 	self.visible = visible
         self.updating = False
         self.thumbURL = "resource:images/feedicon.png"
-        self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self) #FIXME free this later
+        self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
         DDBObject.__init__(self)
 
     def isLoading(self):
@@ -449,7 +449,6 @@ class Feed(DDBObject):
         finally:
             self.endRead()
         defaultDatabase.removeView(self.itemlist)
-        del self.itemlist
         DDBObject.remove(self)
 
     ##
@@ -479,6 +478,7 @@ class UniversalFeed(DDBObject):
     def __init__(self,url):
         self.origURL = url
         self.loading = True
+        self.errorState = False
         self.actualFeed = Feed(url,visible=False)
         self.feedView = defaultDatabase.filter(lambda x:x is self.getActualFeed())
         self.feedView.addChangeCallback(self.onSubChange)
@@ -488,14 +488,60 @@ class UniversalFeed(DDBObject):
         thread.start()
 
     def isLoading(self):
-        return self.loading
+        ret = False
+        self.beginRead()
+        try:
+            ret = self.loading
+        finally:
+            self.endRead()
+        return ret
+
+    def hasError(self):
+        ret = False
+        self.beginRead()
+        try:
+            ret = self.errorState
+        finally:
+            self.endRead()
+        return ret
+
+    def getError(self):
+        return "Could not load feed"
+
+    def update(self):
+        self.beginRead()
+        try:
+            if self.loading:
+                return
+            elif self.errorState:
+                self.loading = True
+                self.errorState = False
+                self.beginChange()
+                self.endChange()
+                thread = Thread(target=lambda: self.generateFeed())
+                thread.setDaemon(False)
+                thread.start()
+                return
+            else:
+                self.actualFeed.update()
+        finally:
+            self.endRead()
 
     def generateFeed(self):
         oldFeed = self.actualFeed
-        self.actualFeed = _generateFeed(self.url,visible=False)
-        self.loading = False
-        oldFeed.remove()
-        defaultDatabase.recomputeFilter(self.feedView)
+        temp =  _generateFeed(self.url,visible=False)
+        self.beginRead()
+        try:
+            self.loading = False
+            if temp is None:
+                self.errorState = True
+            else:
+                self.actualFeed = temp
+        finally:
+            self.endRead()
+        if not temp is None:
+            oldFeed.remove()
+            defaultDatabase.recomputeFilter(self.feedView)
         self.beginChange()
         self.endChange()
         
@@ -512,8 +558,8 @@ class UniversalFeed(DDBObject):
     def remove(self):
         print "Removing UF"
         defaultDatabase.removeView(self.feedView)
+        self.actualFeed.remove()
         DDBObject.remove(self)
-        self.getActualFeed().remove()
 
     def __getattr__(self,attr):
         return getattr(self.getActualFeed(),attr)
@@ -521,16 +567,22 @@ class UniversalFeed(DDBObject):
     def __getstate__(self):
 	temp = copy(self.__dict__)
 	temp["feedView"] = None
-	return (0,temp)
+	return (1,temp)
 
     ##
     # Called by pickle during deserialization
     def __setstate__(self,state):
         (version, data) = state
-        assert(version == 0)
+        if version == 0:
+            data['errorState'] = False
+            version += 1
+        assert(version == 1)
 	self.__dict__ = data
 	self.feedView = defaultDatabase.filter(lambda x:x is self.getActualFeed())
-
+        if self.loading:
+            thread = Thread(target=lambda: self.generateFeed())
+            thread.setDaemon(False)
+            thread.start()
 
 class RSSFeed(Feed):
     firstImageRE = re.compile('\<\s*img\s+[^>]*src\s*=\s*"(.*?)"[^>]*\>',re.I|re.M)
@@ -762,7 +814,7 @@ class Collection(Feed):
 # A feed based on un unformatted HTML or pre-enclosure RSS
 class ScraperFeed(Feed):
     #FIXME: change this to a higher number once we optimize shit a bit
-    maxThreads = 2
+    maxThreads = 5
 
     def __init__(self,url,title = None, visible = True, initialHTML = None,etag=None,modified = None,charset = None):
 	Feed.__init__(self,url,title,visible)
