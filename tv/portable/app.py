@@ -346,7 +346,7 @@ class ModelActionHandler:
     def removeFeed(self, url):
 	db.beginUpdate()
 	try:
-	    db.removeMatching(lambda x: (isinstance(x,feed.Feed) or isinstance(x,feed.UniversalFeed)) and x.getURL() == url)
+	    db.removeMatching(lambda x: isinstance(x,feed.UniversalFeed) and x.getURL() == url)
 	finally:
 	    db.endUpdate()
 
@@ -355,7 +355,7 @@ class ModelActionHandler:
 	db.saveCursor()
 	try:
 	    for obj in db:
-		if (isinstance(obj,feed.Feed) or isinstance(obj,feed.UniversalFeed)) and obj.getURL() == url:
+		if isinstance(obj,feed.UniversalFeed) and obj.getURL() == url:
 		    obj.update()
 		    break
 	finally:
