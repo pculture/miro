@@ -1,7 +1,7 @@
 import xml.sax.saxutils
 import xml.dom
 import re
-from urllib import quote_plus
+from urllib import quote
 from HTMLParser import HTMLParser
 
 ##
@@ -59,7 +59,7 @@ def unescape(data):
 #
 # encodes string for use in a URL
 def urlencode(data):
-    return quote_plus(data)
+    return quote(data,'')
 
 ##
 # Returns XHTMLified version of HTML document
