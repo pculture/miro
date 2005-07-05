@@ -256,6 +256,10 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
  	frontend.HTMLDisplay.__init__(self, html, frameHint=frameHint, indexHint=indexHint)
 
+        thread = threading.Thread(target=self.templateHandle.initialFillIn)
+        thread.setDaemon(False)
+        thread.start()
+
     def onURLLoad(self, url):
 	try:
 	    # Special-case non-'action:'-format URL

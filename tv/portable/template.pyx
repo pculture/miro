@@ -388,8 +388,6 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             self.inRepeatView = False
             PyList_Append(self.repeatList,(getRepeatText,'</%s>'%name))
 
-            processRepeat(self.data,self.repeatView,self.repeatList,self.outString.write)
-
             repeatId = generateId()
             self.outString.write('<span id=%s/>'%sax.saxutils.quoteattr(repeatId))
             self.handle.addView(repeatId, 'nextSibling', self.repeatView, self.repeatList, self.data)
@@ -416,33 +414,6 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         else:
             self.outString.write(sax.saxutils.escape(data))
 
-# Calls each function in repeatList for each item in the view and
-# write it all out with write
-#
-# Note: The template spends most of it's time here. This is the place
-#       to optimize
-cdef processRepeat(data,repeatView,repeatList,write):
-    cdef int count
-    cdef void* itemtemp
-    cdef object iter
-    cdef object item
-    cdef object temp
-    cdef object args
-
-    iter = PyObject_GetIter(repeatView)
-    itemtemp = PyIter_Next(iter)
-    while itemtemp != NULL:
-        item = <object>itemtemp
-        PyDict_SetItemString(data,'this',PyObject_GetAttrString(item,'object'))
-        clearEvalCache()
-        for count from 0 <= count < PyList_GET_SIZE(repeatList):
-            temp = <object>PyList_GET_ITEM(repeatList,count)
-            func = <object>PyTuple_GET_ITEM(temp,0)
-            args = <object>PyTuple_GET_ITEM(temp,1)
-            PyObject_CallObject(write,(PyObject_CallObject(func,(data,item.tid,args)),))
-        Py_DECREF(item)
-        itemtemp = PyIter_Next(iter)
-
 # Used in place of execJS
 def returnFalse(x):
     return False
@@ -465,9 +436,20 @@ class TrackedView:
         self.templateData = templateData
         self.parent = parent
 
-        view.addChangeCallback(self.onChange)
-        view.addAddCallback(self.onAdd)
-        view.addRemoveCallback(self.onRemove)
+    #
+    # This is called after the HTML has been rendered to fill in the
+    # data for each view and register callbacks to keep it updated
+    def initialFillIn(self):
+        self.view.beginRead()
+        try:
+            for x in range(0,self.view.len()):
+                self.addHTMLAtEnd(x)
+            self.view.addChangeCallback(self.onChange)
+            self.view.addAddCallback(self.onAdd)
+            self.view.addRemoveCallback(self.onRemove)
+        finally:
+            self.view.endRead()
+
 
     def currentXML(self, index):
         output = []
@@ -513,6 +495,12 @@ class TrackedView:
         if self.parent.execJS:
             self.parent.execJS("removeItem(\"%s\")" % oldObject.tid)
         self.parent.checkHides()
+
+    # Add the HTML for the item at newIndex in the view to the
+    # display. It should only be called by initialFillIn()
+    def addHTMLAtEnd(self, newIndex):
+        clearEvalCache()
+        self.parent.execJS("addItemBefore(\"%s\",\"%s\")" % (quoteJS(self.currentXML(newIndex)), self.anchorId))
 
 # Class used by Handle to track the dynamically filterable, sortable
 # views created by makeNamedView and identified by names. After
@@ -719,6 +707,11 @@ class Handle:
         self.trackedViews = []
         for view in self.namedViews.values():
             view.removeViewFromDB()
+    
+    def initialFillIn(self):
+        for tv in self.trackedViews:
+            tv.initialFillIn()
+
 
 ###############################################################################
 #### Utility routines                                                      ####
