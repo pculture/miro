@@ -1,8 +1,8 @@
 <tabs>
 <statictab tabtemplatebase="guidetab" contentstemplate="guide" order="1"/>
-<statictab tabtemplatebase="librarytab" contentstemplate="library" order="2"/>
+<!-- <statictab tabtemplatebase="librarytab" contentstemplate="library" order="2"/> -->
 <statictab tabtemplatebase="newtab" contentstemplate="new" order="3"/>
 
-<statictab tabtemplatebase="debugtab" contentstemplate="debug" order="1000000"/>
+<!-- <statictab tabtemplatebase="debugtab" contentstemplate="debug" order="1000000"/> -->
 <statictab tabtemplatebase="downloadtab" contentstemplate="download" order="10000000"/>
 </tabs>
