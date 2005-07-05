@@ -83,8 +83,9 @@ Contains the channels
 /////////////////////////////////////////////*/
 
 #sidebar{
-	padding: 0;
+	padding: 25px 0 0;
 	width: 100%;
+	overflow: hidden;
 	}
 
 #channels{
@@ -110,7 +111,6 @@ Contains the channels
 	list-style: none;
 	clear: both;
 	margin: 0;
-	border-bottom: 1px solid #ccc;
 	}
 
 
@@ -138,17 +138,23 @@ Contains the channels
 	}
 
 #sidebar ul li a{
-	padding: 4px 5px;
+	padding: 4px 5px 1px;
 	color: #333;
 	text-decoration: none;
 	clear: both;
 	height: 29px;
 	}
 
+#sidebar ul li a img{
+	height: 26px;
+	width: 26px;
+	}
+
+
 #sidebar ul li a span{
 	display: block;
-	padding: 8px 0 9px 37px;
-
+	padding: 5px 0 5px 5px;
+	overflow: hidden;
 	}
 
 
@@ -207,39 +213,107 @@ Various Buttons
  
 /////////////////////////////////////////////*/
 
-.settings_button{
-	position: absolute;
-	right: 10px;
-	top: 5px;
-	font: 12px Verdana, Arial, Helvetica, sans-serif;
-	color: #fff;
-	text-decoration: none;
-	}
+/*
+
+Download Queue Button
+-----------------------------------------------
+
+*/
 
 
-
-a.queuebutton{
+#sidebar a.queuebutton{
 	position: fixed;
 	display: block;
-	margin: 0;
-	padding: 0;
+	padding: 0px;
+	margin: 0px;
 	text-decoration: none;
 	color: #333;
-	border-top: 1px solid #ddd;
-	bottom: 0;
-	left: 0; 
+	bottom: 0px;
+	left: 0px; 
 	width: 100%;
 	z-index: 100;
+	background: url(resource:images/dqueue_back.png) repeat-x; 
+	height: 52px;
+	text-align: center;
 	}
 
-
-
-a.queuebutton span.name{
-	margin: 0 0 0 -10px;
-	padding: 0;
+#sidebar a.selected_queuebutton{
+	position: fixed;
 	display: block;
+	padding: 0px;
+	margin: 0px;
+	text-decoration: none;
+	color: #ccc;
+	bottom: 0px;
+	left: 0px; 
+	width: 100%;
+	z-index: 100;
+	background: url(resource:images/selectedbackgrey.png) 0px 18px repeat-x; 
+	height: 52px;
+	text-align: center;
 	}
 
+
+#sidebar a.queuebutton span.name{
+	padding-top: 25px;
+	height: 50px;
+	/*
+	display: block;
+	position: fixed;
+	bottom: 10px;
+	width: 100%
+	*/
+	
+	}
+
+#sidebar a.selected_queuebutton span.name{
+	padding-top: 25px;
+	height: 50px;
+	/*
+	display: block;
+	position: fixed;
+	bottom: 10px;
+	width: 100%
+	*/
+	
+	}
+
+
+#sidebar a.queuebutton span.name span{
+	display: inline;
+	padding: 5px 0 5px 20px;
+	margin: 0 0 0 -30px;
+	background: url(resource:images/queue_arrow.png) 0 4px no-repeat;
+	text-shadow: 0px 1px 0px white;
+	/*border: 1px solid;	
+	display: inline;
+	padding: 25px 0 0 15px;
+	
+	margin: 0 0 0 -60px;
+	 
+	*/
+	
+	
+	
+	}
+
+#sidebar a.selected_queuebutton span.name span{
+	display: inline;
+	padding: 5px 0 5px 20px;
+	margin: 0 0 0 -30px;
+	background: url(resource:images/queue_arrow.png) 0 4px no-repeat;
+	text-shadow: 0px 1px 0px black;
+	/*border: 1px solid;	
+	display: inline;
+	padding: 25px 0 0 15px;
+	
+	margin: 0 0 0 -60px;
+	 
+	*/
+	
+	
+	
+	}
 
 a.queuebutton img{
 	display: none;
@@ -276,29 +350,6 @@ A wrapper around the content
 	background: url(resource:images/itunes.jpg);
 	}
 
-/*/////////////////////////////////////////////
-
-Title of each channel
- 
-/////////////////////////////////////////////*/
-
-.channel_title {
-	padding: 3px 2px 4px 5px;
-	color: white;
-	font-size: 14px;
-	font-weight: bold;
-	background: #666 url(resource:images/blue.gif);
-	text-shadow: 0px 1px 0px black;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	z-index: 100;
-	}
-	
-#main_window:hover .channel_title {
-	background: #666 url(resource:images/blue.gif);
-	}
 
 /*/////////////////////////////////////////////
 
@@ -382,15 +433,21 @@ Where the videos show up
  
 /////////////////////////////////////////////*/
 
+#main_window ul {
+	margin: 0;
+	padding: 0;	
+	}
+
 
 #main_window ul li {
-	border-top: 1px solid #f9f9f9;
-	border-bottom: 1px solid #ddd;
-	border-right: 1px solid #eee;
-	border-left: 1px solid #fff;
+	
+	border-bottom: 5px solid #eee;
+	
+	background: url(resource:images/video_back.png) bottom left repeat-x;
+	
 	display: block;
 	clear: both;
-	padding-top: 5px;
+	padding: 12px 0 5px 0;
 	list-style: none;
 	height: 76px;
 	}
@@ -429,10 +486,7 @@ Where the videos show up
 #main_window ul li.divider img{
 	}
 
-#main_window ul {
-	margin: 0;
-	padding: 0;	
-	}
+
 
 
 
@@ -440,18 +494,21 @@ Where the videos show up
 	display: block;
 	float: left;
 	padding: 0px;
-	border: 1px solid #eee;
 	margin-top: 0px;
 	margin-right: 8px;
 	margin-left: 8px;
 	width: 92px;
 	height: 69px;
 	}
+	
+#main_window li .thumbnail_placeholder img{
+	border-left: 2px solid #666;
+	border-top: 2px solid #666;
+	}
 
 
 .desc{
-	float:left;
-	width: 55%;
+	margin-right: 125px;
 	}
 
 .file_size{
@@ -463,6 +520,8 @@ Where the videos show up
 	}
 
 .file_size span{
+	margin-right: 10px;
+
 	}
 
 .file_size span strong.length{
@@ -495,57 +554,79 @@ Where the videos show up
 	display: block;
 	float: right;
 	margin-right: 58px;
-	/* background: url(resource:images/download_button.png) top left no-repeat; */
-	}
-
-/*
-
-.download_button:hover {
-	background: url(resource:images/download_button_hover.png)  top left no-repeat;
-	}
-	
-	*/
-
-.play_item {
-	background: url(resource:images/play_button.png)  top left no-repeat;
-	width: 30px;
-	height: 30px;
-	display: block;
-	margin: 10px auto;
 	}
 
 
-.play_item:hover {
-	background: url(resource:images/play_button_hover.png)  top left no-repeat;
-	}
+/*/////////////////////////////////////////////
+
+Right side of the Videos
+-----------------------------------------------
+play button, download button, error/expire
+messages
+ 
+/////////////////////////////////////////////*/
 
 
-.play_box{
+.right_box{
+	text-align: right;
+	width: 120px;
 	float: right;
-	text-align: center;
-	width: 150px;
+	z-index: 100;
+	padding-right: 10px;
 	}
 
-.play_box a{
+.right_box a{
 	color: dark blue;
 	font-size: 11px;
 	text-decoration: none;
 	}
 
-.play_box a:hover{
+.right_box a:hover{
 	color: blue;
 	font-size: 11px;
 	text-decoration: underline;
 	}
 
-.in_progress {
-	background: url(resource:images/in_progress_gray.gif)  top left no-repeat;
+
+.report_expire{
+	font-size: 10px;
+	background: url(resource:images/icons/calendar.png) 0 2px no-repeat;
+	padding: 3px 0 3px 15px;
 	}
 
-.in_progress:hover{
-	background: url(resource:images/queued_item.gif)   top left no-repeat;
+.report_pending{
+	font-size: 10px;
+	background: url(resource:images/icons/pending.png) 0 2px no-repeat;
+	padding: 3px 0 3px 15px;
+	}
+	
+/* ---- Play Button ----- */
+	
+.play_button{
+	width: 42px;
+	height: 42px;
+	background: url(resource:images/play_button.png) no-repeat;
+	display: block;
+	margin-left: 75px;
+	}
+	
+.play_button:active{
+	background: url(resource:images/play_button_active.png) no-repeat;
 	}
 
+
+/*/////////////////////////////////////////////
+
+Progress Bar
+ 
+/////////////////////////////////////////////*/
+
+
+.bar_holder{
+	width: 102px;
+	height: 20px;
+	background: url(resource:images/0.png) top left no-repeat;
+	}
 
 .progress_box{
 	float: right;
@@ -555,57 +636,25 @@ Where the videos show up
 	margin-right: 20px;
 	}
 
-.bar_holder{
-	width: 102px;
-	height: 20px;
-	background: url(resource:images/0.png) top left no-repeat;
-	}
-
 .cancel_button{
 	float: right;
 	margin: 3px 0px 3px 3px;
 	}
 	
-
 .est_time{
 	display: block;
 	padding-top: 4px;
 	text-align: left;
 	}
 
+/*/////////////////////////////////////////////
 
-.download_button a {
-	color: #339933;
-	}
+Settings Section
+-----------------------------------------------
+The settings of each channel
+ 
+/////////////////////////////////////////////*/
 
-.queue a {
-	color: #CD4D00
-	}
-
-.dling a {
-	color: #CD4D00
-	}
-
-/* progress bar 
-
-
-.progress{
-	color: #666;
-	font-size: 9px;
-	padding-top: 7px 0;
-	}
-
-img.progressbar {
-    margin-left: -30px
-}
-
-.progress a{
-    margin: 3px 0 0 9px;
-	}
-
-
-
-/* --- Settings Section ---- */
 
 .settings_section{
 	padding: 10px;
@@ -624,45 +673,7 @@ img.progressbar {
 	padding: 8px;
 	margin: 0;
 	font-size: 18px;
-}
-
-
-
-/* ---- Play Button --- */
-
-
-a#playbutton{
-	margin-left: 363px;
 	}
-
-a#playbutton img{
-	border: 0;
-	}
-
-/* ----- video ----- */
-
-#video{	
-	background: #000;
-	text-align:center;
-	padding-top: 10px;
-	}
-
-#video #desc{	
-	background: #212121;
-	text-align:center;
-	margin-top: 30px;
-	}
-
-
-
-
-/*/////////////////////////////////////////////
-
-Settings Section
------------------------------------------------
-Where the videos show up
- 
-/////////////////////////////////////////////*/
 
 div.settings{
 	background: #eee;
@@ -704,10 +715,15 @@ div.settings div{
 	font-size: 10px;
 	}
 	
-	
-	
-	
 
+
+/*/////////////////////////////////////////////
+
+Channel Heading
+-----------------------------------------------
+search, title, recommend link
+ 
+/////////////////////////////////////////////*/
 
 
 #ultra_top_wrapper{
@@ -738,7 +754,6 @@ div.settings div{
 	width: 55px;
 	height: 55px;
 	margin: 0 6px 0 0;
-/*	border: 1px solid #aaa; */
 	}
 
 #channel_info h2{
@@ -781,24 +796,31 @@ div.settings div{
 	}
 
 .settings_link:hover {
-text-decoration: underline;
-}
+	text-decoration: underline;
+	}
 
 .recommend_link:hover {
-text-decoration: underline;
-}
-
-
+	text-decoration: underline;
+	}
 
 .search_field{
 	display: block;
 	margin: 9px 0 0 0;
 	}
 
+/*/////////////////////////////////////////////
+
+Channel Navigation
+-----------------------------------------------
+The settings of each channel
+ 
+/////////////////////////////////////////////*/
+
+
 
 #navigation_wrapper	{
 	background: green url(resource:images/navigation_back.png) repeat-x;
-	height: 20px;
+	height: 17px;
 	margin: 0;
 	}
 
@@ -814,7 +836,7 @@ text-decoration: underline;
 	float: left;
 	text-decoration: none;
 	color: #333;
-	height: 24px;
+	height: 20px;
 	}
 
 
@@ -823,62 +845,79 @@ text-decoration: underline;
 	width: 46px;
 	padding: 5px 0 0 15px;
 	background: url(resource:images/watch.png) no-repeat;
+	text-shadow: 0px 1px 0px white;
 	}
 
 .watch:active{
 	background: url(resource:images/watch_pressed.png) no-repeat;
+	text-shadow: 0px 1px 0px white;
 	}
 	
 .watch_active{
 	width: 46px;
 	padding: 5px 0 0 15px;
 	background: url(resource:images/watch_active.png) no-repeat;
+	text-shadow: 0px 1px 0px white;
 	}
 
 .watch_active:active{
 	background: url(resource:images/watch_pressed.png) no-repeat;
+	text-shadow: 0px 1px 0px white;
 	}
 
 .browse{
 	width: 52px;
 	padding: 5px 0 0 10px;
 	background: url(resource:images/browse.png) no-repeat;
+	
+	text-shadow: 0px 1px 0px white;
 	}
 
 .browse:active{
 	background: url(resource:images/browse_pressed.png) no-repeat;
+	text-shadow: 0px 1px 0px white;
 	}
 
 .browse_active{
 	width: 52px;
 	padding: 6px 0 0 10px;
 	background: url(resource:images/browse_active.png) top right no-repeat;
+	text-shadow: 0px 1px 0px white;
 	}
 
 .browse_active:active{
 	background: url(resource:images/browse_pressed.png) no-repeat;
+	text-shadow: 0px 1px 0px white;
 	}
 
 
 
-.browse_nolibrary{
+a.browse_nolibrary{
 	width: 57px;
 	padding: 5px 0 0 10px;
 	background: url(resource:images/library.png) no-repeat;
+	border-left: 1px solid #ccc;
+	text-shadow: 0px 1px 0px white;
 	}
 
 .browse_nolibrary:active{
 	background: url(resource:images/library_pressed.png) no-repeat;
+	border-left: 1px solid #ccc;
+	text-shadow: 0px 1px 0px white;
 	}
 
 .browse_nolibrary_active{
 	width: 57px;
 	padding: 5px 0 0 10px;
 	background: url(resource:images/library_active.png) no-repeat;
+	border-left: 1px solid #ccc;
+	text-shadow: 0px 1px 0px white;
 	}
 
 .browse_nolibrary_active:active{
 	background: url(resource:images/library_pressed.png) no-repeat;
+	border-left: 1px solid #ccc;
+	text-shadow: 0px 1px 0px white;
 	}
 
 
@@ -890,10 +929,12 @@ text-decoration: underline;
 	width: 57px;
 	padding: 5px 0 0 10px;
 	background: url(resource:images/library.png) no-repeat;
+	text-shadow: 0px 1px 0px white;
 	}
 
 .library:active{
 	background: url(resource:images/library_pressed.png) no-repeat;
+	text-shadow: 0px 1px 0px white;
 	}
 	
 	
@@ -901,10 +942,12 @@ text-decoration: underline;
 	width: 57px;
 	padding: 5px 0 0 10px;
 	background: url(resource:images/library_active.png) no-repeat;
+	text-shadow: 0px 1px 0px white;
 	}
 	
 .library_active:active{
 	background: url(resource:images/library_pressed.png) no-repeat;
+	text-shadow: 0px 1px 0px white;
 	}
 
 
@@ -919,51 +962,116 @@ A wrapper around the content
  
 /////////////////////////////////////////////*/
 
-#sidebar_tabs{
+#sidebar_tabs a{
 	margin: 0;
-	padding: 0;
-	text-align: left;
-	overflow: auto;
-	border-bottom: 1px solid #333;
-	}
-
-#sidebar_tabs li{
-	margin: 0;
-	padding: 0;
-	display: block;
-	float: left;
-	}
-	
-#sidebar_tabs li a{
-	margin: 0;
-	padding: 5px 7px ;
+	padding: 5px 0;
 	height: 15px;
 	display: block;
 	float: left;
 	font-size: 13px;
-	border-right: 1px solid #fff;
 	color: black;
 	text-decoration: none;
 	text-shadow: 0px 1px 0px white;
+	text-align: center;
+	width: 49%;
 	}
 
-#sidebar_tabs li a.active{
-	
+#sidebar_tabs a.channel{
+	border-right: 1px solid white;
 	}
-	
-	
-.number_count{
-	display: inline;
-	position: relative;
-	z-index: 800;
-	left: -22;
-	top: 7;
+
+#sidebar_tabs a.collection{
+	border-left: 1px solid #ccc;
+	}
+
+#sidebar_tabs{
+	clear: both;
+	overflow: auto;
 	padding: 0;
 	margin: 0;
-	color: white;
-	text-shadow: 0px 1px 0px #333;
+	background: url(resource:images/sidebar_tab_back.png) repeat-x;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 80;
 	}
 	
+
+	
+.numbercount_holder{
+	float: right;
+	}
+
+
+
+.number_count{
+	padding: 3px 0 4px;
+	color: #fff;
+	margin: 0 9px;
+	background: #6c3;
+	font-weight: bold;
+	font-size: 11px;
+	text-shadow: 0px 1px 0px #333;
+	}
+
+	
+
+.green_left{
+	background: url(resource:images/green_left.png) top left no-repeat;
+	display: inline;
+	margin: 3px -15px 0 0;
+	float: right;
+	}
+
+.green_right{
+	background: url(resource:images/green_right.png) top right no-repeat;
+	padding-right: 1px;
+	}
+
+
+.gray_number_count{
+	padding: 3px 2px 3px 9px;
+	color: #333;
+	margin: 0 9px;
+	background: #ccc;
+	font-size: 10px;
+	text-shadow: 0px 1px 0px #fff;
+	}
+
+.gray_left{
+	background: url(resource:images/gray_left.png) top left no-repeat;
+	display: inline;
+	margin: 4px 0 0 0;
+	float: right;
+	}
+
+.gray_right{
+	background: url(resource:images/gray_right.png) top right no-repeat;
+	}
+
+
+
 span.newchannel{
 	display: none;
 	}
+	
+
+
+/*/////////////////////////////////////////////
+
+Buttons
+-----------------------------------------------
+Various Buttons
+ 
+/////////////////////////////////////////////*/
+
+
+
+.more_link{
+	margin-bottom: -3px;
+	vertical-align: bottom;
+	}
+	
+	
+	

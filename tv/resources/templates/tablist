@@ -20,10 +20,11 @@
 <body> 
 
 
- <ul id="sidebar_tabs">
-  	<li><a href="" class="active">Channels</a></li>
-  	<li><a href="">Collection</a></li>
-  </ul>
+<div id="sidebar_tabs">
+  	<a href="" class="active channel">Channels</a>
+  	<a href="" class="collection">Collection</a>
+  </div>
+
 
 <div id="sidebar">
 

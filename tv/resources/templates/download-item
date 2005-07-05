@@ -8,73 +8,89 @@
 </head>
 
 <body>
-  <div class="thumbnail_placeholder"><img width="92" height="69" class="thumb" src="***this getThumbnail***" /></div>
-  <div class="desc" >
-    <div class="video_title" t:replace="this getTitle" />
-    <div class="short_description" t:replaceMarkup="this getDescription"/> 
-    <div class="file_size"><span t:replace="this getReleaseDate" /> - <span t:replace="this getDuration" /> - <span t:replace="this getTotalSize" /></div>
+  
+
+  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="autopending" class="right_box">
+    <a href="action:startDownload?item=@@@this getID@@@"><img src="resource:images/download_button.png" /></a><br />
+    <span class="report_pending">Pending Automatic Download</span>
   </div>
 
-  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="autopending" class="pending_download">
-    Pending Automatic Download<br/>
-    <a href="action:startDownload?item=@@@this getID@@@">
-      <div class="download_button queue"><img src="resource:images/download_button.png" /></div>
+
+  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="manualpending" class="right_box">
+    <span t:replace="this getPendingReason" />
+    <span class="report_pending">Pending Manual Download</span>
+  </div>
+
+
+
+  <div class="right_box">
+    <a t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="stopped" href="action:startDownload?item=@@@this getID@@@">
+      <img src="resource:images/download_button.png" />
     </a>
   </div>
-
-  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="manualpending" class="pending_download">
-    Pending Manual Download<br/>
-    <span t:replace="this getPendingReason" />
-  </div>
-
-  <a t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="stopped" href="action:startDownload?item=@@@this getID@@@">
-    <div class="download_button queue"><img src="resource:images/download_button.png" /></div>
-  </a>
   
   <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="downloading" class="progress_box dling">
     <div class="bar_holder"><img src="resource:images/statusbar/@@@this threeDigitPercentDone@@@.png"/></div><a class="cancel_button" href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/cancel_button.png" /></a><span class="est_time" t:replace="this downloadETA" />
   </div> 
 
-  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="failed" class="failed_download">
-    Download Error
+
+  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="failed" class="right_box">  
     <span t:replace="this getFailureReason" />
-    <a href="action:startDownload?item=@@@this getID@@@">
-      <div class="download_button queue"><img src="resource:images/download_button.png" /></div>
-    </a>
+    <a href="action:startDownload?item=@@@this getID@@@"><img src="resource:images/download_button.png" /></a><br />
+    <span class="report_downloaderror">Download Error</span>
   </div>
 
-  <div class="play_box" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="finished">
-    <a href="action:playFile?filename=@@@this getFilename@@@" class="play_item"><span/></a>
+
+
+  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="finished" class="right_box">
+    <a href="action:playFile?filename=@@@this getFilename@@@" class="play_button"><span /></a>
     <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> | <a href="action:expireItem?item=@@@this getID@@@">delete</a>
   </div>
 
-  <div class="play_box" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="uploading">
-    <a href="action:playFile?filename=@@@this getFilename@@@" class="play_item"><span/></a>
+
+
+  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="uploading" class="right_box">
+    <a href="action:playFile?filename=@@@this getFilename@@@" class="play_button"><span /></a>
     <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> | <a href="action:expireItem?item=@@@this getID@@@">delete</a>
   </div>
   
-  <div class="play_box" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="watched">
-    Expires in <span t:replace="this getExpirationTime"/><br/>
-    <a href="action:playFile?filename=@@@this getFilename@@@" class="play_item"><span/></a>
+  
+  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="watched" class="right_box">    
+    <a href="action:playFile?filename=@@@this getFilename@@@" class="play_button"><span /></a>
+    <span class="report_expire">Expires in <span t:replace="this getExpirationTime"/></span><br />
     <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> | <a href="action:expireItem?item=@@@this getID@@@">delete</a>
   </div>
 
-  <div class="play_box" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="saved">
-    Expires in <span t:replace="this getExpirationTime"/><br/>
-    <a href="action:playFile?filename=@@@this getFilename@@@" class="play_item"><span/></a>
+
+  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="saved" class="right_box">  
+    <a href="action:playFile?filename=@@@this getFilename@@@" class="play_button"><span /></a>
+    <span class="report_expire">Expires in <span t:replace="this getExpirationTime"/></span><br />
     <a href="action:expireItem?item=@@@this getID@@@">delete</a>
+  	
   </div>
   
-  <div class="play_box" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="paused">
+  
+  
+  
+  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="paused" class="right_box">
     Downloads Paused
   </div>
 
-  <div class="play_box" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="expired">
-    Expired
-    <a href="action:startDownload?item=@@@this getID@@@">
-      <div class="download_button queue"><img src="resource:images/download_button.png" /></div>
-    </a>
+
+
+  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="expired" class="right_box">
+    <a href="action:startDownload?item=@@@this getID@@@"><img src="resource:images/download_button.png" /></a><br />
+   <span class="report_expire">Expired</span>
   </div>
+
+	
+  <div class="thumbnail_placeholder"><img width="92" height="69" class="thumb" src="***this getThumbnail***" /></div>
+  <div class="desc" >
+    <div class="video_title" t:replace="this getTitle" />
+    <div class="short_description" t:replaceMarkup="this getDescription"/> 
+    <div class="file_size"><span t:replace="this getReleaseDate" />  <span t:replace="this getDuration" /> <span t:replace="this getTotalSize" /><a class="more_link"><img src="resource:images/more.png" /></a><a class="add_link"><img src="resource:images/add.png" /></a></div>
+  </div>
+
 
 </body>
 </html>
