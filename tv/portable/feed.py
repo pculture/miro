@@ -814,7 +814,7 @@ class Collection(Feed):
 # A feed based on un unformatted HTML or pre-enclosure RSS
 class ScraperFeed(Feed):
     #FIXME: change this to a higher number once we optimize shit a bit
-    maxThreads = 5
+    maxThreads = 1
 
     def __init__(self,url,title = None, visible = True, initialHTML = None,etag=None,modified = None,charset = None):
 	Feed.__init__(self,url,title,visible)
