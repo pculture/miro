@@ -292,6 +292,15 @@ class TemplateDisplay(frontend.HTMLDisplay):
 		    print "Ignored bad action URL: %s" % url
 		    return False
 
+            #NEEDS: handle feed:// URLs and USM subscription URLs
+
+            # If we get here, this isn't a DTV URL. We should open it
+            # in an external browser.
+            if (url.startswith('http://') or url.startswith('https://') or 
+                url.startswith('ftp://') or url.startswith('mailto:')):
+                self.controller.getBackendDelegate().openExternalURL(url)
+                return False
+
 	except:
 	    print "Exception in URL action handler (for URL '%s'):" % url
 	    traceback.print_exc()
