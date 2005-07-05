@@ -377,6 +377,12 @@ class Feed(DDBObject):
         self.endRead()
         return ret
 
+    def autoDownloadStatus(self):
+        status = self.isAutoDownloadable()
+        if status:
+            return "ON"
+        else:
+            return "OFF"
 
     ##
     # Returns the title of the feed
