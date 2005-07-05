@@ -300,8 +300,13 @@ Please notify the publisher if you want this channel to be fully supported""" % 
 Would you like to download it now?"""
 
 	if QuestionController.alloc().init(message).getAnswer():
-            pass
-            #NEEDS: open the URL
+            self.openExternalURL(url)
+
+    def openExternalURL(self, url):
+        # We could use Python's webbrowser.open() here, but
+        # unfortunately, it doesn't have the same semantics under UNIX
+        # as under other OSes. Sometimes it blocks, sometimes it doesn't.
+        NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
 
 # NEEDS: Factor code common between PasswordController and
 # QuestionController out into a superclass
