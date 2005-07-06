@@ -101,7 +101,7 @@ def fillTemplate(file, data, execJS, top = True):
 #     if top:
 #         startTime = time.clock()
     handle = Handle(execJS)
-    tch = TemplateContentHandler(data,handle,True)
+    tch = TemplateContentHandler(data,handle,True,execJS=execJS)
     p = sax.make_parser()
     p.setFeature(sax.handler.feature_external_ges, False)
     p.setContentHandler(tch)
@@ -142,10 +142,11 @@ class TemplateError(Exception):
 ##
 # SAX version of templating code
 class TemplateContentHandler(sax.handler.ContentHandler):
-    def __init__(self, data, handle, debug = False):
+    def __init__(self, data, handle, debug = False, execJS = returnFalse):
         self.data = data
         self.handle = handle
         self.debug = debug
+        self.execJS = execJS
         clearEvalCache()
 
     def returnIf(self,bool,value):
@@ -155,8 +156,10 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             return ''
 
     def fillTemplate(self,name,data):
-        (html,handle) = fillTemplate(name,data,returnFalse, False)
-        html = self.HTMLPattern.match(html).group(1)
+        (html,handle) = fillTemplate(name,data,self.execJS, False)
+        
+        html = HTMLPattern.match(html).group(1)
+        self.handle.addSubHandle(handle)
         return html
         
     def startDocument(self):
@@ -242,9 +245,9 @@ class TemplateContentHandler(sax.handler.ContentHandler):
 
             if name == 't:includeTemplate':
                 if hide: 
-                    PyList_Append(self.repeatList,(getRepeatFillTemplateHide,(functionKey,ifKey,parameter,ifInvert,attrs['filename'])))
+                    PyList_Append(self.repeatList,(getRepeatFillTemplateHide,(functionKey,ifKey,parameter,ifInvert,attrs['filename'],self)))
                 else:
-                    PyList_Append(self.repeatList,(getRepeatFillTemplate,attrs['filename']))
+                    PyList_Append(self.repeatList,(getRepeatFillTemplate,(attrs['filename'],self)))
             else:
                 PyList_Append(self.repeatList,(getRepeatText,'<%s'%name))
                 for key in attrs.keys():
@@ -581,17 +584,17 @@ def getRepeatEval(data, tid, replace):
     return str(evalKeyC(replace,data,None, True))
 
 # Evaluates template and returns it
-def getRepeatFillTemplate(data,tid,name):
-    (html,handle) = fillTemplate(name,data,returnFalse, False)
-    html = HTMLPattern.match(html).group(1)
+def getRepeatFillTemplate(data,tid,args):
+    (name, self) = args
+    html = self.fillTemplate(name,data)
     return html
 
 # Evaluates template and returns it iff function does not evaluate to true
 def getRepeatFillTemplateHide(data,tid,args):
-    (functionKey,ifKey,parameter,invert, name) = args
+    (functionKey,ifKey,parameter,invert, name, self) = args
     hide = evalKeyC(functionKey, data, None, True)(evalKeyC(ifKey, data, None, True), parameter)
     if (not invert and hide) or (invert and not hide):
-        return getRepeatFillTemplate(data,tid,name)
+        return getRepeatFillTemplate(data,tid,(name,self))
     else:
         return ''
         
@@ -641,6 +644,7 @@ class Handle:
         self.hideConditions = []
         self.namedViews = {}
         self.trackedViews = []
+        self.subHandles = []
 
     def addHideIfEmpty(self, id, name, invert):
         # Make JS calls to hide and show the node with the give id when
@@ -707,11 +711,17 @@ class Handle:
         self.trackedViews = []
         for view in self.namedViews.values():
             view.removeViewFromDB()
+        for handle in self.subHandles:
+            handle.unlinkTemplate()
     
     def initialFillIn(self):
         for tv in self.trackedViews:
             tv.initialFillIn()
+        for handle in self.subHandles:
+            handle.initialFillIn()
 
+    def addSubHandle(self, handle):
+        self.subHandles.append(handle)
 
 ###############################################################################
 #### Utility routines                                                      ####
