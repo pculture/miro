@@ -599,7 +599,6 @@ class RSSFeed(Feed):
         self.etag = etag
         self.modified = modified
         self.scheduler = ScheduleEvent(self.updateFreq, self.update)
-	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
         self.scheduler = ScheduleEvent(0, self.update,False)
 
     ##
@@ -828,7 +827,6 @@ class ScraperFeed(Feed):
         self.initialHTML = initialHTML
         self.initialCharset = charset
 	self.scheduler = ScheduleEvent(self.updateFreq, self.update)
-	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
 	self.scheduler = ScheduleEvent(0, self.update,False)
         self.linkHistory = {}
         self.linkHistory[url] = {}
@@ -1098,7 +1096,6 @@ class DirectoryFeed(Feed):
 	self.RSSFilenames = defaultDatabase.filter(lambda x:isinstance(x,Item) and isinstance(x.feed,RSSFeed)).map(lambda x:x.getFilenames())
 	self.updateFreq = 30
         self.scheduler = ScheduleEvent(self.updateFreq, self.update,True)
-	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,FileItem) and x.feed is self)
         self.scheduler = ScheduleEvent(0, self.update,False)
     ##
     # Returns a list of all of the files in a given directory
