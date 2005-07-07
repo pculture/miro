@@ -32,6 +32,7 @@ class Item(DDBObject):
         # top of a page show up before scraped items at the bottom of
         # a page. 0 is the topmost, 1 is the next, and so on
         self.linkNumber = linkNumber
+        self.creationTime = datetime.now()
         DDBObject.__init__(self)
 
     ##
@@ -69,7 +70,8 @@ class Item(DDBObject):
         self.beginRead()
 	try:
 	    self.stopDownload()
-	    self.markItemSeen()
+            # FIXME: should expired items be marked as "seen?"
+	    # self.markItemSeen()
 	    self.expired = True
 	finally:
 	    self.endRead()	
@@ -706,7 +708,7 @@ class Item(DDBObject):
     # Called by pickle during serialization
     def __getstate__(self):
 	temp = copy(self.__dict__)
-	return (2,temp)
+	return (3,temp)
 
     ##
     # Called by pickle during serialization
@@ -721,7 +723,10 @@ class Item(DDBObject):
             data['keep'] = False
             data['pendingReason'] = ""
             version += 1
-        assert(version == 2)
+        if version == 2:
+            data['creationTime'] = datetime.now()
+            version += 1
+        assert(version == 3)
         data['startingDownload'] = False
 	self.__dict__ = data
 
@@ -749,7 +754,17 @@ class FileItem(Item):
 	    self.endRead()
 
     def getFilename(self):
-	return self.filename
+        ret = ''
+        try:
+            ret = self.filename
+        except:
+            pass
+        return ret
 
     def getFilenames(self):
-	return [self.filename]
+        ret = []
+        try:
+            ret = [self.filename]
+        except:
+            pass
+        return ret
