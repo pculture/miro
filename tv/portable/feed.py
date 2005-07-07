@@ -487,11 +487,35 @@ class UniversalFeed(DDBObject):
         self.errorState = False
         self.actualFeed = Feed(url,visible=False)
         self.feedView = defaultDatabase.filter(lambda x:x is self.getActualFeed())
-        self.feedView.addChangeCallback(self.onSubChange)
+        self.feedView.addChangeCallback(self.onSubFeedChange)
+        self.itemlist.addChangeCallback(self.onSubChange)
+        self.itemlist.addAddCallback(self.onSubAdd)
+        self.lastViewed = datetime.min
+        self.unwatched = self.itemlist.filter(lambda x:x.getState() == 'finished' or x.getState() == 'uploading')
+        self.available = self.itemlist.filter(lambda x:x.getState() == 'stopped' and x.creationTime > self.lastViewed)
         DDBObject.__init__(self)
         thread = Thread(target=lambda: self.generateFeed())
         thread.setDaemon(False)
         thread.start()
+
+    def numUnwatched(self):
+        return str(self.__dict__['unwatched'].len())
+
+    def numAvailable(self):
+        return str(self.__dict__['available'].len())
+
+    ##
+    # Returns the last time this feed was viewed by the user
+    def lastViewed(self):
+        return self.lastViewed
+
+    ##
+    # Sets the last time the feed was viewed to now
+    def markAsViewed(self):
+        self.lastViewed = datetime.now()
+        defaultDatabase.recomputeFilter(self.itemlist)
+        self.beginChange()
+        self.endChange()
 
     def isLoading(self):
         ret = False
@@ -547,22 +571,36 @@ class UniversalFeed(DDBObject):
             self.endRead()
         if not temp is None:
             oldFeed.remove()
+            self.unwatched = self.itemlist.filter(lambda x:x.getState() == 'finished' or x.getState() == 'uploading')
+            self.available = self.itemlist.filter(lambda x:x.getState() == 'stopped' and x.creationTime > self.lastViewed)
+            self.feedView.addChangeCallback(self.onSubFeedChange)
+            self.itemlist.addChangeCallback(self.onSubChange)
+            self.itemlist.addAddCallback(self.onSubAdd)
+            defaultDatabase.recomputeFilter(self.itemlist)
             defaultDatabase.recomputeFilter(self.feedView)
         self.beginChange()
         self.endChange()
         
-    def onSubChange(self,pos):
+    def onSubFeedChange(self,pos):
         self.beginChange()
         self.endChange()
-        for item in self.itemlist:
-            item.beginChange()
-            item.endChange()
+
+    def onSubAdd(self,pos):
+        self.beginChange()
+        self.endChange()
+        
+
+    def onSubChange(self,pos):
+        #FIXME this is slow, but necessary to update the number of
+        #      unwatched and available items
+        defaultDatabase.recomputeFilter(self.itemlist)
+        self.beginChange()
+        self.endChange()
 
     def getActualFeed(self):
         return self.__dict__['actualFeed']
 
     def remove(self):
-        print "Removing UF"
         defaultDatabase.removeView(self.feedView)
         self.actualFeed.remove()
         DDBObject.remove(self)
@@ -573,7 +611,9 @@ class UniversalFeed(DDBObject):
     def __getstate__(self):
 	temp = copy(self.__dict__)
 	temp["feedView"] = None
-	return (1,temp)
+        temp["unwatched"] = None
+        temp["available"] = None
+	return (2,temp)
 
     ##
     # Called by pickle during deserialization
@@ -582,9 +622,19 @@ class UniversalFeed(DDBObject):
         if version == 0:
             data['errorState'] = False
             version += 1
-        assert(version == 1)
+        if version == 1:
+            data['lastViewed'] = datetime.min
+            version += 1
+        assert(version == 2)
 	self.__dict__ = data
 	self.feedView = defaultDatabase.filter(lambda x:x is self.getActualFeed())
+        self.feedView.addChangeCallback(self.onSubFeedChange)
+        self.itemlist.addChangeCallback(self.onSubChange)
+        self.itemlist.addAddCallback(self.onSubAdd)
+
+        self.unwatched = self.itemlist.filter(lambda x:x.getState() == 'finished' or x.getState() == 'uploading')
+        self.available = self.itemlist.filter(lambda x:x.getState() == 'stopped' and x.creationTime > self.lastViewed)
+
         if self.loading:
             thread = Thread(target=lambda: self.generateFeed())
             thread.setDaemon(False)
@@ -1093,7 +1143,7 @@ class DirectoryFeed(Feed):
         Feed.__init__(self,url = "dtv:directoryfeed",title = "Feedless Videos",visible = False)
 
 	#A database query of all of the filenames of all of the downloads
-	self.RSSFilenames = defaultDatabase.filter(lambda x:isinstance(x,Item) and isinstance(x.feed,RSSFeed)).map(lambda x:x.getFilenames())
+	self.RSSFilenames = defaultDatabase.filter(lambda x:isinstance(x,Item) and not isinstance(x.feed,DirectoryFeed)).map(lambda x:x.getFilenames())
 	self.updateFreq = 30
         self.scheduler = ScheduleEvent(self.updateFreq, self.update,True)
         self.scheduler = ScheduleEvent(0, self.update,False)
