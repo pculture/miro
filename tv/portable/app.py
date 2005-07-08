@@ -375,6 +375,18 @@ class ModelActionHandler:
 	    db.restoreCursor()
 	    db.endUpdate()
 
+    def markFeedViewed(self, url):
+	db.beginUpdate()
+	db.saveCursor()
+	try:
+	    for obj in db:
+		if isinstance(obj,feed.UniversalFeed) and obj.getURL() == url:
+		    obj.markAsViewed()
+		    break
+	finally:
+	    db.restoreCursor()
+	    db.endUpdate()
+
     def expireItem(self, item):
 	db.beginUpdate()
 	db.saveCursor()
@@ -903,11 +915,11 @@ globalFilterList = {
     'boolean': (lambda x, y: x),
 
     #FIXME make this look at the feed's time until expiration
-    'recentItems': (lambda x, y: isinstance(x,item.Item) and x.getState() == 'finished' and x.getDownloadedTime()+config.get('DefaultTimeUntilExpiration')>datetime.datetime.now() and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
-    'oldItems': (lambda x, y:  isinstance(x,item.Item) and x.getState() == 'finished' and x.getDownloadedTime()+config.get('DefaultTimeUntilExpiration')<=datetime.datetime.now() and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
+    'recentItems': (lambda x, y: isinstance(x,item.Item) and (x.getState() == 'finished' or x.getState() == 'uploading' or x.getState() == 'watched') and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
+    'oldItems': (lambda x, y:  isinstance(x,item.Item) and (x.getState() == 'finished' or x.getState() == 'uploading' or x.getState() == 'watched') and x.getDownloadedTime()+config.get('DefaultTimeUntilExpiration')<=datetime.datetime.now() and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
 
-    'downloadedItems': (lambda x, y: isinstance(x,item.Item) and x.getState() == 'finished' and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
-    'unDownloadedItems': (lambda x, y: isinstance(x,item.Item) and (not x.getState() == 'finished') and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
+    'downloadedItems': (lambda x, y: isinstance(x,item.Item) and (x.getState() == 'finished' or x.getState() == 'uploading' or x.getState() == 'watched') and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
+    'unDownloadedItems': (lambda x, y: isinstance(x,item.Item) and (not (x.getState() == 'finished' or x.getState() == 'uploading' or x.getState() == 'watched')) and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
     'downloadingItems': (lambda x, y: isinstance(x,item.Item) and x.getState() == 'downloading' and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
        
     'class': filterClass,
