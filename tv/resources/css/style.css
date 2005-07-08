@@ -237,36 +237,8 @@ Download Queue Button
 	text-align: center;
 	}
 
-#sidebar a.selected_queuebutton{
-	position: fixed;
-	display: block;
-	padding: 0px;
-	margin: 0px;
-	text-decoration: none;
-	color: #ccc;
-	bottom: 0px;
-	left: 0px; 
-	width: 100%;
-	z-index: 100;
-	background: url(resource:images/selectedbackgrey.png) 0px 18px repeat-x; 
-	height: 52px;
-	text-align: center;
-	}
-
 
 #sidebar a.queuebutton span.name{
-	padding-top: 25px;
-	height: 50px;
-	/*
-	display: block;
-	position: fixed;
-	bottom: 10px;
-	width: 100%
-	*/
-	
-	}
-
-#sidebar a.selected_queuebutton span.name{
 	padding-top: 25px;
 	height: 50px;
 	/*
@@ -285,24 +257,6 @@ Download Queue Button
 	margin: 0 0 0 -30px;
 	background: url(resource:images/queue_arrow.png) 0 4px no-repeat;
 	text-shadow: 0px 1px 0px white;
-	/*border: 1px solid;	
-	display: inline;
-	padding: 25px 0 0 15px;
-	
-	margin: 0 0 0 -60px;
-	 
-	*/
-	
-	
-	
-	}
-
-#sidebar a.selected_queuebutton span.name span{
-	display: inline;
-	padding: 5px 0 5px 20px;
-	margin: 0 0 0 -30px;
-	background: url(resource:images/queue_arrow.png) 0 4px no-repeat;
-	text-shadow: 0px 1px 0px black;
 	/*border: 1px solid;	
 	display: inline;
 	padding: 25px 0 0 15px;
@@ -1020,7 +974,7 @@ A wrapper around the content
 .green_left{
 	background: url(resource:images/green_left.png) top left no-repeat;
 	display: inline;
-	margin: 3px -15px 0 0;
+	margin: 3px 0 0 0;
 	float: right;
 	}
 
@@ -1047,6 +1001,52 @@ A wrapper around the content
 	}
 
 .gray_right{
+	background: url(resource:images/gray_right.png) top right no-repeat;
+	}
+
+
+	
+.both_number_count{
+	padding: 3px 0 4px;
+	color: #fff;
+	margin: 0 9px;
+	background: #6c3;
+	font-weight: bold;
+	font-size: 11px;
+	text-shadow: 0px 1px 0px #333;
+	}
+	
+	
+.both_green_left{
+	background: url(resource:images/green_left.png) top left no-repeat;
+	display: inline;
+	margin: 3px -15px 0 0;
+	float: right;
+	}
+
+.both_green_right{
+	background: url(resource:images/green_right.png) top right no-repeat;
+	padding-right: 1px;
+	}
+
+
+.both_gray_number_count{
+	padding: 3px 2px 3px 9px;
+	color: #333;
+	margin: 0 9px;
+	background: #ccc;
+	font-size: 10px;
+	text-shadow: 0px 1px 0px #fff;
+	}
+
+.both_gray_left{
+	background: url(resource:images/gray_left.png) top left no-repeat;
+	display: inline;
+	margin: 4px 0 0 0;
+	float: right;
+	}
+
+.both_gray_right{
 	background: url(resource:images/gray_right.png) top right no-repeat;
 	}
 

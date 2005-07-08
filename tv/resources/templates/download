@@ -28,8 +28,8 @@
 <div id="top_wrapper">
 
 <div id="channel_info">
-	<img src="resource:images/thumbnail.png" />
-	<h2 i18n:translate="">Download Queue</h2>
+	<img src="resource:images/queue_arrow.png" />
+	<h2 i18n:translate="">Downloads</h2>
 </div>
 
 <div id="right_half">

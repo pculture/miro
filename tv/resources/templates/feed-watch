@@ -65,7 +65,7 @@
   <div id="content_window">
     <ul> 
 
-<div class="no_new" t:hideIfViewNotEmpty="newitems" i18n:translate="">No new videos.  You can see what's available on this channel by clicking on the 'Choose' tab above.</div>        
+<div class="no_new" t:hideIfViewNotEmpty="newitems" i18n:translate="">See what's available on this channel by clicking on the 'Browse' tab.</div>        
 <li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="newitems">
         <t:includeTemplate filename="download-item" />
         </li> 
