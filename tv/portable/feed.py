@@ -498,11 +498,38 @@ class UniversalFeed(DDBObject):
         thread.setDaemon(False)
         thread.start()
 
+    # Returns string with number of unwatched videos in feed
     def numUnwatched(self):
         return str(self.__dict__['unwatched'].len())
 
+    # Returns string with number of available videos in feed
     def numAvailable(self):
         return str(self.__dict__['available'].len())
+
+    # Returns true iff both unwatched and available numbers should be shown
+    def showBothUAndA(self):
+        return ((not self.isAutoDownloadable()) and
+                self.__dict__['unwatched'].len() > 0 and 
+                self.__dict__['available'].len() > 0)
+
+    # Returns true iff unwatched should be shown and available shouldn't
+    def showOnlyU(self):
+        return ((self.__dict__['unwatched'].len() > 0 and 
+                 self.__dict__['available'].len() == 0) or 
+                (self.isAutoDownloadable() and
+                 self.__dict__['unwatched'].len() > 0))
+
+    # Returns true iff available should be shown and unwatched shouldn't
+    def showOnlyA(self):
+        return ((not self.isAutoDownloadable()) and 
+                self.__dict__['unwatched'].len() == 0 and 
+                self.__dict__['available'].len() > 0)
+
+    # Returns true iff neither unwatched nor available should be shown
+    def showNeitherUNorA(self):
+        return (self.__dict__['unwatched'].len() == 0 and
+                (self.isAutoDownloadable() or 
+                 self.__dict__['available'].len() == 0))
 
     ##
     # Returns the last time this feed was viewed by the user
