@@ -6,6 +6,7 @@ from xhtmltools import unescape,xhtmlify
 from scheduler import ScheduleEvent
 from feedparser import FeedParserDict
 from threading import Thread
+import threadpriority
 import config
 
 ##
@@ -195,6 +196,7 @@ class Item(DDBObject):
     ##
     # Starts downloading the item
     def actualDownload(self,autodl=False):
+	threadpriority.setNormalPriority()
         spawn = True
         self.beginRead()
         try:

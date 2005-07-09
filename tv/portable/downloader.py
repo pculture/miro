@@ -2,6 +2,7 @@ from database import DDBObject, defaultDatabase
 from threading import Thread, Event, RLock
 from httplib import HTTPConnection, HTTPSConnection,HTTPException
 from scheduler import ScheduleEvent
+import threadpriority
 import config
 import traceback
 import socket
@@ -751,6 +752,8 @@ class HTTPDownloader(Downloader):
     ##
     # This is the actual download thread.
     def runDownloader(self, retry = False):
+	threadpriority.setBackgroundPriority()
+
         if retry:
             self.beginRead()
             pos = self.currentSize
@@ -1164,6 +1167,8 @@ class BTDownloader(Downloader):
         self.d.finished()
 
     def restartDL(self):
+	threadpriority.setBackgroundPriority()
+
 	if self.metainfo != None:
 	    self.torrent = self.multitorrent.start_torrent(self.metainfo,
 				      self.torrentConfig, self, self.filename)
