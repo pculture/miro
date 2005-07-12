@@ -15,7 +15,7 @@ def get(key):
 	except KeyError:
 	    if key == 'DataDirectory':
 		#FIXME add Windows support
-		path = expanduser("~/Movies")
+		path = expanduser("~/Movies/DTV")
 		try:
 		    makedirs(join(path,'Incomplete Downloads'))
 		except:
