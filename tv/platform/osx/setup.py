@@ -61,9 +61,11 @@ setup(
 # IMPORTANT: Note well that we don't *remove* any files left over from
 # the previous build that disappeared in this one. So, before building
 # a distribution bundle, you should be sure to 'clean'.
+
 VLC_LIBRARY_SUBDIR = 'extras/contrib/vlc-lib'
 BUNDLE_LIB_DIRECTORY = 'Contents/MacOS/lib'
 BUNDLE_MODULE_DIRECTORY = 'Contents/MacOS'
+
 if 'py2app' in sys.argv and False: ## NEEDS XXXX
     # Create symlinks or copy files?
     alias = '-A' in sys.argv
@@ -71,8 +73,8 @@ if 'py2app' in sys.argv and False: ## NEEDS XXXX
     # NEEDS: We guess where the bundle was built. Horrible.
     bundleRoot = 'dist/DTV.app'
     for i in range(0,len(sys.argv)-1):
-	if sys.argv[i] == '--dist-dir':
-	    bundleRoot = '%s/DTV.app' % sys.argv[i+1]
+        if sys.argv[i] == '--dist-dir':
+            bundleRoot = '%s/DTV.app' % sys.argv[i+1]
 
     # list of (sourcePath, destinationPath) tuples of files to copy or link
     manifest = []
@@ -81,34 +83,34 @@ if 'py2app' in sys.argv and False: ## NEEDS XXXX
     vlcLibDir = "%s/%s" % (vlchelper.info.getVLCRoot(root), VLC_LIBRARY_SUBDIR)
     bundleLibDir = "%s/%s" % (bundleRoot, BUNDLE_LIB_DIRECTORY)
     if not os.access(bundleLibDir, os.F_OK):
-	os.makedirs(bundleLibDir)
+        os.makedirs(bundleLibDir)
     for file in os.listdir(vlcLibDir):
-	src = os.path.abspath('%s/%s' % (vlcLibDir, file))
-	dest = '%s/vlc_%s' % (bundleLibDir, os.path.basename(file))
-	manifest.append((src, dest))
+        src = os.path.abspath('%s/%s' % (vlcLibDir, file))
+        dest = '%s/vlc_%s' % (bundleLibDir, os.path.basename(file))
+        manifest.append((src, dest))
 
     # Find the modules to copy.
     bundleModuleDir = "%s/%s" % (bundleRoot, BUNDLE_MODULE_DIRECTORY)
     for module in vlchelper.info.getModuleList(root):
-	src = os.path.abspath('%s/%s.dylib' % (vlchelper.info.getVLCRoot(root), module))
-	dest = '%s/%s.dylib' % (bundleModuleDir, module)
-	manifest.append((src, dest))
+        src = os.path.abspath('%s/%s.dylib' % (vlchelper.info.getVLCRoot(root), module))
+        dest = '%s/%s.dylib' % (bundleModuleDir, module)
+        manifest.append((src, dest))
 
     # Copy or link the files.
     for (src, dest) in manifest:
-	# Make sure the destination directory exists.
-	if not os.access(os.path.dirname(dest), os.F_OK):
-	    os.makedirs(os.path.dirname(dest))
+        # Make sure the destination directory exists.
+        if not os.access(os.path.dirname(dest), os.F_OK):
+            os.makedirs(os.path.dirname(dest))
 
-	# Delete the file if it exists.
-	try:
-	    os.unlink(dest)
-	except OSError:
-	    pass
+        # Delete the file if it exists.
+        try:
+            os.unlink(dest)
+        except OSError:
+            pass
 
-	# Copy or link the file.
-	if alias:
-	    os.symlink(src, dest)
-	else:
-	    # NEEDS: frob permissions?
-	    shutil.copy(src, dest)
+        # Copy or link the file.
+        if alias:
+            os.symlink(src, dest)
+        else:
+            # NEEDS: frob permissions?
+            shutil.copy(src, dest)
