@@ -369,7 +369,9 @@ class ModelActionHandler:
 	try:
 	    for obj in db:
 		if isinstance(obj,feed.UniversalFeed) and obj.getURL() == url:
-		    obj.update()
+                    thread = threading.Thread(target=obj.update)
+                    thread.setDaemon(False)
+                    thread.start()
 		    break
 	finally:
 	    db.restoreCursor()
@@ -677,6 +679,13 @@ class Tab:
 
     def start(self, frame, templateNameHint):
 	self.controller.setTabListActive(True) 
+
+        # Free up the template currently being displayed
+        # NOTE: This is kind of a hacky way to do this, but it works --NN
+        try:
+            frame.obj.currentDisplay[1].onDeselect()
+        except:
+            pass
 
         self.display = TemplateDisplay(templateNameHint or self.contentsTemplate, self.contentsData, self.controller, frameHint=frame, indexHint=1)
 
