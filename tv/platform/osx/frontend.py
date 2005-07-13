@@ -14,6 +14,7 @@ import re
 import os
 import sys
 import time
+import math
 import struct
 import threading
 
@@ -61,7 +62,7 @@ class Application:
         None
 
 
-class AppController(NSObject):
+class AppController (NSObject):
 
     def init(self, actualApp):
         self.actualApp = actualApp
@@ -107,6 +108,7 @@ class AppController(NSObject):
 
         openURL_withReplyEvent_ = objc.selector(openURL_withReplyEvent_,
                                                 signature="v@:@@")
+
 
 ###############################################################################
 #### Main window                                                           ####
@@ -213,7 +215,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         theTemplate = (index == 0) and self.tabView or self.contentTemplateView
         return theTemplate.frame()
 
-    ### Size contraints on splitview ###
+    ### Size constraints on splitview ###
 
     minimumTabListWidth = 150 # pixels
     minimumContentWidth = 300 # pixels
@@ -231,22 +233,26 @@ class MainController (NibClassBuilder.AutoBaseClass):
     # the tab list unless it's necessary to shrink it to obey the
     # minimum content area size constraint.
     def splitView_resizeSubviewsWithOldSize_(self, sender, oldSize):
+        tabBox = self.tabView.superview().superview()
+        contentBox = self.contentTemplateView.superview().superview()
+        
         splitViewSize = sender.frame().size
-        tabSize = self.tabView.frame().size
-        contentSize = self.contentTemplateView.frame().size
+        tabSize = tabBox.frame().size
+        contentSize = contentBox.frame().size
+        dividerWidth = sender.dividerThickness()
 
-        tabSize.height = splitViewSize.height
-        contentSize.height = splitViewSize.height
+        tabSize.height = contentSize.height = splitViewSize.height
 
-        contentSize.width = splitViewSize.width - sender.dividerThickness() - tabSize.width
+        contentSize.width = splitViewSize.width - dividerWidth - tabSize.width
         if contentSize.width < self.minimumContentWidth:
             contentSize.width = self.minimumContentWidth
-        tabSize.width = splitViewSize.width - sender.dividerThickness() - contentSize.width
+        tabSize.width = splitViewSize.width - dividerWidth - contentSize.width
 
-        self.tabView.setFrameSize_(tabSize)
-        self.tabView.setFrameOrigin_(NSPoint(0, 0))
-        self.contentTemplateView.setFrameSize_(contentSize)
-        self.contentTemplateView.setFrameOrigin_(NSPoint(tabSize.width + sender.dividerThickness(), 0))
+        tabBox.setFrameSize_(tabSize)
+        tabBox.setFrameOrigin_(NSZeroPoint)
+        contentBox.setFrameSize_(contentSize)
+        contentBox.setFrameOrigin_((tabSize.width + dividerWidth,0))
+        
 
     ### 'Add Channel' sheet ###
 
@@ -272,6 +278,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     def addChannelSheetCancel_(self, sender):
         NSApplication.sharedApplication().endSheet_(self.addChannelSheet)
+
 
 ###############################################################################
 #### 'Delegate' objects for asynchronously asking the user questions       ####
@@ -311,10 +318,11 @@ class UIBackendDelegate:
         # as under other OSes. Sometimes it blocks, sometimes it doesn't.
         NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
 
+
 # NEEDS: Factor code common between PasswordController and
 # QuestionController out into a superclass
 
-class PasswordController(NibClassBuilder.AutoBaseClass):
+class PasswordController (NibClassBuilder.AutoBaseClass):
 
     def init(self, message, prefillUser = None, prefillPassword = None):
         pool = NSAutoreleasePool.alloc().init()
@@ -418,18 +426,20 @@ class QuestionController(NibClassBuilder.AutoBaseClass):
         self.condition.notify()
         self.condition.release()
 
+
 ###############################################################################
 #### Our own prettier beveled NSBox                                        ####
 ###############################################################################
 
 class BeveledBox (NibClassBuilder.AutoBaseClass):
+    # Actual base class is NSBox
 
     TOP_COLOR        = NSColor.colorWithDeviceWhite_alpha_( 147 / 255.0, 1.0 )
     LEFT_RIGHT_COLOR = NSColor.colorWithDeviceWhite_alpha_( 224 / 255.0, 1.0 )
     BOTTOM_COLOR     = NSColor.colorWithDeviceWhite_alpha_( 240 / 255.0, 1.0 )
     CONTOUR_COLOR    = NSColor.colorWithDeviceWhite_alpha_( 102 / 255.0, 1.0 )
 
-    def drawRect_( self, rect ):
+    def drawRect_(self, rect):
         interior = NSInsetRect( rect, 1, 1 )
 
         NSColor.whiteColor().set()
@@ -455,6 +465,59 @@ class BeveledBox (NibClassBuilder.AutoBaseClass):
         p1 = NSPoint( rect.origin.x+1, rect.origin.y+0.5 )
         p2 = NSPoint( rect.size.width-1, rect.origin.y+0.5 )
         NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
+
+
+###############################################################################
+#### The progress display                                                  ####
+###############################################################################
+
+class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
+    # Actual base class is NSView
+
+    def initWithFrame_(self, frame):
+        super(ProgressDisplayView, self).initWithFrame_(frame)
+        self.backgroundLeft = NSImage.imageNamed_( "display_left" )
+        self.backgroundLeftWidth = self.backgroundLeft.size().width
+        self.backgroundRight = NSImage.imageNamed_( "display_right" )
+        self.backgroundRightWidth = self.backgroundRight.size().width
+        self.backgroundCenter = NSImage.imageNamed_( "display_center" )
+        self.backgroundCenterWidth = self.backgroundCenter.size().width
+        self.timeAttrs = { NSFontAttributeName:NSFont.fontWithName_size_("Helvetica", 10),
+                           NSForegroundColorAttributeName:NSColor.colorWithCalibratedWhite_alpha_(69/255.0, 1.0) }
+        return self;
+
+    def drawRect_( self, rect ):
+        self.drawBackground()
+        self.drawTimeIndicator()
+        self.drawProgressGroove()
+        self.drawProgressCursor()
+
+    def drawBackground(self):
+        self.backgroundLeft.compositeToPoint_operation_( (0,0), NSCompositeSourceOver )
+        
+        x = self.bounds().size.width - self.backgroundRightWidth
+        self.backgroundRight.compositeToPoint_operation_( (x, 0), NSCompositeSourceOver )
+        
+        renderedSpace = self.backgroundRightWidth + self.backgroundLeftWidth
+        emptySpace = self.bounds().size.width - renderedSpace
+        tileNum = emptySpace / float(self.backgroundCenterWidth)
+        x = self.bounds().size.width - self.backgroundRightWidth - self.backgroundCenterWidth
+        while tileNum >= 1:
+            self.backgroundCenter.compositeToPoint_operation_( (x, 0), NSCompositeSourceOver )
+            x -= self.backgroundCenterWidth
+            tileNum -= 1
+        x = self.backgroundLeftWidth
+        self.backgroundCenter.compositeToPoint_operation_( (x, 0), NSCompositeSourceOver )
+    
+    def drawTimeIndicator(self):
+        NSString.stringWithString_(u"00:00:00").drawAtPoint_withAttributes_( (8,5.5), self.timeAttrs )
+
+    def drawProgressGroove(self):
+        pass
+        
+    def drawProgressCursor(self):
+        pass
+
 
 ###############################################################################
 #### Right-hand pane displays generally                                    ####
@@ -506,6 +569,7 @@ class NullDisplay (Display):
 
     def getView(self):
         return self.view
+
 
 ###############################################################################
 #### Right-hand pane HTML display                                          ####
@@ -567,11 +631,12 @@ class HTMLDisplay (Display):
             self.readyToDisplayHook = None
             hook()
 
+
 ###############################################################################
 #### An enhanced WebView                                                   ####
 ###############################################################################
 
-class ManagedWebView(NSObject):
+class ManagedWebView (NSObject):
 
     def init(self, initialHTML, existingView=None, onInitialLoadFinished=None, onLoadURL=None, sizeHint=None):
         self.onInitialLoadFinished = onInitialLoadFinished
@@ -693,6 +758,7 @@ class ManagedWebView(NSObject):
             return NSURLRequest.requestWithURL_(urlObject)
         return request
 
+
 ###############################################################################
 #### Right-hand pane video display                                         ####
 ###############################################################################
@@ -732,6 +798,7 @@ def darkVoodooMakePidFront(pid):
     if err:
         print >>sys.stderr, 'SetFrontProcess', (err, psn)
         assert(0)
+
 
 def playVideoFileHack(filename):
     # Old way
