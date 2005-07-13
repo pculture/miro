@@ -225,7 +225,8 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                     PyList_Append(self.repeatList,(getRepeatAttr,(addKey,attrs[addKey])))
             PyList_Append(self.repeatList,(getRepeatAddIdAndClose,None))
 
-            self.repeatView = self.handle.findNamedView(attrs['t:repeatForView']).getView().map(idAssignment)
+            self.repeatView = self.handle.findNamedView(attrs['t:repeatForView']).getView()
+
         elif self.inRepeatView:
             if attrs.has_key('t:hideIfKey') or attrs.has_key('t:hideIfNotKey'):
                 try:
@@ -431,10 +432,9 @@ class TrackedView:
         # that is used to invoke execJS and checkHides
         self.anchorId = anchorId
         self.anchorType = anchorType
-        # Map view through identity so that we get our own private
-        # copy to attach our callbacks to, such that when we drop
-        # our reference to the view the callbacks go away
-        self.view = view.map(identityFunc)
+
+        self.origView = view
+        self.view = view.map(idAssignment)
         self.templateFuncs = templateFuncs
         self.templateData = templateData
         self.parent = parent
@@ -709,10 +709,10 @@ class Handle:
         self.document = None
         self.hideConditions = []
         self.trackedViews = []
-        for view in self.namedViews.values():
-            view.removeViewFromDB()
         for handle in self.subHandles:
             handle.unlinkTemplate()
+        for view in self.namedViews.values():
+            view.removeViewFromDB()
     
     def initialFillIn(self):
         for tv in self.trackedViews:
