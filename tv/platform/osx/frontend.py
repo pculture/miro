@@ -419,6 +419,38 @@ class QuestionController(NibClassBuilder.AutoBaseClass):
         self.condition.release()
 
 ###############################################################################
+#### Our own prettier beveled NSBox                                        ####
+###############################################################################
+
+class BeveledBox (NibClassBuilder.AutoBaseClass):
+
+    TOP_COLOR     = NSColor.colorWithDeviceWhite_alpha_( 0.3, 0.8 )
+    CONTOUR_COLOR = NSColor.colorWithDeviceWhite_alpha_( 0.4, 0.8 )
+    BOTTOM_COLOR  = NSColor.colorWithDeviceWhite_alpha_( 0.9, 0.8 )
+
+    def drawRect_( self, rect ):
+        self.TOP_COLOR.set()
+        p1 = NSPoint( rect.origin.x-0.5, rect.size.height-0.5 )
+        p2 = NSPoint( rect.size.width+0.5, rect.size.height-0.5 )
+        NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
+
+        self.CONTOUR_COLOR.set()
+        p1 = NSPoint( rect.origin.x+0.5, rect.size.height-1 )
+        p2 = NSPoint( rect.origin.x+0.5, rect.origin.y+1 )
+        NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
+        p1 = NSPoint( rect.origin.x+1, rect.origin.y+1.5 )
+        p2 = NSPoint( rect.size.width, rect.origin.y+1.5 )
+        NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
+        p1 = NSPoint( rect.size.width-0.5, rect.origin.y+2 )
+        p2 = NSPoint( rect.size.width-0.5, rect.size.height-1 )
+        NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
+
+        self.BOTTOM_COLOR.set()
+        p1 = NSPoint( rect.origin.x-0.5, rect.origin.y+0.5 )
+        p2 = NSPoint( rect.size.width+0.5, rect.origin.y+0.5 )
+        NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
+
+###############################################################################
 #### Right-hand pane displays generally                                    ####
 ###############################################################################
 
