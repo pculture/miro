@@ -424,30 +424,36 @@ class QuestionController(NibClassBuilder.AutoBaseClass):
 
 class BeveledBox (NibClassBuilder.AutoBaseClass):
 
-    TOP_COLOR     = NSColor.colorWithDeviceWhite_alpha_( 0.3, 0.8 )
-    CONTOUR_COLOR = NSColor.colorWithDeviceWhite_alpha_( 0.4, 0.8 )
-    BOTTOM_COLOR  = NSColor.colorWithDeviceWhite_alpha_( 0.9, 0.8 )
+    TOP_COLOR        = NSColor.colorWithDeviceWhite_alpha_( 147 / 255.0, 1.0 )
+    LEFT_RIGHT_COLOR = NSColor.colorWithDeviceWhite_alpha_( 224 / 255.0, 1.0 )
+    BOTTOM_COLOR     = NSColor.colorWithDeviceWhite_alpha_( 240 / 255.0, 1.0 )
+    CONTOUR_COLOR    = NSColor.colorWithDeviceWhite_alpha_( 102 / 255.0, 1.0 )
 
     def drawRect_( self, rect ):
-        self.TOP_COLOR.set()
-        p1 = NSPoint( rect.origin.x-0.5, rect.size.height-0.5 )
-        p2 = NSPoint( rect.size.width+0.5, rect.size.height-0.5 )
-        NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
+        interior = NSInsetRect( rect, 1, 1 )
+
+        NSColor.whiteColor().set()
+        NSRectFill( interior )
 
         self.CONTOUR_COLOR.set()
+        NSFrameRect( interior )
+    
+        self.TOP_COLOR.set()
+        p1 = NSPoint( rect.origin.x+1, rect.size.height-0.5 )
+        p2 = NSPoint( rect.size.width-1, rect.size.height-0.5 )
+        NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
+
+        self.LEFT_RIGHT_COLOR.set()
         p1 = NSPoint( rect.origin.x+0.5, rect.size.height-1 )
         p2 = NSPoint( rect.origin.x+0.5, rect.origin.y+1 )
         NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
-        p1 = NSPoint( rect.origin.x+1, rect.origin.y+1.5 )
-        p2 = NSPoint( rect.size.width, rect.origin.y+1.5 )
-        NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
-        p1 = NSPoint( rect.size.width-0.5, rect.origin.y+2 )
+        p1 = NSPoint( rect.size.width-0.5, rect.origin.y+1 )
         p2 = NSPoint( rect.size.width-0.5, rect.size.height-1 )
         NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
 
         self.BOTTOM_COLOR.set()
-        p1 = NSPoint( rect.origin.x-0.5, rect.origin.y+0.5 )
-        p2 = NSPoint( rect.size.width+0.5, rect.origin.y+0.5 )
+        p1 = NSPoint( rect.origin.x+1, rect.origin.y+0.5 )
+        p2 = NSPoint( rect.size.width-1, rect.origin.y+0.5 )
         NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
 
 ###############################################################################
