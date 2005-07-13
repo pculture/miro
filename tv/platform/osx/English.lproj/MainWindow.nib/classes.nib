@@ -8,7 +8,8 @@
             LANGUAGE = ObjC; 
             OUTLETS = {contentTemplateView = id; mainWindow = id; tabView = id; }; 
             SUPERCLASS = NSObject; 
-        }
+        }, 
+        {CLASS = ProgressDisplayView; LANGUAGE = ObjC; SUPERCLASS = NSView; }
     ); 
     IBVersion = 1; 
 }
