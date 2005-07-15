@@ -12,18 +12,16 @@ class AutoDownloader:
     # Returns true iff x is an autodownloader
     def isAutoDownloader(self,x):
         ret = False
-        if isinstance(x,item.Item) and x.getState() == 'downloading':
-            if x.getAutoDownloaded():
-                ret = True
+        if x.getAutoDownloaded() and x.getState() == 'downloading':
+            ret = True
         return ret
 
     ##
     # Returns true iff x is a manual downloader
     def isManualDownloader(self,x):
         ret = False
-        if isinstance(x,item.Item) and x.getState() == 'downloading':
-            if not x.getAutoDownloaded():
-                ret = True
+        if not x.getAutoDownloaded() and x.getState() == 'downloading':
+            ret = True
         return ret
 
     ##
@@ -45,21 +43,20 @@ class AutoDownloader:
     ##
     # Returns true iff x is a feed and is automatically downloadable
     def eligibileFeedFilter(self,x):
-	return isinstance(x,feed.Feed) and x.isAutoDownloadable()
+	return x.isAutoDownloadable()
 
     ##
     # Returns true iff x is a feed with a manual download item
     def manualFeedFilter(self,x):
         ret = False
-        if isinstance(x, feed.Feed):
-            x.beginRead()
-            try:
-                for item in x.items:
-                    if item.getStateNoAuto() == 'manualpending':
-                        ret = True
-                        break
-            finally:
-                x.endRead()
+        x.beginRead()
+        try:
+            for item in x.items:
+                if item.getStateNoAuto() == 'manualpending':
+                    ret = True
+                    break
+        finally:
+            x.endRead()
         return ret
                 
     ##
@@ -72,11 +69,10 @@ class AutoDownloader:
         # FIXME: For locking reasons, downloaders don't always
         #        call beginChange() and endChange(), so we have to
         #        recompute these filters
-        database.defaultDatabase.recomputeFilter(self.autoFeeds)
-	database.defaultDatabase.recomputeFilter(self.manualFeeds)
-	database.defaultDatabase.recomputeFilter(self.allFeeds)
-	database.defaultDatabase.recomputeFilter(self.autoDownloaders)
-	database.defaultDatabase.recomputeFilter(self.manualDownloaders)
+        self.allFeeds.recomputeFilter(self.autoFeeds)
+	self.allFeeds.recomputeFilter(self.manualFeeds)
+	self.allItems.recomputeFilter(self.autoDownloaders)
+        self.allItems.recomputeFilter(self.manualDownloaders)
 
 
     ##
@@ -85,7 +81,6 @@ class AutoDownloader:
     # gets the next thing it can
     # 
     def spawnDownloads(self):
-	#print "Spawning auto downloader..."
         self.recomputeFilters()
 	attempts = 0
         numFeeds = self.autoFeeds.len()
@@ -118,29 +113,29 @@ class AutoDownloader:
 	    if thisFeed != None:
 		thisFeed.downloadNextManual()
 		numDownloads += 1
-	#print "done autodownloading."
 
     def run(self):
 	self.expireItems()
 	self.spawnDownloads()
 	    
     def __init__(self):
-	self.autoFeeds = database.defaultDatabase.filter(self.eligibileFeedFilter)
+        self.allFeeds = database.defaultDatabase.filter(lambda x:isinstance(x,feed.Feed))
+        self.allItems = database.defaultDatabase.filter(lambda x:isinstance(x,item.Item
+))
+	self.autoFeeds =self.allFeeds.filter(self.eligibileFeedFilter)
         if self.autoFeeds.len() > 1:
             skip = randint(0,self.autoFeeds.len()-1)
             for x in range(0,skip):
                 self.autoFeeds.getNext()
 
-        self.manualFeeds = database.defaultDatabase.filter(self.manualFeedFilter)
+        self.manualFeeds = self.allFeeds.filter(self.manualFeedFilter)
         if self.manualFeeds.len() > 1:
             skip = randint(0,self.manualFeeds.len()-1)
             for x in range(0,skip):
                 self.manualFeeds.getNext()
-        
-        self.allFeeds = database.defaultDatabase.filter(lambda x:isinstance(x,feed.Feed))
 
-	self.autoDownloaders = database.defaultDatabase.filter(self.isAutoDownloader)
-	self.manualDownloaders = database.defaultDatabase.filter(self.isManualDownloader)
+	self.autoDownloaders = self.allItems.filter(self.isAutoDownloader)
+	self.manualDownloaders = self.allItems.filter(self.isManualDownloader)
 
 	self.run()
 	self.event = scheduler.ScheduleEvent(10,self.run)
