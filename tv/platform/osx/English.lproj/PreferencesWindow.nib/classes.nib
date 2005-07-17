@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {switchPreferenceView = id; }; 
+            CLASS = PreferencesWindowController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {channelsView = id; downloadsView = id; rssView = id; }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}
