@@ -379,7 +379,7 @@ class PasswordController (NibClassBuilder.AutoBaseClass):
 
 class QuestionController(NibClassBuilder.AutoBaseClass):
 
-    def init(secondslf, message):
+    def init(self, message):
         # as loaded, button titles are "Yes" and "No" and window title is
         # "Question", but these could be made arguments to init()
         pool = NSAutoreleasePool.alloc().init()
