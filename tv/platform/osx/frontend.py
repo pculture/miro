@@ -21,6 +21,7 @@ import threading
 NibClassBuilder.extractClasses("MainMenu")
 NibClassBuilder.extractClasses("MainWindow")
 NibClassBuilder.extractClasses("VideoView")
+NibClassBuilder.extractClasses("PreferencesWindow")
 NibClassBuilder.extractClasses("AddChannelSheet")
 NibClassBuilder.extractClasses("PasswordWindow")
 NibClassBuilder.extractClasses("QuestionWindow")
@@ -35,13 +36,13 @@ class Application:
 
     def __init__(self):
         self.app = NSApplication.sharedApplication()
-        self.ctrl = AppController.alloc().init(self)
-        self.app.setDelegate_(self.ctrl)
         NSBundle.loadNibNamed_owner_("MainMenu", self.app)
+        controller = self.app.delegate()
+        controller.actualApp = self
 
         # Force Cocoa into multithreaded mode
         # (NSThread.isMultiThreaded will be true when this call returns)
-        NSThread.detachNewThreadSelector_toTarget_withObject_("noop", self.ctrl, self.ctrl)
+        NSThread.detachNewThreadSelector_toTarget_withObject_("noop", controller, controller)
 
     def Run(self):
         AppHelper.runEventLoop()
@@ -64,10 +65,6 @@ class Application:
 
 class AppController (NSObject):
 
-    def init(self, actualApp):
-        self.actualApp = actualApp
-        return self
-    
     # Do nothing. A dummy method called by Application to force Cocoa into
     # multithreaded mode.
     def noop(self):
@@ -108,7 +105,70 @@ class AppController (NSObject):
 
         openURL_withReplyEvent_ = objc.selector(openURL_withReplyEvent_,
                                                 signature="v@:@@")
+                                                
+    def showPreferencesWindow_(self, sender):
+        prefController = PreferencesWindowController.alloc().init()
+        prefController.retain()
+        prefController.showWindow_(None)
 
+
+###############################################################################
+#### Preferences window                                                    ####
+###############################################################################
+
+class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
+
+    class PreferenceItem (NSToolbarItem):
+        def setView_(self, view):
+            self.view = view
+        
+    def init(self):
+        super(PreferencesWindowController, self).initWithWindowNibName_("PreferencesWindow")
+        return self
+
+    def awakeFromNib(self):
+        self.items = dict()
+        channelsItem = self.makePreferenceItem("Channels")
+        downloadsItem = self.makePreferenceItem("Downloads")
+        rssItem = self.makePreferenceItem("RSS")
+        self.allItems = (channelsItem.itemIdentifier(), 
+                         downloadsItem.itemIdentifier(),
+                         rssItem.itemIdentifier())
+
+        toolbar = NSToolbar.alloc().initWithIdentifier_("Preferences")
+        toolbar.setDelegate_(self)
+        toolbar.setSelectedItemIdentifier_(self.items["Channels"].itemIdentifier())
+        self.window().setToolbar_( toolbar )
+
+    def makePreferenceItem(self, descriptor):
+        item = self.PreferenceItem.alloc().initWithItemIdentifier_(descriptor)
+        item.setLabel_(descriptor)
+        item.setImage_( NSImage.imageNamed_(descriptor.lower() + "_pref") )
+        item.setTarget_(self)
+        item.setAction_("switchPreferenceView:")
+        item.setView_(getattr(self, descriptor.lower() + "View"))
+        self.items[ descriptor ] = item
+        return item
+    
+    def toolbarAllowedItemIdentifiers_(self, toolbar):
+        return self.allItems
+    
+    def toolbarDefaultItemIdentifiers_(self, toolbar):
+        return self.allItems
+        
+    def toolbarSelectableItemIdentifiers_(self, toolbar):
+        return self.allItems
+
+    def toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_(self, toolbar, itemIdentifier, flag ):
+        return self.items[ itemIdentifier ]
+        
+    def validateToolbarItem_(self, item):
+        return True
+
+    def switchPreferenceView_(self, sender):
+        item = self.items[ sender.itemIdentifier() ]
+        self.window().setContentView_(item.view)
+    
 
 ###############################################################################
 #### Main window                                                           ####
@@ -253,7 +313,6 @@ class MainController (NibClassBuilder.AutoBaseClass):
         contentBox.setFrameSize_(contentSize)
         contentBox.setFrameOrigin_((tabSize.width + dividerWidth,0))
         
-
     ### 'Add Channel' sheet ###
 
     def openAddChannelSheet_(self, sender):
@@ -278,6 +337,25 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     def addChannelSheetCancel_(self, sender):
         NSApplication.sharedApplication().endSheet_(self.addChannelSheet)
+
+    ### Action button ###
+    
+    def showActionMenu_(self, sender):
+        mainMenu = NSApplication.sharedApplication().mainMenu()
+        menu = mainMenu.itemWithTag_( 1 ).submenu()
+        curEvent = NSApplication.sharedApplication().currentEvent()
+#        event = NSEvent.mouseEventWithType_location_modifierFlags_timestamp_windowNumber_context_eventNumber_clickCount_pressure_(
+#            NSLeftMouseDown,
+#            curEvent.locationInWindow(),
+#            curEvent.modifierFlags(),
+#            curEvent.timestamp(),
+#            curEvent.windowNumber(),
+#            curEvent.context(),
+#            curEvent.eventNumber(),
+#            curEvent.clickCount(),
+#            curEvent.pressure() )
+            
+        NSMenu.popUpContextMenu_withEvent_forView_( menu, curEvent, sender )
 
 
 ###############################################################################
