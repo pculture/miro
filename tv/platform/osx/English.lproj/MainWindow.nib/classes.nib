@@ -3,7 +3,7 @@
         {CLASS = BeveledBox; LANGUAGE = ObjC; SUPERCLASS = NSBox; }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
-            ACTIONS = {openAddChannelSheet = id; }; 
+            ACTIONS = {openAddChannelSheet = id; showActionMenu = id; }; 
             CLASS = MainController; 
             LANGUAGE = ObjC; 
             OUTLETS = {contentTemplateView = id; mainWindow = id; tabView = id; }; 
