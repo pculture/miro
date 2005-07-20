@@ -343,7 +343,7 @@ cdef class CDynamicDatabase:
     #
     # @param f function to use as a map
     def map(self, f):
-        assert(not self.rootDB) # Dude! Don't map the entire DB! Are you crazy?
+        #assert(not self.rootDB) # Dude! Don't map the entire DB! Are you crazy?
 
         self.beginUpdate()
         try:
@@ -365,7 +365,7 @@ cdef class CDynamicDatabase:
     # returns a View of the data filtered through a sort function
     # @param f comparision function to use for sorting
     def sort(self, f):
-        assert(not self.rootDB) # Dude! Don't sort the entire DB! Are you crazy?
+        #assert(not self.rootDB) # Dude! Don't sort the entire DB! Are you crazy?
 
         self.beginUpdate()
         try:
@@ -680,7 +680,14 @@ cdef class CDynamicDatabase:
                     view.saveCursor()
                     try:
                         view.resetCursor()
-                        view.changeObj(self.objects[item][0])
+                        if f(self.objects[item][0]):
+                            if view.objectLocs.has_key(self.objects[item][0]):
+                                view.changeObj(self.objects[item][0])
+                            else:
+                                view.addBeforeCursor(self.objects[item][0],self.objects[item][1])
+                        else:
+                            if view.objectLocs.has_key(self.objects[item][0]):
+                                view.removeObj(self.objects[item][0])
                     finally:
                         view.restoreCursor()
                 finally:
