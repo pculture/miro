@@ -692,5 +692,26 @@ class RecomputeMapTestCase(unittest.TestCase):
 	temp.endChange()
 	self.assertEqual(self.changeCalls,1)
 
+class FilterUpdateOnChange(unittest.TestCase):
+    def setUp(self):
+        DDBObject.dd = DynamicDatabase()
+        self.everything = DDBObject.dd
+	self.origObjs = [DDBObject(), DDBObject(), DDBObject()]
+        self.goodID = self.origObjs[0].getID()
+	self.objs = self.everything.filter(lambda x: x.getID() == self.goodID)
+	self.changeCalls = 0
+    def testLoss(self):
+        self.assertEqual(self.objs.len(),1)
+        self.origObjs[0].beginChange()
+        self.origObjs[0].id = -1
+        self.origObjs[0].endChange()
+        self.assertEqual(self.objs.len(),0)
+    def testAdd(self):
+        self.assertEqual(self.objs.len(),1)
+        self.origObjs[1].beginChange()
+        self.origObjs[1].id = self.goodID
+        self.origObjs[1].endChange()
+        self.assertEqual(self.objs.len(),2)
+
 if __name__ == "__main__":
     unittest.main()
