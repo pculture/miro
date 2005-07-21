@@ -698,8 +698,12 @@ class FilterUpdateOnChange(unittest.TestCase):
         self.everything = DDBObject.dd
 	self.origObjs = [DDBObject(), DDBObject(), DDBObject()]
         self.goodID = self.origObjs[0].getID()
-	self.objs = self.everything.filter(lambda x: x.getID() == self.goodID)
+	self.objs = self.everything.map(self.mapToObject).filter(lambda x: x.oldID == self.goodID)
 	self.changeCalls = 0
+    def mapToObject(self, obj):
+	temp = DDBObject(add = False)
+	temp.oldID = obj.getID()
+	return temp
     def testLoss(self):
         self.assertEqual(self.objs.len(),1)
         self.origObjs[0].beginChange()
