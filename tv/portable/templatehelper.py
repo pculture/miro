@@ -32,3 +32,6 @@ def getFilterFunc(templateApp):
 
 def getSortFunc(templateApp):
     return lambda x: templateApp.sort(x)
+
+def makeOnChange(self,index):
+    return lambda :self._onChange("changeItem(\"%s\",\"%s\")" % (self.view[index].tid, template.quoteJS(self.currentXML(index))))
