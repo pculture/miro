@@ -5,7 +5,7 @@
             ACTIONS = {switchPreferenceView = id; }; 
             CLASS = PreferencesWindowController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {channelsView = id; downloadsView = id; rssView = id; }; 
+            OUTLETS = {channelsView = id; diskSpaceView = id; downloadsView = id; }; 
             SUPERCLASS = NSWindowController; 
         }
     ); 
