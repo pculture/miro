@@ -1,13 +1,13 @@
 {
     IBClasses = (
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
             ACTIONS = {addChannelSheetCancel = id; addChannelSheetDone = id; }; 
-            CLASS = MainController; 
+            CLASS = AddChannelSheetController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {addChannelSheet = id; addChannelSheetURL = id; }; 
-            SUPERCLASS = NSObject; 
-        }
+            OUTLETS = {addChannelSheetURL = id; }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
     ); 
     IBVersion = 1; 
 }
