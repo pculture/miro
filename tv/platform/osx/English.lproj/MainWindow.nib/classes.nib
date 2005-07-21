@@ -6,10 +6,42 @@
             ACTIONS = {openAddChannelSheet = id; showActionMenu = id; }; 
             CLASS = MainController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {contentTemplateView = id; mainWindow = id; tabView = id; }; 
+            OUTLETS = {
+                contentTemplateView = id; 
+                tabView = id; 
+                videoDisplayController = id; 
+                window = id; 
+            }; 
             SUPERCLASS = NSObject; 
         }, 
-        {CLASS = ProgressDisplayView; LANGUAGE = ObjC; SUPERCLASS = NSView; }
+        {CLASS = ProgressDisplayView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            ACTIONS = {
+                fastBackward = id; 
+                fastForward = id; 
+                goFullscreen = id; 
+                muteVolume = id; 
+                playPause = id; 
+                setMaxVolume = id; 
+                setVolume = id; 
+                stop = id; 
+            }; 
+            CLASS = VideoDisplayController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                fastBackwardButton = id; 
+                fastForwardButton = id; 
+                fullscreenButton = id; 
+                maxVolumeButton = id; 
+                muteButton = id; 
+                playPauseButton = id; 
+                rootView = id; 
+                stopButton = id; 
+                videoView = id; 
+                volumeSlider = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
     ); 
     IBVersion = 1; 
 }
