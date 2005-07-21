@@ -50,6 +50,7 @@ import types
 import traceback
 import gettext
 import templatehelper
+from threading import Thread
 
 #Setup gettext
 gettext.install('dtv', 'resources/gettext')
@@ -472,10 +473,16 @@ class TrackedView:
                     pass
             return ret
 
-    def onChange(self, index):
+    def onChange(self,index):
+        thread = Thread(target=templatehelper.makeOnChange(self,index))
+        thread.setDaemon(False)
+        thread.start()
+
+    def _onChange(self, text):
         clearEvalCache()
         if self.parent.execJS:
-            self.parent.execJS("changeItem(\"%s\",\"%s\")" % (self.view[index].tid, quoteJS(self.currentXML(index))))
+            #self.parent.execJS("changeItem(\"%s\",\"%s\")" % (self.view[index].tid, quoteJS(self.currentXML(index))))
+            self.parent.execJS(text)
         self.parent.checkHides()
 
     def onAdd(self, newIndex):
@@ -622,7 +629,7 @@ def fillAttr(value,data):
 class idAssignment:
     def __init__(self, x):
         self.object = x
-        self.tid = generateId()    
+        self.tid = str(self.object)
 
 ###############################################################################
 #### Generating Javascript callbacks to keep document updated              ####
