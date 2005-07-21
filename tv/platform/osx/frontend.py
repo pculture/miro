@@ -3,7 +3,9 @@ from PyObjCTools import NibClassBuilder, AppHelper
 from Foundation import *
 from AppKit import *
 from WebKit import *
+from QTKit import *
 
+import app
 import feed
 import resource
 import template
@@ -20,7 +22,6 @@ import threading
 
 NibClassBuilder.extractClasses("MainMenu")
 NibClassBuilder.extractClasses("MainWindow")
-NibClassBuilder.extractClasses("VideoView")
 NibClassBuilder.extractClasses("PreferencesWindow")
 NibClassBuilder.extractClasses("AddChannelSheet")
 NibClassBuilder.extractClasses("PasswordWindow")
@@ -105,70 +106,12 @@ class AppController (NSObject):
 
         openURL_withReplyEvent_ = objc.selector(openURL_withReplyEvent_,
                                                 signature="v@:@@")
-                                                
+
     def showPreferencesWindow_(self, sender):
         prefController = PreferencesWindowController.alloc().init()
         prefController.retain()
         prefController.showWindow_(None)
 
-
-###############################################################################
-#### Preferences window                                                    ####
-###############################################################################
-
-class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
-
-    class PreferenceItem (NSToolbarItem):
-        def setView_(self, view):
-            self.view = view
-        
-    def init(self):
-        super(PreferencesWindowController, self).initWithWindowNibName_("PreferencesWindow")
-        return self
-
-    def awakeFromNib(self):
-        self.items = dict()
-        channelsItem = self.makePreferenceItem("Channels")
-        downloadsItem = self.makePreferenceItem("Downloads")
-        rssItem = self.makePreferenceItem("RSS")
-        self.allItems = (channelsItem.itemIdentifier(), 
-                         downloadsItem.itemIdentifier(),
-                         rssItem.itemIdentifier())
-
-        toolbar = NSToolbar.alloc().initWithIdentifier_("Preferences")
-        toolbar.setDelegate_(self)
-        toolbar.setSelectedItemIdentifier_(self.items["Channels"].itemIdentifier())
-        self.window().setToolbar_( toolbar )
-
-    def makePreferenceItem(self, descriptor):
-        item = self.PreferenceItem.alloc().initWithItemIdentifier_(descriptor)
-        item.setLabel_(descriptor)
-        item.setImage_( NSImage.imageNamed_(descriptor.lower() + "_pref") )
-        item.setTarget_(self)
-        item.setAction_("switchPreferenceView:")
-        item.setView_(getattr(self, descriptor.lower() + "View"))
-        self.items[ descriptor ] = item
-        return item
-    
-    def toolbarAllowedItemIdentifiers_(self, toolbar):
-        return self.allItems
-    
-    def toolbarDefaultItemIdentifiers_(self, toolbar):
-        return self.allItems
-        
-    def toolbarSelectableItemIdentifiers_(self, toolbar):
-        return self.allItems
-
-    def toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_(self, toolbar, itemIdentifier, flag ):
-        return self.items[ itemIdentifier ]
-        
-    def validateToolbarItem_(self, item):
-        return True
-
-    def switchPreferenceView_(self, sender):
-        item = self.items[ sender.itemIdentifier() ]
-        self.window().setContentView_(item.view)
-    
 
 ###############################################################################
 #### Main window                                                           ####
@@ -202,7 +145,7 @@ class MainFrame:
 
 
 class MainController (NibClassBuilder.AutoBaseClass):
-    # Outlets: tabView, contentTemplateView, mainWindow
+    # Outlets: tabView, contentTemplateView
     # Is the delegate for the split view
 
     def init(self, owner, app):
@@ -218,7 +161,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         return self
 
     def awakeFromNib(self):
-        self.mainWindow.makeKeyAndOrderFront_(None)
+        self.window.makeKeyAndOrderFront_(None)
 
     ### Switching displays ###
 
@@ -277,8 +220,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     ### Size constraints on splitview ###
 
-    minimumTabListWidth = 150 # pixels
-    minimumContentWidth = 300 # pixels
+    minimumTabListWidth = 180 # pixels
+    minimumContentWidth = 500 # pixels
 
     # How far left can the user move the slider?
     def splitView_constrainMinCoordinate_ofSubviewAt_(self, sender, proposedMin, offset):
@@ -293,9 +236,9 @@ class MainController (NibClassBuilder.AutoBaseClass):
     # the tab list unless it's necessary to shrink it to obey the
     # minimum content area size constraint.
     def splitView_resizeSubviewsWithOldSize_(self, sender, oldSize):
-        tabBox = self.tabView.superview().superview()
-        contentBox = self.contentTemplateView.superview().superview()
-        
+        tabBox = self.tabView.superview().superview().superview()
+        contentBox = self.contentTemplateView.superview().superview().superview()
+
         splitViewSize = sender.frame().size
         tabSize = tabBox.frame().size
         contentSize = contentBox.frame().size
@@ -312,34 +255,16 @@ class MainController (NibClassBuilder.AutoBaseClass):
         tabBox.setFrameOrigin_(NSZeroPoint)
         contentBox.setFrameSize_(contentSize)
         contentBox.setFrameOrigin_((tabSize.width + dividerWidth,0))
-        
+
     ### 'Add Channel' sheet ###
 
     def openAddChannelSheet_(self, sender):
-        if not self.addChannelSheet:
-            NSBundle.loadNibNamed_owner_("AddChannelSheet", self)
-        if not self.addChannelSheet:
-            raise NotImplementedError, "Missing or defective AddChannelSheet nib"
-        self.addChannelSheetURL.setStringValue_("")
-        NSApplication.sharedApplication().beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(self.addChannelSheet, self.mainWindow, self, self.addChannelSheetDidEnd, 0)
-        # Sheet's now visible and function returns.
-
-    def addChannelSheetDidEnd(self, sheet, returnCode, contextInfo):
-        sheet.orderOut_(self)
-    # decorate with appropriate selector
-    addChannelSheetDidEnd = AppHelper.endSheetMethod(addChannelSheetDidEnd)
-
-    def addChannelSheetDone_(self, sender):
-        sheetURL = self.addChannelSheetURL.stringValue()
-        # NEEDS: pass a non-default template name?
-        self.app.addAndSelectFeed(sheetURL)
-        NSApplication.sharedApplication().endSheet_(self.addChannelSheet)
-
-    def addChannelSheetCancel_(self, sender):
-        NSApplication.sharedApplication().endSheet_(self.addChannelSheet)
+        controller = AddChannelSheetController.alloc().init()
+        controller.retain()
+        NSApplication.sharedApplication().beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(controller.window(), self.window, self, None, 0)
 
     ### Action button ###
-    
+
     def showActionMenu_(self, sender):
         mainMenu = NSApplication.sharedApplication().mainMenu()
         menu = mainMenu.itemWithTag_( 1 ).submenu()
@@ -354,8 +279,110 @@ class MainController (NibClassBuilder.AutoBaseClass):
 #            curEvent.eventNumber(),
 #            curEvent.clickCount(),
 #            curEvent.pressure() )
-            
+
         NSMenu.popUpContextMenu_withEvent_forView_( menu, curEvent, sender )
+
+
+###############################################################################
+#### Add channel sheet                                                     ####
+###############################################################################
+
+class AddChannelSheetController (NibClassBuilder.AutoBaseClass):
+
+    def init(self):
+        super(AddChannelSheetController, self).initWithWindowNibName_owner_("AddChannelSheet", self)
+        return self
+
+    def awakeFromNib(self):
+        self.addChannelSheetURL.setStringValue_("")
+
+    def addChannelSheetDone_(self, sender):
+        sheetURL = self.addChannelSheetURL.stringValue()
+        self.app.addAndSelectFeed(sheetURL)
+        self.closeSheet()
+
+    def addChannelSheetCancel_(self, sender):
+        self.closeSheet()
+
+    def closeSheet(self):
+        NSApplication.sharedApplication().endSheet_(self.window())
+        self.window().orderOut_(self)
+        self.release()
+
+
+###############################################################################
+#### Preferences window                                                    ####
+###############################################################################
+
+class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
+
+    class PreferenceItem (NSToolbarItem):
+        def setView_(self, view):
+            self.view = view
+
+    def init(self):
+        super(PreferencesWindowController, self).initWithWindowNibName_("PreferencesWindow")
+        return self
+
+    def awakeFromNib(self):
+        channelsItem = self.makePreferenceItem("ChannelsItem", "Channels", "channels_pref", self.channelsView)
+        downloadsItem = self.makePreferenceItem("DownloadsItem", "Downloads", "downloads_pref", self.downloadsView)
+        diskSpaceItem = self.makePreferenceItem("DiskSpaceItem", "Disk Space", "disk_space_pref", self.diskSpaceView)
+
+        self.items = {channelsItem.itemIdentifier(): channelsItem,
+                      downloadsItem.itemIdentifier(): downloadsItem,
+                      diskSpaceItem.itemIdentifier(): diskSpaceItem}
+
+        self.allItems = (channelsItem.itemIdentifier(), 
+                         downloadsItem.itemIdentifier(),
+                         diskSpaceItem.itemIdentifier())
+
+        toolbar = NSToolbar.alloc().initWithIdentifier_("Preferences")
+        toolbar.setDelegate_(self)
+        toolbar.setAllowsUserCustomization_(False)
+        toolbar.setSelectedItemIdentifier_(channelsItem.itemIdentifier())
+
+        self.window().setToolbar_(toolbar)
+        self.switchPreferenceView_(channelsItem)
+
+    def makePreferenceItem(self, identifier, label, imageName, view):
+        item = self.PreferenceItem.alloc().initWithItemIdentifier_(identifier)
+        item.setLabel_(label)
+        item.setImage_(NSImage.imageNamed_(imageName))
+        item.setTarget_(self)
+        item.setAction_("switchPreferenceView:")
+        item.setView_(view)
+        return item
+
+    def toolbarAllowedItemIdentifiers_(self, toolbar):
+        return self.allItems
+
+    def toolbarDefaultItemIdentifiers_(self, toolbar):
+        return self.allItems
+
+    def toolbarSelectableItemIdentifiers_(self, toolbar):
+        return self.allItems
+
+    def toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_(self, toolbar, itemIdentifier, flag ):
+        return self.items[ itemIdentifier ]
+
+    def validateToolbarItem_(self, item):
+        return True
+
+    def switchPreferenceView_(self, sender):
+        if self.window().contentView() == sender.view:
+            return
+
+        window = self.window()
+        wframe = window.frame()
+        vframe = sender.view.frame()
+        toolbarHeight = wframe.size.height - window.contentView().frame().size.height
+        wframe.origin.y += wframe.size.height - vframe.size.height - toolbarHeight
+        wframe.size = vframe.size
+        wframe.size.height += toolbarHeight
+
+        self.window().setContentView_(sender.view)
+        self.window().setFrame_display_animate_(wframe, True, True)
 
 
 ###############################################################################
@@ -415,7 +442,7 @@ class PasswordController (NibClassBuilder.AutoBaseClass):
 
         # Ensure we're not deallocated until the window that has actions
         # that point at us is closed
-        self.retain() 
+        self.retain()
 
         pool.release()
         return self
@@ -525,7 +552,7 @@ class BeveledBox (NibClassBuilder.AutoBaseClass):
 
         self.CONTOUR_COLOR.set()
         NSFrameRect( interior )
-    
+
         self.TOP_COLOR.set()
         p1 = NSPoint( rect.origin.x+1, rect.size.height-0.5 )
         p2 = NSPoint( rect.size.width-1, rect.size.height-0.5 )
@@ -554,17 +581,58 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
 
     def initWithFrame_(self, frame):
         super(ProgressDisplayView, self).initWithFrame_(frame)
+
         self.backgroundLeft = NSImage.imageNamed_( "display_left" )
         self.backgroundLeftWidth = self.backgroundLeft.size().width
         self.backgroundRight = NSImage.imageNamed_( "display_right" )
         self.backgroundRightWidth = self.backgroundRight.size().width
         self.backgroundCenter = NSImage.imageNamed_( "display_center" )
         self.backgroundCenterWidth = self.backgroundCenter.size().width
+
+        self.grooveContourColor = NSColor.colorWithCalibratedWhite_alpha_( 0.1, 0.3 )
+        self.grooveFillColor = NSColor.colorWithCalibratedWhite_alpha_( 0.5, 0.3 )
+
         self.timeAttrs = { NSFontAttributeName:NSFont.fontWithName_size_("Helvetica", 10),
                            NSForegroundColorAttributeName:NSColor.colorWithCalibratedWhite_alpha_(69/255.0, 1.0) }
+
+        self.cursor = NSImage.alloc().initWithSize_((10,10))
+        self.cursor.lockFocus()
+        path = NSBezierPath.bezierPath()
+        path.moveToPoint_((0, 4.5))
+        path.lineToPoint_((4, 8))
+        path.lineToPoint_((8, 4.5))
+        path.lineToPoint_((4, 1))
+        path.closePath()
+        NSColor.colorWithCalibratedWhite_alpha_( 51/255.0, 1.0 ).set()
+        path.fill()
+        self.cursor.unlockFocus()
+
+        nc = NSNotificationCenter.defaultCenter()
+        nc.addObserver_selector_name_object_(self, 'prepareForNewMovie:', 'PrepareForNewMovie', None)
+        nc.addObserver_selector_name_object_(self, 'movieWillStartPlaying:', 'MovieWillStartPlaying', None)
+        nc.addObserver_selector_name_object_(self, 'movieWillStopPlaying:', 'MovieWillStopPlaying', None)
+
+        self.movie = None
+        self.heartbeatTimer = None
+
         return self;
 
-    def drawRect_( self, rect ):
+    def prepareForNewMovie_(self, notification):
+        self.movie = notification.userInfo().get('Movie')
+        self.setNeedsDisplay_(True)
+
+    def movieWillStartPlaying_(self, notification):
+        self.heartbeatTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(0.5, self, 'heartbeat:', notification.userInfo(), True)
+
+    def movieWillStopPlaying_(self, notification):
+        if self.heartbeatTimer != None:
+            self.heartbeatTimer.invalidate()
+        self.heartbeatTimer = None
+
+    def heartbeat_(self, timer):
+        self.setNeedsDisplay_(True)
+
+    def drawRect_(self, rect):
         self.drawBackground()
         self.drawTimeIndicator()
         self.drawProgressGroove()
@@ -572,10 +640,10 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
 
     def drawBackground(self):
         self.backgroundLeft.compositeToPoint_operation_( (0,0), NSCompositeSourceOver )
-        
+
         x = self.bounds().size.width - self.backgroundRightWidth
         self.backgroundRight.compositeToPoint_operation_( (x, 0), NSCompositeSourceOver )
-        
+
         renderedSpace = self.backgroundRightWidth + self.backgroundLeftWidth
         emptySpace = self.bounds().size.width - renderedSpace
         tileNum = emptySpace / float(self.backgroundCenterWidth)
@@ -586,15 +654,55 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
             tileNum -= 1
         x = self.backgroundLeftWidth
         self.backgroundCenter.compositeToPoint_operation_( (x, 0), NSCompositeSourceOver )
-    
+
     def drawTimeIndicator(self):
-        NSString.stringWithString_(u"00:00:00").drawAtPoint_withAttributes_( (8,5.5), self.timeAttrs )
+        timeStr = '00:00:00'
+        if self.movie != None:
+            seconds = self.getCurrentTimeInSeconds()
+            timeStr = time.strftime("%H:%M:%S", time.gmtime(seconds))
+        NSString.stringWithString_(timeStr).drawAtPoint_withAttributes_( (8,5), self.timeAttrs )
 
     def drawProgressGroove(self):
-        pass
-        
+        origin = NSPoint(60, 8)
+        size = NSSize(self.getGrooveWidth(), 8)
+        rect = NSOffsetRect(NSRect(origin, size), -0.5, -0.5)
+
+        self.grooveFillColor.set()
+        NSBezierPath.fillRect_(rect)
+        self.grooveContourColor.set()
+        NSBezierPath.strokeRect_(rect)
+
     def drawProgressCursor(self):
-        pass
+        if self.movie == None:
+            return
+
+        progress = 0.0
+
+        currentTime = self.getCurrentTimeInSeconds()
+        if currentTime > 0.0:
+            progress = self.getDurationInSeconds() / currentTime
+
+        offset = 0
+        if progress > 0.0:
+            offset = (self.getGrooveWidth() - 9) / progress
+
+        x = math.floor(59 + offset) + 0.5
+        self.cursor.compositeToPoint_operation_((x,7), NSCompositeSourceOver)
+
+    def getDurationInSeconds(self):
+        if self.movie == None:
+            return 0
+        qttime = self.movie.duration()
+        return qttime.timeValue / float(qttime.timeScale)
+
+    def getCurrentTimeInSeconds(self):
+        if self.movie == None:
+            return 0
+        qttime = self.movie.currentTime()
+        return qttime.timeValue / float(qttime.timeScale)
+
+    def getGrooveWidth(self):
+        return self.bounds().size.width - 60 - 8
 
 
 ###############################################################################
@@ -841,176 +949,101 @@ class ManagedWebView (NSObject):
 #### Right-hand pane video display                                         ####
 ###############################################################################
 
-# Given a Unix PID, give focus to the corresponding process. Requires rooting
-# around in Carbon APIs.
-def darkVoodooMakePidFront(pid):
-    # See http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/Scripts/wmEnable.py
-    def S(*args):
-        return ''.join(args)
-    OSErr = objc._C_SHT
-    OUTPID = 'o^L'
-    INPID = 'L'
-    OUTPSN = 'o^{ProcessSerialNumber=LL}'
-    INPSN = 'n^{ProcessSerialNumber=LL}'
-    FUNCTIONS=[
-        ( u'GetCurrentProcess', S(OSErr, OUTPSN) ),
-        ( u'GetProcessForPID', S(OSErr, INPID, OUTPSN) ),
-        ( u'SetFrontProcess', S(OSErr, INPSN) ),
-        ]
-
-    bndl = NSBundle.bundleWithPath_(objc.pathForFramework('/System/Library/Frameworks/ApplicationServices.framework'))
-    if bndl is None:
-        print >>sys.stderr, 'ApplicationServices missing'
-        assert(0)
-    d = {}
-    objc.loadBundleFunctions(bndl, d, FUNCTIONS)
-    for (fn, sig) in FUNCTIONS:
-        if fn not in d:
-            print >>sys.stderr, 'Missing', fn
-            assert(0)
-    err, psn = d['GetProcessForPID'](pid)
-    if err:
-        print >>sys.stderr, 'GetProcessForPID', (err, psn)
-        assert(0)
-    err = d['SetFrontProcess'](psn)
-    if err:
-        print >>sys.stderr, 'SetFrontProcess', (err, psn)
-        assert(0)
-
-
-def playVideoFileHack(filename):
-    # Old way
-    #   vlch = vlcext.create()
-    #   print vlcext.init(vlch, ('vlc', '--plugin-path', '/Users/gschmidt/co/vlc-0.8.1/VLC.app/Contents/MacOS/modules'))
-    #   print vlcext.addTarget(vlch, '/Users/gschmidt/Movies/utahsaints.avi')
-    #   print vlcext.play(vlch)
-    
-    # New way
-    #   pluginRoot = os.path.join(NSBundle.mainBundle().bundlePath(), 'Contents/MacOS/modules')
-    #   print pluginRoot
-    #   mc = vlc.MediaControl(['--verbose', '1', '--plugin-path', pluginRoot])
-    #   mc.playlist_add_item(filename)
-    #   mc.start(0)
-    print "Hack play: %s" % filename
-    app = resource.path("VLC.app")
-    path = "%s/Contents/MacOS/VLC" % app
-    pid = os.spawnl(os.P_NOWAIT, path, path, 
-                    "--fullscreen", filename)
-    print "pid: %s" % pid
-    # Give VLC a chance to connect to the process server.
-    time.sleep(1)
-    darkVoodooMakePidFront(pid)
-
-
 class VideoDisplay (Display):
     "Video player that can be shown in a MainFrame's right-hand pane."
 
-    def __init__(self, playlist, previousDisplay):
-        """'playlist' is a View giving the video items to play
-        as PlaylistItems. The cursor of the View indicates where playback
-        should start. 'previousDisplay' indicates the display that should
-        be switched to when the user is done interacting with the player."""
-        pool = NSAutoreleasePool.alloc().init()
-        self.previousDisplay = previousDisplay
-        self.obj = PlayerController.alloc()
-        self.obj.init(playlist, self)
+    controller = None
+
+    def __init__(self, filename):
         Display.__init__(self)
-        pool.release()
+        self.filename = filename
+
+    def onSelected(self, frame):
+        self.controller.enableControls(True)
+        self.controller.setMovieFile(self.filename)
+#        self.controller.play_(None)
+
+    def onDeselected(self, frame):
+        self.controller.stop_(None)
+        self.controller.enableControls(False)
+        self.controller.reset()
 
     def getView(self):
-        return self.obj.rootView
+        return self.controller.rootView
 
 
-class PlayerController (NibClassBuilder.AutoBaseClass):
-    # Has outlets for most of the GUI widgets
+class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
-    def init(self, playlist, owner):
-        # owner is our Python-instantiable proxy, the actual Display object
-        # NEEDS: text field are hidden by image -- why?
-        # NEEDS: resizing behavior of some controls is wrong
-        NSObject.init(self)
-        NSBundle.loadNibNamed_owner_("VideoView", self)
+    def awakeFromNib(self):
+        self.isPlaying = False
+        VideoDisplay.controller = self
 
-        # Start a VLC instance
-        # (Removed for fullscreen demo hack)
-        # pluginRoot = os.path.join(NSBundle.mainBundle().bundlePath(), 'Contents/MacOS/modules')
-        # mc = vlc.MediaControl(['--verbose', '1', '--plugin-path', pluginRoot])
+    def notify(self, message, movie):
+        nc = NSNotificationCenter.defaultCenter()
+        info = { 'Movie': movie }
+        nc.postNotificationName_object_userInfo_(message, self, info)
 
-        # Set up initial playlist state and start playing
-        # NEEDS: lock from observation to callback registration
-        # NEEDS: bail if playlist is empty (else VLC exception!)
-        self.playlistView = playlist
-        print "PLAYLIST SIZE: %d" % playlist.len()
-        for a in playlist:
-            print "%s (%s)" % (a.getTitle(), a.getPath())
-            mc.playlist_add_item(a.getPath())
-        mc.start(0)
+    def setMovieFile(self, filename):
+        (movie, error) = QTMovie.alloc().initWithFile_error_(filename)
+        self.videoView.setMovie_(movie)
+        self.notify('PrepareForNewMovie', movie)
 
-        playlist.addChangeCallback(lambda index: self.onPlaylistItemChanged(index))
-        playlist.addAddCallback(lambda newIndex: self.onPlaylistItemAdded(newIndex))
-        playlist.addRemoveCallback(lambda oldObject, oldIndex: self.onPlaylistItemRemoved(oldObject, oldIndex))
+    def reset(self):
+        self.videoView.setMovie_(None)
 
-        # Put GUI controls in correct state
-        self.synchronizeControls()
-        
-    def synchronizeControls(self):
-        # NEEDS: add actual logic
-        # NEEDS: set licenseImage, licenseText
-        self.backButton.setEnabled_(True)
-        self.topText.setStringValue_("My nice video's title goes here.")
-        self.bottomText.setStringValue_("Here I tell you where I got it and when it expires.")
-        self.deleteButton.setEnabled_(True)
-        self.donateButton.setEnabled_(True)
-        self.fastForwardButton.setEnabled_(True)
-        self.forwardButton.setEnabled_(True)
-        self.fullscreenButton.setEnabled_(True)
-        self.playButton.setEnabled_(True) # NEEDS: also image change
-        self.rewindButton.setEnabled_(True)
-        self.saveButton.setEnabled_(True)
-        self.volumeSlider.setEnabled_(True) # NEEDS: also set position
-
-    def onPlaylistItemChanged(self, index):
-        # NEEDS
-        print "should update playlist item in VLC"
-
-    def onPlaylistItemAdded(self, newIndex):
-        # NEEDS
-        print "should add playlist item in VLC"
-
-    def onPlaylistItemRemoved(self, oldObject, oldIndex):
-        # NEEDS
-        # NEEDS: Bail if playlist is now empty
-        print "should remove playlist item in VLC"
-
-    def back_(self, sender):
-        print "back"
-
-    def changeVolume_(self, sender):
-        print "changeVolume"
-
-    def deleteItem_(self, sender):
-        print "deleteItem"
-
-    def donate_(self, sender):
-        print "donate"
-
-    def fastForward_(self, sender):
-        print "fastForward"
-
-    def forward_(self, sender):
-        print "forward"
-
-    def goFullscreen_(self, sender):
-        print "goFullscreen"
+    def enableControls(self, enabled):
+        self.fastBackwardButton.setEnabled_(enabled)
+        self.stopButton.setEnabled_(enabled)
+        self.playPauseButton.setEnabled_(enabled)
+        self.fastForwardButton.setEnabled_(enabled)
+        self.muteButton.setEnabled_(enabled)
+        self.volumeSlider.setEnabled_(enabled)
+        self.maxVolumeButton.setEnabled_(enabled)
+        self.fullscreenButton.setEnabled_(enabled)
 
     def play_(self, sender):
-        print "play"
+        self.notify('MovieWillStartPlaying', self.videoView.movie())
+        self.playPauseButton.setImage_(NSImage.imageNamed_('pause.png'))
+        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('pause_blue.png'))
+        self.videoView.play_(self)
+        self.isPlaying = True
 
-    def rewind_(self, sender):
-        print "rewind"
+    def pause_(self, sender):
+        self.notify('MovieWillStopPlaying', self.videoView.movie())
+        self.playPauseButton.setImage_(NSImage.imageNamed_('play.png'))
+        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('play_blue.png'))
+        self.videoView.pause_(self)
+        self.isPlaying = False
 
-    def saveItem_(self, sender):
-        print "saveItem"
+    def stop_(self, sender):
+        self.pause_(sender)
+        self.videoView.gotoBeginning_(self)
+
+    def playPause_(self, sender):
+        if self.isPlaying:
+            self.pause_(sender)
+        else:
+            self.play_(sender)
+
+    def fastForward_(self, sender):
+        self.videoView.movie().setRate_(2.0)
+
+    def fastBackward_(self, sender):
+        self.videoView.movie().setRate_(-2.0)
+
+    def setVolume_(self, sender):
+        self.videoView.movie().setVolume_(sender.floatValue())
+
+    def muteVolume_(self, sender):
+        self.volumeSlider.setFloatValue_(0.0)
+        self.setVolume_(self.volumeSlider)
+
+    def setMaxVolume_(self, sender):
+        self.volumeSlider.setFloatValue_(1.0)
+        self.setVolume_(self.volumeSlider)
+
+    def goFullscreen_(self, sender):
+        pass
 
 
 class PlaylistItem:
