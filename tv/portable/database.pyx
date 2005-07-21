@@ -680,7 +680,7 @@ cdef class CDynamicDatabase:
                     view.saveCursor()
                     try:
                         view.resetCursor()
-                        if f(self.objects[item][0]):
+                        if f(self.objects[item][1]):
                             if view.objectLocs.has_key(self.objects[item][0]):
                                 view.changeObj(self.objects[item][0])
                             else:
