@@ -1236,61 +1236,31 @@ class DirectoryFeed(Feed):
         finally:
             self.endRead()
         knownFiles = []
-        self.beginRead()
-	try:
-	    #Files on the filesystem
-	    existingFiles = self.getFileList(config.get('DataDirectory'))
-	    #Files known about by real feeds
-	    for item in app.globalViewList['items']:
-                if not item.feed is self:
-                    knownFiles[:0] = item.getFilenames()
-	    knownFiles = map(os.path.normcase,knownFiles)
+        #Files on the filesystem
+        existingFiles = self.getFileList(config.get('DataDirectory'))
+        #Files known about by real feeds
+        for item in app.globalViewList['items']:
+            if not item.feed is self:
+                knownFiles[:0] = item.getFilenames()
+        knownFiles = map(os.path.normcase,knownFiles)
   
-	    #Remove items that are in feeds, but we have in our list
-	    for x in range(0,len(self.items)):
-		try:
-		    while (self.items[x].getFilename() in knownFiles) or (not self.items[x].getFilename() in existingFiles):
-			self.items[x].remove()
-			self.items[x:x+1] = []
-		except IndexError:
-		    pass
+        #Remove items that are in feeds, but we have in our list
+        for x in range(0,len(self.items)):
+            try:
+                while (self.items[x].getFilename() in knownFiles) or (not self.items[x].getFilename() in existingFiles):
+                    self.items[x].remove()
+                    self.items[x:x+1] = []
+            except IndexError:
+                pass
 
-	    #Files on the filesystem that we known about
-	    myFiles = map(lambda x:x.getFilename(),self.items)
+        #Files on the filesystem that we known about
+        myFiles = map(lambda x:x.getFilename(),self.items)
 
-	    #Adds any files we don't know about
-	    for file in existingFiles:
-		if not file in knownFiles and not file in myFiles:
-		    self.items.append(FileItem(self,file))
-            self.updating = False
-	finally:
-	    self.endRead()
-# 	knownFiles = []
-#         #Files on the filesystem
-#         existingFiles = self.getFileList(config.get('DataDirectory'))
-#         #Files known about by real feeds
-#         for item in app.globalViewList['items']:
-#             knownFiles[:0] = item.getFilenames()
-#         knownFiles = map(os.path.normcase,knownFiles)
-
-#         #Remove items that are in feeds, but we have in our list
-#         for x in range(0,len(self.items)):
-#             try:
-#                 while (self.items[x].getFilename() in knownFiles) or (not self.items[x].getFilename() in existingFiles):
-#                     self.items[x].remove()
-#                     self.items[x:x+1] = []
-#             except IndexError:
-#                 pass
-
-#         #Files on the filesystem that we known about
-#         myFiles = map(lambda x:x.getFilename(),self.items)
-
-#         #Adds any files we don't know about
-#         for file in existingFiles:
-#             if not file in knownFiles and not file in myFiles:
-#                 self.items.append(FileItem(self,file))
-
-#         self.updating = False
+        #Adds any files we don't know about
+        for file in existingFiles:
+            if not file in knownFiles and not file in myFiles:
+                self.items.append(FileItem(self,file))
+        self.updating = False
 
     ##
     # Called by pickle during serialization
