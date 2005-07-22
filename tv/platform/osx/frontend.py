@@ -260,18 +260,22 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     def openAddChannelSheet_(self, sender):
         controller = AddChannelSheetController.alloc().init()
-        controller.retain()
         NSApplication.sharedApplication().beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(controller.window(), self.window, self, None, 0)
 
     ### Action button ###
 
     def showActionMenu_(self, sender):
         mainMenu = NSApplication.sharedApplication().mainMenu()
-        menu = mainMenu.itemWithTag_( 1 ).submenu()
+        menu = mainMenu.itemWithTag_(1).submenu()
+
+        location = sender.convertPoint_toView_(sender.frame().origin, None)
+        location.x += 1.0
+        location.y -= 4.0
+
         curEvent = NSApplication.sharedApplication().currentEvent()
 #        event = NSEvent.mouseEventWithType_location_modifierFlags_timestamp_windowNumber_context_eventNumber_clickCount_pressure_(
-#            NSLeftMouseDown,
-#            curEvent.locationInWindow(),
+#            curEvent.type(),
+#            location,
 #            curEvent.modifierFlags(),
 #            curEvent.timestamp(),
 #            curEvent.windowNumber(),
@@ -291,7 +295,7 @@ class AddChannelSheetController (NibClassBuilder.AutoBaseClass):
 
     def init(self):
         super(AddChannelSheetController, self).initWithWindowNibName_owner_("AddChannelSheet", self)
-        return self
+        return self.retain()
 
     def awakeFromNib(self):
         self.addChannelSheetURL.setStringValue_("")
@@ -533,6 +537,34 @@ class QuestionController(NibClassBuilder.AutoBaseClass):
 
 
 ###############################################################################
+#### The tab selector button class                                         ####
+###############################################################################
+
+class TabButtonCell (NibClassBuilder.AutoBaseClass):
+
+    def awakeFromNib(self):
+        self.background = NSImage.imageNamed_('tab')
+        self.selectedBackground = NSImage.imageNamed_('tab_blue')
+
+    def drawInteriorWithFrame_inView_(self, rect, view):
+        image = self.background
+        if self.state() == NSOnState:
+            image = self.selectedBackground
+
+        y = rect.origin.y
+        if view.isFlipped():
+            y += rect.size.height
+
+        tileWidth = image.size().width
+        times = math.ceil(rect.size.width / tileWidth)
+        for i in range(0, int(times)):
+            x = (rect.origin.x + (i * tileWidth), y)
+            image.compositeToPoint_operation_(x, NSCompositeSourceOver)
+
+        super(TabButtonCell, self).drawTitle_withFrame_inView_(self.attributedTitle(), rect, view)
+
+
+###############################################################################
 #### Our own prettier beveled NSBox                                        ####
 ###############################################################################
 
@@ -644,16 +676,15 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         x = self.bounds().size.width - self.backgroundRightWidth
         self.backgroundRight.compositeToPoint_operation_( (x, 0), NSCompositeSourceOver )
 
-        renderedSpace = self.backgroundRightWidth + self.backgroundLeftWidth
-        emptySpace = self.bounds().size.width - renderedSpace
-        tileNum = emptySpace / float(self.backgroundCenterWidth)
-        x = self.bounds().size.width - self.backgroundRightWidth - self.backgroundCenterWidth
-        while tileNum >= 1:
+        emptyWidth = self.bounds().size.width - (self.backgroundRightWidth + self.backgroundLeftWidth)
+        emptyRect = ((self.backgroundLeftWidth, 0), (emptyWidth, self.bounds().size.height))
+        NSGraphicsContext.currentContext().saveGraphicsState()
+        NSBezierPath.clipRect_(emptyRect)
+        tiles = math.ceil(emptyWidth / float(self.backgroundCenterWidth))
+        for i in range(0, int(tiles)):
+            x = self.backgroundLeftWidth + (i * self.backgroundCenterWidth)
             self.backgroundCenter.compositeToPoint_operation_( (x, 0), NSCompositeSourceOver )
-            x -= self.backgroundCenterWidth
-            tileNum -= 1
-        x = self.backgroundLeftWidth
-        self.backgroundCenter.compositeToPoint_operation_( (x, 0), NSCompositeSourceOver )
+        NSGraphicsContext.currentContext().restoreGraphicsState()
 
     def drawTimeIndicator(self):
         timeStr = '00:00:00'
