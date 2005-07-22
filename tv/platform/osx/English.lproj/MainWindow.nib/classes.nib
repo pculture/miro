@@ -15,6 +15,7 @@
             SUPERCLASS = NSObject; 
         }, 
         {CLASS = ProgressDisplayView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = TabButtonCell; LANGUAGE = ObjC; SUPERCLASS = NSButtonCell; }, 
         {
             ACTIONS = {
                 fastBackward = id; 
