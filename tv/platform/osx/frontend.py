@@ -36,9 +36,9 @@ doNotCollect = {}
 class Application:
 
     def __init__(self):
-        self.app = NSApplication.sharedApplication()
-        NSBundle.loadNibNamed_owner_("MainMenu", self.app)
-        controller = self.app.delegate()
+        self.appl = NSApplication.sharedApplication()
+        NSBundle.loadNibNamed_owner_("MainMenu", self.appl)
+        controller = self.appl.delegate()
         controller.actualApp = self
 
         # Force Cocoa into multithreaded mode
@@ -126,12 +126,12 @@ class AppController (NSObject):
 
 class MainFrame:
 
-    def __init__(self, app):
+    def __init__(self, appl):
         """The initially active display will be an instance of NullDisplay."""
         # Do this in two steps so that self.obj is set when self.obj.init
         # is called. That way, init can turn around and call selectDisplay.
         self.obj = MainController.alloc()
-        self.obj.init(self, app)
+        self.obj.init(self, appl)
 
     def selectDisplay(self, display, index):
         """Install the provided 'display' in the left-hand side (index == 0)
@@ -148,13 +148,13 @@ class MainController (NibClassBuilder.AutoBaseClass):
     # Outlets: tabView, contentTemplateView
     # Is the delegate for the split view
 
-    def init(self, owner, app):
+    def init(self, owner, appl):
         # owner is the actual frame object (the argument to onSelected, etc)
         NSObject.init(self)
         NSBundle.loadNibNamed_owner_("MainWindow", self)
 
         self.owner = owner
-        self.app = app
+        self.appl = appl
         self.currentDisplay = [None, None]
         self.currentDisplayView = [None, None]
         self.addChannelSheet = None
@@ -259,7 +259,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
     ### 'Add Channel' sheet ###
 
     def openAddChannelSheet_(self, sender):
-        controller = AddChannelSheetController.alloc().init()
+        controller = AddChannelSheetController.alloc().init(self.appl)
+        controller.retain()
         NSApplication.sharedApplication().beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(controller.window(), self.window, self, None, 0)
 
     ### Action button ###
@@ -293,16 +294,17 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
 class AddChannelSheetController (NibClassBuilder.AutoBaseClass):
 
-    def init(self):
+    def init(self, parent):
         super(AddChannelSheetController, self).initWithWindowNibName_owner_("AddChannelSheet", self)
-        return self.retain()
+        self.parentController = parent
+        return self
 
     def awakeFromNib(self):
         self.addChannelSheetURL.setStringValue_("")
 
     def addChannelSheetDone_(self, sender):
         sheetURL = self.addChannelSheetURL.stringValue()
-        self.app.addAndSelectFeed(sheetURL)
+        self.parentController.addAndSelectFeed(sheetURL)
         self.closeSheet()
 
     def addChannelSheetCancel_(self, sender):
@@ -311,7 +313,7 @@ class AddChannelSheetController (NibClassBuilder.AutoBaseClass):
     def closeSheet(self):
         NSApplication.sharedApplication().endSheet_(self.window())
         self.window().orderOut_(self)
-        self.release()
+        #self.release()
 
 
 ###############################################################################
