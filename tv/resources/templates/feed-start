@@ -11,7 +11,7 @@
 <t:include filename="dynamic.js" />
 
 <t:dynamicviews>
- <t:view name="thisFeed" key="global database">
+ <t:view name="thisFeed" key="global view feeds">
   <t:filter functionkey="global filter equal" key="getID" parameter="@@@feed getID@@@" />
  </t:view>
 </t:dynamicviews>

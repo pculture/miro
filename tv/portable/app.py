@@ -63,6 +63,7 @@ class Controller (frontend.Application):
                 'database': db,
                 'filter': globalFilterList,
                 'sort': globalSortList,
+                'view': globalViewList,
                 }
             tabPaneData = {
                 'global': globalData,
@@ -355,11 +356,8 @@ class ModelActionHandler:
             db.endUpdate()
 
     def removeFeed(self, url):
-        db.beginUpdate()
-        try:
-            db.removeMatching(lambda x: isinstance(x,feed.UniversalFeed) and x.getURL() == url)
-        finally:
-            db.endUpdate()
+        db.removeMatching(lambda x: isinstance(x,feed.UniversalFeed) and x.getURL() == url)
+
 
     def updateFeed(self, url):
         db.beginUpdate()
@@ -928,16 +926,27 @@ globalFilterList = {
     'substring': (lambda x, y: str(y) in str(x)),
     'boolean': (lambda x, y: x),
 
+    #Pass in the id of the feed as a parameter to these feeds
+
     #FIXME make this look at the feed's time until expiration
-    'recentItems': (lambda x, y: isinstance(x,item.Item) and (x.getState() == 'finished' or x.getState() == 'uploading' or x.getState() == 'watched') and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
-    'oldItems': (lambda x, y:  isinstance(x,item.Item) and (x.getState() == 'finished' or x.getState() == 'uploading' or x.getState() == 'watched') and x.getDownloadedTime()+config.get('DefaultTimeUntilExpiration')<=datetime.datetime.now() and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
 
-    'downloadedItems': (lambda x, y: isinstance(x,item.Item) and (x.getState() == 'finished' or x.getState() == 'uploading' or x.getState() == 'watched') and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
-    'unDownloadedItems': (lambda x, y: isinstance(x,item.Item) and (not (x.getState() == 'finished' or x.getState() == 'uploading' or x.getState() == 'watched')) and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
-    'downloadingItems': (lambda x, y: isinstance(x,item.Item) and x.getState() == 'downloading' and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
+    'recentItems': (lambda x, y: str(x.feed.getID()) == y and (x.getState() == 'finished' or x.getState() == 'uploading' or x.getState() == 'watched')),
+    'allRecentItems': (lambda x, y: (x.getState() == 'finished' or x.getState() == 'uploading' or x.getState() == 'watched') and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
+    'oldItems': (lambda x, y:  str(x.feed.getID()) == y and (x.getState() == 'finished' or x.getState() == 'uploading' or x.getState() == 'watched') and x.getDownloadedTime()+config.get('DefaultTimeUntilExpiration')<=datetime.datetime.now()),
 
+    'downloadedItems': (lambda x, y: str(x.feed.getID()) == y and (x.getState() == 'finished' or x.getState() == 'uploading' or x.getState() == 'watched')),
+    'unDownloadedItems':  (lambda x, y: str(x.feed.getID()) == y and (not (x.getState() == 'finished' or x.getState() == 'uploading' or x.getState() == 'watched'))),
+    'allDownloadingItems': (lambda x, y: x.getState() == 'downloading'),
+       
     'class': filterClass,
     'all': (lambda x, y: True),
     'hasKey':  filterHasKey,
-    'equal':(lambda x, y: str(x) == str(y))
+    'equal':(lambda x, y: str(x) == str(y)),
+}
+
+
+globalViewList = {
+    'items': db.filter(lambda x: isinstance(x,item.Item)),
+    'feeds': db.filter(lambda x: isinstance(x,feed.UniversalFeed)),
+    'httpauths':  db.filter(lambda x: isinstance(x,downloader.HTTPAuthPassword))
 }

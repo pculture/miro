@@ -52,7 +52,7 @@ class AutoDownloader:
         x.beginRead()
         try:
             for item in x.items:
-                if item.getStateNoAuto() == 'manualpending':
+                if item.getState() == 'manualpending':
                     ret = True
                     break
         finally:
@@ -65,23 +65,12 @@ class AutoDownloader:
 	for feed in self.allFeeds:
 	    feed.expireItems()
 
-    def recomputeFilters(self):
-        # FIXME: For locking reasons, downloaders don't always
-        #        call beginChange() and endChange(), so we have to
-        #        recompute these filters
-        self.allFeeds.recomputeFilter(self.autoFeeds)
-	self.allFeeds.recomputeFilter(self.manualFeeds)
-	self.allItems.recomputeFilter(self.autoDownloaders)
-        self.allItems.recomputeFilter(self.manualDownloaders)
-
-
     ##
     # This is the function that actually triggers the downloads It
     # loops through all of the available feeds round-robin style and
     # gets the next thing it can
     # 
     def spawnDownloads(self):
-        self.recomputeFilters()
 	attempts = 0
         numFeeds = self.autoFeeds.len()
         numDownloads = self.autoDownloads()

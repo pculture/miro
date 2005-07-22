@@ -11,8 +11,8 @@
 <t:include filename="dynamic.js" />
 
 <t:dynamicviews>
- <t:view name="newitems" key="global database">
-  <t:filter functionkey="global filter recentItems" parameter="" />
+ <t:view name="newitems" key="global view items">
+  <t:filter functionkey="global filter allRecentItems" parameter="" />
   <t:sort functionkey="global sort item" parameter="" />
  </t:view>
 </t:dynamicviews>

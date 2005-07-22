@@ -10,16 +10,6 @@
 </style>
 <t:include filename="dynamic.js" />
 
-<t:dynamicviews>
- <t:view name="pendingitems" key="feed itemlist">
-  <t:filter functionkey="global filter unDownloadedItems" parameter="" />
-  <t:sort functionkey="global sort item" parameter="" />
- </t:view>
- <t:view name="downloadeditems" key="feed itemlist">
-  <t:filter functionkey="global filter downloadedItems" parameter="" />
-  <t:sort functionkey="global sort item" parameter="" />
- </t:view>
-</t:dynamicviews>
 </head>
 
 <body>

@@ -15,6 +15,7 @@ import traceback #FIXME get rid of this
 import os
 import config
 import re
+import app
 
 # Notes on character set encoding of feeds:
 #
@@ -78,12 +79,12 @@ def getFeedURLFromWebPage(url):
 # Generates an appropriate feed for a URL
 #
 # @param url The URL of the feed
-def generateFeed(url):
-    thread = Thread(target=lambda: _generateFeed(url))
+def generateFeed(url,ufeed):
+    thread = Thread(target=lambda: _generateFeed(url,ufeed))
     thread.setDaemon(False)
     thread.start()
 
-def _generateFeed(url, visible=True):
+def _generateFeed(url, ufeed, visible=True):
     info = grabURL(url,"GET")
     if info is None:
         return None
@@ -107,7 +108,7 @@ def _generateFeed(url, visible=True):
             charset = None
         info['file-handle'].close()
         if delegate.isScrapeAllowed(url):
-            return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified, charset=charset, visible=visible)
+            return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified, charset=charset, visible=visible, ufeed=ufeed)
         else:
             return None
 
@@ -121,7 +122,7 @@ def _generateFeed(url, visible=True):
             xmldata = fixXMLHeader(html,info['charset'])
         else:
             xmldata = html
-        return RSSFeed(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, visible=visible)
+        return RSSFeed(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, visible=visible, ufeed=ufeed)
     # If it's not HTML, we can't be sure what it is.
     #
     # If we get generic XML, it's probably RSS, but it still could be
@@ -152,7 +153,7 @@ def _generateFeed(url, visible=True):
         except xml.sax.SAXException: #it doesn't parse as RSS, so it must be HTML
             #print " Nevermind! it's HTML"
             if delegate.isScrapeAllowed(url):
-                 return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified, charset=charset, visible=visible)
+                 return ScraperFeed(info['updated-url'],initialHTML=html,etag=etag,modified=modified, charset=charset, visible=visible, ufeed=ufeed)
             else:
                  return None
         except UnicodeDecodeError:
@@ -161,11 +162,11 @@ def _generateFeed(url, visible=True):
             return None
         if handler.enclosureCount > 0 or handler.itemCount == 0:
             #print " It's RSS with enclosures"
-            return RSSFeed(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, visible=visible)
+            return RSSFeed(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, visible=visible, ufeed=ufeed)
         else:
             #print " It's pre-enclosure RSS"
             if delegate.isScrapeAllowed(url):
-                return ScraperFeed(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, charset=charset, visible=visible)
+                return ScraperFeed(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, charset=charset, visible=visible, ufeed=ufeed)
             else:
                 return None
     else:  #What the fuck kinda feed is this, asshole?
@@ -176,8 +177,11 @@ def _generateFeed(url, visible=True):
 ##
 # A feed contains a set of of downloadable items
 class Feed(DDBObject):
-    def __init__(self, url, title = None, visible = True):
+    def __init__(self, url, ufeed, title = None, visible = True):
+        self.available = 0
+        self.unwatched = 0
         self.url = url
+        self.ufeed = ufeed
         self.items = []
 	if title == None:
 	    self.title = url
@@ -193,10 +197,107 @@ class Feed(DDBObject):
 	self.startfrom = datetime.min
 	self.visible = visible
         self.updating = False
+        self.lastViewed = datetime.min
         self.thumbURL = "resource:images/feedicon.png"
-        self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
+        #self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
+
+        # Find the UniversalFeed associated with this feed
+
+        # NOTE: This is a bit of a hack and eventually we should find
+        # a better way to trigger change events on the UniversalFeed
         DDBObject.__init__(self)
 
+    # Returns the ID of the actual feed, never that of the UniversalFeed wrapper
+    def getFeedID(self):
+        return self.getID()
+
+    # Override DDBObject's endChange function so that it also triggers
+    # a change in the Universal Feed
+    def endChange(self):
+        DDBObject.endChange(self)
+        if not self.ufeed is None:
+            self.ufeed.beginChange()
+            self.ufeed.endChange()
+
+    # Returns true if x is a newly available item, otherwise returns false
+    def isAvailable(self, x):
+        return x.creationTime > self.lastViewed and x.getState() == 'stopped'
+
+    # Returns true if x is an unwatched item, otherwise returns false
+    def isUnwatched(self, x):
+        state = x.getState()
+        return state == 'finished' or state == 'uploading'
+
+    # Updates the state of unwatched and available items to meet
+    # Returns true iff endChange() is called
+    def updateUandA(self):
+        # Note: I'm not locking this with the assumption that we don't
+        #       care if these totals reflect an actual snapshot of the
+        #       database. If items change in the middle of this, oh well.
+        newU = 0
+        newA = 0
+        ret = False
+        for item in self.items:
+            if self.isAvailable(item):
+                newA += 1
+            if self.isUnwatched(item):
+                newU += 1
+        self.beginRead()
+        try:
+            if newU != self.unwatched or newA != self.available:
+                self.beginChange()
+                try:
+                    ret = True
+                    self.unwatched = newU
+                    self.available = newA
+                finally:
+                    self.endChange()
+        finally:
+            self.endRead()
+        return ret
+            
+    # Returns string with number of unwatched videos in feed
+    def numUnwatched(self):
+        return self.unwatched
+
+    # Returns string with number of available videos in feed
+    def numAvailable(self):
+        return self.available
+
+    # Returns true iff both unwatched and available numbers should be shown
+    def showBothUAndA(self):
+        return ((not self.isAutoDownloadable()) and
+                self.unwatched > 0 and 
+                self.available > 0)
+
+    # Returns true iff unwatched should be shown and available shouldn't
+    def showOnlyU(self):
+        return ((self.unwatched > 0 and 
+                 self.available == 0) or 
+                (self.isAutoDownloadable() and
+                 self.unwatched > 0))
+
+    # Returns true iff available should be shown and unwatched shouldn't
+    def showOnlyA(self):
+        return ((not self.isAutoDownloadable()) and 
+                self.unwatched == 0 and 
+                self.available > 0)
+
+    # Returns true iff neither unwatched nor available should be shown
+    def showNeitherUNorA(self):
+        return (self.unwatched == 0 and
+                (self.isAutoDownloadable() or 
+                 self.available == 0))
+
+    ##
+    # Sets the last time the feed was viewed to now
+    def markAsViewed(self):
+        self.lastViewed = datetime.now()
+        self.updateUandA()
+
+    ##
+    # Returns true iff the feed is loading. Only makes sense in the
+    # context of UniversalFeeds
     def isLoading(self):
         return False
 
@@ -445,24 +546,24 @@ class Feed(DDBObject):
         self.beginRead()
         try:
             items = []
-            self.itemlist.resetCursor()
-            for item in self.itemlist:
-                items.append(item)
-            for item in items:
+            #self.itemlist.resetCursor()
+            #for item in self.itemlist:
+            #    items.append(item)
+            for item in self.items:
                 if not item.getKeep():
                     item.expire()
                 item.remove()
         finally:
             self.endRead()
-        defaultDatabase.removeView(self.itemlist)
+        #defaultDatabase.removeView(self.itemlist)
         DDBObject.remove(self)
 
     ##
     # Called by pickle during serialization
     def __getstate__(self):
 	temp = copy(self.__dict__)
-        temp["itemlist"] = None
-	return (2,temp)
+        #temp["itemlist"] = None
+	return (3,temp)
 
     ##
     # Called by pickle during deserialization
@@ -473,85 +574,34 @@ class Feed(DDBObject):
         if version == 1:
             data['thumbURL'] = "resource:images/feedicon.png"
             version += 1
-        assert(version == 2)
+        if version == 2:
+            data['lastViewed'] = datetime.min
+            data['unwatched'] = 0
+            data['available'] = 0
+            version += 1
+        assert(version == 3)
         data['updating'] = False
 	self.__dict__ = data
-	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
+	#self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)    
 
 ##
 # This class is a magic class that can become any type of feed it wants
+#
+# It works by passing on attributes to the actual feed.
 class UniversalFeed(DDBObject):
     def __init__(self,url):
         self.origURL = url
         self.loading = True
         self.errorState = False
-        self.actualFeed = Feed(url,visible=False)
-        self.feedView = defaultDatabase.filter(lambda x:x is self.getActualFeed())
-        self.feedView.addChangeCallback(self.onSubFeedChange)
-        self.itemlist.addChangeCallback(self.onSubChange)
-        self.itemlist.addAddCallback(self.onSubAdd)
-        self.lastViewed = datetime.min
-        self.unwatched = self.itemlist.filter(lambda x:x.getState() == 'finished' or x.getState() == 'uploading')
-        self.available = self.itemlist.filter(lambda x:x.getState() == 'stopped' and x.creationTime > self.lastViewed)
+        self.actualFeed = Feed(url,self,visible=False)
         DDBObject.__init__(self)
         thread = Thread(target=lambda: self.generateFeed())
         thread.setDaemon(False)
         thread.start()
 
-    # Returns string with number of unwatched videos in feed
-    def numUnwatched(self):
-        return str(self.__dict__['unwatched'].len())
-
-    # Returns string with number of available videos in feed
-    def numAvailable(self):
-        return str(self.__dict__['available'].len())
-
-    # Returns true iff both unwatched and available numbers should be shown
-    def showBothUAndA(self):
-        return ((not self.isAutoDownloadable()) and
-                self.__dict__['unwatched'].len() > 0 and 
-                self.__dict__['available'].len() > 0)
-
-    # Returns true iff unwatched should be shown and available shouldn't
-    def showOnlyU(self):
-        return ((self.__dict__['unwatched'].len() > 0 and 
-                 self.__dict__['available'].len() == 0) or 
-                (self.isAutoDownloadable() and
-                 self.__dict__['unwatched'].len() > 0))
-
-    # Returns true iff available should be shown and unwatched shouldn't
-    def showOnlyA(self):
-        return ((not self.isAutoDownloadable()) and 
-                self.__dict__['unwatched'].len() == 0 and 
-                self.__dict__['available'].len() > 0)
-
-    # Returns true iff neither unwatched nor available should be shown
-    def showNeitherUNorA(self):
-        return (self.__dict__['unwatched'].len() == 0 and
-                (self.isAutoDownloadable() or 
-                 self.__dict__['available'].len() == 0))
-
-    ##
-    # Returns the last time this feed was viewed by the user
-    def lastViewed(self):
-        return self.lastViewed
-
-    ##
-    # Sets the last time the feed was viewed to now
-    def markAsViewed(self):
-        self.lastViewed = datetime.now()
-        defaultDatabase.recomputeFilter(self.itemlist)
-        self.beginChange()
-        self.endChange()
-
-    def isLoading(self):
-        ret = False
-        self.beginRead()
-        try:
-            ret = self.loading
-        finally:
-            self.endRead()
-        return ret
+    # Returns the ID of the actual feed, never that of the UniversalFeed wrapper
+    def getFeedID(self):
+        return self.actualFeed.getID()
 
     def hasError(self):
         ret = False
@@ -586,7 +636,7 @@ class UniversalFeed(DDBObject):
 
     def generateFeed(self):
         oldFeed = self.actualFeed
-        temp =  _generateFeed(self.url,visible=False)
+        temp =  _generateFeed(self.url,self,visible=False)
         self.beginRead()
         try:
             self.loading = False
@@ -598,29 +648,6 @@ class UniversalFeed(DDBObject):
             self.endRead()
         if not temp is None:
             oldFeed.remove()
-            self.unwatched = self.itemlist.filter(lambda x:x.getState() == 'finished' or x.getState() == 'uploading')
-            self.available = self.itemlist.filter(lambda x:x.getState() == 'stopped' and x.creationTime > self.lastViewed)
-            self.feedView.addChangeCallback(self.onSubFeedChange)
-            self.itemlist.addChangeCallback(self.onSubChange)
-            self.itemlist.addAddCallback(self.onSubAdd)
-            defaultDatabase.recomputeFilter(self.itemlist)
-            defaultDatabase.recomputeFilter(self.feedView)
-        self.beginChange()
-        self.endChange()
-        
-    def onSubFeedChange(self,pos):
-        self.beginChange()
-        self.endChange()
-
-    def onSubAdd(self,pos):
-        self.beginChange()
-        self.endChange()
-        
-
-    def onSubChange(self,pos):
-        #FIXME this is slow, but necessary to update the number of
-        #      unwatched and available items
-        defaultDatabase.recomputeFilter(self.itemlist)
         self.beginChange()
         self.endChange()
 
@@ -628,18 +655,17 @@ class UniversalFeed(DDBObject):
         return self.__dict__['actualFeed']
 
     def remove(self):
-        defaultDatabase.removeView(self.feedView)
+        print "Removing actual feed..."
         self.actualFeed.remove()
+        print "Removing UniversalFeed..."
         DDBObject.remove(self)
+        print "Done removing"
 
     def __getattr__(self,attr):
         return getattr(self.getActualFeed(),attr)
 
     def __getstate__(self):
 	temp = copy(self.__dict__)
-	temp["feedView"] = None
-        temp["unwatched"] = None
-        temp["available"] = None
 	return (2,temp)
 
     ##
@@ -650,17 +676,9 @@ class UniversalFeed(DDBObject):
             data['errorState'] = False
             version += 1
         if version == 1:
-            data['lastViewed'] = datetime.min
             version += 1
         assert(version == 2)
 	self.__dict__ = data
-	self.feedView = defaultDatabase.filter(lambda x:x is self.getActualFeed())
-        self.feedView.addChangeCallback(self.onSubFeedChange)
-        self.itemlist.addChangeCallback(self.onSubChange)
-        self.itemlist.addAddCallback(self.onSubAdd)
-
-        self.unwatched = self.itemlist.filter(lambda x:x.getState() == 'finished' or x.getState() == 'uploading')
-        self.available = self.itemlist.filter(lambda x:x.getState() == 'stopped' and x.creationTime > self.lastViewed)
 
         if self.loading:
             thread = Thread(target=lambda: self.generateFeed())
@@ -670,8 +688,8 @@ class UniversalFeed(DDBObject):
 class RSSFeed(Feed):
     firstImageRE = re.compile('\<\s*img\s+[^>]*src\s*=\s*"(.*?)"[^>]*\>',re.I|re.M)
     
-    def __init__(self,url,title = None,initialHTML = None, etag = None, modified = None, visible=True):
-        Feed.__init__(self,url,title,visible=visible)
+    def __init__(self,url,ufeed,title = None,initialHTML = None, etag = None, modified = None, visible=True):
+        Feed.__init__(self,url,ufeed,title,visible=visible)
         self.initialHTML = initialHTML
         self.etag = etag
         self.modified = modified
@@ -790,9 +808,10 @@ class RSSFeed(Feed):
                 self.etag = info['etag']
             if info.has_key('last-modified'):
                 self.modified = info['last-modified']
-            self.endRead()
-	    self.beginChange()
-	    self.endChange()
+            self.endRead() #FIXMENOW This is sloow...
+            if not self.updateUandA():
+                self.beginChange()
+                self.endChange()
 
     def addScrapedThumbnail(self,entry):
         if (entry.has_key('enclosures') and len(entry['enclosures'])>0 and
@@ -823,8 +842,8 @@ class RSSFeed(Feed):
     def __getstate__(self):
 	temp = copy(self.__dict__)
 	temp["scheduler"] = None
-        temp["itemlist"] = None
-	return (2,temp)
+        #temp["itemlist"] = None
+	return (3,temp)
 
     ##
     # Called by pickle during deserialization
@@ -835,10 +854,15 @@ class RSSFeed(Feed):
         if version == 1:
             data['thumbURL'] = "resource:images/feedicon.png"
             version += 1
-        assert(version == 2)
+        if version == 2:
+            data['lastViewed'] = datetime.min
+            data['unwatched'] = 0
+            data['available'] = 0
+            version += 1
+        assert(version == 3)
         data['updating'] = False
 	self.__dict__ = data
-	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
+	#self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
 	#FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
         self.scheduler = ScheduleEvent(5, self.update,False)
@@ -849,8 +873,8 @@ class RSSFeed(Feed):
 ##
 # A DTV Collection of items -- similar to a playlist
 class Collection(Feed):
-    def __init__(self,title = None):
-        Feed.__init__(self,url = "dtv:collection",title = title,visible = False)
+    def __init__(self,ufeed=None,title = None):
+        Feed.__init__(self,ufeed,url = "dtv:collection",title = title,visible = False)
 
     ##
     # Adds an item to the collection
@@ -898,8 +922,8 @@ class ScraperFeed(Feed):
     #FIXME: change this to a higher number once we optimize shit a bit
     maxThreads = 1
 
-    def __init__(self,url,title = None, visible = True, initialHTML = None,etag=None,modified = None,charset = None):
-	Feed.__init__(self,url,title,visible)
+    def __init__(self,url,ufeed, title = None, visible = True, initialHTML = None,etag=None,modified = None,charset = None):
+	Feed.__init__(self,url,ufeed,title,visible)
         self.updateFreq = 60*60*24
         self.initialHTML = initialHTML
         self.initialCharset = charset
@@ -979,8 +1003,9 @@ class ScraperFeed(Feed):
 	else:
 	    i=Item(self, FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link})]}),linkNumber = linkNumber)
 	self.items.append(i)
-	self.beginChange()
-	self.endChange()
+        if not self.updateUandA():
+            self.beginChange()
+            self.endChange()
 
     def makeProcessLinkFunc(self,subLinks,depth,linkNumber):
         return lambda: self.processLinksThenFreeSem(subLinks,depth,linkNumber)
@@ -1135,8 +1160,8 @@ class ScraperFeed(Feed):
 	temp = copy(self.__dict__)
         temp['semaphore'] = None
 	temp["scheduler"] = None
-        temp["itemlist"] = None
-	return (2,temp)
+        #temp["itemlist"] = None
+	return (3,temp)
 
     ##
     # Called by pickle during deserialization
@@ -1147,11 +1172,17 @@ class ScraperFeed(Feed):
         if version == 1:
             data['thumbURL'] = "resource:images/feedicon.png"
             version += 1
-        assert(version == 2)
+        if version == 2:
+            data['lastViewed'] = datetime.min
+            data['unwatched'] = 0
+            data['available'] = 0
+
+            version += 1
+        assert(version == 3)
         data['updating'] = False
         data['tempHistory'] = {}
 	self.__dict__ = data
-	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
+	#self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
 
 	#FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
@@ -1166,11 +1197,9 @@ class ScraperFeed(Feed):
 #
 # FIXME: How do we trigger updates on this feed?
 class DirectoryFeed(Feed):
-    def __init__(self):
-        Feed.__init__(self,url = "dtv:directoryfeed",title = "Feedless Videos",visible = False)
+    def __init__(self,ufeed=None):
+        Feed.__init__(self,url = "dtv:directoryfeed",ufeed=ufeed,title = "Feedless Videos",visible = False)
 
-	#A database query of all of the filenames of all of the downloads
-	self.RSSFilenames = defaultDatabase.filter(lambda x:isinstance(x,Item) and not isinstance(x.feed,DirectoryFeed)).map(lambda x:x.getFilenames())
 	self.updateFreq = 30
         self.scheduler = ScheduleEvent(self.updateFreq, self.update,True)
         self.scheduler = ScheduleEvent(0, self.update,False)
@@ -1206,16 +1235,17 @@ class DirectoryFeed(Feed):
                 self.updating = True
         finally:
             self.endRead()
-	knownFiles = []
-	self.beginRead()
+        knownFiles = []
+        self.beginRead()
 	try:
 	    #Files on the filesystem
 	    existingFiles = self.getFileList(config.get('DataDirectory'))
 	    #Files known about by real feeds
-	    for item in self.RSSFilenames:
-		knownFiles[:0] = item
+	    for item in app.globalViewList['items']:
+                if not item.feed is self:
+                    knownFiles[:0] = item.getFilenames()
 	    knownFiles = map(os.path.normcase,knownFiles)
-
+  
 	    #Remove items that are in feeds, but we have in our list
 	    for x in range(0,len(self.items)):
 		try:
@@ -1235,15 +1265,40 @@ class DirectoryFeed(Feed):
             self.updating = False
 	finally:
 	    self.endRead()
+# 	knownFiles = []
+#         #Files on the filesystem
+#         existingFiles = self.getFileList(config.get('DataDirectory'))
+#         #Files known about by real feeds
+#         for item in app.globalViewList['items']:
+#             knownFiles[:0] = item.getFilenames()
+#         knownFiles = map(os.path.normcase,knownFiles)
+
+#         #Remove items that are in feeds, but we have in our list
+#         for x in range(0,len(self.items)):
+#             try:
+#                 while (self.items[x].getFilename() in knownFiles) or (not self.items[x].getFilename() in existingFiles):
+#                     self.items[x].remove()
+#                     self.items[x:x+1] = []
+#             except IndexError:
+#                 pass
+
+#         #Files on the filesystem that we known about
+#         myFiles = map(lambda x:x.getFilename(),self.items)
+
+#         #Adds any files we don't know about
+#         for file in existingFiles:
+#             if not file in knownFiles and not file in myFiles:
+#                 self.items.append(FileItem(self,file))
+
+#         self.updating = False
 
     ##
     # Called by pickle during serialization
     def __getstate__(self):
 	temp = copy(self.__dict__)
 	temp["scheduler"] = None
-        temp['itemlist'] = None
-        temp['RSSFilenames'] = None
-	return (1,temp)
+        #temp['itemlist'] = None
+	return (2,temp)
 
     ##
     # Called by pickle during deserialization
@@ -1252,11 +1307,15 @@ class DirectoryFeed(Feed):
         if version == 0:
             data['thumbURL'] = "resource:images/feedicon.png"
             version += 1
-        assert(version == 1)
+        if version == 1:
+            data['lastViewed'] = datetime.min
+            data['unwatched'] = 0
+            data['available'] = 0
+            version += 1
+        assert(version == 2)
         data['updating'] = False
 	self.__dict__ = data
-	self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
-	self.RSSFilenames = defaultDatabase.filter(lambda x:isinstance(x,Item) and isinstance(x.feed,RSSFeed)).map(lambda x:x.getFilenames())
+
 	#FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
         self.scheduler = ScheduleEvent(5, self.update,False)

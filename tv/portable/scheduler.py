@@ -1,6 +1,7 @@
 from threading import Thread, Semaphore
 from database import DynamicDatabase,DDBObject
 from time import time, sleep
+import threadpriority
 
 def now():
     return int(time())
@@ -75,11 +76,16 @@ class ScheduleEvent(DDBObject):
     ##
     # Makes an event happen
     def execute(self):
+        #print "Spawning %s" % str(self.event)
+
+        threadpriority.setBackgroundPriority()
         semaphore.acquire()
         try:
             self.event()
         finally:
             semaphore.release()
+        #print "%s finished " % str(self.event)
+        threadpriority.setBackgroundPriority()
 
     def __getstate(self):
         assert(0) #This should never be serialized

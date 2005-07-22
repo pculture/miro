@@ -36,6 +36,13 @@ class Item(DDBObject):
         self.creationTime = datetime.now()
         DDBObject.__init__(self)
 
+    # Unfortunately, our database does not scale well with many views,
+    # so we have this hack to make sure that unwatched and available
+    # get updated when an item changes
+    def endChange(self):
+        DDBObject.endChange(self)
+        self.feed.updateUandA()
+
     ##
     # Returns the URL associated with the first enclosure in the item
     def getURL(self):

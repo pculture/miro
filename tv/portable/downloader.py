@@ -32,6 +32,8 @@ from time import time, strftime
 from signal import signal, SIGWINCH
 from cStringIO import StringIO
 
+import app
+
 defaults = get_defaults('btdownloadheadless')
 defaults.extend((('donated', '', ''),
                  ))
@@ -56,9 +58,8 @@ def findHTTPAuth(host,path,realm = None,scheme = None):
     ret = None
     defaultDatabase.beginRead()
     try:
-        for obj in defaultDatabase:
-            if (isinstance(obj,HTTPAuthPassword) and
-                obj.host == host and path.startswith(obj.path) and
+        for obj in app.globalViewList['httpauths']:
+            if (obj.host == host and path.startswith(obj.path) and
                 (realm is None or obj.realm == realm) and
                 (scheme is None or obj.authScheme == scheme)):
                 ret = obj

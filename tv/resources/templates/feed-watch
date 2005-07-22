@@ -11,12 +11,12 @@
 <t:include filename="dynamic.js" />
 
 <t:dynamicviews>
- <t:view name="newitems" key="feed itemlist">
-  <t:filter functionkey="global filter recentItems" parameter="" />
+ <t:view name="newitems" key="global view items">
+  <t:filter functionkey="global filter recentItems" parameter="@@@feed getFeedID@@@" />
   <t:sort functionkey="global sort item" parameter="" />
  </t:view>
- <t:view name="mylibrary" key="feed itemlist">
-  <t:filter functionkey="global filter oldItems" parameter="" />
+ <t:view name="mylibrary" key="global view items">
+  <t:filter functionkey="global filter oldItems" parameter="@@@feed getFeedID@@@" />
   <t:sort functionkey="global sort item" parameter="" />
  </t:view>
 </t:dynamicviews>
