@@ -79,8 +79,8 @@
   </div> 
 
 <div class="no_new">
-DEBUG: <a href="action:playView?viewName=newitems">Play unseen items</a>,
-<a href="action:playView?viewName=mylibrary">Play seen items</a>
+<!-- DEBUG: <a href="action:playView?viewName=newitems">Play unseen items</a>,
+<a href="action:playView?viewName=mylibrary">Play seen items</a> -->
 </div>
 
 </body>

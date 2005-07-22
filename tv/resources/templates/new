@@ -28,7 +28,7 @@
 <div id="top_wrapper">
 
 <div id="channel_info">
-	<img src="resource:images/thumbnail.png" />
+	<img src="resource:images/newstar.png" />
 	<h2 i18n:translate="">New Videos</h2>
 </div>
 
@@ -44,7 +44,7 @@
 <div id="navigation_wrapper">
 	<div id="navigation">
 		<a href="" class="watch_active">Watch</a>
-		<a href="" class="browse">Browse</a>
+		<a href="" class="browse_nolibrary">Browse</a>
 	</div>
 </div>
 

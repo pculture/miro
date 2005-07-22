@@ -13,11 +13,9 @@
 </head>
 
 <body>
-  <div id="loading_channel">
-
-Loading Channel<br />
-<img src="resource:images/loader.gif" alt="" />
-
-</div>
+	<div id="loading_channel">
+		<center>Loading Channel</center><br />
+		<center><img src="resource:images/loader.gif" alt="" /></center>
+	</div>
 </body>
 </html>

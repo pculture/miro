@@ -83,6 +83,7 @@ Contains the channels
 /////////////////////////////////////////////*/
 
 #sidebar{
+	padding: 25px 0 0;
 	width: 100%;
 	overflow: hidden;
 	}
@@ -147,15 +148,21 @@ Contains the channels
 #sidebar ul li a img{
 	height: 26px;
 	width: 26px;
+	margin: 0;
 	}
 
 
 #sidebar ul li a span{
 	display: block;
-	padding: 5px 0 5px 5px;
+	padding: 0px 0 5px 0px;
 	overflow: hidden;
 	}
 
+#sidebar ul li a span span{
+	display: block;
+	padding: 5px 0 5px 5px;
+	overflow: hidden;
+	}
 
 #sidebar ul li a span.new{
 	background: url(resource:images/play.png) 100% 100% no-repeat;
@@ -180,18 +187,15 @@ a.feeditem:hover{
 	}
 
 #sidebar a.selected_feeditem {
+	background: #eee url(resource:images/selectedback.png) 0% 0% repeat-x; 
+	color: #fff;
+	}
+
+#sidebar a.selected_feeditem_inactive {
 	background: #eee url(resource:images/selectedbackgrey.png) 0% 0% repeat-x; 
 	color: #fff;
 	}
 
-/*
-
-#sidebar:hover a.selected_feeditem {
-	background: #eee url(resource:images/selectedback.png) 0% 0% repeat-x; 
-	color: #fff;
-	} 
-	
-*/
 
 a.selected_feeditem span {
 	color: #fff;
@@ -220,7 +224,7 @@ Download Queue Button
 */
 
 
-#sidebar a.queuebutton{
+#sidebar a.queuebutton {
 	position: fixed;
 	display: block;
 	padding: 0px;
@@ -236,8 +240,25 @@ Download Queue Button
 	text-align: center;
 	}
 
+#sidebar a.selected_queuebutton {
+	position: fixed;
+	display: block;
+	padding: 0px;
+	margin: 0px;
+	text-decoration: none;
+	color: #333;
+	bottom: 0px;
+	left: 0px; 
+	width: 100%;
+	z-index: 100;
+	background: url(resource:images/selected_dqueue_back.png) repeat-x; 
+	height: 52px;
+	text-align: center;
+	}
 
-#sidebar a.queuebutton span.name{
+
+
+#sidebar a.queuebutton span.name, #sidebar a.selected_queuebutton span.name {
 	padding-top: 25px;
 	height: 50px;
 	/*
@@ -250,25 +271,16 @@ Download Queue Button
 	}
 
 
-#sidebar a.queuebutton span.name span{
+#sidebar a.queuebutton span.name span, #sidebar a.selected_queuebutton span.name span {
 	display: inline;
 	padding: 5px 0 5px 20px;
 	margin: 0 0 0 -30px;
 	background: url(resource:images/queue_arrow.png) 0 4px no-repeat;
 	text-shadow: 0px 1px 0px white;
-	/*border: 1px solid;	
-	display: inline;
-	padding: 25px 0 0 15px;
-	
-	margin: 0 0 0 -60px;
-	 
-	*/
-	
-	
 	
 	}
 
-a.queuebutton img{
+a.queuebutton img, a.selected_queuebutton img{
 	display: none;
 	}
 
@@ -484,7 +496,6 @@ Where the videos show up
 .video_title {
 	font-weight: bold;
 	color: #222;
-	width: 100%;
 	overflow: hidden;
 	height: 20px;
 	font-size: 15px;
@@ -697,7 +708,7 @@ search, title, recommend link
 
 #channel_info{
 	float: left;
-	width: 250px;
+	width: 60%;
 	padding: 5px 0 0 5px;
 	}
 
@@ -713,6 +724,8 @@ search, title, recommend link
 	margin: 0 0 0 59px;
 	padding: 0;
 	font-weight: normal;
+	max-height: 44px;
+	overflow: hidden;
 	}
 
 
@@ -954,6 +967,7 @@ A wrapper around the content
 	
 .numbercount_holder{
 	float: right;
+	margin-left: 5px;
 	}
 
 
@@ -962,7 +976,7 @@ A wrapper around the content
 	padding: 3px 0 4px;
 	color: #fff;
 	margin: 0 9px;
-	background: #6c3;
+	background: #00d810;
 	font-weight: bold;
 	font-size: 11px;
 	text-shadow: 0px 1px 0px #333;
@@ -984,7 +998,7 @@ A wrapper around the content
 
 
 .gray_number_count{
-	padding: 3px 2px 3px 9px;
+	padding: 3px 1px 3px 0px;
 	color: #333;
 	margin: 0 9px;
 	background: #ccc;
@@ -1030,7 +1044,7 @@ A wrapper around the content
 
 
 .both_gray_number_count{
-	padding: 3px 2px 3px 9px;
+	padding: 3px 2px 3px 0px;
 	color: #333;
 	margin: 0 9px;
 	background: #ccc;
@@ -1072,5 +1086,12 @@ Various Buttons
 	vertical-align: bottom;
 	}
 	
-	
-	
+/*/////////////////////////////////////////////
+
+Loading Channel
+ 
+/////////////////////////////////////////////*/
+
+#loading_channel{
+	margin: 30% 0;
+	}

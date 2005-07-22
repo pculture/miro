@@ -9,7 +9,6 @@
 
 <body>
   
-
   <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="autopending" class="right_box">
     <a href="action:startDownload?item=@@@this getID@@@"><img src="resource:images/download_button.png" /></a><br />
     <span class="report_pending">Pending Automatic Download</span>
@@ -35,9 +34,9 @@
 
 
   <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="failed" class="right_box">  
-    <span t:replace="this getFailureReason" />
     <a href="action:startDownload?item=@@@this getID@@@"><img src="resource:images/download_button.png" /></a><br />
     <span class="report_downloaderror">Download Error</span>
+    <span class="report_downloaderror" t:replace="this getFailureReason" />
   </div>
 
 
@@ -80,7 +79,7 @@
 
   <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="expired" class="right_box">
     <a href="action:startDownload?item=@@@this getID@@@"><img src="resource:images/download_button.png" /></a><br />
-   <span class="report_expire">Expired</span>
+   <span class="report_expire">Deleted</span>
   </div>
 
 	
