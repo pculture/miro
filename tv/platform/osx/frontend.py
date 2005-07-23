@@ -104,8 +104,8 @@ class AppController (NSObject):
             url = "http:%s" % match.group(1)
             self.actualApp.addAndSelectFeed(url)
 
-        openURL_withReplyEvent_ = objc.selector(openURL_withReplyEvent_,
-                                                signature="v@:@@")
+    openURL_withReplyEvent_ = objc.selector(openURL_withReplyEvent_,
+                                            signature="v@:@@")
 
     def showPreferencesWindow_(self, sender):
         prefController = PreferencesWindowController.alloc().init()
