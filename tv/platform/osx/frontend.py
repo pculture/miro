@@ -601,6 +601,11 @@ class TabButtonCell (NibClassBuilder.AutoBaseClass):
     def awakeFromNib(self):
         self.background = NSImage.imageNamed_('tab')
         self.selectedBackground = NSImage.imageNamed_('tab_blue')
+        
+        pstyle = NSMutableParagraphStyle.alloc().init()
+        pstyle.setAlignment_(NSCenterTextAlignment)
+        self.titleAttrs = { NSFontAttributeName:NSFont.fontWithName_size_("Lucida Grande", 12),
+                            NSParagraphStyleAttributeName:pstyle }
 
     def drawInteriorWithFrame_inView_(self, rect, view):
         image = self.background
@@ -617,7 +622,15 @@ class TabButtonCell (NibClassBuilder.AutoBaseClass):
             x = (rect.origin.x + (i * tileWidth), y)
             image.compositeToPoint_operation_(x, NSCompositeSourceOver)
 
-        super(TabButtonCell, self).drawTitle_withFrame_inView_(self.attributedTitle(), rect, view)
+        self.drawTitle(rect)
+        
+    def drawTitle(self, rect):
+        r = rect
+        r.origin.x += 8
+        r.origin.y += 5
+        r.size.width -= 16
+        title = self.title()
+        NSString.stringWithString_(title).drawInRect_withAttributes_( r, self.titleAttrs )
 
 
 ###############################################################################
