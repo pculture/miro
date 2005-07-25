@@ -1,13 +1,38 @@
 {
     IBClasses = (
         {
-            ACTIONS = {showPreferencesWindow = id; }; 
+            ACTIONS = {
+                checkForUpdates = id; 
+                donate = id; 
+                showPreferencesWindow = id; 
+                tellAFriend = id; 
+            }; 
             CLASS = AppController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {}; 
             SUPERCLASS = NSObject; 
         }, 
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+        {
+            ACTIONS = {
+                addChannel = id; 
+                copyChannelLink = id; 
+                copyVideoLink = id; 
+                createCollection = id; 
+                deleteCollection = id; 
+                deleteVideo = id; 
+                playVideo = id; 
+                playVideoFullScreen = id; 
+                playVideoHalfScreen = id; 
+                removeChannel = id; 
+                renameChannel = id; 
+                saveVideo = id; 
+                sendCollectionToFriend = id; 
+                updateAllChannels = id; 
+                updateChannel = id; 
+            }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }
     ); 
     IBVersion = 1; 
 }
