@@ -3,19 +3,21 @@
         {CLASS = BeveledBox; LANGUAGE = ObjC; SUPERCLASS = NSBox; }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
-            ACTIONS = {openAddChannelSheet = id; showActionMenu = id; }; 
+            ACTIONS = {addChannel = id; showActionMenu = id; }; 
             CLASS = MainController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
+                actionButton = id; 
                 contentTemplateView = id; 
+                switcherMatrix = id; 
                 tabView = id; 
                 videoDisplayController = id; 
-                window = id; 
             }; 
-            SUPERCLASS = NSObject; 
+            SUPERCLASS = NSWindowController; 
         }, 
         {CLASS = ProgressDisplayView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {CLASS = TabButtonCell; LANGUAGE = ObjC; SUPERCLASS = NSButtonCell; }, 
+        {CLASS = TrackButton; LANGUAGE = ObjC; SUPERCLASS = NSButton; }, 
         {
             ACTIONS = {
                 fastBackward = id; 
