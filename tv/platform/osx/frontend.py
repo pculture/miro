@@ -107,11 +107,20 @@ class AppController (NSObject):
     openURL_withReplyEvent_ = objc.selector(openURL_withReplyEvent_,
                                             signature="v@:@@")
 
+    def checkForUpdates_(self, sender):
+        print "NOT IMPLEMENTED"
+
     def showPreferencesWindow_(self, sender):
         prefController = PreferencesWindowController.alloc().init()
         prefController.retain()
         prefController.showWindow_(None)
 
+    def donate_(self, sender):
+        print "NOT IMPLEMENTED"
+
+    def tellAFriend_(self, sender):
+        print "NOT IMPLEMENTED"
+    
 
 ###############################################################################
 #### Main window                                                           ####
@@ -161,7 +170,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
         return self
 
     def awakeFromNib(self):
-        self.window.makeKeyAndOrderFront_(None)
+        self.actionButton.sendActionOn_(NSLeftMouseDownMask)
+        self.showWindow_(None)
 
     ### Switching displays ###
 
@@ -256,36 +266,80 @@ class MainController (NibClassBuilder.AutoBaseClass):
         contentBox.setFrameSize_(contentSize)
         contentBox.setFrameOrigin_((tabSize.width + dividerWidth,0))
 
-    ### 'Add Channel' sheet ###
+    ### Actions ###
 
-    def openAddChannelSheet_(self, sender):
+    def playVideo_(self, sender):
+        print "NOT IMPLEMENTED"
+
+    def playVideoFullScreen_(self, sender):
+        print "NOT IMPLEMENTED"
+
+    def playVideoHalfScreen_(self, sender):
+        print "NOT IMPLEMENTED"
+
+    def deleteVideo_(self, sender):
+        print "NOT IMPLEMENTED"
+
+    def saveVideo_(self, sender):
+        print "NOT IMPLEMENTED"
+
+    def copyVideoLink_(self, sender):
+        print "NOT IMPLEMENTED"
+
+    def addChannel_(self, sender):
         controller = AddChannelSheetController.alloc().init(self.appl)
         controller.retain()
-        NSApplication.sharedApplication().beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(controller.window(), self.window, self, None, 0)
+        NSApplication.sharedApplication().beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(controller.window(), self.window(), self, None, 0)
 
-    ### Action button ###
+    def removeChannel_(self, sender):
+        print "NOT IMPLEMENTED"
+
+    def copyChannelLink_(self, sender):
+        print "NOT IMPLEMENTED"
+
+    def updateChannel_(self, sender):
+        print "NOT IMPLEMENTED"
+
+    def updateAllChannels_(self, sender):
+        print "NOT IMPLEMENTED"
+
+    def renameChannel_(self, sender):
+        print "NOT IMPLEMENTED"
+
+    def createCollection_(self, sender):
+        print "NOT IMPLEMENTED"
+
+    def deleteCollection_(self, sender):
+        print "NOT IMPLEMENTED"
+
+    def sendCollectionToFriend_(self, sender):
+        print "NOT IMPLEMENTED"
 
     def showActionMenu_(self, sender):
         mainMenu = NSApplication.sharedApplication().mainMenu()
-        menu = mainMenu.itemWithTag_(1).submenu()
+        tag = self.switcherMatrix.selectedCell().tag()
+        menu = mainMenu.itemWithTag_(tag).submenu()
 
-        location = sender.convertPoint_toView_(sender.frame().origin, None)
-        location.x += 1.0
-        location.y -= 4.0
+        location = sender.frame().origin
+        location.x += 10.0
+        location.y += 3.0
 
         curEvent = NSApplication.sharedApplication().currentEvent()
-#        event = NSEvent.mouseEventWithType_location_modifierFlags_timestamp_windowNumber_context_eventNumber_clickCount_pressure_(
-#            curEvent.type(),
-#            location,
-#            curEvent.modifierFlags(),
-#            curEvent.timestamp(),
-#            curEvent.windowNumber(),
-#            curEvent.context(),
-#            curEvent.eventNumber(),
-#            curEvent.clickCount(),
-#            curEvent.pressure() )
+        event = NSEvent.mouseEventWithType_location_modifierFlags_timestamp_windowNumber_context_eventNumber_clickCount_pressure_(
+            curEvent.type(),
+            location,
+            curEvent.modifierFlags(),
+            curEvent.timestamp(),
+            curEvent.windowNumber(),
+            None,
+            curEvent.eventNumber(),
+            curEvent.clickCount(),
+            curEvent.pressure() )
 
-        NSMenu.popUpContextMenu_withEvent_forView_( menu, curEvent, sender )
+        NSMenu.popUpContextMenu_withEvent_forView_( menu, event, sender )
+
+    def validateMenuItem_(self, item):
+        return super(MainController, self).validateMenuItem_(item)
 
 
 ###############################################################################
@@ -994,7 +1048,7 @@ class VideoDisplay (Display):
     def onSelected(self, frame):
         self.controller.enableControls(True)
         self.controller.setMovieFile(self.filename)
-#        self.controller.play_(None)
+        self.controller.play_(None)
 
     def onDeselected(self, frame):
         self.controller.stop_(None)
@@ -1009,6 +1063,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
     def awakeFromNib(self):
         self.isPlaying = False
+        self.fastForwardButton.sendActionOn_(NSLeftMouseDownMask)
         VideoDisplay.controller = self
 
     def notify(self, message, movie):
@@ -1059,10 +1114,20 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             self.play_(sender)
 
     def fastForward_(self, sender):
-        self.videoView.movie().setRate_(2.0)
+        if self.videoView.movie().rate() == 1.0:
+            self.videoView.movie().setRate_(2.0)
+            self.fastForwardButton.sendActionOn_(NSLeftMouseUpMask)
+        else:
+            self.videoView.movie().setRate_(1.0)
+            self.fastForwardButton.sendActionOn_(NSLeftMouseDownMask)
 
     def fastBackward_(self, sender):
-        self.videoView.movie().setRate_(-2.0)
+        if self.videoView.movie().rate() == 1.0:
+            self.videoView.movie().setRate_(-2.0)
+            self.fastForwardButton.sendActionOn_(NSLeftMouseUpMask)
+        else:
+            self.videoView.movie().setRate_(1.0)
+            self.fastForwardButton.sendActionOn_(NSLeftMouseDownMask)
 
     def setVolume_(self, sender):
         self.videoView.movie().setVolume_(sender.floatValue())
