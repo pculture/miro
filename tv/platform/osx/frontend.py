@@ -1,5 +1,5 @@
-import objc
 from PyObjCTools import NibClassBuilder, AppHelper
+from objc import YES, NO, nil
 from Foundation import *
 from AppKit import *
 from WebKit import *
@@ -15,6 +15,7 @@ import database
 import re
 import os
 import sys
+import objc
 import time
 import math
 import struct
@@ -28,6 +29,20 @@ NibClassBuilder.extractClasses("PasswordWindow")
 NibClassBuilder.extractClasses("QuestionWindow")
 
 doNotCollect = {}
+nc = NSNotificationCenter.defaultCenter()
+
+
+###############################################################################
+#### Dynamically link some specific Carbon functions which are not         ####
+#### available in the default MacPython                                    ####
+###############################################################################
+
+kUIModeNormal = 0
+kUIModeAllHidden = 3
+
+carbonBundle = NSBundle.bundleWithPath_('/System/Library/Frameworks/Carbon.framework')
+objc.loadBundleFunctions(carbonBundle, globals(), (('SetSystemUIMode', 'III', ""),))
+
 
 ###############################################################################
 #### Application object                                                    ####
@@ -91,6 +106,7 @@ class AppController (NSObject):
     def application_openFile_(self, app, filename):
         return self.actualApp.addFeedFromFile(filename)
 
+    @objc.signature('v@:@@')
     def openURL_withReplyEvent_(self, event, replyEvent):
         print "**** got open URL event"
         keyDirectObject = struct.unpack(">i", "----")[0]
@@ -103,9 +119,6 @@ class AppController (NSObject):
         if match:
             url = "http:%s" % match.group(1)
             self.actualApp.addAndSelectFeed(url)
-
-    openURL_withReplyEvent_ = objc.selector(openURL_withReplyEvent_,
-                                            signature="v@:@@")
 
     def checkForUpdates_(self, sender):
         print "NOT IMPLEMENTED"
@@ -650,6 +663,9 @@ class MetalSlider (NibClassBuilder.AutoBaseClass):
         newCell = MetalSliderCell.alloc().init()
         newCell.setState_(oldCell.state())
         newCell.setEnabled_(oldCell.isEnabled())
+        newCell.setFloatValue_(oldCell.floatValue())
+        newCell.setTarget_(oldCell.target())
+        newCell.setAction_(oldCell.action())
         self.setCell_(newCell)
 
 
@@ -753,7 +769,6 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         path.fill()
         self.cursor.unlockFocus()
 
-        nc = NSNotificationCenter.defaultCenter()
         nc.addObserver_selector_name_object_(self, 'prepareForNewMovie:', 'PrepareForNewMovie', None)
         nc.addObserver_selector_name_object_(self, 'movieWillStartPlaying:', 'MovieWillStartPlaying', None)
         nc.addObserver_selector_name_object_(self, 'movieWillStopPlaying:', 'MovieWillStopPlaying', None)
@@ -1125,7 +1140,6 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         VideoDisplay.controller = self
 
     def notify(self, message, movie):
-        nc = NSNotificationCenter.defaultCenter()
         info = { 'Movie': movie }
         nc.postNotificationName_object_userInfo_(message, self, info)
 
@@ -1133,9 +1147,11 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         (movie, error) = QTMovie.alloc().initWithFile_error_(filename)
         self.videoView.setMovie_(movie)
         self.notify('PrepareForNewMovie', movie)
+        nc.addObserver_selector_name_object_(self, 'handleMovieNotification:', nil, self.videoView.movie())
 
     def reset(self):
         self.videoView.setMovie_(None)
+        nc.removeObserver_(self)
 
     def enableControls(self, enabled):
         self.fastBackwardButton.setEnabled_(enabled)
@@ -1148,15 +1164,11 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
     def play_(self, sender):
         self.notify('MovieWillStartPlaying', self.videoView.movie())
-        self.playPauseButton.setImage_(NSImage.imageNamed_('pause.png'))
-        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('pause_blue.png'))
         self.videoView.play_(self)
         self.isPlaying = True
 
     def pause_(self, sender):
         self.notify('MovieWillStopPlaying', self.videoView.movie())
-        self.playPauseButton.setImage_(NSImage.imageNamed_('play.png'))
-        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('play_blue.png'))
         self.videoView.pause_(self)
         self.isPlaying = False
 
@@ -1199,8 +1211,115 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             self.videoView.movie().setVolume_(self.volumeSlider.floatValue())
 
     def goFullscreen_(self, sender):
-        pass
+        controller = FullScreenVideoController.alloc().initWithVideoView_(self.videoView)
+        controller.enterFullScreen()
 
+    def handleMovieNotification_(self, notification):
+        info = notification.userInfo()
+        if notification.name() == QTMovieRateDidChangeNotification:
+            rate = info.get(QTMovieRateDidChangeNotificationParameter).floatValue()
+            if rate == 0.0:
+                self.playPauseButton.setImage_(NSImage.imageNamed_('play.png'))
+                self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('play_blue.png'))
+            else:
+                self.playPauseButton.setImage_(NSImage.imageNamed_('pause.png'))
+                self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('pause_blue.png'))
+
+
+###############################################################################
+#### The fullscreen video controller                                       ####
+###############################################################################
+
+class FullScreenVideoController (NSObject):
+    
+    def initWithVideoView_(self, videoView):
+        self = super(FullScreenVideoController, self).init()
+        self.videoWindow = FullScreenVideoWindow.alloc().init(videoView).retain()
+        self.overlayWindow = FullScreenOverlay.alloc().init().retain()
+        self.overlayWindow.controller = self
+        return self
+        
+    def enterFullScreen(self):
+        self.videoWindow.orderFront_(nil)
+        self.overlayWindow.makeKeyAndOrderFront_(nil)
+        SetSystemUIMode(kUIModeAllHidden, 0)
+    
+    def exitFullScreen(self):
+        self.overlayWindow.close()
+        self.videoWindow.close()
+        SetSystemUIMode(kUIModeNormal, 0)
+    
+
+###############################################################################
+#### The fullscreen overlay                                                ####
+###############################################################################
+
+class FullScreenOverlay (NSWindow):
+    
+    def init(self):
+        frame = NSScreen.mainScreen().frame()
+        parent = super(FullScreenOverlay, self)
+        self = parent.initWithContentRect_styleMask_backing_defer_(
+            frame,
+            NSBorderlessWindowMask,
+            NSBackingStoreBuffered,
+            True )
+        self.setOpaque_(NO)
+        self.setHasShadow_(NO)
+        self.setIgnoresMouseEvents_(NO)
+        self.setBackgroundColor_(NSColor.clearColor())
+        self.setAlphaValue_(1.0)
+        return self
+
+    def canBecomeMainWindow(self):
+        return True
+
+    def canBecomeKeyWindow(self):
+        return True
+
+    def keyDown_(self, event):
+        code = event.characters().characterAtIndex_(0)
+        if code == 0x1B:
+            self.controller.exitFullScreen()
+
+
+###############################################################################
+#### The fullscreen video window                                           ####
+###############################################################################
+
+class FullScreenVideoWindow (NSWindow):
+    
+    def init(self, videoView):
+        frame = NSScreen.mainScreen().frame()
+        
+        parent = super(FullScreenVideoWindow, self)
+        self = parent.initWithContentRect_styleMask_backing_defer_(
+            frame,
+            NSBorderlessWindowMask,
+            NSBackingStoreBuffered,
+            True )
+        
+        self.videoView = videoView
+        self.previousSuperview = videoView.superview()
+        if self.previousSuperview is not None:
+            self.videoView.retain()
+            self.videoView.removeFromSuperviewWithoutNeedingDisplay()
+
+        self.videoView.setFrameSize_(frame.size)
+        self.contentView().addSubview_(self.videoView)
+        return self
+
+    def orderOut_(self, sender):
+        self.videoView.retain()
+        self.videoView.removeFromSuperviewWithoutNeedingDisplay()
+        self.videoView.setFrameSize_(self.previousSuperview.frame().size)
+        self.previousSuperview.addSubview_(self.videoView)
+        super(FullScreenVideoWindow, self).orderOut_(sender)
+
+
+###############################################################################
+#### Playlist item ?                                                       ####
+###############################################################################
 
 class PlaylistItem:
     "The record that makes up VideoDisplay playlists."
