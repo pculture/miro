@@ -385,25 +385,31 @@ class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
         return self
 
     def awakeFromNib(self):
+        generalItem = self.makePreferenceItem("GeneralItem", "General", "general_pref", self.generalView)
         channelsItem = self.makePreferenceItem("ChannelsItem", "Channels", "channels_pref", self.channelsView)
         downloadsItem = self.makePreferenceItem("DownloadsItem", "Downloads", "downloads_pref", self.downloadsView)
         diskSpaceItem = self.makePreferenceItem("DiskSpaceItem", "Disk Space", "disk_space_pref", self.diskSpaceView)
 
-        self.items = {channelsItem.itemIdentifier(): channelsItem,
+        self.items = {generalItem.itemIdentifier(): generalItem,
+                      channelsItem.itemIdentifier(): channelsItem,
                       downloadsItem.itemIdentifier(): downloadsItem,
                       diskSpaceItem.itemIdentifier(): diskSpaceItem}
 
-        self.allItems = (channelsItem.itemIdentifier(), 
+        self.allItems = (generalItem.itemIdentifier(),
+                         channelsItem.itemIdentifier(), 
                          downloadsItem.itemIdentifier(),
                          diskSpaceItem.itemIdentifier())
+
+        initialItem = generalItem
 
         toolbar = NSToolbar.alloc().initWithIdentifier_("Preferences")
         toolbar.setDelegate_(self)
         toolbar.setAllowsUserCustomization_(False)
-        toolbar.setSelectedItemIdentifier_(channelsItem.itemIdentifier())
+        toolbar.setSelectedItemIdentifier_(initialItem.itemIdentifier())
 
         self.window().setToolbar_(toolbar)
-        self.switchPreferenceView_(channelsItem)
+        self.window().setShowsToolbarButton_(False)
+        self.switchPreferenceView_(initialItem)
 
     def makePreferenceItem(self, identifier, label, imageName, view):
         item = self.PreferenceItem.alloc().initWithItemIdentifier_(identifier)
