@@ -15,6 +15,7 @@
             }; 
             SUPERCLASS = NSWindowController; 
         }, 
+        {CLASS = MetalSlider; LANGUAGE = ObjC; SUPERCLASS = NSSlider; }, 
         {CLASS = ProgressDisplayView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {CLASS = TabButtonCell; LANGUAGE = ObjC; SUPERCLASS = NSButtonCell; }, 
         {CLASS = TrackButton; LANGUAGE = ObjC; SUPERCLASS = NSButton; }, 
@@ -23,9 +24,8 @@
                 fastBackward = id; 
                 fastForward = id; 
                 goFullscreen = id; 
-                muteVolume = id; 
+                muteUnmuteVolume = id; 
                 playPause = id; 
-                setMaxVolume = id; 
                 setVolume = id; 
                 stop = id; 
             }; 
@@ -35,7 +35,6 @@
                 fastBackwardButton = id; 
                 fastForwardButton = id; 
                 fullscreenButton = id; 
-                maxVolumeButton = id; 
                 muteButton = id; 
                 playPauseButton = id; 
                 rootView = id; 
