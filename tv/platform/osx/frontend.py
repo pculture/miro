@@ -338,8 +338,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
         NSMenu.popUpContextMenu_withEvent_forView_( menu, event, sender )
 
-    def validateMenuItem_(self, item):
-        return super(MainController, self).validateMenuItem_(item)
+#    def validateMenuItem_(self, item):
+#        return super(MainController, self).validateMenuItem_(item)
 
 
 ###############################################################################
@@ -631,6 +631,45 @@ class TabButtonCell (NibClassBuilder.AutoBaseClass):
         r.size.width -= 16
         title = self.title()
         NSString.stringWithString_(title).drawInRect_withAttributes_( r, self.titleAttrs )
+
+
+###############################################################################
+#### Custom metal slider                                                   ####
+###############################################################################
+
+class MetalSlider (NibClassBuilder.AutoBaseClass):
+    
+    def awakeFromNib(self):
+        oldCell = self.cell()
+        newCell = MetalSliderCell.alloc().init()
+        newCell.setState_(oldCell.state())
+        newCell.setEnabled_(oldCell.isEnabled())
+        self.setCell_(newCell)
+
+
+class MetalSliderCell (NSSliderCell):
+    
+    def init(self):
+        self = super(MetalSliderCell, self).init()
+        self.knob = NSImage.imageNamed_('volume_knob')
+        self.knobPressed = NSImage.imageNamed_('volume_knob_blue')
+        self.knobSize = self.knob.size()
+        return self
+        
+    def knobRectFlipped_(self, flipped):
+        value = self.floatValue()
+        course = self.controlView().bounds().size.width - self.knobSize.width
+        origin = NSPoint(course * value, 0)
+        return ( origin, (self.knobSize.width, self.controlView().bounds().size.height) )
+    
+    def drawKnob_(self, rect):
+        self.controlView().lockFocus()
+        location = NSPoint(rect.origin.x, rect.origin.y + rect.size.height + 1)
+        if self.isEnabled():
+            self.knob.compositeToPoint_operation_(location, NSCompositeSourceOver)
+        else:
+            self.knob.dissolveToPoint_fraction_(location, 0.5)
+        self.controlView().unlockFocus()
 
 
 ###############################################################################
@@ -1099,7 +1138,6 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.fastForwardButton.setEnabled_(enabled)
         self.muteButton.setEnabled_(enabled)
         self.volumeSlider.setEnabled_(enabled)
-        self.maxVolumeButton.setEnabled_(enabled)
         self.fullscreenButton.setEnabled_(enabled)
 
     def play_(self, sender):
@@ -1145,13 +1183,14 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     def setVolume_(self, sender):
         self.videoView.movie().setVolume_(sender.floatValue())
 
-    def muteVolume_(self, sender):
-        self.volumeSlider.setFloatValue_(0.0)
-        self.setVolume_(self.volumeSlider)
-
-    def setMaxVolume_(self, sender):
-        self.volumeSlider.setFloatValue_(1.0)
-        self.setVolume_(self.volumeSlider)
+    def muteUnmuteVolume_(self, sender):
+        volume = self.videoView.movie().volume()
+        if volume > 0.0:
+            self.volumeSlider.setEnabled_(False)
+            self.videoView.movie().setVolume_(0.0)
+        else:
+            self.volumeSlider.setEnabled_(True)
+            self.videoView.movie().setVolume_(self.volumeSlider.floatValue())
 
     def goFullscreen_(self, sender):
         pass
