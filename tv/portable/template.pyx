@@ -685,9 +685,15 @@ class Handle:
         return nv.getView()
 
     def findNamedView(self, name):
-        if not self.namedViews.has_key(name):
-            raise TemplateError, "A view named '%s' was referenced but not defined." % name
-        return self.namedViews[name]
+        if self.namedViews.has_key(name):
+            return self.namedViews[name]
+        else:
+            for sh in self.subHandles:
+                try:
+                    return sh.findNamedView(name)
+                except TemplateError:
+                    pass
+        raise TemplateError, "A view named '%s' was referenced but not defined." % name
 
     def addView(self, anchorId, anchorType, view, templateFuncs, data):
         # Register for JS calls to populate a t:repeatFor. 'view' is the
