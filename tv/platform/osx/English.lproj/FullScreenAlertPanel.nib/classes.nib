@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {dismiss = id; }; 
+            CLASS = FullScreenAlertPanelController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {dontShowCheckbox = id; }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}
