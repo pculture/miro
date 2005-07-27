@@ -27,6 +27,7 @@ NibClassBuilder.extractClasses("PreferencesWindow")
 NibClassBuilder.extractClasses("AddChannelSheet")
 NibClassBuilder.extractClasses("PasswordWindow")
 NibClassBuilder.extractClasses("QuestionWindow")
+NibClassBuilder.extractClasses("FullScreenAlertPanel")
 
 doNotCollect = {}
 nc = NSNotificationCenter.defaultCenter()
@@ -180,12 +181,51 @@ class MainController (NibClassBuilder.AutoBaseClass):
         self.currentDisplay = [None, None]
         self.currentDisplayView = [None, None]
         self.addChannelSheet = None
+        
+        nc.addObserver_selector_name_object_(
+            self, 
+            'appWillTerminate:', 
+            NSApplicationWillTerminateNotification, 
+            NSApplication.sharedApplication())
+        
         return self
 
     def awakeFromNib(self):
+        self.restoreLayout()
         self.actionButton.sendActionOn_(NSLeftMouseDownMask)
         self.showWindow_(None)
 
+    def appWillTerminate_(self, notification):
+        self.saveLayout()
+
+    def restoreLayout(self):
+        defaults = NSUserDefaults.standardUserDefaults()
+        windowFrame = defaults.stringForKey_('mainWindow')
+        windowFrame = NSRectFromString(windowFrame)
+        leftFrame = defaults.stringForKey_('leftView')
+        leftFrame = NSRectFromString(leftFrame)
+        rightFrame = defaults.stringForKey_('rightView')
+        rightFrame = NSRectFromString(rightFrame)
+                
+        self.window().setFrame_display_(windowFrame, NO)
+        self.splitView.subviews().objectAtIndex_(0).setFrame_(leftFrame)
+        self.splitView.subviews().objectAtIndex_(1).setFrame_(rightFrame)
+        self.splitView.adjustSubviews()
+        
+    def saveLayout(self):
+        windowFrame = self.window().frame()
+        windowFrame = NSStringFromRect(windowFrame)
+        leftFrame = self.splitView.subviews().objectAtIndex_(0).frame()
+        leftFrame = NSStringFromRect(leftFrame)
+        rightFrame = self.splitView.subviews().objectAtIndex_(1).frame()
+        rightFrame = NSStringFromRect(rightFrame)
+
+        defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject_forKey_(windowFrame, 'mainWindow')
+        defaults.setObject_forKey_(leftFrame, 'leftView')
+        defaults.setObject_forKey_(rightFrame, 'rightView')
+        defaults.synchronize()
+                
     ### Switching displays ###
 
     def selectDisplay(self, display, index):
@@ -353,6 +393,31 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
 #    def validateMenuItem_(self, item):
 #        return super(MainController, self).validateMenuItem_(item)
+
+
+###############################################################################
+#### Fullscreen alert panel                                                ####
+###############################################################################
+
+class FullScreenAlertPanelController (NibClassBuilder.AutoBaseClass):
+    
+    @classmethod
+    def displayIfNeeded(cls):
+        noAlert = NSUserDefaults.standardUserDefaults().boolForKey_('noFullscreenAlert')
+        if not noAlert:
+            controller = FullScreenAlertPanelController.alloc().init()
+            NSApplication.sharedApplication().runModalForWindow_(controller.window())
+    
+    def init(self):
+        parent = super(FullScreenAlertPanelController, self)
+        self = parent.initWithWindowNibName_owner_('FullScreenAlertPanel', self)
+        return self
+    
+    def dismiss_(self, sender):
+        if self.dontShowCheckbox.state() == NSOnState:
+            NSUserDefaults.standardUserDefaults().setBool_forKey_(True, 'noFullscreenAlert')
+        NSApplication.sharedApplication().stopModal()
+        self.window().orderOut_(nil)
 
 
 ###############################################################################
@@ -1211,6 +1276,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             self.videoView.movie().setVolume_(self.volumeSlider.floatValue())
 
     def goFullscreen_(self, sender):
+        FullScreenAlertPanelController.displayIfNeeded()
         controller = FullScreenVideoController.alloc().initWithVideoView_(self.videoView)
         controller.enterFullScreen()
 
