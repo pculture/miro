@@ -24,16 +24,17 @@ function eventURL(url) {
 // to the test function (such as a search string). If invert is true,
 // the sense of the filter is reversed: only objects that don't match
 // it will be included. For convenience in 'onclick' handlers, this
-// function returns false.
-function setViewFilter(viewName, fieldKey, functionKey, parameter, invert) {
+// function returns false. param is a hack to include a static
+// parameter in addition to the dynamic one.
+     function setViewFilter(viewName, fieldKey, functionKey, parameter, invert, param) {
     url = 'action:setViewFilter?';
     url = url + 'viewName=' + URLencode(viewName);
     url = url + '&fieldKey=' + URLencode(fieldKey);
     url = url + '&functionKey=' + URLencode(functionKey);
     if (parameter)
-	url = url + '&parameter=' + URLencode(parameter);
+	url = url + '&parameter=' + URLencode(param+'|'+parameter);
     else
-	url = url + '&parameter=';
+	url = url + '&parameter='+ URLencode(param);
     if (invert)
 	url = url + '&invert=true';
     else
@@ -80,9 +81,12 @@ function playView(viewName, firstItemId) {
 // with the other argumens fixed. To do this, add these two attributes to
 // the text box:
 //   onfocus="startEditFilter(this, (viewName), (fieldKey),
-//            (functionKey), (invert)"
+//            (functionKey), (invert), (param)"
 //   onblur="endEditFilter()"
 // replacing the arguments in parentheses with the desired strings.
+//
+// Note that params is a big hack to pass a static parameter in
+// addition to the dynamic one
 
 var editFilterTimers = new Array();
 var editFilterField = null;
@@ -92,9 +96,10 @@ var editFilterViews = new Array();
 var editFilterFieldKeys = new Array();
 var editFilterFunctionKeys = new Array();
 var editFilterInverts = new Array();
+var editFilterParams = new Array();
 var editCurView = 0;
 
-function startEditFilter(obj, views, fieldKeys, functionKeys, inverts) {
+function startEditFilter(obj, views, fieldKeys, functionKeys, inverts, params) {
   editFilterOldValue = obj.value;
 
   editFilterField = obj;
@@ -102,12 +107,13 @@ function startEditFilter(obj, views, fieldKeys, functionKeys, inverts) {
   editFilterFieldKeys = fieldKeys;
   editFilterFunctionKeys = functionKeys;
   editFilterInverts = inverts;
+  editFilterParams = params;
   editCurView = 0;
 
   editFilterTimerTick(editCurView);
 }
 
-function editFilterUpdate(viewName,functionName,fieldName,invert) {
+function editFilterUpdate(viewName,functionName,fieldName,invert, param) {
     value = editFilterField.value;
     if (editFilterOldValue != value ||
 	editFilterCount < editFilterViews.length) {
@@ -117,13 +123,13 @@ function editFilterUpdate(viewName,functionName,fieldName,invert) {
 	    editFilterCount++;
 	setViewFilter(viewName, fieldName,
 		      functionName, value,
-		      invert);
+		      invert, param);
 	editFilterOldValue = value;
     }
 }
 
 function editFilterTimerTick(curView) {
-    editFilterUpdate(editFilterViews[editCurView],editFilterFunctionKeys[editCurView],editFilterFieldKeys[editCurView],editFilterInverts[editCurView]);
+    editFilterUpdate(editFilterViews[editCurView],editFilterFunctionKeys[editCurView],editFilterFieldKeys[editCurView],editFilterInverts[editCurView], editFilterParams[editCurView]);
     editCurView++;
     if (editCurView >= editFilterViews.length) {
 	editCurView = 0;

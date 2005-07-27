@@ -298,6 +298,10 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
             #NEEDS: handle feed:// URLs and USM subscription URLs
 
+            # Let channel guide URLs pass through
+            if url.startswith('http://clients.tekritisoftware.com/pcf/channelguide'):
+                return True
+
             # If we get here, this isn't a DTV URL. We should open it
             # in an external browser.
             if (url.startswith('http://') or url.startswith('https://') or
@@ -547,7 +551,7 @@ class GUIActionHandler:
     # NEEDS: name should change to addAndSelectFeed; then we should create
     # a non-GUI addFeed to match removeFeed. (requires template updates)
 
-    def addFeed(self, url, showTemplate = None):
+    def addFeed(self, url, showTemplate = None, selected = '1'):
         db.beginUpdate()
         db.saveCursor()
 
@@ -564,16 +568,17 @@ class GUIActionHandler:
                 # At this point, the addition is guaranteed to be reflected
                 # in the tab list.
 
-                tabs = self.controller.tabs
-                tabs.resetCursor()
-                while True:
-                    cur = tabs.getNext()
-                    if cur == None:
-                        assert(0) # NEEDS: better error (failed to add tab)
-                    if cur.feedURL() == url:
-                        break
+                if selected == '1':
+                    tabs = self.controller.tabs
+                    tabs.resetCursor()
+                    while True:
+                        cur = tabs.getNext()
+                        if cur == None:
+                            assert(0) # NEEDS: better error (failed to add tab)
+                        if cur.feedURL() == url:
+                            break
 
-                self.controller.checkSelectedTab(showTemplate)
+                    self.controller.checkSelectedTab(showTemplate)
 
         finally:
             db.restoreCursor()
@@ -922,21 +927,98 @@ def filterHasKey(obj,parameter):
         return False
     return True
 
+# FIXME: All of these functions have a big hack to support two
+#        parameters instead of one. It's ugly. We should fix this to
+#        support multiple parameters
+def undownloadedItems(obj,param):
+    params = param.split('|',1)
+    
+    undled = (str(obj.feed.getID()) == params[0] and 
+              (not (obj.getState() == 'finished' or
+                    obj.getState() == 'uploading' or
+                    obj.getState() == 'watched')))
+    if len(params) > 1:
+        undled = (undled and 
+                  (str(params[1]).lower() in obj.getTitle().lower() or
+                   str(params[1]).lower() in obj.getDescription().lower()))
+    return undled
+
+def downloadedItems(obj, param):
+    params = param.split('|',1)
+    
+    dled = (str(obj.feed.getID()) == params[0] and 
+              ((obj.getState() == 'finished' or
+                obj.getState() == 'uploading' or
+                obj.getState() == 'watched')))
+    if len(params) > 1:
+        dled = (dled and 
+                (str(params[1]).lower() in obj.getTitle().lower() or
+                 str(params[1]).lower() in obj.getDescription().lower()))
+    return dled
+
+def recentItems(obj, param):
+    #FIXME make this look at the feed's time until expiration
+    params = param.split('|',1)
+    
+    recent = (str(obj.feed.getID()) == params[0] and 
+              ((obj.getState() == 'finished' or
+                obj.getState() == 'uploading' or
+                obj.getState() == 'watched')))
+    if len(params) > 1:
+        recent = (recent and 
+                  (str(params[1]).lower() in obj.getTitle().lower() or
+                   str(params[1]).lower() in obj.getDescription().lower()))
+    return recent
+
+def oldItems(obj, param):
+    params = param.split('|',1)
+    
+    old = (str(obj.feed.getID()) == params[0] and 
+           ((obj.getState() == 'finished' or
+             obj.getState() == 'uploading' or
+             obj.getState() == 'watched')) and 
+           (obj.getDownloadedTime()+config.get('DefaultTimeUntilExpiration') <=
+            datetime.datetime.now()))
+    if len(params) > 1:
+        old = (old and 
+               (str(params[1]).lower() in obj.getTitle().lower() or
+                str(params[1]).lower() in obj.getDescription().lower()))
+    return old
+    
+def allRecentItems(obj, param):
+    params = param.split('|',1)
+    if len(params)>1:
+        search = params[1]
+    else:
+        search = ''
+
+    return ((obj.getState() == 'finished' or obj.getState() == 'uploading' or
+            obj.getState() == 'watched') and 
+            (search.lower() in obj.getTitle().lower() or 
+             search.lower() in obj.getDescription().lower()))
+
+def allDownloadingItems(obj, param):
+    params = param.split('|',1)
+    if len(params)>1:
+        search = params[1]
+    else:
+        search = ''
+
+    return (obj.getState() == 'downloading' and
+            (search.lower() in obj.getTitle().lower() or 
+             search.lower() in obj.getDescription().lower()))
+            
+
 globalFilterList = {
     'substring': (lambda x, y: str(y) in str(x)),
     'boolean': (lambda x, y: x),
 
-    #Pass in the id of the feed as a parameter to these feeds
-
-    #FIXME make this look at the feed's time until expiration
-
-    'recentItems': (lambda x, y: str(x.feed.getID()) == y and (x.getState() == 'finished' or x.getState() == 'uploading' or x.getState() == 'watched')),
-    'allRecentItems': (lambda x, y: (x.getState() == 'finished' or x.getState() == 'uploading' or x.getState() == 'watched') and (str(y).lower() in x.getTitle().lower() or str(y).lower() in x.getDescription().lower())),
-    'oldItems': (lambda x, y:  str(x.feed.getID()) == y and (x.getState() == 'finished' or x.getState() == 'uploading' or x.getState() == 'watched') and x.getDownloadedTime()+config.get('DefaultTimeUntilExpiration')<=datetime.datetime.now()),
-
-    'downloadedItems': (lambda x, y: str(x.feed.getID()) == y and (x.getState() == 'finished' or x.getState() == 'uploading' or x.getState() == 'watched')),
-    'unDownloadedItems':  (lambda x, y: str(x.feed.getID()) == y and (not (x.getState() == 'finished' or x.getState() == 'uploading' or x.getState() == 'watched'))),
-    'allDownloadingItems': (lambda x, y: x.getState() == 'downloading'),
+    'recentItems': recentItems,
+    'allRecentItems': allRecentItems,
+    'oldItems': oldItems,
+    'downloadedItems': downloadedItems,
+    'unDownloadedItems':  undownloadedItems,
+    'allDownloadingItems': allDownloadingItems                         ,
        
     'class': filterClass,
     'all': (lambda x, y: True),

@@ -39,7 +39,7 @@
 <div id="right_half">
 	<div class="auto_link" i18n:translate="">AUTO DOWNLOAD: <span t:replace="feed autoDownloadStatus"/></div>
 	<a class="settings_link" i18n:translate="" href="template:feed-settings">Change Settings</a>
-	<input type="text" size="20" class="search_field" onfocus="startEditFilter(this,new Array('newitems','mylibrary'),new Array('',''),new Array('global filter recentItems','global filter oldItems'),new Array(0,0))" onblur="endEditFilter()"  />
+	<input type="text" size="20" class="search_field" onfocus="startEditFilter(this,new Array('newitems','mylibrary'),new Array('',''),new Array('global filter recentItems','global filter oldItems'),new Array(0,0),new Array('@@@feed getFeedID@@@','@@@feed getFeedID@@@'))" onblur="endEditFilter()"  />
 </div>
 
 	<br style="clear: both; height: 0; padding: 0; margin: 0;" />
@@ -49,11 +49,19 @@
 
 <div id="navigation_wrapper">
 	<div id="navigation">
-		<a href="" class="watch_active">Watch</a>
-		<a href="template:feed-choose" class="browse" t:hideIfNotKey="feed hasLibrary" t:hideFunctionKey="global filter boolean">Browse</a>
-		<a href="template:feed-choose" class="browse_nolibrary" t:hideIfKey="feed hasLibrary" t:hideFunctionKey="global filter boolean">Browse</a>
-		<a href="" class="library" t:hideIfNotKey="feed hasLibrary" t:hideFunctionKey="global filter boolean">Library</a>
+	<div id="tabs" class="tabs">
+		
+		<span class="tab_left"><a href="" class="watch_active">Watch</a></span>
+		
+		<span class="tab-center" t:hideIfNotKey="feed hasLibrary" t:hideFunctionKey="global filter boolean"><a href="template:feed-choose" class="browse" >Browse</a></span>
+		
+		<span class="tab_right" t:hideIfKey="feed hasLibrary" t:hideFunctionKey="global filter boolean"><a href="template:feed-choose" class="browse_nolibrary">Browse</a></span>
+		
+		<span class="tab_right" t:hideIfNotKey="feed hasLibrary" t:hideFunctionKey="global filter boolean"><a href="" class="library">Library</a></span>
+	
 	</div>
+	</div>
+
 </div>
 
 </div>
@@ -65,7 +73,7 @@
   <div id="content_window">
     <ul> 
 
-<div class="no_new" t:hideIfViewNotEmpty="newitems" i18n:translate="">See what's available on this channel by clicking on the 'Browse' tab.</div>        
+<div class="no_new" t:hideIfViewNotEmpty="newitems" i18n:translate=""><a href="template:feed-choose">See what's on this channel by clicking 'Browse'.</a></div>        
 <li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="newitems">
         <t:includeTemplate filename="download-item" />
         </li> 
@@ -78,10 +86,13 @@
   </div>
   </div> 
 
+<!--
 <div class="no_new">
-<!-- DEBUG: <a href="action:playView?viewName=newitems">Play unseen items</a>,
-<a href="action:playView?viewName=mylibrary">Play seen items</a> -->
+DEBUG: <a href="action:playView?viewName=newitems">Play unseen items</a>,
+<a href="action:playView?viewName=mylibrary">Play seen items</a>
 </div>
+-->
+
 
 </body>
 </html>

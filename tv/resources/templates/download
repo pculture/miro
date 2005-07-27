@@ -33,7 +33,7 @@
 </div>
 
 <div id="right_half">
-	<input type="text" size="20" class="search_field" onfocus="startEditFilter(this,new Array('dlitems'),new Array(''),new Array('global filter downloadingItems'),new Array(0))" onblur="endEditFilter()"  />
+	<input type="text" size="20" class="search_field" onfocus="startEditFilter(this,new Array('dlitems'),new Array(''),new Array('global filter allDownloadingItems'),new Array(0), new Array(''))" onblur="endEditFilter()"  />
 	
 </div>
 

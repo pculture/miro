@@ -115,7 +115,7 @@ Contains the channels
 
 
 #sidebar ul ul li {
-	padding: 7px 0px 7px 0px;
+	padding: 4px 0px 4px 0px;
 	color: #333;
 	text-decoration: none;
 	clear: both;
@@ -138,11 +138,11 @@ Contains the channels
 	}
 
 #sidebar ul li a{
-	padding: 4px 5px 1px;
-	color: #333;
+	padding: 2px 2px 2px 4px;
+	color: #000;
 	text-decoration: none;
 	clear: both;
-	height: 29px;
+	height: 26px;
 	}
 
 #sidebar ul li a img{
@@ -160,7 +160,7 @@ Contains the channels
 
 #sidebar ul li a span span{
 	display: block;
-	padding: 5px 0 5px 5px;
+	padding: 5px 0 4px 3px;
 	overflow: hidden;
 	}
 
@@ -188,11 +188,13 @@ a.feeditem:hover{
 
 #sidebar a.selected_feeditem {
 	background: #eee url(resource:images/selectedback.png) 0% 0% repeat-x; 
+	background: #eee url(resource:images/active_channel_bg.png) 0% 0% repeat-x; 
+
 	color: #fff;
 	}
 
 #sidebar a.selected_feeditem_inactive {
-	background: #eee url(resource:images/selectedbackgrey.png) 0% 0% repeat-x; 
+	background: #eee url(resource:images/inactive_channel_bg.png) 0% 0% repeat-x; 
 	color: #fff;
 	}
 
@@ -301,12 +303,10 @@ A wrapper around the content
 	}
 
 
-
-
 #content_window {
 	background-color: #fff;
 	padding-right: 0px;
-	margin-top: 90px;
+	margin-top: 95px;
 	}
 
 #library {
@@ -344,14 +344,13 @@ watch, choose...
 	}
 
 .tab {
-	padding: 6px 8px;
+	padding: 5px 6px 5px 6px;
 	font-size: 12px;
 	float: left;
 	color: #333;
 	height: 13px;
 	font-weight: bold;
 	text-shadow: 0px 1px 0px white;
-/*	width: 45px;  */
 	text-align: center;
 	margin:0;
 	}
@@ -389,6 +388,11 @@ watch, choose...
 	color: #900;
 }
 
+.no_new a {
+	text-decoration: none;
+	color: #900;
+}
+
 
 /*/////////////////////////////////////////////
 
@@ -400,19 +404,17 @@ Where the videos show up
 
 #main_window ul {
 	margin: 0;
-	padding: 0;	
+	padding: 0;
+	clear: both;
 	}
 
 
 #main_window ul li {
-	
 	border-bottom: 5px solid #eee;
-	
 	background: url(resource:images/video_back.png) bottom left repeat-x;
-	
 	display: block;
 	clear: both;
-	padding: 12px 0 5px 0;
+	padding: 7px 0 3px 0;
 	list-style: none;
 	height: 76px;
 	}
@@ -453,22 +455,19 @@ Where the videos show up
 
 
 
-
-
 #main_window li .thumbnail_placeholder{
 	display: block;
 	float: left;
 	padding: 0px;
 	margin-top: 0px;
-	margin-right: 8px;
+	margin-right: 7px;
 	margin-left: 8px;
-	width: 92px;
-	height: 69px;
+	width: 101px;
+	height: 75px;
 	}
 	
 #main_window li .thumbnail_placeholder img{
-	border-left: 2px solid #666;
-	border-top: 2px solid #666;
+	border: 1px solid #ddd;
 	}
 
 
@@ -498,7 +497,7 @@ Where the videos show up
 	color: #222;
 	overflow: hidden;
 	height: 20px;
-	font-size: 15px;
+	font-size: 16px;
 	padding-top: 1px;
 	}
 
@@ -507,17 +506,18 @@ Where the videos show up
 
 .short_description {
 	color: #444;  
-	line-height: 16px;
-	height: 32px;
+	line-height: 17px;
+	height: 34px;
 	overflow: hidden;
 	}
 
 .download_button {
-	width: 30px;
-	height: 30px;
 	display: block;
-	float: right;
-	margin-right: 58px;
+	margin-left: 80px;
+	margin-top: 10px;
+	width: 34px;
+	height: 34px;
+	background: url(resource:images/download_button_green.png) top left no-repeat;
 	}
 
 
@@ -564,6 +564,11 @@ messages
 	padding: 3px 0 3px 15px;
 	}
 	
+	
+.report_downloaderror {
+	font-size: 10px;
+}
+	
 /* ---- Play Button ----- */
 	
 .play_button{
@@ -597,7 +602,7 @@ Progress Bar
 	width: 102px;
 	font-size: 11px;
 	padding-top: 20px;
-	margin-right: 20px;
+	margin-right: 10px;
 	}
 
 .cancel_button{
@@ -633,22 +638,31 @@ The settings of each channel
 	}
 
 .settings_title {
-	background-color: #fff;
-	padding: 8px;
+	padding: 8px 0 0 8px;
 	margin: 0;
-	font-size: 18px;
+	font-size: 16px;
 	}
+
+.settings_url {
+	padding: 2px 0 0 8px;
+	margin: 0;
+	font-weight: normal;
+	font-size: 13px;
+	color: #333;
+	}
+
 
 div.settings{
 	background: #eee;
+	margin: 0 30px 0 30px;
+	padding: 5px;
 	}
 
 
 div.settings div{
 	display: block;
-	padding: 5px 5px 5px 25px;
-	border-bottom: 1px solid white;
-	border-top: 1px solid #f9f9f9;
+	padding: 10px;
+	border-bottom: 0px solid white;
 	}
 
 
@@ -659,26 +673,73 @@ div.settings div{
 	color: #333;
 	}
 	
+
+.settings_auto_mode{
+	background-color: #f4f1be;
+	padding: 15px;
+	width: 450px;
+	margin: 20px auto 10px auto;
+	border: 1px solid #ddb;
+}
+
+
+.settings_auto_mode h2 input {
+	vertical-align: top;
+	padding-top: 2px;
+}
+
+.settings_auto_mode h2{
+	padding: 0;
+	margin: 0;
+	font-size: 18px;
+	}
+
+
 	
 .setting_heading{
+	padding: 15px 5px 5px 30px;
+	}
+
+.setting_heading h2{
+	font-size: 15px;
+	margin: 0;
+	padding: 0;
+}
+
+
+.setting_link{
 	background: #bbb;
 	padding: 5px;
 	margin-bottom: 2px;
 	}
-	
-.setting_heading h2{
-	display: inline;
-	padding: 0;
-	margin: 0;
-	font-size: 13px;
-	}
-	
+
+
 .heading_desc{
-	padding-left: 5px;
+	padding-left: 0px;
 	color: #666;
-	font-size: 10px;
+	font-size: 12px;
 	}
 	
+	
+#expiration_tips {
+margin-top: 10px;
+padding: 8px;
+background-color: #eee;
+}
+
+#main_window #expiration_tips li, #main_window #expiration_tips ul {
+padding: 0;
+margin: 0;
+background-color: #eee;
+height: inherit;
+width: inherit;
+background-image: none;
+list-style-type: disc;
+}
+
+#main_window #expiration_tips li {
+padding: 3px 0 3px 0;
+}
 
 
 /*/////////////////////////////////////////////
@@ -696,11 +757,11 @@ search, title, recommend link
 	left: 0;
 	width: 100%;
 	z-index: 100;
+	background: url(resource:images/channel_top_background7.png) repeat-x;
 	}
 	
 	
 #top_wrapper{
-	background: #E6E9FF;
 	clear: both;
 	height: 63px;
 	}
@@ -712,21 +773,29 @@ search, title, recommend link
 	padding: 5px 0 0 5px;
 	}
 
+
 #channel_info img{
 	display: block;
 	float: left;
 	width: 55px;
 	height: 55px;
-	margin: 0 6px 0 0;
+	margin: 0 4px 0 0;
+	border: 1px solid #dadde3;
+	background-color: #fafbfe;
 	}
 
 #channel_info h2{
 	margin: 0 0 0 59px;
 	padding: 0;
 	font-weight: normal;
-	max-height: 44px;
+	max-height: 40px;
+	font-size: 17px;
+	line-height: 21px;
 	overflow: hidden;
+	color: black;
+	text-shadow: 0px 1px 0px #eee;
 	}
+
 
 
 #right_half{
@@ -736,9 +805,8 @@ search, title, recommend link
 	}
 
 
-
 .auto_link{
-	color: green;
+	color: #00aa00;
 	}
 
 .settings_link{
@@ -782,155 +850,107 @@ The settings of each channel
  
 /////////////////////////////////////////////*/
 
-
-
 #navigation_wrapper	{
-	background: green url(resource:images/navigation_back.png) repeat-x;
-	height: 17px;
+	height: 35px;
 	margin: 0;
 	}
 
 #navigation	{
 	height: 25px;
 	width: 190px;
-	margin: 0 auto;
+	margin: 1px auto 0 auto;
 	}
 
 #navigation	a{
 	margin: 0;
 	display: block;
 	float: left;
+	}
+
+	
+#tabs {
+	height: 24px;
+	font: normal 13px "Lucida Grande", "Lucida Sans Unicode";
+	color: #000000;
 	text-decoration: none;
-	color: #333;
-	height: 20px;
-	}
-
-
-
-.watch{
-	width: 46px;
-	padding: 5px 0 0 15px;
-	background: url(resource:images/watch.png) no-repeat;
 	text-shadow: 0px 1px 0px white;
-	}
+}
 
-.watch:active{
-	background: url(resource:images/watch_pressed.png) no-repeat;
-	text-shadow: 0px 1px 0px white;
-	}
-	
-.watch_active{
-	width: 46px;
-	padding: 5px 0 0 15px;
-	background: url(resource:images/watch_active.png) no-repeat;
-	text-shadow: 0px 1px 0px white;
-	}
+.tabs a:link, .tabs a:visited, .tabs a:active, .tabs a:hover {
+	color: #000000;
+	text-decoration: none;	
+}
 
-.watch_active:active{
-	background: url(resource:images/watch_pressed.png) no-repeat;
-	text-shadow: 0px 1px 0px white;
-	}
+.tab_left {
+/*	background: url(resource:images/tab_divider.png) no-repeat right top; */
+	padding: 3px 0px 4px 0px;
+	height: 24px;
+	display: block;
+	float: left;
+}
 
-.browse{
-	width: 52px;
-	padding: 5px 0 0 10px;
-	background: url(resource:images/browse.png) no-repeat;
-	
-	text-shadow: 0px 1px 0px white;
-	}
+.tab_right {
+	background: url(resource:images/tab_divider.png) no-repeat left top;
+	background-position: 0px 3px;
+	padding: 3px 0px 4px 1px;
+	height: 24px;
+	display: block;
+	float: left;
+} 
 
-.browse:active{
-	background: url(resource:images/browse_pressed.png) no-repeat;
-	text-shadow: 0px 1px 0px white;
-	}
+.watch {
+	background: url(resource:images/tab_left.png) no-repeat left top;
+	padding: 3px 8px 4px 12px;
+}
 
-.browse_active{
-	width: 52px;
-	padding: 6px 0 0 10px;
-	background: url(resource:images/browse_active.png) top right no-repeat;
-	text-shadow: 0px 1px 0px white;
-	}
+.watch_active {
+	background: url(resource:images/tab_left_active.png) no-repeat left top;
+	padding: 3px 8px 4px 12px;
+}
 
-.browse_active:active{
-	background: url(resource:images/browse_pressed.png) no-repeat;
-	text-shadow: 0px 1px 0px white;
-	}
+.browse {
+	background: url(resource:images/tab_center.png) no-repeat left top;
+	padding: 3px 8px 4px 8px;
+}
 
+.browse_active {
+	background: url(resource:images/tab_center_active.png) no-repeat left top;
+	padding: 3px 8px 4px 8px;
+}
 
+.library {
+	background: url(resource:images/tab_right.png) no-repeat right top;
+	padding: 3px 12px 4px 8px;
+}
+
+.library_active {
+	background: url(resource:images/tab_right_active.png) no-repeat right top;
+	padding: 3px 12px 4px 8px;
+}	
 
 a.browse_nolibrary{
-	width: 57px;
-	padding: 5px 0 0 10px;
-	background: url(resource:images/library.png) no-repeat;
-	border-left: 1px solid #ccc;
-	text-shadow: 0px 1px 0px white;
-	}
-
-.browse_nolibrary:active{
-	background: url(resource:images/library_pressed.png) no-repeat;
-	border-left: 1px solid #ccc;
-	text-shadow: 0px 1px 0px white;
+	padding: 3px 12px 4px 8px;
+	background: url(resource:images/tab_right.png) right top no-repeat;
 	}
 
 .browse_nolibrary_active{
-	width: 57px;
-	padding: 5px 0 0 10px;
-	background: url(resource:images/library_active.png) no-repeat;
-	border-left: 1px solid #ccc;
-	text-shadow: 0px 1px 0px white;
+	padding: 3px 12px 4px 8px;
+	background: url(resource:images/tab_right_active.png) right top no-repeat;
 	}
-
-.browse_nolibrary_active:active{
-	background: url(resource:images/library_pressed.png) no-repeat;
-	border-left: 1px solid #ccc;
-	text-shadow: 0px 1px 0px white;
-	}
-
-
-
-
-
-
-.library{
-	width: 57px;
-	padding: 5px 0 0 10px;
-	background: url(resource:images/library.png) no-repeat;
-	text-shadow: 0px 1px 0px white;
-	}
-
-.library:active{
-	background: url(resource:images/library_pressed.png) no-repeat;
-	text-shadow: 0px 1px 0px white;
-	}
-	
-	
-.library_active{
-	width: 57px;
-	padding: 5px 0 0 10px;
-	background: url(resource:images/library_active.png) no-repeat;
-	text-shadow: 0px 1px 0px white;
-	}
-	
-.library_active:active{
-	background: url(resource:images/library_pressed.png) no-repeat;
-	text-shadow: 0px 1px 0px white;
-	}
-
-
 
 
 
 /*/////////////////////////////////////////////
 
-MAIN WINDOW
+SIDEBAR
 -----------------------------------------------
-A wrapper around the content
+
  
 /////////////////////////////////////////////*/
 
 #sidebar_tabs a{
 	margin: 0;
-	padding: 5px 0;
+	padding: 4px 0;
 	height: 15px;
 	display: block;
 	float: left;
@@ -964,25 +984,20 @@ A wrapper around the content
 	}
 	
 
-	
 .numbercount_holder{
 	float: right;
 	margin-left: 5px;
 	}
 
-
-
 .number_count{
-	padding: 3px 0 4px;
+	padding: 3px 0 3px 0;
 	color: #fff;
-	margin: 0 9px;
+	margin: 0px 9px 0 9px;
 	background: #00d810;
 	font-weight: bold;
-	font-size: 11px;
+	font-size: 10px;
 	text-shadow: 0px 1px 0px #333;
 	}
-
-	
 
 .green_left{
 	background: url(resource:images/green_left.png) top left no-repeat;
@@ -993,12 +1008,11 @@ A wrapper around the content
 
 .green_right{
 	background: url(resource:images/green_right.png) top right no-repeat;
-	padding-right: 1px;
+	padding-right: 0px;
 	}
 
-
 .gray_number_count{
-	padding: 3px 1px 3px 0px;
+	padding: 3px 0px 3px 0px;
 	color: #333;
 	margin: 0 9px;
 	background: #ccc;
@@ -1009,7 +1023,7 @@ A wrapper around the content
 .gray_left{
 	background: url(resource:images/gray_left.png) top left no-repeat;
 	display: inline;
-	margin: 4px 0 0 0;
+	margin: 3px 0 0 0;
 	float: right;
 	}
 
@@ -1020,31 +1034,30 @@ A wrapper around the content
 
 	
 .both_number_count{
-	padding: 3px 0 4px;
+	padding: 3px 0 3px 0;
 	color: #fff;
-	margin: 0 9px;
-	background: #6c3;
+	margin: 0 9px 0 9px;
+	background: #00d810;
 	font-weight: bold;
-	font-size: 11px;
+	font-size: 10px;
 	text-shadow: 0px 1px 0px #333;
 	}
-	
-	
+		
 .both_green_left{
 	background: url(resource:images/green_left.png) top left no-repeat;
 	display: inline;
-	margin: 3px -15px 0 0;
+	margin: 3px -9px 0 0;
 	float: right;
 	}
 
 .both_green_right{
 	background: url(resource:images/green_right.png) top right no-repeat;
-	padding-right: 1px;
+	padding-right: 0px;
 	}
 
 
 .both_gray_number_count{
-	padding: 3px 2px 3px 0px;
+	padding: 3px 0px 3px 1px;
 	color: #333;
 	margin: 0 9px;
 	background: #ccc;
@@ -1055,7 +1068,7 @@ A wrapper around the content
 .both_gray_left{
 	background: url(resource:images/gray_left.png) top left no-repeat;
 	display: inline;
-	margin: 4px 0 0 0;
+	margin: 3px 0 0 0;
 	float: right;
 	}
 

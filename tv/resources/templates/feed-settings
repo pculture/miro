@@ -21,7 +21,7 @@
 <div id="top_wrapper">
 
 <div id="channel_info">
-	<img src="resource:images/thumbnail.png" />
+	<img src="***feed getThumbnail***" />
 	<h2 i18n:translate=""><span t:replace="feed getTitle"/></h2>
 	<a href="mailto:?subject=@@@feed getTitle@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed getTitle@@@&quot;. If you don't have DTV, you can get it here:%0D%0A%0D%0Ahttp://www.participatoryculture.org/download.php%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed getURL@@@" class="recommend_link" i18n:translate="">Recommend to Friends</a>
 </div>
@@ -29,7 +29,7 @@
 <div id="right_half">
 	<div class="auto_link" i18n:translate="">AUTO DOWNLOAD: <span t:replace="feed autoDownloadStatus"/></div>
 	<a class="settings_link" i18n:translate="" href="template:feed-settings">Change Settings</a>
-	<input type="text" size="20" class="search_field" onfocus="startEditFilter(this,new Array('newitems','mylibrary'),new Array('',''),new Array('global filter recentItems','global filter oldItems'),new Array(0,0))" onblur="endEditFilter()"  />
+
 </div>
 
 	<br style="clear: both; height: 0; padding: 0; margin: 0;" />
@@ -39,11 +39,19 @@
 
 <div id="navigation_wrapper">
 	<div id="navigation">
-		<a href="template:feed-start" class="watch">Watch</a>
-		<a href="template:feed-choose" class="browse" t:hideIfNotKey="feed hasLibrary" t:hideFunctionKey="global filter boolean">Browse</a>
-		<a href="template:feed-choose" class="browse_nolibrary" t:hideIfKey="feed hasLibrary" t:hideFunctionKey="global filter boolean">Browse</a>
-		<a href="" class="library" t:hideIfNotKey="feed hasLibrary" t:hideFunctionKey="global filter boolean">Library</a>
+	<div id="tabs" class="tabs">
+		
+		<span class="tab_left"><a href="template:feed-watch" class="watch">Watch</a></span>
+		
+		<span class="tab-center" t:hideIfNotKey="feed hasLibrary" t:hideFunctionKey="global filter boolean"><a href="template:feed-choose" class="browse" >Browse</a></span>
+		
+		<span class="tab_right" t:hideIfKey="feed hasLibrary" t:hideFunctionKey="global filter boolean"><a href="template:feed-choose" class="browse_nolibrary">Browse</a></span>
+		
+		<span class="tab_right" t:hideIfNotKey="feed hasLibrary" t:hideFunctionKey="global filter boolean"><a href="" class="library">Library</a></span>
+	
 	</div>
+	</div>
+
 </div>
 
 </div>
@@ -53,7 +61,7 @@
 
 
 <h2 i18n:translate="" class="settings_title">Channel Settings</h2>
-
+<h4 class="settings_url"><span t:replace="feed getURL"/></h4>
 
 
 
@@ -61,7 +69,7 @@
 <input type="hidden" name="feed" value="@@@feed getID@@@" />
 
 
-
+<!--
 
 <div class="setting_heading">
  <input name="automatic" type="radio" t:hideIfKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" onClick="javascript:form.submit()" value="0" checked="checked" />
@@ -70,20 +78,30 @@
  <span class="heading_desc" i18n:translate="">Don't download automatically. I will choose which videos I want to get.</span>
 </div>
 
+-->
+
+
+<div class="settings_auto_mode">
+ 
+<h2 i18n:translate=""><input name="automatic" type="checkbox" t:hideIfNotKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" onClick="javascript:form.submit()" value="1" checked="checked" />
+ <input name="automatic" type="checkbox" t:hideIfKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" onClick="javascript:form.submit()" value="1"/>
+Auto Download</h2>
+  <span class="heading_desc" i18n:translate="">&nbsp;&nbsp;&nbsp;Automatically download videos from this channel as they become available.</span>
+</div>
+
 
 <div class="setting_heading">
-<input name="automatic" type="radio" t:hideIfNotKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" onClick="javascript:form.submit()" value="1" checked="checked" />
- <input name="automatic" type="radio" t:hideIfKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" onClick="javascript:form.submit()" value="1"/>
- <h2 i18n:translate="">Automatic Mode</h2>
- <span class="heading_desc" i18n:translate="">Automatically download new videos on this channel, according to these rules:</span>
+ <h2 i18n:translate="">Auto Download Settings</h2>
+ <span class="heading_desc" i18n:translate="">When Auto Download is turned on, use these settings:</span>
 </div>
+
 
 <div class="settings">
  <div i18n:translate="">
-  Never have more than <input i18n:name="maxnew" type="text" size="8" name="maxnew" value="@@@feed getMaxNew@@@" onFocus="javascript:if (document.settings['maxnew'].value == 'unlimited') document.settings['maxnew'].value = '';" onBlur="javascript:if (document.settings['maxnew'].value == '') document.settings['maxnew'].value = 'unlimited';form.submit()"  /> new videos at a time from this channel (if this channel is hogging disk space, you may want to reduce this number).
+    <input type="checkbox" name="getEverything" value="1" onClick="javascript:form.submit()" t:hideIfKey="feed getEverything" t:hideFunctionKey="global filter boolean"/> Never have more than <input i18n:name="maxnew" type="text" size="8" name="maxnew" value="@@@feed getMaxNew@@@" onFocus="javascript:if (document.settings['maxnew'].value == 'unlimited') document.settings['maxnew'].value = '';" onBlur="javascript:if (document.settings['maxnew'].value == '') document.settings['maxnew'].value = 'unlimited';form.submit()"  /> new videos at a time from this channel. If this channel is hogging disk space, you may want to reduce this number.
  </div>
  <div i18n:translate="">
-  If DTV falls behind this channel by more than <input i18n:name="fallbehind" name="fallbehind" type="text" size="8" value="@@@feed getMaxFallBehind@@@" onFocus="javascript:if (document.settings['fallbehind'].value == 'unlimited') document.settings['fallbehind'].value = '';" onBlur="javascript:if (document.settings['fallbehind'].value == '') document.settings['fallbehind'].value = 'unlimited';form.submit()" /> videos, skip some to catch up.
+     <input type="checkbox" name="getEverything" value="1" onClick="javascript:form.submit()" t:hideIfKey="feed getEverything" t:hideFunctionKey="global filter boolean"/> If DTV falls behind this channel by more than <input i18n:name="fallbehind" name="fallbehind" type="text" size="8" value="@@@feed getMaxFallBehind@@@" onFocus="javascript:if (document.settings['fallbehind'].value == 'unlimited') document.settings['fallbehind'].value = '';" onBlur="javascript:if (document.settings['fallbehind'].value == '') document.settings['fallbehind'].value = 'unlimited';form.submit()" /> videos, skip some to catch up.
  </div>
  <div>
   <input type="checkbox" name="getEverything" value="1" onClick="javascript:form.submit()" t:hideIfKey="feed getEverything" t:hideFunctionKey="global filter boolean"/>
@@ -107,7 +125,7 @@
  <div>
   <input type="radio" name="expire" value="system" checked="checked"  onClick="javascript:form.submit()"  t:hideIfNotKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="system"/>
   <input type="radio" name="expire" value="system" onClick="javascript:form.submit()"  t:hideIfKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="system"/>
-  <span i18n:translate="">Use the system default (currently 5 days).</span>
+  <span i18n:translate="">Use the system default (6 days).</span>
  </div>
 
 
@@ -122,14 +140,11 @@
  <div>
   <input type="radio" name="expire" value="never" onClick="javascript:form.submit()"  t:hideIfNotKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="never" checked="checked"/>
   <input type="radio" name="expire" value="never" onClick="javascript:form.submit()"  t:hideIfKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="never"/>
-  <span i18n:translate="">Videos in this channel never expire (they are automatically saved). <span class="warning" i18n:translate="">WARNING: Not recommended for most channels-- can use up disk space very quickly.</span></span>
+  <span i18n:translate="">Videos in this channel never expire (they are automatically saved).<br /><span class="warning" i18n:translate="">WARNING: Not recommended for most channels-- can use up disk space very quickly.</span></span>
  </div>
  
- <div class="lighttopbox">
- <p i18n:translate="">
-   <strong>Expiration tips:</strong><br />-Automatic expiration helps make room on your hard drive for new videos.  If you fill up your cache, no videos will download from any channel until there is more room (<a id="editcachelink" href="cache_settings" i18n:name="edit_link" i18n:translate="">Edit Cache Settings</a>).<br />
--You can permanently keep any video that hasn't expired by clicking 'save'.<br />-On channels with more fleeting content (for example, music videos or video blogs), you might want videos that you've watched to expire more quickly to make way for new content.  
- </p>
+ <div id="expiration_tips">
+ <p i18n:translate=""><strong>Expiration tips:</strong><ul class="expiration_tips_list"><li>Automatic expiration helps make room on your hard drive for new videos.  If you fill up your cache, no videos will download from any channel until there is more room (<a id="editcachelink" href="cache_settings" i18n:name="edit_link" i18n:translate="">Edit Cache Settings</a>).</li><li>You can permanently keep any video that hasn't expired by clicking 'save'.</li><li>On channels with more fleeting content (for example, music videos or video blogs), you might want videos that you've watched to expire more quickly to make way for new content.</li></ul></p>
 </div>
 
  
