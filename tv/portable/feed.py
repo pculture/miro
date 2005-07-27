@@ -8,7 +8,7 @@ from database import defaultDatabase
 from item import *
 from scheduler import ScheduleEvent
 from copy import copy
-from xhtmltools import unescape,xhtmlify,fixXMLHeader, fixHTMLHeader, toUTF8Bytes
+from xhtmltools import unescape,xhtmlify,fixXMLHeader, fixHTMLHeader, toUTF8Bytes, urlencode
 from cStringIO import StringIO
 from threading import Thread, Semaphore
 import traceback #FIXME get rid of this
@@ -598,6 +598,13 @@ class UniversalFeed(DDBObject):
         thread = Thread(target=lambda: self.generateFeed())
         thread.setDaemon(False)
         thread.start()
+
+    # Returns javascript to mark the feed as viewed
+    # FIXME: Using setTimeout is a hack to get around JavaScript bugs
+    #        Without the timeout, the view is never completely updated
+    def getMarkViewedJS(self):
+        return ("function markViewed() {eventURL('action:markFeedViewed?url=%s');} setTimeout(markViewed, 5000);" % 
+                urlencode(self.getURL()))
 
     # Returns the ID of the actual feed, never that of the UniversalFeed wrapper
     def getFeedID(self):
