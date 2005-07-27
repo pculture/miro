@@ -9,6 +9,7 @@
             OUTLETS = {
                 actionButton = id; 
                 contentTemplateView = id; 
+                splitView = id; 
                 switcherMatrix = id; 
                 tabView = id; 
                 videoDisplayController = id; 
