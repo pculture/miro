@@ -177,6 +177,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         self.hideDepth = 0
         self.outString = StringIO()
         self.depth = 0
+        self.repeatName = ''
 
         # When we're in repeat mode, we store output as a set of
         # functions and arguments that, called given an object, tid,
@@ -227,6 +228,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             PyList_Append(self.repeatList,(getRepeatAddIdAndClose,None))
 
             self.repeatView = self.handle.findNamedView(attrs['t:repeatForView']).getView()
+            self.repeatName = attrs['t:repeatForView']
 
         elif self.inRepeatView:
             if attrs.has_key('t:hideIfKey') or attrs.has_key('t:hideIfNotKey'):
@@ -395,7 +397,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
 
             repeatId = generateId()
             self.outString.write('<span id=%s/>'%sax.saxutils.quoteattr(repeatId))
-            self.handle.addView(repeatId, 'nextSibling', self.repeatView, self.repeatList, self.data)
+            self.handle.addView(repeatId, 'nextSibling', self.repeatView, self.repeatList, self.data, self.repeatName)
         elif self.inRepeatView:
             PyList_Append(self.repeatList,(getRepeatText,'</%s>'%name))
         elif name == 't:dynamicviews':
@@ -428,7 +430,7 @@ def identityFunc(x):
 
 # Class used internally by Handle to track a t:repeatForSet clause.
 class TrackedView:
-    def __init__(self, anchorId, anchorType, view, templateFuncs, templateData, parent):
+    def __init__(self, anchorId, anchorType, view, templateFuncs, templateData, parent, name):
         # arguments as Handle.addView(), plus 'parent', a pointer to the Handle
         # that is used to invoke execJS and checkHides
         self.anchorId = anchorId
@@ -439,6 +441,7 @@ class TrackedView:
         self.templateFuncs = templateFuncs
         self.templateData = templateData
         self.parent = parent
+        self.name = name
 
     #
     # This is called after the HTML has been rendered to fill in the
@@ -460,6 +463,7 @@ class TrackedView:
         item = self.view[index]
         data = copy.copy(self.templateData)
         data['this'] = item.object
+        data['thisView'] = self.name
         for (func, args) in self.templateFuncs:
             output.append(func(data,item.tid,args))
         try:
@@ -695,7 +699,7 @@ class Handle:
                     pass
         raise TemplateError, "A view named '%s' was referenced but not defined." % name
 
-    def addView(self, anchorId, anchorType, view, templateFuncs, data):
+    def addView(self, anchorId, anchorType, view, templateFuncs, data, name):
         # Register for JS calls to populate a t:repeatFor. 'view' is the
         # database view to track; 'node' is a DOM node representing the
         # template to fill; 'data' are extra variables to be used in expanding
@@ -708,7 +712,7 @@ class Handle:
         #
         # We take a private copy of 'node', so don't worry about modifying
         # it subsequent to calling this method.
-        tv = TrackedView(anchorId, anchorType, view, templateFuncs, data, self)
+        tv = TrackedView(anchorId, anchorType, view, templateFuncs, data, self, name)
         self.trackedViews.append(tv)
         None
 
