@@ -76,7 +76,7 @@
         <li t:contextMenu="action:startDownload?item=@@@this getID@@@|Download" t:repeatForView="pendingitems">
         <t:includeTemplate filename="download-item" />
         </li> 
-        <li t:contextMenu="action:playFile?filename=@@@this getFilename@@@|Play" t:repeatForView="downloadeditems">
+        <li t:contextMenu="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@|Play" t:repeatForView="downloadeditems">
         <t:includeTemplate filename="download-item" />
         </li> 
    </ul>

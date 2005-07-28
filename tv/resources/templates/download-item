@@ -40,7 +40,7 @@
 
 
   <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="finished" class="right_box">
-    <a href="action:playFile?filename=@@@this getFilename@@@" class="play_button"><span /></a>
+    <a href="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
     <span class="report_expire">Unwatched</span><br />
     <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> | <a href="action:expireItem?item=@@@this getID@@@">delete</a>
   </div>
@@ -48,21 +48,21 @@
 
 
   <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="uploading" class="right_box">
-    <a href="action:playFile?filename=@@@this getFilename@@@" class="play_button"><span /></a>
+    <a href="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
     <span class="report_expire">Unwatched</span><br />
     <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> | <a href="action:expireItem?item=@@@this getID@@@">delete</a>
   </div>
   
   
   <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="watched" class="right_box">    
-    <a href="action:playFile?filename=@@@this getFilename@@@" class="play_button"><span /></a>
+    <a href="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
     <span class="report_expire">Expires in <span t:replace="this getExpirationTime"/></span><br />
     <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> | <a href="action:expireItem?item=@@@this getID@@@">delete</a>
   </div>
 
 
   <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="saved" class="right_box">  
-    <a href="action:playFile?filename=@@@this getFilename@@@" class="play_button"><span /></a>
+    <a href="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
     <span class="report_expire">Expires in <span t:replace="this getExpirationTime"/></span><br />
     <a href="action:expireItem?item=@@@this getID@@@">delete</a>
   	
