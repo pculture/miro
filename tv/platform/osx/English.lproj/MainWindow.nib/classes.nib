@@ -38,6 +38,7 @@
                 fullscreenButton = id; 
                 muteButton = id; 
                 playPauseButton = id; 
+                progressDisplayer = id; 
                 rootView = id; 
                 stopButton = id; 
                 videoView = id; 
