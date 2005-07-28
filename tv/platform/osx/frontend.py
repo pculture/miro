@@ -32,19 +32,6 @@ NibClassBuilder.extractClasses("FullScreenAlertPanel")
 doNotCollect = {}
 nc = NSNotificationCenter.defaultCenter()
 
-
-###############################################################################
-#### Dynamically link some specific Carbon functions which are not         ####
-#### available in the default MacPython                                    ####
-###############################################################################
-
-kUIModeNormal = 0
-kUIModeAllHidden = 3
-
-carbonBundle = NSBundle.bundleWithPath_('/System/Library/Frameworks/Carbon.framework')
-objc.loadBundleFunctions(carbonBundle, globals(), (('SetSystemUIMode', 'III', ""),))
-
-
 ###############################################################################
 #### Application object                                                    ####
 ###############################################################################
@@ -69,15 +56,15 @@ class Application:
 
     def onStartup(self):
         # For overriding
-        None
+        pass
 
     def onShutdown(self):
         # For overriding
-        None
+        pass
 
     def addAndSelectFeed(self, url):
         # For overriding
-        None
+        pass
 
 
 class AppController (NSObject):
@@ -127,7 +114,7 @@ class AppController (NSObject):
     def showPreferencesWindow_(self, sender):
         prefController = PreferencesWindowController.alloc().init()
         prefController.retain()
-        prefController.showWindow_(None)
+        prefController.showWindow_(nil)
 
     def donate_(self, sender):
         print "NOT IMPLEMENTED"
@@ -179,8 +166,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         self.owner = owner
         self.appl = appl
         self.currentDisplay = [None, None]
-        self.currentDisplayView = [None, None]
-        self.addChannelSheet = None
+        self.currentDisplayView = [nil, nil]
 
         nc.addObserver_selector_name_object_(
             self,
@@ -193,7 +179,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
     def awakeFromNib(self):
         self.restoreLayout()
         self.actionButton.sendActionOn_(NSLeftMouseDownMask)
-        self.showWindow_(None)
+        self.showWindow_(nil)
 
     def appWillTerminate_(self, notification):
         self.saveLayout()
@@ -237,7 +223,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
         display.callWhenReadyToDisplay(lambda: self.doSelectDisplay(display, index))
 
     def doSelectDisplay(self, display, index):
-        pool = NSAutoreleasePool.alloc().init()
+        # (luc) why would we need this ?
+        #pool = NSAutoreleasePool.alloc().init()
 
         # Send notification to old display if any
         if self.currentDisplay[index]:
@@ -265,7 +252,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
         # Mark as needing display
         parent.setNeedsDisplayInRect_(frame)
-        view.setNeedsDisplay_(True)
+        view.setNeedsDisplay_(YES)
 
         # Wait until now to clean up the old view, to reduce flicker
         # (doesn't actually work all that well, sadly -- possibly what
@@ -278,7 +265,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         display.onSelected_private(self.owner)
         display.onSelected(self.owner)
 
-        pool.release()
+        #pool.release()
 
     def getDisplaySizeHint(self, index):
         theTemplate = (index == 0) and self.tabView or self.contentTemplateView
@@ -345,7 +332,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
     def addChannel_(self, sender):
         controller = AddChannelSheetController.alloc().init(self.appl)
         controller.retain()
-        NSApplication.sharedApplication().beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(controller.window(), self.window(), self, None, 0)
+        NSApplication.sharedApplication().beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(controller.window(), self.window(), self, nil, 0)
 
     def removeChannel_(self, sender):
         print "NOT IMPLEMENTED"
@@ -387,7 +374,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
             curEvent.modifierFlags(),
             curEvent.timestamp(),
             curEvent.windowNumber(),
-            None,
+            nil,
             curEvent.eventNumber(),
             curEvent.clickCount(),
             curEvent.pressure() )
@@ -418,7 +405,7 @@ class FullScreenAlertPanelController (NibClassBuilder.AutoBaseClass):
 
     def dismiss_(self, sender):
         if self.dontShowCheckbox.state() == NSOnState:
-            NSUserDefaults.standardUserDefaults().setBool_forKey_(True, 'noFullscreenAlert')
+            NSUserDefaults.standardUserDefaults().setBool_forKey_(YES, 'noFullscreenAlert')
         NSApplication.sharedApplication().stopModal()
         self.window().orderOut_(nil)
 
@@ -485,11 +472,11 @@ class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
 
         toolbar = NSToolbar.alloc().initWithIdentifier_("Preferences")
         toolbar.setDelegate_(self)
-        toolbar.setAllowsUserCustomization_(False)
+        toolbar.setAllowsUserCustomization_(NO)
         toolbar.setSelectedItemIdentifier_(initialItem.itemIdentifier())
 
         self.window().setToolbar_(toolbar)
-        self.window().setShowsToolbarButton_(False)
+        self.window().setShowsToolbarButton_(NO)
         self.switchPreferenceView_(initialItem)
 
     def makePreferenceItem(self, identifier, label, imageName, view):
@@ -514,7 +501,7 @@ class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
         return self.items[ itemIdentifier ]
 
     def validateToolbarItem_(self, item):
-        return True
+        return YES
 
     def switchPreferenceView_(self, sender):
         if self.window().contentView() == sender.view:
@@ -529,7 +516,7 @@ class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
         wframe.size.height += toolbarHeight
 
         self.window().setContentView_(sender.view)
-        self.window().setFrame_display_animate_(wframe, True, True)
+        self.window().setFrame_display_animate_(wframe, YES, YES)
 
 
 ###############################################################################
@@ -599,7 +586,7 @@ class PasswordController (NibClassBuilder.AutoBaseClass):
         password) if the user pressed OK, or None if the user pressed Cancel."""
         # PasswordController is likely to get release()d by Python in response
         # to getAnswer returning.
-        self.performSelectorOnMainThread_withObject_waitUntilDone_("showAtModalLevel:", None, False)
+        self.performSelectorOnMainThread_withObject_waitUntilDone_("showAtModalLevel:", nil, NO)
         self.condition.acquire()
         self.condition.wait()
         self.condition.release()
@@ -609,7 +596,7 @@ class PasswordController (NibClassBuilder.AutoBaseClass):
     # executes in GUI thread
     def showAtModalLevel_(self, sender):
         self.window.setLevel_(NSModalPanelWindowLevel)
-        self.window.makeKeyAndOrderFront_(None)
+        self.window.makeKeyAndOrderFront_(nil)
 
     # bound to button in nib
     def acceptEntry_(self, sender):
@@ -650,7 +637,7 @@ class QuestionController(NibClassBuilder.AutoBaseClass):
     def getAnswer(self):
         """Present the dialog and wait for user answer. Returns True or False
         depending on the button selected."""
-        self.performSelectorOnMainThread_withObject_waitUntilDone_("showAtModalLevel:", None, False)
+        self.performSelectorOnMainThread_withObject_waitUntilDone_("showAtModalLevel:", nil, NO)
         self.condition.acquire()
         self.condition.wait()
         self.condition.release()
@@ -660,7 +647,7 @@ class QuestionController(NibClassBuilder.AutoBaseClass):
     # executes in GUI thread
     def showAtModalLevel_(self, sender):
         self.window.setLevel_(NSModalPanelWindowLevel)
-        self.window.makeKeyAndOrderFront_(None)
+        self.window.makeKeyAndOrderFront_(nil)
 
     # bound to button in nib
     def defaultAction_(self, sender):
@@ -836,31 +823,28 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         NSColor.colorWithCalibratedWhite_alpha_( 51/255.0, 1.0 ).set()
         path.fill()
         self.cursor.unlockFocus()
-
-        nc.addObserver_selector_name_object_(self, 'prepareForNewMovie:', 'PrepareForNewMovie', None)
-        nc.addObserver_selector_name_object_(self, 'movieWillStartPlaying:', 'MovieWillStartPlaying', None)
-        nc.addObserver_selector_name_object_(self, 'movieWillStopPlaying:', 'MovieWillStopPlaying', None)
-
-        self.movie = None
-        self.heartbeatTimer = None
+        
+        self.movie = nil
+        self.lastTime = 0
 
         return self;
 
-    def prepareForNewMovie_(self, notification):
-        self.movie = notification.userInfo().get('Movie')
-        self.setNeedsDisplay_(True)
+    def setMovie_(self, movie):
+        if self.movie is not nil:
+            self.movie.setDelegate_(nil)
+        self.movie = movie
+        self.lastTime = 0
+        if self.movie is not nil:
+            self.movie.setDelegate_(self)
+        self.setNeedsDisplay_(YES)
 
-    def movieWillStartPlaying_(self, notification):
-        self.heartbeatTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(0.5, self, 'heartbeat:', notification.userInfo(), True)
-
-    def movieWillStopPlaying_(self, notification):
-        if self.heartbeatTimer != None:
-            self.heartbeatTimer.invalidate()
-        self.heartbeatTimer = None
-
-    def heartbeat_(self, timer):
-        self.setNeedsDisplay_(True)
-
+    def movieShouldTask_(self, movie):
+        currentTime = self.getCurrentTimeInSeconds()
+        if currentTime - self.lastTime >= 1.0:
+            self.setNeedsDisplay_(YES)
+            self.lastTime = currentTime
+        return NO
+        
     def drawRect_(self, rect):
         self.drawBackground()
         self.drawTimeIndicator()
@@ -885,7 +869,7 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
 
     def drawTimeIndicator(self):
         timeStr = '00:00:00'
-        if self.movie != None:
+        if self.movie is not nil:
             seconds = self.getCurrentTimeInSeconds()
             timeStr = time.strftime("%H:%M:%S", time.gmtime(seconds))
         NSString.stringWithString_(timeStr).drawAtPoint_withAttributes_( (8,5), self.timeAttrs )
@@ -901,7 +885,7 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         NSBezierPath.strokeRect_(rect)
 
     def drawProgressCursor(self):
-        if self.movie == None:
+        if self.movie == nil:
             return
 
         progress = 0.0
@@ -918,13 +902,13 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         self.cursor.compositeToPoint_operation_((x,7), NSCompositeSourceOver)
 
     def getDurationInSeconds(self):
-        if self.movie == None:
+        if self.movie == nil:
             return 0
         qttime = self.movie.duration()
         return qttime.timeValue / float(qttime.timeScale)
 
     def getCurrentTimeInSeconds(self):
-        if self.movie == None:
+        if self.movie == nil:
             return 0
         qttime = self.movie.currentTime()
         return qttime.timeValue / float(qttime.timeScale)
@@ -946,14 +930,14 @@ class Display:
 
     def onSelected(self, frame):
         "Called when the Display is shown in the given MainFrame."
-        None
+        pass
 
     def onDeselected(self, frame):
         """Called when the Display is no longer shown in the given
         MainFrame. This function is called on the Display losing the
         selection before onSelected is called on the Display gaining the
         selection."""
-        None
+        pass
 
     def onSelected_private(self, frame):
         assert(self.currentFrame == None)
@@ -1027,7 +1011,7 @@ class HTMLDisplay (Display):
         returns true; override in a subclass to implement special
         behavior."""
         # For overriding
-        None
+        pass
 
     def callWhenReadyToDisplay(self, hook):
         # NEEDS: lock?
@@ -1071,7 +1055,7 @@ class ManagedWebView (NSObject):
         self.view.setResourceLoadDelegate_(self)
         self.view.setFrameLoadDelegate_(self)
         self.view.setUIDelegate_(self)
-        self.view.mainFrame().loadHTMLString_baseURL_(initialHTML, None)
+        self.view.mainFrame().loadHTMLString_baseURL_(initialHTML, nil)
         return self
 
     ##
@@ -1095,7 +1079,7 @@ class ManagedWebView (NSObject):
                         (url, name) = menuEntry.split('|',1)
                         menuItem = NSMenuItem.alloc()
                         menuItem.initWithTitle_action_keyEquivalent_(name,self.processContextClick_,"")
-                        menuItem.setEnabled_(True)
+                        menuItem.setEnabled_(YES)
                         menuItem.setRepresentedObject_(url)
                         menuItem.setTarget_(self)
                         menuItems.append(menuItem)
@@ -1124,8 +1108,8 @@ class ManagedWebView (NSObject):
             # WebViews are not documented to be thread-safe, so be cautious
             # and do updates only on the main thread (in fact, crashes in
             # khtml occur if this is not done)
-            self.view.performSelectorOnMainThread_withObject_waitUntilDone_("stringByEvaluatingJavaScriptFromString:", js, False)
-            # self.view.setNeedsDisplay_(True) # shouldn't be necessary
+            self.view.performSelectorOnMainThread_withObject_waitUntilDone_("stringByEvaluatingJavaScriptFromString:", js, NO)
+            # self.view.setNeedsDisplay_(YES) # shouldn't be necessary
 
         pool.release()
 
@@ -1180,19 +1164,20 @@ class ManagedWebView (NSObject):
 class VideoDisplay (Display):
     "Video player that can be shown in a MainFrame's right-hand pane."
 
-    controller = None
+    controller = nil
 
-    def __init__(self, filename):
+    def __init__(self, view, previousDisplay):
         Display.__init__(self)
-        self.filename = filename
+        self.playlist = view
+        self.controller.previousDisplay = previousDisplay
 
     def onSelected(self, frame):
-        self.controller.enableControls(True)
-        self.controller.setMovieFile(self.filename)
-        self.controller.play_(None)
+        self.controller.enableControls(YES)
+        self.controller.setPlaylist(self.playlist)
+        self.controller.play_(nil)
 
     def onDeselected(self, frame):
-        self.controller.stop_(None)
+        self.controller.pause_(nil)
         self.controller.enableControls(False)
         self.controller.reset()
 
@@ -1203,22 +1188,40 @@ class VideoDisplay (Display):
 class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
     def awakeFromNib(self):
-        self.isPlaying = False
+        self.reset()
         self.fastForwardButton.sendActionOn_(NSLeftMouseDownMask)
         VideoDisplay.controller = self
 
-    def notify(self, message, movie):
-        info = { 'Movie': movie }
-        nc.postNotificationName_object_userInfo_(message, self, info)
+    def setPlaylist(self, playlist):
+        self.playlist = playlist
+        self.selectPlaylistItem(0)
 
-    def setMovieFile(self, filename):
-        (movie, error) = QTMovie.alloc().initWithFile_error_(filename)
+    def selectPlaylistItem(self, index):
+        pathname = self.playlist[index].getPath()
+        (movie, error) = QTMovie.alloc().initWithFile_error_(pathname)
         self.videoView.setMovie_(movie)
-        self.notify('PrepareForNewMovie', movie)
-        nc.addObserver_selector_name_object_(self, 'handleMovieNotification:', nil, self.videoView.movie())
+        self.progressDisplayer.setMovie_(movie)
+        nc.removeObserver_(self)
+        nc.addObserver_selector_name_object_(
+            self, 
+            'handleMovieNotification:', 
+            nil, 
+            self.videoView.movie())
+        self.fullscreenController = nil
+
+    def exitVideoMode(self):
+        if self.fullscreenController is not nil:
+            self.fullscreenController.exitFullscreen()
+        mainController = self.videoView.window().delegate()
+        mainController.selectDisplay(self.previousDisplay, 1)
 
     def reset(self):
-        self.videoView.setMovie_(None)
+        self.isPlaying = False
+        self.playlist = None
+        self.currentItemIndex = 0
+        self.previousDisplay = None
+        self.videoView.setMovie_(nil)
+        self.progressDisplayer.setMovie_(nil)
         nc.removeObserver_(self)
 
     def enableControls(self, enabled):
@@ -1231,18 +1234,17 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.fullscreenButton.setEnabled_(enabled)
 
     def play_(self, sender):
-        self.notify('MovieWillStartPlaying', self.videoView.movie())
         self.videoView.play_(self)
         self.isPlaying = True
 
     def pause_(self, sender):
-        self.notify('MovieWillStopPlaying', self.videoView.movie())
         self.videoView.pause_(self)
         self.isPlaying = False
 
     def stop_(self, sender):
         self.pause_(sender)
         self.videoView.gotoBeginning_(self)
+        self.exitVideoMode()
 
     def playPause_(self, sender):
         if self.isPlaying:
@@ -1272,16 +1274,22 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     def muteUnmuteVolume_(self, sender):
         volume = self.videoView.movie().volume()
         if volume > 0.0:
-            self.volumeSlider.setEnabled_(False)
+            self.volumeSlider.setEnabled_(NO)
             self.videoView.movie().setVolume_(0.0)
         else:
-            self.volumeSlider.setEnabled_(True)
+            self.volumeSlider.setEnabled_(YES)
             self.videoView.movie().setVolume_(self.volumeSlider.floatValue())
 
     def goFullscreen_(self, sender):
+        self.fullscreenController = FullScreenVideoController.alloc().initWithVideoView_(self.videoView)
+        self.fullscreenController.setDelegate_(self)
+        self.fullscreenController.enterFullScreen()
+
+    def didEnterFullscreenMode(self):
         FullScreenAlertPanelController.displayIfNeeded()
-        controller = FullScreenVideoController.alloc().initWithVideoView_(self.videoView)
-        controller.enterFullScreen()
+
+    def didExitFullscreenMode(self):
+        self.fullscreenController = None
 
     def handleMovieNotification_(self, notification):
         info = notification.userInfo()
@@ -1293,63 +1301,52 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             else:
                 self.playPauseButton.setImage_(NSImage.imageNamed_('pause.png'))
                 self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('pause_blue.png'))
+        elif notification.name() == QTMovieDidEndNotification:
+            self.currentItemIndex += 1
+            if self.currentItemIndex < self.playlist.len():
+                self.selectPlaylistItem(self.currentItemIndex)
+            else:
+                self.currentItemIndex = 0
+                self.exitVideoMode()
 
 
 ###############################################################################
 #### The fullscreen video controller                                       ####
+#### We have to dynamically link some specific Carbon functions which are  ####
+###  not available in the default MacPython                                ####
 ###############################################################################
+
+kUIModeNormal = 0
+kUIModeAllHidden = 3
+
+carbonBundle = NSBundle.bundleWithPath_('/System/Library/Frameworks/Carbon.framework')
+objc.loadBundleFunctions(carbonBundle, globals(), (('SetSystemUIMode', 'III', ""),))
 
 class FullScreenVideoController (NSObject):
 
     def initWithVideoView_(self, videoView):
         self = super(FullScreenVideoController, self).init()
         self.videoWindow = FullScreenVideoWindow.alloc().init(videoView).retain()
-        self.overlayWindow = FullScreenOverlay.alloc().init().retain()
-        self.overlayWindow.controller = self
+        self.videoWindow.controller = self
+        self.delegate = nil
         return self
+
+    def setDelegate_(self, delegate):
+        self.delegate = delegate
 
     def enterFullScreen(self):
-        self.videoWindow.orderFront_(nil)
-        self.overlayWindow.makeKeyAndOrderFront_(nil)
         SetSystemUIMode(kUIModeAllHidden, 0)
+        self.videoWindow.makeKeyAndOrderFront_(nil)
+        
+        if self.delegate is not nil and self.delegate.didEnterFullscreenMode:
+            self.delegate.didEnterFullscreenMode()
 
     def exitFullScreen(self):
-        self.overlayWindow.close()
         self.videoWindow.close()
         SetSystemUIMode(kUIModeNormal, 0)
-
-
-###############################################################################
-#### The fullscreen overlay                                                ####
-###############################################################################
-
-class FullScreenOverlay (NSWindow):
-
-    def init(self):
-        frame = NSScreen.mainScreen().frame()
-        parent = super(FullScreenOverlay, self)
-        self = parent.initWithContentRect_styleMask_backing_defer_(
-            frame,
-            NSBorderlessWindowMask,
-            NSBackingStoreBuffered,
-            True )
-        self.setOpaque_(NO)
-        self.setHasShadow_(NO)
-        self.setIgnoresMouseEvents_(NO)
-        self.setBackgroundColor_(NSColor.clearColor())
-        self.setAlphaValue_(1.0)
-        return self
-
-    def canBecomeMainWindow(self):
-        return True
-
-    def canBecomeKeyWindow(self):
-        return True
-
-    def keyDown_(self, event):
-        code = event.characters().characterAtIndex_(0)
-        if code == 0x1B:
-            self.controller.exitFullScreen()
+        
+        if self.delegate is not nil and self.delegate.didExitFullscreenMode:
+            self.delegate.didExitFullscreenMode()
 
 
 ###############################################################################
@@ -1366,11 +1363,12 @@ class FullScreenVideoWindow (NSWindow):
             frame,
             NSBorderlessWindowMask,
             NSBackingStoreBuffered,
-            True )
-
+            YES )
+        
+        self.controller = None
         self.videoView = videoView
         self.previousSuperview = videoView.superview()
-        if self.previousSuperview is not None:
+        if self.previousSuperview is not nil:
             self.videoView.retain()
             self.videoView.removeFromSuperviewWithoutNeedingDisplay()
 
@@ -1378,12 +1376,22 @@ class FullScreenVideoWindow (NSWindow):
         self.contentView().addSubview_(self.videoView)
         return self
 
-    def orderOut_(self, sender):
+    def canBecomeMainWindow(self):
+        return YES
+    
+    def canBecomeKeyWindow(self):
+        return YES
+
+    def sendEvent_(self, event):
+        if event.type() == NSKeyDown and event.characters().characterAtIndex_(0) == 0x1B:
+            self.controller.exitFullScreen()
+
+    def close(self):
         self.videoView.retain()
         self.videoView.removeFromSuperviewWithoutNeedingDisplay()
-        self.videoView.setFrameSize_(self.previousSuperview.frame().size)
         self.previousSuperview.addSubview_(self.videoView)
-        super(FullScreenVideoWindow, self).orderOut_(sender)
+        self.videoView.setFrameSize_(self.previousSuperview.frame().size)
+        super(FullScreenVideoWindow, self).close()
 
 
 ###############################################################################
