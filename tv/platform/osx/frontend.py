@@ -826,8 +826,14 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         
         self.movie = nil
         self.lastTime = 0
+        self.dragging = False
+        self.grooveRect = None
 
         return self;
+
+    def setFrame_(self, frame):
+        super(ProgressDisplayView, self).setFrame_(frame)
+        self.grooveRect = self.getGrooveRect()
 
     def setMovie_(self, movie):
         if self.movie is not nil:
@@ -838,9 +844,39 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
             self.movie.setDelegate_(self)
         self.setNeedsDisplay_(YES)
 
+    def mouseDown_(self, event):
+        if self.movie is not nil:
+            location = self.convertPoint_fromView_(event.locationInWindow(), nil)
+            if NSPointInRect(location, self.grooveRect):
+                self.dragging = True
+                self.movie.stop()
+                self.movie.setCurrentTime_(self.getTimeForLocation(location))
+
+    def mouseDragged_(self, event):
+        if self.dragging:
+            location = self.convertPoint_fromView_(event.locationInWindow(), nil)
+            self.movie.setCurrentTime_(self.getTimeForLocation(location))
+
+    def mouseUp_(self, event):
+        if self.movie is not nil:
+            self.dragging = False
+            self.movie.play()
+
+    def getTimeForLocation(self, location):
+        offset = location.x - self.grooveRect.origin.x
+        if offset < 0:
+            offset = 0
+        if offset > self.grooveRect.size.width:
+            offset = self.grooveRect.size.width
+        if offset > 0:
+            offset /= self.grooveRect.size.width
+        time = self.movie.duration()
+        time.timeValue *= offset
+        return time
+
     def movieShouldTask_(self, movie):
         currentTime = self.getCurrentTimeInSeconds()
-        if currentTime - self.lastTime >= 1.0:
+        if currentTime - self.lastTime >= 1.0 or self.dragging:
             self.setNeedsDisplay_(YES)
             self.lastTime = currentTime
         return NO
@@ -875,14 +911,10 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         NSString.stringWithString_(timeStr).drawAtPoint_withAttributes_( (8,5), self.timeAttrs )
 
     def drawProgressGroove(self):
-        origin = NSPoint(60, 8)
-        size = NSSize(self.getGrooveWidth(), 8)
-        rect = NSOffsetRect(NSRect(origin, size), -0.5, -0.5)
-
         self.grooveFillColor.set()
-        NSBezierPath.fillRect_(rect)
+        NSBezierPath.fillRect_(self.grooveRect)
         self.grooveContourColor.set()
-        NSBezierPath.strokeRect_(rect)
+        NSBezierPath.strokeRect_(self.grooveRect)
 
     def drawProgressCursor(self):
         if self.movie == nil:
@@ -896,7 +928,7 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
 
         offset = 0
         if progress > 0.0:
-            offset = (self.getGrooveWidth() - 9) / progress
+            offset = (self.grooveRect.size.width - 9) / progress
 
         x = math.floor(59 + offset) + 0.5
         self.cursor.compositeToPoint_operation_((x,7), NSCompositeSourceOver)
@@ -913,8 +945,10 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         qttime = self.movie.currentTime()
         return qttime.timeValue / float(qttime.timeScale)
 
-    def getGrooveWidth(self):
-        return self.bounds().size.width - 60 - 8
+    def getGrooveRect(self):
+        origin = NSPoint(60, 8)
+        size = NSSize(self.bounds().size.width - 60 - 8, 8)
+        return NSOffsetRect(NSRect(origin, size), -0.5, -0.5)
 
 
 ###############################################################################
@@ -1190,6 +1224,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     def awakeFromNib(self):
         self.reset()
         self.fastForwardButton.sendActionOn_(NSLeftMouseDownMask)
+        self.fullscreenController = nil
         VideoDisplay.controller = self
 
     def setPlaylist(self, playlist):
@@ -1201,17 +1236,18 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         (movie, error) = QTMovie.alloc().initWithFile_error_(pathname)
         self.videoView.setMovie_(movie)
         self.progressDisplayer.setMovie_(movie)
+        self.setVolume_(self.volumeSlider)
         nc.removeObserver_(self)
         nc.addObserver_selector_name_object_(
             self, 
             'handleMovieNotification:', 
             nil, 
             self.videoView.movie())
-        self.fullscreenController = nil
 
     def exitVideoMode(self):
         if self.fullscreenController is not nil:
             self.fullscreenController.exitFullscreen()
+            self.fullscreenController = nil
         mainController = self.videoView.window().delegate()
         mainController.selectDisplay(self.previousDisplay, 1)
 
@@ -1289,7 +1325,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         FullScreenAlertPanelController.displayIfNeeded()
 
     def didExitFullscreenMode(self):
-        self.fullscreenController = None
+        self.fullscreenController = nil
 
     def handleMovieNotification_(self, notification):
         info = notification.userInfo()
@@ -1302,12 +1338,14 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
                 self.playPauseButton.setImage_(NSImage.imageNamed_('pause.png'))
                 self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('pause_blue.png'))
         elif notification.name() == QTMovieDidEndNotification:
-            self.currentItemIndex += 1
-            if self.currentItemIndex < self.playlist.len():
-                self.selectPlaylistItem(self.currentItemIndex)
-            else:
-                self.currentItemIndex = 0
-                self.exitVideoMode()
+            if not self.progressDisplayer.dragging:
+                self.currentItemIndex += 1
+                if self.currentItemIndex < self.playlist.len():
+                    self.selectPlaylistItem(self.currentItemIndex)
+                    self.play_(nil)
+                else:
+                    self.currentItemIndex = 0
+                    self.exitVideoMode()
 
 
 ###############################################################################
