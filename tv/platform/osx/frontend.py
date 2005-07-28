@@ -134,7 +134,7 @@ class AppController (NSObject):
 
     def tellAFriend_(self, sender):
         print "NOT IMPLEMENTED"
-    
+
 
 ###############################################################################
 #### Main window                                                           ####
@@ -181,13 +181,13 @@ class MainController (NibClassBuilder.AutoBaseClass):
         self.currentDisplay = [None, None]
         self.currentDisplayView = [None, None]
         self.addChannelSheet = None
-        
+
         nc.addObserver_selector_name_object_(
-            self, 
-            'appWillTerminate:', 
-            NSApplicationWillTerminateNotification, 
+            self,
+            'appWillTerminate:',
+            NSApplicationWillTerminateNotification,
             NSApplication.sharedApplication())
-        
+
         return self
 
     def awakeFromNib(self):
@@ -200,18 +200,21 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     def restoreLayout(self):
         defaults = NSUserDefaults.standardUserDefaults()
+
         windowFrame = defaults.stringForKey_('mainWindow')
-        windowFrame = NSRectFromString(windowFrame)
+        if windowFrame is not None:
+           windowFrame = NSRectFromString(windowFrame)
+           self.window().setFrame_display_(windowFrame, NO)
+
         leftFrame = defaults.stringForKey_('leftView')
-        leftFrame = NSRectFromString(leftFrame)
         rightFrame = defaults.stringForKey_('rightView')
-        rightFrame = NSRectFromString(rightFrame)
-                
-        self.window().setFrame_display_(windowFrame, NO)
-        self.splitView.subviews().objectAtIndex_(0).setFrame_(leftFrame)
-        self.splitView.subviews().objectAtIndex_(1).setFrame_(rightFrame)
-        self.splitView.adjustSubviews()
-        
+        if leftFrame is not None and rightFrame is not None:
+           leftFrame = NSRectFromString(leftFrame)
+           rightFrame = NSRectFromString(rightFrame)
+           self.splitView.subviews().objectAtIndex_(0).setFrame_(leftFrame)
+           self.splitView.subviews().objectAtIndex_(1).setFrame_(rightFrame)
+           self.splitView.adjustSubviews()
+
     def saveLayout(self):
         windowFrame = self.window().frame()
         windowFrame = NSStringFromRect(windowFrame)
@@ -225,7 +228,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         defaults.setObject_forKey_(leftFrame, 'leftView')
         defaults.setObject_forKey_(rightFrame, 'rightView')
         defaults.synchronize()
-                
+
     ### Switching displays ###
 
     def selectDisplay(self, display, index):
@@ -400,19 +403,19 @@ class MainController (NibClassBuilder.AutoBaseClass):
 ###############################################################################
 
 class FullScreenAlertPanelController (NibClassBuilder.AutoBaseClass):
-    
+
     @classmethod
     def displayIfNeeded(cls):
         noAlert = NSUserDefaults.standardUserDefaults().boolForKey_('noFullscreenAlert')
         if not noAlert:
             controller = FullScreenAlertPanelController.alloc().init()
             NSApplication.sharedApplication().runModalForWindow_(controller.window())
-    
+
     def init(self):
         parent = super(FullScreenAlertPanelController, self)
         self = parent.initWithWindowNibName_owner_('FullScreenAlertPanel', self)
         return self
-    
+
     def dismiss_(self, sender):
         if self.dontShowCheckbox.state() == NSOnState:
             NSUserDefaults.standardUserDefaults().setBool_forKey_(True, 'noFullscreenAlert')
@@ -474,7 +477,7 @@ class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
                       diskSpaceItem.itemIdentifier(): diskSpaceItem}
 
         self.allItems = (generalItem.itemIdentifier(),
-                         channelsItem.itemIdentifier(), 
+                         channelsItem.itemIdentifier(),
                          downloadsItem.itemIdentifier(),
                          diskSpaceItem.itemIdentifier())
 
@@ -685,7 +688,7 @@ class TabButtonCell (NibClassBuilder.AutoBaseClass):
     def awakeFromNib(self):
         self.background = NSImage.imageNamed_('tab')
         self.selectedBackground = NSImage.imageNamed_('tab_blue')
-        
+
         pstyle = NSMutableParagraphStyle.alloc().init()
         pstyle.setAlignment_(NSCenterTextAlignment)
         self.titleAttrs = { NSFontAttributeName:NSFont.fontWithName_size_("Lucida Grande", 12),
@@ -707,7 +710,7 @@ class TabButtonCell (NibClassBuilder.AutoBaseClass):
             image.compositeToPoint_operation_(x, NSCompositeSourceOver)
 
         self.drawTitle(rect)
-        
+
     def drawTitle(self, rect):
         r = rect
         r.origin.x += 8
@@ -722,7 +725,7 @@ class TabButtonCell (NibClassBuilder.AutoBaseClass):
 ###############################################################################
 
 class MetalSlider (NibClassBuilder.AutoBaseClass):
-    
+
     def awakeFromNib(self):
         oldCell = self.cell()
         newCell = MetalSliderCell.alloc().init()
@@ -735,20 +738,20 @@ class MetalSlider (NibClassBuilder.AutoBaseClass):
 
 
 class MetalSliderCell (NSSliderCell):
-    
+
     def init(self):
         self = super(MetalSliderCell, self).init()
         self.knob = NSImage.imageNamed_('volume_knob')
         self.knobPressed = NSImage.imageNamed_('volume_knob_blue')
         self.knobSize = self.knob.size()
         return self
-        
+
     def knobRectFlipped_(self, flipped):
         value = self.floatValue()
         course = self.controlView().bounds().size.width - self.knobSize.width
         origin = NSPoint(course * value, 0)
         return ( origin, (self.knobSize.width, self.controlView().bounds().size.height) )
-    
+
     def drawKnob_(self, rect):
         self.controlView().lockFocus()
         location = NSPoint(rect.origin.x, rect.origin.y + rect.size.height + 1)
@@ -1297,31 +1300,31 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 ###############################################################################
 
 class FullScreenVideoController (NSObject):
-    
+
     def initWithVideoView_(self, videoView):
         self = super(FullScreenVideoController, self).init()
         self.videoWindow = FullScreenVideoWindow.alloc().init(videoView).retain()
         self.overlayWindow = FullScreenOverlay.alloc().init().retain()
         self.overlayWindow.controller = self
         return self
-        
+
     def enterFullScreen(self):
         self.videoWindow.orderFront_(nil)
         self.overlayWindow.makeKeyAndOrderFront_(nil)
         SetSystemUIMode(kUIModeAllHidden, 0)
-    
+
     def exitFullScreen(self):
         self.overlayWindow.close()
         self.videoWindow.close()
         SetSystemUIMode(kUIModeNormal, 0)
-    
+
 
 ###############################################################################
 #### The fullscreen overlay                                                ####
 ###############################################################################
 
 class FullScreenOverlay (NSWindow):
-    
+
     def init(self):
         frame = NSScreen.mainScreen().frame()
         parent = super(FullScreenOverlay, self)
@@ -1354,17 +1357,17 @@ class FullScreenOverlay (NSWindow):
 ###############################################################################
 
 class FullScreenVideoWindow (NSWindow):
-    
+
     def init(self, videoView):
         frame = NSScreen.mainScreen().frame()
-        
+
         parent = super(FullScreenVideoWindow, self)
         self = parent.initWithContentRect_styleMask_backing_defer_(
             frame,
             NSBorderlessWindowMask,
             NSBackingStoreBuffered,
             True )
-        
+
         self.videoView = videoView
         self.previousSuperview = videoView.superview()
         if self.previousSuperview is not None:
