@@ -128,11 +128,11 @@ cdef class CDynamicDatabase:
     def checkObjLocs(self):
         if len(self.objectLocs) != len(self.objects):
             print "ERROR -- %d objects and %d locations" % (len(self.objects), len(self.objectLocs))
-            raise error
+            raise Exception
         for (key, val) in self.objectLocs.items():
             if self.objects[val][0] != key:
                 print "Error-- %s in wrong location" % key
-                raise error
+                raise Exception
     ##
     # Saves the current position of the cursor on the stack
     #
@@ -738,33 +738,13 @@ cdef class CDynamicDatabase:
                             myObjObj = <object>PyTuple_GET_ITEM(myObj,0)
                             myObjVal = <object>PyTuple_GET_ITEM(myObj,1)
 
-                            # Get the next item in the view
-                            if viewPos < viewSize:
-                                viewObj = <object>PyList_GET_ITEM(view.objects,viewPos)
+                            if PyDict_Contains(view.objectLocs,myObjObj):
+                                if not <object>PyObject_CallObject(f,(myObjVal,)):
+                                    view.removeObj(myObjObj)
                             else:
-                                viewObj = (NoValue, NoValue)
-
-                            if (<object>PyTuple_GET_ITEM(viewObj,0) is 
-                                 myObjObj):
                                 if <object>PyObject_CallObject(f,(myObjVal,)):
-                                    # The object passes the filter and is
-                                    # already in the subView
-                                    viewPos = viewPos + 1
-                                else:
-                                    view.remove(viewPos) #The object
-                                                     #doesn't pass,
-                                                     #but is in the
-                                                     #subView, so we
-                                                     #remove it
-                                    viewSize = viewSize - 1
-                            else:
-                                if <object>PyObject_CallObject(f,(myObjVal,)): 
-                                    # The object is not in the subview,
-                                    # but should be
-                                    view.cursor = viewPos
                                     view.addBeforeCursor(myObjObj,myObjVal)
-                                    viewPos = viewPos + 1
-                                    viewSize = viewSize + 1
+
                         self.restoreCursor()
                         view.restoreCursor()
                         view.recomputeFilters()
@@ -884,33 +864,13 @@ cdef class CDynamicDatabase:
                         myObjObj = <object>PyTuple_GET_ITEM(myObj,0)
                         myObjVal = <object>PyTuple_GET_ITEM(myObj,1)
 
-                        # Get the next item in the view
-                        if viewPos < viewSize:
-                            viewObj = <object>PyList_GET_ITEM(view.objects,viewPos)
+                        if PyDict_Contains(view.objectLocs,myObjObj):
+                            if not <object>PyObject_CallObject(f,(myObjVal,)):
+                                view.removeObj(myObjObj)
                         else:
-                            viewObj = (NoValue, NoValue)
-
-                        if (<object>PyTuple_GET_ITEM(viewObj,0) is 
-                             myObjObj):
                             if <object>PyObject_CallObject(f,(myObjVal,)):
-                                 # The object passes the filter and is
-                                 # already in the subView
-                                viewPos = viewPos + 1
-                            else:
-                                view.remove(viewPos) #The object
-                                                     #doesn't pass,
-                                                     #but is in the
-                                                     #subView, so we
-                                                     #remove it
-                                viewSize = viewSize - 1
-                        else:
-                            if <object>PyObject_CallObject(f,(myObjVal,)): 
-                                # The object is not in the subview,
-                                # but should be
-                                view.cursor = viewPos
                                 view.addBeforeCursor(myObjObj,myObjVal)
-                                viewPos = viewPos + 1
-                                viewSize = viewSize + 1
+
                     self.restoreCursor()
                     view.restoreCursor()
                     view.recomputeFilters()
@@ -1047,6 +1007,7 @@ cdef class CDynamicDatabase:
                     pass           #restoring anything
 
                 #Initialize the object location dictionary
+                self.objectLocs = {}
                 count = 0
                 for count from 0 <= count < PyList_GET_SIZE(self.objects):
                     temp = <object>PyList_GET_ITEM(self.objects,count)
@@ -1057,6 +1018,7 @@ cdef class CDynamicDatabase:
                 #    print str(object[0].__class__.__name__)+" of id "+str(object[0].getID())
             finally:
                 self.endUpdate()
+            #self.checkObjLocs()
             return True
         else:
             return exists(filename+".bak") and self.restore(filename+".bak")

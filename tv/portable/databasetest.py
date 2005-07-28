@@ -717,5 +717,10 @@ class FilterUpdateOnChange(unittest.TestCase):
         self.origObjs[1].endChange()
         self.assertEqual(self.objs.len(),2)
 
+#FIXME: Add a test such that recomputeFilters code that assumes
+#       subfilters keep the same order as their parent will fail.
+#
+#       v1.4 of database.pyx should pass, while 1.5 should fail
+
 if __name__ == "__main__":
     unittest.main()
