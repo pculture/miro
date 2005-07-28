@@ -596,6 +596,7 @@ class GUIActionHandler:
 # specific to a particular instantiation of a template, and so have to
 # be scoped to a particular HTML display widget.
 class TemplateActionHandler:
+    
     def __init__(self, controller, display, templateHandle):
         self.controller = controller
         self.display = display
@@ -817,11 +818,12 @@ def mappableToPlaylistItem(obj):
     if not isinstance(obj, item.Item):
         return False
     # NEEDS: check to see if the download has finished in a cleaner way
-    if obj.downloadState() != "finished":
+    if obj.getState() != "finished":
         return False
     return True
 
-class playlistItemFromItem(frontend.PlaylistItem):
+class PlaylistItemFromItem (frontend.PlaylistItem):
+
     def __init__(self, item):
         self.item = item
 
@@ -830,8 +832,7 @@ class playlistItemFromItem(frontend.PlaylistItem):
         return "Title here"
 
     def getPath(self):
-        # NEEDS
-        return "/Users/gschmidt/Movies/mahnamahna.mpeg"
+        return self.item.getFilename()
 
     def getLength(self):
         # NEEDS
@@ -847,7 +848,7 @@ class playlistItemFromItem(frontend.PlaylistItem):
         return self.item.getID()
 
 def mapToPlaylistItem(obj):
-    return playlistItemFromItem(obj)
+    return PlaylistItemFromItem(obj)
 
 ###############################################################################
 #### The global set of filter and sort functions accessible from templates ####
