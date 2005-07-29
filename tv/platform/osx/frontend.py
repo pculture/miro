@@ -827,13 +827,8 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         self.movie = nil
         self.lastTime = 0
         self.dragging = False
-        self.grooveRect = None
 
         return self;
-
-    def setFrame_(self, frame):
-        super(ProgressDisplayView, self).setFrame_(frame)
-        self.grooveRect = self.getGrooveRect()
 
     def setMovie_(self, movie):
         if self.movie is not nil:
@@ -847,7 +842,7 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
     def mouseDown_(self, event):
         if self.movie is not nil:
             location = self.convertPoint_fromView_(event.locationInWindow(), nil)
-            if NSPointInRect(location, self.grooveRect):
+            if NSPointInRect(location, self.getGrooveRect()):
                 self.dragging = True
                 self.movie.stop()
                 self.movie.setCurrentTime_(self.getTimeForLocation(location))
@@ -863,13 +858,14 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
             self.movie.play()
 
     def getTimeForLocation(self, location):
-        offset = location.x - self.grooveRect.origin.x
+        rect = self.getGrooveRect()
+        offset = location.x - rect.origin.x
         if offset < 0:
             offset = 0
-        if offset > self.grooveRect.size.width:
-            offset = self.grooveRect.size.width
+        if offset > rect.size.width:
+            offset = rect.size.width
         if offset > 0:
-            offset /= self.grooveRect.size.width
+            offset /= rect.size.width
         time = self.movie.duration()
         time.timeValue *= offset
         return time
@@ -911,10 +907,11 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         NSString.stringWithString_(timeStr).drawAtPoint_withAttributes_( (8,5), self.timeAttrs )
 
     def drawProgressGroove(self):
+        rect = self.getGrooveRect()
         self.grooveFillColor.set()
-        NSBezierPath.fillRect_(self.grooveRect)
+        NSBezierPath.fillRect_(rect)
         self.grooveContourColor.set()
-        NSBezierPath.strokeRect_(self.grooveRect)
+        NSBezierPath.strokeRect_(rect)
 
     def drawProgressCursor(self):
         if self.movie == nil:
@@ -928,7 +925,7 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
 
         offset = 0
         if progress > 0.0:
-            offset = (self.grooveRect.size.width - 9) / progress
+            offset = (self.getGrooveRect().size.width - 9) / progress
 
         x = math.floor(59 + offset) + 0.5
         self.cursor.compositeToPoint_operation_((x,7), NSCompositeSourceOver)
