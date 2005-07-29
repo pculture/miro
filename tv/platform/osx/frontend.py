@@ -1063,6 +1063,11 @@ class HTMLDisplay (Display):
             self.readyToDisplayHook = None
             hook()
 
+    def unlink(self):
+        webView = self.web.getView()
+        if webView is not nil:
+            webView.setHostWindow_(self.currentFrame.obj.window()) # not very pretty
+    
 
 ###############################################################################
 #### An enhanced WebView                                                   ####
@@ -1070,7 +1075,7 @@ class HTMLDisplay (Display):
 
 class ManagedWebView (NSObject):
 
-    def init(self, initialHTML, existingView=None, onInitialLoadFinished=None, onLoadURL=None, sizeHint=None):
+    def init(self, initialHTML, existingView=nil, onInitialLoadFinished=None, onLoadURL=None, sizeHint=None):
         self.onInitialLoadFinished = onInitialLoadFinished
         self.onLoadURL = onLoadURL
         self.initialLoadFinished = False
