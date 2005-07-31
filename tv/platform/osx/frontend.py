@@ -993,6 +993,7 @@ class NullDisplay (Display):
         pool = NSAutoreleasePool.alloc().init()
         # NEEDS: take (and leak) a covering reference -- cargo cult programming
         self.view = WebView.alloc().init().retain()
+        self.view.setCustomUserAgent_("DTV/pre-release (http://participatoryculture.org/)")
         Display.__init__(self)
         pool.release()
 
@@ -1086,6 +1087,7 @@ class ManagedWebView (NSObject):
                 # is hopefully rendered to the correct dimensions, instead
                 # of having to be corrected after being displayed.
                 self.view.setFrame_(sizeHint)
+            self.view.setCustomUserAgent_("DTV/pre-release (http://participatoryculture.org/)")
         self.jsQueue = []
         self.view.setPolicyDelegate_(self)
         self.view.setResourceLoadDelegate_(self)
