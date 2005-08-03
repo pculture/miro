@@ -1,6 +1,34 @@
 {
     IBClasses = (
+        {
+            ACTIONS = {checkEvery = id; }; 
+            CLASS = ChannelsPrefsController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {periodicityPopup = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {setMinimumSpace = id; }; 
+            CLASS = DiskSpacePrefsController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {minimumSpaceField = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {limitUpstream = id; setUpstreamLimit = id; }; 
+            CLASS = DownloadsPrefsController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {limitUpstreamCheckBox = id; limitValueField = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {runAtStartup = id; }; 
+            CLASS = GeneralPrefsController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {runAtStartupCheckBox = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
         {
             ACTIONS = {switchPreferenceView = id; }; 
             CLASS = PreferencesWindowController; 
