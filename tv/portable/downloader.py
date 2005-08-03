@@ -35,8 +35,7 @@ from cStringIO import StringIO
 import app
 
 defaults = get_defaults('btdownloadheadless')
-defaults.extend((('donated', '', ''),
-                 ))
+defaults.extend((('donated', '', ''),))
 
 # Pass in a connection to the frontend
 def setDelegate(newDelegate):
@@ -539,12 +538,12 @@ connectionPool = HTTPConnectionPool()
 class Downloader(DDBObject):
     def __init__(self, url,item):
         self.url = url
-	self.itemList = [item]
+        self.itemList = [item]
         self.startTime = time()
         self.endTime = self.startTime
-	self.shortFilename = self.filenameFromURL(url)
-        self.filename = os.path.join(config.get('DataDirectory'),'Incomplete Downloads',self.shortFilename+".part")
-	self.filename = self.nextFreeFilename(self.filename)
+        self.shortFilename = self.filenameFromURL(url)
+        self.filename = os.path.join(config.get(config.MOVIES_DIRECTORY),'Incomplete Downloads',self.shortFilename+".part")
+        self.filename = self.nextFreeFilename(self.filename)
         self.state = "downloading"
         self.currentSize = 0
         self.totalSize = -1
@@ -577,18 +576,18 @@ class Downloader(DDBObject):
     # Finds a filename that's unused and similar the the file we want
     # to download
     def nextFreeFilename(self, name):
-	if not access(name,F_OK):
-	    return name
-	parts = name.split('.')
-	insertPoint = len(parts)-1
-	count = 1
-	parts[insertPoint:insertPoint] = [str(count)]
-	newname = '.'.join(parts)
-	while access(newname,F_OK):
-	    count += 1
-	    parts[insertPoint] = str(count)
-	    newname = '.'.join(parts)
-	return newname
+        if not access(name,F_OK):
+            return name
+        parts = name.split('.')
+        insertPoint = len(parts)-1
+        count = 1
+        parts[insertPoint:insertPoint] = [str(count)]
+        newname = '.'.join(parts)
+        while access(newname,F_OK):
+            count += 1
+            parts[insertPoint] = str(count)
+            newname = '.'.join(parts)
+        return newname
 
     def remove(self):
         DDBObject.remove(self)
@@ -688,44 +687,44 @@ class Downloader(DDBObject):
     ##
     # Called by pickle during serialization
     def __getstate__(self):
-	temp = copy(self.__dict__)
-	temp["thread"] = None
-	return (0,temp)
+        temp = copy(self.__dict__)
+        temp["thread"] = None
+        return (0,temp)
 
     ##
     # Called by pickle during deserialization
     def __setstate__(self,state):
         (version, data) = state
         assert(version == 0)
-	self.__dict__ = data
+        self.__dict__ = data
         if self.getState() == "downloading":
             ScheduleEvent(0, lambda :self.runDownloader(retry = True),False)
 
 
 class HTTPDownloader(Downloader):
     def __init__(self, url,item):
-	self.lastUpdated = 0
-	self.lastSize = 0
-	Downloader.__init__(self,url,item)
+        self.lastUpdated = 0
+        self.lastSize = 0
+        Downloader.__init__(self,url,item)
 
     ##
     # Update the download rate and eta based on recieving length bytes
     def updateRateAndETA(self,length):
         now = time()
-	updated = False
+        updated = False
         self.beginRead()
         try:
             self.currentSize = self.currentSize + length
-	    if self.lastUpdated < now-3:
-		self.blockTimes.append((now,  self.currentSize))
-	        #Only keep the last 100 packets
-		if len(self.blockTimes)>100:
-		    self.blockTimes.pop(0)
-	        updated = True
-		self.lastUpdated = now
+            if self.lastUpdated < now-3:
+                self.blockTimes.append((now,  self.currentSize))
+                #Only keep the last 100 packets
+                if len(self.blockTimes)>100:
+                    self.blockTimes.pop(0)
+                updated = True
+                self.lastUpdated = now
         finally:
             self.endRead()
-	if updated:
+        if updated:
             for item in self.itemList:
                 item.beginChange()
                 item.endChange()
@@ -738,22 +737,22 @@ class HTTPDownloader(Downloader):
         self.endRead()
         if (state == "paused") or (state == "stopped"):
             data = ""
-	else:
-	    try:
-		data = handle.read(1024)
-	    except:
-		self.beginRead()
-		self.state = "failed"
+        else:
+            try:
+                data = handle.read(1024)
+            except:
+                self.beginRead()
+                self.state = "failed"
                 self.reasonFailed = "Lost connection to server"
-		self.endRead()
-		data = ""
+                self.endRead()
+                data = ""
         self.updateRateAndETA(len(data))
         return data
 
     ##
     # This is the actual download thread.
     def runDownloader(self, retry = False):
-	threadpriority.setBackgroundPriority()
+        threadpriority.setBackgroundPriority()
 
         if retry:
             self.beginRead()
@@ -769,10 +768,10 @@ class HTTPDownloader(Downloader):
                 totalSize = self.totalSize
                 self.endRead()
                 pos = 0
-		if totalSize > 0:
-		    filehandle.seek(totalSize-1)
-		    filehandle.write(' ')
-		    filehandle.seek(0)
+                if totalSize > 0:
+                    filehandle.seek(totalSize-1)
+                    filehandle.write(' ')
+                    filehandle.seek(0)
 
             info = grabURL(self.url,"GET",pos)
             if info is None and pos > 0:
@@ -806,7 +805,7 @@ class HTTPDownloader(Downloader):
             self.beginRead()
             try:
                 self.shortFilename = info['filename']
-                self.filename = os.path.join(config.get('DataDirectory'),'Incomplete Downloads',self.shortFilename+".part")
+                self.filename = os.path.join(config.get(config.MOVIES_DIRECTORY),'Incomplete Downloads',self.shortFilename+".part")
                 self.filename = self.nextFreeFilename(self.filename)
             finally:
                 self.endRead()
@@ -856,10 +855,10 @@ class HTTPDownloader(Downloader):
                 self.state = "finished"
                 for item in self.itemList:
                     item.setDownloadedTime()
-		newfilename = os.path.join(config.get('DataDirectory'),self.shortFilename)
-		newfilename = self.nextFreeFilename(newfilename)
-		rename(self.filename,newfilename)
-		self.filename = newfilename
+                newfilename = os.path.join(config.get(config.MOVIES_DIRECTORY),self.shortFilename)
+                newfilename = self.nextFreeFilename(newfilename)
+                rename(self.filename,newfilename)
+                self.filename = newfilename
                 if self.totalSize == -1:
                     self.totalSize = self.currentSize
                 self.endTime = time()
@@ -920,7 +919,7 @@ class HTTPDownloader(Downloader):
         for item in self.itemList:
             item.beginChange()
             item.endChange()
-	self.runDownloader(True)
+        self.runDownloader(True)
 
     ##
     # Removes downloader from the database
@@ -939,29 +938,29 @@ class BTDisplay:
     # Takes in the downloader class associated with this display
     def __init__(self,dler):
         self.dler = dler
-	self.lastUpTotal = 0
-	self.lastUpdated = 0
+        self.lastUpTotal = 0
+        self.lastUpdated = 0
 
     def finished(self):
         for item in self.dler.itemList:
             item.setDownloadedTime()
         self.dler.beginRead()
-	try:
-	    if not self.dler.state == "finished":
-		self.dler.state = "finished"
-		newfilename = os.path.join(config.get('DataDirectory'),self.dler.shortFilename)
-		newfilename = self.dler.nextFreeFilename(newfilename)
-		rename(self.dler.filename,newfilename)
-		self.dler.filename = newfilename
-		self.dler.endTime = time()
-		if self.dler.endTime - self.dler.startTime != 0:
-		    self.dler.rate = self.dler.totalSize/(self.dler.endTime-self.dler.startTime)
-		self.dler.currentSize =self.dler.totalSize
-		self.dler.multitorrent.singleport_listener.remove_torrent(self.dler.metainfo.infohash)
-		self.dler.torrent = self.dler.multitorrent.start_torrent(self.dler.metainfo,self.dler.torrentConfig, self.dler, self.dler.filename)
+        try:
+            if not self.dler.state == "finished":
+                self.dler.state = "finished"
+                newfilename = os.path.join(config.get(config.MOVIES_DIRECTORY),self.dler.shortFilename)
+                newfilename = self.dler.nextFreeFilename(newfilename)
+                rename(self.dler.filename,newfilename)
+                self.dler.filename = newfilename
+                self.dler.endTime = time()
+                if self.dler.endTime - self.dler.startTime != 0:
+                    self.dler.rate = self.dler.totalSize/(self.dler.endTime-self.dler.startTime)
+                self.dler.currentSize =self.dler.totalSize
+                self.dler.multitorrent.singleport_listener.remove_torrent(self.dler.metainfo.infohash)
+                self.dler.torrent = self.dler.multitorrent.start_torrent(self.dler.metainfo,self.dler.torrentConfig, self.dler, self.dler.filename)
 
-	finally:
-	    self.dler.endRead()
+        finally:
+            self.dler.endRead()
             #FIXME: Really, this change should trigger a change in the item,
             #so we don't have to manually change each item
             self.beginChange()
@@ -971,34 +970,34 @@ class BTDisplay:
                 item.endChange()
 
     def error(self, errormsg):
-	print errormsg
+        print errormsg
             
     def display(self, statistics):
-	update = False
-	now = time()
-	self.dler.beginRead()
-	try:
-	    if statistics.get('upTotal') != None:
-		if self.lastUpTotal > statistics.get('upTotal'):
-		    self.dler.uploaded += statistics.get('upTotal')
-		else:
-		    self.dler.uploaded += statistics.get('upTotal') - self.lastUpTotal
-		self.lastUpTotal = statistics.get('upTotal')
-	    if self.dler.state != "paused":
-		self.dler.currentSize = int(self.dler.totalSize*statistics.get('fractionDone'))
-	    if self.dler.state != "finished":
-		self.dler.rate = statistics.get('downRate')
-	    if self.dler.rate == None:
-		self.dler.rate = 0.0
-	    self.dler.eta = statistics.get('timeEst')
-	    if self.dler.eta == None:
-		self.dler.eta = 0
-	    if self.lastUpdated < now-3:
-		update = True
-		self.lastUpdated = now
-	finally:
-	    self.dler.endRead()
-	    if update:
+        update = False
+        now = time()
+        self.dler.beginRead()
+        try:
+            if statistics.get('upTotal') != None:
+                if self.lastUpTotal > statistics.get('upTotal'):
+                    self.dler.uploaded += statistics.get('upTotal')
+                else:
+                    self.dler.uploaded += statistics.get('upTotal') - self.lastUpTotal
+                self.lastUpTotal = statistics.get('upTotal')
+            if self.dler.state != "paused":
+                self.dler.currentSize = int(self.dler.totalSize*statistics.get('fractionDone'))
+            if self.dler.state != "finished":
+                self.dler.rate = statistics.get('downRate')
+            if self.dler.rate == None:
+                self.dler.rate = 0.0
+            self.dler.eta = statistics.get('timeEst')
+            if self.dler.eta == None:
+                self.dler.eta = 0
+            if self.lastUpdated < now-3:
+                update = True
+                self.lastUpdated = now
+        finally:
+            self.dler.endRead()
+            if update:
                 for item in self.dler.itemList:
                     item.beginChange()
                     item.endChange()
@@ -1006,14 +1005,14 @@ class BTDisplay:
     ##
     # Called by pickle during serialization
     def __getstate__(self):
-	temp = copy(self.__dict__)
-	return (0,temp)
+        temp = copy(self.__dict__)
+        return (0,temp)
 
     ##
     # Called by pickle during deserialization
     def __setstate__(self,state):
         (version, data) = state
-	self.__dict__ = data
+        self.__dict__ = data
 
 class BTDownloader(Downloader):
     def global_error(self, level, text):
@@ -1024,7 +1023,7 @@ class BTDownloader(Downloader):
     multitorrent = Multitorrent(torrentConfig, doneflag, global_error)
 
     def __init__(self, url, item):
-	self.metainfo = None
+        self.metainfo = None
         self.rate = 0
         self.eta = 0
         self.d = BTDisplay(self)
@@ -1050,10 +1049,10 @@ class BTDownloader(Downloader):
         for item in self.itemList:
             item.beginChange()
             item.endChange()
-	try:
-	    self.torrent.shutdown()
-	except KeyError:
-	    pass
+        try:
+            self.torrent.shutdown()
+        except KeyError:
+            pass
 
     def stop(self):
         self.beginRead()
@@ -1062,11 +1061,11 @@ class BTDownloader(Downloader):
         for item in self.itemList:
             item.beginChange()
             item.endChange()
-	self.torrent.shutdown()
-	try:
-	    self.torrent.shutdown()
-	except KeyError:
-	    pass
+        self.torrent.shutdown()
+        try:
+            self.torrent.shutdown()
+        except KeyError:
+            pass
         try:
             remove(self.filename)
         except:
@@ -1077,18 +1076,18 @@ class BTDownloader(Downloader):
     def start(self):
         self.pause()
         self.beginRead()
-	metainfo = self.metainfo
-	if metainfo == None:
-	    self.state = "failed"
+        metainfo = self.metainfo
+        if metainfo == None:
+            self.state = "failed"
             self.reasonFailed = "Could not read BitTorrent metadata"
-	else:
-	    self.state = "downloading"
+        else:
+            self.state = "downloading"
         self.endRead()
         for item in self.itemList:
             item.beginChange()
             item.endChange()
-	if metainfo != None:
-	    self.torrent = self.multitorrent.start_torrent(metainfo,
+        if metainfo != None:
+            self.torrent = self.multitorrent.start_torrent(metainfo,
                                 self.torrentConfig, self, self.filename)
 
     ##
@@ -1101,8 +1100,8 @@ class BTDownloader(Downloader):
         for item in self.itemList:
             item.beginChange()
             item.endChange()
-	if self.metainfo is None:
-	    h = grabURL(self.getURL(),"GET")
+        if self.metainfo is None:
+            h = grabURL(self.getURL(),"GET")
             if h is None:
                 self.beginChange()
                 try:
@@ -1116,16 +1115,16 @@ class BTDownloader(Downloader):
                 h['file-handle'].close()
         try:
             # raises BTFailure if bad
-	    if self.metainfo is None:
-		metainfo = ConvertedMetainfo(bdecode(metainfo))
-	    else:
-		metainfo = self.metainfo
+            if self.metainfo is None:
+                metainfo = ConvertedMetainfo(bdecode(metainfo))
+            else:
+                metainfo = self.metainfo
             self.shortFilename = metainfo.name_fs
-	    if not done:
-		self.filename = os.path.join(config.get('DataDirectory'),'Incomplete Downloads',self.shortFilename+".part")
-		self.filename = self.nextFreeFilename(self.filename)
-	    if self.metainfo is None:
-		self.metainfo = metainfo
+            if not done:
+                self.filename = os.path.join(config.get(config.MOVIES_DIRECTORY),'Incomplete Downloads',self.shortFilename+".part")
+                self.filename = self.nextFreeFilename(self.filename)
+            if self.metainfo is None:
+                self.metainfo = metainfo
             self.set_torrent_values(self.metainfo.name, self.filename,
                                 self.metainfo.total_bytes, len(self.metainfo.hashes))
             self.torrent = self.multitorrent.start_torrent(self.metainfo,
@@ -1152,7 +1151,7 @@ class BTDownloader(Downloader):
 
 
     def get_status(self):
-	#print str(self.getID()) + ": "+str(self.metainfo.infohash).encode('hex')
+        #print str(self.getID()) + ": "+str(self.metainfo.infohash).encode('hex')
         self.multitorrent.rawserver.add_task(self.get_status,
                                              self.torrentConfig['display_interval'])
         status = self.torrent.get_status(False)
@@ -1168,29 +1167,29 @@ class BTDownloader(Downloader):
         self.d.finished()
 
     def restartDL(self):
-	threadpriority.setBackgroundPriority()
+        threadpriority.setBackgroundPriority()
 
-	if self.metainfo != None:
-	    self.torrent = self.multitorrent.start_torrent(self.metainfo,
-				      self.torrentConfig, self, self.filename)
+        if self.metainfo != None:
+            self.torrent = self.multitorrent.start_torrent(self.metainfo,
+                                      self.torrentConfig, self, self.filename)
 
-	    self.get_status()
-	else:
-	    self.state = "paused"
+            self.get_status()
+        else:
+            self.state = "paused"
 
 
     def __getstate__(self):
-	temp = copy(self.__dict__)
-	temp["thread"] = None
-	try:
-	    temp["torrent"] = None
-	except:
-	    pass
-	return (0,temp)
+        temp = copy(self.__dict__)
+        temp["thread"] = None
+        try:
+            temp["torrent"] = None
+        except:
+            pass
+        return (0,temp)
 
     def __setstate__(self,state):
         (version, data) = state
-	self.__dict__ = data
+        self.__dict__ = data
         self.thread = Thread(target=self.restartDL)
         self.thread.setDaemon(True)
         self.thread.start()
@@ -1210,7 +1209,7 @@ BTDownloader.dlthread.start()
 class DownloaderFactory:
     lock = RLock()
     def __init__(self,item):
-	self.item = item
+        self.item = item
 
     def getDownloader(self,url):
         info = grabURL(url,'GET')
@@ -1246,7 +1245,7 @@ class DownloaderFactory:
 
 if __name__ == "__main__":
     def printsaved():
-	print "Saved!"
+        print "Saved!"
     def displayDLStatus(dler):
         print dler.getState()
         print str(dler.getCurrentSize()) + " of " + str(dler.getTotalSize())

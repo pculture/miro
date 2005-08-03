@@ -24,6 +24,8 @@ from shutil import copyfile
 from copy import copy
 import traceback
 
+import config
+
 # Import Python C functions
 cdef extern from "Python.h":
     cdef int PyList_GET_SIZE(object list)
@@ -961,7 +963,9 @@ cdef class CDynamicDatabase:
     # Maybe we want to add more robust error handling in the future?
     # Right now, I'm assuming that if it doesn't work, there's nothing
     # we can do to make it work anyway.
-    def save(self,filename = "~/.tvdump"):
+    def save(self,filename=None):
+        if filename == None:
+            filename = config.get(config.DB_PATHNAME)
         filename = expanduser(filename)
         self.beginRead()
         try:
@@ -982,10 +986,12 @@ cdef class CDynamicDatabase:
     #
     # @param filename the file to save to
     #
-    def restore(self,filename = "~/.tvdump"):
+    def restore(self,filename=None):
         cdef int count
         cdef object temp
 
+        if filename == None:
+            filename = config.get(config.DB_PATHNAME)
         filename = expanduser(filename)
         if exists(filename):
             self.beginUpdate()
