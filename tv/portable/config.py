@@ -1,49 +1,58 @@
-from database import DDBObject
-from os.path import expanduser, join
-from os import makedirs
-from datetime import timedelta
-import database
+from threading import Lock
+import platformcfg
 
-configData = {}
-configLock = database.globalLock
+__data = None
+__lock = Lock()
 
-def get(key):
-    configLock.acquire()
-    try:
-        try:
-            ret = configData[key]
-        except KeyError:
-            if key == 'DataDirectory':
-                #FIXME add Windows support
-                path = expanduser("~/Movies/DTV")
-                try:
-                    makedirs(join(path,'Incomplete Downloads'))
-                except:
-                    pass
-                configData[key] = path
-                ret = path
-            elif key == 'FreeSpaceTarget':
-                configData[key] = '2000000000'
-                ret = '2000000000'
-            elif key == 'DownloadsTarget':
-                configData[key] = 3
-                ret = 3
-            elif key == 'MaxManualDownloads':
-                configData[key] = 10
-                ret = 10
-            elif key == 'DefaultTimeUntilExpiration':
-                configData[key] = timedelta(days=7)
-                ret = timedelta(days=7)
-            else:
-                raise KeyError
-    finally:
-        configLock.release()
-        
-    return ret
+class Pref:
+    def __init__(self, **kwds):
+        self.__dict__.update(kwds)
 
-def set(key,value):
-    configLock.acquire()
-    try:
-        configData[key]=value
-    finally:
-        configLock.release()
+MAIN_WINDOW_FRAME           = Pref( key='mainWindowFrame',       default=None,  platformSpecific=False )
+LEFT_VIEW_SIZE              = Pref( key='leftViewSize',          default=None,  platformSpecific=False )
+RIGHT_VIEW_SIZE             = Pref( key='rightViewSize',         default=None,  platformSpecific=False )
+NO_FULLSCREEN_ALERT         = Pref( key='noFullscreenAlert',     default=False, platformSpecific=False )
+RUN_DTV_AT_STARTUP          = Pref( key='runAtStartup',          default=False, platformSpecific=False )
+CHECK_CHANNELS_EVERY_X_MN   = Pref( key='checkChannelsEveryXMn', default=60,    platformSpecific=False )
+LIMIT_UPSTREAM              = Pref( key='limitUpstream',         default=True,  platformSpecific=False )
+UPSTREAM_LIMIT_IN_KBS       = Pref( key='upstreamLimitInKBS',    default=4,     platformSpecific=False )
+PRESERVE_X_GB_FREE          = Pref( key='preserveXGBFree',       default=20,    platformSpecific=False )
+EXPIRE_AFTER_X_DAYS         = Pref( key='expireAfterXDays',      default=7,     platformSpecific=False )
+DOWNLOADS_TARGET            = Pref( key='DownloadsTarget',       default=3,     platformSpecific=False )
+MAX_MANUAL_DOWNLOADS        = Pref( key='MaxManualDownloads',    default=10,    platformSpecific=False )
+
+MOVIES_DIRECTORY            = Pref( key='MoviesDirectory',       default=None,  platformSpecific=True )
+SUPPORT_DIRECTORY           = Pref( key='SupportDirectory',      default=None,  platformSpecific=True )
+DB_PATHNAME                 = Pref( key='DBPathname',            default=None,  platformSpecific=True )
+
+def checkValidity():
+    if __data == None:
+        load()
+
+def load():
+    global __data
+    __lock.acquire()
+    __data = platformcfg.load()
+    __lock.release()
+
+def save():
+    checkValidity()
+    __lock.acquire()
+    platformcfg.save( __data )
+    __lock.release()
+
+def get(descriptor):
+    checkValidity()
+    __lock.acquire()
+    if descriptor.platformSpecific:
+        value = platformcfg.get(descriptor)
+    else:
+        value = __data.get(descriptor.key, descriptor.default)
+    __lock.release()
+    return value
+    
+def set(descriptor, value):
+    checkValidity()
+    __lock.acquire()
+    __data[ descriptor.key ] = value
+    __lock.release()
