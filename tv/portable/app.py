@@ -18,6 +18,7 @@ import cgi
 import copy
 import types
 import random
+import datetime
 import traceback
 import datetime
 import threading
@@ -45,6 +46,9 @@ class Controller (frontend.Application):
 
     def onStartup(self):
         try:
+            print "DTV: Loading preferences..."
+            config.load()
+            
             delegate = self.getBackendDelegate()
             feed.setDelegate(delegate)
             feed.setSortFunc(itemSort)
@@ -137,6 +141,9 @@ class Controller (frontend.Application):
 
     def onShutdown(self):
         try:
+            print "DTV: Saving preferences..."
+            config.save()
+
             print "DTV: Stopping scheduler"
             scheduler.ScheduleEvent.scheduler.shutdown()
 
@@ -514,10 +521,6 @@ class GUIActionHandler:
 
     def __init__(self, controller):
         self.controller = controller
-
-    def playFile(self, filename):
-        print "Playing " + filename
-        self.controller.frame.selectDisplay(frontend.VideoDisplay(filename), 1)
 
     def selectTab(self, id, templateNameHint = None):
         db.beginRead()
@@ -978,7 +981,7 @@ def oldItems(obj, param):
            ((obj.getState() == 'finished' or
              obj.getState() == 'uploading' or
              obj.getState() == 'watched')) and 
-           (obj.getDownloadedTime()+config.get('DefaultTimeUntilExpiration') <=
+           (obj.getDownloadedTime()+datetime.timedelta(days=config.get(config.EXPIRE_AFTER_X_DAYS)) <=
             datetime.datetime.now()))
     if len(params) > 1:
         old = (old and 
