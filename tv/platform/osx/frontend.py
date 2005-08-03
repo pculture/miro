@@ -7,6 +7,7 @@ from QTKit import *
 
 import app
 import feed
+import config
 import resource
 import template
 import database
@@ -185,15 +186,13 @@ class MainController (NibClassBuilder.AutoBaseClass):
         self.saveLayout()
 
     def restoreLayout(self):
-        defaults = NSUserDefaults.standardUserDefaults()
-
-        windowFrame = defaults.stringForKey_('mainWindow')
+        windowFrame = config.get(config.MAIN_WINDOW_FRAME)
         if windowFrame is not None:
            windowFrame = NSRectFromString(windowFrame)
            self.window().setFrame_display_(windowFrame, NO)
 
-        leftFrame = defaults.stringForKey_('leftView')
-        rightFrame = defaults.stringForKey_('rightView')
+        leftFrame = config.get(config.LEFT_VIEW_SIZE)
+        rightFrame = config.get(config.RIGHT_VIEW_SIZE)
         if leftFrame is not None and rightFrame is not None:
            leftFrame = NSRectFromString(leftFrame)
            rightFrame = NSRectFromString(rightFrame)
@@ -209,11 +208,10 @@ class MainController (NibClassBuilder.AutoBaseClass):
         rightFrame = self.splitView.subviews().objectAtIndex_(1).frame()
         rightFrame = NSStringFromRect(rightFrame)
 
-        defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject_forKey_(windowFrame, 'mainWindow')
-        defaults.setObject_forKey_(leftFrame, 'leftView')
-        defaults.setObject_forKey_(rightFrame, 'rightView')
-        defaults.synchronize()
+        config.set(config.MAIN_WINDOW_FRAME, windowFrame)
+        config.set(config.LEFT_VIEW_SIZE, leftFrame)
+        config.set(config.RIGHT_VIEW_SIZE, rightFrame)
+        config.save()
 
     ### Switching displays ###
 
@@ -311,6 +309,9 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     ### Actions ###
 
+    def switchTabs_(self, sender):
+        pass
+
     def playVideo_(self, sender):
         print "NOT IMPLEMENTED"
 
@@ -393,7 +394,7 @@ class FullScreenAlertPanelController (NibClassBuilder.AutoBaseClass):
 
     @classmethod
     def displayIfNeeded(cls):
-        noAlert = NSUserDefaults.standardUserDefaults().boolForKey_('noFullscreenAlert')
+        noAlert = config.get(config.NO_FULLSCREEN_ALERT)
         if not noAlert:
             controller = FullScreenAlertPanelController.alloc().init()
             NSApplication.sharedApplication().runModalForWindow_(controller.window())
@@ -405,7 +406,7 @@ class FullScreenAlertPanelController (NibClassBuilder.AutoBaseClass):
 
     def dismiss_(self, sender):
         if self.dontShowCheckbox.state() == NSOnState:
-            NSUserDefaults.standardUserDefaults().setBool_forKey_(YES, 'noFullscreenAlert')
+            config.set(config.NO_FULLSCREEN_ALERT, TRUE)
         NSApplication.sharedApplication().stopModal()
         self.window().orderOut_(nil)
 
@@ -517,6 +518,35 @@ class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
 
         self.window().setContentView_(sender.view)
         self.window().setFrame_display_animate_(wframe, YES, YES)
+
+class GeneralPrefsController (NibClassBuilder.AutoBaseClass):
+    
+    def runAtStartup_(self, sender):
+        run = (sender.state() == NSOnState)
+        config.set(config.RUN_DTV_AT_STARTUP, run)
+
+class ChannelsPrefsController (NibClassBuilder.AutoBaseClass):
+
+    def checkEvery_(self, sender):
+        minutes = sender.tag()
+        config.set(config.CHECK_CHANNELS_EVERY_X_MN, minutes)
+
+class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
+    
+    def limitUpstream_(self, sender):
+        limit = (sender.state() == NSOnState)
+        config.set(config.LIMIT_UPSTREAM, limit)
+    
+    def setUpstreamLimit_(self, sender):
+        limit = sender.floatValue()
+        config.set(config.UPSTREAM_LIMIT_IN_KBS, limit)
+
+class DiskSpacePrefsController (NibClassBuilder.AutoBaseClass):
+    
+    def setMinimumSpace_(self, sender):
+        space = sender.floatValue()
+        print "setting minimum space to %s" % space
+        config.set(config.PRESERVE_X_GB_FREE, space)
 
 
 ###############################################################################
@@ -1233,10 +1263,10 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
     def setPlaylist(self, playlist):
         self.playlist = playlist
-        self.selectPlaylistItem(0)
+        self.selectPlaylistItem(self.playlist.cur())
 
-    def selectPlaylistItem(self, index):
-        pathname = self.playlist[index].getPath()
+    def selectPlaylistItem(self, item):
+        pathname = item.getPath()
         (movie, error) = QTMovie.alloc().initWithFile_error_(pathname)
         self.videoView.setMovie_(movie)
         self.progressDisplayer.setMovie_(movie)
@@ -1258,7 +1288,6 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     def reset(self):
         self.isPlaying = False
         self.playlist = None
-        self.currentItemIndex = 0
         self.previousDisplay = None
         self.videoView.setMovie_(nil)
         self.progressDisplayer.setMovie_(nil)
@@ -1343,12 +1372,11 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
                 self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('pause_blue.png'))
         elif notification.name() == QTMovieDidEndNotification:
             if not self.progressDisplayer.dragging:
-                self.currentItemIndex += 1
-                if self.currentItemIndex < self.playlist.len():
-                    self.selectPlaylistItem(self.currentItemIndex)
+                nextItem = self.playlist.getNext()
+                if nextItem is not None:
+                    self.selectPlaylistItem(nextItem)
                     self.play_(nil)
                 else:
-                    self.currentItemIndex = 0
                     self.exitVideoMode()
 
 
