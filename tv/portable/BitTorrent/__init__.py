@@ -46,7 +46,7 @@ def get_home_dir():
 
 def get_dir_root(shellvars):
     def check_sysvars(x):
-        y = os.path.expandvars(x)
+        y = os.path.expanduser(os.path.expandvars(x))
         if y != x and os.path.isdir(y):
             return y
         return None
