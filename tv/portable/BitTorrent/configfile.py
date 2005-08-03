@@ -29,7 +29,7 @@ def get_config(defaults, section):
     if dir_root is None:
         return {}
 
-    configdir = os.path.join(dir_root, '.bittorrent-dtv')
+    configdir = os.path.join(dir_root, 'bittorrent-dtv')
     if not os.path.isdir(configdir):
         try:
             os.mkdir(configdir, 0700)
