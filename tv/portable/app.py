@@ -125,7 +125,7 @@ class Controller (frontend.Application):
             # Set up tab list (on left); this will automatically set up the
             # display area (on right) and currentSelectedTab
             self.tabDisplay = TemplateDisplay('tablist', tabPaneData, self)
-            self.frame.selectDisplay(self.tabDisplay, 0)
+            self.frame.selectDisplay(self.tabDisplay, self.frame.channelsDisplay)
             self.tabs.addRemoveCallback(lambda oldObject, oldIndex: self.checkSelectedTab())
             self.checkSelectedTab()
 
@@ -245,6 +245,10 @@ class Controller (frontend.Application):
         if self.tabs.cur():
             self.tabs.cur().redraw()
 
+    def onDisplaySwitch(self, newDisplay):
+        # Nick, your turn ;)
+        pass
+        
 
 ###############################################################################
 #### TemplateDisplay: a HTML-template-driven right-hand display panel      ####
@@ -252,7 +256,7 @@ class Controller (frontend.Application):
 
 class TemplateDisplay(frontend.HTMLDisplay):
 
-    def __init__(self, templateName, data, controller, frameHint=None, indexHint=None):
+    def __init__(self, templateName, data, controller, frameHint=None, areaHint=None):
         "'templateName' is the name of the inital template file. 'data' is keys for the template."
 
         self.controller = controller
@@ -265,7 +269,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
             TemplateActionHandler(self.controller, self, self.templateHandle),
             ]
 
-        frontend.HTMLDisplay.__init__(self, html, frameHint=frameHint, indexHint=indexHint)
+        frontend.HTMLDisplay.__init__(self, html, frameHint=frameHint, areaHint=areaHint)
 
         thread = threading.Thread(target=self.templateHandle.initialFillIn)
         thread.setDaemon(False)
@@ -613,11 +617,11 @@ class TemplateActionHandler:
         self.templateHandle.unlinkTemplate()
         # Switch to new template. It get the same variable
         # dictionary as we have.
-        # NEEDS: currently we hardcode the display index. This means
+        # NEEDS: currently we hardcode the display area. This means
         # that these links always affect the right-hand 'content'
         # area, even if they are loaded from the left-hand 'tab'
         # area. Actually this whole invocation is pretty hacky.
-        self.controller.frame.selectDisplay(TemplateDisplay(name, self.display.templateData, self.controller, frameHint=self.controller.frame, indexHint=1), 1)
+        self.controller.frame.selectDisplay(TemplateDisplay(name, self.display.templateData, self.controller, frameHint=self.controller.frame, areaHint=self.controller.frame.mainDisplay), self.controller.frame.mainDisplay)
 
     def setViewFilter(self, viewName, fieldKey, functionKey, parameter, invert):
         if viewName != "undefined":
@@ -663,7 +667,7 @@ class TemplateActionHandler:
 
         # Construct playback display and switch to it, arranging
         # to switch back to ourself when playback mode is exited
-        self.controller.frame.selectDisplay(frontend.VideoDisplay(view, self.display), 1)
+        self.controller.frame.selectDisplay(frontend.VideoDisplay(view, self.display), self.controller.frame.mainDisplay)
 
 # Helper: liberally interpret the provided string as a boolean
 def stringToBoolean(string):
@@ -697,14 +701,12 @@ class Tab:
         # Free up the template currently being displayed
         # NOTE: This is kind of a hacky way to do this, but it works --NN
         try:
-            frame.obj.currentDisplay[1].onDeselect()
+            frame.mainDisplay.hostedDisplay.onDeselect()
         except:
             pass
 
-        self.display = TemplateDisplay(templateNameHint or self.contentsTemplate, self.contentsData, self.controller, frameHint=frame, indexHint=1)
-
-        # '1' means 'right hand side of the window, in the display area.'
-        frame.selectDisplay(self.display, 1)
+        self.display = TemplateDisplay(templateNameHint or self.contentsTemplate, self.contentsData, self.controller, frameHint=frame, areaHint=frame.mainDisplay)
+        frame.selectDisplay(self.display, frame.mainDisplay)
 
     def markup(self):
         """Get HTML giving the visual appearance of the tab. 'state' is
