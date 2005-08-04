@@ -33,6 +33,8 @@ def load():
     global __data
     __lock.acquire()
     __data = platformcfg.load()
+    if __data is None:
+        _data == dict()
     __lock.release()
 
 def save():
