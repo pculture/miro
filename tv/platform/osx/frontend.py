@@ -139,35 +139,83 @@ class MainFrame:
 
     def __init__(self, appl):
         """The initially active display will be an instance of NullDisplay."""
+        self.channelsDisplay = None
+        self.collectionDisplay = None
+        self.mainDisplay = None
         # Do this in two steps so that self.obj is set when self.obj.init
         # is called. That way, init can turn around and call selectDisplay.
         self.obj = MainController.alloc()
         self.obj.init(self, appl)
 
-    def selectDisplay(self, display, index):
-        """Install the provided 'display' in the left-hand side (index == 0)
-        or right-hand side (index == 1) of the window."""
-        self.obj.selectDisplay(display, index)
+    def selectDisplay(self, display, area=None):
+        """Install the provided 'display' in the requested area"""
+        self.obj.selectDisplay(display, area)
 
     # Internal use: return an estimate of the size of a given display area as
     # a Cocoa frame object.
-    def getDisplaySizeHint(self, index):
-        return self.obj.getDisplaySizeHint(index)
+    def getDisplaySizeHint(self, area):
+        return self.obj.getDisplaySizeHint(area)
+
+
+class DisplayHostView (NibClassBuilder.AutoBaseClass):
+    
+    def awakeFromNib(self):
+        self.hostedDisplay = None
+        self.hostedView = nil
+    
+    def setDisplay(self, display, owner):
+        pool = NSAutoreleasePool.alloc().init()
+
+        # Send notification to old display if any
+        if self.hostedDisplay is not None:
+            self.hostedDisplay.onDeselected_private(owner)
+            self.hostedDisplay.onDeselected(owner)
+        oldView = self.hostedView
+
+        # Switch to new display
+        self.hostedDisplay = display
+        if display is not None:
+            self.hostedView = display.getView()
+        else:
+            self.hostedView = nil
+        if display is None:
+            return
+
+        # Figure out where to put the content area
+        # NEEDS: clean up outlet names/types in nib
+        frame = self.bounds()
+        mask = self.autoresizingMask()
+
+        # Arrange to cover the template that marks the content area
+        self.hostedView.setFrame_(frame)
+        self.addSubview_(self.hostedView)
+        self.hostedView.setAutoresizingMask_(mask)
+
+        # Mark as needing display
+        self.setNeedsDisplayInRect_(frame)
+        self.hostedView.setNeedsDisplay_(YES)
+
+        # Wait until now to clean up the old view, to reduce flicker
+        # (doesn't actually work all that well, sadly -- possibly what
+        # we want to do is wait until notification comes from the new
+        # view that it's been fully loaded to even show it)
+        if oldView:
+            oldView.removeFromSuperview()
+
+        # Send notification to new display
+        display.onSelected_private(owner)
+        display.onSelected(owner)
+
+        del pool
 
 
 class MainController (NibClassBuilder.AutoBaseClass):
-    # Outlets: tabView, contentTemplateView
-    # Is the delegate for the split view
 
-    def init(self, owner, appl):
-        # owner is the actual frame object (the argument to onSelected, etc)
+    def init(self, frame, appl):
         NSObject.init(self)
-        NSBundle.loadNibNamed_owner_("MainWindow", self)
-
-        self.owner = owner
+        self.frame = frame
         self.appl = appl
-        self.currentDisplay = [None, None]
-        self.currentDisplayView = [nil, nil]
+        NSBundle.loadNibNamed_owner_("MainWindow", self)
 
         nc.addObserver_selector_name_object_(
             self,
@@ -178,6 +226,9 @@ class MainController (NibClassBuilder.AutoBaseClass):
         return self
 
     def awakeFromNib(self):
+        self.frame.channelsDisplay = self.channelsHostView
+        self.frame.collectionDisplay = self.collectionHostView
+        self.frame.mainDisplay = self.mainHostView
         self.restoreLayout()
         self.actionButton.sendActionOn_(NSLeftMouseDownMask)
         self.showWindow_(nil)
@@ -215,59 +266,17 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     ### Switching displays ###
 
-    def selectDisplay(self, display, index):
+    def selectDisplay(self, display, area):
         # Tell the new display we want to switch to it. It'll call us
         # back when it's ready to display without flickering.
-        display.callWhenReadyToDisplay(lambda: self.doSelectDisplay(display, index))
+        display.callWhenReadyToDisplay(lambda: self.doSelectDisplay(display, area))
 
-    def doSelectDisplay(self, display, index):
-        # (luc) why would we need this ?
-        #pool = NSAutoreleasePool.alloc().init()
+    def doSelectDisplay(self, display, area):
+        if area is not None:
+            area.setDisplay(display, self.frame)
 
-        # Send notification to old display if any
-        if self.currentDisplay[index]:
-            self.currentDisplay[index].onDeselected_private(self.owner)
-            self.currentDisplay[index].onDeselected(self.owner)
-        oldView = self.currentDisplayView[index]
-
-        # Switch to new display
-        self.currentDisplay[index] = display
-        view = self.currentDisplayView[index] = display and display.getView() or None
-        if display is None:
-            return
-
-        # Figure out where to put the content area
-        # NEEDS: clean up outlet names/types in nib
-        theTemplate = (index == 0) and self.tabView or self.contentTemplateView
-        frame = theTemplate.bounds()
-        parent = theTemplate
-        mask = theTemplate.autoresizingMask()
-
-        # Arrange to cover the template that marks the content area
-        view.setFrame_(frame)
-        parent.addSubview_(view)
-        view.setAutoresizingMask_(mask)
-
-        # Mark as needing display
-        parent.setNeedsDisplayInRect_(frame)
-        view.setNeedsDisplay_(YES)
-
-        # Wait until now to clean up the old view, to reduce flicker
-        # (doesn't actually work all that well, sadly -- possibly what
-        # we want to do is wait until notification comes from the new
-        # view that it's been fully loaded to even show it)
-        if oldView:
-            oldView.removeFromSuperview()
-
-        # Send notification to new display
-        display.onSelected_private(self.owner)
-        display.onSelected(self.owner)
-
-        #pool.release()
-
-    def getDisplaySizeHint(self, index):
-        theTemplate = (index == 0) and self.tabView or self.contentTemplateView
-        return theTemplate.frame()
+    def getDisplaySizeHint(self, area):
+        return area.frame()
 
     ### Size constraints on splitview ###
 
@@ -288,7 +297,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
     # minimum content area size constraint.
     def splitView_resizeSubviewsWithOldSize_(self, sender, oldSize):
         tabBox = self.tabView.superview().superview().superview()
-        contentBox = self.contentTemplateView.superview().superview().superview()
+        contentBox = self.mainHostView.superview().superview().superview()
 
         splitViewSize = sender.frame().size
         tabSize = tabBox.frame().size
@@ -310,7 +319,14 @@ class MainController (NibClassBuilder.AutoBaseClass):
     ### Actions ###
 
     def switchTabs_(self, sender):
-        pass
+        tag = sender.selectedCell().tag()
+        self.tabView.selectTabViewItemAtIndex_(tag)
+        newDisplay = None
+        if tag == 1:
+            newDisplay = self.frame.channelsDisplay
+        elif tag == 2:
+            newDisplay = self.frame.collectionDisplay
+        self.appl.onDisplaySwitch(newDisplay)
 
     def playVideo_(self, sender):
         print "NOT IMPLEMENTED"
@@ -607,8 +623,7 @@ class PasswordController (NibClassBuilder.AutoBaseClass):
         # Ensure we're not deallocated until the window that has actions
         # that point at us is closed
         self.retain()
-
-        pool.release()
+        del pool
         return self
 
     def getAnswer(self):
@@ -661,7 +676,7 @@ class QuestionController(NibClassBuilder.AutoBaseClass):
         # Ensure we're not deallocated until the window that has actions
         # that point at us is closed
         self.retain()
-        pool.release()
+        del pool
         return self
 
     def getAnswer(self):
@@ -1025,7 +1040,7 @@ class NullDisplay (Display):
         self.view = WebView.alloc().init().retain()
         self.view.setCustomUserAgent_("DTV/pre-release (http://participatoryculture.org/)")
         Display.__init__(self)
-        pool.release()
+        del pool
 
     def getView(self):
         return self.view
@@ -1040,7 +1055,7 @@ class HTMLDisplay (Display):
 
     # We don't need to override onSelected, onDeselected
 
-    def __init__(self, html, frameHint=None, indexHint=None):
+    def __init__(self, html, frameHint=None, areaHint=None):
         """'html' is the initial contents of the display, as a string. If
         frameHint is provided, it is used to guess the initial size the HTML
         display will be rendered at, which might reduce flicker when the
@@ -1048,9 +1063,9 @@ class HTMLDisplay (Display):
         pool = NSAutoreleasePool.alloc().init()
         self.readyToDisplayHook = None
         self.readyToDisplay = False
-        self.web = ManagedWebView.alloc().init(html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(x), frameHint and indexHint and frameHint.getDisplaySizeHint(indexHint) or None)
+        self.web = ManagedWebView.alloc().init(html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(x), frameHint and areaHint and frameHint.getDisplaySizeHint(areaHint) or None)
         Display.__init__(self)
-        pool.release()
+        del pool
 
     def getView(self):
         return self.web.getView()
@@ -1179,7 +1194,7 @@ class ManagedWebView (NSObject):
             self.view.performSelectorOnMainThread_withObject_waitUntilDone_("stringByEvaluatingJavaScriptFromString:", js, NO)
             # self.view.setNeedsDisplay_(YES) # shouldn't be necessary
 
-        pool.release()
+        del pool
 
     # Generate callback when the initial HTML (passed in the constructor)
     # has been loaded
@@ -1240,6 +1255,7 @@ class VideoDisplay (Display):
         self.controller.previousDisplay = previousDisplay
 
     def onSelected(self, frame):
+        self.controller.frame = frame
         self.controller.enableControls(YES)
         self.controller.setPlaylist(self.playlist)
         self.controller.play_(nil)
@@ -1260,6 +1276,15 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.fastForwardButton.sendActionOn_(NSLeftMouseDownMask)
         self.fullscreenController = nil
         VideoDisplay.controller = self
+
+    def reset(self):
+        self.isPlaying = False
+        self.playlist = None
+        self.frame = None
+        self.previousDisplay = None
+        self.videoView.setMovie_(nil)
+        self.progressDisplayer.setMovie_(nil)
+        nc.removeObserver_(self)
 
     def setPlaylist(self, playlist):
         self.playlist = playlist
@@ -1283,15 +1308,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             self.fullscreenController.exitFullscreen()
             self.fullscreenController = nil
         mainController = self.videoView.window().delegate()
-        mainController.selectDisplay(self.previousDisplay, 1)
-
-    def reset(self):
-        self.isPlaying = False
-        self.playlist = None
-        self.previousDisplay = None
-        self.videoView.setMovie_(nil)
-        self.progressDisplayer.setMovie_(nil)
-        nc.removeObserver_(self)
+        mainController.selectDisplay(self.previousDisplay, self.frame.mainDisplay)
 
     def enableControls(self, enabled):
         self.fastBackwardButton.setEnabled_(enabled)
