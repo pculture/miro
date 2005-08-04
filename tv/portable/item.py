@@ -518,6 +518,24 @@ class Item(DDBObject):
         return self.releaseDate
 
     ##
+    # returns the date this video was released or when it was published
+    def getReleaseDateObj(self):
+        if hasattr(self,'releaseDateObj'):
+            return self.releaseDateObj
+        self.beginRead()
+        try:
+            try:
+                self.releaseDateObj = datetime(*self.entry.enclosures[0].modified_parsed[0:7])
+            except:
+                try:
+                    self.releaseDateObj = datetime(*self.entry.modified_parsed[0:7])
+                except:
+                    self.releaseDateObj = datetime.min
+        finally:
+            self.endRead()
+        return self.releaseDateObj
+
+    ##
     # returns string with the play length of the video
     def getDuration(self):
         secs = 0
