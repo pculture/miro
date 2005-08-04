@@ -24,7 +24,6 @@ body {
 	width: 100%
 	}
 
-	
 
 
 /*///////////////////////////////////////////////
@@ -83,7 +82,7 @@ Contains the channels
 /////////////////////////////////////////////*/
 
 #sidebar{
-	/*padding: 25px 0 0;*/
+	padding: 3px 0 0 0;
 	width: 100%;
 	overflow: hidden;
 	}
@@ -383,14 +382,19 @@ watch, choose...
 	margin: 0 3px;
 	}
 	
+	
 .no_new {
-	padding: 10px;
-	color: #900;
+	padding: 20px 10px 10px 10px;
+	color: #990000;
+	text-align: center;
+	font-size: 14px;
 }
 
 .no_new a {
 	text-decoration: none;
-	color: #900;
+	color: #990000;
+	padding-right: 24px;
+	background: url(resource:images/red_arrow.png) 3px right no-repeat;
 }
 
 
@@ -675,7 +679,7 @@ div.settings div{
 	
 
 .settings_auto_mode{
-	background-color: #f4f1be;
+	background-color: #FFF9B4;
 	padding: 15px;
 	width: 450px;
 	margin: 20px auto 10px auto;
@@ -806,7 +810,7 @@ search, title, recommend link
 
 
 .auto_link{
-	color: #00aa00;
+	color: #00B904;
 	}
 
 .settings_link{
@@ -857,7 +861,7 @@ The settings of each channel
 
 #navigation	{
 	height: 25px;
-	width: 190px;
+	width: 140px;
 	margin: 1px auto 0 auto;
 	}
 
@@ -992,8 +996,9 @@ SIDEBAR
 .number_count{
 	padding: 3px 0 3px 0;
 	color: #fff;
-	margin: 0px 9px 0 9px;
-	background: #00d810;
+	margin: 0px 8px 0 9px;
+
+	background: #00B904;
 	font-weight: bold;
 	font-size: 10px;
 	text-shadow: 0px 1px 0px #333;
@@ -1014,8 +1019,8 @@ SIDEBAR
 .gray_number_count{
 	padding: 3px 0px 3px 0px;
 	color: #333;
-	margin: 0 9px;
-	background: #ccc;
+	margin: 0 8px 0 9px;
+	background: #d4d4d4;
 	font-size: 10px;
 	text-shadow: 0px 1px 0px #fff;
 	}
@@ -1036,8 +1041,8 @@ SIDEBAR
 .both_number_count{
 	padding: 3px 0 3px 0;
 	color: #fff;
-	margin: 0 9px 0 9px;
-	background: #00d810;
+	margin: 0 8px 0 9px;
+	background: #00B904;
 	font-weight: bold;
 	font-size: 10px;
 	text-shadow: 0px 1px 0px #333;
@@ -1059,8 +1064,8 @@ SIDEBAR
 .both_gray_number_count{
 	padding: 3px 0px 3px 1px;
 	color: #333;
-	margin: 0 9px;
-	background: #ccc;
+	margin: 0 8px 0 9px;
+	background: #d4d4d4;
 	font-size: 10px;
 	text-shadow: 0px 1px 0px #fff;
 	}
@@ -1105,6 +1110,51 @@ Loading Channel
  
 /////////////////////////////////////////////*/
 
+.loading_body {
+background-color: #e7e7e7;
+}
+
 #loading_channel{
-	margin: 30% 0;
+	font-size: 25px;
+	color: #333;
+	font-weight: bold;
+	margin: 20% auto 0 auto;
+/*	background-color: #fff; */
+	width: 330px;
+	height: 100px;
+	padding: 35px;
+/*	border: 1px solid #d8d8d8; */
 	}
+	
+	/*/////////////////////////////////////////////
+
+Scraping Channel
+ 
+/////////////////////////////////////////////*/
+
+
+
+#scraping_first_time {
+	background-color: #FFF9B4;
+	padding: 10px;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #ddd;
+}
+
+.scraping_first_time_inner {
+	font-size: 15px;
+	color: #333;
+	font-weight: bold;
+	margin: 0 auto 0 auto;
+/*	background-color: #fff;  */
+	width: 330px;
+	padding-top: 10px;
+/*	border: 1px solid #eeeeee; */
+	}
+	
+.non_standard {
+	font-size: 11px;
+	text-transform: uppercase;
+	font-weight: normal;
+}
