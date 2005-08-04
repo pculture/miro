@@ -23,7 +23,7 @@
 
 </head>
 
-<body>
+<body scroll="yes">
   <div id="main_window">  
   
 <div id="ultra_top_wrapper">
@@ -71,9 +71,12 @@
   
   
   <div id="content_window">
+   
+  
     <ul> 
 
-<div class="no_new" t:hideIfViewNotEmpty="newitems" i18n:translate=""><a href="template:feed-choose">See what's on this channel by clicking 'Browse'.</a></div>        
+<div class="no_new" t:hideIfViewNotEmpty="newitems" i18n:translate=""><a href="template:feed-choose">See what's on this channel by clicking 'Browse'</a></div>        
+
 <li t:contextMenu="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@|Play" t:repeatForView="newitems">
         <t:includeTemplate filename="download-item" />
         </li> 
@@ -85,6 +88,9 @@
    </ul>
   </div>
   </div> 
+
+
+
 
 <!--
 <div class="no_new">

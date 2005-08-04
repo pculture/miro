@@ -12,9 +12,9 @@
 
 </head>
 
-<body>
+<body class="loading_body">
 	<div id="loading_channel">
-		<center>Loading Channel</center><br />
+		<center style="padding-bottom: 18px;">Loading Channel</center>
 		<center><img src="resource:images/loader.gif" alt="" /></center>
 	</div>
 </body>
