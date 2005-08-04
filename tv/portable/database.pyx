@@ -15,7 +15,10 @@
 # This adds an additional restriction to the database: you cannot
 # store the same item twice.
 
-# FIXME: Write functions to remove unused filters, sorts, and maps
+#
+# At the moment, we don't guarantee that filters preserve order, so
+# you should always sort your views last
+#
 
 from threading import RLock
 from os.path import expanduser, exists

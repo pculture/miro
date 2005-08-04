@@ -13,7 +13,9 @@
 <t:include filename="dynamic.js" />
 
 <t:dynamicviews>
- <t:view name="tabs" key="tabs" />
+ <t:view name="tabs" key="tabs">
+  <t:sort functionkey="global sort tab" parameter="" />
+ </t:view>
 </t:dynamicviews>
 
 </head>

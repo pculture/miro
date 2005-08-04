@@ -76,7 +76,7 @@ class Controller (frontend.Application):
             # Set up tab list
             reloadStaticTabs()
             mapFunc = makeMapToTabFunction(globalData, self)
-            self.tabs = db.filter(mappableToTab).map(mapFunc).sort(sortTabs)
+            self.tabs = db.filter(mappableToTab).map(mapFunc)
 
             self.currentSelectedTab = None
             self.tabListActive = True
@@ -636,6 +636,8 @@ class TemplateActionHandler:
         # clips and put it in the format the frontend expects.
         namedView = self.templateHandle.findNamedView(viewName)
         view = namedView.getView()
+
+        #FIXME: These views need to be released
         view = view.filter(mappableToPlaylistItem)
         view = view.map(mapToPlaylistItem)
 
@@ -907,6 +909,7 @@ def downloadStartedSort(x,y):
 globalSortList = {
     'item': itemSort,
     'alphabetical': alphabeticalSort,
+    'tab': sortTabs,
     'downloadStarted': downloadStartedSort,
     'text': (lambda x, y: compare(str(x), str(y))),
     'number': (lambda x, y: compare(float(x), float(y))),
