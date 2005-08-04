@@ -11,12 +11,8 @@
 <t:include filename="dynamic.js" />
 
 <t:dynamicviews>
- <t:view name="pendingitems" key="global view items">
-  <t:filter functionkey="global filter unDownloadedItems" parameter="@@@feed getFeedID@@@" />
-  <t:sort functionkey="global sort item" parameter="" />
- </t:view>
- <t:view name="downloadeditems" key="global view items">
-  <t:filter functionkey="global filter downloadedItems" parameter="@@@feed getFeedID@@@" />
+ <t:view name="items" key="global view items">
+  <t:filter functionkey="global filter feedItems" parameter="@@@feed getFeedID@@@" />
   <t:sort functionkey="global sort item" parameter="" />
  </t:view>
 </t:dynamicviews>
@@ -39,7 +35,7 @@
 <div id="right_half">
 	<div class="auto_link" i18n:translate="">AUTO DOWNLOAD: <span t:replace="feed autoDownloadStatus"/></div>
 	<a class="settings_link" i18n:translate="" href="template:feed-settings">Change Settings</a>
-	<input type="text" size="20" class="search_field" onfocus="startEditFilter(this,new Array('pendingitems','downloadeditems'),new Array('',''),new Array('global filter unDownloadedItems','global filter downloadedItems'),new Array(0,0),new Array('@@@feed getFeedID@@@','@@@feed getFeedID@@@'))" onblur="endEditFilter()"  />
+	<input type="text" size="20" class="search_field" onfocus="startEditFilter(this,new Array('items'),new Array(''),new Array('global filter items'),new Array(0),new Array('@@@feed getFeedID@@@')" onblur="endEditFilter()"  />
 </div>
 
 	<br style="clear: both; height: 0; padding: 0; margin: 0;" />
@@ -72,11 +68,8 @@
   
   <div id="content_window">
     <ul> 
-        <div class="no_new" t:hideIfViewNotEmpty="pendingitems" i18n:translate="">There are no videos available on this channel.  This could mean that you have the wrong address for the channel or that the publisher of the channel is having problems.</div>    
-        <li t:contextMenu="action:startDownload?item=@@@this getID@@@|Download" t:repeatForView="pendingitems">
-        <t:includeTemplate filename="download-item" />
-        </li> 
-        <li t:contextMenu="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@|Play" t:repeatForView="downloadeditems">
+        <div class="no_new" t:hideIfViewNotEmpty="items" i18n:translate="">There are no videos available on this channel.  This could mean that you have the wrong address for the channel or that the publisher of the channel is having problems.</div>    
+        <li t:contextMenu="action:startDownload?item=@@@this getID@@@|Download" t:repeatForView="items">
         <t:includeTemplate filename="download-item" />
         </li> 
    </ul>
