@@ -960,6 +960,16 @@ def downloadedItems(obj, param):
                  str(params[1]).lower() in obj.getDescription().lower()))
     return dled
 
+def feedItems(obj, param):
+    params = param.split('|',1)
+    
+    dled = (str(obj.feed.getID()) == params[0])
+    if len(params) > 1:
+        dled = (dled and 
+                (str(params[1]).lower() in obj.getTitle().lower() or
+                 str(params[1]).lower() in obj.getDescription().lower()))
+    return dled
+
 def recentItems(obj, param):
     #FIXME make this look at the feed's time until expiration
     params = param.split('|',1)
@@ -1017,6 +1027,7 @@ globalFilterList = {
     'substring': (lambda x, y: str(y) in str(x)),
     'boolean': (lambda x, y: x),
 
+    'feedItems' : feedItems,
     'recentItems': recentItems,
     'allRecentItems': allRecentItems,
     'oldItems': oldItems,
