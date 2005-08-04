@@ -1,6 +1,7 @@
 {
     IBClasses = (
         {CLASS = BeveledBox; LANGUAGE = ObjC; SUPERCLASS = NSBox; }, 
+        {CLASS = DisplayHostView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
             ACTIONS = {addChannel = id; showActionMenu = id; switchTabs = id; }; 
@@ -8,7 +9,9 @@
             LANGUAGE = ObjC; 
             OUTLETS = {
                 actionButton = id; 
-                contentTemplateView = id; 
+                channelsHostView = id; 
+                collectionHostView = id; 
+                mainHostView = id; 
                 splitView = id; 
                 switcherMatrix = id; 
                 tabView = id; 
