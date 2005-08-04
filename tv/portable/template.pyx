@@ -425,8 +425,14 @@ class TemplateContentHandler(sax.handler.ContentHandler):
 def returnFalse(x):
     return False
 
+def returnTrue(x):
+    return True
+
 def identityFunc(x):
     return x
+
+def nullSort(x,y):
+    return 0
 
 # Class used internally by Handle to track a t:repeatForSet clause.
 class TrackedView:
@@ -525,34 +531,37 @@ class NamedView:
         self.name = name
         self.data = data
         self.origView = evalKeyC(viewKey, data, None, True)
-        if not filterKey is None:
-            self.filter = templatehelper.makeFilter(filterKey, filterFunc, filterParameter, invertFilter,self.data)
-            self.view = self.origView.filter(templatehelper.getFilterFunc(self))
-        elif not sortKey is None:
-            self.sort = templatehelper.makeSort(sortKey, sortFunc, invertSort, self.data)
-            self.view = self.origView.sort(templatehelper.getSortFunc(self))
+
+        if filterKey is None:
+            self.filter = returnTrue
         else:
-            self.view = self.origView
+            self.filter = templatehelper.makeFilter(filterKey, filterFunc, filterParameter, invertFilter,self.data)
+        if sortKey is None:
+            self.sort = nullSort
+        else:
+            self.sort = templatehelper.makeSort(sortKey, sortFunc, invertSort, self.data)
+
+        self.filterView = self.origView.filter(templatehelper.getFilterFunc(self))
+        self.view = self.filterView.sort(templatehelper.getSortFunc(self))
 
     def setFilter(self, fieldKey, funcKey, parameter, invert):
         if not self.filter:
             raise TemplateError, "View '%s' was not declared with a filter, so it is not possible to change the filter parameters" % self.name
         self.filter = templatehelper.makeFilter(fieldKey, funcKey, parameter, invert,self.data)
-        self.origView.recomputeFilter(self.view)
+        self.origView.recomputeFilter(self.filterView)
 
     def setSort(self, fieldKey, funcKey, invert):
         if not self.sort:
             raise TemplateError, "View '%s' was not declared with a sort, so it is not possible to change the sort parameters." % self.name
         self.sort = templatehelper.makeSort(fieldKey, funcKey, invert, self.data)
-        self.origView.recomputeSort(self.view)
+        self.origView.recomputeSort(self.filterView)
 
     def getView(self):
         # Internal use.
         return self.view
 
     def removeViewFromDB(self):
-        if not self.view is self.origView:
-            self.origView.removeView(self.view)
+        self.origView.removeView(self.filterView)
 
 ###############################################################################
 #### Functions used in repeating templates                                 ####
