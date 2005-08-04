@@ -865,17 +865,17 @@ def compare(x, y):
     return 0
 
 def itemSort(x,y):
-    if x.getReleaseDate() < y.getReleaseDate():
+    if x.getReleaseDateObj() > y.getReleaseDateObj():
         return -1
-    elif x.getReleaseDate() > y.getReleaseDate():
+    elif x.getReleaseDateObj() < y.getReleaseDateObj():
         return 1
-    elif x.getLinkNumber() < y.getLinkNumber():
-        return -1
     elif x.getLinkNumber() > y.getLinkNumber():
-        return 1
-    elif x.getID() < y.getID():
         return -1
+    elif x.getLinkNumber() < y.getLinkNumber():
+        return 1
     elif x.getID() > y.getID():
+        return -1
+    elif x.getID() < y.getID():
         return 1
     else:
         return 0
