@@ -99,7 +99,7 @@ class AppController (NSObject):
         return self.actualApp.addFeedFromFile(filename)
 
     def checkQuicktimeVersion(self, showError):
-        supported = gestalt('qtim') >= 0x08000000
+        supported = gestalt('qtim') >= 0x07000000
         
         if not supported and showError:
             alert = NSAlert.alloc().init()
