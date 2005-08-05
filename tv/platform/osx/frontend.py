@@ -99,14 +99,26 @@ class AppController (NSObject):
         return self.actualApp.addFeedFromFile(filename)
 
     def checkQuicktimeVersion(self, showError):
-        qtVersion = gestalt('qtim')
-        supported = qtVersion >= 0x07000000
+        supported = gestalt('qtim') >= 0x08000000
+        
         if not supported and showError:
-            alert = NSAlert.alertWithMessageText_defaultButton_alternateButton_otherButton_informativeTextWithFormat_(
-                "Unsupported version of Quicktime", 
-                "Ok", nil, nil, 
-                "DTV currently requires Quicktime 7 or later to play video.")
-            alert.runModal()
+            alert = NSAlert.alloc().init()
+            alert.setAlertStyle_(NSCriticalAlertStyle)
+            alert.setMessageText_('Unsupported version of Quicktime')
+            alert.setInformativeText_('To run DTV you need the most recent version of Quicktime, which is a free update.')
+            
+            button1 = alert.addButtonWithTitle_('Quit')
+            button1.setTag_(NSAlertFirstButtonReturn)
+            button2 = alert.addButtonWithTitle_('Download Quicktime now')
+            button2.setTag_(NSAlertSecondButtonReturn)
+
+            result = alert.runModal()
+            if result == NSAlertFirstButtonReturn:
+                NSApplication.sharedApplication().terminate_(nil)
+            elif result == NSAlertSecondButtonReturn:
+                url = NSURL.URLWithString_('http://www.apple.com/quicktime/download')
+                NSWorkspace.sharedWorkspace().openURL_(url)
+        
         return supported
 
     @objc.signature('v@:@@')
