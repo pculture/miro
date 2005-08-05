@@ -55,6 +55,8 @@
 		<key>APPDATA</key>
 		<string>~/Library/Application Support/DTV</string>
 	</dict>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.3.9</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright 2005 Participatory Culture Foundation. See license.</string>
 </dict>
