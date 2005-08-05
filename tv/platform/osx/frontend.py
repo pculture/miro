@@ -4,7 +4,11 @@ from gestalt import gestalt
 from Foundation import *
 from AppKit import *
 from WebKit import *
-from QTKit import *
+
+try:
+    from QTKit import *
+except:
+    print "[DTV] QTKit coudln't be imported."
 
 import app
 import feed
@@ -12,7 +16,6 @@ import config
 import resource
 import template
 import database
-#import vlc
 
 import re
 import os
