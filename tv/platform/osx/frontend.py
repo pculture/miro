@@ -1,5 +1,6 @@
 from PyObjCTools import NibClassBuilder, AppHelper
 from objc import YES, NO, nil
+from gestalt import gestalt
 from Foundation import *
 from AppKit import *
 from WebKit import *
@@ -44,6 +45,8 @@ class Application:
         NSBundle.loadNibNamed_owner_("MainMenu", self.appl)
         controller = self.appl.delegate()
         controller.actualApp = self
+        
+        controller.checkQuicktimeVersion(True)
 
         # Force Cocoa into multithreaded mode
         # (NSThread.isMultiThreaded will be true when this call returns)
@@ -94,6 +97,17 @@ class AppController (NSObject):
 
     def application_openFile_(self, app, filename):
         return self.actualApp.addFeedFromFile(filename)
+
+    def checkQuicktimeVersion(self, showError):
+        qtVersion = gestalt('qtim')
+        supported = qtVersion >= 0x07000000
+        if not supported and showError:
+            alert = NSAlert.alertWithMessageText_defaultButton_alternateButton_otherButton_informativeTextWithFormat_(
+                "Unsupported version of Quicktime", 
+                "Ok", nil, nil, 
+                "DTV currently requires Quicktime 7 or later to play video.")
+            alert.runModal()
+        return supported
 
     @objc.signature('v@:@@')
     def openURL_withReplyEvent_(self, event, replyEvent):
