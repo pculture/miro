@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style type="text/css">
+	@import url(resource:css/style.css);
+</style>
+<t:include filename="dynamic.js" />
+
+</head>
+
+<body class="first_time">
+
+<h1>Welcome to Internet Television</h1>
+
+<p>It looks like this is your first time running DTV, so here's a few pointers to get you started:</p>
+
+<p><strong>Explore the Channel Guide.</strong><br /> It's your home base.  Check back often-- new channels are added every day.</p>
+
+<p><strong>Subscribe, Browse, and Watch.</strong><br /> When you subscribe to a channel, it will appear in the channel bar.  Look for videos in each channel's 'Browse' tab and start some downloads.  The 'Watch' tab shows you all the videos you have downloaded from that channel.</p>
+
+<p><strong>Don't wait for your downloads.</strong><br /> On a web page, videos need to be small so that they'll load right away.  But DTV is a different experience.  Publishers can send big, high quality videos to download in the background.  So don't sit around waiting for videos to come in--  pick out some things you like and then check back later.</p>
+
+<p><strong>Auto Download your favorite channels.</strong><br />  If you really like a channel, you can change the channel settings to turn Auto Download on.  This will automatically download new videos as soon as they become available.</p>
+
+<p><strong>Let things go, but save the best.</strong><br />  Like a TiVo, DTV has an 'expiration' system that deletes older videos to make room for new videos.  This helps keep hard disk space available without forcing you to constantly clean up.  However, you can always choose to permanently save a video in your collection by clicking 'don't expire'.</p>
+
+<p><strong>Leave it on.</strong><br /> DTV regularly checks channels for newly available videos and downloads in the background.  Leaving DTV running as much as possible means that that you'll have new things ready to watch when you want to sit back and relax.</p>  
+
+
+
+<h3><a href="">Continue to the Channel Guide >></a></h3>
+
+
+</body>
+</html>
