@@ -35,7 +35,7 @@
 <div id="right_half">
 	<div class="auto_link" i18n:translate="">AUTO DOWNLOAD: <span t:replace="feed autoDownloadStatus"/></div>
 	<a class="settings_link" i18n:translate="" href="template:feed-settings">Change Settings</a>
-	<input type="text" size="20" class="search_field" onfocus="startEditFilter(this,new Array('items'),new Array(''),new Array('global filter items'),new Array(0),new Array('@@@feed getFeedID@@@')" onblur="endEditFilter()"  />
+	<input type="text" size="20" class="search_field" onfocus="startEditFilter(this,new Array('items'),new Array(''),new Array('global filter items'),new Array(0),new Array('@@@feed getFeedID@@@'))" onblur="endEditFilter()"  />
 </div>
 
 	<br style="clear: both; height: 0; padding: 0; margin: 0;" />
