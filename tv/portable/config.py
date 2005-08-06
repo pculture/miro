@@ -34,7 +34,7 @@ def load():
     __lock.acquire()
     __data = platformcfg.load()
     if __data is None:
-        __data == dict()
+        __data = dict()
     __lock.release()
 
 def save():
