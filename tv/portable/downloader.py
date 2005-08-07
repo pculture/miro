@@ -134,7 +134,8 @@ def grabURL(url, type="GET",start = 0, etag=None,modified=None):
             depth += 1
             info = download.msg
             download.close()
-            redirURL = urljoin(redirURL,info['location'])
+            if info.has_key('location'):
+                redirURL = urljoin(redirURL,info['location'])
             if download.status == 301:
                 url = redirURL
             (scheme, host, path, params, query, fragment) = urlparse(redirURL)
