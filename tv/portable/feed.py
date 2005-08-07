@@ -371,6 +371,7 @@ class Feed(DDBObject):
     ##
     # Returns marks expired items as expired
     def expireItems(self):
+        expireTime = datetime.max - datetime.min
         if self.expire == "feed":
             expireTime = self.expireTime
         elif self.expire == "system":
