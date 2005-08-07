@@ -11,6 +11,7 @@ import scheduler
 import downloader
 import autoupdate
 import xhtmltools
+import guide
 
 import re
 import sys
@@ -61,6 +62,18 @@ class Controller (frontend.Application):
             print "DTV: Recomputing filters..."
             db.recomputeFilters()
 
+            # If there's no Channel Guide in the database, create one
+            # and some test feeds
+            hasGuide = False
+            for obj in db.objects:
+                if obj[0].__class__.__name__ == 'ChannelGuide':
+                    hasGuide = True
+                    channelGuide = obj[0]
+                    break
+            if not hasGuide:
+                print "Spawning Channel Guide..."
+                channelGuide = guide.ChannelGuide()
+
             # Define variables for templates
             # NEEDS: reorganize this, and update templates
             globalData = {
@@ -68,6 +81,7 @@ class Controller (frontend.Application):
                 'filter': globalFilterList,
                 'sort': globalSortList,
                 'view': globalViewList,
+                'guide': channelGuide,
                 }
             tabPaneData = {
                 'global': globalData,
@@ -86,18 +100,6 @@ class Controller (frontend.Application):
             # selected
             self.tabs.resetCursor()
             self.tabs.getNext()
-
-            # If there are no feeds in the database, create a test feed
-            hasFeed = False
-            for obj in db.objects:
-                if obj[0].__class__.__name__ == 'RSSFeed':
-                    hasFeed = True
-                    break
-            #if not hasFeed:
-                #print "Spawning first feed..."
-                #f = feed.RSSFeed("http://blogtorrent.com/demo/rss.php")
-                #fold = folder.Folder('Test folder')
-                #fold.addFeed(f)
 
             # If we're missing the file system videos feed, create it
             hasDirFeed = False
