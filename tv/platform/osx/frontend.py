@@ -228,7 +228,7 @@ class DisplayHostView (NibClassBuilder.AutoBaseClass):
         # (doesn't actually work all that well, sadly -- possibly what
         # we want to do is wait until notification comes from the new
         # view that it's been fully loaded to even show it)
-        if oldView:
+        if oldView and (not (oldView is self.hostedView)):
             oldView.removeFromSuperview()
 
         # Send notification to new display
@@ -1079,12 +1079,15 @@ class NullDisplay (Display):
 #### Right-hand pane HTML display                                          ####
 ###############################################################################
 
+
 class HTMLDisplay (Display):
     "HTML browser that can be shown in a MainFrame's right-hand pane."
 
+    sharedWebView = None
+
     # We don't need to override onSelected, onDeselected
 
-    def __init__(self, html, frameHint=None, areaHint=None):
+    def __init__(self, html, existingView=None, frameHint=None, areaHint=None):
         """'html' is the initial contents of the display, as a string. If
         frameHint is provided, it is used to guess the initial size the HTML
         display will be rendered at, which might reduce flicker when the
@@ -1092,7 +1095,14 @@ class HTMLDisplay (Display):
         pool = NSAutoreleasePool.alloc().init()
         self.readyToDisplayHook = None
         self.readyToDisplay = False
-        self.web = ManagedWebView.alloc().init(html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(x), frameHint and areaHint and frameHint.getDisplaySizeHint(areaHint) or None)
+
+	if existingView == "sharedView":
+	    if not HTMLDisplay.sharedWebView:
+		HTMLDisplay.sharedWebView = WebView.alloc().init()
+		print "Creating sharedWebView: %s" % HTMLDisplay.sharedWebView
+	    existingView = HTMLDisplay.sharedWebView
+
+        self.web = ManagedWebView.alloc().init(html, existingView or nil, self.nowReadyToDisplay, lambda x:self.onURLLoad(x), frameHint and areaHint and frameHint.getDisplaySizeHint(areaHint) or None)
         Display.__init__(self)
         del pool
 
@@ -1154,6 +1164,7 @@ class ManagedWebView (NSObject):
         self.view = existingView
         if not self.view:
             self.view = WebView.alloc().init()
+	    print "***** Creating new WebView %s" % self.view
             if sizeHint:
                 # We have an estimate of the size that will be assigned to
                 # the view when it is actually inserted in the MainFrame.
@@ -1162,6 +1173,10 @@ class ManagedWebView (NSObject):
                 # of having to be corrected after being displayed.
                 self.view.setFrame_(sizeHint)
             self.view.setCustomUserAgent_("DTV/pre-release (http://participatoryculture.org/)")
+	else:
+	    print "***** Using existing WebView %s" % self.view
+            if sizeHint:
+		self.view.setFrame_(sizeHint)
         self.jsQueue = []
         self.view.setPolicyDelegate_(self)
         self.view.setResourceLoadDelegate_(self)
