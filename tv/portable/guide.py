@@ -6,7 +6,7 @@ from copy import copy
 
 class ChannelGuide(DDBObject):
     def __init__(self):
-        self.html = '<h1>Welcome to DTV</h1><p>blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah</p>'
+        self.html = "<script type=\"text/javascript\">\neventURL('template:first-time-intro');\n</script>"
         self.viewed = False
         ScheduleEvent(3600,self.update,True)
         DDBObject.__init__(self)
