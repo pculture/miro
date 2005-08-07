@@ -9,7 +9,7 @@
 	@import url(resource:css/style.css);
 </style>
 <t:include filename="dynamic.js" />
-
+<t:include filename="settings.js" />
 </head>
 
 <body>
@@ -83,8 +83,8 @@
 
 <div class="settings_auto_mode">
  
-<h2 i18n:translate=""><input name="automatic" type="checkbox" t:hideIfNotKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" onClick="javascript:form.submit()" value="1" checked="checked" />
- <input name="automatic" type="checkbox" t:hideIfKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" onClick="javascript:form.submit()" value="1"/>
+<h2 i18n:translate=""><input name="automatic" type="checkbox" t:hideIfNotKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" onClick="javascript:settingsFormSubmit()" value="1" checked="checked" />
+ <input name="automatic" type="checkbox" t:hideIfKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" onClick="javascript:settingsFormSubmit()" value="1"/>
 Auto Download</h2>
   <span class="heading_desc" i18n:translate="">&nbsp;&nbsp;&nbsp;Automatically download videos from this channel as they become available.</span>
 </div>
@@ -98,14 +98,14 @@ Auto Download</h2>
 
 <div class="settings">
  <div i18n:translate="">
-    <input type="checkbox" name="getEverything" value="1" onClick="javascript:form.submit()" t:hideIfKey="feed getEverything" t:hideFunctionKey="global filter boolean"/> Never have more than <input i18n:name="maxnew" type="text" size="8" name="maxnew" value="@@@feed getMaxNew@@@" onFocus="javascript:if (document.settings['maxnew'].value == 'unlimited') document.settings['maxnew'].value = '';" onBlur="javascript:if (document.settings['maxnew'].value == '') document.settings['maxnew'].value = 'unlimited';form.submit()"  /> new videos at a time from this channel. If this channel is hogging disk space, you may want to reduce this number.
+    <input type="checkbox" name="hasMaxnew" value="1" onClick="javascript:settingsFormSubmit()" /> Never have more than <input i18n:name="maxnew" type="text" size="8" name="maxnew" value="@@@feed getMaxNew@@@" onFocus="javascript:if (document.settings['maxnew'].value == 'unlimited') document.settings['maxnew'].value = '';" onBlur="javascript:if (document.settings['maxnew'].value == '') document.settings['maxnew'].value = 'unlimited';settingsFormSubmit()"  /> new videos at a time from this channel. If this channel is hogging disk space, you may want to reduce this number.
  </div>
  <div i18n:translate="">
-     <input type="checkbox" name="getEverything" value="1" onClick="javascript:form.submit()" t:hideIfKey="feed getEverything" t:hideFunctionKey="global filter boolean"/> If DTV falls behind this channel by more than <input i18n:name="fallbehind" name="fallbehind" type="text" size="8" value="@@@feed getMaxFallBehind@@@" onFocus="javascript:if (document.settings['fallbehind'].value == 'unlimited') document.settings['fallbehind'].value = '';" onBlur="javascript:if (document.settings['fallbehind'].value == '') document.settings['fallbehind'].value = 'unlimited';form.submit()" /> videos, skip some to catch up.
+     <input type="checkbox" name="hasFallbehind" value="1" onClick="javascript:settingsFormSubmit()" /> If DTV falls behind this channel by more than <input i18n:name="fallbehind" name="fallbehind" type="text" size="8" value="@@@feed getMaxFallBehind@@@" onFocus="javascript:if (document.settings['fallbehind'].value == 'unlimited') document.settings['fallbehind'].value = '';" onBlur="javascript:if (document.settings['fallbehind'].value == '') document.settings['fallbehind'].value = 'unlimited';settingsFormSubmit()" /> videos, skip some to catch up.
  </div>
  <div>
-  <input type="checkbox" name="getEverything" value="1" onClick="javascript:form.submit()" t:hideIfKey="feed getEverything" t:hideFunctionKey="global filter boolean"/>
-  <input type="checkbox" name="getEverything" value="1" onClick="javascript:form.submit()" t:hideIfNotKey="feed getEverything" t:hideFunctionKey="global filter boolean" checked="checked"/>
+  <input type="checkbox" name="getEverything" value="0" onClick="javascript:settingsFormSubmit()" t:hideIfKey="feed getEverything" t:hideFunctionKey="global filter boolean"/>
+  <input type="checkbox" name="getEverything" value="1" onClick="javascript:settingsFormSubmit()" t:hideIfNotKey="feed getEverything" t:hideFunctionKey="global filter boolean" checked="checked"/>
   <span i18n:translate="">Get everything that's available on this channel, even older items.</span>
  </div>
 </div>
@@ -123,23 +123,23 @@ Auto Download</h2>
 <div class="settings">
 
  <div>
-  <input type="radio" name="expire" value="system" checked="checked"  onClick="javascript:form.submit()"  t:hideIfNotKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="system"/>
-  <input type="radio" name="expire" value="system" onClick="javascript:form.submit()"  t:hideIfKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="system"/>
+  <input type="radio" name="expire" value="system" checked="checked"  onClick="javascript:settingsFormSubmit()"  t:hideIfNotKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="system"/>
+  <input type="radio" name="expire" value="system" onClick="javascript:settingsFormSubmit()"  t:hideIfKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="system"/>
   <span i18n:translate="">Use the system default (6 days).</span>
  </div>
 
 
 
  <div>
-  <input type="radio" name="expire" value="feed"  onClick="javascript:form.submit()"  t:hideIfNotKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="feed" checked="checked"/>
-  <input type="radio" name="expire" value="feed"  onClick="javascript:form.submit()"  t:hideIfKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="feed"/>
-  <span i18n:translate="">Videos in this channel expire in <input i18n:name="days" type="text" size="3" value="@@@feed getExpireDays@@@" name="expireDays" onBlur="javascript:form.submit()" /> days and <input  i18n:name="hours" type="text" size="3" value="@@@feed getExpireHours@@@" name="expireHours" onBlur="javascript:form.submit()"/> hours after I watch them.</span>
+  <input type="radio" name="expire" value="feed"  onClick="javascript:settingsFormSubmit()"  t:hideIfNotKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="feed" checked="checked"/>
+  <input type="radio" name="expire" value="feed"  onClick="javascript:settingsFormSubmit()"  t:hideIfKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="feed"/>
+  <span i18n:translate="">Videos in this channel expire in <input i18n:name="days" type="text" size="3" value="@@@feed getExpireDays@@@" name="expireDays" onBlur="javascript:settingsFormSubmit()" /> days and <input  i18n:name="hours" type="text" size="3" value="@@@feed getExpireHours@@@" name="expireHours" onBlur="javascript:settingsFormSubmit()"/> hours after I watch them.</span>
  </div>
  
 
  <div>
-  <input type="radio" name="expire" value="never" onClick="javascript:form.submit()"  t:hideIfNotKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="never" checked="checked"/>
-  <input type="radio" name="expire" value="never" onClick="javascript:form.submit()"  t:hideIfKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="never"/>
+  <input type="radio" name="expire" value="never" onClick="javascript:settingsFormSubmit()"  t:hideIfNotKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="never" checked="checked"/>
+  <input type="radio" name="expire" value="never" onClick="javascript:settingsFormSubmit()"  t:hideIfKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="never"/>
   <span i18n:translate="">Videos in this channel never expire (they are automatically saved).<br /><span class="warning" i18n:translate="">WARNING: Not recommended for most channels-- can use up disk space very quickly.</span></span>
  </div>
  
