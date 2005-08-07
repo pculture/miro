@@ -90,7 +90,7 @@ class Controller (frontend.Application):
             # Set up tab list
             reloadStaticTabs()
             mapFunc = makeMapToTabFunction(globalData, self)
-            self.tabs = db.filter(mappableToTab).map(mapFunc)
+            self.tabs = db.filter(mappableToTab).map(mapFunc).sort(sortTabs)
 
             self.currentSelectedTab = None
             self.tabListActive = True
