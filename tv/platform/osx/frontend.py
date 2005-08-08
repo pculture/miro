@@ -1099,6 +1099,7 @@ class HTMLDisplay (Display):
 	if existingView == "sharedView":
 	    if not HTMLDisplay.sharedWebView:
 		HTMLDisplay.sharedWebView = WebView.alloc().init()
+                HTMLDisplay.sharedWebView.setCustomUserAgent_("DTV/pre-release (http://participatoryculture.org/)")
 		print "Creating sharedWebView: %s" % HTMLDisplay.sharedWebView
 	    existingView = HTMLDisplay.sharedWebView
 
