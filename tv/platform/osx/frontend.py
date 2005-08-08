@@ -8,7 +8,7 @@ from WebKit import *
 try:
     from QTKit import *
 except:
-    print "[DTV] QTKit coudln't be imported."
+    print "[DTV] QTKit coudln't be imported. Please upgrade to Quicktime 7 or later. You can update at http://apple.com/quicktime/ or by running Software Update."
 
 import app
 import feed
