@@ -1097,14 +1097,15 @@ class HTMLDisplay (Display):
         self.readyToDisplayHook = None
         self.readyToDisplay = False
 
-	if existingView == "sharedView":
-	    if not HTMLDisplay.sharedWebView:
-		HTMLDisplay.sharedWebView = WebView.alloc().init()
-                HTMLDisplay.sharedWebView.setCustomUserAgent_("DTV/pre-release (http://participatoryculture.org/)")
-		print "Creating sharedWebView: %s" % HTMLDisplay.sharedWebView
-	    existingView = HTMLDisplay.sharedWebView
+# 	if existingView == "sharedView":
+# 	    if not HTMLDisplay.sharedWebView:
+# 		HTMLDisplay.sharedWebView = WebView.alloc().init()
+#                 HTMLDisplay.sharedWebView.setCustomUserAgent_("DTV/pre-release (http://participatoryculture.org/)")
+# 		print "Creating sharedWebView: %s" % HTMLDisplay.sharedWebView
+# 	    existingView = HTMLDisplay.sharedWebView
 
-        self.web = ManagedWebView.alloc().init(html, existingView or nil, self.nowReadyToDisplay, lambda x:self.onURLLoad(x), frameHint and areaHint and frameHint.getDisplaySizeHint(areaHint) or None)
+        self.web = ManagedWebView.alloc().init(html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(x), frameHint and areaHint and frameHint.getDisplaySizeHint(areaHint) or None)
+
         Display.__init__(self)
         del pool
 
