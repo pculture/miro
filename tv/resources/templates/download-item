@@ -27,7 +27,7 @@
   </div>
   
   <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="downloading" class="progress_box dling">
-    <div class="bar_holder"><img src="resource:images/statusbar/@@@this threeDigitPercentDone@@@.png"/></div><a class="cancel_button" href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/cancel_button.png" /></a><span class="est_time" t:replace="this downloadETA" />
+    <div class="bar_holder"><img src="resource:images/status.png" width="@@@this threeDigitPercentDone@@@" height="20" /></div><a class="cancel_button" href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/cancel_button.png" /></a><span class="est_time" t:replace="this downloadETA" />
   </div> 
 
 
@@ -41,30 +41,30 @@
 
   <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="finished" class="right_box">
     <a href="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
-    <span class="report_expire">Unwatched</span><br />
-    <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> <a href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/delete_file.png" alt="delete file button" /></a>
+    <span class="report_expire">unwatched</span><br />
+    <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a> <!-- <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> -->
   </div>
 
 
 
   <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="uploading" class="right_box">
     <a href="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
-    <span class="report_expire">Unwatched</span><br />
-    <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> <a href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/delete_file.png" alt="delete file button" /></a>
+    <span class="report_expire">unwatched</span><br />
+    <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a> <!-- <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> -->
   </div>
   
   
   <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="watched" class="right_box">    
     <a href="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
-    <span class="report_expire">Expires in <span t:replace="this getExpirationTime"/></span><br />
-    <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> <a href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/delete_file.png" alt="delete file button" /></a>
+    <span class="report_expire">Expires: <span t:replace="this getExpirationTime"/></span>  <a href="action:keepItem?item=@@@this getID@@@">keep</a> <br />
+    <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a>  
   </div>
 
 
   <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="saved" class="right_box">  
     <a href="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
-    <span class="report_expire">Expires in <span t:replace="this getExpirationTime"/></span><br />
-    <a href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/delete_file.png" alt="delete file button" /></a>
+    <span class="report_expire">Expires: <span t:replace="this getExpirationTime"/></span><br />
+    <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a>
   	
   </div>
   
@@ -87,7 +87,7 @@
   <div class="desc" >
     <div class="video_title" t:replace="this getTitle" />
     <div class="short_description" t:replaceMarkup="this getDescription"/> 
-    <div class="file_size"><span t:replace="this getReleaseDate" />  <span t:replace="this getDuration" /> <span t:replace="this getTotalSize" /><!-- <a class="more_link"><img src="resource:images/more.png" /></a><a class="add_link"><img src="resource:images/add.png" /></a> --></div>
+    <div class="file_size"><span t:replace="this getReleaseDate" />  <span t:replace="this getDuration" /> <span t:replace="this getTotalSize" /><a class="more_link"><img src="resource:images/more.png" /></a><a class="add_link"><img src="resource:images/add.png" /></a></div>
   </div>
 
 

@@ -186,14 +186,12 @@ a.feeditem:hover{
 	}
 
 #sidebar a.selected_feeditem {
-	background: #eee url(resource:images/selectedback.png) 0% 0% repeat-x; 
-	background: #eee url(resource:images/active_channel_bg.png) 0% 0% repeat-x; 
-
+	background: #888 url(resource:images/channel_bg.png) 0% 0% repeat-x; 
 	color: #fff;
 	}
 
 #sidebar a.selected_feeditem_inactive {
-	background: #eee url(resource:images/inactive_channel_bg.png) 0% 0% repeat-x; 
+	background: #888 url(resource:images/channel_bg.png) 0px -30px repeat-x; 
 	color: #fff;
 	}
 
@@ -384,7 +382,7 @@ watch, choose...
 	
 	
 .no_new {
-	padding: 20px 10px 10px 10px;
+	padding: 20px 20px 30px 10px;
 	color: #990000;
 	text-align: center;
 	font-size: 15px;
@@ -418,11 +416,11 @@ Where the videos show up
 
 
 #main_window ul li {
-	border-bottom: 5px solid #eee;
+	border-bottom: 4px solid #eee;
 	background: url(resource:images/video_back.png) bottom left repeat-x;
 	display: block;
 	clear: both;
-	padding: 7px 0 3px 0;
+	padding: 7px 0 4px 0;
 	list-style: none;
 	height: 76px;
 	}
@@ -448,12 +446,12 @@ Where the videos show up
 	display: block;
 	clear: both;
 	padding: 0px;
-	height: 14px;
+	height: 12px;
 	font-size: 10px;
 	padding-left: 6px;
-	padding-top: 2px;
-	background-color: #FFFEC1;
-	color: #444;
+	padding-top: 0px;
+	background: #ddd;
+	color: #fff;
 	text-shadow: 0px 1px 0px #ddd;
 	font-weight: normal;
 	}
@@ -560,6 +558,29 @@ messages
 	}
 
 
+.right_box img {
+	vertical-align: bottom;
+}
+
+.delete_button {
+	display: block; 
+	float: right;
+	width: 14px;
+	height: 14px;
+	background: url(resource:images/delete_file.png) 0px 0px no-repeat;
+	margin-left: 3px;
+}
+
+.delete_button:hover {
+	display: block; 
+	float: right;
+	width: 14px;
+	height: 14px;
+	background: url(resource:images/delete_file.png) 0px -16px no-repeat;
+}
+
+
+
 .report_expire{
 	font-size: 10px;
 	background: url(resource:images/icons/calendar.png) 0 2px no-repeat;
@@ -600,9 +621,10 @@ Progress Bar
 
 
 .bar_holder{
-	width: 102px;
+	width: 100px;
 	height: 20px;
-	background: url(resource:images/0.png) top left no-repeat;
+	padding: 0 1px 0 1px;
+	background: url(resource:images/status_background.png) top left no-repeat;
 	}
 
 .progress_box{
