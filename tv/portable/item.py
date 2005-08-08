@@ -137,9 +137,11 @@ class Item(DDBObject):
     ##
     # Marks the item as seen
     def markItemSeen(self):
-        self.beginRead()
-        self.seen = True
-        self.endRead()
+        self.beginChange()
+        try:
+            self.seen = True
+        finally:
+            self.endChange()
 
     ##
     # Returns a list of downloaders associated with this object
