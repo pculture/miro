@@ -87,7 +87,7 @@
   <div class="desc" >
     <div class="video_title" t:replace="this getTitle" />
     <div class="short_description" t:replaceMarkup="this getDescription"/> 
-    <div class="file_size"><span t:replace="this getReleaseDate" />  <span t:replace="this getDuration" /> <span t:replace="this getTotalSize" /><a class="more_link"><img src="resource:images/more.png" /></a><a class="add_link"><img src="resource:images/add.png" /></a></div>
+    <div class="file_size"><span t:replace="this getReleaseDate" />  <span t:replace="this getDuration" /> <span t:replace="this getTotalSize" /><!--<a class="more_link"><img src="resource:images/more.png" /></a><a class="add_link"><img src="resource:images/add.png" /></a>--></div>
   </div>
 
 
