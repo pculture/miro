@@ -1011,16 +1011,23 @@ def oldItems(obj, param):
     params = param.split('|',1)
     
     old = (str(obj.feed.getID()) == params[0] and 
-           ((obj.getState() == 'finished' or
-             obj.getState() == 'uploading' or
-             obj.getState() == 'watched')) and 
-           (obj.getDownloadedTime()+datetime.timedelta(days=config.get(config.EXPIRE_AFTER_X_DAYS)) <=
-            datetime.datetime.now()))
+           obj.getState() == 'saved')
     if len(params) > 1:
         old = (old and 
                (str(params[1]).lower() in obj.getTitle().lower() or
                 str(params[1]).lower() in obj.getDescription().lower()))
     return old
+
+def watchableItems(obj, param):
+    params = param.split('|',1)
+    
+    params = param.split('|',1)
+    
+    return (str(obj.feed.getID()) == params[0] and 
+            ((obj.getState() == 'finished' or
+              obj.getState() == 'uploading' or
+              obj.getState() == 'watched' or
+              obj.getState() == 'saved')))
     
 def allRecentItems(obj, param):
     params = param.split('|',1)
@@ -1054,6 +1061,7 @@ globalFilterList = {
     'recentItems': recentItems,
     'allRecentItems': allRecentItems,
     'oldItems': oldItems,
+    'watchableItems': watchableItems,
     'downloadedItems': downloadedItems,
     'unDownloadedItems':  undownloadedItems,
     'allDownloadingItems': allDownloadingItems                         ,
