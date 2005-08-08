@@ -1202,10 +1202,11 @@ class _FeedParserMixin:
 	self.contentparams['type'] = 'application/xhtml+xml'
 	self.push('dtv:paymentlink',1)
 	if self.inentry:
-	    if self.inenclosure:
-		self.entries[-1]['enclosures'][-1]['payment_url'] = attrsD['url']
-	    else:
-		self.entries[-1]['payment_url'] = attrsD['url']
+            if attrsD.has_key('url'):
+                if self.inenclosure:
+                    self.entries[-1]['enclosures'][-1]['payment_url'] = attrsD['url']
+                else:
+                    self.entries[-1]['payment_url'] = attrsD['url']
 
     def _end_dtv_paymentlink(self):
 	value = _sanitizeHTML(self.pop('dtv:paymentlink'),self.encoding)
