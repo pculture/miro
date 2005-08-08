@@ -207,6 +207,10 @@ class Feed(DDBObject):
         # a better way to trigger change events on the UniversalFeed
         DDBObject.__init__(self)
 
+    # Returns true iff this feed has been looked at
+    def getViewed(self):
+        return self.lastViewed != datetime.min
+
     # Returns the ID of the actual feed, never that of the UniversalFeed wrapper
     def getFeedID(self):
         return self.getID()
