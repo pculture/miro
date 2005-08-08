@@ -119,6 +119,11 @@ class Controller (frontend.Application):
             if not hasGuide:
                 print "Spawning Channel Guide..."
                 channelGuide = guide.ChannelGuide()
+                feed.UniversalFeed('http://www.mediarights.org/bm/rss.php?i=1')
+                feed.UniversalFeed('http://mediamatters.org/tools/syndication/latest.rss')
+                feed.UniversalFeed('http://www.rocketboom.com/vlog/quicktime_daily_enclosures.xml')
+                feed.UniversalFeed('http://some-pig.net/videos/rss.php?i=2')
+                feed.UniversalFeed('http://telemusicvision.com/televideos/rss.php?i=3&PHPSESSID=8cfef59e42367759c212d1de5b204f06')
 
             # Define variables for templates
             # NEEDS: reorganize this, and update templates
