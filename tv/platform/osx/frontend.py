@@ -19,6 +19,7 @@ import database
 
 import re
 import os
+import tempfile
 import sys
 import objc
 import time
@@ -1183,7 +1184,13 @@ class ManagedWebView (NSObject):
         self.view.setResourceLoadDelegate_(self)
         self.view.setFrameLoadDelegate_(self)
         self.view.setUIDelegate_(self)
-        self.view.mainFrame().loadHTMLString_baseURL_(initialHTML, nil)
+
+        (handle, location) = tempfile.mkstemp('.html')
+        handle = os.fdopen(handle,"w")
+        handle.write(initialHTML)
+        handle.close()
+        print "DTV: loading temp file %s" % location
+        self.view.mainFrame().loadRequest_(NSURLRequest.requestWithURL_(NSURL.URLWithString_("file://%s" % location)))
         return self
 
     ##
