@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from database import DDBObject, defaultDatabase
 from downloader import DownloaderFactory
 from copy import copy
@@ -99,7 +99,7 @@ class Item(DDBObject):
                 if self.feed.expire == "feed":
                     expireTime = self.feed.expireTime
                 elif self.feed.expire == "system":
-                    expireTime = datetime.timedelta(days=config.get(config.EXPIRE_AFTER_X_DAYS))
+                    expireTime = timedelta(days=config.get(config.EXPIRE_AFTER_X_DAYS))
                 
                     exp = expireTime - (datetime.now() - self.getDownloadedTime())
                     if exp.days > 0:
