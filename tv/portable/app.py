@@ -4,7 +4,6 @@ import config
 import folder
 import autodler
 import resource
-import frontend
 import template
 import database
 import scheduler
@@ -30,6 +29,53 @@ from xml.dom.minidom import parse, parseString
 import templatehelper
 
 db = database.defaultDatabase
+
+###############################################################################
+#### Provides cross platform part of Video Display                         ####
+####                                                                       ####
+#### This must be defined before we import the frontend                    ####
+###############################################################################
+class VideoDisplayDB:
+    def __init__(self, firstItemId, origView):
+        self.origView = origView
+
+        #FIXME: These views need to be released
+        self.subView = self.origView.filter(mappableToPlaylistItem)
+        self.view = self.subView.map(mapToPlaylistItem)
+
+        # Move the cursor to the requested item; if there's no
+        # such item in the view, move the cursor to the first
+        # item
+        self.view.beginRead()
+        try:
+            self.view.resetCursor()
+            while True:
+                cur = self.view.getNext()
+                if cur == None:
+                    # Item not found in view. Put cursor at the first
+                    # item, if any.
+                    self.view.resetCursor()
+                    self.view.getNext()
+                    break
+                if str(cur.getID()) == firstItemId:
+                    # The cursor is now on the requested item.
+                    break
+        finally:
+            self.view.endRead()
+
+    def cur(self):
+        item = self.view.cur()
+        if item is not None:
+            item.onViewed()
+        return item
+
+    def getNext(self):
+        item = self.view.getNext()
+        if item is not None:
+            item.onViewed()
+        return item
+
+import frontend
 
 def main():
     Controller().Run()
@@ -643,33 +689,7 @@ class TemplateActionHandler:
         namedView = self.templateHandle.findNamedView(viewName)
         view = namedView.getView()
 
-        #FIXME: These views need to be released
-        view = view.filter(mappableToPlaylistItem)
-        view = view.map(mapToPlaylistItem)
-
-        # Move the cursor to the requested item; if there's no
-        # such item in the view, move the cursor to the first
-        # item
-        db.beginRead()
-        try:
-            view.resetCursor()
-            while True:
-                cur = view.getNext()
-                if cur == None:
-                    # Item not found in view. Put cursor at the first
-                    # item, if any.
-                    view.resetCursor()
-                    view.getNext()
-                    break
-                if str(cur.getID()) == firstItemId:
-                    # The cursor is now on the requested item.
-                    break
-        finally:
-            db.endRead()
-
-        # Construct playback display and switch to it, arranging
-        # to switch back to ourself when playback mode is exited
-        self.controller.frame.selectDisplay(frontend.VideoDisplay(view, self.display), self.controller.frame.mainDisplay)
+        self.controller.frame.selectDisplay(frontend.VideoDisplay(firstItemId, view, self.display), self.controller.frame.mainDisplay)
 
 # Helper: liberally interpret the provided string as a boolean
 def stringToBoolean(string):
@@ -826,10 +846,9 @@ def sortTabs(x, y):
 def mappableToPlaylistItem(obj):
     if not isinstance(obj, item.Item):
         return False
-    # NEEDS: check to see if the download has finished in a cleaner way
-    if obj.getState() != "finished":
-        return False
-    return True
+
+    return (obj.getState() == "finished" or obj.getState() == "uploading" or
+            obj.getState() == "watched" or obj.getState() == "saved")
 
 class PlaylistItemFromItem (frontend.PlaylistItem):
 
@@ -837,8 +856,7 @@ class PlaylistItemFromItem (frontend.PlaylistItem):
         self.item = item
 
     def getTitle(self):
-        # NEEDS
-        return "Title here"
+        return item.getTitle()
 
     def getPath(self):
         return self.item.getFilename()
@@ -848,9 +866,7 @@ class PlaylistItemFromItem (frontend.PlaylistItem):
         return 42.42
 
     def onViewed(self):
-        # NEEDS: I have no idea if this is right.
-        #self.item.markItemSeen()
-        None
+        self.item.markItemSeen()
 
     # Return the ID that is used by a template to indicate this item 
     def getID(self):

@@ -1288,29 +1288,29 @@ class ManagedWebView (NSObject):
 #### Right-hand pane video display                                         ####
 ###############################################################################
 
-class VideoDisplay (Display):
+class VideoDisplay (Display,app.VideoDisplayDB):
     "Video player that can be shown in a MainFrame's right-hand pane."
 
     controller = nil
 
-    def __init__(self, view, previousDisplay):
+    def __init__(self, firstItemId, view, previousDisplay):
+        app.VideoDisplayDB.__init__(self, firstItemId, view)
         Display.__init__(self)
-        self.playlist = view
-        self.controller.previousDisplay = previousDisplay
+        VideoDisplay.controller.previousDisplay = previousDisplay
 
     def onSelected(self, frame):
-        self.controller.frame = frame
-        self.controller.enableControls(YES)
-        self.controller.setPlaylist(self.playlist)
-        self.controller.play_(nil)
+        VideoDisplay.controller.frame = frame
+        VideoDisplay.controller.enableControls(YES)
+        VideoDisplay.controller.setPlaylist(self)
+        VideoDisplay.controller.play_(nil)
 
     def onDeselected(self, frame):
-        self.controller.pause_(nil)
-        self.controller.enableControls(False)
-        self.controller.reset()
+        VideoDisplay.controller.pause_(nil)
+        VideoDisplay.controller.enableControls(False)
+        VideoDisplay.controller.reset()
 
     def getView(self):
-        return self.controller.rootView
+        return VideoDisplay.controller.rootView
 
 
 class VideoDisplayController (NibClassBuilder.AutoBaseClass):
@@ -1332,7 +1332,8 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
     def setPlaylist(self, playlist):
         self.playlist = playlist
-        self.selectPlaylistItem(self.playlist.cur())
+        item = self.playlist.cur()
+        self.selectPlaylistItem(item)
 
     def selectPlaylistItem(self, item):
         pathname = item.getPath()
