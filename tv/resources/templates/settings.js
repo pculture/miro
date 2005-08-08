@@ -1,7 +1,7 @@
 <script type="text/javascript">
 <!-- // Protect from our XML parser, which doesn't know to protect <script>
 function settingsFormSubmit() {
-     url = 'action:changeFeedSettings?';
+     var url = 'action:changeFeedSettings?';
      url += 'feed='+document.forms['settings']['feed'].value;
      url += '&automatic='+document.forms['settings']['automatic'].value;
      url += '&getEverything='+document.forms['settings']['getEverything'].value;
