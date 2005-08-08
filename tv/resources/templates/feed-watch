@@ -19,6 +19,10 @@
   <t:filter functionkey="global filter oldItems" parameter="@@@feed getFeedID@@@" />
   <t:sort functionkey="global sort item" parameter="" />
  </t:view>
+ <t:view name="watchable" key="global view items">
+  <t:filter functionkey="global filter watchableItems" parameter="@@@feed getFeedID@@@" />
+  <t:sort functionkey="global sort item" parameter="" />
+ </t:view>
 </t:dynamicviews>
 
 </head>
@@ -75,7 +79,7 @@
   
     <ul> 
 
-<div class="no_new" t:hideIfViewNotEmpty="newitems" i18n:translate=""><a href="template:feed-choose">See what's on this channel by clicking 'Browse'</a></div>        
+<div class="no_new" t:hideIfViewNotEmpty="watchable" i18n:translate=""><a href="template:feed-choose">See what's on this channel by clicking 'Browse'</a></div>        
 
 <li t:contextMenu="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@|Play" t:repeatForView="newitems">
         <t:includeTemplate filename="download-item" />
