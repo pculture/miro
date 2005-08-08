@@ -366,6 +366,8 @@ class TemplateDisplay(frontend.HTMLDisplay):
             # Let channel guide URLs pass through
             if url.startswith('http://clients.tekritisoftware.com/pcf/channelguide'):
                 return True
+            if url.startswith('file://'):
+                return True
 
             # If we get here, this isn't a DTV URL. We should open it
             # in an external browser.
