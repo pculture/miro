@@ -104,8 +104,8 @@ Auto Download</h2>
      <input type="checkbox" name="hasFallbehind" value="1" onClick="javascript:settingsFormSubmit()" /> If DTV falls behind this channel by more than <input i18n:name="fallbehind" name="fallbehind" type="text" size="8" value="@@@feed getMaxFallBehind@@@" onFocus="javascript:if (document.settings['fallbehind'].value == 'unlimited') document.settings['fallbehind'].value = '';" onBlur="javascript:if (document.settings['fallbehind'].value == '') document.settings['fallbehind'].value = 'unlimited';settingsFormSubmit()" /> videos, skip some to catch up.
  </div>
  <div>
-  <input type="checkbox" name="getEverything" value="0" onClick="javascript:settingsFormSubmit()" t:hideIfKey="feed getEverything" t:hideFunctionKey="global filter boolean"/>
-  <input type="checkbox" name="getEverything" value="1" onClick="javascript:settingsFormSubmit()" t:hideIfNotKey="feed getEverything" t:hideFunctionKey="global filter boolean" checked="checked"/>
+  <input type="checkbox" name="getEverything" value="1" onclick="javascript:settingsFormSubmit()" t:hideIfKey="feed getEverything" t:hideFunctionKey="global filter boolean" />
+  <input type="checkbox" name="getEverything" value="1" onclick="javascript:settingsFormSubmit()" t:hideIfNotKey="feed getEverything" t:hideFunctionKey="global filter boolean" checked="checked"/>
   <span i18n:translate="">Get everything that's available on this channel, even older items.</span>
  </div>
 </div>
