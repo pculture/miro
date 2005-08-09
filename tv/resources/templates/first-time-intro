@@ -16,7 +16,7 @@
 
 <h1>Welcome to Internet Television</h1>
 
-<p>It looks like this is your first time running DTV, so here's a few pointers to get you started:</p>
+<p style="padding-top: 10px;">It looks like this is your first time running DTV, so here's a few pointers to get you started:</p>
 
 <p><strong>Explore the Channel Guide.</strong><br /> It's your home base.  Check back often-- new channels are added every day.</p>
 
@@ -32,7 +32,7 @@
 
 
 
-<h3><a href="template:guide">Continue to the Channel Guide >></a></h3>
+<h3><a href="template:first-time-intro-two">Continue >></a></h3>
 
 
 </body>

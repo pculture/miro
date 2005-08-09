@@ -15,7 +15,7 @@
 
 <span t:hideIfKey="feed hasError" t:hideFunctionKey="global filter boolean">
 <script type="text/javascript">
-<t:triggerActionOnLoad url="template:feed-choose" />
+<t:triggerActionOnLoad url="template:feed-watch" />
 </script>
 </span>
 <span t:hideIfNotKey="feed hasError" t:hideFunctionKey="global filter boolean">

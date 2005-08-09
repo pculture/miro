@@ -1222,7 +1222,7 @@ First Time Intro
 
 
 .first_time {
-padding: 25px;
+padding: 10px 20px 10px 20px;
 background-color: #FFF;
 color: #000;
 font-size: 12px;
@@ -1230,13 +1230,20 @@ width: auto;
 }
 
 .first_time h1 {
-padding: 0;
+padding-top: 10px;
 margin: 0;
-font-size: 22px;
+font-size: 20px;
 color: #00487D;
 }
 
 .first_time h3 {
 font-size: 15px;
 font-weight: bold;
+margin: 0;
+padding: 2px 0 6px 0;
+}
+
+.first_time p {
+margin: 0;
+padding: 0 0 12px 0;
 }

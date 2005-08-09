@@ -28,11 +28,11 @@
 <div id="top_wrapper">
 
 <div id="channel_info">
-	<img src="resource:images/queue_arrow.png" />
+	<img src="resource:images/everything_icon.png" />
 	<h2 i18n:translate="">My Collection</h2>
 </div>
 <div id="right_half">
-	<input type="text" size="20" class="search_field" onfocus="startEditFilter(this,new Array('allitems'),new Array(''),new Array('global filter watchableItems'),new Array(0), new Array(''))" onblur="endEditFilter()"  />
+	
 	
 </div>
 
@@ -42,7 +42,12 @@
 
 
 <div id="navigation_wrapper">
+
+<div class="search_wrap"><input type="text" size="20" class="search_field" onfocus="startEditFilter(this,new Array('allitems'),new Array(''),new Array('global filter watchableItems'),new Array(0), new Array(''))" onblur="endEditFilter()"  /></div>
+
+
 	<div id="navigation">
+
 	</div>
 </div>
 

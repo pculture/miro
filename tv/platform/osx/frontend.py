@@ -1167,7 +1167,7 @@ class ManagedWebView (NSObject):
         self.view = existingView
         if not self.view:
             self.view = WebView.alloc().init()
-	    print "***** Creating new WebView %s" % self.view
+	    #print "***** Creating new WebView %s" % self.view
             if sizeHint:
                 # We have an estimate of the size that will be assigned to
                 # the view when it is actually inserted in the MainFrame.
@@ -1177,7 +1177,7 @@ class ManagedWebView (NSObject):
                 self.view.setFrame_(sizeHint)
             self.view.setCustomUserAgent_("DTV/pre-release (http://participatoryculture.org/)")
 	else:
-	    print "***** Using existing WebView %s" % self.view
+	    #print "***** Using existing WebView %s" % self.view
             if sizeHint:
 		self.view.setFrame_(sizeHint)
         self.jsQueue = []
@@ -1190,7 +1190,7 @@ class ManagedWebView (NSObject):
         handle = os.fdopen(handle,"w")
         handle.write(initialHTML)
         handle.close()
-        print "DTV: loading temp file %s" % location
+        #print "DTV: loading temp file %s" % location
         self.view.mainFrame().loadRequest_(NSURLRequest.requestWithURL_(NSURL.URLWithString_("file://%s" % location)))
         return self
 

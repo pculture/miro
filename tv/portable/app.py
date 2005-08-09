@@ -313,7 +313,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
     def __init__(self, templateName, data, controller, existingView = None, frameHint=None, areaHint=None):
         "'templateName' is the name of the inital template file. 'data' is keys for the template."
 
-        print "Processing %s" % templateName
+        #print "Processing %s" % templateName
         self.controller = controller
         self.templateName = templateName
         self.templateData = data
@@ -330,7 +330,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
         triggers = self.templateHandle.getTriggerActionURLs()
         for url in triggers:
             if url.startswith('action:'):
-                print "loading %s" % url
+                #print "loading %s" % url
                 self.onURLLoad(url)
             elif url.startswith('template:'):
                 newPage = True
@@ -347,7 +347,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
             thread.start()
 
     def onURLLoad(self, url):
-        print "DTV: got %s" % url
+        #print "DTV: got %s" % url
         try:
             # Special-case non-'action:'-format URL
             match = re.compile(r"^template:(.*)$").match(url)

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style type="text/css">
+	@import url(resource:css/style.css);
+</style>
+<t:include filename="dynamic.js" />
+
+</head>
+
+<body class="first_time">
+
+<h1>Internet TV Channels</h1>
+
+<p>
+DTV can subscribe to internet TV channels from all over the web.  Channels can be specially made lists of videos in RSS feeds, websites with links to videos, or channels made with our publishing tool Broadcast Machine.  There are thousands of RSS feeds and websites out there that will work in DTV.
+</p>
+
+<p>
+To keep things easy, DTV comes with a Channel Guide -- browse channels and subscribe with one click. You can also subscribe to a channel from the web by clicking 'Add Channel' and pasting in the URL.  
+</p>
+
+<p>
+Once you subscribe to a channel, DTV will check regularly for new videos.  When new videos are available, you'll see a gray circle next to the name of the channel with the number of new videos.
+</p>
+
+<h1>Subscribe to a Channel</h1>
+
+<p>Subscribing to a channel from the Channel guide is easy. Below is a channel from our Channel Guide. Try subscribing to this channel by clicking on the "Subscribe" button:</p>
+
+<p>
+<center><a href="action:addFeed?url=http://www.oldeenglish.org/bm/rss.php?i=1&amp;selected=0"><img src="resource:images/subscribe_example.png" /></a></center>
+</p>
+
+
+<p>The Channel should appear in your channel bar.  If you like this channel, you can always go to the Settings page and turn on "Auto Download"-- you'll get the latest videos as soon as they're online. Subscribing to other channels in the Channel Guide is just as easy.</p>
+
+<p>The Channel Guide is off to a good start with the dozens of channels already listed.  New channels are being added every day, so keep an eye on the Guide.  And if you make a channel or know of a DTV-compatible channel that's not listed, please submit it to the Guide.</p>
+
+
+
+<h3><a href="template:guide">Go to the Channel Guide >></a></h3>
+
+
+</body>
+</html>
