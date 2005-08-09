@@ -16,6 +16,10 @@
  <t:view name="items" key="global database">
   <t:filter functionkey="global filter class" parameter="Item" />
  </t:view>
+ <t:view name="feeds" key="global view feeds">
+  <t:filter functionkey="global filter substring" fieldkey="title" parameter="" invert="false" />
+  <t:sort functionkey="global sort text" fieldkey="title" parameter="" />
+ </t:view>
 </t:dynamicviews>
 
 </head>
@@ -68,6 +72,24 @@
       <input type="submit" />
       <br />
    </form>
+
+<br/><br/>
+  Feed list (for testing view code and dynamic updates):<br/>
+
+<div t:hideIfViewNotEmpty="feeds">(No matching search results.)</div>
+<div t:hideIfViewEmpty="feeds">
+ <div>
+ <span t:repeatForView="feeds">
+    <span t:replace="this title" /> 
+    (<span t:replace="this available" /> available)<br />
+ </span>
+ </div>
+  Sort: <a href="javascript:void()" onclick="setViewSort('feeds','title','global sort text',false)">name</a>, <a href="javascript:void()" onclick="setViewSort('feeds','title','global sort text',true)">name descending</a>, <a href="javascript:void()" onclick="setViewSort('feeds','available','global sort number',false)">available</a>, <a href="javascript:void()" onclick="setViewSort('feeds','available','global sort number',true)">available descending</a>
+</div>
+
+  Search feed titles:
+<input type="text" onfocus="startEditFilter(this, new Array('feeds'), new Array('title'), new Array('global filter substring'), new Array('false'), new Array(''))" onblur="endEditFilter()" />
+ 
 <br/><br/>
   Test dialogs:
    <a href="action:testGetHTTPAuth?url=myurl&amp;domain=mydomain&amp;prefillUser=myusername&amp;prefillPassword=mypassword">getHTTPAuth</a>,

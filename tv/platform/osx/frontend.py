@@ -1121,6 +1121,21 @@ class HTMLDisplay (Display):
             print "Couldn't exec javascript! Web view not initialized"
         #print "DISP: %s with %s" % (self.view, js)
 
+    # DOM hooks used by the dynamic template code -- do they need a 
+    # try..except wrapper like the above?
+    def addItemAtEnd(self, xml, id):
+	return self.web.addItemAtEnd(xml, id)
+    def addItemBefore(self, xml, id):
+	return self.web.addItemBefore(xml, id)
+    def removeItem(self, id):
+	return self.web.removeItem(id)
+    def changeItem(self, id, xml):
+	return self.web.changeItem(id, xml)
+    def hideItem(self, id):
+	return self.web.hideItem(id)
+    def showItem(self, id):
+	return self.web.showItem(id)
+
     def onURLLoad(self, url):
         """Called when this HTML browser attempts to load a URL (either
         through user action or Javascript.) The URL is provided as a
@@ -1158,6 +1173,20 @@ class HTMLDisplay (Display):
 #### An enhanced WebView                                                   ####
 ###############################################################################
 
+# Little ObjC-compatible class to wrap a closure (function) so it can be
+# used as an ObjC-callback, eg, posted to the main thread with
+# performSelectorOnMainThread_withObject_waitUntilDone_.
+class ObjCHandlerWrapper(NSObject):
+    def init(self, func):
+        self.func = func
+        return self
+
+    def executeDiscarding1_(self, ignoredArgument):
+        self.func()
+
+    def executeOnMainThreadAsync_(self):
+        self.performSelectorOnMainThread_withObject_waitUntilDone_("executeDiscarding1:", None, NO)
+
 class ManagedWebView (NSObject):
 
     def init(self, initialHTML, existingView=nil, onInitialLoadFinished=None, onLoadURL=None, sizeHint=None):
@@ -1180,7 +1209,7 @@ class ManagedWebView (NSObject):
 	    print "***** Using existing WebView %s" % self.view
             if sizeHint:
 		self.view.setFrame_(sizeHint)
-        self.jsQueue = []
+        self.execQueue = []
         self.view.setPolicyDelegate_(self)
         self.view.setResourceLoadDelegate_(self)
         self.view.setFrameLoadDelegate_(self)
@@ -1232,35 +1261,52 @@ class ManagedWebView (NSObject):
     def getView(self):
         return self.view
 
-    # Execute given Javascript string in context of the HTML document,
-    # queueing as necessary if the initial HTML hasn't finished loading yet
-    def execJS(self, js):
-        pool = NSAutoreleasePool.alloc().init()
-
-        #print "JS: %s" % js
+    # Call func() once the document has finished loading. If the
+    # document has already finished loading, call it right away. But
+    # in either case, the call is executed on the main thread, by
+    # queueing an event, since WebViews are not documented to be
+    # thread-safe, and we have seen crashes.
+    def execAfterLoad(self, func):
         if not self.initialLoadFinished:
-            self.jsQueue.append(js)
+            self.execQueue.append(func)
         else:
-            # WebViews are not documented to be thread-safe, so be cautious
-            # and do updates only on the main thread (in fact, crashes in
-            # khtml occur if this is not done)
-            self.view.performSelectorOnMainThread_withObject_waitUntilDone_("stringByEvaluatingJavaScriptFromString:", js, NO)
-            # self.view.setNeedsDisplay_(YES) # shouldn't be necessary
+            # Contortion: we can't just pass random Python functions
+            # into ObjC and expect it to know how to call them, so use
+            # a NSObject-derived wrapper class.
+            pool = NSAutoreleasePool.alloc().init()
+            ObjCHandlerWrapper.alloc().init(func).executeOnMainThreadAsync_()
+            del pool
 
-        del pool
-
-    # Generate callback when the initial HTML (passed in the constructor)
+    # Generate callbacks when the initial HTML (passed in the constructor)
     # has been loaded
     def webView_didFinishLoadForFrame_(self, webview, frame):
         if (not self.initialLoadFinished) and (frame is self.view.mainFrame()):
-            self.initialLoadFinished = True
-            # Execute any Javascript that we queued because the page load
+            # Execute any function calls we queued because the page load
             # hadn't completed
-            for js in self.jsQueue:
-                self.view.stringByEvaluatingJavaScriptFromString_(js)
-            self.jsQueue = []
+            # NEEDS: there should be a lock here, preventing execAfterLoad
+            # from dropping something in the queue just after we have finished
+            # processing it
+            for func in self.execQueue:
+                ObjCHandlerWrapper.alloc().init(func).executeOnMainThreadAsync_()
+            self.execQueue = []
+            self.initialLoadFinished = True
+
             if self.onInitialLoadFinished:
                 self.onInitialLoadFinished()
+
+    # Decorator to make using execAfterLoad easier
+    def deferUntilAfterLoad(func):
+        def runFunc(*args, **kwargs):
+            func(*args, **kwargs)
+        def schedFunc(self, *args, **kwargs):
+            rf = lambda: runFunc(self, *args, **kwargs)
+            self.execAfterLoad(rf)
+        return schedFunc
+
+    # Execute given Javascript string in context of the HTML document
+    @deferUntilAfterLoad
+    def execJS(self, js):
+        self.view.stringByEvaluatingJavaScriptFromString_(js)
 
     # Intercept navigation actions and give program a chance to respond
     def webView_decidePolicyForNavigationAction_request_frame_decisionListener_(self, webview, action, request, frame, listener):
@@ -1292,6 +1338,74 @@ class ManagedWebView (NSObject):
             return NSURLRequest.requestWithURL_(urlObject)
         return request
 
+    ## DOM mutators called, ultimately, by dynamic template system ##
+
+    def findElt(self, id):
+        doc = self.view.mainFrame().DOMDocument()
+        elt = doc.getElementById_(id)
+        return elt
+
+    def createElt(self, xml):
+	parent = self.view.mainFrame().DOMDocument().createElement_("div")
+        parent.setInnerHTML_(xml)
+        elt = parent.firstChild()
+        if parent.childNodes().length() != 1:
+            raise NotImplementedError, "in createElt, expected exactly one node"
+	return elt
+        
+    @deferUntilAfterLoad
+    def addItemAtEnd(self, xml, id):
+        elt = self.findElt(id)
+        if not elt:
+            print "warning: addItemAtEnd: missing element %s" % id
+        else:
+            elt.insertBefore__(self.createElt(xml), None)
+            #print "add item %s at end of %s" % (elt.getAttribute_("id"), id)
+
+    @deferUntilAfterLoad
+    def addItemBefore(self, xml, id):
+	elt = self.findElt(id)
+        if not elt:
+            print "warning: addItemBefore: missing element %s" % id
+        else:
+            elt.parentNode().insertBefore__(self.createElt(xml), elt)
+            #print "add item %s before %s" % (elt.getAttribute_("id"), id)
+
+    @deferUntilAfterLoad
+    def removeItem(self, id):
+	elt = self.findElt(id)
+        if not elt:
+            print "warning: removeItem: missing element %s" % id
+        else:
+            elt.parentNode().removeChild_(elt)
+            #print "remove item %s" % id
+
+    @deferUntilAfterLoad
+    def changeItem(self, id, xml):
+	elt = self.findElt(id)
+        if not elt:
+            print "warning: changeItem: missing element %s" % id
+        else:
+            elt.setOuterHTML_(xml)
+            #print "change item %s (new id %s)" % (id, elt.getAttribute_("id"))
+
+    @deferUntilAfterLoad
+    def hideItem(self, id):
+	elt = self.findElt(id)
+        if not elt:
+            print "warning: hideItem: missing element %s" % id
+        else:
+            elt.getAttribute_("style").setAttribute_("display", "none")
+            #print "hide item %s (new style '%s')" % (id, elt.getAttribute_("style"))
+
+    @deferUntilAfterLoad
+    def showItem(self, id):
+	elt = self.findElt(id)
+        if not elt:
+            print "warning: showItem: missing element %s" % id
+        else:
+            elt.getAttribute_("style").setAttribute_("display", "")
+            #print "show item %s (new style '%s')" % (id, elt.getAttribute_("style"))
 
 ###############################################################################
 #### Right-hand pane video display                                         ####

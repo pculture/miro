@@ -317,7 +317,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
         self.controller = controller
         self.templateName = templateName
         self.templateData = data
-        (html, self.templateHandle) = template.fillTemplate(templateName, data, lambda js:self.execJS(js))
+        (html, self.templateHandle) = template.fillTemplate(templateName, data, self)
 
         self.actionHandlers = [
             ModelActionHandler(),
@@ -698,12 +698,14 @@ class TemplateActionHandler:
         self.controller.frame.selectDisplay(TemplateDisplay(name, self.display.templateData, self.controller, existingView = "sharedView", frameHint=self.controller.frame, areaHint=self.controller.frame.mainDisplay), self.controller.frame.mainDisplay)
 
     def setViewFilter(self, viewName, fieldKey, functionKey, parameter, invert):
+        #print "set filter: view %s field %s func %s param %s invert %s" % (viewName, fieldKey, functionKey, parameter, invert)
         if viewName != "undefined":
             invert = stringToBoolean(invert)
             namedView = self.templateHandle.findNamedView(viewName)
             namedView.setFilter(fieldKey, functionKey, parameter, invert)
 
-    def setViewSort(self, viewName, fieldKey, functionKey, reverse):
+    def setViewSort(self, viewName, fieldKey, functionKey, reverse="false"):
+        #print "set sort: view %s field %s func %s reverse %s" % (viewName, fieldKey, functionKey, reverse)
         reverse = stringToBoolean(reverse)
         namedView = self.templateHandle.findNamedView(viewName)
         namedView.setSort(fieldKey, functionKey, reverse)

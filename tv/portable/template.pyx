@@ -92,17 +92,18 @@ rawAttrPattern = re.compile("^(.*)\\*\\*\\*(.*?)\\*\\*\\*(.*)$")
 
 # Fill the template in the given file in the template directory using
 # the information in the dictionary given by 'data'. If the template
-# contains dynamic views, call the provided execJS function as
-# necessary in the future, passing a string that should be executed in
-# the context of the page to update it.  Returns a tuple: a string
-# giving the HTML or XML that resulted from filling the template, and
-# a "template handle" whose unlinkTemplate() method you should call
-# when you no longer want to receive Javascript callbacks.
-def fillTemplate(file, data, execJS, top = True):
+# contains dynamic views, call update methods on the provided
+# domHandler function object as necessary in the future, passing a
+# string that should be executed in the context of the page to update
+# it.  Returns a tuple: a string giving the HTML or XML that resulted
+# from filling the template, and a "template handle" whose
+# unlinkTemplate() method you should call when you no longer want to
+# receive Javascript callbacks.
+def fillTemplate(file, data, domHandler, top = True):
 #     if top:
 #         startTime = time.clock()
-    handle = Handle(execJS)
-    tch = TemplateContentHandler(data,handle,True,execJS=execJS)
+    handle = Handle(domHandler)
+    tch = TemplateContentHandler(data,handle,True,domHandler=domHandler)
     p = sax.make_parser()
     p.setFeature(sax.handler.feature_external_ges, False)
     p.setContentHandler(tch)
@@ -126,7 +127,7 @@ def fillTemplate(file, data, execJS, top = True):
 # you get a static snapshot of the page at the time the call is made.
 def fillStaticTemplate(file, data):
     # This could be somewhat more efficient    
-    (xml, handle) = fillTemplate(file, data, returnFalse)
+    (xml, handle) = fillTemplate(file, data, None)
     handle.unlinkTemplate()
     return xml
 
@@ -143,11 +144,11 @@ class TemplateError(Exception):
 ##
 # SAX version of templating code
 class TemplateContentHandler(sax.handler.ContentHandler):
-    def __init__(self, data, handle, debug = False, execJS = returnFalse):
+    def __init__(self, data, handle, debug = False, domHandler = None):
         self.data = data
         self.handle = handle
         self.debug = debug
-        self.execJS = execJS
+        self.domHandler = domHandler
         clearEvalCache()
 
     def returnIf(self,bool,value):
@@ -157,7 +158,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             return ''
 
     def fillTemplate(self,name,data):
-        (html,handle) = fillTemplate(name,data,self.execJS, False)
+        (html,handle) = fillTemplate(name,data,self.domHandler, False)
         
         html = HTMLPattern.match(html).group(1)
         self.handle.addSubHandle(handle)
@@ -423,7 +424,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         else:
             self.outString.write(sax.saxutils.escape(data))
 
-# Used in place of execJS
+# Random utility functions 
 def returnFalse(x):
     return False
 
@@ -440,7 +441,7 @@ def nullSort(x,y):
 class TrackedView:
     def __init__(self, anchorId, anchorType, view, templateFuncs, templateData, parent, name):
         # arguments as Handle.addView(), plus 'parent', a pointer to the Handle
-        # that is used to invoke execJS and checkHides
+        # that is used to find domHandler and invoke checkHides
         self.anchorId = anchorId
         self.anchorType = anchorType
 
@@ -490,39 +491,39 @@ class TrackedView:
         thread.setDaemon(False)
         thread.start()
 
-    def _onChange(self, text):
+    def doOnChange(self, tid, xmlString):
         clearEvalCache()
-        if self.parent.execJS:
-            #self.parent.execJS("changeItem(\"%s\",\"%s\")" % (self.view[index].tid, quoteJS(self.currentXML(index))))
-            self.parent.execJS(text)
+        if self.parent.domHandler:
+            self.parent.domHandler.changeItem(tid, xmlString)
         self.parent.checkHides()
 
     def onAdd(self, newIndex):
         clearEvalCache()
-        if self.parent.execJS:
+        if self.parent.domHandler:
             if newIndex + 1 == self.view.len():
                 # Adding it at the end of the list. Must add it relative to
                 # the anchor.
                 if self.anchorType == 'parentNode':
-                    self.parent.execJS("addItemAtEnd(\"%s\",\"%s\")" % (quoteJS(self.currentXML(newIndex)), self.anchorId))
+                    self.parent.domHandler.addItemAtEnd(self.currentXML(newIndex), self.anchorId)
                 if self.anchorType == 'nextSibling':
-                    self.parent.execJS("addItemBefore(\"%s\",\"%s\")" % (quoteJS(self.currentXML(newIndex)), self.anchorId))
+                    self.parent.domHandler.addItemBefore(self.currentXML(newIndex), self.anchorId)
             else:
-                self.parent.execJS("addItemBefore(\"%s\",\"%s\")" % (quoteJS(self.currentXML(newIndex)), self.view[newIndex+1].tid))
+                self.parent.domHandler.addItemBefore(self.currentXML(newIndex), self.view[newIndex+1].tid)
 
         self.parent.checkHides()
 
     def onRemove(self, oldObject, oldIndex):
         clearEvalCache()
-        if self.parent.execJS:
-            self.parent.execJS("removeItem(\"%s\")" % oldObject.tid)
+        if self.parent.domHandler:
+            self.parent.domHandler.removeItem(oldObject.tid)
         self.parent.checkHides()
 
     # Add the HTML for the item at newIndex in the view to the
     # display. It should only be called by initialFillIn()
     def addHTMLAtEnd(self, newIndex):
         clearEvalCache()
-        self.parent.execJS("addItemBefore(\"%s\",\"%s\")" % (quoteJS(self.currentXML(newIndex)), self.anchorId))
+        if self.parent.domHandler:
+            self.parent.domHandler.addItemBefore(self.currentXML(newIndex), self.anchorId)
 
 # Class used by Handle to track the dynamically filterable, sortable
 # views created by makeNamedView and identified by names. After
@@ -644,7 +645,7 @@ def fillAttr(value,data):
 class idAssignment:
     def __init__(self, x):
         self.object = x
-        self.tid = str(self.object)
+        self.tid = "objid%d" % id(self.object)
 
 ###############################################################################
 #### Generating Javascript callbacks to keep document updated              ####
@@ -656,12 +657,12 @@ class idAssignment:
 # receive Javascript callbacks for a particular filled template, call
 # this object's unlinkTemplate() method.
 class Handle:
-    def __init__(self, execJS, document = None):
-        # 'execJS' is a function that will be called with a text
-        # string to indicate Javascript to execute. 'document', if
-        # non-None, is a DOM document objects that will be unlink()ed
+    def __init__(self, domHandler, document = None):
+        # 'domHandler' is an object that will receive method calls when
+        # dynamic page updates need to be made. 'document', if
+        # non-None, is a (Python) DOM document objects that will be unlink()ed
         # when unlinkTemplate() is called on this handle.
-        self.execJS = execJS
+        self.domHandler = domHandler
         self.document = document
         self.hideConditions = []
         self.namedViews = {}
@@ -688,7 +689,7 @@ class Handle:
 
     def checkHides(self):
         # Internal use.
-        if self.execJS:
+        if self.domHandler:
             for i in range(0,len(self.hideConditions)):
                 (id, name, invert, previous) = self.hideConditions[i]
                 if invert:
@@ -697,8 +698,11 @@ class Handle:
                     current = self.viewIsEmpty(name)
                 if (current == True) != (previous == True):
                     self.hideConditions[i] = (id, name, invert, current)
-                    self.execJS("%sItem(\"%s\")" % (current and "hide" or "show", id))
-
+                    if current:
+                        self.domHandler.hideItem(id)
+                    else:
+                        self.domHandler.showItem(id)
+                        
     def makeNamedView(self, name, viewKey, filterKey, filterFunc, filterParameter, invertFilter, sortKey, sortFunc, invertSort, data):
         if self.namedViews.has_key(name):
             raise TemplateError, "More than one view was declared with the name '%s'. Each view must have a different name." % name
@@ -736,7 +740,7 @@ class Handle:
 
     def unlinkTemplate(self):
         # Stop delivering callbacks, allowing the handle to be released.
-        self.execJS = None
+        self.domHandler = None
         try:
             self.document.unlink()
         except:
