@@ -34,7 +34,4 @@ def getSortFunc(templateApp):
     return lambda x, y: templateApp.sort(x, y)
 
 def makeOnChange(self,index):
-    # Subtlety: compute view[index] now, not when the returned function is
-    # called.
-    tid = self.view[index].tid
-    return lambda :self.doOnChange(tid, self.currentXML(index))
+    return lambda :self._onChange("changeItem(\"%s\",\"%s\")" % (self.view[index].tid, template.quoteJS(self.currentXML(index))))
