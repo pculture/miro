@@ -3,6 +3,9 @@ from downloader import grabURL
 from scheduler import ScheduleEvent
 from xhtmltools import urlencode
 from copy import copy
+import re
+
+HTMLPattern = re.compile("^.*(<head.*?>.*</body\s*>)", re.S)
 
 class ChannelGuide(DDBObject):
     def __init__(self):
@@ -43,14 +46,7 @@ class ChannelGuide(DDBObject):
         # for non-programmers to work with
         url = 'http://clients.tekritisoftware.com/pcf/channelguide/'
         info = grabURL(url)
-        html = "<script type=\"text/javascript\">"
-        lines = info['file-handle'].read().split("\n")
-        try:
-            for line in lines:
-                html = "%sdocument.writeln(unescape(\"%s\"));\n" % (html,urlencode(line.replace("\r","").replace("\n","")))
-        except:
-            print 'DTV: channel guide load failed'
-            return
+        html = info['file-handle'].read()
         info['file-handle'].close()
-        html = "%s\n</script>" % html
+        html = HTMLPattern.match(html).group(1)
         self.html = html

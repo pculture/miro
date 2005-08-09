@@ -209,7 +209,9 @@ class Feed(DDBObject):
 
     # Returns true iff this feed has been looked at
     def getViewed(self):
-        return self.lastViewed != datetime.min
+        ret = self.lastViewed != datetime.min
+        print "get viewed is %s" % ret
+        return ret
 
     # Returns the ID of the actual feed, never that of the UniversalFeed wrapper
     def getFeedID(self):

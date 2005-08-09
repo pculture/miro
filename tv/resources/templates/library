@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:t="http://www.participatorypolitics.org/"
-      xmlns:i18n="http://www.participatorypolitics.org/i18n">
+      xmlns:i18n="http://www.participatoryculture.org/i18n">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <style type="text/css">
@@ -11,8 +11,8 @@
 <t:include filename="dynamic.js" />
 
 <t:dynamicviews>
- <t:view name="newitems" key="global database">
-  <t:filter functionkey="global filter recentItems" parameter="" />
+ <t:view name="allitems" key="global view items">
+  <t:filter functionkey="global filter watchableItems" parameter="" />
   <t:sort functionkey="global sort item" parameter="" />
  </t:view>
 </t:dynamicviews>
@@ -20,19 +20,20 @@
 </head>
 
 <body>
-  <div id="main_window">  
+
+ <div id="main_window">  
   
 <div id="ultra_top_wrapper">
 
 <div id="top_wrapper">
 
 <div id="channel_info">
-	<img src="resource:images/thumbnail.png" />
+	<img src="resource:images/queue_arrow.png" />
 	<h2 i18n:translate="">My Collection</h2>
 </div>
-
 <div id="right_half">
-	<input type="text" size="20" class="search_field" onfocus="startEditFilter(this,new Array('newitems'),new Array(''),new Array('global filter recentItems'),new Array(0))" onblur="endEditFilter()"  />
+	<input type="text" size="20" class="search_field" onfocus="startEditFilter(this,new Array('allitems'),new Array(''),new Array('global filter watchableItems'),new Array(0), new Array(''))" onblur="endEditFilter()"  />
+	
 </div>
 
 	<br style="clear: both; height: 0; padding: 0; margin: 0;" />
@@ -47,9 +48,11 @@
 
 </div>
 
+
+
   <div id="content_window">
     <ul> 
-        <li t:contextMenu="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@|Play" t:repeatForView="newitems">
+        <li t:repeatForView="allitems">
         <t:includeTemplate filename="download-item" />
         </li> 
    </ul>

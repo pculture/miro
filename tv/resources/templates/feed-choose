@@ -35,7 +35,6 @@
 <div id="right_half">
 	<div class="auto_link" i18n:translate="">AUTO DOWNLOAD: <span t:replace="feed autoDownloadStatus"/></div>
 	<a class="settings_link" i18n:translate="" href="template:feed-settings">Change Settings</a>
-	<input type="text" size="20" class="search_field" onfocus="startEditFilter(this,new Array('items'),new Array(''),new Array('global filter feedItems'),new Array(0),new Array('@@@feed getFeedID@@@'))" onblur="endEditFilter()"  />
 </div>
 
 	<br style="clear: both; height: 0; padding: 0; margin: 0;" />
@@ -44,7 +43,16 @@
 
 
 <div id="navigation_wrapper">
+
+		<div class="search_wrap"><input type="text" size="17" class="search_field" onfocus="startEditFilter(this,new Array('items'),new Array(''),new Array('global filter feedItems'),new Array(0),new Array('@@@feed getFeedID@@@'))" onblur="endEditFilter()"  /></div>
+
+
+
 	<div id="navigation">
+
+	
+	
+	
 	<div id="tabs" class="tabs">
 		
 		<span class="tab_left"><a href="template:feed-watch" class="watch">Watch</a></span>
@@ -75,9 +83,10 @@
    </ul>
   </div>
   </div>
-<!-- Open the action URL that marks this feed as viewed -->
 
-<script type="text/javascript" t:replace="feed getMarkViewedJS" />
+<!-- Open the action URL that marks this feed as viewed -->
+<t:triggerActionOnLoad url="action:markFeedViewed?url=@@@feed getURL@@@" />
+
 
 </body>
 </html>

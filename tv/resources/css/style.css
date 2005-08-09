@@ -580,6 +580,13 @@ messages
 }
 
 
+.unwatched{
+	font-size: 10px;
+	color: #00B904;
+	background: url(resource:images/icons/calendar.png) 0 2px no-repeat;
+	padding: 3px 0 3px 15px;
+	}
+
 
 .report_expire{
 	font-size: 10px;
@@ -837,6 +844,7 @@ search, title, recommend link
 
 .auto_link{
 	color: #00B904;
+	font-size: 14px;
 	}
 
 .settings_link{
@@ -867,9 +875,17 @@ search, title, recommend link
 	text-decoration: underline;
 	}
 
-.search_field{
+.search_wrap {
+	float: right;
+	padding-left: 15px;
+	background: url(resource:images/magnifying_glass.png) 0 7px no-repeat;
 	display: block;
-	margin: 9px 0 0 0;
+	padding-top: 2px;
+	padding-right: 3px;
+}
+
+.search_field{
+	font-size: 12px;
 	}
 
 /*/////////////////////////////////////////////
@@ -888,7 +904,7 @@ The settings of each channel
 #navigation	{
 	height: 25px;
 	width: 140px;
-	margin: 1px auto 0 auto;
+	margin: 0px auto 0 auto;
 	}
 
 #navigation	a{

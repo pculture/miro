@@ -41,7 +41,7 @@
 
   <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="finished" class="right_box">
     <a href="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
-    <span class="report_expire">unwatched</span><br />
+    <span class="unwatched">unwatched</span><br />
     <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a> <!-- <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> -->
   </div>
 
@@ -49,7 +49,7 @@
 
   <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="uploading" class="right_box">
     <a href="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
-    <span class="report_expire">unwatched</span><br />
+    <span class="unwatched">unwatched</span><br />
     <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a> <!-- <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> -->
   </div>
   

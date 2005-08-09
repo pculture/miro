@@ -313,23 +313,41 @@ class TemplateDisplay(frontend.HTMLDisplay):
     def __init__(self, templateName, data, controller, existingView = None, frameHint=None, areaHint=None):
         "'templateName' is the name of the inital template file. 'data' is keys for the template."
 
+        print "Processing %s" % templateName
         self.controller = controller
         self.templateName = templateName
         self.templateData = data
         (html, self.templateHandle) = template.fillTemplate(templateName, data, lambda js:self.execJS(js))
+
         self.actionHandlers = [
             ModelActionHandler(),
             GUIActionHandler(self.controller),
             TemplateActionHandler(self.controller, self, self.templateHandle),
             ]
 
-        frontend.HTMLDisplay.__init__(self, html, existingView=existingView, frameHint=frameHint, areaHint=areaHint)
 
-        thread = threading.Thread(target=self.templateHandle.initialFillIn)
-        thread.setDaemon(False)
-        thread.start()
+        newPage = False
+        triggers = self.templateHandle.getTriggerActionURLs()
+        for url in triggers:
+            if url.startswith('action:'):
+                print "loading %s" % url
+                self.onURLLoad(url)
+            elif url.startswith('template:'):
+                newPage = True
+                break
+
+        if newPage:
+            self.templateHandle.unlinkTemplate()
+            self.__init__(re.compile(r"^template:(.*)$").match(url).group(1),data,controller, existingView, frameHint, areaHint)
+        else:
+            frontend.HTMLDisplay.__init__(self, html, existingView=existingView, frameHint=frameHint, areaHint=areaHint)
+
+            thread = threading.Thread(target=self.templateHandle.initialFillIn)
+            thread.setDaemon(False)
+            thread.start()
 
     def onURLLoad(self, url):
+        print "DTV: got %s" % url
         try:
             # Special-case non-'action:'-format URL
             match = re.compile(r"^template:(.*)$").match(url)
@@ -631,17 +649,17 @@ class GUIActionHandler:
                 # At this point, the addition is guaranteed to be reflected
                 # in the tab list.
 
-                if selected == '1':
-                    tabs = self.controller.tabs
-                    tabs.resetCursor()
-                    while True:
-                        cur = tabs.getNext()
-                        if cur == None:
-                            assert(0) # NEEDS: better error (failed to add tab)
-                        if cur.feedURL() == url:
-                            break
+            if selected == '1':
+                tabs = self.controller.tabs
+                tabs.resetCursor()
+                while True:
+                    cur = tabs.getNext()
+                    if cur == None:
+                        assert(0) # NEEDS: better error (failed to add tab)
+                    if cur.feedURL() == url:
+                        break
 
-                    self.controller.checkSelectedTab(showTemplate)
+                self.controller.checkSelectedTab(showTemplate)
 
         finally:
             db.restoreCursor()
@@ -1028,14 +1046,19 @@ def oldItems(obj, param):
 
 def watchableItems(obj, param):
     params = param.split('|',1)
-    
-    params = param.split('|',1)
-    
-    return (str(obj.feed.getID()) == params[0] and 
+
+    if len(params)>1:
+        search = params[1]
+    else:
+        search = ''
+
+    return (((len(params[0]) == 0) or str(obj.feed.getID()) == params[0]) and 
             ((obj.getState() == 'finished' or
               obj.getState() == 'uploading' or
               obj.getState() == 'watched' or
-              obj.getState() == 'saved')))
+              obj.getState() == 'saved')) and
+            (search.lower() in obj.getTitle().lower() or 
+             search.lower() in obj.getDescription().lower()))
     
 def allRecentItems(obj, param):
     params = param.split('|',1)

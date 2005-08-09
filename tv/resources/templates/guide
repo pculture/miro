@@ -2,18 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:t="http://www.participatorypolitics.org/">
-<head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <t:include filename="dynamic.js" />
-<style type="text/css">
-	@import url(resource:css/style.css);
-</style>
-
-</head>
-
-<body >
 
 <span t:replaceMarkup="global guide getHTML" />
 
-</body>
 </html>
