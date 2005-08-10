@@ -699,7 +699,7 @@ class FilterUpdateOnChange(unittest.TestCase):
         self.everything = DDBObject.dd
 	self.origObjs = [DDBObject(), DDBObject(), DDBObject()]
         self.goodID = self.origObjs[0].getID()
-	self.objs = self.everything.map(self.mapToObject).filter(lambda x: x.oldID == self.goodID)
+	self.objs = self.everything.map(self.mapToObject).sort(lambda x, y:0).filter(lambda x: x.oldID == self.goodID)
 	self.changeCalls = 0
     def mapToObject(self, obj):
 	temp = DDBObject(add = False)
@@ -722,6 +722,8 @@ class FilterUpdateOnChange(unittest.TestCase):
 #       subfilters keep the same order as their parent will fail.
 #
 #       v1.4 of database.pyx should pass, while 1.5 should fail
+
+#FIXME: Add test for recomputing sorts on endChange()
 
 if __name__ == "__main__":
     unittest.main()
