@@ -3,6 +3,7 @@ from database import *
 from os import remove
 from os.path import expanduser
 import random
+import config
 
 class EmptyViewTestCase(unittest.TestCase):
     def setUp(self):
@@ -389,7 +390,7 @@ class SaveViewTestCase(unittest.TestCase):
     def testBackup(self):
         self.everything.save()
         self.everything.save()
-        remove(expanduser("~/.tvdump"))
+        remove(config.get(config.DB_PATHNAME))
         self.z = DDBObject()
         self.zz = DDBObject()
         self.x.remove()
