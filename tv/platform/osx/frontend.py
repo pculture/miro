@@ -1540,7 +1540,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             self.videoView.movie().setVolume_(self.volumeSlider.floatValue())
 
     def goFullscreen_(self, sender):
-        self.fullscreenController = FullScreenVideoController.alloc().initWithVideoView_(self.videoView)
+        self.fullscreenController = FullScreenVideoController.alloc().initWithPreviousVideoView_(self.videoView)
         self.fullscreenController.setDelegate_(self)
         self.fullscreenController.enterFullScreen()
 
@@ -1584,9 +1584,9 @@ objc.loadBundleFunctions(carbonBundle, globals(), (('SetSystemUIMode', 'III', ""
 
 class FullScreenVideoController (NSObject):
 
-    def initWithVideoView_(self, videoView):
+    def initWithPreviousVideoView_(self, previousMovieView):
         self = super(FullScreenVideoController, self).init()
-        self.videoWindow = FullScreenVideoWindow.alloc().init(videoView).retain()
+        self.videoWindow = FullScreenVideoWindow.alloc().init(previousMovieView).retain()
         self.videoWindow.controller = self
         self.delegate = nil
         return self
@@ -1615,7 +1615,7 @@ class FullScreenVideoController (NSObject):
 
 class FullScreenVideoWindow (NSWindow):
 
-    def init(self, videoView):
+    def init(self, previousMovieView):
         frame = NSScreen.mainScreen().frame()
 
         parent = super(FullScreenVideoWindow, self)
@@ -1625,15 +1625,12 @@ class FullScreenVideoWindow (NSWindow):
             NSBackingStoreBuffered,
             YES )
         
-        self.controller = None
-        self.videoView = videoView
-        self.previousSuperview = videoView.superview()
-        if self.previousSuperview is not nil:
-            self.videoView.retain()
-            self.videoView.removeFromSuperviewWithoutNeedingDisplay()
-
-        self.videoView.setFrameSize_(frame.size)
-        self.contentView().addSubview_(self.videoView)
+        self.previousMovieView = previousMovieView
+        self.movieView = QTMovieView.alloc().initWithFrame_(frame)
+        self.movieView.setControllerVisible_(NO)
+        self.movieView.setPreservesAspectRatio_(YES)
+        self.movieView.setMovie_(previousMovieView.movie())
+        self.setContentView_(self.movieView)
         return self
 
     def canBecomeMainWindow(self):
@@ -1647,10 +1644,7 @@ class FullScreenVideoWindow (NSWindow):
             self.controller.exitFullScreen()
 
     def close(self):
-        self.videoView.retain()
-        self.videoView.removeFromSuperviewWithoutNeedingDisplay()
-        self.previousSuperview.addSubview_(self.videoView)
-        self.videoView.setFrameSize_(self.previousSuperview.frame().size)
+        self.previousMovieView.setMovie_(self.movieView.movie())
         super(FullScreenVideoWindow, self).close()
 
 
