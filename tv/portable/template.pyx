@@ -367,7 +367,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             f.close()
             self.outString.write(html)
         elif name == 't:includeTemplate':
-            self.outString.write(self.fillTemplate(attrs['filename']),self.data)
+            self.outString.write(self.fillTemplate(attrs['filename'],self.data))
         elif name == 't:triggerActionOnLoad':
             self.handle.addTriggerActionURL(fillAttr(attrs['url'],self.data))
         else:
