@@ -12,6 +12,7 @@ import autoupdate
 import xhtmltools
 import guide
 
+import os
 import re
 import sys
 import cgi
@@ -884,7 +885,7 @@ class PlaylistItemFromItem (frontend.PlaylistItem):
         self.item = item
 
     def getTitle(self):
-        return item.getTitle()
+        return self.item.getTitle()
 
     def getPath(self):
         return self.item.getFilename()
@@ -899,6 +900,14 @@ class PlaylistItemFromItem (frontend.PlaylistItem):
     # Return the ID that is used by a template to indicate this item 
     def getID(self):
         return self.item.getID()
+
+    def getInfoMap(self):
+        info = dict()
+        info['title'] = self.item.getTitle()
+        if info['title'].startswith(config.get(config.MOVIES_DIRECTORY)):
+            info['title'] = os.path.basename(info['title'])
+        info['link'] = self.item.getLink()
+        return info
 
 def mapToPlaylistItem(obj):
     return PlaylistItemFromItem(obj)
