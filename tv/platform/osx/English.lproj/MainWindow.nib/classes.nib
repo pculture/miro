@@ -39,6 +39,7 @@
                 fastBackwardButton = id; 
                 fastForwardButton = id; 
                 fullscreenButton = id; 
+                infoView = id; 
                 muteButton = id; 
                 playPauseButton = id; 
                 progressDisplayer = id; 
