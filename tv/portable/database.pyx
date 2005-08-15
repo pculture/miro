@@ -668,17 +668,9 @@ cdef class CDynamicDatabase:
                 callback(item)
             for [view, f] in self.subMaps:
                 view.change(item)
+            #FIXME We probably should re-sort here
             for [view, f] in self.subSorts:
-                view.beginUpdate()
-                try:
-                    view.saveCursor()
-                    try:
-                        view.resetCursor()
-                        view.changeObj(self.objects[item][0])
-                    finally:
-                        view.restoreCursor()
-                finally:
-                    view.endUpdate()
+                view.changeObj(self.objects[item][0])
             for [view, f] in self.subFilters:
                 view.beginUpdate()
                 try:
