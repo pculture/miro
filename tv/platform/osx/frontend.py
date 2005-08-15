@@ -1097,12 +1097,12 @@ class HTMLDisplay (Display):
         self.readyToDisplayHook = None
         self.readyToDisplay = False
 
-# 	if existingView == "sharedView":
-# 	    if not HTMLDisplay.sharedWebView:
-# 		HTMLDisplay.sharedWebView = WebView.alloc().init()
+#         if existingView == "sharedView":
+#             if not HTMLDisplay.sharedWebView:
+#                 HTMLDisplay.sharedWebView = WebView.alloc().init()
 #                 HTMLDisplay.sharedWebView.setCustomUserAgent_("DTV/pre-release (http://participatoryculture.org/)")
-# 		print "Creating sharedWebView: %s" % HTMLDisplay.sharedWebView
-# 	    existingView = HTMLDisplay.sharedWebView
+#                 print "Creating sharedWebView: %s" % HTMLDisplay.sharedWebView
+#             existingView = HTMLDisplay.sharedWebView
 
         self.web = ManagedWebView.alloc().init(html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(x), frameHint and areaHint and frameHint.getDisplaySizeHint(areaHint) or None)
 
@@ -1124,17 +1124,17 @@ class HTMLDisplay (Display):
     # DOM hooks used by the dynamic template code -- do they need a 
     # try..except wrapper like the above?
     def addItemAtEnd(self, xml, id):
-	return self.web.addItemAtEnd(xml, id)
+        return self.web.addItemAtEnd(xml, id)
     def addItemBefore(self, xml, id):
-	return self.web.addItemBefore(xml, id)
+        return self.web.addItemBefore(xml, id)
     def removeItem(self, id):
-	return self.web.removeItem(id)
+        return self.web.removeItem(id)
     def changeItem(self, id, xml):
-	return self.web.changeItem(id, xml)
+        return self.web.changeItem(id, xml)
     def hideItem(self, id):
-	return self.web.hideItem(id)
+        return self.web.hideItem(id)
     def showItem(self, id):
-	return self.web.showItem(id)
+        return self.web.showItem(id)
 
     def onURLLoad(self, url):
         """Called when this HTML browser attempts to load a URL (either
@@ -1196,7 +1196,7 @@ class ManagedWebView (NSObject):
         self.view = existingView
         if not self.view:
             self.view = WebView.alloc().init()
-	    print "***** Creating new WebView %s" % self.view
+            print "***** Creating new WebView %s" % self.view
             if sizeHint:
                 # We have an estimate of the size that will be assigned to
                 # the view when it is actually inserted in the MainFrame.
@@ -1205,10 +1205,10 @@ class ManagedWebView (NSObject):
                 # of having to be corrected after being displayed.
                 self.view.setFrame_(sizeHint)
             self.view.setCustomUserAgent_("DTV/pre-release (http://participatoryculture.org/)")
-	else:
-	    print "***** Using existing WebView %s" % self.view
+        else:
+            print "***** Using existing WebView %s" % self.view
             if sizeHint:
-		self.view.setFrame_(sizeHint)
+                self.view.setFrame_(sizeHint)
         self.execQueue = []
         self.view.setPolicyDelegate_(self)
         self.view.setResourceLoadDelegate_(self)
@@ -1346,12 +1346,12 @@ class ManagedWebView (NSObject):
         return elt
 
     def createElt(self, xml):
-	parent = self.view.mainFrame().DOMDocument().createElement_("div")
+        parent = self.view.mainFrame().DOMDocument().createElement_("div")
         parent.setInnerHTML_(xml)
         elt = parent.firstChild()
         if parent.childNodes().length() != 1:
             raise NotImplementedError, "in createElt, expected exactly one node"
-	return elt
+        return elt
         
     @deferUntilAfterLoad
     def addItemAtEnd(self, xml, id):
@@ -1364,7 +1364,7 @@ class ManagedWebView (NSObject):
 
     @deferUntilAfterLoad
     def addItemBefore(self, xml, id):
-	elt = self.findElt(id)
+        elt = self.findElt(id)
         if not elt:
             print "warning: addItemBefore: missing element %s" % id
         else:
@@ -1373,7 +1373,7 @@ class ManagedWebView (NSObject):
 
     @deferUntilAfterLoad
     def removeItem(self, id):
-	elt = self.findElt(id)
+        elt = self.findElt(id)
         if not elt:
             print "warning: removeItem: missing element %s" % id
         else:
@@ -1382,7 +1382,7 @@ class ManagedWebView (NSObject):
 
     @deferUntilAfterLoad
     def changeItem(self, id, xml):
-	elt = self.findElt(id)
+        elt = self.findElt(id)
         if not elt:
             print "warning: changeItem: missing element %s" % id
         else:
@@ -1391,7 +1391,7 @@ class ManagedWebView (NSObject):
 
     @deferUntilAfterLoad
     def hideItem(self, id):
-	elt = self.findElt(id)
+        elt = self.findElt(id)
         if not elt:
             print "warning: hideItem: missing element %s" % id
         else:
@@ -1400,7 +1400,7 @@ class ManagedWebView (NSObject):
 
     @deferUntilAfterLoad
     def showItem(self, id):
-	elt = self.findElt(id)
+        elt = self.findElt(id)
         if not elt:
             print "warning: showItem: missing element %s" % id
         else:
@@ -1464,6 +1464,11 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.videoView.setMovie_(movie)
         self.progressDisplayer.setMovie_(movie)
         self.setVolume_(self.volumeSlider)
+
+        info = item.getInfoMap()
+        html = template.fillStaticTemplate('video-info', info)
+        self.infoView.mainFrame().loadHTMLString_baseURL_(html, nil)
+
         nc.removeObserver_(self)
         nc.addObserver_selector_name_object_(
             self, 
@@ -1676,6 +1681,7 @@ class PlaylistItem:
         """Called by the frontend when a clip is at least partially watched
         by the user. To handle this event, for example by marking the
         item viewed in the database, override this method in a subclass."""
+        raise NotImplementedError
 
 ###############################################################################
 ###############################################################################
