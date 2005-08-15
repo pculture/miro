@@ -699,12 +699,55 @@ class FilterUpdateOnChange(unittest.TestCase):
         self.everything = DDBObject.dd
 	self.origObjs = [DDBObject(), DDBObject(), DDBObject()]
         self.goodID = self.origObjs[0].getID()
-	self.objs = self.everything.map(self.mapToObject).sort(lambda x, y:0).filter(lambda x: x.oldID == self.goodID)
+	self.objs = self.everything.filter(lambda x: x.getID() == self.goodID)
+	self.changeCalls = 0
+    def testLoss(self):
+        self.assertEqual(self.objs.len(),1)
+        self.origObjs[0].beginChange()
+        self.origObjs[0].id = -1
+        self.origObjs[0].endChange()
+        self.assertEqual(self.objs.len(),0)
+    def testAdd(self):
+        self.assertEqual(self.objs.len(),1)
+        self.origObjs[1].beginChange()
+        self.origObjs[1].id = self.goodID
+        self.origObjs[1].endChange()
+        self.assertEqual(self.objs.len(),2)
+
+# Currently, we require that the database does NOT update maps on a change
+class MapUpdateOnChange(unittest.TestCase):
+    def setUp(self):
+        DDBObject.dd = DynamicDatabase()
+        self.everything = DDBObject.dd
+	self.origObjs = [DDBObject(), DDBObject(), DDBObject()]
+        self.goodID = self.origObjs[0].getID()
+	self.objs = self.everything.map(self.mapToObject).filter(lambda x: x.oldID == self.goodID)
 	self.changeCalls = 0
     def mapToObject(self, obj):
 	temp = DDBObject(add = False)
 	temp.oldID = obj.getID()
 	return temp
+    def testLoss(self):
+        self.assertEqual(self.objs.len(),1)
+        self.origObjs[0].beginChange()
+        self.origObjs[0].id = -1
+        self.origObjs[0].endChange()
+        self.assertEqual(self.objs.len(),1)
+    def testAdd(self):
+        self.assertEqual(self.objs.len(),1)
+        self.origObjs[1].beginChange()
+        self.origObjs[1].id = self.goodID
+        self.origObjs[1].endChange()
+        self.assertEqual(self.objs.len(),1)
+
+class SortUpdateOnChange(unittest.TestCase):
+    def setUp(self):
+        DDBObject.dd = DynamicDatabase()
+        self.everything = DDBObject.dd
+	self.origObjs = [DDBObject(), DDBObject(), DDBObject()]
+        self.goodID = self.origObjs[0].getID()
+	self.objs = self.everything.sort(lambda x, y: 0).sort(lambda x, y: 0).filter(lambda x: x.getID() == self.goodID)
+	self.changeCalls = 0
     def testLoss(self):
         self.assertEqual(self.objs.len(),1)
         self.origObjs[0].beginChange()
