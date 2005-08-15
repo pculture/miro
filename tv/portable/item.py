@@ -597,7 +597,7 @@ class Item(DDBObject):
                 pass
         finally:
             self.endRead()
-        return ret.join(', ')
+        return ', '.join(ret)
 
     ##
     # returns the URL of the webpage associated with the item
