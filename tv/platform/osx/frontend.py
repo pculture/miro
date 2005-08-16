@@ -310,7 +310,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     ### Size constraints on splitview ###
 
-    minimumTabListWidth = 180 # pixels
+    minimumTabListWidth = 160 # pixels
     minimumContentWidth = 500 # pixels
 
     # How far left can the user move the slider?
