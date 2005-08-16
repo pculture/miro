@@ -617,14 +617,18 @@ class UIBackendDelegate:
         scraped for links instead. Returns True if the user gives
         permission, or False if not."""
         # This message could use some serious work.
-        message = "%s is not a DTV-style channel.  DTV can try to subscribe, but videos may lack proper descriptions and thumbnails.\n\nPlease notify the publisher if you want this channel to be fully supported" % url
-        return QuestionController.alloc().init(message).getAnswer()
+        title = "Non-Standard Channel"
+        message = "%s is not a DTV-style channel. DTV can try to subscribe, but videos may lack proper descriptions and thumbnails.\n\nPlease notify the publisher if you want this channel to be fully supported" % url
+        defaultButtonTitle = "Subscribe"
+        altButtonTitle = "Cancel"
+        return QuestionController.alloc().init(title, message, defaultButtonTitle, altButtonTitle).getAnswer()
 
     def updateAvailable(self, url):
         """Tell the user that an update is available and ask them if they'd
         like to download it now"""
+        title = "DTV Version Alert"
         message = "A new version of DTV is available.\n\nWould you like to download it now?"
-        if QuestionController.alloc().init(message).getAnswer():
+        if QuestionController.alloc().init(title, message).getAnswer():
             self.openExternalURL(url)
 
     def openExternalURL(self, url):
@@ -691,17 +695,17 @@ class PasswordController (NibClassBuilder.AutoBaseClass):
         self.condition.release()
 
 
-class QuestionController(NibClassBuilder.AutoBaseClass):
+class QuestionController (NibClassBuilder.AutoBaseClass):
 
-    def init(self, message):
-        # as loaded, button titles are "Yes" and "No" and window title is
-        # "Question", but these could be made arguments to init()
+    def init(self, title, message, defaultButtonTitle="Yes", altButtonTitle="No"):
         pool = NSAutoreleasePool.alloc().init()
-        # sets defaultButton, alternateButton, textArea, window
+
         NSBundle.loadNibNamed_owner_("QuestionWindow", self)
+        self.window.setTitle_(title)
         self.textArea.setStringValue_(message)
+        self.defaultButton.setTitle_(defaultButtonTitle)
+        self.alternateButton.setTitle_(altButtonTitle)
         self.result = None
-        self.condition = threading.Condition()
 
         # Ensure we're not deallocated until the window that has actions
         # that point at us is closed
@@ -712,33 +716,23 @@ class QuestionController(NibClassBuilder.AutoBaseClass):
     def getAnswer(self):
         """Present the dialog and wait for user answer. Returns True or False
         depending on the button selected."""
-        self.performSelectorOnMainThread_withObject_waitUntilDone_("showAtModalLevel:", nil, NO)
-        self.condition.acquire()
-        self.condition.wait()
-        self.condition.release()
+        appl = NSApplication.sharedApplication()
+        appl.performSelectorOnMainThread_withObject_waitUntilDone_("runModalForWindow:", self.window, YES)
+        assert(self.result is not None)
         self.release()
         return self.result
 
-    # executes in GUI thread
-    def showAtModalLevel_(self, sender):
-        self.window.setLevel_(NSModalPanelWindowLevel)
-        self.window.makeKeyAndOrderFront_(nil)
-
     # bound to button in nib
     def defaultAction_(self, sender):
-        self.condition.acquire()
         self.result = True
         self.window.close()
-        self.condition.notify()
-        self.condition.release()
+        NSApplication.sharedApplication().stopModal()
 
     # bound to button in nib
     def alternateAction_(self, sender):
-        self.condition.acquire()
         self.result = False
         self.window.close()
-        self.condition.notify()
-        self.condition.release()
+        NSApplication.sharedApplication().stopModal()
 
 
 ###############################################################################
