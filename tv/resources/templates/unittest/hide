@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://www.participatorypolitics.org/">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+</head>
+<body>
+<h1>hide test template</h1>
+<div t:hideIfKey="true" t:hideFunctionKey="bool" t:hideParameter="paramtest">
+hideIfKey:true
+<t:include filename="unittest/include" />
+<t:includeTemplate filename="unittest/include-template" />
+<span t:replace="replace"/>
+<span t:replaceMarkup="replace"/>
+</div>
+<div t:hideIfNotKey="true" t:hideFunctionKey="bool" t:hideParameter="paramtest">
+hideIfNotKey:true
+<t:include filename="unittest/include" />
+<t:includeTemplate filename="unittest/include-template" />
+<span t:replace="replace"/>
+<span t:replaceMarkup="replace"/>
+</div>
+<div t:hideIfKey="false" t:hideFunctionKey="bool" t:hideParameter="paramtest">
+hideIfKey:false
+<t:include filename="unittest/include" />
+<t:includeTemplate filename="unittest/include-template" />
+<span t:replace="replace"/>
+<span t:replaceMarkup="replace"/>
+</div>
+<div t:hideIfNotKey="false" t:hideFunctionKey="bool" t:hideParameter="paramtest">
+hideIfNotKey:flase
+<t:include filename="unittest/include" />
+<t:includeTemplate filename="unittest/include-template" />
+<span t:replace="replace"/>
+<span t:replaceMarkup="replace"/>
+</div>
+</body>
+</html>
