@@ -523,7 +523,8 @@ class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
         toolbar.setSelectedItemIdentifier_(initialItem.itemIdentifier())
 
         self.window().setToolbar_(toolbar)
-        self.window().setShowsToolbarButton_(NO)
+        if hasattr(self.window(), 'setShowsToolbarButton_'): # 10.4 only
+            self.window().setShowsToolbarButton_(NO)
         self.switchPreferenceView_(initialItem)
 
     def makePreferenceItem(self, identifier, label, imageName, view):
@@ -1522,16 +1523,20 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             self.fastForwardButton.sendActionOn_(NSLeftMouseDownMask)
 
     def setVolume_(self, sender):
-        self.videoView.movie().setVolume_(sender.floatValue())
+        movie = self.videoView.movie()
+        if movie is not None:
+            movie.setVolume_(sender.floatValue())
 
     def muteUnmuteVolume_(self, sender):
-        volume = self.videoView.movie().volume()
-        if volume > 0.0:
-            self.volumeSlider.setEnabled_(NO)
-            self.videoView.movie().setVolume_(0.0)
-        else:
-            self.volumeSlider.setEnabled_(YES)
-            self.videoView.movie().setVolume_(self.volumeSlider.floatValue())
+        movie = self.videoView.movie()
+        if movie is not None:
+            volume = movie.volume()
+            if volume > 0.0:
+                self.volumeSlider.setEnabled_(NO)
+                movie.setVolume_(0.0)
+            else:
+                self.volumeSlider.setEnabled_(YES)
+                movie.setVolume_(self.volumeSlider.floatValue())
 
     def goFullscreen_(self, sender):
         self.fullscreenController = FullScreenVideoController.alloc().initWithPreviousVideoView_(self.videoView)
