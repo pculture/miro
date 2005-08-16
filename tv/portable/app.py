@@ -383,7 +383,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
             #NEEDS: handle feed:// URLs and USM subscription URLs
 
             # Let channel guide URLs pass through
-            if url.startswith('http://clients.tekritisoftware.com/pcf/channelguide'):
+            if url.startswith(config.get(config.CHANNEL_GUIDE_URL)):
                 return True
             if url.startswith('file://'):
                 return True

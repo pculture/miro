@@ -20,6 +20,7 @@ PRESERVE_X_GB_FREE          = Pref( key='preserveXGBFree',       default=20,    
 EXPIRE_AFTER_X_DAYS         = Pref( key='expireAfterXDays',      default=7,     platformSpecific=False )
 DOWNLOADS_TARGET            = Pref( key='DownloadsTarget',       default=3,     platformSpecific=False )
 MAX_MANUAL_DOWNLOADS        = Pref( key='MaxManualDownloads',    default=10,    platformSpecific=False )
+CHANNEL_GUIDE_URL           = Pref( key='ChannelGuideURL',       default='https://channelguide.participatoryculture.org/',    platformSpecific=False )
 
 MOVIES_DIRECTORY            = Pref( key='MoviesDirectory',       default=None,  platformSpecific=True )
 SUPPORT_DIRECTORY           = Pref( key='SupportDirectory',      default=None,  platformSpecific=True )

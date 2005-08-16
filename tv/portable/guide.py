@@ -4,6 +4,7 @@ from scheduler import ScheduleEvent
 from xhtmltools import urlencode
 from copy import copy
 import re
+import config
 
 HTMLPattern = re.compile("^.*(<head.*?>.*</body\s*>)", re.S)
 
@@ -44,7 +45,7 @@ class ChannelGuide(DDBObject):
         # be loaded from a plain old template. It's less elegant than
         # making another kind of feed object, but it makes it easier
         # for non-programmers to work with
-        url = 'http://clients.tekritisoftware.com/pcf/channelguide/'
+        url = config.get(config.CHANNEL_GUIDE_URL)
         info = grabURL(url)
         html = info['file-handle'].read()
         info['file-handle'].close()
