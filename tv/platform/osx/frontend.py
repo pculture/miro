@@ -452,7 +452,7 @@ class FullScreenAlertPanelController (NibClassBuilder.AutoBaseClass):
 
     def dismiss_(self, sender):
         if self.dontShowCheckbox.state() == NSOnState:
-            config.set(config.NO_FULLSCREEN_ALERT, TRUE)
+            config.set(config.NO_FULLSCREEN_ALERT, True)
         NSApplication.sharedApplication().stopModal()
         self.window().orderOut_(nil)
 
