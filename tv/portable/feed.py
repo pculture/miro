@@ -344,7 +344,7 @@ class Feed(DDBObject):
         finally:
             self.endRead()
 
-        if self.maxNew >= 0 and newItems >= self.maxNew:
+        if self.maxNew >= 0 and newitems >= self.maxNew:
             return False
         elif self.fallBehind>=0 and eligibile > self.fallBehind:
             dontUse.append(next)
