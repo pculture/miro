@@ -748,11 +748,13 @@ class RSSFeed(Feed):
         for enclosure in enclosures:
             if ((enclosure.has_key('type') and
                  (enclosure['type'].startswith('video/') or
-                  enclosure['type'].startswith('audio/'))) or
+                  enclosure['type'].startswith('audio/') or
+                  enclosure['type'] == "application/x-bittorrent")) or
                 (enclosure.has_key('url') and
-                 enclosure['url'][-4:].lower() in ['.mov','.wmv','.mp4',
-                                                   '.mp3','.mpg','.avi',
-                                                   'mpeg'])):
+                 (enclosure['url'][-4:].lower() in ['.mov','.wmv','.mp4',
+                                                   '.mp3','.mpg','.avi'] or
+                  enclosure['url'][-8].lower() == '.torrent' or
+                  enclosure['url'][-5].lower() == '.mpeg'))):
                 hasOne = True
                 break
         return hasOne
@@ -1084,7 +1086,9 @@ class ScraperFeed(Feed):
                             pass
                             #print link+" seems to be bogus..."
                     #This is a video
-                    elif mimetype.startswith('video/'):
+                    elif (mimetype.startswith('video/') or 
+                          mimetype.startswith('audeo/') or
+                          mimetype == "application/x-bittorrent"):
                         self.addVideoItem(link, links[link],linkNumber)
 
     #FIXME: go through and add error handling
