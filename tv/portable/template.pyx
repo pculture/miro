@@ -253,6 +253,11 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                     PyList_Append(self.repeatList,(getRepeatFillTemplateHide,(functionKey,ifKey,parameter,ifInvert,attrs['filename'],self)))
                 else:
                     PyList_Append(self.repeatList,(getRepeatFillTemplate,(attrs['filename'],self)))
+            elif name == 't:include':
+                if hide:
+                    PyList_Append(self.repeatList,(getRepeatIncludeHide,(functionKey,ifKey,parameter,ifInvert,attrs['filename'],self)))
+                else:
+                    PyList_Append(self.repeatList,(getRepeatInclude,(attrs['filename'],self)))                
             else:
                 PyList_Append(self.repeatList,(getRepeatText,'<%s'%name))
                 for key in attrs.keys():
@@ -605,6 +610,22 @@ def getRepeatEvalEscape(data, tid, replace):
 # Evaluates key with data
 def getRepeatEval(data, tid, replace):
     return str(evalKeyC(replace,data,None, True))
+
+# Returns text of include
+def getRepeatInclude(data, tid, args):
+    f = open(resource.path('templates/%s'%args[0]),'r')
+    html = f.read()
+    f.close()
+    return html
+
+# Returns include iff function does not evaluate to true
+def getRepeatIncludeHide(data,tid,args):
+    (functionKey,ifKey,parameter,invert, name, self) = args
+    hide = evalKeyC(functionKey, data, None, True)(evalKeyC(ifKey, data, None, True), parameter)
+    if (not invert and hide) or (invert and not hide):
+        return getRepeatInclude(data,tid,(name,self))
+    else:
+        return ''
 
 # Evaluates template and returns it
 def getRepeatFillTemplate(data,tid,args):
