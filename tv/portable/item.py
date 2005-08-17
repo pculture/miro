@@ -496,7 +496,9 @@ class Item(DDBObject):
             try:
                 ret = datetime(*self.entry.modified_parsed[0:7])
             except:
-                ret = ""
+                ret = datetime.max # Is this reasonable? It should
+                                   # avoid type issues for now, if
+                                   # nothing else
         finally:
             self.endRead()
         return ret
