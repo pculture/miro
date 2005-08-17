@@ -47,7 +47,8 @@ class ChannelGuide(DDBObject):
         # for non-programmers to work with
         url = config.get(config.CHANNEL_GUIDE_URL)
         info = grabURL(url)
-        html = info['file-handle'].read()
-        info['file-handle'].close()
-        html = HTMLPattern.match(html).group(1)
-        self.html = html
+        if info is not None:
+            html = info['file-handle'].read()
+            info['file-handle'].close()
+            html = HTMLPattern.match(html).group(1)
+            self.html = html
