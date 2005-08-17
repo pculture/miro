@@ -68,6 +68,9 @@ class HideTest(unittest.TestCase):
 
 class ViewTest(unittest.TestCase):
     pattern = re.compile("^\n<h1>view test template</h1>\n<span id=\"([^\"]+)\"/>\n", re.S)
+
+    itemPattern = re.compile("^<div id=\"(.*?)\">\n<span>&lt;span&gt;object&lt;/span&gt;</span>\n<span><span>object</span></span>\n<div style=\"display:none\">\nhideIfKey:true\n<span>This is an include</span>\n\n<span>This is a template include</span>\n\n<span>&lt;span&gt;This is a database replace&lt;/span&gt;</span>\n<span><span>This is a database replace</span></span>\n</div>\n<div>\nhideIfNotKey:true\n<span>This is an include</span>\n\n<span>This is a template include</span>\n\n<span>&lt;span&gt;This is a database replace&lt;/span&gt;</span>\n<span><span>This is a database replace</span></span>\n</div>\n<div>\nhideIfKey:false\n<span>This is an include</span>\n\n<span>This is a template include</span>\n\n<span>&lt;span&gt;This is a database replace&lt;/span&gt;</span>\n<span><span>This is a database replace</span></span>\n</div>\n<div style=\"display:none\">\nhideIfNotKey:flase\n<span>This is an include</span>\n\n<span>This is a template include</span>\n\n<span>&lt;span&gt;This is a database replace&lt;/span&gt;</span>\n<span><span>This is a database replace</span></span>\n</div>\n",re.S)
+
     def setUp(self):
         DDBObject.dd = DynamicDatabase()
         self.everything = DDBObject.dd
@@ -98,7 +101,11 @@ class ViewTest(unittest.TestCase):
         self.assertEqual(self.domHandle.callList[1]['name'],'addItemBefore')
         self.assertEqual(self.domHandle.callList[0]['id'],id)
         self.assertEqual(self.domHandle.callList[1]['id'],id)
-        # FIXME test XML
+        match0 = self.itemPattern.match(self.domHandle.callList[0]['xml'])
+        match1 = self.itemPattern.match(self.domHandle.callList[1]['xml'])
+        self.assert_(match0)
+        self.assert_(match1)
+        self.assertNotEqual(match0.group(1),match1.group(1))
 
 # FIXME Add test for evalKey
 # FIXME Add test for database add, remove, change
