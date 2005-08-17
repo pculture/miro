@@ -492,11 +492,8 @@ class TrackedView:
             return ret
 
     def onChange(self,index):
-        thread = Thread(target=templatehelper.makeOnChange(self,index))
-        thread.setDaemon(False)
-        thread.start()
-
-    def doOnChange(self, tid, xmlString):
+        tid = self.view[index].tid
+        xmlString = self.currentXML(index)
         clearEvalCache()
         if self.parent.domHandler:
             self.parent.domHandler.changeItem(tid, xmlString)
