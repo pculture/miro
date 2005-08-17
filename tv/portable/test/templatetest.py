@@ -2,6 +2,7 @@ import unittest
 import resource
 import os
 import re
+import time
 
 from template import *
 from database import *
@@ -29,6 +30,10 @@ class DOMTracker:
     def showItem(self, id):
         self.callList.append({'name':'showItem','id':id})
 
+class ChangeDelayedDOMTracker(DOMTracker):
+    def changeItem(self, id, xml):
+        time.sleep(0.1)
+        self.callList.append({'name':'changeItem','xml':xml,'id':id})
 
 class SimpleTest(unittest.TestCase):
     def setUp(self):
@@ -90,6 +95,7 @@ class ViewTest(unittest.TestCase):
             return 1
         else:
             return 0
+
     def test(self):
         (text, handle) = fillTemplate("unittest/view",{"replace":"<span>This is a database replace</span>","true":True, "false":False, "bool":self.bool, "view":self.view},self.domHandle)
         text = HTMLPattern.match(text).group(1)
@@ -106,6 +112,18 @@ class ViewTest(unittest.TestCase):
         self.assert_(match0)
         self.assert_(match1)
         self.assertNotEqual(match0.group(1),match1.group(1))
+
+    def testOutOfOrder(self):
+        self.domHandle = ChangeDelayedDOMTracker()
+        (text, handle) = fillTemplate("unittest/view",{"replace":"<span>This is a database replace</span>","true":True, "false":False, "bool":self.bool, "view":self.view},self.domHandle)
+        handle.initialFillIn()
+        self.x.beginChange()
+        self.x.endChange()
+        self.x.remove()
+        self.assertEqual(self.domHandle.callList[0]['name'],'addItemBefore')
+        self.assertEqual(self.domHandle.callList[1]['name'],'addItemBefore')
+        self.assertEqual(self.domHandle.callList[2]['name'],'changeItem')
+        self.assertEqual(self.domHandle.callList[3]['name'],'removeItem')
 
 # FIXME Add test for evalKey
 # FIXME Add test for database add, remove, change
