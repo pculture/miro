@@ -743,6 +743,20 @@ class RSSFeed(Feed):
         self.endRead()
         return ret        
 
+    def hasVideoFeed(self, enclosures):
+        hasOne = False
+        for enclosure in enclosures:
+            if ((enclosure.has_key('type') and
+                 (enclosure['type'].startswith('video/') or
+                  enclosure['type'].startswith('audio/'))) or
+                (enclosure.has_key('url') and
+                 enclosure['url'][-4:].lower() in ['.mov','.wmv','.mp4',
+                                                   '.mp3','.mpg','.avi',
+                                                   'mpeg'])):
+                hasOne = True
+                break
+        return hasOne
+
     ##
     # Updates a feed
     def update(self):
@@ -810,7 +824,7 @@ class RSSFeed(Feed):
                             item.update(entry)
                             new = False
                 if (new and entry.has_key('enclosures') and
-                               len(entry.enclosures)>0):
+                    self.hasVideoFeed(entry.enclosures)):
                     self.items.append(Item(self,entry))
             try:
                 self.updateFreq = max(15*60,self.parsed["feed"]["ttl"]*60)
