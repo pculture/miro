@@ -901,12 +901,10 @@ class PlaylistItemFromItem (frontend.PlaylistItem):
     def getID(self):
         return self.item.getID()
 
+    # Return a dictionary containing info to be injected in a template
     def getInfoMap(self):
         info = dict()
-        info['title'] = self.item.getTitle()
-        if info['title'].startswith(config.get(config.MOVIES_DIRECTORY)):
-            info['title'] = os.path.basename(info['title'])
-        info['link'] = self.item.getLink()
+        info['this'] = self.item
         return info
 
 def mapToPlaylistItem(obj):
