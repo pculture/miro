@@ -8,23 +8,22 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <style>
-        body
-        {
-            font-family:    lucida grande, verdana;
-            font-size:      12px;
-            color:          white;
-            background:     black;
-        }
-        
-        .title
-        {
-            font-weight:    bold;
-        }
+        @import url(resource:css/style.css);
     </style>
 </head>
 
-<body>
-<span class="title" t:replace="title" />
+<body id="video_info_area">
+
+    <div class="left_box">
+        <span t:replace="this getTitle" /> by ??? (<a href="@@@this getFeed getURL@@@"><span t:replace="this getFeed getTitle" /></a>)<br/>
+        <span t:replaceMarkup="this getPaymentHTML" />
+    </div>
+
+    <div class="right_box">
+        <span class="report_expire">Expires in <span t:replace="this getExpirationTime" /></span>  <a href="action:keepItem?item=@@@this getID@@@">keep</a> <br />
+        <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a>  
+    </div>
+
 </body>
 
 </html>
