@@ -964,9 +964,9 @@ class BTDisplay:
             self.dler.endRead()
             #FIXME: Really, this change should trigger a change in the item,
             #so we don't have to manually change each item
-            self.beginChange()
-            self.endChange()
-            for item in self.itemList:
+            self.dler.beginChange()
+            self.dler.endChange()
+            for item in self.dler.itemList:
                 item.beginChange()
                 item.endChange()
 
