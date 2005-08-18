@@ -1473,7 +1473,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
     def exitVideoMode(self):
         if self.fullscreenController is not nil:
-            self.fullscreenController.exitFullscreen()
+            self.fullscreenController.exitFullScreen()
             self.fullscreenController = nil
         mainController = self.videoView.window().delegate()
         mainController.selectDisplay(self.previousDisplay, self.frame.mainDisplay)
@@ -1489,6 +1489,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
     def play_(self, sender):
         self.videoView.play_(self)
+        self.videoView.setNeedsDisplay_(YES)
         self.isPlaying = True
 
     def pause_(self, sender):
