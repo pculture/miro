@@ -583,20 +583,20 @@ messages
 .unwatched{
 	font-size: 10px;
 	color: #00B904;
-	background: url(resource:images/icons/calendar.png) 0 2px no-repeat;
+	background: url(resource:images/calendar.png) 0 2px no-repeat;
 	padding: 3px 0 3px 15px;
 	}
 
 
 .report_expire{
 	font-size: 10px;
-	background: url(resource:images/icons/calendar.png) 0 2px no-repeat;
+	background: url(resource:images/calendar.png) 0 2px no-repeat;
 	padding: 3px 0 3px 15px;
 	}
 
 .report_pending{
 	font-size: 10px;
-	background: url(resource:images/icons/pending.png) 0 2px no-repeat;
+	background: url(resource:images/pending.png) 0 2px no-repeat;
 	padding: 3px 0 3px 15px;
 	}
 	
@@ -1246,4 +1246,25 @@ padding: 2px 0 6px 0;
 .first_time p {
 margin: 0;
 padding: 0 0 12px 0;
+}
+
+/*/////////////////////////////////////////////
+
+Video info area
+
+/////////////////////////////////////////////*/
+
+#video_info_area {
+    background: black;
+    color:      white;
+    margin-top: 6px;
+}
+
+#video_info_area a {
+    color:  white;
+}
+
+.left_box {
+    float:      left;
+    margin-left: 12px;
 }
