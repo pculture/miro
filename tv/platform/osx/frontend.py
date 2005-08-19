@@ -190,11 +190,19 @@ class MainFrame:
 class DisplayHostView (NibClassBuilder.AutoBaseClass):
     
     def awakeFromNib(self):
+        self.scheduledDisplay = None
         self.hostedDisplay = None
         self.hostedView = nil
-    
+
+    def setScheduledDisplay(self, display):
+        if self.scheduledDisplay is not None:
+            self.scheduledDisplay.cancel()
+        self.scheduledDisplay = display
+        
     def setDisplay(self, display, owner):
         pool = NSAutoreleasePool.alloc().init()
+
+        self.scheduledDisplay = None
 
         # Send notification to old display if any
         if self.hostedDisplay is not None:
@@ -297,6 +305,9 @@ class MainController (NibClassBuilder.AutoBaseClass):
     ### Switching displays ###
 
     def selectDisplay(self, display, area):
+        # Tell the display area that the next display it will host once it's
+        # ready is this one.
+        area.setScheduledDisplay(display)
         # Tell the new display we want to switch to it. It'll call us
         # back when it's ready to display without flickering.
         display.callWhenReadyToDisplay(lambda: self.doSelectDisplay(display, area))
@@ -1019,44 +1030,10 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
 
 
 ###############################################################################
-#### Right-hand pane displays generally                                    ####
+#### An empty display                                                      ####
 ###############################################################################
 
-# To be provided in platform package
-class Display:
-    "Base class representing a display in a MainFrame's right-hand pane."
-
-    def __init__(self):
-        self.currentFrame = None # tracks the frame that currently has us selected
-
-    def onSelected(self, frame):
-        "Called when the Display is shown in the given MainFrame."
-        pass
-
-    def onDeselected(self, frame):
-        """Called when the Display is no longer shown in the given
-        MainFrame. This function is called on the Display losing the
-        selection before onSelected is called on the Display gaining the
-        selection."""
-        pass
-
-    def onSelected_private(self, frame):
-        assert(self.currentFrame == None)
-        self.currentFrame = frame
-
-    def onDeselected_private(self, frame):
-        assert(self.currentFrame == frame)
-        self.currentFrame = None
-
-    # The MainFrame wants to know if we're ready to display (eg, if the
-    # a HTML display has finished loading its contents, so it can display
-    # immediately without flicker.) We're to call hook() when we're ready
-    # to be displayed.
-    def callWhenReadyToDisplay(self, hook):
-        hook()
-
-
-class NullDisplay (Display):
+class NullDisplay (app.Display):
     "Represents an empty right-hand area."
 
     def __init__(self):
@@ -1064,7 +1041,7 @@ class NullDisplay (Display):
         # NEEDS: take (and leak) a covering reference -- cargo cult programming
         self.view = WebView.alloc().init().retain()
         self.view.setCustomUserAgent_("DTV/pre-release (http://participatoryculture.org/)")
-        Display.__init__(self)
+        app.Display.__init__(self)
         del pool
 
     def getView(self):
@@ -1075,11 +1052,10 @@ class NullDisplay (Display):
 #### Right-hand pane HTML display                                          ####
 ###############################################################################
 
-
-class HTMLDisplay (Display):
+class HTMLDisplay (app.Display):
     "HTML browser that can be shown in a MainFrame's right-hand pane."
 
-    sharedWebView = None
+#    sharedWebView = None
 
     # We don't need to override onSelected, onDeselected
 
@@ -1101,7 +1077,7 @@ class HTMLDisplay (Display):
 
         self.web = ManagedWebView.alloc().init(html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(x), frameHint and areaHint and frameHint.getDisplaySizeHint(areaHint) or None)
 
-        Display.__init__(self)
+        app.Display.__init__(self)
         del pool
 
     def getView(self):
@@ -1163,6 +1139,12 @@ class HTMLDisplay (Display):
         if webView is not nil:
             webView.setHostWindow_(self.currentFrame.obj.window()) # not very pretty
     
+    def cancel(self):
+        print "DTV: Canceling load of WebView %s" % self.web.getView()
+        self.web.getView().stopLoading_(nil)
+        self.readyToDisplay = False
+        self.readyToDisplayHook = None
+
 
 ###############################################################################
 #### An enhanced WebView                                                   ####
@@ -1215,7 +1197,8 @@ class ManagedWebView (NSObject):
         handle.write(initialHTML)
         handle.close()
         print "DTV: loading temp file %s" % location
-        self.view.mainFrame().loadRequest_(NSURLRequest.requestWithURL_(NSURL.URLWithString_("file://%s" % location)))
+        request = NSURLRequest.requestWithURL_(NSURL.fileURLWithPath_(location))
+        self.view.mainFrame().loadRequest_(request)
         return self
 
     ##
@@ -1406,14 +1389,14 @@ class ManagedWebView (NSObject):
 #### Right-hand pane video display                                         ####
 ###############################################################################
 
-class VideoDisplay (Display,app.VideoDisplayDB):
+class VideoDisplay (app.Display, app.VideoDisplayDB):
     "Video player that can be shown in a MainFrame's right-hand pane."
 
     controller = nil
 
     def __init__(self, firstItemId, view, previousDisplay):
         app.VideoDisplayDB.__init__(self, firstItemId, view)
-        Display.__init__(self)
+        app.Display.__init__(self)
         VideoDisplay.controller.previousDisplay = previousDisplay
 
     def onSelected(self, frame):
