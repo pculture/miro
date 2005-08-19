@@ -31,12 +31,15 @@ import templatehelper
 
 db = database.defaultDatabase
 
+def main():
+    Controller().Run()
+
 ###############################################################################
 #### Provides cross platform part of Video Display                         ####
-####                                                                       ####
 #### This must be defined before we import the frontend                    ####
 ###############################################################################
 class VideoDisplayDB:
+    
     def __init__(self, firstItemId, origView):
         self.origView = origView
 
@@ -76,10 +79,52 @@ class VideoDisplayDB:
             item.onViewed()
         return item
 
-import frontend
 
-def main():
-    Controller().Run()
+###############################################################################
+#### Base class for displays                                               ####
+#### This must be defined before we import the frontend                    ####
+###############################################################################
+
+class Display:
+    "Base class representing a display in a MainFrame's right-hand pane."
+
+    def __init__(self):
+        self.currentFrame = None # tracks the frame that currently has us selected
+
+    def onSelected(self, frame):
+        "Called when the Display is shown in the given MainFrame."
+        pass
+
+    def onDeselected(self, frame):
+        """Called when the Display is no longer shown in the given
+        MainFrame. This function is called on the Display losing the
+        selection before onSelected is called on the Display gaining the
+        selection."""
+        pass
+
+    def onSelected_private(self, frame):
+        assert(self.currentFrame == None)
+        self.currentFrame = frame
+
+    def onDeselected_private(self, frame):
+        assert(self.currentFrame == frame)
+        self.currentFrame = None
+
+    # The MainFrame wants to know if we're ready to display (eg, if the
+    # a HTML display has finished loading its contents, so it can display
+    # immediately without flicker.) We're to call hook() when we're ready
+    # to be displayed.
+    def callWhenReadyToDisplay(self, hook):
+        hook()
+
+    def cancel(self):
+        """Called when the Display is not shown because it is not ready yet
+        and another display will take its place"""
+        pass
+
+
+# We can now safely import the frontend module
+import frontend
 
 ###############################################################################
 #### The main application controller object, binding model to view         ####
