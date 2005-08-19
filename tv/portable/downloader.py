@@ -947,8 +947,9 @@ class BTDisplay:
             item.setDownloadedTime()
         self.dler.beginRead()
         try:
-            if not self.dler.state == "finished":
-                self.dler.state = "finished"
+            if not (self.dler.state == "uploading" or
+                    self.dler.state == "finished"):
+                self.dler.state = "uploading"
                 newfilename = os.path.join(config.get(config.MOVIES_DIRECTORY),self.dler.shortFilename)
                 newfilename = self.dler.nextFreeFilename(newfilename)
                 rename(self.dler.filename,newfilename)
@@ -986,13 +987,17 @@ class BTDisplay:
                 self.lastUpTotal = statistics.get('upTotal')
             if self.dler.state != "paused":
                 self.dler.currentSize = int(self.dler.totalSize*statistics.get('fractionDone'))
-            if self.dler.state != "finished":
+            if self.dler.state != "finished" and self.dler.state != "uploading":
                 self.dler.rate = statistics.get('downRate')
             if self.dler.rate == None:
                 self.dler.rate = 0.0
             self.dler.eta = statistics.get('timeEst')
             if self.dler.eta == None:
                 self.dler.eta = 0
+            if (self.dler.state == "uploading" and
+                self.dler.uploaded >= 1.5*self.dler.totalSize):
+                self.dler.state = "finished"
+                self.dler.torrent.shutdown()
             if self.lastUpdated < now-3:
                 update = True
                 self.lastUpdated = now
@@ -1062,11 +1067,12 @@ class BTDownloader(Downloader):
         for item in self.itemList:
             item.beginChange()
             item.endChange()
-        self.torrent.shutdown()
-        try:
+        if self.torrent is not None:
             self.torrent.shutdown()
-        except KeyError:
-            pass
+            try:
+                self.torrent.shutdown()
+            except KeyError:
+                pass
         try:
             remove(self.filename)
         except:
@@ -1170,12 +1176,12 @@ class BTDownloader(Downloader):
     def restartDL(self):
         threadpriority.setBackgroundPriority()
 
-        if self.metainfo != None:
+        if self.metainfo != None and self.state != "finished":
             self.torrent = self.multitorrent.start_torrent(self.metainfo,
                                       self.torrentConfig, self, self.filename)
 
             self.get_status()
-        else:
+        elif self.state != "finished":
             self.state = "paused"
 
 
