@@ -25,6 +25,7 @@ import objc
 import time
 import math
 import struct
+import urlparse
 import threading
 
 NibClassBuilder.extractClasses("MainMenu")
@@ -94,7 +95,13 @@ class AppController (NSObject):
         self.actualApp.onStartup()
 
     def applicationDidFinishLaunching_(self, notification):
-        pass
+        # The [NSURLRequest setAllowsAnyHTTPSCertificate:forHost:] selector is
+        # not documented anywhere, so I assume it is not public. It is however 
+        # a very clean and easy way to allow us to load our channel guide from
+        # https, so let's use it here anyway :)
+        components = urlparse.urlparse(config.get(config.CHANNEL_GUIDE_URL))
+        channelGuideHost = components[1]
+        NSURLRequest.setAllowsAnyHTTPSCertificate_forHost_(YES, channelGuideHost)
 
     def applicationWillTerminate_(self, notification):
         self.actualApp.onShutdown()
@@ -1196,6 +1203,7 @@ class ManagedWebView (NSObject):
         handle = os.fdopen(handle,"w")
         handle.write(initialHTML)
         handle.close()
+        
         print "DTV: loading temp file %s" % location
         request = NSURLRequest.requestWithURL_(NSURL.fileURLWithPath_(location))
         self.view.mainFrame().loadRequest_(request)
