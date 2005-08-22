@@ -88,5 +88,11 @@
 <t:triggerActionOnLoad url="action:markFeedViewed?url=@@@feed getURL@@@" />
 
 
+
+<div class="bottom_strip">
+Thanks for trying DTV Beta!  It still has some <a href="http://participatoryculture.org/dtv_faq.php#known_bugs">bugs</a>, but we're working on them.  <a href="mailto:feedback@ppolitics.org?Subject=DTV Beta Feedback">Send us your feedback</a>!
+</div>
+
+
 </body>
 </html>

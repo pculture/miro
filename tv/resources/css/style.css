@@ -583,20 +583,20 @@ messages
 .unwatched{
 	font-size: 10px;
 	color: #00B904;
-	background: url(resource:images/calendar.png) 0 2px no-repeat;
+	background: url(resource:images/icons/calendar.png) 0 2px no-repeat;
 	padding: 3px 0 3px 15px;
 	}
 
 
 .report_expire{
 	font-size: 10px;
-	background: url(resource:images/calendar.png) 0 2px no-repeat;
+	background: url(resource:images/icons/calendar.png) 0 2px no-repeat;
 	padding: 3px 0 3px 15px;
 	}
 
 .report_pending{
 	font-size: 10px;
-	background: url(resource:images/pending.png) 0 2px no-repeat;
+	background: url(resource:images/icons/pending.png) 0 2px no-repeat;
 	padding: 3px 0 3px 15px;
 	}
 	
@@ -1053,7 +1053,7 @@ SIDEBAR
 	background: #00B904;
 	font-weight: bold;
 	font-size: 10px;
-	text-shadow: 0px 1px 0px #333;
+/*	text-shadow: 0px 1px 0px #333;  */
 	}
 
 .green_left{
@@ -1074,7 +1074,7 @@ SIDEBAR
 	margin: 0 8px 0 9px;
 	background: #d4d4d4;
 	font-size: 10px;
-	text-shadow: 0px 1px 0px #fff;
+/*	text-shadow: 0px 1px 0px #fff;  */
 	}
 
 .gray_left{
@@ -1097,7 +1097,7 @@ SIDEBAR
 	background: #00B904;
 	font-weight: bold;
 	font-size: 10px;
-	text-shadow: 0px 1px 0px #333;
+/*	text-shadow: 0px 1px 0px #333;  */
 	}
 		
 .both_green_left{
@@ -1119,7 +1119,7 @@ SIDEBAR
 	margin: 0 8px 0 9px;
 	background: #d4d4d4;
 	font-size: 10px;
-	text-shadow: 0px 1px 0px #fff;
+/*	text-shadow: 0px 1px 0px #fff;  */
 	}
 
 .both_gray_left{
@@ -1214,6 +1214,32 @@ Scraping Channel
 
 
 
+
+/*/////////////////////////////////////////////
+
+Bottom Feedback Strip
+
+/////////////////////////////////////////////*/
+
+.bottom_strip {
+position: fixed;
+bottom: 0;
+left: 0;
+height: 16px;
+background-color: #FFF9B4;
+border-top: 1px solid #DFD9A4;
+padding: 1px 0 0px 0;
+font-size: 11px;
+width: 100%;
+color: #333;
+text-align: center;
+}
+
+.bottom_strip a, .bottom_strip a:visited {
+color: #222;
+}
+
+
 /*/////////////////////////////////////////////
 
 First Time Intro
@@ -1246,25 +1272,4 @@ padding: 2px 0 6px 0;
 .first_time p {
 margin: 0;
 padding: 0 0 12px 0;
-}
-
-/*/////////////////////////////////////////////
-
-Video info area
-
-/////////////////////////////////////////////*/
-
-#video_info_area {
-    background: black;
-    color:      white;
-    margin-top: 6px;
-}
-
-#video_info_area a {
-    color:  white;
-}
-
-.left_box {
-    float:      left;
-    margin-left: 12px;
 }
