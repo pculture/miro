@@ -333,8 +333,12 @@ class Controller (frontend.Application):
                 # might not be there... I'm not sure why...
                 if hasattr(self,'selectDisplay'):
                     self.selectDisplay(NullDisplay())
-            if not oldSelected is None:
-                oldSelected.onDeselect()
+
+            # Note: Commenting this out since onDeselect() is called
+            #       by Tab.start() --NN 08/22/05
+
+            #if not oldSelected is None:
+            #    oldSelected.onDeselect()
 
     def setTabListActive(self, active):
         """If active is true, show the tab list normally. If active is
