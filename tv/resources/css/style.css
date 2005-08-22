@@ -1273,3 +1273,24 @@ padding: 2px 0 6px 0;
 margin: 0;
 padding: 0 0 12px 0;
 }
+
+/*/////////////////////////////////////////////
+
+Video info area
+
+/////////////////////////////////////////////*/
+
+#video_info_area {
+    background: black;
+    color:      white;
+    margin-top: 6px;
+}
+
+#video_info_area a {
+    color:  white;
+}
+
+.left_box {
+    float:      left;
+    margin-left: 12px;
+}
