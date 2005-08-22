@@ -1294,3 +1294,11 @@ Video info area
     float:      left;
     margin-left: 12px;
 }
+
+#video_info_area .delete_button {
+	background: url(resource:images/delete_file_white.png) 0px 0px no-repeat;
+}
+
+#video_info_area .delete_button:hover {
+	background: url(resource:images/delete_file_white.png) 0px -16px no-repeat;
+}
