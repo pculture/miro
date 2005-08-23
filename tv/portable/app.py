@@ -961,9 +961,8 @@ class PlaylistItemFromItem (frontend.PlaylistItem):
         
         title = self.item.getTitle()
         if title.startswith(config.get(config.MOVIES_DIRECTORY)):
-            info += os.path.basename(title)
-        else:
-            info += title
+            title = os.path.basename(title)
+        info += '<span class="title">%s</span>' % title
         
         channelName = self.item.getFeed().getTitle()
         channelLink = self.item.getFeed().getLink()
