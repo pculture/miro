@@ -1299,6 +1299,7 @@ Video info area
 
 #video_info_area .right_box {
     position:   absolute;
+    width:      auto;
     right:      0px;
     background: black;
 }
