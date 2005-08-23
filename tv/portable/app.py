@@ -132,8 +132,12 @@ import frontend
 
 class Controller (frontend.Application):
 
+    instance = None
+
     def __init__(self):
         frontend.Application.__init__(self)
+        assert(Controller.instance is None)
+        Controller.instance = self
 
     ### Startup and shutdown ###
 
@@ -950,10 +954,31 @@ class PlaylistItemFromItem (frontend.PlaylistItem):
     def getID(self):
         return self.item.getID()
 
+    def getVideoInfoHTML(self):
+        info = '<span>'
+        
+        title = self.item.getTitle()
+        if title.startswith(config.get(config.MOVIES_DIRECTORY)):
+            info += os.path.basename(title)
+        else:
+            info += title
+        
+        channelName = self.item.getFeed().getTitle()
+        channelLink = self.item.getFeed().getLink()
+        if channelLink == '':
+            info += ' (%s)' % channelName
+        else:
+            info += ' (<a href="%s">%s</a>)' % (channelLink, channelName)
+        
+        info += '<span>'
+        print info
+        return info
+
     # Return a dictionary containing info to be injected in a template
     def getInfoMap(self):
         info = dict()
         info['this'] = self.item
+        info['videoInfoHTML'] = self.getVideoInfoHTML()
         return info
 
 def mapToPlaylistItem(obj):
