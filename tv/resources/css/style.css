@@ -1281,6 +1281,7 @@ Video info area
 /////////////////////////////////////////////*/
 
 #video_info_area {
+    font-size:  13px;
     background: black;
     color:      white;
     margin-top: 6px;
@@ -1290,13 +1291,20 @@ Video info area
     color:  white;
 }
 
-.left_box {
-    float:      left;
+#video_info_area .left_box {
+    position:   absolute;
+    left:       0px;
     margin-left: 12px;
 }
 
+#video_info_area .right_box {
+    position:   absolute;
+    right:      0px;
+    background: black;
+}
+
 #video_info_area .delete_button {
-	background: url(resource:images/delete_file_white.png) 0px 0px no-repeat;
+    background: url(resource:images/delete_file_white.png) 0px 0px no-repeat;
 }
 
 #video_info_area .delete_button:hover {
