@@ -16,6 +16,7 @@
                 switcherMatrix = id; 
                 tabView = id; 
                 videoDisplayController = id; 
+                videoInfoHostView = id; 
             }; 
             SUPERCLASS = NSWindowController; 
         }, 
@@ -39,7 +40,6 @@
                 fastBackwardButton = id; 
                 fastForwardButton = id; 
                 fullscreenButton = id; 
-                infoView = id; 
                 muteButton = id; 
                 playPauseButton = id; 
                 progressDisplayer = id; 
