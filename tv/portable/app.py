@@ -172,7 +172,7 @@ class Controller (frontend.Application):
                 print "Spawning Channel Guide..."
                 channelGuide = guide.ChannelGuide()
                 feed.UniversalFeed('http://www.mediarights.org/bm/rss.php?i=1')
-                feed.UniversalFeed('http://mediamatters.org/tools/syndication/latest.rss')
+                feed.UniversalFeed('http://live.watchmactv.com/wp-rss2.php')
                 feed.UniversalFeed('http://www.rocketboom.com/vlog/quicktime_daily_enclosures.xml')
                 feed.UniversalFeed('http://some-pig.net/videos/rss.php?i=2')
                 feed.UniversalFeed('http://64.207.132.106/tmv/rss.php?i=2')
