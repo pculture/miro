@@ -67,17 +67,19 @@ class VideoDisplayDB:
         finally:
             self.view.endRead()
 
-    def cur(self):
-        item = self.view.cur()
+    def skipTo(self, item):
         if item is not None:
             item.onViewed()
         return item
 
+    def cur(self):
+        return self.skipTo(self.view.cur())
+
     def getNext(self):
-        item = self.view.getNext()
-        if item is not None:
-            item.onViewed()
-        return item
+        return self.skipTo(self.view.getNext())
+        
+    def getPrev(self):
+        return self.skipTo(self.view.getPrev())
 
 
 ###############################################################################
@@ -971,7 +973,6 @@ class PlaylistItemFromItem (frontend.PlaylistItem):
             info += ' (<a href="%s">%s</a>)' % (channelLink, channelName)
         
         info += '<span>'
-        print info
         return info
 
     # Return a dictionary containing info to be injected in a template
