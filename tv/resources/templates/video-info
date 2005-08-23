@@ -15,13 +15,13 @@
 <body id="video_info_area">
 
     <div class="left_box">
-        <span t:replaceMarkup="videoInfoHTML" /><br/>
-        <span t:replaceMarkup="this getPaymentHTML" />
+        <div><span t:replaceMarkup="videoInfoHTML" /></div>
+        <div><span t:replaceMarkup="this getPaymentHTML" /></div>
     </div>
 
     <div class="right_box">
-        <span class="report_expire">Expires: <span t:replace="this getExpirationTime" /></span>  <a href="action:keepItem?item=@@@this getID@@@">keep</a> <br />
-        <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a>  
+        <span class="report_expire">Expires: <span t:replace="this getExpirationTime" /></span> <!-- ><a href="action:keepItem?item=@@@this getID@@@">keep</a> --> <br />
+        <!-- <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a>  -->
     </div>
 
 </body>
