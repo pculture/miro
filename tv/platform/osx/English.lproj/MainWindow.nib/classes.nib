@@ -26,8 +26,8 @@
         {CLASS = TrackButton; LANGUAGE = ObjC; SUPERCLASS = NSButton; }, 
         {
             ACTIONS = {
-                fastBackward = id; 
-                fastForward = id; 
+                backward = id; 
+                forward = id; 
                 goFullscreen = id; 
                 muteUnmuteVolume = id; 
                 playPause = id; 
@@ -37,8 +37,8 @@
             CLASS = VideoDisplayController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                fastBackwardButton = id; 
-                fastForwardButton = id; 
+                backwardButton = id; 
+                forwardButton = id; 
                 fullscreenButton = id; 
                 muteButton = id; 
                 playPauseButton = id; 
