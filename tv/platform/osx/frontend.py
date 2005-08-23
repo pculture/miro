@@ -19,13 +19,13 @@ import database
 
 import re
 import os
-import tempfile
 import sys
 import objc
 import time
 import math
 import struct
 import urlparse
+import tempfile
 import threading
 
 NibClassBuilder.extractClasses("MainMenu")
@@ -962,7 +962,7 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
 
     def movieShouldTask_(self, movie):
         currentTime = self.getCurrentTimeInSeconds()
-        if currentTime - self.lastTime >= 1.0 or self.dragging:
+        if math.fabs(currentTime - self.lastTime) >= 1.0 or self.dragging:
             self.setNeedsDisplay_(YES)
             self.lastTime = currentTime
         return NO
@@ -1428,8 +1428,10 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
     def awakeFromNib(self):
         self.reset()
-        self.fastForwardButton.sendActionOn_(NSLeftMouseDownMask)
+        self.forwardButton.sendActionOn_(NSLeftMouseDownMask)
+        self.backwardButton.sendActionOn_(NSLeftMouseDownMask)
         self.fullscreenController = nil
+        self.fastSeekTimer = nil
         VideoDisplay.controller = self
 
     def reset(self):
@@ -1473,10 +1475,10 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         mainController.selectDisplay(self.previousDisplay, self.frame.mainDisplay)
 
     def enableControls(self, enabled):
-        self.fastBackwardButton.setEnabled_(enabled)
+        self.backwardButton.setEnabled_(enabled)
         self.stopButton.setEnabled_(enabled)
         self.playPauseButton.setEnabled_(enabled)
-        self.fastForwardButton.setEnabled_(enabled)
+        self.forwardButton.setEnabled_(enabled)
         self.muteButton.setEnabled_(enabled)
         self.volumeSlider.setEnabled_(enabled)
         self.fullscreenButton.setEnabled_(enabled)
@@ -1501,21 +1503,50 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         else:
             self.play_(sender)
 
-    def fastForward_(self, sender):
-        if self.videoView.movie().rate() == 1.0:
-            self.videoView.movie().setRate_(2.0)
-            self.fastForwardButton.sendActionOn_(NSLeftMouseUpMask)
-        else:
-            self.videoView.movie().setRate_(1.0)
-            self.fastForwardButton.sendActionOn_(NSLeftMouseDownMask)
+    def forward_(self, sender):
+        self.performSeek(sender, 1)
+        
+    def backward_(self, sender):
+        self.performSeek(sender, -1)
 
-    def fastBackward_(self, sender):
-        if self.videoView.movie().rate() == 1.0:
-            self.videoView.movie().setRate_(-2.0)
-            self.fastForwardButton.sendActionOn_(NSLeftMouseUpMask)
+    def performSeek(self, sender, direction):
+        if sender.state() == NSOnState:
+            sender.sendActionOn_(NSLeftMouseUpMask)
+            info = {'seekDirection': direction}
+            self.fastSeekTimer = NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_(0.5, self, 'fastSeek:', info, NO)
+            NSRunLoop.currentRunLoop().addTimer_forMode_(self.fastSeekTimer, NSEventTrackingRunLoopMode)
         else:
-            self.videoView.movie().setRate_(1.0)
-            self.fastForwardButton.sendActionOn_(NSLeftMouseDownMask)
+            sender.sendActionOn_(NSLeftMouseDownMask)
+            if self.fastSeekTimer is nil:
+                self.videoView.movie().setRate_(1.0)
+            else:
+                self.fastSeekTimer.invalidate()
+                self.fastSeekTimer = nil
+                self.skip(direction)
+
+    def fastSeek_(self, timer):
+        assert(self.videoView.movie().rate() == 1.0)
+        info = timer.userInfo()
+        direction = info['seekDirection']
+        rate = 2 * direction
+        self.videoView.movie().setRate_(rate)
+        self.fastSeekTimer = nil
+
+    def skip(self, direction):
+        nextItem = None
+        if direction == 1:
+            nextItem = self.playlist.getNext()
+        else:
+            if self.progressDisplayer.getCurrentTimeInSeconds() <= 0.5:
+                nextItem = self.playlist.getPrev()
+            else:
+                self.videoView.movie().gotoBeginning()
+            
+        if nextItem is not None:
+            self.selectPlaylistItem(nextItem)
+            self.play_(nil)
+            
+        return nextItem
 
     def setVolume_(self, sender):
         movie = self.videoView.movie()
@@ -1556,11 +1587,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
                 self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('pause_blue.png'))
         elif notification.name() == QTMovieDidEndNotification:
             if not self.progressDisplayer.dragging:
-                nextItem = self.playlist.getNext()
-                if nextItem is not None:
-                    self.selectPlaylistItem(nextItem)
-                    self.play_(nil)
-                else:
+                if self.skip(1) is None:
                     self.exitVideoMode()
 
 
