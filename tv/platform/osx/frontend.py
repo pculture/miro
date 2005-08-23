@@ -160,6 +160,9 @@ class AppController (NSObject):
     def tellAFriend_(self, sender):
         print "NOT IMPLEMENTED"
 
+    def validateMenuItem_(self, item):
+        return item.action() == 'showPreferencesWindow:'
+
 
 ###############################################################################
 #### Main window                                                           ####
@@ -448,8 +451,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
         NSMenu.popUpContextMenu_withEvent_forView_( menu, event, sender )
 
-#    def validateMenuItem_(self, item):
-#        return super(MainController, self).validateMenuItem_(item)
+    def validateMenuItem_(self, item):
+        return item.action() == 'addChannel:'
 
 
 ###############################################################################
