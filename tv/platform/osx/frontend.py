@@ -179,6 +179,7 @@ class MainFrame:
         self.channelsDisplay = None
         self.collectionDisplay = None
         self.mainDisplay = None
+        self.videoInfoDisplay = None
         # Do this in two steps so that self.obj is set when self.obj.init
         # is called. That way, init can turn around and call selectDisplay.
         self.obj = MainController.alloc()
@@ -274,6 +275,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         self.frame.channelsDisplay = self.channelsHostView
         self.frame.collectionDisplay = self.collectionHostView
         self.frame.mainDisplay = self.mainHostView
+        self.frame.videoInfoDisplay = self.videoInfoHostView
         self.restoreLayout()
         self.actionButton.sendActionOn_(NSLeftMouseDownMask)
         self.showWindow_(nil)
@@ -1218,7 +1220,7 @@ class ManagedWebView (NSObject):
             exists = webView.windowScriptObject().evaluateWebScript_("typeof(getContextClickMenu)") == "function"
             if exists:
                 x = webView.windowScriptObject().callWebScriptMethod_withArguments_("getContextClickMenu",[contextMenu['WebElementDOMNode']])
-
+                    
                 # getContextClickMenu returns a string with one menu
                 # item on each line in the format
                 # "URL|description" Blank lines are separators
@@ -1452,8 +1454,9 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.setVolume_(self.volumeSlider)
 
         info = item.getInfoMap()
-        html = template.fillStaticTemplate('video-info', info)
-        self.infoView.mainFrame().loadHTMLString_baseURL_(html, nil)
+        template = app.TemplateDisplay('video-info', info, app.Controller.instance, None, None, None)
+        area = app.Controller.instance.frame.videoInfoDisplay
+        app.Controller.instance.frame.selectDisplay(template, area)        
 
         nc.removeObserver_(self)
         nc.addObserver_selector_name_object_(
