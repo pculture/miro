@@ -492,9 +492,9 @@ class TrackedView:
             return ret
 
     def onChange(self,index):
+        clearEvalCache()
         tid = self.view[index].tid
         xmlString = self.currentXML(index)
-        clearEvalCache()
         if self.parent.domHandler:
             self.parent.domHandler.changeItem(tid, xmlString)
         self.parent.checkHides()
