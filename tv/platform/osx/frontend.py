@@ -1214,6 +1214,18 @@ class ManagedWebView (NSObject):
         self.view.mainFrame().loadRequest_(request)
         return self
 
+    def isKeyExcludedFromWebScript_(self,key):
+        return YES
+
+    def isSelectorExcludedFromWebScript_(self,sel):
+        if (str(sel) == 'eventURL'):
+            return NO
+        else:
+            return YES
+
+    def eventURL(self,url):
+        self.onLoadURL(str(url))
+
     ##
     # Create CTRL-click menu on the fly
     def webView_contextMenuItemsForElement_defaultMenuItems_(self,webView,contextMenu,defaultMenuItems):
@@ -1285,6 +1297,9 @@ class ManagedWebView (NSObject):
             if self.onInitialLoadFinished:
                 self.onInitialLoadFinished()
 
+            scriptObj = self.view.windowScriptObject()
+            scriptObj.setValue_forKey_(self,'frontend')
+
     # Decorator to make using execAfterLoad easier
     def deferUntilAfterLoad(func):
         def runFunc(*args, **kwargs):
@@ -1336,6 +1351,12 @@ class ManagedWebView (NSObject):
         elt = doc.getElementById_(id)
         return elt
 
+#     def printHTML(self):
+#         print
+#         print "--- Document HTML ---"
+#         print self.view.mainFrame().DOMDocument().body().outerHTML()
+#         print "--- End Document HTML ---"
+
     def createElt(self, xml):
         parent = self.view.mainFrame().DOMDocument().createElement_("div")
         parent.setInnerHTML_(xml)
@@ -1352,6 +1373,7 @@ class ManagedWebView (NSObject):
         else:
             elt.insertBefore__(self.createElt(xml), None)
             #print "add item %s at end of %s" % (elt.getAttribute_("id"), id)
+            #print xml[0:79]
 
     @deferUntilAfterLoad
     def addItemBefore(self, xml, id):
@@ -1359,8 +1381,10 @@ class ManagedWebView (NSObject):
         if not elt:
             print "warning: addItemBefore: missing element %s" % id
         else:
-            elt.parentNode().insertBefore__(self.createElt(xml), elt)
-            #print "add item %s before %s" % (elt.getAttribute_("id"), id)
+            newelt = self.createElt(xml)
+            elt.parentNode().insertBefore__(newelt, elt)
+            #print "add item %s before %s" % (newelt.getAttribute_("id"), id)
+            #print xml[0:79]
 
     @deferUntilAfterLoad
     def removeItem(self, id):
@@ -1379,6 +1403,12 @@ class ManagedWebView (NSObject):
         else:
             elt.setOuterHTML_(xml)
             #print "change item %s (new id %s)" % (id, elt.getAttribute_("id"))
+            #print xml[0:79]
+            #if id != elt.getAttribute_("id"):
+            #    raise Exception
+            #elt = self.findElt(id)
+            #if not elt:
+            #    print "ERROR ELEMENT LOST %s" % id
 
     @deferUntilAfterLoad
     def hideItem(self, id):
