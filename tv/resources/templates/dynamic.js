@@ -9,8 +9,12 @@
 // assumption is that the application will notice, abort the load, and
 // take some action based on the URL.
 function eventURL(url) {
-    document.location.href = url;
-    return false;
+     if (typeof(window.frontend) == 'undefined') {
+         document.location.href = url;
+     } else {
+         window.frontend.eventURL(url);
+     }
+     return false;
 }    
 
 // Change a view's filter. The filter controls which records are
