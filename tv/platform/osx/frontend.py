@@ -1463,8 +1463,6 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.reset()
         self.forwardButton.sendActionOn_(NSLeftMouseDownMask)
         self.backwardButton.sendActionOn_(NSLeftMouseDownMask)
-        self.fullscreenController = nil
-        self.fastSeekTimer = nil
         VideoDisplay.controller = self
 
     def reset(self):
@@ -1472,6 +1470,9 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.playlist = None
         self.frame = None
         self.previousDisplay = None
+        self.fullscreenController = nil
+        self.fastSeekTimer = nil
+        self.currentVideoView = self.videoView
         self.videoView.setMovie_(nil)
         self.progressDisplayer.setMovie_(nil)
         nc.removeObserver_(self)
@@ -1484,7 +1485,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     def selectPlaylistItem(self, item):
         pathname = item.getPath()
         (movie, error) = QTMovie.alloc().initWithFile_error_(pathname)
-        self.videoView.setMovie_(movie)
+        self.currentVideoView.setMovie_(movie)
         self.progressDisplayer.setMovie_(movie)
         self.setVolume_(self.volumeSlider)
 
@@ -1494,11 +1495,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         app.Controller.instance.frame.selectDisplay(template, area)        
 
         nc.removeObserver_(self)
-        nc.addObserver_selector_name_object_(
-            self, 
-            'handleMovieNotification:', 
-            nil, 
-            self.videoView.movie())
+        nc.addObserver_selector_name_object_(self, 'handleMovieNotification:', nil, movie)
 
     def exitVideoMode(self):
         if self.fullscreenController is not nil:
@@ -1517,17 +1514,17 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.fullscreenButton.setEnabled_(enabled)
 
     def play_(self, sender):
-        self.videoView.play_(self)
-        self.videoView.setNeedsDisplay_(YES)
+        self.currentVideoView.play_(self)
+        self.currentVideoView.setNeedsDisplay_(YES)
         self.isPlaying = True
 
     def pause_(self, sender):
-        self.videoView.pause_(self)
+        self.currentVideoView.pause_(self)
         self.isPlaying = False
 
     def stop_(self, sender):
         self.pause_(sender)
-        self.videoView.gotoBeginning_(self)
+        self.currentVideoView.gotoBeginning_(self)
         self.exitVideoMode()
 
     def playPause_(self, sender):
@@ -1551,18 +1548,18 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         else:
             sender.sendActionOn_(NSLeftMouseDownMask)
             if self.fastSeekTimer is nil:
-                self.videoView.movie().setRate_(1.0)
+                self.currentVideoView.movie().setRate_(1.0)
             else:
                 self.fastSeekTimer.invalidate()
                 self.fastSeekTimer = nil
                 self.skip(direction)
 
     def fastSeek_(self, timer):
-        assert(self.videoView.movie().rate() == 1.0)
+        assert(self.currentVideoView.movie().rate() == 1.0)
         info = timer.userInfo()
         direction = info['seekDirection']
         rate = 2 * direction
-        self.videoView.movie().setRate_(rate)
+        self.currentVideoView.movie().setRate_(rate)
         self.fastSeekTimer = nil
 
     def skip(self, direction):
@@ -1573,7 +1570,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             if self.progressDisplayer.getCurrentTimeInSeconds() <= 0.5:
                 nextItem = self.playlist.getPrev()
             else:
-                self.videoView.movie().gotoBeginning()
+                self.currentVideoView.movie().gotoBeginning()
             
         if nextItem is not None:
             self.selectPlaylistItem(nextItem)
@@ -1582,12 +1579,15 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         return nextItem
 
     def setVolume_(self, sender):
-        movie = self.videoView.movie()
+        movie = self.currentVideoView.movie()
         if movie is not None:
-            movie.setVolume_(sender.floatValue())
+            if sender.isEnabled():
+                movie.setVolume_(sender.floatValue())
+            else:
+                movie.setVolume_(0.0)
 
     def muteUnmuteVolume_(self, sender):
-        movie = self.videoView.movie()
+        movie = self.currentVideoView.movie()
         if movie is not None:
             volume = movie.volume()
             if volume > 0.0:
@@ -1603,9 +1603,11 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.fullscreenController.enterFullScreen()
 
     def didEnterFullscreenMode(self):
+        self.currentVideoView = self.fullscreenController.videoWindow.movieView
         FullScreenAlertPanelController.displayIfNeeded()
 
     def didExitFullscreenMode(self):
+        self.currentVideoView = self.videoView
         self.fullscreenController = nil
 
     def handleMovieNotification_(self, notification):
