@@ -243,7 +243,7 @@ class Controller (frontend.Application):
         except:
             print "DTV: Exception on startup:"
             traceback.print_exc()
-            sys.exit(1)
+            frontend.exit(1)
 
     def onShutdown(self):
         try:
@@ -269,7 +269,7 @@ class Controller (frontend.Application):
         except:
             print "DTV: Exception on shutdown:"
             traceback.print_exc()
-            sys.exit(1)
+            frontend.exit(1)
 
     ### Handling events received from the OS (via our base class) ###
 
@@ -453,7 +453,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
         except:
             print "Exception in URL action handler (for URL '%s'):" % url
             traceback.print_exc()
-            sys.exit(1)
+            frontend.exit(1)
 
         return True
 

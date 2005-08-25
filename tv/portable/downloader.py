@@ -29,7 +29,6 @@ import sys
 import os
 import threading
 from time import time, strftime
-from signal import signal, SIGWINCH
 from cStringIO import StringIO
 
 import app
@@ -1021,8 +1020,8 @@ class BTDisplay:
         self.__dict__ = data
 
 class BTDownloader(Downloader):
-    def global_error(self, level, text):
-        self.d.error(text)
+    def global_error(level, text):
+        print "Bittorrent error (%s): %s" % (level, text)
     doneflag = threading.Event()
     torrentConfig = configfile.parse_configuration_and_args(defaults,'btdownloadheadless', [], 0, None)
     torrentConfig = torrentConfig[0]

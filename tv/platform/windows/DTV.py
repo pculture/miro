@@ -1,0 +1,2 @@
+import app
+app.main()

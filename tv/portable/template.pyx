@@ -83,6 +83,7 @@ cdef object rawAttrPattern
 #HTMLPattern = re.compile("^.*<body.*?>(.*)</body\s*>", re.S)
 HTMLPattern = re.compile("^.*<body.*?>(.*)</body\\s*>", re.S)
 attrPattern = re.compile("^(.*)@@@(.*?)@@@(.*)$")
+resourcePattern = re.compile("^resource:(.*)$")
 #rawAttrPattern = re.compile("^(.*)\*\*\*(.*?)\*\*\*(.*)$")
 rawAttrPattern = re.compile("^(.*)\\*\\*\\*(.*?)\\*\\*\\*(.*)$")
 
@@ -655,6 +656,9 @@ def fillAttr(value,data):
         if not match:
             break
         value = ''.join((match.group(1), str(evalKeyC(match.group(2), data, None, True)), match.group(3)))
+    match = resourcePattern.match(value)
+    if match:
+        value = resource.url(match.group(1))
     return value
 
 # View mapping function used to assign ID attributes to records so

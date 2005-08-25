@@ -10,7 +10,8 @@ HTMLPattern = re.compile("^.*(<head.*?>.*</body\s*>)", re.S)
 
 class ChannelGuide(DDBObject):
     def __init__(self):
-        self.html = "<script type=\"text/javascript\">\neventURL('template:first-time-intro');\n</script>"
+        self.html = "<body><script type=\"text/javascript\">\neventURL('template:first-time-intro');\n</script></body>"
+#        self.html = "<body>script type=\"text/javascript\"\neventURL('template:first-time-intro');\n/script</body>"
         self.viewed = False
         ScheduleEvent(3600,self.update,True)
         DDBObject.__init__(self)

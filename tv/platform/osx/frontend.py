@@ -39,6 +39,9 @@ NibClassBuilder.extractClasses("FullScreenAlertPanel")
 doNotCollect = {}
 nc = NSNotificationCenter.defaultCenter()
 
+def exit(returnCode):
+   sys.exit(returnCode)
+
 ###############################################################################
 #### Application object                                                    ####
 ###############################################################################

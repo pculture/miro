@@ -22,7 +22,7 @@
 <body> 
 
 <div id="sidebar">
-
+  Stuff. Things.
 
   <div id="channels">
     <span t:hideIfViewNotEmpty="tabs" i18n:translate="">There are no tabs. Something is wrong. Please, contact tech support</span>

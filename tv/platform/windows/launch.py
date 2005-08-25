@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/cygdrive/c/python24/python
 
 import os
 import sys

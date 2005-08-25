@@ -1,9 +1,6 @@
 import objc
 from AppKit import *
 
-def get():
-    return NSThread.threadPriority()
-
 def set(n):
     NSThread.setThreadPriority_(n)
 
