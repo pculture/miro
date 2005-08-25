@@ -1159,22 +1159,8 @@ class HTMLDisplay (app.Display):
 
 
 ###############################################################################
-#### An enhanced WebView                                                   ####
+#### An enhanced WebView Wrapper                                           ####
 ###############################################################################
-
-# Little ObjC-compatible class to wrap a closure (function) so it can be
-# used as an ObjC-callback, eg, posted to the main thread with
-# performSelectorOnMainThread_withObject_waitUntilDone_.
-class ObjCHandlerWrapper(NSObject):
-    def init(self, func):
-        self.func = func
-        return self
-
-    def executeDiscarding1_(self, ignoredArgument):
-        self.func()
-
-    def executeOnMainThreadAsync_(self):
-        self.performSelectorOnMainThread_withObject_waitUntilDone_("executeDiscarding1:", None, NO)
 
 class ManagedWebView (NSObject):
 
@@ -1273,12 +1259,7 @@ class ManagedWebView (NSObject):
         if not self.initialLoadFinished:
             self.execQueue.append(func)
         else:
-            # Contortion: we can't just pass random Python functions
-            # into ObjC and expect it to know how to call them, so use
-            # a NSObject-derived wrapper class.
-            pool = NSAutoreleasePool.alloc().init()
-            ObjCHandlerWrapper.alloc().init(func).executeOnMainThreadAsync_()
-            del pool
+            AppHelper.callAfter(func)
 
     # Generate callbacks when the initial HTML (passed in the constructor)
     # has been loaded
@@ -1290,7 +1271,7 @@ class ManagedWebView (NSObject):
             # from dropping something in the queue just after we have finished
             # processing it
             for func in self.execQueue:
-                ObjCHandlerWrapper.alloc().init(func).executeOnMainThreadAsync_()
+                AppHelper.callAfter(func)
             self.execQueue = []
             self.initialLoadFinished = True
 
