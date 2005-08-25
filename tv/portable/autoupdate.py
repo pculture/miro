@@ -19,7 +19,7 @@ def _checkForUpdates():
             data = info['file-handle'].read()
             info['file-handle'].close()
             (version, url) = data.split()
-            if version != 'beta2005-08-09':
+            if version != 'beta2005-08-25':
                 delegate.updateAvailable(url)
         except:
             pass
