@@ -664,6 +664,9 @@ class Item(DDBObject):
         self.beginRead()
         try:
             self.downloadedTime = datetime.now()
+
+            # Hack to immediately "save" items in feeds set to never expire
+            self.keep = (self.feed.expire == "never")
         finally:
             self.endRead()
 
