@@ -958,10 +958,7 @@ class PlaylistItemFromItem (frontend.PlaylistItem):
 
     # Return a dictionary containing info to be injected in a template
     def getInfoMap(self):
-        info = dict()
-        info['this'] = self.item
-        info['filter'] = globalFilterList
-        return info
+        return dict(this=self.item, filter=globalFilterList)
 
 def mapToPlaylistItem(obj):
     return PlaylistItemFromItem(obj)
