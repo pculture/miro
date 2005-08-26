@@ -8,6 +8,7 @@ from feedparser import FeedParserDict
 from threading import Thread
 import threadpriority
 import config
+import os
 
 ##
 # An item corresponds to a single entry in a feed. Generally, it has
