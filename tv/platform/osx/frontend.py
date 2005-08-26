@@ -1193,14 +1193,8 @@ class ManagedWebView (NSObject):
         self.view.setFrameLoadDelegate_(self)
         self.view.setUIDelegate_(self)
 
-        (handle, location) = tempfile.mkstemp('.html')
-        handle = os.fdopen(handle,"w")
-        handle.write(initialHTML)
-        handle.close()
-        
-        print "DTV: loading temp file %s" % location
-        request = NSURLRequest.requestWithURL_(NSURL.fileURLWithPath_(location))
-        self.view.mainFrame().loadRequest_(request)
+        data = NSString.stringWithString_(initialHTML).dataUsingEncoding_(NSUTF8StringEncoding)
+        self.view.mainFrame().loadData_MIMEType_textEncodingName_baseURL_(data, 'text/html', 'utf-8', nil)
         return self
 
     def isKeyExcludedFromWebScript_(self,key):
@@ -1619,8 +1613,9 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 kUIModeNormal = 0
 kUIModeAllHidden = 3
 
-carbonBundle = NSBundle.bundleWithPath_('/System/Library/Frameworks/Carbon.framework')
-objc.loadBundleFunctions(carbonBundle, globals(), (('SetSystemUIMode', 'III', ""),))
+carbonPath = objc.pathForFramework('/System/Library/Frameworks/Carbon.framework')
+carbonBundle = NSBundle.bundleWithPath_(carbonPath)
+objc.loadBundleFunctions(carbonBundle, globals(), ((u'SetSystemUIMode', 'III'),))
 
 class FullScreenVideoController (NSObject):
 
