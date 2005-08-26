@@ -956,32 +956,16 @@ class PlaylistItemFromItem (frontend.PlaylistItem):
     def getID(self):
         return self.item.getID()
 
-    # FIXME: this should use the templating system, rather than hardcoding HTML
-    def getVideoInfoHTML(self):
-        info = '<span>'
-        
-        title = self.item.getTitle()
-        info += '<span class="title">%s</span>' % title
-        
-        channelName = self.item.getFeed().getTitle()
-        channelLink = self.item.getFeed().getLink()
-        if channelLink == '':
-            info += ' (%s)' % channelName
-        else:
-            info += ' (<a href="%s">%s</a>)' % (channelLink, channelName)
-        
-        info += '<span>'
-        return info
-
     # Return a dictionary containing info to be injected in a template
     def getInfoMap(self):
         info = dict()
         info['this'] = self.item
-        info['videoInfoHTML'] = self.getVideoInfoHTML()
+        info['filter'] = globalFilterList
         return info
 
 def mapToPlaylistItem(obj):
     return PlaylistItemFromItem(obj)
+
 
 ###############################################################################
 #### The global set of filter and sort functions accessible from templates ####
