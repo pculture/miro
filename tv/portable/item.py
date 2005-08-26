@@ -768,7 +768,7 @@ class Item(DDBObject):
 # An Item that exists as a file, but not as a download
 class FileItem(Item):
     def getEntry(self,filename):
-        return FeedParserDict({'title':filename,'enclosures':[{'url':filename}]})
+        return FeedParserDict({'title':os.path.basename(filename),'enclosures':[{'url':filename}]})
 
     def __init__(self,feed,filename):
         Item.__init__(self,feed,self.getEntry(filename))
