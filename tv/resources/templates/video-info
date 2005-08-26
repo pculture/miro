@@ -15,7 +15,15 @@
 <body id="video_info_area">
 
     <div class="left_box">
-        <div><span t:replaceMarkup="videoInfoHTML" /></div>
+        <div>
+            <span class="title" t:replace="this getTitle" />&nbsp;
+            <span t:hideIfKey="this getFeed getLink" t:hideFunctionKey="filter equal">
+                (<a href="***this getFeed getLink***"><span t:replace="this getFeed getTitle" /></a>)
+            </span>
+            <span t:hideIfNotKey="this getFeed getLink" t:hideFunctionKey="filter equal">
+                (<span t:replace="this getFeed getTitle" />)
+            </span>
+        </div>
         <div><span t:replaceMarkup="this getPaymentHTML" /></div>
     </div>
 
