@@ -403,7 +403,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
             thread.start()
 
     def onURLLoad(self, url):
-        #print "DTV: got %s" % url
+        print "DTV: got %s" % url
         try:
             # Special-case non-'action:'-format URL
             match = re.compile(r"^template:(.*)$").match(url)
@@ -956,12 +956,11 @@ class PlaylistItemFromItem (frontend.PlaylistItem):
     def getID(self):
         return self.item.getID()
 
+    # FIXME: this should use the templating system, rather than hardcoding HTML
     def getVideoInfoHTML(self):
         info = '<span>'
         
         title = self.item.getTitle()
-        if title.startswith(config.get(config.MOVIES_DIRECTORY)):
-            title = os.path.basename(title)
         info += '<span class="title">%s</span>' % title
         
         channelName = self.item.getFeed().getTitle()
