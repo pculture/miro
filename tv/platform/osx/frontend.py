@@ -454,8 +454,15 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
         NSMenu.popUpContextMenu_withEvent_forView_( menu, event, sender )
 
+    def showHelp_(self, sender):
+        alert = NSAlert.alloc().init()
+        alert.setAlertStyle_(NSInformationalAlertStyle)
+        alert.setMessageText_(u'Help for DTV will be available soon.')
+        alert.setInformativeText_(u'In the meantime, please visit our homepage for our help FAQ: http://participatoryculture.org/\n\nFor individual user support, please e-mail feedback@ppolitics.org.')
+        alert.runModal()
+
     def validateMenuItem_(self, item):
-        return item.action() == 'addChannel:'
+        return item.action() == 'addChannel:' or item.action() == 'showHelp:'
 
 
 ###############################################################################
