@@ -1193,7 +1193,8 @@ class ManagedWebView (NSObject):
         self.view.setFrameLoadDelegate_(self)
         self.view.setUIDelegate_(self)
 
-        data = NSString.stringWithString_(initialHTML).dataUsingEncoding_(NSUTF8StringEncoding)
+        html = NSString.stringWithString_(unicode(initialHTML))
+        data = html.dataUsingEncoding_(NSUTF8StringEncoding)
         self.view.mainFrame().loadData_MIMEType_textEncodingName_baseURL_(data, 'text/html', 'utf-8', nil)
         return self
 
