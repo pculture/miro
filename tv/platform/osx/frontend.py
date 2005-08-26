@@ -16,6 +16,7 @@ import config
 import resource
 import template
 import database
+import autoupdate
 
 import re
 import os
@@ -150,7 +151,7 @@ class AppController (NSObject):
             self.actualApp.addAndSelectFeed(url)
 
     def checkForUpdates_(self, sender):
-        print "NOT IMPLEMENTED"
+        autoupdate.checkForUpdates(True)
 
     def showPreferencesWindow_(self, sender):
         prefController = PreferencesWindowController.alloc().init()
@@ -163,9 +164,10 @@ class AppController (NSObject):
     def tellAFriend_(self, sender):
         print "NOT IMPLEMENTED"
 
+    itemsAlwaysAvailable = ('checkForUpdates:', 'showPreferencesWindow:')
     def validateMenuItem_(self, item):
-        return item.action() == 'showPreferencesWindow:'
-
+        return item.action() in self.itemsAlwaysAvailable
+        
 
 ###############################################################################
 #### Main window                                                           ####
@@ -689,6 +691,16 @@ class UIBackendDelegate:
         message = "A new version of DTV is available.\n\nWould you like to download it now?"
         if QuestionController.alloc().init(title, message).getAnswer():
             self.openExternalURL(url)
+
+    def dtvIsUpToDate(self):
+        pool = NSAutoreleasePool.alloc().init()
+        alert = NSAlert.alloc().init()
+        alert.setAlertStyle_(NSInformationalAlertStyle)
+        alert.setMessageText_(u'DTV is up to date')
+        alert.setInformativeText_(u'No updates are available. Please try again later.')
+        alert.runModal()
+        del alert
+        del pool
 
     def openExternalURL(self, url):
         # We could use Python's webbrowser.open() here, but
