@@ -30,9 +30,9 @@ def get(descriptor):
 
     elif descriptor == config.SUPPORT_DIRECTORY:
         path = os.path.expandvars('${APPDATA}')
-	# FIXME: Hack to deal with systems that don't set APPDATA
-	if path == '${APPDATA}':
-	    path = '~/Library/Application Support/DTV'
+        # FIXME: Hack to deal with systems that don't set APPDATA
+        if path == '${APPDATA}':
+            path = '~/Library/Application Support/DTV'
         path = os.path.expanduser(path)
         try:
             os.makedirs(path)
