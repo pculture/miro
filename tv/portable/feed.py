@@ -414,6 +414,10 @@ class Feed(DDBObject):
             else:
                 self.fallBehind = int(fallBehind)
             self.expire = expire
+            if self.expire == "never":
+                for item in self.items:
+                    if item.getState() in ['finished','uploading','watched']:
+                        item.setKeep(True)
             self.expireTime = timedelta(days=int(expireDays),hours=int(expireHours))
         finally:
             self.endRead()
