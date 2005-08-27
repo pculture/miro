@@ -376,7 +376,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
         (html, self.templateHandle) = template.fillTemplate(templateName, data, self)
 
         self.actionHandlers = [
-            ModelActionHandler(),
+            ModelActionHandler(self.controller.getBackendDelegate()),
             GUIActionHandler(self.controller),
             TemplateActionHandler(self.controller, self, self.templateHandle),
             ]
@@ -475,8 +475,11 @@ class TemplateDisplay(frontend.HTMLDisplay):
 # Functions that are safe to call from action: URLs that do nothing
 # but manipulate the database.
 class ModelActionHandler:
+    
+    def __init__(self, backEndDelegate):
+        self.backEndDelegate = backEndDelegate
+    
     def changeFeedSettings(self, feed, maxnew, fallbehind, automatic, expireDays, expireHours, expire, getEverything="0"):
-
         db.beginUpdate()
         db.saveCursor()
         try:
@@ -501,8 +504,8 @@ class ModelActionHandler:
             db.endUpdate()
 
     def removeFeed(self, url):
-        db.removeMatching(lambda x: isinstance(x,feed.UniversalFeed) and x.getURL() == url)
-
+        if self.backEndDelegate.validateFeedRemoval(url):
+            db.removeMatching(lambda x: isinstance(x,feed.UniversalFeed) and x.getURL() == url)
 
     def updateFeed(self, url):
         db.beginUpdate()
