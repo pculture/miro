@@ -412,7 +412,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
     def removeChannel_(self, sender):
         feedURL = app.Controller.instance.currentSelectedTab.feedURL()
         if feedURL is not None:
-            app.ModelActionHandler().removeFeed(feedURL)
+            backEndDelegate = self.appl.getBackendDelegate()
+            app.ModelActionHandler(backEndDelegate).removeFeed(feedURL)
 
     def copyChannelLink_(self, sender):
         NSPasteboard.generalPasteboard().declareTypes_owner_([NSURLPboardType], self)
@@ -420,7 +421,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
     def updateChannel_(self, sender):
         feedURL = app.Controller.instance.currentSelectedTab.feedURL()
         if feedURL is not None:
-            app.ModelActionHandler().updateFeed(feedURL)
+            backEndDelegate = self.appl.getBackendDelegate()
+            app.ModelActionHandler(backEndDelegate).updateFeed(feedURL)
 
     def updateAllChannels_(self, sender):
         print "NOT IMPLEMENTED"
@@ -717,6 +719,19 @@ class UIBackendDelegate:
         alert.runModal()
         del alert
         del pool
+
+    def validateFeedRemoval(self, feedURL):
+        pool = NSAutoreleasePool.alloc().init()
+        alert = NSAlert.alloc().init()
+        alert.setAlertStyle_(NSCriticalAlertStyle)
+        alert.setMessageText_(u'Remove Channel')
+        alert.setInformativeText_(u'Are you sure you want to remove this channel? This operation cannot be undone.')
+        alert.addButtonWithTitle_(u'Remove')
+        alert.addButtonWithTitle_(u'Cancel')
+        result = alert.runModal()
+        del alert
+        del pool
+        return (result == NSAlertFirstButtonReturn)
 
     def openExternalURL(self, url):
         # We could use Python's webbrowser.open() here, but
