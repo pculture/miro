@@ -410,13 +410,17 @@ class MainController (NibClassBuilder.AutoBaseClass):
         NSApplication.sharedApplication().beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(controller.window(), self.window(), self, nil, 0)
 
     def removeChannel_(self, sender):
-        print "NOT IMPLEMENTED"
+        feedURL = app.Controller.instance.currentSelectedTab.feedURL()
+        if feedURL is not None:
+            app.ModelActionHandler().removeFeed(feedURL)
 
     def copyChannelLink_(self, sender):
-        print "NOT IMPLEMENTED"
+        NSPasteboard.generalPasteboard().declareTypes_owner_([NSURLPboardType], self)
 
     def updateChannel_(self, sender):
-        print "NOT IMPLEMENTED"
+        feedURL = app.Controller.instance.currentSelectedTab.feedURL()
+        if feedURL is not None:
+            app.ModelActionHandler().updateFeed(feedURL)
 
     def updateAllChannels_(self, sender):
         print "NOT IMPLEMENTED"
@@ -463,8 +467,20 @@ class MainController (NibClassBuilder.AutoBaseClass):
         alert.setInformativeText_(u'In the meantime, please visit our homepage for our help FAQ: http://participatoryculture.org/\n\nFor individual user support, please e-mail feedback@ppolitics.org.')
         alert.runModal()
 
+    itemsAlwaysAvailable = ('addChannel:', 'showHelp:')
+    selectedChannelItems = ('removeChannel:', 'copyChannelLink:', 'updateChannel:')
     def validateMenuItem_(self, item):
-        return item.action() == 'addChannel:' or item.action() == 'showHelp:'
+        if item.action() in self.selectedChannelItems:
+            currentTab = app.Controller.instance.currentSelectedTab
+            return currentTab is not None and currentTab.isFeed()
+        else:
+            return item.action() in self.itemsAlwaysAvailable
+
+    def pasteboard_provideDataForType_(self, pasteboard, type):
+        feedURL = app.Controller.instance.currentSelectedTab.feedURL()
+        if feedURL is not None:
+            url = NSURL.URLWithString_(feedURL)
+            url.writeToPasteboard_(NSPasteboard.generalPasteboard())
 
 
 ###############################################################################
