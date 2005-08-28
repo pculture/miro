@@ -1061,18 +1061,25 @@ class ScraperFeed(Feed):
                 if depth == 0:
                     linkNumber += 1
                 print "Processing %s (%d)" % (link,linkNumber)
-                #FIXME keep the connection open
-                mimetype = self.getMimeType(link)
-                #print " mimetype is "+mimetype
+                if ((link[-4:].lower() in 
+                     ['.mov','.wmv','.mp4','.mp3','.mpg','.avi']) or
+                    (link[-5:].lower() in ['.mpeg'])):
+                    mimetype = 'video/unknown'
+                elif link.find('?') > 0 and link.lower().find('.htm') == -1:
+                    mimetype = self.getMimeType(link)
+                    #print " mimetype is "+mimetype
+                else:
+                    mimetype = 'text/html'
                 if mimetype != None:
                     #This is text of some sort: HTML, XML, etc.
-                    if (mimetype.startswith('text/html') or
-                        mimetype.startswith('application/xhtml+xml') or 
-                        mimetype.startswith('text/xml')  or
-                        mimetype.startswith('application/xml') or
-                        mimetype.startswith('application/rss+xml') or
-                        mimetype.startswith('application/atom+xml') or
-                        mimetype.startswith('application/rdf+xml') ):
+                    if ((mimetype.startswith('text/html') or
+                         mimetype.startswith('application/xhtml+xml') or 
+                         mimetype.startswith('text/xml')  or
+                         mimetype.startswith('application/xml') or
+                         mimetype.startswith('application/rss+xml') or
+                         mimetype.startswith('application/atom+xml') or
+                         mimetype.startswith('application/rdf+xml') ) and
+                        depth < maxDepth -1):
                         (html, url, redirURL,status,charset) = self.getHTML(link)
                         if status == 304: #It's cached
                             pass
