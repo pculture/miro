@@ -34,7 +34,6 @@ NibClassBuilder.extractClasses("MainWindow")
 NibClassBuilder.extractClasses("PreferencesWindow")
 NibClassBuilder.extractClasses("AddChannelSheet")
 NibClassBuilder.extractClasses("PasswordWindow")
-NibClassBuilder.extractClasses("QuestionWindow")
 NibClassBuilder.extractClasses("FullScreenAlertPanel")
 
 doNotCollect = {}
@@ -42,6 +41,34 @@ nc = NSNotificationCenter.defaultCenter()
 
 def exit(returnCode):
    sys.exit(returnCode)
+
+
+###############################################################################
+#### Helper methods used to display alert dialog of various types          ####
+###############################################################################
+
+def showInformationalDialog(summary, message, buttons=[]):
+    return showDialog(summary, message, buttons, NSInformationalAlertStyle)
+
+def showWarningDialog(summary, message, buttons=[]):
+    return showDialog(summary, message, buttons, NSWarningAlertStyle)
+
+def showCriticalDialog(summary, message, buttons=[]):
+    return showDialog(summary, message, buttons, NSCriticalAlertStyle)
+
+def showDialog(summary, message, buttons, style):
+    pool = NSAutoreleasePool.alloc().init()
+    alert = NSAlert.alloc().init()
+    alert.setAlertStyle_(style)
+    alert.setMessageText_(summary)
+    alert.setInformativeText_(message)
+    for title in buttons:
+        alert.addButtonWithTitle_(title)
+    result = alert.runModal()
+    del alert
+    del pool
+    return (result == NSAlertFirstButtonReturn)
+
 
 ###############################################################################
 #### Application object                                                    ####
@@ -117,20 +144,14 @@ class AppController (NSObject):
         supported = gestalt('qtim') >= 0x07000000
         
         if not supported and showError:
-            alert = NSAlert.alloc().init()
-            alert.setAlertStyle_(NSCriticalAlertStyle)
-            alert.setMessageText_('Unsupported version of Quicktime')
-            alert.setInformativeText_('To run DTV you need the most recent version of Quicktime, which is a free update.')
-            
-            button1 = alert.addButtonWithTitle_('Quit')
-            button1.setTag_(NSAlertFirstButtonReturn)
-            button2 = alert.addButtonWithTitle_('Download Quicktime now')
-            button2.setTag_(NSAlertSecondButtonReturn)
+            summary = u'Unsupported version of Quicktime'
+            message = u'To run DTV you need the most recent version of Quicktime, which is a free update.'
+            buttons = ('Quit', 'Download Quicktime now')
+            quit = showCriticalDialog(summary, message, buttons)
 
-            result = alert.runModal()
-            if result == NSAlertFirstButtonReturn:
+            if quit:
                 NSApplication.sharedApplication().terminate_(nil)
-            elif result == NSAlertSecondButtonReturn:
+            else:
                 url = NSURL.URLWithString_('http://www.apple.com/quicktime/download')
                 NSWorkspace.sharedWorkspace().openURL_(url)
         
@@ -463,11 +484,9 @@ class MainController (NibClassBuilder.AutoBaseClass):
         NSMenu.popUpContextMenu_withEvent_forView_( menu, event, sender )
 
     def showHelp_(self, sender):
-        alert = NSAlert.alloc().init()
-        alert.setAlertStyle_(NSInformationalAlertStyle)
-        alert.setMessageText_(u'Help for DTV will be available soon.')
-        alert.setInformativeText_(u'In the meantime, please visit our homepage for our help FAQ: http://participatoryculture.org/\n\nFor individual user support, please e-mail feedback@ppolitics.org.')
-        alert.runModal()
+        summary = u'Help for DTV will be available soon.'
+        message = u'In the meantime, please visit our homepage for our help FAQ: http://participatoryculture.org/\n\nFor individual user support, please e-mail feedback@ppolitics.org.'
+        showInformationalDialog(summary, message)
 
     itemsAlwaysAvailable = ('addChannel:', 'showHelp:')
     selectedChannelItems = ('removeChannel:', 'copyChannelLink:', 'updateChannel:')
@@ -695,43 +714,30 @@ class UIBackendDelegate:
         """Tell the user that URL wasn't a valid feed and ask if it should be
         scraped for links instead. Returns True if the user gives
         permission, or False if not."""
-        # This message could use some serious work.
-        title = "Non-Standard Channel"
-        message = "%s is not a DTV-style channel. DTV can try to subscribe, but videos may lack proper descriptions and thumbnails.\n\nPlease notify the publisher if you want this channel to be fully supported" % url
-        defaultButtonTitle = "Subscribe"
-        altButtonTitle = "Cancel"
-        return QuestionController.alloc().init(title, message, defaultButtonTitle, altButtonTitle).getAnswer()
+        summary = u'Non-Standard Channel'
+        message = u'%s is not a DTV-style channel. DTV can try to subscribe, but videos may lack proper descriptions and thumbnails.\nPlease notify the publisher if you want this channel to be fully supported\n\nContinue ?' % url
+        buttons = (u'Subscribe', u'Cancel')
+        return showWarningDialog(summary, message, buttons)
 
     def updateAvailable(self, url):
         """Tell the user that an update is available and ask them if they'd
         like to download it now"""
-        title = "DTV Version Alert"
-        message = "A new version of DTV is available.\n\nWould you like to download it now?"
-        if QuestionController.alloc().init(title, message).getAnswer():
+        summary = u'DTV Version Alert'
+        message = u'A new version of DTV is available.\n\nWould you like to download it now?'
+        download = showInformationalDialog(summary, message)
+        if download:
             self.openExternalURL(url)
 
     def dtvIsUpToDate(self):
-        pool = NSAutoreleasePool.alloc().init()
-        alert = NSAlert.alloc().init()
-        alert.setAlertStyle_(NSInformationalAlertStyle)
-        alert.setMessageText_(u'DTV is up to date')
-        alert.setInformativeText_(u'No updates are available. Please try again later.')
-        alert.runModal()
-        del alert
-        del pool
+        summary = u'DTV is up to date'
+        message = u'No updates are available. Please try again later.'
+        showInformationalDialog(summary, message)
 
     def validateFeedRemoval(self, feedURL):
-        pool = NSAutoreleasePool.alloc().init()
-        alert = NSAlert.alloc().init()
-        alert.setAlertStyle_(NSCriticalAlertStyle)
-        alert.setMessageText_(u'Remove Channel')
-        alert.setInformativeText_(u'Are you sure you want to remove this channel? This operation cannot be undone.')
-        alert.addButtonWithTitle_(u'Remove')
-        alert.addButtonWithTitle_(u'Cancel')
-        result = alert.runModal()
-        del alert
-        del pool
-        return (result == NSAlertFirstButtonReturn)
+        summary = u'Remove Channel'
+        message = u'Are you sure you want to remove this channel? This operation cannot be undone.'
+        buttons = (u'Remove', u'Cancel')
+        return showCriticalDialog(summary, message, buttons)
 
     def openExternalURL(self, url):
         # We could use Python's webbrowser.open() here, but
@@ -739,9 +745,6 @@ class UIBackendDelegate:
         # as under other OSes. Sometimes it blocks, sometimes it doesn't.
         NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
 
-
-# NEEDS: Factor code common between PasswordController and
-# QuestionController out into a superclass
 
 class PasswordController (NibClassBuilder.AutoBaseClass):
 
@@ -795,46 +798,6 @@ class PasswordController (NibClassBuilder.AutoBaseClass):
         self.window.close()
         self.condition.notify()
         self.condition.release()
-
-
-class QuestionController (NibClassBuilder.AutoBaseClass):
-
-    def init(self, title, message, defaultButtonTitle="Yes", altButtonTitle="No"):
-        pool = NSAutoreleasePool.alloc().init()
-
-        NSBundle.loadNibNamed_owner_("QuestionWindow", self)
-        self.window.setTitle_(title)
-        self.textArea.setStringValue_(message)
-        self.defaultButton.setTitle_(defaultButtonTitle)
-        self.alternateButton.setTitle_(altButtonTitle)
-        self.result = None
-
-        # Ensure we're not deallocated until the window that has actions
-        # that point at us is closed
-        self.retain()
-        del pool
-        return self
-
-    def getAnswer(self):
-        """Present the dialog and wait for user answer. Returns True or False
-        depending on the button selected."""
-        appl = NSApplication.sharedApplication()
-        appl.performSelectorOnMainThread_withObject_waitUntilDone_("runModalForWindow:", self.window, YES)
-        assert(self.result is not None)
-        self.release()
-        return self.result
-
-    # bound to button in nib
-    def defaultAction_(self, sender):
-        self.result = True
-        self.window.close()
-        NSApplication.sharedApplication().stopModal()
-
-    # bound to button in nib
-    def alternateAction_(self, sender):
-        self.result = False
-        self.window.close()
-        NSApplication.sharedApplication().stopModal()
 
 
 ###############################################################################
@@ -1652,12 +1615,12 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
                 movie.setVolume_(self.volumeSlider.floatValue())
 
     def goFullscreen_(self, sender):
-        self.fullscreenController = FullScreenVideoController.alloc().initWithPreviousVideoView_(self.videoView)
-        self.fullscreenController.setDelegate_(self)
+        self.fullscreenController = FullScreenVideoController(self.videoView)
+        self.fullscreenController.setDelegate(self)
         self.fullscreenController.enterFullScreen()
 
     def didEnterFullscreenMode(self):
-        self.currentVideoView = self.fullscreenController.videoWindow.movieView
+        self.currentVideoView = FullScreenVideoController.fsWindow.movieView
         FullScreenAlertPanelController.displayIfNeeded()
 
     def didExitFullscreenMode(self):
@@ -1693,30 +1656,30 @@ carbonPath = objc.pathForFramework('/System/Library/Frameworks/Carbon.framework'
 carbonBundle = NSBundle.bundleWithPath_(carbonPath)
 objc.loadBundleFunctions(carbonBundle, globals(), ((u'SetSystemUIMode', 'III'),))
 
-class FullScreenVideoController (NSObject):
+class FullScreenVideoController:
 
-    def initWithPreviousVideoView_(self, previousMovieView):
-        self = super(FullScreenVideoController, self).init()
-        self.videoWindow = FullScreenVideoWindow.alloc().init(previousMovieView).retain()
-        self.videoWindow.controller = self
-        self.delegate = nil
-        return self
+    fsWindow = nil
 
-    def setDelegate_(self, delegate):
+    def __init__(self, previousMovieView):
+        self.delegate = None
+        if FullScreenVideoController.fsWindow == nil:
+            FullScreenVideoController.fsWindow = FullScreenVideoWindow.alloc().init().retain()
+            FullScreenVideoController.fsWindow.controller = self
+        FullScreenVideoController.fsWindow.setPreviousMovieView(previousMovieView)
+
+    def setDelegate(self, delegate):
         self.delegate = delegate
 
     def enterFullScreen(self):
         SetSystemUIMode(kUIModeAllHidden, 0)
-        self.videoWindow.makeKeyAndOrderFront_(nil)
-        
-        if self.delegate is not nil and self.delegate.didEnterFullscreenMode:
+        FullScreenVideoController.fsWindow.makeKeyAndOrderFront_(nil)
+        if self.delegate is not None:
             self.delegate.didEnterFullscreenMode()
 
     def exitFullScreen(self):
-        self.videoWindow.close()
+        FullScreenVideoController.fsWindow.orderOut_(nil)
         SetSystemUIMode(kUIModeNormal, 0)
-        
-        if self.delegate is not nil and self.delegate.didExitFullscreenMode:
+        if self.delegate is not None:
             self.delegate.didExitFullscreenMode()
 
 
@@ -1726,23 +1689,25 @@ class FullScreenVideoController (NSObject):
 
 class FullScreenVideoWindow (NSWindow):
 
-    def init(self, previousMovieView):
+    def init(self):
         frame = NSScreen.mainScreen().frame()
-
         parent = super(FullScreenVideoWindow, self)
         self = parent.initWithContentRect_styleMask_backing_defer_(
             frame,
             NSBorderlessWindowMask,
             NSBackingStoreBuffered,
             YES )
-        
-        self.previousMovieView = previousMovieView
         self.movieView = QTMovieView.alloc().initWithFrame_(frame)
         self.movieView.setControllerVisible_(NO)
         self.movieView.setPreservesAspectRatio_(YES)
-        self.movieView.setMovie_(previousMovieView.movie())
         self.setContentView_(self.movieView)
+        self.previousMovieWindow = nil
+        self.previousMovieView = nil
         return self
+
+    def setPreviousMovieView(self, previousMovieView):
+        self.previousMovieWindow = previousMovieView.window()
+        self.previousMovieView = previousMovieView
 
     def canBecomeMainWindow(self):
         return YES
@@ -1754,9 +1719,17 @@ class FullScreenVideoWindow (NSWindow):
         if event.type() == NSKeyDown and event.characters().characterAtIndex_(0) == 0x1B:
             self.controller.exitFullScreen()
 
-    def close(self):
+    def makeKeyAndOrderFront_(self, sender):
+        self.movieView.setMovie_(self.previousMovieView.movie())
+        super(FullScreenVideoWindow, self).makeKeyAndOrderFront_(sender)
+        self.previousMovieWindow.orderOut_(sender)
+        
+    def orderOut_(self, sender):
         self.previousMovieView.setMovie_(self.movieView.movie())
-        super(FullScreenVideoWindow, self).close()
+        self.previousMovieWindow.makeKeyAndOrderFront_(sender)
+        self.previousMovieWindow = nil
+        self.previousMovieView = nil
+        super(FullScreenVideoWindow, self).orderOut_(sender)
 
 
 ###############################################################################
