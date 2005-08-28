@@ -47,13 +47,13 @@ def exit(returnCode):
 #### Helper methods used to display alert dialog of various types          ####
 ###############################################################################
 
-def showInformationalDialog(summary, message, buttons=[]):
+def showInformationalDialog(summary, message, buttons=None):
     return showDialog(summary, message, buttons, NSInformationalAlertStyle)
 
-def showWarningDialog(summary, message, buttons=[]):
+def showWarningDialog(summary, message, buttons=None):
     return showDialog(summary, message, buttons, NSWarningAlertStyle)
 
-def showCriticalDialog(summary, message, buttons=[]):
+def showCriticalDialog(summary, message, buttons=None):
     return showDialog(summary, message, buttons, NSCriticalAlertStyle)
 
 def showDialog(summary, message, buttons, style):
@@ -62,8 +62,9 @@ def showDialog(summary, message, buttons, style):
     alert.setAlertStyle_(style)
     alert.setMessageText_(summary)
     alert.setInformativeText_(message)
-    for title in buttons:
-        alert.addButtonWithTitle_(title)
+    if buttons is not None:
+        for title in buttons:
+            alert.addButtonWithTitle_(title)
     result = alert.runModal()
     del alert
     del pool
