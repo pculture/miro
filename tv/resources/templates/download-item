@@ -40,7 +40,7 @@
 
 
   <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="finished" class="right_box">
-    <a href="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
+    <a href="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
     <span class="unwatched">unwatched</span><br />
     <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a> <!-- <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> -->
   </div>
@@ -48,21 +48,21 @@
 
 
   <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="uploading" class="right_box">
-    <a href="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
+    <a href="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
     <span class="unwatched">unwatched</span><br />
     <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a> <!-- <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> -->
   </div>
   
   
   <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="watched" class="right_box">    
-    <a href="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
+    <a href="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
     <span class="report_expire">Expires: <span t:replace="this getExpirationTime"/></span>  <a href="action:keepItem?item=@@@this getID@@@">keep</a> <br />
     <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a>  
   </div>
 
 
   <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="saved" class="right_box">  
-    <a href="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
+    <a href="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
     <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a>
   	
   </div>

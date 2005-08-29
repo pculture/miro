@@ -72,8 +72,8 @@ function setViewSort(viewName, fieldKey, functionKey, reverse) {
 // named by viewName. If firstItemId is the id of an item in the view,
 // playback will start on that item; otherwise playback will start on
 // the first item.
-function playView(viewName, firstItemId) {
-    url = 'action:playView?';
+function playViewNamed(viewName, firstItemId) {
+    url = 'action:playViewNamed?';
     url = url + 'viewName=' + URLencode(viewName);
     url = url + '&firstItemId=' + URLencode(firstItemId);
     eventURL(url);

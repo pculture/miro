@@ -101,7 +101,7 @@
       <input type="submit" value="play"/>
     </form>
 <br/><br/>
-  <a href="action:playView?viewName=feeds">
+  <a href="action:playViewNamed?viewName=feeds">
   Play a dummy view
   </a>
   </div>

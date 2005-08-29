@@ -84,11 +84,11 @@
 
 <div class="no_new" t:hideIfViewNotEmpty="watchable" i18n:translate=""><a href="template:feed-choose">See what's on this channel by clicking 'Browse'</a></div>        
 
-<li t:contextMenu="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@|Play" t:repeatForView="newitems">
+<li t:contextMenu="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@|Play" t:repeatForView="newitems">
         <t:includeTemplate filename="download-item" />
         </li> 
         <li class="divider" i18n:translate="">SAVED IN MY COLLECTION</li> 
-        <li t:contextMenu="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@|Play" t:repeatForView="mylibrary">
+        <li t:contextMenu="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@|Play" t:repeatForView="mylibrary">
         <t:includeTemplate filename="download-item" />
           
         </li> 

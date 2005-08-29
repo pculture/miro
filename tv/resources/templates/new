@@ -64,7 +64,7 @@
 
   <div id="content_window">
     <ul> 
-        <li t:contextMenu="action:playView?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@|Play" t:repeatForView="newitems">
+        <li t:contextMenu="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@|Play" t:repeatForView="newitems">
         <t:includeTemplate filename="download-item" />
         </li> 
    </ul>
