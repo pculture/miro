@@ -769,14 +769,17 @@ class TemplateActionHandler:
         namedView = self.templateHandle.findNamedView(viewName)
         namedView.setSort(fieldKey, functionKey, reverse)
 
-    def playView(self, viewName, firstItemId):
+    def playViewNamed(self, viewName, firstItemId):
         # Find the database view that we're supposed to be
         # playing; take out items that aren't playable video
         # clips and put it in the format the frontend expects.
         namedView = self.templateHandle.findNamedView(viewName)
         view = namedView.getView()
+        self.playView(view, firstItemId)
 
+    def playView(self, view, firstItemId):
         self.controller.frame.selectDisplay(frontend.VideoDisplay(firstItemId, view, self.display), self.controller.frame.mainDisplay)
+
 
 # Helper: liberally interpret the provided string as a boolean
 def stringToBoolean(string):
