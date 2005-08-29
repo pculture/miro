@@ -281,8 +281,30 @@ class DisplayHostView (NibClassBuilder.AutoBaseClass):
         # Send notification to new display
         display.onSelected_private(owner)
         display.onSelected(owner)
+        
+        self.notifyIfWatchable(display)
 
         del pool
+
+    def notifyIfWatchable(self, display):
+        view = self.getNamedView(display, ('watchable', 'allitems'))
+        if view is None:
+            return
+        
+        if view.getView().len() > 0:
+            nc.postNotificationName_object_userInfo_('displayIsWatchable', display, {'view': view})
+        else:
+            nc.postNotificationName_object_('displayIsNotWatchable', display)
+            
+    def getNamedView(self, display, names):
+        view = None
+        for name in names:
+            try:
+                view = display.templateHandle.findNamedView(name)
+                break
+            except:
+                pass
+        return view
 
 
 class MainController (NibClassBuilder.AutoBaseClass):
@@ -1177,7 +1199,7 @@ class HTMLDisplay (app.Display):
         if self.readyToDisplay:
             hook()
         else:
-            assert(self.readyToDisplayHook == None)
+            assert self.readyToDisplayHook == None
             self.readyToDisplayHook = hook
 
     # Called (via callback established in constructor)
@@ -1481,11 +1503,23 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.reset()
         self.forwardButton.sendActionOn_(NSLeftMouseDownMask)
         self.backwardButton.sendActionOn_(NSLeftMouseDownMask)
+        nc.addObserver_selector_name_object_(
+            self, 
+            'handleWatchableDisplayNotification:', 
+            'displayIsWatchable', 
+            nil)
+        nc.addObserver_selector_name_object_(
+            self, 
+            'handleNonWatchableDisplayNotification:', 
+            'displayIsNotWatchable', 
+            nil)
         VideoDisplay.controller = self
 
     def reset(self):
         self.isPlaying = False
         self.playlist = None
+        self.currentItem = None
+        self.currentWatchableDisplay = None
         self.frame = None
         self.previousDisplay = None
         self.fullscreenController = nil
@@ -1493,12 +1527,22 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.currentVideoView = self.videoView
         self.videoView.setMovie_(nil)
         self.progressDisplayer.setMovie_(nil)
-        nc.removeObserver_(self)
+        self.unregisterAsMovieObserver()
 
-    def setPlaylist(self, playlist):
+    def registerAsMovieObserver(self, movie):
+        nc.addObserver_selector_name_object_(self, 'handleMovieNotification:', QTMovieRateDidChangeNotification, movie)
+        nc.addObserver_selector_name_object_(self, 'handleMovieNotification:', QTMovieDidEndNotification, movie)
+
+    def unregisterAsMovieObserver(self):
+        nc.removeObserver_name_object_(self, QTMovieRateDidChangeNotification, nil)
+        nc.removeObserver_name_object_(self, QTMovieDidEndNotification, nil)
+
+    def setPlaylist(self, playlist, autoselect=True):
         self.playlist = playlist
+        self.currentItem = None
         item = self.playlist.cur()
-        self.selectPlaylistItem(item)
+        if autoselect:
+            self.selectPlaylistItem(item)
 
     def selectPlaylistItem(self, item):
         pathname = item.getPath()
@@ -1506,35 +1550,47 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.currentVideoView.setMovie_(movie)
         self.progressDisplayer.setMovie_(movie)
         self.setVolume_(self.volumeSlider)
+        self.currentItem = item
 
         info = item.getInfoMap()
         template = app.TemplateDisplay('video-info', info, app.Controller.instance, None, None, None)
         area = app.Controller.instance.frame.videoInfoDisplay
         app.Controller.instance.frame.selectDisplay(template, area)        
 
-        nc.removeObserver_(self)
-        nc.addObserver_selector_name_object_(self, 'handleMovieNotification:', nil, movie)
+        self.unregisterAsMovieObserver()
+        self.registerAsMovieObserver(movie)
 
     def exitVideoMode(self):
         if self.fullscreenController is not nil:
             self.fullscreenController.exitFullScreen()
             self.fullscreenController = nil
+
+        area = self.frame.mainDisplay
+        previousDisplay = self.previousDisplay
+        self.reset()
+
         mainController = self.videoView.window().delegate()
-        mainController.selectDisplay(self.previousDisplay, self.frame.mainDisplay)
+        mainController.selectDisplay(previousDisplay, area)
 
     def enableControls(self, enabled):
         self.backwardButton.setEnabled_(enabled)
         self.stopButton.setEnabled_(enabled)
         self.playPauseButton.setEnabled_(enabled)
+        self.fullscreenButton.setEnabled_(enabled)
         self.forwardButton.setEnabled_(enabled)
         self.muteButton.setEnabled_(enabled)
         self.volumeSlider.setEnabled_(enabled)
         self.fullscreenButton.setEnabled_(enabled)
 
     def play_(self, sender):
-        self.currentVideoView.play_(self)
-        self.currentVideoView.setNeedsDisplay_(YES)
-        self.isPlaying = True
+        if self.currentItem is None:
+            assert self.playlist is not None
+            assert self.currentWatchableDisplay is not None
+            self.currentWatchableDisplay.dispatchAction('playView', view=self.playlist, firstItemId=0)
+        else:
+            self.currentVideoView.play_(self)
+            self.currentVideoView.setNeedsDisplay_(YES)
+            self.isPlaying = True
 
     def pause_(self, sender):
         self.currentVideoView.pause_(self)
@@ -1573,7 +1629,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
                 self.skip(direction)
 
     def fastSeek_(self, timer):
-        assert(self.currentVideoView.movie().rate() == 1.0)
+        assert self.currentVideoView.movie().rate() == 1.0
         info = timer.userInfo()
         direction = info['seekDirection']
         rate = 2 * direction
@@ -1616,6 +1672,8 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
                 movie.setVolume_(self.volumeSlider.floatValue())
 
     def goFullscreen_(self, sender):
+        if not self.isPlaying:
+            self.play_(nil)
         self.fullscreenController = FullScreenVideoController(self.videoView)
         self.fullscreenController.setDelegate(self)
         self.fullscreenController.enterFullScreen()
@@ -1627,6 +1685,18 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     def didExitFullscreenMode(self):
         self.currentVideoView = self.videoView
         self.fullscreenController = nil
+
+    def handleWatchableDisplayNotification_(self, notification):
+        self.playPauseButton.setEnabled_(YES)
+        self.fullscreenButton.setEnabled_(YES)
+        info = notification.userInfo()
+        playlist = info['view'].getView()
+        self.setPlaylist(playlist, False)
+        self.currentWatchableDisplay = notification.object()
+
+    def handleNonWatchableDisplayNotification_(self, notification):
+        self.playPauseButton.setEnabled_(NO)
+        self.fullscreenButton.setEnabled_(NO)
 
     def handleMovieNotification_(self, notification):
         info = notification.userInfo()
