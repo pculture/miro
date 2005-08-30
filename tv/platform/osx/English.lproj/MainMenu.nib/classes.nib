@@ -1,14 +1,10 @@
 {
     IBClasses = (
         {
-            ACTIONS = {
-                checkForUpdates = id; 
-                donate = id; 
-                showPreferencesWindow = id; 
-                tellAFriend = id; 
-            }; 
+            ACTIONS = {checkForUpdates = id; donate = id; showPreferencesWindow = id; }; 
             CLASS = AppController; 
             LANGUAGE = ObjC; 
+            OUTLETS = {}; 
             SUPERCLASS = NSObject; 
         }, 
         {
@@ -26,6 +22,7 @@
                 renameChannel = id; 
                 saveVideo = id; 
                 sendCollectionToFriend = id; 
+                tellAFriend = id; 
                 updateAllChannels = id; 
                 updateChannel = id; 
             }; 
