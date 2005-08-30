@@ -183,9 +183,6 @@ class AppController (NSObject):
     def donate_(self, sender):
         print "NOT IMPLEMENTED"
 
-    def tellAFriend_(self, sender):
-        print "NOT IMPLEMENTED"
-
     itemsAlwaysAvailable = ('checkForUpdates:', 'showPreferencesWindow:')
     def validateMenuItem_(self, item):
         return item.action() in self.itemsAlwaysAvailable
@@ -282,29 +279,7 @@ class DisplayHostView (NibClassBuilder.AutoBaseClass):
         display.onSelected_private(owner)
         display.onSelected(owner)
         
-        self.notifyIfWatchable(display)
-
         del pool
-
-    def notifyIfWatchable(self, display):
-        view = self.getNamedView(display, ('watchable', 'allitems'))
-        if view is None:
-            return
-        
-        if view.getView().len() > 0:
-            nc.postNotificationName_object_userInfo_('displayIsWatchable', display, {'view': view})
-        else:
-            nc.postNotificationName_object_('displayIsNotWatchable', display)
-            
-    def getNamedView(self, display, names):
-        view = None
-        for name in names:
-            try:
-                view = display.templateHandle.findNamedView(name)
-                break
-            except:
-                pass
-        return view
 
 
 class MainController (NibClassBuilder.AutoBaseClass):
@@ -376,6 +351,12 @@ class MainController (NibClassBuilder.AutoBaseClass):
     def doSelectDisplay(self, display, area):
         if area is not None:
             area.setDisplay(display, self.frame)
+            if area == self.mainHostView:
+                view = display.getWatchable()
+                if view is not None:
+                    nc.postNotificationName_object_userInfo_('displayIsWatchable', display, {'view': view})
+                else:
+                    nc.postNotificationName_object_('displayIsNotWatchable', display)
 
     def getDisplaySizeHint(self, area):
         return area.frame()
@@ -431,13 +412,18 @@ class MainController (NibClassBuilder.AutoBaseClass):
         self.appl.onDisplaySwitch(newDisplay)
 
     def playVideo_(self, sender):
-        print "NOT IMPLEMENTED"
+        self.playVideoInMode(0)
 
     def playVideoFullScreen_(self, sender):
-        print "NOT IMPLEMENTED"
+        self.playVideoInMode(1)
 
     def playVideoHalfScreen_(self, sender):
-        print "NOT IMPLEMENTED"
+        self.playVideoInMode(2)
+
+    def playVideoInMode(self, mode):
+        display = self.frame.mainDisplay.hostedDisplay
+        playlist = display.getWatchable()
+        display.dispatchAction('playView', view=playlist, firstItemId=0, mode=mode)
 
     def deleteVideo_(self, sender):
         print "NOT IMPLEMENTED"
@@ -483,6 +469,9 @@ class MainController (NibClassBuilder.AutoBaseClass):
     def sendCollectionToFriend_(self, sender):
         print "NOT IMPLEMENTED"
 
+    def tellAFriend_(self, sender):
+        print "NOT IMPLEMENTED"
+
     def showActionMenu_(self, sender):
         mainMenu = NSApplication.sharedApplication().mainMenu()
         tag = self.switcherMatrix.selectedCell().tag()
@@ -517,6 +506,12 @@ class MainController (NibClassBuilder.AutoBaseClass):
         if item.action() in self.selectedChannelItems:
             currentTab = app.Controller.instance.currentSelectedTab
             return currentTab is not None and currentTab.isFeed()
+        elif item.action() == 'playVideo:' or item.action() == 'playVideoFullScreen:':
+            display = self.frame.mainDisplay.hostedDisplay
+            if display is not None:
+                return (display.getWatchable() is not None)
+            else:
+                return NO
         else:
             return item.action() in self.itemsAlwaysAvailable
 
@@ -1477,21 +1472,28 @@ class VideoDisplay (app.Display, app.VideoDisplayDB):
 
     controller = nil
 
-    def __init__(self, firstItemId, view, previousDisplay):
+    def __init__(self, firstItemId, view, previousDisplay, mode):
         app.VideoDisplayDB.__init__(self, firstItemId, view)
         app.Display.__init__(self)
         VideoDisplay.controller.previousDisplay = previousDisplay
+        self.initialMode = mode
 
     def onSelected(self, frame):
         VideoDisplay.controller.frame = frame
         VideoDisplay.controller.enableControls(YES)
         VideoDisplay.controller.setPlaylist(self)
-        VideoDisplay.controller.play_(nil)
+        if self.initialMode == 0:
+            VideoDisplay.controller.play_(nil)
+        else:
+            VideoDisplay.controller.goFullscreen_(nil)
 
     def onDeselected(self, frame):
         VideoDisplay.controller.pause_(nil)
         VideoDisplay.controller.enableControls(False)
         VideoDisplay.controller.reset()
+
+    def getWatchable(self):
+        return self
 
     def getView(self):
         return VideoDisplay.controller.rootView
@@ -1584,9 +1586,8 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
     def play_(self, sender):
         if self.currentItem is None:
-            assert self.playlist is not None
-            assert self.currentWatchableDisplay is not None
-            self.currentWatchableDisplay.dispatchAction('playView', view=self.playlist, firstItemId=0)
+            # There has to be a better way to do this...
+            app.Controller.instance.frame.obj.doCommandBySelector_('playVideo:')
         else:
             self.currentVideoView.play_(self)
             self.currentVideoView.setNeedsDisplay_(YES)
@@ -1690,7 +1691,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.playPauseButton.setEnabled_(YES)
         self.fullscreenButton.setEnabled_(YES)
         info = notification.userInfo()
-        playlist = info['view'].getView()
+        playlist = info['view']
         self.setPlaylist(playlist, False)
         self.currentWatchableDisplay = notification.object()
 
