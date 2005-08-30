@@ -1060,14 +1060,22 @@ class ScraperFeed(Feed):
             for link in urls:
                 if depth == 0:
                     linkNumber += 1
-                print "Processing %s (%d)" % (link,linkNumber)
+                #print "Processing %s (%d)" % (link,linkNumber)
+
+                # FIXME: Using file extensions totally breaks the
+                # standard and won't work with Broadcast Machine or
+                # Blog Torrent. However, it's also a hell of a lot
+                # faster than checking the mime type for every single
+                # file, so for now, we're being bad boys. Uncomment
+                # the elif to make this use mime types for HTTP GET URLs
+
                 if ((link[-4:].lower() in 
                      ['.mov','.wmv','.mp4','.mp3','.mpg','.avi']) or
                     (link[-5:].lower() in ['.mpeg'])):
                     mimetype = 'video/unknown'
-                elif link.find('?') > 0 and link.lower().find('.htm') == -1:
-                    mimetype = self.getMimeType(link)
-                    #print " mimetype is "+mimetype
+                #elif link.find('?') > 0 and link.lower().find('.htm') == -1:
+                #    mimetype = self.getMimeType(link)
+                #    #print " mimetype is "+mimetype
                 else:
                     mimetype = 'text/html'
                 if mimetype != None:
