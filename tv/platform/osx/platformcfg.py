@@ -29,11 +29,8 @@ def get(descriptor):
         value = path
 
     elif descriptor == config.SUPPORT_DIRECTORY:
-        path = os.path.expandvars('${APPDATA}')
-        # FIXME: Hack to deal with systems that don't set APPDATA
-        if path == '${APPDATA}':
-            path = '~/Library/Application Support/DTV'
-        path = os.path.expanduser(path)
+        path = os.path.expanduser('~/Library/Application Support/DTV')
+        os.environ['APPDATA'] = path # This is for the Bittorent module
         try:
             os.makedirs(path)
         except:
