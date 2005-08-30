@@ -1,6 +1,6 @@
 import feed
 import item
-import config
+import config       # IMPORTANT!! config MUST be imported before downloader
 import folder
 import autodler
 import resource
@@ -123,6 +123,11 @@ class Display:
         """Called when the Display is not shown because it is not ready yet
         and another display will take its place"""
         pass
+        
+    def getWatchable(self):
+        """Subclasses can implement this if they can return a database view
+        of watchable items"""
+        return None
 
 
 # We can now safely import the frontend module
@@ -468,6 +473,20 @@ class TemplateDisplay(frontend.HTMLDisplay):
     def onDeselect(self):
         self.templateHandle.unlinkTemplate()
 
+    def getWatchable(self):
+        view = None
+        for name in ('watchable', 'allitems'):
+            try:
+                view = self.templateHandle.findNamedView(name)
+                break
+            except:
+                pass
+        if view is None or view.getView().len() == 0:
+            return None
+        
+        return view.getView()
+
+
 ###############################################################################
 #### Handlers for actions generated from templates, the OS, etc            ####
 ###############################################################################
@@ -775,10 +794,12 @@ class TemplateActionHandler:
         # clips and put it in the format the frontend expects.
         namedView = self.templateHandle.findNamedView(viewName)
         view = namedView.getView()
-        self.playView(view, firstItemId)
+        self.playView(view, firstItemId, 0)
 
-    def playView(self, view, firstItemId):
-        self.controller.frame.selectDisplay(frontend.VideoDisplay(firstItemId, view, self.display), self.controller.frame.mainDisplay)
+    def playView(self, view, firstItemId, mode):
+        # The mode argument specifies if the playback should be done in the main
+        # window, or fullscreen, etc.
+        self.controller.frame.selectDisplay(frontend.VideoDisplay(firstItemId, view, self.display, mode), self.controller.frame.mainDisplay)
 
 
 # Helper: liberally interpret the provided string as a boolean
