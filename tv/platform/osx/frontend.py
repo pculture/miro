@@ -415,10 +415,13 @@ class MainController (NibClassBuilder.AutoBaseClass):
         self.playVideoInMode(0)
 
     def playVideoFullScreen_(self, sender):
-        self.playVideoInMode(1)
+        if VideoDisplayController.getInstance().isPlaying:
+            VideoDisplayController.getInstance().goFullscreen_(sender)
+        else:
+            self.playVideoInMode(1)
 
     def playVideoHalfScreen_(self, sender):
-        self.playVideoInMode(2)
+        self.playVideoInMode(2) # ??!??
 
     def playVideoInMode(self, mode):
         display = self.frame.mainDisplay.hostedDisplay
@@ -1468,38 +1471,61 @@ class ManagedWebView (NSObject):
 ###############################################################################
 
 class VideoDisplay (app.Display, app.VideoDisplayDB):
-    "Video player that can be shown in a MainFrame's right-hand pane."
+    "Video player shown in a MainFrame's right-hand pane."
 
-    controller = nil
+    _instance = None
 
-    def __init__(self, firstItemId, view, previousDisplay, mode):
-        app.VideoDisplayDB.__init__(self, firstItemId, view)
+    @classmethod
+    def getInstance(cls, controller=None):
+        if VideoDisplay._instance is None:
+            VideoDisplay._instance = VideoDisplay(controller)
+        return VideoDisplay._instance
+
+    def __init__(self, controller):
+        app.VideoDisplayDB.__init__(self)
         app.Display.__init__(self)
-        VideoDisplay.controller.previousDisplay = previousDisplay
+        self.controller = controller
+        self.initialMode = None
+        
+    def configure(self, view, firstItemId, previousDisplay, mode):
+        self.setPlaylist(view, firstItemId)
+        self.controller.previousDisplay = previousDisplay
         self.initialMode = mode
 
+    def reset(self):
+        app.VideoDisplayDB.reset(self)
+        self.controller.previousDisplay = None
+        self.initialMode = None
+
     def onSelected(self, frame):
-        VideoDisplay.controller.frame = frame
-        VideoDisplay.controller.enableControls(YES)
-        VideoDisplay.controller.setPlaylist(self)
+        self.controller.frame = frame
+        self.controller.enableControls(YES)
+        self.controller.setPlaylist(self)
         if self.initialMode == 0:
-            VideoDisplay.controller.play_(nil)
+            self.controller.play_(nil)
         else:
-            VideoDisplay.controller.goFullscreen_(nil)
+            self.controller.goFullscreen_(nil)
 
     def onDeselected(self, frame):
-        VideoDisplay.controller.pause_(nil)
-        VideoDisplay.controller.enableControls(False)
-        VideoDisplay.controller.reset()
+        self.controller.pause_(nil)
+        self.controller.enableControls(False)
+        self.controller.reset()
+        self.reset()
 
     def getWatchable(self):
         return self
 
     def getView(self):
-        return VideoDisplay.controller.rootView
-
+        return self.controller.rootView
+        
 
 class VideoDisplayController (NibClassBuilder.AutoBaseClass):
+
+    _instance = nil
+
+    @classmethod
+    def getInstance(self):
+        return VideoDisplayController._instance
 
     def awakeFromNib(self):
         self.reset()
@@ -1515,7 +1541,8 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             'handleNonWatchableDisplayNotification:', 
             'displayIsNotWatchable', 
             nil)
-        VideoDisplay.controller = self
+        VideoDisplay.getInstance(self)
+        VideoDisplayController._instance = self
 
     def reset(self):
         self.isPlaying = False
