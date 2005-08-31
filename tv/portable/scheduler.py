@@ -57,7 +57,7 @@ class ScheduleEvent(DDBObject):
     # Schedules an event for interval seconds from now
     # Repeats every
     def __init__(self,interval, event, repeat = True):
-        self.interval = interval
+        self.interval = int(interval)
         self.event = event
         self.repeat = repeat
         self.lastRun = now()
