@@ -562,7 +562,10 @@ class AddChannelSheetController (NibClassBuilder.AutoBaseClass):
         return self
 
     def awakeFromNib(self):
-        self.addChannelSheetURL.setStringValue_("")
+        url = NSPasteboard.generalPasteboard().stringForType_(NSStringPboardType)
+        if not url.startswith('http://'):
+            url = ''
+        self.addChannelSheetURL.setStringValue_(url)
 
     def addChannelSheetDone_(self, sender):
         sheetURL = self.addChannelSheetURL.stringValue()
@@ -1618,11 +1621,9 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         else:
             self.currentVideoView.play_(self)
             self.currentVideoView.setNeedsDisplay_(YES)
-            self.isPlaying = True
 
     def pause_(self, sender):
         self.currentVideoView.pause_(self)
-        self.isPlaying = False
 
     def stop_(self, sender):
         self.pause_(sender)
@@ -1715,12 +1716,14 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.fullscreenController = nil
 
     def handleWatchableDisplayNotification_(self, notification):
-        self.playPauseButton.setEnabled_(YES)
-        self.fullscreenButton.setEnabled_(YES)
-        info = notification.userInfo()
-        playlist = info['view']
-        self.setPlaylist(playlist, False)
-        self.currentWatchableDisplay = notification.object()
+        source = notification.object()
+        if source is not VideoDisplay.getInstance():
+            self.playPauseButton.setEnabled_(YES)
+            self.fullscreenButton.setEnabled_(YES)
+            info = notification.userInfo()
+            playlist = info['view']
+            self.setPlaylist(playlist, False)
+            self.currentWatchableDisplay = source
 
     def handleNonWatchableDisplayNotification_(self, notification):
         self.playPauseButton.setEnabled_(NO)
@@ -1733,9 +1736,11 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             if rate == 0.0:
                 self.playPauseButton.setImage_(NSImage.imageNamed_('play.png'))
                 self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('play_blue.png'))
+                self.isPlaying = False
             else:
                 self.playPauseButton.setImage_(NSImage.imageNamed_('pause.png'))
                 self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('pause_blue.png'))
+                self.isPlaying = True
         elif notification.name() == QTMovieDidEndNotification:
             if not self.progressDisplayer.dragging:
                 if self.skip(1) is None:
@@ -1819,16 +1824,22 @@ class FullScreenVideoWindow (NSWindow):
             self.controller.exitFullScreen()
 
     def makeKeyAndOrderFront_(self, sender):
-        self.movieView.setMovie_(self.previousMovieView.movie())
+        movie = self.previousMovieView.movie()
+        self.movieView.setMovie_(movie)
+        self.movieView.setNeedsDisplay_(YES)
+        self.previousMovieView.setMovie_(nil)
         super(FullScreenVideoWindow, self).makeKeyAndOrderFront_(sender)
         self.previousMovieWindow.orderOut_(sender)
         
     def orderOut_(self, sender):
-        self.previousMovieView.setMovie_(self.movieView.movie())
+        super(FullScreenVideoWindow, self).orderOut_(sender)
+        movie = self.movieView.movie()
+        self.previousMovieView.setMovie_(movie)
+        self.movieView.setMovie_(nil)
+        self.previousMovieView.setNeedsDisplay_(YES)
         self.previousMovieWindow.makeKeyAndOrderFront_(sender)
         self.previousMovieWindow = nil
         self.previousMovieView = nil
-        super(FullScreenVideoWindow, self).orderOut_(sender)
 
 
 ###############################################################################
