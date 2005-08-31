@@ -40,12 +40,15 @@ def main():
 ###############################################################################
 class VideoDisplayDB:
     
-    def __init__(self, firstItemId, origView):
-        self.origView = origView
-
-        #FIXME: These views need to be released
-        self.subView = self.origView.filter(mappableToPlaylistItem)
-        self.view = self.subView.map(mapToPlaylistItem)
+    def __init__(self):
+        self.initialView = None
+        self.filteredView = None
+        self.view = None
+    
+    def setPlaylist(self, playlist, firstItemId):
+        self.initialView = playlist
+        self.filteredView = self.initialView.filter(mappableToPlaylistItem)
+        self.view = self.filteredView.map(mapToPlaylistItem)
 
         # Move the cursor to the requested item; if there's no
         # such item in the view, move the cursor to the first
@@ -66,6 +69,12 @@ class VideoDisplayDB:
                     break
         finally:
             self.view.endRead()
+
+    def reset(self):
+        self.initialView.removeView(self.filteredView)
+        self.initialView = None
+        self.filteredView = None
+        self.view = None
 
     def skipTo(self, item):
         if item is not None:
@@ -799,7 +808,9 @@ class TemplateActionHandler:
     def playView(self, view, firstItemId, mode):
         # The mode argument specifies if the playback should be done in the main
         # window, or fullscreen, etc.
-        self.controller.frame.selectDisplay(frontend.VideoDisplay(firstItemId, view, self.display, mode), self.controller.frame.mainDisplay)
+        videoDisplay = frontend.VideoDisplay.getInstance()
+        videoDisplay.configure(view, firstItemId, self.display, mode)
+        self.controller.frame.selectDisplay(videoDisplay, self.controller.frame.mainDisplay)
 
 
 # Helper: liberally interpret the provided string as a boolean
