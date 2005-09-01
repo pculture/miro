@@ -76,6 +76,12 @@ class VideoDisplayDB:
         self.filteredView = None
         self.view = None
 
+    def playPause(self):
+        raise NotImplementedErr
+
+    def stop(self):
+        raise NotImplementedErr
+
     def skipTo(self, item):
         if item is not None:
             item.onViewed()
@@ -803,14 +809,12 @@ class TemplateActionHandler:
         # clips and put it in the format the frontend expects.
         namedView = self.templateHandle.findNamedView(viewName)
         view = namedView.getView()
-        self.playView(view, firstItemId, 0)
+        self.playView(view, firstItemId)
 
-    def playView(self, view, firstItemId, mode):
-        # The mode argument specifies if the playback should be done in the main
-        # window, or fullscreen, etc.
+    def playView(self, view, firstItemId):
         videoDisplay = frontend.VideoDisplay.getInstance()
-        videoDisplay.configure(view, firstItemId, self.display, mode)
-        self.controller.frame.selectDisplay(videoDisplay, self.controller.frame.mainDisplay)
+        videoDisplay.configure(view, firstItemId, self.display)
+        videoDisplay.playPause()
 
 
 # Helper: liberally interpret the provided string as a boolean
