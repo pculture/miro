@@ -791,9 +791,9 @@ class UIBackendDelegate:
         message = u'No updates are available. Please try again later.'
         showInformationalDialog(summary, message)
 
-    def validateFeedRemoval(self, feedURL):
+    def validateFeedRemoval(self, feedTitle):
         summary = u'Remove Channel'
-        message = u'Are you sure you want to remove this channel? This operation cannot be undone.'
+        message = u'Are you sure you want to remove the channel \'%s\'? This operation cannot be undone.' % feedTitle
         buttons = (u'Remove', u'Cancel')
         return showCriticalDialog(summary, message, buttons)
 
