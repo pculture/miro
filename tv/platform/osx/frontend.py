@@ -109,7 +109,7 @@ class Application:
         pass
 
 
-class AppController (NSObject):
+class AppController (NibClassBuilder.AutoBaseClass):
 
     # Do nothing. A dummy method called by Application to force Cocoa into
     # multithreaded mode.
@@ -123,6 +123,21 @@ class AppController (NSObject):
             "openURL:withReplyEvent:",
             struct.unpack(">i", "GURL")[0],
             struct.unpack(">i", "GURL")[0])
+        nc.addObserver_selector_name_object_(
+            self,
+            'videoWillPlay:',
+            'videoWillPlay',
+            nil)
+        nc.addObserver_selector_name_object_(
+            self,
+            'videoWillStop:',
+            'videoWillPause',
+            nil)
+        nc.addObserver_selector_name_object_(
+            self,
+            'videoWillStop:',
+            'videoWillStop',
+            nil)
         # Call the startup hook before any events (such as instructions
         # to open files...) are delivered.
         self.actualApp.onStartup()
@@ -141,6 +156,12 @@ class AppController (NSObject):
 
     def application_openFile_(self, app, filename):
         return self.actualApp.addFeedFromFile(filename)
+
+    def videoWillPlay_(self, notification):
+        self.playPauseMenuItem.setTitle_('Pause Video')
+
+    def videoWillStop_(self, notification):
+        self.playPauseMenuItem.setTitle_('Play Video')
 
     def checkQuicktimeVersion(self, showError):
         supported = gestalt('qtim') >= 0x07000000
@@ -208,19 +229,19 @@ class MainFrame:
         self.collectionDisplay = None
         self.mainDisplay = None
         self.videoInfoDisplay = None
-        # Do this in two steps so that self.obj is set when self.obj.init
+        # Do this in two steps so that self.controller is set when self.controler.init
         # is called. That way, init can turn around and call selectDisplay.
-        self.obj = MainController.alloc()
-        self.obj.init(self, appl)
+        self.controller = MainController.alloc()
+        self.controller.init(self, appl)
 
     def selectDisplay(self, display, area=None):
         """Install the provided 'display' in the requested area"""
-        self.obj.selectDisplay(display, area)
+        self.controller.selectDisplay(display, area)
 
     # Internal use: return an estimate of the size of a given display area as
     # a Cocoa frame object.
     def getDisplaySizeHint(self, area):
-        return self.obj.getDisplaySizeHint(area)
+        return self.controller.getDisplaySizeHint(area)
 
 
 class DisplayHostView (NibClassBuilder.AutoBaseClass):
@@ -297,6 +318,12 @@ class MainController (NibClassBuilder.AutoBaseClass):
             NSApplicationWillTerminateNotification,
             NSApplication.sharedApplication())
 
+        nc.addObserver_selector_name_object_(
+            self,
+            'videoWillPlay:',
+            'videoWillPlay',
+            nil)
+
         return self
 
     def awakeFromNib(self):
@@ -310,6 +337,11 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     def appWillTerminate_(self, notification):
         self.saveLayout()
+
+    def videoWillPlay_(self, notification):
+        videoDisplay = VideoDisplay.getInstance()
+        if videoDisplay.currentFrame is None:
+            self.selectDisplay(videoDisplay, self.frame.mainDisplay)
 
     def restoreLayout(self):
         windowFrame = config.get(config.MAIN_WINDOW_FRAME)
@@ -352,7 +384,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
     def doSelectDisplay(self, display, area):
         if area is not None:
             area.setDisplay(display, self.frame)
-            if area == self.mainHostView:
+            if isinstance(display, app.TemplateDisplay) and area == self.mainHostView:
                 view = display.getWatchable()
                 if view is not None:
                     nc.postNotificationName_object_userInfo_('displayIsWatchable', display, {'view': view})
@@ -412,22 +444,17 @@ class MainController (NibClassBuilder.AutoBaseClass):
             newDisplay = self.frame.collectionDisplay
         self.appl.onDisplaySwitch(newDisplay)
 
-    def playVideo_(self, sender):
-        self.playVideoInMode(0)
+    def playPause_(self, sender):
+        VideoDisplayController.getInstance().playPause_(sender)
 
-    def playVideoFullScreen_(self, sender):
-        if VideoDisplayController.getInstance().isPlaying:
-            VideoDisplayController.getInstance().goFullscreen_(sender)
-        else:
-            self.playVideoInMode(1)
+    def stopVideo_(self, sender):
+        VideoDisplayController.getInstance().stop_(sender)
 
-    def playVideoHalfScreen_(self, sender):
-        self.playVideoInMode(2) # ??!??
+    def playFullScreen_(self, sender):
+        VideoDisplayController.getInstance().playFullScreen_(sender)
 
-    def playVideoInMode(self, mode):
-        display = self.frame.mainDisplay.hostedDisplay
-        playlist = display.getWatchable()
-        display.dispatchAction('playView', view=playlist, firstItemId=0, mode=mode)
+    def playHalfScreen_(self, sender):
+        pass
 
     def deleteVideo_(self, sender):
         print "NOT IMPLEMENTED"
@@ -510,12 +537,17 @@ class MainController (NibClassBuilder.AutoBaseClass):
         if item.action() in self.selectedChannelItems:
             currentTab = app.Controller.instance.currentSelectedTab
             return currentTab is not None and currentTab.isFeed()
-        elif item.action() == 'playVideo:' or item.action() == 'playVideoFullScreen:':
+        elif item.action() == 'playPause:' or item.action() == 'playFullScreen:':
             display = self.frame.mainDisplay.hostedDisplay
             if display is not None:
-                return (display.getWatchable() is not None)
+                if display is VideoDisplay.getInstance():
+                    return YES
+                else:
+                    return display.getWatchable() is not None
             else:
                 return NO
+        elif item.action() == 'stopVideo:':
+            return self.frame.mainDisplay.hostedDisplay is VideoDisplay.getInstance()
         else:
             return item.action() in self.itemsAlwaysAvailable
 
@@ -1490,39 +1522,38 @@ class VideoDisplay (app.Display, app.VideoDisplayDB):
         app.VideoDisplayDB.__init__(self)
         app.Display.__init__(self)
         self.controller = controller
-        self.initialMode = None
         
-    def configure(self, view, firstItemId, previousDisplay, mode):
+    def configure(self, view, firstItemId, previousDisplay):
         self.setPlaylist(view, firstItemId)
         self.controller.previousDisplay = previousDisplay
-        self.initialMode = mode
 
     def reset(self):
         app.VideoDisplayDB.reset(self)
         self.controller.previousDisplay = None
-        self.initialMode = None
 
-    def onSelected(self, frame):
-        self.controller.frame = frame
-        self.controller.enableControls(YES)
-        self.controller.setPlaylist(self)
-        if self.initialMode == 0:
-            self.controller.play_(nil)
+    def playPause(self):
+        if self.controller.isPlaying:
+            self.controller.pause()
         else:
-            self.controller.goFullscreen_(nil)
+            self.controller.play()
+
+    def stop(self):
+        self.controller.stop_(nil)
+    
+    def onSelected(self, frame):
+        self.controller.onSelected(self, frame)
 
     def onDeselected(self, frame):
-        self.controller.pause_(nil)
-        self.controller.enableControls(False)
-        self.controller.reset()
+        self.controller.onDeselected(frame)
         self.reset()
-
-    def getWatchable(self):
-        return self
 
     def getView(self):
         return self.controller.rootView
-        
+
+
+###############################################################################
+#### The video display controller object, instantiated from the nib file   ####
+###############################################################################
 
 class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
@@ -1533,7 +1564,6 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         return VideoDisplayController._instance
 
     def awakeFromNib(self):
-        self.reset()
         self.forwardButton.sendActionOn_(NSLeftMouseDownMask)
         self.backwardButton.sendActionOn_(NSLeftMouseDownMask)
         nc.addObserver_selector_name_object_(
@@ -1548,6 +1578,20 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             nil)
         VideoDisplay.getInstance(self)
         VideoDisplayController._instance = self
+        self.reset()
+
+    def onSelected(self, playlist, frame):
+        self.frame = frame
+        self.movieView = self.videoAreaView.movieView
+        self.enableControls(YES)
+        self.setPlaylist(playlist)
+        self.videoAreaView.activate()
+
+    def onDeselected(self, frame):
+        self.pause()
+        self.enableControls(False)
+        self.videoAreaView.deactivate()
+        self.reset()
 
     def reset(self):
         self.isPlaying = False
@@ -1556,10 +1600,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.currentWatchableDisplay = None
         self.frame = None
         self.previousDisplay = None
-        self.fullscreenController = nil
         self.fastSeekTimer = nil
-        self.currentVideoView = self.videoView
-        self.videoView.setMovie_(nil)
         self.progressDisplayer.setMovie_(nil)
         self.unregisterAsMovieObserver()
 
@@ -1581,7 +1622,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     def selectPlaylistItem(self, item):
         pathname = item.getPath()
         (movie, error) = QTMovie.alloc().initWithFile_error_(pathname)
-        self.currentVideoView.setMovie_(movie)
+        self.movieView.setMovie_(movie)
         self.progressDisplayer.setMovie_(movie)
         self.setVolume_(self.volumeSlider)
         self.currentItem = item
@@ -1595,16 +1636,11 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.registerAsMovieObserver(movie)
 
     def exitVideoMode(self):
-        if self.fullscreenController is not nil:
-            self.fullscreenController.exitFullScreen()
-            self.fullscreenController = nil
-
+        frame = self.frame
         area = self.frame.mainDisplay
         previousDisplay = self.previousDisplay
         self.reset()
-
-        mainController = self.videoView.window().delegate()
-        mainController.selectDisplay(previousDisplay, area)
+        frame.selectDisplay(previousDisplay, area)
 
     def enableControls(self, enabled):
         self.backwardButton.setEnabled_(enabled)
@@ -1616,27 +1652,28 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.volumeSlider.setEnabled_(enabled)
         self.fullscreenButton.setEnabled_(enabled)
 
-    def play_(self, sender):
-        if self.currentItem is None:
-            # There has to be a better way to do this...
-            app.Controller.instance.frame.obj.doCommandBySelector_('playVideo:')
-        else:
-            self.currentVideoView.play_(self)
-            self.currentVideoView.setNeedsDisplay_(YES)
+    def playPause_(self, sender):
+        VideoDisplay.getInstance().playPause()
 
-    def pause_(self, sender):
-        self.currentVideoView.pause_(self)
+    def play(self):
+        nc.postNotificationName_object_('videoWillPlay', nil)
+        self.movieView.play_(self)
+        self.movieView.setNeedsDisplay_(YES)
+
+    def pause(self):
+        nc.postNotificationName_object_('videoWillPause', nil)
+        self.movieView.pause_(nil)
 
     def stop_(self, sender):
-        self.pause_(sender)
-        self.currentVideoView.gotoBeginning_(self)
+        nc.postNotificationName_object_('videoWillStop', nil)
+        self.movieView.pause_(nil)
+        self.movieView.gotoBeginning_(sender)
         self.exitVideoMode()
 
-    def playPause_(self, sender):
-        if self.isPlaying:
-            self.pause_(sender)
-        else:
-            self.play_(sender)
+    def playFullScreen_(self, sender):
+        if not self.isPlaying:
+            self.playPause_(sender)
+        self.videoAreaView.enterFullScreen()
 
     def forward_(self, sender):
         self.performSeek(sender, 1)
@@ -1653,18 +1690,18 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         else:
             sender.sendActionOn_(NSLeftMouseDownMask)
             if self.fastSeekTimer is nil:
-                self.currentVideoView.movie().setRate_(1.0)
+                self.movieView.movie().setRate_(1.0)
             else:
                 self.fastSeekTimer.invalidate()
                 self.fastSeekTimer = nil
                 self.skip(direction)
 
     def fastSeek_(self, timer):
-        assert self.currentVideoView.movie().rate() == 1.0
+        assert self.movieView.movie().rate() == 1.0
         info = timer.userInfo()
         direction = info['seekDirection']
         rate = 2 * direction
-        self.currentVideoView.movie().setRate_(rate)
+        self.movieView.movie().setRate_(rate)
         self.fastSeekTimer = nil
 
     def skip(self, direction):
@@ -1675,16 +1712,16 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             if self.progressDisplayer.getCurrentTimeInSeconds() <= 0.5:
                 nextItem = self.playlist.getPrev()
             else:
-                self.currentVideoView.movie().gotoBeginning()
-            
+                self.movieView.movie().gotoBeginning()
+
         if nextItem is not None:
             self.selectPlaylistItem(nextItem)
-            self.play_(nil)
+            self.play()
             
         return nextItem
 
     def setVolume_(self, sender):
-        movie = self.currentVideoView.movie()
+        movie = self.movieView.movie()
         if movie is not None:
             if sender.isEnabled():
                 movie.setVolume_(sender.floatValue())
@@ -1692,7 +1729,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
                 movie.setVolume_(0.0)
 
     def muteUnmuteVolume_(self, sender):
-        movie = self.currentVideoView.movie()
+        movie = self.movieView.movie()
         if movie is not None:
             volume = movie.volume()
             if volume > 0.0:
@@ -1702,30 +1739,13 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
                 self.volumeSlider.setEnabled_(YES)
                 movie.setVolume_(self.volumeSlider.floatValue())
 
-    def goFullscreen_(self, sender):
-        if not self.isPlaying:
-            self.play_(nil)
-        self.fullscreenController = FullScreenVideoController(self.videoView)
-        self.fullscreenController.setDelegate(self)
-        self.fullscreenController.enterFullScreen()
-
-    def didEnterFullscreenMode(self):
-        self.currentVideoView = FullScreenVideoController.fsWindow.movieView
-        FullScreenAlertPanelController.displayIfNeeded()
-
-    def didExitFullscreenMode(self):
-        self.currentVideoView = self.videoView
-        self.fullscreenController = nil
-
     def handleWatchableDisplayNotification_(self, notification):
-        source = notification.object()
-        if source is not VideoDisplay.getInstance():
-            self.playPauseButton.setEnabled_(YES)
-            self.fullscreenButton.setEnabled_(YES)
-            info = notification.userInfo()
-            playlist = info['view']
-            self.setPlaylist(playlist, False)
-            self.currentWatchableDisplay = source
+        self.playPauseButton.setEnabled_(YES)
+        self.fullscreenButton.setEnabled_(YES)
+        info = notification.userInfo()
+        view = info['view']
+        display = notification.object()
+        VideoDisplay.getInstance().configure(view, None, display)
 
     def handleNonWatchableDisplayNotification_(self, notification):
         self.playPauseButton.setEnabled_(NO)
@@ -1750,7 +1770,54 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
 
 ###############################################################################
-#### The fullscreen video controller                                       ####
+#### The "dummy" video area. The actula video display will happen in a     ####
+#### child VideoWindow window. This allows to have a single movie view for ####
+#### both windowed and fullscreen playback                                 ####
+###############################################################################
+
+class VideoAreaView (NSView):
+    
+    def awakeFromNib(self):
+        self.videoWindow = VideoWindow.alloc().initWithFrame_(((0,0),(320,200)))
+        self.movieView = self.videoWindow.movieView
+        self.hostWindow = nil
+        
+    def activate(self):
+        self.hostWindow = self.window()
+        assert self.hostWindow is not nil
+        self.adjustVideoWindowSize()
+        self.hostWindow.addChildWindow_ordered_(self.videoWindow, NSWindowAbove)
+        self.videoWindow.orderFront_(nil)
+    
+    def deactivate(self):
+        self.hostWindow.removeChildWindow_(self.videoWindow)
+        self.videoWindow.orderOut_(nil)
+        self.movieView.setMovie_(nil)
+    
+    def adjustVideoWindowSize(self):
+        if self.window() is nil:
+            return
+        frame = self.frame()
+        frame.origin = self.convertPoint_toView_(NSZeroPoint, nil)
+        frame.origin = self.window().convertBaseToScreen_(frame.origin)
+        self.videoWindow.setFrame_display_(frame, YES)
+    
+    def drawRect_(self, rect):
+        NSColor.blackColor().set()
+        NSRectFill(rect)
+    
+    def setFrame_(self, frame):
+        super(VideoAreaView, self).setFrame_(frame)
+        self.adjustVideoWindowSize()
+    
+    def enterFullScreen(self):
+        self.videoWindow.enterFullScreen()
+
+
+###############################################################################
+#### The video window, used to display the movies in both windowed and     ####
+#### fullscreen modes.                                                     ####
+####                                                                       ####
 #### We have to dynamically link some specific Carbon functions which are  ####
 ###  not available in the default MacPython                                ####
 ###############################################################################
@@ -1762,86 +1829,50 @@ carbonPath = objc.pathForFramework('/System/Library/Frameworks/Carbon.framework'
 carbonBundle = NSBundle.bundleWithPath_(carbonPath)
 objc.loadBundleFunctions(carbonBundle, globals(), ((u'SetSystemUIMode', 'III'),))
 
-class FullScreenVideoController:
-
-    fsWindow = nil
-
-    def __init__(self, previousMovieView):
-        self.delegate = None
-        if FullScreenVideoController.fsWindow == nil:
-            FullScreenVideoController.fsWindow = FullScreenVideoWindow.alloc().init().retain()
-            FullScreenVideoController.fsWindow.controller = self
-        FullScreenVideoController.fsWindow.setPreviousMovieView(previousMovieView)
-
-    def setDelegate(self, delegate):
-        self.delegate = delegate
-
-    def enterFullScreen(self):
-        SetSystemUIMode(kUIModeAllHidden, 0)
-        FullScreenVideoController.fsWindow.makeKeyAndOrderFront_(nil)
-        if self.delegate is not None:
-            self.delegate.didEnterFullscreenMode()
-
-    def exitFullScreen(self):
-        FullScreenVideoController.fsWindow.orderOut_(nil)
-        SetSystemUIMode(kUIModeNormal, 0)
-        if self.delegate is not None:
-            self.delegate.didExitFullscreenMode()
-
-
-###############################################################################
-#### The fullscreen video window                                           ####
-###############################################################################
-
-class FullScreenVideoWindow (NSWindow):
-
-    def init(self):
-        frame = NSScreen.mainScreen().frame()
-        parent = super(FullScreenVideoWindow, self)
+class VideoWindow (NSWindow):
+    
+    def initWithFrame_(self, frame):
+        parent = super(VideoWindow, self)
         self = parent.initWithContentRect_styleMask_backing_defer_(
             frame,
             NSBorderlessWindowMask,
             NSBackingStoreBuffered,
             YES )
         self.movieView = QTMovieView.alloc().initWithFrame_(frame)
+        self.movieView.setFillColor_(NSColor.blackColor())
         self.movieView.setControllerVisible_(NO)
         self.movieView.setPreservesAspectRatio_(YES)
         self.setContentView_(self.movieView)
-        self.previousMovieWindow = nil
-        self.previousMovieView = nil
+        self.isFullScreen = NO
         return self
 
-    def setPreviousMovieView(self, previousMovieView):
-        self.previousMovieWindow = previousMovieView.window()
-        self.previousMovieView = previousMovieView
-
     def canBecomeMainWindow(self):
-        return YES
+        return self.isFullScreen
     
     def canBecomeKeyWindow(self):
-        return YES
+        return self.isFullScreen
 
+    def enterFullScreen(self):
+        SetSystemUIMode(kUIModeAllHidden, 0)
+        self.isFullScreen = YES
+        self.parent = self.parentWindow()
+        self.frameInParent = self.frame()
+        self.setFrame_display_animate_(NSScreen.mainScreen().frame(), YES, YES)
+        self.parent.removeChildWindow_(self)
+        self.parent.orderOut_(nil)
+        self.makeKeyAndOrderFront_(nil)
+        FullScreenAlertPanelController.displayIfNeeded()
+
+    def exitFullScreen(self):
+        self.isFullScreen = NO
+        self.parent.addChildWindow_ordered_(self, NSWindowAbove)
+        self.parent.makeKeyAndOrderFront_(nil)
+        self.setFrame_display_animate_(self.frameInParent, YES, YES)
+        SetSystemUIMode(kUIModeNormal, 0)
+        
     def sendEvent_(self, event):
         if event.type() == NSKeyDown and event.characters().characterAtIndex_(0) == 0x1B:
-            self.controller.exitFullScreen()
-
-    def makeKeyAndOrderFront_(self, sender):
-        movie = self.previousMovieView.movie()
-        self.movieView.setMovie_(movie)
-        self.movieView.setNeedsDisplay_(YES)
-        self.previousMovieView.setMovie_(nil)
-        super(FullScreenVideoWindow, self).makeKeyAndOrderFront_(sender)
-        self.previousMovieWindow.orderOut_(sender)
-        
-    def orderOut_(self, sender):
-        super(FullScreenVideoWindow, self).orderOut_(sender)
-        movie = self.movieView.movie()
-        self.previousMovieView.setMovie_(movie)
-        self.movieView.setMovie_(nil)
-        self.previousMovieView.setNeedsDisplay_(YES)
-        self.previousMovieWindow.makeKeyAndOrderFront_(sender)
-        self.previousMovieWindow = nil
-        self.previousMovieView = nil
+            self.exitFullScreen()
 
 
 ###############################################################################
