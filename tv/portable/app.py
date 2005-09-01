@@ -484,7 +484,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
     def getWatchable(self):
         view = None
-        for name in ('watchable', 'allitems'):
+        for name in ('watchable', 'newitems', 'allitems'):
             try:
                 view = self.templateHandle.findNamedView(name)
                 break
