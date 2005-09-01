@@ -4,7 +4,7 @@
             ACTIONS = {checkForUpdates = id; donate = id; showPreferencesWindow = id; }; 
             CLASS = AppController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {}; 
+            OUTLETS = {playPauseMenuItem = id; }; 
             SUPERCLASS = NSObject; 
         }, 
         {
@@ -15,13 +15,14 @@
                 createCollection = id; 
                 deleteCollection = id; 
                 deleteVideo = id; 
-                playVideo = id; 
-                playVideoFullScreen = id; 
-                playVideoHalfScreen = id; 
+                playFullScreen = id; 
+                playHalfScreen = id; 
+                playPause = id; 
                 removeChannel = id; 
                 renameChannel = id; 
                 saveVideo = id; 
                 sendCollectionToFriend = id; 
+                stopVideo = id; 
                 tellAFriend = id; 
                 updateAllChannels = id; 
                 updateChannel = id; 
