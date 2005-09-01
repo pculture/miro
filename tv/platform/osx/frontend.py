@@ -28,6 +28,7 @@ import struct
 import urlparse
 import tempfile
 import threading
+import itertools
 
 NibClassBuilder.extractClasses("MainMenu")
 NibClassBuilder.extractClasses("MainWindow")
@@ -561,9 +562,10 @@ class AddChannelSheetController (NibClassBuilder.AutoBaseClass):
         self.parentController = parent
         return self
 
+    allowedURLSchemes = ('http://', 'https://', 'feed://')
     def awakeFromNib(self):
         url = NSPasteboard.generalPasteboard().stringForType_(NSStringPboardType)
-        if not url.startswith('http://'):
+        if True not in itertools.imap(url.startswith, self.allowedURLSchemes):
             url = ''
         self.addChannelSheetURL.setStringValue_(url)
 
