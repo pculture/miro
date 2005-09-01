@@ -24,12 +24,13 @@
         {CLASS = ProgressDisplayView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {CLASS = TabButtonCell; LANGUAGE = ObjC; SUPERCLASS = NSButtonCell; }, 
         {CLASS = TrackButton; LANGUAGE = ObjC; SUPERCLASS = NSButton; }, 
+        {CLASS = VideoAreaView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {
             ACTIONS = {
                 backward = id; 
                 forward = id; 
-                goFullscreen = id; 
                 muteUnmuteVolume = id; 
+                playFullScreen = id; 
                 playPause = id; 
                 setVolume = id; 
                 stop = id; 
@@ -45,7 +46,7 @@
                 progressDisplayer = id; 
                 rootView = id; 
                 stopButton = id; 
-                videoView = id; 
+                videoAreaView = id; 
                 volumeSlider = id; 
             }; 
             SUPERCLASS = NSObject; 
