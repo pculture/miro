@@ -538,8 +538,12 @@ class ModelActionHandler:
             db.endUpdate()
 
     def removeFeed(self, url):
-        if self.backEndDelegate.validateFeedRemoval(url):
-            db.removeMatching(lambda x: isinstance(x,feed.UniversalFeed) and x.getURL() == url)
+        func = lambda x: isinstance(x, feed.UniversalFeed) and x.getURL() == url
+        view = db.filter(func)
+        feedObj = view.getNext()
+        if self.backEndDelegate.validateFeedRemoval(feedObj.getTitle()):
+            feedObj.remove()
+        db.removeView(view)
 
     def updateFeed(self, url):
         db.beginUpdate()
