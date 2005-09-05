@@ -787,8 +787,8 @@ class UIBackendDelegate:
             self.openExternalURL(url)
 
     def dtvIsUpToDate(self):
-        summary = u'DTV is up to date'
-        message = u'No updates are available. Please try again later.'
+        summary = u'DTV Version Check'
+        message = u'This version of DTV is up to date.'
         showInformationalDialog(summary, message)
 
     def validateFeedRemoval(self, feedTitle):
