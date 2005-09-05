@@ -73,6 +73,18 @@ def showDialog(summary, message, buttons, style):
 
 
 ###############################################################################
+#### Helper method used to get the free space on the disk where downloaded ####
+#### movies are stored                                                     ####
+###############################################################################
+
+def getAvailableGBytesForMovies():
+    fm = NSFileManager.defaultManager()
+    info = fm.fileSystemAttributesAtPath_(config.get(config.MOVIES_DIRECTORY))
+    bytesFree = info[NSFileSystemFreeSize]
+    return bytesFree / (1024 * 1024 *1024)
+
+
+###############################################################################
 #### Application object                                                    ####
 ###############################################################################
 
