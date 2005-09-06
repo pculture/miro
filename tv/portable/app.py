@@ -11,6 +11,7 @@ import downloader
 import autoupdate
 import xhtmltools
 import guide
+import idlenotifier
 
 import os
 import re
@@ -239,6 +240,11 @@ class Controller (frontend.Application):
             print "DTV: Spawning auto downloader..."
             autodler.AutoDownloader()
 
+            # Start the idle notifier daemon
+            print "DTV: Spawning idle notifier"
+            self.idlingNotifier = idlenotifier.IdleNotifier(self)
+            self.idlingNotifier.start()
+
             # Put up the main frame
             print "DTV: Displaying main frame..."
             self.frame = frontend.MainFrame(self)
@@ -290,6 +296,17 @@ class Controller (frontend.Application):
             print "DTV: Exception on shutdown:"
             traceback.print_exc()
             frontend.exit(1)
+
+    ### Handling system idle events
+    
+    def systemHasBeenIdlingSince(self, seconds):
+        # the system is idling, we can now remove the upstream limit cap
+        # but how do I do this ? :)
+        pass
+
+    def systemIsActiveAgain(self):
+        # the system is active again, limit the upstream 
+        pass
 
     ### Handling events received from the OS (via our base class) ###
 
