@@ -39,6 +39,7 @@ setup(
     ),
     ext_modules=[
         #Add extra_compile_args to change the compile options
+        Extension("idletime",["%s/platform/osx/idletime.c" % root]),
         Extension("database",["%s/portable/database.pyx" % root]),
         Extension("template",["%s/portable/template.pyx" % root])
         ],
