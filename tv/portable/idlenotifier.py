@@ -22,37 +22,37 @@ DEFAULT_IDLE_THRESHOLD = 60 * 5     # Notify after X seconds of idling
 
 class IdleNotifier (threading.Thread):
     
-    def __init__(self, delegate):
+    def __init__(self, delegate, idleThreshold=DEFAULT_IDLE_THRESHOLD, periodicity=DEFAULT_PERIODICITY):
         """Initialize the IdleNotifier object, the passed delegate will be
            called when the system idle state changes.
-        """
-        threading.Thread.__init__(self, target=self._workerMethod)
-        self.setDaemon(True)
-        self.idling = False
-        self.wasIdling = False
-        self.delegate = delegate
-        self.idleThreshold = 0
-        self.periodicity = 0
-        
-    def start(self, idleThreshold=DEFAULT_IDLE_THRESHOLD, periodicity=DEFAULT_PERIODICITY):
-        """Launches the background daemon.
            - idleThreshold specifies the idle time (in seconds) after which the
            delegate is called.
            - periodicity specifies that that the idle state should be checked
            every X seconds.
         """
+        threading.Thread.__init__(self)
+        self.setDaemon(True)
+        self.stopEvent = threading.Event()
+        self.idling = False
+        self.wasIdling = False
+        self.delegate = delegate
         self.idleThreshold = idleThreshold
         self.periodicity = periodicity
-        threading.Thread.start(self)
-        
-    def _workerMethod(self):
-        while True:
+                        
+    def run(self):
+        print "DTV: idle notifier thread running"
+        while not self.stopEvent.isSet():
             seconds = idletime.get()
             if self.idling:
                 self._whenIdling(seconds)
             else:
                 self._whenNotIdling(seconds)
-            time.sleep(self.periodicity)
+            self.stopEvent.wait(self.periodicity)
+        print "DTV: idle notifier thread stopped"
+
+    def join(self):
+        self.stopEvent.set()
+        threading.Thread.join(self)
     
     def _whenNotIdling(self, seconds):
         if seconds >= self.idleThreshold:
