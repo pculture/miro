@@ -1809,6 +1809,8 @@ class VideoAreaView (NSView):
         self.videoWindow.orderFront_(nil)
     
     def deactivate(self):
+        if self.videoWindow.isFullScreen:
+            self.videoWindow.exitFullScreen()
         self.hostWindow.removeChildWindow_(self.videoWindow)
         self.videoWindow.orderOut_(nil)
         self.movieView.setMovie_(nil)
