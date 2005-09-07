@@ -168,6 +168,7 @@ class Controller (frontend.Application):
         try:
             print "DTV: Loading preferences..."
             config.load()
+            config.addListener(self)
             
             delegate = self.getBackendDelegate()
             feed.setDelegate(delegate)
@@ -241,9 +242,12 @@ class Controller (frontend.Application):
             autodler.AutoDownloader()
 
             # Start the idle notifier daemon
-            print "DTV: Spawning idle notifier"
-            self.idlingNotifier = idlenotifier.IdleNotifier(self)
-            self.idlingNotifier.start()
+            if config.get(config.LIMIT_UPSTREAM) is True:
+                print "DTV: Spawning idle notifier"
+                self.idlingNotifier = idlenotifier.IdleNotifier(self)
+                self.idlingNotifier.start()
+            else:
+                self.idlingNotifier = None
 
             # Put up the main frame
             print "DTV: Displaying main frame..."
@@ -297,16 +301,24 @@ class Controller (frontend.Application):
             traceback.print_exc()
             frontend.exit(1)
 
+    ### Handling config/prefs changes
+    
+    def configDidChange(self, key, value):
+        if key is config.LIMIT_UPSTREAM.key:
+            if value is False:
+                self.idlingNotifier.join()
+                self.idlingNotifier = None
+            elif self.idlingNotifier is None:
+                self.idlingNotifier = idlenotifier.IdleNotifier(self)
+                self.idlingNotifier.start()
+
     ### Handling system idle events
     
     def systemHasBeenIdlingSince(self, seconds):
-        # the system is idling, we can now remove the upstream limit cap
-        # but how do I do this ? :)
-        pass
+        self.setUpstreamLimit(False)
 
     def systemIsActiveAgain(self):
-        # the system is active again, limit the upstream 
-        pass
+        self.setUpstreamLimit(True)
 
     ### Handling events received from the OS (via our base class) ###
 
@@ -396,6 +408,14 @@ class Controller (frontend.Application):
         # Nick, your turn ;)
         pass
         
+    def setUpstreamLimit(self, setLimit):
+        if setLimit:
+            limit = config.get(config.UPSTREAM_LIMIT_IN_KBS)
+            # upstream limit should be set here
+        else:
+            # upstream limit should be unset here
+            pass
+
 
 ###############################################################################
 #### TemplateDisplay: a HTML-template-driven right-hand display panel      ####
