@@ -3,6 +3,7 @@ import platformcfg
 
 __data = None
 __lock = Lock()
+__listeners = set()
 
 class Pref:
     def __init__(self, **kwds):
@@ -26,9 +27,11 @@ MOVIES_DIRECTORY            = Pref( key='MoviesDirectory',       default=None,  
 SUPPORT_DIRECTORY           = Pref( key='SupportDirectory',      default=None,  platformSpecific=True )
 DB_PATHNAME                 = Pref( key='DBPathname',            default=None,  platformSpecific=True )
 
-def checkValidity():
-    if __data == None:
-        load()
+def addListener(listener):
+    __listeners.add(listener)
+
+def removeListener(listener):
+    __listeners.discard(listener)
 
 def load():
     global __data
@@ -39,13 +42,13 @@ def load():
     __lock.release()
 
 def save():
-    checkValidity()
+    __checkValidity()
     __lock.acquire()
     platformcfg.save( __data )
     __lock.release()
 
 def get(descriptor):
-    checkValidity()
+    __checkValidity()
     __lock.acquire()
     if descriptor.platformSpecific:
         value = platformcfg.get(descriptor)
@@ -55,10 +58,20 @@ def get(descriptor):
     return value
     
 def set(descriptor, value):
-    checkValidity()
+    __checkValidity()
     __lock.acquire()
     __data[ descriptor.key ] = value
+    __notifyListeners(descriptor.key, value)
     __lock.release()
+
+def __checkValidity():
+    if __data == None:
+        load()
+
+def __notifyListeners(key, value):
+    for listener in __listeners:
+        if hasattr(listener, 'configDidChange'):
+            listener.configDidChange(key, value)
 
 
 # Hack. Getting the support directory path here forces it to be created at
