@@ -1797,7 +1797,7 @@ class VideoAreaView (NSView):
     def activate(self):
         self.hostWindow = self.window()
         assert self.hostWindow is not nil
-        self.adjustVideoWindowSize()
+        self.adjustVideoWindowFrame()
         self.hostWindow.addChildWindow_ordered_(self.videoWindow, NSWindowAbove)
         self.videoWindow.orderFront_(nil)
     
@@ -1806,7 +1806,7 @@ class VideoAreaView (NSView):
         self.videoWindow.orderOut_(nil)
         self.movieView.setMovie_(nil)
     
-    def adjustVideoWindowSize(self):
+    def adjustVideoWindowFrame(self):
         if self.window() is nil:
             return
         frame = self.frame()
@@ -1820,9 +1820,10 @@ class VideoAreaView (NSView):
     
     def setFrame_(self, frame):
         super(VideoAreaView, self).setFrame_(frame)
-        self.adjustVideoWindowSize()
+        self.adjustVideoWindowFrame()
     
     def enterFullScreen(self):
+        self.adjustVideoWindowFrame()
         self.videoWindow.enterFullScreen()
 
 
