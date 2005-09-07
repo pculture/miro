@@ -747,8 +747,15 @@ class ChannelsPrefsController (NibClassBuilder.AutoBaseClass):
 
 class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
     
+    def awakeFromNib(self):
+        limit = config.get(config.LIMIT_UPSTREAM)
+        self.limitUpstreamCheckBox.setState_(limit and NSOnState or NSOffState)
+        self.limitValueField.setEnabled_(limit)
+        self.limitValueField.setIntValue_(config.get(config.UPSTREAM_LIMIT_IN_KBS))
+    
     def limitUpstream_(self, sender):
         limit = (sender.state() == NSOnState)
+        self.limitValueField.setEnabled_(limit)
         config.set(config.LIMIT_UPSTREAM, limit)
     
     def setUpstreamLimit_(self, sender):
