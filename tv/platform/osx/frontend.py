@@ -517,7 +517,10 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     def showActionMenu_(self, sender):
         mainMenu = NSApplication.sharedApplication().mainMenu()
-        tag = self.switcherMatrix.selectedCell().tag()
+        # collections do not really work just yet so we hardcode the action menu
+        # to the channel menu
+        # tag = self.switcherMatrix.selectedCell().tag()
+        tag = 1
         menu = mainMenu.itemWithTag_(tag).submenu()
 
         location = sender.frame().origin
