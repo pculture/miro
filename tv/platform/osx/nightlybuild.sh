@@ -41,7 +41,8 @@ echo "done."
 
 ./build.sh
 mkdir img
-mv DTV.app img
+mv "DTV.app" img
+cp "notes/README IF UPGRADING ON PANTHER.txt" img
 
 # Grab size and name
 imgName=DTV-CVS-`date +"%F"`
