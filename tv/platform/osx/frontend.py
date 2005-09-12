@@ -1600,18 +1600,19 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             nil)
         VideoDisplay.getInstance(self)
         VideoDisplayController._instance = self
+        self.movieView = None
         self.reset()
 
     def onSelected(self, playlist, frame):
         self.frame = frame
         self.movieView = self.videoAreaView.movieView
-        self.enableControls(YES)
+        self.enableSecondaryControls(YES)
         self.setPlaylist(playlist)
         self.videoAreaView.activate()
 
     def onDeselected(self, frame):
         self.pause()
-        self.enableControls(False)
+        self.enableSecondaryControls(False)
         self.videoAreaView.deactivate()
         self.reset()
 
@@ -1664,14 +1665,16 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.reset()
         frame.selectDisplay(previousDisplay, area)
 
-    def enableControls(self, enabled):
-        self.backwardButton.setEnabled_(enabled)
-        self.stopButton.setEnabled_(enabled)
+    def enablePrimaryControls(self, enabled):
         self.playPauseButton.setEnabled_(enabled)
         self.fullscreenButton.setEnabled_(enabled)
-        self.forwardButton.setEnabled_(enabled)
         self.muteButton.setEnabled_(enabled)
-        self.volumeSlider.setEnabled_(enabled)
+        self.volumeSlider.setEnabled_(enabled and self.muteButton.state() is NSOnState)
+
+    def enableSecondaryControls(self, enabled):
+        self.backwardButton.setEnabled_(enabled)
+        self.stopButton.setEnabled_(enabled)
+        self.forwardButton.setEnabled_(enabled)
         self.fullscreenButton.setEnabled_(enabled)
 
     def playPause_(self, sender):
@@ -1743,35 +1746,27 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         return nextItem
 
     def setVolume_(self, sender):
-        movie = self.movieView.movie()
-        if movie is not None:
-            if sender.isEnabled():
-                movie.setVolume_(sender.floatValue())
-            else:
-                movie.setVolume_(0.0)
+        if self.movieView is not None:
+            movie = self.movieView.movie()
+            if movie is not None:
+                if self.muteButton.state() == NSOnState:
+                    movie.setVolume_(sender.floatValue())
+                else:
+                    movie.setVolume_(0.0)
 
     def muteUnmuteVolume_(self, sender):
-        movie = self.movieView.movie()
-        if movie is not None:
-            volume = movie.volume()
-            if volume > 0.0:
-                self.volumeSlider.setEnabled_(NO)
-                movie.setVolume_(0.0)
-            else:
-                self.volumeSlider.setEnabled_(YES)
-                movie.setVolume_(self.volumeSlider.floatValue())
+        self.volumeSlider.setEnabled_(sender.state() is NSOnState)
+        self.setVolume_(self.volumeSlider)
 
     def handleWatchableDisplayNotification_(self, notification):
-        self.playPauseButton.setEnabled_(YES)
-        self.fullscreenButton.setEnabled_(YES)
+        self.enablePrimaryControls(YES)
         info = notification.userInfo()
         view = info['view']
         display = notification.object()
         VideoDisplay.getInstance().configure(view, None, display)
 
     def handleNonWatchableDisplayNotification_(self, notification):
-        self.playPauseButton.setEnabled_(NO)
-        self.fullscreenButton.setEnabled_(NO)
+        self.enablePrimaryControls(NO)
 
     def handleMovieNotification_(self, notification):
         info = notification.userInfo()
