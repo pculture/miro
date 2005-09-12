@@ -123,8 +123,8 @@ cdef class CDynamicDatabase:
         for count from 0 <= count < PyList_GET_SIZE(objects):
             temp = <object>PyList_GET_ITEM(objects,count)
             temp = <object>PyTuple_GET_ITEM(temp,0)
-            PyDict_SetItem(self.objectLocs,temp,count)
-        #self.checkObjLocs()
+            PyDict_SetItem(self.objectLocs,temp.id,count)
+        self.checkObjLocs()
 
     # Checks to make the sure object location dictionary is accurate
     #
@@ -135,7 +135,7 @@ cdef class CDynamicDatabase:
             print "ERROR -- %d objects and %d locations" % (len(self.objects), len(self.objectLocs))
             raise Exception
         for (key, val) in self.objectLocs.items():
-            if self.objects[val][0] != key:
+            if self.objects[val][0].id != key:
                 print "Error-- %s in wrong location" % key
                 raise Exception
     ##
@@ -480,10 +480,10 @@ cdef class CDynamicDatabase:
             for count from point <= count < PyList_GET_SIZE(self.objects):
                 myObj = <object>PyList_GET_ITEM(self.objects,count)
                 myObjObj = <object>PyTuple_GET_ITEM(myObj,0)
-                tempObj = <object>PyDict_GetItem(self.objectLocs,myObjObj)
+                tempObj = <object>PyDict_GetItem(self.objectLocs,myObjObj.id)
                 tempObj = tempObj+1
-                PyDict_SetItem(self.objectLocs,myObjObj,tempObj)
-            PyDict_SetItem(self.objectLocs,newobject,point)
+                PyDict_SetItem(self.objectLocs,myObjObj.id,tempObj)
+            PyDict_SetItem(self.objectLocs,newobject.id,point)
 
             #Add it
             if (PyList_GET_SIZE(self.objects) == 0):
@@ -538,9 +538,9 @@ cdef class CDynamicDatabase:
                         while count2 >= 0:
                             myObj = <object>PyList_GET_ITEM(self.objects,count2)
                             myObjObj = <object>PyTuple_GET_ITEM(myObj,0)
-                            if PyDict_Contains(view.objectLocs,myObjObj):
+                            if PyDict_Contains(view.objectLocs,myObjObj.id):
 
-                                view.cursor = <object>PyDict_GetItem(view.objectLocs,myObjObj)
+                                view.cursor = <object>PyDict_GetItem(view.objectLocs,myObjObj.id)
                                 view.addAfterCursor(newobject,value)
                                 break
                             count2 = count2 - 1
@@ -554,15 +554,15 @@ cdef class CDynamicDatabase:
                 callback(point)
         finally:
             self.endUpdate()
-        #self.checkObjLocs()
+        self.checkObjLocs()
 
     #
     # Removes the object from the database
     def removeObj(self,object obj):
         self.beginUpdate()
         try:
-            if PyDict_Contains(self.objectLocs,obj):
-                self.remove(<object>PyDict_GetItem(self.objectLocs,obj))
+            if PyDict_Contains(self.objectLocs,obj.id):
+                self.remove(<object>PyDict_GetItem(self.objectLocs,obj.id))
         finally:
             self.endUpdate()
 
@@ -571,8 +571,8 @@ cdef class CDynamicDatabase:
     def changeObj(self,object obj):
         self.beginUpdate()
         try:
-            if PyDict_Contains(self.objectLocs,obj):
-                self.change(<object>PyDict_GetItem(self.objectLocs,obj))
+            if PyDict_Contains(self.objectLocs,obj.id):
+                self.change(<object>PyDict_GetItem(self.objectLocs,obj.id))
         finally:
             self.endUpdate()
 
@@ -611,7 +611,7 @@ cdef class CDynamicDatabase:
              for (key,val) in self.objectLocs.items():
                  if val > item:
                      PyDict_SetItem(self.objectLocs,key,val-1)
-             del self.objectLocs[tempobj]
+             del self.objectLocs[tempobj.id]
 
              #Remove it
              PyList_SetSlice(self.objects, item, item+1, [])
@@ -652,7 +652,7 @@ cdef class CDynamicDatabase:
                  view.removeObj(tempobj)
         finally:
             self.endUpdate()
-        #self.checkObjLocs()
+        self.checkObjLocs()
 
     ##
     # Signals that object on cursor has changed
@@ -677,13 +677,14 @@ cdef class CDynamicDatabase:
                     view.saveCursor()
                     try:
                         view.resetCursor()
+                        view.checkObjLocs()
                         if f(self.objects[item][1]):
-                            if view.objectLocs.has_key(self.objects[item][0]):
+                            if view.objectLocs.has_key(self.objects[item][0].id):
                                 view.changeObj(self.objects[item][0])
                             else:
                                 view.addBeforeCursor(self.objects[item][0],self.objects[item][1])
                         else:
-                            if view.objectLocs.has_key(self.objects[item][0]):
+                            if view.objectLocs.has_key(self.objects[item][0].id):
                                 view.removeObj(self.objects[item][0])
                     finally:
                         view.restoreCursor()
@@ -735,7 +736,7 @@ cdef class CDynamicDatabase:
                             myObjObj = <object>PyTuple_GET_ITEM(myObj,0)
                             myObjVal = <object>PyTuple_GET_ITEM(myObj,1)
 
-                            if PyDict_Contains(view.objectLocs,myObjObj):
+                            if PyDict_Contains(view.objectLocs,myObjObj.id):
                                 if not <object>PyObject_CallObject(f,(myObjVal,)):
                                     view.removeObj(myObjObj)
                             else:
@@ -861,7 +862,7 @@ cdef class CDynamicDatabase:
                         myObjObj = <object>PyTuple_GET_ITEM(myObj,0)
                         myObjVal = <object>PyTuple_GET_ITEM(myObj,1)
 
-                        if PyDict_Contains(view.objectLocs,myObjObj):
+                        if PyDict_Contains(view.objectLocs,myObjObj.id):
                             if not <object>PyObject_CallObject(f,(myObjVal,)):
                                 view.removeObj(myObjObj)
                         else:
@@ -927,7 +928,7 @@ cdef class CDynamicDatabase:
                 view.recomputeFilters()
         finally:
             self.endUpdate()
-        #self.checkObjLocs()
+        self.checkObjLocs()
 
     # Used to sort objects
     def getVal(object self,object obj):
@@ -1013,13 +1014,13 @@ cdef class CDynamicDatabase:
                 for count from 0 <= count < PyList_GET_SIZE(self.objects):
                     temp = <object>PyList_GET_ITEM(self.objects,count)
                     temp = <object>PyTuple_GET_ITEM(temp,0)
-                    PyDict_SetItem(self.objectLocs,temp,count)
+                    PyDict_SetItem(self.objectLocs,temp.id,count)
                     
                 #for object in self.objects:
                 #    print str(object[0].__class__.__name__)+" of id "+str(object[0].getID())
             finally:
                 self.endUpdate()
-            #self.checkObjLocs()
+            self.checkObjLocs()
             return True
         else:
             return exists(filename+".bak") and self.restore(filename+".bak")
