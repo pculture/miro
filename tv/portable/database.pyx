@@ -1075,6 +1075,46 @@ cdef class CDynamicDatabase:
         finally:
             self.endUpdate()
 
+    ##
+    # returns the object with the given id
+    def getObjectByID(self, id):
+        if not self.objectLocs.has_key(id):
+            raise ObjectNotFoundError, "No object with id %s in the database" % id
+        else:
+            return self.objects[self.objectLocs[id]][1]
+
+    ##
+    # returns the id of the object the cursor is currently pointing to
+    def getCurrentID(self):
+        if (self.cursor >= 0) and (self.cursor < PyList_GET_SIZE(self.objects)):
+            return self.objects[self.cursor][0].id
+        else:
+            raise ObjectNotFoundError, "No object at current cursor position"
+
+    ##
+    # returns the id of the object after the object identified by id
+    def getNextID(self, id):
+        if not self.objectLocs.has_key(id):
+            raise ObjectNotFoundError, "No object with id %s in the database" % id
+        else:
+            pos = self.objectLocs[id] + 1
+            if (pos >= 0) and (pos < PyList_GET_SIZE(self.objects)):
+                return self.objects[pos][0].id
+            else:
+                return None
+
+    ##
+    # returns the id of the object before the object identified by id
+    def getPrevID(self, id):
+        if not self.objectLocs.has_key(id):
+            raise ObjectNotFoundError, "No object with id %s in the database" % id
+        else:
+            pos = self.objectLocs[id] - 1
+            if (pos >= 0) and (pos < PyList_GET_SIZE(self.objects)):
+                return self.objects[pos][0].id
+            else:
+                return None
+
 ##
 # Global default database
 defaultDatabase = DynamicDatabase()
