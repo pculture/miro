@@ -767,6 +767,47 @@ class SortUpdateOnChange(unittest.TestCase):
         self.origObjs[1].endChange()
         self.assertEqual(self.objs.len(),2)
 
+class IDBaseTraversal(unittest.TestCase):
+    def setUp(self):
+        DDBObject.dd = DynamicDatabase()
+        self.everything = DDBObject.dd
+	self.origObjs = [DDBObject(), DDBObject(), DDBObject()]
+        self.sorted = self.everything.sort(self.sortID)
+    def sortID(self,x,y):
+	if x.getID() > y.getID():
+	    return 1
+	elif x.getID() < y.getID():
+	    return -1
+	else:
+	    return 0
+    def test(self):
+        self.assertEqual(self.origObjs[0],
+                         self.sorted.getObjectByID(self.origObjs[0].getID()))
+        self.assertEqual(self.origObjs[1],
+                         self.sorted.getObjectByID(self.origObjs[1].getID()))
+        self.assertEqual(self.origObjs[2],
+                         self.sorted.getObjectByID(self.origObjs[2].getID()))
+        
+        self.assertEqual(self.origObjs[1].getID(),
+                         self.sorted.getNextID(self.origObjs[0].getID()))
+        self.assertEqual(self.origObjs[2].getID(),
+                         self.sorted.getNextID(self.origObjs[1].getID()))
+        self.assertEqual(None,self.sorted.getNextID(self.origObjs[2].getID()))
+
+        self.assertEqual(None,self.sorted.getPrevID(self.origObjs[0].getID()))
+        self.assertEqual(self.origObjs[0].getID(),
+                         self.sorted.getPrevID(self.origObjs[1].getID()))
+        self.assertEqual(self.origObjs[1].getID(),
+                         self.sorted.getPrevID(self.origObjs[2].getID()))
+    
+        self.sorted.resetCursor()
+        self.sorted.getNext()
+        self.assertEqual(self.origObjs[0].getID(), self.sorted.getCurrentID())
+        self.sorted.getNext()
+        self.assertEqual(self.origObjs[1].getID(), self.sorted.getCurrentID())
+        self.sorted.getNext()
+        self.assertEqual(self.origObjs[2].getID(), self.sorted.getCurrentID())
+
 #FIXME: Add a test such that recomputeFilters code that assumes
 #       subfilters keep the same order as their parent will fail.
 #
