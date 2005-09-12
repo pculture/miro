@@ -698,19 +698,21 @@ class FilterUpdateOnChange(unittest.TestCase):
         DDBObject.dd = DynamicDatabase()
         self.everything = DDBObject.dd
 	self.origObjs = [DDBObject(), DDBObject(), DDBObject()]
-        self.goodID = self.origObjs[0].getID()
-	self.objs = self.everything.filter(lambda x: x.getID() == self.goodID)
+        self.origObjs[0].good = True
+        self.origObjs[1].good = False
+        self.origObjs[2].good = False
+	self.objs = self.everything.filter(lambda x: x.good)
 	self.changeCalls = 0
     def testLoss(self):
         self.assertEqual(self.objs.len(),1)
         self.origObjs[0].beginChange()
-        self.origObjs[0].id = -1
+        self.origObjs[0].good = False
         self.origObjs[0].endChange()
         self.assertEqual(self.objs.len(),0)
     def testAdd(self):
         self.assertEqual(self.objs.len(),1)
         self.origObjs[1].beginChange()
-        self.origObjs[1].id = self.goodID
+        self.origObjs[1].good = True
         self.origObjs[1].endChange()
         self.assertEqual(self.objs.len(),2)
 
@@ -720,23 +722,25 @@ class MapUpdateOnChange(unittest.TestCase):
         DDBObject.dd = DynamicDatabase()
         self.everything = DDBObject.dd
 	self.origObjs = [DDBObject(), DDBObject(), DDBObject()]
-        self.goodID = self.origObjs[0].getID()
-	self.objs = self.everything.map(self.mapToObject).filter(lambda x: x.oldID == self.goodID)
+        self.origObjs[0].good = True
+        self.origObjs[1].good = False
+        self.origObjs[2].good = False
+	self.objs = self.everything.map(self.mapToObject).filter(lambda x: x.good)
 	self.changeCalls = 0
     def mapToObject(self, obj):
 	temp = DDBObject(add = False)
-	temp.oldID = obj.getID()
+	temp.good = obj.good
 	return temp
     def testLoss(self):
         self.assertEqual(self.objs.len(),1)
         self.origObjs[0].beginChange()
-        self.origObjs[0].id = -1
+        self.origObjs[0].good = False
         self.origObjs[0].endChange()
         self.assertEqual(self.objs.len(),1)
     def testAdd(self):
         self.assertEqual(self.objs.len(),1)
         self.origObjs[1].beginChange()
-        self.origObjs[1].id = self.goodID
+        self.origObjs[1].good = True
         self.origObjs[1].endChange()
         self.assertEqual(self.objs.len(),1)
 
@@ -745,19 +749,21 @@ class SortUpdateOnChange(unittest.TestCase):
         DDBObject.dd = DynamicDatabase()
         self.everything = DDBObject.dd
 	self.origObjs = [DDBObject(), DDBObject(), DDBObject()]
-        self.goodID = self.origObjs[0].getID()
-	self.objs = self.everything.sort(lambda x, y: 0).sort(lambda x, y: 0).filter(lambda x: x.getID() == self.goodID)
+        self.origObjs[0].good = True
+        self.origObjs[1].good = False
+        self.origObjs[2].good = False
+	self.objs = self.everything.sort(lambda x, y: 0).sort(lambda x, y: 0).filter(lambda x: x.good)
 	self.changeCalls = 0
     def testLoss(self):
         self.assertEqual(self.objs.len(),1)
         self.origObjs[0].beginChange()
-        self.origObjs[0].id = -1
+        self.origObjs[0].good = False
         self.origObjs[0].endChange()
         self.assertEqual(self.objs.len(),0)
     def testAdd(self):
         self.assertEqual(self.objs.len(),1)
         self.origObjs[1].beginChange()
-        self.origObjs[1].id = self.goodID
+        self.origObjs[1].good = True
         self.origObjs[1].endChange()
         self.assertEqual(self.objs.len(),2)
 
