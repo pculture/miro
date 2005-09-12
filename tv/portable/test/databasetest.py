@@ -305,11 +305,10 @@ class CallbackViewTestCase(unittest.TestCase):
         self.mapped = self.everything.map(lambda x:x)
         self.sorted = self.everything.sort(lambda x,y:0)
         self.callcount = 0
-    def call(self, count):
-        assert count == 0
+    def call(self, obj, id):
+        assert id == self.everything[0].getID()
         self.callcount+=1
-    def removeCall(self, obj, count):
-        assert count == 0
+    def removeCall(self, obj, id):
         self.callcount+=1
     def testAdd(self):
         self.everything.addAddCallback(self.call)
@@ -456,9 +455,7 @@ class FilterSortMapTestCase(unittest.TestCase):
             return 1
         else:
             return 0
-    def call(self,item):
-        self.callbacks += 1
-    def removeCall(self,obj,item):
+    def call(self,obj, id):
         self.callbacks += 1
     def test(self):
         self.assertEqual(self.mapped.len(),5)
@@ -471,7 +468,7 @@ class FilterSortMapTestCase(unittest.TestCase):
         self.assertEqual(self.mapped.len(),10)
     def testTwoSets(self):
         self.callbacks2 = 0
-        def call2(item):
+        def call2(item,id):
             self.callbacks2 += 1
         filtFunc2 = lambda x:True
         filted2 = self.everything.filter(filtFunc2)
@@ -509,9 +506,7 @@ class FilterSortMapTestCase(unittest.TestCase):
         self.assertEqual(self.callbacks2,2)
     def testTwoSets2(self):
         self.callbacks2 = 0
-        def removeCall2(obj,item):
-            self.callbacks2 += 1
-        def call2(item):
+        def call2(item, id):
             self.callbacks2 += 1
         filtFunc2 = lambda x:x.getID()%2 == 1
         filted2 = self.everything.filter(filtFunc2)
@@ -521,8 +516,8 @@ class FilterSortMapTestCase(unittest.TestCase):
         mapped2.addChangeCallback(call2)
         self.mapped.addAddCallback(self.call)
         mapped2.addAddCallback(call2)
-        self.mapped.addRemoveCallback(self.removeCall)
-        mapped2.addRemoveCallback(removeCall2)
+        self.mapped.addRemoveCallback(self.call)
+        mapped2.addRemoveCallback(call2)
 
         self.mapped.next()
         self.mapped.next()
@@ -682,7 +677,7 @@ class RecomputeMapTestCase(unittest.TestCase):
 	temp = DDBObject(add = False)
 	temp.oldID = obj.getID()
 	return temp
-    def changeCall(self,item):
+    def changeCall(self,item,id):
 	self.changeCalls +=1
     def test(self):
 	self.objs.addChangeCallback(self.changeCall)

@@ -551,7 +551,7 @@ cdef class CDynamicDatabase:
                     finally:
                         view.endUpdate()
             for callback in self.addCallbacks:
-                callback(point)
+                callback(self.objects[point][1],self.objects[point][0].id)
         finally:
             self.endUpdate()
         self.checkObjLocs()
@@ -634,7 +634,7 @@ cdef class CDynamicDatabase:
              #Perform callbacks
              for count from 0 <= count < PyList_GET_SIZE(self.removeCallbacks):
                  callback = <object>PyList_GET_ITEM(self.removeCallbacks,count)
-                 <object>PyObject_CallObject(callback,(tempmapped,item))
+                 <object>PyObject_CallObject(callback,(tempmapped,tempobj.id))
                  
              for count from 0 <= count < PyList_GET_SIZE(self.subMaps):
                  temp = <object>PyList_GET_ITEM(self.subMaps,count)
@@ -665,7 +665,7 @@ cdef class CDynamicDatabase:
             if item == None:
                 item = self.cursor
             for callback in self.changeCallbacks:
-                callback(item)
+                callback(self.objects[item][1],self.objects[item][0].id)
             for [view, f] in self.subMaps:
                 view.change(item)
             #FIXME We probably should re-sort here

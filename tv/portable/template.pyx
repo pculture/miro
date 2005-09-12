@@ -464,7 +464,7 @@ class TrackedView:
     def initialFillIn(self):
         self.view.beginRead()
         try:
-            for x in range(0,self.view.len()):
+            for x in self.view:
                 self.addHTMLAtEnd(x)
             self.view.addChangeCallback(self.onChange)
             self.view.addAddCallback(self.onAdd)
@@ -473,9 +473,8 @@ class TrackedView:
             self.view.endRead()
 
 
-    def currentXML(self, index):
+    def currentXML(self, item):
         output = []
-        item = self.view[index]
         data = copy.copy(self.templateData)
         data['this'] = item.object
         data['thisView'] = self.name
@@ -492,41 +491,42 @@ class TrackedView:
                     pass
             return ret
 
-    def onChange(self,index):
+    def onChange(self,obj,id):
         clearEvalCache()
-        tid = self.view[index].tid
-        xmlString = self.currentXML(index)
+        tid = obj.tid
+        xmlString = self.currentXML(obj)
         if self.parent.domHandler:
             self.parent.domHandler.changeItem(tid, xmlString)
         self.parent.checkHides()
 
-    def onAdd(self, newIndex):
+    def onAdd(self, obj, id):
         clearEvalCache()
         if self.parent.domHandler:
-            if newIndex + 1 == self.view.len():
+            next = self.view.getNextID(id) 
+            if next == None:
                 # Adding it at the end of the list. Must add it relative to
                 # the anchor.
                 if self.anchorType == 'parentNode':
-                    self.parent.domHandler.addItemAtEnd(self.currentXML(newIndex), self.anchorId)
+                    self.parent.domHandler.addItemAtEnd(self.currentXML(obj), self.anchorId)
                 if self.anchorType == 'nextSibling':
-                    self.parent.domHandler.addItemBefore(self.currentXML(newIndex), self.anchorId)
+                    self.parent.domHandler.addItemBefore(self.currentXML(obj), self.anchorId)
             else:
-                self.parent.domHandler.addItemBefore(self.currentXML(newIndex), self.view[newIndex+1].tid)
+                self.parent.domHandler.addItemBefore(self.currentXML(obj), self.view.getObjectByID(next).tid)
 
         self.parent.checkHides()
 
-    def onRemove(self, oldObject, oldIndex):
+    def onRemove(self, obj, id):
         clearEvalCache()
         if self.parent.domHandler:
-            self.parent.domHandler.removeItem(oldObject.tid)
+            self.parent.domHandler.removeItem(obj.tid)
         self.parent.checkHides()
 
     # Add the HTML for the item at newIndex in the view to the
     # display. It should only be called by initialFillIn()
-    def addHTMLAtEnd(self, newIndex):
+    def addHTMLAtEnd(self, newObj):
         clearEvalCache()
         if self.parent.domHandler:
-            self.parent.domHandler.addItemBefore(self.currentXML(newIndex), self.anchorId)
+            self.parent.domHandler.addItemBefore(self.currentXML(newObj), self.anchorId)
 
 # Class used by Handle to track the dynamically filterable, sortable
 # views created by makeNamedView and identified by names. After
