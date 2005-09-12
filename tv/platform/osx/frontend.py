@@ -1525,6 +1525,7 @@ class ManagedWebView (NSObject):
             elt.getAttribute_("style").setAttribute_("display", "")
             #print "show item %s (new style '%s')" % (id, elt.getAttribute_("style"))
 
+
 ###############################################################################
 #### Right-hand pane video display                                         ####
 ###############################################################################
