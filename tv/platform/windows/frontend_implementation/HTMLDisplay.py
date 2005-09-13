@@ -40,7 +40,10 @@ class EventListener(dispinterface_EventReceiver):
             return
         else:
             print "--> cancel"
-            Cancel.value = True
+#            Cancel.value = True
+	    # A poor, temporary substitute:
+            wrappedDispatch = ctypes.com.client._Dispatch(pDisp)
+	    wrappedDispatch.Stop()
             return
 
     def DocumentComplete(self, this, pDisp, URL):
@@ -113,7 +116,7 @@ class HTMLDisplay (app.Display, dispinterface_EventReceiver):
         try:
             self.browser.Document.write(html)
         except:
-            "initial load failed"
+            print "initial load failed"
             import traceback
             traceback.print_exc()
         print "continuing"
