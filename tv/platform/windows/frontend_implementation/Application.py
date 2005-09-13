@@ -17,9 +17,6 @@ class Application:
     def Run(self):
 	self.onStartup()
 
-	# Set up ATL ActiveX hosting (needed to invoke IE)
-	atl.AtlAxWinInit()
-
 	# Standard Windows message pump
 	# Alternative: ret = win32gui.PumpMessages()
 	user32 = windll.user32

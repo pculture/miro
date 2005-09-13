@@ -25,9 +25,16 @@ py2exe_options = {
     'packages': "encodings"
 }
 
+WebBrowser_ext = Extension('WebBrowser',
+                           sources = ['WebBrowser.cpp'],
+                           libraries = ['gdi32', 'shell32', 'user32',
+                                        'advapi32'],
+                          )
+
 # Private extension modules to build.
 ext_modules = [
     #vlchelper.info.getExtension(root),
+    WebBrowser_ext,
     # Pyrex sources.
     Extension("database", [os.path.join(root, 'portable', 'database.pyx')]),
     Extension("template", [os.path.join(root, 'portable', 'template.pyx')]),
