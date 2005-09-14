@@ -436,7 +436,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         self.depth = self.depth - 1
 
     def characters(self,data):
-        if self.inReplace or self.hiding:
+        if self.inReplace or self.inStaticReplace or self.hiding:
             pass
         elif self.inRepeatView:
             PyList_Append(self.repeatList,(getRepeatTextEscape,data))
