@@ -5,9 +5,16 @@
 #include <atlhost.h>
 #include <exdisp.h>
 #include <exdispid.h>
+#include <urlmon.h>
 // possibly need: atlapp, atlwin, atlctl?
 
 #import "shdocvw.dll"
+
+// Make sure _pAtlModule is non-NULL; ATL needs this for locking. If you
+// don't do this then AtlAxCreateControl returns "out of memory" or segfaults.
+class MyAtlModule : public CAtlModuleT<MyAtlModule> {
+} ;
+static MyAtlModule atlModule;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Object definition                                                         //
@@ -22,6 +29,7 @@ struct WebBrowserData {
   IWebBrowser2 *wb2;
   // Oddly enough, IHTMLDocument3 inherits directly from IDispatch instead of
   // IHTMLDocument2, and basic methods like write() aren't defined on it.
+  // So use IHTMLDocument2.
   IHTMLDocument2 *doc2;
   CWebEventsSink *sink;
   HWND hwnd; // Cosmetic use (repr()) only
@@ -144,16 +152,11 @@ static PyObject *WebBrowser_NEW(HWND hwnd, BSTR initialHTML,
   
   // Create an IWebBrowser2, hosted in the provided HWND.
   IUnknown *pUnkContainer, *pUnkControl;
-  printf("hwnd %d\n", hwnd);
-  fflush(stdout);
-  AtlAxWinInit();
   HRESULT hr =
-    //    AtlAxCreateControlEx(OLESTR("about:blank"), hwnd, NULL, &pUnkContainer,
-    AtlAxCreateControlEx(OLESTR("http://www.microsoft.com"), hwnd, NULL, &pUnkContainer,
-			 &pUnkControl);
+    AtlAxCreateControlEx(OLESTR("about:"), hwnd, NULL, &pUnkContainer,
+    			 &pUnkControl);
+  
   if (!SUCCEEDED(hr)) {
-    printf("Failed with hresult %x\n", hr);
-    fflush(stdout);
     PyErr_SetString(PyExc_OSError, "Couldn't instantiate Explorer through "
 		    "AtlAxCreateControl.");
     goto failure;
@@ -198,15 +201,19 @@ static PyObject *WebBrowser_NEW(HWND hwnd, BSTR initialHTML,
   param->vt = VT_BSTR;
   param->bstrVal = initialHTML;
   if (!SUCCEEDED(SafeArrayUnaccessData(sfArray))) goto failure;
-  if (!SUCCEEDED(doc2->write(sfArray))) {
-    PyErr_SetString(PyExc_OSError, "Couldn't write() HTML to IHTMLDocument2.");
+  hr = doc2->write(sfArray);
+  if (!SUCCEEDED(hr)) {
+    char buf[256];
+    snprintf(buf, sizeof(buf),
+	     "Couldn't write() HTML to IHTMLDocument2; HRESULT = %08x.", hr);
+    PyErr_SetString(PyExc_OSError, buf);
     goto failure;
   }
-
-  // NEEDS: do we need to call doc2->close()
+  doc2->close(); // may not be necessary/appropriate
   
   // Now we know that everything went fine, make a Python object
   WebBrowserData *wb = PyObject_NEW(WebBrowserData, &WebBrowser_Type);
+  if (!wb)
     goto failure;
   wb->wb2 = wb2;
   wb->wb2->AddRef();
@@ -249,11 +256,6 @@ static void WebBrowser_dealloc(PyObject *self) {
 static PyObject *WebBrowser_new(PyObject *self, PyObject *args,
 				PyObject *kwargs) {
   HWND hwnd;
-  // NEEDS: unicode strings are not handled correctly here
-  // Need to accept both Python string objects and Unicode string objects,
-  // figure out the encoding Windows is expecting from the type of OLECHAR
-  // (should be wchar_t on all platforms we'd be running on?), call Python
-  // to encode the string, and then create the BSTR.
   char *html = NULL;
   PyObject *onLoadCallback = Py_None;
   char *agent = NULL;
@@ -319,7 +321,8 @@ static PyObject *WebBrowser_repr(PyObject *self) {
     WebBrowserData *wb = (WebBrowserData *)self;
 
     char buf[128];
-    sprintf(buf, "<WebBrowser %p on HWND %d>", wb->wb2, wb->hwnd);
+    snprintf(buf, sizeof(buf), "<WebBrowser %p on HWND %d>", wb->wb2,
+	     wb->hwnd);
     return PyString_FromString(buf);
   }
 
@@ -334,6 +337,11 @@ static PyMethodDef methods[] = {
 
 extern "C" void initWebBrowser(void) {
   CoInitialize(NULL);
+  AtlAxWinInit();
+#ifdef notdef
+  CoInternetSetFeatureEnabled(FEATURE_LOCALMACHINE_LOCKDOWN,
+			      SET_FEATURE_ON_PROCESS, FALSE);
+#endif
   (void)Py_InitModule("WebBrowser", methods);
 }
 
