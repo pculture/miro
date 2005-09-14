@@ -4,6 +4,6 @@
       xmlns:t="http://www.participatorypolitics.org/">
 <t:include filename="dynamic.js" />
 
-<span t:replaceMarkup="global guide getHTML" />
+<t:staticReplaceMarkup t:replaceData="global guide getHTML" />
 
 </html>

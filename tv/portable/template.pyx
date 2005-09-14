@@ -172,6 +172,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         self.inInclude = False
         self.inRepeatView = False
         self.inReplace = False
+        self.inStaticReplace = False
         self.repeatDepth = 0
         self.replaceDepth = 0
         self.repeatView = None
@@ -191,7 +192,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
 
     def startElement(self,name, attrs):
         self.depth = self.depth + 1
-        if self.inReplace or self.hiding:
+        if self.inReplace or self.inStaticReplace or self.hiding:
             pass
         elif 't:hideIfViewEmpty' in attrs.keys() or 't:hideIfViewNotEmpty' in attrs.keys():
             nodeId = generateId()
@@ -372,6 +373,14 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             html = f.read()
             f.close()
             self.outString.write(html)
+        elif name == 't:staticReplaceMarkup':
+            replace = attrs['t:replaceData']
+            self.outString.write(str(evalKeyC(replace,self.data,None, True)))
+            self.inStaticReplace = True
+        elif name == 't:staticReplace':
+            replace = attrs['t:replaceData']
+            self.outString.write(sax.saxutils.escape(str(evalKeyC(replace,self.data, None, True))))
+            self.inStaticReplace = True
         elif name == 't:includeTemplate':
             self.outString.write(self.fillTemplate(attrs['filename'],self.data))
         elif name == 't:triggerActionOnLoad':
@@ -385,6 +394,10 @@ class TemplateContentHandler(sax.handler.ContentHandler):
     def endElement(self,name):
         if name == 't:include':
             pass
+        elif name == 't:staticReplace':
+            self.inStaticReplace = False
+        elif name == 't:staticReplaceMarkup':
+            self.inStaticReplace = False
         elif name == 't:filter':
             pass
         elif name == 't:sort':
