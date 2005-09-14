@@ -645,6 +645,10 @@ def quoteAndFillAttr(value,data):
     return sax.saxutils.quoteattr(fillAttr(value,data))
 
 # Returns a filled version of attribute text
+# Important: because we expand resource: URLs here, instead of defining a
+# URL handler (which is hard to do in IE), you must link to stylesheets via
+# <link .../> rather than <style> @import ... </style> if they are resource:
+# URLs.
 def fillAttr(value,data):
     while True:
         match = attrPattern.match(value)
