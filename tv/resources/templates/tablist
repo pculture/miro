@@ -6,9 +6,7 @@
       xmlns:i18n="http://www.participatoryculture.org/i18n">
 <head>
 <title>video player interface</title>
-<style type="text/css">
-	@import url(resource:css/style.css);
-</style>
+<link rel="stylesheet" type="text/css" href="resource:css/style.css" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <t:include filename="dynamic.js" />
 
