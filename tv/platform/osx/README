@@ -1,8 +1,18 @@
-On the development machine, you will need to have installed PyObjC,
-available here:
+To build DTV for distribution, run build.sh in this directory. The result
+is DTV.app, which is self-contained and should be safe to distribute.
+
+To run the application quickly, without generating a distribution-safe
+package, run ./test.sh. DTV.app, if it exists, is in the process
+overwritten with a non-distribution-safe bundle tree that contains
+symlinks that point outside the bundle.
+
+You'll need Pyrex, PyObjC and Boost to compile DTV. We use these for
+linking to C, Objective C, and C++ code.
+
+You can download PyObjC here.
 http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.2-python2.3-macosx10.3.dmg?download
 
-You'll also need Pyrex, which is available here:
+You can download Pyrex here:
 http://www.cosc.canterbury.ac.nz/~greg/python/Pyrex/
 http://www.cosc.canterbury.ac.nz/~greg/python/Pyrex/Pyrex-0.9.3.tar.gz
 
@@ -16,10 +26,24 @@ to
 before you can start building. I already sent an email to Greg about
 it, so hopefully, it'll get fixed in the next release.
 
-To build for distribution, run build.sh in this directory. The result
-is DTV.app, which is self-contained and should be safe to distribute.
+You can download Boost here:
+http://sourceforge.net/project/showfiles.php?group_id=7586&package_id=8041
+http://prdownloads.sourceforge.net/boost/boost_1_33_0.tar.gz?download
 
-To run the application quickly, without generating a distribution-safe
-package, run ./test.sh. DTV.app, if it exists, is in the process
-overwritten with a non-distribution-safe bundle tree that contains
-symlinks that point outside the bundle.
+You'll need Boost.Jam to build Boost. You can get it here:
+http://sourceforge.net/project/showfiles.php?group_id=7586&package_id=72941
+http://prdownloads.sourceforge.net/boost/boost-jam-3.1.11-1-macosxppc.tgz?download
+
+The instructions for installing Boost are here:
+http://www.boost.org/more/getting_started.html
+
+I used Boost 1.33.0 and Boost.Jam 3.1.11-1, installed bjam to
+/usr/local/bin, and used the following command to build and install
+Boost. You may need to do things slightly differently in order to get
+it to work for you. 
+
+PYTHON_VERSION=2.4 bjam -sTOOLS=darwin --with-python-root=/Library/Frameworks/Python.framework/Versions/2.4 --with-pydebug install
+
+It appears that the build script doesn't build the unit tests
+correctly on OS X, and it reports that 10 target failed to build. This
+doesn't seem to be an issue.
