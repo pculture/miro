@@ -41,7 +41,10 @@ setup(
     ext_modules=[
         #Add extra_compile_args to change the compile options
         Extension("database",["%s/portable/database.pyx" % root]),
-        Extension("template",["%s/portable/template.pyx" % root])
+        Extension("template",["%s/portable/template.pyx" % root]),
+        Extension("fasttypes",["%s/portable/fasttypes.cpp" % root],
+                  extra_objects=["/usr/local/lib/libboost_python-1_33.a"],
+                  include_dirs=["/usr/local/include/boost-1_33/"])
         ],
     cmdclass = {'build_ext': build_ext}
 )
