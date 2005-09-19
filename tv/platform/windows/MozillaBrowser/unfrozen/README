@@ -1,0 +1,18 @@
+This directory contains headers for XPCOM interfaces that are not
+frozen by mozilla.org, but which we absolutely can't do without. Each
+should be documented here and an appropriate excuse made.
+
+nsIBaseWindow:
+ It's absolutely required for embedding and must be copied in from the main
+ build:
+   http://article.gmane.org/gmane.comp.mozilla.devel.embedding/2164
+ More recently (7/3/05), according to this, it's coming to the SDK in 1.8:
+   http://www.mail-archive.org/mozilla-embedding@mozilla.org/msg05648.html
+
+nsIWebNavigation:
+ Can't find any other way to initiate a load of a URL into a new WebBrowser
+ (or hell, any other way to manipulate its content.) It's used for this
+ purpose in the embedding samples. Another person who resorted to nabbing
+ the unfrozen interface:
+   http://www2.all-usenet-archive.comp/File.asp?service=471
+ (search for nsIWebNavigation)

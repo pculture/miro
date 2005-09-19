@@ -50,7 +50,7 @@ class HTMLDisplay (app.Display):
 	# host it in the window just created
 	# NEEDS: move user agent string to central location
         userAgent = "DTV/pre-release (http://participatoryculture.org/)"
-	print "hwnd (python) = %d" % self.hwnd
+#	html = "Hello from Python!" # NEEDS
 	self.wb = WebBrowser.WebBrowser(hwnd = self.hwnd,
                                         initialHTML = html,
                                         onLoadCallback = self.rawOnLoad,
