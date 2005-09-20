@@ -28,6 +28,8 @@
 #include "nsIWeakReference.h"
 #include "nsIWeakReferenceUtils.h"
 #include "nsWeakReference.h"
+#include "nsIURIContentListener.h"
+#include "nsIURI.h"
 
 // Forward declaration
 class Control;
@@ -54,6 +56,15 @@ class Control;
 nsresult CreateInstance(const char *aContractID, const nsIID &aIID,
 			void **aInstancePtr);
 nsresult startMozilla(void);
+
+// Mozilla chokes on Unicode byte-order marks, at least in URLs. This
+// function is provided to strip the byte-order marks from a string,
+// performing any necessary conversion. A newly malloc()'d string is
+// returned which must be free()'d by the caller. Note that only a
+// simple case is implemented presently; see comments in the
+// function. As a special case, passing NULL to this function causes
+// it to return NULL.
+wchar_t *stripBOM(wchar_t *str);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Chrome.cpp                                                                //
@@ -109,13 +120,15 @@ protected:
    for page load activity.
 */
 class Listener: public nsIWebProgressListener,
-                       nsSupportsWeakReference {
+		public nsIURIContentListener,
+                public nsSupportsWeakReference {
 public:
   Listener() {puts("** Listener created");}
-  ~Listener() {puts("** Listener destroyed");}
+  ~Listener();
 
   NS_DECL_ISUPPORTS
   NS_DECL_NSIWEBPROGRESSLISTENER
+  NS_DECL_NSIURICONTENTLISTENER
 
   // Initialize, setting the WebBrowser we will monitor and selecting
   // the Control object on which we will call methods in response to
@@ -151,7 +164,7 @@ protected:
 
 class Control {
 public:
-  Control() : m_mutex(PR_NewLock()), m_chrome(NULL), m_initialHTML(NULL)
+  Control() : m_mutex(PR_NewLock()), m_chrome(NULL)
   {puts("** Control created");
       printf("at ctor chrome %p listener %p\n", m_chrome, m_listener);
 
@@ -160,15 +173,9 @@ public:
 
   // Initialize the control. Must be called first. May only be called
   // exactly once.
-  virtual nsresult Create(HWND hwnd, wchar_t *initialHTML=NULL,
+  virtual nsresult Create(HWND hwnd, wchar_t *initialURL=NULL,
 			  wchar_t *userAgent=NULL);
 
-  // NEEDS: return value?
-  // NEEDS: define exact queuing semantics/interaction with document
-  // loading
-  nsresult execJS(wchar_t *expr);
-
-  // NEEDS: DOM calls
   // NEEDS: direct event gateway -- see mozilla.org/projects/embedding/faq.html
   /* NEEDS:
     # NEEDS: right-click menu.
@@ -177,7 +184,9 @@ public:
     # with blank lines for separators. On a click, force navigation of that
     # frame to that URL, maybe by setting document.location.href.
   */
-  
+
+  /**** Window maintenance methods ****/
+
   // Call this whenever the size of the window passed into the constructor
   // changes. Otherwise the size of the browser will not track the size
   // of the window.
@@ -199,29 +208,71 @@ public:
   // deactivate() should also be called when focus moves from the
   // browser to the embedding chrome" -- see nsIWebBrowserFocus.
   nsresult deactivate(void);
+
+  /**** DOM mutators ****/
   
+  // Parse 'xml'; this should yield a single DOM element. Insert it as
+  // the last child of the element on the currently loaded page with
+  // id 'id'.
+
+  nsresult addElementAtEnd(wchar_t *xml, wchar_t *id);
+
+  // Parse 'xml'; this should yield a single DOM element. Find the
+  // element E in the currently loaded page with id 'id'. Insert the
+  // new element as a child of E's parent, immediately before E in the
+  // child ordering.
+  nsresult addElementBefore(wchar_t *xml, wchar_t *id);
+
+  // Remove the element with id 'id' in the currently loaded page.
+  nsresult removeElement(wchar_t *id);
+
+  // Parse 'xml'; this should yield a single DOM element. Find the
+  // element with id 'id' in the currently loaded page, remove it, and
+  // insert the newly constructed element exactly where it was.
+  nsresult changeElement(wchar_t *id, wchar_t *xml);
+
+  // Find the element with id 'id' in the currently loaded page and set
+  // the value of its 'display' style property to 'none'.
+  nsresult hideElement(wchar_t *id);
+
+  // Find the element with id 'id' in the currently loaded page and
+  // set the value of its 'display' style property to the empty
+  // string, reversing hideElement().
+  nsresult showElement(wchar_t *id);  
+
+protected:
+  // Internal use: get the nsIDOMDocument interface to the current document.
+  nsresult getDocument(nsIDOMDocument **_retval);
+
+  // Internal use: find an element in the current document by 'id' attribute.
+  nsresult getElementById(wchar_t *id, nsIDOMElement **_retval);
+public:
+		       
+  /**** Other methods ****/
+
+  // NEEDS: return value?
+  // NEEDS: define exact queuing semantics/interaction with document
+  // loading
+  nsresult execJS(wchar_t *expr);
+
+  /**** Hooks for overriding ****/
+
   // For overriding: called when the given URL (UTF16 encoded) is
   // about to be loaded, and should return PR_TRUE if the load should
   // continue, or PR_FALSE if it should be cancelled. May be extended
-  // in the future to past POST data, etc.
-  virtual PRBool onURLLoad(wchar_t *url) { return PR_TRUE; }
+  // in the future to pass POST data, etc.
+  virtual PRBool onURLLoad(const char *url) { return PR_TRUE; }
 
   // For overriding: called when the given "action URL" (UTF16 encoded,
   // really just an arbitrary string) is delivered via Javascript.
-  virtual void onActionURL(wchar_t *url) { onURLLoad(url); }
+  virtual void onActionURL(const char *url) { }
 
-  // For overriding: called when a document load finishes. If you do override
-  // this, you must call the superclass method *first*, before doing your
-  // processing.
-  virtual void documentLoadFinished(void);
+  // For overriding: called when a document load finishes.
+  virtual void onDocumentLoadFinished(void) { }
 
 protected:
   PRLock *m_mutex;
   HWND m_hwnd;
-
-  // Used to hold the initial HTML to show until the initial load finishes
-  // (of blank.html) and we can slurp it in with document.write.
-  wchar_t *m_initialHTML;
 
   // Convenience -- use m_ref_chrome to get automatic refcounting, but
   // keep m_chrome around as a direct pointer to the object so we can

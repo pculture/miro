@@ -42,3 +42,20 @@ nsresult startMozilla(void) {
 
   return GRE_Startup();
 }
+
+wchar_t *stripBOM(wchar_t *str) {
+  // If the string starts with a byte-order mark, and it indicates the
+  // native byte order you'd assume anyway on this platform, strip
+  // it. This simple logic is enough to handle the usual case created
+  // by Python.
+  if (!str)
+    return NULL;
+
+  wchar_t *source = *str == 0xfeff ? str+1 : str;
+  int len = wcslen(source) + 1;
+  wchar_t *ret = (wchar_t *)malloc(sizeof(wchar_t) * len);
+  wmemcpy(ret, source, len);
+
+  printf("stripBOM returning string of length %d == %S\n", wcslen(ret), ret);
+  return ret;
+}

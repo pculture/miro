@@ -101,6 +101,7 @@ MozillaBrowser_libraries = [
 
 MozillaBrowser_sources = [
     'MozillaBrowser\\MozillaBrowser.cpp',
+    'MozillaBrowser\\MozillaBrowser_methods.cpp',
     'MozillaBrowser\\helpers.cpp',
     'MozillaBrowser\\Control.cpp',
     'MozillaBrowser\\Chrome.cpp',

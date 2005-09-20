@@ -1,15 +1,16 @@
 #include "MozillaBrowser.h"
 #include <stdio.h>
 
+///////////////////////////////////////////////////////////////////////////////
+// Creation and destruction                                                  //
+///////////////////////////////////////////////////////////////////////////////
+
 Control::~Control() {
   puts("** Control destroyed.");
   PR_DestroyLock(m_mutex);
-  if (m_initialHTML)
-    delete[] m_initialHTML;
-  m_initialHTML = NULL;
 }
 
-nsresult Control::Create(HWND hwnd, wchar_t *initialHTML, wchar_t *userAgent) {
+nsresult Control::Create(HWND hwnd, wchar_t *initialURL, wchar_t *userAgent) {
   nsresult rv;
   nsCOMPtr<nsIWebNavigation> nav;
 
@@ -52,13 +53,6 @@ nsresult Control::Create(HWND hwnd, wchar_t *initialHTML, wchar_t *userAgent) {
     goto done;
   puts("all's good in the hood");
   
-  // Save the initial HTML until the load finishes and we can push it is
-  // with document.write.
-  wchar_t *effectiveInitialHTML = initialHTML ? initialHTML : L"";
-  int initialHTML_len = wcslen(effectiveInitialHTML) + 1;
-  m_initialHTML = new wchar_t[initialHTML_len];
-  wmemcpy(m_initialHTML, effectiveInitialHTML, initialHTML_len);
-
   // Create one of our Listeners, pointed at us, and hooked up to the
   // browser, in order that we receive event callbacks. IMPORTANT: make
   // sure the class is sufficiently initialized that we are fully prepared
@@ -74,21 +68,16 @@ nsresult Control::Create(HWND hwnd, wchar_t *initialHTML, wchar_t *userAgent) {
     goto done;
   puts("created");
 
-  // Load a blank html document to force the creation of
-  // nsIDOMHTMLDocument. Use a file: URL instead of, eg, chrome: to
-  // ensure that the document we subsequently construct has no special
-  // privileges. Use an empty file instead of about:blank because the
-  // latter actually has tags for a null head and body.
-  puts("LoadURI");
+  // Load the URL given, or a blank page if omitted.
+  wchar_t *url = initialURL ? initialURL : L"about:blank";
   nav = do_QueryInterface(m_webBrowser);
   if (nav == nsnull)
     goto done;
   printf("Got %p\n", (void *)nav);
   // documentLoadFinished may have already been called by the time this
   // function returns. In fact for a file it's likely.
-  // NEEDS: make checkin-safe
-  //  if (NS_FAILED(rv = nav->LoadURI(L"file://c:/tmp/blank.html",
-  if (NS_FAILED(rv = nav->LoadURI(L"http://www.google.com",
+  printf("About to LoadURI: '%S' (len %d)\n", url, wcslen(url));
+  if (NS_FAILED(rv = nav->LoadURI(url,
 				  nsIWebNavigation::LOAD_FLAGS_NONE,
 				  nsnull /* referrer */, nsnull /* postData */,
 				  nsnull /* headers */)))
@@ -106,13 +95,9 @@ nsresult Control::Create(HWND hwnd, wchar_t *initialHTML, wchar_t *userAgent) {
   return rv;
 }
 
-// NEEDS: return value? queuing?
-nsresult Control::execJS(wchar_t *expr) {
-  PR_Lock(m_mutex);
-  puts("Control: punt js");
-  PR_Unlock(m_mutex);
-  return NS_OK;
-}
+///////////////////////////////////////////////////////////////////////////////
+// Window maintenance                                                        //
+///////////////////////////////////////////////////////////////////////////////
 
 nsresult Control::recomputeSize(void) {
   PR_Lock(m_mutex);
@@ -149,60 +134,71 @@ nsresult Control::deactivate(void) {
   return rv;
 }
 
-void Control::documentLoadFinished(void) {
+///////////////////////////////////////////////////////////////////////////////
+// DOM mutators                                                              //
+///////////////////////////////////////////////////////////////////////////////
+
+nsresult Control::getDocument(nsIDOMDocument **_retval) {
   nsresult rv;
+
   nsCOMPtr<nsIDOMWindow> domWindow;
-  nsCOMPtr<nsIDOMDocument> domDocument;
-  nsCOMPtr<nsIDOMHTMLDocument> htmlDocument;
-
-  PR_Lock(m_mutex);
-  puts("documentLoadFinished");
-  printf("m_initialHTML = %p\n", m_initialHTML);
-  
-  if (!m_initialHTML)
-    goto done;
-  puts("I'm glad I can at least test it for truth.");
-  
-  puts("GetContentDOMWindow");
   if (NS_FAILED(rv = m_webBrowser->
-		GetContentDOMWindow(getter_AddRefs(domWindow)))) {
-    puts("fail!");
-    goto done;
-  }
-  printf("Got %p\n", (void *)domWindow);
+		GetContentDOMWindow(getter_AddRefs(domWindow))))
+    return rv;
 
-  puts("GetDocument");
-  if (NS_FAILED(rv = domWindow->
-		GetDocument(getter_AddRefs(domDocument)))) {
-    puts("fail!");    
-    goto done;
-  }
-  printf("Got %p\n", (void *)domDocument);
+  return domWindow->GetDocument(_retval);
+}
 
-  puts("QI for htmlDocument");
-  htmlDocument = do_QueryInterface(htmlDocument);
-  printf("Got %p\n", (void *)htmlDocument);
-  if (htmlDocument == nsnull) {
-    puts("fail!");
-    goto done;
-  }
+nsresult Control::getElementById(wchar_t *id, nsIDOMElement **_retval) {
+  nsresult rv;
 
-  puts("doc->write");
-  if (NS_FAILED(rv = htmlDocument->Write(nsEmbedString(m_initialHTML)))) {
-    puts("fail!");
-    goto done;
-  }
-  puts("sweet it is");
+  nsCOMPtr<nsIDOMDocument> doc;
+  if (NS_FAILED(rv = getDocument(getter_AddRefs(doc))))
+    return rv;
 
- done:
-  puts("at done:");
-  if (m_initialHTML) {
-    puts("try to delete");
-    delete[] m_initialHTML;
-  }
-  m_initialHTML = NULL;
+  return doc->GetElementById(nsEmbedString(id), _retval);
+}
+  
+nsresult Control::addElementAtEnd(wchar_t *xml, wchar_t *id) {
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+nsresult Control::addElementBefore(wchar_t *xml, wchar_t *id) {
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+nsresult Control::removeElement(wchar_t *id) {
+  nsresult rv;
+
+  nsCOMPtr<nsIDOMElement> elt;
+  if (NS_FAILED(rv = getElementById(id, getter_AddRefs(elt))))
+    return rv;
+  printf("remove: got %p for elt\n", elt);
+  return NS_OK; // NEEDS
+}
+
+nsresult Control::changeElement(wchar_t *id, wchar_t *xml) {
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+nsresult Control::hideElement(wchar_t *id) {
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+nsresult Control::showElement(wchar_t *id) { 
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Miscellaneous                                                             //
+///////////////////////////////////////////////////////////////////////////////
+
+// NEEDS: return value? queuing?
+nsresult Control::execJS(wchar_t *expr) {
+  PR_Lock(m_mutex);
+  puts("Control: punt js");
   PR_Unlock(m_mutex);
-  puts("post mutex, return");
+  return NS_OK;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

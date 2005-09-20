@@ -17,9 +17,15 @@ theControl = None
 def onSize(hwnd, msg, wparam, lparam):
     theControl and theControl.recomputeSize()
 def onActivate(hwnd, msg, wparam, lparam):
+    print "onActivate (%d)" % wparam
     if theControl:
-        wparam == WA_ACTIVE and theControl.activate()
-        wparam == WA_INACTIVE and theControl.deactivate()
+        print " .. has a control %s" % theControl
+        if wparam == WA_ACTIVE or wparam == WA_CLICKACTIVE:
+           print ".. calling activate() on it"
+           theControl.activate()
+        if wparam == WA_INACTIVE:
+           print ".. calling deactivate() on it"
+           theControl.deactivate()
 messageMap = { WM_CLOSE: onClose,
                WM_SIZE: onSize,
                WM_ERASEBKGND: lambda *args: 1, # flicker reduction
@@ -65,10 +71,49 @@ hwndChild = win32gui.CreateWindowEx(0, blankWindowClassAtom,
 #win32gui.ShowWindow(hwndChild, SW_SHOW)
 win32gui.UpdateWindow(hwndChild)
 
+class CBTest:
+  def __init__(self):
+    self.parity = True
+  def XXonLoadCallback(self, url):
+    print "Python got URL: %s" % url
+    ret = False
+    if self.parity:
+      ret = True 
+      print "Allowing"
+    else:
+      ret = False
+      print "Cancelling"
+    self.parity = 1 - self.parity
+    return ret
+  def onActionCallback(self, url):
+    print "Python got action: %s" % url
+  def onDocumentLoadFinishedCallback(self):
+    print "Python notes that the document load has finished."
+
+def onLoadCallback(getControl, url):
+  control = getControl()
+  print "onLoad for %s (control is %s)" % (url, control)
+  if url == "test:remove":
+      print "before remove"
+      control.remove('victim') 
+      print "after remove"
+  return True
+
+cb = CBTest()
+
 print "hwnd: top = %s child = %s" % (hwndTop, hwndChild)
 import MozillaBrowser
 #m = MozillaBrowser.MozillaBrowser(hwndChild)
-m = MozillaBrowser.MozillaBrowser(hwndTop, initialHTML = "Hi there!")
+m = MozillaBrowser.MozillaBrowser(hwndTop,
+        userAgent = "stuff",
+	initialURL = "file://c:/tmp/domtest.html",
+#	initialURL = "http://www.google.com",
+	onLoadCallback = lambda url: onLoadCallback((lambda: theControl), url),
+#	onActionCallback = cb.onActionCallback,
+	onDocumentLoadFinishedCallback = cb.onDocumentLoadFinishedCallback,
+)
+#	onDocumentLoadFinishedCallback = cb.onDocumentLoadFinishedCallback)
+#m = MozillaBrowser.MozillaBrowser(hwndTop)
 theControl = m
 
 print "Got m = %s" % m
