@@ -26,7 +26,6 @@ import time
 import math
 import struct
 import urlparse
-import tempfile
 import threading
 import itertools
 
@@ -150,6 +149,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
             'videoWillStop:',
             'videoWillStop',
             nil)
+        
         # Call the startup hook before any events (such as instructions
         # to open files...) are delivered.
         self.actualApp.onStartup()
@@ -443,6 +443,9 @@ class MainController (NibClassBuilder.AutoBaseClass):
         tabBox.setFrameOrigin_(NSZeroPoint)
         contentBox.setFrameSize_(contentSize)
         contentBox.setFrameOrigin_((tabSize.width + dividerWidth,0))
+
+    def splitView_canCollapseSubview_(self, sender, subview):
+        return self.channelsHostView.isDescendantOf_(subview) and VideoDisplay.getInstance().isSelected()
 
     ### Actions ###
 
@@ -1788,7 +1791,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
 
 ###############################################################################
-#### The "dummy" video area. The actula video display will happen in a     ####
+#### The "dummy" video area. The actual video display will happen in a     ####
 #### child VideoWindow window. This allows to have a single movie view for ####
 #### both windowed and fullscreen playback                                 ####
 ###############################################################################
@@ -1892,7 +1895,7 @@ class VideoWindow (NSWindow):
         SetSystemUIMode(kUIModeNormal, 0)
         
     def sendEvent_(self, event):
-        if event.type() == NSKeyDown and event.characters().characterAtIndex_(0) == 0x1B:
+        if event.type() == NSLeftMouseDown or (event.type() == NSKeyDown and event.characters().characterAtIndex_(0) == 0x1B):
             self.exitFullScreen()
 
 
