@@ -68,7 +68,7 @@ win32gui.UpdateWindow(hwndChild)
 print "hwnd: top = %s child = %s" % (hwndTop, hwndChild)
 import MozillaBrowser
 #m = MozillaBrowser.MozillaBrowser(hwndChild)
-m = MozillaBrowser.MozillaBrowser(hwndTop)
+m = MozillaBrowser.MozillaBrowser(hwndTop, initialHTML = "Hi there!")
 theControl = m
 
 print "Got m = %s" % m

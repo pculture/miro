@@ -143,9 +143,12 @@ static PyObject *MozillaBrowser_new(PyObject *self, PyObject *args,
     return NULL;
   }
 
+  puts("new pycontrol");
   PyControl *control = new PyControl();
+  puts("pycontrol create");
   nsresult rv = control->Create(hwnd, html, agent, onLoadCallback,
 				onActionCallback);
+  puts("came back");
   if (NS_FAILED(rv)) {
     char buf[128];
     snprintf(buf, sizeof(buf),
@@ -154,6 +157,7 @@ static PyObject *MozillaBrowser_new(PyObject *self, PyObject *args,
     delete control;
     return NULL;
   }
+  puts("it was ok");
 
   MozillaBrowser *mb = PyObject_NEW(MozillaBrowser, &MozillaBrowser_Type);
   if (!mb) {
@@ -169,7 +173,7 @@ static PyObject *MozillaBrowser_new(PyObject *self, PyObject *args,
 }
 
 static void MozillaBrowser_dealloc(PyObject *self) {
-  fprintf(stderr, "Note: MozillaBrowser_dealloc called.");
+  fprintf(stderr, "Note: MozillaBrowser_dealloc called.\n");
   if (MozillaBrowser_Check(self)) {
     MozillaBrowser *mb = (MozillaBrowser *)self;
     delete mb->control;

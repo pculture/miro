@@ -2,6 +2,7 @@
 #define __MOZILLABROWSER_H
 
 #include <windows.h>
+#include <wchar.h>
 
 #include "nsCOMPtr.h"
 #include "nsStringAPI.h"
@@ -23,6 +24,13 @@
 #include "nsIDOMDocument.h"
 #include "nsIDOMHTMLDocument.h"
 #include "nsIWebBrowserFocus.h"
+#include "nsIWebProgressListener.h"
+#include "nsIWeakReference.h"
+#include "nsIWeakReferenceUtils.h"
+#include "nsWeakReference.h"
+
+// Forward declaration
+class Control;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Miscellaneous                                                             //
@@ -69,6 +77,8 @@ nsresult startMozilla(void);
 class Chrome: public nsIWebBrowserChrome,
 	      public nsIEmbeddingSiteWindow {
 public:
+  Chrome() {    puts("** Chrome created");}
+
   ~Chrome();
 
   NS_DECL_ISUPPORTS
@@ -89,6 +99,33 @@ protected:
   nsCOMPtr<nsIWebBrowser> m_webBrowser;
   PRUint32 m_chromeFlags;
 } ; 
+
+///////////////////////////////////////////////////////////////////////////////
+// Listener.cpp                                                              //
+///////////////////////////////////////////////////////////////////////////////
+
+/* We register this object with Gecko via various interfaces for callbacks
+   that allow us to track browser state changes. For now we only use this
+   for page load activity.
+*/
+class Listener: public nsIWebProgressListener,
+                       nsSupportsWeakReference {
+public:
+  Listener() {puts("** Listener created");}
+  ~Listener() {puts("** Listener destroyed");}
+
+  NS_DECL_ISUPPORTS
+  NS_DECL_NSIWEBPROGRESSLISTENER
+
+  // Initialize, setting the WebBrowser we will monitor and selecting
+  // the Control object on which we will call methods in response to
+  // events.
+  nsresult Create(nsIWebBrowser *webBrowser, Control *control);
+
+protected:
+  Control *m_control;
+  nsCOMPtr<nsIWebBrowser> m_webBrowser;
+} ;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Control.cpp                                                               //
@@ -114,13 +151,17 @@ protected:
 
 class Control {
 public:
-  Control() : m_mutex(PR_NewLock()) {}
+  Control() : m_mutex(PR_NewLock()), m_chrome(NULL), m_initialHTML(NULL)
+  {puts("** Control created");
+      printf("at ctor chrome %p listener %p\n", m_chrome, m_listener);
 
-  virtual ~Control() { PR_DestroyLock(m_mutex); }
+  }
+  virtual ~Control();
 
   // Initialize the control. Must be called first. May only be called
   // exactly once.
-  virtual nsresult Create(HWND hwnd, wchar_t *initialHTML, wchar_t *userAgent);
+  virtual nsresult Create(HWND hwnd, wchar_t *initialHTML=NULL,
+			  wchar_t *userAgent=NULL);
 
   // NEEDS: return value?
   // NEEDS: define exact queuing semantics/interaction with document
@@ -169,11 +210,27 @@ public:
   // really just an arbitrary string) is delivered via Javascript.
   virtual void onActionURL(wchar_t *url) { onURLLoad(url); }
 
+  // For overriding: called when a document load finishes. If you do override
+  // this, you must call the superclass method *first*, before doing your
+  // processing.
+  virtual void documentLoadFinished(void);
+
 protected:
   PRLock *m_mutex;
   HWND m_hwnd;
+
+  // Used to hold the initial HTML to show until the initial load finishes
+  // (of blank.html) and we can slurp it in with document.write.
+  wchar_t *m_initialHTML;
+
+  // Convenience -- use m_ref_chrome to get automatic refcounting, but
+  // keep m_chrome around as a direct pointer to the object so we can
+  // call methods like execJS directly, even though we don't bother to
+  // define a custom interface for them.
   Chrome *m_chrome;
+  nsCOMPtr<nsIWebBrowserChrome> m_ref_chrome;
   nsCOMPtr<nsIWebBrowser> m_webBrowser;
+  nsCOMPtr<nsISupports> m_listener;
 } ;
 
 #endif /* __MOZILLABROWSER_H */

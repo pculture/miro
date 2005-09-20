@@ -9,7 +9,7 @@ nsresult Chrome::Create(HWND hwnd, nsIWebBrowser *browser) {
   nsresult rv;
 
   if (m_webBrowser != nsnull)
-    return NS_ERROR_NOT_IMPLEMENTED; // tried to call twice
+    return NS_ERROR_ALREADY_INITIALIZED;
   m_webBrowser = browser;
   m_hwnd = hwnd;
 
@@ -90,6 +90,7 @@ nsresult Chrome::Create(HWND hwnd, nsIWebBrowser *browser) {
 Chrome::~Chrome() {
   // Let the WebBrowser know that we're going away (it doesn't hold a
   // reference to us -- see documentation for SetContainerWindow)
+  puts("** Chrome destroyed");
   if (m_webBrowser)
     m_webBrowser->SetContainerWindow(nsnull);
 }
@@ -112,6 +113,7 @@ NS_IMPL_RELEASE(Chrome)
 
 NS_INTERFACE_MAP_BEGIN(Chrome)
   NS_INTERFACE_MAP_ENTRY_AMBIGUOUS(nsISupports, nsIWebBrowserChrome)
+  NS_INTERFACE_MAP_ENTRY(nsIWebBrowserChrome)
   NS_INTERFACE_MAP_ENTRY(nsIEmbeddingSiteWindow)
 NS_INTERFACE_MAP_END
 

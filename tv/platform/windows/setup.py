@@ -53,6 +53,13 @@ MOZILLABROWSER_DEBUGGING = 1
 # Get GRE installer at:
 # http://ftp.mozilla.org/pub/mozilla.org/mozilla/releases/mozilla1.7.8/windows-xpi/gre-win32-installer.zip
 
+# Or, download and build Mozilla. The GRE SDK will be in
+# '$OBJDIR/dist/sdk' and the GRE itself in '$OBJDIR/dist/sdk'. You
+# will need to copy 'regxpcom' from the 'bin' directory of the SDK
+# into the root of the GRE and run it before anything will work. This
+# creates the component registry. (Actually, this doesn't work.)
+
+
 MozillaBrowser_extra_compile_args = [
     '-DXPCOM_GLUE',
     '-DMOZILLA_STRICT_API',
@@ -97,6 +104,7 @@ MozillaBrowser_sources = [
     'MozillaBrowser\\helpers.cpp',
     'MozillaBrowser\\Control.cpp',
     'MozillaBrowser\\Chrome.cpp',
+    'MozillaBrowser\\Listener.cpp',
 ]
 
 MozillaBrowser_ext = \
