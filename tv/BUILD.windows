@@ -5,7 +5,7 @@ C++. You are largely on your own.
 1) Install Python 2.4.x:
      http://www.python.org/download/
 
-2) Install other dependencies:
+2) Install dependencies:
      * An appropriate compiler, configured so that Python distutils can
        find it and successfully build extensions with it. I use
        Visual Studio .NET 2003; for information about free alternatives, see:
@@ -22,6 +22,23 @@ C++. You are largely on your own.
      * Mozilla GRE and GRE SDK (and set paths in platform/windows/setup.py)
      * simplevlc.dll/simplevlc.h from inside KCEasy?
      * Probably some other things I am forgetting
+
+2) Get the Mozilla Gecko Runtime Engine (GRE) and a matching GRE SDK. You
+   have two options:
+     * Prebuilt GRE and GRE SDK. Get the GRE at
+         http://ftp.mozilla.org/pub/mozilla.org/mozilla/releases/mozilla1.7.8/windows-xpi/gre-win32-installer.zip
+       and run it. Get 
+         http://ftp.mozilla.org/pub/mozilla.org/mozilla/releases/mozilla1.7.8/gecko-sdk-i586-pc-msvc-1.7.8.zip 
+       and unzip it to the directory of your choosing.
+     * Download and build Mozilla per the instructions at mozilla.org. This
+       could be to your great advantage for debugging The GRE SDK will be in
+       '$OBJDIR/dist/sdk' and the GRE itself in '$OBJDIR/dist/sdk'. However,
+       I get weird errors halfway through initialization when I do this,
+       suggesting that the component registry isn't being initialized
+       correctly. Creating an empty platform/windows/dist/components directory
+       after building DTV, and/or running Mozilla's regxpcom in the right 
+       location, will suppress some of the messages but not fix the underlying
+       issue.
 
 3) Get and install Boost and Boost.Python following the instructions at:
      http://www.boost.org/more/getting_started.html
@@ -47,7 +64,12 @@ C++. You are largely on your own.
        Python support.
     
 4) Edit platform/windows/setup.py. Set the paths to Boost and the GRE and
-   GRE SDK.
+   GRE SDK. If you installed a prebuild GRE, you'll probably have to dig
+   around underneath C:\Program Files\Common Files\mozilla.org and figure
+   out where the installer put it. If you have several GREs on your system,
+   make absolutely sure that the GRE and the GRE SDK you pick are of matching
+   versions. Read the special instructions in setup.py about hardcoding GRE
+   paths.
 
 5) cd to platform/windows. Run:
      python setup.py py2exe
