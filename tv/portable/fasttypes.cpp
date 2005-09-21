@@ -280,11 +280,17 @@ void (SortedList::*SLdelItem2)(SortedListIterator&) = &SortedList::delItem;
 // iterator isn't past-the-end, so calling either of these on a
 // past-the-end iterator is undefined and may segfault some STL
 // implementations
+LinkedListIterator *copyLLIter(LinkedListIterator& it) {
+  return new LinkedListIterator(it);
+}
 void incLLIter(LinkedListIterator& it) {
   advance(it,1);
 }
 void decLLIter(LinkedListIterator& it) {
   advance(it,-1);
+}
+SortedListIterator *copySLIter(SortedListIterator& it) {
+  return new SortedListIterator(it);
 }
 void incSLIter(SortedListIterator& it) {
   advance(it,1);
@@ -300,18 +306,26 @@ BOOST_PYTHON_MODULE(fasttypes)
                         indexPopException>(&indexPopExceptionTranslator);
 
   class_<LinkedListIterator>("LinkedListIterator")
+    .def("copy",&copyLLIter,return_value_policy<manage_new_object>())
     .def("forward",&incLLIter)
     .def("back",&decLLIter)
+    .def(self == self)
+    .def(self != self)
   ;
 
   class_<SortedListIterator>("SortedListIterator")
+    .def("copy",&copySLIter,return_value_policy<manage_new_object>())
     .def("forward",&incSLIter)
     .def("back",&decSLIter)
+    .def(self == self)
+    .def(self != self)
   ;
 
   class_<LinkedList>("LinkedList")
     .def("__len__",&LinkedList::len)
     .def("append",&LinkedList::append)
+    .def("firstIter",&LinkedList::first)
+    .def("lastIter",&LinkedList::last)
     .def("prepend",&LinkedList::prepend)
     .def("pop",&LinkedList::pop)
     .def("__delitem__",LLdelItem1)
@@ -329,6 +343,8 @@ BOOST_PYTHON_MODULE(fasttypes)
   class_<SortedList>("SortedList", init<object>())
     .def("__len__",&SortedList::len)
     .def("append",&SortedList::append)
+    .def("firstIter",&SortedList::first)
+    .def("lastIter",&SortedList::last)
     .def("prepend",&SortedList::prepend)
     .def("pop",&SortedList::pop)
     .def("__delitem__",SLdelItem1)
