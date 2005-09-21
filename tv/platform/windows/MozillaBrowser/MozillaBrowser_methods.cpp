@@ -48,6 +48,9 @@ static int unicodeArgs(PyObject *self, PyObject *args, PyObject *kwargs,
     }
   }
 
+  // Success: output strings and return.
+  if (var1) *var1 = out[0];
+  if (var2) *var2 = out[1];
   return TRUE;
 
  failure:
