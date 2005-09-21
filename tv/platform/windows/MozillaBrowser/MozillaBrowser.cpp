@@ -179,7 +179,7 @@ static PyObject *MozillaBrowser_new(PyObject *self, PyObject *args,
     if (_url && rv == NS_ERROR_FILE_NOT_FOUND)
       // Give a descriptive message for a common error
       snprintf(buf, sizeof(buf),
-	       "Couldn't instantiate Gecko; file not found: %S", rv, _url);
+	       "Couldn't instantiate Gecko; file not found: %S", _url);
     else
       snprintf(buf, sizeof(buf),
 	       "Couldn't instantiate Gecko; nsresult = %08x.", rv);
