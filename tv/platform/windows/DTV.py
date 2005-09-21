@@ -105,15 +105,13 @@ print "hwnd: top = %s child = %s" % (hwndTop, hwndChild)
 import MozillaBrowser
 #m = MozillaBrowser.MozillaBrowser(hwndChild)
 m = MozillaBrowser.MozillaBrowser(hwndTop,
-        userAgent = "stuff",
-	initialURL = "file://c:/tmp/domtest.html",
+#        userAgent = "stuff",
+	initialURL = "file:///c:/tmp/domtest.html",
 #	initialURL = "http://www.google.com",
-	onLoadCallback = lambda url: onLoadCallback((lambda: theControl), url),
+#	onLoadCallback = lambda url: onLoadCallback((lambda: theControl), url),
 #	onActionCallback = cb.onActionCallback,
-	onDocumentLoadFinishedCallback = cb.onDocumentLoadFinishedCallback,
+#	onDocumentLoadFinishedCallback = cb.onDocumentLoadFinishedCallback,
 )
-#	onDocumentLoadFinishedCallback = cb.onDocumentLoadFinishedCallback)
-#m = MozillaBrowser.MozillaBrowser(hwndTop)
 theControl = m
 
 print "Got m = %s" % m

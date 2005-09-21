@@ -80,8 +80,10 @@ nsresult Control::Create(HWND hwnd, wchar_t *initialURL, wchar_t *userAgent) {
   if (NS_FAILED(rv = nav->LoadURI(url,
 				  nsIWebNavigation::LOAD_FLAGS_NONE,
 				  nsnull /* referrer */, nsnull /* postData */,
-				  nsnull /* headers */)))
+				  nsnull /* headers */))) {
+    printf("LoadURI failed with %08x\n", rv);
     goto done;
+  }
   puts("Back from loaduri");
 
   if (userAgent) {

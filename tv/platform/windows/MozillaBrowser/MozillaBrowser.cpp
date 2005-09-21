@@ -120,12 +120,15 @@ PyTypeObject MozillaBrowser_Type = {
 static PyObject *MozillaBrowser_new(PyObject *self, PyObject *args,
 				PyObject *kwargs) {
   HWND hwnd;
-  wchar_t *url = NULL;
+  wchar_t *url    = NULL;
+  wchar_t *agent  = NULL;
+  wchar_t *_url   = NULL;
+  wchar_t *_agent = NULL;
   PyObject *onLoadCallback = Py_None;
   PyObject *onActionCallback = Py_None;
   PyObject *onDocumentLoadFinishedCallback = Py_None;
-  wchar_t *agent = NULL;
-  int junk_int;
+  int url_len, agent_len;
+  PyObject *ret = NULL;
 
   static char *kwlist[] = {"hwnd", "initialURL", "userAgent", "onLoadCallback",
 			   "onActionCallback",
@@ -133,30 +136,33 @@ static PyObject *MozillaBrowser_new(PyObject *self, PyObject *args,
 
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "l|es#es#OOO:MozillaBrowser",
 				   kwlist, &hwnd,
-				   "utf16", (char **)&url, &junk_int,
-				   "utf16", (char **)&agent, &junk_int,
+				   "utf16", (char **)&url, &url_len,
+				   "utf16", (char **)&agent, &agent_len,
 				   &onLoadCallback,
 				   &onActionCallback,
 				   &onDocumentLoadFinishedCallback))
-    return NULL;
+    goto done;
   
   if (onLoadCallback != Py_None && !PyCallable_Check(onLoadCallback)) {
     PyErr_SetString(PyExc_TypeError, "onLoadCallback must be a function");
-    return NULL;
+    goto done;
   }
   if (onActionCallback != Py_None && !PyCallable_Check(onActionCallback)) {
     PyErr_SetString(PyExc_TypeError, "onActionCallback must be a function");
-    return NULL;
+    goto done;
   }
   if (onDocumentLoadFinishedCallback != Py_None &&
       !PyCallable_Check(onDocumentLoadFinishedCallback)) {
     PyErr_SetString(PyExc_TypeError,
 		    "onDocumentLoadFinishedCallback must be a function");
-    return NULL;
+    goto done;
   }
 
-  wchar_t *_url   = stripBOM(url);
-  wchar_t *_agent = stripBOM(agent);
+  printf("lens = %d, %d\n", url_len, agent_len);
+  if (url_len & 1 || agent_len & 1)
+    goto done;
+  _url   = unPythonifyString(url, url_len / 2);
+  _agent = unPythonifyString(agent, agent_len / 2);
   
   puts("new pycontrol");
   PyControl *control = new PyControl();
@@ -165,29 +171,42 @@ static PyObject *MozillaBrowser_new(PyObject *self, PyObject *args,
 				onActionCallback,
 				onDocumentLoadFinishedCallback);
   puts("came back");
-  free(_url);
-  free(_agent);
   if (NS_FAILED(rv)) {
     char buf[128];
-    snprintf(buf, sizeof(buf),
-	     "Couldn't instantiate Gecko; nsresult = %08x.", rv);
-    PyErr_SetString(PyExc_OSError, buf);
+    printf("deleting control for error\n");
     delete control;
-    return NULL;
+    printf("setting python error code\n");
+    if (_url && rv == NS_ERROR_FILE_NOT_FOUND)
+      // Give a descriptive message for a common error
+      snprintf(buf, sizeof(buf),
+	       "Couldn't instantiate Gecko; file not found: %S", rv, _url);
+    else
+      snprintf(buf, sizeof(buf),
+	       "Couldn't instantiate Gecko; nsresult = %08x.", rv);
+    PyErr_SetString(PyExc_OSError, buf);
+    goto done;
   }
   puts("it was ok");
 
   MozillaBrowser *mb = PyObject_NEW(MozillaBrowser, &MozillaBrowser_Type);
   if (!mb) {
     delete control;
-    return NULL;
+    goto done;
   }
   mb->control = control;
+  ret = (PyObject *)mb;
 
-  PyMem_Free(url);
-  PyMem_Free(agent);
-
-  return (PyObject *)mb;
+ done:
+  if (_url)
+    free(_url);
+  if (_agent)
+    free(_agent);
+  if (url)
+    PyMem_Free(url);
+  if (agent)
+    PyMem_Free(agent);
+  
+  return ret;
 }
 
 static void MozillaBrowser_dealloc(PyObject *self) {

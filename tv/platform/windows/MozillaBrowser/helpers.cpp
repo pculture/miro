@@ -16,7 +16,6 @@ nsresult CreateInstance(const char *aContractID, const nsIID &aIID,
 					     aInstancePtr);
 }
 
-
 // NEEDS: would be nice to have finalization too, but I don't know how to
 // make Python do that right now.
 nsresult startMozilla(void) {
@@ -43,19 +42,26 @@ nsresult startMozilla(void) {
   return GRE_Startup();
 }
 
-wchar_t *stripBOM(wchar_t *str) {
+wchar_t *unPythonifyString(wchar_t *str, size_t length) {
+  if (!str)
+    return NULL;
+
   // If the string starts with a byte-order mark, and it indicates the
   // native byte order you'd assume anyway on this platform, strip
   // it. This simple logic is enough to handle the usual case created
   // by Python.
-  if (!str)
-    return NULL;
+  if (*str == 0xfeff) {
+    str++;
+    length--;
+  }
 
-  wchar_t *source = *str == 0xfeff ? str+1 : str;
-  int len = wcslen(source) + 1;
-  wchar_t *ret = (wchar_t *)malloc(sizeof(wchar_t) * len);
-  wmemcpy(ret, source, len);
+  // Copy the string.
+  wchar_t *ret = (wchar_t *)malloc(sizeof(wchar_t) * (length+1));
+  wmemcpy(ret, str, length);
+  ret[length] = 0;
 
-  printf("stripBOM returning string of length %d == %S\n", wcslen(ret), ret);
   return ret;
 }
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////

@@ -1,3 +1,42 @@
+###############################################################################
+## Paths and configuration                                                   ##
+###############################################################################
+
+# Set these as appropriate for the location of Boost, the version you
+# built, and the compiler you used. If you are unsure, search you hard
+# drive for a file named "boost_python*". If there is more than one,
+# you probably already know what you're doing.
+
+BOOST_LIB = "C:\\Boost\\lib\\boost_python-vc71-mt-1_33.lib"
+BOOST_INCLUDE = "C:\\Boost\\include\\boost-1_33"
+
+# You'll need the Gecko Runtime Engine (GRE) and a corresponding GRE
+# SDK in order to build this program. Set their paths here. See
+# BUILD.windows for more information.
+
+GRE_SDK_PATH = "c:\\cygwin\\home\\Owner\\bin\\gecko-sdk-i586-pc-msvc-1.7.8"
+GRE_PATH = "c:\\Program Files\\Common Files\\mozilla.org\\GRE\\1.7.8_2005051112"
+#GRE_SDK_PATH = "c:\\moz\\mozilla\\w32-objdir-debug\\dist\\sdk"
+#GRE_PATH = "c:\\moz\\mozilla\\w32-objdir-debug\\dist\\gre"
+
+# IMPORTANT: if you use a GRE that was not installed by the
+# mozilla.org installer, you will need to set HARDCODE_GRE_PATH to 1
+# here and give the full path to the GRE you want to use, quoted as
+# following the model. This will bypass the normal runtime GRE
+# location logic and always use the GRE at this absolute path (meaning
+# that you probably won't be able to ship your build off your machine
+# to anyone who doesn't have a GRE in exactly the same place.) You
+# need to do this because the mozilla.org installer sets registry keys
+# that are used at runtime to find the GRE, and your GRE will lack
+# this registration.
+
+HARDCODE_GRE_PATH = 0
+#HARDCODE_GRE_PATH_AS = r'\"c:\\moz\\mozilla\\w32-objdir-debug\\dist\\gre\"'
+
+###############################################################################
+## End of configuration. No user-servicable parts inside                     ##
+###############################################################################
+
 from distutils.core import setup
 from distutils.extension import Extension
 import py2exe
@@ -25,40 +64,22 @@ py2exe_options = {
     'packages': "encodings"
 }
 
+
+#### The WebBrowser extension (deprecated) ####
+
 WebBrowser_ext = Extension('WebBrowser',
                            sources = ['WebBrowser.cpp'],
                            libraries = ['gdi32', 'shell32', 'user32',
                                         'advapi32', 'atl'],
                           )
 
-# NEEDS: clean up for checkin
-GRE_SDK_PATH = "c:\\cygwin\\home\\Owner\\bin\\gecko-sdk-i586-pc-msvc-1.7.8"
-GRE_PATH = "c:\\Program Files\\Common Files\\mozilla.org\\GRE\\1.7.8_2005051112"
-#GRE_SDK_PATH = "c:\\moz\\mozilla\\w32-objdir\\dist\\sdk"
-#GRE_PATH = "c:\\moz\\mozilla\\w32-objdir\\dist\\gre"
-#GRE_SDK_PATH = "c:\\moz\\mozilla\\w32-objdir-debug\\dist\\sdk"
-#GRE_PATH = "c:\\moz\\mozilla\\w32-objdir-debug\\dist\\gre"
+#### The MozillaBrowser extension ####
 
-# Set this to hardcode GRE_PATH into the binary, instead of letting Mozilla
-# perform its usual GRE location procedure using the registry.
-HARDCODE_GRE_PATH = 0
-# NEEDS: automatically compute (watch the quoting!)
-#HARDCODE_GRE_PATH_AS = r'\"c:\\moz\\mozilla\\w32-objdir\\dist\\gre\"'
-#HARDCODE_GRE_PATH_AS = r'\"c:\\moz\\mozilla\\w32-objdir-debug\\dist\\gre\"'
-
+# Set this to pass compiler flags to generate debugging information
+# and use debugging DLLs when building MozillaBrowser. Still doen't
+# help, apparently because py2exe packages the app in such a way
+# that the Visual Studio debugger can't find the debugging symbols.
 MOZILLABROWSER_DEBUGGING = 1
-
-# Get GRE SDK at:
-# http://ftp.mozilla.org/pub/mozilla.org/mozilla/releases/mozilla1.7.8/gecko-sdk-i586-pc-msvc-1.7.8.zip 
-# Get GRE installer at:
-# http://ftp.mozilla.org/pub/mozilla.org/mozilla/releases/mozilla1.7.8/windows-xpi/gre-win32-installer.zip
-
-# Or, download and build Mozilla. The GRE SDK will be in
-# '$OBJDIR/dist/sdk' and the GRE itself in '$OBJDIR/dist/sdk'. You
-# will need to copy 'regxpcom' from the 'bin' directory of the SDK
-# into the root of the GRE and run it before anything will work. This
-# creates the component registry. (Actually, this doesn't work.)
-
 
 MozillaBrowser_extra_compile_args = [
     '-DXPCOM_GLUE',
@@ -116,22 +137,28 @@ MozillaBrowser_ext = \
 	extra_compile_args = MozillaBrowser_extra_compile_args,
     )
 
+#### The fasttypes extension ####
+
+fasttypes_ext = \
+    Extension("fasttypes", 
+        sources = [os.path.join(root, 'portable', 'fasttypes.cpp')],
+        extra_objects = [BOOST_LIB],
+        include_dirs = [BOOST_INCLUDE]
+    )
+
+
 # Private extension modules to build.
 ext_modules = [
-    #vlchelper.info.getExtension(root),
-#   WebBrowser_ext,
+    # Full-blown C++ extension modules.
+#   WebBrowser_ext, # deprecated
     MozillaBrowser_ext,
+    fasttypes_ext,
+    #vlchelper.info.getExtension(root),
+
     # Pyrex sources.
     Extension("database", [os.path.join(root, 'portable', 'database.pyx')]),
     Extension("template", [os.path.join(root, 'portable', 'template.pyx')]),
-#    Extension("fasttypes",["%s/portable/fasttypes.cpp" % root],
-#              extra_objects=["/usr/local/lib/libboost_python-1_33.a"],
-#              include_dirs=["/usr/local/include/boost-1_33/"])
-
 ]
-
-
-
 
 # As documented at
 # http://www.mozilla.org/projects/xpcom/glue/Component_Reuse.html

@@ -57,14 +57,26 @@ nsresult CreateInstance(const char *aContractID, const nsIID &aIID,
 			void **aInstancePtr);
 nsresult startMozilla(void);
 
-// Mozilla chokes on Unicode byte-order marks, at least in URLs. This
-// function is provided to strip the byte-order marks from a string,
-// performing any necessary conversion. A newly malloc()'d string is
-// returned which must be free()'d by the caller. Note that only a
-// simple case is implemented presently; see comments in the
-// function. As a special case, passing NULL to this function causes
-// it to return NULL.
-wchar_t *stripBOM(wchar_t *str);
+// Clean up a UTF16-encoded string provided to us by Python. There are
+// two issues to deal with here.
+//
+// (1) Mozilla chokes on Unicode byte-order marks, at least in
+// URLs. Strip the byte-order marks, leaving the string in host byte
+// order. Note that only a simple case is implemented presently; see
+// comments in the function.
+//
+// (2) When strings are read in the "utf16" encoding using the "es#"
+// format string to ParseTuple, Python terminates the returned UTF16
+// buffer *with a single null*, which is useless. The correct length
+// of the string must be passed in; a proper terminator will be added
+// based on it. The length should include any control characters, eg,
+// a possible byte-order mark per (1). Again, we implement only the
+// "naive" case.
+//
+// A newly malloc()'d string is returned which must be free()'d by the
+// caller. As a special case, passing NULL to this function causes it
+// to return NULL.
+wchar_t *unPythonifyString(wchar_t *str, size_t length);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Chrome.cpp                                                                //

@@ -9,33 +9,64 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 // Accepts zero to two arguments, all to be read as Unicode strings.
+#define MAXARGS 2
 static int unicodeArgs(PyObject *self, PyObject *args, PyObject *kwargs,
-		       char *fmt,
+		       int count, char *fmt,
 		       char *name1=NULL, wchar_t **var1=NULL,
 		       char *name2=NULL, wchar_t **var2=NULL) {
   if (!MozillaBrowser_Check(self))
-    return NULL;
+    return FALSE;
 
-  int len1 = 0, len2 = 0;
-  char *kwlist[3];
+  int ret = FALSE;
+  int len[MAXARGS];
+  wchar_t *raw[MAXARGS];
+  wchar_t *out[MAXARGS];
+
+  // Construct keyword argument list
+  char *kwlist[MAXARGS + 1];
   kwlist[0] = name1;
   kwlist[1] = name2;
   kwlist[2] = NULL;
-  
+
+  // Clear out conversion structures
+  for(int i=0; i<count; i++)
+    raw[i] = out[i] = NULL;
+
+  // Parse argument list
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, fmt, kwlist,
-				   "utf16", (char **)var1, &len1,
-				   "utf16", (char **)var2, &len2))
-    return FALSE;
-  if (len1 & 1 || len2 & 1)
-    return FALSE;
+				   "utf16", (char **)&raw[0], &len[0],
+				   "utf16", (char **)&raw[1], &len[1]))
+    goto failure;
+
+  // Convert strings
+  for(int i=0; i<count; i++) {
+    if (raw[i]) {
+      if (len[i] & 1)
+	goto failure;
+      out[i] = unPythonifyString(raw[i], len[i] / 2);
+      PyMem_Free(raw[i]);
+    }
+  }
 
   return TRUE;
+
+ failure:
+  // Clean up intermediate state from failed conversion
+  for(int i=0; i<count; i++) {
+    if (raw[i])
+      PyMem_Free(raw[i]);
+    if (out[i])
+      free(out[i]);
+  }
+
+  return FALSE;
 }
 
 static PyObject *handleNsresultAndFree(const char *name, nsresult rv,
 				       void *free1=NULL, void *free2=NULL) {
   PyObject *ret;
 
+  // Determine return value and error string
   if (NS_FAILED(rv)) {
     char buf[256];
     snprintf(buf, sizeof(buf),
@@ -47,11 +78,12 @@ static PyObject *handleNsresultAndFree(const char *name, nsresult rv,
     ret = Py_None;
     Py_INCREF(ret);
   }
-    
+
+  // Free strings allocated by converter in unicodeArgs
   if (free1)
-    PyMem_Free(free1);
+    free(free1);
   if (free2)
-    PyMem_Free(free1);
+    free(free1);
 
   return ret;
 }
@@ -62,7 +94,7 @@ static PyObject *handleNsresultAndFree(const char *name, nsresult rv,
 
 PyObject *MozillaBrowser_recomputeSize(PyObject *self, PyObject *args,
 				       PyObject *kwargs) {
-  if (!unicodeArgs(self, args, kwargs, ":recomputeSize"))
+  if (!unicodeArgs(self, args, kwargs, 0, ":recomputeSize"))
     return NULL;
   return handleNsresultAndFree("recomputeSize",
 			       MozillaBrowser_control(self)
@@ -72,7 +104,7 @@ PyObject *MozillaBrowser_recomputeSize(PyObject *self, PyObject *args,
 PyObject *MozillaBrowser_activate(PyObject *self, PyObject *args,
 				  PyObject *kwargs) {
   puts("---> Top of activate");
-  if (!unicodeArgs(self, args, kwargs, ":activate"))
+  if (!unicodeArgs(self, args, kwargs, 0, ":activate"))
     return NULL;
   return handleNsresultAndFree("activate",
 			       MozillaBrowser_control(self)
@@ -82,7 +114,7 @@ PyObject *MozillaBrowser_activate(PyObject *self, PyObject *args,
 PyObject *MozillaBrowser_deactivate(PyObject *self, PyObject *args,
 				    PyObject *kwargs) {
   puts("---> Top of deactivate");
-  if (!unicodeArgs(self, args, kwargs, ":deactivate"))
+  if (!unicodeArgs(self, args, kwargs, 0, ":deactivate"))
     return NULL;
   return handleNsresultAndFree("deactivate",
 			       MozillaBrowser_control(self)
@@ -98,8 +130,8 @@ PyObject *MozillaBrowser_addElementAtEnd(PyObject *self, PyObject *args,
 					 PyObject *kwargs) {
   wchar_t *xml, *id;
 
-  if (!unicodeArgs(self, args, kwargs, "es#es#:addElementAtEnd", "xml", &xml,
-		   "id", &id))
+  if (!unicodeArgs(self, args, kwargs, 2, "es#es#:addElementAtEnd",
+		   "xml", &xml, "id", &id))
     return NULL;
   return handleNsresultAndFree("addElementAtEnd",
 			       MozillaBrowser_control(self)->
@@ -111,8 +143,8 @@ PyObject *MozillaBrowser_addElementBefore(PyObject *self, PyObject *args,
 					  PyObject *kwargs) {
   wchar_t *xml, *id;
 
-  if (!unicodeArgs(self, args, kwargs, "es#es#:addElementBefore", "xml", &xml,
-		   "id", &id))
+  if (!unicodeArgs(self, args, kwargs, 2, "es#es#:addElementBefore",
+		   "xml", &xml, "id", &id))
     return NULL;
   return handleNsresultAndFree("addElementBefore",
 			       MozillaBrowser_control(self)->
@@ -124,7 +156,7 @@ PyObject *MozillaBrowser_removeElement(PyObject *self, PyObject *args,
 				       PyObject *kwargs) {
   wchar_t *id;
 
-  if (!unicodeArgs(self, args, kwargs, "es#:removeElement", "id", &id))
+  if (!unicodeArgs(self, args, kwargs, 1, "es#:removeElement", "id", &id))
     return NULL;
   return handleNsresultAndFree("removeElement",
 			       MozillaBrowser_control(self)->
@@ -136,7 +168,7 @@ PyObject *MozillaBrowser_changeElement(PyObject *self, PyObject *args,
 					PyObject *kwargs) {
   wchar_t *id, *xml;
 
-  if (!unicodeArgs(self, args, kwargs, "es#:removeElement", "id", &id,
+  if (!unicodeArgs(self, args, kwargs, 2, "es#es#:changeElement", "id", &id,
 		   "xml", &xml))
     return NULL;
   return handleNsresultAndFree("changeElement",
@@ -149,7 +181,7 @@ PyObject *MozillaBrowser_hideElement(PyObject *self, PyObject *args,
 				     PyObject *kwargs) {
   wchar_t *id;
 
-  if (!unicodeArgs(self, args, kwargs, "es#:hideElement", "id", &id))
+  if (!unicodeArgs(self, args, kwargs, 1, "es#:hideElement", "id", &id))
     return NULL;
   return handleNsresultAndFree("hideElement",
 			       MozillaBrowser_control(self)->
@@ -161,7 +193,7 @@ PyObject *MozillaBrowser_showElement(PyObject *self, PyObject *args,
 				     PyObject *kwargs) {
   wchar_t *id;
 
-  if (!unicodeArgs(self, args, kwargs, "es#:showElement", "id", &id))
+  if (!unicodeArgs(self, args, kwargs, 1, "es#:showElement", "id", &id))
     return NULL;
   return handleNsresultAndFree("showElement",
 			       MozillaBrowser_control(self)->
@@ -177,7 +209,7 @@ PyObject *MozillaBrowser_execJS(PyObject *self, PyObject *args,
 				PyObject *kwargs) {
   wchar_t *expr;
 
-  if (!unicodeArgs(self, args, kwargs, "es#:execJS", "expr", &expr))
+  if (!unicodeArgs(self, args, kwargs, 1, "es#:execJS", "expr", &expr))
     return NULL;
   return handleNsresultAndFree("execJS",
 			       MozillaBrowser_control(self)->execJS(expr),
