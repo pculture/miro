@@ -119,12 +119,19 @@ MozillaBrowser_ext = \
 # Private extension modules to build.
 ext_modules = [
     #vlchelper.info.getExtension(root),
-    WebBrowser_ext,
+#   WebBrowser_ext,
     MozillaBrowser_ext,
     # Pyrex sources.
     Extension("database", [os.path.join(root, 'portable', 'database.pyx')]),
     Extension("template", [os.path.join(root, 'portable', 'template.pyx')]),
+#    Extension("fasttypes",["%s/portable/fasttypes.cpp" % root],
+#              extra_objects=["/usr/local/lib/libboost_python-1_33.a"],
+#              include_dirs=["/usr/local/include/boost-1_33/"])
+
 ]
+
+
+
 
 # As documented at
 # http://www.mozilla.org/projects/xpcom/glue/Component_Reuse.html
