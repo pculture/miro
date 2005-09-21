@@ -40,6 +40,7 @@ PRBool PyControl::onURLLoad(const char *url) {
   if (!result) {
     fprintf(stderr, "Warning: ignoring exception in MozillaBrowser "
 	    "onLoad callback (Python-side).\n");
+    PyErr_Print();
     PyGILState_Release(gstate);
     return PR_TRUE;
   }
@@ -64,6 +65,13 @@ void PyControl::onActionURL(const char *url) {
 
   PyObject *result = PyObject_CallFunction(m_onActionURL, "s", url);
   Py_DECREF(result);
+
+  if (PyErr_Occurred()) {
+    fprintf(stderr, "Warning: ignoring exception in MozillaBrowser "
+	    "onActionURL callback (Python-side).\n");
+    PyErr_Print();
+  }
+
   PyGILState_Release(gstate);
 }
 
@@ -76,6 +84,13 @@ void PyControl::onDocumentLoadFinished(void) {
 
   PyObject *result = PyObject_CallFunction(m_onDocumentLoadFinished, "");
   Py_DECREF(result);
+
+  if (PyErr_Occurred()) {
+    fprintf(stderr, "Warning: ignoring exception in MozillaBrowser "
+	    "onDocumentLoadFinished callback (Python-side).\n");
+    PyErr_Print();
+  }
+
   PyGILState_Release(gstate);
 }
 
