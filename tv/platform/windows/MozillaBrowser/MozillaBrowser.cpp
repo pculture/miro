@@ -130,17 +130,23 @@ static PyObject *MozillaBrowser_new(PyObject *self, PyObject *args,
   int url_len, agent_len;
   PyObject *ret = NULL;
 
-  static char *kwlist[] = {"hwnd", "initialURL", "userAgent", "onLoadCallback",
+  static char *kwlist[] = {"hwnd",
+			   "onLoadCallback",
 			   "onActionCallback",
-			   "onDocumentLoadFinishedCallback", NULL};
+			   "onDocumentLoadFinishedCallback",
+			   "initialURL", "userAgent", NULL};
 
-  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "l|es#es#OOO:MozillaBrowser",
+  // Python 2.4.0 will raise a cryptic exception about '<bad format
+  // char>' if it has to skip an 'es#' keyword argument while walking
+  // the argument list.  So, structure the order of the arguments to
+  // minimize the chance of that happening.
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "l|OOOes#es#:MozillaBrowser",
 				   kwlist, &hwnd,
-				   "utf16", (char **)&url, &url_len,
-				   "utf16", (char **)&agent, &agent_len,
 				   &onLoadCallback,
 				   &onActionCallback,
-				   &onDocumentLoadFinishedCallback))
+				   &onDocumentLoadFinishedCallback,
+				   "utf16", (char **)&url, &url_len,
+				   "utf16", (char **)&agent, &agent_len))
     goto done;
   
   if (onLoadCallback != Py_None && !PyCallable_Check(onLoadCallback)) {
