@@ -1,0 +1,69 @@
+Just some notes for now: not tested on a virgin machine, not
+necessarily complete, and not tested with compilers other than Visual
+C++. You are largely on your own.
+
+1) Install Python 2.4.x:
+     http://www.python.org/download/
+
+2) Install other dependencies:
+     * An appropriate compiler, configured so that Python distutils can
+       find it and successfully build extensions with it. I use
+       Visual Studio .NET 2003; for information about free alternatives, see:
+         http://www.vrplumber.com/programming/mstoolkit/
+     * Mark Hammonds's Python for Windows Extensions ('pywin32' aka 'win32all'):
+         http://sourceforge.net/project/showfiles.php?group_id=78018
+     * ctypes (in the future we will probably require pywin32 *or* ctypes,
+       not both):
+         http://sourceforge.net/project/showfiles.php?group_id=71702
+     * Pyrex:
+         http://www.cosc.canterbury.ac.nz/~greg/python/Pyrex/
+     * Py2exe:
+         http://starship.python.net/crew/theller/py2exe/
+     * Mozilla GRE and GRE SDK (and set paths in platform/windows/setup.py)
+     * simplevlc.dll/simplevlc.h from inside KCEasy?
+     * Probably some other things I am forgetting
+
+3) Get and install Boost and Boost.Python following the instructions at:
+     http://www.boost.org/more/getting_started.html
+     and/or http://www.boost.org/libs/python/doc/building.html
+
+   Here is the short form if you are using Visual C++ .NET 2003:
+     * Get the boost-jam build tool from:
+         http://prdownloads.sourceforge.net/boost/boost-jam-3.1.11-1-ntx86.zip?download         
+       This archive contains bjam.exe and a readme. Put bjam.exe somewhere
+       in your path.
+     * Get the Boost source:
+         http://prdownloads.sourceforge.net/boost/boost_1_33_0.exe?download
+     * Choose "Visual Studio .NET 2003 Command Prompt" option from Start
+       Menu, or run VCVARS32.BAT/VSVARS32.BAT in an existing shell.
+     * In the directory where you unpacked the source, run:
+         bjam "-sTOOLS=vc-7_1" "-sPYTHON_VERSION=<major>.<minor>" install
+           --with-python-root=<Python install root>
+       For example:
+         bjam "-sTOOLS=vc-7_1" "-sPYTHON_VERSION=2.4" install
+           --with-python-root=c:\Python2.4
+       This takes quite a long time.
+     * This creates a directory c:\Boost containing a build of Boost with
+       Python support.
+    
+4) Edit platform/windows/setup.py. Set the paths to Boost and the GRE and
+   GRE SDK.
+
+5) cd to platform/windows. Run:
+     python setup.py py2exe
+
+6) If all went well, a directory platform/windows/dist was created, containing
+   DTV.exe and a number of other files and directories. This is DTV. All of
+   the other files in 'dist' are required and should stay in the same directory
+   as DTV.exe.
+
+   The only other runtime requirement is a compatible version of the GRE.
+   We will probably end up bundling the GRE directly into the dist directory
+   because we use some unfrozen XPCOM interfaces that are necessary for
+   browser embedding and don't want to take any chances.
+
+   Important note: if you edit any of the header files in the MozillaBrowser
+   directory, particularly the class declarations, you will need to delete
+   the platform/windows/build directory, or the results are unpredictable.
+   distutils does not compute dependencies correctly; this is your only
+   warning.
