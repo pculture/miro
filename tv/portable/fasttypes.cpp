@@ -45,7 +45,7 @@ void indexPopExceptionTranslator(exception const& x) {
 }
 
 typedef std::list<object>::iterator LinkedListIterator;
-typedef std::multiset<object>::iterator SortedListIterator;
+typedef std::multiset<object,object>::iterator SortedListIterator;
 
 //Create a linked list type with Pythonish semantics, but backed by STL
 class LinkedList:protected std::list<object> {
