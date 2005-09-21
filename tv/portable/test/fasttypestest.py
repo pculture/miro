@@ -93,6 +93,22 @@ class LinkedListTestCase(unittest.TestCase):
         assert self.list[del2] == 3
         del self.list[0]
         assert len(self.list) == 0
+        self.list.append(2)
+
+        it0 = self.list.firstIter()
+        it1 = self.list.firstIter()
+        assert it0 == it1
+        it2 = self.list.lastIter()
+        it3 = self.list.lastIter()
+        assert it2 == it3
+        assert it0 != it2
+        it0.forward()
+        assert it0 == it2
+        assert it0 != it1
+
+        del self.list[0]
+        assert self.list.firstIter() == self.list.lastIter()
+        assert not self.list.firstIter() != self.list.lastIter()
 
 class SortedListTestCase(unittest.TestCase):
     def setUp(self):
@@ -181,3 +197,18 @@ class SortedListTestCase(unittest.TestCase):
         assert len(self.list) == 2
         del self.list[0]
         assert len(self.list) == 1
+        
+        it0 = self.list.firstIter()
+        it1 = self.list.firstIter()
+        assert it0 == it1
+        it2 = self.list.lastIter()
+        it3 = self.list.lastIter()
+        assert it2 == it3
+        assert it0 != it2
+        it0.forward()
+        assert it0 == it2
+        assert it0 != it1
+
+        del self.list[0]
+        assert self.list.firstIter() == self.list.lastIter()
+        assert not self.list.firstIter() != self.list.lastIter()
