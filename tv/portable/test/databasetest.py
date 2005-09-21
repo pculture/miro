@@ -374,11 +374,11 @@ class SaveViewTestCase(unittest.TestCase):
         self.everything = DDBObject.dd
         self.x = DDBObject()
         self.y = DDBObject()
-        self.last = DDBObject.lastID
     def testSaveRestore(self):
         self.everything.save()
         self.z = DDBObject()
         self.zz = DDBObject()
+        last = self.zz.getID()
         self.x.remove()
         self.everything.restore()
         self.assertEqual(self.everything.len(),2)
@@ -389,13 +389,25 @@ class SaveViewTestCase(unittest.TestCase):
         if self.everything[0].getID() == self.x.getID():
             self.assertEqual(self.everything[1].getID(),self.y.getID())
         self.assertEqual(self.everything[2],None)
-        assert DDBObject.lastID >= self.last
+        assert DDBObject().getID() >= last
+    def testLastID(self):
+        last = self.y.getID()
+        self.everything.save()
+        # Simulate restarting app
+        self.y.remove()
+        self.x.remove()
+        DDBObject.lastID = 0 # This is implementation specific and
+                             # needs to be updated when the
+                             # implementation changes
+        self.everything.restore()
+        assert DDBObject().getID() >= last
     def testBackup(self):
         self.everything.save()
         self.everything.save()
         remove(config.get(config.DB_PATHNAME))
         self.z = DDBObject()
         self.zz = DDBObject()
+        last = self.zz.getID()
         self.x.remove()
         self.everything.restore()
         self.assertEqual(self.everything.len(),2)
@@ -406,7 +418,7 @@ class SaveViewTestCase(unittest.TestCase):
         if self.everything[0].getID() == self.x.getID():
             self.assertEqual(self.everything[1].getID(),self.y.getID())
         self.assertEqual(self.everything[2],None)
-        assert DDBObject.lastID >= self.last
+        assert DDBObject().getID() >= last
 
 class MapFilterRemoveViewTestCase(unittest.TestCase):
     def setUp(self):
