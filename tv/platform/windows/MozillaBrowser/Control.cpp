@@ -16,7 +16,6 @@ nsresult Control::Create(HWND hwnd, wchar_t *initialURL, wchar_t *userAgent) {
 
   PR_Lock(m_mutex);
 
-  printf("chrome %p listener %p\n", m_chrome, m_listener);
   if (m_chrome != nsnull || m_listener != nsnull) {
     rv = NS_ERROR_ALREADY_INITIALIZED;
     goto done;
@@ -37,54 +36,38 @@ nsresult Control::Create(HWND hwnd, wchar_t *initialURL, wchar_t *userAgent) {
 
   // Create a Chrome object to allow Mozilla to control and
   // occasionally query the embedding site
-  puts("new Chrome");
   m_chrome = new Chrome();
-  puts("grabbing a ref");
-  printf("m_chrome = %p\n", m_chrome);
   nsISupports *nsI = NS_ISUPPORTS_CAST(nsIWebBrowserChrome *, m_chrome);
-  printf("nsI = %p\n", nsI);
   m_ref_chrome = do_QueryInterface(nsI);
-  printf("m_ref_chrome = %p\n", m_ref_chrome);
   
   m_ref_chrome =
     do_QueryInterface( NS_ISUPPORTS_CAST(nsIWebBrowserChrome *, m_chrome));
-  puts("create");
   if (NS_FAILED(rv = m_chrome->Create(hwnd, m_webBrowser)))
     goto done;
-  puts("all's good in the hood");
   
   // Create one of our Listeners, pointed at us, and hooked up to the
   // browser, in order that we receive event callbacks. IMPORTANT: make
   // sure the class is sufficiently initialized that we are fully prepared
   // for any callbacks before we do this.
-  puts("create listener");
   Listener *listener = new Listener();
-  puts("did it");
   // It's important to hold a reference across the call :)
   m_listener =
     do_QueryInterface(NS_ISUPPORTS_CAST(nsIWebProgressListener *, listener));
-  puts("qi'd");
   if (NS_FAILED(rv = listener->Create(m_webBrowser, this)))
     goto done;
-  puts("created");
 
   // Load the URL given, or a blank page if omitted.
   wchar_t *url = initialURL ? initialURL : L"about:blank";
   nav = do_QueryInterface(m_webBrowser);
   if (nav == nsnull)
     goto done;
-  printf("Got %p\n", (void *)nav);
   // documentLoadFinished may have already been called by the time this
   // function returns. In fact for a file it's likely.
-  printf("About to LoadURI: '%S' (len %d)\n", url, wcslen(url));
   if (NS_FAILED(rv = nav->LoadURI(url,
 				  nsIWebNavigation::LOAD_FLAGS_NONE,
 				  nsnull /* referrer */, nsnull /* postData */,
-				  nsnull /* headers */))) {
-    printf("LoadURI failed with %08x\n", rv);
+				  nsnull /* headers */)))
     goto done;
-  }
-  puts("Back from loaduri");
 
   if (userAgent) {
     // NEEDS: set userAgent :)

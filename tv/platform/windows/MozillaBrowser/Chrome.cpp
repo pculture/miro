@@ -40,50 +40,6 @@ nsresult Chrome::Create(HWND hwnd, nsIWebBrowser *browser) {
     return rv;
   }
   
-  puts("LoadURI");
-  nsCOMPtr<nsIWebNavigation> nav = do_QueryInterface(browser);
-  if (nav == nsnull) {
-    puts("Couldn't get nsIWebNavigation");
-    browser->SetContainerWindow(nsnull);
-    return rv;
-  }
-  printf("Got %p\n", (void *)nav);
-  if (NS_FAILED(rv = nav->LoadURI(L"http://www.google.com",
-				  nsIWebNavigation::LOAD_FLAGS_NONE,
-				  nsnull /* referrer */, nsnull /* postData */,
-				  nsnull /* headers */))) {
-    puts("nav failed");
-    browser->SetContainerWindow(nsnull);
-    return rv;
-  }
-#ifdef notdef
-
-  puts("GetContentDOMWindow");
-  nsCOMPtr<nsIDOMWindow> domWindow;
-  if (NS_FAILED(rv = browser->
-		GetContentDOMWindow(getter_AddRefs(domWindow)))) {
-    DissociateFromCurrentBrowser();
-    return rv;
-  }
-  printf("Got %p\n", (void *)domWindow);
-
-  puts("GetDocument");
-  nsCOMPtr<nsIDOMDocument> domDocument;
-  if (NS_FAILED(rv = domWindow->
-		GetDocument(getter_AddRefs(domDocument)))) {
-    DissociateFromCurrentBrowser();
-    return rv;
-  }
-  printf("Got %p\n", (void *)domDocument);
-
-  puts("QI for htmlDocument");
-  nsCOMPtr<nsIDOMHTMLDocument> htmlDocument;
-  htmlDocument = do_QueryInterface(htmlDocument);
-  printf("Got %p\n", (void *)htmlDocument);
-
-  // Listeners and so on would be registered here.
-#endif
-  
   return NS_OK;
 }
 

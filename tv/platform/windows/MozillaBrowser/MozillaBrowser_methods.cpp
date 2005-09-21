@@ -103,7 +103,6 @@ PyObject *MozillaBrowser_recomputeSize(PyObject *self, PyObject *args,
 
 PyObject *MozillaBrowser_activate(PyObject *self, PyObject *args,
 				  PyObject *kwargs) {
-  puts("---> Top of activate");
   if (!unicodeArgs(self, args, kwargs, 0, ":activate"))
     return NULL;
   return handleNsresultAndFree("activate",
@@ -113,7 +112,6 @@ PyObject *MozillaBrowser_activate(PyObject *self, PyObject *args,
 
 PyObject *MozillaBrowser_deactivate(PyObject *self, PyObject *args,
 				    PyObject *kwargs) {
-  puts("---> Top of deactivate");
   if (!unicodeArgs(self, args, kwargs, 0, ":deactivate"))
     return NULL;
   return handleNsresultAndFree("deactivate",

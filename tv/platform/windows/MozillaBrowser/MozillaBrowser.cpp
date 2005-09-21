@@ -30,19 +30,13 @@ PyControl::~PyControl() {
 }
 
 PRBool PyControl::onURLLoad(const char *url) {
-  puts("PyControl::onURLLoad");
-  if (m_onURLLoad == Py_None) {
-    puts("it's none; bail");
+  if (m_onURLLoad == Py_None)
     return PR_TRUE;
-  }
-    puts("entering python");
 
   // Get the Python lock so we can call into Python
   PyGILState_STATE gstate = PyGILState_Ensure();
   
-    puts("calling function");
   PyObject *result = PyObject_CallFunction(m_onURLLoad, "s", url);
-    puts("back");
   if (!result) {
     fprintf(stderr, "Warning: ignoring exception in MozillaBrowser "
 	    "onLoad callback (Python-side).\n");
@@ -164,24 +158,19 @@ static PyObject *MozillaBrowser_new(PyObject *self, PyObject *args,
     goto done;
   }
 
-  printf("lens = %d, %d\n", url_len, agent_len);
-  if (url_len & 1 || agent_len & 1)
+  if ((url   && (url_len   & 1)) ||
+      (agent && (agent_len & 1)) )
     goto done;
   _url   = unPythonifyString(url, url_len / 2);
   _agent = unPythonifyString(agent, agent_len / 2);
   
-  puts("new pycontrol");
   PyControl *control = new PyControl();
-  puts("pycontrol create");
   nsresult rv = control->Create(hwnd, _url, _agent, onLoadCallback,
 				onActionCallback,
 				onDocumentLoadFinishedCallback);
-  puts("came back");
   if (NS_FAILED(rv)) {
     char buf[128];
-    printf("deleting control for error\n");
     delete control;
-    printf("setting python error code\n");
     if (_url && rv == NS_ERROR_FILE_NOT_FOUND)
       // Give a descriptive message for a common error
       snprintf(buf, sizeof(buf),
@@ -192,7 +181,6 @@ static PyObject *MozillaBrowser_new(PyObject *self, PyObject *args,
     PyErr_SetString(PyExc_OSError, buf);
     goto done;
   }
-  puts("it was ok");
 
   MozillaBrowser *mb = PyObject_NEW(MozillaBrowser, &MozillaBrowser_Type);
   if (!mb) {

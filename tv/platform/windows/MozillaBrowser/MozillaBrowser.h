@@ -177,10 +177,7 @@ protected:
 class Control {
 public:
   Control() : m_mutex(PR_NewLock()), m_chrome(NULL)
-  {puts("** Control created");
-      printf("at ctor chrome %p listener %p\n", m_chrome, m_listener);
-
-  }
+  { puts("** Control created"); }
   virtual ~Control();
 
   // Initialize the control. Must be called first. May only be called

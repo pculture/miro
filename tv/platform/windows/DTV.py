@@ -17,14 +17,14 @@ theControl = None
 def onSize(hwnd, msg, wparam, lparam):
     theControl and theControl.recomputeSize()
 def onActivate(hwnd, msg, wparam, lparam):
-    print "onActivate (%d)" % wparam
+#    print "onActivate (%d)" % wparam
     if theControl:
-        print " .. has a control %s" % theControl
+#        print " .. has a control %s" % theControl
         if wparam == WA_ACTIVE or wparam == WA_CLICKACTIVE:
-           print ".. calling activate() on it"
+#           print ".. calling activate() on it"
            theControl.activate()
         if wparam == WA_INACTIVE:
-           print ".. calling deactivate() on it"
+#           print ".. calling deactivate() on it"
            theControl.deactivate()
 messageMap = { WM_CLOSE: onClose,
                WM_SIZE: onSize,
@@ -107,10 +107,10 @@ import MozillaBrowser
 m = MozillaBrowser.MozillaBrowser(hwndTop,
 #        userAgent = "stuff",
 	initialURL = "file:///c:/tmp/domtest.html",
-#	initialURL = "http://www.google.com",
-#	onLoadCallback = lambda url: onLoadCallback((lambda: theControl), url),
-#	onActionCallback = cb.onActionCallback,
-#	onDocumentLoadFinishedCallback = cb.onDocumentLoadFinishedCallback,
+#	initialURL = "http://www.google.com/",
+	onLoadCallback = lambda url: onLoadCallback((lambda: theControl), url),
+	onActionCallback = cb.onActionCallback,
+	onDocumentLoadFinishedCallback = cb.onDocumentLoadFinishedCallback,
 )
 theControl = m
 
