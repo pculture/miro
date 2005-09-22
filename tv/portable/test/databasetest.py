@@ -680,6 +680,14 @@ class CursorTestCase(unittest.TestCase):
 	self.assertEqual(self.objs.cur(),self.objs[1])
 	self.objs.getPrev()
 	self.assertEqual(self.objs.cur(),self.objs[0])
+    def testStack(self):
+        obj = self.everything.getNext()
+        self.assertEqual(self.everything.cur(), obj)
+        self.everything.saveCursor()
+        while self.everything.getNext() is not None:
+            pass
+        self.everything.restoreCursor()
+        self.assertEqual(self.everything.cur(), obj)
 
 class RecomputeMapTestCase(unittest.TestCase):
     def setUp(self):
