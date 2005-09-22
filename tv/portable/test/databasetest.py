@@ -4,6 +4,7 @@ from os import remove
 from os.path import expanduser
 import random
 import config
+from threading import Thread
 
 class EmptyViewTestCase(unittest.TestCase):
     def setUp(self):
@@ -832,6 +833,24 @@ class IDBaseTraversal(unittest.TestCase):
         self.assertEqual(self.origObjs[1].getID(), self.sorted.getCurrentID())
         self.sorted.getNext()
         self.assertEqual(self.origObjs[2].getID(), self.sorted.getCurrentID())
+
+class ThreadTest(unittest.TestCase):
+    def setUp(self):
+        DDBObject.dd = DynamicDatabase()
+        self.everything = DDBObject.dd
+    def add100(self):
+        for x in range(0,100):
+            DDBObject()
+    def remove100(self):
+        for x in range(0,100):
+            self.everything[0].remove()
+    def testAddRemove(self):
+        self.add100()
+        thread = Thread(target = self.add100)
+	thread.setDaemon(False)
+	thread.start()
+        self.remove100()
+        thread.join()
 
 #FIXME: Add a test such that recomputeFilters code that assumes
 #       subfilters keep the same order as their parent will fail.
