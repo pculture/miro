@@ -29,6 +29,8 @@ from xml.dom.minidom import parse, parseString
 
 # Something needs to import this outside of Pyrex. Might as well be app
 import templatehelper
+import databasehelper
+import fasttypes
 
 db = database.defaultDatabase
 
