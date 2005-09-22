@@ -23,6 +23,7 @@
 #include "nsIDOMWindow.h"
 #include "nsIDOMDocument.h"
 #include "nsIDOMHTMLDocument.h"
+#include "nsIDOMElement.h"
 #include "nsIWebBrowserFocus.h"
 #include "nsIWebProgressListener.h"
 #include "nsIWeakReference.h"
@@ -30,6 +31,7 @@
 #include "nsWeakReference.h"
 #include "nsIURIContentListener.h"
 #include "nsIURI.h"
+#include "nsIDOMDOMException.h"
 
 // Forward declaration
 class Control;

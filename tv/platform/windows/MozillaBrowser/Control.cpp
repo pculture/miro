@@ -141,7 +141,21 @@ nsresult Control::getElementById(wchar_t *id, nsIDOMElement **_retval) {
   if (NS_FAILED(rv = getDocument(getter_AddRefs(doc))))
     return rv;
 
-  return doc->GetElementById(nsEmbedString(id), _retval);
+  nsCOMPtr<nsIDOMElement> elt;
+  if (NS_FAILED(rv = doc->GetElementById(nsEmbedString(id),
+					 getter_AddRefs(elt))))
+    return rv;
+
+  if (elt == nsnull) {
+    // This is GetElementById's way of telling us that the element
+    // wasn't found AFAICT.
+    *_retval = nsnull;
+    return NS_ERROR_FAILURE;
+  }
+  
+  *_retval = elt;
+  NS_IF_ADDREF(*_retval);
+  return NS_OK;
 }
   
 nsresult Control::addElementAtEnd(wchar_t *xml, wchar_t *id) {
@@ -157,9 +171,22 @@ nsresult Control::removeElement(wchar_t *id) {
 
   nsCOMPtr<nsIDOMElement> elt;
   if (NS_FAILED(rv = getElementById(id, getter_AddRefs(elt))))
+    return rv;    
+
+  nsCOMPtr<nsIDOMNode> parent;
+  if (NS_FAILED(rv = elt->GetParentNode(getter_AddRefs(parent))))
     return rv;
-  printf("remove: got %p for elt\n", elt);
-  return NS_OK; // NEEDS
+  if (parent == nsnull)
+    return NS_ERROR_FAILURE;
+    
+  nsCOMPtr<nsIDOMNode> nodeOut; // the removed node -- or an exception?
+  if (NS_FAILED(rv = parent->RemoveChild(elt, getter_AddRefs(nodeOut))))
+    return rv;
+
+  // NEEDS: if indeed exceptions are returned in nodeOut, we don't
+  // check 'em.
+
+  return NS_OK;
 }
 
 nsresult Control::changeElement(wchar_t *id, wchar_t *xml) {

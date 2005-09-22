@@ -95,7 +95,7 @@ def onLoadCallback(getControl, url):
   print "onLoad for %s (control is %s)" % (url, control)
   if url == "test:remove":
       print "before remove"
-      control.remove('victim') 
+      control.removeElement('victim') 
       print "after remove"
   return True
 

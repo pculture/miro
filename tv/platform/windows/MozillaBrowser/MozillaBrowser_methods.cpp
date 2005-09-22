@@ -73,7 +73,7 @@ static PyObject *handleNsresultAndFree(const char *name, nsresult rv,
   if (NS_FAILED(rv)) {
     char buf[256];
     snprintf(buf, sizeof(buf),
-	     "MozillaBrowser: %s failed; error code is %08x.", rv);
+	     "MozillaBrowser: %s failed; error code is %08x.", name, rv);
     PyErr_SetString(PyExc_OSError, buf);
     ret = NULL;
   }
@@ -86,7 +86,7 @@ static PyObject *handleNsresultAndFree(const char *name, nsresult rv,
   if (free1)
     free(free1);
   if (free2)
-    free(free1);
+    free(free2);
 
   return ret;
 }
