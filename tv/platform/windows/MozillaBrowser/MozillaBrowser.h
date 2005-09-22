@@ -32,6 +32,11 @@
 #include "nsIURIContentListener.h"
 #include "nsIURI.h"
 #include "nsIDOMDOMException.h"
+#include "nsIDOMDocumentRange.h"
+#include "nsIDOMRange.h"
+#include "nsIDOMNSRange.h"
+#include "nsIDOMDocumentFragment.h"
+#include "nsIDOMNodeList.h"
 
 // Forward declaration
 class Control;
@@ -257,6 +262,10 @@ protected:
 
   // Internal use: find an element in the current document by 'id' attribute.
   nsresult getElementById(wchar_t *id, nsIDOMElement **_retval);
+
+  // Internal use: create a new element from an XML string.
+  nsresult createElement(wchar_t *xml, nsIDOMNode **_retval);
+
 public:
 		       
   /**** Other methods ****/

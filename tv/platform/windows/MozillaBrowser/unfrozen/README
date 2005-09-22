@@ -16,3 +16,9 @@ nsIWebNavigation:
  the unfrozen interface:
    http://www2.all-usenet-archive.comp/File.asp?service=471
  (search for nsIWebNavigation)
+
+nsIDOMNSRange:
+ This has createContextualFragment, the Mozilla extension to the DOM Range
+ object that is the Mozilla equivalent of IE's innerHTML. We need it to
+ parse strings into new DOM nodes. It is not marked as frozen and isn't in
+ the GRE SDK distribution. Couldn't find Web references to this situation.

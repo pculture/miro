@@ -90,13 +90,24 @@ class CBTest:
   def onDocumentLoadFinishedCallback(self):
     print "Python notes that the document load has finished."
 
+def getNewElementMarkup():
+    return "<p>new element</p>"
+
 def onLoadCallback(getControl, url):
   control = getControl()
   print "onLoad for %s (control is %s)" % (url, control)
   if url == "test:remove":
-      print "before remove"
       control.removeElement('victim') 
-      print "after remove"
+  if url == "test:before_victim":
+      control.addElementBefore(getNewElementMarkup(), 'victim') 
+  if url == "test:before_bottom":
+      control.addElementBefore(getNewElementMarkup(), 'bottom') 
+  if url == "test:after":
+      control.addElementAtEnd(getNewElementMarkup(), 'arena') 
+  if url == "test:change":
+      newMarkup = "<div id=\"victim\"><p>I am the mticiv!</p></div>"
+      control.changeElement('victim', newMarkup)
+  print "onLoad done"
   return True
 
 cb = CBTest()

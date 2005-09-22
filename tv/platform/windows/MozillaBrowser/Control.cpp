@@ -157,13 +157,109 @@ nsresult Control::getElementById(wchar_t *id, nsIDOMElement **_retval) {
   NS_IF_ADDREF(*_retval);
   return NS_OK;
 }
-  
+
+nsresult Control::createElement(wchar_t *xml, nsIDOMNode **_retval) {
+  nsresult rv;
+
+  // Get the document.
+  nsCOMPtr<nsIDOMDocument> doc;
+  if (NS_FAILED(rv = getDocument(getter_AddRefs(doc))))
+    return rv;
+
+  // Cast from Document to DocumentRange to get at createRange, which,
+  // though specified, is not core DOM, but rather the 'Traversal and
+  // Range' addon profile.
+  nsCOMPtr<nsIDOMDocumentRange> docRange = do_QueryInterface(doc, &rv);
+  if (!docRange || NS_FAILED(rv))
+    return rv;
+
+  // Create a new range. I don't really understand why
+  // createContextualFragment is defined on ranges, or what makes the
+  // fragment "contextual" in the first place if I can successfully
+  // create one from only a document as I do in this function, but I
+  // can roll with it.
+  nsCOMPtr<nsIDOMRange> range;
+  if (NS_FAILED(rv = docRange->CreateRange(getter_AddRefs(range))))
+    return rv;
+
+  // We have to initialize the range by pointing it somewhere. Nobody
+  // seems to know what difference it makes where you point it. Maybe
+  // it doesn't make any difference for balanced HTML. We might as
+  // well pick the BODY tag (NEEDS: hoping there is one.)
+  nsCOMPtr<nsIDOMNodeList> bodyNodes;
+  if (NS_FAILED(rv = doc->GetElementsByTagName(nsEmbedString(L"BODY"),
+					       getter_AddRefs(bodyNodes))))
+    return rv;
+
+  nsCOMPtr<nsIDOMNode> bodyNode;
+  if (NS_FAILED(rv = bodyNodes->Item(0, getter_AddRefs(bodyNode))))
+      return rv;
+
+  if (NS_FAILED(rv = range->SelectNodeContents(bodyNode)))
+    return rv;
+  printf("managed to init range to body at %p\n", bodyNode);
+
+  // Now get the Mozilla extended range interface that includes
+  // createContextualFragment.
+  nsCOMPtr<nsIDOMNSRange> nsRange = do_QueryInterface(range, &rv);
+  if (!nsRange || NS_FAILED(rv))
+    return rv;
+  printf("got nsRange %p\n", nsRange);
+
+  // Finally, we can parse the XML.
+  nsEmbedString markup(xml);
+  nsCOMPtr<nsIDOMDocumentFragment> frag;
+  if (NS_FAILED(rv = nsRange->
+		CreateContextualFragment(markup, getter_AddRefs(frag))))
+    return rv;
+  printf("got frag %p\n", frag);
+
+  // Now we have a document fragment. I don't really understand the
+  // difference between a document fragment and a document -- the
+  // former has no methods and inherits from node, not document. A
+  // quick glance at the source of GreateContextualFragment was not
+  // enlightening. In any event, it is apparently sufficient for our
+  // purposes to return the fragment returned by
+  // CreateContextualFragment cast down to node.
+  *_retval = frag;
+  NS_IF_ADDREF(*_retval);
+  return NS_OK;
+}
+
 nsresult Control::addElementAtEnd(wchar_t *xml, wchar_t *id) {
-  return NS_ERROR_NOT_IMPLEMENTED;
+  nsresult rv;
+
+  nsCOMPtr<nsIDOMElement> parent;
+  if (NS_FAILED(rv = getElementById(id, getter_AddRefs(parent))))
+    return rv;    
+
+  nsCOMPtr<nsIDOMNode> newNode;
+  if (NS_FAILED(rv = createElement(xml, getter_AddRefs(newNode))))
+    return rv;    
+
+  nsCOMPtr<nsIDOMNode> nodeOut;
+  return parent->InsertBefore(newNode, nsnull, getter_AddRefs(nodeOut));
 }
 
 nsresult Control::addElementBefore(wchar_t *xml, wchar_t *id) {
-  return NS_ERROR_NOT_IMPLEMENTED;
+  nsresult rv;
+
+  nsCOMPtr<nsIDOMElement> refElt;
+  if (NS_FAILED(rv = getElementById(id, getter_AddRefs(refElt))))
+    return rv;    
+
+  nsCOMPtr<nsIDOMNode> parent;
+  if (NS_FAILED(rv = refElt->GetParentNode(getter_AddRefs(parent))))
+    return rv;
+  if (parent == nsnull)
+    return NS_ERROR_FAILURE;
+
+  nsCOMPtr<nsIDOMNode> newNode;
+  if (NS_FAILED(rv = createElement(xml, getter_AddRefs(newNode))))
+    return rv;    
+
+  nsCOMPtr<nsIDOMNode> nodeOut;
+  return parent->InsertBefore(newNode, refElt, getter_AddRefs(nodeOut));
 }
 
 nsresult Control::removeElement(wchar_t *id) {
@@ -190,7 +286,28 @@ nsresult Control::removeElement(wchar_t *id) {
 }
 
 nsresult Control::changeElement(wchar_t *id, wchar_t *xml) {
-  return NS_ERROR_NOT_IMPLEMENTED;
+  nsresult rv;
+
+  nsCOMPtr<nsIDOMElement> refElt;
+  if (NS_FAILED(rv = getElementById(id, getter_AddRefs(refElt))))
+    return rv;    
+
+  nsCOMPtr<nsIDOMNode> parent;
+  if (NS_FAILED(rv = refElt->GetParentNode(getter_AddRefs(parent))))
+    return rv;
+  if (parent == nsnull)
+    return NS_ERROR_FAILURE;
+
+  nsCOMPtr<nsIDOMNode> newNode;
+  if (NS_FAILED(rv = createElement(xml, getter_AddRefs(newNode))))
+    return rv;    
+
+  nsCOMPtr<nsIDOMNode> nodeOut;
+  if (NS_FAILED(rv = parent->
+		ReplaceChild(newNode, refElt, getter_AddRefs(nodeOut))))
+    return rv;
+
+  return NS_OK;
 }
 
 nsresult Control::hideElement(wchar_t *id) {
