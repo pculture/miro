@@ -1,24 +1,5 @@
 # Pyrex version of the DTV object database
 #
-# This will be integrated into distutils and setup.py real soon. In
-# the meantime, you'll have to compile it by hand
-#
-# To compile on OS X without distutils:
-# /Library/Frameworks/Python.framework/Versions/2.4/bin/pyrexc database.pyx
-# gcc -c -fPIC -I/Library/Frameworks/Python.framework/Versions/2.4/Headers/ database.c
-# gcc -bundle -framework Python database.o -o database.so
-#
-# In addition to rewriting most of this code in C, I've made some
-# algorithmic changes. We now keep a dictionary of the locations of
-# objects in the database to avoid looping through the database. 
-#
-# This adds an additional restriction to the database: you cannot
-# store the same item twice.
-
-#
-# At the moment, we don't guarantee that filters preserve order, so
-# you should always sort your views last
-#
 
 from threading import RLock
 from os.path import expanduser, exists
@@ -26,30 +7,10 @@ from cPickle import dump, load, HIGHEST_PROTOCOL, UnpicklingError
 from shutil import copyfile
 from copy import copy
 import traceback
+from fasttypes import LinkedList, SortedList
+from databasehelper import pysort2dbsort
 
 import config
-
-# Import Python C functions
-cdef extern from "Python.h":
-    cdef int PyList_GET_SIZE(object list)
-    cdef int PyList_GET_ITEM(object list, int i)
-    cdef void PyList_SET_ITEM(object PyList, int idx, object obj)
-    cdef int PyList_SetSlice(object list, int low, int high, object itemlist)
-
-    cdef void* PyTuple_GET_ITEM(object list, int i)
-
-    cdef void* PyDict_GetItem(object dict, object key)
-    cdef int PyDict_SetItem(object dict, object key, object val)
-    cdef int PyDict_Contains(object dict, object key)
-    cdef int PyDict_Next(object dict, int *pos, void* key, void* value)
-
-    cdef object PyObject_CallObject(object callable, object args)
-    cdef void Py_INCREF(object x)
-
-# A faster equivalent to PyList[idx] = obj
-cdef int setListItem(object PyList, int idx, object obj) except -1:
-    Py_INCREF(obj)
-    PyList_SET_ITEM(PyList, idx, obj)
 
 ##
 # Raised when an attempt is made to remove an object that doesn't exist
@@ -72,45 +33,16 @@ globalLock = RLock()
 #
 # A Dynamic Database is a list of objects that can be filtered,
 # sorted, and mapped. It can also give notification when an object is
-# added, removed, or changed. Most of the actual implementation is in
-# CDynamicDaabase
-class DynamicDatabase(CDynamicDatabase):
-    ##
-    # This is needed for the class to function as an iterator
-    def __iter__(self):
-        self.beginUpdate()
-        self.cursor = -1
-        self.endUpdate()
-        return self    
-
-# A c-based dynamic database class
-cdef class CDynamicDatabase:
-    cdef int    cursor
-    cdef int    rootDB
-    cdef object objects
-    cdef object changeCallbacks
-    cdef object addCallbacks
-    cdef object removeCallbacks
-    cdef object subFilters
-    cdef object subSorts
-    cdef object subMaps
-    cdef object cursorStack
-    cdef object objectLocs
-
+# added, removed, or changed.
+class DynamicDatabase:
     ##
     # Create a view of a list of objects.
     # @param objects A list of object/mapped value pairs to create the
     # initial view
     # @param rootDB true iff this is not a subview of another DD. Should never be used outside of this class.
-    def __new__(self,object objects = [], int rootDB = True):
+    def __init__(self, objects = [], rootDB = True, sortFunc = None, filterFunc = None, mapFunc = None, cursorID = None):
         self.rootDB = rootDB
-
-    def __init__(self,object objects = [], int rootDB = True):
-        cdef int count
-        cdef object temp
-
-        self.cursor = -1
-        self.objects = objects
+        self.cursor = None
         self.changeCallbacks = []
         self.addCallbacks = []
         self.removeCallbacks = []
@@ -119,25 +51,91 @@ cdef class CDynamicDatabase:
         self.subMaps = []
         self.cursorStack = []
         self.objectLocs = {}
-        count = 0
-        for count from 0 <= count < PyList_GET_SIZE(objects):
-            temp = <object>PyList_GET_ITEM(objects,count)
-            temp = <object>PyTuple_GET_ITEM(temp,0)
-            PyDict_SetItem(self.objectLocs,temp.id,count)
-        self.checkObjLocs()
+
+        # Normally, any access to fasttypes should be surrounded by a
+        # lock. However, inside of an __init__, we can be sure that no
+        # other objects can see this object
+        if sortFunc is not None:
+            self.objects = SortedList(pysort2dbsort(sortFunc))
+        else:
+            self.objects = LinkedList()
+        for temp in objects:
+            if filterFunc is None or filterFunc(temp[1]):
+                if mapFunc is not None:
+                    temp = (temp[0], mapFunc(temp[1]))
+                it = self.objects.append(temp)
+                id = temp[0].id
+                if id == cursorID:
+                    self.cursor = it.copy()
+                self.objectLocs[id] = it
+        #self.checkObjLocs()
 
     # Checks to make the sure object location dictionary is accurate
     #
     # Uncomment the calls to this when you change the location
     # dictionary code
-    def checkObjLocs(self):
-        if len(self.objectLocs) != len(self.objects):
-            print "ERROR -- %d objects and %d locations" % (len(self.objects), len(self.objectLocs))
-            raise Exception
-        for (key, val) in self.objectLocs.items():
-            if self.objects[val][0].id != key:
-                print "Error-- %s in wrong location" % key
-                raise Exception
+#     def checkObjLocs(self):
+#         self.beginRead()
+#         try:
+#             if len(self.objectLocs) != len(self.objects):
+#                 raise Exception, "ERROR -- %d objects and %d locations" % (len(self.objects), len(self.objectLocs))
+#             for (key, val) in self.objectLocs.items():
+#                 if self.objects[val][0].id != key:
+#                     #raise Exception, "Error-- %s in wrong location %s" % (key, val)
+#                     print "Error-- %s in wrong location %s" % (key, val)
+
+#             if (self.cursor is not None) and (self.cursor != self.objects.lastIter()):
+#                 self.objects[self.cursor][0].id
+
+#             for cursor in self.cursorStack:
+#                 if (cursor is not None) and (cursor != self.objects.lastIter()):
+#                     self.objects[cursor][0].id
+#         finally:
+#             self.endRead()
+
+#     def checkMappedView(self, view):
+#         self.beginRead()
+#         try:
+#             if len(self.objects) != len(view.objects):
+#                 raise Exception, "ERROR -- %d objects in mapped and %d in this" % (len(self.objects), len(self.objectLocs))
+#             temp = []
+#             temp2 = []
+#             for (obj, val) in self.objects:
+#                 temp.append(obj)
+#             for (obj, val) in view.objects:
+#                 temp2.append(obj)
+#             for count in range(0,len(temp)):
+#                 if temp[count] is not temp2[count]:
+#                     raise Exception, "%s mapped incorrectly to %s (%d)" % (temp[count],temp2[count],count)
+#         finally:
+#             self.endRead()
+
+#     def checkFilteredView(self, view, f):
+#         self.beginRead()
+#         try:
+#             temp = []
+#             temp2 = []
+#             for (obj, val) in self.objects:
+#                 if f(val):
+#                     temp.append(obj)
+#             for (obj, val) in view.objects:
+#                 temp2.append(obj)
+#             if len(temp) != len(temp2):
+#                 raise Exception, "view (%d) and filtered view (%d) differ in length" % (len(temp),len(temp2))
+#             for count in range(0,len(temp)):
+#                 if temp[count] is not temp2[count]:
+#                     raise Exception, "%s filtered incorrectly to %s (%d)" % (temp[count],temp2[count],count)
+#         finally:
+#             self.endRead()
+
+    ##
+    # This is needed for the class to function as an iterator
+    def __iter__(self):
+        self.beginUpdate()
+        self.cursor = None
+        self.endUpdate()
+        return self    
+
     ##
     # Saves the current position of the cursor on the stack
     #
@@ -149,7 +147,11 @@ cdef class CDynamicDatabase:
     # finally:
     #     view.restoreCursor()
     def saveCursor(self):
-        self.cursorStack.append(self.cursor)
+         if self.cursor is not None:
+             self.cursorStack.append(self.cursor.copy())
+         else:
+             self.cursorStack.append(None)
+
 
     ##
     # Restores the position of the cursor
@@ -158,38 +160,21 @@ cdef class CDynamicDatabase:
 
     ##
     # Returns the nth item in the View
-    def __getitem__(self,int n):
-        cdef object obj
+    def __getitem__(self,n):
+        #print "DTV: Database Warning: numeric subscripts are depricated"
         self.beginRead()
         try:
-            if ((n >= 0) and n < PyList_GET_SIZE(self.objects)):
-                obj = <object>PyList_GET_ITEM(self.objects,n)
-                obj = <object>PyTuple_GET_ITEM(obj,1)
-                return obj
-            else:
+            try:
+                return self.objects[n][1]
+            except IndexError:
                 return None
         finally:
             self.endRead()
 
-    # Python method to grab C attributes
-    def __getattr__(self,n):
-        if n == "cursor":
-            return self.cursor
-        elif n == "objects":
-            return self.objects
-        elif n == "objectLocs":
-            return self.objectLocs
-
-    # Python method to grab C attributes
-    def __setattr__(self,n,val):
-        if n == "cursor":
-            self.cursor = val
-
     # Returns the number of items in the database
     def len(self):
-        cdef int length
         self.beginRead()
-        length = PyList_GET_SIZE(self.objects)
+        length = len(self.objects)
         self.endRead()
         return length
 
@@ -240,42 +225,42 @@ cdef class CDynamicDatabase:
     # Returns the object that the cursor is currently pointing to or
     # None if it's not pointing to an object
     def cur(self):
-        #cdef object ret
         self.beginRead()
         try:
-            if (self.cursor >= 0) and (self.cursor < PyList_GET_SIZE(self.objects)):
-                #ret = self.objects[self.cursor][1]
-                ret = <object>PyList_GET_ITEM(self.objects,self.cursor)
-                ret = <object>PyTuple_GET_ITEM(ret,1)
-            else:
-                ret = None
+            try:
+                return self.objects[self.cursor][1]
+            except:
+                self.cursor = None
+                return None
         finally:
             self.endRead()
-        return ret
 
     ##
     # next() function used by iterator
     def next(self):
         self.beginUpdate()
         try:
-            ret = self.getNext()
-            if self.cursor >= PyList_GET_SIZE(self.objects):
+            try:
+                if self.cursor is None:
+                    self.cursor = self.objects.firstIter().copy()
+                else:
+                    self.cursor.forward();
+                return self.objects[self.cursor][1]
+            except:
                 raise StopIteration
         finally:
             self.endUpdate()
-        return ret
 
     ##
-    # returns the previous object in the view
-    # null if it is not set
+    # returns the next object in the view
+    # None if it is not set
     def getNext(self):
-        cdef int length
         self.beginUpdate()
         try:
-            length = PyList_GET_SIZE(self.objects)
-            self.cursor = self.cursor + 1
-            if self.cursor >= length:
-                self.cursor = length
+            if self.cursor is None:
+                self.cursor = self.objects.firstIter().copy()
+            else:
+                self.cursor.forward();
             ret = self.cur()
         finally:
             self.endUpdate()
@@ -283,14 +268,14 @@ cdef class CDynamicDatabase:
 
     ##
     # returns the previous object in the view
-    # null if it is not set
+    # None if it is not set
     def getPrev(self):
         self.beginUpdate()
         try:
-            self.cursor = self.cursor - 1
-            if self.cursor < 0:
-                self.cursor = -1
-            ret = self.cur()
+            ret = None
+            if self.cursor is not None:
+                self.cursor.back();
+                ret = self.cur()
         finally:
             self.endUpdate()
         return ret
@@ -300,7 +285,7 @@ cdef class CDynamicDatabase:
     def resetCursor(self):
         self.beginUpdate()
         try:
-            self.cursor = -1
+            self.cursor = None
         finally:
             self.endUpdate()
 
@@ -310,34 +295,11 @@ cdef class CDynamicDatabase:
     def filter(self, f):
         self.beginUpdate()
         try:
-            temp = []
-            for obj in self.objects:
-                if f(obj[1]):
-                    temp.append(obj)
-            new = DynamicDatabase(temp,False)
-            new.beginUpdate()
             try:
-                if self.cursor<0:
-                    new.cursor = self.cursor
-                elif self.cursor>=self.len():
-                    new.cursor = new.len()+self.cursor-self.len()
-                else:
-                    new.resetCursor()
-                    try:
-                        tempobj = new.objects[new.cursor]
-                    except IndexError:
-                        tempobj = NoValue
-                    for x from 0 <= x < len(self.objects):
-                        if x == self.cursor:
-                            break
-                        if self.objects[x] is tempobj:
-                            new.next()
-                            try:
-                                tempobj = new.objects[new.cursor]
-                            except IndexError:
-                                tempobj = NoValue
-            finally:
-                new.endUpdate()
+                curID = self.objects[self.cursor][0].id
+            except:
+                curID = None
+            new = DynamicDatabase(self.objects,False,cursorID = curID, filterFunc = f)
             self.subFilters.append([new, f])
         finally:
             self.endUpdate()
@@ -352,15 +314,11 @@ cdef class CDynamicDatabase:
 
         self.beginUpdate()
         try:
-            temp = []
-            for obj in self.objects:
-                temp.append((obj[0],f(obj[1])))
-            new = DynamicDatabase(temp,False)
-            new.beginUpdate()
             try:
-                new.cursor = self.cursor
-            finally:
-                new.endUpdate()
+                curID = self.objects[self.cursor][0].id
+            except:
+                curID = None
+            new = DynamicDatabase(self.objects,False, cursorID = curID, mapFunc = f)
             self.subMaps.append([new,f])
         finally:
             self.endUpdate()
@@ -371,27 +329,13 @@ cdef class CDynamicDatabase:
     # @param f comparision function to use for sorting
     def sort(self, f):
         #assert(not self.rootDB) # Dude! Don't sort the entire DB! Are you crazy?
-
         self.beginUpdate()
         try:
-            temp = copy(self.objects)
-            temp.sort(f,key=self.getVal)
-            new = DynamicDatabase(temp,False)
-            new.beginUpdate()
             try:
-                if self.cursor<0:
-                    new.cursor = self.cursor
-                elif self.cursor>=self.len():
-                    new.cursor = new.len()+self.cursor-self.len()
-                else:
-                    cur = self.objects[self.cursor]
-                    for x from 0 <= x < len(new.objects):
-                        if new.objects[x] == cur:
-                            new.cursor = x
-                            break
-            finally:
-                new.endUpdate()
-            
+                curID = self.objects[self.cursor][0].id
+            except:
+                curID = None
+            new = DynamicDatabase(self.objects,False, sortFunc = f, cursorID = curID)
             self.subSorts.append([new,f])
         finally:
             self.endUpdate()
@@ -440,307 +384,279 @@ cdef class CDynamicDatabase:
     def addBeforeCursor(self, newobject,value=NoValue):
         self.beginUpdate()
         try:
-            self.saveCursor()
-            self.cursor = self.cursor - 1
-            self.addAfterCursor(newobject,value)
-            self.restoreCursor()
-        finally:
-            self.endUpdate()
-
-    ##
-    # Adds an item to the object database, filtering changes to subViews
-    # @param object the object to add
-    def addAfterCursor(self, object newobject, object value = NoValue):
-        cdef int point
-        cdef int temp
-        cdef int viewPos
-        cdef int viewSize
-        cdef int count
-        cdef int count2
-        cdef object view
-        cdef object f
-        cdef object myObj
-        cdef object myObjObj
-        cdef object viewObj
-        cdef object tempObj
-
-        self.beginUpdate()
-        try:
-            if value == NoValue:
+            if self.objectLocs.has_key(newobject.id):
+                raise Exception, "%s (%d) is already in the database" % (newobject, newobject.id)
+            point = self.cursor
+            if point is None:
+                point = self.objects.firstIter().copy()
+            try:
+                origObj = self.objects[point]
+            except IndexError:
+                origObj = None
+            if value is NoValue:
                 value = newobject
+            it = self.objects.insertBefore(point, (newobject,value))
+            self.objectLocs[newobject.id] = it
+            # If this database is sorted, the cursor might not have
+            # actually inserted at that point
+            point = it.copy()
+            if not point == self.objects.lastIter():
+                point.forward()
+            try:
+                origObj = self.objects[point]
+            except:
+                origObj = None
 
-            #Make sure the point we're adding at is valid
-            point = self.cursor+1
-            if point < 0:
-                point = 0
-            if point > PyList_GET_SIZE(self.objects):
-                point = PyList_GET_SIZE(self.objects)
-
-            #Update the location dictionary
-            for count from point <= count < PyList_GET_SIZE(self.objects):
-                myObj = <object>PyList_GET_ITEM(self.objects,count)
-                myObjObj = <object>PyTuple_GET_ITEM(myObj,0)
-                tempObj = <object>PyDict_GetItem(self.objectLocs,myObjObj.id)
-                tempObj = tempObj+1
-                PyDict_SetItem(self.objectLocs,myObjObj.id,tempObj)
-            PyDict_SetItem(self.objectLocs,newobject.id,point)
-
-            #Add it
-            if (PyList_GET_SIZE(self.objects) == 0):
-                self.objects = [(newobject,value)]
-            else:
-                PyList_SetSlice(self.objects,point,point,[(newobject,value)])
-                
-
-            for count from 0 <= count < PyList_GET_SIZE(self.cursorStack):
-                temp = <object>PyList_GET_ITEM(self.cursorStack,count)
-                if temp >= point:
-                    setListItem(self.cursorStack,count,temp+1)
+            #self.checkObjLocs()
             for [view, f] in self.subMaps:
                 view.beginUpdate()
                 try:
                     view.saveCursor()
-                    view.cursor = point - 1
-                    view.addAfterCursor(newobject,f(value))
+                    #FIXME setting the cursor directly is bad karma
+                    if origObj is None:
+                        view.cursor = view.objects.lastIter().copy()
+                    else:
+                        view.cursor = view.objectLocs[origObj[0].id].copy()
+                    view.addBeforeCursor(newobject,f(value))
                     view.restoreCursor()
                 finally:
                     view.endUpdate()
+#                 try:
+#                     self.checkMappedView(view)
+#                 except Exception, e:
+#                     print "--------------"
+#                     print "sub map failed"
+#                     print "Mapping %s" % newobject
+#                     print "initial point %s" % self.cursor
+#                     print "actual point %s" % point
+#                     print "orig obj %s (%d)" % (str(origObj), origObj[0].id)
+#                     print 
+#                     print view.objects[view.objectLocs[origObj[0].id]][0]
+#                     for obj in self.objects:
+#                         print obj[0]
+#                     print
+#                     for obj in view.objects:
+#                         print obj[0]                    
+#                     print e
+#                     print "--------------"
             for [view, f] in self.subSorts:
-                view.beginUpdate()
-                try:
+                view.addBeforeCursor(newobject,value)
+            #FIXME: PRESERVING ORDER IS SLOOOW.
+            for [view, f] in self.subFilters:
+                if f(value):
+                    self.saveCursor()
                     view.saveCursor()
+                    self.resetCursor()
                     view.resetCursor()
-                    added = False
-                    for obj in view:
-                        if f(obj,value) >= 0:
-                            added = True
-                            view.addBeforeCursor(newobject,value)
-                            break
-                    if not added:
-                        view.addBeforeCursor(newobject,value)
+                    if origObj is None and point is not None:
+                        view.cursor = view.objects.lastIter().copy()
+                    elif origObj is None:
+                        view.cursor = None
+                    else:
+                        view.getNext()
+                        if view.cursor is not None and view.cursor != view.objects.lastIter():
+                            viewObj = view.objects[view.cursor]
+                            for obj in self.objects:
+                                if (viewObj is origObj or viewObj is None or
+                                    viewObj == view.objects.lastIter()):
+                                    break
+                                elif obj is viewObj:
+                                    view.getNext()
+                                    try:
+                                        viewObj = view.objects[view.cursor]
+                                    except:
+                                        viewObj = None
+                    view.addBeforeCursor(newobject,value)
                     view.restoreCursor()
-                finally:
-                    view.endUpdate()
-            for count from 0 <= count < PyList_GET_SIZE(self.subFilters):
-                tempObj = <object>PyList_GET_ITEM(self.subFilters,count)
-                view = <object>PyList_GET_ITEM(tempObj,0)
-                viewSize = PyList_GET_SIZE(view.objects)
-                f = <object>PyList_GET_ITEM(tempObj,1)
-
-                if <object>PyObject_CallObject(f,(value,)):
-                    view.beginUpdate()
-                    try:
-                        view.saveCursor()
-                        view.resetCursor()
-                        viewPos = 0
-
-                        count2 = point - 1
-                        while count2 >= 0:
-                            myObj = <object>PyList_GET_ITEM(self.objects,count2)
-                            myObjObj = <object>PyTuple_GET_ITEM(myObj,0)
-                            if PyDict_Contains(view.objectLocs,myObjObj.id):
-
-                                view.cursor = <object>PyDict_GetItem(view.objectLocs,myObjObj.id)
-                                view.addAfterCursor(newobject,value)
-                                break
-                            count2 = count2 - 1
-                        if count2 < 0:
-                            view.cursor = -1
-                            view.addAfterCursor(newobject,value)
-                        view.restoreCursor()
-                    finally:
-                        view.endUpdate()
+                    self.restoreCursor()
+#                 try:
+#                     self.checkFilteredView(view,f)
+#                 except Exception, e:
+#                     print "--------------"
+#                     print "sub filter failed"
+#                     print "Filtering %s" % newobject
+#                     print "initial point %s" % self.cursor
+#                     print "actual point %s" % point
+#                     print "orig obj %s" % str(origObj)
+#                     for obj in self.objects:
+#                         if f(obj[1]):
+#                             print obj[0]
+#                     print
+#                     for obj in self.objects:
+#                         print obj[0]
+#                     print
+#                     for obj in view.objects:
+#                         print obj[0]
+#                     print
+#                     print e
+#                     print "--------------"
             for callback in self.addCallbacks:
-                callback(self.objects[point][1],self.objects[point][0].id)
+                callback(value,newobject.id)
         finally:
             self.endUpdate()
-        self.checkObjLocs()
+        #self.checkObjLocs()
+
+    ##
+    # Adds an item to the object database, filtering changes to subViews
+    # @param object the object to add
+    def addAfterCursor(self, newobject, value = NoValue):
+        self.beginUpdate()
+        try:
+            self.saveCursor()
+            if (self.cursor != self.objects.lastIter() and 
+                self.cursor is not None):
+                self.cursor.forward()
+            self.addBeforeCursor(newobject, value)
+        finally:
+            self.restoreCursor()
+            self.endUpdate()
+        #self.checkObjLocs()
 
     #
     # Removes the object from the database
-    def removeObj(self,object obj):
+    def removeObj(self, obj):
         self.beginUpdate()
         try:
-            if PyDict_Contains(self.objectLocs,obj.id):
-                self.remove(<object>PyDict_GetItem(self.objectLocs,obj.id))
+            if self.objectLocs.has_key(obj.id):
+                self.remove(self.objectLocs[obj.id])
         finally:
             self.endUpdate()
 
     #
     # Removes the object from the database
-    def changeObj(self,object obj):
+    def changeObj(self, obj):
         self.beginUpdate()
         try:
-            if PyDict_Contains(self.objectLocs,obj.id):
-                self.change(<object>PyDict_GetItem(self.objectLocs,obj.id))
+            if self.objectLocs.has_key(obj.id):
+                self.change(self.objectLocs[obj.id])
         finally:
             self.endUpdate()
 
     ##
-    # remove the object the cursor is on
+    # remove the object the given iterator points to
     #
     # Private function. Should only be called by DynmaicDatabase class members
     # @param item optional position of item to remove
-    def remove(self, int item = -1):
-        cdef object temp
-        cdef object tempobj
-        cdef object tempmapped
-        cdef object myObj
-        cdef object myObjObj
-        cdef object callback
-        cdef object view
-        cdef int cursorItem
-        cdef int size
-        cdef int count
-        cdef int count2
-
+    def remove(self, it = NoValue):
         self.beginUpdate()
         try:
-             size = PyList_GET_SIZE(self.objects)
-             if item == -1:
-                 item = self.cursor
-             if (item < 0) or (item>=size):
-                 raise ObjectNotFoundError, "No object at position "+str(item)+" in the database"
+            point = it
+            if point is NoValue:
+                if self.cursor is None:
+                    point = None
+                else:
+                    point = self.cursor.copy()
+            if point is not None and point is self.cursor:
+                point = point.copy()
+            if point is None:
+                raise ObjectNotFoundError, "No object with id %s in database" % point
+            
 
-             #Save a reference to the item to compare with subViews
-             temp = <object>PyList_GET_ITEM(self.objects,item)
-             tempobj = <object>PyTuple_GET_ITEM(temp,0)
-             tempmapped = <object>PyTuple_GET_ITEM(temp,1)
-             
+            #Save a reference to the item to compare with subViews
+            temp = self.objects[point]
+            tempobj = temp[0]
+            tempid = tempobj.id
+            tempmapped = temp[1]
+
+            try:
+                if point == self.cursor:
+                    self.cursor.back()
+            except:
+                pass
+            for cursor in self.cursorStack:
+                try:
+                    if point == cursor:
+                        cursor.back()
+                except:
+                    pass
+            
             #Update the location dictionary
-             for (key,val) in self.objectLocs.items():
-                 if val > item:
-                     PyDict_SetItem(self.objectLocs,key,val-1)
-             del self.objectLocs[tempobj.id]
+            #self.checkObjLocs()
+            self.objectLocs.pop(tempid)
 
              #Remove it
-             PyList_SetSlice(self.objects, item, item+1, [])
+            self.objects.remove(point)
+            #self.checkObjLocs()
 
-
-             size = size - 1
-
-             #Update the cursor
-             for count from 0 <= count < PyList_GET_SIZE(self.cursorStack):
-                 cursorItem = <object>PyList_GET_ITEM(self.cursorStack,count)
-                 if cursorItem > item:
-                    self.cursorStack[count] = self.cursorStack[count] - 1
-                 if cursorItem >= size:
-                    self.cursorStack[count] =  self.cursorStack[count] - 1
-             if item < self.cursor:
-                 self.cursor = self.cursor - 1
-             if self.cursor >= size:
-                 self.cursor = self.cursor - 1
-         
              #Perform callbacks
-             for count from 0 <= count < PyList_GET_SIZE(self.removeCallbacks):
-                 callback = <object>PyList_GET_ITEM(self.removeCallbacks,count)
-                 <object>PyObject_CallObject(callback,(tempmapped,tempobj.id))
-                 
-             for count from 0 <= count < PyList_GET_SIZE(self.subMaps):
-                 temp = <object>PyList_GET_ITEM(self.subMaps,count)
-                 view = <object>PyList_GET_ITEM(temp,0)
-                 view.remove(item)
+            for callback in self.removeCallbacks:
+                callback(tempmapped, tempid)
 
-             for count from 0 <= count < PyList_GET_SIZE(self.subSorts):
-                 temp = <object>PyList_GET_ITEM(self.subSorts,count)
-                 view = <object>PyList_GET_ITEM(temp,0)
-                 view.removeObj(tempobj)
-
-             for count from 0 <= count < PyList_GET_SIZE(self.subFilters):
-                 temp = <object>PyList_GET_ITEM(self.subFilters,count)
-                 view = <object>PyList_GET_ITEM(temp,0)
-                 view.removeObj(tempobj)
+             #Pass the remove on to subViews
+            for [view, f] in self.subMaps:
+                view.removeObj(tempobj)
+            for [view, f] in self.subSorts:
+                view.removeObj(tempobj)
+            for [view, f] in self.subFilters:
+                view.removeObj(tempobj)
         finally:
             self.endUpdate()
-        self.checkObjLocs()
+        #self.checkObjLocs()
 
     ##
     # Signals that object on cursor has changed
     #
     # Private function. Should only be called by DynmaicDatabase class members
     # @param item optional position of item to remove in place of cursor
-    def change(self, item = None):
+    def change(self, it = None):
         self.beginUpdate()
         try:
-            if item == None:
-                item = self.cursor
+            if it is None:
+                it = self.cursor
+            if it is None:
+                return
+            temp = self.objects[it]
+            tempobj = temp[0]
+            tempid = tempobj.id
+            tempmapped = temp[1]
+            
             for callback in self.changeCallbacks:
-                callback(self.objects[item][1],self.objects[item][0].id)
+                callback(tempmapped,tempid)
             for [view, f] in self.subMaps:
-                view.change(item)
-            #FIXME We probably should re-sort here
+                view.changeObj(tempobj)
             for [view, f] in self.subSorts:
-                view.changeObj(self.objects[item][0])
+                view.changeObj(tempobj)
             for [view, f] in self.subFilters:
                 view.beginUpdate()
                 try:
-                    view.saveCursor()
-                    try:
-                        view.resetCursor()
-                        view.checkObjLocs()
-                        if f(self.objects[item][1]):
-                            if view.objectLocs.has_key(self.objects[item][0].id):
-                                view.changeObj(self.objects[item][0])
-                            else:
-                                view.addBeforeCursor(self.objects[item][0],self.objects[item][1])
+                    #view.checkObjLocs()
+                    if f(tempmapped):
+                        if view.objectLocs.has_key(tempid):
+                            view.changeObj(tempobj)
                         else:
-                            if view.objectLocs.has_key(self.objects[item][0].id):
-                                view.removeObj(self.objects[item][0])
-                    finally:
-                        view.restoreCursor()
+                            view.addBeforeCursor(tempobj,tempmapped)
+                    else:
+                        if view.objectLocs.has_key(tempid):
+                            view.removeObj(tempobj)
                 finally:
                     view.endUpdate()
         finally:
             self.endUpdate()
 
     # Recomputes a single filter in the database
-    def recomputeFilter(self,filter):
-        # FIXME: This is copy-and-paste from recomputeFilters
-        cdef int count
-        cdef int count2
-        cdef int viewPos
-        cdef int viewSize
-        cdef object view
-        cdef object f
-        cdef object obj
-        cdef object viewObj
-        cdef object myObj
-        cdef object myObjObj
-        cdef object myObjVal
-
+    def recomputeFilter(self,filter, all = False):
         self.beginUpdate()
         try:
             # Go through each one of the filter subviews
-            for count from 0 <= count < PyList_GET_SIZE(self.subFilters):
-
-                obj = <object>PyList_GET_ITEM(self.subFilters,count)
-
-                view = <object>PyList_GET_ITEM(obj,0)
-                if view is filter:
-                    viewSize = PyList_GET_SIZE(view.objects)
-                    
-                    f = <object>PyList_GET_ITEM(obj,1)
-
+            for [view, f] in self.subFilters:
+                if all or view is filter:
                     view.beginUpdate()
                     try:
                         self.saveCursor()
                         self.resetCursor()
                         view.saveCursor()
                         view.resetCursor()
-                        viewPos = 0
                         #Go through all the objects and recompute the filters
-                        for count2 from 0 <= count2 < PyList_GET_SIZE(self.objects):
-                            # Get the next item from the list as both the
-                            # original object and mapped value
-                            myObj = <object>PyList_GET_ITEM(self.objects,count2)
-                            myObjObj = <object>PyTuple_GET_ITEM(myObj,0)
-                            myObjVal = <object>PyTuple_GET_ITEM(myObj,1)
-
-                            if PyDict_Contains(view.objectLocs,myObjObj.id):
-                                if not <object>PyObject_CallObject(f,(myObjVal,)):
+                        for myObj in self.objects:
+                            myObjObj = myObj[0]
+                            myObjVal = myObj[1]
+                            if view.objectLocs.has_key(myObjObj.id):
+                                if not f(myObjVal):
                                     view.removeObj(myObjObj)
+                                else:
+                                    view.getNext()
                             else:
-                                if <object>PyObject_CallObject(f,(myObjVal,)):
+                                if f(myObjVal):
                                     view.addBeforeCursor(myObjObj,myObjVal)
 
                         self.restoreCursor()
@@ -750,189 +666,69 @@ cdef class CDynamicDatabase:
                         view.endUpdate()
         finally:
             self.endUpdate()
+        #self.checkObjLocs()
 
     #Recompute a single subSort
-    def recomputeSort(self,sort):
-        # FIXME: This is copy-and-paste from recomputeFilters
-        cdef int count
-        cdef int count2
-        cdef int viewSize
-        cdef int madeSwap
-        cdef object view
-        cdef object f
-        cdef object obj
-        cdef object viewObj
-        cdef object myObj
-        cdef object myObjObj
-        cdef object myObjVal
-        cdef object myObj2
-        cdef object myObj2Obj
-        cdef object myObj2Val
-
+    def recomputeSort(self,sort, all = False):
         self.beginUpdate()
         try:
 
-            for count from 0 <= count < PyList_GET_SIZE(self.subSorts):
-                obj = <object>PyList_GET_ITEM(self.subSorts,count)
-
-                view = <object>PyList_GET_ITEM(obj,0)
-                if view is sort:
-                    viewSize = PyList_GET_SIZE(view.objects)
-
-                    f = <object>PyList_GET_ITEM(obj,1)
-
+            for [view, f] in self.subSorts:
+                if all or view is sort:
                     view.beginUpdate()
                     try:
-                            view.saveCursor()
-
-                            # Bubble sort -- used based on the assumption
-                            # that most of the time nothing has changed
-                            madeSwap = True
-                            while madeSwap:
-                                madeSwap = False
-                                for count2 from 0 <= count2 < PyList_GET_SIZE(view.objects)-1:
-                                    myObj = <object>PyList_GET_ITEM(view.objects,count2)
-                                    myObjVal = <object>PyTuple_GET_ITEM(myObj,1)
-
-                                    myObj2 = <object>PyList_GET_ITEM(view.objects,count2+1)
-                                    myObj2Val = <object>PyTuple_GET_ITEM(myObj2,1)
-
-                                    if <object>PyObject_CallObject(f,(myObjVal,myObj2Val)) > 0:
-                                        #FIXME: add an optimized swap
-                                        #function, rather than adding and
-                                        #removing
-                                        madeSwap = True
-                                        myObjObj = <object>PyTuple_GET_ITEM(myObj,0)
-                                        view.cursor = count2+1
-                                        view.remove(count2)
-                                        view.addAfterCursor(myObjObj,myObjVal)
-                            view.restoreCursor()
-                            view.recomputeFilters()
+                        #FIXME this probably doesn't even work
+                        #      right. We should remove every item,
+                        #      then re-add them
+                        try:
+                            curObj = view.objects[view.cursor]
+                        except:
+                            curObj = None
+                        newCursor = None
+                        newLocs = {}
+                        temp = SortedList(pysort2dbsort(f))
+                        for obj in view.objects:
+                            it = temp.append(obj)
+                            newLocs[obj[0].id] = it
+                            if obj is curObj:
+                                newCursor = it.copy()
+                        newStack = []
+                        for it in view.cursorStack:
+                            if it is None:
+                                newStack.append(None)
+                            elif it == view.objects.lastIter():
+                                newStack.append(view.objects.lastIter().copy())
+                            else:
+                                newStack.append(newLocs[view.objects[it][0].id])
+                        view.objects = temp
+                        view.cursor = newCursor
+                        view.objectLocs = newLocs
+                        view.cursorStack = newStack
+                        view.recomputeFilters()
                     finally:
                         view.endUpdate()
         finally:
             self.endUpdate()
+        #self.checkObjLocs()
 
     ##
     # This is called when the criteria for one of the filters changes. It
     # calls the appropriate add callbacks to deal with objects that have
     # appeared and disappeared.
     def recomputeFilters(self):
-        cdef int count
-        cdef int count2
-        cdef int viewPos
-        cdef int viewSize
-        cdef int madeSwap
-        cdef object view
-        cdef object f
-        cdef object obj
-        cdef object viewObj
-        cdef object myObj
-        cdef object myObjObj
-        cdef object myObjVal
-        cdef object myObj2
-        cdef object myObj2Obj
-        cdef object myObj2Val
-        cdef object temp
-
         self.beginUpdate()
         try:
-            # Go through each one of the filter subviews
-            for count from 0 <= count < PyList_GET_SIZE(self.subFilters):
-
-                obj = <object>PyList_GET_ITEM(self.subFilters,count)
-
-                view = <object>PyList_GET_ITEM(obj,0)
-                viewSize = PyList_GET_SIZE(view.objects)
-
-                f = <object>PyList_GET_ITEM(obj,1)
-
-                view.beginUpdate()
-                try:
-                    self.saveCursor()
-                    self.resetCursor()
-                    view.saveCursor()
-                    view.resetCursor()
-                    viewPos = 0
-                    #Go through all the objects and recompute the filters
-                    for count2 from 0 <= count2 < PyList_GET_SIZE(self.objects):
-                        # Get the next item from the list as both the
-                        # original object and mapped value
-                        myObj = <object>PyList_GET_ITEM(self.objects,count2)
-                        myObjObj = <object>PyTuple_GET_ITEM(myObj,0)
-                        myObjVal = <object>PyTuple_GET_ITEM(myObj,1)
-
-                        if PyDict_Contains(view.objectLocs,myObjObj.id):
-                            if not <object>PyObject_CallObject(f,(myObjVal,)):
-                                view.removeObj(myObjObj)
-                        else:
-                            if <object>PyObject_CallObject(f,(myObjVal,)):
-                                view.addBeforeCursor(myObjObj,myObjVal)
-
-                    self.restoreCursor()
-                    view.restoreCursor()
-                    view.recomputeFilters()
-                finally:
-                    view.endUpdate()
-
-            #Recompute subSorts
-            #
-            # FIXME: Can I comment out this whole region and just say that
-            # recomputeFilters doesn't touch sorts?
-            #
-            # FIXME: Is there a sort algorithm that works better in
-            # the worst case scenario, but still works ideally in the
-            # common case of nothing changed?
-            for count from 0 <= count < PyList_GET_SIZE(self.subSorts):
-                obj = <object>PyList_GET_ITEM(self.subSorts,count)
-
-                view = <object>PyList_GET_ITEM(obj,0)
-                viewSize = PyList_GET_SIZE(view.objects)
-
-                f = <object>PyList_GET_ITEM(obj,1)
-
-                view.beginUpdate()
-                try:
-                        view.saveCursor()
-
-                        # Bubble sort -- used based on the assumption
-                        # that most of the time nothing has changed
-                        madeSwap = True
-                        while madeSwap:
-                            madeSwap = False
-                            for count2 from 0 <= count2 < PyList_GET_SIZE(view.objects)-1:
-                                myObj = <object>PyList_GET_ITEM(view.objects,count2)
-                                myObjVal = <object>PyTuple_GET_ITEM(myObj,1)
-
-                                myObj2 = <object>PyList_GET_ITEM(view.objects,count2+1)
-                                myObj2Val = <object>PyTuple_GET_ITEM(myObj2,1)
-
-                                if <object>PyObject_CallObject(f,(myObjVal,myObj2Val)) > 0:
-                                    #FIXME: add an optimized swap
-                                    #function, rather than adding and
-                                    #removing
-                                    madeSwap = True
-                                    myObjObj = <object>PyTuple_GET_ITEM(myObj,0)
-                                    view.cursor = count2+1
-                                    view.remove(count2)
-                                    view.addAfterCursor(myObjObj,myObjVal)
-                        view.restoreCursor()
-                        view.recomputeFilters()
-                finally:
-                    view.endUpdate()
-
-            #Recompute submaps
-            for count from 0 <= count < PyList_GET_SIZE(self.subMaps):
-                view = <object>PyList_GET_ITEM(self.subMaps,count)
-                view = <object>PyList_GET_ITEM(view,0)
+            self.recomputeFilter(None,True)
+            self.recomputeSort(None, True)
+            for [view, f] in self.subMaps:
                 view.recomputeFilters()
         finally:
             self.endUpdate()
-        self.checkObjLocs()
+        #self.checkObjLocs()
 
     # Used to sort objects
-    def getVal(object self,object obj):
-        return <object>PyTuple_GET_ITEM(obj,1)
+    def getVal(self, obj):
+        return obj[1]
 
     ##
     # This is called to remove all elements matching a particular filter
@@ -960,22 +756,27 @@ cdef class CDynamicDatabase:
     # Right now, I'm assuming that if it doesn't work, there's nothing
     # we can do to make it work anyway.
     def save(self,filename=None):
+        #FIXME copying out the data before we save it is sloow
+        self.beginRead()
+        try:
+            out = []
+            for obj in self.objects:
+                out.append(obj)
+        finally:
+            self.endRead()
+
         if filename == None:
             filename = config.get(config.DB_PATHNAME)
         filename = expanduser(filename)
-        self.beginRead()
         try:
-            try:
-                if exists(filename):
-                    copyfile(filename,filename+".bak")
-                handle = file(filename,"wb")
-                dump(self.objects,handle,HIGHEST_PROTOCOL)
-                handle.close()
-            except:
-                print "Error saving database:"
-                traceback.print_exc()
-        finally:
-            self.endRead()
+            if exists(filename):
+                copyfile(filename,filename+".bak")
+            handle = file(filename,"wb")
+            dump(out,handle,HIGHEST_PROTOCOL)
+            handle.close()
+        except:
+            print "Error saving database:"
+            traceback.print_exc()
 
     ##
     # Restores this database
@@ -983,9 +784,6 @@ cdef class CDynamicDatabase:
     # @param filename the file to save to
     #
     def restore(self,filename=None):
-        cdef int count
-        cdef object temp
-
         if filename == None:
             filename = config.get(config.DB_PATHNAME)
         filename = expanduser(filename)
@@ -1002,43 +800,36 @@ cdef class CDynamicDatabase:
                     handle.close()
                     return (self.restore(filename+".bak"))
                 handle.close()
-                self.objects = temp
+
+                #Initialize the object location dictionary
+                self.objectLocs = {}
+                self.objects = LinkedList()
+                for obj in temp:
+                    it = self.objects.append(obj)
+                    self.objectLocs[obj[0].id] = it
+                self.cursor = None    
+                self.cursorStack = []
                 try:
                     DDBObject.lastID = self.getLastID()
                 except ValueError: #For the weird case where we're not
                     pass           #restoring anything
 
-                #Initialize the object location dictionary
-                self.objectLocs = {}
-                count = 0
-                for count from 0 <= count < PyList_GET_SIZE(self.objects):
-                    temp = <object>PyList_GET_ITEM(self.objects,count)
-                    temp = <object>PyTuple_GET_ITEM(temp,0)
-                    PyDict_SetItem(self.objectLocs,temp.id,count)
-                    
                 #for object in self.objects:
                 #    print str(object[0].__class__.__name__)+" of id "+str(object[0].getID())
             finally:
                 self.endUpdate()
-            self.checkObjLocs()
+            #self.checkObjLocs()
             return True
         else:
             return exists(filename+".bak") and self.restore(filename+".bak")
 
     def getLastID(self):
-        cdef int last
-        cdef int temp
-        cdef int count
-        cdef object obj
-        cdef object objobj
 
         self.beginUpdate()
         try:
             last = DDBObject.lastID
-            for count from 0 <= count < PyList_GET_SIZE(self.objects):
-                obj = <object>PyList_GET_ITEM(self.objects,count)
-                objobj = <object>PyTuple_GET_ITEM(obj,0)
-                temp = objobj.getID()
+            for obj in self.objects:
+                temp = obj[0].getID()
                 if temp > last:
                     last = temp
         finally:
@@ -1049,28 +840,19 @@ cdef class CDynamicDatabase:
     # Removes a filter that's currently not being used from the database
     # This should be called when a filter is no longer in use
     def removeView(self,oldView):
-        cdef int count
-        cdef object view
-
         self.beginUpdate()
         try:
-            for count from 0 <= count < PyList_GET_SIZE(self.subFilters):
-                view = <object>PyList_GET_ITEM(self.subFilters,count)
-                view = <object>PyList_GET_ITEM(view, 0)
-                if view is oldView:
-                    PyList_SetSlice(self.subFilters, count, count+1, [])
+            for count in range(0,len(self.subFilters)):
+                if self.subFilters[count][0] is oldView:
+                    self.subFilters[count:count+1] =  []
                     return
-            for count from 0 <= count < PyList_GET_SIZE(self.subSorts):
-                view = <object>PyList_GET_ITEM(self.subSorts,count)
-                view = <object>PyList_GET_ITEM(view, 0)
-                if view is oldView:
-                    PyList_SetSlice(self.subSorts, count, count+1, [])
+            for count in range(0,len(self.subSorts)):
+                if self.subSorts[count][0] is oldView:
+                    self.subSorts[count:count+1] =  []
                     return
-            for count from 0 <= count < PyList_GET_SIZE(self.subMaps):
-                view = <object>PyList_GET_ITEM(self.subMaps,count)
-                view = <object>PyList_GET_ITEM(view, 0)
-                if view is oldView:
-                    PyList_SetSlice(self.subMaps, count, count+1, [])
+            for count in range(0,len(self.subMaps)):
+                if self.subMaps[count][0] is oldView:
+                    self.subMaps[count:count+1] =  []
                     return
         finally:
             self.endUpdate()
@@ -1078,42 +860,54 @@ cdef class CDynamicDatabase:
     ##
     # returns the object with the given id
     def getObjectByID(self, id):
-        if not self.objectLocs.has_key(id):
-            raise ObjectNotFoundError, "No object with id %s in the database" % id
-        else:
-            return self.objects[self.objectLocs[id]][1]
+        self.beginRead()
+        try:
+            try:
+                return self.objects[self.objectLocs[id]][1]
+            except:
+                raise ObjectNotFoundError, "No object with id %s in the database" % id
+        finally:
+            self.endRead()
 
     ##
     # returns the id of the object the cursor is currently pointing to
     def getCurrentID(self):
-        if (self.cursor >= 0) and (self.cursor < PyList_GET_SIZE(self.objects)):
-            return self.objects[self.cursor][0].id
-        else:
-            raise ObjectNotFoundError, "No object at current cursor position"
+        self.beginRead()
+        try:
+            try:
+                return self.objects[self.cursor][0].id
+            except:
+                raise ObjectNotFoundError, "No object at current cursor position"
+        finally:
+            self.endRead()
 
     ##
     # returns the id of the object after the object identified by id
     def getNextID(self, id):
-        if not self.objectLocs.has_key(id):
-            raise ObjectNotFoundError, "No object with id %s in the database" % id
-        else:
-            pos = self.objectLocs[id] + 1
-            if (pos >= 0) and (pos < PyList_GET_SIZE(self.objects)):
+        self.beginRead()
+        try:
+            try:
+                pos = self.objectLocs[id].copy()
+                pos.forward()
                 return self.objects[pos][0].id
-            else:
+            except:
                 return None
+        finally:
+            self.endRead()
 
     ##
     # returns the id of the object before the object identified by id
     def getPrevID(self, id):
-        if not self.objectLocs.has_key(id):
-            raise ObjectNotFoundError, "No object with id %s in the database" % id
-        else:
-            pos = self.objectLocs[id] - 1
-            if (pos >= 0) and (pos < PyList_GET_SIZE(self.objects)):
+        self.beginRead()
+        try:
+            try:
+                pos = self.objectLocs[id].copy()
+                pos.back()
                 return self.objects[pos][0].id
-            else:
+            except:
                 return None
+        finally:
+            self.endRead()
 
 ##
 # Global default database
