@@ -1,0 +1,33 @@
+Main developers
+--------------- 
+(funded by the Participatory Culture Foundation www.participatoryculture.org)
+
+  * Nick Nassar, nassar at downhillbattle dot org, Worcester, Massachusetts, USA
+      Design, database implementation, Bittorrent and RSS feed reader
+      integration, optimization (Pyrex, fasttypes)
+
+  * Geoff Schmidt, gschmidt at gschmidt dot org, Cambridge, Massachusetts, USA
+      Design, template system and controller implementation, OS X frontend
+      prototype, Windows frontend (work in progress)
+
+  * Luc Heinrick, luc at honk-honk dot dom, Paris, France
+      OS X frontend, including Quicktime integration
+
+[NEEDS: template credits]      
+
+Special thanks
+--------------
+
+Holmes Wilson, Tiffiniy Cheng, and Nick Reville of the Participatory
+Culture Foundation in Worcester, who had the idea and made it
+happen. They find us funding, magic up user interface templates,
+wrangle the website and the press, manage companion projects like
+Broadcast Machine, make our hosting and infrastructure arrangements,
+test release builds, set up partnerships with other organizations that
+want to host feeds, and help us in other ways too numerous to mention,
+all so we can focus on writing open-source software.
+
+[NEEDS: funders]      
+
+Buzz at oska dot com, for figuring out how to build Windows DTV with
+the free Microsoft compiler release.

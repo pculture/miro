@@ -26,7 +26,7 @@ unfinished pre-alpha software. -- 9/27/05
      * Py2exe:
          http://starship.python.net/crew/theller/py2exe/
      * Mozilla GRE and GRE SDK (and set paths in platform/windows/setup.py)
-     * simplevlc.dll/simplevlc.h from inside KCEasy?
+     * simplevlc.dll/simplevlc.h from inside KCEasy? (not needed *yet*)
      * Probably some other things I am forgetting
 
 2) Get the Mozilla Gecko Runtime Engine (GRE) and a matching GRE SDK. You
@@ -68,7 +68,37 @@ unfinished pre-alpha software. -- 9/27/05
        This takes quite a long time.
      * This creates a directory c:\Boost containing a build of Boost with
        Python support.
-    
+
+   With the free "Microsoft Visual C++ Toolkit 2003" compiler:
+
+     This free Microsoft package is reported to work with the above
+     instructions too (using the same "vc-7_1" setting for Boost's
+     TOOLS variable.) Accomplish the third step (wherein a command
+     prompt is opened with the right environment) by opening a new
+     instance of cmd.exe and running:
+       C:\Program Files\Microsoft Visual C++ Toolkit 2003\vcvars.bat
+   
+     But, I'm told, you will get a report of a missing
+     msvcprtd.lib. Install the free ".NET Framework SDK" from
+     Microsoft to get msvcprt.dll and follow your favorite instuctions
+     for generating an import library from a DLL, such as these:
+       http://libsh.org/win32/build.html
+     
+     (You don't need the 'UnxUtils' package this site mentions if you
+     are using Cygwin.) You probably don't have dumpbin.exe and
+     lib.exe, so use "link -dumpbin" and "link -lib" which do the same
+     thing. (link.exe came with the compiler, and vcvars.bat will put
+     it in your PATH.)
+
+     Once you have msvcprt.lib, copy it to
+       C:\Program Files\Microsoft Visual C++ Toolkit 2003\lib
+
+     as both msvcptr.lib and msvcptrd.lib. This is not actually
+     correct -- msvcptrd.lib should be a different version with extra
+     debugging symbols -- but is reported to "mostly" work.
+
+     Many thanks to 'buzz at oska dot com' for the above instructions.
+
 4) Edit platform/windows/setup.py. Set the paths to Boost and the GRE and
    GRE SDK. If you installed a prebuild GRE, you'll probably have to dig
    around underneath C:\Program Files\Common Files\mozilla.org and figure
