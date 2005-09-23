@@ -13,7 +13,7 @@
 
             <!-- THUMBNAIL AND DESCRIPTION -->
             <div class="channelview-video-tnail"><img src="***this getThumbnail***" alt="" /></div>
-            <div class="channelview-video-hitbox"><a href="action:startDownload?item=@@@this getID@@@" title="Download '***this getTitle***'"></a></div>
+            <div class="channelview-video-hitbox"><a href="#" title="Download '***this getTitle***'"></a></div>
             <div class="channelview-video-desc">
                <h1 t:replace="this getTitle" />
                <p t:replaceMarkup="this getDescription" />
