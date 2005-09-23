@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n">
+
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    </head>
+
+    <body>
+        <div class="channelview-video">
+
+            <!-- THUMBNAIL AND DESCRIPTION -->
+            <div class="channelview-video-tnail"><img src="***this getThumbnail***" alt="" /></div>
+            <div class="channelview-video-hitbox"><a href="#" title="Download '***this getTitle***'"></a></div>
+            <div class="channelview-video-desc">
+               <h1 t:replace="this getTitle" />
+               <p t:replaceMarkup="this getDescription" />
+            </div>
+            <!-- / THUMBNAIL AND DESCRIPTION -->
+
+            <div class="channelview-video-details">
+                <!-- FILE INFO -->
+                <p class="channelview-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+                <p class="channelview-video-details-right">819.6MB</p>
+                <p class="channelview-video-details-left">1hrs, 23min</p>
+                <p class="channelview-video-details-right">MPEG</p>
+            	<!-- / FILE INFO -->
+
+            	<!-- DOWNLOAD PROGRESS -->
+                <div class="channelview-video-progress">
+            		<p><img src="resource:images/temp-video-downloadprogress.png" alt="" /><a href="#" title="Cancel Download"><img src="resource:images/channelview-cancel.png" alt="" border="0" style="margin-left:5px;" /></a></p>
+            	</div>
+            	<p style="clear:both;">12.3hrs left - 54kbps</p>
+            	<!-- / DOWNLOAD PROGRESS -->
+            </div>
+            
+            <div class="clearer"></div>
+
+        </div>
+    </body>
+    
+</html>

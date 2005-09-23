@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>DTV Channel View</title>
+
+    <link href="resource:css/channel.css" rel="stylesheet" type="text/css" />
+    <t:include filename="dynamic.js" />
+    <t:include filename="settings.js" />
+    <script type="text/javascript" src="resource:templates/shide.js" />
+
+    <t:dynamicviews>
+        <t:view name="new-items" key="global view items">
+            <t:filter functionkey="global filter unDownloadedItems" parameter="@@@feed getFeedID@@@" />
+            <t:sort functionkey="global sort item" parameter="" />
+        </t:view>
+        <t:view name="downloading-items" key="global view items">
+            <t:filter functionkey="global filter downloadingItems" parameter="@@@feed getFeedID@@@" />
+            <t:sort functionkey="global sort item" parameter="" />
+        </t:view>
+        <t:view name="unwatched-items" key="global view items">
+            <t:filter functionkey="global filter downloadedItems" parameter="@@@feed getFeedID@@@" />
+            <t:sort functionkey="global sort item" parameter="" />
+        </t:view>
+        <t:view name="expiring-items" key="global view items">
+            <t:filter functionkey="global filter recentItems" parameter="@@@feed getFeedID@@@" />
+            <t:sort functionkey="global sort item" parameter="" />
+        </t:view>
+        <t:view name="saved-items" key="global view items">
+            <t:filter functionkey="global filter recentItems" parameter="@@@feed getFeedID@@@" />
+            <t:sort functionkey="global sort item" parameter="" />
+        </t:view>
+    </t:dynamicviews>
+</head>
+
+<body onload="toggleLayer('channelview-newlyavailable'); toggleLayer('channelview-downloads'); toggleLayer('channelview-unwatched'); toggleLayer('channelview-expiring'); toggleLayer('channelview-saved');">
+    
+<!-- TITLE BAR ************************************************************ -->
+<div id="channelview-titlebar">
+	<div id="channelview-titlebar-avatar"><img src="***feed getThumbnail***" alt="" /></div>
+	<div id="channelview-titlebar-channelname">
+		<h1 t:replaceMarkup="feed getTitle" />
+		<div id="channelview-titlebar-autodownload">
+            <form name="setAuto">
+                <input type="hidden" name="feed" value="@@@feed getID@@@" />
+                <input type="checkbox" name="automatic" t:hideIfNotKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" value="1" checked="checked" onClick="javascript:setAutoDownloadableFeed()" />
+                <input type="checkbox" name="automatic" t:hideIfKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" value="1" onClick="javascript:setAutoDownloadableFeed()" />
+                <span class="auto_link" i18n:translate="">Auto Download</span>
+            </form>
+		</div>
+	</div>
+	<div id="channelview-titlebar-tasks">
+		<div id="channelview-titlebar-tasks-settings">
+			<p><a href="template:feed-settings">Settings</a></p>
+		</div>
+		<div id="channelview-titlebar-tasks-recommend">
+		    <p><a href="mailto:?subject=@@@feed getTitle@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed getTitle@@@&quot;. If you don't have DTV, you can get it here:%0D%0A%0D%0Ahttp://www.participatoryculture.org/download.php%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed getURL@@@" class="recommend_link" i18n:translate="">Recommend</a></p>
+		</div>
+		<div id="channelview-titlebar-tasks-search">
+		    <input type="search" placeholder="Search Channel" style="width: 120px; height: 20px;" onfocus="startEditFilter(this,new Array('items'),new Array(''),new Array('global filter feedItems'),new Array(0),new Array('@@@feed getFeedID@@@'))" onblur="endEditFilter()" />
+		</div>
+	</div>
+</div>
+<!-- / TITLE BAR -->
+
+<!-- NEWLY AVAILABLE ****************************************************** -->
+<div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-newlyavailable');">&nbsp;</a></div>
+<div id="channelview-channelbar" class="channelview-channelbar">
+	<h1>Newly Available</h1>
+</div>
+
+<div id="channelview-newlyavailable">
+    <span t:repeatForView="new-items">
+        <t:includeTemplate filename="channel-item-new" />
+    </span>
+</div>
+<!-- / NEWLY AVAILABLE -->
+
+<!-- DOWNLOADS ************************************************************ -->
+<div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-downloads');">&nbsp;</a></div>
+<div id="channelview-channelbar" class="channelview-channelbar">
+	<h1>Downloads</h1>
+	<h2>X in Progress, Y in Queue</h2>
+</div>
+
+<div id="channelview-downloads">
+    <span t:repeatForView="downloading-items">
+        <t:includeTemplate filename="channel-item-downloading" />
+    </span>
+</div>
+<!-- / DOWNLOADS -->
+
+<!-- UNWATCHED ************************************************************ -->
+<div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-unwatched');">&nbsp;</a></div>
+<div id="channelview-channelbar" class="channelview-channelbar">
+	<h1>Unwatched</h1>
+	<h2>(0)</h2>
+</div>
+
+<div id="channelview-unwatched">
+    <span t:repeatForView="unwatched-items">
+        <t:includeTemplate filename="channel-item-unwatched" />
+    </span>
+</div>
+<!-- / UNWATCHED -->
+
+<!-- EXPIRING ************************************************************* -->
+<div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-expiring');">&nbsp;</a></div>
+<div id="channelview-channelbar" class="channelview-channelbar">
+	<h1>Expiring</h1>
+	<h2>(0)</h2>
+</div>
+
+<div id="channelview-expiring">
+    <span t:repeatForView="expiring-items">
+        <t:includeTemplate filename="channel-item-expiring" />
+    </span>
+</div>
+<!-- / EXPIRING -->
+
+<!-- SAVED **************************************************************** -->
+<div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-saved');">&nbsp;</a></div>
+<div id="channelview-channelbar" class="channelview-channelbar">
+	<h1>Saved</h1>
+	<h2>(0)</h2>
+</div>
+
+<div id="channelview-saved">
+    <span t:repeatForView="saved-items">
+        <t:includeTemplate filename="channel-item-saved" />
+    </span>
+</div>
+<!-- / SAVED -->
+
+</body>
+</html>
