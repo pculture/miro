@@ -150,6 +150,9 @@ class AppController (NibClassBuilder.AutoBaseClass):
             'videoWillStop',
             nil)
         
+        # Register our custom HTML web view to WebKit
+        DTVHTMLWebView.register()
+        
         # Call the startup hook before any events (such as instructions
         # to open files...) are delivered.
         self.actualApp.onStartup()
@@ -263,6 +266,10 @@ class DisplayHostView (NibClassBuilder.AutoBaseClass):
         self.hostedDisplay = None
         self.hostedView = nil
 
+    def drawRect_(self, rect):
+        NSColor.whiteColor().set()
+        NSRectFill(rect)
+
     def setScheduledDisplay(self, display):
         if self.scheduledDisplay is not None:
             self.scheduledDisplay.cancel()
@@ -340,10 +347,11 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     def awakeFromNib(self):
         self.frame.channelsDisplay = self.channelsHostView
-        self.frame.collectionDisplay = self.collectionHostView
+        self.frame.collectionDisplay = None #self.collectionHostView
         self.frame.mainDisplay = self.mainHostView
         self.frame.videoInfoDisplay = self.videoInfoHostView
         self.restoreLayout()
+        self.updateWindowTexture()
         self.actionButton.sendActionOn_(NSLeftMouseDownMask)
         self.showWindow_(nil)
 
@@ -383,6 +391,30 @@ class MainController (NibClassBuilder.AutoBaseClass):
         config.set(config.RIGHT_VIEW_SIZE, rightFrame)
         config.save()
 
+    def updateWindowTexture(self):
+        bgTexture = NSImage.alloc().initWithSize_(self.window().frame().size)
+        bgTexture.lockFocus()
+                
+        topImage = NSImage.imageNamed_(u'wtexture_top')
+        topColor = NSColor.colorWithPatternImage_(topImage)
+        topColor.set()
+        NSGraphicsContext.currentContext().setPatternPhase_(bgTexture.size())
+        NSRectFill(((0, bgTexture.size().height - topImage.size().height), (bgTexture.size().width, topImage.size().height)))
+        
+        bottomImage = NSImage.imageNamed_(u'wtexture_bottom')
+        bottomColor = NSColor.colorWithPatternImage_(bottomImage)
+        bottomColor.set()
+        NSGraphicsContext.currentContext().setPatternPhase_(bottomImage.size())
+        NSRectFill(((0, 0), (bgTexture.size().width, bottomImage.size().height)))
+
+        bgColor = NSColor.colorWithCalibratedWhite_alpha_(161.0/255.0, 1.0)
+        bgColor.set()
+        NSRectFill(((0, bottomImage.size().height), (bgTexture.size().width, bgTexture.size().height -  bottomImage.size().height - topImage.size().height)))
+        
+        bgTexture.unlockFocus()
+        
+        self.window().setBackgroundColor_(NSColor.colorWithPatternImage_(bgTexture))
+        
     ### Switching displays ###
 
     def selectDisplay(self, display, area):
@@ -406,6 +438,11 @@ class MainController (NibClassBuilder.AutoBaseClass):
     def getDisplaySizeHint(self, area):
         return area.frame()
 
+    ### Window resize handler
+
+    def windowDidResize_(self, notification):
+        self.updateWindowTexture()
+
     ### Size constraints on splitview ###
 
     minimumTabListWidth = 160 # pixels
@@ -424,8 +461,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
     # the tab list unless it's necessary to shrink it to obey the
     # minimum content area size constraint.
     def splitView_resizeSubviewsWithOldSize_(self, sender, oldSize):
-        tabBox = self.tabView.superview().superview().superview()
-        contentBox = self.mainHostView.superview().superview().superview()
+        tabBox = self.channelsHostView.superview()
+        contentBox = self.mainHostView.superview()
 
         splitViewSize = sender.frame().size
         tabSize = tabBox.frame().size
@@ -970,40 +1007,40 @@ class MetalSliderCell (NSSliderCell):
 #### Our own prettier beveled NSBox                                        ####
 ###############################################################################
 
-class BeveledBox (NibClassBuilder.AutoBaseClass):
-    # Actual base class is NSBox
-
-    TOP_COLOR        = NSColor.colorWithDeviceWhite_alpha_( 147 / 255.0, 1.0 )
-    LEFT_RIGHT_COLOR = NSColor.colorWithDeviceWhite_alpha_( 224 / 255.0, 1.0 )
-    BOTTOM_COLOR     = NSColor.colorWithDeviceWhite_alpha_( 240 / 255.0, 1.0 )
-    CONTOUR_COLOR    = NSColor.colorWithDeviceWhite_alpha_( 102 / 255.0, 1.0 )
-
-    def drawRect_(self, rect):
-        interior = NSInsetRect( rect, 1, 1 )
-
-        NSColor.whiteColor().set()
-        NSRectFill( interior )
-
-        self.CONTOUR_COLOR.set()
-        NSFrameRect( interior )
-
-        self.TOP_COLOR.set()
-        p1 = NSPoint( rect.origin.x+1, rect.size.height-0.5 )
-        p2 = NSPoint( rect.size.width-1, rect.size.height-0.5 )
-        NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
-
-        self.LEFT_RIGHT_COLOR.set()
-        p1 = NSPoint( rect.origin.x+0.5, rect.size.height-1 )
-        p2 = NSPoint( rect.origin.x+0.5, rect.origin.y+1 )
-        NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
-        p1 = NSPoint( rect.size.width-0.5, rect.origin.y+1 )
-        p2 = NSPoint( rect.size.width-0.5, rect.size.height-1 )
-        NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
-
-        self.BOTTOM_COLOR.set()
-        p1 = NSPoint( rect.origin.x+1, rect.origin.y+0.5 )
-        p2 = NSPoint( rect.size.width-1, rect.origin.y+0.5 )
-        NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
+#class BeveledBox (NibClassBuilder.AutoBaseClass):
+#    # Actual base class is NSBox
+#
+#    TOP_COLOR        = NSColor.colorWithDeviceWhite_alpha_( 147 / 255.0, 1.0 )
+#    LEFT_RIGHT_COLOR = NSColor.colorWithDeviceWhite_alpha_( 224 / 255.0, 1.0 )
+#    BOTTOM_COLOR     = NSColor.colorWithDeviceWhite_alpha_( 240 / 255.0, 1.0 )
+#    CONTOUR_COLOR    = NSColor.colorWithDeviceWhite_alpha_( 102 / 255.0, 1.0 )
+#
+#    def drawRect_(self, rect):
+#        interior = NSInsetRect( rect, 1, 1 )
+#
+#        NSColor.whiteColor().set()
+#        NSRectFill( interior )
+#
+#        self.CONTOUR_COLOR.set()
+#        NSFrameRect( interior )
+#
+#        self.TOP_COLOR.set()
+#        p1 = NSPoint( rect.origin.x+1, rect.size.height-0.5 )
+#        p2 = NSPoint( rect.size.width-1, rect.size.height-0.5 )
+#        NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
+#
+#        self.LEFT_RIGHT_COLOR.set()
+#        p1 = NSPoint( rect.origin.x+0.5, rect.size.height-1 )
+#        p2 = NSPoint( rect.origin.x+0.5, rect.origin.y+1 )
+#        NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
+#        p1 = NSPoint( rect.size.width-0.5, rect.origin.y+1 )
+#        p2 = NSPoint( rect.size.width-0.5, rect.size.height-1 )
+#        NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
+#
+#        self.BOTTOM_COLOR.set()
+#        p1 = NSPoint( rect.origin.x+1, rect.origin.y+0.5 )
+#        p2 = NSPoint( rect.size.width-1, rect.origin.y+0.5 )
+#        NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
 
 
 ###############################################################################
@@ -1281,6 +1318,24 @@ class HTMLDisplay (app.Display):
         self.readyToDisplay = False
         self.readyToDisplayHook = None
 
+
+###############################################################################
+#### Our custom HTML web view, allowing us to override default WebKit      ####
+#### behaviors                                                             ####
+###############################################################################
+
+class DTVHTMLWebView (WebHTMLView):
+
+    @classmethod
+    def register(cls):
+        WebView.registerViewClass_representationClass_forMIMEType_(DTVHTMLWebView, WebHTMLRepresentation, 'text/html')
+
+    # To make the GUI feel more like "standard GUI" we don't allow text 
+    # selection. This will probably have to be smarter when we do drag'n'drop
+    # but for now it works well.
+    def mouseDragged_(self, event):
+        return
+        
 
 ###############################################################################
 #### An enhanced WebView Wrapper                                           ####
