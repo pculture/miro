@@ -111,6 +111,9 @@ class Display:
     def __init__(self):
         self.currentFrame = None # tracks the frame that currently has us selected
 
+    def isSelected(self):
+        return self.currentFrame is not None
+
     def onSelected(self, frame):
         "Called when the Display is shown in the given MainFrame."
         pass
@@ -552,6 +555,18 @@ class ModelActionHandler:
     def __init__(self, backEndDelegate):
         self.backEndDelegate = backEndDelegate
     
+    def setAutoDownloadableFeed(self, feed, automatic):
+        db.beginUpdate()
+        db.saveCursor()
+        try:
+            for obj in db:
+                if obj.getID() == int(feed):
+                    obj.setAutoDownloadable(automatic)
+                    break
+        finally:
+            db.restoreCursor()
+            db.endUpdate()
+    
     def changeFeedSettings(self, feed, maxnew, fallbehind, automatic, expireDays, expireHours, expire, getEverything="0"):
         db.beginUpdate()
         db.saveCursor()
@@ -982,7 +997,7 @@ def makeMapToTabFunction(globalTemplateData, controller):
                 data['feed'] = obj
                 # Change this to sort feeds on a different value
                 sortKey = obj.getTitle()
-                return Tab('feedtab', data, 'feed-start', data, [100, sortKey], obj, controller)
+                return Tab('feedtab', data, 'channel', data, [100, sortKey], obj, controller)
             elif isinstance(obj, folder.Folder):
                 data['folder'] = obj
                 sortKey = obj.getTitle()
@@ -1135,7 +1150,8 @@ def undownloadedItems(obj,param):
     params = param.split('|',1)
     
     undled = (str(obj.feed.getID()) == params[0] and 
-              (not (obj.getState() == 'finished' or
+              (not (obj.getState() == 'downloading' or
+                    obj.getState() == 'finished' or
                     obj.getState() == 'uploading' or
                     obj.getState() == 'watched')))
     if len(params) > 1:
@@ -1143,6 +1159,17 @@ def undownloadedItems(obj,param):
                   (str(params[1]).lower() in obj.getTitle().lower() or
                    str(params[1]).lower() in obj.getDescription().lower()))
     return undled
+
+def downloadingItems(obj, param):
+    params = param.split('|',1)
+    
+    old = (str(obj.feed.getID()) == params[0] and 
+           obj.getState() == 'downloading')
+    if len(params) > 1:
+        old = (old and 
+               (str(params[1]).lower() in obj.getTitle().lower() or
+                str(params[1]).lower() in obj.getDescription().lower()))
+    return old
 
 def downloadedItems(obj, param):
     params = param.split('|',1)
@@ -1241,9 +1268,10 @@ globalFilterList = {
     'allRecentItems': allRecentItems,
     'oldItems': oldItems,
     'watchableItems': watchableItems,
+    'downloadingItems': downloadingItems,
     'downloadedItems': downloadedItems,
     'unDownloadedItems':  undownloadedItems,
-    'allDownloadingItems': allDownloadingItems                         ,
+    'allDownloadingItems': allDownloadingItems,
        
     'class': filterClass,
     'all': (lambda x, y: True),
@@ -1254,6 +1282,8 @@ globalFilterList = {
 
 globalViewList = {
     'items': db.filter(lambda x: isinstance(x,item.Item)),
+    'newItems': db.filter(lambda x: isinstance(x,item.Item) and x.getState() == 'finished'),
+    'downloadingItems': db.filter(lambda x: isinstance(x,item.Item) and x.getState() == 'downloading'),
     'feeds': db.filter(lambda x: isinstance(x,feed.UniversalFeed)),
-    'httpauths':  db.filter(lambda x: isinstance(x,downloader.HTTPAuthPassword))
+    'httpauths':  db.filter(lambda x: isinstance(x,downloader.HTTPAuthPassword)),
 }
