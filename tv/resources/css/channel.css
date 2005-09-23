@@ -3,6 +3,8 @@ body {
 	margin: 0px;
 	font: 12px "Lucida Grande", "Lucida Sans", Arial, "Trebuchet MS";
 	color: #333333;
+	/* The following property is used by Safari to prevent text selection */
+	-khtml-user-select: none;
 }
 
 .clearer {
