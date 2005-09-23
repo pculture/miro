@@ -150,9 +150,6 @@ class AppController (NibClassBuilder.AutoBaseClass):
             'videoWillStop',
             nil)
         
-        # Register our custom HTML web view to WebKit
-        DTVHTMLWebView.register()
-        
         # Call the startup hook before any events (such as instructions
         # to open files...) are delivered.
         self.actualApp.onStartup()
@@ -1317,25 +1314,7 @@ class HTMLDisplay (app.Display):
         self.web.getView().stopLoading_(nil)
         self.readyToDisplay = False
         self.readyToDisplayHook = None
-
-
-###############################################################################
-#### Our custom HTML web view, allowing us to override default WebKit      ####
-#### behaviors                                                             ####
-###############################################################################
-
-class DTVHTMLWebView (WebHTMLView):
-
-    @classmethod
-    def register(cls):
-        WebView.registerViewClass_representationClass_forMIMEType_(DTVHTMLWebView, WebHTMLRepresentation, 'text/html')
-
-    # To make the GUI feel more like "standard GUI" we don't allow text 
-    # selection. This will probably have to be smarter when we do drag'n'drop
-    # but for now it works well.
-    def mouseDragged_(self, event):
-        return
-        
+                        
 
 ###############################################################################
 #### An enhanced WebView Wrapper                                           ####
