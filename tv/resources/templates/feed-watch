@@ -7,6 +7,7 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="resource:css/style.css" />
 <t:include filename="dynamic.js" />
+<t:include filename="settings.js" />
 
 <t:dynamicviews>
  <t:view name="newitems" key="global view items">
@@ -39,9 +40,13 @@
 </div>
 
 <div id="right_half">
-	<div class="auto_link" i18n:translate="">AUTO DOWNLOAD: <span t:replace="feed autoDownloadStatus"/></div>
+    <form name="setAuto">
+        <input type="hidden" name="feed" value="@@@feed getID@@@" />
+        <input type="checkbox" name="automatic" t:hideIfNotKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" value="1" checked="checked" onClick="javascript:setAutoDownloadableFeed()" />
+        <input type="checkbox" name="automatic" t:hideIfKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" value="1" onClick="javascript:setAutoDownloadableFeed()" />
+        <span class="auto_link" i18n:translate="">AUTO DOWNLOAD</span>
+    </form>
 	<a class="settings_link" i18n:translate="" href="template:feed-settings">Change Settings</a>
-
 </div>
 
 	<br style="clear: both; height: 0; padding: 0; margin: 0;" />

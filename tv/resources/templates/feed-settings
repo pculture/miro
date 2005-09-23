@@ -23,13 +23,13 @@
 	<h2 i18n:translate=""><span t:replaceMarkup="feed getTitle"/></h2>
 	<a href="mailto:?subject=@@@feed getTitle@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed getTitle@@@&quot;. If you don't have DTV, you can get it here:%0D%0A%0D%0Ahttp://www.participatoryculture.org/download.php%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed getURL@@@" class="recommend_link" i18n:translate="">Recommend to Friends</a>
 </div>
-
+<!--
 <div id="right_half">
 	<div class="auto_link" i18n:translate="">AUTO DOWNLOAD: <span t:replace="feed autoDownloadStatus"/></div>
 	<a class="settings_link" i18n:translate="" href="template:feed-settings">Change Settings</a>
 
 </div>
-
+-->
 	<br style="clear: both; height: 0; padding: 0; margin: 0;" />
 </div>
 
