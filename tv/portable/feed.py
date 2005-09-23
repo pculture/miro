@@ -243,6 +243,7 @@ class Feed(DDBObject):
         newU = 0
         newA = 0
         ret = False
+
         for item in self.items:
             if self.isAvailable(item):
                 newA += 1
@@ -397,6 +398,16 @@ class Feed(DDBObject):
         finally:
             self.endRead()
         return ret
+
+    ##
+    # Switch the auto-downloadable state individually (as opposed to collectively
+    # with the other seetings in the 'saveSettings' method below)
+    def setAutoDownloadable(self, automatic):
+        self.beginRead()
+        try:
+            self.autoDownloadable = (automatic == "1")
+        finally:
+            self.endRead()
 
     ##
     # Takes in parameters from the save settings page and saves them
