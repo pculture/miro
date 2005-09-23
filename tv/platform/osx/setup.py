@@ -1,10 +1,12 @@
 from distutils.core import setup
 from distutils.extension import Extension
+from Pyrex.Distutils import build_ext
+from glob import glob
+
 import py2app
 import os
 import sys
 import shutil
-from Pyrex.Distutils import build_ext
 
 # The name of this platform.
 platform = 'osx'
@@ -17,7 +19,31 @@ root = os.path.normpath(root)
 sys.path[0:0]=['%s/platform/%s' % (root, platform), '%s/platform' % root, '%s/portable' % root]
 
 # Only now may we import things from our own tree
-import vlchelper.info
+#import vlchelper.info
+
+# Look for the Boost library in various common places.
+# - we assume that both the library and the include files are installed in the
+#   same directory sub-hierarchy.
+# - we look for library and include directory in:
+#   - the standard '/usr/local' tree
+#   - Darwinports' standard '/opt/local' tree
+#   - Fink's standard '/sw' tree
+boostLib = None
+boostIncludeDir = None
+boostSearchDirs = ('/usr/local', '/opt/local', '/sw')
+
+for rootDir in boostSearchDirs:
+    libItems = glob('%s/lib/libboost_python-1_3?.a' % rootDir)
+    incItems = glob('%s/include/boost-1_3?/' % rootDir)
+    if len(libItems) == 1 and len(incItems) == 1:
+        boostLib = libItems[0]
+        boostIncludeDir = incItems[0]
+
+if boostLib is None or boostIncludeDir is None:
+    print 'Boost library could not be found, interrupting build.'
+    sys.exit(1)
+else:
+    print 'Boost library found (%s)' % boostLib
 
 # Get a list of additional resource files to include
 resourceFiles = ['Resources/%s' % x for x in os.listdir('Resources')]
@@ -43,8 +69,8 @@ setup(
         Extension("database",["%s/portable/database.pyx" % root]),
         Extension("template",["%s/portable/template.pyx" % root]),
         Extension("fasttypes",["%s/portable/fasttypes.cpp" % root],
-                  extra_objects=["/usr/local/lib/libboost_python-1_33.a"],
-                  include_dirs=["/usr/local/include/boost-1_33/"])
+                  extra_objects=[boostLib],
+                  include_dirs=[boostIncludeDir])
         ],
     cmdclass = {'build_ext': build_ext}
 )
