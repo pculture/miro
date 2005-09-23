@@ -1,0 +1,297 @@
+body {
+	background: #FFFFFF;
+	margin: 0px;
+	font: 12px "Lucida Grande", "Lucida Sans", Arial, "Trebuchet MS";
+	color: #333333;
+}
+
+.clearer {
+	clear: both;
+	margin: 0px;
+	padding: 0px;
+}
+
+p {
+	font-size: 90%;
+	margin: 5px 10px 7px 10px;
+}
+
+form {
+	margin: 0px;
+	padding: 0px;
+}
+
+#channelview-titlebar {
+	background: #5392e3 url(../images/channelview-titlebar-bg.png) repeat-x left bottom;
+	height: 77px;
+	margin: 0px 0px 1px;
+}
+
+#channelview-titlebar-avatar {
+	position: absolute;
+	width: 60px;
+	height: 60px;
+	border: 2px solid #FFFFFF;
+	margin: 5px 0px 0px 5px;
+}
+
+#channelview-titlebar-avatar img {
+	width: 60px;
+	height: 60px;
+}
+
+#channelview-titlebar-channelname {
+	position: absolute;
+	width: 400px;
+	left: 50%;
+	top: 10px;
+	margin: 0px 0px 0px -200px;
+}
+
+#channelview-titlebar-channelname h1 {
+	margin: 0px 0px 2px 0px;
+	padding: 0px;
+	color: #FFFFFF;
+	font-size: 200%;
+	text-align: center;	
+}
+
+#channelview-titlebar-autodownload {
+	position: relative;
+	width: 138px;
+	padding: 0px;
+	color: #FFFFFF;
+	text-align: center;
+	text-transform: uppercase;
+	padding: 3px;
+	margin: 0px 0px 0px 131px;
+}
+
+#channelview-titlebar-autodownload:hover {
+	background-color: #5291e3;
+}
+
+#channelview-titlebar-tasks {
+	position: absolute;
+	width: 130px;
+	top: 10px;
+	right: 0px;
+	margin: 0px 0px 0px -140px;
+}
+
+#channelview-titlebar-tasks p {
+	margin: 0px;
+	padding: 0px;
+	color: #FFFFFF;
+	text-transform: uppercase;
+}
+
+#channelview-titlebar-tasks p a {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+#channelview-titlebar-tasks p a:hover {
+	color: #FFFFFF;
+	text-decoration: underline;
+}
+
+#channelview-titlebar-tasks-settings {
+	background: url(../images/channelview-icon-settings.png) no-repeat left top;
+	height: 18px;
+	margin: 0px;
+	padding: 0px 0px 0px 20px;
+}
+
+#channelview-titlebar-tasks-recommend {
+	background: url(../images/channelview-icon-mail-titlebar.png) no-repeat left 2px;
+	height: 18px;
+	margin: 0px;
+	padding: 0px 0px 0px 20px;
+}
+
+.channelview-channelbar {
+	background: url(../images/channelview-bar-bg.png) repeat-x left bottom;
+	height: 22px;
+}
+
+.channelview-channelbar-hitbox {
+	position: relative;
+	margin: 0px 0px -22px 0px;
+	overflow: hidden;
+	height: 22px;
+	text-indent: -100%;
+}
+
+.channelview-channelbar-hitbox a {
+	padding: 5px 200% 5px 0px;
+}
+
+.channelview-channelbar h1, .channelview-channelbar h2 {
+	display: inline;
+	padding: 0px;
+	font-size: 100%;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.channelview-channelbar h1 {
+	float: left;
+	margin: 3px 0px 0px 5px;
+}
+
+.channelview-channelbar h2 {
+	float: right;
+	margin: 3px 5px 0px 0px;
+}
+
+.channelview-channelbar a:link, .channelview-channelbar a:visited, .channelview-channelbar a:active {
+	color: #FFFFFF;
+	text-decoration: none;	
+}
+
+#channelview-newlyavailable, #channelview-downloads, #channelview-unwatched, #channelview-expiring, #channelview-saved  {
+	display: none;
+}
+
+.channelview-video {
+	clear: both;
+	border-bottom: 1px solid #DDDDDD;
+	background: #FFFFFF url(../images/channelview-video-bg.png) no-repeat right bottom;
+}
+
+.channelview-video:hover {
+	background: #f9fbfe url(../images/channelview-video-bg-hover.png) no-repeat right bottom;
+}
+
+.channelview-video-tnail {
+	float: left;
+	display: inline;
+	width: 100px;
+	height: 75px;
+	margin: 3px 0px 3px 8px;
+	border: 2px solid #FFFFFF;
+}
+
+.channelview-video-tnail img {
+	width: 100px;
+	height: 75px;
+}
+
+.channelview-video-hitbox a {
+	float: left;
+	margin: 5px 0px 0px -102px;
+	padding: 38px 50px 37px 50px;
+	background: url(../images/channelview-video-play.png) no-repeat left top;
+}
+
+.channelview-video-hitbox a:hover {
+	background: url(../images/channelview-video-play-hover.png) no-repeat left top;
+}
+
+.channelview-video-desc {
+	float: left;
+	margin: 8px 0px 0px 10px;
+	width: 60%;
+	height: 68px;
+	overflow: hidden;
+}
+
+.channelview-video-desc h1 {
+	margin: 0px;
+	padding: 0px;
+	font-size: 120%;
+	font-weight: bold;
+	color: #000000;
+	text-decoration: none;
+}
+
+.channelview-video-desc p {
+	margin: 0px;
+	padding: 0px;
+	font-size: 90%;
+}
+
+.channelview-video-details {
+	float: right;
+	display: inline;
+	width: 115px;
+	padding: 5px 10px 5px 10px;
+}
+
+.channelview-video-details p {
+	margin: 0px 0px 3px;
+	padding: 0px;
+	font-size: 85%;
+	text-decoration: none;
+}
+
+.channelview-video-details-left {
+	float: left;
+	display: inline;
+	width: 75px;
+}
+
+.channelview-video-details-right {
+	width: 40px;
+	float: left;
+	display: inline;
+}
+
+.channelview-video-details-expiry {
+	float: left;
+	display: inline;
+	background-color: #74a5ce;
+	margin-top: 5px;
+}
+
+.channelview-video-details-expiry p {
+	color: #FFFFFF;
+	text-transform: uppercase;
+	font-size: 75%;
+	margin: 0px;
+	padding: 2px 2px;
+}
+
+.channelview-video-details-keep {
+	float: left;
+	display: inline;
+	background-color: #f9fbfe;
+	margin-top: 5px;
+	padding: 1px 2px;
+}
+
+.channelview-video-details-keep p {
+	text-transform: uppercase;
+	font-size: 75%;
+	margin: 0px;
+	padding: 1px 3px;
+}
+
+.channelview-video-details-keep p a {
+	color: #2b5576;
+	text-decoration: underline;	
+}
+
+.channelview-video-details-keep p a:hover {
+	color: #000000;
+	text-decoration: underline;	
+}
+
+.channelview-video-details-tasks {
+	clear: both;
+	padding: 5px 0px 0px 0px;
+}
+
+.channelview-video-details-task {
+	float: left;
+	display: inline;
+	margin: 0px 12px 0px 12px;
+}
+
+.channelview-video-progress {
+	float: left;
+	display: inline;
+	padding-top: 5px;
+}
