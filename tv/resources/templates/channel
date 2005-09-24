@@ -29,7 +29,7 @@
             <t:sort functionkey="global sort item" parameter="" />
         </t:view>
         <t:view name="saved-items" key="global view items">
-            <t:filter functionkey="global filter recentItems" parameter="@@@feed getFeedID@@@" />
+            <t:filter functionkey="global filter oldItems" parameter="@@@feed getFeedID@@@" />
             <t:sort functionkey="global sort item" parameter="" />
         </t:view>
     </t:dynamicviews>
@@ -66,7 +66,7 @@
 <!-- / TITLE BAR -->
 
 <!-- NEWLY AVAILABLE ****************************************************** -->
-<div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-newlyavailable');">&nbsp;</a></div>
+<div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-newlyavailable');">#&nbsp;</a></div>
 <div id="channelview-channelbar" class="channelview-channelbar">
 	<h1>Newly Available</h1>
 </div>
@@ -79,7 +79,7 @@
 <!-- / NEWLY AVAILABLE -->
 
 <!-- DOWNLOADS ************************************************************ -->
-<div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-downloads');">&nbsp;</a></div>
+<div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-downloads');">#&nbsp;</a></div>
 <div id="channelview-channelbar" class="channelview-channelbar">
 	<h1>Downloads</h1>
 	<h2>X in Progress, Y in Queue</h2>
@@ -93,7 +93,7 @@
 <!-- / DOWNLOADS -->
 
 <!-- UNWATCHED ************************************************************ -->
-<div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-unwatched');">&nbsp;</a></div>
+<div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-unwatched');">#&nbsp;</a></div>
 <div id="channelview-channelbar" class="channelview-channelbar">
 	<h1>Unwatched</h1>
 	<h2>(0)</h2>
@@ -107,7 +107,7 @@
 <!-- / UNWATCHED -->
 
 <!-- EXPIRING ************************************************************* -->
-<div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-expiring');">&nbsp;</a></div>
+<div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-expiring');">#&nbsp;</a></div>
 <div id="channelview-channelbar" class="channelview-channelbar">
 	<h1>Expiring</h1>
 	<h2>(0)</h2>
@@ -121,7 +121,7 @@
 <!-- / EXPIRING -->
 
 <!-- SAVED **************************************************************** -->
-<div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-saved');">&nbsp;</a></div>
+<div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-saved');">#&nbsp;</a></div>
 <div id="channelview-channelbar" class="channelview-channelbar">
 	<h1>Saved</h1>
 	<h2>(0)</h2>
