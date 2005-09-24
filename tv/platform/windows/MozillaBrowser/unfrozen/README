@@ -22,3 +22,8 @@ nsIDOMNSRange:
  object that is the Mozilla equivalent of IE's innerHTML. We need it to
  parse strings into new DOM nodes. It is not marked as frozen and isn't in
  the GRE SDK distribution. Couldn't find Web references to this situation.
+
+nsIDOMElementCSSInlineStyle:
+ This is used to geth the nsIDOMCSSStyleDeclaration of a node. I have
+ no idea why this interface isn't frozen. It contains a single method,
+ GetStyle, and is specified by the DOM Level 2 standard.

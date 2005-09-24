@@ -1,5 +1,5 @@
-#include "MozillaBrowser.h"
 #include "MozillaBrowser_python.h"
+#include "MozillaBrowser.h"
 #include <stdio.h>
 
 ///////////////////////////////////////////////////////////////////////////////

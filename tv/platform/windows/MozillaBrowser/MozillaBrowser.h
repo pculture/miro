@@ -37,6 +37,8 @@
 #include "nsIDOMNSRange.h"
 #include "nsIDOMDocumentFragment.h"
 #include "nsIDOMNodeList.h"
+#include "nsIDOMElementCSSInlineStyle.h"
+#include "nsIDOMCSSStyleDeclaration.h"
 
 // Forward declaration
 class Control;
@@ -52,8 +54,19 @@ class Control;
         "@mozilla.org/embedding/browser/nsWebBrowser;1"
 
 #ifdef WIN32
-// I guess their hearts were in the right place.
-#define snprintf _snprintf
+// On Windows, there is no snprintf, and the provided _snprintf
+// apparently has an inexplicable property: if the buffer is too large
+// to hold the output, all n bytes of the buffer are filled with the
+// first n characters of the output, and no NUL is written. Substitute
+// in a less pathological implementation. Its arguments are the same,
+// but unfortunately it returns a Windows HRESULT code instead of
+// something standard. Cast the result to void * to reduce the likelihood
+// that someone will get burnt on this accidently.
+#ifdef snprintf
+#undef snprintf
+#endif
+#include <strsafe.h>
+#define snprintf (void *)StringCchPrintfA
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -265,6 +278,10 @@ protected:
 
   // Internal use: create a new element from an XML string.
   nsresult createElement(wchar_t *xml, nsIDOMNode **_retval);
+
+  // Internal use: set a CSS property on an element.
+  nsresult setElementStyle(wchar_t *id, wchar_t *name,
+			   wchar_t *value, wchar_t *priority=L"");
 
 public:
 		       

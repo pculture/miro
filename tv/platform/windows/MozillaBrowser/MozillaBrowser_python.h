@@ -1,8 +1,10 @@
 #ifndef __MOZILLABROWSER_PYTHON_H
 #define __MOZILLABROWSER_PYTHON_H
 
-#include "MozillaBrowser.h"
+/* Important: our header should come second. Python.h include a bogus
+   definition of snprintf to _snprintf. See MozillaBrowser.h. */
 #include <Python.h>
+#include "MozillaBrowser.h"
 
 extern PyTypeObject MozillaBrowser_Type;
 

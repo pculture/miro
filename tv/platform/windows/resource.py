@@ -17,12 +17,12 @@ def appRoot():
 # expected to be supplied in Unix format, with forward-slashes as
 # separators. The output, though, uses the native platform separator.
 def path(relative_path):
-    parts = re.split(r'/', relative_path)
-    parts[0:0] = [appRoot(), 'resources']
-    return os.path.join(*parts)
+    rootParts = re.split(r'\\', appRoot())
+    myParts = re.split(r'/', relative_path)
+    return '\\'.join(rootParts + ['resources'] + myParts)
 
 # As path(), but return a file: URL instead.
 def url(relative_path):
-    parts = re.split(r'/', relative_path)
-    parts[0:0] = [appRoot(), 'resources']
-    return "file:///" + '/'.join(parts)
+    rootParts = re.split(r'\\', appRoot())
+    myParts = re.split(r'/', relative_path)
+    return "file:///" + '/'.join(rootParts + ['resources'] + myParts)

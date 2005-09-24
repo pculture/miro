@@ -197,14 +197,12 @@ nsresult Control::createElement(wchar_t *xml, nsIDOMNode **_retval) {
 
   if (NS_FAILED(rv = range->SelectNodeContents(bodyNode)))
     return rv;
-  printf("managed to init range to body at %p\n", bodyNode);
 
   // Now get the Mozilla extended range interface that includes
   // createContextualFragment.
   nsCOMPtr<nsIDOMNSRange> nsRange = do_QueryInterface(range, &rv);
   if (!nsRange || NS_FAILED(rv))
     return rv;
-  printf("got nsRange %p\n", nsRange);
 
   // Finally, we can parse the XML.
   nsEmbedString markup(xml);
@@ -212,7 +210,6 @@ nsresult Control::createElement(wchar_t *xml, nsIDOMNode **_retval) {
   if (NS_FAILED(rv = nsRange->
 		CreateContextualFragment(markup, getter_AddRefs(frag))))
     return rv;
-  printf("got frag %p\n", frag);
 
   // Now we have a document fragment. I don't really understand the
   // difference between a document fragment and a document -- the
@@ -224,6 +221,27 @@ nsresult Control::createElement(wchar_t *xml, nsIDOMNode **_retval) {
   *_retval = frag;
   NS_IF_ADDREF(*_retval);
   return NS_OK;
+}
+
+nsresult Control::setElementStyle(wchar_t *id, wchar_t *name,
+				  wchar_t *value, wchar_t *priority) {
+  nsresult rv;
+
+  nsCOMPtr<nsIDOMElement> elt;
+  if (NS_FAILED(rv = getElementById(id, getter_AddRefs(elt))))
+    return rv;    
+
+  nsCOMPtr<nsIDOMElementCSSInlineStyle> styleElt = do_QueryInterface(elt, &rv);
+  if (!styleElt || NS_FAILED(rv))
+    return rv;      
+
+  nsCOMPtr<nsIDOMCSSStyleDeclaration> style;
+  if (NS_FAILED(rv = styleElt->GetStyle(getter_AddRefs(style))))
+    return rv;
+
+  return style->SetProperty(nsEmbedString(name),
+			    nsEmbedString(value),
+			    nsEmbedString(priority));
 }
 
 nsresult Control::addElementAtEnd(wchar_t *xml, wchar_t *id) {
@@ -310,12 +328,12 @@ nsresult Control::changeElement(wchar_t *id, wchar_t *xml) {
   return NS_OK;
 }
 
-nsresult Control::hideElement(wchar_t *id) {
-  return NS_ERROR_NOT_IMPLEMENTED;
+nsresult Control::hideElement(wchar_t *id) { 
+  return setElementStyle(id, L"display", L"none");
 }
 
 nsresult Control::showElement(wchar_t *id) { 
-  return NS_ERROR_NOT_IMPLEMENTED;
+  return setElementStyle(id, L"display", L"");
 }
 
 ///////////////////////////////////////////////////////////////////////////////
