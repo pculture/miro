@@ -1,6 +1,10 @@
 import frontend
 import app
-import WebBrowser
+import MozillaBrowser
+import tempfile
+import os
+import re
+import threading
 
 from frontend_implementation.MainFrame import blankWindowClassAtom
 from frontend_implementation.MainFrame import invisibleDisplayParentHwnd
@@ -24,6 +28,10 @@ class HTMLDisplay (app.Display):
         display is installed."""
         app.Display.__init__(self)
 
+	self.lock = threading.RLock()
+	self.initialLoadFinished = False
+	self.execQueue = []
+
         # Create a dummy child window
         self.hwnd = win32gui.CreateWindowEx(0, blankWindowClassAtom,
             "", WS_CHILDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
@@ -37,54 +45,80 @@ class HTMLDisplay (app.Display):
             win32gui.MoveWindow(self.hwnd, 0, 0, 
                 displaySizeHint[0], displaySizeHint[1], False)
 
-        # NEEDS: debugging; save HTML to disk
-        import tempfile
-        import os
+        # Save HTML to disk for loading via file: url. We'll delete it
+	# when the load has finished in onDocumentLoadFinishedCallback.
         (handle, location) = tempfile.mkstemp('.html')
         handle = os.fdopen(handle,"w")
         handle.write(html)
         handle.close()
         print "Logged HTML to %s" % location
-	
-	# Use C++ extension to instantiate IE as an ActiveX control and
-	# host it in the window just created
-	# NEEDS: move user agent string to central location
+	self.deleteOnLoadFinished = location
+
+	# Translate path into URL.
+	parts = re.split(r'\\', location)
+	url = "file:///" + '/'.join(parts)
+	print "url = %s" % url
+
         userAgent = "DTV/pre-release (http://participatoryculture.org/)"
-#	html = "Hello from Python!" # NEEDS
-	self.wb = WebBrowser.WebBrowser(hwnd = self.hwnd,
-                                        initialHTML = html,
-                                        onLoadCallback = self.rawOnLoad,
-                                        userAgent = userAgent)
+	self.mb = MozillaBrowser. \
+	    MozillaBrowser(hwnd = self.hwnd,
+			   initialURL = url,
+			   onLoadCallback = self.onURLLoad,
+			   onActionCallback = self.onURLLoad,
+			   onDocumentLoadFinishedCallback = \
+			       self.onDocumentLoadFinished,
+			   userAgent = userAgent)
 
     def getHwnd(self):
         return self.hwnd
 
+    # Decorator. Causes calls to be queued up, in order, until
+    # onDocumentLoadFinished is called.
+    def deferUntilAfterLoad(func):
+	def wrapper(self, *args, **kwargs):
+	    self.lock.acquire()
+	    if not self.initialLoadFinished:
+		self.execQueue.append(lambda: func(self, *args, **kwargs))
+	    else:
+		func(self, *args, **kwargs)
+	    self.lock.release()
+	return wrapper
+
+    @deferUntilAfterLoad
     def execJS(self, js):
-        # NEEDS: threading??? queueing???
-        # Go ahead and queue on main thread, through message. You'll be glad.
-        #print "Punted JS" #NEEDS
-        #self.browser.document.parentWindow.execScript(js, "javascript")
-	self.wb.execJS(js)
+	raise NotImplementedError
 
     # DOM hooks used by the dynamic template code
-    # NEEDS (go back to OS X code, for starters)
+    @deferUntilAfterLoad
     def addItemAtEnd(self, xml, id):
-        pass
+	print "aIAE"
+	self.mb.addElementAtEnd(xml, id)
+	print "back"
+    @deferUntilAfterLoad
     def addItemBefore(self, xml, id):
-        pass
+	print "aIB on %s" % self
+	self.mb.addElementBefore(xml, id)
+	print "back"
+    @deferUntilAfterLoad
     def removeItem(self, id):
-        pass
+	print "rI"
+	self.mb.removeItem(id)
+	print "back"
+    @deferUntilAfterLoad
     def changeItem(self, id, xml):
-        pass
+	print "cI"
+	self.mb.changeItem(id, xml)
+	print "back"
+    @deferUntilAfterLoad
     def hideItem(self, id):
-        pass
+	print "hI"
+	self.mb.hideItem(id)
+	print "back"
+    @deferUntilAfterLoad
     def showItem(self, id):
-        pass
-
-    def rawOnLoad(self, *args):
-        print "Got load event in Python, args: %s" % (args, )
-        # NEEDS: decode args, call onURLLoad, return False to cancel load
-	# (just return value of self.onURLLoad)
+	print "sI"
+	self.mb.showItem(id)
+	print "back"
 
     def onURLLoad(self, url):
         """Called when this HTML browser attempts to load a URL (either
@@ -97,8 +131,33 @@ class HTMLDisplay (app.Display):
         # For overriding
         return True
 
+    def onDocumentLoadFinished(self):
+	print "onDocumentLoadFinished"
+	if self.deleteOnLoadFinished:
+	    try:
+		# NEEDS: debugging
+#		os.remove(self.deleteOnLoadFinished)
+		pass
+	    except os.error:
+		pass
+	    self.deleteOnLoadFinished = None
+
+	# Dispatch calls that got queued up as a result of @deferUntilAfterLoad
+	if not self.initialLoadFinished:
+	    self.lock.acquire()
+	    print "Dispatching queued up events"
+	    self.initialLoadFinished = True
+	    for func in self.execQueue:
+		print "dispatching %s" % func
+		func()
+		print "back from dispatch"
+#		print "skipping %s" % func
+	    self.execQueue = []
+	    print "Done dispatching"
+	    self.lock.release()
+
     def unlink(self):
-        self.wb = None
+        self.mb = None
         if self.hwnd:
             print "HTMLDisplay unlink %s" % self.hwnd
             win32gui.DestroyWindow(self.hwnd)
