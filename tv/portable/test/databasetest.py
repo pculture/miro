@@ -852,11 +852,72 @@ class ThreadTest(unittest.TestCase):
         self.remove100()
         thread.join()
 
-#FIXME: Add a test such that recomputeFilters code that assumes
-#       subfilters keep the same order as their parent will fail.
-#
-#       v1.4 of database.pyx should pass, while 1.5 should fail
+class IndexFilterTest(unittest.TestCase):
+    def setUp(self):
+        DDBObject.dd = DynamicDatabase()
+        self.everything = DDBObject.dd
+        self.addCallbacks = 0
+        self.removeCallbacks = 0
+        self.changeCallbacks = 0
+        self.shift = 0
+    def modTen(self, x):
+        return (x.getID() + self.shift) % 10
+    def addCallback(self,value,id):
+        self.addCallbacks += 1
+    def removeCallback(self,value,id):
+        self.removeCallbacks += 1
+    def changeCallback(self,value,id):
+        self.changeCallbacks += 1
+    def testBasicIndexFilter(self):
+        for x in range(0,100):
+            DDBObject()
+        self.everything.createIndex(self.modTen)
+        for x in range(0,50):
+            DDBObject()
+        filtered = self.everything.filterWithIndex(self.modTen,0)
+        filtered.addAddCallback(self.addCallback)
+        filtered.addRemoveCallback(self.removeCallback)
+        filtered.addChangeCallback(self.changeCallback)
+        for x in range(0,50):
+            DDBObject()
 
+        self.assertEqual(self.addCallbacks,5)
+        for obj in filtered:
+            self.assertEqual(self.modTen(obj),0)
+        filtered[0].remove()
+        self.assertEqual(filtered.len(),19)
+        self.assertEqual(self.removeCallbacks,1)
+        filtered[0].beginChange()
+        filtered[0].endChange()
+        self.assertEqual(self.changeCallbacks,1)
+
+        obj = filtered[0]
+        self.everything.removeView(filtered)
+        for x in range(0,50):
+            DDBObject()
+        self.assertEqual(self.addCallbacks,5)
+        obj.beginChange()
+        obj.endChange()
+        self.assertEqual(self.changeCallbacks,1)
+        obj.remove()
+        self.assertEqual(self.removeCallbacks,1)
+    def testRecomputeIndex(self):
+        for x in range(0,100):
+            DDBObject()
+        self.everything.createIndex(self.modTen)
+        for x in range(0,50):
+            DDBObject()
+        filtered = self.everything.filterWithIndex(self.modTen,0)
+        for x in range(0,50):
+            DDBObject()
+        self.assertEqual(filtered.len(),20)
+        filtered[0].remove()
+        self.assertEqual(filtered.len(),19)
+        self.shift = 1
+        self.everything.recomputeFilters()
+        self.assertEqual(filtered.len(),20)
+
+#FIXME: Add test for explicitly recomputing sorts
 #FIXME: Add test for recomputing sorts on endChange()
 
 if __name__ == "__main__":

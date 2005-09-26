@@ -54,6 +54,7 @@ class DynamicDatabase:
         self.subMaps = []
         self.cursorStack = []
         self.objectLocs = {}
+        self.indexes = {}
 
         # Normally, any access to fasttypes should be surrounded by a
         # lock. However, inside of an __init__, we can be sure that no
@@ -468,6 +469,8 @@ class DynamicDatabase:
 #                     print
 #                     print e
 #                     print "--------------"
+            for filter in self.indexes.keys():
+                self.indexes[filter][filter(value)].addBeforeCursor(newobject,value)
             for callback in self.addCallbacks:
                 callback(value,newobject.id)
         finally:
@@ -567,6 +570,11 @@ class DynamicDatabase:
                 view.removeObj(tempobj)
             for [view, f] in self.subFilters:
                 view.removeObj(tempobj)
+            for (key, views) in self.indexes.iteritems():
+                # FIXME: Keep an index of items to
+                # views. Eliminate this loop
+                for (value, view) in views.iteritems():
+                    view.removeObj(tempobj)
         finally:
             self.endUpdate()
         #self.checkObjLocs()
@@ -608,6 +616,11 @@ class DynamicDatabase:
                             view.removeObj(tempobj)
                 finally:
                     view.endUpdate()
+            for (key, views) in self.indexes.iteritems():
+                # FIXME: Keep an index of items to
+                # views. Eliminate this loop
+                for (value, view) in views.iteritems():
+                    view.changeObj(tempobj)
         finally:
             self.endUpdate()
 
@@ -643,6 +656,34 @@ class DynamicDatabase:
         finally:
             self.endUpdate()
         #self.checkObjLocs()
+
+    def recomputeIndex(self,filter, all = False):
+        self.beginUpdate()
+        try:
+            # Go through each one of the filter subviews
+            for filt, views in self.indexes.iteritems():
+                if all or filt is filter:
+                    self.saveCursor()
+                    try:
+                        self.resetCursor()
+                        for myObj in self.objects:
+                            myObjObj = myObj[0]
+                            myObjVal = myObj[1]
+                            filtVal = filt(myObjVal)
+                            if not views[filtVal].objectLocs.has_key(myObjObj.id):
+                                # FIXME: Keep an index of items to
+                                # views. Eliminate this loop
+                                for val, view in views.iteritems():
+                                    if view.objectLocs.has_key(myObjObj.id):
+                                        view.removeObj(myObjObj)
+                                        break
+                                views[filtVal].addBeforeCursor(myObjObj,myObjVal)
+                    finally:
+                        self.restoreCursor()
+                    for val, view in views.iteritems():
+                        view.recomputeFilters()
+        finally:
+            self.endUpdate()
 
     #Recompute a single subSort
     def recomputeSort(self,sort, all = False):
@@ -698,6 +739,7 @@ class DynamicDatabase:
             self.recomputeSort(None, True)
             for [view, f] in self.subMaps:
                 view.recomputeFilters()
+            self.recomputeIndex(None,True)
         finally:
             self.endUpdate()
         #self.checkObjLocs()
@@ -816,6 +858,7 @@ class DynamicDatabase:
     # Removes a filter that's currently not being used from the database
     # This should be called when a filter is no longer in use
     def removeView(self,oldView):
+        #FIXME: We should keep indexes to make this faster
         self.beginUpdate()
         try:
             for count in range(0,len(self.subFilters)):
@@ -830,6 +873,18 @@ class DynamicDatabase:
                 if self.subMaps[count][0] is oldView:
                     self.subMaps[count:count+1] =  []
                     return
+            for func, views in self.indexes.iteritems():
+                # Clear out subfilters and callbacks on this view
+                for key, view in views.iteritems():
+                    if view is oldView:
+                        view.subFilters = []
+                        view.subMaps = []
+                        view.subSorts = []
+                        view.indexes = {}
+                        view.addCallbacks = []
+                        view.removeCallbacks = []
+                        view.changeCallbacks = []
+                        return
         finally:
             self.endUpdate()
 
@@ -884,6 +939,29 @@ class DynamicDatabase:
                 return None
         finally:
             self.endRead()
+
+    def createIndex(self, indexFunc):
+        self.beginUpdate()
+        try:
+            indexViews = {}
+            for obj in self.objects:
+                index = indexFunc(obj[1])
+                if not indexViews.has_key(index):
+                    indexViews[index] = DynamicDatabase([],False)
+                indexViews[index].addBeforeCursor(obj[0],obj[1])
+            self.indexes[indexFunc] = indexViews
+        finally:
+            self.endUpdate()
+
+    def filterWithIndex(self, indexFunc, value):
+        # Throw an exception if there's no filter for this func
+        views = self.indexes[indexFunc]
+        try:
+            return views[value]
+        except:
+            views[value] = DynamicDatabase([],False)
+            return views[value]
+
 
 ##
 # Global default database
