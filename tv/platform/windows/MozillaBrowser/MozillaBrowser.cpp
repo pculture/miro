@@ -35,7 +35,7 @@ PRBool PyControl::onURLLoad(const char *url) {
 
   // Get the Python lock so we can call into Python
   PyGILState_STATE gstate = PyGILState_Ensure();
-  
+
   PyObject *result = PyObject_CallFunction(m_onURLLoad, "s", url);
   if (!result) {
     fprintf(stderr, "Warning: ignoring exception in MozillaBrowser "
@@ -64,13 +64,14 @@ void PyControl::onActionURL(const char *url) {
   PyGILState_STATE gstate = PyGILState_Ensure();
 
   PyObject *result = PyObject_CallFunction(m_onActionURL, "s", url);
-  Py_DECREF(result);
 
-  if (PyErr_Occurred()) {
+  if (result == NULL) {
     fprintf(stderr, "Warning: ignoring exception in MozillaBrowser "
 	    "onActionURL callback (Python-side).\n");
     PyErr_Print();
   }
+  else
+    Py_DECREF(result);
 
   PyGILState_Release(gstate);
 }
@@ -83,13 +84,14 @@ void PyControl::onDocumentLoadFinished(void) {
   PyGILState_STATE gstate = PyGILState_Ensure();
 
   PyObject *result = PyObject_CallFunction(m_onDocumentLoadFinished, "");
-  Py_DECREF(result);
 
-  if (PyErr_Occurred()) {
+  if (result == NULL) {
     fprintf(stderr, "Warning: ignoring exception in MozillaBrowser "
 	    "onDocumentLoadFinished callback (Python-side).\n");
     PyErr_Print();
   }
+  else
+    Py_DECREF(result);
 
   PyGILState_Release(gstate);
 }
@@ -138,6 +140,8 @@ static PyObject *MozillaBrowser_new(PyObject *self, PyObject *args,
   PyObject *onDocumentLoadFinishedCallback = Py_None;
   int url_len, agent_len;
   PyObject *ret = NULL;
+
+  puts("** Entering MozillaBrowser_new");
 
   static char *kwlist[] = {"hwnd",
 			   "onLoadCallback",
@@ -214,6 +218,8 @@ static PyObject *MozillaBrowser_new(PyObject *self, PyObject *args,
     PyMem_Free(url);
   if (agent)
     PyMem_Free(agent);
+
+  puts("** Leaving MozillaBrowser_new");
   
   return ret;
 }
