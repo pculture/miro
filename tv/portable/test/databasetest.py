@@ -4,6 +4,7 @@ from os import remove
 from os.path import expanduser
 import random
 import config
+import time
 from threading import Thread
 
 class EmptyViewTestCase(unittest.TestCase):
@@ -860,8 +861,19 @@ class IndexFilterTest(unittest.TestCase):
         self.removeCallbacks = 0
         self.changeCallbacks = 0
         self.shift = 0
-    def modTen(self, x):
+    def mod10(self, x):
         return (x.getID() + self.shift) % 10
+    def mod100(self, x):
+        return (x.getID() + self.shift) % 100
+    def sortFunc(self, x, y):
+        x = x.getID()
+        y = y.getID()
+        if x < y:
+            return -1
+        elif x > y:
+            return 1
+        else:
+            return 0
     def addCallback(self,value,id):
         self.addCallbacks += 1
     def removeCallback(self,value,id):
@@ -871,10 +883,10 @@ class IndexFilterTest(unittest.TestCase):
     def testBasicIndexFilter(self):
         for x in range(0,100):
             DDBObject()
-        self.everything.createIndex(self.modTen)
+        self.everything.createIndex(self.mod10)
         for x in range(0,50):
             DDBObject()
-        filtered = self.everything.filterWithIndex(self.modTen,0)
+        filtered = self.everything.filterWithIndex(self.mod10,0)
         filtered.addAddCallback(self.addCallback)
         filtered.addRemoveCallback(self.removeCallback)
         filtered.addChangeCallback(self.changeCallback)
@@ -883,7 +895,7 @@ class IndexFilterTest(unittest.TestCase):
 
         self.assertEqual(self.addCallbacks,5)
         for obj in filtered:
-            self.assertEqual(self.modTen(obj),0)
+            self.assertEqual(self.mod10(obj),0)
         filtered[0].remove()
         self.assertEqual(filtered.len(),19)
         self.assertEqual(self.removeCallbacks,1)
@@ -904,10 +916,10 @@ class IndexFilterTest(unittest.TestCase):
     def testRecomputeIndex(self):
         for x in range(0,100):
             DDBObject()
-        self.everything.createIndex(self.modTen)
+        self.everything.createIndex(self.mod10)
         for x in range(0,50):
             DDBObject()
-        filtered = self.everything.filterWithIndex(self.modTen,0)
+        filtered = self.everything.filterWithIndex(self.mod10,0)
         for x in range(0,50):
             DDBObject()
         self.assertEqual(filtered.len(),20)
@@ -916,6 +928,39 @@ class IndexFilterTest(unittest.TestCase):
         self.shift = 1
         self.everything.recomputeFilters()
         self.assertEqual(filtered.len(),20)
+    def testLargeSet(self):
+        self.everything.createIndex(self.mod100)
+        start = time.clock()
+        for x in range(0,500):
+            DDBObject()
+            DDBObject()
+            DDBObject()
+            DDBObject()
+            DDBObject()
+            DDBObject()
+            DDBObject()
+            DDBObject()
+            DDBObject()
+            DDBObject()
+        mid = time.clock()
+        for x in range(0,500):
+            DDBObject()
+            DDBObject()
+            DDBObject()
+            DDBObject()
+            DDBObject()
+            DDBObject()
+            DDBObject()
+            DDBObject()
+            DDBObject()
+            DDBObject()
+        end = time.clock()
+        # Make sure insert time doesn't increase as the size of the
+        # database increases
+        assert ( (end-mid) - (mid-start) < (mid-start)/2)
+        filtered = self.everything.filterWithIndex(self.mod100,0).sort(self.sortFunc)
+        self.assertEqual(filtered.len(),100)
+
 
 #FIXME: Add test for explicitly recomputing sorts
 #FIXME: Add test for recomputing sorts on endChange()
