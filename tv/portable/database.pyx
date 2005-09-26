@@ -470,7 +470,12 @@ class DynamicDatabase:
 #                     print e
 #                     print "--------------"
             for filter in self.indexes.keys():
-                self.indexes[filter][filter(value)].addBeforeCursor(newobject,value)
+                view = self.indexes[filter]
+                try:
+                    view[filter(value)].addBeforeCursor(newobject,value)
+                except KeyError:
+                    view[filter(value)] = DynamicDatabase([],False)
+                    view[filter(value)].addBeforeCursor(newobject,value)
             for callback in self.addCallbacks:
                 callback(value,newobject.id)
         finally:
