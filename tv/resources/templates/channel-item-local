@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n">
+
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    </head>
+
+    <body>
+        <div class="channelview-video">
+
+            <t:includeTemplate filename="channel-item-header" />
+
+            <!-- VIDEO DETAILS BLOCK -->
+            <div class="channelview-video-details">
+                
+                <!-- FILE INFO -->
+                <p class="channelview-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+                <p class="channelview-video-details-right" t:replace="this getTotalSize" />
+                <p class="channelview-video-details-left" t:replace="this getDuration" />
+                <p class="channelview-video-details-right" t:replace="this getFormat" />
+            	<!-- / FILE INFO -->
+
+    			<!-- EXPIRY -->
+    			<span t:hideIfKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="saved">
+        			<div class="channelview-video-details-expiry">
+        				<p>Expires: <span t:replace="this getExpirationTime" /></p>
+        			</div>
+        			<div class="channelview-video-details-keep">
+        				<p><a href="action:keepItem?item=@@@this getID@@@">Keep</a></p>
+        			</div>
+    			</span>
+    			<!-- / EXPIRY -->
+
+    			<!-- FILE TASKS -->
+    			<div class="channelview-video-details-tasks">
+    				<a href="action:expireItem?item=@@@this getID@@@">
+    				    <img src="resource:images/channelview-icon-trash.png" alt="" border="0" class="channelview-video-details-task" />
+    				</a>
+    				<a href="#">
+    				    <img src="resource:images/channelview-icon-bomb.png" alt="" border="0" class="channelview-video-details-task" />
+    				</a>
+    				<a href="#">
+    				    <img src="resource:images/channelview-icon-mail.png" alt="" border="0" class="channelview-video-details-task" />
+    				</a>
+    				<div class="clearer"></div>
+    			</div>
+    			<!-- / FILE TASKS -->
+            	
+            </div>            
+            <div class="clearer"></div>
+            <!-- / VIDEO DETAILS BLOCK -->
+
+        </div>
+    </body>
+    
+</html>
