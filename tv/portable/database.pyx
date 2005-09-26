@@ -1,5 +1,8 @@
 # Pyrex version of the DTV object database
 #
+# 09/26/2005 Checked in change that speeds up inserts, but changes
+#            filters so that they no longer keep the order of the
+#            parent view. So, filter before you sort.
 
 from threading import RLock
 from os.path import expanduser, exists
@@ -441,34 +444,9 @@ class DynamicDatabase:
 #                     print "--------------"
             for [view, f] in self.subSorts:
                 view.addBeforeCursor(newobject,value)
-            #FIXME: PRESERVING ORDER IS SLOOOW.
             for [view, f] in self.subFilters:
                 if f(value):
-                    self.saveCursor()
-                    view.saveCursor()
-                    self.resetCursor()
-                    view.resetCursor()
-                    if origObj is None and point is not None:
-                        view.cursor = view.objects.lastIter().copy()
-                    elif origObj is None:
-                        view.cursor = None
-                    else:
-                        view.getNext()
-                        if view.cursor is not None and view.cursor != view.objects.lastIter():
-                            viewObj = view.objects[view.cursor]
-                            for obj in self.objects:
-                                if (viewObj is origObj or viewObj is None or
-                                    viewObj == view.objects.lastIter()):
-                                    break
-                                elif obj is viewObj:
-                                    view.getNext()
-                                    try:
-                                        viewObj = view.objects[view.cursor]
-                                    except:
-                                        viewObj = None
                     view.addBeforeCursor(newobject,value)
-                    view.restoreCursor()
-                    self.restoreCursor()
 #                 try:
 #                     self.checkFilteredView(view,f)
 #                 except Exception, e:
@@ -653,8 +631,6 @@ class DynamicDatabase:
                             if view.objectLocs.has_key(myObjObj.id):
                                 if not f(myObjVal):
                                     view.removeObj(myObjObj)
-                                else:
-                                    view.getNext()
                             else:
                                 if f(myObjVal):
                                     view.addBeforeCursor(myObjObj,myObjVal)
