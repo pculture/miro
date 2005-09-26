@@ -2,13 +2,14 @@
 ## Paths and configuration                                                   ##
 ###############################################################################
 
-# Set these as appropriate for the location of Boost, the version you
-# built, and the compiler you used. If you are unsure, search you hard
-# drive for a file named "boost_python*". If there is more than one,
-# you probably already know what you're doing.
+# Set ALL THREE of these as appropriate for the location of Boost, the
+# version you built, and the compiler you used. If you are unsure,
+# search you hard drive for a file named "boost_python*". If there is
+# more than one, you probably already know what you're doing.
 
-BOOST_LIB = "C:\\Boost\\lib\\boost_python-vc71-mt-1_33.lib"
-BOOST_INCLUDE = "C:\\Boost\\include\\boost-1_33"
+BOOST_LIB_PATH = "C:\\Boost\\lib"
+BOOST_LIB = "%s\\boost_python-vc71-mt-1_33.lib" % BOOST_LIB_PATH
+BOOST_INCLUDE_PATH = "C:\\Boost\\include\\boost-1_33"
 
 # You'll need the Gecko Runtime Engine (GRE) and a corresponding GRE
 # SDK in order to build this program. Set their paths here. See
@@ -143,8 +144,10 @@ fasttypes_ext = \
     Extension("fasttypes", 
         sources = [os.path.join(root, 'portable', 'fasttypes.cpp')],
         extra_objects = [BOOST_LIB],
-        include_dirs = [BOOST_INCLUDE]
+        include_dirs = [BOOST_INCLUDE_PATH]
     )
+
+os.environ['PATH'] = r'%s;%s' % (os.environ['PATH'], BOOST_LIB_PATH)
 
 
 # Private extension modules to build.
