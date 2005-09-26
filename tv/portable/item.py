@@ -416,11 +416,11 @@ class Item(DDBObject):
             return ""
         mb = size / 1000000
         if mb <  100:
-            return '%1.1f' % mb + " MB"
+            return '%1.1f' % mb + "MB"
         elif mb < 1000:
-            return '%1.0f' % mb + " MB"
+            return '%1.0f' % mb + "MB"
         else:
-            return '%1.1f' % (mb/1000) + " GB"
+            return '%1.1f' % (mb/1000) + "GB"
         return size
 
     ##
@@ -433,11 +433,11 @@ class Item(DDBObject):
             return ""
         mb = size / 1000000
         if mb <  100:
-            return '%1.1f' % mb + " MB"
+            return '%1.1f' % mb + "MB"
         elif mb < 1000:
-            return '%1.0f' % mb + " MB"
+            return '%1.0f' % mb + "MB"
         else:
-            return '%1.1f' % (mb/1000) + " GB"
+            return '%1.1f' % (mb/1000) + "GB"
         return size
 
     ##
@@ -461,6 +461,7 @@ class Item(DDBObject):
         finally:
             self.endRead()
         return ret
+
     ##
     # returns string with estimate time until download completes
     def downloadETA(self):
@@ -475,6 +476,25 @@ class Item(DDBObject):
             return '%1.0f' % (secs/60)+" mins left"
         else:
             return '%1.1f' % (secs/3600)+" hours left"
+
+    ##
+    # returns the download rate in kbps/mbps
+    def downloadRate(self):
+        rate = 0
+        unit = "kbps"
+        if len(self.downloaders) > 0:
+            for dler in self.downloaders:
+                rate = dler.getRate()
+            rate /= len(self.downloaders)
+        rate *= 8
+        rate /= 1024
+        if rate > 1000:
+            rate /= 1024
+            unit = "mpbs"
+        if rate > 1000:
+            rate /= 1024
+            unit = "gpbs"
+        return "%d%s" % (rate, unit)
 
     ##
     # Returns the published date of the item
@@ -553,6 +573,11 @@ class Item(DDBObject):
             return '%1.0f' % (secs/60)+" mins"
         else:
             return '%1.1f' % (secs/3600)+" hours"
+
+    ##
+    # returns stringh with the format of the video
+    def getFormat(self):
+        return ""
 
     ##
     # return keyword tags associated with the video separated by commas
