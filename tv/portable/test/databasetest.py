@@ -450,7 +450,7 @@ class MapFilterRemoveViewTestCase(unittest.TestCase):
         self.everything.addAfterCursor(DDBObject(add=False))
         self.everything.resetCursor()
         for obj in self.everything:
-            self.assertEqual(self.mapFunc(obj),self.mapped.getNext())
+            self.assertEqual(self.mapFunc(obj),self.mapped.getObjectByID(obj.getID()))
 
 class FilterSortMapTestCase(unittest.TestCase):
     def setUp(self):
