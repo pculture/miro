@@ -12,6 +12,9 @@
     <script type="text/javascript" src="resource:templates/shide.js" />
 
     <t:dynamicviews>
+        <t:view name="thisFeed" key="global view feeds">
+            <t:filter functionkey="global filter feedID"  parameter="@@@feed getFeedID@@@" />
+        </t:view>
         <t:view name="new-items" key="global view items">
             <t:filter functionkey="global filter unDownloadedItems" parameter="@@@feed getFeedID@@@" />
             <t:sort functionkey="global sort item" parameter="" />
@@ -59,80 +62,103 @@
 		    <p><a href="mailto:?subject=@@@feed getTitle@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed getTitle@@@&quot;. If you don't have DTV, you can get it here:%0D%0A%0D%0Ahttp://www.participatoryculture.org/download.php%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed getURL@@@" class="recommend_link" i18n:translate="">Recommend</a></p>
 		</div>
 		<div id="channelview-titlebar-tasks-search">
-		    <input type="search" placeholder="Search Channel" style="width: 120px; height: 20px;" onfocus="startEditFilter(this,new Array('items'),new Array(''),new Array('global filter feedItems'),new Array(0),new Array('@@@feed getFeedID@@@'))" onblur="endEditFilter()" />
+		    <input type="search" placeholder="Search Channel" style="width: 120px; height: 20px;" onfocus="startEditFilter(this,new Array('new-items'),new Array(''),new Array('global filter feedItems'),new Array(0),new Array('@@@feed getFeedID@@@'))" onblur="endEditFilter()" />
 		</div>
 	</div>
 </div>
 <!-- / TITLE BAR -->
 
-<!-- NEWLY AVAILABLE ****************************************************** -->
-<div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-newlyavailable');">#&nbsp;</a></div>
-<div id="channelview-channelbar" class="channelview-channelbar">
-	<h1>Newly Available</h1>
-</div>
+<!-- CHANNEL ITEMS LIST *************************************************** -->
+<div id="channelview-itemlist">
 
-<div id="channelview-newlyavailable">
-    <span t:repeatForView="new-items">
-        <t:includeTemplate filename="channel-item-new" />
-    </span>
-</div>
-<!-- / NEWLY AVAILABLE -->
+    <!-- NEWLY AVAILABLE ************************************************** -->
+    <div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-newlyavailable');">#&nbsp;</a></div>
+    <div id="channelview-channelbar" class="channelview-channelbar">
+    	<h1>Newly Available</h1>
+    	<h2 t:repeatForView="thisFeed">(<span t:replace="this available" />)</h2>
+    </div>
 
-<!-- DOWNLOADS ************************************************************ -->
-<div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-downloads');">#&nbsp;</a></div>
-<div id="channelview-channelbar" class="channelview-channelbar">
-	<h1>Downloads</h1>
-	<h2>X in Progress, Y in Queue</h2>
-</div>
+    <div id="channelview-newlyavailable">
+        <span t:hideIfNotKey="new-items len" t:hideFunctionKey="global filter equal" t:hideParameter="0" t:repeatForView="new-items">
+            <t:includeTemplate filename="channel-item-remote" />
+        </span>
+        <span t:hideIfNotKey="new-items len" t:hideFunctionKey="global filter equal" t:hideParameter="0">
+            <p>No videos.</p>
+        </span>
+    </div>
+    <!-- / NEWLY AVAILABLE -->
 
-<div id="channelview-downloads">
-    <span t:repeatForView="downloading-items">
-        <t:includeTemplate filename="channel-item-downloading" />
-    </span>
-</div>
-<!-- / DOWNLOADS -->
+    <!-- DOWNLOADS ******************************************************** -->
+    <div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-downloads');">#&nbsp;</a></div>
+    <div id="channelview-channelbar" class="channelview-channelbar">
+    	<h1>Downloads</h1>
+    	<h2>X in Progress, Y in Queue</h2>
+    </div>
 
-<!-- UNWATCHED ************************************************************ -->
-<div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-unwatched');">#&nbsp;</a></div>
-<div id="channelview-channelbar" class="channelview-channelbar">
-	<h1>Unwatched</h1>
-	<h2>(0)</h2>
-</div>
+    <div id="channelview-downloads">
+        <span t:hideIfKey="downloading-items len" t:hideFunctionKey="global filter equal" t:hideParameter="0" t:repeatForView="downloading-items">
+            <t:includeTemplate filename="channel-item-remote" />
+        </span>
+        <span t:hideIfNotKey="downloading-items len" t:hideFunctionKey="global filter equal" t:hideParameter="0">
+            <p>No videos.</p>
+        </span>
+    </div>
+    <!-- / DOWNLOADS -->
 
-<div id="channelview-unwatched">
-    <span t:repeatForView="unwatched-items">
-        <t:includeTemplate filename="channel-item-unwatched" />
-    </span>
-</div>
-<!-- / UNWATCHED -->
+    <!-- UNWATCHED ******************************************************** -->
+    <div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-unwatched');">#&nbsp;</a></div>
+    <div id="channelview-channelbar" class="channelview-channelbar">
+    	<h1>Unwatched</h1>
+    	<h2 t:repeatForView="thisFeed">(<span t:replace="this unwatched" />)</h2>
+    </div>
 
-<!-- EXPIRING ************************************************************* -->
-<div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-expiring');">#&nbsp;</a></div>
-<div id="channelview-channelbar" class="channelview-channelbar">
-	<h1>Expiring</h1>
-	<h2>(0)</h2>
-</div>
+    <div id="channelview-unwatched">
+        <span t:hideIfKey="unwatched-items len" t:hideFunctionKey="global filter equal" t:hideParameter="0" t:repeatForView="unwatched-items">
+            <t:includeTemplate filename="channel-item-local" />
+        </span>
+        <span t:hideIfNotKey="unwatched-items len" t:hideFunctionKey="global filter equal" t:hideParameter="0">
+            <p>No videos.</p>
+        </span>
+    </div>
+    <!-- / UNWATCHED -->
 
-<div id="channelview-expiring">
-    <span t:repeatForView="expiring-items">
-        <t:includeTemplate filename="channel-item-expiring" />
-    </span>
-</div>
-<!-- / EXPIRING -->
+    <!-- EXPIRING ********************************************************* -->
+    <div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-expiring');">#&nbsp;</a></div>
+    <div id="channelview-channelbar" class="channelview-channelbar">
+    	<h1>Expiring</h1>
+    	<h2>(<span t:replace="foobar" />)</h2>
+    </div>
 
-<!-- SAVED **************************************************************** -->
-<div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-saved');">#&nbsp;</a></div>
-<div id="channelview-channelbar" class="channelview-channelbar">
-	<h1>Saved</h1>
-	<h2>(0)</h2>
-</div>
+    <div id="channelview-expiring">
+        <span t:hideIfKey="expiring-items len" t:hideFunctionKey="global filter equal" t:hideParameter="0" t:repeatForView="expiring-items">
+            <t:includeTemplate filename="channel-item-local" />
+        </span>
+        <span t:hideIfNotKey="expiring-items len" t:hideFunctionKey="global filter equal" t:hideParameter="0">
+            <p>No videos.</p>
+        </span>
+    </div>
+    <!-- / EXPIRING -->
 
-<div id="channelview-saved">
-    <span t:repeatForView="saved-items">
-        <t:includeTemplate filename="channel-item-saved" />
-    </span>
+    <!-- SAVED ************************************************************ -->
+    <div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-saved');">#&nbsp;</a></div>
+    <div id="channelview-channelbar" class="channelview-channelbar">
+    	<h1>Saved</h1>
+    	<h2>(<span t:replace="foobar" />)</h2>
+    </div>
+
+    <div id="channelview-saved">
+        <span t:hideIfKey="saved-items len" t:hideFunctionKey="global filter equal" t:hideParameter="0" t:repeatForView="saved-items">
+            <t:includeTemplate filename="channel-item-local" />
+        </span>
+        <span t:hideIfNotKey="saved-items len" t:hideFunctionKey="global filter equal" t:hideParameter="0">
+            <p>No videos.</p>
+        </span>
+    </div>
+    <!-- / SAVED -->
 </div>
-<!-- / SAVED -->
+<!-- / CHANNEL ITEMS LIST -->
+
+<t:triggerActionOnLoad url="action:markFeedViewed?url=@@@feed getURL@@@" />
 
 </body>
 </html>
