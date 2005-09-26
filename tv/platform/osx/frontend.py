@@ -476,7 +476,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         tabBox.setFrameSize_(tabSize)
         tabBox.setFrameOrigin_(NSZeroPoint)
         contentBox.setFrameSize_(contentSize)
-        contentBox.setFrameOrigin_((tabSize.width + dividerWidth,0))
+        contentBox.setFrameOrigin_((tabSize.width + dividerWidth, 0))
 
     def splitView_canCollapseSubview_(self, sender, subview):
         return self.channelsHostView.isDescendantOf_(subview) and VideoDisplay.getInstance().isSelected()
@@ -1704,6 +1704,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         frame.selectDisplay(previousDisplay, area)
 
     def enablePrimaryControls(self, enabled):
+        print "########## enablePrimaryControls %s" % str(enabled)
         self.playPauseButton.setEnabled_(enabled)
         self.fullscreenButton.setEnabled_(enabled)
         self.muteButton.setEnabled_(enabled)
@@ -1890,8 +1891,7 @@ objc.loadBundleFunctions(carbonBundle, globals(), ((u'SetSystemUIMode', 'III'),)
 class VideoWindow (NSWindow):
     
     def initWithFrame_(self, frame):
-        parent = super(VideoWindow, self)
-        self = parent.initWithContentRect_styleMask_backing_defer_(
+        self = super(VideoWindow, self).initWithContentRect_styleMask_backing_defer_(
             frame,
             NSBorderlessWindowMask,
             NSBackingStoreBuffered,
@@ -1929,7 +1929,9 @@ class VideoWindow (NSWindow):
         SetSystemUIMode(kUIModeNormal, 0)
         
     def sendEvent_(self, event):
-        if event.type() == NSLeftMouseDown or (event.type() == NSKeyDown and event.characters().characterAtIndex_(0) == 0x1B):
+        click = event.type() == NSLeftMouseDown
+        esc = event.type() == NSKeyDown and event.characters().characterAtIndex_(0) == 0x1B
+        if self.isFullScreen and (click or esc):
             self.exitFullScreen()
 
 
