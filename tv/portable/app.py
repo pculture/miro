@@ -532,7 +532,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
     def getWatchable(self):
         view = None
-        for name in ('watchable', 'newitems', 'allitems'):
+        for name in ('watchable', 'unwatched-items', 'expiring-items', 'saved-items'):
             try:
                 view = self.templateHandle.findNamedView(name)
                 break
@@ -1146,12 +1146,11 @@ def filterHasKey(obj,parameter):
 # FIXME: All of these functions have a big hack to support two
 #        parameters instead of one. It's ugly. We should fix this to
 #        support multiple parameters
-def undownloadedItems(obj,param):
+def unDownloadedItems(obj,param):
     params = param.split('|',1)
     
     undled = (str(obj.feed.getID()) == params[0] and 
-              (not (obj.getState() == 'downloading' or
-                    obj.getState() == 'finished' or
+              (not (obj.getState() == 'finished' or
                     obj.getState() == 'uploading' or
                     obj.getState() == 'watched')))
     if len(params) > 1:
@@ -1257,7 +1256,6 @@ def allDownloadingItems(obj, param):
     return (obj.getState() == 'downloading' and
             (search.lower() in obj.getTitle().lower() or 
              search.lower() in obj.getDescription().lower()))
-            
 
 globalFilterList = {
     'substring': (lambda x, y: str(y) in str(x)),
@@ -1270,13 +1268,14 @@ globalFilterList = {
     'watchableItems': watchableItems,
     'downloadingItems': downloadingItems,
     'downloadedItems': downloadedItems,
-    'unDownloadedItems':  undownloadedItems,
+    'unDownloadedItems':  unDownloadedItems,
     'allDownloadingItems': allDownloadingItems,
        
     'class': filterClass,
     'all': (lambda x, y: True),
     'hasKey':  filterHasKey,
     'equal':(lambda x, y: str(x) == str(y)),
+    'feedID': (lambda x, y: str(x.getFeedID()) == str(y))
 }
 
 
