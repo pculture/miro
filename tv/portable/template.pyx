@@ -339,6 +339,8 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         elif name == 't:view' and self.inDynamicViews:
             self.viewName = attrs['name']
             self.viewKey = attrs['key']
+            self.viewIndex = None
+            self.viewIndexValue = None
             self.filterKey = None
             self.filterInvert = False
             self.filterFunc = None
@@ -347,6 +349,9 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             self.sortFunc = None
             self.sortInvert = False
             self.inView = True
+        elif name == 't:indexFilter' and self.inView:
+            self.viewIndex = attrs['index']
+            self.viewIndexValue = fillAttr(attrs['value'], self.data)
         elif name == 't:filter' and self.inView:
             try:
                 self.filterKey = attrs['key']
@@ -426,7 +431,8 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             self.inDynamicViews = False
         elif name == 't:view':
             self.inView = False
-            self.handle.makeNamedView(self.viewName, self.viewKey, 
+            self.handle.makeNamedView(self.viewName, self.viewKey,
+                                 self.viewIndex, self.viewIndexValue,
                                  self.filterKey, self.filterFunc, 
                                  self.filterParam, self.filterInvert,
                                  self.sortKey, self.sortFunc, self.sortInvert,
@@ -546,10 +552,17 @@ class TrackedView:
 # creation, can be looked up with Handle.findNamedView and the filter
 # and sort changed with setFilter and setSort.
 class NamedView:
-    def __init__(self, name, viewKey, filterKey, filterFunc, filterParameter, invertFilter, sortKey, sortFunc, invertSort, data):
+    def __init__(self, name, viewKey, viewIndex, viewIndexValue, filterKey, filterFunc, filterParameter, invertFilter, sortKey, sortFunc, invertSort, data):
         self.name = name
         self.data = data
         self.origView = evalKeyC(viewKey, data, None, True)
+
+        if viewIndex is not None:
+            self.indexFunc = evalKeyC(viewIndex, data, None, True)
+            self.indexValue = evalKeyC(viewIndexValue, data, None, True)
+            self.indexView = self.origView.filterWithIndex(self.indexFunc,self.indexValue)
+        else:
+            self.indexView = self.origView
 
         if filterKey is None:
             self.filter = returnTrue
@@ -560,27 +573,30 @@ class NamedView:
         else:
             self.sort = templatehelper.makeSort(sortKey, sortFunc, invertSort, self.data)
 
-        self.filterView = self.origView.filter(templatehelper.getFilterFunc(self))
+        self.filterView = self.indexView.filter(templatehelper.getFilterFunc(self))
         self.view = self.filterView.sort(templatehelper.getSortFunc(self))
 
     def setFilter(self, fieldKey, funcKey, parameter, invert):
         if not self.filter:
             raise TemplateError, "View '%s' was not declared with a filter, so it is not possible to change the filter parameters" % self.name
         self.filter = templatehelper.makeFilter(fieldKey, funcKey, parameter, invert,self.data)
-        self.origView.recomputeFilter(self.filterView)
+        self.indexView.recomputeFilter(self.filterView)
 
     def setSort(self, fieldKey, funcKey, invert):
         if not self.sort:
             raise TemplateError, "View '%s' was not declared with a sort, so it is not possible to change the sort parameters." % self.name
         self.sort = templatehelper.makeSort(fieldKey, funcKey, invert, self.data)
-        self.origView.recomputeSort(self.filterView)
+        self.indexView.recomputeSort(self.filterView)
 
     def getView(self):
         # Internal use.
         return self.view
 
     def removeViewFromDB(self):
-        self.origView.removeView(self.filterView)
+        if self.origView is self.indexView:
+            self.origView.removeView(self.filterView)
+        else:
+            self.origView.removeView(self.indexView)
 
 ###############################################################################
 #### Functions used in repeating templates                                 ####
@@ -742,10 +758,10 @@ class Handle:
                     else:
                         self.domHandler.showItem(id)
                         
-    def makeNamedView(self, name, viewKey, filterKey, filterFunc, filterParameter, invertFilter, sortKey, sortFunc, invertSort, data):
+    def makeNamedView(self, name, viewKey, viewIndex, viewIndexValue, filterKey, filterFunc, filterParameter, invertFilter, sortKey, sortFunc, invertSort, data):
         if self.namedViews.has_key(name):
             raise TemplateError, "More than one view was declared with the name '%s'. Each view must have a different name." % name
-        nv = NamedView(name, viewKey, filterKey, filterFunc, filterParameter, invertFilter, sortKey, sortFunc, invertSort, data)
+        nv = NamedView(name, viewKey, viewIndex, viewIndexValue, filterKey, filterFunc, filterParameter, invertFilter, sortKey, sortFunc, invertSort, data)
         self.namedViews[name] = nv
         return nv.getView()
 

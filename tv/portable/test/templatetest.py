@@ -82,10 +82,15 @@ class ViewTest(unittest.TestCase):
         self.x = HTMLObject('<span>object</span>')
         self.y = HTMLObject('<span>object</span>')
         self.view = self.everything.sort(self.sortFunc)
+        self.everything.createIndex(self.indexFunc)
         self.domHandle = DOMTracker()
     def bool(self,x,y):
         self.assertEqual(y, "paramtest")
         return x
+    def indexFunc(self,x):
+        return x.getID() < self.x.getID()+3
+    def filterFunc(self,x,param):
+        return x.getID() <= self.y.getID() or x.getID() >= self.x.getID()+3
     def sortFunc(self, x, y):
         x = x.getID()
         y = y.getID()
@@ -97,7 +102,7 @@ class ViewTest(unittest.TestCase):
             return 0
 
     def test(self):
-        (text, handle) = fillTemplate("unittest/view",{"replace":"<span>This is a database replace</span>","true":True, "false":False, "bool":self.bool, "view":self.view},self.domHandle)
+        (text, handle) = fillTemplate("unittest/view",{"replace":"<span>This is a database replace</span>","true":True, "false":False, "bool":self.bool, "view":self.everything},self.domHandle)
         text = HTMLPattern.match(text).group(1)
         assert(self.pattern.match(text)) #span for template inserted
         id = self.pattern.match(text).group(1)
@@ -117,6 +122,26 @@ class ViewTest(unittest.TestCase):
         self.domHandle = ChangeDelayedDOMTracker()
         (text, handle) = fillTemplate("unittest/view",{"replace":"<span>This is a database replace</span>","true":True, "false":False, "bool":self.bool, "view":self.view},self.domHandle)
         handle.initialFillIn()
+        self.x.beginChange()
+        self.x.endChange()
+        self.x.remove()
+        self.assertEqual(self.domHandle.callList[0]['name'],'addItemBefore')
+        self.assertEqual(self.domHandle.callList[1]['name'],'addItemBefore')
+        self.assertEqual(self.domHandle.callList[2]['name'],'changeItem')
+        self.assertEqual(self.domHandle.callList[3]['name'],'removeItem')
+
+    def testIndexSort(self):
+        HTMLObject('<span>bogus</span>')
+        HTMLObject('<span>bogus</span>')
+        HTMLObject('<span>bogus</span>')
+        self.domHandle = ChangeDelayedDOMTracker()
+        (text, handle) = fillTemplate("unittest/ifsview",{"replace":"<span>This is a database replace</span>","true":True, "false":False, "bool":self.bool, "view":self.everything,"sort":self.sortFunc,"index":self.indexFunc,"value":True,"filter":self.filterFunc},self.domHandle)
+        handle.initialFillIn()
+        HTMLObject('<span>bogus</span>')
+        HTMLObject('<span>bogus</span>')
+        HTMLObject('<span>bogus</span>')
+        HTMLObject('<span>bogus</span>')
+        HTMLObject('<span>bogus</span>')
         self.x.beginChange()
         self.x.endChange()
         self.x.remove()
