@@ -73,7 +73,9 @@ Listener::OnStateChange(nsIWebProgress *aWebProgress, nsIRequest *aRequest,
 
     if (aStateFlags & STATE_STOP) {
       // Load of top-level document finished
+      puts("*** Generating oDLF");
       m_control->onDocumentLoadFinished();
+      puts("*** Back from oDLF");
     }
   }
 

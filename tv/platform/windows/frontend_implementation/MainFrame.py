@@ -59,8 +59,8 @@ class MainFrame:
 
         # Main window message routing table
         messageMap = {
-#            WM_PAINT: self.onPaint,
-            WM_CLOSE: self.onClose,
+	    WM_SIZE: self.onWMSize,
+            WM_CLOSE: self.onWMClose,
         }
 
         # Create the main window window class
@@ -95,40 +95,66 @@ class MainFrame:
             windowTitle, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
             CW_USEDEFAULT, CW_USEDEFAULT, 0, 0, self.hInstance, None)
 
-	# NEEDS: TESTING
-        self.testHwnd = win32gui.CreateWindowEx(0, blankWindowClassAtom,
-            "", WS_CHILDWINDOW, 640, 10, 200,
-            200, self.hwnd, 0,
-            self.hInstance, None)
-	win32gui.ShowWindow(self.testHwnd, SW_SHOW)
-	self.testMb = MozillaBrowser. \
-	    MozillaBrowser(hwnd = self.testHwnd,
-			   initialURL = "http://www.google.com")
-	self.testMb.activate()
-	# END TEST CODE
-
-        # NEEDS: temp hack: create some child displays
-        self.areaHwnds[self.channelsDisplay] = win32gui.CreateWindowEx(0, blankWindowClassAtom,
-            windowTitle, WS_CHILDWINDOW, 10, 10, 100, 300,
+	# Create display areas
+        self.areaHwnds[self.channelsDisplay] = win32gui.CreateWindowEx(0,
+            blankWindowClassAtom, "", WS_CHILDWINDOW,
+	    CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, 
             self.hwnd, 0, self.hInstance, None)
-        self.areaHwnds[self.mainDisplay] = win32gui.CreateWindowEx(0, blankWindowClassAtom,
-            windowTitle, WS_CHILDWINDOW, 120, 10, 500, 300,
+        self.areaHwnds[self.mainDisplay] = win32gui.CreateWindowEx(0,
+            blankWindowClassAtom, "", WS_CHILDWINDOW,
+	    CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, 
             self.hwnd, 0, self.hInstance, None)
-        for area in self.areaHwnds:
-            win32gui.ShowWindow(self.areaHwnds[area], SW_SHOW)
+        for hwnd in self.areaHwnds.values():
+	    self.onWMSize(hwnd, None, 0, 0)
+            win32gui.ShowWindow(hwnd, SW_SHOW)
 
         # Push the window to the screen
         user32.ShowWindow(self.hwnd, SW_SHOWDEFAULT)
         user32.UpdateWindow(self.hwnd)
 
-    # TEMPORARY (NEEDS)
-    def onPaint(self, hwnd, msg, wparam, lparam):
-        (hdc, paintstruct) = win32gui.BeginPaint(hwnd)
-        rect = win32gui.GetClientRect(hwnd)
-        win32gui.DrawText(hdc, "Watch this space.", -1, rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER)
-        win32gui.EndPaint(hwnd, paintstruct)
+    def onWMSize(self, hwnd, msg, wparam, lparam):
+        # Size display areas based on a fixed, programmatic concept of
+	# MainFrame layout. There is a 20 pixel border around the
+	# window and between the display areas. The left area is 400
+	# pixels wide. Both areas are as tall as the remaining space.
+	print "----------------------- ONWMSIZE"
+	outerBorder = 20
+	innerBorder = 20
+        (left, top, right, bottom) = win32gui.GetWindowRect(hwnd)
+        (width, height) = (right-left, bottom-top)
+	availableWidth = width - outerBorder*2 - innerBorder
+	contentHeight = height - outerBorder*2
+	channelsWidth = 400
+	mainWidth = availableWidth - channelsWidth
+	if mainWidth < 0:
+	    mainWidth = 0
 
-    def onClose(self, hwnd, msg, wparam, lparam):
+	print "computed %d %d %d" % (contentHeight, channelsWidth, mainWidth)
+	channelsHwnd = self.channelsDisplay in self.areaHwnds and self.areaHwnds[self.channelsDisplay] or None
+	mainHwnd = self.mainDisplay in self.areaHwnds and self.areaHwnds[self.mainDisplay] or None
+
+	if channelsHwnd:
+	    win32gui.MoveWindow(channelsHwnd, outerBorder, outerBorder,
+				channelsWidth, contentHeight, False)
+	if self.channelsDisplay in self.selectedDisplays:
+	    d = self.selectedDisplays[self.channelsDisplay]
+	    if d:
+		win32gui.MoveWindow(d.getHwnd(), 0, 0,
+				    channelsWidth, contentHeight, False)
+
+	if mainHwnd:
+	    win32gui.MoveWindow(mainHwnd,
+				outerBorder + channelsWidth + innerBorder,
+				outerBorder, mainWidth, contentHeight, False)
+	if self.mainDisplay in self.selectedDisplays:
+	    d = self.selectedDisplays[self.mainDisplay]
+	    if d:
+		win32gui.MoveWindow(d.getHwnd(), 0, 0,
+				    mainWidth, contentHeight, False)
+
+        user32.UpdateWindow(self.hwnd)
+
+    def onWMClose(self, hwnd, msg, wparam, lparam):
         self.unlink()
         win32gui.PostQuitMessage(0)
 

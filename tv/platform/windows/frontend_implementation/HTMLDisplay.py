@@ -99,6 +99,7 @@ class HTMLDisplay (app.Display):
         return self.hwnd
 
     def onWMClose(self, hwnd, msg, wparam, lparam):
+	self.unlink()
 	win32gui.PostQuitMessage(0)
 
     def onWMSize(self, hwnd, msg, wparam, lparam):
