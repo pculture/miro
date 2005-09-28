@@ -756,6 +756,7 @@ class DynamicDatabase:
     ##
     # This is called to remove all elements matching a particular filter
     def removeMatching(self,f):
+        print "DTV: WARNING: removeMatching is depricated"
         if not self.rootDB:
             raise NotRootDBError, "removeMatching() cannot be called from subviews"
         self.beginUpdate()
@@ -765,7 +766,6 @@ class DynamicDatabase:
             for obj in self:
                 if f(obj):
                     obj.remove()
-                    self.getPrev()
             self.restoreCursor()
         finally:
             self.endUpdate()        
