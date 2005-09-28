@@ -404,7 +404,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         NSGraphicsContext.currentContext().setPatternPhase_(bottomImage.size())
         NSRectFill(((0, 0), (bgTexture.size().width, bottomImage.size().height)))
 
-        bgColor = NSColor.colorWithCalibratedWhite_alpha_(161.0/255.0, 1.0)
+        bgColor = NSColor.colorWithCalibratedWhite_alpha_(195.0/255.0, 1.0)
         bgColor.set()
         NSRectFill(((0, bottomImage.size().height), (bgTexture.size().width, bgTexture.size().height -  bottomImage.size().height - topImage.size().height)))
         
@@ -1704,7 +1704,6 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         frame.selectDisplay(previousDisplay, area)
 
     def enablePrimaryControls(self, enabled):
-        print "########## enablePrimaryControls %s" % str(enabled)
         self.playPauseButton.setEnabled_(enabled)
         self.fullscreenButton.setEnabled_(enabled)
         self.muteButton.setEnabled_(enabled)
