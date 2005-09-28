@@ -183,6 +183,19 @@ setup(
     cmdclass = {'build_ext': build_ext}
 )
 
+def copyTreeExceptSvn(src, dest):
+    names = os.listdir(src)
+    os.mkdir(dest)
+    for name in names:
+	if name == ".svn":
+	    continue
+	srcname = os.path.join(src, name)
+	destname = os.path.join(dest, name)
+	if os.path.isdir(srcname):
+	    copyTreeExceptSvn(srcname, destname)
+	else:
+	    shutil.copy2(srcname, destname)
+
 # Brutal hacks to set up the distribution environment.
 if 'py2exe' in sys.argv:
     # NEEDS: Try to figure out the root distribution directory. Ugly.
@@ -194,10 +207,10 @@ if 'py2exe' in sys.argv:
     # Copy our resources into the dist dir the way we like them.
     resourceRoot = os.path.join(root, 'resources')
     resourceTarget = os.path.join(distRoot, 'resources')
-    print 'Removing old %s if any' % resourceRoot
+    print 'Removing old %s if any' % resourceTarget
     shutil.rmtree(resourceTarget, True)
     print 'Populating %s' % resourceTarget
-    shutil.copytree(resourceRoot, resourceTarget)
+    copyTreeExceptSvn(resourceRoot, resourceTarget)
 
     # NEEDS: plds4.dll from the GRE is in fact needed at runtime, but
     # somehow it slips past distutils. (It doesn't seem to appear in the
