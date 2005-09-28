@@ -123,6 +123,7 @@ nsresult Control::deactivate(void) {
 // DOM mutators                                                              //
 ///////////////////////////////////////////////////////////////////////////////
 
+// Internal use; doesn't take lock.
 nsresult Control::getDocument(nsIDOMDocument **_retval) {
   nsresult rv;
 
@@ -134,6 +135,7 @@ nsresult Control::getDocument(nsIDOMDocument **_retval) {
   return domWindow->GetDocument(_retval);
 }
 
+// Internal use; doesn't take lock.
 nsresult Control::getElementById(wchar_t *id, nsIDOMElement **_retval) {
   nsresult rv;
 
@@ -158,6 +160,7 @@ nsresult Control::getElementById(wchar_t *id, nsIDOMElement **_retval) {
   return NS_OK;
 }
 
+// Internal use; doesn't take lock.
 nsresult Control::createElement(wchar_t *xml, nsIDOMNode **_retval) {
   nsresult rv;
 
@@ -223,6 +226,7 @@ nsresult Control::createElement(wchar_t *xml, nsIDOMNode **_retval) {
   return NS_OK;
 }
 
+// Internal use; doesn't take lock.
 nsresult Control::setElementStyle(wchar_t *id, wchar_t *name,
 				  wchar_t *value, wchar_t *priority) {
   nsresult rv;
@@ -244,96 +248,140 @@ nsresult Control::setElementStyle(wchar_t *id, wchar_t *name,
 			    nsEmbedString(priority));
 }
 
+// Part of public API; takes lock.
 nsresult Control::addElementAtEnd(wchar_t *xml, wchar_t *id) {
   nsresult rv;
+  PR_Lock(m_mutex);
 
   nsCOMPtr<nsIDOMElement> parent;
-  if (NS_FAILED(rv = getElementById(id, getter_AddRefs(parent))))
-    return rv;    
-
   nsCOMPtr<nsIDOMNode> newNode;
-  if (NS_FAILED(rv = createElement(xml, getter_AddRefs(newNode))))
-    return rv;    
-
   nsCOMPtr<nsIDOMNode> nodeOut;
-  return parent->InsertBefore(newNode, nsnull, getter_AddRefs(nodeOut));
+
+  if (NS_FAILED(rv = getElementById(id, getter_AddRefs(parent))))
+    goto done;
+
+  if (NS_FAILED(rv = createElement(xml, getter_AddRefs(newNode))))
+    goto done;
+
+  rv = parent->InsertBefore(newNode, nsnull, getter_AddRefs(nodeOut));
+
+ done:
+  PR_Unlock(m_mutex);
+  return rv;
 }
 
+// Part of public API; takes lock.
 nsresult Control::addElementBefore(wchar_t *xml, wchar_t *id) {
   nsresult rv;
+  PR_Lock(m_mutex);
 
   nsCOMPtr<nsIDOMElement> refElt;
-  if (NS_FAILED(rv = getElementById(id, getter_AddRefs(refElt))))
-    return rv;    
-
   nsCOMPtr<nsIDOMNode> parent;
-  if (NS_FAILED(rv = refElt->GetParentNode(getter_AddRefs(parent))))
-    return rv;
-  if (parent == nsnull)
-    return NS_ERROR_FAILURE;
-
   nsCOMPtr<nsIDOMNode> newNode;
-  if (NS_FAILED(rv = createElement(xml, getter_AddRefs(newNode))))
-    return rv;    
-
   nsCOMPtr<nsIDOMNode> nodeOut;
-  return parent->InsertBefore(newNode, refElt, getter_AddRefs(nodeOut));
+
+  if (NS_FAILED(rv = getElementById(id, getter_AddRefs(refElt))))
+    goto done;
+
+  if (NS_FAILED(rv = refElt->GetParentNode(getter_AddRefs(parent))))
+    goto done;
+  if (parent == nsnull) {
+    rv = NS_ERROR_FAILURE;
+    goto done;
+  }
+
+  if (NS_FAILED(rv = createElement(xml, getter_AddRefs(newNode))))
+    goto done;
+
+  rv = parent->InsertBefore(newNode, refElt, getter_AddRefs(nodeOut));
+
+ done:
+  PR_Unlock(m_mutex);
+  return rv;
 }
 
+// Part of public API; takes lock.
 nsresult Control::removeElement(wchar_t *id) {
   nsresult rv;
+  PR_Lock(m_mutex);
 
   nsCOMPtr<nsIDOMElement> elt;
-  if (NS_FAILED(rv = getElementById(id, getter_AddRefs(elt))))
-    return rv;    
-
   nsCOMPtr<nsIDOMNode> parent;
-  if (NS_FAILED(rv = elt->GetParentNode(getter_AddRefs(parent))))
-    return rv;
-  if (parent == nsnull)
-    return NS_ERROR_FAILURE;
-    
   nsCOMPtr<nsIDOMNode> nodeOut; // the removed node -- or an exception?
+
+  if (NS_FAILED(rv = getElementById(id, getter_AddRefs(elt))))
+    goto done;
+
+  if (NS_FAILED(rv = elt->GetParentNode(getter_AddRefs(parent))))
+    goto done;
+  if (parent == nsnull) {
+    rv = NS_ERROR_FAILURE;
+    goto done;
+  }
+
   if (NS_FAILED(rv = parent->RemoveChild(elt, getter_AddRefs(nodeOut))))
-    return rv;
+    goto done;
 
   // NEEDS: if indeed exceptions are returned in nodeOut, we don't
   // check 'em.
 
-  return NS_OK;
+  rv = NS_OK;
+ 
+  done:
+  PR_Unlock(m_mutex);
+  return rv;
 }
 
+// Part of public API; takes lock.
 nsresult Control::changeElement(wchar_t *id, wchar_t *xml) {
   nsresult rv;
+  PR_Lock(m_mutex);
 
   nsCOMPtr<nsIDOMElement> refElt;
-  if (NS_FAILED(rv = getElementById(id, getter_AddRefs(refElt))))
-    return rv;    
-
   nsCOMPtr<nsIDOMNode> parent;
-  if (NS_FAILED(rv = refElt->GetParentNode(getter_AddRefs(parent))))
-    return rv;
-  if (parent == nsnull)
-    return NS_ERROR_FAILURE;
-
   nsCOMPtr<nsIDOMNode> newNode;
-  if (NS_FAILED(rv = createElement(xml, getter_AddRefs(newNode))))
-    return rv;    
-
   nsCOMPtr<nsIDOMNode> nodeOut;
+
+  if (NS_FAILED(rv = getElementById(id, getter_AddRefs(refElt))))
+    goto done;
+
+  if (NS_FAILED(rv = refElt->GetParentNode(getter_AddRefs(parent))))
+    goto done;
+  if (parent == nsnull) {
+    rv = NS_ERROR_FAILURE;
+    goto done;
+  }
+
+  if (NS_FAILED(rv = createElement(xml, getter_AddRefs(newNode))))
+    goto done;
+
   if (NS_FAILED(rv = parent->
 		ReplaceChild(newNode, refElt, getter_AddRefs(nodeOut))))
-    return rv;
+    goto done;
 
-  return NS_OK;
+  rv = NS_OK;
+
+ done:
+  PR_Unlock(m_mutex);
+  return rv;
 }
 
+ // Part of public API; takes lock.
 nsresult Control::hideElement(wchar_t *id) { 
-  return setElementStyle(id, L"display", L"none");
+  PR_Lock(m_mutex);
+  nsresult rv = setElementStyle(id, L"display", L"none");
+  PR_Unlock(m_mutex);
+
+  return rv;
 }
 
+// Part of public API; takes lock.
 nsresult Control::showElement(wchar_t *id) { 
-  return setElementStyle(id, L"display", L"");
+  PR_Lock(m_mutex);
+  nsresult rv = setElementStyle(id, L"display", L"");
+  PR_Unlock(m_mutex);
+
+  return rv;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
