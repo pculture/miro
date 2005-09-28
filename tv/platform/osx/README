@@ -47,3 +47,6 @@ PYTHON_VERSION=2.4 bjam -sTOOLS=darwin --with-python-root=/Library/Frameworks/Py
 It appears that the build script doesn't build the unit tests
 correctly on OS X, and it reports that 10 target failed to build. This
 doesn't seem to be an issue.
+
+The setup script has also been updated to work with Boost distributions
+installed using package managers like Darwinports or Fink.
