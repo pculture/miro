@@ -24,7 +24,7 @@ form {
 }
 
 #channelview-titlebar {
-	background: #5392e3 url(resource:images/channelview-titlebar-bg.png) repeat-x left bottom;
+	background: url(resource:images/channelview-titlebar-bg.png) repeat-x left bottom;
 	height: 77px;
 	width: 100%;
 	margin: 0px 0px 1px;
@@ -47,34 +47,27 @@ form {
 }
 
 #channelview-titlebar-channelname {
-	position: absolute;
-	width: 400px;
-	left: 50%;
-	top: 10px;
-	margin: 0px 0px 0px -200px;
+	padding-top: 10px;
 }
 
 #channelview-titlebar-channelname h1 {
-	margin: 0px 0px 2px 0px;
+	margin: 0px 140px 0px 80px;
 	padding: 0px;
+	height: 28px;
+	overflow: hidden;
 	color: #FFFFFF;
 	font-size: 200%;
-	text-align: center;	
+	text-align: center;
 }
 
 #channelview-titlebar-autodownload {
-	position: relative;
+	position: absolute;
 	width: 138px;
-	padding: 0px;
+	top: 48px;
+	left: 50%;
+	margin: 0px 0px 0px -99px;
 	color: #FFFFFF;
-	text-align: center;
 	text-transform: uppercase;
-	padding: 3px;
-	margin: 0px 0px 0px 131px;
-}
-
-#channelview-titlebar-autodownload:hover {
-	background-color: #5291e3;
 }
 
 #channelview-titlebar-tasks {
@@ -116,9 +109,17 @@ form {
 	padding: 0px 0px 0px 20px;
 }
 
-#channelview-itemlist {
-    margin-top: 77px;
-    z-index: 0;
+.channelview-titlebar-tasks-search {
+	width: 115px; 
+	height: 13px;
+	border: 1px solid #5392e3;
+	padding: 4px;
+	font-size: 11px;
+	color: #1c5180;
+}
+
+#channelview-container {
+	padding-top: 77px;
 }
 
 .channelview-channelbar {
@@ -173,7 +174,17 @@ form {
 }
 
 .channelview-video:hover {
-	background: #f9fbfe url(resource:images/channelview-video-bg-hover.png) no-repeat right bottom;
+	background: #f9fbfe url(../images/channelview-video-bg-hover.png) no-repeat right bottom;
+}
+
+.channelview-video-green {
+	clear: both;
+	border-bottom: 1px solid #DDDDDD;
+	background: #FFFFFF url(../images/channelview-video-bg-green.png) no-repeat right bottom;
+}
+
+.channelview-video-green:hover {
+	background: #f7faf8 url(../images/channelview-video-bg-hover-green.png) no-repeat right bottom;
 }
 
 .channelview-video-tnail {
@@ -263,7 +274,14 @@ form {
 	margin-top: 5px;
 }
 
-.channelview-video-details-expiry p {
+.channelview-video-details-unwatched {
+	float: left;
+	display: inline;
+	background-color: #5ab471;
+	margin-top: 5px;
+}
+
+.channelview-video-details-expiry p, .channelview-video-details-unwatched p {
 	color: #FFFFFF;
 	text-transform: uppercase;
 	font-size: 75%;
@@ -271,22 +289,22 @@ form {
 	padding: 2px 2px;
 }
 
-.channelview-video-details-keep {
+.channelview-video-details-save {
 	float: left;
 	display: inline;
 	background-color: #f9fbfe;
+	padding: 1px;
 	margin-top: 5px;
-	padding: 1px 2px;
 }
 
-.channelview-video-details-keep p {
+.channelview-video-details-save p {
 	text-transform: uppercase;
 	font-size: 75%;
 	margin: 0px;
-	padding: 1px 3px;
+	padding: 1px;
 }
 
-.channelview-video-details-keep p a {
+.channelview-video-details-save p a {
 	color: #2b5576;
 	text-decoration: underline;	
 }
@@ -317,7 +335,7 @@ form {
 	float: left;
     width: 94px;
     height: 12px;
-	padding: 0 1px 0 1px;
+	padding: 0 2px 0 2px;
 	background: url(resource:images/status_background.png) top left no-repeat;
 }
 

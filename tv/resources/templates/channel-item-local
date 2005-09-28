@@ -34,6 +34,17 @@
     			</span>
     			<!-- / EXPIRY -->
 
+    			<!-- UNWATCHED -->
+    			<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="watched">
+        			<div class="channelview-video-details-unwatched">
+        				<p>Unwatched</p>
+        			</div>
+        			<div class="channelview-video-details-keep">
+        				<p><a href="#">Keep</a></p>
+        			</div>
+        		</span>
+    			<!-- / UNWATCHED -->
+
     			<!-- FILE TASKS -->
     			<div class="channelview-video-details-tasks">
     				<a href="action:expireItem?item=@@@this getID@@@">
