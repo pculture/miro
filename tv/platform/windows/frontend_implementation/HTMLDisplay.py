@@ -32,14 +32,37 @@ class HTMLDisplay (app.Display):
 	self.initialLoadFinished = False
 	self.execQueue = []
 
-        # Create a dummy child window
-        self.hwnd = win32gui.CreateWindowEx(0, blankWindowClassAtom,
+	# Our message map.
+	messageMap = { WM_CLOSE: self.onWMClose,
+		       WM_SIZE: self.onWMSize,
+		       WM_ERASEBKGND: lambda *args: 1, # flicker reduction
+		       WM_ACTIVATE: self.onWMActivate }
+
+	# We have a custom message map, so go ahead and create a custom
+	# window class.
+	wc = win32gui.WNDCLASS()
+	wc.style = 0
+	wc.lpfnWndProc = messageMap
+	wc.cbWndExtra = 0
+	wc.hInstance = win32api.GetModuleHandle(None)
+	wc.hIcon = win32gui.LoadIcon(0, IDI_APPLICATION)
+	wc.hCursor = win32gui.LoadCursor(0, IDC_ARROW)
+	wc.hbrBackground = win32gui.GetStockObject(WHITE_BRUSH)
+        #wc.lpszMenuName = None
+	wc.lpszClassName = "DTV HTMLDisplay class for %s" % id(self)
+	classAtom = win32gui.RegisterClass(wc)
+	del wc
+
+        # Create a containing child window.
+        self.hwnd = win32gui.CreateWindowEx(0, classAtom,
             "", WS_CHILDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
             CW_USEDEFAULT, invisibleDisplayParentHwnd, 0,
             win32api.GetModuleHandle(None), None)
 
-        # If we have size information available, use it. It will be the
-        # tuple (width, height).
+        # If we have size information available, use it. It will be
+        # the tuple (width, height). Calling MoveWindow results into a
+        # call to onWMSize which results in a call to recomputeSize on
+        # the browser.
         displaySizeHint = frameHint and areaHint and frameHint.getDisplaySizeHint(areaHint) or None
         if displaySizeHint:
             win32gui.MoveWindow(self.hwnd, 0, 0, 
@@ -51,8 +74,11 @@ class HTMLDisplay (app.Display):
         handle = os.fdopen(handle,"w")
         handle.write(html)
         handle.close()
-        print "Logged HTML to %s" % location
 	self.deleteOnLoadFinished = location
+	# For debugging generated HTML, you could uncomment the next
+	# two lines.
+	#print "Logged HTML to %s" % location
+	#self.deleteOnLoadFinished = None
 
 	# Translate path into URL.
 	parts = re.split(r'\\', location)
@@ -72,16 +98,37 @@ class HTMLDisplay (app.Display):
     def getHwnd(self):
         return self.hwnd
 
+    def onWMClose(self, hwnd, msg, wparam, lparam):
+	win32gui.PostQuitMessage(0)
+
+    def onWMSize(self, hwnd, msg, wparam, lparam):
+	self.mb and self.mb.recomputeSize()
+
+    def onWMActivate(self, hwnd, msg, wparam, lparam):
+	if self.mb:
+	    if wparam == WA_ACTIVE or wparam == WA_CLICKACTIVE:
+		self.mb.activate()
+	    if wparam == WA_INACTIVE:
+		self.mb.deactivate()
+
+    def onSelected(self, *args):
+	# Give focus whenever the display is installed. Probably the best
+	# of several not especially attractive options.
+	app.Display.onSelected(self, *args)
+	self.mb and self.mb.activate()
+
     # Decorator. Causes calls to be queued up, in order, until
     # onDocumentLoadFinished is called.
     def deferUntilAfterLoad(func):
 	def wrapper(self, *args, **kwargs):
 	    self.lock.acquire()
-	    if not self.initialLoadFinished:
-		self.execQueue.append(lambda: func(self, *args, **kwargs))
-	    else:
-		func(self, *args, **kwargs)
-	    self.lock.release()
+	    try:
+		if not self.initialLoadFinished:
+		    self.execQueue.append(lambda: func(self, *args, **kwargs))
+		else:
+		    func(self, *args, **kwargs)
+	    finally:
+		self.lock.release()
 	return wrapper
 
     @deferUntilAfterLoad
@@ -91,35 +138,22 @@ class HTMLDisplay (app.Display):
     # DOM hooks used by the dynamic template code
     @deferUntilAfterLoad
     def addItemAtEnd(self, xml, id):
-	print "aIAE"
 	self.mb.addElementAtEnd(xml, id)
-	print "back"
     @deferUntilAfterLoad
     def addItemBefore(self, xml, id):
-	print "aIB on %s" % self
 	self.mb.addElementBefore(xml, id)
-	print "back"
     @deferUntilAfterLoad
     def removeItem(self, id):
-	print "rI"
-	self.mb.removeItem(id)
-	print "back"
+	self.mb.removeElement(id)
     @deferUntilAfterLoad
     def changeItem(self, id, xml):
-	print "cI"
-	self.mb.changeItem(id, xml)
-	print "back"
+	self.mb.changeElement(id, xml)
     @deferUntilAfterLoad
     def hideItem(self, id):
-	print "hI"
-	self.mb.hideItem(id)
-	print "back"
+	self.mb.hideElement(id)
     @deferUntilAfterLoad
     def showItem(self, id):
-	print "sI"
-	self.mb.showItem(id)
-	print "back"
-
+	self.mb.showElement(id)
     def onURLLoad(self, url):
         """Called when this HTML browser attempts to load a URL (either
         through user action or Javascript.) The URL is provided as a
@@ -132,11 +166,10 @@ class HTMLDisplay (app.Display):
         return True
 
     def onDocumentLoadFinished(self):
-	print "onDocumentLoadFinished"
 	if self.deleteOnLoadFinished:
 	    try:
-		# NEEDS: debugging
-#		os.remove(self.deleteOnLoadFinished)
+		# Comment this line out for debugging
+		os.remove(self.deleteOnLoadFinished)
 		pass
 	    except os.error:
 		pass
@@ -145,21 +178,17 @@ class HTMLDisplay (app.Display):
 	# Dispatch calls that got queued up as a result of @deferUntilAfterLoad
 	if not self.initialLoadFinished:
 	    self.lock.acquire()
-	    print "Dispatching queued up events"
-	    self.initialLoadFinished = True
-	    for func in self.execQueue:
-		print "dispatching %s" % func
-		func()
-		print "back from dispatch"
-#		print "skipping %s" % func
-	    self.execQueue = []
-	    print "Done dispatching"
-	    self.lock.release()
+	    try:
+		self.initialLoadFinished = True
+		for func in self.execQueue:
+		    func()
+		self.execQueue = []
+	    finally:
+		self.lock.release()
 
     def unlink(self):
         self.mb = None
         if self.hwnd:
-            print "HTMLDisplay unlink %s" % self.hwnd
             win32gui.DestroyWindow(self.hwnd)
         self.hwnd = None
 
