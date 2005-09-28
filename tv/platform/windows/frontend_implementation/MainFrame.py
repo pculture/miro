@@ -32,6 +32,9 @@ invisibleDisplayParentHwnd = win32gui.CreateWindowEx(0, blankWindowClassAtom,
     CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, 0, 0,
     win32api.GetModuleHandle(None), None)
 
+import MozillaBrowser #NEEDS: test
+import HTMLDisplay #NEEDS: test
+
 ###############################################################################
 #### Main window                                                           ####
 ###############################################################################
@@ -84,7 +87,7 @@ class MainFrame:
 
         # Child display state
         self.selectedDisplays = {}
-        self.areaHwnds = {} # NEEDS: broken
+        self.areaHwnds = {}
 
         # Create top-level window
         windowTitle = "DTV"
@@ -92,12 +95,24 @@ class MainFrame:
             windowTitle, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
             CW_USEDEFAULT, CW_USEDEFAULT, 0, 0, self.hInstance, None)
 
+	# NEEDS: TESTING
+        self.testHwnd = win32gui.CreateWindowEx(0, blankWindowClassAtom,
+            "", WS_CHILDWINDOW, 640, 10, 200,
+            200, self.hwnd, 0,
+            self.hInstance, None)
+	win32gui.ShowWindow(self.testHwnd, SW_SHOW)
+	self.testMb = MozillaBrowser. \
+	    MozillaBrowser(hwnd = self.testHwnd,
+			   initialURL = "http://www.google.com")
+	self.testMb.activate()
+	# END TEST CODE
+
         # NEEDS: temp hack: create some child displays
         self.areaHwnds[self.channelsDisplay] = win32gui.CreateWindowEx(0, blankWindowClassAtom,
             windowTitle, WS_CHILDWINDOW, 10, 10, 100, 300,
             self.hwnd, 0, self.hInstance, None)
         self.areaHwnds[self.mainDisplay] = win32gui.CreateWindowEx(0, blankWindowClassAtom,
-            windowTitle, WS_CHILDWINDOW, 320, 10, 300, 300,
+            windowTitle, WS_CHILDWINDOW, 120, 10, 500, 300,
             self.hwnd, 0, self.hInstance, None)
         for area in self.areaHwnds:
             win32gui.ShowWindow(self.areaHwnds[area], SW_SHOW)
@@ -122,6 +137,7 @@ class MainFrame:
         print "selectDisplay %s (%s) in %s" % (newDisplay, newDisplay.getHwnd(), area)
         if not self.hwnd:
             print "Warning: selectDisplay ignored on destroyed MainFrame."
+	    return
 
         oldDisplay = None # protect from GC at least until new window's in
         oldHwnd = None
@@ -138,6 +154,8 @@ class MainFrame:
             # selected for the purpose of sending deselection messages --
             # just don't display it anywhere.
             areaHwnd = self.areaHwnds[area] or invisibleDisplayParentHwnd
+	    print "------>> for %s areaHwnd = %d (not %d); newHwnd = %d" % \
+		(area, areaHwnd, invisibleDisplayParentHwnd, newHwnd)
             win32gui.ShowWindow(newHwnd, SW_HIDE)
             win32gui.SetParent(newHwnd, areaHwnd)
             (left, top, right, bottom) = win32gui.GetWindowRect(areaHwnd)
@@ -146,7 +164,7 @@ class MainFrame:
             win32gui.BringWindowToTop(newHwnd)
             win32gui.ShowWindow(newHwnd, SW_SHOW)
 
-        if oldHwnd:
+        if oldHwnd and oldHwnd != newHwnd:
             win32gui.SetParent(oldHwnd, invisibleDisplayParentHwnd)
 
         self.selectedDisplays[area] = newDisplay
