@@ -37,11 +37,13 @@ class UIBackendDelegate:
         message = "A new version of DTV is available.\n\nWould you like to download it now?"
         # NEEDS
         # right now, if user says yes, self.openExternalURL(url)
-        raise NotImplementedError
+	print "WARNING: ignoring new version available at URL: %s" % url
+#        raise NotImplementedError
 
     def openExternalURL(self, url):
         # We could use Python's webbrowser.open() here, but
         # unfortunately, it doesn't have the same semantics under UNIX
         # as under other OSes. Sometimes it blocks, sometimes it doesn't.
-        raise NotImplementedError
+	print "WARNING: ignoring external URL: %s" % url
+#        raise NotImplementedError
 
