@@ -165,7 +165,7 @@ class DynamicDatabase:
     ##
     # Returns the nth item in the View
     def __getitem__(self,n):
-        #print "DTV: Database Warning: numeric subscripts are depricated"
+        #print "DTV: Database Warning: numeric subscripts are deprecated"
         self.beginRead()
         try:
             try:
@@ -1061,5 +1061,5 @@ class DDBObject:
                 self.dd.restoreCursor()
         finally:
             self.dd.endUpdate()
-        globalLock.release()
+            globalLock.release()
 
