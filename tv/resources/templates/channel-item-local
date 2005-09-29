@@ -28,8 +28,8 @@
         			<div class="channelview-video-details-expiry">
         				<p>Expires: <span t:replace="this getExpirationTime" /></p>
         			</div>
-        			<div class="channelview-video-details-keep">
-        				<p><a href="action:keepItem?item=@@@this getID@@@">Keep</a></p>
+        			<div class="channelview-video-details-save">
+        				<p><a href="action:keepItem?item=@@@this getID@@@">Save</a></p>
         			</div>
     			</span>
     			<!-- / EXPIRY -->
@@ -39,8 +39,8 @@
         			<div class="channelview-video-details-unwatched">
         				<p>Unwatched</p>
         			</div>
-        			<div class="channelview-video-details-keep">
-        				<p><a href="#">Keep</a></p>
+        			<div class="channelview-video-details-save">
+        				<p><a href="#">Save</a></p>
         			</div>
         		</span>
     			<!-- / UNWATCHED -->

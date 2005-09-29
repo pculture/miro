@@ -174,7 +174,7 @@ form {
 }
 
 .channelview-video:hover {
-	background: #f9fbfe url(../images/channelview-video-bg-hover.png) no-repeat right bottom;
+	background: #e8ecf3 url(../images/channelview-video-bg-hover.png) no-repeat right bottom;
 }
 
 .channelview-video-green {
@@ -208,14 +208,27 @@ form {
 }
 
 .channelview-video-hitbox .downloadable a {
-    background: url(resource:images/channelview-icon-download.png) no-repeat right bottom;
+	background: url(resource:images/channelview-video-download.png) no-repeat right bottom;
+}
+
+.channelview-video-hitbox .downloadable a:hover {
+	background: url(resource:images/channelview-video-download-hover.png) no-repeat right bottom;
 }
 
 .channelview-video-hitbox .playable a {
-    background: url(resource:images/channelview-icon-play.png) no-repeat right bottom;
+	background: url(resource:images/channelview-video-play.png) no-repeat right bottom;
 }
 
-.channelview-video-hitbox a:hover {
+.channelview-video-hitbox .playable a:hover {
+	background: url(resource:images/channelview-video-play-hover.png) no-repeat right bottom;
+}
+
+.channelview-video-hitbox .inprogress a {
+	background: url(resource:images/channelview-video-inprogress.png) no-repeat right bottom;
+}
+
+.channelview-video-hitbox .inprogress a:hover {
+	background: url(resource:images/channelview-video-inprogress-hover.png) no-repeat right bottom;
 }
 
 .channelview-video-desc {
@@ -309,7 +322,7 @@ form {
 	text-decoration: underline;	
 }
 
-.channelview-video-details-keep p a:hover {
+.channelview-video-details-save p a:hover {
 	color: #000000;
 	text-decoration: underline;	
 }
