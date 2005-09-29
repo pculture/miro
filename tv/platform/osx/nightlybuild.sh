@@ -7,14 +7,11 @@
 #
 # Add this script to your crontab to automatically upload builds to the server
 #
-# Make sure to include the necessary environment variables for SSH and CVS
-#
 # For example, my crontab looks like this:
 #
 # PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin
 # SSH_AUTH_SOCK=/tmp/501/SSHKeychain.socket
-# CVS_RSH=/usr/bin/ssh
-# 30 03 * * * /Users/nassar/nightlybuild/tv/platform/osx/nightlybuild.sh /Users/nassar/nightlybuild/tv
+# 30 03 * * * /Users/nassar/nightlybuild/dtv/trunk/tv/platform/osx/nightlybuild.sh /Users/nassar/nightlybuild/dtv
 #
 #
 
@@ -28,12 +25,12 @@ fi
 
 buildDir=$1
 
-echo "Updating the CVS tree..."
+echo "Updating the source tree..."
 cd "${buildDir}"
-cvs update -d
+svn update
 
 echo "Changing to OS X platform directory"
-cd platform/osx
+cd trunk/tv/platform/osx
 
 echo -n "Removing old DTV.app..."
 rm -rf DTV.app img
