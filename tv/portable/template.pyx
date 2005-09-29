@@ -171,6 +171,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         self.inView = False
         self.inInclude = False
         self.inRepeatView = False
+        self.inUpdateView = False
         self.inReplace = False
         self.inStaticReplace = False
         self.repeatDepth = 0
@@ -233,7 +234,20 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             self.repeatView = self.handle.findNamedView(attrs['t:repeatForView']).getView()
             self.repeatName = attrs['t:repeatForView']
 
-        elif self.inRepeatView:
+        elif 't:updateForView' in attrs.keys():
+            self.inUpdateView = True
+            self.repeatDepth = self.depth
+            self.repeatList = [(getRepeatText, '<%s'%name),]
+            for key in attrs.keys():
+                if key != 't:updateForView':
+                    addKey = key
+                    PyList_Append(self.repeatList,(getRepeatAttr,(addKey,attrs[addKey])))
+            PyList_Append(self.repeatList,(getRepeatAddIdAndClose,None))
+
+            self.repeatView = self.handle.findNamedView(attrs['t:updateForView']).getView()
+            self.repeatName = attrs['t:updateForView']
+
+        elif self.inRepeatView or self.inUpdateView:
             if attrs.has_key('t:hideIfKey') or attrs.has_key('t:hideIfNotKey'):
                 try:
                     ifKey = attrs['t:hideIfKey']
@@ -413,7 +427,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             if self.depth == self.hideDepth:
                 self.hiding = False
         elif self.inReplace and self.depth == self.replaceDepth:
-            if self.inRepeatView:
+            if self.inRepeatView or self.inUpdateView:
                 PyList_Append(self.repeatList,(getRepeatText,'</%s>'%name))
             else:
                 self.outString.write('</%s>'%name)
@@ -425,7 +439,14 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             repeatId = generateId()
             self.outString.write('<span id=%s/>'%sax.saxutils.quoteattr(repeatId))
             self.handle.addView(repeatId, 'nextSibling', self.repeatView, self.repeatList, self.data, self.repeatName)
-        elif self.inRepeatView:
+        elif self.inUpdateView and self.depth == self.repeatDepth:
+            self.inUpdateView = False
+            PyList_Append(self.repeatList,(getRepeatText,'</%s>'%name))
+
+            repeatId = generateId()
+            self.outString.write('<span id=%s/>'%sax.saxutils.quoteattr(repeatId))
+            self.handle.addUpdate(repeatId, 'nextSibling', self.repeatView, self.repeatList, self.data, self.repeatName)
+        elif self.inRepeatView or self.inUpdateView:
             PyList_Append(self.repeatList,(getRepeatText,'</%s>'%name))
         elif name == 't:dynamicviews':
             self.inDynamicViews = False
@@ -444,7 +465,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
     def characters(self,data):
         if self.inReplace or self.inStaticReplace or self.hiding:
             pass
-        elif self.inRepeatView:
+        elif self.inRepeatView or self.inUpdateView:
             PyList_Append(self.repeatList,(getRepeatTextEscape,data))
         else:
             self.outString.write(sax.saxutils.escape(data))
@@ -546,6 +567,62 @@ class TrackedView:
         clearEvalCache()
         if self.parent.domHandler:
             self.parent.domHandler.addItemBefore(self.currentXML(newObj), self.anchorId)
+
+# Class used internally by Handle to track a t:updateForView clause.
+class UpdateRegion:
+    def __init__(self, anchorId, anchorType, view, templateFuncs, templateData, parent, name):
+        # arguments as Handle.addView(), plus 'parent', a pointer to the Handle
+        # that is used to find domHandler and invoke checkHides
+        self.anchorId = anchorId
+        self.anchorType = anchorType
+
+        self.view = view
+        self.templateFuncs = templateFuncs
+        self.templateData = templateData
+        self.parent = parent
+        self.name = name
+        self.tid = generateId()
+
+    #
+    # This is called after the HTML has been rendered to fill in the
+    # data for each view and register callbacks to keep it updated
+    def initialFillIn(self):
+        self.view.beginRead()
+        try:
+            clearEvalCache()
+            if self.parent.domHandler:
+                self.parent.domHandler.addItemBefore(self.currentXML(), self.anchorId)
+            self.view.addChangeCallback(self.onChange)
+            self.view.addAddCallback(self.onChange)
+            self.view.addRemoveCallback(self.onChange)
+        finally:
+            self.view.endRead()
+
+
+    def currentXML(self):
+        output = []
+        data = copy.copy(self.templateData)
+        data['this'] = self.view
+        data['thisView'] = self.name
+        for (func, args) in self.templateFuncs:
+            output.append(func(data,self.tid,args))
+        try:
+            return ''.join(output) 
+        except UnicodeDecodeError:
+            ret = ''
+            for string in output:
+                try:
+                    ret = ret + string
+                except:
+                    pass
+            return ret
+
+    def onChange(self,obj=None,id=None):
+        clearEvalCache()
+        xmlString = self.currentXML()
+        if self.parent.domHandler:
+            self.parent.domHandler.changeItem(self.tid, xmlString)
+        self.parent.checkHides()
 
 # Class used by Handle to track the dynamically filterable, sortable
 # views created by makeNamedView and identified by names. After
@@ -722,6 +799,7 @@ class Handle:
         self.hideConditions = []
         self.namedViews = {}
         self.trackedViews = []
+        self.updateRegions = []
         self.subHandles = []
         self.triggerActionURLs = []
         
@@ -791,7 +869,10 @@ class Handle:
         # it subsequent to calling this method.
         tv = TrackedView(anchorId, anchorType, view, templateFuncs, data, self, name)
         self.trackedViews.append(tv)
-        None
+
+    def addUpdate(self, anchorId, anchorType, view, templateFuncs, data, name):
+        ur = UpdateRegion(anchorId, anchorType, view, templateFuncs, data, self, name)
+        self.updateRegions.append(ur)
 
     def unlinkTemplate(self):
         # Stop delivering callbacks, allowing the handle to be released.
@@ -803,6 +884,7 @@ class Handle:
         self.document = None
         self.hideConditions = []
         self.trackedViews = []
+        self.updateRegions = []
         for handle in self.subHandles:
             handle.unlinkTemplate()
         for view in self.namedViews.values():
@@ -811,6 +893,8 @@ class Handle:
     def initialFillIn(self):
         for tv in self.trackedViews:
             tv.initialFillIn()
+        for ur in self.updateRegions:
+            ur.initialFillIn()
         for handle in self.subHandles:
             handle.initialFillIn()
 
