@@ -1,12 +1,18 @@
 Just some notes for now: not tested on a virgin machine, not
 necessarily complete, and not tested with compilers other than Visual
-C++. You are largely on your own.
+C++. You are largely on your own. If you encounter any problems, check
+the Developer FAQ at:
 
-IMPORTANT: the Windows port doesn't do much of anything right now --
-when you run the program you might get a Web browser window pointing
-at Google, *if you're lucky.* This situation will be improving rapidly
-over the next few weeks; just remember not to expect too much from
-unfinished pre-alpha software. -- 9/27/05
+https://develop.participatoryculture.org/projects/dtv/wiki/DeveloperFaq
+
+If that doesn't help, post to the mailing list.
+
+IMPORTANT: the Windows port is *extremely rough.* It is unskinned, has
+serious graphical glitches, can't play videos, and is not tested for
+stability at all. It's likely to be of interest only to
+developers. This situation will be improving rapidly over the next few
+weeks; just remember not to expect too much from unfinished pre-alpha
+software. -- 9/29/05
 
 1) Install Python 2.4.x:
      http://www.python.org/download/
