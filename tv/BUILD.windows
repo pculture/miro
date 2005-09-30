@@ -83,7 +83,7 @@ software. -- 9/29/05
      prompt is opened with the right environment) by opening a new
      instance of cmd.exe and running:
        C:\Program Files\Microsoft Visual C++ Toolkit 2003\vcvars.bat
-   
+
      But, I'm told, you will get a report of a missing
      msvcprtd.lib. Install the free ".NET Framework SDK" from
      Microsoft to get msvcprt.dll and follow your favorite instuctions
@@ -103,7 +103,10 @@ software. -- 9/29/05
      correct -- msvcptrd.lib should be a different version with extra
      debugging symbols -- but is reported to "mostly" work.
 
-     Many thanks to 'buzz at oska dot com' for the above instructions.
+     Many thanks to 'buzz at oska dot com' for the above instructions. He
+     also contributed the file 'platform/windows/contrib/pathsetup.bat'
+     which automates some of the above; this may be a useful starting
+     point.
 
 4) Edit platform/windows/setup.py. Set the paths to Boost and the GRE and
    GRE SDK. If you installed a prebuild GRE, you'll probably have to dig
