@@ -117,19 +117,17 @@ class MainFrame:
 	# MainFrame layout. There is a 20 pixel border around the
 	# window and between the display areas. The left area is 400
 	# pixels wide. Both areas are as tall as the remaining space.
-	print "----------------------- ONWMSIZE"
 	outerBorder = 20
 	innerBorder = 20
         (left, top, right, bottom) = win32gui.GetWindowRect(hwnd)
         (width, height) = (right-left, bottom-top)
 	availableWidth = width - outerBorder*2 - innerBorder
 	contentHeight = height - outerBorder*2
-	channelsWidth = 400
+	channelsWidth = 250
 	mainWidth = availableWidth - channelsWidth
 	if mainWidth < 0:
 	    mainWidth = 0
 
-	print "computed %d %d %d" % (contentHeight, channelsWidth, mainWidth)
 	channelsHwnd = self.channelsDisplay in self.areaHwnds and self.areaHwnds[self.channelsDisplay] or None
 	mainHwnd = self.mainDisplay in self.areaHwnds and self.areaHwnds[self.mainDisplay] or None
 
@@ -180,8 +178,6 @@ class MainFrame:
             # selected for the purpose of sending deselection messages --
             # just don't display it anywhere.
             areaHwnd = self.areaHwnds[area] or invisibleDisplayParentHwnd
-	    print "------>> for %s areaHwnd = %d (not %d); newHwnd = %d" % \
-		(area, areaHwnd, invisibleDisplayParentHwnd, newHwnd)
             win32gui.ShowWindow(newHwnd, SW_HIDE)
             win32gui.SetParent(newHwnd, areaHwnd)
             (left, top, right, bottom) = win32gui.GetWindowRect(areaHwnd)
