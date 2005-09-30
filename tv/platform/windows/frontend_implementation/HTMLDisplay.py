@@ -54,6 +54,7 @@ class HTMLDisplay (app.Display):
 	del wc
 
         # Create a containing child window.
+	self.mb = None # so callbacks can detect that there's no browser yet
         self.hwnd = win32gui.CreateWindowEx(0, classAtom,
             "", WS_CHILDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
             CW_USEDEFAULT, invisibleDisplayParentHwnd, 0,
@@ -83,7 +84,6 @@ class HTMLDisplay (app.Display):
 	# Translate path into URL.
 	parts = re.split(r'\\', location)
 	url = "file:///" + '/'.join(parts)
-	print "url = %s" % url
 
         userAgent = "DTV/pre-release (http://participatoryculture.org/)"
 	self.mb = MozillaBrowser. \
