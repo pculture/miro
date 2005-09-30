@@ -40,7 +40,8 @@ cdef int setListItem(object PyList, int idx, object obj) except -1:
 from xml.dom.minidom import parse, parseString
 from xml import sax
 from xhtmltools import urlencode
-from cStringIO import StringIO
+#from cStringIO import StringIO
+from StringIO import StringIO
 import time
 import resource
 import random
@@ -335,7 +336,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                         self.outString.write(' %s=%s'%(key,quoteAndFillAttr(attrs[key],self.data)))
                 self.outString.write('>')
                 replace = attrs['t:replace']
-                self.outString.write(sax.saxutils.escape(str(evalKeyC(replace,self.data, None, True))))
+                self.outString.write(sax.saxutils.escape(unicode(evalKeyC(replace,self.data, None, True))))
                 self.inReplace = True
                 self.replaceDepth = self.depth      
         elif 't:replaceMarkup' in attrs.keys():
@@ -345,7 +346,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                         self.outString.write(' %s=%s'%(key,quoteAndFillAttr(attrs[key],self.data)))
                 self.outString.write('>')
                 replace = attrs['t:replaceMarkup']
-                self.outString.write(str(evalKeyC(replace,self.data,None, True)))
+                self.outString.write(unicode(evalKeyC(replace,self.data,None, True)))
                 self.inReplace = True
                 self.replaceDepth = self.depth      
         elif name == 't:dynamicviews':
@@ -394,11 +395,11 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             self.outString.write(html)
         elif name == 't:staticReplaceMarkup':
             replace = attrs['t:replaceData']
-            self.outString.write(str(evalKeyC(replace,self.data,None, True)))
+            self.outString.write(unicode(evalKeyC(replace,self.data,None, True)))
             self.inStaticReplace = True
         elif name == 't:staticReplace':
             replace = attrs['t:replaceData']
-            self.outString.write(sax.saxutils.escape(str(evalKeyC(replace,self.data, None, True))))
+            self.outString.write(sax.saxutils.escape(unicode(evalKeyC(replace,self.data, None, True))))
             self.inStaticReplace = True
         elif name == 't:includeTemplate':
             self.outString.write(self.fillTemplate(attrs['filename'],self.data))
@@ -709,11 +710,11 @@ def getRepeatAddIdAndClose(data,tid,args):
 
 # Evaluates key with data
 def getRepeatEvalEscape(data, tid, replace):
-    return sax.saxutils.escape(str(evalKeyC(replace,data,None, True)))
+    return sax.saxutils.escape(unicode(evalKeyC(replace,data,None, True)))
 
 # Evaluates key with data
 def getRepeatEval(data, tid, replace):
-    return str(evalKeyC(replace,data,None, True))
+    return unicode(evalKeyC(replace,data,None, True))
 
 # Returns text of include
 def getRepeatInclude(data, tid, args):
@@ -760,12 +761,12 @@ def fillAttr(value,data):
         match = attrPattern.match(value)
         if not match:
             break
-        value = ''.join((match.group(1), urlencode(str(evalKeyC(match.group(2), data, None, True))), match.group(3)))
+        value = ''.join((match.group(1), urlencode(unicode(evalKeyC(match.group(2), data, None, True))), match.group(3)))
     while True:
         match = rawAttrPattern.match(value)
         if not match:
             break
-        value = ''.join((match.group(1), str(evalKeyC(match.group(2), data, None, True)), match.group(3)))
+        value = ''.join((match.group(1), unicode(evalKeyC(match.group(2), data, None, True)), match.group(3)))
     match = resourcePattern.match(value)
     if match:
         value = resource.url(match.group(1))
