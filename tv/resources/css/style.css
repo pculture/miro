@@ -188,12 +188,12 @@ a.feeditem:hover{
 	}
 
 #sidebar a.selected_feeditem {
-	background: #888 url(resource:images/channel_bg.png) 0% 0% repeat-x; 
+	background: url(resource:images/channel_bg.png) 0% 0% repeat-x; 
 	color: #fff;
 	}
 
 #sidebar a.selected_feeditem_inactive {
-	background: #888 url(resource:images/channel_bg.png) 0px -40px repeat-x; 
+	background: url(resource:images/channel_bg.png) 0px -40px repeat-x; 
 	color: #fff;
 	}
 
@@ -214,11 +214,10 @@ height: 36px;
 
 .channel_bar_divider {
 margin: 3px 2px 3px 0px;
-height: 3px;
+height: 2px;
 overflow: hidden;
 font-size: 2px;
-border-top: 2px solid #bbb;
-background-color: #fff;
+border-top: 1px solid #b6bfce;
 }
 
 
