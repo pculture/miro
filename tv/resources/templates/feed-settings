@@ -23,34 +23,14 @@
 	<h2 i18n:translate=""><span t:replaceMarkup="feed getTitle"/></h2>
 	<a href="mailto:?subject=@@@feed getTitle@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed getTitle@@@&quot;. If you don't have DTV, you can get it here:%0D%0A%0D%0Ahttp://www.participatoryculture.org/download.php%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed getURL@@@" class="recommend_link" i18n:translate="">Recommend to Friends</a>
 </div>
-<!--
-<div id="right_half">
-	<div class="auto_link" i18n:translate="">AUTO DOWNLOAD: <span t:replace="feed autoDownloadStatus"/></div>
-	<a class="settings_link" i18n:translate="" href="template:feed-settings">Change Settings</a>
-
-</div>
--->
 	<br style="clear: both; height: 0; padding: 0; margin: 0;" />
 </div>
 
 
-
 <div id="navigation_wrapper">
-	<div id="navigation">
-	<div id="tabs" class="tabs">
-		
-		<span class="tab_left"><a href="template:feed-watch" class="watch">Watch</a></span>
-		
-		<span class="tab-center" t:hideIfNotKey="feed hasLibrary" t:hideFunctionKey="global filter boolean"><a href="template:feed-choose" class="browse" >Browse</a></span>
-		
-		<span class="tab_right" t:hideIfKey="feed hasLibrary" t:hideFunctionKey="global filter boolean"><a href="template:feed-choose" class="browse_nolibrary">Browse</a></span>
-		
-		<span class="tab_right" t:hideIfNotKey="feed hasLibrary" t:hideFunctionKey="global filter boolean"><a href="" class="library">Library</a></span>
-	
-	</div>
-	</div>
-
+	<div id="navigation" />
 </div>
+
 
 </div>
 
@@ -64,28 +44,9 @@
 
 
 <form action="action:changeFeedSettings" method="GET" name="settings">
-<input type="hidden" name="feed" value="@@@feed getID@@@" />
-
-
-<!--
-
-<div class="setting_heading">
- <input name="automatic" type="radio" t:hideIfKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" onClick="javascript:form.submit()" value="0" checked="checked" />
- <input name="automatic" type="radio" t:hideIfNotKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" onClick="javascript:form.submit()" value="0"/>
- <h2 i18n:translate="">Browse Mode</h2>
- <span class="heading_desc" i18n:translate="">Don't download automatically. I will choose which videos I want to get.</span>
-</div>
-
--->
-
-
-<div class="settings_auto_mode">
- 
-<h2 i18n:translate=""><input name="automatic" type="checkbox" t:hideIfNotKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" onClick="javascript:settingsFormSubmit()" value="1" checked="checked" />
- <input name="automatic" type="checkbox" t:hideIfKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" onClick="javascript:settingsFormSubmit()" value="1"/>
-Auto Download</h2>
-  <span class="heading_desc" i18n:translate="">&nbsp;&nbsp;&nbsp;Automatically download videos from this channel as they become available.</span>
-</div>
+<input name="feed" type="hidden" value="@@@feed getID@@@" />
+<input name="automatic" type="hidden" t:hideIfNotKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" onClick="javascript:settingsFormSubmit()" value="1" />
+<input name="automatic" type="hidden" t:hideIfKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" onClick="javascript:settingsFormSubmit()" value="0" />
 
 
 <div class="setting_heading">
@@ -150,8 +111,9 @@ Auto Download</h2>
 
  
 </div>
-  
+<input type="button" value="Save Changes" onClick="javascript:eventURL('template:channel')" />
 </form>
+
   </div>
   </div> 
 
