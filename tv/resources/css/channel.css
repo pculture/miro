@@ -208,27 +208,27 @@ form {
 }
 
 .channelview-video-hitbox .downloadable a {
-	background: url(resource:images/channelview-video-download.png) no-repeat right bottom;
+	background: url(resource:images/channelview-video-download.png) no-repeat right top;
 }
 
 .channelview-video-hitbox .downloadable a:hover {
-	background: url(resource:images/channelview-video-download-hover.png) no-repeat right bottom;
+	background: url(resource:images/channelview-video-download.png) no-repeat right -75px;
 }
 
 .channelview-video-hitbox .playable a {
-	background: url(resource:images/channelview-video-play.png) no-repeat right bottom;
+	background: url(resource:images/channelview-video-play.png) no-repeat right top;
 }
 
 .channelview-video-hitbox .playable a:hover {
-	background: url(resource:images/channelview-video-play-hover.png) no-repeat right bottom;
+	background: url(resource:images/channelview-video-play.png) no-repeat right -75px;
 }
 
 .channelview-video-hitbox .inprogress a {
-	background: url(resource:images/channelview-video-inprogress.png) no-repeat right bottom;
+	background: url(resource:images/channelview-video-inprogress.png) no-repeat right top;
 }
 
 .channelview-video-hitbox .inprogress a:hover {
-	background: url(resource:images/channelview-video-inprogress-hover.png) no-repeat right bottom;
+	background: url(resource:images/channelview-video-inprogress.png) no-repeat right -75px;
 }
 
 .channelview-video-desc {
@@ -356,6 +356,6 @@ form {
 	float: right;
 	width: 11px;
 	height: 13px;
-	margin: 3px 0px 3px 3px;
+	margin: 0px 0px 3px 3px;
 	background: url(resource:images/channelview-cancel.png) top left no-repeat;
 }
