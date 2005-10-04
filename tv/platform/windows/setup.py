@@ -159,6 +159,7 @@ ext_modules = [
     #vlchelper.info.getExtension(root),
 
     # Pyrex sources.
+    Extension("simplevlc", [os.path.join(root, 'platform','windows', 'simplevlc.pyx')],libraries=["simplevlc"]),
     Extension("database", [os.path.join(root, 'portable', 'database.pyx')]),
     Extension("template", [os.path.join(root, 'portable', 'template.pyx')]),
 ]
