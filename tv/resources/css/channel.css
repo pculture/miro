@@ -336,10 +336,31 @@ form {
 	padding: 5px 0px 0px 0px;
 }
 
-.channelview-video-details-task {
+.channelview-video-details-task-delete, .channelview-video-details-task-bomb, .channelview-video-details-task-mail {
 	float: left;
 	display: inline;
 	margin: 0px 12px 0px 12px;
+	overflow: hidden;
+}
+
+.channelview-video-details-task-delete {	
+	background: url(resource:images/channelview-icon-trash.png) top left no-repeat;
+	width: 13px;
+	height: 12px;
+}
+
+.channelview-video-details-task-delete:hover {	
+	background: url(resource:images/channelview-icon-trash.png) bottom left no-repeat;
+}
+
+.channelview-video-details-task-mail {	
+	background: url(resource:images/channelview-icon-mail.png) top left no-repeat;
+	width: 14px;
+	height: 12px;
+}
+
+.channelview-video-details-task-mail:hover {	
+	background: url(resource:images/channelview-icon-mail.png) bottom left no-repeat;
 }
 
 .channelview-video-progress {
