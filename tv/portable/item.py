@@ -441,10 +441,9 @@ class Item(DDBObject):
         return size
 
     ##
-    # Returns string containing three digit percent finished
-    # "000" through "100" This is used to choose an image for the progress bar
-    def threeDigitPercentDone(self):
-        ret = "000"
+    # Returns the download progress in absolute percentage [0.0 - 100.0].
+    def downloadProgress(self):
+        progress = 0
         self.beginRead()
         try:
             size = 0
@@ -456,14 +455,31 @@ class Item(DDBObject):
                 except:
                     pass
             if size > 0:
-                percent = (100*dled)/size
-                ret = '%03d' % percent
+                progress = (100.0*dled) / size
         finally:
             self.endRead()
-        return ret
+        return progress
 
     ##
-    # returns string with estimate time until download completes
+    # Returns the width of the progress bar corresponding to the current
+    # download progress. This doesn't really belong here and even forces
+    # to use a hardcoded constant, but the templating system doesn't 
+    # really leave any other choice.
+    def downloadProgressWidth(self):
+        fullWidth = 92  # width of resource:channelview-progressbar-bg.png - 2
+        progress = self.downloadProgress() / 100.0
+        if progress == 0:
+            return 0
+        return int(progress * fullWidth)
+
+    ##
+    # Returns string containing three digit percent finished
+    # "000" through "100".
+    def threeDigitPercentDone(self):
+        return '%03d' % int(self.downloadProgress())
+
+    ##
+    # Returns string with estimate time until download completes
     def downloadETA(self):
         secs = 0
         for dler in self.downloaders:
@@ -471,29 +487,30 @@ class Item(DDBObject):
         if secs == 0:
             return 'starting up...'
         elif (secs < 120):
-            return '%1.0f' % secs+" secs left"
+            return '%1.0f secs left - ' % secs
         elif (secs < 6000):
-            return '%1.0f' % (secs/60)+" mins left"
+            return '%1.0f mins left - ' % (secs/60)
         else:
-            return '%1.1f' % (secs/3600)+" hours left"
+            return '%1.1f hours left - ' % (secs/3600)
 
     ##
-    # returns the download rate in kbps/mbps
+    # Returns the download rate
     def downloadRate(self):
         rate = 0
-        unit = "kbps"
+        unit = "k/s"
         if len(self.downloaders) > 0:
             for dler in self.downloaders:
                 rate = dler.getRate()
             rate /= len(self.downloaders)
-        rate *= 8
+
         rate /= 1024
         if rate > 1000:
             rate /= 1024
-            unit = "mpbs"
+            unit = "m/s"
         if rate > 1000:
             rate /= 1024
-            unit = "gpbs"
+            unit = "g/s"
+            
         return "%d%s" % (rate, unit)
 
     ##

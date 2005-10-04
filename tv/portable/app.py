@@ -218,6 +218,11 @@ class Controller (frontend.Application):
                 'global': globalData,
                 }
 
+            globalData['view']['availableItems'].addAddCallback(self.onAvailableItemsCountChange)
+            globalData['view']['availableItems'].addRemoveCallback(self.onAvailableItemsCountChange)
+            globalData['view']['downloadingItems'].addAddCallback(self.onDownloadingItemsCountChange)
+            globalData['view']['downloadingItems'].addRemoveCallback(self.onDownloadingItemsCountChange)
+
             # Set up tab list
             reloadStaticTabs()
             mapFunc = makeMapToTabFunction(globalData, self)
@@ -226,6 +231,15 @@ class Controller (frontend.Application):
             self.currentSelectedTab = None
             self.tabListActive = True
             tabPaneData['tabs'] = self.tabs
+
+            # Keep a ref of the 'new' and 'download' tabs, we'll need'em later
+            self.newTab = None
+            self.downloadTab = None
+            for tab in self.tabs:
+                if tab.tabTemplateBase == 'newtab':
+                    self.newTab = tab
+                elif tab.tabTemplateBase == 'downloadtab':
+                    self.downloadTab = tab
 
             # Put cursor on first tab to indicate that it should be initially
             # selected
@@ -408,6 +422,19 @@ class Controller (frontend.Application):
         self.tabListActive = active
         if self.tabs.cur():
             self.tabs.cur().redraw()
+
+    ### Keep track of currently available+downloading items and refresh the
+    ### corresponding tabs accordingly.
+
+    def onAvailableItemsCountChange(self, obj, id):
+        assert self.newTab is not None
+        self.newTab.redraw()
+
+    def onDownloadingItemsCountChange(self, obj, id):
+        assert self.downloadTab is not None
+        self.downloadTab.redraw()
+
+    ### ----
 
     def onDisplaySwitch(self, newDisplay):
         # Nick, your turn ;)
@@ -1281,7 +1308,7 @@ globalFilterList = {
 
 globalViewList = {
     'items': db.filter(lambda x: isinstance(x,item.Item)),
-    'newItems': db.filter(lambda x: isinstance(x,item.Item) and x.getState() == 'finished'),
+    'availableItems': db.filter(lambda x: isinstance(x,item.Item) and x.getState() == 'finished'),
     'downloadingItems': db.filter(lambda x: isinstance(x,item.Item) and x.getState() == 'downloading'),
     'feeds': db.filter(lambda x: isinstance(x,feed.UniversalFeed)),
     'httpauths':  db.filter(lambda x: isinstance(x,downloader.HTTPAuthPassword)),

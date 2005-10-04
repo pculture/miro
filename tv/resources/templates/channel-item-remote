@@ -27,11 +27,16 @@
             	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="downloading">
                     <div class="channelview-video-progress">
             		    <div class="channelview-progress-bar">
-            		        <img src="resource:images/status.png" width="@@@this threeDigitPercentDone@@@" height="12" />
+            		        <img src="resource:images/status.png" width="@@@this downloadProgressWidth@@@" height="12" />
             		    </div>
             		    <a class="channelview-progress-cancel" href="action:expireItem?item=@@@this getID@@@" title="Cancel Download" />
                 	</div>
-                	<p style="clear:both;"><span t:replace="this downloadETA" /> - <span t:replace="this downloadRate" /></p>
+                	<p style="clear:both;">
+                	    <span t:replace="this downloadETA" />
+                	    <span t:hideIfKey="this downloadRate" t:hideFunctionKey="global filter equal" t:hideParameter="0k/s">
+                	        <span t:replace="this downloadRate" />
+                	    </span>
+                	</p>
             	</span>
             	<!-- / DOWNLOAD PROGRESS -->
             	            	

@@ -1223,6 +1223,26 @@ span.newchannel{
 	display: none;
 	}
 
+.orange_left{
+	background: url(resource:images/orange_left.png) top left no-repeat;
+	display: inline;
+	margin: 4px 0 0 0;
+	float: right;
+	}
+
+.orange_right{
+	background: url(resource:images/orange_right.png) top right no-repeat;
+	}
+
+.orange_number_count{
+	padding: 2px 0px 3px 0px;
+	color: #FFFFFF;
+	margin: 0 8px 0 8px;
+	background: #E16500;
+	font-size: 11px;
+/*	text-shadow: 0px 1px 0px #fff;  */
+	}
+
 /*/////////////////////////////////////////////
 
 Buttons

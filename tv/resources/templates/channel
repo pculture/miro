@@ -12,9 +12,6 @@
     <script type="text/javascript" src="resource:templates/shide.js" />
 
     <t:dynamicviews>
-        <t:view name="thisFeed" key="global view feeds">
-            <t:filter functionkey="global filter feedID"  parameter="@@@feed getFeedID@@@" />
-        </t:view>
         <t:view name="new-items" key="global view items">
             <t:filter functionkey="global filter unDownloadedItems" parameter="@@@feed getFeedID@@@" />
             <t:sort functionkey="global sort item" parameter="" />
@@ -38,7 +35,7 @@
     </t:dynamicviews>
 </head>
 
-<body onload="toggleLayer('channelview-newlyavailable'); toggleLayer('channelview-downloads'); toggleLayer('channelview-unwatched'); toggleLayer('channelview-expiring'); toggleLayer('channelview-saved');">
+<body onload="toggleLayer('channelview-newlyavailable'); toggleLayer('channelview-unwatched'); toggleLayer('channelview-expiring'); toggleLayer('channelview-saved');">
     
 <!-- TITLE BAR ************************************************************ -->
 <div id="channelview-titlebar">
@@ -75,7 +72,7 @@
     <div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-newlyavailable');">#&nbsp;</a></div>
     <div id="channelview-channelbar" class="channelview-channelbar">
     	<h1>Newly Available</h1>
-    	<h2 t:repeatForView="thisFeed">(<span t:replace="this available" />)</h2>
+    	<h2 t:updateForView="new-items">(<span t:replace="this len" />)</h2>
     </div>
 
     <div id="channelview-newlyavailable">
@@ -92,7 +89,7 @@
     <div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-downloads');">#&nbsp;</a></div>
     <div id="channelview-channelbar" class="channelview-channelbar">
     	<h1>Downloads</h1>
-    	<h2>X in Progress, Y in Queue</h2>
+    	<h2 t:updateForView="downloading-items"><span t:replace="this len" /> in Progress, Y in Queue</h2>
     </div>
 
     <div id="channelview-downloads">
@@ -109,7 +106,7 @@
     <div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-unwatched');">#&nbsp;</a></div>
     <div id="channelview-channelbar" class="channelview-channelbar">
     	<h1>Unwatched</h1>
-    	<h2 t:repeatForView="thisFeed">(<span t:replace="this unwatched" />)</h2>
+    	<h2 t:updateForView="unwatched-items">(<span t:replace="this len" />)</h2>
     </div>
 
     <div id="channelview-unwatched">
@@ -126,7 +123,7 @@
     <div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-expiring');">#&nbsp;</a></div>
     <div id="channelview-channelbar" class="channelview-channelbar">
     	<h1>Expiring</h1>
-    	<h2>(<span t:replace="foobar" />)</h2>
+    	<h2 t:updateForView="expiring-items">(<span t:replace="this len" />)</h2>
     </div>
 
     <div id="channelview-expiring">
@@ -143,7 +140,7 @@
     <div class="channelview-channelbar-hitbox"><a href="javascript:toggleLayer('channelview-saved');">#&nbsp;</a></div>
     <div id="channelview-channelbar" class="channelview-channelbar">
     	<h1>Saved</h1>
-    	<h2>(<span t:replace="foobar" />)</h2>
+    	<h2 t:updateForView="saved-items">(<span t:replace="this len" />)</h2>
     </div>
 
     <div id="channelview-saved">
