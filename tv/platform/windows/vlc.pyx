@@ -1,4 +1,4 @@
-# simplevlc.pyx Python binding for VLC based on KCEasy's simplevlc
+# vlc.pyx Python binding for VLC based on KCEasy's simplevlc
 # 
 # Requires simplevlc.dll and simplevlc.h from KCEasy (GPL)
 # http://sf.net/projects/kceasy/
