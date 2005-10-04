@@ -9,8 +9,7 @@ body {
 
 .clearer {
 	clear: both;
-	margin: 0px;
-	padding: 0px;
+	height: 0px;
 }
 
 p {
@@ -169,7 +168,7 @@ form {
 
 .channelview-video {
 	clear: both;
-	border-bottom: 1px solid #DDDDDD;
+	border-bottom: 1px solid #b6bfce;
 	background: #FFFFFF url(resource:images/channelview-video-bg.png) no-repeat right bottom;
 }
 
@@ -179,7 +178,7 @@ form {
 
 .channelview-video-green {
 	clear: both;
-	border-bottom: 1px solid #DDDDDD;
+	border-bottom: 1px solid #b6bfce;
 	background: #FFFFFF url(../images/channelview-video-bg-green.png) no-repeat right bottom;
 }
 
@@ -187,23 +186,43 @@ form {
 	background: #f7faf8 url(../images/channelview-video-bg-hover-green.png) no-repeat right bottom;
 }
 
-.channelview-video-tnail {
+.channelview-video-container {
+	width: 100%;
 	float: left;
-	display: inline;
-	width: 100px;
-	height: 75px;
-	margin: 3px 0px 3px 8px;
-	border: 2px solid #FFFFFF;
+	margin-right: -150px;
+}
+
+.channelview-video-content {
+	margin-right: 150px;
+}
+
+.channelview-video-desc {
+	padding-top: 8px;
+	height: 70px;
+	overflow: hidden;
+}
+
+.channelview-video-tnail {
+	width: 118px;
+	float: left;
+}
+
+.channelview-video-details {
+	width: 125px;
+	float: right;
+	padding-top: 5px;	
 }
 
 .channelview-video-tnail img {
 	width: 100px;
 	height: 75px;
+	margin: 3px 0px 3px 5px;
+	border: 2px solid #FFFFFF;
 }
 
 .channelview-video-hitbox a {
 	float: left;
-	margin: 5px 0px 0px -102px;
+	margin: 5px 0px 0px -111px;
 	padding: 38px 50px 37px 50px;
 }
 
@@ -231,14 +250,6 @@ form {
 	background: url(resource:images/channelview-video-inprogress.png) no-repeat right -75px;
 }
 
-.channelview-video-desc {
-	float: left;
-	margin: 8px 0px 0px 10px;
-	width: 60%;
-	height: 68px;
-	overflow: hidden;
-}
-
 .channelview-video-desc h1 {
 	margin: 0px;
 	padding: 0px;
@@ -252,13 +263,6 @@ form {
 	margin: 0px;
 	padding: 0px;
 	font-size: 90%;
-}
-
-.channelview-video-details {
-	float: right;
-	display: inline;
-	width: 115px;
-	padding: 5px 10px 5px 10px;
 }
 
 .channelview-video-details p {
