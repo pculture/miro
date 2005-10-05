@@ -15,13 +15,8 @@
 
             <!-- VIDEO DETAILS BLOCK -->
             <div class="channelview-video-details">
-                
-                <!-- FILE INFO -->
-                <p class="channelview-video-details-left"><strong t:replace="this getReleaseDate" /></p>
-                <p class="channelview-video-details-right" t:replace="this getTotalSize" />
-                <p class="channelview-video-details-left" t:replace="this getDuration" />
-                <p class="channelview-video-details-right" t:replace="this getFormat" />
-            	<!-- / FILE INFO -->
+
+                <t:includeTemplate filename="channel-item-info" />
 
     			<!-- EXPIRY -->
     			<span t:hideIfKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="saved">

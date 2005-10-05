@@ -401,7 +401,21 @@ class Item(DDBObject):
         finally:
             self.endRead()
         return ret
-                
+    
+    ##
+    # Returns the total size of all enclosures in bytes
+    def getEnclosuresSize(self):
+        size = 0
+        self.beginRead()
+        try:
+            if self.entry.has_key('enclosures'):
+                enclosures = self.entry['enclosures']
+                for enclosure in enclosures:
+                    if enclosure.has_key('length'):
+                        size += int(enclosure['length'])
+        finally:
+            self.endRead()
+        return self.sizeFormattedForDisplay(size)
 
     ##
     # returns status of the download in plain text
@@ -414,14 +428,7 @@ class Item(DDBObject):
                 pass
         if size == 0:
             return ""
-        mb = size / 1000000
-        if mb <  100:
-            return '%1.1f' % mb + "MB"
-        elif mb < 1000:
-            return '%1.0f' % mb + "MB"
-        else:
-            return '%1.1f' % (mb/1000) + "GB"
-        return size
+        return self.sizeFormattedForDisplay(size)
 
     ##
     # returns status of the download in plain text
@@ -431,14 +438,20 @@ class Item(DDBObject):
             size += dler.getCurrentSize()
         if size == 0:
             return ""
-        mb = size / 1000000
-        if mb <  100:
-            return '%1.1f' % mb + "MB"
-        elif mb < 1000:
-            return '%1.0f' % mb + "MB"
+        return self.sizeFormattedForDisplay(size)
+
+    ##
+    # Returns a byte size formatted for display
+    def sizeFormattedForDisplay(self, bytes, emptyForZero=True):
+        bytes = bytes / 1000000
+        if bytes == 0 and emptyForZero:
+            return ""
+        elif bytes <  100:
+            return '%1.1fMB' % bytes
+        elif bytes < 1000:
+            return '%1.0fMB' % bytes
         else:
-            return '%1.1f' % (mb/1000) + "GB"
-        return size
+            return '%1.1fGB' % (size/1000)
 
     ##
     # Returns the download progress in absolute percentage [0.0 - 100.0].
@@ -585,16 +598,38 @@ class Item(DDBObject):
         if secs == 0:
             return ""
         if (secs < 120):
-            return '%1.0f' % secs+" secs"
+            return '%1.0f secs' % secs
         elif (secs < 6000):
-            return '%1.0f' % (secs/60)+" mins"
+            return '%1.0f mins' % (secs/60)
         else:
-            return '%1.1f' % (secs/3600)+" hours"
+            return '%1.1f hours' % (secs/3600)
 
     ##
-    # returns stringh with the format of the video
+    # returns string with the format of the video
+    KNOWN_MIME_TYPES = ('audio', 'video')
+    KNOWN_MIME_SUBTYPES = ('mov', 'wmv', 'mp4', 'mp3', 'mpg', 'mpeg', 'avi')
     def getFormat(self):
-        return ""
+        format = ""
+        self.beginRead()
+        try:
+            if self.entry.has_key('enclosures'):
+                enclosures = self.entry['enclosures']
+                if len(enclosures) > 0:
+                    enclosure = enclosures[0]
+                    if enclosure.has_key('type'):
+                        type, subtype = enclosure['type'].split('/')
+                        if type.lower() in self.KNOWN_MIME_TYPES and subtype.lower() in self.KNOWN_MIME_SUBTYPES:
+                            format = subtype.upper()
+                        elif enclosure.has_key('url'):
+                            try:
+                                extension = enclosure['url'].split('.').pop().lower()
+                                if extension in self.KNOWN_MIME_SUBTYPES:
+                                    format = extension.upper()
+                            except:
+                                pass
+        finally:
+            self.endRead()
+        return format
 
     ##
     # return keyword tags associated with the video separated by commas
