@@ -1,1 +1,42 @@
-<?xml version="1.0" encoding="utf-8"?><html xmlns="http://www.w3.org/1999/xhtml"      xmlns:t="http://www.participatorypolitics.org/"      xmlns:i18n="http://www.participatoryculture.org/i18n">    <head>        <meta http-equiv="content-type" content="text/html; charset=utf-8" />    </head>    <body>        <!-- THUMBNAIL AND DESCRIPTION -->				<div class="channelview-video-container">					<div class="channelview-video-content">											<div class="channelview-video-tnail">								<img src="***this getThumbnail***" alt="" />						</div>								<div class="channelview-video-hitbox">								<span class="downloadable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="stopped">										<a href="action:startDownload?item=@@@this getID@@@" title="Download '***this getTitle***'" />								</span>								<span class="inprogress" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="downloading">										<a href="#" title="" />								</span>								<span class="playable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="finished">										<a href="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" title="Play '***this getTitle***'" />								</span>						</div>											<div class="channelview-video-desc">								<h1 t:replace="this getTitle" />								<p t:replaceMarkup="this getDescription" />						</div>											</div>				</div>        <!-- / THUMBNAIL AND DESCRIPTION -->    </body></html>
+<?xml version="1.0" encoding="utf-8"?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n">
+
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    </head>
+
+    <body>
+        <!-- THUMBNAIL AND DESCRIPTION -->
+				<div class="main-video-container">
+					<div class="main-video-content">
+					
+						<div class="main-video-tnail">
+								<img src="***this getThumbnail***" alt="" />
+						</div>
+		
+						<div class="main-video-hitbox">
+								<span class="downloadable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="stopped">
+										<a href="action:startDownload?item=@@@this getID@@@" title="Download '***this getTitle***'" />
+								</span>
+								<span class="inprogress" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="downloading">
+										<a href="#" title="" />
+								</span>
+								<span class="playable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="finished">
+										<a href="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" title="Play '***this getTitle***'" />
+								</span>
+						</div>
+					
+						<div class="main-video-desc">
+								<h1 t:replace="this getTitle" />
+								<p t:replaceMarkup="this getDescription" />
+						</div>
+						
+					</div>
+				</div>
+        <!-- / THUMBNAIL AND DESCRIPTION -->
+    </body>
+
+</html>

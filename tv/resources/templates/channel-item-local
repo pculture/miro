@@ -9,21 +9,21 @@
     </head>
 
     <body>
-        <div class="channelview-video">
+        <div class="main-video">
 
             <t:includeTemplate filename="channel-item-header" />
 
             <!-- VIDEO DETAILS BLOCK -->
-            <div class="channelview-video-details">
+            <div class="main-video-details">
 
                 <t:includeTemplate filename="channel-item-info" />
 
     			<!-- EXPIRY -->
     			<span t:hideIfKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="saved">
-        			<div class="channelview-video-details-expiry">
+        			<div class="main-video-details-expiry">
         				<p>Expires: <span t:replace="this getExpirationTime" /></p>
         			</div>
-        			<div class="channelview-video-details-save">
+        			<div class="main-video-details-save">
         				<p><a href="action:keepItem?item=@@@this getID@@@">Save</a></p>
         			</div>
     			</span>
@@ -31,17 +31,17 @@
 
     			<!-- UNWATCHED -->
     			<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="watched">
-        			<div class="channelview-video-details-unwatched">
+        			<div class="main-video-details-unwatched">
         				<p>Unwatched</p>
         			</div>
         		</span>
     			<!-- / UNWATCHED -->
 
     			<!-- FILE TASKS -->
-    			<div class="channelview-video-details-tasks">
-    				<a href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="channelview-video-details-task-delete" /></a>
-    				<!-- <a href="#"><img src="resource:images/clear.png" alt="" border="0" class="channelview-video-details-task-bomb" /></a> -->
-    				<a href="#"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="channelview-video-details-task-mail" /></a>
+    			<div class="main-video-details-tasks">
+    				<a href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
+    				<!-- <a href="#"><img src="resource:images/clear.png" alt="" border="0" class="main-video-details-task-bomb" /></a> -->
+    				<a href="#"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
     				<div class="clearer"></div>
     			</div>
     			<!-- / FILE TASKS -->
