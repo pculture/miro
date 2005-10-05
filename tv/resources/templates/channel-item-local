@@ -41,7 +41,7 @@
     			<div class="channelview-video-details-tasks">
     				<a href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="channelview-video-details-task-delete" /></a>
     				<!-- <a href="#"><img src="resource:images/clear.png" alt="" border="0" class="channelview-video-details-task-bomb" /></a> -->
-    				<a href="mailto:?subject=@@@feed getTitle@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed getTitle@@@&quot;. If you don't have DTV, you can get it here:%0D%0A%0D%0Ahttp://www.participatoryculture.org/download.php%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed getURL@@@" i18n:translate=""><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="channelview-video-details-task-mail" /></a>
+    				<a href="#"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="channelview-video-details-task-mail" /></a>
     				<div class="clearer"></div>
     			</div>
     			<!-- / FILE TASKS -->
