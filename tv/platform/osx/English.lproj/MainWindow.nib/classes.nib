@@ -1,6 +1,7 @@
 {
     IBClasses = (
         {CLASS = BeveledBox; LANGUAGE = ObjC; SUPERCLASS = NSBox; }, 
+        {CLASS = DTVSplitView; LANGUAGE = ObjC; SUPERCLASS = NSSplitView; }, 
         {CLASS = DisplayHostView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {

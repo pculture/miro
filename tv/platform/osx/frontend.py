@@ -959,6 +959,29 @@ class TabButtonCell (NibClassBuilder.AutoBaseClass):
 
 
 ###############################################################################
+#### Custom split view                                                     ####
+###############################################################################
+
+class DTVSplitView (NibClassBuilder.AutoBaseClass):
+    
+    def awakeFromNib(self):
+        self.background = NSImage.imageNamed_('splitview_divider_background')
+        self.backgroundRect = ((0,0), self.background.size())
+        self.dimple = NSImage.imageNamed_('splitview_divider_dimple')
+        
+    def dividerThickness(self):
+        return 10.0
+        
+    def drawDividerInRect_(self, rect):
+        dividerOrigin = (rect.origin.x, 12)
+        dividerSize = (rect.size.width, rect.size.height - 58 - 12)
+        dividerRect = (dividerOrigin, dividerSize)
+        self.background.drawInRect_fromRect_operation_fraction_(dividerRect, self.backgroundRect, NSCompositeSourceOver, 1.0)
+        dimplePosition = (rect.origin.x, (dividerSize[1] - self.dimple.size().height) / 2)
+        self.dimple.compositeToPoint_operation_(dimplePosition, NSCompositeSourceOver)
+
+
+###############################################################################
 #### Custom metal slider                                                   ####
 ###############################################################################
 
