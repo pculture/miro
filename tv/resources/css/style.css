@@ -166,7 +166,7 @@ Contains the channels
 	}
 
 #sidebar ul li a span.new{
-	background: url(resource:images/play.png) 100% 100% no-repeat;
+	background: url(../images/play.png) 100% 100% no-repeat;
 	display: inline;
 	width: 40px;
 	padding: 0 10px 0 5px;
@@ -188,12 +188,12 @@ a.feeditem:hover{
 	}
 
 #sidebar a.selected_feeditem {
-	background: url(resource:images/channel_bg.png) 0% 0% repeat-x; 
+	background: url(../images/channel_bg.png) 0% 0% repeat-x; 
 	color: #fff;
 	}
 
 #sidebar a.selected_feeditem_inactive {
-	background: url(resource:images/channel_bg.png) 0px -40px repeat-x; 
+	background: url(../images/channel_bg.png) 0px -40px repeat-x; 
 	color: #fff;
 	}
 
@@ -249,7 +249,7 @@ Download Queue Button
 	left: 0px; 
 	width: 100%;
 	z-index: 100;
-	background: url(resource:images/dqueue_back.png) repeat-x; 
+	background: url(../images/dqueue_back.png) repeat-x; 
 	height: 52px;
 	text-align: center;
 	}
@@ -265,7 +265,7 @@ Download Queue Button
 	left: 0px; 
 	width: 100%;
 	z-index: 100;
-	background: url(resource:images/selected_dqueue_back.png) repeat-x; 
+	background: url(../images/selected_dqueue_back.png) repeat-x; 
 	height: 52px;
 	text-align: center;
 	}
@@ -289,7 +289,7 @@ Download Queue Button
 	display: inline;
 	padding: 5px 0 5px 20px;
 	margin: 0 0 0 -30px;
-	background: url(resource:images/queue_arrow.png) 0 4px no-repeat;
+	background: url(../images/queue_arrow.png) 0 4px no-repeat;
 	text-shadow: 0px 1px 0px white;
 	
 	}
@@ -324,7 +324,7 @@ A wrapper around the content
 #library {
 	width: 597px;
 	height: 355px;
-	background: url(resource:images/itunes.jpg);
+	background: url(../images/itunes.jpg);
 	}
 
 
@@ -343,7 +343,7 @@ watch, choose...
 	border-top: 1px solid #666;
 	border-bottom: 1px solid #999;
 	background-color: #ccc;
-	background: url(resource:images/tabback.png);
+	background: url(../images/tabback.png);
 	position: fixed;
 	top: 24px;
 	width: 100%;
@@ -372,14 +372,14 @@ watch, choose...
 	}
 	
 .tab:active {
-	background: url(resource:images/tab_active.png) repeat-x;	
+	background: url(../images/tab_active.png) repeat-x;	
 	}
 	
 .emptytab {
 	width: 40px
         }
 .active_tab {
-	background: url(resource:images/tab_active.png) repeat-x;
+	background: url(../images/tab_active.png) repeat-x;
 	color: #333;
 	text-shadow: 0px 1px 0px white;
 	}
@@ -407,7 +407,7 @@ watch, choose...
 	text-decoration: none;
 	color: #990000;
 	padding-right: 24px;
-	background: url(resource:images/red_arrow.png) 3px right no-repeat;
+	background: url(../images/red_arrow.png) 3px right no-repeat;
 }
 
 .no_new a:hover {
@@ -432,7 +432,7 @@ Where the videos show up
 
 #main_window ul li {
 	border-bottom: 4px solid #eee;
-	background: url(resource:images/video_back.png) bottom left repeat-x;
+	background: url(../images/video_back.png) bottom left repeat-x;
 	display: block;
 	clear: both;
 	padding: 7px 0 4px 0;
@@ -538,7 +538,7 @@ Where the videos show up
 	margin-top: 10px;
 	width: 34px;
 	height: 34px;
-	background: url(resource:images/download_button_green.png) top left no-repeat;
+	background: url(../images/download_button_green.png) top left no-repeat;
 	}
 
 
@@ -582,7 +582,7 @@ messages
 	float: right;
 	width: 14px;
 	height: 14px;
-	background: url(resource:images/delete_file.png) 0px 0px no-repeat;
+	background: url(../images/delete_file.png) 0px 0px no-repeat;
 	margin-left: 3px;
 }
 
@@ -591,27 +591,27 @@ messages
 	float: right;
 	width: 14px;
 	height: 14px;
-	background: url(resource:images/delete_file.png) 0px -16px no-repeat;
+	background: url(../images/delete_file.png) 0px -16px no-repeat;
 }
 
 
 .unwatched{
 	font-size: 10px;
 	color: #00B904;
-	background: url(resource:images/icons/calendar.png) 0 2px no-repeat;
+	background: url(../images/icons/calendar.png) 0 2px no-repeat;
 	padding: 3px 0 3px 15px;
 	}
 
 
 .report_expire{
 	font-size: 10px;
-	background: url(resource:images/icons/calendar.png) 0 2px no-repeat;
+	background: url(../images/icons/calendar.png) 0 2px no-repeat;
 	padding: 3px 0 3px 15px;
 	}
 
 .report_pending{
 	font-size: 10px;
-	background: url(resource:images/icons/pending.png) 0 2px no-repeat;
+	background: url(../images/icons/pending.png) 0 2px no-repeat;
 	padding: 3px 0 3px 15px;
 	}
 	
@@ -625,13 +625,13 @@ messages
 .play_button{
 	width: 42px;
 	height: 42px;
-	background: url(resource:images/play_button.png) no-repeat;
+	background: url(../images/play_button.png) no-repeat;
 	display: block;
 	margin-left: 75px;
 	}
 	
 .play_button:active{
-	background: url(resource:images/play_button_active.png) no-repeat;
+	background: url(../images/play_button_active.png) no-repeat;
 	}
 
 
@@ -646,7 +646,7 @@ Progress Bar
 	width: 100px;
 	height: 20px;
 	padding: 0 1px 0 1px;
-	background: url(resource:images/status_background.png) top left no-repeat;
+	background: url(../images/status_background.png) top left no-repeat;
 	}
 
 .progress_box{
@@ -809,7 +809,7 @@ search, title, recommend link
 	left: 0;
 	width: 100%;
 	z-index: 100;
-	background: url(resource:images/channel_top_background7.png) repeat-x;
+	background: url(../images/channel_top_background7.png) repeat-x;
 	}
 	
 	
@@ -865,7 +865,7 @@ search, title, recommend link
 .settings_link{
 	margin-top: 1px;
 	color: black;
-	background: url(resource:images/orange_arrow.png) top right no-repeat;
+	background: url(../images/orange_arrow.png) top right no-repeat;
 	padding-right: 25px;
 	font-size: 11px;
 	text-decoration: none;
@@ -875,7 +875,7 @@ search, title, recommend link
 	color: black;
 	padding-right: 19px;
 	font-size: 11px;
-	background: url(resource:images/green_arrow.png) top right no-repeat;
+	background: url(../images/green_arrow.png) top right no-repeat;
 	display: block;
 	width: 190px;
 	font-size: 11px;
@@ -893,7 +893,7 @@ search, title, recommend link
 .search_wrap {
 	float: right;
 	padding-left: 15px;
-	background: url(resource:images/magnifying_glass.png) 0 7px no-repeat;
+	background: url(../images/magnifying_glass.png) 0 7px no-repeat;
 	display: block;
 	padding-top: 2px;
 	padding-right: 3px;
@@ -943,7 +943,7 @@ The settings of each channel
 }
 
 .tab_left {
-/*	background: url(resource:images/tab_divider.png) no-repeat right top; */
+/*	background: url(../images/tab_divider.png) no-repeat right top; */
 	padding: 3px 0px 4px 0px;
 	height: 24px;
 	display: block;
@@ -951,7 +951,7 @@ The settings of each channel
 }
 
 .tab_right {
-	background: url(resource:images/tab_divider.png) no-repeat left top;
+	background: url(../images/tab_divider.png) no-repeat left top;
 	background-position: 0px 3px;
 	padding: 3px 0px 4px 1px;
 	height: 24px;
@@ -960,51 +960,51 @@ The settings of each channel
 } 
 
 .watch {
-	background: url(resource:images/tab_left.png) no-repeat left top;
+	background: url(../images/tab_left.png) no-repeat left top;
 	padding: 3px 8px 4px 12px;
 
 }
 
 .watch_active {
-	background: url(resource:images/tab_left_active.png) no-repeat left top;
+	background: url(../images/tab_left_active.png) no-repeat left top;
 	padding: 3px 8px 4px 12px;
 	text-shadow: 0px 1px 0px #eee;
 	color: #999;
 }
 
 .browse {
-	background: url(resource:images/tab_center.png) no-repeat left top;
+	background: url(../images/tab_center.png) no-repeat left top;
 	padding: 3px 8px 4px 8px;
 
 }
 
 .browse_active {
-	background: url(resource:images/tab_center_active.png) no-repeat left top;
+	background: url(../images/tab_center_active.png) no-repeat left top;
 	padding: 3px 8px 4px 8px;
 	text-shadow: 0px 1px 0px #eee;
 }
 
 .library {
-	background: url(resource:images/tab_right.png) no-repeat right top;
+	background: url(../images/tab_right.png) no-repeat right top;
 	padding: 3px 12px 4px 8px;
 
 }
 
 .library_active {
-	background: url(resource:images/tab_right_active.png) no-repeat right top;
+	background: url(../images/tab_right_active.png) no-repeat right top;
 	padding: 3px 12px 4px 8px;
 	text-shadow: 0px 1px 0px #eee;
 }	
 
 a.browse_nolibrary{
 	padding: 3px 12px 4px 8px;
-	background: url(resource:images/tab_right.png) right top no-repeat;
+	background: url(../images/tab_right.png) right top no-repeat;
 
 	}
 
 .browse_nolibrary_active{
 	padding: 3px 12px 4px 8px;
-	background: url(resource:images/tab_right_active.png) right top no-repeat;
+	background: url(../images/tab_right_active.png) right top no-repeat;
 		text-shadow: 0px 1px 0px #eee;
 
 	}
@@ -1044,7 +1044,7 @@ SIDEBAR
 	overflow: auto;
 	padding: 0;
 	margin: 0;
-	background: url(resource:images/sidebar_tab_back.png) repeat-x;
+	background: url(../images/sidebar_tab_back.png) repeat-x;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -1078,7 +1078,7 @@ SIDEBAR
 	}	
 
 .number_count_active_play{
-	background: url(resource:images/green_play.png) top center no-repeat;
+	background: url(../images/green_play.png) top center no-repeat;
 	z-index: 2;
 	margin-top: -16px;
 	left: 1px;
@@ -1088,14 +1088,14 @@ SIDEBAR
 	}
 
 .green_left{
-	background: url(resource:images/green_left.png) top left no-repeat;
+	background: url(../images/green_left.png) top left no-repeat;
 	display: inline;
 	margin: 4px 0 0 0;
 	float: right;
 	}
 
 .green_right{
-	background: url(resource:images/green_right.png) top right no-repeat;
+	background: url(../images/green_right.png) top right no-repeat;
 	}
 
 .gray_number_count{
@@ -1108,14 +1108,14 @@ SIDEBAR
 	}
 
 .gray_left{
-	background: url(resource:images/gray_left.png) top left no-repeat;
+	background: url(../images/gray_left.png) top left no-repeat;
 	display: inline;
 	margin: 4px 0 0 0;
 	float: right;
 	}
 
 .gray_right{
-	background: url(resource:images/gray_right.png) top right no-repeat;
+	background: url(../images/gray_right.png) top right no-repeat;
 	}
 
 
@@ -1129,14 +1129,14 @@ SIDEBAR
 	}
 
 .blue_left{
-	background: url(resource:images/blue_left.png) top left no-repeat;
+	background: url(../images/blue_left.png) top left no-repeat;
 	display: inline;
 	margin: 4px 0 0 0;
 	float: right;
 	}
 
 .blue_right{
-	background: url(resource:images/blue_right.png) top right no-repeat;
+	background: url(../images/blue_right.png) top right no-repeat;
 	}
 
 .blue_number_count_active{
@@ -1149,14 +1149,14 @@ SIDEBAR
 	}
 
 .white_left{
-	background: url(resource:images/white_left.png) top left no-repeat;
+	background: url(../images/white_left.png) top left no-repeat;
 	display: inline;
 	margin: 4px 0 0 0;
 	float: right;
 	}
 
 .white_right{
-	background: url(resource:images/white_right.png) top right no-repeat;
+	background: url(../images/white_right.png) top right no-repeat;
 	}
 
 .both_number_count{
@@ -1169,14 +1169,14 @@ SIDEBAR
 	}
 
 .both_green_left{
-	background: url(resource:images/green_left.png) top left no-repeat;
+	background: url(../images/green_left.png) top left no-repeat;
 	display: inline;
 	margin: 4px -9px 0 0;
 	float: right;
 	}
 
 .both_green_right{
-	background: url(resource:images/green_right.png) top right no-repeat;
+	background: url(../images/green_right.png) top right no-repeat;
 	}
 
 
@@ -1190,14 +1190,14 @@ SIDEBAR
 	}
 
 .both_blue_left{
-	background: url(resource:images/blue_left.png) top left no-repeat;
+	background: url(../images/blue_left.png) top left no-repeat;
 	display: inline;
 	margin: 4px 0 0 0;
 	float: right;
 	}
 
 .both_blue_right{
-	background: url(resource:images/blue_right.png) top right no-repeat;
+	background: url(../images/blue_right.png) top right no-repeat;
 	}
 
 .both_white_number_count{
@@ -1210,28 +1210,28 @@ SIDEBAR
 	}
 
 .both_white_left{
-	background: url(resource:images/white_left.png) top left no-repeat;
+	background: url(../images/white_left.png) top left no-repeat;
 	display: inline;
 	margin: 4px 0 0 0;
 	float: right;
 	}
 
 .both_white_right{
-	background: url(resource:images/white_right.png) top right no-repeat;
+	background: url(../images/white_right.png) top right no-repeat;
 	}
 span.newchannel{
 	display: none;
 	}
 
 .orange_left{
-	background: url(resource:images/orange_left.png) top left no-repeat;
+	background: url(../images/orange_left.png) top left no-repeat;
 	display: inline;
 	margin: 4px 0 0 0;
 	float: right;
 	}
 
 .orange_right{
-	background: url(resource:images/orange_right.png) top right no-repeat;
+	background: url(../images/orange_right.png) top right no-repeat;
 	}
 
 .orange_number_count{
@@ -1419,9 +1419,9 @@ Video info area
 }
 
 #video_info_area .delete_button {
-    background: url(resource:images/delete_file_white.png) 0px 0px no-repeat;
+    background: url(../images/delete_file_white.png) 0px 0px no-repeat;
 }
 
 #video_info_area .delete_button:hover {
-	background: url(resource:images/delete_file_white.png) 0px -16px no-repeat;
+	background: url(../images/delete_file_white.png) 0px -16px no-repeat;
 }

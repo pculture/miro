@@ -23,7 +23,7 @@ form {
 }
 
 #channelview-titlebar {
-	background: url(resource:images/channelview-titlebar-bg.png) repeat-x left bottom;
+	background: url(../images/channelview-titlebar-bg.png) repeat-x left bottom;
 	height: 77px;
 	width: 100%;
 	margin: 0px 0px 1px;
@@ -95,14 +95,14 @@ form {
 }
 
 #channelview-titlebar-tasks-settings {
-	background: url(resource:images/channelview-icon-settings.png) no-repeat left top;
+	background: url(../images/channelview-icon-settings.png) no-repeat left top;
 	height: 18px;
 	margin: 0px;
 	padding: 0px 0px 0px 20px;
 }
 
 #channelview-titlebar-tasks-recommend {
-	background: url(resource:images/channelview-icon-mail-titlebar.png) no-repeat left 2px;
+	background: url(../images/channelview-icon-mail-titlebar.png) no-repeat left 2px;
 	height: 18px;
 	margin: 0px;
 	padding: 0px 0px 0px 20px;
@@ -122,7 +122,7 @@ form {
 }
 
 .channelview-channelbar {
-	background: url(resource:images/channelview-bar-bg.png) repeat-x left bottom;
+	background: url(../images/channelview-bar-bg.png) repeat-x left bottom;
 	height: 22px;
 }
 
@@ -169,7 +169,7 @@ form {
 .channelview-video {
 	clear: both;
 	border-bottom: 1px solid #b6bfce;
-	background: #FFFFFF url(resource:images/channelview-video-bg.png) no-repeat right bottom;
+	background: #FFFFFF url(../images/channelview-video-bg.png) no-repeat right bottom;
 }
 
 .channelview-video:hover {
@@ -227,27 +227,27 @@ form {
 }
 
 .channelview-video-hitbox .downloadable a {
-	background: url(resource:images/channelview-video-download.png) no-repeat right top;
+	background: url(../images/channelview-video-download.png) no-repeat right top;
 }
 
 .channelview-video-hitbox .downloadable a:hover {
-	background: url(resource:images/channelview-video-download.png) no-repeat right -75px;
+	background: url(../images/channelview-video-download.png) no-repeat right -75px;
 }
 
 .channelview-video-hitbox .playable a {
-	background: url(resource:images/channelview-video-play.png) no-repeat right top;
+	background: url(../images/channelview-video-play.png) no-repeat right top;
 }
 
 .channelview-video-hitbox .playable a:hover {
-	background: url(resource:images/channelview-video-play.png) no-repeat right -75px;
+	background: url(../images/channelview-video-play.png) no-repeat right -75px;
 }
 
 .channelview-video-hitbox .inprogress a {
-	background: url(resource:images/channelview-video-inprogress.png) no-repeat right top;
+	background: url(../images/channelview-video-inprogress.png) no-repeat right top;
 }
 
 .channelview-video-hitbox .inprogress a:hover {
-	background: url(resource:images/channelview-video-inprogress.png) no-repeat right -75px;
+	background: url(../images/channelview-video-inprogress.png) no-repeat right -75px;
 }
 
 .channelview-video-desc h1 {
@@ -344,23 +344,23 @@ form {
 }
 
 .channelview-video-details-task-delete {	
-	background: url(resource:images/channelview-icon-trash.png) top left no-repeat;
+	background: url(../images/channelview-icon-trash.png) top left no-repeat;
 	width: 13px;
 	height: 12px;
 }
 
 .channelview-video-details-task-delete:hover {	
-	background: url(resource:images/channelview-icon-trash.png) bottom left no-repeat;
+	background: url(../images/channelview-icon-trash.png) bottom left no-repeat;
 }
 
 .channelview-video-details-task-mail {	
-	background: url(resource:images/channelview-icon-mail.png) top left no-repeat;
+	background: url(../images/channelview-icon-mail.png) top left no-repeat;
 	width: 14px;
 	height: 12px;
 }
 
 .channelview-video-details-task-mail:hover {	
-	background: url(resource:images/channelview-icon-mail.png) bottom left no-repeat;
+	background: url(../images/channelview-icon-mail.png) bottom left no-repeat;
 }
 
 .channelview-video-progress {
@@ -374,7 +374,7 @@ form {
     width: 94px;
     height: 12px;
 	padding: 0 2px 0 2px;
-	background: url(resource:images/status_background.png) top left no-repeat;
+	background: url(../images/status_background.png) top left no-repeat;
 }
 
 .channelview-progress-cancel {
@@ -382,5 +382,5 @@ form {
 	width: 11px;
 	height: 13px;
 	margin: 0px 0px 3px 3px;
-	background: url(resource:images/channelview-cancel.png) top left no-repeat;
+	background: url(../images/channelview-cancel.png) top left no-repeat;
 }
