@@ -1,56 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:t="http://www.participatorypolitics.org/"
-      xmlns:i18n="http://www.participatoryculture.org/i18n">
-
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    </head>
-
-    <body>
-        <div class="main-video">
-
-            <t:includeTemplate filename="channel-item-header" />
-
-            <!-- VIDEO DETAILS BLOCK -->
-            <div class="main-video-details">
-
-                <t:includeTemplate filename="channel-item-info" />
-
-    			<!-- EXPIRY -->
-    			<span t:hideIfKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="saved">
-        			<div class="main-video-details-expiry">
-        				<p>Expires: <span t:replace="this getExpirationTime" /></p>
-        			</div>
-        			<div class="main-video-details-save">
-        				<p><a href="action:keepItem?item=@@@this getID@@@">Save</a></p>
-        			</div>
-    			</span>
-    			<!-- / EXPIRY -->
-
-    			<!-- UNWATCHED -->
-    			<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="watched">
-        			<div class="main-video-details-unwatched">
-        				<p>Unwatched</p>
-        			</div>
-        		</span>
-    			<!-- / UNWATCHED -->
-
-    			<!-- FILE TASKS -->
-    			<div class="main-video-details-tasks">
-    				<a href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
-    				<!-- <a href="#"><img src="resource:images/clear.png" alt="" border="0" class="main-video-details-task-bomb" /></a> -->
-    				<a href="#"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
-    				<div class="clearer"></div>
-    			</div>
-    			<!-- / FILE TASKS -->
-            	
-            </div>            
-            <div class="clearer"></div>
-            <!-- / VIDEO DETAILS BLOCK -->
-
-        </div>
-    </body>
-    
-</html>
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"><html xmlns="http://www.w3.org/1999/xhtml"      xmlns:t="http://www.participatorypolitics.org/"      xmlns:i18n="http://www.participatoryculture.org/i18n">    <head>        <meta http-equiv="content-type" content="text/html; charset=utf-8" />    </head>    <body>        <div class="main-video">            <t:includeTemplate filename="channel-item-header" />            <!-- VIDEO DETAILS BLOCK -->            <div class="main-video-details">                <t:includeTemplate filename="channel-item-info" />    			<!-- EXPIRY -->    			<span t:hideIfKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="saved">        			<div class="main-video-details-expiry">        				<p>Expires: <span t:replace="this getExpirationTime" /></p>        			</div>        			<div class="main-video-details-save">        				<p><a href="action:keepItem?item=@@@this getID@@@">Save</a></p>        			</div>    			</span>    			<!-- / EXPIRY -->    			<!-- UNWATCHED -->    			<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="watched">        			<div class="main-video-details-unwatched">        				<p>Unwatched</p>        			</div>        		</span>    			<!-- / UNWATCHED -->    			<!-- FILE TASKS -->    			<div class="main-video-details-tasks">    				<a href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>    				<a href="#"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>    				<div class="clearer"></div>    			</div>    			<!-- / FILE TASKS -->            	            </div>                        <div class="clearer"></div>            <!-- / VIDEO DETAILS BLOCK -->        </div>    </body>    </html>
