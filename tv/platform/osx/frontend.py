@@ -1573,7 +1573,7 @@ class ManagedWebView (NSObject):
         if not elt:
             print "warning: hideItem: missing element %s" % id
         else:
-            elt.getAttribute_("style").setAttribute_("display", "none")
+            elt.setAttribute__("style", "display:none")
             #print "hide item %s (new style '%s')" % (id, elt.getAttribute_("style"))
 
     @deferUntilAfterLoad
@@ -1582,7 +1582,7 @@ class ManagedWebView (NSObject):
         if not elt:
             print "warning: showItem: missing element %s" % id
         else:
-            elt.getAttribute_("style").setAttribute_("display", "")
+            elt.setAttribute__("style", "")
             #print "show item %s (new style '%s')" % (id, elt.getAttribute_("style"))
 
 

@@ -444,8 +444,11 @@ class Item(DDBObject):
     # Returns a byte size formatted for display
     def sizeFormattedForDisplay(self, bytes, emptyForZero=True):
         bytes = bytes / 1000000
-        if bytes == 0 and emptyForZero:
-            return ""
+        if bytes == 0:
+            if emptyForZero:
+                return ""
+            else:
+                return "n/a"
         elif bytes <  100:
             return '%1.1fMB' % bytes
         elif bytes < 1000:
@@ -592,11 +595,14 @@ class Item(DDBObject):
 
     ##
     # returns string with the play length of the video
-    def getDuration(self):
+    def getDuration(self, emptyIfZero=True):
         secs = 0
         #FIXME get this from VideoInfo
         if secs == 0:
-            return ""
+            if emptyIfZero:
+                return ""
+            else:
+                return "n/a"
         if (secs < 120):
             return '%1.0f secs' % secs
         elif (secs < 6000):
@@ -608,8 +614,10 @@ class Item(DDBObject):
     # returns string with the format of the video
     KNOWN_MIME_TYPES = ('audio', 'video')
     KNOWN_MIME_SUBTYPES = ('mov', 'wmv', 'mp4', 'mp3', 'mpg', 'mpeg', 'avi')
-    def getFormat(self):
-        format = ""
+    def getFormat(self, emptyForUnknown=True):
+        format = "n/a"
+        if emptyForUnknown:
+            format = ""
         self.beginRead()
         try:
             if self.entry.has_key('enclosures'):

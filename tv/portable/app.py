@@ -470,16 +470,8 @@ class TemplateDisplay(frontend.HTMLDisplay):
             TemplateActionHandler(self.controller, self, self.templateHandle),
             ]
 
-
-        newPage = False
-        triggers = self.templateHandle.getTriggerActionURLs()
-        for url in triggers:
-            if url.startswith('action:'):
-                #print "loading %s" % url
-                self.onURLLoad(url)
-            elif url.startswith('template:'):
-                newPage = True
-                break
+        loadTriggers = self.templateHandle.getTriggerActionURLsOnLoad()
+        newPage = self.runActionURLs(loadTriggers)
 
         if newPage:
             self.templateHandle.unlinkTemplate()
@@ -491,6 +483,17 @@ class TemplateDisplay(frontend.HTMLDisplay):
             thread.setDaemon(False)
             thread.start()
 
+    def runActionURLs(self, triggers):
+        newPage = False
+        for url in triggers:
+            if url.startswith('action:'):
+                #print "loading %s" % url
+                self.onURLLoad(url)
+            elif url.startswith('template:'):
+                newPage = True
+                break
+        return newPage
+        
     def onURLLoad(self, url):
         print "DTV: got %s" % url
         try:
@@ -555,6 +558,8 @@ class TemplateDisplay(frontend.HTMLDisplay):
         return False
 
     def onDeselect(self):
+        unloadTriggers = self.templateHandle.getTriggerActionURLsOnUnload()
+        self.runActionURLs(unloadTriggers)
         self.templateHandle.unlinkTemplate()
 
     def getWatchable(self):
@@ -1173,13 +1178,15 @@ def filterHasKey(obj,parameter):
 # FIXME: All of these functions have a big hack to support two
 #        parameters instead of one. It's ugly. We should fix this to
 #        support multiple parameters
-def unDownloadedItems(obj,param):
+def unseenItems(obj, param):
+    return undownloadedItems(obj, param) and obj.feed.isAvailable(obj)
+
+def undownloadedItems(obj,param):
     params = param.split('|',1)
     
     undled = (str(obj.feed.getID()) == params[0] and 
-              (not (obj.getState() == 'finished' or
-                    obj.getState() == 'uploading' or
-                    obj.getState() == 'watched')))
+              (obj.getState() == 'stopped' or
+               obj.getState() == 'downloading'))
     if len(params) > 1:
         undled = (undled and 
                   (str(params[1]).lower() in obj.getTitle().lower() or
@@ -1288,6 +1295,7 @@ globalFilterList = {
     'substring': (lambda x, y: str(y) in str(x)),
     'boolean': (lambda x, y: x),
 
+    'unseenItems': unseenItems,
     'feedItems' : feedItems,
     'recentItems': recentItems,
     'allRecentItems': allRecentItems,
@@ -1295,7 +1303,7 @@ globalFilterList = {
     'watchableItems': watchableItems,
     'downloadingItems': downloadingItems,
     'downloadedItems': downloadedItems,
-    'unDownloadedItems':  unDownloadedItems,
+    'undownloadedItems':  undownloadedItems,
     'allDownloadingItems': allDownloadingItems,
        
     'class': filterClass,

@@ -404,7 +404,9 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         elif name == 't:includeTemplate':
             self.outString.write(self.fillTemplate(attrs['filename'],self.data))
         elif name == 't:triggerActionOnLoad':
-            self.handle.addTriggerActionURL(fillAttr(attrs['url'],self.data))
+            self.handle.addTriggerActionURLOnLoad(fillAttr(attrs['url'],self.data))
+        elif name == 't:triggerActionOnUnload':
+            self.handle.addTriggerActionURLOnUnload(fillAttr(attrs['url'],self.data))
         else:
             self.outString.write('<%s'%name)
             for key in attrs.keys():
@@ -802,13 +804,20 @@ class Handle:
         self.trackedViews = []
         self.updateRegions = []
         self.subHandles = []
-        self.triggerActionURLs = []
+        self.triggerActionURLsOnLoad = []
+        self.triggerActionURLsOnUnload = []
         
-    def addTriggerActionURL(self,url):
-        self.triggerActionURLs.append(str(url))
+    def addTriggerActionURLOnLoad(self,url):
+        self.triggerActionURLsOnLoad.append(str(url))
 
-    def getTriggerActionURLs(self):
-        return self.triggerActionURLs
+    def addTriggerActionURLOnUnload(self, url):
+        self.triggerActionURLsOnUnload.append(str(url))
+
+    def getTriggerActionURLsOnLoad(self):
+        return self.triggerActionURLsOnLoad
+
+    def getTriggerActionURLsOnUnload(self):
+        return self.triggerActionURLsOnUnload
 
     def addHideIfEmpty(self, id, name, invert):
         # Make JS calls to hide and show the node with the give id when

@@ -227,7 +227,7 @@ class Feed(DDBObject):
 
     # Returns true if x is a newly available item, otherwise returns false
     def isAvailable(self, x):
-        return x.creationTime > self.lastViewed and x.getState() == 'stopped'
+        return x.creationTime > self.lastViewed and (x.getState() == 'stopped' or x.getState() == 'downloading')
 
     # Returns true if x is an unwatched item, otherwise returns false
     def isUnwatched(self, x):
