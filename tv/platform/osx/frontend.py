@@ -649,7 +649,7 @@ class AddChannelSheetController (NibClassBuilder.AutoBaseClass):
     allowedURLSchemes = ('http://', 'https://', 'feed://')
     def awakeFromNib(self):
         url = NSPasteboard.generalPasteboard().stringForType_(NSStringPboardType)
-        if True not in itertools.imap(url.startswith, self.allowedURLSchemes):
+        if url is None or True not in itertools.imap(url.startswith, self.allowedURLSchemes):
             url = ''
         self.addChannelSheetURL.setStringValue_(url)
 
