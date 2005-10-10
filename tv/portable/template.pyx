@@ -495,7 +495,7 @@ class TrackedView:
         self.anchorType = anchorType
 
         self.origView = view
-        self.view = view.map(idAssignment)
+        self.view = view.map(IDAssignmentInView(name).mapper)
         self.templateFuncs = templateFuncs
         self.templateData = templateData
         self.parent = parent
@@ -777,10 +777,17 @@ def fillAttr(value,data):
 # View mapping function used to assign ID attributes to records so
 # that we can find them in the page after we generate them if we need
 # to update them.
-class idAssignment:
-    def __init__(self, x):
+class IDAssignment:
+    def __init__(self, x, parentViewName):
         self.object = x
-        self.tid = "objid%d" % id(self.object)
+        self.tid = "objid-%s-%d" % (parentViewName, id(self.object))
+        
+class IDAssignmentInView:
+    def __init__(self, name=""):
+        self.viewName = name
+    def mapper(self, obj):
+        return IDAssignment(obj, self.viewName)
+        
 
 ###############################################################################
 #### Generating Javascript callbacks to keep document updated              ####
