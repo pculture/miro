@@ -1204,18 +1204,28 @@ def downloadingItems(obj, param):
                 str(params[1]).lower() in obj.getDescription().lower()))
     return old
 
-def downloadedItems(obj, param):
+def unwatchedItems(obj, param):
     params = param.split('|',1)
     
     dled = (str(obj.feed.getID()) == params[0] and 
               ((obj.getState() == 'finished' or
-                obj.getState() == 'uploading' or
-                obj.getState() == 'watched')))
+                obj.getState() == 'uploading')))
     if len(params) > 1:
         dled = (dled and 
                 (str(params[1]).lower() in obj.getTitle().lower() or
                  str(params[1]).lower() in obj.getDescription().lower()))
     return dled
+
+def expiringItems(obj, param):
+    params = param.split('|',1)
+
+    expiring = (str(obj.feed.getID()) == params[0] and 
+              (obj.getState() == 'watched'))
+    if len(params) > 1:
+        expiring = (expiring and 
+                (str(params[1]).lower() in obj.getTitle().lower() or
+                 str(params[1]).lower() in obj.getDescription().lower()))
+    return expiring
 
 def feedItems(obj, param):
     params = param.split('|',1)
@@ -1302,7 +1312,8 @@ globalFilterList = {
     'oldItems': oldItems,
     'watchableItems': watchableItems,
     'downloadingItems': downloadingItems,
-    'downloadedItems': downloadedItems,
+    'unwatchedItems': unwatchedItems,
+    'expiringItems': expiringItems,
     'undownloadedItems':  undownloadedItems,
     'allDownloadingItems': allDownloadingItems,
        
