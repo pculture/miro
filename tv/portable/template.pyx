@@ -495,7 +495,7 @@ class TrackedView:
         self.anchorType = anchorType
 
         self.origView = view
-        self.view = view.map(IDAssignmentInView(name).mapper)
+        self.view = view.map(IDAssignmentInView(id(self)).mapper)
         self.templateFuncs = templateFuncs
         self.templateData = templateData
         self.parent = parent
