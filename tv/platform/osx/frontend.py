@@ -8,7 +8,7 @@ from WebKit import *
 try:
     from QTKit import *
 except:
-    print "[DTV] QTKit coudln't be imported. Please upgrade to Quicktime 7 or later. You can update at http://apple.com/quicktime/ or by running Software Update."
+    print "DTV: QTKit coudln't be imported. Please upgrade to Quicktime 7 or later. You can update at http://apple.com/quicktime/ or by running Software Update."
 
 import app
 import feed
@@ -41,6 +41,25 @@ nc = NSNotificationCenter.defaultCenter()
 
 def exit(returnCode):
    sys.exit(returnCode)
+
+
+###############################################################################
+#### Dynamically link some specific Carbon functions which we need but     ####
+###  which are not available in the default MacPython                      ####
+###############################################################################
+
+kUIModeNormal = 0
+kUIModeAllHidden = 3
+
+carbonPath = objc.pathForFramework('/System/Library/Frameworks/Carbon.framework')
+carbonBundle = NSBundle.bundleWithPath_(carbonPath)
+objc.loadBundleFunctions(carbonBundle, globals(), ((u'SetSystemUIMode', 'III'),))
+
+OverallAct = 0
+
+coreServicesPath = objc.pathForFramework('/System/Library/Frameworks/CoreServices.framework')
+coreServicesBundle = NSBundle.bundleWithPath_(coreServicesPath)
+objc.loadBundleFunctions(coreServicesBundle, globals(), ((u'UpdateSystemActivity', 'IC'),))
 
 
 ###############################################################################
@@ -1662,12 +1681,14 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         VideoDisplay.getInstance(self)
         VideoDisplayController._instance = self
         self.movieView = None
+        self.systemActivityUpdaterTimer = nil
         self.reset()
 
     def onSelected(self, playlist, frame):
         self.frame = frame
         self.movieView = self.videoAreaView.movieView
         self.enableSecondaryControls(YES)
+        self.preventSystemSleep(True)
         self.setPlaylist(playlist)
         self.videoAreaView.activate()
 
@@ -1675,6 +1696,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.pause()
         self.enableSecondaryControls(False)
         self.videoAreaView.deactivate()
+        self.preventSystemSleep(False)
         self.reset()
 
     def reset(self):
@@ -1687,6 +1709,18 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.fastSeekTimer = nil
         self.progressDisplayer.setMovie_(nil)
         self.unregisterAsMovieObserver()
+
+    def preventSystemSleep(self, prevent):
+        if prevent and self.systemActivityUpdaterTimer is nil:
+            print "DTV: Launching system activity updater timer"
+            self.systemActivityUpdaterTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(30, self, 'updateSystemActivity:', nil, YES)
+        elif self.systemActivityUpdaterTimer is not nil:
+            print "DTV: Stopping system activity updater timer"
+            self.systemActivityUpdaterTimer.invalidate()
+            self.systemActivityUpdaterTimer = nil
+
+    def updateSystemActivity_(self, timer):
+        UpdateSystemActivity(OverallAct)
 
     def registerAsMovieObserver(self, movie):
         nc.addObserver_selector_name_object_(self, 'handleMovieNotification:', QTMovieRateDidChangeNotification, movie)
@@ -1898,17 +1932,7 @@ class VideoAreaView (NSView):
 ###############################################################################
 #### The video window, used to display the movies in both windowed and     ####
 #### fullscreen modes.                                                     ####
-####                                                                       ####
-#### We have to dynamically link some specific Carbon functions which are  ####
-###  not available in the default MacPython                                ####
 ###############################################################################
-
-kUIModeNormal = 0
-kUIModeAllHidden = 3
-
-carbonPath = objc.pathForFramework('/System/Library/Frameworks/Carbon.framework')
-carbonBundle = NSBundle.bundleWithPath_(carbonPath)
-objc.loadBundleFunctions(carbonBundle, globals(), ((u'SetSystemUIMode', 'III'),))
 
 class VideoWindow (NSWindow):
     
