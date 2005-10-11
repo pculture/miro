@@ -3,7 +3,7 @@ import platformcfg
 
 __data = None
 __lock = Lock()
-__listeners = set()
+__callbacks = set()
 
 class Pref:
     def __init__(self, **kwds):
@@ -27,11 +27,11 @@ MOVIES_DIRECTORY            = Pref( key='MoviesDirectory',       default=None,  
 SUPPORT_DIRECTORY           = Pref( key='SupportDirectory',      default=None,  platformSpecific=True )
 DB_PATHNAME                 = Pref( key='DBPathname',            default=None,  platformSpecific=True )
 
-def addListener(listener):
-    __listeners.add(listener)
+def addChangeCallback(callback):
+    __callbacks.add(callback)
 
-def removeListener(listener):
-    __listeners.discard(listener)
+def removeChangeCallback(callback):
+    __callbacks.discard(callback)
 
 def load():
     global __data
@@ -69,9 +69,8 @@ def __checkValidity():
         load()
 
 def __notifyListeners(key, value):
-    for listener in __listeners:
-        if hasattr(listener, 'configDidChange'):
-            listener.configDidChange(key, value)
+    for callback in __callbacks:
+        callback(key, value)
 
 
 # Hack. Getting the support directory path here forces it to be created at

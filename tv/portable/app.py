@@ -173,7 +173,7 @@ class Controller (frontend.Application):
         try:
             print "DTV: Loading preferences..."
             config.load()
-            config.addListener(self)
+            config.addChangeCallback(self.configDidChange)
             
             delegate = self.getBackendDelegate()
             feed.setDelegate(delegate)
