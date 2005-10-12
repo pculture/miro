@@ -704,10 +704,9 @@ class UniversalFeed(DDBObject):
                 thread.setDaemon(False)
                 thread.start()
                 return
-            else:
-                self.actualFeed.update()
         finally:
             self.endRead()
+        self.actualFeed.update()
 
     def generateFeed(self):
         oldFeed = self.actualFeed
