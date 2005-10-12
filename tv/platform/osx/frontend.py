@@ -1604,7 +1604,7 @@ class VideoDisplay (app.Display, app.VideoDisplayDB):
         app.VideoDisplayDB.__init__(self)
         app.Display.__init__(self)
         self.controller = VideoDisplayController.getInstance()
-        assert self.controller is not None
+        assert self.controller is not nil
         
     def configure(self, view, firstItemId, previousDisplay):
         self.setPlaylist(view, firstItemId)
