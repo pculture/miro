@@ -1,1 +1,407 @@
-body {	background: #FFFFFF;	margin: 0px;	font: 12px "Lucida Grande", "Lucida Sans", Arial, "Trebuchet MS";	color: #333333;	/* The following property is used by Safari to prevent text selection */	-khtml-user-select: none;}.clearer {	clear: both;	height: 0px;}p {	font-size: 90%;	margin: 5px 10px 7px 10px;}form {	margin: 0px;	padding: 0px;}ul {		list-style-position: inside;	margin: 0px 0px 0px 5px;	padding: 0px;	}li {	margin: 0px 0px 15px 0px;	padding: 0px;}#main-titlebar {	background: url(../images/main-titlebar-bg.png) repeat-x left bottom;	height: 77px;	width: 100%;	margin: 0px 0px 1px;	position: fixed;	top: 0px;	z-index: 10;}#main-titlebar-avatar {	position: absolute;	width: 60px;	height: 60px;	border: 2px solid #FFFFFF;	margin: 5px 0px 0px 5px;}#main-titlebar-avatar img {	width: 60px;	height: 60px;}#main-titlebar-channelname {	padding-top: 10px;}#main-titlebar-channelname h1 {	margin: 0px 140px 0px 80px;	padding: 0px;	height: 28px;	overflow: hidden;	color: #FFFFFF;	font-size: 200%;	text-align: center;}#main-titlebar-autodownload {	position: absolute;	width: 138px;	top: 44px;	left: 50%;	margin: 0px 0px 0px -99px;	color: #FFFFFF;	text-transform: uppercase;}#main-titlebar-tasks {	position: absolute;	width: 130px;	top: 5px;	right: 0px;	margin: 0px 0px 0px -140px;}#main-titlebar-tasks p {	margin: 0px;	padding: 0px;	color: #FFFFFF;	text-transform: uppercase;}#main-titlebar-tasks p a {	color: #FFFFFF;	text-decoration: none;}#main-titlebar-tasks p a:hover {	color: #FFFFFF;	text-decoration: underline;}#main-titlebar-tasks-settings {	background: url(../images/main-icon-settings.png) no-repeat left top;	height: 18px;	margin: 0px 0px 5px 0px;	padding: 0px 0px 0px 20px;}#main-titlebar-tasks-recommend {	background: url(../images/main-icon-mail-titlebar.png) no-repeat left 2px;	height: 18px;	margin: 0px 0px 4px 0px;	padding: 0px 0px 0px 20px;}.main-titlebar-tasks-search {	width: 125px; 	height: 13px;	border: 1px solid #5392e3;	padding: 4px;	font-size: 11px;	color: #1c5180;}#main-container {	padding-top: 77px;}.main-channelbar {	background: url(../images/main-bar-bg.png) repeat-x left bottom;	height: 22px;}.main-channelbar-hitbox {	position: relative;	margin: 0px 0px -22px 0px;	overflow: hidden;	height: 22px;	text-indent: -100%;}.main-channelbar-hitbox a {	padding: 5px 200% 5px 0px;}.main-channelbar h1, .main-channelbar h2 {	display: inline;	padding: 0px;	font-size: 100%;	font-weight: bold;	color: #FFFFFF;	text-decoration: none;}.main-channelbar h1 {	float: left;	margin: 3px 0px 0px 5px;}.main-channelbar h2 {	float: right;	margin: 3px 5px 0px 0px;}.main-channelbar a:link, .main-channelbar a:visited, .main-channelbar a:active {	color: #FFFFFF;	text-decoration: none;	}#main-newlyavailable, #main-downloads, #main-unwatched, #main-expiring, #main-saved, #main-autodownload, #main-expiration, #main-newlyavailable-seen, #show-more-videos-label {	display: none;}.main-video {	clear: both;	border-bottom: 1px solid #b6bfce;	background: #FFFFFF url(../images/main-video-bg.png) no-repeat right bottom;}.main-video-green {	clear: both;	border-bottom: 1px solid #b6bfce;	background: #FFFFFF url(../images/main-video-bg-green.png) no-repeat right bottom;}.main-video-container {	width: 100%;	float: left;	margin-right: -150px;}.main-video-content {	margin-right: 150px;}.main-video-desc {	padding-top: 8px;	height: 70px;	overflow: hidden;}.main-video-desc a:link, .main-video-desc a:active, .main-content a:link, .main-content a:active {	color: #215ccf;	text-decoration: underline;}.main-video-desc a:hover, .main-content a:hover {	color: #4181e0;	text-decoration: none;}.main-video-desc a:visited, .main-content a:visited {	color: #666666;	text-decoration: underline;}.main-video-tnail {	width: 118px;	float: left;}.main-video-details {	width: 125px;	float: right;	padding-top: 5px;	}.main-video-tnail img {	width: 100px;	height: 75px;	margin: 3px 0px 3px 5px;	border: 2px solid #FFFFFF;}.main-video-hitbox a {	float: left;	margin: 5px 0px 0px -111px;	padding: 38px 50px 37px 50px;}.main-video-hitbox .downloadable a {	background: url(../images/main-video-download.png) no-repeat right top;}.main-video-hitbox .downloadable a:hover {	background: url(../images/main-video-download.png) no-repeat right -75px;}.main-video-hitbox .playable a {	background: url(../images/main-video-play.png) no-repeat right top;}.main-video-hitbox .playable a:hover {	background: url(../images/main-video-play.png) no-repeat right -75px;}.main-video-hitbox .inprogress a {	background: url(../images/main-video-inprogress.png) no-repeat right top;}.main-video-hitbox .inprogress a:hover {	background: url(../images/main-video-inprogress.png) no-repeat right -75px;}.main-video-desc h1 {	margin: 0px;	padding: 0px;	font-size: 120%;	font-weight: bold;	color: #000000;	text-decoration: none;}.main-video-desc p {	margin: 0px;	padding: 0px;	font-size: 90%;}.main-video-details p {	margin: 0px 0px 3px;	padding: 0px;	font-size: 85%;	text-decoration: none;}.main-video-details-left {	float: left;	display: inline;	width: 75px;}.main-video-details-right {	width: 40px;	float: left;	display: inline;}.main-video-details-new {	float: left;	display: inline;	background-color: #00a2ef;	margin-top: 5px;}.main-video-details-unwatched {	float: left;	display: inline;	background-color: #5ab471;	margin-top: 5px;}.main-video-details-expiry {	float: left;	display: inline;	background-color: #74a5ce;	margin-top: 5px;}.main-video-details-new p, .main-video-details-unwatched p, .main-video-details-expiry p {	color: #FFFFFF;	text-transform: uppercase;	font-size: 75%;	margin: 0px;	padding: 2px 2px;}.main-video-details-save {	float: left;	display: inline;	background-color: #f9fbfe;	padding: 1px;	margin-top: 5px;}.main-video-details-save p {	text-transform: uppercase;	font-size: 75%;	margin: 0px;	padding: 1px;}.main-video-details-save p a {	color: #2b5576;	text-decoration: underline;	}.main-video-details-save p a:hover {	color: #000000;	text-decoration: underline;	}.main-video-details-tasks {	clear: both;	padding: 5px 0px;}.main-video-details-task-delete, .main-video-details-task-bomb, .main-video-details-task-mail {	float: left;	display: inline;	margin: 0px 24px 0px 0px;	overflow: hidden;}.main-video-details-task-delete {		background: url(../images/main-icon-trash.png) top left no-repeat;	width: 13px;	height: 12px;}.main-video-details-task-delete:hover {		background: url(../images/main-icon-trash.png) bottom left no-repeat;}.main-video-details-task-mail {		background: url(../images/main-icon-mail.png) top left no-repeat;	width: 14px;	height: 12px;}.main-video-details-task-mail:hover {		background: url(../images/main-icon-mail.png) bottom left no-repeat;}.main-video-progress {	float: left;	display: inline;	padding-top: 5px;}.main-progress-bar {	float: left;    width: 94px;    height: 12px;	padding: 0 2px 0 2px;	background: url(../images/status_background.png) top left no-repeat;}.main-progress-cancel {	float: right;	width: 11px;	height: 13px;	margin: 0px 0px 3px 3px;	background: url(../images/main-cancel.png) top left no-repeat;}
+body {
+	background: #FFFFFF;
+	margin: 0px;
+	font: 12px "Lucida Grande", "Lucida Sans", Arial, "Trebuchet MS";
+	color: #333333;
+	/* The following property is used by Safari to prevent text selection */
+	-khtml-user-select: none;
+}
+
+.clearer {
+	clear: both;
+	height: 0px;
+}
+
+p {
+	font-size: 90%;
+	margin: 5px 10px 7px 10px;
+}
+
+form {
+	margin: 0px;
+	padding: 0px;
+}
+
+ul {	
+	list-style-position: inside;
+	margin: 0px 0px 0px 5px;
+	padding: 0px;	
+}
+
+li {
+	margin: 0px 0px 15px 0px;
+	padding: 0px;
+}
+
+#main-titlebar {
+	background: url(../images/main-titlebar-bg.png) repeat-x left bottom;
+	height: 77px;
+	width: 100%;
+	margin: 0px 0px 1px;
+	position: fixed;
+	top: 0px;
+	z-index: 10;
+}
+
+#main-titlebar-avatar {
+	position: absolute;
+	width: 60px;
+	height: 60px;
+	border: 2px solid #FFFFFF;
+	margin: 5px 0px 0px 5px;
+}
+
+#main-titlebar-avatar img {
+	width: 60px;
+	height: 60px;
+}
+
+#main-titlebar-channelname {
+	padding-top: 10px;
+}
+
+#main-titlebar-channelname h1 {
+	margin: 0px 140px 0px 80px;
+	padding: 0px;
+	height: 28px;
+	overflow: hidden;
+	color: #FFFFFF;
+	font-size: 200%;
+	text-align: center;
+}
+
+#main-titlebar-autodownload {
+	position: absolute;
+	width: 138px;
+	top: 44px;
+	left: 50%;
+	margin: 0px 0px 0px -99px;
+	color: #FFFFFF;
+	text-transform: uppercase;
+}
+
+#main-titlebar-tasks {
+	position: absolute;
+	width: 130px;
+	top: 5px;
+	right: 0px;
+	margin: 0px 0px 0px -140px;
+}
+
+#main-titlebar-tasks p {
+	margin: 0px;
+	padding: 0px;
+	color: #FFFFFF;
+	text-transform: uppercase;
+}
+
+#main-titlebar-tasks p a {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+#main-titlebar-tasks p a:hover {
+	color: #FFFFFF;
+	text-decoration: underline;
+}
+
+#main-titlebar-tasks-settings {
+	background: url(../images/main-icon-settings.png) no-repeat left top;
+	height: 18px;
+	margin: 0px 0px 5px 0px;
+	padding: 0px 0px 0px 20px;
+}
+
+#main-titlebar-tasks-recommend {
+	background: url(../images/main-icon-mail-titlebar.png) no-repeat left 2px;
+	height: 18px;
+	margin: 0px 0px 4px 0px;
+	padding: 0px 0px 0px 20px;
+}
+
+.main-titlebar-tasks-search {
+	width: 125px; 
+	height: 13px;
+	border: 1px solid #5392e3;
+	padding: 4px;
+	font-size: 11px;
+	color: #1c5180;
+}
+
+#main-container {
+	padding-top: 77px;
+}
+
+.main-channelbar {
+	background: url(../images/main-bar-bg.png) repeat-x left bottom;
+	height: 22px;
+}
+
+.main-channelbar-hitbox {
+	position: relative;
+	margin: 0px 0px -22px 0px;
+	overflow: hidden;
+	height: 22px;
+	text-indent: -100%;
+}
+
+.main-channelbar-hitbox a {
+	padding: 5px 200% 5px 0px;
+}
+
+.main-channelbar h1, .main-channelbar h2 {
+	display: inline;
+	padding: 0px;
+	font-size: 100%;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.main-channelbar h1 {
+	float: left;
+	margin: 3px 0px 0px 5px;
+}
+
+.main-channelbar h2 {
+	float: right;
+	margin: 3px 5px 0px 0px;
+}
+
+.main-channelbar a:link, .main-channelbar a:visited, .main-channelbar a:active {
+	color: #FFFFFF;
+	text-decoration: none;	
+}
+
+#main-newlyavailable, #main-downloads, #main-unwatched, #main-expiring, #main-saved, #main-autodownload, #main-expiration, #main-newlyavailable-seen, #show-more-videos-label {
+	display: none;
+}
+
+.main-video {
+	clear: both;
+	border-bottom: 1px solid #b6bfce;
+	background: #FFFFFF url(../images/main-video-bg.png) no-repeat right bottom;
+}
+
+.main-video-green {
+	clear: both;
+	border-bottom: 1px solid #b6bfce;
+	background: #FFFFFF url(../images/main-video-bg-green.png) no-repeat right bottom;
+}
+
+.main-video-container {
+	width: 100%;
+	float: left;
+	margin-right: -150px;
+}
+
+.main-video-content {
+	margin-right: 150px;
+}
+
+.main-video-desc {
+	padding-top: 8px;
+	height: 70px;
+	overflow: hidden;
+}
+
+.main-video-desc a:link, .main-video-desc a:active, .main-content a:link, .main-content a:active {
+	color: #215ccf;
+	text-decoration: underline;
+}
+
+.main-video-desc a:hover, .main-content a:hover {
+	color: #4181e0;
+	text-decoration: none;
+}
+
+.main-video-desc a:visited, .main-content a:visited {
+	color: #666666;
+	text-decoration: underline;
+}
+
+.main-video-tnail {
+	width: 118px;
+	float: left;
+}
+
+.main-video-details {
+	width: 125px;
+	float: right;
+	padding-top: 5px;	
+}
+
+.main-video-tnail img {
+	width: 100px;
+	height: 75px;
+	margin: 3px 0px 3px 5px;
+	border: 2px solid #FFFFFF;
+}
+
+.main-video-hitbox a, .main-video-hitbox span span {
+	float: left;
+	margin: 5px 0px 0px -111px;
+	padding: 38px 50px 37px 50px;
+}
+
+.main-video-hitbox .downloadable a {
+	background: url(../images/main-video-download.png) no-repeat right top;
+}
+
+.main-video-hitbox .downloadable a:hover {
+	background: url(../images/main-video-download.png) no-repeat right -75px;
+}
+
+.main-video-hitbox .playable a {
+	background: url(../images/main-video-play.png) no-repeat right top;
+}
+
+.main-video-hitbox .playable a:hover {
+	background: url(../images/main-video-play.png) no-repeat right -75px;
+}
+
+.main-video-hitbox .inprogress span {
+	background: url(../images/main-video-inprogress.png) no-repeat right top;
+}
+
+.main-video-desc h1 {
+	margin: 0px;
+	padding: 0px;
+	font-size: 120%;
+	font-weight: bold;
+	color: #000000;
+	text-decoration: none;
+}
+
+.main-video-desc p {
+	margin: 0px;
+	padding: 0px;
+	font-size: 90%;
+}
+
+.main-video-details p {
+	margin: 0px 0px 3px;
+	padding: 0px;
+	font-size: 85%;
+	text-decoration: none;
+}
+
+.main-video-details-left {
+	float: left;
+	display: inline;
+	width: 75px;
+}
+
+.main-video-details-right {
+	width: 40px;
+	float: left;
+	display: inline;
+}
+
+.main-video-details-new {
+	float: left;
+	display: inline;
+	background-color: #00a2ef;
+	margin-top: 5px;
+}
+
+.main-video-details-unwatched {
+	float: left;
+	display: inline;
+	background-color: #5ab471;
+	margin-top: 5px;
+}
+
+.main-video-details-expiry {
+	float: left;
+	display: inline;
+	background-color: #74a5ce;
+	margin-top: 5px;
+}
+
+.main-video-details-new p, .main-video-details-unwatched p, .main-video-details-expiry p {
+	color: #FFFFFF;
+	text-transform: uppercase;
+	font-size: 75%;
+	margin: 0px;
+	padding: 2px 2px;
+}
+
+.main-video-details-save {
+	float: left;
+	display: inline;
+	background-color: #f9fbfe;
+	padding: 1px;
+	margin-top: 5px;
+}
+
+.main-video-details-save p {
+	text-transform: uppercase;
+	font-size: 75%;
+	margin: 0px;
+	padding: 1px;
+}
+
+.main-video-details-save p a {
+	color: #2b5576;
+	text-decoration: underline;	
+}
+
+.main-video-details-save p a:hover {
+	color: #000000;
+	text-decoration: underline;	
+}
+
+.main-video-details-tasks {
+	clear: both;
+	padding: 5px 0px;
+}
+
+.main-video-details-task-delete, .main-video-details-task-bomb, .main-video-details-task-mail {
+	float: left;
+	display: inline;
+	margin: 0px 24px 0px 0px;
+	overflow: hidden;
+}
+
+.main-video-details-task-delete {	
+	background: url(../images/main-icon-trash.png) top left no-repeat;
+	width: 13px;
+	height: 12px;
+}
+
+.main-video-details-task-delete:hover {	
+	background: url(../images/main-icon-trash.png) bottom left no-repeat;
+}
+
+.main-video-details-task-mail {	
+	background: url(../images/main-icon-mail.png) top left no-repeat;
+	width: 14px;
+	height: 12px;
+}
+
+.main-video-details-task-mail:hover {	
+	background: url(../images/main-icon-mail.png) bottom left no-repeat;
+}
+
+.main-video-progress {
+	float: left;
+	display: inline;
+	padding-top: 5px;
+}
+
+.main-progress-bar {
+	float: left;
+    width: 94px;
+    height: 12px;
+	padding: 0 2px 0 2px;
+	background: url(../images/status_background.png) top left no-repeat;
+}
+
+.main-progress-cancel {
+	float: right;
+	width: 11px;
+	height: 13px;
+	margin: 0px 0px 3px 3px;
+	background: url(../images/main-cancel.png) top left no-repeat;
+}

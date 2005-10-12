@@ -8,87 +8,399 @@
 </head>
 
 <body>
-  
-  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="autopending" class="right_box">
-    <a href="action:startDownload?item=@@@this getID@@@"><img src="resource:images/download_button.png" /></a><br />
-    <span class="report_pending">Pending Automatic Download</span>
-  </div>
 
-
-  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="manualpending" class="right_box">
-    <span t:replace="this getPendingReason" />
-    <span class="report_pending">Pending Manual Download</span>
-  </div>
+<div class="main-video">
 
 
 
-  <div class="right_box">
-    <a t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="stopped" href="action:startDownload?item=@@@this getID@@@" class="download_button" ><span /></a>
-  </div>
-  
-  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="downloading" class="progress_box dling">
-    <div class="bar_holder"><img src="resource:images/status.png" width="@@@this threeDigitPercentDone@@@" height="20" /></div><a class="cancel_button" href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/cancel_button.png" /></a><span class="est_time" t:replace="this downloadETA" />
-  </div> 
+	<!-- THUMBNAIL, TITLE AND DESCRIPTION -->
+	<div class="main-video-container">
+		<div class="main-video-content">
+		
+			<!-- THUMBNAIL -->
+			<div class="main-video-tnail">
+				<img src="***this getThumbnail***" alt="" />
+			</div>
+	
+			<div class="main-video-hitbox">
+				<span class="inprogress" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="downloading">
+						<span title="Downloading '***this getTitle***'" />
+				</span>
+				<span class="downloadable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="stopped">
+						<a href="action:startDownload?item=@@@this getID@@@" title="Download '***this getTitle***'" />
+				</span>
+				<span class="downloadable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="failed">
+						<a href="action:startDownload?item=@@@this getID@@@" title="Download '***this getTitle***'" />
+				</span>
+				<span class="downloadable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="autopending">
+						<a href="action:startDownload?item=@@@this getID@@@" title="Download '***this getTitle***'" />
+				</span>
+				<span class="downloadable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="manualpending">
+						<a href="action:startDownload?item=@@@this getID@@@" title="Download '***this getTitle***'" />
+				</span>
+				<span class="playable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="finished">
+						<a href="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" title="Play '***this getTitle***'" />
+				</span>
+				<span class="playable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="watched">
+						<a href="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" title="Play '***this getTitle***'" />
+				</span>
+				<span class="playable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="uploading">
+						<a href="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" title="Play '***this getTitle***'" />
+				</span>
+				<span class="playable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="saved">
+						<a href="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" title="Play '***this getTitle***'" />
+				</span>
+			</div>
+			<!-- / THUMBNAIL -->
+		
+			<!-- TITLE AND DESCRIPTION -->
+			<div class="main-video-desc">
+				<h1 t:replace="this getTitle" />
+				<p t:replaceMarkup="this getDescription" />
+			</div>
+			<!-- / TITLE AND DESCRIPTION -->
+			
+		</div>
+	</div>
+	<!-- / THUMBNAIL, TITLE AND DESCRIPTION -->
+	
+	
+	
+	<!-- STOPPED **************************************************** -->
+	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="stopped">
+		<div class="main-video-details">
+		
+			<!-- FILE INFO -->
+			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+			<p class="main-video-details-left" t:replace="this getDuration" />
+			<p class="main-video-details-right" t:replace="this getFormat" />
+			<!-- / FILE INFO -->
+			
+		</div>
+		<div class="clearer"></div>
+	</span>
+	<!-- / STOPPED -->
+	
+	
+	
+	
+	<!-- DOWNLOADING **************************************************** -->
+	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="downloading">
+		<div class="main-video-details">
+		
+			<!-- FILE INFO -->
+			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+			<p class="main-video-details-left" t:replace="this getDuration" />
+			<p class="main-video-details-right" t:replace="this getFormat" />
+			<!-- / FILE INFO -->
+			
+			<!-- DOWNLOAD PROGRESS -->
+			<div class="main-video-progress">
+				<div class="main-progress-bar">
+					<img src="resource:images/status.png" width="@@@this downloadProgressWidth@@@" height="12" />
+				</div>
+				<a class="main-progress-cancel" href="action:expireItem?item=@@@this getID@@@" title="Cancel Download" />
+			</div>
+			<p style="clear:both;">
+				<span t:replace="this downloadETA" />
+				<span t:hideIfKey="this downloadRate" t:hideFunctionKey="global filter equal" t:hideParameter="0k/s">
+					<span t:replace="this downloadRate" />
+				</span>
+			</p>
+			<!-- / DOWNLOAD PROGRESS -->	
+			
+		</div>
+		<div class="clearer"></div>
+	</span>
+	<!-- / DOWNLOADING -->	
+	
+	
+	
+	<!-- AUTO-DOWNLOAD PENDING **************************************************** -->
+	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="autopending">
+		<div class="main-video-details">
+		
+			<!-- FILE INFO -->
+			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+			<p class="main-video-details-left" t:replace="this getDuration" />
+			<p class="main-video-details-right" t:replace="this getFormat" />
+			<!-- / FILE INFO -->
+			
+			<!-- MESSAGE -->
+			<p>Pending Automatic Download</p>
+			<!-- MESSAGE -->
+			
+		</div>
+		<div class="clearer"></div>
+	</span>
+	<!-- / AUTO-DOWNLOAD PENDING -->
+	
+	
+	
+	<!-- MANUAL-DOWNLOAD PENDING **************************************************** -->
+	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="manualpending">
+		<div class="main-video-details">
+		
+			<!-- FILE INFO -->
+			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+			<p class="main-video-details-left" t:replace="this getDuration" />
+			<p class="main-video-details-right" t:replace="this getFormat" />
+			<!-- / FILE INFO -->
+			
+			<!-- MESSAGE -->
+			<p>Pending Manual Download</p>
+			<!-- MESSAGE -->
+			
+		</div>
+		<div class="clearer"></div>
+	</span>
+	<!-- / MANUAL-DOWNLOAD PENDING -->
+	
+	
 
+	<!-- UNWATCHED **************************************************** -->
+	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="finished">
+		<div class="main-video-details">
+		
+			<!-- FILE INFO -->
+			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+			<p class="main-video-details-left" t:replace="this getDuration" />
+			<p class="main-video-details-right" t:replace="this getFormat" />
+			<!-- / FILE INFO -->		
+			
+			<!-- UNWATCHED -->
+			<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring">
+				<div class="main-video-details-unwatched">
+					<p>Unwatched</p>
+				</div>
+			</span>
+			<!-- / UNWATCHED -->	
+			
+			<!-- EXPIRY -->
+			<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring">
+				<div class="main-video-details-expiry">
+					<p>Expires: <span t:replace="this getExpirationTime" /></p>
+				</div>
+				<div class="main-video-details-save">
+					<p><a href="action:keepItem?item=@@@this getID@@@">Save</a></p>
+				</div>
+			</span>
+			<!-- / EXPIRY -->
+			
+			<!-- FILE TASKS -->
+			<div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" class="main-video-details-tasks">
+				<a href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
+				<a href="#"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+				<div class="clearer"></div>
+			</div>
+			<!-- / FILE TASKS -->
+			
+		</div>
+		<div class="clearer"></div>
+	</span>
+	<!-- / UNWATCHED -->
+	
+	
+	
+	<!-- WATCHED **************************************************** -->
+	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="watched">
+		<div class="main-video-details">
+		
+			<!-- FILE INFO -->
+			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+			<p class="main-video-details-left" t:replace="this getDuration" />
+			<p class="main-video-details-right" t:replace="this getFormat" />
+			<!-- / FILE INFO -->			
+			
+			<!-- EXPIRY -->
+			<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring">
+				<div class="main-video-details-expiry" style="margin-top:25px;">
+					<p>Expires: <span t:replace="this getExpirationTime" /></p>
+				</div>
+				<div class="main-video-details-save" style="margin-top:25px;">
+					<p><a href="action:keepItem?item=@@@this getID@@@">Save</a></p>
+				</div>
+			</span>
+			<!-- / EXPIRY -->
+			
+			<!-- FILE TASKS -->
+			<div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" class="main-video-details-tasks">
+				<a href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
+				<a href="#"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+				<div class="clearer"></div>
+			</div>
+			<!-- / FILE TASKS -->
+			
+		</div>
+		<div class="clearer"></div>
+	</span>
+	<!-- / WATCHED -->
+	
+	
+	
+	<!-- SAVED **************************************************** -->
+	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="saved">
+		<div class="main-video-details">
+		
+			<!-- FILE INFO -->
+			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+			<p class="main-video-details-left" t:replace="this getDuration" />
+			<p class="main-video-details-right" t:replace="this getFormat" />
+			<!-- / FILE INFO -->			
+			
+			<!-- FILE TASKS -->
+			<div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" class="main-video-details-tasks" style="padding-top:35px;">
+				<a href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
+				<a href="#"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+				<div class="clearer"></div>
+			</div>
+			<!-- / FILE TASKS -->
+			
+		</div>
+		<div class="clearer"></div>
+	</span>
+	<!-- / SAVED -->
+	
+	
 
-  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="failed" class="right_box">  
-    <a href="action:startDownload?item=@@@this getID@@@" class="download_button"><span /></a>
-    <span class="report_downloaderror">Download Error:</span>
-    <span class="report_downloaderror" t:replace="this getFailureReason" />
-  </div>
+	<!-- UPLOADING **************************************************** -->
+	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="uploading">
+		<div class="main-video-details">
+		
+			<!-- FILE INFO -->
+			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+			<p class="main-video-details-left" t:replace="this getDuration" />
+			<p class="main-video-details-right" t:replace="this getFormat" />
+			<!-- / FILE INFO -->
+			
+			<!-- UNWATCHED -->
+			<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="uploading">
+				<div class="main-video-details-unwatched">
+					<p>Unwatched</p>
+				</div>
+			</span>
+			<!-- / UNWATCHED -->
+			
+			<!-- EXPIRY -->
+			<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring">
+				<div class="main-video-details-expiry">
+					<p>Expires: <span t:replace="this getExpirationTime" /></p>
+				</div>
+				<div class="main-video-details-save">
+					<p><a href="action:keepItem?item=@@@this getID@@@">Save</a></p>
+				</div>
+			</span>
+			<!-- / EXPIRY -->
+			
+			<!-- FILE TASKS -->
+			<div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" class="main-video-details-tasks">
+				<a href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
+				<a href="#"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+				<div class="clearer"></div>
+			</div>
+			<!-- / FILE TASKS -->
+			
+		</div>
+		<div class="clearer"></div>
+	</span>
+	<!-- / UPLOADING -->
+	
+	
+	
+	<!-- FAILED DOWNLOAD **************************************************** -->
+	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="failed">
+		<div class="main-video-details">
+		
+			<!-- FILE INFO -->
+			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+			<p class="main-video-details-left" t:replace="this getDuration" />
+			<p class="main-video-details-right" t:replace="this getFormat" />
+			<!-- / FILE INFO -->
+			
+			<!-- ERROR -->
+			<p>Download Error: <span t:replace="this getFailureReason" /></p>
+			<!-- / ERROR -->
+			
+		</div>
+		<div class="clearer"></div>
+	</span>
+	<!-- / FAILED DOWNLOAD -->
+	
+	
 
-
-
-  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="finished" class="right_box">
+</div>	
+	
+	<!-- DONE <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="finished" class="right_box">
     <a href="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
     <span class="unwatched">unwatched</span><br />
-    <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a> <!-- <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> -->
-  </div>
+    <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a>--> <!-- <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> -->
+  <!--</div>-->
 
-
-
-  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="uploading" class="right_box">
+  <!-- DONE <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="uploading" class="right_box">
     <a href="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
     <span class="unwatched">unwatched</span><br />
-    <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a> <!-- <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> -->
-  </div>
+    <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a>
+  </div>-->  
   
-  
-  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="watched" class="right_box">    
+  <!-- DONE <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="watched" class="right_box">    
     <a href="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
     <span class="report_expire">Expires: <span t:replace="this getExpirationTime"/></span>  <a href="action:keepItem?item=@@@this getID@@@">keep</a> <br />
     <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a>  
-  </div>
+  </div>-->
 
-
-  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="saved" class="right_box">  
+  <!-- DONE <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="saved" class="right_box">  
     <a href="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
-    <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a>
-  	
-  </div>
+    <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a>  	
+  </div>-->  
   
-  
-  
-  
-  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="paused" class="right_box">
+  <!--<div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="paused" class="right_box">
     Downloads Paused
-  </div>
+  </div>-->
 
-
-
-  <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="expired" class="right_box">
+  <!-- DONE <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="expired" class="right_box">
     <a href="action:startDownload?item=@@@this getID@@@" class="download_button"><span /></a><br />
    <span class="report_expire"></span>
-  </div>
-
+  </div>-->
 	
-  <div class="thumbnail_placeholder"><img width="101" height="75" class="thumb" src="***this getThumbnail***" /></div>
+	<!-- DONE <div class="thumbnail_placeholder"><img width="101" height="75" class="thumb" src="***this getThumbnail***" /></div>
   <div class="desc" >
     <div class="video_title" t:replace="this getTitle" />
     <div class="short_description" t:replaceMarkup="this getDescription"/> 
-    <div class="file_size"><span t:replace="this getReleaseDate" />  <span t:replace="this getDuration" /> <span t:replace="this getTotalSize" /><!--<a class="more_link"><img src="resource:images/more.png" /></a><a class="add_link"><img src="resource:images/add.png" /></a>--></div>
-  </div>
+    <div class="file_size"><span t:replace="this getReleaseDate" />  <span t:replace="this getDuration" /> <span t:replace="this getTotalSize" /></div>
+  </div>-->
+	
+	  <!-- DONE <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="autopending" class="right_box">
+    <a href="action:startDownload?item=@@@this getID@@@"><img src="resource:images/download_button.png" /></a><br />
+    <span class="report_pending">Pending Automatic Download</span>
+  </div>-->
 
+  <!-- DONE <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="manualpending" class="right_box">
+    <span t:replace="this getPendingReason" />
+    <span class="report_pending">Pending Manual Download</span>
+  </div>-->
+
+  <!--<div class="right_box">
+    <a t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="stopped" href="action:startDownload?item=@@@this getID@@@" class="download_button" ><span /></a>
+  </div>-->
+  
+  <!-- DONE <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="downloading" class="progress_box dling">
+    <div class="bar_holder"><img src="resource:images/status.png" width="@@@this threeDigitPercentDone@@@" height="20" /></div><a class="cancel_button" href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/cancel_button.png" /></a><span class="est_time" t:replace="this downloadETA" />
+  </div>--> 
+
+  <!-- DONE <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="failed" class="right_box">  
+    <a href="action:startDownload?item=@@@this getID@@@" class="download_button"><span /></a>
+    <span class="report_downloaderror">Download Error:</span>
+    <span class="report_downloaderror" t:replace="this getFailureReason" />
+  </div>-->	
 
 </body>
 </html>

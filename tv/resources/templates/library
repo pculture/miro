@@ -5,8 +5,10 @@
       xmlns:i18n="http://www.participatoryculture.org/i18n">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" href="resource:css/style.css" />
+
+<link href="resource:css/main.css" rel="stylesheet" type="text/css" />
 <t:include filename="dynamic.js" />
+<t:include filename="settings.js" />
 
 <t:dynamicviews>
  <t:view name="allitems" key="global view items">
@@ -19,48 +21,31 @@
 
 <body>
 
- <div id="main_window">  
-  
-<div id="ultra_top_wrapper">
-
-<div id="top_wrapper">
-
-<div id="channel_info">
-	<img src="resource:images/everything_icon.png" />
-	<h2 i18n:translate="">My Collection</h2>
-</div>
-<div id="right_half">
-	
-	
-</div>
-
-	<br style="clear: both; height: 0; padding: 0; margin: 0;" />
-</div>
-
-
-
-<div id="navigation_wrapper">
-
-<div class="search_wrap"><input type="text" size="20" class="search_field" onfocus="startEditFilter(this,new Array('allitems'),new Array(''),new Array('global filter watchableItems'),new Array(0), new Array(''))" onblur="endEditFilter()"  /></div>
-
-
-	<div id="navigation">
-
+<!-- TITLE BAR ************************************************************ -->
+<div id="main-titlebar">
+	<div id="main-titlebar-avatar" style="border:0px;"><img src="resource:images/everything_icon.png" /></div>
+	<div id="main-titlebar-channelname">
+		<h1 i18n:translate="">My Collection</h1>
+	</div>
+	<div id="main-titlebar-tasks">
+		<div id="main-titlebar-tasks-search" style="margin-top:45px;">
+		    <input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search" onfocus="startEditFilter(this,new Array('allitems'),new Array(''),new Array('global filter watchableItems'),new Array(0), new Array(''))" onblur="endEditFilter()" />
+		</div>
 	</div>
 </div>
+<!-- / TITLE BAR -->
 
+<div id="main-container">
+
+	<!-- VIDEOS ************************************************** -->
+	<div>
+    	<span t:repeatForView="allitems">
+    	<t:includeTemplate filename="download-item" />
+   		</span>
+	</div>
+	<!-- / VIDEOS -->
+	
 </div>
-
-
-
-  <div id="content_window">
-    <ul> 
-        <li t:repeatForView="allitems">
-        <t:includeTemplate filename="download-item" />
-        </li> 
-   </ul>
-  </div>
-  </div> 
 
 </body>
 </html>
