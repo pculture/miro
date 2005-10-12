@@ -173,10 +173,29 @@ def _generateFeed(url, ufeed, visible=True):
         print "DTV doesn't know how to deal with "+info['content-type']+" feeds"
         return None
 
+##
+# Handle configuration changes so we can update feed update frequencies
+
+def configDidChange(key, value):
+    if key is config.CHECK_CHANNELS_EVERY_X_MN.key:
+        feeds = defaultDatabase.filter(lambda x: isinstance(x, RSSFeed) or isinstance(x, ScraperFeed))
+        feeds.beginRead()
+        try:
+            for feed in feeds:
+                feed.cancelUpdateEvents()
+                feed.setUpdateFrequency(value)
+                feed.scheduleUpdateEvents(0)
+        finally:
+            feeds.endRead()
+        defaultDatabase.removeView(feeds)
+
+config.addChangeCallback(configDidChange)
+
 
 ##
 # A feed contains a set of of downloadable items
 class Feed(DDBObject):
+    
     def __init__(self, url, ufeed, title = None, visible = True):
         self.available = 0
         self.unwatched = 0
@@ -193,12 +212,12 @@ class Feed(DDBObject):
         self.maxNew = -1
         self.fallBehind = -1
         self.expire = "system"
-        self.updateFreq = 60*60
         self.startfrom = datetime.min
         self.visible = visible
         self.updating = False
         self.lastViewed = datetime.min
         self.thumbURL = "resource:images/feedicon.png"
+        self.setUpdateFrequency(config.get(config.CHECK_CHANNELS_EVERY_X_MN))
         #self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
 
         # Find the UniversalFeed associated with this feed
@@ -206,6 +225,32 @@ class Feed(DDBObject):
         # NOTE: This is a bit of a hack and eventually we should find
         # a better way to trigger change events on the UniversalFeed
         DDBObject.__init__(self)
+
+    # Sets the update frequency (in minutes). 
+    # - A frequency of -1 means that auto-update is disabled.
+    def setUpdateFrequency(self, frequency):
+        self.updateFreq = frequency
+        if frequency > 0:
+            self.updateFreq * 60            
+
+    def scheduleUpdateEvents(self, firstTriggerDelay):
+        if self.updateFreq > 0:
+            ScheduleEvent(self.updateFreq, self.update)
+            if firstTriggerDelay >= 0:
+                ScheduleEvent(firstTriggerDelay, self.update, False)
+
+    def cancelUpdateEvents(self):
+        ScheduleEvent.scheduler.beginRead()
+        try:
+            for event in ScheduleEvent.scheduler:
+                if event.event == self.update:
+                    ScheduleEvent.scheduler.removeObj(event)
+        finally:
+            ScheduleEvent.scheduler.endRead()
+
+    # Subclasses should implement this
+    def update(self):
+        pass
 
     # Returns true iff this feed has been looked at
     def getViewed(self):
@@ -565,6 +610,7 @@ class Feed(DDBObject):
     ##
     # Removes a feed from the database
     def remove(self):
+        self.cancelUpdateEvents()
         self.beginRead()
         try:
             items = []
@@ -722,8 +768,7 @@ class RSSFeed(Feed):
         self.initialHTML = initialHTML
         self.etag = etag
         self.modified = modified
-        self.scheduler = ScheduleEvent(self.updateFreq, self.update)
-        self.scheduler = ScheduleEvent(0, self.update,False)
+        self.scheduleUpdateEvents(0)
 
     ##
     # Returns the description of the feed
@@ -843,10 +888,17 @@ class RSSFeed(Feed):
                 if (new and entry.has_key('enclosures') and
                     self.hasVideoFeed(entry.enclosures)):
                     self.items.append(Item(self,entry))
+                    
+            globalUpdateCheck = config.get(config.CHECK_CHANNELS_EVERY_X_MN)
+            updateFreq = globalUpdateCheck
             try:
-                self.updateFreq = max(15*60,self.parsed["feed"]["ttl"]*60)
+                updateFreq = max(globalUpdateCheck, self.parsed["feed"]["ttl"]*60)
             except KeyError:
-                self.updateFreq = 60*60
+                pass
+            self.cancelUpdateEvents()
+            self.setUpdateFrequency(updateFreq)
+            self.scheduleUpdateEvents(-1)
+            
             self.updating = False
         finally:
             if info.has_key('etag'):
@@ -866,12 +918,6 @@ class RSSFeed(Feed):
                 if not desc is None:
                     entry['enclosures'][0]['thumbnail'] = FeedParserDict({'url': desc.expand("\\1")})
         return entry
-
-    ##
-    # Overrides the DDBObject remove()
-    def remove(self):
-        self.scheduler.remove()
-        Feed.remove(self)
 
     ##
     # Returns the URL of the license associated with the feed
@@ -910,9 +956,7 @@ class RSSFeed(Feed):
         #self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
-        self.scheduler = ScheduleEvent(5, self.update,False)
-
-        self.scheduler = ScheduleEvent(self.updateFreq, self.update)
+        self.scheduleUpdateEvents(5)
 
 
 ##
@@ -969,11 +1013,9 @@ class ScraperFeed(Feed):
 
     def __init__(self,url,ufeed, title = None, visible = True, initialHTML = None,etag=None,modified = None,charset = None):
         Feed.__init__(self,url,ufeed,title,visible)
-        self.updateFreq = 60*60*24
+        self.scheduleUpdateEvents(0)
         self.initialHTML = initialHTML
         self.initialCharset = charset
-        self.scheduler = ScheduleEvent(self.updateFreq, self.update)
-        self.scheduler = ScheduleEvent(0, self.update,False)
         self.linkHistory = {}
         self.linkHistory[url] = {}
         self.tempHistory = {}
@@ -1248,9 +1290,7 @@ class ScraperFeed(Feed):
 
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
-        ScheduleEvent(5, self.update,False)
-
-        self.scheduler = ScheduleEvent(self.updateFreq, self.update)
+        self.scheduleUpdateEvents(5)
         self.semaphore = Semaphore(ScraperFeed.maxThreads)
 
 ##
@@ -1259,12 +1299,13 @@ class ScraperFeed(Feed):
 #
 # FIXME: How do we trigger updates on this feed?
 class DirectoryFeed(Feed):
+
     def __init__(self,ufeed=None):
         Feed.__init__(self,url = "dtv:directoryfeed",ufeed=ufeed,title = "Feedless Videos",visible = False)
 
-        self.updateFreq = 30
-        self.scheduler = ScheduleEvent(self.updateFreq, self.update,True)
-        self.scheduler = ScheduleEvent(0, self.update,False)
+        self.setUpdateFrequency(0.5)
+        self.scheduleUpdateEvents(0)
+
     ##
     # Returns a list of all of the files in a given directory
     def getFileList(self,dir):
@@ -1350,9 +1391,7 @@ class DirectoryFeed(Feed):
 
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
-        self.scheduler = ScheduleEvent(5, self.update,False)
-
-        self.scheduler = ScheduleEvent(self.updateFreq, self.update)
+        self.scheduleUpdateEvents(5)
 
 ##
 # Parse HTML document and grab all of the links and their title

@@ -6,6 +6,7 @@ import threadpriority
 import config
 import traceback
 import socket
+import platformutils
 from base64 import b64encode
 
 from time import sleep,time
@@ -825,14 +826,17 @@ class HTTPDownloader(Downloader):
             except IOError:
                 self.beginRead()
                 try:
-                    self.state = "faied"
+                    self.state = "failed"
                     self.reasonFailed = "Could not write file to disk"
                 finally:
                     self.endRead()
-                    return false
+                return False
             self.beginRead()
             self.currentSize = 0
             self.endRead()
+            if not self.acceptDownloadSize(totalSize):
+                print "file is too big"
+                return False
             pos = 0
             if totalSize > 0:
                 filehandle.seek(totalSize-1)
@@ -877,6 +881,21 @@ class HTTPDownloader(Downloader):
                 item.beginChange()
                 item.endChange()
  
+    ##
+    # Checks the download file size to see if we can accept it based on the 
+    # user disk space preservation preference
+    def acceptDownloadSize(self, size):
+        sizeInGB = size / 1024 / 1024 / 1024
+        if sizeInGB > platformutils.getAvailableGBytesForMovies() - config.get(config.PRESERVE_X_GB_FREE):
+            self.beginRead()
+            try:
+                self.state = "failed"
+                self.reasonFailed = "File is too big"
+            finally:
+                self.endRead()
+            return False
+        return True
+        
 
     ##
     # Pauses the download.
