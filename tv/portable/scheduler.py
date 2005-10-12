@@ -6,7 +6,8 @@ import threadpriority
 def now():
     return int(time())
 
-maxThreads = 30
+# This should be higher than the number of feeds and simultaneous downloads
+maxThreads = 100
 semaphore = Semaphore(maxThreads)
 
 ##
