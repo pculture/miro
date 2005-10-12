@@ -164,7 +164,7 @@ class Controller (frontend.Application):
 
     def __init__(self):
         frontend.Application.__init__(self)
-        assert(Controller.instance is None)
+        assert Controller.instance is None
         Controller.instance = self
 
     ### Startup and shutdown ###
@@ -283,6 +283,9 @@ class Controller (frontend.Application):
             self.frame.selectDisplay(self.tabDisplay, self.frame.channelsDisplay)
             self.tabs.addRemoveCallback(lambda oldObject, oldIndex: self.checkSelectedTab())
             self.checkSelectedTab()
+
+            # Set up the video display
+            self.videoDisplay = frontend.VideoDisplay()
 
             # NEEDS: our strategy above with addRemoveCallback doesn't
             # work. I'm not sure why, but it seems to have to do with the
@@ -564,13 +567,15 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
     def getWatchable(self):
         view = None
-        for name in ('watchable', 'unwatched-items', 'expiring-items', 'saved-items'):
+        for name in ('unwatched-items', 'expiring-items', 'saved-items'):
             try:
-                view = self.templateHandle.findNamedView(name)
-                break
+                namedView = self.templateHandle.findNamedView(name)
+                if namedView.getView().len() > 0:
+                    view = namedView
+                    break
             except:
                 pass
-        if view is None or view.getView().len() == 0:
+        if view is None:
             return None
         
         return view.getView()
@@ -902,8 +907,9 @@ class TemplateActionHandler:
         self.playView(view, firstItemId)
 
     def playView(self, view, firstItemId):
-        videoDisplay = frontend.VideoDisplay.getInstance()
+        videoDisplay = self.controller.videoDisplay
         videoDisplay.configure(view, firstItemId, self.display)
+        self.controller.frame.selectDisplay(videoDisplay, self.controller.frame.mainDisplay)
         videoDisplay.playPause()
 
 

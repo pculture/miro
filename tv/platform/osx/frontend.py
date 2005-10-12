@@ -363,7 +363,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         self.saveLayout()
 
     def videoWillPlay_(self, notification):
-        videoDisplay = VideoDisplay.getInstance()
+        videoDisplay = app.Controller.instance.videoDisplay
         if videoDisplay.currentFrame is None:
             self.selectDisplay(videoDisplay, self.frame.mainDisplay)
 
@@ -486,7 +486,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         contentBox.setFrameOrigin_((tabSize.width + dividerWidth, 0))
 
     def splitView_canCollapseSubview_(self, sender, subview):
-        return self.channelsHostView.isDescendantOf_(subview) and VideoDisplay.getInstance().isSelected()
+        return self.channelsHostView.isDescendantOf_(subview) and app.Controller.instance.videoDisplay.isSelected()
 
     ### Actions ###
 
@@ -599,14 +599,14 @@ class MainController (NibClassBuilder.AutoBaseClass):
         elif item.action() == 'playPause:' or item.action() == 'playFullScreen:':
             display = self.frame.mainDisplay.hostedDisplay
             if display is not None:
-                if display is VideoDisplay.getInstance():
+                if display is app.Controller.instance.videoDisplay:
                     return YES
                 else:
                     return display.getWatchable() is not None
             else:
                 return NO
         elif item.action() == 'stopVideo:':
-            return self.frame.mainDisplay.hostedDisplay is VideoDisplay.getInstance()
+            return self.frame.mainDisplay.hostedDisplay is app.Controller.instance.videoDisplay
         else:
             return item.action() in self.itemsAlwaysAvailable
 
@@ -1600,18 +1600,11 @@ class ManagedWebView (NSObject):
 class VideoDisplay (app.Display, app.VideoDisplayDB):
     "Video player shown in a MainFrame's right-hand pane."
 
-    _instance = None
-
-    @classmethod
-    def getInstance(cls, controller=None):
-        if VideoDisplay._instance is None:
-            VideoDisplay._instance = VideoDisplay(controller)
-        return VideoDisplay._instance
-
-    def __init__(self, controller):
+    def __init__(self):
         app.VideoDisplayDB.__init__(self)
         app.Display.__init__(self)
-        self.controller = controller
+        self.controller = VideoDisplayController.getInstance()
+        assert self.controller is not None
         
     def configure(self, view, firstItemId, previousDisplay):
         self.setPlaylist(view, firstItemId)
@@ -1654,6 +1647,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         return VideoDisplayController._instance
 
     def awakeFromNib(self):
+        VideoDisplayController._instance = self
         self.forwardButton.sendActionOn_(NSLeftMouseDownMask)
         self.backwardButton.sendActionOn_(NSLeftMouseDownMask)
         nc.addObserver_selector_name_object_(
@@ -1666,8 +1660,6 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             'handleNonWatchableDisplayNotification:', 
             'displayIsNotWatchable', 
             nil)
-        VideoDisplay.getInstance(self)
-        VideoDisplayController._instance = self
         self.movieView = None
         self.systemActivityUpdaterTimer = nil
         self.reset()
@@ -1761,7 +1753,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.fullscreenButton.setEnabled_(enabled)
 
     def playPause_(self, sender):
-        VideoDisplay.getInstance().playPause()
+        app.Controller.instance.videoDisplay.playPause()
 
     def play(self):
         nc.postNotificationName_object_('videoWillPlay', nil)
@@ -1846,7 +1838,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         info = notification.userInfo()
         view = info['view']
         display = notification.object()
-        VideoDisplay.getInstance().configure(view, None, display)
+        app.Controller.instance.videoDisplay.configure(view, None, display)
 
     def handleNonWatchableDisplayNotification_(self, notification):
         self.enablePrimaryControls(NO)
