@@ -1,4 +1,5 @@
 from random import randint
+from threading import Lock
 
 import feed
 import item
@@ -104,10 +105,25 @@ class AutoDownloader:
                 numDownloads += 1
 
     def run(self):
+        self.lock.acquire()
+        try:
+            if self.running:
+                return
+            else:
+                self.running = True
+        finally:
+            self.lock.release()
         self.expireItems()
         self.spawnDownloads()
-            
+        self.lock.acquire()
+        try:
+            self.running = False
+        finally:
+            self.lock.release()
+
     def __init__(self):
+        self.lock = Lock()
+        self.running = False
         self.allFeeds = database.defaultDatabase.filter(lambda x:isinstance(x,feed.Feed))
         self.allItems = database.defaultDatabase.filter(lambda x:isinstance(x,item.Item))
         self.autoFeeds =self.allFeeds.filter(self.eligibileFeedFilter)
