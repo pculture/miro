@@ -11,7 +11,7 @@
 <t:include filename="settings.js" />
 
 <t:dynamicviews>
- <t:view name="allitems" key="global view items">
+ <t:view name="watchable-items" key="global view items">
   <t:filter functionkey="global filter watchableItems" parameter="" />
   <t:sort functionkey="global sort item" parameter="" />
  </t:view>
@@ -29,7 +29,7 @@
 	</div>
 	<div id="main-titlebar-tasks">
 		<div id="main-titlebar-tasks-search" style="margin-top:38px;">
-		    <input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search" onfocus="startEditFilter(this,new Array('allitems'),new Array(''),new Array('global filter watchableItems'),new Array(0), new Array(''))" onblur="endEditFilter()" />
+		    <input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search" onfocus="startEditFilter(this,new Array('watchable-items'),new Array(''),new Array('global filter watchableItems'),new Array(0), new Array(''))" onblur="endEditFilter()" />
 		</div>
 	</div>
 </div>
@@ -39,7 +39,7 @@
 
 	<!-- VIDEOS ************************************************** -->
 	<div>
-    	<span t:repeatForView="allitems">
+    	<span t:repeatForView="watchable-items">
     	<t:includeTemplate filename="download-item" />
    		</span>
 	</div>

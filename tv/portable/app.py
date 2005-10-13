@@ -567,7 +567,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
     def getWatchable(self):
         view = None
-        for name in ('unwatched-items', 'expiring-items', 'saved-items'):
+        for name in ('watchable-items', 'unwatched-items', 'expiring-items', 'saved-items'):
             try:
                 namedView = self.templateHandle.findNamedView(name)
                 if namedView.getView().len() > 0:
