@@ -27,7 +27,7 @@
 		<h1 i18n:translate="">Downloads</h1>
 	</div>
 	<div id="main-titlebar-tasks">
-		<div id="main-titlebar-tasks-search" style="margin-top:45px;"><input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search" onfocus="startEditFilter(this,new Array('dlitems'),new Array(''),new Array('global filter allDownloadingItems'),new Array(0), new Array(''))" onblur="endEditFilter()" /></div>
+		<div id="main-titlebar-tasks-search" style="margin-top:38px;"><input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search" onfocus="startEditFilter(this,new Array('dlitems'),new Array(''),new Array('global filter allDownloadingItems'),new Array(0), new Array(''))" onblur="endEditFilter()" /></div>
 	</div>
 </div>
 <!-- / TITLE BAR -->

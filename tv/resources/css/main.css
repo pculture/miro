@@ -83,7 +83,7 @@ li {
 #main-titlebar-tasks {
 	position: absolute;
 	width: 130px;
-	top: 5px;
+	top: 8px;
 	right: 0px;
 	margin: 0px 0px 0px -140px;
 }
@@ -108,14 +108,14 @@ li {
 #main-titlebar-tasks-settings {
 	background: url(../images/main-icon-settings.png) no-repeat left top;
 	height: 18px;
-	margin: 0px 0px 5px 0px;
+	margin: 0px 0px 1px 0px;
 	padding: 0px 0px 0px 20px;
 }
 
 #main-titlebar-tasks-recommend {
 	background: url(../images/main-icon-mail-titlebar.png) no-repeat left 2px;
 	height: 18px;
-	margin: 0px 0px 4px 0px;
+	margin: 0px 0px 1px 0px;
 	padding: 0px 0px 0px 20px;
 }
 
