@@ -44,6 +44,12 @@ class Item(DDBObject):
         DDBObject.endChange(self)
         self.feed.updateUandA()
 
+    #
+    # Returns True iff this item has never been viewed in the interface
+    # Note the difference between "viewed" and seen
+    def getViewed(self):
+        return self.creationTime <= self.feed.lastViewed
+
     ##
     # Returns the URL associated with the first enclosure in the item
     def getURL(self):
@@ -128,7 +134,8 @@ class Item(DDBObject):
         self.endChange()
 
     ##
-    # returns true iff item has been seen
+    # returns true iff video has been seen
+    # Note the difference between "viewed" and "seen"
     def getSeen(self):
         self.beginRead()
         ret = self.seen

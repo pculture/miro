@@ -1184,8 +1184,27 @@ def filterHasKey(obj,parameter):
 # FIXME: All of these functions have a big hack to support two
 #        parameters instead of one. It's ugly. We should fix this to
 #        support multiple parameters
-def unseenItems(obj, param):
-    return undownloadedItems(obj, param) and obj.feed.isAvailable(obj)
+def unviewedItems(obj, param):
+    params = param.split('|',1)
+    
+    unviewed = (str(obj.feed.getID()) == params[0] and 
+                not obj.getViewed())
+    if len(params) > 1:
+        unviewed= (unviewed and 
+                   (str(params[1]).lower() in obj.getTitle().lower() or
+                    str(params[1]).lower() in obj.getDescription().lower()))
+    return unviewed
+
+def viewedItems(obj, param):
+    params = param.split('|',1)
+    
+    viewed = (str(obj.feed.getID()) == params[0] and 
+              obj.getViewed())
+    if len(params) > 1:
+        viewed= (viewed and 
+                 (str(params[1]).lower() in obj.getTitle().lower() or
+                  str(params[1]).lower() in obj.getDescription().lower()))
+    return viewed
 
 def undownloadedItems(obj,param):
     params = param.split('|',1)
@@ -1311,7 +1330,9 @@ globalFilterList = {
     'substring': (lambda x, y: str(y) in str(x)),
     'boolean': (lambda x, y: x),
 
-    'unseenItems': unseenItems,
+    'unviewedItems': unviewedItems,
+    'viewedItems': viewedItems,
+
     'feedItems' : feedItems,
     'recentItems': recentItems,
     'allRecentItems': allRecentItems,

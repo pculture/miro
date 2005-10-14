@@ -13,11 +13,11 @@
 
     <t:dynamicviews>
         <t:view name="new-unseen-items" key="global view items">
-            <t:filter functionkey="global filter unseenItems" parameter="@@@feed getFeedID@@@" />
+            <t:filter functionkey="global filter unviewedItems" parameter="@@@feed getFeedID@@@" />
             <t:sort functionkey="global sort item" parameter="" />
         </t:view>
         <t:view name="new-items" key="global view items">
-            <t:filter functionkey="global filter undownloadedItems" parameter="@@@feed getFeedID@@@" />
+            <t:filter functionkey="global filter viewedItems" parameter="@@@feed getFeedID@@@" />
             <t:sort functionkey="global sort item" parameter="" />
         </t:view>
         <t:view name="downloading-items" key="global view items">
@@ -63,7 +63,7 @@
 		    <p><a href="mailto:?subject=@@@feed getTitle@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed getTitle@@@&quot;. If you don't have DTV, you can get it here:%0D%0A%0D%0Ahttp://www.participatoryculture.org/download.php%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed getURL@@@" class="recommend_link" i18n:translate="">Recommend</a></p>
 		</div>
 		<div id="main-titlebar-tasks-search">
-		    <input type="search" placeholder="Search Channel" class="main-titlebar-tasks-search" onfocus="startEditFilter(this,new Array('new-unseen-items'),new Array(''),new Array('global filter feedItems'),new Array(0),new Array('@@@feed getFeedID@@@'))" onblur="endEditFilter()" />
+		    <input type="search" placeholder="Search Channel" class="main-titlebar-tasks-search" onfocus="startEditFilter(this,new Array('new-unseen-items','new-items'),new Array('',''),new Array('global filter unviewedItems','global filter viewedItems'),new Array(0,0),new Array('@@@feed getFeedID@@@','@@@feed getFeedID@@@'))" onblur="endEditFilter()" />
 		</div>
 	</div>
 </div>
@@ -83,9 +83,9 @@
         <span t:repeatForView="new-unseen-items">
             <t:includeTemplate filename="download-item" />
         </span>
-        <span t:hideIfViewNotEmpty="new-unseen-items">
+        <span t:hideIfViewEmpty="new-items">
             <p id="show-more-videos-label" class="main-content">
-                No new videos (<a href="javascript:toggleLayer('main-newlyavailable-seen');toggleLayer('show-more-videos-label');">show more...</a>)
+                <a href="javascript:toggleLayer('main-newlyavailable-seen');toggleLayer('show-more-videos-label');">show more...</a>
             </p>
             <span id="main-newlyavailable-seen">
                 <span t:repeatForView="new-items">
