@@ -1,1 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?><a class="selected_queuebutton" xmlns:t="http://www.participatorypolitics.org/"                                xmlns:i18n="http://www.participatoryculture.org/i18n">    <span class="name" i18n:translate="">        <span>Downloads</span>        <div class="orange_left" t:hideIfKey="global view downloadingItems len" t:hideFunctionKey="global filter equal" t:hideParameter="0">            <div class="orange_right">                <div class="orange_number_count" t:replace="global view downloadingItems len" />            </div>        </div>    </span></a>
+<?xml version="1.0" encoding="utf-8"?>
+<a xmlns:t="http://www.participatorypolitics.org/" xmlns:i18n="http://www.participatoryculture.org/i18n" class="sidebar-download-selected">
+	<div class="sidebar-download-inner">
+		<p>Downloads</p>
+		<div class="orange_left" t:hideIfKey="global view downloadingItems len" t:hideFunctionKey="global filter equal" t:hideParameter="0" style="margin:8px -1px 0px 0px;">
+			<div class="orange_right">
+				<div class="orange_number_count" t:replace="global view downloadingItems len" />
+			</div>
+		</div>
+	</div>
+</a>

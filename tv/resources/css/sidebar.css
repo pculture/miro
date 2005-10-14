@@ -1,0 +1,111 @@
+
+/* DOWNLOAD TAB
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+
+.sidebar-download, .sidebar-download-selected, .sidebar-download-inactive {
+	position: fixed;
+	bottom: 8px;
+	width: 100%;
+	height: 32px; 
+	z-index: 100;
+}
+
+/*.sidebar-download-selected {	
+	background: #e6edf7 url(../images/sidebar-tab-bg-selected.png) 0px 6px repeat-x;
+}*/
+
+/*.sidebar-download-inactive {	
+	background: #e6edf7 url(../images/sidebar-tab-bg-selected.png) 0px 6px repeat-x;
+}*/
+
+.sidebar-download-inner {
+	height: 32px;
+	margin-right: 8px;
+	background: url(../images/download-icon-tab.png) 0px 4px no-repeat;
+	border-top: 2px solid #b6bfce;
+}
+
+.sidebar-download-inner p {
+	float: left;
+	padding-left: 28px;
+	margin-top: 9px;
+}
+
+/* CIRCLE ICONS
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+
+.circle-blue-left {
+	float: right;
+	display: inline;
+	margin: 4px 0px 0px 0px;
+	background: url(../images/circle-blue-left.png) top left no-repeat;
+}
+
+.circle-blue-number {
+	margin: 0px 8px 0px 8px;
+	padding: 2px 0px 3px 0px;
+	background: #4081EC;
+	color: #FFFFFF;
+	font-size: 11px;
+}
+
+.circle-blue-right {
+	background: url(../images/circle-blue-right.png) top right no-repeat;
+}
+
+.circle-green-left {
+	float: right;
+	display: inline;
+	margin: 4px 0px 0px 0px;
+	background: url(../images/circle-green-left.png) top left no-repeat;
+}
+
+.circle-green-number {
+	margin: 0px 8px 0px 8px;
+	padding: 2px 0px 3px 0px;
+	background: #00B904;
+	color: #FFFFFF;
+	font-size: 11px;
+}
+
+.circle-green-right {
+	background: url(../images/circle-green-right.png) top right no-repeat;
+}
+
+.circle-white-left {
+	float: right;
+	display: inline;
+	margin: 4px 0px 0px 0px;
+	background: url(../images/circle-white-left.png) top left no-repeat;
+}
+
+.circle-white-number {
+	margin: 0px 8px 0px 8px;
+	padding: 2px 0px 3px 0px;
+	background: #FFFFFF;
+	color: #4081EC;
+	font-size: 11px;
+}
+
+.circle-white-right {
+	background: url(../images/circle-white-right.png) top right no-repeat;
+}
+
+.circle-orange-left {
+	float: right;
+	display: inline;
+	margin: 4px 0px 0px 0px;
+	background: url(../images/circle-orange-left.png) top left no-repeat;
+}
+
+.circle-orange-number {
+	margin: 0px 8px 0px 8px;
+	padding: 2px 0px 3px 0px;
+	background: #D25C00;
+	color: #FFFFFF;
+	font-size: 11px;
+}
+
+.circle-orange-right {
+	background: url(../images/circle-orange-right.png) top right no-repeat;
+}
