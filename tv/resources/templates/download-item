@@ -174,23 +174,20 @@
 			<!-- / FILE INFO -->		
 			
 			<!-- UNWATCHED -->
-			<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring">
+			<span>
 				<div class="main-video-details-unwatched">
 					<p>Unwatched</p>
 				</div>
 			</span>
 			<!-- / UNWATCHED -->	
 			
-			<!-- EXPIRY -->
-			<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring">
-				<div class="main-video-details-expiry">
-					<p>Expires: <span t:replace="this getExpirationTime" /></p>
-				</div>
+			<!-- SAVE -->
+			<span>
 				<div class="main-video-details-save">
 					<p><a href="action:keepItem?item=@@@this getID@@@">Save</a></p>
 				</div>
 			</span>
-			<!-- / EXPIRY -->
+			<!-- / SAVE -->
 			
 			<!-- FILE TASKS -->
 			<div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" class="main-video-details-tasks">
@@ -282,26 +279,23 @@
 			<!-- / FILE INFO -->
 			
 			<!-- UNWATCHED -->
-			<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="uploading">
+			<span>
 				<div class="main-video-details-unwatched">
 					<p>Unwatched</p>
 				</div>
 			</span>
 			<!-- / UNWATCHED -->
 			
-			<!-- EXPIRY -->
-			<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring">
-				<div class="main-video-details-expiry">
-					<p>Expires: <span t:replace="this getExpirationTime" /></p>
-				</div>
+			<!-- SAVE -->
+			<span>
 				<div class="main-video-details-save">
 					<p><a href="action:keepItem?item=@@@this getID@@@">Save</a></p>
 				</div>
 			</span>
-			<!-- / EXPIRY -->
+			<!-- / SAVE -->
 			
 			<!-- FILE TASKS -->
-			<div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" class="main-video-details-tasks">
+			<div>
 				<a href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
 				<a href="#"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
 				<div class="clearer"></div>
