@@ -37,13 +37,31 @@ class UIBackendDelegate:
         message = "A new version of DTV is available.\n\nWould you like to download it now?"
         # NEEDS
         # right now, if user says yes, self.openExternalURL(url)
-	print "WARNING: ignoring new version available at URL: %s" % url
+        print "WARNING: ignoring new version available at URL: %s" % url
 #        raise NotImplementedError
+
+    def dtvIsUpToDate(self):
+        summary = u'DTV Version Check'
+        message = u'This version of DTV is up to date.'
+        # NEEDS inform user
+        print "DTV: is up to date"
+
+    def validateFeedRemoval(self, feedTitle):
+        summary = u'Remove Channel'
+        message = u'Are you sure you want to remove the channel \'%s\'? This operation cannot be undone.' % feedTitle
+        buttons = (u'Remove', u'Cancel')
+        # NEEDS inform user
+        print "WARNING: defaulting feed validation removal to True"
+        return True
 
     def openExternalURL(self, url):
         # We could use Python's webbrowser.open() here, but
         # unfortunately, it doesn't have the same semantics under UNIX
         # as under other OSes. Sometimes it blocks, sometimes it doesn't.
-	print "WARNING: ignoring external URL: %s" % url
+        print "WARNING: ignoring external URL: %s" % url
 #        raise NotImplementedError
 
+    def updateAvailableItemsCountFeedback(self, count):
+        # Inform the user in a way or another that newly available items are
+        # available
+        pass
