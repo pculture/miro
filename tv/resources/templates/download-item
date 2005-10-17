@@ -331,70 +331,7 @@
 	
 	
 
-</div>	
-	
-	<!-- DONE <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="finished" class="right_box">
-    <a href="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
-    <span class="unwatched">unwatched</span><br />
-    <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a>--> <!-- <a href="action:keepItem?item=@@@this getID@@@">don't expire</a> -->
-  <!--</div>-->
-
-  <!-- DONE <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="uploading" class="right_box">
-    <a href="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
-    <span class="unwatched">unwatched</span><br />
-    <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a>
-  </div>-->  
-  
-  <!-- DONE <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="watched" class="right_box">    
-    <a href="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
-    <span class="report_expire">Expires: <span t:replace="this getExpirationTime"/></span>  <a href="action:keepItem?item=@@@this getID@@@">keep</a> <br />
-    <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a>  
-  </div>-->
-
-  <!-- DONE <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="saved" class="right_box">  
-    <a href="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@" class="play_button"><span /></a>
-    <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a>  	
-  </div>-->  
-  
-  <!--<div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="paused" class="right_box">
-    Downloads Paused
-  </div>-->
-
-  <!-- DONE <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="expired" class="right_box">
-    <a href="action:startDownload?item=@@@this getID@@@" class="download_button"><span /></a><br />
-   <span class="report_expire"></span>
-  </div>-->
-	
-	<!-- DONE <div class="thumbnail_placeholder"><img width="101" height="75" class="thumb" src="***this getThumbnail***" /></div>
-  <div class="desc" >
-    <div class="video_title" t:replace="this getTitle" />
-    <div class="short_description" t:replaceMarkup="this getDescription"/> 
-    <div class="file_size"><span t:replace="this getReleaseDate" />  <span t:replace="this getDuration" /> <span t:replace="this getTotalSize" /></div>
-  </div>-->
-	
-	  <!-- DONE <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="autopending" class="right_box">
-    <a href="action:startDownload?item=@@@this getID@@@"><img src="resource:images/download_button.png" /></a><br />
-    <span class="report_pending">Pending Automatic Download</span>
-  </div>-->
-
-  <!-- DONE <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="manualpending" class="right_box">
-    <span t:replace="this getPendingReason" />
-    <span class="report_pending">Pending Manual Download</span>
-  </div>-->
-
-  <!--<div class="right_box">
-    <a t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="stopped" href="action:startDownload?item=@@@this getID@@@" class="download_button" ><span /></a>
-  </div>-->
-  
-  <!-- DONE <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="downloading" class="progress_box dling">
-    <div class="bar_holder"><img src="resource:images/status.png" width="@@@this threeDigitPercentDone@@@" height="20" /></div><a class="cancel_button" href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/cancel_button.png" /></a><span class="est_time" t:replace="this downloadETA" />
-  </div>--> 
-
-  <!-- DONE <div t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="failed" class="right_box">  
-    <a href="action:startDownload?item=@@@this getID@@@" class="download_button"><span /></a>
-    <span class="report_downloaderror">Download Error:</span>
-    <span class="report_downloaderror" t:replace="this getFailureReason" />
-  </div>-->	
+</div>
 
 </body>
 </html>
