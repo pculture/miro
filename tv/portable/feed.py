@@ -230,8 +230,8 @@ class Feed(DDBObject):
     # - A frequency of -1 means that auto-update is disabled.
     def setUpdateFrequency(self, frequency):
         self.updateFreq = frequency
-        if frequency > 0:
-            self.updateFreq * 60            
+        if self.updateFreq > 0.0:
+            self.updateFreq *= 60.0
 
     def scheduleUpdateEvents(self, firstTriggerDelay):
         if self.updateFreq > 0:

@@ -788,8 +788,12 @@ class GeneralPrefsController (NibClassBuilder.AutoBaseClass):
                     
 class ChannelsPrefsController (NibClassBuilder.AutoBaseClass):
 
+    def awakeFromNib(self):
+        minutes = config.get(config.CHECK_CHANNELS_EVERY_X_MN)
+        self.periodicityPopup.selectItemWithTag_(minutes)
+
     def checkEvery_(self, sender):
-        minutes = sender.tag()
+        minutes = sender.selectedItem().tag()
         config.set(config.CHECK_CHANNELS_EVERY_X_MN, minutes)
 
 class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
