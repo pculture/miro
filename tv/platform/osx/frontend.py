@@ -804,6 +804,7 @@ class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
         limit = (sender.state() == NSOnState)
         self.limitValueField.setEnabled_(limit)
         config.set(config.LIMIT_UPSTREAM, limit)
+        self.setUpstreamLimit_(self.limitValueField)
     
     def setUpstreamLimit_(self, sender):
         limit = sender.floatValue()
@@ -811,9 +812,20 @@ class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
 
 class DiskSpacePrefsController (NibClassBuilder.AutoBaseClass):
     
+    def awakeFromNib(self):
+        preserve = config.get(config.PRESERVE_DISK_SPACE)
+        self.preserveSpaceCheckBox.setState_(preserve and NSOnState or NSOffState)
+        self.minimumSpaceField.setEnabled_(preserve)
+        self.minimumSpaceField.setIntValue_(config.get(config.PRESERVE_X_GB_FREE))
+    
+    def preserveDiskSpace_(self, sender):
+        preserve = (sender.state() == NSOnState)
+        self.minimumSpaceField.setEnabled_(preserve)
+        config.set(config.PRESERVE_DISK_SPACE, preserve)
+        self.setMinimumSpace_(self.minimumSpaceField)
+    
     def setMinimumSpace_(self, sender):
         space = sender.floatValue()
-        print "setting minimum space to %s" % space
         config.set(config.PRESERVE_X_GB_FREE, space)
 
 

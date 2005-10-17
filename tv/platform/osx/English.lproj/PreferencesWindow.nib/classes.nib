@@ -8,10 +8,10 @@
             SUPERCLASS = NSObject; 
         }, 
         {
-            ACTIONS = {setMinimumSpace = id; }; 
+            ACTIONS = {preserveDiskSpace = id; setMinimumSpace = id; }; 
             CLASS = DiskSpacePrefsController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {minimumSpaceField = id; }; 
+            OUTLETS = {minimumSpaceField = id; preserveSpaceCheckBox = id; }; 
             SUPERCLASS = NSObject; 
         }, 
         {

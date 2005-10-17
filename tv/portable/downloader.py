@@ -885,15 +885,16 @@ class HTTPDownloader(Downloader):
     # Checks the download file size to see if we can accept it based on the 
     # user disk space preservation preference
     def acceptDownloadSize(self, size):
-        sizeInGB = size / 1024 / 1024 / 1024
-        if sizeInGB > platformutils.getAvailableGBytesForMovies() - config.get(config.PRESERVE_X_GB_FREE):
-            self.beginRead()
-            try:
-                self.state = "failed"
-                self.reasonFailed = "File is too big"
-            finally:
-                self.endRead()
-            return False
+        if config.get(config.PRESERVE_DISK_SPACE):
+            sizeInGB = size / 1024 / 1024 / 1024
+            if sizeInGB > platformutils.getAvailableGBytesForMovies() - config.get(config.PRESERVE_X_GB_FREE):
+                self.beginRead()
+                try:
+                    self.state = "failed"
+                    self.reasonFailed = "File is too big"
+                finally:
+                    self.endRead()
+                return False
         return True
         
 
