@@ -287,6 +287,9 @@ class Controller (frontend.Application):
             # Set up the video display
             self.videoDisplay = frontend.VideoDisplay()
 
+            # If we have newly available items, provide feedback
+            self.updateAvailableItemsCountFeedback()
+
             # NEEDS: our strategy above with addRemoveCallback doesn't
             # work. I'm not sure why, but it seems to have to do with the
             # reentrant call back into the database when checkSelectedTab ends 
@@ -432,10 +435,15 @@ class Controller (frontend.Application):
     def onAvailableItemsCountChange(self, obj, id):
         assert self.newTab is not None
         self.newTab.redraw()
+        self.updateAvailableItemsCountFeedback()
 
     def onDownloadingItemsCountChange(self, obj, id):
         assert self.downloadTab is not None
         self.downloadTab.redraw()
+
+    def updateAvailableItemsCountFeedback(self):
+        count = globalViewList['availableItems'].len()
+        self.getBackendDelegate().updateAvailableItemsCountFeedback(count)
 
     ### ----
 
