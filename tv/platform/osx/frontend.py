@@ -882,6 +882,7 @@ class UIBackendDelegate:
         NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
 
     def updateAvailableItemsCountFeedback(self, count):
+        pool = NSAutoreleasePool.alloc().init()
         appIcon = NSImage.imageNamed_('NSApplicationIcon')
         badgedIcon = NSImage.alloc().initWithSize_(appIcon.size())
         badgedIcon.lockFocus()
@@ -914,6 +915,7 @@ class UIBackendDelegate:
         finally:
             badgedIcon.unlockFocus()
         NSApplication.sharedApplication().setApplicationIconImage_(badgedIcon)
+        del pool
 
 
 class PasswordController (NibClassBuilder.AutoBaseClass):
