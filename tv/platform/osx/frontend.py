@@ -1450,31 +1450,28 @@ class ManagedWebView (NSObject):
     ##
     # Create CTRL-click menu on the fly
     def webView_contextMenuItemsForElement_defaultMenuItems_(self,webView,contextMenu,defaultMenuItems):
+        menuItems = []
         if self.initialLoadFinished:
-            menuItems = []
-
             exists = webView.windowScriptObject().evaluateWebScript_("typeof(getContextClickMenu)") == "function"
             if exists:
                 x = webView.windowScriptObject().callWebScriptMethod_withArguments_("getContextClickMenu",[contextMenu['WebElementDOMNode']])
-                    
-                # getContextClickMenu returns a string with one menu
-                # item on each line in the format
-                # "URL|description" Blank lines are separators
-                for menuEntry in x.split("\n"):
-                    menuEntry = menuEntry.strip()
-                    if len(menuEntry) == 0:
-                        menuItems.append(NSMenuItem.separatorItem())
-                    else:
-                        (url, name) = menuEntry.split('|',1)
-                        menuItem = NSMenuItem.alloc()
-                        menuItem.initWithTitle_action_keyEquivalent_(name,self.processContextClick_,"")
-                        menuItem.setEnabled_(YES)
-                        menuItem.setRepresentedObject_(url)
-                        menuItem.setTarget_(self)
-                        menuItems.append(menuItem)
-                return menuItems
-        else:
-            return []
+                if len(x) > 0:
+                    # getContextClickMenu returns a string with one menu
+                    # item on each line in the format
+                    # "URL|description" Blank lines are separators
+                    for menuEntry in x.split("\n"):
+                        menuEntry = menuEntry.strip()
+                        if len(menuEntry) == 0:
+                            menuItems.append(NSMenuItem.separatorItem())
+                        else:
+                            (url, name) = menuEntry.split('|',1)
+                            menuItem = NSMenuItem.alloc()
+                            menuItem.initWithTitle_action_keyEquivalent_(name,self.processContextClick_,"")
+                            menuItem.setEnabled_(YES)
+                            menuItem.setRepresentedObject_(url)
+                            menuItem.setTarget_(self)
+                            menuItems.append(menuItem)
+        return menuItems
 
     ##
     # Process a click on an item in a context menu
