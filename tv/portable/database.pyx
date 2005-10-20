@@ -828,8 +828,11 @@ class DynamicDatabase:
                 self.objectLocs = {}
                 self.objects = LinkedList()
                 for obj in temp:
-                    it = self.objects.append(obj)
-                    self.objectLocs[obj[0].id] = it
+                    # Filter out any non-database objects that used to
+                    # be stored in the database in past versions
+                    if issubclass(obj[0].__class__, DDBObject):
+                        it = self.objects.append(obj)
+                        self.objectLocs[obj[0].id] = it
                 self.cursor = None    
                 self.cursorStack = []
                 try:

@@ -855,6 +855,15 @@ class Item(DDBObject):
             version += 1
         assert(version == 3)
         data['startingDownload'] = False
+
+        # Older versions of the database allowed Feed Implementations
+        # to act as feeds. If that's the case, change feed attribute
+        # to contain the actual feed.
+        # NOTE: This assumes that the feed object is decoded
+        # before its items. That appears to be generally true
+        if not issubclass(data['feed'].__class__, DDBObject):
+            data['feed'] = data['feed'].ufeed
+
         self.__dict__ = data
 
 ##

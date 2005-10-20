@@ -198,12 +198,12 @@ class Controller (frontend.Application):
             if not hasGuide:
                 print "Spawning Channel Guide..."
                 channelGuide = guide.ChannelGuide()
-                feed.UniversalFeed('http://www.mediarights.org/bm/rss.php?i=1')
-                feed.UniversalFeed('http://live.watchmactv.com/wp-rss2.php')
-                feed.UniversalFeed('http://www.rocketboom.com/vlog/quicktime_daily_enclosures.xml')
-                feed.UniversalFeed('http://some-pig.net/videos/rss.php?i=2')
-                feed.UniversalFeed('http://64.207.132.106/tmv/rss.php?i=2')
-                feed.UniversalFeed('http://revision3.com/diggnation/feed/small.mov')
+                feed.Feed('http://www.mediarights.org/bm/rss.php?i=1')
+                feed.Feed('http://live.watchmactv.com/wp-rss2.php')
+                feed.Feed('http://www.rocketboom.com/vlog/quicktime_daily_enclosures.xml')
+                feed.Feed('http://some-pig.net/videos/rss.php?i=2')
+                feed.Feed('http://64.207.132.106/tmv/rss.php?i=2')
+                feed.Feed('http://revision3.com/diggnation/feed/small.mov')
 
             # Define variables for templates
             # NEEDS: reorganize this, and update templates
@@ -249,12 +249,13 @@ class Controller (frontend.Application):
             # If we're missing the file system videos feed, create it
             hasDirFeed = False
             for obj in db.objects:
-                if obj[0].__class__.__name__ == 'DirectoryFeed':
+                if (isinstance(obj[0], feed.Feed) and
+                    obj[0].getURL() == 'dtv:directoryfeed'):
                     hasDirFeed = True
                     break
             if not hasDirFeed:
                 print "DTV: Spawning file system videos feed"
-                d = feed.DirectoryFeed()
+                d = feed.Feed('dtv:directoryfeed')
 
             # Start the automatic downloader daemon
             print "DTV: Spawning auto downloader..."
@@ -637,7 +638,7 @@ class ModelActionHandler:
             db.endUpdate()
 
     def removeFeed(self, url):
-        func = lambda x: isinstance(x, feed.UniversalFeed) and x.getURL() == url
+        func = lambda x: isinstance(x, feed.Feed) and x.getURL() == url
         view = db.filter(func)
         feedObj = view.getNext()
         if self.backEndDelegate.validateFeedRemoval(feedObj.getTitle()):
@@ -649,7 +650,7 @@ class ModelActionHandler:
         db.saveCursor()
         try:
             for obj in db:
-                if isinstance(obj,feed.UniversalFeed) and obj.getURL() == url:
+                if isinstance(obj,feed.Feed) and obj.getURL() == url:
                     thread = threading.Thread(target=obj.update)
                     thread.setDaemon(False)
                     thread.start()
@@ -663,7 +664,7 @@ class ModelActionHandler:
         db.saveCursor()
         try:
             for obj in db:
-                if isinstance(obj,feed.UniversalFeed) and obj.getURL() == url:
+                if isinstance(obj,feed.Feed) and obj.getURL() == url:
                     obj.markAsViewed()
                     break
         finally:
@@ -835,12 +836,12 @@ class GUIActionHandler:
         try:
             exists = False
             for obj in db:
-                if isinstance(obj,feed.UniversalFeed) and obj.getURL() == url:
+                if isinstance(obj,feed.Feed) and obj.getURL() == url:
                     exists = True
                     break
 
             if not exists:
-                myFeed = feed.UniversalFeed(url)
+                myFeed = feed.Feed(url)
 
                 # At this point, the addition is guaranteed to be reflected
                 # in the tab list.
@@ -979,7 +980,7 @@ class Tab:
 
     def isFeed(self):
         """True if this Tab represents a Feed."""
-        return isinstance(self.obj, feed.Feed) or isinstance(self.obj, feed.UniversalFeed)
+        return isinstance(self.obj, feed.Feed)
 
     def feedURL(self):
         """If this Tab represents a Feed, the feed's URL. Otherwise None."""
@@ -1020,7 +1021,8 @@ def reloadStaticTabs():
 # Return True if a tab should be shown for obj in the frontend. The filter
 # used on the database to get the list of tabs.
 def mappableToTab(obj):
-    return isinstance(obj, StaticTab) or isinstance(obj, folder.Folder) or (isinstance(obj, feed.Feed) and obj.isVisible()) or isinstance(obj, feed.UniversalFeed)
+    return isinstance(obj, StaticTab) or (isinstance(obj, feed.Feed) and
+                                          obj.isVisible())
 
 # Generate a function that, given an object for which mappableToTab
 # returns true, return a Tab instance -- mapping a model object into
@@ -1039,7 +1041,7 @@ def makeMapToTabFunction(globalTemplateData, controller):
             data = {'global': self.globalTemplateData};
             if isinstance(obj, StaticTab):
                 return Tab(obj.tabTemplateBase, data, obj.contentsTemplate, data, [obj.order], obj, controller)
-            elif isinstance(obj, feed.Feed) or isinstance(obj, feed.UniversalFeed):
+            elif isinstance(obj, feed.Feed):
                 data['feed'] = obj
                 # Change this to sort feeds on a different value
                 sortKey = obj.getTitle()
@@ -1367,6 +1369,6 @@ globalViewList = {
     'items': db.filter(lambda x: isinstance(x,item.Item)),
     'availableItems': db.filter(lambda x: isinstance(x,item.Item) and x.getState() == 'finished'),
     'downloadingItems': db.filter(lambda x: isinstance(x,item.Item) and x.getState() == 'downloading'),
-    'feeds': db.filter(lambda x: isinstance(x,feed.UniversalFeed)),
+    'feeds': db.filter(lambda x: isinstance(x,feed.Feed)),
     'httpauths':  db.filter(lambda x: isinstance(x,downloader.HTTPAuthPassword)),
 }
