@@ -1239,25 +1239,28 @@ def downloadingItems(obj, param):
 
 def unwatchedItems(obj, param):
     params = param.split('|',1)
-    
-    dled = (str(obj.feed.getID()) == params[0] and 
-              ((obj.getState() == 'finished' or
-                obj.getState() == 'uploading')))
+    unwatched = True
+    if params[0] != '':
+        unwatched = (str(obj.feed.getID()) == params[0])
     if len(params) > 1:
-        dled = (dled and 
-                (str(params[1]).lower() in obj.getTitle().lower() or
-                 str(params[1]).lower() in obj.getDescription().lower()))
-    return dled
+        unwatched = (unwatched and 
+                     (str(params[1]).lower() in obj.getTitle().lower() or
+                      str(params[1]).lower() in obj.getDescription().lower()))
+    unwatched = (unwatched and 
+                 ((obj.getState() == 'finished' or
+                   obj.getState() == 'uploading')))
+    return unwatched
 
 def expiringItems(obj, param):
     params = param.split('|',1)
-
-    expiring = (str(obj.feed.getID()) == params[0] and 
-              (obj.getState() == 'watched'))
+    expiring = True
+    if params[0] != '':
+        expiring = (str(obj.feed.getID()) == params[0])
     if len(params) > 1:
         expiring = (expiring and 
                 (str(params[1]).lower() in obj.getTitle().lower() or
                  str(params[1]).lower() in obj.getDescription().lower()))
+    expiring = (expiring and (obj.getState() == 'watched'))
     return expiring
 
 def feedItems(obj, param):

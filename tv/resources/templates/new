@@ -8,17 +8,22 @@
 <link href="resource:css/main.css" rel="stylesheet" type="text/css" />
 <t:include filename="dynamic.js" />
 <t:include filename="settings.js" />
+<script type="text/javascript" src="resource:templates/shide.js" />
 
 <t:dynamicviews>
-	<t:view name="watchable-items" key="global view items">
-  <t:filter functionkey="global filter allRecentItems" parameter="" />
-  <t:sort functionkey="global sort item" parameter="" />
- 	</t:view>
+    <t:view name="unwatched-items" key="global view items">
+        <t:filter functionkey="global filter unwatchedItems" parameter="" />
+        <t:sort functionkey="global sort item" parameter="" />
+    </t:view>
+    <t:view name="expiring-items" key="global view items">
+        <t:filter functionkey="global filter expiringItems" parameter="" />
+        <t:sort functionkey="global sort item" parameter="" />
+    </t:view>
 </t:dynamicviews>
 
 </head>
 
-<body>
+<body onload="toggleLayer('main-unwatched'); toggleLayer('main-expiring');">
 
 <!-- TITLE BAR ************************************************************ -->
 <div id="main-titlebar">
@@ -34,13 +39,37 @@
 
 <div id="main-container">
 
-	<!-- VIDEOS ************************************************** -->
-	<div>
-		<span t:contextMenu="action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@|Play" t:repeatForView="watchable-items">		
-		<t:includeTemplate filename="download-item" />
- 		</span>
-	</div>
-	<!-- / VIDEOS -->
+    <!-- UNWATCHED ******************************************************** -->
+    <span t:hideIfViewEmpty="unwatched-items">
+        <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-unwatched');">#&nbsp;</a></div>
+        <div id="main-channelbar" class="main-channelbar">
+        	<h1>Unwatched</h1>
+        	<h2 t:updateForView="unwatched-items">(<span t:replace="this len" />)</h2>
+        </div>
+
+        <div id="main-unwatched">
+            <span t:repeatForView="unwatched-items">
+                <t:includeTemplate filename="download-item" />
+            </span>
+        </div>
+    </span>
+    <!-- / UNWATCHED -->
+
+    <!-- EXPIRING ********************************************************* -->
+    <span t:hideIfViewEmpty="expiring-items">
+        <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-expiring');">#&nbsp;</a></div>
+        <div id="main-channelbar" class="main-channelbar">
+        	<h1>Expiring</h1>
+        	<h2 t:updateForView="expiring-items">(<span t:replace="this len" />)</h2>
+        </div>
+
+        <div id="main-expiring">
+            <span t:repeatForView="expiring-items">
+                <t:includeTemplate filename="download-item" />
+            </span>
+        </div>
+    </span>
+    <!-- / EXPIRING -->
 	
 </div>
 
