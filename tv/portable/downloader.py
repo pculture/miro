@@ -1203,7 +1203,6 @@ class BTDownloader(Downloader):
         elif self.state != "finished":
             self.state = "paused"
 
-
     def __getstate__(self):
         temp = copy(self.__dict__)
         temp["thread"] = None
@@ -1220,12 +1219,19 @@ class BTDownloader(Downloader):
         self.thread.setDaemon(True)
         self.thread.start()
 
+    @classmethod
+    def wakeup(self):
+        if sys.platform != 'win32':
+            if BTDownloader.multitorrent.rawserver.wakeupfds[1] is not None:
+                os.write(BTDownloader.multitorrent.rawserver.wakeupfds[1], 'X')
+
 ##
 # Kill the main BitTorrent thread
 #
 # This should be called before closing the app
 def shutdownBTDownloader():
     BTDownloader.doneflag.set()
+    BTDownloader.wakeup()
     BTDownloader.dlthread.join()
 
 #Spawn the download thread
