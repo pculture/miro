@@ -134,7 +134,12 @@ li {
 
 .main-channelbar {
 	background: url(../images/main-bar-bg.png) repeat-x left bottom;
-	height: 22px;
+	height: 23px;
+}
+
+.main-channelbar-download {
+	background: url(../images/main-bar-bg-download.png) repeat-x left bottom;
+	height: 23px;
 }
 
 .main-channelbar-hitbox {
@@ -149,7 +154,7 @@ li {
 	padding: 5px 200% 5px 0px;
 }
 
-.main-channelbar h1, .main-channelbar h2 {
+.main-channelbar h1, .main-channelbar-download h1, .main-channelbar h2 {
 	display: inline;
 	padding: 0px;
 	font-size: 100%;
@@ -158,14 +163,14 @@ li {
 	text-decoration: none;
 }
 
-.main-channelbar h1 {
+.main-channelbar h1, .main-channelbar-download h1 {
 	float: left;
-	margin: 3px 0px 0px 5px;
+	margin: 4px 0px 0px 5px;
 }
 
 .main-channelbar h2 {
 	float: right;
-	margin: 3px 5px 0px 0px;
+	margin: 4px 5px 0px 0px;
 }
 
 .main-channelbar a:link, .main-channelbar a:visited, .main-channelbar a:active {
@@ -175,6 +180,36 @@ li {
 
 #main-newlyavailable, #main-downloads, #main-unwatched, #main-expiring, #main-saved, #main-autodownload, #main-expiration, #main-newlyavailable-seen, #show-more-videos-label {
 	display: none;
+}
+
+.main-notification-nonew {
+	width: 230px;
+	height: 80px;
+	margin: 0px 0px 0px 5px;	
+}
+
+.main-notification-nonew h3 {
+	margin-left: 5px;
+}
+
+.main-notification {	
+	float: left;
+	height: 24px;
+	background: url(../images/main-notification-bg.png) no-repeat left top;
+	padding: 3px 0px 0px 20px;
+	margin: 0px 0px 15px 5px;
+	font-size: 14px;
+	font-weight: bold;
+	color:#FFFFFF;
+}
+
+.main-notification-right {	
+	float: left;
+	width: 20px;
+	height: 24px;
+	margin: 0px 0px 15px 0px;
+	background: url(../images/main-notification-right.png) no-repeat right top;
+	overflow: hidden;
 }
 
 .main-video {
