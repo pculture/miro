@@ -105,6 +105,14 @@
             </span>
         </span>
     </div>
+		
+		<!-- ### MORE LINK TO BE DISPLAYED UNDER NEW VIDEOS - SHOULD REVEAL ALL VIDEOS AVAILABLE FROM CHANNEL ###
+		<a href="javascript:toggleLayer('main-newlyavailable-seen');toggleLayer('show-more-videos-label');" style="color:#333333; text-decoration:none;" class="main-notification-nonew" t:repeatForView="new-unseen-items">
+				<div class="main-notification" style="margin-top:5px;" t:updateForView="new-items"><span t:replace="this len" /> More...</div>
+				<div class="main-notification-right" style="margin-top:5px;">&nbsp;</div>
+				<br clear="left" />
+		</a> 
+		-->
     <!-- / NEWLY AVAILABLE -->
 
     <!-- DOWNLOADS ******************************************************** -->
