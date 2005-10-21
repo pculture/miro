@@ -87,7 +87,7 @@
 	
 	
 	
-	<!-- STOPPED **************************************************** -->
+	<!-- EXPIRED **************************************************** -->
 	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="expired">
 		<div class="main-video-details">
 		
@@ -101,7 +101,7 @@
 		</div>
 		<div class="clearer"></div>
 	</span>
-	<!-- / STOPPED -->
+	<!-- / EXPIRED -->
 	
 	
 	
