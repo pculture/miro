@@ -212,6 +212,7 @@ class Controller (frontend.Application):
                 'filter': globalFilterList,
                 'sort': globalSortList,
                 'view': globalViewList,
+                'index': globalIndexList,
                 'guide': channelGuide,
                 }
             tabPaneData = {
@@ -1364,7 +1365,6 @@ globalFilterList = {
     'feedID': (lambda x, y: str(x.getFeedID()) == str(y))
 }
 
-
 globalViewList = {
     'items': db.filter(lambda x: isinstance(x,item.Item)),
     'availableItems': db.filter(lambda x: isinstance(x,item.Item) and x.getState() == 'finished'),
@@ -1372,3 +1372,9 @@ globalViewList = {
     'feeds': db.filter(lambda x: isinstance(x,feed.Feed)),
     'httpauths':  db.filter(lambda x: isinstance(x,downloader.HTTPAuthPassword)),
 }
+
+globalIndexList = {
+    'itemsByFeed': lambda x:str(x.getFeed().getID())
+}
+
+globalViewList['items'].createIndex(globalIndexList['itemsByFeed'])

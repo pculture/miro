@@ -13,26 +13,32 @@
 
     <t:dynamicviews>
         <t:view name="new-unseen-items" key="global view items">
+            <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
             <t:filter functionkey="global filter unviewedItems" parameter="@@@feed getFeedID@@@" />
             <t:sort functionkey="global sort item" parameter="" />
         </t:view>
         <t:view name="new-items" key="global view items">
+            <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
             <t:filter functionkey="global filter viewedItems" parameter="@@@feed getFeedID@@@" />
             <t:sort functionkey="global sort item" parameter="" />
         </t:view>
         <t:view name="downloading-items" key="global view items">
+           <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
             <t:filter functionkey="global filter downloadingItems" parameter="@@@feed getFeedID@@@" />
             <t:sort functionkey="global sort item" parameter="" />
         </t:view>
         <t:view name="unwatched-items" key="global view items">
+            <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
             <t:filter functionkey="global filter unwatchedItems" parameter="@@@feed getFeedID@@@" />
             <t:sort functionkey="global sort item" parameter="" />
         </t:view>
         <t:view name="expiring-items" key="global view items">
+            <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
             <t:filter functionkey="global filter expiringItems" parameter="@@@feed getFeedID@@@" />
             <t:sort functionkey="global sort item" parameter="" />
         </t:view>
         <t:view name="saved-items" key="global view items">
+            <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
             <t:filter functionkey="global filter oldItems" parameter="@@@feed getFeedID@@@" />
             <t:sort functionkey="global sort item" parameter="" />
         </t:view>
