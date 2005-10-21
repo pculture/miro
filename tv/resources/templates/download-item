@@ -196,10 +196,10 @@
 			
 			<!-- UNWATCHED -->
 			<span>
-				<div class="main-video-details-unwatched" style="margin-top:15px;">
+				<div class="main-video-details-unwatched">
 					<p>Unwatched</p>
 				</div>
-				<div class="main-video-details-save" style="margin-top:15px;">
+				<div class="main-video-details-save">
 					<p><a href="action:keepItem?item=@@@this getID@@@">Save</a></p>
 				</div>
 			</span>
@@ -233,10 +233,10 @@
 			
 			<!-- EXPIRY -->
 			<span>
-				<div class="main-video-details-expiry" style="margin-top:15px;">
+				<div class="main-video-details-expiry">
 					<p>Expires: <span t:replace="this getExpirationTime" /></p>
 				</div>
-				<div class="main-video-details-save" style="margin-top:15px;">
+				<div class="main-video-details-save">
 					<p><a href="action:keepItem?item=@@@this getID@@@">Save</a></p>
 				</div>
 			</span>
@@ -269,7 +269,7 @@
 			<!-- / FILE INFO -->			
 			
 			<!-- FILE TASKS -->
-			<div class="main-video-details-tasks" style="padding-top:35px;">
+			<div class="main-video-details-tasks" style="padding-top:37px;">
 				<a href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
 				<a href="#"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
 				<div class="clearer"></div>
@@ -296,10 +296,10 @@
 			
 			<!-- UNWATCHED -->
 			<span>
-				<div class="main-video-details-unwatched" style="margin-top:15px;">
+				<div class="main-video-details-unwatched">
 					<p>Unwatched</p>
 				</div>
-				<div class="main-video-details-save" style="margin-top:15px;">
+				<div class="main-video-details-save">
 					<p><a href="action:keepItem?item=@@@this getID@@@">Save</a></p>
 				</div>
 			</span>

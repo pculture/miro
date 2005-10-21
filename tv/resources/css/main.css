@@ -169,8 +169,9 @@ li {
 }
 
 .main-channelbar h2 {
-	float: right;
-	margin: 4px 5px 0px 0px;
+	float: left;
+	margin: 4px 0px 0px 5px;
+	color: #CDDFF6;
 }
 
 .main-channelbar a:link, .main-channelbar a:visited, .main-channelbar a:active {
@@ -178,7 +179,7 @@ li {
 	text-decoration: none;	
 }
 
-#main-newlyavailable, #main-downloads, #main-unwatched, #main-expiring, #main-saved, #main-autodownload, #main-expiration, #main-newlyavailable-seen, #show-more-videos-label {
+#main-newlyavailable, #main-downloads, #main-unwatched, #main-expiring, #main-saved, #main-autodownload, #main-expiration, #main-newlyavailable-seen, #show-more-videos-label, #no-new-videos-label {
 	display: none;
 }
 
@@ -214,7 +215,7 @@ li {
 
 .main-video {
 	clear: both;
-	border-bottom: 1px solid #b6bfce;
+	border-bottom: 1px solid #d0dcee;
 	background: #FFFFFF url(../images/main-video-bg.png) no-repeat right bottom;
 }
 
@@ -269,7 +270,7 @@ li {
 .main-video-tnail img {
 	width: 100px;
 	height: 75px;
-	margin: 3px 0px 3px 5px;
+	margin: 3px 0px 0px 5px;
 	border: 2px solid #FFFFFF;
 }
 
@@ -319,6 +320,7 @@ li {
 	padding: 0px;
 	font-size: 85%;
 	text-decoration: none;
+	height: 10px;
 }
 
 .main-video-details-left {
@@ -344,14 +346,14 @@ li {
 	float: left;
 	display: inline;
 	background-color: #5ab471;
-	margin-top: 5px;
+	margin-top: 18px;
 }
 
 .main-video-details-expiry {
 	float: left;
 	display: inline;
 	background-color: #74a5ce;
-	margin-top: 5px;
+	margin-top: 18px;
 }
 
 .main-video-details-new p, .main-video-details-unwatched p, .main-video-details-expiry p {
@@ -367,7 +369,7 @@ li {
 	display: inline;
 	background-color: #f9fbfe;
 	padding: 1px;
-	margin-top: 5px;
+	margin-top: 18px;
 }
 
 .main-video-details-save p {
@@ -389,7 +391,7 @@ li {
 
 .main-video-details-tasks {
 	clear: both;
-	padding: 5px 0px;
+	padding: 5px 0px 0px 0px;
 }
 
 .main-video-details-task-delete, .main-video-details-task-bomb, .main-video-details-task-mail {
@@ -422,7 +424,7 @@ li {
 .main-video-progress {
 	float: left;
 	display: inline;
-	padding-top: 5px;
+	padding-top: 23px;
 }
 
 .main-progress-bar {
