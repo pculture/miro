@@ -639,7 +639,7 @@ class NamedView:
 
         if viewIndex is not None:
             self.indexFunc = evalKeyC(viewIndex, data, None, True)
-            self.indexValue = evalKeyC(viewIndexValue, data, None, True)
+            self.indexValue = viewIndexValue
             self.indexView = self.origView.filterWithIndex(self.indexFunc,self.indexValue)
         else:
             self.indexView = self.origView
