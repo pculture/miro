@@ -268,6 +268,10 @@ class Item(DDBObject):
                                 self.lastDownloadFailed = True
                             finally:
                                 self.endRead()
+                    else:
+                        for dler in self.downloaders:
+                            if dler.getURL() == enclosure['url']:
+                                dler.start()
                 except KeyError:
                     pass
         except KeyError:
