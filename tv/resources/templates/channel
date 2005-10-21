@@ -45,7 +45,7 @@
     </t:dynamicviews>
 </head>
 
-<body onload="toggleLayer('main-newlyavailable'); toggleLayer('main-unwatched'); toggleLayer('main-expiring'); toggleLayer('main-saved'); toggleLayer('show-more-videos-label');">
+<body onload="toggleLayer('main-newlyavailable'); toggleLayer('main-unwatched'); toggleLayer('main-expiring'); toggleLayer('main-saved'); toggleLayer('show-more-videos-label'); toggleLayer('no-new-videos-label');">
     
 <!-- TITLE BAR ************************************************************ -->
 <div id="main-titlebar">
@@ -89,16 +89,16 @@
         <span t:repeatForView="new-unseen-items">
             <t:includeTemplate filename="download-item" />
         </span>
-        <span t:hideIfViewNotEmpty="new-unseen-items">
-  	  <h3>No new videos on this channel.</h3>
+        <span t:hideIfViewNotEmpty="new-unseen-items" id="no-new-videos-label">
+						<h3 style="margin:12px 0px 17px 5px;">No new videos on this channel.</h3>
         </span>
         <span t:hideIfViewEmpty="new-items">
             <span id="show-more-videos-label" class="main-content">								
-				<a href="javascript:toggleLayer('main-newlyavailable-seen');toggleLayer('show-more-videos-label');" style="color:#333333; text-decoration:none;" class="main-notification-nonew">
-					<div class="main-notification" style="margin-top:-10px;" t:updateForView="new-items">See All <span t:replace="this len" /> Videos &gt;&gt;</div>
-					<div class="main-notification-right" style="margin-top:-10px;">&nbsp;</div>
-					<br clear="left" />
-				</a>
+								<a href="javascript:toggleLayer('main-newlyavailable-seen');toggleLayer('show-more-videos-label');toggleLayer('no-new-videos-label');" style="color:#333333; text-decoration:none;" class="main-notification-nonew">
+										<div class="main-notification" style="margin-top:-10px;" t:updateForView="new-items">See All <span t:replace="this len" /> Videos &gt;&gt;</div>
+										<div class="main-notification-right" style="margin-top:-10px;">&nbsp;</div>
+										<br clear="left" />
+								</a>
             </span>
             <span id="main-newlyavailable-seen">
                 <span t:repeatForView="new-items">
@@ -106,16 +106,7 @@
                 </span>
             </span>
         </span>
-    </div>
-		
-		<!-- ### MORE LINK TO BE DISPLAYED UNDER NEW VIDEOS - SHOULD REVEAL ALL VIDEOS AVAILABLE FROM CHANNEL ###
-		<a href="javascript:toggleLayer('main-newlyavailable-seen');toggleLayer('show-more-videos-label');" style="color:#333333; text-decoration:none;" class="main-notification-nonew" t:repeatForView="new-unseen-items">
-				<div class="main-notification" style="margin-top:5px;" t:updateForView="new-items"><span t:replace="this len" /> More...</div>
-				<div class="main-notification-right" style="margin-top:5px;">&nbsp;</div>
-				<br clear="left" />
-		</a> 
-		-->
-    <!-- / NEWLY AVAILABLE -->
+    </div>		
 
     <!-- DOWNLOADS ******************************************************** -->
     <span t:hideIfViewEmpty="downloading-items">
