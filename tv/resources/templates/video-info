@@ -19,7 +19,9 @@
                 (<a href="***this getFeed getLink***"><span t:replace="this getFeed getTitle" /></a>)
             </span>
             <span t:hideIfNotKey="this getFeed getLink" t:hideFunctionKey="filter equal">
-                (<span t:replace="this getFeed getTitle" />)
+                <span t:hideIfKey="this getFeed getTitle" t:hideFunctionKey="filter equal" t:hideParameter="Feedless Videos">
+                    (<span t:replace="this getFeed getTitle" />)
+                </span>
             </span>
         </div>
         <div><span t:replaceMarkup="this getPaymentHTML" /></div>
