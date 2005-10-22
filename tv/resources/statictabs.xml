@@ -1,5 +1,5 @@
 <tabs>
-<statictab tabtemplatebase="guidetab" contentstemplate="guide" order="1"/>
+<statictab tabtemplatebase="guidetab" contentstemplate="guide-loading" order="1"/>
 <statictab tabtemplatebase="librarytab" contentstemplate="library" order="2"/>
 <statictab tabtemplatebase="newtab" contentstemplate="new" order="3"/>
 
