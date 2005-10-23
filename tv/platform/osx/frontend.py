@@ -171,6 +171,10 @@ class AppController (NibClassBuilder.AutoBaseClass):
         NSURLRequest.setAllowsAnyHTTPSCertificate_forHost_(YES, channelGuideHost)
 
     def applicationWillTerminate_(self, notification):
+        # Reset the application icon to its default state
+        defaultAppIcon = NSImage.imageNamed_('NSApplicationIcon')
+        NSApplication.sharedApplication().setApplicationIconImage_(defaultAppIcon)
+        # Call shutdown on backend
         self.actualApp.onShutdown()
 
     def application_openFile_(self, app, filename):
