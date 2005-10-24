@@ -675,6 +675,10 @@ class DynamicDatabase:
                             myObjObj = myObj[0]
                             myObjVal = myObj[1]
                             filtVal = filt(myObjVal)
+                            if not views.has_key(filtVal):
+                                views[filtVal] = DynamicDatabase([],False)
+                                views[filtVal].addBeforeCursor(myObjObj,
+                                                               myObjVal)
                             if not views[filtVal].objectLocs.has_key(myObjObj.id):
                                 # FIXME: Keep an index of items to
                                 # views. Eliminate this loop
