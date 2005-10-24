@@ -112,7 +112,7 @@
     <span t:hideIfViewEmpty="downloading-items">
         <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-downloads');">#&nbsp;</a></div>
         <div id="main-channelbar" class="main-channelbar-download">
-        	<h1 style="color:#000000; text-decoration:underline;" t:updateForView="downloading-items"><span t:replace="this len" /> Download<span t:hideIfKey="this len" t:hideFunctionKey="global filter equal" t:hideParameter="1">s</span> in Progress...</h1>
+        	<h1 t:updateForView="downloading-items"><span t:replace="this len" /> Download<span t:hideIfKey="this len" t:hideFunctionKey="global filter equal" t:hideParameter="1">s</span> in Progress...</h1>
         </div>
 
         <div id="main-downloads">

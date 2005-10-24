@@ -142,6 +142,11 @@ li {
 	height: 23px;
 }
 
+.main-channelbar-download h1 {
+	color: #000000;
+	text-decoration: none;
+}
+
 .main-channelbar-hitbox {
 	position: relative;
 	margin: 0px 0px -22px 0px;
@@ -159,8 +164,11 @@ li {
 	padding: 0px;
 	font-size: 100%;
 	font-weight: bold;
-	color: #FFFFFF;
 	text-decoration: none;
+}
+
+.main-channelbar h1, .main-channelbar h2 {
+	color: #FFFFFF;
 }
 
 .main-channelbar h1, .main-channelbar-download h1 {
@@ -339,8 +347,8 @@ li {
 .main-video-details-new {
 	float: left;
 	display: inline;
-	background-color: #00a2ef;
-	margin-top: 5px;
+	background-color: #1796ee;
+	margin-top: 18px;
 }
 
 .main-video-details-unwatched {
