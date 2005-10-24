@@ -425,14 +425,14 @@ li {
 .main-video-progress {
 	float: left;
 	display: inline;
-	padding-top: 23px;
+	padding-top: 18px;
 }
 
 .main-progress-bar {
 	float: left;
-    width: 94px;
-    height: 12px;
-	padding: 0 2px 0 2px;
+  width: 94px;
+  height: 12px;
+	padding: 0px 2px 0px 2px;
 	background: url(../images/status_background.png) top left no-repeat;
 }
 
