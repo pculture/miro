@@ -106,17 +106,11 @@
 		<div style="margin:10px 0px 10px 0px;">
 			<input type="radio" name="expire" value="never" onClick="javascript:settingsFormSubmit()"  t:hideIfNotKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="never" checked="checked"/>
 			<input type="radio" name="expire" value="never" onClick="javascript:settingsFormSubmit()"  t:hideIfKey="feed getExpirationType" t:hideFunctionKey="global filter substring" t:hideParameter="never"/>
-			<span i18n:translate="">Videos in this channel never expire (they are automatically saved).</span><br />
-			<span i18n:translate="" style="margin-left:22px;"><strong>Warning</strong>: Can use up disk space quickly.</span>
+			<span i18n:translate="">Videos in this channel never expire (they are automatically saved). <strong>Warning:</strong> Can use up disk space quickly.</span>
 		</div>
 		
 		<div id="expiration_tips">
-			<h3>Expiration tips:</h3>
-			<ul class="expiration_tips_list">
-				<li>Automatic expiration helps make room on your hard drive for new videos.  If you fill up your cache, no videos will download from any channel until there is more room (<a id="editcachelink" href="cache_settings" i18n:name="edit_link" i18n:translate="">Edit Cache Settings</a>).</li>
-				<li>You can permanently keep any video that hasn't expired by clicking 'save'.</li>
-				<li>On channels with more fleeting content (for example, music videos or video blogs), you might want videos that you've watched to expire more quickly to make way for new content.</li>
-			</ul>
+			<strong>Expiration tips:</strong> Automatic expiration helps make room on your hard drive for new videos. You can permanently keep any video that hasn't expired by clicking 'save'. On channels with more fleeting content (for example, music videos or video blogs), you might want videos that you've watched to expire more quickly to make way for new content.
 		</div>
 	</div>
 	<!-- / EXPIRATION -->
