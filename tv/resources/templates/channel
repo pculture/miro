@@ -90,13 +90,13 @@
             <t:includeTemplate filename="download-item" />
         </span>
         <span t:hideIfViewNotEmpty="new-unseen-items" id="no-new-videos-label">
-						<h3 style="margin:12px 0px 17px 5px;">No new videos on this channel.</h3>
+						<h3 style="margin:11px 0px -3px 5px;">No new videos on this channel.</h3>
         </span>
         <span t:hideIfViewEmpty="new-items">
             <span id="show-more-videos-label" class="main-content">								
 								<a href="javascript:toggleLayer('main-newlyavailable-seen');toggleLayer('show-more-videos-label');toggleLayer('no-new-videos-label');" style="color:#333333; text-decoration:none;" class="main-notification-nonew">
-										<div class="main-notification" style="margin-top:-10px;" t:updateForView="new-items">See All <span t:replace="this len" /> Videos &gt;&gt;</div>
-										<div class="main-notification-right" style="margin-top:-10px;">&nbsp;</div>
+										<div class="main-notification" t:updateForView="new-items">See All <span t:replace="this len" /> Videos &gt;&gt;</div>
+										<div class="main-notification-right">&nbsp;</div>
 										<br clear="left" />
 								</a>
             </span>

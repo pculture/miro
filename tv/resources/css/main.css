@@ -190,7 +190,8 @@ li {
 }
 
 .main-notification-nonew h3 {
-	margin-left: 5px;
+	margin: 11px 0px 2px 5px;
+	padding: 0px;
 }
 
 .main-notification {	
@@ -198,7 +199,7 @@ li {
 	height: 24px;
 	background: url(../images/main-notification-bg.png) no-repeat left top;
 	padding: 3px 0px 0px 20px;
-	margin: 0px 0px 15px 5px;
+	margin: 15px 0px 12px 5px;
 	font-size: 14px;
 	font-weight: bold;
 	color:#FFFFFF;
@@ -208,7 +209,7 @@ li {
 	float: left;
 	width: 20px;
 	height: 24px;
-	margin: 0px 0px 15px 0px;
+	margin: 15px 0px 12px 0px;
 	background: url(../images/main-notification-right.png) no-repeat right top;
 	overflow: hidden;
 }
