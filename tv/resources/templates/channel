@@ -173,7 +173,7 @@
 </div>
 <!-- / CHANNEL ITEMS LIST -->
 
-<t:triggerActionOnUnload url="action:markFeedViewed?url=@@@feed getURL@@@" />
+<t:triggerActionOnUnload url="action:markFeedViewed?feed=@@@feed getID@@@" />
 
 </body>
 </html>

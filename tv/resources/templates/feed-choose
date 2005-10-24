@@ -89,7 +89,7 @@
   </div>
 
 <!-- Open the action URL that marks this feed as viewed -->
-<t:triggerActionOnLoad url="action:markFeedViewed?url=@@@feed getURL@@@" />
+<t:triggerActionOnLoad url="action:markFeedViewed?feed=@@@feed getID@@@" />
 
 
 

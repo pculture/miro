@@ -190,11 +190,9 @@ class Controller (frontend.Application):
             # If there's no Channel Guide in the database, create one
             # and some test feeds
             hasGuide = False
-            for obj in db.objects:
-                if obj[0].__class__.__name__ == 'ChannelGuide':
-                    hasGuide = True
-                    channelGuide = obj[0]
-                    break
+            for obj in globalViewList['guide']:
+                hasGuide = True
+                channelGuide = obj
             if not hasGuide:
                 print "Spawning Channel Guide..."
                 channelGuide = guide.ChannelGuide()
@@ -229,6 +227,12 @@ class Controller (frontend.Application):
             mapFunc = makeMapToTabFunction(globalData, self)
             self.tabs = db.filter(mappableToTab).map(mapFunc).sort(sortTabs)
 
+            self.tabIDIndex = lambda x: x.id
+            self.tabs.createIndex(self.tabIDIndex)
+
+            self.tabObjIDIndex = lambda x: x.obj.getID()
+            self.tabs.createIndex(self.tabObjIDIndex)
+
             self.currentSelectedTab = None
             self.tabListActive = True
             tabPaneData['tabs'] = self.tabs
@@ -248,12 +252,10 @@ class Controller (frontend.Application):
             self.tabs.getNext()
 
             # If we're missing the file system videos feed, create it
-            hasDirFeed = False
-            for obj in db.objects:
-                if (isinstance(obj[0], feed.Feed) and
-                    obj[0].getURL() == 'dtv:directoryfeed'):
-                    hasDirFeed = True
-                    break
+            dirFeed = globalViewList['feeds'].filterWithIndex(globalIndexList['feedsByURL'],'dtv:directoryfeed')
+            hasDirFeed = dirFeed.len() > 0
+            globalViewList['feeds'].removeView(dirFeed)
+
             if not hasDirFeed:
                 print "DTV: Spawning file system videos feed"
                 d = feed.Feed('dtv:directoryfeed')
@@ -301,6 +303,25 @@ class Controller (frontend.Application):
             print "DTV: Exception on startup:"
             traceback.print_exc()
             frontend.exit(1)
+
+    def checkTabUsingIndex(self, index, id):
+        view = self.tabs.filterWithIndex(index, id)
+        view.beginUpdate()
+        try:
+            view.resetCursor()
+            obj = view.getNext()
+        #FIXME: This is a hack. We need to change the database API to allow this
+            self.tabs.cursor = self.tabs.objectLocs[view.objects[view.cursor][0].getID()]
+        finally:
+            view.endUpdate()
+            self.tabs.removeView(view)
+        return obj
+
+    def checkTabByID(self, id):
+        return self.checkTabUsingIndex(self.tabIDIndex, id)
+
+    def checkTabByObjID(self, id):
+        return self.checkTabUsingIndex(self.tabObjIDIndex, id)
 
     def onShutdown(self):
         try:
@@ -461,7 +482,6 @@ class Controller (frontend.Application):
             # upstream limit should be unset here
             pass
 
-
 ###############################################################################
 #### TemplateDisplay: a HTML-template-driven right-hand display panel      ####
 ###############################################################################
@@ -603,160 +623,39 @@ class ModelActionHandler:
         self.backEndDelegate = backEndDelegate
     
     def setAutoDownloadableFeed(self, feed, automatic):
-        db.beginUpdate()
-        db.saveCursor()
-        try:
-            for obj in db:
-                if obj.getID() == int(feed):
-                    obj.setAutoDownloadable(automatic)
-                    break
-        finally:
-            db.restoreCursor()
-            db.endUpdate()
-    
+        obj = db.getObjectByID(int(feed))
+        obj.setAutoDownloadable(automatic)
+
     def changeFeedSettings(self, feed, maxnew, fallbehind, automatic, expireDays, expireHours, expire, getEverything="0"):
-        db.beginUpdate()
-        db.saveCursor()
-        try:
-            for obj in db:
-                if obj.getID() == int(feed):
-                    obj.saveSettings(automatic,maxnew,fallbehind,expire,expireDays,expireHours,getEverything)
-                    break
-        finally:
-            db.restoreCursor()
-            db.endUpdate()
+        obj = db.getObjectByID(int(feed))
+        obj.saveSettings(automatic,maxnew,fallbehind,expire,expireDays,expireHours,getEverything)
 
     def startDownload(self, item):
-        db.beginUpdate()
-        db.saveCursor()
-        try:
-            for obj in db:
-                if obj.getID() == int(item):
-                    obj.download()
-                    break
-        finally:
-            db.restoreCursor()
-            db.endUpdate()
+        obj = db.getObjectByID(int(item))
+        obj.download()
 
-    def removeFeed(self, url):
-        func = lambda x: isinstance(x, feed.Feed) and x.getURL() == url
-        view = db.filter(func)
-        feedObj = view.getNext()
-        if self.backEndDelegate.validateFeedRemoval(feedObj.getTitle()):
-            feedObj.remove()
-        db.removeView(view)
+    def removeFeed(self, feed):
+        obj = db.getObjectByID(int(feed))
+        if self.backEndDelegate.validateFeedRemoval(obj.getTitle()):
+            obj.remove()
 
-    def updateFeed(self, url):
-        db.beginUpdate()
-        db.saveCursor()
-        try:
-            for obj in db:
-                if isinstance(obj,feed.Feed) and obj.getURL() == url:
-                    thread = threading.Thread(target=obj.update)
-                    thread.setDaemon(False)
-                    thread.start()
-                    break
-        finally:
-            db.restoreCursor()
-            db.endUpdate()
+    def updateFeed(self, feed):
+        obj = db.getObjectByID(int(feed))
+        thread = threading.Thread(target=obj.update)
+        thread.setDaemon(False)
+        thread.start()
 
-    def markFeedViewed(self, url):
-        db.beginUpdate()
-        db.saveCursor()
-        try:
-            for obj in db:
-                if isinstance(obj,feed.Feed) and obj.getURL() == url:
-                    obj.markAsViewed()
-                    break
-        finally:
-            db.restoreCursor()
-            db.endUpdate()
+    def markFeedViewed(self, feed):
+        obj = db.getObjectByID(int(feed))
+        obj.markAsViewed()
 
     def expireItem(self, item):
-        db.beginUpdate()
-        db.saveCursor()
-        try:
-            for obj in db:
-                if obj.getID() == int(item):
-                    obj.expire()
-                    break
-        finally:
-            db.restoreCursor()
-            db.endUpdate()
+        obj = db.getObjectByID(int(item))
+        obj.expire()
 
     def keepItem(self,item):
-        db.beginUpdate()
-        db.saveCursor()
-        try:
-            for obj in db:
-                if obj.getID() == int(item):
-                    obj.setKeep(True)
-                    break
-        finally:
-            db.restoreCursor()
-            db.endUpdate()
-
-    # Collections
-
-    def addCollection(self, title):
-        x = feed.Collection(title)
-
-    def removeCollection(self, id):
-        print "DTV: remove collection not implemented"
-
-    def addToCollection(self, id, item):
-        db.beginUpdate()
-        try:
-
-            obj = None
-            for x in db:
-                if isinstance(x,feed.Collection) and x.getID() == int(id):
-                    obj = x
-                    break
-
-            if obj != None:
-                for x in db:
-                    if isinstance(x,item.Item) and x.getID() == int(item):
-                        obj.addItem(x)
-
-        finally:
-            db.endUpdate()
-
-    def removeFromCollection(self, id, item):
-        db.beginUpdate()
-        try:
-
-            obj = None
-            for x in db:
-                if isinstance(x,feed.Collection) and x.getID() == int(id):
-                    obj = x
-                    break
-
-            if obj != None:
-                for x in db:
-                    if isinstance(x,item.Item) and x.getID() == int(item):
-                        obj.removeItem(x)
-
-        finally:
-            db.endUpdate()
-
-    def moveInCollection(self, id, item, pos):
-        db.beginUpdate()
-        try:
-
-            obj = None
-            for x in db:
-                if isinstance(x,feed.Collection) and x.getID() == int(id):
-                    obj = x
-                    break
-
-            if obj != None:
-                for x in db:
-                    if isinstance(x,item.Item) and x.getID() == int(item):
-                        obj.moveItem(x,int(pos))
-
-        finally:
-            db.endUpdate()
+        obj = db.getObjectByID(int(item))
+        obj.setKeep(True)
 
 # Test shim for test* functions on GUIActionHandler
 class printResultThread(threading.Thread):
@@ -777,25 +676,11 @@ class GUIActionHandler:
         self.controller = controller
 
     def selectTab(self, id, templateNameHint = None):
-        db.beginRead()
-        # NEEDS: lock on controller state
-
-        try:
-            # Move the cursor to the newly selected object
-            self.controller.tabs.resetCursor()
-            while True:
-                cur = self.controller.tabs.getNext()
-                if cur == None:
-                    assert(0) # NEEDS: better error (JS sent bad tab id)
-                if cur.id == id:
-                    break
-
-        finally:
-            db.endRead() # NEEDS: dropping this prematurely?
+        cur = self.controller.checkTabByID(id)
 
         # Figure out what happened
         oldSelected = self.controller.currentSelectedTab
-        newSelected = self.controller.tabs.cur()
+        newSelected = cur
 
         # Handle reselection action (checkSelectedTab won't; it doesn't
         # see a difference)
@@ -810,35 +695,25 @@ class GUIActionHandler:
 
     def addFeed(self, url, showTemplate = None, selected = '1'):
         db.beginUpdate()
-        db.saveCursor()
-
         try:
-            exists = False
-            for obj in db:
-                if isinstance(obj,feed.Feed) and obj.getURL() == url:
-                    exists = True
-                    break
+            feedView = globalViewList['feeds'].filterWithIndex(globalIndexList['feedsByURL'],url)
+            exists = feedView.len() > 0
 
             if not exists:
                 myFeed = feed.Feed(url)
-
+            else:
+                feedView.resetCursor()
+                myFeed = feedView.getNext()
                 # At this point, the addition is guaranteed to be reflected
                 # in the tab list.
 
-            if selected == '1':
-                tabs = self.controller.tabs
-                tabs.resetCursor()
-                while True:
-                    cur = tabs.getNext()
-                    if cur == None:
-                        assert(0) # NEEDS: better error (failed to add tab)
-                    if cur.feedURL() == url:
-                        break
+            globalViewList['feeds'].removeView(feedView)
 
+            if selected == '1':
+                self.controller.checkTabByObjID(myFeed.getID())
                 self.controller.checkSelectedTab(showTemplate)
 
         finally:
-            db.restoreCursor()
             db.endUpdate()
 
     # Following for testing/debugging
@@ -1356,18 +1231,19 @@ globalViewList = {}  # filled in below with indexed view
 
 globalIndexList = {
     'itemsByFeed': lambda x:str(x.getFeed().getID()),
-    'class': lambda x:x.__class__,
-    'id': lambda x:x.getID(),
+    'feedsByURL': lambda x:str(x.getURL()),
+    'class': lambda x:x.__class__
 }
 
 db.createIndex(globalIndexList['class'])
-db.createIndex(globalIndexList['id'])
 globalViewList['items'] = db.filterWithIndex(globalIndexList['class'],item.Item)
 globalViewList['feeds'] = db.filterWithIndex(globalIndexList['class'],feed.Feed)
 globalViewList['httpauths'] = db.filterWithIndex(globalIndexList['class'],downloader.HTTPAuthPassword)
 globalViewList['staticTabs'] = db.filterWithIndex(globalIndexList['class'],StaticTab)
+globalViewList['guide'] =  db.filterWithIndex(globalIndexList['class'],guide.ChannelGuide)
 globalViewList['availableItems'] = globalViewList['items'].filter(lambda x:x.getState() == 'finished' or x.getState() == 'uploading')
 globalViewList['downloadingItems'] = globalViewList['items'].filter(lambda x:x.getState() == 'downloading')
 
 globalViewList['items'].createIndex(globalIndexList['itemsByFeed'])
+globalViewList['feeds'].createIndex(globalIndexList['feedsByURL'])
 
