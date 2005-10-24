@@ -1310,7 +1310,7 @@ class DirectoryFeedImpl(FeedImpl):
         #Adds any files we don't know about
         for file in existingFiles:
             if not file in knownFiles and not file in myFiles:
-                self.items.append(FileItem(self,file))
+                self.items.append(FileItem(self.ufeed,file))
         self.updating = False
 
     ##
