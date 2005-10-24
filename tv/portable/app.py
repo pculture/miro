@@ -311,7 +311,7 @@ class Controller (frontend.Application):
             scheduler.ScheduleEvent.scheduler.shutdown()
 
             print "DTV: Removing static tabs..."
-            db.removeMatching(lambda x:str(x.__class__.__name__) == "StaticTab")
+            removeStaticTabs()
             # for item in db:
             #    print str(item.__class__.__name__) + " of id "+str(item.getID())
             print "DTV: Saving database..."
@@ -702,9 +702,7 @@ class ModelActionHandler:
         x = feed.Collection(title)
 
     def removeCollection(self, id):
-        db.beginUpdate()
-        db.removeMatching(lambda x: isinstance(x, feed.Collection) and x.getID() == int(id))
-        db.endUpdate()
+        print "DTV: remove collection not implemented"
 
     def addToCollection(self, id, item):
         db.beginUpdate()
@@ -759,26 +757,6 @@ class ModelActionHandler:
 
         finally:
             db.endUpdate()
-
-    # Following are just for debugging/testing.
-
-    def deleteTab(self, base):
-        db.beginUpdate()
-        try:
-            db.removeMatching(lambda x: isinstance(x, StaticTab) and x.tabTemplateBase == base)
-        finally:
-            db.endUpdate()
-
-    def createTab(self, tabTemplateBase, contentsTemplate, order):
-        db.beginUpdate()
-        try:
-            order = int(order)
-            StaticTab(tabTemplateBase, contentsTemplate, order)
-        finally:
-            db.endUpdate()
-
-    def recomputeFilters(self):
-        db.recomputeFilters()
 
 # Test shim for test* functions on GUIActionHandler
 class printResultThread(threading.Thread):
@@ -1001,12 +979,21 @@ class StaticTab(database.DDBObject):
         self.order = order
         database.DDBObject.__init__(self)
 
+# Remove all static tabs from the database
+def removeStaticTabs():
+    db.beginUpdate()
+    try:
+        for obj in globalViewList['staticTabs']:
+            obj.remove()
+    finally:
+        db.endUpdate()
+
 # Reload the StaticTabs in the database from the statictabs.xml resource file.
 def reloadStaticTabs():
     db.beginUpdate()
     try:
         # Wipe all of the StaticTabs currently in the database.
-        db.removeMatching(lambda x: x.__class__ == StaticTab)
+        removeStaticTabs()
 
         # Load them anew from the resource file.
         # NEEDS: maybe better error reporting?
@@ -1365,16 +1352,22 @@ globalFilterList = {
     'feedID': (lambda x, y: str(x.getFeedID()) == str(y))
 }
 
-globalViewList = {
-    'items': db.filter(lambda x: isinstance(x,item.Item)),
-    'availableItems': db.filter(lambda x: isinstance(x,item.Item) and x.getState() == 'finished'),
-    'downloadingItems': db.filter(lambda x: isinstance(x,item.Item) and x.getState() == 'downloading'),
-    'feeds': db.filter(lambda x: isinstance(x,feed.Feed)),
-    'httpauths':  db.filter(lambda x: isinstance(x,downloader.HTTPAuthPassword)),
-}
+globalViewList = {}  # filled in below with indexed view
 
 globalIndexList = {
-    'itemsByFeed': lambda x:str(x.getFeed().getID())
+    'itemsByFeed': lambda x:str(x.getFeed().getID()),
+    'class': lambda x:x.__class__,
+    'id': lambda x:x.getID(),
 }
 
+db.createIndex(globalIndexList['class'])
+db.createIndex(globalIndexList['id'])
+globalViewList['items'] = db.filterWithIndex(globalIndexList['class'],item.Item)
+globalViewList['feeds'] = db.filterWithIndex(globalIndexList['class'],feed.Feed)
+globalViewList['httpauths'] = db.filterWithIndex(globalIndexList['class'],downloader.HTTPAuthPassword)
+globalViewList['staticTabs'] = db.filterWithIndex(globalIndexList['class'],StaticTab)
+globalViewList['availableItems'] = globalViewList['items'].filter(lambda x:x.getState() == 'finished' or x.getState() == 'uploading')
+globalViewList['downloadingItems'] = globalViewList['items'].filter(lambda x:x.getState() == 'downloading')
+
 globalViewList['items'].createIndex(globalIndexList['itemsByFeed'])
+
