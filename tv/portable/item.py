@@ -56,7 +56,10 @@ class Item(DDBObject):
         ret = ''
         self.beginRead()
         try:
-            ret = self.entry.enclosures[0].url
+            try:
+                ret = self.entry.enclosures[0].url
+            except:
+                pass
         finally:
             self.endRead()
         return ret

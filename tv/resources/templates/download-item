@@ -4,7 +4,8 @@
       xmlns:t="http://www.participatorypolitics.org/"
       xmlns:i18n="http://www.participatoryculture.org/i18n">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <t:include filename="dynamic.js" />
 </head>
 
 <body>
@@ -208,7 +209,10 @@
 			<!-- FILE TASKS -->
 			<div class="main-video-details-tasks">
 				<a href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
-				<a href="#"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
+				   href="javascript:recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@');">
+				    <img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" />
+				</a>
 				<div class="clearer"></div>
 			</div>
 			<!-- / FILE TASKS -->
@@ -245,7 +249,10 @@
 			<!-- FILE TASKS -->
 			<div class="main-video-details-tasks">
 				<a href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
-				<a href="#"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
+				   href="javascript:recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@');">
+				    <img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" />
+				</a>
 				<div class="clearer"></div>
 			</div>
 			<!-- / FILE TASKS -->
@@ -271,7 +278,10 @@
 			<!-- FILE TASKS -->
 			<div class="main-video-details-tasks" style="padding-top:37px;">
 				<a href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
-				<a href="#"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
+				   href="javascript:recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@');">
+				    <img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" />
+				</a>
 				<div class="clearer"></div>
 			</div>
 			<!-- / FILE TASKS -->
@@ -308,7 +318,10 @@
 			<!-- FILE TASKS -->
 			<div class="main-video-details-tasks">
 				<a href="action:expireItem?item=@@@this getID@@@"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
-				<a href="#"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
+				   href="javascript:recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@');">
+				    <img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" />
+				</a>
 				<div class="clearer"></div>
 			</div>
 			<!-- / FILE TASKS -->

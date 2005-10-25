@@ -17,6 +17,22 @@ function eventURL(url) {
      return false;
 }    
 
+function recommendItem(title, url, feedURL) {
+    body = "You should check out this video:\n";
+    body = body + url + "\n\n";
+    body = body + "I found it while using DTV, which you can download here:\n";
+    body = body + "http://www.dtvmac.com\n\n";
+    body = body + "The video was on this channel (click 'subscribe' in DTV and paste in this address):\n"
+    body = body + feedURL + "\n\n"
+    
+    url = 'mailto:';
+    url = url + "?subject=" + URLencode(title);
+    url = url + "&body=" + URLencode(body);
+    eventURL(url);
+    
+    return false;
+}
+
 // Change a view's filter. The filter controls which records are
 // included and which are not. (You can only do this if, when the view
 // was declared in the page header, it was given an initial filter
@@ -30,7 +46,7 @@ function eventURL(url) {
 // it will be included. For convenience in 'onclick' handlers, this
 // function returns false. param is a hack to include a static
 // parameter in addition to the dynamic one.
-     function setViewFilter(viewName, fieldKey, functionKey, parameter, invert, param) {
+function setViewFilter(viewName, fieldKey, functionKey, parameter, invert, param) {
     url = 'action:setViewFilter?';
     url = url + 'viewName=' + URLencode(viewName);
     url = url + '&fieldKey=' + URLencode(fieldKey);
