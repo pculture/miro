@@ -425,7 +425,7 @@ class Item(DDBObject):
             if self.entry.has_key('enclosures'):
                 enclosures = self.entry['enclosures']
                 for enclosure in enclosures:
-                    if enclosure.has_key('length'):
+                    if enclosure.has_key('length') and len(enclosure['length']) > 0:
                         size += int(enclosure['length'])
         finally:
             self.endRead()
@@ -638,7 +638,7 @@ class Item(DDBObject):
                 enclosures = self.entry['enclosures']
                 if len(enclosures) > 0:
                     enclosure = enclosures[0]
-                    if enclosure.has_key('type'):
+                    if enclosure.has_key('type') and len(enclosure['type']) > 0:
                         type, subtype = enclosure['type'].split('/')
                         if type.lower() in self.KNOWN_MIME_TYPES and subtype.lower() in self.KNOWN_MIME_SUBTYPES:
                             format = subtype.upper()
