@@ -89,7 +89,10 @@ class ViewTest(unittest.TestCase):
         self.assertEqual(y, "paramtest")
         return x
     def indexFunc(self,x):
-        return x.getID() < self.x.getID()+3
+        if x.getID() < self.x.getID()+3:
+            return '1'
+        else:
+            return '0'
     def filterFunc(self,x,param):
         return x.getID() <= self.y.getID() or x.getID() >= self.x.getID()+3
     def sortFunc(self, x, y):
@@ -208,11 +211,12 @@ class ViewTest(unittest.TestCase):
         self.assertEqual(self.domHandle.callList[3]['name'],'removeItem')
 
     def testIndexSort(self):
+        print "Index sort test"
         HTMLObject('<span>bogus</span>')
         HTMLObject('<span>bogus</span>')
         HTMLObject('<span>bogus</span>')
         self.domHandle = ChangeDelayedDOMTracker()
-        (text, handle) = fillTemplate("unittest/ifsview",{"replace":"<span>This is a database replace</span>","true":True, "false":False, "bool":self.bool, "view":self.everything,"sort":self.sortFunc,"index":self.indexFunc,"value":True,"filter":self.filterFunc},self.domHandle)
+        (text, handle) = fillTemplate("unittest/ifsview",{"replace":"<span>This is a database replace</span>","true":True, "false":False, "bool":self.bool, "view":self.everything,"sort":self.sortFunc,"index":self.indexFunc,"value":'1',"filter":self.filterFunc},self.domHandle)
         handle.initialFillIn()
         HTMLObject('<span>bogus</span>')
         HTMLObject('<span>bogus</span>')
@@ -222,10 +226,12 @@ class ViewTest(unittest.TestCase):
         self.x.beginChange()
         self.x.endChange()
         self.x.remove()
+        self.assertEqual(len(self.domHandle.callList),4)
         self.assertEqual(self.domHandle.callList[0]['name'],'addItemBefore')
         self.assertEqual(self.domHandle.callList[1]['name'],'addItemBefore')
         self.assertEqual(self.domHandle.callList[2]['name'],'changeItem')
         self.assertEqual(self.domHandle.callList[3]['name'],'removeItem')
+        print "Done index sort test"
 
 # FIXME Add test for evalKey
 # FIXME Add test for database add, remove, change

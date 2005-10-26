@@ -8,7 +8,7 @@
 
 <t:dynamicviews>
  <t:view name="testview" key="view">
-   <t:indexFilter index="index" value="value" />
+   <t:indexFilter index="index" value="@@@value@@@" />
    <t:filter functionkey="filter" parameter="" />
    <t:sort functionkey="sort" />
  </t:view>
