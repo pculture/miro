@@ -273,7 +273,7 @@ li {
 .main-video-details {
 	width: 125px;
 	float: right;
-	padding-top: 5px;	
+	padding-top: 12px;	
 }
 
 .main-video-tnail img {
@@ -325,11 +325,11 @@ li {
 }
 
 .main-video-details p {
-	margin: 0px 0px 3px;
+	margin: 0px 0px 3px 0px;
 	padding: 0px;
 	font-size: 85%;
 	text-decoration: none;
-	height: 10px;
+	height: 12px;
 }
 
 .main-video-details-left {
@@ -348,21 +348,18 @@ li {
 	float: left;
 	display: inline;
 	background-color: #1796ee;
-	margin-top: 18px;
 }
 
 .main-video-details-unwatched {
 	float: left;
 	display: inline;
 	background-color: #5ab471;
-	margin-top: 18px;
 }
 
 .main-video-details-expiry {
 	float: left;
 	display: inline;
 	background-color: #74a5ce;
-	margin-top: 18px;
 }
 
 .main-video-details-new p, .main-video-details-unwatched p, .main-video-details-expiry p {
@@ -370,7 +367,7 @@ li {
 	text-transform: uppercase;
 	font-size: 75%;
 	margin: 0px;
-	padding: 2px 2px;
+	padding: 2px;
 }
 
 .main-video-details-save {
@@ -378,7 +375,6 @@ li {
 	display: inline;
 	background-color: #f9fbfe;
 	padding: 1px;
-	margin-top: 18px;
 }
 
 .main-video-details-save p {
@@ -400,7 +396,7 @@ li {
 
 .main-video-details-tasks {
 	clear: both;
-	padding: 5px 0px 0px 0px;
+	padding: 4px 0px 0px 0px;
 }
 
 .main-video-details-task-delete, .main-video-details-task-bomb, .main-video-details-task-mail {
@@ -433,7 +429,6 @@ li {
 .main-video-progress {
 	float: left;
 	display: inline;
-	padding-top: 18px;
 }
 
 .main-progress-bar {
