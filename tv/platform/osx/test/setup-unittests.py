@@ -27,7 +27,6 @@ resourceFiles.append('English.lproj')
 py2app_options = dict(
     resources='%s/resources' % root, 
     plist='../Info.plist',
-    iconfile='%s/platform/%s/check.icns' % (root, platform),
 )
 
 setup(
