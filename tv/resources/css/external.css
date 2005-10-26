@@ -1,0 +1,55 @@
+body {
+	font: 14px "Lucida Grande", "Lucida Sans", "Trebuchet MS", Arial;
+	color: #FFFFFF;
+	text-decoration: none;
+	background: #000000;
+	margin: 0px;
+}
+
+#external-container-basic {
+	position: absolute;
+	width: 450px;
+	height: 150px;
+	left: 50%;
+	top: 50%;
+	margin: -125px 0px 0px -225px;
+	text-align: center;
+}
+
+#external-container-button {
+	position: absolute;
+	width: 202px;
+	height: 35px;
+	left: 50%;
+	top: 50%;
+	margin: -17px 0px 0px -102px;
+	text-align: center;
+}
+
+#external-button-left {
+	float: left;
+	height: 31px;
+	margin: 50px 0px 0px 50px;
+}
+
+#external-button-right {
+	float: right;
+	height: 31px;
+	margin: 50px 50px 0px 0px;
+}
+
+#external-button-center {
+	height: 31px;
+	margin: 0px;
+}
+
+#external-button-left span, #external-button-right span, #external-button-center span {
+	float: left;
+	background: url(../images/ext-button-left.gif) no-repeat left top;
+	height: 31px;
+	padding: 8px 0px 0px 22px;
+}
+
+#external-button-left a, #external-button-right a, #external-button-center a {
+	text-decoration: none;
+}
