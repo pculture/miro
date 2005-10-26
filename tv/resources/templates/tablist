@@ -28,7 +28,7 @@
     <ul t:hideIfViewEmpty="tabs">
       <li t:repeatForView="tabs" onmousedown="eventURL('action:selectTab?id=@@@this id@@@')">
         <span t:hideIfNotKey="this isFeed" t:hideFunctionKey="global filter boolean">
-        <span t:replaceMarkup="this markup"  t:contextMenu="action:removeFeed?feed=@@@this obj getID@@@|Remove\naction:updateFeed?feed=@@@this obj getID@@@|Update Channel Now\naction:savePlaylist?feed=@@@this obj getID@@@|Save Playlist"/>
+        <span t:replaceMarkup="this markup"  t:contextMenu="action:updateFeed?feed=@@@this obj getID@@@|Update Channel Now\n\naction:removeFeed?feed=@@@this obj getID@@@|Remove"/>
         </span>
         <span t:hideIfKey="this isFeed" t:hideFunctionKey="global filter boolean">
         <span t:replaceMarkup="this markup" t:hideParameter="Feed" />
