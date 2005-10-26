@@ -531,19 +531,19 @@ class MainController (NibClassBuilder.AutoBaseClass):
         NSApplication.sharedApplication().beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(controller.window(), self.window(), self, nil, 0)
 
     def removeChannel_(self, sender):
-        feedURL = app.Controller.instance.currentSelectedTab.feedURL()
-        if feedURL is not None:
+        feedID = app.Controller.instance.currentSelectedTab.feedID()
+        if feedID is not None:
             backEndDelegate = self.appl.getBackendDelegate()
-            app.ModelActionHandler(backEndDelegate).removeFeed(feedURL)
+            app.ModelActionHandler(backEndDelegate).removeFeed(feedID)
 
     def copyChannelLink_(self, sender):
         NSPasteboard.generalPasteboard().declareTypes_owner_([NSURLPboardType], self)
 
     def updateChannel_(self, sender):
-        feedURL = app.Controller.instance.currentSelectedTab.feedURL()
-        if feedURL is not None:
+        feedURL = app.Controller.instance.currentSelectedTab.feedID()
+        if feedID is not None:
             backEndDelegate = self.appl.getBackendDelegate()
-            app.ModelActionHandler(backEndDelegate).updateFeed(feedURL)
+            app.ModelActionHandler(backEndDelegate).updateFeed(feedID)
 
     def updateAllChannels_(self, sender):
         print "NOT IMPLEMENTED"

@@ -843,6 +843,13 @@ class Tab:
         else:
             return None
 
+    def feedID(self):
+        """If this Tab represents a Feed, the feed's ID. Otherwise None."""
+        if self.isFeed():
+            return self.obj.getID()
+        else:
+            return None
+
     def onDeselect(self):
         self.display.onDeselect()
 
