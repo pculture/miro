@@ -101,9 +101,9 @@
 .circle-orange-number {
 	margin: 0px 8px 0px 8px;
 	padding: 2px 0px 3px 0px;
-	background: #dd7119;
 	color: #FFFFFF;
 	font-size: 11px;
+	background: url(../images/circle-orange-center.png) top left repeat-x;
 }
 
 .circle-orange-right {
