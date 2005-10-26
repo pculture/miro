@@ -189,6 +189,10 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         # and set of arguments return the correct output
         self.repeatList = []
 
+        # We store repeat text here before turning it into an item in
+        # repeatList. 
+        self.repeatText = []
+
     def endDocument(self):
         self.output = self.outString.getvalue()
 
@@ -225,12 +229,12 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         elif 't:repeatForView' in attrs.keys():
             self.inRepeatView = True
             self.repeatDepth = self.depth
-            self.repeatList = [(getRepeatText, '<%s'%name),]
+            self.resetRepeat()
+            self.addRepeatText('<%s'%name)
             for key in attrs.keys():
                 if key != 't:repeatForView':
-                    addKey = key
-                    PyList_Append(self.repeatList,(getRepeatAttr,(addKey,attrs[addKey])))
-            PyList_Append(self.repeatList,(getRepeatAddIdAndClose,None))
+                    self.addRepeatAttr(key,attrs[key])
+            self.addRepeatAddIdAndClose()
 
             self.repeatView = self.handle.findNamedView(attrs['t:repeatForView']).getView()
             self.repeatName = attrs['t:repeatForView']
@@ -238,12 +242,12 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         elif 't:updateForView' in attrs.keys():
             self.inUpdateView = True
             self.repeatDepth = self.depth
-            self.repeatList = [(getRepeatText, '<%s'%name),]
+            self.resetRepeat()
+            self.addRepeatText('<%s'%name)
             for key in attrs.keys():
                 if key != 't:updateForView':
-                    addKey = key
-                    PyList_Append(self.repeatList,(getRepeatAttr,(addKey,attrs[addKey])))
-            PyList_Append(self.repeatList,(getRepeatAddIdAndClose,None))
+                    self.addRepeatAttr(key,attrs[key])
+            self.addRepeatAddIdAndClose()
 
             self.repeatView = self.handle.findNamedView(attrs['t:updateForView']).getView()
             self.repeatName = attrs['t:updateForView']
@@ -267,36 +271,36 @@ class TemplateContentHandler(sax.handler.ContentHandler):
 
             if name == 't:includeTemplate':
                 if hide: 
-                    PyList_Append(self.repeatList,(getRepeatFillTemplateHide,(functionKey,ifKey,parameter,ifInvert,attrs['filename'],self)))
+                    self.addRepeatIncludeHide(functionKey,ifKey,parameter,ifInvert,attrs['filename'])
                 else:
-                    PyList_Append(self.repeatList,(getRepeatFillTemplate,(attrs['filename'],self)))
+                    self.addRepeatFillTemplate(attrs['filename'])
             elif name == 't:include':
                 if hide:
-                    PyList_Append(self.repeatList,(getRepeatIncludeHide,(functionKey,ifKey,parameter,ifInvert,attrs['filename'],self)))
+                    self.addRepeatIncludeHide(functionKey,ifKey,parameter,ifInvert,attrs['filename'])
                 else:
-                    PyList_Append(self.repeatList,(getRepeatInclude,(attrs['filename'],self)))                
+                    self.addRepeatInclude(attrs['filename'])
             else:
-                PyList_Append(self.repeatList,(getRepeatText,'<%s'%name))
+                self.addRepeatText('<%s'%name)
                 for key in attrs.keys():
                     if not (key in ['t:replace','t:replaceMarkup','t:hideIfKey',
                                't:hideIfNotKey','t:hideFunctionKey',
                                't:hideParameter','style']):
-                        PyList_Append(self.repeatList,(getRepeatAttr,(key,attrs[key])))
+                        self.addRepeatAttr(key,attrs[key])
 
                 if hide:
-                    PyList_Append(self.repeatList,(getRepeatTextHide,(functionKey,ifKey,parameter,ifInvert,' style="display:none"')))
+                    self.addRepeatTextHide(functionKey,ifKey,parameter,ifInvert,' style="display:none"')
 
-                PyList_Append(self.repeatList,(getRepeatText,'>'))
+                self.addRepeatText('>')
                 try:
                     replace = attrs['t:replace']
-                    PyList_Append(self.repeatList,(getRepeatEvalEscape,replace))
+                    self.addRepeatEvalEscape(replace)
                     self.inReplace = True
                     self.replaceDepth = self.depth
                 except KeyError:
                     pass
                 try:
                     replace = attrs['t:replaceMarkup']
-                    PyList_Append(self.repeatList,(getRepeatEval,replace))
+                    self.addRepeatEval(replace)
                     self.inReplace = True
                     self.replaceDepth = self.depth
                 except KeyError:
@@ -431,26 +435,27 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                 self.hiding = False
         elif self.inReplace and self.depth == self.replaceDepth:
             if self.inRepeatView or self.inUpdateView:
-                PyList_Append(self.repeatList,(getRepeatText,'</%s>'%name))
+                self.addRepeatText('</%s>'%name)
             else:
                 self.outString.write('</%s>'%name)
             self.inReplace = False
         elif self.inRepeatView and self.depth == self.repeatDepth:
             self.inRepeatView = False
-            PyList_Append(self.repeatList,(getRepeatText,'</%s>'%name))
-
+            self.addRepeatText('</%s>'%name)
+            self.endRepeatText()
             repeatId = generateId()
             self.outString.write('<span id=%s/>'%sax.saxutils.quoteattr(repeatId))
             self.handle.addView(repeatId, 'nextSibling', self.repeatView, self.repeatList, self.data, self.repeatName)
         elif self.inUpdateView and self.depth == self.repeatDepth:
             self.inUpdateView = False
-            PyList_Append(self.repeatList,(getRepeatText,'</%s>'%name))
-
+            self.addRepeatText('</%s>'%name)
+            self.endRepeatText()
+            
             repeatId = generateId()
             self.outString.write('<span id=%s/>'%sax.saxutils.quoteattr(repeatId))
             self.handle.addUpdate(repeatId, 'nextSibling', self.repeatView, self.repeatList, self.data, self.repeatName)
         elif self.inRepeatView or self.inUpdateView:
-            PyList_Append(self.repeatList,(getRepeatText,'</%s>'%name))
+            self.addRepeatText('</%s>'%name)
         elif name == 't:dynamicviews':
             self.inDynamicViews = False
         elif name == 't:view':
@@ -469,9 +474,65 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         if self.inReplace or self.inStaticReplace or self.hiding:
             pass
         elif self.inRepeatView or self.inUpdateView:
-            PyList_Append(self.repeatList,(getRepeatTextEscape,data))
+            self.addRepeatTextEscape(data)
         else:
             self.outString.write(sax.saxutils.escape(data))
+
+    def addRepeatText(self, text):
+        self.repeatText.append(text)
+
+    def addRepeatTextEscape(self, text):
+        self.repeatText.append(sax.saxutils.escape(text))
+
+    def addRepeatTextHide(self,functionKey,ifKey,parameter,invert, text):
+        self.endRepeatText()
+        PyList_Append(self.repeatList,(getRepeatTextHide,(functionKey,ifKey,parameter,invert,text)))
+
+    def addRepeatAttr(self, attr, value):
+        if (attrPattern.match(value) or rawAttrPattern.match(value)):
+            self.endRepeatText()
+            PyList_Append(self.repeatList,(getRepeatAttr,(attr,value)))
+        else:
+            self.repeatText.append(' %s=%s' % (attr,sax.saxutils.quoteattr(value)))
+
+    def addRepeatInclude(self, template):
+        f = open(resource.path('templates/%s'%template),'r')
+        html = f.read()
+        f.close()
+        self.addRepeatText(html)
+
+    def addRepeatIncludeHide(self,functionKey,ifKey,parameter,invert, name):
+        self.endRepeatText()
+        PyList_Append(self.repeatList,(getRepeatIncludeHide,(functionKey,ifKey,parameter,invert, name)))
+
+    def addRepeatFillTemplate(self, name):
+        self.endRepeatText()
+        PyList_Append(self.repeatList,(getRepeatFillTemplate,(name, self)))
+
+    def addRepeatFillTemplateHide(self,functionKey,ifKey,parameter,invert,name):
+        self.endRepeatText()
+        PyList_Append(self.repeatList,(getRepeatFillTemplateHide,
+                        (functionKey,ifKey,parameter,invert, name, self)))
+
+    def addRepeatAddIdAndClose(self):
+        self.endRepeatText()
+        PyList_Append(self.repeatList,(getRepeatAddIdAndClose,None))
+
+    def addRepeatEval(self,replace):
+        self.endRepeatText()
+        PyList_Append(self.repeatList,(getRepeatEval,replace))
+
+    def addRepeatEvalEscape(self,replace):
+        self.endRepeatText()
+        PyList_Append(self.repeatList,(getRepeatEvalEscape,replace))
+
+    def resetRepeat(self):
+        self.repeatList = []
+        self.repeatText = []
+    def endRepeatText(self):
+        if len(self.repeatText) > 0:
+            PyList_Append(self.repeatList,(getRepeatText,''.join(self.repeatText)))
+        self.repeatText = []
 
 # Random utility functions 
 def returnFalse(x):
@@ -689,10 +750,6 @@ class NamedView:
 def getRepeatText(data, tid, text):
     return text
 
-# Returns text, xml escaped
-def getRepeatTextEscape(data, tid, text):
-    return sax.saxutils.escape(text)
-
 # Returns text if function does not evaluate to true
 def getRepeatTextHide(data, tid, args):
     (functionKey,ifKey,parameter,invert, text) = args
@@ -718,19 +775,15 @@ def getRepeatEvalEscape(data, tid, replace):
 def getRepeatEval(data, tid, replace):
     return unicode(evalKeyC(replace,data,None, True))
 
-# Returns text of include
-def getRepeatInclude(data, tid, args):
-    f = open(resource.path('templates/%s'%args[0]),'r')
-    html = f.read()
-    f.close()
-    return html
-
 # Returns include iff function does not evaluate to true
 def getRepeatIncludeHide(data,tid,args):
-    (functionKey,ifKey,parameter,invert, name, self) = args
+    (functionKey,ifKey,parameter,invert, name) = args
     hide = evalKeyC(functionKey, data, None, True)(evalKeyC(ifKey, data, None, True), parameter)
     if (not invert and hide) or (invert and not hide):
-        return getRepeatInclude(data,tid,(name,self))
+        f = open(resource.path('templates/%s'%name),'r')
+        html = f.read()
+        f.close()
+        return html
     else:
         return ''
 
