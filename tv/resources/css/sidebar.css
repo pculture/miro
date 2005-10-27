@@ -6,8 +6,10 @@
 	position: fixed;
 	bottom: 8px;
 	width: 100%;
-	height: 32px; 
+	height: 36px; 
 	z-index: 100;
+	margin:0px 0px 0px -4px;	
+	padding-top: 20px;
 }
 
 /*.sidebar-download-selected {	
@@ -20,15 +22,25 @@
 
 .sidebar-download-inner {
 	height: 32px;
-	margin-right: 8px;
-	background: url(../images/download-icon-tab.png) 0px 4px no-repeat;
+	margin-right: 0px;
+	padding-bottom: 8px;
+	background: #e6edf7 url(../images/download-icon-tab.png) no-repeat 4px 4px;
 	border-top: 2px solid #b6bfce;
 }
 
 .sidebar-download-inner p {
 	float: left;
-	padding-left: 28px;
+	padding-left: 32px;
 	margin-top: 9px;
+}
+
+#sidebar-download-fade {
+	position: fixed;
+	bottom: 36px;
+	width: 100%;
+	height: 20px;	
+	z-index: 100;
+	background: url(../images/sidebar-downloadtab-fade.png) repeat-x left bottom;
 }
 
 /* CIRCLE ICONS
@@ -38,7 +50,7 @@
 	float: right;
 	display: inline;
 	margin: 4px 0px 0px 0px;
-	background: url(../images/circle-blue-left.png) top left no-repeat;
+	background: url(../images/circle-blue-left.png) left top no-repeat;
 }
 
 .circle-blue-number {
@@ -57,7 +69,7 @@
 	float: right;
 	display: inline;
 	margin: 4px 0px 0px 0px;
-	background: url(../images/circle-green-left.png) top left no-repeat;
+	background: url(../images/circle-green-left.png) left top no-repeat;
 }
 
 .circle-green-number {
@@ -76,7 +88,7 @@
 	float: right;
 	display: inline;
 	margin: 4px 0px 0px 0px;
-	background: url(../images/circle-white-left.png) top left no-repeat;
+	background: url(../images/circle-white-left.png) left top no-repeat;
 }
 
 .circle-white-number {
@@ -95,7 +107,7 @@
 	float: right;
 	display: inline;
 	margin: 4px 0px 0px 0px;
-	background: url(../images/circle-orange-left.png) top left no-repeat;
+	background: url(../images/circle-orange-left.png) left top no-repeat;
 }
 
 .circle-orange-number {
@@ -103,7 +115,7 @@
 	padding: 2px 0px 3px 0px;
 	color: #FFFFFF;
 	font-size: 11px;
-	background: url(../images/circle-orange-center.png) top left repeat-x;
+	background: url(../images/circle-orange-center.png) left top repeat-x;
 }
 
 .circle-orange-right {
