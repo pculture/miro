@@ -495,7 +495,8 @@ class TemplateDisplay(frontend.HTMLDisplay):
         self.controller = controller
         self.templateName = templateName
         self.templateData = data
-        (html, self.templateHandle) = template.fillTemplate(templateName, data, self)
+        (tch, self.templateHandle) = template.fillTemplate(templateName, data, self)
+        html = tch.getOutput()
 
         self.actionHandlers = [
             ModelActionHandler(self.controller.getBackendDelegate()),
