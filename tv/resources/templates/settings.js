@@ -11,30 +11,23 @@
     }
 
     function settingsFormSubmit() {
-         var expire = 'system';
-         var i = 0;
          var url = 'action:changeFeedSettings?';
-         url += 'feed='+document.forms['settings']['feed'].value;
-         if (document.forms['settings'].automatic.checked)
-             url += '&automatic=1';
+
+         url += 'feed=' + document.forms['settings']['feed'].value;         
+         url += '&getEverything=' + document.forms['settings']['autoDownloadGets'].selectedIndex;
+
+         if (document.forms['settings']['maxOutDownloads'].checked)
+         {
+             url += '&maxnew=' + document.forms['settings']['maxNew'].value;
+         }
          else
-             url += '&automatic=0';
-         for (i=0;i<document.forms['settings'].expire.length;i++)
-             {
-                 if (document.forms['settings'].expire[i].checked)
-                     {
-                         expire = document.forms['settings'].expire[i].value;
-                     }
-             }
-         url += '&expire='+expire;
-         if (document.forms['settings'].getEverything.checked)
-             url += '&getEverything=1';
-         else
-             url += '&getEverything=0';
-         url += '&maxnew='+document.forms['settings']['maxnew'].value;
-         url += '&fallbehind='+document.forms['settings']['fallbehind'].value;
-         url += '&expireDays='+document.forms['settings']['expireDays'].value;
-         url += '&expireHours='+document.forms['settings']['expireHours'].value;
+         {
+             url += '&maxnew=unlimited';
+         }
+
+         var selectedExpirationIndex = document.forms['settings']['expireAfter'].selectedIndex;
+         url += "&expire=" + document.forms['settings']['expireAfter'].options[selectedExpirationIndex].value;
+         
          eventURL(url);
     }
     -->

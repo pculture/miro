@@ -7,6 +7,11 @@ body {
 	-khtml-user-select: none;
 }
 
+.selectable {
+    /* This allows to enable selectability on a per-element basis */
+	-khtml-user-select: text;
+}
+
 .clearer {
 	clear: both;
 	height: 0px;

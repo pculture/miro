@@ -8,10 +8,14 @@
             SUPERCLASS = NSObject; 
         }, 
         {
-            ACTIONS = {preserveDiskSpace = id; setMinimumSpace = id; }; 
+            ACTIONS = {preserveDiskSpace = id; setExpirationDelay = id; setMinimumSpace = id; }; 
             CLASS = DiskSpacePrefsController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {minimumSpaceField = id; preserveSpaceCheckBox = id; }; 
+            OUTLETS = {
+                expirationDelayPopupButton = id; 
+                minimumSpaceField = id; 
+                preserveSpaceCheckBox = id; 
+            }; 
             SUPERCLASS = NSObject; 
         }, 
         {

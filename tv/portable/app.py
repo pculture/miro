@@ -627,9 +627,9 @@ class ModelActionHandler:
         obj = db.getObjectByID(int(feed))
         obj.setAutoDownloadable(automatic)
 
-    def changeFeedSettings(self, feed, maxnew, fallbehind, automatic, expireDays, expireHours, expire, getEverything="0"):
+    def changeFeedSettings(self, feed, getEverything, maxnew, expire):
         obj = db.getObjectByID(int(feed))
-        obj.saveSettings(automatic,maxnew,fallbehind,expire,expireDays,expireHours,getEverything)
+        obj.saveSettings(getEverything, maxnew, expire)
 
     def startDownload(self, item):
         obj = db.getObjectByID(int(item))

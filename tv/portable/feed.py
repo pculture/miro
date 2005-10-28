@@ -450,25 +450,32 @@ class FeedImpl:
 
     ##
     # Takes in parameters from the save settings page and saves them
-    def saveSettings(self,automatic,maxnew,fallBehind,expire,expireDays,expireHours,getEverything):
+    def saveSettings(self, getEverything, maxnew, expire):
         self.ufeed.beginRead()
         try:
-            self.autoDownloadable = (automatic == "1")
             self.getEverything = (getEverything == "1")
+
             if maxnew == "unlimited":
                 self.maxNew = -1
             else:
                 self.maxNew = int(maxnew)
-            if fallBehind == "unlimited":
-                self.fallBehind = -1
+
+            if expire == "never" or expire == "system":
+                self.expire = expire
+                self.expireTime = 0
             else:
-                self.fallBehind = int(fallBehind)
-            self.expire = expire
+                self.expire = "feed"
+                self.expireTime = timedelta(hours=int(expire))
+
             if self.expire == "never":
                 for item in self.items:
                     if item.getState() in ['finished','uploading','watched']:
                         item.setKeep(True)
-            self.expireTime = timedelta(days=int(expireDays),hours=int(expireHours))
+
+#            if fallBehind == "unlimited":
+#                self.fallBehind = -1
+#            else:
+#                self.fallBehind = int(fallBehind)
         finally:
             self.ufeed.endRead()
 

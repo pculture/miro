@@ -19,7 +19,7 @@ LIMIT_UPSTREAM              = Pref( key='limitUpstream',         default=True,  
 UPSTREAM_LIMIT_IN_KBS       = Pref( key='upstreamLimitInKBS',    default=4,     platformSpecific=False )
 PRESERVE_DISK_SPACE         = Pref( key='preserveDiskSpace',     default=False, platformSpecific=False )
 PRESERVE_X_GB_FREE          = Pref( key='preserveXGBFree',       default=1,     platformSpecific=False )
-EXPIRE_AFTER_X_DAYS         = Pref( key='expireAfterXDays',      default=7,     platformSpecific=False )
+EXPIRE_AFTER_X_DAYS         = Pref( key='expireAfterXDays',      default=6,     platformSpecific=False )
 DOWNLOADS_TARGET            = Pref( key='DownloadsTarget',       default=3,     platformSpecific=False )
 MAX_MANUAL_DOWNLOADS        = Pref( key='MaxManualDownloads',    default=10,    platformSpecific=False )
 CHANNEL_GUIDE_URL           = Pref( key='ChannelGuideURL',       default='https://channelguide.participatoryculture.org/',    platformSpecific=False )
