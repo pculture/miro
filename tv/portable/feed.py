@@ -480,6 +480,26 @@ class FeedImpl:
             self.ufeed.endRead()
 
     ##
+    # Return the 'system' expiration delay, in days (can be < 0.0)
+    def getDefaultExpiration(self):
+        return config.get(config.EXPIRE_AFTER_X_DAYS)
+
+    ##
+    # Returns the 'system' expiration delay as a formatted string
+    def getFormattedDefaultExpiration(self):
+        expiration = self.getDefaultExpiration()
+        formattedExpiration = ''
+        if expiration < 0.0:
+            formattedExpiration = '%d hours' % int(expiration * 24.0)
+        elif expiration == 1:
+            formattedExpiration = '%d day' % int(expiration)
+        elif expiration > 1 and expiration < 30:
+            formattedExpiration = '%d days' % int(expiration)
+        elif expiration >= 30:
+            formattedExpiration = '%d months' % int(expiration / 30)
+        return formattedExpiration
+
+    ##
     # Returns "feed," "system," or "never"
     def getExpirationType(self):
         self.ufeed.beginRead()
