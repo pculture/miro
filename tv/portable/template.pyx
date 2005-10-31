@@ -1,5 +1,6 @@
 # Import Python C functions
 cdef extern from "Python.h":
+
     cdef int PyList_GET_SIZE(object list)
     cdef int PyList_GET_ITEM(object list, int i)
     cdef void PyList_SET_ITEM(object PyList, int idx, object obj)
@@ -31,6 +32,12 @@ cdef extern from "Python.h":
     cdef int PyInstance_Check(object p)
     cdef int PyMethod_Check(object p)
     cdef int PyMethod_GET_FUNCTION(object m)
+
+    ctypedef unsigned short Py_UNICODE
+    cdef object PyUnicode_FromObject(object o)
+    cdef object PyUnicode_FromUnicode(Py_UNICODE *u, int size)
+    cdef int PyUnicode_GET_SIZE(object o)
+    Py_UNICODE* PyUnicode_AS_UNICODE(object o)
 
 # A faster equivalent to PyList[idx] = obj
 cdef int setListItem(object PyList, int idx, object obj) except -1:
@@ -465,7 +472,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             self.addRepeatText('</%s>'%name)
             self.endRepeatText()
             repeatId = generateId()
-            self.addText('<span id=%s/>'%sax.saxutils.quoteattr(repeatId))
+            self.addText('<span id=%s/>'%quoteattr(repeatId))
             self.handle.addView(repeatId, 'nextSibling', self.repeatView, self.repeatList, self.data, self.repeatName)
         elif self.inUpdateView and self.depth == self.repeatDepth:
             self.inUpdateView = False
@@ -473,7 +480,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             self.endRepeatText()
             
             repeatId = generateId()
-            self.addText('<span id=%s/>'%sax.saxutils.quoteattr(repeatId))
+            self.addText('<span id=%s/>'%quoteattr(repeatId))
             self.handle.addUpdate(repeatId, 'nextSibling', self.repeatView, self.repeatList, self.data, self.repeatName)
         elif self.inRepeatView or self.inUpdateView:
             self.addRepeatText('</%s>'%name)
@@ -505,7 +512,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         PyList_Append(self.repeatText, text)
 
     def addRepeatTextEscape(self, text):
-        PyList_Append(self.repeatText, sax.saxutils.escape(text))
+        PyList_Append(self.repeatText, escape(text))
 
     def addRepeatTextHide(self,functionKey,ifKey,parameter,invert, text):
         self.endRepeatText()
@@ -513,8 +520,10 @@ class TemplateContentHandler(sax.handler.ContentHandler):
 
     def addRepeatAttr(self, attr, value):
         if (attrPattern.match(value) or rawAttrPattern.match(value)):
+            self.addRepeatText(' %s='%attr)
             self.endRepeatText()
-            PyList_Append(self.repeatList,(attrFunc,(attr,value)))
+            
+            PyList_Append(self.repeatList,(attrFunc,value))
         else:
             self.repeatText.append(' %s=%s' % (attr,quoteAndFillAttr(value,self.data)))
 
@@ -559,7 +568,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         PyList_Append(self.outputText, text)
 
     def addTextEscape(self, text):
-        PyList_Append(self.outputText, sax.saxutils.escape(text))
+        PyList_Append(self.outputText, escape(text))
 
     def addHideIfEmpty(self, view, name, invert, attrs):
         self.endText()
@@ -571,8 +580,10 @@ class TemplateContentHandler(sax.handler.ContentHandler):
 
     def addAttr(self, attr, value):
         if (attrPattern.match(value) or rawAttrPattern.match(value)):
+            self.addText(' %s='%attr)
             self.endText()
-            PyList_Append(self.outputList,(attrFunc,(attr,value)))
+            
+            PyList_Append(self.outputList,(attrFunc,value))
         else:
             self.outputText.append(' %s=%s' % (attr,quoteAndFillAttr(value,self.data)))
 
@@ -643,14 +654,14 @@ class TrackedView:
     def initialFillIn(self):
         self.view.beginRead()
         try:
-            #print "Filling in %d items" % self.view.len()
-            #start = time.clock()
+            print "Filling in %d items" % self.view.len()
+            start = time.clock()
             for x in self.view:
                 self.addHTMLAtEnd(x)
             self.view.addChangeCallback(self.onChange)
             self.view.addAddCallback(self.onAdd)
             self.view.addRemoveCallback(self.onRemove)
-            #print "done (%f)" % (time.clock()-start)
+            print "done (%f)" % (time.clock()-start)
         finally:
             self.view.endRead()
 
@@ -858,15 +869,15 @@ cdef object getRepeatTextHide(object data, object tid, object args):
 
 # Arg is a tuple of the name of the argument and it's value
 cdef object getRepeatAttr(object data, object tid, object args):
-    return " %s=%s" % (args[0],quoteAndFillAttr(args[1],data))
+    return quoteAndFillAttr(args,data)
 
 # Adds an id attribute to a tag and closes it
 cdef object getRepeatAddIdAndClose(object data, object tid, object args):
-    return ' id=%s>'%sax.saxutils.quoteattr(tid)
+    return ' id=%s>'%quoteattr(tid)
 
 # Evaluates key with data
 cdef object getRepeatEvalEscape(object data, object tid, object replace):
-    return sax.saxutils.escape(unicode(evalKeyC(replace,data,None, True)))
+    return escape(unicode(evalKeyC(replace,data,None, True)))
 
 # Evaluates key with data
 cdef object getRepeatEval(object data, object tid, object replace):
@@ -895,7 +906,7 @@ cdef object getHideIfEmpty(object data, object tid, object args):
         if not key in ['t:hideIfViewEmpty','t:hideIfViewNotEmpty','style']:
             PyList_Append(output, ' %s=%s'%(key,quoteAndFillAttr(attrs[key],data)))
     PyList_Append(output,' id=')
-    PyList_Append(output,sax.saxutils.quoteattr(nodeId))
+    PyList_Append(output,quoteattr(nodeId))
     if hide:
         PyList_Append(output,' style="display:none">')
     else:
@@ -905,7 +916,7 @@ cdef object getHideIfEmpty(object data, object tid, object args):
         
 # Returns a quoted, filled version of attribute text
 def quoteAndFillAttr(value,data):
-    return sax.saxutils.quoteattr(fillAttr(value,data))
+    return quoteattr(fillAttr(value,data))
 
 # Returns a filled version of attribute text
 # Important: because we expand resource: URLs here, instead of defining a
@@ -913,20 +924,19 @@ def quoteAndFillAttr(value,data):
 # <link .../> rather than <style> @import ... </style> if they are resource:
 # URLs.
 def fillAttr(value,data):
-    while True:
-        match = attrPattern.match(value)
-        if not match:
-            break
-        value = ''.join((match.group(1), urlencode(unicode(evalKeyC(match.group(2), data, None, True))), match.group(3)))
-    while True:
-        match = rawAttrPattern.match(value)
-        if not match:
-            break
-        value = ''.join((match.group(1), unicode(evalKeyC(match.group(2), data, None, True)), match.group(3)))
-    match = resourcePattern.match(value)
+    match = attrPattern.match(value)
     if match:
-        value = resource.url(match.group(1))
-    return value
+        return ''.join((match.group(1), urlencode(str(evalKeyC(match.group(2), data, None, True))), match.group(3)))
+    else:
+        match = rawAttrPattern.match(value)
+        if match:
+            return ''.join((match.group(1), str(evalKeyC(match.group(2), data, None, True)), match.group(3)))
+        else:
+            match = resourcePattern.match(value)
+            if match:
+                return resource.url(match.group(1))
+            else:
+                return value
 
 # View mapping function used to assign ID attributes to records so
 # that we can find them in the page after we generate them if we need
@@ -1141,6 +1151,107 @@ def quoteJS(x):
     x = re.compile("\n").  sub("\\\\n", x) # newline -> \n
     x = re.compile("\r").  sub("\\\\r", x) #      CR -> \r
     return x
+
+cdef object escape(object orig):
+    cdef Py_UNICODE *newData
+    cdef Py_UNICODE *oldData
+    cdef Py_UNICODE cur
+    cdef object newString
+    cdef unsigned int origLen, newLen, count, pos
+    orig = PyUnicode_FromObject(orig)
+    origLen = PyUnicode_GET_SIZE(orig)
+    oldData = PyUnicode_AS_UNICODE(orig)
+    newLen = 0
+    for count from 0 <= count < origLen:
+        cur = oldData[count]
+        if   (<unsigned int>cur) == 60: # <
+            newLen = newLen + 4
+        elif (<unsigned int>cur) == 62: # >
+            newLen = newLen + 4
+        elif (<unsigned int>cur) == 38: # &
+            newLen = newLen + 5
+        else:
+            newLen = newLen + 1
+    newString = PyUnicode_FromUnicode(NULL, newLen)
+    newData = PyUnicode_AS_UNICODE(newString)
+    pos = 0
+    for count from 0 <= count < origLen:
+        cur = oldData[count]
+        if   (<unsigned int>cur) == 60: # <
+            newData[pos] = 38
+            pos = pos + 1
+            newData[pos] = 108
+            pos = pos + 1
+            newData[pos] = 116
+            pos = pos + 1
+            newData[pos] = 59
+            pos = pos + 1
+        elif (<unsigned int>cur) == 62: # >
+            newData[pos] = 38
+            pos = pos + 1
+            newData[pos] = 103
+            pos = pos + 1
+            newData[pos] = 116
+            pos = pos + 1
+            newData[pos] = 59
+            pos = pos + 1
+        elif (<unsigned int>cur) == 38: # &
+            newData[pos] = 38
+            pos = pos + 1
+            newData[pos] = 97
+            pos = pos + 1
+            newData[pos] = 109
+            pos = pos + 1
+            newData[pos] = 112
+            pos = pos + 1
+            newData[pos] = 59
+            pos = pos + 1
+        else:
+            newData[pos] = cur
+            pos = pos + 1
+    return newString
+
+
+cdef object quoteattr(object orig):
+    cdef Py_UNICODE *newData
+    cdef Py_UNICODE *oldData
+    cdef Py_UNICODE cur
+    cdef object newString
+    cdef unsigned int origLen, newLen, count, pos
+    orig = PyUnicode_FromObject(orig)
+    origLen = PyUnicode_GET_SIZE(orig)
+    oldData = PyUnicode_AS_UNICODE(orig)
+    newLen = 2
+    for count from 0 <= count < origLen:
+        cur = oldData[count]
+        if   (<unsigned int>cur) == 34: # "
+            newLen = newLen + 6
+        else:
+            newLen = newLen + 1
+    newString = PyUnicode_FromUnicode(NULL, newLen)
+    newData = PyUnicode_AS_UNICODE(newString)
+    newData[0] = 34
+    pos = 1
+    for count from 0 <= count < origLen:
+        cur = oldData[count]
+        if   (<unsigned int>cur) == 34: # <
+            newData[pos] = 38
+            pos = pos + 1
+            newData[pos] = 113
+            pos = pos + 1
+            newData[pos] = 117
+            pos = pos + 1
+            newData[pos] = 111
+            pos = pos + 1
+            newData[pos] = 116
+            pos = pos + 1
+            newData[pos] = 59
+            pos = pos + 1
+        else:
+            newData[pos] = cur
+            pos = pos + 1
+    newData[pos] = 34
+    return newString
 
 # Generate an arbitrary string to use as an ID attribute.
 def generateId():
