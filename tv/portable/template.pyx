@@ -679,14 +679,14 @@ class TrackedView:
     def initialFillIn(self):
         self.view.beginRead()
         try:
-            print "Filling in %d items" % self.view.len()
-            start = time.clock()
+            #print "Filling in %d items" % self.view.len()
+            #start = time.clock()
             for x in self.view:
                 self.addHTMLAtEnd(x)
             self.view.addChangeCallback(self.onChange)
             self.view.addAddCallback(self.onAdd)
             self.view.addRemoveCallback(self.onRemove)
-            print "done (%f)" % (time.clock()-start)
+            #print "done (%f)" % (time.clock()-start)
         finally:
             self.view.endRead()
 
