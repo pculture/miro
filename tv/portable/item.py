@@ -310,16 +310,13 @@ class Item(DDBObject):
     ##
     # returns the title of the item
     def getTitle(self):
-        self.beginRead()
         try:
-            ret = self.entry.title
+            return self.entry.title
         except:
             try:
-                ret = self.entry.enclosures[0]["url"]
+                return self.entry.enclosures[0]["url"]
             except:
-                ret = ""
-        self.endRead()
-        return ret
+                return ""
 
     ##
     # Returns valid XHTML containing a description of the video
@@ -420,15 +417,13 @@ class Item(DDBObject):
     # Returns the total size of all enclosures in bytes
     def getEnclosuresSize(self):
         size = 0
-        self.beginRead()
         try:
             if self.entry.has_key('enclosures'):
                 enclosures = self.entry['enclosures']
                 for enclosure in enclosures:
-                    if enclosure.has_key('length') and len(enclosure['length']) > 0:
-                        size += int(enclosure['length'])
-        finally:
-            self.endRead()
+                    size += int(enclosure['length'])
+        except:
+            pass
         return self.sizeFormattedForDisplay(size)
 
     ##
@@ -574,20 +569,20 @@ class Item(DDBObject):
     ##
     # returns the date this video was released or when it was published
     def getReleaseDate(self):
-        if hasattr(self,'releaseDate'):
-            return self.releaseDate            
-        self.beginRead()
         try:
+            return self.releaseDate
+        except:
             try:
                 self.releaseDate = datetime(*self.entry.enclosures[0].modified_parsed[0:7]).strftime("%b %d %Y")
+                return self.releaseDate
             except:
                 try:
                     self.releaseDate = datetime(*self.entry.modified_parsed[0:7]).strftime("%b %d %Y")
+                    return self.releaseDate
                 except:
                     self.releaseDate = ""
-        finally:
-            self.endRead()
-        return self.releaseDate
+                    return self.releaseDate
+            
 
     ##
     # returns the date this video was released or when it was published
@@ -629,29 +624,22 @@ class Item(DDBObject):
     KNOWN_MIME_TYPES = ('audio', 'video')
     KNOWN_MIME_SUBTYPES = ('mov', 'wmv', 'mp4', 'mp3', 'mpg', 'mpeg', 'avi')
     def getFormat(self, emptyForUnknown=True):
-        format = "n/a"
-        if emptyForUnknown:
-            format = ""
-        self.beginRead()
         try:
-            if self.entry.has_key('enclosures'):
-                enclosures = self.entry['enclosures']
-                if len(enclosures) > 0:
-                    enclosure = enclosures[0]
-                    if enclosure.has_key('type') and len(enclosure['type']) > 0:
-                        type, subtype = enclosure['type'].split('/')
-                        if type.lower() in self.KNOWN_MIME_TYPES and subtype.lower() in self.KNOWN_MIME_SUBTYPES:
-                            format = subtype.upper()
-                        elif enclosure.has_key('url'):
-                            try:
-                                extension = enclosure['url'].split('.').pop().lower()
-                                if extension in self.KNOWN_MIME_SUBTYPES:
-                                    format = extension.upper()
-                            except:
-                                pass
-        finally:
-            self.endRead()
-        return format
+            enclosure = self.entry['enclosures'][0]
+            if enclosure.has_key('type') and len(enclosure['type']) > 0:
+                type, subtype = enclosure['type'].split('/')
+                if type.lower() in self.KNOWN_MIME_TYPES:
+                    return subtype.upper()
+            else:
+                extension = enclosure['url'].split('.')[-1].lower()
+                if extension in self.KNOWN_MIME_SUBTYPES:
+                    return extension.upper()
+        except:
+            pass
+        if emptyForUnknown:
+            return ""
+        else:
+            return "n/a"
 
     ##
     # return keyword tags associated with the video separated by commas
