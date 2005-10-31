@@ -197,6 +197,7 @@ def grabURL(url, type="GET",start = 0, etag=None,modified=None):
         download.close()
     #print "closed request"
 
+    info['filename'] = 'unknown'
     try:
         disposition = info['content-disposition']
         info['filename'] = re.compile("^.*filename\s*=\s*\"(.*?)\"$").search(disposition).expand("\\1")
@@ -205,8 +206,10 @@ def grabURL(url, type="GET",start = 0, etag=None,modified=None):
     except KeyError:
         try:
             info['filename'] = re.compile("^.*?([^/]+)/?$").search(path).expand("\\1")
-        except AttributeError:
-            info['filename'] = 'unknown'
+        except:
+            pass
+    except:
+        pass
 
     info['redirected-url'] = redirURL
     info['updated-url'] = url
