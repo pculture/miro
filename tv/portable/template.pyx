@@ -54,16 +54,18 @@ cdef enum funcPointers:
     evalFunc = 5
     includeHideFunc = 6
     hideIfEmptyFunc = 7
-    
-cdef CFuncPointer funcTable[8]
+    rawAttrFunc = 8
+
+cdef CFuncPointer funcTable[9]
 funcTable[textFunc] = getRepeatText
 funcTable[textHideFunc] = getRepeatTextHide
-funcTable[attrFunc] = getRepeatAttr
+funcTable[attrFunc] = getQuoteAttr
 funcTable[addIDFunc] = getRepeatAddIdAndClose
 funcTable[evalEscapeFunc] = getRepeatEvalEscape
 funcTable[evalFunc] = getRepeatEval
 funcTable[includeHideFunc] = getRepeatIncludeHide
 funcTable[hideIfEmptyFunc] = getHideIfEmpty
+funcTable[rawAttrFunc] = getRawAttr
 
 from xml.dom.minidom import parse, parseString
 from xml import sax
@@ -472,7 +474,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             self.addRepeatText('</%s>'%name)
             self.endRepeatText()
             repeatId = generateId()
-            self.addText('<span id=%s/>'%quoteattr(repeatId))
+            self.addText('<span id="%s"/>'%quoteattr(repeatId))
             self.handle.addView(repeatId, 'nextSibling', self.repeatView, self.repeatList, self.data, self.repeatName)
         elif self.inUpdateView and self.depth == self.repeatDepth:
             self.inUpdateView = False
@@ -480,7 +482,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             self.endRepeatText()
             
             repeatId = generateId()
-            self.addText('<span id=%s/>'%quoteattr(repeatId))
+            self.addText('<span id="%s"/>'%quoteattr(repeatId))
             self.handle.addUpdate(repeatId, 'nextSibling', self.repeatView, self.repeatList, self.data, self.repeatName)
         elif self.inRepeatView or self.inUpdateView:
             self.addRepeatText('</%s>'%name)
@@ -519,13 +521,23 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         PyList_Append(self.repeatList,(textHideFunc,(functionKey,ifKey,parameter,invert,text)))
 
     def addRepeatAttr(self, attr, value):
-        if (attrPattern.match(value) or rawAttrPattern.match(value)):
-            self.addRepeatText(' %s='%attr)
+        match = attrPattern.match(value)
+        if match:
+            self.addRepeatText(' %s="%s'%(attr, quoteattr(match.group(1))))
             self.endRepeatText()
             
-            PyList_Append(self.repeatList,(attrFunc,value))
+            PyList_Append(self.repeatList,(attrFunc,match.group(2)))
+            self.addRepeatText('%s"' % match.group(3))
         else:
-            self.repeatText.append(' %s=%s' % (attr,quoteAndFillAttr(value,self.data)))
+            match = rawAttrPattern.match(value)
+            if match:
+                self.addRepeatText(' %s="%s'%(attr, quoteattr(match.group(1))))
+                self.endRepeatText()
+                
+                PyList_Append(self.repeatList,(rawAttrFunc,match.group(2)))
+                self.addRepeatText('%s"' % match.group(3))
+            else:
+                PyList_Append(self.repeatText, ' %s=%s' % (attr,quoteAndFillAttr(value,self.data)))
 
     def addRepeatInclude(self, template):
         f = open(resource.path('templates/%s'%template),'r')
@@ -579,13 +591,23 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         PyList_Append(self.outputList,(textHideFunc,(functionKey,ifKey,parameter,invert,text)))
 
     def addAttr(self, attr, value):
-        if (attrPattern.match(value) or rawAttrPattern.match(value)):
-            self.addText(' %s='%attr)
+        match = attrPattern.match(value)
+        if match:
+            self.addText(' %s="%s'%(attr, quoteattr(match.group(1))))
             self.endText()
             
-            PyList_Append(self.outputList,(attrFunc,value))
+            PyList_Append(self.outputList,(attrFunc,match.group(2)))
+            self.addText('%s"' % match.group(3))
         else:
-            self.outputText.append(' %s=%s' % (attr,quoteAndFillAttr(value,self.data)))
+            match = rawAttrPattern.match(value)
+            if match:
+                self.addText(' %s="%s'%(attr, quoteattr(match.group(1))))
+                self.endText()
+                
+                PyList_Append(self.outputList,(rawAttrFunc,match.group(2)))
+                self.addText('%s"' % match.group(3))
+            else:
+                PyList_Append(self.outputText, ' %s=%s' % (attr,quoteAndFillAttr(value,self.data)))
 
     def addInclude(self, template):
         f = open(resource.path('templates/%s'%template),'r')
@@ -867,13 +889,15 @@ cdef object getRepeatTextHide(object data, object tid, object args):
     else:
         return ''
 
-# Arg is a tuple of the name of the argument and it's value
-cdef object getRepeatAttr(object data, object tid, object args):
-    return quoteAndFillAttr(args,data)
+cdef object getQuoteAttr(object data, object tid, object value):
+    return quoteattr(urlencode(unicode(evalKeyC(value, data, None, True))))
+
+cdef object getRawAttr(object data, object tid, object value):
+    return quoteattr(unicode(evalKeyC(value, data, None, True)))
 
 # Adds an id attribute to a tag and closes it
 cdef object getRepeatAddIdAndClose(object data, object tid, object args):
-    return ' id=%s>'%quoteattr(tid)
+    return ' id="%s">'%quoteattr(tid)
 
 # Evaluates key with data
 cdef object getRepeatEvalEscape(object data, object tid, object replace):
@@ -884,7 +908,7 @@ cdef object getRepeatEval(object data, object tid, object replace):
     return unicode(evalKeyC(replace,data,None, True))
 
 # Returns include iff function does not evaluate to true
-cdef object getRepeatIncludeHide(object data, objecttid, objectargs):
+cdef object getRepeatIncludeHide(object data, object tid, object args):
     (functionKey,ifKey,parameter,invert, name) = args
     hide = evalKeyC(functionKey, data, None, True)(evalKeyC(ifKey, data, None, True), parameter)
     if (not invert and hide) or (invert and not hide):
@@ -905,8 +929,9 @@ cdef object getHideIfEmpty(object data, object tid, object args):
     for key in attrs.keys():
         if not key in ['t:hideIfViewEmpty','t:hideIfViewNotEmpty','style']:
             PyList_Append(output, ' %s=%s'%(key,quoteAndFillAttr(attrs[key],data)))
-    PyList_Append(output,' id=')
+    PyList_Append(output,' id="')
     PyList_Append(output,quoteattr(nodeId))
+    PyList_Append(output,'"')
     if hide:
         PyList_Append(output,' style="display:none">')
     else:
@@ -916,7 +941,7 @@ cdef object getHideIfEmpty(object data, object tid, object args):
         
 # Returns a quoted, filled version of attribute text
 def quoteAndFillAttr(value,data):
-    return quoteattr(fillAttr(value,data))
+    return ''.join(('"',quoteattr(fillAttr(value,data)),'"'))
 
 # Returns a filled version of attribute text
 # Important: because we expand resource: URLs here, instead of defining a
@@ -926,11 +951,11 @@ def quoteAndFillAttr(value,data):
 def fillAttr(value,data):
     match = attrPattern.match(value)
     if match:
-        return ''.join((match.group(1), urlencode(str(evalKeyC(match.group(2), data, None, True))), match.group(3)))
+        return ''.join((match.group(1), urlencode(unicode(evalKeyC(match.group(2), data, None, True))), match.group(3)))
     else:
         match = rawAttrPattern.match(value)
         if match:
-            return ''.join((match.group(1), str(evalKeyC(match.group(2), data, None, True)), match.group(3)))
+            return ''.join((match.group(1), unicode(evalKeyC(match.group(2), data, None, True)), match.group(3)))
         else:
             match = resourcePattern.match(value)
             if match:
@@ -1221,20 +1246,21 @@ cdef object quoteattr(object orig):
     orig = PyUnicode_FromObject(orig)
     origLen = PyUnicode_GET_SIZE(orig)
     oldData = PyUnicode_AS_UNICODE(orig)
-    newLen = 2
+    newLen = 0
     for count from 0 <= count < origLen:
         cur = oldData[count]
         if   (<unsigned int>cur) == 34: # "
             newLen = newLen + 6
         else:
             newLen = newLen + 1
+    if newLen == origLen:
+        return orig
     newString = PyUnicode_FromUnicode(NULL, newLen)
     newData = PyUnicode_AS_UNICODE(newString)
-    newData[0] = 34
-    pos = 1
+    pos = 0
     for count from 0 <= count < origLen:
         cur = oldData[count]
-        if   (<unsigned int>cur) == 34: # <
+        if   (<unsigned int>cur) == 34: # "
             newData[pos] = 38
             pos = pos + 1
             newData[pos] = 113
@@ -1250,7 +1276,6 @@ cdef object quoteattr(object orig):
         else:
             newData[pos] = cur
             pos = pos + 1
-    newData[pos] = 34
     return newString
 
 # Generate an arbitrary string to use as an ID attribute.
