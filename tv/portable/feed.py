@@ -576,18 +576,18 @@ class FeedImpl:
     ##
     # Returns the title of the feed
     def getTitle(self):
-        self.ufeed.beginRead()
-        ret = self.title
-        self.ufeed.endRead()
-        return ret
+        try:
+            return self.title
+        except:
+            return ""
 
     ##
     # Returns the URL of the feed
     def getURL(self):
-        self.ufeed.beginRead()
-        ret = self.url
-        self.ufeed.endRead()
-        return ret
+        try:
+            return self.url
+        except:
+            return ""
 
     ##
     # Returns the description of the feed
