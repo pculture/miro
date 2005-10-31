@@ -203,13 +203,11 @@ def grabURL(url, type="GET",start = 0, etag=None,modified=None):
         info['filename'] = re.compile("^.*filename\s*=\s*\"(.*?)\"$").search(disposition).expand("\\1")
         info['filename'].replace ("/","")
         info['filename'].replace ("\\","")
-    except KeyError:
+    except:
         try:
             info['filename'] = re.compile("^.*?([^/]+)/?$").search(path).expand("\\1")
         except:
             pass
-    except:
-        pass
 
     info['redirected-url'] = redirURL
     info['updated-url'] = url
