@@ -35,9 +35,12 @@ cdef extern from "Python.h":
 
     ctypedef unsigned short Py_UNICODE
     cdef object PyUnicode_FromObject(object o)
+    cdef object PyUnicode_Format(object o, object p)
     cdef object PyUnicode_FromUnicode(Py_UNICODE *u, int size)
     cdef int PyUnicode_GET_SIZE(object o)
     Py_UNICODE* PyUnicode_AS_UNICODE(object o)
+
+    cdef int PyInt_Check(object o)
 
 # A faster equivalent to PyList[idx] = obj
 cdef int setListItem(object PyList, int idx, object obj) except -1:
@@ -890,10 +893,10 @@ cdef object getRepeatTextHide(object data, object tid, object args):
         return ''
 
 cdef object getQuoteAttr(object data, object tid, object value):
-    return quoteattr(urlencode(unicode(evalKeyC(value, data, None, True))))
+    return quoteattr(urlencode(toUni(evalKeyC(value, data, None, True))))
 
 cdef object getRawAttr(object data, object tid, object value):
-    return quoteattr(unicode(evalKeyC(value, data, None, True)))
+    return quoteattr(toUni(evalKeyC(value, data, None, True)))
 
 # Adds an id attribute to a tag and closes it
 cdef object getRepeatAddIdAndClose(object data, object tid, object args):
@@ -901,11 +904,11 @@ cdef object getRepeatAddIdAndClose(object data, object tid, object args):
 
 # Evaluates key with data
 cdef object getRepeatEvalEscape(object data, object tid, object replace):
-    return escape(unicode(evalKeyC(replace,data,None, True)))
+    return escape(evalKeyC(replace,data,None, True))
 
 # Evaluates key with data
 cdef object getRepeatEval(object data, object tid, object replace):
-    return unicode(evalKeyC(replace,data,None, True))
+    return toUni(evalKeyC(replace,data,None, True))
 
 # Returns include iff function does not evaluate to true
 cdef object getRepeatIncludeHide(object data, object tid, object args):
@@ -948,14 +951,14 @@ def quoteAndFillAttr(value,data):
 # URL handler (which is hard to do in IE), you must link to stylesheets via
 # <link .../> rather than <style> @import ... </style> if they are resource:
 # URLs.
-def fillAttr(value,data):
+cdef object fillAttr(object value,object data):
     match = attrPattern.match(value)
     if match:
-        return ''.join((match.group(1), urlencode(unicode(evalKeyC(match.group(2), data, None, True))), match.group(3)))
+        return ''.join((match.group(1), urlencode(toUni(evalKeyC(match.group(2), data, None, True))), match.group(3)))
     else:
         match = rawAttrPattern.match(value)
         if match:
-            return ''.join((match.group(1), unicode(evalKeyC(match.group(2), data, None, True)), match.group(3)))
+            return ''.join((match.group(1), toUni(evalKeyC(match.group(2), data, None, True)), match.group(3)))
         else:
             match = resourcePattern.match(value)
             if match:
@@ -1177,13 +1180,19 @@ def quoteJS(x):
     x = re.compile("\r").  sub("\\\\r", x) #      CR -> \r
     return x
 
+cdef object toUni(object orig):
+    if PyInt_Check(orig):
+        return PyUnicode_Format("%d",(orig,))
+    else:
+        return PyUnicode_FromObject(orig)
+
 cdef object escape(object orig):
     cdef Py_UNICODE *newData
     cdef Py_UNICODE *oldData
     cdef Py_UNICODE cur
     cdef object newString
     cdef unsigned int origLen, newLen, count, pos
-    orig = PyUnicode_FromObject(orig)
+    orig = toUni(orig)
     origLen = PyUnicode_GET_SIZE(orig)
     oldData = PyUnicode_AS_UNICODE(orig)
     newLen = 0
@@ -1243,7 +1252,7 @@ cdef object quoteattr(object orig):
     cdef Py_UNICODE cur
     cdef object newString
     cdef unsigned int origLen, newLen, count, pos
-    orig = PyUnicode_FromObject(orig)
+    orig = toUni(orig)
     origLen = PyUnicode_GET_SIZE(orig)
     oldData = PyUnicode_AS_UNICODE(orig)
     newLen = 0
