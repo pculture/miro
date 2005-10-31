@@ -44,7 +44,7 @@
         <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-unwatched');">#&nbsp;</a></div>
         <div id="main-channelbar" class="main-channelbar">
         	<h1>Unwatched</h1>
-        	<h2 t:updateForView="unwatched-items">(<span t:replace="this len" />)</h2>
+        	<h2 t:updateForView="unwatched-items"><span t:replace="this len" /></h2>
         </div>
 
         <div id="main-unwatched">
@@ -60,7 +60,7 @@
         <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-expiring');">#&nbsp;</a></div>
         <div id="main-channelbar" class="main-channelbar">
         	<h1>Expiring</h1>
-        	<h2 t:updateForView="expiring-items">(<span t:replace="this len" />)</h2>
+        	<h2 t:updateForView="expiring-items"><span t:replace="this len" /></h2>
         </div>
 
         <div id="main-expiring">
