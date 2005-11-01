@@ -76,9 +76,9 @@
 		
 			<!-- FILE INFO -->
 			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getDuration" />
+			<p class="main-video-details-left" t:replace="this getFormat" />
 			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
-			<p class="main-video-details-left" t:replace="this getDuration" />
-			<p class="main-video-details-right" t:replace="this getFormat" />
 			<!-- / FILE INFO -->
 			
 		</div>
@@ -94,9 +94,9 @@
 		
 			<!-- FILE INFO -->
 			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getDuration" />
+			<p class="main-video-details-left" t:replace="this getFormat" />
 			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
-			<p class="main-video-details-left" t:replace="this getDuration" />
-			<p class="main-video-details-right" t:replace="this getFormat" />
 			<!-- / FILE INFO -->
 			
 		</div>
@@ -113,9 +113,9 @@
 		
 			<!-- FILE INFO -->
 			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getDuration" />
+			<p class="main-video-details-left" t:replace="this getFormat" />
 			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
-			<p class="main-video-details-left" t:replace="this getDuration" />
-			<p class="main-video-details-right" t:replace="this getFormat" />
 			<!-- / FILE INFO -->
 			
 			<!-- DOWNLOAD PROGRESS -->
@@ -146,9 +146,9 @@
 		
 			<!-- FILE INFO -->
 			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getDuration" />
+			<p class="main-video-details-left" t:replace="this getFormat" />
 			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
-			<p class="main-video-details-left" t:replace="this getDuration" />
-			<p class="main-video-details-right" t:replace="this getFormat" />
 			<!-- / FILE INFO -->
 			
 			<!-- MESSAGE -->
@@ -168,9 +168,9 @@
 		
 			<!-- FILE INFO -->
 			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getDuration" />
+			<p class="main-video-details-left" t:replace="this getFormat" />
 			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
-			<p class="main-video-details-left" t:replace="this getDuration" />
-			<p class="main-video-details-right" t:replace="this getFormat" />
 			<!-- / FILE INFO -->
 			
 			<!-- MESSAGE -->
@@ -190,9 +190,9 @@
 		
 			<!-- FILE INFO -->
 			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getDuration" />
+			<p class="main-video-details-left" t:replace="this getFormat" />
 			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
-			<p class="main-video-details-left" t:replace="this getDuration" />
-			<p class="main-video-details-right" t:replace="this getFormat" />
 			<!-- / FILE INFO -->		
 			
 			<!-- UNWATCHED -->
@@ -230,9 +230,9 @@
 		
 			<!-- FILE INFO -->
 			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getDuration" />
+			<p class="main-video-details-left" t:replace="this getFormat" />
 			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
-			<p class="main-video-details-left" t:replace="this getDuration" />
-			<p class="main-video-details-right" t:replace="this getFormat" />
 			<!-- / FILE INFO -->			
 			
 			<!-- EXPIRY -->
@@ -270,9 +270,9 @@
 		
 			<!-- FILE INFO -->
 			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getDuration" />
+			<p class="main-video-details-left" t:replace="this getFormat" />
 			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
-			<p class="main-video-details-left" t:replace="this getDuration" />
-			<p class="main-video-details-right" t:replace="this getFormat" />
 			<!-- / FILE INFO -->			
 			
 			<!-- FILE TASKS -->
@@ -299,9 +299,9 @@
 		
 			<!-- FILE INFO -->
 			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getDuration" />
+			<p class="main-video-details-left" t:replace="this getFormat" />
 			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
-			<p class="main-video-details-left" t:replace="this getDuration" />
-			<p class="main-video-details-right" t:replace="this getFormat" />
 			<!-- / FILE INFO -->
 			
 			<!-- UNWATCHED -->
@@ -339,9 +339,9 @@
 		
 			<!-- FILE INFO -->
 			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getDuration" />
+			<p class="main-video-details-left" t:replace="this getFormat" />
 			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
-			<p class="main-video-details-left" t:replace="this getDuration" />
-			<p class="main-video-details-right" t:replace="this getFormat" />
 			<!-- / FILE INFO -->
 			
 			<!-- ERROR -->
