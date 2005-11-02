@@ -872,7 +872,14 @@ class FileItem(Item):
         self.filename = filename
 
     def getState(self):
-        return "finished"
+        return "saved"
+
+    def expire(self):
+        try:
+            os.remove(self.filename)
+        except:
+            pass
+        self.remove()
 
     def getDownloadedTime(self):
         self.beginRead()

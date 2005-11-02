@@ -1237,10 +1237,17 @@ globalFilterList = {
 
 globalViewList = {}  # filled in below with indexed view
 
+# Returns the class of the object, aggregating all Item subtypes under Item
+def getClassForFilter(x):
+    if isinstance(x,item.Item):
+        return item.Item
+    else:
+        return x.__class__
+
 globalIndexList = {
     'itemsByFeed': lambda x:str(x.getFeed().getID()),
     'feedsByURL': lambda x:str(x.getURL()),
-    'class': lambda x:x.__class__
+    'class': getClassForFilter
 }
 
 db.createIndex(globalIndexList['class'])

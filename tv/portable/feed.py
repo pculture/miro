@@ -1276,6 +1276,18 @@ class DirectoryFeedImpl(FeedImpl):
         FeedImpl.__init__(self,url = "dtv:directoryfeed",ufeed=ufeed,title = "Feedless Videos",visible = False)
 
         self.setUpdateFrequency(5)
+        self.scheduleUpdateEvents(0)
+
+    ##
+    # Directory Items shouldn't automatically expire
+    def expireItems(self):
+        pass
+
+    def setUpdateFrequency(self, frequency):
+        newFreq = frequency*60
+        if newFreq != self.updateFreq:
+                self.updateFreq = newFreq
+                self.scheduleUpdateEvents(-1)
 
     ##
     # Returns a list of all of the files in a given directory
@@ -1314,10 +1326,10 @@ class DirectoryFeedImpl(FeedImpl):
         existingFiles = self.getFileList(config.get(config.MOVIES_DIRECTORY))
         #Files known about by real feeds
         for item in app.globalViewList['items']:
-            if not item.feed is self:
+            if not item.feed is self.ufeed:
                 knownFiles[:0] = item.getFilenames()
         knownFiles = map(os.path.normcase,knownFiles)
-  
+
         #Remove items that are in feeds, but we have in our list
         for x in range(0,len(self.items)):
             try:
