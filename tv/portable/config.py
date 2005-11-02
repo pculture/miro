@@ -1,8 +1,8 @@
-from threading import Lock
+from threading import RLock
 import platformcfg
 
 __data = None
-__lock = Lock()
+__lock = RLock()
 __callbacks = set()
 
 class Pref:
