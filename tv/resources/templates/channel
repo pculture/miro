@@ -48,7 +48,7 @@
     </t:dynamicviews>
 </head>
 
-<body onload="toggleLayer('main-newlyavailable'); toggleLayer('main-unwatched'); toggleLayer('main-expiring'); toggleLayer('main-saved'); toggleLayer('show-more-videos-label'); toggleLayer('no-new-videos-label');">
+<body onload="toggleLayer('main-newlyavailable'); toggleLayer('main-unwatched'); toggleLayer('main-expiring'); toggleLayer('main-saved'); toggleLayer('show-more-videos-label');">
     
 <!-- TITLE BAR ************************************************************ -->
 <div id="main-titlebar">
@@ -97,7 +97,7 @@
         </span>
         <span t:hideIfViewEmpty="new-items">
             <span id="show-more-videos-label" class="main-content">								
-								<a href="javascript:toggleLayer('main-newlyavailable-seen');toggleLayer('show-more-videos-label');toggleLayer('no-new-videos-label');" style="color:#333333; text-decoration:none;" class="main-notification-nonew">
+								<a href="javascript:toggleLayer('main-newlyavailable-seen');toggleLayer('show-more-videos-label');" style="color:#333333; text-decoration:none;" class="main-notification-nonew">
 										<div class="main-notification">See All <span t:updateForView="new-items"><span t:replace="this len" /></span> Videos &gt;&gt;</div>
 										<div class="main-notification-right">&nbsp;</div>
 										<br clear="left" />
