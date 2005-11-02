@@ -12,6 +12,9 @@
     <script type="text/javascript" src="resource:templates/shide.js" />
 
     <t:dynamicviews>
+        <t:view name="all-items" key="global view items">
+            <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
+        </t:view>
         <t:view name="new-unseen-items" key="global view items">
             <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
             <t:filter functionkey="global filter unviewedItems" parameter="@@@feed getFeedID@@@" />
@@ -82,7 +85,7 @@
     <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-newlyavailable');">#&nbsp;</a></div>
     <div id="main-channelbar" class="main-channelbar">
     	<h1>On This Channel</h1>
-    	<h2 t:updateForView="new-items"><span t:replace="this len" /></h2>
+    	<h2 t:updateForView="all-items"><span t:replace="this len" /></h2>
     </div>
 
     <div id="main-newlyavailable">
