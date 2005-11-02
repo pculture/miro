@@ -56,10 +56,14 @@
 	<div id="main-titlebar-channelname">
 		<h1 t:replaceMarkup="feed getTitle" />
 		<div id="main-titlebar-autodownload">
-            <form name="setAuto">
+            <form name="setAuto" t:hideIfNotKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean">
                 <input type="hidden" name="feed" value="@@@feed getID@@@" />
-                <input type="checkbox" name="automatic" t:hideIfNotKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" value="1" checked="checked" onClick="javascript:setAutoDownloadableFeed()" />
-                <input type="checkbox" name="automatic" t:hideIfKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" value="1" onClick="javascript:setAutoDownloadableFeed()" />
+                <input type="checkbox" name="automatic" value="1" checked="checked" onClick="javascript:setAutoDownloadableFeed()" />
+                <span class="auto_link" i18n:translate="">Auto Download</span>
+            </form>
+            <form name="setAuto2" t:hideIfKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean">
+                <input type="hidden" name="feed" value="@@@feed getID@@@" />
+                <input type="checkbox" name="automatic" value="1" onClick="javascript:setAutoDownloadableFeed2()" />
                 <span class="auto_link" i18n:translate="">Auto Download</span>
             </form>
 		</div>

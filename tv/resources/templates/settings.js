@@ -9,6 +9,15 @@
             url += '&automatic=0';
         eventURL(url);
     }
+    function setAutoDownloadableFeed2() {
+        var url = 'action:setAutoDownloadableFeed';
+        url += '?feed=' + document.forms['setAuto2']['feed'].value;
+        if (document.forms['setAuto2'].automatic.checked)
+            url += '&automatic=1';
+        else
+            url += '&automatic=0';
+        eventURL(url);
+    }
 
     function settingsFormSubmit() {
          var url = 'action:changeFeedSettings?';
