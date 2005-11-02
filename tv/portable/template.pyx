@@ -116,10 +116,10 @@ cdef object rawAttrPattern
 
 #HTMLPattern = re.compile("^.*<body.*?>(.*)</body\s*>", re.S)
 HTMLPattern = re.compile("^.*<body.*?>(.*)</body\\s*>", re.S)
-attrPattern = re.compile("^(.*)@@@(.*?)@@@(.*)$")
+attrPattern = re.compile("^(.*?)@@@(.*?)@@@(.*)$")
 resourcePattern = re.compile("^resource:(.*)$")
 #rawAttrPattern = re.compile("^(.*)\*\*\*(.*?)\*\*\*(.*)$")
-rawAttrPattern = re.compile("^(.*)\\*\\*\\*(.*?)\\*\\*\\*(.*)$")
+rawAttrPattern = re.compile("^(.*?)\\*\\*\\*(.*?)\\*\\*\\*(.*)$")
 
 ###############################################################################
 #### Public interface                                                      ####
@@ -526,21 +526,27 @@ class TemplateContentHandler(sax.handler.ContentHandler):
     def addRepeatAttr(self, attr, value):
         match = attrPattern.match(value)
         if match:
-            self.addRepeatText(' %s="%s'%(attr, quoteattr(match.group(1))))
-            self.endRepeatText()
-            
-            PyList_Append(self.repeatList,(attrFunc,match.group(2)))
-            self.addRepeatText('%s"' % match.group(3))
+            self.addRepeatText(' %s="' % attr)
+            while match:
+                self.addRepeatText(quoteattr(match.group(1)))
+                self.endRepeatText()
+                PyList_Append(self.repeatList,(attrFunc,match.group(2)))
+                value = match.group(3)
+                match = attrPattern.match(value)
+            self.addRepeatText('%s"' % quoteattr(value))
         else:
             match = rawAttrPattern.match(value)
             if match:
-                self.addRepeatText(' %s="%s'%(attr, quoteattr(match.group(1))))
-                self.endRepeatText()
-                
-                PyList_Append(self.repeatList,(rawAttrFunc,match.group(2)))
-                self.addRepeatText('%s"' % match.group(3))
+                self.addRepeatText(' %s="' % attr)
+                while match:
+                    self.addRepeatText(quoteattr(match.group(1)))
+                    self.endRepeatText()
+                    PyList_Append(self.repeatList,(rawAttrFunc,match.group(2)))
+                    value = match.group(3)
+                    match = rawAttrPattern.match(value)
+                self.addRepeatText('%s"' % quoteattr(value))
             else:
-                PyList_Append(self.repeatText, ' %s=%s' % (attr,quoteAndFillAttr(value,self.data)))
+                self.addRepeatText(' %s=%s' % (attr,quoteAndFillAttr(value,self.data)))
 
     def addRepeatInclude(self, template):
         f = open(resource.path('templates/%s'%template),'r')
@@ -596,21 +602,27 @@ class TemplateContentHandler(sax.handler.ContentHandler):
     def addAttr(self, attr, value):
         match = attrPattern.match(value)
         if match:
-            self.addText(' %s="%s'%(attr, quoteattr(match.group(1))))
-            self.endText()
-            
-            PyList_Append(self.outputList,(attrFunc,match.group(2)))
-            self.addText('%s"' % match.group(3))
+            self.addText(' %s="' % attr)
+            while match:
+                self.addText(quoteattr(match.group(1)))
+                self.endText()
+                PyList_Append(self.outputList,(attrFunc,match.group(2)))
+                value = match.group(3)
+                match = attrPattern.match(value)
+            self.addText('%s"' % quoteattr(value))
         else:
             match = rawAttrPattern.match(value)
             if match:
-                self.addText(' %s="%s'%(attr, quoteattr(match.group(1))))
-                self.endText()
-                
-                PyList_Append(self.outputList,(rawAttrFunc,match.group(2)))
-                self.addText('%s"' % match.group(3))
+                self.addText(' %s="' % attr)
+                while match:
+                    self.addText(quoteattr(match.group(1)))
+                    self.endText()
+                    PyList_Append(self.outputList,(rawAttrFunc,match.group(2)))
+                    value = match.group(3)
+                    match = rawAttrPattern.match(value)
+                self.addText('%s"' % quoteattr(value))
             else:
-                PyList_Append(self.outputText, ' %s=%s' % (attr,quoteAndFillAttr(value,self.data)))
+                self.addText(' %s=%s' % (attr,quoteAndFillAttr(value,self.data)))
 
     def addInclude(self, template):
         f = open(resource.path('templates/%s'%template),'r')
@@ -679,14 +691,14 @@ class TrackedView:
     def initialFillIn(self):
         self.view.beginRead()
         try:
-            #print "Filling in %d items" % self.view.len()
-            #start = time.clock()
+            print "Filling in %d items" % self.view.len()
+            start = time.clock()
             for x in self.view:
                 self.addHTMLAtEnd(x)
             self.view.addChangeCallback(self.onChange)
             self.view.addAddCallback(self.onAdd)
             self.view.addRemoveCallback(self.onRemove)
-            #print "done (%f)" % (time.clock()-start)
+            print "done (%f)" % (time.clock()-start)
         finally:
             self.view.endRead()
 
