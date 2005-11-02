@@ -174,7 +174,7 @@ def _generateFeed(url, ufeed, visible=True):
                 return ScraperFeedImpl(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, charset=charset, visible=visible, ufeed=ufeed)
             else:
                 return None
-    else:  #What the fuck kinda feed is this, asshole?
+    else:
         print "DTV doesn't know how to deal with "+info['content-type']+" feeds"
         return None
 
@@ -183,16 +183,13 @@ def _generateFeed(url, ufeed, visible=True):
 
 def configDidChange(key, value):
     if key is config.CHECK_CHANNELS_EVERY_X_MN.key:
-        feeds = defaultDatabase.filter(lambda x: isinstance(x, RSSFeedImpl) or isinstance(x, ScraperFeedImpl))
-        feeds.beginRead()
-        try:
-            for feed in feeds:
-                feed.cancelUpdateEvents()
-                feed.setUpdateFrequency(value)
-                feed.scheduleUpdateEvents(0)
-        finally:
-            feeds.endRead()
-        defaultDatabase.removeView(feeds)
+        for feed in app.globalViewList['feeds']:
+            updateFreq = 0
+            try:
+                updateFreq = feed.parsed["feed"]["ttl"]
+            except:
+                pass
+            feed.setUpdateFrequency(updateFreq)
 
 config.addChangeCallback(configDidChange)
 
@@ -220,29 +217,34 @@ class FeedImpl:
         self.updating = False
         self.lastViewed = datetime.min
         self.thumbURL = "resource:images/feedicon.png"
-        self.setUpdateFrequency(config.get(config.CHECK_CHANNELS_EVERY_X_MN))
+        self.updateFreq = config.get(config.CHECK_CHANNELS_EVERY_X_MN)*60
 
     # Sets the update frequency (in minutes). 
     # - A frequency of -1 means that auto-update is disabled.
     def setUpdateFrequency(self, frequency):
-        self.updateFreq = frequency
-        if self.updateFreq > 0.0:
-            self.updateFreq *= 60.0
+        if frequency < 0:
+            self.cancelUpdateEvents()
+            self.updateFreq = -1
+        else:
+            newFreq = max(config.get(config.CHECK_CHANNELS_EVERY_X_MN),
+                          frequency)*60
+            if newFreq != self.updateFreq:
+                self.updateFreq = newFreq
+                self.scheduleUpdateEvents(-1)
 
     def scheduleUpdateEvents(self, firstTriggerDelay):
+        self.cancelUpdateEvents()
         if self.updateFreq > 0:
-            ScheduleEvent(self.updateFreq, self.update)
+            self.scheduler = ScheduleEvent(self.updateFreq, self.update)
             if firstTriggerDelay >= 0:
                 ScheduleEvent(firstTriggerDelay, self.update, False)
 
     def cancelUpdateEvents(self):
-        ScheduleEvent.scheduler.beginRead()
         try:
-            for event in ScheduleEvent.scheduler:
-                if event.event == self.update:
-                    ScheduleEvent.scheduler.removeObj(event)
-        finally:
-            ScheduleEvent.scheduler.endRead()
+            self.scheduler.remove()
+            self.scheduler = None
+        except:
+            pass
 
     # Subclasses should implement this
     def update(self):
@@ -251,7 +253,6 @@ class FeedImpl:
     # Returns true iff this feed has been looked at
     def getViewed(self):
         ret = self.lastViewed != datetime.min
-        print "get viewed is %s" % ret
         return ret
 
     # Returns the ID of the actual feed, never that of the UniversalFeed wrapper
@@ -885,16 +886,11 @@ class RSSFeedImpl(FeedImpl):
                 if (new and entry.has_key('enclosures') and
                     self.hasVideoFeed(entry.enclosures)):
                     self.items.append(Item(self.ufeed,entry))
-                    
-            globalUpdateCheck = config.get(config.CHECK_CHANNELS_EVERY_X_MN)
-            updateFreq = globalUpdateCheck
             try:
-                updateFreq = max(globalUpdateCheck, self.parsed["feed"]["ttl"]*60)
+                updateFreq = self.parsed["feed"]["ttl"]
             except KeyError:
-                pass
-            self.cancelUpdateEvents()
+                updateFreq = 0
             self.setUpdateFrequency(updateFreq)
-            self.scheduleUpdateEvents(-1)
             
             self.updating = False
         finally:
@@ -943,7 +939,7 @@ class RSSFeedImpl(FeedImpl):
         #self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
-        self.scheduleUpdateEvents(5)
+        self.scheduleUpdateEvents(0.1)
 
 
 ##
@@ -995,12 +991,11 @@ class Collection(FeedImpl):
 ##
 # A feed based on un unformatted HTML or pre-enclosure RSS
 class ScraperFeedImpl(FeedImpl):
-    #FIXME: change this to a higher number once we optimize shit a bit
+    #FIXME: change this to a higher number once we optimize a bit
     maxThreads = 1
 
     def __init__(self,url,ufeed, title = None, visible = True, initialHTML = None,etag=None,modified = None,charset = None):
         FeedImpl.__init__(self,url,ufeed,title,visible)
-        self.scheduleUpdateEvents(0)
         self.initialHTML = initialHTML
         self.initialCharset = charset
         self.linkHistory = {}
@@ -1011,6 +1006,7 @@ class ScraperFeedImpl(FeedImpl):
         if not modified is None:
             self.linkHistory[url]['modified'] = modified
         self.semaphore = Semaphore(ScraperFeedImpl.maxThreads)
+        self.setUpdateFrequency(360)
 
     def getMimeType(self,link):
         info = grabURL(link,"HEAD")
@@ -1266,7 +1262,7 @@ class ScraperFeedImpl(FeedImpl):
 
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
-        self.scheduleUpdateEvents(5)
+        self.scheduleUpdateEvents(.1)
         self.semaphore = Semaphore(ScraperFeedImpl.maxThreads)
 
 ##
@@ -1279,8 +1275,7 @@ class DirectoryFeedImpl(FeedImpl):
     def __init__(self,ufeed):
         FeedImpl.__init__(self,url = "dtv:directoryfeed",ufeed=ufeed,title = "Feedless Videos",visible = False)
 
-        self.setUpdateFrequency(0.5)
-        self.scheduleUpdateEvents(0)
+        self.setUpdateFrequency(5)
 
     ##
     # Returns a list of all of the files in a given directory
@@ -1355,7 +1350,7 @@ class DirectoryFeedImpl(FeedImpl):
 
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
-        self.scheduleUpdateEvents(5)
+        self.scheduleUpdateEvents(.1)
 
 
 ##
