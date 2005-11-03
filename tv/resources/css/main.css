@@ -182,8 +182,8 @@ li {
 }
 
 .main-channelbar h2 {
-	float: left;
-	margin: 4px 0px 0px 5px;
+	float: right;
+	margin: 4px 5px 0px 0px;
 	color: #CDDFF6;
 }
 
