@@ -80,14 +80,16 @@
 			<p class="main-video-details-left" t:replace="this getFormat" />
 			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
 			<!-- / FILE INFO -->
+					
+			<!-- NEW -->
+			<span t:hideIfKey="this getViewed" t:hideFunctionKey="global filter boolean">
+				<div class="main-video-details-new">
+					<p>New</p>
+				</div>
+			</span>
+			<!-- / NEW -->
 			
 		</div>
-		<!-- NEW -->
-                <span t:hideIfKey="this getViewed" t:hideFunctionKey="global filter boolean">
-                  <div class="main-video-details-new">
-                    <p>New</p>
-                  </div>
-                </span>
 		<div class="clearer"></div>
 	</span>
 	<!-- / STOPPED -->
