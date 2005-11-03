@@ -48,7 +48,7 @@
     </t:dynamicviews>
 </head>
 
-<body onload="toggleLayer('main-newlyavailable'); toggleLayer('main-unwatched'); toggleLayer('main-expiring'); toggleLayer('main-saved'); toggleLayer('show-more-videos-label');">
+<body onload="toggleLayer('main-newlyavailable'); toggleLayer('main-unwatched'); toggleLayer('main-expiring'); toggleLayer('main-saved'); toggleLayer('no-new-videos-label'); toggleLayer('show-more-videos-label');">
     
 <!-- TITLE BAR ************************************************************ -->
 <div id="main-titlebar">
@@ -96,22 +96,35 @@
         <span t:repeatForView="new-unseen-items">
             <t:includeTemplate filename="download-item" />
         </span>
-        <span t:hideIfViewNotEmpty="new-unseen-items" id="no-new-videos-label">
-						<h3 style="margin:11px 0px -3px 5px;">No new videos on this channel.</h3>
-        </span>
-        <span t:hideIfViewEmpty="new-items">
-            <span id="show-more-videos-label" class="main-content">								
+				<span t:hideIfViewEmpty="new-unseen-items" id="show-more-videos-label">			
+						<span class="main-content">								
 								<a href="javascript:toggleLayer('main-newlyavailable-seen');toggleLayer('show-more-videos-label');" style="color:#333333; text-decoration:none;" class="main-notification-nonew">
 										<div class="main-notification">See All <span t:updateForView="new-items"><span t:replace="this len" /></span> Videos &gt;&gt;</div>
 										<div class="main-notification-right">&nbsp;</div>
 										<br clear="left" />
 								</a>
-            </span>
+						</span>
+				</span>
+        
+				<span t:hideIfViewEmpty="new-items">
+						<span t:hideIfViewNotEmpty="new-unseen-items" id="no-new-videos-label">			
+								<span>
+										<h3 style="margin:11px 0px -3px 5px;">No new videos on this channel.</h3>
+								</span>
+								<span class="main-content">								
+										<a href="javascript:toggleLayer('main-newlyavailable-seen');toggleLayer('no-new-videos-label');" style="color:#333333; text-decoration:none;" class="main-notification-nonew">
+												<div class="main-notification">See All <span t:updateForView="new-items"><span t:replace="this len" /></span> Videos &gt;&gt;</div>
+												<div class="main-notification-right">&nbsp;</div>
+												<br clear="left" />
+										</a>
+								</span>
+						</span>						
             <span id="main-newlyavailable-seen">
                 <span t:repeatForView="new-items">
                     <t:includeTemplate filename="download-item" />
                 </span>
             </span>
+						
         </span>
     </div>		
 
