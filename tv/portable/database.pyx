@@ -795,11 +795,16 @@ class DynamicDatabase:
         if filename == None:
             filename = config.get(config.DB_PATHNAME)
         filename = expanduser(filename)
-        if exists(filename):
-            copyfile(filename,filename+".bak")
-        handle = file(filename,"wb")
-        dump(out,handle,HIGHEST_PROTOCOL)
-        handle.close()
+        try:
+            handle = file(filename+".temp","wb")
+            dump(out,handle,HIGHEST_PROTOCOL)
+            handle.close()
+            if exists(filename):
+                copyfile(filename,filename+".bak")
+            copyfile(filename+".temp",filename)
+        except:
+            print "Error saving database:"
+            traceback.print_exc()
 
     ##
     # Restores this database
