@@ -58,8 +58,9 @@ cdef enum funcPointers:
     includeHideFunc = 6
     hideIfEmptyFunc = 7
     rawAttrFunc = 8
+    hideSectionFunc = 9
 
-cdef CFuncPointer funcTable[9]
+cdef CFuncPointer funcTable[10]
 funcTable[textFunc] = getRepeatText
 funcTable[textHideFunc] = getRepeatTextHide
 funcTable[attrFunc] = getQuoteAttr
@@ -69,6 +70,7 @@ funcTable[evalFunc] = getRepeatEval
 funcTable[includeHideFunc] = getRepeatIncludeHide
 funcTable[hideIfEmptyFunc] = getHideIfEmpty
 funcTable[rawAttrFunc] = getRawAttr
+funcTable[hideSectionFunc] = getHideSection
 
 from xml.dom.minidom import parse, parseString
 from xml import sax
@@ -228,12 +230,14 @@ class TemplateContentHandler(sax.handler.ContentHandler):
         self.replaceDepth = 0
         self.repeatView = None
         self.hiding = False
-        self.hideDepth = 0
+        self.hideDepth = []
         self.depth = 0
         self.repeatName = ''
         self.started = not self.onlyBody
         self.outputList = []
         self.outputText = []
+        self.hidingList = []
+        self.hidingParams = []
 
         # When we're in repeat mode, we store output as a set of
         # functions and arguments that, called given an object, tid,
@@ -254,7 +258,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                 self.started = True
         elif not self.started:
             pass
-        elif self.inReplace or self.inStaticReplace or self.hiding:
+        elif self.inReplace or self.inStaticReplace:
             pass
         elif 't:hideIfViewEmpty' in attrs.keys() or 't:hideIfViewNotEmpty' in attrs.keys():
             if 't:hideIfViewEmpty' in attrs.keys():
@@ -308,7 +312,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                 hide = False
 
             if name == 't:includeTemplate':
-                if hide: 
+                if hide:
                     self.addRepeatIncludeHide(functionKey,ifKey,parameter,ifInvert,attrs['filename'])
                 else:
                     self.addRepeatFillTemplate(attrs['filename'])
@@ -326,6 +330,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                         self.addRepeatAttr(key,attrs[key])
 
                 if hide:
+                    #self.addRepeatText(' style="display:none"')
                     self.addRepeatTextHide(functionKey,ifKey,parameter,ifInvert,' style="display:none"')
 
                 self.addRepeatText('>')
@@ -355,10 +360,12 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                 parameter = attrs['t:hideParameter']
             except KeyError:
                 parameter = ''
+            self.startHiding(functionKey,ifKey,parameter,ifInvert)
+
             self.addText('<%s'%name)
-            self.addTextHide(functionKey,ifKey,parameter,ifInvert, ' style="display:none"')
+            #self.addTextHide(functionKey,ifKey,parameter,ifInvert, ' style="display:none"')
             for key in attrs.keys():
-                if not (key in ['t:hideIfKey','t:hideIfNotKey','t:hideFunctionKey','t:hideParameter','style']):
+                if not (key in ['t:hideIfKey','t:hideIfNotKey','t:hideFunctionKey','t:hideParameter']):
                     self.addAttr(key,attrs[key])
             self.addText('>')
 
@@ -463,9 +470,9 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             pass
         elif name == 't:includeTemplate':
             pass
-        elif self.hiding:
-            if self.depth == self.hideDepth:
-                self.hiding = False
+        elif self.hiding and self.depth == self.hideDepth[-1]:
+            self.addText('</%s>'%name)
+            self.endHiding()
         elif self.inReplace and self.depth == self.replaceDepth:
             if self.inRepeatView or self.inUpdateView:
                 self.addRepeatText('</%s>'%name)
@@ -506,7 +513,7 @@ class TemplateContentHandler(sax.handler.ContentHandler):
     def characters(self,data):
         if not self.started:
             pass
-        elif self.inReplace or self.inStaticReplace or self.hiding:
+        elif self.inReplace or self.inStaticReplace:
             pass
         elif self.inRepeatView or self.inUpdateView:
             self.addRepeatTextEscape(data)
@@ -585,6 +592,24 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             PyList_Append(self.repeatList,(textFunc,''.join(self.repeatText)))
         self.repeatText = []
 
+    def startHiding(self,functionKey,ifKey,parameter,ifInvert):
+        self.endText()
+        self.hidingParams.append((functionKey,ifKey,parameter,ifInvert))
+        self.hidingList.append([])
+        self.hideDepth.append(self.depth)
+        self.hiding = True
+
+    def endHiding(self):
+        self.endText()
+        (functionKey,ifKey,parameter,invert) = self.hidingParams.pop()
+        funcList = self.hidingList.pop()
+        self.hideDepth.pop()
+        self.hiding = len(self.hidingList) > 0
+        if self.hiding:
+            PyList_Append(self.hidingList[-1],(hideSectionFunc, (functionKey, ifKey, parameter, invert, funcList)))
+        else:
+            PyList_Append(self.outputList,(hideSectionFunc, (functionKey, ifKey, parameter, invert, funcList)))
+
     def addText(self, text):
         PyList_Append(self.outputText, text)
 
@@ -593,11 +618,11 @@ class TemplateContentHandler(sax.handler.ContentHandler):
 
     def addHideIfEmpty(self, view, name, invert, attrs):
         self.endText()
-        PyList_Append(self.outputList, (hideIfEmptyFunc,(self, view, name, invert, attrs)))
+        if self.hiding:
+            PyList_Append(self.hidingList[-1], (hideIfEmptyFunc,(self, view, name, invert, attrs)))
+        else:
+            PyList_Append(self.outputList, (hideIfEmptyFunc,(self, view, name, invert, attrs)))
 
-    def addTextHide(self,functionKey,ifKey,parameter,invert, text):
-        self.endText()
-        PyList_Append(self.outputList,(textHideFunc,(functionKey,ifKey,parameter,invert,text)))
 
     def addAttr(self, attr, value):
         match = attrPattern.match(value)
@@ -606,7 +631,10 @@ class TemplateContentHandler(sax.handler.ContentHandler):
             while match:
                 self.addText(quoteattr(match.group(1)))
                 self.endText()
-                PyList_Append(self.outputList,(attrFunc,match.group(2)))
+                if self.hiding:
+                    PyList_Append(self.hidingList[-1],(attrFunc,match.group(2)))
+                else:
+                    PyList_Append(self.outputList,(attrFunc,match.group(2)))
                 value = match.group(3)
                 match = attrPattern.match(value)
             self.addText('%s"' % quoteattr(value))
@@ -617,7 +645,10 @@ class TemplateContentHandler(sax.handler.ContentHandler):
                 while match:
                     self.addText(quoteattr(match.group(1)))
                     self.endText()
-                    PyList_Append(self.outputList,(rawAttrFunc,match.group(2)))
+                    if self.hiding:
+                        PyList_Append(self.hidingList[-1],(rawAttrFunc,match.group(2)))
+                    else:
+                        PyList_Append(self.outputList,(rawAttrFunc,match.group(2)))
                     value = match.group(3)
                     match = rawAttrPattern.match(value)
                 self.addText('%s"' % quoteattr(value))
@@ -632,29 +663,47 @@ class TemplateContentHandler(sax.handler.ContentHandler):
 
     def addIncludeHide(self,functionKey,ifKey,parameter,invert, name):
         self.endText()
-        PyList_Append(self.outputList,(includeHideFunc,(functionKey,ifKey,parameter,invert, name)))
+        if self.hiding:
+            PyList_Append(self.hidingList[-1],(includeHideFunc,(functionKey,ifKey,parameter,invert, name)))
+        else:
+            PyList_Append(self.outputList,(includeHideFunc,(functionKey,ifKey,parameter,invert, name)))
 
     def addFillTemplate(self, name):
         self.endText()
         (tch, handle) = fillTemplate(name, self.data, self.domHandler, False, True)
         self.handle.addSubHandle(handle)
-        self.outputList.extend(tch.getOperationList())
+        if self.hiding:
+            self.hidingList[-1].extend(tch.getOperationList())
+        else:
+            self.outputList.extend(tch.getOperationList())
 
     def addAddIdAndClose(self):
         self.endText()
-        PyList_Append(self.outputList,(addIDFunc,None))
+        if self.hiding:
+            PyList_Append(self.hidingList[-1],(addIDFunc,None))
+        else:
+            PyList_Append(self.outputList,(addIDFunc,None))
 
     def addEval(self,replace):
         self.endText()
-        PyList_Append(self.outputList,(evalFunc,replace))
+        if self.hiding:
+            PyList_Append(self.hidingList[-1],(evalFunc,replace))
+        else:
+            PyList_Append(self.outputList,(evalFunc,replace))
 
     def addEvalEscape(self,replace):
         self.endText()
-        PyList_Append(self.outputList,(evalEscapeFunc,replace))
+        if self.hiding:
+            PyList_Append(self.hidingList[-1],(evalEscapeFunc,replace))
+        else:
+            PyList_Append(self.outputList,(evalEscapeFunc,replace))
 
     def endText(self):
         if len(self.outputText) > 0:
-            PyList_Append(self.outputList,(textFunc,''.join(self.outputText)))
+            if self.hiding:
+                PyList_Append(self.hidingList[-1],(textFunc,''.join(self.outputText)))
+            else:
+                PyList_Append(self.outputList,(textFunc,''.join(self.outputText)))
         self.outputText = []
 
 # Random utility functions 
@@ -720,6 +769,9 @@ class TrackedView:
             args = <object>PyTuple_GET_ITEM(both,1)
             PyList_Append(output, funcTable[func](data,item.tid,args))
         try:
+#             print "-----"
+#             print str(''.join(output))
+#             print "-----"
             return ''.join(output)
         except UnicodeDecodeError:
             ret = ''
@@ -953,7 +1005,20 @@ cdef object getHideIfEmpty(object data, object tid, object args):
         PyList_Append(output,'>')
     self.handle.addHideIfEmpty(nodeId,viewName, invert)
     return ''.join(output)
-        
+
+cdef object getHideSection(object data, object tid, object args):
+    cdef object output
+    output = []
+    (functionKey,ifKey,parameter,invert, funcList) = args
+    hide = evalKeyC(functionKey, data, None, True)(evalKeyC(ifKey, data, None, True), parameter)
+    if (invert and hide) or (not invert and not hide):
+        for count from 0 <= count < PyList_GET_SIZE(funcList):
+            both = <object>PyList_GET_ITEM(funcList, count)
+            func = <object>PyTuple_GET_ITEM(both,0)
+            args = <object>PyTuple_GET_ITEM(both,1)
+            PyList_Append(output, funcTable[func](data,tid,args))
+    return ''.join(output)
+
 # Returns a quoted, filled version of attribute text
 def quoteAndFillAttr(value,data):
     return ''.join(('"',quoteattr(fillAttr(value,data)),'"'))
