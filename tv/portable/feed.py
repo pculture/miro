@@ -339,8 +339,8 @@ class FeedImpl:
     ##
     # Sets the last time the feed was viewed to now
     def markAsViewed(self):
-        # FIXME this is a hack to make new behave correctly. See #655
-        self.lastViewed = datetime.now() - timedelta(hours=6)
+        # FIXME uncomment to make "new" state last 6 hours. See #655, #733
+        self.lastViewed = datetime.now() #- timedelta(hours=6)
         self.updateUandA()
 
     ##
