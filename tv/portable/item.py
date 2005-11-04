@@ -629,7 +629,7 @@ class Item(DDBObject):
             if enclosure.has_key('type') and len(enclosure['type']) > 0:
                 type, subtype = enclosure['type'].split('/')
                 if type.lower() in self.KNOWN_MIME_TYPES:
-                    return subtype.upper()
+                    return subtype.split(';')[0].upper()
             else:
                 extension = enclosure['url'].split('.')[-1].lower()
                 if extension in self.KNOWN_MIME_SUBTYPES:
