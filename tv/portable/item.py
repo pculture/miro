@@ -9,6 +9,7 @@ from threading import Thread
 import threadpriority
 import config
 import os
+import feed
 
 ##
 # An item corresponds to a single entry in a feed. Generally, it has
@@ -850,16 +851,24 @@ class Item(DDBObject):
             version += 1
         assert(version == 3)
         data['startingDownload'] = False
+        self.__dict__ = data
 
         # Older versions of the database allowed Feed Implementations
         # to act as feeds. If that's the case, change feed attribute
         # to contain the actual feed.
         # NOTE: This assumes that the feed object is decoded
         # before its items. That appears to be generally true
-        if not issubclass(data['feed'].__class__, DDBObject):
-            data['feed'] = data['feed'].ufeed
+        if not issubclass(self.feed.__class__, DDBObject):
+            try:
+                self.feed = self.feed.ufeed
+            except:
+                self.__class__ = DropItLikeItsHot
+            if self.__class__ is FileItem:
+                self.__class__ = DropItLikeItsHot
 
-        self.__dict__ = data
+#Dummy class for removing bogus FileItem instances
+class DropItLikeItsHot:
+    pass
 
 ##
 # An Item that exists as a file, but not as a download
