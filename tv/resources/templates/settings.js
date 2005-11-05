@@ -1,6 +1,8 @@
 <script type="text/javascript">
     <!-- // Protect from our XML parser, which doesn't know to protect <script>
-    function setAutoDownloadableFeed() {
+
+    function setAutoDownloadableFeed()
+    {
         var url = 'action:setAutoDownloadableFeed';
         url += '?feed=' + document.forms['setAuto']['feed'].value;
         if (document.forms['setAuto'].automatic.checked)
@@ -9,35 +11,55 @@
             url += '&automatic=0';
         eventURL(url);
     }
-    function setAutoDownloadableFeed2() {
-        var url = 'action:setAutoDownloadableFeed';
-        url += '?feed=' + document.forms['setAuto2']['feed'].value;
-        if (document.forms['setAuto2'].automatic.checked)
-            url += '&automatic=1';
-        else
-            url += '&automatic=0';
+
+    function setAutoDownloadGets()
+    {
+        var url = "action:setGetEverything";
+        var idx = document.forms['settings']['autoDownloadGets'].selectedIndex;
+        
+        url += '?feed=' + document.forms['setAuto']['feed'].value;
+        url += "&everything=" + document.forms['settings']['autoDownloadGets'].options[idx].value;
+
         eventURL(url);
     }
 
-    function settingsFormSubmit() {
-         var url = 'action:changeFeedSettings?';
+    function setExpiration()
+    {
+        var url = "action:setExpiration";
+        var idx = document.forms['settings']['expireAfter'].selectedIndex;
+        var value = document.forms['settings']['expireAfter'].options[idx].value;
 
-         url += 'feed=' + document.forms['settings']['feed'].value;         
-         url += '&getEverything=' + document.forms['settings']['autoDownloadGets'].selectedIndex;
+        url += '?feed=' + document.forms['setAuto']['feed'].value;
+        if (value == 'system' || value == 'never')
+        {
+            url += "&type=" + value + "&time=0";
+        }
+        else
+        {
+            url += "&type=feed&time=" + value;
+        }
 
-         if (document.forms['settings']['maxOutDownloads'].checked)
-         {
-             url += '&maxnew=' + document.forms['settings']['maxNew'].value;
-         }
-         else
-         {
-             url += '&maxnew=unlimited';
-         }
-
-         var selectedExpirationIndex = document.forms['settings']['expireAfter'].selectedIndex;
-         url += "&expire=" + document.forms['settings']['expireAfter'].options[selectedExpirationIndex].value;
-         
-         eventURL(url);
+        eventURL(url);
     }
+
+    function setMaxNew()
+    {
+        var url = "action:setMaxNew";
+
+        url += '?feed=' + document.forms['setAuto']['feed'].value;
+        if (document.forms['settings']['maxOutDownloads'].checked)
+        {
+            document.forms['settings']['maxNew'].disabled = false;
+            url += '&maxNew=' + document.forms['settings']['maxNew'].value;
+        }
+        else
+        {
+            document.forms['settings']['maxNew'].disabled = true;
+            url += '&maxNew=-1';
+        }
+
+        eventURL(url);
+    }
+
     -->
 </script>

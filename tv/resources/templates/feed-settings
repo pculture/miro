@@ -35,7 +35,7 @@
 		    <p><a href="mailto:?subject=@@@feed getTitle@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed getTitle@@@&quot;. If you don't have DTV, you can get it here:%0D%0A%0D%0Ahttp://www.participatoryculture.org/download.php%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed getURL@@@" class="recommend_link" i18n:translate="">Recommend</a></p>
 		</div>
 		<div id="main-titlebar-tasks-search">
-		    <input type="search" placeholder="Search Channel" class="main-titlebar-tasks-search" onfocus="startEditFilter(this,new Array('new-items'),new Array(''),new Array('global filter feedItems'),new Array(0),new Array('@@@feed getFeedID@@@'))" onblur="endEditFilter()" />
+		    <input type="search" placeholder="Search Channel" class="main-titlebar-tasks-search" disabled="1" />
 		</div>
 	</div>
 </div>
@@ -55,29 +55,43 @@
 	</div>
 
 	<div style="margin:10px 10px 10px 10px;">
-	    Auto download should:
-	    <select name="autoDownloadGets" onChange="javascript:settingsFormSubmit();">
-            <option selected="1">just get new stuff</option>
-	        <option>download all items</option>
-        </select>
+		Auto download should:
+	   <select name="autoDownloadGets" onChange="javascript:setAutoDownloadGets();">
+			<option t:hideIfKey="feed getEverything"    t:hideFunctionKey="global filter boolean" value="False" selected="1">just get new stuff</option>
+			<option t:hideIfNotKey="feed getEverything" t:hideFunctionKey="global filter boolean" value="False"             >just get new stuff</option>
+	        <option t:hideIfNotKey="feed getEverything" t:hideFunctionKey="global filter boolean" value="True"  selected="1">download all items</option>
+	        <option t:hideIfKey="feed getEverything"    t:hideFunctionKey="global filter boolean" value="True"              >download all items</option>
+		</select>
 	</div>
 
 	<div style="margin:0px 10px 10px 10px;">
-	    <input type="checkbox" name="maxOutDownloads" onClick="javascript:settingsFormSubmit();"/>
-	    If I have <input name="maxNew" type="text" size="4" value="25"/> videos waiting, don't auto download more. (Keeps channel from hogging disk space)
+	    <input type="checkbox" name="maxOutDownloads" onClick="javascript:setMaxNew();" checked="checked" t:hideIfKey="feed getMaxNew"    t:hideFunctionKey="global filter equal" t:hideParameter="unlimited" />
+	    <input type="checkbox" name="maxOutDownloads" onClick="javascript:setMaxNew();"                   t:hideIfNotKey="feed getMaxNew" t:hideFunctionKey="global filter equal" t:hideParameter="unlimited"/>
+	    If I have
+	    <input name="maxNew" type="text" size="4" value="0"                    disabled="1" onBlur="javascript:setMaxNew();" t:hideIfNotKey="feed getMaxNew" t:hideFunctionKey="global filter equal" t:hideParameter="unlimited" />
+	    <input name="maxNew" type="text" size="4" value="@@@feed getMaxNew@@@"              onBlur="javascript:setMaxNew();" t:hideIfKey="feed getMaxNew"    t:hideFunctionKey="global filter equal" t:hideParameter="unlimited" />
+	    videos waiting, don't auto download more. (Keeps channel from hogging disk space)
 	</div>
 
 	<div style="margin:0px 10px 20px 10px;">
 	    Videos expire after:
-	    <select name="expireAfter" onChange="javascript:settingsFormSubmit();">
-	        <option value="system">Default (<span t:replace="feed getFormattedDefaultExpiration" />)</option>
-	        <option value="3">3 hours</option>
-	        <option value="24">1 day</option>
-	        <option value="72">3 days</option>
-	        <option value="144">6 days</option>
-	        <option value="240">10 days</option>
-	        <option value="720">1 month</option>
-	        <option value="never">Never</option>
+	    <select name="expireAfter" onChange="javascript:setExpiration();">
+	        <option value="system" selected="1" t:hideIfNotKey="feed getExpirationType" t:hideFunctionKey="global filter equal" t:hideParameter="system">Default (<span t:replace="feed getFormattedDefaultExpiration" />)</option>
+	        <option value="system"              t:hideIfKey="feed getExpirationType"    t:hideFunctionKey="global filter equal" t:hideParameter="system">Default (<span t:replace="feed getFormattedDefaultExpiration" />)</option>
+	        <option value="3"      selected="1" t:hideIfNotKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="3">3 hours</option>
+	        <option value="3"                   t:hideIfKey="feed getExpirationTime"    t:hideFunctionKey="global filter equal" t:hideParameter="3">3 hours</option>
+	        <option value="24"     selected="1" t:hideIfNotKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="24">1 day</option>
+	        <option value="24"                  t:hideIfKey="feed getExpirationTime"    t:hideFunctionKey="global filter equal" t:hideParameter="24">1 day</option>
+	        <option value="72"     selected="1" t:hideIfNotKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="72">3 days</option>
+	        <option value="72"                  t:hideIfKey="feed getExpirationTime"    t:hideFunctionKey="global filter equal" t:hideParameter="72">3 days</option>
+	        <option value="144"    selected="1" t:hideIfNotKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="144">6 days</option>
+	        <option value="144"                 t:hideIfKey="feed getExpirationTime"    t:hideFunctionKey="global filter equal" t:hideParameter="144">6 days</option>
+	        <option value="240"    selected="1" t:hideIfNotKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="240">10 days</option>
+	        <option value="240"                 t:hideIfKey="feed getExpirationTime"    t:hideFunctionKey="global filter equal" t:hideParameter="240">10 days</option>
+	        <option value="720"    selected="1" t:hideIfNotKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="720">1 month</option>
+	        <option value="720"                 t:hideIfKey="feed getExpirationTime"    t:hideFunctionKey="global filter equal" t:hideParameter="720">1 month</option>
+	        <option value="never"  selected="1" t:hideIfNotKey="feed getExpirationType" t:hideFunctionKey="global filter equal" t:hideParameter="never">Never</option>
+	        <option value="never"               t:hideIfKey="feed getExpirationType"    t:hideFunctionKey="global filter equal" t:hideParameter="never">Never</option>
         </select>
 	</div>
 

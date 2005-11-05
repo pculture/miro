@@ -441,8 +441,7 @@ class FeedImpl:
         return ret
 
     ##
-    # Switch the auto-downloadable state individually (as opposed to collectively
-    # with the other seetings in the 'saveSettings' method below)
+    # Switch the auto-downloadable state
     def setAutoDownloadable(self, automatic):
         self.ufeed.beginRead()
         try:
@@ -451,33 +450,36 @@ class FeedImpl:
             self.ufeed.endRead()
 
     ##
-    # Takes in parameters from the save settings page and saves them
-    def saveSettings(self, getEverything, maxnew, expire):
+    # Sets the 'getEverything' attribute, True or False
+    def setGetEverything(self, everything):
         self.ufeed.beginRead()
         try:
-            self.getEverything = (getEverything == "1")
+            self.getEverything = everything
+        finally:
+            self.ufeed.endRead()
 
-            if maxnew == "unlimited":
-                self.maxNew = -1
-            else:
-                self.maxNew = int(maxnew)
-
-            if expire == "never" or expire == "system":
-                self.expire = expire
-                self.expireTime = 0
-            else:
-                self.expire = "feed"
-                self.expireTime = timedelta(hours=int(expire))
+    ##
+    # Sets the expiration attributes. Valid types are 'system', 'feed' and 'never'
+    # Expiration time is in hour(s).
+    def setExpiration(self, type, time):
+        self.ufeed.beginRead()
+        try:
+            self.expire = type
+            self.expireTime = timedelta(hours=time)
 
             if self.expire == "never":
                 for item in self.items:
                     if item.getState() in ['finished','uploading','watched']:
                         item.setKeep(True)
+        finally:
+            self.ufeed.endRead()
 
-#            if fallBehind == "unlimited":
-#                self.fallBehind = -1
-#            else:
-#                self.fallBehind = int(fallBehind)
+    ##
+    # Sets the maxNew attributes. -1 means unlimited.
+    def setMaxNew(self, maxNew):
+        self.ufeed.beginRead()
+        try:
+            self.maxNew = maxNew
         finally:
             self.ufeed.endRead()
 
@@ -530,6 +532,21 @@ class FeedImpl:
             ret = self.maxNew
         self.ufeed.endRead()
         return ret
+
+    ##
+    # Returns the total absolute expiration time in hours.
+    # WARNING: 'system' and 'never' expiration types return 0
+    def getExpirationTime(self):
+        delta = None
+        self.ufeed.beginRead()
+        try:
+            try:
+                delta = self.expireTime
+            except:
+                delta = timedelta()
+        finally:
+            self.ufeed.endRead()
+        return (delta.days * 24) + (delta.seconds / 3600)
 
     ##
     # Returns the number of days until a video expires
