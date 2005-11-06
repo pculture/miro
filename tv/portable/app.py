@@ -202,6 +202,7 @@ class Controller (frontend.Application):
                 feed.Feed('http://some-pig.net/videos/rss.php?i=2')
                 feed.Feed('http://64.207.132.106/tmv/rss.php?i=2')
                 feed.Feed('http://revision3.com/diggnation/feed/small.mov')
+                feed.Feed('http://www.channelfrederator.com/rss')
 
             # Define variables for templates
             # NEEDS: reorganize this, and update templates
