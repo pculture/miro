@@ -882,6 +882,12 @@ class UIBackendDelegate:
         message = u'This version of DTV is up to date.'
         showInformationalDialog(summary, message)
 
+    def saveFailed(self, reason):
+        summary = u'DTV database save failed'
+        message = u"DTV was unabled to save its database.\nRecent changes may be lost\n\n%s" % reason
+        buttons = (u'Continue',)
+        return showCriticalDialog(summary, message, buttons)
+
     def validateFeedRemoval(self, feedTitle):
         summary = u'Remove Channel'
         message = u'Are you sure you want to remove the channel \'%s\'? This operation cannot be undone.' % feedTitle

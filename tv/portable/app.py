@@ -187,6 +187,7 @@ class Controller (frontend.Application):
             feed.setSortFunc(itemSort)
             downloader.setDelegate(delegate)
             autoupdate.setDelegate(delegate)
+            database.setDelegate(delegate)
 
             #Restoring
             print "DTV: Restoring database..."

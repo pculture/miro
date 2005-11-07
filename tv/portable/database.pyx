@@ -12,6 +12,7 @@ from copy import copy
 import traceback
 from fasttypes import LinkedList, SortedList
 from databasehelper import pysort2dbsort
+import sys
 
 import config
 
@@ -30,6 +31,10 @@ class NoValue:
     pass
 
 globalLock = RLock()
+
+def setDelegate(newDelegate):
+    global delegate
+    delegate = newDelegate
 
 ##
 # Implements a view of the database
@@ -783,6 +788,7 @@ class DynamicDatabase:
     # Right now, I'm assuming that if it doesn't work, there's nothing
     # we can do to make it work anyway.
     def save(self,filename=None):
+        global delegate
         #FIXME copying out the data before we save it is sloow
         self.beginRead()
         try:
@@ -803,8 +809,7 @@ class DynamicDatabase:
                 copyfile(filename,filename+".bak")
             copyfile(filename+".temp",filename)
         except:
-            print "Error saving database:"
-            traceback.print_exc()
+            delegate.saveFailed(sys.exc_info()[0])
 
     ##
     # Restores this database
