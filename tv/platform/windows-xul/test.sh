@@ -1,1 +1,3 @@
-python setup.py py2exe && dist/DTV.exe
+#!/bin/sh
+
+python setup.py runxul

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml-stylesheet href="chrome://global/skin" type="text/css"?>
+
+<!DOCTYPE window SYSTEM "chrome://dtv/locale/main.dtd">
+
+<!-- add hidechrome="true" to eliminate title bar -->
+<window id="main" title="&main.title;"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	hidechrome="false" onload="onLoad();"
+	width="600" height="370"
+	screenX="100" screenY="100"
+	persist="screenX screenY width height">
+  <script src="chrome://dtv/content/main.js"/>
+  <hbox flex="1">
+    <spacer width="20" flex="0" />
+    <browser id="channelsDisplay_html" src="http://www.google.com"
+	     width="250" type="content" flex="0"/>
+    <spacer width="20" flex="0" />
+    <vbox flex="1">
+      <!-- The code will show one of these and hide the other, as
+	   appropriate. -->
+      <browser id="mainDisplay_html" src="http://www.google.com"
+	       type="content-primary" flex="1" collapsed="false"/>
+      <label id="mainDisplay_video" value="VLC will go here" flex="1"
+	     collapsed="true"/>
+    </vbox>
+    <spacer width="20" flex="0" />
+  </hbox>
+</window>

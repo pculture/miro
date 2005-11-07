@@ -1,0 +1,11 @@
+#include "nsISupports.idl"
+
+[scriptable, uuid(45E29F73-4C9C-4856-8DB4-5A09096EEB58)]
+interface nsISubtract : nsISupports
+{
+  /**
+   * This interface subtracts the second operand from the first and returns
+   * the result.
+   */
+  long subtract(in long a, in long b); 
+};

@@ -1,0 +1,10 @@
+#include "nsISupports.idl"
+
+[scriptable, uuid(f2f71d91-0451-47ec-aaa0-166663a7711a)]
+interface nsISimpleTest : nsISupports
+{
+  /**
+   * This interface adds two numbers together and returns the result.
+   */
+  long add(in long a, in long b); 
+};

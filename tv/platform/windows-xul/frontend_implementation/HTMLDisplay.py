@@ -1,22 +1,33 @@
 import frontend
 import app
-import MozillaBrowser
 import tempfile
 import os
 import re
 import threading
-
-from frontend_implementation.MainFrame import blankWindowClassAtom
-from frontend_implementation.MainFrame import invisibleDisplayParentHwnd
-
-import win32gui, win32api
-from win32con import *
-from ctypes import *
-from ctypes.wintypes import *
+from xpcom import components
 
 ###############################################################################
 #### HTML display                                                          ####
 ###############################################################################
+
+class ProgressListener:
+    _com_interfaces_ = [components.interfaces.nsIWebProgressListener]
+
+    def __init__(self, boundDisplay):
+	self.boundDisplay = boundDisplay
+
+    def onLocationChange(self, webProgress, request, location):
+	print "onLocationChange: %s" % request
+
+    def onProgressChange(self, webProgress, request, curSelfProgress,
+			 maxSelfProgress, curTotalProgress, maxTotalProgess):
+	pass
+
+    def onSecurityChange(self, webProgress, request, state):
+	pass
+
+    def onStateChange(self, webProgress, request, stateFlags, status):
+	print "onStateChange! %s %s %s" % (request, stateFlags, status)
 
 class HTMLDisplay (app.Display):
     "Selectable Display that shows a HTML document."
@@ -26,48 +37,20 @@ class HTMLDisplay (app.Display):
         frameHint is provided, it is used to guess the initial size the HTML
         display will be rendered at, which might reduce flicker when the
         display is installed."""
+	print "HTMLDisplay created"
         app.Display.__init__(self)
 
 	self.lock = threading.RLock()
 	self.initialLoadFinished = False
 	self.execQueue = []
+	self.progressListener = ProgressListener(self)
 
-	# Our message map.
-	messageMap = { WM_CLOSE: self.onWMClose,
-		       WM_SIZE: self.onWMSize,
-		       WM_ERASEBKGND: lambda *args: 1, # flicker reduction
-		       WM_ACTIVATE: self.onWMActivate }
+	klass = components.classes["@participatoryculture.org/dtv/jsbridge;1"]
+	self.jsbridge = klass.getService(components.interfaces.pcfIDTVJSBridge)
 
-	# We have a custom message map, so go ahead and create a custom
-	# window class.
-	wc = win32gui.WNDCLASS()
-	wc.style = 0
-	wc.lpfnWndProc = messageMap
-	wc.cbWndExtra = 0
-	wc.hInstance = win32api.GetModuleHandle(None)
-	wc.hIcon = win32gui.LoadIcon(0, IDI_APPLICATION)
-	wc.hCursor = win32gui.LoadCursor(0, IDC_ARROW)
-	wc.hbrBackground = win32gui.GetStockObject(WHITE_BRUSH)
-        #wc.lpszMenuName = None
-	wc.lpszClassName = "DTV HTMLDisplay class for %s" % id(self)
-	classAtom = win32gui.RegisterClass(wc)
-	del wc
-
-        # Create a containing child window.
-	self.mb = None # so callbacks can detect that there's no browser yet
-        self.hwnd = win32gui.CreateWindowEx(0, classAtom,
-            "", WS_CHILDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
-            CW_USEDEFAULT, invisibleDisplayParentHwnd, 0,
-            win32api.GetModuleHandle(None), None)
-
-        # If we have size information available, use it. It will be
-        # the tuple (width, height). Calling MoveWindow results into a
-        # call to onWMSize which results in a call to recomputeSize on
-        # the browser.
-        displaySizeHint = frameHint and areaHint and frameHint.getDisplaySizeHint(areaHint) or None
-        if displaySizeHint:
-            win32gui.MoveWindow(self.hwnd, 0, 0, 
-                displaySizeHint[0], displaySizeHint[1], False)
+	# This flag is set when we are deseleted to ensure that we
+	# stop trying to generate events against the browser object.
+	self.isDead = False
 
         # Save HTML to disk for loading via file: url. We'll delete it
 	# when the load has finished in onDocumentLoadFinishedCallback.
@@ -81,42 +64,34 @@ class HTMLDisplay (app.Display):
 	#print "Logged HTML to %s" % location
 	#self.deleteOnLoadFinished = None
 
-	# Translate path into URL.
+	# Translate path into URL and stash until we are ready to display
+	# ourselves.
 	parts = re.split(r'\\', location)
-	url = "file:///" + '/'.join(parts)
+	self.initialURL = "file:///" + '/'.join(parts)
 
-        userAgent = "DTV/pre-release (http://participatoryculture.org/)"
-	self.mb = MozillaBrowser. \
-	    MozillaBrowser(hwnd = self.hwnd,
-			   initialURL = url,
-			   onLoadCallback = self.onURLLoad,
-			   onActionCallback = self.onURLLoad,
-			   onDocumentLoadFinishedCallback = \
-			       self.onDocumentLoadFinished,
-			   userAgent = userAgent)
+    # NEEDS: register for onDocumentLoadFinished
+    # NEEDS: wire up onURLLoad callback
+    # NEEDS: set useragent as a pref: 
+    # "DTV/pre-release (http://participatoryculture.org/)"
 
-    def getHwnd(self):
-        return self.hwnd
+    def doSelect(self, frame, area):
+	print "HTMLDisplay selected"
+	assert not self.isDead, "HTMLDisplay selected multiple times"
+	self.boundElement = frame.getAreaElement(area, "html")
+	print "loading URL %s" % self.initialURL
+	# NEEDS: probably some locking
+	self.jsbridge.xulAddProgressListener(self.boundElement,
+					     self.progressListener)
+	self.jsbridge.xulLoadURI(self.boundElement, self.initialURL)
+	frame.ensureAreaMode(area, "html")
 
-    def onWMClose(self, hwnd, msg, wparam, lparam):
-	self.unlink()
-	win32gui.PostQuitMessage(0)
-
-    def onWMSize(self, hwnd, msg, wparam, lparam):
-	self.mb and self.mb.recomputeSize()
-
-    def onWMActivate(self, hwnd, msg, wparam, lparam):
-	if self.mb:
-	    if wparam == WA_ACTIVE or wparam == WA_CLICKACTIVE:
-		self.mb.activate()
-	    if wparam == WA_INACTIVE:
-		self.mb.deactivate()
-
-    def onSelected(self, *args):
-	# Give focus whenever the display is installed. Probably the best
-	# of several not especially attractive options.
-	app.Display.onSelected(self, *args)
-	self.mb and self.mb.activate()
+    def doDeselect(self, frame, area):
+	print "HTMLDisplay deselected"
+	self.lock.acquire()
+	self.isDead = True
+	self.jsbridge.xulRemoveProgressListener(self.boundElement,
+						self.progressListener)
+	self.lock.release()
 
     # Decorator. Causes calls to be queued up, in order, until
     # onDocumentLoadFinished is called.
@@ -132,29 +107,53 @@ class HTMLDisplay (app.Display):
 		self.lock.release()
 	return wrapper
 
+    def ignoreIfDead(func):
+	def wrapper(self, *args, **kwargs):
+	    self.lock.acquire()
+	    try:
+		if not self.isDead:
+		    func(*args, **kwargs)
+	    finally:
+		self.lock.release()
+	return wrapper
+
     @deferUntilAfterLoad
+    @ignoreIfDead
     def execJS(self, js):
 	raise NotImplementedError
 
     # DOM hooks used by the dynamic template code
+    # NEEDS: bind!
     @deferUntilAfterLoad
+    @ignoreIfDead
     def addItemAtEnd(self, xml, id):
-	self.mb.addElementAtEnd(xml, id)
+	self.jsbridge.addElementAtEnd(self.boundElement, xml, id)
+	pass
     @deferUntilAfterLoad
+    @ignoreIfDead
     def addItemBefore(self, xml, id):
-	self.mb.addElementBefore(xml, id)
+	self.jsbridge.addElementBefore(self.boundElement, xml, id)
+	pass
     @deferUntilAfterLoad
+    @ignoreIfDead
     def removeItem(self, id):
-	self.mb.removeElement(id)
+	self.jsbridge.removeElement(self.boundElement, id)
+	pass
     @deferUntilAfterLoad
+    @ignoreIfDead
     def changeItem(self, id, xml):
-	self.mb.changeElement(id, xml)
+	self.jsbridge.changeElement(self.boundElement, id, xml)
+	pass
     @deferUntilAfterLoad
+    @ignoreIfDead
     def hideItem(self, id):
-	self.mb.hideElement(id)
+	self.jsbridge.hideElement(self.boundElement, id)
+	pass
     @deferUntilAfterLoad
+    @ignoreIfDead
     def showItem(self, id):
-	self.mb.showElement(id)
+	self.jsbridge.showElement(self.boundElement, id)
+	pass
     def onURLLoad(self, url):
         """Called when this HTML browser attempts to load a URL (either
         through user action or Javascript.) The URL is provided as a
@@ -188,10 +187,9 @@ class HTMLDisplay (app.Display):
 		self.lock.release()
 
     def unlink(self):
-        self.mb = None
-        if self.hwnd:
-            win32gui.DestroyWindow(self.hwnd)
-        self.hwnd = None
+	# NEEDS: should keep track if this has already happened
+	self.jsbridge.xulAddProgressListener(self.boundElement,
+					     self.progressListener)
 
     def __del__(self):
         self.unlink()

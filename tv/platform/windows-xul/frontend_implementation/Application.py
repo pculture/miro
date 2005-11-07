@@ -14,23 +14,10 @@ class Application:
     def __init__(self):
 	print "Application init"
 
-    def Run(self):
+    def runNonblocking(self):
 	self.onStartup()
 
-	# Standard Windows message pump
-	# Alternative: ret = win32gui.PumpMessages()
-	user32 = windll.user32
-	msg = MSG()
-        returnCode = 0
-	while True:
-            returnCode = user32.GetMessageA(byref(msg), None, 0, 0)
-            if not returnCode:
-                break
-	    user32.TranslateMessage(byref(msg))
-            user32.DispatchMessageA(byref(msg))
-
-	self.onShutdown()
-        frontend.exit(returnCode)
+    # NEDS: arrange for onShutdown to be called
 
     def getBackendDelegate(self):
         return frontend.UIBackendDelegate()

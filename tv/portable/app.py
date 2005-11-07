@@ -34,8 +34,15 @@ import fasttypes
 
 db = database.defaultDatabase
 
+# Run the application. Call this, not start(), on platforms where we
+# are responsible for the event loop.
 def main():
     Controller().Run()
+
+# Start up the application and return. Call this, not main(), on
+# platform where we are not responsible for the event loop.
+def start():
+    Controller().runNonblocking()
 
 ###############################################################################
 #### Provides cross platform part of Video Display                         ####

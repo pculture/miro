@@ -26,7 +26,12 @@ def calc_unix_dirs():
     dp = os.path.join('share', 'doc'    , appdir)
     return ip, dp
 
-app_root = os.path.split(os.path.abspath(sys.argv[0]))[0]
+# GRS 11/06/05: When embedding Python, sometimes there is no sys.argv.
+# Fortunately sys.argv is used only to calculate image_root and
+# doc_root; the former is used only in Bittorrent's GUI.py, and the
+# latter is not used at all.
+#app_root = os.path.split(os.path.abspath(sys.argv[0]))[0]
+app_root = ""
 image_root = os.path.join(app_root, 'images')
 doc_root = app_root
 

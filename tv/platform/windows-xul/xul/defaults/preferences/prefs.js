@@ -1,0 +1,1 @@
+pref("toolkit.defaultChromeURI", "chrome://dtv/content/main.xul");

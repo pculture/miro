@@ -12,8 +12,8 @@ class VideoDisplay (frontend.NullDisplay, app.VideoDisplayDB):
     def __init__(self):
         app.VideoDisplayDB.__init__(self)
         frontend.NullDisplay.__init__(self)
-        self.vlc = vlc.SimpleVLC()
-        self.vlc.setWindow(self.getHwnd())
+#        self.vlc = vlc.SimpleVLC()
+#        self.vlc.setWindow(self.getHwnd())
 
     # FIXME: This strange API was inherited from OS X
     @classmethod
@@ -23,11 +23,6 @@ class VideoDisplay (frontend.NullDisplay, app.VideoDisplayDB):
     def configure(self, view, firstItemId, previousDisplay):
         self.setPlaylist(view, firstItemId)
         self.previousDisplay = previousDisplay
-
-
-    def onWMClose(self, hwnd, msg, wparam, lparam):
-	self.unlink()
-	win32gui.PostQuitMessage(0)
 
     def onWMSize(self, hwnd, msg, wparam, lparam):
         pass
@@ -39,10 +34,11 @@ class VideoDisplay (frontend.NullDisplay, app.VideoDisplayDB):
         filename = self.cur().getPath()
         if filename is None:
             filename= self.getNext().getPath()
-        self.vlc.play(filename)
+#        self.vlc.play(filename)
 
     def stop(self):
-        self.vlc.stop()
+#        self.vlc.stop()
+	pass
     
     def onSelected(self, frame):
         # Enable controls
@@ -50,16 +46,13 @@ class VideoDisplay (frontend.NullDisplay, app.VideoDisplayDB):
 
     def onDeselected(self, frame):
         # Disable controls
-        self.vlc.stop()
-
-    # NEEDS: See OS X for details on how to use VideoDisplayDB to find
-    # items to play.
-
-#    def getHwnd(self):
-#        in parent for now
+	pass
 
     def unlink(self):
         frontend.NullDisplay.unlink(self)
+
+    def __del__(self):
+	self.unlink()
 
 ###############################################################################
 #### Playlist item base class                                              ####
