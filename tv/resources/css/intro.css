@@ -1,0 +1,53 @@
+body {
+	background: #FFFFFF;
+	margin: 0px;
+	font: 12px "Lucida Grande", "Lucida Sans", "Trebuchet MS", Arial;
+	color: #000000;
+	text-decoration: none;
+}
+
+#container {
+	margin: 20px 0px;
+}
+
+p {
+	margin: 0px 20px 18px 20px;
+	padding: 0px;	
+	line-height: 16px;
+}
+
+h1 {
+	font-size: 200%;
+	font-weight: bold;
+	color: #085ffe;
+	margin: 0px 0px 18px 20px;
+	padding: 0px;
+}
+
+h2 {
+	font-size: 125%;
+	font-weight: bold;
+	line-height: 125%;
+	color: #000000;
+	background-color: #eff3fe;
+	margin: 0px 0px 5px 0px;
+	padding: 5px 0px 5px 20px;
+}
+
+h3 {
+	font-size: 115%;
+	font-weight: bold;
+	color: #000000;
+	margin: 0px 0px 18px 20px;
+	padding: 0px;
+}
+
+a:link, a:visited, a:active {
+	color: #085ffe;
+	text-decoration: underline;
+}
+
+a:hover {
+	color: #085ffe;
+	text-decoration: none;
+}

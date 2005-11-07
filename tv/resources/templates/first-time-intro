@@ -5,30 +5,29 @@
       xmlns:i18n="http://www.participatoryculture.org/i18n">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" href="resource:css/style.css" />
+<link rel="stylesheet" type="text/css" href="resource:css/intro.css" />
 <t:include filename="dynamic.js" />
 
 </head>
 
-<body class="first_time">
-
-<h1>Welcome to Internet Television</h1>
-
-<p style="padding-top: 10px;">Explore the Channel Guide<br />
-The Channel Guide is your home base. Check back often-- new channels are added every day and all channels are free. When you subscribe to a channel, it will appear in the left side channel bar. Select it to see what's on.</p>
-
-<p>Don't wait for your downloads.<br /><br />
-On a web page, videos need to be small so that they'll load right away. But DTV is a different experience. Publishers can send big, high quality videos to download in the background. So don't sit around waiting for videos to come in-- start some downloads and then check back later.</p>
-
-<p>Auto Download your favorite channels. If you really like a channel, turn AUTO DOWNLOAD on. This will automatically download new videos on that channel.</p>
-
-<p>Let things go, but save the best.<br /><br />
-Like a TiVo, DTV has an 'expiration' system that deletes older videos to make room for new videos. This helps keep hard disk space available without forcing you to constantly clean up. You can always choose to permanently keep a video by clicking 'save'.</p>
-
-<p>Leave DTV running.<br />
-DTV regularly checks channels for new videos and downloads in the background. Leaving DTV running as much as possible means that that you'll have new things ready to watch when you want to sit back and relax. You can also set the DTV prefences so that it will automatically run when you start your computer. </p>
-
-<h3><a href="template:first-time-intro-two">How to Subscribe >></a></h3>
-
+<body>
+<div id="container">
+  <h1>Welcome to Internet Television</h1>
+	
+  <h2>Explore the Channel Guide</h2>
+  <p>The Channel Guide is your home base. Check back often-- new channels are added every day and all channels are free. When you subscribe to a channel, it will appear in the left side channel bar. Select it to see what's on.</p>
+	
+  <h2>Don't wait for your downloads.</h2>
+  <p>On a web page, videos need to be small so that they'll load right away. But DTV is a different experience. Publishers can send big, high quality videos to download in the background. So don't sit around waiting for videos to come in-- start some downloads and then check back later.</p>
+  <p>Auto Download your favorite channels. If you really like a channel, turn AUTO DOWNLOAD on. This will automatically download new videos on that channel.</p>
+  
+	<h2>Let things go, but save the best.</h2>
+  <p>Like a TiVo, DTV has an 'expiration' system that deletes older videos to make room for new videos. This helps keep hard disk space available without forcing you to constantly clean up. You can always choose to permanently keep a video by clicking 'save'.</p>
+  
+	<h2>Leave DTV running.</h2>
+  <p>DTV regularly checks channels for new videos and downloads in the background. Leaving DTV running as much as possible means that that you'll have new things ready to watch when you want to sit back and relax. You can also set the DTV prefences so that it will automatically run when you start your computer. </p>
+	
+  <h3>Next Step: <a href="template:first-time-intro-two">How to Subscribe >></a></h3>
+</div>
 </body>
 </html>
