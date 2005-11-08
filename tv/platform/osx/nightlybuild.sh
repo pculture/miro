@@ -49,13 +49,10 @@ mkdir "${imgDirName}"
 mkdir "${imgDirName}/.background"
 
 mv "DTV.app" "${imgDirName}"
-cp "Resources-DMG/README IF UPGRADING ON PANTHER.txt" "${imgDirName}/Readme if upgrading on Panther"
 cp "Resources-DMG/DS_Store" "${imgDirName}/.DS_Store"
 cp "Resources-DMG/background.tiff" "${imgDirName}/.background"
 
 /Developer/Tools/SetFile -a V "${imgDirName}/.DS_Store"
-/Developer/Tools/SetFile -c ttxt "${imgDirName}/Readme if upgrading on Panther"
-/Developer/Tools/SetFile -t TEXT "${imgDirName}/Readme if upgrading on Panther"
 
 # Create the DMG from the image folder ----------------------------------------
 
