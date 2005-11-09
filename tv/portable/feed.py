@@ -773,6 +773,9 @@ class Feed(DDBObject):
         assert(version == 3)
         data['updating'] = False
         self.__dict__ = data
+        # This object is useless without a FeedImpl associated with it
+        if not data.has_key('actualFeed'):
+            self.__class__ = DropItLikeItsHot
 
 
 class RSSFeedImpl(FeedImpl):
@@ -1574,9 +1577,15 @@ class UniversalFeed:
         for key, val in Feed.__dict__.iteritems():
             if isfunction(val):
                 instancemethod(val, self,Feed)
-        # FIXME: this assumes that the feed object is decoded before
-        # it's items
         self.actualFeed.ufeed = self
+        # UniversalFeeds should never contain Feeds. If they do,
+        # something is wrong.
+        if isinstance(self.actualFeed, Feed):
+            self.__class__ = DropItLikeItsHot
+        else:
+            # FIXME: this assumes that the feed object is decoded before
+            # it's items
+            self.actualFeed.ufeed = self
                 
 class ScraperFeed(ScraperFeedImpl):
     ##
