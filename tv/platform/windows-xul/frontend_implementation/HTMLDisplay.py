@@ -10,8 +10,11 @@ from xpcom import components
 #### HTML display                                                          ####
 ###############################################################################
 
+# NEEDS: we need to cancel loads when we get a transition to a new
+# page, and then not loadURI until we get a successful cancellation.
 class ProgressListener:
-    _com_interfaces_ = [components.interfaces.nsIWebProgressListener]
+    _com_interfaces_ = [components.interfaces.nsIWebProgressListener,
+			components.interfaces.nsIURIContentListener]
 
     def __init__(self, boundDisplay):
 	self.boundDisplay = boundDisplay
@@ -27,7 +30,21 @@ class ProgressListener:
 	pass
 
     def onStateChange(self, webProgress, request, stateFlags, status):
-	print "onStateChange! %s %s %s" % (request, stateFlags, status)
+	iwpl = components.interfaces.nsIWebProgressListener
+
+	if stateFlags & iwpl.STATE_IS_DOCUMENT:
+	    if stateFlags & iwpl.STATE_START:
+		# Load of top-level document began
+		print "STARTED: %d" % id(request)
+		pass
+	    if stateFlags & iwpl.STATE_STOP:
+		# Load of top-level document finished
+		print "FINISHED: %d" % id(request)
+		self.boundDisplay.onDocumentLoadFinished()
+
+    def onStartURIOpen(uri):
+	print "onStartURIOpen!"
+	return True
 
 class HTMLDisplay (app.Display):
     "Selectable Display that shows a HTML document."
@@ -44,16 +61,13 @@ class HTMLDisplay (app.Display):
 	self.initialLoadFinished = False
 	self.execQueue = []
 	self.progressListener = ProgressListener(self)
+	self.frame = None
 
 	klass = components.classes["@participatoryculture.org/dtv/jsbridge;1"]
 	self.jsbridge = klass.getService(components.interfaces.pcfIDTVJSBridge)
 
-	# This flag is set when we are deseleted to ensure that we
-	# stop trying to generate events against the browser object.
-	self.isDead = False
-
         # Save HTML to disk for loading via file: url. We'll delete it
-	# when the load has finished in onDocumentLoadFinishedCallback.
+	# when the load has finished in onDocumentLoadFinished.
         (handle, location) = tempfile.mkstemp('.html')
         handle = os.fdopen(handle,"w")
         handle.write(html)
@@ -61,8 +75,8 @@ class HTMLDisplay (app.Display):
 	self.deleteOnLoadFinished = location
 	# For debugging generated HTML, you could uncomment the next
 	# two lines.
-	#print "Logged HTML to %s" % location
-	#self.deleteOnLoadFinished = None
+	print "Logged HTML to %s" % location # NEEDS
+	self.deleteOnLoadFinished = None # NEEDS
 
 	# Translate path into URL and stash until we are ready to display
 	# ourselves.
@@ -74,24 +88,61 @@ class HTMLDisplay (app.Display):
     # NEEDS: set useragent as a pref: 
     # "DTV/pre-release (http://participatoryculture.org/)"
 
-    def doSelect(self, frame, area):
-	print "HTMLDisplay selected"
-	assert not self.isDead, "HTMLDisplay selected multiple times"
-	self.boundElement = frame.getAreaElement(area, "html")
-	print "loading URL %s" % self.initialURL
-	# NEEDS: probably some locking
-	self.jsbridge.xulAddProgressListener(self.boundElement,
-					     self.progressListener)
-	self.jsbridge.xulLoadURI(self.boundElement, self.initialURL)
-	frame.ensureAreaMode(area, "html")
-
-    def doDeselect(self, frame, area):
-	print "HTMLDisplay deselected"
+    def getXULElement(self, frame):
 	self.lock.acquire()
-	self.isDead = True
-	self.jsbridge.xulRemoveProgressListener(self.boundElement,
-						self.progressListener)
-	self.lock.release()
+	try:
+	    if not (self.frame is None):
+		assert self.frame == frame, "XUL displays cannot be reused"
+		return self.elt
+
+	    self.frame = frame
+	    self.elt = self.frame.getXULDocument().createElement("browser")
+	    self.elt.setAttribute("flex", "1")
+	    self.elt.setAttribute("type", "content")
+	    self.elt.setAttribute("src", self.initialURL)
+	    return self.elt
+	finally:
+	    self.lock.release()
+
+    def onSelected(self, frame):
+	# Technically, there is a race condition here. You apparently
+	# can't add a progress listener until the browser element has
+	# been inserted in the XUL document, and presumably the 'src'
+	# URL doesn't start loading until then. But as the code sits
+	# now, there is a small window between when selectDisplay
+	# inserts the element in the document and when it calls this
+	# function, allowing us to register the listener. This means
+	# we might miss the "load finished" event. What we need is a
+	# way to simultaneously get the current state of the load and
+	# register our handler.
+	self.jsbridge.xulAddProgressListener(self.elt,
+					     self.progressListener)
+
+#	print "boxObject %s" % self.elt.boxObject
+#	q = self.elt.boxObject.queryInterface(components.interfaces.nsIBrowserBoxObject)
+#	ds = q.docShell
+#	print "docShell %s" % ds
+#	wp = ds.queryInterface(components.interfaces.nsIInterfaceRequestor).getInterface(components.interfaces.nsIWebProgress)
+#	print "wp %s" % wp
+#	wp.addProgressListener(self.progressListener, components.interfaces.nsIWebProgress.NOTIFY_ALL)
+#	ds = ds.queryInterface(components.interfaces.nsIDocShell)
+#	print "q'd: %s" % ds
+#	print "pUCL was %s" % ds.parentURIContentListener
+#	ds.parentURIContentListener = self.progressListener
+
+#	old = self.jsbridge.xulGetContentListener(self.elt)
+#	print "old %s" % old
+#	self.jsbridge.xulSetContentListener(self.elt,
+#					    self.progressListener)
+#	print "success"
+
+#	window = self.jsbridge.xulGetContentWindow(self.elt)
+#	print "got win %s" % window
+#	window.myProp = 12
+#	window.setAttribute("myProp", "12")
+#	print "set prop"
+
+	self.jsbridge.xulSetDocumentBridge(self.elt, "myValXXX1")
 
     # Decorator. Causes calls to be queued up, in order, until
     # onDocumentLoadFinished is called.
@@ -107,52 +158,34 @@ class HTMLDisplay (app.Display):
 		self.lock.release()
 	return wrapper
 
-    def ignoreIfDead(func):
-	def wrapper(self, *args, **kwargs):
-	    self.lock.acquire()
-	    try:
-		if not self.isDead:
-		    func(*args, **kwargs)
-	    finally:
-		self.lock.release()
-	return wrapper
-
     @deferUntilAfterLoad
-    @ignoreIfDead
     def execJS(self, js):
 	raise NotImplementedError
 
     # DOM hooks used by the dynamic template code
-    # NEEDS: bind!
     @deferUntilAfterLoad
-    @ignoreIfDead
     def addItemAtEnd(self, xml, id):
-	self.jsbridge.addElementAtEnd(self.boundElement, xml, id)
+	self.jsbridge.xulAddElementAtEnd(self.elt, xml, id)
 	pass
     @deferUntilAfterLoad
-    @ignoreIfDead
     def addItemBefore(self, xml, id):
-	self.jsbridge.addElementBefore(self.boundElement, xml, id)
+	self.jsbridge.xulAddElementBefore(self.elt, xml, id)
 	pass
     @deferUntilAfterLoad
-    @ignoreIfDead
     def removeItem(self, id):
-	self.jsbridge.removeElement(self.boundElement, id)
+	self.jsbridge.xulRemoveElement(self.elt, id)
 	pass
     @deferUntilAfterLoad
-    @ignoreIfDead
     def changeItem(self, id, xml):
-	self.jsbridge.changeElement(self.boundElement, id, xml)
+	self.jsbridge.xulChangeElement(self.elt, id, xml)
 	pass
     @deferUntilAfterLoad
-    @ignoreIfDead
     def hideItem(self, id):
-	self.jsbridge.hideElement(self.boundElement, id)
+	self.jsbridge.xulHideElement(self.elt, id)
 	pass
     @deferUntilAfterLoad
-    @ignoreIfDead
     def showItem(self, id):
-	self.jsbridge.showElement(self.boundElement, id)
+	self.jsbridge.xulShowElement(self.elt, id)
 	pass
     def onURLLoad(self, url):
         """Called when this HTML browser attempts to load a URL (either
@@ -166,6 +199,8 @@ class HTMLDisplay (app.Display):
         return True
 
     def onDocumentLoadFinished(self):
+	self.jsbridge.xulSetDocumentBridge(self.elt, "myValXXX2") # NEEDS
+
 	if self.deleteOnLoadFinished:
 	    try:
 		# Comment this line out for debugging
@@ -187,8 +222,8 @@ class HTMLDisplay (app.Display):
 		self.lock.release()
 
     def unlink(self):
-	# NEEDS: should keep track if this has already happened
-	self.jsbridge.xulAddProgressListener(self.boundElement,
+	# NEEDS: should keep track if this has already happened?
+	self.jsbridge.xulAddProgressListener(self.elt,
 					     self.progressListener)
 
     def __del__(self):

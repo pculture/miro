@@ -19,9 +19,28 @@ jsBridge.prototype = {
     xulAddProgressListener: function(xulElt, listener) {
 	xulElt.addProgressListener(listener);
     },
-    xulRemoveProgressListener: function(elt, listener) {
+    xulRemoveProgressListener: function(xulElt, listener) {
 	xulElt.removeProgressListener(listener);
     },
+
+    xulGetContentListener: function(xulElt) {
+	return xulElt.docShell.parentURIContentListener;
+    },
+    xulSetContentListener: function(xulElt, listener) {
+	//	xulElt.docShell.parentURIContentListener = listener;
+	ds = xulElt.docShell;
+	ds = ds.QueryInterface(Components.interfaces.nsIDocShell);
+	ds.parentURIContentListener = listener;
+    },
+
+    xulGetContentWindow: function(xulElt) {
+	return xulElt.contentWindow;
+    },
+
+    xulSetDocumentBridge: function(xulElt, value) {
+	xulElt.contentWindow.bridge = value;
+	//	xulElt.nhthtnhtn.htnhtnhtn.htnhtnshtns = 12;
+    }, 
 
     xulAddElementAtEnd: function(xulElt, xml, id) {
 	elt = xulElt.contentDocument.getElementById(id);

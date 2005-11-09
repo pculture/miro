@@ -22,17 +22,16 @@ class MainFrame:
         # Child display state
         self.selectedDisplays = {}
 
-	# Find our global XPCOM controller object
-	print "MainFrame about to try"
+	# Find the XUL document corresponding to the window
 	klass = components.classes["@participatoryculture.org/dtv/pybridge;1"]
-	self.pybridge = klass.getService(components.interfaces.pcfIDTVPyBridge)
-	klass = components.classes["@participatoryculture.org/dtv/jsbridge;1"]
-	self.jsbridge = klass.getService(components.interfaces.pcfIDTVJSBridge)
-	print "MainFrame init got bridges: %s %s" % (self.pybridge, self.jsbridge)
+	pybridge = klass.getService(components.interfaces.pcfIDTVPyBridge)
+	self.document = pybridge.mainWindowDocument
 
     def selectDisplay(self, newDisplay, area):
         """Install the provided 'newDisplay' in the requested area"""
 
+	# Generate a deselection message for the previously selected
+	# display in this area, if any
 	print "selectDisplay called"
         oldDisplay = None # protect from GC at least until new window's in
         if self.selectedDisplays.has_key(area):
@@ -41,40 +40,26 @@ class MainFrame:
                 oldDisplay.onDeselected_private(self)
                 oldDisplay.onDeselected(self)
 
-	# On this platform, we leave the dirty work entirely up to the
-	# displays!
+	# Find the <box /> into which the display is to be inserted
+	box = self.document.getElementById(area)
+
+	# Remove the deselected display
 	if oldDisplay:
-	    oldDisplay.doDeselect(self, area)
+	    box.removeChild(oldDisplay.getXULElement(self))
+
+	# Insert the newly selected display
 	if newDisplay:
-	    newDisplay.doSelect(self, area)
+	    box.appendChild(newDisplay.getXULElement(self))
 
+	# Generate a selection message for the new display, if any
         self.selectedDisplays[area] = newDisplay
-        newDisplay.onSelected_private(self)
-        newDisplay.onSelected(self)
+	if newDisplay:
+	    newDisplay.onSelected_private(self)
+	    newDisplay.onSelected(self)
 
-    # Internal use: return the DOM element corresponding to a given
-    # display area, assuming that we want to use the area to display
-    # content of the given "mode" (currently 'video' or 'html'.)
-    def getAreaElement(self, area, mode):
-	theId = "%s_%s" % (area, mode)
-	print "getAreaElement %s" % theId
-	return self.pybridge.mainWindowDocument.getElementById(theId)
-
-    # Internal use: if the given display area isn't "prepared" to
-    # display content "in the given mode," do whatever is necessary
-    # XUL-side to prepare it. In practice, the only use for this is
-    # switching between "video" and "html" modes for mainDisplay.
-    def ensureAreaMode(self, area, mode):
-	print "EnsureAreaMode"
-	if area == self.mainDisplay:
-	    htmlElt = self.getAreaElement(area, "html")
-	    videoElt = self.getAreaElement(area, "video")
-	    if mode == "video":
-		htmlElt.setAttribute("collapsed", "true")
-		videoElt.setAttribute("collapsed", "false")
-	    else:
-		htmlElt.setAttribute("collapsed", "false")
-		videoElt.setAttribute("collapsed", "true")
+    # Internal use: get the XUL document corresponding to the window.
+    def getXULDocument(self):
+	return self.document
 
     # Internal use: return an estimate of the size of a given display area
     # as a (width, height) pair, or None if no information's available.
@@ -96,12 +81,19 @@ class NullDisplay (app.Display):
 
     def __init__(self):
         app.Display.__init__(self)
+	self.elt = None
+	self.frame = None
 
-    def doDeselect(self, frame, area):
-	pass
-
-    def doSelect(self, frame, area):
-	pass
+    def getXULElement(self, frame):
+	if self.frame is None:
+	    self.frame = frame
+	    self.elt = self.frame.getXULDocument().createElement("spacer")
+	    self.elt.setAttribute("width", "0")
+	    self.elt.setAttribute("height", "0")
+	    self.elt.setAttribute("collapsed", "true")
+	else:
+	    assert self.frame == frame, "XUL displays cannot be reused"
+	return self.elt
 
     def unlink(self):
 	pass

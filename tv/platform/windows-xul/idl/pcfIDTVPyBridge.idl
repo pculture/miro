@@ -10,6 +10,7 @@ interface pcfIDTVPyBridge : nsISupports
   /**
    * Called on application startup.
    */
-  void onStartup(in nsIDOMDocument mainWindowDocument,
-		 in nsISupports elt);
+  void onStartup(in nsIDOMDocument mainWindowDocument);
+
+  void eventURL(in AString url);
 };

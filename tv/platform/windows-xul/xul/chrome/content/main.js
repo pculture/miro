@@ -44,7 +44,17 @@ function onLoad() {
     var py = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
     	getService();
     py.QueryInterface(Components.interfaces.pcfIDTVPyBridge); // optional?
-    document.getElementById("channelsDisplay_html").loadURI("http://www.penny-arcade.com");
-    py.onStartup(document, document.getElementById("channelsDisplay_html"));
-    //py.onStartup(document, document.getElementById("channelsDisplay_html").webNavigation);
+    //document.getElementById("channelsDisplay_html").loadURI("http://www.penny-arcade.com");
+    //    py.onStartup(document, document.getElementById("channelsDisplay_html"));
+    document.myProp = "myVal";
+    py.onStartup(document);
+}
+
+function testCreate() {
+    elt = document.createElement("browser");
+    elt.setAttribute("width", "100");
+    elt.setAttribute("height", "100");
+    elt.setAttribute("src", "http://web.mit.edu");
+    main = document.getElementById("main");
+    main.appendChild(elt);
 }

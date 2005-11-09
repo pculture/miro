@@ -13,17 +13,11 @@
   <script src="chrome://dtv/content/main.js"/>
   <hbox flex="1">
     <spacer width="20" flex="0" />
-    <browser id="channelsDisplay_html" src="http://www.google.com"
-	     width="250" type="content" flex="0"/>
+    <box id="channelsDisplay" flex="0" width="250" />
     <spacer width="20" flex="0" />
-    <vbox flex="1">
-      <!-- The code will show one of these and hide the other, as
-	   appropriate. -->
-      <browser id="mainDisplay_html" src="http://www.google.com"
-	       type="content-primary" flex="1" collapsed="false"/>
-      <label id="mainDisplay_video" value="VLC will go here" flex="1"
-	     collapsed="true"/>
-    </vbox>
+    <box id="mainDisplay" flex="1" />
     <spacer width="20" flex="0" />
   </hbox>
+  <button id="theButton" value="testCreate" oncommand="testCreate();" />
+
 </window>

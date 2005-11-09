@@ -2,6 +2,8 @@
 #include "nsIDOMDocument.idl"
 #include "nsIDOMElement.idl"
 #include "nsIWebProgressListener.idl"
+#include "nsIURIContentListener.idl"
+#include "nsIDOMWindow.idl"
 
 [scriptable, uuid(7E70142F-ABC9-4d6e-BDB8-EDC747FCD2A3)]
 interface pcfIDTVJSBridge : nsISupports
@@ -18,6 +20,14 @@ interface pcfIDTVJSBridge : nsISupports
 			      in nsIWebProgressListener listener);
   void xulRemoveProgressListener(in nsISupports elt,
 				 in nsIWebProgressListener listener);
+
+  nsIURIContentListener xulGetContentListener(in nsISupports elt);
+  void xulSetContentListener(in nsISupports xulElt,
+			     in nsIURIContentListener listener);
+
+  nsIDOMWindow xulGetContentWindow(in nsISupports elt);
+
+  void xulSetDocumentBridge(in nsISupports elt, in AString value);
 
   void xulAddElementAtEnd(in nsISupports elt, in AString xml, in AString id);
   void xulAddElementBefore(in nsISupports elt, in AString xml, in AString id);
