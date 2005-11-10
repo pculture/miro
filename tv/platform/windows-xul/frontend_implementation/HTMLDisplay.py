@@ -42,8 +42,56 @@ class ProgressListener:
 		print "FINISHED: %d" % id(request)
 		self.boundDisplay.onDocumentLoadFinished()
 
-    def onStartURIOpen(uri):
-	print "onStartURIOpen!"
+
+    def onStartURIOpen(self, uri):
+	print "onStartURIOpen (old)! %s" % uri.spec
+	return True
+
+class ProgressListener2:
+    _com_interfaces_ = [components.interfaces.nsIWebProgressListener,
+			components.interfaces.nsIURIContentListener]
+
+    def __init__(self, boundDisplay):
+	self.boundDisplay = boundDisplay
+
+    def onLocationChange(self, webProgress, request, location):
+	print "onLocationChange: %s" % request
+
+    def onProgressChange(self, webProgress, request, curSelfProgress,
+			 maxSelfProgress, curTotalProgress, maxTotalProgess):
+	pass
+
+    def onSecurityChange(self, webProgress, request, state):
+	pass
+
+    def onStateChange(self, webProgress, request, stateFlags, status):
+	iwpl = components.interfaces.nsIWebProgressListener
+
+	if stateFlags & iwpl.STATE_IS_DOCUMENT:
+	    if stateFlags & iwpl.STATE_START:
+		# Load of top-level document began
+		print "STARTED: %d" % id(request)
+		pass
+	    if stateFlags & iwpl.STATE_STOP:
+		# Load of top-level document finished
+		print "FINISHED: %d" % id(request)
+		self.boundDisplay.onDocumentLoadFinished()
+
+
+    def onStartURIOpen(self, uri):
+	print "onStartURIOpen (old2)! %s" % uri.spec
+	return True
+
+class ContentListener:
+    _com_interfaces_ = [components.interfaces.nsIURIContentListener]
+
+    def __init__(self, boundDisplay, parent):
+	self.loadCookie = None
+	self.boundDisplay = boundDisplay
+	self.parentContentListener = parent
+
+    def onStartURIOpen(self, uri):
+	print "onStartURIOpen! %s" % uri.spec
 	return True
 
 class HTMLDisplay (app.Display):
@@ -61,6 +109,7 @@ class HTMLDisplay (app.Display):
 	self.initialLoadFinished = False
 	self.execQueue = []
 	self.progressListener = ProgressListener(self)
+	self.pl2 = ProgressListener2(self)
 	self.frame = None
 
 	klass = components.classes["@participatoryculture.org/dtv/jsbridge;1"]
@@ -118,10 +167,14 @@ class HTMLDisplay (app.Display):
 	self.jsbridge.xulAddProgressListener(self.elt,
 					     self.progressListener)
 
-#	print "boxObject %s" % self.elt.boxObject
-#	q = self.elt.boxObject.queryInterface(components.interfaces.nsIBrowserBoxObject)
-#	ds = q.docShell
-#	print "docShell %s" % ds
+	self.jsbridge.xulAddProgressListener(self.elt,
+					     self.pl2)
+
+	print "boxObject %s" % self.elt.boxObject
+	q = self.elt.boxObject.queryInterface(components.interfaces.nsIBrowserBoxObject)
+	ds = q.docShell
+	print "docShell %s" % ds
+
 #	wp = ds.queryInterface(components.interfaces.nsIInterfaceRequestor).getInterface(components.interfaces.nsIWebProgress)
 #	print "wp %s" % wp
 #	wp.addProgressListener(self.progressListener, components.interfaces.nsIWebProgress.NOTIFY_ALL)
@@ -142,7 +195,20 @@ class HTMLDisplay (app.Display):
 #	window.setAttribute("myProp", "12")
 #	print "set prop"
 
-	self.jsbridge.xulSetDocumentBridge(self.elt, "myValXXX1")
+#	self.jsbridge.xulSetDocumentBridge(self.elt, "myValXXX1")
+
+
+	ds2 = ds.queryInterface(components.interfaces.nsIInterfaceRequestor)
+
+	ucl = ds2.getInterface(components.interfaces.nsIURIContentListener)
+	print "ucl = %s" % ucl
+	print "parent ucl = %s" % ucl.parentContentListener
+#	self.contentListener = ContentListener(self, ucl.parentContentListener)
+#	ucl.parentContentListener = self.contentListener
+#	self.pl2 = self.progressListener
+
+	ucl.parentContentListener = self.pl2
+	print "set successfully"
 
     # Decorator. Causes calls to be queued up, in order, until
     # onDocumentLoadFinished is called.

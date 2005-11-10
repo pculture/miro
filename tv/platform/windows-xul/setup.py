@@ -236,6 +236,7 @@ class runxul(Command):
 	newEnv['RUNXUL_RESOURCES'] = self.appResources
 	print "Starting application"
 	os.execle(xulrunnerBinary, xulrunnerBinary, applicationIni, newEnv)
+#	os.execle(xulrunnerBinary, xulrunnerBinary, applicationIni, "-console", newEnv)
 
     def buildXulrunnerInstallation(self):
 	buildBase = os.path.join(self.bdist_base, "xulrunner")
