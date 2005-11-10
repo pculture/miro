@@ -873,7 +873,8 @@ class UIBackendDelegate:
         like to download it now"""
         summary = u'DTV Version Alert'
         message = u'A new version of DTV is available.\n\nWould you like to download it now?'
-        download = showInformationalDialog(summary, message)
+        buttons = (u'Download', u'Cancel')
+        download = showInformationalDialog(summary, message, buttons)
         if download:
             self.openExternalURL(url)
 
@@ -898,7 +899,9 @@ class UIBackendDelegate:
         # We could use Python's webbrowser.open() here, but
         # unfortunately, it doesn't have the same semantics under UNIX
         # as under other OSes. Sometimes it blocks, sometimes it doesn't.
+        pool = NSAutoreleasePool.alloc().init()
         NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
+        del pool
 
     def updateAvailableItemsCountFeedback(self, count):
         pool = NSAutoreleasePool.alloc().init()
