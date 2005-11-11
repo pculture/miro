@@ -1,0 +1,4 @@
+The majority of the Linux port is in the platform/gtk-x11 folder.
+
+This folder should only contain Linux specific pieces.
+
