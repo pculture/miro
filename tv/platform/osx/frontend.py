@@ -540,7 +540,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         NSPasteboard.generalPasteboard().declareTypes_owner_([NSURLPboardType], self)
 
     def updateChannel_(self, sender):
-        feedURL = app.Controller.instance.currentSelectedTab.feedID()
+        feedID = app.Controller.instance.currentSelectedTab.feedID()
         if feedID is not None:
             backEndDelegate = self.appl.getBackendDelegate()
             app.ModelActionHandler(backEndDelegate).updateFeed(feedID)
