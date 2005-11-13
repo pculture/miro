@@ -383,9 +383,17 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     def restoreLayout(self):
         windowFrame = config.get(config.MAIN_WINDOW_FRAME)
-        if windowFrame is not None:
-           windowFrame = NSRectFromString(windowFrame)
-           self.window().setFrame_display_(windowFrame, NO)
+        if windowFrame is None:
+            windowFrame = self.window().frame()
+        else:
+            windowFrame = NSRectFromString(windowFrame)
+        screen = self.window().screen()
+        if screen is not None:
+            visibleFrame = screen.visibleFrame()
+            if not NSContainsRect(visibleFrame, windowFrame):
+                print "DTV: Fitting window to screen size"
+                windowFrame = visibleFrame
+        self.window().setFrame_display_(windowFrame, NO)
 
         leftFrame = config.get(config.LEFT_VIEW_SIZE)
         rightFrame = config.get(config.RIGHT_VIEW_SIZE)
