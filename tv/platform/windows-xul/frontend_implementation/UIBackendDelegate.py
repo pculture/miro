@@ -65,3 +65,10 @@ class UIBackendDelegate:
         # Inform the user in a way or another that newly available items are
         # available
         pass
+
+    def interruptDownloadsAtShutdown(self, downloadsCount):
+        summary = u'Are you sure you want to quit?'
+        message = u'You have %d download%s still in progress.' % (downloadsCount, downloadsCount > 1 and 's' or '')
+        buttons = (u'Quit', u'Cancel')
+        # NEEDS inform user
+        return True

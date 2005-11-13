@@ -118,6 +118,10 @@ class Application:
         # For overriding
         pass
 
+    def allowShutdown(self):
+        # For overriding
+        pass
+
     def onShutdown(self):
         # For overriding
         pass
@@ -160,6 +164,12 @@ class AppController (NibClassBuilder.AutoBaseClass):
         # Call the startup hook before any events (such as instructions
         # to open files...) are delivered.
         self.actualApp.onStartup()
+
+    def applicationShouldTerminate_(self, application):
+        reply = NSTerminateNow
+        if not self.actualApp.allowShutdown():
+            reply = NSTerminateCancel 
+        return reply
 
     def applicationDidFinishLaunching_(self, notification):
         # The [NSURLRequest setAllowsAnyHTTPSCertificate:forHost:] selector is
@@ -938,6 +948,12 @@ class UIBackendDelegate:
             badgedIcon.unlockFocus()
         NSApplication.sharedApplication().setApplicationIconImage_(badgedIcon)
         del pool
+        
+    def interruptDownloadsAtShutdown(self, downloadsCount):
+        summary = u'Are you sure you want to quit?'
+        message = u'You have %d download%s still in progress.' % (downloadsCount, downloadsCount > 1 and 's' or '')
+        buttons = (u'Quit', u'Cancel')
+        return showWarningDialog(summary, message, buttons)
 
 
 class PasswordController (NibClassBuilder.AutoBaseClass):

@@ -332,6 +332,13 @@ class Controller (frontend.Application):
     def checkTabByObjID(self, id):
         return self.checkTabUsingIndex(self.tabObjIDIndex, id)
 
+    def allowShutdown(self):
+        allow = True
+        downloadsCount = globalViewList['downloadingItems'].len()
+        if downloadsCount > 0:
+            allow = self.getBackendDelegate().interruptDownloadsAtShutdown(downloadsCount)
+        return allow
+
     def onShutdown(self):
         try:
             print "DTV: Saving preferences..."
