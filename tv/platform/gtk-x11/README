@@ -4,11 +4,11 @@ Run test.sh to start the app.
 
 Currently, there's no way to build a distributable binary.
 
-You'll need Pyrex, PyObjC and Boost to compile DTV. We use these for
-linking to C, Objective C, and C++ code.
-
-You'll also need python-gtk2, python-gnome2-extras, mozilla-dev, and
-whatever packages those depend on for the GTK port.
+DTV requires Python 2.4.  You'll need python-pyrex and
+libboost-python-dev to compile DTV. We use these for linking to C and
+C++ code.  For the GTK port you'll also need python-gtk2-dev,
+python-gnome2-extras-dev, mozilla-dev, and whatever packages those
+depend on.
 
 I'm using Debian unstable with a few packages from experimental. I
 tried to avoid distribution specific paths, but I may have left some
