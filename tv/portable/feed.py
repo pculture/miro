@@ -376,7 +376,7 @@ class FeedImpl:
                     eligibile += 1
                     if next == None:
                         next = item
-                    elif item.getPubDateParsed() < next.getPubDateParsed():
+                    elif item.getPubDateParsed() > next.getPubDateParsed():
                         next = item
                 if item.getState() == "downloading":
                     dling += 1
