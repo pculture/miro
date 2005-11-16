@@ -45,69 +45,6 @@ def start():
     Controller().runNonblocking()
 
 ###############################################################################
-#### Provides cross platform part of Video Display                         ####
-#### This must be defined before we import the frontend                    ####
-###############################################################################
-class VideoDisplayDB:
-    
-    def __init__(self):
-        self.initialView = None
-        self.filteredView = None
-        self.view = None
-    
-    def setPlaylist(self, playlist, firstItemId):
-        self.initialView = playlist
-        self.filteredView = self.initialView.filter(mappableToPlaylistItem)
-        self.view = self.filteredView.map(mapToPlaylistItem)
-
-        # Move the cursor to the requested item; if there's no
-        # such item in the view, move the cursor to the first
-        # item
-        self.view.beginRead()
-        try:
-            self.view.resetCursor()
-            while True:
-                cur = self.view.getNext()
-                if cur == None:
-                    # Item not found in view. Put cursor at the first
-                    # item, if any.
-                    self.view.resetCursor()
-                    self.view.getNext()
-                    break
-                if str(cur.getID()) == firstItemId:
-                    # The cursor is now on the requested item.
-                    break
-        finally:
-            self.view.endRead()
-
-    def reset(self):
-        self.initialView.removeView(self.filteredView)
-        self.initialView = None
-        self.filteredView = None
-        self.view = None
-
-    def playPause(self):
-        raise NotImplementedErr
-
-    def stop(self):
-        raise NotImplementedErr
-
-    def skipTo(self, item):
-        if item is not None:
-            item.onViewed()
-        return item
-
-    def cur(self):
-        return self.skipTo(self.view.cur())
-
-    def getNext(self):
-        return self.skipTo(self.view.getNext())
-        
-    def getPrev(self):
-        return self.skipTo(self.view.getPrev())
-
-
-###############################################################################
 #### Base class for displays                                               ####
 #### This must be defined before we import the frontend                    ####
 ###############################################################################
@@ -151,12 +88,140 @@ class Display:
         """Called when the Display is not shown because it is not ready yet
         and another display will take its place"""
         pass
-        
+
     def getWatchable(self):
         """Subclasses can implement this if they can return a database view
         of watchable items"""
         return None
 
+
+###############################################################################
+#### Provides cross platform part of Video Display                         ####
+#### This must be defined before we import the frontend                    ####
+###############################################################################
+
+class VideoDisplayBase (Display):
+    
+    def __init__(self):
+        Display.__init__(self)
+        self.initialView = None
+        self.filteredView = None
+        self.previousDisplay = None
+        self.view = None
+        self.isPlaying = False
+
+    def configure(self, view, firstItemId, previousDisplay):
+        self.setPlaylist(view, firstItemId)
+        self.previousDisplay = previousDisplay
+        
+    def setPlaylist(self, playlist, firstItemId):
+        self.initialView = playlist
+        self.filteredView = self.initialView.filter(mappableToPlaylistItem)
+        self.view = self.filteredView.map(mapToPlaylistItem)
+
+        # Move the cursor to the requested item; if there's no
+        # such item in the view, move the cursor to the first
+        # item
+        self.view.beginRead()
+        try:
+            self.view.resetCursor()
+            while True:
+                cur = self.view.getNext()
+                if cur == None:
+                    # Item not found in view. Put cursor at the first
+                    # item, if any.
+                    self.view.resetCursor()
+                    self.view.getNext()
+                    break
+                if str(cur.getID()) == firstItemId:
+                    # The cursor is now on the requested item.
+                    break
+        finally:
+            self.view.endRead()
+
+    def selectItem(self, item):
+        info = item.getInfoMap()
+        template = TemplateDisplay('video-info', info, Controller.instance, None, None, None)
+        area = Controller.instance.frame.videoInfoDisplay
+        Controller.instance.frame.selectDisplay(template, area)        
+
+    def onSelected(self, frame):
+        item = self.cur()
+        if item is not None:
+            self.selectItem(item)
+
+    def reset(self):
+        self.initialView.removeView(self.filteredView)
+        self.initialView = None
+        self.filteredView = None
+        self.view = None
+        self.previousDisplay = None
+        self.isPlaying = False
+
+    def resetMovie(self):
+        raise NotImplementedError
+
+    def playPause(self):
+        if self.isPlaying:
+            self.pause()
+        else:
+            self.play()
+
+    def play(self):
+        self.isPlaying = True
+
+    def pause(self):
+        self.isPlaying = False
+
+    def stop(self):
+        self.isPlaying = False
+        self.exitVideoMode()
+
+    def goFullScreen(self):
+        if not self.isPlaying:
+            self.play()
+
+    def getCurrentTime(self):
+        raise NotImplementedError
+
+    def skip(self, direction):
+        nextItem = None
+        if direction == 1:
+            nextItem = self.getNext()
+        else:
+            if self.getCurrentTime() <= 0.5:
+                nextItem = self.getPrev()
+            else:
+                self.resetMovie()
+        if nextItem is not None:
+            self.selectItem(nextItem)
+            self.play()
+        return nextItem
+
+    def onMovieFinished(self):
+        if self.skip(1) is None:
+            self.exitVideoMode()
+
+    def exitVideoMode(self):
+        frame = Controller.instance.frame
+        area = frame.mainDisplay
+        frame.selectDisplay(self.previousDisplay, area)
+        self.reset()
+
+    def itemMarkedAsViewed(self, item):
+        if item is not None:
+            item.onViewed()
+        return item
+
+    def cur(self):
+        return self.itemMarkedAsViewed(self.view.cur())
+
+    def getNext(self):
+        return self.itemMarkedAsViewed(self.view.getNext())
+        
+    def getPrev(self):
+        return self.itemMarkedAsViewed(self.view.getPrev())
+    
 
 # We can now safely import the frontend module
 import frontend

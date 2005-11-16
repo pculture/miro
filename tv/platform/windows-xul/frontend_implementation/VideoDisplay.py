@@ -6,53 +6,56 @@ import vlc
 #### Right-hand pane video display                                         ####
 ###############################################################################
 
-class VideoDisplay (frontend.NullDisplay, app.VideoDisplayDB):
+class VideoDisplay (app.VideoDisplayBase):
     "Video player that can be shown in a MainFrame's right-hand pane."
 
     def __init__(self):
-        app.VideoDisplayDB.__init__(self)
-        frontend.NullDisplay.__init__(self)
-#        self.vlc = vlc.SimpleVLC()
-#        self.vlc.setWindow(self.getHwnd())
+        app.VideoDisplayBase.__init__(self)
+        self.vlc = vlc.SimpleVLC()
+        self.vlc.setWindow(self.getHwnd())
+    
+    def selectItem(self, item):
+        app.VideoDisplayBase.selectItem(self, item)
 
-    # FIXME: This strange API was inherited from OS X
-    @classmethod
-    def getInstance(self):
-        return VideoDisplay()
+    def resetMovie(self):
+        pass
 
-    def configure(self, view, firstItemId, previousDisplay):
-        self.setPlaylist(view, firstItemId)
-        self.previousDisplay = previousDisplay
+    def play(self):
+        filename = self.cur().getPath()
+        if filename is None:
+            filename= self.getNext().getPath()
+        self.vlc.play(filename)
+        app.VideoDisplayBase.play(self)
+
+    def pause(self):
+        self.vlc.pause(0)
+        app.VideoDisplayBase.pause(self)
+
+    def stop(self):
+        self.vlc.stop()
+        app.VideoDisplayBase.stop(self)
+
+    def goFullScreen(self):
+        app.VideoDisplayBase.goFullScreen(self)
+
+    def getCurrentTime(self):
+        return self.vlc.getPosition()
+
+    def onSelected(self, frame):
+        app.VideoDisplayBase.onSelected(self, frame)
+
+    def onDeselected(self, frame):
+        pass
+
+    def onWMClose(self, hwnd, msg, wparam, lparam):
+        self.unlink()
+        win32gui.PostQuitMessage(0)
 
     def onWMSize(self, hwnd, msg, wparam, lparam):
         pass
 
     def onWMActivate(self, hwnd, msg, wparam, lparam):
         pass
-
-    def playPause(self):
-        filename = self.cur().getPath()
-        if filename is None:
-            filename= self.getNext().getPath()
-#        self.vlc.play(filename)
-
-    def stop(self):
-#        self.vlc.stop()
-	pass
-    
-    def onSelected(self, frame):
-        # Enable controls
-        pass
-
-    def onDeselected(self, frame):
-        # Disable controls
-	pass
-
-    def unlink(self):
-        frontend.NullDisplay.unlink(self)
-
-    def __del__(self):
-	self.unlink()
 
 ###############################################################################
 #### Playlist item base class                                              ####

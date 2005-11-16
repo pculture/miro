@@ -1687,38 +1687,46 @@ class ManagedWebView (NSObject):
 #### Right-hand pane video display                                         ####
 ###############################################################################
 
-class VideoDisplay (app.Display, app.VideoDisplayDB):
+class VideoDisplay (app.VideoDisplayBase):
     "Video player shown in a MainFrame's right-hand pane."
 
     def __init__(self):
-        app.VideoDisplayDB.__init__(self)
-        app.Display.__init__(self)
+        app.VideoDisplayBase.__init__(self)
         self.controller = VideoDisplayController.getInstance()
-        assert self.controller is not nil
-        
-    def configure(self, view, firstItemId, previousDisplay):
-        self.setPlaylist(view, firstItemId)
-        self.controller.previousDisplay = previousDisplay
+        self.controller.display = self
 
-    def reset(self):
-        app.VideoDisplayDB.reset(self)
-        self.controller.previousDisplay = None
+    def selectItem(self, item):
+        self.controller.selectPlaylistItem(item)
+        app.VideoDisplayBase.selectItem(self, item)
 
-    def playPause(self):
-        if self.controller.isPlaying:
-            self.controller.pause()
-        else:
-            self.controller.play()
+    def resetMovie(self):
+        self.controller.resetMovie()
+
+    def play(self):
+        self.controller.play()
+        app.VideoDisplayBase.play(self)
+
+    def pause(self):
+        self.controller.pause()
+        app.VideoDisplayBase.pause(self)
 
     def stop(self):
-        self.controller.stop_(nil)
+        self.controller.stop()
+        app.VideoDisplayBase.stop(self)
+    
+    def goFullScreen(self):
+        self.controller.goFullScreen()
+        app.VideoDisplayBase.goFullScreen(self)
+
+    def getCurrentTime(self):
+        return self.controller.progressDisplayer.getCurrentTimeInSeconds()
     
     def onSelected(self, frame):
-        self.controller.onSelected(self, frame)
+        self.controller.onSelected(self)
+        app.VideoDisplayBase.onSelected(self, frame)
 
     def onDeselected(self, frame):
         self.controller.onDeselected(frame)
-        self.reset()
 
     def getView(self):
         return self.controller.rootView
@@ -1734,6 +1742,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
     @classmethod
     def getInstance(self):
+        assert VideoDisplayController._instance is not nil
         return VideoDisplayController._instance
 
     def awakeFromNib(self):
@@ -1754,12 +1763,11 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.systemActivityUpdaterTimer = nil
         self.reset()
 
-    def onSelected(self, playlist, frame):
-        self.frame = frame
+    def onSelected(self, playlist):
+        self.playlist = playlist
         self.movieView = self.videoAreaView.movieView
         self.enableSecondaryControls(YES)
         self.preventSystemSleep(True)
-        self.setPlaylist(playlist)
         self.videoAreaView.activate()
 
     def onDeselected(self, frame):
@@ -1770,15 +1778,16 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.reset()
 
     def reset(self):
-        self.isPlaying = False
         self.playlist = None
-        self.currentItem = None
         self.currentWatchableDisplay = None
-        self.frame = None
-        self.previousDisplay = None
         self.fastSeekTimer = nil
         self.progressDisplayer.setMovie_(nil)
         self.unregisterAsMovieObserver()
+
+    def resetMovie(self):
+        movie = self.movieView.movie()
+        if movie is not nil:
+            movie.gotoBeginning()
 
     def preventSystemSleep(self, prevent):
         if prevent and self.systemActivityUpdaterTimer is nil:
@@ -1793,19 +1802,11 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         UpdateSystemActivity(OverallAct)
 
     def registerAsMovieObserver(self, movie):
-        nc.addObserver_selector_name_object_(self, 'handleMovieNotification:', QTMovieRateDidChangeNotification, movie)
+        self.unregisterAsMovieObserver()
         nc.addObserver_selector_name_object_(self, 'handleMovieNotification:', QTMovieDidEndNotification, movie)
 
     def unregisterAsMovieObserver(self):
-        nc.removeObserver_name_object_(self, QTMovieRateDidChangeNotification, nil)
         nc.removeObserver_name_object_(self, QTMovieDidEndNotification, nil)
-
-    def setPlaylist(self, playlist, autoselect=True):
-        self.playlist = playlist
-        self.currentItem = None
-        item = self.playlist.cur()
-        if autoselect:
-            self.selectPlaylistItem(item)
 
     def selectPlaylistItem(self, item):
         pathname = item.getPath()
@@ -1813,22 +1814,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.movieView.setMovie_(movie)
         self.progressDisplayer.setMovie_(movie)
         self.setVolume_(self.volumeSlider)
-        self.currentItem = item
-
-        info = item.getInfoMap()
-        template = app.TemplateDisplay('video-info', info, app.Controller.instance, None, None, None)
-        area = app.Controller.instance.frame.videoInfoDisplay
-        app.Controller.instance.frame.selectDisplay(template, area)        
-
-        self.unregisterAsMovieObserver()
         self.registerAsMovieObserver(movie)
-
-    def exitVideoMode(self):
-        frame = self.frame
-        area = self.frame.mainDisplay
-        previousDisplay = self.previousDisplay
-        self.reset()
-        frame.selectDisplay(previousDisplay, area)
 
     def enablePrimaryControls(self, enabled):
         self.playPauseButton.setEnabled_(enabled)
@@ -1847,22 +1833,29 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
     def play(self):
         nc.postNotificationName_object_('videoWillPlay', nil)
+        self.playPauseButton.setImage_(NSImage.imageNamed_('pause.png'))
+        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('pause_blue.png'))
         self.movieView.play_(self)
         self.movieView.setNeedsDisplay_(YES)
 
     def pause(self):
         nc.postNotificationName_object_('videoWillPause', nil)
+        self.playPauseButton.setImage_(NSImage.imageNamed_('play.png'))
+        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('play_blue.png'))
         self.movieView.pause_(nil)
 
     def stop_(self, sender):
+        app.Controller.instance.videoDisplay.stop()
+        
+    def stop(self):
         nc.postNotificationName_object_('videoWillStop', nil)
         self.movieView.pause_(nil)
-        self.movieView.gotoBeginning_(sender)
-        self.exitVideoMode()
+        self.resetMovie()
 
     def playFullScreen_(self, sender):
-        if not self.isPlaying:
-            self.playPause_(sender)
+        app.Controller.instance.videoDisplay.goFullScreen()
+
+    def goFullScreen(self):
         self.videoAreaView.enterFullScreen()
 
     def forward_(self, sender):
@@ -1884,7 +1877,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             else:
                 self.fastSeekTimer.invalidate()
                 self.fastSeekTimer = nil
-                self.skip(direction)
+                self.playlist.skip(direction)
 
     def fastSeek_(self, timer):
         assert self.movieView.movie().rate() == 1.0
@@ -1893,22 +1886,6 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         rate = 2 * direction
         self.movieView.movie().setRate_(rate)
         self.fastSeekTimer = nil
-
-    def skip(self, direction):
-        nextItem = None
-        if direction == 1:
-            nextItem = self.playlist.getNext()
-        else:
-            if self.progressDisplayer.getCurrentTimeInSeconds() <= 0.5:
-                nextItem = self.playlist.getPrev()
-            else:
-                self.movieView.movie().gotoBeginning()
-
-        if nextItem is not None:
-            self.selectPlaylistItem(nextItem)
-            self.play()
-            
-        return nextItem
 
     def setVolume_(self, sender):
         if self.movieView is not None:
@@ -1934,21 +1911,8 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.enablePrimaryControls(NO)
 
     def handleMovieNotification_(self, notification):
-        info = notification.userInfo()
-        if notification.name() == QTMovieRateDidChangeNotification:
-            rate = info.get(QTMovieRateDidChangeNotificationParameter).floatValue()
-            if rate == 0.0:
-                self.playPauseButton.setImage_(NSImage.imageNamed_('play.png'))
-                self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('play_blue.png'))
-                self.isPlaying = False
-            else:
-                self.playPauseButton.setImage_(NSImage.imageNamed_('pause.png'))
-                self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('pause_blue.png'))
-                self.isPlaying = True
-        elif notification.name() == QTMovieDidEndNotification:
-            if not self.progressDisplayer.dragging:
-                if self.skip(1) is None:
-                    self.exitVideoMode()
+        if notification.name() == QTMovieDidEndNotification and not self.progressDisplayer.dragging:
+            self.playlist.onMovieFinished()
 
 
 ###############################################################################

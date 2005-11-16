@@ -5,42 +5,40 @@ import frontend
 #### Right-hand pane video display                                         ####
 ###############################################################################
 
-class VideoDisplay (frontend.NullDisplay, app.VideoDisplayDB):
+class VideoDisplay (app.VideoDisplayBase):
     "Video player that can be shown in a MainFrame's right-hand pane."
 
     def __init__(self):
-        app.VideoDisplayDB.__init__(self)
-        frontend.NullDisplay.__init__(self)
+        app.VideoDisplayBase.__init__(self)
         pass
     
-    # FIXME: This strange API was inherited from OS X
-    @classmethod
-    def getInstance(self):
-        return VideoDisplay()
+    def selectItem(self, item):
+        app.VideoDisplayBase.selectItem(self, item)
 
-    def configure(self, view, firstItemId, previousDisplay):
-        self.setPlaylist(view, firstItemId)
-        self.previousDisplay = previousDisplay
+    def resetMovie(self):
+        pass
 
+    def play(self):
+        app.VideoDisplayBase.play(self)
 
-    def playPause(self):
-        filename = self.cur().getPath()
-        if filename is None:
-            filename= self.getNext().getPath()
+    def pause(self):
+        app.VideoDisplayBase.pause(self)
 
     def stop(self):
-        pass
-    
+        app.VideoDisplayBase.stop(self)
+
+    def goFullScreen(self):
+        app.VideoDisplayBase.goFullScreen(self)
+
+    def getCurrentTime(self):
+        return 0.0
+
     def onSelected(self, frame):
-        # Enable controls
-        pass
+        app.VideoDisplayBase.onSelected(self, frame)
 
     def onDeselected(self, frame):
-        # Disable controls
         pass
 
-    def unlink(self):
-        pass
 
 ###############################################################################
 #### Playlist item base class                                              ####
