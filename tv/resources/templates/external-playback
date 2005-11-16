@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>DTV - External Playback Template</title>
+    <link href="resource:css/external.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div id="external-container-basic">
+    	<span>This file type (<span t:replace="fileType" />) can't be played in the main DTV window.</span>
+    	<div id="external-button-left">
+    	    <span>Play Externally</span>
+    	    <img src="resource:images/ext-button-left-edge.gif" />
+    	    <a href="#" style="padding:18px 68px 0px 68px; margin:0px 0px 0px -140px;">&nbsp;</a>
+    	</div>
+    	<div id="external-button-right">
+    	    <span>Skip Video <span t:replace="fileIndex" /> </span>
+    	    <img src="resource:images/ext-button-left-edge.gif" />
+    	    <a href="#" style="padding:18px 48px 0px 78px; margin:0px 0px 0px -130px;">&nbsp;</a>
+    	</div>	
+    </div>
+    <!-- <div id="external-container-button">
+    	<div id="external-button-center"><span>Continue To Next Video</span><img src="resource:images/ext-button-left-edge.gif" /><a href="#" style="padding:18px 98px 0px 100px; margin:0px 0px 0px -202px;">&nbsp;</a></div>
+    </div> -->
+</body>
+
+</html>
