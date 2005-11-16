@@ -1200,18 +1200,21 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         self.cursor.unlockFocus()
         
         self.movie = nil
-        self.lastTime = 0
         self.dragging = False
+        self.updateTimer = nil
 
         return self;
 
     def setMovie_(self, movie):
-        if self.movie is not nil:
-            self.movie.setDelegate_(nil)
         self.movie = movie
-        self.lastTime = 0
-        if self.movie is not nil:
-            self.movie.setDelegate_(self)
+        if movie is not nil:
+            self.updateTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(1.0, self, 'refresh:', nil, YES)
+        elif self.updateTimer is not nil:
+            self.updateTimer.invalidate()
+            self.updateTimer = nil
+        self.refresh_(nil)
+
+    def refresh_(self, timer):
         self.setNeedsDisplay_(YES)
 
     def mouseDown_(self, event):
@@ -1221,16 +1224,19 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
                 self.dragging = True
                 self.movie.stop()
                 self.movie.setCurrentTime_(self.getTimeForLocation(location))
+                self.refresh_(nil)
 
     def mouseDragged_(self, event):
         if self.dragging:
             location = self.convertPoint_fromView_(event.locationInWindow(), nil)
             self.movie.setCurrentTime_(self.getTimeForLocation(location))
+            self.refresh_(nil)
 
     def mouseUp_(self, event):
         if self.movie is not nil:
             self.dragging = False
             self.movie.play()
+            self.refresh_(nil)
 
     def getTimeForLocation(self, location):
         rect = self.getGrooveRect()
@@ -1245,13 +1251,6 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         time.timeValue *= offset
         return time
 
-    def movieShouldTask_(self, movie):
-        currentTime = self.getCurrentTimeInSeconds()
-        if math.fabs(currentTime - self.lastTime) >= 1.0 or self.dragging:
-            self.setNeedsDisplay_(YES)
-            self.lastTime = currentTime
-        return NO
-        
     def drawRect_(self, rect):
         self.drawBackground()
         self.drawTimeIndicator()
