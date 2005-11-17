@@ -23,6 +23,7 @@ EXPIRE_AFTER_X_DAYS         = Pref( key='expireAfterXDays',      default=6,     
 DOWNLOADS_TARGET            = Pref( key='DownloadsTarget',       default=3,     platformSpecific=False )
 MAX_MANUAL_DOWNLOADS        = Pref( key='MaxManualDownloads',    default=10,    platformSpecific=False )
 CHANNEL_GUIDE_URL           = Pref( key='ChannelGuideURL',       default='https://channelguide.participatoryculture.org/',    platformSpecific=False )
+VOLUME_LEVEL                = Pref( key='VolumeLevel',           default=1.0,   platformSpecific=False )
 
 MOVIES_DIRECTORY            = Pref( key='MoviesDirectory',       default=None,  platformSpecific=True )
 SUPPORT_DIRECTORY           = Pref( key='SupportDirectory',      default=None,  platformSpecific=True )

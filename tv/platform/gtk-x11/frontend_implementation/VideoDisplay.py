@@ -34,7 +34,7 @@ class VideoDisplay (app.VideoDisplayBase):
         return 0.0
 
     def setVolume(self, level):
-        pass
+        app.VideoDisplayBase.setVolume(self, level)
 
     def getVolume(self):
         return 1.0

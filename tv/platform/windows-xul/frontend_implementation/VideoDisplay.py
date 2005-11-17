@@ -42,7 +42,8 @@ class VideoDisplay (app.VideoDisplayBase):
         return self.vlc.getPosition()
 
     def setVolume(self, level):
-        self.vlc.setVolume()
+        self.vlc.setVolume(level)
+        app.VideoDisplayBase.setVolume(self, level)
 
     def getVolume(self):
         return self.vlc.getVolume()

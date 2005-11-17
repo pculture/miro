@@ -165,12 +165,6 @@ class AppController (NibClassBuilder.AutoBaseClass):
         # to open files...) are delivered.
         self.actualApp.onStartup()
 
-    def applicationShouldTerminate_(self, application):
-        reply = NSTerminateNow
-        if not self.actualApp.allowShutdown():
-            reply = NSTerminateCancel 
-        return reply
-
     def applicationDidFinishLaunching_(self, notification):
         # The [NSURLRequest setAllowsAnyHTTPSCertificate:forHost:] selector is
         # not documented anywhere, so I assume it is not public. It is however 
@@ -179,6 +173,12 @@ class AppController (NibClassBuilder.AutoBaseClass):
         components = urlparse.urlparse(config.get(config.CHANNEL_GUIDE_URL))
         channelGuideHost = components[1]
         NSURLRequest.setAllowsAnyHTTPSCertificate_forHost_(YES, channelGuideHost)
+        
+    def applicationShouldTerminate_(self, application):
+        reply = NSTerminateNow
+        if not self.actualApp.allowShutdown():
+            reply = NSTerminateCancel 
+        return reply
 
     def applicationWillTerminate_(self, notification):
         # Reset the application icon to its default state
@@ -1724,6 +1724,7 @@ class VideoDisplay (app.VideoDisplayBase):
 
     def setVolume(self, level):
         self.controller.setVolume(level)
+        app.VideoDisplayBase.setVolume(self, level)
 
     def getVolume(self):
         return self.controller.getVolume()
@@ -1912,10 +1913,11 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         if self.movieView is not None:
             movie = self.movieView.movie()
             if movie is not None:
-                if self.muteButton.state() == NSOnState:
-                    movie.setVolume_(level)
-                else:
-                    movie.setVolume_(0.0)
+                if self.muteButton.state() == NSOffState:
+                    level = 0.0
+                movie.setVolume_(level)
+        if self.muteButton.state() == NSOnState:
+            self.volumeSlider.setFloatValue_(level)
 
     def muteUnmuteVolume_(self, sender):
         if sender.state() is NSOffState:

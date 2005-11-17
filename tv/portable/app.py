@@ -200,6 +200,7 @@ class VideoDisplayBase (Display):
         return nextItem
 
     def setVolume(self, level):
+        config.set(config.VOLUME_LEVEL, level)
         pass
 
     def getVolume(self):
@@ -378,6 +379,7 @@ class Controller (frontend.Application):
 
             # Set up the video display
             self.videoDisplay = frontend.VideoDisplay()
+            self.videoDisplay.setVolume(config.get(config.VOLUME_LEVEL))
 
             # If we have newly available items, provide feedback
             self.updateAvailableItemsCountFeedback()
