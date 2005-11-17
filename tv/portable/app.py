@@ -106,8 +106,9 @@ class VideoDisplayBase (Display):
         Display.__init__(self)
         self.initialView = None
         self.filteredView = None
-        self.previousDisplay = None
         self.view = None
+        self.previousDisplay = None
+        self.previousVolume = 1.0
         self.isPlaying = False
 
     def configure(self, view, firstItemId, previousDisplay):
@@ -143,7 +144,7 @@ class VideoDisplayBase (Display):
         info = item.getInfoMap()
         template = TemplateDisplay('video-info', info, Controller.instance, None, None, None)
         area = Controller.instance.frame.videoInfoDisplay
-        Controller.instance.frame.selectDisplay(template, area)        
+        Controller.instance.frame.selectDisplay(template, area)
 
     def onSelected(self, frame):
         item = self.cur()
@@ -159,7 +160,7 @@ class VideoDisplayBase (Display):
         self.isPlaying = False
 
     def resetMovie(self):
-        raise NotImplementedError
+        pass
 
     def playPause(self):
         if self.isPlaying:
@@ -182,7 +183,7 @@ class VideoDisplayBase (Display):
             self.play()
 
     def getCurrentTime(self):
-        raise NotImplementedError
+        return 0.0
 
     def skip(self, direction):
         nextItem = None
@@ -197,6 +198,19 @@ class VideoDisplayBase (Display):
             self.selectItem(nextItem)
             self.play()
         return nextItem
+
+    def setVolume(self, level):
+        pass
+
+    def getVolume(self):
+        return 1.0
+
+    def muteVolume(self):
+        self.previousVolume = self.getVolume()
+        self.setVolume(0.0)
+
+    def restoreVolume(self):
+        self.setVolume(self.previousVolume)
 
     def onMovieFinished(self):
         if self.skip(1) is None:

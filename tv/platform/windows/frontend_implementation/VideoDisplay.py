@@ -41,6 +41,18 @@ class VideoDisplay (app.VideoDisplayBase):
     def getCurrentTime(self):
         return self.vlc.getPosition()
 
+    def setVolume(self, level):
+        self.vlc.setVolume()
+
+    def getVolume(self):
+        return self.vlc.getVolume()
+
+    def muteVolume(self):
+        app.VideoDisplayBase.muteVolume(self)
+
+    def restoreVolume(self):
+        app.VideoDisplayBase.restoreVolume(self)
+
     def onSelected(self, frame):
         app.VideoDisplayBase.onSelected(self, frame)
 

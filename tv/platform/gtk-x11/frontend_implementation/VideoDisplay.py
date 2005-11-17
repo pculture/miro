@@ -33,6 +33,18 @@ class VideoDisplay (app.VideoDisplayBase):
     def getCurrentTime(self):
         return 0.0
 
+    def setVolume(self, level):
+        pass
+
+    def getVolume(self):
+        return 1.0
+
+    def muteVolume(self):
+        app.VideoDisplayBase.muteVolume(self)
+
+    def restoreVolume(self):
+        app.VideoDisplayBase.restoreVolume(self)
+
     def onSelected(self, frame):
         app.VideoDisplayBase.onSelected(self, frame)
 

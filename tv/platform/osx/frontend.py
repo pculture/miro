@@ -444,12 +444,13 @@ class MainController (NibClassBuilder.AutoBaseClass):
     ### Switching displays ###
 
     def selectDisplay(self, display, area):
-        # Tell the display area that the next display it will host once it's
-        # ready is this one.
-        area.setScheduledDisplay(display)
-        # Tell the new display we want to switch to it. It'll call us
-        # back when it's ready to display without flickering.
-        display.callWhenReadyToDisplay(lambda: self.doSelectDisplay(display, area))
+        if display is not None:
+            # Tell the display area that the next display it will host once it's
+            # ready is this one.
+            area.setScheduledDisplay(display)
+            # Tell the new display we want to switch to it. It'll call us
+            # back when it's ready to display without flickering.
+            display.callWhenReadyToDisplay(lambda: self.doSelectDisplay(display, area))
 
     def doSelectDisplay(self, display, area):
         if area is not None:
@@ -1693,7 +1694,7 @@ class VideoDisplay (app.VideoDisplayBase):
     def __init__(self):
         app.VideoDisplayBase.__init__(self)
         self.controller = VideoDisplayController.getInstance()
-        self.controller.display = self
+        self.controller.videoDisplay = self
 
     def selectItem(self, item):
         self.controller.selectPlaylistItem(item)
@@ -1720,7 +1721,21 @@ class VideoDisplay (app.VideoDisplayBase):
 
     def getCurrentTime(self):
         return self.controller.progressDisplayer.getCurrentTimeInSeconds()
-    
+
+    def setVolume(self, level):
+        self.controller.setVolume(level)
+
+    def getVolume(self):
+        return self.controller.getVolume()
+
+    def muteVolume(self):
+        self.controller.volumeSlider.setEnabled_(NO)
+        app.VideoDisplayBase.muteVolume(self)
+
+    def restoreVolume(self):
+        self.controller.volumeSlider.setEnabled_(YES)
+        app.VideoDisplayBase.restoreVolume(self)
+
     def onSelected(self, frame):
         self.controller.onSelected(self)
         app.VideoDisplayBase.onSelected(self, frame)
@@ -1759,7 +1774,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             'handleNonWatchableDisplayNotification:', 
             'displayIsNotWatchable', 
             nil)
-        self.movieView = None
+        self.movieView = nil
         self.systemActivityUpdaterTimer = nil
         self.reset()
 
@@ -1829,7 +1844,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.fullscreenButton.setEnabled_(enabled)
 
     def playPause_(self, sender):
-        app.Controller.instance.videoDisplay.playPause()
+        self.videoDisplay.playPause()
 
     def play(self):
         nc.postNotificationName_object_('videoWillPlay', nil)
@@ -1845,7 +1860,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.movieView.pause_(nil)
 
     def stop_(self, sender):
-        app.Controller.instance.videoDisplay.stop()
+        self.videoDisplay.stop()
         
     def stop(self):
         nc.postNotificationName_object_('videoWillStop', nil)
@@ -1853,7 +1868,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.resetMovie()
 
     def playFullScreen_(self, sender):
-        app.Controller.instance.videoDisplay.goFullScreen()
+        self.videoDisplay.goFullScreen()
 
     def goFullScreen(self):
         self.videoAreaView.enterFullScreen()
@@ -1887,25 +1902,33 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.movieView.movie().setRate_(rate)
         self.fastSeekTimer = nil
 
+    def getVolume(self):
+        return self.volumeSlider.floatValue()
+
     def setVolume_(self, sender):
+        self.videoDisplay.setVolume(sender.floatValue())
+
+    def setVolume(self, level):
         if self.movieView is not None:
             movie = self.movieView.movie()
             if movie is not None:
                 if self.muteButton.state() == NSOnState:
-                    movie.setVolume_(sender.floatValue())
+                    movie.setVolume_(level)
                 else:
                     movie.setVolume_(0.0)
 
     def muteUnmuteVolume_(self, sender):
-        self.volumeSlider.setEnabled_(sender.state() is NSOnState)
-        self.setVolume_(self.volumeSlider)
+        if sender.state() is NSOffState:
+            self.videoDisplay.muteVolume()
+        else:
+            self.videoDisplay.restoreVolume()
 
     def handleWatchableDisplayNotification_(self, notification):
         self.enablePrimaryControls(YES)
         info = notification.userInfo()
         view = info['view']
         display = notification.object()
-        app.Controller.instance.videoDisplay.configure(view, None, display)
+        self.videoDisplay.configure(view, None, display)
 
     def handleNonWatchableDisplayNotification_(self, notification):
         self.enablePrimaryControls(NO)
