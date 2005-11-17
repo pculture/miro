@@ -1738,11 +1738,11 @@ class VideoDisplay (app.VideoDisplayBase):
         app.VideoDisplayBase.restoreVolume(self)
 
     def onSelected(self, frame):
-        self.controller.onSelected(self)
+        self.controller.onSelected()
         app.VideoDisplayBase.onSelected(self, frame)
 
     def onDeselected(self, frame):
-        self.controller.onDeselected(frame)
+        self.controller.onDeselected()
 
     def getView(self):
         return self.controller.rootView
@@ -1779,14 +1779,13 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.systemActivityUpdaterTimer = nil
         self.reset()
 
-    def onSelected(self, playlist):
-        self.playlist = playlist
+    def onSelected(self):
         self.movieView = self.videoAreaView.movieView
         self.enableSecondaryControls(YES)
         self.preventSystemSleep(True)
         self.videoAreaView.activate()
 
-    def onDeselected(self, frame):
+    def onDeselected(self):
         self.pause()
         self.enableSecondaryControls(False)
         self.videoAreaView.deactivate()
@@ -1794,7 +1793,6 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.reset()
 
     def reset(self):
-        self.playlist = None
         self.currentWatchableDisplay = None
         self.fastSeekTimer = nil
         self.progressDisplayer.setMovie_(nil)
@@ -1893,7 +1891,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             else:
                 self.fastSeekTimer.invalidate()
                 self.fastSeekTimer = nil
-                self.playlist.skip(direction)
+                self.videoDisplay.skip(direction)
 
     def fastSeek_(self, timer):
         assert self.movieView.movie().rate() == 1.0
@@ -1937,7 +1935,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
     def handleMovieNotification_(self, notification):
         if notification.name() == QTMovieDidEndNotification and not self.progressDisplayer.dragging:
-            self.playlist.onMovieFinished()
+            self.videoDisplay.onMovieFinished()
 
 
 ###############################################################################

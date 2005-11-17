@@ -104,42 +104,14 @@ class VideoDisplayBase (Display):
     
     def __init__(self):
         Display.__init__(self)
-        self.initialView = None
-        self.filteredView = None
-        self.view = None
         self.previousDisplay = None
         self.previousVolume = 1.0
         self.isPlaying = False
 
     def configure(self, view, firstItemId, previousDisplay):
-        self.setPlaylist(view, firstItemId)
+        self.playlist = Playlist(view, firstItemId)
         self.previousDisplay = previousDisplay
         
-    def setPlaylist(self, playlist, firstItemId):
-        self.initialView = playlist
-        self.filteredView = self.initialView.filter(mappableToPlaylistItem)
-        self.view = self.filteredView.map(mapToPlaylistItem)
-
-        # Move the cursor to the requested item; if there's no
-        # such item in the view, move the cursor to the first
-        # item
-        self.view.beginRead()
-        try:
-            self.view.resetCursor()
-            while True:
-                cur = self.view.getNext()
-                if cur == None:
-                    # Item not found in view. Put cursor at the first
-                    # item, if any.
-                    self.view.resetCursor()
-                    self.view.getNext()
-                    break
-                if str(cur.getID()) == firstItemId:
-                    # The cursor is now on the requested item.
-                    break
-        finally:
-            self.view.endRead()
-
     def selectItem(self, item):
         info = item.getInfoMap()
         template = TemplateDisplay('video-info', info, Controller.instance, None, None, None)
@@ -147,15 +119,14 @@ class VideoDisplayBase (Display):
         Controller.instance.frame.selectDisplay(template, area)
 
     def onSelected(self, frame):
-        item = self.cur()
-        if item is not None:
-            self.selectItem(item)
+        if self.playlist is not None:
+            item = self.playlist.cur()
+            if item is not None:
+                self.selectItem(item)
 
     def reset(self):
-        self.initialView.removeView(self.filteredView)
-        self.initialView = None
-        self.filteredView = None
-        self.view = None
+        self.playlist.reset()
+        self.playlist = None
         self.previousDisplay = None
         self.isPlaying = False
 
@@ -188,10 +159,10 @@ class VideoDisplayBase (Display):
     def skip(self, direction):
         nextItem = None
         if direction == 1:
-            nextItem = self.getNext()
+            nextItem = self.playlist.getNext()
         else:
             if self.getCurrentTime() <= 0.5:
-                nextItem = self.getPrev()
+                nextItem = self.playlist.getPrev()
             else:
                 self.resetMovie()
         if nextItem is not None:
@@ -222,20 +193,6 @@ class VideoDisplayBase (Display):
         area = frame.mainDisplay
         frame.selectDisplay(self.previousDisplay, area)
         self.reset()
-
-    def itemMarkedAsViewed(self, item):
-        if item is not None:
-            item.onViewed()
-        return item
-
-    def cur(self):
-        return self.itemMarkedAsViewed(self.view.cur())
-
-    def getNext(self):
-        return self.itemMarkedAsViewed(self.view.getNext())
-        
-    def getPrev(self):
-        return self.itemMarkedAsViewed(self.view.getPrev())
     
 
 # We can now safely import the frontend module
@@ -1048,15 +1005,55 @@ def sortTabs(x, y):
     return 0
 
 ###############################################################################
-#### Video clips                                                           ####
+#### Playlist & Video clips                                                ####
 ###############################################################################
 
-def mappableToPlaylistItem(obj):
-    if not isinstance(obj, item.Item):
-        return False
+class Playlist:
+    
+    def __init__(self, view, firstItemId):
+        self.initialView = view
+        self.filteredView = self.initialView.filter(mappableToPlaylistItem)
+        self.view = self.filteredView.map(mapToPlaylistItem)
 
-    return (obj.getState() == "finished" or obj.getState() == "uploading" or
-            obj.getState() == "watched" or obj.getState() == "saved")
+        # Move the cursor to the requested item; if there's no
+        # such item in the view, move the cursor to the first
+        # item
+        self.view.beginRead()
+        try:
+            self.view.resetCursor()
+            while True:
+                cur = self.view.getNext()
+                if cur == None:
+                    # Item not found in view. Put cursor at the first
+                    # item, if any.
+                    self.view.resetCursor()
+                    self.view.getNext()
+                    break
+                if str(cur.getID()) == firstItemId:
+                    # The cursor is now on the requested item.
+                    break
+        finally:
+            self.view.endRead()
+
+    def reset(self):
+        self.initialView.removeView(self.filteredView)
+        self.initialView = None
+        self.filteredView = None
+        self.view = None
+
+    def cur(self):
+        return self.itemMarkedAsViewed(self.view.cur())
+
+    def getNext(self):
+        return self.itemMarkedAsViewed(self.view.getNext())
+        
+    def getPrev(self):
+        return self.itemMarkedAsViewed(self.view.getPrev())
+
+    def itemMarkedAsViewed(self, item):
+        if item is not None:
+            item.onViewed()
+        return item
 
 class PlaylistItemFromItem (frontend.PlaylistItem):
 
@@ -1083,6 +1080,13 @@ class PlaylistItemFromItem (frontend.PlaylistItem):
     # Return a dictionary containing info to be injected in a template
     def getInfoMap(self):
         return dict(this=self.item, filter=globalFilterList)
+
+def mappableToPlaylistItem(obj):
+    if not isinstance(obj, item.Item):
+        return False
+
+    return (obj.getState() == "finished" or obj.getState() == "uploading" or
+            obj.getState() == "watched" or obj.getState() == "saved")
 
 def mapToPlaylistItem(obj):
     return PlaylistItemFromItem(obj)
