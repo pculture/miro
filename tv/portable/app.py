@@ -189,12 +189,14 @@ class VideoDisplayBase (Display):
             self.exitVideoMode()
 
     def exitVideoMode(self):
-        frame = Controller.instance.frame
-        area = frame.mainDisplay
-        frame.selectDisplay(self.previousDisplay, area)
+        # Warning: resetting must be done *BEFORE* calling selectDisplay because
+        # selectDisplay can possibly trigger a call to configure, which effect 
+        # would therefore be 'canceled' by a subsequent call to reset (#786).
+        area = Controller.instance.frame.mainDisplay
+        previousDisplay = self.previousDisplay
         self.reset()
+        frame.selectDisplay(previousDisplay, area)
     
-
 # We can now safely import the frontend module
 import frontend
 
