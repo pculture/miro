@@ -104,30 +104,21 @@ class VideoDisplayBase (Display):
     
     def __init__(self):
         Display.__init__(self)
-        self.previousDisplay = None
+        self.playbackController = None
         self.previousVolume = 1.0
         self.isPlaying = False
-
-    def configure(self, view, firstItemId, previousDisplay):
-        self.playlist = Playlist(view, firstItemId)
-        self.previousDisplay = previousDisplay
-        
-    def selectItem(self, item):
-        info = item.getInfoMap()
+        self.isFullScreen = False
+    
+    def canPlayItem(self, anItem):
+        return True
+    
+    def selectItem(self, anItem):
+        info = anItem.getInfoMap()
         template = TemplateDisplay('video-info', info, Controller.instance, None, None, None)
         area = Controller.instance.frame.videoInfoDisplay
         Controller.instance.frame.selectDisplay(template, area)
 
-    def onSelected(self, frame):
-        if self.playlist is not None:
-            item = self.playlist.cur()
-            if item is not None:
-                self.selectItem(item)
-
     def reset(self):
-        self.playlist.reset()
-        self.playlist = None
-        self.previousDisplay = None
         self.isPlaying = False
 
     def resetMovie(self):
@@ -147,32 +138,21 @@ class VideoDisplayBase (Display):
 
     def stop(self):
         self.isPlaying = False
-        self.exitVideoMode()
+        self.playbackController.exitPlayback()
 
     def goFullScreen(self):
+        self.isFullScreen = True
         if not self.isPlaying:
             self.play()
+
+    def exitFullScreen(self):
+        self.isFullScreen = False
 
     def getCurrentTime(self):
         return 0.0
 
-    def skip(self, direction):
-        nextItem = None
-        if direction == 1:
-            nextItem = self.playlist.getNext()
-        else:
-            if self.getCurrentTime() <= 0.5:
-                nextItem = self.playlist.getPrev()
-            else:
-                self.resetMovie()
-        if nextItem is not None:
-            self.selectItem(nextItem)
-            self.play()
-        return nextItem
-
     def setVolume(self, level):
         config.set(config.VOLUME_LEVEL, level)
-        pass
 
     def getVolume(self):
         return 1.0
@@ -184,19 +164,100 @@ class VideoDisplayBase (Display):
     def restoreVolume(self):
         self.setVolume(self.previousVolume)
 
-    def onMovieFinished(self):
-        if self.skip(1) is None:
-            self.exitVideoMode()
+    
+###############################################################################
+#### The Playback Controller base class                                    ####
+###############################################################################
 
-    def exitVideoMode(self):
+class PlaybackControllerBase:
+    
+    def __init__(self):
+        self.currentPlaylist = None
+        self.previousDisplay = None
+        self.currentDisplay = None
+
+    def configure(self, view, firstItemId, previousDisplay):
+        self.currentPlaylist = Playlist(view, firstItemId)
+        self.previousDisplay = previousDisplay
+    
+    def reset(self):
+        self.currentPlaylist.reset()
+        self.currentPlaylist = None
+        self.previousDisplay = None
+        self.currentDisplay = None
+    
+    def enterPlayback(self):
+        if self.currentPlaylist is not None:
+            startItem = self.currentPlaylist.cur()
+            if startItem is not None:
+                self.playItem(startItem)
+        
+    def exitPlayback(self):
         # Warning: resetting must be done *BEFORE* calling selectDisplay because
         # selectDisplay can possibly trigger a call to configure, which effect 
         # would therefore be 'canceled' by a subsequent call to reset (#786).
-        area = Controller.instance.frame.mainDisplay
+        frame = Controller.instance.frame
+        area = frame.mainDisplay
         previousDisplay = self.previousDisplay
         self.reset()
         frame.selectDisplay(previousDisplay, area)
-    
+
+    def playPause(self):
+        videoDisplay = Controller.instance.videoDisplay
+        if self.currentDisplay == videoDisplay:
+            videoDisplay.playPause()
+        else:
+            self.enterPlayback()
+
+    def playItem(self, anItem):
+        videoDisplay = Controller.instance.videoDisplay
+        if videoDisplay.canPlayItem(anItem):
+            self.playItemInternally(videoDisplay, anItem)
+        else:
+            if self.currentDisplay is videoDisplay and videoDisplay.isFullScreen:
+                videoDisplay.exitFullScreen()
+            self.scheduleExternalPlayback(anItem)
+
+    def playItemInternally(self, videoDisplay, anItem):
+        if self.currentDisplay is not videoDisplay:
+            self.currentDisplay = videoDisplay
+            frame = Controller.instance.frame
+            frame.selectDisplay(videoDisplay, frame.mainDisplay)
+        videoDisplay.selectItem(anItem)
+        videoDisplay.play()
+
+    def playItemExternally(self, itemID):
+        anItem = mapToPlaylistItem(db.getObjectByID(int(itemID)))
+        self.currentDisplay = TemplateDisplay('external-playback-continue', anItem.getInfoMap(), Controller.instance)
+        frame = Controller.instance.frame
+        frame.selectDisplay(self.currentDisplay, frame.mainDisplay)
+        return anItem
+        
+    def scheduleExternalPlayback(self, anItem):
+        self.currentDisplay = TemplateDisplay('external-playback', anItem.getInfoMap(), Controller.instance)
+        frame = Controller.instance.frame
+        frame.selectDisplay(self.currentDisplay, frame.mainDisplay)
+
+    def skip(self, direction):
+        nextItem = None
+        if direction == 1:
+            nextItem = self.currentPlaylist.getNext()
+        else:
+            if self.currentDisplay.getCurrentTime() <= 1.0:
+                nextItem = self.currentPlaylist.getPrev()
+            else:
+                self.currentDisplay.resetMovie()
+        if nextItem is None:
+            self.exitPlayback()
+        else:
+            self.playItem(nextItem)
+        return nextItem
+
+    def onMovieFinished(self):
+        if self.skip(1) is None:
+            self.exitPlayback()
+
+
 # We can now safely import the frontend module
 import frontend
 
@@ -336,8 +397,12 @@ class Controller (frontend.Application):
             self.tabs.addRemoveCallback(lambda oldObject, oldIndex: self.checkSelectedTab())
             self.checkSelectedTab()
 
+            # Set up the playback controller
+            self.playbackController = frontend.PlaybackController()
+
             # Set up the video display
             self.videoDisplay = frontend.VideoDisplay()
+            self.videoDisplay.playbackController = self.playbackController
             self.videoDisplay.setVolume(config.get(config.VOLUME_LEVEL))
 
             # If we have newly available items, provide feedback
@@ -538,6 +603,7 @@ class Controller (frontend.Application):
             # upstream limit should be unset here
             pass
 
+
 ###############################################################################
 #### TemplateDisplay: a HTML-template-driven right-hand display panel      ####
 ###############################################################################
@@ -647,7 +713,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
         return False
 
-    def onDeselect(self):
+    def onDeselected(self, frame):
         unloadTriggers = self.templateHandle.getTriggerActionURLsOnUnload()
         self.runActionURLs(unloadTriggers)
         self.templateHandle.unlinkTemplate()
@@ -718,7 +784,7 @@ class ModelActionHandler:
         obj = db.getObjectByID(int(item))
         obj.expire()
 
-    def keepItem(self,item):
+    def keepItem(self, item):
         obj = db.getObjectByID(int(item))
         obj.setKeep(True)
 
@@ -835,11 +901,15 @@ class TemplateActionHandler:
         self.playView(view, firstItemId)
 
     def playView(self, view, firstItemId):
-        videoDisplay = self.controller.videoDisplay
-        videoDisplay.configure(view, firstItemId, self.display)
-        self.controller.frame.selectDisplay(videoDisplay, self.controller.frame.mainDisplay)
-        videoDisplay.playPause()
+        self.controller.playbackController.configure(view, firstItemId, self.display)
+        self.controller.playbackController.enterPlayback()
 
+    def playItemExternally(self, itemID):
+        self.controller.playbackController.playItemExternally(itemID)
+        
+    def skipItem(self, itemID):
+        self.controller.playbackController.skip(1)
+        
 
 # Helper: liberally interpret the provided string as a boolean
 def stringToBoolean(string):
@@ -873,7 +943,7 @@ class Tab:
         # Free up the template currently being displayed
         # NOTE: This is kind of a hacky way to do this, but it works --NN
         try:
-            frame.mainDisplay.hostedDisplay.onDeselect()
+            frame.mainDisplay.hostedDisplay.onDeselected(frame)
         except:
             pass
 
@@ -915,8 +985,8 @@ class Tab:
         else:
             return None
 
-    def onDeselect(self):
-        self.display.onDeselect()
+    def onDeselected(self, frame):
+        self.display.onDeselect(frame)
 
 # Database object representing a static (non-feed-associated) tab.
 class StaticTab(database.DDBObject):
@@ -1006,6 +1076,7 @@ def sortTabs(x, y):
         return 1
     return 0
 
+
 ###############################################################################
 #### Playlist & Video clips                                                ####
 ###############################################################################
@@ -1052,15 +1123,15 @@ class Playlist:
     def getPrev(self):
         return self.itemMarkedAsViewed(self.view.getPrev())
 
-    def itemMarkedAsViewed(self, item):
-        if item is not None:
-            item.onViewed()
-        return item
+    def itemMarkedAsViewed(self, anItem):
+        if anItem is not None:
+            anItem.onViewed()
+        return anItem
 
 class PlaylistItemFromItem (frontend.PlaylistItem):
 
-    def __init__(self, item):
-        self.item = item
+    def __init__(self, anItem):
+        self.item = anItem
 
     def getTitle(self):
         return self.item.getTitle()

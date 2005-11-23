@@ -18,8 +18,6 @@ body {
 
 #external-container-button {
 	position: absolute;
-	width: 202px;
-	height: 35px;
 	left: 50%;
 	top: 50%;
 	margin: -17px 0px 0px -102px;
@@ -28,28 +26,42 @@ body {
 
 #external-button-left {
 	float: left;
-	height: 31px;
 	margin: 50px 0px 0px 50px;
 }
 
 #external-button-right {
 	float: right;
-	height: 31px;
 	margin: 50px 50px 0px 0px;
 }
 
 #external-button-center {
-	height: 31px;
+    float: left;
 	margin: 0px;
+}
+
+#external-button-left, #external-button-right, #external-button-center {
+	color: inherit;
+	text-decoration: inherit;
+	height: 31px;
+	background: url(../images/ext-button-left.gif) no-repeat left top
 }
 
 #external-button-left span, #external-button-right span, #external-button-center span {
 	float: left;
-	background: url(../images/ext-button-left.gif) no-repeat left top;
 	height: 31px;
-	padding: 8px 0px 0px 22px;
+	padding: 7px 15px 0px 15px;
+	background: url(../images/ext-button-left-edge.gif) no-repeat right top;
 }
 
-#external-button-left a, #external-button-right a, #external-button-center a {
-	text-decoration: none;
+#embedded-video-info {
+    position: absolute;
+    bottom: 0%;
+    width: 100%;
+    height: 46px;
+}
+
+#countdown {
+    color: #955;
+    padding-left: 8px;
+    font-weight: normal;
 }

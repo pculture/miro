@@ -3,6 +3,17 @@ import frontend
 import vlc
 
 ###############################################################################
+#### The Playback Controller                                               ####
+###############################################################################
+
+class PlaybackController (app.PlaybackControllerBase):
+    
+    def playItemExternally(self, itemID):
+        item = app.PlaybackControllerBase.playItemExternally(self, itemID)
+        # now play this item externally
+
+
+###############################################################################
 #### Right-hand pane video display                                         ####
 ###############################################################################
 
@@ -14,6 +25,9 @@ class VideoDisplay (app.VideoDisplayBase):
         self.vlc = vlc.SimpleVLC()
         self.vlc.setWindow(self.getHwnd())
     
+    def canPlayItem(self, item):
+        return False
+
     def selectItem(self, item):
         app.VideoDisplayBase.selectItem(self, item)
 
@@ -37,6 +51,9 @@ class VideoDisplay (app.VideoDisplayBase):
 
     def goFullScreen(self):
         app.VideoDisplayBase.goFullScreen(self)
+
+    def exitFullScreen(self):
+        app.VideoDisplayBase.exitFullScreen(self)
 
     def getCurrentTime(self):
         return self.vlc.getPosition()

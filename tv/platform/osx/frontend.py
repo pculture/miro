@@ -355,12 +355,6 @@ class MainController (NibClassBuilder.AutoBaseClass):
             NSApplicationWillTerminateNotification,
             NSApplication.sharedApplication())
 
-        nc.addObserver_selector_name_object_(
-            self,
-            'videoWillPlay:',
-            'videoWillPlay',
-            nil)
-
         return self
 
     def awakeFromNib(self):
@@ -375,11 +369,6 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     def appWillTerminate_(self, notification):
         self.saveLayout()
-
-    def videoWillPlay_(self, notification):
-        videoDisplay = app.Controller.instance.videoDisplay
-        if videoDisplay.currentFrame is None:
-            self.selectDisplay(videoDisplay, self.frame.mainDisplay)
 
     def restoreLayout(self):
         windowFrame = config.get(config.MAIN_WINDOW_FRAME)
@@ -1685,6 +1674,20 @@ class ManagedWebView (NSObject):
 
 
 ###############################################################################
+#### The Playback Controller                                               ####
+###############################################################################
+
+class PlaybackController (app.PlaybackControllerBase):
+    
+    def playItemExternally(self, itemID):
+        item = app.PlaybackControllerBase.playItemExternally(self, itemID)
+        moviePath = item.getPath()
+        ok = NSWorkspace.sharedWorkspace().openFile_withApplication_andDeactivate_(moviePath, nil, YES)
+        if not ok:
+            print "DTV: movie %s could not be externally opened" % moviePath
+ 
+
+###############################################################################
 #### Right-hand pane video display                                         ####
 ###############################################################################
 
@@ -1695,6 +1698,9 @@ class VideoDisplay (app.VideoDisplayBase):
         app.VideoDisplayBase.__init__(self)
         self.controller = VideoDisplayController.getInstance()
         self.controller.videoDisplay = self
+
+    def canPlayItem(self, item):
+        return self.controller.canPlayItem(item)
 
     def selectItem(self, item):
         self.controller.selectPlaylistItem(item)
@@ -1718,6 +1724,10 @@ class VideoDisplay (app.VideoDisplayBase):
     def goFullScreen(self):
         self.controller.goFullScreen()
         app.VideoDisplayBase.goFullScreen(self)
+
+    def exitFullScreen(self):
+        self.controller.exitFullScreen()
+        app.VideoDisplayBase.exitFullScreen(self)
 
     def getCurrentTime(self):
         return self.controller.progressDisplayer.getCurrentTimeInSeconds()
@@ -1778,6 +1788,10 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.movieView = nil
         self.systemActivityUpdaterTimer = nil
         self.reset()
+
+    def canPlayItem(self, item):
+        moviePath = item.getPath().lower()
+        return not moviePath.endswith('wmv') and not moviePath.endswith('avi')        
 
     def onSelected(self):
         self.movieView = self.videoAreaView.movieView
@@ -1843,10 +1857,12 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.fullscreenButton.setEnabled_(enabled)
 
     def playPause_(self, sender):
-        self.videoDisplay.playPause()
+        app.Controller.instance.playbackController.playPause()
 
     def play(self):
         nc.postNotificationName_object_('videoWillPlay', nil)
+        self.enablePrimaryControls(YES)
+        self.enableSecondaryControls(YES)
         self.playPauseButton.setImage_(NSImage.imageNamed_('pause.png'))
         self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('pause_blue.png'))
         self.movieView.play_(self)
@@ -1872,6 +1888,9 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     def goFullScreen(self):
         self.videoAreaView.enterFullScreen()
 
+    def exitFullScreen(self):
+        self.videoAreaView.exitFullScreen()
+
     def forward_(self, sender):
         self.performSeek(sender, 1)
         
@@ -1891,7 +1910,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             else:
                 self.fastSeekTimer.invalidate()
                 self.fastSeekTimer = nil
-                self.videoDisplay.skip(direction)
+                app.Controller.instance.playbackController.skip(direction)
 
     def fastSeek_(self, timer):
         assert self.movieView.movie().rate() == 1.0
@@ -1928,14 +1947,14 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         info = notification.userInfo()
         view = info['view']
         display = notification.object()
-        self.videoDisplay.configure(view, None, display)
+        app.Controller.instance.playbackController.configure(view, None, display)
 
     def handleNonWatchableDisplayNotification_(self, notification):
         self.enablePrimaryControls(NO)
 
     def handleMovieNotification_(self, notification):
         if notification.name() == QTMovieDidEndNotification and not self.progressDisplayer.dragging:
-            self.videoDisplay.onMovieFinished()
+            app.Controller.instance.playbackController.onMovieFinished()
 
 
 ###############################################################################
@@ -1985,6 +2004,10 @@ class VideoAreaView (NSView):
         self.adjustVideoWindowFrame()
         self.videoWindow.enterFullScreen()
 
+    def exitFullScreen(self):
+        if self.videoWindow.isFullScreen:
+            self.videoWindow.exitFullScreen()
+    
 
 ###############################################################################
 #### The video window, used to display the movies in both windowed and     ####
