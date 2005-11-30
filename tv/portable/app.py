@@ -825,6 +825,7 @@ class GUIActionHandler:
     # a non-GUI addFeed to match removeFeed. (requires template updates)
 
     def addFeed(self, url, showTemplate = None, selected = '1'):
+        url = feed.normalizeFeedURL(url)
         db.beginUpdate()
         try:
             feedView = globalViewList['feeds'].filterWithIndex(globalIndexList['feedsByURL'],url)

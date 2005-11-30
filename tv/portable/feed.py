@@ -77,6 +77,29 @@ def getFeedURLFromWebPage(url):
         pass
     return HTMLFeedURLParser().getLink(info['updated-url'],data)
 
+# URL validitation and normalization
+def validateFeedURL(url):
+    return re.match(r"^(http|https|feed)://[^/].*", url) is not None
+
+def normalizeFeedURL(url):
+    # Valid URL are returned as-is
+    if validateFeedURL(url):
+        return url
+    
+    # Check valid schemes with invalid separator
+    match = re.match(r"^(http|https|feed):/*(.*)$", url)
+    if match is not None:
+        return "%s://%s" % match.group(1,2)
+
+    # Replace invalid schemes by http
+    match = re.match(r"^(.*:/*)*(.*)$", url)
+    if match is not None:
+        return "http://%s" % match.group(2)
+
+    # We weren't able to normalize
+    print "DTV: unable to normalize URL %s" % url
+    return url
+
 ##
 # Generates an appropriate feed for a URL
 #

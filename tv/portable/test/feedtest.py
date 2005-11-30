@@ -1,8 +1,53 @@
 import unittest
-from database import *
-from feed import *
 from tempfile import mkstemp
 from time import sleep
+
+from feed import *
+from database import *
+
+class FeedURLValidationTest(unittest.TestCase):
+    def test(self):
+        self.assertEqual(validateFeedURL("http://foo.bar.com"), True)
+        self.assertEqual(validateFeedURL("https://foo.bar.com"), True)
+        self.assertEqual(validateFeedURL("feed://foo.bar.com"), True)
+                         
+        self.assertEqual(validateFeedURL("http:foo.bar.com"), False)
+        self.assertEqual(validateFeedURL("https:foo.bar.com"), False)
+        self.assertEqual(validateFeedURL("feed:foo.bar.com"), False)
+        self.assertEqual(validateFeedURL("http:/foo.bar.com"), False)
+        self.assertEqual(validateFeedURL("https:/foo.bar.com"), False)
+        self.assertEqual(validateFeedURL("feed:/foo.bar.com"), False)
+        self.assertEqual(validateFeedURL("http:///foo.bar.com"), False)
+        self.assertEqual(validateFeedURL("https:///foo.bar.com"), False)
+        self.assertEqual(validateFeedURL("feed:///foo.bar.com"), False)
+
+        self.assertEqual(validateFeedURL("foo.bar.com"), False)
+        self.assertEqual(validateFeedURL("crap:foo.bar.com"), False)
+        self.assertEqual(validateFeedURL("crap:/foo.bar.com"), False)
+        self.assertEqual(validateFeedURL("crap://foo.bar.com"), False)
+        self.assertEqual(validateFeedURL("crap:///foo.bar.com"), False)
+
+class FeedURLNormalizationTest(unittest.TestCase):
+    def test(self):
+        self.assertEqual(normalizeFeedURL("http://foo.bar.com"), "http://foo.bar.com")
+        self.assertEqual(normalizeFeedURL("https://foo.bar.com"), "https://foo.bar.com")
+        self.assertEqual(normalizeFeedURL("feed://foo.bar.com"), "feed://foo.bar.com")
+
+        self.assertEqual(normalizeFeedURL("http:foo.bar.com"), "http://foo.bar.com")
+        self.assertEqual(normalizeFeedURL("https:foo.bar.com"), "https://foo.bar.com")
+        self.assertEqual(normalizeFeedURL("feed:foo.bar.com"), "feed://foo.bar.com")
+        self.assertEqual(normalizeFeedURL("http:/foo.bar.com"), "http://foo.bar.com")
+        self.assertEqual(normalizeFeedURL("https:/foo.bar.com"), "https://foo.bar.com")
+        self.assertEqual(normalizeFeedURL("feed:/foo.bar.com"), "feed://foo.bar.com")
+        self.assertEqual(normalizeFeedURL("http:///foo.bar.com"), "http://foo.bar.com")
+        self.assertEqual(normalizeFeedURL("https:///foo.bar.com"), "https://foo.bar.com")
+        self.assertEqual(normalizeFeedURL("feed:///foo.bar.com"), "feed://foo.bar.com")
+
+        self.assertEqual(normalizeFeedURL("foo.bar.com"), "http://foo.bar.com")
+        self.assertEqual(normalizeFeedURL("crap:foo.bar.com"), "http://foo.bar.com")
+        self.assertEqual(normalizeFeedURL("crap:/foo.bar.com"), "http://foo.bar.com")
+        self.assertEqual(normalizeFeedURL("crap://foo.bar.com"), "http://foo.bar.com")
+        self.assertEqual(normalizeFeedURL("crap:///foo.bar.com"), "http://foo.bar.com")
 
 class SimpleFeedTestCase(unittest.TestCase):
     def setUp(self):
