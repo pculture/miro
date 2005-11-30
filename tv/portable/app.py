@@ -1050,7 +1050,7 @@ def makeMapToTabFunction(globalTemplateData, controller):
             elif isinstance(obj, feed.Feed):
                 data['feed'] = obj
                 # Change this to sort feeds on a different value
-                sortKey = obj.getTitle()
+                sortKey = obj.getTitle().lower()
                 return Tab('feedtab', data, 'channel', data, [100, sortKey], obj, controller)
             elif isinstance(obj, folder.Folder):
                 data['folder'] = obj
