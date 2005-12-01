@@ -1411,7 +1411,11 @@ class DirectoryFeedImpl(FeedImpl):
 ##
 # Parse HTML document and grab all of the links and their title
 # FIXME: Grab link title from ALT tags in images
+# FIXME: Grab document title from TITLE tags
 class HTMLLinkGrabber(HTMLParser):
+    linkPattern = re.compile("^.*?<(a|embed).*?(href|src)\s*=\s*\"(.*?)\".*?>(.*?)</a>(.*)$", re.S)
+    imgPattern = re.compile(".*<img.*?src\s*=\s*\"(.*?)\".*?>", re.S)
+    tagPattern = re.compile("<.*?>")
     def getLinks(self,data, baseurl):
         self.links = []
         self.lastLink = None
@@ -1421,72 +1425,20 @@ class HTMLLinkGrabber(HTMLParser):
         self.inTitle = False
         self.title = None
         self.thumbnailUrl = None
-        try:
-            self.feed(data)
-        except HTMLParseError:
-            print "DTV: error parsing "+str(baseurl)
-        try:
-            self.close()
-        except HTMLParseError:
-            print "DTV: error closing "+str(baseurl)
-        return self.links
 
-    def handle_starttag(self, tag, attrs):
-        if tag.lower() == 'title':
-            self.inTitle = True
-        elif tag.lower() == 'base':
-            for attr in attrs:
-                if attr[0].lower() == 'href':
-                    self.baseurl = attr[1]
-        elif tag.lower() == 'object':
-            self.inObject = True
-        elif self.inLink and tag.lower() == 'img':
-            for attr in attrs:
-                if attr[0].lower() == 'src':
-                    self.links[-1] = (self.links[-1][0],self.links[-1][1],urljoin(self.baseurl,attr[1]))
-        elif tag.lower() == 'a':
-            for attr in attrs:
-                if attr[0].lower() == 'href':
-                    self.links.append( (urljoin(self.baseurl,attr[1]),None,None))
-                    self.inLink = True
-                    break
-        elif tag.lower() == 'embed':
-                for attr in attrs:
-                    if attr[0].lower() == 'src':
-                        self.links.append( (urljoin(self.baseurl,attr[1]),None,None))
-                        break
-        elif tag.lower() == 'param' and self.inObject:
-            srcParam = False
-            for attr in attrs:
-                if attr[0].lower() == 'name' and attr[1].lower() == 'src':
-                    srcParam = True
-                    break
-            if srcParam:
-                for attr in attrs:
-                    if attr[0].lower() == 'value':
-                        self.links.append( (urljoin(self.baseurl,attr[1]),None,None))
-                        break
-                
-    def handle_endtag(self, tag):
-        if tag.lower() == 'a':
-            if self.inLink:
-                if self.links[-1][1] is None:
-                    self.links[-1] = (self.links[-1][0], self.links[-1][0],self.links[-1][2])
-                    self.inLink = False
-        elif tag.lower() == 'object':
-            self.inObject = False
-        elif tag.lower() == 'title':
-            self.inTitle = False
-    def handle_data(self, data):
-        if self.inLink:
-            if self.links[-1][1] is None:
-                self.links[-1] = (self.links[-1][0], '',self.links[-1][2])
-            self.links[-1] = (self.links[-1][0],self.links[-1][1]+data,self.links[-1][2])
-        elif self.inTitle:
-            if self.title is None:
-                self.title = data
+        match = HTMLLinkGrabber.linkPattern.match(data)
+        while match:
+            link = urljoin(baseurl, match.group(3))
+            desc = match.group(4)
+            imgMatch = HTMLLinkGrabber.imgPattern.match(desc)
+            if imgMatch:
+                thumb = urljoin(baseurl, imgMatch.group(1))
             else:
-                self.title += data
+                thumb = None
+            desc =  HTMLLinkGrabber.tagPattern.sub(' ',desc)
+            self.links.append( (link, desc, thumb))
+            match = HTMLLinkGrabber.linkPattern.match(match.group(5))
+        return self.links
 
 class RSSLinkGrabber(xml.sax.handler.ContentHandler):
     def __init__(self,baseurl,charset=None):
