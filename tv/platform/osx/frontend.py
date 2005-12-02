@@ -2076,10 +2076,11 @@ class QuicktimeRenderer:
 
     def selectPlaylistItem(self, item, volume):
         pathname = item.getPath()
-        (mov, error) = QTMovie.alloc().initWithFile_error_(pathname)
-        mov.setVolume_(volume)
-        self.view.setMovie_(mov)
-        self.registerMovieObserver(mov)
+        (qtmovie, error) = QTMovie.alloc().initWithFile_error_(pathname)
+        if qtmovie is not nil:
+            qtmovie.setVolume_(volume)
+            self.view.setMovie_(qtmovie)
+            self.registerMovieObserver(qtmovie)
 
     def play(self):
         self.view.play_(self)
@@ -2096,32 +2097,35 @@ class QuicktimeRenderer:
             self.view.movie().gotoBeginning()
 
     def getDuration(self):
-        if self.view.movie() == nil:
+        if self.view.movie() is nil:
             return 0
         qttime = self.view.movie().duration()
         return qttime.timeValue / float(qttime.timeScale)
 
     def getCurrentTime(self):
-        if self.view.movie() == nil:
+        if self.view.movie() is nil:
             return 0
         qttime = self.view.movie().currentTime()
         return qttime.timeValue / float(qttime.timeScale)
 
     def setCurrentTime(self, time):
-        qttime = self.view.movie().currentTime()
-        qttime.timeValue = time * float(qttime.timeScale)
-        self.view.movie().setCurrentTime_(qttime)
+        if self.view.movie() is not nil:
+            qttime = self.view.movie().currentTime()
+            qttime.timeValue = time * float(qttime.timeScale)
+            self.view.movie().setCurrentTime_(qttime)
 
     def getRate(self):
+        if self.view.movie() is nil:
+            return 0.0
         return self.view.movie().rate()
 
     def setRate(self, rate):
-        self.view.movie().setRate_(rate)
+        if self.view.movie() is not nil:
+            self.view.movie().setRate_(rate)
         
     def setVolume(self, level):
-        if self.view is not None:
-            if self.view.movie() is not None:
-                self.view.movie().setVolume_(level)
+        if self.view.movie() is not nil:
+            self.view.movie().setVolume_(level)
     
         
 ###############################################################################
