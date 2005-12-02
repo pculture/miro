@@ -1187,43 +1187,46 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         path.fill()
         self.cursor.unlockFocus()
         
-        self.movie = nil
+        self.renderer = None
         self.dragging = False
         self.updateTimer = nil
 
         return self;
 
-    def setMovie_(self, movie):
-        self.movie = movie
-        if movie is not nil:
+    def setup(self, renderer):
+        self.renderer = renderer
+        if renderer is not nil:
             self.updateTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(1.0, self, 'refresh:', nil, YES)
         elif self.updateTimer is not nil:
             self.updateTimer.invalidate()
             self.updateTimer = nil
         self.refresh_(nil)
 
+    def teardown(self):
+        self.setup(None)
+
     def refresh_(self, timer):
         self.setNeedsDisplay_(YES)
 
     def mouseDown_(self, event):
-        if self.movie is not nil:
+        if self.renderer is not None:
             location = self.convertPoint_fromView_(event.locationInWindow(), nil)
             if NSPointInRect(location, self.getGrooveRect()):
                 self.dragging = True
-                self.movie.stop()
-                self.movie.setCurrentTime_(self.getTimeForLocation(location))
+                self.renderer.stop()
+                self.renderer.setCurrentTime(self.getTimeForLocation(location))
                 self.refresh_(nil)
 
     def mouseDragged_(self, event):
         if self.dragging:
             location = self.convertPoint_fromView_(event.locationInWindow(), nil)
-            self.movie.setCurrentTime_(self.getTimeForLocation(location))
+            self.renderer.setCurrentTime(self.getTimeForLocation(location))
             self.refresh_(nil)
 
     def mouseUp_(self, event):
-        if self.movie is not nil:
+        if self.renderer is not None:
             self.dragging = False
-            self.movie.play()
+            self.renderer.play()
             self.refresh_(nil)
 
     def getTimeForLocation(self, location):
@@ -1235,8 +1238,7 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
             offset = rect.size.width
         if offset > 0:
             offset /= rect.size.width
-        time = self.movie.duration()
-        time.timeValue *= offset
+        time = self.renderer.getDuration() * offset
         return time
 
     def drawRect_(self, rect):
@@ -1263,8 +1265,8 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
 
     def drawTimeIndicator(self):
         timeStr = '00:00:00'
-        if self.movie is not nil:
-            seconds = self.getCurrentTimeInSeconds()
+        if self.renderer is not None:
+            seconds = self.renderer.getCurrentTime()
             timeStr = time.strftime("%H:%M:%S", time.gmtime(seconds))
         NSString.stringWithString_(timeStr).drawAtPoint_withAttributes_( (8,5), self.timeAttrs )
 
@@ -1276,14 +1278,14 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         NSBezierPath.strokeRect_(rect)
 
     def drawProgressCursor(self):
-        if self.movie == nil:
+        if self.renderer == None:
             return
 
         progress = 0.0
 
-        currentTime = self.getCurrentTimeInSeconds()
+        currentTime = self.renderer.getCurrentTime()
         if currentTime > 0.0:
-            progress = self.getDurationInSeconds() / currentTime
+            progress = self.renderer.getDuration() / currentTime
 
         offset = 0
         if progress > 0.0:
@@ -1291,18 +1293,6 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
 
         x = math.floor(59 + offset) + 0.5
         self.cursor.compositeToPoint_operation_((x,7), NSCompositeSourceOver)
-
-    def getDurationInSeconds(self):
-        if self.movie == nil:
-            return 0
-        qttime = self.movie.duration()
-        return qttime.timeValue / float(qttime.timeScale)
-
-    def getCurrentTimeInSeconds(self):
-        if self.movie == nil:
-            return 0
-        qttime = self.movie.currentTime()
-        return qttime.timeValue / float(qttime.timeScale)
 
     def getGrooveRect(self):
         origin = NSPoint(60, 8)
@@ -1728,7 +1718,7 @@ class VideoDisplay (app.VideoDisplayBase):
         app.VideoDisplayBase.exitFullScreen(self)
 
     def getCurrentTime(self):
-        return self.controller.progressDisplayer.getCurrentTimeInSeconds()
+        return self.controller.getCurrentTime()
 
     def setVolume(self, level):
         self.controller.setVolume(level)
@@ -1783,37 +1773,53 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             'handleNonWatchableDisplayNotification:', 
             'displayIsNotWatchable', 
             nil)
-        self.movieView = nil
+        self.initRenderers()
         self.systemActivityUpdaterTimer = nil
         self.reset()
 
+    def initRenderers(self):
+        self.renderers = list()
+        self.renderers.append(QuicktimeRenderer(self))
+        self.renderer = None
+
+    def getRendererForItem(self, item):
+        renderer = None
+        for r in self.renderers:
+            if r.canPlayItem(item):
+                renderer = r
+                break
+        return renderer
+
     def canPlayItem(self, item):
-        moviePath = item.getPath().lower()
-        return not moviePath.endswith('wmv') and not moviePath.endswith('avi')        
+        return self.getRendererForItem(item) is not None
 
     def onSelected(self):
-        self.movieView = self.videoAreaView.movieView
         self.enableSecondaryControls(YES)
         self.preventSystemSleep(True)
-        self.videoAreaView.activate()
 
     def onDeselected(self):
         self.pause()
         self.enableSecondaryControls(False)
-        self.videoAreaView.deactivate()
+        self.videoAreaView.teardown()
         self.preventSystemSleep(False)
         self.reset()
 
+    def selectPlaylistItem(self, item):
+        self.renderer = self.getRendererForItem(item)
+        self.renderer.selectPlaylistItem(item, self.volumeSlider.floatValue())
+        self.videoAreaView.setup(self.renderer)
+        self.progressDisplayer.setup(self.renderer)
+
     def reset(self):
+        if self.renderer is not None:
+            self.renderer.reset()
+        self.renderer = None
         self.currentWatchableDisplay = None
         self.fastSeekTimer = nil
-        self.progressDisplayer.setMovie_(nil)
-        self.unregisterAsMovieObserver()
+        self.progressDisplayer.teardown()
 
     def resetMovie(self):
-        movie = self.movieView.movie()
-        if movie is not nil:
-            movie.gotoBeginning()
+        self.renderer.gotoBeginning()
 
     def preventSystemSleep(self, prevent):
         if prevent and self.systemActivityUpdaterTimer is nil:
@@ -1826,21 +1832,6 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
     def updateSystemActivity_(self, timer):
         UpdateSystemActivity(OverallAct)
-
-    def registerAsMovieObserver(self, movie):
-        self.unregisterAsMovieObserver()
-        nc.addObserver_selector_name_object_(self, 'handleMovieNotification:', QTMovieDidEndNotification, movie)
-
-    def unregisterAsMovieObserver(self):
-        nc.removeObserver_name_object_(self, QTMovieDidEndNotification, nil)
-
-    def selectPlaylistItem(self, item):
-        pathname = item.getPath()
-        (movie, error) = QTMovie.alloc().initWithFile_error_(pathname)
-        self.movieView.setMovie_(movie)
-        self.progressDisplayer.setMovie_(movie)
-        self.setVolume_(self.volumeSlider)
-        self.registerAsMovieObserver(movie)
 
     def enablePrimaryControls(self, enabled):
         self.playPauseButton.setEnabled_(enabled)
@@ -1863,22 +1854,20 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.enableSecondaryControls(YES)
         self.playPauseButton.setImage_(NSImage.imageNamed_('pause.png'))
         self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('pause_blue.png'))
-        self.movieView.play_(self)
-        self.movieView.setNeedsDisplay_(YES)
+        self.renderer.play()
 
     def pause(self):
         nc.postNotificationName_object_('videoWillPause', nil)
         self.playPauseButton.setImage_(NSImage.imageNamed_('play.png'))
         self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('play_blue.png'))
-        self.movieView.pause_(nil)
+        self.renderer.pause()
 
     def stop_(self, sender):
         self.videoDisplay.stop()
         
     def stop(self):
         nc.postNotificationName_object_('videoWillStop', nil)
-        self.movieView.pause_(nil)
-        self.resetMovie()
+        self.renderer.stop()
 
     def playFullScreen_(self, sender):
         self.videoDisplay.goFullScreen()
@@ -1904,18 +1893,21 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         else:
             sender.sendActionOn_(NSLeftMouseDownMask)
             if self.fastSeekTimer is nil:
-                self.movieView.movie().setRate_(1.0)
+                self.renderer.setRate(1.0)
             else:
                 self.fastSeekTimer.invalidate()
                 self.fastSeekTimer = nil
                 app.Controller.instance.playbackController.skip(direction)
 
+    def getCurrentTime(self):
+        return self.renderer.getCurrentTime()
+
     def fastSeek_(self, timer):
-        assert self.movieView.movie().rate() == 1.0
+        assert self.renderer.getRate() == 1.0
         info = timer.userInfo()
         direction = info['seekDirection']
         rate = 2 * direction
-        self.movieView.movie().setRate_(rate)
+        self.renderer.setRate(rate)
         self.fastSeekTimer = nil
 
     def getVolume(self):
@@ -1925,12 +1917,10 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.videoDisplay.setVolume(sender.floatValue())
 
     def setVolume(self, level):
-        if self.movieView is not None:
-            movie = self.movieView.movie()
-            if movie is not None:
-                if self.muteButton.state() == NSOffState:
-                    level = 0.0
-                movie.setVolume_(level)
+        if self.muteButton.state() == NSOffState:
+            level = 0.0
+        if self.renderer is not None:
+            self.renderer.setVolume(level)
         if self.muteButton.state() == NSOnState:
             self.volumeSlider.setFloatValue_(level)
 
@@ -1949,7 +1939,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
     def handleNonWatchableDisplayNotification_(self, notification):
         self.enablePrimaryControls(NO)
-
+        
     def handleMovieNotification_(self, notification):
         if notification.name() == QTMovieDidEndNotification and not self.progressDisplayer.dragging:
             app.Controller.instance.playbackController.onMovieFinished()
@@ -1965,22 +1955,22 @@ class VideoAreaView (NSView):
     
     def awakeFromNib(self):
         self.videoWindow = VideoWindow.alloc().initWithFrame_(((0,0),(320,200)))
-        self.movieView = self.videoWindow.movieView
         self.hostWindow = nil
         
-    def activate(self):
+    def setup(self, renderer):
         self.hostWindow = self.window()
         assert self.hostWindow is not nil
         self.adjustVideoWindowFrame()
         self.hostWindow.addChildWindow_ordered_(self.videoWindow, NSWindowAbove)
+        self.videoWindow.setup(renderer)
         self.videoWindow.orderFront_(nil)
     
-    def deactivate(self):
+    def teardown(self):
         if self.videoWindow.isFullScreen:
             self.videoWindow.exitFullScreen()
         self.hostWindow.removeChildWindow_(self.videoWindow)
         self.videoWindow.orderOut_(nil)
-        self.movieView.setMovie_(nil)
+        self.videoWindow.teardown()
     
     def adjustVideoWindowFrame(self):
         if self.window() is nil:
@@ -1989,11 +1979,7 @@ class VideoAreaView (NSView):
         frame.origin = self.convertPoint_toView_(NSZeroPoint, nil)
         frame.origin = self.window().convertBaseToScreen_(frame.origin)
         self.videoWindow.setFrame_display_(frame, YES)
-    
-    def drawRect_(self, rect):
-        NSColor.blackColor().set()
-        NSRectFill(rect)
-    
+        
     def setFrame_(self, frame):
         super(VideoAreaView, self).setFrame_(frame)
         self.adjustVideoWindowFrame()
@@ -2020,13 +2006,14 @@ class VideoWindow (NSWindow):
             NSBorderlessWindowMask,
             NSBackingStoreBuffered,
             YES )
-        self.movieView = QTMovieView.alloc().initWithFrame_(frame)
-        self.movieView.setFillColor_(NSColor.blackColor())
-        self.movieView.setControllerVisible_(NO)
-        self.movieView.setPreservesAspectRatio_(YES)
-        self.setContentView_(self.movieView)
         self.isFullScreen = NO
         return self
+
+    def setup(self, renderer):
+        self.setContentView_(renderer.view)
+    
+    def teardown(self):
+        self.setContentView_(nil)
 
     def canBecomeMainWindow(self):
         return self.isFullScreen
@@ -2059,6 +2046,84 @@ class VideoWindow (NSWindow):
             self.exitFullScreen()
 
 
+###############################################################################
+#### Quicktime video renderer                                              ####
+###############################################################################
+
+class QuicktimeRenderer:
+
+    def __init__(self, delegate):
+        self.view = QTMovieView.alloc().initWithFrame_(((0,0),(100,100)))
+        self.view.setFillColor_(NSColor.blackColor())
+        self.view.setControllerVisible_(NO)
+        self.view.setPreservesAspectRatio_(YES)
+        self.delegate = delegate
+
+    def registerMovieObserver(self, movie):
+        self.unregisterMovieObserver()
+        nc.addObserver_selector_name_object_(self.delegate, 'handleMovieNotification:', QTMovieDidEndNotification, movie)
+
+    def unregisterMovieObserver(self):
+        nc.removeObserver_name_object_(self.delegate, QTMovieDidEndNotification, nil)
+
+    def reset(self):
+        self.view.setMovie_(nil)
+        self.unregisterMovieObserver()
+
+    def canPlayItem(self, item):
+        moviePath = item.getPath().lower()
+        return not moviePath.endswith('wmv') and not moviePath.endswith('avi')        
+
+    def selectPlaylistItem(self, item, volume):
+        pathname = item.getPath()
+        (mov, error) = QTMovie.alloc().initWithFile_error_(pathname)
+        mov.setVolume_(volume)
+        self.view.setMovie_(mov)
+        self.registerMovieObserver(mov)
+
+    def play(self):
+        self.view.play_(self)
+        self.view.setNeedsDisplay_(YES)
+
+    def pause(self):
+        self.view.pause_(nil)
+
+    def stop(self):
+        self.view.pause_(nil)
+
+    def gotoBeginning(self):
+        if self.view.movie() is not nil:
+            self.view.movie().gotoBeginning()
+
+    def getDuration(self):
+        if self.view.movie() == nil:
+            return 0
+        qttime = self.view.movie().duration()
+        return qttime.timeValue / float(qttime.timeScale)
+
+    def getCurrentTime(self):
+        if self.view.movie() == nil:
+            return 0
+        qttime = self.view.movie().currentTime()
+        return qttime.timeValue / float(qttime.timeScale)
+
+    def setCurrentTime(self, time):
+        qttime = self.view.movie().currentTime()
+        qttime.timeValue = time * float(qttime.timeScale)
+        self.view.movie().setCurrentTime_(qttime)
+
+    def getRate(self):
+        return self.view.movie().rate()
+
+    def setRate(self, rate):
+        self.view.movie().setRate_(rate)
+        
+    def setVolume(self, level):
+        if self.view is not None:
+            if self.view.movie() is not None:
+                self.view.movie().setVolume_(level)
+    
+        
 ###############################################################################
 #### Playlist item ?                                                       ####
 ###############################################################################
