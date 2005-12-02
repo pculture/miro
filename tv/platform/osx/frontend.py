@@ -666,7 +666,7 @@ class AddChannelSheetController (NibClassBuilder.AutoBaseClass):
 
     def awakeFromNib(self):
         url = NSPasteboard.generalPasteboard().stringForType_(NSStringPboardType)
-        if not feed.validateFeedURL(url):
+        if url is None or not feed.validateFeedURL(url):
             url = ''
         self.addChannelSheetURL.setStringValue_(url)
 
