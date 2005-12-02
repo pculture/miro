@@ -1796,6 +1796,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     def onSelected(self):
         self.enableSecondaryControls(YES)
         self.preventSystemSleep(True)
+        self.videoAreaView.prepare()
 
     def onDeselected(self):
         self.pause()
@@ -1805,10 +1806,12 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.reset()
 
     def selectPlaylistItem(self, item):
-        self.renderer = self.getRendererForItem(item)
-        self.renderer.selectPlaylistItem(item, self.volumeSlider.floatValue())
-        self.videoAreaView.setup(self.renderer)
-        self.progressDisplayer.setup(self.renderer)
+        renderer = self.getRendererForItem(item)
+        renderer.selectPlaylistItem(item, self.volumeSlider.floatValue())
+        if renderer != self.renderer:
+            self.videoAreaView.setup(renderer)
+            self.progressDisplayer.setup(renderer)
+        self.renderer = renderer
 
     def reset(self):
         if self.renderer is not None:
@@ -1956,12 +1959,14 @@ class VideoAreaView (NSView):
     def awakeFromNib(self):
         self.videoWindow = VideoWindow.alloc().initWithFrame_(((0,0),(320,200)))
         self.hostWindow = nil
-        
-    def setup(self, renderer):
+    
+    def prepare(self):
         self.hostWindow = self.window()
         assert self.hostWindow is not nil
         self.adjustVideoWindowFrame()
         self.hostWindow.addChildWindow_ordered_(self.videoWindow, NSWindowAbove)
+    
+    def setup(self, renderer):
         self.videoWindow.setup(renderer)
         self.videoWindow.orderFront_(nil)
     
