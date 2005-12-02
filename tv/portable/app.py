@@ -247,6 +247,7 @@ class PlaybackControllerBase:
                 nextItem = self.currentPlaylist.getPrev()
             else:
                 self.currentDisplay.resetMovie()
+                return self.currentPlaylist.cur()
         if nextItem is None:
             self.exitPlayback()
         else:
