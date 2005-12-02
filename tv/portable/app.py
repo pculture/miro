@@ -778,8 +778,11 @@ class ModelActionHandler:
         thread.start()
 
     def markFeedViewed(self, feed):
-        obj = db.getObjectByID(int(feed))
-        obj.markAsViewed()
+        try:
+            obj = db.getObjectByID(int(feed))
+            obj.markAsViewed()
+        except database.ObjectNotFoundError:
+            pass
 
     def expireItem(self, item):
         obj = db.getObjectByID(int(item))
