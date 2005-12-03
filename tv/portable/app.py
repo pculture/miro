@@ -164,6 +164,10 @@ class VideoDisplayBase (Display):
     def restoreVolume(self):
         self.setVolume(self.previousVolume)
 
+    def onDeselected(self, frame):
+        if self.isPlaying:
+            self.stop()
+
     
 ###############################################################################
 #### The Playback Controller base class                                    ####

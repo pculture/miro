@@ -1740,6 +1740,7 @@ class VideoDisplay (app.VideoDisplayBase):
         app.VideoDisplayBase.onSelected(self, frame)
 
     def onDeselected(self, frame):
+        app.VideoDisplayBase.onDeselected(self, frame)
         self.controller.onDeselected()
 
     def getView(self):
@@ -1799,10 +1800,10 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.videoAreaView.prepare()
 
     def onDeselected(self):
-        self.pause()
         self.enableSecondaryControls(False)
-        self.videoAreaView.teardown()
         self.preventSystemSleep(False)
+        self.videoAreaView.teardown()
+        self.progressDisplayer.teardown()
         self.reset()
 
     def selectPlaylistItem(self, item):
@@ -1819,7 +1820,6 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.renderer = None
         self.currentWatchableDisplay = None
         self.fastSeekTimer = nil
-        self.progressDisplayer.teardown()
 
     def resetMovie(self):
         self.renderer.gotoBeginning()
@@ -1848,6 +1848,10 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.forwardButton.setEnabled_(enabled)
         self.fullscreenButton.setEnabled_(enabled)
 
+    def updatePlayPauseButton(self, prefix):
+        self.playPauseButton.setImage_(NSImage.imageNamed_('%s.png' % prefix))
+        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('%s_blue.png' % prefix))
+
     def playPause_(self, sender):
         app.Controller.instance.playbackController.playPause()
 
@@ -1855,14 +1859,12 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         nc.postNotificationName_object_('videoWillPlay', nil)
         self.enablePrimaryControls(YES)
         self.enableSecondaryControls(YES)
-        self.playPauseButton.setImage_(NSImage.imageNamed_('pause.png'))
-        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('pause_blue.png'))
+        self.updatePlayPauseButton('pause')
         self.renderer.play()
 
     def pause(self):
         nc.postNotificationName_object_('videoWillPause', nil)
-        self.playPauseButton.setImage_(NSImage.imageNamed_('play.png'))
-        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('play_blue.png'))
+        self.updatePlayPauseButton('play')
         self.renderer.pause()
 
     def stop_(self, sender):
@@ -1870,6 +1872,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         
     def stop(self):
         nc.postNotificationName_object_('videoWillStop', nil)
+        self.updatePlayPauseButton('play')
         self.renderer.stop()
 
     def playFullScreen_(self, sender):

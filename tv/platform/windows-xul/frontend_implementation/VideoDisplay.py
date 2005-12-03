@@ -75,7 +75,7 @@ class VideoDisplay (app.VideoDisplayBase):
         app.VideoDisplayBase.onSelected(self, frame)
 
     def onDeselected(self, frame):
-        pass
+        app.VideoDisplayBase.onDeselected(self, frame)
 
     def onWMClose(self, hwnd, msg, wparam, lparam):
         self.unlink()

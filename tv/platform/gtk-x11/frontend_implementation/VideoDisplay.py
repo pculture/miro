@@ -66,7 +66,7 @@ class VideoDisplay (app.VideoDisplayBase):
         app.VideoDisplayBase.onSelected(self, frame)
 
     def onDeselected(self, frame):
-        pass
+        app.VideoDisplayBase.onDeselected(self, frame)
 
 
 ###############################################################################
