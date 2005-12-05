@@ -138,7 +138,6 @@ class VideoDisplayBase (Display):
 
     def stop(self):
         self.isPlaying = False
-        self.playbackController.exitPlayback()
 
     def goFullScreen(self):
         self.isFullScreen = True
@@ -242,6 +241,12 @@ class PlaybackControllerBase:
         self.currentDisplay = TemplateDisplay('external-playback', anItem.getInfoMap(), Controller.instance)
         frame = Controller.instance.frame
         frame.selectDisplay(self.currentDisplay, frame.mainDisplay)
+
+    def stop(self):
+        videoDisplay = Controller.instance.videoDisplay
+        if self.currentDisplay == videoDisplay:
+            videoDisplay.stop()
+        self.exitPlayback()
 
     def skip(self, direction):
         nextItem = None

@@ -1868,7 +1868,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.renderer.pause()
 
     def stop_(self, sender):
-        self.videoDisplay.stop()
+        app.Controller.instance.playbackController.stop()
         
     def stop(self):
         nc.postNotificationName_object_('videoWillStop', nil)
