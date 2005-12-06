@@ -630,6 +630,12 @@ class TemplateDisplay(frontend.HTMLDisplay):
     def __init__(self, templateName, data, controller, existingView = None, frameHint=None, areaHint=None):
         "'templateName' is the name of the inital template file. 'data' is keys for the template."
 
+	# Copy the event cookie for this instance (allocated by our
+	# base class) into the template data
+	data = copy.copy(data)
+	data['eventCookie'] = self.getEventCookie()
+	data['dtvPlatform'] = self.getDTVPlatformName()
+
         #print "Processing %s" % templateName
         self.controller = controller
         self.templateName = templateName
@@ -691,7 +697,9 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 for key in argLists.keys():
                     value = argLists[key]
                     if len(value) != 1:
-                        raise template.TemplateError, "Multiple values of '%s' argument passend to '%s' action" % (key, action)
+                        raise template.TemplateError, "Multiple values of '%s' argument passed to '%s' action" % (key, action)
+		    if type(key) == unicode:
+			key = key.encode('utf8')
                     args[key] = value[0]
 
                 if self.dispatchAction(action, **args):
