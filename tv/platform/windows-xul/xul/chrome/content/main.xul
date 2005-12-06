@@ -8,149 +8,208 @@
 <window id="main" title="&main.title;"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 	xmlns:html="http://www.w3.org/1999/xhtml"
-	hidechrome="false" onload="onLoad();"
+	hidechrome="true"
 	orient="vertical"
-	width="600" height="370"
+	sizemode="normal"
+	width="800" height="600"
 	screenX="100" screenY="100"
 	persist="screenX screenY width height">
-  <script src="chrome://dtv/content/main.js"/>
 
-  <!-- TITLEBAR -->
-  <hbox id="titlebar">
-    <spacer id="titlebar-left" />
+<!-- TITLEBAR -->
+<hbox height="25" container="1" id="titlebar" class="titlebar">
 
-    <ul id="titlebar-menu" xmlns="http://www.w3.org/1999/xhtml">
-      <li><a href="#" class="titlebar-menu-toplevel">File</a>
-	<ul>
-	  <li class="titlebar-menu-item"><a href="#"><span class="titlebar-menu-shortcut">Ctrl+O</span>Open</a></li>
-	  <li class="titlebar-menu-item"><a href="#"><span class="titlebar-menu-shortcut">&rsaquo;</span>Open Recent</a>
-	    <ul>
-	      <li class="titlebar-menu-item"><a href="#">filename-one.mov</a></li>
-	      <li class="titlebar-menu-item"><a href="#">filename-two.mov</a></li>
-	      <li class="titlebar-menu-item"><a href="#">filename-three.mov</a></li>
-	      <li class="titlebar-menu-item"><a href="#">filename-four.mov</a></li>
-	      <li class="titlebar-menu-item"><a href="#">filename-five.mov</a></li>
-	    </ul>
-	  </li>
-	  <li class="titlebar-menu-divider">&nbsp;</li>
-	  <li class="titlebar-menu-item"><a href="#"><span class="titlebar-menu-shortcut">Ctrl+Q</span>Exit DTV</a></li>
-	</ul>
-      </li>
-      <li><a href="#" class="titlebar-menu-toplevel">Edit</a>
-	<ul>
-	  <li class="titlebar-menu-item"><span class="titlebar-menu-shortcut">Ctrl+Z</span>Undo</li>
-	  <li class="titlebar-menu-item"><span class="titlebar-menu-shortcut">Ctrl+Y</span>Redo</li>
-	  <li class="titlebar-menu-divider">&nbsp;</li>
-	  <li class="titlebar-menu-item"><span class="titlebar-menu-shortcut">Ctrl+X</span>Cut</li>
-	  <li class="titlebar-menu-item"><span class="titlebar-menu-shortcut">Ctrl+C</span>Copy</li>
-	  <li class="titlebar-menu-item"><span class="titlebar-menu-shortcut">Ctrl+V</span>Paste</li>
-	  <li class="titlebar-menu-divider">&nbsp;</li>
-	  <li class="titlebar-menu-item"><a href="#">Preferences</a></li>
-	</ul>
-      </li>
-      <li><a href="#" class="titlebar-menu-toplevel">Video</a>
-	<ul>
-	  <li class="titlebar-menu-item">Play Video</li>
-	  <li class="titlebar-menu-item">Stop Video</li>
-	  <li class="titlebar-menu-divider">&nbsp;</li>
-	  <li class="titlebar-menu-item"><span class="titlebar-menu-shortcut">Alt+Enter</span>Full Screen</li>
-	  <li class="titlebar-menu-item">Half Screen</li>
-	  <li class="titlebar-menu-divider">&nbsp;</li>
-	  <li class="titlebar-menu-item">Delete Video</li>
-	  <li class="titlebar-menu-item">Save Video</li>
-	  <li class="titlebar-menu-item">Copy Video Link</li>
-	</ul>
-      </li>
-      <li><a href="#" class="titlebar-menu-toplevel">Channel</a>
-	<ul>
-	  <li class="titlebar-menu-item"><a href="#">Add a Channel</a></li>
-	  <li class="titlebar-menu-item">Remove Channel</li>
-	  <li class="titlebar-menu-item">Copy Channel Link</li>
-	  <li class="titlebar-menu-divider">&nbsp;</li>
-	  <li class="titlebar-menu-item">Update Channel</li>
-	  <li class="titlebar-menu-item"><a href="#">Update All Channels</a></li>
-	  <li class="titlebar-menu-divider">&nbsp;</li>
-	  <li class="titlebar-menu-item">Rename Channel</li>
-	  <li class="titlebar-menu-divider">&nbsp;</li>
-	  <li class="titlebar-menu-item">Tell a Friend</li>
-	</ul>
-      </li>
-      <li><a href="#" class="titlebar-menu-toplevel">Collection</a>
-	<ul>
-	  <li class="titlebar-menu-item"><a href="#">Create a Collection</a></li>
-	  <li class="titlebar-menu-item">Delete Collection</li>
-	  <li class="titlebar-menu-divider">&nbsp;</li>
-	  <li class="titlebar-menu-item">Send to a Friend</li>
-	</ul>
-      </li>
-      <li><a href="#" class="titlebar-menu-toplevel">Window</a>
-	<ul>
-	  <li class="titlebar-menu-item"><a href="#">Zoom</a></li>
-	  <li class="titlebar-menu-item"><a href="#">Minimize</a></li>
-	  <li class="titlebar-menu-item"><a href="#">Maximize</a></li>
-	  <li class="titlebar-menu-divider">&nbsp;</li>
-	  <li class="titlebar-menu-item"><a href="#">Bring to Front</a></li>
-	</ul>
-      </li>
-      <li><a href="#" class="titlebar-menu-toplevel">Help</a>
-	<ul>
-	  <li class="titlebar-menu-item"><a href="#">Help Contents</a></li>
-	  <li class="titlebar-menu-divider">&nbsp;</li>
-	  <li class="titlebar-menu-item"><a href="#">About DTV</a></li>
-	</ul>
-      </li>
-    </ul>
+	<!-- MAIN MENUBAR -->
+	<hbox>
+		<menubar id="titlebar-menu">
+		
+			<!-- FILE MENU -->
+			<menu id="file-menu" label="File" accesskey="F" class="titlebar-toplevel" style="margin-left: 10px;">
+				<menupopup id="file-popup">
+					<menuitem label="Open" acceltext="Ctrl+O" accesskey="O"/>
+						<menu id="openrecent-menu" label="Open Recent" accesskey="R">
+							<menupopup id="openrecent-popup">
+								<menuitem label="music/filename-01.mov"/>
+								<menuitem label="music/filename-02.mov"/>
+								<menuitem label="videogames/filename-03.mov"/>
+								<menuitem label="concerts/filename-04.mov"/>
+								<menuitem label="tv/filename-05.mov"/>
+							</menupopup>
+						</menu>
+					<menuseparator/>
+					<menuitem label="Exit" acceltext="Ctrl+Q" accesskey="E"/>
+				</menupopup>
+			</menu>
+			<!-- / FILE MENU -->
+			
+			<!-- EDIT MENU -->
+			<menu id="edit-menu" label="Edit" accesskey="E" class="titlebar-toplevel">
+				<menupopup id="file-popup">
+					<menuitem label="Undo" acceltext="Ctrl+Z" accesskey="U"/>
+					<menuitem label="Redo" acceltext="Ctrl+Y" accesskey="R"/>
+					<menuseparator/>
+					<menuitem label="Cut" acceltext="Ctrl+X" accesskey="T"/>
+					<menuitem label="Copy" acceltext="Ctrl+C" accesskey="C"/>
+					<menuitem label="Paste" acceltext="Ctrl+V" accesskey="P"/>
+				</menupopup>
+			</menu>
+			<!-- / EDIT MENU -->
+			
+			<!-- VIDEO MENU -->
+			<menu id="video-menu" label="Video" accesskey="V" class="titlebar-toplevel">
+				<menupopup id="file-popup">
+					<menuitem label="Play Video" accesskey="P"/>
+					<menuitem label="Stop Video" accesskey="S"/>
+					<menuseparator/>
+					<menuitem label="Full Screen" acceltext="Alt+Enter" accesskey="F"/>
+					<menuitem label="Half Screen" accesskey="H"/>
+					<menuseparator/>
+					<menuitem label="Delete Video" accesskey="D"/>
+					<menuitem label="Save Video" accesskey="a"/>
+					<menuitem label="Copy Video Link" accesskey="L"/>
+				</menupopup>
+			</menu>
+			<!-- / VIDEO MENU -->
+			
+			<!-- CHANNEL MENU -->
+			<menu id="channel-menu" label="Channel" accesskey="C" class="titlebar-toplevel">
+				<menupopup id="file-popup">
+					<menuitem label="Add Channel" accesskey="A"/>
+					<menuitem label="Remove Channel" accesskey="R"/>
+					<menuitem label="Copy Channel Link" accesskey="L"/>
+					<menuseparator/>
+					<menuitem label="Update Channel" accesskey="U"/>
+					<menuitem label="Update All Channels" accesskey="A"/>
+					<menuseparator/>
+					<menuitem label="Rename Channel" accesskey="e"/>
+					<menuseparator/>
+					<menuitem label="Tell A Friend About This Channel" accesskey="F"/>
+				</menupopup>
+			</menu>
+			<!-- / CHANNEL MENU -->
+			
+			<!-- COLLECTION MENU -->
+			<menu id="collection-menu" label="Collection" accesskey="o" class="titlebar-toplevel">
+				<menupopup id="file-popup">
+					<menuitem label="Creat Collection" accesskey="C"/>
+					<menuitem label="Delete Collection" accesskey="D"/>
+					<menuseparator/>
+					<menuitem label="Send This Collection To A Friend" accesskey="F"/>
+				</menupopup>
+			</menu>
+			<!-- / COLLECTION MENU -->
+			
+			<!-- WINDOW MENU -->
+			<menu id="window-menu" label="Window" accesskey="W" class="titlebar-toplevel">
+				<menupopup id="file-popup">
+					<menuitem label="Zoom" accesskey="Z"/>
+					<menuitem label="Minimize" accesskey="M"/>
+					<menuitem label="Maximize" accesskey="X"/>
+					<menuseparator/>
+					<menuitem label="Bring To Front" accesskey="F"/>
+				</menupopup>
+			</menu>
+			<!-- / WINDOW MENU -->
+			
+			<!-- HELP MENU -->
+			<menu id="help-menu" label="Help" accesskey="H" class="titlebar-toplevel">
+				<menupopup id="file-popup">
+					<menuitem label="Help Contents" acceltext="F1" accesskey="H"/>
+					<menuseparator/>
+					<menuitem label="About DTV" accesskey="A"/>
+				</menupopup>
+			</menu>
+			<!-- / HELP MENU -->
+		
+		</menubar>
+	</hbox>
+	<!-- / MAIN MENUBAR -->
+	
+	<!-- WINDOW TITLE -->
+	<titlebar flex="1" container="1">
+		<caption flex="1" label="DTV"/>
+	</titlebar>
+	<!-- / WINDOW TITLE -->
+	
+	<!-- WINDOW BUTTONS -->
+	<hbox flex="0" width="55" minheight="24">	
+		<html:ul id="titlebar-buttons">
+			<html:li id="titlebar-buttons-minimize"><html:a href="#">Minimize</html:a></html:li>
+			<html:li id="titlebar-buttons-maximize"><html:a href="#">Maximize</html:a></html:li>
+			<html:li id="titlebar-buttons-close"><html:a href="#">Close</html:a></html:li>
+		</html:ul>
+	</hbox>
+	<!-- / WINDOW BUTTONS -->
+	
+</hbox>
+<!-- / TITLEBAR -->
 
-    <label id="titlebar-center" flex="1">DTV</label>
+<!-- CONTENT AREA -->
+<hbox flex="1">
 
-    <label id="titlebar-buttons-minimize"/>
-    <label id="titlebar-buttons-maximize"/>
-    <label id="titlebar-buttons-close"/>
-  </hbox>
-  <!-- / TITLEBAR -->
+	<!-- CHANNEL BAR -->
+	<hbox id="channelsDisplay" flex="0" width="250" minwidth="25" maxwidth="400">
+  	<browser src="" flex="1"/>
+	</hbox>
+	<!-- / CHANNEL BAR -->
+	
+  <!-- DIVIDER -->
+	<splitter collapse="before" width="10"/>
+	<!-- / DIVIDER -->
+	
+	<!-- MAIN WINDOW -->
+	<hbox id="mainDisplay" flex="1">
+  	<browser src="http://channelguide.participatoryculture.org" flex="1"/>
+	</hbox>
+	<!-- / MAIN WINDOW -->
+	
+</hbox>
+<!-- / CONTENT AREA -->
 
-  <!-- CONTENT AREA -->
-  <hbox flex="1">
-    <spacer width="20" flex="0" />
-    <box id="channelsDisplay" flex="0" width="250" />
-    <spacer width="20" flex="0" />
-    <box id="mainDisplay" flex="1" />
-    <spacer width="20" flex="0" />
-  </hbox>
-  <!-- / CONTENT AREA -->
+<!-- BOTTOM -->
+<hbox flex="0" id="bottom" class="bottom">
 
-  <!-- BOTTOM -->
-<!--
-  <div id="bottom" xmlns="http://www.w3.org/1999/xhtml">
-    <div id="bottom-container">
-      <div id="bottom-content">
-	<div id="bottom-left">
-	  <span id="bottom-left-addchannel"><a href="#">Add Channel</a></span>
-	  <span id="bottom-left-preferences"><a href="#">&nbsp;&nbsp;&nbsp;</a></span>
-	</div>
-	<div id="bottom-center">
-	  <div id="bottom-center-content">
-	    <div id="bottom-progress">
-	      <img src="images/temp-progress.png" alt="" />
-	    </div>
-	    <div id="bottom-controls">
-	      <ul id="bottom-buttons">
-	        <li id="bottom-buttons-previous"><a href="#">Previous</a></li>
-	        <li id="bottom-buttons-stop"><a href="#">Stop</a></li>
-	        <li id="bottom-buttons-play"><a href="#">Play</a></li>
-	        <li id="bottom-buttons-fullscreen"><a href="#">Fullscreen</a></li>
-	        <li id="bottom-buttons-next"><a href="#">Next</a></li>
-              </ul>
-	    </div>
-          </div>
-	</div>		
-      </div>
-    </div>
-    <div id="bottom-right">
-      <span><a href="#">&nbsp;</a></span>
-    </div>
-  </div>
--->
-  <!-- / BOTTOM -->
+	<!-- BUTTONS -->
+	<hbox flex="0" container="1" width="250" height="64" minheight="64" id="bottom-left">
+		<hbox flex="0" maxheight="20" id="bottom-left-addchannel">
+			<button id="add-channel" label="Add Channel" disabled="false" accesskey="A"/>
+		</hbox>
+		<hbox flex="0" maxheight="20" id="bottom-left-preferences">
+			<button id="Preferences" label="Options" disabled="false" accesskey="O"/>
+		</hbox>
+	</hbox>
+	<!-- / BUTTONS -->
+	
+	<!-- PLAYBACK PROGRESS/CONTROLS -->
+	<hbox flex="1" class="bottom-center">
+		<hbox flex="1"/>
+		
+		<!-- PROGRESS BAR -->
+		<hbox flex="0" width="220" id="bottom-progress">
+			<image src="images/temp-progress.png" maxheight="26"/>
+		</hbox>
+		<!-- / PROGRESS BAR -->
+		
+		<!-- CONTROLS -->
+		<hbox flex="0" width="180">
+			<html:ul id="bottom-buttons">
+				<html:li id="bottom-buttons-previous"><html:a href="#">Previous</html:a></html:li>
+				<html:li id="bottom-buttons-stop"><html:a href="#">Stop</html:a></html:li>
+				<html:li id="bottom-buttons-play"><html:a href="#">Play</html:a></html:li>
+				<html:li id="bottom-buttons-fullscreen"><html:a href="#">Fullscreen</html:a></html:li>
+				<html:li id="bottom-buttons-next"><html:a href="#">Next</html:a></html:li>
+			</html:ul>
+		</hbox>
+		<!-- / CONTROLS -->
+		
+		<hbox flex="1"/>
+	</hbox>
+	<!-- / PLAYBACK PROGRESS/CONTROLS -->
+	
+	<!-- VOLUME SLIDER -->
+	<hbox flex="0" width="130" id="bottom-right"/>
+	<!-- / VOLUME SLIDER -->
+	
+</hbox>
+<!-- / BOTTOM -->
 
 </window>
