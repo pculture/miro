@@ -12,5 +12,5 @@ interface pcfIDTVPyBridge : nsISupports
    */
   void onStartup(in nsIDOMDocument mainWindowDocument);
 
-  void eventURL(in AString url);
+  void eventURL(in AString cookie, in AString url);
 };

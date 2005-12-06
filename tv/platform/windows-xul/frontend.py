@@ -16,7 +16,7 @@ from frontend_implementation.Application import Application
 from frontend_implementation.MainFrame import MainFrame, NullDisplay
 from frontend_implementation.UIBackendDelegate import UIBackendDelegate
 from frontend_implementation.HTMLDisplay import HTMLDisplay
-from frontend_implementation.VideoDisplay import VideoDisplay, PlaylistItem
+from frontend_implementation.VideoDisplay import VideoDisplay, PlaylistItem, PlaybackController
 
 # Python's sys.exit isn't sufficient in a Windows application. It's not
 # clear why.

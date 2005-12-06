@@ -37,11 +37,6 @@ jsBridge.prototype = {
 	return xulElt.contentWindow;
     },
 
-    xulSetDocumentBridge: function(xulElt, value) {
-	xulElt.contentWindow.bridge = value;
-	//	xulElt.nhthtnhtn.htnhtnhtn.htnhtnshtns = 12;
-    }, 
-
     xulAddElementAtEnd: function(xulElt, xml, id) {
 	elt = xulElt.contentDocument.getElementById(id);
 	r = xulElt.contentDocument.createRange();

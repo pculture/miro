@@ -13,6 +13,7 @@ class PyBridge:
 	pass
 
     def onStartup(self, mainWindowDocument):
+	print "onStartup"
 	self.mainWindowDocument = mainWindowDocument
 
 	class AutoflushingStream:
@@ -35,3 +36,7 @@ class PyBridge:
 	    app.start()
 	except:
 	    traceback.print_exc()
+
+    def eventURL(self, cookie, url):
+	import frontend
+	frontend.HTMLDisplay.dispatchEventByCookie(cookie, url)

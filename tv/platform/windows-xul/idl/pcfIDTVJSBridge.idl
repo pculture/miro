@@ -27,8 +27,6 @@ interface pcfIDTVJSBridge : nsISupports
 
   nsIDOMWindow xulGetContentWindow(in nsISupports elt);
 
-  void xulSetDocumentBridge(in nsISupports elt, in AString value);
-
   void xulAddElementAtEnd(in nsISupports elt, in AString xml, in AString id);
   void xulAddElementBefore(in nsISupports elt, in AString xml, in AString id);
   void xulRemoveElement(in nsISupports elt, in AString id);

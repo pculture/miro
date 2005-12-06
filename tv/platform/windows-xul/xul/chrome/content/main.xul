@@ -1,16 +1,115 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin" type="text/css"?>
+<?xml-stylesheet href="main.css" type="text/css"?>
 
 <!DOCTYPE window SYSTEM "chrome://dtv/locale/main.dtd">
 
 <!-- add hidechrome="true" to eliminate title bar -->
 <window id="main" title="&main.title;"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	xmlns:html="http://www.w3.org/1999/xhtml"
 	hidechrome="false" onload="onLoad();"
+	orient="vertical"
 	width="600" height="370"
 	screenX="100" screenY="100"
 	persist="screenX screenY width height">
   <script src="chrome://dtv/content/main.js"/>
+
+  <!-- TITLEBAR -->
+  <hbox id="titlebar">
+    <spacer id="titlebar-left" />
+
+    <ul id="titlebar-menu" xmlns="http://www.w3.org/1999/xhtml">
+      <li><a href="#" class="titlebar-menu-toplevel">File</a>
+	<ul>
+	  <li class="titlebar-menu-item"><a href="#"><span class="titlebar-menu-shortcut">Ctrl+O</span>Open</a></li>
+	  <li class="titlebar-menu-item"><a href="#"><span class="titlebar-menu-shortcut">&rsaquo;</span>Open Recent</a>
+	    <ul>
+	      <li class="titlebar-menu-item"><a href="#">filename-one.mov</a></li>
+	      <li class="titlebar-menu-item"><a href="#">filename-two.mov</a></li>
+	      <li class="titlebar-menu-item"><a href="#">filename-three.mov</a></li>
+	      <li class="titlebar-menu-item"><a href="#">filename-four.mov</a></li>
+	      <li class="titlebar-menu-item"><a href="#">filename-five.mov</a></li>
+	    </ul>
+	  </li>
+	  <li class="titlebar-menu-divider">&nbsp;</li>
+	  <li class="titlebar-menu-item"><a href="#"><span class="titlebar-menu-shortcut">Ctrl+Q</span>Exit DTV</a></li>
+	</ul>
+      </li>
+      <li><a href="#" class="titlebar-menu-toplevel">Edit</a>
+	<ul>
+	  <li class="titlebar-menu-item"><span class="titlebar-menu-shortcut">Ctrl+Z</span>Undo</li>
+	  <li class="titlebar-menu-item"><span class="titlebar-menu-shortcut">Ctrl+Y</span>Redo</li>
+	  <li class="titlebar-menu-divider">&nbsp;</li>
+	  <li class="titlebar-menu-item"><span class="titlebar-menu-shortcut">Ctrl+X</span>Cut</li>
+	  <li class="titlebar-menu-item"><span class="titlebar-menu-shortcut">Ctrl+C</span>Copy</li>
+	  <li class="titlebar-menu-item"><span class="titlebar-menu-shortcut">Ctrl+V</span>Paste</li>
+	  <li class="titlebar-menu-divider">&nbsp;</li>
+	  <li class="titlebar-menu-item"><a href="#">Preferences</a></li>
+	</ul>
+      </li>
+      <li><a href="#" class="titlebar-menu-toplevel">Video</a>
+	<ul>
+	  <li class="titlebar-menu-item">Play Video</li>
+	  <li class="titlebar-menu-item">Stop Video</li>
+	  <li class="titlebar-menu-divider">&nbsp;</li>
+	  <li class="titlebar-menu-item"><span class="titlebar-menu-shortcut">Alt+Enter</span>Full Screen</li>
+	  <li class="titlebar-menu-item">Half Screen</li>
+	  <li class="titlebar-menu-divider">&nbsp;</li>
+	  <li class="titlebar-menu-item">Delete Video</li>
+	  <li class="titlebar-menu-item">Save Video</li>
+	  <li class="titlebar-menu-item">Copy Video Link</li>
+	</ul>
+      </li>
+      <li><a href="#" class="titlebar-menu-toplevel">Channel</a>
+	<ul>
+	  <li class="titlebar-menu-item"><a href="#">Add a Channel</a></li>
+	  <li class="titlebar-menu-item">Remove Channel</li>
+	  <li class="titlebar-menu-item">Copy Channel Link</li>
+	  <li class="titlebar-menu-divider">&nbsp;</li>
+	  <li class="titlebar-menu-item">Update Channel</li>
+	  <li class="titlebar-menu-item"><a href="#">Update All Channels</a></li>
+	  <li class="titlebar-menu-divider">&nbsp;</li>
+	  <li class="titlebar-menu-item">Rename Channel</li>
+	  <li class="titlebar-menu-divider">&nbsp;</li>
+	  <li class="titlebar-menu-item">Tell a Friend</li>
+	</ul>
+      </li>
+      <li><a href="#" class="titlebar-menu-toplevel">Collection</a>
+	<ul>
+	  <li class="titlebar-menu-item"><a href="#">Create a Collection</a></li>
+	  <li class="titlebar-menu-item">Delete Collection</li>
+	  <li class="titlebar-menu-divider">&nbsp;</li>
+	  <li class="titlebar-menu-item">Send to a Friend</li>
+	</ul>
+      </li>
+      <li><a href="#" class="titlebar-menu-toplevel">Window</a>
+	<ul>
+	  <li class="titlebar-menu-item"><a href="#">Zoom</a></li>
+	  <li class="titlebar-menu-item"><a href="#">Minimize</a></li>
+	  <li class="titlebar-menu-item"><a href="#">Maximize</a></li>
+	  <li class="titlebar-menu-divider">&nbsp;</li>
+	  <li class="titlebar-menu-item"><a href="#">Bring to Front</a></li>
+	</ul>
+      </li>
+      <li><a href="#" class="titlebar-menu-toplevel">Help</a>
+	<ul>
+	  <li class="titlebar-menu-item"><a href="#">Help Contents</a></li>
+	  <li class="titlebar-menu-divider">&nbsp;</li>
+	  <li class="titlebar-menu-item"><a href="#">About DTV</a></li>
+	</ul>
+      </li>
+    </ul>
+
+    <label id="titlebar-center" flex="1">DTV</label>
+
+    <label id="titlebar-buttons-minimize"/>
+    <label id="titlebar-buttons-maximize"/>
+    <label id="titlebar-buttons-close"/>
+  </hbox>
+  <!-- / TITLEBAR -->
+
+  <!-- CONTENT AREA -->
   <hbox flex="1">
     <spacer width="20" flex="0" />
     <box id="channelsDisplay" flex="0" width="250" />
@@ -18,6 +117,40 @@
     <box id="mainDisplay" flex="1" />
     <spacer width="20" flex="0" />
   </hbox>
-  <button id="theButton" value="testCreate" oncommand="testCreate();" />
+  <!-- / CONTENT AREA -->
+
+  <!-- BOTTOM -->
+<!--
+  <div id="bottom" xmlns="http://www.w3.org/1999/xhtml">
+    <div id="bottom-container">
+      <div id="bottom-content">
+	<div id="bottom-left">
+	  <span id="bottom-left-addchannel"><a href="#">Add Channel</a></span>
+	  <span id="bottom-left-preferences"><a href="#">&nbsp;&nbsp;&nbsp;</a></span>
+	</div>
+	<div id="bottom-center">
+	  <div id="bottom-center-content">
+	    <div id="bottom-progress">
+	      <img src="images/temp-progress.png" alt="" />
+	    </div>
+	    <div id="bottom-controls">
+	      <ul id="bottom-buttons">
+	        <li id="bottom-buttons-previous"><a href="#">Previous</a></li>
+	        <li id="bottom-buttons-stop"><a href="#">Stop</a></li>
+	        <li id="bottom-buttons-play"><a href="#">Play</a></li>
+	        <li id="bottom-buttons-fullscreen"><a href="#">Fullscreen</a></li>
+	        <li id="bottom-buttons-next"><a href="#">Next</a></li>
+              </ul>
+	    </div>
+          </div>
+	</div>		
+      </div>
+    </div>
+    <div id="bottom-right">
+      <span><a href="#">&nbsp;</a></span>
+    </div>
+  </div>
+-->
+  <!-- / BOTTOM -->
 
 </window>

@@ -1,0 +1,392 @@
+window {
+	font: 12px "Lucida Grande", "Lucida Sans", "Trebuchet MS", Arial;
+	color: #FFFFFF;
+	text-decoration: none;
+	min-width: 800px;
+	margin: 0px;
+}
+
+#titlebar-left {
+	width: 10px;
+	height: 25px;
+	background: url(images/titlebar-left.png) no-repeat left top;
+}
+
+
+#titlebar {
+	width: 100%;
+	margin-right: -55px;
+	margin-bottom: 0px;
+}
+
+#titlebar-content {
+	height: 25px;
+	margin-right: 55px;	
+	overflow: hidden;
+}
+
+
+/* TITLEBAR MENU
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+
+#titlebar-menu, #titlebar-menu ul {
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+
+#titlebar-menu a {
+	display: block;
+}
+
+#titlebar-menu li {
+	float: left;
+}
+
+#titlebar-menu li ul li {
+	width: 126px;
+}
+
+#titlebar-menu li ul {
+	position: absolute;
+	width: 150px;
+	left: -999em;
+	padding: 2px 0px 2px 0px;
+	background-color: #333333;
+	border: 1px outset #000000;
+}
+
+#titlebar-menu li ul ul {
+	margin: -21px 0px 0px 136px;
+}
+
+#titlebar-menu li:hover ul ul {
+	left: -999em;
+}
+
+#titlebar-menu li:hover ul, #titlebar-menu li li:hover ul {
+	left: auto;
+}
+
+.titlebar-menu-toplevel {
+	margin-top: 2px;
+	padding: 0px 10px;
+	font-size: 11px;
+	line-height: 22px;
+	text-decoration: none;
+	color: #FFFFFF;
+}
+
+.titlebar-menu-toplevel:hover {
+	background-color: #000000;
+	text-decoration: none;
+}	
+
+.titlebar-menu-item {
+	margin: 0px 2px;
+	padding: 2px 10px;
+	font-size: 10px;
+	line-height: 16px;
+	text-decoration: none;
+	color: #999999;
+}
+
+.titlebar-menu-item:hover {
+	background-color: #555555;
+	text-decoration: none;
+}
+
+#titlebar-menu li ul li a:link, #titlebar-menu li ul li a:visited, #titlebar-menu li ul li a:active {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.titlebar-menu-divider {
+	height: 10px;
+	padding: 0px 10px;
+	background: url(images/divider.gif) repeat-x left center;
+}
+
+.titlebar-menu-shortcut {
+	float: right;
+	color: #999999;
+}
+
+/* WINDOW TITLE
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+
+#titlebar-center {
+	height: 25px;
+	padding: 4px 55px 0px 0px;	
+	text-align: center;
+	background: url(images/titlebar-bg.png) repeat-x 0px 0px;
+	margin-left: 10px;
+}
+
+#titlebar-center span {
+	margin-left: 40px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+/* WINDOW BUTTONS
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+
+#titlebar-right {
+	width: 55px;
+	height: 25px;
+	background: url(images/titlebar-right.png) no-repeat right top;
+}
+
+#titlebar-buttons {
+	height: 16px;
+	margin: 5px 0px 0px 0px;
+	padding: 0px;
+	list-style-type: none;
+	overflow: hidden;
+}
+
+#titlebar-buttons li {
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;	
+	display: inline;
+}
+
+#titlebar-buttons a {
+	float: left;
+	height: 0px;
+	margin: 0px 2px 0px 0px;
+	padding: 16px 0px 0px 0px;
+	overflow: hidden;
+}
+
+#titlebar-buttons-minimize a {	
+	width: 16px;
+	background:  url(images/titlebar-buttons.png) no-repeat 0px 0px;
+}
+
+#titlebar-buttons-minimize a:hover {	
+	width: 16px;
+	background:  url(images/titlebar-buttons.png) no-repeat 0px -16px;
+}
+
+#titlebar-buttons-maximize a {	
+	width: 16px;
+	background:  url(images/titlebar-buttons.png) no-repeat -16px 0px;
+}
+
+#titlebar-buttons-maximize a:hover {	
+	width: 16px;
+	background:  url(images/titlebar-buttons.png) no-repeat -16px -16px;
+}
+
+#titlebar-buttons-close a {	
+	width: 16px;
+	background:  url(images/titlebar-buttons.png) no-repeat -32px 0px;
+}
+
+#titlebar-buttons-close a:hover {	
+	width: 16px;
+	background:  url(images/titlebar-buttons.png) no-repeat -32px -16px;
+}
+
+/* BOTTOM
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+	
+#bottom {
+	position: absolute;
+	width: 100%;
+	min-width: 800px;
+	height: 64px;
+	bottom: 0px;
+}
+
+#bottom-container {
+	float: left;
+	width: 100%;
+	margin-right: -130px;
+	background: url(images/bottom-bg.png) repeat-x 0px 0px;
+}
+
+#bottom-content {
+	height: 64px;
+	margin-right: 130px;	
+	overflow: hidden;
+}
+
+#bottom-left {
+	float: left;
+	width: 175px;
+	height: 64px;
+}
+
+#bottom-left-addchannel {
+	position: absolute;
+	margin: 26px 0px 0px 30px;
+}
+
+#bottom-left-addchannel a {
+	padding: 5px;
+	font-weight: bold;
+	font-size: 11px;
+	color: #999999;
+	text-decoration: none;
+	background: url(images/button-bg.gif) repeat-x left top;
+	border: 2px solid #454545;
+}
+
+#bottom-left-addchannel a:hover {
+	color: #DDDDDD;
+	text-decoration: none;
+	background: url(images/button-bg.gif) repeat-x left -50px;
+	border: 2px solid #525252;
+}
+
+#bottom-left-preferences {
+	position: absolute;
+	margin: 26px 0px 0px 128px;
+}
+
+#bottom-left-preferences a {
+	padding: 5px;
+	font-weight: bold;
+	font-size: 11px;
+	color: #999999;
+	text-decoration: none;
+	background: url(images/button-bg.gif) repeat-x left top;
+	border: 2px solid #454545;
+}
+
+#bottom-left-preferences a:hover {
+	color: #DDDDDD;
+	text-decoration: none;
+	background: url(images/button-bg.gif) repeat-x left -50px;
+	border: 2px solid #525252;
+}
+
+#bottom-center {
+	height: 64px;
+	margin-left: 175px;
+}
+
+#bottom-center-content {
+	position: absolute;
+	width: 486px;
+	left: 50%;
+	margin-left: -243px;
+}
+
+#bottom-right {
+	float: right;
+	width: 110px;
+	height: 64px;
+	margin-right: 20px;
+	background: url(images/bottom-volume.png) no-repeat left center;
+}
+
+#bottom-right a {
+	padding: 0px 4px;
+	text-decoration: none;
+	background: url(images/bottom-volume-slider.png) no-repeat left top;
+	border: 0px;
+}
+
+#bottom-right span {
+	position: absolute;
+	margin: 26px 0px 0px 30px;
+}
+
+#bottom-progress {
+	float: left;
+	width: 220px;
+	margin: 0px 10px 0px 50px;
+	padding-top: 18px;
+}
+
+/* VIDEO PLAYBACK CONTROLS
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+
+#bottom-controls {
+	float: left;	
+	width: 185px;
+}
+
+#bottom-buttons {
+	height: 39px;
+	margin: 0px;
+	padding: 12px 0px 0px 0px;
+	list-style-type: none;
+	overflow: hidden;
+}
+
+#bottom-buttons li {
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;	
+	display: inline;
+}
+
+#bottom-buttons a {
+	float: left;
+	height: 0px; 
+	margin: 0px 2px 0px 0px;
+	padding: 39px 0px 0px 0px;
+	overflow: hidden;
+}
+
+#bottom-buttons-previous a {	
+	width: 31px;
+	background:  url(images/bottom-controls.png) no-repeat 0px 0px;
+}
+
+#bottom-buttons-previous a:hover {	
+	width: 31px;
+	background:  url(images/bottom-controls.png) no-repeat 0px -39px;
+}
+
+#bottom-buttons-stop a {	
+	width: 39px;
+	background:  url(images/bottom-controls.png) no-repeat -31px 0px;
+}
+
+#bottom-buttons-stop a:hover {	
+	width: 39px;
+	background:  url(images/bottom-controls.png) no-repeat -31px -39px;
+}
+
+#bottom-buttons-play a {	
+	width: 39px;
+	background:  url(images/bottom-controls.png) no-repeat -70px 0px;
+}
+
+#bottom-buttons-play a:hover {	
+	width: 39px;
+	background:  url(images/bottom-controls.png) no-repeat -70px -39px;
+}
+
+#bottom-buttons-fullscreen a {	
+	width: 31px;
+	background:  url(images/bottom-controls.png) no-repeat -109px 0px;
+}
+
+#bottom-buttons-fullscreen a:hover {	
+	width: 31px;
+	background:  url(images/bottom-controls.png) no-repeat -109px -39px;
+}
+
+#bottom-buttons-next a {	
+	width: 31px;
+	background:  url(images/bottom-controls.png) no-repeat -140px 0px;
+}
+
+#bottom-buttons-next a:hover {	
+	width: 31px;
+	background:  url(images/bottom-controls.png) no-repeat -140px -39px;
+}
+
+.clear {
+	clear: both;
+	height: 0px;
+}

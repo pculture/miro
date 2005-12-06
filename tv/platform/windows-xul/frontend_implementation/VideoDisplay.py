@@ -22,8 +22,8 @@ class VideoDisplay (app.VideoDisplayBase):
 
     def __init__(self):
         app.VideoDisplayBase.__init__(self)
-        self.vlc = vlc.SimpleVLC()
-        self.vlc.setWindow(self.getHwnd())
+#        self.vlc = vlc.SimpleVLC()
+#        self.vlc.setWindow(self.getHwnd())
     
     def canPlayItem(self, item):
         return False
@@ -38,15 +38,15 @@ class VideoDisplay (app.VideoDisplayBase):
         filename = self.cur().getPath()
         if filename is None:
             filename= self.getNext().getPath()
-        self.vlc.play(filename)
+#        self.vlc.play(filename)
         app.VideoDisplayBase.play(self)
 
     def pause(self):
-        self.vlc.pause(0)
+#        self.vlc.pause(0)
         app.VideoDisplayBase.pause(self)
 
     def stop(self):
-        self.vlc.stop()
+#        self.vlc.stop()
         app.VideoDisplayBase.stop(self)
 
     def goFullScreen(self):
@@ -59,11 +59,12 @@ class VideoDisplay (app.VideoDisplayBase):
         return self.vlc.getPosition()
 
     def setVolume(self, level):
-        self.vlc.setVolume(level)
+#        self.vlc.setVolume(level)
         app.VideoDisplayBase.setVolume(self, level)
 
     def getVolume(self):
-        return self.vlc.getVolume()
+#        return self.vlc.getVolume()
+	return 0
 
     def muteVolume(self):
         app.VideoDisplayBase.muteVolume(self)
@@ -79,7 +80,6 @@ class VideoDisplay (app.VideoDisplayBase):
 
     def onWMClose(self, hwnd, msg, wparam, lparam):
         self.unlink()
-        win32gui.PostQuitMessage(0)
 
     def onWMSize(self, hwnd, msg, wparam, lparam):
         pass

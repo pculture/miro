@@ -5,6 +5,7 @@ import os
 import re
 import threading
 from xpcom import components
+import time
 
 ###############################################################################
 #### HTML display                                                          ####
@@ -13,8 +14,7 @@ from xpcom import components
 # NEEDS: we need to cancel loads when we get a transition to a new
 # page, and then not loadURI until we get a successful cancellation.
 class ProgressListener:
-    _com_interfaces_ = [components.interfaces.nsIWebProgressListener,
-			components.interfaces.nsIURIContentListener]
+    _com_interfaces_ = [components.interfaces.nsIWebProgressListener]
 
     def __init__(self, boundDisplay):
 	self.boundDisplay = boundDisplay
@@ -42,60 +42,13 @@ class ProgressListener:
 		print "FINISHED: %d" % id(request)
 		self.boundDisplay.onDocumentLoadFinished()
 
-
-    def onStartURIOpen(self, uri):
-	print "onStartURIOpen (old)! %s" % uri.spec
-	return True
-
-class ProgressListener2:
-    _com_interfaces_ = [components.interfaces.nsIWebProgressListener,
-			components.interfaces.nsIURIContentListener]
-
-    def __init__(self, boundDisplay):
-	self.boundDisplay = boundDisplay
-
-    def onLocationChange(self, webProgress, request, location):
-	print "onLocationChange: %s" % request
-
-    def onProgressChange(self, webProgress, request, curSelfProgress,
-			 maxSelfProgress, curTotalProgress, maxTotalProgess):
+    def onStatusChange(self, webProgress, request, status, message):
 	pass
-
-    def onSecurityChange(self, webProgress, request, state):
-	pass
-
-    def onStateChange(self, webProgress, request, stateFlags, status):
-	iwpl = components.interfaces.nsIWebProgressListener
-
-	if stateFlags & iwpl.STATE_IS_DOCUMENT:
-	    if stateFlags & iwpl.STATE_START:
-		# Load of top-level document began
-		print "STARTED: %d" % id(request)
-		pass
-	    if stateFlags & iwpl.STATE_STOP:
-		# Load of top-level document finished
-		print "FINISHED: %d" % id(request)
-		self.boundDisplay.onDocumentLoadFinished()
-
-
-    def onStartURIOpen(self, uri):
-	print "onStartURIOpen (old2)! %s" % uri.spec
-	return True
-
-class ContentListener:
-    _com_interfaces_ = [components.interfaces.nsIURIContentListener]
-
-    def __init__(self, boundDisplay, parent):
-	self.loadCookie = None
-	self.boundDisplay = boundDisplay
-	self.parentContentListener = parent
-
-    def onStartURIOpen(self, uri):
-	print "onStartURIOpen! %s" % uri.spec
-	return True
 
 class HTMLDisplay (app.Display):
     "Selectable Display that shows a HTML document."
+
+    cookieToInstanceMap = {}
 
     def __init__(self, html, existingView=None, frameHint=None, areaHint=None):
         """'html' is the initial contents of the display, as a string. If
@@ -109,8 +62,8 @@ class HTMLDisplay (app.Display):
 	self.initialLoadFinished = False
 	self.execQueue = []
 	self.progressListener = ProgressListener(self)
-	self.pl2 = ProgressListener2(self)
 	self.frame = None
+	self.elt = None
 
 	klass = components.classes["@participatoryculture.org/dtv/jsbridge;1"]
 	self.jsbridge = klass.getService(components.interfaces.pcfIDTVJSBridge)
@@ -124,18 +77,45 @@ class HTMLDisplay (app.Display):
 	self.deleteOnLoadFinished = location
 	# For debugging generated HTML, you could uncomment the next
 	# two lines.
-	print "Logged HTML to %s" % location # NEEDS
-	self.deleteOnLoadFinished = None # NEEDS
+	print "Logged HTML to %s" % location # NEEDS: RECOMMENT
+	self.deleteOnLoadFinished = None # NEEDS: RECOMMENT
 
 	# Translate path into URL and stash until we are ready to display
 	# ourselves.
 	parts = re.split(r'\\', location)
 	self.initialURL = "file:///" + '/'.join(parts)
 
-    # NEEDS: register for onDocumentLoadFinished
-    # NEEDS: wire up onURLLoad callback
     # NEEDS: set useragent as a pref: 
     # "DTV/pre-release (http://participatoryculture.org/)"
+
+    # NEEDS: security audit: do we need to make cookies difficult to
+    # predict?
+    def getEventCookie(self):
+	# Can't do this initialization in constructor, because of
+	# circular dependency between HTMLDisplay constructor and
+	# derived TemplateDisplay constructor. (You need the initial
+	# HTML to create the HTMLDisplay, but you need the eventCookie
+	# to make the initial HTML.) NEEDS: wish there was a way to
+	# put a mutex around this. Is safe in the current
+	# implementation, though, because getEventCookie is always
+	# called first from the TemplateDisplay constructor.
+	if hasattr(self, 'eventCookie'):
+	    return self.eventCookie
+
+	# Create cookie and ave this instance in the instance cookie
+	# lookup table
+	self.eventCookie = str(id(self))
+	HTMLDisplay.cookieToInstanceMap[self.eventCookie] = self
+
+	return self.eventCookie
+
+    def getDTVPlatformName(self):
+	return "xul"
+
+    @classmethod
+    def dispatchEventByCookie(klass, eventCookie, eventURL):
+	print "dispatch %s %s" % (eventCookie, eventURL)
+	return klass.cookieToInstanceMap[eventCookie].onURLLoad(eventURL)
 
     def getXULElement(self, frame):
 	self.lock.acquire()
@@ -164,51 +144,9 @@ class HTMLDisplay (app.Display):
 	# we might miss the "load finished" event. What we need is a
 	# way to simultaneously get the current state of the load and
 	# register our handler.
+	assert self.elt, "HTMLDisplay methods called out of assumed order"
 	self.jsbridge.xulAddProgressListener(self.elt,
 					     self.progressListener)
-
-	self.jsbridge.xulAddProgressListener(self.elt,
-					     self.pl2)
-
-	print "boxObject %s" % self.elt.boxObject
-	q = self.elt.boxObject.queryInterface(components.interfaces.nsIBrowserBoxObject)
-	ds = q.docShell
-	print "docShell %s" % ds
-
-#	wp = ds.queryInterface(components.interfaces.nsIInterfaceRequestor).getInterface(components.interfaces.nsIWebProgress)
-#	print "wp %s" % wp
-#	wp.addProgressListener(self.progressListener, components.interfaces.nsIWebProgress.NOTIFY_ALL)
-#	ds = ds.queryInterface(components.interfaces.nsIDocShell)
-#	print "q'd: %s" % ds
-#	print "pUCL was %s" % ds.parentURIContentListener
-#	ds.parentURIContentListener = self.progressListener
-
-#	old = self.jsbridge.xulGetContentListener(self.elt)
-#	print "old %s" % old
-#	self.jsbridge.xulSetContentListener(self.elt,
-#					    self.progressListener)
-#	print "success"
-
-#	window = self.jsbridge.xulGetContentWindow(self.elt)
-#	print "got win %s" % window
-#	window.myProp = 12
-#	window.setAttribute("myProp", "12")
-#	print "set prop"
-
-#	self.jsbridge.xulSetDocumentBridge(self.elt, "myValXXX1")
-
-
-	ds2 = ds.queryInterface(components.interfaces.nsIInterfaceRequestor)
-
-	ucl = ds2.getInterface(components.interfaces.nsIURIContentListener)
-	print "ucl = %s" % ucl
-	print "parent ucl = %s" % ucl.parentContentListener
-#	self.contentListener = ContentListener(self, ucl.parentContentListener)
-#	ucl.parentContentListener = self.contentListener
-#	self.pl2 = self.progressListener
-
-	ucl.parentContentListener = self.pl2
-	print "set successfully"
 
     # Decorator. Causes calls to be queued up, in order, until
     # onDocumentLoadFinished is called.
@@ -265,11 +203,11 @@ class HTMLDisplay (app.Display):
         return True
 
     def onDocumentLoadFinished(self):
-	self.jsbridge.xulSetDocumentBridge(self.elt, "myValXXX2") # NEEDS
+#	self.jsbridge.xulSetDocumentBridge(self.elt, "myValXXX2") # NEEDS
+	print "--------------- onDocumentLoadFinished"
 
 	if self.deleteOnLoadFinished:
 	    try:
-		# Comment this line out for debugging
 		os.remove(self.deleteOnLoadFinished)
 		pass
 	    except os.error:
@@ -288,9 +226,19 @@ class HTMLDisplay (app.Display):
 		self.lock.release()
 
     def unlink(self):
-	# NEEDS: should keep track if this has already happened?
-	self.jsbridge.xulAddProgressListener(self.elt,
-					     self.progressListener)
+	print "WARNING ---------- unlink()"
+	self.lock.acquire()
+
+	try:
+	    if self.eventCookie in HTMLDisplay.cookieToInstanceMap:
+		del HTMLDisplay.cookieToInstanceMap[self.eventCookie]
+
+		# Because this is inside the 'if' above, we make sure it only
+		# happens once.
+		self.jsbridge.xulRemoveProgressListener(self.elt,
+							self.progressListener)
+	finally:
+	    self.lock.release()
 
     def __del__(self):
         self.unlink()
