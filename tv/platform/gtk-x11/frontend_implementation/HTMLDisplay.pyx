@@ -122,6 +122,11 @@ class HTMLDisplay(app.Display):
         self.widget.load_url(url)
         self.widget.show()
 
+    def getEventCookie(self):
+        return ''
+    def getDTVPlatformName(self):
+        return 'gtk-x11-MozillaBrowser'
+
     def getWidget(self):
         return self.widget
 
