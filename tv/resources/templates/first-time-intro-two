@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:t="http://www.participatorypolitics.org/"
-      xmlns:i18n="http://www.participatoryculture.org/i18n">
+      xmlns:i18n="http://www.participatoryculture.org/i18n"
+      eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="resource:css/intro.css" />
@@ -20,7 +21,7 @@
 	
 	<h1>How to Subscribe</h1>
 	
-	<a href="action:addFeed?url=http://www.oldeenglish.org/bm/rss.php?i=1&amp;selected=0"><img src="resource:images/subscribe_example.png" style="float:right; margin:0px 20px 5px 10px;" /></a>
+	<a href="#" onclick="eventURL('action:addFeed?url=http://www.oldeenglish.org/bm/rss.php?i=1&amp;selected=0');"><img src="resource:images/subscribe_example.png" style="float:right; margin:0px 20px 5px 10px;" /></a>
 	
 	<p>To the right is a channel from our Channel Guide. Try subscribing to this channel by clicking on the "Subscribe" button:</p>
 	

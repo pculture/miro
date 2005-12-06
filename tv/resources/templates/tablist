@@ -3,9 +3,11 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:t="http://www.participatorypolitics.org/"
-      xmlns:i18n="http://www.participatoryculture.org/i18n">
+      xmlns:i18n="http://www.participatoryculture.org/i18n"
+      eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 <head>
 <title>video player interface</title>
+
 <link rel="stylesheet" type="text/css" href="resource:css/style.css" />
 <link rel="stylesheet" type="text/css" href="resource:css/sidebar.css" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -21,8 +23,6 @@
 <body> 
 
 <div id="sidebar">
-
-
   <div id="channels">
     <span t:hideIfViewNotEmpty="tabs" i18n:translate="">There are no tabs. Something is wrong. Please, contact tech support</span>
     <ul t:hideIfViewEmpty="tabs">
@@ -39,5 +39,6 @@
   </div>
 	<div id="sidebar-download-fade">&nbsp;</div>
 </div>
+
 </body>
 </html>

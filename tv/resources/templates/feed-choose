@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:t="http://www.participatorypolitics.org/"
-      xmlns:i18n="http://www.participatoryculture.org/i18n">
+      xmlns:i18n="http://www.participatoryculture.org/i18n"
+      eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="resource:css/style.css" />
@@ -38,7 +39,7 @@
         <input type="checkbox" name="automatic" t:hideIfKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean" value="1" onClick="javascript:setAutoDownloadableFeed()" />
         <span class="auto_link" i18n:translate="">AUTO DOWNLOAD</span>
     </form>
-	<a class="settings_link" i18n:translate="" href="template:feed-settings">Change Settings</a>
+	<a class="settings_link" i18n:translate="" href="#" onclick="eventURL('template:feed-settings')">Change Settings</a>
 </div>
 
 	<br style="clear: both; height: 0; padding: 0; margin: 0;" />
@@ -59,7 +60,7 @@
 	
 	<div id="tabs" class="tabs">
 		
-		<span class="tab_left"><a href="template:feed-watch" class="watch">Watch</a></span>
+		<span class="tab_left"><a href="#" onclick="eventURL('template:feed-watch');" class="watch">Watch</a></span>
 		
 		<span class="tab-center" t:hideIfNotKey="feed hasLibrary" t:hideFunctionKey="global filter boolean"><a href="" class="browse" >Browse</a></span>
 		

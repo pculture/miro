@@ -4,6 +4,8 @@ body {
 	font: 12px "Lucida Grande", "Lucida Sans", Arial, "Trebuchet MS";
 	color: #333333;
 	/* The following property is used by Safari to prevent text selection */
+	/* NEEDS: generates spammy console warnings in strict mode under
+           Mozilla -- conditionally enable somehow? */
 	-khtml-user-select: none;
 }
 

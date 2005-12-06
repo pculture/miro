@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
@@ -66,7 +67,7 @@
 	</div>
 	<div id="main-titlebar-tasks">
 		<div id="main-titlebar-tasks-settings">
-			<p><a href="template:feed-settings">Settings</a></p>
+			<p><a href="#" onclick="eventURL('template:feed-settings');">Settings</a></p>
 		</div>
 		<div id="main-titlebar-tasks-recommend">
 		    <p><a href="mailto:?subject=@@@feed getTitle@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed getTitle@@@&quot;. If you don't have DTV, you can get it here:%0D%0A%0D%0Ahttp://www.participatoryculture.org/download.php%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed getURL@@@" class="recommend_link" i18n:translate="">Recommend</a></p>

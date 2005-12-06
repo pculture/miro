@@ -23,6 +23,8 @@ body {
 	padding: 0;
 	width: 100%;
 	/* The following property is used by Safari to prevent text selection */
+	/* NEEDS: generates spammy console warnings in strict mode under
+           Mozilla -- conditionally enable somehow? */
 	-khtml-user-select: none;
 	}
 
@@ -407,7 +409,7 @@ watch, choose...
 	text-decoration: none;
 	color: #990000;
 	padding-right: 24px;
-	background: url(../images/red_arrow.png) 3px right no-repeat;
+	background: url(../images/red_arrow.png) right 3px no-repeat;
 }
 
 .no_new a:hover {
@@ -561,7 +563,7 @@ messages
 	}
 
 .right_box a{
-	color: dark blue;
+	color: darkblue;
 	font-size: 11px;
 	text-decoration: none;
 	}

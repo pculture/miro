@@ -5,16 +5,46 @@
 //// For use on your page                                                  ////
 ///////////////////////////////////////////////////////////////////////////////
 
+function jsdump(str) {
+    Components.classes['@mozilla.org/consoleservice;1']
+	.getService(Components.interfaces.nsIConsoleService)	
+	.logStringMessage(str);
+}
+
+function getEventCookie() {
+    var elt = document.getElementsByTagName("html")[0];
+    return elt.getAttribute('eventCookie');
+}
+
+function getDTVPlatform() {
+    var elt = document.getElementsByTagName("html")[0];
+    return elt.getAttribute('dtvPlatform');
+}
+
 // For calling from page Javascript: Cause a URL to be loaded. The
 // assumption is that the application will notice, abort the load, and
 // take some action based on the URL.
 function eventURL(url) {
-     if (typeof(window.frontend) == 'undefined') {
-         document.location.href = url;
-     } else {
-         window.frontend.eventURL(url);
-     }
-     return false;
+    if (getDTVPlatform() == 'xul') {
+    	// XUL strategy: XML RPC to a custom protocol handler.
+    	var req = new XMLHttpRequest();
+    	netscape.security.PrivilegeManager.
+    	    enablePrivilege("UniversalBrowserRead");
+    	req.open("GET", "dispatch:" + getEventCookie() + "?" + url, false);
+    	req.send("");
+    }
+    else if (typeof(window.frontend) == 'undefined') {
+	// Generic strategy: trigger a load, and hope the application
+	// catches it and cancels it without creating a race
+	// condition.
+	document.location.href = url;
+    } else {
+	// OS X WebKit (KHTML) strategy: pass in an Objective C object
+	// through the window object and call a method on it.
+	window.frontend.eventURL(url);
+    }
+
+    return false;
 }    
 
 function recommendItem(title, url, feedURL) {
@@ -189,9 +219,13 @@ function getContextClickMenu(element) {
 	else
 	    return "";
     }
+
+    // Satisfy Mozilla that the function always returns a
+    // value. Otherwise, we get an error if strict mode is enabled,
+    // ultimately preventing us from getting the state change event
+    // indicating that the load succeeded.
+    return "";
 }
-
-
 
 // For calling by host templating code: Set CSS styles on the item
 // with the given ID to make it disappear.
