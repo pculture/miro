@@ -1351,6 +1351,11 @@ class HTMLDisplay (app.Display):
         app.Display.__init__(self)
         del pool
 
+    def getEventCookie(self):
+        return ''
+    def getDTVPlatformName(self):
+        return 'webkit'
+
     def getView(self):
         return self.web.getView()
 
