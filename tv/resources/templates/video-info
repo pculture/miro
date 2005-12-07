@@ -4,15 +4,42 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:t="http://www.participatorypolitics.org/"
       xmlns:i18n="http://www.participatoryculture.org/i18n"
-      eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
+			eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">  
 
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link href="resource:css/video-info.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body id="video_info_area">
-    <div id="video_info_area">
+<body>
+
+
+<div id="videodetails-container">
+
+	<div id="videodetails-channeltitle">
+		<h1><span t:replace="this getTitle" /></h1> <h2><span t:replace="this getFeed getTitle" /></h2>
+		<!--<h3>Donate to support videos like these by <a href="#">clicking here</a>.</h3>-->
+	</div>
+	
+	<!--<div id="videodetails-actions">
+		<div id="videodetails-actions-buttons">
+			<a href="#" id="videodetails-actions-bomb"><img src="images/spacer.png" width="11" height="10" alt="" /></a>
+			<a href="#" id="videodetails-actions-mail"><img src="images/spacer.png" width="14" height="10" alt="" /></a>
+			<a href="#" onclick="eventURL('action:expireItem?item=@@@this getID@@@');" id="videodetails-actions-trash"><img src="images/spacer.png" width="11" height="10" alt="" /></a>
+		</div>		
+		<div id="videodetails-actions-expiry-container">
+		  <div id="videodetails-actions-save">
+		    <p><a href="#" onclick="eventURL('action:keepItem?item=@@@this getID@@@');">Save</a></p>
+		  </div>
+		  <div id="videodetails-actions-expiry">
+		    <p>Expires: <span t:replace="this getExpirationTime" /></p>
+		  </div>			
+	  </div>		
+	</div>-->
+
+</div>
+
+    <!--<div id="video_info_area">
         <div class="left_box">
             <div>
                 <span class="title" t:replace="this getTitle" />&nbsp;
@@ -26,15 +53,17 @@
                 </span>
             </div>
             <div><span t:replaceMarkup="this getPaymentHTML" /></div>
-        </div>
+        </div>-->
 
         <!-- *** Taken out until the 'keep' and 'expire' action work correctly ***
         <div class="right_box">
-            <span class="report_expire">Expires: <span t:replace="this getExpirationTime" /></span> <a href="#" onclick="eventURL('action:keepItem?item=@@@this getID@@@');">keep</a> <br />
-            <a class="delete_button" href="#" onclick="eventURL('action:expireItem?item=@@@this getID@@@');">&nbsp;</a>  
+            <span class="report_expire">Expires: <span t:replace="this getExpirationTime" /></span> <a href="action:keepItem?item=@@@this getID@@@">keep</a> <br />
+            <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a>  
         </div>
-        -->
-    </div>
+        
+    </div>-->
+		
+		
 
 </body>
 
