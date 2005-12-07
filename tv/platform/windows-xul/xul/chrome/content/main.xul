@@ -8,12 +8,14 @@
 <window id="main" title="&main.title;"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 	xmlns:html="http://www.w3.org/1999/xhtml"
-	hidechrome="true"
+	hidechrome="true" onload="onLoad();"
 	orient="vertical"
 	sizemode="normal"
 	width="800" height="600"
 	screenX="100" screenY="100"
 	persist="screenX screenY width height">
+
+<script src="chrome://dtv/content/main.js"/>
 
 <!-- TITLEBAR -->
 <hbox height="25" container="1" id="titlebar" class="titlebar">
