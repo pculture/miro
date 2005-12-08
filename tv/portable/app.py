@@ -165,7 +165,7 @@ class VideoDisplayBase (Display):
 
     def onDeselected(self, frame):
         if self.isPlaying:
-            self.stop()
+            Controller.instance.playbackController.stop(False)
 
     
 ###############################################################################
@@ -195,16 +195,17 @@ class PlaybackControllerBase:
             if startItem is not None:
                 self.playItem(startItem)
         
-    def exitPlayback(self):
+    def exitPlayback(self, switchDisplay=True):
         # Warning: resetting must be done *BEFORE* calling selectDisplay because
         # selectDisplay can possibly trigger a call to configure, which effect 
         # would therefore be 'canceled' by a subsequent call to reset (#786).
-        frame = Controller.instance.frame
-        area = frame.mainDisplay
         previousDisplay = self.previousDisplay
         self.reset()
-        frame.selectDisplay(previousDisplay, area)
-
+        if switchDisplay:
+            frame = Controller.instance.frame
+            area = frame.mainDisplay
+            frame.selectDisplay(previousDisplay, area)
+    
     def playPause(self):
         videoDisplay = Controller.instance.videoDisplay
         if self.currentDisplay == videoDisplay:
@@ -242,11 +243,11 @@ class PlaybackControllerBase:
         frame = Controller.instance.frame
         frame.selectDisplay(self.currentDisplay, frame.mainDisplay)
 
-    def stop(self):
+    def stop(self, switchDisplay=True):
         videoDisplay = Controller.instance.videoDisplay
         if self.currentDisplay == videoDisplay:
             videoDisplay.stop()
-        self.exitPlayback()
+        self.exitPlayback(switchDisplay)
 
     def skip(self, direction):
         nextItem = None
@@ -968,14 +969,6 @@ class Tab:
 
     def start(self, frame, templateNameHint):
         self.controller.setTabListActive(True)
-
-        # Free up the template currently being displayed
-        # NOTE: This is kind of a hacky way to do this, but it works --NN
-        try:
-            frame.mainDisplay.hostedDisplay.onDeselected(frame)
-        except:
-            pass
-
         self.display = TemplateDisplay(templateNameHint or self.contentsTemplate, self.contentsData, self.controller, existingView="sharedView", frameHint=frame, areaHint=frame.mainDisplay)
         frame.selectDisplay(self.display, frame.mainDisplay)
 
