@@ -108,11 +108,13 @@ class VideoDisplayBase (Display):
         self.previousVolume = 1.0
         self.isPlaying = False
         self.isFullScreen = False
+        self.stopOnDeselect = True
     
     def canPlayItem(self, anItem):
         return True
     
     def selectItem(self, anItem):
+        self.stopOnDeselect = True
         info = anItem.getInfoMap()
         template = TemplateDisplay('video-info', info, Controller.instance, None, None, None)
         area = Controller.instance.frame.videoInfoDisplay
@@ -120,6 +122,7 @@ class VideoDisplayBase (Display):
 
     def reset(self):
         self.isPlaying = False
+        self.stopOnDeselect = True
 
     def resetMovie(self):
         pass
@@ -138,6 +141,7 @@ class VideoDisplayBase (Display):
 
     def stop(self):
         self.isPlaying = False
+        self.stopOnDeselect = True
 
     def goFullScreen(self):
         self.isFullScreen = True
@@ -164,7 +168,7 @@ class VideoDisplayBase (Display):
         self.setVolume(self.previousVolume)
 
     def onDeselected(self, frame):
-        if self.isPlaying:
+        if self.isPlaying and self.stopOnDeselect:
             Controller.instance.playbackController.stop(False)
 
     
@@ -239,6 +243,7 @@ class PlaybackControllerBase:
         return anItem
         
     def scheduleExternalPlayback(self, anItem):
+        Controller.instance.videoDisplay.stopOnDeselect = False
         self.currentDisplay = TemplateDisplay('external-playback', anItem.getInfoMap(), Controller.instance)
         frame = Controller.instance.frame
         frame.selectDisplay(self.currentDisplay, frame.mainDisplay)
@@ -260,7 +265,7 @@ class PlaybackControllerBase:
                 self.currentDisplay.resetMovie()
                 return self.currentPlaylist.cur()
         if nextItem is None:
-            self.exitPlayback()
+            self.stop()
         else:
             self.playItem(nextItem)
         return nextItem
@@ -273,7 +278,7 @@ class PlaybackControllerBase:
 
     def onMovieFinished(self):
         if self.skip(1) is None:
-            self.exitPlayback()
+            self.stop()
 
 
 # We can now safely import the frontend module

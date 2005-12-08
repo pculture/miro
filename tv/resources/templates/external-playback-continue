@@ -6,13 +6,17 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
     <title>DTV - External Playback Template</title>
+
     <link href="resource:css/external.css" rel="stylesheet" type="text/css" />
     <link href="resource:css/video-info.css" rel="stylesheet" type="text/css" />
+
+    <t:include filename="dynamic.js" />
+    <t:include filename="external.js" />
 </head>
 
 <body>
     <div id="external-container-button">
-        <a id="external-button-center" href="#" onclick="eventURL('action:skipItem?itemID=@@@this getID@@@');">
+        <a id="external-button-center" href="javascript:skipItem(@@@this getID@@@)">
             <span>Continue To Next Video</span>
         </a>
     </div>
