@@ -1,6 +1,12 @@
 const JSBRIDGE_CONTRACTID = "@participatoryculture.org/dtv/jsbridge;1";
 const JSBRIDGE_CLASSID    = Components.ID("{421AA951-F53D-4499-B362-E432CAE920F4}");
 
+function writelog(str) {
+    Components.classes['@mozilla.org/consoleservice;1']
+	.getService(Components.interfaces.nsIConsoleService)	
+	.logStringMessage(str);
+}
+
 function jsBridge() {
 }
 
@@ -35,6 +41,16 @@ jsBridge.prototype = {
 
     xulGetContentWindow: function(xulElt) {
 	return xulElt.contentWindow;
+    },
+
+    xulRemoveAllChildren: function(xulElt) {
+        writelog("xulRemoveAllChildren");
+        while (xulElt.hasChildNodes()) {
+            writelog("removing a child");
+            xulElt.removeChild(xulElt.firstChild);
+            writelog("child removed");
+        }
+        writelog("xulRemoveAllChildren done");
     },
 
     xulAddElementAtEnd: function(xulElt, xml, id) {

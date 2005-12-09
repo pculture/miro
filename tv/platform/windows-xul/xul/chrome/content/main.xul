@@ -160,7 +160,9 @@
 	
 	<!-- MAIN WINDOW -->
 	<hbox id="mainDisplay" flex="1">
-  	<browser src="http://channelguide.participatoryculture.org" flex="1"/>
+          <!-- NEEDS: this load needs to go away before release, but
+               setting src="" seems to break things; no idea why. -->
+  	<browser src="http://www.participatoryculture.org" flex="1"/>
 	</hbox>
 	<!-- / MAIN WINDOW -->
 	

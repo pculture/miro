@@ -27,12 +27,16 @@ class MainFrame:
 	pybridge = klass.getService(components.interfaces.pcfIDTVPyBridge)
 	self.document = pybridge.mainWindowDocument
 
+        # Grab the Javascript bridge object in case we need to call
+        # some of our Javascript helper functions
+	klass = components.classes["@participatoryculture.org/dtv/jsbridge;1"]
+	self.jsbridge = klass.getService(components.interfaces.pcfIDTVJSBridge)
+
     def selectDisplay(self, newDisplay, area):
         """Install the provided 'newDisplay' in the requested area"""
 
 	# Generate a deselection message for the previously selected
 	# display in this area, if any
-	print "selectDisplay called"
         oldDisplay = None # protect from GC at least until new window's in
         if self.selectedDisplays.has_key(area):
             oldDisplay = self.selectedDisplays[area]
@@ -43,9 +47,8 @@ class MainFrame:
 	# Find the <box /> into which the display is to be inserted
 	box = self.document.getElementById(area)
 
-	# Remove the deselected display
-	if oldDisplay:
-	    box.removeChild(oldDisplay.getXULElement(self))
+        # Remove whatever was in the box before (such as the previous display)
+	self.jsbridge.xulRemoveAllChildren(box)
 
 	# Insert the newly selected display
 	if newDisplay:
