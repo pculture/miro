@@ -837,12 +837,31 @@ class DynamicDatabase:
                 #Initialize the object location dictionary
                 self.objectLocs = {}
                 self.objects = LinkedList()
+                itemURLs = {}
+                feedURLs = {}
                 for obj in temp:
+                    try:
+                        itemURLs[obj[0].feed.origURL] = obj[0].feed
+                    except:
+                        pass
+                    try:
+                        feedURLs[obj[0].origURL] = True
+                    except:
+                        pass
                     # Filter out any non-database objects that used to
                     # be stored in the database in past versions
                     if issubclass(obj[0].__class__, DDBObject):
                         it = self.objects.append(obj)
                         self.objectLocs[obj[0].id] = it
+
+                # Fix the broken case where an item's feed isn't in
+                # the database
+                for lostFeed in itemURLs.keys():
+                    if not feedURLs.has_key(lostFeed):
+                        lostFeed = itemURLs[lostFeed]
+                        it = self.objects.append( (lostFeed, lostFeed) )
+                        self.objectLocs[lostFeed.id] = it
+                    
                 self.cursor = None    
                 self.cursorStack = []
                 try:
