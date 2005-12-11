@@ -670,24 +670,6 @@ class FeedImpl:
         self.ufeed.endRead()
         return count
 
-    ##
-    # Removes a feed from the database
-    def remove(self):
-        self.cancelUpdateEvents()
-        self.ufeed.beginRead()
-        try:
-            items = []
-            #self.itemlist.resetCursor()
-            #for item in self.itemlist:
-            #    items.append(item)
-            for item in self.items:
-                if not item.getKeep():
-                    item.expire()
-                item.remove()
-        finally:
-            self.ufeed.endRead()
-        #defaultDatabase.removeView(self.itemlist)
-        self.ufeed.remove()
 ##
 # This class is a magic class that can become any type of feed it wants
 #
@@ -771,6 +753,18 @@ class Feed(DDBObject):
     def __getattr__(self,attr):
         return getattr(self.getActualFeed(),attr)
 
+    def remove(self):
+        self.beginChange()
+        self.cancelUpdateEvents()
+        try:
+            DDBObject.remove(self)
+            for item in self.items:
+                if not item.getKeep():
+                    item.expire()
+                item.remove()
+        finally:
+            self.endChange()
+        
 
     ##
     # Called by pickle during serialization
