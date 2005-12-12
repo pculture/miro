@@ -4,8 +4,6 @@ import gtk
 
 import frontend
 
-
-
 ###############################################################################
 #### Application object                                                    ####
 ###############################################################################
@@ -16,10 +14,9 @@ class Application:
 	print "Application init"
 
     def Run(self):
+        gtk.threads_init()
 	self.onStartup()
-
         gtk.main()
-
 	self.onShutdown()
 
     def getBackendDelegate(self):

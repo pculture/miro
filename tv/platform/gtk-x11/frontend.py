@@ -4,9 +4,9 @@ import config
 from frontend_implementation.Application import Application
 from frontend_implementation.MainFrame import MainFrame, NullDisplay
 from frontend_implementation.UIBackendDelegate import UIBackendDelegate
-from HTMLDisplay import HTMLDisplay
+from frontend_implementation.HTMLDisplay import HTMLDisplay
 from frontend_implementation.VideoDisplay import VideoDisplay, PlaylistItem
-import frontend_implementation.HTMLDisplayHelper
+from frontend_implementation.VideoDisplay import PlaybackController
 
 import gtkmozembed
 

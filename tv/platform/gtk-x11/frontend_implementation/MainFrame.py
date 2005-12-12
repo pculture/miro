@@ -2,8 +2,10 @@ import app
 import pygtk
 pygtk.require('2.0')
 import gtk
+import gobject
 
 from frontend import *
+from frontend_implementation.gtk_queue import gtkMethod
 
 ###############################################################################
 #### Initialization code: window classes, invisible toplevel parent        ####
@@ -36,6 +38,12 @@ class MainFrame:
         self.channelsDisplay = "channelsDisplay"
         self.collectionDisplay = "collectionDisplay"
 
+        # Child display state
+        self.selectedDisplays = {}
+        self.windowCreated = False
+        gobject.idle_add(self.ensureWindowCreated)
+
+    def createWindow(self):
         window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         window.set_title("DTV")
         window.connect("destroy", lambda w: gtk.main_quit())
@@ -50,15 +58,18 @@ class MainFrame:
 
         window.show()
 
-        # Child display state
-        self.selectedDisplays = {}
+    def ensureWindowCreated(self):
+        if not self.windowCreated:
+            self.createWindow()
+            self.windowCreated = True
 
-
+    @gtkMethod
     def selectDisplay(self, newDisplay, area):
         """Install the provided 'newDisplay' in the requested area"""
         print "selectDisplay %s  in %s" % (newDisplay, area)
 
         oldDisplay = None # protect from GC at least until new window's in
+        print "selecting display"
         if self.selectedDisplays.has_key(area):
             oldDisplay = self.selectedDisplays[area]
             if oldDisplay:
