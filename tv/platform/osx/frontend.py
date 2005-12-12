@@ -2216,7 +2216,6 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         self.autoConcealTimer = nil
         self.updateTimer = nil
         self.holdStartTime = 0.0
-        self.animator = FullScreenPaletteAnimator()
         self.renderer = None
         return self
 
@@ -2239,10 +2238,19 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         self.renderer = renderer
 
     def reveal(self, parent):
-        self.animator.setup(self)
+        screenSize = NSScreen.mainScreen().frame().size
+        height = self.frame().size.height
+        frame = ((0, -height), (screenSize.width, height))
+        self.setFrame_display_(frame, NO)        
         parent.addChildWindow_ordered_(self, NSWindowAbove)
         self.orderFront_(nil)
-        self.animator.reveal(self)
+        frame = ((0, 0), (screenSize.width, height))
+        self.setFrame_display_animate_(frame, YES, YES)
+        self.holdStartTime = time.time()
+        self.autoConcealTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
+            1.0, self, 'concealAfterDelay:', nil, YES)
+        self.updateTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
+            1.0, self, 'update:', nil, YES)
     
     def conceal(self):
         if self.autoConcealTimer is not nil:
@@ -2251,7 +2259,10 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         if self.updateTimer is not nil:
             self.updateTimer.invalidate()
             self.updateTimer = nil
-        self.animator.conceal(self)
+        frame = self.frame()
+        frame.origin.y = -frame.size.height
+        self.setFrame_display_animate_(frame, YES, YES)
+        self.remove()
     
     def concealAfterDelay_(self, timer):
         if time.time() - self.holdStartTime > self.HOLD_TIME:
@@ -2260,16 +2271,6 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
     def resetAutoConceal(self):
         self.holdStartTime = time.time()
         
-    def didFinishRevealing(self):
-        self.holdStartTime = time.time()
-        self.autoConcealTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
-            1.0, self, 'concealAfterDelay:', nil, YES)
-        self.updateTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
-            1.0, self, 'update:', nil, YES)
-
-    def didFinishConcealing(self):
-        self.remove()
-    
     def update_(self, timer):
         self.updateTimeIndicator()
         self.updateProgressIndicator()
@@ -2294,65 +2295,6 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         if self.parentWindow() is not nil:
             self.parentWindow().removeChildWindow_(self)
         self.orderOut_(nil)
-
-
-class FullScreenPaletteAnimator:
-    
-    def __init__(self):
-        self.interpolate = None
-        self.notify = None
-        self.duration = 0.0
-        self.startTime = 0.0
-        self.timer = nil
-    
-    def setup(self, palette):
-        if self.interpolate is None:
-            screenSize = NSScreen.mainScreen().frame().size
-            paletteHeight = palette.frame().size.height
-            frame = ((0, -paletteHeight), (screenSize.width, paletteHeight))
-            palette.setFrame_display_(frame, NO)
-    
-    def reveal(self, palette):
-        if self.interpolate is None:
-            self.interpolate = self.interpolateIn
-            self.notify = palette.didFinishRevealing
-            self.duration = 0.5
-            self.run(palette)
-        
-    def conceal(self, palette):
-        if self.interpolate is None:
-            self.interpolate = self.interpolateOut
-            self.notify = palette.didFinishConcealing
-            self.duration = 1.0
-            self.run(palette)
-        
-    def run(self, palette):
-        self.startTime = time.time()
-        self.timer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
-            0.04, self, 'update:', palette, YES)
-            
-    def update_(self, timer):
-        t = (time.time() - self.startTime) / self.duration
-        if t <= 1.0:
-            self.displayAt(self.interpolate(t), timer.userInfo())
-        else:
-            self.interpolate = None
-            self.displayAt(1.0, timer.userInfo())
-            self.timer.invalidate()
-            self.notify()
-        
-    def interpolateIn(self, t):
-        return t ** (1 / (2 * t * math.e))
-        
-    def interpolateOut(self, t):
-        return (2 * t - 3) * t * t + 1
-    
-    def displayAt(self, progress, palette):
-        frame = palette.frame()
-        height = frame.size.height
-        frame.origin.y = (progress * height) - height
-        palette.setFrame_display_(frame, YES)
-        
 
 
 class FullScreenPaletteView (NibClassBuilder.AutoBaseClass):
