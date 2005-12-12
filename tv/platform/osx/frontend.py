@@ -1194,13 +1194,14 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         return self;
 
     def setup(self, renderer):
-        self.renderer = renderer
-        if renderer is not nil:
-            self.updateTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(1.0, self, 'refresh:', nil, YES)
-        elif self.updateTimer is not nil:
-            self.updateTimer.invalidate()
-            self.updateTimer = nil
-        self.refresh_(nil)
+        if self.renderer != renderer:
+            self.renderer = renderer
+            if renderer is not nil:
+                self.updateTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(1.0, self, 'refresh:', nil, YES)
+            elif self.updateTimer is not nil:
+                self.updateTimer.invalidate()
+                self.updateTimer = nil
+            self.refresh_(nil)
 
     def teardown(self):
         self.setup(None)
@@ -1814,9 +1815,8 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     def selectPlaylistItem(self, item):
         renderer = self.getRendererForItem(item)
         renderer.selectPlaylistItem(item, self.volumeSlider.floatValue())
-        if renderer != self.renderer:
-            self.videoAreaView.setup(renderer)
-            self.progressDisplayer.setup(renderer)
+        self.videoAreaView.setup(renderer, item)
+        self.progressDisplayer.setup(renderer)
         self.renderer = renderer
 
     def reset(self):
@@ -1886,20 +1886,35 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     def goFullScreen(self):
         self.videoAreaView.enterFullScreen()
 
+    def exitFullScreen_(self, sender):
+        self.exitFullScreen()
+
     def exitFullScreen(self):
         self.videoAreaView.exitFullScreen()
 
     def forward_(self, sender):
         self.performSeek(sender, 1)
         
+    def skipForward_(self, sender):
+        app.Controller.instance.playbackController.skip(1)
+
+    def fastForward_(self, sender):
+        self.performSeek(sender, 1, 0.0)
+        
     def backward_(self, sender):
         self.performSeek(sender, -1)
 
-    def performSeek(self, sender, direction):
+    def skipBackward_(self, sender):
+        app.Controller.instance.playbackController.skip(-1)
+
+    def fastBackward_(self, sender):
+        self.performSeek(sender, -1, 0.0)
+
+    def performSeek(self, sender, direction, seekDelay=0.5):
         if sender.state() == NSOnState:
             sender.sendActionOn_(NSLeftMouseUpMask)
             info = {'seekDirection': direction}
-            self.fastSeekTimer = NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_(0.5, self, 'fastSeek:', info, NO)
+            self.fastSeekTimer = NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_(seekDelay, self, 'fastSeek:', info, NO)
             NSRunLoop.currentRunLoop().addTimer_forMode_(self.fastSeekTimer, NSEventTrackingRunLoopMode)
         else:
             sender.sendActionOn_(NSLeftMouseDownMask)
@@ -1962,10 +1977,9 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 #### both windowed and fullscreen playback                                 ####
 ###############################################################################
 
-class VideoAreaView (NSView):
+class VideoAreaView (NibClassBuilder.AutoBaseClass):
     
     def awakeFromNib(self):
-        self.videoWindow = VideoWindow.alloc().initWithFrame_(((0,0),(320,200)))
         self.hostWindow = nil
     
     def prepare(self):
@@ -1974,8 +1988,8 @@ class VideoAreaView (NSView):
         self.adjustVideoWindowFrame()
         self.hostWindow.addChildWindow_ordered_(self.videoWindow, NSWindowAbove)
     
-    def setup(self, renderer):
-        self.videoWindow.setup(renderer)
+    def setup(self, renderer, item):
+        self.videoWindow.setup(renderer, item)
         self.videoWindow.orderFront_(nil)
     
     def teardown(self):
@@ -2011,19 +2025,22 @@ class VideoAreaView (NSView):
 #### fullscreen modes.                                                     ####
 ###############################################################################
 
-class VideoWindow (NSWindow):
+class VideoWindow (NibClassBuilder.AutoBaseClass):
     
-    def initWithFrame_(self, frame):
+    def initWithContentRect_styleMask_backing_defer_(self, rect, style, backing, defer):
         self = super(VideoWindow, self).initWithContentRect_styleMask_backing_defer_(
-            frame,
+            rect,
             NSBorderlessWindowMask,
-            NSBackingStoreBuffered,
-            YES )
+            backing,
+            defer )
+        self.setAcceptsMouseMovedEvents_(YES)
         self.isFullScreen = NO
         return self
 
-    def setup(self, renderer):
-        self.setContentView_(renderer.view)
+    def setup(self, renderer, item):
+        if self.contentView() != renderer.view:
+            self.setContentView_(renderer.view)
+        self.palette.setup(item, renderer)
     
     def teardown(self):
         self.setContentView_(nil)
@@ -2047,16 +2064,23 @@ class VideoWindow (NSWindow):
 
     def exitFullScreen(self):
         self.isFullScreen = NO
+        self.palette.remove()
         self.parent.addChildWindow_ordered_(self, NSWindowAbove)
         self.parent.makeKeyAndOrderFront_(nil)
         self.setFrame_display_animate_(self.frameInParent, YES, YES)
         SetSystemUIMode(kUIModeNormal, 0)
         
     def sendEvent_(self, event):
-        click = event.type() == NSLeftMouseDown
-        esc = event.type() == NSKeyDown and event.characters().characterAtIndex_(0) == 0x1B
-        if self.isFullScreen and (click or esc):
-            self.exitFullScreen()
+        if self.isFullScreen:
+            if event.type() == NSLeftMouseDown:
+                self.exitFullScreen()
+            elif event.type() == NSKeyDown and event.characters().characterAtIndex_(0) == 0x1B:
+                self.exitFullScreen()
+            elif event.type() == NSMouseMoved:
+                if not self.palette.isVisible():
+                    self.palette.reveal(self)
+                else:
+                    self.palette.resetAutoConceal()
 
 
 ###############################################################################
@@ -2170,5 +2194,204 @@ class PlaylistItem:
         item viewed in the database, override this method in a subclass."""
         raise NotImplementedError
 
+
 ###############################################################################
+#### The fullscreen controls palette                                       ####
 ###############################################################################
+
+class FullScreenPalette (NibClassBuilder.AutoBaseClass):
+    
+    HOLD_TIME = 10
+    
+    def initWithContentRect_styleMask_backing_defer_(self, rect, style, backing, defer):
+        self = super(FullScreenPalette, self).initWithContentRect_styleMask_backing_defer_(
+            rect,
+            NSBorderlessWindowMask,
+            backing,
+            defer )
+        self.setBackgroundColor_(NSColor.clearColor())
+        self.setAlphaValue_(1.0)
+        self.setOpaque_(NO)
+        self.autoConcealTimer = nil
+        self.updateTimer = nil
+        self.holdStartTime = 0.0
+        self.animator = FullScreenPaletteAnimator()
+        self.renderer = None
+        return self
+
+    def awakeFromNib(self):
+        self.seekForwardButton.sendActionOn_(NSLeftMouseDownMask)
+        self.seekBackwardButton.sendActionOn_(NSLeftMouseDownMask)
+        self.progressSlider.setImages('fs-progress-background', 'fs-progress-slider')
+        self.volumeSlider.setImages('fs-volume-background', 'fs-volume-slider')
+
+    def canBecomeKeyWindow(self):
+        return NO
+
+    def canBecomeMainWindow(self):
+        return NO
+
+    def setup(self, item, renderer):
+        self.titleLabel.setStringValue_(item.getTitle())
+        self.feedLabel.setStringValue_(item.getFeed().getTitle())
+        self.donationLabel.setStringValue_(u'')
+        self.renderer = renderer
+
+    def reveal(self, parent):
+        self.animator.setup(self)
+        parent.addChildWindow_ordered_(self, NSWindowAbove)
+        self.orderFront_(nil)
+        self.animator.reveal(self)
+    
+    def conceal(self):
+        if self.autoConcealTimer is not nil:
+            self.autoConcealTimer.invalidate()
+            self.autoConcealTimer = nil
+        if self.updateTimer is not nil:
+            self.updateTimer.invalidate()
+            self.updateTimer = nil
+        self.animator.conceal(self)
+    
+    def concealAfterDelay_(self, timer):
+        if time.time() - self.holdStartTime > self.HOLD_TIME:
+            self.conceal()
+    
+    def resetAutoConceal(self):
+        self.holdStartTime = time.time()
+        
+    def didFinishRevealing(self):
+        self.holdStartTime = time.time()
+        self.autoConcealTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
+            1.0, self, 'concealAfterDelay:', nil, YES)
+        self.updateTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
+            1.0, self, 'update:', nil, YES)
+
+    def didFinishConcealing(self):
+        self.remove()
+    
+    def update_(self, timer):
+        self.updateTimeIndicator()
+        self.updateProgressIndicator()
+    
+    def updateTimeIndicator(self):
+        timeStr = '00:00:00'
+        if self.renderer is not None:
+            seconds = self.renderer.getCurrentTime()
+            timeStr = time.strftime("%H:%M:%S", time.gmtime(seconds))
+        self.timeIndicator.setStringValue_(timeStr)
+
+    def updateProgressIndicator(self):
+        if self.renderer is not None:
+            progress = 0.0
+            currentTime = self.renderer.getCurrentTime()
+            if currentTime > 0.0:
+                progress = currentTime / self.renderer.getDuration()
+            self.progressSlider.value = progress
+            self.progressSlider.setNeedsDisplay_(YES)
+            
+    def remove(self):
+        if self.parentWindow() is not nil:
+            self.parentWindow().removeChildWindow_(self)
+        self.orderOut_(nil)
+
+
+class FullScreenPaletteAnimator:
+    
+    def __init__(self):
+        self.interpolate = None
+        self.notify = None
+        self.duration = 0.0
+        self.startTime = 0.0
+        self.timer = nil
+    
+    def setup(self, palette):
+        if self.interpolate is None:
+            screenSize = NSScreen.mainScreen().frame().size
+            paletteHeight = palette.frame().size.height
+            frame = ((0, -paletteHeight), (screenSize.width, paletteHeight))
+            palette.setFrame_display_(frame, NO)
+    
+    def reveal(self, palette):
+        if self.interpolate is None:
+            self.interpolate = self.interpolateIn
+            self.notify = palette.didFinishRevealing
+            self.duration = 0.5
+            self.run(palette)
+        
+    def conceal(self, palette):
+        if self.interpolate is None:
+            self.interpolate = self.interpolateOut
+            self.notify = palette.didFinishConcealing
+            self.duration = 1.0
+            self.run(palette)
+        
+    def run(self, palette):
+        self.startTime = time.time()
+        self.timer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
+            0.04, self, 'update:', palette, YES)
+            
+    def update_(self, timer):
+        t = (time.time() - self.startTime) / self.duration
+        if t <= 1.0:
+            self.displayAt(self.interpolate(t), timer.userInfo())
+        else:
+            self.interpolate = None
+            self.displayAt(1.0, timer.userInfo())
+            self.timer.invalidate()
+            self.notify()
+        
+    def interpolateIn(self, t):
+        return t ** (1 / (2 * t * math.e))
+        
+    def interpolateOut(self, t):
+        return (2 * t - 3) * t * t + 1
+    
+    def displayAt(self, progress, palette):
+        frame = palette.frame()
+        height = frame.size.height
+        frame.origin.y = (progress * height) - height
+        palette.setFrame_display_(frame, YES)
+        
+
+
+class FullScreenPaletteView (NibClassBuilder.AutoBaseClass):
+
+    def awakeFromNib(self):
+        self.background = NSImage.imageNamed_('fs-background')
+        self.backgroundRect = NSRect((0,0), self.background.size())
+        self.topLine = NSImage.imageNamed_('fs-topline')
+        self.topLineRect = NSRect((0,0), self.topLine.size())
+
+    def drawRect_(self, rect):
+        width = self.bounds().size.width
+        bgRect = ((0,0), (width, self.backgroundRect.size.height))
+        self.background.drawInRect_fromRect_operation_fraction_(bgRect, self.backgroundRect, NSCompositeSourceOver, 1.0)
+        tlRect1 = ((0,self.backgroundRect.size.height), (width-135, self.topLineRect.size.height))
+        self.topLine.drawInRect_fromRect_operation_fraction_(tlRect1, self.topLineRect, NSCompositeSourceOver, 1.0)
+        tlRect2 = ((width-25,self.backgroundRect.size.height), (25, self.topLineRect.size.height))
+        self.topLine.drawInRect_fromRect_operation_fraction_(tlRect2, self.topLineRect, NSCompositeSourceOver, 1.0)
+
+
+class FullScreenControlsView (NibClassBuilder.AutoBaseClass):
+    
+    def awakeFromNib(self):
+        self.background = NSImage.imageNamed_('fs-controls-background')
+        self.backgroundRect = NSRect((0,0), self.background.size())
+
+    def drawRect_(self, rect):
+        self.background.compositeToPoint_operation_((0, 0), NSCompositeSourceOver)
+
+
+class FullScreenSlider (NibClassBuilder.AutoBaseClass):
+
+    def awakeFromNib(self):
+        self.value = 0.0
+
+    def setImages(self, track, knob):
+        self.track = NSImage.imageNamed_(track)
+        self.knob = NSImage.imageNamed_(knob)
+    
+    def drawRect_(self, rect):
+        kx = (self.frame().size.width * self.value) - (self.knob.size().width * self.value)
+        self.track.compositeToPoint_operation_((0, 2), NSCompositeSourceOver)
+        self.knob.compositeToPoint_operation_((kx, 0), NSCompositeSourceOver)

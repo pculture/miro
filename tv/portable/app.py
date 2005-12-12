@@ -1181,6 +1181,9 @@ class PlaylistItemFromItem (frontend.PlaylistItem):
     def getInfoMap(self):
         return dict(this=self.item, filter=globalFilterList)
 
+    def __getattr__(self, attr):
+        return getattr(self.item, attr)
+
 def mappableToPlaylistItem(obj):
     if not isinstance(obj, item.Item):
         return False
