@@ -1881,6 +1881,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.renderer.stop()
 
     def playFullScreen_(self, sender):
+        app.Controller.instance.playbackController.playPause()
         self.videoDisplay.goFullScreen()
 
     def goFullScreen(self):
