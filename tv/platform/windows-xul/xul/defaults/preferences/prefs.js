@@ -1,4 +1,5 @@
 pref("toolkit.defaultChromeURI", "chrome://dtv/content/main.xul");
+pref("toolkit.singletonWindowType", "main");
 
 /* Allow files on local disk (such as those we autogenerate) to
    acquire the UniversalBrowserRead privilege, which is what's
