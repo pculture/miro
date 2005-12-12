@@ -1,6 +1,7 @@
 from xpcom import components, nsError, ServerException
 import traceback
 import sys
+import os
 import time
 
 class PyBridge:
@@ -10,33 +11,37 @@ class PyBridge:
     _reg_desc_ = "Bridge into DTV Python core"
 
     def __init__(self):
-	pass
+        pass
 
     def onStartup(self, mainWindowDocument):
-	print "onStartup"
-	self.mainWindowDocument = mainWindowDocument
+        print "onStartup"
+        self.mainWindowDocument = mainWindowDocument
 
-	class AutoflushingStream:
-	    def __init__(self, stream):
-		self.stream = stream
-	    def write(self, *args):
-		self.stream.write(*args)
-		self.stream.flush()
+        class AutoflushingStream:
+            def __init__(self, stream):
+                self.stream = stream
+            def write(self, *args):
+                self.stream.write(*args)
+                self.stream.flush()
 
-	h = open("/tmp/dtv-log", "wt")
-	sys.stdout = sys.stderr = AutoflushingStream(h)
-	try:
-	    print "got:: %s" % mainWindowDocument
+        try:
+            if os.environ.has_key('TMP'):
+                h = open("%s/dtv-log" % os.environ['TMP'], "wt")
+                sys.stdout = sys.stderr = AutoflushingStream(h)
+        except:
+            pass
+        try:
+            print "got:: %s" % mainWindowDocument
 
-#	    klass = components.classes["@participatoryculture.org/dtv/jsbridge;1"]
-#	    jsb = klass.getService(components.interfaces.pcfIDTVJSBridge)
-#	    jsb.xulLoadURI(elt, "http://www.achewood.com")
+#           klass = components.classes["@participatoryculture.org/dtv/jsbridge;1"]
+#           jsb = klass.getService(components.interfaces.pcfIDTVJSBridge)
+#           jsb.xulLoadURI(elt, "http://www.achewood.com")
 
-	    import app
-	    app.start()
-	except:
-	    traceback.print_exc()
+            import app
+            app.start()
+        except:
+            traceback.print_exc()
 
     def eventURL(self, cookie, url):
-	import frontend
-	frontend.HTMLDisplay.dispatchEventByCookie(cookie, url)
+        import frontend
+        frontend.HTMLDisplay.dispatchEventByCookie(cookie, url)
