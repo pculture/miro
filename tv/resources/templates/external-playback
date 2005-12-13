@@ -4,7 +4,7 @@
       eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>DTV - External Playback Template</title>
 
     <link href="resource:css/external.css" rel="stylesheet" type="text/css" />
