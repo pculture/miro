@@ -1182,6 +1182,7 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         self.backgroundCenterWidth = self.backgroundCenter.size().width
         self.renderer = None
         self.updateTimer = nil
+        self.wasPlaying = False
 
     def setup(self, renderer):
         if self.renderer != renderer:
@@ -1220,14 +1221,18 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         NSGraphicsContext.currentContext().restoreGraphicsState()
 
     def progressSliderWasClicked(self, slider):
-        self.renderer.pause()
+        if app.Controller.instance.videoDisplay.isPlaying:
+            self.wasPlaying = True
+            self.renderer.pause()
         self.renderer.setProgress(slider.floatValue())
         
     def progressSliderWasDragged(self, slider):
         self.renderer.setProgress(slider.floatValue())
         
     def progressSliderWasReleased(self, slider):
-        self.renderer.play()
+        if self.wasPlaying:
+            self.wasPlaying = False
+            self.renderer.play()
 
     
 ###############################################################################
@@ -2203,6 +2208,7 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         self.updateTimer = nil
         self.holdStartTime = 0.0
         self.renderer = None
+        self.wasPlaying = False
         return self
 
     def awakeFromNib(self):
@@ -2279,7 +2285,9 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         self.progressSlider.setFloatValue_(self.renderer.getProgress())
             
     def progressSliderWasClicked(self, slider):
-        self.renderer.pause()
+        if app.Controller.instance.videoDisplay.isPlaying:
+            self.wasPlaying = True
+            self.renderer.pause()
         self.renderer.setProgress(slider.floatValue())
         self.resetAutoConceal()
         
@@ -2288,7 +2296,9 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         self.resetAutoConceal()
         
     def progressSliderWasReleased(self, slider):
-        self.renderer.play()
+        if self.wasPlaying:
+            self.wasPlaying = False
+            self.renderer.play()
 
     def volumeSliderWasDragged(self, slider):
         app.Controller.instance.videoDisplay.setVolume(slider.floatValue())
