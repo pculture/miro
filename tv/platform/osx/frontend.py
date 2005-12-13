@@ -2271,6 +2271,12 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
     def resetAutoConceal(self):
         self.holdStartTime = time.time()
         
+    def expireNow_(self, sender):
+        pass
+        
+    def tellAFriend_(self, sender):
+        pass
+        
     def update_(self, timer):
         self.updateTimeIndicator()
         self.updateProgressIndicator()

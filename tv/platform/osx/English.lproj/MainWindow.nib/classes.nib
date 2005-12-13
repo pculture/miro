@@ -6,6 +6,7 @@
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {CLASS = FullScreenControlsView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {
+            ACTIONS = {expireNow = id; tellAFriend = id; }; 
             CLASS = FullScreenPalette; 
             LANGUAGE = ObjC; 
             OUTLETS = {
