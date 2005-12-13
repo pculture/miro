@@ -2329,6 +2329,15 @@ class FullScreenControlsView (NibClassBuilder.AutoBaseClass):
 
     def drawRect_(self, rect):
         self.background.compositeToPoint_operation_((0, 0), NSCompositeSourceOver)
+        
+    def hitTest_(self, point):
+        # Our buttons have transparent parts, but we still want mouse clicks
+        # to be detected if they happen there, so we override hit testing and
+        # simply test for button frames.
+        for subview in self.subviews():
+            if NSPointInRect(self.convertPoint_fromView_(point, nil), subview.frame()):
+                return subview
+        return self
 
 
 class FullScreenSlider (NibClassBuilder.AutoBaseClass):
