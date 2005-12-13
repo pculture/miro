@@ -258,7 +258,6 @@ class MainFrame:
     def __init__(self, appl):
         """The initially active display will be an instance of NullDisplay."""
         self.channelsDisplay = None
-        self.collectionDisplay = None
         self.mainDisplay = None
         self.videoInfoDisplay = None
         # Do this in two steps so that self.controller is set when self.controler.init
@@ -278,10 +277,12 @@ class MainFrame:
 
 class DisplayHostView (NibClassBuilder.AutoBaseClass):
     
-    def awakeFromNib(self):
+    def initWithFrame_(self, frame):
+        self = super(DisplayHostView, self).initWithFrame_(frame)
         self.scheduledDisplay = None
         self.hostedDisplay = None
         self.hostedView = nil
+        return self
 
     def drawRect_(self, rect):
         NSColor.whiteColor().set()
@@ -358,7 +359,6 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     def awakeFromNib(self):
         self.frame.channelsDisplay = self.channelsHostView
-        self.frame.collectionDisplay = None #self.collectionHostView
         self.frame.mainDisplay = self.mainHostView
         self.frame.videoInfoDisplay = self.videoInfoHostView
         self.restoreLayout()
@@ -500,16 +500,6 @@ class MainController (NibClassBuilder.AutoBaseClass):
         return self.channelsHostView.isDescendantOf_(subview) and app.Controller.instance.videoDisplay.isSelected()
 
     ### Actions ###
-
-    def switchTabs_(self, sender):
-        tag = sender.selectedCell().tag()
-        self.tabView.selectTabViewItemAtIndex_(tag)
-        newDisplay = None
-        if tag == 1:
-            newDisplay = self.frame.channelsDisplay
-        elif tag == 2:
-            newDisplay = self.frame.collectionDisplay
-        self.appl.onDisplaySwitch(newDisplay)
 
     def playPause_(self, sender):
         VideoDisplayController.getInstance().playPause_(sender)
@@ -1113,43 +1103,76 @@ class MetalSliderCell (NSSliderCell):
 
 
 ###############################################################################
-#### Our own prettier beveled NSBox                                        ####
+#### The base class for all our custom sliders                             ####
 ###############################################################################
 
-#class BeveledBox (NibClassBuilder.AutoBaseClass):
-#    # Actual base class is NSBox
-#
-#    TOP_COLOR        = NSColor.colorWithDeviceWhite_alpha_( 147 / 255.0, 1.0 )
-#    LEFT_RIGHT_COLOR = NSColor.colorWithDeviceWhite_alpha_( 224 / 255.0, 1.0 )
-#    BOTTOM_COLOR     = NSColor.colorWithDeviceWhite_alpha_( 240 / 255.0, 1.0 )
-#    CONTOUR_COLOR    = NSColor.colorWithDeviceWhite_alpha_( 102 / 255.0, 1.0 )
-#
-#    def drawRect_(self, rect):
-#        interior = NSInsetRect( rect, 1, 1 )
-#
-#        NSColor.whiteColor().set()
-#        NSRectFill( interior )
-#
-#        self.CONTOUR_COLOR.set()
-#        NSFrameRect( interior )
-#
-#        self.TOP_COLOR.set()
-#        p1 = NSPoint( rect.origin.x+1, rect.size.height-0.5 )
-#        p2 = NSPoint( rect.size.width-1, rect.size.height-0.5 )
-#        NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
-#
-#        self.LEFT_RIGHT_COLOR.set()
-#        p1 = NSPoint( rect.origin.x+0.5, rect.size.height-1 )
-#        p2 = NSPoint( rect.origin.x+0.5, rect.origin.y+1 )
-#        NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
-#        p1 = NSPoint( rect.size.width-0.5, rect.origin.y+1 )
-#        p2 = NSPoint( rect.size.width-0.5, rect.size.height-1 )
-#        NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
-#
-#        self.BOTTOM_COLOR.set()
-#        p1 = NSPoint( rect.origin.x+1, rect.origin.y+0.5 )
-#        p2 = NSPoint( rect.size.width-1, rect.origin.y+0.5 )
-#        NSBezierPath.strokeLineFromPoint_toPoint_( p1, p2 )
+class Slider (NibClassBuilder.AutoBaseClass):
+
+    def initWithFrame_(self, frame):
+        self = super(Slider, self).initWithFrame_(frame)
+        self.value = 0.0
+        self.showCursor = False
+        self.dragging = False
+        self.sliderWasClicked = None
+        self.sliderWasDragged = None
+        self.sliderWasReleased = None
+        return self
+
+    def setFloatValue_(self, value):
+        self.value = value
+        self.setNeedsDisplay_(YES)
+        
+    def floatValue(self):
+        return self.value
+
+    def setShowCursor_(self, showCursor):
+        self.showCursor = showCursor
+
+    def drawRect_(self, rect):
+        self.drawTrack()
+        if self.showCursor:
+            self.drawCursor()
+
+    def drawTrack(self):
+        pass
+
+    def drawCursor(self):
+        x = (self.bounds().size.width - self.cursor.size().width) * self.value
+        self.cursor.compositeToPoint_operation_((abs(x)+0.5, 0), NSCompositeSourceOver)
+
+    def mouseDown_(self, event):
+        if self.showCursor:
+            location = self.convertPoint_fromView_(event.locationInWindow(), nil)
+            if NSPointInRect(location, self.bounds()):
+                self.dragging = True
+                self.setFloatValue_(self.getValueForClickLocation(location))
+                if self.sliderWasClicked is not None:
+                    self.sliderWasClicked(self)
+
+    def mouseDragged_(self, event):
+        if self.showCursor and self.dragging:
+            location = self.convertPoint_fromView_(event.locationInWindow(), nil)
+            self.setFloatValue_(self.getValueForClickLocation(location))
+            if self.sliderWasDragged is not None:
+                self.sliderWasDragged(self)
+
+    def mouseUp_(self, event):
+        if self.showCursor:
+            self.dragging = False
+            if self.sliderWasReleased is not None:
+                self.sliderWasReleased(self)
+            self.setNeedsDisplay_(YES)
+
+    def getValueForClickLocation(self, location):
+        min = self.cursor.size().width / 2.0
+        max = self.bounds().size.width - min
+        span = max - min
+        offset = location.x
+        if offset < min:
+            offset = min
+        elif offset > max:
+            offset = max
+        return (offset - min) / span
 
 
 ###############################################################################
@@ -1157,41 +1180,19 @@ class MetalSliderCell (NSSliderCell):
 ###############################################################################
 
 class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
-    # Actual base class is NSView
 
-    def initWithFrame_(self, frame):
-        super(ProgressDisplayView, self).initWithFrame_(frame)
-
+    def awakeFromNib(self):
+        self.progressSlider.sliderWasClicked = self.progressSliderWasClicked
+        self.progressSlider.sliderWasDragged = self.progressSliderWasDragged
+        self.progressSlider.sliderWasReleased = self.progressSliderWasReleased
         self.backgroundLeft = NSImage.imageNamed_( "display_left" )
         self.backgroundLeftWidth = self.backgroundLeft.size().width
         self.backgroundRight = NSImage.imageNamed_( "display_right" )
         self.backgroundRightWidth = self.backgroundRight.size().width
         self.backgroundCenter = NSImage.imageNamed_( "display_center" )
         self.backgroundCenterWidth = self.backgroundCenter.size().width
-
-        self.grooveContourColor = NSColor.colorWithCalibratedWhite_alpha_( 0.1, 0.3 )
-        self.grooveFillColor = NSColor.colorWithCalibratedWhite_alpha_( 0.5, 0.3 )
-
-        self.timeAttrs = { NSFontAttributeName:NSFont.fontWithName_size_("Helvetica", 10),
-                           NSForegroundColorAttributeName:NSColor.colorWithCalibratedWhite_alpha_(69/255.0, 1.0) }
-
-        self.cursor = NSImage.alloc().initWithSize_((10,10))
-        self.cursor.lockFocus()
-        path = NSBezierPath.bezierPath()
-        path.moveToPoint_((0, 4.5))
-        path.lineToPoint_((4, 8))
-        path.lineToPoint_((8, 4.5))
-        path.lineToPoint_((4, 1))
-        path.closePath()
-        NSColor.colorWithCalibratedWhite_alpha_( 51/255.0, 1.0 ).set()
-        path.fill()
-        self.cursor.unlockFocus()
-        
         self.renderer = None
-        self.dragging = False
         self.updateTimer = nil
-
-        return self;
 
     def setup(self, renderer):
         if self.renderer != renderer:
@@ -1207,53 +1208,18 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         self.setup(None)
 
     def refresh_(self, timer):
-        self.setNeedsDisplay_(YES)
-
-    def mouseDown_(self, event):
         if self.renderer is not None:
-            location = self.convertPoint_fromView_(event.locationInWindow(), nil)
-            if NSPointInRect(location, self.getGrooveRect()):
-                self.dragging = True
-                self.renderer.stop()
-                self.renderer.setCurrentTime(self.getTimeForLocation(location))
-                self.refresh_(nil)
-
-    def mouseDragged_(self, event):
-        if self.dragging:
-            location = self.convertPoint_fromView_(event.locationInWindow(), nil)
-            self.renderer.setCurrentTime(self.getTimeForLocation(location))
-            self.refresh_(nil)
-
-    def mouseUp_(self, event):
-        if self.renderer is not None:
-            self.dragging = False
-            self.renderer.play()
-            self.refresh_(nil)
-
-    def getTimeForLocation(self, location):
-        rect = self.getGrooveRect()
-        offset = location.x - rect.origin.x
-        if offset < 0:
-            offset = 0
-        if offset > rect.size.width:
-            offset = rect.size.width
-        if offset > 0:
-            offset /= rect.size.width
-        time = self.renderer.getDuration() * offset
-        return time
+            self.progressSlider.setShowCursor_(True)
+            self.progressSlider.setFloatValue_(self.renderer.getProgress())
+            self.timeIndicator.setStringValue_(self.renderer.getDisplayTime())
+        else:
+            self.progressSlider.setShowCursor_(False)
+            self.progressSlider.setFloatValue_(0.0)
 
     def drawRect_(self, rect):
-        self.drawBackground()
-        self.drawTimeIndicator()
-        self.drawProgressGroove()
-        self.drawProgressCursor()
-
-    def drawBackground(self):
         self.backgroundLeft.compositeToPoint_operation_( (0,0), NSCompositeSourceOver )
-
         x = self.bounds().size.width - self.backgroundRightWidth
         self.backgroundRight.compositeToPoint_operation_( (x, 0), NSCompositeSourceOver )
-
         emptyWidth = self.bounds().size.width - (self.backgroundRightWidth + self.backgroundLeftWidth)
         emptyRect = ((self.backgroundLeftWidth, 0), (emptyWidth, self.bounds().size.height))
         NSGraphicsContext.currentContext().saveGraphicsState()
@@ -1264,41 +1230,49 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
             self.backgroundCenter.compositeToPoint_operation_( (x, 0), NSCompositeSourceOver )
         NSGraphicsContext.currentContext().restoreGraphicsState()
 
-    def drawTimeIndicator(self):
-        timeStr = '00:00:00'
-        if self.renderer is not None:
-            seconds = self.renderer.getCurrentTime()
-            timeStr = time.strftime("%H:%M:%S", time.gmtime(seconds))
-        NSString.stringWithString_(timeStr).drawAtPoint_withAttributes_( (8,5), self.timeAttrs )
+    def progressSliderWasClicked(self, slider):
+        self.renderer.pause()
+        self.renderer.setProgress(slider.floatValue())
+        
+    def progressSliderWasDragged(self, slider):
+        self.renderer.setProgress(slider.floatValue())
+        
+    def progressSliderWasReleased(self, slider):
+        self.renderer.play()
 
-    def drawProgressGroove(self):
-        rect = self.getGrooveRect()
+    
+###############################################################################
+#### The progress display progress slider                                  ####
+###############################################################################
+
+class ProgressSlider (NibClassBuilder.AutoBaseClass):
+    
+    def initWithFrame_(self, frame):
+        self = super(ProgressSlider, self).initWithFrame_(frame)
+        self.grooveContourColor = NSColor.colorWithCalibratedWhite_alpha_( 0.1, 0.3 )
+        self.grooveFillColor = NSColor.colorWithCalibratedWhite_alpha_( 0.5, 0.3 )
+        self.cursor = NSImage.alloc().initWithSize_((10,10))
+        self.cursor.lockFocus()
+        path = NSBezierPath.bezierPath()
+        path.moveToPoint_((0, 4.5))
+        path.lineToPoint_((4, 8))
+        path.lineToPoint_((8, 4.5))
+        path.lineToPoint_((4, 1))
+        path.closePath()
+        NSColor.colorWithCalibratedWhite_alpha_( 51/255.0, 1.0 ).set()
+        path.fill()
+        self.cursor.unlockFocus()
+        return self
+                
+    def drawTrack(self):
+        rect = self.bounds()
+        rect = NSOffsetRect(rect, 0.5, 0.5)
+        rect.size.width -= 1
+        rect.size.height -= 1
         self.grooveFillColor.set()
         NSBezierPath.fillRect_(rect)
         self.grooveContourColor.set()
-        NSBezierPath.strokeRect_(rect)
-
-    def drawProgressCursor(self):
-        if self.renderer == None:
-            return
-
-        progress = 0.0
-
-        currentTime = self.renderer.getCurrentTime()
-        if currentTime > 0.0:
-            progress = self.renderer.getDuration() / currentTime
-
-        offset = 0
-        if progress > 0.0:
-            offset = (self.getGrooveRect().size.width - 9) / progress
-
-        x = math.floor(59 + offset) + 0.5
-        self.cursor.compositeToPoint_operation_((x,7), NSCompositeSourceOver)
-
-    def getGrooveRect(self):
-        origin = NSPoint(60, 8)
-        size = NSSize(self.bounds().size.width - 60 - 8, 8)
-        return NSOffsetRect(NSRect(origin, size), -0.5, -0.5)
+        NSBezierPath.strokeRect_(rect)        
 
 
 ###############################################################################
@@ -1730,8 +1704,8 @@ class VideoDisplay (app.VideoDisplayBase):
         self.controller.setVolume(level)
         app.VideoDisplayBase.setVolume(self, level)
 
-    def getVolume(self):
-        return self.controller.getVolume()
+#    def getVolume(self):
+#        return self.controller.getVolume()
 
     def muteVolume(self):
         self.controller.volumeSlider.setEnabled_(NO)
@@ -1881,7 +1855,8 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.renderer.stop()
 
     def playFullScreen_(self, sender):
-        app.Controller.instance.playbackController.playPause()
+        if not app.Controller.instance.videoDisplay.isPlaying:
+            app.Controller.instance.playbackController.playPause()
         self.videoDisplay.goFullScreen()
 
     def goFullScreen(self):
@@ -2085,10 +2060,30 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
 
 
 ###############################################################################
+#### Video renderer base class                                             ####
+###############################################################################
+
+class VideoRenderer:
+    
+    def getDisplayTime(self):
+        seconds = self.getCurrentTime()
+        return time.strftime("%H:%M:%S", time.gmtime(seconds))
+
+    def getProgress(self):
+        duration = self.getDuration()
+        if duration == 0:
+            return 0.0
+        return self.getCurrentTime() / duration
+
+    def setProgress(self, progress):
+        self.setCurrentTime(self.getDuration() * progress)
+
+
+###############################################################################
 #### Quicktime video renderer                                              ####
 ###############################################################################
 
-class QuicktimeRenderer:
+class QuicktimeRenderer (VideoRenderer):
 
     def __init__(self, delegate):
         self.view = QTMovieView.alloc().initWithFrame_(((0,0),(100,100)))
@@ -2202,7 +2197,7 @@ class PlaylistItem:
 
 class FullScreenPalette (NibClassBuilder.AutoBaseClass):
     
-    HOLD_TIME = 10
+    HOLD_TIME = 5
     
     def initWithContentRect_styleMask_backing_defer_(self, rect, style, backing, defer):
         self = super(FullScreenPalette, self).initWithContentRect_styleMask_backing_defer_(
@@ -2222,8 +2217,16 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
     def awakeFromNib(self):
         self.seekForwardButton.sendActionOn_(NSLeftMouseDownMask)
         self.seekBackwardButton.sendActionOn_(NSLeftMouseDownMask)
-        self.progressSlider.setImages('fs-progress-background', 'fs-progress-slider')
-        self.volumeSlider.setImages('fs-volume-background', 'fs-volume-slider')
+        self.progressSlider.track = NSImage.imageNamed_('fs-progress-background')
+        self.progressSlider.cursor = NSImage.imageNamed_('fs-progress-slider')
+        self.progressSlider.sliderWasClicked = self.progressSliderWasClicked
+        self.progressSlider.sliderWasDragged = self.progressSliderWasDragged
+        self.progressSlider.sliderWasReleased = self.progressSliderWasReleased
+        self.progressSlider.setShowCursor_(True)
+        self.volumeSlider.track = NSImage.imageNamed_('fs-volume-background')
+        self.volumeSlider.cursor = NSImage.imageNamed_('fs-volume-slider')
+        self.volumeSlider.sliderWasDragged = self.volumeSliderWasDragged
+        self.volumeSlider.setShowCursor_(True)
 
     def canBecomeKeyWindow(self):
         return NO
@@ -2238,6 +2241,8 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         self.renderer = renderer
 
     def reveal(self, parent):
+        self.update_(nil)
+        self.volumeSlider.setFloatValue_(app.Controller.instance.videoDisplay.getVolume())
         screenSize = NSScreen.mainScreen().frame().size
         height = self.frame().size.height
         frame = ((0, -height), (screenSize.width, height))
@@ -2251,6 +2256,7 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
             1.0, self, 'concealAfterDelay:', nil, YES)
         self.updateTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
             1.0, self, 'update:', nil, YES)
+        self.update_(nil)
     
     def conceal(self):
         if self.autoConcealTimer is not nil:
@@ -2278,30 +2284,34 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         pass
         
     def update_(self, timer):
-        self.updateTimeIndicator()
-        self.updateProgressIndicator()
-    
-    def updateTimeIndicator(self):
-        timeStr = '00:00:00'
-        if self.renderer is not None:
-            seconds = self.renderer.getCurrentTime()
-            timeStr = time.strftime("%H:%M:%S", time.gmtime(seconds))
-        self.timeIndicator.setStringValue_(timeStr)
-
-    def updateProgressIndicator(self):
-        if self.renderer is not None:
-            progress = 0.0
-            currentTime = self.renderer.getCurrentTime()
-            if currentTime > 0.0:
-                progress = currentTime / self.renderer.getDuration()
-            self.progressSlider.value = progress
-            self.progressSlider.setNeedsDisplay_(YES)
+        self.timeIndicator.setStringValue_(self.renderer.getDisplayTime())
+        self.progressSlider.setFloatValue_(self.renderer.getProgress())
             
+    def progressSliderWasClicked(self, slider):
+        self.renderer.pause()
+        self.renderer.setProgress(slider.floatValue())
+        self.resetAutoConceal()
+        
+    def progressSliderWasDragged(self, slider):
+        self.renderer.setProgress(slider.floatValue())
+        self.resetAutoConceal()
+        
+    def progressSliderWasReleased(self, slider):
+        self.renderer.play()
+
+    def volumeSliderWasDragged(self, slider):
+        app.Controller.instance.videoDisplay.setVolume(slider.floatValue())
+        self.resetAutoConceal()
+
     def remove(self):
         if self.parentWindow() is not nil:
             self.parentWindow().removeChildWindow_(self)
         self.orderOut_(nil)
 
+
+###############################################################################
+#### The fullscreen palette background view                                ####
+###############################################################################
 
 class FullScreenPaletteView (NibClassBuilder.AutoBaseClass):
 
@@ -2320,6 +2330,10 @@ class FullScreenPaletteView (NibClassBuilder.AutoBaseClass):
         tlRect2 = ((width-25,self.backgroundRect.size.height), (25, self.topLineRect.size.height))
         self.topLine.drawInRect_fromRect_operation_fraction_(tlRect2, self.topLineRect, NSCompositeSourceOver, 1.0)
 
+
+###############################################################################
+#### The fullscreen palette control pane                                   ####
+###############################################################################
 
 class FullScreenControlsView (NibClassBuilder.AutoBaseClass):
     
@@ -2340,16 +2354,12 @@ class FullScreenControlsView (NibClassBuilder.AutoBaseClass):
         return self
 
 
+###############################################################################
+#### The fullscreen palette progress and volume sliders                    ####
+###############################################################################
+
 class FullScreenSlider (NibClassBuilder.AutoBaseClass):
 
-    def awakeFromNib(self):
-        self.value = 0.0
-
-    def setImages(self, track, knob):
-        self.track = NSImage.imageNamed_(track)
-        self.knob = NSImage.imageNamed_(knob)
-    
-    def drawRect_(self, rect):
-        kx = (self.frame().size.width * self.value) - (self.knob.size().width * self.value)
+    def drawTrack(self):
         self.track.compositeToPoint_operation_((0, 2), NSCompositeSourceOver)
-        self.knob.compositeToPoint_operation_((kx, 0), NSCompositeSourceOver)
+

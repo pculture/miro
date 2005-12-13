@@ -105,6 +105,7 @@ class VideoDisplayBase (Display):
     def __init__(self):
         Display.__init__(self)
         self.playbackController = None
+        self.volume = 1.0
         self.previousVolume = 1.0
         self.isPlaying = False
         self.isFullScreen = False
@@ -155,10 +156,11 @@ class VideoDisplayBase (Display):
         return 0.0
 
     def setVolume(self, level):
+        self.volume = level
         config.set(config.VOLUME_LEVEL, level)
 
     def getVolume(self):
-        return 1.0
+        return self.volume
 
     def muteVolume(self):
         self.previousVolume = self.getVolume()

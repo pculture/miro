@@ -22,7 +22,7 @@
             SUPERCLASS = NSWindow; 
         }, 
         {CLASS = FullScreenPaletteView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
-        {CLASS = FullScreenSlider; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
+        {CLASS = FullScreenSlider; LANGUAGE = ObjC; SUPERCLASS = Slider; }, 
         {
             ACTIONS = {addChannel = id; showActionMenu = id; switchTabs = id; }; 
             CLASS = MainController; 
@@ -41,7 +41,14 @@
             SUPERCLASS = NSWindowController; 
         }, 
         {CLASS = MetalSlider; LANGUAGE = ObjC; SUPERCLASS = NSSlider; }, 
-        {CLASS = ProgressDisplayView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            CLASS = ProgressDisplayView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {progressSlider = id; timeIndicator = id; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {CLASS = ProgressSlider; LANGUAGE = ObjC; SUPERCLASS = Slider; }, 
+        {CLASS = Slider; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {CLASS = TabButtonCell; LANGUAGE = ObjC; SUPERCLASS = NSButtonCell; }, 
         {CLASS = TrackButton; LANGUAGE = ObjC; SUPERCLASS = NSButton; }, 
         {
