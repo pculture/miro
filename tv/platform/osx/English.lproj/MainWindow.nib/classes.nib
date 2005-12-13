@@ -12,6 +12,7 @@
             OUTLETS = {
                 donationLabel = id; 
                 feedLabel = id; 
+                playPauseButton = id; 
                 progressSlider = id; 
                 seekBackwardButton = id; 
                 seekForwardButton = id; 

@@ -144,21 +144,10 @@ class AppController (NibClassBuilder.AutoBaseClass):
             "openURL:withReplyEvent:",
             struct.unpack(">i", "GURL")[0],
             struct.unpack(">i", "GURL")[0])
-        nc.addObserver_selector_name_object_(
-            self,
-            'videoWillPlay:',
-            'videoWillPlay',
-            nil)
-        nc.addObserver_selector_name_object_(
-            self,
-            'videoWillStop:',
-            'videoWillPause',
-            nil)
-        nc.addObserver_selector_name_object_(
-            self,
-            'videoWillStop:',
-            'videoWillStop',
-            nil)
+
+        nc.addObserver_selector_name_object_(self, 'videoWillPlay:', 'videoWillPlay', nil)
+        nc.addObserver_selector_name_object_(self, 'videoWillStop:', 'videoWillPause', nil)
+        nc.addObserver_selector_name_object_(self, 'videoWillStop:', 'videoWillStop', nil)
         
         # Call the startup hook before any events (such as instructions
         # to open files...) are delivered.
@@ -1828,8 +1817,8 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.fullscreenButton.setEnabled_(enabled)
 
     def updatePlayPauseButton(self, prefix):
-        self.playPauseButton.setImage_(NSImage.imageNamed_('%s.png' % prefix))
-        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('%s_blue.png' % prefix))
+        self.playPauseButton.setImage_(NSImage.imageNamed_('%s' % prefix))
+        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('%s_blue' % prefix))
 
     def playPause_(self, sender):
         app.Controller.instance.playbackController.playPause()
@@ -2205,6 +2194,8 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
             NSBorderlessWindowMask,
             backing,
             defer )
+        nc.addObserver_selector_name_object_(self, 'videoWillPlay:', 'videoWillPlay', nil)
+        nc.addObserver_selector_name_object_(self, 'videoWillPause:', 'videoWillPause', nil)
         self.setBackgroundColor_(NSColor.clearColor())
         self.setAlphaValue_(1.0)
         self.setOpaque_(NO)
@@ -2302,6 +2293,14 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
     def volumeSliderWasDragged(self, slider):
         app.Controller.instance.videoDisplay.setVolume(slider.floatValue())
         self.resetAutoConceal()
+
+    def videoWillPlay_(self, notification):
+        self.playPauseButton.setImage_(NSImage.imageNamed_('fs-button-pause'))
+        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('fs-button-pause-alt'))
+
+    def videoWillPause_(self, notification):
+        self.playPauseButton.setImage_(NSImage.imageNamed_('fs-button-play'))
+        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('fs-button-play-alt'))
 
     def remove(self):
         if self.parentWindow() is not nil:
