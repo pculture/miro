@@ -194,7 +194,7 @@ li {
 	text-decoration: none;	
 }
 
-#main-newlyavailable, #main-downloads, #main-unwatched, #main-expiring, #main-saved, #main-autodownload, #main-expiration, #main-newlyavailable-seen, #show-more-videos-label, #no-new-videos-label {
+#main-newlyavailable, #main-downloads, #main-unwatched, #main-expiring, #main-saved, #main-autodownload, #main-expiration, #main-newlyavailable-seen, #show-more-videos-label, #no-new-videos-label, #google-results, #yahoo-results {
 	display: none;
 }
 

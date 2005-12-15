@@ -12,7 +12,5 @@
     </div>
 
     <span><span class="name" i18n:translate="">New Videos</span></span>
-
-    <div class="channel_bar_divider" /> 
-
+    
 </a>
