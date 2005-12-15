@@ -1225,11 +1225,13 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
             self.wasPlaying = True
             self.renderer.pause()
         self.renderer.setProgress(slider.floatValue())
+        self.renderer.interactivelySeeking = True
         
     def progressSliderWasDragged(self, slider):
         self.renderer.setProgress(slider.floatValue())
         
     def progressSliderWasReleased(self, slider):
+        self.renderer.interactivelySeeking = False
         if self.wasPlaying:
             self.wasPlaying = False
             self.renderer.play()
@@ -1698,9 +1700,6 @@ class VideoDisplay (app.VideoDisplayBase):
         self.controller.setVolume(level)
         app.VideoDisplayBase.setVolume(self, level)
 
-#    def getVolume(self):
-#        return self.controller.getVolume()
-
     def muteVolume(self):
         self.controller.volumeSlider.setEnabled_(NO)
         app.VideoDisplayBase.muteVolume(self)
@@ -1937,7 +1936,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.enablePrimaryControls(NO)
         
     def handleMovieNotification_(self, notification):
-        if notification.name() == QTMovieDidEndNotification and not self.progressDisplayer.dragging:
+        if notification.name() == QTMovieDidEndNotification and not self.renderer.interactivelySeeking:
             app.Controller.instance.playbackController.onMovieFinished()
 
 
@@ -2059,6 +2058,9 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
 
 class VideoRenderer:
     
+    def __init__(self):
+        self.interactivelySeeking = False
+    
     def getDisplayTime(self):
         seconds = self.getCurrentTime()
         return time.strftime("%H:%M:%S", time.gmtime(seconds))
@@ -2080,6 +2082,7 @@ class VideoRenderer:
 class QuicktimeRenderer (VideoRenderer):
 
     def __init__(self, delegate):
+        VideoRenderer.__init__(self)
         self.view = QTMovieView.alloc().initWithFrame_(((0,0),(100,100)))
         self.view.setFillColor_(NSColor.blackColor())
         self.view.setControllerVisible_(NO)
@@ -2289,6 +2292,7 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
             self.wasPlaying = True
             self.renderer.pause()
         self.renderer.setProgress(slider.floatValue())
+        self.renderer.interactivelySeeking = True
         self.resetAutoConceal()
         
     def progressSliderWasDragged(self, slider):
@@ -2296,6 +2300,7 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         self.resetAutoConceal()
         
     def progressSliderWasReleased(self, slider):
+        self.renderer.interactivelySeeking = False
         if self.wasPlaying:
             self.wasPlaying = False
             self.renderer.play()
