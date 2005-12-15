@@ -2026,7 +2026,7 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
         self.isFullScreen = YES
         self.parent = self.parentWindow()
         self.frameInParent = self.frame()
-        self.setFrame_display_animate_(NSScreen.mainScreen().frame(), YES, YES)
+        self.setFrame_display_animate_(self.parent.screen().frame(), YES, YES)
         self.parent.removeChildWindow_(self)
         self.parent.orderOut_(nil)
         self.makeKeyAndOrderFront_(nil)
@@ -2240,7 +2240,7 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
     def reveal(self, parent):
         self.update_(nil)
         self.volumeSlider.setFloatValue_(app.Controller.instance.videoDisplay.getVolume())
-        screenSize = NSScreen.mainScreen().frame().size
+        screenSize = parent.screen().frame().size
         height = self.frame().size.height
         frame = ((0, -height), (screenSize.width, height))
         self.setFrame_display_(frame, NO)        
