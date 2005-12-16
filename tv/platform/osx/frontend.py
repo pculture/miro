@@ -2028,6 +2028,7 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
 
     def enterFullScreen(self):
         SetSystemUIMode(kUIModeAllHidden, 0)
+        NSCursor.setHiddenUntilMouseMoves_(YES)
         self.isFullScreen = YES
         self.parent = self.parentWindow()
         self.frameInParent = self.frame()
@@ -2038,6 +2039,7 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
         FullScreenAlertPanelController.displayIfNeeded()
 
     def exitFullScreen(self):
+        NSCursor.setHiddenUntilMouseMoves_(NO)
         self.isFullScreen = NO
         self.palette.remove()
         self.parent.addChildWindow_ordered_(self, NSWindowAbove)
@@ -2278,6 +2280,7 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         frame.origin.y = -frame.size.height
         self.setFrame_display_animate_(frame, YES, YES)
         self.remove()
+        NSCursor.setHiddenUntilMouseMoves_(YES)
     
     def concealAfterDelay_(self, timer):
         if time.time() - self.holdStartTime > self.HOLD_TIME:
