@@ -488,6 +488,12 @@ class MainController (NibClassBuilder.AutoBaseClass):
     def splitView_canCollapseSubview_(self, sender, subview):
         return self.channelsHostView.isDescendantOf_(subview) and app.Controller.instance.videoDisplay.isSelected()
 
+    ### Events ###
+
+    def keyDown_(self, event):
+        if self.frame.mainDisplay.hostedDisplay is app.Controller.instance.videoDisplay and event.characters().characterAtIndex_(0) == 0x20:
+            app.Controller.instance.playbackController.playPause()
+
     ### Actions ###
 
     def playPause_(self, sender):
@@ -2043,8 +2049,11 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
         if self.isFullScreen:
             if event.type() == NSLeftMouseDown:
                 self.exitFullScreen()
-            elif event.type() == NSKeyDown and event.characters().characterAtIndex_(0) == 0x1B:
-                self.exitFullScreen()
+            elif event.type() == NSKeyDown:
+                if event.characters().characterAtIndex_(0) == 0x1B:
+                    self.exitFullScreen()
+                elif event.characters().characterAtIndex_(0) == 0x20:
+                    app.Controller.instance.playbackController.playPause()
             elif event.type() == NSMouseMoved:
                 if not self.palette.isVisible():
                     self.palette.reveal(self)
