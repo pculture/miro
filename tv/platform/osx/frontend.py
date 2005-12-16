@@ -271,10 +271,11 @@ class DisplayHostView (NibClassBuilder.AutoBaseClass):
         self.scheduledDisplay = None
         self.hostedDisplay = None
         self.hostedView = nil
+        self.backgroundColor = NSColor.whiteColor()
         return self
 
     def drawRect_(self, rect):
-        NSColor.whiteColor().set()
+        self.backgroundColor.set()
         NSRectFill(rect)
 
     def setScheduledDisplay(self, display):
@@ -350,6 +351,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         self.frame.channelsDisplay = self.channelsHostView
         self.frame.mainDisplay = self.mainHostView
         self.frame.videoInfoDisplay = self.videoInfoHostView
+        self.frame.videoInfoDisplay.backgroundColor = NSColor.blackColor()
         self.restoreLayout()
         self.updateWindowTexture()
         self.actionButton.sendActionOn_(NSLeftMouseDownMask)
@@ -1776,7 +1778,6 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     def onSelected(self):
         self.enableSecondaryControls(YES)
         self.preventSystemSleep(True)
-        self.videoAreaView.prepare()
 
     def onDeselected(self):
         self.enableSecondaryControls(False)
@@ -1786,11 +1787,10 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.reset()
 
     def selectPlaylistItem(self, item):
-        renderer = self.getRendererForItem(item)
-        renderer.selectPlaylistItem(item, self.volumeSlider.floatValue())
-        self.videoAreaView.setup(renderer, item)
-        self.progressDisplayer.setup(renderer)
-        self.renderer = renderer
+        self.renderer = self.getRendererForItem(item)
+        self.renderer.selectPlaylistItem(item, self.volumeSlider.floatValue())
+        self.videoAreaView.setup(self.renderer, item)
+        self.progressDisplayer.setup(self.renderer)
 
     def reset(self):
         if self.renderer is not None:
@@ -1954,23 +1954,24 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
 class VideoAreaView (NibClassBuilder.AutoBaseClass):
     
-    def awakeFromNib(self):
-        self.hostWindow = nil
-    
-    def prepare(self):
-        self.hostWindow = self.window()
-        assert self.hostWindow is not nil
-        self.adjustVideoWindowFrame()
-        self.hostWindow.addChildWindow_ordered_(self.videoWindow, NSWindowAbove)
-    
     def setup(self, renderer, item):
+        self.adjustVideoWindowFrame()
         self.videoWindow.setup(renderer, item)
+        AppHelper.callAfter(self.activateVideoWindow)
+
+    def activateVideoWindow(self):
         self.videoWindow.orderFront_(nil)
+        if self.videoWindow.parentWindow() is nil:
+            self.window().addChildWindow_ordered_(self.videoWindow, NSWindowAbove)
+    
+    def drawRect_(self, rect):
+        NSColor.blackColor().set()
+        NSRectFill(rect)
     
     def teardown(self):
         if self.videoWindow.isFullScreen:
             self.videoWindow.exitFullScreen()
-        self.hostWindow.removeChildWindow_(self.videoWindow)
+        self.window().removeChildWindow_(self.videoWindow)
         self.videoWindow.orderOut_(nil)
         self.videoWindow.teardown()
     
@@ -2009,6 +2010,7 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
             backing,
             defer )
         self.setAcceptsMouseMovedEvents_(YES)
+        self.setBackgroundColor_(NSColor.blackColor())
         self.isFullScreen = NO
         return self
 
