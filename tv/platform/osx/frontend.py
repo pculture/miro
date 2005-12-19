@@ -787,7 +787,8 @@ class ChannelsPrefsController (NibClassBuilder.AutoBaseClass):
 
     def awakeFromNib(self):
         minutes = config.get(config.CHECK_CHANNELS_EVERY_X_MN)
-        self.periodicityPopup.selectItemWithTag_(minutes)
+        itemIndex = self.periodicityPopup.indexOfItemWithTag_(minutes)
+        self.periodicityPopup.selectItemAtIndex_(itemIndex)
 
     def checkEvery_(self, sender):
         minutes = sender.selectedItem().tag()
@@ -818,7 +819,9 @@ class DiskSpacePrefsController (NibClassBuilder.AutoBaseClass):
         self.preserveSpaceCheckBox.setState_(preserve and NSOnState or NSOffState)
         self.minimumSpaceField.setEnabled_(preserve)
         self.minimumSpaceField.setIntValue_(config.get(config.PRESERVE_X_GB_FREE))
-        self.expirationDelayPopupButton.selectItemWithTag_(int(config.get(config.EXPIRE_AFTER_X_DAYS) * 24))
+        itemTag = int(config.get(config.EXPIRE_AFTER_X_DAYS) * 24)
+        itemIndex = self.expirationDelayPopupButton.indexOfItemWithTag_(itemTag)
+        self.expirationDelayPopupButton.selectItemAtIndex_(itemIndex)
     
     def preserveDiskSpace_(self, sender):
         preserve = (sender.state() == NSOnState)
