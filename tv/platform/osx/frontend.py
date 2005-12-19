@@ -1958,7 +1958,8 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 class VideoAreaView (NibClassBuilder.AutoBaseClass):
     
     def setup(self, renderer, item):
-        self.adjustVideoWindowFrame()
+        if not self.videoWindow.isFullScreen:
+            self.adjustVideoWindowFrame()
         self.videoWindow.setup(renderer, item)
         AppHelper.callAfter(self.activateVideoWindow)
 
