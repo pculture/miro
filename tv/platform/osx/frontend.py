@@ -1216,6 +1216,7 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         else:
             self.progressSlider.setShowCursor_(False)
             self.progressSlider.setFloatValue_(0.0)
+            self.timeIndicator.setStringValue_(VideoRenderer.DEFAULT_DISPLAY_TIME)
 
     def drawRect_(self, rect):
         self.backgroundLeft.compositeToPoint_operation_( (0,0), NSCompositeSourceOver )
@@ -1237,9 +1238,11 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
             self.renderer.pause()
         self.renderer.setProgress(slider.floatValue())
         self.renderer.interactivelySeeking = True
+        self.refresh_(nil)
         
     def progressSliderWasDragged(self, slider):
         self.renderer.setProgress(slider.floatValue())
+        self.refresh_(nil)
         
     def progressSliderWasReleased(self, slider):
         self.renderer.interactivelySeeking = False
@@ -2075,12 +2078,15 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
 
 class VideoRenderer:
     
+    DISPLAY_TIME_FORMAT  = "%H:%M:%S"
+    DEFAULT_DISPLAY_TIME = time.strftime(DISPLAY_TIME_FORMAT, time.gmtime(0))
+    
     def __init__(self):
         self.interactivelySeeking = False
     
     def getDisplayTime(self):
         seconds = self.getCurrentTime()
-        return time.strftime("%H:%M:%S", time.gmtime(seconds))
+        return time.strftime(self.DISPLAY_TIME_FORMAT, time.gmtime(seconds))
 
     def getProgress(self):
         duration = self.getDuration()
