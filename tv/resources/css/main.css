@@ -409,14 +409,14 @@ li {
 .main-video-details-task-delete, .main-video-details-task-bomb, .main-video-details-task-mail {
 	float: left;
 	display: inline;
-	margin: 0px 24px 0px 0px;
+	margin: 0px 18px 0px 0px;
 	overflow: hidden;
 }
 
 .main-video-details-task-delete {	
 	background: url(../images/main-icon-trash.png) top left no-repeat;
-	width: 13px;
-	height: 12px;
+	width: 19px;
+	height: 17px;
 }
 
 .main-video-details-task-delete:hover {	
@@ -425,8 +425,8 @@ li {
 
 .main-video-details-task-mail {	
 	background: url(../images/main-icon-mail.png) top left no-repeat;
-	width: 14px;
-	height: 12px;
+	width: 20px;
+	height: 17px;
 }
 
 .main-video-details-task-mail:hover {	
