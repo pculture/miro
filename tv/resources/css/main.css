@@ -355,45 +355,62 @@ li {
 	float: left;
 	display: inline;
 	background-color: #1796ee;
+	background: url(../images/main-new-bg.png) no-repeat left top;
+	height: 17px;
+	padding-left: 5px;
 }
 
 .main-video-details-unwatched {
 	float: left;
 	display: inline;
-	background-color: #5ab471;
+	background: url(../images/main-unwatched-bg.png) no-repeat left top;
+	height: 17px;
 }
 
 .main-video-details-expiry {
 	float: left;
 	display: inline;
-	background-color: #74a5ce;
+	background: url(../images/main-watched-bg.png) no-repeat left top;
+	height: 17px;
 }
 
-.main-video-details-new p, .main-video-details-unwatched p, .main-video-details-expiry p {
+.main-video-details-new p {
+	background: url(../images/main-new-right.png) no-repeat right top;
 	color: #FFFFFF;
 	text-transform: uppercase;
-	font-size: 75%;
+	font-size: 70%;
+	font-weight: bold;
 	margin: 0px;
-	padding: 2px;
+	padding: 3px 5px 3px 0px;
+}
+
+.main-video-details-unwatched p, .main-video-details-expiry p {
+	color: #FFFFFF;
+	text-transform: uppercase;
+	font-size: 70%;
+	font-weight: bold;
+	margin: 0px;
+	padding: 3px 5px;
 }
 
 .main-video-details-save {
 	float: left;
 	display: inline;
-	background-color: #f9fbfe;
-	padding: 1px;
+	background: url(../images/main-save-bg.png) no-repeat right top;
+	height: 17px;
 }
 
 .main-video-details-save p {
 	text-transform: uppercase;
-	font-size: 75%;
+	font-size: 70%;
+	font-weight: bold;
 	margin: 0px;
-	padding: 1px;
+	padding: 3px 5px;
 }
 
 .main-video-details-save p a {
-	color: #2b5576;
-	text-decoration: underline;	
+	color: #000000;
+	text-decoration: none;	
 }
 
 .main-video-details-save p a:hover {

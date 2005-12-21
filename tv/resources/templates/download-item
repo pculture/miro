@@ -247,7 +247,7 @@
 			<!-- EXPIRY -->
 			<span>
 				<div class="main-video-details-expiry">
-					<p>Expires: <span t:replace="this getExpirationTime" /></p>
+					<p>Exp: <span t:replace="this getExpirationTime" /></p>
 				</div>
 				<div class="main-video-details-save">
 					<p><a href="#" onclick="eventURL('action:keepItem?item=@@@this getID@@@');">Save</a></p>
