@@ -1684,8 +1684,8 @@ class VideoDisplay (app.VideoDisplayBase):
         self.controller.selectPlaylistItem(item)
         app.VideoDisplayBase.selectItem(self, item)
 
-    def resetMovie(self):
-        self.controller.resetMovie()
+    def goToBeginningOfMovie(self):
+        self.controller.goToBeginningOfMovie()
 
     def play(self):
         self.controller.play()
@@ -1805,7 +1805,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.currentWatchableDisplay = None
         self.fastSeekTimer = nil
 
-    def resetMovie(self):
+    def goToBeginningOfMovie(self):
         self.renderer.gotoBeginning()
 
     def preventSystemSleep(self, prevent):

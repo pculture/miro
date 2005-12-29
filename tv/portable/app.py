@@ -125,7 +125,7 @@ class VideoDisplayBase (Display):
         self.isPlaying = False
         self.stopOnDeselect = True
 
-    def resetMovie(self):
+    def goToBeginningOfMovie(self):
         pass
 
     def playPause(self):
@@ -264,7 +264,7 @@ class PlaybackControllerBase:
             if self.currentDisplay.getCurrentTime() <= 1.0:
                 nextItem = self.currentPlaylist.getPrev()
             else:
-                self.currentDisplay.resetMovie()
+                self.currentDisplay.goToBeginningOfMovie()
                 return self.currentPlaylist.cur()
         if nextItem is None:
             self.stop()

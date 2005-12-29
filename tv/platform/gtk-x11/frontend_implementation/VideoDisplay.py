@@ -29,7 +29,7 @@ class VideoDisplay (app.VideoDisplayBase):
     def selectItem(self, item):
         app.VideoDisplayBase.selectItem(self, item)
 
-    def resetMovie(self):
+    def goToBeginningOfMovie(self):
         pass
 
     def play(self):
