@@ -18,6 +18,7 @@ import re
 import sys
 import cgi
 import copy
+import time
 import types
 import random
 import datetime
@@ -44,136 +45,7 @@ def main():
 def start():
     Controller().runNonblocking()
 
-###############################################################################
-#### Base class for displays                                               ####
-#### This must be defined before we import the frontend                    ####
-###############################################################################
 
-class Display:
-    "Base class representing a display in a MainFrame's right-hand pane."
-
-    def __init__(self):
-        self.currentFrame = None # tracks the frame that currently has us selected
-
-    def isSelected(self):
-        return self.currentFrame is not None
-
-    def onSelected(self, frame):
-        "Called when the Display is shown in the given MainFrame."
-        pass
-
-    def onDeselected(self, frame):
-        """Called when the Display is no longer shown in the given
-        MainFrame. This function is called on the Display losing the
-        selection before onSelected is called on the Display gaining the
-        selection."""
-        pass
-
-    def onSelected_private(self, frame):
-        assert(self.currentFrame == None)
-        self.currentFrame = frame
-
-    def onDeselected_private(self, frame):
-        assert(self.currentFrame == frame)
-        self.currentFrame = None
-
-    # The MainFrame wants to know if we're ready to display (eg, if the
-    # a HTML display has finished loading its contents, so it can display
-    # immediately without flicker.) We're to call hook() when we're ready
-    # to be displayed.
-    def callWhenReadyToDisplay(self, hook):
-        hook()
-
-    def cancel(self):
-        """Called when the Display is not shown because it is not ready yet
-        and another display will take its place"""
-        pass
-
-    def getWatchable(self):
-        """Subclasses can implement this if they can return a database view
-        of watchable items"""
-        return None
-
-
-###############################################################################
-#### Provides cross platform part of Video Display                         ####
-#### This must be defined before we import the frontend                    ####
-###############################################################################
-
-class VideoDisplayBase (Display):
-    
-    def __init__(self):
-        Display.__init__(self)
-        self.playbackController = None
-        self.volume = 1.0
-        self.previousVolume = 1.0
-        self.isPlaying = False
-        self.isFullScreen = False
-        self.stopOnDeselect = True
-    
-    def canPlayItem(self, anItem):
-        return True
-    
-    def selectItem(self, anItem):
-        self.stopOnDeselect = True
-        info = anItem.getInfoMap()
-        template = TemplateDisplay('video-info', info, Controller.instance, None, None, None)
-        area = Controller.instance.frame.videoInfoDisplay
-        Controller.instance.frame.selectDisplay(template, area)
-
-    def reset(self):
-        self.isPlaying = False
-        self.stopOnDeselect = True
-
-    def goToBeginningOfMovie(self):
-        pass
-
-    def playPause(self):
-        if self.isPlaying:
-            self.pause()
-        else:
-            self.play()
-
-    def play(self):
-        self.isPlaying = True
-
-    def pause(self):
-        self.isPlaying = False
-
-    def stop(self):
-        self.isPlaying = False
-        self.stopOnDeselect = True
-
-    def goFullScreen(self):
-        self.isFullScreen = True
-        if not self.isPlaying:
-            self.play()
-
-    def exitFullScreen(self):
-        self.isFullScreen = False
-
-    def getCurrentTime(self):
-        return 0.0
-
-    def setVolume(self, level):
-        self.volume = level
-        config.set(config.VOLUME_LEVEL, level)
-
-    def getVolume(self):
-        return self.volume
-
-    def muteVolume(self):
-        self.previousVolume = self.getVolume()
-        self.setVolume(0.0)
-
-    def restoreVolume(self):
-        self.setVolume(self.previousVolume)
-
-    def onDeselected(self, frame):
-        if self.isPlaying and self.stopOnDeselect:
-            Controller.instance.playbackController.stop(False)
-
-    
 ###############################################################################
 #### The Playback Controller base class                                    ####
 ###############################################################################
@@ -283,6 +155,229 @@ class PlaybackControllerBase:
             self.stop()
 
 
+###############################################################################
+#### Base class for displays                                               ####
+#### This must be defined before we import the frontend                    ####
+###############################################################################
+
+class Display:
+    "Base class representing a display in a MainFrame's right-hand pane."
+
+    def __init__(self):
+        self.currentFrame = None # tracks the frame that currently has us selected
+
+    def isSelected(self):
+        return self.currentFrame is not None
+
+    def onSelected(self, frame):
+        "Called when the Display is shown in the given MainFrame."
+        pass
+
+    def onDeselected(self, frame):
+        """Called when the Display is no longer shown in the given
+        MainFrame. This function is called on the Display losing the
+        selection before onSelected is called on the Display gaining the
+        selection."""
+        pass
+
+    def onSelected_private(self, frame):
+        assert(self.currentFrame == None)
+        self.currentFrame = frame
+
+    def onDeselected_private(self, frame):
+        assert(self.currentFrame == frame)
+        self.currentFrame = None
+
+    # The MainFrame wants to know if we're ready to display (eg, if the
+    # a HTML display has finished loading its contents, so it can display
+    # immediately without flicker.) We're to call hook() when we're ready
+    # to be displayed.
+    def callWhenReadyToDisplay(self, hook):
+        hook()
+
+    def cancel(self):
+        """Called when the Display is not shown because it is not ready yet
+        and another display will take its place"""
+        pass
+
+    def getWatchable(self):
+        """Subclasses can implement this if they can return a database view
+        of watchable items"""
+        return None
+
+
+###############################################################################
+#### Provides cross platform part of Video Display                         ####
+#### This must be defined before we import the frontend                    ####
+###############################################################################
+
+class VideoDisplayBase (Display):
+    
+    def __init__(self):
+        Display.__init__(self)
+        self.playbackController = None
+        self.volume = 1.0
+        self.previousVolume = 1.0
+        self.isPlaying = False
+        self.isFullScreen = False
+        self.stopOnDeselect = True
+        self.renderers = list()
+        self.activeRenderer = None
+
+    def initRenderers(self):
+        pass
+        
+    def getRendererForItem(self, anItem):
+        for renderer in self.renderers:
+            if renderer.canPlayItem(anItem):
+                return renderer
+        return None
+
+    def canPlayItem(self, anItem):
+        return self.getRendererForItem(anItem) is not None
+    
+    def selectItem(self, anItem):
+        self.stopOnDeselect = True
+        
+        info = anItem.getInfoMap()
+        template = TemplateDisplay('video-info', info, Controller.instance, None, None, None)
+        area = Controller.instance.frame.videoInfoDisplay
+        Controller.instance.frame.selectDisplay(template, area)
+        
+        self.activeRenderer = self.getRendererForItem(anItem)
+        self.activeRenderer.selectItem(anItem)
+        self.activeRenderer.setVolume(self.getVolume())
+
+    def reset(self):
+        self.isPlaying = False
+        self.stopOnDeselect = True
+        if self.activeRenderer is not None:
+            self.activeRenderer.reset()
+        self.activeRenderer = None
+
+    def goToBeginningOfMovie(self):
+        if self.activeRenderer is not None:
+            self.activeRenderer.goToBeginningOfMovie()
+
+    def playPause(self):
+        if self.isPlaying:
+            self.pause()
+        else:
+            self.play()
+
+    def play(self):
+        if self.activeRenderer is not None:
+            self.activeRenderer.play()
+        self.isPlaying = True
+
+    def pause(self):
+        if self.activeRenderer is not None:
+            self.activeRenderer.pause()
+        self.isPlaying = False
+
+    def stop(self):
+        if self.isFullScreen:
+            self.exitFullScreen()
+        if self.activeRenderer is not None:
+            self.activeRenderer.stop()
+        self.reset()
+
+    def goFullScreen(self):
+        self.isFullScreen = True
+        if not self.isPlaying:
+            self.play()
+
+    def exitFullScreen(self):
+        self.isFullScreen = False
+
+    def getCurrentTime(self):
+        if self.activeRenderer is not None:
+            return self.activeRenderer.getCurrentTime()
+        return VideoRenderer.DEFAULT_DISPLAY_TIME
+
+    def setVolume(self, level):
+        self.volume = level
+        config.set(config.VOLUME_LEVEL, level)
+        if self.activeRenderer is not None:
+            self.activeRenderer.setVolume(level)
+
+    def getVolume(self):
+        return self.volume
+
+    def muteVolume(self):
+        self.previousVolume = self.getVolume()
+        self.setVolume(0.0)
+
+    def restoreVolume(self):
+        self.setVolume(self.previousVolume)
+
+    def onDeselected(self, frame):
+        if self.isPlaying and self.stopOnDeselect:
+            Controller.instance.playbackController.stop(False)
+
+    
+###############################################################################
+#### Video renderer base class                                             ####
+###############################################################################
+
+class VideoRenderer:
+    
+    DISPLAY_TIME_FORMAT  = "%H:%M:%S"
+    DEFAULT_DISPLAY_TIME = time.strftime(DISPLAY_TIME_FORMAT, time.gmtime(0))
+    
+    def __init__(self):
+        self.interactivelySeeking = False
+    
+    def getDisplayTime(self):
+        seconds = self.getCurrentTime()
+        return time.strftime(self.DISPLAY_TIME_FORMAT, time.gmtime(seconds))
+
+    def getProgress(self):
+        duration = self.getDuration()
+        if duration == 0:
+            return 0.0
+        return self.getCurrentTime() / duration
+
+    def setProgress(self, progress):
+        self.setCurrentTime(self.getDuration() * progress)
+    
+    def selectItem(self, anItem):
+        pass
+        
+    def reset(self):
+        pass
+
+    def getCurrentTime(self):
+        return 0.0
+
+    def setCurrentTime(self, seconds):
+        pass
+
+    def getDuration(self):
+        return 0.0
+
+    def setVolume(self, level):
+        pass
+                
+    def goToBeginningOfMovie(self):
+        pass
+        
+    def play(self):
+        pass
+        
+    def pause(self):
+        pass
+        
+    def stop(self):
+        pass
+    
+    def getRate(self):
+        return 1.0
+    
+    def setRate(self, rate):
+        pass
+        
+        
 # We can now safely import the frontend module
 import frontend
 
@@ -427,6 +522,7 @@ class Controller (frontend.Application):
 
             # Set up the video display
             self.videoDisplay = frontend.VideoDisplay()
+            self.videoDisplay.initRenderers()
             self.videoDisplay.playbackController = self.playbackController
             self.videoDisplay.setVolume(config.get(config.VOLUME_LEVEL))
 
