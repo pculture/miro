@@ -464,7 +464,7 @@ class Item(DDBObject):
         elif bytes < 1000:
             return '%1.0fMB' % bytes
         else:
-            return '%1.1fGB' % (size/1000)
+            return '%1.1fGB' % (bytes/1000)
 
     ##
     # Returns the download progress in absolute percentage [0.0 - 100.0].
