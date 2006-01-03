@@ -65,8 +65,24 @@ class HTMLDisplay (app.Display):
 	self.frame = None
 	self.elt = None
 
-	klass = components.classes["@participatoryculture.org/dtv/jsbridge;1"]
-	self.jsbridge = klass.getService(components.interfaces.pcfIDTVJSBridge)
+        # Create a JS bridge component that sends events to the UI thread
+        # See http://www.mozilla.org/projects/xpcom/Proxies.html
+
+        jsbridge = components.classes[
+            "@participatoryculture.org/dtv/jsbridge;1"].getService(
+                 components.interfaces.pcfIDTVJSBridge)
+
+        proxy = components.classes["@mozilla.org/xpcomproxy;1"].getService(
+            components.interfaces.nsIProxyObjectManager)
+        
+        eventQ = components.classes[
+            "@mozilla.org/event-queue-service;1"].getService(
+            components.interfaces.nsIEventQueueService)
+
+        self.jsbridge = proxy.getProxyForObject(
+            eventQ.getSpecialEventQueue(eventQ.UI_THREAD_EVENT_QUEUE),
+            components.interfaces.pcfIDTVJSBridge, jsbridge,
+            proxy.INVOKE_SYNC | proxy.FORCE_PROXY_CREATION)
 
         # Save HTML to disk for loading via file: url. We'll delete it
 	# when the load has finished in onDocumentLoadFinished.
