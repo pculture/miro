@@ -1,6 +1,7 @@
 import app
 import frontend
 import vlc
+import os
 
 ###############################################################################
 #### The Playback Controller                                               ####
@@ -11,7 +12,12 @@ class PlaybackController (app.PlaybackControllerBase):
     def playItemExternally(self, itemID):
         item = app.PlaybackControllerBase.playItemExternally(self, itemID)
         # now play this item externally
-
+        moviePath = ""
+        try:
+            moviePath = os.path.normpath(item.getPath())
+            os.startfile(moviePath)
+        except:
+            print "DTV: movie %s could not be externally opened" % moviePath
 
 ###############################################################################
 #### Right-hand pane video display                                         ####
