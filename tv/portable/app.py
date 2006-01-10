@@ -54,17 +54,14 @@ class PlaybackControllerBase:
     
     def __init__(self):
         self.currentPlaylist = None
-        self.previousDisplay = None
         self.currentDisplay = None
 
-    def configure(self, view, firstItemId, previousDisplay):
+    def configure(self, view, firstItemId=None):
         self.currentPlaylist = Playlist(view, firstItemId)
-        self.previousDisplay = previousDisplay
     
     def reset(self):
         self.currentPlaylist.reset()
         self.currentPlaylist = None
-        self.previousDisplay = None
         self.currentDisplay = None
     
     def enterPlayback(self):
@@ -74,15 +71,9 @@ class PlaybackControllerBase:
                 self.playItem(startItem)
         
     def exitPlayback(self, switchDisplay=True):
-        # Warning: resetting must be done *BEFORE* calling selectDisplay because
-        # selectDisplay can possibly trigger a call to configure, which effect 
-        # would therefore be 'canceled' by a subsequent call to reset (#786).
-        previousDisplay = self.previousDisplay
         self.reset()
         if switchDisplay:
-            frame = Controller.instance.frame
-            area = frame.mainDisplay
-            frame.selectDisplay(previousDisplay, area)
+            Controller.instance.displayCurrentTabContent()
     
     def playPause(self):
         videoDisplay = Controller.instance.videoDisplay
@@ -663,27 +654,22 @@ class Controller (frontend.Application):
 
         tabChanged = ((oldSelected == None) != (newSelected == None)) or (oldSelected and newSelected and oldSelected.id != newSelected.id)
         if tabChanged: # Tab selection has changed! Deal.
-
             # Redraw the old and new tabs
             if oldSelected:
                 oldSelected.redraw()
             if newSelected:
                 newSelected.redraw()
-
             # Boot up the new tab's template.
-            if newSelected:
-                newSelected.start(self.frame, templateNameHint)
-            else:
-                # If we're in the middle of a shutdown, selectDisplay
-                # might not be there... I'm not sure why...
-                if hasattr(self,'selectDisplay'):
-                    self.selectDisplay(NullDisplay())
+            self.displayCurrentTabContent(templateNameHint)
 
-            # Note: Commenting this out since onDeselect() is called
-            #       by Tab.start() --NN 08/22/05
-
-            #if not oldSelected is None:
-            #    oldSelected.onDeselect()
+    def displayCurrentTabContent(self, templateNameHint = None):
+        if self.currentSelectedTab is not None:
+            self.currentSelectedTab.start(self.frame, templateNameHint)
+        else:
+            # If we're in the middle of a shutdown, selectDisplay
+            # might not be there... I'm not sure why...
+            if hasattr(self,'selectDisplay'):
+                self.selectDisplay(NullDisplay())
 
     def setTabListActive(self, active):
         """If active is true, show the tab list normally. If active is
@@ -1034,7 +1020,7 @@ class TemplateActionHandler:
         self.playView(view, firstItemId)
 
     def playView(self, view, firstItemId):
-        self.controller.playbackController.configure(view, firstItemId, self.display)
+        self.controller.playbackController.configure(view, firstItemId)
         self.controller.playbackController.enterPlayback()
 
     def playItemExternally(self, itemID):

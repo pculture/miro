@@ -1910,7 +1910,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         info = notification.userInfo()
         view = info['view']
         display = notification.object()
-        app.Controller.instance.playbackController.configure(view, None, display)
+        app.Controller.instance.playbackController.configure(view)
 
     def handleNonWatchableDisplayNotification_(self, notification):
         self.enablePrimaryControls(NO)
