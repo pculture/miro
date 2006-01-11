@@ -7,7 +7,12 @@ import re
 # process," which is read to mean the root of the Mozilla
 # installation. Use a fixed offset from this path.
 
+# Another copy appears in components/pybridge.py, in the bootstrap
+# code; if you change this function, change that one too.
 def appRoot():
+    # This reports the path to xulrunner.exe -- admittedly a little
+    # misleading. In general, this will be in a 'xulrunner'
+    # subdirectory underneath the actual application root directory.
     klass = components.classes["@mozilla.org/file/directory_service;1"]
     service = klass.getService(components.interfaces.nsIProperties)
     file = service.get("XCurProcD", components.interfaces.nsIFile)
@@ -18,8 +23,8 @@ def resourceRoot():
 	# We're being run it test mode by our 'runxul' distutils
 	# command.
 	return os.environ['RUNXUL_RESOURCES']
-    # NEEDS: is this really how we want to lay out the directories?
-    return os.path.join(appRoot(), '..', 'resources')
+#    return os.path.join(appRoot(), 'resources') # NEEDS XXX TEST
+    return os.path.join(appRoot(), '..', 'resources') # NEEDS XXX TEST
 
 # Note: some of these functions are probably not absolutely correct in
 # the face of funny characters in the input paths. In particular,

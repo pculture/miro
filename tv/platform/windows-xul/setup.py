@@ -7,15 +7,6 @@ import sys
 ## Paths and configuration                                                   ##
 ###############################################################################
 
-# Set ALL THREE of these as appropriate for the location of Boost, the
-# version you built, and the compiler you used. If you are unsure,
-# search you hard drive for a file named "boost_python*". If there is
-# more than one, you probably already know what you're doing.
-# NEEDS: move into Binary Kit
-BOOST_LIB_PATH = "C:\\Boost\\lib"
-BOOST_LIB = "%s\\boost_python-vc71-mt-1_33.lib" % BOOST_LIB_PATH
-BOOST_INCLUDE_PATH = "C:\\Boost\\include\\boost-1_33"
-
 # If you're using the prebuilt DTV Dependencies Binary Kit, just set
 # the path to it here, and ignore everything after this point. In
 # fact, if you unpacked or checked out the binary kit in the same
@@ -27,6 +18,37 @@ BOOST_INCLUDE_PATH = "C:\\Boost\\include\\boost-1_33"
 defaultBinaryKitRoot = os.path.join(os.path.dirname(sys.argv[0]), \
 				    '..', '..', '..', 'dtv-binary-kit')
 BINARY_KIT_ROOT = defaultBinaryKitRoot
+
+# Set BOOST_LIB, BOOST_INCLUDE_PATH, and BOOST_RUNTIMES as appropriate
+# for the location of Boost, the version you built, and the compiler
+# you used. If you are unsure, search you hard drive for a file named
+# "boost_python*". If there is more than one, you probably already
+# know what you're doing.
+# NEEDS: better accomodate non-vc71 compilers in binary kit?
+BOOST_ROOT = os.path.join(BINARY_KIT_ROOT, 'boost', 'win32')
+BOOST_LIB_PATH = os.path.join(BOOST_ROOT, 'lib')
+BOOST_LIB = os.path.join(BOOST_LIB_PATH, 'boost_python-vc71-mt-1_33.lib')
+BOOST_INCLUDE_PATH = os.path.join(BOOST_ROOT, 'include', 'boost-1_33')
+BOOST_RUNTIMES = [
+    os.path.join(BOOST_LIB_PATH, 'boost_python-vc71-mt-1_33.dll'),
+    ]
+
+# Runtime library DLLs to distribute with the application. Set as
+# appropriate for your compiler.
+# NEEDS: a future version should autodetect these, by walking DLLs a la
+# py2exe.
+COMPILER_RUNTIMES = [
+    # Visual C++ 7.1 C runtime library (required by Python, if nothing else)
+    os.path.join(BINARY_KIT_ROOT, 'vc71redist', 'msvcr71.dll'),
+    # Visual C++ 7.1 C++ runtime library (required by Boost-Python)
+    os.path.join(BINARY_KIT_ROOT, 'vc71redist', 'msvcp71.dll'),
+    ]
+
+# Python runtime DLL to distribute with the application. Usually, the
+# Python installer drops it in c:\windows\system32.
+PYTHON_RUNTIMES = [
+    "C:\\windows\\system32\\python24.dll",
+    ]
 
 # Path to the Mozilla "xulrunner" distribution. We include a build in
 # the Binary Kit to save you a minute or two, but if you want to be
@@ -87,6 +109,7 @@ sys.path[0:0] = [
     os.path.join(root, 'platform'),
     os.path.join(root, 'portable'),
 ]
+root = os.path.normpath(root)
 
 #### The fasttypes extension ####
 
@@ -104,160 +127,51 @@ ext_modules = [
     fasttypes_ext,
 
     # Pyrex sources.
-    Extension("vlc", [os.path.join(root, 'platform',platform, 'vlc.pyx')],libraries=["simplevlc"]),
+    #Extension("vlc", [os.path.join(root, 'platform',platform, 'vlc.pyx')],libraries=["simplevlc"]),
     Extension("database", [os.path.join(root, 'portable', 'database.pyx')]),
     Extension("template", [os.path.join(root, 'portable', 'template.pyx')]),
 ]
 
-# Method (for now we only connsider launching the app directly from setup.py):
+###############################################################################
+
+# WHEN LAUNCHING DIRECTLY ('test mode'):
 #
-# XXX --- THIS IS OBSOLETE, BUT OLD DOCS ARE BETTER THAN NO DOCS --- XXX
+# 1) Build any extensions; add results to sys.path
+# 2) Add all application Python directories to sys.path
+# 3) Find 'resources'
+# 4) Build a complete xulrunner image in a temporary directory
+# 5) Find the application template, including application.ini
+# 6) Compile all IDL files in 'idl'. [HACK: save results into the original
+#    copy of the application tree..]
+# 7) Adjust PATH and PYTHONPATH. Set RUNXUL_RESOURCES to point at 'resources'.
+#    to tell child process where to find them.
+# 8) Shell out to the xulrunner binary in the built xulrunner image, passing
+#    the path to application.ini.
 #
-# 1) Build all of our extensions.
-# 2) Copy (or symlink) the xul tree to staging.
-# 3) Find all of the idl files in 'idl'. Compile them. Link them and drop
-#    the result in staging/components/app.xpt.
-# 4) Modify the Python path to be the application's Python path and the
-#    extensions -- not for us, but for the child process.
-# 5) Copy xulrunner into dist/xulrunner. Copy the pyxpcom files over it.
-#    (Or, better, make a symlink farm of the top directory, drop in 'python',
-#    and then interpolate the python loader into the application component
-#    directory as a symlink.)
-# 6) Copy (or symlink) platform-independent resources to dist/resources.
-#    Arguably not the best plan.
-# 7) Adjust path to include Boost. Make sure it includes an appropriate Python
-#    too.
-# 8) Ideally, force a component index rebuild. (How? Something about .autoreg?)
-# 8) Run xulrunner application.ini
+# WHEN BUILDING A REDISTRIBUTABLE IMAGE:
 #
-# What we should be doing:
-# - Trace out Python include dependencies and build one big Python tree that
-#   includes not only our modules (those that are actually used) but also
-#   those necessary from the standard/site libraries.
-# - Trace out DLL dependencies, including Python itself, and dump them all in
-#   'lib'. Don't apply this to xulrunner, though -- always include all of
-#   it, in its customary location.
-# - For efficiency (?), roll XUL resources (content and localization) up into
-#   jar files.
-# - In the future, we will have an 'official' xpi installer of some sort
-#   that we may wish to integrate with.
-#   - Maybe 'runxul' for testing, bdist_xpi for a bare xpi,
-#     bdist_xulinst for a standalone XUL app installer including xulrunner
+# 1) Build any extensions; add results to sys.path
+# 2) Add all application Python directories to sys.path
+# 3) Walk the module dependency graph to get a list of all Python files
+#    that should be distributed, including extensions.
+# 4) Find 'resources'
+# 5) Make the distribution directory. Flush it if it already exists.
+# 6) Copy the application template to the distribution directory.
+# 7) Build a complete xulrunner image into dist/xulrunner
+# 8) Rename dist/xulrunner/xulrunner-stub.exe to dist/dtv.exe
+# 9) Compile all IDL files in 'idl'; save result into dist/components
+# 10) Copy the Python files identified in step 3 to dist/python
+# 11) Identify DLL dependencies and copy them into, as far as I can
+#     tell, dist/xulrunner. The roots for the dependency calculation are
+#     the pyloader XPCOM module and any Python extension DLLs, filtered
+#     to remove any system DLLs. For now, though, we'll just use a
+#     static dependency list.
+#
+# pybridge must be modified to augment sys.path with (XCurProcD)/python
+# if present. resource.resourceRoot() has already been modified in what
+# should be the appropriate way.
 
-class runxul(Command):
-    description = "test run of a Mozilla XUL-based application"
-
-    # List of option tuples: long name, short name (None if no short
-    # name), and help string.
-    user_options = [
-        ('bdist-base=', 'b',
-         'base directory for build library (default is build)'),
-        ('dist-dir=', 'd',
-         "directory to put final built distributions in (default is dist)"),
-	('bdist-dir=', 'd',
-	 "temporary directory for creating the distribution"),
-        ]
-
-    def initialize_options(self):
-        self.bdist_base = None
-	self.bdist_dir = None
-        self.dist_dir = 'dist'
-
-	self.childPythonPaths = []
-	self.childDLLPaths = []
-
-    def finalize_options(self):
-        if self.bdist_dir is None:
-            bdist_base = self.get_finalized_command('bdist').bdist_base
-            self.bdist_dir = os.path.join(bdist_base, 'xul')
-
-        self.set_undefined_options('bdist',
-                                   ('dist_dir', 'dist_dir'),
-                                   ('bdist_base', 'bdist_base'))
-
-    def run(self):
-        # Build extensions and add results to child search path
-        build = self.reinitialize_command('build')
-        build.build_base = self.bdist_base
-        build.run()
-        if build.build_platlib is not None:
-	    self.childPythonPaths.append(build.build_platlib)
-        if build.build_lib is not None:
-	    self.childPythonPaths.append(build.build_lib)
-
-	# Add application Python modules to child search path
-	self.childPythonPaths. \
-	    extend([
-		os.path.join(root, 'platform', platform),
-		os.path.join(root, 'platform'),
-		os.path.join(root, 'portable'),
-		])
-
-	# Find our 'resources' tree
-	self.appResources = os.path.join(root, 'resources')
-
-	# Put together an xulrunner installation that meets our standards.
-	self.buildXulrunnerInstallation()
-	xulrunnerBinary = os.path.join(self.xulrunnerDir, "xulrunner")
-
-	# Find application -- presently hardcoded to a tree in
-	# 'xul'.
-	self.applicationRoot = os.path.join(root, 'platform', platform,
-					    'xul')
-	applicationIni = os.path.join(self.applicationRoot, 'application.ini')
-
-	# Compile any IDL in the application
-	self.compileIDL()
-
-	# Find, ah, other dependencies or something (NEEDS: complete hack,
-	# and not even necessary in the runxul case because we already have
-	# the libs on the path from building extensions)
-	self.childDLLPaths. \
-	    extend([
-		BOOST_LIB_PATH,
-		])
-
-	# Run the app. NEEDS: The main hack here is how we write the
-	# type library into the source tree, which is pretty odious.
-	if self.typeLibrary:
-	    # NEEDS: even if we did it this way, ensure that 'components'
-	    # exists
-	    typeLibraryPath = os.path.join(self.applicationRoot, 'components',
-					   'types.xpt')
-	    shutil.copy2(self.typeLibrary, typeLibraryPath)
-
-	newEnv = copy.deepcopy(os.environ)
-	oldPath = 'PATH' in newEnv and [newEnv['PATH']] or []
-	newEnv['PATH'] = \
-	    ';'.join(oldPath + self.childDLLPaths)
-	oldPyPath = 'PYTHONPATH' in newEnv and [newEnv['PYTHONPATH']] or []
-	newEnv['PYTHONPATH'] = \
-	    ';'.join(oldPyPath + self.childPythonPaths)
-	newEnv['RUNXUL_RESOURCES'] = self.appResources
-	print "Starting application"
-#	os.execle(xulrunnerBinary, xulrunnerBinary, applicationIni, newEnv)
-	os.execle(xulrunnerBinary, xulrunnerBinary, applicationIni, "-jsconsole", newEnv)
-
-    def buildXulrunnerInstallation(self):
-	buildBase = os.path.join(self.bdist_base, "xulrunner")
-	self.xulrunnerDir = buildBase
-	markFile = os.path.join(buildBase, ".xulrunnerBuilt")
-	if os.access(markFile, os.F_OK):
-	    # Mark file exists. We take this to mean that there is
-	    # valid xulrunner tree already built in buildBase.
-	    return
-
-        log.info("assembling temporary xulrunner tree in %s" % buildBase)
-
-	# First, copy in the basic Xulrunner distribution.
-	copyTreeExceptSvn(XULRUNNER_DIR, buildBase)
-
-	# Then, copy the extra PyXPCOM files over it.
-	copyTreeExceptSvn(PYXPCOM_DIR, buildBase)
-
-	# Create the mark file to indicate that we now have a build.
-	open(markFile, 'w')
-
+class Common:
     def compileIDL(self):
 	buildDir = os.path.join(self.bdist_base, "idl")
 	pattern = re.compile(r"(.*)\.idl$")
@@ -269,7 +183,6 @@ class runxul(Command):
 
 	idlDir = os.path.join(root, 'platform', platform, 'idl')
 	generatedFiles = []
-        log.info("compiling IDL files to %s" % buildDir)
 	if not os.access(idlDir, os.F_OK):
 	    self.typeLibrary = None
 	    return
@@ -304,7 +217,383 @@ class runxul(Command):
 
 	self.typeLibrary = outXpt
 
+###############################################################################
+
+class runxul(Command, Common):
+    description = "test run of a Mozilla XUL-based application"
+
+    # List of option tuples: long name, short name (None if no short
+    # name), and help string.
+    user_options = [
+        ('bdist-base=', 'b',
+         'base directory for build library (default is build)'),
+        ('dist-dir=', 'd',
+         "directory to put final built distributions in (default is dist)"),
+	('bdist-dir=', 'd',
+	 "temporary directory for creating the distribution"),
+        ]
+
+    def initialize_options(self):
+        self.bdist_base = None
+	self.bdist_dir = None
+        self.dist_dir = 'dist'
+
+	self.childPythonPaths = []
+	self.childDLLPaths = []
+
+    def finalize_options(self):
+        if self.bdist_dir is None:
+            bdist_base = self.get_finalized_command('bdist').bdist_base
+            self.bdist_dir = os.path.join(bdist_base, 'xul')
+
+        self.set_undefined_options('bdist',
+                                   ('dist_dir', 'dist_dir'),
+                                   ('bdist_base', 'bdist_base'))
+
+	# Find our 'resources' tree (NEEDS)
+	self.appResources = os.path.join(root, 'resources')
+
+    def buildXulrunnerInstallation(self):
+	buildBase = os.path.join(self.bdist_base, "xulrunner")
+	self.xulrunnerDir = buildBase
+	markFile = os.path.join(buildBase, ".xulrunnerBuilt")
+	if os.access(markFile, os.F_OK):
+	    # Mark file exists. We take this to mean that there is
+	    # valid xulrunner tree already built in buildBase.
+	    return
+
+        log.info("assembling temporary xulrunner tree in %s" % buildBase)
+
+	# First, copy in the basic Xulrunner distribution.
+	copyTreeExceptSvn(XULRUNNER_DIR, buildBase)
+
+	# Then, copy the extra PyXPCOM files over it.
+	copyTreeExceptSvn(PYXPCOM_DIR, buildBase)
+
+	# Create the mark file to indicate that we now have a build.
+	open(markFile, 'w')
+
+    def run(self):
+        # Build extensions and add results to child search path
+        build = self.reinitialize_command('build')
+        build.build_base = self.bdist_base
+        build.run()
+        if build.build_platlib is not None:
+	    self.childPythonPaths.append(build.build_platlib)
+        if build.build_lib is not None:
+	    self.childPythonPaths.append(build.build_lib)
+
+	# Add application Python modules to child search path
+	self.childPythonPaths. \
+	    extend([
+		os.path.join(root, 'platform', platform),
+		os.path.join(root, 'platform'),
+		os.path.join(root, 'portable'),
+		])
+
+	# Put together an xulrunner installation that meets our standards.
+	self.buildXulrunnerInstallation()
+	xulrunnerBinary = os.path.join(self.xulrunnerDir, "xulrunner")
+
+	# Find application -- presently hardcoded to a tree in
+	# 'xul'.
+	self.applicationRoot = os.path.join(root, 'platform', platform,
+					    'xul')
+	applicationIni = os.path.join(self.applicationRoot, 'application.ini')
+
+	# Compile any IDL in the application
+        log.info("compiling type libraries")
+	self.compileIDL()
+
+	# Run the app. NEEDS: The main hack here is how we write the
+	# type library into the source tree, which is pretty odious.
+	if self.typeLibrary:
+	    # NEEDS: even if we did it this way, ensure that 'components'
+	    # exists
+	    typeLibraryPath = os.path.join(self.applicationRoot, 'components',
+					   'types.xpt')
+	    shutil.copy2(self.typeLibrary, typeLibraryPath)
+
+	newEnv = copy.deepcopy(os.environ)
+	oldPath = 'PATH' in newEnv and [newEnv['PATH']] or []
+	newEnv['PATH'] = \
+	    ';'.join(oldPath + self.childDLLPaths)
+	oldPyPath = 'PYTHONPATH' in newEnv and [newEnv['PYTHONPATH']] or []
+	newEnv['PYTHONPATH'] = \
+	    ';'.join(oldPyPath + self.childPythonPaths)
+	newEnv['RUNXUL_RESOURCES'] = self.appResources
+	newEnv['RUNXUL_DONT_ADJUST_PATH'] = ''
+	print "Starting application"
+#	os.execle(xulrunnerBinary, xulrunnerBinary, applicationIni, newEnv)
+	os.execle(xulrunnerBinary, xulrunnerBinary, applicationIni, "-jsconsole", newEnv)
+
+###############################################################################
+
+class bdist_xul_dumb(Command, Common):
+    description = "build redistributable directory for Mozilla-based app"
+
+    # List of option tuples: long name, short name (None if no short
+    # name), and help string.
+    user_options = [
+        ('bdist-base=', 'b',
+         'base directory for build library (default is build)'),
+        ('dist-dir=', 'd',
+         "directory to put final built distribution in (default is dist)"),
+	('bdist-dir=', 'd',
+	 "temporary directory for creating the distribution"),
+        ]
+
+    def initialize_options(self):
+        # NEEDS: allow 'includes' and 'excludes' options?
+        self.bdist_base = None
+	self.bdist_dir = None
+        self.dist_dir = 'dist'
+
+	self.childPythonPaths = []
+	self.childDLLPaths = []
+
+    def finalize_options(self):
+        if self.bdist_dir is None:
+            bdist_base = self.get_finalized_command('bdist').bdist_base
+            self.bdist_dir = os.path.join(bdist_base, 'xul')
+
+        self.set_undefined_options('bdist',
+                                   ('dist_dir', 'dist_dir'),
+                                   ('bdist_base', 'bdist_base'))
+
+	# Find our 'resources' tree (NEEDS)
+	self.appResources = os.path.join(root, 'resources')
+        # Find our various data bits (NEEDS)
+	self.xulTemplateDir = os.path.join(root, 'platform', platform,
+                                           'xul')
+
+    def run(self):
+        packagePaths = copy.copy(sys.path)
+
+        # Build extensions; add them to search path
+        build = self.reinitialize_command('build')
+        build.build_base = self.bdist_base
+        build.run()
+        if build.build_platlib is not None:
+	    packagePaths.append(build.build_platlib)
+        if build.build_lib is not None:
+	    packagePaths.append(build.build_lib)
+
+	# Add application Python modules to search path
+        # NEEDS: should compile all Python files, and add the *build*
+        # directories to the path.
+	packagePaths.extend([
+                os.path.join(root, 'platform', platform),
+		os.path.join(root, 'platform'),
+		os.path.join(root, 'portable'),
+		])
+
+        # Build the list of all Python code and extensions required by
+        # the application
+        # NEEDS: should bootstrap dependency scan from *.py in component
+        # directory..
+        log.info("computing module dependencies")
+        wellConnectedFile = os.path.join(root, 'portable', 'app.py')
+        manifest = self.computePythonManifest(scripts = [wellConnectedFile],
+                                              path = packagePaths)
+#        print '\n'.join(["%s -> %s" % (source, dest) \
+#                         for (source, dest) in manifest])
+        
+        # Put together the basic skeleton of the application
+        log.info("clearing out old build directory if any")
+        shutil.rmtree(self.dist_dir, True)
+        log.info("copying XUL resources")
+        copyTreeExceptSvn(self.xulTemplateDir, self.dist_dir)
+        log.info("assembling xulrunner")
+        self.xulrunnerOut = os.path.join(self.dist_dir, 'xulrunner')
+	copyTreeExceptSvn(XULRUNNER_DIR, self.xulrunnerOut)
+	copyTreeExceptSvn(PYXPCOM_DIR, self.xulrunnerOut)
+
+        # Compile and drop in type library
+        # NEEDS: make IDL directory configurable
+        log.info("compiling type libraries")
+        self.compileIDL()
+	if self.typeLibrary:
+            componentDir = os.path.join(self.dist_dir, 'components')
+            if not os.access(componentDir, os.F_OK):
+                os.makedirs(componentDir)
+            shutil.copy2(self.typeLibrary, componentDir)
+
+        # Copy the files indicated in the manifest to create a complete
+        # application package.
+        log.info("creating application image")
+        imageRoot = os.path.join(self.dist_dir, 'python')
+        dirsCreated = set()
+        for (source, dest) in manifest:
+            dest = os.path.join(imageRoot, dest)
+            destDir = os.path.dirname(dest)
+            if destDir not in dirsCreated:
+                if not os.access(destDir, os.F_OK):
+                    os.makedirs(destDir)
+                dirsCreated.add(destDir)
+            shutil.copy2(source, dest)
+
+        # Copy required DLLs.
+        # NEEDS: shared library dependency scan, starting with pyloader
+        # and any python extensions, instead of this static list
+        log.info("copying DLL dependencies")
+        # NEEDS: Some Microsoft documentation says that the DLL search
+        # order is (1) the directory containing the "executable module
+        # for the current process", (2) the current directory, (3)
+        # GetSystemDirectory(), (4) GetWindowsDirectory(), and finally
+        # (5) PATH. That would suggest that we could put the DLLs in
+        # the same directory as xulrunner.exe and everything would be
+        # grand. In fact, everything is grand only if the DLLs are on
+        # PATH or in the current directory.
+        #
+        # Elsewhere, I read that the search order changed recently
+        # (SP1?): "No longer is the current directory searched first
+        # when loading DLLs! ... The default behavior now is to look
+        # in all the system locations first, then the current
+        # directory, and finally any user-defined paths. This will
+        # have an impact on your code if you install a DLL in the
+        # application's directory because Windows Server 2003 no
+        # longer loads the 'local' DLL if a DLL of the same name is in
+        # the system directory." (Google for "Development Impacts of
+        # Security Changes in Windows Server 2003.) The purpose of the
+        # change was to eliminate an opportunity for an attacker to
+        # put trojaned versions of the system DLLs into an application
+        # directory. The article is mum on this concept of searching
+        # the "executable module for the current directory."
+        #
+        # For now, let's dump the DLLs in the same directory as
+        # xulrunner-stub.exe (aka dtv.exe) and require that the
+        # current directory be the directory that contains the binary
+        # when it is run. This can easily be accomplished with a
+        # Windows shortcut, which is the way end-users will be
+        # starting the program.
+#        dllDistDir = self.xulrunnerOut
+        dllDistDir = self.dist_dir
+        allRuntimes = PYTHON_RUNTIMES + BOOST_RUNTIMES + COMPILER_RUNTIMES
+        for runtime in allRuntimes:
+            shutil.copy2(runtime, dllDistDir)
+
+        # Copy in our application's resources.
+        log.info("copying application resources")
+        copyTreeExceptSvn(self.appResources,
+                          os.path.join(self.dist_dir, 'resources'))
+
+        # NEEDS: set permissions/attributes on everything uniformly?
+
+        # Finally, create the top-level executable.
+        log.info("creating executable")
+        os.rename(os.path.join(self.xulrunnerOut, "xulrunner-stub.exe"), #NEEDS
+                  os.path.join(self.dist_dir, "dtv.exe")) # NEEDS
+
+# pybridge must be modified to *replace* sys.path with
+# (XCurProcD)/python if present. (no, actually this is a mess. It's
+# the *components* that should get the path replacement -- but they
+# are all loaded into the same python interpreter, so they can't just
+# go around unilaterally changing it. probably we need to start by
+# distinguishing the 'standalone application' case from the
+# 'extension/pyxpcom module' case, and separately the 'bundled python
+# standard library' case from the 'all dependencies including
+# installed packages manually specified' case, with the latter
+# unfortunately being poorly supported.) resource.resourceRoot() has
+# already been modified in what should be the appropriate way.
+#
+# What we really wish we had is a way to execute some code on
+# 'startup' in the 'embedded standard library' case. We can accomplish
+# this by tacking a header onto each component script, I guess, that
+# checks a global variable (using some kind of built-in mutex, I
+# hope?)
+#
+# NEEDS: so where does this leave pyxpcom's python-side code? how do
+# we stop pyloader (for example) from seeing the "true" sys.path??
+
+    def computePythonManifest(self, path=None, scripts=[], packages=[],
+                              includes=[], excludes=[]):
+        """Determine the files that need to be copied to get a complete image
+        of the Python modules and extensions used by the application,
+        by tracing all of the dependencies of a set of Python scripts and
+        packages. The packages will be included in the list of files to
+        copy; the scripts will not be.
+
+        @param path: The search path when resolving package references;
+        think of it as the simulated runtime value of sys.path.
+        @type path: list of string
+
+        @param scripts: Filenames of the scripts to use as dependency roots.
+        @type scripts: string iterable
+        @param packages: Names of the packages to use as dependency roots,
+        such as might be passed to 'import'
+        @type packages: string iterable
+
+        @param includes: Names of packages that should be included
+        even if they are not found by the dependency scan
+        @type includes: string iterable
+        @param excludes: Names of packages that should not be included even
+        if they are found by the dependency scan (if a package is given both
+        as an 'include' and an 'exclude', 'include' takes priority)
+        @type includes: string iterable
+
+        @return: (source, dest) tuples giving the absolute source path of a
+        file that should be copied, and the relative destination path
+        (including filename) to which it should be copied in the image
+        @rtype: (string, string) list
+
+        @bug: Due to an apparent bug in modulegraph, a dependency root
+        cannot be given as a package if it does not represent a directory,
+        that is, if it does not correspond to a file named 'init.py'.
+        """
+
+        # Put our helper packages on the path, and import them
+        helperRoot = os.path.join(root, 'platform', platform, 'tools')
+        if not helperRoot in sys.path:
+            sys.path.append(helperRoot)
+        from modulegraph.find_modules import find_modules
+        import modulegraph.modulegraph as mg
+
+        # Run the dependency scan
+        moduleGraph = find_modules(path = path,
+                                   scripts = scripts, packages = packages,
+                                   includes = includes, excludes = excludes)
+#        moduleGraph.graphreport()
+
+        # Resolve items found to files, and report any errors detected
+        manifest = [] # (absolute source path, relative dest path) tuples
+        dotPattern = re.compile(r"\.")
+        for item in moduleGraph.flatten():
+            if type(item) is mg.MissingModule:
+                log.warn("apparently missing module %s" % item.identifier)
+            elif type(item) in [mg.ExcludedModule, mg.BuiltinModule,
+                                mg.Script]:
+                pass
+            elif item.filename is None:
+                log.warn("missing filename for module %s (? -- type %s)"\
+                         % (item.identifier, type(item).__name__))
+            elif type(item) in [mg.SourceModule, mg.CompiledModule,
+                                mg.Extension, mg.Package]:
+                components = dotPattern.split(item.identifier)
+                if type(item) is mg.Package:
+                    components.append('__init__.py')
+                else:
+                    # Need to put the correct extension back on. Does this
+                    # work in all cases?
+                    components[-1:] = [os.path.basename(item.filename)]
+                relativePath = os.path.join(*components)
+                manifest.append((item.filename, relativePath))
+            else:
+                log.warn("unrecognized dependency type %s (%s, %s)"\
+                         % (type(item).__name__, item.identifier, 
+                            item.filename))
+
+        return manifest
+
+###############################################################################
+
 def copyTreeExceptSvn(src, dest):
+    """Copy the contents of the given source directory into the given
+    destination directory, creating the destination directory first if
+    necessary. Preserve all file attributes. If the source directory
+    contains directories, recursively copy them as well. However,
+    under no circumstances copy a file or directory named '.svn'."""
+
     names = os.listdir(src)
     if not os.access(dest, os.F_OK):
 	os.mkdir(dest)
@@ -323,5 +612,6 @@ setup(
     cmdclass = {
 	'build_ext': build_ext,
 	'runxul': runxul,
+	'bdist_xul_dumb': bdist_xul_dumb,
 	}
 )
