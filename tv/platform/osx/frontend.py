@@ -33,7 +33,6 @@ NibClassBuilder.extractClasses("MainWindow")
 NibClassBuilder.extractClasses("PreferencesWindow")
 NibClassBuilder.extractClasses("AddChannelSheet")
 NibClassBuilder.extractClasses("PasswordWindow")
-NibClassBuilder.extractClasses("FullScreenAlertPanel")
 
 doNotCollect = {}
 nc = NSNotificationCenter.defaultCenter()
@@ -613,31 +612,6 @@ class MainController (NibClassBuilder.AutoBaseClass):
         if feedURL is not None:
             url = NSURL.URLWithString_(feedURL)
             url.writeToPasteboard_(NSPasteboard.generalPasteboard())
-
-
-###############################################################################
-#### Fullscreen alert panel                                                ####
-###############################################################################
-
-class FullScreenAlertPanelController (NibClassBuilder.AutoBaseClass):
-
-    @classmethod
-    def displayIfNeeded(cls):
-        noAlert = config.get(config.NO_FULLSCREEN_ALERT)
-        if not noAlert:
-            controller = FullScreenAlertPanelController.alloc().init()
-            NSApplication.sharedApplication().runModalForWindow_(controller.window())
-
-    def init(self):
-        parent = super(FullScreenAlertPanelController, self)
-        self = parent.initWithWindowNibName_owner_('FullScreenAlertPanel', self)
-        return self
-
-    def dismiss_(self, sender):
-        if self.dontShowCheckbox.state() == NSOnState:
-            config.set(config.NO_FULLSCREEN_ALERT, True)
-        NSApplication.sharedApplication().stopModal()
-        self.window().orderOut_(nil)
 
 
 ###############################################################################
@@ -2015,7 +1989,6 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
         self.previousFrame = self.frame()
         self.setFrame_display_animate_(screen.frame(), YES, YES)
         self.makeKeyAndOrderFront_(nil)
-        FullScreenAlertPanelController.displayIfNeeded()
 
     def exitFullScreen(self):
         NSCursor.setHiddenUntilMouseMoves_(NO)

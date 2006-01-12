@@ -12,7 +12,6 @@ class Pref:
 MAIN_WINDOW_FRAME           = Pref( key='mainWindowFrame',       default=None,  platformSpecific=False )
 LEFT_VIEW_SIZE              = Pref( key='leftViewSize',          default=None,  platformSpecific=False )
 RIGHT_VIEW_SIZE             = Pref( key='rightViewSize',         default=None,  platformSpecific=False )
-NO_FULLSCREEN_ALERT         = Pref( key='noFullscreenAlert',     default=False, platformSpecific=False )
 RUN_DTV_AT_STARTUP          = Pref( key='runAtStartup',          default=False, platformSpecific=False )
 CHECK_CHANNELS_EVERY_X_MN   = Pref( key='checkChannelsEveryXMn', default=60,    platformSpecific=False )
 LIMIT_UPSTREAM              = Pref( key='limitUpstream',         default=True,  platformSpecific=False )
