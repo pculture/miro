@@ -2000,7 +2000,10 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
     def sendEvent_(self, event):
         if self.isFullScreen:
             if event.type() == NSLeftMouseDown:
-                app.Controller.instance.videoDisplay.exitFullScreen()
+                if NSApplication.sharedApplication().isActive():
+                    app.Controller.instance.videoDisplay.exitFullScreen()
+                else:
+                    NSApplication.sharedApplication().activateIgnoringOtherApps_(YES)
             elif event.type() == NSKeyDown:
                 if event.characters().characterAtIndex_(0) == 0x1B:
                     app.Controller.instance.videoDisplay.exitFullScreen()
@@ -2011,6 +2014,12 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
                     self.palette.reveal(self)
                 else:
                     self.palette.resetAutoConceal()
+        else:
+            if event.type() == NSLeftMouseDown:
+                if NSApplication.sharedApplication().isActive():
+                    app.Controller.instance.videoDisplay.goFullScreen()
+                else:
+                    NSApplication.sharedApplication().activateIgnoringOtherApps_(YES)
 
 
 ###############################################################################
