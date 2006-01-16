@@ -76,7 +76,7 @@
 			<!-- CHANNEL MENU -->
 			<menu id="channel-menu" label="Channel" accesskey="C" class="titlebar-toplevel">
 				<menupopup id="file-popup">
-					<menuitem label="Add Channel" accesskey="A"/>
+					<menuitem label="Add Channel" accesskey="A" disabled="false" command="addchannel"/>
 					<menuitem label="Remove Channel" accesskey="R"/>
 					<menuitem label="Copy Channel Link" accesskey="L"/>
 					<menuseparator/>
@@ -176,7 +176,7 @@
 	<!-- BUTTONS -->
 	<hbox flex="0" container="1" width="250" height="64" minheight="64" id="bottom-left">
 		<hbox flex="0" maxheight="20" id="bottom-left-addchannel">
-			<button id="add-channel" label="Add Channel" disabled="false" accesskey="A"/>
+			<button id="add-channel" label="Add Channel" disabled="false" accesskey="A" command="addchannel"/>
 		</hbox>
 		<hbox flex="0" maxheight="20" id="bottom-left-preferences">
 			<button id="Preferences" label="Options" disabled="false" accesskey="O"/>
@@ -216,5 +216,5 @@
 	
 </hbox>
 <!-- / BOTTOM -->
-
+<command id="addchannel" oncommand="window.openDialog('chrome://dtv/content/addchannel.xul','addchannel','chrome,dependent,centerscreen');" />
 </window>

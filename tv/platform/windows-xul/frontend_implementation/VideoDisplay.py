@@ -1,6 +1,6 @@
 import app
 import frontend
-import vlc
+#import vlc
 import os
 
 ###############################################################################

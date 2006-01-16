@@ -22,3 +22,10 @@ function jsdump(str) {
 	.getService(Components.interfaces.nsIConsoleService)	
 	.logStringMessage(str);
 }
+
+function addChannel(url) {
+    var py = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
+    	getService();
+    py.QueryInterface(Components.interfaces.pcfIDTVPyBridge);
+    py.addChannel(url);
+}

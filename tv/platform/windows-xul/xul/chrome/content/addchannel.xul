@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin" type="text/css"?>
+<?xml-stylesheet href="main.css" type="text/css"?>
+
+<!DOCTYPE window SYSTEM "chrome://dtv/locale/main.dtd">
+<dialog id="main"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+        title="Add Channel"
+        ondialogaccept="return addChannel(document.getElementById('addurl').value);"
+        buttons="accept,cancel">
+    <script src="chrome://dtv/content/main.js" />
+    <label control="addurl" value="Please, enter the channel of the URL you'd like to add"/>
+    <textbox id="addurl"/>
+</dialog>
