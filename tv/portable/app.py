@@ -413,7 +413,7 @@ class Controller (frontend.Application):
                 hasGuide = True
                 channelGuide = obj
             if not hasGuide:
-                print "Spawning Channel Guide..."
+                print "DTV: Spawning Channel Guide..."
                 channelGuide = guide.ChannelGuide()
                 feed.Feed('http://www.mediarights.org/bm/rss.php?i=1')
                 feed.Feed('http://live.watchmactv.com/wp-rss2.php')
@@ -441,6 +441,10 @@ class Controller (frontend.Application):
             globalData['view']['availableItems'].addRemoveCallback(self.onAvailableItemsCountChange)
             globalData['view']['downloadingItems'].addAddCallback(self.onDownloadingItemsCountChange)
             globalData['view']['downloadingItems'].addRemoveCallback(self.onDownloadingItemsCountChange)
+
+            # Set up the search objects
+            self.setupGlobalFeed('dtv:search')
+            self.setupGlobalFeed('dtv:searchDownloads')
 
             # Set up tab list
             reloadStaticTabs()
@@ -472,13 +476,7 @@ class Controller (frontend.Application):
             self.tabs.getNext()
 
             # If we're missing the file system videos feed, create it
-            dirFeed = globalViewList['feeds'].filterWithIndex(globalIndexList['feedsByURL'],'dtv:directoryfeed')
-            hasDirFeed = dirFeed.len() > 0
-            globalViewList['feeds'].removeView(dirFeed)
-
-            if not hasDirFeed:
-                print "DTV: Spawning file system videos feed"
-                d = feed.Feed('dtv:directoryfeed')
+            self.setupGlobalFeed('dtv:directoryfeed')
 
             # Start the automatic downloader daemon
             print "DTV: Spawning auto downloader..."
@@ -530,6 +528,30 @@ class Controller (frontend.Application):
             traceback.print_exc()
             frontend.exit(1)
 
+    def setupGlobalFeed(self, url):
+        feedView = globalViewList['feeds'].filterWithIndex(globalIndexList['feedsByURL'], url)
+        hasFeed = feedView.len() > 0
+        globalViewList['feeds'].removeView(feedView)
+        if not hasFeed:
+            print "DTV: Spawning global feed %s" % url
+            d = feed.Feed(url)
+
+    def getGlobalFeed(self, url):
+        feedView = globalViewList['feeds'].filterWithIndex(globalIndexList['feedsByURL'], url)
+        feedView.resetCursor()
+        feed = feedView.getNext()
+        globalViewList['feeds'].removeView(feedView)
+        return feed
+
+    def removeGlobalFeed(self, url):
+        feedView = globalViewList['feeds'].filterWithIndex(globalIndexList['feedsByURL'], url)
+        feedView.resetCursor()
+        feed = feedView.getNext()
+        globalViewList['feeds'].removeView(feedView)
+        if feed is not None:
+            print "DTV: Removing global feed %s" % url
+            feed.remove()
+
     def checkTabUsingIndex(self, index, id):
         view = self.tabs.filterWithIndex(index, id)
         view.beginUpdate()
@@ -563,6 +585,9 @@ class Controller (frontend.Application):
 
             print "DTV: Stopping scheduler"
             scheduler.ScheduleEvent.scheduler.shutdown()
+
+            print "DTV: Removing search feed"
+            self.removeGlobalFeed('dtv:search')
 
             print "DTV: Removing static tabs..."
             removeStaticTabs()
@@ -1029,6 +1054,19 @@ class TemplateActionHandler:
     def skipItem(self, itemID):
         self.controller.playbackController.skip(1)
         
+    def performSearch(self, query):
+        searchFeed = self.controller.getGlobalFeed('dtv:search')
+        assert searchFeed is not None
+        searchFeed.lookup(query)
+
+    def resetSearch(self):
+        searchFeed = self.controller.getGlobalFeed('dtv:search')
+        assert searchFeed is not None
+        searchDownloadsFeed = Controller.instance.getGlobalFeed('dtv:searchDownloads')
+        assert searchDownloadsFeed is not None
+        searchFeed.preserveDownloads(searchDownloadsFeed)
+        searchFeed.reset()
+        
 
 # Helper: liberally interpret the provided string as a boolean
 def stringToBoolean(string):
@@ -1156,6 +1194,8 @@ def makeMapToTabFunction(globalTemplateData, controller):
         def mapToTab(self,obj):
             data = {'global': self.globalTemplateData};
             if isinstance(obj, StaticTab):
+                if obj.contentsTemplate == 'search':
+                    data['feed'] = Controller.instance.getGlobalFeed('dtv:search')
                 return Tab(obj.tabTemplateBase, data, obj.contentsTemplate, data, [obj.order], obj, controller)
             elif isinstance(obj, feed.Feed):
                 data['feed'] = obj
@@ -1523,7 +1563,7 @@ globalFilterList = {
     'expiringItems': expiringItems,
     'undownloadedItems':  undownloadedItems,
     'allDownloadingItems': allDownloadingItems,
-       
+    
     'class': filterClass,
     'all': (lambda x, y: True),
     'hasKey':  filterHasKey,
@@ -1557,4 +1597,3 @@ globalViewList['downloadingItems'] = globalViewList['items'].filter(lambda x:x.g
 
 globalViewList['items'].createIndex(globalIndexList['itemsByFeed'])
 globalViewList['feeds'].createIndex(globalIndexList['feedsByURL'])
-

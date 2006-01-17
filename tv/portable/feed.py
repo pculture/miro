@@ -112,6 +112,10 @@ def generateFeed(url,ufeed):
 def _generateFeed(url, ufeed, visible=True):
     if (url == "dtv:directoryfeed"):
         return DirectoryFeedImpl(ufeed)
+    elif (url == "dtv:search"):
+        return YahooSearchFeedImpl(ufeed)
+    elif (url == "dtv:searchDownloads"):
+        return SearchDownloadsFeedImpl(ufeed)
 
     info = grabURL(url,"GET")
     if info is None:
@@ -931,14 +935,17 @@ class RSSFeedImpl(FeedImpl):
             
             self.updating = False
         finally:
-            if info.has_key('etag'):
-                self.etag = info['etag']
-            if info.has_key('last-modified'):
-                self.modified = info['last-modified']
-            self.ufeed.endRead() #FIXMENOW This is sloow...
-            if not self.updateUandA():
-                self.ufeed.beginChange()
-                self.ufeed.endChange()
+            self.finishUpdate(info)
+
+    def finishUpdate(self, info):
+        if info.has_key('etag'):
+            self.etag = info['etag']
+        if info.has_key('last-modified'):
+            self.modified = info['last-modified']
+        self.ufeed.endRead() #FIXMENOW This is sloow...
+        if not self.updateUandA():
+            self.ufeed.beginChange()
+            self.ufeed.endChange()
 
     def addScrapedThumbnail(self,entry):
         if (entry.has_key('enclosures') and len(entry['enclosures'])>0 and
@@ -1400,6 +1407,114 @@ class DirectoryFeedImpl(FeedImpl):
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
         self.scheduleUpdateEvents(.1)
+
+
+##
+# Search and Search Results feeds
+
+class SearchFeed:
+    
+    def __init__(self, impl):
+        self.searching = False
+        self.impl = impl
+
+    def getStatus(self):
+        status = 'idle-empty'
+        if self.searching:
+            status =  'searching'
+        elif len(self.items) > 0:
+            status =  'idle-with-results'
+        return status
+
+    def reset(self, url='', searchState=False):
+        self.ufeed.beginChange()
+        try:
+            for item in self.items:
+                item.remove()
+            self.items = []
+            self.url = url
+            self.searching = searchState
+        finally:
+            self.ufeed.endChange()
+    
+    def preserveDownloads(self, downloadsFeed):
+        self.ufeed.beginRead()
+        try:
+            allItems = [] + self.items
+            for item in allItems:
+                if item.getState() != 'stopped':
+                    downloadsFeed.addItem(item)
+        finally:
+            self.ufeed.endRead()
+        
+    def lookup(self, query):
+        url = self.getRequestURL(query)
+        self.reset(url, True)
+        thread = Thread(target=self.update)
+        thread.setDaemon(False)
+        thread.start()
+
+    def update(self):
+        if self.url is not None and self.url != '':
+            self.impl.update(self)
+
+    def finishUpdate(self, info):
+        self.searching = False
+        self.impl.finishUpdate(self, info)
+                    
+
+class YahooSearchFeedImpl (SearchFeed, RSSFeedImpl):
+
+    def __init__(self, ufeed):
+        SearchFeed.__init__(self, RSSFeedImpl)
+        RSSFeedImpl.__init__(self, url='', ufeed=ufeed, title='dtv:search-yahoo', visible=False)
+        self.setUpdateFrequency(-1)
+
+    def getRequestURL(self, query, filterAdultContents=True, limit=50):
+        url =  "http://api.search.yahoo.com/VideoSearchService/rss/videoSearch.xml"
+        url += "?appid=dtv_search"
+        url += "&adult_ok=%d" % int(not filterAdultContents)
+        url += "&results=%d" % limit
+        url += "&format=any"
+        url += "&query=%s" % urlencode(query)
+        return url
+    
+
+class GoogleSearchFeedImpl (SearchFeed, ScraperFeedImpl):
+
+    def __init__(self, ufeed):
+        SearchFeed.__init__(self, ScraperFeedImpl)
+        ScraperFeedImpl.__init__(self, url='', ufeed=ufeed, title='dtv:search-google', visible=False)
+        self.setUpdateFrequency(-1)
+
+    def getRequestURL(self, query, filterAdultContents=True, limit=50):
+        url =  "http://www.google.com/search"
+        url += "?num=%d" % limit
+        url += "&hl=en&lr=&as_qdr=all&q=%s" % urlencode(query)
+        url += "+filetype%3Amov+OR+filetype%3Ampg+OR+filetype%3Am4v+OR+filetype%3AOGM+OR+filetype%3Amp4+OR+filetype%3Aavi+OR+filetype%3Atorrent+OR+filetype%3Awmv+OR+filetype%3Amp3+OR+filetype%3A3gp+OR+filetype%3Axvid+OR+filetype%3Am4v&btnG=Search"
+        return url
+
+
+
+class SearchDownloadsFeedImpl (FeedImpl):
+
+    def __init__(self, ufeed):
+        FeedImpl.__init__(self, url='dtv:searchDownloads', ufeed=ufeed, title=None, visible=False)
+        self.setUpdateFrequency(-1)
+        
+    def addItem(self, item):
+        self.ufeed.beginRead()
+        try:
+            if not item in self.items:
+                item.beginRead()
+                try:
+                    item.feed.items.remove(item)
+                    item.feed = self.ufeed
+                finally:
+                    item.endRead()
+                self.items.append(item)
+        finally:
+            self.ufeed.endRead()
 
 
 ##

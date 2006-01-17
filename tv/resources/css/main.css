@@ -194,7 +194,7 @@ li {
 	text-decoration: none;	
 }
 
-#main-newlyavailable, #main-downloads, #main-unwatched, #main-expiring, #main-saved, #main-autodownload, #main-expiration, #main-newlyavailable-seen, #show-more-videos-label, #no-new-videos-label, #google-results, #yahoo-results {
+#main-newlyavailable, #main-downloads, #main-unwatched, #main-expiring, #main-saved, #main-autodownload, #main-expiration, #main-newlyavailable-seen, #show-more-videos-label, #no-new-videos-label {
 	display: none;
 }
 
@@ -469,4 +469,11 @@ li {
 	height: 13px;
 	margin: 0px 0px 3px 3px;
 	background: url(../images/main-cancel.png) top left no-repeat;
+}
+
+.search-message {
+    font:       28px "Lucida Grande", "Lucida Sans", Arial, "Trebuchet MS";
+    color:      #DDD;
+    text-align: center;
+    margin-top: 50px;
 }

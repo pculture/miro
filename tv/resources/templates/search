@@ -9,43 +9,57 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <link href="resource:css/main.css" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="resource:templates/shide.js" />
+        <link href="resource:css/search.css" rel="stylesheet" type="text/css" />
+        <t:include filename="dynamic.js" />
+        <script type="text/javascript" src="resource:templates/search.js" />
+
+        <t:dynamicviews>
+            <t:view name="search-feed" key="global view feeds">
+                <t:filter functionkey="global filter feedID" parameter="@@@feed getID@@@" />
+            </t:view>
+            <t:view name="search-items" key="global view items">
+                <t:filter functionkey="global filter feedItems" parameter="@@@feed getID@@@" />
+                <t:sort functionkey="global sort item" parameter="" />
+            </t:view>
+        </t:dynamicviews>
     </head>
 
-    <body onload="toggleLayer('google-results'); toggleLayer('yahoo-results');">
+    <body>
         <div id="main-titlebar">
         	<div id="main-titlebar-avatar" style="border:0px;"><img src="resource:images/everything_icon.png" /></div>
         	<div id="main-titlebar-channelname">
         		<h1 i18n:translate="">Search</h1>
         	</div>
         	<div id="main-titlebar-tasks">
-        		<div id="main-titlebar-tasks-search" style="margin-top:38px;">
-        		    <input type="search" placeholder="Google &amp; Yahoo" class="main-titlebar-tasks-search" onBlur="search()" />
-        		</div>
+        	    <!--
+    		    <select name="engines" style="display: inline">
+    		        <option value="yahoo">Yahoo</option>
+    		        <option value="google">Google</option>
+    		    </select>
+		        -->
+    		    <input type="search" placeholder="Yahoo" class="main-titlebar-tasks-search" style="margin-top:38px;" onBlur="performSearch(this.value)" />
         	</div>
         </div>
 
         <div id="main-container">
-            <div id="search-results">
-                <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('google-results');">#&nbsp;</a></div>
-                <div id="main-channelbar" class="main-channelbar">
-                	<h1>Google Results</h1>
-                	<!-- <h2 t:updateForView="google-results"><span t:replace="this len" /></h2> -->
+            <div t:updateForView="search-feed">
+                <div class="search-message" t:hideIfNotKey="feed getStatus" t:hideFunctionKey="global filter equal" t:hideParameter="idle-empty">
+                    Nothing to display.<br />
+                    Enter a query in the search field above.
                 </div>
-                <div id="google-results">
-                    Google results go here
-                </div>
-
-                <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('yahoo-results');">#&nbsp;</a></div>
-                <div id="main-channelbar" class="main-channelbar">
-                	<h1>Yahoo Results</h1>
-                	<!-- <h2 t:updateForView="yahoo-results"><span t:replace="this len" /></h2> -->
-                </div>
-                <div id="yahoo-results">
-                    Yahoo results go here
+                <div class="search-message" t:hideIfNotKey="feed getStatus" t:hideFunctionKey="global filter equal" t:hideParameter="searching">
+                    Searching...
                 </div>
             </div>
+            
+            <div id="search-results">
+                <span t:repeatForView="search-items">
+                    <t:includeTemplate filename="download-item" />
+                </span>
+            </div>
         </div>
+
+        <t:triggerActionOnUnload url="action:resetSearch?" />
     </body>
 
 </html>
