@@ -29,31 +29,31 @@
 						<span title="Downloading '***this getTitle***'" /><img src="resource:images/main-video-inprogress-arrows.gif" style="position:absolute; margin: 57px 0px 0px -34px; z-index:4;" />
 				</span>
 				<span class="downloadable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="stopped">
-						<a href="#" onclick="eventURL('action:startDownload?item=@@@this getID@@@');" title="Download '***this getTitle***'" />
+						<a href="#" onclick="return eventURL('action:startDownload?item=@@@this getID@@@');" title="Download '***this getTitle***'" />
 				</span>
 				<span class="downloadable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="failed">
-						<a href="#" onclick="eventURL('action:startDownload?item=@@@this getID@@@');" title="Download '***this getTitle***'" />
+						<a href="#" onclick="return eventURL('action:startDownload?item=@@@this getID@@@');" title="Download '***this getTitle***'" />
 				</span>
 				<span class="downloadable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="expired">
-						<a href="#" onclick="eventURL('action:startDownload?item=@@@this getID@@@');" title="Download '***this getTitle***'" />
+						<a href="#" onclick="return eventURL('action:startDownload?item=@@@this getID@@@');" title="Download '***this getTitle***'" />
 				</span>
 				<span class="downloadable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="autopending">
-						<a href="#" onclick="eventURL('action:startDownload?item=@@@this getID@@@');" title="Download '***this getTitle***'" />
+						<a href="#" onclick="return eventURL('action:startDownload?item=@@@this getID@@@');" title="Download '***this getTitle***'" />
 				</span>
 				<span class="downloadable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="manualpending">
-						<a href="#" onclick="eventURL('action:startDownload?item=@@@this getID@@@');" title="Download '***this getTitle***'" />
+						<a href="#" onclick="return eventURL('action:startDownload?item=@@@this getID@@@');" title="Download '***this getTitle***'" />
 				</span>
 				<span class="playable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="finished">
-						<a href="#" onclick="eventURL('action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@');" title="Play '***this getTitle***'" />
+						<a href="#" onclick="return eventURL('action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@');" title="Play '***this getTitle***'" />
 				</span>
 				<span class="playable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="watched">
-						<a href="#" onclick="eventURL('action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@');" title="Play '***this getTitle***'" />
+						<a href="#" onclick="return eventURL('action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@');" title="Play '***this getTitle***'" />
 				</span>
 				<span class="playable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="uploading">
-						<a href="#" onclick="eventURL('action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@');" title="Play '***this getTitle***'" />
+						<a href="#" onclick="return eventURL('action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@');" title="Play '***this getTitle***'" />
 				</span>
 				<span class="playable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="saved">
-						<a href="#" onclick="eventURL('action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@');" title="Play '***this getTitle***'" />
+						<a href="#" onclick="return eventURL('action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@');" title="Play '***this getTitle***'" />
 				</span>
 			</div>
 			<!-- / THUMBNAIL -->
@@ -132,7 +132,7 @@
 				<div class="main-progress-bar">
 					<img src="resource:images/status.png" width="@@@this downloadProgressWidth@@@" height="12" />
 				</div>
-				<a class="main-progress-cancel" href="#" onclick="eventURL('action:expireItem?item=@@@this getID@@@');" title="Cancel Download" />
+				<a class="main-progress-cancel" href="#" onclick="return eventURL('action:expireItem?item=@@@this getID@@@');" title="Cancel Download" />
 			</div>
 			<p style="clear:both;">
 				<span t:replace="this downloadETA" />
@@ -210,14 +210,14 @@
 					<p>Unwatched</p>
 				</div>
 				<div class="main-video-details-save">
-					<p><a href="#" onclick="eventURL('action:keepItem?item=@@@this getID@@@');">Save</a></p>
+					<p><a href="#" onclick="return eventURL('action:keepItem?item=@@@this getID@@@');">Save</a></p>
 				</div>
 			</span>
 			<!-- / UNWATCHED -->
 			
 			<!-- FILE TASKS -->
 			<div class="main-video-details-tasks">
-				<a href="#" onclick="eventURL('action:expireItem?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
+				<a href="#" onclick="return eventURL('action:expireItem?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
 				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
 				   href="javascript:recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@');">
 				    <img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" />
@@ -250,14 +250,14 @@
 					<p>Exp: <span t:replace="this getExpirationTime" /></p>
 				</div>
 				<div class="main-video-details-save">
-					<p><a href="#" onclick="eventURL('action:keepItem?item=@@@this getID@@@');">Save</a></p>
+					<p><a href="#" onclick="return eventURL('action:keepItem?item=@@@this getID@@@');">Save</a></p>
 				</div>
 			</span>
 			<!-- / EXPIRY -->
 			
 			<!-- FILE TASKS -->
 			<div class="main-video-details-tasks">
-				<a href="#" onclick="eventURL('action:expireItem?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
+				<a href="#" onclick="return eventURL('action:expireItem?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
 				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
 				   href="javascript:recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@');">
 				    <img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" />
@@ -286,7 +286,7 @@
 			
 			<!-- FILE TASKS -->
 			<div class="main-video-details-tasks" style="padding-top:19px;">
-				<a href="#" onclick="eventURL('action:expireItem?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
+				<a href="#" onclick="return eventURL('action:expireItem?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
 				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
 				   href="javascript:recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@');">
 				    <img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" />
@@ -319,14 +319,14 @@
 					<p>Unwatched</p>
 				</div>
 				<div class="main-video-details-save">
-					<p><a href="#" onclick="eventURL('action:keepItem?item=@@@this getID@@@');">Save</a></p>
+					<p><a href="#" onclick="return eventURL('action:keepItem?item=@@@this getID@@@');">Save</a></p>
 				</div>
 			</span>
 			<!-- / UNWATCHED -->
 			
 			<!-- FILE TASKS -->
 			<div class="main-video-details-tasks">
-				<a href="#" onclick="eventURL('action:expireItem?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
+				<a href="#" onclick="return eventURL('action:expireItem?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
 				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
 				   href="javascript:recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@');">
 				    <img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" />

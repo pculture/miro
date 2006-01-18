@@ -20,13 +20,13 @@
 		
 						<div class="main-video-hitbox">
 								<span class="downloadable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="stopped">
-										<a href="#" onclick="eventURL('action:startDownload?item=@@@this getID@@@');" title="Download '***this getTitle***'" />
+										<a href="#" onclick="return eventURL('action:startDownload?item=@@@this getID@@@');" title="Download '***this getTitle***'" />
 								</span>
 								<span class="inprogress" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="downloading">
 										<a href="#" title="" />
 								</span>
 								<span class="playable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="finished">
-										<a href="#" onclick="eventURL('action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@');" title="Play '***this getTitle***'" />
+										<a href="#" onclick="return eventURL('action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@');" title="Play '***this getTitle***'" />
 								</span>
 						</div>
 					
