@@ -789,7 +789,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
         return newPage
         
     def onURLLoad(self, url):
-        print "DTV: got %s" % url
+        #print "DTV: got %s" % url
         try:
             # Special-case non-'action:'-format URL
             match = re.compile(r"^template:(.*)$").match(url)
@@ -1053,6 +1053,11 @@ class TemplateActionHandler:
         
     def skipItem(self, itemID):
         self.controller.playbackController.skip(1)
+        
+    def updateLastSearchQuery(self, query):
+        searchFeed = self.controller.getGlobalFeed('dtv:search')
+        assert searchFeed is not None
+        searchFeed.lastQuery = query
         
     def performSearch(self, query):
         searchFeed = self.controller.getGlobalFeed('dtv:search')

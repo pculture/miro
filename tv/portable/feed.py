@@ -1416,6 +1416,7 @@ class SearchFeed:
     
     def __init__(self, impl):
         self.searching = False
+        self.lastQuery = ''
         self.impl = impl
 
     def getStatus(self):
@@ -1450,6 +1451,7 @@ class SearchFeed:
     def lookup(self, query):
         url = self.getRequestURL(query)
         self.reset(url, True)
+        self.lastQuery = query
         thread = Thread(target=self.update)
         thread.setDaemon(False)
         thread.start()

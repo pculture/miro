@@ -37,7 +37,9 @@
     		        <option value="google">Google</option>
     		    </select>
 		        -->
-    		    <input type="search" placeholder="Yahoo" class="main-titlebar-tasks-search" style="margin-top:38px;" onBlur="performSearch(this.value)" />
+    		    <input type="search" name="searchquery" value="@@@feed lastQuery@@@" placeholder="Yahoo" 
+    		           class="main-titlebar-tasks-search" style="margin-top:38px;" 
+    		           onKeyUp="fillSearch(this.value)" onKeyPress="validateSearch(event, this.value)" />
         	</div>
         </div>
 
@@ -58,8 +60,6 @@
                 </span>
             </div>
         </div>
-
-        <t:triggerActionOnUnload url="action:resetSearch?" />
     </body>
 
 </html>
