@@ -589,6 +589,7 @@ class Controller (frontend.Application):
             scheduler.ScheduleEvent.scheduler.shutdown()
 
             print "DTV: Removing search feed"
+            TemplateActionHandler(self, None, None).resetSearch()
             self.removeGlobalFeed('dtv:search')
 
             print "DTV: Removing static tabs..."
