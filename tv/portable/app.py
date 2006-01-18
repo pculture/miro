@@ -88,8 +88,10 @@ class PlaybackControllerBase:
         if videoDisplay.canPlayItem(anItem):
             self.playItemInternally(videoDisplay, anItem)
         else:
-            if self.currentDisplay is videoDisplay and videoDisplay.isFullScreen:
-                videoDisplay.exitFullScreen()
+            if self.currentDisplay is videoDisplay:
+                if videoDisplay.isFullScreen:
+                    videoDisplay.exitFullScreen()
+                videoDisplay.stop()
             self.scheduleExternalPlayback(anItem)
 
     def playItemInternally(self, videoDisplay, anItem):
