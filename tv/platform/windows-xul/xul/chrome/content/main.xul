@@ -15,7 +15,7 @@
 	width="800" height="600"
 	screenX="100" screenY="100"
 	persist="screenX screenY width height">
-
+ <popupset><popup id="contextPopup"><menuitem label="bar"/></popup></popupset>
 <script src="chrome://dtv/content/main.js"/>
 
 <!-- TITLEBAR -->
@@ -150,8 +150,8 @@
 <hbox flex="1">
 
 	<!-- CHANNEL BAR -->
-	<hbox id="channelsDisplay" flex="0" width="250" minwidth="25" maxwidth="400">
-  	<browser src="" flex="1"/>
+	<hbox id="channelsDisplay" flex="0" width="250" minwidth="25" maxwidth="400" context="contextPopup" oncontextmenu="xulclickhandler(event);">
+  	<browser src="about:mozilla" flex="1"  />
 	</hbox>
 	<!-- / CHANNEL BAR -->
 	
@@ -160,10 +160,10 @@
 	<!-- / DIVIDER -->
 	
 	<!-- MAIN WINDOW -->
-	<hbox id="mainDisplay" flex="1">
+	<hbox id="mainDisplay" flex="1" context="contextPopup" oncontextmenu="xulclickhandler(event);">
           <!-- NEEDS: this load needs to go away before release, but
                setting src="" seems to break things; no idea why. -->
-  	<browser src="about:mozilla" type="content" flex="1"/>
+  	<browser src="about:mozilla" flex="1" />
 	</hbox>
 	<!-- / MAIN WINDOW -->
 	
