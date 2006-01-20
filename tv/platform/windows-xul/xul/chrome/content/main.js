@@ -98,3 +98,11 @@ function xulcontexthandler(event) {
                            // apparently doesn't...
 
 }
+
+function maximizeOrRestore() {
+  if (window.windowState == window.STATE_MAXIMIZED) {
+    window.restore();
+  } else {
+    window.maximize();
+  }
+}

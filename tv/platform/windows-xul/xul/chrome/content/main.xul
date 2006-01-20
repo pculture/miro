@@ -90,29 +90,6 @@
 			</menu>
 			<!-- / CHANNEL MENU -->
 			
-			<!-- COLLECTION MENU -->
-			<menu id="collection-menu" label="Collection" accesskey="o" class="titlebar-toplevel">
-				<menupopup id="file-popup">
-					<menuitem label="Creat Collection" accesskey="C"/>
-					<menuitem label="Delete Collection" accesskey="D"/>
-					<menuseparator/>
-					<menuitem label="Send This Collection To A Friend" accesskey="F"/>
-				</menupopup>
-			</menu>
-			<!-- / COLLECTION MENU -->
-			
-			<!-- WINDOW MENU -->
-			<menu id="window-menu" label="Window" accesskey="W" class="titlebar-toplevel">
-				<menupopup id="file-popup">
-					<menuitem label="Zoom" accesskey="Z"/>
-					<menuitem label="Minimize" accesskey="M"/>
-					<menuitem label="Maximize" accesskey="X"/>
-					<menuseparator/>
-					<menuitem label="Bring To Front" accesskey="F"/>
-				</menupopup>
-			</menu>
-			<!-- / WINDOW MENU -->
-			
 			<!-- HELP MENU -->
 			<menu id="help-menu" label="Help" accesskey="H" class="titlebar-toplevel">
 				<menupopup id="file-popup">
@@ -136,9 +113,9 @@
 	<!-- WINDOW BUTTONS -->
 	<hbox flex="0" width="55" minheight="24">	
 		<html:ul id="titlebar-buttons">
-			<html:li id="titlebar-buttons-minimize"><html:a href="#">Minimize</html:a></html:li>
-			<html:li id="titlebar-buttons-maximize"><html:a href="#">Maximize</html:a></html:li>
-			<html:li id="titlebar-buttons-close"><html:a href="#">Close</html:a></html:li>
+			<html:li id="titlebar-buttons-minimize"><html:a onclick="window.minimize();">Minimize</html:a></html:li>
+			<html:li id="titlebar-buttons-maximize"><html:a onclick="maximizeOrRestore();">Maximize</html:a></html:li>
+			<html:li id="titlebar-buttons-close"><html:a onclick="window.close()">Close</html:a></html:li>
 		</html:ul>
 	</hbox>
 	<!-- / WINDOW BUTTONS -->
