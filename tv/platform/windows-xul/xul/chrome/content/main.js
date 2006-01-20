@@ -106,3 +106,10 @@ function maximizeOrRestore() {
     window.maximize();
   }
 }
+
+function closeApp() {
+  var startup = Components.classes["@mozilla.org/toolkit/app-startup;1"].
+       getService();
+  startup.QueryInterface(Components.interfaces.nsIAppStartup); // necessary?
+  startup.quit(startup.eAttemptQuit);
+}
