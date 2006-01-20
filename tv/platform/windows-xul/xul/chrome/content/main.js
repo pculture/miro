@@ -53,26 +53,39 @@ function getContextClickMenu(element) {
 }
 
 //FIXME: Duplicated from dynamic.js
-function eventURL(url) {
-  jsdump('FIXME: eventURL called from XUL land: '+url);
+function eventURL(cookie, url) {
+  var py = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
+        getService();
+  py.QueryInterface(Components.interfaces.pcfIDTVPyBridge); // necessary?
+  py.eventURL(cookie, url);
 }
 
-function xulclickhandler(event) {
+function getCookieFromElement(element) {
+  while (element != null) {
+    if (element.tagName == "HTML")
+      return element.getAttribute('eventCookie');
+    else {
+      element = element.parentNode;
+    }
+  }
+  return "";
+}
+
+function xulcontexthandler(event) {
   var itemsAdded = 0;
   var menu = getContextClickMenu(event.target);
+  var cookie = getCookieFromElement(event.target);
   var popup = document.getElementById('contextPopup');
-  var kids = popup.childNodes;
-  for (var i = 0; i < kids.length; i++) {
-    popup.removeChild(kids[i]);
+  while (popup.firstChild) {
+    popup.removeChild(popup.firstChild);
   }
- 
   menu = menu.split("\n");
   while (menu.length > 0) {
     var line = menu.shift().split('|');
     if (line.length > 1) {
       var newItem = document.createElement('menuitem');
       newItem.setAttribute('label',line[1]);
-      newItem.setAttribute('oncommand','eventURL("'+line[0]+'");');
+      newItem.setAttribute('oncommand','eventURL("'+cookie+'","'+line[0]+'");');
       popup.appendChild(newItem);
       itemsAdded++;
     } else {

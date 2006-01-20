@@ -150,7 +150,7 @@
 <hbox flex="1">
 
 	<!-- CHANNEL BAR -->
-	<hbox id="channelsDisplay" flex="0" width="250" minwidth="25" maxwidth="400" context="contextPopup" oncontextmenu="xulclickhandler(event);">
+	<hbox id="channelsDisplay" flex="0" width="250" minwidth="25" maxwidth="400" context="contextPopup" oncontextmenu="return xulcontexthandler(event);" >
   	<browser src="about:mozilla" flex="1" type="content" />
 	</hbox>
 	<!-- / CHANNEL BAR -->
@@ -160,7 +160,7 @@
 	<!-- / DIVIDER -->
 	
 	<!-- MAIN WINDOW -->
-	<hbox id="mainDisplay" flex="1" context="contextPopup" oncontextmenu="xulclickhandler(event);">
+	<hbox id="mainDisplay" flex="1" context="contextPopup" oncontextmenu="return xulcontexthandler(event);" >
           <!-- NEEDS: this load needs to go away before release, but
                setting src="" seems to break things; no idea why. -->
   	<browser src="about:mozilla" flex="1" type="content" />
