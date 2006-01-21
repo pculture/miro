@@ -58,6 +58,10 @@ class PyBridge:
         except:
             traceback.print_exc()
 
+    def onShutdown(self):
+        import app
+        #app.Controller().onShutdown()
+
     def eventURL(self, cookie, url):
         import frontend
         frontend.HTMLDisplay.dispatchEventByCookie(cookie, url)

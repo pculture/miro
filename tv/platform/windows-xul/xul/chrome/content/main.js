@@ -1,21 +1,36 @@
+function quitObserver()
+{
+  this.register();
+}
+
+quitObserver.prototype = {
+  observe: function(subject, topic, data) {
+    
+    var py = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
+    	getService();
+    py.QueryInterface(Components.interfaces.pcfIDTVPyBridge); // necessary?
+    py.onShutdown();
+  },
+  register: function() {
+    var observerService = Components.classes["@mozilla.org/observer-service;1"]
+                          .getService(Components.interfaces.nsIObserverService);
+    observerService.addObserver(this, "quit-application", false);
+  },
+  unregister: function() {
+    var observerService = Components.classes["@mozilla.org/observer-service;1"]
+                            .getService(Components.interfaces.nsIObserverService);
+    observerService.removeObserver(this, "quit-application");
+  }
+}
+
 function onLoad() {
     jsdump("onLoad running.");
+    var qo = new quitObserver();
     var py = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
     	getService();
     py.QueryInterface(Components.interfaces.pcfIDTVPyBridge); // necessary?
     py.onStartup(document);
 }
-
-/*
-function testCreate() {
-    elt = document.createElement("browser");
-    elt.setAttribute("width", "100");
-    elt.setAttribute("height", "100");
-    elt.setAttribute("src", "http://web.mit.edu");
-    main = document.getElementById("main");
-    main.appendChild(elt);
-}
-*/
 
 function jsdump(str) {
     Components.classes['@mozilla.org/consoleservice;1']
