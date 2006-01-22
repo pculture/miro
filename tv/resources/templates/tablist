@@ -20,7 +20,7 @@
 </t:dynamicviews>
 
 </head>
-<body> 
+<body onload="beginUpdates();"> 
 
 <div id="sidebar">
   <div id="channels">

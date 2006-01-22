@@ -2,6 +2,38 @@
 <!-- // Protect from our XML parser, which doesn't know to protect <script>
 
 ///////////////////////////////////////////////////////////////////////////////
+//// Machinery related to dynamic updates in full XUL mode                 ////
+///////////////////////////////////////////////////////////////////////////////
+
+function handleUpdate(event) {
+    r = event.target;
+    eval(r.responseText);
+}
+
+function beginUpdates() {
+    if (getDTVPlatform() == 'xul') {
+        // Under XUL, open a 'push' HTTP connection to the controller to
+        // receive updates. This avoids calling across the Python/XPCOM
+        // boundary, which causes deadlocks sometimes for poorly understood
+        // reasons.
+        //        port = getServerPort();
+        cookie = getEventCookie();
+        //        url = "http://127.0.0.1:" + port + "/dtv/mutators/" + cookie;
+        url = "/dtv/mutators/" + cookie;
+
+        var xr = new XMLHttpRequest();
+        /*
+        netscape.security.PrivilegeManager.
+            enablePrivilege("UniversalBrowserRead");
+        */
+        xr.multipart = true;
+        xr.open("GET", url, false);
+        xr.onload = handleUpdate;
+        xr.send(null);
+    }
+}
+     
+///////////////////////////////////////////////////////////////////////////////
 //// For use on your page                                                  ////
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -21,17 +53,30 @@ function getDTVPlatform() {
     return elt.getAttribute('dtvPlatform');
 }
 
+/*
+// NEEDS: eliminate! just use relative URLs
+function getServerPort() {
+    var elt = document.getElementsByTagName("html")[0];
+    return elt.getAttribute('serverPort');
+}
+*/
+
 // For calling from page Javascript: Cause a URL to be loaded. The
 // assumption is that the application will notice, abort the load, and
 // take some action based on the URL.
 function eventURL(url) {
     if (getDTVPlatform() == 'xul') {
-    	// XUL strategy: XML RPC to a custom protocol handler.
+    	// XUL strategy: async HTTP request to our in-process HTTP
+        // server.  Since it falls under the "same origin" security
+        // model exemption, no need for complicated preferences
+        // shenanigans -- what a nice day!
+        //        url = "http://127.0.0.1:" + getServerPort() + "/dtv/action/" +
+        //            getEventCookie() + "?" + url; NEEDS: remove
+        url = "/dtv/action/" + getEventCookie() + "?" + url;
     	var req = new XMLHttpRequest();
-    	netscape.security.PrivilegeManager.
-    	    enablePrivilege("UniversalBrowserRead");
-    	req.open("GET", "dispatch:" + getEventCookie() + "?" + url, false);
-    	req.send("");
+        req.open("GET", url, false);
+        req.send(null);
+        // NEEDS: there is another copy of this in main.js.
     }
     else if (typeof(window.frontend) == 'undefined') {
 	// Generic strategy: trigger a load, and hope the application

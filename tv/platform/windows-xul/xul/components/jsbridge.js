@@ -18,39 +18,9 @@ jsBridge.prototype = {
 	throw Components.results.NS_ERROR_NO_INTERFACE;
     },
 
-    xulLoadURI: function(xulElt, uri) {
-	xulElt.loadURI(uri);
-    },
-
-    xulAddProgressListener: function(xulElt, listener) {
-	xulElt.addProgressListener(listener);
-    },
-    xulRemoveProgressListener: function(xulElt, listener) {
-	xulElt.removeProgressListener(listener);
-    },
-
-    xulGetContentListener: function(xulElt) {
-	return xulElt.docShell.parentURIContentListener;
-    },
-    xulSetContentListener: function(xulElt, listener) {
-	//	xulElt.docShell.parentURIContentListener = listener;
-	ds = xulElt.docShell;
-	ds = ds.QueryInterface(Components.interfaces.nsIDocShell);
-	ds.parentURIContentListener = listener;
-    },
-
-    xulGetContentWindow: function(xulElt) {
-	return xulElt.contentWindow;
-    },
-
-    xulRemoveAllChildren: function(xulElt) {
-        writelog("xulRemoveAllChildren");
-        while (xulElt.hasChildNodes()) {
-            writelog("removing a child");
-            xulElt.removeChild(xulElt.firstChild);
-            writelog("child removed");
-        }
-        writelog("xulRemoveAllChildren done");
+    xulNavigateDisplay: function(mainDocument, displayName, uri) {
+        var disp = mainDocument.getElementById(displayName);
+        disp.contentDocument.location = uri;
     },
 
     xulAddElementAtEnd: function(xulElt, xml, id) {

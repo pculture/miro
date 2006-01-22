@@ -53,10 +53,12 @@ class PyBridge:
 #           jsb = klass.getService(components.interfaces.pcfIDTVJSBridge)
 #           jsb.xulLoadURI(elt, "http://www.achewood.com")
 
-            import app
-            app.start()
         except:
             traceback.print_exc()
+
+    def bootApp(self):
+        import app
+        app.start()
 
     def onShutdown(self):
         import app
@@ -70,3 +72,11 @@ class PyBridge:
         print "Add Channel %s" % url
         import feed
         feed.Feed(url)
+
+    def getServerPort(self):
+        # Frontend has to go first, because it knows the right time to
+        # import frontend for the first time (after the right set of classes
+        # have been set up)
+        import app
+        import frontend
+        return frontend.getServerPort()

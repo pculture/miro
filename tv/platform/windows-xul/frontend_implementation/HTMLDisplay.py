@@ -1,108 +1,282 @@
-import frontend
 import app
-import tempfile
-import os
-import re
 import threading
-from xpcom import components
-import time
+import asyncore
+import asynchat
+import socket
+import re
+import resource
+
+###############################################################################
+#### HTTP server to deliver pages/events to browsers via XMLHttpRequest    ####
+###############################################################################
+
+# document cookie -> (content type, body)
+pendingDocuments = {}
+
+# The port we're listening on
+serverPort = None
+lock = threading.RLock() # and a lock protecting it
+
+def getServerPort():
+    lock.acquire()
+    try:
+        if serverPort is None:
+            # Bring up the server.
+            httpListener()
+
+        assert serverPort, "httpListener didn't set the port"
+        result = serverPort
+    finally:
+        lock.release()
+
+    print "returning %d for port" % result
+    return result
+
+class httpListener(asyncore.dispatcher):
+    def __init__(self):
+        global serverPort
+
+        asyncore.dispatcher.__init__(self)
+        self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.bind( ('127.0.0.1', 0) )
+        (myAddr, myPort) = self.socket.getsockname()
+        print "Listening on %s %s" % (myAddr, myPort)
+        assert not serverPort, "Only one httpListener allowed, please"
+        serverPort = myPort
+        self.listen(2)
+
+    def handle_accept(self):
+        print "accepting conn"
+        (conn, address) = self.accept()
+        httpServer(conn)
+
+class httpServer(asynchat.async_chat):
+
+    lock = threading.RLock()
+    chromeJavascriptStream = None
+    chromeJavascriptQueue = []
+
+    def __init__(self, conn):
+        asynchat.async_chat.__init__(self, conn)
+        self.set_terminator('\r\n')
+        self.buffer = ''
+        self.gotRequest = None
+        self.isChunked = False
+
+        # NEEDS: more convincing random ID
+        self.boundary = "DTVDTVDTVDTVDTVDTV%s" % (str(id(self)))
+
+    def collect_incoming_data(self, data):
+        self.buffer += data
+
+    def found_terminator(self):
+        if self.gotRequest:
+            self.buffer = ''
+            return
+        request = self.buffer
+        self.buffer = ''
+        self.gotRequest = True
+        print "got request '%s'" % request
+
+        ## Mutator stream ##
+        match = re.match("GET /dtv/mutators/([^ ]*)", request)
+        if match:
+            cookie = match.group(1)
+            print "My event cookie is %s" % cookie
+            self.push("""HTTP/1.0 200 OK
+Content-Type: multipart/x-mixed-replace;boundary="%s"
+
+--%s""" % (self.boundary, self.boundary))
+            self.isChunked = True
+            HTMLDisplay.setMutationOutput(cookie, self)
+            return
+
+        ## Chrome-context Javascript stream ##
+        match = re.match("GET /dtv/xuljs", request)
+        if match:
+            self.push("""HTTP/1.0 200 OK
+Content-Type: multipart/x-mixed-replace;boundary="%s"
+
+--%s""" % (self.boundary, self.boundary))
+            self.isChunked = True
+            httpServer.lock.acquire()
+            try:
+                assert not httpServer.chromeJavascriptStream, \
+                    "There can't be two xuljs's"
+                httpServer.chromeJavascriptStream = self
+                for a in httpServer.chromeJavascriptQueue:
+                    print "flush pending xuljs: %s" % a
+                    self.push_chunk("text/plain", a)
+                httpServer.chromeJavascriptQueue = []
+            finally:
+                httpServer.lock.release()
+            print "Hey look, got xuljs."
+            return
+
+        ## Initial HTML ##
+        match = re.match("GET /dtv/document/([^ ]*)", request)
+        if match:
+            cookie = match.group(1)
+            print "My document cookie is %s" % cookie
+            self.isChunked = False
+
+            assert cookie in pendingDocuments, \
+                "bad document request %s to HTMLDisplay server" % \
+                cookie
+            (contentType, body) = pendingDocuments[cookie]
+            del pendingDocuments[cookie]
+
+            self.push("""HTTP/1.0 200 OK
+Content-Length: %s
+Content-Type: %s
+
+%s""" % (len(body), contentType, body))
+            self.close_when_done()
+
+        ## Action ## 
+        match = re.match(r"GET /dtv/action/([^ ?]*)\?([^ ]*)", request)
+        if match:
+            cookie = match.group(1)
+            url = match.group(2)
+            print "dispatching %s to %s" % (url, cookie)
+	    HTMLDisplay.dispatchEventByCookie(cookie, url)
+            self.push("""HTTP/1.0 200 OK
+Content-Length: 0
+Content-Type: text/plain
+
+""")
+            self.close_when_done()
+
+        ## Resource file ##
+        match = re.match("GET /dtv/resource/([^ ]*)", request)
+        if match:
+            relativePath = match.group(1)
+            fullPath = resource.path(relativePath)
+            data = open(fullPath).read()
+
+            # Guess the content-type.
+            contentType = None
+            if re.search(".png$", fullPath):
+                contentType = "image/png"
+            elif re.search(".jpg$", fullPath):
+                contentType = "image/jpeg"
+            elif re.search(".jpeg$", fullPath):
+                contentType = "image/jpeg"
+            elif re.search(".gif$", fullPath):
+                contentType = "image/gif"
+            elif re.search(".css$", fullPath):
+                contentType = "text/css"
+
+            self.push("""HTTP/1.0 200 OK
+Content-Length: %s
+""" % len(data))
+            if contentType:
+                self.push("""Content-Type: %s
+""" % contentType)
+            self.push("""
+""")
+            self.push(data)
+            self.close_when_done()
+
+        ## Fell through - bad URL ##
+        assert False, ("Invalid request '%s' to HTMLDisplay server" \
+                       % request)
+
+    def handle_close(self):
+        print "connection closed"
+        self.close() # removes self from map and leads to GC
+
+    def push_chunk(self, mimeType, body):
+        assert self.isChunked, \
+            "push_chunk only works on event-based HTTP sessions"
+        self.push("""Content-type: %s
+
+%s
+--%s""" % (mimeType, body, self.boundary))
+
+def execChromeJS(js):
+    """Execute some Javascript in the context of the privileged top-level
+    chrome window. Queued and delivered via a HTTP-based event
+    mechanism; no return value is recovered."""
+    httpServer.lock.acquire()
+    try:
+        if httpServer.chromeJavascriptStream:
+            print "exec xuljs: %s" % js
+            httpServer.chromeJavascriptStream.push_chunk("text/plain", js)
+        else:
+            print "queue up xuljs: %s" % js
+            httpServer.chromeJavascriptQueue.append(js)
+    finally:
+        httpServer.lock.release()
 
 ###############################################################################
 #### HTML display                                                          ####
 ###############################################################################
 
-# NEEDS: we need to cancel loads when we get a transition to a new
-# page, and then not loadURI until we get a successful cancellation.
-class ProgressListener:
-    _com_interfaces_ = [components.interfaces.nsIWebProgressListener]
+# Perform escapes needed for Javascript string contents.
+def quoteJS(x):
+    x = re.compile("\\\\").sub("\\\\", x)  #       \ -> \\
+    x = re.compile("\"").  sub("\\\"", x)  #       " -> \"
+    x = re.compile("'").   sub("\\'", x)   #       ' -> \'
+    x = re.compile("\n").  sub("\\\\n", x) # newline -> \n
+    x = re.compile("\r").  sub("\\\\r", x) #      CR -> \r
+    return x
 
-    def __init__(self, boundDisplay):
-	self.boundDisplay = boundDisplay
+def _genMutator(name):
+    """Internal: Generates a method that causes the javascript function with
+the given name to be called with the arguments passed to the method. Each
+argument will be turned into a string and quoted according to Javascript's
+requirements. When the method is called, it returns immediately, and the
+request goes in a queue."""
+    def mutatorFunc(self, *args):
+        self.lock.acquire()
+        try:
+            args = ','.join(['"%s"' % quoteJS(a) for a in args])
+            command = "%s(%s);" % (name, args)
 
-    def onLocationChange(self, webProgress, request, location):
-	print "onLocationChange: %s" % request
-
-    def onProgressChange(self, webProgress, request, curSelfProgress,
-			 maxSelfProgress, curTotalProgress, maxTotalProgess):
-	pass
-
-    def onSecurityChange(self, webProgress, request, state):
-	pass
-
-    def onStateChange(self, webProgress, request, stateFlags, status):
-	iwpl = components.interfaces.nsIWebProgressListener
-
-	if stateFlags & iwpl.STATE_IS_DOCUMENT:
-	    if stateFlags & iwpl.STATE_START:
-		# Load of top-level document began
-		print "STARTED: %d" % id(request)
-		pass
-	    if stateFlags & iwpl.STATE_STOP:
-		# Load of top-level document finished
-		print "FINISHED: %d" % id(request)
-		self.boundDisplay.onDocumentLoadFinished()
-
-    def onStatusChange(self, webProgress, request, status, message):
-	pass
+            if self.mutationOutput:
+                self.mutationOutput.push_chunk("text/plain", command)
+            else:
+                self.queue.append(command)
+        finally:
+            self.lock.release()
+    return mutatorFunc
 
 class HTMLDisplay (app.Display):
     "Selectable Display that shows a HTML document."
 
-    cookieToInstanceMap = {}
-
     def __init__(self, html, existingView=None, frameHint=None, areaHint=None):
-        """'html' is the initial contents of the display, as a string. If
-        frameHint is provided, it is used to guess the initial size the HTML
-        display will be rendered at, which might reduce flicker when the
-        display is installed."""
-	print "HTMLDisplay created"
+        """'html' is the initial contents of the display, as a string.
+        Remaining arguments are ignored."""
+
         app.Display.__init__(self)
 
+        # Save the HTML so the server can find it
+        pendingDocuments[self.getEventCookie()] = ("text/html", html)
+
 	self.lock = threading.RLock()
-	self.initialLoadFinished = False
-	self.execQueue = []
-	self.progressListener = ProgressListener(self)
-	self.frame = None
-	self.elt = None
+        self.mutationOutput = None
+        self.queue = []
 
-        # Create a JS bridge component that sends events to the UI thread
-        # See http://www.mozilla.org/projects/xpcom/Proxies.html
+    def getURL(self):
+        """Return the URL to load to see this document."""
+        return "http://127.0.0.1:%s/dtv/document/%s" % \
+            (self.getServerPort(), self.getEventCookie())
 
-        jsbridge = components.classes[
-            "@participatoryculture.org/dtv/jsbridge;1"].getService(
-                 components.interfaces.pcfIDTVJSBridge)
-
-        proxy = components.classes["@mozilla.org/xpcomproxy;1"].getService(
-            components.interfaces.nsIProxyObjectManager)
-        
-        eventQ = components.classes[
-            "@mozilla.org/event-queue-service;1"].getService(
-            components.interfaces.nsIEventQueueService)
-
-        self.jsbridge = proxy.getProxyForObject(
-            eventQ.getSpecialEventQueue(eventQ.UI_THREAD_EVENT_QUEUE),
-            components.interfaces.pcfIDTVJSBridge, jsbridge,
-            proxy.INVOKE_SYNC | proxy.FORCE_PROXY_CREATION)
-
-        # Save HTML to disk for loading via file: url. We'll delete it
-	# when the load has finished in onDocumentLoadFinished.
-        (handle, location) = tempfile.mkstemp('.html')
-        handle = os.fdopen(handle,"w")
-        handle.write(html)
-        handle.close()
-	self.deleteOnLoadFinished = location
-	# For debugging generated HTML, you could uncomment the next
-	# two lines.
-	print "Logged HTML to %s" % location # NEEDS: RECOMMENT
-	self.deleteOnLoadFinished = None # NEEDS: RECOMMENT
-
-	# Translate path into URL and stash until we are ready to display
-	# ourselves.
-	parts = re.split(r'\\', location)
-	self.initialURL = "file:///" + '/'.join(parts)
+    # The mutation functions.
+    addItemAtEnd = _genMutator('addItemAtEnd')
+    addItemBefore = _genMutator('addItemBefore')
+    removeItem = _genMutator('removeItem')
+    changeItem = _genMutator('changeItem')
+    hideItem = _genMutator('hideItem')
+    showItem = _genMutator('showItem')
 
     # NEEDS: set useragent as a pref: 
     # "DTV/pre-release (http://participatoryculture.org/)"
+
+    ### Concerning dispatching events via context cookies ###
+
+    cookieToInstanceMap = {}
 
     # NEEDS: security audit: do we need to make cookies difficult to
     # predict?
@@ -118,7 +292,7 @@ class HTMLDisplay (app.Display):
 	if hasattr(self, 'eventCookie'):
 	    return self.eventCookie
 
-	# Create cookie and ave this instance in the instance cookie
+	# Create cookie and add this instance to the instance cookie
 	# lookup table
 	self.eventCookie = str(id(self))
 	HTMLDisplay.cookieToInstanceMap[self.eventCookie] = self
@@ -128,85 +302,16 @@ class HTMLDisplay (app.Display):
     def getDTVPlatformName(self):
 	return "xul"
 
+    def getServerPort(self):
+        port = getServerPort()
+        print "--- reporting port %s" % port
+        return port
+
     @classmethod
     def dispatchEventByCookie(klass, eventCookie, eventURL):
 	print "dispatch %s %s" % (eventCookie, eventURL)
 	return klass.cookieToInstanceMap[eventCookie].onURLLoad(eventURL)
 
-    def getXULElement(self, frame):
-	self.lock.acquire()
-	try:
-	    if not (self.frame is None):
-		assert self.frame == frame, "XUL displays cannot be reused"
-		return self.elt
-
-	    self.frame = frame
-	    self.elt = self.frame.getXULDocument().createElement("browser")
-	    self.elt.setAttribute("flex", "1")
-	    self.elt.setAttribute("type", "content")
-	    self.elt.setAttribute("src", self.initialURL)
-	    return self.elt
-	finally:
-	    self.lock.release()
-
-    def onSelected(self, frame):
-	# Technically, there is a race condition here. You apparently
-	# can't add a progress listener until the browser element has
-	# been inserted in the XUL document, and presumably the 'src'
-	# URL doesn't start loading until then. But as the code sits
-	# now, there is a small window between when selectDisplay
-	# inserts the element in the document and when it calls this
-	# function, allowing us to register the listener. This means
-	# we might miss the "load finished" event. What we need is a
-	# way to simultaneously get the current state of the load and
-	# register our handler.
-	assert self.elt, "HTMLDisplay methods called out of assumed order"
-	self.jsbridge.xulAddProgressListener(self.elt,
-					     self.progressListener)
-
-    # Decorator. Causes calls to be queued up, in order, until
-    # onDocumentLoadFinished is called.
-    def deferUntilAfterLoad(func):
-	def wrapper(self, *args, **kwargs):
-	    self.lock.acquire()
-	    try:
-		if not self.initialLoadFinished:
-		    self.execQueue.append(lambda: func(self, *args, **kwargs))
-		else:
-		    func(self, *args, **kwargs)
-	    finally:
-		self.lock.release()
-	return wrapper
-
-    @deferUntilAfterLoad
-    def execJS(self, js):
-	raise NotImplementedError
-
-    # DOM hooks used by the dynamic template code
-    @deferUntilAfterLoad
-    def addItemAtEnd(self, xml, id):
-	self.jsbridge.xulAddElementAtEnd(self.elt, xml, id)
-	pass
-    @deferUntilAfterLoad
-    def addItemBefore(self, xml, id):
-	self.jsbridge.xulAddElementBefore(self.elt, xml, id)
-	pass
-    @deferUntilAfterLoad
-    def removeItem(self, id):
-	self.jsbridge.xulRemoveElement(self.elt, id)
-	pass
-    @deferUntilAfterLoad
-    def changeItem(self, id, xml):
-	self.jsbridge.xulChangeElement(self.elt, id, xml)
-	pass
-    @deferUntilAfterLoad
-    def hideItem(self, id):
-	self.jsbridge.xulHideElement(self.elt, id)
-	pass
-    @deferUntilAfterLoad
-    def showItem(self, id):
-	self.jsbridge.xulShowElement(self.elt, id)
-	pass
     def onURLLoad(self, url):
         """Called when this HTML browser attempts to load a URL (either
         through user action or Javascript.) The URL is provided as a
@@ -218,52 +323,34 @@ class HTMLDisplay (app.Display):
         # For overriding
         return True
 
-    def onDocumentLoadFinished(self):
-#	self.jsbridge.xulSetDocumentBridge(self.elt, "myValXXX2") # NEEDS
-	print "--------------- onDocumentLoadFinished"
+    @classmethod
+    def setMutationOutput(klass, eventCookie, htmlServer):
+	self = klass.cookieToInstanceMap[eventCookie]
+        assert not self.mutationOutput, "HTMLDisplay already has its htmlServer"
 
-	if self.deleteOnLoadFinished:
-	    try:
-		os.remove(self.deleteOnLoadFinished)
-		pass
-	    except os.error:
-		pass
-	    self.deleteOnLoadFinished = None
+        self.lock.acquire()
+        try:
+            self.mutationOutput = htmlServer
+            for q in self.queue:
+                self.mutationOutput.push_chunk('text/plain', q)
+            self.queue = []
+        finally:
+            self.lock.release()
 
-	# Dispatch calls that got queued up as a result of @deferUntilAfterLoad
-	if not self.initialLoadFinished:
-	    self.lock.acquire()
-	    try:
-		self.initialLoadFinished = True
-		for func in self.execQueue:
-		    func()
-		self.execQueue = []
-	    finally:
-		self.lock.release()
+    ### Concerning destruction ###
 
     def unlink(self):
-	print "WARNING ---------- unlink()"
 	self.lock.acquire()
-
 	try:
 	    if self.eventCookie in HTMLDisplay.cookieToInstanceMap:
 		del HTMLDisplay.cookieToInstanceMap[self.eventCookie]
-
-		# Because this is inside the 'if' above, we make sure it only
-		# happens once.
-		self.jsbridge.xulRemoveProgressListener(self.elt,
-							self.progressListener)
+            if self.eventCookie in pendingDocuments:
+                del pendingDocuments[self.eventCookie]
 	finally:
 	    self.lock.release()
 
     def __del__(self):
         self.unlink()
-
-    # NEEDS: right-click menu.
-    # Protocol: if type(getContextClickMenu) == "function", call it and
-    # pass the DOM node that was clicked on. That returns "URL|description"
-    # with blank lines for separators. On a click, force navigation of that
-    # frame to that URL, maybe by setting document.location.href.
 
 ###############################################################################
 ###############################################################################

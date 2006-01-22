@@ -1,58 +1,49 @@
-import app
-from frontend import *
+import frontend
 from xpcom import components
+import threading
 
 ###############################################################################
 #### Main window                                                           ####
 ###############################################################################
 
-# NEEDS: save/restore window position and size
 class MainFrame:
     def __init__(self, appl):
-        """The initially active display will be an instance of NullDisplay."""
-	print "MainFrame init"
-
         # Symbols by other parts of the program as as arguments
         # to selectDisplay
         self.mainDisplay = "mainDisplay"
         self.channelsDisplay = "channelsDisplay"
         self.collectionDisplay = "collectionDisplay"
-        #(videoInfoDisplay?)
 
-        # Child display state
+        # Displays selected in each area, for generating deselection
+        # messages.
         self.selectedDisplays = {}
 
-	# Find the XUL document corresponding to the window
-	klass = components.classes["@participatoryculture.org/dtv/pybridge;1"]
-	pybridge = klass.getService(components.interfaces.pcfIDTVPyBridge)
-	self.document = pybridge.mainWindowDocument
+        ## BEGIN SYNCHRONOUS MOZILLA CALLS ##
 
-        # Grab the Javascript bridge object in case we need to call
-        # some of our Javascript helper functions
-	klass = components.classes["@participatoryculture.org/dtv/jsbridge;1"]
-	self.jsbridge = klass.getService(components.interfaces.pcfIDTVJSBridge)
+	# Find the XUL document corresponding to the window.
+	#klass = components.classes["@participatoryculture.org/dtv/pybridge;1"]
+	#pybridge = klass.getService(components.interfaces.pcfIDTVPyBridge)
+	#self.document = pybridge.mainWindowDocument
+
+        # Grab the Javascript bridge so we can call our Javascript helpers.
+	#klass = components.classes["@participatoryculture.org/dtv/jsbridge;1"]
+	#self.jsbridge = klass.getService(components.interfaces.pcfIDTVJSBridge)
+
+        ## END SYNCHRONOUS MOZILLA CALLS ##
 
     def selectDisplay(self, newDisplay, area):
         """Install the provided 'newDisplay' in the requested area"""
 
 	# Generate a deselection message for the previously selected
 	# display in this area, if any
-        oldDisplay = None # protect from GC at least until new window's in
-        if self.selectedDisplays.has_key(area):
+        if area in self.selectedDisplays:
             oldDisplay = self.selectedDisplays[area]
             if oldDisplay:
                 oldDisplay.onDeselected_private(self)
                 oldDisplay.onDeselected(self)
 
-	# Find the <box /> into which the display is to be inserted
-	box = self.document.getElementById(area)
-
-        # Remove whatever was in the box before (such as the previous display)
-	self.jsbridge.xulRemoveAllChildren(box)
-
-	# Insert the newly selected display
-	if newDisplay:
-	    box.appendChild(newDisplay.getXULElement(self))
+        # NEEDS: case out instances for HTMLDisplay and VideoDisplay
+        self.selectHTML(newDisplay, area)
 
 	# Generate a selection message for the new display, if any
         self.selectedDisplays[area] = newDisplay
@@ -60,9 +51,18 @@ class MainFrame:
 	    newDisplay.onSelected_private(self)
 	    newDisplay.onSelected(self)
 
-    # Internal use: get the XUL document corresponding to the window.
-    def getXULDocument(self):
-	return self.document
+    def selectHTML(self, display, area):
+        newURL = display.getURL()
+        # make the display load newURL. that's it!
+
+        ## BEGIN SYNCHRONOUS MOZILLA CALLS ##
+
+        print "Telling %s to load %s" % (area, newURL)
+        #self.jsbridge.xulNavigateDisplay(self.document, area, newURL)
+        frontend.execChromeJS("navigateDisplay('%s', '%s');" % (area, newURL))
+        print "Came back from that"
+
+        ## END SYNCHRONOUS MOZILLA CALLS ##
 
     # Internal use: return an estimate of the size of a given display area
     # as a (width, height) pair, or None if no information's available.
@@ -70,36 +70,7 @@ class MainFrame:
 	return None
 
     def unlink(self):
-	pass
-
-    def __del__(self):
-        self.unlink()
-
-###############################################################################
-#### The no-op display (here's as good a place as any)                     ####
-###############################################################################
-
-class NullDisplay (app.Display):
-    "A blank placeholder Display."
-
-    def __init__(self):
-        app.Display.__init__(self)
-	self.elt = None
-	self.frame = None
-
-    def getXULElement(self, frame):
-	if self.frame is None:
-	    self.frame = frame
-	    self.elt = self.frame.getXULDocument().createElement("spacer")
-	    self.elt.setAttribute("width", "0")
-	    self.elt.setAttribute("height", "0")
-	    self.elt.setAttribute("collapsed", "true")
-	else:
-	    assert self.frame == frame, "XUL displays cannot be reused"
-	return self.elt
-
-    def unlink(self):
-	pass
+        pass
 
     def __del__(self):
         self.unlink()

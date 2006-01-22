@@ -1,9 +1,8 @@
 import sys
 import frontend
-
-from ctypes import *
-from ctypes.wintypes import *
-atl = windll.atl
+import asyncore
+import time
+import threading
 
 ###############################################################################
 #### Application object                                                    ####
@@ -15,6 +14,14 @@ class Application:
 	print "Application init"
 
     def runNonblocking(self):
+        # Start the asynchronous I/O thread (mostly for the webserver
+        # used to send events to the browsers.)
+        ioThread = threading.Thread(name = "Asynchronous IO",
+                                    target = ioThreadFunc)
+        ioThread.setDaemon(True)
+        ioThread.start()
+
+        # Start the core.
 	self.onStartup()
 
     # NEDS: arrange for onShutdown to be called
@@ -37,6 +44,13 @@ class Application:
     def addAndSelectFeed(self, url):
         # For overriding
         pass
+
+def ioThreadFunc():
+    # loop() shouldn't exit, because we keep some listening sockets
+    # open; if it does, just try again
+    while True:
+        asyncore.loop()
+        time.sleep(.1)
 
 ###############################################################################
 ###############################################################################

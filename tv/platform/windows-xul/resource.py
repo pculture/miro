@@ -40,8 +40,10 @@ def path(relative_path):
     myParts = re.split(r'/', relative_path)
     return '\\'.join(rootParts + myParts)
 
-# As path(), but return a file: URL instead.
+# As path(), but return a URL that will retrieve the resource
+# instead. (We end up returning a relative URL that will work on the
+# webserver we serve on 127.0.0.1. That way, loading stylesheets from
+# a resource URL will be legal under the Mozilla "same origin"
+# policy.)
 def url(relative_path):
-    rootParts = re.split(r'\\', resourceRoot())
-    myParts = re.split(r'/', relative_path)
-    return "file:///" + '/'.join(rootParts + myParts)
+    return "/dtv/resource/" + relative_path

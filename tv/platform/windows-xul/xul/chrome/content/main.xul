@@ -9,11 +9,11 @@
         windowtype="main"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 	xmlns:html="http://www.w3.org/1999/xhtml"
-	hidechrome="true" onload="onLoad();"
+	hidechrome="true"
+        onload="onLoad();" onunload="onUnload();"
 	orient="vertical"
 	sizemode="normal"
 	width="800" height="600"
-        onunload="closeApp();"
 	persist="screenX screenY width height">
  <popupset><popup id="contextPopup"><menuitem label="bar"/></popup></popupset>
 <script src="chrome://dtv/content/main.js"/>
@@ -127,9 +127,10 @@
 <hbox flex="1">
 
 	<!-- CHANNEL BAR -->
-	<hbox id="channelsDisplay" flex="0" width="250" minwidth="25" maxwidth="400" context="contextPopup" oncontextmenu="return xulcontexthandler(event);" >
-  	<browser src="about:mozilla" flex="1" type="content" />
-	</hbox>
+  	<browser id="channelsDisplay" src="http://www.yahoo.com" type="content"
+                 flex="0" width="250" minwidth="25" maxwidth="400"
+                 context="contextPopup"
+                 oncontextmenu="return xulcontexthandler(event);" />
 	<!-- / CHANNEL BAR -->
 	
   <!-- DIVIDER -->
@@ -137,11 +138,9 @@
 	<!-- / DIVIDER -->
 	
 	<!-- MAIN WINDOW -->
-	<hbox id="mainDisplay" flex="1" context="contextPopup" oncontextmenu="return xulcontexthandler(event);" >
-          <!-- NEEDS: this load needs to go away before release, but
-               setting src="" seems to break things; no idea why. -->
-  	<browser src="about:mozilla" flex="1" type="content" />
-	</hbox>
+  	<browser id="mainDisplay" src="file://c:/tmp/a.html" type="content" flex="1"
+                 context="contextPopup"
+                 oncontextmenu="return xulcontexthandler(event);" />
 	<!-- / MAIN WINDOW -->
 	
 </hbox>
