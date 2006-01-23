@@ -60,8 +60,9 @@ class PlaybackControllerBase:
         self.currentPlaylist = Playlist(view, firstItemId)
     
     def reset(self):
-        self.currentPlaylist.reset()
-        self.currentPlaylist = None
+        if self.currentPlaylist is not None:
+            self.currentPlaylist.reset()
+            self.currentPlaylist = None
         self.currentDisplay = None
     
     def enterPlayback(self):
