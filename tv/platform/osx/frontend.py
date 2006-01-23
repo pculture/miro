@@ -818,6 +818,10 @@ class DiskSpacePrefsController (NibClassBuilder.AutoBaseClass):
 
 class UIBackendDelegate:
 
+    # This lock is used by getHTTPAuth to serialize HTTP authentication requests 
+    # and prevent multiple authentication dialogs to pop up at once.
+    httpAuthLock = threading.Lock()
+
     def getHTTPAuth(self, url, domain, prefillUser = None, prefillPassword = None):
         """Ask the user for HTTP login information for a location, identified
         to the user by its URL and the domain string provided by the
@@ -826,8 +830,14 @@ class UIBackendDelegate:
         information, it's returned as a (user, password)
         tuple. Otherwise, if the user presses Cancel or similar, None
         is returned."""
-        message = "%s requires a username and password for \"%s\"." % (url, domain)
-        return PasswordController.alloc().init(message, prefillUser, prefillPassword).getAnswer()
+        ret = None
+        self.httpAuthLock.acquire()
+        try:
+            message = "%s requires a username and password for \"%s\"." % (url, domain)
+            ret = PasswordController.alloc().init(message, prefillUser, prefillPassword).getAnswer()
+        finally:
+            self.httpAuthLock.release()
+        return ret;
 
     def isScrapeAllowed(self, url):
         """Tell the user that URL wasn't a valid feed and ask if it should be
