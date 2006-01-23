@@ -152,7 +152,7 @@ Content-Type: text/plain
         if match:
             relativePath = match.group(1)
             fullPath = resource.path(relativePath)
-            data = open(fullPath).read()
+            data = open(fullPath,'rb').read()
 
             # Guess the content-type.
             contentType = None
