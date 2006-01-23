@@ -147,7 +147,7 @@
 <!-- / CONTENT AREA -->
 
 <!-- BOTTOM -->
-<hbox flex="0" id="bottom" class="bottom">
+<hbox flex="0" id="bottom" class="bottom" align="center">
 
 	<!-- BUTTONS -->
 	<hbox flex="0" container="1" width="250" height="64" minheight="64" id="bottom-left">
@@ -187,10 +187,13 @@
 	<!-- / PLAYBACK PROGRESS/CONTROLS -->
 	
 	<!-- VOLUME SLIDER -->
-	<hbox flex="0" width="130" id="bottom-right"/>
-	<!-- / VOLUME SLIDER -->
-	
+	<hbox flex="0" width="130" id="volume"/>
+	<!-- / VOLUME SLIDER -->	
+	<hbox flex="0" id="bottom-right" height="100">
+          <resizer dir="bottomright" id="resizer"/>
+        </hbox>
 </hbox>
+
 <!-- / BOTTOM -->
 <command id="addchannel" oncommand="window.openDialog('chrome://dtv/content/addchannel.xul','addchannel','chrome,dependent,centerscreen');" />
 </window>
