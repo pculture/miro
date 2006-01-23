@@ -85,6 +85,10 @@ IDL_INCLUDE_PATH = os.path.join(BINARY_KIT_ROOT, "idlinclude")
 # running it alongside your choice of xulrunner nightlies.
 PYXPCOM_DIR = os.path.join(BINARY_KIT_ROOT, "pyxpcom")
 
+# Path to a build of our patched VLC Mozilla plugin. This directory
+# should contain 'npvlc.dll' and 'vlcintf.xpt'.
+VLC_PLUGIN_DIR = os.path.join(BINARY_KIT_ROOT, "mozplugin")
+
 ###############################################################################
 ## End of configuration. No user-servicable parts inside                     ##
 ###############################################################################
@@ -172,6 +176,19 @@ ext_modules = [
 # should be the appropriate way.
 
 class Common:
+    # NEEDS: if you look at the usage of this function, we're dropping
+    # the plugin into the xulrunner plugin directory, rather than the
+    # app bundle plugin directory, which is the way you're "supposed"
+    # to do it so your app is cleanly separated from xulrunner.
+    def copyVLCPluginFiles(self, baseDir):
+        destDir = os.path.join(baseDir, 'plugins')
+	if not os.access(destDir, os.F_OK):
+	    os.mkdir(destDir)
+
+        pluginFiles = ['npvlc.dll', 'vlcintf.xpt']
+        for f in pluginFiles:
+            shutil.copy2(os.path.join(VLC_PLUGIN_DIR, f), destDir)
+
     def compileIDL(self):
 	buildDir = os.path.join(self.bdist_base, "idl")
 	pattern = re.compile(r"(.*)\.idl$")
@@ -269,6 +286,9 @@ class runxul(Command, Common):
 
 	# Then, copy the extra PyXPCOM files over it.
 	copyTreeExceptSvn(PYXPCOM_DIR, buildBase)
+
+        # Finally, drop in our plugins.
+        self.copyVLCPluginFiles(buildBase)
 
 	# Create the mark file to indicate that we now have a build.
 	open(markFile, 'w')
@@ -408,6 +428,7 @@ class bdist_xul_dumb(Command, Common):
         self.xulrunnerOut = os.path.join(self.dist_dir, 'xulrunner')
 	copyTreeExceptSvn(XULRUNNER_DIR, self.xulrunnerOut)
 	copyTreeExceptSvn(PYXPCOM_DIR, self.xulrunnerOut)
+        self.copyVLCPluginFiles(self.xulrunnerOut)
 
         # Compile and drop in type library
         # NEEDS: make IDL directory configurable
