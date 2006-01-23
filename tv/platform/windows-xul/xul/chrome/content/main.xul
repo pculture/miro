@@ -127,7 +127,7 @@
 <hbox flex="1">
 
 	<!-- CHANNEL BAR -->
-  	<browser id="channelsDisplay" src="http://www.yahoo.com" type="content"
+  	<browser id="channelsDisplay" src="" type="content"
                  flex="0" width="250" minwidth="25" maxwidth="400"
                  context="contextPopup"
                  oncontextmenu="return xulcontexthandler(event);" />
@@ -138,7 +138,7 @@
 	<!-- / DIVIDER -->
 	
 	<!-- MAIN WINDOW -->
-  	<browser id="mainDisplay" src="file://c:/tmp/a.html" type="content" flex="1"
+  	<browser id="mainDisplay" src="" type="content" flex="1"
                  context="contextPopup"
                  oncontextmenu="return xulcontexthandler(event);" />
 	<!-- / MAIN WINDOW -->
