@@ -187,7 +187,7 @@
 	<!-- / PLAYBACK PROGRESS/CONTROLS -->
 	
 	<!-- VOLUME SLIDER -->
-	<hbox flex="0" width="130" id="volume"/>
+	<hbox flex="0" width="110" id="volume"/>
 	<!-- / VOLUME SLIDER -->	
 	<hbox flex="0" id="bottom-right" height="100">
           <resizer dir="bottomright" id="resizer"/>
