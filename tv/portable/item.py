@@ -3,6 +3,7 @@ from database import DDBObject, defaultDatabase
 from downloader import DownloaderFactory
 from copy import copy
 from xhtmltools import unescape,xhtmlify
+from xml.sax.saxutils import unescape
 from scheduler import ScheduleEvent
 from feedparser import FeedParserDict
 from threading import Thread
@@ -734,7 +735,10 @@ class Item(DDBObject):
                     ret = ""
         finally:
             self.endRead()
-        return '<span>'+ret+'</span>'
+        # feedparser returns escaped CDATA so we either have to change its
+        # behavior when it parses dtv:paymentlink elements, or simply unescape
+        # here...
+        return '<span>' + unescape(ret) + '</span>'
 
     ##
     # Updates an item with new data

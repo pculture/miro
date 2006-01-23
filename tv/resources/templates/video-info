@@ -17,8 +17,8 @@
 <div id="videodetails-container">
 
 	<div id="videodetails-channeltitle">
-		<h1><span t:replace="this getTitle" /></h1> <h2><span t:replace="this getFeed getTitle" /></h2>
-		<!--<h3>Donate to support videos like these by <a href="#">clicking here</a>.</h3>-->
+		<h1 t:replace="this getTitle" /> <h2 t:replace="this getFeed getTitle" />
+		<h3 t:replaceMarkup="this getPaymentHTML" />
 	</div>
 	
 	<!--<div id="videodetails-actions">
