@@ -12,7 +12,7 @@ class MainFrame:
         # to selectDisplay
         self.mainDisplay = "mainDisplay"
         self.channelsDisplay = "channelsDisplay"
-        self.collectionDisplay = "collectionDisplay"
+        self.videoInfoDisplay = "videoInfoDisplay"
 
         # Displays selected in each area, for generating deselection
         # messages.

@@ -1,7 +1,8 @@
 import app
 import frontend
-#import vlc
+import frontend_implementation
 import os
+import threading
 
 ###############################################################################
 #### The Playback Controller                                               ####
@@ -23,75 +24,139 @@ class PlaybackController (app.PlaybackControllerBase):
 #### Right-hand pane video display                                         ####
 ###############################################################################
 
-class VideoDisplay (app.VideoDisplayBase):
-    "Video player that can be shown in a MainFrame's right-hand pane."
+class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
+    "Video player shown in a MainFrame's right-hand pane."
 
     def __init__(self):
+        print "VideoDisplay init"
         app.VideoDisplayBase.__init__(self)
-#        self.vlc = vlc.SimpleVLC()
-#        self.vlc.setWindow(self.getHwnd())
-    
-    def canPlayItem(self, item):
-        return False
+
+	self.lock = threading.RLock()
+        self.mutationOutput = None
+        self.queue = []
+        print "Display initialized"        
+
+    def initRenderers(self):
+        print "initRenderers"
+        self.renderers.append(VLCPluginRenderer())
 
     def selectItem(self, item):
+        print "VideoDisplay select item"
+        self.itemPath = item.getFilename()
         app.VideoDisplayBase.selectItem(self, item)
-
-    def goToBeginningOfMovie(self):
-        pass
-
+ 
     def play(self):
-        filename = self.cur().getPath()
-        if filename is None:
-            filename= self.getNext().getPath()
-#        self.vlc.play(filename)
+        print "VideoDisplay play"
+        html = """<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+<embed type="application/x-vlc-plugin"
+         name="video1"
+         autostart="1" loop="yes" style="position: absolute; top: 0px;bottom: 0px; left: 0px; right: 0px"
+         target="file:///"""
+
+        html += self.itemPath.replace("\\","/")
+        html += '''" id="video1" />
+
+</body>
+</html>
+'''
+        frontend_implementation.HTMLDisplay.pendingDocuments[self.getEventCookie()] = ("text/html", html)
+
         app.VideoDisplayBase.play(self)
 
     def pause(self):
-#        self.vlc.pause(0)
+        print "VideoDisplay pause"
         app.VideoDisplayBase.pause(self)
 
     def stop(self):
-#        self.vlc.stop()
+        print "VideoDisplay stop"
         app.VideoDisplayBase.stop(self)
-
+    
     def goFullScreen(self):
+        print "VideoDisplay fullscreen"
         app.VideoDisplayBase.goFullScreen(self)
 
     def exitFullScreen(self):
+        print "VideoDisplay exit fullscreen"
         app.VideoDisplayBase.exitFullScreen(self)
 
-    def getCurrentTime(self):
-        return self.vlc.getPosition()
-
     def setVolume(self, level):
-#        self.vlc.setVolume(level)
+        print "VideoDisplay set volume"
         app.VideoDisplayBase.setVolume(self, level)
 
-    def getVolume(self):
-#        return self.vlc.getVolume()
-	return 0
-
     def muteVolume(self):
+        print "VideoDisplay mute volume"
         app.VideoDisplayBase.muteVolume(self)
 
     def restoreVolume(self):
+        print "VideoDisplay restore volume"
         app.VideoDisplayBase.restoreVolume(self)
 
     def onSelected(self, frame):
+        print "VideoDisplay on selected"
         app.VideoDisplayBase.onSelected(self, frame)
 
     def onDeselected(self, frame):
+        print "VideoDisplay deselected"
         app.VideoDisplayBase.onDeselected(self, frame)
 
-    def onWMClose(self, hwnd, msg, wparam, lparam):
-        self.unlink()
+class VLCPluginRenderer (app.VideoRenderer):
 
-    def onWMSize(self, hwnd, msg, wparam, lparam):
-        pass
+    def __init__(self):
+        app.VideoRenderer.__init__(self)
+        print "Renderer initialized"
 
-    def onWMActivate(self, hwnd, msg, wparam, lparam):
-        pass
+    def reset(self):
+        print "Renderer reset"
+    def canPlayItem(self, item):
+        print "canPlayItem"
+        return True
+
+    def selectItem(self, item):
+        print "Renderer select item"
+        self.itemPath = item.getFilename()
+
+    def play(self):
+        print "Renderer play"
+
+    def pause(self):
+        print "Renderer pause"
+
+    def stop(self):
+        print "Renderer stop"
+
+    def goToBeginningOfMovie(self):
+        print "Renderer go to beginning"
+
+    def getDuration(self):
+        print "Renderer getDuration"
+        return 0
+
+    def getCurrentTime(self):
+        print "Renderer getCurrentTime"
+        return 0
+
+    def setCurrentTime(self, time):
+        print "Renderer Set current time"
+
+    def getRate(self):
+        print "Renderer get rate"
+        return 0.0
+
+    def setRate(self, rate):
+        print "Renderer set rate"
+        
+    def setVolume(self, level):
+        print "Renderer set volume"
+
 
 ###############################################################################
 #### Playlist item base class                                              ####
