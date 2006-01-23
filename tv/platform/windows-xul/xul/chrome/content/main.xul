@@ -190,7 +190,7 @@
 	<hbox flex="0" width="110" id="volume"/>
 	<!-- / VOLUME SLIDER -->	
 	<hbox flex="0" id="bottom-right" height="100">
-          <resizer dir="bottomright" id="resizer"/>
+          <resizer dir="bottomright" id="resizer" oncommand="return doResize(event);"/>
         </hbox>
 </hbox>
 

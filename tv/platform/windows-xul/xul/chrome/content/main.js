@@ -298,3 +298,13 @@ function xulcontexthandler(event) {
                            // apparently doesn't...
 
 }
+
+function doResize(event) {
+ if (window.outerWidth < 800) {
+    window.outerWidth=800;
+  }
+ if (window.outerHeight < 200) {
+    window.outerHeight=200;
+  }
+  return true;  
+}
