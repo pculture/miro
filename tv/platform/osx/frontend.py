@@ -21,6 +21,7 @@ import autoupdate
 import re
 import os
 import sys
+import glob
 import objc
 import time
 import math
@@ -2038,6 +2039,9 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
 
 class QuicktimeRenderer (app.VideoRenderer):
 
+    POSSIBLY_SUPPORTED_EXT = ('.wmv', '.avi', '.asf')
+    UNSUPPORTED_EXT = ('.ram', '.rm', '.rpm', '.rv', '.ra')
+
     def __init__(self, delegate):
         app.VideoRenderer.__init__(self)
         self.view = QTMovieView.alloc().initWithFrame_(((0,0),(100,100)))
@@ -2045,6 +2049,7 @@ class QuicktimeRenderer (app.VideoRenderer):
         self.view.setControllerVisible_(NO)
         self.view.setPreservesAspectRatio_(YES)
         self.delegate = delegate
+        self.cachedMovie = nil
 
     def registerMovieObserver(self, movie):
         self.unregisterMovieObserver()
@@ -2058,12 +2063,31 @@ class QuicktimeRenderer (app.VideoRenderer):
         self.unregisterMovieObserver()
 
     def canPlayItem(self, item):
-        moviePath = item.getPath().lower()
-        return not moviePath.endswith('wmv') and not moviePath.endswith('avi')        
+        canPlay = False
+        pathname = item.getPath()
+        if self.cachedMovie is not nil and self.cachedMovie.attributeForKey_(QTMovieFileNameAttribute) == pathname:
+            qtmovie = self.cachedMovie
+        else:
+            (qtmovie, error) = QTMovie.alloc().initWithFile_error_(pathname)
+            self.cachedMovie = qtmovie
+        if qtmovie is not nil:
+            (path, ext) = os.path.splitext(pathname.lower())
+            if ext in self.POSSIBLY_SUPPORTED_EXT and self.hasFlip4MacComponent():
+                canPlay = True
+            elif ext not in self.POSSIBLY_SUPPORTED_EXT and ext not in self.UNSUPPORTED_EXT:
+                canPlay = True
+        return canPlay
+
+    def hasFlip4MacComponent(self):
+        return len(glob.glob('/Library/Quicktime/Flip4Mac*')) > 0
 
     def selectItem(self, item):
         pathname = item.getPath()
-        (qtmovie, error) = QTMovie.alloc().initWithFile_error_(pathname)
+        if self.cachedMovie is not nil and self.cachedMovie.attributeForKey_(QTMovieFileNameAttribute) == pathname:
+            qtmovie = self.cachedMovie
+        else:
+            (qtmovie, error) = QTMovie.alloc().initWithFile_error_(pathname)
+        self.cachedMovie = nil
         if qtmovie is not nil:
             self.view.setMovie_(qtmovie)
             self.registerMovieObserver(qtmovie)
