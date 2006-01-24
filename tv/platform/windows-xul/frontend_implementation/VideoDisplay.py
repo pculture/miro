@@ -60,8 +60,8 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
 <embed type="application/x-vlc-plugin"
          name="video1"
          autostart="1" loop="yes" style="position: absolute; top: 0px;bottom: 0px; left: 0px; right: 0px"
-         target="file:///"""
-
+"""
+        html += ' target="file:///'
         html += self.itemPath.replace("\\","/")
         html += '''" id="video1" />
 
