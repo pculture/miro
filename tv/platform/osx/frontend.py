@@ -1748,7 +1748,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.preventSystemSleep(True)
 
     def onDeselected(self):
-        self.enableSecondaryControls(False)
+        self.enableSecondaryControls(NO)
         self.preventSystemSleep(False)
         self.videoAreaView.teardown()
         self.progressDisplayer.teardown()
@@ -1784,7 +1784,6 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.backwardButton.setEnabled_(enabled)
         self.stopButton.setEnabled_(enabled)
         self.forwardButton.setEnabled_(enabled)
-        self.fullscreenButton.setEnabled_(enabled)
 
     def updatePlayPauseButton(self, prefix):
         self.playPauseButton.setImage_(NSImage.imageNamed_('%s' % prefix))
@@ -1892,13 +1891,16 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
     def handleWatchableDisplayNotification_(self, notification):
         self.enablePrimaryControls(YES)
+        self.enableSecondaryControls(NO)
         info = notification.userInfo()
         view = info['view']
-        display = notification.object()
         app.Controller.instance.playbackController.configure(view)
 
     def handleNonWatchableDisplayNotification_(self, notification):
         self.enablePrimaryControls(NO)
+        display = notification.object()
+        if hasattr(display, 'templateName') and display.templateName.startswith('external-playback'):
+            self.enableSecondaryControls(YES)
     
     def handleMovieNotification_(self, notification):
         renderer = self.videoDisplay.activeRenderer

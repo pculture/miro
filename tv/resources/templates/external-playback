@@ -30,6 +30,8 @@
     <div id="embedded-video-info">
         <span id="video_info_area"><t:includeTemplate filename="video-info" /></span>
     </div>
+    
+    <t:triggerActionOnUnload url="javascript:stopCountdown()" />
 </body>
 
 </html>

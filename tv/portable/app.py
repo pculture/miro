@@ -127,7 +127,7 @@ class PlaybackControllerBase:
         if direction == 1:
             nextItem = self.currentPlaylist.getNext()
         else:
-            if self.currentDisplay.getCurrentTime() <= 1.0:
+            if not hasattr(self.currentDisplay, 'getCurrentTime') or self.currentDisplay.getCurrentTime() <= 1.0:
                 nextItem = self.currentPlaylist.getPrev()
             else:
                 self.currentDisplay.goToBeginningOfMovie()
@@ -785,8 +785,10 @@ class TemplateDisplay(frontend.HTMLDisplay):
         newPage = False
         for url in triggers:
             if url.startswith('action:'):
-                #print "loading %s" % url
                 self.onURLLoad(url)
+            elif url.startswith('javascript:'):
+                js = url.replace('javascript:', '')
+                self.execJS(js)
             elif url.startswith('template:'):
                 newPage = True
                 break

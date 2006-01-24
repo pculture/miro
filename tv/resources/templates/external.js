@@ -10,6 +10,11 @@ function startCountdown(itemID)
     updateCountdown(itemID)
 }
 
+function stopCountdown()
+{
+    counting = false;
+}
+
 function updateCountdown(itemID)
 {
     if (counting)
@@ -29,13 +34,13 @@ function updateCountdown(itemID)
 
 function playItemExternally(itemID)
 {
-    counting = false;
+    stopCountdown();
     eventURL('action:playItemExternally?itemID=' + itemID)
 }
 
 function skipItem(itemID)
 {
-    counting = false;
+    stopCountdown();
     eventURL('action:skipItem?itemID=' + itemID)
 }
 
