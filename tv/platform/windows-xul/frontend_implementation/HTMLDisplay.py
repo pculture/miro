@@ -5,6 +5,7 @@ import asynchat
 import socket
 import re
 import resource
+import xhtmltools
 
 ###############################################################################
 #### HTTP server to deliver pages/events to browsers via XMLHttpRequest    ####
@@ -233,6 +234,8 @@ request goes in a queue."""
         try:
             args = ','.join(['"%s"' % quoteJS(a) for a in args])
             command = "%s(%s);" % (name, args)
+            
+            command = xhtmltools.toUTF8Bytes(command)         
 
             if self.mutationOutput:
                 self.mutationOutput.push_chunk("text/plain", command)
@@ -248,6 +251,8 @@ class HTMLDisplay (app.Display):
     def __init__(self, html, existingView=None, frameHint=None, areaHint=None):
         """'html' is the initial contents of the display, as a string.
         Remaining arguments are ignored."""
+
+        html=xhtmltools.toUTF8Bytes(html)
 
         app.Display.__init__(self)
 
