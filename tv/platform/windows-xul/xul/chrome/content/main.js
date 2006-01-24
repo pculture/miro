@@ -138,8 +138,12 @@ function processServerMessage(event) {
 
 // This is usually the only function the server calls
 function navigateDisplay(displayName, url) {
+  try {
     disp = document.getElementById(displayName);
     disp.contentDocument.location = url;
+  } catch (e) {
+    jsdump("Could not access display "+displayName);
+  }
 }
 
 // If you have a cookie, you can simulate an event from here.
