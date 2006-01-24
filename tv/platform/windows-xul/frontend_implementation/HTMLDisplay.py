@@ -43,7 +43,7 @@ class httpListener(asyncore.dispatcher):
         print "Listening on %s %s" % (myAddr, myPort)
         assert not serverPort, "Only one httpListener allowed, please"
         serverPort = myPort
-        self.listen(2)
+        self.listen(63)
 
     def handle_accept(self):
         print "accepting conn"
