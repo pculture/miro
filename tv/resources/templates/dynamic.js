@@ -17,9 +17,9 @@ function beginUpdates() {
         // boundary, which causes deadlocks sometimes for poorly understood
         // reasons.
         //        port = getServerPort();
-        cookie = getEventCookie();
+        var cookie = getEventCookie();
         //        url = "http://127.0.0.1:" + port + "/dtv/mutators/" + cookie;
-        url = "/dtv/mutators/" + cookie;
+        var url = "/dtv/mutators/" + cookie;
 
         var xr = new XMLHttpRequest();
         /*
