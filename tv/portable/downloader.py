@@ -66,7 +66,14 @@ def findHTTPAuth(host,path,realm = None,scheme = None):
     finally:
         defaultDatabase.endRead()
     return ret
-        
+
+# Filter invalid URLs with duplicated ports (http://foo.bar:123:123/baz) which
+# seem to be part of #441.
+def parseURL(url):
+    (scheme, host, path, params, query, fragment) = urlparse(url)
+    if host.count(':') > 1:
+        host = host[0:host.rfind(':')]
+    return (scheme, host, path, params, query, fragment)
 
 # FIXME: Currently, returns a None object in the case where it can't
 # download the file. In the future, we should probably raise
@@ -95,7 +102,7 @@ def grabURL(url, type="GET",start = 0, etag=None,modified=None):
     redirURL = url
     myHeaders = {"User-Agent":"DTV/pre-release (http://participatoryculture.org/)"}
 
-    (scheme, host, path, params, query, fragment) = urlparse(url)
+    (scheme, host, path, params, query, fragment) = parseURL(url)
     #print "grab URL called for "+host
 
     auth = findHTTPAuth(host,path)
@@ -138,7 +145,7 @@ def grabURL(url, type="GET",start = 0, etag=None,modified=None):
                 redirURL = urljoin(redirURL,info['location'])
             if download.status == 301:
                 url = redirURL
-            (scheme, host, path, params, query, fragment) = urlparse(redirURL)
+            (scheme, host, path, params, query, fragment) = parseURL(redirURL)
 
             try:
                 del myHeaders["Authorization"]
@@ -674,7 +681,7 @@ class Downloader(DDBObject):
     ##
     # Returns a reasonable filename for saving the given url
     def filenameFromURL(self,url):
-        (scheme, host, path, params, query, fragment) = urlparse(url)
+        (scheme, host, path, params, query, fragment) = parseURL(url)
         if len(path):
             try:
                 return re.compile("^.*?([^/]+)/?$").search(path).expand("\\1")
