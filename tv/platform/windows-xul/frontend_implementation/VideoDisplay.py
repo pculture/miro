@@ -4,6 +4,8 @@ import frontend_implementation
 import os
 import threading
 
+_genMutator = frontend_implementation.HTMLDisplay._genMutator
+
 ###############################################################################
 #### The Playback Controller                                               ####
 ###############################################################################
@@ -29,12 +31,93 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
 
     def __init__(self):
         print "VideoDisplay init"
-        app.VideoDisplayBase.__init__(self)
+        html = """<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n"
+      eventCookie="%s" dtvPlatform="xul">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
 
-	self.lock = threading.RLock()
-        self.mutationOutput = None
-        self.queue = []
+<body onload="beginUpdates();">
+<script type="text/javascript">
+function beginUpdates() {
+        // Under XUL, open a 'push' HTTP connection to the controller to
+        // receive updates. This avoids calling across the Python/XPCOM
+        // boundary, which causes deadlocks sometimes for poorly understood
+        // reasons.
+        //        port = getServerPort();
+        var cookie = "%s";
+        //        url = "http://127.0.0.1:" + port + "/dtv/mutators/" + cookie;
+        var url = "/dtv/mutators/" + cookie;
+
+        var xr = new XMLHttpRequest();
+        /*
+        netscape.security.PrivilegeManager.
+            enablePrivilege("UniversalBrowserRead");
+        */
+        xr.multipart = true;
+        xr.open("GET", url, false);
+        xr.onload = handleUpdate;
+        xr.send(null);
+}
+function handleUpdate(event) {
+    r = event.target;
+    eval(r.responseText);
+}
+function eventURL(url) {
+     	// XUL strategy: async HTTP request to our in-process HTTP
+        // server.  Since it falls under the "same origin" security
+        // model exemption, no need for complicated preferences
+        // shenanigans -- what a nice day!
+        //        url = "http://127.0.0.1:" + getServerPort() + "/dtv/action/" +
+        //            getEventCookie() + "?" + url; NEEDS: remove
+        url = "/dtv/action/" + "%s" + "?" + url;
+    	var req = new XMLHttpRequest();
+        req.open("GET", url, false);
+        req.send(null);
+}
+function videoPlay(url) {
+  // FIXME: race condition
+  if(typeof this.lastURL == 'undefined')
+          this.lastURL = '';
+  if(this.lastURL != url) {
+    document.video1.stop();
+    document.video1.clear_playlist();
+    document.video1.add_item(url);
+    this.lastURL = url;
+    document.video1.play();
+  } else {
+    document.video1.play();
+  }
+}
+function videoPause() {
+  document.video1.pause();
+}
+function videoStop() {
+  document.video1.stop();
+}
+function videoReset() {
+  document.video1.seek(0,0);
+}
+</script>
+<embed type="application/x-vlc-plugin"
+         name="video1"
+         autostart="0" style="position: absolute; top: 0px;bottom: 0px; left: 0px; right: 0px" id="video1"/>
+</body>
+</html>
+""" % (self.getEventCookie(),self.getEventCookie(),self.getEventCookie())
+        frontend.HTMLDisplay.__init__(self,html)
+        app.VideoDisplayBase.__init__(self)
         print "Display initialized"        
+
+    # The mutation functions.
+    videoPlay = _genMutator('videoPlay')
+    videoStop = _genMutator('videoStop')
+    videoPause = _genMutator('videoPause')
+    videoReset = _genMutator('videoReset')
 
     def initRenderers(self):
         print "initRenderers"
@@ -47,38 +130,19 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
  
     def play(self):
         print "VideoDisplay play"
-        html = """<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:t="http://www.participatorypolitics.org/"
-      xmlns:i18n="http://www.participatoryculture.org/i18n">
-<head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-</head>
-
-<body>
-<embed type="application/x-vlc-plugin"
-         name="video1"
-         autostart="1" loop="yes" style="position: absolute; top: 0px;bottom: 0px; left: 0px; right: 0px"
-"""
-        html += ' target="file:///'
-        html += self.itemPath.replace("\\","/")
-        html += '''" id="video1" />
-
-</body>
-</html>
-'''
-        frontend_implementation.HTMLDisplay.pendingDocuments[self.getEventCookie()] = ("text/html", html)
-
         app.VideoDisplayBase.play(self)
+        url = "file:///%s" % self.itemPath.replace('\\','/').replace(" ",'%20')
+        self.videoPlay(url)
 
     def pause(self):
         print "VideoDisplay pause"
         app.VideoDisplayBase.pause(self)
+        self.videoPause()
 
     def stop(self):
         print "VideoDisplay stop"
         app.VideoDisplayBase.stop(self)
+        self.videoStop()
     
     def goFullScreen(self):
         print "VideoDisplay fullscreen"
@@ -116,6 +180,7 @@ class VLCPluginRenderer (app.VideoRenderer):
 
     def reset(self):
         print "Renderer reset"
+
     def canPlayItem(self, item):
         print "canPlayItem"
         return True
