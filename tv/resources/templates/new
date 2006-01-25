@@ -24,7 +24,7 @@
 
 </head>
 
-<body onload="toggleLayer('main-unwatched'); toggleLayer('main-expiring');">
+<body onload="toggleLayer('main-unwatched'); toggleLayer('main-expiring'); beginUpdates();">
 
 <!-- TITLE BAR ************************************************************ -->
 <div id="main-titlebar">
