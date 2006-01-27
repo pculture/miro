@@ -275,6 +275,14 @@ function getCookieFromElement(element) {
   return "";
 }
 
+function getCookieFromBrowserId(elementId) {
+  try {
+    return document.getElementById(elementId).contentWindow.document.getElementsByTagName('html')[0].getAttribute('eventCookie');
+  } catch(e) {
+  return "";
+  }
+}
+
 function xulcontexthandler(event) {
   var itemsAdded = 0;
   var menu = getContextClickMenu(event.target);

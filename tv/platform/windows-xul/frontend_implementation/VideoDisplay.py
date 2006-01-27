@@ -35,7 +35,7 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
         html = template.fillStaticTemplate("video-display-vlc", {'eventCookie':self.getEventCookie(),'dtvPlatform':'xul'})
         frontend.HTMLDisplay.__init__(self,html)
         app.VideoDisplayBase.__init__(self)
-        print "Display initialized"        
+        print "Display initialized"
 
     # The mutation functions.
     videoPlay = _genMutator('videoPlay')
@@ -95,6 +95,12 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
     def onDeselected(self, frame):
         print "VideoDisplay deselected"
         app.VideoDisplayBase.onDeselected(self, frame)
+
+    def onURLLoad(self, url):
+        if ("action:playPauseVideo" == url):
+            self.playPause()
+            return False
+        return True
 
 class VLCPluginRenderer (app.VideoRenderer):
 

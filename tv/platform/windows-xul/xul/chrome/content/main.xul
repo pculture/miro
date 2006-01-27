@@ -175,7 +175,7 @@
 			<html:ul id="bottom-buttons">
 				<html:li id="bottom-buttons-previous"><html:a href="#">Previous</html:a></html:li>
 				<html:li id="bottom-buttons-stop"><html:a href="#">Stop</html:a></html:li>
-				<html:li id="bottom-buttons-play"><html:a href="#">Play</html:a></html:li>
+				<html:li id="bottom-buttons-play"><html:a onclick="eventURL(getCookieFromBrowserId('mainDisplay'),'action:playPauseVideo');">Play</html:a></html:li>
 				<html:li id="bottom-buttons-fullscreen"><html:a href="#">Fullscreen</html:a></html:li>
 				<html:li id="bottom-buttons-next"><html:a href="#">Next</html:a></html:li>
 			</html:ul>
