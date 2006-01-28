@@ -39,9 +39,10 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
 
     # The mutation functions.
     videoPlay = _genMutator('videoPlay')
-    videoStop = _genMutator('videoStop')
     videoPause = _genMutator('videoPause')
     videoReset = _genMutator('videoReset')
+    videoStop = _genMutator('videoStop')
+    videoFullscreen = _genMutator('videoFullscreen')
 
     def initRenderers(self):
         print "initRenderers"
@@ -53,7 +54,7 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
         app.VideoDisplayBase.selectItem(self, item)
  
     def play(self):
-        print "VideoDisplay play"
+        print "VideoDisplay play %s" % self.itemPath
         app.VideoDisplayBase.play(self)
         url = "file:///%s" % self.itemPath.replace('\\','/').replace(" ",'%20')
         self.videoPlay(url)
@@ -65,12 +66,13 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
 
     def stop(self):
         print "VideoDisplay stop"
-        app.VideoDisplayBase.stop(self)
         self.videoStop()
+        app.VideoDisplayBase.stop(self)
     
     def goFullScreen(self):
         print "VideoDisplay fullscreen"
         app.VideoDisplayBase.goFullScreen(self)
+        self.videoFullscreen()
 
     def exitFullScreen(self):
         print "VideoDisplay exit fullscreen"
@@ -97,8 +99,22 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
         app.VideoDisplayBase.onDeselected(self, frame)
 
     def onURLLoad(self, url):
-        if ("action:playPauseVideo" == url):
+        print "DTV video: %s" % url
+        # FIXME we probably should have some sort of a controller here
+        if ("action:videoPlayPause" == url):
             self.playPause()
+            return False
+        elif ("action:videoFullscreen" == url):
+            self.goFullScreen()
+            return False
+        elif ("action:videoStop" == url):
+            self.stop()
+            return False
+        elif ("action:videoNext" == url):
+            app.Controller.instance.playbackController.skip(1)
+            return False
+        elif ("action:videoPrev" == url):
+            app.Controller.instance.playbackController.skip(-1)
             return False
         return True
 

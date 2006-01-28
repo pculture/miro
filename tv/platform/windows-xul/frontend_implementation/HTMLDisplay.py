@@ -56,6 +56,7 @@ class httpServer(asynchat.async_chat):
     lock = threading.RLock()
     chromeJavascriptStream = None
     chromeJavascriptQueue = []
+    reqNum = 0
 
     def __init__(self, conn):
         asynchat.async_chat.__init__(self, conn)
@@ -67,6 +68,16 @@ class httpServer(asynchat.async_chat):
         # NEEDS: more convincing random ID
         self.boundary = "DTVDTVDTVDTVDTVDTV%s" % (str(id(self)))
 
+    def incReqNum(self):
+        ret = -1
+        httpServer.lock.acquire()
+        try:
+            httpServer.reqNum += 1
+            ret = httpServer.reqNum
+        finally:
+            httpServer.lock.release()
+        return ret
+
     def collect_incoming_data(self, data):
         self.buffer += data
 
@@ -75,15 +86,16 @@ class httpServer(asynchat.async_chat):
             self.buffer = ''
             return
         request = self.buffer
+        reqNum = self.incReqNum()
         self.buffer = ''
         self.gotRequest = True
-        print "got request '%s'" % request
+        print "got request '%s' (%d)" % (request, reqNum)
 
         ## Mutator stream ##
         match = re.match("GET /dtv/mutators/([^ ]*)", request)
         if match:
             cookie = match.group(1)
-            print "My event cookie is %s" % cookie
+            print "My event cookie is %s (%d)" % (cookie, reqNum)
             self.push("""HTTP/1.0 200 OK
 Content-Type: multipart/x-mixed-replace;boundary="%s"
 
@@ -95,6 +107,7 @@ Content-Type: multipart/x-mixed-replace;boundary="%s"
         ## Chrome-context Javascript stream ##
         match = re.match("GET /dtv/xuljs", request)
         if match:
+            print "XULJS (%d)" % (reqNum)
             self.push("""HTTP/1.0 200 OK
 Content-Type: multipart/x-mixed-replace;boundary="%s"
 
@@ -103,27 +116,27 @@ Content-Type: multipart/x-mixed-replace;boundary="%s"
             httpServer.lock.acquire()
             try:
                 assert not httpServer.chromeJavascriptStream, \
-                    "There can't be two xuljs's"
+                    "There can't be two xuljs's (%d)" % reqNum
                 httpServer.chromeJavascriptStream = self
                 for a in httpServer.chromeJavascriptQueue:
-                    print "flush pending xuljs: %s" % a
+                    print "flush pending xuljs: %s (%d)" % (a,reqNum)
                     self.push_chunk("text/plain", a)
                 httpServer.chromeJavascriptQueue = []
             finally:
                 httpServer.lock.release()
-            print "Hey look, got xuljs."
+            print "Hey look, got xuljs. %d" % reqNum
             return
 
         ## Initial HTML ##
         match = re.match("GET /dtv/document/([^ ]*)", request)
         if match:
             cookie = match.group(1)
-            print "My document cookie is %s" % cookie
+            print "document cookie is %s (%d)" % (cookie, reqNum)
             self.isChunked = False
 
             assert cookie in pendingDocuments, \
-                "bad document request %s to HTMLDisplay server" % \
-                cookie
+                "bad document request %s to HTMLDisplay server %d" % \
+                (cookie, reqNum)
             (contentType, body) = pendingDocuments[cookie]
             del pendingDocuments[cookie]
 
@@ -139,7 +152,7 @@ Content-Type: %s
         if match:
             cookie = match.group(1)
             url = match.group(2)
-            print "dispatching %s to %s" % (url, cookie)
+            print "dispatching %s to %s (%d)" % (url, cookie, reqNum)
 	    HTMLDisplay.dispatchEventByCookie(cookie, url)
             self.push("""HTTP/1.0 200 OK
 Content-Length: 0
@@ -151,6 +164,7 @@ Content-Type: text/plain
         ## Resource file ##
         match = re.match("GET /dtv/resource/([^ ]*)", request)
         if match:
+            print "Resource (%d)" % reqNum
             relativePath = match.group(1)
             fullPath = resource.path(relativePath)
             data = open(fullPath,'rb').read()
@@ -180,8 +194,8 @@ Content-Length: %s
             self.close_when_done()
 
         ## Fell through - bad URL ##
-        assert False, ("Invalid request '%s' to HTMLDisplay server" \
-                       % request)
+        assert False, ("Invalid request '%s' to HTMLDisplay server (%d)" \
+                       % (request, reqNum))
 
     def handle_close(self):
         print "connection closed"

@@ -9,28 +9,42 @@
 </head>
 <t:include filename="dynamic.js" />
 <script type="text/javascript">
+// Returns a "blessed" version of an event URL for use with DTV
+function blessEventURL(cookie, url) {
+  return "/dtv/action/" + getEventCookie() + "?" + url;
+}
 function videoPlay(url) {
   // FIXME: race condition
   if(typeof this.lastURL == 'undefined')
           this.lastURL = '';
   if(this.lastURL != url) {
+    dump('playing new\n');
     document.video1.stop();
     document.video1.clear_playlist();
     document.video1.add_item(url);
+    document.video1.add_item(blessEventURL('action:videoNext'));
     this.lastURL = url;
     document.video1.play();
   } else {
+    dump('playing again\n');
     document.video1.play();
   }
 }
 function videoPause() {
+  dump("pausing\n");
   document.video1.pause();
 }
 function videoStop() {
+  dump("stopping\n");
   document.video1.stop();
 }
 function videoReset() {
+  dump("reseting\n");
   document.video1.seek(0,0);
+}
+function videoFullscreen() {
+  dump("fsing\n");
+  document.video1.fullscreen();
 }
 </script>
 <body onload="beginUpdates();">
