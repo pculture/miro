@@ -342,7 +342,6 @@ class runxul(Command, Common):
 	newEnv['PYTHONPATH'] = \
 	    ';'.join(oldPyPath + self.childPythonPaths)
 	newEnv['RUNXUL_RESOURCES'] = self.appResources
-	newEnv['RUNXUL_DONT_ADJUST_PATH'] = ''
 	print "Starting application"
 #	os.execle(xulrunnerBinary, xulrunnerBinary, applicationIni, newEnv)
 	os.execle(xulrunnerBinary, xulrunnerBinary, applicationIni, "-jsconsole", newEnv)
@@ -408,6 +407,28 @@ class bdist_xul_dumb(Command, Common):
 		os.path.join(root, 'portable'),
 		])
 
+        # Add PyXPCOM's runtime scripts directory to the search path,
+        # and call out a list of top-level modules (those imported by
+        # user code or by the C XPConnect code) that are sufficient to
+        # cause the dependency scanner to conclude that all of the
+        # PyXPCOM scripts are necessary.
+        # NEEDS: again, should arrange to have these get built.
+	packagePaths.extend([
+                os.path.join(PYXPCOM_DIR, "python"),
+                ])
+        pyxpcomIncludes = [# Public to Python code
+                           "xpcom",
+                           "xpcom.components",
+                           "xpcom.file",
+                           "xpcom.register",
+                           # Used by C++ XPConnect bridge to Mozilla
+                           "xpcom._xpcom",
+                           "xpcom.client",
+                           "xpcom.server",
+                           # This manages to escape but looks important (?)
+                           "xpcom.server.enumerator",
+                           ]
+
         # Build the list of all Python code and extensions required by
         # the application
         # NEEDS: should bootstrap dependency scan from *.py in component
@@ -415,9 +436,10 @@ class bdist_xul_dumb(Command, Common):
         log.info("computing module dependencies")
         wellConnectedFile = os.path.join(root, 'portable', 'app.py')
         manifest = self.computePythonManifest(scripts = [wellConnectedFile],
+                                              includes = pyxpcomIncludes,
                                               path = packagePaths)
-#        print '\n'.join(["%s -> %s" % (source, dest) \
-#                         for (source, dest) in manifest])
+        #print '\n'.join(["%s -> %s" % (source, dest) \
+        #                 for (source, dest) in manifest])
         
         # Put together the basic skeleton of the application
         log.info("clearing out old build directory if any")
@@ -427,7 +449,10 @@ class bdist_xul_dumb(Command, Common):
         log.info("assembling xulrunner")
         self.xulrunnerOut = os.path.join(self.dist_dir, 'xulrunner')
 	copyTreeExceptSvn(XULRUNNER_DIR, self.xulrunnerOut)
-	copyTreeExceptSvn(PYXPCOM_DIR, self.xulrunnerOut)
+        # (Copy *only* the components part, not the Python part; that
+        #  got sucked into the dependency scan above)
+	copyTreeExceptSvn(os.path.join(PYXPCOM_DIR, 'components'),
+                          os.path.join(self.xulrunnerOut, 'components'))
         self.copyVLCPluginFiles(self.xulrunnerOut)
 
         # Compile and drop in type library
@@ -443,7 +468,7 @@ class bdist_xul_dumb(Command, Common):
         # Copy the files indicated in the manifest to create a complete
         # application package.
         log.info("creating application image")
-        imageRoot = os.path.join(self.dist_dir, 'python')
+        imageRoot = os.path.join(self.dist_dir, 'xulrunner', 'python')
         dirsCreated = set()
         for (source, dest) in manifest:
             dest = os.path.join(imageRoot, dest)
