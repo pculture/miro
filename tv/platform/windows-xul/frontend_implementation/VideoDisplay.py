@@ -102,19 +102,19 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
         print "DTV video: %s" % url
         # FIXME we probably should have some sort of a controller here
         if ("action:videoPlayPause" == url):
-            self.playPause()
+            self.playbackController.playPause()
             return False
         elif ("action:videoFullscreen" == url):
             self.goFullScreen()
             return False
         elif ("action:videoStop" == url):
-            self.stop()
+            self.playbackController.stop()
             return False
         elif ("action:videoNext" == url):
-            app.Controller.instance.playbackController.skip(1)
+            self.playbackController.skip(1)
             return False
         elif ("action:videoPrev" == url):
-            app.Controller.instance.playbackController.skip(-1)
+            self.playbackController.skip(-1)
             return False
         return True
 
