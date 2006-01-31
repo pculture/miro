@@ -94,6 +94,16 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
         print "VideoDisplay on selected"
         app.VideoDisplayBase.onSelected(self, frame)
 
+        # Reset the display so it can be reused
+        html = template.fillStaticTemplate("video-display-vlc", {'eventCookie':self.getEventCookie(),'dtvPlatform':'xul'})
+
+        frontend_implementation.HTMLDisplay.pendingDocuments[self.getEventCookie()] = ("text/html", html)
+
+	frontend_implementation.HTMLDisplay.HTMLDisplay.cookieToInstanceMap[self.eventCookie] = self
+
+        self.mutationOutput = None
+        self.queue = []
+
     def onDeselected(self, frame):
         print "VideoDisplay deselected"
         app.VideoDisplayBase.onDeselected(self, frame)
