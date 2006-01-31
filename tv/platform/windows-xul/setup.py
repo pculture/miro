@@ -87,7 +87,10 @@ PYXPCOM_DIR = os.path.join(BINARY_KIT_ROOT, "pyxpcom")
 
 # Path to a build of our patched VLC Mozilla plugin. This directory
 # should contain 'npvlc.dll' and 'vlcintf.xpt'.
-VLC_PLUGIN_DIR = os.path.join(BINARY_KIT_ROOT, "mozplugin")
+VLC_MOZ_PLUGIN_DIR = os.path.join(BINARY_KIT_ROOT, "mozplugin")
+
+# Path to a build of vlc plugins to go along with that Mozilla plugin
+VLC_PLUGINS_DIR = os.path.join(VLC_MOZ_PLUGIN_DIR, "vlc-plugins")
 
 ###############################################################################
 ## End of configuration. No user-servicable parts inside                     ##
@@ -180,14 +183,23 @@ class Common:
     # the plugin into the xulrunner plugin directory, rather than the
     # app bundle plugin directory, which is the way you're "supposed"
     # to do it so your app is cleanly separated from xulrunner.
-    def copyVLCPluginFiles(self, baseDir):
-        destDir = os.path.join(baseDir, 'plugins')
+    def copyVLCPluginFiles(self, baseDir, xulrunnerDir):
+        destDir = os.path.join(xulrunnerDir, 'plugins')
 	if not os.access(destDir, os.F_OK):
 	    os.mkdir(destDir)
 
         pluginFiles = ['npvlc.dll', 'vlcintf.xpt']
         for f in pluginFiles:
-            shutil.copy2(os.path.join(VLC_PLUGIN_DIR, f), destDir)
+            shutil.copy2(os.path.join(VLC_MOZ_PLUGIN_DIR, f), destDir)
+
+        vlcPluginDest = os.path.join(baseDir, "vlc-plugins")
+	if not os.access(vlcPluginDest, os.F_OK):
+	    os.mkdir(vlcPluginDest)
+
+        vlcPlugins = os.listdir(VLC_PLUGINS_DIR)
+        for f in vlcPlugins:
+            if f[0] != '.':
+                shutil.copy2(os.path.join(VLC_PLUGINS_DIR, f), vlcPluginDest)
 
     def compileIDL(self):
 	buildDir = os.path.join(self.bdist_base, "idl")
@@ -288,7 +300,7 @@ class runxul(Command, Common):
 	copyTreeExceptSvn(PYXPCOM_DIR, buildBase)
 
         # Finally, drop in our plugins.
-        self.copyVLCPluginFiles(buildBase)
+        self.copyVLCPluginFiles(self.bdist_base, buildBase)
 
 	# Create the mark file to indicate that we now have a build.
 	open(markFile, 'w')
@@ -344,7 +356,7 @@ class runxul(Command, Common):
 	newEnv['RUNXUL_RESOURCES'] = self.appResources
 	print "Starting application"
 #	os.execle(xulrunnerBinary, xulrunnerBinary, applicationIni, newEnv)
-	os.execle(xulrunnerBinary, xulrunnerBinary, applicationIni, "-jsconsole", newEnv)
+	os.execle(xulrunnerBinary, xulrunnerBinary, applicationIni, "-jsconsole", "-console", newEnv)
 
 ###############################################################################
 
@@ -453,7 +465,7 @@ class bdist_xul_dumb(Command, Common):
         #  got sucked into the dependency scan above)
 	copyTreeExceptSvn(os.path.join(PYXPCOM_DIR, 'components'),
                           os.path.join(self.xulrunnerOut, 'components'))
-        self.copyVLCPluginFiles(self.xulrunnerOut)
+        self.copyVLCPluginFiles(self.dist_dir, self.xulrunnerOut)
 
         # Compile and drop in type library
         # NEEDS: make IDL directory configurable
