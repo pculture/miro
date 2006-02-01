@@ -7,6 +7,12 @@ import sys
 ## Paths and configuration                                                   ##
 ###############################################################################
 
+# This is the version that will be shown in the installer
+VERSION_STRING = "0.8.0"
+
+# The location of the NSIS compiler
+NSIS_PATH = '"C:\\Program Files\\NSIS\\makensis.exe"'
+
 # If you're using the prebuilt DTV Dependencies Binary Kit, just set
 # the path to it here, and ignore everything after this point. In
 # fact, if you unpacked or checked out the binary kit in the same
@@ -535,6 +541,8 @@ class bdist_xul_dumb(Command, Common):
         log.info("copying application resources")
         copyTreeExceptSvn(self.appResources,
                           os.path.join(self.dist_dir, 'resources'))
+        shutil.copy2("dtv.nsi", self.dist_dir)
+        shutil.copy2("dtv.ico", self.dist_dir)
 
         # NEEDS: set permissions/attributes on everything uniformly?
 
@@ -645,6 +653,15 @@ class bdist_xul_dumb(Command, Common):
 
 ###############################################################################
 
+###############################################################################
+
+class bdist_xul (bdist_xul_dumb):
+    def run(self):
+        bdist_xul_dumb.run(self)
+        log.info("building installer")
+        os.system("%s /DVERSION=%s %s" % ( NSIS_PATH, VERSION_STRING,
+                                      os.path.join(self.dist_dir,"dtv.nsi")))
+
 def copyTreeExceptSvn(src, dest):
     """Copy the contents of the given source directory into the given
     destination directory, creating the destination directory first if
@@ -671,5 +688,6 @@ setup(
 	'build_ext': build_ext,
 	'runxul': runxul,
 	'bdist_xul_dumb': bdist_xul_dumb,
+	'bdist_xul': bdist_xul,
 	}
 )
