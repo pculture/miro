@@ -1952,9 +1952,10 @@ class VideoAreaView (NibClassBuilder.AutoBaseClass):
     
     def enterFullScreen(self):
         self.adjustVideoWindowFrame()
-        self.videoWindow.enterFullScreen(self.window().screen())
-        self.window().removeChildWindow_(self.videoWindow)
-        self.window().orderOut_(nil)
+        if self.window() is not nil:
+            self.videoWindow.enterFullScreen(self.window().screen())
+            self.window().removeChildWindow_(self.videoWindow)
+            self.window().orderOut_(nil)
 
     def exitFullScreen(self):
         if self.videoWindow.isFullScreen:
