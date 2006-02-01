@@ -405,7 +405,14 @@ class bdist_xul_dumb(Command, Common):
                                            'xul')
 
     def run(self):
-        packagePaths = copy.copy(sys.path)
+        # There are a few modules in the standard library that we want to
+        # override with out own copies (well, just one: site.py) -- put them
+        # on the path first.
+        packagePaths = [os.path.join(root, 'platform', platform, 'overrides')]
+
+        # The standard library (and any installed extensions) come
+        # after that.
+        packagePaths.extend(sys.path)
 
         # Build extensions; add them to search path
         build = self.reinitialize_command('build')
@@ -434,7 +441,7 @@ class bdist_xul_dumb(Command, Common):
 	packagePaths.extend([
                 os.path.join(PYXPCOM_DIR, "python"),
                 ])
-        pyxpcomIncludes = [# Public to Python code
+        moduleIncludes = [# Public to Python code
                            "xpcom",
                            "xpcom.components",
                            "xpcom.file",
@@ -447,6 +454,18 @@ class bdist_xul_dumb(Command, Common):
                            "xpcom.server.enumerator",
                            ]
 
+        # Add other stuff that is necessary to get a functional Python
+        # environment.
+        moduleIncludes.extend([
+                # The Python initialization script.
+                "site",
+                ])
+        packageIncludes = [
+            # Make sure all the codecs we need make it in. Otherwise the
+            # dependency scanner isn't clever enough to find them.
+            "encodings",
+            ]
+
         # Build the list of all Python code and extensions required by
         # the application
         # NEEDS: should bootstrap dependency scan from *.py in component
@@ -454,7 +473,8 @@ class bdist_xul_dumb(Command, Common):
         log.info("computing module dependencies")
         wellConnectedFile = os.path.join(root, 'portable', 'app.py')
         manifest = self.computePythonManifest(scripts = [wellConnectedFile],
-                                              includes = pyxpcomIncludes,
+                                              includes = moduleIncludes,
+                                              packages = packageIncludes,
                                               path = packagePaths)
         #print '\n'.join(["%s -> %s" % (source, dest) \
         #                 for (source, dest) in manifest])
@@ -590,11 +610,11 @@ class bdist_xul_dumb(Command, Common):
         such as might be passed to 'import'
         @type packages: string iterable
 
-        @param includes: Names of packages that should be included
+        @param includes: Names of modules that should be included
         even if they are not found by the dependency scan
         @type includes: string iterable
-        @param excludes: Names of packages that should not be included even
-        if they are found by the dependency scan (if a package is given both
+        @param excludes: Names of modules that should not be included even
+        if they are found by the dependency scan (if a module is given both
         as an 'include' and an 'exclude', 'include' takes priority)
         @type includes: string iterable
 
@@ -603,9 +623,10 @@ class bdist_xul_dumb(Command, Common):
         (including filename) to which it should be copied in the image
         @rtype: (string, string) list
 
-        @bug: Due to an apparent bug in modulegraph, a dependency root
-        cannot be given as a package if it does not represent a directory,
-        that is, if it does not correspond to a file named 'init.py'.
+        @bug: Packages are not the same as modules. A dependency root
+        cannot be given as a package if it does not represent a
+        directory, that is, if it does not correspond to a file named
+        '__init__.py'. List it in 'includes' in this case.
         """
 
         # Put our helper packages on the path, and import them
