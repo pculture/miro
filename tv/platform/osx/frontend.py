@@ -2054,15 +2054,15 @@ class QuicktimeRenderer (app.VideoRenderer):
         self.cachedMovie = nil
 
     def registerMovieObserver(self, movie):
-        self.unregisterMovieObserver()
         nc.addObserver_selector_name_object_(self.delegate, 'handleMovieNotification:', QTMovieDidEndNotification, movie)
 
-    def unregisterMovieObserver(self):
-        nc.removeObserver_name_object_(self.delegate, QTMovieDidEndNotification, nil)
+    def unregisterMovieObserver(self, movie):
+        nc.removeObserver_name_object_(self.delegate, QTMovieDidEndNotification, movie)
 
     def reset(self):
+        self.unregisterMovieObserver(self.view.movie())
         self.view.setMovie_(nil)
-        self.unregisterMovieObserver()
+        self.cachedMovie = nil
 
     def canPlayItem(self, item):
         canPlay = False
@@ -2089,7 +2089,7 @@ class QuicktimeRenderer (app.VideoRenderer):
             qtmovie = self.cachedMovie
         else:
             (qtmovie, error) = QTMovie.alloc().initWithFile_error_(pathname)
-        self.cachedMovie = nil
+        self.reset()
         if qtmovie is not nil:
             self.view.setMovie_(qtmovie)
             self.registerMovieObserver(qtmovie)
