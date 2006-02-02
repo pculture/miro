@@ -187,7 +187,9 @@
 	<!-- / PLAYBACK PROGRESS/CONTROLS -->
 	
 	<!-- VOLUME SLIDER -->
-	<hbox flex="0" width="110" id="volume"/>
+	<html:div id="volume">
+        <html:span id="knob"/>
+        </html:div>
 	<!-- / VOLUME SLIDER -->	
 	<hbox flex="0" id="bottom-right" height="100">
           <resizer dir="bottomright" id="resizer" oncommand="return doResize(event);"/>

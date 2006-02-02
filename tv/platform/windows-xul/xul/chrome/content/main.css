@@ -256,5 +256,19 @@ splitter {
 }
 
 #volume {
+        width: 110px;
+        height: 100px;
 	background: url(images/bottom-volume.png) no-repeat 0px 26px;
+}
+
+#knob {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top:28px;
+  left:15px; /* The slider can move between 15px and 105px */
+  margin: 0px;
+  padding: 0px;
+  background: url(images/knob.png) no-repeat;
+  z-index: 100;
 }

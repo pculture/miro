@@ -156,6 +156,32 @@ function eventURL(cookie, url) {
 }
 
 /*****************************************************************************
+ Volume Knob 
+ *****************************************************************************/
+
+var knobDragStart = 0;
+var knobPos = 15;
+
+function volumeKnobMove(event) {
+  if (knobDragStart > 0) {
+  var left = 15;
+  var right= 105;
+  var knob = document.getElementById("knob");
+  knobPos += event.clientX - knobDragStart;
+  if (knobPos < left) knobPos = left;
+  if (knobPos > right) knobPos = right;
+  knobDragStart = event.clientX;
+  knob.style.left = knobPos +"px";
+  }
+}
+function volumeKnobDown(event) {
+  knobDragStart = event.clientX;
+}
+function volumeKnobUp(event) {
+  knobDragStart = 0;
+}
+
+/*****************************************************************************
  Main functions
  *****************************************************************************/
 
@@ -192,6 +218,12 @@ function onLoad() {
     // Start the server. For some reason it cause hangs if it's started
     // before the app.
     openServerCommunications();
+
+    // Set up listeners for the volume knobby
+    var knob = document.getElementById("volume");
+    knob.onmousemove = volumeKnobMove;
+    knob.onmousedown = volumeKnobDown;
+    window.onmouseup = volumeKnobUp;
 }
 
 function onUnload() {
