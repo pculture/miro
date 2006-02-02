@@ -162,20 +162,36 @@ function eventURL(cookie, url) {
 var knobDragStart = 0;
 var knobPos = 15;
 
+function setVolume(percent) {
+    /*  jsdump("Volume now at "+percent); */
+}
+
 function volumeKnobMove(event) {
   if (knobDragStart > 0) {
-  var left = 15;
-  var right= 105;
-  var knob = document.getElementById("knob");
-  knobPos += event.clientX - knobDragStart;
-  if (knobPos < left) knobPos = left;
-  if (knobPos > right) knobPos = right;
-  knobDragStart = event.clientX;
-  knob.style.left = knobPos +"px";
+    var left = 15;
+    var right= 105;
+    var knob = document.getElementById("knob");
+    knobPos += event.clientX - knobDragStart;
+    if (knobPos < left) knobPos = left;
+    if (knobPos > right) knobPos = right;
+    knobDragStart = event.clientX;
+    knob.style.left = knobPos +"px";
+    setVolume((knobPos - left)/(right-left));
   }
 }
 function volumeKnobDown(event) {
   knobDragStart = event.clientX;
+}
+function volumeKnobOut(event) {
+  /* Ignore a move from the knob to the slider or vice-versa */
+  if (!((event.target.getAttribute("id") == "knob" &&
+        event.currentTarget.getAttribute("id") == "volume") ||
+        (event.target.getAttribute("id") == "volume" &&
+         event.currentTarget.getAttribute("id") == "volume")))
+  {
+    knobDragStart = 0;
+  }
+  event.stopPropagation();
 }
 function volumeKnobUp(event) {
   knobDragStart = 0;
@@ -224,6 +240,7 @@ function onLoad() {
     knob.onmousemove = volumeKnobMove;
     knob.onmousedown = volumeKnobDown;
     window.onmouseup = volumeKnobUp;
+    knob.onmouseout = volumeKnobOut;
 }
 
 function onUnload() {
