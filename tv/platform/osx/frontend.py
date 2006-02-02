@@ -1780,10 +1780,16 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.muteButton.setEnabled_(enabled)
         self.volumeSlider.setEnabled_(enabled and self.muteButton.state() is NSOnState)
 
-    def enableSecondaryControls(self, enabled):
+    def enableSecondaryControls(self, enabled, allowFastSeeking=YES):
         self.backwardButton.setEnabled_(enabled)
         self.stopButton.setEnabled_(enabled)
         self.forwardButton.setEnabled_(enabled)
+        if allowFastSeeking:
+            self.backwardButton.setAction_('backward:')
+            self.forwardButton.setAction_('forward:')
+        else:
+            self.backwardButton.setAction_('skipBackward:')
+            self.forwardButton.setAction_('skipForward:')
 
     def updatePlayPauseButton(self, prefix):
         self.playPauseButton.setImage_(NSImage.imageNamed_('%s' % prefix))
@@ -1858,7 +1864,8 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
                 if not self.videoDisplay.isPlaying:
                     rate = 0.0
                     self.updatePlayPauseButton('play')
-                self.videoDisplay.activeRenderer.setRate(rate)
+                if self.videoDisplay.activeRenderer is not None:
+                    self.videoDisplay.activeRenderer.setRate(rate)
             else:
                 self.fastSeekTimer.invalidate()
                 self.fastSeekTimer = nil
@@ -1900,7 +1907,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.enablePrimaryControls(NO)
         display = notification.object()
         if hasattr(display, 'templateName') and display.templateName.startswith('external-playback'):
-            self.enableSecondaryControls(YES)
+            self.enableSecondaryControls(YES, NO)
     
     def handleMovieNotification_(self, notification):
         renderer = self.videoDisplay.activeRenderer
