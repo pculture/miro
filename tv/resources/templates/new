@@ -33,7 +33,11 @@
 		<h1 i18n:translate="">New Videos</h1>
 	</div>
 	<div id="main-titlebar-tasks">
-		<div id="main-titlebar-tasks-search" style="margin-top:38px;"><input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search" onfocus="startEditFilter(this,new Array('unwatched-items'),new Array(''),new Array('global filter allRecentItems'),new Array(0),new Array(''))" onblur="endEditFilter()" /></div>
+		<div id="main-titlebar-tasks-search" style="margin-top:38px;">
+		    <input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search" 
+		           onfocus="startEditFilter(this,new Array('unwatched-items', 'expiring-items'),new Array('',''),new Array('global filter unwatchedItems','global filter expiringItems'),new Array(0, 0),new Array('',''))" 
+		           onblur="endEditFilter()" />
+		</div>
 	</div>
 </div>
 <!-- / TITLE BAR -->
