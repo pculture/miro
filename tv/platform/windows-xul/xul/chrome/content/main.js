@@ -160,10 +160,11 @@ function eventURL(cookie, url) {
  *****************************************************************************/
 
 var knobDragStart = 0;
-var knobPos = 15;
+var knobPos = 105;
 
 function setVolume(percent) {
     /*  jsdump("Volume now at "+percent); */
+  eventURL(getCookieFromBrowserId('mainDisplay'),'action:setVolume?level='+percent);
 }
 
 function volumeKnobMove(event) {

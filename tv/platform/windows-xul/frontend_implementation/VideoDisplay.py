@@ -43,6 +43,7 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
     videoReset = _genMutator('videoReset')
     videoStop = _genMutator('videoStop')
     videoFullscreen = _genMutator('videoFullscreen')
+    videoSetVolume = _genMutator('videoSetVolume')
 
     def initRenderers(self):
         print "initRenderers"
@@ -79,8 +80,9 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
         app.VideoDisplayBase.exitFullScreen(self)
 
     def setVolume(self, level):
-        print "VideoDisplay set volume"
+        print "VideoDisplay set volume %s" % level
         app.VideoDisplayBase.setVolume(self, level)
+        self.videoSetVolume(str(level))
 
     def muteVolume(self):
         print "VideoDisplay mute volume"
@@ -125,6 +127,9 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
             return False
         elif ("action:videoPrev" == url):
             self.playbackController.skip(-1)
+            return False
+        elif (url.startswith("action:setVolume?level=")):
+            self.setVolume(float(url[23:]))
             return False
         return True
 
@@ -176,8 +181,7 @@ class VLCPluginRenderer (app.VideoRenderer):
         print "Renderer set rate"
         
     def setVolume(self, level):
-        print "Renderer set volume"
-
+        print "Renderer set volume %s" % level
 
 ###############################################################################
 #### Playlist item base class                                              ####

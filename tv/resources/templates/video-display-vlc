@@ -13,6 +13,10 @@
 function blessEventURL(cookie, url) {
   return "/dtv/action/" + getEventCookie() + "?" + url;
 }
+function videoSetVolume(level) {
+  dump("Setting volume to "+level);
+  document.video1.set_volume(level*200);
+}
 function videoPlay(url) {
   // FIXME: race condition
   if(typeof this.lastURL == 'undefined')

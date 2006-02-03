@@ -1078,6 +1078,10 @@ class TemplateActionHandler:
         searchFeed.preserveDownloads(searchDownloadsFeed)
         searchFeed.reset()
         
+    # The Windows XUL port can send a setVolume at any time, even when
+    # there's no video display around. We can just ignore it
+    def setVolume(self, level):
+        pass
 
 # Helper: liberally interpret the provided string as a boolean
 def stringToBoolean(string):

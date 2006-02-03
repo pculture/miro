@@ -266,7 +266,7 @@ splitter {
   width: 10px;
   height: 10px;
   top:28px;
-  left:15px; /* The slider can move between 15px and 105px */
+  left:105px; /* The slider can move between 15px and 105px */
   margin: 0px;
   padding: 0px;
   background: url(images/knob.png) no-repeat;
