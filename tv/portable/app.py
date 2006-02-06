@@ -322,6 +322,9 @@ class VideoRenderer:
     def __init__(self):
         self.interactivelySeeking = False
     
+    def canPlayItem(self, anItem):
+        return False
+    
     def getDisplayTime(self):
         seconds = self.getCurrentTime()
         return time.strftime(self.DISPLAY_TIME_FORMAT, time.gmtime(seconds))
