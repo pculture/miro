@@ -98,7 +98,7 @@ Contains the channels
 
 
 #sidebar h2{
-	font: 14px Arial, Helvetica, sans-serif;
+	font: 12px Arial, Helvetica, sans-serif;
 	background: #ddd;
 	margin: 0;
 	padding: 4px;
@@ -124,8 +124,6 @@ Contains the channels
 	clear: both;
 	}
 
-
-
 #sidebar ul ul {
 	padding: 0;
 	margin: 0;
@@ -141,16 +139,18 @@ Contains the channels
 	}
 
 #sidebar ul li a{
-	padding: 2px 2px 2px 4px;
+	padding: 4px 2px 4px 4px;
 	color: #000;
+	font-size: 11px;
 	text-decoration: none;
 	clear: both;
-	height: 26px;
+	height: 20px;
+	vertical-align: middle;
 	}
 
 #sidebar ul li a img{
-	height: 26px;
-	width: 26px;
+	height: 20px;
+	width: 20px;
 	margin: 0;
 	}
 
@@ -163,7 +163,7 @@ Contains the channels
 
 #sidebar ul li a span span{
 	display: block;
-	padding: 6px 0 3px 3px;
+	padding: 3px 0 3px 3px;
 	overflow: hidden;
 	}
 
@@ -183,7 +183,7 @@ Contains the channels
 	
 a.feeditem{
 	display: block;
-    white-space: nowrap;
+   white-space: nowrap;
 	}
 
 a.feeditem:hover{
@@ -195,7 +195,7 @@ a.feeditem:hover{
 	}
 
 #sidebar a.selected_feeditem_inactive {
-	background: url(../images/channel_bg.png) 0px -40px repeat-x; 
+	background: url(../images/channel_bg.png) 0px -50px repeat-x; 
 	color: #fff;
 	}
 
@@ -215,7 +215,7 @@ height: 36px;
 }
 
 .channel_bar_divider {
-margin: 3px 2px 3px 0px;
+margin: 7px 2px 3px 0px;
 height: 2px;
 overflow: hidden;
 font-size: 2px;
@@ -1092,7 +1092,7 @@ SIDEBAR
 .green_left{
 	background: url(../images/green_left.png) top left no-repeat;
 	display: inline;
-	margin: 4px 0 0 0;
+	margin: 1px 0 0 0;
 	float: right;
 	}
 
@@ -1112,7 +1112,7 @@ SIDEBAR
 .gray_left{
 	background: url(../images/gray_left.png) top left no-repeat;
 	display: inline;
-	margin: 4px 0 0 0;
+	margin: 1px 0 0 0;
 	float: right;
 	}
 
@@ -1133,7 +1133,7 @@ SIDEBAR
 .blue_left{
 	background: url(../images/blue_left.png) top left no-repeat;
 	display: inline;
-	margin: 4px 0 0 0;
+	margin: 1px 0 0 0;
 	float: right;
 	}
 
@@ -1153,7 +1153,7 @@ SIDEBAR
 .white_left{
 	background: url(../images/white_left.png) top left no-repeat;
 	display: inline;
-	margin: 4px 0 0 0;
+	margin: 1px 0 0 0;
 	float: right;
 	}
 
@@ -1173,7 +1173,7 @@ SIDEBAR
 .both_green_left{
 	background: url(../images/green_left.png) top left no-repeat;
 	display: inline;
-	margin: 4px -9px 0 0;
+	margin: 1px -9px 0 0;
 	float: right;
 	}
 
@@ -1194,7 +1194,7 @@ SIDEBAR
 .both_blue_left{
 	background: url(../images/blue_left.png) top left no-repeat;
 	display: inline;
-	margin: 4px 0 0 0;
+	margin: 1px 0 0 0;
 	float: right;
 	}
 
@@ -1214,7 +1214,7 @@ SIDEBAR
 .both_white_left{
 	background: url(../images/white_left.png) top left no-repeat;
 	display: inline;
-	margin: 4px 0 0 0;
+	margin: 1px 0 0 0;
 	float: right;
 	}
 
@@ -1228,7 +1228,7 @@ span.newchannel{
 .orange_left{
 	background: url(../images/orange_left.png) top left no-repeat;
 	display: inline;
-	margin: 4px 0 0 0;
+	margin: 1px 0 0 0;
 	float: right;
 	}
 

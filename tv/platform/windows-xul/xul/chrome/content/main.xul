@@ -126,9 +126,11 @@
 <!-- CONTENT AREA -->
 <hbox flex="1">
 
+	<hbox flex="0" width="5" minwidth="5" style="background-color:#000000;"></hbox>
+
 	<!-- CHANNEL BAR -->
   	<browser id="channelsDisplay" src="" type="content"
-                 flex="0" width="250" minwidth="25" maxwidth="400"
+                 flex="0" width="250" minwidth="50" maxwidth="400"
                  context="contextPopup"
                  oncontextmenu="return xulcontexthandler(event);" />
 	<!-- / CHANNEL BAR -->
@@ -142,6 +144,8 @@
                  context="contextPopup"
                  oncontextmenu="return xulcontexthandler(event);" />
 	<!-- / MAIN WINDOW -->
+	
+	<hbox width="5" style="background-color:#000000;"></hbox>
 	
 </hbox>
 <!-- / CONTENT AREA -->
@@ -188,12 +192,12 @@
 	
 	<!-- VOLUME SLIDER -->
 	<html:div id="volume">
-        <html:span id="knob"/>
-        </html:div>
+  	<html:span id="knob"/>
+	</html:div>
 	<!-- / VOLUME SLIDER -->	
 	<hbox flex="0" id="bottom-right" height="100">
-          <resizer dir="bottomright" id="resizer" oncommand="return doResize(event);"/>
-        </hbox>
+  	<resizer dir="bottomright" id="resizer" oncommand="return doResize(event);"/>
+	</hbox>
 </hbox>
 
 <!-- / BOTTOM -->

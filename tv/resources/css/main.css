@@ -1,7 +1,7 @@
 body {
 	background: #FFFFFF;
 	margin: 0px;
-	font: 12px "Lucida Grande", "Lucida Sans", Arial, "Trebuchet MS";
+	font: 12px "Lucida Grande", "Trebuchet MS", Arial, sans-serif;
 	color: #333333;
 	/* The following property is used by Safari to prevent text selection */
 	/* NEEDS: generates spammy console warnings in strict mode under
@@ -127,10 +127,9 @@ li {
 }
 
 .main-titlebar-tasks-search {
-	width: 125px; 
-	height: 13px;
+	width: 115px; 
 	border: 1px solid #5392e3;
-	padding: 4px;
+	padding: 2px;
 	font-size: 11px;
 	color: #1c5180;
 }
@@ -172,6 +171,7 @@ li {
 	font-size: 100%;
 	font-weight: bold;
 	text-decoration: none;
+	line-height: 16px;
 }
 
 .main-channelbar h1, .main-channelbar h2 {
@@ -217,7 +217,7 @@ li {
 	margin: 15px 0px 12px 5px;
 	font-size: 14px;
 	font-weight: bold;
-	color:#FFFFFF;
+	color: #ffffff;
 }
 
 .main-notification-right {	
@@ -328,7 +328,7 @@ li {
 .main-video-desc p {
 	margin: 0px;
 	padding: 0px;
-	font-size: 90%;
+	font-size: 95%;
 }
 
 .main-video-details p {
@@ -391,6 +391,7 @@ li {
 	font-weight: bold;
 	margin: 0px;
 	padding: 3px 5px;
+	line-height: 11px;
 }
 
 .main-video-details-save {
@@ -406,6 +407,7 @@ li {
 	font-weight: bold;
 	margin: 0px;
 	padding: 3px 5px;
+	line-height: 11px;
 }
 
 .main-video-details-save p a {

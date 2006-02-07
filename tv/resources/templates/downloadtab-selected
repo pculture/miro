@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <a xmlns:t="http://www.participatorypolitics.org/" xmlns:i18n="http://www.participatoryculture.org/i18n" class="sidebar-download">
-	<div class="sidebar-download-inner-selected" style="background:#e6edf7 url(resource:images/sidebar-tab-bg-selected.png) repeat-x left 2px;">
+	<div class="sidebar-download-inner-selected">
 		<span>
 			<p>Downloads</p>
 			<div class="circle-orange-left" t:hideIfKey="global view downloadingItems len" t:hideFunctionKey="global filter equal" t:hideParameter="0">
