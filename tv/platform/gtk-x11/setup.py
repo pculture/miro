@@ -10,11 +10,13 @@ BOOST_LIB = 'boost_python-gcc-mt-1_33'
 
 from distutils.core import setup
 from distutils.extension import Extension
+from distutils.cmd import Command
 import os
 import sys
 import shutil
 import popen2
 from Pyrex.Distutils import build_ext
+from distutils import dep_util
 
 # The name of this platform.
 platform = 'gtk-x11'
@@ -54,6 +56,13 @@ mozilla_libs = getConfigList('mozilla-config --libs %s' % mozilla_components)
 
 frontend_implementation_dir = os.path.join(root, 'platform', platform,
         'frontend_implementation')
+xine_dir = os.path.join(root, 'platform', platform, 'xine')
+
+def pkgconfigList(args):
+    output = os.popen("pkg-config %s" % args).read()
+    return output.strip().split(' ')
+
+xinePackages = ['pygtk-2.0', 'gtk+-2.0', 'glib-2.0', 'gthread-2.0']
 
 # Private extension modules to build.
 ext_modules = [
@@ -70,8 +79,19 @@ ext_modules = [
               include_dirs=pygtk_includes + mozilla_includes,
               runtime_library_dirs=mozilla_libs,
               library_dirs=mozilla_libs,
-              libraries=['gtk-x11-2.0', 'gtkembedmoz'])
-]
+              libraries=['gtk-x11-2.0', 'gtkembedmoz']),
+    Extension('xine', [
+        os.path.join(xine_dir, 'xine.pyx'),
+        os.path.join(xine_dir, 'xine_impl.c'),
+        ],
+        libraries=['xine', 'X11'],
+        include_dirs=['/usr/include/X11'],
+        library_dirs=['/usr/X11R6/lib'],
+        extra_compile_args=pkgconfigList("--cflags " + 
+            ' '.join(xinePackages)),
+        extra_link_args=pkgconfigList("--libs " + ' '.join(xinePackages)))
+    ]
+
 
 setup(
     console = ['DTV.py'],

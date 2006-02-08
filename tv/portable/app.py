@@ -496,6 +496,15 @@ class Controller (frontend.Application):
             else:
                 self.idlingNotifier = None
 
+            # Set up the playback controller
+            self.playbackController = frontend.PlaybackController()
+
+            # Set up the video display
+            self.videoDisplay = frontend.VideoDisplay()
+            self.videoDisplay.initRenderers()
+            self.videoDisplay.playbackController = self.playbackController
+            self.videoDisplay.setVolume(config.get(config.VOLUME_LEVEL))
+
             # Put up the main frame
             print "DTV: Displaying main frame..."
             self.frame = frontend.MainFrame(self)
@@ -511,15 +520,6 @@ class Controller (frontend.Application):
             self.frame.selectDisplay(self.tabDisplay, self.frame.channelsDisplay)
             self.tabs.addRemoveCallback(lambda oldObject, oldIndex: self.checkSelectedTab())
             self.checkSelectedTab()
-
-            # Set up the playback controller
-            self.playbackController = frontend.PlaybackController()
-
-            # Set up the video display
-            self.videoDisplay = frontend.VideoDisplay()
-            self.videoDisplay.initRenderers()
-            self.videoDisplay.playbackController = self.playbackController
-            self.videoDisplay.setVolume(config.get(config.VOLUME_LEVEL))
 
             # If we have newly available items, provide feedback
             self.updateAvailableItemsCountFeedback()

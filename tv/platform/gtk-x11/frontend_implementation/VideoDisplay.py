@@ -1,5 +1,10 @@
 import app
 import frontend
+import gobject
+import gtk
+from gtk_queue import gtkMethod
+
+from xinerenderer import XineRenderer
 
 ###############################################################################
 #### The Playback Controller                                               ####
@@ -11,7 +16,6 @@ class PlaybackController (app.PlaybackControllerBase):
         item = app.PlaybackControllerBase.playItemExternally(self, itemID)
         # now play this item externally
 
-
 ###############################################################################
 #### Right-hand pane video display                                         ####
 ###############################################################################
@@ -21,53 +25,37 @@ class VideoDisplay (app.VideoDisplayBase):
 
     def __init__(self):
         app.VideoDisplayBase.__init__(self)
-        pass
-    
-    def canPlayItem(self, item):
-        return False
+        self._gtkInit()
 
-    def selectItem(self, item):
-        app.VideoDisplayBase.selectItem(self, item)
+    def initRenderers(self):
+        self.renderers = [
+            XineRenderer(),
+            # add additional video renderers here
+        ]
 
-    def goToBeginningOfMovie(self):
-        pass
+    @gtkMethod
+    def _gtkInit(self):
+        self.widget = gtk.DrawingArea()
+        self.widget.set_double_buffered(False)
+        self.widget.show()
+        for renderer in self.renderers:
+            renderer.setWidget(self.widget)
 
-    def play(self):
-        app.VideoDisplayBase.play(self)
-
-    def pause(self):
-        app.VideoDisplayBase.pause(self)
-
-    def stop(self):
-        app.VideoDisplayBase.stop(self)
+    def getWidget(self):
+        return self.widget
 
     def goFullScreen(self):
-        app.VideoDisplayBase.goFullScreen(self)
+        print "NOT IMPLEMENTED: goFullScreen()"
 
     def exitFullScreen(self):
-        app.VideoDisplayBase.exitFullScreen(self)
+        print "NOT IMPLEMENTED: exitFullScreen()"
 
-    def getCurrentTime(self):
-        return 0.0
-
-    def setVolume(self, level):
-        app.VideoDisplayBase.setVolume(self, level)
-
-    def getVolume(self):
-        return 1.0
-
-    def muteVolume(self):
-        app.VideoDisplayBase.muteVolume(self)
-
-    def restoreVolume(self):
-        app.VideoDisplayBase.restoreVolume(self)
-
-    def onSelected(self, frame):
-        app.VideoDisplayBase.onSelected(self, frame)
-
-    def onDeselected(self, frame):
-        app.VideoDisplayBase.onDeselected(self, frame)
-
+    def getLength(self):
+        """Get the length, in seconds, of the current video."""
+        if self.activeRenderer:
+            return self.activeRenderer.getLength()
+        else:
+            return 0
 
 ###############################################################################
 #### Playlist item base class                                              ####
