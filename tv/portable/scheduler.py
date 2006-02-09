@@ -44,7 +44,7 @@ class Scheduler(DynamicDatabase):
 		self.endUpdate()
 	    sleep(1)
 
-    def __getstate(self):
+    def __getstate__(self):
         assert(0) #This should never be serialized
 
 ##
@@ -88,5 +88,5 @@ class ScheduleEvent(DDBObject):
         #print "%s finished " % str(self.event)
         threadpriority.setBackgroundPriority()
 
-    def __getstate(self):
+    def __getstate__(self):
         assert(0) #This should never be serialized
