@@ -2059,6 +2059,7 @@ class QuicktimeRenderer (app.VideoRenderer):
         self.view = QTMovieView.alloc().initWithFrame_(((0,0),(100,100)))
         self.view.setFillColor_(NSColor.blackColor())
         self.view.setControllerVisible_(NO)
+        self.view.setEditable_(NO)
         self.view.setPreservesAspectRatio_(YES)
         self.delegate = delegate
         self.cachedMovie = nil
@@ -2113,6 +2114,7 @@ class QuicktimeRenderer (app.VideoRenderer):
         self.reset()
         if qtmovie is not nil:
             self.view.setMovie_(qtmovie)
+            self.view.setNeedsDisplay_(YES)
             self.registerMovieObserver(qtmovie)
 
     def play(self):
