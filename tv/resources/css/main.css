@@ -452,6 +452,16 @@ li {
 	background: url(../images/main-icon-mail.png) bottom left no-repeat;
 }
 
+.main-video-details-task-bomb {	
+	background: url(../images/main-icon-bomb.png) top left no-repeat;
+	width: 19px;
+	height: 17px;
+}
+
+.main-video-details-task-bomb:hover {	
+	background: url(../images/main-icon-bomb.png) bottom left no-repeat;
+}
+
 .main-video-progress {
 	float: left;
 	display: inline;
