@@ -1189,7 +1189,8 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
             elif self.updateTimer is not nil:
                 self.updateTimer.invalidate()
                 self.updateTimer = nil
-            self.refresh_(nil)
+        self.refresh_(nil)
+        self.setNeedsDisplay_(YES)
 
     def teardown(self):
         self.setup(None)
@@ -2081,12 +2082,23 @@ class QuicktimeRenderer (app.VideoRenderer):
         else:
             (qtmovie, error) = QTMovie.alloc().initWithFile_error_(pathname)
             self.cachedMovie = qtmovie
-        if qtmovie is not nil:
+
+        # Purely referential movies have a no duration, no track and need to be 
+        # streamed first. Since we don't support this yet, we delegate the 
+        # streaming to the standalone QT player to avoid any problem (like the 
+        # crash in #944) by simply declaring that we can't play the corresponding item.
+        # Note that once the movie is fully streamed and cached by QT, DTV will
+        # be able to play it internally just fine -- luc
+        
+        if qtmovie is not nil and qtmovie.duration().timeValue > 0 and len(qtmovie.tracks()) > 0:
             (path, ext) = os.path.splitext(pathname.lower())
             if ext in self.POSSIBLY_SUPPORTED_EXT and self.hasFlip4MacComponent():
                 canPlay = True
             elif ext not in self.POSSIBLY_SUPPORTED_EXT and ext not in self.UNSUPPORTED_EXT:
                 canPlay = True
+        else:
+            self.cachedMovie = nil
+
         return canPlay
 
     def hasFlip4MacComponent(self):
@@ -2230,6 +2242,7 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         self.feedLabel.setStringValue_(item.getFeed().getTitle())
         self.donationLabel.setStringValue_(u'')
         self.renderer = renderer
+        self.update_(nil)
 
     def reveal(self, parent):
         self.update_(nil)
