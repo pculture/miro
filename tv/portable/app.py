@@ -499,15 +499,15 @@ class Controller (frontend.Application):
             # Set up the playback controller
             self.playbackController = frontend.PlaybackController()
 
+            # Put up the main frame
+            print "DTV: Displaying main frame..."
+            self.frame = frontend.MainFrame(self)
+
             # Set up the video display
             self.videoDisplay = frontend.VideoDisplay()
             self.videoDisplay.initRenderers()
             self.videoDisplay.playbackController = self.playbackController
             self.videoDisplay.setVolume(config.get(config.VOLUME_LEVEL))
-
-            # Put up the main frame
-            print "DTV: Displaying main frame..."
-            self.frame = frontend.MainFrame(self)
 
             scheduler.ScheduleEvent(300,db.save)
 
