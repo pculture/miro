@@ -28,7 +28,7 @@
 	<h2>Leave DTV running.</h2>
   <p>DTV regularly checks channels for new videos and downloads in the background. Leaving DTV running as much as possible means that that you'll have new things ready to watch when you want to sit back and relax. You can also set the DTV prefences so that it will automatically run when you start your computer. </p>
 	
-  <h3>Next Step: <a href="template:first-time-intro-two">How to Subscribe >></a></h3>
+  <h3>Next Step: <a href="#" onclick="eventURL('template:first-time-intro-two');">How to Subscribe &gt;&gt;</a></h3>
 </div>
 </body>
 </html>

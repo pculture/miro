@@ -29,7 +29,7 @@
 	
 	<p>New channels are being added every day, so keep an eye on the Guide. And if you publish a channel or know of a DTV-compatible channel that's not listed, please submit it.</p> 
 	
-	<h3>Next Step: <a href="template:guide-loading">Go to the Channel Guide >></a></h3>
+	<h3>Next Step: <a href="#" onclick="eventURL('template:guide-loading');">Go to the Channel Guide &gt;&gt;</a></h3>
 </div>
 </body>
 </html>
