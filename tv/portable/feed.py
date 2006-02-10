@@ -19,6 +19,8 @@ import config
 import re
 import app
 
+whitespacePattern = re.compile(r"^[ \t\r\n]*$")
+
 # Notes on character set encoding of feeds:
 #
 # The parsing libraries built into Python mostly use byte strings
@@ -623,7 +625,10 @@ class FeedImpl:
     # Returns the title of the feed
     def getTitle(self):
         try:
-            return self.title
+            title = self.title
+            if whitespacePattern.match(title):
+                title = self.url
+            return title
         except:
             return ""
 
