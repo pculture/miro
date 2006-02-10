@@ -421,6 +421,7 @@ class Controller (frontend.Application):
             if not hasGuide:
                 print "DTV: Spawning Channel Guide..."
                 channelGuide = guide.ChannelGuide()
+                feed.Feed('http://www.videobomb.com/rss/posts/front')
                 feed.Feed('http://www.mediarights.org/bm/rss.php?i=1')
                 feed.Feed('http://live.watchmactv.com/wp-rss2.php')
                 feed.Feed('http://www.rocketboom.com/vlog/quicktime_daily_enclosures.xml')
