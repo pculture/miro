@@ -20,6 +20,14 @@ def quoteJS(x):
     x = re.compile("\n").  sub("\\\\n", x) # newline -> \n
     x = re.compile("\r").  sub("\\\\r", x) #      CR -> \r
     return x
+
+# These are used by the channel guide. This platform uses the
+# old-style 'magic URL' guide API, so we just return None. See
+# ChannelGuideToDtvApi in the Trac wiki for the full writeup.
+def getDTVAPICookie():
+    return None
+def getDTVAPIURL():
+    return None
         
 ###############################################################################
 #### HTML display                                                          ####

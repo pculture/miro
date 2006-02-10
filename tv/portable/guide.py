@@ -6,6 +6,7 @@ from copy import copy
 import re
 import config
 import threading
+import urllib
 
 HTMLPattern = re.compile("^.*(<head.*?>.*</body\s*>)", re.S)
 
@@ -163,6 +164,14 @@ class ChannelGuide(DDBObject):
         # for non-programmers to work with
         print "guide update running"
         url = config.get(config.CHANNEL_GUIDE_URL)
+
+        import frontend
+        apiurl = frontend.getDTVAPIURL()
+        if apiurl:
+            apiurl = urllib.quote_plus(apiurl)
+            apicookie = urllib.quote_plus(frontend.getDTVAPICookie())
+            url = "%s?dtvapiURL=%s&dtvapiCookie=%s" % (url, apiurl, apicookie)
+
         print "guide update grabbing %s" % url
         info = grabURL(url)
         print "guide update got: %s" % info

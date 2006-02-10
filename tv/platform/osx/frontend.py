@@ -41,6 +41,13 @@ nc = NSNotificationCenter.defaultCenter()
 def exit(returnCode):
    sys.exit(returnCode)
 
+# These are used by the channel guide. This platform uses the
+# old-style 'magic URL' guide API, so we just return None. See
+# ChannelGuideToDtvApi in the Trac wiki for the full writeup.
+def getDTVAPICookie():
+    return None
+def getDTVAPIURL():
+    return None
 
 ###############################################################################
 #### Dynamically link some specific Carbon functions which we need but     ####
@@ -59,7 +66,6 @@ OverallAct = 0
 coreServicesPath = objc.pathForFramework('/System/Library/Frameworks/CoreServices.framework')
 coreServicesBundle = NSBundle.bundleWithPath_(coreServicesPath)
 objc.loadBundleFunctions(coreServicesBundle, globals(), ((u'UpdateSystemActivity', 'IC'),))
-
 
 ###############################################################################
 #### Helper methods used to display alert dialog of various types          ####

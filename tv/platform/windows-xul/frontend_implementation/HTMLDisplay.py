@@ -18,6 +18,9 @@ pendingDocuments = {}
 serverPort = None
 lock = threading.RLock() # and a lock protecting it
 
+def getDTVPlatformName():
+    return "xul"
+
 def getServerPort():
     lock.acquire()
     try:
@@ -225,6 +228,19 @@ def execChromeJS(js):
         httpServer.lock.release()
 
 ###############################################################################
+#### Channel guide support                                                 ####
+###############################################################################
+
+# These are used by the channel guide. See ChannelGuideToDtvApi in the
+# Trac wiki for the full writeup.
+
+def getDTVAPICookie():
+    return str(getServerPort())
+
+def getDTVAPIURL():
+    return "http://127.0.0.1:%s/dtv/resource/dtvapi.js" % getServerPort()
+
+###############################################################################
 #### HTML display                                                          ####
 ###############################################################################
 
@@ -319,7 +335,7 @@ class HTMLDisplay (app.Display):
 	return self.eventCookie
 
     def getDTVPlatformName(self):
-	return "xul"
+        return getDTVPlatformName()
 
     def getServerPort(self):
         port = getServerPort()
