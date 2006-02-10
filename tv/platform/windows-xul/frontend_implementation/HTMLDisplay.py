@@ -164,6 +164,24 @@ Content-Type: text/plain
 """)
             self.close_when_done()
 
+        ## Channel guide API ##
+        match = re.match(r"GET /dtv/dtvapi/addChannel\?(.*)", request)
+        if match:
+            # NEEDS: it may be necessary to encode the url parameter
+            # in JS, and decode it here. I'm not super-clear on the
+            # circumstances (if any) under which Mozilla would treat
+            # the query string as other than opaque bytes.
+            url = match.group(1)
+            print "adding feed %s via DTVAPI" % url
+            app.Controller.instance.addAndSelectFeed(url)
+            self.push("""HTTP/1.0 200 OK
+Content-Length: 0
+Content-Type: text/plain
+
+""")
+            self.close_when_done()
+
+
         ## Resource file ##
         match = re.match("GET /dtv/resource/([^ ]*)", request)
         if match:
@@ -184,6 +202,8 @@ Content-Type: text/plain
                 contentType = "image/gif"
             elif re.search(".css$", fullPath):
                 contentType = "text/css"
+            elif re.search(".js$", fullPath):
+                contentType = "application/x-javascript"
 
             self.push("""HTTP/1.0 200 OK
 Content-Length: %s

@@ -384,6 +384,7 @@ import frontend
 
 class Controller (frontend.Application):
 
+    # This is considered public for now (ugly, sorry)
     instance = None
 
     def __init__(self):
