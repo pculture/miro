@@ -27,7 +27,7 @@ function beginUpdates() {
             enablePrivilege("UniversalBrowserRead");
         */
         xr.multipart = true;
-        xr.open("GET", url, false);
+        xr.open("GET", url, true);
         xr.onload = handleUpdate;
         xr.send(null);
     }
@@ -74,7 +74,7 @@ function eventURL(url) {
         //            getEventCookie() + "?" + url; NEEDS: remove
         url = "/dtv/action/" + getEventCookie() + "?" + url;
     	var req = new XMLHttpRequest();
-        req.open("GET", url, false);
+        req.open("GET", url, true);
         req.send(null);
         // NEEDS: there is another copy of this in main.js.
     }

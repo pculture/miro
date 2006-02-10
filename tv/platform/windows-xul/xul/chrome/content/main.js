@@ -124,7 +124,7 @@ function openServerCommunications() {
     // display.)
     var req = new XMLHttpRequest();
     req.multipart = true;
-    req.open("GET", "http://127.0.0.1:" + serverPort + "/dtv/xuljs", false);
+    req.open("GET", "http://127.0.0.1:" + serverPort + "/dtv/xuljs", true);
     req.onload = processServerMessage;
     req.send(null);
     jsdump("started xuljs pump");
@@ -151,7 +151,7 @@ function eventURL(cookie, url) {
     url = "http://127.0.0.1:" + serverPort + "/dtv/action/" +
         cookie + "?" + url;
     var req = new XMLHttpRequest();
-    req.open("GET", url, false);
+    req.open("GET", url, true);
     req.send(null);
 }
 
