@@ -3,7 +3,7 @@
 
 <glade-interface>
 
-<widget class="GtkWindow" id="main">
+<widget class="GtkWindow" id="main-window">
   <property name="visible">True</property>
   <property name="title" translatable="yes">DTV</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
@@ -27,7 +27,7 @@
       <property name="spacing">0</property>
 
       <child>
-	<widget class="GtkMenuBar" id="menubar1">
+	<widget class="GtkMenuBar" id="menubar">
 	  <property name="visible">True</property>
 
 	  <child>
@@ -47,7 +47,7 @@
 		      <signal name="activate" handler="on_save_video_activate" last_modification_time="Wed, 01 Feb 2006 22:40:25 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image44">
+			<widget class="GtkImage" id="image72">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-save-as</property>
 			  <property name="icon_size">1</property>
@@ -68,7 +68,7 @@
 		      <signal name="activate" handler="on_delete_video_activate" last_modification_time="Wed, 01 Feb 2006 22:40:25 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image45">
+			<widget class="GtkImage" id="image73">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-delete</property>
 			  <property name="icon_size">1</property>
@@ -117,7 +117,7 @@
 		      <signal name="activate" handler="on_play_activate" last_modification_time="Wed, 01 Feb 2006 22:40:25 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image46">
+			<widget class="GtkImage" id="image74">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-media-play</property>
 			  <property name="icon_size">1</property>
@@ -138,7 +138,7 @@
 		      <signal name="activate" handler="on_stop_activate" last_modification_time="Wed, 01 Feb 2006 22:40:25 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image47">
+			<widget class="GtkImage" id="image75">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-stop</property>
 			  <property name="icon_size">1</property>
@@ -163,6 +163,15 @@
 		      <property name="label">gtk-fullscreen</property>
 		      <property name="use_stock">True</property>
 		      <signal name="activate" handler="on_fullscreen_activate" last_modification_time="Wed, 01 Feb 2006 22:40:25 GMT"/>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkImageMenuItem" id="leave-fullscreen">
+		      <property name="visible">True</property>
+		      <property name="label">gtk-leave-fullscreen</property>
+		      <property name="use_stock">True</property>
+		      <signal name="activate" handler="on_leave_fullscreen_activate" last_modification_time="Wed, 08 Feb 2006 11:16:06 GMT"/>
 		    </widget>
 		  </child>
 		</widget>
@@ -205,7 +214,7 @@
 		      <signal name="activate" handler="on_channel_copy_url_activate" last_modification_time="Wed, 01 Feb 2006 22:40:25 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image48">
+			<widget class="GtkImage" id="image76">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-copy</property>
 			  <property name="icon_size">1</property>
@@ -226,7 +235,7 @@
 		      <signal name="activate" handler="on_channel_rename_activate" last_modification_time="Wed, 01 Feb 2006 22:40:25 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image49">
+			<widget class="GtkImage" id="image77">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-edit</property>
 			  <property name="icon_size">1</property>
@@ -253,7 +262,7 @@
 		      <signal name="activate" handler="on_update_channel_activate" last_modification_time="Sat, 04 Feb 2006 19:11:22 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image50">
+			<widget class="GtkImage" id="image78">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-refresh</property>
 			  <property name="icon_size">1</property>
@@ -289,7 +298,7 @@
 		      <signal name="activate" handler="on_tell_a_friend_activate" last_modification_time="Wed, 01 Feb 2006 22:40:25 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image51">
+			<widget class="GtkImage" id="image79">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-network</property>
 			  <property name="icon_size">1</property>
@@ -429,6 +438,33 @@
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
 		      <property name="spacing">0</property>
+
+		      <child>
+			<widget class="GtkButton" id="fullscreen-button">
+			  <property name="visible">True</property>
+			  <property name="can_focus">True</property>
+			  <property name="relief">GTK_RELIEF_NORMAL</property>
+			  <property name="focus_on_click">True</property>
+			  <signal name="clicked" handler="on_fullscreen_button_clicked" last_modification_time="Sat, 11 Feb 2006 14:49:58 GMT"/>
+
+			  <child>
+			    <widget class="GtkImage" id="fullscreen-image">
+			      <property name="visible">True</property>
+			      <property name="stock">gtk-fullscreen</property>
+			      <property name="icon_size">3</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">False</property>
+			  <property name="fill">False</property>
+			</packing>
+		      </child>
 
 		      <child>
 			<widget class="GtkAlignment" id="alignment2">

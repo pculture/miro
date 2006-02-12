@@ -2,6 +2,7 @@ import app
 import xine
 import gtk
 import traceback
+import gobject
 
 def waitForAttach(func):
     """Many xine calls can't be made until we attach the object to a X window.
@@ -26,9 +27,10 @@ class XineRenderer(app.VideoRenderer):
         widget.connect("unrealize", self.onUnrealize)
         widget.connect("configure-event", self.onConfigureEvent)
         widget.connect("expose-event", self.onExposeEvent)
+        self.widget = widget
 
     def onEos(self):
-        print "EOS"
+        app.Controller.instance.playbackController.skip(1)
 
     def onRealize(self, widget):
         # flush gdk output to ensure that our window is created
@@ -58,6 +60,26 @@ class XineRenderer(app.VideoRenderer):
     def canPlayItem(self, item):
         url = 'file://%s' % item.getPath()
         return self.xine.canPlayUrl(url)
+
+    def goFullscreen(self):
+        """Handle when the video window goes fullscreen."""
+        # Sometimes xine doesn't seem to handle the expose events properly and
+        # only thinks part of the window is exposed.  To work around this we
+        # send it a couple of fake expose events for the entire window, after
+        # a short time delay.
+
+        def fullscreenExposeWorkaround():
+            _, _, width, height, _ = self.widget.window.get_geometry()
+            self.xine.gotExposeEvent(0, 0, width, height)
+            return False
+
+        gobject.timeout_add(500, fullscreenExposeWorkaround)
+        gobject.timeout_add(1000, fullscreenExposeWorkaround)
+
+    def exitFullscreen(self):
+        """Handle when the video window exits fullscreen mode."""
+        # nothing to do here
+        pass
     
     @waitForAttach
     def selectItem(self, item):

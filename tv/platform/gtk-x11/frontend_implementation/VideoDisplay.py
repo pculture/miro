@@ -2,6 +2,7 @@ import app
 import frontend
 import gobject
 import gtk
+import gtk.gdk
 from gtk_queue import gtkMethod
 
 from xinerenderer import XineRenderer
@@ -37,18 +38,13 @@ class VideoDisplay (app.VideoDisplayBase):
     def _gtkInit(self):
         self.widget = gtk.DrawingArea()
         self.widget.set_double_buffered(False)
+        self.widget.add_events(gtk.gdk.POINTER_MOTION_MASK)
         self.widget.show()
         for renderer in self.renderers:
             renderer.setWidget(self.widget)
 
     def getWidget(self):
         return self.widget
-
-    def goFullScreen(self):
-        print "NOT IMPLEMENTED: goFullScreen()"
-
-    def exitFullScreen(self):
-        print "NOT IMPLEMENTED: exitFullScreen()"
 
     def getLength(self):
         """Get the length, in seconds, of the current video."""

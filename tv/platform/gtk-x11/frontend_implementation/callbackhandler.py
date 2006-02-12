@@ -7,30 +7,29 @@ import os
 import shutil
 
 class CallbackHandler(object):
-    """This is where everything happens.  The method names for this class
-    correspond to the event handler that they implement.  The event handler
-    name's are chosen in glade.  We use the underscored_method_name convention
-    here, because that's the default for glade.
+    """Class to handle menu item activation, button presses, etc.  The method
+    names for this class correspond to the event handler that they implement.
+    The event handler name's are chosen in glade.  CallbackHandler uses the
+    underscored_method_name convention for its methods, because that's the
+    default for glade.
     """
 
     def __init__(self, mainFrame):
         self.mainFrame = mainFrame
         self.mainApp = app.Controller.instance
-        self.videoDisplay = self.mainApp.videoDisplay
-        self.playbackController = self.mainApp.playbackController
 
     def on_main_destroy(self, event):
         gtk.main_quit()
 
     def on_play_pause_button_clicked(self, event):
-        app.Controller.instance.playbackController.playPause()
-        self.mainFrame.updatePlayPauseButton()
+        self.mainApp.playbackController.playPause()
+        self.mainFrame.windowChanger.updatePlayPauseButton()
 
     def on_previous_button_clicked(self, event):
-        self.playbackController.skip(-1)
+        self.mainApp.playbackController.skip(-1)
 
     def on_next_button_clicked(self, event):
-        self.playbackController.skip(1)
+        self.mainApp.playbackController.skip(1)
 
     def on_video_time_scale_format_value(self, scale, seconds):
         videoLength = self.mainFrame.videoLength
@@ -46,13 +45,13 @@ class CallbackHandler(object):
         return "%s / %s" % (formatTime(seconds), formatTime(videoLength))
 
     def on_video_time_scale_change_value(self, range, scroll, value):
-        renderer = self.videoDisplay.activeRenderer
+        renderer = self.mainApp.videoDisplay.activeRenderer
         if renderer:
             renderer.setCurrentTime(value)
         return True
 
     def on_volume_scale_value_changed(self, scale):
-        self.videoDisplay.setVolume(scale.get_value())
+        self.mainApp.videoDisplay.setVolume(scale.get_value())
 
     def on_save_video_activate(self, event):
         # I think the following is the best way to get the current playlist
@@ -60,13 +59,13 @@ class CallbackHandler(object):
         # a try, except.  This is pretty ugly, IMHO.  Someone who knows more
         # than me about the system should fix this.
         try:
-            item = self.playbackController.currentPlaylist.cur()
+            item = self.mainApp.playbackController.currentPlaylist.cur()
             videoPath = item.getPath()
         except:
             return
-        self.videoDisplay.pause()
+        self.mainApp.videoDisplay.pause()
         chooser = gtk.FileChooserDialog("Save Video As...",
-                self.mainFrame.mainWindow,
+                self.mainFrame.widgetTree['main-window'],
                 gtk.FILE_CHOOSER_ACTION_SAVE,
                 (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, 
                     gtk.STOCK_SAVE, gtk.RESPONSE_ACCEPT))
@@ -81,14 +80,16 @@ class CallbackHandler(object):
         chooser.destroy()
 
     def on_play_activate(self, event):
-        if self.playbackController.currentDisplay == self.videoDisplay:
-            self.videoDisplay.play()
+        currentDisplay = self.mainApp.playbackController.currentDisplay
+        if currentDisplay == self.mainApp.videoDisplay:
+            self.mainApp.videoDisplay.play()
         else:
-            self.playbackController.enterPlayback()
+            self.mainApp.playbackController.enterPlayback()
 
     def on_stop_activate(self, event):
-        if self.playbackController.currentDisplay == self.videoDisplay:
-            self.videoDisplay.pause()
+        currentDisplay = self.mainApp.playbackController.currentDisplay
+        if currentDisplay == self.mainApp.videoDisplay:
+            self.mainApp.videoDisplay.pause()
         else:
             pass
             # I think this will happen if we play an item externally.  Not
@@ -96,6 +97,18 @@ class CallbackHandler(object):
 
     def on_quit_activate(self, event):
         gtk.main_quit()
+
+    def on_fullscreen_activate(self, event):
+        self.mainFrame.setFullscreen(True)
+
+    def on_leave_fullscreen_activate(self, event):
+        self.mainFrame.setFullscreen(False)
+
+    def on_fullscreen_button_clicked(self, event):
+        if self.mainFrame.isFullscreen:
+            self.mainFrame.setFullscreen(False)
+        else:
+            self.mainFrame.setFullscreen(True)
 
     def on_update_channel_activate(self, event):
         pass

@@ -9,6 +9,22 @@ from frontend import *
 from frontend_implementation.gtk_queue import gtkMethod
 from frontend_implementation.VideoDisplay import VideoDisplay
 from frontend_implementation.callbackhandler import CallbackHandler
+from frontend_implementation.fullscreenhandler import FullscreenHandler
+from frontend_implementation.mainwindowchanger import MainWindowChanger
+
+class WidgetTree(gtk.glade.XML):
+    """Small helper class.  It's exactly like the gtk.glade.XML interface,
+    except that it supports a mapping interface to get widgets.  If wt is a
+    WidgetTree object, wt[name] is equivelent to wt.get_widget(name), but
+    without all the typing.
+    """
+
+    def __getitem__(self, key):
+        rv = self.get_widget(key)
+        if rv is None:
+            raise KeyError("No widget named %s" % key)
+        else:
+            return rv
 
 ###############################################################################
 #### Initialization code: window classes, invisible toplevel parent        ####
@@ -37,63 +53,35 @@ class MainFrame:
         self.selectedDisplays = {}
         self.videoLength = None
         self.callbackHandler = CallbackHandler(self)
+        self.isFullscreen = False
         self._gtkInit()
 
     @gtkMethod
     def _gtkInit(self):
         # Create the widget tree, and remember important widgets
-        widgetTree = gtk.glade.XML('glade/dtv.glade')
+        self.widgetTree = WidgetTree('glade/dtv.glade')
+        self.widgetTree['main-window'].show_all()
         self.displayBoxes = {
-            self.mainDisplay : widgetTree.get_widget('main-box'),
-            self.channelsDisplay : widgetTree.get_widget('channels-box'),
-            self.videoInfoDisplay : widgetTree.get_widget('video-info-box'),
+            self.mainDisplay : self.widgetTree['main-box'],
+            self.channelsDisplay : self.widgetTree['channels-box'],
+            self.videoInfoDisplay : self.widgetTree['video-info-box'],
         }
-        self.playPauseImage = widgetTree.get_widget('play-pause-image')
-        self.videoTimeScale = widgetTree.get_widget('video-time-scale')
-        self.mainWindow = widgetTree.get_widget('main')
-        # show all widgets except the video controll box, which is only shown
-        # when we have a video playlist
-        self.mainWindow.show_all()
-        self.videoControlBox = widgetTree.get_widget('video-control-box')
-        self.videoControlBox.hide()
-        # Keep track of menu items that need to be disabled when we aren't
-        # watching a video
-        self.videoOnlyMenuItems = [
-            widgetTree.get_widget('save-video'),
-            # delete-video should be one ,but it's not implemented yet so we
-            # always disable it
-            #widgetTree.get_widget('delete-video'),
-            widgetTree.get_widget('play'),
-            widgetTree.get_widget('stop'),
-            widgetTree.get_widget('fullscreen'),
-        ]
-        self.disableVideoControls()
+        self.windowChanger = MainWindowChanger(self.widgetTree,
+                MainWindowChanger.BROWSING)
+        self.fullscreenHandler = FullscreenHandler(self.widgetTree,
+                self.windowChanger)
         # connect all signals
-        widgetTree.signal_autoconnect(self.callbackHandler)
+        self.widgetTree.signal_autoconnect(self.callbackHandler)
         gobject.timeout_add(500, self.updateVideoTime)
         # disable menu item's that aren't implemented yet
-        widgetTree.get_widget('update-channel').set_sensitive(False)
-        widgetTree.get_widget('update-all-channels').set_sensitive(False)
-        widgetTree.get_widget('tell-a-friend').set_sensitive(False)
-        widgetTree.get_widget('channel-rename').set_sensitive(False)
-        widgetTree.get_widget('channel-copy-url').set_sensitive(False)
-        widgetTree.get_widget('channel-add').set_sensitive(False)
-        widgetTree.get_widget('channel-remove').set_sensitive(False)
-        widgetTree.get_widget('delete-video').set_sensitive(False)
-        widgetTree.get_widget('fullscreen').set_sensitive(False)
-
-    @gtkMethod
-    def disableVideoControls(self):
-        self.videoControlBox.hide()
-        for widget in self.videoOnlyMenuItems:
-            widget.set_sensitive(False)
-
-    @gtkMethod
-    def enableVideoControls(self):
-        self.videoControlBox.show()
-        self.updatePlayPauseButton()
-        for widget in self.videoOnlyMenuItems:
-            widget.set_sensitive(True)
+        self.widgetTree.get_widget('update-channel').set_sensitive(False)
+        self.widgetTree.get_widget('update-all-channels').set_sensitive(False)
+        self.widgetTree.get_widget('tell-a-friend').set_sensitive(False)
+        self.widgetTree.get_widget('channel-rename').set_sensitive(False)
+        self.widgetTree.get_widget('channel-copy-url').set_sensitive(False)
+        self.widgetTree.get_widget('channel-add').set_sensitive(False)
+        self.widgetTree.get_widget('channel-remove').set_sensitive(False)
+        self.widgetTree.get_widget('delete-video').set_sensitive(False)
 
     @gtkMethod
     def selectDisplay(self, newDisplay, area):
@@ -119,42 +107,49 @@ class MainFrame:
         if area == self.mainDisplay:
             watchable = newDisplay.getWatchable()
             if watchable:
-                self.enableVideoControls()
-                self.displayBoxes[self.videoInfoDisplay].hide()
+                self.windowChanger.changeState(self.windowChanger.PLAYLIST)
                 app.Controller.instance.playbackController.configure(watchable)
             elif isinstance(newDisplay, VideoDisplay):
-                self.enableVideoControls()
-                self.displayBoxes[self.videoInfoDisplay].show()
+                self.windowChanger.changeState(self.windowChanger.VIDEO)
             else:
-                self.disableVideoControls()
-
-    @gtkMethod
-    def updatePlayPauseButton(self):
-        if app.Controller.instance.videoDisplay.isPlaying:
-            pixbuf = self.playPauseImage.render_icon(gtk.STOCK_MEDIA_PAUSE, 
-                    gtk.ICON_SIZE_LARGE_TOOLBAR)
-        else:
-            pixbuf = self.playPauseImage.render_icon(gtk.STOCK_MEDIA_PLAY, 
-                    gtk.ICON_SIZE_LARGE_TOOLBAR)
-        self.playPauseImage.set_from_pixbuf(pixbuf)
+                self.windowChanger.changeState(self.windowChanger.BROWSING)
 
     def updateVideoTime(self):
         renderer = app.Controller.instance.videoDisplay.activeRenderer
         if renderer:
+            videoTimeScale = self.widgetTree['video-time-scale']
             try:
                 self.videoLength = renderer.getDuration()
             except:
                 self.videoLength = None
-                self.videoTimeScale.set_value(0)
+                videoTimeScale.set_value(0)
             else:
-                self.videoTimeScale.set_range(0, self.videoLength)
-                self.videoTimeScale.set_value(renderer.getCurrentTime())
+                videoTimeScale.set_range(0, self.videoLength)
+                videoTimeScale.set_value(renderer.getCurrentTime())
         return True
+
+    def setFullscreen(self, fullscreen):
+        activeRenderer = app.Controller.instance.videoDisplay.activeRenderer
+        if fullscreen:
+            self.windowChanger.changeState(self.windowChanger.VIDEO_FULLSCREEN)
+            self.widgetTree['main-window'].fullscreen()
+            self.fullscreenHandler.enable()
+            activeRenderer.goFullscreen()
+        else:
+            self.windowChanger.changeState(self.windowChanger.VIDEO)
+            self.widgetTree['main-window'].unfullscreen()
+            self.fullscreenHandler.disable()
+            activeRenderer.exitFullscreen()
+        self.isFullscreen = fullscreen
 
     # Internal use: return an estimate of the size of a given display area
     # as a (width, height) pair, or None if no information's available.
     def getDisplaySizeHint(self, area):
-        return None
+        display = self.selectedDisplays.get(area)
+        if display is None:
+            return None
+        allocation = display.getWidget().get_allocation()
+        return allocation.width, allocation.height
 
     def unlink(self):
         pass
