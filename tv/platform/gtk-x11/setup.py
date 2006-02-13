@@ -2,7 +2,7 @@
 ## Paths and configuration                                                   ##
 ###############################################################################
 
-BOOST_LIB = 'boost_python-gcc-mt-1_33'
+BOOST_LIB = 'boost_python'
 
 ###############################################################################
 ## End of configuration. No user-servicable parts inside                     ##
