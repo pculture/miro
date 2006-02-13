@@ -70,3 +70,9 @@ class UIBackendDelegate:
         buttons = (u'Quit', u'Cancel')
         # NEEDS inform user
         return True
+
+    def notifyUnkownErrorOccurence(self, when):
+        summary = u'Unknown Runtime Error'
+        message = u'An unknown error has occured %s.' % when
+        # NEEDS inform user
+        return True

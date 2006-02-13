@@ -84,16 +84,21 @@ class PlaybackControllerBase:
             self.enterPlayback()
 
     def playItem(self, anItem):
-        self.skipIfItemFileIsMissing(anItem)
-        videoDisplay = Controller.instance.videoDisplay
-        if videoDisplay.canPlayItem(anItem):
-            self.playItemInternally(videoDisplay, anItem)
-        else:
-            if self.currentDisplay is videoDisplay:
-                if videoDisplay.isFullScreen:
-                    videoDisplay.exitFullScreen()
-                videoDisplay.stop()
-            self.scheduleExternalPlayback(anItem)
+        try:
+            self.skipIfItemFileIsMissing(anItem)
+            videoDisplay = Controller.instance.videoDisplay
+            if videoDisplay.canPlayItem(anItem):
+                self.playItemInternally(videoDisplay, anItem)
+            else:
+                if self.currentDisplay is videoDisplay:
+                    if videoDisplay.isFullScreen:
+                        videoDisplay.exitFullScreen()
+                    videoDisplay.stop()
+                self.scheduleExternalPlayback(anItem)
+        except:
+            traceback.print_exc()
+            Controller.instance.getBackendDelegate().notifyUnkownErrorOccurence('when trying to play a video')
+            self.stop()
 
     def playItemInternally(self, videoDisplay, anItem):
         if self.currentDisplay is not videoDisplay:

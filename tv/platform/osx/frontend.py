@@ -931,6 +931,11 @@ class UIBackendDelegate:
         message = u'You have %d download%s still in progress.' % (downloadsCount, downloadsCount > 1 and 's' or '')
         buttons = (u'Quit', u'Cancel')
         return showWarningDialog(summary, message, buttons)
+        
+    def notifyUnkownErrorOccurence(self, when):
+        summary = u'Unknown Runtime Error'
+        message = u'An unknown error has occured %s.' % when
+        return showWarningDialog(summary, message)
 
 
 class PasswordController (NibClassBuilder.AutoBaseClass):
