@@ -546,7 +546,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
             app.ModelActionHandler(backEndDelegate).updateFeed(feedID)
 
     def updateAllChannels_(self, sender):
-        print "NOT IMPLEMENTED"
+        backEndDelegate = self.appl.getBackendDelegate()
+        app.ModelActionHandler(backEndDelegate).updateAllFeeds()
 
     def renameChannel_(self, sender):
         print "NOT IMPLEMENTED"
@@ -594,7 +595,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         message = u'In the meantime, please visit our homepage for our help FAQ: http://participatoryculture.org/\n\nFor individual user support, please e-mail feedback@ppolitics.org.'
         showInformationalDialog(summary, message)
 
-    itemsAlwaysAvailable = ('addChannel:', 'showHelp:')
+    itemsAlwaysAvailable = ('addChannel:', 'showHelp:', 'updateAllChannels:')
     selectedChannelItems = ('removeChannel:', 'copyChannelLink:', 'updateChannel:')
     def validateMenuItem_(self, item):
         if item.action() in self.selectedChannelItems:

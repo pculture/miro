@@ -932,6 +932,14 @@ class ModelActionHandler:
         thread.setDaemon(False)
         thread.start()
 
+    def updateAllFeeds(self):
+        # We might want to limit the number of simultaneous threads but for
+        # now, this naive and simple implementation will do the trick.
+        for f in globalViewList['feeds']:
+            thread = threading.Thread(target=f.update)
+            thread.setDaemon(False)
+            thread.start()
+
     def markFeedViewed(self, feed):
         try:
             obj = db.getObjectByID(int(feed))
