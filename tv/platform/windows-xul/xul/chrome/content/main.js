@@ -155,6 +155,16 @@ function eventURL(cookie, url) {
     req.send(null);
 }
 
+
+// Used to send return values back to UIBackendDelegate
+function delegateReturnURL(cookie, data) {
+    url = "http://127.0.0.1:" + serverPort + "/dtv/delegateresult/" +
+        cookie + "?" + data;
+    var req = new XMLHttpRequest();
+    req.open("GET", url, true);
+    req.send(null);
+}
+
 /*****************************************************************************
  Volume Knob 
  *****************************************************************************/
@@ -369,4 +379,10 @@ function doResize(event) {
     window.outerHeight=200;
   }
   return true;  
+}
+
+function showIsScrapeAllowedDialog(cookie,text) {
+  var params = {"in" : text, "out" : null};
+  window.openDialog('chrome://dtv/content/canscrape.xul','canscrape','chrome,dependent,centerscreen,modal',params);
+  delegateReturnURL(cookie, params.out);
 }

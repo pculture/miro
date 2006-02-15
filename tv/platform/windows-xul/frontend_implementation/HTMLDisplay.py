@@ -7,6 +7,23 @@ import re
 import resource
 import xhtmltools
 
+def execChromeJS(js):
+    """Execute some Javascript in the context of the privileged top-level
+    chrome window. Queued and delivered via a HTTP-based event
+    mechanism; no return value is recovered."""
+    httpServer.lock.acquire()
+    try:
+        if httpServer.chromeJavascriptStream:
+            print "exec xuljs: %s" % js
+            httpServer.chromeJavascriptStream.push_chunk("text/plain", js)
+        else:
+            print "queue up xuljs: %s" % js
+            httpServer.chromeJavascriptQueue.append(js)
+    finally:
+        httpServer.lock.release()
+
+from frontend_implementation import UIBackendDelegate
+
 ###############################################################################
 #### HTTP server to deliver pages/events to browsers via XMLHttpRequest    ####
 ###############################################################################
@@ -164,6 +181,26 @@ Content-Type: text/plain
 """)
             self.close_when_done()
 
+        ## Used to return result from UI Backend Delegate call ##
+
+        # If we find that in the future the web server is being
+        # littered with lots of URLs specific to the frontend, we may
+        # want to make a more general system for registering python functions
+        # that can be called by XUL
+
+        match = re.match(r"GET /dtv/delegateresult/([^ ?]*)\?([^ ]*)", request)
+        if match:
+            cookie = match.group(1)
+            url = match.group(2)
+            print "dispatching UIBackendDelegate event %s to %s (%d)" % (url, cookie, reqNum)
+	    UIBackendDelegate.dispatchResultByCookie(cookie, url)
+            self.push("""HTTP/1.0 200 OK
+Content-Length: 0
+Content-Type: text/plain
+
+""")
+            self.close_when_done()
+
         ## Channel guide API ##
         match = re.match(r"GET /dtv/dtvapi/addChannel\?(.*)", request)
         if match:
@@ -231,21 +268,6 @@ Content-Length: %s
 
 %s
 --%s""" % (mimeType, body, self.boundary))
-
-def execChromeJS(js):
-    """Execute some Javascript in the context of the privileged top-level
-    chrome window. Queued and delivered via a HTTP-based event
-    mechanism; no return value is recovered."""
-    httpServer.lock.acquire()
-    try:
-        if httpServer.chromeJavascriptStream:
-            print "exec xuljs: %s" % js
-            httpServer.chromeJavascriptStream.push_chunk("text/plain", js)
-        else:
-            print "queue up xuljs: %s" % js
-            httpServer.chromeJavascriptQueue.append(js)
-    finally:
-        httpServer.lock.release()
 
 ###############################################################################
 #### Channel guide support                                                 ####

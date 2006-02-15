@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin" type="text/css"?>
+<?xml-stylesheet href="main.css" type="text/css"?>
+
+<!DOCTYPE window SYSTEM "chrome://dtv/locale/main.dtd">
+<dialog id="main"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+        title="Non-standard Channel"
+        ondialogaccept="window.arguments[0].out = '1';"
+        ondialogcancel="window.arguments[0].out = '0';"
+        buttons="accept,cancel">
+    <script src="chrome://dtv/content/main.js" />
+   <label value="FIXME is not a DTV-style channel. DTV can try to subscribe, but videos may lack proper descriptions and thumbnails." />
+   <label value="Please notify the publisher if you want this channel to be fully supported" />
+
+</dialog>

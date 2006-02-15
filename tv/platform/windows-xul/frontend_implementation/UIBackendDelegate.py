@@ -1,8 +1,36 @@
+from frontend_implementation.HTMLDisplay import execChromeJS
+from random import randint
+from threading import Event
+
 ###############################################################################
 #### 'Delegate' objects for asynchronously asking the user questions       ####
 ###############################################################################
 
+def dispatchResultByCookie(cookie, url):
+    UIBackendDelegate.returnValues[cookie] = url
+    UIBackendDelegate.events[cookie].set()
+
+#FIXME: is this sufficient?
+def generateCookie():
+    return str(randint(1000000000,9999999999))
+
 class UIBackendDelegate:
+
+    events = {}
+    returnValues ={}
+
+    # Set up the data structures to listen for a return event from XUL
+    def initializeReturnEvent(self):
+        cookie = generateCookie()
+        UIBackendDelegate.events[cookie] = Event()
+        return cookie
+
+    def getReturnValue(self, cookie):
+        UIBackendDelegate.events[cookie].wait()
+        retval = UIBackendDelegate.returnValues[cookie]
+        del UIBackendDelegate.events[cookie]
+        del UIBackendDelegate.returnValues[cookie]
+        return retval
 
     def getHTTPAuth(self, url, domain, prefillUser = None, prefillPassword = None):
         """Ask the user for HTTP login information for a location, identified
@@ -20,13 +48,9 @@ class UIBackendDelegate:
         """Tell the user that URL wasn't a valid feed and ask if it should be
         scraped for links instead. Returns True if the user gives
         permission, or False if not."""
-        # This message could use some serious work.
-        title = "Non-Standard Channel"
-        message = "%s is not a DTV-style channel. DTV can try to subscribe, but videos may lack proper descriptions and thumbnails.\n\nPlease notify the publisher if you want this channel to be fully supported" % url
-        defaultButtonTitle = "Subscribe"
-        altButtonTitle = "Cancel"
-        # NEEDS
-        raise NotImplementedError
+        cookie = self.initializeReturnEvent()
+        execChromeJS("showIsScrapeAllowedDialog('%s');" % cookie)
+        return (str(self.getReturnValue(cookie)) != "0")
 
     def updateAvailable(self, url):
         """Tell the user that an update is available and ask them if they'd
