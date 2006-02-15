@@ -432,7 +432,7 @@ class Controller (frontend.Application):
                 feed.Feed('http://live.watchmactv.com/wp-rss2.php')
                 feed.Feed('http://www.rocketboom.com/vlog/quicktime_daily_enclosures.xml')
                 feed.Feed('http://some-pig.net/videos/rss.php?i=2')
-                feed.Feed('http://64.207.132.106/tmv/rss.php?i=2')
+                feed.Feed('http://www.telemusicvision.com/videos/rss.php?i=1')
                 feed.Feed('http://revision3.com/diggnation/feed/small.mov')
                 feed.Feed('http://www.channelfrederator.com/rss')
 
