@@ -26,6 +26,7 @@ class VideoDisplay (app.VideoDisplayBase):
 
     def __init__(self):
         app.VideoDisplayBase.__init__(self)
+        self.videoUpdateTimeout = None
         self._gtkInit()
 
     def initRenderers(self):
@@ -42,6 +43,32 @@ class VideoDisplay (app.VideoDisplayBase):
         self.widget.show()
         for renderer in self.renderers:
             renderer.setWidget(self.widget)
+
+    def startVideoTimeUpdate(self):
+        self.stopVideoTimeUpdate()
+        self.videoUpdateTimeout = gobject.timeout_add(500,
+                app.Controller.instance.frame.updateVideoTime)
+
+    def stopVideoTimeUpdate(self):
+        if self.videoUpdateTimeout is not None:
+            gobject.source_remove(self.videoUpdateTimeout)
+            self.videoUpdateTimeout = None
+
+    def play(self, startTime=0):
+        if not self.activeRenderer:
+            return
+        self.activeRenderer.playFromTime(startTime)
+        self.startVideoTimeUpdate()
+        self.isPlaying = True
+        app.Controller.instance.frame.windowChanger.updatePlayPauseButton()
+
+    def goToBeginningOfMovie(self):
+        self.play(0)
+
+    def pause(self):
+        self.stopVideoTimeUpdate()
+        app.VideoDisplayBase.pause(self)
+        app.Controller.instance.frame.windowChanger.updatePlayPauseButton()
 
     def getWidget(self):
         return self.widget

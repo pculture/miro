@@ -243,5 +243,8 @@ void xineGotExposeEvent(_Xine* xine, int x, int y, int width, int height)
 int xineGetPosLength(_Xine* xine, int* position, int* length)
 {
     int dummy;
+    if(!xine->attached) {
+        return 0; // This should cause an exception to be raised upstream
+    }
     return xine_get_pos_length(xine->stream, &dummy, position, length);
 }

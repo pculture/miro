@@ -75,7 +75,7 @@ class MainWindowChanger(object):
             self.widgetTree['video-info-box'].hide()
             self.widgetTree['menubar'].show()
         elif newState == self.PLAYLIST:
-            self.widgetTree['video-control-box'].show()
+            self.widgetTree['video-control-box'].hide()
             self.widgetTree['fullscreen'].set_sensitive(False)
             self.widgetTree['leave-fullscreen'].set_sensitive(False)
             self.widgetTree['channels-box'].show()

@@ -22,7 +22,12 @@ class CallbackHandler(object):
         gtk.main_quit()
 
     def on_play_pause_button_clicked(self, event):
-        self.mainApp.playbackController.playPause()
+        videoDisplay = self.mainApp.videoDisplay
+        if videoDisplay.isPlaying:
+            videoDisplay.pause()
+        else:
+            videoTimeScale = self.mainFrame.widgetTree['video-time-scale']
+            videoDisplay.play(videoTimeScale.get_value())
         self.mainFrame.windowChanger.updatePlayPauseButton()
 
     def on_previous_button_clicked(self, event):
@@ -30,6 +35,24 @@ class CallbackHandler(object):
 
     def on_next_button_clicked(self, event):
         self.mainApp.playbackController.skip(1)
+
+    def on_video_time_scale_button_press_event(self, scale, event):
+        scale.buttonsDown.add(event.button)
+
+    def on_video_time_scale_button_release_event(self, scale, event):
+        # we want to remove the button from the buttonsDown set, but we can't
+        # yet, because we haven't run the default signal handler yet, which
+        # will emit the value-changed signal.  So we use use idle_add, to
+        # remove the buttons once we're done with signal processing.
+        button = event.button 
+        gobject.idle_add(lambda: scale.buttonsDown.remove(button))
+
+    def on_video_time_scale_value_changed(self, videoTimeScale):
+        videoDisplay = self.mainApp.videoDisplay
+        renderer = videoDisplay.activeRenderer
+        if videoDisplay.isPlaying and renderer and videoTimeScale.buttonsDown:
+            renderer.playFromTime(videoTimeScale.get_value())
+        return True
 
     def on_video_time_scale_format_value(self, scale, seconds):
         videoLength = self.mainFrame.videoLength
@@ -43,12 +66,6 @@ class CallbackHandler(object):
             else:
                 return "%02d:%02d" % (mins, secs)
         return "%s / %s" % (formatTime(seconds), formatTime(videoLength))
-
-    def on_video_time_scale_change_value(self, range, scroll, value):
-        renderer = self.mainApp.videoDisplay.activeRenderer
-        if renderer:
-            renderer.setCurrentTime(value)
-        return True
 
     def on_volume_scale_value_changed(self, scale):
         self.mainApp.videoDisplay.setVolume(scale.get_value())

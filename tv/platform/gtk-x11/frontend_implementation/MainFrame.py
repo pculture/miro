@@ -4,6 +4,7 @@ pygtk.require('2.0')
 import gtk
 import gobject
 import gtk.glade
+import sets
 
 from frontend import *
 from frontend_implementation.gtk_queue import gtkMethod
@@ -70,9 +71,13 @@ class MainFrame:
                 MainWindowChanger.BROWSING)
         self.fullscreenHandler = FullscreenHandler(self.widgetTree,
                 self.windowChanger)
+        # create the buttonsDown attribute to the video time scale.  It will
+        # track which mouse buttons are currently pressed.  This is usefull
+        # because we don't want to update widget when the user is in the
+        # middle of draging it.
+        self.widgetTree['video-time-scale'].buttonsDown = sets.Set()
         # connect all signals
         self.widgetTree.signal_autoconnect(self.callbackHandler)
-        gobject.timeout_add(500, self.updateVideoTime)
         # disable menu item's that aren't implemented yet
         self.widgetTree.get_widget('update-channel').set_sensitive(False)
         self.widgetTree.get_widget('update-all-channels').set_sensitive(False)
@@ -116,8 +121,8 @@ class MainFrame:
 
     def updateVideoTime(self):
         renderer = app.Controller.instance.videoDisplay.activeRenderer
-        if renderer:
-            videoTimeScale = self.widgetTree['video-time-scale']
+        videoTimeScale = self.widgetTree['video-time-scale']
+        if renderer and not videoTimeScale.buttonsDown:
             try:
                 self.videoLength = renderer.getDuration()
             except:

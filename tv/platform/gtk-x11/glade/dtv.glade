@@ -420,11 +420,13 @@
 		      <property name="draw_value">True</property>
 		      <property name="value_pos">GTK_POS_RIGHT</property>
 		      <property name="digits">6</property>
-		      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+		      <property name="update_policy">GTK_UPDATE_DISCONTINUOUS</property>
 		      <property name="inverted">False</property>
 		      <property name="adjustment">0 0 1 0 0 0</property>
-		      <signal name="change_value" handler="on_video_time_scale_change_value" last_modification_time="Mon, 30 Jan 2006 03:58:59 GMT"/>
+		      <signal name="value_changed" handler="on_video_time_scale_value_changed" last_modification_time="Tue, 05 Dec 2006 23:39:32 GMT"/>
 		      <signal name="format_value" handler="on_video_time_scale_format_value" last_modification_time="Mon, 30 Jan 2006 05:00:59 GMT"/>
+		      <signal name="button_press_event" handler="on_video_time_scale_button_press_event" last_modification_time="Wed, 06 Dec 2006 00:20:38 GMT"/>
+		      <signal name="button_release_event" handler="on_video_time_scale_button_release_event" last_modification_time="Wed, 06 Dec 2006 00:35:59 GMT"/>
 		    </widget>
 		    <packing>
 		      <property name="padding">5</property>

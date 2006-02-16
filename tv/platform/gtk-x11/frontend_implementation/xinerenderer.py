@@ -89,16 +89,12 @@ class XineRenderer(app.VideoRenderer):
     def getProgress(self):
         pos, length = self.xine.getPositionAndLength()
 
-    @waitForAttach
-    def setProgress(self, progress):
-        self.setCurrentTime(self.getDuration() * progress)
-
     def getCurrentTime(self):
         pos, length = self.xine.getPositionAndLength()
         return pos / 1000
 
     @waitForAttach
-    def setCurrentTime(self, seconds):
+    def playFromTime(self, seconds):
         self.xine.seek(int(seconds * 1000))
 
     def getDuration(self):
@@ -113,11 +109,6 @@ class XineRenderer(app.VideoRenderer):
     def setVolume(self, level):
         self.xine.setVolume(int(level * 100))
                 
-    @waitForAttach
-    def goToBeginningOfMovie(self):
-        self.setCurrentTime(0.0)
-        self.pause()
-        
     @waitForAttach
     def play(self):
         self.xine.play()
