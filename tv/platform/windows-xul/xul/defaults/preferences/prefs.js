@@ -17,4 +17,4 @@ pref("general.useragent.vendorComment", "http://participatoryculture.org");
 /* debugging prefs */
 pref("browser.dom.window.dump.enabled", true);
 pref("javascript.options.showInConsole", true);
-pref("javascript.options.strict"wa, true);
+pref("javascript.options.strict", true);
