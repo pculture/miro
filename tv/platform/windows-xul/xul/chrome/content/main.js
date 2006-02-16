@@ -386,3 +386,10 @@ function showIsScrapeAllowedDialog(cookie,text) {
   window.openDialog('chrome://dtv/content/canscrape.xul','canscrape','chrome,dependent,centerscreen,modal',params);
   delegateReturnURL(cookie, params.out);
 }
+
+
+function showPasswordDialog(cookie,text) {
+  var params = {"in" : text, "out" : null};
+  window.openDialog('chrome://dtv/content/password.xul','password','chrome,dependent,centerscreen,modal',params);
+  delegateReturnURL(cookie, params.out);
+}

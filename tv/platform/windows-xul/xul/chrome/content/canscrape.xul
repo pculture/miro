@@ -9,9 +9,15 @@
         title="Non-standard Channel"
         ondialogaccept="window.arguments[0].out = '1';"
         ondialogcancel="window.arguments[0].out = '0';"
+        onload="updateLabel()"
         buttons="accept,cancel">
-    <script src="chrome://dtv/content/main.js" />
-   <label value="FIXME is not a DTV-style channel. DTV can try to subscribe, but videos may lack proper descriptions and thumbnails." />
+    <script type="text/javascript">
+function updateLabel() {
+  var label = document.getElementById("label1");
+  label.setAttribute("value", window.arguments[0]["in"] + " is not a DTV-style channel. DTV can try to subscribe, but videos may lack proper descriptions and thumbnails.");
+}
+    </script>
+   <label id="label1" value="???? is not a DTV-style channel. DTV can try to subscribe, but videos may lack proper descriptions and thumbnails." />
    <label value="Please notify the publisher if you want this channel to be fully supported" />
 
 </dialog>

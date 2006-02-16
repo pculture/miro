@@ -1,13 +1,14 @@
 from frontend_implementation.HTMLDisplay import execChromeJS
 from random import randint
 from threading import Event
+from urllib import unquote
 
 ###############################################################################
 #### 'Delegate' objects for asynchronously asking the user questions       ####
 ###############################################################################
 
 def dispatchResultByCookie(cookie, url):
-    UIBackendDelegate.returnValues[cookie] = url
+    UIBackendDelegate.returnValues[cookie] = unquote(url)
     UIBackendDelegate.events[cookie].set()
 
 #FIXME: is this sufficient?
@@ -19,13 +20,18 @@ class UIBackendDelegate:
     events = {}
     returnValues ={}
 
-    # Set up the data structures to listen for a return event from XUL
     def initializeReturnEvent(self):
+        """Set up the data structures to listen for a return event
+        from XUL"""
+
         cookie = generateCookie()
         UIBackendDelegate.events[cookie] = Event()
         return cookie
 
     def getReturnValue(self, cookie):
+        """Block until the frontend gives us a return value, then
+        return it"""
+
         UIBackendDelegate.events[cookie].wait()
         retval = UIBackendDelegate.returnValues[cookie]
         del UIBackendDelegate.events[cookie]
@@ -40,16 +46,39 @@ class UIBackendDelegate:
         information, it's returned as a (user, password)
         tuple. Otherwise, if the user presses Cancel or similar, None
         is returned."""
+        cookie = self.initializeReturnEvent()
         message = "%s requires a username and password for \"%s\"." % (url, domain)
-        # NEEDS
-        raise NotImplementedError
+        message = message.replace("\\","\\\\").replace("\"","\\\"").replace("'","\\'")
+        execChromeJS("showPasswordDialog('%s','%s');" % (cookie, message))
+
+        ret = self.getReturnValue(cookie)
+        if (len(ret) == 0):
+            return None
+
+        # FIXME find a saner way of marshalling data
+        # Currently, the pair of strings is separated by "|", escaped by "\\"
+        ret = ret.split("|",1)
+        while ((len(ret[0])>0) and (ret[0][-1] == "\\") and 
+               (len(ret[0]) == 1 or ret[0][-2] != "\\")):
+            temp = ret.pop(0)
+            ret[0] = temp + '|' + ret[0]
+        while ((len(ret[1])>0) and (ret[1][-1] == "\\") and 
+               (len(ret[1]) == 1 or ret[1][-2] != "\\")):
+            temp = ret.pop(1)
+            ret[1] = temp + '|' + ret[1]
+        user = ret[0].replace("\\|","|").replace("\\\\","\\")
+        password = ret[1].replace("\\|","|").replace("\\\\","\\")
+        #print "Username is (%s)" % user
+        #print "Password is (%s)" % password
+        return (user, password)
 
     def isScrapeAllowed(self, url):
         """Tell the user that URL wasn't a valid feed and ask if it should be
         scraped for links instead. Returns True if the user gives
         permission, or False if not."""
         cookie = self.initializeReturnEvent()
-        execChromeJS("showIsScrapeAllowedDialog('%s');" % cookie)
+        url = url.replace("\\","\\\\").replace("\"","\\\"").replace("'","\\'")
+        execChromeJS(("showIsScrapeAllowedDialog('%s','%s');" % (cookie,url)))
         return (str(self.getReturnValue(cookie)) != "0")
 
     def updateAvailable(self, url):
