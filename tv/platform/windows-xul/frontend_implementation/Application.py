@@ -14,6 +14,10 @@ class Application:
 	print "Application init"
 
     def runNonblocking(self):
+        import psyco
+        #psyco.log('\\dtv.psyco')
+        psyco.profile(.03)
+
         # Start the asynchronous I/O thread (mostly for the webserver
         # used to send events to the browsers.)
         ioThread = threading.Thread(name = "Asynchronous IO",
