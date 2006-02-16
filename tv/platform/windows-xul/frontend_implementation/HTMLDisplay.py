@@ -6,6 +6,7 @@ import socket
 import re
 import resource
 import xhtmltools
+import traceback
 
 def execChromeJS(js):
     """Execute some Javascript in the context of the privileged top-level
@@ -111,6 +112,15 @@ class httpServer(asynchat.async_chat):
         self.gotRequest = True
         print "got request '%s' (%d)" % (request, reqNum)
 
+        try:
+            self.handleRequest(request, reqNum)
+        except:
+            print "Closing due to exception handling request %s (%s):" \
+                % (reqNum, request)
+            traceback.print_exc()
+            self.close()
+
+    def handleRequest(self, request, reqNum):
         ## Mutator stream ##
         match = re.match("GET /dtv/mutators/([^ ]*)", request)
         if match:
