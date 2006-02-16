@@ -759,11 +759,11 @@ class TemplateDisplay(frontend.HTMLDisplay):
     def __init__(self, templateName, data, controller, existingView = None, frameHint=None, areaHint=None):
         "'templateName' is the name of the inital template file. 'data' is keys for the template."
 
-	# Copy the event cookie for this instance (allocated by our
-	# base class) into the template data
-	data = copy.copy(data)
-	data['eventCookie'] = self.getEventCookie()
-	data['dtvPlatform'] = self.getDTVPlatformName()
+        # Copy the event cookie for this instance (allocated by our
+        # base class) into the template data
+        data = copy.copy(data)
+        data['eventCookie'] = self.getEventCookie()
+        data['dtvPlatform'] = self.getDTVPlatformName()
 
         #print "Processing %s" % templateName
         self.controller = controller

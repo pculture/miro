@@ -699,7 +699,7 @@ class Feed(DDBObject):
             self.loading = True
             self.actualFeed = FeedImpl(url,self)
             DDBObject.__init__(self)
-            thread = Thread(target=lambda: self.generateFeed())
+            thread = Thread(target=lambda: self.generateFeed(True))
             thread.setDaemon(False)
             thread.start()
         else:
@@ -750,7 +750,7 @@ class Feed(DDBObject):
             self.endRead()
         self.actualFeed.update()
 
-    def generateFeed(self):
+    def generateFeed(self, removeOnError=False):
         temp =  _generateFeed(self.url,self,visible=True)
         self.beginRead()
         try:
@@ -761,8 +761,12 @@ class Feed(DDBObject):
                 self.actualFeed = temp
         finally:
             self.endRead()
-        self.beginChange()
-        self.endChange()
+
+        if removeOnError and self.errorState:
+            self.remove()
+        else:
+            self.beginChange()
+            self.endChange()
 
     def getActualFeed(self):
         return self.__dict__['actualFeed']

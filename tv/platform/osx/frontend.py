@@ -262,7 +262,9 @@ class MainFrame:
 
     def selectDisplay(self, display, area=None):
         """Install the provided 'display' in the requested area"""
+        pool = NSAutoreleasePool.alloc().init()
         self.controller.selectDisplay(display, area)
+        del pool
 
     # Internal use: return an estimate of the size of a given display area as
     # a Cocoa frame object.
@@ -1440,7 +1442,7 @@ class ManagedWebView (NSObject):
 
         html = NSString.stringWithString_(unicode(initialHTML))
         data = html.dataUsingEncoding_(NSUTF8StringEncoding)
-        self.view.mainFrame().loadData_MIMEType_textEncodingName_baseURL_(data, 'text/html', 'utf-8', nil)
+        AppHelper.callAfter(self.view.mainFrame().loadData_MIMEType_textEncodingName_baseURL_, data, 'text/html', 'utf-8', nil)
         return self
 
     def isKeyExcludedFromWebScript_(self,key):
