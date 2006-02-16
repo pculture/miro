@@ -7,6 +7,7 @@ from xml.sax.saxutils import unescape
 from scheduler import ScheduleEvent
 from feedparser import FeedParserDict
 from threading import Thread
+from math import ceil
 import threadpriority
 import config
 import os
@@ -117,9 +118,9 @@ class Item(DDBObject):
                 if exp.days > 0:
                     ret = "%d days" % exp.days
                 elif exp.seconds > 3600:
-                    ret = "%d hours" % (exp.seconds/3600)
+                    ret = "%d hours" % (ceil(exp.seconds/3600.0))
                 else:
-                    ret = "%d minutes" % (exp.seconds/60)
+                    ret = "%d minutes" % (ceil(exp.seconds/60.0))
         finally:
             self.feed.endRead()
             self.endRead()
@@ -516,9 +517,9 @@ class Item(DDBObject):
         elif (secs < 120):
             return '%1.0f secs left - ' % secs
         elif (secs < 6000):
-            return '%1.0f mins left - ' % (secs/60)
+            return '%1.0f mins left - ' % ceil(secs/60.0)
         else:
-            return '%1.1f hours left - ' % (secs/3600)
+            return '%1.1f hours left - ' % ceil(secs/3600.0)
 
     ##
     # Returns the download rate
@@ -617,9 +618,9 @@ class Item(DDBObject):
         if (secs < 120):
             return '%1.0f secs' % secs
         elif (secs < 6000):
-            return '%1.0f mins' % (secs/60)
+            return '%1.0f mins' % ceil(secs/60.0)
         else:
-            return '%1.1f hours' % (secs/3600)
+            return '%1.1f hours' % ceil(secs/3600.0)
 
     ##
     # returns string with the format of the video

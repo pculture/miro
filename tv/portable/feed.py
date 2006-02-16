@@ -460,7 +460,11 @@ class FeedImpl:
         elif self.expire == "never":
             return
         for item in self.items:
-            if (not item.getKeep()) and item.getState() == "finished" and datetime.now() - item.getDownloadedTime() > expireTime:
+            local = item.getFilename() is not ""
+            expiring = datetime.now() - item.getDownloadedTime() > expireTime
+            stateOk = item.getState() in ('finished', 'stopped', 'watched')
+            keepIt = item.getKeep()
+            if local and expiring and stateOk and not keepIt:
                 item.expire()
 
     ##
