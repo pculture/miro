@@ -814,10 +814,12 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 return False
 
             # Standard 'action:' URL
-            match = re.compile(r"^action:([^?]+)\?(.*)$").match(url)
+            match = re.compile(r"^action:([^?]+)(\?(.*))?$").match(url)
             if match:
                 action = match.group(1)
-                argString = match.group(2)
+                argString = match.group(3)
+                if argString is None:
+                    argString = ''
                 argLists = cgi.parse_qs(argString, keep_blank_values=True)
 
                 # argLists is a dictionary from parameter names to a list
@@ -1046,6 +1048,35 @@ class TemplateActionHandler:
         # area, even if they are loaded from the left-hand 'tab'
         # area. Actually this whole invocation is pretty hacky.
         self.controller.frame.selectDisplay(TemplateDisplay(name, self.display.templateData, self.controller, existingView = "sharedView", frameHint=self.controller.frame, areaHint=self.controller.frame.mainDisplay), self.controller.frame.mainDisplay)
+
+    def doneWithIntro(self):
+        # Find the guide
+        guide = None
+        for obj in globalViewList['guide']:
+            guide = obj
+        assert guide is not None
+
+        guide.setSawIntro()
+        self.goToGuide()
+
+    def goToGuide(self):
+        # Find the guide
+        guide = None
+        for obj in globalViewList['guide']:
+            guide = obj
+        assert guide is not None
+
+        # Does the Guide want to implement itself as a redirection to
+        # a URL?
+        (mode, location) = guide.getLocation()
+
+        if mode == 'template':
+            self.switchTemplate(location)
+        elif mode == 'url':
+            self.controller.frame.selectURL(location, \
+                                            self.controller.frame.mainDisplay)
+        else:
+            assert False, "Invalid guide load mode '%s'" % mode
 
     def setViewFilter(self, viewName, fieldKey, functionKey, parameter, invert):
         #print "set filter: view %s field %s func %s param %s invert %s" % (viewName, fieldKey, functionKey, parameter, invert)

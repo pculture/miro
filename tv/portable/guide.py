@@ -10,14 +10,6 @@ import urllib
 
 HTMLPattern = re.compile("^.*(<head.*?>.*</body\s*>)", re.S)
 
-firstTimeIntroBody = """
-<body>
-  <script type=\"text/javascript\">
-    eventURL('template:first-time-intro');
-  </script>
-</body>
-"""
-
 # NEEDS: Make this something more attractive
 guideNotAvailableBody = """
 <body>
@@ -86,9 +78,7 @@ class ChannelGuide(DDBObject):
         DDBObject.__init__(self)
         # Start loading the channel guide.
         print "Guide created. Scheduling first update."
-        ScheduleEvent(0, self.update, False)
-        # Start hourly reloads.
-        ScheduleEvent(3600, self.update, True)
+        self.startLoadsIfNecessary()
 
     ##
     # Called by pickle during serialization
@@ -119,41 +109,67 @@ class ChannelGuide(DDBObject):
         # getHTML() being called. If the latter happens first, we might get
         # the version of the channel guide from the last time DTV was run even
         # if we have a perfectly good net connection.
-        ScheduleEvent(0, self.update, False)
-        # Start hourly reloads.
-        ScheduleEvent(3600, self.update, True)
+        self.startLoadsIfNecessary()
+
+    def startLoadsIfNecessary(self):
+        import frontend
+        if frontend.getDTVAPIURL():
+            # Uses direct browsing. No precaching needed here.
+            pass
+        else:
+            # Uses precaching. Set up an initial update, plus hourly reloads..
+            ScheduleEvent(0, self.update, False)
+            ScheduleEvent(3600, self.update, True)
+
+    def setSawIntro(self):
+        self.sawIntro = True
+
+    # How should we load the guide? Returns (scheme, value). If scheme is
+    # 'url', value is a URL that should be loaded directly in the frame.
+    # If scheme is 'template', value is the template that should be loaded in
+    # the frame.
+    def getLocation(self):
+        if not self.sawIntro:
+            return ('template', 'first-time-intro')
+
+        import frontend
+        apiurl = frontend.getDTVAPIURL()
+        if apiurl:
+            # We're on a platform that uses direct loads and DTVAPI.
+            url = config.get(config.CHANNEL_GUIDE_URL)
+            apiurl = urllib.quote_plus(apiurl)
+            apicookie = urllib.quote_plus(frontend.getDTVAPICookie())
+            url = "%s?dtvapiURL=%s&dtvapiCookie=%s" % (url, apiurl, apicookie)
+            return ('url', url)
+
+        # We're on a platform that uses template inclusions and URL
+        # interception.
+        return ('template', 'guide')
 
     def getHTML(self):
         self.cond.acquire()
         try:
-            print "guide in getHTML"
-            if not self.sawIntro:
-                print "guide: not viewed. toggling flag."
-                self.sawIntro = True
-                print "guide: setting viewed. now %s" % self.sawIntro
-                return firstTimeIntroBody 
+            # In the future, may want to use
+            # self.loadedThisSession to tell if this is a fresh
+            # copy of the channel guide, and/or block a bit to
+            # give the initial load a chance to succeed or fail
+            # (but this would require changing the frontend code
+            # to expect the template code to block, and in general
+            # seems like a bad idea.)
+            #
+            # A better solution would be to put up a "loading" page and
+            # somehow shove an event to the page when the channel guide
+            # load finishes that causes the browser to reload the page.
+            if not self.cachedGuideBody:
+                # Start a new attempt, so that clicking on the guide
+                # tab again has at least a chance of working
+                print "guide scheduling a load and returning apology"
+                ScheduleEvent(0, self.update, False)
+                return guideNotAvailableBody
             else:
-                # In the future, may want to use
-                # self.loadedThisSession to tell if this is a fresh
-                # copy of the channel guide, and/or block a bit to
-                # give the initial load a chance to succeed or fail
-                # (but this would require changing the frontend code
-                # to expect the template code to block, and in general
-                # seems like a bad idea.)
-                #
-                # A better solution would be to put up a "loading" page and
-                # somehow shove an event to the page when the channel guide
-                # load finishes that causes the browser to reload the page.
-                if not self.cachedGuideBody:
-                    # Start a new attempt, so that clicking on the guide
-                    # tab again has at least a chance of working
-                    print "guide scheduling a load and returning apology"
-                    ScheduleEvent(0, self.update, False)
-                    return guideNotAvailableBody
-                else:
-                    if not self.loadedThisSession:
-                        print "*** WARNING *** loading a stale copy of the chanel guide from cache"
-                    return self.cachedGuideBody
+                if not self.loadedThisSession:
+                    print "*** WARNING *** loading a stale copy of the chanel guide from cache"
+                return self.cachedGuideBody
         finally:
             self.cond.release()
 
@@ -165,16 +181,8 @@ class ChannelGuide(DDBObject):
         print "guide update running"
         url = config.get(config.CHANNEL_GUIDE_URL)
 
-        import frontend
-        apiurl = frontend.getDTVAPIURL()
-        if apiurl:
-            apiurl = urllib.quote_plus(apiurl)
-            apicookie = urllib.quote_plus(frontend.getDTVAPICookie())
-            url = "%s?dtvapiURL=%s&dtvapiCookie=%s" % (url, apiurl, apicookie)
-
-        print "guide update grabbing %s" % url
         info = grabURL(url)
-        print "guide update got: %s" % info
+        print "loading %s, guide update got: %s" % (url, info)
         if info is not None:
             html = info['file-handle'].read()
             info['file-handle'].close()

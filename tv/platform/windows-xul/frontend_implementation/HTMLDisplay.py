@@ -7,6 +7,7 @@ import re
 import resource
 import xhtmltools
 import traceback
+from util import quoteJS
 
 def execChromeJS(js):
     """Execute some Javascript in the context of the privileged top-level
@@ -295,15 +296,6 @@ def getDTVAPIURL():
 ###############################################################################
 #### HTML display                                                          ####
 ###############################################################################
-
-# Perform escapes needed for Javascript string contents.
-def quoteJS(x):
-    x = re.compile("\\\\").sub("\\\\", x)  #       \ -> \\
-    x = re.compile("\"").  sub("\\\"", x)  #       " -> \"
-    x = re.compile("'").   sub("\\'", x)   #       ' -> \'
-    x = re.compile("\n").  sub("\\\\n", x) # newline -> \n
-    x = re.compile("\r").  sub("\\\\r", x) #      CR -> \r
-    return x
 
 def _genMutator(name):
     """Internal: Generates a method that causes the javascript function with
