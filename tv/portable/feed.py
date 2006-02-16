@@ -21,6 +21,10 @@ import app
 
 whitespacePattern = re.compile(r"^[ \t\r\n]*$")
 
+def defaultFeedIconURL():
+    import resource
+    return resource.url("images/feedicon.png")
+
 # Notes on character set encoding of feeds:
 #
 # The parsing libraries built into Python mostly use byte strings
@@ -245,7 +249,7 @@ class FeedImpl:
         self.visible = visible
         self.updating = False
         self.lastViewed = datetime.min
-        self.thumbURL = "resource:images/feedicon.png"
+        self.thumbURL = defaultFeedIconURL()
         self.updateFreq = config.get(config.CHECK_CHANNELS_EVERY_X_MN)*60
 
     # Sets the update frequency (in minutes). 
@@ -789,7 +793,7 @@ class Feed(DDBObject):
         if version == 0:
             version += 1
         if version == 1:
-            data['thumbURL'] = "resource:images/feedicon.png"
+            data['thumbURL'] = defaultFeedIconURL()
             version += 1
         if version == 2:
             data['lastViewed'] = datetime.min
@@ -1686,7 +1690,7 @@ class ScraperFeed(ScraperFeedImpl):
         if version == 0:
             version += 1
         if version == 1:
-            data['thumbURL'] = "resource:images/feedicon.png"
+            data['thumbURL'] = defaultFeedIconURL()
             version += 1
         if version == 2:
             data['lastViewed'] = datetime.min
@@ -1707,7 +1711,7 @@ class DirectoryFeed(DirectoryFeedImpl):
     def __setstate__(self,state):
         (version, data) = state
         if version == 0:
-            data['thumbURL'] = "resource:images/feedicon.png"
+            data['thumbURL'] = defaultFeedIconURL()
             version += 1
         if version == 1:
             data['lastViewed'] = datetime.min
@@ -1727,7 +1731,7 @@ class RSSFeed(RSSFeedImpl):
         if version == 0:
             version += 1
         if version == 1:
-            data['thumbURL'] = "resource:images/feedicon.png"
+            data['thumbURL'] = defaultFeedIconURL()
             version += 1
         if version == 2:
             data['lastViewed'] = datetime.min
