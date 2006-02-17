@@ -213,7 +213,7 @@ Content-Type: text/plain
             self.close_when_done()
 
         ## Channel guide API ##
-        match = re.match(r"GET /dtv/dtvapi/([^?]+)\?(.*)", request)
+        match = re.match(r"GET /dtv/dtvapi/([^?]+)\?([^ ]*)", request)
         if match:
             # NEEDS: it may be necessary to encode the url parameter
             # in JS, and decode it here. I'm not super-clear on the
