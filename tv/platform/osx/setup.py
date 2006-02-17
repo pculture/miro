@@ -40,8 +40,8 @@ boostIncludeDir = None
 boostSearchDirs = ('/usr/local', '/opt/local', '/sw')
 
 for rootDir in boostSearchDirs:
-    libItems = glob('%s/lib/libboost_python-1_3?.a' % rootDir)
-    incItems = glob('%s/include/boost-1_3?/' % rootDir)
+    libItems = glob(os.path.join(rootDir, 'lib/libboost_python-1_3*.a'))
+    incItems = glob(os.path.join(rootDir, 'include/boost-1_3*/'))
     if len(libItems) == 1 and len(incItems) == 1:
         boostLib = libItems[0]
         boostIncludeDir = incItems[0]
