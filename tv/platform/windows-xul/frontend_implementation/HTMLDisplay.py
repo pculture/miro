@@ -192,7 +192,7 @@ Content-Type: text/plain
 """)
             self.close_when_done()
 
-        ## Used to return result from UI Backend Delegate call ##
+        ## Returns result from UI Backend Delegate call ##
 
         # If we find that in the future the web server is being
         # littered with lots of URLs specific to the frontend, we may
@@ -389,7 +389,9 @@ class HTMLDisplay (app.Display):
     @classmethod
     def dispatchEventByCookie(klass, eventCookie, eventURL):
 	print "dispatch %s %s" % (eventCookie, eventURL)
-	return klass.cookieToInstanceMap[eventCookie].onURLLoad(eventURL)
+        thread = threading.Thread(target=lambda : klass.cookieToInstanceMap[eventCookie].onURLLoad(eventURL))
+        thread.setDaemon(False)
+        thread.start()
 
     def onURLLoad(self, url):
         """Called when this HTML browser attempts to load a URL (either

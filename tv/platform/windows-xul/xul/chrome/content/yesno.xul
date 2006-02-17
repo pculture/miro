@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin" type="text/css"?>
+<?xml-stylesheet href="main.css" type="text/css"?>
+
+<!DOCTYPE window SYSTEM "chrome://dtv/locale/main.dtd">
+<dialog id="main"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+        title="Prompt"
+        ondialogaccept="window.arguments[0].out = '1';"
+        ondialogcancel="window.arguments[0].out = '0';"
+        onload="updateLabel()"
+        buttons="accept,cancel">
+    <script type="text/javascript">
+function updateLabel() {
+  var label = document.getElementById("label1");
+  label.setAttribute("value", window.arguments[0]["text"]);
+  var ele = document.getElementById("main");
+  ele.setAttribute("title", window.arguments[0]["title"]);
+}
+    </script>
+   <label id="label1" value="Question goes here" />
+
+</dialog>

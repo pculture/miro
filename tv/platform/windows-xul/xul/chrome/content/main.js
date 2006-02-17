@@ -158,7 +158,7 @@ function eventURL(cookie, url) {
 
 // Used to send return values back to UIBackendDelegate
 function delegateReturnURL(cookie, data) {
-    url = "http://127.0.0.1:" + serverPort + "/dtv/delegateresult/" +
+    var url = "http://127.0.0.1:" + serverPort + "/dtv/delegateresult/" +
         cookie + "?" + data;
     var req = new XMLHttpRequest();
     req.open("GET", url, true);
@@ -384,6 +384,12 @@ function doResize(event) {
 function showIsScrapeAllowedDialog(cookie,text) {
   var params = {"in" : text, "out" : null};
   window.openDialog('chrome://dtv/content/canscrape.xul','canscrape','chrome,dependent,centerscreen,modal',params);
+  delegateReturnURL(cookie, params.out);
+}
+
+function showYesNoDialog(cookie,title, text) {
+  var params = {"text" : text, "title": title, "out" : null};
+  window.openDialog('chrome://dtv/content/yesno.xul','yesno','chrome,dependent,centerscreen,modal',params);
   delegateReturnURL(cookie, params.out);
 }
 
