@@ -6,18 +6,21 @@
 <dialog id="main"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 	xmlns:html="http://www.w3.org/1999/xhtml"
-        title="Non-standard Channel"
+        title="Not a DTV-style channel"
         ondialogaccept="window.arguments[0].out = '1';"
-        ondialogcancel="window.arguments[0].out = '0';"
         onload="updateLabel()"
-        buttons="accept,cancel">
+        buttons="accept">
     <script type="text/javascript">
 function updateLabel() {
   var label = document.getElementById("label1");
-  label.setAttribute("value", window.arguments[0]["in"] + " is not a DTV-style channel. DTV can try to subscribe, but videos may lack proper descriptions and thumbnails.");
+  label.setAttribute("value", "Please contact the publishers of " + window.arguments[0]["in"] + " and ask if they have a DTV-style channel.")
 }
     </script>
-   <label id="label1" value="???? is not a DTV-style channel. DTV can try to subscribe, but videos may lack proper descriptions and thumbnails." />
-   <label value="Please notify the publisher if you want this channel to be fully supported" />
+    
+   <label value="But we'll try our best to grab the files." />
+   <label value="- It may take time to list the videos." />
+   <label value="- Descriptions may look funny." />
+   
+   <label id="label1" value="Please contact the publishers of ???? and ask if they have a DTV-style channel." />
 
 </dialog>

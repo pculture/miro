@@ -22,11 +22,9 @@ class UIBackendDelegate:
         """Tell the user that URL wasn't a valid feed and ask if it should be
         scraped for links instead. Returns True if the user gives
         permission, or False if not."""
-        # This message could use some serious work.
-        title = "Non-Standard Channel"
-        message = "%s is not a DTV-style channel. DTV can try to subscribe, but videos may lack proper descriptions and thumbnails.\n\nPlease notify the publisher if you want this channel to be fully supported" % url
-        defaultButtonTitle = "Subscribe"
-        altButtonTitle = "Cancel"
+        summary = "Not a DTV-style channel"
+        message = "But we'll try our best to grab the files.\n- It may take time to list the videos\n- Descriptions may look funny\n\nPlease contact the publishers of %s and ask if they have a DTV-style channel." % url
+        defaultButtonTitle = 'Continue'
         # NEEDS
         raise NotImplementedError
 

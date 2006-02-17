@@ -853,9 +853,9 @@ class UIBackendDelegate:
         """Tell the user that URL wasn't a valid feed and ask if it should be
         scraped for links instead. Returns True if the user gives
         permission, or False if not."""
-        summary = u'Non-Standard Channel'
-        message = u'%s is not a DTV-style channel. DTV can try to subscribe, but videos may lack proper descriptions and thumbnails.\nPlease notify the publisher if you want this channel to be fully supported\n\nContinue ?' % url
-        buttons = (u'Subscribe', u'Cancel')
+        summary = u"Not a DTV-style channel"
+        message = u"But we'll try our best to grab the files.\n- It may take time to list the videos\n- Descriptions may look funny\n\nPlease contact the publishers of %s and ask if they have a DTV-style channel." % url
+        buttons = (u'Continue',)
         return showWarningDialog(summary, message, buttons)
 
     def updateAvailable(self, url):
