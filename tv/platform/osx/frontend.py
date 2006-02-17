@@ -940,6 +940,8 @@ class UIBackendDelegate:
         message = u'An unknown error has occured %s.' % when
         return showWarningDialog(summary, message)
 
+    def copyTextToClipboard(self, text):
+        print "WARNING: copyTextToClipboard not implemented"
 
 class PasswordController (NibClassBuilder.AutoBaseClass):
 

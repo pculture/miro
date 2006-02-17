@@ -78,3 +78,7 @@ class UIBackendDelegate:
         message = u'An unknown error has occured %s.' % when
         # NEEDS inform user
         return True
+
+    def copyTextToClipboard(self, text):
+        print "WARNING: copyTextToClipboard not implemented"
+        # NEEDS do it!

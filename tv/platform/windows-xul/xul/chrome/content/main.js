@@ -399,3 +399,26 @@ function showPasswordDialog(cookie,text) {
   window.openDialog('chrome://dtv/content/password.xul','password','chrome,dependent,centerscreen,modal',params);
   delegateReturnURL(cookie, params.out);
 }
+
+function clipboardCopy() {
+  clip = Components.classes["@mozilla.org/webshell;1"].getService();
+  clip.QueryInterface(Components.interfaces.nsIClipboardCommands);
+  clip.copySelection()
+}
+
+function clipboardCut() {
+  clip = Components.classes["@mozilla.org/webshell;1"].getService();
+  clip.QueryInterface(Components.interfaces.nsIClipboardCommands);
+  clip.cutSelection()
+}
+
+function clipboardPaste() {
+  clip = Components.classes["@mozilla.org/webshell;1"].getService();
+  clip.QueryInterface(Components.interfaces.nsIClipboardCommands);
+  clip.paste()
+}
+
+function copyTextToClipboard(text) {
+  var gClipboardHelper = Components.classes["@mozilla.org/widget/clipboardhelper;1"].getService(Components.interfaces.nsIClipboardHelper);
+  gClipboardHelper.copyString(text);
+}

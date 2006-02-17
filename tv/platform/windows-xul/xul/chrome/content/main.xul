@@ -28,18 +28,7 @@
 			<!-- FILE MENU -->
 			<menu id="file-menu" label="File" accesskey="F" class="titlebar-toplevel" style="margin-left: 10px;">
 				<menupopup id="file-popup">
-					<menuitem label="Open" acceltext="Ctrl+O" accesskey="O"/>
-						<menu id="openrecent-menu" label="Open Recent" accesskey="R">
-							<menupopup id="openrecent-popup">
-								<menuitem label="music/filename-01.mov"/>
-								<menuitem label="music/filename-02.mov"/>
-								<menuitem label="videogames/filename-03.mov"/>
-								<menuitem label="concerts/filename-04.mov"/>
-								<menuitem label="tv/filename-05.mov"/>
-							</menupopup>
-						</menu>
-					<menuseparator/>
-					<menuitem label="Exit" acceltext="Ctrl+Q" accesskey="E"/>
+					<menuitem label="Exit" acceltext="Ctrl+Q" accesskey="E" command="exit"/>
 				</menupopup>
 			</menu>
 			<!-- / FILE MENU -->
@@ -47,12 +36,11 @@
 			<!-- EDIT MENU -->
 			<menu id="edit-menu" label="Edit" accesskey="E" class="titlebar-toplevel">
 				<menupopup id="file-popup">
-					<menuitem label="Undo" acceltext="Ctrl+Z" accesskey="U"/>
-					<menuitem label="Redo" acceltext="Ctrl+Y" accesskey="R"/>
-					<menuseparator/>
-					<menuitem label="Cut" acceltext="Ctrl+X" accesskey="T"/>
-					<menuitem label="Copy" acceltext="Ctrl+C" accesskey="C"/>
-					<menuitem label="Paste" acceltext="Ctrl+V" accesskey="P"/>
+					<menuitem label="Cut" acceltext="Ctrl+X" accesskey="T" command="cut"/>
+					<menuitem label="Copy" acceltext="Ctrl+C" accesskey="C" command="copy"/>
+					<menuitem label="Paste" acceltext="Ctrl+V" accesskey="P" command="paste"/>
+                                        <menuseparator/>
+					<menuitem label="Preferences" disabled="true"/>
 				</menupopup>
 			</menu>
 			<!-- / EDIT MENU -->
@@ -60,15 +48,13 @@
 			<!-- VIDEO MENU -->
 			<menu id="video-menu" label="Video" accesskey="V" class="titlebar-toplevel">
 				<menupopup id="file-popup">
-					<menuitem label="Play Video" accesskey="P"/>
-					<menuitem label="Stop Video" accesskey="S"/>
+					<menuitem label="Play Video" accesskey="P" disabled="true"/>
+					<menuitem label="Stop Video" accesskey="S" disabled="true"/>
+					<menuitem label="Full Screen" acceltext="Alt+Enter" accesskey="F" disabled="true"/>
 					<menuseparator/>
-					<menuitem label="Full Screen" acceltext="Alt+Enter" accesskey="F"/>
-					<menuitem label="Half Screen" accesskey="H"/>
-					<menuseparator/>
-					<menuitem label="Delete Video" accesskey="D"/>
-					<menuitem label="Save Video" accesskey="a"/>
-					<menuitem label="Copy Video Link" accesskey="L"/>
+					<menuitem label="Delete Video" accesskey="D" disabled="true"/>
+					<menuitem label="Save Video" accesskey="a" disabled="true"/>
+					<menuitem label="Copy Video Link" accesskey="L" disabled="true"/>
 				</menupopup>
 			</menu>
 			<!-- / VIDEO MENU -->
@@ -77,15 +63,15 @@
 			<menu id="channel-menu" label="Channel" accesskey="C" class="titlebar-toplevel">
 				<menupopup id="file-popup">
 					<menuitem label="Add Channel" accesskey="A" disabled="false" command="addchannel"/>
-					<menuitem label="Remove Channel" accesskey="R"/>
-					<menuitem label="Copy Channel Link" accesskey="L"/>
+					<menuitem label="Remove Channel" accesskey="R" disabled="false" command="removechannel"/>
+					<menuitem label="Copy Channel Link" accesskey="L" disabled="false" command="copychannellink"/>
 					<menuseparator/>
-					<menuitem label="Update Channel" accesskey="U"/>
-					<menuitem label="Update All Channels" accesskey="A"/>
+					<menuitem label="Update Channel" accesskey="U" disabled="false" command="updatechannel"/>
+					<menuitem label="Update All Channels" accesskey="A" disabled="false" command="updateall"/>
 					<menuseparator/>
-					<menuitem label="Rename Channel" accesskey="e"/>
+					<menuitem label="Rename Channel" accesskey="e" disabled="true"/>
 					<menuseparator/>
-					<menuitem label="Tell A Friend About This Channel" accesskey="F"/>
+					<menuitem label="Tell A Friend About This Channel" accesskey="F" disabled="true"/>
 				</menupopup>
 			</menu>
 			<!-- / CHANNEL MENU -->
@@ -93,9 +79,9 @@
 			<!-- HELP MENU -->
 			<menu id="help-menu" label="Help" accesskey="H" class="titlebar-toplevel">
 				<menupopup id="file-popup">
-					<menuitem label="Help Contents" acceltext="F1" accesskey="H"/>
+					<menuitem label="Help Contents" acceltext="F1" accesskey="H" command="showhelp"/>
 					<menuseparator/>
-					<menuitem label="About DTV" accesskey="A"/>
+					<menuitem label="About DTV" accesskey="A" command="about"/>
 				</menupopup>
 			</menu>
 			<!-- / HELP MENU -->
@@ -207,4 +193,14 @@
 
 <!-- / BOTTOM -->
 <command id="addchannel" oncommand="window.openDialog('chrome://dtv/content/addchannel.xul','addchannel','chrome,dependent,centerscreen');" />
+<command id="exit" oncommand="window.close();" />
+<command id="copy" oncommand="clipboardCopy();" />
+<command id="cut" oncommand="clipboardCut();" />
+<command id="paste" oncommand="clibboardPaste();" />
+<command id="removechannel" oncommand="eventURL(getCookieFromBrowserId('channelsDisplay'),'action:removeCurrentFeed');" />
+<command id="updatechannel" oncommand="eventURL(getCookieFromBrowserId('channelsDisplay'),'action:updateCurrentFeed');" />
+<command id="updateall" oncommand="eventURL(getCookieFromBrowserId('channelsDisplay'),'action:updateAllFeeds');" />
+<command id="showhelp" oncommand="eventURL(getCookieFromBrowserId('channelsDisplay'),'action:showHelp');" />
+<command id="copychannellink" oncommand="eventURL(getCookieFromBrowserId('channelsDisplay'),'action:copyCurrentFeedURL');" />
+<command id="about" oncommand="alert('DTV Windows version 0.8.0 Copyright (c) 2005, 2006 Participatry Culture Foundation');" />
 </window>

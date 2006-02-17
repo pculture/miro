@@ -931,10 +931,20 @@ class ModelActionHandler:
         obj = db.getObjectByID(int(item))
         obj.download()
 
+    def removeCurrentFeed(self):
+        currentFeed = Controller.instance.currentSelectedTab.feedID()
+        if currentFeed:
+            self.removeFeed(currentFeed)
+
     def removeFeed(self, feed):
         obj = db.getObjectByID(int(feed))
         if self.backEndDelegate.validateFeedRemoval(obj.getTitle()):
             obj.remove()
+
+    def updateCurrentFeed(self):
+        currentFeed = Controller.instance.currentSelectedTab.feedID()
+        if currentFeed:
+            self.updateFeed(currentFeed)
 
     def updateFeed(self, feed):
         obj = db.getObjectByID(int(feed))
@@ -949,6 +959,16 @@ class ModelActionHandler:
             thread = threading.Thread(target=f.update)
             thread.setDaemon(False)
             thread.start()
+
+    def copyCurrentFeedURL(self):
+        currentFeed = Controller.instance.currentSelectedTab.feedID()
+        if currentFeed:
+            self.copyFeedURL(currentFeed)
+
+    def copyFeedURL(self, feed):
+        obj = db.getObjectByID(int(feed))
+        url = obj.getURL()
+        self.backEndDelegate.copyTextToClipboard(url)
 
     def markFeedViewed(self, feed):
         try:
@@ -1048,6 +1068,9 @@ class GUIActionHandler:
             db.endUpdate()
 
     # Following for testing/debugging
+
+    def showHelp(self):
+        self.controller.getBackendDelegate().openExternalURL('http://www.getdemocracy.com/help')
 
     def testGetHTTPAuth(self, **args):
         printResultThread("testGetHTTPAuth: got %s", lambda: self.controller.getBackendDelegate().getHTTPAuth(**args)).start()

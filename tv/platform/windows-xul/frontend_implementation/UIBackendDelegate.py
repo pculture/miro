@@ -140,3 +140,7 @@ class UIBackendDelegate:
         message.replace("\\","\\\\").replace("\"","\\\"").replace("'","\\'")
         execChromeJS("alert('%s');" % message)
         return true
+
+    def copyTextToClipboard(self, text):
+        text.replace("\\","\\\\").replace("\"","\\\"").replace("'","\\'")
+        execChromeJS("copyTextToClipboard('%s');" % text)
