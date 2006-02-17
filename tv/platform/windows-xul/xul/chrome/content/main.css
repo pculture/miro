@@ -288,6 +288,6 @@ splitter {
   left:103px; /* The slider can move between 15px and 105px */
   margin: 0px;
   padding: 0px;
-  background: url(images/bottom-volume-knob.png) no-repeat;
+  background: url(images/bottom-volume-slider.png) no-repeat;
   z-index: 100;
 }
