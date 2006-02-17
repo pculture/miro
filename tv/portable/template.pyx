@@ -75,6 +75,7 @@ funcTable[hideSectionFunc] = getHideSection
 from xml.dom.minidom import parse, parseString
 from xml import sax
 from xhtmltools import urlencode
+from xhtmltools import toUTF8Bytes
 #from cStringIO import StringIO
 from StringIO import StringIO
 import time
@@ -1261,7 +1262,8 @@ cdef object toUni(object orig):
     if PyInt_Check(orig):
         return PyUnicode_Format("%d",(orig,))
     else:
-        return PyUnicode_FromObject(orig)
+        orig = toUTF8Bytes(orig)
+        return unicode(orig,'utf-8')
 
 cdef object escape(object orig):
     cdef Py_UNICODE *newData
