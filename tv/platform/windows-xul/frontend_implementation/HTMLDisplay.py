@@ -213,15 +213,24 @@ Content-Type: text/plain
             self.close_when_done()
 
         ## Channel guide API ##
-        match = re.match(r"GET /dtv/dtvapi/addChannel\?(.*)", request)
+        match = re.match(r"GET /dtv/dtvapi/([^?]+)\?(.*)", request)
         if match:
             # NEEDS: it may be necessary to encode the url parameter
             # in JS, and decode it here. I'm not super-clear on the
             # circumstances (if any) under which Mozilla would treat
             # the query string as other than opaque bytes.
-            url = match.group(1)
-            print "adding feed %s via DTVAPI" % url
-            app.Controller.instance.addAndSelectFeed(url)
+            action = match.group(1)
+            parameter = match.group(2)
+
+            if action == 'addChannel':
+                print "adding feed %s via DTVAPI" % parameter
+                app.Controller.instance.addFeed(parameter)
+            elif action == 'goToChannel':
+                print "selecting feed %s via DTVAPI" % parameter
+                app.Controller.instance.selectFeed(parameter)
+            else:
+                print "WARNING: ignored bad DTVAPI request '%s'" % request
+
             self.push("""HTTP/1.0 200 OK
 Content-Length: 0
 Content-Type: text/plain

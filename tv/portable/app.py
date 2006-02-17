@@ -650,6 +650,14 @@ class Controller (frontend.Application):
         feed.addFeedFromFile(file)
         return False
 
+    ### Handling 'DTVAPI' events from the channel guide ###
+
+    def addFeed(self, url):
+        return GUIActionHandler(self).addFeed(url, selected = None)
+
+    def selectFeed(self, url):
+        return GUIActionHandler(self).selectFeed(url)
+
     ### Keeping track of the selected tab and showing the right template ###
 
     def getTabState(self, tabId):
@@ -1013,6 +1021,28 @@ class GUIActionHandler:
             if selected == '1':
                 self.controller.checkTabByObjID(myFeed.getID())
                 self.controller.checkSelectedTab(showTemplate)
+
+        finally:
+            db.endUpdate()
+
+    # NEEDS: factor out common code with addFeed
+    def selectFeed(self, url):
+        url = feed.normalizeFeedURL(url)
+        db.beginUpdate()
+        try:
+            # Find the feed
+            feedView = globalViewList['feeds'].filterWithIndex(globalIndexList['feedsByURL'],url)
+            exists = feedView.len() > 0
+            if not exists:
+                print "selectFeed: no such feed: %s" % url
+                return
+            feedView.resetCursor()
+            myFeed = feedView.getNext()
+            globalViewList['feeds'].removeView(feedView)
+
+            # Select it
+            self.controller.checkTabByObjID(myFeed.getID())
+            self.controller.checkSelectedTab()
 
         finally:
             db.endUpdate()
