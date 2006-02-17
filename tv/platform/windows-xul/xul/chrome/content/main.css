@@ -108,12 +108,12 @@
 
 #titlebar-buttons-close a {	
 	width: 16px;
-	background:  url(images/titlebar-buttons.png) no-repeat -32px 0px;
+	background: url(images/titlebar-buttons.png) no-repeat -32px 0px;
 }
 
 #titlebar-buttons-close a:hover {	
 	width: 16px;
-	background:  url(images/titlebar-buttons.png) no-repeat -32px -16px;
+	background: url(images/titlebar-buttons.png) no-repeat -32px -16px;
 }
 
 
@@ -127,6 +127,25 @@ splitter {
 	-moz-border-left-colors: #666666 #444444;
 	background: #333333;
 }	
+
+#resizer-left:hover, #resizer-right:hover {
+	cursor: e-resize;	
+}	
+
+#bottom-right {
+}
+
+#resizer-bottomright {
+	-moz-appearance: none;
+	margin-top: 45px;
+	width: 20px;
+	height: 20px;
+	background: url(images/bottom-resizer.png) no-repeat 0px 0px;
+}
+
+#resizer-bottomright:hover {
+	cursor: se-resize;
+}
 
 
 
