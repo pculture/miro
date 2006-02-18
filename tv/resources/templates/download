@@ -19,7 +19,7 @@
 
 </head>
 
-<body>
+<body onload="beginUpdates();">
 
 <!-- TITLE BAR ************************************************************ -->
 <div id="main-titlebar">
