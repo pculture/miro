@@ -19,19 +19,6 @@ class MainFrame:
         # messages.
         self.selectedDisplays = {}
 
-        ## BEGIN SYNCHRONOUS MOZILLA CALLS ##
-
-	# Find the XUL document corresponding to the window.
-	#klass = components.classes["@participatoryculture.org/dtv/pybridge;1"]
-	#pybridge = klass.getService(components.interfaces.pcfIDTVPyBridge)
-	#self.document = pybridge.mainWindowDocument
-
-        # Grab the Javascript bridge so we can call our Javascript helpers.
-	#klass = components.classes["@participatoryculture.org/dtv/jsbridge;1"]
-	#self.jsbridge = klass.getService(components.interfaces.pcfIDTVJSBridge)
-
-        ## END SYNCHRONOUS MOZILLA CALLS ##
-
     def selectDisplay(self, newDisplay, area):
         """Install the provided 'newDisplay' in the requested area"""
 
@@ -56,15 +43,8 @@ class MainFrame:
         newURL = display.getURL()
         # make the display load newURL. that's it!
 
-        ## BEGIN SYNCHRONOUS MOZILLA CALLS ##
-
-        print "Telling %s to load %s" % (area, newURL)
-        #self.jsbridge.xulNavigateDisplay(self.document, area, newURL)
         frontend.execChromeJS("navigateDisplay('%s', '%s');" % \
                               (quoteJS(area), quoteJS(newURL)))
-        print "Came back from that"
-
-        ## END SYNCHRONOUS MOZILLA CALLS ##
 
     def selectURL(self, url, area):
 	# Generate a deselection message for the previously selected

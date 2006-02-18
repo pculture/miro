@@ -1,28 +1,29 @@
 import app
 import threading
-import asyncore
-import asynchat
 import socket
 import re
 import resource
 import xhtmltools
 import traceback
+import time
+import errno
+import os
 from util import quoteJS
 
 def execChromeJS(js):
     """Execute some Javascript in the context of the privileged top-level
     chrome window. Queued and delivered via a HTTP-based event
     mechanism; no return value is recovered."""
-    httpServer.lock.acquire()
+    httpServer.classLock.acquire()
     try:
         if httpServer.chromeJavascriptStream:
-            print "exec xuljs: %s" % js
-            httpServer.chromeJavascriptStream.push_chunk("text/plain", js)
+            print "XULJS: exec %s" % js
+            httpServer.chromeJavascriptStream.queueChunk("text/plain", js)
         else:
-            print "queue up xuljs: %s" % js
+            print "XULJS: queue: %s" % js
             httpServer.chromeJavascriptQueue.append(js)
     finally:
-        httpServer.lock.release()
+        httpServer.classLock.release()
 
 from frontend_implementation import UIBackendDelegate
 
@@ -52,145 +53,153 @@ def getServerPort():
     finally:
         lock.release()
 
-    print "returning %d for port" % result
     return result
 
-class httpListener(asyncore.dispatcher):
+class httpListener:
     def __init__(self):
         global serverPort
 
-        asyncore.dispatcher.__init__(self)
-        self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.bind( ('127.0.0.1', 0) )
+        # Create and bind socket; start listening
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.settimeout(None)
+        self.socket.bind( ('127.0.0.1', 0) )
         (myAddr, myPort) = self.socket.getsockname()
-        print "Listening on %s %s" % (myAddr, myPort)
+        print "httpListener: Listening on %s %s" % (myAddr, myPort)
         assert not serverPort, "Only one httpListener allowed, please"
         serverPort = myPort
-        self.listen(63)
+        self.socket.listen(63)
 
-    def handle_accept(self):
-        print "accepting conn"
-        (conn, address) = self.accept()
-        httpServer(conn)
+        # Kick off the accept loop in a new thread
+        thread = threading.Thread(target = self.acceptThread,
+                                  name = "httpListener accept thread")
+        thread.setDaemon(True)
+        thread.start()
 
-class httpServer(asynchat.async_chat):
+    def acceptThread(self):
+        while True:
+            (conn, address) = self.socket.accept()
+            conn.settimeout(None)
+            httpServer(conn)
 
-    lock = threading.RLock()
+class httpServer:
+
+    classLock = threading.RLock()
     chromeJavascriptStream = None
     chromeJavascriptQueue = []
     reqNum = 0
 
-    def __init__(self, conn):
-        asynchat.async_chat.__init__(self, conn)
-        self.set_terminator('\r\n')
-        self.buffer = ''
-        self.gotRequest = None
+    def __init__(self, socket):
+        self.socket = socket
+        self.file = socket.makefile("rb")
         self.isChunked = False
+        self.chunkQueue = []
+        self.reqNum = None
+        self.cond = threading.Condition()
 
         # NEEDS: more convincing random ID
         self.boundary = "DTVDTVDTVDTVDTVDTV%s" % (str(id(self)))
 
+        # Kick off a thread that can block waiting for a request to be
+        # received
+        thread = threading.Thread(target = self.requestThread,
+                                  name = "httpServer request thread")
+        thread.setDaemon(True)
+        thread.start()
+
     def incReqNum(self):
         ret = -1
-        httpServer.lock.acquire()
+        httpServer.classLock.acquire()
         try:
             httpServer.reqNum += 1
             ret = httpServer.reqNum
         finally:
-            httpServer.lock.release()
+            httpServer.classLock.release()
         return ret
 
-    def collect_incoming_data(self, data):
-        self.buffer += data
-
-    def found_terminator(self):
-        if self.gotRequest:
-            self.buffer = ''
-            return
-        request = self.buffer
-        reqNum = self.incReqNum()
-        self.buffer = ''
-        self.gotRequest = True
-        print "got request '%s' (%d)" % (request, reqNum)
-
+    def requestThread(self):
+        request = None
+        
         try:
-            self.handleRequest(request, reqNum)
-        except:
-            print "Closing due to exception handling request %s (%s):" \
-                % (reqNum, request)
-            traceback.print_exc()
-            self.close()
+            try:
+                request = self.file.readline()
 
-    def handleRequest(self, request, reqNum):
+                match = re.match(r"^([^ ]+) +([^ ]+)", request)
+                assert match, "Malformed HTTP request"
+                method = match.group(1)
+                path = match.group(2)
+                self.reqNum = self.incReqNum()
+
+                self.handleRequest(method, path)
+            except:
+                    print "Closing due to exception handling request %s (%s):" \
+                        % (self.reqNum, request)
+                    traceback.print_exc()
+        finally:
+            self.socket.close()
+
+        # Thread exits at this point
+
+    def handleRequest(self, method, path):
+        assert method == 'GET', "Only GET is supported"
+
         ## Mutator stream ##
-        match = re.match("GET /dtv/mutators/([^ ]*)", request)
+        match = re.match("^/dtv/mutators/(.*)", path)
         if match:
             cookie = match.group(1)
-            print "My event cookie is %s (%d)" % (cookie, reqNum)
-            self.push("""HTTP/1.0 200 OK
-Content-Type: multipart/x-mixed-replace;boundary="%s"
+            print "[%s @%s] Events" % (self.reqNum, cookie)
 
---%s""" % (self.boundary, self.boundary))
-            self.isChunked = True
+            self.beginSendingChunks()
             HTMLDisplay.setMutationOutput(cookie, self)
+            self.runChunkPump()
             return
 
         ## Chrome-context Javascript stream ##
-        match = re.match("GET /dtv/xuljs", request)
+        match = re.match("^/dtv/xuljs", path)
         if match:
-            print "XULJS (%d)" % (reqNum)
-            self.push("""HTTP/1.0 200 OK
-Content-Type: multipart/x-mixed-replace;boundary="%s"
+            print "[%s] XULJS" % (self.reqNum)
 
---%s""" % (self.boundary, self.boundary))
-            self.isChunked = True
-            httpServer.lock.acquire()
+            httpServer.classLock.acquire()
             try:
                 assert not httpServer.chromeJavascriptStream, \
-                    "There can't be two xuljs's (%d)" % reqNum
-                httpServer.chromeJavascriptStream = self
+                    "There can't be two xuljs's (%d)" % self.reqNum
+
+                self.beginSendingChunks()
                 for a in httpServer.chromeJavascriptQueue:
-                    print "flush pending xuljs: %s (%d)" % (a,reqNum)
-                    self.push_chunk("text/plain", a)
+                    print "XULJS: flush %s" % a
+                    self.queueChunk("text/plain", a)
                 httpServer.chromeJavascriptQueue = []
+                httpServer.chromeJavascriptStream = self
             finally:
-                httpServer.lock.release()
-            print "Hey look, got xuljs. %d" % reqNum
+                httpServer.classLock.release()
+
+            self.runChunkPump()
             return
 
         ## Initial HTML ##
-        match = re.match("GET /dtv/document/([^ ]*)", request)
+        match = re.match("^/dtv/document/(.*)", path)
         if match:
             cookie = match.group(1)
-            print "document cookie is %s (%d)" % (cookie, reqNum)
-            self.isChunked = False
+            print "[%s @%s] Initial HTML" % (self.reqNum, cookie)
 
             assert cookie in pendingDocuments, \
                 "bad document request %s to HTMLDisplay server %d" % \
-                (cookie, reqNum)
+                (cookie, self.reqNum)
             (contentType, body) = pendingDocuments[cookie]
             del pendingDocuments[cookie]
 
-            self.push("""HTTP/1.0 200 OK
-Content-Length: %s
-Content-Type: %s
-
-%s""" % (len(body), contentType, body))
-            self.close_when_done()
+            self.sendDocumentAndClose(contentType, body)
+            return
 
         ## Action ## 
-        match = re.match(r"GET /dtv/action/([^ ?]*)\?([^ ]*)", request)
+        match = re.match(r"^/dtv/action/([^?]*)\?(.*)", path)
         if match:
             cookie = match.group(1)
             url = match.group(2)
-            print "dispatching %s to %s (%d)" % (url, cookie, reqNum)
-	    HTMLDisplay.dispatchEventByCookie(cookie, url)
-            self.push("""HTTP/1.0 200 OK
-Content-Length: 0
-Content-Type: text/plain
+            print "[%s @%s] Action: %s" % (self.reqNum, cookie, url)
 
-""")
-            self.close_when_done()
+	    HTMLDisplay.dispatchEventByCookie(cookie, url)
+            self.sendDocumentAndClose("text/plain", "")
+            return
 
         ## Returns result from UI Backend Delegate call ##
 
@@ -199,21 +208,18 @@ Content-Type: text/plain
         # want to make a more general system for registering python functions
         # that can be called by XUL
 
-        match = re.match(r"GET /dtv/delegateresult/([^ ?]*)\?([^ ]*)", request)
+        match = re.match(r"^/dtv/delegateresult/([^?]*)\?(.*)", path)
         if match:
             cookie = match.group(1)
             url = match.group(2)
-            print "dispatching UIBackendDelegate event %s to %s (%d)" % (url, cookie, reqNum)
-	    UIBackendDelegate.dispatchResultByCookie(cookie, url)
-            self.push("""HTTP/1.0 200 OK
-Content-Length: 0
-Content-Type: text/plain
+            print "[%s @%s] UIBackendDelegate: %s" % (self.reqNum, cookie, url)
 
-""")
-            self.close_when_done()
+	    UIBackendDelegate.dispatchResultByCookie(cookie, url)
+            self.sendDocumentAndClose("text/plain", "")
+            return
 
         ## Channel guide API ##
-        match = re.match(r"GET /dtv/dtvapi/([^?]+)\?([^ ]*)", request)
+        match = re.match(r"^/dtv/dtvapi/([^?]+)\?(.*)", path)
         if match:
             # NEEDS: it may be necessary to encode the url parameter
             # in JS, and decode it here. I'm not super-clear on the
@@ -221,29 +227,24 @@ Content-Type: text/plain
             # the query string as other than opaque bytes.
             action = match.group(1)
             parameter = match.group(2)
+            print "[%s] DTVAPI: action %s, parameter %s" % (self.reqNum, \
+                                                            action, parameter)
 
             if action == 'addChannel':
-                print "adding feed %s via DTVAPI" % parameter
                 app.Controller.instance.addFeed(parameter)
             elif action == 'goToChannel':
-                print "selecting feed %s via DTVAPI" % parameter
                 app.Controller.instance.selectFeed(parameter)
             else:
                 print "WARNING: ignored bad DTVAPI request '%s'" % request
 
-            self.push("""HTTP/1.0 200 OK
-Content-Length: 0
-Content-Type: text/plain
-
-""")
-            self.close_when_done()
-
+            self.sendDocumentAndClose("text/plain", "")
+            return
 
         ## Resource file ##
-        match = re.match("GET /dtv/resource/([^ ]*)", request)
+        match = re.match("^/dtv/resource/(.*)", path)
         if match:
-            print "Resource (%d)" % reqNum
             relativePath = match.group(1)
+            print "[%s] Resource: %s" % (self.reqNum, relativePath)
             fullPath = resource.path(relativePath)
             data = open(fullPath,'rb').read()
 
@@ -262,32 +263,85 @@ Content-Type: text/plain
             elif re.search(".js$", fullPath):
                 contentType = "application/x-javascript"
 
-            self.push("""HTTP/1.0 200 OK
-Content-Length: %s
-""" % len(data))
-            if contentType:
-                self.push("""Content-Type: %s
-""" % contentType)
-            self.push("""
-""")
-            self.push(data)
-            self.close_when_done()
+            self.sendDocumentAndClose(contentType, data, cache=True)
+            return
 
         ## Fell through - bad URL ##
-        assert False, ("Invalid request '%s' to HTMLDisplay server (%d)" \
-                       % (request, reqNum))
+        assert False, "Unrecognized request"
 
-    def handle_close(self):
-        print "connection closed"
-        self.close() # removes self from map and leads to GC
+    def sendDocumentAndClose(self, contentType, data, cache=False):
+        try:
+            try:
+                self.socket.send("HTTP/1.0 200 OK\r\n")
+                self.socket.send("Content-Length: %s\r\n" % len(data))
+                if contentType:
+                    self.socket.send("Content-Type: %s\r\n" % contentType)
+                if cache and not 'DTV_DISABLE_CACHE' in os.environ:
+                    cacheTime = 60*60 # keep it an hour
+                    thenGMT = time.gmtime(time.time()+cacheTime)
+                    thenString = time.strftime("%a, %d %b %Y %H:%M:%S GMT",
+                                               thenGMT)
+                    self.socket.send("Expires: %s\r\n" % thenString)
+                self.socket.send("\r\n")
+                self.socket.send(data)
+            except socket.error, (code, description):
+                if code == errno.ECONNABORTED or \
+                        code == errno.ECONNRESET:
+                    # Normal: Mozilla was just being abrupt
+                    print "[%d] Ignoring remote or network error '%s'" % \
+                        (self.reqNum, description)
+                    return
+                else:
+                    raise
+        finally:
+            self.socket.close()
 
-    def push_chunk(self, mimeType, body):
-        assert self.isChunked, \
-            "push_chunk only works on event-based HTTP sessions"
-        self.push("""Content-type: %s
+    def queueChunk(self, mimeType, body):
+        self.cond.acquire()
+        try:
+            assert self.isChunked, \
+                "queueChunk only works on event-based HTTP sessions"
+            self.chunkQueue.append((mimeType, body))
+            self.cond.notify()
+        finally:
+            self.cond.release()
 
-%s
---%s""" % (mimeType, body, self.boundary))
+    def beginSendingChunks(self):
+        self.socket.send("""HTTP/1.0 200 OK
+Content-Type: multipart/x-mixed-replace;boundary="%s"
+
+--%s""" % (self.boundary, self.boundary))
+        self.isChunked = True
+
+    def runChunkPump(self):
+        self.cond.acquire()
+        try:
+            while True:
+                while len(self.chunkQueue) == 0:
+                    self.cond.wait()
+            
+                (mimeType, body) = self.chunkQueue[0]
+                self.chunkQueue = self.chunkQueue[1:]
+
+                self.cond.release()
+                try:
+                    try:
+                        self.socket.send("Content-type: %s\r\n\r\n%s\r\n--%s" \
+                                         % (mimeType, body, self.boundary))
+                    except socket.error, (code, description):
+                        if code == errno.ECONNABORTED or \
+                                code == errno.ECONNRESET:
+                            print "[%d] Events end with remote error '%s'" % \
+                                (self.reqNum, description)
+                            return
+                        else:
+                            raise
+                finally:
+                    self.cond.acquire()
+
+        finally:
+            self.cond.release()
+            self.socket.close()
 
 ###############################################################################
 #### Channel guide support                                                 ####
@@ -321,7 +375,7 @@ request goes in a queue."""
             command = xhtmltools.toUTF8Bytes(command)         
 
             if self.mutationOutput:
-                self.mutationOutput.push_chunk("text/plain", command)
+                self.mutationOutput.queueChunk("text/plain", command)
             else:
                 self.queue.append(command)
         finally:
@@ -359,9 +413,6 @@ class HTMLDisplay (app.Display):
     hideItem = _genMutator('hideItem')
     showItem = _genMutator('showItem')
 
-    # NEEDS: set useragent as a pref: 
-    # "DTV/pre-release (http://participatoryculture.org/)"
-
     ### Concerning dispatching events via context cookies ###
 
     cookieToInstanceMap = {}
@@ -392,12 +443,10 @@ class HTMLDisplay (app.Display):
 
     def getServerPort(self):
         port = getServerPort()
-        print "--- reporting port %s" % port
         return port
 
     @classmethod
     def dispatchEventByCookie(klass, eventCookie, eventURL):
-	print "dispatch %s %s" % (eventCookie, eventURL)
         thread = threading.Thread(target=lambda : klass.cookieToInstanceMap[eventCookie].onURLLoad(eventURL))
         thread.setDaemon(False)
         thread.start()
@@ -422,7 +471,7 @@ class HTMLDisplay (app.Display):
         try:
             self.mutationOutput = htmlServer
             for q in self.queue:
-                self.mutationOutput.push_chunk('text/plain', q)
+                self.mutationOutput.queueChunk('text/plain', q)
             self.queue = []
         finally:
             self.lock.release()
