@@ -241,11 +241,11 @@ class FeedImpl:
             self.title = title
         self.created = datetime.now()
         self.autoDownloadable = False
+        self.startfrom = datetime.min
         self.getEverything = False
         self.maxNew = -1
         self.fallBehind = -1
         self.expire = "system"
-        self.startfrom = datetime.min
         self.visible = visible
         self.updating = False
         self.lastViewed = datetime.min
@@ -483,6 +483,10 @@ class FeedImpl:
         self.ufeed.beginRead()
         try:
             self.autoDownloadable = (automatic == "1")
+            if self.autoDownloadable:
+                self.startfrom = datetime.now()
+            else:
+                self.startfrom = datetime.max
         finally:
             self.ufeed.endRead()
 
