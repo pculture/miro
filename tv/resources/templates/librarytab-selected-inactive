@@ -1,1 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><a class="feeditem selected_feeditem_inactive" xmlns:t="http://www.participatorypolitics.org/"      xmlns:i18n="http://www.participatoryculture.org/i18n"><img class="icon" src="resource:images/everything_icon.png" /><span><span class="name" i18n:translate="">My Collection</span></span></a>
+<?xml version="1.0" encoding="utf-8"?>
+<a class="feeditem selected_feeditem_inactive" xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n">
+<img class="icon" src="resource:images/collection-icon-tablist.png" /><span><span class="name" i18n:translate="">My Collection</span></span>
+</a>

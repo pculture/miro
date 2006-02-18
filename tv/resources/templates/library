@@ -24,7 +24,7 @@
 
 <!-- TITLE BAR ************************************************************ -->
 <div id="main-titlebar">
-	<div id="main-titlebar-avatar" style="border:0px;"><img src="resource:images/everything_icon.png" /></div>
+	<div id="main-titlebar-avatar" style="border:0px;"><img src="resource:images/collection-icon.png" /></div>
 	<div id="main-titlebar-channelname">
 		<h1 i18n:translate="">My Collection</h1>
 	</div>

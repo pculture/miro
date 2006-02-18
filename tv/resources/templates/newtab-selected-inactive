@@ -3,7 +3,7 @@
 <a class="feeditem selected_feeditem_inactive" xmlns:t="http://www.participatorypolitics.org/"
                                                xmlns:i18n="http://www.participatoryculture.org/i18n">
 
-    <img class="icon" src="resource:images/new.png" />
+    <img class="icon" src="resource:images/newvideos-icon-tablist.png" />
 
     <div class="green_left" t:hideIfKey="global view availableItems len" t:hideFunctionKey="global filter equal" t:hideParameter="0">
         <div class="green_right">

@@ -4,12 +4,12 @@
 
 .sidebar-download {
 	position: fixed;
-	bottom: 12px;
+	bottom: 6px;
 	width: 100%;
-	height: 36px; 
+	height: 30px; 
 	z-index: 100;
 	margin:0px 0px 0px -4px;	
-	padding-top: 20px;
+	padding-top: 16px;
 }
 
 /*.sidebar-download-selected {	
@@ -24,9 +24,9 @@
 }
 
 .sidebar-download-inner, .sidebar-download-inner-selected, .sidebar-download-inner-inactive {
-	height: 32px;
+	height: 26px;
 	margin-right: 0px;
-	padding-bottom: 8px;
+	padding-bottom: 0px;
 	background-color: #e6edf7;
 	border-top: 2px solid #b6bfce;
 }
@@ -45,8 +45,8 @@
 
 .sidebar-download-inner p, .sidebar-download-inner-selected p, .sidebar-download-inner-inactive p {
 	float: left;
-	padding-left: 32px;
-	margin-top: 10px;
+	padding-left: 26px;
+	margin-top: 8px;
 }
 
 .sidebar-download-inner-selected p {
