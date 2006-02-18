@@ -2,7 +2,7 @@
 <a xmlns:t="http://www.participatorypolitics.org/" xmlns:i18n="http://www.participatoryculture.org/i18n" class="sidebar-download">
 	<div class="sidebar-download-inner-selected">
 		<span>
-			<p>Downloads</p>
+			<p>Active Downloads</p>
 			<div class="circle-orange-left" t:hideIfKey="global view downloadingItems len" t:hideFunctionKey="global filter equal" t:hideParameter="0">
 				<div class="circle-orange-right">
 					<div class="circle-orange-number" t:replace="global view downloadingItems len" />
