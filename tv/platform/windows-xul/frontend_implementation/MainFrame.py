@@ -74,6 +74,7 @@ class MainFrame:
             if oldDisplay:
                 oldDisplay.onDeselected_private(self)
                 oldDisplay.onDeselected(self)
+            self.selectedDisplays[area] = None
 
         # Now just make Mozilla load the new URL over there
         frontend.execChromeJS("navigateDisplay('%s', '%s');" % \
