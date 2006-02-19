@@ -985,6 +985,46 @@ class ModelActionHandler:
         obj = db.getObjectByID(int(item))
         obj.setKeep(True)
 
+    def videoBombExternally(self, item):
+        obj = db.getObjectByID(int(item))
+        paramList = {}
+        paramList["title"] = obj.getTitle()
+        paramList["info_url"] = obj.getLink()
+        paramList["hookup_url"] = obj.getPaymentLink()
+        try:
+            rss_url = obj.getFeed().getURL()
+            if (not rss_url.startswith('dtv:')):
+                paramList["rss_url"] = rss_url
+        except:
+            pass
+        thumb_url = obj.getThumbnail()
+        if (not thumb_url.startswith('resource:')):
+            paramList["thumb_url"] = thumb_url
+
+        # FIXME: add "explicit" and "tags" parameters when we get them in item
+
+        paramString = ""
+        glue = '?'
+       
+        # This should be first, since it's most important.
+        url = obj.getURL()
+        if (not url.startswith('file:')):
+            paramString = "?url=%s" % xhtmltools.urlencode(url)
+            glue = '&'
+
+        for key in paramList.keys():
+            if len(paramList[key]) > 0:
+                paramString = "%s%s%s=%s" % (paramString, glue, key, xhtmltools.urlencode(paramList[key]))
+                glue = '&'
+
+        # This should be last, so that if it's extra long it 
+        # cut off all the other parameters
+        description = obj.getDescription()
+        if len(description) > 0:
+            paramString = "%s%sdescription=%s" % (paramString, glue,  xhtmltools.urlencode(description))
+        # FIXME don't hardcode this URL
+        self.backEndDelegate.openExternalURL('http://www.videobomb.com/posts/new%s'%paramString)
+
 # Test shim for test* functions on GUIActionHandler
 class printResultThread(threading.Thread):
 
@@ -1070,6 +1110,7 @@ class GUIActionHandler:
     # Following for testing/debugging
 
     def showHelp(self):
+        # FIXME don't hardcode this URL
         self.controller.getBackendDelegate().openExternalURL('http://www.getdemocracy.com/help')
 
     def testGetHTTPAuth(self, **args):
