@@ -220,7 +220,7 @@
 				<a href="#" onclick="return eventURL('action:expireItem?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
 				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
 				   href="javascript:recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@');"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
-					 <a href="#"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a>
+					 <a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a>
 				<div class="clearer"></div>
 			</div>
 			<!-- / FILE TASKS -->
@@ -259,7 +259,7 @@
 				<a href="#" onclick="return eventURL('action:expireItem?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
 				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
 				   href="javascript:recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@');"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
-				<a href="#"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a>
+				<a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a>
 				<div class="clearer"></div>
 			</div>
 			<!-- / FILE TASKS -->
@@ -287,7 +287,7 @@
 				<a href="#" onclick="return eventURL('action:expireItem?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
 				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
 				   href="javascript:recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@');"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>					 
-				<a href="#"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a>
+				<a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a>
 				<div class="clearer"></div>
 			</div>
 			<!-- / FILE TASKS -->
@@ -326,7 +326,7 @@
 				<a href="#" onclick="return eventURL('action:expireItem?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
 				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
 				   href="javascript:recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@');"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
-				<a href="#"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a>
+				<a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a>
 				<div class="clearer"></div>
 			</div>
 			<!-- / FILE TASKS -->
