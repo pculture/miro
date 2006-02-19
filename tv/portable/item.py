@@ -120,7 +120,7 @@ class Item(DDBObject):
                 elif exp.seconds > 3600:
                     ret = "%d hours" % (ceil(exp.seconds/3600.0))
                 else:
-                    ret = "%d minutes" % (ceil(exp.seconds/60.0))
+                    ret = "%d min." % (ceil(exp.seconds/60.0))
         finally:
             self.feed.endRead()
             self.endRead()
