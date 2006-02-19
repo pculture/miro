@@ -240,8 +240,8 @@ class FeedImpl:
         else:
             self.title = title
         self.created = datetime.now()
-        self.autoDownloadable = False
-        self.startfrom = datetime.min
+        self.autoDownloadable = True
+        self.startfrom = datetime.now()
         self.getEverything = False
         self.maxNew = -1
         self.fallBehind = -1
@@ -525,7 +525,7 @@ class FeedImpl:
             self.ufeed.endRead()
 
     ##
-    # Return the 'system' expiration delay, in days (can be < 0.0)
+    # Return the 'system' expiration delay, in days (can be < 1.0)
     def getDefaultExpiration(self):
         return config.get(config.EXPIRE_AFTER_X_DAYS)
 
@@ -534,7 +534,7 @@ class FeedImpl:
     def getFormattedDefaultExpiration(self):
         expiration = self.getDefaultExpiration()
         formattedExpiration = ''
-        if expiration < 0.0:
+        if expiration < 1.0:
             formattedExpiration = '%d hours' % int(expiration * 24.0)
         elif expiration == 1:
             formattedExpiration = '%d day' % int(expiration)
