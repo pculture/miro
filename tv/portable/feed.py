@@ -1545,8 +1545,8 @@ class SearchDownloadsFeedImpl (FeedImpl):
 # FIXME: Grab link title from ALT tags in images
 # FIXME: Grab document title from TITLE tags
 class HTMLLinkGrabber(HTMLParser):
-    linkPattern = re.compile("^.*?<(a|embed).*?(href|src)\s*=\s*\"(.*?)\".*?>(.*?)</a>(.*)$", re.S)
-    imgPattern = re.compile(".*<img.*?src\s*=\s*\"(.*?)\".*?>", re.S)
+    linkPattern = re.compile("^.*?<(a|embed)\s.*?(href|src)\s*=\s*\"(.*?)\".*?>(.*?)</a>(.*)$", re.S)
+    imgPattern = re.compile(".*<img\s.*?src\s*=\s*\"(.*?)\".*?>", re.S)
     tagPattern = re.compile("<.*?>")
     def getLinks(self,data, baseurl):
         self.links = []
