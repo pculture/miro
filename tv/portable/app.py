@@ -1023,8 +1023,8 @@ class ModelActionHandler:
         description = obj.getDescription()
         if len(description) > 0:
             paramString = "%s%sdescription=%s" % (paramString, glue,  xhtmltools.urlencode(description))
-        # FIXME don't hardcode this URL
-        self.backEndDelegate.openExternalURL('http://www.videobomb.com/posts/new%s'%paramString)
+        url = config.get(config.VIDEOBOMB_URL) + paramString
+        self.backEndDelegate.openExternalURL(url)
 
 # Test shim for test* functions on GUIActionHandler
 class printResultThread(threading.Thread):

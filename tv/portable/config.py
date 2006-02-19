@@ -1,9 +1,20 @@
 from threading import RLock
+import os
 import platformcfg
 
 __data = None
 __lock = RLock()
 __callbacks = set()
+
+if 'DTV_CHANNELGUIDE_URL' in os.environ:
+    effectiveChannelGuide = os.environ['DTV_CHANNELGUIDE_URL']
+else:
+    effectiveChannelGuide = 'https://channelguide.participatoryculture.org/'
+
+if 'DTV_VIDEOBOMB_URL' in os.environ:
+    effectiveVideobomb = os.environ['DTV_VIDEOBOMB_URL']
+else:
+    effectiveVideobomb = 'http://www.videobomb.com'
 
 class Pref:
     def __init__(self, **kwds):
@@ -21,7 +32,8 @@ PRESERVE_X_GB_FREE          = Pref( key='preserveXGBFree',       default=1,     
 EXPIRE_AFTER_X_DAYS         = Pref( key='expireAfterXDays',      default=6,     platformSpecific=False )
 DOWNLOADS_TARGET            = Pref( key='DownloadsTarget',       default=3,     platformSpecific=False )
 MAX_MANUAL_DOWNLOADS        = Pref( key='MaxManualDownloads',    default=10,    platformSpecific=False )
-CHANNEL_GUIDE_URL           = Pref( key='ChannelGuideURL',       default='https://channelguide.participatoryculture.org/',    platformSpecific=False )
+CHANNEL_GUIDE_URL           = Pref( key='ChannelGuideURL',       default=effectiveChannelGuide, platformSpecific=False )
+VIDEOBOMB_URL               = Pref( key='VideobombURL',          default=effectiveVideobomb,    platformSpecific=False )
 VOLUME_LEVEL                = Pref( key='VolumeLevel',           default=1.0,   platformSpecific=False )
 
 MOVIES_DIRECTORY            = Pref( key='MoviesDirectory',       default=None,  platformSpecific=True )
