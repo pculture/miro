@@ -427,14 +427,15 @@ class Controller (frontend.Application):
             if not hasGuide:
                 print "DTV: Spawning Channel Guide..."
                 channelGuide = guide.ChannelGuide()
+                feed.Feed('http://del.icio.us/rss/representordie/system:media:video')
                 feed.Feed('http://www.videobomb.com/rss/posts/front')
                 feed.Feed('http://www.mediarights.org/bm/rss.php?i=1')
-                feed.Feed('http://live.watchmactv.com/wp-rss2.php')
-                feed.Feed('http://www.rocketboom.com/vlog/quicktime_daily_enclosures.xml')
-                feed.Feed('http://some-pig.net/videos/rss.php?i=2')
                 feed.Feed('http://www.telemusicvision.com/videos/rss.php?i=1')
-                feed.Feed('http://revision3.com/diggnation/feed/small.mov')
+                feed.Feed('http://www.rocketboom.com/vlog/quicktime_daily_enclosures.xml')
                 feed.Feed('http://www.channelfrederator.com/rss')
+                feed.Feed('http://revision3.com/diggnation/feed/small.mov')
+                feed.Feed('http://live.watchmactv.com/wp-rss2.php')
+                feed.Feed('http://some-pig.net/videos/rss.php?i=2')
 
             # Define variables for templates
             # NEEDS: reorganize this, and update templates
