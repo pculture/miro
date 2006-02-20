@@ -494,3 +494,7 @@ li {
     text-align: center;
     margin-top: 50px;
 }
+
+img {
+	border: 0px;
+}
