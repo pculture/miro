@@ -6,8 +6,9 @@
 !define PRODUCT_DIR_REGKEY "Software\PCF\DTV"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
+!define MUI_STARTMENUPAGE_DEFAULTFOLDER "Participatory Culture Foundation"
 
-Name "${PRODUCT_GROUP} ${PRODUCT_NAME} ${PRODUCT_VERSION}"
+Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 OutFile ..\dtv-${VERSION}.exe
 InstallDir "$PROGRAMFILES\Participatory Culture Foundation\DTV"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" "Install_Dir"
@@ -18,14 +19,19 @@ CRCCheck on
 
 Icon dtv.ico
 
-InstType /NOCUSTOM
+Var STARTMENU_FOLDER
 
 !include "MUI.nsh"
 
     !define MUI_WELCOMEPAGE_TITLE_3LINES
     !insertmacro MUI_PAGE_WELCOME
   ; License page
-  ;  !insertmacro MUI_PAGE_LICENSE "COPYING.txt"
+    !insertmacro MUI_PAGE_LICENSE "license.txt"
+    !define MUI_COMPONENTSPAGE_TEXT_COMPLIST "Please, choose which optional components to install"
+    !insertmacro MUI_PAGE_COMPONENTS
+    !insertmacro MUI_PAGE_DIRECTORY
+
+    !insertmacro MUI_PAGE_STARTMENU Application $STARTMENU_FOLDER
     !insertmacro MUI_PAGE_INSTFILES
   ; Finish page
     !define MUI_FINISHPAGE_RUN "$INSTDIR\dtv.exe"
@@ -62,7 +68,7 @@ InstType /NOCUSTOM
 
   !insertmacro MUI_RESERVEFILE_INSTALLOPTIONS
 
-Section "DTV" SEC01
+Section "-DTV"
   SetShellVarContext all
   SetOutPath "$INSTDIR"
 
@@ -81,9 +87,16 @@ Section "DTV" SEC01
   File  /r vlc-plugins
   File  /r xulrunner
 
-  CreateDirectory "$SMPROGRAMS\Participatory Culture Foundation"
-  CreateShortCut "$SMPROGRAMS\Participatory Culture Foundation\DTV.lnk" \
-    "$INSTDIR\dtv.exe" "" "$INSTDIR\dtv.ico"
+    !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
+    CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
+    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\DTV.lnk" "$INSTDIR\dtv.exe" "" "$INSTDIR\dtv.ico"
+    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall DTV.lnk" "$INSTDIR\uninstall.exe"
+    !insertmacro MUI_STARTMENU_WRITE_END
+
+SectionEnd
+
+Section /o "Desktop icon" SecDesktop
+  CreateShortcut "$DESKTOP\DTV.lnk" "$INSTDIR\dtv.exe" "" "$INSTDIR\dtv.ico"
 SectionEnd
 
 Function .onInit
@@ -135,7 +148,11 @@ Section "Uninstall" SEC91
   DeleteRegKey HKLM \
     "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 
-  Delete "$SMPROGRAMS\Participatory Culture Foundation\DTV.lnk"
+!insertmacro MUI_STARTMENU_GETFOLDER Application $R0
+  Delete "$SMPROGRAMS\$R0\DTV.lnk"
+  Delete "$SMPROGRAMS\$R0\Uninstall DTV.lnk"
+  Delete "$DESKTOP\DTV.lnk"
+  RMDir "$R0"
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"

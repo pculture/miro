@@ -207,6 +207,9 @@ class Common:
             if f[0] != '.':
                 shutil.copy2(os.path.join(VLC_PLUGINS_DIR, f), vlcPluginDest)
 
+    def copyMiscFiles(self, destDir):
+        shutil.copy2(os.path.join(root,"license.txt"),destDir)
+
     def compileIDL(self):
 	buildDir = os.path.join(self.bdist_base, "idl")
 	pattern = re.compile(r"(.*)\.idl$")
@@ -304,6 +307,9 @@ class runxul(Command, Common):
 
 	# Then, copy the extra PyXPCOM files over it.
 	copyTreeExceptSvn(PYXPCOM_DIR, buildBase)
+
+        # Copy the license file over
+        self.copyMiscFiles(self.bdist_base)
 
         # Finally, drop in our plugins.
         self.copyVLCPluginFiles(self.bdist_base, buildBase)
@@ -491,6 +497,10 @@ class bdist_xul_dumb(Command, Common):
         #  got sucked into the dependency scan above)
 	copyTreeExceptSvn(os.path.join(PYXPCOM_DIR, 'components'),
                           os.path.join(self.xulrunnerOut, 'components'))
+
+        # Copy the license file over
+        self.copyMiscFiles(self.dist_dir)
+
         self.copyVLCPluginFiles(self.dist_dir, self.xulrunnerOut)
 
         # Compile and drop in type library
