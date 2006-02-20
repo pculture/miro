@@ -28,18 +28,20 @@
         <div id="main-titlebar">
         	<div id="main-titlebar-avatar" style="border:0px;"><img src="resource:images/search-icon.png" /></div>
         	<div id="main-titlebar-channelname">
-        		<h1 i18n:translate="">Yahoo! Video Search</h1>
+        		<h1 i18n:translate="">Video Search</h1>
         	</div>
         	<div id="main-titlebar-tasks" style="width:100%; text-align:center;">
-        	    <!--
-    		    <select name="engines" style="display: inline">
-    		        <option value="yahoo">Yahoo</option>
-    		        <option value="google">Google</option>
-    		    </select>
-		        -->
-    		    <input type="search" name="searchquery" value="@@@feed lastQuery@@@" placeholder="Yahoo" 
-    		           class="main-titlebar-tasks-search" style="margin:35px 55px 0px 0px; width:200px; font-size: 120%;" 
-    		           onKeyUp="fillSearch(this.value)" onKeyPress="validateSearch(event, this.value)" />
+                <form name="search">
+                    <select name="engines" onChange="updateLastSearchEngine()">
+                        <option t:hideIfNotKey="feed lastEngine" t:hideFunctionKey="global filter equal" t:hideParameter="yahoo" value="yahoo" selected="selected">Yahoo!</option>
+                        <option t:hideIfKey="feed lastEngine" t:hideFunctionKey="global filter equal" t:hideParameter="yahoo" value="yahoo">Yahoo!</option>
+                        <option t:hideIfNotKey="feed lastEngine" t:hideFunctionKey="global filter equal" t:hideParameter="blogdigger" value="blogdigger" selected="selected">Blogdigger</option>
+                        <option t:hideIfKey="feed lastEngine" t:hideFunctionKey="global filter equal" t:hideParameter="blogdigger" value="blogdigger">Blogdigger</option>
+                    </select>
+                    <input type="search" name="query" value="@@@feed lastQuery@@@" placeholder="" 
+                           class="main-titlebar-tasks-search" style="margin:35px 55px 0px 0px; width:200px; font-size: 120%;" 
+                           onKeyUp="fillSearch()" onKeyPress="validateSearch(event)" />
+                </form>
         	</div>
         </div>
 

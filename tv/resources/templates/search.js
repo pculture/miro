@@ -1,5 +1,7 @@
-function performSearch(query)
+function performSearch()
 {
+    engine = document.forms['search']['engines'].value;
+    query =  document.forms['search']['query'].value;
     url = 'action:'
     
     if (query == '')
@@ -8,20 +10,30 @@ function performSearch(query)
     }
     else
     {
-        url = url + 'performSearch?query=' + URLencode(query);
+        url = url + 'performSearch?engine=' + URLencode(engine);
+        url = url + '&query=' + URLencode(query);
     }
     
     return eventURL(url);
 }
 
-function fillSearch(query)
+function updateLastSearchEngine()
 {
+    engine = document.forms['search']['engines'].value;
+    updateUrl =  'action:updateLastSearchEngine?engine=' + engine;
+    eventURL(updateUrl)
+    return true;
+}
+
+function fillSearch()
+{
+    query =  document.forms['search']['query'].value;
     updateUrl =  'action:updateLastSearchQuery?query=' + query;
     eventURL(updateUrl)
     return true;
 }
 
-function validateSearch(e, query)
+function validateSearch(e)
 {
    	if (window.event) 
    	{
@@ -34,7 +46,9 @@ function validateSearch(e, query)
 
     if (key == 13)
     {
-        performSearch(query)
+        engine = document.forms['search']['engines'].value;
+        query =  document.forms['search']['query'].value;
+        performSearch(engine, query)
     }
 
     return true;

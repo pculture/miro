@@ -119,7 +119,7 @@ def _generateFeed(url, ufeed, visible=True):
     if (url == "dtv:directoryfeed"):
         return DirectoryFeedImpl(ufeed)
     elif (url == "dtv:search"):
-        return YahooSearchFeedImpl(ufeed)
+        return SearchFeedImpl(ufeed)
     elif (url == "dtv:searchDownloads"):
         return SearchDownloadsFeedImpl(ufeed)
 
@@ -901,7 +901,7 @@ class RSSFeedImpl(FeedImpl):
                 try:
                     self.updating = False
                 finally:
-                    self.ufeed.endRead()
+                    self.finishUpdate()
                 return None
             
             html = info['file-handle'].read()
@@ -913,7 +913,7 @@ class RSSFeedImpl(FeedImpl):
                 try:
                     self.updating = False
                 finally:
-                    self.ufeed.endRead()
+                    self.finishUpdate()
                 return
             self.url = info['updated-url']
         d = feedparser.parse(html)
@@ -958,11 +958,12 @@ class RSSFeedImpl(FeedImpl):
         finally:
             self.finishUpdate(info)
 
-    def finishUpdate(self, info):
-        if info.has_key('etag'):
-            self.etag = info['etag']
-        if info.has_key('last-modified'):
-            self.modified = info['last-modified']
+    def finishUpdate(self, info=None):
+        if info is not None:
+            if info.has_key('etag'):
+                self.etag = info['etag']
+            if info.has_key('last-modified'):
+                self.modified = info['last-modified']
         self.ufeed.endRead() #FIXMENOW This is sloow...
         if not self.updateUandA():
             self.ufeed.beginChange()
@@ -1433,12 +1434,15 @@ class DirectoryFeedImpl(FeedImpl):
 ##
 # Search and Search Results feeds
 
-class SearchFeed:
+class SearchFeedImpl (RSSFeedImpl):
     
-    def __init__(self, impl):
+    def __init__(self, ufeed):
+        RSSFeedImpl.__init__(self, url='', ufeed=ufeed, title='dtv:search', visible=False)
+        self.setUpdateFrequency(-1)
+        self.setAutoDownloadable(False)
         self.searching = False
+        self.lastEngine = 'yahoo'
         self.lastQuery = ''
-        self.impl = impl
 
     def getStatus(self):
         status = 'idle-empty'
@@ -1469,55 +1473,38 @@ class SearchFeed:
         finally:
             self.ufeed.endRead()
         
-    def lookup(self, query):
-        url = self.getRequestURL(query)
+    def lookup(self, engine, query):
+        url = self.getRequestURL(engine, query)
         self.reset(url, True)
         self.lastQuery = query
         thread = Thread(target=self.update)
         thread.setDaemon(False)
         thread.start()
 
+    def getRequestURL(self, engine, query, filterAdultContents=True, limit=50):
+        if engine == 'yahoo':
+            url =  "http://api.search.yahoo.com/VideoSearchService/rss/videoSearch.xml"
+            url += "?appid=dtv_search"
+            url += "&adult_ok=%d" % int(not filterAdultContents)
+            url += "&results=%d" % limit
+            url += "&format=any"
+            url += "&query=%s" % urlencode(query)
+        elif engine == 'blogdigger':
+            url =  "http://blogdigger.com/media/rss.jsp"
+            url += "?q=%s" % urlencode(query)
+            url += "&media=video"
+            url += "&media=torrent"
+            url += "&sortby=date"
+        return url
+
     def update(self):
         if self.url is not None and self.url != '':
-            self.impl.update(self)
+            RSSFeedImpl.update(self)
 
-    def finishUpdate(self, info):
+    def finishUpdate(self, info=None):
         self.searching = False
-        self.impl.finishUpdate(self, info)
+        RSSFeedImpl.finishUpdate(self, info)
                     
-
-class YahooSearchFeedImpl (SearchFeed, RSSFeedImpl):
-
-    def __init__(self, ufeed):
-        SearchFeed.__init__(self, RSSFeedImpl)
-        RSSFeedImpl.__init__(self, url='', ufeed=ufeed, title='dtv:search-yahoo', visible=False)
-        self.setUpdateFrequency(-1)
-
-    def getRequestURL(self, query, filterAdultContents=True, limit=50):
-        url =  "http://api.search.yahoo.com/VideoSearchService/rss/videoSearch.xml"
-        url += "?appid=dtv_search"
-        url += "&adult_ok=%d" % int(not filterAdultContents)
-        url += "&results=%d" % limit
-        url += "&format=any"
-        url += "&query=%s" % urlencode(query)
-        return url
-    
-
-class GoogleSearchFeedImpl (SearchFeed, ScraperFeedImpl):
-
-    def __init__(self, ufeed):
-        SearchFeed.__init__(self, ScraperFeedImpl)
-        ScraperFeedImpl.__init__(self, url='', ufeed=ufeed, title='dtv:search-google', visible=False)
-        self.setUpdateFrequency(-1)
-
-    def getRequestURL(self, query, filterAdultContents=True, limit=50):
-        url =  "http://www.google.com/search"
-        url += "?num=%d" % limit
-        url += "&hl=en&lr=&as_qdr=all&q=%s" % urlencode(query)
-        url += "+filetype%3Amov+OR+filetype%3Ampg+OR+filetype%3Am4v+OR+filetype%3AOGM+OR+filetype%3Amp4+OR+filetype%3Aavi+OR+filetype%3Atorrent+OR+filetype%3Awmv+OR+filetype%3Amp3+OR+filetype%3A3gp+OR+filetype%3Axvid+OR+filetype%3Am4v&btnG=Search"
-        return url
-
-
 
 class SearchDownloadsFeedImpl (FeedImpl):
 

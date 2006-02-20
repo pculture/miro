@@ -1203,16 +1203,21 @@ class TemplateActionHandler:
         
     def skipItem(self, itemID):
         self.controller.playbackController.skip(1)
-        
+    
+    def updateLastSearchEngine(self, engine):
+        searchFeed = self.controller.getGlobalFeed('dtv:search')
+        assert searchFeed is not None
+        searchFeed.lastEngine = engine
+    
     def updateLastSearchQuery(self, query):
         searchFeed = self.controller.getGlobalFeed('dtv:search')
         assert searchFeed is not None
         searchFeed.lastQuery = query
         
-    def performSearch(self, query):
+    def performSearch(self, engine, query):
         searchFeed = self.controller.getGlobalFeed('dtv:search')
         assert searchFeed is not None
-        searchFeed.lookup(query)
+        searchFeed.lookup(engine, query)
 
     def resetSearch(self):
         searchFeed = self.controller.getGlobalFeed('dtv:search')
