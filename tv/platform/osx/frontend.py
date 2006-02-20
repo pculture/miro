@@ -195,7 +195,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         
         if not supported and showError:
             summary = u'Unsupported version of Quicktime'
-            message = u'To run Democracy you need the most recent version of Quicktime, which is a free update.'
+            message = u'To run %s you need the most recent version of Quicktime, which is a free update.' % (config.get(config.LONG_APP_NAME), )
             buttons = ('Quit', 'Download Quicktime now')
             quit = showCriticalDialog(summary, message, buttons)
 
@@ -593,8 +593,9 @@ class MainController (NibClassBuilder.AutoBaseClass):
         NSMenu.popUpContextMenu_withEvent_forView_( menu, event, sender )
 
     def showHelp_(self, sender):
-        summary = u'Help for Democracy will be available soon.'
-        message = u'In the meantime, please visit our homepage for our help FAQ: http://participatoryculture.org/\n\nFor individual user support, please e-mail feedback@ppolitics.org.'
+        summary = u'Help for %s will be available soon.' % \
+            (config.get(config.LONG_APP_NAME), )
+        message = u'In the meantime, please visit our homepage for our help FAQ: %s\n\nFor individual user support, please e-mail feedback@ppolitics.org.' % (config.get(config.PROJECT_URL), )
         showInformationalDialog(summary, message)
 
     itemsAlwaysAvailable = ('addChannel:', 'showHelp:', 'updateAllChannels:')
@@ -853,29 +854,31 @@ class UIBackendDelegate:
         """Tell the user that URL wasn't a valid feed and ask if it should be
         scraped for links instead. Returns True if the user gives
         permission, or False if not."""
-        summary = u"Not a Democracy-style channel"
-        message = u"But we'll try our best to grab the files.\n- It may take time to list the videos\n- Descriptions may look funny\n\nPlease contact the publishers of %s and ask if they have a Democracy-style channel." % url
+        summary = u"Channel is not compatible with %s!" % \
+            (config.get(config.SHORT_APP_NAME), )
+        message = u"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.\n\nPlease contact the publishers of %s and ask if they can supply a feed in a format that will work with %s." % (url, config.get(config.SHORT_APP_NAME), )
         buttons = (u'Continue',)
         return showWarningDialog(summary, message, buttons)
 
     def updateAvailable(self, url):
         """Tell the user that an update is available and ask them if they'd
         like to download it now"""
-        summary = u'Democracy Version Alert'
-        message = u'A new version of Democracy is available.\n\nWould you like to download it now?'
+        summary = "%s Version Alert" % (config.get(config.SHORT_APP_NAME), )
+        message = "A new version of %s is available. Would you like to download it now?" % (config.get(config.LONG_APP_NAME), )
         buttons = (u'Download', u'Cancel')
         download = showInformationalDialog(summary, message, buttons)
         if download:
             self.openExternalURL(url)
 
     def dtvIsUpToDate(self):
-        summary = u'Democracy Version Check'
-        message = u'This version of Democracy is up to date.'
+        summary = u'%s Version Check' % (config.get(config.SHORT_APP_NAME), )
+        message = u'%s is up to date.' % (config.get(config.LONG_APP_NAME), )
         showInformationalDialog(summary, message)
 
     def saveFailed(self, reason):
-        summary = u'Democracy database save failed'
-        message = u"Democracy was unable to save its database.\nRecent changes may be lost\n\n%s" % reason
+        summary = u'%s database save failed' % \
+            (config.get(config.SHORT_APP_NAME), )
+        message = u"%s was unable to save its database.\nRecent changes may be lost\n\n%s" % (config.get(config.LONG_APP_NAME), reason)
         buttons = (u'Continue',)
         return showCriticalDialog(summary, message, buttons)
 
@@ -1299,7 +1302,10 @@ class NullDisplay (app.Display):
         pool = NSAutoreleasePool.alloc().init()
         # NEEDS: take (and leak) a covering reference -- cargo cult programming
         self.view = WebView.alloc().init().retain()
-        self.view.setCustomUserAgent_("Democracy/pre-release (http://participatoryculture.org/)")
+        self.view.setCustomUserAgent_("%s/%s (%s)" % \
+                                      (config.get(config.SHORT_APP_NAME),
+                                       config.get(config.APP_VERSION),
+                                       config.get(config.PROJECT_URL),))
         app.Display.__init__(self)
         del pool
 
@@ -1326,13 +1332,6 @@ class HTMLDisplay (app.Display):
         pool = NSAutoreleasePool.alloc().init()
         self.readyToDisplayHook = None
         self.readyToDisplay = False
-
-#         if existingView == "sharedView":
-#             if not HTMLDisplay.sharedWebView:
-#                 HTMLDisplay.sharedWebView = WebView.alloc().init()
-#                 HTMLDisplay.sharedWebView.setCustomUserAgent_("Democracy/pre-release (http://participatoryculture.org/)")
-#                 print "Creating sharedWebView: %s" % HTMLDisplay.sharedWebView
-#             existingView = HTMLDisplay.sharedWebView
 
         self.web = ManagedWebView.alloc().init(html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(x), frameHint and areaHint and frameHint.getDisplaySizeHint(areaHint) or None)
 
@@ -1431,7 +1430,10 @@ class ManagedWebView (NSObject):
                 # is hopefully rendered to the correct dimensions, instead
                 # of having to be corrected after being displayed.
                 self.view.setFrame_(sizeHint)
-            self.view.setCustomUserAgent_("Democracy/pre-release (http://participatoryculture.org/)")
+            self.view.setCustomUserAgent_("%s/%s (%s)" % \
+                                          (config.get(config.SHORT_APP_NAME),
+                                           config.get(config.APP_VERSION),
+                                           config.get(config.PROJECT_URL),))
         else:
             #print "***** Using existing WebView %s" % self.view
             if sizeHint:
