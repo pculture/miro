@@ -14,7 +14,7 @@ else:
 if 'DTV_VIDEOBOMB_URL' in os.environ:
     effectiveVideobomb = os.environ['DTV_VIDEOBOMB_URL']
 else:
-    effectiveVideobomb = 'http://www.videobomb.com'
+    effectiveVideobomb = 'http://www.videobomb.com/api/submit_or_bomb'
 
 class Pref:
     def __init__(self, **kwds):
