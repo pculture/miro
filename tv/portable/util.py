@@ -25,7 +25,7 @@ def readSimpleConfigFile(path):
             continue
 
         # Otherwise it'd better be a configuration setting
-        match = re.match("^([^ ]+) *= *(.*)$", line)
+        match = re.match(r"^([^ ]+) *= *([^\r\n]*)[\r\n]*$", line)
         if not match:
             print "WARNING: %s: ignored bad configuration directive '%s'" % \
                 (path, line)
