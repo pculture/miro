@@ -240,8 +240,11 @@ class FeedImpl:
         else:
             self.title = title
         self.created = datetime.now()
-        self.autoDownloadable = True
-        self.startfrom = datetime.now()
+        self.autoDownloadable = ufeed.initiallyAutoDownloadable
+        if self.autoDownloadable:
+            self.startfrom = datetime.min
+        else:
+            self.startfrom = datetime.max
         self.getEverything = False
         self.maxNew = -1
         self.fallBehind = -1
@@ -696,9 +699,10 @@ class FeedImpl:
 #
 # It works by passing on attributes to the actual feed.
 class Feed(DDBObject):
-    def __init__(self,url, initial = None):
+    def __init__(self,url, initial = None, initiallyAutoDownloadable = True):
         self.origURL = url
         self.errorState = False
+        self.initiallyAutoDownloadable = initiallyAutoDownloadable
         if initial is None:
             self.loading = True
             self.actualFeed = FeedImpl(url,self)
