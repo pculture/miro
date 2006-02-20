@@ -170,7 +170,7 @@ function delegateReturnURL(cookie, data) {
  *****************************************************************************/
 
 var knobDragStart = 0;
-var knobPos = 105;
+var knobPos = 98;
 
 function setVolume(percent) {
     /*  jsdump("Volume now at "+percent); */
@@ -179,8 +179,8 @@ function setVolume(percent) {
 
 function volumeKnobMove(event) {
   if (knobDragStart > 0) {
-    var left = 15;
-    var right= 105;
+    var left = 25;
+    var right= 98;
     var knob = document.getElementById("knob");
     knobPos += event.clientX - knobDragStart;
     if (knobPos < left) knobPos = left;
@@ -375,8 +375,8 @@ function doResize(event) {
  if (window.outerWidth < 800) {
     window.outerWidth=800;
   }
- if (window.outerHeight < 200) {
-    window.outerHeight=200;
+ if (window.outerHeight < 500) {
+    window.outerHeight=500;
   }
   return true;  
 }
