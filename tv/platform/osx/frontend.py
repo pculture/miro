@@ -195,7 +195,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         
         if not supported and showError:
             summary = u'Unsupported version of Quicktime'
-            message = u'To run DTV you need the most recent version of Quicktime, which is a free update.'
+            message = u'To run Democracy you need the most recent version of Quicktime, which is a free update.'
             buttons = ('Quit', 'Download Quicktime now')
             quit = showCriticalDialog(summary, message, buttons)
 
@@ -593,7 +593,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         NSMenu.popUpContextMenu_withEvent_forView_( menu, event, sender )
 
     def showHelp_(self, sender):
-        summary = u'Help for DTV will be available soon.'
+        summary = u'Help for Democracy will be available soon.'
         message = u'In the meantime, please visit our homepage for our help FAQ: http://participatoryculture.org/\n\nFor individual user support, please e-mail feedback@ppolitics.org.'
         showInformationalDialog(summary, message)
 
@@ -853,29 +853,29 @@ class UIBackendDelegate:
         """Tell the user that URL wasn't a valid feed and ask if it should be
         scraped for links instead. Returns True if the user gives
         permission, or False if not."""
-        summary = u"Not a DTV-style channel"
-        message = u"But we'll try our best to grab the files.\n- It may take time to list the videos\n- Descriptions may look funny\n\nPlease contact the publishers of %s and ask if they have a DTV-style channel." % url
+        summary = u"Not a Democracy-style channel"
+        message = u"But we'll try our best to grab the files.\n- It may take time to list the videos\n- Descriptions may look funny\n\nPlease contact the publishers of %s and ask if they have a Democracy-style channel." % url
         buttons = (u'Continue',)
         return showWarningDialog(summary, message, buttons)
 
     def updateAvailable(self, url):
         """Tell the user that an update is available and ask them if they'd
         like to download it now"""
-        summary = u'DTV Version Alert'
-        message = u'A new version of DTV is available.\n\nWould you like to download it now?'
+        summary = u'Democracy Version Alert'
+        message = u'A new version of Democracy is available.\n\nWould you like to download it now?'
         buttons = (u'Download', u'Cancel')
         download = showInformationalDialog(summary, message, buttons)
         if download:
             self.openExternalURL(url)
 
     def dtvIsUpToDate(self):
-        summary = u'DTV Version Check'
-        message = u'This version of DTV is up to date.'
+        summary = u'Democracy Version Check'
+        message = u'This version of Democracy is up to date.'
         showInformationalDialog(summary, message)
 
     def saveFailed(self, reason):
-        summary = u'DTV database save failed'
-        message = u"DTV was unable to save its database.\nRecent changes may be lost\n\n%s" % reason
+        summary = u'Democracy database save failed'
+        message = u"Democracy was unable to save its database.\nRecent changes may be lost\n\n%s" % reason
         buttons = (u'Continue',)
         return showCriticalDialog(summary, message, buttons)
 
@@ -1299,7 +1299,7 @@ class NullDisplay (app.Display):
         pool = NSAutoreleasePool.alloc().init()
         # NEEDS: take (and leak) a covering reference -- cargo cult programming
         self.view = WebView.alloc().init().retain()
-        self.view.setCustomUserAgent_("DTV/pre-release (http://participatoryculture.org/)")
+        self.view.setCustomUserAgent_("Democracy/pre-release (http://participatoryculture.org/)")
         app.Display.__init__(self)
         del pool
 
@@ -1330,7 +1330,7 @@ class HTMLDisplay (app.Display):
 #         if existingView == "sharedView":
 #             if not HTMLDisplay.sharedWebView:
 #                 HTMLDisplay.sharedWebView = WebView.alloc().init()
-#                 HTMLDisplay.sharedWebView.setCustomUserAgent_("DTV/pre-release (http://participatoryculture.org/)")
+#                 HTMLDisplay.sharedWebView.setCustomUserAgent_("Democracy/pre-release (http://participatoryculture.org/)")
 #                 print "Creating sharedWebView: %s" % HTMLDisplay.sharedWebView
 #             existingView = HTMLDisplay.sharedWebView
 
@@ -1431,7 +1431,7 @@ class ManagedWebView (NSObject):
                 # is hopefully rendered to the correct dimensions, instead
                 # of having to be corrected after being displayed.
                 self.view.setFrame_(sizeHint)
-            self.view.setCustomUserAgent_("DTV/pre-release (http://participatoryculture.org/)")
+            self.view.setCustomUserAgent_("Democracy/pre-release (http://participatoryculture.org/)")
         else:
             #print "***** Using existing WebView %s" % self.view
             if sizeHint:

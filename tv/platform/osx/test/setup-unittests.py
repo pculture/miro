@@ -74,10 +74,10 @@ if 'py2app' in sys.argv and False: ## NEEDS XXXX
     alias = '-A' in sys.argv
     
     # NEEDS: We guess where the bundle was built. Horrible.
-    bundleRoot = 'dist/DTV.app'
+    bundleRoot = 'dist/Democracy.app'
     for i in range(0,len(sys.argv)-1):
         if sys.argv[i] == '--dist-dir':
-            bundleRoot = '%s/DTV.app' % sys.argv[i+1]
+            bundleRoot = '%s/Democracy.app' % sys.argv[i+1]
 
     # list of (sourcePath, destinationPath) tuples of files to copy or link
     manifest = []

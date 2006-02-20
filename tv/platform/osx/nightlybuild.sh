@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Automated nightly build script for DTV OS X
+# Automated nightly build script for Democracy OS X
 # Add this script to your crontab to automatically upload builds to the server
 #
 # For example, my crontab looks like this:
@@ -34,7 +34,7 @@ echo "Changing to OS X platform directory"
 cd trunk/tv/platform/osx
 
 echo -n "Removing old build files... "
-rm -rf DTV.app
+rm -rf Democracy.app
 rm -rf "${imgDirName}"
 echo "done."
 
@@ -48,7 +48,7 @@ echo "Preparing image folder..."
 mkdir "${imgDirName}"
 mkdir "${imgDirName}/.background"
 
-mv "DTV.app" "${imgDirName}"
+mv "Democracy.app" "${imgDirName}"
 cp "Resources-DMG/DS_Store" "${imgDirName}/.DS_Store"
 cp "Resources-DMG/background.tiff" "${imgDirName}/.background"
 
@@ -58,17 +58,17 @@ cp "Resources-DMG/background.tiff" "${imgDirName}/.background"
 
 echo "Creating DMG file... "
 
-imgName=DTV-CVS-`date +"%F"`
-hdiutil create -srcfolder "${imgDirName}" -volname DTV -format UDZO "DTV.tmp.dmg"
-hdiutil convert -format UDZO -imagekey zlib-level=9 -o "${imgName}.dmg" "DTV.tmp.dmg"
-rm "DTV.tmp.dmg"
+imgName=Democracy-CVS-`date +"%F"`
+hdiutil create -srcfolder "${imgDirName}" -volname Democracy -format UDZO "Democracy.tmp.dmg"
+hdiutil convert -format UDZO -imagekey zlib-level=9 -o "${imgName}.dmg" "Democracy.tmp.dmg"
+rm "Democracy.tmp.dmg"
 
 echo "Completed:"
 ls -la "${imgName}.dmg"
 
 # Upload DMG to Sourceforge ---------------------------------------------------
 
-echo "Uploading to Sourceforge"
+#echo "Uploading to Sourceforge"
 
 scp "${imgName}.dmg" shell.sf.net:/home/groups/d/de/demotv/htdocs/cvs-snapshots
 echo

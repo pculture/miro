@@ -76,11 +76,11 @@ resourceFiles.append('English.lproj')
 py2app_options = dict(
     resources='%s/resources' % root, 
     plist=infoPlist,
-    iconfile='%s/platform/%s/DTV.icns' % (root, platform),
+    iconfile='%s/platform/%s/Democracy.icns' % (root, platform),
 )
 
 setup(
-    app=['DTV.py'],
+    app=['Democracy.py'],
     data_files= resourceFiles,
 # NEEDS XXXX
 #    ext_modules = [vlchelper.info.getExtension(root)],
@@ -125,10 +125,10 @@ if 'py2app' in sys.argv and False: ## NEEDS XXXX
     alias = '-A' in sys.argv
     
     # NEEDS: We guess where the bundle was built. Horrible.
-    bundleRoot = 'dist/DTV.app'
+    bundleRoot = 'dist/Democracy.app'
     for i in range(0,len(sys.argv)-1):
         if sys.argv[i] == '--dist-dir':
-            bundleRoot = '%s/DTV.app' % sys.argv[i+1]
+            bundleRoot = '%s/Democracy.app' % sys.argv[i+1]
 
     # list of (sourcePath, destinationPath) tuples of files to copy or link
     manifest = []
