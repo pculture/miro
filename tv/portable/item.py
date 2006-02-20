@@ -873,7 +873,11 @@ class Item(DDBObject):
 
 #Dummy class for removing bogus FileItem instances
 class DropItLikeItsHot:
-    pass
+    def __slurp(self, *args, **kwargs):
+        pass
+    def __getattr__(self, attr):
+        print "DTV: WARNING! Attempt to call '%s' on DropItLikeItsHot instance" % attr
+        return self.__slurp
 
 ##
 # An Item that exists as a file, but not as a download
