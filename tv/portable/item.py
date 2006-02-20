@@ -873,6 +873,7 @@ class Item(DDBObject):
 
 #Dummy class for removing bogus FileItem instances
 class DropItLikeItsHot:
+    __DropMeLikeItsHot = True
     def __slurp(self, *args, **kwargs):
         pass
     def __getattr__(self, attr):

@@ -850,7 +850,8 @@ class DynamicDatabase:
                         pass
                     # Filter out any non-database objects that used to
                     # be stored in the database in past versions
-                    if issubclass(obj[0].__class__, DDBObject):
+                    if (issubclass(obj[0].__class__, DDBObject) and
+                        (not hasattr(obj[0],'__DropMeLikeItsHot'))):
                         it = self.objects.append(obj)
                         self.objectLocs[obj[0].id] = it
 

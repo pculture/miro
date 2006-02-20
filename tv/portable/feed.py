@@ -819,6 +819,10 @@ class Feed(DDBObject):
         if not data.has_key('actualFeed'):
             self.__class__ = DropItLikeItsHot
 
+# Dummy class to facilitate upgrade
+class YahooSearchFeedImpl:
+    def __setstate__(self,state):
+        self.__class__ = DropItLikeItsHot
 
 class RSSFeedImpl(FeedImpl):
     firstImageRE = re.compile('\<\s*img\s+[^>]*src\s*=\s*"(.*?)"[^>]*\>',re.I|re.M)
