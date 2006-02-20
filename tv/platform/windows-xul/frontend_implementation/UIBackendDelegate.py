@@ -3,6 +3,7 @@ from random import randint
 from threading import Event
 from urllib import unquote
 import webbrowser
+import traceback
 
 ###############################################################################
 #### 'Delegate' objects for asynchronously asking the user questions       ####
@@ -119,7 +120,14 @@ class UIBackendDelegate:
         return self.yesNoPrompt(summary,message)
 
     def openExternalURL(self, url):
-        webbrowser.open(url)
+        # It looks like the maximum URL length is about 2k. I can't
+        # seem to find the exact value
+        if len(url) > 2047:
+            url = url[:2047]
+        try:
+            webbrowser.open(url)
+        except error:
+            traceback.print_exc()
 
     def updateAvailableItemsCountFeedback(self, count):
         # Inform the user in a way or another that newly available items are
