@@ -10,6 +10,7 @@ import py2app
 import shutil
 import plistlib
 import subprocess
+import string
 
 # The name of this platform.
 
@@ -55,18 +56,26 @@ else:
 # Get the Info property list and update the CFBundleVersion with the
 # Subversion revision
 
-# NEEDS: I (Geoff) copies this into util.py. Should call that code
-# eventually instead of duplicating it here.
-
 infoPlist = plistlib.readPlist(u'Info.plist')
 
-p1 = subprocess.Popen(["svn", "info"], stdout=subprocess.PIPE) 
-p2 = subprocess.Popen(["grep", "Revision:"], stdin=p1.stdout, stdout=subprocess.PIPE) 
-output = re.search('Revision: (.*)', p2.communicate()[0])
-if output is not None:
-    revision = int(output.group(1))
-    print "Building revision %d" % revision
-    infoPlist[u'CFBundleVersion'] = u'r%d' % revision
+import util
+revision = util.queryRevision(root)
+if revision is not None:
+    revision = u'r%d' % revision
+    print "Building revision %s" % revision
+    infoPlist[u'CFBundleVersion'] = revision
+else:
+    revision = "unknown"
+
+# Inject the revision number into app.config.template to get app.config.
+# NEEDS: Very sloppy. The new file is just dropped in the source tree
+# next to the old one.
+appConfigPath = os.path.join(root, 'resources', 'app.config')
+s = open("%s.template" % appConfigPath, "rt").read()
+s = string.Template(s).safe_substitute(APP_REVISION = revision)
+f = open(appConfigPath, "wt")
+f.write(s)
+f.close()
 
 # Get a list of additional resource files to include
 
