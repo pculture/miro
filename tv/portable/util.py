@@ -1,5 +1,8 @@
 import re
 import subprocess
+import string
+import os
+import urllib
 
 # Perform escapes needed for Javascript string contents.
 def quoteJS(x):
@@ -69,3 +72,17 @@ def queryRevision(file):
     except:
         # whatever
         return None
+
+# 'path' is a path that could be passed to open() to open a file on
+# this platform. It must be an absolute path. Return the file:// URL
+# that would refer to the same file.
+def absolutePathToFileURL(path):
+    parts = string.split(path, os.sep)
+    parts = [urllib.quote(x, ':') for x in parts]
+    if len(parts) > 0 and parts[0] == '':
+        # Don't let "/foo/bar" become "file:////foo/bar", but leave
+        # "c:/foo/bar" becoming "file://c:/foo/bar" -- technically :
+        # should become | (but only in a drive name?) but most
+        # consumers will let us get by with that.
+        parts = parts[1:]
+    return "file:///" + '/'.join(parts)

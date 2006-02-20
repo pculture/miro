@@ -4,6 +4,7 @@ import frontend_implementation
 import os
 import threading
 import template
+import util
 
 _genMutator = frontend_implementation.HTMLDisplay._genMutator
 
@@ -57,7 +58,7 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
     def play(self):
         print "VideoDisplay play %s" % self.itemPath
         app.VideoDisplayBase.play(self)
-        url = "file:///%s" % self.itemPath.replace('\\','/').replace(" ",'%20')
+        url = util.absolutePathToFileURL(self.itemPath)
         self.videoPlay(url)
 
     def pause(self):

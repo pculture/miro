@@ -146,7 +146,7 @@ class UIBackendDelegate:
         summary = u'Unknown Runtime Error'
         message = u'An unknown error has occured %s.' % when
         execChromeJS("alert('%s');" % quoteJS(message))
-        return true
+        return True
 
     def copyTextToClipboard(self, text):
         execChromeJS("copyTextToClipboard('%s');" % quoteJS(text))
