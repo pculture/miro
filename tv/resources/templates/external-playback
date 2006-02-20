@@ -5,7 +5,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>DTV - External Playback Template</title>
+    <title>Democracy - External Playback Template</title>
 
     <link href="resource:css/external.css" rel="stylesheet" type="text/css" />
     <link href="resource:css/video-info.css" rel="stylesheet" type="text/css" />
@@ -16,7 +16,7 @@
 
 <body onload="startCountdown(@@@this getID@@@)">
     <div id="external-container-basic">
-    	<span>This file type (<span t:replace="this getFormat" />) can't be played in the main DTV window.</span>
+    	<span>This file type (<span t:replace="this getFormat" />) can't be played in the main Democracy window.</span>
 
         <a id="external-button-left" href="javascript:playItemExternally(@@@this getID@@@)">
             <span>Play Externally</span>

@@ -37,7 +37,7 @@
 <div id="channel_info">
 	<img src="***feed getThumbnail***" />
 	<h2 i18n:translate=""><span t:replaceMarkup="feed getTitle"/></h2>
-	<a href="mailto:?subject=@@@feed getTitle@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed getTitle@@@&quot;. If you don't have DTV, you can get it here:%0D%0A%0D%0Ahttp://www.participatoryculture.org/download.php%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed getURL@@@" class="recommend_link" i18n:translate="">Recommend to Friends</a>
+	<a href="mailto:?subject=@@@feed getTitle@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed getTitle@@@&quot;. If you don't have the Democracy Player, you can get it here:%0D%0A%0D%0Ahttp://www.participatoryculture.org/download.php%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed getURL@@@" class="recommend_link" i18n:translate="">Recommend to Friends</a>
 </div>
 
 <div id="right_half">
@@ -101,8 +101,8 @@
   </div> 
 
 <div class="bottom_strip">
-Thanks for trying DTV Beta.  It still has some <a href="http://participatoryculture.org/dtv_faq.php#known_bugs">bugs</a>, but we're working on them.  <a href="mailto:feedback@ppolitics.org?Subject=DTV Beta Feedback">Send us your feedback</a>! (<a href="mailto:feedback@ppolitics.org?body=Dear Participatory ____(noun)____,%0A%0A
-I downloaded DTV Beta so that I could ____(verb)____ some ____(noun)____.  But when I ____(verb, past tense)____ the ____(noun)____ everything went totally ____(adjective)_____.  You guys really need to ____(verb)____  your ____(noun)____ together.%0A%0AI'll see you ____(time or location)____,%0A%0A
+Thanks for trying the beta release of the Democracy Player.  It still has some <a href="http://participatoryculture.org/dtv_faq.php#known_bugs">bugs</a>, but we're working on them.  <a href="mailto:feedback@ppolitics.org?Subject=Democracy Player Beta Feedback">Send us your feedback</a>! (<a href="mailto:feedback@ppolitics.org?body=Dear Participatory ____(noun)____,%0A%0A
+I downloaded Democracy Player so that I could ____(verb)____ some ____(noun)____.  But when I ____(verb, past tense)____ the ____(noun)____ everything went totally ____(adjective)_____.  You guys really need to ____(verb)____  your ____(noun)____ together.%0A%0AI'll see you ____(time or location)____,%0A%0A
 
 _____(your name)_____">mad libs version</a>)
 </div>

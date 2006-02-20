@@ -95,9 +95,9 @@ function eventURL(url) {
 function recommendItem(title, url, feedURL) {
     body = "You should check out this video:\n";
     body = body + url + "\n\n";
-    body = body + "I found it while using DTV, which you can download here:\n";
-    body = body + "http://www.dtvmac.com\n\n";
-    body = body + "The video was on this channel (click 'subscribe' in DTV and paste in this address):\n"
+    body = body + "I found it while using the Democracy Player, which you can download here:\n";
+    body = body + "http://www.participatoryculture.org\n\n";
+    body = body + "The video was on this channel (click 'subscribe' in Democracy and paste in this address):\n"
     body = body + feedURL + "\n\n"
     
     url = 'mailto:';
