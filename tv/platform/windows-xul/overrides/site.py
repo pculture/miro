@@ -1,13 +1,13 @@
-import sys
-class AutoflushingStream:
-    def __init__(self, stream):
-        self.stream = stream
-    def write(self, *args):
-        self.stream.write(*args)
-        self.stream.flush()
-mylog = open("\\sitelog","wt")
-sys.stdout = sys.stderr = AutoflushingStream(mylog)
-print "this is sitelog; path now %s" % sys.path
+#import sys
+#class AutoflushingStream:
+#    def __init__(self, stream):
+#        self.stream = stream
+#    def write(self, *args):
+#        self.stream.write(*args)
+#        self.stream.flush()
+#mylog = open("\\sitelog","wt")
+#sys.stdout = sys.stderr = AutoflushingStream(mylog)
+#print "this is sitelog; path now %s" % sys.path
 
 """Customized site-setup script that leaves sys.path alone.
 
@@ -278,7 +278,6 @@ def execsitecustomize():
         pass
 
 def main():
-    print "whee! entering site main, %s" % sys.path
     abs__file__()
     paths_in_sys = removeduppaths()
     setquit()
@@ -292,7 +291,6 @@ def main():
     # this module is run as a script, because this code is executed twice.
     if hasattr(sys, "setdefaultencoding"):
         del sys.setdefaultencoding
-    print "leaving site main, %s" % sys.path
 
 main()
 
