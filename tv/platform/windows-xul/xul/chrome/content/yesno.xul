@@ -2,11 +2,11 @@
 <?xml-stylesheet href="chrome://global/skin" type="text/css"?>
 <?xml-stylesheet href="main.css" type="text/css"?>
 
-<!DOCTYPE window SYSTEM "chrome://dtv/locale/main.dtd">
+<!DOCTYPE window SYSTEM "chrome://dtv/locale/yesno.dtd">
 <dialog id="main"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 	xmlns:html="http://www.w3.org/1999/xhtml"
-        title="Prompt"
+        title="&yesno.title;"
         ondialogaccept="window.arguments[0].out = '1';"
         ondialogcancel="window.arguments[0].out = '0';"
         onload="updateLabel()"
@@ -19,6 +19,6 @@ function updateLabel() {
   ele.setAttribute("title", window.arguments[0]["title"]);
 }
     </script>
-   <label id="label1" value="Question goes here" />
+   <label id="label1" value="" />
 
 </dialog>

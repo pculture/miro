@@ -2,16 +2,15 @@ import os.path
 import os
 import copy
 import sys
+import string
+import subprocess
 
 ###############################################################################
 ## Paths and configuration                                                   ##
 ###############################################################################
 
-# This is the version that will be shown in the installer
-VERSION_STRING = "0.8.0"
-
 # The location of the NSIS compiler
-NSIS_PATH = '"C:\\Program Files\\NSIS\\makensis.exe"'
+NSIS_PATH = 'C:\\Program Files\\NSIS\\makensis.exe'
 
 # If you're using the prebuilt DTV Dependencies Binary Kit, just set
 # the path to it here, and ignore everything after this point. In
@@ -38,6 +37,10 @@ BOOST_INCLUDE_PATH = os.path.join(BOOST_ROOT, 'include', 'boost-1_33')
 BOOST_RUNTIMES = [
     os.path.join(BOOST_LIB_PATH, 'boost_python-vc71-mt-1_33.dll'),
     ]
+
+# The 'Democracy.exe' launcher stub, currently provided only in the
+# binary kit.
+STUB_PATH = os.path.join(BINARY_KIT_ROOT, 'stub', 'Democracy.exe')
 
 # Runtime library DLLs to distribute with the application. Set as
 # appropriate for your compiler.
@@ -185,6 +188,9 @@ ext_modules = [
 # should be the appropriate way.
 
 class Common:
+    def __init__(self):
+        self.templateVars = None
+
     # NEEDS: if you look at the usage of this function, we're dropping
     # the plugin into the xulrunner plugin directory, rather than the
     # app bundle plugin directory, which is the way you're "supposed"
@@ -255,10 +261,73 @@ class Common:
 
 	self.typeLibrary = outXpt
 
+    # Fill the app.config.template, to generate the real app.config.
+    # NEEDS: Very sloppy. The new file is just dropped in the source tree
+    # next to the old one. This also initializes self.templateVars.
+    def makeAppConfig(self):
+        import util
+        revision = util.queryRevision(root)
+        if revision is None:
+            revision = "unknown"
+        else:
+            revision = "r%d" % revision
+
+        path = os.path.join(root, 'resources', 'app.config')
+        s = open("%s.template" % path, "rt").read()
+        s = string.Template(s).safe_substitute(APP_REVISION = revision)
+        f = open(path, "wt")
+        f.write(s)
+        f.close()
+
+        self.templateVars = util.readSimpleConfigFile(path)
+
+    def setTemplateVariable(self, key, value):
+        assert self.templateVars, \
+            "Must call makeAppConfig before setTemplateVariable"
+        self.templateVars[key] = value
+
+    def getTemplateVariable(self, key):
+        assert self.templateVars, \
+            "Must call makeAppConfig before getTemplateVariable"
+        return self.templateVars[key]
+
+    # Given a file <filename>.template, replace all applicable
+    # template variables and generate a file <filename> right next to
+    # it in the tree. 'Template variables' are anything in app.config,
+    # plus anything set with setTemplateVariable.
+    # NEEDS: same deal as makeAppConfig: sloppy; shouldn't drop files in
+    # the source tree.
+    def fillTemplate(self, filename):
+        assert self.templateVars, \
+            "Must call makeAppConfig before fillTemplate"
+        s = open("%s.template" % filename, "rt").read()
+        s = string.Template(s).safe_substitute(self.templateVars)
+        f = open(filename, "wt")
+        f.write(s)
+        f.close()
+
+    def fillTemplates(self):
+        xulBase = os.path.join(root, 'platform', platform, 'xul')
+
+        self.fillTemplate(os.path.join(xulBase, 'application.ini'))
+        self.fillTemplate(os.path.join(xulBase, 'defaults', 'preferences',
+                                       'prefs.js'))
+
+        # NEEDS: generalize to do the whole tree, so as to handle all
+        # locales
+        self.fillTemplate(os.path.join(xulBase, 'chrome', 'locale',
+                                       'en-US', 'main.dtd'))        
+        self.fillTemplate(os.path.join(xulBase, 'chrome', 'locale',
+                                       'en-US', 'about.dtd'))        
+
 ###############################################################################
 
 class runxul(Command, Common):
     description = "test run of a Mozilla XUL-based application"
+
+    def __init__(self, *rest):
+        Command.__init__(self, *rest)
+        Common.__init__(self)
 
     # List of option tuples: long name, short name (None if no short
     # name), and help string.
@@ -309,6 +378,7 @@ class runxul(Command, Common):
 	copyTreeExceptSvn(PYXPCOM_DIR, buildBase)
 
         # Copy the license file over
+        # NEEDS: (huh? this doesn't belong here at all)
         self.copyMiscFiles(self.bdist_base)
 
         # Finally, drop in our plugins.
@@ -318,6 +388,10 @@ class runxul(Command, Common):
 	open(markFile, 'w')
 
     def run(self):
+        self.makeAppConfig()
+        self.setTemplateVariable("pyxpcomIsEmbedded", "false")
+        self.fillTemplates()                  
+
         # Build extensions and add results to child search path
         build = self.reinitialize_command('build')
         build.build_base = self.bdist_base
@@ -375,6 +449,10 @@ class runxul(Command, Common):
 class bdist_xul_dumb(Command, Common):
     description = "build redistributable directory for Mozilla-based app"
 
+    def __init__(self, *rest):
+        Command.__init__(self, *rest)
+        Common.__init__(self)
+
     # List of option tuples: long name, short name (None if no short
     # name), and help string.
     user_options = [
@@ -411,6 +489,10 @@ class bdist_xul_dumb(Command, Common):
                                            'xul')
 
     def run(self):
+        self.makeAppConfig()
+        self.setTemplateVariable("pyxpcomIsEmbedded", "true")
+        self.fillTemplates()                  
+
         # There are a few modules in the standard library that we want to
         # override with out own copies (well, just one: site.py) -- put them
         # on the path first.
@@ -560,7 +642,9 @@ class bdist_xul_dumb(Command, Common):
         # current directory be the directory that contains the binary
         # when it is run. This can easily be accomplished with a
         # Windows shortcut, which is the way end-users will be
-        # starting the program.
+        # starting the program. [And in fact the new Democracy.exe
+        # launcher now ensures that xulrunner is already run with the
+        # current directory set appropriately.]
 #        dllDistDir = self.xulrunnerOut
         dllDistDir = self.dist_dir
         allRuntimes = PYTHON_RUNTIMES + BOOST_RUNTIMES + COMPILER_RUNTIMES
@@ -571,36 +655,20 @@ class bdist_xul_dumb(Command, Common):
         log.info("copying application resources")
         copyTreeExceptSvn(self.appResources,
                           os.path.join(self.dist_dir, 'resources'))
-        shutil.copy2("dtv.nsi", self.dist_dir)
-        shutil.copy2("dtv.ico", self.dist_dir)
+        shutil.copy2("Democracy.nsi", self.dist_dir)
+        shutil.copy2("Democracy.ico", self.dist_dir)
 
         # NEEDS: set permissions/attributes on everything uniformly?
 
-        # Finally, create the top-level executable.
+        # Finally, create the top-level executable, and rename
+        # xulrunner.exe so the user is not confused and surprised to
+        # see it in the process list (and in firewall/antivirus
+        # dialogs, etc.)
         log.info("creating executable")
-        os.rename(os.path.join(self.xulrunnerOut, "xulrunner-stub.exe"), #NEEDS
-                  os.path.join(self.dist_dir, "dtv.exe")) # NEEDS
-
-# pybridge must be modified to *replace* sys.path with
-# (XCurProcD)/python if present. (no, actually this is a mess. It's
-# the *components* that should get the path replacement -- but they
-# are all loaded into the same python interpreter, so they can't just
-# go around unilaterally changing it. probably we need to start by
-# distinguishing the 'standalone application' case from the
-# 'extension/pyxpcom module' case, and separately the 'bundled python
-# standard library' case from the 'all dependencies including
-# installed packages manually specified' case, with the latter
-# unfortunately being poorly supported.) resource.resourceRoot() has
-# already been modified in what should be the appropriate way.
-#
-# What we really wish we had is a way to execute some code on
-# 'startup' in the 'embedded standard library' case. We can accomplish
-# this by tacking a header onto each component script, I guess, that
-# checks a global variable (using some kind of built-in mutex, I
-# hope?)
-#
-# NEEDS: so where does this leave pyxpcom's python-side code? how do
-# we stop pyloader (for example) from seeing the "true" sys.path??
+        shutil.copy2(STUB_PATH, self.dist_dir)
+        os.rename(os.path.join(self.xulrunnerOut, "xulrunner.exe"),
+                  os.path.join(self.xulrunnerOut, "Democracy.exe"))
+        os.remove(os.path.join(self.xulrunnerOut, "xulrunner-stub.exe"))
 
     def computePythonManifest(self, path=None, scripts=[], packages=[],
                               includes=[], excludes=[]):
@@ -689,9 +757,35 @@ class bdist_xul_dumb(Command, Common):
 class bdist_xul (bdist_xul_dumb):
     def run(self):
         bdist_xul_dumb.run(self)
+
         log.info("building installer")
-        os.system("%s /DVERSION=%s %s" % ( NSIS_PATH, VERSION_STRING,
-                                      os.path.join(self.dist_dir,"dtv.nsi")))
+
+        nsisVars = {}
+        for (ourName, nsisName) in [
+            ('appVersion', 'CONFIG_VERSION'),
+            ('projectURL', 'CONFIG_PROJECT_URL'),
+            ('shortAppName', 'CONFIG_SHORT_APP_NAME'),
+            ('longAppName', 'CONFIG_LONG_APP_NAME'),
+            ('publisher', 'CONFIG_PUBLISHER'),
+            ]:
+            nsisVars[nsisName] = self.getTemplateVariable(ourName)
+
+        outputFile = "%s-%s.exe" % \
+            (self.getTemplateVariable('shortAppName'),
+             self.getTemplateVariable('appVersion'),
+             )
+        nsisVars['CONFIG_OUTPUT_FILE'] = outputFile
+
+        # Hardcoded elsewhere in this file, so why not here too?
+        nsisVars['CONFIG_EXECUTABLE'] = "Democracy.exe"
+        nsisVars['CONFIG_ICON'] = "Democracy.ico"
+
+        nsisArgs = ["/D%s=%s" % (k, v) for (k, v) in nsisVars.iteritems()]
+        nsisArgs.append(os.path.join(self.dist_dir, "Democracy.nsi"))
+
+        if os.access(outputFile, os.F_OK):
+            os.remove(outputFile)
+        subprocess.call([NSIS_PATH] + nsisArgs)
 
 def copyTreeExceptSvn(src, dest):
     """Copy the contents of the given source directory into the given

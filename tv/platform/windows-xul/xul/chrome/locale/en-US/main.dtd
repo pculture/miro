@@ -1,3 +1,5 @@
-<!ENTITY main.title          "DTV">
 <!ENTITY nbsp                " ">
 <!ENTITY rsaquo              "'">
+
+<!ENTITY main.title          "Democracy Player">
+<!ENTITY main.about          "About Democracy Player">

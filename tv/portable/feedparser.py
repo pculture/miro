@@ -26,6 +26,12 @@ _debug = 0
 # If you are embedding feedparser in a larger application, you should
 # change this to your application name and URL.
 USER_AGENT = "UniversalFeedParser/%s +http://feedparser.org/" % __version__
+# GRS: And lo, I have done so.
+import config
+USER_AGENT += " %s/%s (%s)" % \
+    (config.get(config.SHORT_APP_NAME),
+     config.get(config.APP_VERSION),
+     config.get(config.PROJECT_URL))
 
 # HTTP "Accept" header to send to servers when downloading feeds.  If you don't
 # want to send an Accept header, set this to None.

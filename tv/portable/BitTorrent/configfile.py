@@ -10,6 +10,7 @@
 
 # Written by Uoti Urpala
 
+import config
 import os
 import sys
 # Python 2.2 doesn't have RawConfigParser
@@ -24,12 +25,16 @@ from BitTorrent import version
 from __init__ import get_config_dir
 
 def get_config(defaults, section):
-    dir_root = get_config_dir()
+    # GRS: Get our state directory by asking DTV for it
+#    dir_root = get_config_dir()
+#
+#    if dir_root is None:
+#        return {}
+#
+#    configdir = os.path.join(dir_root, 'bittorrent-dtv')
+    configdir = os.path.join(config.get(config.SUPPORT_DIRECTORY),
+                             'Bittorrent')
 
-    if dir_root is None:
-        return {}
-
-    configdir = os.path.join(dir_root, 'bittorrent-dtv')
     if not os.path.isdir(configdir):
         try:
             os.mkdir(configdir, 0700)

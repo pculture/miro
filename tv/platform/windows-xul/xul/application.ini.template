@@ -1,8 +1,8 @@
 [App]
-Vendor=Participatory Culture Foundation
-Name=Democracy Player
-Version=0.8.0
-BuildID=r1098
+Vendor=$publisher
+Name=$longAppName
+Version=$appVersion
+BuildID=$appRevision
 Copyright=See LICENSE file for copyright and license terms.
 ID={6334D996-EA3E-4a0e-AA8D-15BA56B37241}
 

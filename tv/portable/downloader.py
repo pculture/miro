@@ -100,7 +100,11 @@ def grabURL(url, type="GET",start = 0, etag=None,modified=None):
     maxDepth = 10
     maxAuthAttempts = 5
     redirURL = url
-    myHeaders = {"User-Agent":"DTV/pre-release (http://participatoryculture.org/)"}
+    userAgent = "%s/%s (%s)" % \
+        (config.get(config.SHORT_APP_NAME),
+         config.get(config.APP_VERSION),
+         config.get(config.PROJECT_URL))
+    myHeaders = {"User-Agent": userAgent}
 
     (scheme, host, path, params, query, fragment) = parseURL(url)
     #print "grab URL called for "+host

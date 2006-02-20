@@ -2,6 +2,7 @@ from frontend_implementation.HTMLDisplay import execChromeJS
 from random import randint
 from threading import Event
 from urllib import unquote
+from util import quoteJS
 import webbrowser
 import traceback
 
@@ -44,12 +45,12 @@ class UIBackendDelegate:
     # Returns true or false
     def yesNoPrompt(self, title, text):
         cookie = self.initializeReturnEvent()
-        title = title.replace("\\","\\\\").replace("\"","\\\"").replace("'","\\'")
-        text = text.replace("\\","\\\\").replace("\"","\\\"").replace("'","\\'")
+        title = quoteJS(title)
+        text = quoteJS(text)
         execChromeJS(("showYesNoDialog('%s','%s','%s');" % (cookie,title, text)))
-        print "Yes no dialog displayed"
+        print "Yes/no dialog displayed"
         ret = (str(self.getReturnValue(cookie)) != "0")
-        print "Return is %s" % ret
+        print "Dialog return is %s" % ret
         return ret
  
     def getHTTPAuth(self, url, domain, prefillUser = None, prefillPassword = None):
@@ -62,7 +63,7 @@ class UIBackendDelegate:
         is returned."""
         cookie = self.initializeReturnEvent()
         message = "%s requires a username and password for \"%s\"." % (url, domain)
-        message = message.replace("\\","\\\\").replace("\"","\\\"").replace("'","\\'")
+        message = quoteJS(message)
         execChromeJS("showPasswordDialog('%s','%s');" % (cookie, message))
 
         ret = self.getReturnValue(cookie)
@@ -91,27 +92,27 @@ class UIBackendDelegate:
         scraped for links instead. Returns True if the user gives
         permission, or False if not."""
         cookie = self.initializeReturnEvent()
-        url = url.replace("\\","\\\\").replace("\"","\\\"").replace("'","\\'")
+        url = quoteJS(url)
         execChromeJS(("showIsScrapeAllowedDialog('%s','%s');" % (cookie,url)))
         return (str(self.getReturnValue(cookie)) != "0")
 
     def updateAvailable(self, url):
         """Tell the user that an update is available and ask them if they'd
         like to download it now"""
-        title = "DTV Version Alert"
-        message = "A new version of DTV is available. Would you like to download it now?"
+        title = "%s Version Alert" % (config.get(config.SHORT_APP_NAME), )
+        message = "A new version of %s is available. Would you like to download it now?" % (config.get(config.LONG_APP_NAME), )
         download = self.yesNoPrompt(title, message)
         if download:
             self.openExternalURL(url)
 
-
     def dtvIsUpToDate(self):
-        execChromeJS("alert('DTV is up to date');")
+        execChromeJS("alert('%s is up to date.');" % \
+                     (quoteJS(config.get(config.LONG_APP_NAME)), ))
 
     def saveFailed(self, reason):
-        message = u"DTV was unable to save its database. Recent changes may be lost  %s" % reason
-        message.replace("\\","\\\\").replace("\"","\\\"").replace("'","\\'")
-        execChromeJS("alert('%s');" % message)
+        message = u"%s was unable to save its database. Recent changes may be lost %s" % \
+                     (config.get(config.SHORT_APP_NAME), reason)
+        execChromeJS("alert('%s');" % quoteJS(message))
 
     def validateFeedRemoval(self, feedTitle):
         summary = u'Remove Channel'
@@ -144,11 +145,8 @@ class UIBackendDelegate:
     def notifyUnkownErrorOccurence(self, when):
         summary = u'Unknown Runtime Error'
         message = u'An unknown error has occured %s.' % when
-        # NEEDS inform user
-        message.replace("\\","\\\\").replace("\"","\\\"").replace("'","\\'")
-        execChromeJS("alert('%s');" % message)
+        execChromeJS("alert('%s');" % quoteJS(message))
         return true
 
     def copyTextToClipboard(self, text):
-        text.replace("\\","\\\\").replace("\"","\\\"").replace("'","\\'")
-        execChromeJS("copyTextToClipboard('%s');" % text)
+        execChromeJS("copyTextToClipboard('%s');" % quoteJS(text))

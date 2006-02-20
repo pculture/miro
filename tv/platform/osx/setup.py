@@ -55,6 +55,9 @@ else:
 # Get the Info property list and update the CFBundleVersion with the
 # Subversion revision
 
+# NEEDS: I (Geoff) copies this into util.py. Should call that code
+# eventually instead of duplicating it here.
+
 infoPlist = plistlib.readPlist(u'Info.plist')
 
 p1 = subprocess.Popen(["svn", "info"], stdout=subprocess.PIPE) 

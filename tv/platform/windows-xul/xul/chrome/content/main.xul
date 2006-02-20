@@ -81,7 +81,7 @@
 				<menupopup id="file-popup">
 					<menuitem label="Help Contents" acceltext="F1" accesskey="H" command="showhelp"/>
 					<menuseparator/>
-					<menuitem label="About DTV" accesskey="A" command="about"/>
+					<menuitem label="&main.about;" accesskey="A" command="about"/>
 				</menupopup>
 			</menu>
 			<!-- / HELP MENU -->
@@ -92,7 +92,7 @@
 	
 	<!-- WINDOW TITLE -->
 	<titlebar flex="1" container="1">
-		<caption flex="1" label="DTV"/>
+		<caption flex="1" label="&main.title;"/>
 	</titlebar>
 	<!-- / WINDOW TITLE -->
 	
@@ -202,5 +202,10 @@
 <command id="updateall" oncommand="eventURL(getCookieFromBrowserId('channelsDisplay'),'action:updateAllFeeds');" />
 <command id="showhelp" oncommand="eventURL(getCookieFromBrowserId('channelsDisplay'),'action:showHelp');" />
 <command id="copychannellink" oncommand="eventURL(getCookieFromBrowserId('channelsDisplay'),'action:copyCurrentFeedURL');" />
+<!--
 <command id="about" oncommand="alert('DTV Windows version 0.8.0 Copyright (c) 2005, 2006 Participatry Culture Foundation');" />
+<command id="about" oncommand="window.openDialog('chrome://dtv/content/about.xul',about','chrome,dependent,centerscreen');" />
+-->
+<command id="about" oncommand="window.openDialog('chrome://dtv/content/about.xul','aboutdialog','chrome,dependent,centerscreen');" />
+
 </window>

@@ -1,5 +1,6 @@
 from downloader import grabURL
 from threading import Thread, Lock
+import config
 
 _lock = Lock()
 
@@ -16,13 +17,13 @@ def checkForUpdates(notifyIfUpToDate=False):
     
 
 def _checkForUpdates(notifyIfUpToDate):
-    info = grabURL('http://www.participatoryculture.org/DTV-version.txt')
+    info = grabURL(config.get(config.AUTOUPDATE_URL))
     if info is not None:
         try:
             data = info['file-handle'].read()
             info['file-handle'].close()
             (version, url) = data.split()
-            if version != 'beta2005-11-08':
+            if version != config.get(config.UPDATE_KEY):
                 delegate.updateAvailable(url)
             elif notifyIfUpToDate:
                 delegate.dtvIsUpToDate()

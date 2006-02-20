@@ -1,8 +1,21 @@
+import sys
+#class AutoflushingStream:
+#    def __init__(self, stream):
+#        self.stream = stream
+#    def write(self, *args):
+#        self.stream.write(*args)
+#        self.stream.flush()
+mylog = open("\\bridgelog","wt")
+#sys.stdout = sys.stderr = AutoflushingStream(mylog)
+mylog.write("hey, I ran")
+
 from xpcom import components, nsError, ServerException
 import traceback
 import sys
 import os
 import time
+
+#print "PYBRIDGE TOP"
 
 # Copied from resource.py; if you change this function here, change it
 # there too.

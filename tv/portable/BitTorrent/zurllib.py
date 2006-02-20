@@ -13,6 +13,7 @@ from urllib2 import *
 from gzip import GzipFile
 from StringIO import StringIO
 import pprint
+import config
 
 from BitTorrent import version
 
@@ -25,7 +26,13 @@ class HTTPContentEncodingHandler(HTTPHandler):
         # add the Accept-Encoding header to the request
         # support gzip encoding (identity is assumed)
         req.add_header("Accept-Encoding","gzip")
-        req.add_header('User-Agent', 'BitTorrent/' + version)
+        # GRS: Put embedding application in the User-Agent
+        req.add_header('User-Agent', 
+                       'BitTorrent/%s %s/%s (%s)' % \
+                       (version,
+                        config.get(config.SHORT_APP_NAME),
+                        config.get(config.APP_VERSION),
+                        config.get(config.PROJECT_URL)))
         if DEBUG: 
             print "Sending:" 
             print req.headers

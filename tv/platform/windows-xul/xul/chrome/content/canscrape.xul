@@ -2,25 +2,23 @@
 <?xml-stylesheet href="chrome://global/skin" type="text/css"?>
 <?xml-stylesheet href="main.css" type="text/css"?>
 
-<!DOCTYPE window SYSTEM "chrome://dtv/locale/main.dtd">
+<!DOCTYPE window SYSTEM "chrome://dtv/locale/canscrape.dtd">
 <dialog id="main"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 	xmlns:html="http://www.w3.org/1999/xhtml"
-        title="Not a DTV-style channel"
+        title="&canscrape.title;"
         ondialogaccept="window.arguments[0].out = '1';"
         onload="updateLabel()"
         buttons="accept">
     <script type="text/javascript">
 function updateLabel() {
-  var label = document.getElementById("label1");
-  label.setAttribute("value", "Please contact the publishers of " + window.arguments[0]["in"] + " and ask if they have a DTV-style channel.")
+  var label = document.getElementById("footer");
+  label.setAttribute("value", "&canscrape.prefix; " + window.arguments[0]["in"] + " &canscrape.suffix;")
 }
     </script>
     
-   <label value="But we'll try our best to grab the files." />
-   <label value="- It may take time to list the videos." />
-   <label value="- Descriptions may look funny." />
+   <label value="&canscrape.body;" />
    
-   <label id="label1" value="Please contact the publishers of ???? and ask if they have a DTV-style channel." />
+   <label id="footer" value="" />
 
 </dialog>
