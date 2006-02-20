@@ -1076,6 +1076,7 @@ class ScraperFeedImpl(FeedImpl):
         if not modified is None:
             self.linkHistory[url]['modified'] = modified
         self.semaphore = Semaphore(ScraperFeedImpl.maxThreads)
+        self.scheduleUpdateEvents(0)
         self.setUpdateFrequency(360)
 
     def getMimeType(self,link):
@@ -1179,6 +1180,8 @@ class ScraperFeedImpl(FeedImpl):
                      ['.mov','.wmv','.mp4','.mp3','.mpg','.avi']) or
                     (link[-5:].lower() in ['.mpeg'])):
                     mimetype = 'video/unknown'
+                elif link[-8:].lower() == '.torrent':
+                    mimetype = "application/x-bittorrent"
                 #elif link.find('?') > 0 and link.lower().find('.htm') == -1:
                 #    mimetype = self.getMimeType(link)
                 #    #print " mimetype is "+mimetype
@@ -1592,7 +1595,6 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler):
         elif tag.lower() == 'link':
             self.inLink = True
             self.theLink = ''
-            return
         elif tag.lower() == 'description':
             self.inDescription = True
             self.descHTML = ''
