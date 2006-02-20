@@ -13,7 +13,7 @@
         onload="onLoad();" onunload="onUnload();"
 	orient="vertical"
 	sizemode="normal"
-	width="800" height="600"
+	width="900" height="700"
 	persist="screenX screenY width height">
  <popupset><popup id="contextPopup"><menuitem label="bar"/></popup></popupset>
 <script src="chrome://dtv/content/main.js"/>
@@ -118,7 +118,7 @@
 
 	<!-- CHANNEL BAR -->
   	<browser id="channelsDisplay" src="" type="content"
-                 flex="0" width="250" minwidth="50" maxwidth="400"
+                 flex="0" width="200" minwidth="50" maxwidth="400"
                  context="contextPopup"
                  oncontextmenu="return xulcontexthandler(event);" />
 	<!-- / CHANNEL BAR -->
