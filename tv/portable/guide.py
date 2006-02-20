@@ -77,7 +77,6 @@ class ChannelGuide(DDBObject):
         self.cond = threading.Condition()
         DDBObject.__init__(self)
         # Start loading the channel guide.
-        print "Guide created. Scheduling first update."
         self.startLoadsIfNecessary()
 
     ##
@@ -163,12 +162,12 @@ class ChannelGuide(DDBObject):
             if not self.cachedGuideBody:
                 # Start a new attempt, so that clicking on the guide
                 # tab again has at least a chance of working
-                print "guide scheduling a load and returning apology"
+                print "DTV: No guide available! Sending apology instead."
                 ScheduleEvent(0, self.update, False)
                 return guideNotAvailableBody
             else:
                 if not self.loadedThisSession:
-                    print "*** WARNING *** loading a stale copy of the chanel guide from cache"
+                    print "DTV: *** WARNING *** loading a stale copy of the chanel guide from cache"
                 return self.cachedGuideBody
         finally:
             self.cond.release()
@@ -178,11 +177,10 @@ class ChannelGuide(DDBObject):
         # be loaded from a plain old template. It's less elegant than
         # making another kind of feed object, but it makes it easier
         # for non-programmers to work with
-        print "guide update running"
+        print "DTV: updating the Guide"
         url = config.get(config.CHANNEL_GUIDE_URL)
 
         info = grabURL(url)
-        print "loading %s, guide update got: %s" % (url, info)
         if info is not None:
             html = info['file-handle'].read()
             info['file-handle'].close()
