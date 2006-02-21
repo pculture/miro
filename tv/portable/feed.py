@@ -530,7 +530,7 @@ class FeedImpl:
     ##
     # Return the 'system' expiration delay, in days (can be < 1.0)
     def getDefaultExpiration(self):
-        return config.get(config.EXPIRE_AFTER_X_DAYS)
+        return float(config.get(config.EXPIRE_AFTER_X_DAYS))
 
     ##
     # Returns the 'system' expiration delay as a formatted string

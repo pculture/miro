@@ -149,7 +149,7 @@
 			<button id="add-channel" label="Add Channel" disabled="false" accesskey="A" command="addchannel"/>
 		</hbox>
 		<hbox flex="0" maxheight="20" id="bottom-left-preferences">
-			<button id="Preferences" label="Options" disabled="false" accesskey="O"/>
+			<button id="Preferences" label="Options" disabled="false" accesskey="O" command="openprefs"/>
 		</hbox>
 	</hbox>
 	<!-- / BUTTONS -->
