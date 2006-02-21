@@ -6,11 +6,11 @@ import urllib
 
 # Perform escapes needed for Javascript string contents.
 def quoteJS(x):
-    x = re.compile("\\\\").sub("\\\\", x)  #       \ -> \\
-    x = re.compile("\"").  sub("\\\"", x)  #       " -> \"
-    x = re.compile("'").   sub("\\'", x)   #       ' -> \'
-    x = re.compile("\n").  sub("\\\\n", x) # newline -> \n
-    x = re.compile("\r").  sub("\\\\r", x) #      CR -> \r
+    x = x.replace("\\", "\\\\") # \       -> \\
+    x = x.replace("\"", "\\\"") # "       -> \"  
+    x = x.replace("'",  "\\'")  # '       -> \'
+    x = x.replace("\n", "\\n")  # newline -> \n
+    x = x.replace("\r", "\\r")  # CR      -> \r
     return x
 
 # Parse a configuration file in a very simple format. Each line is

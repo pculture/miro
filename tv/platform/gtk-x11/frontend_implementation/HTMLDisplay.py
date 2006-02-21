@@ -7,19 +7,12 @@ import tempfile
 from xml.sax.saxutils import escape
 from MozillaBrowser import MozillaBrowser
 from frontend_implementation.gtk_queue import gtkMethod
+from util import quoteJS
 
 import os
 import re
 import threading
 import time
-
-def quoteJS(x):
-    x = re.compile("\\\\").sub("\\\\", x)  #       \ -> \\
-    x = re.compile("\"").  sub("\\\"", x)  #       " -> \"
-    x = re.compile("'").   sub("\\'", x)   #       ' -> \'
-    x = re.compile("\n").  sub("\\\\n", x) # newline -> \n
-    x = re.compile("\r").  sub("\\\\r", x) #      CR -> \r
-    return x
 
 # These are used by the channel guide. This platform uses the
 # old-style 'magic URL' guide API, so we just return None. See
