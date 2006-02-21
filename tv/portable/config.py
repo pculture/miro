@@ -26,7 +26,6 @@ PRESERVE_X_GB_FREE          = Pref( key='preserveXGBFree',       default=1,     
 EXPIRE_AFTER_X_DAYS         = Pref( key='expireAfterXDays',      default=6,     platformSpecific=False )
 DOWNLOADS_TARGET            = Pref( key='DownloadsTarget',       default=3,     platformSpecific=False )
 MAX_MANUAL_DOWNLOADS        = Pref( key='MaxManualDownloads',    default=10,    platformSpecific=False )
-AUTOUPDATE_URL              = Pref( key='AutoupdateURL',          default='http://www.participatoryculture.org/DTV-version.txt', platformSpecific=False )
 VOLUME_LEVEL                = Pref( key='VolumeLevel',           default=1.0,   platformSpecific=False )
 
 # These have a hardcoded default which can be overridden by setting an
@@ -42,10 +41,17 @@ if 'DTV_VIDEOBOMB_URL' in os.environ:
 else:
     effectiveVideobomb = 'http://www.videobomb.com/api/submit_or_bomb'
 
+if 'DTV_AUTOUPDATE_URL' in os.environ:
+    effectiveAutoupdate = os.environ['DTV_AUTOUPDATE_URL']
+else:
+    effectiveAutoupdate = 'http://www.participatoryculture.org/DTV-version.txt'
+
 CHANNEL_GUIDE_URL = Pref(key='ChannelGuideURL', default=effectiveChannelGuide,
                          platformSpecific=False)
 VIDEOBOMB_URL     = Pref(key='VideobombURL',    default=effectiveVideobomb,
-                         platformSpecific=False )
+                         platformSpecific=False)
+AUTOUPDATE_URL    = Pref(key='AutoupdateURL',   default=effectiveAutoupdate,
+                         platformSpecific=False)
 
 # These are computed by special platform code.
 RUN_AT_STARTUP     = Pref( key='RunAtStartup',  default=False,  platformSpecific=True )
