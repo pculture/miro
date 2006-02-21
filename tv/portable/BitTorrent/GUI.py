@@ -403,7 +403,8 @@ if os.name == 'nt':
             self.bfs.lpstrFile = filename
             self.bfs.lpstrTitle = title
 
-            self.thread = threading.Thread(target=self.run)
+            self.thread = threading.Thread(target=self.run, \
+                                           name="Bittorrent GUI")
             if show:
                 self.show()
             

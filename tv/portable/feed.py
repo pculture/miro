@@ -111,7 +111,8 @@ def normalizeFeedURL(url):
 #
 # @param url The URL of the feed
 def generateFeed(url,ufeed):
-    thread = Thread(target=lambda: _generateFeed(url,ufeed))
+    thread = Thread(target=lambda: _generateFeed(url,ufeed), \
+                    name="generateFeed -- %s" % url)
     thread.setDaemon(False)
     thread.start()
 
@@ -707,7 +708,8 @@ class Feed(DDBObject):
             self.loading = True
             self.actualFeed = FeedImpl(url,self)
             DDBObject.__init__(self)
-            thread = Thread(target=lambda: self.generateFeed(True))
+            thread = Thread(target=lambda: self.generateFeed(True), \
+                            name="Feed.__init__ generate -- %s" % url)
             thread.setDaemon(False)
             thread.start()
         else:
@@ -750,7 +752,9 @@ class Feed(DDBObject):
                 self.errorState = False
                 self.beginChange()
                 self.endChange()
-                thread = Thread(target=lambda: self.generateFeed())
+                thread = Thread(target=lambda: self.generateFeed(), \
+                                name="Feed.update generate -- %s" % \
+                                self.origURL)
                 thread.setDaemon(False)
                 thread.start()
                 return
@@ -1209,7 +1213,8 @@ class ScraperFeedImpl(FeedImpl):
                             if depth == 0:
                                 self.semaphore.acquire()
                                 #print "Acquiring semaphore"
-                                thread = Thread(target = self.makeProcessLinkFunc(subLinks,depth+1,linkNumber))
+                                thread = Thread(target = self.makeProcessLinkFunc(subLinks,depth+1,linkNumber), \
+                                                name = "scraper processLinks -- %s" % self.url)
                                 thread.setDaemon(False)
                                 thread.start()
                             else:
@@ -1488,11 +1493,15 @@ class SearchFeedImpl (RSSFeedImpl):
         url = self.getRequestURL(engine, query)
         self.reset(url, True)
         self.lastQuery = query
-        thread = Thread(target=self.update)
+        thread = Thread(target=self.update, \
+                        name = "%s search -- %s" % (engine, query))
         thread.setDaemon(False)
         thread.start()
 
     def getRequestURL(self, engine, query, filterAdultContents=True, limit=50):
+        if query == "LET'S TEST DTV'S CRASH REPORTER TODAY":
+            someVariable = intentionallyUndefinedVariableToTestCrashReporter
+
         if engine == 'yahoo':
             url =  "http://api.search.yahoo.com/VideoSearchService/rss/videoSearch.xml"
             url += "?appid=dtv_search"

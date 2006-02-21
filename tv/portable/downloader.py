@@ -564,7 +564,8 @@ class Downloader(DDBObject):
         self.reasonFailed = "No Error"
         self.headers = None
         DDBObject.__init__(self)
-        self.thread = Thread(target=self.runDownloader)
+        self.thread = Thread(target=self.runDownloader, \
+                             name="downloader -- %s" % self.shortFilename)
         self.thread.setDaemon(True)
         self.thread.start()
 
@@ -1227,7 +1228,9 @@ class BTDownloader(Downloader):
     def __setstate__(self,state):
         (version, data) = state
         self.__dict__ = data
-        self.thread = Thread(target=self.restartDL)
+        self.thread = Thread(target=self.restartDL, \
+                             name="unpickled download -- %s" %\
+                             (self.shortFilename, ))
         self.thread.setDaemon(True)
         self.thread.start()
 
@@ -1248,6 +1251,7 @@ def shutdownBTDownloader():
 
 #Spawn the download thread
 BTDownloader.dlthread = Thread(target=BTDownloader.multitorrent.rawserver.listen_forever)
+BTDownloader.dlthread.setName("bittorrent downloader")
 BTDownloader.dlthread.start()
 
 class DownloaderFactory:

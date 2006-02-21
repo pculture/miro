@@ -17,6 +17,7 @@ class Scheduler(DynamicDatabase):
         DynamicDatabase.__init__(self)
         self.isShutdown = False
         thread = Thread(target = self.executeEvents)
+        thread.setName("Scheduler")
 	thread.setDaemon(False)
 	thread.start()
 
@@ -37,7 +38,8 @@ class Scheduler(DynamicDatabase):
 			event.lastRun = now()
 			if not event.repeat:
 			    event.remove()
-			t = Thread(target = event.execute)
+			t = Thread(target = event.execute,
+                                   name = "Scheduler exec event")
 			t.setDaemon(False)
 			t.start()
 	    finally:

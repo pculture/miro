@@ -71,7 +71,7 @@ class UIBackendDelegate:
         # NEEDS inform user
         return True
 
-    def notifyUnkownErrorOccurence(self, when):
+    def notifyUnkownErrorOccurence(self, when, log = ''):
         summary = u'Unknown Runtime Error'
         message = u'An unknown error has occured %s.' % when
         # NEEDS inform user

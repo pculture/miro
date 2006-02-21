@@ -280,7 +280,8 @@ class _SingleTorrent(object):
             except:
                 backthread_exception.append(sys.exc_info())
             self._contfunc()
-        thread = threading.Thread(target = hashcheck)
+        thread = threading.Thread(target = hashcheck, \
+                                  name = "Bittorrent hashcheck")
         thread.setDaemon(False)
         self._hashcheck_thread = thread
         thread.start()

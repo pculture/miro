@@ -11,7 +11,8 @@ def setDelegate(newDelegate):
 
 def checkForUpdates(notifyIfUpToDate=False):
     if _lock.acquire(False):
-        thread = Thread(target=lambda: _checkForUpdates(notifyIfUpToDate))
+        thread = Thread(target=lambda: _checkForUpdates(notifyIfUpToDate),
+                        name="upgrade notification")
         thread.setDaemon(False)
         thread.start()
     

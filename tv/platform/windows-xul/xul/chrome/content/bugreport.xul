@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin" type="text/css"?>
+<?xml-stylesheet href="main.css" type="text/css"?>
+
+<!DOCTYPE window SYSTEM "chrome://dtv/locale/bugreport.dtd">
+<dialog id="main"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+        title="&bugreport.title;"
+        onload="updateLabel()"
+        buttons="accept">
+    <script type="text/javascript">
+
+function updateLabel() {
+  var elt = document.getElementById("label1");
+  textIn = window.arguments[0]["when"];
+  newText = "&bugreport.before;" + textIn + "&bugreport.after;";
+  textElt = document.createTextNode(newText);
+  elt.appendChild(textElt);
+
+  elt = document.getElementById("log");
+  textIn = window.arguments[0]["report"];
+  elt.setAttribute("value", textIn);
+}
+    </script>
+
+  <description id="label1" class="header" width="250" />
+
+  <description id="label2" width="250">
+    &bugreport.comeon;
+  </description>
+
+  <textbox id="log" value="" class="monospace"
+           multiline="true" readonly="true" rows="8" cols="80"/>
+
+  <description width="250">
+    &bugreport.comeon2;
+  </description>
+
+</dialog>

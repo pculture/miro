@@ -131,7 +131,8 @@ class Rerequester(object):
             s += '&compact=1'
         if event is not None:
             s += '&event=' + ['started', 'completed', 'stopped'][event]
-        Thread(target=self._rerequest, args=[s, self.peerid]).start()
+        Thread(target=self._rerequest, args=[s, self.peerid], \
+               name="Bittorrent rerequester -- %s" % self.baseurl).start()
 
     # Must destroy all references that could cause reference circles
     def cleanup(self):

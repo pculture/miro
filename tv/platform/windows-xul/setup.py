@@ -319,6 +319,8 @@ class Common:
                                        'en-US', 'main.dtd'))        
         self.fillTemplate(os.path.join(xulBase, 'chrome', 'locale',
                                        'en-US', 'about.dtd'))        
+        self.fillTemplate(os.path.join(xulBase, 'chrome', 'locale',
+                                       'en-US', 'bugreport.dtd'))        
 
 ###############################################################################
 

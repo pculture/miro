@@ -31,6 +31,7 @@ class IdleNotifier (threading.Thread):
            every X seconds.
         """
         threading.Thread.__init__(self)
+        self.setName("IdleNotifier")
         self.setDaemon(True)
         self.stopEvent = threading.Event()
         self.idling = False

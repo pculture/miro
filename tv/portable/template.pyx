@@ -88,6 +88,7 @@ import traceback
 import gettext
 import templatehelper
 from threading import Thread
+import util
 
 #Setup gettext
 gettext.install('dtv', 'resources/gettext')
@@ -151,7 +152,7 @@ def fillTemplate(file, data, domHandler, top = True, onlyBody = False):
         #prof.runcall(p.parse,(resource.path("templates/%s" % file)))
         #prof.close()
     except:
-        traceback.print_exc()        
+        util.failExn("while drawing a page")
 
     #print '-----\n%s\n-----'%tch.output
 #     if top:

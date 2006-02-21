@@ -156,7 +156,8 @@ class TorrentQueue(Feedback):
         if not HAVE_DNS:
             self.global_error(WARNING, "Version check failed: no DNS library")
             return
-        threading.Thread(target=self._version_thread).start()
+        threading.Thread(target=self._version_thread, \
+                         name="Bittorrent version check").start()
 
     def _version_thread(self):
         def error(level, text):

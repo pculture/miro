@@ -4,7 +4,6 @@ import socket
 import re
 import resource
 import xhtmltools
-import traceback
 import time
 import errno
 import os
@@ -71,7 +70,7 @@ class httpListener:
         self.socket.listen(63)
 
         # Kick off the accept loop in a new thread
-        thread = threading.Thread(target = self.acceptThread,
+        thread = threading.Thread(target = self.acceptThread, \
                                   name = "httpListener accept thread")
         thread.setDaemon(True)
         thread.start()
@@ -104,10 +103,10 @@ class httpServer:
 
         # Kick off a thread that can block waiting for a request to be
         # received
-        thread = threading.Thread(target = self.requestThread,
-                                  name = "httpServer request thread")
-        thread.setDaemon(True)
-        thread.start()
+        self.thread = threading.Thread(target = self.requestThread, \
+                                       name = "httpServer -- reading request")
+        self.thread.setDaemon(True)
+        self.thread.start()
 
     def incReqNum(self):
         ret = -1
@@ -131,12 +130,14 @@ class httpServer:
                 method = match.group(1)
                 path = match.group(2)
                 self.reqNum = self.incReqNum()
+                self.thread.setName("httpServer [%d] -- %s" % \
+                                    (self.reqNum, path))
 
                 self.handleRequest(method, path)
             except:
-                    print "Closing due to exception handling request %s (%s):" \
-                        % (self.reqNum, request)
-                    traceback.print_exc()
+                details = "Closing socket; request was [%d] %s" % \
+                    (self.reqNum, request)
+                util.failedExn("when answering a request", details = details)
         finally:
             self.socket.close()
 
@@ -494,6 +495,7 @@ class HTMLDisplay (app.Display):
     @classmethod
     def dispatchEventByCookie(klass, eventCookie, eventURL):
         thread = threading.Thread(target=lambda : klass.cookieToInstanceMap[eventCookie].onURLLoad(eventURL))
+        thread.setName("dispatchEvent -- %s" % eventURL)
         thread.setDaemon(False)
         thread.start()
 

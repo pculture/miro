@@ -1,3 +1,4 @@
+import util
 import feed
 import item
 import config       # IMPORTANT!! config MUST be imported before downloader
@@ -96,8 +97,7 @@ class PlaybackControllerBase:
                     videoDisplay.stop()
                 self.scheduleExternalPlayback(anItem)
         except:
-            traceback.print_exc()
-            Controller.instance.getBackendDelegate().notifyUnkownErrorOccurence('when trying to play a video')
+            util.failedExn('when trying to play a video')
             self.stop()
 
     def playItemInternally(self, videoDisplay, anItem):
@@ -538,8 +538,7 @@ class Controller (frontend.Application):
             # up calling endChange to force a tab to get rerendered.
 
         except:
-            print "DTV: Exception on startup:"
-            traceback.print_exc()
+            util.failedExn("while starting up")
             frontend.exit(1)
 
     def setupGlobalFeed(self, url):
@@ -618,8 +617,7 @@ class Controller (frontend.Application):
             print "DTV: Done shutting down."
 
         except:
-            print "DTV: Exception on shutdown:"
-            traceback.print_exc()
+            util.failedExn("while shutting down")
             frontend.exit(1)
 
     ### Handling config/prefs changes
@@ -801,7 +799,9 @@ class TemplateDisplay(frontend.HTMLDisplay):
         else:
             frontend.HTMLDisplay.__init__(self, html, existingView=existingView, frameHint=frameHint, areaHint=areaHint)
 
-            thread = threading.Thread(target=self.templateHandle.initialFillIn)
+            thread = threading.Thread(target=self.templateHandle.initialFillIn,\
+                                      name="Initial fillin for template %s" %\
+                                      templateName)
             thread.setDaemon(False)
             thread.start()
 
@@ -871,9 +871,8 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 return False
 
         except:
-            print "Exception in URL action handler (for URL '%s'):" % url
-            traceback.print_exc()
-            frontend.exit(1)
+            details = "Handling action URL '%s'" % (url, )
+            util.failedExn("while handling a request", details = details)
 
         return True
 
@@ -954,7 +953,7 @@ class ModelActionHandler:
 
     def updateFeed(self, feed):
         obj = db.getObjectByID(int(feed))
-        thread = threading.Thread(target=obj.update)
+        thread = threading.Thread(target=obj.update, name="updateFeed")
         thread.setDaemon(False)
         thread.start()
 
@@ -962,7 +961,7 @@ class ModelActionHandler:
         # We might want to limit the number of simultaneous threads but for
         # now, this naive and simple implementation will do the trick.
         for f in globalViewList['feeds']:
-            thread = threading.Thread(target=f.update)
+            thread = threading.Thread(target=f.update, name="updateAllFeeds")
             thread.setDaemon(False)
             thread.start()
 

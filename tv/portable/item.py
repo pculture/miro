@@ -212,7 +212,8 @@ class Item(DDBObject):
         return ret
 
     def download(self,autodl=False):
-        thread = Thread(target = lambda:self.actualDownload(autodl))
+        thread = Thread(target = lambda:self.actualDownload(autodl),
+                        name = "Item download -- %s" % (self.getURL(), ))
         thread.setDaemon(False)
         thread.start()
 

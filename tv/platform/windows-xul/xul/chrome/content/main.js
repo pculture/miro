@@ -400,6 +400,14 @@ function showPasswordDialog(cookie,text) {
   delegateReturnURL(cookie, params.out);
 }
 
+function showBugReportDialog(when, report) {
+    var params = {"when" : when, "report": report};
+    window.openDialog('chrome://dtv/content/bugreport.xul','bugreport','chrome,dependent,centerscreen,modal',params);
+
+    //  var params = {"in" : when, "out" : null};
+    //  window.openDialog('chrome://dtv/content/bugreport.xul','password','chrome,dependent,centerscreen,modal',params);
+}
+
 function clipboardCopy() {
   clip = Components.classes["@mozilla.org/webshell;1"].getService();
   clip.QueryInterface(Components.interfaces.nsIClipboardCommands);

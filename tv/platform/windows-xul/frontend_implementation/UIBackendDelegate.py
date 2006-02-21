@@ -3,10 +3,12 @@ from random import randint
 from threading import Event
 from urllib import unquote
 from util import quoteJS
+import config
 import os
+import time
 import resource
 import webbrowser
-import traceback
+import sys
 import _winreg
 
 ###############################################################################
@@ -131,7 +133,7 @@ class UIBackendDelegate:
         try:
             webbrowser.open(url)
         except error:
-            traceback.print_exc()
+            util.failedExn("while opening a URL in a new window")
 
     def updateAvailableItemsCountFeedback(self, count):
         # Inform the user in a way or another that newly available items are
@@ -145,10 +147,16 @@ class UIBackendDelegate:
         buttons = (u'Quit', u'Cancel')
         return self.yesNoPrompt(summary, message)
 
-    def notifyUnkownErrorOccurence(self, when):
-        summary = u'Unknown Runtime Error'
-        message = u'An unknown error has occured %s.' % when
-        execChromeJS("alert('%s');" % quoteJS(message))
+    def notifyUnkownErrorOccurence(self, when, log = ''):
+        log += "{{{\n"
+        log += "Log\n---\n"
+        f = open("%s/dtv-log" % os.environ['TMP'], "rt")
+        log += f.read()
+        f.close()
+        log += "}}}\n"
+
+        execChromeJS("showBugReportDialog('%s', '%s');" % \
+                     (quoteJS(when), quoteJS(log)))
         return True
 
     def copyTextToClipboard(self, text):

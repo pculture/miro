@@ -3,6 +3,10 @@ import subprocess
 import string
 import os
 import urllib
+import threading
+import traceback
+import time
+import sys
 
 # Perform escapes needed for Javascript string contents.
 def quoteJS(x):
@@ -86,3 +90,65 @@ def absolutePathToFileURL(path):
         # consumers will let us get by with that.
         parts = parts[1:]
     return "file:///" + '/'.join(parts)
+
+
+# Shortcut for 'failed' with the exception flag.
+def failedExn(when, **kwargs):
+    failed(when, withExn = True, **kwargs)
+
+# Puts up a dialog with debugging information encouraging the user to
+# file a ticket. (Also print a call trace to stderr or whatever, which
+# hopefully will end up on the console or in a log.) 'when' should be
+# something like "when trying to play a video." The user will see
+# it. If 'withExn' is true, last-exception information will be printed
+# to. If 'detail' is true, it will be included in the report and the
+# the console/log, but not presented in the dialog box.
+def failed(when, withExn = False, details = None):
+    log = ""
+    log += "{{{\n"
+    try:
+        import config # probably works at runtime only
+        log += "App:        %s\n" % config.get(config.LONG_APP_NAME)
+        log += "Publisher:  %s\n" % config.get(config.PUBLISHER)
+        log += "Version:    %s\n" % config.get(config.APP_VERSION)
+        log += "Revision:   %s\n" % config.get(config.APP_REVISION)
+        log += "Update key: %s\n" % config.get(config.UPDATE_KEY)
+    except:
+        pass
+    log += "Time:       %s\n" % time.asctime()
+    log += "When:       %s\n" % when
+    log += "\n"
+
+    if withExn:
+        print "DTV: Failed %s; exception follows." % (when, )
+        if details:
+            print "DTV: Details: %s" % (details, )
+        traceback.print_exc()
+        log += "Exception\n---------\n"
+        log += traceback.format_exc()
+        log += "\n"
+    else:
+        print "DTV: Failed %s; call stack follows." % (when, )
+        if details:
+            print "DTV: Details: %s" % (details, )
+        traceback.print_stack()
+        log += "Call stack\n----------\n"
+        log += ''.join(traceback.format_stack())
+        log += "\n"
+        
+    log += "Threads\n-------\n"
+    log += "Current: %s\n" % threading.currentThread().getName()
+    log += "Active:\n"
+    for t in threading.enumerate():
+        log += " - %s%s\n" % \
+            (t.getName(),
+             t.isDaemon() and ' [Daemon]' or '')
+    log += "}}}"
+    log += "\n"
+
+    try:
+        import app
+        app.Controller.instance.getBackendDelegate(). \
+            notifyUnkownErrorOccurence(when, log = log)
+    except:
+        pass
