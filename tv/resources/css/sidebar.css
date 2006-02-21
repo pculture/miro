@@ -29,6 +29,7 @@
 	padding-bottom: 0px;
 	background-color: #e6edf7;
 	border-top: 2px solid #b6bfce;
+	border-bottom: 2px solid #e6edf7;
 }
 
 .sidebar-download-inner-selected {
@@ -54,6 +55,7 @@
 }
 
 #sidebar-download-fade {
+	display: none;
 	position: fixed;
 	bottom: 30px;
 	width: 100%;
