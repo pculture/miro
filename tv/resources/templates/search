@@ -31,7 +31,7 @@
         		<h1 i18n:translate="">Video Search</h1>
         	</div>
         	<div id="main-titlebar-tasks" style="width:100%; text-align:center;">
-                <form name="search">
+                <form name="search" onsubmit="return false;">
                     <select name="engines" onChange="updateLastSearchEngine()">
                         <option t:hideIfNotKey="feed lastEngine" t:hideFunctionKey="global filter equal" t:hideParameter="yahoo" value="yahoo" selected="selected">Yahoo!</option>
                         <option t:hideIfKey="feed lastEngine" t:hideFunctionKey="global filter equal" t:hideParameter="yahoo" value="yahoo">Yahoo!</option>

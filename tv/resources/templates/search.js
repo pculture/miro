@@ -51,5 +51,5 @@ function validateSearch(e)
         performSearch(engine, query)
     }
 
-    return true;
+    return false;
 }
