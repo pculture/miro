@@ -40,7 +40,7 @@
 					<menuitem label="Copy" acceltext="Ctrl+C" accesskey="C" command="copy"/>
 					<menuitem label="Paste" acceltext="Ctrl+V" accesskey="P" command="paste"/>
                                         <menuseparator/>
-					<menuitem label="Preferences" disabled="true"/>
+					<menuitem label="Preferences" command="openprefs"/>
 				</menupopup>
 			</menu>
 			<!-- / EDIT MENU -->
@@ -207,5 +207,6 @@
 <command id="about" oncommand="window.openDialog('chrome://dtv/content/about.xul',about','chrome,dependent,centerscreen');" />
 -->
 <command id="about" oncommand="window.openDialog('chrome://dtv/content/about.xul','aboutdialog','chrome,dependent,centerscreen');" />
+<command id="openprefs" oncommand="window.openDialog('chrome://dtv/content/prefs.xul','prefs','chrome,dependent,centerscreen',getCookieFromBrowserId('channelsDisplay'));" />
 
 </window>

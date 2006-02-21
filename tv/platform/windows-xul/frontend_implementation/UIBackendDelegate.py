@@ -3,8 +3,11 @@ from random import randint
 from threading import Event
 from urllib import unquote
 from util import quoteJS
+import os
+import resource
 import webbrowser
 import traceback
+import _winreg
 
 ###############################################################################
 #### 'Delegate' objects for asynchronously asking the user questions       ####
@@ -150,3 +153,15 @@ class UIBackendDelegate:
 
     def copyTextToClipboard(self, text):
         execChromeJS("copyTextToClipboard('%s');" % quoteJS(text))
+
+    # This is windows specific right now. We don't need it on other platforms
+    def setRunAtStartup(self, value):
+        if (value):
+            filename = os.path.join(resource.resourceRoot(),"..","Democracy.exe")
+            filename = os.path.normpath(filename)
+            print "Filename is %s" % filename
+            folder = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,"Software\Microsoft\Windows\CurrentVersion\Run",0, _winreg.KEY_SET_VALUE)
+            _winreg.SetValueEx(folder, "Democracy Player", 0,_winreg.REG_SZ, filename)
+        else:
+            folder = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,"Software\Microsoft\Windows\CurrentVersion\Run",0, _winreg.KEY_SET_VALUE)
+            _winreg.DeleteValue(folder, "Democracy Player")

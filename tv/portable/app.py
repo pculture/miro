@@ -627,7 +627,12 @@ class Controller (frontend.Application):
     def configDidChange(self, key, value):
         if key is config.LIMIT_UPSTREAM.key:
             if value is False:
-                self.idlingNotifier.join()
+                # The Windows version can get here without creating an
+                # idlingNotifier
+                try:
+                    self.idlingNotifier.join()
+                except:
+                    pass
                 self.idlingNotifier = None
             elif self.idlingNotifier is None:
                 self.idlingNotifier = idlenotifier.IdleNotifier(self)
@@ -985,6 +990,34 @@ class ModelActionHandler:
     def keepItem(self, item):
         obj = db.getObjectByID(int(item))
         obj.setKeep(True)
+
+    def setRunAtStartup(self, value):
+        value = (value == "1")
+        self.backEndDelegate.setRunAtStartup(value)
+
+    def setCheckEvery(self, value):
+        value = int(value)
+        config.set(config.CHECK_CHANNELS_EVERY_X_MN,value)
+
+    def setLimitUpstream(self, value):
+        value = (value == "1")
+        config.set(config.LIMIT_UPSTREAM,value)
+
+    def setMaxUpstream(self, value):
+        value = int(value)
+        config.set(config.UPSTREAM_LIMIT_IN_KBS,value)
+
+    def setPreserveDiskSpace(self, value):
+        value = (value == "1")
+        config.set(config.PRESERVE_DISK_SPACE,value)
+
+    def setMinDiskSpace(self, value):
+        value = int(value)
+        config.set(config.PRESERVE_X_GB_FREE,value)
+
+    def setDefaultExpiration(self, value):
+        value = int(value)
+        config.set(config.EXPIRE_AFTER_X_DAYS,value)
 
     def videoBombExternally(self, item):
         obj = db.getObjectByID(int(item))

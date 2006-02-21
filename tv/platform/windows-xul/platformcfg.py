@@ -1,6 +1,7 @@
 import os
 import util
 import config
+import _winreg
 
 # NEEDS: the correct way to do these is to call SHGetFolderPath and
 # ship the appropriate dll, not to hardcode paths. But that isn't
@@ -50,5 +51,20 @@ def get(descriptor):
     elif descriptor == config.DB_PATHNAME:
         path = get(config.SUPPORT_DIRECTORY)
         return os.path.join(path, 'tvdump')
-    
+    elif descriptor == config.RUN_AT_STARTUP:
+        # We use the legacy startup registry key, so legacy versions
+        # of Windows have a chance
+        # http://support.microsoft.com/?kbid=270035
+
+        folder = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,"Software\Microsoft\Windows\CurrentVersion\Run")
+        count = 0
+        while True:
+            try:
+                (name, val, type) = _winreg.EnumValue(folder,count)
+                count += 1
+                if (name == "Democracy Player"):
+                    return True                    
+            except:
+                return False
+        return False
     return None

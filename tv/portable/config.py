@@ -48,6 +48,7 @@ VIDEOBOMB_URL     = Pref(key='VideobombURL',    default=effectiveVideobomb,
                          platformSpecific=False )
 
 # These are computed by special platform code.
+RUN_AT_STARTUP     = Pref( key='RunAtStartup',  default=False,  platformSpecific=True )
 MOVIES_DIRECTORY = \
     Pref(key='MoviesDirectory',  default=None, platformSpecific=True)
 SUPPORT_DIRECTORY = \

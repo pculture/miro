@@ -459,7 +459,7 @@ class FeedImpl:
         if self.expire == "feed":
             expireTime = self.expireTime
         elif self.expire == "system":
-            expireTime = timedelta(days=config.get(config.EXPIRE_AFTER_X_DAYS))
+            expireTime = timedelta(days=int(config.get(config.EXPIRE_AFTER_X_DAYS)))
         elif self.expire == "never":
             return
         for item in self.items:

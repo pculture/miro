@@ -8,6 +8,7 @@ import traceback
 import time
 import errno
 import os
+import config
 from util import quoteJS
 
 def execChromeJS(js):
@@ -86,6 +87,8 @@ class httpServer:
     classLock = threading.RLock()
     chromeJavascriptStream = None
     chromeJavascriptQueue = []
+    prefJavascriptStream = None
+    prefJavascriptQueue = []
     reqNum = 0
 
     def __init__(self, socket):
@@ -169,6 +172,49 @@ class httpServer:
                     self.queueChunk("text/plain", a)
                 httpServer.chromeJavascriptQueue = []
                 httpServer.chromeJavascriptStream = self
+            finally:
+                httpServer.classLock.release()
+
+            self.runChunkPump()
+            return
+
+        ## Chrome-context Preferences Javascript stream ##
+        match = re.match("^/dtv/prefjs", path)
+        if match:
+            print "[%s] PREFJS" % (self.reqNum)
+
+            httpServer.classLock.acquire()
+            try:
+                assert not httpServer.prefJavascriptStream, \
+                    "There can't be two prefjs's (%d)" % self.reqNum
+
+                self.beginSendingChunks()
+                if (config.get(config.RUN_AT_STARTUP)):
+                    self.queueChunk("text/plain", "setRunAtStartup(true);")
+                else:
+                    self.queueChunk("text/plain", "setRunAtStartup(false);")
+                checkEvery = config.get(config.CHECK_CHANNELS_EVERY_X_MN)
+                self.queueChunk("text/plain", "setCheckEvery('%s');" % checkEvery)
+                speed = config.get(config.UPSTREAM_LIMIT_IN_KBS)
+                self.queueChunk("text/plain", "setMaxUpstream(%s);" % speed)
+
+                if (config.get(config.LIMIT_UPSTREAM)):
+                    self.queueChunk("text/plain", "setLimitUpstream(true);")
+                else:
+                    self.queueChunk("text/plain", "setLimitUpstream(false);")
+
+                min = config.get(config.PRESERVE_X_GB_FREE)
+                self.queueChunk("text/plain", "setMinDiskSpace(%s);" % min)
+                if (config.get(config.PRESERVE_DISK_SPACE)):
+                    self.queueChunk("text/plain", "setHasMinDiskSpace(true);")
+                else:
+                    self.queueChunk("text/plain", "setHasMinDiskSpace(false);")
+
+                expire = config.get(config.EXPIRE_AFTER_X_DAYS)
+                self.queueChunk("text/plain", "setExpire('%s');" % expire)
+
+                httpServer.prefJavascriptQueue = []
+                httpServer.prefJavascriptStream = self
             finally:
                 httpServer.classLock.release()
 
