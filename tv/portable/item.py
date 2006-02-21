@@ -878,8 +878,11 @@ class DropItLikeItsHot:
     def __slurp(self, *args, **kwargs):
         pass
     def __getattr__(self, attr):
-        print "DTV: WARNING! Attempt to call '%s' on DropItLikeItsHot instance" % attr
-        return self.__slurp
+        if attr == '__DropMeLikeItsHot':
+            return self.__DropMeLikeItsHot
+        else:
+            print "DTV: WARNING! Attempt to call '%s' on DropItLikeItsHot instance" % attr
+            return self.__slurp
 
 ##
 # An Item that exists as a file, but not as a download
