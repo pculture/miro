@@ -519,8 +519,8 @@ class Controller (frontend.Application):
 
             scheduler.ScheduleEvent(300,db.save)
 
-            scheduler.ScheduleEvent(10,autoupdate.checkForUpdates)
-            scheduler.ScheduleEvent(86400,autoupdate.checkForUpdates)
+            scheduler.ScheduleEvent(10, autoupdate.checkForUpdates, False)
+            scheduler.ScheduleEvent(86400, autoupdate.checkForUpdates)
 
             # Set up tab list (on left); this will automatically set up the
             # display area (on right) and currentSelectedTab
