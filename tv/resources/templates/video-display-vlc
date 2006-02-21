@@ -9,9 +9,15 @@
 </head>
 <t:include filename="dynamic.js" />
 <script type="text/javascript">
+
+function getServerPort() {
+  var port = document.location.port;
+  return port;
+}
 // Returns a "blessed" version of an event URL for use with DTV
-function blessEventURL(cookie, url) {
-  return "/dtv/action/" + getEventCookie() + "?" + url;
+function blessEventURL(url) {
+  var blessedURL = "http://127.0.0.1:" + getServerPort() + "/dtv/action/" + getEventCookie() + "?" + url;
+  return blessedURL;
 }
 function videoSetVolume(level) {
   dump("Setting volume to "+level);
