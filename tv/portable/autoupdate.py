@@ -24,6 +24,8 @@ def _checkForUpdates(notifyIfUpToDate):
             info['file-handle'].close()
             (version, url) = data.split()
             if version != config.get(config.UPDATE_KEY):
+                print "DTV: new update '%s' available (have '%s')" % \
+                    (config.get(config.UPDATE_KEY), version)
                 delegate.updateAvailable(url)
             elif notifyIfUpToDate:
                 delegate.dtvIsUpToDate()
