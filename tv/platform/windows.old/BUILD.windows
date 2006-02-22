@@ -1,3 +1,12 @@
+*******************************************************************************
+*******************************************************************************
+
+THIS PORT IS INCOMPLETE AND OBSOLETE. IT HAS BEEN ABANDONED IN FAVOR
+OF THE 'WINDOWS-XUL' PORT. PROCEED AT YOUR OWN RISK.
+
+*******************************************************************************
+*******************************************************************************
+
 Just some notes for now: not tested on a virgin machine, not
 necessarily complete, and not tested with compilers other than Visual
 C++. You are largely on your own. If you encounter any problems, check

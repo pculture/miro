@@ -1,0 +1,8 @@
+'platform/<platform name>' -- platform-specific code. This is searched
+first when importing Python modules.
+
+'portable' -- the portable backend that is common across all platforms.
+
+'resources' -- cross-platform resource files distributed with the
+application. Includes GUI assets that are (or could be) shared across
+platforms, but not those that are specific to a particular widget set.

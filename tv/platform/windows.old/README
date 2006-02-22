@@ -1,3 +1,12 @@
+*******************************************************************************
+*******************************************************************************
+
+THIS PORT IS INCOMPLETE AND OBSOLETE. IT HAS BEEN ABANDONED IN FAVOR
+OF THE 'WINDOWS-XUL' PORT. PROCEED AT YOUR OWN RISK.
+
+*******************************************************************************
+*******************************************************************************
+
 There is a bug in Distutils and Pyrex in Python 2.4. You will need to
 make the following change to the build_ext.py in Pyrex (on my system,
 it was in c:\Python24\Lib\site-packages\Pyrex\Distutils

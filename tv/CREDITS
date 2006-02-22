@@ -1,35 +1,56 @@
-Main developers
---------------- 
-(funded by the Participatory Culture Foundation www.participatoryculture.org)
+Funded software developers (chronological order)
+------------------------------------------------
 
-  * Nick Nassar, nassar at downhillbattle dot org, Worcester, Massachusetts, USA
-      Design, database implementation, Bittorrent and RSS feed reader
-      integration, optimization (Pyrex, fasttypes)
+  * Nick Nassar (nassar at downhillbattle dot org)
+    Worcester, Massachusetts, USA
 
-  * Geoff Schmidt, gschmidt at gschmidt dot org, Cambridge, Massachusetts, USA
-      Design, template system and controller implementation, OS X frontend
-      prototype, Windows frontend (work in progress)
+  * Geoff Schmidt (gschmidt at gschmidt dot org)
+    Cambridge, Massachusetts, USA
 
-  * Luc Heinrich, luc at honk-honk dot dom, Paris, France
-      OS X frontend, including Quicktime integration
+  * Luc Heinrich (luc at honk-honk dot com)
+    Paris, France
 
-[NEEDS: other developers]
+  * Ben Dean-Kawamura (ben.dean.kawamura at gmail.com)
+    Worcester, Massachusetts, USA
 
-[NEEDS: template credits]      
+Funded user interface designers (chronological order)
+-----------------------------------------------------
+
+  * Nick Reville (npr at pculture dot org)
+    Worcester, Massachusetts, USA
+
+  * Matt Bret (mb at pculture dot org)
+    Whitby, Ontario, Canada
+
+Funding
+-------
+
+This software is one part of Democracy, an Internet TV
+platform. Funding for Democracy development is funded by the
+Participatory Culture Foundation, a 501(c)(3)-pending nonprofit
+organization based in Worcester, Massachusetts, USA.
+
+PCF, in turn, is funded by generous grants from Andrew and Deborah
+Rappaport, Mitch Kapor, and viewers like you.
 
 Special thanks
 --------------
 
-Holmes Wilson, Tiffiniy Cheng, and Nick Reville of the Participatory
-Culture Foundation in Worcester, who had the idea and made it
-happen. They find us funding, magic up user interface templates,
-wrangle the website and the press, manage companion projects like
-Broadcast Machine, make our hosting and infrastructure arrangements,
-test release builds, set up partnerships with other organizations that
-want to host feeds, and help us in other ways too numerous to mention,
-all so we can focus on writing open-source software.
-
-[NEEDS: funders]      
-
-Buzz at oska dot com, for figuring out how to build Windows DTV with
-the free Microsoft compiler release.
+Holmes Wilson
+Tiffiny Cheng
+Colin Mitchell
+David Moore
+Buzz
+Morgan Knutson
+Padgett Arango
+Webneo (Design Contest winner!)
+Dean Jansen
+Michael Bell-smith
+Samuel Felder
+Andy Ross
+Matt Griffin
+Adam Conover
+Tom Woodhams (icon design)
+Neil Cook
+Dan Funderburg (T-shirts)
+Tekriti Software (channel guide)

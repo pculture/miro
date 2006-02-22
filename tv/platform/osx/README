@@ -7,7 +7,8 @@ overwritten with a non-distribution-safe bundle tree that contains
 symlinks that point outside the bundle.
 
 You'll need Pyrex, PyObjC and Boost to compile DTV. We use these for
-linking to C, Objective C, and C++ code.
+linking to C, Objective C, and C++ code. And you'll need Python 2.4 or
+later.
 
 At least as of 1.3.7, the prebuilt PyObjC binaries do not have proper
 Quicktime support, so you'll have to build from source. Download and untar:
@@ -33,6 +34,11 @@ to:
 before you can start building. I already sent an email to Greg about
 it, so hopefully, it'll get fixed in the next release.
 
+Finally, you'll need the Boost C++ library. The easiest option is to
+install it using Darwinports or Fink. Otherwise, you'll have to build
+it from source, as follows:
+
+---
 You can download Boost here:
 http://sourceforge.net/project/showfiles.php?group_id=7586&package_id=8041
 http://prdownloads.sourceforge.net/boost/boost_1_33_0.tar.gz?download
@@ -54,6 +60,4 @@ PYTHON_VERSION=2.4 bjam -sTOOLS=darwin --with-python-root=/Library/Frameworks/Py
 It appears that the build script doesn't build the unit tests
 correctly on OS X, and it reports that 10 target failed to build. This
 doesn't seem to be an issue.
-
-The setup script has also been updated to work with Boost distributions
-installed using package managers like Darwinports or Fink.
+---

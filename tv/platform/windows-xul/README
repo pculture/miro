@@ -1,15 +1,9 @@
-There is a bug in Distutils and Pyrex in Python 2.4. You will need to
-make the following change to the build_ext.py in Pyrex (on my system,
-it was in c:\Python24\Lib\site-packages\Pyrex\Distutils
+This is the currently supported frontend on Windows. It is based on
+Mozilla's portable XULRunner application framework, and would be
+portable to other platforms with a little work, mostly to the build
+system and to platformcfg.py.
 
----cut-------------------------------------------------------------------------
---- build_ext.py        Fri Apr 30 08:00:46 2004
-+++ new-build_ext.py    Wed Dec 29 03:11:19 2004
-@@ -32,7 +32,7 @@
-        if self.compiler == 'mingw32':
-          self.swig_cpp = 1
+The build documentation for this platform is maintained in the
+Developer Wiki:
 
--  def swig_sources (self, sources):
-+  def swig_sources (self, sources, extension=None):
-      if not self.extensions:
----cut-------------------------------------------------------------------------
+https://develop.participatoryculture.org/projects/dtv/wiki/WindowsBuildDocs

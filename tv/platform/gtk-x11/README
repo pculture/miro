@@ -8,7 +8,10 @@ DTV requires Python 2.4.  You'll need python-pyrex and
 libboost-python-dev to compile DTV. We use these for linking to C and
 C++ code.  For the GTK port you'll also need python-gtk2-dev,
 python-gnome2-extras-dev, mozilla-dev, and whatever packages those
-depend on.
+depend on. For full build and dependency documentation, see:
+
+https://develop.participatoryculture.org/projects/dtv/wiki/GTKX11BuildDocs
+(This is considered the authoritative source.)
 
 I'm using Debian unstable with a few packages from experimental. I
 tried to avoid distribution specific paths, but I may have left some
