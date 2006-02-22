@@ -30,16 +30,43 @@ def _getSupportDirectory():
 def _getConfigFile():
     return os.path.join(_getSupportDirectory(), "preferences")
 
+#
+# Our config file uses strings to store everything that causes typing
+# problems.
+#
+# Convert those strings to int or float if appropriate
+def _fixConfigType(data):
+    try:
+        return int(data)
+    except:
+        try:
+            return float(data)
+        except:
+            # FIXME What if we need to return the string "False" or "True"?
+            if (data == "False"):
+                return False
+            elif (data == "True"):
+                return True
+            return data
+
+#
+# Add types to the data types in the dictionary
+def _fixTypes(dict):
+    for key in dict.keys():
+        dict[key] = _fixConfigType(dict[key])
+    return dict
+
 def load():
     file = _getConfigFile()
     if os.access(file, os.F_OK):
-        return util.readSimpleConfigFile(_getConfigFile())
+        return _fixTypes(util.readSimpleConfigFile(file))
     else:
         # First time running program
         return {}
 
 def save(data):
-    util.writeSimpleConfigFile(_getConfigFile(), data)
+    file = _getConfigFile()
+    util.writeSimpleConfigFile(file, data)
 
 def get(descriptor):
     if descriptor == config.MOVIES_DIRECTORY:

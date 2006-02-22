@@ -36,10 +36,10 @@ function setRunAtStartup(value) {
     document.getElementById("runonstartup").checked = value;
 }
 function runOnStartupChange() {
-//   if (document.getElementById("runonstartup").checked)
-//       eventURL(window.arguments[0],'action:setRunAtStartup?value=1');
-//   else
-//       eventURL(window.arguments[0],'action:setRunAtStartup?value=0');
+  if (document.getElementById("runonstartup").checked)
+      eventURL(window.arguments[0],'action:setRunAtStartup?value=1');
+  else
+      eventURL(window.arguments[0],'action:setRunAtStartup?value=0');
 }
 function setCheckEvery(minutes) {
   var check = document.getElementById("checkevery");
@@ -52,7 +52,7 @@ function setCheckEvery(minutes) {
           check.value = "never";
 }
 function checkEveryChange(minutes) {
-  //  eventURL(window.arguments[0],'action:setCheckEvery?value=' + minutes.toString());
+   eventURL(window.arguments[0],'action:setCheckEvery?value=' + minutes.toString());
 }
 function setMaxUpstream(max) {
     document.getElementById("maxupstream").value = max;
@@ -71,10 +71,10 @@ function limitUpstreamChange() {
   textbox.disabled = !ret;
   if (ret) {
     textbox.value = "16";
-    //    eventURL(window.arguments[0],'action:setLimitUpstream?value=1');
+    eventURL(window.arguments[0],'action:setLimitUpstream?value=1');
   } else {
     textbox.value = "";
-    //    eventURL(window.arguments[0],'action:setLimitUpstream?value=0');
+    eventURL(window.arguments[0],'action:setLimitUpstream?value=0');
   }
 }
 function maxUpstreamChange() {
@@ -87,7 +87,7 @@ function maxUpstreamChange() {
     textbox.value=value;
   }
   jsdump("Setting max upstream to "+value);
-  //  eventURL(window.arguments[0],'action:setMaxUpstream?value=' + value.toString());
+  eventURL(window.arguments[0],'action:setMaxUpstream?value=' + value.toString());
 }
 function setMinDiskSpace(min) {
     document.getElementById("minspace").value = min;
@@ -106,10 +106,10 @@ function hasMinSpaceChange() {
   textbox.disabled = !ret;
   if (ret) {
     textbox.value = "1";
-    //    eventURL(window.arguments[0],'action:setPreserveDiskSpace?value=1');
+    eventURL(window.arguments[0],'action:setPreserveDiskSpace?value=1');
   } else {
     textbox.value = "";
-    //    eventURL(window.arguments[0],'action:setPreserveDiskSpace?value=0');
+    eventURL(window.arguments[0],'action:setPreserveDiskSpace?value=0');
   }
 }
 function minSpaceChange() {
@@ -121,7 +121,7 @@ function minSpaceChange() {
   } else {
     textbox.value=value;
   }
-  //  eventURL(window.arguments[0],'action:setMinDiskSpace?value=' + value.toString());
+  eventURL(window.arguments[0],'action:setMinDiskSpace?value=' + value.toString());
 }
 function setExpire(days) {
   var check = document.getElementById("expiration");
@@ -144,5 +144,5 @@ function setExpire(days) {
           check.value = "never";
 }
 function expirationChange(days) {
-    //  eventURL(window.arguments[0],'action:setDefaultExpiration?value=' + days.toString());
+    eventURL(window.arguments[0],'action:setDefaultExpiration?value=' + days.toString());
 }
