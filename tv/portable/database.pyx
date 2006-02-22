@@ -809,6 +809,9 @@ class DynamicDatabase:
                 copyfile(filename,filename+".bak")
             copyfile(filename+".temp",filename)
         except:
+            print "=" * 80
+            traceback.print_exc()
+            print "=" * 80
             delegate.saveFailed(sys.exc_info()[0])
 
     ##
