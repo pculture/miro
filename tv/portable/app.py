@@ -1237,27 +1237,30 @@ class TemplateActionHandler:
         self.controller.playbackController.skip(1)
     
     def updateLastSearchEngine(self, engine):
-        searchFeed = self.controller.getGlobalFeed('dtv:search')
-        assert searchFeed is not None
+        searchFeed, searchDownloadsFeed = self.__getSearchFeeds()
         searchFeed.lastEngine = engine
     
     def updateLastSearchQuery(self, query):
-        searchFeed = self.controller.getGlobalFeed('dtv:search')
-        assert searchFeed is not None
+        searchFeed, searchDownloadsFeed = self.__getSearchFeeds()
         searchFeed.lastQuery = query
         
     def performSearch(self, engine, query):
-        searchFeed = self.controller.getGlobalFeed('dtv:search')
-        assert searchFeed is not None
+        searchFeed, searchDownloadsFeed = self.__getSearchFeeds()
+        searchFeed.preserveDownloads(searchDownloadsFeed)
         searchFeed.lookup(engine, query)
 
     def resetSearch(self):
+        searchFeed, searchDownloadsFeed = self.__getSearchFeeds()
+        searchFeed.preserveDownloads(searchDownloadsFeed)
+        searchFeed.reset()
+        
+    def __getSearchFeeds(self):
         searchFeed = self.controller.getGlobalFeed('dtv:search')
         assert searchFeed is not None
         searchDownloadsFeed = Controller.instance.getGlobalFeed('dtv:searchDownloads')
         assert searchDownloadsFeed is not None
-        searchFeed.preserveDownloads(searchDownloadsFeed)
-        searchFeed.reset()
+        return (searchFeed, searchDownloadsFeed)
+        
         
     # The Windows XUL port can send a setVolume at any time, even when
     # there's no video display around. We can just ignore it
