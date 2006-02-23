@@ -53,19 +53,11 @@ if boostLib is None or boostIncludeDir is None:
 else:
     print 'Boost library found (%s)' % boostLib
 
-# Get the Info property list and update the CFBundleVersion with the
-# Subversion revision
-
-infoPlist = plistlib.readPlist(u'Info.plist')
 
 import util
 revision = util.queryRevision(root)
-if revision is not None:
-    revision = u'r%d' % revision
-    print "Building revision %s" % revision
-    infoPlist[u'CFBundleVersion'] = revision
-else:
-    revision = "unknown"
+if revision is None:
+    revision = 'unknown'
 
 # Inject the revision number into app.config.template to get app.config.
 # NEEDS: Very sloppy. The new file is just dropped in the source tree
@@ -76,6 +68,23 @@ s = string.Template(s).safe_substitute(APP_REVISION = revision)
 f = open(appConfigPath, "wt")
 f.write(s)
 f.close()
+
+# Update the Info property list.
+
+def updatePListEntry(plist, key, conf):
+    entry = plist[key]
+    plist[key] = string.Template(entry).safe_substitute(conf)
+
+conf = util.readSimpleConfigFile(appConfigPath)
+infoPlist = plistlib.readPlist(u'Info.plist')
+
+updatePListEntry(infoPlist, u'CFBundleGetInfoString', conf)
+updatePListEntry(infoPlist, u'CFBundleName', conf)
+updatePListEntry(infoPlist, u'CFBundleShortVersionString', conf)
+updatePListEntry(infoPlist, u'CFBundleVersion', conf)
+updatePListEntry(infoPlist, u'NSHumanReadableCopyright', conf)
+
+print "Building Democracy Player v%s (r%s)" % (conf['appVersion'], conf['appRevision'])
 
 # Get a list of additional resource files to include
 

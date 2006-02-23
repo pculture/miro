@@ -30,13 +30,13 @@
 		</dict>
 	</array>
 	<key>CFBundleGetInfoString</key>
-	<string>0.7, Copyright 2006 Participatory Culture Foundation</string>
+	<string>$appVersion, $copyright $publisher</string>
 	<key>CFBundleIdentifier</key>
 	<string>org.participatoryculture.DTV</string>
 	<key>CFBundleName</key>
-	<string>Democracy</string>
+	<string>$shortAppName</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.7</string>
+	<string>$appVersion</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -49,10 +49,10 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>0</string>
+	<string>r$appRevision</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.3.9</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright 2006 Participatory Culture Foundation.   See license.</string>
+	<string>$copyright $publisher.   See license.</string>
 </dict>
 </plist>

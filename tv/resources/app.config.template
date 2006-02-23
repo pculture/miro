@@ -2,6 +2,7 @@ shortAppName = Democracy
 longAppName = Democracy Player
 projectURL = http://www.participatoryculture.org
 publisher = Participatory Culture Foundation
+copyright = Copyright 2006
 appVersion = 0.8.0
 appRevision = $APP_REVISION
 updateKey = 0.8.0-0
