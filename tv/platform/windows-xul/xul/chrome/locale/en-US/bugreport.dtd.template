@@ -5,4 +5,4 @@
 <!ENTITY bugreport.before    "Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness ">
 <!ENTITY bugreport.after     ". We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions.">
 <!ENTITY bugreport.comeon    "Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:">
-<!ENTITY bugreport.comeon2   "Our bug-tracker's at https://develop.participatoryculture.org/project/dtv/newticket. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.">
+<!ENTITY bugreport.comeon2   "Our bug-tracker's at https://develop.participatoryculture.org/projects/dtv/newticket. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.">
