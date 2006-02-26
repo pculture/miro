@@ -285,9 +285,37 @@ splitter {
   width: 12px;
   height: 12px;
   top: 26px;
-  left: 98px; /* The slider can move between 15px and 105px */
+  left: 98px; /* The slider can move between 15px and 98px */
   margin: 0px;
   padding: 0px;
   background: url(images/bottom-volume-slider.png) no-repeat;
   z-index: 100;
+}
+
+#progress-text {
+  font: 12px "Courier New" Courier;
+  position: absolute;
+  color: black;
+  left: 15px;
+  top: 5px;
+  width: 100px;
+  height: 20px;
+}
+
+#progress-slider {
+  position: absolute;
+  width: 5px;
+  height: 7px;
+  top: 10px;
+  left: 61px;  /* The slider can move between 61 and 204px */
+  margin: 0px;
+  padding: 0px;
+  background: url(images/progress-slider.png) no-repeat;
+  z-index: 100;
+}
+
+#progress {
+  width: 219px;
+  height: 26px;
+	background: url(images/progress.png) no-repeat;
 }
