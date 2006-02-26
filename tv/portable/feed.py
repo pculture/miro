@@ -461,6 +461,8 @@ class FeedImpl:
             expireTime = self.expireTime
         elif self.expire == "system":
             expireTime = timedelta(days=config.get(config.EXPIRE_AFTER_X_DAYS))
+            if expireTime <= timedelta(0):
+                return
         elif self.expire == "never":
             return
         for item in self.items:
@@ -538,7 +540,9 @@ class FeedImpl:
     def getFormattedDefaultExpiration(self):
         expiration = self.getDefaultExpiration()
         formattedExpiration = ''
-        if expiration < 1.0:
+        if expiration < 0:
+            formattedExpiration = 'never'
+        elif expiration < 1.0:
             formattedExpiration = '%d hours' % int(expiration * 24.0)
         elif expiration == 1:
             formattedExpiration = '%d day' % int(expiration)
@@ -586,7 +590,10 @@ class FeedImpl:
         self.ufeed.beginRead()
         try:
             try:
-                delta = self.expireTime
+                if self.expire == 'never' or (self.expire == 'system' and config.get(config.EXPIRE_AFTER_X_DAYS) <= 0):
+                    delta = timedelta()
+                else:
+                    delta = self.expireTime
             except:
                 delta = timedelta()
         finally:

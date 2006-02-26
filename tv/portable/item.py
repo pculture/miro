@@ -106,7 +106,7 @@ class Item(DDBObject):
         self.beginRead()
         self.feed.beginRead()
         try:
-            if self.feed.expire == "never":
+            if self.feed.expire == 'never' or (self.feed.expire == 'system' and config.get(config.EXPIRE_AFTER_X_DAYS) <= 0):
                 ret = "never"
             else:
                 if self.feed.expire == "feed":
