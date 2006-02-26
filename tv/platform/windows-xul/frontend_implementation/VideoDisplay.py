@@ -45,6 +45,7 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
     videoStop = _genMutator('videoStop')
     videoFullscreen = _genMutator('videoFullscreen')
     videoSetVolume = _genMutator('videoSetVolume')
+    videoSetRate = _genMutator('videoSetRate')
 
     def initRenderers(self):
         print "initRenderers"
@@ -84,6 +85,11 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
         print "VideoDisplay set volume %s" % level
         app.VideoDisplayBase.setVolume(self, level)
         self.videoSetVolume(str(level))
+
+    def setRate(self, rate):
+        print "VideoDisplay set rate %s" % rate
+        #app.VideoDisplayBase.setRate(self, rate)
+        self.videoSetRate(str(rate))
 
     def muteVolume(self):
         print "VideoDisplay mute volume"
@@ -131,6 +137,9 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
             return False
         elif (url.startswith("action:setVolume?level=")):
             self.setVolume(float(url[23:]))
+            return False
+        elif (url.startswith("action:setRate?rate=")):
+            self.setRate(float(url[20:]))
             return False
         return True
 

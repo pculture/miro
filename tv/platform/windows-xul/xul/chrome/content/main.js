@@ -430,3 +430,73 @@ function copyTextToClipboard(text) {
   var gClipboardHelper = Components.classes["@mozilla.org/widget/clipboardhelper;1"].getService(Components.interfaces.nsIClipboardHelper);
   gClipboardHelper.copyString(text);
 }
+
+var dtvFFMode = false;
+var dtvWillFF = false;
+var dtvLastTimeout = 0;
+
+function startFastForward() {
+    dump("\n\nFF\n\n");
+    if (dtvWillFF) {
+    dump("\n\nin FF\n\n");
+      dtvFFMode = true;
+      eventURL(getCookieFromBrowserId('mainDisplay'),'action:setRate?rate=3.0');
+    }
+}
+
+function fastForwardMouseDown() {
+  dump("\n\nMouse Down\n\n");
+  dtvFFMode = false;
+  dtvWillFF = true;
+  eventURL(getCookieFromBrowserId('mainDisplay'),'action:setRate?rate=1.0');
+  dtvLastTimeout = setTimeout(startFastForward,500);
+}
+
+function fastForwardMouseUp() {
+    dump("\n\nMouse Up\n\n");
+    clearTimeout(dtvLastTimeout);
+    dtvWillFF = false;
+    if (!dtvFFMode) {
+      dump("\n\nNext\n\n");
+      eventURL(getCookieFromBrowserId('mainDisplay'),'action:videoNext');
+    }
+    eventURL(getCookieFromBrowserId('mainDisplay'),'action:setRate?rate=1.0');
+    dtvFFMode = false;
+}
+
+function startRewind() {
+    dump("\n\nFF\n\n");
+    if (dtvWillFF) {
+    dump("\n\nin FF\n\n");
+      dtvFFMode = true;
+      eventURL(getCookieFromBrowserId('mainDisplay'),'action:setRate?rate=-3.0');
+    }
+}
+
+function rewindMouseDown() {
+  dump("\n\nMouse Down\n\n");
+  dtvFFMode = false;
+  dtvWillFF = true;
+  eventURL(getCookieFromBrowserId('mainDisplay'),'action:setRate?rate=1.0');
+  dtvLastTimeout = setTimeout(startRewind,500);
+}
+
+function rewindMouseUp() {
+    dump("\n\nMouse Up\n\n");
+    clearTimeout(dtvLastTimeout);
+    dtvWillFF = false;
+    if (!dtvFFMode) {
+      dump("\n\nNext\n\n");
+      eventURL(getCookieFromBrowserId('mainDisplay'),'action:videoPrev');
+    }
+    eventURL(getCookieFromBrowserId('mainDisplay'),'action:setRate?rate=1.0');
+    dtvFFMode = false;
+}
+
+function rewindFFMouseOut() {
+    dump("\n\nMouse Out\n\n");
+    clearTimeout(dtvLastTimeout);
+    dtvWillFF = false;
+    eventURL(getCookieFromBrowserId('mainDisplay'),'action:setRate?rate=1.0');
+    dtvFFMode = false;
+}

@@ -8,55 +8,7 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 </head>
 <t:include filename="dynamic.js" />
-<script type="text/javascript">
-
-function getServerPort() {
-  var port = document.location.port;
-  return port;
-}
-// Returns a "blessed" version of an event URL for use with DTV
-function blessEventURL(url) {
-  var blessedURL = "http://127.0.0.1:" + getServerPort() + "/dtv/action/" + getEventCookie() + "?" + url;
-  return blessedURL;
-}
-function videoSetVolume(level) {
-  dump("Setting volume to "+level);
-  document.video1.set_volume(level*200);
-}
-function videoPlay(url) {
-  // FIXME: race condition
-  if(typeof this.lastURL == 'undefined')
-          this.lastURL = '';
-  if(this.lastURL != url) {
-    dump('playing new\n');
-    document.video1.stop();
-    document.video1.clear_playlist();
-    document.video1.add_item(url);
-    document.video1.add_item(blessEventURL('action:videoNext'));
-    this.lastURL = url;
-    document.video1.play();
-  } else {
-    dump('playing again\n');
-    document.video1.play();
-  }
-}
-function videoPause() {
-  dump("pausing\n");
-  document.video1.pause();
-}
-function videoStop() {
-  dump("stopping\n");
-  document.video1.stop();
-}
-function videoReset() {
-  dump("reseting\n");
-  document.video1.seek(0,0);
-}
-function videoFullscreen() {
-  dump("fsing\n");
-  document.video1.fullscreen();
-}
-</script>
+<t:include filename="video-vlc.js" />
 <body onload="beginUpdates();">
 <embed type="application/x-vlc-plugin"
          name="video1"
