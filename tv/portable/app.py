@@ -768,7 +768,7 @@ class Controller (frontend.Application):
 
 class TemplateDisplay(frontend.HTMLDisplay):
 
-    def __init__(self, templateName, data, controller, existingView = None, frameHint=None, areaHint=None):
+    def __init__(self, templateName, data, controller, existingView = None, frameHint=None, areaHint=None, baseURL=None):
         "'templateName' is the name of the inital template file. 'data' is keys for the template."
 
         # Copy the event cookie for this instance (allocated by our
@@ -795,9 +795,9 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
         if newPage:
             self.templateHandle.unlinkTemplate()
-            self.__init__(re.compile(r"^template:(.*)$").match(url).group(1),data,controller, existingView, frameHint, areaHint)
+            self.__init__(re.compile(r"^template:(.*)$").match(url).group(1),data,controller, existingView, frameHint, areaHint, baseURL)
         else:
-            frontend.HTMLDisplay.__init__(self, html, existingView=existingView, frameHint=frameHint, areaHint=areaHint)
+            frontend.HTMLDisplay.__init__(self, html, existingView=existingView, frameHint=frameHint, areaHint=areaHint, baseURL=baseURL)
 
             thread = threading.Thread(target=self.templateHandle.initialFillIn,\
                                       name="Initial fillin for template %s" %\
@@ -1162,7 +1162,7 @@ class TemplateActionHandler:
         self.display = display
         self.templateHandle = templateHandle
 
-    def switchTemplate(self, name):
+    def switchTemplate(self, name, baseURL=None):
         # Graphically indicate that we're not at the home
         # template anymore
         self.controller.setTabListActive(False)
@@ -1174,7 +1174,8 @@ class TemplateActionHandler:
         # that these links always affect the right-hand 'content'
         # area, even if they are loaded from the left-hand 'tab'
         # area. Actually this whole invocation is pretty hacky.
-        self.controller.frame.selectDisplay(TemplateDisplay(name, self.display.templateData, self.controller, existingView = "sharedView", frameHint=self.controller.frame, areaHint=self.controller.frame.mainDisplay), self.controller.frame.mainDisplay)
+        template = TemplateDisplay(name, self.display.templateData, self.controller, existingView = "sharedView", frameHint=self.controller.frame, areaHint=self.controller.frame.mainDisplay, baseURL=baseURL)
+        self.controller.frame.selectDisplay(template, self.controller.frame.mainDisplay)
 
     def doneWithIntro(self):
         # Find the guide
@@ -1198,7 +1199,7 @@ class TemplateActionHandler:
         (mode, location) = guide.getLocation()
 
         if mode == 'template':
-            self.switchTemplate(location)
+            self.switchTemplate(location, baseURL=config.get(config.CHANNEL_GUIDE_URL))
         elif mode == 'url':
             self.controller.frame.selectURL(location, \
                                             self.controller.frame.mainDisplay)

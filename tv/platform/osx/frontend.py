@@ -1324,7 +1324,7 @@ class HTMLDisplay (app.Display):
 
     # We don't need to override onSelected, onDeselected
 
-    def __init__(self, html, existingView=None, frameHint=None, areaHint=None):
+    def __init__(self, html, existingView=None, frameHint=None, areaHint=None, baseURL=None):
         """'html' is the initial contents of the display, as a string. If
         frameHint is provided, it is used to guess the initial size the HTML
         display will be rendered at, which might reduce flicker when the
@@ -1333,7 +1333,7 @@ class HTMLDisplay (app.Display):
         self.readyToDisplayHook = None
         self.readyToDisplay = False
 
-        self.web = ManagedWebView.alloc().init(html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(x), frameHint and areaHint and frameHint.getDisplaySizeHint(areaHint) or None)
+        self.web = ManagedWebView.alloc().init(html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(x), frameHint and areaHint and frameHint.getDisplaySizeHint(areaHint) or None, baseURL)
 
         app.Display.__init__(self)
         del pool
@@ -1415,7 +1415,7 @@ class HTMLDisplay (app.Display):
 
 class ManagedWebView (NSObject):
 
-    def init(self, initialHTML, existingView=nil, onInitialLoadFinished=None, onLoadURL=None, sizeHint=None):
+    def init(self, initialHTML, existingView=nil, onInitialLoadFinished=None, onLoadURL=None, sizeHint=None, baseURL=None):
         self.onInitialLoadFinished = onInitialLoadFinished
         self.onLoadURL = onLoadURL
         self.initialLoadFinished = False
@@ -1446,7 +1446,11 @@ class ManagedWebView (NSObject):
 
         html = NSString.stringWithString_(unicode(initialHTML))
         data = html.dataUsingEncoding_(NSUTF8StringEncoding)
-        AppHelper.callAfter(self.view.mainFrame().loadData_MIMEType_textEncodingName_baseURL_, data, 'text/html', 'utf-8', nil)
+        if baseURL is not None:
+            baseURL = NSURL.URLWithString_(baseURL)
+
+        AppHelper.callAfter(self.view.mainFrame().loadData_MIMEType_textEncodingName_baseURL_, data, 'text/html', 'utf-8', baseURL)        
+        
         return self
 
     def isKeyExcludedFromWebScript_(self,key):
