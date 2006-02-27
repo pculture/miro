@@ -6,13 +6,14 @@
 
 from threading import RLock
 from os.path import expanduser, exists
-from cPickle import dump, load, HIGHEST_PROTOCOL, UnpicklingError
+from cPickle import dump, dumps, load, HIGHEST_PROTOCOL, UnpicklingError
 from shutil import copyfile
 from copy import copy
 import traceback
 from fasttypes import LinkedList, SortedList
 from databasehelper import pysort2dbsort
 import sys
+import types
 
 import config
 
@@ -35,6 +36,31 @@ globalLock = RLock()
 def setDelegate(newDelegate):
     global delegate
     delegate = newDelegate
+
+def findUnpicklableParts(obj, seen = {}, depth=0):
+    if (seen.has_key(id(obj))):
+        return (("  "*depth) + str(obj) + " already checked\n")
+    else:
+        seen[id(obj)]=True
+        try:
+            dumps(obj,HIGHEST_PROTOCOL)
+            return (("  "*depth) + str(obj) + " OK\n")
+        except:
+            out = (("  "*depth) + str(obj) + " BAD\n")
+            if type(obj) == types.DictType:
+                for key in obj:
+                    out = out + findUnpicklableParts(key, seen, depth+1)
+                    out = out + findUnpicklableParts(obj[key], seen, depth+1)
+            elif type(obj) == types.InstanceType:
+                for key in obj.__dict__:
+                    out = out + findUnpicklableParts(key, seen, depth+1)
+                    out = out + findUnpicklableParts(getattr(obj,key), seen, depth+1)
+            elif ((type(obj) == types.ListType) or
+                  (type(obj) == types.TupleType)):
+                for val in obj:
+                    out = out + findUnpicklableParts(val, seen, depth+1)
+            return out
+
 
 ##
 # Implements a view of the database
@@ -809,10 +835,12 @@ class DynamicDatabase:
                 copyfile(filename,filename+".bak")
             copyfile(filename+".temp",filename)
         except:
+            outText = findUnpicklableParts(out)
+            print "=" * 80
+            print outText
             print "=" * 80
             traceback.print_exc()
-            print "=" * 80
-            delegate.saveFailed(sys.exc_info()[0])
+            delegate.saveFailed(outText)
 
     ##
     # Restores this database
