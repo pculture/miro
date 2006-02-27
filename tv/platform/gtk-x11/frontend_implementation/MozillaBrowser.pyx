@@ -38,6 +38,12 @@ cdef extern from "MozillaBrowserXPCOM.h":
     nsresult removeItem(GtkMozEmbed *gtkembed, char *id)
     nsresult showItem(GtkMozEmbed *gtkembed, char *id)
     nsresult hideItem(GtkMozEmbed *gtkembed, char *id)
+    char* getContextMenu(void* domEvent)
+
+cdef extern from "stdio.h":
+    int printf(char* str, ...)
+cdef extern from "stdlib.h":
+   void free(void *ptr)
 
 class DOMError(Exception):
     pass
@@ -45,6 +51,7 @@ class DOMError(Exception):
 cdef class MozillaBrowser:
     cdef GtkMozEmbed *cWidget
     cdef object widget, URICallBack, finishedCallBack, destroyCallBack
+    cdef object contextMenuCallBack
     
     def __new__(self):
         self.widget = gtkmozembed.MozEmbed()
@@ -53,8 +60,12 @@ cdef class MozillaBrowser:
     def __init__(self):
         self.URICallBack = None
         self.finishedCallBack = None
-        g_signal_connect(<gpointer *>self.cWidget, "open_uri", <void *>open_uri_cb, <gpointer>self)
-
+        self.destroyCallBack = None
+        self.contextMenuCallBack = None
+        g_signal_connect(<gpointer *>self.cWidget, "open_uri", 
+                <void *>open_uri_cb, <gpointer>self)
+        g_signal_connect(<gpointer *>self.cWidget, "dom_mouse_down", 
+                <void *>on_dom_mouse_down, <gpointer>self)
     def getWidget(self):
         return self.widget
 
@@ -106,6 +117,12 @@ cdef class MozillaBrowser:
     def getDestroyCallBack(self):
         return self.destroyCallBack
         
+    def setContextMenuCallBack(self, callback):
+        self.contextMenuCallBack = callback
+
+    def getContextMenuCallBack(self):
+        return self.contextMenuCallBack
+
     cdef GtkMozEmbed *pygtkmozembed_to_c(MozillaBrowser self, object pygtkmoz):
         cdef PyGObject *tempObj
         cdef GObject *temp
@@ -119,6 +136,15 @@ cdef class MozillaBrowser:
             return True
         else:
             return False
+
+    def createContextMenu(self, menu):
+        # Menu is the string from the DOM element.  It has newlines encoded as
+        # "\n" and backslashes encoded as "\\".  Decode menu and pass it to
+        # our context menu callback if we have one.
+        if self.contextMenuCallBack is not None:
+            menu = menu.replace("\\n", "\n")
+            menu = menu.replace("\\\\", "\\")
+            self.contextMenuCallBack(menu)
 
 # Here's the deal on the open-uri callback hack:
 #
@@ -150,3 +176,24 @@ cdef gint open_uri_cb (GtkMozEmbed *embed, char *uri, PyObject * self):
     Py_DECREF(self)
     PyGILState_Release(gil)
     return rv
+
+cdef gint on_dom_mouse_down (GtkMozEmbed *embed, gpointer domEvent, 
+        PyObject * self):
+    cdef char* contextMenu
+    cdef PyGILState_STATE gil
+    cdef PyObject* callbackResult
+
+    contextMenu = getContextMenu(domEvent)
+    if contextMenu:
+        gil = PyGILState_Ensure()
+        Py_INCREF(self)
+        callbackResult = PyObject_CallMethod(self, "createContextMenu", "s",
+                contextMenu, NULL)
+        free(contextMenu)
+        if callbackResult == NULL:
+            PyErr_Print()
+        else:
+            Py_DECREF(callbackResult)
+        Py_DECREF(self)
+        PyGILState_Release(gil)
+    return 0

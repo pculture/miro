@@ -9,6 +9,8 @@
 #include <nsIDOMDocumentRange.h>
 #include <nsIDOMElement.h>
 #include <nsIDOMElementCSSInlineStyle.h>
+#include <nsIDOMEventTarget.h>
+#include <nsIDOMMouseEvent.h>
 #include <nsIDOMNSRange.h>
 #include <nsIDOMNodeList.h>
 #include <nsIDOMRange.h>
@@ -16,6 +18,7 @@
 #include <nsIURIContentListener.h>
 #include <nsIWebBrowser.h>
 #include <nsString.h>
+#include <stdio.h>
 
 //////////////////////////////////////////////////////////////////////////////
 // MozillaBrowserXPCOM.cc
@@ -222,4 +225,48 @@ nsresult showItem(GtkMozEmbed *gtkembed, char *id)
 nsresult hideItem(GtkMozEmbed *gtkembed, char *id)
 {
     return setElementStyle(gtkembed, id, "display", "none");
+}
+
+char* getContextMenu(void* domEvent)
+{
+    // Cast domEvent to a nsIDOMMouseEvent.
+    nsIDOMMouseEvent *mouseEvent =  (nsIDOMMouseEvent*)domEvent;
+    PRUint16 button;
+    nsresult result = mouseEvent->GetButton(&button);
+    if(NS_FAILED(result)) return NULL;
+    // If it wasn't a right button click, we don't want to pop up a menu
+    if(button != 2) return NULL;
+    // Get the target of the event.  That's the element we will begin
+    // searching for a context menu.
+    nsCOMPtr<nsIDOMEventTarget> target;
+    result = mouseEvent->GetTarget(getter_AddRefs(target));
+    if (NS_FAILED(result)) return NULL;
+    nsCOMPtr<nsIDOMElement> element = do_QueryInterface(target);
+    if (!element) return NULL;
+    // We need to pass in a nsString to GetAttribute().  Create one now, so we
+    // only need to do the conversion once.
+    nsString contextMenuString = NS_ConvertASCIItoUTF16(
+            nsDependentCString("t:contextMenu"));
+    while(1) {
+        // Check the current element for a context menu attribute
+        nsString contextMenu;
+        result = element->GetAttribute(contextMenuString, contextMenu);
+        if(NS_FAILED(result)) return NULL;
+        if(!contextMenu.IsEmpty()) {
+            return ToNewCString(contextMenu);
+        } 
+        // Get the parent of the current element and try again.  If we fail it
+        // probably means we reached the document node, or it could mean some
+        // generic xpcom error, either way we should return NULL.
+        nsCOMPtr<nsIDOMNode> node = do_QueryInterface(element);
+        if(node == nsnull) return NULL;
+        nsCOMPtr<nsIDOMNode> parent;
+        result = node->GetParentNode(getter_AddRefs(parent));
+        if(NS_FAILED(result)) return NULL;
+        if(parent == nsnull) return NULL;
+        element = do_QueryInterface(parent, &result);
+        if(NS_FAILED(result)) return NULL;
+    }
+    // We shouldn't get here, but return NULL just in case.
+    return NULL;
 }

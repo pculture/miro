@@ -67,6 +67,7 @@ class HTMLDisplay(app.Display):
         self.widget.connect("net-stop", self.loadFinished)
         self.widget.connect("destroy", self.onBrowserDestroy)
         self.mb.setURICallBack(self.onURLLoad)
+        self.mb.setContextMenuCallBack(self.onContextMenu)
         self.widget.load_url(self.urlToLoad)
         self.widget.show()
 
@@ -166,18 +167,32 @@ class HTMLDisplay(app.Display):
 
     def onDocumentLoadFinished(self):
         pass
-        
+
+    def onContextMenuItem(self, menuItem, url):
+        self.widget.load_url(url)
+
+    def onContextMenu(self, menu):
+        # onContextMenu handles the context menu callback from MozillaBrowser.
+        # Menu is a string, where each line is either
+        # "URL|description" or a blank lines for separators. 
+        # On menu item click, we should load URL into this HTML area.
+        popupMenu = gtk.Menu()
+        for item in menu.split("\n"):
+            if item == "":
+                item = gtk.SeparatorMenuItem()
+            else:
+                url, description = item.split("|")
+                item = gtk.MenuItem(description)
+                item.connect("activate", self.onContextMenuItem, url)
+            popupMenu.append(item)
+            item.show()
+        popupMenu.popup(None, None, None, 2, gtk.get_current_event_time())
+
     def unlink(self):
         pass
 
     def __del__(self):
         self.unlink()
-
-    # NEEDS: right-click menu.
-    # Protocol: if type(getContextClickMenu) == "function", call it and
-    # pass the DOM node that was clicked on. That returns "URL|description"
-    # with blank lines for separators. On a click, force navigation of that
-    # frame to that URL, maybe by setting document.location.href.
 
 ###############################################################################
 ###############################################################################

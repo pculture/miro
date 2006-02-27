@@ -8,9 +8,8 @@ from frontend_implementation.HTMLDisplay import HTMLDisplay, getDTVAPICookie, ge
 from frontend_implementation.VideoDisplay import VideoDisplay, PlaylistItem
 from frontend_implementation.VideoDisplay import PlaybackController
 
-import gtkmozembed
-
-gtkmozembed.gtk_moz_embed_set_profile_path(config.get(config.SUPPORT_DIRECTORY),'mozilla')
+import mozsetup
+mozsetup.setupMozillaEnvironment()
 
 def exit(returnCode):
     return returnCode
