@@ -162,7 +162,7 @@
 		<hbox flex="0" width="220" id="bottom-progress">
                      <html:div id="progress">
           	         <html:span id="progress-slider"/>
-          	         <html:span id="progress-text">00:00</html:span>
+          	         <html:span id="progress-text">00:00:00</html:span>
                      </html:div>
 		</hbox>
 		<!-- / PROGRESS BAR -->

@@ -209,6 +209,94 @@ function volumeKnobUp(event) {
 }
 
 /*****************************************************************************
+ Video Progress Slider
+ *****************************************************************************/
+
+var progressDragStart = 0;
+var progressPos = 61;
+
+var progressDragEnabled = false;
+var progressDragging = false;
+
+function twoDigits(data) {
+    if (data < 10) return "0" + data;
+    else return ""+data;
+}
+
+function videoProgressUpdate(elapsed, len) {
+    //FIXME: these are stored in two places
+    var left = 61;
+    var right = 204;
+    if (progressDragStart == 0) {
+        var hours = Math.floor(elapsed/3600);
+        var mins = Math.floor((elapsed - hours*3600)/60);
+        var secs = elapsed - hours*3600 - mins*60;
+        var sliderText = document.getElementById("progress-text");
+        sliderText.childNodes[0].nodeValue = twoDigits(hours)+":"+twoDigits(mins)+":"+twoDigits(secs);
+
+        var slider = document.getElementById("progress-slider");
+        var newSliderPos = Math.floor(left + (elapsed/len)*(right-left));
+        slider.style.left = newSliderPos+"px";
+    }
+}
+
+function videoEnableControls() {
+    //jsdump('Enabling controls');
+    progressDragEnabled = true;
+    progressDragStart = 0;
+}
+function videoDisableControls() {
+    //jsdump('Disabling Controls');
+    progressDragEnabled = false;
+    progressDragStart = 0;
+    videoProgressUpdate(0,1);
+}
+
+function setVideoProgress(percent) {
+  //jsdump("Video now at "+percent);
+  eventURL(getCookieFromBrowserId('mainDisplay'),'action:setVideoProgress?pos='+percent);
+}
+
+function videoProgressMove(event) {
+  //jsdump("Video progress move");
+  if (progressDragStart > 0) {
+    var left = 61;
+    var right= 204;
+    var slider = document.getElementById("progress-slider");
+    progressPos += event.clientX - progressDragStart;
+    if (progressPos < left) progressPos = left;
+    if (progressPos > right) progressPos = right;
+    progressDragStart = event.clientX;
+    slider.style.left = progressPos +"px";
+    setVideoProgress((progressPos - left)/(right-left));
+  }
+}
+function videoProgressDown(event) {
+  //jsdump("Video progress down");
+  if (progressDragEnabled) {
+    progressDragStart = event.clientX;
+  }
+}
+function videoProgressOut(event) {
+  //jsdump("Video progress out: "+event.target.getAttribute("id")+" "+event.currentTarget.getAttribute("id"));
+  /* Ignore a move from the knob to the slider or vice-versa */
+  if (!((event.target.getAttribute("id") == "progress-slider" &&
+        event.currentTarget.getAttribute("id") == "progress") ||
+        (event.target.getAttribute("id") == "progress" &&
+         event.currentTarget.getAttribute("id") == "progress") ||
+        (event.target.getAttribute("id") == "progress-text" &&
+         event.currentTarget.getAttribute("id") == "progress")))
+  {
+    progressDragStart = 0;
+  }
+  event.stopPropagation();
+}
+function videoProgressUp(event) {
+  //jsdump("Video progress up");
+  progressDragStart = 0;
+}
+
+/*****************************************************************************
  Main functions
  *****************************************************************************/
 
@@ -250,8 +338,20 @@ function onLoad() {
     var knob = document.getElementById("volume");
     knob.onmousemove = volumeKnobMove;
     knob.onmousedown = volumeKnobDown;
-    window.onmouseup = volumeKnobUp;
     knob.onmouseout = volumeKnobOut;
+
+    // Set up listeners for the progress slider
+    var progress = document.getElementById("progress");
+    progress.onmousemove = videoProgressMove;
+    progress.onmousedown = videoProgressDown;
+    progress.onmouseout = videoProgressOut;
+
+    window.onmouseup = windowMouseUp;
+}
+
+function windowMouseUp(event) {
+  volumeKnobUp(event);
+  videoProgressUp(event);
 }
 
 function onUnload() {

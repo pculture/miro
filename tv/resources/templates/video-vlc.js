@@ -12,6 +12,20 @@ function blessEventURL(url) {
 
 var videoLastTimeout = 0;
 
+function updateVideoControls() {
+  eventURL('action:updateVideoControls?elapsed='+document.video1.get_time()+'&len='+document.video1.get_length());
+}
+
+function videoOnLoad() {
+  beginUpdates();
+  setInterval(updateVideoControls, 500);
+  eventURL('action:enableVideoControls');
+}
+
+function videoOnUnload() {
+  eventURL('action:disableVideoControls');
+}
+
 function videoSetVolume(level) {
   dump("\n\nSetting volume to "+level+"\n\n");
   document.video1.set_volume(level*200);
@@ -32,6 +46,12 @@ function videoPlay(url) {
     dump('\n\nplaying again\n\n');
     document.video1.play();
   }
+}
+function videoSetPos(pos) {
+  pos = parseFloat(pos);
+  var posInSecs = Math.floor(document.video1.get_length()*pos);
+  dump('\n\nMoving to position '+pos+' ('+posInSecs+')\n\n');
+  document.video1.seek(posInSecs, false);
 }
 function videoPause() {
   dump("\n\npausing\n\n");

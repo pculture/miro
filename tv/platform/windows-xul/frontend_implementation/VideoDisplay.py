@@ -5,8 +5,10 @@ import os
 import threading
 import template
 import util
+import re
 
 _genMutator = frontend_implementation.HTMLDisplay._genMutator
+execChromeJS = frontend_implementation.HTMLDisplay.execChromeJS
 
 ###############################################################################
 #### The Playback Controller                                               ####
@@ -38,6 +40,9 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
         app.VideoDisplayBase.__init__(self)
         print "Display initialized"
 
+    elapseRe = re.compile('elapsed=(\d+)')
+    lengthRe = re.compile('len=(\d+)')
+
     # The mutation functions.
     videoPlay = _genMutator('videoPlay')
     videoPause = _genMutator('videoPause')
@@ -46,6 +51,7 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
     videoFullscreen = _genMutator('videoFullscreen')
     videoSetVolume = _genMutator('videoSetVolume')
     videoSetRate = _genMutator('videoSetRate')
+    videoSetPos = _genMutator('videoSetPos')
 
     def initRenderers(self):
         print "initRenderers"
@@ -141,6 +147,19 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
         elif (url.startswith("action:setRate?rate=")):
             self.setRate(float(url[20:]))
             return False
+        elif (url.startswith("action:enableVideoControls")):
+            execChromeJS('videoEnableControls();')
+            return False
+        elif (url.startswith("action:disableVideoControls")):
+            execChromeJS('videoDisableControls();')
+            return False
+        elif (url.startswith("action:setVideoProgress?pos=")):
+            self.videoSetPos(url[28:])
+            return False
+        elif (url.startswith("action:updateVideoControls?")):
+            elapsed = self.elapseRe.search(url).group(1)
+            length = self.lengthRe.search(url).group(1)
+            execChromeJS('videoProgressUpdate(%s, %s);' % (elapsed, length))
         return True
 
 class VLCPluginRenderer (app.VideoRenderer):

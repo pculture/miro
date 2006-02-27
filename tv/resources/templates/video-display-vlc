@@ -9,7 +9,7 @@
 </head>
 <t:include filename="dynamic.js" />
 <t:include filename="video-vlc.js" />
-<body onload="beginUpdates();">
+<body onload="videoOnLoad();" onunload="videoOnUnload();">
 <embed type="application/x-vlc-plugin"
          name="video1"
          autostart="0" style="position: absolute; top: 0px;bottom: 0px; left: 0px; right: 0px" id="video1"/>
