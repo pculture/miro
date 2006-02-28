@@ -135,15 +135,27 @@ class httpServer:
                                     (self.reqNum, path))
 
                 self.handleRequest(method, path)
+
+            # In handling exceptions, remember that reqNum can be None if
+            # the initial readline failed -- so use %s, never %d, when
+            # printing it.
+            except socket.error, (code, description):
+                if code == errno.ECONNABORTED or \
+                        code == errno.ECONNRESET:
+                    # Normal: Mozilla was just being abrupt
+                    print "[%s] Ignoring remote or network error '%s'" % \
+                        (self.reqNum, description)
+                    return
+                else:
+                    details = "Closing socket; request was [%s] %s" % \
+                        (self.reqNum, request)
+                    util.failedExn("when answering a request",
+                                   details = details)
             except:
-                # We have logs collected from the wild here where
-                # self.reqNum is non-int here (presumably None,
-                # because the socket gets closed before the first line
-                # is sent) -- so make sure we use %s for the request
-                # number instead of %d.
                 details = "Closing socket; request was [%s] %s" % \
                     (self.reqNum, request)
                 util.failedExn("when answering a request", details = details)
+
         finally:
             self.socket.close()
 
@@ -323,31 +335,18 @@ class httpServer:
         assert False, "Unrecognized request"
 
     def sendDocumentAndClose(self, contentType, data, cache=False):
-        try:
-            try:
-                self.socket.send("HTTP/1.0 200 OK\r\n")
-                self.socket.send("Content-Length: %s\r\n" % len(data))
-                if contentType:
-                    self.socket.send("Content-Type: %s\r\n" % contentType)
-                if cache and not 'DTV_DISABLE_CACHE' in os.environ:
-                    cacheTime = 60*60 # keep it an hour
-                    thenGMT = time.gmtime(time.time()+cacheTime)
-                    thenString = time.strftime("%a, %d %b %Y %H:%M:%S GMT",
-                                               thenGMT)
-                    self.socket.send("Expires: %s\r\n" % thenString)
-                self.socket.send("\r\n")
-                self.socket.send(data)
-            except socket.error, (code, description):
-                if code == errno.ECONNABORTED or \
-                        code == errno.ECONNRESET:
-                    # Normal: Mozilla was just being abrupt
-                    print "[%d] Ignoring remote or network error '%s'" % \
-                        (self.reqNum, description)
-                    return
-                else:
-                    raise
-        finally:
-            self.socket.close()
+        self.socket.send("HTTP/1.0 200 OK\r\n")
+        self.socket.send("Content-Length: %s\r\n" % len(data))
+        if contentType:
+            self.socket.send("Content-Type: %s\r\n" % contentType)
+        if cache and not 'DTV_DISABLE_CACHE' in os.environ:
+            cacheTime = 60*60 # keep it an hour
+            thenGMT = time.gmtime(time.time()+cacheTime)
+            thenString = time.strftime("%a, %d %b %Y %H:%M:%S GMT",
+                                       thenGMT)
+            self.socket.send("Expires: %s\r\n" % thenString)
+        self.socket.send("\r\n")
+        self.socket.send(data)
 
     def queueChunk(self, mimeType, body):
         self.cond.acquire()
