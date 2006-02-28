@@ -105,7 +105,6 @@ def failedExn(when, **kwargs):
 # the console/log, but not presented in the dialog box.
 def failed(when, withExn = False, details = None):
     log = ""
-    log += "{{{\n"
     try:
         import config # probably works at runtime only
         log += "App:        %s\n" % config.get(config.LONG_APP_NAME)
@@ -143,8 +142,13 @@ def failed(when, withExn = False, details = None):
         log += " - %s%s\n" % \
             (t.getName(),
              t.isDaemon() and ' [Daemon]' or '')
-    log += "}}}"
-    log += "\n"
+
+    print "----- GENERATING CRASH REPORT -----"
+    print log
+    print "----- END OF CRASH REPORT -----"
+
+    # Add decorations for Trac
+    log = "{{{\n%s}}}\n" % log
 
     try:
         import app
