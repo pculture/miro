@@ -1,5 +1,4 @@
 
-
 /* TITLEBAR 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -13,19 +12,19 @@
 	color: #FFFFFF;
 }
 
+.titlebar menu:hover {
+	-moz-appearance: none;
+	background: #000000;
+}
+
 .titlebar-toplevel {
 	margin: 2px 10px 0px 0px;
-	padding: 1px 5px;
 	border: 0px;
 }
 
 .titlebar menubar, .titlebar menubar:hover {
 	-moz-appearance: none;
-}
-
-.titlebar menu:hover {
-	-moz-appearance: none;
-	background-color: #000000;
+	border: 0;
 }
 
 .titlebar menuitem, .titlebar menu menu {
