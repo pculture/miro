@@ -565,22 +565,39 @@ class Controller (frontend.Application):
             print "DTV: Removing global feed %s" % url
             feed.remove()
 
+    # Change the currently selected tab to the one remaining when
+    # filtered by index and id. Returns the currently selected tab.
     def checkTabUsingIndex(self, index, id):
+        # view should contain only one tab object
         view = self.tabs.filterWithIndex(index, id)
         view.beginUpdate()
         try:
             view.resetCursor()
             obj = view.getNext()
-        #FIXME: This is a hack. We need to change the database API to allow this
+
+        #FIXME: This is a hack.
+        # It takes the cursor into view and makes a cursor into self.tabs
+        #
+        # view.objects[view.cursor][0] is the object in view before it was
+        # mapped into a tab
+        # 
+        # objectLocs is an internal dictionary of object IDs to cursors
+        #
+        # We need to change the database API to allow this to happen
+        # cleanly and give sane error messages (See #1053 and #1155)
             self.tabs.cursor = self.tabs.objectLocs[view.objects[view.cursor][0].getID()]
         finally:
             view.endUpdate()
             self.tabs.removeView(view)
         return obj
 
+    # Select a tab given a tab id (as opposed to an object id)
+    # Returns the selected tab
     def checkTabByID(self, id):
         return self.checkTabUsingIndex(self.tabIDIndex, id)
 
+    # Select a tab given an object id (as opposed to an object id)
+    # Returns the selected tab
     def checkTabByObjID(self, id):
         return self.checkTabUsingIndex(self.tabObjIDIndex, id)
 
@@ -1078,7 +1095,11 @@ class GUIActionHandler:
         self.controller = controller
 
     def selectTab(self, id, templateNameHint = None):
-        cur = self.controller.checkTabByID(id)
+        try:
+            cur = self.controller.checkTabByID(id)
+        except: # That tab doesn't exist anymore! Give up.
+            print "Tab %s doesn't exist! Cannot select it." % str(id)
+            return
 
         # Figure out what happened
         oldSelected = self.controller.currentSelectedTab
