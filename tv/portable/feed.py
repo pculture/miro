@@ -171,6 +171,7 @@ def _generateFeed(url, ufeed, visible=True):
     # might be pre-enclosure RSS, so we still have to download them
     # and parse them before we can deal with them correctly.
     elif (info['content-type'].startswith('application/rss+xml') or
+          info['content-type'].startswith('application/podcast+xml') or
           info['content-type'].startswith('text/xml') or 
           info['content-type'].startswith('application/xml')):
         #print " It's doesn't look like HTML..."
@@ -1213,6 +1214,7 @@ class ScraperFeedImpl(FeedImpl):
                          mimetype.startswith('text/xml')  or
                          mimetype.startswith('application/xml') or
                          mimetype.startswith('application/rss+xml') or
+                         mimetype.startswith('application/podcast+xml') or
                          mimetype.startswith('application/atom+xml') or
                          mimetype.startswith('application/rdf+xml') ) and
                         depth < maxDepth -1):
@@ -1681,6 +1683,7 @@ class HTMLFeedURLParser(HTMLParser):
             attrdict.has_key('type') and attrdict.has_key('href') and
             attrdict['rel'].lower() == 'alternate' and 
             attrdict['type'].lower() in ['application/rss+xml',
+                                         'application/podcast+xml',
                                          'application/rdf+xml',
                                          'application/atom+xml',
                                          'text/xml',
