@@ -1,27 +1,28 @@
 body {
 	background: #FFFFFF;
 	margin: 0px;
-	font: 12px "Lucida Grande", "Lucida Sans", "Trebuchet MS", Arial;
+	font: 13px "Lucida Grande", "Lucida Sans", "Trebuchet MS", Arial;
 	color: #000000;
 	text-decoration: none;
 }
 
 #container {
-	margin: 20px 0px;
+	margin: 0px 0px 10px 0;
 }
 
 p {
-	margin: 0px 20px 18px 20px;
+	margin: 0px 20px 12px 20px;
 	padding: 0px;	
 	line-height: 16px;
 }
 
 h1 {
-	font-size: 200%;
+	font-size: 220%;
 	font-weight: bold;
 	color: #085ffe;
-	margin: 0px 0px 18px 20px;
-	padding: 0px;
+	padding: 10px 0px 10px 20px;
+	margin: 0;
+	text-align: center;
 }
 
 h2 {
@@ -30,9 +31,15 @@ h2 {
 	line-height: 125%;
 	color: #000000;
 	background-color: #eff3fe;
-	margin: 0px 0px 5px 0px;
+	margin: 0px 0px 15px 0px;
 	padding: 5px 0px 5px 20px;
+
 }
+
+h2 a, h2 a:visited  {
+	color: #000000;
+}
+
 
 h3 {
 	font-size: 115%;
@@ -50,4 +57,33 @@ a:link, a:visited, a:active {
 a:hover {
 	color: #085ffe;
 	text-decoration: none;
+}
+
+.gotoguide {
+padding-top: 10px;
+text-align: center;
+}
+
+
+#sidebar {
+float: right;
+margin: 5px 20px 10px 15px;
+width: 200px;
+
+}
+
+.captioned_image {
+width: 188px;
+padding: 6px;
+font-size: 12px;
+border: 1px solid #ccc;
+margin-bottom: 20px;
+}
+
+.captioned_image img {
+
+}
+
+img {
+	border: 0px;
 }

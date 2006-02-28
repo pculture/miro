@@ -4,31 +4,38 @@
       xmlns:t="http://www.participatorypolitics.org/"
       xmlns:i18n="http://www.participatoryculture.org/i18n"
       eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
+						
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" href="resource:css/intro.css" />
-<t:include filename="dynamic.js" />
-
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="resource:css/intro.css" />
+	<t:include filename="dynamic.js" />
 </head>
 
 <body>
+
 <div id="container">
-  <h1>Welcome to Internet Television</h1>
+  <h1>Welcome to Democracy Internet TV</h1>
+  <h2>A Few Tips to Get Started</h2>
 	
-  <h2>Explore the Channel Guide</h2>
-  <p>The Channel Guide is your home base. Check back often-- new channels are added every day and all channels are free. When you subscribe to a channel, it will appear in the left side channel bar. Select it to see what's on.</p>
+  <div id="sidebar">	
+    <div class="captioned_image"> <img src="resource:images/intro-fullscreen_button.png" alt="fullscreen button" /><br />
+      <strong>GO BIG:</strong> This is your fullscreen button.  Click it and lean back. </div>
+			
+    <div class="captioned_image"> <img src="resource:images/intro-circles.png" alt="circles" /><br />
+      <strong>NEW STUFF:</strong> Blue circles mean the channel has new videos available to download, green circles mean you have videos ready to watch. </div>
+  </div>
 	
-  <h2>Don't wait for your downloads.</h2>
-  <p>On a web page, videos need to be small so that they'll load right away. But Democracy is a different experience. Publishers can send big, high quality videos to download in the background. So don't sit around waiting for videos to come in-- start some downloads and then check back later.</p>
-  <p>Auto Download your favorite channels. If you really like a channel, turn AUTO DOWNLOAD on. This will automatically download new videos on that channel.</p>
-  
-	<h2>Let things go, but save the best.</h2>
-  <p>Like a TiVo, the Democracy Player has an 'expiration' system that deletes older videos to make room for new videos. This helps keep hard disk space available without forcing you to constantly clean up. You can always choose to permanently keep a video by clicking 'save'.</p>
-  
-	<h2>Leave the Democracy Player running.</h2>
-  <p>Democracy Player regularly checks channels for new videos and downloads in the background. Leaving the player running as much as possible means that that you'll have new things ready to watch when you want to sit back and relax. You can also set your Democracy preferences so that the player will automatically run when you start your computer. </p>
+  <p><strong>Start in the Guide:</strong> The Channel Guide is your home base for subscribing to internet TV channels.  Democracy Player checks your channels regularly and will show a blue circle next to the channel when new videos are available.</p>
 	
-  <h3>Next Step: <a href="#" onclick="eventURL('template:first-time-intro-two');">How to Subscribe &gt;&gt;</a></h3>
+  <p><strong>Don't Wait:</strong> Democracy is a different than watching web videos-- publishers often send big, high quality videos. So don't sit around waiting for videos to download-- start some downloads and check back later.</p>
+	
+  <p><strong>Leave it On:</strong> Democracy Player regularly checks channels for new videos and downloads in the background. Leaving the player running means that that you'll have new things ready to watch when you want to sit back and relax. You can also set the preferences to launch Democracy when you start your computer. </p>
+	
+  <p> <strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player features an 'expiration' system that cleans out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically. </p>
+	
+  <div class="gotoguide"> <a href="#" onclick="eventURL('action:doneWithIntro');"><img src="resource:images/intro-go_to_channel_guide.png" alt="go to channel guide" /></a> </div>
+	
 </div>
+
 </body>
 </html>
