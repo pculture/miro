@@ -18,10 +18,11 @@ def execChromeJS(js):
     httpServer.classLock.acquire()
     try:
         if httpServer.chromeJavascriptStream:
-            print "XULJS: exec %s" % js
+            print "XULJS: exec %s" % js[0:250]
+
             httpServer.chromeJavascriptStream.queueChunk("text/plain", js)
         else:
-            print "XULJS: queue: %s" % js
+            print "XULJS: queue %s" % js[0:250]
             httpServer.chromeJavascriptQueue.append(js)
     finally:
         httpServer.classLock.release()
@@ -187,7 +188,7 @@ class httpServer:
 
                 self.beginSendingChunks()
                 for a in httpServer.chromeJavascriptQueue:
-                    print "XULJS: flush %s" % a
+                    print "XULJS: flush %s" % a[0:250]
                     self.queueChunk("text/plain", a)
                 httpServer.chromeJavascriptQueue = []
                 httpServer.chromeJavascriptStream = self
