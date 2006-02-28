@@ -19,7 +19,6 @@ def execChromeJS(js):
     try:
         if httpServer.chromeJavascriptStream:
             print "XULJS: exec %s" % js[0:250]
-
             httpServer.chromeJavascriptStream.queueChunk("text/plain", js)
         else:
             print "XULJS: queue %s" % js[0:250]
@@ -376,6 +375,11 @@ Content-Type: multipart/x-mixed-replace;boundary="%s"
                 (mimeType, body) = self.chunkQueue[0]
                 self.chunkQueue = self.chunkQueue[1:]
 
+                if body is None:
+                    # Request to close the stream (probably because
+                    # the display was deselected.)
+                    return
+
                 self.cond.release()
                 try:
                     try:
@@ -420,19 +424,11 @@ argument will be turned into a string and quoted according to Javascript's
 requirements. When the method is called, it returns immediately, and the
 request goes in a queue."""
     def mutatorFunc(self, *args):
-        self.lock.acquire()
-        try:
-            args = ','.join(['"%s"' % quoteJS(a) for a in args])
-            command = "%s(%s);" % (name, args)
-            
-            command = xhtmltools.toUTF8Bytes(command)         
+        args = ','.join(['"%s"' % quoteJS(a) for a in args])
+        command = "%s(%s);" % (name, args)
+        command = xhtmltools.toUTF8Bytes(command)         
+        self.outputChunk("text/plain", command)
 
-            if self.mutationOutput:
-                self.mutationOutput.queueChunk("text/plain", command)
-            else:
-                self.queue.append(command)
-        finally:
-            self.lock.release()
     return mutatorFunc
 
 class HTMLDisplay (app.Display):
@@ -470,6 +466,20 @@ class HTMLDisplay (app.Display):
     changeItem = _genMutator('changeItem')
     hideItem = _genMutator('hideItem')
     showItem = _genMutator('showItem')
+
+    def outputChunk(self, mimeType, body):
+        self.lock.acquire()
+        try:
+            if self.mutationOutput:
+                self.mutationOutput.queueChunk(mimeType, body)
+            else:
+                self.queue.append(body)
+        finally:
+            self.lock.release()
+
+    def onDeselected(self, frame):
+        # Close the event stream.
+        self.outputChunk(None, None)
 
     ### Concerning dispatching events via context cookies ###
 

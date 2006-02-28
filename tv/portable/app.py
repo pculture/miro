@@ -888,6 +888,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
         unloadTriggers = self.templateHandle.getTriggerActionURLsOnUnload()
         self.runActionURLs(unloadTriggers)
         self.templateHandle.unlinkTemplate()
+        frontend.HTMLDisplay.onDeselected(self, frame)
 
     def getWatchable(self):
         view = None
