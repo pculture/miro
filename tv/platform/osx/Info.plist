@@ -32,7 +32,7 @@
 	<key>CFBundleGetInfoString</key>
 	<string>$appVersion, $copyright $publisher</string>
 	<key>CFBundleIdentifier</key>
-	<string>org.participatoryculture.DTV</string>
+	<string>org.participatoryculture.$shortAppName</string>
 	<key>CFBundleName</key>
 	<string>$shortAppName</string>
 	<key>CFBundleShortVersionString</key>

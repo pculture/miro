@@ -711,6 +711,7 @@ class Downloader(DDBObject):
         (version, data) = state
         assert(version == 0)
         self.__dict__ = data
+        self.filename = config.ensureMigratedMoviePath(self.filename)
         if self.getState() == "downloading":
             ScheduleEvent(0, lambda :self.runDownloader(retry = True),False)
 

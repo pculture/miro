@@ -148,6 +148,11 @@ def __notifyListeners(key, value):
         callback(key, value)
 
 
+def ensureMigratedMoviePath(pathname):
+    if hasattr(platformcfg, 'ensureMigratedMoviePath'):
+        pathname = platformcfg.ensureMigratedMoviePath(pathname)
+    return pathname
+
 # Hack. Getting the support directory path here forces it to be created at
 # import time (ie, before the application standard startup sequence is running)
 # which solves bug #1260994: the bittorent-dtv folder won't end up at the

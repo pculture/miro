@@ -79,6 +79,7 @@ conf = util.readSimpleConfigFile(appConfigPath)
 infoPlist = plistlib.readPlist(u'Info.plist')
 
 updatePListEntry(infoPlist, u'CFBundleGetInfoString', conf)
+updatePListEntry(infoPlist, u'CFBundleIdentifier', conf)
 updatePListEntry(infoPlist, u'CFBundleName', conf)
 updatePListEntry(infoPlist, u'CFBundleShortVersionString', conf)
 updatePListEntry(infoPlist, u'CFBundleVersion', conf)
