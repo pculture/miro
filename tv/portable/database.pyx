@@ -38,23 +38,37 @@ def setDelegate(newDelegate):
     delegate = newDelegate
 
 def findUnpicklableParts(obj, seen = {}, depth=0):
-    if (seen.has_key(id(obj))):
-        return (("  "*depth) + str(obj) + " already checked\n")
+    thisId = id(obj)
+    out = ""
+
+    if thisId in seen:
+        return (("  "*depth) + seen[thisId] + " (already checked): " + \
+                str(obj) + "\n")
     else:
-        seen[id(obj)]=True
+        if type(obj) == types.InstanceType and \
+            '__getstate__' in dir(obj):
+            out = out + "[%s ->]\n" % obj
+            obj = obj.__getstate__()
+
         try:
             dumps(obj,HIGHEST_PROTOCOL)
-            return (("  "*depth) + str(obj) + " OK\n")
+            seen[thisId] = "OK"
+            out = out + (("  "*depth) + "OK: " + str(obj) + "\n")
+            return out
         except:
-            out = (("  "*depth) + str(obj) + " BAD\n")
+            seen[thisId] = "BAD"
+            out = out + (("  "*depth) + "BAD: " + str(obj) + "\n")
             if type(obj) == types.DictType:
                 for key in obj:
                     out = out + findUnpicklableParts(key, seen, depth+1)
                     out = out + findUnpicklableParts(obj[key], seen, depth+1)
             elif type(obj) == types.InstanceType:
+                out = out + ("  "*(depth+1)) + \
+                    "WARNING: object missing __getstate__"
                 for key in obj.__dict__:
+                    out = out + (("  "*(depth+1)) + "--- FOR KEY "+ str(key) + "\n")
                     out = out + findUnpicklableParts(key, seen, depth+1)
-                    out = out + findUnpicklableParts(getattr(obj,key), seen, depth+1)
+                    out = out + findUnpicklableParts(getattr(obj, key), seen, depth+1)
             elif ((type(obj) == types.ListType) or
                   (type(obj) == types.TupleType)):
                 for val in obj:

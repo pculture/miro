@@ -837,6 +837,7 @@ class Item(DDBObject):
     # Called by pickle during serialization
     def __getstate__(self):
         temp = copy(self.__dict__)
+        temp['dlFactory'] = None
         return (3,temp)
 
     ##
@@ -871,6 +872,8 @@ class Item(DDBObject):
                 self.__class__ = DropItLikeItsHot
             if self.__class__ is FileItem:
                 self.__class__ = DropItLikeItsHot
+
+        self.dlFactory = DownloaderFactory(self)
 
 #Dummy class for removing bogus FileItem instances
 class DropItLikeItsHot:
