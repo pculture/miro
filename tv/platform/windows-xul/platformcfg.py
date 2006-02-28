@@ -3,13 +3,52 @@ import util
 import config
 import _winreg
 import cPickle
+import string
 
-# NEEDS: the correct way to do these is to call SHGetFolderPath and
-# ship the appropriate dll, not to hardcode paths. But that isn't
-# working for me right now, so cheat.
+_appDataDirectory = None
+_baseMoviesDirectory = None
+
+def _getRegString(key, subkey):
+    def doExpand(val):
+        # We can't use os.path.expandvars because that handles only
+        # $foo and ${foo}-style vars, while Windows is lobbing us
+        # %FOO%-style expansions. So just handle the special case of 
+        # %USERPROFILE%, which is what we'll be dealing with under normal
+        # circumstances.
+        # .. If USERPROFILE isn't defined, we're probably in a world of hurt
+        # anyway.
+        return string.replace(val, '%USERPROFILE%', os.environ['USERPROFILE'])
+
+    (val, t) = _winreg.QueryValueEx(key, subkey)
+    if t == _winreg.REG_SZ:
+        return val
+    elif t == _winreg.REG_EXPAND_SZ:
+        return doExpand(val)
+    else:
+        raise TypeError, "Got bad type %s for registry subkey %s" % (t, subkey)
+
+def _findDirectories():
+    global _appDataDirectory
+    global _baseMoviesDirectory
+
+    keyName = r'Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders'
+    key = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, keyName)
+
+    _appDataDirectory = _getRegString(key, 'AppData')
+    try:
+        _baseMoviesDirectory = _getRegString(key, 'My Video')
+    except:
+        _baseMoviesDirectory = None
+    if type(_baseMoviesDirectory) is not str or len(_baseMoviesDirectory) < 1:
+        # Apparently some machines have the key present, but blank
+        documentsDirectory = _getRegString(key, 'Personal')
+        # 'Help' the user
+        _baseMoviesDirectory = os.path.join(documentsDirectory, 'My Videos')
+
+_findDirectories()
 
 def _getMoviesDirectory():
-    path = os.path.expandvars('C:\\Documents and Settings\\${USERNAME}\\My Documents\\My Videos\\%s' % config.get(config.SHORT_APP_NAME))
+    path = os.path.join(_baseMoviesDirectory, config.get(config.SHORT_APP_NAME))
     try:
         os.makedirs(os.path.join(path, 'Incomplete Downloads'))
     except:
@@ -17,11 +56,10 @@ def _getMoviesDirectory():
     return path
 
 def _getSupportDirectory():
-    path = 'C:\\Documents and Settings\\${USERNAME}\\Application Data\\%s\\%s\\Support' % \
-        (config.get(config.PUBLISHER),
-         config.get(config.LONG_APP_NAME))
-    path = os.path.expandvars(path)
-
+    path = os.path.join(_appDataDirectory,
+                        config.get(config.PUBLISHER),
+                        config.get(config.LONG_APP_NAME),
+                        'Support')
     try:
         os.makedirs(path)
     except:
