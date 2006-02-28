@@ -227,6 +227,9 @@ function videoProgressUpdate(elapsed, len) {
     //FIXME: these are stored in two places
     var left = 61;
     var right = 204;
+    if (len < 1) len = 1;
+    if (elapsed < 0) elapsed = 0;
+    if (elapsed > len) elapsed = len;
     if (progressDragStart == 0) {
         var hours = Math.floor(elapsed/3600);
         var mins = Math.floor((elapsed - hours*3600)/60);

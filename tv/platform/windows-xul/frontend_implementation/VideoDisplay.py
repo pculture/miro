@@ -40,8 +40,8 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
         app.VideoDisplayBase.__init__(self)
         print "Display initialized"
 
-    elapseRe = re.compile('elapsed=(\d+)')
-    lengthRe = re.compile('len=(\d+)')
+    elapseRe = re.compile('elapsed=(-?\d+)')
+    lengthRe = re.compile('len=(-?\d+)')
 
     # The mutation functions.
     videoPlay = _genMutator('videoPlay')
