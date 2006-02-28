@@ -132,8 +132,8 @@ class UIBackendDelegate:
             url = url[:2047]
         try:
             webbrowser.open(url)
-        except error:
-            util.failedExn("while opening a URL in a new window")
+        except webbrowser.Error:
+            util.failedExn("while opening %s in a new window" % url)
 
     def updateAvailableItemsCountFeedback(self, count):
         # Inform the user in a way or another that newly available items are

@@ -8,6 +8,7 @@ import time
 import errno
 import os
 import config
+import util
 from util import quoteJS
 
 def execChromeJS(js):
@@ -135,7 +136,12 @@ class httpServer:
 
                 self.handleRequest(method, path)
             except:
-                details = "Closing socket; request was [%d] %s" % \
+                # We have logs collected from the wild here where
+                # self.reqNum is non-int here (presumably None,
+                # because the socket gets closed before the first line
+                # is sent) -- so make sure we use %s for the request
+                # number instead of %d.
+                details = "Closing socket; request was [%s] %s" % \
                     (self.reqNum, request)
                 util.failedExn("when answering a request", details = details)
         finally:
@@ -432,11 +438,16 @@ request goes in a queue."""
 class HTMLDisplay (app.Display):
     "Selectable Display that shows a HTML document."
 
-    def __init__(self, html, existingView=None, frameHint=None, areaHint=None):
+    def __init__(self, html, existingView=None, frameHint=None, areaHint=None,
+                 baseURL=None):
         """'html' is the initial contents of the display, as a string.
         Remaining arguments are ignored."""
 
         html=xhtmltools.toUTF8Bytes(html)
+
+        if baseURL is not None:
+            # This is something the Mac port uses. Complain about that.
+            print "WARNING: HTMLDisplay ignoring baseURL '%s'" % baseURL
 
         app.Display.__init__(self)
 
