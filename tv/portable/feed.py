@@ -1011,7 +1011,7 @@ class RSSFeedImpl(FeedImpl):
     def __getstate__(self):
         temp = copy(self.__dict__)
         temp["scheduler"] = None
-        if 'bozo_exception' in temp['parsed']:
+        if temp.has_key('parsed') and 'bozo_exception' in temp['parsed']:
             # This can end up pointing into the XML parser, leading to
             # a pickling failure.
             del temp['parsed']['bozo_exception']
