@@ -1067,6 +1067,7 @@ class BTDownloader(Downloader):
         self.eta = 0
         self.d = BTDisplay(self)
         self.uploaded = 0
+        self.torrent = None
         Downloader.__init__(self,url,item)
 
     def getRate(self):
