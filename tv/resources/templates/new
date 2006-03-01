@@ -32,9 +32,9 @@
 	<div id="main-titlebar-channelname">
 		<h1 i18n:translate="">New Videos</h1>
 	</div>
-	<div id="main-titlebar-tasks">
-		<div id="main-titlebar-tasks-search" style="margin-top:38px;">
-		    <input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search" 
+	<div id="main-titlebar-tasks" style="width:100%; text-align:center;">
+		<div id="main-titlebar-tasks-search">
+		    <input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search"  style="margin:35px 55px 0px 0px; width:200px; font-size: 120%;"
 		           onfocus="startEditFilter(this,new Array('unwatched-items', 'expiring-items'),new Array('',''),new Array('global filter unwatchedItems','global filter expiringItems'),new Array(0, 0),new Array('',''))" 
 		           onblur="endEditFilter()" />
 		</div>
