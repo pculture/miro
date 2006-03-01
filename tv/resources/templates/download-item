@@ -89,6 +89,15 @@
 				</div>
 			</span>
 			<!-- / NEW -->
+
+			<!-- FILE TASKS -->
+			<div class="main-video-details-tasks">
+				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
+				   href="#" onclick="recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+					 <a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a>
+				<div class="clearer"></div>
+			</div>
+			<!-- / FILE TASKS -->
 			
 		</div>
 		<div class="clearer"></div>
@@ -107,6 +116,14 @@
 			<p class="main-video-details-left" t:replace="this getFormat" />
 			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
 			<!-- / FILE INFO -->
+			<!-- FILE TASKS -->
+			<div class="main-video-details-tasks">
+				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
+				   href="#" onclick="recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+					 <a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a>
+				<div class="clearer"></div>
+			</div>
+			<!-- / FILE TASKS -->
 			
 		</div>
 		<div class="clearer"></div>
@@ -140,7 +157,15 @@
 					<span t:replace="this downloadRate" />
 				</span>
 			</p>
-			<!-- / DOWNLOAD PROGRESS -->	
+			<!-- / DOWNLOAD PROGRESS -->
+			<!-- FILE TASKS -->
+			<div class="main-video-details-tasks">
+				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
+				   href="#" onclick="recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+					 <a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a>
+				<div class="clearer"></div>
+			</div>
+			<!-- / FILE TASKS -->
 			
 		</div>
 		<div class="clearer"></div>
@@ -163,6 +188,14 @@
 			<!-- MESSAGE -->
 			<p>Pending Automatic Download</p>
 			<!-- MESSAGE -->
+			<!-- FILE TASKS -->
+			<div class="main-video-details-tasks">
+				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
+				   href="#" onclick="recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+					 <a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a>
+				<div class="clearer"></div>
+			</div>
+			<!-- / FILE TASKS -->
 			
 		</div>
 		<div class="clearer"></div>
@@ -185,6 +218,15 @@
 			<!-- MESSAGE -->
 			<p>Pending Manual Download</p>
 			<!-- MESSAGE -->
+
+			<!-- FILE TASKS -->
+			<div class="main-video-details-tasks">
+				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
+				   href="#" onclick="recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+					 <a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a>
+				<div class="clearer"></div>
+			</div>
+			<!-- / FILE TASKS -->
 			
 		</div>
 		<div class="clearer"></div>
@@ -219,7 +261,7 @@
 			<div class="main-video-details-tasks">
 				<a href="#" onclick="return eventURL('action:expireItem?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
 				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
-				   href="javascript:recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@');"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+				   href="#" onclick="recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
 					 <a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a>
 				<div class="clearer"></div>
 			</div>
@@ -258,7 +300,7 @@
 			<div class="main-video-details-tasks">
 				<a href="#" onclick="return eventURL('action:expireItem?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
 				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
-				   href="javascript:recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@');"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+				   href="#" onclick="recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
 				<a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a>
 				<div class="clearer"></div>
 			</div>
@@ -286,7 +328,7 @@
 			<div class="main-video-details-tasks" style="padding-top:19px;">
 				<a href="#" onclick="return eventURL('action:expireItem?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
 				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
-				   href="javascript:recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@');"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>					 
+				   href="#" onclick="recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>					 
 				<a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a>
 				<div class="clearer"></div>
 			</div>
@@ -325,7 +367,7 @@
 			<div class="main-video-details-tasks">
 				<a href="#" onclick="return eventURL('action:expireItem?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
 				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
-				   href="javascript:recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@');"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+				   href="#" onclick="recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
 				<a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a>
 				<div class="clearer"></div>
 			</div>
@@ -352,6 +394,14 @@
 			<!-- ERROR -->
 			<p>Download Error: <span t:replace="this getFailureReason" /></p>
 			<!-- / ERROR -->
+			<!-- FILE TASKS -->
+			<div class="main-video-details-tasks">
+				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
+				   href="#" onclick="recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+					 <a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a>
+				<div class="clearer"></div>
+			</div>
+			<!-- / FILE TASKS -->
 			
 		</div>
 		<div class="clearer"></div>

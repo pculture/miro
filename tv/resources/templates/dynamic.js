@@ -92,16 +92,20 @@ function eventURL(url) {
     return false;
 }    
 
+// Open email client with email about selected video
+// All parameters come in URL encoded
 function recommendItem(title, url, feedURL) {
+    url = URLdecode(url);
+    feedURL = URLdecode(feedURL);
     body = "You should check out this video:\n";
     body = body + url + "\n\n";
     body = body + "I found it while using the Democracy Player, which you can download here:\n";
-    body = body + "http://www.participatoryculture.org\n\n";
+    body = body + "http://www.getdemocracy.com\n\n";
     body = body + "The video was on this channel (click 'subscribe' in Democracy and paste in this address):\n"
     body = body + feedURL + "\n\n"
     
     url = 'mailto:';
-    url = url + "?subject=" + URLencode(title);
+    url = url + "?subject=" + title;
     url = url + "&body=" + URLencode(body);
     eventURL(url);
     
@@ -242,6 +246,10 @@ function endEditFilter() {
 function URLencode(str) {
     return escape(str).replace(/\+/g, '%2C').replace(/\"/g,'%22').
 	replace(/\'/g, '%27');
+}
+
+function URLdecode(str) {
+  return unescape(str);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
