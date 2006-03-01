@@ -257,27 +257,27 @@ splitter {
 	background:  url(images/bottom-controls.png) no-repeat -31px -78px;
 }
 
-#bottom-buttons-play a {	
+.bottom-buttons-play a {	
 	width: 39px;
 	background:  url(images/bottom-controls.png) no-repeat -70px 0px;
 }
 
-#bottom-buttons-play a:hover {	
+.bottom-buttons-play a:hover {	
 	width: 39px;
 	background:  url(images/bottom-controls.png) no-repeat -70px -39px;
 }
 
-#bottom-buttons-play-inactive a {	
+.bottom-buttons-play-inactive a {	
 	width: 39px;
 	background:  url(images/bottom-controls.png) no-repeat -70px -78px;
 }
 
-#bottom-buttons-pause a {	
+.bottom-buttons-pause a {	
 	width: 39px;
 	background:  url(images/bottom-controls.png) no-repeat -70px -117px;
 }
 
-#bottom-buttons-pause a:hover {	
+.bottom-buttons-pause a:hover {	
 	width: 39px;
 	background:  url(images/bottom-controls.png) no-repeat -70px -156px;
 }

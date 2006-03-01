@@ -247,12 +247,16 @@ function videoEnableControls() {
     //jsdump('Enabling controls');
     progressDragEnabled = true;
     progressDragStart = 0;
+    var playButton = document.getElementById("bottom-buttons-play");
+    playButton.className = "bottom-buttons-pause";
 }
 function videoDisableControls() {
     //jsdump('Disabling Controls');
     progressDragEnabled = false;
     progressDragStart = 0;
     videoProgressUpdate(0,1);
+    var playButton = document.getElementById("bottom-buttons-play");
+    playButton.className = "bottom-buttons-play";
 }
 
 function setVideoProgress(percent) {
