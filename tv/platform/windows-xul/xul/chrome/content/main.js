@@ -247,8 +247,17 @@ function videoEnableControls() {
     //jsdump('Enabling controls');
     progressDragEnabled = true;
     progressDragStart = 0;
+    var prevButton = document.getElementById("bottom-buttons-previous");
+    prevButton.className = "bottom-buttons-previous";
+    var stopButton = document.getElementById("bottom-buttons-stop");
+    stopButton.className = "bottom-buttons-stop";
     var playButton = document.getElementById("bottom-buttons-play");
     playButton.className = "bottom-buttons-pause";
+    var fullButton = document.getElementById("bottom-buttons-fullscreen");
+    fullButton.className = "bottom-buttons-fullscreen";
+    var nextButton = document.getElementById("bottom-buttons-next");
+    nextButton.className = "bottom-buttons-next";
+
     var slider = document.getElementById("progress-slider");
     slider.className = "progress-slider";
 }
@@ -257,8 +266,16 @@ function videoDisableControls() {
     progressDragEnabled = false;
     progressDragStart = 0;
     videoProgressUpdate(0,1);
+    var prevButton = document.getElementById("bottom-buttons-previous");
+    prevButton.className = "bottom-buttons-previous-inactive";
+    var stopButton = document.getElementById("bottom-buttons-stop");
+    stopButton.className = "bottom-buttons-stop-inactive";
     var playButton = document.getElementById("bottom-buttons-play");
     playButton.className = "bottom-buttons-play";
+    var fullButton = document.getElementById("bottom-buttons-fullscreen");
+    fullButton.className = "bottom-buttons-fullscreen-inactive";
+    var nextButton = document.getElementById("bottom-buttons-next");
+    nextButton.className = "bottom-buttons-next-inactive";
     var slider = document.getElementById("progress-slider");
     slider.className = "progress-slider-inactive";
 }

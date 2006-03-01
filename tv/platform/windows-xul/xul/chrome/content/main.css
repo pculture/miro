@@ -227,32 +227,32 @@ splitter {
 	cursor: default;	
 }
 
-#bottom-buttons-previous a {	
+.bottom-buttons-previous a {	
 	width: 31px;
 	background:  url(images/bottom-controls.png) no-repeat 0px 0px;
 }
 
-#bottom-buttons-previous a:hover {	
+.bottom-buttons-previous a:hover {	
 	width: 31px;
 	background:  url(images/bottom-controls.png) no-repeat 0px -39px;
 }
 
-#bottom-buttons-previous-inactive a {	
+.bottom-buttons-previous-inactive a {	
 	width: 31px;
 	background:  url(images/bottom-controls.png) no-repeat 0px -78px;
 }
 
-#bottom-buttons-stop a {	
+.bottom-buttons-stop a {	
 	width: 39px;
 	background:  url(images/bottom-controls.png) no-repeat -31px 0px;
 }
 
-#bottom-buttons-stop a:hover {	
+.bottom-buttons-stop a:hover {	
 	width: 39px;
 	background:  url(images/bottom-controls.png) no-repeat -31px -39px;
 }
 
-#bottom-buttons-stop-inactive a {	
+.bottom-buttons-stop-inactive a {	
 	width: 39px;
 	background:  url(images/bottom-controls.png) no-repeat -31px -78px;
 }
@@ -282,32 +282,32 @@ splitter {
 	background:  url(images/bottom-controls.png) no-repeat -70px -156px;
 }
 
-#bottom-buttons-fullscreen a {	
+.bottom-buttons-fullscreen a {	
 	width: 31px;
 	background:  url(images/bottom-controls.png) no-repeat -109px 0px;
 }
 
-#bottom-buttons-fullscreen a:hover {	
+.bottom-buttons-fullscreen a:hover {	
 	width: 31px;
 	background:  url(images/bottom-controls.png) no-repeat -109px -39px;
 }
 
-#bottom-buttons-fullscreen-inactive a {	
+.bottom-buttons-fullscreen-inactive a {	
 	width: 31px;
 	background:  url(images/bottom-controls.png) no-repeat -109px -78px;
 }
 
-#bottom-buttons-next a {	
+.bottom-buttons-next a {	
 	width: 31px;
 	background:  url(images/bottom-controls.png) no-repeat -140px 0px;
 }
 
-#bottom-buttons-next a:hover {	
+.bottom-buttons-next a:hover {	
 	width: 31px;
 	background:  url(images/bottom-controls.png) no-repeat -140px -39px;
 }
 
-#bottom-buttons-next-inactive a {	
+.bottom-buttons-next-inactive a {	
 	width: 31px;
 	background:  url(images/bottom-controls.png) no-repeat -140px -78px;
 }

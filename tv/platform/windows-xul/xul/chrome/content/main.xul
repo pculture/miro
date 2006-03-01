@@ -170,11 +170,11 @@
 		<!-- CONTROLS -->
 		<hbox flex="0" width="180">
 			<html:ul id="bottom-buttons">
-				<html:li id="bottom-buttons-previous"><html:a  onmousedown="rewindMouseDown();" onmouseup="rewindMouseUp();" onmouseout="rewindFFMouseOut();">Previous</html:a></html:li>
-				<html:li id="bottom-buttons-stop"><html:a onclick="eventURL(getCookieFromBrowserId('mainDisplay'),'action:videoStop');">Stop</html:a></html:li>
+				<html:li id="bottom-buttons-previous" class="bottom-buttons-previous-inactive"><html:a  onmousedown="rewindMouseDown();" onmouseup="rewindMouseUp();" onmouseout="rewindFFMouseOut();">Previous</html:a></html:li>
+				<html:li id="bottom-buttons-stop" class="bottom-buttons-stop-inactive"><html:a onclick="eventURL(getCookieFromBrowserId('mainDisplay'),'action:videoStop');">Stop</html:a></html:li>
 				<html:li id="bottom-buttons-play" class="bottom-buttons-play"><html:a onclick="eventURL(getCookieFromBrowserId('mainDisplay'),'action:videoPlayPause');">Play</html:a></html:li>
-				<html:li id="bottom-buttons-fullscreen"><html:a onclick="eventURL(getCookieFromBrowserId('mainDisplay'),'action:videoFullscreen');">Fullscreen</html:a></html:li>
-				<html:li id="bottom-buttons-next"><html:a onmousedown="fastForwardMouseDown();" onmouseup="fastForwardMouseUp();" onmouseout="rewindFFMouseOut();">Next</html:a></html:li>
+				<html:li id="bottom-buttons-fullscreen" class="bottom-buttons-fullscreen-inactive"><html:a onclick="eventURL(getCookieFromBrowserId('mainDisplay'),'action:videoFullscreen');">Fullscreen</html:a></html:li>
+				<html:li id="bottom-buttons-next" class="bottom-buttons-next-inactive"><html:a onmousedown="fastForwardMouseDown();" onmouseup="fastForwardMouseUp();" onmouseout="rewindFFMouseOut();">Next</html:a></html:li>
 			</html:ul>
 		</hbox>
 		<!-- / CONTROLS -->
