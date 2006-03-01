@@ -8,11 +8,11 @@ body {
 
 #external-container-basic {
 	position: absolute;
-	width: 450px;
+	width: 500px;
 	height: 150px;
 	left: 50%;
 	top: 50%;
-	margin: -125px 0px 0px -225px;
+	margin: -125px 0px 0px -250px;
 	text-align: center;
 }
 
