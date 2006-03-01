@@ -66,7 +66,7 @@ else:
 # next to the old one.
 appConfigPath = os.path.join(root, 'resources', 'app.config')
 s = open("%s.template" % appConfigPath, "rt").read()
-s = string.Template(s).safe_substitute(APP_REVISION = revision)
+s = string.Template(s).safe_substitute(APP_REVISION = revision, APP_PLATFORM = 'osx')
 f = open(appConfigPath, "wt")
 f.write(s)
 f.close()

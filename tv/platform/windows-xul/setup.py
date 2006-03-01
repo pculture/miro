@@ -274,7 +274,7 @@ class Common:
 
         path = os.path.join(root, 'resources', 'app.config')
         s = open("%s.template" % path, "rt").read()
-        s = string.Template(s).safe_substitute(APP_REVISION = revision)
+        s = string.Template(s).safe_substitute(APP_REVISION = revision, APP_PLATFORM = 'windows-xul')
         f = open(path, "wt")
         f.write(s)
         f.close()
