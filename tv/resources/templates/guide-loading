@@ -18,8 +18,7 @@ setTimeout(loadguide, 10);
 
 <body class="loading_body">
 	<div id="loading_channel">
-		<center style="padding-bottom: 18px;">Loading Channel Guide</center>
-		<center><img src="resource:images/loader.gif" alt="" /></center>
+		&nbsp;
 	</div>
 </body>
 </html>

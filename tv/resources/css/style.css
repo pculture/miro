@@ -1271,15 +1271,13 @@ background-color: #e7e7e7;
 }
 
 #loading_channel{
-	font-size: 25px;
-	color: #333;
-	font-weight: bold;
-	margin: 20% auto 0 auto;
-/*	background-color: #fff; */
-	width: 330px;
-	height: 100px;
-	padding: 35px;
-/*	border: 1px solid #d8d8d8; */
+	width: 324px;
+	height: 128px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -64px 0 0 -162px;
+	background: url(../images/loading.gif) no-repeat left top;
 	}
 	
 	/*/////////////////////////////////////////////
