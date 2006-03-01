@@ -1,4 +1,8 @@
 
+window, hbox, vbox, menu, menubar, menuitem, menupopup {	
+	font: normal 11px "Tahoma", "Trebuchet MS", Arial;
+}
+
 /* TITLEBAR 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
