@@ -340,7 +340,7 @@ splitter {
   height: 20px;
 }
 
-#progress-slider {
+.progress-slider {
   position: absolute;
   width: 5px;
   height: 7px;
@@ -349,6 +349,17 @@ splitter {
   margin: 0px;
   padding: 0px;
   background: url(images/progress-slider.png) no-repeat;
+  z-index: 100;
+}
+
+.progress-slider-inactive {
+  position: absolute;
+  width: 5px;
+  height: 7px;
+  top: 10px;
+  left: 61px;  /* The slider can move between 61 and 204px */
+  margin: 0px;
+  padding: 0px;
   z-index: 100;
 }
 
