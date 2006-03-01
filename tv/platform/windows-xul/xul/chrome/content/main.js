@@ -148,11 +148,16 @@ function navigateDisplay(displayName, url) {
 
 // If you have a cookie, you can simulate an event from here.
 function eventURL(cookie, url) {
+    if (null == cookie) {
+       jsdump('EventURL() called for '+url+' with null cookie');
+       return false;
+    }
     url = "http://127.0.0.1:" + serverPort + "/dtv/action/" +
         cookie + "?" + url;
     var req = new XMLHttpRequest();
     req.open("GET", url, true);
     req.send(null);
+    return false;
 }
 
 
