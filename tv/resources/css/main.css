@@ -1,7 +1,7 @@
 body {
 	background: #FFFFFF;
 	margin: 0px;
-	font: 12px "Lucida Grande", "Trebuchet MS", Arial, sans-serif;
+	font: 12px "Lucida Grande", "Tahoma", Arial, sans-serif;
 	color: #333333;
 	/* The following property is used by Safari to prevent text selection */
 	/* NEEDS: generates spammy console warnings in strict mode under
@@ -384,7 +384,7 @@ li {
 	font-size: 70%;
 	font-weight: bold;
 	margin: 0px;
-	padding: 2px 5px 3px 0px;
+	padding: 3px 5px 3px 0px;
 	line-height: 11px;
 	text-transform: uppercase;
 }
