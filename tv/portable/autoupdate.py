@@ -1,6 +1,7 @@
 from downloader import grabURL
 from threading import Thread, Lock
 import config
+import xml.dom.minidom
 
 _lock = Lock()
 
@@ -18,18 +19,31 @@ def checkForUpdates(notifyIfUpToDate=False):
     
 
 def _checkForUpdates(notifyIfUpToDate):
+    platform = config.get(config.APP_PLATFORM)
+    serial = int(config.get(config.APP_SERIAL))
     info = grabURL(config.get(config.AUTOUPDATE_URL))
+    updated = False
     if info is not None:
-        try:
-            data = info['file-handle'].read()
-            info['file-handle'].close()
-            (version, url) = data.split()
-            if version != config.get(config.UPDATE_KEY):
+        data = info['file-handle'].read()
+        info['file-handle'].close()
+        domObj = xml.dom.minidom.parseString(data)
+        versions = domObj.getElementsByTagNameNS("http://www.getdemocracy.com/versionfile/1.0","version")
+        for version in versions:
+            attributes = version.attributes
+            if ((attributes['platform'].value == platform) and
+                (int(attributes['serial'].value)>serial)):
+                ver = attributes['version'].value
+                url = attributes['updateurl'].value
+                text = ""
+                for node in version.childNodes:
+                    if node.nodeType == node.TEXT_NODE:
+                        text = text + node.data
                 print "DTV: new update '%s' available (have '%s')" % \
-                    (config.get(config.UPDATE_KEY), version)
+                   (ver, config.get(config.APP_VERSION))
                 delegate.updateAvailable(url)
-            elif notifyIfUpToDate:
-                delegate.dtvIsUpToDate()
-        except:
-            pass
+                updated = True
+                break
+        domObj.unlink()
+        if notifyIfUpToDate and not updated:
+            delegate.dtvIsUpToDate()
     _lock.release()

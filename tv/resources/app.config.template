@@ -9,4 +9,3 @@ appRevision = $APP_REVISION
 appPlatform = $APP_PLATFORM
 appSerial-osx = 2006030100
 appSerial-windows-xul = 2006030100
-updateKey = 0.8.0-0

@@ -44,7 +44,7 @@ else:
 if 'DTV_AUTOUPDATE_URL' in os.environ:
     effectiveAutoupdate = os.environ['DTV_AUTOUPDATE_URL']
 else:
-    effectiveAutoupdate = 'http://www.participatoryculture.org/DTV-version.txt'
+    effectiveAutoupdate = 'http://www.participatoryculture.org/democracy-version.xml'
 
 CHANNEL_GUIDE_URL = Pref(key='ChannelGuideURL', default=effectiveChannelGuide,
                          platformSpecific=False)
@@ -75,8 +75,10 @@ APP_VERSION = \
     Pref(key='appVersion',   default=None, platformSpecific=False)
 APP_REVISION = \
     Pref(key='appRevision',  default=None, platformSpecific=False)
-UPDATE_KEY = \
-    Pref(key='updateKey',    default=None, platformSpecific=False)
+APP_PLATFORM = \
+    Pref(key='appPlatform',  default=None, platformSpecific=False)
+APP_SERIAL = \
+    Pref(key='appSerial-unknown',    default="0", platformSpecific=False)
 
 def addChangeCallback(callback):
     __callbacks.add(callback)
@@ -104,6 +106,10 @@ def load():
         __data = platformcfg.load()
         if __data is None:
             __data = dict()
+
+        # This is a bit of a hack to automagically get the serial
+        # number for this platform
+        APP_SERIAL.key = ('appSerial-%s' % get(APP_PLATFORM))
 
     finally:
         __lock.release()
