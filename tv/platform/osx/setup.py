@@ -58,6 +58,8 @@ import util
 revision = util.queryRevision(root)
 if revision is None:
     revision = 'unknown'
+else:
+    revision = 'r%s' % revision
 
 # Inject the revision number into app.config.template to get app.config.
 # NEEDS: Very sloppy. The new file is just dropped in the source tree
@@ -85,7 +87,7 @@ updatePListEntry(infoPlist, u'CFBundleShortVersionString', conf)
 updatePListEntry(infoPlist, u'CFBundleVersion', conf)
 updatePListEntry(infoPlist, u'NSHumanReadableCopyright', conf)
 
-print "Building Democracy Player v%s (r%s)" % (conf['appVersion'], conf['appRevision'])
+print "Building Democracy Player v%s (%s)" % (conf['appVersion'], conf['appRevision'])
 
 # Get a list of additional resource files to include
 

@@ -129,6 +129,14 @@ def get(descriptor):
             return __data.get(descriptor.key, descriptor.default)
     finally:
         __lock.release()
+
+def getAppConfig():
+    __lock.acquire()
+    try:
+        __checkValidity()
+        return __appConfig.copy()
+    finally:
+        __lock.release()
     
 def set(descriptor, value):
     __lock.acquire()

@@ -26,6 +26,7 @@ import objc
 import time
 import math
 import struct
+import string
 import urlparse
 import threading
 
@@ -34,6 +35,7 @@ NibClassBuilder.extractClasses("MainWindow")
 NibClassBuilder.extractClasses("PreferencesWindow")
 NibClassBuilder.extractClasses("AddChannelSheet")
 NibClassBuilder.extractClasses("PasswordWindow")
+NibClassBuilder.extractClasses("ExceptionReporterPanel")
 
 doNotCollect = {}
 nc = NSNotificationCenter.defaultCenter()
@@ -939,13 +941,47 @@ class UIBackendDelegate:
         return showWarningDialog(summary, message, buttons)
         
     def notifyUnkownErrorOccurence(self, when, log = ''):
-        summary = u'Unknown Runtime Error'
-        message = u'An unknown error has occured %s.' % when
-        return showWarningDialog(summary, message)
+        controller = ExceptionReporterController.alloc().initWithMoment_log_(when, log)
+        controller.showPanel()
+        return True
 
     def copyTextToClipboard(self, text):
         print "WARNING: copyTextToClipboard not implemented"
 
+
+class ExceptionReporterController (NibClassBuilder.AutoBaseClass):
+    
+    def initWithMoment_log_(self, when, log):
+        self = super(ExceptionReporterController, self).initWithWindowNibName_owner_("ExceptionReporterPanel", self)
+        self.info = config.getAppConfig()
+        self.info['when'] = when
+        self.info['log'] = log
+        return self
+        
+    def awakeFromNib(self):
+        title = string.Template(self.window().title()).safe_substitute(self.info)
+        msg1 = string.Template(self.msg1Field.stringValue()).safe_substitute(self.info)
+        msg3 = string.Template(self.msg3View.string()).safe_substitute(self.info)
+        nsmsg3 = NSString.stringWithString_(unicode(msg3))
+        msg3Data = nsmsg3.dataUsingEncoding_(NSUTF8StringEncoding)
+        (msg3, attrs) = NSAttributedString.alloc().initWithHTML_documentAttributes_(msg3Data)
+        logmsg = string.Template(self.logView.string()).safe_substitute(self.info)
+
+        self.window().setTitle_(title)
+        self.msg1Field.setStringValue_(msg1)
+        self.msg3View.setBackgroundColor_(NSColor.controlColor())
+        self.msg3View.textContainer().setLineFragmentPadding_(0)
+        self.msg3View.textStorage().setAttributedString_(msg3)
+        self.logView.setString_(logmsg)
+    
+    def showPanel(self):
+        NSApplication.sharedApplication().runModalForWindow_(self.window())
+    
+    def dismissPanel_(self, sender):
+        self.window().close()
+        NSApplication.sharedApplication().stopModal()
+ 
+       
 class PasswordController (NibClassBuilder.AutoBaseClass):
 
     def init(self, message, prefillUser = None, prefillPassword = None):
