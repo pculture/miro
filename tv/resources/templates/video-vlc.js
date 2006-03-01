@@ -31,6 +31,7 @@ function videoSetVolume(level) {
   document.video1.set_volume(level*200);
 }
 function videoPlay(url) {
+  eventURL('action:videoEnablePauseButton')
   // FIXME: race condition
   if(typeof this.lastURL == 'undefined')
           this.lastURL = '';
@@ -54,6 +55,7 @@ function videoSetPos(pos) {
   document.video1.seek(posInSecs, false);
 }
 function videoPause() {
+  eventURL('action:videoDisablePauseButton')
   dump("\n\npausing\n\n");
   document.video1.pause();
 }

@@ -280,6 +280,16 @@ function videoDisableControls() {
     slider.className = "progress-slider-inactive";
 }
 
+function videoEnablePauseButton() {
+    var playButton = document.getElementById("bottom-buttons-play");
+    playButton.className = "bottom-buttons-pause";
+}
+
+function videoDisablePauseButton() {
+    var playButton = document.getElementById("bottom-buttons-play");
+    playButton.className = "bottom-buttons-play";
+}
+
 function setVideoProgress(percent) {
   //jsdump("Video now at "+percent);
   eventURL(getCookieFromBrowserId('mainDisplay'),'action:setVideoProgress?pos='+percent);

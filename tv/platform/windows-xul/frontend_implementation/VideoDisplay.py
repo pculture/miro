@@ -141,6 +141,15 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
         elif ("action:videoPrev" == url):
             self.playbackController.skip(-1)
             return False
+        elif ("action:videoEnablePauseButton" == url):
+            execChromeJS('videoEnablePauseButton();')
+            return False
+        elif ("action:videoDisablePauseButton" == url):
+            execChromeJS('videoDisablePauseButton();')
+            return False
+        elif ("action:videoPrev" == url):
+            self.playbackController.skip(-1)
+            return False
         elif (url.startswith("action:setVolume?level=")):
             self.setVolume(float(url[23:]))
             return False
