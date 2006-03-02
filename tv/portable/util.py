@@ -120,19 +120,15 @@ def failed(when, withExn = False, details = None):
     log += "\n"
 
     if withExn:
-        print "DTV: Failed %s; exception follows." % (when, )
-        if details:
-            print "DTV: Details: %s" % (details, )
-        traceback.print_exc()
         log += "Exception\n---------\n"
+        if details:
+            log += "Details: %s" % (details, )
         log += traceback.format_exc()
         log += "\n"
     else:
-        print "DTV: Failed %s; call stack follows." % (when, )
-        if details:
-            print "DTV: Details: %s" % (details, )
-        traceback.print_stack()
         log += "Call stack\n----------\n"
+        if details:
+            log += "Details: %s" % (details, )
         log += ''.join(traceback.format_stack())
         log += "\n"
         
@@ -144,7 +140,7 @@ def failed(when, withExn = False, details = None):
             (t.getName(),
              t.isDaemon() and ' [Daemon]' or '')
 
-    print "----- GENERATING CRASH REPORT -----"
+    print "----- GENERATING CRASH REPORT (DANGER CAN HAPPEN) -----"
     print log
     print "----- END OF CRASH REPORT -----"
 
