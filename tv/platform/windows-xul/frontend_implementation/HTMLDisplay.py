@@ -48,8 +48,9 @@ def getServerPort():
         if serverPort is None:
             # Bring up the server.
             httpListener()
+        if serverPort is None:
+            raise ValueError, "httpListener didn't set the port"
 
-        assert serverPort, "httpListener didn't set the port"
         result = serverPort
     finally:
         lock.release()
@@ -66,7 +67,8 @@ class httpListener:
         self.socket.bind( ('127.0.0.1', 0) )
         (myAddr, myPort) = self.socket.getsockname()
         print "httpListener: Listening on %s %s" % (myAddr, myPort)
-        assert not serverPort, "Only one httpListener allowed, please"
+        if serverPort:
+            raise RuntimeError, "Only one httpListener allowed, please"
         serverPort = myPort
         self.socket.listen(63)
 
@@ -127,7 +129,8 @@ class httpServer:
                 request = self.file.readline()
 
                 match = re.match(r"^([^ ]+) +([^ ]+)", request)
-                assert match, "Malformed HTTP request"
+                if not match:
+                    raise ValueError, "Malformed HTTP request"
                 method = match.group(1)
                 path = match.group(2)
                 self.reqNum = self.incReqNum()
@@ -162,7 +165,8 @@ class httpServer:
         # Thread exits at this point
 
     def handleRequest(self, method, path):
-        assert method == 'GET', "Only GET is supported"
+        if not method == 'GET':
+            raise ValueError, "Only GET is supported"
 
         ## Mutator stream ##
         match = re.match("^/dtv/mutators/(.*)", path)
@@ -182,8 +186,9 @@ class httpServer:
 
             httpServer.classLock.acquire()
             try:
-                assert not httpServer.chromeJavascriptStream, \
-                    "There can't be two xuljs's (%d)" % self.reqNum
+                if httpServer.chromeJavascriptStream:
+                    raise RuntimeError, \
+                        "There can't be two xuljs's (%d)" % self.reqNum
 
                 self.beginSendingChunks()
                 for a in httpServer.chromeJavascriptQueue:
@@ -204,8 +209,9 @@ class httpServer:
 
             httpServer.classLock.acquire()
             try:
-                assert not httpServer.prefJavascriptStream, \
-                    "There can't be two prefjs's (%d)" % self.reqNum
+                if httpServer.prefJavascriptStream:
+                    raise RuntimeError, \
+                        "There can't be two prefjs's (%d)" % self.reqNum
 
                 self.beginSendingChunks()
                 if (config.get(config.RUN_AT_STARTUP)):
@@ -246,9 +252,10 @@ class httpServer:
             cookie = match.group(1)
             print "[%s @%s] Initial HTML" % (self.reqNum, cookie)
 
-            assert cookie in pendingDocuments, \
-                "bad document request %s to HTMLDisplay server %d" % \
-                (cookie, self.reqNum)
+            if not cookie in pendingDocuments:
+                raise RuntimeError, \
+                    "bad document request %s to HTMLDisplay server %d" % \
+                    (cookie, self.reqNum)
             (contentType, body) = pendingDocuments[cookie]
             del pendingDocuments[cookie]
 
@@ -310,6 +317,17 @@ class httpServer:
         if match:
             relativePath = match.group(1)
             print "[%s] Resource: %s" % (self.reqNum, relativePath)
+
+            # Sanity-check the path. We're very liberal about
+            # rejecting paths -- anything that has two consecutive
+            # periods is thrown out, and a quoting character is
+            # optionally allowed between them (even though I don't
+            # thing this would actally help.)
+            if re.search(r"\.\\?\.", relativePath):
+                print "[%s] Rejecting stupid-looking path" % (self.reqNum, )
+                return
+
+            # Open the file.
             fullPath = resource.path(relativePath)
             data = open(fullPath,'rb').read()
 
@@ -332,7 +350,7 @@ class httpServer:
             return
 
         ## Fell through - bad URL ##
-        assert False, "Unrecognized request"
+        raise ValueError, "Unrecognized request"
 
     def sendDocumentAndClose(self, contentType, data, cache=False):
         self.socket.send("HTTP/1.0 200 OK\r\n")
@@ -351,8 +369,9 @@ class httpServer:
     def queueChunk(self, mimeType, body):
         self.cond.acquire()
         try:
-            assert self.isChunked, \
-                "queueChunk only works on event-based HTTP sessions"
+            if not self.isChunked:
+                raise RuntimeError, \
+                    "queueChunk only works on event-based HTTP sessions"
             self.chunkQueue.append((mimeType, body))
             self.cond.notify()
         finally:
@@ -534,7 +553,8 @@ class HTMLDisplay (app.Display):
     @classmethod
     def setMutationOutput(klass, eventCookie, htmlServer):
 	self = klass.cookieToInstanceMap[eventCookie]
-        assert not self.mutationOutput, "HTMLDisplay already has its htmlServer"
+        if self.mutationOutput:
+            raise RuntimeError, "HTMLDisplay already has its htmlServer"
 
         self.lock.acquire()
         try:
