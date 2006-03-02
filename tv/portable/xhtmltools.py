@@ -108,18 +108,26 @@ def fixHTMLHeader(data,charset):
             #print " adding %s Content-Type to HTML" % charset
             return header.expand('\\1<head \\2><meta http-equiv="Content-Type" content="text/html; charset=')+charset+header.expand('">\\3</head>\\4')
 
-# Takes in a unicode string or a byte string and charset and converts
-# it to utf-8
-def toUTF8Bytes(string,charset=None):
-    try:
-        return string.encode('utf-8')  #Turn whatever we have into utf-8
+# Takes a string and do whatever needs to be done to make it into a
+# UTF-8 string. If a Unicode string is given, it is just encoded in
+# UTF-8. Otherwise, if an encoding hint is given, first try to decode
+# the string as if it were in that encoding; if that fails (or the
+# hint isn't given), liberally (if necessary lossily) interpret it as
+# defaultEncoding, as declared on the next line:
+defaultEncoding = "iso-8859-1" # aka Latin-1
+def toUTF8Bytes(string, encoding=None):
+    # If we got a Unicode string, half of our work is already done.
+    if type(string) == unicode:
+        return string.encode('utf-8')
 
-    except UnicodeDecodeError: #There's a problem
-        try:
-            #Maybe it's a byte string encoded in some other format
-            if not charset is None:
-                return unicode(string.decode(charset),charset).encode('utf-8')
-            else:
-                return unicode(string.decode('iso-8859-1'),'iso-8859-1').encode('utf-8')
-        except TypeError: #It's screwy unicode. Assume it's really latin-1
-            return string.decode('iso-8859-1')
+    # If we knew the encoding of the string, try that.
+    try:
+        if encoding is not None:
+            return string.decode(encoding).encode('utf-8')
+    except UnicodeDecodeError:
+        # string is not really encoded in 'encoding'.
+        pass
+
+    # Encoding wasn't provided, or it was wrong. Interpret provided string
+    # liberally as a fixed defaultEncoding (see above.)
+    return string.decode(defaultEncoding, 'replace').encode('utf-8')
