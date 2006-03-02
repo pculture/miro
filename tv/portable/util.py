@@ -109,9 +109,10 @@ def failed(when, withExn = False, details = None):
         import config # probably works at runtime only
         log += "App:        %s\n" % config.get(config.LONG_APP_NAME)
         log += "Publisher:  %s\n" % config.get(config.PUBLISHER)
+        log += "Platform:   %s\n" % config.get(config.APP_PLATFORM)
         log += "Version:    %s\n" % config.get(config.APP_VERSION)
         log += "Revision:   %s\n" % config.get(config.APP_REVISION)
-        log += "Update key: %s\n" % config.get(config.UPDATE_KEY)
+        log += "Serial:     %s\n" % config.get(config.APP_SERIAL)
     except:
         pass
     log += "Time:       %s\n" % time.asctime()
