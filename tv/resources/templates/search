@@ -37,7 +37,7 @@
                         <option t:hideIfNotKey="feed lastEngine" t:hideFunctionKey="global filter equal" t:hideParameter="blogdigger" value="blogdigger" selected="selected">Blogdigger</option>
                         <option t:hideIfKey="feed lastEngine" t:hideFunctionKey="global filter equal" t:hideParameter="blogdigger" value="blogdigger">Blogdigger</option>
                     </select>
-                    <input type="search" name="query" value="@@@feed lastQuery@@@" placeholder="" 
+                    <input type="search" name="query" value="***feed lastQuery***" placeholder="" 
                            class="main-titlebar-tasks-search" style="margin:35px 55px 0px 0px; width:200px; font-size: 120%;" 
                            onKeyUp="fillSearch()" onKeyPress="validateSearch(event)" />
                 </form>

@@ -244,12 +244,11 @@ function endEditFilter() {
 
 // Internal use: 'URL encode' the given string.
 function URLencode(str) {
-    return escape(str).replace(/\+/g, '%2C').replace(/\"/g,'%22').
-	replace(/\'/g, '%27');
+    return encodeURIComponent(str)
 }
 
 function URLdecode(str) {
-  return unescape(str);
+  return decodeURIComponent(str)
 }
 
 ///////////////////////////////////////////////////////////////////////////////

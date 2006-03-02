@@ -10,7 +10,7 @@ function performSearch()
     }
     else
     {
-        url = url + 'performSearch?engine=' + URLencode(engine);
+        url = url + 'performSearch?engine=' + engine;
         url = url + '&query=' + URLencode(query);
     }
     
@@ -28,7 +28,7 @@ function updateLastSearchEngine()
 function fillSearch()
 {
     query =  document.forms['search']['query'].value;
-    updateUrl =  'action:updateLastSearchQuery?query=' + query;
+    updateUrl =  'action:updateLastSearchQuery?query=' + URLencode(query);
     eventURL(updateUrl)
     return true;
 }
@@ -46,9 +46,7 @@ function validateSearch(e)
 
     if (key == 13)
     {
-        engine = document.forms['search']['engines'].value;
-        query =  document.forms['search']['query'].value;
-        performSearch(engine, query)
+        performSearch();
     }
 
     return false;
