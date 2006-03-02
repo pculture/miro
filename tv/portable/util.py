@@ -102,54 +102,81 @@ def failedExn(when, **kwargs):
 # something like "when trying to play a video." The user will see
 # it. If 'withExn' is true, last-exception information will be printed
 # to. If 'detail' is true, it will be included in the report and the
-# the console/log, but not presented in the dialog box.
+# the console/log, but not presented in the dialog box flavor text.
 def failed(when, withExn = False, details = None):
-    log = ""
+    print "failed() called; generating crash report."
+
+    header = ""
     try:
         import config # probably works at runtime only
-        log += "App:        %s\n" % config.get(config.LONG_APP_NAME)
-        log += "Publisher:  %s\n" % config.get(config.PUBLISHER)
-        log += "Platform:   %s\n" % config.get(config.APP_PLATFORM)
-        log += "Version:    %s\n" % config.get(config.APP_VERSION)
-        log += "Revision:   %s\n" % config.get(config.APP_REVISION)
-        log += "Serial:     %s\n" % config.get(config.APP_SERIAL)
+        header += "App:        %s\n" % config.get(config.LONG_APP_NAME)
+        header += "Publisher:  %s\n" % config.get(config.PUBLISHER)
+        header += "Platform:   %s\n" % config.get(config.APP_PLATFORM)
+        header += "Version:    %s\n" % config.get(config.APP_VERSION)
+        header += "Serial:     %s\n" % config.get(config.APP_SERIAL)
+        header += "Revision:   %s\n" % config.get(config.APP_REVISION)
     except:
         pass
-    log += "Time:       %s\n" % time.asctime()
-    log += "When:       %s\n" % when
-    log += "\n"
+    header += "Time:       %s\n" % time.asctime()
+    header += "When:       %s\n" % when
+    header += "\n"
 
     if withExn:
-        log += "Exception\n---------\n"
+        header += "Exception\n---------\n"
         if details:
-            log += "Details: %s" % (details, )
-        log += traceback.format_exc()
-        log += "\n"
+            header += "Details: %s" % (details, )
+        header += traceback.format_exc()
+        header += "\n"
     else:
-        log += "Call stack\n----------\n"
+        header += "Call stack\n----------\n"
         if details:
-            log += "Details: %s" % (details, )
-        log += ''.join(traceback.format_stack())
-        log += "\n"
-        
-    log += "Threads\n-------\n"
-    log += "Current: %s\n" % threading.currentThread().getName()
-    log += "Active:\n"
+            header += "Details: %s" % (details, )
+        header += ''.join(traceback.format_stack())
+        header += "\n"
+
+    header += "Threads\n-------\n"
+    header += "Current: %s\n" % threading.currentThread().getName()
+    header += "Active:\n"
     for t in threading.enumerate():
-        log += " - %s%s\n" % \
+        header += " - %s%s\n" % \
             (t.getName(),
              t.isDaemon() and ' [Daemon]' or '')
 
-    print "----- GENERATING CRASH REPORT (DANGER CAN HAPPEN) -----"
-    print log
-    print "----- END OF CRASH REPORT -----"
+    # Combine the header with the logfile contents, if available, to
+    # make the dialog box crash message. {{{ and }}} are Trac
+    # Wiki-formatting markers that force a fixed-width font when the
+    # report is pasted into a ticket.
+    report = "{{{\n%s}}}\n" % header
+    logFile = config.get(config.LOG_PATHNAME)
+    if logFile is None:
+        logContents = "No logfile available on this platform.\n"
+    else:
+        try:
+            f = open(logFile, "rt")
+            logContents = "Log\n---\n"
+            logContents += f.read()
+            f.close()
+        except:
+            logContents = "Couldn't read logfile '%s':\n" % (logFile, )
+            logContents += traceback.format_exc()
+    report += "{{{\n%s}}}\n" % logContents
 
-    # Add decorations for Trac
-    log = "{{{\n%s}}}\n" % log
+    # Dump the header for the report we just generated to the log, in
+    # case there are multiple failures or the user sends in the log
+    # instead of the report from the dialog box. (Note that we don't
+    # do this until we've already read the log into the dialog
+    # message.)
+    print "----- CRASH REPORT (DANGER CAN HAPPEN) -----"
+    print header
+    print "----- END OF CRASH REPORT -----"
 
     try:
         import app
         app.Controller.instance.getBackendDelegate(). \
-            notifyUnkownErrorOccurence(when, log = log)
+            notifyUnkownErrorOccurence(when, log = report)
     except:
         pass
+
+
+
+            

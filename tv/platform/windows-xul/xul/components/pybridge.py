@@ -5,9 +5,9 @@ import sys
 #    def write(self, *args):
 #        self.stream.write(*args)
 #        self.stream.flush()
-mylog = open("\\bridgelog","wt")
+#mylog = open("\\bridgelog","wt")
 #sys.stdout = sys.stderr = AutoflushingStream(mylog)
-mylog.write("hey, I ran")
+#mylog.write("hey, I ran")
 
 from xpcom import components, nsError, ServerException
 import traceback
@@ -46,20 +46,22 @@ class PyBridge:
                 self.stream.flush()
 
         try:
-            if os.environ.has_key('TMP'):
-                h = open("%s/dtv-log" % os.environ['TMP'], "wt")
+            import config
+            logFile = config.get(config.LOG_PATHNAME)
+            if logFile is not None:
+                h = open(logFile, "wt")
                 sys.stdout = sys.stderr = AutoflushingStream(h)
         except:
             pass
-        try:
-            print "got:: %s" % mainWindowDocument
+#        try:
+#           print "got:: %s" % mainWindowDocument
 
 #           klass = components.classes["@participatoryculture.org/dtv/jsbridge;1"]
 #           jsb = klass.getService(components.interfaces.pcfIDTVJSBridge)
 #           jsb.xulLoadURI(elt, "http://www.achewood.com")
-
-        except:
-            traceback.print_exc()
+#
+#        except:
+#            traceback.print_exc()
 
     def bootApp(self):
         import app

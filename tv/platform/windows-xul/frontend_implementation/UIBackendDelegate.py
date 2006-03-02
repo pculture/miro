@@ -148,15 +148,6 @@ class UIBackendDelegate:
         return self.yesNoPrompt(summary, message)
 
     def notifyUnkownErrorOccurence(self, when, log = ''):
-        log += "{{{\n"
-        log += "Log\n---\n"
-        f = open("%s/dtv-log" % os.environ['TMP'], "rt")
-        log += f.read()
-        f.close()
-        log += "}}}\n"
-
-        # The log is in utf-8, which should get interpretted correctly
-        # by the XUL frontend
         execChromeJS("showBugReportDialog('%s', '%s');" % \
                      (quoteJS(when), quoteJS(log)))
         return True

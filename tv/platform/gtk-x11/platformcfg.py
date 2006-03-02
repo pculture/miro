@@ -32,5 +32,10 @@ def get(descriptor):
         path = get(config.SUPPORT_DIRECTORY)
         path = os.path.join(path, 'tvdump')
         value = path
+
+    elif descriptor == config.DB_PATHNAME:
+        path = get(config.SUPPORT_DIRECTORY)
+        path = os.path.join(path, 'log')
+        value = path
     
     return value

@@ -61,6 +61,8 @@ SUPPORT_DIRECTORY = \
     Pref(key='SupportDirectory', default=None, platformSpecific=True)
 DB_PATHNAME = \
     Pref(key='DBPathname',       default=None, platformSpecific=True)
+LOG_PATHNAME = \
+    Pref(key='LogPathname',      default=None, platformSpecific=True)
 
 # These are normally read from resources/app.config.
 SHORT_APP_NAME = \

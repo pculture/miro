@@ -91,6 +91,13 @@ def get(descriptor):
     elif descriptor == config.DB_PATHNAME:
         path = get(config.SUPPORT_DIRECTORY)
         return os.path.join(path, 'tvdump')
+
+    elif descriptor == config.LOG_PATHNAME:
+        if os.environ.has_key('TMP'):
+            return os.path.join(os.environ['TMP'], 'dtv-log')
+        else:
+            return None
+
     elif descriptor == config.RUN_AT_STARTUP:
         # We use the legacy startup registry key, so legacy versions
         # of Windows have a chance
