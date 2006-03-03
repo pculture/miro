@@ -121,6 +121,9 @@ Section "-${CONFIG_LONG_APP_NAME}"
   File  /r vlc-plugins
   File  /r xulrunner
 
+  ; Democracy complains if this isn't present and it can't crete it
+  CreateDirectory "$INSTDIR\xulrunner\extensions"
+
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
   CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
   CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\${RUN_SHORTCUT}" \
@@ -185,6 +188,7 @@ Section "Uninstall" SEC91
   ; Remove registry keys
   DeleteRegKey HKLM "${INST_KEY}"
   DeleteRegKey HKLM "${UNINST_KEY}"
+  DeleteRegValue HKLM "Software\Microsoft\Windows\CurrentVersion\Run" "Democracy Player"
 
   SetAutoClose true
 SectionEnd
