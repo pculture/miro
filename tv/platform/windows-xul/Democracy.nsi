@@ -103,6 +103,18 @@ Var STARTMENU_FOLDER
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 Section "-${CONFIG_LONG_APP_NAME}"
+
+; Warn users of Windows 9x/ME that they're not supported
+  Push $R0
+  ClearErrors
+  ReadRegStr $R0 HKLM \
+    "SOFTWARE\Microsoft\Windows NT\CurrentVersion" CurrentVersion
+  IfErrors 0 lbl_winnt
+  MessageBox MB_ICONEXCLAMATION \
+     "WARNING: Democracy Player is not officially supported on this version of Windows$\r$\n$\r$\nVideo playback is known to be broken, and there may be other problems"
+lbl_winnt:
+  Pop $R0
+
   SetShellVarContext all
   SetOutPath "$INSTDIR"
 
