@@ -37,6 +37,10 @@ import app
 defaults = get_defaults('btdownloadheadless')
 defaults.extend((('donated', '', ''),))
 
+# Returns a filename minus nasty characters
+def cleanFilename(filename):
+    return filename.replace("\\","").replace("/","").replace(":","").replace("*","").replace("?","").replace("\"","").replace("<","").replace(">","").replace("|","")
+
 # Pass in a connection to the frontend
 def setDelegate(newDelegate):
     global delegate
@@ -212,11 +216,11 @@ def grabURL(url, type="GET",start = 0, etag=None,modified=None):
     try:
         disposition = info['content-disposition']
         info['filename'] = re.compile("^.*filename\s*=\s*\"(.*?)\"$").search(disposition).expand("\\1")
-        info['filename'].replace ("/","")
-        info['filename'].replace ("\\","")
+        info['filename'] = cleanFilename(info['filename'])
     except:
         try:
             info['filename'] = re.compile("^.*?([^/]+)/?$").search(path).expand("\\1")
+            info['filename'] = cleanFilename(info['filename'])
         except:
             pass
 
@@ -689,7 +693,9 @@ class Downloader(DDBObject):
         (scheme, host, path, params, query, fragment) = parseURL(url)
         if len(path):
             try:
-                return re.compile("^.*?([^/]+)/?$").search(path).expand("\\1")
+                ret = re.compile("^.*?([^/]+)/?$").search(path).expand("\\1")
+                return cleanFilename(ret)
+
             except:
                 return 'unknown'
         else:
