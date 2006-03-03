@@ -34,7 +34,13 @@ def _findDirectories():
     keyName = r'Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders'
     key = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, keyName)
 
-    _appDataDirectory = _getRegString(key, 'AppData')
+    try:
+        _appDataDirectory = _getRegString(key, 'AppData')
+    except:
+        # Older versions of Windows didn't have per user Application Data
+        keyName2 = r'Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders'
+        key2 = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, keyName2)
+        _appDataDirectory = _getRegString(key2, 'AppData')
     try:
         _baseMoviesDirectory = _getRegString(key, 'My Video')
     except:
