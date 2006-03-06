@@ -84,12 +84,18 @@ def migrateToDemocracy():
     # Migrate Movies and Support folders
 
     if os.path.exists(oldMoviesFolder):
-        print "DTV: Migrating movies folder to %s" % newMoviesFolder
-        os.rename(oldMoviesFolder, newMoviesFolder)
+        if not os.path.exists(newMoviesFolder):
+            print "DTV: Migrating movies folder to %s" % newMoviesFolder
+            os.rename(oldMoviesFolder, newMoviesFolder)
+        else:
+            print "DTV: WARNING! Both DTV and Democracy movies folder exist."
 
     if os.path.exists(oldSupportFolder):
-        print "DTV: Migrating support folder to %s" % newSupportFolder
-        os.rename(oldSupportFolder, newSupportFolder)
+        if not os.path.exists(newSupportFolder):
+            print "DTV: Migrating support folder to %s" % newSupportFolder
+            os.rename(oldSupportFolder, newSupportFolder)
+        else:
+            print "DTV: WARNING! Both DTV and Democracy support folder exist."
 
 def ensureMigratedMoviePath(pathname):
     if pathname.startswith(oldMoviesFolder):
