@@ -2273,7 +2273,7 @@ class PlaylistItem:
 
 class FullScreenPalette (NibClassBuilder.AutoBaseClass):
     
-    HOLD_TIME = 5
+    HOLD_TIME = 2
     
     def initWithContentRect_styleMask_backing_defer_(self, rect, style, backing, defer):
         self = super(FullScreenPalette, self).initWithContentRect_styleMask_backing_defer_(
