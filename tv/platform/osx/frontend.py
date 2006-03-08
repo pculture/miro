@@ -2053,6 +2053,8 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
         if self.contentView() != renderer.view:
             self.setContentView_(renderer.view)
         self.palette.setup(item, renderer)
+        if self.isFullScreen:
+            AppHelper.callLater(0.5, self.palette.reveal, self)
     
     def teardown(self):
         self.setContentView_(nil)
@@ -2321,23 +2323,24 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         self.update_(nil)
 
     def reveal(self, parent):
-        self.update_(nil)
-        self.volumeSlider.setFloatValue_(app.Controller.instance.videoDisplay.getVolume())
-        screenSize = parent.screen().frame().size
-        height = self.frame().size.height
-        frame = ((0, -height), (screenSize.width, height))
-        self.setFrame_display_(frame, NO)        
-        parent.addChildWindow_ordered_(self, NSWindowAbove)
-        self.orderFront_(nil)
-        frame = ((0, 0), (screenSize.width, height))
-        self.setFrame_display_animate_(frame, YES, YES)
-        self.holdStartTime = time.time()
-        self.autoConcealTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
-            1.0, self, 'concealAfterDelay:', nil, YES)
-        self.updateTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
-            1.0, self, 'update:', nil, YES)
-        NSRunLoop.currentRunLoop().addTimer_forMode_(self.updateTimer, NSEventTrackingRunLoopMode)
-        self.update_(nil)
+        if not self.isVisible():
+            self.update_(nil)
+            self.volumeSlider.setFloatValue_(app.Controller.instance.videoDisplay.getVolume())
+            screenSize = parent.screen().frame().size
+            height = self.frame().size.height
+            frame = ((0, -height), (screenSize.width, height))
+            self.setFrame_display_(frame, NO)        
+            parent.addChildWindow_ordered_(self, NSWindowAbove)
+            self.orderFront_(nil)
+            frame = ((0, 0), (screenSize.width, height))
+            self.setFrame_display_animate_(frame, YES, YES)
+            self.holdStartTime = time.time()
+            self.autoConcealTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
+                1.0, self, 'concealAfterDelay:', nil, YES)
+            self.updateTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
+                1.0, self, 'update:', nil, YES)
+            NSRunLoop.currentRunLoop().addTimer_forMode_(self.updateTimer, NSEventTrackingRunLoopMode)
+            self.update_(nil)
     
     def conceal(self):
         if self.autoConcealTimer is not nil:
