@@ -2154,22 +2154,23 @@ class QuicktimeRenderer (app.VideoRenderer):
         # therefore need to drill down and find out if we have a zero length
         # video track/media.
         
-        allTracks = qtmovie.tracks()
-        if qtmovie is not nil and qtmovie.duration().timeValue > 0 and len(allTracks) > 0:
-            # First make sure we have at least one video track with a non zero length
-            allMedia = [track.media() for track in allTracks]
-            for media in allMedia:
-                mediaType = media.attributeForKey_(QTMediaTypeAttribute)
-                mediaDuration = media.attributeForKey_(QTMediaDurationAttribute).QTTimeValue().timeValue
-                if mediaType == QTMediaTypeVideo and mediaDuration > 0:
-                    # We have one, see if the file is something we support
-                    (path, ext) = os.path.splitext(pathname.lower())
-                    if ext in self.POSSIBLY_SUPPORTED_EXT and self.hasFlip4MacComponent():
-                        canPlay = True
-                        break
-                    elif ext not in self.POSSIBLY_SUPPORTED_EXT and ext not in self.UNSUPPORTED_EXT:
-                        canPlay = True
-                        break
+        if qtmovie is not nil and qtmovie.duration().timeValue > 0:
+            allTracks = qtmovie.tracks()
+            if len(qtmovie.tracks()) > 0:
+                # First make sure we have at least one video track with a non zero length
+                allMedia = [track.media() for track in allTracks]
+                for media in allMedia:
+                    mediaType = media.attributeForKey_(QTMediaTypeAttribute)
+                    mediaDuration = media.attributeForKey_(QTMediaDurationAttribute).QTTimeValue().timeValue
+                    if mediaType == QTMediaTypeVideo and mediaDuration > 0:
+                        # We have one, see if the file is something we support
+                        (path, ext) = os.path.splitext(pathname.lower())
+                        if ext in self.POSSIBLY_SUPPORTED_EXT and self.hasFlip4MacComponent():
+                            canPlay = True
+                            break
+                        elif ext not in self.POSSIBLY_SUPPORTED_EXT and ext not in self.UNSUPPORTED_EXT:
+                            canPlay = True
+                            break
         else:
             self.cachedMovie = nil
 
