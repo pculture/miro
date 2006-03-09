@@ -35,11 +35,17 @@ def deferUntilAfterLoad(func):
 class HTMLDisplay(app.Display):
     "Selectable Display that shows a HTML document."
 
-    def __init__(self, html, existingView=None, frameHint=None, areaHint=None):
+    def __init__(self, html, existingView=None, frameHint=None, areaHint=None,
+            baseURL=None):
         """'html' is the initial contents of the display, as a string. If
         frameHint is provided, it is used to guess the initial size the HTML
         display will be rendered at, which might reduce flicker when the
         display is installed."""
+
+        if baseURL is not None:
+            # This is something the Mac port uses. Complain about that.
+            print "WARNING: HTMLDisplay ignoring baseURL '%s'" % baseURL
+
         app.Display.__init__(self)
 
         self.initialLoadFinished = False
