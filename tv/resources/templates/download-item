@@ -158,6 +158,7 @@
 				</span>
 			</p>
 			<!-- / DOWNLOAD PROGRESS -->
+			
 			<!-- FILE TASKS -->
 			<div class="main-video-details-tasks">
 				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
@@ -186,8 +187,9 @@
 			<!-- / FILE INFO -->
 			
 			<!-- MESSAGE -->
-			<p>Pending Automatic Download</p>
+			<p style="clear:both; padding-bottom:3px;">Pending Auto Download</p>
 			<!-- MESSAGE -->
+			
 			<!-- FILE TASKS -->
 			<div class="main-video-details-tasks">
 				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
@@ -216,7 +218,7 @@
 			<!-- / FILE INFO -->
 			
 			<!-- MESSAGE -->
-			<p>Pending Manual Download</p>
+			<p style="clear:both; padding-bottom:3px;">Pending Manual Download</p>
 			<!-- MESSAGE -->
 
 			<!-- FILE TASKS -->
@@ -394,6 +396,7 @@
 			<!-- ERROR -->
 			<p>Download Error: <span t:replace="this getFailureReason" /></p>
 			<!-- / ERROR -->
+			
 			<!-- FILE TASKS -->
 			<div class="main-video-details-tasks">
 				<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
