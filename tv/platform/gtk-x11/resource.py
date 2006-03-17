@@ -3,11 +3,7 @@ import re
 import sys
 
 def appRoot():
-    if hasattr(sys, "frozen"):
-        path = sys.executable
-    else:
-        path = sys.argv[0]
-    return os.path.dirname(os.path.join(os.getcwdu(), path))
+    return os.path.abspath(os.path.dirname(__file__))
 
 # Note: some of these functions are probably not absolutely correct in
 # the face of funny characters in the input paths. In particular,
@@ -19,25 +15,9 @@ def appRoot():
 # expected to be supplied in Unix format, with forward-slashes as
 # separators. The output, though, uses the native platform separator.
 def path(relative_path):
-    root = appRoot()
-    if len(root) > 0:
-        rootParts = re.split(r'/', appRoot())
-    else:
-        rootParts = []
-    rootParts.append('..')
-    rootParts.append('..')
-    myParts = re.split(r'/', relative_path)
-    return os.path.normpath('/'.join(rootParts + ['resources'] + myParts))
+    return os.path.abspath(os.path.join(appRoot(), 'resources',
+        relative_path))
 
 # As path(), but return a file: URL instead.
 def url(relative_path):
-    root = appRoot()
-    if len(root) > 0:
-        rootParts = re.split(r'/', appRoot())
-    else:
-        rootParts = []
-    rootParts.append('..')
-    rootParts.append('..')
-    myParts = re.split(r'/', relative_path)
-    return "file://" + os.path.normpath('/'.join(rootParts + ['resources'] + myParts))
-
+    return 'file://%s' % path(relative_path)

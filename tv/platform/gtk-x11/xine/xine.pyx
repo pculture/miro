@@ -7,7 +7,7 @@
 #
 ##############################################################################
 
-cdef extern from "Xlib.h":
+cdef extern from "X11/Xlib.h":
     ctypedef unsigned long Drawable
 
 cdef extern from "Python.h":

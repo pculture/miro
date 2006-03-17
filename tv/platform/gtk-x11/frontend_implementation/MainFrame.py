@@ -6,6 +6,7 @@ import gobject
 import gtk.glade
 import sets
 
+import resource
 from frontend import *
 from frontend_implementation.gtk_queue import gtkMethod
 from frontend_implementation.VideoDisplay import VideoDisplay
@@ -60,7 +61,7 @@ class MainFrame:
     @gtkMethod
     def _gtkInit(self):
         # Create the widget tree, and remember important widgets
-        self.widgetTree = WidgetTree('glade/dtv.glade')
+        self.widgetTree = WidgetTree(resource.path('democracy.glade'))
         self.widgetTree['main-window'].show_all()
         self.displayBoxes = {
             self.mainDisplay : self.widgetTree['main-box'],
