@@ -1807,6 +1807,7 @@ def getClassForFilter(x):
 globalIndexList = {
     'itemsByFeed': lambda x:str(x.getFeed().getID()),
     'feedsByURL': lambda x:str(x.getURL()),
+    'downloadsByDLID': lambda x:str(x.dlid),
     'class': getClassForFilter
 }
 
@@ -1818,6 +1819,8 @@ globalViewList['staticTabs'] = db.filterWithIndex(globalIndexList['class'],Stati
 globalViewList['guide'] =  db.filterWithIndex(globalIndexList['class'],guide.ChannelGuide)
 globalViewList['availableItems'] = globalViewList['items'].filter(lambda x:x.getState() == 'finished' or x.getState() == 'uploading')
 globalViewList['downloadingItems'] = globalViewList['items'].filter(lambda x:x.getState() == 'downloading')
+globalViewList['remoteDownloads'] = db.filterWithIndex(globalIndexList['class'],downloader.RemoteDownloader)
 
+globalViewList['remoteDownloads'].createIndex(globalIndexList['downloadsByDLID'])
 globalViewList['items'].createIndex(globalIndexList['itemsByFeed'])
 globalViewList['feeds'].createIndex(globalIndexList['feedsByURL'])
