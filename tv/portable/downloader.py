@@ -38,6 +38,8 @@ import app
 
 from download_utils import grabURL, parseURL, cleanFilename
 
+DOWNLOAD_DAEMON = False
+
 defaults = get_defaults('btdownloadheadless')
 defaults.extend((('donated', '', ''),))
 
@@ -274,6 +276,8 @@ class RemoteDownloader(Downloader):
     def __init__(self, url,item,contentType):
         self.dlid = "noid"
         self.contentType = contentType
+        self.eta = 0
+        self.rate = 0
         Downloader.__init__(self,url,item)
 
     @classmethod
@@ -285,11 +289,12 @@ class RemoteDownloader(Downloader):
             self = view.getNext()
         finally:   
             app.globalViewList['remoteDownloads'].removeView(view)
-        for key in data.keys():
-            self.__dict__[key] = data[key]
-        for item in self.itemList:
-            item.beginChange()
-            item.endChange()
+        if not self is None:
+            for key in data.keys():
+                self.__dict__[key] = data[key]
+            for item in self.itemList:
+                item.beginChange()
+                item.endChange()
         
     ##
     # This is the actual download thread.
@@ -339,6 +344,7 @@ class RemoteDownloader(Downloader):
     # Called by pickle during serialization
     def __getstate__(self):
         temp = copy(self.__dict__)
+        temp["thread"] = None
         return (0,temp)
 
     ##
@@ -877,18 +883,21 @@ class BTDownloader(Downloader):
 # Kill the main BitTorrent thread
 #
 # This should be called before closing the app
-def shutdownBTDownloader():
-    BTDownloader.doneflag.set()
-    BTDownloader.wakeup()
-    BTDownloader.dlthread.join()
+def shutdownDownloader():
+    if DOWNLOAD_DAEMON:
+        c = command.ShutDownCommand(RemoteDownloader.dldaemon)
+        c.send()
+    else:
+        BTDownloader.doneflag.set()
+        BTDownloader.wakeup()
+        BTDownloader.dlthread.join()
+    
 
 # Spawn the download thread
-
-# FIXME: Comment out these 3 lines and uncomment the 2 below to enable
-#        the download daemon
-BTDownloader.dlthread = Thread(target=BTDownloader.multitorrent.rawserver.listen_forever)
-BTDownloader.dlthread.setName("bittorrent downloader")
-BTDownloader.dlthread.start()
+if not DOWNLOAD_DAEMON:
+    BTDownloader.dlthread = Thread(target=BTDownloader.multitorrent.rawserver.listen_forever)
+    BTDownloader.dlthread.setName("bittorrent downloader")
+    BTDownloader.dlthread.start()
 
 class DownloaderFactory:
     lock = RLock()
@@ -902,9 +911,8 @@ class DownloaderFactory:
         # FIXME: uncomment these 2 lines and comment the 3 above to
         # enable the download daemon
 
-        #else:
-        #    return RemoteDownloader(info['updated-url'],self.item, info['content-type'])
-        
+        elif DOWNLOAD_DAEMON:
+            return RemoteDownloader(info['updated-url'],self.item, info['content-type'])
         self.lock.acquire()
         try:
             ret = None

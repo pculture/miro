@@ -120,6 +120,7 @@ lbl_winnt:
 
   File  ${CONFIG_EXECUTABLE}
   File  ${CONFIG_ICON}
+  File  Democracy_Downloader.exe
   File  application.ini
   File  msvcp71.dll  
   File  msvcr71.dll  

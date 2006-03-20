@@ -101,6 +101,10 @@ VLC_MOZ_PLUGIN_DIR = os.path.join(BINARY_KIT_ROOT, "mozplugin")
 # Path to a build of vlc plugins to go along with that Mozilla plugin
 VLC_PLUGINS_DIR = os.path.join(VLC_MOZ_PLUGIN_DIR, "vlc-plugins")
 
+# Name of python binary, so we can build the download daemon in
+# another process. (Can we get this from Python itself?)
+PYTHON_BINARY="python"
+
 ###############################################################################
 ## End of configuration. No user-servicable parts inside                     ##
 ###############################################################################
@@ -190,6 +194,11 @@ ext_modules = [
 class Common:
     def __init__(self):
         self.templateVars = None
+
+    def buildDownloadDaemon(self, baseDir):
+        print "building download daemon"
+        os.system("%s setup_daemon.py py2exe --dist-dir daemon --bundle-files 1" % PYTHON_BINARY)
+        shutil.copy2(os.path.join("daemon","Democracy_Downloader.exe"), baseDir)
 
     # NEEDS: if you look at the usage of this function, we're dropping
     # the plugin into the xulrunner plugin directory, rather than the
@@ -434,6 +443,8 @@ class runxul(Command, Common):
 					   'types.xpt')
 	    shutil.copy2(self.typeLibrary, typeLibraryPath)
 
+        self.buildDownloadDaemon(self.bdist_base)
+
 	newEnv = copy.deepcopy(os.environ)
 	oldPath = 'PATH' in newEnv and [newEnv['PATH']] or []
 	newEnv['PATH'] = \
@@ -662,7 +673,7 @@ class bdist_xul_dumb(Command, Common):
 
         # NEEDS: set permissions/attributes on everything uniformly?
 
-        # Finally, create the top-level executable, and rename
+        # Create the top-level executable, and rename
         # xulrunner.exe so the user is not confused and surprised to
         # see it in the process list (and in firewall/antivirus
         # dialogs, etc.)
@@ -672,6 +683,9 @@ class bdist_xul_dumb(Command, Common):
                   os.path.join(self.xulrunnerOut, "Democracy.exe"))
         os.remove(os.path.join(self.xulrunnerOut, "xulrunner-stub.exe"))
 
+        # Finally, build the download daemon
+        self.buildDownloadDaemon(self.dist_dir)
+        
     def computePythonManifest(self, path=None, scripts=[], packages=[],
                               includes=[], excludes=[]):
         """Determine the files that need to be copied to get a complete image

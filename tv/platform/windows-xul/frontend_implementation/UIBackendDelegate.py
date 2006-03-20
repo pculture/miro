@@ -10,6 +10,7 @@ import resource
 import webbrowser
 import sys
 import _winreg
+import ctypes
 
 ###############################################################################
 #### 'Delegate' objects for asynchronously asking the user questions       ####
@@ -166,3 +167,16 @@ class UIBackendDelegate:
         else:
             folder = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,"Software\Microsoft\Windows\CurrentVersion\Run",0, _winreg.KEY_SET_VALUE)
             _winreg.DeleteValue(folder, "Democracy Player")
+
+    def launchDownloadDaemon(self, oldpid = None):
+        # Kill the old process, if it exists
+        if oldpid is not None:
+            # This isn't guaranteed to kill the process, but it's likely the
+            # best we can do
+            # See http://support.microsoft.com/kb/q178893/
+            # http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/347462
+            PROCESS_TERMINATE = 1
+            handle = ctypes.windll.kernel32.OpenProcess(PROCESS_TERMINATE, False, oldpid)
+            ctypes.windll.kernel32.TerminateProcess(handle, -1)
+            ctypes.windll.kernel32.CloseHandle(handle)
+        os.spawnl(os.P_NOWAIT, os.path.join(resource.resourceRoot(),"..","Democracy_Downloader.exe"))

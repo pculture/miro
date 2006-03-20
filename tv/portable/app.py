@@ -628,8 +628,8 @@ class Controller (frontend.Application):
             db.save()
 
             # FIXME closing BitTorrent is slow and makes the application seem hung...
-            print "DTV: Shutting down BitTorrent..."
-            downloader.shutdownBTDownloader()
+            print "DTV: Shutting down Downloader..."
+            downloader.shutdownDownloader()
 
             print "DTV: Done shutting down."
 

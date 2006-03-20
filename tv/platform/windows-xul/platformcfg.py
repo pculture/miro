@@ -88,23 +88,23 @@ def save(data):
     cPickle.dump(data,open(file,'w'))
 
 def get(descriptor):
-    if descriptor == config.MOVIES_DIRECTORY:
+    if descriptor.key == config.MOVIES_DIRECTORY.key:
         return _getMoviesDirectory()
 
-    elif descriptor == config.SUPPORT_DIRECTORY:
+    elif descriptor.key == config.SUPPORT_DIRECTORY.key:
         return _getSupportDirectory()
     
-    elif descriptor == config.DB_PATHNAME:
+    elif descriptor.key == config.DB_PATHNAME.key:
         path = get(config.SUPPORT_DIRECTORY)
         return os.path.join(path, 'tvdump')
 
-    elif descriptor == config.LOG_PATHNAME:
+    elif descriptor.key == config.LOG_PATHNAME.key:
         if os.environ.has_key('TMP'):
             return os.path.join(os.environ['TMP'], 'dtv-log')
         else:
             return None
 
-    elif descriptor == config.RUN_AT_STARTUP:
+    elif descriptor.key == config.RUN_AT_STARTUP.key:
         # We use the legacy startup registry key, so legacy versions
         # of Windows have a chance
         # http://support.microsoft.com/?kbid=270035

@@ -6,6 +6,11 @@ import traceback
 from threading import Lock, Thread, Event
 from time import sleep
 
+def launchDownloadDaemon(oldpid = None):
+    import app
+    delegate = app.Controller.instance.getBackendDelegate()
+    delegate.launchDownloadDaemon(oldpid)
+    
 def getDataFile():
     return os.path.join(os.environ['TMP'], 'Democracy_Download_Daemon.txt')
 
@@ -37,39 +42,55 @@ class Daemon:
         else:
             t = Thread(target = self.clientLoop, name = "Client Loop")
             t.start()
-
+    
+    def clientConnect(self):
+        # There's still a possible race condition in the case where
+        # two copies of the daemon start at nearly the same time
+        MAX_TRIES = 3
+        connected = False
+        port = None
+        pid = None
+        tries = 0
+        while not connected:
+            tries += 1
+            try:
+                f = open(getDataFile(),"rb")
+                port = int(f.readline())
+                pid = int(f.readline())
+                f.close()
+            except:
+                pass
+            try:
+                if (port is not None):
+                    print "Client Connecting to %d" % port
+                    self.socket.connect( ('127.0.0.1',port))
+                    connected = True
+            except:
+                self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                self.socket.settimeout(None)
+                sleep(1)
+            if not connected and (tries == MAX_TRIES or pid is None):
+                print "launching download daemon"
+                launchDownloadDaemon(pid)
+                sleep(3)
+                tries = 0
+                        
     def clientLoop(self):
-        while True:
-            connected = False
-            port = -1
-            while not connected: #FIXME: add code to spawn server
-                try:
-                    if (port > 0):
-                        print "Client Connecting to %d" % port
-                        self.socket.connect( ('127.0.0.1',port))
-                        connected = True
-                except:
-                    self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    self.socket.settimeout(None)
-                    sleep(5)
-                if not connected:
-                    try:
-                        f = open(getDataFile(),"rb")
-                        port = int(f.readline())
-                        pid = int(f.readline())
-                        f.close()
-                    except:
-                        pass
+        cont = True
+        while cont:
+            self.clientConnect()
             self.stream = self.socket.makefile("r+b")
-            self.listenLoop()
+            cont = self.listenLoop()
+        
 
     def serverLoop(self):
-        while True:
+        cont = True
+        while cont:
             print "server listening..."
             (conn, address) = self.socket.accept()
             conn.settimeout(None)
             self.stream = conn.makefile("r+b")
-            self.listenLoop()
+            cont = self.listenLoop()
 
     def listenLoop(self):
         try:
@@ -80,11 +101,17 @@ class Daemon:
                 print "dl daemon got object %s %s" % (str(comm), comm.id)
                 # Process commands in their own thread so actions that
                 # need to send stuff over the wire don't hang
+                # FIXME: We shouldn't spawn a thread for every command!
                 t = Thread(target=lambda:self.processCommand(comm), name="command processor")
                 t.setDaemon(False)
                 t.start()
+                #FIXME This is a bit of a hack
+                cont = not isinstance(comm, command.ShutDownCommand)
+            print "Leaving daemon listen loop"
+            return False # Stop looping
         except:
             traceback.print_exc()
+            return True # Keep looping
 
     def processCommand(self, comm):
         if comm.orig:

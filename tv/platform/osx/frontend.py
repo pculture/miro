@@ -948,6 +948,12 @@ class UIBackendDelegate:
     def copyTextToClipboard(self, text):
         print "WARNING: copyTextToClipboard not implemented"
 
+    def launchDownloadDaemon(self, oldpid)
+        # Use UNIX style kill
+        os.kill(oldpid, signal.SIGTERM)
+        sleep(1)
+        os.kill(oldpid, signal.SIGKILL)
+        print "WARNING: launchDownloadDaemon not implemented"
 
 class ExceptionReporterController (NibClassBuilder.AutoBaseClass):
     
