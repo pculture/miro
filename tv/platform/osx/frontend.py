@@ -948,7 +948,7 @@ class UIBackendDelegate:
     def copyTextToClipboard(self, text):
         print "WARNING: copyTextToClipboard not implemented"
 
-    def launchDownloadDaemon(self, oldpid)
+    def launchDownloadDaemon(self, oldpid):
         # Use UNIX style kill
         os.kill(oldpid, signal.SIGTERM)
         sleep(1)
