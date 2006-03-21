@@ -25,7 +25,7 @@ def save(data):
 def get(descriptor):
     value = None
 
-    if descriptor == config.MOVIES_DIRECTORY:
+    if descriptor.key == config.MOVIES_DIRECTORY.key:
         path = os.path.join(MOVIES_DIRECTORY_PARENT, config.get(config.SHORT_APP_NAME))
         try:
             os.makedirs(os.path.join(path,'Incomplete Downloads'))
@@ -33,7 +33,7 @@ def get(descriptor):
             pass
         value = path
 
-    elif descriptor == config.SUPPORT_DIRECTORY:
+    elif descriptor.key == config.SUPPORT_DIRECTORY.key:
         path = os.path.join(SUPPORT_DIRECTORY_PARENT, config.get(config.SHORT_APP_NAME))
         os.environ['APPDATA'] = path # This is for the Bittorent module
         try:
@@ -42,12 +42,12 @@ def get(descriptor):
             pass
         value = path
     
-    elif descriptor == config.DB_PATHNAME:
+    elif descriptor.key == config.DB_PATHNAME.key:
         path = get(config.SUPPORT_DIRECTORY)
         path = os.path.join(path, 'tvdump')
         value = path
 
-    elif descriptor == config.LOG_PATHNAME:
+    elif descriptor.key == config.LOG_PATHNAME.key:
         path = get(config.SUPPORT_DIRECTORY)
         path = os.path.join(path, 'log')
         value = path

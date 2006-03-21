@@ -5,6 +5,7 @@ import socket
 import traceback
 from threading import Lock, Thread, Event
 from time import sleep
+import tempfile
 
 def launchDownloadDaemon(oldpid = None):
     import app
@@ -12,7 +13,8 @@ def launchDownloadDaemon(oldpid = None):
     delegate.launchDownloadDaemon(oldpid)
     
 def getDataFile():
-    return os.path.join(os.environ['TMP'], 'Democracy_Download_Daemon.txt')
+    #FIXME work in the user ID, so multi user systems don't freak
+    return os.path.join(tempfile.gettempdir(), 'Democracy_Download_Daemon.txt')
 
 lastDaemon = None
 

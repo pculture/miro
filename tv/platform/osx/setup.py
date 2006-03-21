@@ -93,12 +93,16 @@ print "Building Democracy Player v%s (%s)" % (conf['appVersion'], conf['appRevis
 
 resourceFiles = ['Resources/%s' % x for x in os.listdir('Resources')]
 resourceFiles.append('English.lproj')
+resourceFiles.append('Democracy_Downloader.app')
 
 py2app_options = dict(
     resources='%s/resources' % root, 
     plist=infoPlist,
     iconfile='%s/platform/%s/Democracy.icns' % (root, platform),
 )
+
+print "building setup daemon"
+os.system("python setup_daemon.py py2app --dist-dir .")
 
 setup(
     app=['Democracy.py'],

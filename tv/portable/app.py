@@ -34,6 +34,8 @@ import templatehelper
 import databasehelper
 import fasttypes
 
+from dl_daemon import daemon
+
 db = database.defaultDatabase
 
 # Run the application. Call this, not start(), on platforms where we
@@ -411,6 +413,8 @@ class Controller (frontend.Application):
             downloader.setDelegate(delegate)
             autoupdate.setDelegate(delegate)
             database.setDelegate(delegate)
+
+            downloader.RemoteDownloader.initializeDaemon()
 
             #Restoring
             print "DTV: Restoring database..."

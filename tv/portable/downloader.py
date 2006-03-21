@@ -272,13 +272,17 @@ class Downloader(DDBObject):
 
 # Download an item using our separate download process
 class RemoteDownloader(Downloader):
-    dldaemon = daemon.Daemon(server = False)
     def __init__(self, url,item,contentType):
         self.dlid = "noid"
         self.contentType = contentType
         self.eta = 0
         self.rate = 0
         Downloader.__init__(self,url,item)
+
+    @classmethod
+    def initializeDaemon(cls):
+        if DOWNLOAD_DAEMON:
+            RemoteDownloader.dldaemon = daemon.Daemon(server = False)
 
     @classmethod
     def updateStatus(cls, data):

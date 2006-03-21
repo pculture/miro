@@ -27,6 +27,7 @@ import time
 import math
 import struct
 import string
+import signal
 import urlparse
 import threading
 
@@ -950,10 +951,16 @@ class UIBackendDelegate:
 
     def launchDownloadDaemon(self, oldpid):
         # Use UNIX style kill
-        os.kill(oldpid, signal.SIGTERM)
-        sleep(1)
-        os.kill(oldpid, signal.SIGKILL)
-        print "WARNING: launchDownloadDaemon not implemented"
+        if oldpid is not None:
+            try:
+                os.kill(oldpid, signal.SIGTERM)
+                sleep(1)
+                os.kill(oldpid, signal.SIGKILL)
+            except:
+                pass
+        p = os.path.normpath(resource.path("../Democracy_Downloader.app"))
+        print p
+        NSWorkspace.sharedWorkspace().launchApplication_(p)
 
 class ExceptionReporterController (NibClassBuilder.AutoBaseClass):
     
