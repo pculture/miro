@@ -111,8 +111,8 @@ def getDownloadStatus(dlids = None):
     return statuses
 
 def shutDown():
-    for dl in _downloads:
-        dl.pause()
+    for dlid in _downloads:
+        _downloads[dlid].pause()
     shutdownBTDownloader()
     
 
