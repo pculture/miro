@@ -1,4 +1,28 @@
 import os
+from string import Template
+
+def read_file(path):
+    f = open(path)
+    try:
+        return f.read()
+    finally:
+        f.close()
+
+def write_file(path, contents):
+    f = open(path, 'w')
+    try:
+        f.write(contents)
+    finally:
+        f.close()
+
+def expand_file_contents(path, **values):
+    """Do a string expansion on the contents of a file using the same rules as
+    string.Template from the standard library.  
+    """
+
+    template = Template(read_file(path))
+    expanded = template.substitute(**values)
+    write_file(path, expanded)
 
 def parsePkgConfig(command, components, options_dict = None):
     """Helper function to parse compiler/linker arguments from 

@@ -4,6 +4,7 @@ from distutils import log
 from distutils import dir_util
 
 from paths import debian_package_dir
+import util
 
 class bdist_deb (Command):
     """bdist_deb builds the democracy debian package."""
@@ -42,6 +43,9 @@ class bdist_deb (Command):
         debian_source = os.path.join(debian_package_dir, 'DEBIAN')
         debian_dest = os.path.join(self.bdist_dir, 'DEBIAN')
         self.copy_tree(debian_source, debian_dest)
+        # Fill in the version number in the control file
+        util.expand_file_contents(os.path.join(debian_dest, 'control'),
+                VERSION=self.distribution.get_version())
         # copy the copyright file
         copyright_source = os.path.join(debian_package_dir, 'copyright')
         copyright_dest = os.path.join(self.bdist_dir, 'usr', 'share', 'doc', 

@@ -1,5 +1,5 @@
 Package: python2.4-democracy-player
-Version: 0.8
+Version: $VERSION
 Section: net
 Priority: optional
 Architecture: i386
