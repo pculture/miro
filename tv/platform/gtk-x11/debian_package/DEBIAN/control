@@ -1,0 +1,12 @@
+Package: python2.4-democracy-player
+Version: 0.8
+Section: net
+Priority: optional
+Architecture: i386
+Depends: python2.4, python2.4-gnome2-extras, python2.4-gtk2, python2.4-glade2, mozilla-browser, mozilla-psm
+Installed-Size: 1024
+Maintainer: Ben Dean-Kawamura <ben.dean.kawamura@gmail.com>
+Description: Download and watch internet TV shows and videos.
+ Democracy Player is a browser for watching videos.  It allows you to download
+ and watch videos from RSS feeds (including podcasts, video blogs, and
+ BitTorrent feeds).
