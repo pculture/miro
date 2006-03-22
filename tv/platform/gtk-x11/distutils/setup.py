@@ -82,7 +82,8 @@ setup(name='democracy',
     packages = [
         'democracy.frontend_implementation',
         'democracy.BitTorrent',
-        'democracy.dl_daemon'
+        'democracy.dl_daemon',
+        'democracy.dl_daemon.private',
     ],
     package_dir = {
         'democracy.frontend_implementation' : frontend_implementation_dir,

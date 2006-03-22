@@ -1,3 +1,6 @@
+import os
+import sys
+
 from frontend import *
 
 ###############################################################################
@@ -80,3 +83,33 @@ class UIBackendDelegate:
     def copyTextToClipboard(self, text):
         print "WARNING: copyTextToClipboard not implemented"
         # NEEDS do it!
+
+    def launchDownloadDaemon(self, oldpid):
+        print "*** LAUNCHING**** "
+        # Use UNIX style kill
+        if oldpid is not None:
+            try:
+                os.kill(oldpid, signal.SIGTERM)
+                sleep(1)
+                os.kill(oldpid, signal.SIGKILL)
+            except:
+                pass
+        pid = os.fork()
+        if pid == 0:
+            # child process
+            # insert the dl_daemon.private directory, then the democracy
+            # directory at the top of PYTOHNPATH
+            import democracy
+            democracyPath = os.path.dirname(democracy.__file__)
+            dlDaemonPath = os.path.join(democracyPath, 'dl_daemon')
+            privatePath = os.path.join(dlDaemonPath, 'private')
+            pythonPath = os.environ.get('PYTHONPATH', '').split(':')
+            pythonPath[0:0] = [privatePath, democracyPath]
+            os.environ['PYTHONPATH'] = ':'.join(pythonPath)
+            # run the Democracy_Downloader script
+            script = os.path.join(dlDaemonPath,  'Democracy_Downloader.py')
+            os.execlp("python2.4", "python2.4", script)
+        else:
+            # parent processes, nothing to do here
+            print "spawned download daemon (PID %d)" % pid
+            pass
