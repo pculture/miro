@@ -2126,6 +2126,7 @@ class QuicktimeRenderer (app.VideoRenderer):
 
     POSSIBLY_SUPPORTED_EXT = ('.wmv', '.avi', '.asf')
     UNSUPPORTED_EXT = ('.ram', '.rm', '.rpm', '.rv', '.ra')
+    CORRECT_QTMEDIA_TYPES = (QTMediaTypeVideo, QTMediaTypeMPEG, QTMediaTypeMovie)
 
     def __init__(self, delegate):
         app.VideoRenderer.__init__(self)
@@ -2177,7 +2178,7 @@ class QuicktimeRenderer (app.VideoRenderer):
                 for media in allMedia:
                     mediaType = media.attributeForKey_(QTMediaTypeAttribute)
                     mediaDuration = media.attributeForKey_(QTMediaDurationAttribute).QTTimeValue().timeValue
-                    if mediaType == QTMediaTypeVideo and mediaDuration > 0:
+                    if mediaType in self.CORRECT_QTMEDIA_TYPES and mediaDuration > 0:
                         # We have one, see if the file is something we support
                         (path, ext) = os.path.splitext(pathname.lower())
                         if ext in self.POSSIBLY_SUPPORTED_EXT and self.hasFlip4MacComponent():
