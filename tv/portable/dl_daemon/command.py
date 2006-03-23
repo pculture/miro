@@ -21,8 +21,10 @@ class Command:
             except:
                 #traceback.print_exc()
                 if retry:
+                    print "DTV: dl daemon retrying %s %s" % (str(self), self.id)
                     sleep(5)
                 else:
+                    print "DTV: dl daemon send failed %s %s" % (str(self), self.id)
                     break
 
     def setReturnValue(self, ret):
@@ -81,6 +83,10 @@ class UpdateDownloadStatus(Command):
     def action(self):
         from downloader import RemoteDownloader
         return RemoteDownloader.updateStatus(*self.args, **self.kws)
+
+class ReadyCommand(Command):
+    def action(self):
+        self.daemon.ready.set() # go
 
 #############################################################################
 #  App to Downloader commands                                               #

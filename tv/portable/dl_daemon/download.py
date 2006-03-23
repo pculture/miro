@@ -6,6 +6,7 @@ import types
 from os import remove, rename, access, F_OK
 from threading import RLock, Event, Thread
 from time import sleep, time
+from copy import copy
 
 from download_utils import grabURL, cleanFilename, parseURL
 
@@ -110,7 +111,6 @@ def getDownloadStatus(dlids = None):
                 pass
     return statuses
 
-# FIXME: This sometimes doesn't kill all the download threads...
 def shutDown():
     for dlid in _downloads:
         _downloads[dlid].pause()
@@ -158,7 +158,7 @@ class BGDownloader:
             'currentSize': self.currentSize,
             'eta': self.getETA(),
             'rate': self.getRate(),
-            'uploaded': 0, #FIXME: store this
+            'uploaded': 0,
             'filename': self.filename,
             'shortFilename': self.shortFilename,
             'reasonFailed': self.reasonFailed,
@@ -166,7 +166,7 @@ class BGDownloader:
 
     def updateClient(self):
         x = command.UpdateDownloadStatus(daemon.lastDaemon, self.getStatus())
-        return x.send(block = False, retry = True)
+        return x.send(block = False, retry = False)
         
     ##
     # Returns a reasonable filename for saving the given url
@@ -359,7 +359,7 @@ class HTTPDownloader(BGDownloader):
                 remove(self.filename)
             except:
                 pass
-        self.updateClient()            
+        self.updateClient()
  
     ##
     # Checks the download file size to see if we can accept it based on the 
@@ -404,7 +404,7 @@ class HTTPDownloader(BGDownloader):
         self.runDownloader(True)
 
     def restoreState(self, data):
-        self.__dict__ = data
+        self.__dict__ = copy(data)
         if self.state == "downloading":
             self.thread = Thread(target=lambda:self.runDownloader(retry = True), \
                                  name="downloader -- %s" % self.shortFilename)

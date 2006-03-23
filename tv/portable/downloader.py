@@ -356,8 +356,8 @@ class RemoteDownloader(Downloader):
     def __setstate__(self,state):
         (version, data) = state
         self.__dict__ = copy(data)
-        del data['itemList']
         if data['dlid'] != 'noid':
+            del data['itemList']
             c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, data)
             c.send(retry = True, block = False)
         else:

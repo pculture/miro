@@ -42,7 +42,7 @@ class Daemon:
             t = Thread(target = self.serverLoop, name = "Server Loop")
             t.start()
         else:
-            # FIXME: hack to make sure we don't start until the server
+            # make sure we don't start until the server
             # has asked us for all it's config info
             self.ready = Event()
             t = Thread(target = self.clientLoop, name = "Client Loop")
@@ -85,7 +85,6 @@ class Daemon:
         cont = True
         while cont:
             self.clientConnect()
-            self.ready.set()
             self.stream = self.socket.makefile("r+b")
             cont = self.listenLoop()
         
@@ -169,6 +168,14 @@ class Daemon:
             self.globalLock.release()
 
     def send(self, comm, block):
+        # Don't let client traffic through until the server is ready
+        if comm.orig and not self.server and not self.ready.isSet():
+            print 'DTV: Delaying send of %s %s' % (str(comm), comm.id)
+            if block:
+                self.ready.wait()
+            else:
+                raise socket.error
+
         if block:
             self.addToWaitingList(comm)
         raw = cPickle.dumps(comm, cPickle.HIGHEST_PROTOCOL)
