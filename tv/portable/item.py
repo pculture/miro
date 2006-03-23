@@ -418,6 +418,18 @@ class Item(DDBObject):
         return ret
     
     ##
+    # Returns the size of the item to be displayed. If the item has a corresponding
+    # downloaded enclosure we use the pysical size of the file, otherwise we use
+    # the RSS enclosure tag values.
+    def getSizeForDisplay(self):
+        fname = self.getFilename()
+        if fname != "":
+            size = os.stat(fname)[6]
+            return self.sizeFormattedForDisplay(size)
+        else:
+            return self.getEnclosuresSize()
+    
+    ##
     # Returns the total size of all enclosures in bytes
     def getEnclosuresSize(self):
         size = 0
@@ -456,18 +468,19 @@ class Item(DDBObject):
     ##
     # Returns a byte size formatted for display
     def sizeFormattedForDisplay(self, bytes, emptyForZero=True):
-        bytes = bytes / 1000000
-        if bytes == 0:
+        if bytes > (1 << 30):
+            return "%1.1fGB" % (bytes / (1024.0 * 1024.0 * 1024.0))
+        elif bytes > (1 << 20):
+            return "%1.1fMB" % (bytes / (1024.0 * 1024.0))
+        elif bytes > (1 << 10):
+            return "%1.1fKB" % (bytes / 1024.0)
+        elif bytes > 1:
+            return "%0.0fB" % bytes
+        else:
             if emptyForZero:
                 return ""
             else:
                 return "n/a"
-        elif bytes <  100:
-            return '%1.1fMB' % bytes
-        elif bytes < 1000:
-            return '%1.0fMB' % bytes
-        else:
-            return '%1.1fGB' % (bytes/1000)
 
     ##
     # Returns the download progress in absolute percentage [0.0 - 100.0].

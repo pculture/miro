@@ -79,7 +79,7 @@
 			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
 			<p class="main-video-details-right" t:replace="this getDuration" />
 			<p class="main-video-details-left" t:replace="this getFormat" />
-			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+			<p class="main-video-details-right" t:replace="this getSizeForDisplay" />
 			<!-- / FILE INFO -->
 					
 			<!-- NEW -->
@@ -114,7 +114,7 @@
 			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
 			<p class="main-video-details-right" t:replace="this getDuration" />
 			<p class="main-video-details-left" t:replace="this getFormat" />
-			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+			<p class="main-video-details-right" t:replace="this getSizeForDisplay" />
 			<!-- / FILE INFO -->
 			<!-- FILE TASKS -->
 			<div class="main-video-details-tasks">
@@ -141,7 +141,7 @@
 			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
 			<p class="main-video-details-right" t:replace="this getDuration" />
 			<p class="main-video-details-left" t:replace="this getFormat" />
-			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+			<p class="main-video-details-right" t:replace="this getSizeForDisplay" />
 			<!-- / FILE INFO -->
 			
 			<!-- DOWNLOAD PROGRESS -->
@@ -183,7 +183,7 @@
 			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
 			<p class="main-video-details-right" t:replace="this getDuration" />
 			<p class="main-video-details-left" t:replace="this getFormat" />
-			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+			<p class="main-video-details-right" t:replace="this getSizeForDisplay" />
 			<!-- / FILE INFO -->
 			
 			<!-- MESSAGE -->
@@ -214,7 +214,7 @@
 			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
 			<p class="main-video-details-right" t:replace="this getDuration" />
 			<p class="main-video-details-left" t:replace="this getFormat" />
-			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+			<p class="main-video-details-right" t:replace="this getSizeForDisplay" />
 			<!-- / FILE INFO -->
 			
 			<!-- MESSAGE -->
@@ -245,7 +245,7 @@
 			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
 			<p class="main-video-details-right" t:replace="this getDuration" />
 			<p class="main-video-details-left" t:replace="this getFormat" />
-			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+			<p class="main-video-details-right" t:replace="this getSizeForDisplay" />
 			<!-- / FILE INFO -->		
 			
 			<!-- UNWATCHED -->
@@ -284,7 +284,7 @@
 			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
 			<p class="main-video-details-right" t:replace="this getDuration" />
 			<p class="main-video-details-left" t:replace="this getFormat" />
-			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+			<p class="main-video-details-right" t:replace="this getSizeForDisplay" />
 			<!-- / FILE INFO -->			
 			
 			<!-- EXPIRY -->
@@ -323,7 +323,7 @@
 			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
 			<p class="main-video-details-right" t:replace="this getDuration" />
 			<p class="main-video-details-left" t:replace="this getFormat" />
-			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+			<p class="main-video-details-right" t:replace="this getSizeForDisplay" />
 			<!-- / FILE INFO -->			
 			
 			<!-- FILE TASKS -->
@@ -351,7 +351,7 @@
 			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
 			<p class="main-video-details-right" t:replace="this getDuration" />
 			<p class="main-video-details-left" t:replace="this getFormat" />
-			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+			<p class="main-video-details-right" t:replace="this getSizeForDisplay" />
 			<!-- / FILE INFO -->
 			
 			<!-- UNWATCHED -->
@@ -390,7 +390,7 @@
 			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
 			<p class="main-video-details-right" t:replace="this getDuration" />
 			<p class="main-video-details-left" t:replace="this getFormat" />
-			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+			<p class="main-video-details-right" t:replace="this getSizeForDisplay" />
 			<!-- / FILE INFO -->
 			
 			<!-- ERROR -->

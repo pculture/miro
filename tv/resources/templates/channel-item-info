@@ -12,7 +12,7 @@
     <body>
 
         <p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
-        <p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+        <p class="main-video-details-right" t:replace="this getSizeForDisplay" />
         <p class="main-video-details-left" t:replace="this getDuration" />
         <p class="main-video-details-right" t:replace="this getFormat" />
 
