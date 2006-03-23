@@ -114,3 +114,8 @@ class ShutDownCommand(Command):
     def action(self):
         from dl_daemon import download
         return download.shutDown(*self.args, **self.kws)
+
+class RestoreDownloaderCommand(Command):
+    def action(self):
+        from dl_daemon import download
+        return download.restoreDownloader(*self.args, **self.kws)

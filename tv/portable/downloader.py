@@ -355,7 +355,17 @@ class RemoteDownloader(Downloader):
     # Called by pickle during deserialization
     def __setstate__(self,state):
         (version, data) = state
-        self.__dict__ = data
+        self.__dict__ = copy(data)
+        del data['itemList']
+        if data['dlid'] != 'noid':
+            c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, data)
+            c.send(retry = True, block = False)
+        else:
+            self.thread = Thread(target=self.runDownloader, \
+                                 name="downloader -- %s" % self.shortFilename)
+            self.thread.setDaemon(True)
+            self.thread.start()
+            
 
 class HTTPDownloader(Downloader):
     def __init__(self, url,item):

@@ -42,8 +42,12 @@ class Daemon:
             t = Thread(target = self.serverLoop, name = "Server Loop")
             t.start()
         else:
+            # FIXME: hack to make sure we don't start until the server
+            # has asked us for all it's config info
+            self.ready = Event()
             t = Thread(target = self.clientLoop, name = "Client Loop")
             t.start()
+            self.ready.wait()
     
     def clientConnect(self):
         # There's still a possible race condition in the case where
@@ -81,6 +85,7 @@ class Daemon:
         cont = True
         while cont:
             self.clientConnect()
+            self.ready.set()
             self.stream = self.socket.makefile("r+b")
             cont = self.listenLoop()
         

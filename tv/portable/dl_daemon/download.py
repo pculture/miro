@@ -110,11 +110,22 @@ def getDownloadStatus(dlids = None):
                 pass
     return statuses
 
+# FIXME: This sometimes doesn't kill all the download threads...
 def shutDown():
     for dlid in _downloads:
         _downloads[dlid].pause()
     shutdownBTDownloader()
-    
+
+def restoreDownloader(downloader):
+    if downloader['dlerType'] == 'HTTP':
+        dl = HTTPDownloader(restore = downloader)
+    elif downloader['dlerType'] == 'BitTorrent':
+        dl = BTDownloader(restore = downloader)
+    else:
+        print "WARNING dlerType %s not recognized" % downloader['dlerType']
+        return
+    _downloads[downloader['dlid']] = dl
+    _downloads_by_url[downloader['url']] = dl
 
 class BGDownloader:
     def __init__(self, url, dlid):
@@ -149,7 +160,9 @@ class BGDownloader:
             'rate': self.getRate(),
             'uploaded': 0, #FIXME: store this
             'filename': self.filename,
-            'reasonFailed': self.reasonFailed}
+            'shortFilename': self.shortFilename,
+            'reasonFailed': self.reasonFailed,
+            'dlerType': None }
 
     def updateClient(self):
         x = command.UpdateDownloadStatus(daemon.lastDaemon, self.getStatus())
@@ -212,10 +225,19 @@ class BGDownloader:
         return rate
 
 class HTTPDownloader(BGDownloader):
-    def __init__(self, url,dlid):
-        self.lastUpdated = 0
-        self.lastSize = 0
-        BGDownloader.__init__(self,url, dlid)
+    def __init__(self, url = None,dlid = None,restore = None):
+        if restore is not None:
+            print "Restoring dlid %s" % restore['dlid']
+            self.restoreState(restore)
+        else:
+            self.lastUpdated = 0
+            BGDownloader.__init__(self,url, dlid)
+
+    def getStatus(self):
+        data = BGDownloader.getStatus(self)
+        data['lastUpdated'] = self.lastUpdated
+        data['dlerType'] = 'HTTP'
+        return data
 
     ##
     # Update the download rate and eta based on recieving length bytes
@@ -381,6 +403,14 @@ class HTTPDownloader(BGDownloader):
         print "Warning starting downloader in thread"
         self.runDownloader(True)
 
+    def restoreState(self, data):
+        self.__dict__ = data
+        if self.state == "downloading":
+            self.thread = Thread(target=lambda:self.runDownloader(retry = True), \
+                                 name="downloader -- %s" % self.shortFilename)
+            self.thread.setDaemon(False)
+            self.thread.start()
+
 
 ##
 # BitTorrent uses this class to display status information. We use
@@ -455,14 +485,31 @@ class BTDownloader(BGDownloader):
     torrentConfig = torrentConfig[0]
     multitorrent = Multitorrent(torrentConfig, doneflag, global_error)
 
-    def __init__(self, url, item):
+    def __init__(self, url = None, item = None, restore = None):
         self.metainfo = None
         self.rate = 0
         self.eta = 0
         self.d = BTDisplay(self)
         self.uploaded = 0
         self.torrent = None
-        BGDownloader.__init__(self,url,item)
+        if restore is not None:
+            self.restoreState(restore)
+        else:            
+            BGDownloader.__init__(self,url,item)
+
+    def restoreState(self, data):
+        self.__dict__ = data
+        if self.state in ("downloading","uploading"):
+            self.thread = Thread(target=lambda:self.restartDL, \
+                                 name="downloader -- %s" % self.shortFilename)
+            self.thread.setDaemon(False)
+            self.thread.start()
+
+    def getStatus(self):
+        data = BGDownloader.getStatus(self)
+        data['metainfo'] = self.metainfo
+        data['dlerType'] = 'BitTorrent'
+        return data
 
     def getRate(self):
         return self.rate
@@ -567,8 +614,6 @@ class BTDownloader(BGDownloader):
         self.d.finished()
 
     def restartDL(self):
-        threadpriority.setBackgroundPriority()
-
         if self.metainfo != None and self.state != "finished":
             self.torrent = self.multitorrent.start_torrent(self.metainfo,
                                       self.torrentConfig, self, self.filename)
