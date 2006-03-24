@@ -13,8 +13,13 @@ def launchDownloadDaemon(oldpid = None):
     delegate.launchDownloadDaemon(oldpid)
     
 def getDataFile():
-    #FIXME work in the user ID, so multi user systems don't freak
-    return os.path.join(tempfile.gettempdir(), 'Democracy_Download_Daemon.txt')
+    try:
+        uid = os.getuid()
+    except:
+        # This works for win32, where we don't have getuid()
+        uid = os.environ['USER']
+        
+    return os.path.join(tempfile.gettempdir(), 'Democracy_Download_Daemon_%s.txt' % uid)
 
 lastDaemon = None
 
@@ -57,6 +62,24 @@ class Daemon:
         port = None
         pid = None
         tries = 0
+        try:
+            f = open(getDataFile(),"rb")
+            port = int(f.readline())
+            pid = int(f.readline())
+            f.close()
+        except:
+            pass
+        try:
+            if (port is not None):
+                print "dtv: Client Connecting to %d" % port
+                self.socket.connect( ('127.0.0.1',port))
+                connected = True
+        except:
+            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.socket.settimeout(None)
+            launchDownloadDaemon(pid)
+            sleep(1)
+            
         while not connected:
             tries += 1
             try:
@@ -68,15 +91,15 @@ class Daemon:
                 pass
             try:
                 if (port is not None):
-                    print "Client Connecting to %d" % port
+                    print "dtv: Client Connecting to %d" % port
                     self.socket.connect( ('127.0.0.1',port))
                     connected = True
             except:
                 self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.socket.settimeout(None)
                 sleep(1)
-            if not connected and (tries == MAX_TRIES or pid is None):
-                print "launching download daemon"
+            if not connected and tries == MAX_TRIES:
+                print "dtv: launching download daemon"
                 launchDownloadDaemon(pid)
                 sleep(3)
                 tries = 0
