@@ -140,7 +140,9 @@ class Daemon:
             return False # Stop looping
         except:
             traceback.print_exc()
-            return True # Keep looping
+            # On socket errors, the daemon dies, but the client stays
+            # alive so it can restart the daemon
+            return not self.server
 
     def processCommand(self, comm):
         if comm.orig:
