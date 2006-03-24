@@ -17,6 +17,19 @@ import types
 
 import config
 
+# When you need to upgrade the database:
+#
+# * Increment VERSION by one
+# * Add instructions for upgrading to DynamicDatabase.upgrade()
+VERSION = 0
+
+
+##
+# Raised when an attempt is made to restore a database newer than the
+# one we support
+class DatabaseVersionError(StandardError):
+    pass
+
 ##
 # Raised when an attempt is made to remove an object that doesn't exist
 class ObjectNotFoundError(StandardError):
@@ -828,13 +841,14 @@ class DynamicDatabase:
     # Right now, I'm assuming that if it doesn't work, there's nothing
     # we can do to make it work anyway.
     def save(self,filename=None):
-        global delegate
+        global delegate, VERSION
         #FIXME copying out the data before we save it is sloow
         self.beginRead()
         try:
-            out = []
+            data = []
             for obj in self.objects:
-                out.append(obj)
+                data.append(obj)
+            out = (VERSION, data)
         finally:
             self.endRead()
 
@@ -857,6 +871,28 @@ class DynamicDatabase:
             delegate.saveFailed(outText)
 
     ##
+    # Upgrades database "schema" between versions
+    #
+    # @param data the unserialized data loaded from disk
+    #
+    def upgrade(self, origdata):
+        global VERSION
+        if type(origdata) == types.ListType:
+            print "dtv: upgrading from old, versionless database"
+            version = 0
+            data = origdata
+        else:
+            (version, data) = origdata
+
+        # Insert upgrade code here
+
+        if VERSION != version:
+            print "dtv: database has version %s and we're using %s!" % (str(version), str(VERSION))
+            raise DatabaseVersionError
+
+        return data
+    
+    ##
     # Restores this database
     #
     # @param filename the file to save to
@@ -878,6 +914,9 @@ class DynamicDatabase:
                     handle.close()
                     return (self.restore(filename+".bak"))
                 handle.close()
+
+                # Upgrade older versions of the database
+                temp = self.upgrade(temp)
 
                 #Initialize the object location dictionary
                 self.objectLocs = {}
