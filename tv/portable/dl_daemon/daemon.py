@@ -24,9 +24,10 @@ def getDataFile():
 lastDaemon = None
 
 class Daemon:
-    def __init__(self, server = False):
+    def __init__(self, server = False, onShutdown = lambda:None):
         global lastDaemon
         lastDaemon = self
+        self.shutdown = False
         self.server = server
         self.waitingCommands = {}
         self.returnValues = {}
@@ -34,6 +35,7 @@ class Daemon:
         self.globalLock = Lock() # For serializing access to global object data
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.settimeout(None)
+        self.onShutdown = onShutdown
         if server:
             self.socket.bind( ('127.0.0.1', 0) )
             (myAddr, myPort) = self.socket.getsockname()
@@ -110,7 +112,8 @@ class Daemon:
             self.clientConnect()
             self.stream = self.socket.makefile("r+b")
             cont = self.listenLoop()
-        
+        self.onShutdown()
+        self.shutdown = True
 
     def serverLoop(self):
         cont = True
@@ -120,14 +123,16 @@ class Daemon:
             conn.settimeout(None)
             self.stream = conn.makefile("r+b")
             cont = self.listenLoop()
+        self.onShutdown()
+        self.shutdown = True
 
     def listenLoop(self):
         try:
             cont = True
             while cont:
-                print "Top of dl daemon listen loop"
+                #print "Top of dl daemon listen loop"
                 comm = cPickle.load(self.stream)
-                print "dl daemon got object %s %s" % (str(comm), comm.id)
+                #print "dl daemon got object %s %s" % (str(comm), comm.id)
                 # Process commands in their own thread so actions that
                 # need to send stuff over the wire don't hang
                 # FIXME: We shouldn't spawn a thread for every command!

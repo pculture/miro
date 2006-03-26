@@ -61,10 +61,8 @@ def startNewDownload(url, contentType):
         else:
             dlid = generateDownloadID()
             if contentType == 'application/x-bittorrent':
-                print "Got BT Download"
                 dl = BTDownloader(url, dlid)
             else:
-                print "Got HTTP download"
                 dl = HTTPDownloader(url, dlid)
             _downloads[dlid] = dl
             _downloads_by_url[url] = dl
@@ -112,11 +110,15 @@ def getDownloadStatus(dlids = None):
     return statuses
 
 def shutDown():
+    print "Shutting down downloaders..."
     for dlid in _downloads:
         _downloads[dlid].pause()
     shutdownBTDownloader()
 
 def restoreDownloader(downloader):
+    # changes to the downloader's dict shouldn't affect this
+    downloader = copy(downloader)
+    
     if downloader['dlerType'] == 'HTTP':
         dl = HTTPDownloader(restore = downloader)
     elif downloader['dlerType'] == 'BitTorrent':
@@ -227,7 +229,6 @@ class BGDownloader:
 class HTTPDownloader(BGDownloader):
     def __init__(self, url = None,dlid = None,restore = None):
         if restore is not None:
-            print "Restoring dlid %s" % restore['dlid']
             self.restoreState(restore)
         else:
             self.lastUpdated = 0
@@ -499,8 +500,9 @@ class BTDownloader(BGDownloader):
 
     def restoreState(self, data):
         self.__dict__ = data
+        self.d = BTDisplay(self)
         if self.state in ("downloading","uploading"):
-            self.thread = Thread(target=lambda:self.restartDL, \
+            self.thread = Thread(target=self.restartDL, \
                                  name="downloader -- %s" % self.shortFilename)
             self.thread.setDaemon(False)
             self.thread.start()
@@ -523,6 +525,8 @@ class BTDownloader(BGDownloader):
         try:
             self.torrent.shutdown()
         except KeyError:
+            pass
+        except AttributeError:
             pass
 
     def stop(self):

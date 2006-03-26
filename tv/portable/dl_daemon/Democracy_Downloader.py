@@ -5,7 +5,11 @@
 import resource, platformcfg
 from dl_daemon import daemon, command
 
-server = daemon.Daemon(server = True)
+def shutdownDownloader():
+    from dl_daemon import download
+    return download.shutDown()
+
+server = daemon.Daemon(server = True, onShutdown = shutdownDownloader)
 
 from dl_daemon import download
 download.startBTDownloader()

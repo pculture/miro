@@ -15,16 +15,16 @@ class Command:
         self.daemon = daemon
 
     def send(self, block = True, retry = True):
-        while True:
+        while not self.daemon.shutdown:
             try:
                 return self.daemon.send(self, block)
             except:
                 #traceback.print_exc()
                 if retry:
-                    print "DTV: dl daemon retrying %s %s" % (str(self), self.id)
+                    #print "dtv: dl daemon retrying %s %s" % (str(self), self.id)
                     sleep(5)
                 else:
-                    print "DTV: dl daemon send failed %s %s" % (str(self), self.id)
+                    #print "dtv: dl daemon send failed %s %s" % (str(self), self.id)
                     break
 
     def setReturnValue(self, ret):
@@ -116,11 +116,11 @@ class GetDownloadStatusCommand(Command):
         from dl_daemon import download
         return download.getDownloadStatus(*self.args, **self.kws)
 
+# This is a special command that's trapped by the daemon
 class ShutDownCommand(Command):
     def action(self):
-        from dl_daemon import download
-        return download.shutDown(*self.args, **self.kws)
-
+        pass
+    
 class RestoreDownloaderCommand(Command):
     def action(self):
         from dl_daemon import download

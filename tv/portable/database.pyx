@@ -21,7 +21,7 @@ import config
 #
 # * Increment VERSION by one
 # * Add instructions for upgrading to DynamicDatabase.upgrade()
-VERSION = 0
+VERSION = 1
 
 
 ##
@@ -884,7 +884,28 @@ class DynamicDatabase:
         else:
             (version, data) = origdata
 
-        # Insert upgrade code here
+        if version == 0:
+            print "dtv: Upgrading database from version 0 to version 1"
+            for key in range(len(data)):
+                obj = data[key]
+                if obj[0].__class__.__name__ in ['HTTPDownloader','BTDownloader']:
+                    import downloader
+                    objdata = copy(obj[0].__dict__)
+                    if obj[0].__class__.__name__ == 'BTDownloader':
+                        objdata['dlerType'] = 'BitTorrent'
+                        del objdata['d']
+                    else:
+                        objdata['dlerType'] = 'HTTP'
+                    objdata['blockTimes'] = []
+                    newdownloader = downloader.RemoteDownloader(localDownloadData = objdata)
+                    data[key] = (newdownloader, newdownloader)
+                    for item in newdownloader.itemList:
+                        for key2 in range(len(item.downloaders)):
+                            dler = item.downloaders[key2]
+                            if dler is obj[0]:
+                                item.downloaders[key2] = newdownloader
+            version = 1
+
 
         if VERSION != version:
             print "dtv: database has version %s and we're using %s!" % (str(version), str(VERSION))
