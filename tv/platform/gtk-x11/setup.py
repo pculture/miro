@@ -276,7 +276,7 @@ class bdist_deb (Command):
         # ensure the dist directory is around
         self.mkpath(self.dist_dir)
         # create the debian package
-        package_basename = "democracy-player_%s_i386.deb" % \
+        package_basename = "democracy_%s_i386.deb" % \
                 self.distribution.get_version()
         package_path  = os.path.join(self.dist_dir, package_basename)
         dpkg_command = "fakeroot dpkg --build %s %s" % (self.bdist_dir, 
