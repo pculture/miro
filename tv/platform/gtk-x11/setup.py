@@ -24,15 +24,30 @@ import os
 from Pyrex.Distutils import build_ext
 
 #### usefull paths to have around ####
-root_dir = os.path.abspath(os.path.join(__file__, '..', '..', '..'))
+# bdist_rpm and possibly other commands copies setup.py into a subdir of
+# platform/gtk-x11.  This makes it hard to find the root directory.  We work
+# our way up the path until our is_root_dir test passes.
+def is_root_dir(dir):
+    return (os.path.basename(dir) == 'tv' and
+            os.path.isdir(os.path.join(dir, 'portable')) and
+            os.path.isdir(os.path.join(dir, 'resources')) and
+            os.path.isdir(os.path.join(dir, 'platform')))
+root_try = os.path.abspath(os.path.dirname(__file__))
+while True:
+    if is_root_dir(root_try):
+        root_dir = root_try
+        break
+    if root_try == '/':
+        raise RuntimeError("Couldn't find Democracy root directory")
+    root_try = os.path.abspath(os.path.join(root_try, '..'))
 portable_dir = os.path.join(root_dir, 'portable')
 bittorrent_dir = os.path.join(portable_dir, 'BitTorrent')
 dl_daemon_dir = os.path.join(portable_dir, 'dl_daemon')
 resource_dir = os.path.join(root_dir, 'resources')
 platform_dir = os.path.join(root_dir, 'platform', 'gtk-x11')
+xine_dir = os.path.join(platform_dir, 'xine')
 frontend_implementation_dir = os.path.join(platform_dir,
         'frontend_implementation')
-xine_dir = os.path.join(platform_dir, 'xine')
 debian_package_dir = os.path.join(platform_dir, 'debian_package')
 
 #### utility functions ####
@@ -109,11 +124,14 @@ parsePkgConfig("mozilla-config", "string dom gtkembedmoz necko xpcom",
         mozilla_browser_options)
 # mozilla-config doesn't get gtkembedmoz one for some reason
 mozilla_browser_options['libraries'].append('gtkembedmoz') 
+# Running mozilla-config with no components should get us the path to the
+# mozilla libraries (nessecary to import gtkmozembed.so)
+mozilla_lib_path = parsePkgConfig('mozilla-config', '')['library_dirs']
 mozilla_browser_ext = Extension("democracy.MozillaBrowser",
         [ os.path.join(frontend_implementation_dir,'MozillaBrowser.pyx'),
           os.path.join(frontend_implementation_dir,'MozillaBrowserXPCOM.cc'),
         ],
-        runtime_library_dirs=['/usr/lib/mozilla'],
+        runtime_library_dirs=mozilla_lib_path,
         **mozilla_browser_options)
 
 #### Xine Extension ####

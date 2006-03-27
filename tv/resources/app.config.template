@@ -7,5 +7,6 @@ copyright = Copyright 2006
 appVersion = 0.8.1
 appRevision = $APP_REVISION
 appPlatform = $APP_PLATFORM
+appSerial-gtk-x11 = 2006031800
 appSerial-osx = 2006031300
 appSerial-windows-xul = 2006030100
