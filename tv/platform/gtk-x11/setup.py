@@ -158,6 +158,13 @@ for dir in ('templates', 'css', 'images'):
     source_dir = os.path.join(resource_dir, dir)
     dest_dir = os.path.join('/usr/share/democracy/resources/', dir)
     data_files.append((dest_dir, listfiles(source_dir)))
+# add the desktop file and the icons
+data_files += [
+    ('/usr/share/pixmaps', 
+            glob(os.path.join(platform_dir, 'democracyplayer-*.png'))),
+    ('/usr/share/applications', 
+        [os.path.join(platform_dir, 'democracyplayer.desktop')]),
+]
 
 #### Our specialized install_data command ####
 class install_data (distutils.command.install_data.install_data):
