@@ -125,17 +125,22 @@ class httpServer:
         try:
             try:
                 request = self.file.readline()
-
                 match = re.match(r"^([^ ]+) +([^ ]+)", request)
-                if not match:
-                    raise ValueError, "Malformed HTTP request: %r" % request
-                method = match.group(1)
-                path = match.group(2)
-                self.reqNum = self.incReqNum()
-                self.thread.setName("httpServer [%d] -- %s" % \
-                                    (self.reqNum, path))
+                if request == '':
+                    # an empty string indicates we've hit EOS already, don't
+                    # bother sending anything back.
+                    print "WARNING: empty HTTP request"
+                elif not match:
+                    print "WARNING: Malformed HTTP request: %r" % request
+                    self.sendBadRequestResponse()
+                else:
+                    method = match.group(1)
+                    path = match.group(2)
+                    self.reqNum = self.incReqNum()
+                    self.thread.setName("httpServer [%d] -- %s" % \
+                                        (self.reqNum, path))
 
-                self.handleRequest(method, path)
+                    self.handleRequest(method, path)
 
             # In handling exceptions, remember that reqNum can be None if
             # the initial readline failed -- so use %s, never %d, when
@@ -159,6 +164,7 @@ class httpServer:
 
         finally:
             self.socket.close()
+            self.file.close()
 
         # Thread exits at this point
 
@@ -345,20 +351,33 @@ class httpServer:
         print "Request for %s is invalid.  Sending 404 response" % path
         self.sendNotFoundResponse(path)
 
-    def sendDocumentAndClose(self, contentType, data, code=200, reason="OK", 
-            cache=False):
+    def sendStatusLine(self, code, reason):
         self.socket.send("HTTP/1.0 %s %s\r\n" % (code, reason))
-        self.socket.send("Content-Length: %s\r\n" % len(data))
+
+    def sendHeader(self, name, value):
+        self.socket.send("%s: %s\r\n" % (name, value))
+
+    def finishHeaders(self):
+        self.socket.send("\r\n")
+
+    def sendBody(self, body):
+        self.socket.send(body)
+
+
+    def sendDocumentAndClose(self, contentType, data, statusCode="200",
+            statusMessage="OK", cache=False):
+        self.sendStatusLine(statusCode, statusMessage)
+        self.sendHeader("Content-Length", len(data))
         if contentType:
-            self.socket.send("Content-Type: %s\r\n" % contentType)
+            self.sendHeader("Content-Type", contentType)
         if cache and not 'DTV_DISABLE_CACHE' in os.environ:
             cacheTime = 60*60 # keep it an hour
             thenGMT = time.gmtime(time.time()+cacheTime)
             thenString = time.strftime("%a, %d %b %Y %H:%M:%S GMT",
                                        thenGMT)
-            self.socket.send("Expires: %s\r\n" % thenString)
-        self.socket.send("\r\n")
-        self.socket.send(data)
+            self.sendHeader("Expires", thenString)
+        self.finishHeaders()
+        self.sendBody(data)
 
     def sendNotFoundResponse(self, path):
         message = """\
@@ -369,9 +388,11 @@ class httpServer:
 <P>The requested URL %s was not found on this server.</P>
 </BODY>
 </HTML>""" % path
-        self.sendDocumentAndClose("text/html", message, code=404, 
-                reason="Not Found")
+        self.sendDocumentAndClose('text/html', message, "404", "Not Found")
 
+    def sendBadRequestResponse(self):
+        self.sendStatusLine("400", "Bad Request")
+        self.finishHeaders()
 
     def queueChunk(self, mimeType, body):
         self.cond.acquire()
