@@ -68,9 +68,8 @@ class PyBridge:
         app.start()
 
     def onShutdown(self):
-        print "onShutdown in pybridge"
         import app
-        app.Controller().onShutdown()
+        app.Controller.instance.onShutdown()
 
     def eventURL(self, cookie, url):
         import frontend

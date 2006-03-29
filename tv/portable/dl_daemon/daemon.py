@@ -17,7 +17,7 @@ def getDataFile():
         uid = os.getuid()
     except:
         # This works for win32, where we don't have getuid()
-        uid = os.environ['USER']
+        uid = os.environ['USERNAME']
         
     return os.path.join(tempfile.gettempdir(), 'Democracy_Download_Daemon_%s.txt' % uid)
 
