@@ -110,6 +110,12 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
         app.VideoDisplayBase.onSelected(self, frame)
 
         # Reset the display so it can be reused
+        # Note from Ben: there is a race condition here if we get 2 HTTP
+        # requests for the VideoDisplay page in a very short timespan.  If
+        # VideoDisplay.onSelected() gets called for both requests, before the
+        # XUL code loads either page, then the second time the XUL code loads
+        # the page it won't be in pendingDocuments anymore.  I think it's
+        # exteremly unlikely that we'll ever run into this problem though.
         html = template.fillStaticTemplate("video-display-vlc", {'eventCookie':self.getEventCookie(),'dtvPlatform':'xul'})
 
         frontend_implementation.HTMLDisplay.pendingDocuments[self.getEventCookie()] = ("text/html", html)

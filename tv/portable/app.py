@@ -636,6 +636,9 @@ class Controller (frontend.Application):
             downloader.shutdownDownloader()
 
             print "DTV: Done shutting down."
+            print "Remaining threads are:"
+            for thread in threading.enumerate():
+                print thread
 
         except:
             util.failedExn("while shutting down")
