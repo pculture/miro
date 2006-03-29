@@ -1,8 +1,20 @@
 import os
 import config
 
+# Import MozillaBrowser ASAP.  On some systems the gtkmozembed module is
+# linked against a different libxpcom than MozillaBrowser.  Importing it first
+# ensures that MozillaBrowser's libxpcom gets linked to.
+#
+# NOTE: this could also lead to problems, since now gtkmozembed is being
+# linked to a different libxpcom than it expects.  This way seems to be less
+# bad though, so we'll use it for now.  See Bug #1560.
+import pygtk
+pygtk.require('2.0')
+import MozillaBrowser
+
 # Almost everything is split out into files under frontend-implementation.
 from frontend_implementation.Application import Application
+import frontend_implementation.MozillaBrowser
 from frontend_implementation.MainFrame import MainFrame, NullDisplay
 from frontend_implementation.UIBackendDelegate import UIBackendDelegate
 from frontend_implementation.HTMLDisplay import HTMLDisplay, getDTVAPICookie, getDTVAPIURL
@@ -18,8 +30,8 @@ movie_dir = config.get(config.MOVIES_DIRECTORY)
 if not os.path.exists(support_dir):
     os.makedirs(os.path.join(movie_dir,'Incomplete Downloads'))
 
-#import mozsetup
-#mozsetup.setupMozillaEnvironment()
+import mozsetup
+mozsetup.setupMozillaEnvironment()
 
 def exit(returnCode):
     return returnCode
