@@ -131,14 +131,15 @@ class PlaybackControllerBase:
 
     def skip(self, direction):
         nextItem = None
-        if direction == 1:
-            nextItem = self.currentPlaylist.getNext()
-        else:
-            if not hasattr(self.currentDisplay, 'getCurrentTime') or self.currentDisplay.getCurrentTime() <= 1.0:
-                nextItem = self.currentPlaylist.getPrev()
+        if self.currentPlaylist is not None:
+            if direction == 1:
+                nextItem = self.currentPlaylist.getNext()
             else:
-                self.currentDisplay.goToBeginningOfMovie()
-                return self.currentPlaylist.cur()
+                if not hasattr(self.currentDisplay, 'getCurrentTime') or self.currentDisplay.getCurrentTime() <= 1.0:
+                    nextItem = self.currentPlaylist.getPrev()
+                else:
+                    self.currentDisplay.goToBeginningOfMovie()
+                    return self.currentPlaylist.cur()
         if nextItem is None:
             self.stop()
         else:
