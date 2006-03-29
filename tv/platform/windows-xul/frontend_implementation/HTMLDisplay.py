@@ -338,10 +338,16 @@ class httpServer:
             return
 
         ## Fell through - bad URL ##
-        raise ValueError, "Unrecognized request"
+        # One possible cause is a relative like in a feed like,
+        # <IMG src="/ImageOnMyServer/">
+        # Another cause is a bug in democracy.  Return a 404 and print a
+        # warning to the log.
+        print "Request for %s is invalid.  Sending 404 response" % path
+        self.sendNotFoundResponse(path)
 
-    def sendDocumentAndClose(self, contentType, data, cache=False):
-        self.socket.send("HTTP/1.0 200 OK\r\n")
+    def sendDocumentAndClose(self, contentType, data, code=200, reason="OK", 
+            cache=False):
+        self.socket.send("HTTP/1.0 %s %s\r\n" % (code, reason))
         self.socket.send("Content-Length: %s\r\n" % len(data))
         if contentType:
             self.socket.send("Content-Type: %s\r\n" % contentType)
@@ -353,6 +359,19 @@ class httpServer:
             self.socket.send("Expires: %s\r\n" % thenString)
         self.socket.send("\r\n")
         self.socket.send(data)
+
+    def sendNotFoundResponse(self, path):
+        message = """\
+<HTML>
+<HEAD><TITLE>404 Not Found</TITLE></HEAD>
+<BODY>
+<H1>Not Found</H1>
+<P>The requested URL %s was not found on this server.</P>
+</BODY>
+</HTML>""" % path
+        self.sendDocumentAndClose("text/html", message, code=404, 
+                reason="Not Found")
+
 
     def queueChunk(self, mimeType, body):
         self.cond.acquire()
