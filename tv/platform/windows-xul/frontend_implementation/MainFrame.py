@@ -30,14 +30,14 @@ class MainFrame:
                 oldDisplay.onDeselected_private(self)
                 oldDisplay.onDeselected(self)
 
-        # NEEDS: case out instances for HTMLDisplay and VideoDisplay
-        self.selectHTML(newDisplay, area)
-
 	# Generate a selection message for the new display, if any
         self.selectedDisplays[area] = newDisplay
 	if newDisplay:
 	    newDisplay.onSelected_private(self)
 	    newDisplay.onSelected(self)
+
+        # NEEDS: case out instances for HTMLDisplay and VideoDisplay
+        self.selectHTML(newDisplay, area)
 
     def selectHTML(self, display, area):
         newURL = display.getURL()
