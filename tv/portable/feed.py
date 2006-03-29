@@ -891,7 +891,7 @@ class RSSFeedImpl(FeedImpl):
                   enclosure['type'].startswith('audio/') or
                   enclosure['type'] == "application/x-bittorrent")) or
                 (enclosure.has_key('url') and
-                 (enclosure['url'][-4:].lower() in ['.mov','.wmv','.mp4',
+                 (enclosure['url'][-4:].lower() in ['.mov','.wmv','.mp4', '.m4v',
                                                    '.mp3','.mpg','.avi'] or
                   enclosure['url'][-8].lower() == '.torrent' or
                   enclosure['url'][-5].lower() == '.mpeg'))):
@@ -1197,7 +1197,7 @@ class ScraperFeedImpl(FeedImpl):
                 # the elif to make this use mime types for HTTP GET URLs
 
                 if ((link[-4:].lower() in 
-                     ['.mov','.wmv','.mp4','.mp3','.mpg','.avi']) or
+                     ['.mov','.wmv','.mp4','.m4v','.mp3','.mpg','.avi']) or
                     (link[-5:].lower() in ['.mpeg'])):
                     mimetype = 'video/unknown'
                 elif link[-8:].lower() == '.torrent':
