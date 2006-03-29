@@ -423,7 +423,7 @@ class Item(DDBObject):
     # the RSS enclosure tag values.
     def getSizeForDisplay(self):
         fname = self.getFilename()
-        if fname != "":
+        if fname != "" and os.path.exists(fname):
             size = os.stat(fname)[6]
             return self.sizeFormattedForDisplay(size)
         else:
