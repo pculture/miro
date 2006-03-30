@@ -19,9 +19,10 @@ class Command:
             try:
                 return self.daemon.send(self, block)
             except:
-                #traceback.print_exc()
                 if retry:
-                    #print "dtv: dl daemon retrying %s %s" % (str(self), self.id)
+                    print "dtv: dl daemon retrying %s %s" % (str(self), self.id)
+                    print "orig is ", self.orig
+                    traceback.print_exc()
                     sleep(5)
                 else:
                     #print "dtv: dl daemon send failed %s %s" % (str(self), self.id)

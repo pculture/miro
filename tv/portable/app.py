@@ -636,6 +636,10 @@ class Controller (frontend.Application):
             print "DTV: Shutting down Downloader..."
             downloader.shutdownDownloader()
 
+            if self.idlingNotifier is not None:
+                print "DTV: Shutting down IdleNotifier"
+                self.idlingNotifier.join()
+
             print "DTV: Done shutting down."
             print "Remaining threads are:"
             for thread in threading.enumerate():

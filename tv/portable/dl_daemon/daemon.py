@@ -36,6 +36,7 @@ class Daemon:
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.settimeout(None)
         self.onShutdown = onShutdown
+        self.createStreamEvent = Event() 
         if server:
             self.socket.bind( ('127.0.0.1', 0) )
             (myAddr, myPort) = self.socket.getsockname()
@@ -45,7 +46,6 @@ class Daemon:
             f = open(getDataFile(),"wb")
             f.write("%s\n%s\n" % (myPort, os.getpid()))
             f.close()
-            self.socket.listen(63)
             t = Thread(target = self.serverLoop, name = "Server Loop")
             t.start()
         else:
@@ -105,13 +105,14 @@ class Daemon:
                 launchDownloadDaemon(pid)
                 sleep(3)
                 tries = 0
-                        
+
     def clientLoop(self):
         cont = True
         while cont:
             self.clientConnect()
             self.stream = self.socket.makefile("r+b")
-            cont = self.listenLoop()
+            self.createStreamEvent.set()
+            cont = self.listenLoop("Client Listen Loop")
         self.onShutdown()
         self.shutdown = True
 
@@ -122,14 +123,14 @@ class Daemon:
             (conn, address) = self.socket.accept()
             conn.settimeout(None)
             self.stream = conn.makefile("r+b")
-            cont = self.listenLoop()
+            self.createStreamEvent.set()
+            cont = self.listenLoop("Server Listen Loop")
         self.onShutdown()
         self.shutdown = True
 
-    def listenLoop(self):
+    def listenLoop(self, name):
         try:
-            cont = True
-            while cont:
+            while True:
                 #print "Top of dl daemon listen loop"
                 comm = cPickle.load(self.stream)
                 #print "dl daemon got object %s %s" % (str(comm), comm.id)
@@ -140,10 +141,15 @@ class Daemon:
                 t.setDaemon(False)
                 t.start()
                 #FIXME This is a bit of a hack
-                cont = not isinstance(comm, command.ShutDownCommand)
+                if isinstance(comm, command.ShutDownCommand):
+                    # wait for the command thread to send our reply along the
+                    # socket, then quit.
+                    t.join()
+                    break
             print "Leaving daemon listen loop"
             return False # Stop looping
         except:
+            print "Exception in the %s" % name
             traceback.print_exc()
             # On socket errors, the daemon dies, but the client stays
             # alive so it can restart the daemon
@@ -204,7 +210,7 @@ class Daemon:
             if block:
                 self.ready.wait()
             else:
-                raise socket.error
+                raise socket.error("server not ready")
 
         if block:
             self.addToWaitingList(comm)

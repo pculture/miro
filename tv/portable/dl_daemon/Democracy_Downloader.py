@@ -10,6 +10,7 @@ def shutdownDownloader():
     return download.shutDown()
 
 server = daemon.Daemon(server = True, onShutdown = shutdownDownloader)
+server.createStreamEvent.wait()
 
 from dl_daemon import download
 download.startBTDownloader()
