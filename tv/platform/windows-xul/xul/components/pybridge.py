@@ -32,9 +32,16 @@ class PyBridge:
     _reg_desc_ = "Bridge into DTV Python core"
 
     def __init__(self):
-        pass
+        self.started = False
+        self.booted = False
 
     def onStartup(self, mainWindowDocument):
+        if self.started:
+            import util
+            util.failed("Loading window", details="onStartup called twice")
+            return
+        else:
+            self.started = True
         print "onStartup"
         self.mainWindowDocument = mainWindowDocument
 
@@ -64,6 +71,12 @@ class PyBridge:
 #            traceback.print_exc()
 
     def bootApp(self):
+        if self.booted:
+            import util
+            util.failed("Loading window", details="bootApp called twice")
+            return
+        else:
+            self.booted = True
         import app
         app.start()
 

@@ -52,6 +52,12 @@ def generateDownloadID():
         _lock.release()
     return dlid
 
+def createDownloader(url, contentType, dlid):
+    if contentType == 'application/x-bittorrent':
+        return BTDownloader(url, dlid)
+    else:
+        return HTTPDownloader(url, dlid)
+
 # Creates a new downloader object. Returns id on success, None on failure
 def startNewDownload(url, contentType):
     _lock.acquire()
@@ -60,10 +66,7 @@ def startNewDownload(url, contentType):
             return _downloads_by_url[url].dlid
         else:
             dlid = generateDownloadID()
-            if contentType == 'application/x-bittorrent':
-                dl = BTDownloader(url, dlid)
-            else:
-                dl = HTTPDownloader(url, dlid)
+            dl = createDownloader(url, contentType, dlid)
             _downloads[dlid] = dl
             _downloads_by_url[url] = dl
     finally:
@@ -118,14 +121,18 @@ def shutDown():
 def restoreDownloader(downloader):
     # changes to the downloader's dict shouldn't affect this
     downloader = copy(downloader)
-    
-    if downloader['dlerType'] == 'HTTP':
+
+    dlerType = downloader.get('dlerType')
+    if dlerType == 'HTTP':
         dl = HTTPDownloader(restore = downloader)
-    elif downloader['dlerType'] == 'BitTorrent':
+    elif dlerType == 'BitTorrent':
         dl = BTDownloader(restore = downloader)
     else:
-        print "WARNING dlerType %s not recognized" % downloader['dlerType']
-        return
+        print "WARNING dlerType %s not recognized" % dlerType
+        dl = createDownloader(downloader['url'], downloader['contentType'],
+                downloader['dlid'])
+        print "created new downloader: %s" % dl
+
     _downloads[downloader['dlid']] = dl
     _downloads_by_url[downloader['url']] = dl
 
