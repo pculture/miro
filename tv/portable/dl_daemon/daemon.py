@@ -71,16 +71,10 @@ class Daemon:
             f.close()
         except:
             pass
-        try:
-            if (port is not None):
-                print "dtv: Client Connecting to %d" % port
-                self.socket.connect( ('127.0.0.1',port))
-                connected = True
-        except:
-            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.socket.settimeout(None)
-            launchDownloadDaemon(pid)
-            sleep(1)
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.settimeout(None)
+        launchDownloadDaemon(pid)
+        sleep(1)
             
         while not connected:
             tries += 1
