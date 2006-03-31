@@ -26,7 +26,9 @@ root = os.path.normpath(root)
 sys.path[0:0]=['%s/platform/%s' % (root, platform), '%s/platform' % root, '%s/portable' % root]
 
 # Only now may we import things from our own tree
-#import vlchelper.info
+
+import template_compiler
+template_compiler.compileAllTemplates(root)
 
 # Look for the Boost library in various common places.
 # - we assume that both the library and the include files are installed in the
@@ -116,7 +118,7 @@ setup(
         #Add extra_compile_args to change the compile options
         Extension("idletime",["%s/platform/osx/idletime.c" % root]),
         Extension("database",["%s/portable/database.pyx" % root]),
-        Extension("template",["%s/portable/template.pyx" % root]),
+        #Extension("template",["%s/portable/template.pyx" % root]),
         Extension("fasttypes",["%s/portable/fasttypes.cpp" % root],
                   extra_objects=[boostLib],
                   include_dirs=[boostIncludeDir])

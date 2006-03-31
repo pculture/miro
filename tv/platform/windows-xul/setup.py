@@ -149,8 +149,10 @@ ext_modules = [
     # Pyrex sources.
     #Extension("vlc", [os.path.join(root, 'platform',platform, 'vlc.pyx')],libraries=["simplevlc"]),
     Extension("database", [os.path.join(root, 'portable', 'database.pyx')]),
-    Extension("template", [os.path.join(root, 'portable', 'template.pyx')]),
+    #Extension("template", [os.path.join(root, 'portable', 'template.pyx')]),
 ]
+
+import template_compiler
 
 ###############################################################################
 
@@ -403,6 +405,8 @@ class runxul(Command, Common):
         self.setTemplateVariable("pyxpcomIsEmbedded", "false")
         self.fillTemplates()                  
 
+        template_compiler.compileAllTemplates(root)
+
         # Build extensions and add results to child search path
         build = self.reinitialize_command('build')
         build.build_base = self.bdist_base
@@ -514,6 +518,8 @@ class bdist_xul_dumb(Command, Common):
         # The standard library (and any installed extensions) come
         # after that.
         packagePaths.extend(sys.path)
+
+        template_compiler.compileAllTemplates(root)
 
         # Build extensions; add them to search path
         build = self.reinitialize_command('build')

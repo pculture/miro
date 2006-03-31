@@ -20,6 +20,7 @@ import distutils.command.build_py
 import distutils.command.build_py
 import distutils.command.install_data
 import os
+import sys
 
 from Pyrex.Distutils import build_ext
 
@@ -43,12 +44,20 @@ while True:
 portable_dir = os.path.join(root_dir, 'portable')
 bittorrent_dir = os.path.join(portable_dir, 'BitTorrent')
 dl_daemon_dir = os.path.join(portable_dir, 'dl_daemon')
+compiled_templates_dir = os.path.join(portable_dir, 'compiled_templates')
+compiled_templates_test_dir = os.path.join(compiled_templates_dir,'test')
+compiled_templates_unittest_dir = os.path.join(compiled_templates_dir,'unittest')
 resource_dir = os.path.join(root_dir, 'resources')
 platform_dir = os.path.join(root_dir, 'platform', 'gtk-x11')
 xine_dir = os.path.join(platform_dir, 'xine')
 frontend_implementation_dir = os.path.join(platform_dir,
         'frontend_implementation')
 debian_package_dir = os.path.join(platform_dir, 'debian_package')
+
+sys.path[0:0] = ['%s/platform/%s' % (root_dir, 'gtk-x11'), '%s/platform' % root_dir, '%s/portable' % root_dir]
+
+import template_compiler
+template_compiler.compileAllTemplates(root_dir)
 
 #### utility functions ####
 def read_file(path):
@@ -297,19 +306,25 @@ setup(name='democracy',
         fasttypes_ext, mozilla_browser_ext, xine_ext,
         Extension("democracy.database", 
                 [os.path.join(portable_dir, 'database.pyx')]),
-        Extension("democracy.template", 
-                [os.path.join(portable_dir, 'template.pyx')]),
+        #Extension("democracy.template", 
+        #        [os.path.join(portable_dir, 'template.pyx')]),
     ],
     packages = [
         'democracy.frontend_implementation',
         'democracy.BitTorrent',
         'democracy.dl_daemon',
+        'democracy.compiled_templates',
+        'democracy.compiled_templates.test',
+        'democracy.compiled_templates.unittest',
         'democracy.dl_daemon.private',
     ],
     package_dir = {
         'democracy.frontend_implementation' : frontend_implementation_dir,
         'democracy.BitTorrent' : bittorrent_dir,
         'democracy.dl_daemon' : dl_daemon_dir,
+        'democracy.compiled_templates' : compiled_templates_dir,
+        'democracy.compiled_templates.test' : compiled_templates_test_dir,
+        'democracy.compiled_templates.unittest' : compiled_templates_unittest_dir,
     },
     cmdclass = {
         'build_ext': build_ext, 
