@@ -1,18 +1,13 @@
 # Democracy download daemon Copyright (c) 2006 Participatory Culture Foundation
 # Background process
 
-# These are found in portable/dl_daemon/private
-import resource, platformcfg
-from dl_daemon import daemon, command
+import os
+from dl_daemon import daemon
 
-def shutdownDownloader():
-    from dl_daemon import download
-    return download.shutDown()
+port = int(os.environ['DEMOCRACY_DOWNLOADER_PORT'])
+server = daemon.DownloaderDaemon(port)
 
-server = daemon.Daemon(server = True, onShutdown = shutdownDownloader)
-server.createStreamEvent.wait()
-
-from dl_daemon import download
+from dl_daemon import download, command
 download.startBTDownloader()
 c = command.ReadyCommand(server)
 c.send(block = False, retry = True)

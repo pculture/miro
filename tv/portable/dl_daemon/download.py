@@ -63,7 +63,7 @@ def startNewDownload(url, contentType):
     _lock.acquire()
     try:
         if _downloads_by_url.has_key(url):
-            return _downloads_by_url[url].dlid
+            dlid = _downloads_by_url[url].dlid
         else:
             dlid = generateDownloadID()
             dl = createDownloader(url, contentType, dlid)

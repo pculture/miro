@@ -296,7 +296,7 @@ class RemoteDownloader(Downloader):
             
     @classmethod
     def initializeDaemon(cls):
-        RemoteDownloader.dldaemon = daemon.Daemon(server = False)
+        RemoteDownloader.dldaemon = daemon.ControllerDaemon()
 
     @classmethod
     def updateStatus(cls, data):

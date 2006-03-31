@@ -7,10 +7,10 @@ from threading import Lock, Thread, Event
 from time import sleep
 import tempfile
 
-def launchDownloadDaemon(oldpid = None):
+def launchDownloadDaemon(oldpid, port):
     import app
     delegate = app.Controller.instance.getBackendDelegate()
-    delegate.launchDownloadDaemon(oldpid)
+    delegate.launchDownloadDaemon(oldpid, port)
     
 def getDataFile():
     try:
@@ -21,133 +21,82 @@ def getDataFile():
         
     return os.path.join(tempfile.gettempdir(), 'Democracy_Download_Daemon_%s.txt' % uid)
 
+pidfile = None
+def writePid(pid):
+    """Write out our pid.
+
+    This method locks the pid file until the downloader exits.  On windows
+    this is achieved by keeping the file open.  On Unix/OS X, we use the
+    fcntl.lockf() function.
+    """
+
+    global pidfile
+    # NOTE: we want to open the file in a mode the standard open() doesn't
+    # support.  We want to create the file if nessecary, but not truncate it
+    # if it's already around.  We can't truncate it because on unix we haven't
+    # locked the file yet.
+    fd = os.open(getDataFile(), os.O_WRONLY | os.O_CREAT)
+    pidfile = os.fdopen(fd, 'w')
+    try:
+        import fcntl
+    except:
+        pass
+    else:
+        fcntl.lockf(pidfile, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    pidfile.write("%s\n" % pid)
+    pidfile.flush()
+    # NOTE: There may be extra data after the line we write left around from
+    # prevous writes to the pid file.  This is fine since readPid() only reads
+    # the 1st line.
+    #
+    # NOTE 2: we purposely don't close the file, to achieve locking on
+    # windows.
+
+def readPid():
+    try:
+        f = open(getDataFile(), "r")
+    except IOError:
+        return None
+    try:
+        try:
+            return int(f.readline())
+        except ValueError:
+            return None
+    finally:
+        f.close()
+
 lastDaemon = None
 
 class Daemon:
-    def __init__(self, server = False, onShutdown = lambda:None):
+    def __init__(self):
         global lastDaemon
         lastDaemon = self
         self.shutdown = False
-        self.server = server
         self.waitingCommands = {}
         self.returnValues = {}
         self.sendLock = Lock() # For serializing data sent over the network
         self.globalLock = Lock() # For serializing access to global object data
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.settimeout(None)
-        self.onShutdown = onShutdown
-        self.createStreamEvent = Event() 
-        if server:
-            self.socket.bind( ('127.0.0.1', 0) )
-            (myAddr, myPort) = self.socket.getsockname()
-            print "DownloadServer Daemon: Listening on %s %s" % (myAddr, myPort)
-            self.port = myPort
-            self.socket.listen(63)
-            f = open(getDataFile(),"wb")
-            f.write("%s\n%s\n" % (myPort, os.getpid()))
-            f.close()
-            t = Thread(target = self.serverLoop, name = "Server Loop")
-            t.start()
-        else:
-            # make sure we don't start until the server
-            # has asked us for all it's config info
-            self.ready = Event()
-            t = Thread(target = self.clientLoop, name = "Client Loop")
-            t.start()
-            self.ready.wait()
     
-    def clientConnect(self):
-        # There's still a possible race condition in the case where
-        # two copies of the daemon start at nearly the same time
-        MAX_TRIES = 3
-        connected = False
-        port = None
-        pid = None
-        tries = 0
-        try:
-            f = open(getDataFile(),"rb")
-            port = int(f.readline())
-            pid = int(f.readline())
-            f.close()
-        except:
-            pass
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.settimeout(None)
-        launchDownloadDaemon(pid)
-        sleep(1)
-            
-        while not connected:
-            tries += 1
-            try:
-                f = open(getDataFile(),"rb")
-                port = int(f.readline())
-                pid = int(f.readline())
-                f.close()
-            except:
-                pass
-            try:
-                if (port is not None):
-                    print "dtv: Client Connecting to %d" % port
-                    self.socket.connect( ('127.0.0.1',port))
-                    connected = True
-            except:
-                self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                self.socket.settimeout(None)
-                sleep(1)
-            if not connected and tries == MAX_TRIES:
-                print "dtv: launching download daemon"
-                launchDownloadDaemon(pid)
-                sleep(3)
-                tries = 0
-
-    def clientLoop(self):
-        cont = True
-        while cont:
-            self.clientConnect()
-            self.stream = self.socket.makefile("r+b")
-            self.createStreamEvent.set()
-            cont = self.listenLoop("Client Listen Loop")
-        self.onShutdown()
-        self.shutdown = True
-
-    def serverLoop(self):
-        cont = True
-        while cont:
-            print "server listening..."
-            (conn, address) = self.socket.accept()
-            conn.settimeout(None)
-            self.stream = conn.makefile("r+b")
-            self.createStreamEvent.set()
-            cont = self.listenLoop("Server Listen Loop")
-        self.onShutdown()
-        self.shutdown = True
-
-    def listenLoop(self, name):
-        try:
-            while True:
-                #print "Top of dl daemon listen loop"
-                comm = cPickle.load(self.stream)
-                #print "dl daemon got object %s %s" % (str(comm), comm.id)
-                # Process commands in their own thread so actions that
-                # need to send stuff over the wire don't hang
-                # FIXME: We shouldn't spawn a thread for every command!
-                t = Thread(target=lambda:self.processCommand(comm), name="command processor")
-                t.setDaemon(False)
-                t.start()
-                #FIXME This is a bit of a hack
-                if isinstance(comm, command.ShutDownCommand):
-                    # wait for the command thread to send our reply along the
-                    # socket, then quit.
-                    t.join()
-                    break
-            print "Leaving daemon listen loop"
-            return False # Stop looping
-        except:
-            print "Exception in the %s" % name
-            traceback.print_exc()
-            # On socket errors, the daemon dies, but the client stays
-            # alive so it can restart the daemon
-            return not self.server
+    def listenLoop(self):
+        while True:
+            #print "Top of dl daemon listen loop"
+            comm = cPickle.load(self.stream)
+            #print "dl daemon got object %s %s" % (str(comm), comm.id)
+            # Process commands in their own thread so actions that
+            # need to send stuff over the wire don't hang
+            # FIXME: We shouldn't spawn a thread for every command!
+            t = Thread(target=lambda:self.processCommand(comm),
+                    name="command processor")
+            t.setDaemon(False)
+            t.start()
+            #FIXME This is a bit of a hack
+            if isinstance(comm, command.ShutDownCommand):
+                # wait for the command thread to send our reply along the
+                # socket before quitting
+                t.join()
+                break
 
     def processCommand(self, comm):
         if comm.orig:
@@ -198,14 +147,6 @@ class Daemon:
             self.globalLock.release()
 
     def send(self, comm, block):
-        # Don't let client traffic through until the server is ready
-        if comm.orig and not self.server and not self.ready.isSet():
-            print 'DTV: Delaying send of %s %s' % (str(comm), comm.id)
-            if block:
-                self.ready.wait()
-            else:
-                raise socket.error("server not ready")
-
         if block:
             self.addToWaitingList(comm)
         raw = cPickle.dumps(comm, cPickle.HIGHEST_PROTOCOL)
@@ -219,3 +160,75 @@ class Daemon:
             self.sendLock.release()
         if block:
             return self.waitForReturn(comm)
+
+
+class DownloaderDaemon(Daemon):
+    def __init__(self, port):
+        # before anything else, write out our PID 
+        writePid(os.getpid())
+        # connect to the controller and start our listen loop
+        Daemon.__init__(self)
+        self.socket.connect(('127.0.0.1', port))
+        self.stream = self.socket.makefile("r+b")
+        print "Downloader Daemon: Connected on port %s" % port
+        t = Thread(target = self.downloaderLoop, name = "Downloader Loop")
+        t.start()
+
+    def downloaderLoop(self):
+        try:
+            self.listenLoop()
+            print "Downloader listen loop completed"
+        finally:
+            from dl_daemon import download
+            download.shutDown()
+            self.shutDown = True
+
+class ControllerDaemon(Daemon):
+    def __init__(self):
+        Daemon.__init__(self)
+        # open a port and start our listen loop
+        self.socket.bind( ('127.0.0.1', 0) )
+        (myAddr, myPort) = self.socket.getsockname()
+        print "Controller Daemon: Listening on %s %s" % (myAddr, myPort)
+        self.port = myPort
+        self.socket.listen(63)
+        self.ready = Event()
+        t = Thread(target = self.clientLoop, name = "Controller Loop")
+        t.start()
+        self.ready.wait()
+
+    def send(self, comm, block):
+        # Don't let traffic through until tho downloader child process is
+        # ready
+        if comm.orig and not self.ready.isSet():
+            print 'DTV: Delaying send of %s %s' % (str(comm), comm.id)
+            if block:
+                self.ready.wait()
+            else:
+                raise socket.error("server not ready")
+        return Daemon.send(self, comm, block)
+
+    def clientLoop(self):
+        try:
+            while True:
+                self.connectToDownloader()
+                try:
+                    self.listenLoop()
+                    print "Controller listen loop completed"
+                    break
+                except socket.error:
+                    # On socket errors, the downloader dies, but the
+                    # controller stays alive and restarts the downloader
+                    self.ready.clear()
+                    print "Socket exception in the controller daemon"
+                    traceback.print_exc()
+        finally:
+            self.shutDown = True
+
+    def connectToDownloader(self):
+        # launch a new daemon
+        launchDownloadDaemon(readPid(), self.port)
+        # wait for the daemon to connect to our port
+        (conn, address) = self.socket.accept()
+        conn.settimeout(None)
+        self.stream = conn.makefile("r+b")

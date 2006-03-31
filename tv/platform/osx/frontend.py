@@ -949,7 +949,7 @@ class UIBackendDelegate:
     def copyTextToClipboard(self, text):
         print "WARNING: copyTextToClipboard not implemented"
 
-    def launchDownloadDaemon(self, oldpid):
+    def launchDownloadDaemon(self, oldpid, port):
         # Use UNIX style kill
         if oldpid is not None:
             try:
@@ -959,7 +959,7 @@ class UIBackendDelegate:
             except:
                 pass
         p = os.path.normpath(resource.path("../Democracy_Downloader.app"))
-        print p
+        os.environ['DEMOCRACY_DOWNLOADER_PORT'] = str(port)
         NSWorkspace.sharedWorkspace().launchApplication_(p)
 
 class ExceptionReporterController (NibClassBuilder.AutoBaseClass):

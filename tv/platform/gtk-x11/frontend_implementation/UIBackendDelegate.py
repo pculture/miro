@@ -1,5 +1,7 @@
 import os
+import signal
 import sys
+import time
 
 from frontend import *
 
@@ -84,15 +86,19 @@ class UIBackendDelegate:
         print "WARNING: copyTextToClipboard not implemented"
         # NEEDS do it!
 
-    def launchDownloadDaemon(self, oldpid):
+    def launchDownloadDaemon(self, oldpid, port):
         print "*** LAUNCHING**** "
         # Use UNIX style kill
         if oldpid is not None:
+            print "KILLING old download daemon with pid: %r" % oldpid
             try:
                 os.kill(oldpid, signal.SIGTERM)
-                sleep(1)
+                time.sleep(1)
                 os.kill(oldpid, signal.SIGKILL)
             except:
+                import traceback
+                print "ERROR killing old daemon"
+                traceback.print_exc()
                 pass
         pid = os.fork()
         if pid == 0:
@@ -106,6 +112,7 @@ class UIBackendDelegate:
             pythonPath = os.environ.get('PYTHONPATH', '').split(':')
             pythonPath[0:0] = [privatePath, democracyPath]
             os.environ['PYTHONPATH'] = ':'.join(pythonPath)
+            os.environ['DEMOCRACY_DOWNLOADER_PORT'] = str(port)
             # run the Democracy_Downloader script
             script = os.path.join(dlDaemonPath,  'Democracy_Downloader.py')
             os.execlp("python2.4", "python2.4", script)
