@@ -59,6 +59,11 @@ sys.path[0:0] = ['%s/platform/%s' % (root_dir, 'gtk-x11'), '%s/platform' % root_
 import template_compiler
 template_compiler.compileAllTemplates(root_dir)
 
+# little hack get the version from the current app.config.template
+import util
+app_config = os.path.join(resource_dir, 'app.config.template')
+appVersion = util.readSimpleConfigFile(app_config)['appVersion']
+
 #### utility functions ####
 def read_file(path):
     f = open(path)
@@ -295,7 +300,7 @@ class bdist_deb (Command):
         dir_util.remove_tree(self.bdist_dir)
 #### Run setup ####
 setup(name='democracy', 
-    version='0.8', 
+    version=appVersion,
     author='Participatory Culture Foundation',
     author_email='feedback@pculture.org',
     url='http://www.getdemocracy.com/',
