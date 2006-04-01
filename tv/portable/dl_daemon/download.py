@@ -482,8 +482,7 @@ class BTDisplay:
             update = True
             self.lastUpdated = now
         if update:
-            pass
-        self.dler.updateClient()
+            self.dler.updateClient()
 
 class BTDownloader(BGDownloader):
     def global_error(level, text):
