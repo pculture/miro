@@ -1641,8 +1641,13 @@ class ManagedWebView (NSObject):
         parent = self.view.mainFrame().DOMDocument().createElement_("div")
         parent.setInnerHTML_(xml)
         elt = parent.firstChild()
-        if parent.childNodes().length() != 1:
-            raise NotImplementedError, "in createElt, expected exactly one node"
+        #FIXME: This is a bit of a hack. Since, we only deal with
+        # multiple elements on initialFillIn, it should be fine for now
+        if parent.childNodes().length() > 1:
+            eltlist = []
+            for child in range(parent.childNodes().length()):
+                eltlist.append(parent.childNodes().item_(child))
+            return eltlist
         return elt
         
     @deferUntilAfterLoad
@@ -1661,8 +1666,12 @@ class ManagedWebView (NSObject):
         if not elt:
             print "warning: addItemBefore: missing element %s" % id
         else:
-            newelt = self.createElt(xml)
-            elt.parentNode().insertBefore__(newelt, elt)
+            newelts = self.createElt(xml)
+            try:
+                for newelt in newelts:
+                    elt.parentNode().insertBefore__(newelt, elt)
+            except:
+                elt.parentNode().insertBefore__(newelts, elt)
             #print "add item %s before %s" % (newelt.getAttribute_("id"), id)
             #print xml[0:79]
 
