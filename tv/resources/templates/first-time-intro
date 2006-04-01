@@ -14,24 +14,26 @@
 <body>
 
 <div id="container">
-  <h1>Welcome to Democracy Internet TV</h1>
-  <h2>A Few Tips to Get Started</h2>
+  <h1>Democracy Internet TV: How to Get Started</h1>
 	
   <div id="sidebar">	
     <div class="captioned_image"> <img src="resource:images/intro-fullscreen_button.png" alt="fullscreen button" /><br />
       <strong>GO BIG:</strong> This is your fullscreen button.  Click it and lean back. </div>
 			
     <div class="captioned_image"> <img src="resource:images/intro-circles.png" alt="circles" /><br />
-      <strong>NEW STUFF:</strong> Blue circles mean the channel has new videos available to download, green circles mean you have videos ready to watch. </div>
+      <strong>NEW STUFF:</strong> Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch. </div>
   </div>
 	
-  <p><strong>Start in the Guide:</strong> The Channel Guide is your home base for subscribing to internet TV channels.  Democracy Player checks your channels regularly and will show a blue circle next to the channel when new videos are available.</p>
 	
-  <p><strong>Don't Wait:</strong> Democracy is a different than watching web videos-- publishers often send big, high quality videos. So don't sit around waiting for videos to download-- start some downloads and check back later.</p>
+	<p style="color: #090;"><strong>SKIP INTRO: <a style="color: #090;" href="#" onclick="eventURL('action:doneWithIntro');">Go to Channel Guide >></a></strong></p>
 	
-  <p><strong>Leave it On:</strong> Democracy Player regularly checks channels for new videos and downloads in the background. Leaving the player running means that that you'll have new things ready to watch when you want to sit back and relax. You can also set the preferences to launch Democracy when you start your computer. </p>
+  <p><strong>Add Channels:</strong> The Channel Guide is your home base for internet TV channels.  Click 'ADD' to subscribe to a channel-- <strong>the channels in the guide are free.</strong></p>
 	
-  <p> <strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player features an 'expiration' system that cleans out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically. </p>
+  <p><strong>Don't Wait:</strong> Democracy is different than watching webpage videos-- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later.</p>
+	
+  <p><strong>Leave it On:</strong> Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.</p>
+	
+  <p> <strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically. </p>
 	
   <div class="gotoguide"> <a href="#" onclick="eventURL('action:doneWithIntro');"><img src="resource:images/intro-go_to_channel_guide.png" alt="go to channel guide" /></a> </div>
 	

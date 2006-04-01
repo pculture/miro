@@ -86,7 +86,7 @@ Contains the channels
 /////////////////////////////////////////////*/
 
 #sidebar{
-	padding: 3px 0 0 0;
+	padding: 0px 0px 0 0;
 	width: 100%;
 	overflow: hidden;
 	}
@@ -118,7 +118,7 @@ Contains the channels
 
 
 #sidebar ul ul li {
-	padding: 4px 0px 4px 0px;
+	padding: 1px 0px 1px 0px;
 	color: #333;
 	text-decoration: none;
 	clear: both;
@@ -139,7 +139,7 @@ Contains the channels
 	}
 
 #sidebar ul li a{
-	padding: 4px 2px 4px 4px;
+	padding: 2px 5px 2px 4px;
 	color: #000;
 	font-size: 11px;
 	text-decoration: none;
@@ -184,6 +184,7 @@ Contains the channels
 a.feeditem{
 	display: block;
    white-space: nowrap;
+
 	}
 
 a.feeditem:hover{
@@ -192,11 +193,13 @@ a.feeditem:hover{
 #sidebar a.selected_feeditem {
 	background: url(../images/channel_bg.png) 0% 0% repeat-x; 
 	color: #fff;
+	font-weight: bold;
 	}
 
 #sidebar a.selected_feeditem_inactive {
 	background: url(../images/channel_bg.png) 0px -50px repeat-x; 
 	color: #fff;
+	font-weight: bold;
 	}
 
 
@@ -211,15 +214,15 @@ a.infolder {
 
 
 #sidebar a.last_static {
-height: 36px;
+height: 28px;
 }
 
 .channel_bar_divider {
-margin: 7px 2px 3px 0px;
+margin: 1px 2px 1px 0px;
 height: 2px;
 overflow: hidden;
 font-size: 2px;
-border-top: 2px solid #b6bfce;
+border-top: 1px solid #b6bfce;
 }
 
 
@@ -1064,7 +1067,7 @@ SIDEBAR
 	background: #00B904;
 	font-size: 11px;
 	color: #FFFFFF;
-	margin: 0px 8px 0px 8px;
+	margin: 0px 7px 0px 8px;
 	padding: 2px 0px 3px 0px;
 	z-index: 2;
 	}
@@ -1074,7 +1077,7 @@ SIDEBAR
 	font-size: 11px;
 	position: relative;
 	height: 18px;
-	margin: 0px 8px 0px 8px;
+	margin: 0px 7px 0px 8px;
 	overflow: hidden;
 	z-index: 1;
 	}	
@@ -1103,7 +1106,7 @@ SIDEBAR
 .gray_number_count{
 	padding: 2px 0px 3px 0px;
 	color: #333;
-	margin: 0 8px 0 8px;
+	margin: 0 7px 0 8px;
 	background: #4081EC;
 	font-size: 11px;
 /*	text-shadow: 0px 1px 0px #fff;  */
@@ -1205,7 +1208,7 @@ SIDEBAR
 .both_white_number_count{
 	padding: 2px 0px 3px 1px;
 	color: #4081EC;
-	margin: 0 8px 0 8px;
+	margin: 0 7px 0 8px;
 	background: #FFFFFF;
 	font-size: 11px;
 /*	text-shadow: 0px 1px 0px #fff;  */

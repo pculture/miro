@@ -84,10 +84,11 @@
 
     <!-- NEWLY AVAILABLE ************************************************** -->
     <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-newlyavailable');">#&nbsp;</a></div>
-    <div id="main-channelbar" class="main-channelbar">
+  <!--  <div id="main-channelbar" class="main-channelbar">
     	<h1>On This Channel</h1>
     	<h2 t:updateForView="all-items"><span t:replace="this len" /></h2>
     </div>
+-->
 
     <div id="main-newlyavailable">
         <span t:repeatForView="new-unseen-items">
@@ -95,13 +96,13 @@
         </span>
         <span id="no-new-videos-label">
         <span t:hideIfViewNotEmpty="new-unseen-items">
-						<h3 style="margin:11px 0px -3px 5px;">No new videos on this channel.</h3>
+
         </span>
         </span>
         <span t:hideIfViewEmpty="new-items">
             <span id="show-more-videos-label" class="main-content">								
 								<a href="javascript:toggleLayer('main-newlyavailable-seen');toggleLayer('show-more-videos-label');toggleLayer('no-new-videos-label');" style="color:#FFFFFF; text-decoration:none;" class="main-notification-nonew">
-										<div class="main-notification">See All <span t:updateForView="new-items"><span t:replace="this len" /></span> Videos &gt;&gt;</div>
+										<div class="main-notification"><span t:updateForView="new-items" class="video-count"><span t:replace="this len" /></span>Videos on this Channel &gt;&gt;</div>
 										<div class="main-notification-right">&nbsp;</div>
 										<br clear="left" />
 								</a>
@@ -118,7 +119,7 @@
     <span t:hideIfViewEmpty="downloading-items">
         <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-downloads');">#&nbsp;</a></div>
         <div id="main-channelbar" class="main-channelbar-download">
-        	<h1 t:updateForView="downloading-items"><span t:replace="this len" /> Download<span t:hideIfKey="this len" t:hideFunctionKey="global filter equal" t:hideParameter="1">s</span> in Progress...</h1>
+        	<h1 t:updateForView="downloading-items"><span t:replace="this len" /> Download<span t:hideIfKey="this len" t:hideFunctionKey="global filter equal" t:hideParameter="1">s</span> in Progress</h1>
         </div>
 
         <div id="main-downloads">
@@ -149,7 +150,7 @@
     <span t:hideIfViewEmpty="expiring-items">
         <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-expiring');">#&nbsp;</a></div>
         <div id="main-channelbar" class="main-channelbar">
-        	<h1>Expiring</h1>
+        	<h1>Watched</h1>
         	<h2 t:updateForView="expiring-items"><span t:replace="this len" /></h2>
         </div>
 

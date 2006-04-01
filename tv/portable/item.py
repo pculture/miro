@@ -8,6 +8,7 @@ from scheduler import ScheduleEvent
 from feedparser import FeedParserDict
 from threading import Thread
 from math import ceil
+from templatehelper import escape
 import threadpriority
 import config
 import os
@@ -335,6 +336,25 @@ class Item(DDBObject):
                 ret = '<span />'
         self.endRead()
         return ret
+
+    ##
+    # Returns formatted XHTML with release date, duration, format, and size
+    def getDetails(self):
+        details = []
+        reldate = self.getReleaseDate()
+        duration = self.getDuration()
+        format = self.getFormat()
+        size = self.getSizeForDisplay()
+        if len(reldate) > 0:
+            details.append('<span class="details-date">%s</span>' % escape(reldate))
+        if len(duration) > 0:
+            details.append('<span class="details-duration">%s</span>' % escape(duration))
+        if len(format) > 0:
+            details.append('<span class="details-format">%s</span>' % escape(format))
+        if len(size) > 0:
+            details.append('<span class="details-size">%s</span>' % escape(size))
+        out = ' - '.join(details)
+        return '<div class="main-video-details-under">%s</div>' % out
 
     ##
     # Stops downloading the item
