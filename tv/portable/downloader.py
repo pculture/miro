@@ -308,8 +308,12 @@ class RemoteDownloader(Downloader):
         finally:   
             app.globalViewList['remoteDownloads'].removeView(view)
         if not self is None:
+            oldState = self.state
             for key in data.keys():
                 self.__dict__[key] = data[key]
+            if self.state == 'finished' and oldState != 'finished':
+                for item in self.itemList:
+                    item.setDownloadedTime()
             for item in self.itemList:
                 item.beginChange()
                 item.endChange()
