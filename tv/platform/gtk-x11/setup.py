@@ -64,6 +64,10 @@ import util
 app_config = os.path.join(resource_dir, 'app.config.template')
 appVersion = util.readSimpleConfigFile(app_config)['appVersion']
 
+# RPM hack
+if 'bdist_rpm' in sys.argv:
+    appVersion = appVersion.replace('-', '_')
+
 #### utility functions ####
 def read_file(path):
     f = open(path)
