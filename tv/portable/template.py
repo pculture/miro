@@ -153,8 +153,11 @@ class TrackedView:
         try:
             #print "Filling in %d items" % self.view.len()
             #start = time.clock()
+            xmls = []
             for x in self.view:
-                self.addHTMLAtEnd(x)
+                clearEvalCache()
+                xmls.append(self.currentXML(x))
+            self.addHTMLAtEnd(''.join(xmls))
             self.view.addChangeCallback(self.onChange)
             self.view.addAddCallback(self.onAdd)
             self.view.addRemoveCallback(self.onRemove)
@@ -216,10 +219,8 @@ class TrackedView:
 
     # Add the HTML for the item at newIndex in the view to the
     # display. It should only be called by initialFillIn()
-    def addHTMLAtEnd(self, newObj):
-        clearEvalCache()
+    def addHTMLAtEnd(self, xml):
         if self.parent.domHandler:
-            xml = self.currentXML(newObj)
             self.parent.domHandler.addItemBefore(xml, self.anchorId)
 
 # Class used internally by Handle to track a t:updateForView clause.
