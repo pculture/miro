@@ -136,3 +136,20 @@ class CallbackHandler(object):
         #if feedID is not None:
         #    backEndDelegate = self.appl.getBackendDelegate()
         #    app.ModelActionHandler(backEndDelegate).updateFeed(feedID)
+
+    def on_add_channel_button_clicked(self, event):
+        # get our add channel dialog
+        dialog = self.mainFrame.widgetTree['add-channel-dialog']
+        mainWindow = self.mainFrame.widgetTree['main-window']
+        dialog.set_transient_for(mainWindow)
+        # reset the text entry
+        entry = self.mainFrame.widgetTree['add-channel-entry']
+        entry.set_text('')
+        entry.grab_focus()
+        # run the dialog
+        response = dialog.run()
+        dialog.hide()
+
+        if response == gtk.RESPONSE_OK:
+            channel = entry.get_text()
+            app.Controller.instance.addAndSelectFeed(channel)

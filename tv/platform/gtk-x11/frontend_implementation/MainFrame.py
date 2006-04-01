@@ -113,9 +113,9 @@ class MainFrame:
         if area == self.mainDisplay:
             watchable = newDisplay.getWatchable()
             if watchable:
-                self.windowChanger.changeState(self.windowChanger.PLAYLIST)
                 app.Controller.instance.playbackController.configure(watchable)
-            elif isinstance(newDisplay, VideoDisplay):
+
+            if isinstance(newDisplay, VideoDisplay):
                 self.windowChanger.changeState(self.windowChanger.VIDEO)
             else:
                 self.windowChanger.changeState(self.windowChanger.BROWSING)

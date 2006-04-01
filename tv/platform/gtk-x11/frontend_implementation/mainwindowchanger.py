@@ -6,10 +6,10 @@ class MainWindowChanger(object):
     current state.  The following states are possible:
 
     BROWSING -- Browsing a page with lots of feed links, like the
-            Channel Guide.  Don't display any video controls.
-    PLAYLIST -- Viewing a page with a video playlist.  Display the
-        video controls, but only enable the play button.
-    VIDEO -- Playing a video.  Display and enable all video controls.
+            Channel Guide.  Disable all video controls.
+    PLAYLIST -- Viewing a page with a video playlist.  Only enable the play
+            button.
+    VIDEO -- Playing a video.  Enable all video controls.
     VIDEO_FULLSCREEN -- Playing a video in fullscreen, make the window
         fullscreen and only show the video playback controls.
     VIDEO_ONLY_FULLSCREEN -- Playing a video in fullscreen and the user
@@ -58,8 +58,9 @@ class MainWindowChanger(object):
         playing a video.
         """
 
-        videoWidgets = ['save-video', 'play', 'stop', 'next-button',
-                'previous-button', 'fullscreen-button']
+        videoWidgets = ['save-video', 'play', 'stop', 'play-pause-button',
+            'next-button', 'previous-button', 'fullscreen-button',
+            'video-time-scale']
         # delete-video should be in this list, but it's not implemented yet
         for widget in videoWidgets:
             self.widgetTree[widget].set_sensitive(sensitive)
@@ -68,40 +69,42 @@ class MainWindowChanger(object):
         if newState == self.currentState:
             return
         if newState == self.BROWSING:
-            self.widgetTree['video-control-box'].hide()
             self.widgetTree['fullscreen'].set_sensitive(False)
             self.widgetTree['leave-fullscreen'].set_sensitive(False)
             self.widgetTree['channels-box'].show()
             self.widgetTree['video-info-box'].hide()
-            self.widgetTree['menubar'].show()
-        elif newState == self.PLAYLIST:
-            self.widgetTree['video-control-box'].hide()
-            self.widgetTree['fullscreen'].set_sensitive(False)
-            self.widgetTree['leave-fullscreen'].set_sensitive(False)
-            self.widgetTree['channels-box'].show()
-            self.widgetTree['video-info-box'].hide()
+            self.widgetTree['video-control-box'].show()
             self.widgetTree['menubar'].show()
             self.setVideoWidgetsSensitive(False)
-        elif newState == self.VIDEO:
+        elif newState == self.PLAYLIST:
+            self.widgetTree['fullscreen'].set_sensitive(False)
+            self.widgetTree['leave-fullscreen'].set_sensitive(False)
+            self.widgetTree['channels-box'].show()
+            self.widgetTree['video-info-box'].hide()
             self.widgetTree['video-control-box'].show()
+            self.widgetTree['menubar'].show()
+            self.setVideoWidgetsSensitive(False)
+            self.widgetTree['play-pause-button'].set_sensitive(True)
+        elif newState == self.VIDEO:
             self.widgetTree['fullscreen'].set_sensitive(True)
             self.widgetTree['leave-fullscreen'].set_sensitive(False)
             self.widgetTree['channels-box'].show()
             self.widgetTree['video-info-box'].show()
+            self.widgetTree['video-control-box'].show()
             self.widgetTree['menubar'].show()
             self.setVideoWidgetsSensitive(True)
         elif newState == self.VIDEO_FULLSCREEN:
-            self.widgetTree['video-control-box'].show()
             self.widgetTree['fullscreen'].set_sensitive(False)
             self.widgetTree['leave-fullscreen'].set_sensitive(True)
             self.widgetTree['channels-box'].hide()
             self.widgetTree['video-info-box'].show()
+            self.widgetTree['video-control-box'].show()
             self.widgetTree['menubar'].hide()
             self.setVideoWidgetsSensitive(True)
         elif newState == self.VIDEO_ONLY_FULLSCREEN:
-            self.widgetTree['video-control-box'].hide()
             self.widgetTree['channels-box'].hide()
             self.widgetTree['video-info-box'].hide()
+            self.widgetTree['video-control-box'].hide()
             self.widgetTree['menubar'].hide()
         else:
             raise TypeError("invalid state: %r" % newState)

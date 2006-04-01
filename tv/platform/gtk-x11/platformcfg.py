@@ -12,7 +12,7 @@ def get(descriptor):
     path = None
 
     if descriptor.key == config.MOVIES_DIRECTORY.key:
-        path = os.path.expanduser('~/Movies/DTV')
+        path = os.path.expanduser('~/Movies/Democracy')
 
     elif descriptor.key == config.SUPPORT_DIRECTORY.key:
         path = os.path.expanduser('~/.democracy')

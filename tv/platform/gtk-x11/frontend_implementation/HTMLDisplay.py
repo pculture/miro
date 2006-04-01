@@ -60,8 +60,6 @@ class HTMLDisplay(app.Display):
         parts = re.split(r'/', location)
         self.urlToLoad = "file:///" + '/'.join(parts)
 
-        userAgent = "DTV/pre-release (http://participatoryculture.org/)"
-
         self.widgetDestroyed = False
         self.widget = None
         self._gtkInit()
