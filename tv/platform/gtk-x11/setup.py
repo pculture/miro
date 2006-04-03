@@ -271,20 +271,27 @@ class bdist_deb (Command):
         install.optimize = 0
         log.info("installing to %s" % self.bdist_dir)
         self.run_command('install')
-        # strip all extension libraries
+        # strip all extension modules
+        extensions = []
         for path, dir, files in os.walk(self.bdist_dir):
             for f in files:
                 if f.endswith('.so'):
-                    filepath = os.path.join(path, f)
-                    log.info('stripping %s' % filepath)
-                    os.system('strip %s' % filepath)
+                    extensions.append(os.path.join(path, f))
+        for path in extensions:
+            log.info('stripping %s' % path)
+            os.system('strip %s' % path)
+        # calculate the dependancies for extension modules
+        cmd = 'dpkg-shlibdeps %s -O' % ' '.join(extensions)
+        extension_deps = os.popen(cmd, 'r').read().strip()
+        extension_deps = extension_deps.replace('shlibs:Depends=', '')
         # copy over the debian package files
         debian_source = os.path.join(debian_package_dir, 'DEBIAN')
         debian_dest = os.path.join(self.bdist_dir, 'DEBIAN')
         self.copy_tree(debian_source, debian_dest)
         # Fill in the version number in the control file
         expand_file_contents(os.path.join(debian_dest, 'control'),
-                VERSION=self.distribution.get_version())
+                VERSION=self.distribution.get_version(),
+                EXTENSION_DEPS=extension_deps)
         # copy the copyright file
         copyright_source = os.path.join(debian_package_dir, 'copyright')
         copyright_dest = os.path.join(self.bdist_dir, 'usr', 'share', 'doc', 
