@@ -1,19 +1,10 @@
 import sys
-#class AutoflushingStream:
-#    def __init__(self, stream):
-#        self.stream = stream
-#    def write(self, *args):
-#        self.stream.write(*args)
-#        self.stream.flush()
-#mylog = open("\\bridgelog","wt")
-#sys.stdout = sys.stderr = AutoflushingStream(mylog)
-#mylog.write("hey, I ran")
-
 from xpcom import components, nsError, ServerException
 import traceback
 import sys
 import os
 import time
+
 
 #print "PYBRIDGE TOP"
 
@@ -45,12 +36,7 @@ class PyBridge:
         print "onStartup"
         self.mainWindowDocument = mainWindowDocument
 
-        class AutoflushingStream:
-            def __init__(self, stream):
-                self.stream = stream
-            def write(self, *args):
-                self.stream.write(*args)
-                self.stream.flush()
+        from util import AutoflushingStream
 
         try:
             import config

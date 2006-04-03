@@ -13,6 +13,11 @@ class Pref:
     def __init__(self, **kwds):
         self.__dict__.update(kwds)
 
+    def __eq__(self, other):
+        return self.key == other.key
+    def __ne__(self, other):
+        return self.key != other.key
+
 # These are normal user preferences.
 MAIN_WINDOW_FRAME           = Pref( key='mainWindowFrame',       default=None,  platformSpecific=False )
 LEFT_VIEW_SIZE              = Pref( key='leftViewSize',          default=None,  platformSpecific=False )
@@ -63,6 +68,8 @@ DB_PATHNAME = \
     Pref(key='DBPathname',       default=None, platformSpecific=True)
 LOG_PATHNAME = \
     Pref(key='LogPathname',      default=None, platformSpecific=True)
+DOWNLOADER_LOG_PATHNAME = \
+    Pref(key='DownloaderLogPathname', default=None, platformSpecific=True)
 
 # These are normally read from resources/app.config.
 SHORT_APP_NAME = \

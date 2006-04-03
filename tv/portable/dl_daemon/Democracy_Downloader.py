@@ -1,6 +1,12 @@
 # Democracy download daemon Copyright (c) 2006 Participatory Culture Foundation
 # Background process
 
+# Make all output flush immediately.
+import sys
+import util
+sys.stdout = util.AutoflushingStream(sys.stdout)
+sys.stderr = util.AutoflushingStream(sys.stderr)
+
 import os
 from dl_daemon import daemon
 

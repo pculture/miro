@@ -147,18 +147,27 @@ def failed(when, withExn = False, details = None):
     # Wiki-formatting markers that force a fixed-width font when the
     # report is pasted into a ticket.
     report = "{{{\n%s}}}\n" % header
-    logFile = config.get(config.LOG_PATHNAME)
-    if logFile is None:
-        logContents = "No logfile available on this platform.\n"
-    else:
+
+    def readLog(logFile, logName="Log"):
         try:
             f = open(logFile, "rt")
-            logContents = "Log\n---\n"
+            logContents = "%s\n---\n" % logName
             logContents += f.read()
             f.close()
         except:
             logContents = "Couldn't read logfile '%s':\n" % (logFile, )
             logContents += traceback.format_exc()
+        return logContents
+
+    logFile = config.get(config.LOG_PATHNAME)
+    downloaderLogFile = config.get(config.DOWNLOADER_LOG_PATHNAME)
+    if logFile is None:
+        logContents = "No logfile available on this platform.\n"
+    else:
+        logContents = readLog(logFile)
+    if downloaderLogFile is not None:
+        logContents += "\n" + readLog(downloaderLogFile, "Downloader Log")
+
     report += "{{{\n%s}}}\n" % logContents
 
     # Dump the header for the report we just generated to the log, in
@@ -178,5 +187,17 @@ def failed(when, withExn = False, details = None):
         pass
 
 
-
-            
+class AutoflushingStream:
+    """Converts a stream to an auto-flushing one.  It behaves in exactly the
+    same way, except all write() calls are automatically followed by a
+    flush().
+    """
+    def __init__(self, stream):
+        self.__dict__['stream'] = stream
+    def write(self, *args):
+        self.stream.write(*args)
+        self.stream.flush()
+    def __getattr__(self, name):
+        return self.stream.__getattr__(name)
+    def __setattr__(self, name, value):
+        return self.stream.__setattr__(name, value)

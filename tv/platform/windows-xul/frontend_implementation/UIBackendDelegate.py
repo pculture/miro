@@ -5,6 +5,7 @@ from urllib import unquote
 from util import quoteJS
 import config
 import os
+import subprocess
 import time
 import resource
 import webbrowser
@@ -180,4 +181,21 @@ class UIBackendDelegate:
             ctypes.windll.kernel32.TerminateProcess(handle, -1)
             ctypes.windll.kernel32.CloseHandle(handle)
         os.environ['DEMOCRACY_DOWNLOADER_PORT'] = str(port)
-        os.spawnl(os.P_NOWAIT, os.path.join(resource.resourceRoot(),"..","Democracy_Downloader.exe"))
+
+
+        # Start the downloader.  We use the subprocess module to turn off the
+        # console.  One slightly awkward thing is that the current process
+        # might not have a valid stdin, so we create a pipe to it that we
+        # never actually use.
+        downloaderPath = os.path.join(resource.resourceRoot(), "..",
+                "Democracy_Downloader.exe")
+        downloaderLog = open(config.get(config.DOWNLOADER_LOG_PATHNAME), 'wt')
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        try:
+            subprocess.Popen(downloaderPath, stdout=downloaderLog,
+                    stderr=downloaderLog, 
+                    stdin=subprocess.PIPE,
+                    startupinfo=startupinfo)
+        finally: 
+            downloaderLog.close()
