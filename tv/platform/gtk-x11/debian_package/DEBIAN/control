@@ -3,7 +3,7 @@ Version: $VERSION
 Section: net
 Priority: optional
 Architecture: i386
-Depends: python2.4, python2.4-gnome2-extras, python2.4-gtk2, python2.4-glade2, mozilla-browser, mozilla-psm, $EXTENSION_DEPS
+Depends: python2.4, python2.4-gnome2-extras, python2.4-gtk2, python2.4-glade2, mozilla-browser, mozilla-psm, libnspr4, $EXTENSION_DEPS
 Installed-Size: 1024
 Maintainer: Ben Dean-Kawamura <ben.dean.kawamura@gmail.com>
 Description: Download and watch internet TV shows and videos.

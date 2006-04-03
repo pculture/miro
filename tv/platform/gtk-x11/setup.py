@@ -20,6 +20,7 @@ import distutils.command.build_py
 import distutils.command.build_py
 import distutils.command.install_data
 import os
+import subprocess
 import sys
 
 from Pyrex.Distutils import build_ext
@@ -92,6 +93,23 @@ def expand_file_contents(path, **values):
     expanded = template.substitute(**values)
     write_file(path, expanded)
 
+def getCommandOutput(cmd, warnOnStderr = True, warnOnReturnCode = True):
+    """Wait for a command and return its output.  Check for common errors and
+    raise an exception if one of these occurs.
+    """
+
+    p = subprocess.Popen(cmd, shell=True, close_fds = True,
+            stdout=subprocess.PIPE, stderr = subprocess.PIPE)
+    p.wait()
+    stderr = p.stderr.read()
+    if warnOnStderr and stderr != '':
+        raise RuntimeError("%s outputted the following error:\n%s" % 
+                (cmd, stderr))
+    if warnOnReturnCode and p.returncode != 0:
+        raise RuntimeError("%s had non-zero return code %d" % 
+                (cmd, p.returncode))
+    return p.stdout.read()
+
 def parsePkgConfig(command, components, options_dict = None):
     """Helper function to parse compiler/linker arguments from 
     pkg-config/mozilla-config and update include_dirs, library_dirs, etc.
@@ -115,7 +133,7 @@ def parsePkgConfig(command, components, options_dict = None):
             'extra_compile_args' : []
         }
     commandLine = "%s --cflags --libs %s" % (command, components)
-    output = os.popen(commandLine, 'r').read().strip()
+    output = getCommandOutput(commandLine).strip()
     for comp in output.split():
         prefix, rest = comp[:2], comp[2:]
         if prefix == '-I':
@@ -192,7 +210,7 @@ class install_data (distutils.command.install_data.install_data):
 
     def install_app_config(self):
         source = os.path.join(resource_dir, 'app.config.template')
-        svnversion = os.popen('svnversion %s' % root_dir).read().strip()
+        svnversion = getCommandOutput('svnversion %s' % root_dir).strip()
         dest = '/usr/share/democracy/resources/app.config'
         if self.root:
             dest = change_root(self.root, dest)
@@ -281,8 +299,8 @@ class bdist_deb (Command):
             log.info('stripping %s' % path)
             os.system('strip %s' % path)
         # calculate the dependancies for extension modules
-        cmd = 'dpkg-shlibdeps %s -O' % ' '.join(extensions)
-        extension_deps = os.popen(cmd, 'r').read().strip()
+        cmd = 'dpkg-shlibdeps -O %s' % ' '.join(extensions)
+        extension_deps = getCommandOutput(cmd, warnOnStderr=False).strip()
         extension_deps = extension_deps.replace('shlibs:Depends=', '')
         # copy over the debian package files
         debian_source = os.path.join(debian_package_dir, 'DEBIAN')
