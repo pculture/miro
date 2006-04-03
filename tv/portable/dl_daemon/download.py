@@ -143,8 +143,7 @@ class BGDownloader:
         self.startTime = time()
         self.endTime = self.startTime
         self.shortFilename = self.filenameFromURL(url)
-        self.filename = os.path.join(config.get(config.MOVIES_DIRECTORY),'Incomplete Downloads',self.shortFilename+".part")
-        self.filename = self.nextFreeFilename(self.filename)
+        self.pickInitialFilename()
         self.state = "downloading"
         self.currentSize = 0
         self.totalSize = -1
@@ -207,6 +206,23 @@ class BGDownloader:
             parts[insertPoint] = str(count)
             newname = '.'.join(parts)
         return newname
+
+    def pickInitialFilename(self):
+        """Pick a path to download to based on self.shortFilename.
+
+        This method sets self.filename, as well as creates any leading paths
+        needed to start downloading there.
+        """
+
+        downloadDir = os.path.join(config.get(config.MOVIES_DIRECTORY),
+                'Incomplete Downloads')
+        # Create the download directory if it doesn't already exist.
+        try:
+            os.makedirs(downloadDir)
+        except:
+            pass
+        baseFilename = os.path.join(downloadDir, self.shortFilename+".part")
+        self.filename = self.nextFreeFilename(baseFilename)
 
     ##
     # Returns a float with the estimated number of seconds left
@@ -316,14 +332,7 @@ class HTTPDownloader(BGDownloader):
         if not retry:
             #get the filename to save to
             self.shortFilename = cleanFilename(info['filename'])
-            self.filename = os.path.join(config.get(config.MOVIES_DIRECTORY),'Incomplete Downloads',self.shortFilename+".part")
-            self.filename = self.nextFreeFilename(self.filename)
-
-            # Create the content directories.
-            try:
-                os.makedirs (os.path.join(config.get(config.MOVIES_DIRECTORY),'Incomplete Downloads'))
-            except:
-                pass
+            self.pickInitialFilename()
 
             #Get the length of the file, then create it
             try:
@@ -588,8 +597,7 @@ class BTDownloader(BGDownloader):
                 metainfo = self.metainfo
             self.shortFilename = metainfo.name_fs
             if not done:
-                self.filename = os.path.join(config.get(config.MOVIES_DIRECTORY),'Incomplete Downloads',self.shortFilename+".part")
-                self.filename = self.nextFreeFilename(self.filename)
+                self.pickInitialFilename()
             if self.metainfo is None:
                 self.metainfo = metainfo
             self.set_torrent_values(self.metainfo.name, self.filename,
