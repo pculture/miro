@@ -928,10 +928,7 @@ class DynamicDatabase:
                 handle = file(filename,"rb")
                 try:
                     temp = load(handle)
-                except UnpicklingError:
-                    handle.close()
-                    return (self.restore(filename+".bak"))
-                except EOFError:
+                except:
                     handle.close()
                     return (self.restore(filename+".bak"))
                 handle.close()
