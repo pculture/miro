@@ -319,6 +319,12 @@ class HTTPDownloader(BGDownloader):
             self.filename = os.path.join(config.get(config.MOVIES_DIRECTORY),'Incomplete Downloads',self.shortFilename+".part")
             self.filename = self.nextFreeFilename(self.filename)
 
+            # Create the content directories.
+            try:
+                os.makedirs (os.path.join(config.get(config.MOVIES_DIRECTORY),'Incomplete Downloads'))
+            except:
+                pass
+
             #Get the length of the file, then create it
             try:
                 totalSize = int(info['content-length'])

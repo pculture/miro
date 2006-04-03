@@ -25,9 +25,6 @@ support_dir = config.get(config.SUPPORT_DIRECTORY)
 os.environ['APPDATA'] = support_dir # Needed to make bittorrent happy
 if not os.path.exists(support_dir):
     os.makedirs(support_dir)
-movie_dir = config.get(config.MOVIES_DIRECTORY)
-if not os.path.exists(support_dir):
-    os.makedirs(os.path.join(movie_dir,'Incomplete Downloads'))
 
 import mozsetup
 mozsetup.setupMozillaEnvironment()
