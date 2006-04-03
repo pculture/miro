@@ -104,7 +104,7 @@ py2app_options = dict(
 )
 
 print "building setup daemon"
-os.system("python setup_daemon.py py2app --dist-dir .")
+os.system("python setup_daemon.py py2app --dist-dir . --bdist-base ./build-daemon")
 
 setup(
     app=['Democracy.py'],
