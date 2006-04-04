@@ -282,15 +282,15 @@ class RemoteDownloader(Downloader):
             Downloader.__init__(self,url,item)
         else:
             self.__dict__ = localDownloadData
-            self.dlid = "noid"
+            self.dlid = 'noid'
             self.eta = 0
             self.rate = 0
             if self.dlerType == 'BitTorrent':
                 self.contentType = 'application/x-bittorrent'
             else:
                 self.contentType = 'video/x-unknown'
-            self.thread = Thread(target=self.runDownloader, \
-                                 name="downloader -- %s" % self.shortFilename)
+            self.thread = Thread(target=self.restoreLocalDownload,
+                    name="restoring old downloader -- %s" % self.shortFilename)
             self.thread.setDaemon(True)
             self.thread.start()
             
@@ -317,6 +317,17 @@ class RemoteDownloader(Downloader):
             for item in self.itemList:
                 item.beginChange()
                 item.endChange()
+
+    def restoreLocalDownload(self):
+        """Restore a previously running download."""
+        c = command.GenerateDownloadID(RemoteDownloader.dldaemon)
+        self.dlid = c.send()
+        restoreData = self.__dict__.copy()
+        del restoreData['thread']
+        c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon,
+                restoreData)
+        #FIXME: This is sooo slow...
+        app.globalViewList['remoteDownloads'].recomputeIndex(app.globalIndexList['downloadsByDLID'])
         
     ##
     # This is the actual download thread.

@@ -117,12 +117,17 @@ class GetDownloadStatusCommand(Command):
         from dl_daemon import download
         return download.getDownloadStatus(*self.args, **self.kws)
 
-# This is a special command that's trapped by the daemon
-class ShutDownCommand(Command):
-    def action(self):
-        pass
-    
 class RestoreDownloaderCommand(Command):
     def action(self):
         from dl_daemon import download
         return download.restoreDownloader(*self.args, **self.kws)
+
+class GenerateDownloadID(Command):
+    def action(self):
+        from dl_daemon import download
+        return download.generateDownloadID()
+
+# This is a special command that's trapped by the daemon
+class ShutDownCommand(Command):
+    def action(self):
+        pass
