@@ -960,7 +960,12 @@ class UIBackendDelegate:
                 pass
         p = os.path.normpath(resource.path("../Democracy_Downloader.app"))
         os.environ['DEMOCRACY_DOWNLOADER_PORT'] = str(port)
-        NSWorkspace.sharedWorkspace().launchApplication_(p)
+        # We used to do this:
+        # NSWorkspace.sharedWorkspace().launchApplication_(p)
+        # 
+        # But it caused problems on OS 10.4.  The GUI became totally unreponsive afterwards.
+        # Using os.system seems to work though.
+        os.system("open %s" % p)
 
 class ExceptionReporterController (NibClassBuilder.AutoBaseClass):
     
