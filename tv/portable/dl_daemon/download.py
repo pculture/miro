@@ -316,7 +316,7 @@ class HTTPDownloader(BGDownloader):
             if info is None and pos > 0:
                 pos = 0
                 self.currentSize = 0
-                info = grabURL(self.url,"GET")       
+                info = grabURL(self.url,"GET", findHTTPAuth = findHTTPAuth)
             if info is None:
                 self.state = "failed"
                 self.reasonFailed = "Could not connect to server"
