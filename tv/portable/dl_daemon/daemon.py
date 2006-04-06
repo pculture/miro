@@ -179,9 +179,9 @@ class DownloaderDaemon(Daemon):
             self.listenLoop()
             print "Downloader listen loop completed"
         finally:
+            self.shutDown = True
             from dl_daemon import download
             download.shutDown()
-            self.shutDown = True
 
 class ControllerDaemon(Daemon):
     def __init__(self):
