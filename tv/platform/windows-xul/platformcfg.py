@@ -5,20 +5,17 @@ import _winreg
 import cPickle
 import string
 import tempfile
+import ctypes
 
 _appDataDirectory = None
 _baseMoviesDirectory = None
 
 def _getRegString(key, subkey):
     def doExpand(val):
-        # We can't use os.path.expandvars because that handles only
-        # $foo and ${foo}-style vars, while Windows is lobbing us
-        # %FOO%-style expansions. So just handle the special case of 
-        # %USERPROFILE%, which is what we'll be dealing with under normal
-        # circumstances.
-        # .. If USERPROFILE isn't defined, we're probably in a world of hurt
-        # anyway.
-        return string.replace(val, '%USERPROFILE%', os.environ['USERPROFILE'])
+        out = ctypes.create_string_buffer(4096)
+        indata = ctypes.create_string_buffer(val)
+        bytes = ctypes.windll.kernel32.ExpandEnvironmentStringsA(indata,out,4093)
+        return out.value
 
     (val, t) = _winreg.QueryValueEx(key, subkey)
     if t == _winreg.REG_SZ:
