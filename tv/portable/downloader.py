@@ -311,7 +311,9 @@ class RemoteDownloader(Downloader):
             oldState = self.state
             for key in data.keys():
                 self.__dict__[key] = data[key]
-            if self.state == 'finished' and oldState != 'finished':
+            # Store the time the download finished
+            if ((self.state in ['finished','uploading']) and
+                (oldState not in ['finished', 'uploading'])):
                 for item in self.itemList:
                     item.setDownloadedTime()
             for item in self.itemList:
