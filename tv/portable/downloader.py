@@ -385,15 +385,15 @@ class RemoteDownloader(Downloader):
     def __setstate__(self,state):
         (version, data) = state
         self.__dict__ = copy(data)
-        if data['dlid'] != 'noid':
-            del data['itemList']
-            c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, data)
-            c.send(retry = True, block = False)
-        else:
+        if data['dlid'] == 'noid':
             self.thread = Thread(target=self.runDownloader, \
                                  name="downloader -- %s" % self.shortFilename)
             self.thread.setDaemon(True)
             self.thread.start()
+        elif data['state'] in ['downloading','uploading']:
+            del data['itemList']
+            c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, data)
+            c.send(retry = True, block = False)
 
 ##
 # For upgrading from old versions of the database

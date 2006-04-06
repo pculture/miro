@@ -300,18 +300,6 @@ class HTTPDownloader(BGDownloader):
     def runDownloader(self, retry = False):
         if retry:
             pos = self.currentSize
-            try:
-                filehandle = file(self.filename,"r+b")
-                filehandle.seek(pos)
-            except:
-                filehandle = file(self.filename,"w+b")
-                self.currentSize = 0
-                totalSize = self.totalSize
-                pos = 0
-                if totalSize > 0:
-                    filehandle.seek(totalSize-1)
-                    filehandle.write(' ')
-                    filehandle.seek(0)
             info = grabURL(self.url,"GET",pos, findHTTPAuth = findHTTPAuth)
             if info is None and pos > 0:
                 pos = 0
@@ -321,6 +309,21 @@ class HTTPDownloader(BGDownloader):
                 self.state = "failed"
                 self.reasonFailed = "Could not connect to server"
                 return False
+            try:
+                filehandle = file(self.filename,"r+b")
+                filehandle.seek(pos)
+            except:
+                #the file doesn't exist. Get the right filename and restart dl
+                self.shortFilename = cleanFilename(info['filename'])
+                self.pickInitialFilename()
+                filehandle = file(self.filename,"w+b")
+                self.currentSize = 0
+                totalSize = self.totalSize
+                pos = 0
+                if totalSize > 0:
+                    filehandle.seek(totalSize-1)
+                    filehandle.write(' ')
+                    filehandle.seek(0)            
         else:
             #print "We don't have any INFO..."
             info = grabURL(self.url,"GET", findHTTPAuth = findHTTPAuth)
