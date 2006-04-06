@@ -247,9 +247,11 @@ class httpServer:
             print "[%s @%s] Initial HTML" % (self.reqNum, cookie)
 
             if not cookie in pendingDocuments:
-                raise RuntimeError, \
-                    "bad document request %s to HTMLDisplay server %d" % \
+                print "bad document request %s to HTMLDisplay server %d" % \
                     (cookie, self.reqNum)
+                self.sendNotFoundResponse(path)
+                return
+
             (contentType, body) = pendingDocuments[cookie]
             del pendingDocuments[cookie]
 

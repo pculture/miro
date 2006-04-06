@@ -682,7 +682,11 @@ class FeedImpl:
     ##
     # Returns the URL of a thumbnail associated with the feed
     def getThumbnail(self):
-        return self.thumbURL
+        ret = self.thumbURL
+        if ret is None or not (ret.startswith('http:') or
+                                ret.startswith('https:')):
+            ret = defaultFeedIconURL()
+        return ret
 
     ##
     # Returns URL of license assocaited with the feed

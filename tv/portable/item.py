@@ -309,7 +309,8 @@ class Item(DDBObject):
                 ret =  self.entry["thumbnail"]["url"]
         finally:
             self.endRead()
-        if ret is None:
+        if ret is None or not (ret.startswith('http:') or
+                                ret.startswith('https:')):
             ret = "resource:images/thumb.png"
         return ret
     ##
