@@ -87,7 +87,8 @@ class Daemon:
             # Process commands in their own thread so actions that
             # need to send stuff over the wire don't hang
             # FIXME: We shouldn't spawn a thread for every command!
-            t = Thread(target=lambda:self.processCommand(comm),
+            t = Thread(target=self.processCommand,
+                    args=(comm,),
                     name="command processor")
             t.setDaemon(False)
             t.start()

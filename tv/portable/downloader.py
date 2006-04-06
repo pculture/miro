@@ -344,7 +344,7 @@ class RemoteDownloader(Downloader):
     def pause(self):
         c = command.PauseDownloadCommand(RemoteDownloader.dldaemon,
                                             self.dlid)
-        return c.send()
+        c.send(block=False)
 
     ##
     # Stops the download and removes the partially downloaded
@@ -352,14 +352,14 @@ class RemoteDownloader(Downloader):
     def stop(self):
         c = command.StopDownloadCommand(RemoteDownloader.dldaemon,
                                             self.dlid)
-        return c.send()
+        c.send(block=False)
 
     ##
     # Continues a paused or stopped download thread
     def start(self):
         c = command.StartDownloadCommand(RemoteDownloader.dldaemon,
                                             self.dlid)
-        return c.send()
+        c.send(block=False)
 
     def getRate(self):
         return self.rate
