@@ -328,6 +328,7 @@ class RemoteDownloader(Downloader):
         del restoreData['thread']
         c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon,
                 restoreData)
+        c.send()
         #FIXME: This is sooo slow...
         app.globalViewList['remoteDownloads'].recomputeIndex(app.globalIndexList['downloadsByDLID'])
         
