@@ -7,6 +7,12 @@ from threading import Lock, Thread, Event
 from time import sleep
 import tempfile
 
+class DaemonError(Exception):
+    """Exception while communicating to a daemon (either controller or
+    downloader).
+    """
+    pass
+
 def launchDownloadDaemon(oldpid, port):
     import app
     delegate = app.Controller.instance.getBackendDelegate()
@@ -131,7 +137,9 @@ class Daemon:
                 return ret
         finally:
             self.globalLock.release()
-        event.wait()
+        event.wait(30)
+        if not event.isSet():
+            raise DaemonError("timeout waiting for response to %s" % comm)
         self.globalLock.acquire()
         try:
             ret = self.returnValues[comm.id]
