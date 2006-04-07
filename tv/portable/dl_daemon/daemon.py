@@ -180,7 +180,7 @@ class DownloaderDaemon(Daemon):
             self.listenLoop()
             print "Downloader listen loop completed"
         finally:
-            self.shutDown = True
+            self.shutdown = True
             from dl_daemon import download
             download.shutDown()
 
