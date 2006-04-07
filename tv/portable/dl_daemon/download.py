@@ -197,14 +197,20 @@ class BGDownloader:
         if not access(name,F_OK):
             return name
         parts = name.split('.')
-        insertPoint = len(parts)-1
         count = 1
-        parts[insertPoint:insertPoint] = [str(count)]
-        newname = '.'.join(parts)
-        while access(newname,F_OK):
-            count += 1
-            parts[insertPoint] = str(count)
+        if len(parts) == 1:
+            newname = "%s.%s" % (name, count)
+            while access(newname,F_OK):
+                count += 1
+                newname = "%s.%s" % (name, count)
+        else:
+            insertPoint = len(parts)-1
+            parts[insertPoint:insertPoint] = [str(count)]
             newname = '.'.join(parts)
+            while access(newname,F_OK):
+                count += 1
+                parts[insertPoint] = str(count)
+                newname = '.'.join(parts)
         return newname
 
     def pickInitialFilename(self):
@@ -374,8 +380,14 @@ class HTTPDownloader(BGDownloader):
             self.state = "finished"
             newfilename = os.path.join(config.get(config.MOVIES_DIRECTORY),self.shortFilename)
             newfilename = self.nextFreeFilename(newfilename)
-            rename(self.filename,newfilename)
-            self.filename = newfilename
+            try:
+                rename(self.filename,newfilename)
+                self.filename = newfilename
+            except:
+                # Eventually we should make this bring up an error
+                # dialog in the app
+                print "Democracy: Warning: Couldn't rename \"%s\" to \"%s\"" %(
+                    self.filename, newfilename)
             if self.totalSize == -1:
                 self.totalSize = self.currentSize
             self.endTime = time()
