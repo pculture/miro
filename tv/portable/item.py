@@ -276,6 +276,7 @@ class Item(DDBObject):
                                 self.lastDownloadFailed = True
                             finally:
                                 self.endRead()
+                        downloadURLs.append(dler.getURL())
                     else:
                         for dler in self.downloaders:
                             if dler.getURL() == enclosure['url']:
