@@ -326,6 +326,7 @@ class RemoteDownloader(Downloader):
         self.dlid = c.send()
         restoreData = self.__dict__.copy()
         del restoreData['thread']
+        del restoreData['itemList']
         c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon,
                 restoreData)
         c.send()
