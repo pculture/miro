@@ -33,7 +33,7 @@ class Command:
         out = {"id":self.id, "args":self.args, "kws":self.kws, "orig":self.orig}
         try:
             out["ret"] = self.ret
-        except KeyError:
+        except AttributeError:
             pass
         return out
 
