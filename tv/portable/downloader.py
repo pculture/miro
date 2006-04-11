@@ -422,7 +422,7 @@ class BTDownloader(Downloader):
 # This should be called before closing the app
 def shutdownDownloader():
     c = command.ShutDownCommand(RemoteDownloader.dldaemon)
-    c.send()    
+    c.send(block=False)    
 
 class DownloaderFactory:
     lock = RLock()

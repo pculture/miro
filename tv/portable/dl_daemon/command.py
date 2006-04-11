@@ -1,7 +1,5 @@
 import random
-import cPickle
-import traceback
-from time import sleep
+import socket
 
 class Command:
     def __init__(self, daemon, *args, **kws):
@@ -15,18 +13,10 @@ class Command:
         self.daemon = daemon
 
     def send(self, block = True, retry = True):
-        while not self.daemon.shutdown:
-            try:
-                return self.daemon.send(self, block)
-            except:
-                if retry:
-                    print "dtv: dl daemon retrying %s %s" % (str(self), self.id)
-                    print "orig is ", self.orig
-                    traceback.print_exc()
-                    sleep(5)
-                else:
-                    #print "dtv: dl daemon send failed %s %s" % (str(self), self.id)
-                    break
+        try:
+            return self.daemon.send(self, block)
+        except socket.error, e:
+            self.daemon.handleSocketError(e)
 
     def setReturnValue(self, ret):
         self.orig = False
@@ -43,7 +33,7 @@ class Command:
         out = {"id":self.id, "args":self.args, "kws":self.kws, "orig":self.orig}
         try:
             out["ret"] = self.ret
-        except:
+        except KeyError:
             pass
         return out
 
@@ -54,7 +44,7 @@ class Command:
         self.orig = data["orig"]
         try:
             self.ret = data["ret"]
-        except:
+        except KeyError:
             pass
 
 #############################################################################
@@ -88,6 +78,11 @@ class UpdateDownloadStatus(Command):
 class ReadyCommand(Command):
     def action(self):
         self.daemon.ready.set() # go
+
+class DownloaderErrorCommand(Command):
+    def action(self):
+        import util
+        util.failed("In Downloader process", details=self.args[0])
 
 #############################################################################
 #  App to Downloader commands                                               #

@@ -84,6 +84,9 @@ def startDownload(dlid):
     try:
         download = _downloads[dlid]
     except: # There is no download with this id
+        err= "in startDownload(): no downloader with id %s" % dlid
+        c = command.DownloaderErrorCommand(daemon.lastDaemon, err)
+        c.send(block=False)
         return True
     return download.start()
 
@@ -150,7 +153,7 @@ class BGDownloader:
         self.blockTimes = []
         self.reasonFailed = "No Error"
         self.headers = None
-        self.thread = Thread(target=self.runDownloader, \
+        self.thread = Thread(target=self.downloadThread, 
                              name="downloader -- %s" % self.shortFilename)
         self.thread.setDaemon(False)
         self.thread.start()
@@ -254,6 +257,16 @@ class BGDownloader:
             except IndexError:
                 rate = 0
         return rate
+
+    def downloadThread(self, *args, **kwargs):
+        try:
+            self.runDownloader(*args, **kwargs)
+        except:
+            import traceback
+            c = command.DownloaderErrorCommand(daemon.lastDaemon, 
+                    traceback.format_exc())
+            c.send(block=False)
+            raise
 
 class HTTPDownloader(BGDownloader):
     def __init__(self, url = None,dlid = None,restore = None):
@@ -436,16 +449,21 @@ class HTTPDownloader(BGDownloader):
     ##
     # Continues a paused or stopped download thread
     def start(self):
-        self.state = "downloading"
-        self.updateClient()
-        print "Warning starting downloader in thread"
-        self.runDownloader(True)
+        if self.state == 'paused' or self.state == 'stopped':
+            self.state = "downloading"
+            self.updateClient()
+            self.thread = Thread(target=self.downloadThread,
+                    kwargs={'retry': True}, 
+                    name="downloader -- %s" % self.shortFilename)
+            self.thread.setDaemon(False)
+            self.thread.start()
 
     def restoreState(self, data):
         self.__dict__ = copy(data)
         if self.state == "downloading":
-            self.thread = Thread(target=lambda:self.runDownloader(retry = True), \
-                                 name="downloader -- %s" % self.shortFilename)
+            self.thread = Thread(target=self.downloadThread,
+                    kwargs={'retry': True}, 
+                    name="downloader -- %s" % self.shortFilename)
             self.thread.setDaemon(False)
             self.thread.start()
 

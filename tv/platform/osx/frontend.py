@@ -949,7 +949,7 @@ class UIBackendDelegate:
     def copyTextToClipboard(self, text):
         print "WARNING: copyTextToClipboard not implemented"
 
-    def launchDownloadDaemon(self, oldpid, port):
+    def launchDownloadDaemon(self, oldpid, env):
         # Use UNIX style kill
         if oldpid is not None:
             try:
@@ -959,7 +959,8 @@ class UIBackendDelegate:
             except:
                 pass
         p = os.path.normpath(resource.path("../Democracy_Downloader.app"))
-        os.environ['DEMOCRACY_DOWNLOADER_PORT'] = str(port)
+        for key, value in env.items():
+            os.environ[key] = value
         # We used to do this:
         # NSWorkspace.sharedWorkspace().launchApplication_(p)
         # 

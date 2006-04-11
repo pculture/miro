@@ -260,9 +260,10 @@ class Item(DDBObject):
             return
 
         try:
+            justStartedDownloaders = set()
             for enclosure in enclosures:
                 try:
-                    if not enclosure["url"] in downloadURLs:
+                    if enclosure["url"] not in downloadURLs:
                         dler = self.dlFactory.getDownloader(enclosure["url"])
                         if dler != None:
                             self.beginRead()
@@ -277,7 +278,8 @@ class Item(DDBObject):
                             finally:
                                 self.endRead()
                         downloadURLs.append(dler.getURL())
-                    else:
+                        justStartedDownloaders.add(dler.getURL())
+                    elif enclosure['url'] not in justStartedDownloaders:
                         for dler in self.downloaders:
                             if dler.getURL() == enclosure['url']:
                                 dler.start()
