@@ -1,115 +1,116 @@
 # template_compiler.py Copyright (c) 2005,2006 Participatory Culture Foundation
 #
-# "Compiles" Democracy templates to Python
-
+# "Compiles" Democracy templates to Python code
+#
 
 ###############################################################################
 #### Functions used in repeating templates                                 ####
 ###############################################################################
 
-# These are functions that take in a dictionary to local data, an id,
-# and an argument and return text to be added to the template
+# These are functions that take in a file object name that will be
+# written to in the output file, an optional id, prefix text, and an
+# argument
+
+# FIXME: These can be optimized to eliminate redundancy
 
 # Simply returns text
-def genRepeatText(varname, tid, text):
-    return '    %s.write(%s)\n' % (varname, repr(text))
+def genRepeatText(varname, tid, prefix, text):
+    return '%s%s.write(%s)\n' % (prefix,varname, repr(text))
 
 # Returns text if function does not evaluate to true
-def genRepeatTextHide(varname, tid, args):
+def genRepeatTextHide(varname, tid, prefix, args):
     (functionKey,ifKey,parameter,invert, text) = args
     if invert:
-        out = '    if not evalKey(%s, data)(evalKey(%s, data), %s):\n'%(
-            repr(functionKey), repr(ifKey), repr(parameter))
+        out = '%sif not evalKey(%s, data)(evalKey(%s, data), %s):\n'%(
+            prefix, repr(functionKey), repr(ifKey), repr(parameter))
     else:
-        out = '    if evalKey(%s, data)(evalKey(%s, data), %s):\n'%(
-            repr(functionKey), repr(ifKey), repr(parameter))
-    out = '%s        %s.write(%s)\n' % (out, varname, repr(text))
+        out = '%sif evalKey(%s, data)(evalKey(%s, data), %s):\n'%(
+            prefix, repr(functionKey), repr(ifKey), repr(parameter))
+    out = '%s%s    %s.write(%s)\n' % (out, prefix, varname, repr(text))
     return out
         
-def genQuoteAttr(varname, tid, value):
-    return '    %s.write(quoteattr(urlencode(toUni(evalKey(%s,data)))))\n'%(
-        varname, repr(value))
+def genQuoteAttr(varname, tid, prefix, value):
+    return '%s%s.write(quoteattr(urlencode(toUni(evalKey(%s,data)))))\n'%(
+        prefix, varname, repr(value))
 
-def genRawAttr(varname, tid, value):
-    return '    %s.write(quoteattr(toUni(evalKey(%s,data))))\n'%(
-        varname, repr(value))
+def genRawAttr(varname, tid, prefix, value):
+    return '%s%s.write(quoteattr(toUni(evalKey(%s,data))))\n'%(
+        prefix, varname, repr(value))
 
 # Adds an id attribute to a tag and closes it
-def genRepeatAddIdAndClose(varname, tid, args):
-    return '    %s.write(" id=\"%s\">")\n' % (varname, quoteattr(tid))
+def genRepeatAddIdAndClose(varname, tid, prefix, args):
+    return '%s%s.write(" id=\\"")\n%s%s.write(quoteattr(tid))\n%s%s.write("\\">")\n' % (prefix, varname,prefix, varname,prefix, varname)
 
 # Evaluates key with data
-def genRepeatEvalEscape(varname, tid, replace):
-    return '    %s.write(escape(evalKey(%s,data)))\n' % (
-        varname, repr(replace))
+def genRepeatEvalEscape(varname, tid, prefix, replace):
+    return '%s%s.write(escape(evalKey(%s,data)))\n' % (
+        prefix, varname, repr(replace))
 
 # Evaluates key with data
-def genRepeatEval(varname, tid, replace):
-    return '    %s.write(toUni(evalKey(%s,data)))\n' % (
-        varname, repr(replace))
+def genRepeatEval(varname, tid, prefix, replace):
+    return '%s%s.write(toUni(evalKey(%s,data)))\n' % (
+        prefix, varname, repr(replace))
 
 # Returns include iff function does not evaluate to true
-def genRepeatIncludeHide(varname, tid, args):
+def genRepeatIncludeHide(varname, tid, prefix, args):
     (functionKey,ifKey,parameter,invert, name) = args
     f = open(resource.path('templates/%s'%name),'r')
     text = f.read()
     f.close()
     if invert:
-        out = '    if not evalKey(%s, data)(evalKey(%s, data), %s):\n'%(
-            repr(functionKey), repr(ifKey), repr(parameter))
+        out = '%sif not evalKey(%s, data)(evalKey(%s, data), %s):\n'%(
+            prefix, repr(functionKey), repr(ifKey), repr(parameter))
     else:
-        out = '    if evalKey(%s, data)(evalKey(%s, data), %s):\n'%(
-            repr(functionKey), repr(ifKey), repr(parameter))
-    out = '%s        %s.write(%s)\n' % (out, varname, repr(text))
+        out = '%sif evalKey(%s, data)(evalKey(%s, data), %s):\n'%(
+            prefix, repr(functionKey), repr(ifKey), repr(parameter))
+    out = '%s%s    %s.write(%s)\n' % (out, prefix, varname, repr(text))
     return out
 
-def genHideIfEmpty(varname, tid, args):
+def genHideIfEmpty(varname, tid, prefix, args):
     (viewName, name, invert, attrs) = args
     nodeId = generateId()
     
-    out = '    %s.write("<%s")\n'%(varname,name)
+    out = '%s%s.write("<%s")\n'%(prefix, varname,name)
     for key in attrs.keys():
         if not key in ['t:hideIfViewEmpty','t:hideIfViewNotEmpty','style']:
-            out = '%s    %s.write(" %s=")\n'%(out,varname,key)
-            out = '%s    %s.write(quoteAndFillAttr("%s",data))\n'%(out,varname,attrs[key])
-    out = '%s    %s.write(" id=\\\"%s\\\"")\n'%(out,varname,quoteattr(nodeId))
+            out = '%s%s%s.write(" %s=")\n'%(out,prefix,varname,key)
+            out = '%s%s%s.write(quoteAndFillAttr("%s",data))\n'%(out,prefix,varname,attrs[key])
+    out = '%s%s%s.write(" id=\\\"%s\\\"")\n'%(out,prefix,varname,quoteattr(nodeId))
     
     if invert:
-        out = '%s    if handle.findNamedView("%s").getView().len() > 0:\n' % (
-            out, viewName)
+        out = '%s%sif handle.findNamedView("%s").getView().len() > 0:\n' % (
+            out, prefix, viewName)
     else:
-        out = '%s    if handle.findNamedView("%s").getView().len() == 0:\n' % (
-            out, viewName)
-    out = '%s        %s.write(" style=\\\"display:none\\\">")\n' % (
-        out, varname)
-    out = '%s    else:\n        %s.write(">")\n' % (
-        out, varname)
+        out = '%s%sif handle.findNamedView("%s").getView().len() == 0:\n' % (
+            out, prefix, viewName)
+    out = '%s%s    %s.write(" style=\\\"display:none\\\">")\n' % (
+        out, prefix, varname)
+    out = '%s%selse:\n        %s.write(">")\n' % (
+        out, prefix, varname)
 
-    out = '%s    handle.addHideIfEmpty(%s,%s,%s)\n' % (
-        out, repr(nodeId), repr(viewName), repr(invert))
+    out = '%s%shandle.addHideIfEmpty(%s,%s,%s)\n' % (
+        out, prefix, repr(nodeId), repr(viewName), repr(invert))
     return out
 
-def genHideSection(varname, tid, args):
+def genHideSection(varname, tid, prefix, args):
     (functionKey,ifKey,parameter,invert, funcList) = args
     if invert:
-        out = '    if evalKey(%s, data)(evalKey(%s, data), %s):\n'%(
-            repr(functionKey), repr(ifKey), repr(parameter))
+        out = '%sif evalKey(%s, data)(evalKey(%s, data), %s):\n'%(
+            prefix, repr(functionKey), repr(ifKey), repr(parameter))
     else:
-        out = '    if not evalKey(%s, data)(evalKey(%s, data), %s):\n'%(
-            repr(functionKey), repr(ifKey), repr(parameter))
-    out = '%s        for (func, args) in %s:\n' % (out, repr(funcList))
-    out = '%s            %s.write(funcTable[func](data,%s,args))\n' % (out, varname, repr(tid))
+        out = '%sif not evalKey(%s, data)(evalKey(%s, data), %s):\n'%(
+            prefix, repr(functionKey), repr(ifKey), repr(parameter))
+    for (func, newargs) in funcList:
+        out = '%s%s' % (out, func(varname,tid,prefix+'    ',newargs))
     return out
 
-def genQuoteAndFillAttr(varname, tid, value):
-    return '    %s.write(quoteAndFillAttr(%s,data))\n' % (varname, repr(value))
-
-compileTable = [genRepeatText,genRepeatTextHide,genQuoteAttr,genRepeatAddIdAndClose,genRepeatEvalEscape,genRepeatEval,genRepeatIncludeHide, genHideIfEmpty, genRawAttr, genHideSection, genQuoteAndFillAttr]
+def genQuoteAndFillAttr(varname, tid, prefix, value):
+    return '%s%s.write(quoteAndFillAttr(%s,data))\n' % (prefix, varname, repr(value))
 
 from xml import sax
 from xhtmltools import toUTF8Bytes
 from StringIO import StringIO
-from templatehelper import quoteattr, escape, HTMLPattern, attrPattern, resourcePattern, rawAttrPattern, generateId, textFunc, textHideFunc, attrFunc, addIDFunc, evalEscapeFunc, evalFunc, includeHideFunc, hideIfEmptyFunc, rawAttrFunc, hideSectionFunc, quoteAndFillFunc
+from templatehelper import quoteattr, escape, HTMLPattern, attrPattern, resourcePattern, rawAttrPattern, generateId
 import re
 import os
 
@@ -233,7 +234,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
 
     def render(self, fileobj):
         fileobj.write('# This is a generated file. Do not edit.\n')
-        fileobj.write('from template import Handle, fillAttr, quoteAndFillAttr, funcTable\n')
+        fileobj.write('from template import Handle, fillAttr, quoteAndFillAttr\n')
         fileobj.write('from IOBuffer import IOBuffer\n')
         fileobj.write('from xhtmltools import urlencode\n')
         fileobj.write('from templatehelper import quoteattr, escape, evalKey, toUni\n')
@@ -246,7 +247,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             
         for count in range(len(self.outputList)):
             (func, args) = self.outputList[count]
-            fileobj.write(compileTable[func]('out','',args))
+            fileobj.write(func('out','','    ',args))
 
         fileobj.write('    out.close()\n')        
         fileobj.write('\n\n    return (out, handle)\n')
@@ -481,9 +482,9 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         elif name == 't:includeTemplate':
             self.addFillTemplate(attrs['filename'])
         elif name == 't:triggerActionOnLoad':
-            self.handle.addTriggerActionURLOnLoad(attrs['url']) # FIXME make sure this is filled
+            self.handle.addTriggerActionURLOnLoad(attrs['url'])
         elif name == 't:triggerActionOnUnload':
-            self.handle.addTriggerActionURLOnUnload(attrs['url']) # FIXME make sure this is filled
+            self.handle.addTriggerActionURLOnUnload(attrs['url'])
         else:
             self.addText('<%s'%name)
             for key in attrs.keys():
@@ -564,7 +565,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
 
     def addRepeatTextHide(self,functionKey,ifKey,parameter,invert, text):
         self.endRepeatText()
-        self.repeatList.append((textHideFunc,(functionKey,ifKey,parameter,invert,text)))
+        self.repeatList.append((genRepeatTextHide,(functionKey,ifKey,parameter,invert,text)))
 
     def addRepeatAttr(self, attr, value):
         match = attrPattern.match(value)
@@ -573,7 +574,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             while match:
                 self.addRepeatText(quoteattr(match.group(1)))
                 self.endRepeatText()
-                self.repeatList.append((attrFunc,match.group(2)))
+                self.repeatList.append((genQuoteAttr,match.group(2)))
                 value = match.group(3)
                 match = attrPattern.match(value)
             self.addRepeatText('%s"' % quoteattr(value))
@@ -584,7 +585,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                 while match:
                     self.addRepeatText(quoteattr(match.group(1)))
                     self.endRepeatText()
-                    self.repeatList.append((rawAttrFunc,match.group(2)))
+                    self.repeatList.append((genRawAttr,match.group(2)))
                     value = match.group(3)
                     match = rawAttrPattern.match(value)
                 self.addRepeatText('%s"' % quoteattr(value))
@@ -594,7 +595,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
 
     def addRepeatQuoteAndFill(self, value):
         self.endRepeatText()
-        self.repeatList.append((quoteAndFillFunc, value))
+        self.repeatList.append((genQuoteAndFillAttr, value))
 
     def addRepeatInclude(self, template):
         f = open(resource.path('templates/%s'%template),'r')
@@ -604,7 +605,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
 
     def addRepeatIncludeHide(self,functionKey,ifKey,parameter,invert, name):
         self.endRepeatText()
-        self.repeatList.append((includeHideFunc,(functionKey,ifKey,parameter,invert, name)))
+        self.repeatList.append((genRepeatIncludeHide,(functionKey,ifKey,parameter,invert, name)))
 
     def addRepeatFillTemplate(self, name):
         self.endRepeatText()
@@ -614,15 +615,15 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
 
     def addRepeatAddIdAndClose(self):
         self.endRepeatText()
-        self.repeatList.append((addIDFunc,None))
+        self.repeatList.append((genRepeatAddIdAndClose,None))
 
     def addRepeatEval(self,replace):
         self.endRepeatText()
-        self.repeatList.append((evalFunc,replace))
+        self.repeatList.append((genRepeatEval,replace))
 
     def addRepeatEvalEscape(self,replace):
         self.endRepeatText()
-        self.repeatList.append((evalEscapeFunc,replace))
+        self.repeatList.append((genRepeatEvalEscape,replace))
 
     def resetRepeat(self):
         self.repeatList = []
@@ -630,7 +631,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
 
     def endRepeatText(self):
         if len(self.repeatText) > 0:
-            self.repeatList.append((textFunc,''.join(self.repeatText)))
+            self.repeatList.append((genRepeatText,''.join(self.repeatText)))
         self.repeatText = []
 
     def startHiding(self,functionKey,ifKey,parameter,ifInvert):
@@ -647,9 +648,9 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.hideDepth.pop()
         self.hiding = len(self.hidingList) > 0
         if self.hiding:
-            self.hidingList[-1].append((hideSectionFunc, (functionKey, ifKey, parameter, invert, funcList)))
+            self.hidingList[-1].append((genHideSection, (functionKey, ifKey, parameter, invert, funcList)))
         else:
-            self.outputList.append((hideSectionFunc, (functionKey, ifKey, parameter, invert, funcList)))
+            self.outputList.append((genHideSection, (functionKey, ifKey, parameter, invert, funcList)))
 
     def addText(self, text):
         self.outputText.append( text)
@@ -660,9 +661,9 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
     def addHideIfEmpty(self, view, name, invert, attrs):
         self.endText()
         if self.hiding:
-            self.hidingList[-1].append( (hideIfEmptyFunc,(view, name, invert, attrs)))
+            self.hidingList[-1].append( (genHideIfEmpty,(view, name, invert, attrs)))
         else:
-            self.outputList.append( (hideIfEmptyFunc,(view, name, invert, attrs)))
+            self.outputList.append( (genHideIfEmpty,(view, name, invert, attrs)))
 
 
     def addAttr(self, attr, value):
@@ -673,9 +674,9 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                 self.addText(quoteattr(match.group(1)))
                 self.endText()
                 if self.hiding:
-                    self.hidingList[-1].append((attrFunc,match.group(2)))
+                    self.hidingList[-1].append((genQuoteAttr,match.group(2)))
                 else:
-                    self.outputList.append((attrFunc,match.group(2)))
+                    self.outputList.append((genQuoteAttr,match.group(2)))
                 value = match.group(3)
                 match = attrPattern.match(value)
             self.addText('%s"' % quoteattr(value))
@@ -687,9 +688,9 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                     self.addText(quoteattr(match.group(1)))
                     self.endText()
                     if self.hiding:
-                        self.hidingList[-1].append((rawAttrFunc,match.group(2)))
+                        self.hidingList[-1].append((genRawAttr,match.group(2)))
                     else:
-                        self.outputList.append((rawAttrFunc,match.group(2)))
+                        self.outputList.append((genRawAttr,match.group(2)))
                     value = match.group(3)
                     match = rawAttrPattern.match(value)
                 self.addText('%s"' % quoteattr(value))
@@ -700,9 +701,9 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
     def addQuoteAndFill(self, value):
         self.endText()
         if self.hiding:
-            self.hidingList[-1].append((quoteAndFillFunc, value))
+            self.hidingList[-1].append((genQuoteAndFillAttr, value))
         else:
-            self.outputList.append((quoteAndFillFunc, value))
+            self.outputList.append((genQuoteAndFillAttr, value))
 
     def addInclude(self, template):
         f = open(resource.path('templates/%s'%template),'r')
@@ -713,9 +714,9 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
     def addIncludeHide(self,functionKey,ifKey,parameter,invert, name):
         self.endText()
         if self.hiding:
-            self.hidingList[-1].append((includeHideFunc,(functionKey,ifKey,parameter,invert, name)))
+            self.hidingList[-1].append((genRepeatIncludeHide,(functionKey,ifKey,parameter,invert, name)))
         else:
-            self.outputList.append((includeHideFunc,(functionKey,ifKey,parameter,invert, name)))
+            self.outputList.append((genRepeatIncludeHide,(functionKey,ifKey,parameter,invert, name)))
 
     def addFillTemplate(self, name):
         self.endText()
@@ -729,30 +730,30 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
     def addAddIdAndClose(self):
         self.endText()
         if self.hiding:
-            self.hidingList[-1].append((addIDFunc,None))
+            self.hidingList[-1].append((genRepeatAddIdAndClose,None))
         else:
-            self.outputList.append((addIDFunc,None))
+            self.outputList.append((genRepeatAddIdAndClose,None))
 
     def addEval(self,replace):
         self.endText()
         if self.hiding:
-            self.hidingList[-1].append((evalFunc,replace))
+            self.hidingList[-1].append((genRepeatEval,replace))
         else:
-            self.outputList.append((evalFunc,replace))
+            self.outputList.append((genRepeatEval,replace))
 
     def addEvalEscape(self,replace):
         self.endText()
         if self.hiding:
-            self.hidingList[-1].append((evalEscapeFunc,replace))
+            self.hidingList[-1].append((genRepeatEvalEscape,replace))
         else:
-            self.outputList.append((evalEscapeFunc,replace))
+            self.outputList.append((genRepeatEvalEscape,replace))
 
     def endText(self):
         if len(self.outputText) > 0:
             if self.hiding:
-                self.hidingList[-1].append((textFunc,''.join(self.outputText)))
+                self.hidingList[-1].append((genRepeatText,''.join(self.outputText)))
             else:
-                self.outputList.append((textFunc,''.join(self.outputText)))
+                self.outputList.append((genRepeatText,''.join(self.outputText)))
         self.outputText = []
 
 
@@ -829,13 +830,34 @@ class MetaHandle:
             (viewKey, viewIndex, viewIndexValue, filterKey, filterFunc, filterParameter, invertFilter, sortKey, sortFunc, invertSort) = self.namedViews[name]
             fileobj.write('%s%s.makeNamedView(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,data)%s' % (prefix, varname, repr(name),repr(viewKey),repr(viewIndex),fillIfNotNone(viewIndexValue),repr(filterKey),repr(filterFunc),fillIfNotNone(filterParameter),repr(invertFilter),repr(sortKey),repr(sortFunc),str(invertSort),ending))
 
+        count = 0
         for tv in self.trackedViews:
             (anchorId, anchorType, templateFuncs, name) = tv
-            fileobj.write('%s%s.addView(%s,%s,%s.findNamedView(%s).getView(),%s, data, %s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),varname,repr(name),str(templateFuncs),repr(name),ending))
+            repFunc = "rep_%s_%s" % (count, varname)
+            fileobj.write('%sdef %s(data, tid):%s' % (prefix, repFunc,ending))
+            fileobj.write('%s    out = IOBuffer()%s' % (prefix, ending))
+            for count2 in range(len(templateFuncs)):
+                (func, args) = templateFuncs[count2]
+                fileobj.write(func('out','',prefix+'    ',args))
+            fileobj.write('%s    out.close()%s' % (prefix, ending))
+            fileobj.write('%s    return out%s' % (prefix, ending))
+
+            fileobj.write('%s%s.addView(%s,%s,%s.findNamedView(%s).getView(),%s, data, %s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),varname,repr(name),repFunc,repr(name),ending))
+            count += 1
 
         for ur in self.updateRegions:
             (anchorId, anchorType, templateFuncs, name) = ur
-            fileobj.write('%s%s.addUpdate(%s,%s,%s.findNamedView(%s).getView(),%s, data, %s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),varname,repr(name),str(templateFuncs),repr(name),ending))
+            upFunc = "up_%s_%s" % (count, varname)
+            fileobj.write('%sdef %s(data, tid):%s' % (prefix, upFunc,ending))
+            fileobj.write('%s    out = IOBuffer()%s' % (prefix, ending))
+            for count2 in range(len(templateFuncs)):
+                (func, args) = templateFuncs[count2]
+                fileobj.write(func('out','',prefix+'    ',args))
+            fileobj.write('%s    out.close()%s' % (prefix, ending))
+            fileobj.write('%s    return out%s' % (prefix, ending))
+
+            fileobj.write('%s%s.addUpdate(%s,%s,%s.findNamedView(%s).getView(),%s, data, %s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),varname,repr(name),upFunc,repr(name),ending))
+            count += 1
             
         for cond in self.hideConditions:
             (id, name, invert) = cond
