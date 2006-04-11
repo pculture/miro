@@ -85,8 +85,8 @@ def genHideIfEmpty(varname, tid, prefix, args):
             out, prefix, viewName)
     out = '%s%s    %s.write(" style=\\\"display:none\\\">")\n' % (
         out, prefix, varname)
-    out = '%s%selse:\n        %s.write(">")\n' % (
-        out, prefix, varname)
+    out = '%s%selse:\n%s    %s.write(">")\n' % (
+        out, prefix, prefix, varname)
 
     out = '%s%shandle.addHideIfEmpty(%s,%s,%s)\n' % (
         out, prefix, repr(nodeId), repr(viewName), repr(invert))
