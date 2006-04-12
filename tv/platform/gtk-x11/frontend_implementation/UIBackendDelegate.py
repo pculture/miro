@@ -2,6 +2,7 @@ import os
 import signal
 import sys
 import time
+import gnomevfs
 
 from frontend import *
 
@@ -61,8 +62,7 @@ class UIBackendDelegate:
         # We could use Python's webbrowser.open() here, but
         # unfortunately, it doesn't have the same semantics under UNIX
         # as under other OSes. Sometimes it blocks, sometimes it doesn't.
-        print "WARNING: ignoring external URL: %s" % url
-#        raise NotImplementedError
+        gnomevfs.url_show(url)
 
     def updateAvailableItemsCountFeedback(self, count):
         # Inform the user in a way or another that newly available items are
