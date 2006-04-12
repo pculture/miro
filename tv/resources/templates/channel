@@ -101,11 +101,11 @@
         </span>
         <span t:hideIfViewEmpty="new-items">
             <span id="show-more-videos-label" class="main-content">								
-								<a href="javascript:toggleLayer('main-newlyavailable-seen');toggleLayer('show-more-videos-label');toggleLayer('no-new-videos-label');" style="color:#FFFFFF; text-decoration:none;" class="main-notification-nonew">
-										<div class="main-notification"><span t:updateForView="new-items" class="video-count"><span t:replace="this len" /></span>Videos on this Channel &gt;&gt;</div>
-										<div class="main-notification-right">&nbsp;</div>
-										<br clear="left" />
-								</a>
+				<a href="javascript:toggleLayer('main-newlyavailable-seen');toggleLayer('show-more-videos-label');toggleLayer('no-new-videos-label');" style="color:#FFFFFF; text-decoration:none;" class="main-notification-nonew">
+    				<div class="main-notification"><span t:updateForView="new-items" class="video-count"><span t:replace="this len" /></span>Videos on this Channel &gt;&gt;</div>
+    				<div class="main-notification-right">&nbsp;</div>
+    				<br clear="left" />
+				</a>
             </span>
             <span id="main-newlyavailable-seen">
                 <span t:repeatForView="new-items">
