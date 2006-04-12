@@ -1645,8 +1645,12 @@ class ManagedWebView (NSObject):
 
     def createElt(self, xml):
         parent = self.view.mainFrame().DOMDocument().createElement_("div")
-        parent.setInnerHTML_(xml)
-        elt = parent.firstChild()
+        if len(xml) == 0:
+            #FIXME: this is awfully ugly but it fixes the symptoms described
+            #in #1664. Next step is to fix the root cause.
+            parent.setInnerHTML_("<div style='height: 1px;'/>")
+        else:
+            parent.setInnerHTML_(xml)
         #FIXME: This is a bit of a hack. Since, we only deal with
         # multiple elements on initialFillIn, it should be fine for now
         if parent.childNodes().length() > 1:
@@ -1654,7 +1658,8 @@ class ManagedWebView (NSObject):
             for child in range(parent.childNodes().length()):
                 eltlist.append(parent.childNodes().item_(child))
             return eltlist
-        return elt
+        else:
+            return parent.firstChild()
         
     @deferUntilAfterLoad
     def addItemAtEnd(self, xml, id):
@@ -1662,9 +1667,9 @@ class ManagedWebView (NSObject):
         if not elt:
             print "warning: addItemAtEnd: missing element %s" % id
         else:
-            elt.insertBefore__(self.createElt(xml), None)
             #print "add item %s at end of %s" % (elt.getAttribute_("id"), id)
             #print xml[0:79]
+            elt.insertBefore__(self.createElt(xml), None)
 
     @deferUntilAfterLoad
     def addItemBefore(self, xml, id):
@@ -1675,11 +1680,11 @@ class ManagedWebView (NSObject):
             newelts = self.createElt(xml)
             try:
                 for newelt in newelts:
+                    #print "add item %s before %s" % (newelt.getAttribute_("id"), id)
                     elt.parentNode().insertBefore__(newelt, elt)
             except:
+                #print "add item %s before %s" % (newelts, id)
                 elt.parentNode().insertBefore__(newelts, elt)
-            #print "add item %s before %s" % (newelt.getAttribute_("id"), id)
-            #print xml[0:79]
 
     @deferUntilAfterLoad
     def removeItem(self, id):
@@ -1687,8 +1692,8 @@ class ManagedWebView (NSObject):
         if not elt:
             print "warning: removeItem: missing element %s" % id
         else:
-            elt.parentNode().removeChild_(elt)
             #print "remove item %s" % id
+            elt.parentNode().removeChild_(elt)
 
     @deferUntilAfterLoad
     def changeItem(self, id, xml):
@@ -1696,7 +1701,6 @@ class ManagedWebView (NSObject):
         if not elt:
             print "warning: changeItem: missing element %s" % id
         else:
-            elt.setOuterHTML_(xml)
             #print "change item %s (new id %s)" % (id, elt.getAttribute_("id"))
             #print xml[0:79]
             #if id != elt.getAttribute_("id"):
@@ -1704,6 +1708,7 @@ class ManagedWebView (NSObject):
             #elt = self.findElt(id)
             #if not elt:
             #    print "ERROR ELEMENT LOST %s" % id
+            elt.setOuterHTML_(xml)
 
     @deferUntilAfterLoad
     def hideItem(self, id):
@@ -1711,8 +1716,8 @@ class ManagedWebView (NSObject):
         if not elt:
             print "warning: hideItem: missing element %s" % id
         else:
-            elt.setAttribute__("style", "display:none")
             #print "hide item %s (new style '%s')" % (id, elt.getAttribute_("style"))
+            elt.setAttribute__("style", "display:none")
 
     @deferUntilAfterLoad
     def showItem(self, id):
@@ -1720,8 +1725,8 @@ class ManagedWebView (NSObject):
         if not elt:
             print "warning: showItem: missing element %s" % id
         else:
-            elt.setAttribute__("style", "")
             #print "show item %s (new style '%s')" % (id, elt.getAttribute_("style"))
+            elt.setAttribute__("style", "")
 
 
 ###############################################################################
