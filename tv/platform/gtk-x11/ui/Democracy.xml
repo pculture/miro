@@ -1,0 +1,20 @@
+<ui>
+  <menubar>
+    <menu action="Video">
+      <menuitem action="SaveVideo"/>
+      <menuitem action="PlayPauseVideo"/>
+      <separator/>
+      <menuitem action="Fullscreen"/>
+      <separator/>
+      <menuitem action="Quit"/>
+    </menu>
+
+    <menu action="Channel">
+      <menuitem action="AddChannel"/>
+    </menu>
+
+    <menu action="Help">
+      <menuitem action="About"/>
+    </menu>
+  </menubar>
+</ui>
