@@ -173,8 +173,9 @@ def findTemplates(root):
             fullpath = os.path.join(r,template)
             template = fullpath[len(tpath)+1:]
             if (template.find('.svn') == -1 and
-                not (template.startswith('#') or template.endswith('~') or
-                     template.endswith('.js') or template.endswith('.html'))):
+                not (template.startswith('.') or template.startswith('#') or 
+                     template.endswith('~') or template.endswith('.js') or 
+                     template.endswith('.html'))):
                 templates.append(template)
     return templates
 
@@ -186,7 +187,7 @@ def compileAllTemplates(root):
         
     for template in findTemplates(root):
         outFile = os.path.join(root,'portable','compiled_templates',template.replace('-','_')+'.py')
-        print "Compiling %s template to %s" % (template, outFile)
+        print "Compiling '%s' template to %s" % (template, outFile)
         (tcc, handle) = compileTemplate(template)
         outDir = os.path.dirname(outFile)
         try:
@@ -557,6 +558,9 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         else:
             self.addTextEscape(data)
 
+    def skippedEntity(self, name):
+        self.addText("&%s;" % name)
+
     def addRepeatText(self, text):
         self.repeatText.append(text)
 
@@ -609,6 +613,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
 
     def addRepeatFillTemplate(self, name):
         self.endRepeatText()
+        print "  compiling '%s' subtemplate" % name
         (tch, handle) = compileTemplate(name, False, True)
         self.handle.addSubHandle(handle)
         self.repeatList.extend(tch.getOperationList())
