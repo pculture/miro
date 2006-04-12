@@ -8,10 +8,10 @@
 #include <nsIDOMDocumentFragment.h>
 #include <nsIDOMDocumentRange.h>
 #include <nsIDOMElement.h>
-#include <nsIDOMElementCSSInlineStyle.h>
+#include <dom/nsIDOMElementCSSInlineStyle.h>
 #include <nsIDOMEventTarget.h>
 #include <nsIDOMMouseEvent.h>
-#include <nsIDOMNSRange.h>
+#include <dom/nsIDOMNSRange.h>
 #include <nsIDOMNodeList.h>
 #include <nsIDOMRange.h>
 #include <nsIDOMWindow.h>

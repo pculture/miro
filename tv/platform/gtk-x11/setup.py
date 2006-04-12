@@ -157,14 +157,8 @@ fasttypes_ext = \
 
 #### MozillaBrowser Extension ####
 mozilla_browser_options = parsePkgConfig("pkg-config" , 
-        "gtk+-2.0 glib-2.0 pygtk-2.0")
-parsePkgConfig("mozilla-config", "string dom gtkembedmoz necko xpcom",
-        mozilla_browser_options)
-# mozilla-config doesn't get gtkembedmoz one for some reason
-mozilla_browser_options['libraries'].append('gtkembedmoz') 
-# Running mozilla-config with no components should get us the path to the
-# mozilla libraries (nessecary to import gtkmozembed.so)
-mozilla_lib_path = parsePkgConfig('mozilla-config', '')['library_dirs']
+        "gtk+-2.0 glib-2.0 pygtk-2.0 mozilla-gtkmozembed mozilla-xpcom")
+mozilla_lib_path = parsePkgConfig('pkg-config', 'mozilla-gtkmozembed')['library_dirs']
 mozilla_browser_ext = Extension("democracy.MozillaBrowser",
         [ os.path.join(frontend_implementation_dir,'MozillaBrowser.pyx'),
           os.path.join(frontend_implementation_dir,'MozillaBrowserXPCOM.cc'),
@@ -186,10 +180,10 @@ def listfiles(path):
 data_files = []
 # append the root resource directory.
 # filter out app.config.template (which is handled specially)
-# add democracy.glade
 files = [f for f in listfiles(resource_dir) \
         if os.path.basename(f) != 'app.config.template']
 files.append(os.path.join(platform_dir, 'glade', 'democracy.glade'))
+files.append(os.path.join(platform_dir, 'ui', 'Democracy.xml'))
 data_files.append(('/usr/share/democracy/resources/', files))
 # handle the sub directories.
 for dir in ('templates', 'css', 'images'):
