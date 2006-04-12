@@ -88,16 +88,17 @@ class PlaybackControllerBase:
 
     def playItem(self, anItem):
         try:
-            self.skipIfItemFileIsMissing(anItem)
-            videoDisplay = Controller.instance.videoDisplay
-            if videoDisplay.canPlayItem(anItem):
-                self.playItemInternally(videoDisplay, anItem)
-            else:
-                if self.currentDisplay is videoDisplay:
-                    if videoDisplay.isFullScreen:
-                        videoDisplay.exitFullScreen()
-                    videoDisplay.stop()
-                self.scheduleExternalPlayback(anItem)
+            anItem = self.skipIfItemFileIsMissing(anItem)
+            if anItem is not None:
+                videoDisplay = Controller.instance.videoDisplay
+                if videoDisplay.canPlayItem(anItem):
+                    self.playItemInternally(videoDisplay, anItem)
+                else:
+                    if self.currentDisplay is videoDisplay:
+                        if videoDisplay.isFullScreen:
+                            videoDisplay.exitFullScreen()
+                        videoDisplay.stop()
+                    self.scheduleExternalPlayback(anItem)
         except:
             util.failedExn('when trying to play a video')
             self.stop()
@@ -150,11 +151,12 @@ class PlaybackControllerBase:
         path = anItem.getPath()
         if not os.path.exists(path):
             print "DTV: movie file '%s' is missing, skipping to next" % path
-            self.onMovieFinished()
+            return self.skip(1)
+        else:
+            return anItem
 
     def onMovieFinished(self):
-        if self.skip(1) is None:
-            self.stop()
+        return self.skip(1)
 
 
 ###############################################################################
