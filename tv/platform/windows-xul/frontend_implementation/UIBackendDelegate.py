@@ -182,19 +182,17 @@ class UIBackendDelegate:
             ctypes.windll.kernel32.CloseHandle(handle)
         for key, value in env.items():
             os.environ[key] = value
+        os.environ['DEMOCRACY_DOWNLOADER_LOG'] = \
+                config.get(config.DOWNLOADER_LOG_PATHNAME)
         # Start the downloader.  We use the subprocess module to turn off the
         # console.  One slightly awkward thing is that the current process
-        # might not have a valid stdin, so we create a pipe to it that we
-        # never actually use.
+        # might not have a valid stdin/stdout/stderr, so we create a pipe to
+        # it that we never actually use.
         downloaderPath = os.path.join(resource.resourceRoot(), "..",
                 "Democracy_Downloader.exe")
-        downloaderLog = open(config.get(config.DOWNLOADER_LOG_PATHNAME), 'wt')
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-        try:
-            subprocess.Popen(downloaderPath, stdout=downloaderLog,
-                    stderr=downloaderLog, 
-                    stdin=subprocess.PIPE,
-                    startupinfo=startupinfo)
-        finally: 
-            downloaderLog.close()
+        subprocess.Popen(downloaderPath, stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE, 
+                stdin=subprocess.PIPE,
+                startupinfo=startupinfo)
