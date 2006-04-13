@@ -5,6 +5,42 @@ import gobject
 import gtk
 import os
 import shutil
+import frontend
+import config
+import resource
+import MainFrame
+
+def AttachBoolean (widget, descriptor, sensitive_widget = None):
+    def BoolChanged (widget):
+         config.set (descriptor, widget.get_active())
+         if (sensitive_widget != None):
+             sensitive_widget.set_sensitive (widget.get_active())
+
+    widget.set_active (config.get(descriptor))
+    if (sensitive_widget != None):
+        sensitive_widget.set_sensitive (widget.get_active())
+    widget.connect ('toggled', BoolChanged)
+
+def AttachInteger (widget, descriptor):
+    def IntegerChanged (widget):
+        try:
+            config.set (descriptor, int(widget.get_text()))
+        except:
+            pass
+
+    widget.set_text (str(config.get(descriptor)))
+    widget.connect ('changed', IntegerChanged)
+
+def AttachCombo (widget, descriptor, values):
+    def ComboChanged (widget):
+        config.set (descriptor, values[widget.get_active()])
+    value = config.get (descriptor)
+    widget.set_active (-1)
+    for i in xrange (len (values)):
+        if values[i] == value:
+            widget.set_active (i)
+            break
+    widget.connect ('changed', ComboChanged)
 
 class CallbackHandler(object):
     """Class to handle menu item activation, button presses, etc.  The method
@@ -18,10 +54,38 @@ class CallbackHandler(object):
         self.mainFrame = mainFrame
         self.mainApp = app.Controller.instance
 
+    def actionGroups (self):
+        actionGroups = {}
+        actionGroups["VideoPlayback"] = gtk.ActionGroup("VideoPlayback")
+        actionGroups["ChannelSelected"] = gtk.ActionGroup("ChannelSelected")
+        actionGroups["Ubiquitous"] = gtk.ActionGroup("Ubiquitous")
+
+        actionGroups["VideoPlayback"].add_actions ([
+            ('SaveVideo', gtk.STOCK_SAVE, '_Save Video', '<Control>s', 'Save this video', self.on_save_video_activate),
+            ('PlayPauseVideo', gtk.STOCK_MEDIA_PLAY, '_Play / Pause', 'p', None, self.on_play_pause_button_clicked),
+            ('Fullscreen', gtk.STOCK_FULLSCREEN, '_Fullscreen', 'f', None, self.on_fullscreen_button_clicked)
+            ])
+        actionGroups["ChannelSelected"].add_actions ([
+            ('RemoveChannel', None, "_Remove Channel", None, None, self.on_remove_channel_activate),
+            ('UpdateChannel', None, "_Update Channel", None, None, self.on_update_channel_activate),
+            ('CopyChannelURL', None, "Copy Channel _Link", None, None, self.on_copy_channel_link_activate)
+            ])
+        actionGroups["Ubiquitous"].add_actions ([
+            ('Video', None, '_Video'),
+            ('EditPreferences', gtk.STOCK_PREFERENCES, 'P_references', None, None, self.on_preference),
+            ('Quit', gtk.STOCK_QUIT, '_Quit', '<Control>q', 'Quit the Program', self.on_quit_activate),
+            ('Channel', None, '_Channel'),
+            ('AddChannel', None, "_Add Channel", None, None, self.on_add_channel_button_clicked),
+            ('UpdateAllChannels', None, "U_pdate All Channels", None, None, self.on_update_all_channels_activate),
+            ('Help', None, '_Help'),
+            ('About', gtk.STOCK_ABOUT, None, None, None, self.on_about_clicked)
+            ])
+        return actionGroups
+
     def on_main_destroy(self, event):
         gtk.main_quit()
 
-    def on_play_pause_button_clicked(self, event):
+    def on_play_pause_button_clicked(self, event = None):
         videoDisplay = self.mainApp.videoDisplay
         if videoDisplay.isPlaying:
             videoDisplay.pause()
@@ -70,7 +134,7 @@ class CallbackHandler(object):
     def on_volume_scale_value_changed(self, scale):
         self.mainApp.videoDisplay.setVolume(scale.get_value())
 
-    def on_save_video_activate(self, event):
+    def on_save_video_activate(self, event = None):
         # I think the following is the best way to get the current playlist
         # item, but I'm not sure it will work all the time so I wrapped it in
         # a try, except.  This is pretty ugly, IMHO.  Someone who knows more
@@ -121,35 +185,59 @@ class CallbackHandler(object):
     def on_leave_fullscreen_activate(self, event):
         self.mainFrame.setFullscreen(False)
 
-    def on_fullscreen_button_clicked(self, event):
+    def on_fullscreen_button_clicked(self, event = None):
         if self.mainFrame.isFullscreen:
             self.mainFrame.setFullscreen(False)
         else:
             self.mainFrame.setFullscreen(True)
 
-    def on_update_channel_activate(self, event):
-        pass
-        # this is what's in the OS X version, but it'l not working because I'm
-        # not sure what self.appl should be
-        #
-        #feedID = self.mainApp.currentSelectedTab.feedID()
-        #if feedID is not None:
-        #    backEndDelegate = self.appl.getBackendDelegate()
-        #    app.ModelActionHandler(backEndDelegate).updateFeed(feedID)
+    def on_remove_channel_activate(self, event = None):
+        app.ModelActionHandler(frontend.UIBackendDelegate()).removeCurrentFeed()
 
-    def on_add_channel_button_clicked(self, event):
+    def on_update_channel_activate(self, event = None):
+        app.ModelActionHandler(frontend.UIBackendDelegate()).updateCurrentFeed()
+
+    def on_update_all_channels_activate(self, event = None):
+        app.ModelActionHandler(frontend.UIBackendDelegate()).updateAllFeeds()
+
+    def on_copy_channel_link_activate(self, event = None):
+        app.ModelActionHandler(frontend.UIBackendDelegate()).copyCurrentFeedURL()
+
+    def on_add_channel_button_clicked(self, event = None):
         # get our add channel dialog
-        dialog = self.mainFrame.widgetTree['add-channel-dialog']
+        widgetTree = MainFrame.WidgetTree(resource.path('democracy.glade'), 'add-channel-dialog')
+        dialog = widgetTree['add-channel-dialog']
         mainWindow = self.mainFrame.widgetTree['main-window']
         dialog.set_transient_for(mainWindow)
-        # reset the text entry
-        entry = self.mainFrame.widgetTree['add-channel-entry']
-        entry.set_text('')
-        entry.grab_focus()
         # run the dialog
         response = dialog.run()
-        dialog.hide()
 
         if response == gtk.RESPONSE_OK:
             channel = entry.get_text()
             app.Controller.instance.addAndSelectFeed(channel)
+
+        dialog.destroy()
+
+    def on_preference(self, event = None):
+        # get our add channel dialog
+        widgetTree = MainFrame.WidgetTree(resource.path('democracy.glade'), 'dialog-preferences')
+        dialog = widgetTree['dialog-preferences']
+        mainWindow = self.mainFrame.widgetTree['main-window']
+        dialog.set_transient_for(mainWindow)
+        AttachBoolean (widgetTree['checkbutton-limit'], config.LIMIT_UPSTREAM, widgetTree['entry-limit'])
+        AttachBoolean (widgetTree['checkbutton-padding'], config.PRESERVE_DISK_SPACE, widgetTree['entry-padding'])
+        AttachInteger (widgetTree['entry-limit'], config.UPSTREAM_LIMIT_IN_KBS)
+        AttachInteger (widgetTree['entry-padding'], config.PRESERVE_X_GB_FREE)
+        AttachCombo (widgetTree['combobox-poll'], config.CHECK_CHANNELS_EVERY_X_MN, (30, 60, -1))
+        AttachCombo (widgetTree['combobox-expiration'], config.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))
+        # run the dialog
+        response = dialog.run()
+
+        if response == gtk.RESPONSE_OK:
+            channel = entry.get_text()
+            app.Controller.instance.addAndSelectFeed(channel)
+
+        dialog.destroy()
+
+    def on_about_clicked(self, event = None):
+        self.mainFrame.about()

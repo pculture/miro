@@ -57,21 +57,18 @@ class MainFrame:
         self.callbackHandler = CallbackHandler(self)
         self.isFullscreen = False
         self._gtkInit()
+        self.aboutWidget = None
 
     @gtkMethod
     def _gtkInit(self):
         # Create the widget tree, and remember important widgets
-        self.widgetTree = WidgetTree(resource.path('democracy.glade'))
-        self.widgetTree['main-window'].show_all()
+        self.widgetTree = WidgetTree(resource.path('democracy.glade'), 'main-window')
         self.displayBoxes = {
             self.mainDisplay : self.widgetTree['main-box'],
             self.channelsDisplay : self.widgetTree['channels-box'],
             self.videoInfoDisplay : self.widgetTree['video-info-box'],
         }
-        self.windowChanger = MainWindowChanger(self.widgetTree,
-                MainWindowChanger.BROWSING)
-        self.fullscreenHandler = FullscreenHandler(self.widgetTree,
-                self.windowChanger)
+
         # create the buttonsDown attribute to the video time scale.  It will
         # track which mouse buttons are currently pressed.  This is usefull
         # because we don't want to update widget when the user is in the
@@ -80,18 +77,43 @@ class MainFrame:
         # connect all signals
         self.widgetTree.signal_autoconnect(self.callbackHandler)
         # disable menu item's that aren't implemented yet
-        self.widgetTree.get_widget('update-channel').set_sensitive(False)
-        self.widgetTree.get_widget('update-all-channels').set_sensitive(False)
-        self.widgetTree.get_widget('tell-a-friend').set_sensitive(False)
-        self.widgetTree.get_widget('channel-rename').set_sensitive(False)
-        self.widgetTree.get_widget('channel-copy-url').set_sensitive(False)
-        self.widgetTree.get_widget('channel-add').set_sensitive(False)
-        self.widgetTree.get_widget('channel-remove').set_sensitive(False)
-        self.widgetTree.get_widget('delete-video').set_sensitive(False)
+#        self.widgetTree.get_widget('update-channel').set_sensitive(False)
+#        self.widgetTree.get_widget('update-all-channels').set_sensitive(False)
+#        self.widgetTree.get_widget('tell-a-friend').set_sensitive(False)
+#        self.widgetTree.get_widget('channel-rename').set_sensitive(False)
+#        self.widgetTree.get_widget('channel-copy-url').set_sensitive(False)
+#        self.widgetTree.get_widget('channel-add').set_sensitive(False)
+#        self.widgetTree.get_widget('channel-remove').set_sensitive(False)
+#        self.widgetTree.get_widget('delete-video').set_sensitive(False)
+
+        self.uiManager = gtk.UIManager()
+
+        self.actionGroups = self.callbackHandler.actionGroups ()
+        i = 0
+        for actionGroup in self.actionGroups.values():
+            self.uiManager.insert_action_group (actionGroup, i)
+            i = i + 1
+
+        self.uiManager.add_ui_from_file(resource.path('Democracy.xml'))
+
+        self.widgetTree['menubar-box'].add (self.uiManager.get_widget('/menubar'))
+        self.widgetTree['main-window'].add_accel_group(self.uiManager.get_accel_group())
+
+        self.widgetTree['volume-scale'].set_value (config.get(config.VOLUME_LEVEL))
+
+        self.windowChanger = MainWindowChanger(self.widgetTree, self,
+                MainWindowChanger.BROWSING)
+        self.fullscreenHandler = FullscreenHandler(self.widgetTree,
+                self.windowChanger)
+
+        self.widgetTree['main-window'].show_all()
 
     @gtkMethod
     def selectDisplay(self, newDisplay, area):
         """Install the provided 'newDisplay' in the requested area"""
+
+
+        print "selectDisplay (%s, %s, %s)" % (self, newDisplay, area)
 
         if area == self.collectionDisplay:
             print "TODO: Collection Display not implemented on gtk/x11"
@@ -119,6 +141,20 @@ class MainFrame:
                 self.windowChanger.changeState(self.windowChanger.VIDEO)
             else:
                 self.windowChanger.changeState(self.windowChanger.BROWSING)
+
+    @gtkMethod
+    def about(self):
+        if (self.aboutWidget is None):
+            self.aboutWidget = gtk.AboutDialog()
+            self.aboutWidget.set_name("Democracy Player")
+            self.aboutWidget.set_version("0.8.2")
+            self.aboutWidget.set_website("http://www.getdemocracy.com/")
+            def delete_event_cb(widget, event):
+                widget.hide()
+                return True
+            self.aboutWidget.connect ("delete_event", delete_event_cb)
+            self.aboutWidget.set_transient_for (self.widgetTree['main-window'])
+        self.aboutWidget.present()
 
     def updateVideoTime(self):
         renderer = app.Controller.instance.videoDisplay.activeRenderer

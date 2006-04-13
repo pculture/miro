@@ -27,8 +27,9 @@ class MainWindowChanger(object):
     VIDEO_FULLSCREEN = 4
     VIDEO_ONLY_FULLSCREEN = 5
 
-    def __init__(self, widgetTree, initialState):
+    def __init__(self, widgetTree, mainFrame, initialState):
         self.widgetTree = widgetTree
+        self.mainFrame = mainFrame
         self.currentState = None
         self.changeState(initialState)
 
@@ -58,54 +59,49 @@ class MainWindowChanger(object):
         playing a video.
         """
 
-        videoWidgets = ['save-video', 'play', 'stop', 'play-pause-button',
+        videoWidgets = ['play-pause-button',
             'next-button', 'previous-button', 'fullscreen-button',
             'video-time-scale']
         # delete-video should be in this list, but it's not implemented yet
         for widget in videoWidgets:
             self.widgetTree[widget].set_sensitive(sensitive)
+        self.mainFrame.actionGroups["VideoPlayback"].set_sensitive (sensitive)
 
     def changeState(self, newState):
+        print "changeState (%s)" % (newState)
         if newState == self.currentState:
             return
         if newState == self.BROWSING:
-            self.widgetTree['fullscreen'].set_sensitive(False)
-            self.widgetTree['leave-fullscreen'].set_sensitive(False)
             self.widgetTree['channels-box'].show()
             self.widgetTree['video-info-box'].hide()
             self.widgetTree['video-control-box'].show()
-            self.widgetTree['menubar'].show()
+            self.widgetTree['menubar-box'].show()
             self.setVideoWidgetsSensitive(False)
         elif newState == self.PLAYLIST:
-            self.widgetTree['fullscreen'].set_sensitive(False)
-            self.widgetTree['leave-fullscreen'].set_sensitive(False)
             self.widgetTree['channels-box'].show()
             self.widgetTree['video-info-box'].hide()
             self.widgetTree['video-control-box'].show()
-            self.widgetTree['menubar'].show()
+            self.widgetTree['menubar-box'].show()
             self.setVideoWidgetsSensitive(False)
             self.widgetTree['play-pause-button'].set_sensitive(True)
         elif newState == self.VIDEO:
-            self.widgetTree['fullscreen'].set_sensitive(True)
-            self.widgetTree['leave-fullscreen'].set_sensitive(False)
             self.widgetTree['channels-box'].show()
             self.widgetTree['video-info-box'].show()
             self.widgetTree['video-control-box'].show()
-            self.widgetTree['menubar'].show()
+            self.widgetTree['menubar-box'].show()
             self.setVideoWidgetsSensitive(True)
         elif newState == self.VIDEO_FULLSCREEN:
-            self.widgetTree['fullscreen'].set_sensitive(False)
-            self.widgetTree['leave-fullscreen'].set_sensitive(True)
             self.widgetTree['channels-box'].hide()
             self.widgetTree['video-info-box'].show()
             self.widgetTree['video-control-box'].show()
-            self.widgetTree['menubar'].hide()
+            self.widgetTree['menubar-box'].hide()
             self.setVideoWidgetsSensitive(True)
         elif newState == self.VIDEO_ONLY_FULLSCREEN:
             self.widgetTree['channels-box'].hide()
             self.widgetTree['video-info-box'].hide()
             self.widgetTree['video-control-box'].hide()
-            self.widgetTree['menubar'].hide()
+            self.widgetTree['menubar-box'].hide()
+            self.setVideoWidgetsSensitive(True)
         else:
             raise TypeError("invalid state: %r" % newState)
         self.updatePlayPauseButton()

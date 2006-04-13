@@ -3,6 +3,7 @@ import signal
 import sys
 import time
 import gnomevfs
+import gtk
 
 from frontend import *
 
@@ -52,11 +53,21 @@ class UIBackendDelegate:
 
     def validateFeedRemoval(self, feedTitle):
         summary = u'Remove Channel'
-        message = u'Are you sure you want to remove the channel \'%s\'? This operation cannot be undone.' % feedTitle
-        buttons = (u'Remove', u'Cancel')
-        # NEEDS inform user
-        print "WARNING: defaulting feed validation removal to True"
-        return True
+        message = u'Are you sure you want to <b>remove</b> the channel\n   \'<b>%s</b>\'?\n<b>This operation cannot be undone.</b>' % feedTitle
+        dialog = gtk.Dialog(summary, None, (), (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_REMOVE, gtk.RESPONSE_OK))
+        label = gtk.Label()
+        alignment = gtk.Alignment()
+        label.set_markup(message)
+        label.set_padding (6, 6)
+        dialog.vbox.add(label)
+        label.show()
+        dialog.set_default_response (gtk.RESPONSE_CANCEL)
+        response = dialog.run()
+        dialog.destroy()
+        if (response == gtk.RESPONSE_OK):
+            return True
+        else:
+            return False
 
     def openExternalURL(self, url):
         # We could use Python's webbrowser.open() here, but
@@ -83,8 +94,8 @@ class UIBackendDelegate:
         return True
 
     def copyTextToClipboard(self, text):
-        print "WARNING: copyTextToClipboard not implemented"
-        # NEEDS do it!
+        gtk.Clipboard(selection="CLIPBOARD").set_text(text)
+        gtk.Clipboard(selection="PRIMARY").set_text(text)
 
     def launchDownloadDaemon(self, oldpid, env):
         print "*** LAUNCHING**** "
