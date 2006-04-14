@@ -158,10 +158,6 @@ class AppController (NibClassBuilder.AutoBaseClass):
         nc.addObserver_selector_name_object_(self, 'videoWillStop:', 'videoWillPause', nil)
         nc.addObserver_selector_name_object_(self, 'videoWillStop:', 'videoWillStop', nil)
         
-        # Call the startup hook before any events (such as instructions
-        # to open files...) are delivered.
-        self.actualApp.onStartup()
-
     def applicationDidFinishLaunching_(self, notification):
         # The [NSURLRequest setAllowsAnyHTTPSCertificate:forHost:] selector is
         # not documented anywhere, so I assume it is not public. It is however 
@@ -170,6 +166,8 @@ class AppController (NibClassBuilder.AutoBaseClass):
         components = urlparse.urlparse(config.get(config.CHANNEL_GUIDE_URL))
         channelGuideHost = components[1]
         NSURLRequest.setAllowsAnyHTTPSCertificate_forHost_(YES, channelGuideHost)
+
+        self.actualApp.onStartup()
         
     def applicationShouldTerminate_(self, application):
         reply = NSTerminateNow
@@ -958,15 +956,14 @@ class UIBackendDelegate:
                 os.kill(oldpid, signal.SIGKILL)
             except:
                 pass
-        p = os.path.normpath(resource.path("../Democracy_Downloader.app"))
+        # Setup environement
         for key, value in env.items():
             os.environ[key] = value
-        # We used to do this:
-        # NSWorkspace.sharedWorkspace().launchApplication_(p)
-        # 
-        # But it caused problems on OS 10.4.  The GUI became totally unreponsive afterwards.
-        # Using os.system seems to work though.
-        os.system("open %s" % p)
+        # Find and launch the daemon
+        pool = NSAutoreleasePool.alloc().init()
+        p = NSBundle.mainBundle().pathForResource_ofType_('Democracy_Downloader', 'app')
+        NSWorkspace.sharedWorkspace().launchApplication_(p)
+        del pool
 
 class ExceptionReporterController (NibClassBuilder.AutoBaseClass):
     
