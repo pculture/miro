@@ -69,6 +69,7 @@ class MainWindowChanger(object):
 
     def changeState(self, newState):
         print "changeState (%s)" % (newState)
+        self.mainFrame.actionGroups["ChannelSelected"].set_sensitive (app.Controller.instance.currentSelectedTab.isFeed())
         if newState == self.currentState:
             return
         if newState == self.BROWSING:
