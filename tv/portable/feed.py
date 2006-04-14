@@ -173,7 +173,8 @@ def _generateFeed(url, ufeed, visible=True):
     elif (info['content-type'].startswith('application/rss+xml') or
           info['content-type'].startswith('application/podcast+xml') or
           info['content-type'].startswith('text/xml') or 
-          info['content-type'].startswith('application/xml')):
+          info['content-type'].startswith('application/xml') or
+          (info['content-type'].startswith('text/plain') and url.endswith('.xml'))):
         #print " It's doesn't look like HTML..."
         html = info["file-handle"].read()
         info["file-handle"].close()
