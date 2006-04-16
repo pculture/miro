@@ -213,7 +213,7 @@ class CallbackHandler(object):
         response = dialog.run()
 
         if response == gtk.RESPONSE_OK:
-            channel = entry.get_text()
+            channel = widgetTree['add-channel-entry'].get_text()
             app.Controller.instance.addAndSelectFeed(channel)
 
         dialog.destroy()
@@ -232,11 +232,6 @@ class CallbackHandler(object):
         AttachCombo (widgetTree['combobox-expiration'], config.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))
         # run the dialog
         response = dialog.run()
-
-        if response == gtk.RESPONSE_OK:
-            channel = entry.get_text()
-            app.Controller.instance.addAndSelectFeed(channel)
-
         dialog.destroy()
 
     def on_about_clicked(self, event = None):

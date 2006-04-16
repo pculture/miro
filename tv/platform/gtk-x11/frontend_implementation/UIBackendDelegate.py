@@ -4,12 +4,59 @@ import sys
 import time
 import gnomevfs
 import gtk
+import threading
+import app
 
 from frontend import *
 
 ###############################################################################
 #### 'Delegate' objects for asynchronously asking the user questions       ####
 ###############################################################################
+
+class GtkThreads:
+    def __init__ (self):
+        self.locked_thread = None
+        self.locked_thread_lock = threading.Lock()
+        self.lock_count = 0
+
+    def Enter (self):
+        self.locked_thread_lock.acquire()
+        need_enter = app.Controller.instance.main_thread != threading.currentThread() and \
+                     self.locked_thread != threading.currentThread()
+        self.locked_thread_lock.release()
+        if need_enter:
+            gtk.threads_enter()
+            self.locked_thread_lock.acquire()
+            self.locked_thread = threading.currentThread
+            self.locked_thread_lock.release()
+        self.lock_count = self.lock_count + 1
+    
+    
+    def Leave (self):
+        self.lock_count = self.lock_count - 1
+        if (self.lock_count == 0):
+            self.locked_thread_lock.acquire()
+            self.locked_thread = None
+            self.locked_thread_lock.release()
+            if app.Controller.instance.main_thread != threading.currentThread():
+                gtk.threads_leave()
+
+gtk_threads = GtkThreads()
+
+def ShowDialog (title, message, buttons, default = gtk.RESPONSE_CANCEL):
+    gtk_threads.Enter()
+    dialog = gtk.Dialog(title, None, (), buttons)
+    label = gtk.Label()
+    alignment = gtk.Alignment()
+    label.set_markup(message)
+    label.set_padding (6, 6)
+    dialog.vbox.add(label)
+    label.show()
+    dialog.set_default_response (default)
+    response = dialog.run()
+    dialog.destroy()
+    gtk_threads.Leave()
+    return response
 
 class UIBackendDelegate:
 
@@ -21,19 +68,65 @@ class UIBackendDelegate:
         information, it's returned as a (user, password)
         tuple. Otherwise, if the user presses Cancel or similar, None
         is returned."""
+        gtk_threads.Enter()
+        summary = "Channel requires authentication"
         message = "%s requires a username and password for \"%s\"." % (url, domain)
-        # NEEDS
-        raise NotImplementedError
+        dialog = gtk.Dialog(summary, None, (), (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OK, gtk.RESPONSE_OK))
+        table = gtk.Table()
+        dialog.vbox.add(table)
+        
+        label = gtk.Label()
+        label.set_markup(message)
+        label.set_padding (6, 6)
+        table.attach (label, 0, 2, 0, 1, gtk.FILL, gtk.FILL)
 
+        label = gtk.Label()
+        label.set_markup("Username:")
+        label.set_padding (6, 6)
+        label.set_alignment (1.0, 0.5)
+        table.attach (label, 0, 1, 1, 2, gtk.FILL, gtk.FILL)
+
+        user = gtk.Entry()
+        if (prefillUser != None):
+            user.set_text(prefillUser)
+        table.attach (user, 1, 2, 1, 2, gtk.FILL | gtk.EXPAND, gtk.FILL, 6, 6)
+
+        label = gtk.Label()
+        label.set_markup("Password:")
+        label.set_padding (6, 6)
+        label.set_alignment (1.0, 0.5)
+        table.attach (label, 0, 1, 2, 3, gtk.FILL, gtk.FILL)
+
+        password = gtk.Entry()
+        if (prefillPassword != None):
+            password.set_text(prefillPassword)
+        table.attach (password, 1, 2, 2, 3, gtk.FILL | gtk.EXPAND, gtk.FILL, 6, 6)
+
+        table.show_all()
+        dialog.set_default_response (gtk.RESPONSE_OK)
+        response = dialog.run()
+        retval = None
+        if (response == gtk.RESPONSE_OK):
+            retval = (user.get_text(), password.get_text())
+        dialog.destroy()
+        gtk_threads.Leave()
+        return retval
+
+    # Called from another thread.
     def isScrapeAllowed(self, url):
         """Tell the user that URL wasn't a valid feed and ask if it should be
         scraped for links instead. Returns True if the user gives
         permission, or False if not."""
         summary = "Not a DTV-style channel"
         message = "But we'll try our best to grab the files.\n- It may take time to list the videos\n- Descriptions may look funny\n\nPlease contact the publishers of %s and ask if they have a DTV-style channel." % url
-        defaultButtonTitle = 'Continue'
-        # NEEDS
-        raise NotImplementedError
+        buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, "Continue", gtk.RESPONSE_OK)
+        print self.getHTTPAuth ("test url", "test domain", "test_user")
+        response = ShowDialog (summary, message, buttons)
+        print response == gtk.RESPONSE_OK
+        if (response == gtk.RESPONSE_OK):
+            return True
+        else:
+            return False
 
     def updateAvailable(self, url):
         """Tell the user that an update is available and ask them if they'd
@@ -51,19 +144,18 @@ class UIBackendDelegate:
         # NEEDS inform user
         print "DTV: is up to date"
 
+    def saveFailed(self, reason):
+        summary = u'%s database save failed' % \
+            (config.get(config.SHORT_APP_NAME), )
+        message = u"%s was unable to save its database.\nRecent changes may be lost\n\n%s" % (config.get(config.LONG_APP_NAME), reason)
+        buttons = (gtk.STOCK_CLOSE, gtk.RESPONSE_OK)
+        ShowDialog (summary, message, buttons)
+
     def validateFeedRemoval(self, feedTitle):
         summary = u'Remove Channel'
         message = u'Are you sure you want to <b>remove</b> the channel\n   \'<b>%s</b>\'?\n<b>This operation cannot be undone.</b>' % feedTitle
-        dialog = gtk.Dialog(summary, None, (), (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_REMOVE, gtk.RESPONSE_OK))
-        label = gtk.Label()
-        alignment = gtk.Alignment()
-        label.set_markup(message)
-        label.set_padding (6, 6)
-        dialog.vbox.add(label)
-        label.show()
-        dialog.set_default_response (gtk.RESPONSE_CANCEL)
-        response = dialog.run()
-        dialog.destroy()
+        buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_REMOVE, gtk.RESPONSE_OK)
+        response = ShowDialog (summary, message, buttons)
         if (response == gtk.RESPONSE_OK):
             return True
         else:
@@ -73,7 +165,9 @@ class UIBackendDelegate:
         # We could use Python's webbrowser.open() here, but
         # unfortunately, it doesn't have the same semantics under UNIX
         # as under other OSes. Sometimes it blocks, sometimes it doesn't.
+        gtk_threads.Enter()
         gnomevfs.url_show(url)
+        gtk_threads.Leave()
 
     def updateAvailableItemsCountFeedback(self, count):
         # Inform the user in a way or another that newly available items are
@@ -83,19 +177,25 @@ class UIBackendDelegate:
     def interruptDownloadsAtShutdown(self, downloadsCount):
         summary = u'Are you sure you want to quit?'
         message = u'You have %d download%s still in progress.' % (downloadsCount, downloadsCount > 1 and 's' or '')
-        buttons = (u'Quit', u'Cancel')
-        # NEEDS inform user
-        return True
+        buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_QUIT, gtk.RESPONSE_OK)
+        response = ShowDialog (summary, message, buttons)
+        if (response == gtk.RESPONSE_OK):
+            return True
+        else:
+            return False
 
     def notifyUnkownErrorOccurence(self, when, log = ''):
         summary = u'Unknown Runtime Error'
         message = u'An unknown error has occured %s.' % when
-        # NEEDS inform user
+        buttons = (gtk.STOCK_CLOSE, gtk.RESPONSE_OK)
+        ShowDialog (summary, message, buttons)
         return True
 
     def copyTextToClipboard(self, text):
+        gtk_threads.Enter()
         gtk.Clipboard(selection="CLIPBOARD").set_text(text)
         gtk.Clipboard(selection="PRIMARY").set_text(text)
+        gtk_threads.Leave()
 
     def launchDownloadDaemon(self, oldpid, env):
         print "*** LAUNCHING**** "
