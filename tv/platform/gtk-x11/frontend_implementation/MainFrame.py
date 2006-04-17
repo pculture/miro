@@ -11,7 +11,6 @@ from frontend import *
 from frontend_implementation.gtk_queue import gtkMethod
 from frontend_implementation.VideoDisplay import VideoDisplay
 from frontend_implementation.callbackhandler import CallbackHandler
-from frontend_implementation.fullscreenhandler import FullscreenHandler
 from frontend_implementation.mainwindowchanger import MainWindowChanger
 
 class WidgetTree(gtk.glade.XML):
@@ -103,8 +102,6 @@ class MainFrame:
 
         self.windowChanger = MainWindowChanger(self.widgetTree, self,
                 MainWindowChanger.BROWSING)
-        self.fullscreenHandler = FullscreenHandler(self.widgetTree,
-                self.windowChanger)
 
         self.widgetTree['main-window'].show_all()
 
@@ -112,8 +109,6 @@ class MainFrame:
     def selectDisplay(self, newDisplay, area):
         """Install the provided 'newDisplay' in the requested area"""
 
-
-        print "selectDisplay (%s, %s, %s)" % (self, newDisplay, area)
 
         if area == self.collectionDisplay:
             print "TODO: Collection Display not implemented on gtk/x11"
@@ -171,17 +166,7 @@ class MainFrame:
         return True
 
     def setFullscreen(self, fullscreen):
-        activeRenderer = app.Controller.instance.videoDisplay.activeRenderer
-        if fullscreen:
-            self.windowChanger.changeState(self.windowChanger.VIDEO_FULLSCREEN)
-            self.widgetTree['main-window'].fullscreen()
-            self.fullscreenHandler.enable()
-            activeRenderer.goFullscreen()
-        else:
-            self.windowChanger.changeState(self.windowChanger.VIDEO)
-            self.widgetTree['main-window'].unfullscreen()
-            self.fullscreenHandler.disable()
-            activeRenderer.exitFullscreen()
+        self.windowChanger.changeFullScreen (fullscreen)
         self.isFullscreen = fullscreen
 
     # Internal use: return an estimate of the size of a given display area
