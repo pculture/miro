@@ -264,18 +264,13 @@ class ControllerDaemon(Daemon):
                 try:
                     self.listenLoop()
                     print "Controller listen loop completed"
-                    break
-                except socket.error, EOFError:
-                    # On socket errors, the downloader dies, but the
-                    # controller stays alive and restarts the downloader
-                    self.cleanupAfterError()
-                    print "Socket exception in the controller daemon"
-                    traceback.print_exc()
                 except Exception, e:
-                    # Exception that we don't anticipate, make a crash dialog
                     self.cleanupAfterError()
                     import util
                     util.failedExn("While talking to downloader backend")
+                    # On socket errors, the downloader dies, but the
+                    # controller stays alive and restarts the downloader
+                    # by continuing the while loop we achieve this
         finally:
             self.shutDown = True
 
