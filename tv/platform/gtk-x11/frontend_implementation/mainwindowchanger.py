@@ -37,7 +37,13 @@ class MainWindowChanger(object):
         self.motionHandlerId = None
         self.hideDelay = 3000
         self.enablePointerTracking()
+        self.createCursor()
         self.changeState(initialState)
+
+    def createCursor(self):
+        pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
+        color = gtk.gdk.Color()
+        self.empty_cursor = gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
 
     def updatePlayPauseButton(self):
         """Update the play/pause button to have the correct image."""
@@ -92,9 +98,11 @@ class MainWindowChanger(object):
 
         # Hide cursor
         if fullscreen and self.currentState == self.VIDEO and self.pointerIdle:
-            pass #hide cursor
+            # Hide cursor
+            self.widgetTree["main-box"].window.set_cursor (self.empty_cursor)
         else:
-            pass #show cursor
+            # Show cursor
+            self.widgetTree["main-box"].window.set_cursor (None)
 
         # Handle UI visibility and sensitivity
         if self.currentState == self.BROWSING:
