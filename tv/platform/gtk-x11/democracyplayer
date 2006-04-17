@@ -6,6 +6,19 @@ import sys
 import democracy
 # Make sure democracy modules are on the search path
 sys.path.insert(0, os.path.abspath(os.path.dirname(democracy.__file__)))
-# import app and start it
-import app
-app.main()
+
+if '--unittest' in sys.argv:
+    # Remove all the democracy unittest specific args
+    for count in range(len(sys.argv)):
+        if sys.argv[count] == '--unittest':
+            del sys.argv[count]
+            break
+
+    import unittest
+    import test
+    unittest.main(module=test)
+
+else:
+    # import app and start it
+    import app
+    app.main()

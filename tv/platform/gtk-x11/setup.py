@@ -47,6 +47,7 @@ while True:
 portable_dir = os.path.join(root_dir, 'portable')
 bittorrent_dir = os.path.join(portable_dir, 'BitTorrent')
 dl_daemon_dir = os.path.join(portable_dir, 'dl_daemon')
+test_dir = os.path.join(portable_dir, 'test')
 compiled_templates_dir = os.path.join(portable_dir, 'compiled_templates')
 compiled_templates_test_dir = os.path.join(compiled_templates_dir,'test')
 compiled_templates_unittest_dir = os.path.join(compiled_templates_dir,'unittest')
@@ -343,6 +344,7 @@ setup(name='democracy',
         'democracy.frontend_implementation',
         'democracy.BitTorrent',
         'democracy.dl_daemon',
+        'democracy.test',
         'democracy.compiled_templates',
         'democracy.compiled_templates.test',
         'democracy.compiled_templates.unittest',
@@ -352,6 +354,7 @@ setup(name='democracy',
         'democracy.frontend_implementation' : frontend_implementation_dir,
         'democracy.BitTorrent' : bittorrent_dir,
         'democracy.dl_daemon' : dl_daemon_dir,
+        'democracy.test' : test_dir,
         'democracy.compiled_templates' : compiled_templates_dir,
         'democracy.compiled_templates.test' : compiled_templates_test_dir,
         'democracy.compiled_templates.unittest' : compiled_templates_unittest_dir,
