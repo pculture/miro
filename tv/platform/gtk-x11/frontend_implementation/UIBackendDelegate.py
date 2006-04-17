@@ -120,7 +120,6 @@ class UIBackendDelegate:
         summary = "Not a DTV-style channel"
         message = "But we'll try our best to grab the files.\n- It may take time to list the videos\n- Descriptions may look funny\n\nPlease contact the publishers of %s and ask if they have a DTV-style channel." % url
         buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, "Continue", gtk.RESPONSE_OK)
-        print self.getHTTPAuth ("test url", "test domain", "test_user")
         response = ShowDialog (summary, message, buttons)
         print response == gtk.RESPONSE_OK
         if (response == gtk.RESPONSE_OK):
