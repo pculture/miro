@@ -264,6 +264,7 @@ class ControllerDaemon(Daemon):
                 try:
                     self.listenLoop()
                     print "Controller listen loop completed"
+                    break
                 except Exception, e:
                     self.cleanupAfterError()
                     import util
