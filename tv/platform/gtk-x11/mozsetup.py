@@ -21,13 +21,18 @@ def createPrefsJS():
 user_pref("security.warn_entering_secure", false);
 user_pref("security.warn_leaving_secure", false);
 user_pref("security.warn_leaving_secure.show_once", false);
-"""
+user_pref("general.useragent.vendor", %s);
+user_pref("general.useragent.vendorSub", %s);
+user_pref("general.useragent.vendorComment", %s);
+
+""" % (repr(config.get(config.LONG_APP_NAME)),
+       repr(config.get(config.APP_VERSION)),
+       repr(config.get(config.PROJECT_URL)))
     prefsPath = os.path.join(config.get(config.SUPPORT_DIRECTORY), 'mozilla',
             'prefs.js')
-    if not os.path.exists(prefsPath):
-        f = open(prefsPath, "wt")
-        f.write(prefsContent)
-        f.close()
+    f = open(prefsPath, "wt")
+    f.write(prefsContent)
+    f.close()
 
 def setupMozillaEnvironment():
     """Do all the work nessecary setup the DTV Mozilla environment."""
