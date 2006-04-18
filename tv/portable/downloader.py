@@ -345,10 +345,10 @@ class RemoteDownloader(Downloader):
 
     ##
     # Pauses the download.
-    def pause(self):
+    def pause(self, block=False):
         c = command.PauseDownloadCommand(RemoteDownloader.dldaemon,
                                             self.dlid)
-        c.send(block=False)
+        c.send(block=block)
 
     ##
     # Stops the download and removes the partially downloaded

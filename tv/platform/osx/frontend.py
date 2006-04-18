@@ -138,7 +138,6 @@ class Application:
         # For overriding
         pass
 
-
 class AppController (NibClassBuilder.AutoBaseClass):
 
     # Do nothing. A dummy method called by Application to force Cocoa into
@@ -154,9 +153,14 @@ class AppController (NibClassBuilder.AutoBaseClass):
             struct.unpack(">i", "GURL")[0],
             struct.unpack(">i", "GURL")[0])
 
-        nc.addObserver_selector_name_object_(self, 'videoWillPlay:', 'videoWillPlay', nil)
+        nc.addObserver_selector_name_object_(self, 'videoWillPlay:', 'videoWillPlay',  nil)
         nc.addObserver_selector_name_object_(self, 'videoWillStop:', 'videoWillPause', nil)
-        nc.addObserver_selector_name_object_(self, 'videoWillStop:', 'videoWillStop', nil)
+        nc.addObserver_selector_name_object_(self, 'videoWillStop:', 'videoWillStop',  nil)
+        
+        ws = NSWorkspace.sharedWorkspace()
+        wsnc = ws.notificationCenter()
+        wsnc.addObserver_selector_name_object_(self, 'workspaceWillSleep:', NSWorkspaceWillSleepNotification, nil)
+        wsnc.addObserver_selector_name_object_(self, 'workspaceDidWake:',   NSWorkspaceDidWakeNotification,   nil)
         
     def applicationDidFinishLaunching_(self, notification):
         # The [NSURLRequest setAllowsAnyHTTPSCertificate:forHost:] selector is
@@ -184,6 +188,30 @@ class AppController (NibClassBuilder.AutoBaseClass):
 
     def application_openFile_(self, app, filename):
         return self.actualApp.addFeedFromFile(filename)
+
+    def workspaceWillSleep_(self, notification):
+        downloads = app.globalViewList['remoteDownloads']
+        dlCount = len(downloads)
+        if dlCount > 0:
+            print "DTV: System is going to sleep, suspending downloads."
+            downloads.beginRead()
+            try:
+                for dl in downloads:
+                    dl.pause(block=True)
+            finally:
+                downloads.endRead()
+
+    def workspaceDidWake_(self, notification):
+        downloads = app.globalViewList['remoteDownloads']
+        dlCount = len(downloads)
+        if dlCount > 0:
+            print "DTV: System is awake, resuming downloads."
+            downloads.beginRead()
+            try:
+                for dl in downloads:
+                    dl.start()
+            finally:
+                downloads.endRead()
 
     def videoWillPlay_(self, notification):
         self.playPauseMenuItem.setTitle_('Pause Video')

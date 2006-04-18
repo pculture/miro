@@ -234,6 +234,8 @@ class DynamicDatabase:
             self.endRead()
 
     # Returns the number of items in the database
+    def __len__(self):
+        return self.len()
     def len(self):
         self.beginRead()
         length = len(self.objects)
