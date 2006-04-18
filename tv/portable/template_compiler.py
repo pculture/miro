@@ -189,25 +189,24 @@ def compileAllTemplates(root):
     for template in findTemplates(root):
         outFile = os.path.join(root,'portable','compiled_templates',template.replace('-','_')+'.py')
         sourceFile = resource.path("templates/%s" % template)
-        if not dep_util.newer(sourceFile, outFile):
-            continue
-        print "Compiling '%s' template to %s" % (template, outFile)
-        (tcc, handle) = compileTemplate(template)
         outDir = os.path.dirname(outFile)
         try:
             os.makedirs(outDir)
         except:
             pass
-
         try:
             open(os.path.join(outDir,'__init__.py'), "r")
         except:
             package = open(os.path.join(outDir,'__init__.py'), "wb")
             package.write('# This is a generated file. Do not edit.\n\n')
             package.close()
-        f = open(outFile,"wb")
-        f.write(tcc.getOutput())
-        f.close()
+
+        if dep_util.newer(sourceFile, outFile):
+            print "Compiling '%s' template to %s" % (template, outFile)
+            (tcc, handle) = compileTemplate(template)
+            f = open(outFile,"wb")
+            f.write(tcc.getOutput())
+            f.close()
         manifest.write("import %s\n" % template.replace('/','.').replace('\\','.').replace('-','_'))
     manifest.close()
 
