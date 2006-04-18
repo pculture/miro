@@ -54,8 +54,6 @@ class Scheduler(DynamicDatabase):
 # future, possibly periodically
 
 class ScheduleEvent(DDBObject):
-    scheduler = Scheduler()
-
     ##
     # Schedules an event for interval seconds from now
     # Repeats every

@@ -14,10 +14,10 @@ if '--unittest' in sys.argv:
             del sys.argv[count]
             break
 
+    import app
     import unittest
     import test
-    unittest.main(module=test)
-
+    unittest.main()
 else:
     # import app and start it
     import app

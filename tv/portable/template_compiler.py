@@ -107,6 +107,7 @@ def genHideSection(varname, tid, prefix, args):
 def genQuoteAndFillAttr(varname, tid, prefix, value):
     return '%s%s.write(quoteAndFillAttr(%s,data))\n' % (prefix, varname, repr(value))
 
+from distutils import dep_util
 from xml import sax
 from xhtmltools import toUTF8Bytes
 from StringIO import StringIO
@@ -187,6 +188,9 @@ def compileAllTemplates(root):
         
     for template in findTemplates(root):
         outFile = os.path.join(root,'portable','compiled_templates',template.replace('-','_')+'.py')
+        sourceFile = resource.path("templates/%s" % template)
+        if not dep_util.newer(sourceFile, outFile):
+            continue
         print "Compiling '%s' template to %s" % (template, outFile)
         (tcc, handle) = compileTemplate(template)
         outDir = os.path.dirname(outFile)

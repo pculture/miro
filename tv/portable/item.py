@@ -24,7 +24,6 @@ class Item(DDBObject):
         self.feed = feed
         self.seen = False
         self.downloaders = []
-        self.vidinfo = None
         self.autoDownloaded = False
         self.startingDownload = False
         self.lastDownloadFailed = False
@@ -172,14 +171,6 @@ class Item(DDBObject):
             ret = self.entry["id"]
         finally:
             self.endRead()
-        return ret
-
-    ##
-    # Returns the vidinfo object associated with this item
-    def getVidInfo(self):
-        self.beginRead()
-        ret = self.vidinfo
-        self.endRead()
         return ret
 
     def setAutoDownloaded(self,autodl = True):

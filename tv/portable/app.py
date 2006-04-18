@@ -406,6 +406,9 @@ class Controller (frontend.Application):
 
     def onStartup(self):
         try:
+            print "DTV: Starting scheduler"
+            scheduler.ScheduleEvent.scheduler = scheduler.Scheduler()
+
             print "DTV: Loading preferences..."
             config.load()
             config.addChangeCallback(self.configDidChange)
