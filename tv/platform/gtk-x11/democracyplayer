@@ -17,7 +17,7 @@ if '--unittest' in sys.argv:
     import app
     import unittest
     import test
-    unittest.main()
+    unittest.main(module=test)
 else:
     # import app and start it
     import app
