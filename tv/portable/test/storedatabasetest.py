@@ -21,6 +21,10 @@ class Human:
         else:
             self.high_scores = high_scores
 
+class RestorableHuman(Human):
+    def onRestore(self):
+        self.iveBeenRestored = True
+
 class Dog:
     def __init__(self, name, age, owner=None):
         self.name = name
@@ -51,6 +55,10 @@ class HumanSchema(schema.ObjectSchema):
         ('high_scores', SchemaDict(SchemaString(), SchemaInt())),
     ]
 
+class RestorableHumanSchema(HumanSchema):
+    klass = RestorableHuman
+    classString = 'restorable-human'
+
 class DogSchema(schema.ObjectSchema):
     klass = Dog
     classString = 'dog'
@@ -77,7 +85,8 @@ class PCFProgramerSchema(HumanSchema):
         ('superpower', SchemaString()),
     ]
 
-testObjectSchemas = [HumanSchema, DogSchema, HouseSchema, PCFProgramerSchema]
+testObjectSchemas = [HumanSchema, DogSchema, HouseSchema, PCFProgramerSchema,
+    RestorableHumanSchema]
 
 def installDummySchema():
     schema.VERSION = 1
@@ -209,6 +218,16 @@ class TestRestore(SchemaTest):
             self.assertEquals(getattr(self.holmes, attr), getattr(holmes2,
                 attr))
         self.assertEquals(forbesSt2.occupants, [lee2, joe2, ben2, holmes2])
+
+    def testOnRestoreCalled(self):
+        resto = RestorableHuman('resto', 23, 1.3, [])
+        self.db.append(resto)
+        storedatabase.saveDatabase(self.db, self.savePath, testObjectSchemas)
+        db2 = storedatabase.restoreDatabase(self.savePath, testObjectSchemas)
+        lee2, joe2, forbesSt2, scruffy2, spike2, resto2, = db2
+        self.assertEquals(resto2.name, 'resto')
+        self.assert_(hasattr(resto2, 'iveBeenRestored'))
+        self.assertEquals(resto2.iveBeenRestored, True)
 
 if __name__ == '__main__':
     unittest.main()

@@ -155,14 +155,25 @@ class ObjectSchema(object):
     """
     pass
 
-from feed import Feed
-from downloader import RemoteDownloader
+from database import DDBObject
+from downloader import RemoteDownloader, HTTPAuthPassword
+from feed import Feed, FeedImpl, RSSFeedImpl
+from feed import SearchFeedImpl, DirectoryFeedImpl, SearchDownloadsFeedImpl
+from folder import Folder
+from guide import ChannelGuide
 from item import Item
 
-class ItemSchema(ObjectSchema):
+class DDBObjectSchema(ObjectSchema):
+    klass = DDBObject
+    classString = 'DDBObject'
+    fields = [
+        ('id', SchemaInt())
+    ]
+
+class ItemSchema(DDBObjectSchema):
     klass = Item
     classString = 'item'
-    fields = [
+    fields = DDBObjectSchema.fields + [
         ('feed', SchemaObject(Feed)),
         ('seen', SchemaBool()),
         ('downloaders', SchemaList(SchemaObject(RemoteDownloader))),
@@ -178,17 +189,120 @@ class ItemSchema(ObjectSchema):
         ('linkNumber', SchemaInt(noneOk=True)),
     ]
 
-VERSION = 1 
-objectSchemas = [ItemSchema]
+class FeedSchema(DDBObjectSchema):
+    klass = Feed
+    classString = 'feed'
+    fields = DDBObjectSchema.fields + [
+        ('origURL', SchemaString()),
+        ('errorState', SchemaBool()),
+        ('initiallyAutoDownloadable', SchemaBool()),
+        ('loading', SchemaBool()),
+        ('actualFeed', SchemaObject(FeedImpl)),
+    ]
 
-# TODO:
-# 'feed' : feed.Feed,
-# 'yahoo-search-feed-impl': feed.YahooSearchFeedImpl,
-# 'rss-feed-impl': feed.RSSFeedImpl,
-# 'search-feed-impl': feed.SearchFeedImpl,
-# 'directory-feed-impl': feed.DirectoryFeedImpl,
-# 'search-downloads-feed-impl': feed.SearchDownloadsFeedImpl,
-# 'downloader' : downloader.RemoteDownloader,
-# 'auth-password': downloader.HTTPAuthPassword,
-# 'folder': folder.Folder,
-# 'channel-guide': guide.ChannelGuide,
+class FeedImplSchema(DDBObjectSchema):
+    klass = FeedImpl
+    classString = 'field-impl'
+    fields = DDBObjectSchema.fields + [
+        ('available', SchemaInt()),
+        ('unwatched', SchemaInt()),
+        ('url', SchemaString()),
+        ('ufeed', SchemaObject(Feed)),
+        ('items', SchemaList(SchemaObject(Item))),
+        ('title', SchemaString()),
+        ('created', SchemaDateTime()),
+        ('autoDownloadable', SchemaBool()),
+        ('startfrom', SchemaDateTime()),
+        ('getEverything', SchemaBool()),
+        ('maxNew', SchemaInt()),
+        ('fallBehind', SchemaInt()),
+        ('expire', SchemaString()),
+        ('visible', SchemaBool()),
+        ('updating', SchemaBool()),
+        ('lastViewed', SchemaDateTime()),
+        ('thumbURL', SchemaString()),
+        ('updateFreq', SchemaInt()),
+    ]
+
+class RSSFeedImplSchema(FeedImplSchema):
+    klass = RSSFeedImpl
+    classString = 'rss-feed-impl'
+    fields = FeedImplSchema.fields + [
+        ('initialHTML', SchemaString(noneOk=True)),
+        ('etag', SchemaString(noneOk=True)),
+        ('modified', SchemaString(noneOk=True)),
+    ]
+
+class SearchFeedImplSchema(FeedImplSchema):
+    klass = SearchFeedImpl
+    classString = 'search-feed-impl'
+    fields = FeedImplSchema.fields + [
+        ('searching', SchemaBool()),
+        ('lastEngine', SchemaString()),
+        ('lastQuery', SchemaString()),
+    ]
+
+class DirectoryFeedImplSchema(FeedImplSchema):
+    klass = DirectoryFeedImpl
+    classString = 'directory-feed-impl'
+    # DirectoryFeedImpl doesn't have any addition fields over FeedImpl
+
+class SearchDownloadsFeedImplSchema(FeedImplSchema):
+    klass = SearchDownloadsFeedImpl
+    classString = 'search-downloads-feed-impl'
+    # SearchDownloadsFeedImpl doesn't have any addition fields over FeedImpl
+
+class RemoteDownloaderSchema(DDBObjectSchema):
+    klass = RemoteDownloader
+    classString = 'remote-downloader'
+    fields = DDBObjectSchema.fields + [
+        ('url', SchemaString()),
+        ('itemList', SchemaList(SchemaObject(Item))),
+        ('startTime', SchemaFloat()),
+        ('endTime', SchemaFloat()),
+        ('shortFilename', SchemaString()),
+        ('filename', SchemaString()),
+        ('state', SchemaString()),
+        ('currentSize', SchemaInt()),
+        ('totalSize', SchemaInt()),
+        ('reasonFailed', SchemaString()),
+        ('dlid', SchemaString()),
+        ('contentType', SchemaString(noneOk=True)),
+    ]
+
+class HTTPAuthPasswordSchema(DDBObjectSchema):
+    klass = HTTPAuthPassword
+    classString = 'http-auth-password'
+    fields = DDBObjectSchema.fields + [
+        ('username', SchemaString()),
+        ('password', SchemaString()),
+        ('host', SchemaString()),
+        ('realm', SchemaString()),
+        ('path', SchemaString()),
+        ('authScheme', SchemaString()),
+    ]
+
+class FolderSchema(DDBObjectSchema):
+    klass = Folder
+    classString = 'folder'
+    fields = DDBObjectSchema.fields + [
+        ('feeds', SchemaList(SchemaInt())),
+        ('title', SchemaString()),
+    ]
+
+class ChannelGuideSchema(DDBObjectSchema):
+    klass = ChannelGuide
+    classString = 'channel-guide'
+    fields = DDBObjectSchema.fields + [
+        ('sawIntro', SchemaBool()),
+        ('cachedGuideBody', SchemaString(noneOk=True)),
+        ('loadedThisSession', SchemaBool()),
+    ]
+
+VERSION = 1 
+objectSchemas = [ 
+    DDBObjectSchema, ItemSchema, FeedSchema, FeedImplSchema,
+    RSSFeedImplSchema, SearchFeedImplSchema, DirectoryFeedImplSchema,
+    SearchDownloadsFeedImplSchema, RemoteDownloaderSchema,
+    HTTPAuthPasswordSchema, FolderSchema, ChannelGuideSchema, 
+]

@@ -111,9 +111,7 @@ class Downloader(DDBObject):
         self.state = "downloading"
         self.currentSize = 0
         self.totalSize = -1
-        self.blockTimes = []
         self.reasonFailed = "No Error"
-        self.headers = None
         DDBObject.__init__(self)
         self.thread = Thread(target=self.runDownloader, \
                              name="downloader -- %s" % self.shortFilename)
@@ -188,42 +186,6 @@ class Downloader(DDBObject):
         ret = self.currentSize
         self.endRead()
         return ret
-
-    ##
-    # Returns a float with the estimated number of seconds left
-    def getETA(self):
-        self.beginRead()
-        try:
-            rate = self.getRate()
-            if rate != 0:
-                eta = (self.totalSize - self.currentSize)/rate
-                if eta < 0:
-                    eta = 0
-            else:
-                eta = 0
-        finally:
-            self.endRead()
-        return eta
-
-    ##
-    # Returns a float with the download rate in bytes per second
-    def getRate(self):
-        now = time()
-        self.beginRead()
-        try:
-            if self.endTime != self.startTime:
-                rate = self.currentSize/(self.endTime-self.startTime)
-            else:
-                try:
-                    if (now-self.blockTimes[0][0]) != 0:
-                        rate=(self.blockTimes[-1][1]-self.blockTimes[0][1])/(now-self.blockTimes[0][0])
-                    else:
-                        rate = 0
-                except IndexError:
-                    rate = 0
-        finally:
-            self.endRead()
-        return rate
 
     ##
     # Returns the filename that we're downloading to. Should not be
@@ -438,20 +400,3 @@ class DownloaderFactory:
 
         else:
             return RemoteDownloader(info['updated-url'],self.item, info['content-type'])
-
-if __name__ == "__main__":
-    def printsaved():
-        print "Saved!"
-    def displayDLStatus(dler):
-        print dler.getState()
-        print str(dler.getCurrentSize()) + " of " + str(dler.getTotalSize())
-        print str(dler.getETA()) + " seconds remaining"
-        print str(dler.getRate()) + " bytes/sec"
-        print "Saving to " + dler.getFilename()
-    factory = DownloaderFactory(DDBObject())
-    x = factory.getDownloader("http://www.blogtorrent.com/demo/btdownload.php?type=torrent&file=SatisfactionWeb.mov.torrent")
-    y = factory.getDownloader("http://www.vimeo.com/clips/2005/04/05/vimeo.thelastminute.613.mov")
-    ScheduleEvent(2,lambda :displayDLStatus(x),True)
-    ScheduleEvent(2,lambda :displayDLStatus(y),True)
-    sleep(60)
-    x.stop()

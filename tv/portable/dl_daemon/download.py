@@ -460,6 +460,7 @@ class HTTPDownloader(BGDownloader):
 
     def restoreState(self, data):
         self.__dict__ = copy(data)
+        self.blockTimes = []
         if self.state == "downloading":
             self.thread = Thread(target=self.downloadThread,
                     kwargs={'retry': True}, 
@@ -541,19 +542,20 @@ class BTDownloader(BGDownloader):
     multitorrent = Multitorrent(torrentConfig, doneflag, global_error)
 
     def __init__(self, url = None, item = None, restore = None):
-        self.metainfo = None
-        self.rate = 0
-        self.eta = 0
-        self.d = BTDisplay(self)
-        self.uploaded = 0
-        self.torrent = None
         if restore is not None:
             self.restoreState(restore)
         else:            
+            self.metainfo = None
+            self.rate = 0
+            self.eta = 0
+            self.d = BTDisplay(self)
+            self.uploaded = 0
+            self.torrent = None
             BGDownloader.__init__(self,url,item)
 
     def restoreState(self, data):
         self.__dict__ = data
+        self.blockTimes = []
         self.d = BTDisplay(self)
         if self.state in ("downloading","uploading"):
             self.thread = Thread(target=self.restartDL, \

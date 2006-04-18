@@ -77,14 +77,12 @@ class ConverterBase(object):
             self.classesToStrings[os.klass] = os.classString
             self.objectSchemaLookup[os.klass] = os
 
-    def convertData(self, data, schema, memory, path=""):
+    def convertData(self, data, schema, path=""):
         """Convert one piece of data.
 
         Arguments:
             data -- piece of data to be converted
             schema -- schema that the data should conform to
-            memory -- dict containing the objects that we've already
-                converted.  It's used to handle circular references.
             path -- string describing how we got to this object.  Its format
                 is totally arbitrary, we just use it to help debug validation
                 errors.
@@ -100,11 +98,11 @@ class ConverterBase(object):
         elif isinstance(schema, schema_mod.SchemaSimpleItem):
             rv = data
         elif isinstance(schema, schema_mod.SchemaList):
-            rv = self.convertList(data, schema, memory, path)
+            rv = self.convertList(data, schema, path)
         elif isinstance(schema, schema_mod.SchemaDict):
-            rv = self.convertDict(data, schema, memory, path)
+            rv = self.convertDict(data, schema, path)
         elif isinstance(schema, schema_mod.SchemaObject):
-            rv = self.convertObject(data, schema, memory, path)
+            rv = self.convertObject(data, schema, path)
         else:
             raise ValueError("%s has an unknown SchemaItem type" % schema)
 
@@ -114,26 +112,26 @@ class ConverterBase(object):
             self.handleValidationError(e, data, path, schema)
         return rv
 
-    def convertList(self, list, schema, memory, path):
+    def convertList(self, list, schema, path):
         childSchema = schema.childSchema
         rv = []
         for i in xrange(len(list)):
             child = list[i]
             newPath = path + "\n[%d] -> %s" % (i, child)
-            rv.append(self.convertData(child, childSchema, memory, newPath))
+            rv.append(self.convertData(child, childSchema, newPath))
         return rv
 
-    def convertDict(self, dict, schema, memory, path):
+    def convertDict(self, dict, schema, path):
         keySchema = schema.keySchema
         valueSchema = schema.valueSchema
         rv = {}
         for key, value in dict.items():
             # convert the key
             newPath = path + "\nkey: %s" % key
-            newKey = self.convertData(key, keySchema, memory, newPath)
+            newKey = self.convertData(key, keySchema, newPath)
             # convert the value
             newPath = path + "\n{%s} -> %s" % (key, value)
-            newValue = self.convertData(value, valueSchema, memory, newPath)
+            newValue = self.convertData(value, valueSchema, newPath)
             # put it together
             rv[newKey] = newValue
         return rv
@@ -145,15 +143,16 @@ class ConverterBase(object):
         """
 
         retval = []
-        memory = {}
+        self.memory = {}
         for object, schema in self.prepareObjectList(objects):
             path = "%s" % object
-            retval.append(self.convertData(object, schema, memory, path))
+            retval.append(self.convertData(object, schema, path))
+        self.onPostConversion()
         return retval
 
-    def convertObject(self, object, schema, memory, path):
-        if id(object) in memory:
-            return memory[id(object)]
+    def convertObject(self, object, schema, path):
+        if id(object) in self.memory:
+            return self.memory[id(object)]
 
         # NOTE: we can't use the schema variable for anything here because
         # object might be a subclass of the class specified in schema.
@@ -161,12 +160,12 @@ class ConverterBase(object):
 
         objectSchema = self.getObjectSchema(object)
         convertedObject = self.makeNewConvert(objectSchema.classString)
-        memory[id(object)] = convertedObject
+        self.memory[id(object)] = convertedObject
 
         for name, schema in objectSchema.fields:
             data = self.getSourceAttr(object, name)
             newPath = path + "\n%s -> %s" % (name, data)
-            convertedData = self.convertData(data, schema, memory, newPath)
+            convertedData = self.convertData(data, schema, newPath)
             self.setTargetAttr(convertedObject, name, convertedData)
         return convertedObject
 
@@ -202,6 +201,11 @@ Path:
 Schema: %s
 Reason: %s""" % (object, path, schema, reason)
         raise schema_mod.ValidationError(message)
+
+    def onPostConversion(self):
+        """Called when the conversion process is done, just before
+        we return the result."""
+        pass
 
     # methods below here *must* be implemented by subclasses
     def getObjectSchema(self, object):
@@ -287,6 +291,11 @@ Path:
 Schema: %s
 Reason: %s""" % (object, path, schema, reason)
         raise schema.ValidationWarning(message)
+
+    def onPostConversion(self):
+        for object in self.memory.values():
+            if hasattr(object, 'onRestore'):
+                object.onRestore()
 
 def saveObjectList(objects, objectSchemas=None):
     """Transform a list of objects into something that we can save to disk.
