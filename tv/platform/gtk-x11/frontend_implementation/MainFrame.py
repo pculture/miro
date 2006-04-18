@@ -137,6 +137,9 @@ class MainFrame:
             else:
                 self.windowChanger.changeState(self.windowChanger.BROWSING)
 
+    def getDisplay(self, area):
+        return self.selectedDisplays[area]
+
     @gtkMethod
     def about(self):
         if (self.aboutWidget is None):

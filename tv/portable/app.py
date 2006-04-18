@@ -57,7 +57,6 @@ class PlaybackControllerBase:
     
     def __init__(self):
         self.currentPlaylist = None
-        self.currentDisplay = None
 
     def configure(self, view, firstItemId=None):
         self.currentPlaylist = Playlist(view, firstItemId)
@@ -66,7 +65,6 @@ class PlaybackControllerBase:
         if self.currentPlaylist is not None:
             self.currentPlaylist.reset()
             self.currentPlaylist = None
-        self.currentDisplay = None
     
     def enterPlayback(self):
         if self.currentPlaylist is not None:
@@ -81,7 +79,8 @@ class PlaybackControllerBase:
     
     def playPause(self):
         videoDisplay = Controller.instance.videoDisplay
-        if self.currentDisplay == videoDisplay:
+        frame = Controller.instance.frame
+        if frame.getDisplay(frame.mainDisplay) == videoDisplay:
             videoDisplay.playPause()
         else:
             self.enterPlayback()
@@ -94,7 +93,8 @@ class PlaybackControllerBase:
                 if videoDisplay.canPlayItem(anItem):
                     self.playItemInternally(videoDisplay, anItem)
                 else:
-                    if self.currentDisplay is videoDisplay:
+                    frame = Controller.instance.frame
+                    if frame.getDisplay(frame.mainDisplay) is videoDisplay:
                         if videoDisplay.isFullScreen:
                             videoDisplay.exitFullScreen()
                         videoDisplay.stop()
@@ -104,29 +104,29 @@ class PlaybackControllerBase:
             self.stop()
 
     def playItemInternally(self, videoDisplay, anItem):
-        if self.currentDisplay is not videoDisplay:
-            self.currentDisplay = videoDisplay
-            frame = Controller.instance.frame
+        frame = Controller.instance.frame
+        if frame.getDisplay(frame.mainDisplay) is not videoDisplay:
             frame.selectDisplay(videoDisplay, frame.mainDisplay)
         videoDisplay.selectItem(anItem)
         videoDisplay.play()
 
     def playItemExternally(self, itemID):
         anItem = mapToPlaylistItem(db.getObjectByID(int(itemID)))
-        self.currentDisplay = TemplateDisplay('external-playback-continue', anItem.getInfoMap(), Controller.instance)
+        newDisplay = TemplateDisplay('external-playback-continue', anItem.getInfoMap(), Controller.instance)
         frame = Controller.instance.frame
-        frame.selectDisplay(self.currentDisplay, frame.mainDisplay)
+        frame.selectDisplay(newDisplay, frame.mainDisplay)
         return anItem
         
     def scheduleExternalPlayback(self, anItem):
         Controller.instance.videoDisplay.stopOnDeselect = False
-        self.currentDisplay = TemplateDisplay('external-playback', anItem.getInfoMap(), Controller.instance)
+        newDisplay = TemplateDisplay('external-playback', anItem.getInfoMap(), Controller.instance)
         frame = Controller.instance.frame
-        frame.selectDisplay(self.currentDisplay, frame.mainDisplay)
+        frame.selectDisplay(newDisplay, frame.mainDisplay)
 
     def stop(self, switchDisplay=True):
+        frame = Controller.instance.frame
         videoDisplay = Controller.instance.videoDisplay
-        if self.currentDisplay == videoDisplay:
+        if frame.getDisplay(frame.mainDisplay) == videoDisplay:
             videoDisplay.stop()
         self.exitPlayback(switchDisplay)
 
@@ -136,10 +136,12 @@ class PlaybackControllerBase:
             if direction == 1:
                 nextItem = self.currentPlaylist.getNext()
             else:
-                if not hasattr(self.currentDisplay, 'getCurrentTime') or self.currentDisplay.getCurrentTime() <= 1.0:
+                frame = Controller.instance.frame
+                currentDisplay = frame.getDisplay(frame.mainDisplay)
+                if not hasattr(currentDisplay, 'getCurrentTime') or currentDisplay.getCurrentTime() <= 1.0:
                     nextItem = self.currentPlaylist.getPrev()
                 else:
-                    self.currentDisplay.goToBeginningOfMovie()
+                    currentDisplay.goToBeginningOfMovie()
                     return self.currentPlaylist.cur()
         if nextItem is None:
             self.stop()
@@ -1137,7 +1139,7 @@ class GUIActionHandler:
         url = feed.normalizeFeedURL(url)
         db.beginUpdate()
         try:
-            feedView = globalViewList['feeds'].filterWithIndex(globalIndexList['feedsByURL'],url)
+            feedView = globalViewList['feeds'].filterWithIndex(globalIndexList['feedsByURL'], url)
             exists = feedView.len() > 0
 
             if not exists:
@@ -1163,7 +1165,7 @@ class GUIActionHandler:
         db.beginUpdate()
         try:
             # Find the feed
-            feedView = globalViewList['feeds'].filterWithIndex(globalIndexList['feedsByURL'],url)
+            feedView = globalViewList['feeds'].filterWithIndex(globalIndexList['feedsByURL'], url)
             exists = feedView.len() > 0
             if not exists:
                 print "selectFeed: no such feed: %s" % url
