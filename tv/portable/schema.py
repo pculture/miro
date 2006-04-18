@@ -1,6 +1,5 @@
 """The schema module is responsible for defining what data in the database
-gets stored on disk.  Doing the actual reading/writing of the data and
-validating the data as we read/write.
+gets stored on disk.  
 
 The goals of this modules are:
 
@@ -8,20 +7,12 @@ The goals of this modules are:
 * Validating that all data we write can be read back in
 * Making upgrades of the database schema as easy as possible
 
-Some notes:
-* We avoid ever writing a DDB class to disk.  This allows us to change our
-classes without concern to how it will affect old databases.  For instance,
-we can delete classes and not have to worry about users with old databases
-that reference those classes.  Instead of class names, we write a string that
-represents the classes ("feed" instead of feed.Feed).  If we decide to delete
-the feed class, the upgrade code can handle upgrading old feed objects.
-* See the bottom of this file for the current database schema
-
 Module-level variables:
     objectSchemas -- Schemas to use with the current database.
     VERISON -- Current schema version.  If you change the schema you must bump
     this number and add a function in the dbupgrade module.
 
+Go to the bottom of this file for the current database schema.
 """
 
 import cPickle

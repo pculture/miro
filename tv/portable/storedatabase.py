@@ -1,3 +1,29 @@
+"""This module does the reading/writing of our database to/from disk.  It
+works with the schema module to validate the data that we read/write and with
+the upgradedatabase module to upgrade old database storages.
+
+We avoid ever writing a DDB class to disk.  This allows us to change our
+classes without concern to how it will affect old databases.  For instance, we
+can delete classes and not have to worry about users with old databases that
+reference those classes.  Instead of class names, we write a string that
+represents the classes ("feed" instead of feed.Feed).  If we decide to delete
+the feed class, the upgrade code can handle upgrading old feed objects.
+
+To achieve the above, before we save the DDBObjects to disk, we convert them
+to SavableObjects.  A SavableObject is a really simple storage container that
+remembers the class it was saved from and selected attributes of the object
+(one for each item in the object's schema).  When we restore DDBObjects, we
+need to convert the other way.
+
+Right now we implement the conversion/unconversion using 2 classes
+(SavableConverter and SavableUnconverter) that share a base classes
+(ConverterBase).  Converter base handles walking the object tree, which is
+most of the actual conversion.  The SavableConverter and SavableUnconverter
+override some methods which are specific to the conversion/unconversion
+process.
+
+"""
+
 import cPickle
 
 import schema as schema_mod
