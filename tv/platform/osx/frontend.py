@@ -267,6 +267,9 @@ class MainFrame:
         self.controller.selectDisplay(display, area)
         del pool
 
+    def getDisplay(self, area):
+        return area.hostedDisplay
+
     # Internal use: return an estimate of the size of a given display area as
     # a Cocoa frame object.
     def getDisplaySizeHint(self, area):
