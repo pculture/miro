@@ -58,13 +58,16 @@ class MainWindowChanger(object):
 
     def updateFullScreenButton(self):
         fullscreenImage = self.widgetTree['fullscreen-image']
-        if self.isFullScreen and self.currentState == self.VIDEO:
-            pixbuf = fullscreenImage.render_icon(gtk.STOCK_LEAVE_FULLSCREEN,
-                    gtk.ICON_SIZE_LARGE_TOOLBAR)
-        else:
-            pixbuf = fullscreenImage.render_icon(gtk.STOCK_FULLSCREEN,
-                    gtk.ICON_SIZE_LARGE_TOOLBAR)
-        fullscreenImage.set_from_pixbuf(pixbuf)
+        try:
+            if self.isFullScreen and self.currentState == self.VIDEO:
+                pixbuf = fullscreenImage.render_icon(gtk.STOCK_LEAVE_FULLSCREEN,
+                                                     gtk.ICON_SIZE_LARGE_TOOLBAR)
+            else:
+                pixbuf = fullscreenImage.render_icon(gtk.STOCK_FULLSCREEN,
+                                                     gtk.ICON_SIZE_LARGE_TOOLBAR)
+            fullscreenImage.set_from_pixbuf(pixbuf)
+        except:
+            pass
 
     def setVideoWidgetsSensitive(self, sensitive):
         """Enable/disable widgets that only make sense to use when we're

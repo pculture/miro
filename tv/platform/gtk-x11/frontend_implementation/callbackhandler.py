@@ -60,10 +60,15 @@ class CallbackHandler(object):
         actionGroups["ChannelSelected"] = gtk.ActionGroup("ChannelSelected")
         actionGroups["Ubiquitous"] = gtk.ActionGroup("Ubiquitous")
 
+        try:
+            fullscreen = gtk.STOCK_FULLSCREEN
+        except:
+            fullscreen = None
+
         actionGroups["VideoPlayback"].add_actions ([
             ('SaveVideo', gtk.STOCK_SAVE, '_Save Video', '<Control>s', 'Save this video', self.on_save_video_activate),
             ('PlayPauseVideo', gtk.STOCK_MEDIA_PLAY, '_Play / Pause', 'p', None, self.on_play_pause_button_clicked),
-            ('Fullscreen', gtk.STOCK_FULLSCREEN, '_Fullscreen', 'f', None, self.on_fullscreen_button_clicked)
+            ('Fullscreen', fullscreen, '_Fullscreen', 'f', None, self.on_fullscreen_button_clicked)
             ])
         actionGroups["ChannelSelected"].add_actions ([
             ('RemoveChannel', None, "_Remove Channel", None, None, self.on_remove_channel_activate),
