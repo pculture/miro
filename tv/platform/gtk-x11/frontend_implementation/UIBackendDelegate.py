@@ -196,18 +196,16 @@ class UIBackendDelegate:
         gtk_threads.Leave()
 
     def launchDownloadDaemon(self, oldpid, env):
-        print "*** LAUNCHING**** "
+#        print "*** LAUNCHING**** "
         # Use UNIX style kill
         if oldpid is not None:
-            print "KILLING old download daemon with pid: %r" % oldpid
+#            print "KILLING old download daemon with pid: %r" % oldpid
+            # Old daemon isn't necessarily running.
             try:
                 os.kill(oldpid, signal.SIGTERM)
                 time.sleep(1)
                 os.kill(oldpid, signal.SIGKILL)
             except:
-                import traceback
-                print "ERROR killing old daemon"
-                traceback.print_exc()
                 pass
         pid = os.fork()
         if pid == 0:
@@ -228,5 +226,5 @@ class UIBackendDelegate:
             os.execlp("python2.4", "python2.4", script)
         else:
             # parent processes, nothing to do here
-            print "spawned download daemon (PID %d)" % pid
+#            print "spawned download daemon (PID %d)" % pid
             pass
