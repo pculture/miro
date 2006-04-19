@@ -67,7 +67,7 @@ class MainloopQueue:
         self.queue.put((callback, args, kargs))
         self.idle_running_lock.acquire()
         if (self.idle_running == 0):
-            gtk.idle_add(self._idle)
+            gobject.idle_add(self._idle)
             self.idle_running = 1
         self.idle_running_lock.release()
 
