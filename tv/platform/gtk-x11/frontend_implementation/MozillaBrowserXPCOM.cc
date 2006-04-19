@@ -87,8 +87,8 @@ nsresult CreateNode(nsIDOMDocument *document, nsString xml,
 nsresult addItemBefore(GtkMozEmbed *gtkembed, char *newXml, char *id)
 {
     nsresult rv;
-    nsString xmlConverted = NS_ConvertASCIItoUTF16(nsDependentCString(newXml));
-    nsString idConverted = NS_ConvertASCIItoUTF16(nsDependentCString(id));
+    nsString xmlConverted = NS_ConvertUTF8toUTF16(nsDependentCString(newXml));
+    nsString idConverted = NS_ConvertUTF8toUTF16(nsDependentCString(id));
     nsCOMPtr<nsIDOMDocument> domDocument;
     GetDocument(gtkembed, domDocument);
     // Get the node
@@ -114,8 +114,8 @@ nsresult addItemBefore(GtkMozEmbed *gtkembed, char *newXml, char *id)
 nsresult addItemAtEnd(GtkMozEmbed *gtkembed, char *newXml, char *id)
 {
     nsresult rv;
-    nsString xmlConverted = NS_ConvertASCIItoUTF16(nsDependentCString(newXml));
-    nsString idConverted = NS_ConvertASCIItoUTF16(nsDependentCString(id));
+    nsString xmlConverted = NS_ConvertUTF8toUTF16(nsDependentCString(newXml));
+    nsString idConverted = NS_ConvertUTF8toUTF16(nsDependentCString(id));
     nsCOMPtr<nsIDOMDocument> domDocument;
     GetDocument(gtkembed, domDocument);
     // Get the node
@@ -137,8 +137,8 @@ nsresult addItemAtEnd(GtkMozEmbed *gtkembed, char *newXml, char *id)
 nsresult changeItem(GtkMozEmbed *gtkembed, char *id, char *newXml)
 {
     nsresult rv;
-    nsString xmlConverted = NS_ConvertASCIItoUTF16(nsDependentCString(newXml));
-    nsString idConverted = NS_ConvertASCIItoUTF16(nsDependentCString(id));
+    nsString xmlConverted = NS_ConvertUTF8toUTF16(nsDependentCString(newXml));
+    nsString idConverted = NS_ConvertUTF8toUTF16(nsDependentCString(id));
     nsCOMPtr<nsIDOMDocument> domDocument;
     GetDocument(gtkembed, domDocument);
     // Get the node to change
@@ -170,7 +170,7 @@ nsresult changeItem(GtkMozEmbed *gtkembed, char *id, char *newXml)
 nsresult removeItem(GtkMozEmbed *gtkembed, char *id)
 {
     nsresult rv;
-    nsString idConverted = NS_ConvertASCIItoUTF16(nsDependentCString(id));
+    nsString idConverted = NS_ConvertUTF8toUTF16(nsDependentCString(id));
     nsCOMPtr<nsIDOMDocument> domDocument;
     GetDocument(gtkembed, domDocument);
     // Get the node
@@ -194,9 +194,9 @@ nsresult setElementStyle(GtkMozEmbed *gtkembed, char *id, char *name,
         char *value)
 {
     nsresult rv;
-    nsString idConverted = NS_ConvertASCIItoUTF16(nsDependentCString(id));
-    nsString nameConverted = NS_ConvertASCIItoUTF16(nsDependentCString(name));
-    nsString valueConverted = NS_ConvertASCIItoUTF16(nsDependentCString(value));
+    nsString idConverted = NS_ConvertUTF8toUTF16(nsDependentCString(id));
+    nsString nameConverted = NS_ConvertUTF8toUTF16(nsDependentCString(name));
+    nsString valueConverted = NS_ConvertUTF8toUTF16(nsDependentCString(value));
 
     nsCOMPtr<nsIDOMDocument> domDocument;
     GetDocument(gtkembed, domDocument);
@@ -245,7 +245,7 @@ char* getContextMenu(void* domEvent)
     if (!element) return NULL;
     // We need to pass in a nsString to GetAttribute().  Create one now, so we
     // only need to do the conversion once.
-    nsString contextMenuString = NS_ConvertASCIItoUTF16(
+    nsString contextMenuString = NS_ConvertUTF8toUTF16(
             nsDependentCString("t:contextMenu"));
     while(1) {
         // Check the current element for a context menu attribute
