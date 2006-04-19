@@ -9,7 +9,8 @@ import frontend
 import config
 import resource
 import MainFrame
-
+from gettext import gettext as _
+ 
 def AttachBoolean (widget, descriptor, sensitive_widget = None):
     def BoolChanged (widget):
          config.set (descriptor, widget.get_active())
@@ -66,23 +67,23 @@ class CallbackHandler(object):
             fullscreen = None
 
         actionGroups["VideoPlayback"].add_actions ([
-            ('SaveVideo', gtk.STOCK_SAVE, '_Save Video', '<Control>s', 'Save this video', self.on_save_video_activate),
-            ('PlayPauseVideo', gtk.STOCK_MEDIA_PLAY, '_Play / Pause', 'p', None, self.on_play_pause_button_clicked),
-            ('Fullscreen', fullscreen, '_Fullscreen', 'f', None, self.on_fullscreen_button_clicked)
+            ('SaveVideo', gtk.STOCK_SAVE, _('_Save Video'), '<Control>s', _('Save this video'), self.on_save_video_activate),
+            ('PlayPauseVideo', gtk.STOCK_MEDIA_PLAY, _('_Play / Pause'), 'p', None, self.on_play_pause_button_clicked),
+            ('Fullscreen', fullscreen, _('_Fullscreen'), 'f', None, self.on_fullscreen_button_clicked)
             ])
         actionGroups["ChannelSelected"].add_actions ([
-            ('RemoveChannel', None, "_Remove Channel", None, None, self.on_remove_channel_activate),
-            ('UpdateChannel', None, "_Update Channel", None, None, self.on_update_channel_activate),
-            ('CopyChannelURL', None, "Copy Channel _Link", None, None, self.on_copy_channel_link_activate)
+            ('RemoveChannel', None, _("_Remove Channel"), None, None, self.on_remove_channel_activate),
+            ('UpdateChannel', None, _("_Update Channel"), None, None, self.on_update_channel_activate),
+            ('CopyChannelURL', None, _("Copy Channel _Link"), None, None, self.on_copy_channel_link_activate)
             ])
         actionGroups["Ubiquitous"].add_actions ([
-            ('Video', None, '_Video'),
-            ('EditPreferences', gtk.STOCK_PREFERENCES, 'P_references', None, None, self.on_preference),
-            ('Quit', gtk.STOCK_QUIT, '_Quit', '<Control>q', 'Quit the Program', self.on_quit_activate),
-            ('Channel', None, '_Channel'),
-            ('AddChannel', None, "_Add Channel", None, None, self.on_add_channel_button_clicked),
-            ('UpdateAllChannels', None, "U_pdate All Channels", None, None, self.on_update_all_channels_activate),
-            ('Help', None, '_Help'),
+            ('Video', None, _('_Video')),
+            ('EditPreferences', gtk.STOCK_PREFERENCES, _('P_references'), None, None, self.on_preference),
+            ('Quit', gtk.STOCK_QUIT, _('_Quit'), '<Control>q', _('Quit the Program'), self.on_quit_activate),
+            ('Channel', None, _('_Channel')),
+            ('AddChannel', None, _("_Add Channel"), None, None, self.on_add_channel_button_clicked),
+            ('UpdateAllChannels', None, _("U_pdate All Channels"), None, None, self.on_update_all_channels_activate),
+            ('Help', None, _('_Help')),
             ('About', gtk.STOCK_ABOUT, None, None, None, self.on_about_clicked)
             ])
         return actionGroups
@@ -210,7 +211,7 @@ class CallbackHandler(object):
 
     def on_add_channel_button_clicked(self, event = None):
         # get our add channel dialog
-        widgetTree = MainFrame.WidgetTree(resource.path('democracy.glade'), 'add-channel-dialog')
+        widgetTree = MainFrame.WidgetTree(resource.path('democracy.glade'), 'add-channel-dialog', 'democracyplayer')
         dialog = widgetTree['add-channel-dialog']
         mainWindow = self.mainFrame.widgetTree['main-window']
         dialog.set_transient_for(mainWindow)
@@ -225,7 +226,7 @@ class CallbackHandler(object):
 
     def on_preference(self, event = None):
         # get our add channel dialog
-        widgetTree = MainFrame.WidgetTree(resource.path('democracy.glade'), 'dialog-preferences')
+        widgetTree = MainFrame.WidgetTree(resource.path('democracy.glade'), 'dialog-preferences', 'democracyplayer')
         dialog = widgetTree['dialog-preferences']
         mainWindow = self.mainFrame.widgetTree['main-window']
         dialog.set_transient_for(mainWindow)

@@ -24,6 +24,7 @@ import distutils.command.install_data
 import os
 import subprocess
 import sys
+import re
 
 from Pyrex.Distutils import build_ext
 
@@ -216,6 +217,15 @@ class install_data (distutils.command.install_data.install_data):
         expand_file_contents(dest, APP_REVISION=svnversion,
                 APP_PLATFORM='gtk-x11')
         self.outfiles.append(dest)
+
+        for lang in ():
+            dest = '/usr/share/locale/%s/LC_MESSAGES/democracyplayer.mo' % lang
+            if self.root:
+                dest = change_root(self.root, dest)
+            source = os.path.join (resource_dir, "locale", "%s.mo" % lang)
+            self.mkpath(os.path.dirname(dest))
+            self.copy_file(source, dest)
+            self.outfiles.append(dest)
 
     def run(self):
         distutils.command.install_data.install_data.run(self)

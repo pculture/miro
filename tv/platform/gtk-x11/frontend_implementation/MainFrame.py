@@ -61,7 +61,7 @@ class MainFrame:
     @gtkAsyncMethod
     def _gtkInit(self):
         # Create the widget tree, and remember important widgets
-        self.widgetTree = WidgetTree(resource.path('democracy.glade'), 'main-window')
+        self.widgetTree = WidgetTree(resource.path('democracy.glade'), 'main-window', 'democracyplayer')
         self.displayBoxes = {
             self.mainDisplay : self.widgetTree['main-box'],
             self.channelsDisplay : self.widgetTree['channels-box'],
