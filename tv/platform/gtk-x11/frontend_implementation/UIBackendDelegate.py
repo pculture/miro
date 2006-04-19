@@ -8,43 +8,14 @@ import threading
 import app
 
 from frontend import *
+from frontend_implementation.gtk_queue import gtkSyncMethod
 
 ###############################################################################
 #### 'Delegate' objects for asynchronously asking the user questions       ####
 ###############################################################################
 
-class GtkThreads:
-    def __init__ (self):
-        self.locked_thread = None
-        self.locked_thread_lock = threading.Lock()
-        self.lock_count = 0
-
-    def Enter (self):
-        self.locked_thread_lock.acquire()
-        need_enter = app.Controller.instance.main_thread != threading.currentThread() and \
-                     self.locked_thread != threading.currentThread()
-        self.locked_thread_lock.release()
-        if need_enter:
-            gtk.threads_enter()
-            self.locked_thread_lock.acquire()
-            self.locked_thread = threading.currentThread
-            self.locked_thread_lock.release()
-        self.lock_count = self.lock_count + 1
-    
-    
-    def Leave (self):
-        self.lock_count = self.lock_count - 1
-        if (self.lock_count == 0):
-            self.locked_thread_lock.acquire()
-            self.locked_thread = None
-            self.locked_thread_lock.release()
-            if app.Controller.instance.main_thread != threading.currentThread():
-                gtk.threads_leave()
-
-gtk_threads = GtkThreads()
-
+@gtkSyncMethod
 def ShowDialog (title, message, buttons, default = gtk.RESPONSE_CANCEL):
-    gtk_threads.Enter()
     dialog = gtk.Dialog(title, None, (), buttons)
     label = gtk.Label()
     alignment = gtk.Alignment()
@@ -55,11 +26,11 @@ def ShowDialog (title, message, buttons, default = gtk.RESPONSE_CANCEL):
     dialog.set_default_response (default)
     response = dialog.run()
     dialog.destroy()
-    gtk_threads.Leave()
     return response
 
 class UIBackendDelegate:
 
+    @gtkSyncMethod
     def getHTTPAuth(self, url, domain, prefillUser = None, prefillPassword = None):
         """Ask the user for HTTP login information for a location, identified
         to the user by its URL and the domain string provided by the
@@ -68,7 +39,6 @@ class UIBackendDelegate:
         information, it's returned as a (user, password)
         tuple. Otherwise, if the user presses Cancel or similar, None
         is returned."""
-        gtk_threads.Enter()
         summary = "Channel requires authentication"
         message = "%s requires a username and password for \"%s\"." % (url, domain)
         dialog = gtk.Dialog(summary, None, (), (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OK, gtk.RESPONSE_OK))
@@ -109,7 +79,6 @@ class UIBackendDelegate:
         if (response == gtk.RESPONSE_OK):
             retval = (user.get_text(), password.get_text())
         dialog.destroy()
-        gtk_threads.Leave()
         return retval
 
     # Called from another thread.
@@ -159,13 +128,12 @@ class UIBackendDelegate:
         else:
             return False
 
+    @gtkSyncMethod
     def openExternalURL(self, url):
         # We could use Python's webbrowser.open() here, but
         # unfortunately, it doesn't have the same semantics under UNIX
         # as under other OSes. Sometimes it blocks, sometimes it doesn't.
-        gtk_threads.Enter()
         gnomevfs.url_show(url)
-        gtk_threads.Leave()
 
     def updateAvailableItemsCountFeedback(self, count):
         # Inform the user in a way or another that newly available items are
@@ -189,11 +157,10 @@ class UIBackendDelegate:
         ShowDialog (summary, message, buttons)
         return True
 
+    @gtkSyncMethod
     def copyTextToClipboard(self, text):
-        gtk_threads.Enter()
         gtk.Clipboard(selection="CLIPBOARD").set_text(text)
         gtk.Clipboard(selection="PRIMARY").set_text(text)
-        gtk_threads.Leave()
 
     def launchDownloadDaemon(self, oldpid, env):
 #        print "*** LAUNCHING**** "

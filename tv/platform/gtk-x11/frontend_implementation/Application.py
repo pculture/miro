@@ -2,6 +2,7 @@ import gtk
 
 import frontend
 import threading
+from frontend_implementation.gtk_queue import queue
 
 ###############################################################################
 #### Application object                                                    ####
@@ -13,7 +14,7 @@ class Application:
 	print "Application init"
 
     def Run(self):
-        self.main_thread = threading.currentThread()
+        queue.main_thread = threading.currentThread()
         gtk.threads_init()
 	self.onStartup()
         gtk.main()

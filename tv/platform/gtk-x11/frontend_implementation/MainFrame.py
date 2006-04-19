@@ -8,7 +8,7 @@ import sets
 
 import resource
 from frontend import *
-from frontend_implementation.gtk_queue import gtkMethod
+from frontend_implementation.gtk_queue import gtkAsyncMethod
 from frontend_implementation.VideoDisplay import VideoDisplay
 from frontend_implementation.callbackhandler import CallbackHandler
 from frontend_implementation.mainwindowchanger import MainWindowChanger
@@ -58,7 +58,7 @@ class MainFrame:
         self._gtkInit()
         self.aboutWidget = None
 
-    @gtkMethod
+    @gtkAsyncMethod
     def _gtkInit(self):
         # Create the widget tree, and remember important widgets
         self.widgetTree = WidgetTree(resource.path('democracy.glade'), 'main-window')
@@ -105,7 +105,7 @@ class MainFrame:
 
         self.widgetTree['main-window'].show_all()
 
-    @gtkMethod
+    @gtkAsyncMethod
     def selectDisplay(self, newDisplay, area):
         """Install the provided 'newDisplay' in the requested area"""
 
@@ -140,7 +140,7 @@ class MainFrame:
     def getDisplay(self, area):
         return self.selectedDisplays[area]
 
-    @gtkMethod
+    @gtkAsyncMethod
     def about(self):
         if (self.aboutWidget is None):
             self.aboutWidget = gtk.AboutDialog()
