@@ -26,7 +26,7 @@ class UIBackendDelegate:
         message = "But we'll try our best to grab the files.\n- It may take time to list the videos\n- Descriptions may look funny\n\nPlease contact the publishers of %s and ask if they have a DTV-style channel." % url
         defaultButtonTitle = 'Continue'
         # NEEDS
-        return True
+        raise NotImplementedError
 
     def updateAvailable(self, url):
         """Tell the user that an update is available and ask them if they'd
