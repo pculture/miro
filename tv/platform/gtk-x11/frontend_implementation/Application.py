@@ -16,6 +16,8 @@ class Application:
     def Run(self):
         gtk.threads_init()
 	self.onStartup()
+        import app
+        app.Controller.instance.addAndSelectFeed('http://boingboing.net/')
         gtk.main()
 	self.onShutdown()
 
