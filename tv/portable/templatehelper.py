@@ -6,6 +6,7 @@
 import cPickle #for database.pyx
 
 import gettext
+import inspect
 import shutil
 import re
 import types
@@ -49,10 +50,8 @@ def evalKey(keyString, indata, originalKey = None, cache = False):
                 data = getattr(data, key)
             except:
                 return 'Bad Key'
-            try:
+            if inspect.ismethod(data) or inspect.isfunction(data):
                 data = data()
-            except:
-                pass
     if cache:
         evalCache[keyString] = data
     return data

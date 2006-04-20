@@ -25,8 +25,23 @@ process.
 """
 
 import cPickle
+import os
+import shutil
+import traceback
 
+import config
+import database
+import databasesanity
+import olddatabaseupgrade
+import util
 import schema as schema_mod
+
+# FILEMAGIC should be the first portion of the database file.  After that the
+# file will contain pickle data
+FILEMAGIC = "Democracy Database V1"
+
+class DatabaseError(Exception):
+    pass
 
 # _BootStrapClass is used to as the initial class when we restore an object.
 class _BootStrapClass:
@@ -58,6 +73,10 @@ class ConverterBase(object):
     convertObject method, and adding validation to the convertData method
     (SavableConverter does validation at the begining, SavableUnconverter does
     it at the end).
+
+    Member variables:
+        skipOnRestore -- should we skip calling onRestore() for the restored
+                objects?
     """
 
     def __init__(self, objectSchemas=None):
@@ -67,7 +86,8 @@ class ConverterBase(object):
         """
 
         if objectSchemas is None:
-            objectSchemas = schema.objectSchemas
+            objectSchemas = schema_mod.objectSchemas
+        self.skipOnRestore = False
 
         self.objectSchemaLookup = {}
         self.classesToStrings = {}
@@ -158,7 +178,11 @@ class ConverterBase(object):
         # object might be a subclass of the class specified in schema.
         # Instead we call getObjectSchema() and use the info from there.
 
-        objectSchema = self.getObjectSchema(object)
+        try:
+            objectSchema = self.getObjectSchema(object)
+        except schema_mod.ValidationError, e:
+            self.handleValidationError(e, object, path, schema)
+
         convertedObject = self.makeNewConvert(objectSchema.classString)
         self.memory[id(object)] = convertedObject
 
@@ -243,7 +267,14 @@ class SavableConverter(ConverterBase):
         return rv
 
     def getObjectSchema(self, object):
-        return self.objectSchemaLookup[object.__class__]
+        try:
+            return self.objectSchemaLookup[object.__class__]
+        except KeyError:
+            # object passed schema.validate() because it was a subclass of the 
+            # type we're trying to save, but we don't have an ObjectSchema for
+            # it, so raise ValidationError here.
+            msg = "No ObjectSchema for %s" % object.__class__
+            raise schema_mod.ValidationError(msg)
 
     def preValidate(self, data, schema):
         schema.validate(data)
@@ -293,11 +324,12 @@ Reason: %s""" % (object, path, schema, reason)
         raise schema.ValidationWarning(message)
 
     def onPostConversion(self):
-        for object in self.memory.values():
-            if hasattr(object, 'onRestore'):
-                object.onRestore()
+        if not self.skipOnRestore:
+            for object in self.memory.values():
+                if hasattr(object, 'onRestore'):
+                    object.onRestore()
 
-def saveObjectList(objects, objectSchemas=None):
+def objectsToSavables(objects, objectSchemas=None):
     """Transform a list of objects into something that we can save to disk.
     This means converting any DDBObjects into SavebleObjects.
     """
@@ -305,22 +337,35 @@ def saveObjectList(objects, objectSchemas=None):
     saver = SavableConverter(objectSchemas)
     return saver.convertObjectList(objects)
 
-def restoreObjectList(savedObjects, objectSchemas=None):
+def savablesToObjects(savedObjects, objectSchemas=None, skipOnRestore=False):
+    """Reverses the work of objectsToSavables"""
+
     restorer = SavableUnconverter(objectSchemas)
     restorer.objectSchemas = objectSchemas
+    restorer.skipOnRestore = skipOnRestore
     return restorer.convertObjectList(savedObjects)
 
-def saveDatabase(objects, pathname, objectSchemas=None):
-    savableObjects = saveObjectList(objects, objectSchemas)
-    toPickle = (schema_mod.VERSION, savableObjects)
+def saveObjectList(objects, pathname, objectSchemas=None, version=None):
+    """Save a list of objects to disk."""
+
+    if version is None:
+        version = schema_mod.VERSION
+    savableObjects = objectsToSavables(objects, objectSchemas)
+    toPickle = (version, savableObjects)
     f = open(pathname, 'w')
+    f.write(FILEMAGIC)
     try:
         cPickle.dump(toPickle, f)
     finally:
         f.close()
 
-def restoreDatabase(pathname, objectSchemas=None):
+def restoreObjectList(pathname, objectSchemas=None, skipOnRestore=False):
+    """Restore a list of objects saved with saveObjectList."""
+
     f = open(pathname, 'r')
+    if f.read(len(FILEMAGIC)) != FILEMAGIC:
+        raise DatabaseError("%s doesn't seem to be a democracy database" %
+                pathname)
     try:
         version, savedObjects = cPickle.load(f)
     finally:
@@ -328,5 +373,61 @@ def restoreDatabase(pathname, objectSchemas=None):
 
     # should do upgrade stuff here
 
-    return restoreObjectList(savedObjects, objectSchemas)
+    return savablesToObjects(savedObjects, objectSchemas, skipOnRestore)
 
+def saveDatabase(db=None, pathname=None):
+    """Save a database object."""
+
+    if db is None:
+        db = database.defaultDatabase
+    if pathname is None:
+        pathname = config.get(config.DB_PATHNAME)
+
+    pathname = os.path.expanduser(pathname)
+    try:
+        db.beginRead()
+        try:
+            databasesanity.checkSanity(db.objects)
+            objectsToSave = []
+            for o in db.objects:
+                objectsToSave.append(o[0])
+            saveObjectList(objectsToSave, pathname)
+        finally:
+            db.endRead()
+    except:
+        util.failedExn("While saving database")
+    else:
+        shutil.copyfile(pathname, pathname + '.bak')
+
+def restoreDatabase(db=None, pathname=None, skipOnRestore=False,
+        convertOnFail=True):
+    """Restore a database object."""
+
+    if db is None:
+        db = database.defaultDatabase
+    if pathname is None:
+        pathname = config.get(config.DB_PATHNAME)
+
+    pathname = os.path.expanduser(pathname)
+    if not os.path.exists(pathname):
+        return
+
+    try:
+        objects = restoreObjectList(pathname, skipOnRestore=skipOnRestore)
+    except DatabaseError:
+        if convertOnFail:
+            print "trying to convert database from old version"
+            print "original traceback is:"
+            traceback.print_exc()
+            olddatabaseupgrade.convertOldDatabase(pathname)
+            objects = restoreObjectList(pathname, skipOnRestore=skipOnRestore)
+            print "*** Conversion Successfull ***"
+        else:
+            raise
+    try:
+        databasesanity.checkSanity(objects)
+    except databasesanity.DatabaseInsaneError, e:
+        util.failedExn("When restoring database", e)
+        # if the database fails the sanity check, try to restore it anyway.
+        # It's better than notheing
+    db.restoreFromObjectList(objects)

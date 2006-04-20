@@ -17,6 +17,7 @@ Go to the bottom of this file for the current database schema.
 
 import cPickle
 import datetime
+import time
 from types import NoneType
 
 class ValidationError(Exception):
@@ -58,15 +59,17 @@ class SchemaItem(object):
     def validateType(self, data, correctType):
         """Helper function that many subclasses use"""
         if data is not None and not isinstance(data, correctType):
-            raise ValidationError("%r is not a %s" % (data, correctType))
+            raise ValidationError("%r (type: %s) is not a %s" % 
+                    (data, type(data), correctType))
 
     def validateTypes(self, data, possibleTypes):
         if data is None:
             return
-        for type in possibleTypes:
-            if isinstance(data, type):
+        for t in possibleTypes:
+            if isinstance(data, t):
                 return
-        raise ValidationError("%r is not any of: %s" % (data, possibleTypes))
+        raise ValidationError("%r (type: %s) is not any of: %s" % 
+                (data, type(data), possibleTypes))
 
 class SchemaSimpleItem(SchemaItem):
     """Base class for SchemaItems for simple python types."""
@@ -117,21 +120,34 @@ class SchemaDict(SchemaItem):
         super(SchemaDict, self).validate(data)
         self.validateType(data, dict)
 
-class SchemaSimpleValue(SchemaItem):
-    """Accepts mixed types, but it must be a built in python object, currently
-    allow are bools, ints, longs, floats, strings, unicode and None.
+class SchemaSimpleContainer(SchemaSimpleItem):
+    """Allows nested dicts, lists and tuples, however the only thing they can
+    store are simple objects.  This currently includes bools, ints, longs,
+    floats, strings, unicode, None, datetime and struct_time objects.
     """
-    type = dict
 
-    def __init__(self, noneOk=True):
-        if not noneOk:
-            raise ValueError("SchemaSimpleValue always accepts None")
-        super(SchemaSimpleValue, self).__init__(noneOk)
+    def recursivelyValidate(self, data):
+        # prevent circular reference problems with lists and dicts
+        if id(data) in self.memory:
+            return
+        else:
+            self.memory.add(id(data))
+
+        if isinstance(data, list) or isinstance(data, tuple):
+            for item in data:
+                self.recursivelyValidate(item)
+        elif isinstance(data, dict):
+            for key, value in data.items():
+                self.recursivelyValidate(key)
+                self.recursivelyValidate(value)
+        else:
+            self.validateTypes(data, [bool, int, long, float, str, unicode,
+                    NoneType, datetime.datetime, time.struct_time])
 
     def validate(self, data):
-        super(SchemaSimpleValue, self).validate(data)
-        self.validateTypes(data, [bool, int, long, float, str, unicode,
-                NoneType])
+        super(SchemaSimpleContainer, self).validate(data)
+        self.memory = set()
+        self.recursivelyValidate(data)
 
 class SchemaObject(SchemaItem):
     def __init__(self, klass, noneOk=False):
@@ -157,15 +173,15 @@ class ObjectSchema(object):
 
 from database import DDBObject
 from downloader import RemoteDownloader, HTTPAuthPassword
-from feed import Feed, FeedImpl, RSSFeedImpl
+from feed import Feed, FeedImpl, RSSFeedImpl, ScraperFeedImpl
 from feed import SearchFeedImpl, DirectoryFeedImpl, SearchDownloadsFeedImpl
 from folder import Folder
 from guide import ChannelGuide
-from item import Item
+from item import Item, FileItem
 
 class DDBObjectSchema(ObjectSchema):
     klass = DDBObject
-    classString = 'DDBObject'
+    classString = 'ddb-object'
     fields = [
         ('id', SchemaInt())
     ]
@@ -182,11 +198,18 @@ class ItemSchema(DDBObjectSchema):
         ('lastDownloadFailed', SchemaBool()),
         ('pendingManualDL', SchemaBool()),
         ('pendingReason', SchemaString()),
-        ('entry', SchemaDict(SchemaSimpleValue(), SchemaSimpleValue())),
+        ('entry', SchemaSimpleContainer()),
         ('expired', SchemaBool()),
         ('keep', SchemaBool()),
         ('creationTime', SchemaDateTime()),
         ('linkNumber', SchemaInt(noneOk=True)),
+    ]
+
+class FileItemSchema(ItemSchema):
+    klass = FileItem
+    classString = 'file-item'
+    fields = ItemSchema.fields + [
+        ('filename', SchemaString()),
     ]
 
 class FeedSchema(DDBObjectSchema):
@@ -200,10 +223,10 @@ class FeedSchema(DDBObjectSchema):
         ('actualFeed', SchemaObject(FeedImpl)),
     ]
 
-class FeedImplSchema(DDBObjectSchema):
+class FeedImplSchema(ObjectSchema):
     klass = FeedImpl
     classString = 'field-impl'
-    fields = DDBObjectSchema.fields + [
+    fields = [
         ('available', SchemaInt()),
         ('unwatched', SchemaInt()),
         ('url', SchemaString()),
@@ -231,6 +254,15 @@ class RSSFeedImplSchema(FeedImplSchema):
         ('initialHTML', SchemaString(noneOk=True)),
         ('etag', SchemaString(noneOk=True)),
         ('modified', SchemaString(noneOk=True)),
+    ]
+
+class ScraperFeedImplSchema(FeedImplSchema):
+    klass = ScraperFeedImpl
+    classString = 'scraper-feed-impl'
+    fields = FeedImplSchema.fields + [
+        ('initialHTML', SchemaString(noneOk=True)),
+        ('initialCharset', SchemaString(noneOk=True)),
+        ('linkHistory', SchemaSimpleContainer()),
     ]
 
 class SearchFeedImplSchema(FeedImplSchema):
@@ -301,8 +333,9 @@ class ChannelGuideSchema(DDBObjectSchema):
 
 VERSION = 1 
 objectSchemas = [ 
-    DDBObjectSchema, ItemSchema, FeedSchema, FeedImplSchema,
-    RSSFeedImplSchema, SearchFeedImplSchema, DirectoryFeedImplSchema,
-    SearchDownloadsFeedImplSchema, RemoteDownloaderSchema,
-    HTTPAuthPasswordSchema, FolderSchema, ChannelGuideSchema, 
+    DDBObjectSchema, ItemSchema, FileItemSchema, FeedSchema, FeedImplSchema,
+    RSSFeedImplSchema, ScraperFeedImplSchema, SearchFeedImplSchema,
+    DirectoryFeedImplSchema, SearchDownloadsFeedImplSchema,
+    RemoteDownloaderSchema, HTTPAuthPasswordSchema, FolderSchema,
+    ChannelGuideSchema, 
 ]

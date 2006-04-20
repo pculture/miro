@@ -80,28 +80,10 @@ class ChannelGuide(DDBObject):
         self.startLoadsIfNecessary()
 
     ##
-    # Called by pickle during serialization
-    def __getstate__(self):
-        temp = copy(self.__dict__)
-        del temp['cond']
-        del temp['loadedThisSession']
-        return (1,temp)
-
-    ##
     # Called by pickle during deserialization
-    def __setstate__(self,state):
-        (version, data) = state
-
-        if version == 0:
-            self.sawIntro = data['viewed']
-            self.cachedGuideBody = None
-            self.loadedThisSession = False
-            self.cond = threading.Condition()
-        else:
-            assert(version == 1)
-            self.__dict__ = data
-            self.cond = threading.Condition()
-            self.loadedThisSession = False
+    def onRestore(self):
+        self.cond = threading.Condition()
+        self.loadedThisSession = False
 
         # Try to get a fresh version.
         # NEEDS: There's a race between self.update finishing and

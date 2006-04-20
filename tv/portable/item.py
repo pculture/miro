@@ -294,6 +294,12 @@ class Item(DDBObject):
         self.beginRead()
         try:
             if self.entry.has_key('enclosures'):
+                try:
+                    self.entry.enclosures
+                except AttributeError:
+                    print "self.entry.enclosures doesn't work"
+                    print "self.entry['enclosures'] is: "
+                    print self.entry['enclosures']
                 for enc in self.entry.enclosures:
                     if enc.has_key('thumbnail') and enc['thumbnail'].has_key('url'):
                         ret = enc["thumbnail"]["url"]
@@ -863,57 +869,9 @@ class Item(DDBObject):
 
     ##
     # Called by pickle during serialization
-    def __getstate__(self):
-        temp = copy(self.__dict__)
-        temp['dlFactory'] = None
-        return (3,temp)
-
-    ##
-    # Called by pickle during serialization
-    def __setstate__(self,state):
-        (version, data) = state
-        if version == 0:
-            data['pendingManualDL'] = False
-            if not data.has_key('linkNumber'):
-                data['linkNumber'] = 0
-            version += 1
-        if version == 1:
-            data['keep'] = False
-            data['pendingReason'] = ""
-            version += 1
-        if version == 2:
-            data['creationTime'] = datetime.now()
-            version += 1
-        assert(version == 3)
-        data['startingDownload'] = False
-        self.__dict__ = data
-
-        # Older versions of the database allowed Feed Implementations
-        # to act as feeds. If that's the case, change feed attribute
-        # to contain the actual feed.
-        # NOTE: This assumes that the feed object is decoded
-        # before its items. That appears to be generally true
-        if not issubclass(self.feed.__class__, DDBObject):
-            try:
-                self.feed = self.feed.ufeed
-            except:
-                self.__class__ = DropItLikeItsHot
-            if self.__class__ is FileItem:
-                self.__class__ = DropItLikeItsHot
-
+    def onRestore(self):
+        self.startingDownload = False
         self.dlFactory = DownloaderFactory(self)
-
-#Dummy class for removing bogus FileItem instances
-class DropItLikeItsHot:
-    __DropMeLikeItsHot = True
-    def __slurp(self, *args, **kwargs):
-        pass
-    def __getattr__(self, attr):
-        if attr == '__DropMeLikeItsHot':
-            return self.__DropMeLikeItsHot
-        else:
-            print "DTV: WARNING! Attempt to call '%s' on DropItLikeItsHot instance" % attr
-            return self.__slurp
 
 ##
 # An Item that exists as a file, but not as a download

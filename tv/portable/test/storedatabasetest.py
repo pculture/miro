@@ -1,12 +1,16 @@
+from datetime import datetime
 import os
 import tempfile
 import unittest
 
+import database
+import item
+import feed
 import schema
 import storedatabase
 
 # sooo much easier to type...
-from schema import SchemaString, SchemaInt, SchemaFloat
+from schema import SchemaString, SchemaInt, SchemaFloat, SchemaSimpleContainer
 from schema import SchemaList, SchemaDict, SchemaObject
 
 # create a dummy schemma
@@ -32,10 +36,11 @@ class Dog:
         self.owner = owner
 
 class House:
-    def __init__(self, address, color, occupants):
+    def __init__(self, address, color, occupants, stuff=None):
         self.address = address
         self.color = color
         self.occupants = occupants
+        self.stuff = stuff
 
 class PCFProgramer(Human):
     def __init__(self, name, age, meters_tall, friends, position, superpower,
@@ -75,6 +80,7 @@ class HouseSchema(schema.ObjectSchema):
         ('address', SchemaString()),
         ('color', SchemaString()),
         ('occupants', SchemaList(SchemaObject(Human))),
+        ('stuff', SchemaSimpleContainer(noneOk=True)),
     ]
 
 class PCFProgramerSchema(HumanSchema):
@@ -96,10 +102,10 @@ def installDummySchema():
 
 class SchemaTest(unittest.TestCase):
     def setUp(self):
-        unittest.TestCase.setUp(self)
         self.lee = Human("lee", 25, 1.4, [], {'virtual bowling': 212})
         self.joe = Human("joe", 14, 1.4, [self.lee])
-        self.forbesSt = House('45 Forbs St', 'Blue', [self.lee, self.joe])
+        self.forbesSt = House('45 Forbs St', 'Blue', [self.lee, self.joe],
+                {'view': 'pretty', 'next-party': datetime(2005, 4, 5)})
         self.scruffy = Dog('Scruffy', 3, self.lee)
         self.spike = Dog('Spike', 4, owner=None)
         self.db = [ self.lee, self.joe, self.forbesSt, self.scruffy, 
@@ -111,7 +117,6 @@ class SchemaTest(unittest.TestCase):
             os.unlink(self.savePath)
         except OSError:
             pass
-        unittest.TestCase.tearDown(self)
 
     def addSubclassObjects(self):
         self.ben = PCFProgramer('ben', 25, 3.4, [], 'programmer',
@@ -123,11 +128,11 @@ class SchemaTest(unittest.TestCase):
 
 class TestValidation(SchemaTest):
     def assertDbValid(self):
-        storedatabase.saveObjectList(self.db, testObjectSchemas)
+        storedatabase.objectsToSavables(self.db, testObjectSchemas)
 
     def assertDbInvalid(self):
         self.assertRaises(schema.ValidationError,
-                storedatabase.saveObjectList, self.db, testObjectSchemas)
+                storedatabase.objectsToSavables, self.db, testObjectSchemas)
 
     def tesntValidDb(self):
         self.assertDbValid()
@@ -169,26 +174,32 @@ class TestValidation(SchemaTest):
     def testSubclassValidation(self):
         self.addSubclassObjects()
         self.assertDbValid()
+        class HumanSubclassWithoutObjectSchema(Human):
+            pass
+        jimmy = HumanSubclassWithoutObjectSchema("Luc", 23, 3.4, [])
+        self.joe.friends.append(jimmy)
+        self.assertDbInvalid()
 
 class TestSave(SchemaTest):
     def testSimpleCircularReference(self):
         self.lee.friends = [self.joe]
-        self.joe.friends = [self.lee]
-        storedatabase.saveObjectList(self.db, testObjectSchemas)
 
     def testSaveToDisk(self):
-        storedatabase.saveDatabase(self.db, self.savePath, testObjectSchemas)
+        storedatabase.saveObjectList(self.db, self.savePath,
+                testObjectSchemas)
 
     def testExtraObjectsAreIgnored(self):
         class EpherialObject:
             pass
         self.db.append(EpherialObject())
-        storedatabase.saveObjectList(self.db, testObjectSchemas)
+        storedatabase.objectsToSavables(self.db, testObjectSchemas)
 
 class TestRestore(SchemaTest):
     def testSaveThenRestore(self):
-        storedatabase.saveDatabase(self.db, self.savePath, testObjectSchemas)
-        db2 = storedatabase.restoreDatabase(self.savePath, testObjectSchemas)
+        storedatabase.saveObjectList(self.db, self.savePath,
+                testObjectSchemas)
+        db2 = storedatabase.restoreObjectList(self.savePath,
+                testObjectSchemas)
         # check out the humans
         lee2, joe2, forbesSt2, scruffy2, spike2 = db2
         for attr in 'name', 'age', 'meters_tall', 'high_scores':
@@ -199,6 +210,8 @@ class TestRestore(SchemaTest):
         self.assertEquals(forbesSt2.address, '45 Forbs St')
         self.assertEquals(forbesSt2.color, 'Blue')
         self.assertEquals(forbesSt2.occupants, [lee2, joe2])
+        self.assertEquals(forbesSt2.stuff,
+                {'view': 'pretty', 'next-party': datetime(2005, 4, 5)})
         # check out the dogs
         self.assertEquals(scruffy2.name, 'Scruffy')
         self.assertEquals(scruffy2.age, 3)
@@ -209,8 +222,8 @@ class TestRestore(SchemaTest):
 
     def testRestoreSubclasses(self):
         self.addSubclassObjects()
-        storedatabase.saveDatabase(self.db, self.savePath, testObjectSchemas)
-        db2 = storedatabase.restoreDatabase(self.savePath, testObjectSchemas)
+        storedatabase.saveObjectList(self.db, self.savePath, testObjectSchemas)
+        db2 = storedatabase.restoreObjectList(self.savePath, testObjectSchemas)
         lee2, joe2, forbesSt2, scruffy2, spike2, ben2, holmes2 = db2
         for attr in ('name', 'age', 'meters_tall', 'high_scores', 'position',
                 'superpower'):
@@ -222,12 +235,70 @@ class TestRestore(SchemaTest):
     def testOnRestoreCalled(self):
         resto = RestorableHuman('resto', 23, 1.3, [])
         self.db.append(resto)
-        storedatabase.saveDatabase(self.db, self.savePath, testObjectSchemas)
-        db2 = storedatabase.restoreDatabase(self.savePath, testObjectSchemas)
+        storedatabase.saveObjectList(self.db, self.savePath, testObjectSchemas)
+        db2 = storedatabase.restoreObjectList(self.savePath, testObjectSchemas)
         lee2, joe2, forbesSt2, scruffy2, spike2, resto2, = db2
         self.assertEquals(resto2.name, 'resto')
         self.assert_(hasattr(resto2, 'iveBeenRestored'))
         self.assertEquals(resto2.iveBeenRestored, True)
+
+    def testSkipOnRestore(self):
+        resto = RestorableHuman('resto', 23, 1.3, [])
+        self.db.append(resto)
+        storedatabase.saveObjectList(self.db, self.savePath, testObjectSchemas)
+        db2 = storedatabase.restoreObjectList(self.savePath,
+                testObjectSchemas, skipOnRestore=True)
+        lee2, joe2, forbesSt2, scruffy2, spike2, resto2, = db2
+        self.assertEquals(resto2.name, 'resto')
+        self.assert_(not hasattr(resto2, 'iveBeenRestored'))
+
+class TestHighLevelFunctions(unittest.TestCase):
+    def setUp(self):
+        self.database = database.DynamicDatabase()
+        self.savePath = tempfile.mktemp()
+
+        f = feed.Feed("http://feed.uk")
+        i = item.Item(f, {})
+        i2 = item.Item(f, {})
+        f.items = [i, i2]
+        self.objects = [i, i2, f]
+        self.database.restoreFromObjectList(self.objects)
+
+    def tearDown(self):
+        try:
+            os.unlink(self.savePath);
+        except:
+            pass
+
+    def checkDatabaseIsTheSame(self):
+        # We can't directly compare objects, since that would compare their
+        # ids.  As a sanity test, compare that we have the same classes coming
+        # out and we did going in.
+        i = 0
+        for newObject, copy in self.database.objects:
+            self.assertEquals(type(newObject), type(self.objects[i]))
+
+    def saveDatabase(self):
+        storedatabase.saveDatabase(self.database, self.savePath)
+
+    def restoreDatabase(self):
+        storedatabase.restoreDatabase(self.database, self.savePath, 
+                convertOnFail=False)
+
+    def testSaveThenRestore(self):
+        self.saveDatabase()
+        self.restoreDatabase()
+        self.checkDatabaseIsTheSame()
+
+    def testMissingDatabaseRestore(self):
+        # try to restore a database that isn't there.  Make sure we don't try
+        # to do anything to db
+        class CantTouchThis(object):
+            def __setattr__(self, attr, name):
+                raise TypeError("I shouldn't be messed with")
+            def __getattr__(self, attr):
+                raise TypeError("I shouldn't be messed with")
+        storedatabase.restoreDatabase(CantTouchThis(), self.savePath, False)
 
 if __name__ == '__main__':
     unittest.main()

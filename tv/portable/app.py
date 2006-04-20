@@ -7,8 +7,10 @@ import autodler
 import resource
 import template
 import database
+import storedatabase
 import scheduler
 import downloader
+import download_utils
 import autoupdate
 import xhtmltools
 import guide
@@ -418,7 +420,7 @@ class Controller (frontend.Application):
             delegate = self.getBackendDelegate()
             feed.setDelegate(delegate)
             feed.setSortFunc(itemSort)
-            downloader.setDelegate(delegate)
+            download_utils.setDelegate(delegate)
             autoupdate.setDelegate(delegate)
             database.setDelegate(delegate)
 
@@ -426,7 +428,10 @@ class Controller (frontend.Application):
 
             #Restoring
             print "DTV: Restoring database..."
-            db.restore()
+            try:
+                storedatabase.restoreDatabase()
+            except Exception:
+                util.failedExn("While restoring database")
             print "DTV: Recomputing filters..."
             db.recomputeFilters()
 
@@ -529,7 +534,7 @@ class Controller (frontend.Application):
             self.videoDisplay.playbackController = self.playbackController
             self.videoDisplay.setVolume(config.get(config.VOLUME_LEVEL))
 
-            scheduler.ScheduleEvent(300,db.save)
+            scheduler.ScheduleEvent(300, storedatabase.saveDatabase)
 
             scheduler.ScheduleEvent(10, autoupdate.checkForUpdates, False)
             scheduler.ScheduleEvent(86400, autoupdate.checkForUpdates)
@@ -637,7 +642,7 @@ class Controller (frontend.Application):
             # for item in db:
             #    print str(item.__class__.__name__) + " of id "+str(item.getID())
             print "DTV: Saving database..."
-            db.save()
+            storedatabase.saveDatabase()
 
             # FIXME closing BitTorrent is slow and makes the application seem hung...
             print "DTV: Shutting down Downloader..."

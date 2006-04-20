@@ -1,13 +1,14 @@
 import datetime
 import os
 import tempfile
+import time
 import unittest
 
 import schema
 # much easier to type this way..
 from schema import SchemaString, SchemaInt, SchemaFloat, SchemaBool
 from schema import SchemaDateTime, SchemaList, SchemaDict, SchemaObject
-from schema import SchemaSimpleValue, ValidationError
+from schema import SchemaSimpleContainer, ValidationError
 
 class TestValidation(unittest.TestCase):
     def testModuleVariablesDefined(self):
@@ -56,22 +57,35 @@ class TestValidation(unittest.TestCase):
         schemastring.validate("10123")
         schemastring.validate(u"10123")
 
-    def testSimpleValueValidation(self):
-        schemasimple = SchemaSimpleValue()
+    def testSimpleContainerValidation(self):
+        schemasimple = SchemaSimpleContainer()
         schemasimple.validate(True)
-        schemasimple.validate(False)
-        schemasimple.validate(None)
-        schemasimple.validate("Hi")
-        schemasimple.validate(u"Hiya")
-        schemasimple.validate(3)
-        schemasimple.validate(3L)
-        schemasimple.validate(3.1415)
+        schemasimple.validate(1)
+        schemasimple.validate({1: "Ben", "pie": 3.1415})
+        schemasimple.validate([1, 1, "two", "three", 5])
+        schemasimple.validate({'y2k': datetime.datetime(2000, 1, 1),
+                'now': time.localtime()})
+        schemasimple.validate({
+                'fib': (1, 1, "two", "three", 5),
+                'square': (1, 4, "nine", 16),
+                'fact': (1, 2.0, 6, "twenty-four"),
+            })
+        #make sure circular refrences doen't screw it up
+        l = []
+        d = {}
+        l.extend([l, d])
+        d['list'] = l
+        schemasimple.validate(l)
+        schemasimple.validate(d)
+
         class TestObject(object):
             pass
         self.assertRaises(ValidationError, schemasimple.validate,
                 TestObject())
-        self.assertRaises(ValidationError, schemasimple.validate, [])
-        self.assertRaises(ValidationError, schemasimple.validate, {})
+        self.assertRaises(ValidationError, schemasimple.validate,
+                [TestObject()])
+        self.assertRaises(ValidationError, schemasimple.validate, 
+                {'object': TestObject()})
 
     def testListValidation(self):
         schemalist = SchemaList(SchemaInt())

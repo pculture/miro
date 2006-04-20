@@ -10,3 +10,5 @@ from test.templatetest import *
 from test.fasttypestest import *
 from test.schematest import *
 from test.storedatabasetest import *
+from test.olddatabaseupgradetest import *
+from test.databasesanitytest import *

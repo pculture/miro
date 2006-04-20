@@ -41,11 +41,6 @@ from download_utils import grabURL, parseURL, cleanFilename
 defaults = get_defaults('btdownloadheadless')
 defaults.extend((('donated', '', ''),))
 
-# Pass in a connection to the frontend
-def setDelegate(newDelegate):
-    global delegate
-    delegate = newDelegate
-
 class DownloaderError(Exception):
     pass
 
@@ -210,51 +205,21 @@ class Downloader(DDBObject):
         else:
             return "unknown"
 
-    def runDownloader(self, retry = False):
-        pass
-
-    ##
-    # Called by pickle during serialization
-    def __getstate__(self):
-        temp = copy(self.__dict__)
-        temp["thread"] = None
-        return (0,temp)
-
     ##
     # Called by pickle during deserialization
-    def __setstate__(self,state):
-        (version, data) = state
-        assert(version == 0)
-        self.__dict__ = data
+    def onRestore(self):
         self.filename = config.ensureMigratedMoviePath(self.filename)
-        if self.getState() == "downloading":
-            ScheduleEvent(0, lambda :self.runDownloader(retry = True),False)
 
 # Download an item using our separate download process
 # Pass in url, item, and contentType to create
 # Pass in localDownloadData to create from data found in local downloader
 class RemoteDownloader(Downloader):
-    def __init__(self, url = None,item = None,contentType = None,
-                 localDownloadData = None):
-        if localDownloadData is None:
-            self.dlid = "noid"
-            self.contentType = contentType
-            self.eta = 0
-            self.rate = 0
-            Downloader.__init__(self,url,item)
-        else:
-            self.__dict__ = localDownloadData
-            self.dlid = 'noid'
-            self.eta = 0
-            self.rate = 0
-            if self.dlerType == 'BitTorrent':
-                self.contentType = 'application/x-bittorrent'
-            else:
-                self.contentType = 'video/x-unknown'
-            self.thread = Thread(target=self.restoreLocalDownload,
-                    name="restoring old downloader -- %s" % self.shortFilename)
-            self.thread.setDaemon(True)
-            self.thread.start()
+    def __init__(self, url = None, item = None, contentType = None):
+        self.dlid = "noid"
+        self.contentType = contentType
+        self.eta = 0
+        self.rate = 0
+        Downloader.__init__(self,url,item)
             
     @classmethod
     def initializeDaemon(cls):
@@ -282,28 +247,14 @@ class RemoteDownloader(Downloader):
                 item.beginChange()
                 item.endChange()
 
-    def restoreLocalDownload(self):
-        """Restore a previously running download."""
-        c = command.GenerateDownloadID(RemoteDownloader.dldaemon)
-        self.dlid = c.send()
-        restoreData = self.__dict__.copy()
-        del restoreData['thread']
-        del restoreData['itemList']
-        c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon,
-                restoreData)
-        c.send()
-        #FIXME: This is sooo slow...
-        app.globalViewList['remoteDownloads'].recomputeIndex(app.globalIndexList['downloadsByDLID'])
-        
     ##
     # This is the actual download thread.
-    def runDownloader(self, retry = False):
-        if not retry:
-            c = command.StartNewDownloadCommand(RemoteDownloader.dldaemon,
-                                                self.url, self.contentType)
-            self.dlid = c.send()
-            #FIXME: This is sooo slow...
-            app.globalViewList['remoteDownloads'].recomputeIndex(app.globalIndexList['downloadsByDLID'])
+    def runDownloader(self):
+        c = command.StartNewDownloadCommand(RemoteDownloader.dldaemon,
+                                            self.url, self.contentType)
+        self.dlid = c.send()
+        #FIXME: This is sooo slow...
+        app.globalViewList['remoteDownloads'].recomputeIndex(app.globalIndexList['downloadsByDLID'])
 
     ##
     # Pauses the download.
@@ -340,43 +291,19 @@ class RemoteDownloader(Downloader):
         Downloader.remove(self)
 
     ##
-    # Called by pickle during serialization
-    def __getstate__(self):
-        temp = copy(self.__dict__)
-        temp["thread"] = None
-        return (0,temp)
-
-    ##
     # Called by pickle during deserialization
-    def __setstate__(self,state):
-        (version, data) = state
-        self.__dict__ = copy(data)
-        if data['dlid'] == 'noid':
-            self.thread = Thread(target=self.runDownloader, \
-                                 name="downloader -- %s" % self.shortFilename)
-            self.thread.setDaemon(True)
-            self.thread.start()
-        elif data['state'] in ['downloading','uploading']:
-            del data['itemList']
-            c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, data)
+    def onRestore(self):
+        if self.dlid == 'noid':
+            thread = Thread(target=self.runDownloader, \
+                            name="downloader -- %s" % self.shortFilename)
+            thread.setDaemon(True)
+            thread.start()
+        elif self.state in ['downloading','uploading']:
+            toSend = self.__dict__.copy()
+            del toSend['itemList']
+            c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, 
+                    toSend)
             c.send(retry = True, block = False)
-
-##
-# For upgrading from old versions of the database
-class HTTPDownloader(Downloader):
-    pass
-
-##
-# For upgrading from old versions of the database
-class BTDisplay:
-    def __setstate__(self,state):
-        (version, data) = state
-        self.__dict__ = data
-
-##
-# For upgrading from old versions of the database
-class BTDownloader(Downloader):
-    pass
 
 ##
 # Kill the main BitTorrent thread
