@@ -4,6 +4,7 @@ import tempfile
 import unittest
 
 import database
+import databaseupgrade
 import item
 import feed
 import schema
@@ -94,14 +95,9 @@ class PCFProgramerSchema(HumanSchema):
 testObjectSchemas = [HumanSchema, DogSchema, HouseSchema, PCFProgramerSchema,
     RestorableHumanSchema]
 
-def installDummySchema():
-    schema.VERSION = 1
-    schema.objectSchemas = testObjectSchemas
-    schema.stringsToClasses = dummyStringsToClasses
-    schema._makeClassesToStrings()
-
 class SchemaTest(unittest.TestCase):
     def setUp(self):
+        storedatabase.skipUpgrade = True
         self.lee = Human("lee", 25, 1.4, [], {'virtual bowling': 212})
         self.joe = Human("joe", 14, 1.4, [self.lee])
         self.forbesSt = House('45 Forbs St', 'Blue', [self.lee, self.joe],
@@ -113,6 +109,7 @@ class SchemaTest(unittest.TestCase):
         self.savePath = tempfile.mktemp()
 
     def tearDown(self):
+        storedatabase.skipUpgrade = False
         try:
             os.unlink(self.savePath)
         except OSError:
@@ -242,18 +239,81 @@ class TestRestore(SchemaTest):
         self.assert_(hasattr(resto2, 'iveBeenRestored'))
         self.assertEquals(resto2.iveBeenRestored, True)
 
-    def testSkipOnRestore(self):
-        resto = RestorableHuman('resto', 23, 1.3, [])
-        self.db.append(resto)
-        storedatabase.saveObjectList(self.db, self.savePath, testObjectSchemas)
-        db2 = storedatabase.restoreObjectList(self.savePath,
-                testObjectSchemas, skipOnRestore=True)
-        lee2, joe2, forbesSt2, scruffy2, spike2, resto2, = db2
-        self.assertEquals(resto2.name, 'resto')
-        self.assert_(not hasattr(resto2, 'iveBeenRestored'))
+class UpgradeTest(SchemaTest):
+    def setUp(self):
+        super(UpgradeTest, self).setUp()
+        # save the database, this is our "old" version
+        storedatabase.saveObjectList(self.db, self.savePath,
+                testObjectSchemas)
+        # save the actual version and upgrade functions
+        self.realSchemaVersion = schema.VERSION
+        try:
+            self.realUpgrade2 = databaseupgrade.upgrade2
+        except AttributeError:
+            self.realUpgrade2 = None
+        try:
+            self.realUpgrade3 = databaseupgrade.upgrade3
+        except AttributeError:
+            self.realUpgrade3 = None
+        # install a fake upgrade path
+        schema.VERSION = 3
+        def upgrade2(objects):
+            for o in objects:
+                if o.classString == 'human':
+                    o.savedData['name'] = "Sir %s" % o.savedData['name']
+            return objects
+        def upgrade3(objects):
+            for o in objects:
+                if o.classString == 'dog':
+                    o.savedData['color'] = "Unknown"
+            return objects
+        databaseupgrade.upgrade2 = upgrade2
+        databaseupgrade.upgrade3 = upgrade3
+        storedatabase.skipUpgrade = False
+        class DogSchema2(schema.ObjectSchema):
+            klass = Dog
+            classString = 'dog'
+            fields = [
+                ('name', SchemaString()),
+                ('age', SchemaInt()),
+                ('owner', SchemaObject(Human, noneOk=True)),
+                ('color', SchemaString()),
+            ]
+        self.nextGenObjectSchemas = [ HumanSchema, DogSchema2, HouseSchema,
+            PCFProgramerSchema, RestorableHumanSchema ]
+
+    def tearDown(self):
+        if self.realUpgrade3 is not None:
+            databaseupgrade.upgrade3 = self.realUpgrade3
+        else:
+            del databaseupgrade.upgrade3
+        if self.realUpgrade2 is not None:
+            databaseupgrade.upgrade2 = self.realUpgrade2
+        else:
+            del databaseupgrade.upgrade2
+        schema.VERSION = self.realSchemaVersion
+        super(UpgradeTest, self).tearDown()
+
+    def testChanges(self):
+        newDb = storedatabase.restoreObjectList(self.savePath,
+                self.nextGenObjectSchemas)
+        for object in newDb:
+            if isinstance(object, Human):
+                self.assert_(object.name.startswith("Sir "))
+            elif isinstance(object, Dog):
+                self.assert_('color' in object.__dict__)
+
+    def testSavingUpgradedDb(self):
+        newDb = storedatabase.restoreObjectList(self.savePath,
+                self.nextGenObjectSchemas)
+        storedatabase.saveObjectList(newDb, self.savePath,
+                self.nextGenObjectSchemas)
+        newDb = storedatabase.restoreObjectList(self.savePath,
+                self.nextGenObjectSchemas)
 
 class TestHighLevelFunctions(unittest.TestCase):
     def setUp(self):
+        storedatabase.skipUpgrade = True
         self.database = database.DynamicDatabase()
         self.savePath = tempfile.mktemp()
 
@@ -265,6 +325,7 @@ class TestHighLevelFunctions(unittest.TestCase):
         self.database.restoreFromObjectList(self.objects)
 
     def tearDown(self):
+        storedatabase.skipUpgrade = False
         try:
             os.unlink(self.savePath);
         except:

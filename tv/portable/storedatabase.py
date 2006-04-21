@@ -32,6 +32,7 @@ import traceback
 import config
 import database
 import databasesanity
+import databaseupgrade
 import olddatabaseupgrade
 import util
 import schema as schema_mod
@@ -39,6 +40,11 @@ import schema as schema_mod
 # FILEMAGIC should be the first portion of the database file.  After that the
 # file will contain pickle data
 FILEMAGIC = "Democracy Database V1"
+
+# skipOnRestore and skipUpgrade are set by the unit tests to bypass
+# some of our usual operations
+skipOnRestore = False
+skipUpgrade = False
 
 class DatabaseError(Exception):
     pass
@@ -73,10 +79,6 @@ class ConverterBase(object):
     convertObject method, and adding validation to the convertData method
     (SavableConverter does validation at the begining, SavableUnconverter does
     it at the end).
-
-    Member variables:
-        skipOnRestore -- should we skip calling onRestore() for the restored
-                objects?
     """
 
     def __init__(self, objectSchemas=None):
@@ -87,7 +89,6 @@ class ConverterBase(object):
 
         if objectSchemas is None:
             objectSchemas = schema_mod.objectSchemas
-        self.skipOnRestore = False
 
         self.objectSchemaLookup = {}
         self.classesToStrings = {}
@@ -324,7 +325,7 @@ Reason: %s""" % (object, path, schema, reason)
         raise schema.ValidationWarning(message)
 
     def onPostConversion(self):
-        if not self.skipOnRestore:
+        if not skipOnRestore:
             for object in self.memory.values():
                 if hasattr(object, 'onRestore'):
                     object.onRestore()
@@ -337,12 +338,11 @@ def objectsToSavables(objects, objectSchemas=None):
     saver = SavableConverter(objectSchemas)
     return saver.convertObjectList(objects)
 
-def savablesToObjects(savedObjects, objectSchemas=None, skipOnRestore=False):
+def savablesToObjects(savedObjects, objectSchemas=None):
     """Reverses the work of objectsToSavables"""
 
     restorer = SavableUnconverter(objectSchemas)
     restorer.objectSchemas = objectSchemas
-    restorer.skipOnRestore = skipOnRestore
     return restorer.convertObjectList(savedObjects)
 
 def saveObjectList(objects, pathname, objectSchemas=None, version=None):
@@ -359,7 +359,7 @@ def saveObjectList(objects, pathname, objectSchemas=None, version=None):
     finally:
         f.close()
 
-def restoreObjectList(pathname, objectSchemas=None, skipOnRestore=False):
+def restoreObjectList(pathname, objectSchemas=None):
     """Restore a list of objects saved with saveObjectList."""
 
     f = open(pathname, 'r')
@@ -371,9 +371,10 @@ def restoreObjectList(pathname, objectSchemas=None, skipOnRestore=False):
     finally:
         f.close()
 
-    # should do upgrade stuff here
+    if not skipUpgrade:
+        savedObjects = databaseupgrade.upgrade(savedObjects, version)
 
-    return savablesToObjects(savedObjects, objectSchemas, skipOnRestore)
+    return savablesToObjects(savedObjects, objectSchemas)
 
 def saveDatabase(db=None, pathname=None):
     """Save a database object."""
@@ -399,8 +400,7 @@ def saveDatabase(db=None, pathname=None):
     else:
         shutil.copyfile(pathname, pathname + '.bak')
 
-def restoreDatabase(db=None, pathname=None, skipOnRestore=False,
-        convertOnFail=True):
+def restoreDatabase(db=None, pathname=None, convertOnFail=True):
     """Restore a database object."""
 
     if db is None:
@@ -413,14 +413,14 @@ def restoreDatabase(db=None, pathname=None, skipOnRestore=False,
         return
 
     try:
-        objects = restoreObjectList(pathname, skipOnRestore=skipOnRestore)
+        objects = restoreObjectList(pathname)
     except DatabaseError:
         if convertOnFail:
             print "trying to convert database from old version"
             print "original traceback is:"
             traceback.print_exc()
             olddatabaseupgrade.convertOldDatabase(pathname)
-            objects = restoreObjectList(pathname, skipOnRestore=skipOnRestore)
+            objects = restoreObjectList(pathname)
             print "*** Conversion Successfull ***"
         else:
             raise
