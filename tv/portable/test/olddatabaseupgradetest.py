@@ -10,12 +10,10 @@ import resource
 class TestConvert(unittest.TestCase):
     def setUp(self):
         storedatabase.skipOnRestore = True
-        storedatabase.skipUpgrade = True
         self.tmpPath = tempfile.mktemp()
 
     def tearDown(self):
         storedatabase.skipOnRestore = False
-        storedatabase.skipUpgrade = False
         try:
             os.unlink(self.tmpPath)
         except:

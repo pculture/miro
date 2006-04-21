@@ -181,18 +181,18 @@ class ConverterBase(object):
 
         try:
             objectSchema = self.getObjectSchema(object)
+            convertedObject = self.makeNewConvert(objectSchema.classString)
+            self.memory[id(object)] = convertedObject
+
+            for name, schema in objectSchema.fields:
+                data = self.getSourceAttr(object, name)
+                newPath = path + "\n%s -> %s" % (name, data)
+                convertedData = self.convertData(data, schema, newPath)
+                self.setTargetAttr(convertedObject, name, convertedData)
+            return convertedObject
         except schema_mod.ValidationError, e:
             self.handleValidationError(e, object, path, schema)
 
-        convertedObject = self.makeNewConvert(objectSchema.classString)
-        self.memory[id(object)] = convertedObject
-
-        for name, schema in objectSchema.fields:
-            data = self.getSourceAttr(object, name)
-            newPath = path + "\n%s -> %s" % (name, data)
-            convertedData = self.convertData(data, schema, newPath)
-            self.setTargetAttr(convertedObject, name, convertedData)
-        return convertedObject
 
     # Methods that may be overridden by SavableConverter/SavableUnconverter
     def preValidate(self, data, schema):
@@ -209,7 +209,11 @@ class ConverterBase(object):
 
     def getSourceAttr(self, object, attrName):
         """Retrive the value of an attribute on a source object."""
-        return getattr(object, attrName)
+        try:
+            return getattr(object, attrName)
+        except AttributeError:
+            msg = "%s doesn't have the %s attribute" % (object, attrName)
+            raise schema_mod.ValidationError(msg)
 
     def setTargetAttr(self, object, attrName, attrValue):
         """Set the value of an attribute on a target object."""
@@ -306,7 +310,12 @@ class SavableUnconverter(ConverterBase):
         return restored
 
     def getSourceAttr(self, savable, attrName):
-        return savable.savedData[attrName]
+        try:
+            return savable.savedData[attrName]
+        except KeyError:
+            msg = "SavableObject: %s doesn't have %s " % (savable.classString,
+                    attrName)
+            raise schema_mod.ValidationError(msg)
 
     def postValidate(self, converted, schema):
         schema.validate(converted)
@@ -322,7 +331,7 @@ Path:
 
 Schema: %s
 Reason: %s""" % (object, path, schema, reason)
-        raise schema.ValidationWarning(message)
+        raise schema_mod.ValidationWarning(message)
 
     def onPostConversion(self):
         if not skipOnRestore:
@@ -372,7 +381,7 @@ def restoreObjectList(pathname, objectSchemas=None):
         f.close()
 
     if not skipUpgrade:
-        savedObjects = databaseupgrade.upgrade(savedObjects, version)
+        databaseupgrade.upgrade(savedObjects, version)
 
     return savablesToObjects(savedObjects, objectSchemas)
 

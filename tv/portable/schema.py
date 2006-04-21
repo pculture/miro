@@ -141,8 +141,16 @@ class SchemaSimpleContainer(SchemaSimpleItem):
                 self.recursivelyValidate(key)
                 self.recursivelyValidate(value)
         else:
+            # HACK ALERT:
+            # We pickle BitTorrent.ConvertedMetainfo.ConvertedMetainfo
+            # objects directly.  This isn't the best thing to do, since if we
+            # switch bit torrent implementations in the future we're screwed.
+            # Nick's converting these objects to plain dicts as part of the
+            # BitTornado work, once that's in we shouldn't allow them anymore.
+            import BitTorrent.ConvertedMetainfo
             self.validateTypes(data, [bool, int, long, float, str, unicode,
-                    NoneType, datetime.datetime, time.struct_time])
+                    NoneType, datetime.datetime, time.struct_time,
+                    BitTorrent.ConvertedMetainfo.ConvertedMetainfo ])
 
     def validate(self, data):
         super(SchemaSimpleContainer, self).validate(data)
@@ -290,16 +298,9 @@ class RemoteDownloaderSchema(DDBObjectSchema):
     fields = DDBObjectSchema.fields + [
         ('url', SchemaString()),
         ('itemList', SchemaList(SchemaObject(Item))),
-        ('startTime', SchemaFloat()),
-        ('endTime', SchemaFloat()),
-        ('shortFilename', SchemaString()),
-        ('filename', SchemaString()),
-        ('state', SchemaString()),
-        ('currentSize', SchemaInt()),
-        ('totalSize', SchemaInt()),
-        ('reasonFailed', SchemaString()),
         ('dlid', SchemaString()),
         ('contentType', SchemaString(noneOk=True)),
+        ('status', SchemaSimpleContainer()),
     ]
 
 class HTTPAuthPasswordSchema(DDBObjectSchema):
@@ -331,7 +332,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('loadedThisSession', SchemaBool()),
     ]
 
-VERSION = 1 
+VERSION = 2
 objectSchemas = [ 
     DDBObjectSchema, ItemSchema, FileItemSchema, FeedSchema, FeedImplSchema,
     RSSFeedImplSchema, ScraperFeedImplSchema, SearchFeedImplSchema,

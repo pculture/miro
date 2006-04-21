@@ -83,7 +83,7 @@ def pauseDownload(dlid):
 def startDownload(dlid):
     try:
         download = _downloads[dlid]
-    except: # There is no download with this id
+    except KeyError:  # There is no download with this id
         err= "in startDownload(): no downloader with id %s" % dlid
         c = command.DownloaderErrorCommand(daemon.lastDaemon, err)
         c.send(block=False)
@@ -122,19 +122,16 @@ def shutDown():
     shutdownBTDownloader()
 
 def restoreDownloader(downloader):
-    # changes to the downloader's dict shouldn't affect this
-    downloader = copy(downloader)
-
     dlerType = downloader.get('dlerType')
     if dlerType == 'HTTP':
         dl = HTTPDownloader(restore = downloader)
     elif dlerType == 'BitTorrent':
         dl = BTDownloader(restore = downloader)
     else:
-        print "WARNING dlerType %s not recognized" % dlerType
-        dl = createDownloader(downloader['url'], downloader['contentType'],
-                downloader['dlid'])
-        print "created new downloader: %s" % dl
+        err = "in restoreDownloader(): unknown dlerType: %s" % dlerType
+        c = command.DownloaderErrorCommand(daemon.lastDaemon, err)
+        c.send(block=False)
+        return
 
     _downloads[downloader['dlid']] = dl
     _downloads_by_url[downloader['url']] = dl
@@ -171,6 +168,8 @@ class BGDownloader:
             'rate': self.getRate(),
             'uploaded': 0,
             'filename': self.filename,
+            'startTime': self.startTime,
+            'endTime': self.endTime,
             'shortFilename': self.shortFilename,
             'reasonFailed': self.reasonFailed,
             'dlerType': None }
@@ -460,6 +459,7 @@ class HTTPDownloader(BGDownloader):
 
     def restoreState(self, data):
         self.__dict__ = copy(data)
+        self.lastUpdated = 0
         self.blockTimes = []
         if self.state == "downloading":
             self.thread = Thread(target=self.downloadThread,

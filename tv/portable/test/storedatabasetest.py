@@ -242,9 +242,6 @@ class TestRestore(SchemaTest):
 class UpgradeTest(SchemaTest):
     def setUp(self):
         super(UpgradeTest, self).setUp()
-        # save the database, this is our "old" version
-        storedatabase.saveObjectList(self.db, self.savePath,
-                testObjectSchemas)
         # save the actual version and upgrade functions
         self.realSchemaVersion = schema.VERSION
         try:
@@ -255,18 +252,20 @@ class UpgradeTest(SchemaTest):
             self.realUpgrade3 = databaseupgrade.upgrade3
         except AttributeError:
             self.realUpgrade3 = None
+        # save the database, this is our "old" version
+        schema.VERSION = 1
+        storedatabase.saveObjectList(self.db, self.savePath,
+                testObjectSchemas)
         # install a fake upgrade path
         schema.VERSION = 3
         def upgrade2(objects):
             for o in objects:
                 if o.classString == 'human':
                     o.savedData['name'] = "Sir %s" % o.savedData['name']
-            return objects
         def upgrade3(objects):
             for o in objects:
                 if o.classString == 'dog':
                     o.savedData['color'] = "Unknown"
-            return objects
         databaseupgrade.upgrade2 = upgrade2
         databaseupgrade.upgrade3 = upgrade3
         storedatabase.skipUpgrade = False

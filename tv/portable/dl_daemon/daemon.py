@@ -99,7 +99,7 @@ class Daemon:
         the downloader, this causes the downloader to quit.  On the
         controller side, this causes the controller to restart the downloader.
         """
-        print "socket error in download daemon, closing my stream"
+        print "socket error in daemon, closing my stream"
         self.stream.close()
     
     def listenLoop(self):

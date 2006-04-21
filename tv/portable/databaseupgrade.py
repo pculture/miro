@@ -14,9 +14,8 @@ def upgrade(savedObjects, saveVersion, upgradeTo=None):
     upgradeTo.  For example, if saveVersion is 2 and upgradeTo is 4, this
     method is equivelant to:
 
-        savedObjects = upgrade3(savedObjects)
-        savedObjects = upgrade4(savedObjects)
-        return savedObjects
+        upgrade3(savedObjects)
+        upgrade4(savedObjects)
 
     By default, upgradeTo will be the VERSION variable in schema.
     """
@@ -26,6 +25,18 @@ def upgrade(savedObjects, saveVersion, upgradeTo=None):
 
     while saveVersion < upgradeTo:
         upgradeFunc = globals()['upgrade%d' % (saveVersion + 1)]
-        savedObjects = upgradeFunc(savedObjects)
+        upgradeFunc(savedObjects)
         saveVersion += 1
-    return savedObjects
+
+def upgrade2(objectList):
+    """Add a dlerType variable to all RemoteDownloader objects."""
+
+    for o in objectList:
+        if o.classString == 'remote-downloader':
+            # many of our old attributes are now stored in status
+            for key in ('startTime', 'endTime', 'filename', 'state',
+                    'currentSize', 'totalSize', 'reasonFailed'):
+                del o.savedData[key]
+            # force the download daemon to create a new downloader object.
+            o.savedData['status'] = {}
+            o.savedData['dlid'] = 'noid'
