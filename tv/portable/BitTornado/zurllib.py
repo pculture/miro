@@ -54,6 +54,17 @@ class addinfourldecompress(addinfourl):
             fp = GzipStream(fp)
         else:
             self.gzip = 0
+
+        # The Python 2.4 libraries expect these parameters --NN
+        try:
+            self.code = fp.code
+        except:
+            pass
+        try:
+            self.msg = fp.msg
+        except:
+            pass
+        
         return addinfourl.__init__(self, fp, headers, url)
 
     def close(self):
