@@ -17,7 +17,7 @@ import threading
 import types
 
 from schema import ObjectSchema, SchemaInt, SchemaFloat
-from schema import SchemaObject, SchemaBool, SchemaDateTime
+from schema import SchemaObject, SchemaBool, SchemaDateTime, SchemaTimeDelta
 from schema import SchemaList, SchemaDict, SchemaString, SchemaSimpleContainer
 import storedatabase
 
@@ -30,8 +30,13 @@ import storedatabase
 # somehow they slip through to a real database
 #
 # ObjectSchema
-# classes are exactly as they appeared when we first implemented the schema
-# module for 0.8.3
+# classes are exactly as they appeared in version 3 of the schema.
+#
+# Why version 3?
+# Version 1 and 2 were used in RC's.  They had a bug where they dropped the
+# feed.expirationTime variable.  By making olddatabaseupgrade start on version
+# 3 we avoid that bug, while still giving the people using version 1 and 2 an
+# upgrade path.
 
 def defaultFeedIconURL():
     import resource
@@ -124,7 +129,10 @@ class OldHTTPAuthPassword(OldDDBObject):
     pass
 
 class OldFeedImpl:
-    pass
+    def __setstate__(self, data):
+        self.__dict__ = data
+        if 'expireTime' not in data:
+            self.expireTime = None
 
 class OldScraperFeedImpl(OldFeedImpl):
     def __setstate__(self,state):
@@ -132,14 +140,14 @@ class OldScraperFeedImpl(OldFeedImpl):
         assert(version == 0)
         data['updating'] = False
         data['tempHistory'] = {}
-        self.__dict__ = data
+        OldFeedImpl.__setstate__(self, data)
 
 class OldRSSFeedImpl(OldFeedImpl):
     def __setstate__(self,state):
         (version, data) = state
         assert(version == 0)
         data['updating'] = False
-        self.__dict__ = data
+        OldFeedImpl.__setstate__(self, data)
 
 class OldSearchFeedImpl(OldRSSFeedImpl):
     pass
@@ -152,25 +160,19 @@ class OldDirectoryFeedImpl(OldFeedImpl):
         (version, data) = state
         assert(version == 0)
         data['updating'] = False
-        self.__dict__ = data
+        OldFeedImpl.__setstate__(self, data)
 
 class OldRemoteDownloader(OldDDBObject):
     def __setstate__(self,state):
         (version, data) = state
         self.__dict__ = copy(data)
-
-        # We would send a message to the downloader daemon, but this is
-        # definitely not what we want when upgrading old databases.
-        #
-        #if data['dlid'] == 'noid':
-        #    self.thread = Thread(target=self.runDownloader, \
-        #                         name="downloader -- %s" % self.shortFilename)
-        #    self.thread.setDaemon(True)
-        #    self.thread.start()
-        #elif data['state'] in ['downloading','uploading']:
-        #    del data['itemList'] 
-        #    c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, data)                   
-        #    c.send(retry = True, block = False)
+        self.status = {}
+        for key in ('startTime', 'endTime', 'filename', 'state',
+                'currentSize', 'totalSize', 'reasonFailed'):
+            self.status[key] = self.__dict__[key]
+            del self.__dict__[key]
+        # force the download daemon to create a new downloader object.
+        self.dlid = 'noid'
 
 class OldChannelGuide(OldDDBObject):
     def __setstate__(self,state):
@@ -231,6 +233,7 @@ fakeClasses['BitTorrent.ConvertedMetainfo.ConvertedMetainfo'] = \
 class FakeClassUnpickler(pickle.Unpickler):
     unpickleNormallyWhitelist = [
         'datetime.datetime', 
+        'datetime.timedelta', 
         'time.struct_time',
         'feedparser.FeedParserDict'
     ]
@@ -313,6 +316,7 @@ class FeedImplSchema(ObjectSchema):
         ('lastViewed', SchemaDateTime()),
         ('thumbURL', SchemaString()),
         ('updateFreq', SchemaInt()),
+        ('expireTime', SchemaTimeDelta(noneOk=True)),
     ]
 
 class RSSFeedImplSchema(FeedImplSchema):
@@ -358,16 +362,9 @@ class RemoteDownloaderSchema(DDBObjectSchema):
     fields = DDBObjectSchema.fields + [
         ('url', SchemaString()),
         ('itemList', SchemaList(SchemaObject(OldItem))),
-        ('startTime', SchemaFloat()),
-        ('endTime', SchemaFloat()),
-        ('shortFilename', SchemaString()),
-        ('filename', SchemaString()),
-        ('state', SchemaString()),
-        ('currentSize', SchemaInt()),
-        ('totalSize', SchemaInt()),
-        ('reasonFailed', SchemaString()),
         ('dlid', SchemaString()),
         ('contentType', SchemaString(noneOk=True)),
+        ('status', SchemaSimpleContainer()),
     ]
 
 class HTTPAuthPasswordSchema(DDBObjectSchema):
@@ -428,4 +425,4 @@ def convertOldDatabase(databasePath):
                     if not hasattr(d, '__DropMeLikeItsHot')]
 
     storedatabase.saveObjectList(objects, databasePath,
-            objectSchemas=objectSchemas, version=1)
+            objectSchemas=objectSchemas, version=3)

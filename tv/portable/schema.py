@@ -99,6 +99,11 @@ class SchemaDateTime(SchemaSimpleItem):
         super(SchemaSimpleItem, self).validate(data)
         self.validateType(data, datetime.datetime)
 
+class SchemaTimeDelta(SchemaSimpleItem):
+    def validate(self, data):
+        super(SchemaSimpleItem, self).validate(data)
+        self.validateType(data, datetime.timedelta)
+
 class SchemaList(SchemaItem):
     def __init__(self, childSchema, noneOk=False):
         super(SchemaList, self).__init__(noneOk)
@@ -253,6 +258,7 @@ class FeedImplSchema(ObjectSchema):
         ('lastViewed', SchemaDateTime()),
         ('thumbURL', SchemaString()),
         ('updateFreq', SchemaInt()),
+        ('expireTime', SchemaTimeDelta(noneOk=True)),
     ]
 
 class RSSFeedImplSchema(FeedImplSchema):
@@ -332,7 +338,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('loadedThisSession', SchemaBool()),
     ]
 
-VERSION = 2
+VERSION = 3
 objectSchemas = [ 
     DDBObjectSchema, ItemSchema, FileItemSchema, FeedSchema, FeedImplSchema,
     RSSFeedImplSchema, ScraperFeedImplSchema, SearchFeedImplSchema,

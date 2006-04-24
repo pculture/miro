@@ -41,3 +41,11 @@ def upgrade2(objectList):
                 del o.savedData[key]
             # force the download daemon to create a new downloader object.
             o.savedData['dlid'] = 'noid'
+
+def upgrade3(objectList):
+    """Add the expireTime variable to FeedImpl objects."""
+
+    for o in objectList:
+        if o.classString.endswith('feed-impl'):
+            o.savedData['expireTime'] = None
+

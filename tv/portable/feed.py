@@ -257,6 +257,7 @@ class FeedImpl:
         self.lastViewed = datetime.min
         self.thumbURL = defaultFeedIconURL()
         self.updateFreq = config.get(config.CHECK_CHANNELS_EVERY_X_MN)*60
+        self.expireTime = None
 
     # Sets the update frequency (in minutes). 
     # - A frequency of -1 means that auto-update is disabled.
@@ -591,16 +592,15 @@ class FeedImpl:
         delta = None
         self.ufeed.beginRead()
         try:
-            try:
-                if self.expire == 'never' or (self.expire == 'system' and config.get(config.EXPIRE_AFTER_X_DAYS) <= 0):
-                    delta = timedelta()
-                else:
-                    delta = self.expireTime
-            except:
-                delta = timedelta()
+            expireAfterSetting = config.get(config.EXPIRE_AFTER_X_DAYS)
+            if (self.expireTime is None or self.expire == 'never' or 
+                    (self.expire == 'system' and expireAfterSetting <= 0)):
+                return 0
+            else:
+                return (self.expireTime.days * 24 + 
+                        self.expireTime.seconds / 3600)
         finally:
             self.ufeed.endRead()
-        return (delta.days * 24) + (delta.seconds / 3600)
 
     ##
     # Returns the number of days until a video expires
