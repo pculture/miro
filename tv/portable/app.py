@@ -7,10 +7,8 @@ import autodler
 import resource
 import template
 import database
-import storedatabase
 import scheduler
 import downloader
-import download_utils
 import autoupdate
 import xhtmltools
 import guide
@@ -59,6 +57,7 @@ class PlaybackControllerBase:
     
     def __init__(self):
         self.currentPlaylist = None
+        self.currentDisplay = None
 
     def configure(self, view, firstItemId=None):
         self.currentPlaylist = Playlist(view, firstItemId)
@@ -67,6 +66,7 @@ class PlaybackControllerBase:
         if self.currentPlaylist is not None:
             self.currentPlaylist.reset()
             self.currentPlaylist = None
+        self.currentDisplay = None
     
     def enterPlayback(self):
         if self.currentPlaylist is not None:
@@ -81,54 +81,51 @@ class PlaybackControllerBase:
     
     def playPause(self):
         videoDisplay = Controller.instance.videoDisplay
-        frame = Controller.instance.frame
-        if frame.getDisplay(frame.mainDisplay) == videoDisplay:
+        if self.currentDisplay == videoDisplay:
             videoDisplay.playPause()
         else:
             self.enterPlayback()
 
     def playItem(self, anItem):
         try:
-            anItem = self.skipIfItemFileIsMissing(anItem)
-            if anItem is not None:
-                videoDisplay = Controller.instance.videoDisplay
-                if videoDisplay.canPlayItem(anItem):
-                    self.playItemInternally(videoDisplay, anItem)
-                else:
-                    frame = Controller.instance.frame
-                    if frame.getDisplay(frame.mainDisplay) is videoDisplay:
-                        if videoDisplay.isFullScreen:
-                            videoDisplay.exitFullScreen()
-                        videoDisplay.stop()
-                    self.scheduleExternalPlayback(anItem)
+            self.skipIfItemFileIsMissing(anItem)
+            videoDisplay = Controller.instance.videoDisplay
+            if videoDisplay.canPlayItem(anItem):
+                self.playItemInternally(videoDisplay, anItem)
+            else:
+                if self.currentDisplay is videoDisplay:
+                    if videoDisplay.isFullScreen:
+                        videoDisplay.exitFullScreen()
+                    videoDisplay.stop()
+                self.scheduleExternalPlayback(anItem)
         except:
             util.failedExn('when trying to play a video')
             self.stop()
 
     def playItemInternally(self, videoDisplay, anItem):
-        frame = Controller.instance.frame
-        if frame.getDisplay(frame.mainDisplay) is not videoDisplay:
+        if self.currentDisplay is not videoDisplay:
+            self.currentDisplay = videoDisplay
+            frame = Controller.instance.frame
             frame.selectDisplay(videoDisplay, frame.mainDisplay)
         videoDisplay.selectItem(anItem)
         videoDisplay.play()
 
     def playItemExternally(self, itemID):
         anItem = mapToPlaylistItem(db.getObjectByID(int(itemID)))
-        newDisplay = TemplateDisplay('external-playback-continue', anItem.getInfoMap(), Controller.instance)
+        self.currentDisplay = TemplateDisplay('external-playback-continue', anItem.getInfoMap(), Controller.instance)
         frame = Controller.instance.frame
-        frame.selectDisplay(newDisplay, frame.mainDisplay)
+        frame.selectDisplay(self.currentDisplay, frame.mainDisplay)
         return anItem
         
     def scheduleExternalPlayback(self, anItem):
         Controller.instance.videoDisplay.stopOnDeselect = False
-        newDisplay = TemplateDisplay('external-playback', anItem.getInfoMap(), Controller.instance)
+        self.currentDisplay = TemplateDisplay('external-playback', anItem.getInfoMap(), Controller.instance)
         frame = Controller.instance.frame
-        frame.selectDisplay(newDisplay, frame.mainDisplay)
+        frame.selectDisplay(self.currentDisplay, frame.mainDisplay)
 
     def stop(self, switchDisplay=True):
-        frame = Controller.instance.frame
         videoDisplay = Controller.instance.videoDisplay
-        if frame.getDisplay(frame.mainDisplay) == videoDisplay:
+        if self.currentDisplay == videoDisplay:
             videoDisplay.stop()
         self.exitPlayback(switchDisplay)
 
@@ -138,12 +135,10 @@ class PlaybackControllerBase:
             if direction == 1:
                 nextItem = self.currentPlaylist.getNext()
             else:
-                frame = Controller.instance.frame
-                currentDisplay = frame.getDisplay(frame.mainDisplay)
-                if not hasattr(currentDisplay, 'getCurrentTime') or currentDisplay.getCurrentTime() <= 2.0:
+                if not hasattr(self.currentDisplay, 'getCurrentTime') or self.currentDisplay.getCurrentTime() <= 1.0:
                     nextItem = self.currentPlaylist.getPrev()
                 else:
-                    currentDisplay.goToBeginningOfMovie()
+                    self.currentDisplay.goToBeginningOfMovie()
                     return self.currentPlaylist.cur()
         if nextItem is None:
             self.stop()
@@ -155,12 +150,11 @@ class PlaybackControllerBase:
         path = anItem.getPath()
         if not os.path.exists(path):
             print "DTV: movie file '%s' is missing, skipping to next" % path
-            return self.skip(1)
-        else:
-            return anItem
+            self.onMovieFinished()
 
     def onMovieFinished(self):
-        return self.skip(1)
+        if self.skip(1) is None:
+            self.stop()
 
 
 ###############################################################################
@@ -301,7 +295,7 @@ class VideoDisplayBase (Display):
     def getCurrentTime(self):
         if self.activeRenderer is not None:
             return self.activeRenderer.getCurrentTime()
-        return 0
+        return VideoRenderer.DEFAULT_DISPLAY_TIME
 
     def setVolume(self, level):
         self.volume = level
@@ -410,9 +404,6 @@ class Controller (frontend.Application):
 
     def onStartup(self):
         try:
-            print "DTV: Starting scheduler"
-            scheduler.ScheduleEvent.scheduler = scheduler.Scheduler()
-
             print "DTV: Loading preferences..."
             config.load()
             config.addChangeCallback(self.configDidChange)
@@ -420,7 +411,7 @@ class Controller (frontend.Application):
             delegate = self.getBackendDelegate()
             feed.setDelegate(delegate)
             feed.setSortFunc(itemSort)
-            download_utils.setDelegate(delegate)
+            downloader.setDelegate(delegate)
             autoupdate.setDelegate(delegate)
             database.setDelegate(delegate)
 
@@ -428,10 +419,7 @@ class Controller (frontend.Application):
 
             #Restoring
             print "DTV: Restoring database..."
-            try:
-                storedatabase.restoreDatabase()
-            except Exception:
-                util.failedExn("While restoring database")
+            db.restore()
             print "DTV: Recomputing filters..."
             db.recomputeFilters()
 
@@ -534,7 +522,7 @@ class Controller (frontend.Application):
             self.videoDisplay.playbackController = self.playbackController
             self.videoDisplay.setVolume(config.get(config.VOLUME_LEVEL))
 
-            scheduler.ScheduleEvent(300, storedatabase.saveDatabase)
+            scheduler.ScheduleEvent(300,db.save)
 
             scheduler.ScheduleEvent(10, autoupdate.checkForUpdates, False)
             scheduler.ScheduleEvent(86400, autoupdate.checkForUpdates)
@@ -642,7 +630,7 @@ class Controller (frontend.Application):
             # for item in db:
             #    print str(item.__class__.__name__) + " of id "+str(item.getID())
             print "DTV: Saving database..."
-            storedatabase.saveDatabase()
+            db.save()
 
             # FIXME closing BitTorrent is slow and makes the application seem hung...
             print "DTV: Shutting down Downloader..."
@@ -1024,13 +1012,6 @@ class ModelActionHandler:
         except database.ObjectNotFoundError:
             pass
 
-    def updateIcons(self, feed):
-        try:
-            obj = db.getObjectByID(int(feed))
-            obj.updateIcons()
-        except database.ObjectNotFoundError:
-            pass
-
     def expireItem(self, item):
         obj = db.getObjectByID(int(item))
         obj.expire()
@@ -1151,7 +1132,7 @@ class GUIActionHandler:
         url = feed.normalizeFeedURL(url)
         db.beginUpdate()
         try:
-            feedView = globalViewList['feeds'].filterWithIndex(globalIndexList['feedsByURL'], url)
+            feedView = globalViewList['feeds'].filterWithIndex(globalIndexList['feedsByURL'],url)
             exists = feedView.len() > 0
 
             if not exists:
@@ -1177,7 +1158,7 @@ class GUIActionHandler:
         db.beginUpdate()
         try:
             # Find the feed
-            feedView = globalViewList['feeds'].filterWithIndex(globalIndexList['feedsByURL'], url)
+            feedView = globalViewList['feeds'].filterWithIndex(globalIndexList['feedsByURL'],url)
             exists = feedView.len() > 0
             if not exists:
                 print "selectFeed: no such feed: %s" % url

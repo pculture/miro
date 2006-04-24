@@ -91,10 +91,6 @@ updatePListEntry(infoPlist, u'NSHumanReadableCopyright', conf)
 
 print "Building Democracy Player v%s (%s)" % (conf['appVersion'], conf['appRevision'])
 
-# Building Download daemon
-
-os.system("%s setup_daemon.py py2app --dist-dir . --bdist-base ./build-daemon" % sys.executable)
-
 # Get a list of additional resource files to include
 
 resourceFiles = ['Resources/%s' % x for x in os.listdir('Resources')]
@@ -106,6 +102,9 @@ py2app_options = dict(
     plist=infoPlist,
     iconfile='%s/platform/%s/Democracy.icns' % (root, platform),
 )
+
+print "building setup daemon"
+os.system("python setup_daemon.py py2app --dist-dir . --bdist-base ./build-daemon")
 
 setup(
     app=['Democracy.py'],
@@ -144,55 +143,55 @@ setup(
 # the previous build that disappeared in this one. So, before building
 # a distribution bundle, you should be sure to 'clean'.
 
-#VLC_LIBRARY_SUBDIR = 'extras/contrib/vlc-lib'
-#BUNDLE_LIB_DIRECTORY = 'Contents/MacOS/lib'
-#BUNDLE_MODULE_DIRECTORY = 'Contents/MacOS'
-#
-#if 'py2app' in sys.argv and False: ## NEEDS XXXX
-#    # Create symlinks or copy files?
-#    alias = '-A' in sys.argv
-#    
-#    # NEEDS: We guess where the bundle was built. Horrible.
-#    bundleRoot = 'dist/Democracy.app'
-#    for i in range(0,len(sys.argv)-1):
-#        if sys.argv[i] == '--dist-dir':
-#            bundleRoot = '%s/Democracy.app' % sys.argv[i+1]
-#
-#    # list of (sourcePath, destinationPath) tuples of files to copy or link
-#    manifest = []
-#
-#    # Make list of libraries to copy, and compute their VLC-mangled names.
-#    vlcLibDir = "%s/%s" % (vlchelper.info.getVLCRoot(root), VLC_LIBRARY_SUBDIR)
-#    bundleLibDir = "%s/%s" % (bundleRoot, BUNDLE_LIB_DIRECTORY)
-#    if not os.access(bundleLibDir, os.F_OK):
-#        os.makedirs(bundleLibDir)
-#    for file in os.listdir(vlcLibDir):
-#        src = os.path.abspath('%s/%s' % (vlcLibDir, file))
-#        dest = '%s/vlc_%s' % (bundleLibDir, os.path.basename(file))
-#        manifest.append((src, dest))
-#
-#    # Find the modules to copy.
-#    bundleModuleDir = "%s/%s" % (bundleRoot, BUNDLE_MODULE_DIRECTORY)
-#    for module in vlchelper.info.getModuleList(root):
-#        src = os.path.abspath('%s/%s.dylib' % (vlchelper.info.getVLCRoot(root), module))
-#        dest = '%s/%s.dylib' % (bundleModuleDir, module)
-#        manifest.append((src, dest))
-#
-#    # Copy or link the files.
-#    for (src, dest) in manifest:
-#        # Make sure the destination directory exists.
-#        if not os.access(os.path.dirname(dest), os.F_OK):
-#            os.makedirs(os.path.dirname(dest))
-#
-#        # Delete the file if it exists.
-#        try:
-#            os.unlink(dest)
-#        except OSError:
-#            pass
-#
-#        # Copy or link the file.
-#        if alias:
-#            os.symlink(src, dest)
-#        else:
-#            # NEEDS: frob permissions?
-#            shutil.copy(src, dest)
+VLC_LIBRARY_SUBDIR = 'extras/contrib/vlc-lib'
+BUNDLE_LIB_DIRECTORY = 'Contents/MacOS/lib'
+BUNDLE_MODULE_DIRECTORY = 'Contents/MacOS'
+
+if 'py2app' in sys.argv and False: ## NEEDS XXXX
+    # Create symlinks or copy files?
+    alias = '-A' in sys.argv
+    
+    # NEEDS: We guess where the bundle was built. Horrible.
+    bundleRoot = 'dist/Democracy.app'
+    for i in range(0,len(sys.argv)-1):
+        if sys.argv[i] == '--dist-dir':
+            bundleRoot = '%s/Democracy.app' % sys.argv[i+1]
+
+    # list of (sourcePath, destinationPath) tuples of files to copy or link
+    manifest = []
+
+    # Make list of libraries to copy, and compute their VLC-mangled names.
+    vlcLibDir = "%s/%s" % (vlchelper.info.getVLCRoot(root), VLC_LIBRARY_SUBDIR)
+    bundleLibDir = "%s/%s" % (bundleRoot, BUNDLE_LIB_DIRECTORY)
+    if not os.access(bundleLibDir, os.F_OK):
+        os.makedirs(bundleLibDir)
+    for file in os.listdir(vlcLibDir):
+        src = os.path.abspath('%s/%s' % (vlcLibDir, file))
+        dest = '%s/vlc_%s' % (bundleLibDir, os.path.basename(file))
+        manifest.append((src, dest))
+
+    # Find the modules to copy.
+    bundleModuleDir = "%s/%s" % (bundleRoot, BUNDLE_MODULE_DIRECTORY)
+    for module in vlchelper.info.getModuleList(root):
+        src = os.path.abspath('%s/%s.dylib' % (vlchelper.info.getVLCRoot(root), module))
+        dest = '%s/%s.dylib' % (bundleModuleDir, module)
+        manifest.append((src, dest))
+
+    # Copy or link the files.
+    for (src, dest) in manifest:
+        # Make sure the destination directory exists.
+        if not os.access(os.path.dirname(dest), os.F_OK):
+            os.makedirs(os.path.dirname(dest))
+
+        # Delete the file if it exists.
+        try:
+            os.unlink(dest)
+        except OSError:
+            pass
+
+        # Copy or link the file.
+        if alias:
+            os.symlink(src, dest)
+        else:
+            # NEEDS: frob permissions?
+            shutil.copy(src, dest)

@@ -3,7 +3,7 @@ import frontend
 import gobject
 import gtk
 import gtk.gdk
-from gtk_queue import gtkAsyncMethod
+from gtk_queue import gtkMethod
 
 from xinerenderer import XineRenderer
 
@@ -35,7 +35,7 @@ class VideoDisplay (app.VideoDisplayBase):
             # add additional video renderers here
         ]
 
-    @gtkAsyncMethod
+    @gtkMethod
     def _gtkInit(self):
         self.widget = gtk.DrawingArea()
         self.widget.set_double_buffered(False)

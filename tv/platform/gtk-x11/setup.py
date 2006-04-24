@@ -1,5 +1,3 @@
-#!/usr/bin/env python2.4
-
 ##############################################################################
 ## Paths and configuration                                                   ##
 ###############################################################################
@@ -24,7 +22,6 @@ import distutils.command.install_data
 import os
 import subprocess
 import sys
-import re
 
 from Pyrex.Distutils import build_ext
 
@@ -48,7 +45,6 @@ while True:
 portable_dir = os.path.join(root_dir, 'portable')
 bittorrent_dir = os.path.join(portable_dir, 'BitTorrent')
 dl_daemon_dir = os.path.join(portable_dir, 'dl_daemon')
-test_dir = os.path.join(portable_dir, 'test')
 compiled_templates_dir = os.path.join(portable_dir, 'compiled_templates')
 compiled_templates_test_dir = os.path.join(compiled_templates_dir,'test')
 compiled_templates_unittest_dir = os.path.join(compiled_templates_dir,'unittest')
@@ -159,8 +155,14 @@ fasttypes_ext = \
 
 #### MozillaBrowser Extension ####
 mozilla_browser_options = parsePkgConfig("pkg-config" , 
-        "gtk+-2.0 glib-2.0 pygtk-2.0 mozilla-gtkmozembed mozilla-xpcom")
-mozilla_lib_path = parsePkgConfig('pkg-config', 'mozilla-gtkmozembed')['library_dirs']
+        "gtk+-2.0 glib-2.0 pygtk-2.0")
+parsePkgConfig("mozilla-config", "string dom gtkembedmoz necko xpcom",
+        mozilla_browser_options)
+# mozilla-config doesn't get gtkembedmoz one for some reason
+mozilla_browser_options['libraries'].append('gtkembedmoz') 
+# Running mozilla-config with no components should get us the path to the
+# mozilla libraries (nessecary to import gtkmozembed.so)
+mozilla_lib_path = parsePkgConfig('mozilla-config', '')['library_dirs']
 mozilla_browser_ext = Extension("democracy.MozillaBrowser",
         [ os.path.join(frontend_implementation_dir,'MozillaBrowser.pyx'),
           os.path.join(frontend_implementation_dir,'MozillaBrowserXPCOM.cc'),
@@ -182,13 +184,13 @@ def listfiles(path):
 data_files = []
 # append the root resource directory.
 # filter out app.config.template (which is handled specially)
+# add democracy.glade
 files = [f for f in listfiles(resource_dir) \
         if os.path.basename(f) != 'app.config.template']
 files.append(os.path.join(platform_dir, 'glade', 'democracy.glade'))
-files.append(os.path.join(platform_dir, 'ui', 'Democracy.xml'))
 data_files.append(('/usr/share/democracy/resources/', files))
 # handle the sub directories.
-for dir in ('templates', 'css', 'images', 'testdata'):
+for dir in ('templates', 'css', 'images'):
     source_dir = os.path.join(resource_dir, dir)
     dest_dir = os.path.join('/usr/share/democracy/resources/', dir)
     data_files.append((dest_dir, listfiles(source_dir)))
@@ -217,15 +219,6 @@ class install_data (distutils.command.install_data.install_data):
         expand_file_contents(dest, APP_REVISION=svnversion,
                 APP_PLATFORM='gtk-x11')
         self.outfiles.append(dest)
-
-        for lang in ():
-            dest = '/usr/share/locale/%s/LC_MESSAGES/democracyplayer.mo' % lang
-            if self.root:
-                dest = change_root(self.root, dest)
-            source = os.path.join (resource_dir, "locale", "%s.mo" % lang)
-            self.mkpath(os.path.dirname(dest))
-            self.copy_file(source, dest)
-            self.outfiles.append(dest)
 
     def run(self):
         distutils.command.install_data.install_data.run(self)
@@ -354,7 +347,6 @@ setup(name='democracy',
         'democracy.frontend_implementation',
         'democracy.BitTorrent',
         'democracy.dl_daemon',
-        'democracy.test',
         'democracy.compiled_templates',
         'democracy.compiled_templates.test',
         'democracy.compiled_templates.unittest',
@@ -364,7 +356,6 @@ setup(name='democracy',
         'democracy.frontend_implementation' : frontend_implementation_dir,
         'democracy.BitTorrent' : bittorrent_dir,
         'democracy.dl_daemon' : dl_daemon_dir,
-        'democracy.test' : test_dir,
         'democracy.compiled_templates' : compiled_templates_dir,
         'democracy.compiled_templates.test' : compiled_templates_test_dir,
         'democracy.compiled_templates.unittest' : compiled_templates_unittest_dir,

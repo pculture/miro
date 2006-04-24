@@ -4,24 +4,10 @@
 # Make all output flush immediately.
 import sys
 import util
-import os
-
-logPath = os.environ.get('DEMOCRACY_DOWNLOADER_LOG')
-if logPath is not None:
-    if os.environ.get('DEMOCRACY_DOWNLOADER_FIRST_LAUNCH') == '1':
-        logMode = 'w'
-    else:
-        logMode = 'a'
-    log = open(logPath, logMode)
-    sys.stdout = sys.stderr = log
-
 sys.stdout = util.AutoflushingStream(sys.stdout)
 sys.stderr = util.AutoflushingStream(sys.stderr)
-if os.environ.get('DEMOCRACY_DOWNLOADER_FIRST_LAUNCH') != '1':
-    print
-    print "*** Starting new downloader log ***"
-    print
 
+import os
 from dl_daemon import daemon
 
 port = int(os.environ['DEMOCRACY_DOWNLOADER_PORT'])

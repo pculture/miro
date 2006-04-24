@@ -6,11 +6,6 @@ from threading import RLock
 from time import time
 from httplib import HTTPConnection, HTTPSConnection,HTTPException
 
-# Pass in a connection to the frontend
-def setDelegate(newDelegate):
-    global delegate
-    delegate = newDelegate
-
 # Filter invalid URLs with duplicated ports (http://foo.bar:123:123/baz) which
 # seem to be part of #441.
 def parseURL(url):
@@ -130,8 +125,7 @@ def grabURL(url, type="GET",start = 0, etag=None,modified=None,findHTTPAuth=None
                 #print "Trying to authenticate "+host+" realm:"+realm
                 result = delegate.getHTTPAuth(host,realm)
                 if not result is None:
-                    import downloader
-                    auth = downloader.HTTPAuthPassword(result[0],result[1],host, realm, path, authScheme)
+                    auth = HTTPAuthPassword(result[0],result[1],host, realm, path, authScheme)
                     myHeaders["Authorization"] = auth.getAuthScheme()+' '+auth.getAuthToken()
                     download = connectionPool.getRequest(scheme,host,type,path, headers=myHeaders)
                 else:
@@ -237,6 +231,11 @@ class PooledHTTPResponse:
             except ValueError:
                 print "Caught error in httplib"
                 self.connPool.removeConn(self.conn)
+
+    ##
+    # Called by pickle during serialization
+    def __getstate__(self):
+        assert(0) #This should never be serialized
 
 #
 # This class a set of HTTP connections so that we always do the
@@ -455,5 +454,10 @@ class HTTPConnectionPool:
                 return self.getRequest(protocol,host,method,url,*args,**keywords)
         #print "Leaving connectionPool"
         return PooledHTTPResponse(conn,response,self)
+
+    ##
+    # Called by pickle during serialization
+    def __getstate__(self):
+        assert(0) #This should never be serialized
 
 connectionPool = HTTPConnectionPool()

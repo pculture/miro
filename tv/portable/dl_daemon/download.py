@@ -83,10 +83,7 @@ def pauseDownload(dlid):
 def startDownload(dlid):
     try:
         download = _downloads[dlid]
-    except KeyError:  # There is no download with this id
-        err= "in startDownload(): no downloader with id %s" % dlid
-        c = command.DownloaderErrorCommand(daemon.lastDaemon, err)
-        c.send(block=False)
+    except: # There is no download with this id
         return True
     return download.start()
 
@@ -122,16 +119,19 @@ def shutDown():
     shutdownBTDownloader()
 
 def restoreDownloader(downloader):
+    # changes to the downloader's dict shouldn't affect this
+    downloader = copy(downloader)
+
     dlerType = downloader.get('dlerType')
     if dlerType == 'HTTP':
         dl = HTTPDownloader(restore = downloader)
     elif dlerType == 'BitTorrent':
         dl = BTDownloader(restore = downloader)
     else:
-        err = "in restoreDownloader(): unknown dlerType: %s" % dlerType
-        c = command.DownloaderErrorCommand(daemon.lastDaemon, err)
-        c.send(block=False)
-        return
+        print "WARNING dlerType %s not recognized" % dlerType
+        dl = createDownloader(downloader['url'], downloader['contentType'],
+                downloader['dlid'])
+        print "created new downloader: %s" % dl
 
     _downloads[downloader['dlid']] = dl
     _downloads_by_url[downloader['url']] = dl
@@ -150,7 +150,7 @@ class BGDownloader:
         self.blockTimes = []
         self.reasonFailed = "No Error"
         self.headers = None
-        self.thread = Thread(target=self.downloadThread, 
+        self.thread = Thread(target=self.runDownloader, \
                              name="downloader -- %s" % self.shortFilename)
         self.thread.setDaemon(False)
         self.thread.start()
@@ -168,8 +168,6 @@ class BGDownloader:
             'rate': self.getRate(),
             'uploaded': 0,
             'filename': self.filename,
-            'startTime': self.startTime,
-            'endTime': self.endTime,
             'shortFilename': self.shortFilename,
             'reasonFailed': self.reasonFailed,
             'dlerType': None }
@@ -256,16 +254,6 @@ class BGDownloader:
             except IndexError:
                 rate = 0
         return rate
-
-    def downloadThread(self, *args, **kwargs):
-        try:
-            self.runDownloader(*args, **kwargs)
-        except:
-            import traceback
-            c = command.DownloaderErrorCommand(daemon.lastDaemon, 
-                    traceback.format_exc())
-            c.send(block=False)
-            raise
 
 class HTTPDownloader(BGDownloader):
     def __init__(self, url = None,dlid = None,restore = None):
@@ -448,23 +436,16 @@ class HTTPDownloader(BGDownloader):
     ##
     # Continues a paused or stopped download thread
     def start(self):
-        if self.state == 'paused' or self.state == 'stopped':
-            self.state = "downloading"
-            self.updateClient()
-            self.thread = Thread(target=self.downloadThread,
-                    kwargs={'retry': True}, 
-                    name="downloader -- %s" % self.shortFilename)
-            self.thread.setDaemon(False)
-            self.thread.start()
+        self.state = "downloading"
+        self.updateClient()
+        print "Warning starting downloader in thread"
+        self.runDownloader(True)
 
     def restoreState(self, data):
         self.__dict__ = copy(data)
-        self.lastUpdated = 0
-        self.blockTimes = []
         if self.state == "downloading":
-            self.thread = Thread(target=self.downloadThread,
-                    kwargs={'retry': True}, 
-                    name="downloader -- %s" % self.shortFilename)
+            self.thread = Thread(target=lambda:self.runDownloader(retry = True), \
+                                 name="downloader -- %s" % self.shortFilename)
             self.thread.setDaemon(False)
             self.thread.start()
 
@@ -542,20 +523,19 @@ class BTDownloader(BGDownloader):
     multitorrent = Multitorrent(torrentConfig, doneflag, global_error)
 
     def __init__(self, url = None, item = None, restore = None):
+        self.metainfo = None
+        self.rate = 0
+        self.eta = 0
+        self.d = BTDisplay(self)
+        self.uploaded = 0
+        self.torrent = None
         if restore is not None:
             self.restoreState(restore)
         else:            
-            self.metainfo = None
-            self.rate = 0
-            self.eta = 0
-            self.d = BTDisplay(self)
-            self.uploaded = 0
-            self.torrent = None
             BGDownloader.__init__(self,url,item)
 
     def restoreState(self, data):
         self.__dict__ = data
-        self.blockTimes = []
         self.d = BTDisplay(self)
         if self.state in ("downloading","uploading"):
             self.thread = Thread(target=self.restartDL, \

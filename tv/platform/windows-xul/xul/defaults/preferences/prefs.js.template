@@ -1,3 +1,5 @@
+pref("toolkit.defaultChromeURI", "chrome://dtv/content/main.xul");
+pref("toolkit.singletonWindowType", "main");
 /* NEEDS: CHANGE BACK BEFORE RELEASE */
 pref("extensions.pyxpcom.embedded", $pyxpcomIsEmbedded);
 

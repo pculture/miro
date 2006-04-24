@@ -234,8 +234,6 @@ class DynamicDatabase:
             self.endRead()
 
     # Returns the number of items in the database
-    def __len__(self):
-        return self.len()
     def len(self):
         self.beginRead()
         length = len(self.objects)
@@ -835,32 +833,156 @@ class DynamicDatabase:
             self.endUpdate()        
     
     ##
+    # Saves this database to disk
+    #
+    # @param filename the file to save to
+    #
+    # Maybe we want to add more robust error handling in the future?
+    # Right now, I'm assuming that if it doesn't work, there's nothing
+    # we can do to make it work anyway.
+    def save(self,filename=None):
+        global delegate, VERSION
+        #FIXME copying out the data before we save it is sloow
+        self.beginRead()
+        try:
+            data = []
+            for obj in self.objects:
+                data.append(obj)
+            out = (VERSION, data)
+        finally:
+            self.endRead()
+
+        if filename == None:
+            filename = config.get(config.DB_PATHNAME)
+        filename = expanduser(filename)
+        try:
+            handle = file(filename+".temp","wb")
+            dump(out,handle,HIGHEST_PROTOCOL)
+            handle.close()
+            if exists(filename):
+                copyfile(filename,filename+".bak")
+            copyfile(filename+".temp",filename)
+        except:
+            outText = findUnpicklableParts(out)
+            print "=" * 80
+            print outText
+            print "=" * 80
+            traceback.print_exc()
+            delegate.saveFailed(outText)
+
+    ##
+    # Upgrades database "schema" between versions
+    #
+    # @param data the unserialized data loaded from disk
+    #
+    def upgrade(self, origdata):
+        global VERSION
+        if type(origdata) == types.ListType:
+            print "dtv: upgrading from old, versionless database"
+            version = 0
+            data = origdata
+        else:
+            (version, data) = origdata
+
+        if version == 0:
+            print "dtv: Upgrading database from version 0 to version 1"
+            for key in range(len(data)):
+                obj = data[key]
+                if obj[0].__class__.__name__ in ['HTTPDownloader','BTDownloader']:
+                    import downloader
+                    objdata = copy(obj[0].__dict__)
+                    if obj[0].__class__.__name__ == 'BTDownloader':
+                        objdata['dlerType'] = 'BitTorrent'
+                        del objdata['d']
+                    else:
+                        objdata['dlerType'] = 'HTTP'
+                    objdata['blockTimes'] = []
+                    newdownloader = downloader.RemoteDownloader(localDownloadData = objdata)
+                    data[key] = (newdownloader, newdownloader)
+                    for item in newdownloader.itemList:
+                        for key2 in range(len(item.downloaders)):
+                            dler = item.downloaders[key2]
+                            if dler is obj[0]:
+                                item.downloaders[key2] = newdownloader
+            version = 1
+
+
+        if VERSION != version:
+            print "dtv: database has version %s and we're using %s!" % (str(version), str(VERSION))
+            raise DatabaseVersionError
+
+        return data
+    
+    ##
     # Restores this database
     #
-    def restoreFromObjectList(self, objectList):
-        """Restore the database using a list of DDBObjects."""
-
-        self.beginUpdate()
-        try:
-            #Initialize the object location dictionary
-            self.objectLocs = {}
-            self.objects = LinkedList()
-            for obj in objectList:
-                it = self.objects.append((obj, obj))
-                self.objectLocs[obj.id] = it
-
-            self.cursor = None    
-            self.cursorStack = []
+    # @param filename the file to save to
+    #
+    def restore(self,filename=None):
+        if filename == None:
+            filename = config.get(config.DB_PATHNAME)
+        filename = expanduser(filename)
+        if exists(filename):
+            self.beginUpdate()
             try:
-                DDBObject.lastID = self.getLastID()
-            except ValueError: #For the weird case where we're not
-                pass           #restoring anything
+                handle = file(filename,"rb")
+                try:
+                    temp = load(handle)
+                except:
+                    handle.close()
+                    return (self.restore(filename+".bak"))
+                handle.close()
 
-        finally:
-            self.endUpdate()
-        return True
+                # Upgrade older versions of the database
+                temp = self.upgrade(temp)
+
+                #Initialize the object location dictionary
+                self.objectLocs = {}
+                self.objects = LinkedList()
+                itemURLs = {}
+                feedURLs = {}
+                for obj in temp:
+                    try:
+                        itemURLs[obj[0].feed.origURL] = obj[0].feed
+                    except:
+                        pass
+                    try:
+                        feedURLs[obj[0].origURL] = True
+                    except:
+                        pass
+                    # Filter out any non-database objects that used to
+                    # be stored in the database in past versions
+                    if (issubclass(obj[0].__class__, DDBObject) and
+                        (not hasattr(obj[0],'__DropMeLikeItsHot'))):
+                        it = self.objects.append(obj)
+                        self.objectLocs[obj[0].id] = it
+
+                # Fix the broken case where an item's feed isn't in
+                # the database
+                for lostFeed in itemURLs.keys():
+                    if not feedURLs.has_key(lostFeed):
+                        lostFeed = itemURLs[lostFeed]
+                        it = self.objects.append( (lostFeed, lostFeed) )
+                        self.objectLocs[lostFeed.id] = it
+                    
+                self.cursor = None    
+                self.cursorStack = []
+                try:
+                    DDBObject.lastID = self.getLastID()
+                except ValueError: #For the weird case where we're not
+                    pass           #restoring anything
+
+                #for object in self.objects:
+                #    print str(object[0].__class__.__name__)+" of id "+str(object[0].getID())
+            finally:
+                self.endUpdate()
+            #self.checkObjLocs()
+            return True
+        else:
+            return exists(filename+".bak") and self.restore(filename+".bak")
 
     def getLastID(self):
+
         self.beginUpdate()
         try:
             last = DDBObject.lastID
@@ -1076,8 +1198,3 @@ class DDBObject:
             self.dd.endUpdate()
             globalLock.release()
 
-
-    ##
-    # Call this after you change the object
-    def endNoChange(self):
-        globalLock.release()

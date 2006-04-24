@@ -41,6 +41,14 @@ from download_utils import grabURL, parseURL, cleanFilename
 defaults = get_defaults('btdownloadheadless')
 defaults.extend((('donated', '', ''),))
 
+# Pass in a connection to the frontend
+def setDelegate(newDelegate):
+    global delegate
+    delegate = newDelegate
+
+class DownloaderError(Exception):
+    pass
+
 # Returns an HTTP auth object corresponding to the given host, path or
 # None if it doesn't exist
 def findHTTPAuth(host,path,realm = None,scheme = None):
@@ -91,21 +99,201 @@ class HTTPAuthPassword(DDBObject):
             self.endRead()
         return ret
 
-class RemoteDownloader(DDBObject):
-    """Download a file using the downloader daemon."""
-
-    def __init__(self, url, item, contentType):
+class Downloader(DDBObject):
+    def __init__(self, url,item):
         self.url = url
         self.itemList = [item]
-        self.contentType = contentType
-        self.dlid = "noid"
-        self.status = {}
-        self.thread = Thread(target=self.runDownloader, 
-                             name="downloader -- %s" % self.url)
+        self.startTime = time()
+        self.endTime = self.startTime
+        self.shortFilename = self.filenameFromURL(url)
+        self.filename = os.path.join(config.get(config.MOVIES_DIRECTORY),'Incomplete Downloads',self.shortFilename+".part")
+        self.filename = self.nextFreeFilename(self.filename)
+        self.state = "downloading"
+        self.currentSize = 0
+        self.totalSize = -1
+        self.blockTimes = []
+        self.reasonFailed = "No Error"
+        self.headers = None
+        DDBObject.__init__(self)
+        self.thread = Thread(target=self.runDownloader, \
+                             name="downloader -- %s" % self.shortFilename)
         self.thread.setDaemon(True)
         self.thread.start()
-        DDBObject.__init__(self)
 
+    ##
+    # In case multiple downloaders are getting the same file, we can support multiple items
+    def addItem(self,item):
+        self.itemList.append(item)
+
+    ##
+    # Returns the reason for the failure of this download
+    # This should only be called when the download is in the failed state
+    def getReasonFailed(self):
+        ret = ""
+        self.beginRead()
+        try:
+            ret = self.reasonFailed
+        finally:
+            self.endRead()
+        return ret
+
+    ##
+    # Finds a filename that's unused and similar the the file we want
+    # to download
+    def nextFreeFilename(self, name):
+        if not access(name,F_OK):
+            return name
+        parts = name.split('.')
+        insertPoint = len(parts)-1
+        count = 1
+        parts[insertPoint:insertPoint] = [str(count)]
+        newname = '.'.join(parts)
+        while access(newname,F_OK):
+            count += 1
+            parts[insertPoint] = str(count)
+            newname = '.'.join(parts)
+        return newname
+
+    def remove(self):
+        DDBObject.remove(self)
+
+    ##
+    # Returns the URL we're downloading
+    def getURL(self):
+        self.beginRead()
+        ret = self.url
+        self.endRead()
+        return ret
+    ##    
+    # Returns the state of the download: downloading, paused, stopped,
+    # failed, or finished
+    def getState(self):
+        self.beginRead()
+        ret = self.state
+        self.endRead()
+        return ret
+
+    ##
+    # Returns the total size of the download in bytes
+    def getTotalSize(self):
+        self.beginRead()
+        ret = self.totalSize
+        self.endRead()
+        return ret
+
+    ##
+    # Returns the current amount downloaded in bytes
+    def getCurrentSize(self):
+        self.beginRead()
+        ret = self.currentSize
+        self.endRead()
+        return ret
+
+    ##
+    # Returns a float with the estimated number of seconds left
+    def getETA(self):
+        self.beginRead()
+        try:
+            rate = self.getRate()
+            if rate != 0:
+                eta = (self.totalSize - self.currentSize)/rate
+                if eta < 0:
+                    eta = 0
+            else:
+                eta = 0
+        finally:
+            self.endRead()
+        return eta
+
+    ##
+    # Returns a float with the download rate in bytes per second
+    def getRate(self):
+        now = time()
+        self.beginRead()
+        try:
+            if self.endTime != self.startTime:
+                rate = self.currentSize/(self.endTime-self.startTime)
+            else:
+                try:
+                    if (now-self.blockTimes[0][0]) != 0:
+                        rate=(self.blockTimes[-1][1]-self.blockTimes[0][1])/(now-self.blockTimes[0][0])
+                    else:
+                        rate = 0
+                except IndexError:
+                    rate = 0
+        finally:
+            self.endRead()
+        return rate
+
+    ##
+    # Returns the filename that we're downloading to. Should not be
+    # called until state is "finished."
+    def getFilename(self):
+        self.beginRead()
+        ret = self.filename
+        self.endRead()
+        return ret
+
+    ##
+    # Returns a reasonable filename for saving the given url
+    def filenameFromURL(self,url):
+        (scheme, host, path, params, query, fragment) = parseURL(url)
+        if len(path):
+            try:
+                ret = re.compile("^.*?([^/]+)/?$").search(path).expand("\\1")
+                return cleanFilename(ret)
+
+            except:
+                return 'unknown'
+        else:
+            return "unknown"
+
+    def runDownloader(self, retry = False):
+        pass
+
+    ##
+    # Called by pickle during serialization
+    def __getstate__(self):
+        temp = copy(self.__dict__)
+        temp["thread"] = None
+        return (0,temp)
+
+    ##
+    # Called by pickle during deserialization
+    def __setstate__(self,state):
+        (version, data) = state
+        assert(version == 0)
+        self.__dict__ = data
+        self.filename = config.ensureMigratedMoviePath(self.filename)
+        if self.getState() == "downloading":
+            ScheduleEvent(0, lambda :self.runDownloader(retry = True),False)
+
+# Download an item using our separate download process
+# Pass in url, item, and contentType to create
+# Pass in localDownloadData to create from data found in local downloader
+class RemoteDownloader(Downloader):
+    def __init__(self, url = None,item = None,contentType = None,
+                 localDownloadData = None):
+        if localDownloadData is None:
+            self.dlid = "noid"
+            self.contentType = contentType
+            self.eta = 0
+            self.rate = 0
+            Downloader.__init__(self,url,item)
+        else:
+            self.__dict__ = localDownloadData
+            self.dlid = 'noid'
+            self.eta = 0
+            self.rate = 0
+            if self.dlerType == 'BitTorrent':
+                self.contentType = 'application/x-bittorrent'
+            else:
+                self.contentType = 'video/x-unknown'
+            self.thread = Thread(target=self.restoreLocalDownload,
+                    name="restoring old downloader -- %s" % self.shortFilename)
+            self.thread.setDaemon(True)
+            self.thread.start()
+            
     @classmethod
     def initializeDaemon(cls):
         RemoteDownloader.dldaemon = daemon.ControllerDaemon()
@@ -120,31 +308,47 @@ class RemoteDownloader(DDBObject):
         finally:   
             app.globalViewList['remoteDownloads'].removeView(view)
         if not self is None:
-            oldState = self.getState()
-            self.status = data
+            oldState = self.state
+            for key in data.keys():
+                self.__dict__[key] = data[key]
             # Store the time the download finished
-            if ((self.getState() in ['finished','uploading']) and
+            if ((self.state in ['finished','uploading']) and
                 (oldState not in ['finished', 'uploading'])):
                 for item in self.itemList:
                     item.setDownloadedTime()
             for item in self.itemList:
                 item.beginChange()
                 item.endChange()
-    ##
-    # This is the actual download thread.
-    def runDownloader(self):
-        c = command.StartNewDownloadCommand(RemoteDownloader.dldaemon,
-                                            self.url, self.contentType)
+
+    def restoreLocalDownload(self):
+        """Restore a previously running download."""
+        c = command.GenerateDownloadID(RemoteDownloader.dldaemon)
         self.dlid = c.send()
+        restoreData = self.__dict__.copy()
+        del restoreData['thread']
+        del restoreData['itemList']
+        c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon,
+                restoreData)
+        c.send()
         #FIXME: This is sooo slow...
         app.globalViewList['remoteDownloads'].recomputeIndex(app.globalIndexList['downloadsByDLID'])
+        
+    ##
+    # This is the actual download thread.
+    def runDownloader(self, retry = False):
+        if not retry:
+            c = command.StartNewDownloadCommand(RemoteDownloader.dldaemon,
+                                                self.url, self.contentType)
+            self.dlid = c.send()
+            #FIXME: This is sooo slow...
+            app.globalViewList['remoteDownloads'].recomputeIndex(app.globalIndexList['downloadsByDLID'])
 
     ##
     # Pauses the download.
-    def pause(self, block=False):
+    def pause(self):
         c = command.PauseDownloadCommand(RemoteDownloader.dldaemon,
                                             self.dlid)
-        c.send(block=block)
+        c.send(block=False)
 
     ##
     # Stops the download and removes the partially downloaded
@@ -161,102 +365,56 @@ class RemoteDownloader(DDBObject):
                                             self.dlid)
         c.send(block=False)
 
+    def getRate(self):
+        return self.rate
+
+    def getETA(self):
+        return self.eta
+
     ##
     # Removes downloader from the database
     def remove(self):
         self.stop()
-        DDBObject.remove(self)
+        Downloader.remove(self)
 
     ##
-    # In case multiple downloaders are getting the same file, we can support
-    # multiple items
-    def addItem(self,item):
-        self.itemList.append(item)
-
-    def getRate(self):
-        self.beginRead()
-        try:
-            return self.status.get('rate', 0)
-        finally:
-            self.endRead()
-
-    def getETA(self):
-        self.beginRead()
-        try:
-            return self.status.get('eta', 0)
-        finally:
-            self.endRead()
+    # Called by pickle during serialization
+    def __getstate__(self):
+        temp = copy(self.__dict__)
+        temp["thread"] = None
+        return (0,temp)
 
     ##
-    # Returns the reason for the failure of this download
-    # This should only be called when the download is in the failed state
-    def getReasonFailed(self):
-        if not self.getState() == 'failed':
-            msg = "getReasonFailed() called on a non-failed downloader"
-            raise ValueError(msg)
-        self.beginRead()
-        try:
-            return self.status['reasonFailed']
-        finally:
-            self.endRead()
-
-    ##
-    # Returns the URL we're downloading
-    def getURL(self):
-        self.beginRead()
-        try:
-            return self.url
-        finally:
-            self.endRead()
-
-    ##    
-    # Returns the state of the download: downloading, paused, stopped,
-    # failed, or finished
-    def getState(self):
-        self.beginRead()
-        try:
-            return self.status.get('state', 'downloading')
-        finally:
-            self.endRead()
-
-    ##
-    # Returns the total size of the download in bytes
-    def getTotalSize(self):
-        self.beginRead()
-        try:
-            return self.status.get('totalSize', -1)
-        finally:
-            self.endRead()
-
-    ##
-    # Returns the current amount downloaded in bytes
-    def getCurrentSize(self):
-        self.beginRead()
-        try:
-            return self.status.get('currentSize', 0)
-        finally:
-            self.endRead()
-
-    ##
-    # Returns the filename that we're downloading to. Should not be
-    # called until state is "finished."
-    def getFilename(self):
-        self.beginRead()
-        try:
-            return self.status['filename']
-        finally:
-            self.endRead()
-
-    def onRestore(self):
-        if self.dlid == 'noid' or len(self.status) == 0:
-            thread = Thread(target=self.runDownloader, \
-                            name="downloader -- %s" % self.url)
-            thread.setDaemon(True)
-            thread.start()
-        elif self.getState() in ['downloading','uploading']:
-            c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, 
-                    self.status)
+    # Called by pickle during deserialization
+    def __setstate__(self,state):
+        (version, data) = state
+        self.__dict__ = copy(data)
+        if data['dlid'] == 'noid':
+            self.thread = Thread(target=self.runDownloader, \
+                                 name="downloader -- %s" % self.shortFilename)
+            self.thread.setDaemon(True)
+            self.thread.start()
+        elif data['state'] in ['downloading','uploading']:
+            del data['itemList']
+            c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, data)
             c.send(retry = True, block = False)
+
+##
+# For upgrading from old versions of the database
+class HTTPDownloader(Downloader):
+    pass
+
+##
+# For upgrading from old versions of the database
+class BTDisplay:
+    def __setstate__(self,state):
+        (version, data) = state
+        self.__dict__ = data
+
+##
+# For upgrading from old versions of the database
+class BTDownloader(Downloader):
+    pass
 
 ##
 # Kill the main BitTorrent thread
@@ -264,7 +422,7 @@ class RemoteDownloader(DDBObject):
 # This should be called before closing the app
 def shutdownDownloader():
     c = command.ShutDownCommand(RemoteDownloader.dldaemon)
-    c.send(block=False)    
+    c.send()    
 
 class DownloaderFactory:
     lock = RLock()
@@ -275,5 +433,25 @@ class DownloaderFactory:
         info = grabURL(url,'GET')
         if info is None:
             return None
+        # FIXME: uncomment these 2 lines and comment the 3 above to
+        # enable the download daemon
+
         else:
             return RemoteDownloader(info['updated-url'],self.item, info['content-type'])
+
+if __name__ == "__main__":
+    def printsaved():
+        print "Saved!"
+    def displayDLStatus(dler):
+        print dler.getState()
+        print str(dler.getCurrentSize()) + " of " + str(dler.getTotalSize())
+        print str(dler.getETA()) + " seconds remaining"
+        print str(dler.getRate()) + " bytes/sec"
+        print "Saving to " + dler.getFilename()
+    factory = DownloaderFactory(DDBObject())
+    x = factory.getDownloader("http://www.blogtorrent.com/demo/btdownload.php?type=torrent&file=SatisfactionWeb.mov.torrent")
+    y = factory.getDownloader("http://www.vimeo.com/clips/2005/04/05/vimeo.thelastminute.613.mov")
+    ScheduleEvent(2,lambda :displayDLStatus(x),True)
+    ScheduleEvent(2,lambda :displayDLStatus(y),True)
+    sleep(60)
+    x.stop()

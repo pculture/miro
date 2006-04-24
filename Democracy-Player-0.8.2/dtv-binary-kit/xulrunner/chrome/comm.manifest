@@ -1,2 +1,0 @@
-content xbl-marquee jar:comm.jar!/content/xbl-marquee/ xpcnativewrappers=yes
-content cookie jar:comm.jar!/content/cookie/ xpcnativewrappers=yes

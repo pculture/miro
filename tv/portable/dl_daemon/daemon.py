@@ -13,18 +13,10 @@ class DaemonError(Exception):
     """
     pass
 
-firstDaemonLaunch = '1'
 def launchDownloadDaemon(oldpid, port):
-    global firstDaemonLaunch
-
-    daemonEnv = {
-        'DEMOCRACY_DOWNLOADER_PORT' : str(port),
-        'DEMOCRACY_DOWNLOADER_FIRST_LAUNCH' : firstDaemonLaunch,
-    }
     import app
     delegate = app.Controller.instance.getBackendDelegate()
-    delegate.launchDownloadDaemon(oldpid, daemonEnv)
-    firstDaemonLaunch = '0'
+    delegate.launchDownloadDaemon(oldpid, port)
     
 def getDataFile():
     try:
@@ -92,15 +84,6 @@ class Daemon:
         self.globalLock = Lock() # For serializing access to global object data
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.settimeout(None)
-
-    def handleSocketError(self, error):
-        """Call this when a error occurs using our socket.  It forces the
-        daemon to close its connection, causing the listen loop to end.  On
-        the downloader, this causes the downloader to quit.  On the
-        controller side, this causes the controller to restart the downloader.
-        """
-        print "socket error in daemon, closing my stream"
-        self.stream.close()
     
     def listenLoop(self):
         while True:
@@ -161,8 +144,6 @@ class Daemon:
         try:
             ret = self.returnValues[comm.id]
             del self.returnValues[comm.id]
-            if isinstance(ret, DaemonError):
-                raise ret
             return ret
         finally:
             self.globalLock.release()
@@ -221,7 +202,7 @@ class ControllerDaemon(Daemon):
         self.port = myPort
         self.socket.listen(63)
         self.ready = Event()
-        t = Thread(target = self.controllerLoop, name = "Controller Loop")
+        t = Thread(target = self.clientLoop, name = "Controller Loop")
         t.start()
         self.ready.wait()
 
@@ -236,28 +217,7 @@ class ControllerDaemon(Daemon):
                 raise socket.error("server not ready")
         return Daemon.send(self, comm, block)
 
-
-    def cleanupAfterError(self):
-        """Called when there's an error communicating with the downloader
-        daemon.  It tries to reset our state so that we're ready to start a
-        new downloader daemon.
-        """
-
-        self.ready.clear()
-        events = []
-        self.globalLock.acquire()
-        try:
-            for id in self.waitingCommands.keys():
-                events.append(self.waitingCommands[id])
-                del self.waitingCommands[id]
-                self.returnValues[id] = \
-                        DaemonError("Downloader connection closed")
-        finally:
-            self.globalLock.release()
-        for e in events:
-            e.set()
-
-    def controllerLoop(self):
+    def clientLoop(self):
         try:
             while True:
                 self.connectToDownloader()
@@ -265,13 +225,12 @@ class ControllerDaemon(Daemon):
                     self.listenLoop()
                     print "Controller listen loop completed"
                     break
-                except Exception, e:
-                    self.cleanupAfterError()
-                    import util
-                    util.failedExn("While talking to downloader backend")
+                except socket.error:
                     # On socket errors, the downloader dies, but the
                     # controller stays alive and restarts the downloader
-                    # by continuing the while loop we achieve this
+                    self.ready.clear()
+                    print "Socket exception in the controller daemon"
+                    traceback.print_exc()
         finally:
             self.shutDown = True
 

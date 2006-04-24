@@ -16,7 +16,7 @@ from Queue import Queue
 class IOBuffer:
     def __init__(self):
         # Force self.buf to be a string or unicode
-        self.bufs = Queue(0)
+        self.bufs = Queue()
         self.curBuf = ''
         self.pos = 0
         self.softspace = 0

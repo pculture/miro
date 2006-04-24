@@ -169,7 +169,7 @@ class UIBackendDelegate:
             folder = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,"Software\Microsoft\Windows\CurrentVersion\Run",0, _winreg.KEY_SET_VALUE)
             _winreg.DeleteValue(folder, "Democracy Player")
 
-    def launchDownloadDaemon(self, oldpid, env):
+    def launchDownloadDaemon(self, oldpid, port):
         # Kill the old process, if it exists
         if oldpid is not None:
             # This isn't guaranteed to kill the process, but it's likely the
@@ -180,19 +180,22 @@ class UIBackendDelegate:
             handle = ctypes.windll.kernel32.OpenProcess(PROCESS_TERMINATE, False, oldpid)
             ctypes.windll.kernel32.TerminateProcess(handle, -1)
             ctypes.windll.kernel32.CloseHandle(handle)
-        for key, value in env.items():
-            os.environ[key] = value
-        os.environ['DEMOCRACY_DOWNLOADER_LOG'] = \
-                config.get(config.DOWNLOADER_LOG_PATHNAME)
+        os.environ['DEMOCRACY_DOWNLOADER_PORT'] = str(port)
+
+
         # Start the downloader.  We use the subprocess module to turn off the
         # console.  One slightly awkward thing is that the current process
-        # might not have a valid stdin/stdout/stderr, so we create a pipe to
-        # it that we never actually use.
+        # might not have a valid stdin, so we create a pipe to it that we
+        # never actually use.
         downloaderPath = os.path.join(resource.resourceRoot(), "..",
                 "Democracy_Downloader.exe")
+        downloaderLog = open(config.get(config.DOWNLOADER_LOG_PATHNAME), 'wt')
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-        subprocess.Popen(downloaderPath, stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE, 
-                stdin=subprocess.PIPE,
-                startupinfo=startupinfo)
+        try:
+            subprocess.Popen(downloaderPath, stdout=downloaderLog,
+                    stderr=downloaderLog, 
+                    stdin=subprocess.PIPE,
+                    startupinfo=startupinfo)
+        finally: 
+            downloaderLog.close()

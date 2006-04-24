@@ -39,9 +39,6 @@ class MainFrame:
         # NEEDS: case out instances for HTMLDisplay and VideoDisplay
         self.selectHTML(newDisplay, area)
 
-    def getDisplay(self, area):
-        return self.selectedDisplays[area]
-
     def selectHTML(self, display, area):
         newURL = display.getURL()
         # make the display load newURL. that's it!

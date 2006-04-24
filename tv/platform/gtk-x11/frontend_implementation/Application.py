@@ -1,12 +1,6 @@
 import gtk
 
 import frontend
-import threading
-from frontend_implementation.gtk_queue import queue
-import gettext
-import locale
-import gtk.glade
-import resource
 
 ###############################################################################
 #### Application object                                                    ####
@@ -18,13 +12,6 @@ class Application:
 	print "Application init"
 
     def Run(self):
-        locale.setlocale(locale.LC_ALL, '')
-        gettext.bindtextdomain("democracyplayer", resource.path("../../locale"))
-        gettext.textdomain("democracyplayer")
-        gtk.glade.bindtextdomain("democracyplayer", resource.path("../../locale"))
-        gtk.glade.textdomain("democracyplayer")
-
-        queue.main_thread = threading.currentThread()
         gtk.threads_init()
 	self.onStartup()
         gtk.main()

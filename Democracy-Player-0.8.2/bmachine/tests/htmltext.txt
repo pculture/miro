@@ -1,7 +1,0 @@
-<html>
-<body>
-<a href=yahoo.com>yahoo!</a>&nbsp;&nbsp;
-<em>YO
-
-</body>
-</html>
