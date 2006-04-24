@@ -53,3 +53,9 @@ def upgrade3(objectList):
             feedImpl = o.savedData['actualFeed']
             if feedImpl is not None:
                 feedImpl.savedData['expireTime'] = None
+
+def upgrade4(objectList):
+    """Add iconCache variables to all Item objects."""
+    for o in objectList:
+        if o.classString in ['item', 'file-item', 'feed']:
+            o.savedData['iconCache'] = None

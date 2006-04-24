@@ -14,6 +14,7 @@ import traceback #FIXME get rid of this
 from datetime import datetime, timedelta
 from inspect import isfunction
 from new import instancemethod
+from iconcache import iconCacheUpdater, IconCache
 import os
 import config
 import re
@@ -682,12 +683,8 @@ class FeedImpl:
 
     ##
     # Returns the URL of a thumbnail associated with the feed
-    def getThumbnail(self):
-        ret = self.thumbURL
-        if ret is None or not (ret.startswith('http:') or
-                                ret.startswith('https:')):
-            ret = defaultFeedIconURL()
-        return ret
+    def getThumbnailURL(self):
+        return self.thumbURL
 
     ##
     # Returns URL of license assocaited with the feed
@@ -728,6 +725,7 @@ class Feed(DDBObject):
         else:
             self.loading = False
             self.actualFeed = initial
+        self.iconCache = IconCache(self, is_vital = True)
 
     # Returns javascript to mark the feed as viewed
     # FIXME: Using setTimeout is a hack to get around JavaScript bugs
@@ -810,6 +808,30 @@ class Feed(DDBObject):
                 item.remove()
         finally:
             self.endChange()
+
+    def getThumbnail(self):
+        self.beginRead()
+        try:
+            if self.iconCache.filename:
+                return "file://" + self.iconCache.filename
+            else:
+                return defaultFeedIconURL()
+        finally:
+            self.endRead()
+
+    def updateIcons(self):
+        iconCacheUpdater.clearVital()
+        for item in self.items:
+            item.iconCache.requestUpdate(True)
+        for feed in app.globalViewList['feeds']:
+            feed.iconCache.requestUpdate(True)
+
+    def onRestore(self):
+        if (self.iconCache == None):
+            self.iconCache = IconCache (self, is_vital = True)
+        else:
+            self.iconCache.dbItem = self
+            self.iconCache.requestUpdate(True)
 
 class RSSFeedImpl(FeedImpl):
     firstImageRE = re.compile('\<\s*img\s+[^>]*src\s*=\s*"(.*?)"[^>]*\>',re.I|re.M)
@@ -922,6 +944,7 @@ class RSSFeedImpl(FeedImpl):
             if (self.parsed.feed.has_key('image') and 
                 self.parsed.feed.image.has_key('url')):
                 self.thumbURL = self.parsed.feed.image.url
+                self.ufeed.iconCache.requestUpdate(is_vital=True)
             for entry in self.parsed.entries:
                 entry = self.addScrapedThumbnail(entry)
                 new = True

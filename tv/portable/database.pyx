@@ -1076,3 +1076,8 @@ class DDBObject:
             self.dd.endUpdate()
             globalLock.release()
 
+
+    ##
+    # Call this after you change the object
+    def endNoChange(self):
+        globalLock.release()

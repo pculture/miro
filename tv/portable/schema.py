@@ -191,6 +191,7 @@ from feed import SearchFeedImpl, DirectoryFeedImpl, SearchDownloadsFeedImpl
 from folder import Folder
 from guide import ChannelGuide
 from item import Item, FileItem
+from iconcache import IconCache
 
 class DDBObjectSchema(ObjectSchema):
     klass = DDBObject
@@ -198,6 +199,16 @@ class DDBObjectSchema(ObjectSchema):
     fields = [
         ('id', SchemaInt())
     ]
+
+class IconCacheSchema (ObjectSchema):
+    klass = IconCache
+    classString = 'icon-cache'
+    fields = [
+        ('etag', SchemaString(noneOk=True)),
+        ('modified', SchemaString(noneOk=True)),
+        ('filename', SchemaString(noneOk=True)),
+        ('url', SchemaString(noneOk=True)),
+        ]
 
 class ItemSchema(DDBObjectSchema):
     klass = Item
@@ -216,6 +227,7 @@ class ItemSchema(DDBObjectSchema):
         ('keep', SchemaBool()),
         ('creationTime', SchemaDateTime()),
         ('linkNumber', SchemaInt(noneOk=True)),
+        ('iconCache', SchemaObject(IconCache, noneOk=True)),
     ]
 
 class FileItemSchema(ItemSchema):
@@ -234,6 +246,7 @@ class FeedSchema(DDBObjectSchema):
         ('initiallyAutoDownloadable', SchemaBool()),
         ('loading', SchemaBool()),
         ('actualFeed', SchemaObject(FeedImpl)),
+        ('iconCache', SchemaObject(IconCache, noneOk=True)),
     ]
 
 class FeedImplSchema(ObjectSchema):
@@ -338,9 +351,9 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('loadedThisSession', SchemaBool()),
     ]
 
-VERSION = 3
+VERSION = 4
 objectSchemas = [ 
-    DDBObjectSchema, ItemSchema, FileItemSchema, FeedSchema, FeedImplSchema,
+    DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema, FeedImplSchema,
     RSSFeedImplSchema, ScraperFeedImplSchema, SearchFeedImplSchema,
     DirectoryFeedImplSchema, SearchDownloadsFeedImplSchema,
     RemoteDownloaderSchema, HTTPAuthPasswordSchema, FolderSchema,

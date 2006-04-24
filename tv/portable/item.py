@@ -9,6 +9,7 @@ from feedparser import FeedParserDict
 from threading import Thread
 from math import ceil
 from templatehelper import escape
+from iconcache import IconCache
 import threadpriority
 import config
 import os
@@ -33,6 +34,9 @@ class Item(DDBObject):
         self.dlFactory = DownloaderFactory(self)
         self.expired = False
         self.keep = False
+
+        self.iconCache = IconCache(self)
+        
         # linkNumber is a hack to make sure that scraped items at the
         # top of a page show up before scraped items at the bottom of
         # a page. 0 is the topmost, 1 is the next, and so on
@@ -289,7 +293,7 @@ class Item(DDBObject):
 
     ##
     # Returns a link to the thumbnail of the video
-    def getThumbnail(self):
+    def getThumbnailURL(self):
         ret = None
         self.beginRead()
         try:
@@ -309,10 +313,17 @@ class Item(DDBObject):
                 ret =  self.entry["thumbnail"]["url"]
         finally:
             self.endRead()
-        if ret is None or not (ret.startswith('http:') or
-                                ret.startswith('https:')):
-            ret = "resource:images/thumb.png"
         return ret
+
+    def getThumbnail (self):
+        self.beginRead()
+        try:
+            if self.iconCache.filename:
+                return "file://" + self.iconCache.filename
+            else:
+                return "resource:images/thumb.png"
+        finally:
+            self.endRead()
     ##
     # returns the title of the item
     def getTitle(self):
@@ -784,6 +795,7 @@ class Item(DDBObject):
         self.beginChange()
         try:
             self.entry = entry
+            self.iconCache.requestUpdate()
         finally:
             self.endChange()
 
@@ -872,6 +884,11 @@ class Item(DDBObject):
     def onRestore(self):
         self.startingDownload = False
         self.dlFactory = DownloaderFactory(self)
+        if (self.iconCache == None):
+            self.iconCache = IconCache (self)
+        else:
+            self.iconCache.dbItem = self
+            self.iconCache.requestUpdate()
 
 ##
 # An Item that exists as a file, but not as a download
@@ -918,3 +935,4 @@ class FileItem(Item):
         except:
             pass
         return ret
+

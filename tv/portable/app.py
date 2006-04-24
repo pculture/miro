@@ -1024,6 +1024,13 @@ class ModelActionHandler:
         except database.ObjectNotFoundError:
             pass
 
+    def updateIcons(self, feed):
+        try:
+            obj = db.getObjectByID(int(feed))
+            obj.updateIcons()
+        except database.ObjectNotFoundError:
+            pass
+
     def expireItem(self, item):
         obj = db.getObjectByID(int(item))
         obj.expire()
