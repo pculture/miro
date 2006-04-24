@@ -3,11 +3,12 @@ import os
 import threading
 from download_utils import grabURL
 from Queue import Queue
+from fasttypes import LinkedList
 
 class IconCacheUpdater:
     def __init__ (self):
-        self.idle = []
-        self.vital = []
+        self.idle = LinkedList()
+        self.vital = LinkedList()
         self.cond = threading.Condition()
 
         thread = threading.Thread(target=self.consumer_thread,\
@@ -31,7 +32,7 @@ class IconCacheUpdater:
                 self.cond.wait()
             if (len(vital) > 0):
                 item = vital.pop()
-            else
+            else:
                 item = idle.pop()
             self.cond.release()
             item.cache.update (lambda : item.url)
@@ -91,11 +92,11 @@ class IconCache:
 
             cachedir = os.path.join (config.get (config.SUPPORT_DIRECTORY), "icon-cache")
     
-            if (not os.path.isdir (cachedir))
+            if (not os.path.isdir (cachedir)):
                 os.makedirs (cachedir)
     
             # If we have sufficiently cached data, let the server know that.
-            if (url == old_url and filename and os.access (filename, os.R_OK))
+            if (url == old_url and filename and os.access (filename, os.R_OK)):
                 info = grabURL (url, etag = etag, modified = modified)
             else:
                 info = grabURL (url)
