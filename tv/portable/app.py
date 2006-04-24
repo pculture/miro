@@ -140,7 +140,7 @@ class PlaybackControllerBase:
             else:
                 frame = Controller.instance.frame
                 currentDisplay = frame.getDisplay(frame.mainDisplay)
-                if not hasattr(currentDisplay, 'getCurrentTime') or currentDisplay.getCurrentTime() <= 1.0:
+                if not hasattr(currentDisplay, 'getCurrentTime') or currentDisplay.getCurrentTime() <= 2.0:
                     nextItem = self.currentPlaylist.getPrev()
                 else:
                     currentDisplay.goToBeginningOfMovie()
@@ -301,7 +301,7 @@ class VideoDisplayBase (Display):
     def getCurrentTime(self):
         if self.activeRenderer is not None:
             return self.activeRenderer.getCurrentTime()
-        return VideoRenderer.DEFAULT_DISPLAY_TIME
+        return 0
 
     def setVolume(self, level):
         self.volume = level
