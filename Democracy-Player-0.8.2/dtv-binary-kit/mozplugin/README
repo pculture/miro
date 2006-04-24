@@ -1,0 +1,15 @@
+This directory contains the VLC Mozilla plugin.
+
+VLC is licensed under the GNU GPL. Source code is available here: 
+http://developers.videolan.org/svn.html
+
+It was built from SVN source tag 0.8.4b patched with the file
+vlc-moz-fix.patch found in this directory, configured with the options
+found in config.log, also in this directory, using contrib files found
+at
+http://download.videolan.org/pub/testing/win32/contrib-20051213-win32-bin-gcc-3.3.1-only.tar.bz2
+and the Linux cross compiler found at
+http://download.videolan.org/pub/testing/win32/mingw-gcc3.3.1-linux-crosscompiler.tar.bz2
+
+Phew!
+

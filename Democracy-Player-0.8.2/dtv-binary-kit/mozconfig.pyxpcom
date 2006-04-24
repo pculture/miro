@@ -1,0 +1,32 @@
+. $topsrcdir/xulrunner/config/mozconfig
+
+#mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/w32-objdir-debug
+mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/w32-objdir-release
+
+ac_add_options --enable-extensions=default,python/xpcom
+
+ac_add_options --disable-debug
+ac_add_options --enable-optimize
+#ac_add_options --enable-debug
+#ac_add_options --disable-optimize
+
+#ac_add_options --disable-static
+#ac_add_options --enable-shared
+
+#ac_add_options --disable-tests
+ac_add_options --enable-tests
+
+ac_add_options --without-system-nspr
+ac_add_options --without-system-zlib
+ac_add_options --without-system-jpeg
+ac_add_options --without-system-png
+ac_add_options --without-system-mng
+
+# I don't have the Java devkit installed. Don't bug me about it.
+ac_add_options --disable-javaxpcom
+
+ac_add_options --enable-crypto #comment to disable PSM/SSL support
+
+MOZ_TOOLS=/cygdrive/c/moz_tools
+GLIB_PREFIX=/cygdrive/c/moz3/static
+LIBIDL_PREFIX=/cygdrive/c/moz3/static

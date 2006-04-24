@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin" type="text/css"?>
+<?xml-stylesheet href="main.css" type="text/css"?>
+
+<!DOCTYPE window SYSTEM "chrome://dtv/locale/main.dtd">
+
+<!-- add hidechrome="true" to eliminate title bar -->
+<window id="main" title="&main.title;"
+        windowtype="main"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	hidechrome="true"
+        onload="onLoad();" onunload="onUnload();"
+	orient="vertical"
+	sizemode="normal"
+	width="800" height="600"
+	persist="screenX screenY width height">
+ <popupset><popup id="contextPopup"><menuitem label="bar"/></popup></popupset>
+<script src="chrome://dtv/content/main.js"/>
+
+<!-- TITLEBAR -->
+<hbox height="25" container="1" id="titlebar" class="titlebar">
+
+	<!-- MAIN MENUBAR -->
+	<hbox>
+		<menubar id="titlebar-menu">
+		
+			<!-- FILE MENU -->
+			<menu id="file-menu" label="File" accesskey="F" class="titlebar-toplevel" style="margin-left: 10px;">
+				<menupopup id="file-popup">
+					<menuitem label="Exit" acceltext="Ctrl+Q" accesskey="E" command="exit"/>
+				</menupopup>
+			</menu>
+			<!-- / FILE MENU -->
+			
+			<!-- EDIT MENU -->
+			<menu id="edit-menu" label="Edit" accesskey="E" class="titlebar-toplevel">
+				<menupopup id="file-popup">
+					<menuitem label="Cut" acceltext="Ctrl+X" accesskey="T" command="cut"/>
+					<menuitem label="Copy" acceltext="Ctrl+C" accesskey="C" command="copy"/>
+					<menuitem label="Paste" acceltext="Ctrl+V" accesskey="P" command="paste"/>
+                                        <menuseparator/>
+					<menuitem label="Preferences" command="openprefs"/>
+				</menupopup>
+			</menu>
+			<!-- / EDIT MENU -->
+			
+			<!-- VIDEO MENU -->
+			<menu id="video-menu" label="Video" accesskey="V" class="titlebar-toplevel">
+				<menupopup id="file-popup">
+					<menuitem label="Play Video" accesskey="P" disabled="true"/>
+					<menuitem label="Stop Video" accesskey="S" disabled="true"/>
+					<menuitem label="Full Screen" acceltext="Alt+Enter" accesskey="F" disabled="true"/>
+					<menuseparator/>
+					<menuitem label="Delete Video" accesskey="D" disabled="true"/>
+					<menuitem label="Save Video" accesskey="a" disabled="true"/>
+					<menuitem label="Copy Video Link" accesskey="L" disabled="true"/>
+				</menupopup>
+			</menu>
+			<!-- / VIDEO MENU -->
+			
+			<!-- CHANNEL MENU -->
+			<menu id="channel-menu" label="Channel" accesskey="C" class="titlebar-toplevel">
+				<menupopup id="file-popup">
+					<menuitem label="Add Channel" accesskey="A" disabled="false" command="addchannel"/>
+					<menuitem label="Remove Channel" accesskey="R" disabled="false" command="removechannel"/>
+					<menuitem label="Copy Channel Link" accesskey="L" disabled="false" command="copychannellink"/>
+					<menuseparator/>
+					<menuitem label="Update Channel" accesskey="U" disabled="false" command="updatechannel"/>
+					<menuitem label="Update All Channels" accesskey="A" disabled="false" command="updateall"/>
+					<menuseparator/>
+					<menuitem label="Rename Channel" accesskey="e" disabled="true"/>
+					<menuseparator/>
+					<menuitem label="Tell A Friend About This Channel" accesskey="F" disabled="true"/>
+				</menupopup>
+			</menu>
+			<!-- / CHANNEL MENU -->
+			
+			<!-- HELP MENU -->
+			<menu id="help-menu" label="Help" accesskey="H" class="titlebar-toplevel">
+				<menupopup id="file-popup">
+					<menuitem label="Help Contents" acceltext="F1" accesskey="H" command="showhelp"/>
+					<menuseparator/>
+					<menuitem label="&main.about;" accesskey="A" command="about"/>
+				</menupopup>
+			</menu>
+			<!-- / HELP MENU -->
+		
+		</menubar>
+	</hbox>
+	<!-- / MAIN MENUBAR -->
+	
+	<!-- WINDOW TITLE -->
+	<titlebar flex="1" container="1">
+		<caption flex="1" label="&main.title;"/>
+	</titlebar>
+	<!-- / WINDOW TITLE -->
+	
+	<!-- WINDOW BUTTONS -->
+	<hbox flex="0" width="55" minheight="24">	
+		<html:ul id="titlebar-buttons">
+			<html:li id="titlebar-buttons-minimize"><html:a onclick="window.minimize();">Minimize</html:a></html:li>
+			<html:li id="titlebar-buttons-maximize"><html:a onclick="maximizeOrRestore();">Maximize</html:a></html:li>
+			<html:li id="titlebar-buttons-close"><html:a onclick="window.close();">Close</html:a></html:li>
+		</html:ul>
+	</hbox>
+	<!-- / WINDOW BUTTONS -->
+	
+</hbox>
+<!-- / TITLEBAR -->
+
+<!-- CONTENT AREA -->
+<hbox flex="1">
+
+	<resizer dir="left" id="resizer-left" oncommand="return doResize(event);">
+		<hbox flex="0" width="5" minwidth="5" style="background-color:#000000;"/>
+	</resizer>
+
+	<!-- CHANNEL BAR -->
+  	<browser id="channelsDisplay" src="" type="content"
+                 flex="0" width="200" minwidth="50" maxwidth="400"
+                 context="contextPopup"
+                 oncontextmenu="return xulcontexthandler(event);" />
+	<!-- / CHANNEL BAR -->
+	
+  <!-- DIVIDER -->
+	<splitter collapse="before" width="10"/>
+	<!-- / DIVIDER -->
+	
+	<!-- MAIN WINDOW -->
+  	<browser id="mainDisplay" src="" type="content" flex="1"
+                 context="contextPopup"
+                 oncontextmenu="return xulcontexthandler(event);" />
+	<!-- / MAIN WINDOW -->
+	
+	<resizer dir="right" id="resizer-left" oncommand="return doResize(event);">
+		<hbox flex="0" width="5" minwidth="5" style="background-color:#000000;"/>
+	</resizer>
+	
+</hbox>
+<!-- / CONTENT AREA -->
+
+<!-- BOTTOM -->
+<hbox flex="0" id="bottom" class="bottom" align="center">
+
+	<!-- BUTTONS -->
+	<hbox flex="0" container="1" width="250" height="64" minheight="64" id="bottom-left">
+		<hbox flex="0" maxheight="20" id="bottom-left-addchannel">
+			<button id="add-channel" label="Add Channel" disabled="false" accesskey="A" command="addchannel"/>
+		</hbox>
+		<hbox flex="0" maxheight="20" id="bottom-left-preferences">
+			<button id="Preferences" label="Options" disabled="false" accesskey="O" command="openprefs"/>
+		</hbox>
+	</hbox>
+	<!-- / BUTTONS -->
+	
+	<!-- PLAYBACK PROGRESS/CONTROLS -->
+	<hbox flex="1" class="bottom-center">
+		<hbox flex="1"/>
+		
+		<!-- PROGRESS BAR -->
+		<hbox flex="0" width="220" id="bottom-progress">
+                     <html:div id="progress">
+          	         <html:span id="progress-slider" class="progress-slider-inactive"/>
+          	         <html:span id="progress-text">00:00:00</html:span>
+                     </html:div>
+		</hbox>
+		<!-- / PROGRESS BAR -->
+		
+		<!-- CONTROLS -->
+		<hbox flex="0" width="180">
+			<html:ul id="bottom-buttons">
+				<html:li id="bottom-buttons-previous" class="bottom-buttons-previous-inactive"><html:a  onmousedown="rewindMouseDown();" onmouseup="rewindMouseUp();" onmouseout="rewindFFMouseOut();">Previous</html:a></html:li>
+				<html:li id="bottom-buttons-stop" class="bottom-buttons-stop-inactive"><html:a onclick="eventURL(getCookieFromBrowserId('mainDisplay'),'action:videoStop');">Stop</html:a></html:li>
+				<html:li id="bottom-buttons-play" class="bottom-buttons-play"><html:a onclick="eventURL(getCookieFromBrowserId('mainDisplay'),'action:videoPlayPause');">Play</html:a></html:li>
+				<html:li id="bottom-buttons-fullscreen" class="bottom-buttons-fullscreen-inactive"><html:a onclick="eventURL(getCookieFromBrowserId('mainDisplay'),'action:videoFullscreen');">Fullscreen</html:a></html:li>
+				<html:li id="bottom-buttons-next" class="bottom-buttons-next-inactive"><html:a onmousedown="fastForwardMouseDown();" onmouseup="fastForwardMouseUp();" onmouseout="rewindFFMouseOut();">Next</html:a></html:li>
+			</html:ul>
+		</hbox>
+		<!-- / CONTROLS -->
+		
+		<hbox flex="1"/>
+	</hbox>
+	<!-- / PLAYBACK PROGRESS/CONTROLS -->
+	
+	<!-- VOLUME SLIDER -->
+	<html:div id="volume">
+  	<html:span id="knob"/>
+	</html:div>
+	<!-- / VOLUME SLIDER -->
+	
+	<hbox flex="0" id="bottom-right">
+  	<resizer dir="bottomright" id="resizer-bottomright" oncommand="return doResize(event);"/>
+	</hbox>
+</hbox>
+
+<!-- / BOTTOM -->
+<command id="addchannel" oncommand="window.openDialog('chrome://dtv/content/addchannel.xul','addchannel','chrome,dependent,centerscreen');" />
+<command id="exit" oncommand="window.close();" />
+<command id="copy" oncommand="clipboardCopy();" />
+<command id="cut" oncommand="clipboardCut();" />
+<command id="paste" oncommand="clibboardPaste();" />
+<command id="removechannel" oncommand="eventURL(getCookieFromBrowserId('channelsDisplay'),'action:removeCurrentFeed');" />
+<command id="updatechannel" oncommand="eventURL(getCookieFromBrowserId('channelsDisplay'),'action:updateCurrentFeed');" />
+<command id="updateall" oncommand="eventURL(getCookieFromBrowserId('channelsDisplay'),'action:updateAllFeeds');" />
+<command id="showhelp" oncommand="eventURL(getCookieFromBrowserId('channelsDisplay'),'action:showHelp');" />
+<command id="copychannellink" oncommand="eventURL(getCookieFromBrowserId('channelsDisplay'),'action:copyCurrentFeedURL');" />
+<!--
+<command id="about" oncommand="alert('DTV Windows version 0.8.0 Copyright (c) 2005, 2006 Participatry Culture Foundation');" />
+<command id="about" oncommand="window.openDialog('chrome://dtv/content/about.xul',about','chrome,dependent,centerscreen');" />
+-->
+<command id="about" oncommand="window.openDialog('chrome://dtv/content/about.xul','aboutdialog','chrome,dependent,centerscreen');" />
+<command id="openprefs" oncommand="window.openDialog('chrome://dtv/content/prefs.xul','prefs','chrome,dependent,centerscreen',getCookieFromBrowserId('channelsDisplay'));" />
+
+</window>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n"
+      eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="resource:css/intro.css" />
+<t:include filename="dynamic.js" />
+
+</head>
+
+<body>
+<div id="container">
+	<h1>Internet TV Channels</h1>
+	
+	<p>The Democracy Player can subscribe to internet TV channels from anywhere on the web. There are thousands of RSS feeds and websites out there that will work in the player. To keep help you find things to watch, Democracy provides a Channel Guide -- you can browse hundreds of channels and subscribe with a single click. You can also subscribe to a channel from the web by clicking 'Add Channel' and pasting in the URL.</p>
+	
+	<p>Once you subscribe to a channel, the player will check it regularly for new videos. When new videos are available, you'll see a blue circle next to the name of the channel with a number showing how many new videos are available.</p>
+	
+	<h1>How to Subscribe</h1>
+	
+	<a href="#" onclick="eventURL('action:addFeed?url=http://www.oldeenglish.org/bm/rss.php?i=1&amp;selected=0');"><img src="resource:images/subscribe_example.png" style="float:right; margin:0px 20px 5px 10px;" /></a>
+	
+	<p>To the right is a channel from our Channel Guide. Try subscribing to this channel by clicking on the "Subscribe" button:</p>
+	
+	<p>The Channel should now appear in your channel bar. If you like this channel, you can check off "Auto Download" and you'll get the latest videos as soon as they're online. Subscribing to other channels in the Channel Guide is just as easy.</p>
+	
+	<p>New channels are being added every day, so keep an eye on the Guide. And if you publish a channel or know of a Democracy-compatible channel that's not listed, please submit it.</p> 
+	
+	<h3>Next Step: <a href="#" onclick="eventURL('action:doneWithIntro');">Go to the Channel Guide &gt;&gt;</a></h3>
+</div>
+</body>
+</html>

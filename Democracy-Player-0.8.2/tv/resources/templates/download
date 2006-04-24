@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+<link href="resource:css/main.css" rel="stylesheet" type="text/css" />
+<t:include filename="dynamic.js" />
+<t:include filename="settings.js" />
+
+<t:dynamicviews>
+	<t:view name="dlitems" key="global view items">
+  <t:filter functionkey="global filter allDownloadingItems" parameter="" />
+  <t:sort functionkey="global sort item" parameter="" />
+	</t:view>
+</t:dynamicviews>
+
+</head>
+
+<body onload="beginUpdates();">
+
+<!-- TITLE BAR ************************************************************ -->
+<div id="main-titlebar">
+	<div id="main-titlebar-avatar" style="border:0px;"><img src="resource:images/download-icon.png" /></div>
+	<div id="main-titlebar-channelname">
+		<h1 i18n:translate="">Active Downloads</h1>
+	</div>
+	<div id="main-titlebar-tasks">
+		<div id="main-titlebar-tasks-search" style="margin-top:38px;"><input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search" onfocus="startEditFilter(this,new Array('dlitems'),new Array(''),new Array('global filter allDownloadingItems'),new Array(0), new Array(''))" onblur="endEditFilter()" /></div>
+	</div>
+</div>
+<!-- / TITLE BAR -->
+
+<div id="main-container">
+
+	<!-- VIDEOS ************************************************** -->
+	<div>
+		<span t:repeatForView="dlitems">		
+		<t:includeTemplate filename="download-item" />
+ 		</span>
+	</div>
+	<!-- / VIDEOS -->
+	
+</div>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+*******************************************************************************
+*******************************************************************************
+
+THIS PORT IS INCOMPLETE AND OBSOLETE. IT HAS BEEN ABANDONED IN FAVOR
+OF THE 'WINDOWS-XUL' PORT. PROCEED AT YOUR OWN RISK.
+
+*******************************************************************************
+*******************************************************************************
+
+There is a bug in Distutils and Pyrex in Python 2.4. You will need to
+make the following change to the build_ext.py in Pyrex (on my system,
+it was in c:\Python24\Lib\site-packages\Pyrex\Distutils
+
+---cut-------------------------------------------------------------------------
+--- build_ext.py        Fri Apr 30 08:00:46 2004
++++ new-build_ext.py    Wed Dec 29 03:11:19 2004
+@@ -32,7 +32,7 @@
+        if self.compiler == 'mingw32':
+          self.swig_cpp = 1
+
+-  def swig_sources (self, sources):
++  def swig_sources (self, sources, extension=None):
+      if not self.extensions:
+---cut-------------------------------------------------------------------------

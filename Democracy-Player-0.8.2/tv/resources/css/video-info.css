@@ -1,0 +1,174 @@
+body {
+	background: #000000;
+	margin: 0px;
+	/* The following property is used by Safari to prevent text selection */
+	-khtml-user-select: none;
+}
+
+#videodetails-container {
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	height: 46px;
+	background-color: #000000;
+	font: normal 11px "Lucida Grande", Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+#videodetails-channeltitle {
+	position: absolute;
+	top: 6px;
+	left: 8px;
+	overflow: hidden;
+	min-width: 350px;
+	background-color: #000000;
+	z-index: 1;
+}
+
+#videodetails-channeltitle h1 {
+	float: left;
+	display: inline;
+	margin: 0px;
+	padding: 0px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+#videodetails-channeltitle h2 {
+	float: left;
+	display: inline;
+	margin: 1px 0px 0px 5px;
+	font-size: 13px;
+	font-weight: normal;
+	color: #CCCCCC;
+}
+
+#videodetails-channeltitle h2 a {
+	color: #CCCCCC;
+	text-decoration: underline;
+}
+
+#videodetails-channeltitle h2 a:hover {
+	color: #CCCCCC;
+	text-decoration: none;
+}
+
+#videodetails-channeltitle h3 {
+	clear: left;
+	margin: 3px 0px 0px 0px;
+	padding: 0px;
+	font-size: 12px;
+	font-weight: normal;
+	color: #FFFFFF;
+}
+
+#videodetails-channeltitle h3 a {
+	color: #FFFFFF;
+	text-decoration: underline;
+}
+
+#videodetails-channeltitle h3 a:hover {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+#videodetails-actions {
+	position: absolute;
+	width: 140px;
+	top: 8px;
+	right: 8px;
+	z-index: 0;
+}
+
+#videodetails-actions-buttons {
+	float: right;
+	height: 10px;
+	overflow: hidden;
+}
+
+#videodetails-actions-bomb {
+	width: 11px;
+	height: 10px;
+	overflow: hidden;
+	background: url(../images/videodetails-bomb.png) no-repeat left top;	
+	text-decoration: none;
+}
+
+#videodetails-actions-bomb:hover {
+	background: url(../images/videodetails-bomb.png) no-repeat 0px -10px;	
+	text-decoration: none;
+}
+
+#videodetails-actions-trash {
+	width: 11px;
+	height: 10px;
+	overflow: hidden;
+	background: url(../images/videodetails-trash.png) no-repeat left top;	
+	text-decoration: none;
+}
+
+#videodetails-actions-trash:hover {
+	background: url(../images/videodetails-trash.png) no-repeat 0px -10px;	
+	text-decoration: none;
+}
+
+#videodetails-actions-mail {
+	width: 14px;
+	height: 10px;
+	overflow: hidden;
+	margin: 0px 10px;
+	background: url(../images/videodetails-mail.png) no-repeat left top;	
+	text-decoration: none;
+}
+
+#videodetails-actions-mail:hover {
+	background: url(../images/videodetails-mail.png) no-repeat 0px -10px;	
+	text-decoration: none;
+}
+
+#videodetails-actions-expiry-container {
+	clear: right;
+	padding-top: 5px;
+}
+
+#videodetails-actions-expiry {
+	float: right;
+	background-color: #9C9C9C;
+}
+
+#videodetails-actions-expiry p {
+	color: #FFFFFF;
+	text-transform: uppercase;
+	font-size: 9px;
+	margin: 0px;
+	padding: 2px;
+}
+
+#videodetails-actions-save {
+	float: right;
+	background-color: #FFFFFF;
+	padding: 1px;
+}
+
+#videodetails-actions-save p {
+	text-transform: uppercase;
+	font-size: 9px;
+	margin: 0px;
+	padding: 1px;
+}
+
+#videodetails-actions-save p a {
+	color: #4A4A4A;
+	text-decoration: underline;	
+}
+
+#videodetails-actions-save p a:hover {
+	color: #999999;
+	text-decoration: underline;	
+}
+
+img {	
+	border: 0px;
+}

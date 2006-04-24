@@ -1,0 +1,21 @@
+#include "nsISupports.idl"
+#include "nsIDOMDocument.idl"
+#include "nsIDOMElement.idl"
+#include "nsIWebProgressListener.idl"
+#include "nsIURIContentListener.idl"
+#include "nsIDOMWindow.idl"
+
+[scriptable, uuid(7E70142F-ABC9-4d6e-BDB8-EDC747FCD2A3)]
+interface pcfIDTVJSBridge : nsISupports
+{
+
+  void xulNavigateDisplay(in nsISupports mainDocument, in AString displayName,
+                          in AString uri);
+
+  void xulAddElementAtEnd(in nsISupports elt, in AString xml, in AString id);
+  void xulAddElementBefore(in nsISupports elt, in AString xml, in AString id);
+  void xulRemoveElement(in nsISupports elt, in AString id);
+  void xulChangeElement(in nsISupports elt, in AString id, in AString xml);
+  void xulHideElement(in nsISupports elt, in AString id);
+  void xulShowElement(in nsISupports elt, in AString id);
+};

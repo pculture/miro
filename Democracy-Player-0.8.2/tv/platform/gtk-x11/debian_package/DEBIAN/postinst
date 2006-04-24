@@ -1,0 +1,8 @@
+#!/bin/sh
+PYTHON=python2.4
+
+if which $PYTHON >/dev/null 2>&1; then
+     MODULEDIR="/usr/lib/python2.4/site-packages/democracy/"
+     $PYTHON -E -O /usr/lib/$PYTHON/compileall.py -q $MODULEDIR
+     $PYTHON -E /usr/lib/$PYTHON/compileall.py -q $MODULEDIR
+fi

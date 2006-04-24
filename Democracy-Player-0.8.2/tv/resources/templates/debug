@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://www.participatorypolitics.org/"
+      eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="resource:css/style.css" />
+<t:include filename="dynamic.js" />
+
+<t:dynamicviews>
+ <t:view name="collections" key="global database">
+  <t:filter functionkey="global filter class" parameter="Collection" />
+ </t:view>
+ <t:view name="items" key="global database">
+  <t:filter functionkey="global filter class" parameter="Item" />
+ </t:view>
+ <t:view name="feeds" key="global view feeds">
+  <t:filter functionkey="global filter substring" fieldkey="title" parameter="" invert="false" />
+  <t:sort functionkey="global sort text" fieldkey="title" parameter="" />
+ </t:view>
+</t:dynamicviews>
+
+</head>
+
+<body>
+  <div id="main_window"> 
+    <div class="channel_title">Debug<a class="settings_button" href="#">Settings</a></div> 
+  <div class="channel_tabs"> 
+    <a href="#"><div class="tab emptytab"><span /></div></a>
+    <a href="#"><div class="tab emptytab"><span /></div></a>
+    <a href="#"><div class="tab emptytab"><span /></div></a>
+    <a href="#"><div class="tab emptytab"><span /></div></a>
+  </div> 
+  <div id="content_window">
+  Add a collection:
+    <form method="GET" action="action:addCollection">
+      <input name="title" type="text" />
+      <input type="submit" />
+    </form>
+<br/><br/>
+  Remove a collection:<br/>
+  <a t:repeatForView="collections" href="action:removeCollection?id=@@@this getID@@@">
+    <span t:replace="this title" /><br />
+   </a>
+<br/><br/>
+  Add to a collection:<br/>
+  <form t:repeatForView="collections" action="action:addToCollection" method="GET">
+    <span t:replace="this title" />
+      <input name="id" type="hidden" value="@@@this getID@@@"/>
+      <input name="item" type="text" />
+      <input type="submit" />
+      <br />
+   </form>
+<br/><br/>
+  Remove from a collection:<br/>
+  <form t:repeatForView="collections" action="action:removeFromCollection" method="GET">
+    <span t:replace="this title" />
+      <input name="id" type="hidden" value="@@@this getID@@@"/>
+      <input name="item" type="text" />
+      <input type="submit" />
+      <br />
+   </form>
+<br/><br/>
+  Move within a collection:<br/>
+  <form t:repeatForView="collections" action="action:moveInCollection" method="GET">
+    <span t:replace="this title" />
+      <input name="id" type="hidden" value="@@@this getID@@@"/>
+      <input name="item" type="text" />
+      <input name="pos" type="text" />
+      <input type="submit" />
+      <br />
+   </form>
+
+<br/><br/>
+  Feed list (for testing view code and dynamic updates):<br/>
+
+<div t:hideIfViewNotEmpty="feeds">(No matching search results.)</div>
+<div t:hideIfViewEmpty="feeds">
+ <div>
+ <span t:repeatForView="feeds">
+    <span t:replace="this title" /> 
+    (<span t:replace="this available" /> available)<br />
+ </span>
+ </div>
+  Sort: <a href="javascript:void()" onclick="setViewSort('feeds','title','global sort text',false)">name</a>, <a href="javascript:void()" onclick="setViewSort('feeds','title','global sort text',true)">name descending</a>, <a href="javascript:void()" onclick="setViewSort('feeds','available','global sort number',false)">available</a>, <a href="javascript:void()" onclick="setViewSort('feeds','available','global sort number',true)">available descending</a>
+</div>
+
+  Search feed titles:
+<input type="text" onfocus="startEditFilter(this, new Array('feeds'), new Array('title'), new Array('global filter substring'), new Array('false'), new Array(''))" onblur="endEditFilter()" />
+ 
+<br/><br/>
+  Test dialogs:
+   <a href="action:testGetHTTPAuth?url=myurl&amp;domain=mydomain&amp;prefillUser=myusername&amp;prefillPassword=mypassword">getHTTPAuth</a>,
+   <a href="action:testIsScrapeAllowed?url=myurl">isScrapeAllowed</a>
+<br/><br/>
+  Play a video file in a new window:
+    <form method="GET" action="action:playFile">
+      Filename on local disk: <input name="filename" type="text" />
+      <input type="submit" value="play"/>
+    </form>
+<br/><br/>
+  <a href="action:playViewNamed?viewName=feeds">
+  Play a dummy view
+  </a>
+  </div>
+  </div> 
+
+</body>
+</html>

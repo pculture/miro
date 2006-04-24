@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n"
+      eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
+
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    </head>
+
+    <body>
+        <div class="main-video">
+
+            <t:includeTemplate filename="channel-item-header" />
+
+            <!-- VIDEO DETAILS BLOCK -->
+            <div class="main-video-details">
+                
+                <t:includeTemplate filename="channel-item-info" />
+
+            	<!-- DOWNLOAD PROGRESS -->
+            	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="downloading">
+                    <div class="main-video-progress">
+            		    <div class="main-progress-bar">
+            		        <img src="resource:images/status.png" width="@@@this downloadProgressWidth@@@" height="12" />
+            		    </div>
+            		    <a class="main-progress-cancel" href="#" onclick="eventURL('action:expireItem?item=@@@this getID@@@');" title="Cancel Download" />
+                	</div>
+                	<p style="clear:both;">
+                	    <span t:replace="this downloadETA" />
+                	    <span t:hideIfKey="this downloadRate" t:hideFunctionKey="global filter equal" t:hideParameter="0k/s">
+                	        <span t:replace="this downloadRate" />
+                	    </span>
+                	</p>
+            	</span>
+            	<!-- / DOWNLOAD PROGRESS -->
+            	            	
+            </div>            
+            <div class="clearer"></div>
+            <!-- / VIDEO DETAILS BLOCK -->
+
+        </div>
+    </body>
+    
+</html>

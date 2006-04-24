@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Democracy Channel View</title>
+
+    <link href="resource:css/main.css" rel="stylesheet" type="text/css" />
+    <t:include filename="dynamic.js" />
+    <t:include filename="settings.js" />
+    <script type="text/javascript" src="resource:templates/shide.js" />
+
+    <t:dynamicviews>
+        <t:view name="all-items" key="global view items">
+            <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
+        </t:view>
+        <t:view name="new-unseen-items" key="global view items">
+            <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
+            <t:filter functionkey="global filter unviewedItems" parameter="@@@feed getFeedID@@@" />
+            <t:sort functionkey="global sort item" parameter="" />
+        </t:view>
+        <t:view name="new-items" key="global view items">
+            <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
+            <t:filter functionkey="global filter viewedItems" parameter="@@@feed getFeedID@@@" />
+            <t:sort functionkey="global sort item" parameter="" />
+        </t:view>
+        <t:view name="downloading-items" key="global view items">
+           <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
+            <t:filter functionkey="global filter downloadingItems" parameter="@@@feed getFeedID@@@" />
+            <t:sort functionkey="global sort item" parameter="" />
+        </t:view>
+        <t:view name="unwatched-items" key="global view items">
+            <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
+            <t:filter functionkey="global filter unwatchedItems" parameter="@@@feed getFeedID@@@" />
+            <t:sort functionkey="global sort item" parameter="" />
+        </t:view>
+        <t:view name="expiring-items" key="global view items">
+            <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
+            <t:filter functionkey="global filter expiringItems" parameter="@@@feed getFeedID@@@" />
+            <t:sort functionkey="global sort item" parameter="" />
+        </t:view>
+        <t:view name="saved-items" key="global view items">
+            <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
+            <t:filter functionkey="global filter oldItems" parameter="@@@feed getFeedID@@@" />
+            <t:sort functionkey="global sort item" parameter="" />
+        </t:view>
+    </t:dynamicviews>
+</head>
+
+<body onload="toggleLayer('main-newlyavailable'); toggleLayer('main-unwatched'); toggleLayer('main-expiring'); toggleLayer('main-saved'); toggleLayer('show-more-videos-label');toggleLayer('no-new-videos-label'); beginUpdates();">
+    
+<!-- TITLE BAR ************************************************************ -->
+<div id="main-titlebar">
+	<div id="main-titlebar-avatar"><img src="***feed getThumbnail***" alt="" style="background-color:#FFFFFF;" /></div>
+	<div id="main-titlebar-channelname">
+		<h1 t:replaceMarkup="feed getTitle" />
+		<div id="main-titlebar-autodownload">
+            <form name="setAuto" >
+                <input type="hidden" name="feed" value="@@@feed getID@@@" />
+                <input type="checkbox" name="automatic" value="1" checked="checked" onClick="javascript:setAutoDownloadableFeed()" t:hideIfNotKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean"/>
+                <input type="checkbox" name="automatic" value="1"                   onClick="javascript:setAutoDownloadableFeed()" t:hideIfKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean"/>
+                <span class="auto_link" i18n:translate="">Auto Download</span>
+            </form>
+		</div>
+	</div>
+	<div id="main-titlebar-tasks">
+		<div id="main-titlebar-tasks-settings">
+			<p><a href="#" onclick="eventURL('template:feed-settings');">Settings</a></p>
+		</div>
+		<div id="main-titlebar-tasks-recommend">
+		    <p><a href="mailto:?subject=@@@feed getTitle@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed getTitle@@@&quot;. If you don't have the Democracy Player, you can get it here:%0D%0A%0D%0Ahttp://www.getdemocracy.com/%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed getURL@@@" class="recommend_link" i18n:translate="">Recommend</a></p>
+		</div>
+		<div id="main-titlebar-tasks-search">
+		    <input type="search" placeholder="Search Channel" class="main-titlebar-tasks-search" onfocus="startEditFilter(this,new Array('new-unseen-items','new-items'),new Array('',''),new Array('global filter unviewedItems','global filter viewedItems'),new Array(0,0),new Array('@@@feed getFeedID@@@','@@@feed getFeedID@@@'))" onblur="endEditFilter()" />
+		</div>
+	</div>
+</div>
+<!-- / TITLE BAR -->
+
+<!-- CHANNEL CONTAINER **************************************************** -->
+<div id="main-container">
+
+    <!-- NEWLY AVAILABLE ************************************************** -->
+    <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-newlyavailable');">#&nbsp;</a></div>
+  <!--  <div id="main-channelbar" class="main-channelbar">
+    	<h1>On This Channel</h1>
+    	<h2 t:updateForView="all-items"><span t:replace="this len" /></h2>
+    </div>
+-->
+
+    <div id="main-newlyavailable">
+        <span t:repeatForView="new-unseen-items">
+            <t:includeTemplate filename="download-item" />
+        </span>
+        <span id="no-new-videos-label">
+        <span t:hideIfViewNotEmpty="new-unseen-items">
+
+        </span>
+        </span>
+        <span t:hideIfViewEmpty="new-items">
+            <span id="show-more-videos-label" class="main-content">								
+								<a href="javascript:toggleLayer('main-newlyavailable-seen');toggleLayer('show-more-videos-label');toggleLayer('no-new-videos-label');" style="color:#FFFFFF; text-decoration:none;" class="main-notification-nonew">
+										<div class="main-notification"><span t:updateForView="new-items" class="video-count"><span t:replace="this len" /></span>Videos on this Channel &gt;&gt;</div>
+										<div class="main-notification-right">&nbsp;</div>
+										<br clear="left" />
+								</a>
+            </span>
+            <span id="main-newlyavailable-seen">
+                <span t:repeatForView="new-items">
+                    <t:includeTemplate filename="download-item" />
+                </span>
+            </span>
+        </span>
+    </div>		
+
+    <!-- DOWNLOADS ******************************************************** -->
+    <span t:hideIfViewEmpty="downloading-items">
+        <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-downloads');">#&nbsp;</a></div>
+        <div id="main-channelbar" class="main-channelbar-download">
+        	<h1 t:updateForView="downloading-items"><span t:replace="this len" /> Download<span t:hideIfKey="this len" t:hideFunctionKey="global filter equal" t:hideParameter="1">s</span> in Progress</h1>
+        </div>
+
+        <div id="main-downloads">
+            <span t:repeatForView="downloading-items">
+                <t:includeTemplate filename="download-item" />
+            </span>
+        </div>
+    </span>
+    <!-- / DOWNLOADS -->
+
+    <!-- UNWATCHED ******************************************************** -->
+    <span t:hideIfViewEmpty="unwatched-items">
+        <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-unwatched');">#&nbsp;</a></div>
+        <div id="main-channelbar" class="main-channelbar">
+        	<h1>Unwatched</h1>
+        	<h2 t:updateForView="unwatched-items"><span t:replace="this len" /></h2>
+        </div>
+
+        <div id="main-unwatched">
+            <span t:repeatForView="unwatched-items">
+                <t:includeTemplate filename="download-item" />
+            </span>
+        </div>
+    </span>
+    <!-- / UNWATCHED -->
+
+    <!-- EXPIRING ********************************************************* -->
+    <span t:hideIfViewEmpty="expiring-items">
+        <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-expiring');">#&nbsp;</a></div>
+        <div id="main-channelbar" class="main-channelbar">
+        	<h1>Watched</h1>
+        	<h2 t:updateForView="expiring-items"><span t:replace="this len" /></h2>
+        </div>
+
+        <div id="main-expiring">
+            <span t:repeatForView="expiring-items">
+                <t:includeTemplate filename="download-item" />
+            </span>
+        </div>
+    </span>
+    <!-- / EXPIRING -->
+
+    <!-- SAVED ************************************************************ -->
+    <span t:hideIfViewEmpty="saved-items">
+        <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-saved');">#&nbsp;</a></div>
+        <div id="main-channelbar" class="main-channelbar">
+        	<h1>Saved</h1>
+        	<h2 t:updateForView="saved-items"><span t:replace="this len" /></h2>
+        </div>
+
+        <div id="main-saved">
+            <span t:repeatForView="saved-items">
+                <t:includeTemplate filename="download-item" />
+            </span>
+        </div>
+    </span>
+    <!-- / SAVED -->
+</div>
+<!-- / CHANNEL ITEMS LIST -->
+
+<t:triggerActionOnUnload url="action:markFeedViewed?feed=@@@feed getID@@@" />
+
+</body>
+</html>

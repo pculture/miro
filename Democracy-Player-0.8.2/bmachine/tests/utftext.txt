@@ -1,0 +1,7 @@
+﻿<ul>
+<li><a href=ayna_faq.utf8.html>الأسئلة المتعددة عن
+أيــن</a>
+<li><a href=nathra_faq.utf8.html>الأسئلة المتعددة عن
+نظــرة</a>
+<li><a href=/search/hints.utf8.html>كيفية إستعمال نظرة</a>
+</ul>

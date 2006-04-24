@@ -1,0 +1,269 @@
+diff -Naur xpcom.orig/src/loader/Makefile.in xpcom/src/loader/Makefile.in
+--- xpcom.orig/src/loader/Makefile.in	2006-01-30 20:22:26.734375000 -0500
++++ xpcom/src/loader/Makefile.in	2006-02-01 16:41:09.437500000 -0500
+@@ -46,7 +46,7 @@
+ 
+ LIBRARY_NAME	= pyloader
+ IS_COMPONENT	= 1
+-REQUIRES	= xpcom string xpcom_obsolete $(NULL)
++REQUIRES	= xpcom string xpcom_obsolete pref $(NULL)
+ MOZILLA_INTERNAL_API = 1
+ FORCE_SHARED_LIB = 1 
+ FORCE_USE_PIC = 1
+diff -Naur xpcom.orig/src/loader/pyloader.cpp xpcom/src/loader/pyloader.cpp
+--- xpcom.orig/src/loader/pyloader.cpp	2006-01-30 20:22:26.750000000 -0500
++++ xpcom/src/loader/pyloader.cpp	2006-02-01 16:44:37.734375000 -0500
+@@ -54,6 +54,8 @@
+ #include "nsIModule.h"
+ #include "nsDirectoryServiceDefs.h"
+ #include "nsILocalFile.h"
++#include "nsIPrefService.h"
++#include "nsIPrefBranch.h"
+ #include "nsString.h"
+ #include "nsXPIDLString.h"
+ #include "nsString.h"
+@@ -82,6 +84,9 @@
+ 
+ #include "nsITimelineService.h"
+ 
++// Boolean preference to look to to see if we're in embedded mode.
++#define EMBEDDED_PREF "extensions.pyxpcom.embedded"
++
+ typedef nsresult (*pfnPyXPCOM_NSGetModule)(nsIComponentManager *servMgr,
+                                           nsIFile* location,
+                                           nsIModule** result);
+@@ -93,33 +98,147 @@
+ static void LogError(const char *fmt, ...);
+ static void LogDebug(const char *fmt, ...);
+ 
+-// Ensure that any paths guaranteed by this package exist on sys.path
+-// Only called once as we are first loaded into the process.
+-void AddStandardPaths()
++// Find the path to the directory with our Python code: {bin}/python. Logs an
++// appropriate error on failure.
++nsresult FindPrivatePythonDirectory(nsAutoString& pathBuf)
+ {
+-	// Put {bin}\Python on the path if it exists.
+ 	nsresult rv;
+ 	nsCOMPtr<nsIFile> aFile;
+ 	rv = NS_GetSpecialDirectory(NS_XPCOM_CURRENT_PROCESS_DIR, getter_AddRefs(aFile));
+ 	if (NS_FAILED(rv)) {
+ 		LogError("The Python XPCOM loader could not locate the 'bin' directory\n");
+-		return;
++		return rv;
+ 	}
+ 	aFile->Append(NS_LITERAL_STRING("python"));
+-	nsAutoString pathBuf;
+ 	aFile->GetPath(pathBuf);
++	return NS_OK;
++}
++
++// PR_TRUE if we are "embedded," that is, we are supposed to look only
++// at a Python installation bundleded with the currently running
++// application (specifically, if sys.path should never contain
++// anything other than {bin}/python unless the application changes
++// it); PR_FALSE if we should initialize Python normally and allow
++// sys.path to point at the system-wide Python install (in which case
++// initialization is likely to fail if the user didn't already have
++// Python installed.)
++PRBool IsEmbedded(void)
++{
++	nsCOMPtr<nsIPrefBranch> branch = do_GetService(NS_PREFSERVICE_CONTRACTID);
++
++	PRBool isEmbedded = PR_FALSE;
++	branch->GetBoolPref(EMBEDDED_PREF, &isEmbedded);
++	return isEmbedded;
++}
++
++// Sets a value in the real, native environment. We can't use
++// PR_SetEnv because at least on some platforms (Windows) it only sets
++// the value in a simulated environment local to this process, as
++// documented in prenv.h. On failure, log a suitable error message.
++nsresult SetInRealEnvironment(const nsAString& name, const nsAString& value) {
++#if defined(XP_WIN)
++	nsString entry(name + NS_LITERAL_STRING("=") + value);
++
++	if (_wputenv(entry.get()) == -1) {
++		NS_LossyConvertUCS2toASCII entryC(entry);
++		LogError("The Python XPCOM loader failed to set '%s' in the environment.", entryC.get());
++		return NS_ERROR_FAILURE;
++	}
++
++	//#elif defined(XP_UNIX)
++
++	// .. not sure how to portably convert a unicode string back down to
++	// whatever encoding the filesystem is using -- on OS X, I think utf8
++	// is required, but on Linux, we have to look at the locale to see
++	// what's going on (for example, could be en_US, which is some kind of
++	// ISO-8859 encoding, or en_US.UTF8, which is UTF8.) We have to get
++	// this right or fail when there is a non-ASCII character in the path
++	// to the application, so let's punt this for now. Sorry!
++	//
++	// NEEDS: this is a mess. On some platforms, the environment is
++	// expressed in terms of codepoints, on others, in terms of encoded
++	// characters. Can we assume that on all of the latter platforms, we
++	// can fetch the encoding out of the locale? I suppose so.
++#else
++	LogError("The Python XPCOM loader couldn't set a required environment variable because it doesn't know how to do so on this platform.");
++	return NS_ERROR_FAILURE;
++#endif
++
++	NS_LossyConvertUCS2toASCII nameCBuf(name);
++	NS_LossyConvertUCS2toASCII valueCBuf(value);
++	LogDebug("The Python XPCOM loader set %s=%s in the environment.\n",
++			 nameCBuf.get(), valueCBuf.get());
++	return NS_OK;
++}
++
++// Set any environment variables we would like to have present when
++// Py_Initialize() is called. On failure, log something reasonable.
++nsresult SetupEnvironment(void) {
++	nsresult rv;
++
++	if (IsEmbedded()) {
++		nsAutoString pathBuf;
++		rv = FindPrivatePythonDirectory(pathBuf);
++		if (NS_FAILED(rv))
++			return rv; /* A reasonable error has already been logged */
++		rv = SetInRealEnvironment(NS_LITERAL_STRING("PYTHONPATH"),
++								  pathBuf);
++		if (NS_FAILED(rv))
++			return rv; /* error already logged */
++	}
++
++#ifndef NS_DEBUG
++	// Arrange for optimizing compliation to happen even for the
++	// modules that are loaded during Py_Initialize() (warnings.py
++	// and its dependencies.)
++	rv = SetInRealEnvironment(NS_LITERAL_STRING("PYTHONOPTIMIZE"),
++							  NS_LITERAL_STRING("TRUE"));
++	if (NS_FAILED(rv))
++		return rv; /* error already logged */
++#endif // NS_DEBUG
++
++}
++
++// Ensure that any paths guaranteed by this package exist on sys.path
++// Only called once as we are first loaded into the process.
++void AddStandardPaths()
++{
++	// Get sys.path.
+ 	PyObject *obPath = PySys_GetObject("path");
+ 	if (!obPath) {
+ 		LogError("The Python XPCOM loader could not get the Python sys.path variable\n");
+ 		return;
+ 	}
++
++	// If in embedded mode, wipe out whatever's on sys.path now,
++	// so after the addition below we end up with just our
++	// directory.
++	if (IsEmbedded()) {
++		int pathLen = PyList_Size(obPath);
++		if (PyList_SetSlice(obPath, 0, PyList_Size(obPath), NULL) == -1) {
++			LogError("The Python XPCOM loader ouldn't clear sys.path");
++			return;
++		}
++	}
++
++	// Put {bin}\Python on the path if it exists.
++	nsresult rv;
++	nsAutoString pathBuf;
++	rv = FindPrivatePythonDirectory(pathBuf);
++	if (NS_FAILED(rv))
++		return; /* A reasonable error has already been logged */
+ 	NS_LossyConvertUCS2toASCII pathCBuf(pathBuf);
+ 	LogDebug("The Python XPCOM loader is adding '%s' to sys.path\n", pathCBuf.get());
+ 	PyObject *newStr = PyString_FromString(pathCBuf.get());
+ 	PyList_Insert(obPath, 0, newStr);
+ 	Py_XDECREF(newStr);
+-	// And now try and get Python to process this directory as a "site dir" 
+-	// - ie, look for .pth files, etc
++
++	// And now try and get Python to process this directory as a
++	// "site dir" - ie, look for .pth files, etc. (Note: In the
++	// embedding case, where Py_NoSiteFlag got set, this is also
++	// the first time 'site' is being imported, so this will also
++	// serve to initialize some parts of the interpreter
++	// environment.)
+ 	nsCAutoString cmdBuf(NS_LITERAL_CSTRING("import site;site.addsitedir(r'") + pathCBuf + NS_LITERAL_CSTRING("')\n"));
+ 	if (0 != PyRun_SimpleString((char *)cmdBuf.get())) {
+ 		LogError("The directory '%s' could not be added as a site directory", pathCBuf.get());
+@@ -145,6 +264,78 @@
+ 	PRBool bDidInitPython = !Py_IsInitialized(); // well, I will next line, anyway :-)
+ 	if (bDidInitPython) {
+ 		NS_TIMELINE_START_TIMER("PyXPCOM: Python initializing");
++
++		// EMBEDDING STRATEGY: Py_Initialize() will always try to
++		// import 'warnings', no matter what you do, and
++		// will also import 'site' unless Py_NoSiteFlag is
++		// set. If the import of 'warnings' fails, but it
++		// appears later, Python will deal gracefully.
++		//
++		// 'warnings' indirectly imports a pretty large chunk
++		// of standard library, including eg the regular
++		// expression engine. Since there is no way to stop it
++		// from being imported, we need to stop the import
++		// from succeeding. (Otherwise we end up with a
++		// 'chimera' Python: some modules from the user's
++		// local installation, some from the embedded
++		// installation shipped with the application. This is
++		// potentially disasterous..) To do this, we need to
++		// make sure it doesn't appear on sys.path.
++		//
++		// But Py_Initialize() builds sys.path very
++		// aggressively. For example, on Windows, if I read
++		// the code correctly, PYTHONPATH, PYTHONHOME,
++		// grovelling disk for certain files based on the
++		// location of the EXE or DLL that is running, and
++		// registry key lookups (!) all produce different
++		// sections of sys.path. They cannot all be
++		// suppressed, so sys.path will contain some elements
++		// that point to the "real" Python installation on the
++		// user's hard drive.
++		//
++		// Since we cannot eliminate the local install from
++		// sys.path, we must content ourselves with making
++		// sure that our application's Python directory, which
++		// presumably contains a copy of all parts of the
++		// standard library that our application needs,
++		// appears *first* on the path. We can do this by
++		// setting PYTHONPATH in the environment before
++		// calling Py_Initialize(). The first thing on the
++		// constructed sys.path will be '' (the current
++		// directory -- dangerous, but unavoidable), followed
++		// by PYTHONPATH, followed by Python's attempts to
++		// locate the local installation. We must make sure
++		// that we ship a copy of 'warnings' and all of its
++		// dependencies with our application, or we will
++		// silently end up loading a chimera.
++		//
++		// As a safety measure, we also set Py_NoSiteFlag and
++		// defer loading of site.py until after
++		// Py_Initialize() has returned and we've had a chance
++		// to set sys.path to our standards. This is a
++		// tradeoff. One one hand we have fewer opportunities
++		// to forget a needed module in our application and
++		// have it loaded from the local Python installation,
++		// but on the other hand it means that 'site' hasn't
++		// been loaded when 'warnings' is imported, meaning
++		// that some aspects of the Python environment (such
++		// as terminal encodings) may not have been set up. If
++		// you want it the other way around, you can always
++		// make 'import site' be the first line in your
++		// application's warnings.py, I suppose.
++		//
++		// Someone smarter than me should investigate a more
++		// elegant way to accomplish this. For example, source
++		// code comments imply that py2exe has a way of
++		// flagging a program as frozen, which somehow causes
++		// the registry not to be checked for sys.path
++		// components. (Is it as simple as setting
++		// sys.frozen? And is it portable?)
++
++		if (IsEmbedded())
++			Py_NoSiteFlag = 1;
++		if (NS_FAILED(SetupEnvironment()))
++			return NS_ERROR_FAILURE; // LogError() already called
+ 		Py_Initialize();
+ 		if (!Py_IsInitialized()) {
+ 			LogError("Python initialization failed!\n");

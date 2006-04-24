@@ -1,0 +1,9 @@
+This is the currently supported frontend on Windows. It is based on
+Mozilla's portable XULRunner application framework, and would be
+portable to other platforms with a little work, mostly to the build
+system and to platformcfg.py.
+
+The build documentation for this platform is maintained in the
+Developer Wiki:
+
+https://develop.participatoryculture.org/projects/dtv/wiki/WindowsBuildDocs

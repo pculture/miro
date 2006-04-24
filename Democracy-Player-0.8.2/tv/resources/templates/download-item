@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n"
+      eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <t:include filename="dynamic.js" />
+</head>
+
+<body>
+
+<div class="main-video">
+
+
+
+	<!-- THUMBNAIL, TITLE AND DESCRIPTION -->
+	<div class="main-video-container">
+		<div class="main-video-content">
+		
+			<!-- THUMBNAIL -->
+			<div class="main-video-tnail">
+				<img src="***this getThumbnail***" alt="" />
+			</div>
+	
+			<div class="main-video-hitbox">
+				<span class="inprogress" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="downloading">
+						<span title="Downloading '***this getTitle***'" /><img src="resource:images/main-video-inprogress-arrows.gif" style="position:absolute; margin: 56px 0px 0px -31px; z-index:4;" />
+				</span>
+				<span class="downloadable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="stopped">
+						<a href="#" onclick="return eventURL('action:startDownload?item=@@@this getID@@@');" title="Download '***this getTitle***'" />
+				</span>
+				<span class="downloadable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="failed">
+						<a href="#" onclick="return eventURL('action:startDownload?item=@@@this getID@@@');" title="Download '***this getTitle***'" />
+				</span>
+				<span class="downloadable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="expired">
+						<a href="#" onclick="return eventURL('action:startDownload?item=@@@this getID@@@');" title="Download '***this getTitle***'" />
+				</span>
+				<span class="downloadable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="autopending">
+						<a href="#" onclick="return eventURL('action:startDownload?item=@@@this getID@@@');" title="Download '***this getTitle***'" />
+				</span>
+				<span class="downloadable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="manualpending">
+						<a href="#" onclick="return eventURL('action:startDownload?item=@@@this getID@@@');" title="Download '***this getTitle***'" />
+				</span>
+				<span class="playable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="finished">
+						<a href="#" onclick="return eventURL('action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@');" title="Play '***this getTitle***'" />
+				</span>
+				<span class="playable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="watched">
+						<a href="#" onclick="return eventURL('action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@');" title="Play '***this getTitle***'" />
+				</span>
+				<span class="playable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="uploading">
+						<a href="#" onclick="return eventURL('action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@');" title="Play '***this getTitle***'" />
+				</span>
+				<span class="playable" t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="saved">
+						<a href="#" onclick="return eventURL('action:playViewNamed?viewName=@@@thisView@@@&amp;firstItemId=@@@this getID@@@');" title="Play '***this getTitle***'" />
+				</span>
+			</div>
+			<!-- / THUMBNAIL -->
+		
+			<!-- TITLE AND DESCRIPTION -->
+			<div class="main-video-desc">
+				<h1 t:replace="this getTitle" />
+				
+				<div class="main-video-desc-desc">
+				<p t:replaceMarkup="this getDescription" />
+				</div>
+				
+<span t:replaceMarkup="this getDetails" />
+
+
+				
+			</div>
+			<!-- / TITLE AND DESCRIPTION -->
+			
+		</div>
+	</div>
+	<!-- / THUMBNAIL, TITLE AND DESCRIPTION -->
+	
+	
+	
+	<!-- STOPPED **************************************************** -->
+	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="stopped">
+		<div class="main-video-details">
+		
+		
+					<!-- FILE TASKS -->
+			<div class="main-video-details-tasks">
+				 <a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
+				   href="#" onclick="recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+					 <a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a> 
+				<div class="clearer"></div>
+			</div>
+			<!-- / FILE TASKS -->
+
+		
+			<!-- FILE INFO -->
+<!--			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getDuration" />
+			<p class="main-video-details-left" t:replace="this getFormat" />
+			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+-->			<!-- / FILE INFO -->
+					
+			<!-- NEW -->
+			<span t:hideIfKey="this getViewed" t:hideFunctionKey="global filter boolean">
+				<div class="main-video-details-new">
+					<p>New</p>
+				</div>
+			</span>
+			<!-- / NEW -->
+
+			
+		</div>
+		<div class="clearer"></div>
+	</span>
+	<!-- / STOPPED -->
+	
+	
+	
+	<!-- STOPPED **************************************************** -->
+	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="expired">
+		<div class="main-video-details">
+		
+			<!-- FILE TASKS -->
+			<div class="main-video-details-tasks">
+				 <a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
+				   href="#" onclick="recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+					 <a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a> 
+				<div class="clearer"></div>
+			</div>
+			<!-- / FILE TASKS -->
+		
+		
+			<!-- FILE INFO -->
+<!--			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getDuration" />
+			<p class="main-video-details-left" t:replace="this getFormat" />
+			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+-->			<!-- / FILE INFO -->
+			
+		</div>
+		<div class="clearer"></div>
+	</span>
+	<!-- / STOPPED -->
+	
+	
+	
+	
+	<!-- DOWNLOADING **************************************************** -->
+	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="downloading">
+		<div class="main-video-details">
+		
+		
+		<!-- FILE TASKS -->
+			<div class="main-video-details-tasks">
+				 <a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
+				   href="#" onclick="recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+					 <a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a> 
+				<div class="clearer"></div>
+			</div>
+			<!-- / FILE TASKS -->
+			
+		
+			<!-- FILE INFO -->
+<!--			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getDuration" />
+			<p class="main-video-details-left" t:replace="this getFormat" />
+			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+-->			<!-- / FILE INFO -->
+			
+			<!-- DOWNLOAD PROGRESS -->
+			<div class="main-video-progress">
+				<div class="main-progress-bar">
+					<img src="resource:images/status.png" width="@@@this downloadProgressWidth@@@" height="12" />
+				</div>
+				<a class="main-progress-cancel" href="#" onclick="return eventURL('action:expireItem?item=@@@this getID@@@');" title="Cancel Download" />
+			</div>
+			<p style="clear:both;">
+				<span t:replace="this downloadETA" />
+				<span t:hideIfKey="this downloadRate" t:hideFunctionKey="global filter equal" t:hideParameter="0k/s">
+					<span t:replace="this downloadRate" />
+				</span>
+			</p>
+			<!-- / DOWNLOAD PROGRESS -->
+			
+			
+		</div>
+		<div class="clearer"></div>
+	</span>
+	<!-- / DOWNLOADING -->	
+	
+	
+	
+	<!-- AUTO-DOWNLOAD PENDING **************************************************** -->
+	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="autopending">
+		<div class="main-video-details">
+
+
+			<!-- FILE TASKS -->
+			<div class="main-video-details-tasks">
+				 <a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
+				   href="#" onclick="recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+					 <a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a> 
+				<div class="clearer"></div>
+			</div>
+			<!-- / FILE TASKS -->
+
+		
+			<!-- FILE INFO -->
+<!--			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getDuration" />
+			<p class="main-video-details-left" t:replace="this getFormat" />
+			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+-->			<!-- / FILE INFO -->
+			
+			<!-- MESSAGE -->
+			<p style="clear:both; padding-bottom:3px;">Pending Auto Download</p>
+			<!-- MESSAGE -->
+			
+			
+		</div>
+		<div class="clearer"></div>
+	</span>
+	<!-- / AUTO-DOWNLOAD PENDING -->
+	
+	
+	
+	<!-- MANUAL-DOWNLOAD PENDING **************************************************** -->
+	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="manualpending">
+		<div class="main-video-details">
+
+			<!-- FILE TASKS -->
+			<div class="main-video-details-tasks">
+				 <a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
+				   href="#" onclick="recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+					 <a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a> 
+				<div class="clearer"></div>
+			</div>
+			<!-- / FILE TASKS -->
+
+		
+			<!-- FILE INFO -->
+<!--			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getDuration" />
+			<p class="main-video-details-left" t:replace="this getFormat" />
+			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+-->			<!-- / FILE INFO -->
+			
+			<!-- MESSAGE -->
+			<p style="clear:both; padding-bottom:3px;">Pending Manual Download</p>
+			<!-- MESSAGE -->
+
+			
+		</div>
+		<div class="clearer"></div>
+	</span>
+	<!-- / MANUAL-DOWNLOAD PENDING -->
+	
+	
+
+	<!-- UNWATCHED **************************************************** -->
+	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="finished">
+		<div class="main-video-details">
+
+
+			<!-- FILE TASKS -->
+			<div class="main-video-details-tasks">
+								
+	<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
+				   href="#" onclick="recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>					 
+				<a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a> <a href="#" onclick="return eventURL('action:expireItem?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
+ 
+				<div class="clearer"></div>
+			</div>
+			<!-- / FILE TASKS -->
+
+		
+			<!-- FILE INFO -->
+<!--			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getDuration" />
+			<p class="main-video-details-left" t:replace="this getFormat" />
+			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+-->			<!-- / FILE INFO -->		
+			
+			<!-- UNWATCHED -->
+			<span>
+				<div class="main-video-details-unwatched">
+					<p>Unwatched</p>
+				</div>
+				<div class="main-video-details-save">
+					<p><a href="#" onclick="return eventURL('action:keepItem?item=@@@this getID@@@');">Save</a></p>
+				</div>
+			</span>
+			<!-- / UNWATCHED -->
+			
+			
+		</div>
+		<div class="clearer"></div>
+	</span>
+	<!-- / UNWATCHED -->
+	
+	
+	
+	<!-- WATCHED **************************************************** -->
+	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="watched">
+		<div class="main-video-details">
+
+			<!-- FILE TASKS -->
+			<div class="main-video-details-tasks">
+								
+	<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
+				   href="#" onclick="recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>					 
+				<a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a> <a href="#" onclick="return eventURL('action:expireItem?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
+
+				<div class="clearer"></div>
+			</div>
+			<!-- / FILE TASKS -->
+
+		
+			<!-- FILE INFO -->
+<!--			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getDuration" />
+			<p class="main-video-details-left" t:replace="this getFormat" />
+			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+-->			<!-- / FILE INFO -->			
+			
+			<!-- EXPIRY -->
+			<span>
+				<div class="main-video-details-expiry">
+					<p>Expires: <span t:replace="this getExpirationTime" /></p>
+				</div>
+				<div class="main-video-details-save">
+					<p><a href="#" onclick="return eventURL('action:keepItem?item=@@@this getID@@@');">Save</a></p>
+				</div>
+			</span>
+			<!-- / EXPIRY -->
+			
+			
+		</div>
+		<div class="clearer"></div>
+	</span>
+	<!-- / WATCHED -->
+	
+	
+	
+	<!-- SAVED **************************************************** -->
+	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="saved">
+		<div class="main-video-details">
+		
+		
+		
+			<!-- FILE TASKS -->
+			<div class="main-video-details-tasks" style="padding-top:19px;">
+								
+	<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
+				   href="#" onclick="recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>					 
+				<a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a> <a href="#" onclick="return eventURL('action:expireItem?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
+
+				<div class="clearer"></div>
+			</div>
+			<!-- / FILE TASKS -->
+			
+		
+			<!-- FILE INFO -->
+<!--			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getDuration" />
+			<p class="main-video-details-left" t:replace="this getFormat" />
+			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+-->			<!-- / FILE INFO -->			
+			
+			
+		</div>
+		<div class="clearer"></div>
+	</span>
+	<!-- / SAVED -->
+	
+	
+
+	<!-- UPLOADING **************************************************** -->
+	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="uploading">
+		<div class="main-video-details">
+
+
+			<!-- FILE TASKS -->
+			<div class="main-video-details-tasks">
+								
+	<a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
+				   href="#" onclick="recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>					 
+				<a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a> <a href="#" onclick="return eventURL('action:expireItem?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
+
+				<div class="clearer"></div>
+			</div>
+			<!-- / FILE TASKS -->
+			
+		
+			<!-- FILE INFO -->
+<!--			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getDuration" />
+			<p class="main-video-details-left" t:replace="this getFormat" />
+			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+-->			<!-- / FILE INFO -->
+			
+			<!-- UNWATCHED -->
+			<span>
+				<div class="main-video-details-unwatched">
+					<p>Unwatched</p>
+				</div>
+				<div class="main-video-details-save">
+					<p><a href="#" onclick="return eventURL('action:keepItem?item=@@@this getID@@@');">Save</a></p>
+				</div>
+			</span>
+			<!-- / UNWATCHED -->
+			
+
+			
+		</div>
+		<div class="clearer"></div>
+	</span>
+	<!-- / UPLOADING -->
+	
+	
+	
+	<!-- FAILED DOWNLOAD **************************************************** -->
+	<span t:hideIfNotKey="this getState" t:hideFunctionKey="global filter substring" t:hideParameter="failed">
+		<div class="main-video-details">
+		
+		<!-- FILE TASKS -->
+			<div class="main-video-details-tasks">
+				 <a t:hideIfKey="this getURL" t:hideFunctionKey="global filter equal" t:hideParameter=""
+				   href="#" onclick="recommendItem('@@@this getTitle@@@', '@@@this getURL@@@', '@@@this getFeed getURL@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
+					 <a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this getID@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a> 
+				<div class="clearer"></div>
+			</div>
+			<!-- / FILE TASKS -->
+		
+			<!-- FILE INFO -->
+<!--			<p class="main-video-details-left"><strong t:replace="this getReleaseDate" /></p>
+			<p class="main-video-details-right" t:replace="this getDuration" />
+			<p class="main-video-details-left" t:replace="this getFormat" />
+			<p class="main-video-details-right" t:replace="this getEnclosuresSize" />
+-->			<!-- / FILE INFO -->
+			
+			<!-- ERROR -->
+			<p>Download Error: <span t:replace="this getFailureReason" /></p>
+			<!-- / ERROR -->
+			
+			
+			
+		</div>
+		<div class="clearer"></div>
+	</span>
+	<!-- / FAILED DOWNLOAD -->
+	
+	
+
+</div>
+
+</body>
+</html>

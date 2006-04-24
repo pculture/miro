@@ -1,0 +1,24 @@
+#include "nsISupports.idl"
+#include "nsIDOMDocument.idl"
+#include "nsIDOMElement.idl"
+
+[scriptable, uuid(8ABB2E1D-6624-4457-A4BD-EBFA6156D426)]
+interface pcfIDTVPyBridge : nsISupports
+{
+  readonly attribute nsIDOMDocument mainWindowDocument;
+
+  /**
+   * Called on application startup.
+   */
+  void onStartup(in nsIDOMDocument mainWindowDocument);
+
+  void bootApp();
+
+  void onShutdown();
+
+  void eventURL(in AString cookie, in AString url);
+
+  void addChannel(in AString url);
+
+  short getServerPort();
+};

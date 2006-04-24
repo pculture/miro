@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n"
+      eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="resource:css/style.css" />
+<t:include filename="dynamic.js" />
+
+</head>
+
+<body class="loading_body">
+	<div id="loading_channel">
+		<center style="padding-bottom: 18px;">Loading Channel</center>
+		<center><img src="resource:images/loader.gif" alt="" /></center>
+	</div>
+</body>
+</html>

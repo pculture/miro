@@ -1,0 +1,1 @@
+A basic white-colored theme.
