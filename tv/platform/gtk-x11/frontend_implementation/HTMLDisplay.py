@@ -6,7 +6,7 @@ import gtkmozembed
 import tempfile
 from xml.sax.saxutils import escape
 from MozillaBrowser import MozillaBrowser
-from frontend_implementation.gtk_queue import gtkMethod
+from frontend_implementation.gtk_queue import gtkAsyncMethod
 from util import quoteJS
 
 import os
@@ -64,7 +64,7 @@ class HTMLDisplay(app.Display):
         self.widget = None
         self._gtkInit()
 
-    @gtkMethod
+    @gtkAsyncMethod
     def _gtkInit(self):
         self.mb = MozillaBrowser()
         self.widget = self.mb.getWidget()
@@ -119,37 +119,37 @@ class HTMLDisplay(app.Display):
     execJS = deferUntilAfterLoad(execJS)
 
     # DOM hooks used by the dynamic template code
-    @gtkMethod
+    @gtkAsyncMethod
     @deferUntilAfterLoad
     def addItemAtEnd(self, xml, id):
         if not self.widgetDestroyed:
             self.mb.addItemAtEnd(xml, id)
 
-    @gtkMethod
+    @gtkAsyncMethod
     @deferUntilAfterLoad
     def addItemBefore(self, xml, id):
         if not self.widgetDestroyed:
             self.mb.addItemBefore(xml, id)
     
-    @gtkMethod
+    @gtkAsyncMethod
     @deferUntilAfterLoad
     def removeItem(self, id):
         if not self.widgetDestroyed:
             self.mb.removeItem(id)
     
-    @gtkMethod
+    @gtkAsyncMethod
     @deferUntilAfterLoad
     def changeItem(self, id, xml):
         if not self.widgetDestroyed:
             self.mb.changeItem(id, xml)
 
-    @gtkMethod
+    @gtkAsyncMethod
     @deferUntilAfterLoad
     def hideItem(self, id):
         if not self.widgetDestroyed:
             self.mb.hideItem(id)
         
-    @gtkMethod
+    @gtkAsyncMethod
     @deferUntilAfterLoad
     def showItem(self, id):
         if not self.widgetDestroyed:

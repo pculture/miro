@@ -1,5 +1,6 @@
 import gtk
 import app
+import gobject
 
 class MainWindowChanger(object):
     """Change which widgets are visible in the main window based on its
@@ -24,13 +25,25 @@ class MainWindowChanger(object):
     BROWSING = 1
     PLAYLIST = 2
     VIDEO = 3
-    VIDEO_FULLSCREEN = 4
-    VIDEO_ONLY_FULLSCREEN = 5
 
-    def __init__(self, widgetTree, initialState):
+    def __init__(self, widgetTree, mainFrame, initialState):
         self.widgetTree = widgetTree
+        self.mainFrame = mainFrame
         self.currentState = None
+        self.isFullScreen = False
+        self.wasFullScreen = False
+        self.pointerIdle = False
+        self.timeoutId = None
+        self.motionHandlerId = None
+        self.hideDelay = 3000
+        self.enablePointerTracking()
+        self.createCursor()
         self.changeState(initialState)
+
+    def createCursor(self):
+        pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
+        color = gtk.gdk.Color()
+        self.empty_cursor = gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
 
     def updatePlayPauseButton(self):
         """Update the play/pause button to have the correct image."""
@@ -43,70 +56,135 @@ class MainWindowChanger(object):
                     gtk.ICON_SIZE_LARGE_TOOLBAR)
         playPauseImage.set_from_pixbuf(pixbuf)
 
-    def updateFullscreenButton(self, windowIsFullscreen):
+    def updateFullScreenButton(self):
         fullscreenImage = self.widgetTree['fullscreen-image']
-        if windowIsFullscreen:
-            pixbuf = fullscreenImage.render_icon(gtk.STOCK_LEAVE_FULLSCREEN,
-                    gtk.ICON_SIZE_LARGE_TOOLBAR)
-        else:
-            pixbuf = fullscreenImage.render_icon(gtk.STOCK_FULLSCREEN,
-                    gtk.ICON_SIZE_LARGE_TOOLBAR)
-        fullscreenImage.set_from_pixbuf(pixbuf)
+        try:
+            if self.isFullScreen and self.currentState == self.VIDEO:
+                pixbuf = fullscreenImage.render_icon(gtk.STOCK_LEAVE_FULLSCREEN,
+                                                     gtk.ICON_SIZE_LARGE_TOOLBAR)
+            else:
+                pixbuf = fullscreenImage.render_icon(gtk.STOCK_FULLSCREEN,
+                                                     gtk.ICON_SIZE_LARGE_TOOLBAR)
+            fullscreenImage.set_from_pixbuf(pixbuf)
+        except:
+            pass
 
     def setVideoWidgetsSensitive(self, sensitive):
         """Enable/disable widgets that only make sense to use when we're
         playing a video.
         """
 
-        videoWidgets = ['save-video', 'play', 'stop', 'play-pause-button',
+
+        videoWidgets = ['play-pause-button',
             'next-button', 'previous-button', 'fullscreen-button',
             'video-time-scale']
         # delete-video should be in this list, but it's not implemented yet
         for widget in videoWidgets:
             self.widgetTree[widget].set_sensitive(sensitive)
+        self.mainFrame.actionGroups["VideoPlayback"].set_sensitive (sensitive)
 
-    def changeState(self, newState):
-        if newState == self.currentState:
-            return
-        if newState == self.BROWSING:
-            self.widgetTree['fullscreen'].set_sensitive(False)
-            self.widgetTree['leave-fullscreen'].set_sensitive(False)
+    def updateState (self):
+        # Handle fullscreen
+        fullscreen = (self.isFullScreen and self.currentState == self.VIDEO)
+        activeRenderer = app.Controller.instance.videoDisplay.activeRenderer
+        if fullscreen and (not self.wasFullScreen):
+            self.widgetTree['main-window'].fullscreen()
+            if activeRenderer != None:
+                activeRenderer.goFullscreen()
+            self.wasFullScreen = True
+        if (not fullscreen) and self.wasFullScreen:
+            self.widgetTree['main-window'].unfullscreen()
+            if activeRenderer != None:
+                activeRenderer.exitFullscreen()
+            self.wasFullScreen = False
+        self.updateFullScreenButton()
+
+        # Hide cursor
+        if fullscreen and self.currentState == self.VIDEO and self.pointerIdle:
+            # Hide cursor
+            self.widgetTree["main-box"].window.set_cursor (self.empty_cursor)
+        else:
+            # Show cursor
+            self.widgetTree["main-box"].window.set_cursor (None)
+
+        # Handle UI visibility and sensitivity
+        if self.currentState == self.BROWSING:
             self.widgetTree['channels-box'].show()
             self.widgetTree['video-info-box'].hide()
             self.widgetTree['video-control-box'].show()
-            self.widgetTree['menubar'].show()
+            self.widgetTree['menubar-box'].show()
             self.setVideoWidgetsSensitive(False)
-        elif newState == self.PLAYLIST:
-            self.widgetTree['fullscreen'].set_sensitive(False)
-            self.widgetTree['leave-fullscreen'].set_sensitive(False)
+        elif self.currentState == self.PLAYLIST:
             self.widgetTree['channels-box'].show()
             self.widgetTree['video-info-box'].hide()
             self.widgetTree['video-control-box'].show()
-            self.widgetTree['menubar'].show()
+            self.widgetTree['menubar-box'].show()
             self.setVideoWidgetsSensitive(False)
             self.widgetTree['play-pause-button'].set_sensitive(True)
-        elif newState == self.VIDEO:
-            self.widgetTree['fullscreen'].set_sensitive(True)
-            self.widgetTree['leave-fullscreen'].set_sensitive(False)
-            self.widgetTree['channels-box'].show()
-            self.widgetTree['video-info-box'].show()
-            self.widgetTree['video-control-box'].show()
-            self.widgetTree['menubar'].show()
-            self.setVideoWidgetsSensitive(True)
-        elif newState == self.VIDEO_FULLSCREEN:
-            self.widgetTree['fullscreen'].set_sensitive(False)
-            self.widgetTree['leave-fullscreen'].set_sensitive(True)
-            self.widgetTree['channels-box'].hide()
-            self.widgetTree['video-info-box'].show()
-            self.widgetTree['video-control-box'].show()
-            self.widgetTree['menubar'].hide()
-            self.setVideoWidgetsSensitive(True)
-        elif newState == self.VIDEO_ONLY_FULLSCREEN:
-            self.widgetTree['channels-box'].hide()
-            self.widgetTree['video-info-box'].hide()
-            self.widgetTree['video-control-box'].hide()
-            self.widgetTree['menubar'].hide()
+        elif self.currentState == self.VIDEO:
+            if self.isFullScreen:
+                if self.pointerIdle:
+                    self.widgetTree['channels-box'].hide()
+                    self.widgetTree['video-info-box'].hide()
+                    self.widgetTree['video-control-box'].hide()
+                    self.widgetTree['menubar-box'].hide()
+                    self.setVideoWidgetsSensitive(True)
+                else:
+                    self.widgetTree['channels-box'].hide()
+                    self.widgetTree['video-info-box'].show()
+                    self.widgetTree['video-control-box'].show()
+                    self.widgetTree['menubar-box'].hide()
+                    self.setVideoWidgetsSensitive(True)
+            else:
+                self.widgetTree['channels-box'].show()
+                self.widgetTree['video-info-box'].show()
+                self.widgetTree['video-control-box'].show()
+                self.widgetTree['menubar-box'].show()
+                self.setVideoWidgetsSensitive(True)
         else:
             raise TypeError("invalid state: %r" % newState)
         self.updatePlayPauseButton()
+
+    def enablePointerTracking(self):
+        self.disablePointerTracking()
+        self.motionHandlerId = self.widgetTree['main-window'].connect(
+                'motion-notify-event', self.onMotion)
+        self.resetTimer()
+
+    def disablePointerTracking(self):
+        if self.timeoutId is not None:
+            gobject.source_remove(self.timeoutId)
+            self.timeoutId = None
+        if self.motionHandlerId is not None:
+            self.widgetTree['main-window'].disconnect(self.motionHandlerId)
+            self.motionHandlerId = None
+
+    def resetTimer(self):
+        if self.timeoutId is not None:
+            gobject.source_remove(self.timeoutId)
+        self.timeoutId = gobject.timeout_add(self.hideDelay, self.onTimeout)
+
+    def onTimeout(self):
+        self.pointerIdle = True
+        self.timeoutId = None
+        self.updateState()
+        return False
+
+    def onMotion(self, window, event):
+        self.pointerIdle = False
+        self.resetTimer()
+        self.updateState()
+        return False
+
+    def changeFullScreen (self, fullscreen):
+        if (self.isFullScreen == fullscreen):
+            return
+        self.isFullScreen = fullscreen
+        self.updateState()
+
+    def changeState(self, newState):
+        self.mainFrame.actionGroups["ChannelSelected"].set_sensitive (app.Controller.instance.currentSelectedTab.isFeed())
+        if newState == self.currentState:
+            return
         self.currentState = newState
+        self.updateState()

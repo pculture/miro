@@ -1,12 +1,46 @@
 import os
 
 import config
+import gconf
+
+client = gconf.client_get_default()
+
+class gconfDict:
+    def get(self, key, default = None):
+        if (type(key) != str):
+            raise TypeError()
+        fullkey = '/apps/democracy/player/' + key
+        value = client.get (fullkey)
+        if (value != None):
+            if (value.type == gconf.VALUE_STRING):
+                return value.get_string()
+            if (value.type == gconf.VALUE_INT):
+                return value.get_int()
+            if (value.type == gconf.VALUE_BOOL):
+                return value.get_bool()
+            if (value.type == gconf.VALUE_FLOAT):
+                return value.get_float()
+        return default
+    def __setitem__(self, key, value):
+        if (type(key) != str):
+            raise TypeError()
+        fullkey = '/apps/democracy/player/' + key
+        if (type(value) == str):
+            client.set_string(fullkey, value)
+        elif (type(value) == int):
+            client.set_int(fullkey, value)
+        elif (type(value) == bool):
+            client.set_bool(fullkey, value)
+        elif (type(value) == float):
+            client.set_float(fullkey, value)
+        else:
+            raise TypeError()
 
 def load():
-    print "WARNING: loading config information is not supported on gtk"
+    return gconfDict()
 
 def save(data):
-    print "WARNING: saving config information is not supported on gtk"
+    pass
 
 def get(descriptor):
     path = None

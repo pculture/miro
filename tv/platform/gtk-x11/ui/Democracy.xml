@@ -1,0 +1,27 @@
+<ui>
+  <menubar>
+    <menu action="Video">
+      <menuitem action="SaveVideo"/>
+      <menuitem action="PlayPauseVideo"/>
+      <separator/>
+      <menuitem action="Fullscreen"/>
+      <separator/>
+      <menuitem action="EditPreferences"/>
+      <separator/>
+      <menuitem action="Quit"/>
+    </menu>
+
+    <menu action="Channel">
+      <menuitem action="AddChannel"/>
+      <menuitem action="RemoveChannel"/>
+      <menuitem action="CopyChannelURL"/>
+      <separator/>
+      <menuitem action="UpdateChannel"/>
+      <menuitem action="UpdateAllChannels"/>
+    </menu>
+
+    <menu action="Help">
+      <menuitem action="About"/>
+    </menu>
+  </menubar>
+</ui>

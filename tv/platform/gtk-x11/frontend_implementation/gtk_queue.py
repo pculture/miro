@@ -18,50 +18,121 @@ methods.
 
 import gobject
 import threading
+import gtk
+import Queue
 
-gtkQueue = []
-gtkQueueLock = threading.Lock()
-def queueMethod(func, *args):
-    """Queue a methods to be run at a later time in the gtk main loop.
-    Methods queued with this method will be run in the order they are queued.
-    """
+class MainloopQueue:
+    # Class to send data back to the other thread.
+    class ReturnData:
+        def __init__ (self, callback, *args, **kargs):
+            # The action to take
+            self.callback = callback
+            self.args = args
+            self.kargs = kargs
+            # Condition to signal that the data is ready.
+            self.cond = threading.Condition()
+            # The return value
+            self.retval = None
+            # Whether retval is ready.
+            self.done = False
+        def main_thread (self):
+            # Call the callback as requested, and then notify that the retval is calculated
+            self.retval = self.callback (*self.args, **self.kargs)
+            self.cond.acquire()
+            self.done = True
+            self.cond.notify()
+            self.cond.release()
+        def get_retval (self):
+            # Check first and then wait just in case notify gets
+            # called before we get to the wait.
+            self.cond.acquire()
+            while (True):
+                if self.done:
+                    retval = self.retval
+                    break
+                self.cond.wait()
+            self.cond.release()
+            return retval
 
-    gtkQueueLock.acquire()
-    try:
-        gtkQueue.append((func, args))
-        if len(gtkQueue) == 1:
-            gobject.idle_add(_runQueue)
-    finally:
-        gtkQueueLock.release()
+    def __init__(self, main_thread = threading.currentThread()):
+        # Set up our queue.
+        self.queue = Queue.Queue()
+        # A lock around whether or not the gtk idle function is running.
+        self.idle_running_lock = threading.Lock()
+        self.idle_running = 0
+        self.main_thread = main_thread
 
-def _runQueue():
-    global gtkQueue
+    def call_nowait(self, callback, *args, **kargs):
+        # put the action on the queue and then make sure the idle is running.
+        self.queue.put((callback, args, kargs))
+        self.idle_running_lock.acquire()
+        if (self.idle_running == 0):
+            gobject.idle_add(self._idle)
+            self.idle_running = 1
+        self.idle_running_lock.release()
 
-    gtkQueueLock.acquire()
-    try:
-        queueCopy = gtkQueue[:]
-        gtkQueue = []
-    finally:
-        gtkQueueLock.release()
+    def call(self, callback, *args, **kargs):
+        # If we're in the main thread, just call the function
+        if self.main_thread == threading.currentThread():
+            return callback (*args, **kargs)
+        # Otherwise create a ReturnData and use call_nowait to signal it
+        return_data = self.ReturnData(callback, *args, **kargs)
+        self.call_nowait (return_data.main_thread)
+        # And then wait for the return value.
+        return return_data.get_retval()
 
-    for func, args in queueCopy:
-        func(*args)
+    def _idle(self):
+        gtk.threads_enter()
+        self.idle_running_lock.acquire()
+        try:
+            (callback, args, kargs) = self.queue.get_nowait()
+        except Queue.Empty:
+            self.idle_running = 0
+            self.idle_running_lock.release()
+            gtk.threads_leave()
+            return 0
+        else:
+            self.idle_running_lock.release()
+            callback (*args, **kargs)
+            gtk.threads_leave()
+            return 1
 
-def gtkMethod(func):
-    """Decorator to make a methods run in the main gtk loop.  
+queue = MainloopQueue()
+
+def gtkAsyncMethod(func):
+    """Decorator to make a methods run in the gtk main loop with no return value
 
     Suppose you have 2 methods, foo and bar
 
-    @gtkMethod
+    @gtkAsyncMethod
     def foo():
         # gtk operations
 
     def bar():
         # same gtk operations as foo
 
-    Then calling foo() is exactly the same as calling queueMethod(bar).
+    Then calling foo() is exactly the same as calling queue.call_nowait(bar).
     """
 
-    def queuer(*args):
-        queueMethod(func, *args)
+    def queuer(*args, **kargs):
+        queue.call_nowait(func, *args, **kargs)
     return queuer
+
+
+def gtkSyncMethod(func):
+    """Decorator to make a methods run in the gtk main loop with a return value
+
+    Suppose you have 2 methods, foo and bar
+
+    @gtkSyncMethod
+    def foo():
+        # gtk operations
+
+    def bar():
+        # same gtk operations as foo
+
+    Then calling foo() is exactly the same as calling queue.call(bar).
+    """
+    def locker(*args, **kargs):
+        return queue.call(func, *args, **kargs)
+    return locker
