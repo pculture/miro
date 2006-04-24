@@ -34,9 +34,10 @@ def upgrade2(objectList):
     for o in objectList:
         if o.classString == 'remote-downloader':
             # many of our old attributes are now stored in status
+            o.savedData['status'] = {}
             for key in ('startTime', 'endTime', 'filename', 'state',
                     'currentSize', 'totalSize', 'reasonFailed'):
+                o.savedData['status'][key] = o.savedData[key]
                 del o.savedData[key]
             # force the download daemon to create a new downloader object.
-            o.savedData['status'] = {}
             o.savedData['dlid'] = 'noid'
