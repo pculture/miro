@@ -49,5 +49,7 @@ def upgrade3(objectList):
     """Add the expireTime variable to FeedImpl objects."""
 
     for o in objectList:
-        if o.classString.endswith('feed-impl'):
-            o.savedData['expireTime'] = None
+        if o.classString == 'feed':
+            feedImpl = o.savedData['actualFeed']
+            if feedImpl is not None:
+                feedImpl.savedData['expireTime'] = None
