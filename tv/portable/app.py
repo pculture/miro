@@ -7,8 +7,10 @@ import autodler
 import resource
 import template
 import database
+import storedatabase
 import scheduler
 import downloader
+import download_utils
 import autoupdate
 import xhtmltools
 import guide
@@ -87,17 +89,18 @@ class PlaybackControllerBase:
 
     def playItem(self, anItem):
         try:
-            self.skipIfItemFileIsMissing(anItem)
-            videoDisplay = Controller.instance.videoDisplay
-            if videoDisplay.canPlayItem(anItem):
-                self.playItemInternally(videoDisplay, anItem)
-            else:
-                frame = Controller.instance.frame
-                if frame.getDisplay(frame.mainDisplay) is videoDisplay:
-                    if videoDisplay.isFullScreen:
-                        videoDisplay.exitFullScreen()
-                    videoDisplay.stop()
-                self.scheduleExternalPlayback(anItem)
+            anItem = self.skipIfItemFileIsMissing(anItem)
+            if anItem is not None:
+                videoDisplay = Controller.instance.videoDisplay
+                if videoDisplay.canPlayItem(anItem):
+                    self.playItemInternally(videoDisplay, anItem)
+                else:
+                    frame = Controller.instance.frame
+                    if frame.getDisplay(frame.mainDisplay) is videoDisplay:
+                        if videoDisplay.isFullScreen:
+                            videoDisplay.exitFullScreen()
+                        videoDisplay.stop()
+                    self.scheduleExternalPlayback(anItem)
         except:
             util.failedExn('when trying to play a video')
             self.stop()
@@ -137,7 +140,7 @@ class PlaybackControllerBase:
             else:
                 frame = Controller.instance.frame
                 currentDisplay = frame.getDisplay(frame.mainDisplay)
-                if not hasattr(currentDisplay, 'getCurrentTime') or currentDisplay.getCurrentTime() <= 1.0:
+                if not hasattr(currentDisplay, 'getCurrentTime') or currentDisplay.getCurrentTime() <= 2.0:
                     nextItem = self.currentPlaylist.getPrev()
                 else:
                     currentDisplay.goToBeginningOfMovie()
@@ -152,11 +155,12 @@ class PlaybackControllerBase:
         path = anItem.getPath()
         if not os.path.exists(path):
             print "DTV: movie file '%s' is missing, skipping to next" % path
-            self.onMovieFinished()
+            return self.skip(1)
+        else:
+            return anItem
 
     def onMovieFinished(self):
-        if self.skip(1) is None:
-            self.stop()
+        return self.skip(1)
 
 
 ###############################################################################
@@ -297,7 +301,7 @@ class VideoDisplayBase (Display):
     def getCurrentTime(self):
         if self.activeRenderer is not None:
             return self.activeRenderer.getCurrentTime()
-        return VideoRenderer.DEFAULT_DISPLAY_TIME
+        return 0
 
     def setVolume(self, level):
         self.volume = level
@@ -406,6 +410,9 @@ class Controller (frontend.Application):
 
     def onStartup(self):
         try:
+            print "DTV: Starting scheduler"
+            scheduler.ScheduleEvent.scheduler = scheduler.Scheduler()
+
             print "DTV: Loading preferences..."
             config.load()
             config.addChangeCallback(self.configDidChange)
@@ -413,15 +420,19 @@ class Controller (frontend.Application):
             delegate = self.getBackendDelegate()
             feed.setDelegate(delegate)
             feed.setSortFunc(itemSort)
-            downloader.setDelegate(delegate)
+            download_utils.setDelegate(delegate)
             autoupdate.setDelegate(delegate)
             database.setDelegate(delegate)
 
+            print "Initializing daemon..."
             downloader.RemoteDownloader.initializeDaemon()
 
             #Restoring
             print "DTV: Restoring database..."
-            db.restore()
+            try:
+                storedatabase.restoreDatabase()
+            except Exception:
+                util.failedExn("While restoring database")
             print "DTV: Recomputing filters..."
             db.recomputeFilters()
 
@@ -524,7 +535,7 @@ class Controller (frontend.Application):
             self.videoDisplay.playbackController = self.playbackController
             self.videoDisplay.setVolume(config.get(config.VOLUME_LEVEL))
 
-            scheduler.ScheduleEvent(300,db.save)
+            scheduler.ScheduleEvent(300, storedatabase.saveDatabase)
 
             scheduler.ScheduleEvent(10, autoupdate.checkForUpdates, False)
             scheduler.ScheduleEvent(86400, autoupdate.checkForUpdates)
@@ -632,7 +643,7 @@ class Controller (frontend.Application):
             # for item in db:
             #    print str(item.__class__.__name__) + " of id "+str(item.getID())
             print "DTV: Saving database..."
-            db.save()
+            storedatabase.saveDatabase()
 
             # FIXME closing BitTorrent is slow and makes the application seem hung...
             print "DTV: Shutting down Downloader..."
@@ -1011,6 +1022,13 @@ class ModelActionHandler:
         try:
             obj = db.getObjectByID(int(feed))
             obj.markAsViewed()
+        except database.ObjectNotFoundError:
+            pass
+
+    def updateIcons(self, feed):
+        try:
+            obj = db.getObjectByID(int(feed))
+            obj.updateIcons()
         except database.ObjectNotFoundError:
             pass
 

@@ -138,7 +138,6 @@ class Application:
         # For overriding
         pass
 
-
 class AppController (NibClassBuilder.AutoBaseClass):
 
     # Do nothing. A dummy method called by Application to force Cocoa into
@@ -154,14 +153,15 @@ class AppController (NibClassBuilder.AutoBaseClass):
             struct.unpack(">i", "GURL")[0],
             struct.unpack(">i", "GURL")[0])
 
-        nc.addObserver_selector_name_object_(self, 'videoWillPlay:', 'videoWillPlay', nil)
+        nc.addObserver_selector_name_object_(self, 'videoWillPlay:', 'videoWillPlay',  nil)
         nc.addObserver_selector_name_object_(self, 'videoWillStop:', 'videoWillPause', nil)
-        nc.addObserver_selector_name_object_(self, 'videoWillStop:', 'videoWillStop', nil)
+        nc.addObserver_selector_name_object_(self, 'videoWillStop:', 'videoWillStop',  nil)
         
-        # Call the startup hook before any events (such as instructions
-        # to open files...) are delivered.
-        self.actualApp.onStartup()
-
+        ws = NSWorkspace.sharedWorkspace()
+        wsnc = ws.notificationCenter()
+        wsnc.addObserver_selector_name_object_(self, 'workspaceWillSleep:', NSWorkspaceWillSleepNotification, nil)
+        wsnc.addObserver_selector_name_object_(self, 'workspaceDidWake:',   NSWorkspaceDidWakeNotification,   nil)
+        
     def applicationDidFinishLaunching_(self, notification):
         # The [NSURLRequest setAllowsAnyHTTPSCertificate:forHost:] selector is
         # not documented anywhere, so I assume it is not public. It is however 
@@ -170,6 +170,8 @@ class AppController (NibClassBuilder.AutoBaseClass):
         components = urlparse.urlparse(config.get(config.CHANNEL_GUIDE_URL))
         channelGuideHost = components[1]
         NSURLRequest.setAllowsAnyHTTPSCertificate_forHost_(YES, channelGuideHost)
+
+        self.actualApp.onStartup()
         
     def applicationShouldTerminate_(self, application):
         reply = NSTerminateNow
@@ -186,6 +188,30 @@ class AppController (NibClassBuilder.AutoBaseClass):
 
     def application_openFile_(self, app, filename):
         return self.actualApp.addFeedFromFile(filename)
+
+    def workspaceWillSleep_(self, notification):
+        downloads = app.globalViewList['remoteDownloads']
+        dlCount = len(downloads)
+        if dlCount > 0:
+            print "DTV: System is going to sleep, suspending downloads."
+            downloads.beginRead()
+            try:
+                for dl in downloads:
+                    dl.pause(block=True)
+            finally:
+                downloads.endRead()
+
+    def workspaceDidWake_(self, notification):
+        downloads = app.globalViewList['remoteDownloads']
+        dlCount = len(downloads)
+        if dlCount > 0:
+            print "DTV: System is awake, resuming downloads."
+            downloads.beginRead()
+            try:
+                for dl in downloads:
+                    dl.start()
+            finally:
+                downloads.endRead()
 
     def videoWillPlay_(self, notification):
         self.playPauseMenuItem.setTitle_('Pause Video')
@@ -952,7 +978,7 @@ class UIBackendDelegate:
     def copyTextToClipboard(self, text):
         print "WARNING: copyTextToClipboard not implemented"
 
-    def launchDownloadDaemon(self, oldpid, port):
+    def launchDownloadDaemon(self, oldpid, env):
         # Use UNIX style kill
         if oldpid is not None:
             try:
@@ -961,14 +987,14 @@ class UIBackendDelegate:
                 os.kill(oldpid, signal.SIGKILL)
             except:
                 pass
-        p = os.path.normpath(resource.path("../Democracy_Downloader.app"))
-        os.environ['DEMOCRACY_DOWNLOADER_PORT'] = str(port)
-        # We used to do this:
-        # NSWorkspace.sharedWorkspace().launchApplication_(p)
-        # 
-        # But it caused problems on OS 10.4.  The GUI became totally unreponsive afterwards.
-        # Using os.system seems to work though.
-        os.system("open %s" % p)
+        # Setup environement
+        for key, value in env.items():
+            os.environ[key] = value
+        # Find and launch the daemon
+        pool = NSAutoreleasePool.alloc().init()
+        p = NSBundle.mainBundle().pathForResource_ofType_('Democracy_Downloader', 'app')
+        NSWorkspace.sharedWorkspace().launchApplication_(p)
+        del pool
 
 class ExceptionReporterController (NibClassBuilder.AutoBaseClass):
     
@@ -1647,8 +1673,12 @@ class ManagedWebView (NSObject):
 
     def createElt(self, xml):
         parent = self.view.mainFrame().DOMDocument().createElement_("div")
-        parent.setInnerHTML_(xml)
-        elt = parent.firstChild()
+        if len(xml) == 0:
+            #FIXME: this is awfully ugly but it fixes the symptoms described
+            #in #1664. Next step is to fix the root cause.
+            parent.setInnerHTML_("<div style='height: 1px;'/>")
+        else:
+            parent.setInnerHTML_(xml)
         #FIXME: This is a bit of a hack. Since, we only deal with
         # multiple elements on initialFillIn, it should be fine for now
         if parent.childNodes().length() > 1:
@@ -1656,7 +1686,8 @@ class ManagedWebView (NSObject):
             for child in range(parent.childNodes().length()):
                 eltlist.append(parent.childNodes().item_(child))
             return eltlist
-        return elt
+        else:
+            return parent.firstChild()
         
     @deferUntilAfterLoad
     def addItemAtEnd(self, xml, id):
@@ -1664,9 +1695,9 @@ class ManagedWebView (NSObject):
         if not elt:
             print "warning: addItemAtEnd: missing element %s" % id
         else:
-            elt.insertBefore__(self.createElt(xml), None)
             #print "add item %s at end of %s" % (elt.getAttribute_("id"), id)
             #print xml[0:79]
+            elt.insertBefore__(self.createElt(xml), None)
 
     @deferUntilAfterLoad
     def addItemBefore(self, xml, id):
@@ -1677,11 +1708,11 @@ class ManagedWebView (NSObject):
             newelts = self.createElt(xml)
             try:
                 for newelt in newelts:
+                    #print "add item %s before %s" % (newelt.getAttribute_("id"), id)
                     elt.parentNode().insertBefore__(newelt, elt)
             except:
+                #print "add item %s before %s" % (newelts, id)
                 elt.parentNode().insertBefore__(newelts, elt)
-            #print "add item %s before %s" % (newelt.getAttribute_("id"), id)
-            #print xml[0:79]
 
     @deferUntilAfterLoad
     def removeItem(self, id):
@@ -1689,8 +1720,8 @@ class ManagedWebView (NSObject):
         if not elt:
             print "warning: removeItem: missing element %s" % id
         else:
-            elt.parentNode().removeChild_(elt)
             #print "remove item %s" % id
+            elt.parentNode().removeChild_(elt)
 
     @deferUntilAfterLoad
     def changeItem(self, id, xml):
@@ -1698,7 +1729,6 @@ class ManagedWebView (NSObject):
         if not elt:
             print "warning: changeItem: missing element %s" % id
         else:
-            elt.setOuterHTML_(xml)
             #print "change item %s (new id %s)" % (id, elt.getAttribute_("id"))
             #print xml[0:79]
             #if id != elt.getAttribute_("id"):
@@ -1706,6 +1736,7 @@ class ManagedWebView (NSObject):
             #elt = self.findElt(id)
             #if not elt:
             #    print "ERROR ELEMENT LOST %s" % id
+            elt.setOuterHTML_(xml)
 
     @deferUntilAfterLoad
     def hideItem(self, id):
@@ -1713,8 +1744,8 @@ class ManagedWebView (NSObject):
         if not elt:
             print "warning: hideItem: missing element %s" % id
         else:
-            elt.setAttribute__("style", "display:none")
             #print "hide item %s (new style '%s')" % (id, elt.getAttribute_("style"))
+            elt.setAttribute__("style", "display:none")
 
     @deferUntilAfterLoad
     def showItem(self, id):
@@ -1722,8 +1753,8 @@ class ManagedWebView (NSObject):
         if not elt:
             print "warning: showItem: missing element %s" % id
         else:
-            elt.setAttribute__("style", "")
             #print "show item %s (new style '%s')" % (id, elt.getAttribute_("style"))
+            elt.setAttribute__("style", "")
 
 
 ###############################################################################

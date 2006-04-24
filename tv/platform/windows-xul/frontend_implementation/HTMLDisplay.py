@@ -146,8 +146,8 @@ class httpServer:
             # the initial readline failed -- so use %s, never %d, when
             # printing it.
             except socket.error, (code, description):
-                if code == errno.ECONNABORTED or \
-                        code == errno.ECONNRESET:
+                if code in (errno.ECONNABORTED, errno.ECONNRESET,
+                        errno.WSAENOTSOCK):
                     # Normal: Mozilla was just being abrupt
                     print "[%s] Ignoring remote or network error '%s'" % \
                         (self.reqNum, description)
@@ -435,8 +435,8 @@ Content-Type: multipart/x-mixed-replace;boundary="%s"
                         self.socket.send("Content-type: %s\r\n\r\n%s\r\n--%s" \
                                          % (mimeType, body, self.boundary))
                     except socket.error, (code, description):
-                        if code == errno.ECONNABORTED or \
-                                code == errno.ECONNRESET:
+                            if code in (errno.ECONNABORTED, errno.ECONNRESET,
+                                    errno.WSAENOTSOCK):
                             print "[%d] Events end with remote error '%s'" % \
                                 (self.reqNum, description)
                             return

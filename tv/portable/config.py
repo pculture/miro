@@ -32,6 +32,9 @@ EXPIRE_AFTER_X_DAYS         = Pref( key='expireAfterXDays',      default=6,     
 DOWNLOADS_TARGET            = Pref( key='DownloadsTarget',       default=3,     platformSpecific=False )
 MAX_MANUAL_DOWNLOADS        = Pref( key='MaxManualDownloads',    default=10,    platformSpecific=False )
 VOLUME_LEVEL                = Pref( key='VolumeLevel',           default=1.0,   platformSpecific=False )
+BT_MIN_PORT                 = Pref( key='BitTorrentMinPort',     default=6980,  platformSpecific=False )
+BT_MAX_PORT                 = Pref( key='BitTorrentMaxPort',     default=6999,  platformSpecific=False )
+UPLOAD_RATIO                = Pref( key='uploadRatio',           default=2.0,   platformSpecific=False )
 
 # These have a hardcoded default which can be overridden by setting an
 # environment variable.

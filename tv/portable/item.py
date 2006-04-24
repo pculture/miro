@@ -9,6 +9,7 @@ from feedparser import FeedParserDict
 from threading import Thread
 from math import ceil
 from templatehelper import escape
+from iconcache import IconCache
 import threadpriority
 import config
 import os
@@ -24,7 +25,6 @@ class Item(DDBObject):
         self.feed = feed
         self.seen = False
         self.downloaders = []
-        self.vidinfo = None
         self.autoDownloaded = False
         self.startingDownload = False
         self.lastDownloadFailed = False
@@ -34,6 +34,9 @@ class Item(DDBObject):
         self.dlFactory = DownloaderFactory(self)
         self.expired = False
         self.keep = False
+
+        self.iconCache = IconCache(self)
+        
         # linkNumber is a hack to make sure that scraped items at the
         # top of a page show up before scraped items at the bottom of
         # a page. 0 is the topmost, 1 is the next, and so on
@@ -174,14 +177,6 @@ class Item(DDBObject):
             self.endRead()
         return ret
 
-    ##
-    # Returns the vidinfo object associated with this item
-    def getVidInfo(self):
-        self.beginRead()
-        ret = self.vidinfo
-        self.endRead()
-        return ret
-
     def setAutoDownloaded(self,autodl = True):
         self.beginRead()
         self.autoDownloaded = autodl
@@ -260,9 +255,10 @@ class Item(DDBObject):
             return
 
         try:
+            justStartedDownloaders = set()
             for enclosure in enclosures:
                 try:
-                    if not enclosure["url"] in downloadURLs:
+                    if enclosure["url"] not in downloadURLs:
                         dler = self.dlFactory.getDownloader(enclosure["url"])
                         if dler != None:
                             self.beginRead()
@@ -277,7 +273,8 @@ class Item(DDBObject):
                             finally:
                                 self.endRead()
                         downloadURLs.append(dler.getURL())
-                    else:
+                        justStartedDownloaders.add(dler.getURL())
+                    elif enclosure['url'] not in justStartedDownloaders:
                         for dler in self.downloaders:
                             if dler.getURL() == enclosure['url']:
                                 dler.start()
@@ -296,11 +293,17 @@ class Item(DDBObject):
 
     ##
     # Returns a link to the thumbnail of the video
-    def getThumbnail(self):
+    def getThumbnailURL(self):
         ret = None
         self.beginRead()
         try:
             if self.entry.has_key('enclosures'):
+                try:
+                    self.entry.enclosures
+                except AttributeError:
+                    print "self.entry.enclosures doesn't work"
+                    print "self.entry['enclosures'] is: "
+                    print self.entry['enclosures']
                 for enc in self.entry.enclosures:
                     if enc.has_key('thumbnail') and enc['thumbnail'].has_key('url'):
                         ret = enc["thumbnail"]["url"]
@@ -310,10 +313,17 @@ class Item(DDBObject):
                 ret =  self.entry["thumbnail"]["url"]
         finally:
             self.endRead()
-        if ret is None or not (ret.startswith('http:') or
-                                ret.startswith('https:')):
-            ret = "resource:images/thumb.png"
         return ret
+
+    def getThumbnail (self):
+        self.beginRead()
+        try:
+            if self.iconCache.filename:
+                return "file://" + self.iconCache.filename
+            else:
+                return "resource:images/thumb.png"
+        finally:
+            self.endRead()
     ##
     # returns the title of the item
     def getTitle(self):
@@ -785,6 +795,7 @@ class Item(DDBObject):
         self.beginChange()
         try:
             self.entry = entry
+            self.iconCache.requestUpdate()
         finally:
             self.endChange()
 
@@ -870,57 +881,14 @@ class Item(DDBObject):
 
     ##
     # Called by pickle during serialization
-    def __getstate__(self):
-        temp = copy(self.__dict__)
-        temp['dlFactory'] = None
-        return (3,temp)
-
-    ##
-    # Called by pickle during serialization
-    def __setstate__(self,state):
-        (version, data) = state
-        if version == 0:
-            data['pendingManualDL'] = False
-            if not data.has_key('linkNumber'):
-                data['linkNumber'] = 0
-            version += 1
-        if version == 1:
-            data['keep'] = False
-            data['pendingReason'] = ""
-            version += 1
-        if version == 2:
-            data['creationTime'] = datetime.now()
-            version += 1
-        assert(version == 3)
-        data['startingDownload'] = False
-        self.__dict__ = data
-
-        # Older versions of the database allowed Feed Implementations
-        # to act as feeds. If that's the case, change feed attribute
-        # to contain the actual feed.
-        # NOTE: This assumes that the feed object is decoded
-        # before its items. That appears to be generally true
-        if not issubclass(self.feed.__class__, DDBObject):
-            try:
-                self.feed = self.feed.ufeed
-            except:
-                self.__class__ = DropItLikeItsHot
-            if self.__class__ is FileItem:
-                self.__class__ = DropItLikeItsHot
-
+    def onRestore(self):
+        self.startingDownload = False
         self.dlFactory = DownloaderFactory(self)
-
-#Dummy class for removing bogus FileItem instances
-class DropItLikeItsHot:
-    __DropMeLikeItsHot = True
-    def __slurp(self, *args, **kwargs):
-        pass
-    def __getattr__(self, attr):
-        if attr == '__DropMeLikeItsHot':
-            return self.__DropMeLikeItsHot
+        if (self.iconCache == None):
+            self.iconCache = IconCache (self)
         else:
-            print "DTV: WARNING! Attempt to call '%s' on DropItLikeItsHot instance" % attr
-            return self.__slurp
+            self.iconCache.dbItem = self
+            self.iconCache.requestUpdate()
 
 ##
 # An Item that exists as a file, but not as a download
@@ -967,3 +935,4 @@ class FileItem(Item):
         except:
             pass
         return ret
+

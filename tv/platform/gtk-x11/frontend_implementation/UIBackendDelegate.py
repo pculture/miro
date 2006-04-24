@@ -162,7 +162,7 @@ class UIBackendDelegate:
         gtk.Clipboard(selection="CLIPBOARD").set_text(text)
         gtk.Clipboard(selection="PRIMARY").set_text(text)
 
-    def launchDownloadDaemon(self, oldpid, port):
+    def launchDownloadDaemon(self, oldpid, env):
 #        print "*** LAUNCHING**** "
         # Use UNIX style kill
         if oldpid is not None:
@@ -186,7 +186,8 @@ class UIBackendDelegate:
             pythonPath = os.environ.get('PYTHONPATH', '').split(':')
             pythonPath[0:0] = [privatePath, democracyPath]
             os.environ['PYTHONPATH'] = ':'.join(pythonPath)
-            os.environ['DEMOCRACY_DOWNLOADER_PORT'] = str(port)
+            for key, value in env.items():
+                os.environ[key] = value
             # run the Democracy_Downloader script
             script = os.path.join(dlDaemonPath,  'Democracy_Downloader.py')
             os.execlp("python2.4", "python2.4", script)

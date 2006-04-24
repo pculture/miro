@@ -1,3 +1,5 @@
+#!/usr/bin/env python2.4
+
 ##############################################################################
 ## Paths and configuration                                                   ##
 ###############################################################################
@@ -44,8 +46,10 @@ while True:
         raise RuntimeError("Couldn't find Democracy root directory")
     root_try = os.path.abspath(os.path.join(root_try, '..'))
 portable_dir = os.path.join(root_dir, 'portable')
-bittorrent_dir = os.path.join(portable_dir, 'BitTorrent')
+bittorrent_dir = os.path.join(portable_dir, 'BitTornado')
+bittorrent_dir2 = os.path.join(portable_dir, 'BitTornado','BT1')
 dl_daemon_dir = os.path.join(portable_dir, 'dl_daemon')
+test_dir = os.path.join(portable_dir, 'test')
 compiled_templates_dir = os.path.join(portable_dir, 'compiled_templates')
 compiled_templates_test_dir = os.path.join(compiled_templates_dir,'test')
 compiled_templates_unittest_dir = os.path.join(compiled_templates_dir,'unittest')
@@ -185,7 +189,7 @@ files.append(os.path.join(platform_dir, 'glade', 'democracy.glade'))
 files.append(os.path.join(platform_dir, 'ui', 'Democracy.xml'))
 data_files.append(('/usr/share/democracy/resources/', files))
 # handle the sub directories.
-for dir in ('templates', 'css', 'images'):
+for dir in ('templates', 'css', 'images', 'testdata'):
     source_dir = os.path.join(resource_dir, dir)
     dest_dir = os.path.join('/usr/share/democracy/resources/', dir)
     data_files.append((dest_dir, listfiles(source_dir)))
@@ -349,8 +353,10 @@ setup(name='democracy',
     ],
     packages = [
         'democracy.frontend_implementation',
-        'democracy.BitTorrent',
+        'democracy.BitTornado',
+        'democracy.BitTornado.BT1',
         'democracy.dl_daemon',
+        'democracy.test',
         'democracy.compiled_templates',
         'democracy.compiled_templates.test',
         'democracy.compiled_templates.unittest',
@@ -358,8 +364,10 @@ setup(name='democracy',
     ],
     package_dir = {
         'democracy.frontend_implementation' : frontend_implementation_dir,
-        'democracy.BitTorrent' : bittorrent_dir,
+        'democracy.BitTornado' : bittorrent_dir,
+        'democracy.BitTornado.BT1' : bittorrent_dir2,
         'democracy.dl_daemon' : dl_daemon_dir,
+        'democracy.test' : test_dir,
         'democracy.compiled_templates' : compiled_templates_dir,
         'democracy.compiled_templates.test' : compiled_templates_test_dir,
         'democracy.compiled_templates.unittest' : compiled_templates_unittest_dir,

@@ -28,16 +28,8 @@ class Folder(DDBObject):
 	    self.endChange()
 
     ##
-    # Called by pickle during serialization
-    def __getstate__(self):
-	temp = copy(self.__dict__)
-	temp["feedlist"] = None
-	return temp
-
-    ##
     # Called by pickle during deserialization
-    def __setstate__(self,state):
-	self.__dict__ = state
+    def onRestore(self):
 	self.feedlist = defaultDatabase.filter(lambda x:isinstance(x,feed.Feed) and x.getID() in self.feeds)
 
     ##

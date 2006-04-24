@@ -46,16 +46,11 @@ class Scheduler(DynamicDatabase):
 		self.endUpdate()
 	    sleep(1)
 
-    def __getstate__(self):
-        assert(0) #This should never be serialized
-
 ##
 # a ScheduleEvent corresponds to something that happens in the
 # future, possibly periodically
 
 class ScheduleEvent(DDBObject):
-    scheduler = Scheduler()
-
     ##
     # Schedules an event for interval seconds from now
     # Repeats every
@@ -89,6 +84,3 @@ class ScheduleEvent(DDBObject):
             semaphore.release()
         #print "%s finished " % str(self.event)
         threadpriority.setBackgroundPriority()
-
-    def __getstate__(self):
-        assert(0) #This should never be serialized

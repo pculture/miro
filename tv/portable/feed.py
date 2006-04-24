@@ -14,6 +14,7 @@ import traceback #FIXME get rid of this
 from datetime import datetime, timedelta
 from inspect import isfunction
 from new import instancemethod
+from iconcache import iconCacheUpdater, IconCache
 import os
 import config
 import re
@@ -173,7 +174,8 @@ def _generateFeed(url, ufeed, visible=True):
     elif (info['content-type'].startswith('application/rss+xml') or
           info['content-type'].startswith('application/podcast+xml') or
           info['content-type'].startswith('text/xml') or 
-          info['content-type'].startswith('application/xml')):
+          info['content-type'].startswith('application/xml') or
+          (info['content-type'].startswith('text/plain') and url.endswith('.xml'))):
         #print " It's doesn't look like HTML..."
         html = info["file-handle"].read()
         info["file-handle"].close()
@@ -256,6 +258,7 @@ class FeedImpl:
         self.lastViewed = datetime.min
         self.thumbURL = defaultFeedIconURL()
         self.updateFreq = config.get(config.CHECK_CHANNELS_EVERY_X_MN)*60
+        self.expireTime = None
 
     # Sets the update frequency (in minutes). 
     # - A frequency of -1 means that auto-update is disabled.
@@ -590,16 +593,15 @@ class FeedImpl:
         delta = None
         self.ufeed.beginRead()
         try:
-            try:
-                if self.expire == 'never' or (self.expire == 'system' and config.get(config.EXPIRE_AFTER_X_DAYS) <= 0):
-                    delta = timedelta()
-                else:
-                    delta = self.expireTime
-            except:
-                delta = timedelta()
+            expireAfterSetting = config.get(config.EXPIRE_AFTER_X_DAYS)
+            if (self.expireTime is None or self.expire == 'never' or 
+                    (self.expire == 'system' and expireAfterSetting <= 0)):
+                return 0
+            else:
+                return (self.expireTime.days * 24 + 
+                        self.expireTime.seconds / 3600)
         finally:
             self.ufeed.endRead()
-        return (delta.days * 24) + (delta.seconds / 3600)
 
     ##
     # Returns the number of days until a video expires
@@ -681,12 +683,8 @@ class FeedImpl:
 
     ##
     # Returns the URL of a thumbnail associated with the feed
-    def getThumbnail(self):
-        ret = self.thumbURL
-        if ret is None or not (ret.startswith('http:') or
-                                ret.startswith('https:')):
-            ret = defaultFeedIconURL()
-        return ret
+    def getThumbnailURL(self):
+        return self.thumbURL
 
     ##
     # Returns URL of license assocaited with the feed
@@ -727,6 +725,7 @@ class Feed(DDBObject):
         else:
             self.loading = False
             self.actualFeed = initial
+        self.iconCache = IconCache(self, is_vital = True)
 
     # Returns javascript to mark the feed as viewed
     # FIXME: Using setTimeout is a hack to get around JavaScript bugs
@@ -809,40 +808,30 @@ class Feed(DDBObject):
                 item.remove()
         finally:
             self.endChange()
-        
 
-    ##
-    # Called by pickle during serialization
-    def __getstate__(self):
-        temp = copy(self.__dict__)
-        #temp["itemlist"] = None
-        return (3,temp)
+    def getThumbnail(self):
+        self.beginRead()
+        try:
+            if self.iconCache.filename:
+                return "file://" + self.iconCache.filename
+            else:
+                return defaultFeedIconURL()
+        finally:
+            self.endRead()
 
-    ##
-    # Called by pickle during deserialization
-    def __setstate__(self,state):
-        (version, data) = state
-        if version == 0:
-            version += 1
-        if version == 1:
-            data['thumbURL'] = defaultFeedIconURL()
-            version += 1
-        if version == 2:
-            data['lastViewed'] = datetime.min
-            data['unwatched'] = 0
-            data['available'] = 0
-            version += 1
-        assert(version == 3)
-        data['updating'] = False
-        self.__dict__ = data
-        # This object is useless without a FeedImpl associated with it
-        if not data.has_key('actualFeed'):
-            self.__class__ = DropItLikeItsHot
+    def updateIcons(self):
+        iconCacheUpdater.clearVital()
+        for item in self.items:
+            item.iconCache.requestUpdate(True)
+        for feed in app.globalViewList['feeds']:
+            feed.iconCache.requestUpdate(True)
 
-# Dummy class to facilitate upgrade
-class YahooSearchFeedImpl:
-    def __setstate__(self,state):
-        self.__class__ = DropItLikeItsHot
+    def onRestore(self):
+        if (self.iconCache == None):
+            self.iconCache = IconCache (self, is_vital = True)
+        else:
+            self.iconCache.dbItem = self
+            self.iconCache.requestUpdate(True)
 
 class RSSFeedImpl(FeedImpl):
     firstImageRE = re.compile('\<\s*img\s+[^>]*src\s*=\s*"(.*?)"[^>]*\>',re.I|re.M)
@@ -955,6 +944,7 @@ class RSSFeedImpl(FeedImpl):
             if (self.parsed.feed.has_key('image') and 
                 self.parsed.feed.image.has_key('url')):
                 self.thumbURL = self.parsed.feed.image.url
+                self.ufeed.iconCache.requestUpdate(is_vital=True)
             for entry in self.parsed.entries:
                 entry = self.addScrapedThumbnail(entry)
                 new = True
@@ -1012,27 +1002,12 @@ class RSSFeedImpl(FeedImpl):
         return ret
 
     ##
-    # Called by pickle during serialization
-    def __getstate__(self):
-        temp = copy(self.__dict__)
-        temp["scheduler"] = None
-        if temp.has_key('parsed') and 'bozo_exception' in temp['parsed']:
-            # This can end up pointing into the XML parser, leading to
-            # a pickling failure.
-            del temp['parsed']['bozo_exception']
-        #temp["itemlist"] = None
-        return (0,temp)
-
-    ##
     # Called by pickle during deserialization
-    def __setstate__(self,state):
-        (version, data) = state
-        assert(version == 0)
-        data['updating'] = False
-        self.__dict__ = data
+    def onRestore(self):
         #self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
+        self.updating = False
         self.scheduleUpdateEvents(0.1)
 
 
@@ -1341,26 +1316,14 @@ class ScraperFeedImpl(FeedImpl):
         return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')],linkDict)
         
     ##
-    # Called by pickle during serialization
-    def __getstate__(self):
-        temp = copy(self.__dict__)
-        temp['semaphore'] = None
-        temp["scheduler"] = None
-        #temp["itemlist"] = None
-        return (0,temp)
-
-    ##
     # Called by pickle during deserialization
-    def __setstate__(self,state):
-        (version, data) = state
-        assert(version == 0)
-        data['updating'] = False
-        data['tempHistory'] = {}
-        self.__dict__ = data
+    def onRestore(self):
         #self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
 
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
+        self.updating = False
+        self.tempHistory = {}
         self.scheduleUpdateEvents(.1)
         self.semaphore = Semaphore(ScraperFeedImpl.maxThreads)
 
@@ -1447,20 +1410,10 @@ class DirectoryFeedImpl(FeedImpl):
                 self.items.append(FileItem(self.ufeed,file))
         self.updating = False
 
-    ##
-    # Called by pickle during serialization
-    def __getstate__(self):
-        temp = copy(self.__dict__)
-        temp["scheduler"] = None
-        return (0,temp)
-    def __setstate__(self,state):
-        (version, data) = state
-        assert(version == 0)
-        data['updating'] = False
-        self.__dict__ = data
-
+    def onRestore(self):
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
+        self.updating = False
         self.scheduleUpdateEvents(.1)
 
 
@@ -1693,89 +1646,3 @@ class HTMLFeedURLParser(HTMLParser):
                                          'text/xml',
                                          'application/xml']):
             self.link = urljoin(self.baseurl,attrdict['href'])
-
-class UniversalFeed:
-    def __setstate__(self, state):
-        (version, data) = state
-        if version == 0:
-            data['errorState'] = False
-            version += 1
-        if version == 1:
-            version += 1
-        assert(version == 2)
-        self.__dict__ = data
-        self.__class__ = Feed
-        for key, val in Feed.__dict__.iteritems():
-            if isfunction(val):
-                instancemethod(val, self,Feed)
-        self.actualFeed.ufeed = self
-        # UniversalFeeds should never contain Feeds. If they do,
-        # something is wrong.
-        if isinstance(self.actualFeed, Feed):
-            self.__class__ = DropItLikeItsHot
-        else:
-            # FIXME: this assumes that the feed object is decoded before
-            # it's items
-            self.actualFeed.ufeed = self
-                
-class ScraperFeed(ScraperFeedImpl):
-    ##
-    # Called by pickle during deserialization
-    def __setstate__(self,state):
-        (version, data) = state
-        if version == 0:
-            version += 1
-        if version == 1:
-            data['thumbURL'] = defaultFeedIconURL()
-            version += 1
-        if version == 2:
-            data['lastViewed'] = datetime.min
-            data['unwatched'] = 0
-            data['available'] = 0
-
-            version += 1
-        assert(version == 3)
-        data['updating'] = False
-        data['tempHistory'] = {}
-        data['visible'] = True
-        self.__dict__ = data
-        self.__class__ = ScraperFeedImpl
-
-class DirectoryFeed(DirectoryFeedImpl):
-    ##
-    # Called by pickle during deserialization
-    def __setstate__(self,state):
-        (version, data) = state
-        if version == 0:
-            data['thumbURL'] = defaultFeedIconURL()
-            version += 1
-        if version == 1:
-            data['lastViewed'] = datetime.min
-            data['unwatched'] = 0
-            data['available'] = 0
-            version += 1
-        assert(version == 2)
-        data['updating'] = False
-        self.__dict__ = data
-        self.__class__ = DirectoryFeedImpl
-
-class RSSFeed(RSSFeedImpl):
-    ##
-    # Called by pickle during deserialization
-    def __setstate__(self,state):
-        (version, data) = state
-        if version == 0:
-            version += 1
-        if version == 1:
-            data['thumbURL'] = defaultFeedIconURL()
-            version += 1
-        if version == 2:
-            data['lastViewed'] = datetime.min
-            data['unwatched'] = 0
-            data['available'] = 0
-            version += 1
-        assert(version == 3)
-        data['updating'] = False
-        data['visible'] = True
-        self.__dict__ = data
-        self.__class__ = RSSFeedImpl

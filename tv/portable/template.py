@@ -2,95 +2,9 @@
 #
 # Contains runtime template code
 
-from templatehelper import quoteattr, escape, evalKey, toUni, clearEvalCache, attrPattern, rawAttrPattern, resourcePattern, generateId, textFunc, textHideFunc, attrFunc, addIDFunc, evalEscapeFunc, evalFunc, includeHideFunc, hideIfEmptyFunc, rawAttrFunc, hideSectionFunc, quoteAndFillFunc
+from templatehelper import quoteattr, escape, evalKey, toUni, clearEvalCache, attrPattern, rawAttrPattern, resourcePattern, generateId
 import resource
 from xhtmltools import urlencode
-
-###############################################################################
-#### Functions used in repeating templates                                 ####
-###############################################################################
-
-# These are functions that take in a dictionary to local data, an id,
-# and an argument and return text to be added to the template
-
-# Simply returns text
-def getRepeatText(data, tid, text):
-    return text
-
-# Returns text if function does not evaluate to true
-def getRepeatTextHide(data, tid, args):
-    (functionKey,ifKey,parameter,invert, text) = args
-    hide = evalKey(functionKey, data, None, True)(evalKey(ifKey, data, None, True), parameter)
-    if (not invert and hide) or (invert and not hide):
-        return text
-    else:
-        return ''
-
-def getQuoteAttr(data, tid, value):
-    return quoteattr(urlencode(toUni(evalKey(value, data, None, True))))
-
-def getRawAttr(data, tid, value):
-    return quoteattr(toUni(evalKey(value, data, None, True)))
-
-# Adds an id attribute to a tag and closes it
-def getRepeatAddIdAndClose(data, tid, args):
-    return ' id="%s">'%quoteattr(tid)
-
-# Evaluates key with data
-def getRepeatEvalEscape(data, tid, replace):
-    return escape(evalKey(replace,data,None, True))
-
-# Evaluates key with data
-def getRepeatEval(data, tid, replace):
-    return toUni(evalKey(replace,data,None, True))
-
-# Returns include iff function does not evaluate to true
-def getRepeatIncludeHide(data, tid, args):
-    (functionKey,ifKey,parameter,invert, name) = args
-    hide = evalKey(functionKey, data, None, True)(evalKey(ifKey, data, None, True), parameter)
-    if (not invert and hide) or (invert and not hide):
-        f = open(resource.path('templates/%s'%name),'r')
-        html = f.read()
-        f.close()
-        return html
-    else:
-        return ''
-
-def getHideIfEmpty(data, tid, args):
-    (self, viewName, name, invert, attrs) = args
-    nodeId = generateId()
-    view = self.handle.findNamedView(viewName).getView()
-    hide = (not invert and view.len() == 0) or (invert and view.len() > 0)
-
-    output = ['<%s'%name]
-    for key in attrs.keys():
-        if not key in ['t:hideIfViewEmpty','t:hideIfViewNotEmpty','style']:
-            PyList_Append(output, ' %s=%s'%(key,quoteAndFillAttr(attrs[key],data)))
-    PyList_Append(output,' id="')
-    PyList_Append(output,quoteattr(nodeId))
-    PyList_Append(output,'"')
-    if hide:
-        PyList_Append(output,' style="display:none">')
-    else:
-        PyList_Append(output,'>')
-    self.handle.addHideIfEmpty(nodeId,viewName, invert)
-    return ''.join(output)
-
-
-def getHideSection(data, tid, args):
-    output = []
-    (functionKey,ifKey,parameter,invert, funcList) = args
-    hide = evalKey(functionKey, data, None, True)(evalKey(ifKey, data, None, True), parameter)
-    if (invert and hide) or (not invert and not hide):
-        for count in range(len(funcList)):
-            (func, args) = funcList[count]
-            output.append(funcTable[func](data,tid,args))
-    return ''.join(output)
-
-def getQuoteAndFillAttr(data, tid, value):
-    return quoteAndFillAttr(value, data)
-
-funcTable = [getRepeatText, getRepeatTextHide, getQuoteAttr, getRepeatAddIdAndClose, getRepeatEvalEscape, getRepeatEval, getRepeatIncludeHide, getHideIfEmpty, getRawAttr, getHideSection, getQuoteAndFillAttr]
 
 ###############################################################################
 #### Public interface                                                      ####
@@ -132,7 +46,7 @@ class TemplateError(Exception):
 
 # Class used internally by Handle to track a t:repeatForSet clause.
 class TrackedView:
-    def __init__(self, anchorId, anchorType, view, templateFuncs, templateData, parent, name):
+    def __init__(self, anchorId, anchorType, view, templateFunc, templateData, parent, name):
         # arguments as Handle.addView(), plus 'parent', a pointer to the Handle
         # that is used to find domHandler and invoke checkHides
         self.anchorId = anchorId
@@ -140,7 +54,7 @@ class TrackedView:
 
         self.origView = view
         self.view = view.map(IDAssignmentInView(id(self)).mapper)
-        self.templateFuncs = templateFuncs
+        self.templateFunc = templateFunc
         self.templateData = templateData
         self.parent = parent
         self.name = name
@@ -171,8 +85,7 @@ class TrackedView:
         data = self.templateData
         data['this'] = item.object
         data['thisView'] = self.name
-        for (func, args) in self.templateFuncs:
-            output.append(funcTable[func](data,item.tid,args))
+        output.append(self.templateFunc(data,item.tid).read())
         try:
 #             print "-----"
 #             print str(''.join(output))
@@ -225,14 +138,14 @@ class TrackedView:
 
 # Class used internally by Handle to track a t:updateForView clause.
 class UpdateRegion:
-    def __init__(self, anchorId, anchorType, view, templateFuncs, templateData, parent, name):
+    def __init__(self, anchorId, anchorType, view, templateFunc, templateData, parent, name):
         # arguments as Handle.addView(), plus 'parent', a pointer to the Handle
         # that is used to find domHandler and invoke checkHides
         self.anchorId = anchorId
         self.anchorType = anchorType
 
         self.view = view
-        self.templateFuncs = templateFuncs
+        self.templateFunc = templateFunc
         self.templateData = templateData
         self.parent = parent
         self.name = name
@@ -259,8 +172,7 @@ class UpdateRegion:
         data = self.templateData
         data['this'] = self.view
         data['thisView'] = self.name
-        for (func, args) in self.templateFuncs:
-            output.append(funcTable[func](data,self.tid,args))
+        output.append(self.templateFunc(data,self.tid).read())
         try:
             return ''.join(output) 
         except UnicodeDecodeError:
@@ -407,7 +319,7 @@ class Handle:
                     pass
         raise TemplateError, "A view named '%s' was referenced but not defined." % name
 
-    def addView(self, anchorId, anchorType, view, templateFuncs, data, name):
+    def addView(self, anchorId, anchorType, view, templateFunc, data, name):
         # Register for JS calls to populate a t:repeatFor. 'view' is the
         # database view to track; 'node' is a DOM node representing the
         # template to fill; 'data' are extra variables to be used in expanding
@@ -420,11 +332,11 @@ class Handle:
         #
         # We take a private copy of 'node', so don't worry about modifying
         # it subsequent to calling this method.
-        tv = TrackedView(anchorId, anchorType, view, templateFuncs, data, self, name)
+        tv = TrackedView(anchorId, anchorType, view, templateFunc, data, self, name)
         self.trackedViews.append(tv)
 
-    def addUpdate(self, anchorId, anchorType, view, templateFuncs, data, name):
-        ur = UpdateRegion(anchorId, anchorType, view, templateFuncs, data, self, name)
+    def addUpdate(self, anchorId, anchorType, view, templateFunc, data, name):
+        ur = UpdateRegion(anchorId, anchorType, view, templateFunc, data, self, name)
         self.updateRegions.append(ur)
 
     def unlinkTemplate(self):

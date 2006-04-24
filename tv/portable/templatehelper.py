@@ -1,11 +1,12 @@
 # templatehelper.py Copyright (c) 2005,2006 Participatory Culture Foundation
-# Contains code shared by template_compiler and template
+# Contains template utility code shared by template_compiler and template
 
 # Distutils needs this in a .py file, so it knows they're required
 # by the entension module. This place seems as good as any.
 import cPickle #for database.pyx
 
 import gettext
+import inspect
 import shutil
 import re
 import types
@@ -18,20 +19,6 @@ attrPattern = re.compile("^(.*?)@@@(.*?)@@@(.*)$")
 resourcePattern = re.compile("^resource:(.*)$")
 rawAttrPattern = re.compile("^(.*)\*\*\*(.*?)\*\*\*(.*)$")
 evalCache = {}
-
-# Constants for the compiler and runtime function tables
-# Eventually, we should eliminate these and use the actual functions
-textFunc = 0
-textHideFunc = 1
-attrFunc = 2
-addIDFunc = 3
-evalEscapeFunc = 4
-evalFunc = 5
-includeHideFunc = 6
-hideIfEmptyFunc = 7
-rawAttrFunc = 8
-hideSectionFunc = 9
-quoteAndFillFunc = 10
 
 def quoteattr(orig):
     return orig.replace('"','&quot;')
@@ -63,10 +50,8 @@ def evalKey(keyString, indata, originalKey = None, cache = False):
                 data = getattr(data, key)
             except:
                 return 'Bad Key'
-            try:
+            if inspect.ismethod(data) or inspect.isfunction(data):
                 data = data()
-            except:
-                pass
     if cache:
         evalCache[keyString] = data
     return data
