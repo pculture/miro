@@ -399,6 +399,17 @@ class FeedImpl:
     # Downloads the next available item taking into account maxNew,
     # fallbehind, and getEverything
     def downloadNextAuto(self, dontUse = []):
+        nextAuto = self.getNextAutoDownload()
+        if nextAuto is not None:
+            nextAuto.download(autodl=True)
+            return True
+        else:
+            return False
+
+    ##
+    # Figure out the next available auto download item taking into account
+    # maxNew, fallbehind, and getEverything
+    def getNextAutoDownload(self, dontUse = []):
         self.ufeed.beginRead()
         try:
             next = None
@@ -428,20 +439,19 @@ class FeedImpl:
             self.ufeed.endRead()
 
         if self.maxNew >= 0 and newitems >= self.maxNew:
-            return False
+            return None
         elif self.fallBehind>=0 and eligibile > self.fallBehind:
             dontUse.append(next)
-            return self.downloadNextAuto(dontUse)
+            return self.getNextAutoDownload(dontUse)
         elif next != None:
             self.ufeed.beginRead()
             try:
                 self.startfrom = next.getPubDateParsed()
             finally:
                 self.ufeed.endRead()
-            next.download(autodl = True)
-            return True
+            return next
         else:
-            return False
+            return None
 
     def downloadNextManual(self):
         self.ufeed.beginRead()

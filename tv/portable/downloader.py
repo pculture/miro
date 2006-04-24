@@ -130,6 +130,7 @@ class RemoteDownloader(DDBObject):
             for item in self.itemList:
                 item.beginChange()
                 item.endChange()
+
     ##
     # This is the actual download thread.
     def runDownloader(self):
@@ -166,6 +167,19 @@ class RemoteDownloader(DDBObject):
     def remove(self):
         self.stop()
         DDBObject.remove(self)
+
+    def getType(self):
+        """Get the type of download.  Will return either "http" or
+        "bittorrent".
+        """
+        self.beginRead()
+        try:
+            if self.contentType == 'application/x-bittorrent':
+                return "bittorrent"
+            else:
+                return "http"
+        finally:
+            self.endRead()
 
     ##
     # In case multiple downloaders are getting the same file, we can support
@@ -271,9 +285,14 @@ class DownloaderFactory:
     def __init__(self,item):
         self.item = item
 
-    def getDownloader(self,url):
-        info = grabURL(url,'GET')
-        if info is None:
-            return None
-        else:
-            return RemoteDownloader(info['updated-url'],self.item, info['content-type'])
+    def getDownloader(self, url):
+        info = grabURL(url, 'HEAD')
+        if info is None: # some websites don't support HEAD requests
+            info = grabURL(url, 'GET')
+            if info is None:
+                # info is still None, we can't create a downloader
+                return None
+            else:
+                info['file-handle'].close()
+        return RemoteDownloader(info['updated-url'], self.item,
+                info['content-type'])

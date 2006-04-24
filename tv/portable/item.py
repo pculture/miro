@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from database import DDBObject, defaultDatabase
 from downloader import DownloaderFactory
+from download_utils import grabURL
 from copy import copy
 from xhtmltools import unescape,xhtmlify
 from xml.sax.saxutils import unescape
@@ -206,6 +207,18 @@ class Item(DDBObject):
         finally:
             self.endRead()
         return ret
+
+    def isTorrent(self):
+        url = self.getURL()
+        info = grabURL(url, "HEAD")
+        if info is not None:
+            return info['content-type'] == 'application/x-bittorrent'
+        # HEAD request didn't work, try GET
+        info = grabURL(url, "GET")
+        if info is None:
+            return False
+        info["file-handle"].close()
+        return info['content-type'] == 'application/x-bittorrent'
 
     def download(self,autodl=False):
         thread = Thread(target = lambda:self.actualDownload(autodl),
