@@ -13,6 +13,7 @@ Strategy:
 from new import classobj
 from copy import copy
 import pickle
+import shutil
 import threading
 import types
 
@@ -405,6 +406,7 @@ objectSchemas = [
 ]
 
 def convertOldDatabase(databasePath):
+    shutil.copyfile(databasePath, databasePath + '.old')
     f = open(databasePath)
     p = FakeClassUnpickler(f)
     data = p.load()

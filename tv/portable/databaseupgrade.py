@@ -5,6 +5,7 @@ olddatabaseupgrade.py)
 """
 
 import schema
+chatter = True # set to False in the unittests
 
 def upgrade(savedObjects, saveVersion, upgradeTo=None):
     """Upgrade a list of SavableObjects that were saved using an old version 
@@ -24,6 +25,8 @@ def upgrade(savedObjects, saveVersion, upgradeTo=None):
         upgradeTo = schema.VERSION
 
     while saveVersion < upgradeTo:
+        if chatter:
+            print "upgrading database to version %s" % (saveVersion + 1)
         upgradeFunc = globals()['upgrade%d' % (saveVersion + 1)]
         upgradeFunc(savedObjects)
         saveVersion += 1
@@ -48,4 +51,3 @@ def upgrade3(objectList):
     for o in objectList:
         if o.classString.endswith('feed-impl'):
             o.savedData['expireTime'] = None
-

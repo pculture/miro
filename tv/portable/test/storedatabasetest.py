@@ -98,6 +98,7 @@ testObjectSchemas = [HumanSchema, DogSchema, HouseSchema, PCFProgramerSchema,
 class SchemaTest(unittest.TestCase):
     def setUp(self):
         storedatabase.skipUpgrade = True
+        databaseupgrade.chatter = False
         self.lee = Human("lee", 25, 1.4, [], {'virtual bowling': 212})
         self.joe = Human("joe", 14, 1.4, [self.lee])
         self.forbesSt = House('45 Forbs St', 'Blue', [self.lee, self.joe],

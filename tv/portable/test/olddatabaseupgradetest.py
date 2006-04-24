@@ -5,11 +5,13 @@ import unittest
 
 import olddatabaseupgrade
 import storedatabase
+import databaseupgrade
 import resource
 
 class TestConvert(unittest.TestCase):
     def setUp(self):
         storedatabase.skipOnRestore = True
+        databaseupgrade.chatter = False
         self.tmpPath = tempfile.mktemp()
 
     def tearDown(self):

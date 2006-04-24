@@ -381,6 +381,8 @@ def restoreObjectList(pathname, objectSchemas=None):
         f.close()
 
     if not skipUpgrade:
+        if version != schema_mod.VERSION:
+            shutil.copyfile(pathname, pathname + '.beforeupgrade')
         databaseupgrade.upgrade(savedObjects, version)
 
     return savablesToObjects(savedObjects, objectSchemas)
