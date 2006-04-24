@@ -241,9 +241,6 @@ class RemoteDownloader(DDBObject):
     # Returns the filename that we're downloading to. Should not be
     # called until state is "finished."
     def getFilename(self):
-        if self.getState() != 'finished':
-            msg = "getFilename() called on an unfinished downloader"
-            raise ValueError(msg)
         self.beginRead()
         try:
             return self.status['filename']
