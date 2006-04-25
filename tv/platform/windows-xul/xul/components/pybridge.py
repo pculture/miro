@@ -74,6 +74,10 @@ class PyBridge:
         import frontend
         frontend.HTMLDisplay.dispatchEventByCookie(cookie, url)
 
+    def openURL(self, url):
+        import webbrowser
+        webbrowser.open(url, new=1)
+
     def addChannel(self, url):
         print "Add Channel %s" % url
         import feed

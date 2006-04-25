@@ -9,32 +9,18 @@
         title="&bugreport.title;"
         onload="updateLabel()"
         buttons="accept">
-    <script type="text/javascript">
+    <script src="chrome://dtv/content/bugreport.js"/>
 
-function updateLabel() {
-  var elt = document.getElementById("label1");
-  textIn = window.arguments[0]["when"];
-  newText = "&bugreport.before;" + textIn + "&bugreport.after;";
-  textElt = document.createTextNode(newText);
-  elt.appendChild(textElt);
-
-  elt = document.getElementById("log");
-  textIn = window.arguments[0]["report"];
-  elt.setAttribute("value", textIn);
-}
-    </script>
-
-  <description id="label1" class="header" width="250" />
-
+    <description id="label1" class="header" width="250">
+        &bugreport.pleasehelpus;
+          <button label="&bugreport.copytoclipboard;" oncommand="copyLogToClipboard();" />
+        <button label="&bugreport.openbugtracker;" oncommand="openBugReportWindow();" />
+    </description>
   <description id="label2" width="250">
-    &bugreport.comeon;
+    &bugreport.pleaserestart;
   </description>
 
   <textbox id="log" value="" class="monospace"
            multiline="true" readonly="true" rows="8" cols="80"/>
-
-  <description width="250">
-    &bugreport.comeon2;
-  </description>
 
 </dialog>
