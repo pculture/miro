@@ -15,6 +15,8 @@ from datetime import datetime, timedelta
 from inspect import isfunction
 from new import instancemethod
 from iconcache import iconCacheUpdater, IconCache
+import resource
+import config
 import os
 import config
 import re
@@ -23,7 +25,6 @@ import app
 whitespacePattern = re.compile(r"^[ \t\r\n]*$")
 
 def defaultFeedIconURL():
-    import resource
     return resource.url("images/feedicon.png")
 
 # Notes on character set encoding of feeds:
@@ -823,7 +824,8 @@ class Feed(DDBObject):
         self.beginRead()
         try:
             if self.iconCache.filename:
-                return "file://" + self.iconCache.filename
+                basename = os.path.basename(self.iconCache.filename)
+                return resource.iconCacheUrl(basename)
             else:
                 return defaultFeedIconURL()
         finally:

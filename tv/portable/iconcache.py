@@ -148,8 +148,7 @@ class IconCache:
             icon_cache_updating_cond.release()
 
         try:
-            cachedir = os.path.join (config.get (config.SUPPORT_DIRECTORY), "icon-cache")
-
+            cachedir = config.get(config.ICON_CACHE_DIRECTORY)
             try:
                 os.makedirs (cachedir)
             except:
@@ -186,11 +185,11 @@ class IconCache:
             # Our cache is good.  Hooray!
             if (info['status'] == 304):
                 print "Cache good: %s!" % url
-                self.dbItem.beginRead()
+                self.dbItem.beginChange()
                 try:
                     self.updated = True
                 finally:
-                    self.dbItem.endRead()
+                    self.dbItem.endChange()
                 return
         
             # We have to update it, and if we can't write to the file, we
@@ -209,7 +208,7 @@ class IconCache:
             icon_cache_filename_lock.acquire()
             try:
                 tmp_filename = self.nextFreeFilename (tmp_filename)
-                output = file (tmp_filename, 'w')
+                output = file (tmp_filename, 'wb')
             finally:
                 icon_cache_filename_lock.release()
         

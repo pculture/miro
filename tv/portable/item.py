@@ -11,6 +11,7 @@ from threading import Thread
 from math import ceil
 from templatehelper import escape
 from iconcache import IconCache
+import resource
 import threadpriority
 import config
 import os
@@ -332,7 +333,8 @@ class Item(DDBObject):
         self.beginRead()
         try:
             if self.iconCache.filename:
-                return "file://" + self.iconCache.filename
+                basename = os.path.basename(self.iconCache.filename)
+                return resource.iconCacheUrl(basename)
             else:
                 return "resource:images/thumb.png"
         finally:

@@ -68,6 +68,8 @@ MOVIES_DIRECTORY = \
     Pref(key='MoviesDirectory',  default=None, platformSpecific=True)
 SUPPORT_DIRECTORY = \
     Pref(key='SupportDirectory', default=None, platformSpecific=True)
+ICON_CACHE_DIRECTORY = \
+    Pref(key='IconCacheDirectory', default=None, platformSpecific=True)
 DB_PATHNAME = \
     Pref(key='DBPathname',       default=None, platformSpecific=True)
 LOG_PATHNAME = \
