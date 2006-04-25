@@ -5,6 +5,7 @@ import gtk
 import gobject
 import gtk.glade
 import sets
+import gconf
 
 import resource
 from frontend import *
@@ -12,6 +13,34 @@ from frontend_implementation.gtk_queue import gtkAsyncMethod
 from frontend_implementation.VideoDisplay import VideoDisplay
 from frontend_implementation.callbackhandler import CallbackHandler
 from frontend_implementation.mainwindowchanger import MainWindowChanger
+
+def getInt(key):
+    client = gconf.client_get_default()
+    fullkey = '/apps/democracy/player/window/' + key
+    value = client.get (fullkey)
+    if (value != None):
+        return value.get_int()
+    else:
+        return None
+
+def setInt(key, value):
+    client = gconf.client_get_default()
+    fullkey = '/apps/democracy/player/window/' + key
+    value = client.set_int (fullkey, value)
+
+def getBool(key):
+    client = gconf.client_get_default()
+    fullkey = '/apps/democracy/player/window/' + key
+    value = client.get (fullkey)
+    if (value != None):
+        return value.get_bool()
+    else:
+        return None
+
+def setBool(key, value):
+    client = gconf.client_get_default()
+    fullkey = '/apps/democracy/player/window/' + key
+    value = client.set_bool (fullkey, value)
 
 class WidgetTree(gtk.glade.XML):
     """Small helper class.  It's exactly like the gtk.glade.XML interface,
@@ -103,7 +132,40 @@ class MainFrame:
         self.windowChanger = MainWindowChanger(self.widgetTree, self,
                 MainWindowChanger.BROWSING)
 
+        width = getInt ("width")
+        height = getInt ("height")
+        x = getInt ("x")
+        y = getInt ("y")
+        if (x != None and y != None):
+            self.widgetTree['main-window'].move (x, y);
+        if (width != None and height != None):
+            self.widgetTree['main-window'].resize (width, height);
+
+        maximized = getBool ("maximized")
+        if maximized != None:
+            if maximized:
+                self.widgetTree['main-window'].maximize()
+            else:
+                self.widgetTree['main-window'].unmaximize()
+
+        self.widgetTree['main-window'].connect ("configure-event", self.configureEvent)
+        self.widgetTree['main-window'].connect ("window-state-event", self.stateEvent)
+
         self.widgetTree['main-window'].show_all()
+
+    def configureEvent(self, widget, event):
+        (x, y) = self.widgetTree['main-window'].get_position ()
+        (width, height) = self.widgetTree['main-window'].get_size()
+        setInt ("width", width)
+        setInt ("height", height)
+        setInt ("x", x)
+        setInt ("y", y)
+        return False
+
+    def stateEvent (self, widget, event):
+        maximized = (event.new_window_state & gtk.gdk.WINDOW_STATE_MAXIMIZED) != 0
+        setBool ("maximized", maximized)
+        
 
     @gtkAsyncMethod
     def selectDisplay(self, newDisplay, area):
