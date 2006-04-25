@@ -23,12 +23,13 @@ class IconCacheUpdater:
 
     def requestUpdate (self, item, is_vital = False):
         self.cond.acquire()
-        item.dbItem.beginRead()
-        try:
-            if (item.filename):
-                is_vital = False
-        finally:
-            item.dbItem.endRead()
+        if is_vital:
+            item.dbItem.beginRead()
+            try:
+                if item.filename and os.access (item.filename, os.R_OK):
+                    is_vital = False
+            finally:
+                item.dbItem.endRead()
         if (is_vital):
             self.vital.prepend(item)
         else:
