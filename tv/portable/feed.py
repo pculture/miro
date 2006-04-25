@@ -724,6 +724,7 @@ class Feed(DDBObject):
         self.origURL = url
         self.errorState = False
         self.initiallyAutoDownloadable = initiallyAutoDownloadable
+        self.iconCache = IconCache(self, is_vital = True)
         if initial is None:
             self.loading = True
             self.actualFeed = FeedImpl(url,self)
@@ -735,7 +736,6 @@ class Feed(DDBObject):
         else:
             self.loading = False
             self.actualFeed = initial
-        self.iconCache = IconCache(self, is_vital = True)
 
     # Returns javascript to mark the feed as viewed
     # FIXME: Using setTimeout is a hack to get around JavaScript bugs
