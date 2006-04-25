@@ -186,11 +186,11 @@ class IconCache:
             # Our cache is good.  Hooray!
             if (info['status'] == 304):
                 print "Cache good: %s!" % url
-                self.dbItem.beginChange()
+                self.dbItem.beginRead()
                 try:
                     self.updated = True
                 finally:
-                    self.dbItem.endChange()
+                    self.dbItem.beginRead()
                 return
         
             # We have to update it, and if we can't write to the file, we
@@ -277,3 +277,10 @@ class IconCache:
         self.updated = False
         self.updating = False
         self.requestUpdate ()
+
+    def isValid(self):
+        self.dbItem.beginRead()
+        try:
+            return self.filename is not None and os.path.exists(self.filename)
+        finally:
+            self.dbItem.endRead()

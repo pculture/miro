@@ -806,7 +806,7 @@ class Feed(DDBObject):
             self.endChange()
 
     def getActualFeed(self):
-        return self.__dict__['actualFeed']
+        return self.actualFeed
 
     def __getattr__(self,attr):
         return getattr(self.getActualFeed(),attr)
@@ -826,7 +826,7 @@ class Feed(DDBObject):
     def getThumbnail(self):
         self.beginRead()
         try:
-            if self.iconCache.filename:
+            if self.iconCache.isValid():
                 basename = os.path.basename(self.iconCache.filename)
                 return resource.iconCacheUrl(basename)
             else:
