@@ -135,7 +135,7 @@
             <!-- / MAIN WINDOW -->
             <!-- VIDEO INFO BISPLAY -->
             <browser id="videoInfoDisplay" src="" type="content"
-                    height="40px"/>
+                    hidden="true" height="40px"/>
              <!-- / VIDEO INFO BISPLAY -->
         </vbox>
                 

@@ -2,6 +2,7 @@ import frontend
 from xpcom import components
 import threading
 from util import quoteJS
+from frontend_implementation.VideoDisplay import VideoDisplay
 
 ###############################################################################
 #### Main window                                                           ####
@@ -38,7 +39,11 @@ class MainFrame:
 
         # NEEDS: case out instances for HTMLDisplay and VideoDisplay
         self.selectHTML(newDisplay, area)
-
+        if area == self.mainDisplay:
+            if isinstance(newDisplay, VideoDisplay):
+                frontend.execChromeJS("setVideoInfoDisplayHidden('false')")
+            else:
+                frontend.execChromeJS("setVideoInfoDisplayHidden('true')")
     def getDisplay(self, area):
         return self.selectedDisplays[area]
 
