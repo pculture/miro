@@ -181,6 +181,7 @@
 <!-- / CHANNEL ITEMS LIST -->
 
 <t:triggerActionOnUnload url="action:markFeedViewed?feed=@@@feed getID@@@" />
+<t:triggerActionOnLoad url="action:updateIcons?feed=@@@feed getID@@@" />
 
 </body>
 </html>

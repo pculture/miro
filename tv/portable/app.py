@@ -28,6 +28,7 @@ import datetime
 import traceback
 import datetime
 import threading
+from iconcache import iconCacheUpdater
 
 from xml.dom.minidom import parse, parseString
 
@@ -637,6 +638,9 @@ class Controller (frontend.Application):
             print "DTV: Removing search feed"
             TemplateActionHandler(self, None, None).resetSearch()
             self.removeGlobalFeed('dtv:search')
+
+            print "DTV: Shutting down icon cache updates"
+            iconCacheUpdater.shutdown()
 
             print "DTV: Removing static tabs..."
             removeStaticTabs()
