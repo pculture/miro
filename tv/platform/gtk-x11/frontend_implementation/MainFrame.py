@@ -161,11 +161,19 @@ class MainFrame:
             try:
                 self.videoLength = renderer.getDuration()
             except:
-                self.videoLength = None
-                videoTimeScale.set_value(0)
-            else:
-                videoTimeScale.set_range(0, self.videoLength)
-                videoTimeScale.set_value(renderer.getCurrentTime())
+                self.videoLength = 0
+            try:
+                currentTime = renderer.getCurrentTime()
+            except:
+                currentTime = 0
+            if self.videoLength < 0:
+                self.videoLength = 0
+            if currentTime < 0:
+                currentTime = 0
+            if currentTime > self.videoLength:
+                currentTime = self.videoLength
+            videoTimeScale.set_range(0, self.videoLength)
+            videoTimeScale.set_value(renderer.getCurrentTime())
         return True
 
     def setFullscreen(self, fullscreen):
