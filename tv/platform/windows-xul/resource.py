@@ -47,3 +47,9 @@ def path(relative_path):
 # policy.)
 def url(relative_path):
     return "/dtv/resource/" + relative_path
+
+def iconCacheUrl(relative_path):
+    """Like url, but for icon cache files.  These probably don't live in the
+    resources directory because we need write access to them.
+    """
+    return "/dtv/icon-cache/" + relative_path

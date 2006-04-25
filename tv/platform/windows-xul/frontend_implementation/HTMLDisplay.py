@@ -57,6 +57,25 @@ def getServerPort():
 
     return result
 
+def getContentType(pathname):
+    """Get the mime-type for a pathname by checking its extension."""
+
+    if re.search(".png$", pathname):
+        return "image/png"
+    elif re.search(".jpg$", pathname):
+        return "image/jpeg"
+    elif re.search(".jpeg$", pathname):
+        return "image/jpeg"
+    elif re.search(".gif$", pathname):
+        return "image/gif"
+    elif re.search(".css$", pathname):
+        return "text/css"
+    elif re.search(".js$", pathname):
+        return "application/x-javascript"
+    else:
+        return "application/unknown"
+
+
 class httpListener:
     def __init__(self):
         global serverPort
@@ -325,24 +344,16 @@ class httpServer:
 
             # Open the file.
             fullPath = resource.path(relativePath)
-            data = open(fullPath,'rb').read()
-
-            # Guess the content-type.
-            contentType = None
-            if re.search(".png$", fullPath):
-                contentType = "image/png"
-            elif re.search(".jpg$", fullPath):
-                contentType = "image/jpeg"
-            elif re.search(".jpeg$", fullPath):
-                contentType = "image/jpeg"
-            elif re.search(".gif$", fullPath):
-                contentType = "image/gif"
-            elif re.search(".css$", fullPath):
-                contentType = "text/css"
-            elif re.search(".js$", fullPath):
-                contentType = "application/x-javascript"
-
-            self.sendDocumentAndClose(contentType, data, cache=True)
+            self.sendFileAndClose(fullPath)
+            return
+        ## Resource file ##
+        match = re.match("^/dtv/icon-cache/(.*)", path)
+        if match:
+            relativePath = match.group(1)
+            print "[%s] Icon-Cache: %s" % (self.reqNum, relativePath)
+            cachedir = config.get(config.ICON_CACHE_DIRECTORY)
+            fullPath = os.path.join(cachedir, relativePath)
+            self.sendFileAndClose(fullPath)
             return
 
         ## Fell through - bad URL ##
@@ -380,6 +391,20 @@ class httpServer:
             self.sendHeader("Expires", thenString)
         self.finishHeaders()
         self.sendBody(data)
+
+    def sendFileAndClose(self, pathname):
+        try:
+            data = open(pathname, 'rb').read()
+        except IOError:
+            # probably means the pathname was deleted while we were trying to 
+            # read it.  Tell the server to try again later.
+            self.sendStatusLine("503", "Temporarily Unavailable")
+            self.sendHeader("Retry-After", "10")
+            self.finishHeaders()
+            print "sending 503 for ", pathname
+            return
+        contentType = getContentType(pathname)
+        self.sendDocumentAndClose(contentType, data, cache=True)
 
     def sendNotFoundResponse(self, path):
         message = """\
@@ -435,8 +460,8 @@ Content-Type: multipart/x-mixed-replace;boundary="%s"
                         self.socket.send("Content-type: %s\r\n\r\n%s\r\n--%s" \
                                          % (mimeType, body, self.boundary))
                     except socket.error, (code, description):
-                            if code in (errno.ECONNABORTED, errno.ECONNRESET,
-                                    errno.WSAENOTSOCK):
+                        if code in (errno.ECONNABORTED, errno.ECONNRESET,
+                                errno.WSAENOTSOCK):
                             print "[%d] Events end with remote error '%s'" % \
                                 (self.reqNum, description)
                             return

@@ -45,17 +45,20 @@ def save(data):
 def get(descriptor):
     path = None
 
-    if descriptor.key == config.MOVIES_DIRECTORY.key:
+    if descriptor == config.MOVIES_DIRECTORY:
         path = os.path.expanduser('~/Movies/Democracy')
 
-    elif descriptor.key == config.SUPPORT_DIRECTORY.key:
+    elif descriptor == config.SUPPORT_DIRECTORY:
         path = os.path.expanduser('~/.democracy')
+
+    elif descriptor == config.ICON_CACHE_DIRECTORY:
+        path = os.path.expanduser('~/.democracy/icon-cache')
     
-    elif descriptor.key == config.DB_PATHNAME.key:
+    elif descriptor == config.DB_PATHNAME:
         path = get(config.SUPPORT_DIRECTORY)
         path = os.path.join(path, 'tvdump')
 
-    elif descriptor.key == config.DB_PATHNAME.key:
+    elif descriptor == config.DB_PATHNAME:
         path = get(config.SUPPORT_DIRECTORY)
         path = os.path.join(path, 'log')
     

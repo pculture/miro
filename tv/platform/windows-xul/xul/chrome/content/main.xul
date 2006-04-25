@@ -7,19 +7,19 @@
 <!-- add hidechrome="true" to eliminate title bar -->
 <window id="main" title="&main.title;"
         windowtype="main"
-	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-	xmlns:html="http://www.w3.org/1999/xhtml"
-	hidechrome="true"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        hidechrome="true"
         onload="onLoad();" onunload="onUnload();"
-	orient="vertical"
-	sizemode="normal"
-	width="800" height="600"
-	persist="screenX screenY width height">
- <popupset><popup id="contextPopup"><menuitem label="bar"/></popup></popupset>
-<script src="chrome://dtv/content/main.js"/>
+        orient="vertical"
+        sizemode="normal"
+        width="800" height="600"
+        persist="screenX screenY width height">
+        <popupset><popup id="contextPopup"><menuitem label="bar"/></popup></popupset>
+        <script src="chrome://dtv/content/main.js"/>
 
-<!-- TITLEBAR -->
-<hbox height="25" container="1" id="titlebar" class="titlebar">
+        <!-- TITLEBAR -->
+        <hbox height="25" container="1" id="titlebar" class="titlebar">
 
 	<!-- MAIN MENUBAR -->
 	<hbox>
@@ -127,11 +127,18 @@
 	<splitter collapse="before" width="10"/>
 	<!-- / DIVIDER -->
 	
-	<!-- MAIN WINDOW -->
-  	<browser id="mainDisplay" src="" type="content" flex="1"
-                 context="contextPopup"
-                 oncontextmenu="return xulcontexthandler(event);" />
-	<!-- / MAIN WINDOW -->
+        <vbox flex="1">
+            <!-- MAIN WINDOW -->
+            <browser id="mainDisplay" src="" type="content" flex="1"
+                     context="contextPopup"
+                     oncontextmenu="return xulcontexthandler(event);" />
+            <!-- / MAIN WINDOW -->
+            <!-- VIDEO INFO BISPLAY -->
+            <browser id="videoInfoDisplay" src="" type="content"
+                    height="40px"/>
+             <!-- / VIDEO INFO BISPLAY -->
+        </vbox>
+                
 	
 	<resizer dir="right" id="resizer-left" oncommand="return doResize(event);">
 		<hbox flex="0" width="5" minwidth="5" style="background-color:#000000;"/>

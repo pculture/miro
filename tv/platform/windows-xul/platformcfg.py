@@ -91,6 +91,9 @@ def get(descriptor):
 
     elif descriptor == config.SUPPORT_DIRECTORY:
         return _getSupportDirectory()
+
+    elif descriptor == config.ICON_CACHE_DIRECTORY:
+        return os.path.join(_getSupportDirectory(), 'icon-cache')
     
     elif descriptor == config.DB_PATHNAME:
         path = get(config.SUPPORT_DIRECTORY)
