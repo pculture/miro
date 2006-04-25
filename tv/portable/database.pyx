@@ -17,13 +17,6 @@ import types
 
 import config
 
-# When you need to upgrade the database:
-#
-# * Increment VERSION by one
-# * Add instructions for upgrading to DynamicDatabase.upgrade()
-VERSION = 1
-
-
 ##
 # Raised when an attempt is made to restore a database newer than the
 # one we support
@@ -101,9 +94,10 @@ class DynamicDatabase:
     # @param objects A list of object/mapped value pairs to create the
     # initial view
     # @param rootDB true iff this is not a subview of another DD. Should never be used outside of this class.
-    def __init__(self, objects = [], rootDB = True, sortFunc = None, filterFunc = None, mapFunc = None, cursorID = None):
+    def __init__(self, objects = [], rootDB = True, sortFunc = None, filterFunc = None, mapFunc = None, cursorID = None, parent = None):
         self.rootDB = rootDB
         self.cursor = None
+        self.parent = parent
         self.changeCallbacks = []
         self.addCallbacks = []
         self.removeCallbacks = []
@@ -363,7 +357,7 @@ class DynamicDatabase:
                 curID = self.objects[self.cursor][0].id
             except:
                 curID = None
-            new = DynamicDatabase(self.objects,False,cursorID = curID, filterFunc = f)
+            new = DynamicDatabase(self.objects,False,cursorID = curID, filterFunc = f, parent = self)
             self.subFilters.append([new, f])
         finally:
             self.endUpdate()
@@ -382,7 +376,7 @@ class DynamicDatabase:
                 curID = self.objects[self.cursor][0].id
             except:
                 curID = None
-            new = DynamicDatabase(self.objects,False, cursorID = curID, mapFunc = f)
+            new = DynamicDatabase(self.objects,False, cursorID = curID, mapFunc = f, parent = self)
             self.subMaps.append([new,f])
         finally:
             self.endUpdate()
@@ -399,7 +393,7 @@ class DynamicDatabase:
                 curID = self.objects[self.cursor][0].id
             except:
                 curID = None
-            new = DynamicDatabase(self.objects,False, sortFunc = f, cursorID = curID)
+            new = DynamicDatabase(self.objects,False, sortFunc = f, cursorID = curID, parent = self)
             self.subSorts.append([new,f])
         finally:
             self.endUpdate()
@@ -534,7 +528,7 @@ class DynamicDatabase:
                 try:
                     view[filter(value)].addBeforeCursor(newobject,value)
                 except KeyError:
-                    view[filter(value)] = DynamicDatabase([],False)
+                    view[filter(value)] = DynamicDatabase([],False,parent=self)
                     view[filter(value)].addBeforeCursor(newobject,value)
             for callback in self.addCallbacks:
                 callback(value,newobject.id)
@@ -736,7 +730,7 @@ class DynamicDatabase:
                             myObjVal = myObj[1]
                             filtVal = filt(myObjVal)
                             if not views.has_key(filtVal):
-                                views[filtVal] = DynamicDatabase([],False)
+                                views[filtVal] = DynamicDatabase([],False,parent=self)
                                 views[filtVal].addBeforeCursor(myObjObj,
                                                                myObjVal)
                             if not views[filtVal].objectLocs.has_key(myObjObj.id):
@@ -873,6 +867,11 @@ class DynamicDatabase:
         return last
 
     ##
+    # Removes this view from the hierarchy of views
+    def unlink(self):
+        self.parent.removeView(self)
+
+    ##
     # Removes a filter that's currently not being used from the database
     # This should be called when a filter is no longer in use
     def removeView(self,oldView):
@@ -965,7 +964,7 @@ class DynamicDatabase:
             for obj in self.objects:
                 index = indexFunc(obj[1])
                 if not indexViews.has_key(index):
-                    indexViews[index] = DynamicDatabase([],False)
+                    indexViews[index] = DynamicDatabase([],False, parent=self)
                 indexViews[index].addBeforeCursor(obj[0],obj[1])
             self.indexes[indexFunc] = indexViews
         finally:
@@ -977,7 +976,7 @@ class DynamicDatabase:
         try:
             return views[value]
         except:
-            views[value] = DynamicDatabase([],False)
+            views[value] = DynamicDatabase([],False, parent=self)
             return views[value]
 
 

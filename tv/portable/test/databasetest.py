@@ -964,6 +964,7 @@ class IndexFilterTest(unittest.TestCase):
 
 #FIXME: Add test for explicitly recomputing sorts
 #FIXME: Add test for recomputing sorts on endChange()
+#FIXME: Add test for unlink()
 
 if __name__ == "__main__":
     unittest.main()
