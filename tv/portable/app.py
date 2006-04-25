@@ -645,7 +645,6 @@ class Controller (frontend.Application):
             print "DTV: Saving database..."
             storedatabase.saveDatabase()
 
-            # FIXME closing BitTorrent is slow and makes the application seem hung...
             print "DTV: Shutting down Downloader..."
             downloader.shutdownDownloader()
 

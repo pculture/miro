@@ -16,16 +16,6 @@ import re
 import math
 from copy import copy
 
-from BitTorrent import configfile
-from BitTorrent.download import Feedback, Multitorrent
-from BitTorrent.defaultargs import get_defaults
-from BitTorrent.parseargs import parseargs, printHelp
-from BitTorrent.bencode import bdecode
-from BitTorrent.ConvertedMetainfo import ConvertedMetainfo
-from BitTorrent import configfile
-from BitTorrent import BTFailure, CRITICAL
-from BitTorrent import version
-
 import sys
 import os
 import threading
@@ -37,9 +27,6 @@ from dl_daemon import daemon, command
 import app
 
 from download_utils import grabURL, parseURL, cleanFilename
-
-defaults = get_defaults('btdownloadheadless')
-defaults.extend((('donated', '', ''),))
 
 # Returns an HTTP auth object corresponding to the given host, path or
 # None if it doesn't exist
