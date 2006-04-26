@@ -46,6 +46,10 @@
 
         <div id="main-container">
             <div t:updateForView="search-feed">
+                <div class="search-warning" t:hideIfNotKey="feed getStatus" t:hideFunctionKey="global filter equal" t:hideParameter="idle-empty">
+                    If clicking in the search entry doesn't work, just hit the tab key and then try again.<br/>
+                    This is a known bug that we're working on.
+                </div>
                 <div class="search-message" t:hideIfNotKey="feed getStatus" t:hideFunctionKey="global filter equal" t:hideParameter="idle-empty">
                     Nothing to display.<br />
                     Enter a query in the search field above.
