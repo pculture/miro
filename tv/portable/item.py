@@ -905,6 +905,9 @@ class Item(DDBObject):
             self.iconCache.dbItem = self
             self.iconCache.requestUpdate()
 
+    def __str__(self):
+        return "Item - %s" % self.getTitle()
+
 ##
 # An Item that exists as a file, but not as a download
 class FileItem(Item):

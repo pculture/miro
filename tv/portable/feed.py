@@ -264,6 +264,11 @@ class FeedImpl:
     # Sets the update frequency (in minutes). 
     # - A frequency of -1 means that auto-update is disabled.
     def setUpdateFrequency(self, frequency):
+        try:
+            frequency = int(frequency)
+        except ValueError:
+            frequency = -1
+
         if frequency < 0:
             self.cancelUpdateEvents()
             self.updateFreq = -1
@@ -847,6 +852,9 @@ class Feed(DDBObject):
         else:
             self.iconCache.dbItem = self
             self.iconCache.requestUpdate(True)
+
+    def __str__(self):
+        return "Feed - %s" % self.getTitle()
 
 class RSSFeedImpl(FeedImpl):
     firstImageRE = re.compile('\<\s*img\s+[^>]*src\s*=\s*"(.*?)"[^>]*\>',re.I|re.M)

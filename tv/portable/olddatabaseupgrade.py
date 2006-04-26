@@ -217,21 +217,27 @@ fakeClasses = {
     'downloader.RemoteDownloader': OldRemoteDownloader,
     'guide.ChannelGuide': OldChannelGuide,
     'BitTorrent.ConvertedMetainfo.ConvertedMetainfo': OldMetainfo,
+
+    # Drop these classes like they're hot!
+    #
+    # YahooSearchFeedImpl is a leftover class that we don't use anymore.
+    #
+    # The HTTPDownloader and BTDownloader classes were removed in 0.8.2.  The
+    # cleanest way to handle them is to just drop them.  If the user still has
+    # these in their database, too bad.  BTDownloaders may contain BTDisplay
+    # and BitTorrent.ConvertedMetainfo.ConvertedMetainfo objects, drop those
+    # too.
+    #
+    # DownloaderFactory and StaticTab shouldn't be pickled, but I've seen
+    # databases where it is.
+    'downloader.DownloaderFactory': DropItLikeItsHot,
+    'app.StaticTab': DropItLikeItsHot,
+    'feed.YahooSearchFeedImpl': DropItLikeItsHot,
+    'downloader.BTDownloader': DropItLikeItsHot,
+    'downloader.BTDisplay': DropItLikeItsHot,
+    'downloader.HTTPDownloader': DropItLikeItsHot,
 }
 
-# Drop these classes like they're hot!
-#
-# YahooSearchFeedImpl is a leftover class that we don't use anymore.
-#
-# The HTTPDownloader and BTDownloader classes were removed in 0.8.2.  
-# The cleanest way to handle them is to just drop them.
-# If the user still has these in their database, too bad.
-# BTDownloaders may contain BTDisplay and
-# BitTorrent.ConvertedMetainfo.ConvertedMetainfo objects, drop those too.
-fakeClasses['feed.YahooSearchFeedImpl'] = DropItLikeItsHot
-fakeClasses['downloader.BTDownloader'] = DropItLikeItsHot
-fakeClasses['downloader.BTDisplay'] = DropItLikeItsHot
-fakeClasses['downloader.HTTPDownloader'] = DropItLikeItsHot
 
 class FakeClassUnpickler(pickle.Unpickler):
     unpickleNormallyWhitelist = [
