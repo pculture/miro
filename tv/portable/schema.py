@@ -145,6 +145,9 @@ class SchemaSimpleContainer(SchemaSimpleItem):
             for key, value in data.items():
                 self.recursivelyValidate(key)
                 self.recursivelyValidate(value)
+        else:
+            self.validateTypes(data, [bool, int, long, float, str, unicode,
+                    NoneType, datetime.datetime, time.struct_time])
 
     def validate(self, data):
         super(SchemaSimpleContainer, self).validate(data)

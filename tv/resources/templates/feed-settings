@@ -55,7 +55,7 @@
 		<h1>Channel Settings</h1>
 	</div>
 
-	<div style="float:left; margin:20px 10px;">
+	<div style="margin:20px 10px;">
 		<div style="float:left; display:inline; width:150px;">
 			Videos expire after:
 		</div>
@@ -80,8 +80,8 @@
 			</select>
 		</div>		
 	</div>
-
-	<div style="float:left; margin:0px 10px 20px 10px;">
+	<br />
+	<div style="margin:0px 10px 20px 10px;">
 		<div style="float:left; display:inline; width:150px;">
 			Auto download should:
 		</div>
@@ -94,8 +94,8 @@
 			</select>
 		</div>				
 	</div>
-
-	<div style="clear:left; margin:0px 10px;">
+	<br />
+	<div style="margin:0px 10px;">
 		<input type="checkbox" name="maxOutDownloads" onClick="javascript:setMaxNew();" checked="checked" t:hideIfKey="feed getMaxNew" t:hideFunctionKey="global filter equal" t:hideParameter="unlimited" />
 		<input type="checkbox" name="maxOutDownloads" onClick="javascript:setMaxNew();" t:hideIfNotKey="feed getMaxNew" t:hideFunctionKey="global filter equal" t:hideParameter="unlimited"/>
 		If I have

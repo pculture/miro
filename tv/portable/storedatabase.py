@@ -49,6 +49,9 @@ skipUpgrade = False
 class DatabaseError(Exception):
     pass
 
+class BadFileFormatError(DatabaseError):
+    pass
+
 # _BootStrapClass is used to as the initial class when we restore an object.
 class _BootStrapClass:
     pass
@@ -372,10 +375,10 @@ def restoreObjectList(pathname, objectSchemas=None):
     """Restore a list of objects saved with saveObjectList."""
 
     f = open(pathname, 'r')
-    if f.read(len(FILEMAGIC)) != FILEMAGIC:
-        raise DatabaseError("%s doesn't seem to be a democracy database" %
-                pathname)
     try:
+        if f.read(len(FILEMAGIC)) != FILEMAGIC:
+            msg = "%s doesn't seem to be a democracy database" % pathname
+            raise BadFileFormatError(pathname)
         version, savedObjects = cPickle.load(f)
     finally:
         f.close()
@@ -425,11 +428,9 @@ def restoreDatabase(db=None, pathname=None, convertOnFail=True):
 
     try:
         objects = restoreObjectList(pathname)
-    except DatabaseError:
+    except BadFileFormatError:
         if convertOnFail:
             print "trying to convert database from old version"
-            print "original traceback is:"
-            traceback.print_exc()
             olddatabaseupgrade.convertOldDatabase(pathname)
             objects = restoreObjectList(pathname)
             print "*** Conversion Successfull ***"
