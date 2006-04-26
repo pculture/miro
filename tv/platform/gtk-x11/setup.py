@@ -201,12 +201,6 @@ data_files += [
         [os.path.join(platform_dir, 'democracyplayer.desktop')]),
 ]
 
-def getAppRevision():
-    info = getCommandOutput('svn info %s' % root_dir).strip()
-    url = re.search("URL: (.*)", info).group(1)
-    revision = re.search("Revision: (.*)", info).group(1)
-    return "%s - %s" % (url, revision)
-
 #### Our specialized install_data command ####
 class install_data (distutils.command.install_data.install_data):
     """install_data extends to default implementation so that it automatically
@@ -216,11 +210,14 @@ class install_data (distutils.command.install_data.install_data):
     def install_app_config(self):
         source = os.path.join(resource_dir, 'app.config.template')
         dest = '/usr/share/democracy/resources/app.config'
+        revision = util.queryRevision(root_dir)
+        if revision is None:
+            revision = "unknown"
         if self.root:
             dest = change_root(self.root, dest)
         self.mkpath(os.path.dirname(dest))
         self.copy_file(source, dest)
-        expand_file_contents(dest, APP_REVISION=getAppRevision(),
+        expand_file_contents(dest, APP_REVISION=revision,
                 APP_PLATFORM='gtk-x11')
         self.outfiles.append(dest)
 
