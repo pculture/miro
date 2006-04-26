@@ -402,10 +402,10 @@ def saveDatabase(db=None, pathname=None):
     try:
         db.beginRead()
         try:
-            databasesanity.checkSanity(db.objects)
             objectsToSave = []
             for o in db.objects:
                 objectsToSave.append(o[0])
+            databasesanity.checkSanity(objectsToSave)
             saveObjectList(objectsToSave, pathname)
         finally:
             db.endRead()

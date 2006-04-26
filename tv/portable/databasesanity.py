@@ -3,6 +3,7 @@
 import item
 import feed
 import util
+import guide
 
 class DatabaseInsaneError(Exception):
     pass
@@ -23,11 +24,25 @@ def checkBrokenFeeds(objectList, fixIfPossible):
         phantoms = feedsInItems.difference(topLevelFeeds)
         msg = "Phantom feed(s) referenced in items: %s" % phantoms
         if fixIfPossible:
-            util.failed("While checking database", msg)
+            util.failed("While checking database", details=msg)
             for f in phantoms:
                 objectList.append(f)
         else:
             raise DatabaseInsaneError(msg)
+
+def checkSingleChannelGuide(objectList, fixIfPossible):
+    guideCount = 0
+    for i in reversed(xrange(len(objectList))):
+        print objectList[i].__class__
+        if isinstance(objectList[i], guide.ChannelGuide):
+            guideCount += 1
+            if guideCount > 1:
+                msg = "Extra chanel Guide"
+                if fixIfPossible:
+                    util.failed("While checking database", details=msg)
+                    del objectList[i]
+                else:
+                    raise DatabaseInsaneError(msg)
 
 def checkSanity(objectList, fixIfPossible=True):
     """Do all sanity checks on a list of objects.
@@ -42,4 +57,5 @@ def checkSanity(objectList, fixIfPossible=True):
     """
 
     checkBrokenFeeds(objectList, fixIfPossible)
+    checkSingleChannelGuide(objectList, fixIfPossible)
     return objectList

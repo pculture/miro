@@ -437,25 +437,7 @@ class Controller (frontend.Application):
             print "DTV: Recomputing filters..."
             db.recomputeFilters()
 
-            # If there's no Channel Guide in the database, create one
-            # and some test feeds
-            hasGuide = False
-            for obj in globalViewList['guide']:
-                hasGuide = True
-                channelGuide = obj
-            if not hasGuide:
-                print "DTV: Spawning Channel Guide..."
-                channelGuide = guide.ChannelGuide()
-                feed.Feed('http://del.icio.us/rss/representordie/system:media:video', initiallyAutoDownloadable=False)
-                feed.Feed('http://www.videobomb.com/rss/posts/front', initiallyAutoDownloadable=False)
-                feed.Feed('http://www.mediarights.org/bm/rss.php?i=1', initiallyAutoDownloadable=False)
-                feed.Feed('http://www.telemusicvision.com/videos/rss.php?i=1', initiallyAutoDownloadable=False)
-                feed.Feed('http://www.rocketboom.com/vlog/quicktime_daily_enclosures.xml', initiallyAutoDownloadable=False)
-                feed.Feed('http://www.channelfrederator.com/rss', initiallyAutoDownloadable=False)
-                feed.Feed('http://revision3.com/diggnation/feed/small.mov', initiallyAutoDownloadable=False)
-                feed.Feed('http://live.watchmactv.com/wp-rss2.php', initiallyAutoDownloadable=False)
-                feed.Feed('http://some-pig.net/videos/rss.php?i=2', initiallyAutoDownloadable=False)
-
+            channelGuide = getInitialChanelGuide()
             # Define variables for templates
             # NEEDS: reorganize this, and update templates
             globalData = {
@@ -1235,22 +1217,11 @@ class TemplateActionHandler:
         self.controller.frame.selectDisplay(template, self.controller.frame.mainDisplay)
 
     def doneWithIntro(self):
-        # Find the guide
-        guide = None
-        for obj in globalViewList['guide']:
-            guide = obj
-        assert guide is not None
-
-        guide.setSawIntro()
+        getChannelGuide().setSawIntro()
         self.goToGuide()
 
     def goToGuide(self):
-        # Find the guide
-        guide = None
-        for obj in globalViewList['guide']:
-            guide = obj
-        assert guide is not None
-
+        guide = getChannelGuide()
         # Does the Guide want to implement itself as a redirection to
         # a URL?
         (mode, location) = guide.getLocation()
@@ -1804,6 +1775,66 @@ def allDownloadingItems(obj, param):
     return (obj.getState() == 'downloading' and
             (search.lower() in obj.getTitle().lower() or 
              search.lower() in obj.getDescription().lower()))
+
+class TooManyChannelGuidesError(Exception):
+    pass
+
+def getChannelGuide():
+    guideView = globalViewList['guide']
+    guideView.beginRead()
+    try:
+        guideViewLength = guideView.len()
+        if guideViewLength == 0:
+            raise LookupError("No channel guide in database")
+        elif guideViewLength == 1:
+            guideView.resetCursor()
+            return guideView.next()
+        else:
+            msg = "%d ChannelGuide objects" % guideViewLength
+            raise TooManyChannelGuidesError(msg)
+    finally:
+        guideView.endRead()
+
+def getInitialChanelGuide():
+    try:
+        channelGuide = getChannelGuide()
+    except LookupError:
+        print "DTV: Spawning Channel Guide..."
+        channelGuide = guide.ChannelGuide()
+        feed.Feed('http://del.icio.us/rss/representordie/system:media:video', 
+                initiallyAutoDownloadable=False)
+        feed.Feed('http://www.videobomb.com/rss/posts/front',
+                initiallyAutoDownloadable=False)
+        feed.Feed('http://www.mediarights.org/bm/rss.php?i=1',
+                initiallyAutoDownloadable=False)
+        feed.Feed('http://www.telemusicvision.com/videos/rss.php?i=1',
+                initiallyAutoDownloadable=False)
+        feed.Feed('http://www.rocketboom.com/vlog/quicktime_daily_enclosures.xml',
+                initiallyAutoDownloadable=False)
+        feed.Feed('http://www.channelfrederator.com/rss',
+                initiallyAutoDownloadable=False)
+        feed.Feed('http://revision3.com/diggnation/feed/small.mov',
+                initiallyAutoDownloadable=False)
+        feed.Feed('http://live.watchmactv.com/wp-rss2.php',
+                initiallyAutoDownloadable=False)
+        feed.Feed('http://some-pig.net/videos/rss.php?i=2',
+                initiallyAutoDownloadable=False)
+    except TooManyChannelGuidesError:
+        print "DTV: Multiple Channel Guides!  Using the first one"
+        guideView = globalViewList['guide']
+        guideView.beginUpdate()
+        try:
+            guideView.resetCursor()
+            channelGuide = guideView.getNext()
+            while 1:
+                thowOut = guideView.getNext()
+                if thowOut is None:
+                    break
+                else:
+                    thowOut.remove()
+        finally:
+            guideView.endUpdate()
+    return channelGuide
 
 globalFilterList = {
     'substring': (lambda x, y: str(y) in str(x)),
