@@ -61,7 +61,7 @@ revision = util.queryRevision(root)
 if revision is None:
     revision = 'unknown'
 else:
-    revision = 'r%s' % revision
+    revision = '%s' % revision
 
 # Inject the revision number into app.config.template to get app.config.
 # NEEDS: Very sloppy. The new file is just dropped in the source tree

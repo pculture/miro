@@ -281,7 +281,7 @@ class Common:
         if revision is None:
             revision = "unknown"
         else:
-            revision = "r%d" % revision
+            revision = "%s" % revision
 
         path = os.path.join(root, 'resources', 'app.config')
         s = open("%s.template" % path, "rt").read()

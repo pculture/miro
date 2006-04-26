@@ -65,14 +65,12 @@ def writeSimpleConfigFile(path, data):
 # integer on success or None on failure.
 def queryRevision(file):
     try:
-        p1 = subprocess.Popen(["svn", "info", file], stdout=subprocess.PIPE) 
-        p2 = subprocess.Popen(["grep", "Revision:"], \
-                              stdin=p1.stdout, stdout=subprocess.PIPE) 
-        output = re.search('Revision: (.*)', p2.communicate()[0])
-        if not output:
-            return None
-        else:
-            return int(output.group(1))
+        p = subprocess.Popen(["svn", "info", file], stdout=subprocess.PIPE) 
+        info = p.stdout.read()
+        p.stdout.close()
+        url = re.search("URL: (.*)", info).group(1)
+        revision = re.search("Revision: (.*)", info).group(1)
+        return "%s - %s" % (url, revision)
     except:
         # whatever
         return None
