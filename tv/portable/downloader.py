@@ -1,32 +1,13 @@
-from database import DDBObject, defaultDatabase
-from threading import Thread, Event, RLock
-from httplib import HTTPConnection, HTTPSConnection,HTTPException
-from scheduler import ScheduleEvent
-import threadpriority
-import config
-import traceback
-import socket
-import platformutils
-from base64 import b64encode
-
-from time import sleep,time
-from urlparse import urlparse,urljoin
-from os import remove, rename, access, F_OK
-import re
-import math
-from copy import copy
-
-import sys
 import os
 import threading
-from time import time, strftime
-from cStringIO import StringIO
-
-from dl_daemon import daemon, command
+from threading import Thread, RLock
+from base64 import b64encode
 
 import app
-
-from download_utils import grabURL, parseURL, cleanFilename
+import config
+from download_utils import grabURL
+from database import DDBObject, defaultDatabase
+from dl_daemon import daemon, command
 
 # Returns an HTTP auth object corresponding to the given host, path or
 # None if it doesn't exist
@@ -248,7 +229,7 @@ class RemoteDownloader(DDBObject):
         finally:
             self.endRead()
 
-    def onRestore(self):
+    def restartIfNeeded(self):
         if self.dlid == 'noid' or len(self.status) == 0:
             thread = Thread(target=self.runDownloader, \
                             name="downloader -- %s" % self.url)
@@ -258,6 +239,54 @@ class RemoteDownloader(DDBObject):
             c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, 
                     self.status)
             c.send(retry = True, block = False)
+
+def cleanupIncompleteDownloads():
+    downloadDir = os.path.join(config.get(config.MOVIES_DIRECTORY),
+            'Incomplete Downloads')
+    if not os.path.exists(downloadDir):
+        return
+
+    filesInUse = set()
+    app.globalViewList['remoteDownloads'].beginRead()
+    try:
+        for downloader in app.globalViewList['remoteDownloads'] :
+            if downloader.status['state'] in ('downloading', 'paused'):
+                filename = downloader.status['filename']
+                if not os.path.isabs(filename):
+                    filename = os.path.join(downloadDir, file)
+                filesInUse.add(filename)
+    finally:
+        app.globalViewList['remoteDownloads'].endRead()
+
+    for file in os.listdir(downloadDir):
+        file = os.path.join(downloadDir, file)
+        if file not in filesInUse:
+            try:
+                os.remove(file)
+            except:
+                pass # maybe a permissions error?  
+
+def restartDownloads():
+    app.globalViewList['remoteDownloads'].beginRead()
+    try:
+        for downloader in app.globalViewList['remoteDownloads']:
+            downloader.restartIfNeeded()
+    finally:
+        app.globalViewList['remoteDownloads'].endRead()
+
+
+def startupDownloader():
+    """Initialize the downloaders.
+
+    This method currently does 2 things.  It deletes any stale files self in
+    Incomplete Downloads, then it restarts downloads that have been restored
+    from the database.  It must be called before any RemoteDownloader objects
+    get created.
+    """
+
+    cleanupIncompleteDownloads()
+    RemoteDownloader.initializeDaemon()
+    restartDownloads()
 
 ##
 # Kill the main BitTorrent thread

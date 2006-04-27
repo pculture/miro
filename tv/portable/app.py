@@ -425,9 +425,6 @@ class Controller (frontend.Application):
             autoupdate.setDelegate(delegate)
             database.setDelegate(delegate)
 
-            print "Initializing daemon..."
-            downloader.RemoteDownloader.initializeDaemon()
-
             #Restoring
             print "DTV: Restoring database..."
             try:
@@ -436,6 +433,7 @@ class Controller (frontend.Application):
                 util.failedExn("While restoring database")
             print "DTV: Recomputing filters..."
             db.recomputeFilters()
+            downloader.startupDownloader()
 
             channelGuide = getInitialChanelGuide()
             # Define variables for templates

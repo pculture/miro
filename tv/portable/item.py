@@ -31,6 +31,7 @@ class Item(DDBObject):
         self.startingDownload = False
         self.lastDownloadFailed = False
         self.pendingManualDL = False
+        self.downloadedTime = None
         self.pendingReason = ""
         self.entry = entry
         self.dlFactory = DownloaderFactory(self)
@@ -832,13 +833,12 @@ class Item(DDBObject):
     def getDownloadedTime(self):
         self.beginRead()
         try:
-            try:
-                ret = self.downloadedTime
-            except:
-                ret = datetime.min
+            if self.downloadedTime is None:
+                return datetime.min
+            else:
+                return self.downloadedTime
         finally:
             self.endRead()
-        return ret
 
     ##
     # gets the time the video started downloading

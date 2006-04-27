@@ -27,17 +27,24 @@ import storedatabase
 # classes and other classes that get saved in the database are present only as
 # skeletons, all we want from them is their __setstate__ method.  
 #
+# The __setstate_ methods are almost exactly like they were in 0.8.2.  I
+# removed some things that don't apply to us simple restoring, then saving the
+# database (starting a Thread, sending messages to the downloader daemon,
+# etc.).  I added some things to make things compatible with our schema,
+# mostly this means setting attributes to None, where before we used the fact
+# that access the attribute would throw an AttributeError (ugh!).
+#
 # We prepend "Old" to the DDBObject so they're easy to recognize if
 # somehow they slip through to a real database
 #
 # ObjectSchema
-# classes are exactly as they appeared in version 3 of the schema.
+# classes are exactly as they appeared in version 6 of the schema.
 #
-# Why version 3?
-# Version 1 and 2 were used in RC's.  They had a bug where they dropped the
-# feed.expirationTime variable.  By making olddatabaseupgrade start on version
-# 3 we avoid that bug, while still giving the people using version 1 and 2 an
-# upgrade path.
+# Why version 6?
+# Previous versions were in RC's.  They dropped some of the data that we
+# need to import from old databases By making olddatabaseupgrade start on
+# version 6 we avoid that bug, while still giving the people using version 1
+# and 2 an upgrade path that does something.
 
 def defaultFeedIconURL():
     import resource
@@ -96,9 +103,10 @@ class OldItem(OldDDBObject):
                 self.__class__ = DropItLikeItsHot
             if self.__class__ is OldFileItem:
                 self.__class__ = DropItLikeItsHot
-                
-        # not sure how this can be implemented and I don't think we need it
-        # self.dlFactory = DownloaderFactory(self)
+
+        self.iconCache = None
+        if not 'downloadedTime' in state:
+            self.downloadedTime = None
 
 class OldFileItem(OldItem):
     pass
@@ -122,6 +130,8 @@ class OldFeed(OldDDBObject):
         # This object is useless without a FeedImpl associated with it
         if not data.has_key('actualFeed'):
             self.__class__ = DropItLikeItsHot
+
+        self.iconCache = None
 
 class OldFolder(OldDDBObject):
     pass
@@ -256,6 +266,11 @@ class FakeClassUnpickler(pickle.Unpickler):
         else:
             raise ValueError("Unrecognized class: %s" % fullyQualifiedName)
 
+class IconCache:
+    # We need to define this class for the ItemSchema.  In practice we will
+    # always use None instead of one of these objects.
+    pass
+
 
 ######################### STAGE 2 helpers #############################
 
@@ -283,6 +298,8 @@ class ItemSchema(DDBObjectSchema):
         ('keep', SchemaBool()),
         ('creationTime', SchemaDateTime()),
         ('linkNumber', SchemaInt(noneOk=True)),
+        ('iconCache', SchemaObject(IconCache, noneOk=True)),
+        ('downloadedTime', SchemaDateTime(noneOk=True)),
     ]
 
 class FileItemSchema(ItemSchema):
@@ -301,6 +318,7 @@ class FeedSchema(DDBObjectSchema):
         ('initiallyAutoDownloadable', SchemaBool()),
         ('loading', SchemaBool()),
         ('actualFeed', SchemaObject(OldFeedImpl)),
+        ('iconCache', SchemaObject(IconCache, noneOk=True)),
     ]
 
 class FeedImplSchema(ObjectSchema):
@@ -435,4 +453,4 @@ def convertOldDatabase(databasePath):
                     if not hasattr(d, '__DropMeLikeItsHot')]
 
     storedatabase.saveObjectList(objects, databasePath,
-            objectSchemas=objectSchemas, version=3)
+            objectSchemas=objectSchemas, version=6)

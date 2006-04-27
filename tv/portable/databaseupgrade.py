@@ -67,3 +67,9 @@ def upgrade5(objectList):
             if o.savedData['status'].has_key('metainfo'):
                 o.savedData['status']['metainfo'] = None
                 o.savedData['status']['infohash'] = None
+
+def upgrade6(objectList):
+    """Add downloadedTime to items."""
+    for o in objectList:
+        if o.classString in ('item', 'file-item'):
+            o.savedData['downloadedTime'] = None

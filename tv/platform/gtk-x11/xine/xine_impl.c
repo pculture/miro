@@ -212,13 +212,13 @@ void xineSetPlaying(_Xine* xine, int isPlaying)
 void xineSetVolume(_Xine* xine, int volume)
 {
     if(!xine->attached) return;
-    xine_set_param(xine->stream, XINE_PARAM_AUDIO_VOLUME, volume);
+    xine_set_param(xine->stream, XINE_PARAM_AUDIO_AMP_LEVEL, volume);
 }
 
 int xineGetVolume(_Xine* xine)
 {
     if(!xine->attached) return 0;
-    return xine_get_param(xine->stream, XINE_PARAM_AUDIO_VOLUME);
+    return xine_get_param(xine->stream, XINE_PARAM_AUDIO_AMP_LEVEL);
 }
 
 void xineGotExposeEvent(_Xine* xine, int x, int y, int width, int height)
