@@ -33,7 +33,6 @@ def checkBrokenFeeds(objectList, fixIfPossible):
 def checkSingleChannelGuide(objectList, fixIfPossible):
     guideCount = 0
     for i in reversed(xrange(len(objectList))):
-        print objectList[i].__class__
         if isinstance(objectList[i], guide.ChannelGuide):
             guideCount += 1
             if guideCount > 1:
