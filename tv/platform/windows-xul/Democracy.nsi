@@ -113,7 +113,10 @@ Section "-${CONFIG_LONG_APP_NAME}"
   MessageBox MB_ICONEXCLAMATION \
      "WARNING: Democracy Player is not officially supported on this version of Windows$\r$\n$\r$\nVideo playback is known to be broken, and there may be other problems"
 lbl_winnt:
+
   Pop $R0
+  ; Remove anything already in the installation dir if it exists
+  RMDir /r $INSTDIR
 
   SetShellVarContext all
   SetOutPath "$INSTDIR"
@@ -153,18 +156,18 @@ SectionEnd
 
 Function .onInit
   ; Is the app already installed? Bail if so.
-  ReadRegStr $R0 HKLM "${UNINST_KEY}" "UninstallString"
+  ReadRegStr $R0 HKLM "${INST_KEY}" "InstallDir"
   StrCmp $R0 "" done
  
   ; Should we uninstall the old one?
-  MessageBox MB_YESNO|MB_ICONEXCLAMATION \
+  MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
   "It looks like you already have a copy of ${CONFIG_LONG_APP_NAME} $\n\
-installed. Do you want to remove that copy before continuing?" \
-  IDNO done
-  
-  ; Punt them to the uninstaller and hope all goes well (..!)
-  ClearErrors
-  ExecWait '$R0 _?=$INSTDIR' ;Do not copy the uninstaller to a temp file
+installed.  Do you want to continue and overwrite it?" \
+       IDOK continue
+  Quit
+  continue:
+  RMDir /r $R0 ; Remove the old installation
+
   done:
   !insertmacro MUI_LANGDLL_DISPLAY
 FunctionEnd
