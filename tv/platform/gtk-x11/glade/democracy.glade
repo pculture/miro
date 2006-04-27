@@ -92,6 +92,7 @@
 
 	      <child>
 		<widget class="GtkHBox" id="video-info-box">
+		  <property name="height_request">46</property>
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">0</property>
@@ -103,7 +104,7 @@
 		<packing>
 		  <property name="padding">0</property>
 		  <property name="expand">False</property>
-		  <property name="fill">False</property>
+		  <property name="fill">True</property>
 		</packing>
 	      </child>
 	    </widget>
