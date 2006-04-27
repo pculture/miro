@@ -733,9 +733,10 @@ class Feed(DDBObject):
         if initial is None:
             self.loading = True
             self.actualFeed = FeedImpl(url,self)
-            DDBObject.__init__(self)
             
             self.iconCache = IconCache(self, is_vital = True)
+
+            DDBObject.__init__(self)
             
             thread = Thread(target=lambda: self.generateFeed(True), \
                             name="Feed.__init__ generate -- %s" % url)
