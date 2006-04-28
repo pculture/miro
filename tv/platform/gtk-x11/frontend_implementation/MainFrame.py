@@ -11,6 +11,7 @@ import resource
 from frontend import *
 from frontend_implementation.gtk_queue import gtkAsyncMethod
 from frontend_implementation.VideoDisplay import VideoDisplay
+from frontend_implementation.HTMLDisplay import HTMLDisplay
 from frontend_implementation.callbackhandler import CallbackHandler
 from frontend_implementation.mainwindowchanger import MainWindowChanger
 
@@ -198,6 +199,8 @@ class MainFrame:
                 self.windowChanger.changeState(self.windowChanger.VIDEO)
             else:
                 self.windowChanger.changeState(self.windowChanger.BROWSING)
+            if isinstance(newDisplay, HTMLDisplay):
+                newDisplay.widget.child.grab_focus()
 
     def getDisplay(self, area):
         return self.selectedDisplays[area]
