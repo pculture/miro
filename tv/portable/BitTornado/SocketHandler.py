@@ -26,6 +26,21 @@ all = POLLIN | POLLOUT
 
 UPnP_ERROR = "unable to forward port via UPnP"
 
+def makeDummySocketPair():
+    """Create a pair of sockets connected to each other on the local
+    interface.  Used to implement SocketHandler.wakeup().
+    """
+
+    dummy_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    dummy_server.bind( ('127.0.0.1', 0) )
+    dummy_server.listen(1)
+    server_address = dummy_server.getsockname()
+    first = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    first.connect(server_address)
+    second, address = dummy_server.accept()
+    dummy_server.close()
+    return first, second
+
 class SingleSocket:
     def __init__(self, socket_handler, sock, handler, ip = None):
         self.socket_handler = socket_handler
@@ -131,6 +146,11 @@ class SocketHandler:
         self.dead_from_write = []
         self.max_connects = 1000
         self.port_forwarded = None
+        self.wakeup_receiver, self.wakeup_sender = makeDummySocketPair()
+        self.poll.register(self.wakeup_receiver, POLLIN)
+
+    def wakeup(self):
+        self.wakeup_sender.send("a")
 
     def scan_for_timeouts(self):
         t = clock() - self.timeout
@@ -283,6 +303,12 @@ class SocketHandler:
         
     def handle_events(self, events):
         for sock, event in events:
+            if sock == self.wakeup_receiver.fileno():
+                # nothing to do here, simply accepting the event woke us from
+                # do_poll().  reading 1024 bytes should be enough to clear 
+                # wakeup_receiver's buffer.
+                self.wakeup_receiver.recv(1024)
+                continue
             s = self.servers.get(sock)
             if s:
                 if event & (POLLHUP | POLLERR) != 0:

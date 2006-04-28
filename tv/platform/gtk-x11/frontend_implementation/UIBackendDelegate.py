@@ -1,3 +1,4 @@
+import errno
 import os
 import signal
 import sys
@@ -5,6 +6,7 @@ import time
 import gnomevfs
 import gtk
 import threading
+import traceback
 import app
 
 from frontend import *
@@ -27,6 +29,13 @@ def ShowDialog (title, message, buttons, default = gtk.RESPONSE_CANCEL):
     response = dialog.run()
     dialog.destroy()
     return response
+
+def pidIsRunning(pid):
+    try:
+        os.kill(pid, 0)
+        return True
+    except OSError, err:
+        return err.errno == errno.EPERM
 
 class UIBackendDelegate:
 
@@ -162,18 +171,21 @@ class UIBackendDelegate:
         gtk.Clipboard(selection="CLIPBOARD").set_text(text)
         gtk.Clipboard(selection="PRIMARY").set_text(text)
 
-    def launchDownloadDaemon(self, oldpid, env):
-#        print "*** LAUNCHING**** "
-        # Use UNIX style kill
-        if oldpid is not None:
-#            print "KILLING old download daemon with pid: %r" % oldpid
-            # Old daemon isn't necessarily running.
+    def killDownloaderDaemon(self, oldpid):
+        if pidIsRunning(oldpid):
             try:
                 os.kill(oldpid, signal.SIGTERM)
                 time.sleep(1)
-                os.kill(oldpid, signal.SIGKILL)
+                if pidIsRunning(oldpid):
+                    os.kill(oldpid, signal.SIGKILL)
             except:
-                pass
+                print "error killing download daemon"
+                traceback.print_exc()
+
+    def launchDownloadDaemon(self, oldpid, env):
+        # Use UNIX style kill
+        if oldpid is not None and pidIsRunning(oldpid):
+            self.killDownloaderDaemon(oldpid)
         pid = os.fork()
         if pid == 0:
             # child process

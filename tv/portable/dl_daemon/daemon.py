@@ -25,7 +25,7 @@ def launchDownloadDaemon(oldpid, port):
     delegate = app.Controller.instance.getBackendDelegate()
     delegate.launchDownloadDaemon(oldpid, daemonEnv)
     firstDaemonLaunch = '0'
-    
+
 def getDataFile():
     try:
         uid = os.getuid()
@@ -85,7 +85,6 @@ class Daemon:
     def __init__(self):
         global lastDaemon
         lastDaemon = self
-        self.shutdown = False
         self.waitingCommands = {}
         self.returnValues = {}
         self.sendLock = Lock() # For serializing data sent over the network
@@ -99,9 +98,9 @@ class Daemon:
         the downloader, this causes the downloader to quit.  On the
         controller side, this causes the controller to restart the downloader.
         """
-        print "socket error in daemon, closing my stream"
-        self.stream.close()
-    
+        print "socket error in daemon, closing my socket"
+        self.stream._sock.shutdown(socket.SHUT_RDWR)
+
     def listenLoop(self):
         while True:
             #print "Top of dl daemon listen loop"
@@ -110,16 +109,20 @@ class Daemon:
             # Process commands in their own thread so actions that
             # need to send stuff over the wire don't hang
             # FIXME: We shouldn't spawn a thread for every command!
-            t = Thread(target=self.processCommand,
-                    args=(comm,),
-                    name="command processor")
-            t.setDaemon(False)
-            t.start()
-            #FIXME This is a bit of a hack
-            if isinstance(comm, command.ShutDownCommand):
-                # wait for the command thread to send our reply along the
-                # socket before quitting
-                t.join()
+            if not isinstance(comm, command.ShutDownCommand):
+                t = Thread(target=self.processCommand,
+                        args=(comm,),
+                        name="command processor")
+                t.setDaemon(False)
+                t.start()
+            else:
+                # Process the shutdown command in the current thread. In the
+                # downloader daemon, this waits for all other threads to quit,
+                # so processing it in a separate thread would deadlock.
+                self.processCommand(comm)
+                sleep(0.1) 
+                # give the controller some time to get the reply before we
+                # close our socket
                 break
 
     def processCommand(self, comm):
@@ -204,13 +207,8 @@ class DownloaderDaemon(Daemon):
         t.start()
 
     def downloaderLoop(self):
-        try:
-            self.listenLoop()
-            print "Downloader listen loop completed"
-        finally:
-            self.shutdown = True
-            from dl_daemon import download
-            download.shutDown()
+        self.listenLoop()
+        print "Downloader listen loop completed"
 
 class ControllerDaemon(Daemon):
     def __init__(self):
@@ -222,6 +220,8 @@ class ControllerDaemon(Daemon):
         self.port = myPort
         self.socket.listen(63)
         self.ready = Event()
+        self.shutdownEvent = Event()
+        self.hardShutdown = False
         t = Thread(target = self.controllerLoop, name = "Controller Loop")
         t.start()
         self.ready.wait()
@@ -267,6 +267,8 @@ class ControllerDaemon(Daemon):
                     print "Controller listen loop completed"
                     break
                 except Exception, e:
+                    if self.hardShutdown:
+                        break
                     self.cleanupAfterError()
                     import util
                     util.failedExn("While talking to downloader backend")
@@ -274,7 +276,7 @@ class ControllerDaemon(Daemon):
                     # controller stays alive and restarts the downloader
                     # by continuing the while loop we achieve this
         finally:
-            self.shutDown = True
+            self.shutdownEvent.set()
 
     def connectToDownloader(self):
         # launch a new daemon
@@ -283,3 +285,23 @@ class ControllerDaemon(Daemon):
         (conn, address) = self.socket.accept()
         conn.settimeout(None)
         self.stream = conn.makefile("r+b")
+
+    def shutdownDownloaderDaemon(self, timeout=5):
+        """Send the downloader daemon the shutdown command.  If it doesn't
+        reply before timeout expires, kill it.  (The reply is not sent until
+        the downloader daemon has one remaining thread and that thread will
+        immediately exit).
+        """
+
+        c = command.ShutDownCommand(self)
+        c.send(block=False)    
+        self.shutdownEvent.wait(timeout)
+        if not self.shutdownEvent.isSet():
+            print "Downloader daemon didn't quit after %d seconds" % timeout
+            print "Starting hard shutdown"
+            self.hardShutdown = True
+            self.stream._sock.shutdown(socket.SHUT_RDWR)
+            self.shutdownEvent.wait()
+            import app
+            delegate = app.Controller.instance.getBackendDelegate()
+            delegate.killDownloaderDaemon(readPid())

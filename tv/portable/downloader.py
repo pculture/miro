@@ -288,13 +288,8 @@ def startupDownloader():
     RemoteDownloader.initializeDaemon()
     restartDownloads()
 
-##
-# Kill the main BitTorrent thread
-#
-# This should be called before closing the app
 def shutdownDownloader():
-    c = command.ShutDownCommand(RemoteDownloader.dldaemon)
-    c.send(block=False)    
+    RemoteDownloader.dldaemon.shutdownDownloaderDaemon()
 
 class DownloaderFactory:
     lock = RLock()

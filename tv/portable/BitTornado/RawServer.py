@@ -105,6 +105,8 @@ class RawServer:
             (a, b, c) = self.externally_added.pop(0)
             self.add_task(a, b, c)
 
+    def wakeup(self):
+        self.sockethandler.wakeup()
 
     def listen_forever(self, handler):
         self.sockethandler.set_handler(handler)

@@ -125,4 +125,10 @@ class GenerateDownloadID(Command):
 # This is a special command that's trapped by the daemon
 class ShutDownCommand(Command):
     def action(self):
-        pass
+        print "starting ShutDownCommand"
+        from dl_daemon import download
+        download.shutDown()
+        import threading
+        for thread in threading.enumerate():
+            if thread != threading.currentThread():
+                thread.join()

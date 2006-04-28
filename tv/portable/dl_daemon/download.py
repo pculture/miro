@@ -901,6 +901,7 @@ class BTDownloader(BGDownloader):
 # This should be called before closing the app
 def shutdownBTDownloader():
     BTDownloader.doneflag.set()
+    BTDownloader.rawserver.wakeup()
     BTDownloader.dlthread.join()
 
 def startBTDownloader():
