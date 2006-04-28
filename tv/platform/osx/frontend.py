@@ -978,7 +978,7 @@ class UIBackendDelegate:
     def copyTextToClipboard(self, text):
         print "WARNING: copyTextToClipboard not implemented"
 
-    def launchDownloadDaemon(self, oldpid, env):
+    def killDownloadDaemon(self, oldpid):
         # Use UNIX style kill
         if oldpid is not None:
             try:
@@ -987,6 +987,9 @@ class UIBackendDelegate:
                 os.kill(oldpid, signal.SIGKILL)
             except:
                 pass
+
+    def launchDownloadDaemon(self, oldpid, env):
+        self.killDownloadDaemon(oldpid)
         # Setup environement
         for key, value in env.items():
             os.environ[key] = value

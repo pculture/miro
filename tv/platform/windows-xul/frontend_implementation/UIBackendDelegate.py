@@ -169,7 +169,7 @@ class UIBackendDelegate:
             folder = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,"Software\Microsoft\Windows\CurrentVersion\Run",0, _winreg.KEY_SET_VALUE)
             _winreg.DeleteValue(folder, "Democracy Player")
 
-    def launchDownloadDaemon(self, oldpid, env):
+    def killDownloadDaemon(self, oldpid):
         # Kill the old process, if it exists
         if oldpid is not None:
             # This isn't guaranteed to kill the process, but it's likely the
@@ -180,6 +180,9 @@ class UIBackendDelegate:
             handle = ctypes.windll.kernel32.OpenProcess(PROCESS_TERMINATE, False, oldpid)
             ctypes.windll.kernel32.TerminateProcess(handle, -1)
             ctypes.windll.kernel32.CloseHandle(handle)
+
+    def launchDownloadDaemon(self, oldpid, env):
+        self.killDownloadDaemon(oldpid)
         for key, value in env.items():
             os.environ[key] = value
         os.environ['DEMOCRACY_DOWNLOADER_LOG'] = \

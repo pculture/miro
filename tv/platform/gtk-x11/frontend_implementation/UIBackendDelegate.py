@@ -171,7 +171,7 @@ class UIBackendDelegate:
         gtk.Clipboard(selection="CLIPBOARD").set_text(text)
         gtk.Clipboard(selection="PRIMARY").set_text(text)
 
-    def killDownloaderDaemon(self, oldpid):
+    def killDownloadDaemon(self, oldpid):
         if pidIsRunning(oldpid):
             try:
                 os.kill(oldpid, signal.SIGTERM)
@@ -185,7 +185,7 @@ class UIBackendDelegate:
     def launchDownloadDaemon(self, oldpid, env):
         # Use UNIX style kill
         if oldpid is not None and pidIsRunning(oldpid):
-            self.killDownloaderDaemon(oldpid)
+            self.killDownloadDaemon(oldpid)
         pid = os.fork()
         if pid == 0:
             # child process

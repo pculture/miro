@@ -304,4 +304,4 @@ class ControllerDaemon(Daemon):
             self.shutdownEvent.wait()
             import app
             delegate = app.Controller.instance.getBackendDelegate()
-            delegate.killDownloaderDaemon(readPid())
+            delegate.killDownloadDaemon(readPid())
