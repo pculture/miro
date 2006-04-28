@@ -148,7 +148,7 @@ function navigateDisplay(displayName, url) {
 
 function setVideoInfoDisplayHidden(value) {
   videoInfo = document.getElementById("videoInfoDisplay");
-  videoInfo.setAttribute("hidden", value);
+  videoInfo.setAttribute("collasped", value);
 }
 
 // If you have a cookie, you can simulate an event from here.

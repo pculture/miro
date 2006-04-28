@@ -166,7 +166,7 @@ class httpServer:
             # printing it.
             except socket.error, (code, description):
                 if code in (errno.ECONNABORTED, errno.ECONNRESET,
-                        errno.WSAENOTSOCK):
+                        errno.WSAENOTSOCK, errno.WSAEINTR):
                     # Normal: Mozilla was just being abrupt
                     print "[%s] Ignoring remote or network error '%s'" % \
                         (self.reqNum, description)
