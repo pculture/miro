@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Dummy Atom Feed</title>
+    <updated>2006-05-28T11:00:00Z</updated>
+    <author><name>Luc Heinrich</name></author>
+    <id>urn:uuid:D7732206-B0BF-4FAF-B2CE-FC25C6C5548F</id>
+    <link 
+        xmlns:atom="http://www.w3.org/2005/Atom"
+        rel="alternate" 
+        type="application/atom+xml" 
+        title="TeleMusicVision" 
+        href="reflexive-auto-discovery-page-atom.html" />
+</feed>

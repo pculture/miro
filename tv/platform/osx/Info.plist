@@ -7,6 +7,26 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>democracy</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string></string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-democracy</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>One Click Subscribe Content</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>TEXT</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>rdf</string>
 				<string>rss</string>
 				<string>atom</string>
@@ -15,8 +35,8 @@
 			<string>check.icns</string>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
-				<string>application/rss+xml</string>
 				<string>application/rdf+xml</string>
+				<string>application/rss+xml</string>
 				<string>application/atom+xml</string>
 			</array>
 			<key>CFBundleTypeName</key>
