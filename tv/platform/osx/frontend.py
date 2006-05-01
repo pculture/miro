@@ -187,7 +187,12 @@ class AppController (NibClassBuilder.AutoBaseClass):
         self.actualApp.onShutdown()
 
     def application_openFile_(self, app, filename):
-        return self.actualApp.addFeedFromFile(filename)
+        root, ext = os.path.splitext(filename)
+        if ext == ".democracy":
+            AppHelper.callAfter(self.actualApp.addSubscriptionFromFile, filename)
+        elif ext in (".rss", ".rss", ".atom"):
+            AppHelper.callAfter(self.actualApp.addFeedFromFile, filename)
+        return YES
 
     def workspaceWillSleep_(self, notification):
         downloads = app.globalViewList['remoteDownloads']

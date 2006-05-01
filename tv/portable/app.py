@@ -14,7 +14,8 @@ import download_utils
 import autoupdate
 import xhtmltools
 import guide
-import idlenotifier
+import idlenotifier 
+import subscription
 
 import os
 import re
@@ -675,8 +676,15 @@ class Controller (frontend.Application):
     def addAndSelectFeed(self, url, showTemplate = None):
         return GUIActionHandler(self).addFeed(url, showTemplate)
 
-    def addFeedFromFile(self,file):
-        feed.addFeedFromFile(file)
+    def addFeedFromFile(self, pathname):
+        feed.addFeedFromFile(pathname)
+        return False
+
+    def addSubscriptionFromFile(self, pathname):
+        urls = subscription.parseFile(pathname)
+        if urls is not None:
+            for url in urls:
+                self.addAndSelectFeed(url)
         return False
 
     ### Handling 'DTVAPI' events from the channel guide ###
