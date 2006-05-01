@@ -196,9 +196,11 @@ for dir in ('templates', 'css', 'images', 'testdata'):
 # add the desktop file and the icons
 data_files += [
     ('/usr/share/pixmaps', 
-            glob(os.path.join(platform_dir, 'democracyplayer-*.png'))),
+     glob(os.path.join(platform_dir, 'democracyplayer-*.png'))),
     ('/usr/share/applications', 
-        [os.path.join(platform_dir, 'democracyplayer.desktop')]),
+     [os.path.join(platform_dir, 'democracyplayer.desktop')]),
+    ('/usr/share/man/man1',
+     [os.path.join(platform_dir, 'democracyplayer.1')]),
 ]
 
 #### Our specialized install_data command ####
@@ -229,6 +231,11 @@ class install_data (distutils.command.install_data.install_data):
             self.mkpath(os.path.dirname(dest))
             self.copy_file(source, dest)
             self.outfiles.append(dest)
+
+        dest = '/usr/share/man/man1/democracyplayer.1'
+        if self.root:
+            dest = change_root(self.root, dest)
+        os.system ("gzip %s" % dest)
 
     def run(self):
         distutils.command.install_data.install_data.run(self)
