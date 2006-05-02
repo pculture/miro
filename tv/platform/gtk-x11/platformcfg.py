@@ -1,40 +1,50 @@
 import os
-
 import config
 import gconf
+import threading
 
 client = gconf.client_get_default()
+gconf_lock = threading.RLock()
 
 class gconfDict:
     def get(self, key, default = None):
-        if (type(key) != str):
-            raise TypeError()
-        fullkey = '/apps/democracy/player/' + key
-        value = client.get (fullkey)
-        if (value != None):
-            if (value.type == gconf.VALUE_STRING):
-                return value.get_string()
-            if (value.type == gconf.VALUE_INT):
-                return value.get_int()
-            if (value.type == gconf.VALUE_BOOL):
-                return value.get_bool()
-            if (value.type == gconf.VALUE_FLOAT):
-                return value.get_float()
-        return default
+        gconf_lock.acquire()
+        try:
+            if (type(key) != str):
+                raise TypeError()
+            fullkey = '/apps/democracy/player/' + key
+            value = client.get (fullkey)
+            if (value != None):
+                if (value.type == gconf.VALUE_STRING):
+                    return value.get_string()
+                if (value.type == gconf.VALUE_INT):
+                    return value.get_int()
+                if (value.type == gconf.VALUE_BOOL):
+                    return value.get_bool()
+                if (value.type == gconf.VALUE_FLOAT):
+                    return value.get_float()
+            return default
+        finally:
+            gconf_lock.release()
+
     def __setitem__(self, key, value):
-        if (type(key) != str):
-            raise TypeError()
-        fullkey = '/apps/democracy/player/' + key
-        if (type(value) == str):
-            client.set_string(fullkey, value)
-        elif (type(value) == int):
-            client.set_int(fullkey, value)
-        elif (type(value) == bool):
-            client.set_bool(fullkey, value)
-        elif (type(value) == float):
-            client.set_float(fullkey, value)
-        else:
-            raise TypeError()
+        gconf_lock.acquire()
+        try:
+            if (type(key) != str):
+                raise TypeError()
+            fullkey = '/apps/democracy/player/' + key
+            if (type(value) == str):
+                client.set_string(fullkey, value)
+            elif (type(value) == int):
+                client.set_int(fullkey, value)
+            elif (type(value) == bool):
+                client.set_bool(fullkey, value)
+            elif (type(value) == float):
+                client.set_float(fullkey, value)
+            else:
+                raise TypeError()
+        finally:
+            gconf_lock.release()
 
 def load():
     return gconfDict()
@@ -58,8 +68,12 @@ def get(descriptor):
         path = get(config.SUPPORT_DIRECTORY)
         path = os.path.join(path, 'tvdump')
 
-    elif descriptor == config.DB_PATHNAME:
+    elif descriptor == config.LOG_PATHNAME:
         path = get(config.SUPPORT_DIRECTORY)
         path = os.path.join(path, 'log')
     
+    elif descriptor == config.DOWNLOADER_LOG_PATHNAME:
+        path = get(config.SUPPORT_DIRECTORY)
+        return os.path.join(path, 'dtv-downloader-log')
+
     return path
