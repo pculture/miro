@@ -57,16 +57,16 @@ def addTorrent(path):
     manualFeed = app.getSingletonDDBObject('manualFeed')
     manualFeed.beginRead()
     try:
-        for item in manualFeed.items:
-            item.beginRead()
+        for i in manualFeed.items:
+            i.beginRead()
             try:
-                infohash = item.downloaders[0].status.get('infohash')
+                infohash = i.downloaders[0].status.get('infohash')
                 if infohash == torrentInfohash:
                     print ("Not downloading %s, it's already a "
-                            "download for %s" % (path, item))
+                            "download for %s" % (path, i))
                     return
             finally:
-                item.endRead()
+                i.endRead()
     finally:
         manualFeed.endRead()
     newItem = item.Item(manualFeed, item.getEntryForFile(path))
