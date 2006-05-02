@@ -7,6 +7,7 @@ import autodler
 import resource
 import template
 import database
+import singleclick
 import storedatabase
 import scheduler
 import downloader
@@ -437,6 +438,7 @@ class Controller (frontend.Application):
             downloader.startupDownloader()
 
             channelGuide = getInitialChanelGuide()
+            singleclick.initialize()
             # Define variables for templates
             # NEEDS: reorganize this, and update templates
             globalData = {
@@ -484,10 +486,18 @@ class Controller (frontend.Application):
                 elif tab.tabTemplateBase == 'downloadtab':
                     self.downloadTab = tab
 
-            # Put cursor on first tab to indicate that it should be initially
-            # selected
+            added = singleclick.parseCommandLineArgs()
             self.tabs.resetCursor()
-            self.tabs.getNext()
+            if added in (singleclick.ADDED_BOTH, singleclick.ADDED_VIDEOS):
+                print "TODO: should be selecting the My Collection tab now"
+                self.tabs.getNext()
+            elif added == singleclick.ADDED_TORRENTS:
+                print "TODO: should be selecting the Downloads tab now"
+                self.tabs.getNext()
+            else:
+                # Put cursor on first tab to indicate that it should be
+                # initially selected
+                self.tabs.getNext()
 
             # If we're missing the file system videos feed, create it
             self.setupGlobalFeed('dtv:directoryfeed')
@@ -1223,11 +1233,11 @@ class TemplateActionHandler:
         self.controller.frame.selectDisplay(template, self.controller.frame.mainDisplay)
 
     def doneWithIntro(self):
-        getChannelGuide().setSawIntro()
+        getSingletonDDBObject('guide').setSawIntro()
         self.goToGuide()
 
     def goToGuide(self):
-        guide = getChannelGuide()
+        guide = getSingletonDDBObject('guide')
         # Does the Guide want to implement itself as a redirection to
         # a URL?
         (mode, location) = guide.getLocation()
@@ -1782,28 +1792,28 @@ def allDownloadingItems(obj, param):
             (search.lower() in obj.getTitle().lower() or 
              search.lower() in obj.getDescription().lower()))
 
-class TooManyChannelGuidesError(Exception):
+class TooManySingletonsError(Exception):
     pass
 
-def getChannelGuide():
-    guideView = globalViewList['guide']
-    guideView.beginRead()
+def getSingletonDDBObject(viewName):
+    view = globalViewList[viewName]
+    view.beginRead()
     try:
-        guideViewLength = guideView.len()
-        if guideViewLength == 0:
-            raise LookupError("No channel guide in database")
-        elif guideViewLength == 1:
-            guideView.resetCursor()
-            return guideView.next()
+        viewLength = view.len()
+        if viewLength == 1:
+            view.resetCursor()
+            return view.next()
+        elif viewLength == 0:
+            raise LookupError("Can't find singleton in %s" % viewName)
         else:
-            msg = "%d ChannelGuide objects" % guideViewLength
-            raise TooManyChannelGuidesError(msg)
+            msg = "%d objects in %s" % (viewLength, viewName)
+            raise TooManySingletonsError(msg)
     finally:
-        guideView.endRead()
+        view.endRead()
 
 def getInitialChanelGuide():
     try:
-        channelGuide = getChannelGuide()
+        channelGuide = getSingletonDDBObject('guide')
     except LookupError:
         print "DTV: Spawning Channel Guide..."
         channelGuide = guide.ChannelGuide()
@@ -1825,7 +1835,7 @@ def getInitialChanelGuide():
                 initiallyAutoDownloadable=False)
         feed.Feed('http://some-pig.net/videos/rss.php?i=2',
                 initiallyAutoDownloadable=False)
-    except TooManyChannelGuidesError:
+    except TooManySingletonsError:
         print "DTV: Multiple Channel Guides!  Using the first one"
         guideView = globalViewList['guide']
         guideView.beginUpdate()
@@ -1896,3 +1906,5 @@ globalViewList['remoteDownloads'] = db.filterWithIndex(globalIndexList['class'],
 globalViewList['remoteDownloads'].createIndex(globalIndexList['downloadsByDLID'])
 globalViewList['items'].createIndex(globalIndexList['itemsByFeed'])
 globalViewList['feeds'].createIndex(globalIndexList['feedsByURL'])
+globalViewList['manualFeed'] = globalViewList['feeds'].filterWithIndex(
+        globalIndexList['feedsByURL'], 'dtv:manualFeed')

@@ -801,31 +801,36 @@ class BTDownloader(BGDownloader):
 
     def getMetainfo(self):
         if self.metainfo is None:
-            h = grabURL(self.getURL(),"GET", findHTTPAuth = findHTTPAuth)
-            if h is None:
-                self.state = "failed"
-                self.reasonFailed = "Could not connect to server"
-                self.updateClient()
-                return False
+            if self.url.startswith('file://'):
+                path = self.url[len('file://'):]
+                metainfoFile = open(path)
             else:
-                metainfo = h['file-handle'].read()
-                h['file-handle'].close()
-                # FIXME: BitTorrent did lots of checking here for
-                # invalid torrents. We should do the same
-                self.metainfo = bdecode(metainfo)
-                info = self.metainfo['info']
-                self.infohash = sha(bencode(info)).digest()
-                self.shortFilename = cleanFilename(self.metainfo['info']['name'])
-                
-                if self.metainfo['info'].has_key('length'):
-                    try:
-                        totalSize = self.metainfo['info']['length']
-                    except KeyError: # There are multiple files in this here torrent
-                        totalSize = 0
-                        for f in self.metainfo['info']['files']:
-                            totalSize += f['length']
-                    self.totalSize = totalSize
-                return True
+                h = grabURL(self.getURL(), "GET", findHTTPAuth = findHTTPAuth)
+                if h is None:
+                    return False
+                else:
+                    metainfoFile = h['file-handler']
+            try:
+                metainfo = metainfoFile.read()
+            finally:
+                metainfoFile.close()
+
+            # FIXME: BitTorrent did lots of checking here for
+            # invalid torrents. We should do the same
+            self.metainfo = bdecode(metainfo)
+            info = self.metainfo['info']
+            self.infohash = sha(bencode(info)).digest()
+            self.shortFilename = cleanFilename(self.metainfo['info']['name'])
+            
+            if self.metainfo['info'].has_key('length'):
+                try:
+                    totalSize = self.metainfo['info']['length']
+                except KeyError: # There are multiple files in this here torrent
+                    totalSize = 0
+                    for f in self.metainfo['info']['files']:
+                        totalSize += f['length']
+                self.totalSize = totalSize
+            return True
         else:
             return True
 

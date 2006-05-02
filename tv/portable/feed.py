@@ -125,6 +125,8 @@ def _generateFeed(url, ufeed, visible=True):
         return SearchFeedImpl(ufeed)
     elif (url == "dtv:searchDownloads"):
         return SearchDownloadsFeedImpl(ufeed)
+    elif (url == "dtv:manualFeed"):
+        return ManualFeedImpl(ufeed)
 
     info = grabURL(url,"GET")
     if info is None:
@@ -726,16 +728,15 @@ class FeedImpl:
 #
 # It works by passing on attributes to the actual feed.
 class Feed(DDBObject):
-    def __init__(self,url, initial = None, initiallyAutoDownloadable = True):
+    def __init__(self,url, useThread=True, initiallyAutoDownloadable=True):
         self.origURL = url
         self.errorState = False
         self.initiallyAutoDownloadable = initiallyAutoDownloadable
-        if initial is None:
+        if useThread:
             self.loading = True
             self.actualFeed = FeedImpl(url,self)
             
             self.iconCache = IconCache(self, is_vital = True)
-
             DDBObject.__init__(self)
             
             thread = Thread(target=lambda: self.generateFeed(True), \
@@ -743,9 +744,10 @@ class Feed(DDBObject):
             thread.setDaemon(False)
             thread.start()
         else:
+            self.generateFeed(True)
             self.loading = False
-            self.actualFeed = initial
             self.iconCache = IconCache(self, is_vital = True)
+            DDBObject.__init__(self)
 
     # Returns javascript to mark the feed as viewed
     # FIXME: Using setTimeout is a hack to get around JavaScript bugs
@@ -794,7 +796,7 @@ class Feed(DDBObject):
         self.actualFeed.update()
 
     def generateFeed(self, removeOnError=False):
-        temp =  _generateFeed(self.url,self,visible=True)
+        temp =  _generateFeed(self.origURL,self,visible=True)
         self.beginRead()
         try:
             self.loading = False
@@ -1518,14 +1520,13 @@ class SearchFeedImpl (RSSFeedImpl):
     def finishUpdate(self, info=None):
         self.searching = False
         RSSFeedImpl.finishUpdate(self, info)
-                    
 
-class SearchDownloadsFeedImpl (FeedImpl):
-
+class SearchDownloadsFeedImpl(FeedImpl):
     def __init__(self, ufeed):
-        FeedImpl.__init__(self, url='dtv:searchDownloads', ufeed=ufeed, title=None, visible=False)
+        FeedImpl.__init__(self, url='dtv:searchDownloads', ufeed=ufeed, 
+                title=None, visible=False)
         self.setUpdateFrequency(-1)
-        
+
     def addItem(self, item):
         self.ufeed.beginRead()
         try:
@@ -1540,6 +1541,24 @@ class SearchDownloadsFeedImpl (FeedImpl):
         finally:
             self.ufeed.endRead()
 
+class ManualFeedImpl(FeedImpl):
+    """Videos/Torrents that have been added using by the user opening them
+    with democracy.
+    """
+
+    def __init__(self, ufeed):
+        FeedImpl.__init__(self, url='dtv:manualFeed', ufeed=ufeed, 
+                title=None, visible=False)
+        self.expire = 'never'
+        self.setUpdateFrequency(-1)
+        
+    def addItem(self, item):
+        self.ufeed.beginRead()
+        try:
+            if not item in self.items:
+                self.items.append(item)
+        finally:
+            self.ufeed.endRead()
 
 ##
 # Parse HTML document and grab all of the links and their title

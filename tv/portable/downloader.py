@@ -297,6 +297,16 @@ class DownloaderFactory:
         self.item = item
 
     def getDownloader(self, url):
+        if url.startswith('file://'):
+            if url.endswith('.torrent'):
+                return RemoteDownloader(url, self.item,
+                        'application/x-bittorrent')
+            else:
+                raise ValueError("Don't know how to handle %s" % url)
+        else:
+            return self.getDownloaderFromWeb(url)
+
+    def getDownloaderFromWeb(self, url):
         info = grabURL(url, 'HEAD')
         if info is None: # some websites don't support HEAD requests
             info = grabURL(url, 'GET')

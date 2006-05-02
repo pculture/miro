@@ -908,15 +908,17 @@ class Item(DDBObject):
     def __str__(self):
         return "Item - %s" % self.getTitle()
 
-##
-# An Item that exists as a file, but not as a download
-class FileItem(Item):
-    def getEntry(self,filename):
-        return FeedParserDict({'title':os.path.basename(filename),'enclosures':[{'url':filename}]})
+def getEntryForFile(filename):
+    return FeedParserDict({'title':os.path.basename(filename),
+            'enclosures':[{'url': 'file://%s' % filename}]})
 
+##
+# An Item that exists as a local file
+class FileItem(Item):
     def __init__(self,feed,filename):
-        Item.__init__(self,feed,self.getEntry(filename))
+        filename = os.path.abspath(filename)
         self.filename = filename
+        Item.__init__(self, feed, getEntryForFile(filename))
 
     def getState(self):
         return "saved"
@@ -953,4 +955,3 @@ class FileItem(Item):
         except:
             pass
         return ret
-

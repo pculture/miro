@@ -235,7 +235,7 @@ class install_data (distutils.command.install_data.install_data):
         dest = '/usr/share/man/man1/democracyplayer.1'
         if self.root:
             dest = change_root(self.root, dest)
-        os.system ("gzip %s" % dest)
+        os.system ("gzip -f %s" % dest)
 
     def run(self):
         distutils.command.install_data.install_data.run(self)

@@ -36,7 +36,22 @@ def checkSingleChannelGuide(objectList, fixIfPossible):
         if isinstance(objectList[i], guide.ChannelGuide):
             guideCount += 1
             if guideCount > 1:
-                msg = "Extra chanel Guide"
+                msg = "Extra channel Guide"
+                if fixIfPossible:
+                    util.failed("While checking database", details=msg)
+                    del objectList[i]
+                else:
+                    raise DatabaseInsaneError(msg)
+
+def checkSingletonManualFeed(objectList, fixIfPossible):
+    count = 0
+    for i in reversed(xrange(len(objectList))):
+        obj = objectList[i]
+        if (isinstance(obj, feed.Feed) and 
+                isinstance(obj.actualFeed, feed.ManualFeedImpl)):
+            count += 1
+            if count > 1:
+                msg = "Extra ManualFeedImpl"
                 if fixIfPossible:
                     util.failed("While checking database", details=msg)
                     del objectList[i]
@@ -57,4 +72,5 @@ def checkSanity(objectList, fixIfPossible=True):
 
     checkBrokenFeeds(objectList, fixIfPossible)
     checkSingleChannelGuide(objectList, fixIfPossible)
+    checkSingletonManualFeed(objectList, fixIfPossible)
     return objectList
