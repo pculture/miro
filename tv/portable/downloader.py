@@ -250,7 +250,7 @@ def cleanupIncompleteDownloads():
     app.globalViewList['remoteDownloads'].beginRead()
     try:
         for downloader in app.globalViewList['remoteDownloads'] :
-            if downloader.status['state'] in ('downloading', 'paused'):
+            if downloader.status.get('state') in ('downloading', 'paused'):
                 filename = downloader.status['filename']
                 if not os.path.isabs(filename):
                     filename = os.path.join(downloadDir, file)

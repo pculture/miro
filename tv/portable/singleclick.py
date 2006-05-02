@@ -39,7 +39,7 @@ def addVideo(path):
     manualFeed.actualFeed.addItem(fileItem)
 
 def getTorrentInfoHash(path):
-    f = open(path)
+    f = open(path, 'rb')
     try:
         data = f.read()
         metainfo = bdecode(data)
@@ -48,23 +48,20 @@ def getTorrentInfoHash(path):
     finally:
         f.close()
 
-def addTorrent(path):
-    try:
-        torrentInfohash = getTorrentInfoHash(path)
-    except ValueError:
-        print "WARNING: %s doesn't seem to be a torrent file"
-        return
+def addTorrent(path, torrentInfohash):
     manualFeed = app.getSingletonDDBObject('manualFeed')
     manualFeed.beginRead()
     try:
         for i in manualFeed.items:
             i.beginRead()
             try:
-                infohash = i.downloaders[0].status.get('infohash')
-                if infohash == torrentInfohash:
-                    print ("Not downloading %s, it's already a "
-                            "download for %s" % (path, i))
-                    return
+                for d in i.downloaders:
+                    if d.status.get('infohash') == torrentInfohash:
+                        print ("Not downloading %s, it's already a "
+                                "download for %s" % (path, i))
+                        if i.getState() in ('paused', 'stopped'):
+                            i.download()
+                        return
             finally:
                 i.endRead()
     finally:
@@ -88,14 +85,23 @@ def parseCommandLineArgs(args=None):
     addedVideos = False
     addedTorrents = False
 
-    for arg in _commandLineArgs:
+    for arg in args:
+        print "parsing ", arg
         if os.path.exists(arg):
             if arg.endswith('.torrent'):
-                addTorrent(arg)
+                print "trying torrent"
+                try:
+                    torrentInfohash = getTorrentInfoHash(arg)
+                except ValueError:
+                    print "WARNING: %s doesn't seem to be a torrent file"
+                    continue
+                addTorrent(arg, torrentInfohash)
                 addedTorrents = True
             else:
                 addVideo(arg)
                 addedVideos = True
+        else:
+            print "doesn't exist"
 
     if addedVideos and addedTorrents:
         return ADDED_BOTH

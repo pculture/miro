@@ -20,7 +20,10 @@ class DemocracyCLH:
         if existingWindow is None:
             wwatch.openWindow(None, chromeURL, windowName,
                     "chrome,dialog=no,all", None)
-
+        else:
+            pybridgeCID = "@participatoryculture.org/dtv/pybridge;1"
+            pybridge = components.classes[pybridgeCID].getService()
+            pybridge.handleSecondCommandLine(commandLine)
 
 catman = components.classes["@mozilla.org/categorymanager;1"].getService()
 catman.queryInterface(components.interfaces.nsICategoryManager)

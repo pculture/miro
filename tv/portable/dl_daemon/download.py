@@ -803,7 +803,7 @@ class BTDownloader(BGDownloader):
         if self.metainfo is None:
             if self.url.startswith('file://'):
                 path = self.url[len('file://'):]
-                metainfoFile = open(path)
+                metainfoFile = open(path, 'rb')
             else:
                 h = grabURL(self.getURL(), "GET", findHTTPAuth = findHTTPAuth)
                 if h is None:

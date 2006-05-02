@@ -56,6 +56,13 @@ class PyBridge:
 #        except:
 #            traceback.print_exc()
 
+    def handleSecondCommandLine(self, commandLine):
+        import singleclick
+        args = [commandLine.getArgument(i) for i in \
+                range(1, commandLine.length)]
+        print "ARGS:", args
+        singleclick.parseCommandLineArgs(args)
+
     def bootApp(self):
         if self.booted:
             import util

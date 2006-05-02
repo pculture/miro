@@ -31,7 +31,7 @@ function videoSetVolume(level) {
   document.video1.set_volume(level*200);
 }
 function videoPlay(url) {
-  eventURL('action:videoEnablePauseButton')
+  //eventURL('action:videoEnablePauseButton')
   // FIXME: race condition
   if(typeof this.lastURL == 'undefined')
           this.lastURL = '';

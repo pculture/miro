@@ -1,6 +1,7 @@
 #include "nsISupports.idl"
 #include "nsIDOMDocument.idl"
-#include "nsIDOMElement.idl"
+
+interface nsICommandLine;
 
 [scriptable, uuid(8ABB2E1D-6624-4457-A4BD-EBFA6156D426)]
 interface pcfIDTVPyBridge : nsISupports
@@ -15,6 +16,8 @@ interface pcfIDTVPyBridge : nsISupports
   void bootApp();
 
   void onShutdown();
+
+  void handleSecondCommandLine(in nsICommandLine commandLine);
 
   void eventURL(in AString cookie, in AString url);
 
