@@ -36,6 +36,8 @@ class VideoDisplay (app.VideoDisplayBase):
             XineRenderer(),
             # add additional video renderers here
         ]
+        for renderer in self.renderers:
+            renderer.setWidget(self.widget)
 
     @gtkAsyncMethod
     def _gtkInit(self):
@@ -43,8 +45,6 @@ class VideoDisplay (app.VideoDisplayBase):
         self.widget.set_double_buffered(False)
         self.widget.add_events(gtk.gdk.POINTER_MOTION_MASK)
         self.widget.show()
-        for renderer in self.renderers:
-            renderer.setWidget(self.widget)
 
     def startVideoTimeUpdate(self):
         self.stopVideoTimeUpdate()

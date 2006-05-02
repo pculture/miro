@@ -48,12 +48,7 @@ def getTorrentInfoHash(path):
     finally:
         f.close()
 
-def addTorrent(path):
-    try:
-        torrentInfohash = getTorrentInfoHash(path)
-    except ValueError:
-        print "WARNING: %s doesn't seem to be a torrent file"
-        return
+def addTorrent(path, torrentInfohash):
     manualFeed = app.getSingletonDDBObject('manualFeed')
     manualFeed.beginRead()
     try:
@@ -73,6 +68,19 @@ def addTorrent(path):
     manualFeed.actualFeed.addItem(newItem)
     newItem.download()
 
+def addFile(path):
+    if path.endswith('.torrent'):
+        try:
+            torrentInfohash = getTorrentInfoHash(path)
+        except ValueError:
+            print "WARNING: %s doesn't seem to be a torrent file"
+            return ADDED_NOTHING
+        addTorrent(path, torrentInfohash)
+        return ADDED_TORRENTS
+    else:
+        addVideo(path)
+        return ADDED_VIDEOS
+
 def setCommandLineArgs(args):
     global _commandLineArgs
     _commandLineArgs = args
@@ -84,23 +92,17 @@ def parseCommandLineArgs():
 
     global _commandLineArgs
 
-    addedVideos = False
-    addedTorrents = False
+    addFileResults = set()
 
     for arg in _commandLineArgs:
         if os.path.exists(arg):
-            if arg.endswith('.torrent'):
-                addTorrent(arg)
-                addedTorrents = True
-            else:
-                addVideo(arg)
-                addedVideos = True
+            addFileResults.add(addFile(arg))
 
-    if addedVideos and addedTorrents:
+    if ADDED_VIDEOS in addFileResults and ADDED_TORRENTS in addFileResults:
         return ADDED_BOTH
-    elif addedVideos:
+    elif ADDED_VIDEOS in addFileResults:
         return ADDED_VIDEOS
-    elif addedTorrents:
+    elif ADDED_TORRENTS in addFileResults:
         return ADDED_TORRENTS
     else:
         return ADDED_NOTHING
