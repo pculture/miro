@@ -905,15 +905,7 @@ class RSSFeedImpl(FeedImpl):
     def hasVideoFeed(self, enclosures):
         hasOne = False
         for enclosure in enclosures:
-            if ((enclosure.has_key('type') and
-                 (enclosure['type'].startswith('video/') or
-                  enclosure['type'].startswith('audio/') or
-                  enclosure['type'] == "application/x-bittorrent")) or
-                (enclosure.has_key('url') and
-                 (enclosure['url'][-4:].lower() in ['.mov','.wmv','.mp4', '.m4v',
-                                                   '.mp3','.mpg','.avi'] or
-                  enclosure['url'][-8].lower() == '.torrent' or
-                  enclosure['url'][-5].lower() == '.mpeg'))):
+            if isVideoEnclosure(enclosure):
                 hasOne = True
                 break
         return hasOne

@@ -16,7 +16,7 @@ import threadpriority
 import config
 import os
 import feed
-
+    
 ##
 # An item corresponds to a single entry in a feed. Generally, it has
 # a single url associated with it
@@ -61,13 +61,30 @@ class Item(DDBObject):
         return self.creationTime <= self.feed.lastViewed
 
     ##
+    # Returns the first video enclosure in the item
+    def getFirstVideoEnclosure(self):
+        first = None
+        self.beginRead()
+        try:
+            try:
+                for enclosure in self.entry.enclosures:
+                    if isVideoEnclosure(enclosure):
+                        first = enclosure
+                        break
+            except:
+                pass
+        finally:
+            self.endRead()
+        return first
+
+    ##
     # Returns the URL associated with the first enclosure in the item
     def getURL(self):
         ret = ''
         self.beginRead()
         try:
             try:
-                ret = self.entry.enclosures[0].url
+                ret = self.getFirstVideoEnclosure().url
             except:
                 pass
         finally:
@@ -347,7 +364,8 @@ class Item(DDBObject):
             return self.entry.title
         except:
             try:
-                return self.entry.enclosures[0]["url"]
+                enclosure = self.getFirstVideoEnclosure()
+                return enclosure["url"]
             except:
                 return ""
 
@@ -356,7 +374,8 @@ class Item(DDBObject):
     def getDescription(self):
         self.beginRead()
         try:
-            ret = xhtmlify('<span>'+unescape(self.entry.enclosures[0]["text"])+'</span>')
+            enclosure = self.getFirstVideoEnclosure()
+            ret = xhtmlify('<span>'+unescape(enclosure["text"])+'</span>')
         except:
             try:
                 ret = xhtmlify('<span>'+unescape(self.entry.description)+'</span>')
@@ -641,7 +660,7 @@ class Item(DDBObject):
             return self.releaseDate
         except:
             try:
-                self.releaseDate = datetime(*self.entry.enclosures[0].modified_parsed[0:7]).strftime("%b %d %Y")
+                self.releaseDate = datetime(*self.getFirstVideoEnclosure().modified_parsed[0:7]).strftime("%b %d %Y")
                 return self.releaseDate
             except:
                 try:
@@ -660,7 +679,7 @@ class Item(DDBObject):
         self.beginRead()
         try:
             try:
-                self.releaseDateObj = datetime(*self.entry.enclosures[0].modified_parsed[0:7])
+                self.releaseDateObj = datetime(*self.getFirstVideoEnclosure().modified_parsed[0:7])
             except:
                 try:
                     self.releaseDateObj = datetime(*self.entry.modified_parsed[0:7])
@@ -745,8 +764,8 @@ class Item(DDBObject):
         self.beginRead()
         try:
             try:
-                for role in self.entry.enclosures[0].roles:
-                    for person in self.entry.enclosures[0].roles[role]:
+                for role in self.getFirstVideoEnclosure().roles:
+                    for person in self.getFirstVideoEnclosure().roles[role]:
                         ret.append(person)
                 for role in self.entry.roles:
                     for person in self.entry.roles[role]:
@@ -776,7 +795,7 @@ class Item(DDBObject):
         self.beginRead()
         try:
             try:
-                ret = self.entry.enclosures[0].payment_url
+                ret = self.getFirstVideoEnclosure().payment_url
             except:
                 try:
                     ret = self.entry.payment_url
@@ -793,7 +812,7 @@ class Item(DDBObject):
         self.beginRead()
         try:
             try:
-                ret = self.entry.enclosures[0].payment_html
+                ret = self.getFirstVideoEnclosure().payment_html
             except:
                 try:
                     ret = self.entry.payment_html
@@ -859,12 +878,17 @@ class Item(DDBObject):
     ##
     # Returns the filename of the first downloaded video or the empty string
     def getFilename(self):
+        ret = ""
         self.beginRead()
         try:
             try:
-                ret = self.downloaders[0].getFilename()
+                enclosure = self.getFirstVideoEnclosure()
+                for dler in self.downloaders:
+                    if dler.getURL() == enclosure["url"]:
+                        ret = dler.getFilename()
+                        break
             except:
-                ret = ""
+                pass
         finally:
             self.endRead()
         return ret
@@ -958,3 +982,20 @@ class FileItem(Item):
         except:
             pass
         return ret
+
+
+def isVideoEnclosure(enclosure):
+    """
+    Pass an enclosure dictionary to this method and it will return a boolean
+    saying if the enclosure is a video or not.
+    """
+    hasVideoType = (enclosure.has_key('type') and
+        (enclosure['type'].startswith('video/') or
+         enclosure['type'].startswith('audio/') or
+         enclosure['type'] == "application/x-bittorrent"))
+    hasVideoExtension = (enclosure.has_key('url') and
+        (enclosure['url'][-4:].lower() in ['.mov','.wmv','.mp4', '.m4v',
+                                            '.mp3','.mpg','.avi'] or
+         enclosure['url'][-8].lower() == '.torrent' or
+         enclosure['url'][-5].lower() == '.mpeg'))
+    return hasVideoType or hasVideoExtension
