@@ -8,8 +8,6 @@ import config
 # NOTE: this could also lead to problems, since now gtkmozembed is being
 # linked to a different libxpcom than it expects.  This way seems to be less
 # bad though, so we'll use it for now.  See Bug #1560.
-import pygtk
-pygtk.require('2.0')
 import MozillaBrowser
 
 # Almost everything is split out into files under frontend-implementation.

@@ -3,6 +3,9 @@
 import os.path
 import sys
 
+import pygtk
+pygtk.require('2.0')
+
 import democracy
 # Make sure democracy modules are on the search path
 sys.path.insert(0, os.path.abspath(os.path.dirname(democracy.__file__)))
