@@ -3,6 +3,7 @@
 import os
 import config
 import gtkmozembed
+from frontend_implementation.gtk_queue import gtkSyncMethod
 
 def createProfileDirectory():
     """Create the mozilla profile directory, if needed."""
@@ -34,6 +35,7 @@ user_pref("general.useragent.vendorComment", %s);
     f.write(prefsContent)
     f.close()
 
+@gtkSyncMethod
 def setupMozillaEnvironment():
     """Do all the work nessecary setup the DTV Mozilla environment."""
     createProfileDirectory()

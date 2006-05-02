@@ -114,43 +114,46 @@ class HTMLDisplay(app.Display):
         # of several not especially attractive options.
         app.Display.onSelected(self, *args)
 
+#defer and then async, which means make an async function and then
+#defer that async function.
+    @deferUntilAfterLoad
+    @gtkAsyncMethod
     def execJS(self, js):
         self.widget.load_url('javascript:%s' % js)
-    execJS = deferUntilAfterLoad(execJS)
 
     # DOM hooks used by the dynamic template code
-    @gtkAsyncMethod
     @deferUntilAfterLoad
+    @gtkAsyncMethod
     def addItemAtEnd(self, xml, id):
         if not self.widgetDestroyed:
             self.mb.addItemAtEnd(xml, id)
 
-    @gtkAsyncMethod
     @deferUntilAfterLoad
+    @gtkAsyncMethod
     def addItemBefore(self, xml, id):
         if not self.widgetDestroyed:
             self.mb.addItemBefore(xml, id)
     
-    @gtkAsyncMethod
     @deferUntilAfterLoad
+    @gtkAsyncMethod
     def removeItem(self, id):
         if not self.widgetDestroyed:
             self.mb.removeItem(id)
     
-    @gtkAsyncMethod
     @deferUntilAfterLoad
+    @gtkAsyncMethod
     def changeItem(self, id, xml):
         if not self.widgetDestroyed:
             self.mb.changeItem(id, xml)
 
-    @gtkAsyncMethod
     @deferUntilAfterLoad
+    @gtkAsyncMethod
     def hideItem(self, id):
         if not self.widgetDestroyed:
             self.mb.hideItem(id)
         
-    @gtkAsyncMethod
     @deferUntilAfterLoad
+    @gtkAsyncMethod
     def showItem(self, id):
         if not self.widgetDestroyed:
             self.mb.showItem(id)
@@ -172,9 +175,11 @@ class HTMLDisplay(app.Display):
     def onDocumentLoadFinished(self):
         pass
 
+    @gtkAsyncMethod
     def onContextMenuItem(self, menuItem, url):
         self.widget.load_url(url)
 
+    @gtkAsyncMethod
     def onContextMenu(self, menu):
         # onContextMenu handles the context menu callback from MozillaBrowser.
         # Menu is a string, where each line is either

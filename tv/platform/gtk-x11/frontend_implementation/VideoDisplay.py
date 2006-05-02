@@ -3,7 +3,8 @@ import frontend
 import gobject
 import gtk
 import gtk.gdk
-from gtk_queue import gtkAsyncMethod
+import gnomevfs
+from gtk_queue import gtkAsyncMethod, gtkSyncMethod
 
 from xinerenderer import XineRenderer
 
@@ -29,6 +30,7 @@ class VideoDisplay (app.VideoDisplayBase):
         self.videoUpdateTimeout = None
         self._gtkInit()
 
+    @gtkAsyncMethod
     def initRenderers(self):
         self.renderers = [
             XineRenderer(),
@@ -54,6 +56,7 @@ class VideoDisplay (app.VideoDisplayBase):
             gobject.source_remove(self.videoUpdateTimeout)
             self.videoUpdateTimeout = None
 
+    @gtkAsyncMethod
     def play(self, startTime=0):
         if not self.activeRenderer:
             return
@@ -65,6 +68,7 @@ class VideoDisplay (app.VideoDisplayBase):
     def goToBeginningOfMovie(self):
         self.play(0)
 
+    @gtkAsyncMethod
     def pause(self):
         self.stopVideoTimeUpdate()
         app.VideoDisplayBase.pause(self)
@@ -73,6 +77,7 @@ class VideoDisplay (app.VideoDisplayBase):
     def getWidget(self):
         return self.widget
 
+    @gtkSyncMethod
     def getLength(self):
         """Get the length, in seconds, of the current video."""
         if self.activeRenderer:

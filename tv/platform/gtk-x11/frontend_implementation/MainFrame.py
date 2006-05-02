@@ -9,7 +9,7 @@ import gconf
 
 import resource
 from frontend import *
-from frontend_implementation.gtk_queue import gtkAsyncMethod
+from frontend_implementation.gtk_queue import gtkAsyncMethod, gtkSyncMethod
 from frontend_implementation.VideoDisplay import VideoDisplay
 from frontend_implementation.HTMLDisplay import HTMLDisplay
 from frontend_implementation.callbackhandler import CallbackHandler
@@ -219,6 +219,7 @@ class MainFrame:
             if isinstance(newDisplay, HTMLDisplay):
                 newDisplay.widget.child.grab_focus()
 
+    @gtkSyncMethod
     def getDisplay(self, area):
         return self.selectedDisplays[area]
 
@@ -236,6 +237,7 @@ class MainFrame:
             self.aboutWidget.set_transient_for (self.widgetTree['main-window'])
         self.aboutWidget.present()
 
+    @gtkSyncMethod
     def updateVideoTime(self):
         renderer = app.Controller.instance.videoDisplay.activeRenderer
         videoTimeScale = self.widgetTree['video-time-scale']
@@ -258,12 +260,14 @@ class MainFrame:
             videoTimeScale.set_value(renderer.getCurrentTime())
         return True
 
+    @gtkAsyncMethod
     def setFullscreen(self, fullscreen):
         self.windowChanger.changeFullScreen (fullscreen)
         self.isFullscreen = fullscreen
 
     # Internal use: return an estimate of the size of a given display area
     # as a (width, height) pair, or None if no information's available.
+    @gtkSyncMethod
     def getDisplaySizeHint(self, area):
         display = self.selectedDisplays.get(area)
         if display is None:
@@ -284,6 +288,7 @@ class MainFrame:
 class NullDisplay (app.Display):
     "A blank placeholder Display."
 
+    @gtkSyncMethod
     def __init__(self):
         app.Display.__init__(self)
 
