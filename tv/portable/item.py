@@ -427,7 +427,8 @@ class Item(DDBObject):
             if ((state == "stopped") and 
                 self.feed.isAutoDownloadable() and 
                 (self.feed.getEverything or 
-                 self.getPubDateParsed() >= self.feed.startfrom)):
+                 (self.getPubDateParsed() >= self.feed.startfrom and
+                  self.getPubDateParsed() != datetime.max))):
                 state = "autopending"
         finally:
             self.feed.endRead()

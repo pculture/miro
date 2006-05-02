@@ -73,3 +73,11 @@ def upgrade6(objectList):
     for o in objectList:
         if o.classString in ('item', 'file-item'):
             o.savedData['downloadedTime'] = None
+
+def upgrade7(objectList):
+    """Add the initialUpdate variable to FeedImpl objects."""
+    for o in objectList:
+        if o.classString == 'feed':
+            feedImpl = o.savedData['actualFeed']
+            if feedImpl is not None:
+                feedImpl.savedData['initialUpdate'] = False

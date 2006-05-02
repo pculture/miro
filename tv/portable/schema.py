@@ -269,6 +269,7 @@ class FeedImplSchema(ObjectSchema):
         ('thumbURL', SchemaString()),
         ('updateFreq', SchemaInt()),
         ('expireTime', SchemaTimeDelta(noneOk=True)),
+        ('initialUpdate', SchemaBool()),
     ]
 
 class RSSFeedImplSchema(FeedImplSchema):
@@ -353,7 +354,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('loadedThisSession', SchemaBool()),
     ]
 
-VERSION = 6
+VERSION = 7
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,

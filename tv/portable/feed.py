@@ -260,6 +260,7 @@ class FeedImpl:
         self.updating = False
         self.lastViewed = datetime.min
         self.thumbURL = defaultFeedIconURL()
+        self.initialUpdate = True
         self.updateFreq = config.get(config.CHECK_CHANNELS_EVERY_X_MN)*60
         self.expireTime = None
 
@@ -985,6 +986,12 @@ class RSSFeedImpl(FeedImpl):
             except KeyError:
                 updateFreq = 0
             self.setUpdateFrequency(updateFreq)
+            
+            if self.initialUpdate:
+                self.initialUpdate = False
+                sortedItems = list(self.items)
+                sortedItems.sort(lambda x, y: cmp(x.getPubDateParsed(), y.getPubDateParsed()))
+                self.startfrom = sortedItems[-1].getPubDateParsed()
             
             self.updating = False
         finally:
