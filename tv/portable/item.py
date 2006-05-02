@@ -485,7 +485,10 @@ class Item(DDBObject):
             if self.entry.has_key('enclosures'):
                 enclosures = self.entry['enclosures']
                 for enclosure in enclosures:
-                    size += int(enclosure['length'])
+                    try:
+                        size += int(enclosure['length'])
+                    except:
+                        pass
         except:
             pass
         return self.sizeFormattedForDisplay(size)
