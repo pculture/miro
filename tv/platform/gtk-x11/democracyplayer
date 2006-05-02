@@ -18,6 +18,7 @@ parser.add_option('--unittest', dest='unittest', default=False,
     help='run unittests instead of launching the program')
 parser.add_option('-v', '--version', dest='version', default=False,
     action='store_true', help='print version info')
+parser.add_option('--profile', metavar='FILE', help='write profiling information to FILE')
 (options, args) = parser.parse_args()
 
 if options.unittest:
@@ -38,6 +39,12 @@ elif options.version:
     print "Democracy Player comes with ABSOLUTELY NO WARRANTY."
     print "This is free software, and you are welcome to redistribute it"
     print "under certain conditions.  See license.txt for details."
+elif options.profile:
+    import profile
+    def main():
+        import app
+        app.main()
+    profile.run ('main()', options.profile)
 else: 
     import singleclick
     singleclick.setCommandLineArgs(args)
