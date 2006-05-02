@@ -19,6 +19,7 @@ import cPickle
 import datetime
 import time
 from types import NoneType
+from fasttypes import LinkedList
 
 class ValidationError(Exception):
     """Error thrown when we try to save invalid data."""
@@ -131,28 +132,30 @@ class SchemaSimpleContainer(SchemaSimpleItem):
     floats, strings, unicode, None, datetime and struct_time objects.
     """
 
-    def recursivelyValidate(self, data):
-        # prevent circular reference problems with lists and dicts
-        if id(data) in self.memory:
-            return
-        else:
-            self.memory.add(id(data))
-
-        if isinstance(data, list) or isinstance(data, tuple):
-            for item in data:
-                self.recursivelyValidate(item)
-        elif isinstance(data, dict):
-            for key, value in data.items():
-                self.recursivelyValidate(key)
-                self.recursivelyValidate(value)
-        else:
-            self.validateTypes(data, [bool, int, long, float, str, unicode,
-                    NoneType, datetime.datetime, time.struct_time])
-
     def validate(self, data):
         super(SchemaSimpleContainer, self).validate(data)
         self.memory = set()
-        self.recursivelyValidate(data)
+        toValidate = LinkedList()
+        while data:
+            if id(data) in self.memory:
+                return
+            else:
+                self.memory.add(id(data))
+    
+            if isinstance(data, list) or isinstance(data, tuple):
+                for item in data:
+                    toValidate.append(item)
+            elif isinstance(data, dict):
+                for key, value in data.items():
+                    toValidate.append(key)
+                    toValidate.append(value)
+            else:
+                self.validateTypes(data, [bool, int, long, float, str, unicode,
+                        NoneType, datetime.datetime, time.struct_time])
+            try:
+                data = toValidate.pop()
+            except:
+                data = None
 
 class SchemaObject(SchemaItem):
     def __init__(self, klass, noneOk=False):
