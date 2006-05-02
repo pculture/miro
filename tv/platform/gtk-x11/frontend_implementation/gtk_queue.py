@@ -7,12 +7,14 @@ accessing gtk and gdk methods simultaniously.  Pygtk provides locking around
 gtk, but using this is very tricky.  Instead, we use gobject.idle_add(), which
 forces a methods to be run in the gtk main loop.  However, idle_add has a
 problem as well.  It doesn't specify which order the methods added will be run
-in.  In facte, the most straight-forward implementation of it would use a
+in.  In fact, the most straight-forward implementation of it would use a
 priority queue which would allow methods to run out of order.  The
-queueMethod function defined here doesn't have that problem.
+gtkSyncMethod and gtkAsyncMethod functions defined here doesn't have that
+problem.
 
-The short story is: use the queueMethod() to safely run methods that use gtk
-methods.
+The short story is: use the gtkAsyncMethod to safely run methods that use
+gtk objects if you don't care about the return value.  Use gtkSyncMethod if
+you do.
 
 """
 
@@ -20,6 +22,15 @@ import gobject
 import threading
 import gtk
 import Queue
+import sys
+import traceback
+
+class ExceptionContainer:
+    def __init__(self, exc_info):
+        self.type, self.value, self.tb = exc_info
+
+    def reraise(self):
+        raise self.type, self.value, self.tb
 
 class MainloopQueue:
     # Class to send data back to the other thread.
@@ -37,7 +48,10 @@ class MainloopQueue:
             self.done = False
         def main_thread (self):
             # Call the callback as requested, and then notify that the retval is calculated
-            self.retval = self.callback (*self.args, **self.kargs)
+            try:
+                self.retval = self.callback (*self.args, **self.kargs)
+            except Exception, e:
+                self.retval = ExceptionContainer(sys.exc_info())
             self.cond.acquire()
             self.done = True
             self.cond.notify()
@@ -79,7 +93,11 @@ class MainloopQueue:
         return_data = self.ReturnData(callback, *args, **kargs)
         self.call_nowait (return_data.main_thread)
         # And then wait for the return value.
-        return return_data.get_retval()
+        retval = return_data.get_retval()
+        if isinstance(retval, ExceptionContainer):
+            retval.reraise()
+        else:
+            return retval
 
     def _idle(self):
         gtk.threads_enter()
@@ -93,7 +111,11 @@ class MainloopQueue:
             return 0
         else:
             self.idle_running_lock.release()
-            callback (*args, **kargs)
+            try:
+                callback (*args, **kargs)
+            except:
+                print "Exception in a gtkAsyncMethod:"
+                traceback.print_exc()
             gtk.threads_leave()
             return 1
 
