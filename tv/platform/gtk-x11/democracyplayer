@@ -19,6 +19,7 @@ parser.add_option('--unittest', dest='unittest', default=False,
 parser.add_option('-v', '--version', dest='version', default=False,
     action='store_true', help='print version info')
 parser.add_option('--profile', metavar='FILE', help='write profiling information to FILE')
+parser.add_option('--bias', metavar='BIAS', help='set profiling bias to BIAS', type=float, default=None)
 (options, args) = parser.parse_args()
 
 if options.unittest:
@@ -44,6 +45,8 @@ elif options.profile:
     def main():
         import app
         app.main()
+    if (options.bias):
+        profile.Profile.bias = options.bias
     profile.run ('main()', options.profile)
 else: 
     import singleclick
