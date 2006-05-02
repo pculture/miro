@@ -1794,9 +1794,9 @@ class VideoDisplay (app.VideoDisplayBase):
     def initRenderers(self):
         self.renderers.append(QuicktimeRenderer(self.controller))
 
-    def selectItem(self, item):
-        app.VideoDisplayBase.selectItem(self, item)
-        self.controller.selectItem(item, self.activeRenderer)
+    def selectItem(self, item, renderer):
+        app.VideoDisplayBase.selectItem(self, item, renderer)
+        self.controller.selectItem(item, renderer)
  
     def play(self):
         app.VideoDisplayBase.play(self)

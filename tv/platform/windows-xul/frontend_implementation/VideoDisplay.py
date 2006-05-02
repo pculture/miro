@@ -57,10 +57,10 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
         print "initRenderers"
         self.renderers.append(VLCPluginRenderer())
 
-    def selectItem(self, item):
+    def selectItem(self, item, renderer):
         print "VideoDisplay select item"
         self.itemPath = item.getFilename()
-        app.VideoDisplayBase.selectItem(self, item)
+        app.VideoDisplayBase.selectItem(self, item, renderer)
  
     def play(self):
         print "VideoDisplay play %s" % self.itemPath

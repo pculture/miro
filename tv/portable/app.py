@@ -95,8 +95,9 @@ class PlaybackControllerBase:
             anItem = self.skipIfItemFileIsMissing(anItem)
             if anItem is not None:
                 videoDisplay = Controller.instance.videoDisplay
-                if videoDisplay.canPlayItem(anItem):
-                    self.playItemInternally(videoDisplay, anItem)
+                videoRenderer = videoDisplay.getRendererForItem(anItem)
+                if videoRenderer is not None:
+                    self.playItemInternally(anItem, videoDisplay, videoRenderer)
                 else:
                     frame = Controller.instance.frame
                     if frame.getDisplay(frame.mainDisplay) is videoDisplay:
@@ -108,11 +109,11 @@ class PlaybackControllerBase:
             util.failedExn('when trying to play a video')
             self.stop()
 
-    def playItemInternally(self, videoDisplay, anItem):
+    def playItemInternally(self, anItem, videoDisplay, videoRenderer):
         frame = Controller.instance.frame
         if frame.getDisplay(frame.mainDisplay) is not videoDisplay:
             frame.selectDisplay(videoDisplay, frame.mainDisplay)
-        videoDisplay.selectItem(anItem)
+        videoDisplay.selectItem(anItem, videoRenderer)
         videoDisplay.play()
 
     def playItemExternally(self, itemID):
@@ -247,7 +248,7 @@ class VideoDisplayBase (Display):
     def canPlayItem(self, anItem):
         return self.getRendererForItem(anItem) is not None
     
-    def selectItem(self, anItem):
+    def selectItem(self, anItem, renderer):
         self.stopOnDeselect = True
         
         info = anItem.getInfoMap()
@@ -255,7 +256,7 @@ class VideoDisplayBase (Display):
         area = Controller.instance.frame.videoInfoDisplay
         Controller.instance.frame.selectDisplay(template, area)
         
-        self.activeRenderer = self.getRendererForItem(anItem)
+        self.activeRenderer = renderer
         self.activeRenderer.selectItem(anItem)
         self.activeRenderer.setVolume(self.getVolume())
 
