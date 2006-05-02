@@ -149,7 +149,7 @@ lbl_winnt:
   !insertmacro MUI_STARTMENU_WRITE_END
 SectionEnd
 
-Section /o "Desktop icon" SecDesktop
+Section "Desktop icon" SecDesktop
   CreateShortcut "$DESKTOP\${RUN_SHORTCUT}" "$INSTDIR\${CONFIG_EXECUTABLE}" \
     "" "$INSTDIR\${CONFIG_ICON}"
 SectionEnd
