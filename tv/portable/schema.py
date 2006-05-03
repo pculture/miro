@@ -134,6 +134,7 @@ class SchemaSimpleContainer(SchemaSimpleItem):
 
     def validate(self, data):
         super(SchemaSimpleContainer, self).validate(data)
+        self.validateTypes(data, (dict, list, tuple))
         self.memory = set()
         toValidate = LinkedList()
         while data:
