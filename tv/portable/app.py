@@ -1284,27 +1284,29 @@ class TemplateActionHandler:
     
     def updateLastSearchEngine(self, engine):
         searchFeed, searchDownloadsFeed = self.__getSearchFeeds()
-        searchFeed.lastEngine = engine
+        if searchFeed is not None:
+            searchFeed.lastEngine = engine
     
     def updateLastSearchQuery(self, query):
         searchFeed, searchDownloadsFeed = self.__getSearchFeeds()
-        searchFeed.lastQuery = query
+        if searchFeed is not None:
+            searchFeed.lastQuery = query
         
     def performSearch(self, engine, query):
         searchFeed, searchDownloadsFeed = self.__getSearchFeeds()
-        searchFeed.preserveDownloads(searchDownloadsFeed)
-        searchFeed.lookup(engine, query)
+        if searchFeed is not None and searchDownloadsFeed is not None:
+            searchFeed.preserveDownloads(searchDownloadsFeed)
+            searchFeed.lookup(engine, query)
 
     def resetSearch(self):
         searchFeed, searchDownloadsFeed = self.__getSearchFeeds()
-        searchFeed.preserveDownloads(searchDownloadsFeed)
-        searchFeed.reset()
+        if searchFeed is not None and searchDownloadsFeed is not None:
+            searchFeed.preserveDownloads(searchDownloadsFeed)
+            searchFeed.reset()
         
     def __getSearchFeeds(self):
         searchFeed = self.controller.getGlobalFeed('dtv:search')
-        assert searchFeed is not None
-        searchDownloadsFeed = Controller.instance.getGlobalFeed('dtv:searchDownloads')
-        assert searchDownloadsFeed is not None
+        searchDownloadsFeed = self.controller.getGlobalFeed('dtv:searchDownloads')
         return (searchFeed, searchDownloadsFeed)
 
     # The Windows XUL port can send a setVolume or setVideoProgress at
