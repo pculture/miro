@@ -116,7 +116,7 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
         # XUL code loads either page, then the second time the XUL code loads
         # the page it won't be in pendingDocuments anymore.  I think it's
         # exteremly unlikely that we'll ever run into this problem though.
-        html = template.fillStaticTemplate("video-display-vlc", {'eventCookie':self.getEventCookie(),'dtvPlatform':'xul'})
+        html = template.fillStaticTemplate("video-display-vlc", platform = 'xul', eventCookie = self.getEventCookie())
 
         frontend_implementation.HTMLDisplay.pendingDocuments[self.getEventCookie()] = ("text/html", html)
 

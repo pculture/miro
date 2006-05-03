@@ -318,9 +318,9 @@ class httpServer:
                                                             action, parameter)
 
             if action == 'addChannel':
-                app.Controller.instance.addFeed(parameter)
+                app.controller.addFeed(parameter)
             elif action == 'goToChannel':
-                app.Controller.instance.selectFeed(parameter)
+                app.controller.selectFeed(parameter)
             else:
                 print "WARNING: ignored bad DTVAPI request '%s'" % request
 

@@ -417,8 +417,6 @@ class Controller (frontend.Application):
         frontend.Application.__init__(self)
         assert controller is None
         controller = self
-        print "WARNING: Controller.instance deprecated"
-        Controller.instance = controller
 
     ### Startup and shutdown ###
 
