@@ -48,7 +48,7 @@ class MainWindowChanger(object):
     def updatePlayPauseButton(self):
         """Update the play/pause button to have the correct image."""
         playPauseImage = self.widgetTree['play-pause-image']
-        if app.Controller.instance.videoDisplay.isPlaying:
+        if app.controller.videoDisplay.isPlaying:
             pixbuf = playPauseImage.render_icon(gtk.STOCK_MEDIA_PAUSE, 
                     gtk.ICON_SIZE_LARGE_TOOLBAR)
         else:
@@ -86,7 +86,7 @@ class MainWindowChanger(object):
     def updateState (self):
         # Handle fullscreen
         fullscreen = (self.isFullScreen and self.currentState == self.VIDEO)
-        activeRenderer = app.Controller.instance.videoDisplay.activeRenderer
+        activeRenderer = app.controller.videoDisplay.activeRenderer
         if fullscreen and (not self.wasFullScreen):
             self.widgetTree['main-window'].fullscreen()
             if activeRenderer != None:
@@ -184,8 +184,8 @@ class MainWindowChanger(object):
 
     def changeState(self, newState):
         isFeed = False
-        if app.Controller.instance.currentSelectedTab:
-            isFeed = app.Controller.instance.currentSelectedTab.isFeed()
+        if app.controller.currentSelectedTab:
+            isFeed = app.controller.currentSelectedTab.isFeed()
         self.mainFrame.actionGroups["ChannelSelected"].set_sensitive (isFeed)
         if newState == self.currentState:
             return

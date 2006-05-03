@@ -131,7 +131,10 @@ class IconCache:
                 modified = self.modified
                 updated = self.updated
                 old_url = self.url
-                url = self.dbItem.getThumbnailURL ()
+                try:
+                    url = self.dbItem.getThumbnailURL()
+                except:
+                    url = old_url
             finally:
                 self.dbItem.endRead()
 

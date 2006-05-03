@@ -1,4 +1,4 @@
-from downloader import grabURL
+from download_utils import grabURL
 from HTMLParser import HTMLParser,HTMLParseError
 import xml
 from urlparse import urlparse, urljoin
@@ -21,6 +21,7 @@ import os
 import config
 import re
 import app
+import views
 
 whitespacePattern = re.compile(r"^[ \t\r\n]*$")
 
@@ -223,7 +224,7 @@ def _generateFeed(url, ufeed, visible=True):
 
 def configDidChange(key, value):
     if key is config.CHECK_CHANNELS_EVERY_X_MN.key:
-        for feed in app.globalViewList['feeds']:
+        for feed in views.feeds:
             updateFreq = 0
             try:
                 updateFreq = feed.parsed["feed"]["ttl"]
@@ -844,7 +845,7 @@ class Feed(DDBObject):
         iconCacheUpdater.clearVital()
         for item in self.items:
             item.iconCache.requestUpdate(True)
-        for feed in app.globalViewList['feeds']:
+        for feed in views.feeds:
             feed.iconCache.requestUpdate(True)
 
     def onRestore(self):
@@ -1409,7 +1410,7 @@ class DirectoryFeedImpl(FeedImpl):
         #Files on the filesystem
         existingFiles = self.getFileList(config.get(config.MOVIES_DIRECTORY))
         #Files known about by real feeds
-        for item in app.globalViewList['items']:
+        for item in views.items:
             if not item.feed is self.ufeed:
                 knownFiles[:0] = item.getFilenames()
         knownFiles = map(os.path.normcase,knownFiles)

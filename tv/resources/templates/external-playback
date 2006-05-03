@@ -12,17 +12,25 @@
 
     <t:include filename="dynamic.js" />
     <t:include filename="external.js" />
+
+    <t:execOnLoad><![CDATA[
+this = app.controller.videoInfoItem
+]]></t:execOnLoad>
+    <t:execOnUnload><![CDATA[
+app.controller.videoInfoItem = None
+]]></t:execOnUnload>
+
 </head>
 
-<body onload="startCountdown(@@@this getID@@@)">
+<body onload="startCountdown(@@@this.getID()@@@)">
     <div id="external-container-basic">
-    	<span>This file type (<span t:replace="this getFormat" />) can't be played in the main Democracy window.</span>
+    	<span>This file type (<span t:replace="this.getFormat()" />) can't be played in the main Democracy window.</span>
 
-        <a id="external-button-left" href="javascript:playItemExternally(@@@this getID@@@)">
+        <a id="external-button-left" href="javascript:playItemExternally(@@@this.getID()@@@)">
             <span>Play Externally</span>
         </a>
 
-        <a id="external-button-right" href="javascript:skipItem(@@@this getID@@@)">
+        <a id="external-button-right" href="javascript:skipItem(@@@this.getID()@@@)">
             <span>Skip Video <b id="countdown" /></span>
         </a>
     </div>

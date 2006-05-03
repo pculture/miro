@@ -53,7 +53,7 @@ class CallbackHandler(object):
 
     def __init__(self, mainFrame):
         self.mainFrame = mainFrame
-        self.mainApp = app.Controller.instance
+        self.mainApp = app.controller
 
     def actionGroups (self):
         actionGroups = {}
@@ -220,7 +220,7 @@ class CallbackHandler(object):
 
         if response == gtk.RESPONSE_OK:
             channel = widgetTree['add-channel-entry'].get_text()
-            app.Controller.instance.addAndSelectFeed(channel)
+            app.controller.addAndSelectFeed(channel)
 
         dialog.destroy()
 

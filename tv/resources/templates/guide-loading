@@ -10,7 +10,7 @@
 <t:include filename="dynamic.js" />
 <script type="text/javascript">
 function loadguide() {
-eventURL('action:goToGuide');
+  eventURL('action:goToGuide');
 }
 setTimeout(loadguide, 10);
 </script>

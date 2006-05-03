@@ -10,12 +10,30 @@
 <t:include filename="dynamic.js" />
 <t:include filename="settings.js" />
 
-<t:dynamicviews>
-	<t:view name="dlitems" key="global view items">
-  <t:filter functionkey="global filter allDownloadingItems" parameter="" />
-  <t:sort functionkey="global sort item" parameter="" />
-	</t:view>
-</t:dynamicviews>
+    <t:execOnLoad><![CDATA[
+global searchFilter
+searchFilter = lambda x: filters.matchingItems(x, None)
+
+allDlItems = views.items.filter(filters.downloadingItems)
+
+matchingDlItems = allDlItems.filter(lambda x:searchFilter(x))
+
+dlItems = matchingDlItems.sort(sorts.item)
+
+def updateSearchString(newSearch):
+    global searchFilter
+    if len(newSearch) == 0:
+        searchFilter = lambda x: filters.matchingItems(x, None)
+    else:
+        searchFilter = lambda x: filters.matchingItems(x, newSearch)
+    allDlItems.recomputeFilter(matchingDlItems)
+
+]]>
+    </t:execOnLoad>
+    <t:execOnUnload><![CDATA[
+allDlItems.unlink()
+]]>
+    </t:execOnUnload>
 
 </head>
 
@@ -28,7 +46,7 @@
 		<h1 i18n:translate="">Active Downloads</h1>
 	</div>
 	<div id="main-titlebar-tasks">
-		<div id="main-titlebar-tasks-search" style="margin-top:38px;"><input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search" onfocus="startEditFilter(this,new Array('dlitems'),new Array(''),new Array('global filter allDownloadingItems'),new Array(0), new Array(''))" onblur="endEditFilter()" /></div>
+		<div id="main-titlebar-tasks-search" style="margin-top:38px;"><input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search" onfocus="startEditSearch(this)" onblur="endEditSearch()" /></div>
 	</div>
 </div>
 <!-- / TITLE BAR -->
@@ -37,7 +55,7 @@
 
 	<!-- VIDEOS ************************************************** -->
 	<div>
-		<span t:repeatForView="dlitems">		
+		<span t:repeatForView="dlItems">		
 		<t:includeTemplate filename="download-item" />
  		</span>
 	</div>

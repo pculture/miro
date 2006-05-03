@@ -12,55 +12,52 @@
     <t:include filename="settings.js" />
     <script type="text/javascript" src="resource:templates/shide.js" />
 
-    <t:dynamicviews>
-        <t:view name="all-items" key="global view items">
-            <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
-        </t:view>
-        <t:view name="new-unseen-items" key="global view items">
-            <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
-            <t:filter functionkey="global filter unviewedItems" parameter="@@@feed getFeedID@@@" />
-            <t:sort functionkey="global sort item" parameter="" />
-        </t:view>
-        <t:view name="new-items" key="global view items">
-            <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
-            <t:filter functionkey="global filter viewedItems" parameter="@@@feed getFeedID@@@" />
-            <t:sort functionkey="global sort item" parameter="" />
-        </t:view>
-        <t:view name="downloading-items" key="global view items">
-           <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
-            <t:filter functionkey="global filter downloadingItems" parameter="@@@feed getFeedID@@@" />
-            <t:sort functionkey="global sort item" parameter="" />
-        </t:view>
-        <t:view name="unwatched-items" key="global view items">
-            <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
-            <t:filter functionkey="global filter unwatchedItems" parameter="@@@feed getFeedID@@@" />
-            <t:sort functionkey="global sort item" parameter="" />
-        </t:view>
-        <t:view name="expiring-items" key="global view items">
-            <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
-            <t:filter functionkey="global filter expiringItems" parameter="@@@feed getFeedID@@@" />
-            <t:sort functionkey="global sort item" parameter="" />
-        </t:view>
-        <t:view name="saved-items" key="global view items">
-            <t:indexFilter index="global index itemsByFeed" value="@@@feed getFeedID@@@" />
-            <t:filter functionkey="global filter oldItems" parameter="@@@feed getFeedID@@@" />
-            <t:sort functionkey="global sort item" parameter="" />
-        </t:view>
-    </t:dynamicviews>
+    <t:execOnLoad><![CDATA[
+global searchFilter
+searchFilter = lambda x: filters.matchingItems(x, None)
+
+feed = app.controller.currentSelectedTab.obj
+
+allItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
+matchingItems = allItems.filter(lambda x: searchFilter(x))
+
+newUnseenItems = matchingItems.filter(filters.unviewedItems).sort(sorts.item)
+newItems = matchingItems.filter(filters.viewedItems).sort(sorts.item)
+downloadingItems = matchingItems.filter(filters.downloadingItems).sort(sorts.item)
+unwatchedItems = matchingItems.filter(filters.unwatchedItems).sort(sorts.item)
+expiringItems = matchingItems.filter(filters.expiringItems).sort(sorts.item)
+savedItems = matchingItems.filter(filters.oldItems).sort(sorts.item)
+
+def updateSearchString(newSearch):
+    global searchFilter
+    if len(newSearch) == 0:
+        searchFilter = lambda x: filters.matchingItems(x, None)
+    else:
+        searchFilter = lambda x: filters.matchingItems(x, newSearch)
+    allItems.recomputeFilter(matchingItems)
+
+]]>
+    </t:execOnLoad>
+    <t:execOnUnload><![CDATA[
+# This should unlink matchingItems and all of it's children
+matchingItems.unlink()
+]]>
+    </t:execOnUnload>
+
 </head>
 
 <body onload="toggleLayer('main-newlyavailable'); toggleLayer('main-unwatched'); toggleLayer('main-expiring'); toggleLayer('main-saved'); toggleLayer('show-more-videos-label');toggleLayer('no-new-videos-label'); beginUpdates();">
     
 <!-- TITLE BAR ************************************************************ -->
 <div id="main-titlebar">
-	<div id="main-titlebar-avatar"><img src="***feed getThumbnail***" alt="" style="background-color:#FFFFFF;" /></div>
+	<div id="main-titlebar-avatar"><img src="***feed.getThumbnail()***" alt="" style="background-color:#FFFFFF;" /></div>
 	<div id="main-titlebar-channelname">
-		<h1 t:replaceMarkup="feed getTitle" />
+		<h1 t:replaceMarkup="feed.getTitle()" />
 		<div id="main-titlebar-autodownload">
             <form name="setAuto" >
-                <input type="hidden" name="feed" value="@@@feed getID@@@" />
-                <input type="checkbox" name="automatic" value="1" checked="checked" onClick="javascript:setAutoDownloadableFeed()" t:hideIfNotKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean"/>
-                <input type="checkbox" name="automatic" value="1"                   onClick="javascript:setAutoDownloadableFeed()" t:hideIfKey="feed isAutoDownloadable" t:hideFunctionKey="global filter boolean"/>
+                <input type="hidden" name="feed" value="@@@feed.getID()@@@" />
+                <input type="checkbox" name="automatic" value="1" checked="checked" onClick="javascript:setAutoDownloadableFeed()" t:hideIf="not feed.isAutoDownloadable()" />
+                <input type="checkbox" name="automatic" value="1"                   onClick="javascript:setAutoDownloadableFeed()" t:hideIf="feed.isAutoDownloadable()" />
                 <span class="auto_link" i18n:translate="">Auto Download</span>
             </form>
 		</div>
@@ -70,10 +67,10 @@
 			<p><a href="#" onclick="eventURL('template:feed-settings');">Settings</a></p>
 		</div>
 		<div id="main-titlebar-tasks-recommend">
-		    <p><a href="mailto:?subject=@@@feed getTitle@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed getTitle@@@&quot;. If you don't have the Democracy Player, you can get it here:%0D%0A%0D%0Ahttp://www.getdemocracy.com/%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed getURL@@@" class="recommend_link" i18n:translate="">Recommend</a></p>
+		    <p><a href="mailto:?subject=@@@feed.getTitle()@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed.getTitle()@@@&quot;. If you don't have the Democracy Player, you can get it here:%0D%0A%0D%0Ahttp://www.getdemocracy.com/%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed.getURL()@@@" class="recommend_link" i18n:translate="">Recommend</a></p>
 		</div>
 		<div id="main-titlebar-tasks-search">
-		    <input type="search" placeholder="Search Channel" class="main-titlebar-tasks-search" onfocus="startEditFilter(this,new Array('new-unseen-items','new-items'),new Array('',''),new Array('global filter unviewedItems','global filter viewedItems'),new Array(0,0),new Array('@@@feed getFeedID@@@','@@@feed getFeedID@@@'))" onblur="endEditFilter()" />
+		    <input type="search" placeholder="Search Channel" class="main-titlebar-tasks-search" onfocus="startEditSearch(this)" onblur="endEditSearch()" />
 		</div>
 	</div>
 </div>
@@ -84,31 +81,31 @@
 
     <!-- NEWLY AVAILABLE ************************************************** -->
     <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-newlyavailable');">#&nbsp;</a></div>
-  <!--  <div id="main-channelbar" class="main-channelbar">
+<!--  <div id="main-channelbar" class="main-channelbar">
     	<h1>On This Channel</h1>
-    	<h2 t:updateForView="all-items"><span t:replace="this len" /></h2>
+    	<h2 t:updateForView="allItems"><span t:replace="allItems.len()" /></h2>
     </div>
 -->
 
     <div id="main-newlyavailable">
-        <span t:repeatForView="new-unseen-items">
+        <span t:repeatForView="newUnseenItems">
             <t:includeTemplate filename="download-item" />
         </span>
         <span id="no-new-videos-label">
-        <span t:hideIfViewNotEmpty="new-unseen-items">
+        <span t:hideIf="newUnseenItems.len()>0"  t:updateHideOnView="newUnseenItems">
 
         </span>
         </span>
-        <span t:hideIfViewEmpty="new-items">
+        <span t:hideIf="newItems.len()==0" t:updateHideOnView="newItems">
             <span id="show-more-videos-label" class="main-content">								
 				<a href="javascript:toggleLayer('main-newlyavailable-seen');toggleLayer('show-more-videos-label');toggleLayer('no-new-videos-label');" style="color:#FFFFFF; text-decoration:none;" class="main-notification-nonew">
-    				<div class="main-notification"><span t:updateForView="new-items" class="video-count"><span t:replace="this len" /></span>Videos on this Channel &gt;&gt;</div>
+    				<div class="main-notification"><span t:updateForView="newItems" class="video-count"><span t:replace="newItems.len()" /></span>Videos on this Channel &gt;&gt;</div>
     				<div class="main-notification-right">&nbsp;</div>
     				<br clear="left" />
 				</a>
             </span>
             <span id="main-newlyavailable-seen">
-                <span t:repeatForView="new-items">
+                <span t:repeatForView="newItems">
                     <t:includeTemplate filename="download-item" />
                 </span>
             </span>
@@ -116,14 +113,14 @@
     </div>		
 
     <!-- DOWNLOADS ******************************************************** -->
-    <span t:hideIfViewEmpty="downloading-items">
+    <span t:hideIf="downloadingItems.len()==0" t:updateHideOnView="downloadingItems">
         <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-downloads');">#&nbsp;</a></div>
         <div id="main-channelbar" class="main-channelbar-download">
-        	<h1 t:updateForView="downloading-items"><span t:replace="this len" /> Download<span t:hideIfKey="this len" t:hideFunctionKey="global filter equal" t:hideParameter="1">s</span> in Progress</h1>
+        	<h1 t:updateForView="downloadingItems"><span t:replace="downloadingItems.len()" /> Download<span t:hideIf="downloadingItems.len()==1">s</span> in Progress</h1>
         </div>
 
         <div id="main-downloads">
-            <span t:repeatForView="downloading-items">
+            <span t:repeatForView="downloadingItems">
                 <t:includeTemplate filename="download-item" />
             </span>
         </div>
@@ -131,15 +128,15 @@
     <!-- / DOWNLOADS -->
 
     <!-- UNWATCHED ******************************************************** -->
-    <span t:hideIfViewEmpty="unwatched-items">
+    <span t:hideIf="unwatchedItems.len()==0" t:updateHideOnView="unwatchedItems">
         <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-unwatched');">#&nbsp;</a></div>
         <div id="main-channelbar" class="main-channelbar">
         	<h1>Unwatched</h1>
-        	<h2 t:updateForView="unwatched-items"><span t:replace="this len" /></h2>
+        	<h2 t:updateForView="unwatchedItems"><span t:replace="unwatchedItems.len()" /></h2>
         </div>
 
         <div id="main-unwatched">
-            <span t:repeatForView="unwatched-items">
+            <span t:repeatForView="unwatchedItems">
                 <t:includeTemplate filename="download-item" />
             </span>
         </div>
@@ -147,15 +144,15 @@
     <!-- / UNWATCHED -->
 
     <!-- EXPIRING ********************************************************* -->
-    <span t:hideIfViewEmpty="expiring-items">
+    <span t:hideIf="expiringItems.len()==0" t:updateHideOnView="expiringItems">
         <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-expiring');">#&nbsp;</a></div>
         <div id="main-channelbar" class="main-channelbar">
         	<h1>Watched</h1>
-        	<h2 t:updateForView="expiring-items"><span t:replace="this len" /></h2>
+        	<h2 t:updateForView="expiringItems"><span t:replace="expiringItems.len()" /></h2>
         </div>
 
         <div id="main-expiring">
-            <span t:repeatForView="expiring-items">
+            <span t:repeatForView="expiringItems">
                 <t:includeTemplate filename="download-item" />
             </span>
         </div>
@@ -163,15 +160,15 @@
     <!-- / EXPIRING -->
 
     <!-- SAVED ************************************************************ -->
-    <span t:hideIfViewEmpty="saved-items">
+    <span t:hideIf="savedItems.len()==0" t:updateHideOnView="savedItems">
         <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-saved');">#&nbsp;</a></div>
         <div id="main-channelbar" class="main-channelbar">
         	<h1>Saved</h1>
-        	<h2 t:updateForView="saved-items"><span t:replace="this len" /></h2>
+        	<h2 t:updateForView="savedItems"><span t:replace="savedItems.len()" /></h2>
         </div>
 
         <div id="main-saved">
-            <span t:repeatForView="saved-items">
+            <span t:repeatForView="savedItems">
                 <t:includeTemplate filename="download-item" />
             </span>
         </div>
@@ -180,8 +177,8 @@
 </div>
 <!-- / CHANNEL ITEMS LIST -->
 
-<t:triggerActionOnUnload url="action:markFeedViewed?feed=@@@feed getID@@@" />
-<t:triggerActionOnLoad url="action:updateIcons?feed=@@@feed getID@@@" />
+<t:triggerActionOnUnload url="action:markFeedViewed?feed=@@@feed.getID()@@@" />
+<t:triggerActionOnLoad url="action:updateIcons?feed=@@@feed.getID()@@@" />
 
 </body>
 </html>

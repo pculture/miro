@@ -49,7 +49,7 @@ class VideoDisplay (app.VideoDisplayBase):
     def startVideoTimeUpdate(self):
         self.stopVideoTimeUpdate()
         self.videoUpdateTimeout = gobject.timeout_add(500,
-                app.Controller.instance.frame.updateVideoTime)
+                app.controller.frame.updateVideoTime)
 
     def stopVideoTimeUpdate(self):
         if self.videoUpdateTimeout is not None:
@@ -63,7 +63,7 @@ class VideoDisplay (app.VideoDisplayBase):
         self.activeRenderer.playFromTime(startTime)
         self.startVideoTimeUpdate()
         self.isPlaying = True
-        app.Controller.instance.frame.windowChanger.updatePlayPauseButton()
+        app.controller.frame.windowChanger.updatePlayPauseButton()
 
     def goToBeginningOfMovie(self):
         self.play(0)
@@ -72,7 +72,7 @@ class VideoDisplay (app.VideoDisplayBase):
     def pause(self):
         self.stopVideoTimeUpdate()
         app.VideoDisplayBase.pause(self)
-        app.Controller.instance.frame.windowChanger.updatePlayPauseButton()
+        app.controller.frame.windowChanger.updatePlayPauseButton()
 
     def getWidget(self):
         return self.widget

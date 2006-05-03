@@ -4,7 +4,10 @@
       xmlns:t="http://www.participatorypolitics.org/"
       eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 <t:include filename="dynamic.js" />
-
-<t:staticReplaceMarkup t:replaceData="global guide getHTML" />
+    <t:execOnLoad><![CDATA[
+import app
+guide = app.getSingletonDDBObject(views.guide)
+]]></t:execOnLoad>
+<t:staticReplaceMarkup t:replaceData="guide.getHTML()" />
 
 </html>

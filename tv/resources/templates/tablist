@@ -13,25 +13,25 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <t:include filename="dynamic.js" />
 
-<t:dynamicviews>
- <t:view name="tabs" key="tabs">
-  <t:sort functionkey="global sort tab" parameter="" />
- </t:view>
-</t:dynamicviews>
+    <t:execOnLoad><![CDATA[
+tabs = views.allTabs.filter(lambda x: True)
+]]>
+    </t:execOnLoad>
 
 </head>
 <body onload="beginUpdates();"> 
 
 <div id="sidebar">
   <div id="channels">
-    <span t:hideIfViewNotEmpty="tabs" i18n:translate="">There are no tabs. Something is wrong. Please, contact tech support</span>
-    <ul t:hideIfViewEmpty="tabs">
-      <li t:repeatForView="tabs" onmousedown="eventURL('action:selectTab?id=@@@this id@@@')">
-        <span t:hideIfNotKey="this isFeed" t:hideFunctionKey="global filter boolean">
-        <span t:replaceMarkup="this markup"  t:contextMenu="action:updateFeed?feed=@@@this obj getID@@@|Update Channel Now\n\naction:removeFeed?feed=@@@this obj getID@@@|Remove"/>
+    <ul>
+      <li t:repeatForView="tabs" onmousedown="eventURL('action:selectTab?id=@@@this.id@@@')">
+        <span t:hideIf="not this.isFeed()" >
+          <span t:contextMenu="action:updateFeed?feed=@@@this.obj.getID()@@@|Update Channel Now\n\naction:removeFeed?feed=@@@this.obj.getID()@@@|Remove">
+            <t:includeTemplate filename="feedtab" />
+	  </span>
         </span>
-        <span t:hideIfKey="this isFeed" t:hideFunctionKey="global filter boolean">
-        <span t:replaceMarkup="this markup" t:hideParameter="Feed" />
+        <span t:hideIf="this.isFeed()">
+          <t:includeTemplate filename="statictab" />
         </span>
       </li>
 			<li style="height:40px;">&nbsp;</li>

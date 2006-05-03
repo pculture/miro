@@ -2,7 +2,7 @@
 #
 # Contains runtime template code
 
-from templatehelper import quoteattr, escape, evalKey, toUni, clearEvalCache, attrPattern, rawAttrPattern, resourcePattern, generateId
+from templatehelper import quoteattr, escape, toUni, attrPattern, rawAttrPattern, resourcePattern, generateId
 import resource
 from xhtmltools import urlencode
 
@@ -19,18 +19,24 @@ from xhtmltools import urlencode
 # from filling the template, and a "template handle" whose
 # unlinkTemplate() method you should call when you no longer want to
 # receive Javascript callbacks.
-def fillTemplate(filename, data, domHandler, top = True, onlyBody = False):
+def fillTemplate(filename, domHandler, platform, eventCookie, top = True, onlyBody = False):
     filename = filename.replace('/','.').replace('\\','.').replace('-','_')
     mod = __import__("compiled_templates.%s"%filename)
     mod = getattr(mod,filename)
-    return mod.fillTemplate(data, domHandler)
+#     (out, blah) = mod.fillTemplate(domHandler, platform, eventCookie)
+#     print
+#     print "="*40
+#     print out.read()
+#     print "="*40
+#     print
+    return mod.fillTemplate(domHandler, platform, eventCookie)
 
 # As fillTemplate, but no Javascript calls are made, and no template
 # handle is returned, only the HTML or XML as a string. Effectively,
 # you get a static snapshot of the page at the time the call is made.
-def fillStaticTemplate(filename, data):
+def fillStaticTemplate(filename, platform, eventCookie):
     # This could be somewhat more efficient
-    (tch, handle) = fillTemplate(filename, data, None)
+    (tch, handle) = fillTemplate(filename, None, platform, eventCookie)
     handle.unlinkTemplate()
     return tch.getOutput()
 
@@ -46,7 +52,7 @@ class TemplateError(Exception):
 
 # Class used internally by Handle to track a t:repeatForSet clause.
 class TrackedView:
-    def __init__(self, anchorId, anchorType, view, templateFunc, templateData, parent, name):
+    def __init__(self, anchorId, anchorType, view, templateFunc, parent, name):
         # arguments as Handle.addView(), plus 'parent', a pointer to the Handle
         # that is used to find domHandler and invoke checkHides
         self.anchorId = anchorId
@@ -55,7 +61,6 @@ class TrackedView:
         self.origView = view
         self.view = view.map(IDAssignmentInView(id(self)).mapper)
         self.templateFunc = templateFunc
-        self.templateData = templateData
         self.parent = parent
         self.name = name
 
@@ -69,7 +74,6 @@ class TrackedView:
             #start = time.clock()
             xmls = []
             for x in self.view:
-                clearEvalCache()
                 xmls.append(self.currentXML(x))
             self.addHTMLAtEnd(''.join(xmls))
             self.view.addChangeCallback(self.onChange)
@@ -82,10 +86,7 @@ class TrackedView:
 
     def currentXML(self, item):
         output = []
-        data = self.templateData
-        data['this'] = item.object
-        data['thisView'] = self.name
-        output.append(self.templateFunc(data,item.tid).read())
+        output.append(self.templateFunc(item.object, self.name, item.tid).read())
         try:
 #             print "-----"
 #             print str(''.join(output))
@@ -101,15 +102,12 @@ class TrackedView:
             return ret
 
     def onChange(self,obj,id):
-        clearEvalCache()
         tid = obj.tid
         xmlString = self.currentXML(obj)
         if self.parent.domHandler:
             self.parent.domHandler.changeItem(tid, xmlString)
-        self.parent.checkHides()
 
     def onAdd(self, obj, id):
-        clearEvalCache()
         if self.parent.domHandler:
             next = self.view.getNextID(id) 
             if next == None:
@@ -122,13 +120,9 @@ class TrackedView:
             else:
                 self.parent.domHandler.addItemBefore(self.currentXML(obj), self.view.getObjectByID(next).tid)
 
-        self.parent.checkHides()
-
     def onRemove(self, obj, id):
-        clearEvalCache()
         if self.parent.domHandler:
             self.parent.domHandler.removeItem(obj.tid)
-        self.parent.checkHides()
 
     # Add the HTML for the item at newIndex in the view to the
     # display. It should only be called by initialFillIn()
@@ -138,7 +132,7 @@ class TrackedView:
 
 # Class used internally by Handle to track a t:updateForView clause.
 class UpdateRegion:
-    def __init__(self, anchorId, anchorType, view, templateFunc, templateData, parent, name):
+    def __init__(self, anchorId, anchorType, view, templateFunc, parent, name):
         # arguments as Handle.addView(), plus 'parent', a pointer to the Handle
         # that is used to find domHandler and invoke checkHides
         self.anchorId = anchorId
@@ -146,7 +140,6 @@ class UpdateRegion:
 
         self.view = view
         self.templateFunc = templateFunc
-        self.templateData = templateData
         self.parent = parent
         self.name = name
         self.tid = generateId()
@@ -157,7 +150,6 @@ class UpdateRegion:
     def initialFillIn(self):
         self.view.beginRead()
         try:
-            clearEvalCache()
             if self.parent.domHandler:
                 self.parent.domHandler.addItemBefore(self.currentXML(), self.anchorId)
             self.view.addChangeCallback(self.onChange)
@@ -169,10 +161,7 @@ class UpdateRegion:
 
     def currentXML(self):
         output = []
-        data = self.templateData
-        data['this'] = self.view
-        data['thisView'] = self.name
-        output.append(self.templateFunc(data,self.tid).read())
+        output.append(self.templateFunc(self.name, self.tid).read())
         try:
             return ''.join(output) 
         except UnicodeDecodeError:
@@ -185,82 +174,31 @@ class UpdateRegion:
             return ret
 
     def onChange(self,obj=None,id=None):
-        clearEvalCache()
         xmlString = self.currentXML()
         if self.parent.domHandler:
             self.parent.domHandler.changeItem(self.tid, xmlString)
-        self.parent.checkHides()
-
-# Class used by Handle to track the dynamically filterable, sortable
-# views created by makeNamedView and identified by names. After
-# creation, can be looked up with Handle.findNamedView and the filter
-# and sort changed with setFilter and setSort.
-class NamedView:
-    def __init__(self, name, viewKey, viewIndex, viewIndexValue, filterKey, filterFunc, filterParameter, invertFilter, sortKey, sortFunc, invertSort, data):
-        self.name = name
-        self.data = data
-        self.origView = evalKey(viewKey, data, None, True)
-
-        if viewIndex is not None:
-            self.indexFunc = evalKey(viewIndex, data, None, True)
-            self.indexValue = viewIndexValue
-            self.indexView = self.origView.filterWithIndex(self.indexFunc,self.indexValue)
-        else:
-            self.indexView = self.origView
-
-        if filterKey is None:
-            self.filter = returnTrue
-        else:
-            self.filter = makeFilter(filterKey, filterFunc, filterParameter, invertFilter,self.data)
-        if sortKey is None:
-            self.sort = nullSort
-        else:
-            self.sort = makeSort(sortKey, sortFunc, invertSort, self.data)
-
-        self.filterView = self.indexView.filter(lambda x:self.filter(x))
-
-        self.view = self.filterView.sort(lambda x, y:self.sort(x,y))
-
-    def setFilter(self, fieldKey, funcKey, parameter, invert):
-        if not self.filter:
-            raise TemplateError, "View '%s' was not declared with a filter, so it is not possible to change the filter parameters" % self.name
-        self.filter = makeFilter(fieldKey, funcKey, parameter, invert,self.data)
-        self.indexView.recomputeFilter(self.filterView)
-
-    def setSort(self, fieldKey, funcKey, invert):
-        if not self.sort:
-            raise TemplateError, "View '%s' was not declared with a sort, so it is not possible to change the sort parameters." % self.name
-        self.sort = makeSort(fieldKey, funcKey, invert, self.data)
-        self.indexView.recomputeSort(self.filterView)
-
-    def getView(self):
-        # Internal use.
-        return self.view
-
-    def removeViewFromDB(self):
-        if self.origView is self.indexView:
-            self.origView.removeView(self.filterView)
-        else:
-            self.origView.removeView(self.indexView)
 
 # Object representing a set of registrations for Javascript callbacks when
 # the contents of some set of database views change. One of these Handles
 # is returned whenever you fill a template; when you no longer want to
 # receive Javascript callbacks for a particular filled template, call
 # this object's unlinkTemplate() method.
+#
+# localVars is a dictionary of variables associated with this template
 class Handle:
-    def __init__(self, domHandler, document = None):
+    def __init__(self, domHandler, templateVars, document = None, onUnlink = lambda : None):        
         # 'domHandler' is an object that will receive method calls when
         # dynamic page updates need to be made. 
         self.domHandler = domHandler
+        self.templateVars = templateVars
         self.document = document
-        self.hideConditions = []
-        self.namedViews = {}
+        self.trackedHides = {}
         self.trackedViews = []
         self.updateRegions = []
         self.subHandles = []
         self.triggerActionURLsOnLoad = []
         self.triggerActionURLsOnUnload = []
+        self.onUnlink = onUnlink
         
     def addTriggerActionURLOnLoad(self,url):
         self.triggerActionURLsOnLoad.append(str(url))
@@ -274,52 +212,23 @@ class Handle:
     def getTriggerActionURLsOnUnload(self):
         return self.triggerActionURLsOnUnload
 
-    def addHideIfEmpty(self, id, name, invert):
-        # Make JS calls to hide and show the node with the give id when
-        # the given view becomes true and false, respectively.
-        if invert:
-            self.hideConditions.append((id, name, invert, not self.viewIsEmpty(name)))
-        else:
-            self.hideConditions.append((id, name, invert, self.viewIsEmpty(name)))
+    def getTemplateVariable(self, name):
+        return self.templateVars[name]
 
-    def viewIsEmpty(self, viewName):
-        return self.findNamedView(viewName).getView().len()==0
+    def addUpdateHideOnView(self, id, view, hideFunc, previous):
+        self.trackedHides[id] = (view, hideFunc, previous)
 
-    def checkHides(self):
-        # Internal use.
-        if self.domHandler:
-            for i in range(0,len(self.hideConditions)):
-                (id, name, invert, previous) = self.hideConditions[i]
-                if invert:
-                    current = not self.viewIsEmpty(name)
-                else:
-                    current = self.viewIsEmpty(name)
-                if (current == True) != (previous == True):
-                    self.hideConditions[i] = (id, name, invert, current)
-                    if current:
-                        self.domHandler.hideItem(id)
-                    else:
-                        self.domHandler.showItem(id)
-                        
-    def makeNamedView(self, name, viewKey, viewIndex, viewIndexValue, filterKey, filterFunc, filterParameter, invertFilter, sortKey, sortFunc, invertSort, data):
-        if self.namedViews.has_key(name):
-            raise TemplateError, "More than one view was declared with the name '%s'. Each view must have a different name." % name
-        nv = NamedView(name, viewKey, viewIndex, viewIndexValue, filterKey, filterFunc, filterParameter, invertFilter, sortKey, sortFunc, invertSort, data)
-        self.namedViews[name] = nv
-        return nv.getView()
+    def _checkHide(self, id):
+        (view, hideFunc, previous) = self.trackedHides[id]
+        if hideFunc() != previous:
+            self.trackedHides[id] = (view, hideFunc, not previous)
+            if previous: # If we were hidden, show
+                self.domHandler.showItem(id)
+            else:        # If we were showing it, hide it
+                self.domHandler.hideItem(id)
 
-    def findNamedView(self, name):
-        if self.namedViews.has_key(name):
-            return self.namedViews[name]
-        else:
-            for sh in self.subHandles:
-                try:
-                    return sh.findNamedView(name)
-                except TemplateError:
-                    pass
-        raise TemplateError, "A view named '%s' was referenced but not defined." % name
 
-    def addView(self, anchorId, anchorType, view, templateFunc, data, name):
+    def addView(self, anchorId, anchorType, view, templateFunc, name):
         # Register for JS calls to populate a t:repeatFor. 'view' is the
         # database view to track; 'node' is a DOM node representing the
         # template to fill; 'data' are extra variables to be used in expanding
@@ -332,11 +241,11 @@ class Handle:
         #
         # We take a private copy of 'node', so don't worry about modifying
         # it subsequent to calling this method.
-        tv = TrackedView(anchorId, anchorType, view, templateFunc, data, self, name)
+        tv = TrackedView(anchorId, anchorType, view, templateFunc, self, name)
         self.trackedViews.append(tv)
 
-    def addUpdate(self, anchorId, anchorType, view, templateFunc, data, name):
-        ur = UpdateRegion(anchorId, anchorType, view, templateFunc, data, self, name)
+    def addUpdate(self, anchorId, anchorType, view, templateFunc, name):
+        ur = UpdateRegion(anchorId, anchorType, view, templateFunc, self, name)
         self.updateRegions.append(ur)
 
     def unlinkTemplate(self):
@@ -347,21 +256,28 @@ class Handle:
         except:
             pass
         self.document = None
-        self.hideConditions = []
         self.trackedViews = []
         self.updateRegions = []
         for handle in self.subHandles:
             handle.unlinkTemplate()
-        for view in self.namedViews.values():
-            view.removeViewFromDB()
-    
+        self.onUnlink()
+
     def initialFillIn(self):
-        for tv in self.trackedViews:
-            tv.initialFillIn()
         for ur in self.updateRegions:
             ur.initialFillIn()
+        for tv in self.trackedViews:
+            tv.initialFillIn()
         for handle in self.subHandles:
             handle.initialFillIn()
+        for id in self.trackedHides.keys():
+            (view, hideFunc, previous) = self.trackedHides[id]
+            self.addHideChecks(view, id)
+
+    def addHideChecks(self, view, id):
+        view.addChangeCallback(lambda x,y:self._checkHide(id))
+        view.addAddCallback(lambda x,y:self._checkHide(id))
+        view.addRemoveCallback(lambda x,y:self._checkHide(id))
+        self._checkHide(id)
 
     def addSubHandle(self, handle):
         self.subHandles.append(handle)
@@ -379,6 +295,8 @@ def identityFunc(x):
 def nullSort(x,y):
     return 0
 
+
+
 # View mapping function used to assign ID attributes to records so
 # that we can find them in the page after we generate them if we need
 # to update them.
@@ -394,43 +312,33 @@ class IDAssignmentInView:
         return IDAssignment(obj, self.viewName)
 
 
-def makeFilter(fieldKey, funcKey, parameter, invert, data):
-    func = evalKey(funcKey, data)
-    if not invert:
-        return lambda x: func(evalKey(fieldKey, x), parameter)
-    else:
-        return lambda x: not func(evalKey(fieldKey, x), parameter)
-
-def makeSort(fieldKey, funcKey, invert,data):
-    func = evalKey(funcKey, data)
-    if not invert:
-        return lambda x,y:  func(evalKey(fieldKey,x), evalKey(fieldKey,y)) 
-    else:
-        return lambda x,y: -func(evalKey(fieldKey,x), evalKey(fieldKey,y))
-
 # Returns a quoted, filled version of attribute text
-def quoteAndFillAttr(value,data):
-    return ''.join(('"',quoteattr(fillAttr(value,data)),'"'))
+def quoteAndFillAttr(value, localVars):
+    return ''.join(('"',quoteattr(fillAttr(value, localVars)),'"'))
 
 # Returns a filled version of attribute text
 # Important: because we expand resource: URLs here, instead of defining a
 # URL handler (which is hard to do in IE), you must link to stylesheets via
 # <link .../> rather than <style> @import ... </style> if they are resource:
 # URLs.
-def fillAttr(value, data):
-    match = attrPattern.match(value)
+
+# FIXME: we should parse the attribute values ahead of time
+def fillAttr(_value, _localVars):
+    _l = locals()
+    _l.update(_localVars)
+    match = attrPattern.match(_value)
     if match:
-        return ''.join((match.group(1), urlencode(toUni(evalKey(match.group(2), data, None, True))), match.group(3)))
+        return ''.join((match.group(1), urlencode(toUni(eval(match.group(2)))), match.group(3)))
     else:
-        match = rawAttrPattern.match(value)
+        match = rawAttrPattern.match(_value)
         if match:
-            return ''.join((match.group(1), toUni(evalKey(match.group(2), data, None, True)), match.group(3)))
+            return ''.join((match.group(1), toUni(eval(match.group(2))), match.group(3)))
         else:
-            match = resourcePattern.match(value)
+            match = resourcePattern.match(_value)
             if match:
                 return resource.url(match.group(1))
             else:
-                return value
+                return _value
 
 # This has to be after Handle, so the compiled templates can get
 # access to Handle

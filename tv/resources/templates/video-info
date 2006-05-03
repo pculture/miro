@@ -9,6 +9,13 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link href="resource:css/video-info.css" rel="stylesheet" type="text/css" />
+    <t:execOnLoad><![CDATA[
+this = app.controller.videoInfoItem
+]]></t:execOnLoad>
+    <t:execOnUnload><![CDATA[
+app.controller.videoInfoItem = None
+]]></t:execOnUnload>
+
 </head>
 
 <body>
@@ -17,53 +24,12 @@
 <div id="videodetails-container">
 
 	<div id="videodetails-channeltitle">
-		<h1 t:replace="this getTitle" /> <h2 t:replace="this getFeed getTitle" />
-		<h3 t:replaceMarkup="this getPaymentHTML" />
+		<h1 t:replace="this.getTitle()" /> <h2 t:replace="this.getFeed().getTitle()" />
+		<h3 t:replaceMarkup="this.getPaymentHTML()" />
 	</div>
 	
-	<!--<div id="videodetails-actions">
-		<div id="videodetails-actions-buttons">
-			<a href="#" id="videodetails-actions-bomb"><img src="images/spacer.png" width="11" height="10" alt="" /></a>
-			<a href="#" id="videodetails-actions-mail"><img src="images/spacer.png" width="14" height="10" alt="" /></a>
-			<a href="#" onclick="eventURL('action:expireItem?item=@@@this getID@@@');" id="videodetails-actions-trash"><img src="images/spacer.png" width="11" height="10" alt="" /></a>
-		</div>		
-		<div id="videodetails-actions-expiry-container">
-		  <div id="videodetails-actions-save">
-		    <p><a href="#" onclick="eventURL('action:keepItem?item=@@@this getID@@@');">Save</a></p>
-		  </div>
-		  <div id="videodetails-actions-expiry">
-		    <p>Expires: <span t:replace="this getExpirationTime" /></p>
-		  </div>			
-	  </div>		
-	</div>-->
 
-</div>
-
-    <!--<div id="video_info_area">
-        <div class="left_box">
-            <div>
-                <span class="title" t:replace="this getTitle" />&nbsp;
-                <span t:hideIfKey="this getFeed getLink" t:hideFunctionKey="filter equal">
-                    (<a href="***this getFeed getLink***"><span t:replace="this getFeed getTitle" /></a>)
-                </span>
-                <span t:hideIfNotKey="this getFeed getLink" t:hideFunctionKey="filter equal">
-                    <span t:hideIfKey="this getFeed getTitle" t:hideFunctionKey="filter equal" t:hideParameter="Feedless Videos">
-                        (<span t:replace="this getFeed getTitle" />)
-                    </span>
-                </span>
-            </div>
-            <div><span t:replaceMarkup="this getPaymentHTML" /></div>
-        </div>-->
-
-        <!-- *** Taken out until the 'keep' and 'expire' action work correctly ***
-        <div class="right_box">
-            <span class="report_expire">Expires: <span t:replace="this getExpirationTime" /></span> <a href="action:keepItem?item=@@@this getID@@@">keep</a> <br />
-            <a class="delete_button" href="action:expireItem?item=@@@this getID@@@">&nbsp;</a>  
-        </div>
-        
-    </div>-->
-		
-		
+</div>		
 
 </body>
 

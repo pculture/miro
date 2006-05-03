@@ -9,6 +9,11 @@ from download_utils import grabURL
 from database import DDBObject, defaultDatabase
 from dl_daemon import daemon, command
 
+import views
+import indexes
+
+from download_utils import grabURL, parseURL, cleanFilename
+
 # Returns an HTTP auth object corresponding to the given host, path or
 # None if it doesn't exist
 def findHTTPAuth(host,path,realm = None,scheme = None):
@@ -16,7 +21,7 @@ def findHTTPAuth(host,path,realm = None,scheme = None):
     ret = None
     defaultDatabase.beginRead()
     try:
-        for obj in app.globalViewList['httpauths']:
+        for obj in views.httpauths:
             if (obj.host == host and path.startswith(obj.path) and
                 (realm is None or obj.realm == realm) and
                 (scheme is None or obj.authScheme == scheme)):
@@ -80,13 +85,13 @@ class RemoteDownloader(DDBObject):
 
     @classmethod
     def updateStatus(cls, data):
-        view = app.globalViewList['remoteDownloads'].filterWithIndex(
-            app.globalIndexList['downloadsByDLID'],data['dlid'])
+        view = views.remoteDownloads.filterWithIndex(
+            indexes.downloadsByDLID,data['dlid'])
         try:
             view.resetCursor()
             self = view.getNext()
         finally:   
-            app.globalViewList['remoteDownloads'].removeView(view)
+            views.remoteDownloads.removeView(view)
         if not self is None:
             oldState = self.getState()
             self.status = data
@@ -106,7 +111,7 @@ class RemoteDownloader(DDBObject):
                                             self.url, self.contentType)
         self.dlid = c.send()
         #FIXME: This is sooo slow...
-        app.globalViewList['remoteDownloads'].recomputeIndex(app.globalIndexList['downloadsByDLID'])
+        views.remoteDownloads.recomputeIndex(indexes.downloadsByDLID)
 
     ##
     # Pauses the download.
@@ -247,16 +252,16 @@ def cleanupIncompleteDownloads():
         return
 
     filesInUse = set()
-    app.globalViewList['remoteDownloads'].beginRead()
+    views.remoteDownloads.beginRead()
     try:
-        for downloader in app.globalViewList['remoteDownloads'] :
+        for downloader in views.remoteDownloads:
             if downloader.status.get('state') in ('downloading', 'paused'):
                 filename = downloader.status['filename']
                 if not os.path.isabs(filename):
                     filename = os.path.join(downloadDir, file)
                 filesInUse.add(filename)
     finally:
-        app.globalViewList['remoteDownloads'].endRead()
+        views.remoteDownloads.endRead()
 
     for file in os.listdir(downloadDir):
         file = os.path.join(downloadDir, file)
@@ -267,12 +272,12 @@ def cleanupIncompleteDownloads():
                 pass # maybe a permissions error?  
 
 def restartDownloads():
-    app.globalViewList['remoteDownloads'].beginRead()
+    views.remoteDownloads.beginRead()
     try:
-        for downloader in app.globalViewList['remoteDownloads']:
+        for downloader in views.remoteDownloads:
             downloader.restartIfNeeded()
     finally:
-        app.globalViewList['remoteDownloads'].endRead()
+        views.remoteDownloads.endRead()
 
 
 def startupDownloader():

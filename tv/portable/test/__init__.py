@@ -6,7 +6,7 @@
 import unittest
 
 from test.databasetest import *
-from test.templatetest import *
+#from test.templatetest import *
 from test.fasttypestest import *
 from test.schematest import *
 from test.storedatabasetest import *

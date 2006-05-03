@@ -26,41 +26,6 @@ def quoteattr(orig):
 def escape(orig):
     return unicode(orig).replace('&','&amp;').replace('<','&lt;').replace('>','&gt;')
 
-# 'key' is a key name in the template language. Resolve it relative to 'data.'
-# For example, 'this feed name' might become data['this'].feed.name().
-def evalKey(keyString, indata, originalKey = None, cache = False):
-    global evalCache
-
-    data = indata
-
-    if cache and evalCache.has_key(keyString):
-        return evalCache[keyString]
-
-    # Save the original expression for use in error messages
-    if originalKey is None:
-        originalKey = keyString
-
-    keys = keyString.split()
-
-    for key in keys:
-        try:
-            data = data[key]
-        except:
-            try:
-                data = getattr(data, key)
-            except:
-                return 'Bad Key'
-            if inspect.ismethod(data) or inspect.isfunction(data):
-                data = data()
-    if cache:
-        evalCache[keyString] = data
-    return data
-
-# Clears cache for evalKey
-def clearEvalCache():
-    global evalCache
-    evalCache = {}
-
 def toUni(orig):
     if type(orig) == types.IntType:
         return "%d" % orig

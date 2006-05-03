@@ -12,15 +12,16 @@
         <t:include filename="dynamic.js" />
         <script type="text/javascript" src="resource:templates/search.js" />
 
-        <t:dynamicviews>
-            <t:view name="search-feed" key="global view feeds">
-                <t:filter functionkey="global filter feedID" parameter="@@@feed getID@@@" />
-            </t:view>
-            <t:view name="search-items" key="global view items">
-                <t:filter functionkey="global filter feedItems" parameter="@@@feed getID@@@" />
-                <t:sort functionkey="global sort item" parameter="" />
-            </t:view>
-        </t:dynamicviews>
+    <t:execOnLoad><![CDATA[
+searchFeed = views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search')
+feed = searchFeed[0]
+
+searchItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
+
+
+]]>
+    </t:execOnLoad>
+
     </head>
 
     <body onload="beginUpdates();">
@@ -32,12 +33,12 @@
         	<div id="main-titlebar-tasks" style="width:100%; text-align:center;">
                 <form name="search" onsubmit="return false;">
                     <select name="engines" onChange="updateLastSearchEngine()">
-                        <option t:hideIfNotKey="feed lastEngine" t:hideFunctionKey="global filter equal" t:hideParameter="yahoo" value="yahoo" selected="selected">Yahoo!</option>
-                        <option t:hideIfKey="feed lastEngine" t:hideFunctionKey="global filter equal" t:hideParameter="yahoo" value="yahoo">Yahoo!</option>
-                        <option t:hideIfNotKey="feed lastEngine" t:hideFunctionKey="global filter equal" t:hideParameter="blogdigger" value="blogdigger" selected="selected">Blogdigger</option>
-                        <option t:hideIfKey="feed lastEngine" t:hideFunctionKey="global filter equal" t:hideParameter="blogdigger" value="blogdigger">Blogdigger</option>
+                        <option t:hideIf="not feed.lastEngine == 'yahoo'" value="yahoo" selected="selected">Yahoo!</option>
+                        <option t:hideIf="feed.lastEngine == 'yahoo'" value="yahoo">Yahoo!</option>
+                        <option t:hideIf="not feed.lastEngine == 'blogdigger'" selected="selected" value="blogdigger">Blogdigger</option>
+                        <option t:hideIf="feed.lastEngine == 'blogdigger'" value="blogdigger">Blogdigger</option>
                     </select>
-                    <input type="search" name="query" value="***feed lastQuery***" placeholder="" 
+                    <input type="search" name="query" value="@@@feed.lastQuery@@@" placeholder="" 
                            class="main-titlebar-tasks-search" style="margin:35px 55px 0px 0px; width:200px; font-size: 120%;" 
                            onKeyUp="fillSearch()" onKeyPress="validateSearch(event)" />
                 </form>
@@ -45,18 +46,18 @@
         </div>
 
         <div id="main-container">
-            <div t:updateForView="search-feed">
-                <div class="search-message" t:hideIfNotKey="feed getStatus" t:hideFunctionKey="global filter equal" t:hideParameter="idle-empty">
+            <div t:updateForView="searchFeed">
+                <div class="search-message" t:hideIf="feed.getStatus() != 'idle-empty'">
                     Nothing to display.<br />
                     Enter a query in the search field above.
                 </div>
-                <div class="search-message" t:hideIfNotKey="feed getStatus" t:hideFunctionKey="global filter equal" t:hideParameter="searching">
+                <div class="search-message" t:hideIf="feed.getStatus() != 'searching'">
                     Searching...
                 </div>
             </div>
             
             <div id="search-results">
-                <span t:repeatForView="search-items">
+                <span t:repeatForView="searchItems">
                     <t:includeTemplate filename="download-item" />
                 </span>
             </div>

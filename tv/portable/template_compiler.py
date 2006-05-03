@@ -19,23 +19,17 @@ def genRepeatText(varname, tid, prefix, text):
 
 # Returns text if function does not evaluate to true
 def genRepeatTextHide(varname, tid, prefix, args):
-    (functionKey,ifKey,parameter,invert, text) = args
-    if invert:
-        out = '%sif not evalKey(%s, data)(evalKey(%s, data), %s):\n'%(
-            prefix, repr(functionKey), repr(ifKey), repr(parameter))
-    else:
-        out = '%sif evalKey(%s, data)(evalKey(%s, data), %s):\n'%(
-            prefix, repr(functionKey), repr(ifKey), repr(parameter))
+    (ifValue, text) = args
+    out = '%sif not (%s):\n'%(prefix, ifValue)
     out = '%s%s    %s.write(%s)\n' % (out, prefix, varname, repr(text))
     return out
         
 def genQuoteAttr(varname, tid, prefix, value):
-    return '%s%s.write(quoteattr(urlencode(toUni(evalKey(%s,data)))))\n'%(
-        prefix, varname, repr(value))
+    return '%s%s.write(quoteattr(urlencode(toUni(%s))))\n'%(
+        prefix, varname, value)
 
 def genRawAttr(varname, tid, prefix, value):
-    return '%s%s.write(quoteattr(toUni(evalKey(%s,data))))\n'%(
-        prefix, varname, repr(value))
+    return '%s%s.write(quoteattr(toUni(%s)))\n'%(prefix, varname, value)
 
 # Adds an id attribute to a tag and closes it
 def genRepeatAddIdAndClose(varname, tid, prefix, args):
@@ -43,69 +37,51 @@ def genRepeatAddIdAndClose(varname, tid, prefix, args):
 
 # Evaluates key with data
 def genRepeatEvalEscape(varname, tid, prefix, replace):
-    return '%s%s.write(escape(evalKey(%s,data)))\n' % (
-        prefix, varname, repr(replace))
+    return '%s%s.write(escape(toUni(%s)))\n' % (prefix, varname, replace)
 
 # Evaluates key with data
 def genRepeatEval(varname, tid, prefix, replace):
-    return '%s%s.write(toUni(evalKey(%s,data)))\n' % (
-        prefix, varname, repr(replace))
+    return '%s%s.write(toUni(%s))\n' % (prefix, varname, replace)
 
 # Returns include iff function does not evaluate to true
 def genRepeatIncludeHide(varname, tid, prefix, args):
-    (functionKey,ifKey,parameter,invert, name) = args
+    (ifValue, name) = args
     f = open(resource.path('templates/%s'%name),'r')
     text = f.read()
     f.close()
-    if invert:
-        out = '%sif not evalKey(%s, data)(evalKey(%s, data), %s):\n'%(
-            prefix, repr(functionKey), repr(ifKey), repr(parameter))
-    else:
-        out = '%sif evalKey(%s, data)(evalKey(%s, data), %s):\n'%(
-            prefix, repr(functionKey), repr(ifKey), repr(parameter))
+    out = '%sif not (%s):\n'%(prefix, ifValue)
     out = '%s%s    %s.write(%s)\n' % (out, prefix, varname, repr(text))
     return out
 
-def genHideIfEmpty(varname, tid, prefix, args):
-    (viewName, name, invert, attrs) = args
+def genHideSection(varname, tid, prefix, args):
+    (ifValue, funcList) = args
+    out = '%sif not (%s):\n'%(prefix, ifValue)
+    for (func, newargs) in funcList:
+        out = '%s%s' % (out, func(varname,tid,prefix+'    ',newargs))
+    return out
+
+def genUpdateHideOnView(varname, tid, prefix, args):
+    (viewName, name, ifValue, attrs) = args
     nodeId = generateId()
     
     out = '%s%s.write("<%s")\n'%(prefix, varname,name)
     for key in attrs.keys():
-        if not key in ['t:hideIfViewEmpty','t:hideIfViewNotEmpty','style']:
+        if not key in ['t:hideIf','t:updateHideOnView','style']:
             out = '%s%s%s.write(" %s=")\n'%(out,prefix,varname,key)
-            out = '%s%s%s.write(quoteAndFillAttr("%s",data))\n'%(out,prefix,varname,attrs[key])
+            out = '%s%s%s.write(quoteAndFillAttr("%s",locals()))\n'%(out,prefix,varname,attrs[key])
     out = '%s%s%s.write(" id=\\\"%s\\\"")\n'%(out,prefix,varname,quoteattr(nodeId))
-    
-    if invert:
-        out = '%s%sif handle.findNamedView("%s").getView().len() > 0:\n' % (
-            out, prefix, viewName)
-    else:
-        out = '%s%sif handle.findNamedView("%s").getView().len() == 0:\n' % (
-            out, prefix, viewName)
+
+    out = '%s%s_hideFunc = lambda : %s\n' % (out, prefix, ifValue)
+    out = '%s%s_dynHide = _hideFunc()\n' % (out, prefix)
+    out = '%s%sif _dynHide:\n' % (out, prefix)
     out = '%s%s    %s.write(" style=\\\"display:none\\\">")\n' % (
         out, prefix, varname)
     out = '%s%selse:\n%s    %s.write(">")\n' % (
         out, prefix, prefix, varname)
 
-    out = '%s%shandle.addHideIfEmpty(%s,%s,%s)\n' % (
-        out, prefix, repr(nodeId), repr(viewName), repr(invert))
+    out = '%s%shandle.addUpdateHideOnView(%s,%s,_hideFunc,_dynHide)\n' % (
+        out, prefix, repr(nodeId), viewName)
     return out
-
-def genHideSection(varname, tid, prefix, args):
-    (functionKey,ifKey,parameter,invert, funcList) = args
-    if invert:
-        out = '%sif evalKey(%s, data)(evalKey(%s, data), %s):\n'%(
-            prefix, repr(functionKey), repr(ifKey), repr(parameter))
-    else:
-        out = '%sif not evalKey(%s, data)(evalKey(%s, data), %s):\n'%(
-            prefix, repr(functionKey), repr(ifKey), repr(parameter))
-    for (func, newargs) in funcList:
-        out = '%s%s' % (out, func(varname,tid,prefix+'    ',newargs))
-    return out
-
-def genQuoteAndFillAttr(varname, tid, prefix, value):
-    return '%s%s.write(quoteAndFillAttr(%s,data))\n' % (prefix, varname, repr(value))
 
 from distutils import dep_util
 from xml import sax
@@ -241,8 +217,14 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         fileobj.write('from template import Handle, fillAttr, quoteAndFillAttr\n')
         fileobj.write('from IOBuffer import IOBuffer\n')
         fileobj.write('from xhtmltools import urlencode\n')
-        fileobj.write('from templatehelper import quoteattr, escape, evalKey, toUni\n')
-        fileobj.write('def fillTemplate(data, domHandler):\n')
+        fileobj.write('from templatehelper import quoteattr, escape, toUni\n')
+        fileobj.write('import app\n')
+        fileobj.write('import views\n')
+        fileobj.write('import sorts\n')
+        fileobj.write('import indexes\n')
+        fileobj.write('import filters\n')
+        fileobj.write('import resource\n')
+        fileobj.write('def fillTemplate(domHandler, dtvPlatform, eventCookie):\n')
         self.handle.render(fileobj)
         fileobj.write('\n\n    out = IOBuffer()\n')
         
@@ -263,14 +245,15 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             return ''
 
     def startDocument(self):
+        print "Starting compile"
         self.elementStack = []
-        self.inDynamicViews = False
-        self.inView = False
         self.inInclude = False
         self.inRepeatView = False
         self.inUpdateView = False
         self.inReplace = False
         self.inStaticReplace = False
+        self.inExecOnUnload = False
+        self.inExecOnLoad = False
         self.repeatDepth = 0
         self.replaceDepth = 0
         self.hiding = False
@@ -293,6 +276,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.repeatText = []
 
     def endDocument(self):
+        print "Ending compile"
         self.endText()
 
     def startElement(self,name, attrs):
@@ -304,14 +288,40 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             pass
         elif self.inReplace or self.inStaticReplace:
             pass
-        elif 't:hideIfViewEmpty' in attrs.keys() or 't:hideIfViewNotEmpty' in attrs.keys():
-            if 't:hideIfViewEmpty' in attrs.keys():
-                viewName = attrs['t:hideIfViewEmpty']
-                ifInvert = False
+        elif self.inRepeatView or self.inUpdateView:
+            if attrs.has_key('t:hideIf'):
+                ifValue = attrs['t:hideIf']
+
+                if attrs.has_key('t:updateHideOnView'):
+                    print "Warning: t:updateHideOnView is unsupported inside a repeat view"
+                self.startRepeatHiding(ifValue)
+
+            if name == 't:includeTemplate':
+                self.addRepeatFillTemplate(attrs['filename'])
+            elif name == 't:include':
+                self.addRepeatInclude(attrs['filename'])
             else:
-                viewName = attrs['t:hideIfViewNotEmpty']
-                ifInvert = True
-            self.addHideIfEmpty(viewName, name, ifInvert, attrs)
+                self.addRepeatText('<%s'%name)
+                for key in attrs.keys():
+                    if not (key in ['t:replace','t:replaceMarkup','t:hideIf',
+                                    'style']):
+                        self.addRepeatAttr(key,attrs[key])
+
+                self.addRepeatText('>')
+                try:
+                    replace = attrs['t:replace']
+                    self.addRepeatEvalEscape(replace)
+                    self.inReplace = True
+                    self.replaceDepth = self.depth
+                except KeyError:
+                    pass
+                try:
+                    replace = attrs['t:replaceMarkup']
+                    self.addRepeatEval(replace)
+                    self.inReplace = True
+                    self.replaceDepth = self.depth
+                except KeyError:
+                    pass
         elif 't:repeatForView' in attrs.keys():
             self.inRepeatView = True
             self.repeatDepth = self.depth
@@ -335,81 +345,19 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             self.addRepeatAddIdAndClose()
 
             self.repeatName = attrs['t:updateForView']
-
-        elif self.inRepeatView or self.inUpdateView:
-            if attrs.has_key('t:hideIfKey') or attrs.has_key('t:hideIfNotKey'):
-                try:
-                    ifKey = attrs['t:hideIfKey']
-                    ifInvert = False
-                except KeyError:
-                    ifKey = attrs['t:hideIfNotKey']
-                    ifInvert = True
-                functionKey = attrs['t:hideFunctionKey']
-                try:
-                    parameter = attrs['t:hideParameter']
-                except KeyError:
-                    parameter = ''
-                hide = True
+        elif 't:hideIf' in attrs.keys():
+            ifValue = attrs['t:hideIf']
+            if attrs.has_key('t:updateHideOnView'):
+                self.addUpdateHideOnView(attrs['t:updateHideOnView'],name, ifValue, attrs)
             else:
-                hide = False
+                self.startHiding(ifValue)
 
-            if name == 't:includeTemplate':
-                if hide:
-                    self.addRepeatIncludeHide(functionKey,ifKey,parameter,ifInvert,attrs['filename'])
-                else:
-                    self.addRepeatFillTemplate(attrs['filename'])
-            elif name == 't:include':
-                if hide:
-                    self.addRepeatIncludeHide(functionKey,ifKey,parameter,ifInvert,attrs['filename'])
-                else:
-                    self.addRepeatInclude(attrs['filename'])
-            else:
-                self.addRepeatText('<%s'%name)
+                self.addText('<%s'%name)
+
                 for key in attrs.keys():
-                    if not (key in ['t:replace','t:replaceMarkup','t:hideIfKey',
-                               't:hideIfNotKey','t:hideFunctionKey',
-                               't:hideParameter','style']):
-                        self.addRepeatAttr(key,attrs[key])
-
-                if hide:
-                    #self.addRepeatText(' style="display:none"')
-                    self.addRepeatTextHide(functionKey,ifKey,parameter,ifInvert,' style="display:none"')
-
-                self.addRepeatText('>')
-                try:
-                    replace = attrs['t:replace']
-                    self.addRepeatEvalEscape(replace)
-                    self.inReplace = True
-                    self.replaceDepth = self.depth
-                except KeyError:
-                    pass
-                try:
-                    replace = attrs['t:replaceMarkup']
-                    self.addRepeatEval(replace)
-                    self.inReplace = True
-                    self.replaceDepth = self.depth
-                except KeyError:
-                    pass
-        elif 't:hideIfKey' in attrs.keys() or 't:hideIfNotKey' in attrs.keys():
-            try:
-                ifKey = attrs['t:hideIfKey']
-                ifInvert = False
-            except KeyError:
-                ifKey = attrs['t:hideIfNotKey']
-                ifInvert = True
-            functionKey = attrs['t:hideFunctionKey']
-            try:
-                parameter = attrs['t:hideParameter']
-            except KeyError:
-                parameter = ''
-            self.startHiding(functionKey,ifKey,parameter,ifInvert)
-
-            self.addText('<%s'%name)
-            #self.addTextHide(functionKey,ifKey,parameter,ifInvert, ' style="display:none"')
-            for key in attrs.keys():
-                if not (key in ['t:hideIfKey','t:hideIfNotKey','t:hideFunctionKey','t:hideParameter']):
-                    self.addAttr(key,attrs[key])
-            self.addText('>')
+                    if (key not in ['t:hideIf']):
+                        self.addAttr(key,attrs[key])
+                self.addText('>')
 
         elif 't:replace' in attrs.keys():
                 self.addText('<%s'%name)
@@ -431,45 +379,12 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                 self.addEval(replace)
                 self.inReplace = True
                 self.replaceDepth = self.depth      
-        elif name == 't:dynamicviews':
-            self.inDynamicViews = True
-        elif name == 't:view' and self.inDynamicViews:
-            self.viewName = attrs['name']
-            self.viewKey = attrs['key']
-            self.viewIndex = None
-            self.viewIndexValue = None
-            self.filterKey = None
-            self.filterInvert = False
-            self.filterFunc = None
-            self.filterParam = None
-            self.sortKey = None
-            self.sortFunc = None
-            self.sortInvert = False
-            self.inView = True
-        elif name == 't:indexFilter' and self.inView:
-            self.viewIndex = attrs['index']
-            self.viewIndexValue = attrs['value']
-        elif name == 't:filter' and self.inView:
-            try:
-                self.filterKey = attrs['key']
-            except KeyError:
-                self.filterKey = ''
-            try:
-                self.filterInvert = not (attrs['invert'] in ['','false','0'])
-            except KeyError:
-                pass
-            self.filterFunc = attrs['functionkey']
-            self.filterParam = attrs['parameter']
-        elif name  == 't:sort' and self.inView:
-            try:
-                self.sortKey = attrs['key']
-            except KeyError:
-                self.sortKey = ''
-            try:
-                self.sortInvert = not (attrs['invert'] in ['','false','0'])
-            except KeyError:
-                pass
-            self.sortFunc = attrs['functionkey']
+        elif name == 't:execOnUnload':
+            self.inExecOnUnload = True
+            self.code = ''
+        elif name == 't:execOnLoad':
+            self.inExecOnLoad = True
+            self.code = ''
         elif name == 't:include':
             f = open(resource.path('templates/%s'%attrs['filename']),'r')
             html = f.read()
@@ -512,9 +427,17 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             pass
         elif name == 't:includeTemplate':
             pass
+        elif name == 't:triggerActionOnUnload':
+            pass
+        elif name == 't:triggerActionOnLoad':
+            pass
         elif self.hiding and self.depth == self.hideDepth[-1]:
-            self.addText('</%s>'%name)
-            self.endHiding()
+            if self.inRepeatView or self.inUpdateView:
+                self.addRepeatText('</%s>'%name)
+                self.endRepeatHiding()
+            else:
+                self.addText('</%s>'%name)
+                self.endHiding()
         elif self.inReplace and self.depth == self.replaceDepth:
             if self.inRepeatView or self.inUpdateView:
                 self.addRepeatText('</%s>'%name)
@@ -538,15 +461,12 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             self.handle.addUpdate(repeatId, 'nextSibling', self.repeatList, self.repeatName)
         elif self.inRepeatView or self.inUpdateView:
             self.addRepeatText('</%s>'%name)
-        elif name == 't:dynamicviews':
-            self.inDynamicViews = False
-        elif name == 't:view':
-            self.inView = False
-            self.handle.makeNamedView(self.viewName, self.viewKey,
-                                 self.viewIndex, self.viewIndexValue,
-                                 self.filterKey, self.filterFunc, 
-                                 self.filterParam, self.filterInvert,
-                                 self.sortKey, self.sortFunc, self.sortInvert)
+        elif name == 't:execOnUnload':
+            self.inExecOnUnload = False
+            self.handle.addExecOnUnload(self.code)
+        elif name == 't:execOnLoad':
+            self.inExecOnLoad = False
+            self.handle.addExecOnLoad(self.code)
         else:
             self.addText('</%s>'%name)
         self.depth = self.depth - 1
@@ -558,6 +478,8 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             pass
         elif self.inRepeatView or self.inUpdateView:
             self.addRepeatTextEscape(data)
+        elif self.inExecOnUnload or self.inExecOnLoad:
+            self.code += data
         else:
             self.addTextEscape(data)
 
@@ -570,9 +492,12 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
     def addRepeatTextEscape(self, text):
         self.repeatText.append( escape(text))
 
-    def addRepeatTextHide(self,functionKey,ifKey,parameter,invert, text):
+    def addRepeatTextHide(self,ifValue,text):
         self.endRepeatText()
-        self.repeatList.append((genRepeatTextHide,(functionKey,ifKey,parameter,invert,text)))
+        if self.hiding:
+            self.hidingList[-1].append((genRepeatTextHide,(ifValue,text)))
+        else:
+            self.repeatList.append((genRepeatTextHide,(ifValue,text)))
 
     def addRepeatAttr(self, attr, value):
         match = attrPattern.match(value)
@@ -581,7 +506,10 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             while match:
                 self.addRepeatText(quoteattr(match.group(1)))
                 self.endRepeatText()
-                self.repeatList.append((genQuoteAttr,match.group(2)))
+                if self.hiding:
+                    self.hidingList[-1].append((genQuoteAttr,match.group(2)))
+                else:
+                    self.repeatList.append((genQuoteAttr,match.group(2)))
                 value = match.group(3)
                 match = attrPattern.match(value)
             self.addRepeatText('%s"' % quoteattr(value))
@@ -592,17 +520,25 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                 while match:
                     self.addRepeatText(quoteattr(match.group(1)))
                     self.endRepeatText()
-                    self.repeatList.append((genRawAttr,match.group(2)))
+                    if self.hiding:
+                        self.hidingList[-1].append((genRawAttr,match.group(2)))
+                    else:
+                        self.repeatList.append((genRawAttr,match.group(2)))
                     value = match.group(3)
                     match = rawAttrPattern.match(value)
                 self.addRepeatText('%s"' % quoteattr(value))
             else:
-                self.addRepeatText(' %s=' % attr)
-                self.addRepeatQuoteAndFill(value)
-
-    def addRepeatQuoteAndFill(self, value):
-        self.endRepeatText()
-        self.repeatList.append((genQuoteAndFillAttr, value))
+                self.addRepeatText(' %s="' % attr)
+                match = resourcePattern.match(value)
+                if match:
+                    self.endRepeatText()
+                    if self.hiding:
+                        self.hidingList[-1].append((genRepeatEval,'resource.url(%s)'%repr(match.group(1))))
+                    else:
+                        self.repeatList.append((genRepeatEval,'resource.url(%s)'%repr(match.group(1))))
+                else:
+                    self.addRepeatText(quoteattr(value))
+                self.addRepeatText('"')
 
     def addRepeatInclude(self, template):
         f = open(resource.path('templates/%s'%template),'r')
@@ -610,28 +546,53 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         f.close()
         self.addRepeatText(html)
 
-    def addRepeatIncludeHide(self,functionKey,ifKey,parameter,invert, name):
+    def addRepeatIncludeHide(self,ifValue, name):
         self.endRepeatText()
-        self.repeatList.append((genRepeatIncludeHide,(functionKey,ifKey,parameter,invert, name)))
+        if self.hiding:
+            self.hidingList[-1].append((genRepeatIncludeHide,(ifValue, name)))
+        else:
+            self.repeatList.append((genRepeatIncludeHide,(ifValue, name)))
 
     def addRepeatFillTemplate(self, name):
         self.endRepeatText()
         print "  compiling '%s' subtemplate" % name
-        (tch, handle) = compileTemplate(name, False, True)
+        (tcc, handle) = compileTemplate(name, False, True)
         self.handle.addSubHandle(handle)
-        self.repeatList.extend(tch.getOperationList())
+        if self.hiding:
+            self.hidingList[-1].extend(tcc.getOperationList())
+        else:
+            self.repeatList.extend(tcc.getOperationList())
+
+    def addFillTemplate(self, name):
+        self.endText()
+        print "  compiling '%s' subtemplate" % name
+        (tcc, handle) = compileTemplate(name, False, True)
+        self.handle.addSubHandle(handle)
+        if self.hiding:
+            self.hidingList[-1].extend(tcc.getOperationList())
+        else:
+            self.outputList.extend(tcc.getOperationList())
 
     def addRepeatAddIdAndClose(self):
         self.endRepeatText()
-        self.repeatList.append((genRepeatAddIdAndClose,None))
+        if self.hiding:
+            self.hidingList[-1].append((genRepeatAddIdAndClose,None))
+        else:
+            self.repeatList.append((genRepeatAddIdAndClose,None))
 
     def addRepeatEval(self,replace):
         self.endRepeatText()
-        self.repeatList.append((genRepeatEval,replace))
+        if self.hiding:
+            self.hidingList[-1].append((genRepeatEval,replace))
+        else:
+            self.repeatList.append((genRepeatEval,replace))
 
     def addRepeatEvalEscape(self,replace):
         self.endRepeatText()
-        self.repeatList.append((genRepeatEvalEscape,replace))
+        if self.hiding:
+            self.hidingList[-1].append((genRepeatEvalEscape,replace))
+        else:
+            self.repeatList.append((genRepeatEvalEscape,replace))
 
     def resetRepeat(self):
         self.repeatList = []
@@ -639,40 +600,65 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
 
     def endRepeatText(self):
         if len(self.repeatText) > 0:
-            self.repeatList.append((genRepeatText,''.join(self.repeatText)))
+            if self.hiding:
+                self.hidingList[-1].append((genRepeatText,''.join(self.repeatText)))
+            else:
+                self.repeatList.append((genRepeatText,''.join(self.repeatText)))
         self.repeatText = []
 
-    def startHiding(self,functionKey,ifKey,parameter,ifInvert):
+    def startHiding(self,ifValue):
         self.endText()
-        self.hidingParams.append((functionKey,ifKey,parameter,ifInvert))
+        self.hidingParams.append(ifValue)
+        self.hidingList.append([])
+        self.hideDepth.append(self.depth)
+        self.hiding = True
+
+    def startRepeatHiding(self,ifValue):
+        self.endRepeatText()
+        self.hidingParams.append(ifValue)
         self.hidingList.append([])
         self.hideDepth.append(self.depth)
         self.hiding = True
 
     def endHiding(self):
         self.endText()
-        (functionKey,ifKey,parameter,invert) = self.hidingParams.pop()
+        ifValue = self.hidingParams.pop()
         funcList = self.hidingList.pop()
         self.hideDepth.pop()
         self.hiding = len(self.hidingList) > 0
         if self.hiding:
-            self.hidingList[-1].append((genHideSection, (functionKey, ifKey, parameter, invert, funcList)))
+            self.hidingList[-1].append((genHideSection, (ifValue, funcList)))
         else:
-            self.outputList.append((genHideSection, (functionKey, ifKey, parameter, invert, funcList)))
+            self.outputList.append((genHideSection, (ifValue, funcList)))
+
+    def endRepeatHiding(self):
+        self.endRepeatText()
+        ifValue = self.hidingParams.pop()
+        funcList = self.hidingList.pop()
+        self.hideDepth.pop()
+        self.hiding = len(self.hidingList) > 0
+        if self.hiding:
+            self.hidingList[-1].append((genHideSection, (ifValue, funcList)))
+        else:
+            self.repeatList.append((genHideSection, (ifValue, funcList)))
+
 
     def addText(self, text):
         self.outputText.append( text)
 
+    def addTextHide(self,ifValue,text):
+        self.endText()
+        self.outputList.append((genRepeatTextHide,(ifValue,text)))
+
     def addTextEscape(self, text):
         self.outputText.append( escape(text))
 
-    def addHideIfEmpty(self, view, name, invert, attrs):
+    def addUpdateHideOnView(self, viewName, name, ifValue, attrs):
         self.endText()
         if self.hiding:
-            self.hidingList[-1].append( (genHideIfEmpty,(view, name, invert, attrs)))
+            self.hidingList[-1].append( (genUpdateHideOnView,(viewName, name, ifValue, attrs)))
         else:
-            self.outputList.append( (genHideIfEmpty,(view, name, invert, attrs)))
-
+            self.outputList.append( (genUpdateHideOnView,(viewName, name, ifValue, attrs)))
 
     def addAttr(self, attr, value):
         match = attrPattern.match(value)
@@ -703,44 +689,17 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                     match = rawAttrPattern.match(value)
                 self.addText('%s"' % quoteattr(value))
             else:
-                self.addText(' %s=' % attr)
-                self.addQuoteAndFill(value)
-
-    def addQuoteAndFill(self, value):
-        self.endText()
-        if self.hiding:
-            self.hidingList[-1].append((genQuoteAndFillAttr, value))
-        else:
-            self.outputList.append((genQuoteAndFillAttr, value))
-
-    def addInclude(self, template):
-        f = open(resource.path('templates/%s'%template),'r')
-        html = f.read()
-        f.close()
-        self.addText(html)
-
-    def addIncludeHide(self,functionKey,ifKey,parameter,invert, name):
-        self.endText()
-        if self.hiding:
-            self.hidingList[-1].append((genRepeatIncludeHide,(functionKey,ifKey,parameter,invert, name)))
-        else:
-            self.outputList.append((genRepeatIncludeHide,(functionKey,ifKey,parameter,invert, name)))
-
-    def addFillTemplate(self, name):
-        self.endText()
-        (tch, handle) = compileTemplate(name, False, True)
-        self.handle.addSubHandle(handle)
-        if self.hiding:
-            self.hidingList[-1].extend(tch.getOperationList())
-        else:
-            self.outputList.extend(tch.getOperationList())
-
-    def addAddIdAndClose(self):
-        self.endText()
-        if self.hiding:
-            self.hidingList[-1].append((genRepeatAddIdAndClose,None))
-        else:
-            self.outputList.append((genRepeatAddIdAndClose,None))
+                self.addText(' %s="' % attr)
+                match = resourcePattern.match(value)
+                if match:
+                    self.endText()
+                    if self.hiding:
+                        self.hidingList[-1].append((genRepeatEval,'resource.url(%s)'%repr(match.group(1))))
+                    else:
+                        self.outputList.append((genRepeatEval,'resource.url(%s)'%repr(match.group(1))))
+                else:
+                    self.addText(quoteattr(value))
+                self.addText('"')
 
     def addEval(self,replace):
         self.endText()
@@ -776,13 +735,13 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
 # Handle
 class MetaHandle:
     def __init__(self):
-        self.hideConditions = []
-        self.namedViews = {}
         self.trackedViews = []
         self.updateRegions = []
         self.subHandles = []
         self.triggerActionURLsOnLoad = []
         self.triggerActionURLsOnUnload = []
+        self.execOnUnload = None
+        self.execOnLoad = None
         
     def addTriggerActionURLOnLoad(self,url):
         self.triggerActionURLsOnLoad.append(str(url))
@@ -796,14 +755,11 @@ class MetaHandle:
     def getTriggerActionURLsOnUnload(self):
         return self.triggerActionURLsOnUnload
 
-    def addHideIfEmpty(self, id, name, invert):
-        self.hideConditions.append((id, name, invert))
+    def addExecOnUnload(self, code):
+        self.execOnUnload = code
 
-    def makeNamedView(self, name, viewKey, viewIndex, viewIndexValue, filterKey, filterFunc, filterParameter, invertFilter, sortKey, sortFunc, invertSort):
-        if self.namedViews.has_key(name):
-            raise TemplateError, "More than one view was declared with the name '%s'. Each view must have a different name." % name
-        nv = (viewKey, viewIndex, viewIndexValue, filterKey, filterFunc, filterParameter, invertFilter, sortKey, sortFunc, invertSort)
-        self.namedViews[name] = nv
+    def addExecOnLoad(self, code):
+        self.execOnLoad = code
 
     def addView(self, anchorId, anchorType, templateFuncs, name):
         # Register for JS calls to populate a t:repeatFor. 'view' is the
@@ -832,17 +788,27 @@ class MetaHandle:
         prefix = '    '
         ending = "\n"
         
-        fileobj.write('%s# Start of handle%s' % (prefix, ending))
-        fileobj.write('%s%s = Handle(domHandler)%s' % (prefix, varname, ending))
-        for name in self.namedViews:
-            (viewKey, viewIndex, viewIndexValue, filterKey, filterFunc, filterParameter, invertFilter, sortKey, sortFunc, invertSort) = self.namedViews[name]
-            fileobj.write('%s%s.makeNamedView(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,data)%s' % (prefix, varname, repr(name),repr(viewKey),repr(viewIndex),fillIfNotNone(viewIndexValue),repr(filterKey),repr(filterFunc),fillIfNotNone(filterParameter),repr(invertFilter),repr(sortKey),repr(sortFunc),str(invertSort),ending))
+        fileobj.write('%s# Start of handle%s%s' % (prefix, ending, ending))
 
+        fileobj.write('%s# Start user code%s' % (prefix, ending))
+        if self.execOnLoad is not None:
+            for line in self.execOnLoad.splitlines():
+                fileobj.write('%s%s%s' % (prefix, line, ending))
+        if self.execOnUnload is not None:
+            fileobj.write('%s%sdef _execOnUnload():%s' % (ending, prefix, ending))
+            for line in self.execOnUnload.splitlines():
+                fileobj.write('%s    %s%s' % (prefix, line, ending))
+        fileobj.write('%s# End user code%s%s' % (prefix, ending, ending))
+
+        if self.execOnUnload is not None:
+            fileobj.write('%s%s = Handle(domHandler, locals(), onUnlink = _execOnUnload)%s%s' % (prefix, varname, ending, ending))
+        else:
+            fileobj.write('%s%s = Handle(domHandler, locals(), onUnlink = lambda:None)%s%s' % (prefix, varname, ending, ending))
         count = 0
         for tv in self.trackedViews:
             (anchorId, anchorType, templateFuncs, name) = tv
             repFunc = "rep_%s_%s" % (count, varname)
-            fileobj.write('%sdef %s(data, tid):%s' % (prefix, repFunc,ending))
+            fileobj.write('%sdef %s(this, viewName, tid):%s' % (prefix, repFunc,ending))
             fileobj.write('%s    out = IOBuffer()%s' % (prefix, ending))
             for count2 in range(len(templateFuncs)):
                 (func, args) = templateFuncs[count2]
@@ -850,13 +816,13 @@ class MetaHandle:
             fileobj.write('%s    out.close()%s' % (prefix, ending))
             fileobj.write('%s    return out%s' % (prefix, ending))
 
-            fileobj.write('%s%s.addView(%s,%s,%s.findNamedView(%s).getView(),%s, data, %s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),varname,repr(name),repFunc,repr(name),ending))
+            fileobj.write('%s%s.addView(%s,%s,%s,%s, %s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),name,repFunc,repr(name),ending))
             count += 1
 
         for ur in self.updateRegions:
             (anchorId, anchorType, templateFuncs, name) = ur
             upFunc = "up_%s_%s" % (count, varname)
-            fileobj.write('%sdef %s(data, tid):%s' % (prefix, upFunc,ending))
+            fileobj.write('%sdef %s(viewName, tid):%s' % (prefix, upFunc,ending))
             fileobj.write('%s    out = IOBuffer()%s' % (prefix, ending))
             for count2 in range(len(templateFuncs)):
                 (func, args) = templateFuncs[count2]
@@ -864,19 +830,15 @@ class MetaHandle:
             fileobj.write('%s    out.close()%s' % (prefix, ending))
             fileobj.write('%s    return out%s' % (prefix, ending))
 
-            fileobj.write('%s%s.addUpdate(%s,%s,%s.findNamedView(%s).getView(),%s, data, %s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),varname,repr(name),upFunc,repr(name),ending))
+            fileobj.write('%s%s.addUpdate(%s,%s,%s,%s, %s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),name,upFunc,repr(name),ending))
             count += 1
             
-        for cond in self.hideConditions:
-            (id, name, invert) = cond
-            fileobj.write('%s%s.addHideIfEmpty(%s,%s,%s)%s' % (prefix, varname, repr(id), repr(name), repr(invert), ending))
-
         for action in self.triggerActionURLsOnLoad:
-            fileobj.write('%s%s.addTriggerActionURLOnLoad(fillAttr(%s,data))%s' %
+            fileobj.write('%s%s.addTriggerActionURLOnLoad(fillAttr(%s,locals()))%s' %
                           (prefix, varname, repr(action), ending))
 
         for action in self.triggerActionURLsOnUnload:
-            fileobj.write('%s%s.addTriggerActionURLOnUnload(fillAttr(%s,data))%s' %
+            fileobj.write('%s%s.addTriggerActionURLOnUnload(fillAttr(%s,locals()))%s' %
                           (prefix, varname, repr(action), ending))
 
         for subHandle in range(len(self.subHandles)):
@@ -890,4 +852,4 @@ def fillIfNotNone(obj):
     if obj is None:
         return repr(None)
     else:
-        return "fillAttr(%s,data)" % repr(obj)
+        return "fillAttr(%s,locals())" % repr(obj)

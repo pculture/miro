@@ -10,13 +10,30 @@
 <link href="resource:css/main.css" rel="stylesheet" type="text/css" />
 <t:include filename="dynamic.js" />
 <t:include filename="settings.js" />
+    <t:execOnLoad><![CDATA[
+global searchFilter
+searchFilter = lambda x: filters.matchingItems(x, None)
 
-<t:dynamicviews>
- <t:view name="watchable-items" key="global view items">
-  <t:filter functionkey="global filter watchableItems" parameter="" />
-  <t:sort functionkey="global sort item" parameter="" />
- </t:view>
-</t:dynamicviews>
+watchableItems = views.items.filter(filters.watchableItems)
+
+matchingItems = watchableItems.filter(lambda x:searchFilter(x))
+libraryItems = matchingItems.sort(sorts.item)
+
+def updateSearchString(newSearch):
+    global searchFilter
+    if len(newSearch) == 0:
+        searchFilter = lambda x: filters.matchingItems(x, None)
+    else:
+        searchFilter = lambda x: filters.matchingItems(x, newSearch)
+    watchableItems.recomputeFilter(matchingItems)
+
+]]>
+    </t:execOnLoad>
+    <t:execOnUnload><![CDATA[
+# This should unlink matchingItems and all of it's children
+watchableItems.unlink()
+]]>
+    </t:execOnUnload>
 
 </head>
 
@@ -30,7 +47,7 @@
 	</div>
 	<div id="main-titlebar-tasks" style="width:100%; text-align:center;">
 		<div id="main-titlebar-tasks-search">
-		    <input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search"  style="margin:35px 55px 0px 0px; width:200px; font-size: 120%;" onfocus="startEditFilter(this,new Array('watchable-items'),new Array(''),new Array('global filter watchableItems'),new Array(0), new Array(''))" onblur="endEditFilter()" />
+		    <input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search"  style="margin:35px 55px 0px 0px; width:200px; font-size: 120%;" onfocus="startEditSearch(this)" onblur="endEditSearch()" />
 		</div>
 	</div>
 </div>
@@ -40,7 +57,7 @@
 
 	<!-- VIDEOS ************************************************** -->
 	<div>
-    	<span t:repeatForView="watchable-items">
+    	<span t:repeatForView="libraryItems">
     	<t:includeTemplate filename="download-item" />
    		</span>
 	</div>

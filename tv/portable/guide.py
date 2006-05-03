@@ -1,5 +1,5 @@
 from database import DDBObject
-from downloader import grabURL
+from download_utils import grabURL
 from scheduler import ScheduleEvent
 from xhtmltools import urlencode
 from copy import copy

@@ -189,7 +189,6 @@ class MainFrame:
     def selectDisplay(self, newDisplay, area):
         """Install the provided 'newDisplay' in the requested area"""
 
-
         if area == self.collectionDisplay:
             print "TODO: Collection Display not implemented on gtk/x11"
             return
@@ -210,7 +209,7 @@ class MainFrame:
         if area == self.mainDisplay:
             watchable = newDisplay.getWatchable()
             if watchable:
-                app.Controller.instance.playbackController.configure(watchable)
+                app.controller.playbackController.configure(watchable)
 
             if isinstance(newDisplay, VideoDisplay):
                 self.windowChanger.changeState(self.windowChanger.VIDEO)
@@ -239,7 +238,7 @@ class MainFrame:
 
     @gtkSyncMethod
     def updateVideoTime(self):
-        renderer = app.Controller.instance.videoDisplay.activeRenderer
+        renderer = app.controller.videoDisplay.activeRenderer
         videoTimeScale = self.widgetTree['video-time-scale']
         if renderer and not videoTimeScale.buttonsDown:
             try:

@@ -12,11 +12,18 @@
 
     <t:include filename="dynamic.js" />
     <t:include filename="external.js" />
+    <t:execOnLoad><![CDATA[
+this = app.controller.videoInfoItem
+]]></t:execOnLoad>
+    <t:execOnUnload><![CDATA[
+app.controller.videoInfoItem = None
+]]></t:execOnUnload>
+
 </head>
 
 <body>
     <div id="external-container-button">
-        <a id="external-button-center" href="javascript:skipItem(@@@this getID@@@)">
+        <a id="external-button-center" href="javascript:skipItem(@@@this.getID()@@@)">
             <span>Continue To Next Video</span>
         </a>
     </div>

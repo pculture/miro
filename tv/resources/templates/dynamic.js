@@ -112,57 +112,6 @@ function recommendItem(title, url, feedURL) {
     return false;
 }
 
-// Change a view's filter. The filter controls which records are
-// included and which are not. (You can only do this if, when the view
-// was declared in the page header, it was given an initial filter
-// with the t:filter tag.) viewName is the name of the view whose
-// filter should be changed, as declared in the t:view tag. fieldKey
-// is the property of the record that should be tested (eg, 'name'.)
-// functionKey is the function that should be used to do the test (eg,
-// 'global filter substring'.) parameter is an extra parameter to pass
-// to the test function (such as a search string). If invert is true,
-// the sense of the filter is reversed: only objects that don't match
-// it will be included. For convenience in 'onclick' handlers, this
-// function returns false. param is a hack to include a static
-// parameter in addition to the dynamic one.
-function setViewFilter(viewName, fieldKey, functionKey, parameter, invert, param) {
-    url = 'action:setViewFilter?';
-    url = url + 'viewName=' + URLencode(viewName);
-    url = url + '&fieldKey=' + URLencode(fieldKey);
-    url = url + '&functionKey=' + URLencode(functionKey);
-    if (parameter)
-	url = url + '&parameter=' + URLencode(param+'|'+parameter);
-    else
-	url = url + '&parameter='+ URLencode(param);
-    if (invert)
-	url = url + '&invert=true';
-    else
-	url = url + '&invert=false';
-    eventURL(url);
-    return false;
-}
-
-// Change a view's sort. The sort controls the order in which records
-// are displayed. (You can only do this if, when the view was declared
-// in the page header, it was given an initial sort with the t:sort
-// tag.)  viewName is the name of the view whose sort should be
-// changed, as declared in the t:view tag. fieldKey is the property of
-// the record to sort on (eg, 'name'.) functionKey is the comparison
-// function for the sort (eg, 'global sort text'.) If reverse is true,
-// the records will be shown in the opposite of their normal order as
-// defined by the other parameters. For convenience in 'onclick'
-// handlers, this function returns false.
-function setViewSort(viewName, fieldKey, functionKey, reverse) {
-    url = 'action:setViewSort?';
-    url = url + 'viewName=' + URLencode(viewName);
-    url = url + '&fieldKey=' + URLencode(fieldKey);
-    url = url + '&functionKey=' + URLencode(functionKey);
-    if (reverse)
-	url = url + '&reverse=true';
-    eventURL(url);
-    return false;
-}
-
 // Start the video player. The playlist will be the items in the view
 // named by viewName. If firstItemId is the id of an item in the view,
 // playback will start on that item; otherwise playback will start on
@@ -179,67 +128,41 @@ function playViewNamed(viewName, firstItemId) {
 // effectively tie the text box to the 'parameter' argument of setViewFilter,
 // with the other argumens fixed. To do this, add these two attributes to
 // the text box:
-//   onfocus="startEditFilter(this, (viewName), (fieldKey),
-//            (functionKey), (invert), (param)"
+//   onfocus="startEditSearch(this)"
 //   onblur="endEditFilter()"
 // replacing the arguments in parentheses with the desired strings.
 //
-// Note that params is a big hack to pass a static parameter in
-// addition to the dynamic one
+// You'll also need to provide a updateSearchString function at the
+// top of your template to perform the actual update
 
-var editFilterTimers = new Array();
-var editFilterField = null;
-var editFilterOldValue = '';
-var editFilterCount = 0;
-var editFilterViews = new Array();
-var editFilterFieldKeys = new Array();
-var editFilterFunctionKeys = new Array();
-var editFilterInverts = new Array();
-var editFilterParams = new Array();
-var editCurView = 0;
+var editSearchField = null;
+var editSearchOldValue = '';
+var editSearchTimer = null;
 
-function startEditFilter(obj, views, fieldKeys, functionKeys, inverts, params) {
-  editFilterOldValue = obj.value;
+function startEditSearch(obj) {
+  editSearchOldValue = obj.value;
 
-  editFilterField = obj;
-  editFilterViews = views;
-  editFilterFieldKeys = fieldKeys;
-  editFilterFunctionKeys = functionKeys;
-  editFilterInverts = inverts;
-  editFilterParams = params;
-  editCurView = 0;
-
-  editFilterTimerTick(editCurView);
+  editSearchField = obj;
+  editSearchTimerTick();
 }
 
-function editFilterUpdate(viewName,functionName,fieldName,invert, param) {
-    value = editFilterField.value;
-    if (editFilterOldValue != value ||
-	editFilterCount < editFilterViews.length) {
-	if (editFilterOldValue != value) 
-	    editFilterCount = 0;
-	else
-	    editFilterCount++;
-	setViewFilter(viewName, fieldName,
-		      functionName, value,
-		      invert, param);
-	editFilterOldValue = value;
+function editSearchUpdate() {
+    value = editSearchField.value;
+    if (editSearchOldValue != value) {
+	url = 'action:setSearchString?searchString=' + URLencode(value);
+	eventURL(url);
+	editSearchOldValue = value;
     }
 }
 
-function editFilterTimerTick(curView) {
-    editFilterUpdate(editFilterViews[editCurView],editFilterFunctionKeys[editCurView],editFilterFieldKeys[editCurView],editFilterInverts[editCurView], editFilterParams[editCurView]);
-    editCurView++;
-    if (editCurView >= editFilterViews.length) {
-	editCurView = 0;
-    }
-  editFilterTimer = setTimeout(editFilterTimerTick, 50);
+function editSearchTimerTick() {
+    editSearchUpdate();
+    editSearchTimer = setTimeout(editSearchTimerTick, 50);
 }
 
-function endEditFilter() {
-  clearTimeout(editFilterTimer);
-  editFilterCount = 0;
-  editFilterUpdate();
+function endEditSearch() {
+  clearTimeout(editSearchTimer);
+  editSearchUpdate();
 }
 
 // Internal use: 'URL encode' the given string.

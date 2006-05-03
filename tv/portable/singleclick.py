@@ -18,6 +18,7 @@ from BitTornado.bencode import bdecode, bencode
 import app
 import item
 import feed
+import views
 
 ADDED_NOTHING = 0
 ADDED_TORRENTS = 1
@@ -28,13 +29,13 @@ _commandLineArgs = []
 
 def initialize():
     try:
-        app.getSingletonDDBObject('manualFeed')
+        app.getSingletonDDBObject(views.manualFeed)
     except LookupError:
         feed.Feed("dtv:manualFeed", useThread=False,
                 initiallyAutoDownloadable=False)
 
 def addVideo(path):
-    manualFeed = app.getSingletonDDBObject('manualFeed')
+    manualFeed = app.getSingletonDDBObject(views.manualFeed)
     fileItem = item.FileItem(manualFeed, path)
     manualFeed.actualFeed.addItem(fileItem)
 
@@ -49,7 +50,7 @@ def getTorrentInfoHash(path):
         f.close()
 
 def addTorrent(path, torrentInfohash):
-    manualFeed = app.getSingletonDDBObject('manualFeed')
+    manualFeed = app.getSingletonDDBObject(views.manualFeed)
     manualFeed.beginRead()
     try:
         for i in manualFeed.items:

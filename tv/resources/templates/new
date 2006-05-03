@@ -11,16 +11,35 @@
 <t:include filename="settings.js" />
 <script type="text/javascript" src="resource:templates/shide.js" />
 
-<t:dynamicviews>
-    <t:view name="unwatched-items" key="global view items">
-        <t:filter functionkey="global filter unwatchedItems" parameter="" />
-        <t:sort functionkey="global sort item" parameter="" />
-    </t:view>
-    <t:view name="expiring-items" key="global view items">
-        <t:filter functionkey="global filter expiringItems" parameter="" />
-        <t:sort functionkey="global sort item" parameter="" />
-    </t:view>
-</t:dynamicviews>
+    <t:execOnLoad><![CDATA[
+global searchFilter
+searchFilter = lambda x: filters.matchingItems(x, None)
+
+allUnwatchedItems = views.items.filter(filters.unwatchedItems)
+allExpiringItems = views.items.filter(filters.expiringItems)
+
+matchingUnwatchedItems = allUnwatchedItems.filter(lambda x:searchFilter(x))
+matchingExpiringItems = allExpiringItems.filter(lambda x:searchFilter(x))
+
+unwatchedItems = matchingUnwatchedItems.sort(sorts.item)
+expiringItems = matchingExpiringItems.sort(sorts.item)
+
+def updateSearchString(newSearch):
+    global searchFilter
+    if len(newSearch) == 0:
+        searchFilter = lambda x: filters.matchingItems(x, None)
+    else:
+        searchFilter = lambda x: filters.matchingItems(x, newSearch)
+    allUnwatchedItems.recomputeFilter(matchingUnwatchedItems)
+    allExpiringItems.recomputeFilter(matchingExpiringItems)
+
+]]>
+    </t:execOnLoad>
+    <t:execOnUnload><![CDATA[
+allUnwatchedItems.unlink()
+allExpiringItems.unlink()
+]]>
+    </t:execOnUnload>
 
 </head>
 
@@ -35,8 +54,8 @@
 	<div id="main-titlebar-tasks" style="width:100%; text-align:center;">
 		<div id="main-titlebar-tasks-search">
 		    <input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search"  style="margin:35px 55px 0px 0px; width:200px; font-size: 120%;"
-		           onfocus="startEditFilter(this,new Array('unwatched-items', 'expiring-items'),new Array('',''),new Array('global filter unwatchedItems','global filter expiringItems'),new Array(0, 0),new Array('',''))" 
-		           onblur="endEditFilter()" />
+		           onfocus="startEditSearch(this)" 
+		           onblur="endEditSearch()" />
 		</div>
 	</div>
 </div>
@@ -45,15 +64,15 @@
 <div id="main-container">
 
     <!-- UNWATCHED ******************************************************** -->
-    <span t:hideIfViewEmpty="unwatched-items">
+    <span t:hideIf="len(unwatchedItems) == 0" t:updateHideOnView="unwatchedItems">
         <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-unwatched');">#&nbsp;</a></div>
         <div id="main-channelbar" class="main-channelbar">
         	<h1>Unwatched</h1>
-        	<h2 t:updateForView="unwatched-items"><span t:replace="this len" /></h2>
+        	<h2 t:updateForView="unwatchedItems"><span t:replace="len(unwatchedItems)" /></h2>
         </div>
 
         <div id="main-unwatched">
-            <span t:repeatForView="unwatched-items">
+            <span t:repeatForView="unwatchedItems">
                 <t:includeTemplate filename="download-item" />
             </span>
         </div>
@@ -61,15 +80,15 @@
     <!-- / UNWATCHED -->
 
     <!-- EXPIRING ********************************************************* -->
-    <span t:hideIfViewEmpty="expiring-items">
+    <span t:hideIf="len(expiringItems) == 0" t:updateHideOnView="expiringItems">
         <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-expiring');">#&nbsp;</a></div>
         <div id="main-channelbar" class="main-channelbar">
         	<h1>Expiring</h1>
-        	<h2 t:updateForView="expiring-items"><span t:replace="this len" /></h2>
+        	<h2 t:updateForView="expiringItems"><span t:replace="len(expiringItems)" /></h2>
         </div>
 
         <div id="main-expiring">
-            <span t:repeatForView="expiring-items">
+            <span t:repeatForView="expiringItems">
                 <t:includeTemplate filename="download-item" />
             </span>
         </div>
