@@ -35,7 +35,7 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
 
     def __init__(self):
         print "VideoDisplay init"
-        html = template.fillStaticTemplate("video-display-vlc", {'eventCookie':self.getEventCookie(),'dtvPlatform':'xul'})
+        html = template.fillStaticTemplate("video-display-vlc", platform = 'xul', eventCookie = self.getEventCookie())
         frontend.HTMLDisplay.__init__(self,html)
         app.VideoDisplayBase.__init__(self)
         print "Display initialized"
