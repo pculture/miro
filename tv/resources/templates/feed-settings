@@ -56,45 +56,39 @@
 	</div>
 
 	<div style="margin:20px 10px;">
-		<div style="float:left; display:inline; width:150px;">
+		<span style="display:inline; width:150px;">
 			Videos expire after:
-		</div>
-		<div style="float:left; display:inline; width:300px;">			
-			<select name="expireAfter" onChange="javascript:setExpiration();">
-				<option value="system" selected="1" t:hideIfNotKey="feed getExpirationType" t:hideFunctionKey="global filter equal" t:hideParameter="system">Default (<span t:replace="feed getFormattedDefaultExpiration" />)</option>
-				<option value="system" t:hideIfKey="feed getExpirationType" t:hideFunctionKey="global filter equal" t:hideParameter="system">Default (<span t:replace="feed getFormattedDefaultExpiration" />)</option>
-				<option value="3" selected="1" t:hideIfNotKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="3">3 hours</option>
-				<option value="3" t:hideIfKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="3">3 hours</option>
-				<option value="24" selected="1" t:hideIfNotKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="24">1 day</option>
-				<option value="24" t:hideIfKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="24">1 day</option>
-				<option value="72" selected="1" t:hideIfNotKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="72">3 days</option>
-				<option value="72" t:hideIfKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="72">3 days</option>
-				<option value="144" selected="1" t:hideIfNotKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="144">6 days</option>
-				<option value="144" t:hideIfKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="144">6 days</option>
-				<option value="240" selected="1" t:hideIfNotKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="240">10 days</option>
-				<option value="240" t:hideIfKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="240">10 days</option>
-				<option value="720" selected="1" t:hideIfNotKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="720">1 month</option>
-				<option value="720" t:hideIfKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="720">1 month</option>
-				<option value="never" selected="1" t:hideIfNotKey="feed getExpirationType" t:hideFunctionKey="global filter equal" t:hideParameter="never">Never</option>
-				<option value="never" t:hideIfKey="feed getExpirationType" t:hideFunctionKey="global filter equal" t:hideParameter="never">Never</option>
-			</select>
-		</div>		
+		</span>
+		<select name="expireAfter" onChange="javascript:setExpiration();">
+			<option value="system" selected="1" t:hideIfNotKey="feed getExpirationType" t:hideFunctionKey="global filter equal" t:hideParameter="system">Default (<span t:replace="feed getFormattedDefaultExpiration" />)</option>
+			<option value="system" t:hideIfKey="feed getExpirationType" t:hideFunctionKey="global filter equal" t:hideParameter="system">Default (<span t:replace="feed getFormattedDefaultExpiration" />)</option>
+			<option value="3" selected="1" t:hideIfNotKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="3">3 hours</option>
+			<option value="3" t:hideIfKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="3">3 hours</option>
+			<option value="24" selected="1" t:hideIfNotKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="24">1 day</option>
+			<option value="24" t:hideIfKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="24">1 day</option>
+			<option value="72" selected="1" t:hideIfNotKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="72">3 days</option>
+			<option value="72" t:hideIfKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="72">3 days</option>
+			<option value="144" selected="1" t:hideIfNotKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="144">6 days</option>
+			<option value="144" t:hideIfKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="144">6 days</option>
+			<option value="240" selected="1" t:hideIfNotKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="240">10 days</option>
+			<option value="240" t:hideIfKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="240">10 days</option>
+			<option value="720" selected="1" t:hideIfNotKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="720">1 month</option>
+			<option value="720" t:hideIfKey="feed getExpirationTime" t:hideFunctionKey="global filter equal" t:hideParameter="720">1 month</option>
+			<option value="never" selected="1" t:hideIfNotKey="feed getExpirationType" t:hideFunctionKey="global filter equal" t:hideParameter="never">Never</option>
+			<option value="never" t:hideIfKey="feed getExpirationType" t:hideFunctionKey="global filter equal" t:hideParameter="never">Never</option>
+		</select>
 	</div>
-	<br />
 	<div style="margin:0px 10px 20px 10px;">
-		<div style="float:left; display:inline; width:150px;">
+		<span style="width:150px;">
 			Auto download should:
-		</div>
-		<div style="float:left; display:inline; width:300px;">			
-			<select name="autoDownloadGets" onChange="javascript:setAutoDownloadGets();">
-				<option t:hideIfKey="feed getEverything" t:hideFunctionKey="global filter boolean" value="False" selected="1">Download new videos only</option>
-				<option t:hideIfNotKey="feed getEverything" t:hideFunctionKey="global filter boolean" value="False">Download new videos only</option>
-				<option t:hideIfNotKey="feed getEverything" t:hideFunctionKey="global filter boolean" value="True" selected="1">Download all videos</option>
-				<option t:hideIfKey="feed getEverything" t:hideFunctionKey="global filter boolean" value="True">Download all videos</option>
-			</select>
-		</div>				
+		</span>
+		<select name="autoDownloadGets" onChange="javascript:setAutoDownloadGets();">
+			<option t:hideIfKey="feed getEverything" t:hideFunctionKey="global filter boolean" value="False" selected="1">Download new videos only</option>
+			<option t:hideIfNotKey="feed getEverything" t:hideFunctionKey="global filter boolean" value="False">Download new videos only</option>
+			<option t:hideIfNotKey="feed getEverything" t:hideFunctionKey="global filter boolean" value="True" selected="1">Download all videos</option>
+			<option t:hideIfKey="feed getEverything" t:hideFunctionKey="global filter boolean" value="True">Download all videos</option>
+		</select>
 	</div>
-	<br />
 	<div style="margin:0px 10px;">
 		<input type="checkbox" name="maxOutDownloads" onClick="javascript:setMaxNew();" checked="checked" t:hideIfKey="feed getMaxNew" t:hideFunctionKey="global filter equal" t:hideParameter="unlimited" />
 		<input type="checkbox" name="maxOutDownloads" onClick="javascript:setMaxNew();" t:hideIfNotKey="feed getMaxNew" t:hideFunctionKey="global filter equal" t:hideParameter="unlimited"/>
@@ -102,7 +96,7 @@
 		<input name="maxNew" type="text" size="4" value="0" disabled="1" onBlur="javascript:setMaxNew();" t:hideIfNotKey="feed getMaxNew" t:hideFunctionKey="global filter equal" t:hideParameter="unlimited" />
 		<input name="maxNew" type="text" size="4" value="@@@feed getMaxNew@@@" onBlur="javascript:setMaxNew();" t:hideIfKey="feed getMaxNew" t:hideFunctionKey="global filter equal" t:hideParameter="unlimited" />
 		videos waiting, don't auto download more.<br />
-		<span style="font-size:90%; color:#666666;">(Keeps channel from hogging disk space)</span>
+		<span style="font-size:90%; color:#666666; margin-left: 25px">(Keeps channel from hogging disk space)</span>
 	</div>
 
     <div style="position: absolute; bottom:0%; margin:0px 10px 10px 10px;">
