@@ -533,13 +533,13 @@ class MainController (NibClassBuilder.AutoBaseClass):
         contentBox.setFrameOrigin_((tabSize.width + dividerWidth, 0))
 
     def splitView_canCollapseSubview_(self, sender, subview):
-        return self.channelsHostView.isDescendantOf_(subview) and app.Controller.instance.videoDisplay.isSelected()
+        return self.channelsHostView.isDescendantOf_(subview) and app.controller.videoDisplay.isSelected()
 
     ### Events ###
 
     def keyDown_(self, event):
-        if self.frame.mainDisplay.hostedDisplay is app.Controller.instance.videoDisplay and event.characters().characterAtIndex_(0) == 0x20:
-            app.Controller.instance.playbackController.playPause()
+        if self.frame.mainDisplay.hostedDisplay is app.controller.videoDisplay and event.characters().characterAtIndex_(0) == 0x20:
+            app.controller.playbackController.playPause()
 
     ### Actions ###
 
@@ -570,7 +570,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         NSApplication.sharedApplication().beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(controller.window(), self.window(), self, nil, 0)
 
     def removeChannel_(self, sender):
-        feedID = app.Controller.instance.currentSelectedTab.feedID()
+        feedID = app.controller.currentSelectedTab.feedID()
         if feedID is not None:
             backEndDelegate = self.appl.getBackendDelegate()
             app.ModelActionHandler(backEndDelegate).removeFeed(feedID)
@@ -579,7 +579,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         NSPasteboard.generalPasteboard().declareTypes_owner_([NSURLPboardType], self)
 
     def updateChannel_(self, sender):
-        feedID = app.Controller.instance.currentSelectedTab.feedID()
+        feedID = app.controller.currentSelectedTab.feedID()
         if feedID is not None:
             backEndDelegate = self.appl.getBackendDelegate()
             app.ModelActionHandler(backEndDelegate).updateFeed(feedID)
@@ -639,24 +639,24 @@ class MainController (NibClassBuilder.AutoBaseClass):
     selectedChannelItems = ('removeChannel:', 'copyChannelLink:', 'updateChannel:')
     def validateMenuItem_(self, item):
         if item.action() in self.selectedChannelItems:
-            currentTab = app.Controller.instance.currentSelectedTab
+            currentTab = app.controller.currentSelectedTab
             return currentTab is not None and currentTab.isFeed()
         elif item.action() == 'playPause:' or item.action() == 'playFullScreen:':
             display = self.frame.mainDisplay.hostedDisplay
             if display is not None:
-                if display is app.Controller.instance.videoDisplay:
+                if display is app.controller.videoDisplay:
                     return YES
                 else:
                     return display.getWatchable() is not None
             else:
                 return NO
         elif item.action() == 'stopVideo:':
-            return self.frame.mainDisplay.hostedDisplay is app.Controller.instance.videoDisplay
+            return self.frame.mainDisplay.hostedDisplay is app.controller.videoDisplay
         else:
             return item.action() in self.itemsAlwaysAvailable
 
     def pasteboard_provideDataForType_(self, pasteboard, type):
-        feedURL = app.Controller.instance.currentSelectedTab.feedURL()
+        feedURL = app.controller.currentSelectedTab.feedURL()
         if feedURL is not None:
             url = NSURL.URLWithString_(feedURL)
             url.writeToPasteboard_(NSPasteboard.generalPasteboard())
@@ -1330,7 +1330,7 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         NSGraphicsContext.currentContext().restoreGraphicsState()
 
     def progressSliderWasClicked(self, slider):
-        if app.Controller.instance.videoDisplay.isPlaying:
+        if app.controller.videoDisplay.isPlaying:
             self.wasPlaying = True
             self.renderer.pause()
         self.renderer.setProgress(slider.floatValue())
@@ -1925,7 +1925,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('%s_blue' % prefix))
 
     def playPause_(self, sender):
-        app.Controller.instance.playbackController.playPause()
+        app.controller.playbackController.playPause()
 
     def play(self):
         nc.postNotificationName_object_('videoWillPlay', nil)
@@ -1938,15 +1938,15 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.updatePlayPauseButton('play')
 
     def stop_(self, sender):
-        app.Controller.instance.playbackController.stop()
+        app.controller.playbackController.stop()
         
     def stop(self):
         nc.postNotificationName_object_('videoWillStop', nil)
         self.updatePlayPauseButton('play')
 
     def playFullScreen_(self, sender):
-        if not app.Controller.instance.videoDisplay.isPlaying:
-            app.Controller.instance.playbackController.playPause()
+        if not app.controller.videoDisplay.isPlaying:
+            app.controller.playbackController.playPause()
         self.videoDisplay.goFullScreen()
 
     def goFullScreen(self):
@@ -1962,7 +1962,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.performSeek(sender, 1)
         
     def skipForward_(self, sender):
-        app.Controller.instance.playbackController.skip(1)
+        app.controller.playbackController.skip(1)
 
     def fastForward_(self, sender):
         self.performSeek(sender, 1, 0.0)
@@ -1971,7 +1971,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.performSeek(sender, -1)
 
     def skipBackward_(self, sender):
-        app.Controller.instance.playbackController.skip(-1)
+        app.controller.playbackController.skip(-1)
 
     def fastBackward_(self, sender):
         self.performSeek(sender, -1, 0.0)
@@ -1998,7 +1998,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             else:
                 self.fastSeekTimer.invalidate()
                 self.fastSeekTimer = nil
-                app.Controller.instance.playbackController.skip(direction)
+                app.controller.playbackController.skip(direction)
 
     def fastSeek_(self, timer):
         info = timer.userInfo()
@@ -2030,7 +2030,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.enableSecondaryControls(NO)
         info = notification.userInfo()
         view = info['view']
-        app.Controller.instance.playbackController.configure(view)
+        app.controller.playbackController.configure(view)
 
     def handleNonWatchableDisplayNotification_(self, notification):
         self.enablePrimaryControls(NO)
@@ -2041,7 +2041,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     def handleMovieNotification_(self, notification):
         renderer = self.videoDisplay.activeRenderer
         if notification.name() == QTMovieDidEndNotification and not renderer.interactivelySeeking:
-            app.Controller.instance.playbackController.onMovieFinished()
+            app.controller.playbackController.onMovieFinished()
 
 
 ###############################################################################
@@ -2153,14 +2153,14 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
         if self.isFullScreen:
             if event.type() == NSLeftMouseDown:
                 if NSApplication.sharedApplication().isActive():
-                    app.Controller.instance.videoDisplay.exitFullScreen()
+                    app.controller.videoDisplay.exitFullScreen()
                 else:
                     NSApplication.sharedApplication().activateIgnoringOtherApps_(YES)
             elif event.type() == NSKeyDown:
                 if event.characters().characterAtIndex_(0) == 0x1B:
-                    app.Controller.instance.videoDisplay.exitFullScreen()
+                    app.controller.videoDisplay.exitFullScreen()
                 elif event.characters().characterAtIndex_(0) == 0x20:
-                    app.Controller.instance.playbackController.playPause()
+                    app.controller.playbackController.playPause()
             elif event.type() == NSMouseMoved:
                 if not self.palette.isVisible():
                     self.palette.reveal(self)
@@ -2169,7 +2169,7 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
         else:
             if event.type() == NSLeftMouseDown:
                 if NSApplication.sharedApplication().isActive():
-                    app.Controller.instance.videoDisplay.goFullScreen()
+                    app.controller.videoDisplay.goFullScreen()
                 else:
                     NSApplication.sharedApplication().activateIgnoringOtherApps_(YES)
 
@@ -2395,7 +2395,7 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
     def reveal(self, parent):
         if not self.isVisible():
             self.update_(nil)
-            self.volumeSlider.setFloatValue_(app.Controller.instance.videoDisplay.getVolume())
+            self.volumeSlider.setFloatValue_(app.controller.videoDisplay.getVolume())
             screenSize = parent.screen().frame().size
             height = self.frame().size.height
             frame = ((0, -height), (screenSize.width, height))
@@ -2443,7 +2443,7 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         self.progressSlider.setFloatValue_(self.renderer.getProgress())
             
     def progressSliderWasClicked(self, slider):
-        if app.Controller.instance.videoDisplay.isPlaying:
+        if app.controller.videoDisplay.isPlaying:
             self.wasPlaying = True
             self.renderer.pause()
         self.renderer.setProgress(slider.floatValue())
@@ -2461,7 +2461,7 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
             self.renderer.play()
 
     def volumeSliderWasDragged(self, slider):
-        app.Controller.instance.videoDisplay.setVolume(slider.floatValue())
+        app.controller.videoDisplay.setVolume(slider.floatValue())
         self.resetAutoConceal()
 
     def videoWillPlay_(self, notification):
