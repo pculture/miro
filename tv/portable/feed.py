@@ -248,10 +248,7 @@ class FeedImpl:
             self.title = title
         self.created = datetime.now()
         self.autoDownloadable = ufeed.initiallyAutoDownloadable
-        if self.autoDownloadable:
-            self.startfrom = datetime.min
-        else:
-            self.startfrom = datetime.max
+        self.startfrom = datetime.max
         self.getEverything = False
         self.maxNew = -1
         self.fallBehind = -1
