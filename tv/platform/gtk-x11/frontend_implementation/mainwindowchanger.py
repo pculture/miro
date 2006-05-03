@@ -183,7 +183,10 @@ class MainWindowChanger(object):
         self.updateState()
 
     def changeState(self, newState):
-        self.mainFrame.actionGroups["ChannelSelected"].set_sensitive (app.Controller.instance.currentSelectedTab.isFeed())
+        isFeed = False
+        if app.Controller.instance.currentSelectedTab:
+            isFeed = app.Controller.instance.currentSelectedTab.isFeed()
+        self.mainFrame.actionGroups["ChannelSelected"].set_sensitive (isFeed)
         if newState == self.currentState:
             return
         self.currentState = newState
