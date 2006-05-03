@@ -16,13 +16,14 @@ class DemocracyCLH:
         windowName = "DemocracyPlayer"
         wwatch = components.classes["@mozilla.org/embedcomp/window-watcher;1"]\
                 .getService(components.interfaces.nsIWindowWatcher);
+        pybridgeCID = "@participatoryculture.org/dtv/pybridge;1"
+        pybridge = components.classes[pybridgeCID].getService()
         existingWindow = wwatch.getWindowByName(windowName, None)
         if existingWindow is None:
+            pybridge.handleCommandLine(commandLine)
             wwatch.openWindow(None, chromeURL, windowName,
                     "chrome,dialog=no,all", None)
         else:
-            pybridgeCID = "@participatoryculture.org/dtv/pybridge;1"
-            pybridge = components.classes[pybridgeCID].getService()
             pybridge.handleSecondCommandLine(commandLine)
 
 catman = components.classes["@mozilla.org/categorymanager;1"].getService()

@@ -809,7 +809,7 @@ class BTDownloader(BGDownloader):
                 if h is None:
                     return False
                 else:
-                    metainfoFile = h['file-handler']
+                    metainfoFile = h['file-handle']
             try:
                 metainfo = metainfoFile.read()
             finally:

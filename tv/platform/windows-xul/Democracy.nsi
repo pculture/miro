@@ -28,6 +28,7 @@ Icon ${CONFIG_ICON}
 Var STARTMENU_FOLDER
 
 !include "MUI.nsh"
+!include "Sections.nsh"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Pages                                                                     ;;
@@ -99,6 +100,20 @@ Var STARTMENU_FOLDER
 !insertmacro MUI_RESERVEFILE_INSTALLOPTIONS
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Macros
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+!macro checkUnhandledExtension ext sectionName
+  Push $0
+  ReadRegStr $0 HKCR "${ext}" ""
+  StrCmp $0 "" 0 +3
+    SectionGetFlags ${sectionName} $0
+    IntOp $0 $0 | 1
+    SectionSetFlags ${sectionName} $0
+  Pop $0
+!macroend
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Sections                                                                  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -137,7 +152,17 @@ lbl_winnt:
   File  /r vlc-plugins
   File  /r xulrunner
 
-  ; Democracy complains if this isn't present and it can't crete it
+  ; Create a ProgID for Democracy
+  WriteRegStr HKCR "DemocracyPlayer" "" "Democracy Player"
+  WriteRegStr HKCR "DemocracyPlayer\shell" "" "open"
+  WriteRegStr HKCR "DemocracyPlayer\DefaultIcon" "" "$INSTDIR\Democracy.exe,0"
+  WriteRegStr HKCR "DemocracyPlayer\shell\open\command" "" \
+    '$INSTDIR\Democracy.exe "%1"'
+  WriteRegStr HKCR "DemocracyPlayer\shell\edit" "" "Edit Options File"
+  WriteRegStr HKCR "DemocracyPlayer\shell\edit\command" "" \
+    '$INSTDIR\Democracy.exe "%1"'
+
+  ; Democracy complains if this isn't present and it can't create it
   CreateDirectory "$INSTDIR\xulrunner\extensions"
 
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
@@ -152,6 +177,30 @@ SectionEnd
 Section "Desktop icon" SecDesktop
   CreateShortcut "$DESKTOP\${RUN_SHORTCUT}" "$INSTDIR\${CONFIG_EXECUTABLE}" \
     "" "$INSTDIR\${CONFIG_ICON}"
+SectionEnd
+
+Section /o "Handle .torrent files" SecRegisterTorrent
+  WriteRegStr HKCR ".torrent" "" "DemocracyPlayer"
+SectionEnd
+
+Section /o "Handle .avi files" SecRegisterAvi
+  WriteRegStr HKCR ".avi" "" "DemocracyPlayer"
+SectionEnd
+
+Section /o "Handle .mpg files" SecRegisterMpg
+  WriteRegStr HKCR ".mpg" "" "DemocracyPlayer"
+SectionEnd
+
+Section /o "Handle .mov files" SecRegisterMov
+  WriteRegStr HKCR ".mov" "" "DemocracyPlayer"
+SectionEnd
+
+Section /o "Handle .wmv files" SecRegisterWmv
+  WriteRegStr HKCR ".wmv" "" "DemocracyPlayer"
+SectionEnd
+
+Section -NotifyShellExentionChange
+  System::Call 'Shell32::SHChangeNotify(i 0x8000000, i 0, i 0, i 0)'
 SectionEnd
 
 Function .onInit
@@ -170,6 +219,13 @@ installed.  Do you want to continue and overwrite it?" \
 
   done:
   !insertmacro MUI_LANGDLL_DISPLAY
+
+  ; Make check boxes for unhandled file extensions.
+  !insertmacro checkUnhandledExtension ".torrent" ${SecRegisterTorrent}
+  !insertmacro checkUnhandledExtension ".avi" ${SecRegisterAvi}
+  !insertmacro checkUnhandledExtension ".mpg" ${SecRegisterMpg}
+  !insertmacro checkUnhandledExtension ".mov" ${SecRegisterMov}
+  !insertmacro checkUnhandledExtension ".wmv" ${SecRegisterWmv}
 FunctionEnd
 
 Section -Post

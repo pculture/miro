@@ -88,7 +88,8 @@ def parseCommandLineArgs(args=None):
     for arg in args:
         print "parsing ", arg
         if os.path.exists(arg):
-            if arg.endswith('.torrent'):
+            ext = os.path.splitext(arg)[1].lower()
+            if ext in ('.torrent', '.tor'):
                 print "trying torrent"
                 try:
                     torrentInfohash = getTorrentInfoHash(arg)

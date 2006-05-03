@@ -17,6 +17,8 @@ interface pcfIDTVPyBridge : nsISupports
 
   void onShutdown();
 
+  void handleCommandLine(in nsICommandLine commandLine);
+
   void handleSecondCommandLine(in nsICommandLine commandLine);
 
   void eventURL(in AString cookie, in AString url);

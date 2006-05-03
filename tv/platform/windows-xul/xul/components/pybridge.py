@@ -5,6 +5,15 @@ import sys
 import os
 import time
 
+def getArgumentList(commandLine):
+    """Convert a nsICommandLine component to a list of arguments to pass
+    to the singleclick module."""
+
+    args = [commandLine.getArgument(i) for i in range(commandLine.length)]
+    # filter out the application.ini that gets included
+    if args[0].lower().endswith('application.ini'):
+        args = args[1:]
+    return args
 
 #print "PYBRIDGE TOP"
 
@@ -55,13 +64,15 @@ class PyBridge:
 #
 #        except:
 #            traceback.print_exc()
+    def handleCommandLine(self, commandLine):
+        print "handleCommandLine"
+        import singleclick
+        singleclick.setCommandLineArgs(getArgumentList(commandLine))
 
     def handleSecondCommandLine(self, commandLine):
+        print "handleSecondCommandLine"
         import singleclick
-        args = [commandLine.getArgument(i) for i in \
-                range(1, commandLine.length)]
-        print "ARGS:", args
-        singleclick.parseCommandLineArgs(args)
+        singleclick.parseCommandLineArgs(getArgumentList(commandLine))
 
     def bootApp(self):
         if self.booted:
