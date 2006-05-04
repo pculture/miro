@@ -27,6 +27,21 @@ class gconfDict:
         finally:
             gconf_lock.release()
 
+    def __contains__(self, key):
+        gconf_lock.acquire()
+        try:
+            fullkey = '/apps/democracy/player/' + key
+            return client.get(fullkey) is not None
+        finally:
+            gconf_lock.release()
+
+    def __getitem__(self, key):
+        rv = self.get(key)
+        if rv is None:
+            raise KeyError
+        else:
+            return rv
+
     def __setitem__(self, key, value):
         gconf_lock.acquire()
         try:
