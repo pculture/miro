@@ -172,7 +172,11 @@ class AppController (NibClassBuilder.AutoBaseClass):
         NSURLRequest.setAllowsAnyHTTPSCertificate_forHost_(YES, channelGuideHost)
 
         self.actualApp.onStartup()
-        
+    
+    def applicationDidBecomeActive_(self, notification):
+        # This should hopefully avoid weird things like #1722
+        app.controller.frame.controller.window().contentView().setNeedsDisplay_(YES)
+    
     def applicationShouldTerminate_(self, application):
         reply = NSTerminateNow
         if not self.actualApp.allowShutdown():
