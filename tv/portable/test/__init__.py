@@ -12,4 +12,4 @@ from test.schematest import *
 from test.storedatabasetest import *
 from test.olddatabaseupgradetest import *
 from test.databasesanitytest import *
-#from test.subscription import*
+from test.subscription import *

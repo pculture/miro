@@ -75,8 +75,8 @@ def _getSubscriptionsFromAtomLinkConstruct(node):
         pass
 
 def _getSubscriptionsFromReflexiveAutoDiscovery(url, ltype):
-    urls = list()
     try:
+        urls = list()
         html = reflexiveAutoDiscoveryOpener(url).read()
         for match in re.findall("<link[^>]+>", html):
             altMatch = re.search("rel=\"alternate\"", match)
@@ -98,6 +98,28 @@ def _getAtomLink(node):
 # =========================================================================
 
 def _getSubscriptionsFromOPMLOutline(root):
-    return None
+    try:
+        urls = list()
+        body = root.getElementsByTagName("body").pop()
+        _searchOPMLNodeRecursively(body, urls)
+    except:
+        urls = None
+    else:
+        if len(urls) == 0:
+            urls = None
+    return urls
+
+def _searchOPMLNodeRecursively(node, urls):
+    try:
+        children = node.childNodes
+        for child in children:
+            if hasattr(child, 'getAttribute'):
+                if child.hasAttribute("xmlUrl"):
+                    url = child.getAttribute("xmlUrl")
+                    urls.append(url)
+                else:
+                    _searchOPMLNodeRecursively(child, urls)
+    except:
+        pass
 
 # =========================================================================
