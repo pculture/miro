@@ -27,13 +27,6 @@ ADDED_BOTH = 3
 
 _commandLineArgs = []
 
-def initialize():
-    try:
-        app.getSingletonDDBObject(views.manualFeed)
-    except LookupError:
-        feed.Feed("dtv:manualFeed", useThread=False,
-                initiallyAutoDownloadable=False)
-
 def addVideo(path):
     manualFeed = app.getSingletonDDBObject(views.manualFeed)
     fileItem = item.FileItem(manualFeed, path)

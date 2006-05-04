@@ -447,7 +447,8 @@ class Controller (frontend.Application):
             downloader.startupDownloader()
 
             channelGuide = getInitialChanelGuide()
-            singleclick.initialize()
+            self.setupGlobalFeed('dtv:manualFeed', useThread=False,
+                    initiallyAutoDownloadable=False)
             views.availableItems.addAddCallback(self.onAvailableItemsCountChange)
             views.availableItems.addRemoveCallback(self.onAvailableItemsCountChange)
             views.downloadingItems.addAddCallback(self.onDownloadingItemsCountChange)
@@ -539,13 +540,13 @@ class Controller (frontend.Application):
             util.failedExn("while starting up")
             frontend.exit(1)
 
-    def setupGlobalFeed(self, url):
+    def setupGlobalFeed(self, url, *args, **kwargs):
         feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
         hasFeed = feedView.len() > 0
         feedView.unlink()
         if not hasFeed:
             print "DTV: Spawning global feed %s" % url
-            d = feed.Feed(url)
+            d = feed.Feed(url, *args, **kwargs)
 
     def getGlobalFeed(self, url):
         feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
@@ -1088,6 +1089,29 @@ class ModelActionHandler:
             paramString = "%s%sdescription=%s" % (paramString, glue,  xhtmltools.urlencode(description))
         url = config.get(config.VIDEOBOMB_URL) + paramString
         self.backEndDelegate.openExternalURL(url)
+
+    def changeMoviesDirectory(self, newDir, migrate):
+        oldDir = config.get(config.MOVIES_DIRECTORY)
+        config.set(config.MOVIES_DIRECTORY, newDir)
+        if migrate == '1':
+            views.remoteDownloads.beginRead()
+            try:
+                for download in views.remoteDownloads:
+                    if download.getState() in ('uploading', 'finished'):
+                        print "migrating", download.getFilename()
+                        download.migrate()
+            finally:
+                views.remoteDownloads.endRead()
+            views.fileItems.beginRead()
+            try:
+                for item in views.fileItems:
+                    currentFilename = item.getFilename()
+                    if os.path.dirname(currentFilename) == oldDir:
+                        item.migrate(newDir)
+            finally:
+                 views.fileItems.endRead()
+        getSingletonDDBObject(views.directoryFeed).update()
+
 
 # Test shim for test* functions on GUIActionHandler
 class printResultThread(threading.Thread):

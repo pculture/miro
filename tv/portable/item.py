@@ -16,6 +16,7 @@ import threadpriority
 import config
 import os
 import feed
+import shutil
     
 ##
 # An item corresponds to a single entry in a feed. Generally, it has
@@ -884,11 +885,7 @@ class Item(DDBObject):
         self.beginRead()
         try:
             try:
-                enclosure = self.getFirstVideoEnclosure()
-                for dler in self.downloaders:
-                    if dler.getURL() == enclosure["url"]:
-                        ret = dler.getFilename()
-                        break
+                ret = self.downloaders[0].getFilename()
             except:
                 pass
         finally:
@@ -976,6 +973,14 @@ class FileItem(Item):
         except:
             pass
         return ret
+
+    def migrate(self, newDir):
+        self.beginChange()
+        try:
+            newFilename = os.path.join(newDir, os.path.basename(self.filename))
+            shutil.move(self.filename, newFilename)
+        finally:
+             self.endChange()
 
     def getFilenames(self):
         ret = []

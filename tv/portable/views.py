@@ -16,6 +16,7 @@ db.createIndex(indexes.objectsByClass)
 allTabs = db.filter(filters.mappableToTab).map(maps.mapToTab).sort(sorts.tabs)
 
 items = db.filterWithIndex(indexes.objectsByClass,item.Item)
+fileItems = db.filterWithIndex(indexes.objectsByClass,item.FileItem)
 feeds = db.filterWithIndex(indexes.objectsByClass,feed.Feed)
 remoteDownloads = db.filterWithIndex(indexes.objectsByClass, downloader.RemoteDownloader)
 httpauths = db.filterWithIndex(indexes.objectsByClass,downloader.HTTPAuthPassword)
@@ -30,6 +31,7 @@ allTabs.createIndex(indexes.tabObjIDIndex)
 #FIXME: These should just be globals
 guide = db.filterWithIndex(indexes.objectsByClass,guide.ChannelGuide)
 manualFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:manualFeed')
+directoryFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:directoryfeed')
 
 availableItems = items.filter(lambda x:x.getState() == 'finished' or x.getState() == 'uploading')
 downloadingItems = items.filter(lambda x:x.getState() == 'downloading')

@@ -239,6 +239,8 @@ class httpServer:
             self.queueChunk("text/plain", "setCheckEvery('%s');" % checkEvery)
             speed = config.get(config.UPSTREAM_LIMIT_IN_KBS)
             self.queueChunk("text/plain", "setMaxUpstream(%s);" % speed)
+            moviesDir = config.get(config.MOVIES_DIRECTORY)
+            self.queueChunk("text/plain", "setMoviesDir(%r);" % moviesDir)
 
             if (config.get(config.LIMIT_UPSTREAM)):
                 self.queueChunk("text/plain", "setLimitUpstream(true);")

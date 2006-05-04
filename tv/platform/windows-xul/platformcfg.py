@@ -78,7 +78,9 @@ def load():
         file = _getConfigFile()
         return cPickle.load(open(file))
     except:
+        import traceback
         print "Error loading perferences. Resetting prefs."
+        traceback.print_exc()
         return {}
 
 def save(data):

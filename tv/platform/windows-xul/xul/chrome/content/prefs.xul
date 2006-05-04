@@ -41,6 +41,22 @@
 	</groupbox>
 	<!--/CHANNELS-->
 
+	<!--MOVIES DIRECTORY-->
+	<groupbox orient="horizontal">
+		<caption label="Movies Directory"/>
+		<hbox>
+                        <description style="padding-top:5px;">
+                                Store downloaded movies in: 
+                        </description>
+			<textbox id="movies-directory" flex="0" value=""
+                                readonly="true" style="width: 300px;" />
+                        <button id="movies-directory-button" flex="0"
+                                label="Change"
+                                oncommand="selectMoviesDirectory();" />
+		</hbox>				
+	</groupbox>
+	<!--/MOVIES DIRECTORY-->
+
 	<!--DOWNLOADS-->
 	<groupbox orient="horizontal">
 		<caption label="Downloads"/>

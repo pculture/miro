@@ -1352,9 +1352,9 @@ class ScraperFeedImpl(FeedImpl):
 
 ##
 # A feed of all of the Movies we find in the movie folder that don't
-# belong to a "real" feed
+# belong to a "real" feed.  If the user changes her movies folder, this feed
+# will continue to remember movies in the old folder.
 #
-# FIXME: How do we trigger updates on this feed?
 class DirectoryFeedImpl(FeedImpl):
 
     def __init__(self,ufeed):
@@ -1374,29 +1374,6 @@ class DirectoryFeedImpl(FeedImpl):
                 self.updateFreq = newFreq
                 self.scheduleUpdateEvents(-1)
 
-    ##
-    # Returns a list of all of the files in a given directory
-    def getFileList(self,dir):
-        allthefiles = []
-        for root, dirs, files in os.walk(dir,topdown=True):
-            if root == dir and 'Incomplete Downloads' in dirs:
-                dirs.remove('Incomplete Downloads')
-            toRemove = []
-            for curdir in dirs:
-                if curdir[0] == '.':
-                    toRemove.append(curdir)
-            for curdir in toRemove:
-                dirs.remove(curdir)
-            toRemove = []
-            for curfile in files:
-                if curfile[0] == '.':
-                    toRemove.append(curfile)
-            for curfile in toRemove:
-                files.remove(curfile)
-            
-            allthefiles[:0] = map(lambda x:os.path.normcase(os.path.join(root,x)),files)
-        return allthefiles
-
     def update(self):
         self.ufeed.beginRead()
         try:
@@ -1406,31 +1383,51 @@ class DirectoryFeedImpl(FeedImpl):
                 self.updating = True
         finally:
             self.ufeed.endRead()
-        knownFiles = []
-        #Files on the filesystem
-        existingFiles = self.getFileList(config.get(config.MOVIES_DIRECTORY))
         #Files known about by real feeds
+        knownFiles = set()
         for item in views.items:
             if not item.feed is self.ufeed:
-                knownFiles[:0] = item.getFilenames()
-        knownFiles = map(os.path.normcase,knownFiles)
-
+                for f in item.getFilenames():
+                    knownFiles.add(os.path.normcase(f))
         #Remove items that are in feeds, but we have in our list
-        for x in range(0,len(self.items)):
-            try:
-                while (self.items[x].getFilename() in knownFiles) or (not self.items[x].getFilename() in existingFiles):
+        # NOTE: we rely on the fact that all our items are single files, so we
+        # only need to use getFilename(), instead of getFilenames().
+        self.ufeed.beginChange()
+        try:
+            for x in reversed(range(len(self.items))):
+                if self.items[x].getFilename() in knownFiles:
                     self.items[x].remove()
-                    self.items[x:x+1] = []
-            except IndexError:
-                pass
+                    del self.items[x]
+        finally:
+            self.ufeed.endChange()
 
-        #Files on the filesystem that we known about
-        myFiles = map(lambda x:x.getFilename(),self.items)
+        self.ufeed.beginRead()
+        try:
+            myFiles = set(x.getFilename() for x in self.items)
+        finally:
+            self.ufeed.endRead()
 
         #Adds any files we don't know about
+        #Files on the filesystem
+        moviesDir = config.get(config.MOVIES_DIRECTORY)
+        existingFiles = [os.path.normcase(os.path.join(moviesDir, f)) \
+                for f in os.listdir(moviesDir)]
+        toAdd = []
         for file in existingFiles:
-            if not file in knownFiles and not file in myFiles:
-                self.items.append(FileItem(self.ufeed,file))
+            if not os.path.isfile(file):
+                print "not a file: ", file
+            else:
+                print "file: ", file
+
+            if (os.path.isfile(file) and not file in knownFiles and 
+                    not file in myFiles):
+                toAdd.append(file)
+        self.ufeed.beginChange()
+        try:
+            for file in toAdd:
+                self.items.append(FileItem(self.ufeed, file))
+        finally:
+            self.ufeed.endChange()
         self.updating = False
 
     def onRestore(self):

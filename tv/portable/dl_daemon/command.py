@@ -117,10 +117,10 @@ class RestoreDownloaderCommand(Command):
         from dl_daemon import download
         return download.restoreDownloader(*self.args, **self.kws)
 
-class GenerateDownloadID(Command):
+class MigrateDownloadCommand(Command):
     def action(self):
         from dl_daemon import download
-        return download.generateDownloadID()
+        return download.migrateDownload(*self.args, **self.kws)
 
 # This is a special command that's trapped by the daemon
 class ShutDownCommand(Command):

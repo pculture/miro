@@ -2,8 +2,9 @@ import os
 import sys
 import bsddb
 import random
+import shutil
 import types
-from os import remove, rename, access, F_OK
+from os import remove, access, F_OK
 from threading import RLock, Event, Thread
 from time import sleep, time
 from copy import copy
@@ -227,6 +228,16 @@ def stopDownload(dlid):
         return True
     return download.stop()
 
+def migrateDownload(dlid):
+    try:
+        download = _downloads[dlid]
+    except: # There is no download with this id
+        return False
+    else:
+        download.moveToMoviesDirectory()
+        download.updateClient()
+        return True
+
 def getDownloadStatus(dlids = None):
     statuses = {}
     for key in _downloads.keys():
@@ -355,6 +366,19 @@ class BGDownloader:
         baseFilename = os.path.join(downloadDir, self.shortFilename+".part")
         self.filename = self.nextFreeFilename(baseFilename)
 
+    def moveToMoviesDirectory(self):
+        """Move our downloaded file from the Incomplete Downloads directoy to
+        the movies directory.
+        """
+
+        print "moving to movies directory fliename is ", self.filename
+        newfilename = os.path.join(config.get(config.MOVIES_DIRECTORY),
+                self.shortFilename)
+        newfilename = self.nextFreeFilename(newfilename)
+        shutil.move(self.filename, newfilename)
+        self.filename = newfilename
+        print "new file name is ", self.filename
+
     ##
     # Returns a float with the estimated number of seconds left
     def getETA(self):
@@ -396,6 +420,7 @@ class HTTPDownloader(BGDownloader):
             self.restoreState(restore)
         else:
             self.lastUpdated = 0
+            print "creating downloader: %s %s " % (url, dlid)
             BGDownloader.__init__(self,url, dlid)
 
     def getStatus(self):
@@ -513,16 +538,7 @@ class HTTPDownloader(BGDownloader):
         #Update the status
         if self.state == "downloading":
             self.state = "finished"
-            newfilename = os.path.join(config.get(config.MOVIES_DIRECTORY),self.shortFilename)
-            newfilename = self.nextFreeFilename(newfilename)
-            try:
-                rename(self.filename,newfilename)
-                self.filename = newfilename
-            except:
-                # Eventually we should make this bring up an error
-                # dialog in the app
-                print "Democracy: Warning: Couldn't rename \"%s\" to \"%s\"" %(
-                    self.filename, newfilename)
+            self.moveToMoviesDirectory()
             if self.totalSize == -1:
                 self.totalSize = self.currentSize
             self.endTime = time()
@@ -611,18 +627,12 @@ class BTDisplay:
         state = self.dler.state
         if not (state == "uploading" or
                 state == "finished"):
+            self.dler.moveToMoviesDirectory()
             self.dler.state = "uploading"
-            
-            newfilename = os.path.join(config.get(config.MOVIES_DIRECTORY),self.dler.shortFilename)
-            newfilename = self.dler.nextFreeFilename(newfilename)
-            rename(self.dler.filename,newfilename)
-            self.dler.filename = newfilename
             self.dler.endTime = time()
             if self.dler.endTime - self.dler.startTime != 0:
                 self.dler.rate = self.dler.totalSize/(self.dler.endTime-self.dler.startTime)
             self.dler.currentSize =self.dler.totalSize
-            self.dler._shutdownTorrent()
-            self.dler._startTorrent()
         self.lastUpdated = time()
         self.dler.updateClient()
 
@@ -742,6 +752,14 @@ class BTDownloader(BGDownloader):
                    
         return {'downRate':downRate, 'timeEst':timeEst,
                 'fractionDone': fractionDone, 'upTotal': upTotal}
+
+    def moveToMoviesDirectory(self):
+        if self.state in ('uploading', 'downloading'):
+            self._shutdownTorrent()
+            BGDownloader.moveToMoviesDirectory(self)
+            self._startTorrent()
+        else:
+            BGDownloader.moveToMoviesDirectory(self)
 
     def restoreState(self, data):
         self.__dict__ = data

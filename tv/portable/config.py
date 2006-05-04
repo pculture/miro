@@ -5,7 +5,7 @@ import util
 import resource
 
 __appConfig = None
-__data = None
+__data = {}
 __lock = RLock()
 __callbacks = set()
 
@@ -142,12 +142,14 @@ def get(descriptor):
     try:
         __checkValidity()
 
-        if descriptor.platformSpecific:
+        if descriptor.key in __data:
+            return __data[descriptor.key]
+        elif descriptor.platformSpecific:
             return platformcfg.get(descriptor)
         elif descriptor.key in __appConfig:
             return __appConfig[descriptor.key]
         else:
-            return __data.get(descriptor.key, descriptor.default)
+            return descriptor.default
     finally:
         __lock.release()
 

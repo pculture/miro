@@ -135,6 +135,11 @@ class RemoteDownloader(DDBObject):
                                             self.dlid)
         c.send(block=False)
 
+    def migrate(self, block=False):
+        c = command.MigrateDownloadCommand(RemoteDownloader.dldaemon,
+                self.dlid)
+        c.send(block=block)
+
     ##
     # Removes downloader from the database
     def remove(self):

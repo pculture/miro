@@ -31,6 +31,8 @@ function finalizeChanges() {
  if (minspace) {
      minSpaceChange();
  }
+
+ checkMoviesDirChanged();
 }
 function setRunAtStartup(value) {
     document.getElementById("runonstartup").checked = value;
@@ -145,4 +147,44 @@ function setExpire(days) {
 }
 function expirationChange(days) {
     eventURL(window.arguments[0],'action:setDefaultExpiration?value=' + days.toString());
+}
+
+var originalMoviesDir = null;
+function setMoviesDir(directory) {
+    var moviesDirBox = document.getElementById('movies-directory');
+    moviesDirBox.value = directory;
+    if(originalMoviesDir == null) {
+        originalMoviesDir = directory;
+    }
+}
+
+function selectMoviesDirectory() {
+    var moviesDirBox = document.getElementById('movies-directory');
+    var fp = Components.classes["@mozilla.org/filepicker;1"]
+            .createInstance(Components.interfaces.nsIFilePicker);
+
+    fp.init(window, "Select a Directory to store Democracy downloads in",
+            Components.interfaces.nsIFilePicker.modeGetFolder);
+    var res = fp.show();
+    if (res == Components.interfaces.nsIFilePicker.returnOK){
+        moviesDirBox.value = fp.file.path;
+    }
+
+}
+
+function checkMoviesDirChanged() {
+    var moviesDirBox = document.getElementById('movies-directory');
+    var currentMoviesDir = moviesDirBox.value;
+    if(originalMoviesDir != null && originalMoviesDir != currentMoviesDir) {
+        var params = {
+              "title": "Migrate existing movies?",
+              "text": "You've selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)",
+              "out" : null
+        }
+        window.openDialog('chrome://dtv/content/yesno.xul', 'yesno',
+                'chrome,dependent,centerscreen,modal', params);
+        eventURL(window.arguments[0],
+          'action:changeMoviesDirectory?newDir=' + escape(currentMoviesDir) + 
+          '&migrate=' + params.out);
+    }
 }

@@ -65,12 +65,10 @@ class PyBridge:
 #        except:
 #            traceback.print_exc()
     def handleCommandLine(self, commandLine):
-        print "handleCommandLine"
         import singleclick
         singleclick.setCommandLineArgs(getArgumentList(commandLine))
 
     def handleSecondCommandLine(self, commandLine):
-        print "handleSecondCommandLine"
         import singleclick
         singleclick.parseCommandLineArgs(getArgumentList(commandLine))
 
