@@ -58,39 +58,39 @@ feed = app.controller.currentSelectedTab.obj
 		<h1>Channel Settings</h1>
 	</div>
 
-	<div style="float:left; margin:20px 10px;">
+	<div style="margin:20px 10px;">
 		<span style="display:inline; width:150px;">
 			Videos expire after:
 		</span>
-			<select name="expireAfter" onChange="javascript:setExpiration();">
-				<option value="system" selected="1" t:hideIf="feed.getExpirationType() != 'system'">Default (<span t:replace="feed.getFormattedDefaultExpiration()" />)</option>
-				<option value="system" t:hideIf="feed.getExpirationType() == 'system'">Default (<span t:replace="feed.getFormattedDefaultExpiration()" />)</option>
-				<option value="3" selected="1" t:hideIf="feed.getExpirationTime() != 3">3 hours</option>
-				<option value="3" t:hideIf="feed.getExpirationTime() == 3">3 hours</option>
-				<option value="24" selected="1" t:hideIf="feed.getExpirationTime() != 24">1 day</option>
-				<option value="24" t:hideIf="feed.getExpirationTime() == 24">1 day</option>
-				<option value="72" selected="1" t:hideIf="feed.getExpirationTime() != 72">3 days</option>
-				<option value="72" t:hideIf="feed.getExpirationTime() == 72">3 days</option>
-				<option value="144" selected="1" t:hideIf="feed.getExpirationTime() != 144">6 days</option>
-				<option value="144" t:hideIf="feed.getExpirationTime() == 144">6 days</option>
-				<option value="240" selected="1" t:hideIf="feed.getExpirationTime() != 240">10 days</option>
-				<option value="240" t:hideIf="feed.getExpirationTime() == 240">10 days</option>
-				<option value="720" selected="1" t:hideIf="feed.getExpirationTime() != 720">1 month</option>
-				<option value="720" t:hideIf="feed.getExpirationTime() == 720">1 month</option>
-				<option value="never" selected="1" t:hideIf="feed.getExpirationType() != 'never'">Never</option>
-				<option value="never" t:hideIf="feed.getExpirationType() == 'never'">Never</option>
-			</select>
+		<select name="expireAfter" onChange="javascript:setExpiration();">
+			<option value="system" selected="1" t:hideIf="feed.getExpirationType() != 'system'">Default (<span t:replace="feed.getFormattedDefaultExpiration()" />)</option>
+			<option value="system" t:hideIf="feed.getExpirationType() == 'system'">Default (<span t:replace="feed.getFormattedDefaultExpiration()" />)</option>
+			<option value="3" selected="1" t:hideIf="feed.getExpirationTime() != 3">3 hours</option>
+			<option value="3" t:hideIf="feed.getExpirationTime() == 3">3 hours</option>
+			<option value="24" selected="1" t:hideIf="feed.getExpirationTime() != 24">1 day</option>
+			<option value="24" t:hideIf="feed.getExpirationTime() == 24">1 day</option>
+			<option value="72" selected="1" t:hideIf="feed.getExpirationTime() != 72">3 days</option>
+			<option value="72" t:hideIf="feed.getExpirationTime() == 72">3 days</option>
+			<option value="144" selected="1" t:hideIf="feed.getExpirationTime() != 144">6 days</option>
+			<option value="144" t:hideIf="feed.getExpirationTime() == 144">6 days</option>
+			<option value="240" selected="1" t:hideIf="feed.getExpirationTime() != 240">10 days</option>
+			<option value="240" t:hideIf="feed.getExpirationTime() == 240">10 days</option>
+			<option value="720" selected="1" t:hideIf="feed.getExpirationTime() != 720">1 month</option>
+			<option value="720" t:hideIf="feed.getExpirationTime() == 720">1 month</option>
+			<option value="never" selected="1" t:hideIf="feed.getExpirationType() != 'never'">Never</option>
+			<option value="never" t:hideIf="feed.getExpirationType() == 'never'">Never</option>
+		</select>
 	</div>
 	<div style="margin:0px 10px 20px 10px;">
 		<span style="width:150px;">
 			Auto download should:
 		</span>
-			<select name="autoDownloadGets" onChange="javascript:setAutoDownloadGets();">
-				<option t:hideIf="feed.getEverything" selected="1" value="False">Download new videos only</option>
-				<option t:hideIf="not feed.getEverything" value="False">Download new videos only</option>
-				<option t:hideIf="not feed.getEverything" value="True" selected="1">Download all videos</option>
-				<option t:hideIf="feed.getEverything" value="True">Download all videos</option>
-			</select>
+		<select name="autoDownloadGets" onChange="javascript:setAutoDownloadGets();">
+			<option t:hideIf="feed.getEverything" selected="1" value="False">Download new videos only</option>
+			<option t:hideIf="not feed.getEverything" value="False">Download new videos only</option>
+			<option t:hideIf="not feed.getEverything" value="True" selected="1">Download all videos</option>
+			<option t:hideIf="feed.getEverything" value="True">Download all videos</option>
+		</select>
 	</div>
 
 	<div style="margin:0px 10px;">
