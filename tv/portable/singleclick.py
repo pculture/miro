@@ -20,15 +20,18 @@ import item
 import feed
 import views
 
-ADDED_NOTHING = 0
-ADDED_TORRENTS = 1
-ADDED_VIDEOS = 2
-ADDED_BOTH = 3
-
 _commandLineArgs = []
 
 def addVideo(path):
     manualFeed = app.getSingletonDDBObject(views.manualFeed)
+    manualFeed.beginRead()
+    try:
+        for i in manualFeed.items:
+            if i.getFilename() == path:
+                print "Not adding duplicate video: %s" % path
+                return
+    finally:
+        manualFeed.endRead()
     fileItem = item.FileItem(manualFeed, path)
     manualFeed.actualFeed.addItem(fileItem)
 
@@ -69,10 +72,6 @@ def setCommandLineArgs(args):
     _commandLineArgs = args
 
 def parseCommandLineArgs(args=None):
-    """Will return ADDED_VIDEOS, ADDED_TORRENTS, ADDED_BOTH, or ADDED_NOTHING
-    depending on what it finds.  
-    """
-
     if args is None:
         args = _commandLineArgs
 
@@ -96,13 +95,11 @@ def parseCommandLineArgs(args=None):
                 addVideo(arg)
                 addedVideos = True
         else:
-            print "doesn't exist"
+            print "WARNING: %s doesn't exist" % arg
 
-    if addedVideos and addedTorrents:
-        return ADDED_BOTH
-    elif addedVideos:
-        return ADDED_VIDEOS
+    if addedVideos:
+        app.controller.selectTabByTemplateBase('librarytab')
     elif addedTorrents:
-        return ADDED_TORRENTS
-    else:
-        return ADDED_NOTHING
+        app.controller.selectTabByTemplateBase('downloadtab')
+
+

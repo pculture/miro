@@ -478,14 +478,8 @@ class Controller (frontend.Application):
                 elif tab.tabTemplateBase == 'downloadtab':
                     self.downloadTab = tab
 
-            added = singleclick.parseCommandLineArgs()
-
             views.allTabs.resetCursor()
             views.allTabs.getNext()
-            if added in (singleclick.ADDED_BOTH, singleclick.ADDED_VIDEOS):
-                print "TODO: should be selecting the My Collection tab now"
-            if added == singleclick.ADDED_TORRENTS:
-                print "TODO: should be selecting the Downloads tab now"
 
             # If we're missing the file system videos feed, create it
             self.setupGlobalFeed('dtv:directoryfeed')
@@ -535,6 +529,8 @@ class Controller (frontend.Application):
             # work. I'm not sure why, but it seems to have to do with the
             # reentrant call back into the database when checkSelectedTab ends 
             # up calling endChange to force a tab to get rerendered.
+
+            singleclick.parseCommandLineArgs()
 
         except:
             util.failedExn("while starting up")
@@ -762,6 +758,41 @@ class Controller (frontend.Application):
         self.tabListActive = active
         if views.allTabs.cur():
             views.allTabs.cur().redraw()
+
+    def selectTab(self, id):
+        try:
+            cur = self.checkTabByID(id)
+        except: # That tab doesn't exist anymore! Give up.
+            print "Tab %s doesn't exist! Cannot select it." % str(id)
+            return
+
+        oldSelected = self.currentSelectedTab
+        newSelected = cur
+
+        # Handle reselection action (checkSelectedTab won't; it doesn't
+        # see a difference)
+        if oldSelected and oldSelected.id == newSelected.id:
+            newSelected.start(self.frame, None)
+
+        # Handle case where a different tab was clicked
+        self.checkSelectedTab()
+
+    def selectTabByTemplateBase(self, templatebase):
+        views.allTabs.beginRead()
+        try:
+            views.allTabs.resetCursor()
+            while 1:
+                obj = views.allTabs.getNext()
+                if obj is None:
+                    print ("WARNING, couldn't find tab with template base %s"
+                            % templatebase)
+                    return
+                elif obj.tabTemplateBase == templatebase:
+                    self.selectTab(obj.id)
+                    return
+        finally:
+            views.allTabs.endRead()
+
 
     ### Keep track of currently available+downloading items and refresh the
     ### corresponding tabs accordingly.
@@ -1129,23 +1160,7 @@ class printResultThread(threading.Thread):
 class GUIActionHandler:
 
     def selectTab(self, id, templateNameHint = None):
-        try:
-            cur = controller.checkTabByID(id)
-        except: # That tab doesn't exist anymore! Give up.
-            print "Tab %s doesn't exist! Cannot select it." % str(id)
-            return
-
-        # Figure out what happened
-        oldSelected = controller.currentSelectedTab
-        newSelected = cur
-
-        # Handle reselection action (checkSelectedTab won't; it doesn't
-        # see a difference)
-        if oldSelected and oldSelected.id == newSelected.id:
-            newSelected.start(controller.frame, templateNameHint)
-
-        # Handle case where a different tab was clicked
-        controller.checkSelectedTab(templateNameHint)
+        controller.selectTab(id)
 
     # NEEDS: name should change to addAndSelectFeed; then we should create
     # a non-GUI addFeed to match removeFeed. (requires template updates)

@@ -106,7 +106,8 @@ Var STARTMENU_FOLDER
 !macro checkUnhandledExtension ext sectionName
   Push $0
   ReadRegStr $0 HKCR "${ext}" ""
-  StrCmp $0 "" 0 +3
+  StrCmp $0 "" +2
+  StrCmp $0 "DemocracyPlayer" 0 +3
     SectionGetFlags ${sectionName} $0
     IntOp $0 $0 | 1
     SectionSetFlags ${sectionName} $0

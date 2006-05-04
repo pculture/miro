@@ -76,7 +76,10 @@ def _getConfigFile():
 def load():
     try:
         file = _getConfigFile()
-        return cPickle.load(open(file))
+        if os.path.exists(file):
+            return cPickle.load(open(file))
+        else:
+            return {}
     except:
         import traceback
         print "Error loading perferences. Resetting prefs."

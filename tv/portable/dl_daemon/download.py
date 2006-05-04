@@ -859,11 +859,13 @@ class BTDownloader(BGDownloader):
             self.reasonFailed = "Could not connect to server"
             self.updateClient()
             return
+        self.updateClient()
         # FIXME: If the client is stopped before a BT download gets
         #        its metadata, we never run this. It's not a huge deal
         #        because it only affects the incomplete filename
         if not done:
             self.pickInitialFilename()
+        self.updateClient()
         self._startTorrent()
 
 
