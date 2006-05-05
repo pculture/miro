@@ -1,4 +1,5 @@
 import os
+import shutil
 import threading
 from threading import Thread, RLock
 from base64 import b64encode
@@ -12,7 +13,7 @@ from dl_daemon import daemon, command
 import views
 import indexes
 
-from download_utils import grabURL, parseURL, cleanFilename
+from download_utils import grabURL, parseURL, cleanFilename, nextFreeFilename
 
 # Returns an HTTP auth object corresponding to the given host, path or
 # None if it doesn't exist
@@ -135,10 +136,30 @@ class RemoteDownloader(DDBObject):
                                             self.dlid)
         c.send(block=False)
 
-    def migrate(self, block=False):
+    def migrate(self):
         c = command.MigrateDownloadCommand(RemoteDownloader.dldaemon,
                 self.dlid)
-        c.send(block=block)
+        if c.send() == False:
+            # downloaded couldn't locate our dlid.  Move the file ourself.
+            try:
+                shortFilename = self.status['shortFilename']
+            except KeyError:
+                print """\
+WARNING: can't migrate download because we don't have a shortFilename!
+URL was %s""" % self.url
+                return
+            try:
+                filename = self.status['filename']
+            except KeyError:
+                print """\
+WARNING: can't migrate download because we don't have a filename!
+URL was %s""" % self.url
+                return
+            newfilename = os.path.join(config.get(config.MOVIES_DIRECTORY),
+                    shortFilename)
+            newfilename = nextFreeFilename(newfilename)
+            shutil.move(filename, newfilename)
+            self.status['filename'] = newfilename
 
     ##
     # Removes downloader from the database

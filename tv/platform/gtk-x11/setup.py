@@ -33,10 +33,8 @@ from Pyrex.Distutils import build_ext
 # platform/gtk-x11.  This makes it hard to find the root directory.  We work
 # our way up the path until our is_root_dir test passes.
 def is_root_dir(dir):
-    return (os.path.basename(dir) == 'tv' and
-            os.path.isdir(os.path.join(dir, 'portable')) and
-            os.path.isdir(os.path.join(dir, 'resources')) and
-            os.path.isdir(os.path.join(dir, 'platform')))
+    return os.path.exists(os.path.join(dir, "DEMOCRACY_ROOT"))
+
 root_try = os.path.abspath(os.path.dirname(__file__))
 while True:
     if is_root_dir(root_try):

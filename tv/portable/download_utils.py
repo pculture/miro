@@ -1,6 +1,7 @@
 import config
 import re
 import socket
+from os import access, F_OK
 from urlparse import urlparse,urljoin
 from threading import RLock
 from time import time
@@ -22,6 +23,29 @@ def parseURL(url):
 # Returns a filename minus nasty characters
 def cleanFilename(filename):
     return filename.replace("\\","").replace("/","").replace(":","").replace("*","").replace("?","").replace("\"","").replace("<","").replace(">","").replace("|","")
+
+##
+# Finds a filename that's unused and similar the the file we want
+# to download
+def nextFreeFilename(name):
+    if not access(name,F_OK):
+        return name
+    parts = name.split('.')
+    count = 1
+    if len(parts) == 1:
+        newname = "%s.%s" % (name, count)
+        while access(newname,F_OK):
+            count += 1
+            newname = "%s.%s" % (name, count)
+    else:
+        insertPoint = len(parts)-1
+        parts[insertPoint:insertPoint] = [str(count)]
+        newname = '.'.join(parts)
+        while access(newname,F_OK):
+            count += 1
+            parts[insertPoint] = str(count)
+            newname = '.'.join(parts)
+    return newname
 
 # FIXME: Currently, returns a None object in the case where it can't
 # download the file. In the future, we should probably raise

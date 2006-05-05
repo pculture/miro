@@ -4,12 +4,12 @@ import bsddb
 import random
 import shutil
 import types
-from os import remove, access, F_OK
+from os import remove
 from threading import RLock, Event, Thread
 from time import sleep, time
 from copy import copy
 
-from download_utils import grabURL, cleanFilename, parseURL
+from download_utils import grabURL, cleanFilename, parseURL, nextFreeFilename
 
 import config
 from BitTornado import mapbase64, createPeerID
@@ -327,28 +327,6 @@ class BGDownloader:
             return "unknown"
 
     ##
-    # Finds a filename that's unused and similar the the file we want
-    # to download
-    def nextFreeFilename(self, name):
-        if not access(name,F_OK):
-            return name
-        parts = name.split('.')
-        count = 1
-        if len(parts) == 1:
-            newname = "%s.%s" % (name, count)
-            while access(newname,F_OK):
-                count += 1
-                newname = "%s.%s" % (name, count)
-        else:
-            insertPoint = len(parts)-1
-            parts[insertPoint:insertPoint] = [str(count)]
-            newname = '.'.join(parts)
-            while access(newname,F_OK):
-                count += 1
-                parts[insertPoint] = str(count)
-                newname = '.'.join(parts)
-        return newname
-
     def pickInitialFilename(self):
         """Pick a path to download to based on self.shortFilename.
 
@@ -364,7 +342,7 @@ class BGDownloader:
         except:
             pass
         baseFilename = os.path.join(downloadDir, self.shortFilename+".part")
-        self.filename = self.nextFreeFilename(baseFilename)
+        self.filename = nextFreeFilename(baseFilename)
 
     def moveToMoviesDirectory(self):
         """Move our downloaded file from the Incomplete Downloads directoy to
@@ -374,7 +352,7 @@ class BGDownloader:
         print "moving to movies directory fliename is ", self.filename
         newfilename = os.path.join(config.get(config.MOVIES_DIRECTORY),
                 self.shortFilename)
-        newfilename = self.nextFreeFilename(newfilename)
+        newfilename = nextFreeFilename(newfilename)
         shutil.move(self.filename, newfilename)
         self.filename = newfilename
         print "new file name is ", self.filename
