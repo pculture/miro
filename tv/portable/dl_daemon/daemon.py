@@ -303,5 +303,5 @@ class ControllerDaemon(Daemon):
             self.stream._sock.shutdown(socket.SHUT_RDWR)
             self.shutdownEvent.wait()
             import app
-            delegate = app.Controller.instance.getBackendDelegate()
+            delegate = app.controller.getBackendDelegate()
             delegate.killDownloadDaemon(readPid())
