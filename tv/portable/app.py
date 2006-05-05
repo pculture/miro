@@ -27,7 +27,6 @@ import autoupdate
 import xhtmltools
 import guide
 import idlenotifier 
-import subscription
 
 import os
 import re
@@ -669,26 +668,15 @@ class Controller (frontend.Application):
 
     # Called by Frontend via Application base class in response to OS request.
     def addAndSelectFeed(self, url, showTemplate = None):
-        return GUIActionHandler(self).addFeed(url, showTemplate)
-
-    def addFeedFromFile(self, pathname):
-        feed.addFeedFromFile(pathname)
-        return False
-
-    def addSubscriptionFromFile(self, pathname):
-        urls = subscription.parseFile(pathname)
-        if urls is not None:
-            for url in urls:
-                self.addAndSelectFeed(url)
-        return False
+        return GUIActionHandler().addFeed(url, showTemplate)
 
     ### Handling 'DTVAPI' events from the channel guide ###
 
     def addFeed(self, url):
-        return GUIActionHandler(self).addFeed(url, selected = None)
+        return GUIActionHandler().addFeed(url, selected = None)
 
     def selectFeed(self, url):
-        return GUIActionHandler(self).selectFeed(url)
+        return GUIActionHandler().selectFeed(url)
 
     ### Keeping track of the selected tab and showing the right template ###
 
@@ -909,8 +897,6 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 else:
                     print "Ignored bad action URL: %s" % url
                     return False
-
-            #NEEDS: handle feed:// URLs and USM subscription URLs
 
             # Let channel guide URLs pass through
             if url.startswith(config.get(config.CHANNEL_GUIDE_URL)):

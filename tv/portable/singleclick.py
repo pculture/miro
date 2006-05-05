@@ -19,6 +19,7 @@ import app
 import item
 import feed
 import views
+import subscription
 
 _commandLineArgs = []
 
@@ -67,6 +68,19 @@ def addTorrent(path, torrentInfohash):
     manualFeed.actualFeed.addItem(newItem)
     newItem.download()
 
+def addFeed(path):
+    feed.addFeedFromFile(path)
+
+def addSubscriptions(path):
+    handler = app.GUIActionHandler()
+    urls = subscription.parseFile(path)
+    if urls is not None:
+        lastURL = urls.pop()
+        for url in urls:
+            handler.addFeed(url, selected=None)
+        handler.addFeed(lastURL)
+
+
 def setCommandLineArgs(args):
     global _commandLineArgs
     _commandLineArgs = args
@@ -91,6 +105,10 @@ def parseCommandLineArgs(args=None):
                     continue
                 addTorrent(arg, torrentInfohash)
                 addedTorrents = True
+            elif ext in ('.rss', '.rdf', '.atom'):
+                addFeed(arg)
+            elif ext == '.democracy':
+                addSubscriptions(arg)
             else:
                 addVideo(arg)
                 addedVideos = True

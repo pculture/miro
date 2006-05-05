@@ -17,6 +17,7 @@ import resource
 import template
 import database
 import autoupdate
+import singleclick
 
 import re
 import os
@@ -191,12 +192,29 @@ class AppController (NibClassBuilder.AutoBaseClass):
         self.actualApp.onShutdown()
 
     def application_openFile_(self, app, filename):
-        root, ext = os.path.splitext(filename)
+        root, ext = os.path.splitext(filename.lower())
         if ext == ".democracy":
-            AppHelper.callAfter(self.actualApp.addSubscriptionFromFile, filename)
-        elif ext in (".rss", ".rss", ".atom"):
-            AppHelper.callAfter(self.actualApp.addFeedFromFile, filename)
+            AppHelper.callAfter(singleclick.addSubscriptions, filename)
+        elif ext == ".torrent":
+            AppHelper.callAfter(self.addTorrent, filename)
+        elif ext in (".rss", ".rdf", ".atom"):
+            AppHelper.callAfter(singleclick.addFeed, filename)
+        else:
+            AppHelper.callAfter(self.addVideo, filename)
         return YES
+
+    def addTorrent(self, path):
+        try:
+            infoHash = singleclick.getTorrentInfoHash(path)
+        except:
+            print "WARNING: %s doesn't seem to be a torrent file" % path
+        else:
+            singleclick.addTorrent(path, infoHash)
+            app.controller.selectTabByTemplateBase('downloadtab')
+        
+    def addVideo(self, path):
+        singleclick.addVideo(path)
+        app.controller.selectTabByTemplateBase('librarytab')
 
     def workspaceWillSleep_(self, notification):
         downloads = app.globalViewList['remoteDownloads']
