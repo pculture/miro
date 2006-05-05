@@ -16,7 +16,9 @@ db.createIndex(indexes.objectsByClass)
 allTabs = db.filter(filters.mappableToTab).map(maps.mapToTab).sort(sorts.tabs)
 
 items = db.filterWithIndex(indexes.objectsByClass,item.Item)
-fileItems = db.filterWithIndex(indexes.objectsByClass,item.FileItem)
+fileItems = db.filter(lambda x: isinstance(x, item.FileItem))
+# NOTE: we can't use the objectsByClass index for fileItems, because it
+# agregates all Item subclasses into one group.
 feeds = db.filterWithIndex(indexes.objectsByClass,feed.Feed)
 remoteDownloads = db.filterWithIndex(indexes.objectsByClass, downloader.RemoteDownloader)
 httpauths = db.filterWithIndex(indexes.objectsByClass,downloader.HTTPAuthPassword)

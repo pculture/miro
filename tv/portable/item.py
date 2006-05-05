@@ -880,6 +880,7 @@ class Item(DDBObject):
 
     ##
     # Returns the filename of the first downloaded video or the empty string
+    # NOTE: this will always return the absolute path to the file.
     def getFilename(self):
         ret = ""
         self.beginRead()

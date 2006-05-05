@@ -22,19 +22,23 @@ import views
 import subscription
 
 _commandLineArgs = []
+commandLineVideoIds = None
+commandLineView = None 
 
 def addVideo(path):
     manualFeed = app.getSingletonDDBObject(views.manualFeed)
     manualFeed.beginRead()
     try:
         for i in manualFeed.items:
-            if i.getFilename() == path:
+            if i.getFilename() == os.path.abspath(path):
                 print "Not adding duplicate video: %s" % path
+                commandLineVideoIds.add(i.getID())
                 return
     finally:
         manualFeed.endRead()
     fileItem = item.FileItem(manualFeed, path)
     manualFeed.actualFeed.addItem(fileItem)
+    commandLineVideoIds.add(fileItem.getID())
 
 def getTorrentInfoHash(path):
     f = open(path, 'rb')
@@ -68,6 +72,24 @@ def addTorrent(path, torrentInfohash):
     manualFeed.actualFeed.addItem(newItem)
     newItem.download()
 
+def resetCommandLineView():
+    global commandLineView, commandLineVideoIds
+    if commandLineView is not None:
+        commandLineView.unlink()
+        commandLineView = None
+    commandLineVideoIds = set()
+
+def playCommandLineView():
+    global commandLineView, commandLineVideoIds
+    if len(commandLineVideoIds) == 0:
+        return
+    def inCommandLineVideoIDs(item):
+        return item.getID() in commandLineVideoIds
+    commandLineView = views.fileItems.filter(inCommandLineVideoIDs)
+    firstItemId = commandLineVideoIds.__iter__().next()
+    app.controller.playbackController.configure(commandLineView, firstItemId)
+    app.controller.playbackController.enterPlayback()
+
 def addFeed(path):
     feed.addFeedFromFile(path)
 
@@ -80,7 +102,6 @@ def addSubscriptions(path):
             handler.addFeed(url, selected=None)
         handler.addFeed(lastURL)
 
-
 def setCommandLineArgs(args):
     global _commandLineArgs
     _commandLineArgs = args
@@ -89,15 +110,15 @@ def parseCommandLineArgs(args=None):
     if args is None:
         args = _commandLineArgs
 
+    resetCommandLineView()
+
     addedVideos = False
     addedTorrents = False
 
     for arg in args:
-        print "parsing ", arg
         if os.path.exists(arg):
             ext = os.path.splitext(arg)[1].lower()
             if ext in ('.torrent', '.tor'):
-                print "trying torrent"
                 try:
                     torrentInfohash = getTorrentInfoHash(arg)
                 except ValueError:
@@ -117,6 +138,7 @@ def parseCommandLineArgs(args=None):
 
     if addedVideos:
         app.controller.selectTabByTemplateBase('librarytab')
+        playCommandLineView()
     elif addedTorrents:
         app.controller.selectTabByTemplateBase('downloadtab')
 
