@@ -399,6 +399,7 @@ def saveDatabase(db=None, pathname=None):
         pathname = config.get(config.DB_PATHNAME)
 
     pathname = os.path.expanduser(pathname)
+    tempPathname = pathname + '.temp'
     try:
         db.beginRead()
         try:
@@ -406,9 +407,14 @@ def saveDatabase(db=None, pathname=None):
             for o in db.objects:
                 objectsToSave.append(o[0])
             databasesanity.checkSanity(objectsToSave)
-            saveObjectList(objectsToSave, pathname)
+            saveObjectList(objectsToSave, tempPathname)
         finally:
             db.endRead()
+        try:
+            os.remove(pathname)
+        except:
+            pass
+        os.rename(tempPathname, pathname)
     except:
         util.failedExn("While saving database")
     else:
@@ -424,7 +430,13 @@ def restoreDatabase(db=None, pathname=None, convertOnFail=True):
 
     pathname = os.path.expanduser(pathname)
     if not os.path.exists(pathname):
-        return
+        # maybe we crashed in saveDatabase() after deleting the real file, but
+        # before renaming the temp file?
+        tempPathname = pathname + '.temp'
+        if os.path.exists(tempPathname):
+            os.rename(tempPathname, pathname)
+        else:
+            return # nope, there's no database to restore
 
     try:
         objects = restoreObjectList(pathname)
