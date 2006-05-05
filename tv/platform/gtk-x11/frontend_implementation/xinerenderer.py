@@ -30,7 +30,7 @@ class XineRenderer(app.VideoRenderer):
         self.widget = widget
 
     def onEos(self):
-        app.Controller.instance.playbackController.skip(1)
+        app.controller.playbackController.skip(1)
 
     def onRealize(self, widget):
         # flush gdk output to ensure that our window is created

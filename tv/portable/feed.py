@@ -921,11 +921,19 @@ class RSSFeedImpl(FeedImpl):
                 self.updating = True
         finally:
             self.ufeed.endRead()
-        if not self.initialHTML is None:
+        if hasattr(self, 'initialHTML') and self.initialHTML is not None:
             html = self.initialHTML
             self.initialHTML = None
         else:
-            info = grabURL(self.url,etag=self.etag,modified=self.modified)
+            try:
+                etag = self.etag
+            except:
+                etag = None
+            try:
+                modified = self.modified
+            except:
+                modified = None
+            info = grabURL(self.url,etag=etag,modified=modified)
             if info is None:
                 self.ufeed.beginRead()
                 try:
