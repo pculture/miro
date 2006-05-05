@@ -226,6 +226,7 @@ class CallbackHandler(object):
 
     def on_preference(self, event = None):
         # get our add channel dialog
+        movie_dir = config.get(config.MOVIES_DIRECTORY)
         widgetTree = MainFrame.WidgetTree(resource.path('democracy.glade'), 'dialog-preferences', 'democracyplayer')
         dialog = widgetTree['dialog-preferences']
         mainWindow = self.mainFrame.widgetTree['main-window']
@@ -236,8 +237,21 @@ class CallbackHandler(object):
         AttachInteger (widgetTree['entry-padding'], config.PRESERVE_X_GB_FREE)
         AttachCombo (widgetTree['combobox-poll'], config.CHECK_CHANNELS_EVERY_X_MN, (30, 60, -1))
         AttachCombo (widgetTree['combobox-expiration'], config.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))
+
+        chooser = widgetTree['filechooserbutton-movies-directory']
+        chooser.set_filename (movie_dir + "/")
         # run the dialog
         response = dialog.run()
+        new_movie_dir = widgetTree['filechooserbutton-movies-directory'].get_filename()
+        if (movie_dir != new_movie_dir):
+            migrate_widgetTree = MainFrame.WidgetTree(resource.path('democracy.glade'), 'dialog-migrate', 'democracyplater')
+            migrate_dialog = migrate_widgetTree['dialog-migrate']
+            response = migrate_dialog.run()
+            migrate = "0"
+            if (response == gtk.RESPONSE_YES):
+                migrate = "1"
+            app.ModelActionHandler(frontend.UIBackendDelegate()).changeMoviesDirectory (new_movie_dir, migrate)
+            migrate_dialog.destroy()
         dialog.destroy()
 
     def on_about_clicked(self, event = None):
