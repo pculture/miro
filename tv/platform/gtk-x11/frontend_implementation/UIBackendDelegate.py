@@ -3,7 +3,6 @@ import os
 import signal
 import sys
 import time
-import gnomevfs
 import gtk
 import threading
 import traceback
@@ -139,10 +138,19 @@ class UIBackendDelegate:
 
     @gtkSyncMethod
     def openExternalURL(self, url):
+        inKDE = False
         # We could use Python's webbrowser.open() here, but
         # unfortunately, it doesn't have the same semantics under UNIX
         # as under other OSes. Sometimes it blocks, sometimes it doesn't.
-        gnomevfs.url_show(url)
+        try:
+            if (os.environ["KDE_FULL_SESSION"]):
+                inKDE = True
+        except:
+            pass
+        if (inKDE):
+            os.spawnlp (os.P_NOWAIT, "kfmclient", "kfmclient", "exec", url)
+        else:
+            os.spawnlp (os.P_NOWAIT, "gnome-open", "gnome-open", url)
 
     def updateAvailableItemsCountFeedback(self, count):
         # Inform the user in a way or another that newly available items are
