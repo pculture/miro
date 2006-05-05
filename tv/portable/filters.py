@@ -20,7 +20,8 @@ def downloadingItems(obj):
     return obj.getState() == 'downloading'
 
 def unwatchedItems(obj):
-    return obj.getState() in ['finished','uploading']
+    return (obj.getState() in ['finished','uploading'] or
+            obj.getState() == 'saved' and not obj.getSeen())
 
 def expiringItems(obj):
     return obj.getState() == 'watched'
@@ -30,7 +31,7 @@ def recentItems(obj):
     return obj.getState() in ['finished','uploading','watched']
 
 def oldItems(obj):
-    return obj.getState() == 'saved'
+    return obj.getState() == 'saved' and obj.getSeen()
 
 def watchableItems(obj):
     return obj.getState() in ['finished', 'uploading', 'watched', 'saved']

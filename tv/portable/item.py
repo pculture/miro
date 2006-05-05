@@ -951,10 +951,6 @@ class FileItem(Item):
         return "saved"
 
     def expire(self):
-        try:
-            os.remove(self.filename)
-        except:
-            pass
         self.remove()
 
     def getDownloadedTime(self):
