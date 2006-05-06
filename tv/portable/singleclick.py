@@ -142,4 +142,5 @@ def parseCommandLineArgs(args=None):
     elif addedTorrents:
         app.controller.selectTabByTemplateBase('downloadtab')
 
-
+def openFile(path):
+    parseCommandLineArgs([path])
