@@ -1,0 +1,65 @@
+import dbus
+import dbus.service
+import dbus.dbus_bindings
+import singleclick
+import app
+
+if getattr(dbus, 'version', (0,0,0)) >= (0,41,0):
+    import dbus.glib
+
+
+class BusNameFlags(dbus.service.BusName):
+    """A base class for exporting your own Named Services across the Bus
+    """
+    def __new__(cls, name, bus=None, flags=0):
+        # get default bus
+        if bus == None:
+            bus = dbus.Bus()
+
+        # see if this name is already defined, return it if so
+        if name in bus._bus_names:
+            return bus._bus_names[name]
+
+        # otherwise register the name
+        retval = dbus.dbus_bindings.bus_request_name(bus.get_connection(), name, flags=flags)
+
+        # TODO: more intelligent tracking of bus name states?
+        if retval == dbus.dbus_bindings.REQUEST_NAME_REPLY_PRIMARY_OWNER:
+            pass
+        elif retval == dbus.dbus_bindings.REQUEST_NAME_REPLY_IN_QUEUE:
+            # queueing can happen by default, maybe we should
+            # track this better or let the user know if they're
+            # queued or not?
+            pass
+        elif retval == dbus.dbus_bindings.REQUEST_NAME_REPLY_EXISTS:
+            raise dbus.NameExistsException(name)
+        elif retval == dbus.dbus_bindings.REQUEST_NAME_REPLY_ALREADY_OWNER:
+            # if this is a shared bus which is being used by someone
+            # else in this process, this can happen legitimately
+            pass
+        else:
+            raise RuntimeError('requesting bus name %s returned unexpected value %s' % (name, retval))
+
+        # and create the object
+        bus_name = object.__new__(cls)
+        bus_name._bus = bus
+        bus_name._name = name
+
+        # cache instance
+        bus._bus_names[name] = bus_name
+
+        return bus_name
+
+class OneTime (dbus.service.Object):
+    def __init__(self):
+        bus = dbus.SessionBus()
+        bus_name = BusNameFlags('org.participatoryculture.dtv.onetime', bus=bus, flags=dbus.dbus_bindings.NAME_FLAG_DO_NOT_QUEUE)
+        dbus.service.Object.__init__(self, bus_name, '/org/participatoryculture/dtv/OneTime')
+
+    @dbus.service.method('org.participatoryculture.dtv.OneTimeIface', in_signature="as", out_signature="")
+    def HandleArgs (self, args):
+        singleclick.parseCommandLineArgs (args)
+        app.controller.frame.widgetTree['main-window'].present()
+
+
+

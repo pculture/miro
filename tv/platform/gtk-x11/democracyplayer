@@ -22,6 +22,12 @@ parser.add_option('--profile', metavar='FILE', help='write profiling information
 parser.add_option('--bias', metavar='BIAS', help='set profiling bias to BIAS', type=float, default=None)
 (options, args) = parser.parse_args()
 
+def startapp():
+    import singleclick
+    singleclick.setCommandLineArgs(args)
+    import app
+    app.main()
+
 if options.unittest:
     # Remove all the democracy unittest specific args
     for count in range(len(sys.argv)):
@@ -48,8 +54,17 @@ elif options.profile:
     if (options.bias):
         profile.Profile.bias = options.bias
     profile.run ('main()', options.profile)
-else: 
-    import singleclick
-    singleclick.setCommandLineArgs(args)
-    import app
-    app.main()
+else:
+    import dbus
+    import onetime
+    try:
+        onetime.OneTime()
+        startapp()
+    except dbus.NameExistsException:
+        bus = dbus.SessionBus()
+        proxy_obj = bus.get_object('org.participatoryculture.dtv.onetime', '/org/participatoryculture/dtv/OneTime')
+        iface = dbus.Interface(proxy_obj, 'org.participatoryculture.dtv.OneTimeIface')
+
+        dbusargs = dbus.Array(args, signature="s")
+
+        iface.HandleArgs(dbusargs)
