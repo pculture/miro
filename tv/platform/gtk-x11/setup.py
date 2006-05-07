@@ -198,8 +198,10 @@ data_files += [
     ('/usr/share/applications', 
      [os.path.join(platform_dir, 'democracyplayer.desktop')]),
     ('/usr/share/man/man1',
-     [os.path.join(platform_dir, 'democracyplayer.1')]),
+     [os.path.join(platform_dir, 'democracyplayer.1.gz')]),
 ]
+
+os.system ("gzip < democracyplayer.1 > democracyplayer.1.gz")
 
 #### Our specialized install_data command ####
 class install_data (distutils.command.install_data.install_data):
@@ -229,11 +231,6 @@ class install_data (distutils.command.install_data.install_data):
             self.mkpath(os.path.dirname(dest))
             self.copy_file(source, dest)
             self.outfiles.append(dest)
-
-        dest = '/usr/share/man/man1/democracyplayer.1'
-        if self.root:
-            dest = change_root(self.root, dest)
-        os.system ("gzip -f %s" % dest)
 
     def run(self):
         distutils.command.install_data.install_data.run(self)
