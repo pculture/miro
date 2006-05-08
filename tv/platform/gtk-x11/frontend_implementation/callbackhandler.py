@@ -267,13 +267,13 @@ class CallbackHandler(object):
         response = dialog.run()
         new_movie_dir = widgetTree['filechooserbutton-movies-directory'].get_filename()
         if (movie_dir != new_movie_dir):
+            print "NEW: %r" % new_movie_dir
             migrate_widgetTree = MainFrame.WidgetTree(resource.path('democracy.glade'), 'dialog-migrate', 'democracyplater')
             migrate_dialog = migrate_widgetTree['dialog-migrate']
             response = migrate_dialog.run()
-            migrate = "0"
-            if (response == gtk.RESPONSE_YES):
-                migrate = "1"
-            app.ModelActionHandler(frontend.UIBackendDelegate()).changeMoviesDirectory (new_movie_dir, migrate)
+            app.changeMoviesDirectory(new_movie_dir, 
+                    response == gtk.RESPONSE_YES)
+
             migrate_dialog.destroy()
         dialog.destroy()
 

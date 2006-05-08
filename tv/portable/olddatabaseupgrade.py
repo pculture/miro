@@ -145,6 +145,13 @@ class OldFeedImpl:
         if 'expireTime' not in data:
             self.expireTime = None
 
+        # Some feeds had invalid updating freq.  Catch that error here, so we
+        # don't lose the dabatase when we restore it.
+        try:
+            self.updateFreq = int(self.updateFreq)
+        except ValueError:
+            self.updateFreq = -1
+
 class OldScraperFeedImpl(OldFeedImpl):
     def __setstate__(self,state):
         (version, data) = state

@@ -1420,17 +1420,12 @@ class DirectoryFeedImpl(FeedImpl):
         #Adds any files we don't know about
         #Files on the filesystem
         moviesDir = config.get(config.MOVIES_DIRECTORY)
-        existingFiles = [os.path.normcase(os.path.join(moviesDir, f)) \
+        existingFiles = [os.path.normcase(os.path.join(moviesDir, f)) 
                 for f in os.listdir(moviesDir)]
         toAdd = []
         for file in existingFiles:
-            if not os.path.isfile(file):
-                print "not a file: ", file
-            else:
-                print "file: ", file
-
-            if (os.path.isfile(file) and not file in knownFiles and 
-                    not file in myFiles):
+            if (os.path.isfile(file) and os.path.basename(file)[0] != '.' and 
+                    not file in knownFiles and not file in myFiles):
                 toAdd.append(file)
         self.ufeed.beginChange()
         try:

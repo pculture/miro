@@ -812,7 +812,6 @@ class Controller (frontend.Application):
             # upstream limit should be unset here
             pass
 
-
 ###############################################################################
 #### TemplateDisplay: a HTML-template-driven right-hand display panel      ####
 ###############################################################################
@@ -1108,27 +1107,7 @@ class ModelActionHandler:
         self.backEndDelegate.openExternalURL(url)
 
     def changeMoviesDirectory(self, newDir, migrate):
-        oldDir = config.get(config.MOVIES_DIRECTORY)
-        config.set(config.MOVIES_DIRECTORY, newDir)
-        if migrate == '1':
-            views.remoteDownloads.beginRead()
-            try:
-                for download in views.remoteDownloads:
-                    if download.getState() in ('uploading', 'finished'):
-                        print "migrating", download.getFilename()
-                        download.migrate()
-            finally:
-                views.remoteDownloads.endRead()
-            views.fileItems.beginRead()
-            try:
-                for item in views.fileItems:
-                    currentFilename = item.getFilename()
-                    if os.path.dirname(currentFilename) == oldDir:
-                        item.migrate(newDir)
-            finally:
-                 views.fileItems.endRead()
-        getSingletonDDBObject(views.directoryFeed).update()
-
+        changeMoviesDirectory(newDir, migrate == '1')
 
 # Test shim for test* functions on GUIActionHandler
 class printResultThread(threading.Thread):
@@ -1465,3 +1444,25 @@ def getInitialChanelGuide():
         finally:
             guideView.endUpdate()
     return channelGuide
+
+def changeMoviesDirectory(newDir, migrate):
+    oldDir = config.get(config.MOVIES_DIRECTORY)
+    config.set(config.MOVIES_DIRECTORY, newDir)
+    if migrate:
+        views.remoteDownloads.beginRead()
+        try:
+            for download in views.remoteDownloads:
+                if download.getState() in ('uploading', 'finished'):
+                    print "migrating", download.getFilename()
+                    download.migrate()
+        finally:
+            views.remoteDownloads.endRead()
+        views.fileItems.beginRead()
+        try:
+            for item in views.fileItems:
+                currentFilename = item.getFilename()
+                if os.path.dirname(currentFilename) == oldDir:
+                    item.migrate(newDir)
+        finally:
+             views.fileItems.endRead()
+    getSingletonDDBObject(views.directoryFeed).update()
