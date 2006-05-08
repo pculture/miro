@@ -648,3 +648,15 @@ function rewindFFMouseOut() {
     eventURL(getCookieFromBrowserId('mainDisplay'),'action:setRate?rate=1.0');
     dtvFFMode = false;
 }
+
+function openFile() {
+    var fp = Components.classes["@mozilla.org/filepicker;1"]
+            .createInstance(Components.interfaces.nsIFilePicker);
+    fp.init(window, "Open File",
+            Components.interfaces.nsIFilePicker.modeGetFile);
+    var res = fp.show();
+    if (res == Components.interfaces.nsIFilePicker.returnOK){
+            eventURL(getCookieFromBrowserId('channelsDisplay'),
+            'action:openFile?path=' + escape(fp.file.path));
+    }
+}

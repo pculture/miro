@@ -440,7 +440,7 @@ objectSchemas = [
 
 def convertOldDatabase(databasePath):
     shutil.copyfile(databasePath, databasePath + '.old')
-    f = open(databasePath)
+    f = open(databasePath, 'rb')
     p = FakeClassUnpickler(f)
     data = p.load()
     if type(data) == types.ListType:

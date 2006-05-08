@@ -46,7 +46,7 @@
 		<caption label="Movies Directory"/>
 		<hbox>
                         <description style="padding-top:5px;">
-                                Store downloaded movies in: 
+                                Store downloaded movies in
                         </description>
 			<textbox id="movies-directory" flex="0" value=""
                                 readonly="true" style="width: 300px;" />

@@ -1129,6 +1129,8 @@ class GUIActionHandler:
 
     # NEEDS: name should change to addAndSelectFeed; then we should create
     # a non-GUI addFeed to match removeFeed. (requires template updates)
+    def openFile(self, path):
+        singleclick.openFile(path)
 
     def addFeed(self, url, showTemplate = None, selected = '1'):
         url = feed.normalizeFeedURL(url)

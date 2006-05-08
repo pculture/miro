@@ -28,6 +28,7 @@
 			<!-- FILE MENU -->
 			<menu id="file-menu" label="File" accesskey="F" class="titlebar-toplevel" style="margin-left: 10px;">
 				<menupopup id="file-popup">
+					<menuitem label="Open" acceltext="Ctrl+O" accesskey="O" command="open"/>
 					<menuitem label="Exit" acceltext="Ctrl+Q" accesskey="E" command="exit"/>
 				</menupopup>
 			</menu>
@@ -35,7 +36,7 @@
 			
 			<!-- EDIT MENU -->
 			<menu id="edit-menu" label="Edit" accesskey="E" class="titlebar-toplevel">
-				<menupopup id="file-popup">
+				<menupopup id="edit-popup">
 					<menuitem label="Cut" acceltext="Ctrl+X" accesskey="T" command="cut"/>
 					<menuitem label="Copy" acceltext="Ctrl+C" accesskey="C" command="copy"/>
 					<menuitem label="Paste" acceltext="Ctrl+V" accesskey="P" command="paste"/>
@@ -47,7 +48,7 @@
 			
 			<!-- VIDEO MENU -->
 			<menu id="video-menu" label="Video" accesskey="V" class="titlebar-toplevel">
-				<menupopup id="file-popup">
+				<menupopup id="video-popup">
 					<menuitem label="Play Video" accesskey="P" disabled="true"/>
 					<menuitem label="Stop Video" accesskey="S" disabled="true"/>
 					<menuitem label="Full Screen" acceltext="Alt+Enter" accesskey="F" disabled="true"/>
@@ -61,7 +62,7 @@
 			
 			<!-- CHANNEL MENU -->
 			<menu id="channel-menu" label="Channel" accesskey="C" class="titlebar-toplevel">
-				<menupopup id="file-popup">
+				<menupopup id="channel-popup">
 					<menuitem label="Add Channel" accesskey="A" disabled="false" command="addchannel"/>
 					<menuitem label="Remove Channel" accesskey="R" disabled="false" command="removechannel"/>
 					<menuitem label="Copy Channel Link" accesskey="L" disabled="false" command="copychannellink"/>
@@ -78,7 +79,7 @@
 			
 			<!-- HELP MENU -->
 			<menu id="help-menu" label="Help" accesskey="H" class="titlebar-toplevel">
-				<menupopup id="file-popup">
+				<menupopup id="help-popup">
 					<menuitem label="Help Contents" acceltext="F1" accesskey="H" command="showhelp"/>
 					<menuseparator/>
 					<menuitem label="&main.about;" accesskey="A" command="about"/>
@@ -203,6 +204,7 @@
 
 <!-- / BOTTOM -->
 <command id="addchannel" oncommand="window.openDialog('chrome://dtv/content/addchannel.xul','addchannel','chrome,dependent,centerscreen');" />
+<command id="open" oncommand="openFile();" />
 <command id="exit" oncommand="window.close();" />
 <command id="copy" oncommand="clipboardCopy();" />
 <command id="cut" oncommand="clipboardCut();" />

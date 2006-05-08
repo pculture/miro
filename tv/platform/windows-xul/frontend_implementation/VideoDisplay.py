@@ -175,6 +175,8 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
             elapsed = self.elapseRe.search(url).group(1)
             length = self.lengthRe.search(url).group(1)
             execChromeJS('videoProgressUpdate(%s, %s);' % (elapsed, length))
+        else:
+            print "Don't know how to handle %s in VideoDisplay" % url
         return True
 
 class VLCPluginRenderer (app.VideoRenderer):

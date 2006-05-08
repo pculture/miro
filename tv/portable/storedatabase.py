@@ -364,7 +364,7 @@ def saveObjectList(objects, pathname, objectSchemas=None, version=None):
         version = schema_mod.VERSION
     savableObjects = objectsToSavables(objects, objectSchemas)
     toPickle = (version, savableObjects)
-    f = open(pathname, 'w')
+    f = open(pathname, 'wb')
     f.write(FILEMAGIC)
     try:
         cPickle.dump(toPickle, f)
@@ -374,7 +374,7 @@ def saveObjectList(objects, pathname, objectSchemas=None, version=None):
 def restoreObjectList(pathname, objectSchemas=None):
     """Restore a list of objects saved with saveObjectList."""
 
-    f = open(pathname, 'r')
+    f = open(pathname, 'rb')
     try:
         if f.read(len(FILEMAGIC)) != FILEMAGIC:
             msg = "%s doesn't seem to be a democracy database" % pathname
