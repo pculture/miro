@@ -16,10 +16,6 @@ class BusNameFlags(object):
         if bus == None:
             bus = dbus.Bus()
 
-        # see if this name is already defined, return it if so
-        if name in bus._bus_names:
-            return bus._bus_names[name]
-
         # otherwise register the name
         retval = dbus.dbus_bindings.bus_request_name(bus.get_connection(), name, flags=flags)
 
@@ -44,9 +40,6 @@ class BusNameFlags(object):
         bus_name = object.__new__(cls)
         bus_name._bus = bus
         bus_name._name = name
-
-        # cache instance
-        bus._bus_names[name] = bus_name
 
         return bus_name
 
