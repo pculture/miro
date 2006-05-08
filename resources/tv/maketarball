@@ -1,0 +1,9 @@
+mkdir temp-democracy
+cd temp-democracy
+svn co https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$1/tv
+mv tv Democracy-$1
+tar zcvf Democracy-$1.tar.gz --exclude=.svn Democracy-$1
+mv Democracy-$1.tar.gz ..
+cd ..
+rm -Rf temp-democracy
+
