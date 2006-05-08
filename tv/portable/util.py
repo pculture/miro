@@ -179,10 +179,11 @@ def failed(when, withExn = False, details = None):
 
     try:
         import app
-        app.Controller.instance.getBackendDelegate(). \
+        app.controller.getBackendDelegate(). \
             notifyUnkownErrorOccurence(when, log = report)
-    except:
-        pass
+    except Exception, e:
+        print "Execption when reporting errror.."
+        traceback.print_exc()
 
 
 class AutoflushingStream:
