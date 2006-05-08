@@ -75,6 +75,8 @@
 
 	      <child>
 		<widget class="GtkHBox" id="main-box">
+		  <property name="width_request">96</property>
+		  <property name="height_request">96</property>
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">0</property>
