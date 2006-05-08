@@ -7,6 +7,24 @@ import app
 if getattr(dbus, 'version', (0,0,0)) >= (0,41,0):
     import dbus.glib
 
+dbus_bindings_consts = {
+    'REQUEST_NAME_REPLY_PRIMARY_OWNER' : 1,
+    'REQUEST_NAME_REPLY_IN_QUEUE': 2,
+    'REQUEST_NAME_REPLY_EXISTS': 3,
+    'REQUEST_NAME_REPLY_ALREADY_OWNER': 4,
+    'NAME_FLAG_DO_NOT_QUEUE' : 4
+}
+for key, value in dbus_bindings_consts.items():
+    try:
+        getattr(dbus.dbus_bindings, key)
+    except AttributeError:
+        setattr(dbus.dbus_bindings, key, value)
+
+try:
+    NameExistsException = dbus.NameExistsException
+except AttributeError:
+    class NameExistsException(dbus.DBusException):
+        pass
 
 class BusNameFlags(object):
     """A base class for exporting your own Named Services across the Bus
@@ -28,7 +46,7 @@ class BusNameFlags(object):
             # queued or not?
             pass
         elif retval == dbus.dbus_bindings.REQUEST_NAME_REPLY_EXISTS:
-            raise dbus.NameExistsException(name)
+            raise NameExistsException(name)
         elif retval == dbus.dbus_bindings.REQUEST_NAME_REPLY_ALREADY_OWNER:
             # if this is a shared bus which is being used by someone
             # else in this process, this can happen legitimately

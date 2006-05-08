@@ -60,7 +60,7 @@ else:
     try:
         onetime.OneTime()
         startapp()
-    except dbus.NameExistsException:
+    except onetime.NameExistsException:
         bus = dbus.SessionBus()
         proxy_obj = bus.get_object('org.participatoryculture.dtv.onetime', '/org/participatoryculture/dtv/OneTime')
         iface = dbus.Interface(proxy_obj, 'org.participatoryculture.dtv.OneTimeIface')
