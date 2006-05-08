@@ -367,7 +367,7 @@ def saveObjectList(objects, pathname, objectSchemas=None, version=None):
     f = open(pathname, 'wb')
     f.write(FILEMAGIC)
     try:
-        cPickle.dump(toPickle, f)
+        cPickle.dump(toPickle, f, cPickle.HIGHEST_PROTOCOL)
     finally:
         f.close()
 
@@ -448,6 +448,21 @@ def restoreDatabase(db=None, pathname=None, convertOnFail=True):
             print "*** Conversion Successfull ***"
         else:
             raise
+    except ImportError, e:
+        if e.args == ("No module named storedatabase\r",):
+            # this looks like an error caused by reading a file saved in text
+            # mode on windows, let's try converting it.
+            print "WARNING: trying to convert text-mode database"
+            f = open(pathname, 'rt')
+            data = f.read()
+            f.close()
+            f = open(pathname, 'wb')
+            f.write(data.replace("\r\n", "\n"))
+            f.close()
+            objects = restoreObjectList(pathname)
+        else:
+            raise
+
     try:
         databasesanity.checkSanity(objects)
     except databasesanity.DatabaseInsaneError, e:
