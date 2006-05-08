@@ -5,3 +5,4 @@ My name is DEMOCRACY_ROOT.
 I live in the root democracy directory to help us locate it when run from
 setup.py, especially on linux.  My contents are arbitrary, all I need to do is
 exist.
+
