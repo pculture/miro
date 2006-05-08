@@ -9,6 +9,7 @@ import frontend
 import config
 import resource
 import MainFrame
+import singleclick
 from gettext import gettext as _
  
 def AttachBoolean (widget, descriptor, sensitive_widget = None):
@@ -51,6 +52,8 @@ class CallbackHandler(object):
     default for glade.
     """
 
+    current_folder = None
+
     def __init__(self, mainFrame):
         self.mainFrame = mainFrame
         self.mainApp = app.controller
@@ -67,7 +70,7 @@ class CallbackHandler(object):
             fullscreen = None
 
         actionGroups["VideoPlayback"].add_actions ([
-            ('SaveVideo', gtk.STOCK_SAVE, _('_Save Video'), '<Control>s', _('Save this video'), self.on_save_video_activate),
+            ('SaveVideo', gtk.STOCK_SAVE, _('_Save Video...'), '<Control>s', _('Save this video'), self.on_save_video_activate),
             ('PlayPauseVideo', gtk.STOCK_MEDIA_PLAY, _('_Play / Pause'), 'p', None, self.on_play_pause_button_clicked),
             ('Fullscreen', fullscreen, _('_Fullscreen'), 'f', None, self.on_fullscreen_button_clicked)
             ])
@@ -78,10 +81,11 @@ class CallbackHandler(object):
             ])
         actionGroups["Ubiquitous"].add_actions ([
             ('Video', None, _('_Video')),
+            ('Open', gtk.STOCK_OPEN, _('_Open...'), '<Control>o', _('Open various files'), self.on_open_video_activate),
             ('EditPreferences', gtk.STOCK_PREFERENCES, _('P_references'), None, None, self.on_preference),
             ('Quit', gtk.STOCK_QUIT, _('_Quit'), '<Control>q', _('Quit the Program'), self.on_quit_activate),
             ('Channel', None, _('_Channel')),
-            ('AddChannel', None, _("_Add Channel"), None, None, self.on_add_channel_button_clicked),
+            ('AddChannel', None, _("_Add Channel..."), None, None, self.on_add_channel_button_clicked),
             ('UpdateAllChannels', None, _("U_pdate All Channels"), None, None, self.on_update_all_channels_activate),
             ('Help', None, _('_Help')),
             ('About', gtk.STOCK_ABOUT, None, None, None, self.on_about_clicked)
@@ -140,6 +144,22 @@ class CallbackHandler(object):
     def on_volume_scale_value_changed(self, scale):
         self.mainApp.videoDisplay.setVolume(scale.get_value())
 
+    def on_open_video_activate(self, event = None):
+        chooser = gtk.FileChooserDialog("Open Files...",
+                self.mainFrame.widgetTree['main-window'],
+                gtk.FILE_CHOOSER_ACTION_OPEN,
+                (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, 
+                    gtk.STOCK_OPEN, gtk.RESPONSE_ACCEPT))
+        chooser.set_select_multiple(True)
+        if (CallbackHandler.current_folder):
+            chooser.set_current_folder(CallbackHandler.current_folder)
+        if chooser.run() == gtk.RESPONSE_ACCEPT:
+            files = chooser.get_filenames()
+            singleclick.parseCommandLineArgs (files)
+        CallbackHandler.current_folder = chooser.get_current_folder()
+        chooser.destroy()
+            
+
     def on_save_video_activate(self, event = None):
         # I think the following is the best way to get the current playlist
         # item, but I'm not sure it will work all the time so I wrapped it in
@@ -156,6 +176,8 @@ class CallbackHandler(object):
                 gtk.FILE_CHOOSER_ACTION_SAVE,
                 (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, 
                     gtk.STOCK_SAVE, gtk.RESPONSE_ACCEPT))
+        if (CallbackHandler.current_folder):
+            chooser.set_current_folder(CallbackHandler.current_folder)
         if chooser.run() == gtk.RESPONSE_ACCEPT:
             savePath = chooser.get_filename()
             def getExt(path):
@@ -164,6 +186,7 @@ class CallbackHandler(object):
                 savePath += getExt(videoPath)
             print "saving %r to %r" % (videoPath, savePath)
             shutil.copyfile(videoPath, savePath)
+        CallbackHandler.current_folder = chooser.get_current_folder()
         chooser.destroy()
 
     def on_play_activate(self, event):

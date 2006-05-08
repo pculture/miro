@@ -1,6 +1,7 @@
 <ui>
   <menubar>
     <menu action="Video">
+      <menuitem action="Open"/>
       <menuitem action="SaveVideo"/>
       <menuitem action="PlayPauseVideo"/>
       <separator/>
