@@ -1207,7 +1207,7 @@ class ScraperFeedImpl(FeedImpl):
                 # the elif to make this use mime types for HTTP GET URLs
 
                 if ((link[-4:].lower() in 
-                     ['.mov','.wmv','.mp4','.m4v','.mp3','.mpg','.avi']) or
+                    ['.mov','.wmv','.mp4','.m4v','.mp3','.ogg','.anx','.mpg','.avi']) or
                     (link[-5:].lower() in ['.mpeg'])):
                     mimetype = 'video/unknown'
                 elif link[-8:].lower() == '.torrent':
@@ -1248,6 +1248,8 @@ class ScraperFeedImpl(FeedImpl):
                     #This is a video
                     elif (mimetype.startswith('video/') or 
                           mimetype.startswith('audeo/') or
+                          mimetype == "application/ogg" or
+                          mimetype == "application/x-annodex" or
                           mimetype == "application/x-bittorrent"):
                         self.addVideoItem(link, links[link],linkNumber)
 

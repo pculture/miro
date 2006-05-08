@@ -996,10 +996,12 @@ def isVideoEnclosure(enclosure):
     hasVideoType = (enclosure.has_key('type') and
         (enclosure['type'].startswith('video/') or
          enclosure['type'].startswith('audio/') or
+         enclosure['type'] == "application/ogg" or
+         enclosure['type'] == "application/x-annodex" or
          enclosure['type'] == "application/x-bittorrent"))
     hasVideoExtension = (enclosure.has_key('url') and
         (enclosure['url'][-4:].lower() in ['.mov','.wmv','.mp4', '.m4v',
-                                            '.mp3','.mpg','.avi'] or
+                                            '.mp3','.ogg','.anx','.mpg','.avi'] or
          enclosure['url'][-8].lower() == '.torrent' or
          enclosure['url'][-5].lower() == '.mpeg'))
     return hasVideoType or hasVideoExtension
