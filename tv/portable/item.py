@@ -297,6 +297,8 @@ class Item(DDBObject):
                             self.beginRead()
                             try:
                                 self.downloaders.append(dler)
+                                downloadURLs.append(dler.getURL())
+                                justStartedDownloaders.add(dler.getURL())
                             finally:
                                 self.endRead()
                         else:
@@ -305,8 +307,6 @@ class Item(DDBObject):
                                 self.lastDownloadFailed = True
                             finally:
                                 self.endRead()
-                        downloadURLs.append(dler.getURL())
-                        justStartedDownloaders.add(dler.getURL())
                     elif enclosure['url'] not in justStartedDownloaders:
                         for dler in self.downloaders:
                             if dler.getURL() == enclosure['url']:
