@@ -244,13 +244,13 @@ class MainFrame:
             try:
                 self.videoLength = renderer.getDuration()
             except:
-                self.videoLength = 0
+                self.videoLength = 1
             try:
                 currentTime = renderer.getCurrentTime()
             except:
                 currentTime = 0
-            if self.videoLength < 0:
-                self.videoLength = 0
+            if self.videoLength < 1:
+                self.videoLength = 1
             if currentTime < 0:
                 currentTime = 0
             if currentTime > self.videoLength:
