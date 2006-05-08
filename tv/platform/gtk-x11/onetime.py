@@ -8,7 +8,7 @@ if getattr(dbus, 'version', (0,0,0)) >= (0,41,0):
     import dbus.glib
 
 
-class BusNameFlags(dbus.service.BusName):
+class BusNameFlags(object):
     """A base class for exporting your own Named Services across the Bus
     """
     def __new__(cls, name, bus=None, flags=0):
@@ -50,13 +50,36 @@ class BusNameFlags(dbus.service.BusName):
 
         return bus_name
 
+    # do nothing because this is called whether or not the bus name
+    # object was retrieved from the cache or created new
+    def __init__(self, *args, **keywords):
+        pass
+
+    # we can delete the low-level name here because these objects
+    # are guaranteed to exist only once for each bus name
+    def __del__(self):
+        dbus_bindings.bus_release_name(self._bus.get_connection(), self._name)
+        pass
+
+    def get_bus(self):
+        """Get the Bus this Service is on"""
+        return self._bus
+
+    def get_name(self):
+        """Get the name of this service"""
+        return self._name
+
+    def __repr__(self):
+        return '<dbus.service.BusName %s on %r at %#x>' % (self._name, self._bus, id(self))
+    __str__ = __repr__
+
 class OneTime (dbus.service.Object):
     def __init__(self):
         bus = dbus.SessionBus()
         bus_name = BusNameFlags('org.participatoryculture.dtv.onetime', bus=bus, flags=dbus.dbus_bindings.NAME_FLAG_DO_NOT_QUEUE)
         dbus.service.Object.__init__(self, bus_name, '/org/participatoryculture/dtv/OneTime')
 
-    @dbus.service.method('org.participatoryculture.dtv.OneTimeIface', in_signature="as", out_signature="")
+    @dbus.service.method('org.participatoryculture.dtv.OneTimeIface')
     def HandleArgs (self, args):
         singleclick.parseCommandLineArgs (args)
         app.controller.frame.widgetTree['main-window'].present()
