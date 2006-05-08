@@ -87,19 +87,28 @@ class XineRenderer(app.VideoRenderer):
         self.xine.playUrl(url)
 
     def getProgress(self):
-        pos, length = self.xine.getPositionAndLength()
+        try:
+            pos, length = self.xine.getPositionAndLength()
+        except:
+            pass
 
     def getCurrentTime(self):
-        pos, length = self.xine.getPositionAndLength()
-        return pos / 1000
+        try:
+            pos, length = self.xine.getPositionAndLength()
+            return pos / 1000
+        except:
+            return 0
 
     @waitForAttach
     def playFromTime(self, seconds):
         self.xine.seek(int(seconds * 1000))
 
     def getDuration(self):
-        pos, length = self.xine.getPositionAndLength()
-        return length / 1000
+        try:
+            pos, length = self.xine.getPositionAndLength()
+            return length / 1000
+        except:
+            return 1
 
     @waitForAttach
     def reset(self):
