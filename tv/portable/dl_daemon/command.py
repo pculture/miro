@@ -17,6 +17,7 @@ class Command:
             return self.daemon.send(self, block)
         except socket.error, e:
             self.daemon.handleSocketError(e)
+            raise
 
     def setReturnValue(self, ret):
         self.orig = False
