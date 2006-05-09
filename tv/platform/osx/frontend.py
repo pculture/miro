@@ -192,15 +192,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         self.actualApp.onShutdown()
 
     def application_openFile_(self, app, filename):
-        root, ext = os.path.splitext(filename.lower())
-        if ext == ".democracy":
-            AppHelper.callAfter(singleclick.addSubscriptions, filename)
-        elif ext == ".torrent":
-            AppHelper.callAfter(self.addTorrent, filename)
-        elif ext in (".rss", ".rdf", ".atom"):
-            AppHelper.callAfter(singleclick.addFeed, filename)
-        else:
-            AppHelper.callAfter(self.addVideo, filename)
+        self.openFile(filename)
         return YES
 
     def addTorrent(self, path):
@@ -285,10 +277,31 @@ class AppController (NibClassBuilder.AutoBaseClass):
         prefController.retain()
         prefController.showWindow_(nil)
 
+    def openFile_(self, sender):
+        openPanel = NSOpenPanel.openPanel()
+        openPanel.setAllowsMultipleSelection_(YES)
+        openPanel.setCanChooseDirectories_(NO)
+        result = openPanel.runModalForDirectory_file_types_(NSHomeDirectory(), nil, nil)
+        if result == NSOKButton:
+            filenames = openPanel.filenames()
+            for f in filenames:
+                self.openFile(f)
+                
+    def openFile(self, filename):
+        root, ext = os.path.splitext(filename.lower())
+        if ext == ".democracy":
+            AppHelper.callAfter(singleclick.addSubscriptions, filename)
+        elif ext == ".torrent":
+            AppHelper.callAfter(self.addTorrent, filename)
+        elif ext in (".rss", ".rdf", ".atom"):
+            AppHelper.callAfter(singleclick.addFeed, filename)
+        else:
+            AppHelper.callAfter(self.addVideo, filename)
+
     def donate_(self, sender):
         print "NOT IMPLEMENTED"
 
-    itemsAlwaysAvailable = ('checkForUpdates:', 'showPreferencesWindow:')
+    itemsAlwaysAvailable = ('checkForUpdates:', 'showPreferencesWindow:', 'openFile:')
     def validateMenuItem_(self, item):
         return item.action() in self.itemsAlwaysAvailable
         

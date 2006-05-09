@@ -1,7 +1,12 @@
 {
     IBClasses = (
         {
-            ACTIONS = {checkForUpdates = id; donate = id; showPreferencesWindow = id; }; 
+            ACTIONS = {
+                checkForUpdates = id; 
+                donate = id; 
+                openFile = id; 
+                showPreferencesWindow = id; 
+            }; 
             CLASS = AppController; 
             LANGUAGE = ObjC; 
             OUTLETS = {playPauseMenuItem = id; }; 
