@@ -149,8 +149,6 @@ defaults = [
 # FIXME: update btconfig with settings from preferences
 btconfig = defaultargs(defaults)
 
-print "LIMIT_UPSTREAM: ", remoteconfig.get(config.LIMIT_UPSTREAM)
-print "UPSTREAM_LIMIT_IN_KBS ", remoteconfig.get(config.UPSTREAM_LIMIT_IN_KBS)
 if remoteconfig.get(config.LIMIT_UPSTREAM):
     btconfig['max_upload_rate'] = remoteconfig.get(config.UPSTREAM_LIMIT_IN_KBS)
 btconfig['minport'] = remoteconfig.get(config.BT_MIN_PORT)
