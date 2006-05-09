@@ -103,13 +103,14 @@ Var STARTMENU_FOLDER
 ;; Macros
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-!macro checkUnhandledExtension ext sectionName
+!macro checkExtensionHandled ext sectionName
   Push $0
   ReadRegStr $0 HKCR "${ext}" ""
-  StrCmp $0 "" +2
-  StrCmp $0 "DemocracyPlayer" 0 +3
+  StrCmp $0 "" +6
+  StrCmp $0 "DemocracyPlayer" +5
+  StrCmp $0 "Democracy.Player.1" +4
     SectionGetFlags ${sectionName} $0
-    IntOp $0 $0 | 1
+    IntOp $0 $0 & 0xFFFFFFFE
     SectionSetFlags ${sectionName} $0
   Pop $0
 !macroend
@@ -154,14 +155,19 @@ lbl_winnt:
   File  /r xulrunner
 
   ; Create a ProgID for Democracy
-  WriteRegStr HKCR "DemocracyPlayer" "" "Democracy Player"
-  WriteRegStr HKCR "DemocracyPlayer\shell" "" "open"
-  WriteRegStr HKCR "DemocracyPlayer\DefaultIcon" "" "$INSTDIR\Democracy.exe,0"
-  WriteRegStr HKCR "DemocracyPlayer\shell\open\command" "" \
+  WriteRegStr HKCR "Democracy.Player.1" "" "Democracy Player"
+  WriteRegDword HKCR "Democracy.Player.1" "EditFlags" 0x00010000
+  ; FTA_OpenIsSafe flag
+  WriteRegStr HKCR "Democracy.Player.1\shell" "" "open"
+  WriteRegStr HKCR "Democracy.Player.1\DefaultIcon" "" "$INSTDIR\Democracy.exe,0"
+  WriteRegStr HKCR "Democracy.Player.1\shell\open\command" "" \
     '$INSTDIR\Democracy.exe "%1"'
-  WriteRegStr HKCR "DemocracyPlayer\shell\edit" "" "Edit Options File"
-  WriteRegStr HKCR "DemocracyPlayer\shell\edit\command" "" \
+  WriteRegStr HKCR "Democracy.Player.1\shell\edit" "" "Edit Options File"
+  WriteRegStr HKCR "Democracy.Player.1\shell\edit\command" "" \
     '$INSTDIR\Democracy.exe "%1"'
+
+  ; Delete our old, poorly formatted ProgID
+  DeleteRegKey HKCR "DemocracyPlayer"
 
   ; Democracy complains if this isn't present and it can't create it
   CreateDirectory "$INSTDIR\xulrunner\extensions"
@@ -180,24 +186,38 @@ Section "Desktop icon" SecDesktop
     "" "$INSTDIR\${CONFIG_ICON}"
 SectionEnd
 
-Section /o "Handle .torrent files" SecRegisterTorrent
-  WriteRegStr HKCR ".torrent" "" "DemocracyPlayer"
+Section "Handle Democracy files" SecRegisterDemocracy
+  WriteRegStr HKCR ".democracy" "" "Democracy.Player.1"
 SectionEnd
 
-Section /o "Handle .avi files" SecRegisterAvi
-  WriteRegStr HKCR ".avi" "" "DemocracyPlayer"
+Section "Handle Torrent files" SecRegisterTorrent
+  WriteRegStr HKCR ".torrent" "" "Democracy.Player.1"
 SectionEnd
 
-Section /o "Handle .mpg files" SecRegisterMpg
-  WriteRegStr HKCR ".mpg" "" "DemocracyPlayer"
+Section "Handle AVI files" SecRegisterAvi
+  WriteRegStr HKCR ".avi" "" "Democracy.Player.1"
 SectionEnd
 
-Section /o "Handle .mov files" SecRegisterMov
-  WriteRegStr HKCR ".mov" "" "DemocracyPlayer"
+Section "Handle MPEG files" SecRegisterMpg
+  WriteRegStr HKCR ".mpg" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".mpeg" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".mp2" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".mpa" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".mpe" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".mpv2" "" "Democracy.Player.1"
 SectionEnd
 
-Section /o "Handle .wmv files" SecRegisterWmv
-  WriteRegStr HKCR ".wmv" "" "DemocracyPlayer"
+Section "Handle Quicktime files" SecRegisterMov
+  WriteRegStr HKCR ".mov" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".qt" "" "Democracy.Player.1"
+SectionEnd
+
+Section "Handle ASF files" SecRegisterAsf
+  WriteRegStr HKCR ".asf" "" "Democracy.Player.1"
+SectionEnd
+
+Section "Handle Windows Media files" SecRegisterWmv
+  WriteRegStr HKCR ".wmv" "" "Democracy.Player.1"
 SectionEnd
 
 Section -NotifyShellExentionChange
@@ -222,11 +242,19 @@ installed.  Do you want to continue and overwrite it?" \
   !insertmacro MUI_LANGDLL_DISPLAY
 
   ; Make check boxes for unhandled file extensions.
-  !insertmacro checkUnhandledExtension ".torrent" ${SecRegisterTorrent}
-  !insertmacro checkUnhandledExtension ".avi" ${SecRegisterAvi}
-  !insertmacro checkUnhandledExtension ".mpg" ${SecRegisterMpg}
-  !insertmacro checkUnhandledExtension ".mov" ${SecRegisterMov}
-  !insertmacro checkUnhandledExtension ".wmv" ${SecRegisterWmv}
+  !insertmacro checkExtensionHandled ".torrent" ${SecRegisterTorrent}
+  !insertmacro checkExtensionHandled ".democracy" ${SecRegisterDemocracy}
+  !insertmacro checkExtensionHandled ".avi" ${SecRegisterAvi}
+  !insertmacro checkExtensionHandled ".mpg" ${SecRegisterMpg}
+  !insertmacro checkExtensionHandled ".mpeg" ${SecRegisterMpg}
+  !insertmacro checkExtensionHandled ".mp3" ${SecRegisterMpg}
+  !insertmacro checkExtensionHandled ".mpa" ${SecRegisterMpg}
+  !insertmacro checkExtensionHandled ".mpe" ${SecRegisterMpg}
+  !insertmacro checkExtensionHandled ".mpv" ${SecRegisterMpg}
+  !insertmacro checkExtensionHandled ".mov" ${SecRegisterMov}
+  !insertmacro checkExtensionHandled ".qa" ${SecRegisterMov}
+  !insertmacro checkExtensionHandled ".asf" ${SecRegisterAsf}
+  !insertmacro checkExtensionHandled ".wmv" ${SecRegisterWmv}
 FunctionEnd
 
 Section -Post
@@ -262,6 +290,7 @@ Section "Uninstall" SEC91
   DeleteRegKey HKLM "${INST_KEY}"
   DeleteRegKey HKLM "${UNINST_KEY}"
   DeleteRegValue HKLM "Software\Microsoft\Windows\CurrentVersion\Run" "Democracy Player"
+  DeleteRegKey HKCR "Democracy.Player.1"
 
   SetAutoClose true
 SectionEnd

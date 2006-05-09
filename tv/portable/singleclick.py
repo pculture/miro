@@ -126,9 +126,9 @@ def parseCommandLineArgs(args=None):
                     continue
                 addTorrent(arg, torrentInfohash)
                 addedTorrents = True
-            elif ext in ('.rss', '.rdf', '.atom'):
+            elif ext in ('.rss', '.rdf', '.atom', '.ato'):
                 addFeed(arg)
-            elif ext == '.democracy':
+            elif ext in ('.democracy', '.dem'):
                 addSubscriptions(arg)
             else:
                 addVideo(arg)
