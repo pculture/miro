@@ -189,7 +189,12 @@ class ConverterBase(object):
 
             for name, schema in objectSchema.fields:
                 data = self.getSourceAttr(object, name)
-                newPath = path + "\n%s -> %s" % (name, data)
+                try:
+                    dataStr = str(data)
+                except Exception, e:
+                    # this will happen when data is invalid unicode
+                    dataStr = "<couldn't convert (%s)>" % e
+                newPath = path + "\n%s -> %s" % (name, dataStr)
                 convertedData = self.convertData(data, schema, newPath)
                 self.setTargetAttr(convertedObject, name, convertedData)
             return convertedObject
