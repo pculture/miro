@@ -23,7 +23,7 @@ from BitTornado.parseargs import defaultargs
 from BitTornado.clock import clock
 from sha import sha
 
-from dl_daemon import command, daemon
+from dl_daemon import command, daemon, remoteconfig
 
 # a hash of download ids to downloaders
 _downloads = {}
@@ -149,10 +149,12 @@ defaults = [
 # FIXME: update btconfig with settings from preferences
 btconfig = defaultargs(defaults)
 
-if config.get(config.LIMIT_UPSTREAM):
-    btconfig['max_upload_rate'] = config.get(config.UPSTREAM_LIMIT_IN_KBS)
-btconfig['minport'] = config.get(config.BT_MIN_PORT)
-btconfig['maxport'] = config.get(config.BT_MAX_PORT)
+print "LIMIT_UPSTREAM: ", remoteconfig.get(config.LIMIT_UPSTREAM)
+print "UPSTREAM_LIMIT_IN_KBS ", remoteconfig.get(config.UPSTREAM_LIMIT_IN_KBS)
+if remoteconfig.get(config.LIMIT_UPSTREAM):
+    btconfig['max_upload_rate'] = remoteconfig.get(config.UPSTREAM_LIMIT_IN_KBS)
+btconfig['minport'] = remoteconfig.get(config.BT_MIN_PORT)
+btconfig['maxport'] = remoteconfig.get(config.BT_MAX_PORT)
 
 #FIXME: check for free space and failed connection to tracker and fail
 #on those cases
@@ -334,7 +336,7 @@ class BGDownloader:
         needed to start downloading there.
         """
 
-        downloadDir = os.path.join(config.get(config.MOVIES_DIRECTORY),
+        downloadDir = os.path.join(remoteconfig.get(config.MOVIES_DIRECTORY),
                 'Incomplete Downloads')
         # Create the download directory if it doesn't already exist.
         try:
@@ -350,7 +352,7 @@ class BGDownloader:
         """
 
         print "moving to movies directory fliename is ", self.filename
-        newfilename = os.path.join(config.get(config.MOVIES_DIRECTORY),
+        newfilename = os.path.join(remoteconfig.get(config.MOVIES_DIRECTORY),
                 self.shortFilename)
         newfilename = nextFreeFilename(newfilename)
         shutil.move(self.filename, newfilename)
@@ -534,9 +536,10 @@ class HTTPDownloader(BGDownloader):
     def acceptDownloadSize(self, size):
         print "WARNING: acceptDownloadSize is a stub"
         return True
-        if config.get(config.PRESERVE_DISK_SPACE):
+        if remoteconfig.get(config.PRESERVE_DISK_SPACE):
             sizeInGB = size / 1024 / 1024 / 1024
-            if sizeInGB > platformutils.getAvailableGBytesForMovies() - config.get(config.PRESERVE_X_GB_FREE):
+            if (sizeInGB > platformutils.getAvailableGBytesForMovies() - 
+                    remoteconfig.get(config.PRESERVE_X_GB_FREE)):
                 self.state = "failed"
                 self.reasonFailed = "File is too big"
                 return False

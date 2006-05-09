@@ -1,4 +1,4 @@
-from dl_daemon import daemon, command
+from dl_daemon import daemon, command, remoteconfig
 
 def load():
     pass
@@ -7,5 +7,4 @@ def save(data):
     pass
 
 def get(descriptor):
-    comm = command.GetConfigCommand(daemon.lastDaemon, descriptor)
-    return comm.send(retry = True)
+    remoteconfig.get(descriptor)
