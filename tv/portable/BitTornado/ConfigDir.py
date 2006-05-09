@@ -8,7 +8,8 @@ from parseargs import defaultargs
 from __init__ import product_name, version_short
 import sys,os
 from time import time, strftime
-import config # Added for Democracy integration --NN
+import dl_daemon.remoteconfig as remoteconfig # Added for Democracy integration --NN
+import config
 
 try:
     True
@@ -87,7 +88,7 @@ class ConfigDir:
                 return y
             return None
 
-        dir_root = os.path.join(config.get(config.SUPPORT_DIRECTORY),
+        dir_root = os.path.join(remoteconfig.get(config.SUPPORT_DIRECTORY),
                                  'Bittornado')
         self.dir_root = dir_root
 

@@ -14,6 +14,7 @@ from gzip import GzipFile
 from StringIO import StringIO
 from __init__ import version_short
 import pprint
+import dl_daemon.remoteconfig as remoteconfig # Added for Democracy integration --NN
 import config
 
 
@@ -29,9 +30,9 @@ class HTTPContentEncodingHandler(HTTPHandler):
         # Added correct capitalization and Democracy info to string --NN
         req.add_header('User-Agent', 'BitTorrent/%s %s/%s (%s)' % \
                        (version_short,
-                        config.get(config.SHORT_APP_NAME),
-                        config.get(config.APP_VERSION),
-                        config.get(config.PROJECT_URL)))
+                        remoteconfig.get(config.SHORT_APP_NAME),
+                        remoteconfig.get(config.APP_VERSION),
+                        remoteconfig.get(config.PROJECT_URL)))
         if DEBUG: 
             print "Sending:" 
             print req.headers
