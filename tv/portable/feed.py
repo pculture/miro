@@ -1420,19 +1420,20 @@ class DirectoryFeedImpl(FeedImpl):
         #Adds any files we don't know about
         #Files on the filesystem
         moviesDir = config.get(config.MOVIES_DIRECTORY)
-        existingFiles = [os.path.normcase(os.path.join(moviesDir, f)) 
-                for f in os.listdir(moviesDir)]
-        toAdd = []
-        for file in existingFiles:
-            if (os.path.isfile(file) and os.path.basename(file)[0] != '.' and 
-                    not file in knownFiles and not file in myFiles):
-                toAdd.append(file)
-        self.ufeed.beginChange()
-        try:
-            for file in toAdd:
-                self.items.append(FileItem(self.ufeed, file))
-        finally:
-            self.ufeed.endChange()
+        if os.path.isdir(moviesDir):
+            existingFiles = [os.path.normcase(os.path.join(moviesDir, f)) 
+                    for f in os.listdir(moviesDir)]
+            toAdd = []
+            for file in existingFiles:
+                if (os.path.isfile(file) and os.path.basename(file)[0] != '.' and 
+                        not file in knownFiles and not file in myFiles):
+                    toAdd.append(file)
+            self.ufeed.beginChange()
+            try:
+                for file in toAdd:
+                    self.items.append(FileItem(self.ufeed, file))
+            finally:
+                self.ufeed.endChange()
         self.updating = False
 
     def onRestore(self):
