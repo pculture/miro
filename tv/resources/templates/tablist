@@ -14,7 +14,9 @@
 <t:include filename="dynamic.js" />
 
     <t:execOnLoad><![CDATA[
-tabs = views.allTabs.filter(lambda x: True)
+# This is a bit of a hack. We need a copy of the view that keeps
+# sorts, so we sort again on the same function
+tabs = views.allTabs.sort(sorts.tabs)
 ]]>
     </t:execOnLoad>
 
