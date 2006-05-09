@@ -55,16 +55,19 @@ elif options.profile:
         profile.Profile.bias = options.bias
     profile.run ('main()', options.profile)
 else:
-    import dbus
-    import onetime
     try:
-        onetime.OneTime()
+        import dbus
+        import onetime
+        try:
+            onetime.OneTime()
+            startapp()
+        except onetime.NameExistsException:
+            bus = dbus.SessionBus()
+            proxy_obj = bus.get_object('org.participatoryculture.dtv.onetime', '/org/participatoryculture/dtv/OneTime')
+            iface = dbus.Interface(proxy_obj, 'org.participatoryculture.dtv.OneTimeIface')
+    
+            dbusargs = dbus.Array(args, signature="s")
+    
+            iface.HandleArgs(dbusargs)
+    except ImportError:
         startapp()
-    except onetime.NameExistsException:
-        bus = dbus.SessionBus()
-        proxy_obj = bus.get_object('org.participatoryculture.dtv.onetime', '/org/participatoryculture/dtv/OneTime')
-        iface = dbus.Interface(proxy_obj, 'org.participatoryculture.dtv.OneTimeIface')
-
-        dbusargs = dbus.Array(args, signature="s")
-
-        iface.HandleArgs(dbusargs)
