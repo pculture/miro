@@ -15,6 +15,12 @@ from frontend_implementation.gtk_queue import gtkSyncMethod
 #### 'Delegate' objects for asynchronously asking the user questions       ####
 ###############################################################################
 
+def EscapeMessagePart(message_part):
+    if '&' in message_part or '<' in message_part:
+        message_part = message_part.replace ("&", "&amp;")
+        message_part = message_part.replace ("<", "&lt;")
+    return message_part
+
 @gtkSyncMethod
 def ShowDialog (title, message, buttons, default = gtk.RESPONSE_CANCEL):
     dialog = gtk.Dialog(title, None, (), buttons)
@@ -48,7 +54,7 @@ class UIBackendDelegate:
         tuple. Otherwise, if the user presses Cancel or similar, None
         is returned."""
         summary = "Channel requires authentication"
-        message = "%s requires a username and password for \"%s\"." % (url, domain)
+        message = "%s requires a username and password for \"%s\"." % (EscapeMessagePart(url), EscapeMessagePart(domain))
         dialog = gtk.Dialog(summary, None, (), (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OK, gtk.RESPONSE_OK))
         table = gtk.Table()
         dialog.vbox.add(table)
@@ -95,7 +101,7 @@ class UIBackendDelegate:
         scraped for links instead. Returns True if the user gives
         permission, or False if not."""
         summary = "Not a DTV-style channel"
-        message = "But we'll try our best to grab the files.\n- It may take time to list the videos\n- Descriptions may look funny\n\nPlease contact the publishers of %s and ask if they have a DTV-style channel." % url
+        message = "But we'll try our best to grab the files.\n- It may take time to list the videos\n- Descriptions may look funny\n\nPlease contact the publishers of %s and ask if they have a DTV-style channel." % EscapeMessagePart(url)
         buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, "Continue", gtk.RESPONSE_OK)
         response = ShowDialog (summary, message, buttons)
         if (response == gtk.RESPONSE_OK):
@@ -122,13 +128,13 @@ class UIBackendDelegate:
     def saveFailed(self, reason):
         summary = u'%s database save failed' % \
             (config.get(config.SHORT_APP_NAME), )
-        message = u"%s was unable to save its database.\nRecent changes may be lost\n\n%s" % (config.get(config.LONG_APP_NAME), reason)
+        message = u"%s was unable to save its database.\nRecent changes may be lost\n\n%s" % (EscapeMessagePart(config.get(config.LONG_APP_NAME)), EscapeMessagePart(reason))
         buttons = (gtk.STOCK_CLOSE, gtk.RESPONSE_OK)
         ShowDialog (summary, message, buttons)
 
     def validateFeedRemoval(self, feedTitle):
         summary = u'Remove Channel'
-        message = u'Are you sure you want to <b>remove</b> the channel\n   \'<b>%s</b>\'?\n<b>This operation cannot be undone.</b>' % feedTitle
+        message = u'Are you sure you want to <b>remove</b> the channel\n   \'<b>%s</b>\'?\n<b>This operation cannot be undone.</b>' % EscapeMessagePart(feedTitle)
         buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_REMOVE, gtk.RESPONSE_OK)
         response = ShowDialog (summary, message, buttons)
         if (response == gtk.RESPONSE_OK):
@@ -169,7 +175,7 @@ class UIBackendDelegate:
 
     def notifyUnkownErrorOccurence(self, when, log = ''):
         summary = u'Unknown Runtime Error'
-        message = u'An unknown error has occured %s.' % when
+        message = u'An unknown error has occured %s.' % EscapeMessagePart(when)
         buttons = (gtk.STOCK_CLOSE, gtk.RESPONSE_OK)
         ShowDialog (summary, message, buttons)
         return True
