@@ -1066,6 +1066,7 @@ SIDEBAR
 .number_count{
 	background: #00B904;
 	font-size: 11px;
+	line-height: 13px;
 	color: #FFFFFF;
 	margin: 0px 7px 0px 8px;
 	padding: 2px 0px 3px 0px;
@@ -1075,6 +1076,7 @@ SIDEBAR
 .number_count_active{
 	background: #00B904;
 	font-size: 11px;
+	line-height: 13px;
 	position: relative;
 	height: 18px;
 	margin: 0px 7px 0px 8px;
@@ -1109,6 +1111,7 @@ SIDEBAR
 	margin: 0 7px 0 8px;
 	background: #4081EC;
 	font-size: 11px;
+	line-height: 13px;
 /*	text-shadow: 0px 1px 0px #fff;  */
 	}
 
@@ -1130,6 +1133,7 @@ SIDEBAR
 	margin: 0 8px 0 8px;
 	background: #4081EC;
 	font-size: 11px;
+	line-height: 13px;
 /*	text-shadow: 0px 1px 0px #fff;  */
 	}
 
@@ -1150,6 +1154,7 @@ SIDEBAR
 	margin: 0 8px 0 8px;
 	background: #FFFFFF;
 	font-size: 11px;
+	line-height: 13px;
 /*	text-shadow: 0px 1px 0px #fff;  */
 	}
 
@@ -1170,6 +1175,7 @@ SIDEBAR
 	margin: 0 8px 0 8px;
 	background: #00B904;
 	font-size: 11px;
+	line-height: 13px;
 /*	text-shadow: 0px 1px 0px #333;  */
 	}
 
@@ -1191,6 +1197,7 @@ SIDEBAR
 	margin: 0 8px 0 8px;
 	background: #4081EC;
 	font-size: 11px;
+	line-height: 13px;
 /*	text-shadow: 0px 1px 0px #fff;  */
 	}
 
@@ -1211,6 +1218,7 @@ SIDEBAR
 	margin: 0 7px 0 8px;
 	background: #FFFFFF;
 	font-size: 11px;
+	line-height: 13px;
 /*	text-shadow: 0px 1px 0px #fff;  */
 	}
 
@@ -1245,6 +1253,7 @@ span.newchannel{
 	margin: 0 8px 0 8px;
 	background: #d25c00;
 	font-size: 11px;
+	line-height: 13px;
 /*	text-shadow: 0px 1px 0px #fff;  */
 	}
 
