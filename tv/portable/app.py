@@ -27,6 +27,7 @@ import autoupdate
 import xhtmltools
 import guide
 import idlenotifier 
+import eventloop
 
 import os
 import re
@@ -421,6 +422,11 @@ class Controller (frontend.Application):
 
     def onStartup(self):
         try:
+            print "DTV: Starting event loop thread"
+            lt = threading.Thread(target = eventloop.loop, name="Event Loop")
+            lt.setDaemon(False)
+            lt.start()
+
             print "DTV: Starting scheduler"
             scheduler.ScheduleEvent.scheduler = scheduler.Scheduler()
 
@@ -604,6 +610,9 @@ class Controller (frontend.Application):
 
     def onShutdown(self):
         try:
+            print "DTV: Shutting down event loop"
+            eventloop.quit()
+            
             print "DTV: Saving preferences..."
             config.save()
 
