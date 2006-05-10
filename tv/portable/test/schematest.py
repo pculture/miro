@@ -59,8 +59,6 @@ class TestValidation(unittest.TestCase):
 
     def testSimpleContainerValidation(self):
         schemasimple = SchemaSimpleContainer()
-        schemasimple.validate(True)
-        schemasimple.validate(1)
         schemasimple.validate({1: "Ben", "pie": 3.1415})
         schemasimple.validate([1, 1, "two", "three", 5])
         schemasimple.validate({'y2k': datetime.datetime(2000, 1, 1),
