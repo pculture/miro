@@ -3,9 +3,10 @@ import re
 import socket
 from os import access, F_OK
 from urlparse import urlparse,urljoin
-from threading import RLock
+from threading import RLock, Thread
 from time import time
 from httplib import HTTPConnection, HTTPSConnection,HTTPException
+import eventloop
 
 # Pass in a connection to the frontend
 def setDelegate(newDelegate):
@@ -46,6 +47,36 @@ def nextFreeFilename(name):
             parts[insertPoint] = str(count)
             newname = '.'.join(parts)
     return newname
+
+def _grabURLThread(callback, url, start, etag, modified, findHTTPAuth, getBody, args, kwargs):
+    if getBody == False:
+        info = grabURL(url, "HEAD", start, etag, modified, findHTTPAuth)
+        if info == None:
+            info = grabURL (url, "GET", start, etag, modified, findHTTPAuth)
+    else:
+        info = grabURL(url, "GET", start, etag, modified, findHTTPAuth)
+        if info:
+            info["body"] = info["file-handle"].read()
+    args[:0] = [info]
+    eventloop.addIdle (callback, args, kwargs)
+
+# args and kargs are passed directly to grabURL  Any extra args are passed to callback.
+def grabURLAsync(callback, url, start=0, etag=None, modified=None, findHTTPAuth=None, getBody=True, args = (), kwargs = {}):
+    request = {}
+    request["callback"] = callback
+    request["url"] = url
+    request["start"] = start
+    request["etag"] = etag
+    request["modified"] = modified
+    request["findHTTPAuth"] = findHTTPAuth
+    request["getBody"] = getBody
+    request["args"] = args
+    request["kwargs"] = kwargs
+    thread = Thread(target=_grabURLThread,\
+                    name="grabURL",
+                    kwargs=request)
+    thread.setDaemon(True)
+    thread.start()
 
 # FIXME: Currently, returns a None object in the case where it can't
 # download the file. In the future, we should probably raise
