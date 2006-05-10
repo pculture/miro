@@ -841,11 +841,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
         else:
             frontend.HTMLDisplay.__init__(self, html, frameHint=frameHint, areaHint=areaHint, baseURL=baseURL)
 
-            thread = threading.Thread(target=self.templateHandle.initialFillIn,\
-                                      name="Initial fillin for template %s" %\
-                                      templateName)
-            thread.setDaemon(False)
-            thread.start()
+            self.templateHandle.initialFillIn()
 
     def runActionURLs(self, triggers):
         newPage = False
