@@ -3,6 +3,7 @@ import subprocess
 import string
 import os
 import urllib
+import socket
 import threading
 import traceback
 import time
@@ -200,3 +201,18 @@ class AutoflushingStream:
         return self.stream.__getattr__(name)
     def __setattr__(self, name, value):
         return self.stream.__setattr__(name, value)
+
+def makeDummySocketPair():
+    """Create a pair of sockets connected to each other on the local
+    interface.  Used to implement SocketHandler.wakeup().
+    """
+
+    dummy_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    dummy_server.bind( ('127.0.0.1', 0) )
+    dummy_server.listen(1)
+    server_address = dummy_server.getsockname()
+    first = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    first.connect(server_address)
+    second, address = dummy_server.accept()
+    dummy_server.close()
+    return first, second
