@@ -57,8 +57,7 @@ def _grabURLThread(callback, url, start, etag, modified, findHTTPAuth, getBody, 
         info = grabURL(url, "GET", start, etag, modified, findHTTPAuth)
         if info:
             info["body"] = info["file-handle"].read()
-    args[:0] = [info]
-    eventloop.addIdle (callback, args, kwargs)
+    eventloop.addIdle (callback, (info,) + args, kwargs)
 
 # args and kargs are passed directly to grabURL  Any extra args are passed to callback.
 def grabURLAsync(callback, url, start=0, etag=None, modified=None, findHTTPAuth=None, getBody=True, args = (), kwargs = {}):
