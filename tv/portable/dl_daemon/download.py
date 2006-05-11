@@ -1,7 +1,6 @@
 import os
 import sys
 import bsddb
-import random
 import shutil
 import types
 from os import remove
@@ -27,8 +26,6 @@ from dl_daemon import command, daemon, remoteconfig
 
 # a hash of download ids to downloaders
 _downloads = {}
-# a hash of URLs to downloaders
-_downloads_by_url = {}
 
 # BitTornado defaults
 defaults = [
@@ -165,16 +162,6 @@ def findHTTPAuth(*args, **kws):
     x = command.FindHTTPAuthCommand(daemon.lastDaemon, *args, **kws)
     return x.send(block = True, retry = True)
 
-def generateDownloadID():
-    _lock.acquire()
-    try:
-        dlid = "download%08d" % random.randint(0,99999999)
-        while _downloads.has_key(dlid):
-            dlid = "download%08d" % random.randint(0,99999999)
-    finally:
-        _lock.release()
-    return dlid
-
 def createDownloader(url, contentType, dlid):
     if contentType == 'application/x-bittorrent':
         return BTDownloader(url, dlid)
@@ -182,19 +169,9 @@ def createDownloader(url, contentType, dlid):
         return HTTPDownloader(url, dlid)
 
 # Creates a new downloader object. Returns id on success, None on failure
-def startNewDownload(url, contentType):
-    _lock.acquire()
-    try:
-        if _downloads_by_url.has_key(url):
-            dlid = _downloads_by_url[url].dlid
-        else:
-            dlid = generateDownloadID()
-            dl = createDownloader(url, contentType, dlid)
-            _downloads[dlid] = dl
-            _downloads_by_url[url] = dl
-    finally:
-        _lock.release()
-        return dlid
+def startNewDownload(url, dlid, contentType):
+    dl = createDownloader(url, contentType, dlid)
+    _downloads[dlid] = dl
 
 def pauseDownload(dlid):
     try:
@@ -219,9 +196,6 @@ def stopDownload(dlid):
         try:
             download = _downloads[dlid]
             del _downloads[dlid]
-            # A download may be referred to by multiple ids
-            if not download in _downloads:
-                del _downloads_by_url[download.url]
         finally:
             _lock.release()
     except: # There is no download with this id
@@ -268,7 +242,6 @@ def restoreDownloader(downloader):
         return
 
     _downloads[downloader['dlid']] = dl
-    _downloads_by_url[downloader['url']] = dl
 
 class BGDownloader:
     def __init__(self, url, dlid):

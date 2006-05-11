@@ -408,7 +408,6 @@ class Item(DDBObject):
     # Stops downloading the item
     def stopDownload(self):
         for dler in self.downloaders:
-            dler.stop()
             dler.remove()
         self.beginRead()
         try:
