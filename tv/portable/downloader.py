@@ -261,15 +261,16 @@ URL was %s""" % self.url
             self.endRead()
 
     def restartIfNeeded(self):
-        if self.dlid == 'noid' or len(self.status) == 0:
-            thread = Thread(target=self.runDownloader, \
-                            name="downloader -- %s" % self.url)
-            thread.setDaemon(True)
-            thread.start()
-        elif self.getState() in ['downloading','uploading']:
-            c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, 
-                    self.status)
-            c.send(retry = True, block = False)
+        if self.getState() in ('downloading','uploading'):
+            if len(self.status) == 0 or self.dlid == 'noid':
+                thread = Thread(target=self.runDownloader, \
+                                name="downloader -- %s" % self.url)
+                thread.setDaemon(True)
+                thread.start()
+            else:
+                c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, 
+                        self.status)
+                c.send(retry = True, block = False)
 
 def cleanupIncompleteDownloads():
     downloadDir = os.path.join(config.get(config.MOVIES_DIRECTORY),

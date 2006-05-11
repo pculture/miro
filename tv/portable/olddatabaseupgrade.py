@@ -105,7 +105,7 @@ class OldItem(OldDDBObject):
                 self.__class__ = DropItLikeItsHot
 
         self.iconCache = None
-        if not 'downloadedTime' in state:
+        if not 'downloadedTime' in data:
             self.downloadedTime = None
 
 class OldFileItem(OldItem):
