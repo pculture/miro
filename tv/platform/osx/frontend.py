@@ -191,9 +191,9 @@ class AppController (NibClassBuilder.AutoBaseClass):
         # Call shutdown on backend
         self.actualApp.onShutdown()
 
-    def application_openFile_(self, app, filename):
-        self.openFile(filename)
-        return YES
+    def application_openFiles_(self, app, filenames):
+        AppHelper.callAfter(self.openFiles, filenames)
+        app.replyToOpenOrPrint_(NSApplicationDelegateReplySuccess)
 
     def addTorrent(self, path):
         try:
@@ -284,19 +284,21 @@ class AppController (NibClassBuilder.AutoBaseClass):
         result = openPanel.runModalForDirectory_file_types_(NSHomeDirectory(), nil, nil)
         if result == NSOKButton:
             filenames = openPanel.filenames()
-            for f in filenames:
-                self.openFile(f)
+            self.openFiles(filenames)
                 
-    def openFile(self, filename):
-        root, ext = os.path.splitext(filename.lower())
-        if ext == ".democracy":
-            AppHelper.callAfter(singleclick.addSubscriptions, filename)
-        elif ext == ".torrent":
-            AppHelper.callAfter(self.addTorrent, filename)
-        elif ext in (".rss", ".rdf", ".atom"):
-            AppHelper.callAfter(singleclick.addFeed, filename)
-        else:
-            AppHelper.callAfter(self.addVideo, filename)
+    def openFiles(self, filenames):
+        singleclick.resetCommandLineView()
+        for filename in filenames:
+            root, ext = os.path.splitext(filename.lower())
+            if ext == ".democracy":
+                singleclick.addSubscriptions(filename)
+            elif ext == ".torrent":
+                self.addTorrent(filename)
+            elif ext in (".rss", ".rdf", ".atom"):
+                singleclick.addFeed(filename)
+            else:
+                self.addVideo(filename)
+        singleclick.playCommandLineView()
 
     def donate_(self, sender):
         print "NOT IMPLEMENTED"
