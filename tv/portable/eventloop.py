@@ -12,34 +12,26 @@ import threading
 import socket
 import select
 import heapq
+import Queue
+import util
 
 from BitTornado.clock import clock
 
 import util
 
-READ_WATCH = 1 << 0
-WRITE_WATCH = 1 << 1
-
-_quitFlag = False
-_wakerSocket, _wakeeSocket = util.makeDummySocketPair()
-
-def wakeup():
-    _wakerSocket.send("B")
-
-def watchSocket(socket, type, callback, errback):
-    """Create a watch on a socket.  type must be a bitwise combination of
-    READ_WATCH and WRITE_WATCH.  When the socket becomes available for
-    readinrg/writing, callback will be called.  If we detect and error on the
-    socket, errback will be called.
-
-    It's okay to call watchSocket with a socket that already has a watch on
-    it.  This can be used to change the type of watch.
-    """
-    pass
-
-def removeWatch(socket):
-    """Remove a watch on a socket."""
-    pass
+def callSafely(function, args=None, kwargs=None):
+    if args is None:
+        args = ()
+    if kwargs is None:
+        kwargs = {}
+    try:
+        function(*args, **kwargs)
+    except:
+        print "Exception while calling %s" % function
+        traceback.print_exc()
+        return False
+    else:
+        return True
 
 class DelayedCall(object):
     def __init__(self, function, args, kwargs):
@@ -52,78 +44,168 @@ class DelayedCall(object):
         self.canceled = True
 
     def dispatch(self):
-        if self.canceled:
-            return
-        try:
-            self.function(*self.args, **self.kwargs)
-        except:
-            print "Exception in DelayedCall:"
-            traceback.print_exc()
+        if not self.canceled:
+            try:
+                self.function(*self.args, **self.kwargs)
+            except:
+                print "Exception in timeout %s" % function
+                traceback.print_exc()
 
 class Scheduler(object):
     def __init__(self):
         self.heap = []
-        self.lock = threading.Lock()
 
-    def addTimeout(self, delay, function, args=(), kwargs={}):
+    def addTimeout(self, delay, function, args=None, kwargs=None):
+        if args is None:
+            args = ()
+        if kwargs is None:
+            kwargs = {}
         scheduledTime = clock() + delay
         dc = DelayedCall(function, args, kwargs)
-        self.lock.acquire()
-        try:
-            heapq.heappush(self.heap, (scheduledTime, dc))
-        finally:
-            self.lock.release()
+        heapq.heappush(self.heap, (scheduledTime, dc))
         return dc
 
     def nextTimeout(self):
-        self.lock.acquire()
-        try:
-            if len(self.heap) == 0:
-                return None
-            else:
-                return max(0, self.heap[0][0] - clock())
-        finally:
-            self.lock.release()
+        if len(self.heap) == 0:
+            return None
+        else:
+            return max(0, self.heap[0][0] - clock())
 
     def processTimeouts(self):
-        while True:
-            self.lock.acquire()
-            try:
-                if len(self.heap) > 0 and self.heap[0][0] < clock():
-                    time, dc = heapq.heappop(self.heap)
-                else:
-                    break
-            finally:
-                self.lock.release()
+        while len(self.heap) > 0 and self.heap[0][0] < clock():
+            time, dc = heapq.heappop(self.heap)
             dc.dispatch()
 
-_scheduler = Scheduler()
+class IdleQueue(object):
+    def __init__(self):
+        self.queue = Queue.Queue()
 
-def addTimeout(delay, function, args=(), kwargs={}):
+    def addIdle(self, function, args=None, kwargs=None):
+        if args is None:
+            args = ()
+        if kwargs is None:
+            kwargs = {}
+        self.queue.put((function, args, kwargs))
+
+    def processIdles(self):
+        while not self.queue.empty():
+            function, args, kwargs = self.queue.get()
+            try:
+                function(*args, **kwargs)
+            except:
+                print "Exception in idle function: %s" % function
+                traceback.print_exc()
+
+class EventLoop(object):
+    def __init__(self):
+        self.scheduler = Scheduler()
+        self.idleQueue = IdleQueue()
+        self.readCallbacks = {}
+        self.writeCallbacks = {}
+        self.wakeSender, self.wakeReceiver = util.makeDummySocketPair()
+        self.addReadCallback(self.wakeReceiver, self._slurpWakerData)
+        self.quitFlag = False
+
+    def _slurpWakerData(self):
+        self.wakeReceiver.recv(1024)
+
+    def addReadCallback(self, socket, callback):
+        self.readCallbacks[socket.fileno()] = callback
+
+    def removeReadCallback(self, socket):
+        del self.readCallbacks[socket.fileno()]
+
+    def addWriteCallback(self, socket, callback):
+        self.writeCallbacks[socket.fileno()] = callback
+
+    def removeWriteCallback(self, socket):
+        del self.writeCallbacks[socket.fileno()]
+
+    def wakeup(self):
+        self.wakeSender.send("b")
+
+    def doCallbacks(self, readyList, map):
+        for fd in readyList:
+            try:
+                function = map[fd]
+            except KeyError:
+                util.failedExn("While talking to the network")
+            else:
+                try:
+                    function()
+                except:
+                    print "Exception in socket callback: %s" % function
+                    traceback.print_exc()
+                    del map[fd] 
+                    # remove the callback, since it's likely to fail
+                    # forever
+
+    def loop(self):
+        while not self.quitFlag:
+            timeout = self.scheduler.nextTimeout()
+            readfds = self.readCallbacks.keys()
+            writefds = self.writeCallbacks.keys()
+            readables, writeables, _ = select.select(readfds, writefds, [],
+                    timeout)
+            self.doCallbacks(writeables, self.writeCallbacks)
+            self.doCallbacks(readables, self.readCallbacks)
+            if self.quitFlag:
+                break
+            self.scheduler.processTimeouts()
+            if self.quitFlag:
+                break
+            self.idleQueue.processIdles()
+            if self.quitFlag:
+                break
+
+_eventLoop = EventLoop()
+
+def addReadCallback(socket, callback):
+    _eventLoop.addReadCallback(socket, callback)
+
+def removeReadCallback(socket):
+    _eventLoop.removeReadCallback(socket)
+
+def addWriteCallback(socket, callback):
+    _eventLoop.addWriteCallback(socket, callback)
+
+def removeWriteCallback(socket):
+    _eventLoop.removeWriteCallback(socket)
+
+def stopHandlingSocket(socket):
+    """Convience function to that removes both the read and write callback for
+    a socket if they exist."""
+    try:
+        removeReadCallback(socket)
+    except KeyError:
+        pass
+    try:
+        removeWriteCallback(socket)
+    except KeyError:
+        pass
+
+def addTimeout(delay, function, args=None, kwargs=None):
     """Schedule a function to be called at some point in the future.
-    Returns a DelayedCall object that can be used to cancel the timeout.
+    Returns a DelayedCall object that can be used to cancel the call.
     """
 
-    dc = _scheduler.addTimeout(delay, function, args, kwargs)
-    wakeup()
+    dc = _eventLoop.scheduler.addTimeout(delay, function, args, kwargs)
+    _eventLoop.wakeup()
     return dc
 
-def addIdle(function, *args, **kwargs):
+def addIdle(function, args=None, kwargs=None):
     """Schedule a function to be called when we get some spare time.
-    Returns a DelayedCall object that can be used to cancel the timeout.
+    Returns a DelayedCall object that can be used to cancel the call.
     """
-    return addTimeout(0, function, *args, **kwargs)
+
+    _eventLoop.idleQueue.addIdle(function, args, kwargs)
+    _eventLoop.wakeup()
+
+def startup():
+    lt = threading.Thread(target=_eventLoop.loop, name="Event Loop")
+    lt.setDaemon(False)
+    lt.start()
 
 def quit():
-    global _quitFlag
-    _quitFlag = True
-    wakeup()
-
-def loop():
-    while not _quitFlag:
-        timeout = _scheduler.nextTimeout()
-        (inputReady, outputReady, exceptions) = select.select([_wakeeSocket], 
-                [], [], timeout)
-        if _wakeeSocket in inputReady:
-            _wakeeSocket.recv(1024)
-        _scheduler.processTimeouts()
+    _eventLoop.quitFlag = True
+    _eventLoop.wakeup()

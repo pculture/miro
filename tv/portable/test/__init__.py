@@ -14,3 +14,4 @@ from test.olddatabaseupgradetest import *
 from test.databasesanitytest import *
 from test.subscriptiontest import *
 from test.schedulertest import *
+from test.httpclienttest import *

@@ -424,9 +424,7 @@ class Controller (frontend.Application):
     def onStartup(self):
         try:
             print "DTV: Starting event loop thread"
-            lt = threading.Thread(target = eventloop.loop, name="Event Loop")
-            lt.setDaemon(False)
-            lt.start()
+            eventloop.startup()
 
             print "DTV: Starting scheduler"
             scheduler.ScheduleEvent.scheduler = scheduler.Scheduler()
