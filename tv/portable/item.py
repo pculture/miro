@@ -942,13 +942,17 @@ def getEntryForFile(filename):
 ##
 # An Item that exists as a local file
 class FileItem(Item):
+
     def __init__(self,feed,filename):
         filename = os.path.abspath(filename)
         self.filename = filename
         Item.__init__(self, feed, getEntryForFile(filename))
 
     def getState(self):
-        return "saved"
+        if self.getSeen():
+            return "saved"
+        else:
+            return "finished"
 
     def expire(self):
         self.remove()
