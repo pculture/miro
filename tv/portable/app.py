@@ -47,6 +47,7 @@ from iconcache import iconCacheUpdater
 import templatehelper
 import databasehelper
 import fasttypes
+import urllib
 
 from dl_daemon import daemon
 
@@ -906,7 +907,12 @@ class TemplateDisplay(frontend.HTMLDisplay):
             if url.startswith(config.get(config.CHANNEL_GUIDE_URL)):
                 return True
             if url.startswith('file://'):
-                return True
+                if url.endswith ('.html'):
+                    return True
+                else:
+                    filename = urllib.unquote(url[len('file://'):])
+                    singleclick.openFile (filename)
+                    return False
 
             # If we get here, this isn't a DTV URL. We should open it
             # in an external browser.
