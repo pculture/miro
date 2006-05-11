@@ -442,7 +442,7 @@ float: left;
 
 .main-video-details-unwatched p, .main-video-details-expiry p, .main-video-details-new p {
 	color: #486D9F;
-	text-trasnform: capitalize;
+	text-transform: capitalize;
 	font-size: 80%;
 	font-weight: bold;
 	margin: 0px;
