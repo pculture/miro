@@ -1,9 +1,11 @@
-import config
-import eventloop
 import socket
 import errno
-import downloader
 from urlparse import urlparse
+
+import config
+import downloader
+import eventloop
+import util
 
 class NetworkBuffer(object):
     """Responsible for storing incomming network data and doing some basic
@@ -12,9 +14,11 @@ class NetworkBuffer(object):
     """
     def __init__(self):
         self.chunks = []
+        self.length = 0
 
     def addData(self, data):
         self.chunks.append(data)
+        self.length += len(data)
 
     def _mergeChunks(self):
         self.chunks = [''.join(self.chunks)]
@@ -30,6 +34,7 @@ class NetworkBuffer(object):
         else:
             rv = self.chunks[0]
             self.chunks = []
+        self.length -= len(rv)
         return rv
 
     def readline(self, sep='\r\n'):
@@ -42,9 +47,21 @@ class NetworkBuffer(object):
         split = self.chunks[0].split(sep, 1)
         if len(split) == 2:
             self.chunks[0] = split[1]
+            self.length = len(self.chunks[0])
             return split[0]
         else:
             return None
+
+    def unread(self, data):
+        """Put back read data.  This make is like the data was never read at
+        all.
+        """
+        self.chunks.insert(0, data)
+        self.length += len(data)
+
+    def printout(self):
+        self._mergeChunks()
+        print self.chunks[0]
 
 class ConnectionHandler(object):
     """Base class to handle socket connections.  It's a thin wrapper our now
@@ -76,6 +93,9 @@ class ConnectionHandler(object):
         if self.connected:
             eventloop.stopHandlingSocket(self.socket)
             self.socket.shutdown(socket.SHUT_RDWR)
+            self.connected = False
+            self.socket = None
+            self.state = 'closed'
 
     def sendData(self, data):
         self.toSend += data
@@ -112,6 +132,18 @@ class ConnectionHandler(object):
         """Handle a chunk of data coming in from the wire"""
         raise NotImplementError()
 
+class HTTPError(Exception):
+    pass
+
+class BadStatusLine(HTTPError):
+    pass
+
+class BadHeaderLine(HTTPError):
+    pass
+
+class ServerClosedConnection(HTTPError):
+    pass
+
 class HTTPRequest(ConnectionHandler):
     MAX_REDIRECTIONS = 10
     MAX_AUTH_REQUEST = 5
@@ -127,10 +159,12 @@ class HTTPRequest(ConnectionHandler):
         self.errback = errback
         self.host = host
         self.port = port
-        self.response = self.createNewResponse()
+        self.startNewResponse()
         self.buffer = NetworkBuffer()
         self.openConnection(self.host, self.port)
+        self.shortVersion = 0
         self.state = 'ready'
+        self.unparsedHeaderLine = ''
 
     def sendRequest(self, method="GET", path='/', headers=None):
         self.method = method
@@ -147,13 +181,14 @@ class HTTPRequest(ConnectionHandler):
         self.state = "response-status"
         self.startReading()
 
-    def createNewResponse(self):
-        return {
-            'status': None, 
-            'status-message': None, 
-            'headers': {}, 
-            'body' : None
-        }
+    def startNewResponse(self):
+        self.version = None
+        self.status = None
+        self.reason = None
+        self.headers = {}
+        self.body = None
+        self.expectedLength = None
+        self.willClose = None
 
     def formatRequest(self):
         sendOut = []
@@ -168,26 +203,168 @@ class HTTPRequest(ConnectionHandler):
         if self.state == "response-status":
             line = self.buffer.readline()
             if line is not None:
-                self.response['status'] = line
-                self.state = 'response-headers'
+                self.handleStatusLine(line)
+                if self.shortVersion != 9:
+                    self.state = 'response-headers'
+                else:
+                    self.headersDone()
         if self.state == "response-headers":
             line = self.buffer.readline()
-            while line is not None and self.state == 'response-headers':
+            while line is not None:
                 self.handleHeaderLine(line)
-                line = self.buffer.readline()
+                if self.state == 'response-headers':
+                    line = self.buffer.readline()
+                else:
+                    break
+        if self.state == 'response-body':
+            if (self.expectedLength is not None and 
+                    self.buffer.length >= self.expectedLength):
+                self.body = self.buffer.read(self.expectedLength)
+                self.sendCallback()
+                self.state = 'ready'
+
+    def handleStatusLine(self, line):
+        try:
+            (version, status, reason) = line.split(None, 2)
+        except ValueError:
+            try:
+                (version, status) = line.split(None, 1)
+                reason = ""
+            except ValueError:
+                # empty version will cause next test to fail and status
+                # will be treated as 0.9 response.
+                version = ""
+        if not version.startswith('HTTP/'):
+            # assume it's a Simple-Response from an 0.9 server
+            self.buffer.unread(line + '\r\n')
+            self.version = "HTTP/0.9"
+            self.status = 200
+            self.reason = ""
+            self.shortVersion = 9
+        else:
+            try:
+                status = int(status)
+                if status < 100 or status > 599:
+                    self.handleError(BadStatusLine(line))
+                    return
+            except ValueError:
+                self.handleError(BadStatusLine(line))
+                return
+            if version == 'HTTP/1.0':
+                self.shortVersion = 10
+            elif version.startswith('HTTP/1.'):
+                # use HTTP/1.1 code for HTTP/1.x where x>=1
+                self.shortVersion = 11
+            else:
+                self.handleError(BadStatusLine(line))
+                return
+            self.version = version
+            self.status = status
+            self.reason = reason
 
     def handleHeaderLine(self, line):
-        if line == '':
-            self.state = 'response-body'
+        if self.unparsedHeaderLine == '':
+            if line == '':
+                self.headersDone()
+            elif ':' in line:
+                self.parseHeader(line)
+            else:
+                self.unparsedHeaderLine = line
         else:
-            header, value = line.split(":", 1)
-            self.response['headers'][header] = value
+            # our last line may have been a continued header, or it may be
+            # garbage, 
+            if len(line) > 0 and line[0] in (' ', '\t'):
+                self.unparsedHeaderLine += line.lstrip()
+                if ':' in self.unparsedHeaderLine:
+                    self.parseHeader(self.unparsedHeaderLine)
+                    self.unparsedHeaderLine = ''
+            else:
+                msg = "line: %s, next line: %s" % (self.unparsedHeaderLine, 
+                        line)
+                self.handleError(BadHeaderLine(msg))
+
+    def parseHeader(self, line):
+        header, value = line.split(":", 1)
+        value = value.strip()
+        header = header.lstrip().lower()
+        if value == '':
+            self.handleError(BadHeaderLine(line))
+            return
+        if header not in self.headers:
+            self.headers[header] = value
+        else:
+            self.headers[header] += (',%s' % value)
+
+    def headersDone(self):
+        if ((100 <= self.status <= 199) or self.status in (204, 304) or
+                self.method == 'HEAD'):
+            self.state = 'ready'
+        else:
+            self.state = 'response-body'
+            self.findExpectedLength()
+            self.decideWillClose()
+
+    def findExpectedLength(self):
+        if self.headers.get('transfer-encoding') != 'identity':
+            try:
+                self.expectedLength = int(self.headers['content-length'])
+            except (ValueError, KeyError):
+                pass
+            if self.expectedLength < 0:
+                self.expectedLength = None
+
+    def decideWillClose(self):
+        # this was basically ripped out from httplib.HTTPConnection
+        if 'close' in self.headers.get('connection', ''):
+            self.willClose = True
+        elif self.version == 11:
+            self.willClose = False
+        elif 'keep-alive' in self.headers:
+            # For older HTTP, Keep-Alive indiciates persistent connection.
+            self.willClose = False
+        elif 'keep-alive' in self.headers.get('connection', ''):
+            # At least Akamai returns a "Connection: Keep-Alive" header, which
+            # was supposed to be sent by the client.
+            self.willClose = False
+        elif "keep-alive" in self.headers.get('proxy-connection', '').lower():
+            # Proxy-Connection is a netscape hack.
+            self.willClose = False
+        else:
+            # otherwise, assume it will close
+            return True
+
+    def sendCallback(self):
+        response = {
+            'version': self.version,
+            'status': self.status,
+            'reason': self.reason,
+            'headers': self.headers,
+            'body': self.body,
+        }
+        try:
+            self.callback(response)
+        except:
+            util.failedExn("While talking to the network")
+            self.closeConnection()
         
     def handleClose(self, type):
-        print "CLOSEd %s" % self.host
-        self.response['body'] = self.buffer.read()
         self.closeConnection()
-        self.callback(self.response)
+        if self.state == 'response-body':
+            if self.expectedLength is None:
+                self.body = self.buffer.read()
+                self.sendCallback()
+            elif self.expectedLength >= self.buffer.length:
+                self.body = self.buffer.read(self.expectedLength)
+                self.sendCallback()
+            else:
+                self.errback(ServerClosedConnection())
+
+        else:
+            self.errback(ServerClosedConnection())
+
+    def handleError(self, error):
+        self.closeConnection()
+        self.errback(error)
 
     def NOTDONEYET():
         download = connectionPool.getRequest(scheme,host,type, path, headers = myHeaders)

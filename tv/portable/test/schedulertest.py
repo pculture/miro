@@ -4,15 +4,28 @@ import threading
 
 import eventloop
 
+class HadToStopEventLoop(Exception):
+    pass
+
 class EventLoopTest(unittest.TestCase):
     def setUp(self):
         eventloop._scheduler = eventloop.Scheduler()
         eventloop._eventLoop.quitFlag = False
+        self.hadToStopEventLoop = False
+
+    def stopEventLoop(self):
+        self.hadToStopEventLoop = True
+        eventloop.quit()
+
+    def runEventLoop(self, timeout=10):
+        self.hadToStopEventLoop = False
+        eventloop.addTimeout(timeout, self.stopEventLoop)
+        eventloop._eventLoop.loop()
+        if self.hadToStopEventLoop:
+            raise HadToStopEventLoop()
 
 class SchedulerTest(EventLoopTest):
     def setUp(self):
-        eventloop._scheduler = eventloop.Scheduler()
-        eventloop._eventLoop.quitFlag = False
         self.gotArgs = []
         self.gotKwargs = []
         EventLoopTest.setUp(self)
@@ -29,7 +42,7 @@ class SchedulerTest(EventLoopTest):
                 kwargs={'hula':"hula"})
         eventloop.addTimeout(0.2, self.callback, args=("ben",), 
                 kwargs={'hula':'moreHula', 'stop':1})
-        eventloop._eventLoop.loop()
+        self.runEventLoop()
         self.assertEquals(self.gotArgs[0], ())
         self.assertEquals(self.gotArgs[1], ("chris",))
         self.assertEquals(self.gotArgs[2], ("ben",))
@@ -40,13 +53,13 @@ class SchedulerTest(EventLoopTest):
     def testQuitWithStuffStillScheduled(self):
         eventloop.addTimeout(0.1, self.callback, kwargs={'stop':1})
         eventloop.addTimeout(2, self.callback)
-        eventloop._eventLoop.loop()
+        self.runEventLoop()
         self.assertEquals(len(self.gotArgs), 1)
 
     def testTiming(self):
         startTime = time()
         eventloop.addTimeout(0.2, self.callback, kwargs={'stop':1})
-        eventloop._eventLoop.loop()
+        self.runEventLoop()
         endTime = time()
         self.assertAlmostEqual(startTime + 0.2, endTime, places=1)
 
@@ -61,6 +74,6 @@ class SchedulerTest(EventLoopTest):
             t = threading.Thread(target=thread)
             t.start()
         eventloop.addTimeout(1, self.callback, kwargs={'stop':1})
-        eventloop._eventLoop.loop()
+        self.runEventLoop()
         totalCalls = len(timeouts) * threadCount + 1
         self.assertEquals(len(self.gotArgs), totalCalls)

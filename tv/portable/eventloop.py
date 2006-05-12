@@ -7,7 +7,6 @@ TODO:
     handle user setting clock back
 """
 
-import traceback
 import threading
 import socket
 import select
@@ -18,20 +17,6 @@ import util
 from BitTornado.clock import clock
 
 import util
-
-def callSafely(function, args=None, kwargs=None):
-    if args is None:
-        args = ()
-    if kwargs is None:
-        kwargs = {}
-    try:
-        function(*args, **kwargs)
-    except:
-        print "Exception while calling %s" % function
-        traceback.print_exc()
-        return False
-    else:
-        return True
 
 class DelayedCall(object):
     def __init__(self, function, args, kwargs):
@@ -48,8 +33,7 @@ class DelayedCall(object):
             try:
                 self.function(*self.args, **self.kwargs)
             except:
-                print "Exception in timeout %s" % function
-                traceback.print_exc()
+                util.failedExn("While handling timeout")
 
 class Scheduler(object):
     def __init__(self):
@@ -93,8 +77,7 @@ class IdleQueue(object):
             try:
                 function(*args, **kwargs)
             except:
-                print "Exception in idle function: %s" % function
-                traceback.print_exc()
+                util.failedExn("While handling idle call")
 
 class EventLoop(object):
     def __init__(self):
@@ -134,11 +117,9 @@ class EventLoop(object):
                 try:
                     function()
                 except:
-                    print "Exception in socket callback: %s" % function
-                    traceback.print_exc()
+                    util.failedExn("While talking to the network")
                     del map[fd] 
-                    # remove the callback, since it's likely to fail
-                    # forever
+                    # remove the callback, since it's likely to fail forever
 
     def loop(self):
         while not self.quitFlag:
