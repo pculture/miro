@@ -300,19 +300,20 @@ URL was %s""" % self.url
             self.endRead()
 
     def restartIfNeeded(self):
-        if self.dlid == 'noid' or len(self.status) == 0:
-            self.runDownloader()
-        elif self.getState() in ['downloading','uploading']:
-            if _downloads_by_url.has_key(self.url):
-                _downloads_by_url[self.url]["count"] += 1
+        if self.getState() in ('downloading','uploading'):
+            if self.dlid == 'noid' or len(self.status) == 0:
+                self.runDownloader()
             else:
-                _downloads_by_url[self.url] = {}
-                _downloads_by_url[self.url]["dlid"] = self.dlid
-                _downloads_by_url[self.url]["count"] = 1
-                _downloads[self.dlid] = self.dlid
-            c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, 
-                                                 self.status)
-            c.send(retry = True, block = False)
+                if _downloads_by_url.has_key(self.url):
+                    _downloads_by_url[self.url]["count"] += 1
+                else:
+                    _downloads_by_url[self.url] = {}
+                    _downloads_by_url[self.url]["dlid"] = self.dlid
+                    _downloads_by_url[self.url]["count"] = 1
+                    _downloads[self.dlid] = self.dlid
+                c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, 
+                                                     self.status)
+                c.send(retry = True, block = False)
 
 def cleanupIncompleteDownloads():
     downloadDir = os.path.join(config.get(config.MOVIES_DIRECTORY),
