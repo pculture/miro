@@ -10,6 +10,10 @@ class ReadWriteLockDummy:
         self.lock.release()
     def release_read (self):
         self.lock.release()
+
+class LockError:
+    pass
+
 class ReadWriteLockActual:
     def __init__ (self):
         self.lock = threading.RLock()
@@ -32,18 +36,20 @@ class ReadWriteLockActual:
             self.local.write_locked = 0
 
     def printout (self):
-        # print "read_locked:", self.read_locked
-        # print "local read_locked:", self.local.read_locked
-        # print "local write_locked:", self.local.write_locked
+#        print "read_locked:", self.read_locked
+#        print "local read_locked:", self.local.read_locked
+#        print "local write_locked:", self.local.write_locked
         pass
 
     def acquire_write (self):
-        # print "attempt to acquire write: ", threading.currentThread()
+#        print "attempt to acquire write: ", threading.currentThread()
         self.lock.acquire()
-        # print "acquire write: ", threading.currentThread()
+#        print "acquire write: ", threading.currentThread()
         self.check_locals()
         if self.local.write_locked == 0:
             self.read_locked = self.read_locked - self.local.read_locked
+#            if (self.local.read_locked != 0):
+#                raise LockError()
             self.write_waiting = self.write_waiting + 1
             while self.read_locked > 0:
                 self.write_cond.wait()
@@ -52,7 +58,7 @@ class ReadWriteLockActual:
         self.printout()
 
     def release_write (self):
-        # print "release write: ", threading.currentThread()
+#        print "release write: ", threading.currentThread()
         self.check_locals()
         self.local.write_locked = self.local.write_locked - 1
         if self.local.write_locked == 0:
@@ -65,9 +71,9 @@ class ReadWriteLockActual:
         self.lock.release()
 
     def acquire_read (self):
-        # print "attempt to acquire read: ", threading.currentThread()
+#        print "attempt to acquire read: ", threading.currentThread()
         self.lock.acquire()
-        # print "acquire read: ", threading.currentThread()
+#        print "acquire read: ", threading.currentThread()
         self.check_locals()
         if self.local.write_locked == 0:
             if self.local.read_locked == 0:
@@ -79,9 +85,9 @@ class ReadWriteLockActual:
         self.lock.release()
         
     def release_read (self):
-        # print "attempt to release read: ", threading.currentThread()
+#        print "attempt to release read: ", threading.currentThread()
         self.lock.acquire()
-        # print "release read: ", threading.currentThread()
+#        print "release read: ", threading.currentThread()
         self.check_locals()
         if self.local.write_locked == 0:
             self.read_locked = self.read_locked - 1
