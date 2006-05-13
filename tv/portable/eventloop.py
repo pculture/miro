@@ -190,3 +190,22 @@ def startup():
 def quit():
     _eventLoop.quitFlag = True
     _eventLoop.wakeup()
+
+def asIdle(func):
+    """Decorator to make a methods run as an idle function
+
+    Suppose you have 2 methods, foo and bar
+
+    @asIdle
+    def foo():
+        # database operations
+
+    def bar():
+        # same database operations as foo
+
+    Then calling foo() is exactly the same as calling addIdle(bar).
+    """
+
+    def queuer(*args, **kwargs):
+        addIdle(func, args=args, kwargs=kwargs)
+    return queuer

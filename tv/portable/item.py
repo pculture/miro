@@ -352,7 +352,7 @@ class Item(DDBObject):
         self.beginRead()
         try:
             if self.iconCache.isValid():
-                basename = os.path.basename(self.iconCache.filename)
+                basename = os.path.basename(self.iconCache.getFilename())
                 return resource.iconCacheUrl(basename)
             else:
                 return "resource:images/thumb.png"
