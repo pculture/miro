@@ -207,5 +207,5 @@ def asIdle(func):
     """
 
     def queuer(*args, **kwargs):
-        addIdle(func, args=args, kwargs=kwargs)
+        return addIdle(func, args=args, kwargs=kwargs)
     return queuer
