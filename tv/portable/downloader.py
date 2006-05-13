@@ -159,15 +159,16 @@ class RemoteDownloader(DDBObject):
     # Stops the download and removes the partially downloaded
     # file.
     def stop(self):
-        print "stop ", self.url
-        _downloads_by_url[self.url]["count"] -= 1
-        if _downloads_by_url[self.url]["count"] == 0:
-            del _downloads[self.dlid]
-            del _downloads_by_url[self.url]
-            c = command.StopDownloadCommand(RemoteDownloader.dldaemon,
-                                            self.dlid)
-            c.send(block=False)
-
+        if ((self.getState() in ['downloading','uploading'])):
+            print "stop ", self.url
+            _downloads_by_url[self.url]["count"] -= 1
+            if _downloads_by_url[self.url]["count"] == 0:
+                del _downloads[self.dlid]
+                del _downloads_by_url[self.url]
+                c = command.StopDownloadCommand(RemoteDownloader.dldaemon,
+                                                self.dlid)
+                c.send(block=False)
+                
     ##
     # Continues a paused or stopped download thread
     def start(self):
