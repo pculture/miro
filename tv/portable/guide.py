@@ -1,12 +1,12 @@
 from database import DDBObject
-from download_utils import grabURL
-from scheduler import ScheduleEvent
+from download_utils import grabURLAsync
 from xhtmltools import urlencode
 from copy import copy
 import re
 import config
 import threading
 import urllib
+import eventloop
 
 HTMLPattern = re.compile("^.*(<head.*?>.*</body\s*>)", re.S)
 
@@ -28,6 +28,8 @@ guideNotAvailableBody = """
   </p>
 </body>
 """
+
+#""" Fix emacs misparse for coloration.
 
 # Desired semantics:
 #  * The first time getHTML() is called (ever, across sessions), the user
@@ -78,12 +80,14 @@ class ChannelGuide(DDBObject):
         DDBObject.__init__(self)
         # Start loading the channel guide.
         self.startLoadsIfNecessary()
+        self.dc = None
 
     ##
     # Called by pickle during deserialization
     def onRestore(self):
         self.cond = threading.Condition()
         self.loadedThisSession = False
+        self.dc = None
 
         # Try to get a fresh version.
         # NEEDS: There's a race between self.update finishing and
@@ -99,11 +103,15 @@ class ChannelGuide(DDBObject):
             pass
         else:
             # Uses precaching. Set up an initial update, plus hourly reloads..
-            ScheduleEvent(0, self.update, False)
-            ScheduleEvent(3600, self.update, True)
+            self.startUpdates()
 
     def setSawIntro(self):
         self.sawIntro = True
+
+    def startUpdates(self):
+        if self.dc:
+            self.dc.cancel()
+        self.dc = eventloop.addIdle (self.update)
 
     # How should we load the guide? Returns (scheme, value). If scheme is
     # 'url', value is a URL that should be loaded directly in the frame.
@@ -145,7 +153,7 @@ class ChannelGuide(DDBObject):
                 # Start a new attempt, so that clicking on the guide
                 # tab again has at least a chance of working
                 print "DTV: No guide available! Sending apology instead."
-                ScheduleEvent(0, self.update, False)
+                self.startUpdates()
                 return guideNotAvailableBody
             else:
                 if not self.loadedThisSession:
@@ -153,6 +161,22 @@ class ChannelGuide(DDBObject):
                 return self.cachedGuideBody
         finally:
             self.cond.release()
+
+    def processUpdate(self, info):
+        try:
+            if info is not None:
+                html = info["body"]
+
+                # Put the HTML into the cache
+                self.cond.acquire()
+                try:
+                    self.cachedGuideBody = HTMLPattern.match(html).group(1)
+                    self.loadedThisSession = True
+                    self.cond.notify()
+                finally:
+                    self.cond.release()
+        finally:
+            self.dc = eventloop.addTimeout(3600, self.update)
 
     def update(self):
         # We grab the URL and convert the HTML to JavaScript so it can
@@ -162,16 +186,4 @@ class ChannelGuide(DDBObject):
         print "DTV: updating the Guide"
         url = config.get(config.CHANNEL_GUIDE_URL)
 
-        info = grabURL(url)
-        if info is not None:
-            html = info['file-handle'].read()
-            info['file-handle'].close()
-
-            # Put the HTML into the cache
-            self.cond.acquire()
-            try:
-                self.cachedGuideBody = HTMLPattern.match(html).group(1)
-                self.loadedThisSession = True
-                self.cond.notify()
-            finally:
-                self.cond.release()
+        self.dc = grabURLAsync(self.processUpdate, url)
