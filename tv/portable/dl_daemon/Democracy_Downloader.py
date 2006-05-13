@@ -5,6 +5,8 @@
 import sys
 import util
 import os
+import eventloop
+import threading
 
 logPath = os.environ.get('DEMOCRACY_DOWNLOADER_LOG')
 if logPath is not None:
@@ -33,3 +35,4 @@ download.startBTDownloader()
 c = command.ReadyCommand(server)
 c.send(block = False, retry = True)
 
+eventloop.startup()

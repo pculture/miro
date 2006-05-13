@@ -126,6 +126,8 @@ class MigrateDownloadCommand(Command):
 # This is a special command that's trapped by the daemon
 class ShutDownCommand(Command):
     def action(self):
+        import eventloop
+        eventloop.quit()
         print "starting ShutDownCommand"
         from dl_daemon import download
         download.shutDown()

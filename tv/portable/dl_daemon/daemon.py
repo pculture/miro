@@ -6,6 +6,7 @@ import traceback
 from threading import Lock, Thread, Event
 from time import sleep
 import tempfile
+import eventloop
 
 class DaemonError(Exception):
     """Exception while communicating to a daemon (either controller or
@@ -91,6 +92,7 @@ class Daemon:
         self.globalLock = Lock() # For serializing access to global object data
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.settimeout(None)
+        self.shutdown = False
 
     def handleSocketError(self, error):
         """Call this when a error occurs using our socket.  It forces the
@@ -110,29 +112,41 @@ class Daemon:
             # need to send stuff over the wire don't hang
             # FIXME: We shouldn't spawn a thread for every command!
             if not isinstance(comm, command.ShutDownCommand):
-                t = Thread(target=self.processCommand,
-                        args=(comm,),
-                        name="command processor")
-                t.setDaemon(False)
-                t.start()
+                if comm.orig:
+                    eventloop.addIdle(self.processCommand,
+                                      args=(comm,))
+                else:
+                    self.processReturnValue(comm)
             else:
                 # Process the shutdown command in the current thread. In the
                 # downloader daemon, this waits for all other threads to quit,
                 # so processing it in a separate thread would deadlock.
-                self.processCommand(comm)
-                sleep(0.1) 
-                # give the controller some time to get the reply before we
-                # close our socket
+                if comm.orig:
+                    self.processCommand(comm)
+                    # give the controller some time to get the reply before we
+                    # close our socket
+                    sleep(0.1)
+                self.shutdown = True
+                self.globalLock.acquire()
+                events = []
+                try:
+                    for comm in self.waitingCommands.keys():
+                        events = events + (self.waitingCommands[comm.id],)
+                        del self.waitingCommands[comm.id]
+                        self.returnValues[comm.id] = DaemonError("Connection shutdown")
+                finally:
+                    self.globalLock.release()
+                for event in events:
+                    event.set()
                 break
 
     def processCommand(self, comm):
-        if comm.orig:
-            comm.setDaemon(self)
-            ret = comm.action()
-            comm.setReturnValue(ret)
-            comm.send(block=False)
-        else:
-            self.processReturnValue(comm)
+        if (self.shutdown):
+            return
+        comm.setDaemon(self)
+        ret = comm.action()
+        comm.setReturnValue(ret)
+        comm.send(block=False)
 
     def processReturnValue(self, comm):
         self.globalLock.acquire()
@@ -150,6 +164,8 @@ class Daemon:
     def waitForReturn(self, comm):
         self.globalLock.acquire()
         try:
+            if self.shutdown:
+                raise DaemonError ("Connection shutdown")
             if self.waitingCommands.has_key(comm.id):
                 event = self.waitingCommands[comm.id]
             elif self.returnValues.has_key(comm.id):
@@ -294,7 +310,7 @@ class ControllerDaemon(Daemon):
         """
 
         c = command.ShutDownCommand(self)
-        c.send(block=False)    
+        c.send(block=False)
         self.shutdownEvent.wait(timeout)
         if not self.shutdownEvent.isSet():
             print "Downloader daemon didn't quit after %d seconds" % timeout
