@@ -513,10 +513,8 @@ class Controller (frontend.Application):
             self.videoDisplay.playbackController = self.playbackController
             self.videoDisplay.setVolume(config.get(config.VOLUME_LEVEL))
 
-            scheduler.ScheduleEvent(300, storedatabase.saveDatabase)
-
-            scheduler.ScheduleEvent(10, autoupdate.checkForUpdates, False)
-            scheduler.ScheduleEvent(86400, autoupdate.checkForUpdates)
+            eventloop.addTimeout (300, storedatabase.saveDatabase, kwargs={"scheduleAnother": True})
+            eventloop.addTimeout (30, autoupdate.checkForUpdates)
 
             # Set up tab list (on left); this will automatically set up the
             # display area (on right) and currentSelectedTab
