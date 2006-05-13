@@ -49,18 +49,24 @@ def nextFreeFilename(name):
     return newname
 
 def _grabURLThread(callback, url, start, etag, modified, findHTTPAuth, getBody, args, kwargs):
-    if getBody == False:
-        info = grabURL(url, "HEAD", start, etag, modified, findHTTPAuth)
-        if info == None:
-            info = grabURL (url, "GET", start, etag, modified, findHTTPAuth)
-    else:
-        info = grabURL(url, "GET", start, etag, modified, findHTTPAuth)
-        if info:
-            info["body"] = info["file-handle"].read()
-    eventloop.addIdle (callback, (info,) + args, kwargs)
+    info = None
+    try:
+        if getBody == False:
+            info = grabURL(url, "HEAD", start, etag, modified, findHTTPAuth)
+            if info == None:
+                info = grabURL (url, "GET", start, etag, modified, findHTTPAuth)
+        else:
+            info = grabURL(url, "GET", start, etag, modified, findHTTPAuth)
+            if info:
+                info["body"] = info["file-handle"].read()
+    finally:
+        eventloop.addIdle (callback, (info,) + args, kwargs)
 
 # args and kargs are passed directly to grabURL  Any extra args are passed to callback.
 def grabURLAsync(callback, url, start=0, etag=None, modified=None, findHTTPAuth=None, getBody=True, args = (), kwargs = {}):
+    if url is None:
+        eventloop.addIdle (callback, (None,) + args, kwargs)
+        return
     request = {}
     request["callback"] = callback
     request["url"] = url
