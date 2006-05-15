@@ -1,11 +1,10 @@
 from random import randint
-from threading import Lock
 
 import feed
 import item
 import config
 import database
-import scheduler
+import eventloop
 
 def viewLooper(view):
     """Generator that continuously loops around a view.  When it gets to the
@@ -157,16 +156,13 @@ class AutoDownloader:
         self.spawnManualDownloads()
 
     def run(self):
-        if not self.runMutex.acquire(False):
-            return
         try:
             self.expireItems()
             self.spawnDownloads()
         finally:
-            self.runMutex.release()
+            eventloop.addTimeout(10, self.run, "Auto downloader")
 
     def __init__(self):
-        self.runMutex = Lock()
         db = database.defaultDatabase
         self.allFeeds = db.filter(lambda x:isinstance(x,feed.Feed))
         self.allItems = db.filter(lambda x:isinstance(x,item.Item))
@@ -178,5 +174,5 @@ class AutoDownloader:
         self.btAutoDownloaders = \
                 self.allItems.filter(isBitTorrentDownloader)
         self.manualDownloaders = self.allItems.filter(isManualDownloader)
-
-        self.event = scheduler.ScheduleEvent(10,self.run)
+        
+        eventloop.addTimeout(10, self.run, "Auto downloader")
