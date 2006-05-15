@@ -291,7 +291,7 @@ class BGDownloader:
         (scheme, host, path, params, query, fragment) = parseURL(url)
         if len(path):
             try:
-                ret = re.compile("^.*?([^/]+)/?$").search(path).expand("\\1")
+                ret = re.compile("^(.*/)?([^/]*)/*$").search(path).expand("\\2")
                 return cleanFilename(ret)
 
             except:
@@ -364,6 +364,7 @@ class BGDownloader:
                     traceback.format_exc())
             c.send(block=False)
             raise
+        self.updateClient()
 
 class HTTPDownloader(BGDownloader):
     def __init__(self, url = None,dlid = None,restore = None):
@@ -371,7 +372,6 @@ class HTTPDownloader(BGDownloader):
             self.restoreState(restore)
         else:
             self.lastUpdated = 0
-            print "creating downloader: %s %s " % (url, dlid)
             BGDownloader.__init__(self,url, dlid)
 
     def getStatus(self):
@@ -416,32 +416,19 @@ class HTTPDownloader(BGDownloader):
     # This is the actual download thread.
     def runDownloader(self, retry = False):
         if retry:
-            pos = self.currentSize
-            info = grabURL(self.url,"GET",pos, findHTTPAuth = findHTTPAuth)
-            if info is None and pos > 0:
-                pos = 0
-                self.currentSize = 0
-                info = grabURL(self.url,"GET", findHTTPAuth = findHTTPAuth)
-            if info is None:
-                self.state = "failed"
-                self.reasonFailed = "Could not connect to server"
-                return False
             try:
+                pos = self.currentSize
                 filehandle = file(self.filename,"r+b")
                 filehandle.seek(pos)
+                info = grabURL(self.url,"GET",pos, findHTTPAuth = findHTTPAuth)
+                if info is None:
+                    self.currentSize = 0
+                    retry = False
             except:
-                #the file doesn't exist. Get the right filename and restart dl
-                self.shortFilename = cleanFilename(info['filename'])
-                self.pickInitialFilename()
-                filehandle = file(self.filename,"w+b")
                 self.currentSize = 0
-                totalSize = self.totalSize
-                pos = 0
-                if totalSize > 0:
-                    filehandle.seek(totalSize-1)
-                    filehandle.write(' ')
-                    filehandle.seek(0)            
-        else:
+                retry = False
+
+        if not retry:
             #print "We don't have any INFO..."
             info = grabURL(self.url,"GET", findHTTPAuth = findHTTPAuth)
             if info is None:
@@ -449,7 +436,6 @@ class HTTPDownloader(BGDownloader):
                 self.reasonFailed = "Could not connect to server"
                 return False
 
-        if not retry:
             #get the filename to save to
             self.shortFilename = cleanFilename(info['filename'])
             self.pickInitialFilename()
@@ -462,29 +448,50 @@ class HTTPDownloader(BGDownloader):
             self.totalSize = totalSize
             try:
                 filehandle = file(self.filename,"w+b")
-            except IOError:
+                self.currentSize = 0
+                if not self.acceptDownloadSize(totalSize):
+                    self.state = "failed"
+                    self.reasonFailed = "Not enough free space"
+                    return False
+                if totalSize > 0:
+                    filehandle.seek(totalSize-1)
+                    filehandle.write(' ')
+                    filehandle.seek(0)
+            except IOError, error:
+                try:
+                    filehandle.close()
+                except:
+                    pass
+                try:
+                    os.remove (self.filename)
+                except:
+                    pass
                 self.state = "failed"
-                self.reasonFailed = "Could not write file to disk"
+                self.reasonFailed = "Could not write %s: %s" % (self.filename, error.strerror)
                 return False
-            self.currentSize = 0
-            if not self.acceptDownloadSize(totalSize):
-                self.state = "failed"
-                self.reasonFailed = "Not enough free space"
-                return False
-            pos = 0
-            if totalSize > 0:
-                filehandle.seek(totalSize-1)
-                filehandle.write(' ')
-                filehandle.seek(0)
 
+        pos = self.currentSize
         #Download the file
-        if pos != self.totalSize:
-            data = self.getNextBlock(info['file-handle'])
-            while len(data) > 0:
-                filehandle.write(data)
+        try:
+            if pos != self.totalSize:
                 data = self.getNextBlock(info['file-handle'])
-            filehandle.close()
-            info['file-handle'].kill()
+                while len(data) > 0:
+                    filehandle.write(data)
+                    data = self.getNextBlock(info['file-handle'])
+                filehandle.close()
+                info['file-handle'].kill()
+        except IOError, error:
+            try:
+                filehandle.close()
+            except:
+                pass
+            try:
+                os.remove (self.filename)
+            except:
+                pass
+            self.state = "failed"
+            self.reasonFailed = error.strerror
+            return False
 
         #Update the status
         if self.state == "downloading":
@@ -499,7 +506,6 @@ class HTTPDownloader(BGDownloader):
                 remove(self.filename)
             except:
                 pass
-        self.updateClient()
  
     ##
     # Checks the download file size to see if we can accept it based on the 
