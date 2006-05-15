@@ -993,17 +993,13 @@ class ModelActionHandler:
 
     def updateFeed(self, feed):
         obj = db.getObjectByID(int(feed))
-        thread = threading.Thread(target=obj.update, name="updateFeed")
-        thread.setDaemon(False)
-        thread.start()
+        obj.update()
 
     def updateAllFeeds(self):
         # We might want to limit the number of simultaneous threads but for
         # now, this naive and simple implementation will do the trick.
         for f in views.feeds:
-            thread = threading.Thread(target=f.update, name="updateAllFeeds")
-            thread.setDaemon(False)
-            thread.start()
+            f.update()
 
     def copyCurrentFeedURL(self):
         currentFeed = controller.currentSelectedTab.feedID()
