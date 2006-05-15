@@ -65,6 +65,8 @@ guideNotAvailableBody = """
 
 class ChannelGuide(DDBObject):
     def __init__(self):
+        # Delayed callback for eventloop.
+        self.dc = None
         # True if user has seen the tutorial
         self.sawIntro = False 
         # If None, we have never successfully loaded the guide. Otherwise,
@@ -80,7 +82,6 @@ class ChannelGuide(DDBObject):
         DDBObject.__init__(self)
         # Start loading the channel guide.
         self.startLoadsIfNecessary()
-        self.dc = None
 
     ##
     # Called by pickle during deserialization
