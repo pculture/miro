@@ -147,6 +147,9 @@ class RemoteDownloader(DDBObject):
         finally:
             _lock.release()
         views.remoteDownloads.recomputeIndex(indexes.downloadsByDLID)
+        for item in self.itemList:
+            item.beginChange()
+            item.endChange()
 
     ##
     # Pauses the download.
@@ -160,7 +163,6 @@ class RemoteDownloader(DDBObject):
     # file.
     def stop(self):
         if ((self.getState() in ['downloading','uploading'])):
-            print "stop ", self.url
             _downloads_by_url[self.url]["count"] -= 1
             if _downloads_by_url[self.url]["count"] == 0:
                 del _downloads[self.dlid]
@@ -170,11 +172,16 @@ class RemoteDownloader(DDBObject):
                 c.send(block=False)
                 
     ##
-    # Continues a paused or stopped download thread
+    # Continues a paused, stopped, or failed download thread
     def start(self):
-        c = command.StartDownloadCommand(RemoteDownloader.dldaemon,
-                                            self.dlid)
-        c.send(block=False)
+        if self.getState() == 'failed':
+            self.dlid = "noid"
+            self.status = {}
+            self.runDownloader()
+        else:
+            c = command.StartDownloadCommand(RemoteDownloader.dldaemon,
+                                             self.dlid)
+            c.send(block=False)
 
     def migrate(self):
         c = command.MigrateDownloadCommand(RemoteDownloader.dldaemon,
