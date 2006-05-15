@@ -5,7 +5,7 @@ from urlparse import urlparse, urljoin
 from urllib import urlopen
 from database import defaultDatabase
 from item import *
-from scheduler import ScheduleEvent
+import eventloop
 from copy import copy
 from xhtmltools import unescape,xhtmlify,fixXMLHeader, fixHTMLHeader, toUTF8Bytes, urlencode
 from cStringIO import StringIO
@@ -167,20 +167,22 @@ class FeedImpl:
     def scheduleUpdateEvents(self, firstTriggerDelay):
         self.cancelUpdateEvents()
         if self.updateFreq > 0:
-            self.scheduler = ScheduleEvent(self.updateFreq, self.update)
+
             if firstTriggerDelay >= 0:
-                ScheduleEvent(firstTriggerDelay, self.update, False)
+                self.scheduler = eventloop.addTimeout(firstTriggerDelay, self.update, "Feed update (%s)" % self.getTitle())
+            else:
+                self.scheduler = eventloop.addTimeout(self.updateFreq, self.update, "Feed update (%s)" % self.getTitle())
 
     def cancelUpdateEvents(self):
         try:
-            self.scheduler.remove()
+            self.scheduler.cancel()
             self.scheduler = None
         except:
             pass
 
     # Subclasses should implement this
     def update(self):
-        pass
+        self.scheduleUpdateEvents(-1)
 
     # Returns true iff this feed has been looked at
     def getViewed(self):
@@ -905,6 +907,7 @@ class RSSFeedImpl(FeedImpl):
             if not self.updateUandA():
                 self.ufeed.beginChange()
                 self.ufeed.endChange()
+            self.scheduleUpdateEvents(-1)
         else:
             try:
                 etag = self.etag
@@ -936,6 +939,7 @@ class RSSFeedImpl(FeedImpl):
         if not self.updateUandA():
             self.ufeed.beginChange()
             self.ufeed.endChange()
+        self.scheduleUpdateEvents(-1)
 
     def updateUsingXML(self, xml):
         """Update the feed using XML passed in"""
@@ -1142,6 +1146,7 @@ class ScraperFeedImpl(FeedImpl):
                 self.updating = False
             finally:
                 self.ufeed.endRead()
+            self.scheduleUpdateEvents(-1)
 
 
 
@@ -1389,6 +1394,7 @@ class DirectoryFeedImpl(FeedImpl):
             finally:
                 self.ufeed.endChange()
         self.updating = False
+        self.scheduleUpdateEvents(-1)
 
     def onRestore(self):
         #FIXME: the update dies if all of the items aren't restored, so we 
