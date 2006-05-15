@@ -111,34 +111,38 @@ class IconCache:
                     self.etag = None
                     self.modified = None
                     return
-    
+
                 # Our cache is good.  Hooray!
                 if (info['status'] == 304):
                     self.updated = True
                     return
-            
+
                 # We have to update it, and if we can't write to the file, we
                 # should pick a new filename.
                 if (self.filename and not os.access (self.filename, os.R_OK | os.W_OK)):
                     self.filename = None
-    
+
                 cachedir = config.get(config.ICON_CACHE_DIRECTORY)
                 try:
                     os.makedirs (cachedir)
                 except:
                     pass
 
-                # Download to a temp file.
-                if (self.filename):
-                    tmp_filename = self.filename + ".part"
-                else:
-                    tmp_filename = os.path.join(cachedir, info["filename"]) + ".part"
-    
-                tmp_filename = self.nextFreeFilename (tmp_filename)
-                output = file (tmp_filename, 'wb')
-                output.write(info["body"])
-                output.close()
-    
+                try:
+                    # Download to a temp file.
+                    if (self.filename):
+                        tmp_filename = self.filename + ".part"
+                    else:
+                        tmp_filename = os.path.join(cachedir, info["filename"]) + ".part"
+
+                    tmp_filename = self.nextFreeFilename (tmp_filename)
+                    output = file (tmp_filename, 'wb')
+                    output.write(info["body"])
+                    output.close()
+                except IOError:
+                    os.remove (tmp_filename)
+                    return
+
                 if (self.filename == None):
                     self.filename = os.path.join(cachedir, info["filename"])
                     self.filename = self.nextFreeFilename (self.filename)
