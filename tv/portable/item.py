@@ -2,16 +2,15 @@ from datetime import datetime, timedelta
 from database import DDBObject, defaultDatabase
 from downloader import DownloaderFactory
 from download_utils import grabURL
+import eventloop
 from copy import copy
 from xhtmltools import unescape,xhtmlify
 from xml.sax.saxutils import unescape
 from feedparser import FeedParserDict
-from threading import Thread
 from math import ceil
 from templatehelper import escape
 from iconcache import IconCache
 import resource
-import threadpriority
 import config
 import os
 import feed
@@ -240,15 +239,11 @@ class Item(DDBObject):
         return info['content-type'] == 'application/x-bittorrent'
 
     def download(self,autodl=False):
-        thread = Thread(target = lambda:self.actualDownload(autodl),
-                        name = "Item download -- %s" % (self.getURL(), ))
-        thread.setDaemon(False)
-        thread.start()
+        eventloop.addIdle(lambda : self.actualDownload(autodl), "Spawning Download %s" % self.getURL())
 
     ##
     # Starts downloading the item
     def actualDownload(self,autodl=False):
-        threadpriority.setNormalPriority()
         spawn = True
         self.beginRead()
         try:

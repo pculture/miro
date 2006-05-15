@@ -1,5 +1,4 @@
 from download_utils import grabURLAsync
-from threading import Thread
 import config
 import xml.dom.minidom
 import eventloop
