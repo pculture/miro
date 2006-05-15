@@ -9,6 +9,7 @@ TODO:
 
 import threading
 import socket
+import errno
 import select
 import heapq
 import Queue
@@ -138,8 +139,14 @@ class EventLoop(object):
             timeout = self.scheduler.nextTimeout()
             readfds = self.readCallbacks.keys()
             writefds = self.writeCallbacks.keys()
-            readables, writeables, _ = select.select(readfds, writefds, [],
-                    timeout)
+            try:
+                readables, writeables, _ = select.select(readfds, writefds, [],
+                                                         timeout)
+            except select.error, (err, detail):
+                if err == errno.EINTR:
+                    print "DTV: eventloop: %s" % detail
+                else:
+                    raise
             self.doCallbacks(writeables, self.writeCallbacks)
             self.doCallbacks(readables, self.readCallbacks)
             if self.quitFlag:
