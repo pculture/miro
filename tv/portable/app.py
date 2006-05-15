@@ -451,8 +451,7 @@ class Controller (frontend.Application):
             downloader.startupDownloader()
 
             channelGuide = getInitialChanelGuide()
-            self.setupGlobalFeed('dtv:manualFeed', useThread=False,
-                    initiallyAutoDownloadable=False)
+            self.setupGlobalFeed('dtv:manualFeed', initiallyAutoDownloadable=False)
             views.availableItems.addAddCallback(self.onAvailableItemsCountChange)
             views.availableItems.addRemoveCallback(self.onAvailableItemsCountChange)
             views.downloadingItems.addAddCallback(self.onDownloadingItemsCountChange)

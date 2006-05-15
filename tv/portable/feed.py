@@ -1,4 +1,4 @@
-from download_utils import grabURLAsync, grabURL
+from download_utils import grabURLAsync
 from HTMLParser import HTMLParser,HTMLParseError
 import xml
 from urlparse import urlparse, urljoin
@@ -9,7 +9,6 @@ from scheduler import ScheduleEvent
 from copy import copy
 from xhtmltools import unescape,xhtmlify,fixXMLHeader, fixHTMLHeader, toUTF8Bytes, urlencode
 from cStringIO import StringIO
-from threading import Thread, Semaphore
 import traceback #FIXME get rid of this
 from datetime import datetime, timedelta
 from inspect import isfunction
@@ -612,26 +611,15 @@ class FeedImpl:
 #
 # It works by passing on attributes to the actual feed.
 class Feed(DDBObject):
-    def __init__(self,url, useThread=True, initiallyAutoDownloadable=True):
+    def __init__(self,url, initiallyAutoDownloadable=True):
         self.origURL = url
         self.errorState = False
         self.initiallyAutoDownloadable = initiallyAutoDownloadable
-        if useThread:
-            self.loading = True
-            self.actualFeed = FeedImpl(url,self)
-            
-            self.iconCache = IconCache(self, is_vital = True)
-            DDBObject.__init__(self)
-            
-            thread = Thread(target=lambda: self.generateFeed(True), \
-                            name="Feed.__init__ generate -- %s" % url)
-            thread.setDaemon(False)
-            thread.start()
-        else:
-            self.generateFeed(True)
-            self.loading = False
-            self.iconCache = IconCache(self, is_vital = True)
-            DDBObject.__init__(self)
+        self.loading = True
+        self.actualFeed = FeedImpl(url,self)
+        self.generateFeed(True)
+        self.iconCache = IconCache(self, is_vital = True)
+        DDBObject.__init__(self)
 
     # Returns javascript to mark the feed as viewed
     # FIXME: Using setTimeout is a hack to get around JavaScript bugs
@@ -690,13 +678,13 @@ class Feed(DDBObject):
         if newFeed:
             self.actualFeed = newFeed
             # Yeah, this is sort of cheating. But setting variables is
-            # thread safe thanks to the GIL, so it doesn't need to be
-            # in there
+            # thread safe thanks to the GIL, so this doesn't need to be
+            # locked
             self.loading = False
 
             self.beginChange()
             self.endChange()
-            
+
     def _generateFeedCallback(self, info, removeOnError):
         """This is called by grabURLAsync to generate a feed based on
         the type of data found at the given URL
@@ -729,7 +717,7 @@ class Feed(DDBObject):
                     charset = info['charset']
                 else:
                     charset = None
-                if delegate.isScrapeAllowed(url):
+                if delegate.isScrapeAllowed(info['updated-url']):
                     temp = ScraperFeedImpl(info['updated-url'],initialHTML=html,etag=etag,modified=modified, charset=charset, ufeed=self)
             #It's some sort of feed we don't know how to scrape
             elif (info['content-type'].startswith('application/rdf+xml') or
@@ -753,7 +741,8 @@ class Feed(DDBObject):
                   info['content-type'].startswith('application/podcast+xml') or
                   info['content-type'].startswith('text/xml') or 
                   info['content-type'].startswith('application/xml') or
-                  (info['content-type'].startswith('text/plain') and url.endswith('.xml'))):
+                  (info['content-type'].startswith('text/plain') and
+                   info['updated-url'].endswith('.xml'))):
                 #print " It's doesn't look like HTML..."
                 html = info["body"]
                 if info.has_key('charset'):
@@ -771,7 +760,7 @@ class Feed(DDBObject):
                     parser.parse(StringIO(xmldata))
                 except xml.sax.SAXException: #it doesn't parse as RSS, so it must be HTML
                     #print " Nevermind! it's HTML"
-                    if delegate.isScrapeAllowed(url):
+                    if delegate.isScrapeAllowed(info['updated-url']):
                         temp = ScraperFeedImpl(info['updated-url'],initialHTML=html,etag=etag,modified=modified, charset=charset, ufeed=self)
                 except UnicodeDecodeError:
                     print "Unicode issue parsing... %s" % xmldata[0:300]
@@ -781,12 +770,12 @@ class Feed(DDBObject):
                     temp = RSSFeedImpl(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, ufeed=self)
                 else:
                     #print " It's pre-enclosure RSS"
-                    if delegate.isScrapeAllowed(url):
+                    if delegate.isScrapeAllowed(info['updated-url']):
                         temp = ScraperFeedImpl(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, charset=charset, ufeed=self)
             else:
                 print "DTV doesn't know how to deal with "+info['content-type']+" feeds"
 
-        # At this point, temp is what 
+        # At this point, temp is the correct FeedImpl
         self.beginRead()
         try:
             self.loading = False
@@ -1074,11 +1063,9 @@ class Collection(FeedImpl):
 ##
 # A feed based on un unformatted HTML or pre-enclosure RSS
 class ScraperFeedImpl(FeedImpl):
-    #FIXME: change this to a higher number once we optimize a bit
-    maxThreads = 1
-
     def __init__(self,url,ufeed, title = None, visible = True, initialHTML = None,etag=None,modified = None,charset = None):
         FeedImpl.__init__(self,url,ufeed,title,visible)
+        self.pendingDownloads = 0
         self.initialHTML = initialHTML
         self.initialCharset = charset
         self.linkHistory = {}
@@ -1088,7 +1075,6 @@ class ScraperFeedImpl(FeedImpl):
             self.linkHistory[url]['etag'] = etag
         if not modified is None:
             self.linkHistory[url]['modified'] = modified
-        self.semaphore = Semaphore(ScraperFeedImpl.maxThreads)
         self.scheduleUpdateEvents(0)
         self.setUpdateFrequency(360)
 
@@ -1108,11 +1094,11 @@ class ScraperFeedImpl(FeedImpl):
         finally:
             self.ufeed.endRead()
     ##
-    # returns a tuple containing the text of the URL, the url (in case
-    # of a permanent redirect), a redirected URL (in case of
-    # temporary redirect)m and the download status
-    def getHTML(self, url, useActualHistory = True):
-        print "WARNING: ScraperFeedImpl still uses synchronous grabURL calls!"
+    # grabs HTML at the given URL, then processes it
+    def getHTML(self, urlList, depth = 0, linkNumber = 0, top = False):
+        url = urlList.pop(0)
+        #print "Grabbing %s" % url
+        self.pendingDownloads +=1
         etag = None
         modified = None
         if self.linkHistory.has_key(url):
@@ -1120,10 +1106,17 @@ class ScraperFeedImpl(FeedImpl):
                 etag = self.linkHistory[url]['etag']
             if self.linkHistory[url].has_key('modified'):
                 modified = self.linkHistory[url]['modified']
-        info = grabURL(url, etag=etag, modified=modified)
+        grabURLAsync(lambda info:self.processDownloadedHTML(
+                                           info, urlList, depth, linkNumber, top),
+                     url, etag=etag, modified=modified)
+
+    def processDownloadedHTML(self, info, urlList, depth, linkNumber, top = False):
+        self.pendingDownloads -= 1
         if info is None:
-            return (None, url, url,404, None)
+            return
         else:
+            #print "Done grabbing %s" % info['updated-url']
+
             if not self.tempHistory.has_key(info['updated-url']):
                 self.tempHistory[info['updated-url']] = {}
             if info.has_key('etag'):
@@ -1131,14 +1124,26 @@ class ScraperFeedImpl(FeedImpl):
             if info.has_key('last-modified'):
                 self.tempHistory[info['updated-url']]['modified'] = info['last-modified']
 
-            html = info['file-handle'].read()
-            #print "Scraper got HTML of length "+str(len(html))
-            info['file-handle'].close()
-            #print "Closed"
-            if info.has_key('charset'):
-                return (html, info['updated-url'],info['redirected-url'],info['status'],info['charset'])
-            else:
-                return (html, info['updated-url'],info['redirected-url'],info['status'],None)
+            if (info['status'] != 304) and (info.has_key('body')):
+                if info.has_key('charset'):
+                    subLinks = self.scrapeLinks(info['body'], info['redirected-url'],charset=info['charset'], setTitle = top)
+                else:
+                    subLinks = self.scrapeLinks(info['body'], info['redirected-url'], setTitle = top)
+                if top:
+                    self.processLinks(subLinks,0,linkNumber)
+                else:
+                    self.processLinks(subLinks,depth+1,linkNumber)
+        if len(urlList) > 0:
+            self.getHTML(urlList, depth, linkNumber)
+        elif (self.pendingDownloads == 0):
+            self.ufeed.beginRead()
+            try:
+                self.saveCacheHistory()
+                self.updating = False
+            finally:
+                self.ufeed.endRead()
+
+
 
     def addVideoItem(self,link,dict,linkNumber):
         link = link.strip()
@@ -1158,21 +1163,14 @@ class ScraperFeedImpl(FeedImpl):
             self.ufeed.beginChange()
             self.ufeed.endChange()
 
-    def makeProcessLinkFunc(self,subLinks,depth,linkNumber):
-        return lambda: self.processLinksThenFreeSem(subLinks,depth,linkNumber)
-
-    def processLinksThenFreeSem(self,subLinks,depth,linkNumber):
-        try:
-            self.processLinks(subLinks, depth,linkNumber)
-        finally:
-            #print "Releasing semaphore"
-            self.semaphore.release()
-
     #FIXME: compound names for titles at each depth??
     def processLinks(self,links, depth = 0,linkNumber = 0):
         maxDepth = 2
         urls = links[0]
         links = links[1]
+        # List of URLs that should be downloaded
+        newURLs = []
+        
         if depth<maxDepth:
             for link in urls:
                 if depth == 0:
@@ -1208,30 +1206,17 @@ class ScraperFeedImpl(FeedImpl):
                          mimetype.startswith('application/atom+xml') or
                          mimetype.startswith('application/rdf+xml') ) and
                         depth < maxDepth -1):
-                        (html, url, redirURL,status,charset) = self.getHTML(link)
-                        if status == 304: #It's cached
-                            pass
-                        elif not html is None:
-                            subLinks = self.scrapeLinks(html, redirURL,charset=charset)
-                            if depth == 0:
-                                self.semaphore.acquire()
-                                #print "Acquiring semaphore"
-                                thread = Thread(target = self.makeProcessLinkFunc(subLinks,depth+1,linkNumber), \
-                                                name = "scraper processLinks -- %s" % self.url)
-                                thread.setDaemon(False)
-                                thread.start()
-                            else:
-                                self.processLinks(subLinks,depth+1,linkNumber)
-                        else:
-                            pass
-                            #print link+" seems to be bogus..."
+                        newURLs.append(link)
+
                     #This is a video
                     elif (mimetype.startswith('video/') or 
-                          mimetype.startswith('audeo/') or
+                          mimetype.startswith('audio/') or
                           mimetype == "application/ogg" or
                           mimetype == "application/x-annodex" or
                           mimetype == "application/x-bittorrent"):
                         self.addVideoItem(link, links[link],linkNumber)
+            if len(newURLs) > 0:
+                self.getHTML(newURLs, depth, linkNumber)
 
     #FIXME: go through and add error handling
     def update(self):
@@ -1250,27 +1235,17 @@ class ScraperFeedImpl(FeedImpl):
             status = 200
             charset = self.initialCharset
             self.initialCharset = None
+            subLinks = self.scrapeLinks(html, redirURL, charset=charset, setTitle = True)
+            self.processLinks(subLinks,0,0)
+
         else:
-            (html,url, redirURL, status,charset) = self.getHTML(self.url)
-        if not status == 304:
-            if not html is None:
-                links = self.scrapeLinks(html, redirURL, setTitle=True,charset=charset)
-                self.processLinks(links)
-            #Download the HTML associated with each page
-        self.ufeed.beginRead()
-        try:
-            self.saveCacheHistory()
-            self.updating = False
-        finally:
-            self.ufeed.endRead()
+            self.getHTML([self.url], top = True)
 
     def scrapeLinks(self,html,baseurl,setTitle = False,charset = None):
         try:
             if not charset is None:
-                xmldata = fixXMLHeader(html,charset)
                 html = fixHTMLHeader(html,charset)
-            else:
-                xmldata = html
+            xmldata = html
             parser = xml.sax.make_parser()
             parser.setFeature(xml.sax.handler.feature_namespaces, 1)
             if not charset is None:
@@ -1307,7 +1282,6 @@ class ScraperFeedImpl(FeedImpl):
     # Given a string containing an HTML file, return a dictionary of
     # links to titles and thumbnails
     def scrapeHTMLLinks(self,html, baseurl,setTitle=False, charset = None):
-        #print "Scraping "+baseurl+" as HTML"
         lg = HTMLLinkGrabber()
         links = lg.getLinks(html, baseurl)
         if setTitle and not lg.title is None:
@@ -1338,7 +1312,7 @@ class ScraperFeedImpl(FeedImpl):
         self.updating = False
         self.tempHistory = {}
         self.scheduleUpdateEvents(.1)
-        self.semaphore = Semaphore(ScraperFeedImpl.maxThreads)
+        self.pendingDownloads = 0
 
 ##
 # A feed of all of the Movies we find in the movie folder that don't
@@ -1436,6 +1410,9 @@ class SearchFeedImpl (RSSFeedImpl):
         self.lastEngine = 'yahoo'
         self.lastQuery = ''
 
+    def getURL(self):
+        return 'dtv:search'
+
     def getStatus(self):
         status = 'idle-empty'
         if self.searching:
@@ -1469,10 +1446,7 @@ class SearchFeedImpl (RSSFeedImpl):
         url = self.getRequestURL(engine, query)
         self.reset(url, True)
         self.lastQuery = query
-        thread = Thread(target=self.update, \
-                        name = "%s search -- %s" % (engine, query))
-        thread.setDaemon(False)
-        thread.start()
+        self.update()
 
     def getRequestURL(self, engine, query, filterAdultContents=True, limit=50):
         if query == "LET'S TEST DTV'S CRASH REPORTER TODAY":
@@ -1496,10 +1470,6 @@ class SearchFeedImpl (RSSFeedImpl):
     def update(self):
         if self.url is not None and self.url != '':
             RSSFeedImpl.update(self)
-
-    def finishUpdate(self, info=None):
-        self.searching = False
-        RSSFeedImpl.finishUpdate(self, info)
 
 class SearchDownloadsFeedImpl(FeedImpl):
     def __init__(self, ufeed):
