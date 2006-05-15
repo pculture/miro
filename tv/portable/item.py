@@ -5,7 +5,6 @@ from download_utils import grabURL
 from copy import copy
 from xhtmltools import unescape,xhtmlify
 from xml.sax.saxutils import unescape
-from scheduler import ScheduleEvent
 from feedparser import FeedParserDict
 from threading import Thread
 from math import ceil

@@ -20,7 +20,6 @@ import resource
 import template
 import singleclick
 import storedatabase
-import scheduler
 import downloader
 import download_utils
 import autoupdate
@@ -426,9 +425,6 @@ class Controller (frontend.Application):
             print "DTV: Starting event loop thread"
             eventloop.startup()
 
-            print "DTV: Starting scheduler"
-            scheduler.ScheduleEvent.scheduler = scheduler.Scheduler()
-
             print "DTV: Loading preferences..."
             config.load()
             config.addChangeCallback(self.configDidChange)
@@ -611,9 +607,6 @@ class Controller (frontend.Application):
             
             print "DTV: Saving preferences..."
             config.save()
-
-            print "DTV: Stopping scheduler"
-            scheduler.ScheduleEvent.scheduler.shutdown()
 
             print "DTV: Removing search feed"
             TemplateActionHandler(None, None).resetSearch()
