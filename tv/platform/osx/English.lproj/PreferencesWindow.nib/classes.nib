@@ -19,10 +19,10 @@
             SUPERCLASS = NSObject; 
         }, 
         {
-            ACTIONS = {limitUpstream = id; setUpstreamLimit = id; }; 
+            ACTIONS = {changeMoviesDirectory = id; limitUpstream = id; setUpstreamLimit = id; }; 
             CLASS = DownloadsPrefsController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {limitUpstreamCheckBox = id; limitValueField = id; }; 
+            OUTLETS = {limitUpstreamCheckBox = id; limitValueField = id; moviesDirectoryField = id; }; 
             SUPERCLASS = NSObject; 
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 

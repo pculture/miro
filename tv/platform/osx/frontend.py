@@ -856,6 +856,8 @@ class ChannelsPrefsController (NibClassBuilder.AutoBaseClass):
 class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
     
     def awakeFromNib(self):
+        moviesDirPath = config.get(config.MOVIES_DIRECTORY)
+        self.moviesDirectoryField.setStringValue_(moviesDirPath)
         limit = config.get(config.LIMIT_UPSTREAM)
         self.limitUpstreamCheckBox.setState_(limit and NSOnState or NSOffState)
         self.limitValueField.setEnabled_(limit)
@@ -870,6 +872,30 @@ class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
     def setUpstreamLimit_(self, sender):
         limit = sender.floatValue()
         config.set(config.UPSTREAM_LIMIT_IN_KBS, limit)
+        
+    def changeMoviesDirectory_(self):
+        panel = NSOpenPanel.openPanel()
+        panel.setCanChooseFiles_(NO)
+        panel.setCanChooseDirectories_(YES)
+        panel.setCanCreateDirectories_(YES)
+        panel.setAllowsMultipleSelection_(NO)
+        panel.setTitle_('Movies Directory')
+        panel.setMessage_('Select a Directory to store Democracy downloads in.')
+        panel.setPrompt_('Select')
+        
+        oldMoviesDirectory = self.moviesDirectoryField.stringValue()
+        result = panel.runModalForDirectory_file_(oldMoviesDirectory, nil)
+        
+        if result == NSOKButton:
+            newMoviesDirectory = panel.directory()
+            if newMoviesDirectory != oldMoviesDirectory:
+                self.moviesDirectoryField.setStringValue_(newMoviesDirectory)
+                summary = u'Migrate existing movies?'
+                message = u'You\'ve selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish).'
+                buttons = (u'Yes', u'No')
+                migrate = showWarningDialog(summary, message, buttons)
+                app.changeMoviesDirectory(newMoviesDirectory, migrate)
+                
 
 class DiskSpacePrefsController (NibClassBuilder.AutoBaseClass):
     
