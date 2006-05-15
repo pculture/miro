@@ -60,12 +60,12 @@ def _grabURLThread(callback, url, start, etag, modified, findHTTPAuth, getBody, 
             if info:
                 info["body"] = info["file-handle"].read()
     finally:
-        eventloop.addIdle (callback, (info,) + args, kwargs)
+        eventloop.addIdle (callback, "Grab URL Callback", (info,) + args, kwargs)
 
 # args and kargs are passed directly to grabURL  Any extra args are passed to callback.
 def grabURLAsync(callback, url, start=0, etag=None, modified=None, findHTTPAuth=None, getBody=True, args = (), kwargs = {}):
     if url is None:
-        eventloop.addIdle (callback, (None,) + args, kwargs)
+        eventloop.addIdle (callback, "Grab URL Callback (no url)", (None,) + args, kwargs)
         return
     request = {}
     request["callback"] = callback

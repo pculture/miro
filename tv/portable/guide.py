@@ -112,7 +112,7 @@ class ChannelGuide(DDBObject):
     def startUpdates(self):
         if self.dc:
             self.dc.cancel()
-        self.dc = eventloop.addIdle (self.update)
+        self.dc = eventloop.addIdle (self.update, "Channel Guide Update")
 
     # How should we load the guide? Returns (scheme, value). If scheme is
     # 'url', value is a URL that should be loaded directly in the frame.
@@ -177,7 +177,7 @@ class ChannelGuide(DDBObject):
                 finally:
                     self.cond.release()
         finally:
-            self.dc = eventloop.addTimeout(3600, self.update)
+            self.dc = eventloop.addTimeout(3600, self.update, "Channel Guide Update")
 
     def update(self):
         # We grab the URL and convert the HTML to JavaScript so it can

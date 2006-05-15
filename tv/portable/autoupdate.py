@@ -40,4 +40,4 @@ def _checkForUpdates(info, notifyIfUpToDate):
             if notifyIfUpToDate and not updated:
                 delegate.dtvIsUpToDate()
     finally:
-        eventloop.addTimeout (86400, checkForUpdates)
+        eventloop.addTimeout (86400, checkForUpdates, "Check for updates")

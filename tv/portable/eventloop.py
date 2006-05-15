@@ -15,12 +15,14 @@ import Queue
 import util
 
 from BitTornado.clock import clock
+#from time import time
 
 import util
 
 class DelayedCall(object):
-    def __init__(self, function, args, kwargs):
+    def __init__(self, function, name, args, kwargs):
         self.function = function
+        self.name = name
         self.args = args
         self.kwargs = kwargs
         self.canceled = False
@@ -31,21 +33,26 @@ class DelayedCall(object):
     def dispatch(self):
         if not self.canceled:
             try:
+                #start = time()
                 self.function(*self.args, **self.kwargs)
+                #end = time()
+                #if end-start > 0.05:
+                #    print "WARNING: %s too slow (%.3f secs)" % (
+                #        self.name, end-start)
             except:
-                util.failedExn("While handling timeout")
+                util.failedExn("While handling timeout (%s)" % self.name)
 
 class Scheduler(object):
     def __init__(self):
         self.heap = []
 
-    def addTimeout(self, delay, function, args=None, kwargs=None):
+    def addTimeout(self, delay, function, name, args=None, kwargs=None):
         if args is None:
             args = ()
         if kwargs is None:
             kwargs = {}
         scheduledTime = clock() + delay
-        dc = DelayedCall(function, args, kwargs)
+        dc = DelayedCall(function, name, args, kwargs)
         heapq.heappush(self.heap, (scheduledTime, dc))
         return dc
 
@@ -64,20 +71,25 @@ class IdleQueue(object):
     def __init__(self):
         self.queue = Queue.Queue()
 
-    def addIdle(self, function, args=None, kwargs=None):
+    def addIdle(self, function, name, args=None, kwargs=None):
         if args is None:
             args = ()
         if kwargs is None:
             kwargs = {}
-        self.queue.put((function, args, kwargs))
+        self.queue.put((function, name, args, kwargs))
 
     def processIdles(self):
         while not self.queue.empty():
-            function, args, kwargs = self.queue.get()
+            function, name, args, kwargs = self.queue.get()
             try:
+                #start = time()
                 function(*args, **kwargs)
+                #end = time()
+                #if end-start > 0.05:
+                #    print "WARNING: %s too slow (%.3f secs)" % (
+                #        name, end-start)
             except:
-                util.failedExn("While handling idle call")
+                util.failedExn("While handling idle call (%s)" % name)
 
 class EventLoop(object):
     def __init__(self):
@@ -165,21 +177,21 @@ def stopHandlingSocket(socket):
     except KeyError:
         pass
 
-def addTimeout(delay, function, args=None, kwargs=None):
+def addTimeout(delay, function, name, args=None, kwargs=None):
     """Schedule a function to be called at some point in the future.
     Returns a DelayedCall object that can be used to cancel the call.
     """
 
-    dc = _eventLoop.scheduler.addTimeout(delay, function, args, kwargs)
+    dc = _eventLoop.scheduler.addTimeout(delay, function, name, args, kwargs)
     _eventLoop.wakeup()
     return dc
 
-def addIdle(function, args=None, kwargs=None):
+def addIdle(function, name, args=None, kwargs=None):
     """Schedule a function to be called when we get some spare time.
     Returns a DelayedCall object that can be used to cancel the call.
     """
 
-    _eventLoop.idleQueue.addIdle(function, args, kwargs)
+    _eventLoop.idleQueue.addIdle(function, name, args, kwargs)
     _eventLoop.wakeup()
 
 def startup():
@@ -207,5 +219,5 @@ def asIdle(func):
     """
 
     def queuer(*args, **kwargs):
-        return addIdle(func, args=args, kwargs=kwargs)
+        return addIdle(func, "%s() (using asIdle)" % func.__name__, args=args, kwargs=kwargs)
     return queuer

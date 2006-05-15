@@ -26,7 +26,7 @@ class IconCacheUpdater:
             finally:
                 item.dbItem.endRead()
         if self.runningCount < RUNNING_MAX:
-            addIdle (item.requestIcon)
+            addIdle (item.requestIcon, "Icon Request")
             self.runningCount += 1
         else:
             if is_vital:
@@ -47,7 +47,7 @@ class IconCacheUpdater:
             self.runningCount -= 1
             return
 
-        addIdle (item.requestIcon)
+        addIdle (item.requestIcon, "Icon Request")
 
     @asIdle
     def clearVital (self):

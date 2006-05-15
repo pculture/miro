@@ -114,7 +114,7 @@ class Daemon:
             if not isinstance(comm, command.ShutDownCommand):
                 if comm.orig:
                     eventloop.addIdle(self.processCommand,
-                                      args=(comm,))
+                                      "DL Daemon Process Command", args=(comm,))
                 else:
                     self.processReturnValue(comm)
             else:
