@@ -11,17 +11,16 @@
    previously idling, the delegate's systemIsActiveAgain method is called.
 """
 
-import threading
 import time
 
+import eventloop
 import idletime
 
 DEFAULT_PERIODICITY = 5             # Check every X seconds
 DEFAULT_IDLE_THRESHOLD = 60 * 5     # Notify after X seconds of idling
 
 
-class IdleNotifier (threading.Thread):
-    
+class IdleNotifier:
     def __init__(self, delegate, idleThreshold=DEFAULT_IDLE_THRESHOLD, periodicity=DEFAULT_PERIODICITY):
         """Initialize the IdleNotifier object, the passed delegate will be
            called when the system idle state changes.
@@ -30,30 +29,31 @@ class IdleNotifier (threading.Thread):
            - periodicity specifies that that the idle state should be checked
            every X seconds.
         """
-        threading.Thread.__init__(self)
-        self.setName("IdleNotifier")
-        self.setDaemon(True)
-        self.stopEvent = threading.Event()
         self.idling = False
         self.wasIdling = False
         self.delegate = delegate
         self.idleThreshold = idleThreshold
         self.periodicity = periodicity
-                        
+        self.lastTimeout = None
+
+    def start(self):
+        print "DTV: idle notifier running"
+        self.lastTimeout = eventloop.addTimeout(self.periodicity,self.run,"Idle notifier")
+
     def run(self):
-        print "DTV: idle notifier thread running"
-        while not self.stopEvent.isSet():
-            seconds = idletime.get()
-            if self.idling:
-                self._whenIdling(seconds)
-            else:
-                self._whenNotIdling(seconds)
-            self.stopEvent.wait(self.periodicity)
-        print "DTV: idle notifier thread stopped"
+        seconds = idletime.get()
+        if self.idling:
+            self._whenIdling(seconds)
+        else:
+            self._whenNotIdling(seconds)
+        self.lastTimeout = eventloop.addTimeout(self.periodicity,self.run,"Idle notifier")
+
 
     def join(self):
-        self.stopEvent.set()
-        threading.Thread.join(self)
+        try:
+            self.lastTimeout.cancel()
+        except:
+            pass
     
     def _whenNotIdling(self, seconds):
         if seconds >= self.idleThreshold:
