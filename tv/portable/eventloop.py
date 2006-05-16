@@ -90,12 +90,58 @@ class IdleQueue(object):
                 #    print "WARNING: %s too slow (%.3f secs)" % (
                 #        name, end-start)
             except:
-                util.failedExn("While handling idle call (%s)" % name)
+                util.failedExn("While handling idle call (%s)" % (name,))
+
+class Resolver(object):
+    """The getaddrinfo() function blocks, so we can't use it in our main
+    eventloop thread.  This class creates a really small thread pool, that
+    handles the call, and passing the data back in the main event loop thread
+    as a callback.
+    """
+    THREADS = 2
+
+    def __init__(self, eventLoop):
+        self.eventLoop = eventLoop
+        self.queue = Queue.Queue()
+        self.threads = []
+        for x in xrange(self.THREADS):
+            t = threading.Thread(name='Resolver Thread %d' % x,
+                    target=self.threadLoop)
+            t.setDaemon(True)
+            t.start()
+            self.threads.append(t)
+
+    def threadLoop(self):
+        while True:
+            nextItem = self.queue.get()
+            if nextItem == "QUIT":
+                break
+            else:
+                host, callback, errback = nextItem
+            try:
+                address = socket.gethostbyname(host)
+            except Exception, e:
+                self.eventLoop.idleQueue.addIdle(errback, 'Resolver Errback',
+                        args=(e,))
+            else:
+                self.eventLoop.idleQueue.addIdle(callback, 
+                    'Resolver Callback', args=(address,))
+            self.eventLoop.wakeup()
+
+    def queueResolve(self, callback, errback, host):
+        self.queue.put((callback, errback, host))
+
+    def closeThreads(self):
+        for x in xrange(self.THREADS):
+            self.queue.put("QUIT")
+        for t in self.threads:
+            t.join()
 
 class EventLoop(object):
     def __init__(self):
         self.scheduler = Scheduler()
         self.idleQueue = IdleQueue()
+        self.resolver = Resolver(self)
         self.readCallbacks = {}
         self.writeCallbacks = {}
         self.wakeSender, self.wakeReceiver = util.makeDummySocketPair()
@@ -119,6 +165,9 @@ class EventLoop(object):
 
     def wakeup(self):
         self.wakeSender.send("b")
+
+    def resolveAddress(self, host, callback, errback):
+        self.resolver.queueResolve(host, callback, errback)
 
     def doCallbacks(self, readyList, map):
         for fd in readyList:
@@ -200,6 +249,13 @@ def addIdle(function, name, args=None, kwargs=None):
 
     _eventLoop.idleQueue.addIdle(function, name, args, kwargs)
     _eventLoop.wakeup()
+
+def resolveAddress(host, callback, errback):
+    """Get the numerical IP address for a IPv4 host, on success callback will
+    be called with the adrress, on failure errback will be called with the
+    exception.
+    """
+    _eventLoop.resolveAddress(host, callback, errback)
 
 def startup():
     lt = threading.Thread(target=_eventLoop.loop, name="Event Loop")

@@ -1,11 +1,38 @@
-import socket
+"""httpclient.py 
+
+Implements an HTTP client.  The main way that this module is used is the
+grabURL function that that's an asynchronous version of our old grabURL.
+
+A lot of the code here comes from inspection of the httplib standard module.
+Some of it was taken more-or-less directly from there.  I (Ben Dean-Kawamura)
+believe our clients follow the HTTP 1.1 spec completely, I used RFC2616 as a
+reference (http://www.w3.org/Protocols/rfc2616/rfc2616.html).
+"""
+
 import errno
-from urlparse import urlparse
+import re
+import socket
+import threading
+from urlparse import urlparse, urljoin
+from collections import deque
+
+from BitTornado.clock import clock
 
 import config
 import downloader
+from download_utils import cleanFilename
 import eventloop
 import util
+import sys
+
+# Pass in a connection to the frontend
+def setDelegate(newDelegate):
+    global delegate
+    delegate = newDelegate
+
+def trapCall(function, *args, **kwargs):
+    """Do a util.trapCall, where when = 'While talking to the network'"""
+    util.trapCall("While talking to the network", function, *args, **kwargs)
 
 class NetworkBuffer(object):
     """Responsible for storing incomming network data and doing some basic
@@ -37,18 +64,22 @@ class NetworkBuffer(object):
         self.length -= len(rv)
         return rv
 
-    def readline(self, sep='\r\n'):
-        """Like a file readline, with two difference:  If there isn't a full
-        line ready to be read we return None.  Also, if there is a line, we
-        don't include the trailing line separator.
+    def readline(self):
+        """Like a file readline, with several difference:  
+        * If there isn't a full line ready to be read we return None.  
+        * Doesn't include the trailing line separator.
+        * Both "\r\n" and "\n" act as a line ender
         """
 
         self._mergeChunks()
-        split = self.chunks[0].split(sep, 1)
+        split = self.chunks[0].split("\n", 1)
         if len(split) == 2:
             self.chunks[0] = split[1]
             self.length = len(self.chunks[0])
-            return split[0]
+            if split[0].endswith("\r"):
+                return split[0][:-1]
+            else:
+                return split[0]
         else:
             return None
 
@@ -59,61 +90,95 @@ class NetworkBuffer(object):
         self.chunks.insert(0, data)
         self.length += len(data)
 
-    def printout(self):
+    def getValue(self):
         self._mergeChunks()
-        print self.chunks[0]
+        return self.chunks[0]
+
+class NotReadyToSendError(Exception):
+    pass
 
 class ConnectionHandler(object):
-    """Base class to handle socket connections.  It's a thin wrapper our now
-    fangled asynchronous eventloop module to make it easier to deal with
-    protocols.
+    """Base class to handle socket connections.  It implements a simple state
+    machine over our new fangled asynchronous eventloop module to help
+    dealing with network protocols.
 
-    Subclasses can use sendData to write data out to the socket and use
-    startReading() to signal that they are ready to handle data coming in.  
+    Sending data: Use the sendData() method.
 
-    Subclasses should override the handleData() method, which handles chunks
-    of data as it becomes available on the socket.  Also the handleClose()
-    method to handle the socket closing.
-     """
+    Reading Data: Add entries to the state dictionary, which maps strings to
+    methods.  The state methods will be called when there is data available,
+    which can be read from the buffer variable.  The states dictionary can
+    contain a None value, to signal that the handler isn't interested in
+    reading at that point.  Use changeState() to switch states.
+
+    Subclasses should override tho the handleClose() method to handle the
+    socket closing.
+    """
 
     def __init__(self):
         self.toSend = ''
-        self.connected = False
+        self.socketOpen = False
         self.readSize = 4096
+        self.buffer = NetworkBuffer()
+        self.states = {'initializing': None, 'closed': None}
+        self.readCallbackActive = False
+        self.writeCallbackActive = False
+        self.changeState('initializing')
 
-    def openConnection(self, host, port):
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.setblocking(0)
-        rv = self.socket.connect_ex((host, port))
-        if rv not in (0, errno.EINPROGRESS, errno.EWOULDBLOCK):
-            raise socket.error, (rv, errno.errorcode[rv])
-        self.connected = True
+    def openConnection(self, host, port, callback, errback):
+        self.host = host
+        self.port = port
+        def finishOpen(address):
+            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.socket.setblocking(0)
+            rv = self.socket.connect_ex((address, port))
+            if rv not in (0, errno.EINPROGRESS, errno.EWOULDBLOCK):
+                trapCall(errback, socket.error((rv, errno.errorcode[rv])))
+            self.socketOpen = True
+            trapCall(callback, self)
+        eventloop.resolveAddress(host, finishOpen, errback)
 
     def closeConnection(self):
-        if self.connected:
+        if self.socketOpen:
             eventloop.stopHandlingSocket(self.socket)
             self.socket.shutdown(socket.SHUT_RDWR)
-            self.connected = False
+            self.socketOpen = False
+            self.writeCallbackActive = self.readCallbackActive = False
             self.socket = None
-            self.state = 'closed'
+            self.changeState('closed')
 
     def sendData(self, data):
         self.toSend += data
-        eventloop.addWriteCallback(self.socket, self.writeCallback)
+        if not self.writeCallbackActive:
+            eventloop.addWriteCallback(self.socket, self.writeCallback)
+            self.writeCallbackActive = True
 
     def writeCallback(self):
-        sent = self.socket.send(self.toSend)
-        if sent == 0:
+        try:
+            sent = self.socket.send(self.toSend)
+        except socket.error:
             self.handleClose(socket.SHUT_WR)
+            return
         self.toSend = self.toSend[sent:]
-        if self.toSend == '':
+        if self.toSend == '' and self.writeCallbackActive:
             eventloop.removeWriteCallback(self.socket)
+            self.writeCallbackActive = False
 
-    def startReading(self):
-        eventloop.addReadCallback(self.socket, self.readCallback)
+    def changeState(self, newState):
+        self.readHandler = self.states[newState]
+        self.state = newState
+        self.updateReadCallback()
+        # there may be extra data that the last read handler didn't pay
+        # attention to, invoke the new readHandler now
+        if self.readHandler is not None:
+            self.readHandler()
 
-    def stopReading(self):
-        eventloop.removeReadCallback(self.socket, self.readCallback)
+    def updateReadCallback(self):
+        if self.readHandler is not None and not self.readCallbackActive:
+            eventloop.addReadCallback(self.socket, self.readCallback)
+            self.readCallbackActive = True
+        elif self.readHandler is None and self.readCallbackActive:
+            eventloop.removeReadCallback(self.socket)
+            self.readCallbackActive = False
 
     def readCallback(self):
         data = self.socket.recv(self.readSize)
@@ -122,106 +187,171 @@ class ConnectionHandler(object):
         else:
             self.handleData(data)
 
+    def handleData(self, data):
+        self.buffer.addData(data)
+        self.readHandler()
+
     def handleClose(self, type):
         """Handle the socket becoming closed.  Type is either socket.SHUT_RD,
         or socket.SHUT_WR.
         """
         raise NotImplementError()
 
-    def handleData(self, data):
-        """Handle a chunk of data coming in from the wire"""
-        raise NotImplementError()
+    def __str__(self):
+        return "%s -- %s" % (self.__class__, self.state)
 
 class HTTPError(Exception):
     pass
-
 class BadStatusLine(HTTPError):
     pass
-
 class BadHeaderLine(HTTPError):
     pass
-
 class ServerClosedConnection(HTTPError):
     pass
+class BadChunkSize(HTTPError):
+    pass
+class CRLFExpected(HTTPError):
+    pass
+class PipelinedRequestNeverStarted(HTTPError):
+    pass
+class BadRedirect(HTTPError):
+    pass
+class AuthorizationFailed(HTTPError):
+    pass
+class NotReadyToSendError(Exception):
+    pass
 
-class HTTPRequest(ConnectionHandler):
-    MAX_REDIRECTIONS = 10
-    MAX_AUTH_REQUEST = 5
-    USER_AGENT = "%s/%s (%s)" % \
-            (config.get(config.SHORT_APP_NAME),
-             config.get(config.APP_VERSION),
-             config.get(config.PROJECT_URL))
-    READ_SIZE = 8192
+class HTTPConnection(ConnectionHandler):
+    def __init__(self, closeCallback=None, readyCallback=None):
+        super(HTTPConnection, self).__init__()
+        self.scheme = 'http'
+        self.shortVersion = 0
+        self.states['ready'] = None
+        self.states['response-status'] = self.onStatusData
+        self.states['response-headers'] = self.onHeaderData
+        self.states['response-body'] = self.onBodyData
+        self.states['chunk-size'] = self.onChunkSizeData
+        self.states['chunk-data'] = self.onChunkData
+        self.states['chunk-trailer'] = self.onChunkTrailerData
+        self.changeState('ready')
+        self.idleSince = clock()
+        self.unparsedHeaderLine = ''
+        self.pipelinedRequest = None
+        self.closeCallback = closeCallback
+        self.readyCallback = readyCallback
+        self.sentReadyCallback = False
 
-    def __init__(self, host, port, callback, errback):
-        super(HTTPRequest, self).__init__()
+    def closeConnection(self):
+        super(HTTPConnection, self).closeConnection()
+        if self.closeCallback is not None:
+            self.closeCallback(self)
+            self.closeCallback = None
+
+    def canSendRequest(self):
+        return (self.state == 'ready' or 
+                (self.state != 'closed' and self.pipelinedRequest is None and
+                    not self.willClose))
+
+    def sendRequest(self, callback, errback, method="GET", path='/',
+            headers=None):
+
+        if not self.canSendRequest():
+            raise NotReadyToSendError()
+
+        if headers is None:
+            headers = {}
+        else:
+            headers = headers.copy()
+        headers['Host'] = self.host.encode('idna')
+        headers['Accept-Encoding'] = 'identity'
+
+        self.sendRequestData(method, path, headers)
+        if self.state == 'ready':
+            self.startNewRequest(callback, errback, method, path, headers)
+        else:
+            self.pipelinedRequest = (callback, errback, method, path, headers)
+
+    def startNewRequest(self, callback, errback, method, path, headers):
+        """Called when we're ready to start processing a new request, either
+        because one has just been made, or because we've pipelined one, and
+        the previous request is done.
+        """
+
         self.callback = callback
         self.errback = errback
-        self.host = host
-        self.port = port
-        self.startNewResponse()
-        self.buffer = NetworkBuffer()
-        self.openConnection(self.host, self.port)
-        self.shortVersion = 0
-        self.state = 'ready'
-        self.unparsedHeaderLine = ''
-
-    def sendRequest(self, method="GET", path='/', headers=None):
         self.method = method
         self.path = path
-        # Figure out what headers we will send
-        self.requestHeaders = {
-            'User-Agent': self.USER_AGENT,
-            'Host': self.host.encode('idna'),
-            'Accept-Encoding': 'identity',
-        }
-        if headers is not None:
-            self.requestHeaders.update(headers)
-        self.sendData(self.formatRequest())
-        self.state = "response-status"
-        self.startReading()
-
-    def startNewResponse(self):
-        self.version = None
-        self.status = None
-        self.reason = None
+        self.requestHeaders = headers
         self.headers = {}
-        self.body = None
-        self.expectedLength = None
-        self.willClose = None
+        self.version = self.status = self.reason = self.body = None
+        self.contentLength = None
+        self.willClose = True 
+        # Assume we will close, until we get the headers
+        self.chunked = False
+        self.chunks = []
+        self.idleSince = None
+        self.sentReadyCallback = False
+        self.changeState('response-status')
 
-    def formatRequest(self):
+    def sendRequestData(self, method, path, headers):
         sendOut = []
-        sendOut.append('%s %s HTTP/1.1\r\n' % (self.method, self.path))
-        for header, value in self.requestHeaders.items():
+        sendOut.append('%s %s HTTP/1.1\r\n' % (method, path))
+        for header, value in headers.items():
             sendOut.append('%s: %s\r\n' % (header, value))
         sendOut.append('\r\n')
-        return ''.join(sendOut)
+        self.sendData(''.join(sendOut))
+
+    def onStatusData(self):
+        line = self.buffer.readline()
+        if line is not None:
+            self.handleStatusLine(line)
+            if self.shortVersion != 9:
+                self.changeState('response-headers')
+            else:
+                self.startBody()
+
+    def onHeaderData(self):
+        while self.state == 'response-headers':
+            line = self.buffer.readline()
+            if line is None:
+                break
+            self.handleHeaderLine(line)
         
-    def handleData(self, data):
-        self.buffer.addData(data)
-        if self.state == "response-status":
+    def onBodyData(self):
+        if (self.contentLength is not None and 
+                self.buffer.length >= self.contentLength):
+            self.body = self.buffer.read(self.contentLength)
+            self.finishRequest()
+
+    def onChunkSizeData(self):
+        line = self.buffer.readline()
+        if line is not None:
+            sizeString = line.split(';', 1)[0] # ignore chunk-extensions
+            try:
+                self.chunkSize = int(sizeString, 16)
+            except ValueError:
+                self.handleError(BadChunkSize(line))
+                return
+            if self.chunkSize != 0:
+                self.changeState('chunk-data')
+            else:
+                self.changeState('chunk-trailer')
+
+    def onChunkData(self):
+        if self.buffer.length >= self.chunkSize + 2:
+            self.chunks.append(self.buffer.read(self.chunkSize))
+            crlf = self.buffer.read(2)
+            if crlf != "\r\n":
+                self.handleError(CRLFExpected(crlf))
+            self.changeState('chunk-size')
+
+    def onChunkTrailerData(self):
+        # discard all trailers, we shouldn't have any
+        line = self.buffer.readline()
+        while line is not None:
+            if line == '':
+                self.finishRequest()
             line = self.buffer.readline()
-            if line is not None:
-                self.handleStatusLine(line)
-                if self.shortVersion != 9:
-                    self.state = 'response-headers'
-                else:
-                    self.headersDone()
-        if self.state == "response-headers":
-            line = self.buffer.readline()
-            while line is not None:
-                self.handleHeaderLine(line)
-                if self.state == 'response-headers':
-                    line = self.buffer.readline()
-                else:
-                    break
-        if self.state == 'response-body':
-            if (self.expectedLength is not None and 
-                    self.buffer.length >= self.expectedLength):
-                self.body = self.buffer.read(self.expectedLength)
-                self.sendCallback()
-                self.state = 'ready'
 
     def handleStatusLine(self, line):
         try:
@@ -265,7 +395,7 @@ class HTTPRequest(ConnectionHandler):
     def handleHeaderLine(self, line):
         if self.unparsedHeaderLine == '':
             if line == '':
-                self.headersDone()
+                self.startBody()
             elif ':' in line:
                 self.parseHeader(line)
             else:
@@ -295,179 +425,97 @@ class HTTPRequest(ConnectionHandler):
         else:
             self.headers[header] += (',%s' % value)
 
-    def headersDone(self):
+    def startBody(self):
         if ((100 <= self.status <= 199) or self.status in (204, 304) or
                 self.method == 'HEAD'):
-            self.state = 'ready'
+            self.finishRequest()
         else:
-            self.state = 'response-body'
             self.findExpectedLength()
+            self.checkChunked()
             self.decideWillClose()
+            if not self.chunked:
+                self.changeState('response-body')
+            else:
+                self.changeState('chunk-size')
+        self.maybeSendReadyCallback()
+
+    def checkChunked(self):
+        te = self.headers.get('transfer-encoding', '')
+        self.chunked = (te.lower() == 'chunked')
 
     def findExpectedLength(self):
-        if self.headers.get('transfer-encoding') != 'identity':
+        if self.headers.get('transfer-encoding', 'identity') == 'identity':
             try:
-                self.expectedLength = int(self.headers['content-length'])
+                self.contentLength = int(self.headers['content-length'])
             except (ValueError, KeyError):
                 pass
-            if self.expectedLength < 0:
-                self.expectedLength = None
+            if self.contentLength < 0:
+                self.contentLength = None
+        else:
+            self.contentLength = None
 
     def decideWillClose(self):
-        # this was basically ripped out from httplib.HTTPConnection
-        if 'close' in self.headers.get('connection', ''):
+        if self.shortVersion != 11:
+            # Close all connections to HTTP/1.0 servers.
             self.willClose = True
-        elif self.version == 11:
-            self.willClose = False
-        elif 'keep-alive' in self.headers:
-            # For older HTTP, Keep-Alive indiciates persistent connection.
-            self.willClose = False
-        elif 'keep-alive' in self.headers.get('connection', ''):
-            # At least Akamai returns a "Connection: Keep-Alive" header, which
-            # was supposed to be sent by the client.
-            self.willClose = False
-        elif "keep-alive" in self.headers.get('proxy-connection', '').lower():
-            # Proxy-Connection is a netscape hack.
-            self.willClose = False
+        elif 'close' in self.headers.get('connection', ''):
+            self.willClose = True
+        elif not self.chunked and self.contentLength is None:
+            # if we aren't chunked and didn't get a content length, we have to
+            # assume the connection will close
+            self.willClose = True
         else:
-            # otherwise, assume it will close
-            return True
+            # HTTP/1.1 connections are assumed to stay open 
+            self.willClose = False
 
-    def sendCallback(self):
-        response = {
-            'version': self.version,
-            'status': self.status,
-            'reason': self.reason,
-            'headers': self.headers,
-            'body': self.body,
-        }
-        try:
-            self.callback(response)
-        except:
-            util.failedExn("While talking to the network")
-            self.closeConnection()
+    def finishRequest(self):
+        if self.chunked:
+            body = ''.join(self.chunks)
+        else:
+            body = self.body
+
+        if self.socketOpen:
+            if self.willClose:
+                self.closeConnection()
+                self.changeState('closed')
+            elif self.pipelinedRequest is not None:
+                self.startNewRequest(*self.pipelinedRequest)
+                self.pipelinedRequest = None
+            else:
+                self.changeState('ready')
+                self.idleSince = clock()
+
+        response = self.headers
+        response['body'] = body
+        for key in ('version', 'status', 'reason', 'method', 'path', 'host',
+                'port'):
+            response[key] = getattr(self, key)
+        trapCall(self.callback, response)
+
+        self.maybeSendReadyCallback()
+
+    def maybeSendReadyCallback(self):
+        if (self.readyCallback and self.canSendRequest() and not
+                self.sentReadyCallback):
+            self.sentReadyCallback = True
+            self.readyCallback(self)
         
     def handleClose(self, type):
+        oldState = self.state
         self.closeConnection()
-        if self.state == 'response-body':
-            if self.expectedLength is None:
-                self.body = self.buffer.read()
-                self.sendCallback()
-            elif self.expectedLength >= self.buffer.length:
-                self.body = self.buffer.read(self.expectedLength)
-                self.sendCallback()
-            else:
-                self.errback(ServerClosedConnection())
-
+        if oldState == 'response-body' and self.contentLength is None:
+            self.body = self.buffer.read()
+            self.finishRequest()
         else:
             self.errback(ServerClosedConnection())
+        if self.pipelinedRequest is not None:
+            (callback, errback, method, path, headers) = self.pipelinedRequest
+            trapCall(errback, PipelinedRequestNeverStarted())
 
     def handleError(self, error):
         self.closeConnection()
-        self.errback(error)
-
-    def NOTDONEYET():
-        download = connectionPool.getRequest(scheme,host,type, path, headers = myHeaders)
-
-        if download is None:
-            return None
-
-        #print "Got it!"
-        depth = 0
-        authAttempts = 0
-        while ((download.status != 304) and
-               ((start == 0 and download.status != 200) or
-                (start > 0 and download.status != 206)) and 
-               (depth < maxDepth and authAttempts < maxAuthAttempts)):
-            if download.status == 302 or download.status == 307 or download.status == 301:
-                #print " redirect"
-                depth += 1
-                info = download.msg
-                download.close()
-                if info.has_key('location'):
-                    redirURL = urljoin(redirURL,info['location'])
-                if download.status == 301:
-                    url = redirURL
-                (scheme, host, path, params, query, fragment) = parseURL(redirURL)
-
-                try:
-                    del myHeaders["Authorization"]
-                except KeyError:
-                    pass
-                auth = findHTTPAuth(host,path)
-                if not auth is None:
-                    #print " adding auth header"
-                    myHeaders["Authorization"] = auth.getAuthScheme()+' '+auth.getAuthToken()
-
-                if len(params):
-                    path += ';'+params
-                if len(query):
-                    path += '?'+query
-                #print "getURLInfo Redirected to "+host
-                download = connectionPool.getRequest(scheme,host,type,path, headers=myHeaders)
-                if download is None:
-                    return None
-            elif download.status == 401:
-                if download.msg.has_key('WWW-Authenticate'):
-                    authAttempts += 1
-                    info = download.msg
-                    download.close()
-                    regExp = re.compile("^(.*?)\s+realm\s*=\s*\"(.*?)\"$").search(info['WWW-Authenticate'])
-                    authScheme = regExp.expand("\\1")
-                    realm = regExp.expand("\\2")
-                    #print "Trying to authenticate "+host+" realm:"+realm
-                    result = delegate.getHTTPAuth(host,realm)
-                    if not result is None:
-                        import downloader
-                        auth = downloader.HTTPAuthPassword(result[0],result[1],host, realm, path, authScheme)
-                        myHeaders["Authorization"] = auth.getAuthScheme()+' '+auth.getAuthToken()
-                        download = connectionPool.getRequest(scheme,host,type,path, headers=myHeaders)
-                    else:
-                        return None #The user hit Cancel
-
-                    #This is where we would do our magic to prompt for a password
-                    #If we get a good password, we save it
-                else:
-                    break
-            else: #Some state we don't handle
-                break
-
-        # Valid or cached pages
-        if not download.status in [200,206,304]:
-            return None
-
-        #print "processing request"
-        info = download.msg
-        myInfo = {}
-        for key in info.keys():
-            myInfo[key] = info[key]
-        info = myInfo
-        if type == 'GET':
-            info['file-handle'] = download
-        else:
-            download.close()
-        #print "closed request"
-
-        info['filename'] = 'unknown'
-        try:
-            disposition = info['content-disposition']
-            info['filename'] = re.compile("^.*filename\s*=\s*\"(.*?)\"$").search(disposition).expand("\\1")
-            info['filename'] = cleanFilename(info['filename'])
-        except:
-            try:
-                info['filename'] = re.compile("^.*?([^/]+)/?$").search(path).expand("\\1")
-                info['filename'] = cleanFilename(info['filename'])
-            except:
-                pass
-
-        info['redirected-url'] = redirURL
-        info['updated-url'] = url
-        info['status'] = download.status
-        try:
-            info['charset'] = re.compile("^.*charset\s*=\s*(\S+)/?$").search(info['content-type']).expand("\\1")
-        except (AttributeError, KeyError):
-            pass
-        return info
+        trapCall(self.errback, error)
+        self.closeConnection()
 
 def parseURL(url):
     (scheme, host, path, params, query, fragment) = urlparse(url)
@@ -493,23 +541,338 @@ def parseURL(url):
         fullPath += '?%s' % query
     return scheme, host, port, fullPath
 
-def makeRequest(url, callback, errback, method="GET", start=0, etag=None,
-        modified=None, findHTTPAuth=None):
-    # TODO: CONNECTION POOLS!
-    scheme, host, port, path = parseURL(url)
-    headers = {}
+class HTTPConnectionPool(object):
+    """Handle a pool of HTTP connections.
 
-    if findHTTPAuth is None:
-        findHTTPAuth = downloader.findHTTPAuth
-    auth = findHTTPAuth(host, path)
-    if not auth is None:
-        authHeader = "%s %s" % (auth.getAuthScheme(), auth.getAuthToken())
-        headers["Authorization"] = authHeader
-    if start > 0:
-        headers["Range"] = "bytes="+str(start)+"-"
-    if not etag is None:
-        headers["If-None-Match"] = etag
-    if not modified is None:
-        headers["If-Modified-Since"] = modified
-    r = HTTPRequest(host, port, callback, errback)
-    r.sendRequest(method, path, headers)
+    We use the following stategy to handle new requests:
+    * If there is an connection on the server that's ready to send, use that.
+    * If we haven't hit our connection limits, create a new request
+    * When a connection becomes closed, we look for our last 
+
+    NOTE: "server" in this class means the combination of the scheme, hostname
+    and port.
+    """
+
+    MAX_CONNECTIONS_PER_SERVER = 2 
+    CONNECTION_TIMEOUT = 300
+    MAX_CONNECTIONS = 30
+
+    def __init__(self):
+        self.pendingRequests = []
+        self.activeConnectionCount = 0
+        self.freeConnectionCount = 0
+        self.connections = {}
+        eventloop.addTimeout(60, self.cleanupPool, 
+            "Check HTTP Connection Timeouts")
+
+    def _getServerConnections(self, scheme, host, port):
+        key = '%s:%s:%s' % (scheme, host, port)
+        try:
+            return self.connections[key]
+        except KeyError:
+            self.connections[key] = {'free': set(), 'active': set()}
+            return self.connections[key]
+
+    def _popPendingRequest(self):
+        """Try to choose a pending request to process.  If one is found,
+        remove it from the pendingRequests list and return it.  If not, return
+        None.
+        """
+
+        if self.activeConnectionCount >= self.MAX_CONNECTIONS:
+            return None
+        for i in xrange(len(self.pendingRequests)):
+            req = self.pendingRequests[i]
+            conns = self._getServerConnections(req['scheme'], req['host'], 
+                    req['port'])
+            if (len(conns['free']) > 0 or 
+                    len(conns['active']) < self.MAX_CONNECTIONS_PER_SERVER):
+                del self.pendingRequests[i]
+                return req
+        return None
+
+    def _onConnectionClosed(self, conn):
+        conns = self._getServerConnections(conn.scheme, conn.host, conn.port)
+        if conn in conns['active']:
+            conns['active'].remove(conn)
+            self.activeConnectionCount -= 1
+        elif conn in conns['free']:
+            conns['free'].remove(conn)
+            self.freeConnectionCount -= 1
+        self.runPendingRequests()
+
+    def _onConnectionReady(self, conn):
+        conns = self._getServerConnections(conn.scheme, conn.host, conn.port)
+        conns['active'].remove(conn)
+        self.activeConnectionCount -= 1
+        conns['free'].add(conn)
+        self.freeConnectionCount += 1
+        self.runPendingRequests()
+
+    def addRequest(self, callback, errback, url, method, headers):
+        """Add a request to be run.  The request will run immediately if we
+        have a free connection, otherwise it will be queued.
+        """
+
+        scheme, host, port, path = parseURL(url)
+        req = {
+            'callback' : callback,
+            'errback': errback,
+            'scheme': scheme,
+            'host': host,
+            'port': port,
+            'method': method,
+            'path': path,
+            'headers': headers,
+        }
+        self.pendingRequests.append(req)
+        self.runPendingRequests()
+
+    def runPendingRequests(self):
+        """Find pending requests have a free connection, otherwise it will be
+        queued.
+        """
+
+        while True:
+            req = self._popPendingRequest()
+            if req is None:
+                return
+            conns = self._getServerConnections(req['scheme'], req['host'], 
+                    req['port'])
+            if len(conns['free']) > 0:
+                conn = conns['free'].pop()
+                self.freeConnectionCount -= 1
+                conn.sendRequest(req['callback'], req['errback'],
+                        req['method'], req['path'], req['headers'])
+            else:
+                conn = self._makeNewConnection(req)
+            conns['active'].add(conn)
+            self.activeConnectionCount += 1
+            connectionCount = (self.activeConnectionCount +
+                    self.freeConnectionCount)
+            if connectionCount > self.MAX_CONNECTIONS:
+                self._dropAFreeConnection()
+
+    def _makeNewConnection(self, req):
+        def openConnectionCallback(conn):
+            conn.sendRequest(req['callback'], req['errback'],
+                    req['method'], req['path'], req['headers'])
+        def openConnectionErrback(error):
+            conns = self._getServerConnections(req['scheme'], req['host'], 
+                    req['port'])
+            conns['active'].remove(conn)
+            self.activeConnectionCount -= 1
+            req['errback'](error)
+
+        if req['scheme'] == 'http':
+            conn = HTTPConnection(self._onConnectionClosed,
+                    self._onConnectionReady) 
+            conn.openConnection(req['host'], req['port'],
+                    openConnectionCallback, openConnectionErrback)
+        elif req['scheme'] == 'https':
+            raise NotImplementError()
+        else:
+            raise ValueError("Unknown scheme: %s" % req['scheme'])
+        return conn
+
+    def _dropAFreeConnection(self):
+        # TODO: pick based on LRU
+        firstTime = sys.maxint
+        toDrop = None
+
+        for conns in self.connections.values():
+            for candidate in conns['free']:
+                if candidate.idleSince < firstTime:
+                    toDrop = candidate
+        if toDrop is not None:
+            toDrop.closeConnection()
+
+    def cleanupPool(self):
+        for serverKey in self.connections.keys():
+            conns = self.connections[serverKey]
+            toRemove = []
+            for conn in conns['free']:
+                if conn.idleSince + self.CONNECTION_TIMEOUT <= clock():
+                    toRemove.append(conn)
+            for x in toRemove:
+                conn.closeConnection()
+            if len(conns['free']) == len(conns['active']) == 0:
+                del self.connections[serverKey]
+        eventloop.addTimeout(60, self.cleanupPool, 
+            "HTTP Connection Pool Cleanup")
+
+class HTTPClient(object):
+    """High-level HTTP client object.  
+    
+    HTTPClients handle a single HTTP request, but may use several
+    HTTPConnections if the server returns back with a redirection status code,
+    asks for authorization, etc.  Connections are pooled using an
+    HTTPConnectionPool object.
+    """
+
+    connectionPool = HTTPConnectionPool() # class-wid connection pool
+    MAX_REDIRECTS = 10
+    MAX_AUTH_ATTEMPS = 5
+    USER_AGENT = "%s/%s (%s)" % \
+            (config.get(config.SHORT_APP_NAME),
+             config.get(config.APP_VERSION),
+             config.get(config.PROJECT_URL))
+
+    def __init__(self, url, callback, errback, method="GET", start=0,
+            etag=None, modified=None, findHTTPAuth=None):
+        self.url = url
+        self.callback = callback
+        self.errback = errback
+        self.method = method
+        self.start = start
+        self.etag = etag
+        self.modified = modified
+        if findHTTPAuth is not None:
+            self.findHTTPAuth = findHTTPAuth
+        else:
+            self.findHTTPAuth = downloader.findHTTPAuth
+        self.depth = 0
+        self.authAttempts = 0
+        self.updateURLOk = True
+        self.originalURL = self.updatedURL = self.redirectedURL = url
+        self.initHeaders()
+
+    def initHeaders(self):
+        self.headers = {}
+        if self.start > 0:
+            self.headers["Range"] = "bytes="+str(self.start)+"-"
+        if not self.etag is None:
+            self.headers["If-None-Match"] = self.etag
+        if not self.modified is None:
+            self.headers["If-Modified-Since"] = self.modified
+        self.headers['User-Agent'] = self.USER_AGENT
+        self.setAuthHeader()
+
+    def setAuthHeader(self):
+        scheme, host, port, path = parseURL(self.url)
+        auth = self.findHTTPAuth(host, path)
+        if not auth is None:
+            authHeader = "%s %s" % (auth.getAuthScheme(), auth.getAuthToken())
+            self.headers["Authorization"] = authHeader
+
+    def startRequest(self):
+        self.connectionPool.addRequest(self.callbackIntercept,
+                self.errbackIntercept, self.url, self.method, self.headers)
+
+    def callbackIntercept(self, response):
+        if self.shouldRedirect(response):
+            self.handleRedirect(response)
+        elif self.shouldAuthorize(response):
+            self.handleAuthorize(response)
+        else:
+            response = self.prepareResponse(response)
+            trapCall(self.callback, response)
+
+    def prepareResponse(self, response):
+        response['original-url'] = self.originalURL
+        response['updated-url'] = self.updatedURL
+        response['redirected-url'] = self.redirectedURL
+        response['filename'] = self.getFilenameFromResponse(response)
+        response['charset'] = self.getCharsetFromResponse(response)
+        return response
+
+    def findValueFromHeader(self, header, targetName):
+        """Finds a value from a response header that uses key=value pairs with
+        the ';' char as a separator.  This is how content-disposition and
+        content-type work.
+        """
+        for part in header.split(';'):
+            try:
+                name, value = part.split("=", 1)
+            except ValueError:
+                pass
+            else:
+                if name.strip().lower() == targetName.lower():
+                    return value.strip()
+        return None
+
+    def getFilenameFromResponse(self, response):
+        try:
+            disposition = response['content-disposition']
+        except KeyError:
+            pass
+        else:
+            filename = self.findValueFromHeader(disposition, 'filename')
+            if filename is not None:
+                return cleanFilename(filename)
+        match = re.search("([^/]+)/?$", response['path'])
+        if match is not None:
+            return cleanFilename(match.group(1))
+        return 'unknown'
+
+    def getCharsetFromResponse(self, response):
+        try:
+            contentType = response['content-type']
+        except KeyError:
+            pass
+        else:
+            charset = self.findValueFromHeader(contentType, 'charset')
+            if charset is not None:
+                return charset
+        return 'iso-8859-1'
+
+    def errbackIntercept(self, error):
+        if isinstance(error, PipelinedRequestNeverStarted):
+            # Connection closed before our pipelined reuest started.  RFC
+            # 2616 says we should retry
+            self.startRequest() 
+            # this should give us a new connection, since our last one closed
+            return
+        trapCall(self.errback, error)
+
+    def shouldRedirect(self, response):
+        return (response['status'] in (301, 302, 303, 307) and 
+                self.depth < self.MAX_REDIRECTS and 
+                'location' in response)
+
+    def handleRedirect(self, response):
+        self.depth += 1
+        self.url = urljoin(self.url, response['location'])
+        self.redirectedURL = self.url
+        if response['status'] == 301 and self.updateURLOk:
+            self.updatedURL = self.url
+        else:
+            self.updateURLOk = False
+        if response['status'] == 303:
+            # "See Other" we must do a get request for the result
+            self.method = "GET"
+        if 'Authorization' in self.headers:
+            del self.headers["Authorization"]
+        self.setAuthHeader()
+        self.startRequest()
+
+    def shouldAuthorize(self, response):
+        return (response['status'] == 401 and 
+                self.authAttempts < self.MAX_AUTH_ATTEMPS and
+                'www-authorization' in response)
+
+    def handleAuthorize(self, response):
+        self.authAttempts += 1
+        info = download.msg
+        download.close()
+        match = re.search("^(.*?)\s+realm\s*=\s*\"(.*?)\"$",
+            response['www-authenticate'])
+        authScheme = match.expand("\\1")
+        realm = match.expand("\\2")
+        scheme, host, port, path = parseURL(self.url)
+        result = delegate.getHTTPAuth(host, realm)
+        if not result is None:
+            import downloader
+            auth = downloader.HTTPAuthPassword(result[0], result[1], host, 
+                    realm, path, authScheme)
+            self.setAuthHeader()
+            self.startRequest()
+        else:
+            trapCall(self.errback, AuthorizationFailed())
+
+def grabURL(url, callback, errback, method="GET", start=0, etag=None,
+        modified=None, findHTTPAuth=None):
+    client = HTTPClient(url, callback, errback, method, start, etag, modified,
+            findHTTPAuth)
+    client.startRequest()
+

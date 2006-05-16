@@ -11,6 +11,14 @@ import democracy
 # Make sure democracy modules are on the search path
 sys.path.insert(0, os.path.abspath(os.path.dirname(democracy.__file__)))
 
+if '--unittest' in sys.argv:
+    # handle this outside optparse, because unittest has its own option set
+    sys.argv.remove('--unittest')
+    import app
+    import unittest
+    import test
+    unittest.main(module=test)
+
 usage = "usage: %prog [options] [torrent files] [video files]"
 parser = optparse.OptionParser(usage=usage)
 parser.add_option('--unittest', dest='unittest', default=False,
@@ -27,19 +35,7 @@ def startapp():
     singleclick.setCommandLineArgs(args)
     import app
     app.main()
-
-if options.unittest:
-    # Remove all the democracy unittest specific args
-    for count in range(len(sys.argv)):
-        if sys.argv[count] == '--unittest':
-            del sys.argv[count]
-            break
-
-    import app
-    import unittest
-    import test
-    unittest.main(module=test)
-elif options.version:
+if options.version:
     print "Democracy Player"
     print "Version: 0.8.2a-rc2"
     print ""

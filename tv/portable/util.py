@@ -216,3 +216,14 @@ def makeDummySocketPair():
     second, address = dummy_server.accept()
     dummy_server.close()
     return first, second
+
+def trapCall(when, function, *args, **kwargs):
+    """Make a call to a function, but trap any exceptions and do a failedExn
+    call for them.
+    """
+
+    try:
+        function(*args, **kwargs)
+    except:
+        failedExn(when)
+
