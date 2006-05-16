@@ -143,13 +143,7 @@ defaults = [
         "minutes between automatic flushes to disk (0 = disabled)"),
     ]
 
-# FIXME: update btconfig with settings from preferences
 btconfig = defaultargs(defaults)
-
-if remoteconfig.get(config.LIMIT_UPSTREAM):
-    btconfig['max_upload_rate'] = remoteconfig.get(config.UPSTREAM_LIMIT_IN_KBS)
-btconfig['minport'] = remoteconfig.get(config.BT_MIN_PORT)
-btconfig['maxport'] = remoteconfig.get(config.BT_MAX_PORT)
 
 #FIXME: check for free space and failed connection to tracker and fail
 #on those cases
@@ -888,6 +882,10 @@ def shutdownBTDownloader():
     BTDownloader.dlthread.join()
 
 def startBTDownloader():
+    if remoteconfig.get(config.LIMIT_UPSTREAM):
+        btconfig['max_upload_rate'] = remoteconfig.get(config.UPSTREAM_LIMIT_IN_KBS)
+    btconfig['minport'] = remoteconfig.get(config.BT_MIN_PORT)
+    btconfig['maxport'] = remoteconfig.get(config.BT_MAX_PORT)
     BTDownloader.dlthread = Thread(target=BTDownloader.handler.listen_forever)
     BTDownloader.dlthread.setName("bittornado downloader")
     BTDownloader.dlthread.start()

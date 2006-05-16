@@ -183,10 +183,3 @@ def ensureMigratedMoviePath(pathname):
     if hasattr(platformcfg, 'ensureMigratedMoviePath'):
         pathname = platformcfg.ensureMigratedMoviePath(pathname)
     return pathname
-
-# Hack. Getting the support directory path here forces it to be created at
-# import time (ie, before the application standard startup sequence is running)
-# which solves bug #1260994: the bittorent-dtv folder won't end up at the
-# root of the user's home folder. Warning, 'config' MUST be import BEFORE
-# 'downloader' in app.py for this to work.
-get(SUPPORT_DIRECTORY)

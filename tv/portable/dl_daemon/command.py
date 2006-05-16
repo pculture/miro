@@ -13,6 +13,8 @@ class Command:
         self.daemon = daemon
 
     def send(self, block = True, retry = True):
+        if block:
+            print "WARNING: blocking %s" % repr(self)
         try:
             return self.daemon.send(self, block)
         except socket.error, e:
@@ -51,11 +53,6 @@ class Command:
 #############################################################################
 #  Downloader to App commands                                               #
 #############################################################################
-class GetConfigCommand(Command):
-    def action(self):
-        import config
-        return config.get(*self.args, **self.kws)
-
 class GetResourcePathCommand(Command):
     def action(self):
         import resource
@@ -76,10 +73,6 @@ class UpdateDownloadStatus(Command):
         from downloader import RemoteDownloader
         return RemoteDownloader.updateStatus(*self.args, **self.kws)
 
-class ReadyCommand(Command):
-    def action(self):
-        self.daemon.ready.set() # go
-
 class DownloaderErrorCommand(Command):
     def action(self):
         import util
@@ -88,6 +81,13 @@ class DownloaderErrorCommand(Command):
 #############################################################################
 #  App to Downloader commands                                               #
 #############################################################################
+class InitialConfigCommand(Command):
+    def action(self):
+        from dl_daemon import remoteconfig
+        remoteconfig.setDictionary(*self.args, **self.kws)
+        from dl_daemon import download
+        download.startBTDownloader()
+
 class StartNewDownloadCommand(Command):
     def action(self):
         from dl_daemon import download

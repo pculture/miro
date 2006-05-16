@@ -248,7 +248,7 @@ class ControllerDaemon(Daemon):
     def send(self, comm, block):
         # Don't let traffic through until tho downloader child process is
         # ready
-        if comm.orig and not self.ready.isSet():
+        if (not isinstance(comm, command.InitialConfigCommand)) and comm.orig and not self.ready.isSet():
             print 'DTV: Delaying send of %s %s' % (str(comm), comm.id)
             if block:
                 self.ready.wait()
@@ -304,6 +304,14 @@ class ControllerDaemon(Daemon):
         (conn, address) = self.socket.accept()
         conn.settimeout(None)
         self.stream = conn.makefile("r+b")
+        from dl_daemon import remoteconfig
+        import config
+        data = {}
+        for desc in remoteconfig.getConfigItems():
+            data[desc.key] = config.get(desc)
+        c = command.InitialConfigCommand(self, data)
+        c.send(block=False)
+        self.ready.set()
 
     def shutdownDownloaderDaemon(self, timeout=5):
         """Send the downloader daemon the shutdown command.  If it doesn't
