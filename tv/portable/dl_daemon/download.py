@@ -414,7 +414,7 @@ class HTTPDownloader(BGDownloader):
                 pos = self.currentSize
                 filehandle = file(self.filename,"r+b")
                 filehandle.seek(pos)
-                info = grabURL(self.url,"GET",pos, findHTTPAuth = findHTTPAuth)
+                info = grabURL(self.url,"GET",pos, findHTTPAuth = findHTTPAuth, useRemoteConfig = True)
                 if info is None:
                     self.currentSize = 0
                     retry = False
@@ -424,7 +424,7 @@ class HTTPDownloader(BGDownloader):
 
         if not retry:
             #print "We don't have any INFO..."
-            info = grabURL(self.url,"GET", findHTTPAuth = findHTTPAuth)
+            info = grabURL(self.url,"GET", findHTTPAuth = findHTTPAuth, useRemoteConfig = True)
             if info is None:
                 self.state = "failed"
                 self.reasonFailed = "Could not connect to server"
@@ -775,7 +775,7 @@ class BTDownloader(BGDownloader):
                 path = self.url[len('file://'):]
                 metainfoFile = open(path, 'rb')
             else:
-                h = grabURL(self.getURL(), "GET", findHTTPAuth = findHTTPAuth)
+                h = grabURL(self.getURL(), "GET", findHTTPAuth = findHTTPAuth, useRemoteConfig = True)
                 if h is None:
                     return False
                 else:

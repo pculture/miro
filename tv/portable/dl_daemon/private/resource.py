@@ -1,9 +1,5 @@
-from dl_daemon import daemon, command
-
 def path(relative_path):
-    comm = command.GetResourcePathCommand(daemon.lastDaemon, relative_path)
-    return comm.send(retry = True)
+    raise StandardError, "Resource paths not available for Downloader Daemon"
 
 def url(relative_path):
-    comm = command.GetResourceURLCommand(daemon.lastDaemon, relative_path)
-    return comm.send(retry = True)
+    raise StandardError, "Resource urls not available for Downloader Daemon"

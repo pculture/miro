@@ -1,4 +1,4 @@
-from dl_daemon import daemon, command, remoteconfig
+from dl_daemon import remoteconfig
 
 def load():
     pass

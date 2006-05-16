@@ -53,16 +53,6 @@ class Command:
 #############################################################################
 #  Downloader to App commands                                               #
 #############################################################################
-class GetResourcePathCommand(Command):
-    def action(self):
-        import resource
-        return resource.path(*self.args, **self.kws)
-
-class GetResourceURLCommand(Command):
-    def action(self):
-        import resource
-        return resource.url(*self.args, **self.kws)
-
 class FindHTTPAuthCommand(Command):
     def action(self):
         import downloader

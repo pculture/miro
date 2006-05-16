@@ -48,22 +48,22 @@ def nextFreeFilename(name):
             newname = '.'.join(parts)
     return newname
 
-def _grabURLThread(callback, url, name, start, etag, modified, findHTTPAuth, getBody, args, kwargs):
+def _grabURLThread(callback, url, name, start, etag, modified, findHTTPAuth, useRemoteConfig, getBody, args, kwargs):
     info = None
     try:
         if getBody == False:
-            info = grabURL(url, "HEAD", start, etag, modified, findHTTPAuth)
+            info = grabURL(url, "HEAD", start, etag, modified, findHTTPAuth, useRemoteConfig)
             if info == None:
-                info = grabURL (url, "GET", start, etag, modified, findHTTPAuth)
+                info = grabURL (url, "GET", start, etag, modified, findHTTPAuth, useRemoteConfig)
         else:
-            info = grabURL(url, "GET", start, etag, modified, findHTTPAuth)
+            info = grabURL(url, "GET", start, etag, modified, findHTTPAuth, useRemoteConfig)
             if info:
                 info["body"] = info["file-handle"].read()
     finally:
         eventloop.addIdle (callback, "Grab URL Callback %s (%s)" % (url, name), (info,) + args, kwargs)
 
 # args and kargs are passed directly to grabURL  Any extra args are passed to callback.
-def grabURLAsync(callback, url, name, start=0, etag=None, modified=None, findHTTPAuth=None, getBody=True, args = (), kwargs = {}):
+def grabURLAsync(callback, url, name, start=0, etag=None, modified=None, findHTTPAuth=None, useRemoteConfig=False, getBody=True, args = (), kwargs = {}):
     if url is None:
         eventloop.addIdle (callback, "Grab URL Callback %s (%s)" % (url, name), (None,) + args, kwargs)
         return
@@ -75,6 +75,7 @@ def grabURLAsync(callback, url, name, start=0, etag=None, modified=None, findHTT
     request["etag"] = etag
     request["modified"] = modified
     request["findHTTPAuth"] = findHTTPAuth
+    request["useRemoteConfig"] = useRemoteConfig
     request["getBody"] = getBody
     request["args"] = args
     request["kwargs"] = kwargs
@@ -105,17 +106,24 @@ def grabURLAsync(callback, url, name, start=0, etag=None, modified=None, findHTT
 #
 # Redirected URL is the URL actually loaded after all of the redirects.
 # Updated-url is the URL of the last permanent redirect
-def grabURL(url, type="GET",start = 0, etag=None,modified=None,findHTTPAuth=None):
+def grabURL(url, type="GET",start = 0, etag=None,modified=None,findHTTPAuth=None, useRemoteConfig = False):
     if findHTTPAuth is None:
         import downloader
         findHTTPAuth = downloader.findHTTPAuth
     maxDepth = 10
     maxAuthAttempts = 5
     redirURL = url
-    userAgent = "%s/%s (%s)" % \
-        (config.get(config.SHORT_APP_NAME),
-         config.get(config.APP_VERSION),
-         config.get(config.PROJECT_URL))
+    if useRemoteConfig:
+        from dl_daemon import remoteconfig
+        userAgent = "%s/%s (%s)" % \
+                    (remoteconfig.get(config.SHORT_APP_NAME),
+                     remoteconfig.get(config.APP_VERSION),
+                     remoteconfig.get(config.PROJECT_URL))
+    else:
+        userAgent = "%s/%s (%s)" % \
+                    (config.get(config.SHORT_APP_NAME),
+                     config.get(config.APP_VERSION),
+                     config.get(config.PROJECT_URL))
     myHeaders = {"User-Agent": userAgent}
 
     (scheme, host, path, params, query, fragment) = parseURL(url)
