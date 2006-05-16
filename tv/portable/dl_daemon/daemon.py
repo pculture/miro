@@ -5,8 +5,11 @@ import socket
 import traceback
 from threading import Lock, Thread, Event
 from time import sleep
+from struct import pack, unpack, calcsize
 import tempfile
 import eventloop
+
+SIZE_OF_INT = calcsize("I")
 
 class DaemonError(Exception):
     """Exception while communicating to a daemon (either controller or
@@ -106,7 +109,8 @@ class Daemon:
     def listenLoop(self):
         while True:
             #print "Top of dl daemon listen loop"
-            comm = cPickle.load(self.stream)
+            (size,) = unpack("I", self.stream.read(SIZE_OF_INT))
+            comm = cPickle.loads(self.stream.read(size))
             #print "dl daemon got object %s %s" % (str(comm), comm.id)
             # Process commands in their own thread so actions that
             # need to send stuff over the wire don't hang
@@ -200,10 +204,9 @@ class Daemon:
         raw = cPickle.dumps(comm, cPickle.HIGHEST_PROTOCOL)
         self.sendLock.acquire()
         try:
-            cPickle.dump(comm, self.stream, cPickle.HIGHEST_PROTOCOL)
-            self.stream.flush() # If I trusted Python sockets to be
-                                # properly multithreaded, I'd put this
-                                # below the finally block. I don't.
+            self.stream.write(pack("I",len(raw)))
+            self.stream.write(raw)
+            self.stream.flush()
         finally:
             self.sendLock.release()
         if block:
