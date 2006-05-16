@@ -9,7 +9,7 @@ import traceback
 import app
 
 from frontend import *
-from frontend_implementation.gtk_queue import gtkSyncMethod
+from frontend_implementation.gtk_queue import gtkSyncMethod, gtkAsyncMethod
 
 ###############################################################################
 #### 'Delegate' objects for asynchronously asking the user questions       ####
@@ -21,8 +21,7 @@ def EscapeMessagePart(message_part):
         message_part = message_part.replace ("<", "&lt;")
     return message_part
 
-@gtkSyncMethod
-def ShowDialog (title, message, buttons, default = gtk.RESPONSE_CANCEL):
+def BuildDialog (title, message, buttons, default):
     dialog = gtk.Dialog(title, None, (), buttons)
     label = gtk.Label()
     alignment = gtk.Alignment()
@@ -31,9 +30,37 @@ def ShowDialog (title, message, buttons, default = gtk.RESPONSE_CANCEL):
     dialog.vbox.add(label)
     label.show()
     dialog.set_default_response (default)
+    return dialog
+
+@gtkSyncMethod
+def ShowDialog (title, message, buttons, default = gtk.RESPONSE_CANCEL):
+    dialog = BuildDialog (title, message, buttons, default)
     response = dialog.run()
     dialog.destroy()
     return response
+
+dialogs = {}
+
+def AsyncDialogDestroy (dialog):
+    try:
+        del dialogs[dialog.once]
+    except:
+        pass
+
+def AsyncDialogResponse(dialog, response):
+    dialog.destroy()
+
+@gtkAsyncMethod
+def ShowDialogAsync (title, message, buttons, default = gtk.RESPONSE_CANCEL, once=None):
+    if once is not None and dialogs.has_key (once):
+        return
+    dialog = BuildDialog (title, message, buttons, default)
+    dialog.show()
+    dialog.connect("response", AsyncDialogResponse)
+    dialog.connect("destroy", AsyncDialogDestroy)
+    if once is not None:
+        dialogs[once] = dialog
+        dialog.once = once
 
 def pidIsRunning(pid):
     try:
@@ -130,7 +157,7 @@ class UIBackendDelegate:
             (config.get(config.SHORT_APP_NAME), )
         message = u"%s was unable to save its database.\nRecent changes may be lost\n\n%s" % (EscapeMessagePart(config.get(config.LONG_APP_NAME)), EscapeMessagePart(reason))
         buttons = (gtk.STOCK_CLOSE, gtk.RESPONSE_OK)
-        ShowDialog (summary, message, buttons)
+        ShowDialogAsync (summary, message, buttons, once="saveFailed")
 
     def validateFeedRemoval(self, feedTitle):
         summary = u'Remove Channel'
@@ -142,7 +169,7 @@ class UIBackendDelegate:
         else:
             return False
 
-    @gtkSyncMethod
+    @gtkAsyncMethod
     def openExternalURL(self, url):
         inKDE = False
         # We could use Python's webbrowser.open() here, but
@@ -177,7 +204,7 @@ class UIBackendDelegate:
         summary = u'Unknown Runtime Error'
         message = u'An unknown error has occured %s.' % EscapeMessagePart(when)
         buttons = (gtk.STOCK_CLOSE, gtk.RESPONSE_OK)
-        ShowDialog (summary, message, buttons)
+        ShowDialogAsync (summary, message, buttons, once="UnknownError")
         return True
 
     @gtkSyncMethod
