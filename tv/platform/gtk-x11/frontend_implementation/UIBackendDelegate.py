@@ -7,6 +7,7 @@ import gtk
 import threading
 import traceback
 import app
+from gettext import gettext as _
 
 from frontend import *
 from frontend_implementation.gtk_queue import gtkSyncMethod, gtkAsyncMethod
@@ -80,8 +81,8 @@ class UIBackendDelegate:
         information, it's returned as a (user, password)
         tuple. Otherwise, if the user presses Cancel or similar, None
         is returned."""
-        summary = "Channel requires authentication"
-        message = "%s requires a username and password for \"%s\"." % (EscapeMessagePart(url), EscapeMessagePart(domain))
+        summary = _("Channel requires authentication")
+        message = _("%s requires a username and password for \"%s\".") % (EscapeMessagePart(url), EscapeMessagePart(domain))
         dialog = gtk.Dialog(summary, None, (), (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OK, gtk.RESPONSE_OK))
         table = gtk.Table()
         dialog.vbox.add(table)
@@ -92,7 +93,7 @@ class UIBackendDelegate:
         table.attach (label, 0, 2, 0, 1, gtk.FILL, gtk.FILL)
 
         label = gtk.Label()
-        label.set_markup("Username:")
+        label.set_markup(_("Username:"))
         label.set_padding (6, 6)
         label.set_alignment (1.0, 0.5)
         table.attach (label, 0, 1, 1, 2, gtk.FILL, gtk.FILL)
@@ -103,7 +104,7 @@ class UIBackendDelegate:
         table.attach (user, 1, 2, 1, 2, gtk.FILL | gtk.EXPAND, gtk.FILL, 6, 6)
 
         label = gtk.Label()
-        label.set_markup("Password:")
+        label.set_markup(_("Password:"))
         label.set_padding (6, 6)
         label.set_alignment (1.0, 0.5)
         table.attach (label, 0, 1, 2, 3, gtk.FILL, gtk.FILL)
@@ -127,9 +128,9 @@ class UIBackendDelegate:
         """Tell the user that URL wasn't a valid feed and ask if it should be
         scraped for links instead. Returns True if the user gives
         permission, or False if not."""
-        summary = "Not a DTV-style channel"
-        message = "But we'll try our best to grab the files.\n- It may take time to list the videos\n- Descriptions may look funny\n\nPlease contact the publishers of %s and ask if they have a DTV-style channel." % EscapeMessagePart(url)
-        buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, "Continue", gtk.RESPONSE_OK)
+        summary = _("Not a DTV-style channel")
+        message = _("But we'll try our best to grab the files.\n- It may take time to list the videos\n- Descriptions may look funny\n\nPlease contact the publishers of %s and ask if they have a DTV-style channel.") % EscapeMessagePart(url)
+        buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, _("Continue"), gtk.RESPONSE_OK)
         response = ShowDialog (summary, message, buttons)
         if (response == gtk.RESPONSE_OK):
             return True
@@ -139,29 +140,29 @@ class UIBackendDelegate:
     def updateAvailable(self, url):
         """Tell the user that an update is available and ask them if they'd
         like to download it now"""
-        title = "DTV Version Alert"
-        message = "A new version of DTV is available.\n\nWould you like to download it now?"
+        title = _("DTV Version Alert")
+        message = _("A new version of DTV is available.\n\nWould you like to download it now?")
         # NEEDS
         # right now, if user says yes, self.openExternalURL(url)
         print "WARNING: ignoring new version available at URL: %s" % url
 #        raise NotImplementedError
 
     def dtvIsUpToDate(self):
-        summary = u'DTV Version Check'
-        message = u'This version of DTV is up to date.'
+        summary = _("DTV Version Check")
+        message = _("This version of DTV is up to date.")
         # NEEDS inform user
         print "DTV: is up to date"
 
     def saveFailed(self, reason):
-        summary = u'%s database save failed' % \
+        summary = _("%s database save failed") % \
             (config.get(config.SHORT_APP_NAME), )
-        message = u"%s was unable to save its database.\nRecent changes may be lost\n\n%s" % (EscapeMessagePart(config.get(config.LONG_APP_NAME)), EscapeMessagePart(reason))
+        message = _("%s was unable to save its database.\nRecent changes may be lost\n\n%s") % (EscapeMessagePart(config.get(config.LONG_APP_NAME)), EscapeMessagePart(reason))
         buttons = (gtk.STOCK_CLOSE, gtk.RESPONSE_OK)
         ShowDialogAsync (summary, message, buttons, once="saveFailed")
 
     def validateFeedRemoval(self, feedTitle):
-        summary = u'Remove Channel'
-        message = u'Are you sure you want to <b>remove</b> the channel\n   \'<b>%s</b>\'?\n<b>This operation cannot be undone.</b>' % EscapeMessagePart(feedTitle)
+        summary = _("Remove Channel")
+        message = _("Are you sure you want to <b>remove</b> the channel\n   \'<b>%s</b>\'?\n<b>This operation cannot be undone.</b>") % EscapeMessagePart(feedTitle)
         buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_REMOVE, gtk.RESPONSE_OK)
         response = ShowDialog (summary, message, buttons)
         if (response == gtk.RESPONSE_OK):
@@ -191,8 +192,8 @@ class UIBackendDelegate:
         pass
 
     def interruptDownloadsAtShutdown(self, downloadsCount):
-        summary = u'Are you sure you want to quit?'
-        message = u'You have %d download%s still in progress.' % (downloadsCount, downloadsCount > 1 and 's' or '')
+        summary = _("Are you sure you want to quit?")
+        message = _("You have %d download%s still in progress.") % (downloadsCount, downloadsCount > 1 and 's' or '')
         buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_QUIT, gtk.RESPONSE_OK)
         response = ShowDialog (summary, message, buttons)
         if (response == gtk.RESPONSE_OK):
@@ -201,8 +202,8 @@ class UIBackendDelegate:
             return False
 
     def notifyUnkownErrorOccurence(self, when, log = ''):
-        summary = u'Unknown Runtime Error'
-        message = u'An unknown error has occured %s.' % EscapeMessagePart(when)
+        summary = _("Unknown Runtime Error")
+        message = _("An unknown error has occured %s.") % EscapeMessagePart(when)
         buttons = (gtk.STOCK_CLOSE, gtk.RESPONSE_OK)
         ShowDialogAsync (summary, message, buttons, once="UnknownError")
         return True
