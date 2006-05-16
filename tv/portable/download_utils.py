@@ -48,7 +48,7 @@ def nextFreeFilename(name):
             newname = '.'.join(parts)
     return newname
 
-def _grabURLThread(callback, url, start, etag, modified, findHTTPAuth, getBody, args, kwargs):
+def _grabURLThread(callback, url, name, start, etag, modified, findHTTPAuth, getBody, args, kwargs):
     info = None
     try:
         if getBody == False:
@@ -60,16 +60,17 @@ def _grabURLThread(callback, url, start, etag, modified, findHTTPAuth, getBody, 
             if info:
                 info["body"] = info["file-handle"].read()
     finally:
-        eventloop.addIdle (callback, "Grab URL Callback", (info,) + args, kwargs)
+        eventloop.addIdle (callback, "Grab URL Callback %s (%s)" % (url, name), (info,) + args, kwargs)
 
 # args and kargs are passed directly to grabURL  Any extra args are passed to callback.
-def grabURLAsync(callback, url, start=0, etag=None, modified=None, findHTTPAuth=None, getBody=True, args = (), kwargs = {}):
+def grabURLAsync(callback, url, name, start=0, etag=None, modified=None, findHTTPAuth=None, getBody=True, args = (), kwargs = {}):
     if url is None:
-        eventloop.addIdle (callback, "Grab URL Callback (no url)", (None,) + args, kwargs)
+        eventloop.addIdle (callback, "Grab URL Callback %s (%s)" % (url, name), (None,) + args, kwargs)
         return
     request = {}
     request["callback"] = callback
     request["url"] = url
+    request["name"] = name
     request["start"] = start
     request["etag"] = etag
     request["modified"] = modified

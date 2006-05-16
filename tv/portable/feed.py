@@ -69,7 +69,7 @@ def addFeedFromFile(file):
 #
 # Adds a new feed based on a link tag in a web page
 def addFeedFromWebPage(url):
-    grabURLAsync(_addFeedFromWebPage, url)
+    grabURLAsync(_addFeedFromWebPage, url, "Add feed from web page")
 
 def _addFeedFromWebPage(info):
     if info is None:
@@ -675,7 +675,7 @@ class Feed(DDBObject):
         elif (self.origURL == "dtv:manualFeed"):
             newFeed = ManualFeedImpl(self)
         else:
-            grabURLAsync(lambda info:self._generateFeedCallback(info, removeOnError),self.origURL)
+            grabURLAsync(lambda info:self._generateFeedCallback(info, removeOnError),self.origURL, "generate feed")
             #print "added async callback to create feed %s" % self.origURL
         if newFeed:
             self.actualFeed = newFeed
@@ -917,7 +917,8 @@ class RSSFeedImpl(FeedImpl):
                 modified = self.modified
             except:
                 modified = None
-            grabURLAsync(self._updateCallback,self.url,etag=etag,modified=modified)
+            grabURLAsync(self._updateCallback,self.url,"RSSFeedImpl.update()",
+                         etag=etag,modified=modified)
 
     def _updateCallback(self,info):
         #print "Got update callback for %s" % self.url
@@ -1111,8 +1112,8 @@ class ScraperFeedImpl(FeedImpl):
             if self.linkHistory[url].has_key('modified'):
                 modified = self.linkHistory[url]['modified']
         grabURLAsync(lambda info:self.processDownloadedHTML(
-                                           info, urlList, depth, linkNumber, top),
-                     url, etag=etag, modified=modified)
+                                   info, urlList, depth, linkNumber, top),
+               url, "ScraperFeedImple.getHTML()", etag=etag, modified=modified)
 
     def processDownloadedHTML(self, info, urlList, depth, linkNumber, top = False):
         self.pendingDownloads -= 1

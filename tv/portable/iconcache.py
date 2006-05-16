@@ -197,9 +197,9 @@ class IconCache:
                 return
 
             if (url == self.url and self.filename and os.access (self.filename, os.R_OK)):
-                grabURLAsync (self.updateIconCache, url, etag=self.etag, modified=self.modified, args=(url,))
+                grabURLAsync (self.updateIconCache, url, "Icon Cache", etag=self.etag, modified=self.modified, args=(url,))
             else:
-                grabURLAsync (self.updateIconCache, url, args=(url,))
+                grabURLAsync (self.updateIconCache, url, "Icon Cache", args=(url,))
         finally:
             self.dbItem.endRead()
 

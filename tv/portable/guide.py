@@ -187,4 +187,4 @@ class ChannelGuide(DDBObject):
         print "DTV: updating the Guide"
         url = config.get(config.CHANNEL_GUIDE_URL)
 
-        self.dc = grabURLAsync(self.processUpdate, url)
+        self.dc = grabURLAsync(self.processUpdate, url, "Channel Guide update")

@@ -9,7 +9,7 @@ def setDelegate(newDelegate):
     delegate = newDelegate
 
 def checkForUpdates(notifyIfUpToDate=False):
-    info = grabURLAsync(_checkForUpdates, config.get(config.AUTOUPDATE_URL), args=(notifyIfUpToDate,))
+    info = grabURLAsync(_checkForUpdates, config.get(config.AUTOUPDATE_URL), "check for updates", args=(notifyIfUpToDate,))
     
 
 def _checkForUpdates(info, notifyIfUpToDate):
