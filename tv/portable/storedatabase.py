@@ -37,6 +37,7 @@ import olddatabaseupgrade
 import util
 import schema as schema_mod
 import eventloop
+import app
 
 # FILEMAGIC should be the first portion of the database file.  After that the
 # file will contain pickle data
@@ -400,6 +401,7 @@ def saveDatabase(db=None, pathname=None, scheduleAnother=False):
     """Save a database object."""
 
     print "Saving database"
+    retval = False
 
     if db is None:
         db = database.defaultDatabase
@@ -407,6 +409,11 @@ def saveDatabase(db=None, pathname=None, scheduleAnother=False):
         pathname = config.get(config.DB_PATHNAME)
 
     pathname = os.path.expanduser(pathname)
+    try:
+        shutil.copyfile(pathname, pathname + '.bak')
+    except:
+        pass
+
     tempPathname = pathname + '.temp'
     try:
         db.beginRead()
@@ -423,12 +430,16 @@ def saveDatabase(db=None, pathname=None, scheduleAnother=False):
         except:
             pass
         os.rename(tempPathname, pathname)
+    except IOError, err:
+        print "IO Error"
+        app.controller.getBackendDelegate().saveFailed(err.strerror)
     except:
         util.failedExn("While saving database")
     else:
-        shutil.copyfile(pathname, pathname + '.bak')
+        retval = True
     if scheduleAnother:
-        eventloop.addTimeout(300, saveDatabase, args=(db, pathname, scheduleAnother))
+        eventloop.addTimeout(300, saveDatabase, "Database Save", args=(db, pathname, scheduleAnother))
+    return retval
 
 def restoreDatabase(db=None, pathname=None, convertOnFail=True):
     """Restore a database object."""
