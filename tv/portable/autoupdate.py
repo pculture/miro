@@ -1,5 +1,6 @@
 from download_utils import grabURLAsync
 import config
+import prefs
 import xml.dom.minidom
 import eventloop
 
@@ -9,13 +10,13 @@ def setDelegate(newDelegate):
     delegate = newDelegate
 
 def checkForUpdates(notifyIfUpToDate=False):
-    info = grabURLAsync(_checkForUpdates, config.get(config.AUTOUPDATE_URL), "check for updates", args=(notifyIfUpToDate,))
+    info = grabURLAsync(_checkForUpdates, config.get(prefs.AUTOUPDATE_URL), "check for updates", args=(notifyIfUpToDate,))
     
 
 def _checkForUpdates(info, notifyIfUpToDate):
     try:
-        platform = config.get(config.APP_PLATFORM)
-        serial = int(config.get(config.APP_SERIAL))
+        platform = config.get(prefs.APP_PLATFORM)
+        serial = int(config.get(prefs.APP_SERIAL))
         updated = False
         if info is not None:
             domObj = xml.dom.minidom.parseString(info['body'])
@@ -31,7 +32,7 @@ def _checkForUpdates(info, notifyIfUpToDate):
                         if node.nodeType == node.TEXT_NODE:
                             text = text + node.data
                     print "DTV: new update '%s' available (have '%s')" % \
-                       (ver, config.get(config.APP_VERSION))
+                       (ver, config.get(prefs.APP_VERSION))
                     delegate.updateAvailable(url)
                     updated = True
                     break

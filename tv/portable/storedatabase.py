@@ -34,6 +34,7 @@ import database
 import databasesanity
 import databaseupgrade
 import olddatabaseupgrade
+import prefs
 import util
 import schema as schema_mod
 import eventloop
@@ -408,7 +409,7 @@ def saveDatabase(db=None, pathname=None, scheduleAnother=False):
     if db is None:
         db = database.defaultDatabase
     if pathname is None:
-        pathname = config.get(config.DB_PATHNAME)
+        pathname = config.get(prefs.DB_PATHNAME)
 
     pathname = os.path.expanduser(pathname)
 
@@ -454,7 +455,7 @@ def restoreDatabase(db=None, pathname=None, convertOnFail=True):
     if db is None:
         db = database.defaultDatabase
     if pathname is None:
-        pathname = config.get(config.DB_PATHNAME)
+        pathname = config.get(prefs.DB_PATHNAME)
 
     db.beginUpdate()
     try:

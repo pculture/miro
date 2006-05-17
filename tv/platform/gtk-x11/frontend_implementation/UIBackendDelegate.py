@@ -9,6 +9,8 @@ import traceback
 import app
 from gettext import gettext as _
 
+import config
+import prefs
 from frontend import *
 from frontend_implementation.gtk_queue import gtkSyncMethod, gtkAsyncMethod
 
@@ -155,8 +157,8 @@ class UIBackendDelegate:
 
     def saveFailed(self, reason):
         summary = _("%s database save failed") % \
-            (config.get(config.SHORT_APP_NAME), )
-        message = _("%s was unable to save its database.\nRecent changes may be lost\n\n%s") % (EscapeMessagePart(config.get(config.LONG_APP_NAME)), EscapeMessagePart(reason))
+            (config.get(prefs.SHORT_APP_NAME), )
+        message = _("%s was unable to save its database.\nRecent changes may be lost\n\n%s") % (EscapeMessagePart(config.get(prefs.LONG_APP_NAME)), EscapeMessagePart(reason))
         buttons = (gtk.STOCK_CLOSE, gtk.RESPONSE_OK)
         ShowDialogAsync (summary, message, buttons, once="saveFailed")
 

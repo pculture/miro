@@ -2,6 +2,7 @@ import re
 import subprocess
 import string
 import os
+import prefs
 import urllib
 import socket
 import threading
@@ -108,12 +109,12 @@ def failed(when, withExn = False, details = None):
     header = ""
     try:
         import config # probably works at runtime only
-        header += "App:        %s\n" % config.get(config.LONG_APP_NAME)
-        header += "Publisher:  %s\n" % config.get(config.PUBLISHER)
-        header += "Platform:   %s\n" % config.get(config.APP_PLATFORM)
-        header += "Version:    %s\n" % config.get(config.APP_VERSION)
-        header += "Serial:     %s\n" % config.get(config.APP_SERIAL)
-        header += "Revision:   %s\n" % config.get(config.APP_REVISION)
+        header += "App:        %s\n" % config.get(prefs.LONG_APP_NAME)
+        header += "Publisher:  %s\n" % config.get(prefs.PUBLISHER)
+        header += "Platform:   %s\n" % config.get(prefs.APP_PLATFORM)
+        header += "Version:    %s\n" % config.get(prefs.APP_VERSION)
+        header += "Serial:     %s\n" % config.get(prefs.APP_SERIAL)
+        header += "Revision:   %s\n" % config.get(prefs.APP_REVISION)
     except:
         pass
     header += "Time:       %s\n" % time.asctime()
@@ -158,8 +159,8 @@ def failed(when, withExn = False, details = None):
             logContents += traceback.format_exc()
         return logContents
 
-    logFile = config.get(config.LOG_PATHNAME)
-    downloaderLogFile = config.get(config.DOWNLOADER_LOG_PATHNAME)
+    logFile = config.get(prefs.LOG_PATHNAME)
+    downloaderLogFile = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
     if logFile is None:
         logContents = "No logfile available on this platform.\n"
     else:

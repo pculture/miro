@@ -5,6 +5,7 @@ from download_utils import grabURLAsync
 from fasttypes import LinkedList
 from eventloop import asIdle, addIdle
 import config
+import prefs
 import time
 
 RUNNING_MAX = 3
@@ -122,7 +123,7 @@ class IconCache:
                 if (self.filename and not os.access (self.filename, os.R_OK | os.W_OK)):
                     self.filename = None
 
-                cachedir = config.get(config.ICON_CACHE_DIRECTORY)
+                cachedir = config.get(prefs.ICON_CACHE_DIRECTORY)
                 try:
                     os.makedirs (cachedir)
                 except:

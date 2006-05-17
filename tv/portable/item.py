@@ -12,6 +12,7 @@ from templatehelper import escape
 from iconcache import IconCache
 import resource
 import config
+import prefs
 import os
 import feed
 import shutil
@@ -129,13 +130,14 @@ class Item(DDBObject):
         self.beginRead()
         self.feed.beginRead()
         try:
-            if self.feed.expire == 'never' or (self.feed.expire == 'system' and config.get(config.EXPIRE_AFTER_X_DAYS) <= 0):
+            if self.feed.expire == 'never' or (self.feed.expire == 'system'
+                    and config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
                 ret = "never"
             else:
                 if self.feed.expire == "feed":
                     expireTime = self.feed.expireTime
                 elif self.feed.expire == "system":
-                    expireTime = timedelta(days=config.get(config.EXPIRE_AFTER_X_DAYS))
+                    expireTime = timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS))
                 
                 exp = expireTime - (datetime.now() - self.getDownloadedTime())
                 if exp.days > 0:
@@ -252,7 +254,7 @@ class Item(DDBObject):
             #        recompute this filter
             defaultDatabase.recomputeFilter(self.manualDownloads)
             if ((not autodl) and 
-                self.manualDownloads.len() >= config.get(config.MAX_MANUAL_DOWNLOADS)):
+                self.manualDownloads.len() >= config.get(prefs.MAX_MANUAL_DOWNLOADS)):
                 self.pendingManualDL = True
                 self.pendingReason = "Too many manual downloads"
                 spawn = False

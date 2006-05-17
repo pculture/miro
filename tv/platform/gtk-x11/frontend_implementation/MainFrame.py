@@ -15,6 +15,8 @@ from frontend_implementation.HTMLDisplay import HTMLDisplay
 from frontend_implementation.callbackhandler import CallbackHandler
 from frontend_implementation.mainwindowchanger import MainWindowChanger
 from platformcfg import gconf_lock
+import config
+import prefs
 
 def getInt(key):
     gconf_lock.acquire()
@@ -145,7 +147,7 @@ class MainFrame:
         self.widgetTree['menubar-box'].add (self.uiManager.get_widget('/menubar'))
         self.widgetTree['main-window'].add_accel_group(self.uiManager.get_accel_group())
 
-        self.widgetTree['volume-scale'].set_value (config.get(config.VOLUME_LEVEL))
+        self.widgetTree['volume-scale'].set_value (config.get(prefs.VOLUME_LEVEL))
 
         self.windowChanger = MainWindowChanger(self.widgetTree, self,
                 MainWindowChanger.BROWSING)

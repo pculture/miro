@@ -47,10 +47,11 @@ _debug = 0
 # change this to your application name and URL.
 USER_AGENT = "UniversalFeedParser/%s +http://feedparser.org/" % __version__
 import config
+import prefs
 USER_AGENT += " %s/%s (%s)" % \
-    (config.get(config.SHORT_APP_NAME),
-     config.get(config.APP_VERSION),
-     config.get(config.PROJECT_URL))
+    (config.get(prefs.SHORT_APP_NAME),
+     config.get(prefs.APP_VERSION),
+     config.get(prefs.PROJECT_URL))
 
 # HTTP "Accept" header to send to servers when downloading feeds.  If you don't
 # want to send an Accept header, set this to None.

@@ -262,7 +262,7 @@ class HTTPClientTestBase(EventLoopTest):
 
 class HTTPClientTest(HTTPClientTestBase):
     def testScheme(self):
-        conn = httpclient.HTTPConnectio()
+        conn = httpclient.HTTPConnection()
         self.assertEquals(conn.scheme, 'http')
 
     def testRequestLine(self):

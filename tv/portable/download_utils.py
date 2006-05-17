@@ -1,4 +1,5 @@
 import config
+import prefs
 import re
 import socket
 from os import access, F_OK
@@ -116,14 +117,14 @@ def grabURL(url, type="GET",start = 0, etag=None,modified=None,findHTTPAuth=None
     if useRemoteConfig:
         from dl_daemon import remoteconfig
         userAgent = "%s/%s (%s)" % \
-                    (remoteconfig.get(config.SHORT_APP_NAME),
-                     remoteconfig.get(config.APP_VERSION),
-                     remoteconfig.get(config.PROJECT_URL))
+                    (remoteconfig.get(prefs.SHORT_APP_NAME),
+                     remoteconfig.get(prefs.APP_VERSION),
+                     remoteconfig.get(prefs.PROJECT_URL))
     else:
         userAgent = "%s/%s (%s)" % \
-                    (config.get(config.SHORT_APP_NAME),
-                     config.get(config.APP_VERSION),
-                     config.get(config.PROJECT_URL))
+                    (config.get(prefs.SHORT_APP_NAME),
+                     config.get(prefs.APP_VERSION),
+                     config.get(prefs.PROJECT_URL))
     myHeaders = {"User-Agent": userAgent}
 
     (scheme, host, path, params, query, fragment) = parseURL(url)

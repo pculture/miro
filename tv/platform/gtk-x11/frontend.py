@@ -1,5 +1,6 @@
 import os
 import config
+import prefs
 
 # Import MozillaBrowser ASAP.  On some systems the gtkmozembed module is
 # linked against a different libxpcom than MozillaBrowser.  Importing it first
@@ -19,7 +20,7 @@ from frontend_implementation.VideoDisplay import VideoDisplay, PlaylistItem
 from frontend_implementation.VideoDisplay import PlaybackController
 
 # Create democracy directories in the user's home
-support_dir = config.get(config.SUPPORT_DIRECTORY)
+support_dir = config.get(prefs.SUPPORT_DIRECTORY)
 os.environ['APPDATA'] = support_dir # Needed to make bittorrent happy
 if not os.path.exists(support_dir):
     os.makedirs(support_dir)

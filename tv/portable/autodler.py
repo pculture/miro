@@ -3,6 +3,7 @@ from random import randint
 import feed
 import item
 import config
+import prefs
 import database
 import eventloop
 
@@ -79,9 +80,9 @@ class AutoDownloader:
         """Spawns auto downloads.
 
         Our strategy is:
-            * Never spawn more downloads than config.DOWNLOADS_TARGET
+            * Never spawn more downloads than prefs.DOWNLOADS_TARGET
             * Never spawn bit torrent downloads than
-                config.TORRENT_DOWNLOADS_TARGET
+                prefs.TORRENT_DOWNLOADS_TARGET
             * Prefer spawning HTTP downloads rather than starting a second
             torrent download.
             * Spawn downloads in a round-robin manner
@@ -93,8 +94,8 @@ class AutoDownloader:
         # that bad if we check a feed twice or miss one.
         numDownloads = self.autoDownloaders.len()
         numTorrents = self.btAutoDownloaders.len()
-        maxDownloads = config.get(config.DOWNLOADS_TARGET)
-        maxTorrents = config.get(config.TORRENT_DOWNLOADS_TARGET)
+        maxDownloads = config.get(prefs.DOWNLOADS_TARGET)
+        maxTorrents = config.get(prefs.TORRENT_DOWNLOADS_TARGET)
         # step 1: Don't start 2 bit torrent downloads
         attempts = 0
         while attempts < numFeeds and numDownloads < maxDownloads:
@@ -134,7 +135,7 @@ class AutoDownloader:
         attempts = 0
         numFeeds = self.manualFeeds.len() # see note in spawnAutoDownloads
         numDownloads = self.manualDownloaders.len()
-        maxDownloads = config.get(config.MAX_MANUAL_DOWNLOADS)
+        maxDownloads = config.get(prefs.MAX_MANUAL_DOWNLOADS)
         while numDownloads < maxDownloads and attempts < numFeeds:
             attempts += 1
             feed = self.manualFeedsLoop.next()

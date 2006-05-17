@@ -1,5 +1,5 @@
 import os
-import config
+import prefs
 import gconf
 import threading
 
@@ -70,25 +70,25 @@ def save(data):
 def get(descriptor):
     path = None
 
-    if descriptor == config.MOVIES_DIRECTORY:
+    if descriptor == prefs.MOVIES_DIRECTORY:
         path = os.path.expanduser('~/Movies/Democracy')
 
-    elif descriptor == config.SUPPORT_DIRECTORY:
+    elif descriptor == prefs.SUPPORT_DIRECTORY:
         path = os.path.expanduser('~/.democracy')
 
-    elif descriptor == config.ICON_CACHE_DIRECTORY:
+    elif descriptor == prefs.ICON_CACHE_DIRECTORY:
         path = os.path.expanduser('~/.democracy/icon-cache')
     
-    elif descriptor == config.DB_PATHNAME:
-        path = get(config.SUPPORT_DIRECTORY)
+    elif descriptor == prefs.DB_PATHNAME:
+        path = get(prefs.SUPPORT_DIRECTORY)
         path = os.path.join(path, 'tvdump')
 
-    elif descriptor == config.LOG_PATHNAME:
-        path = get(config.SUPPORT_DIRECTORY)
+    elif descriptor == prefs.LOG_PATHNAME:
+        path = get(prefs.SUPPORT_DIRECTORY)
         path = os.path.join(path, 'log')
     
-    elif descriptor == config.DOWNLOADER_LOG_PATHNAME:
-        path = get(config.SUPPORT_DIRECTORY)
+    elif descriptor == prefs.DOWNLOADER_LOG_PATHNAME:
+        path = get(prefs.SUPPORT_DIRECTORY)
         return os.path.join(path, 'dtv-downloader-log')
 
     return path

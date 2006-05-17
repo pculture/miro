@@ -5,6 +5,7 @@ from base64 import b64encode
 
 import app
 import config
+import prefs
 from download_utils import grabURL
 from database import DDBObject, defaultDatabase
 from dl_daemon import daemon, command
@@ -202,7 +203,7 @@ URL was %s""" % self.url
 WARNING: can't migrate download because we don't have a filename!
 URL was %s""" % self.url
                 return
-            newfilename = os.path.join(config.get(config.MOVIES_DIRECTORY),
+            newfilename = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
                     shortFilename)
             newfilename = nextFreeFilename(newfilename)
             shutil.move(filename, newfilename)
@@ -324,7 +325,7 @@ URL was %s""" % self.url
                 c.send(retry = True, block = False)
 
 def cleanupIncompleteDownloads():
-    downloadDir = os.path.join(config.get(config.MOVIES_DIRECTORY),
+    downloadDir = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
             'Incomplete Downloads')
     if not os.path.exists(downloadDir):
         return

@@ -1,4 +1,5 @@
 import config       # IMPORTANT!! config MUST be imported before downloader
+import prefs
 
 import database
 db = database.defaultDatabase
@@ -320,7 +321,7 @@ class VideoDisplayBase (Display):
 
     def setVolume(self, level):
         self.volume = level
-        config.set(config.VOLUME_LEVEL, level)
+        config.set(prefs.VOLUME_LEVEL, level)
         if self.activeRenderer is not None:
             self.activeRenderer.setVolume(level)
 
@@ -485,7 +486,7 @@ class Controller (frontend.Application):
             autodler.AutoDownloader()
 
             # Start the idle notifier daemon
-            if config.get(config.LIMIT_UPSTREAM) is True:
+            if config.get(prefs.LIMIT_UPSTREAM) is True:
                 print "DTV: Spawning idle notifier"
                 self.idlingNotifier = idlenotifier.IdleNotifier(self)
                 self.idlingNotifier.start()
@@ -503,7 +504,7 @@ class Controller (frontend.Application):
             self.videoDisplay = frontend.VideoDisplay()
             self.videoDisplay.initRenderers()
             self.videoDisplay.playbackController = self.playbackController
-            self.videoDisplay.setVolume(config.get(config.VOLUME_LEVEL))
+            self.videoDisplay.setVolume(config.get(prefs.VOLUME_LEVEL))
 
             eventloop.addTimeout (300, storedatabase.saveDatabase, "Database Save", kwargs={"scheduleAnother": True})
             eventloop.addTimeout (30, autoupdate.checkForUpdates, "Check for updates")
@@ -642,7 +643,7 @@ class Controller (frontend.Application):
     ### Handling config/prefs changes
     
     def configDidChange(self, key, value):
-        if key is config.LIMIT_UPSTREAM.key:
+        if key is prefs.LIMIT_UPSTREAM.key:
             if value is False:
                 # The Windows version can get here without creating an
                 # idlingNotifier
@@ -805,7 +806,7 @@ class Controller (frontend.Application):
         
     def setUpstreamLimit(self, setLimit):
         if setLimit:
-            limit = config.get(config.UPSTREAM_LIMIT_IN_KBS)
+            limit = config.get(prefs.UPSTREAM_LIMIT_IN_KBS)
             # upstream limit should be set here
         else:
             # upstream limit should be unset here
@@ -893,7 +894,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
                     return False
 
             # Let channel guide URLs pass through
-            if url.startswith(config.get(config.CHANNEL_GUIDE_URL)):
+            if url.startswith(config.get(prefs.CHANNEL_GUIDE_URL)):
                 return True
             if url.startswith('file://'):
                 if url.endswith ('.html'):
@@ -1042,27 +1043,27 @@ class ModelActionHandler:
 
     def setCheckEvery(self, value):
         value = int(value)
-        config.set(config.CHECK_CHANNELS_EVERY_X_MN,value)
+        config.set(prefs.CHECK_CHANNELS_EVERY_X_MN,value)
 
     def setLimitUpstream(self, value):
         value = (value == "1")
-        config.set(config.LIMIT_UPSTREAM,value)
+        config.set(prefs.LIMIT_UPSTREAM,value)
 
     def setMaxUpstream(self, value):
         value = int(value)
-        config.set(config.UPSTREAM_LIMIT_IN_KBS,value)
+        config.set(prefs.UPSTREAM_LIMIT_IN_KBS,value)
 
     def setPreserveDiskSpace(self, value):
         value = (value == "1")
-        config.set(config.PRESERVE_DISK_SPACE,value)
+        config.set(prefs.PRESERVE_DISK_SPACE,value)
 
     def setMinDiskSpace(self, value):
         value = int(value)
-        config.set(config.PRESERVE_X_GB_FREE,value)
+        config.set(prefs.PRESERVE_X_GB_FREE,value)
 
     def setDefaultExpiration(self, value):
         value = int(value)
-        config.set(config.EXPIRE_AFTER_X_DAYS,value)
+        config.set(prefs.EXPIRE_AFTER_X_DAYS,value)
 
     def videoBombExternally(self, item):
         obj = db.getObjectByID(int(item))
@@ -1101,7 +1102,7 @@ class ModelActionHandler:
         description = obj.getDescription()
         if len(description) > 0:
             paramString = "%s%sdescription=%s" % (paramString, glue,  xhtmltools.urlencode(description))
-        url = config.get(config.VIDEOBOMB_URL) + paramString
+        url = config.get(prefs.VIDEOBOMB_URL) + paramString
         self.backEndDelegate.openExternalURL(url)
 
     def changeMoviesDirectory(self, newDir, migrate):
@@ -1223,7 +1224,7 @@ class TemplateActionHandler:
         (mode, location) = guide.getLocation()
 
         if mode == 'template':
-            self.switchTemplate(location, baseURL=config.get(config.CHANNEL_GUIDE_URL))
+            self.switchTemplate(location, baseURL=config.get(prefs.CHANNEL_GUIDE_URL))
         elif mode == 'url':
             controller.frame.selectURL(location, \
                                             controller.frame.mainDisplay)
@@ -1446,8 +1447,8 @@ def getInitialChanelGuide():
     return channelGuide
 
 def changeMoviesDirectory(newDir, migrate):
-    oldDir = config.get(config.MOVIES_DIRECTORY)
-    config.set(config.MOVIES_DIRECTORY, newDir)
+    oldDir = config.get(prefs.MOVIES_DIRECTORY)
+    config.set(prefs.MOVIES_DIRECTORY, newDir)
     if migrate:
         views.remoteDownloads.beginRead()
         try:

@@ -16,8 +16,8 @@ from new import instancemethod
 from iconcache import iconCacheUpdater, IconCache
 import resource
 import config
+import prefs
 import os
-import config
 import re
 import app
 import views
@@ -107,7 +107,7 @@ def normalizeFeedURL(url):
 # Handle configuration changes so we can update feed update frequencies
 
 def configDidChange(key, value):
-    if key is config.CHECK_CHANNELS_EVERY_X_MN.key:
+    if key is prefs.CHECK_CHANNELS_EVERY_X_MN.key:
         for feed in views.feeds:
             updateFreq = 0
             try:
@@ -143,7 +143,7 @@ class FeedImpl:
         self.lastViewed = datetime.min
         self.thumbURL = defaultFeedIconURL()
         self.initialUpdate = True
-        self.updateFreq = config.get(config.CHECK_CHANNELS_EVERY_X_MN)*60
+        self.updateFreq = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)*60
         self.expireTime = None
 
     # Sets the update frequency (in minutes). 
@@ -158,7 +158,7 @@ class FeedImpl:
             self.cancelUpdateEvents()
             self.updateFreq = -1
         else:
-            newFreq = max(config.get(config.CHECK_CHANNELS_EVERY_X_MN),
+            newFreq = max(config.get(prefs.CHECK_CHANNELS_EVERY_X_MN),
                           frequency)*60
             if newFreq != self.updateFreq:
                 self.updateFreq = newFreq
@@ -367,7 +367,7 @@ class FeedImpl:
         if self.expire == "feed":
             expireTime = self.expireTime
         elif self.expire == "system":
-            expireTime = timedelta(days=config.get(config.EXPIRE_AFTER_X_DAYS))
+            expireTime = timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS))
             if expireTime <= timedelta(0):
                 return
         elif self.expire == "never":
@@ -440,7 +440,7 @@ class FeedImpl:
     ##
     # Return the 'system' expiration delay, in days (can be < 1.0)
     def getDefaultExpiration(self):
-        return float(config.get(config.EXPIRE_AFTER_X_DAYS))
+        return float(config.get(prefs.EXPIRE_AFTER_X_DAYS))
 
     ##
     # Returns the 'system' expiration delay as a formatted string
@@ -496,7 +496,7 @@ class FeedImpl:
         delta = None
         self.ufeed.beginRead()
         try:
-            expireAfterSetting = config.get(config.EXPIRE_AFTER_X_DAYS)
+            expireAfterSetting = config.get(prefs.EXPIRE_AFTER_X_DAYS)
             if (self.expireTime is None or self.expire == 'never' or 
                     (self.expire == 'system' and expireAfterSetting <= 0)):
                 return 0
@@ -515,7 +515,7 @@ class FeedImpl:
             try:
                 ret = self.expireTime.days
             except:
-                ret = timedelta(days=config.get(config.EXPIRE_AFTER_X_DAYS)).days
+                ret = timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS)).days
         finally:
             self.ufeed.endRead()
         return ret
@@ -529,7 +529,7 @@ class FeedImpl:
             try:
                 ret = int(self.expireTime.seconds/3600)
             except:
-                ret = int(timedelta(days=config.get(config.EXPIRE_AFTER_X_DAYS)).seconds/3600)
+                ret = int(timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS)).seconds/3600)
         finally:
             self.ufeed.endRead()
         return ret
@@ -1379,7 +1379,7 @@ class DirectoryFeedImpl(FeedImpl):
 
         #Adds any files we don't know about
         #Files on the filesystem
-        moviesDir = config.get(config.MOVIES_DIRECTORY)
+        moviesDir = config.get(prefs.MOVIES_DIRECTORY)
         if os.path.isdir(moviesDir):
             existingFiles = [os.path.normcase(os.path.join(moviesDir, f)) 
                     for f in os.listdir(moviesDir)]

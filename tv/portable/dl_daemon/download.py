@@ -11,6 +11,7 @@ from copy import copy
 from download_utils import grabURL, cleanFilename, parseURL, nextFreeFilename
 
 import config
+import prefs
 from BitTornado import mapbase64, createPeerID
 from BitTornado.RawServer import RawServer, autodetect_socket_style
 from BitTornado.RateLimiter import RateLimiter
@@ -22,7 +23,7 @@ from BitTornado.parseargs import defaultargs
 from BitTornado.clock import clock
 from sha import sha
 
-from dl_daemon import command, daemon, remoteconfig
+from dl_daemon import command, daemon
 
 # a hash of download ids to downloaders
 _downloads = {}
@@ -301,7 +302,7 @@ class BGDownloader:
         needed to start downloading there.
         """
 
-        downloadDir = os.path.join(remoteconfig.get(config.MOVIES_DIRECTORY),
+        downloadDir = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
                 'Incomplete Downloads')
         # Create the download directory if it doesn't already exist.
         try:
@@ -317,7 +318,7 @@ class BGDownloader:
         """
 
         print "moving to movies directory fliename is ", self.filename
-        newfilename = os.path.join(remoteconfig.get(config.MOVIES_DIRECTORY),
+        newfilename = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
                 self.shortFilename)
         newfilename = nextFreeFilename(newfilename)
         shutil.move(self.filename, newfilename)
@@ -507,10 +508,10 @@ class HTTPDownloader(BGDownloader):
     def acceptDownloadSize(self, size):
         print "WARNING: acceptDownloadSize is a stub"
         return True
-        if remoteconfig.get(config.PRESERVE_DISK_SPACE):
+        if config.get(prefs.PRESERVE_DISK_SPACE):
             sizeInGB = size / 1024 / 1024 / 1024
             if (sizeInGB > platformutils.getAvailableGBytesForMovies() - 
-                    remoteconfig.get(config.PRESERVE_X_GB_FREE)):
+                    config.get(prefs.PRESERVE_X_GB_FREE)):
                 self.state = "failed"
                 self.reasonFailed = "File is too big"
                 return False
@@ -882,10 +883,10 @@ def shutdownBTDownloader():
     BTDownloader.dlthread.join()
 
 def startBTDownloader():
-    if remoteconfig.get(config.LIMIT_UPSTREAM):
-        btconfig['max_upload_rate'] = remoteconfig.get(config.UPSTREAM_LIMIT_IN_KBS)
-    btconfig['minport'] = remoteconfig.get(config.BT_MIN_PORT)
-    btconfig['maxport'] = remoteconfig.get(config.BT_MAX_PORT)
+    if config.get(prefs.LIMIT_UPSTREAM):
+        btconfig['max_upload_rate'] = config.get(prefs.UPSTREAM_LIMIT_IN_KBS)
+    btconfig['minport'] = config.get(prefs.BT_MIN_PORT)
+    btconfig['maxport'] = config.get(prefs.BT_MAX_PORT)
     BTDownloader.dlthread = Thread(target=BTDownloader.handler.listen_forever)
     BTDownloader.dlthread.setName("bittornado downloader")
     BTDownloader.dlthread.start()

@@ -19,6 +19,7 @@ from collections import deque
 from BitTornado.clock import clock
 
 import config
+import prefs
 from download_utils import cleanFilename
 import eventloop
 import util
@@ -191,7 +192,7 @@ class AsyncSocket(object):
         if operation == "write":
             expectedErrors = (errno.EPIPE, errno.ECONNRESET)
         else:
-            expectedErrors = (errno.ECONNREFUSED,)
+            expectedErrors = (errno.ECONNREFUSED, errno.ECONNRESET)
         if code not in expectedErrors:
             print "WARNING, got unexpected error during %s" % operation
             print "%s: %s" % (errno.errorcode.get(code), msg)
@@ -239,7 +240,9 @@ class AsyncSSLStream(AsyncSocket):
         super(AsyncSSLStream, self).__init__(closeCallback)
         self.interruptedOperation = None
 
-    def openConnection(self, host, port, callback, errback):
+    def openConnection(self, host, port, callback, errback, listen = False):
+        if listen:
+            raise ValueError("We don't support listening on SSL streams")
         def onSocketOpen(self):
             self.socket.setblocking(1)
             eventloop.callInThread(onSSLOpen, errback, socket.ssl,
@@ -897,7 +900,7 @@ class HTTPClient(object):
     MAX_AUTH_ATTEMPS = 5
 
     def __init__(self, url, callback, errback, method="GET", start=0,
-            etag=None, modified=None, findHTTPAuth=None, useRemoteConfig = False):
+            etag=None, modified=None, findHTTPAuth=None):
         self.url = url
         self.callback = callback
         self.errback = errback
@@ -914,17 +917,10 @@ class HTTPClient(object):
         self.authAttempts = 0
         self.updateURLOk = True
         self.originalURL = self.updatedURL = self.redirectedURL = url
-        if useRemoteConfig:
-            self.userAgent = "%s/%s (%s)" % \
-                             (config.get(config.SHORT_APP_NAME),
-                              config.get(config.APP_VERSION),
-                              config.get(config.PROJECT_URL))
-        else:
-            import remoteconfig
-            self.userAgent = "%s/%s (%s)" % \
-                             (remoteconfig.get(config.SHORT_APP_NAME),
-                              remoteconfig.get(config.APP_VERSION),
-                              remoteconfig.get(config.PROJECT_URL))
+        self.userAgent = "%s/%s (%s)" % \
+                         (config.get(prefs.SHORT_APP_NAME),
+                          config.get(prefs.APP_VERSION),
+                          config.get(prefs.PROJECT_URL))
         self.initHeaders()
 
     def initHeaders(self):

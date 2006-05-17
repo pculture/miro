@@ -6,6 +6,8 @@ import traceback
 from time import sleep
 from struct import pack, unpack, calcsize
 import tempfile
+import config
+import prefs
 import eventloop
 from httpclient import ConnectionHandler
 
@@ -164,10 +166,27 @@ class ControllerDaemon(Daemon):
         self.openConnection('127.0.0.1', 0, self.onConnection, self.onError, listen = True)
         self.port = self.stream.port
         launchDownloadDaemon(readPid(), self.port)
-        from dl_daemon import remoteconfig
-        import config
         data = {}
-        for desc in remoteconfig.getConfigItems():
+        remoteConfigItems = [prefs.LIMIT_UPSTREAM,
+                   prefs.UPSTREAM_LIMIT_IN_KBS,
+                   prefs.BT_MIN_PORT,
+                   prefs.BT_MAX_PORT,
+                   prefs.MOVIES_DIRECTORY,
+                   prefs.PRESERVE_DISK_SPACE,
+                   prefs.PRESERVE_X_GB_FREE,
+                   prefs.SUPPORT_DIRECTORY,
+                   prefs.SHORT_APP_NAME,
+                   prefs.LONG_APP_NAME,
+                   prefs.APP_PLATFORM,
+                   prefs.APP_VERSION,
+                   prefs.APP_SERIAL,
+                   prefs.APP_REVISION,
+                   prefs.PUBLISHER,
+                   prefs.PROJECT_URL,
+                   prefs.LOG_PATHNAME,
+                ]
+
+        for desc in remoteConfigItems:
             data[desc.key] = config.get(desc)
         c = command.InitialConfigCommand(self, data)
         c.send(block=False)

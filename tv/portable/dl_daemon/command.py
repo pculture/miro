@@ -72,8 +72,8 @@ class DownloaderErrorCommand(Command):
 #############################################################################
 class InitialConfigCommand(Command):
     def action(self):
-        from dl_daemon import remoteconfig
-        remoteconfig.setDictionary(*self.args, **self.kws)
+        import config
+        config.setDictionary(*self.args, **self.kws)
         from dl_daemon import download
         download.startBTDownloader()
 

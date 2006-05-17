@@ -7,6 +7,7 @@ import os
 import shutil
 import frontend
 import config
+import prefs
 import resource
 import MainFrame
 import singleclick
@@ -249,17 +250,17 @@ class CallbackHandler(object):
 
     def on_preference(self, event = None):
         # get our add channel dialog
-        movie_dir = config.get(config.MOVIES_DIRECTORY)
+        movie_dir = config.get(prefs.MOVIES_DIRECTORY)
         widgetTree = MainFrame.WidgetTree(resource.path('democracy.glade'), 'dialog-preferences', 'democracyplayer')
         dialog = widgetTree['dialog-preferences']
         mainWindow = self.mainFrame.widgetTree['main-window']
         dialog.set_transient_for(mainWindow)
-        AttachBoolean (widgetTree['checkbutton-limit'], config.LIMIT_UPSTREAM, widgetTree['entry-limit'])
-        AttachBoolean (widgetTree['checkbutton-padding'], config.PRESERVE_DISK_SPACE, widgetTree['entry-padding'])
-        AttachInteger (widgetTree['entry-limit'], config.UPSTREAM_LIMIT_IN_KBS)
-        AttachInteger (widgetTree['entry-padding'], config.PRESERVE_X_GB_FREE)
-        AttachCombo (widgetTree['combobox-poll'], config.CHECK_CHANNELS_EVERY_X_MN, (30, 60, -1))
-        AttachCombo (widgetTree['combobox-expiration'], config.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))
+        AttachBoolean (widgetTree['checkbutton-limit'], prefs.LIMIT_UPSTREAM, widgetTree['entry-limit'])
+        AttachBoolean (widgetTree['checkbutton-padding'], prefs.PRESERVE_DISK_SPACE, widgetTree['entry-padding'])
+        AttachInteger (widgetTree['entry-limit'], prefs.UPSTREAM_LIMIT_IN_KBS)
+        AttachInteger (widgetTree['entry-padding'], prefs.PRESERVE_X_GB_FREE)
+        AttachCombo (widgetTree['combobox-poll'], prefs.CHECK_CHANNELS_EVERY_X_MN, (30, 60, -1))
+        AttachCombo (widgetTree['combobox-expiration'], prefs.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))
 
         chooser = widgetTree['filechooserbutton-movies-directory']
         chooser.set_filename (movie_dir + "/")

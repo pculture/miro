@@ -2,13 +2,14 @@
 
 import os
 import config
+import prefs
 import gtkmozembed
 from frontend_implementation.gtk_queue import gtkSyncMethod
 
 def createProfileDirectory():
     """Create the mozilla profile directory, if needed."""
 
-    path = os.path.join(config.get(config.SUPPORT_DIRECTORY), 'mozilla')
+    path = os.path.join(config.get(prefs.SUPPORT_DIRECTORY), 'mozilla')
     if not os.path.exists(path):
         os.makedirs(path)
 
@@ -26,10 +27,10 @@ user_pref("general.useragent.vendor", %s);
 user_pref("general.useragent.vendorSub", %s);
 user_pref("general.useragent.vendorComment", %s);
 
-""" % (repr(config.get(config.LONG_APP_NAME)),
-       repr(config.get(config.APP_VERSION)),
-       repr(config.get(config.PROJECT_URL)))
-    prefsPath = os.path.join(config.get(config.SUPPORT_DIRECTORY), 'mozilla',
+""" % (repr(config.get(prefs.LONG_APP_NAME)),
+       repr(config.get(prefs.APP_VERSION)),
+       repr(config.get(prefs.PROJECT_URL)))
+    prefsPath = os.path.join(config.get(prefs.SUPPORT_DIRECTORY), 'mozilla',
             'prefs.js')
     f = open(prefsPath, "wt")
     f.write(prefsContent)
@@ -49,4 +50,4 @@ def setupMozillaEnvironment():
     else:
         set_profile_path = gtkmozembed.gtk_moz_embed_set_profile_path
         
-    set_profile_path(config.get(config.SUPPORT_DIRECTORY), 'mozilla')
+    set_profile_path(config.get(prefs.SUPPORT_DIRECTORY), 'mozilla')

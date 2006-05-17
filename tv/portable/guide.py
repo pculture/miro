@@ -4,6 +4,7 @@ from xhtmltools import urlencode
 from copy import copy
 import re
 import config
+import prefs
 import threading
 import urllib
 import eventloop
@@ -126,7 +127,7 @@ class ChannelGuide(DDBObject):
         apiurl = frontend.getDTVAPIURL()
         if apiurl:
             # We're on a platform that uses direct loads and DTVAPI.
-            url = config.get(config.CHANNEL_GUIDE_URL)
+            url = config.get(prefs.CHANNEL_GUIDE_URL)
             apiurl = urllib.quote_plus(apiurl)
             apicookie = urllib.quote_plus(frontend.getDTVAPICookie())
             url = "%s?dtvapiURL=%s&dtvapiCookie=%s" % (url, apiurl, apicookie)
@@ -185,6 +186,6 @@ class ChannelGuide(DDBObject):
         # making another kind of feed object, but it makes it easier
         # for non-programmers to work with
         print "DTV: updating the Guide"
-        url = config.get(config.CHANNEL_GUIDE_URL)
+        url = config.get(prefs.CHANNEL_GUIDE_URL)
 
         self.dc = grabURLAsync(self.processUpdate, url, "Channel Guide update")
