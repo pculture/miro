@@ -14,6 +14,7 @@ import select
 import heapq
 import Queue
 import util
+import database
 
 from BitTornado.clock import clock
 
@@ -177,6 +178,7 @@ class EventLoop(object):
                     # remove the callback, since it's likely to fail forever
 
     def loop(self):
+        database.set_thread()
         while not self.quitFlag:
             timeout = self.scheduler.nextTimeout()
             readfds = self.readCallbacks.keys()
@@ -263,10 +265,18 @@ def callInThread(callback, errback, function, *args, **kwargs):
     """
     _eventLoop.callInThread(callback, errback, function, *args, **kwargs)
 
+lt = None
+
 def startup():
+    global lt
     lt = threading.Thread(target=_eventLoop.loop, name="Event Loop")
     lt.setDaemon(False)
     lt.start()
+
+def join():
+    global lt
+    lt.join()
+    database.set_thread()
 
 def quit():
     _eventLoop.quitFlag = True

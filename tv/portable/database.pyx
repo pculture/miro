@@ -14,6 +14,7 @@ from fasttypes import LinkedList, SortedList
 from databasehelper import pysort2dbsort
 import sys
 import types
+import threading
 
 import config
 
@@ -37,7 +38,23 @@ class NotRootDBError(StandardError):
 class NoValue:
     pass
 
-globalLock = RLock()
+# begin* and end* no longer actually lock the database.  Instead
+# begin* prints a warning if it's run from any thread that isn't the
+# main thread.  This can be removed from releases for speed purposes.
+
+event_thread = None
+def set_thread ():
+    global event_thread
+    event_thread = threading.currentThread()
+    
+def lock():
+    global event_thread
+    if event_thread is not None and event_thread != threading.currentThread():
+        print "database function called from thread %s" % (threading.currentThread(),)
+        traceback.print_stack()
+
+def unlock():
+    pass
 
 def setDelegate(newDelegate):
     global delegate
@@ -248,13 +265,13 @@ class DynamicDatabase:
     #     endUpdate()
     #
     def beginUpdate(self):
-        globalLock.acquire()
+        lock()
 
     ##
     # Call this after beginUpdate when you're done making changes to
     # the database
     def endUpdate(self):
-        globalLock.release()
+        unlock()
         
     ##
     # Call before reading from the database
@@ -270,14 +287,14 @@ class DynamicDatabase:
     #     endRead()
     #
     def beginRead(self):
-        globalLock.acquire()
+        lock()
         
     ##
     # Call this after beginRead to end the lock
     # Note: we can get better performance in the future by allowing
     # multiple threads in the read lock
     def endRead(self):
-        globalLock.release()
+        unlock()
 
     ##
     # Returns the object that the cursor is currently pointing to or
@@ -1004,12 +1021,12 @@ class DDBObject:
             self.dd = dd
         
         #Set the ID to the next free number
-        globalLock.acquire()
+        lock()
         try:
             DDBObject.lastID = DDBObject.lastID + 1
             self.id =  DDBObject.lastID
         finally:
-            globalLock.release()
+            unlock()
         if add:
             self.dd.addAfterCursor(self)
 
@@ -1039,12 +1056,12 @@ class DDBObject:
     #     endRead()
     #
     def beginRead(self):
-        globalLock.acquire()
+        lock()
 
     ##
     # Used with beginRead()
     def endRead(self):
-        globalLock.release()
+        unlock()
 
     ##
     # Call this before you change the object
@@ -1058,7 +1075,7 @@ class DDBObject:
     #     endChange()
     #
     def beginChange(self):
-        globalLock.acquire()
+        lock()
 
     ##
     # Call this after you change the object
@@ -1073,10 +1090,10 @@ class DDBObject:
                 self.dd.restoreCursor()
         finally:
             self.dd.endUpdate()
-            globalLock.release()
+            unlock()
 
 
     ##
     # Call this after you change the object
     def endNoChange(self):
-        globalLock.release()
+        unlock()

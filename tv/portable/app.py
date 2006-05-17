@@ -422,9 +422,6 @@ class Controller (frontend.Application):
 
     def onStartup(self):
         try:
-            print "DTV: Starting event loop thread"
-            eventloop.startup()
-
             print "DTV: Loading preferences..."
             config.load()
             config.addChangeCallback(self.configDidChange)
@@ -529,6 +526,9 @@ class Controller (frontend.Application):
 
             singleclick.parseCommandLineArgs()
 
+            print "DTV: Starting event loop thread"
+            eventloop.startup()
+
         except:
             util.failedExn("while starting up")
             frontend.exit(1)
@@ -604,6 +604,7 @@ class Controller (frontend.Application):
         try:
             print "DTV: Shutting down event loop"
             eventloop.quit()
+            eventloop.join()
             
             print "DTV: Saving preferences..."
             config.save()
@@ -899,7 +900,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
                     return True
                 else:
                     filename = urllib.unquote(url[len('file://'):])
-                    singleclick.openFile (filename)
+                    eventloop.addIdle (lambda:singleclick.openFile (filename), "Open Local File from onURLLoad")
                     return False
 
             # If we get here, this isn't a DTV URL. We should open it
@@ -915,6 +916,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
         return True
 
+    @eventloop.asIdle
     def dispatchAction(self, action, **kwargs):
         for handler in self.actionHandlers:
             if hasattr(handler, action):
@@ -923,6 +925,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
         return False
 
+    @eventloop.asIdle
     def onDeselected(self, frame):
         unloadTriggers = self.templateHandle.getTriggerActionURLsOnUnload()
         self.runActionURLs(unloadTriggers)
