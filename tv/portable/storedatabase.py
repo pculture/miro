@@ -397,6 +397,8 @@ def restoreObjectList(pathname, objectSchemas=None):
 
     return savablesToObjects(savedObjects, objectSchemas)
 
+backedUp = False
+
 def saveDatabase(db=None, pathname=None, scheduleAnother=False):
     """Save a database object."""
 
@@ -409,10 +411,15 @@ def saveDatabase(db=None, pathname=None, scheduleAnother=False):
         pathname = config.get(config.DB_PATHNAME)
 
     pathname = os.path.expanduser(pathname)
-    try:
-        shutil.copyfile(pathname, pathname + '.bak')
-    except:
-        pass
+
+    global backedUp
+    if (not backedUp):
+        try:
+            shutil.copyfile(pathname, pathname + '.bak')
+        except:
+            pass
+        else:
+            backedUp = True
 
     tempPathname = pathname + '.temp'
     try:
