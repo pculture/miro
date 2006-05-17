@@ -97,10 +97,114 @@ class NetworkBuffer(object):
 class NotReadyToSendError(Exception):
     pass
 
+class AsyncSocket(object):
+    """Socket class that uses our new fangled asynchronous eventloop
+    module.
+    """
+
+    def __init__(self, closeCallback=None):
+        """Create an AsyncSocket.  If closeCallback is given, it will be
+        called if we detect that the socket has been closed durring a
+        read/write operation.  The arguments will be the AsyncSocket object
+        and either socket.SHUT_RD or socket.SHUT_WR.
+        """
+        self.toSend = ''
+        self.readSize = 4096
+        self.socket = None
+        self.readCallback = None
+        self.closeCallback = closeCallback
+
+    def openConnection(self, host, port, callback, errback):
+        """Open a connection.  On success, callback will be called with this
+        object.
+        """
+        def finishOpen(address):
+            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.socket.setblocking(0)
+            rv = self.socket.connect_ex((address, port))
+            if rv not in (0, errno.EINPROGRESS, errno.EWOULDBLOCK):
+                trapCall(errback, socket.error((rv, errno.errorcode[rv])))
+            trapCall(callback, self)
+        eventloop.callInThread(finishOpen, errback, socket.gethostbyname,
+                host)
+
+    def closeConnection(self):
+        if self.isOpen():
+            eventloop.stopHandlingSocket(self.socket)
+            self.socket.close()
+            self.socket = None
+
+    def isOpen(self):
+        return self.socket is not None
+
+    def sendData(self, data):
+        """Send data out to the socket when it becomes ready.
+        
+        NOTE: currently we have no way of detecting when the data gets sent
+        out, or if errors happen.
+        """
+
+        if not self.isOpen():
+            raise ValueError("Socket not connected")
+        self.toSend += data
+        eventloop.addWriteCallback(self.socket, self.onWriteReady)
+
+    def startReading(self, readCallback):
+        """Start reading from the socket.  When data becomes available it will
+        be passed to readCallback.  If there is already a read callback, it
+        will be replaced.
+        """
+
+        if not self.isOpen():
+            raise ValueError("Socket not connected")
+        self.readCallback = readCallback
+        eventloop.addReadCallback(self.socket, self.onReadReady)
+
+    def stopReading(self):
+        """Stop reading from the socket."""
+
+        if not self.isOpen():
+            raise ValueError("Socket not connected")
+        self.readCallback = None
+        eventloop.removeReadCallback(self.socket)
+
+    def onWriteReady(self):
+        try:
+            sent = self.socket.send(self.toSend)
+        except socket.error, (code, msg):
+            if code not in (errno.EWOULDBLOCK, errno.EINTR):
+                if code not in (errno.ECONNRESET, errno.EPIPE):
+                    print "WARNING, got unexpected error from send"
+                    print "%s: %s" % (errno.errorcode.get(code), msg)
+                self.closeConnection()
+                if self.closeCallback:
+                    trapCall(self.closeCallback, self, socket.SHUT_WR)
+        else:
+            self.toSend = self.toSend[sent:]
+            if self.toSend == '':
+                eventloop.removeWriteCallback(self.socket)
+
+    def onReadReady(self):
+        try:
+            data = self.socket.recv(self.readSize)
+        except socket.error, (code, msg):
+            if code not in (errno.EWOULDBLOCK, errno.EINTR):
+                if code != errno.ECONNREFUSED:
+                    print "WARNING, got unexpected error from recv"
+                    print "%s: %s" % (errno.errorcode.get(code), msg)
+                self.closeConnection()
+                if self.closeCallback:
+                    trapCall(self.closeCallback, self, socket.SHUT_RD)
+        else:
+            if data == '':
+                if self.closeCallback:
+                    trapCall(self.closeCallback, self, socket.SHUT_RD)
+            else:
+                trapCall(self.readCallback, data)
+
 class ConnectionHandler(object):
-    """Base class to handle socket connections.  It implements a simple state
-    machine over our new fangled asynchronous eventloop module to help
-    dealing with network protocols.
+    """Base class to handle asynchronous network streams.  It implements a
+    simple state machine to deal with incomming data.
 
     Sending data: Use the sendData() method.
 
@@ -115,53 +219,25 @@ class ConnectionHandler(object):
     """
 
     def __init__(self):
-        self.toSend = ''
-        self.socketOpen = False
-        self.readSize = 4096
         self.buffer = NetworkBuffer()
         self.states = {'initializing': None, 'closed': None}
-        self.readCallbackActive = False
-        self.writeCallbackActive = False
+        self.stream = AsyncSocket(closeCallback=self.closeCallback)
         self.changeState('initializing')
 
     def openConnection(self, host, port, callback, errback):
         self.host = host
         self.port = port
-        def finishOpen(address):
-            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.socket.setblocking(0)
-            rv = self.socket.connect_ex((address, port))
-            if rv not in (0, errno.EINPROGRESS, errno.EWOULDBLOCK):
-                trapCall(errback, socket.error((rv, errno.errorcode[rv])))
-            self.socketOpen = True
+        def callbackIntercept(asyncSocket):
             trapCall(callback, self)
-        eventloop.resolveAddress(host, finishOpen, errback)
+        self.stream.openConnection(host, port, callbackIntercept, errback)
 
     def closeConnection(self):
-        if self.socketOpen:
-            eventloop.stopHandlingSocket(self.socket)
-            self.socket.shutdown(socket.SHUT_RDWR)
-            self.socketOpen = False
-            self.writeCallbackActive = self.readCallbackActive = False
-            self.socket = None
-            self.changeState('closed')
+        if self.stream.isOpen():
+            self.stream.closeConnection()
+        self.changeState('closed')
 
     def sendData(self, data):
-        self.toSend += data
-        if not self.writeCallbackActive:
-            eventloop.addWriteCallback(self.socket, self.writeCallback)
-            self.writeCallbackActive = True
-
-    def writeCallback(self):
-        try:
-            sent = self.socket.send(self.toSend)
-        except socket.error:
-            self.handleClose(socket.SHUT_WR)
-            return
-        self.toSend = self.toSend[sent:]
-        if self.toSend == '' and self.writeCallbackActive:
-            eventloop.removeWriteCallback(self.socket)
-            self.writeCallbackActive = False
+        self.stream.sendData(data)
 
     def changeState(self, newState):
         self.readHandler = self.states[newState]
@@ -173,26 +249,23 @@ class ConnectionHandler(object):
             self.readHandler()
 
     def updateReadCallback(self):
-        if self.readHandler is not None and not self.readCallbackActive:
-            eventloop.addReadCallback(self.socket, self.readCallback)
-            self.readCallbackActive = True
-        elif self.readHandler is None and self.readCallbackActive:
-            eventloop.removeReadCallback(self.socket)
-            self.readCallbackActive = False
-
-    def readCallback(self):
-        data = self.socket.recv(self.readSize)
-        if data == '':
-            self.handleClose(socket.SHUT_RD)
-        else:
-            self.handleData(data)
+        if self.readHandler is not None:
+            self.stream.startReading(self.handleData)
+        elif self.stream.isOpen():
+            try:
+                self.stream.stopReading()
+            except KeyError:
+                pass
 
     def handleData(self, data):
         self.buffer.addData(data)
         self.readHandler()
 
+    def closeCallback(self, stream, type):
+        self.handleClose(type)
+
     def handleClose(self, type):
-        """Handle the socket becoming closed.  Type is either socket.SHUT_RD,
+        """Handle our stream becoming closed.  Type is either socket.SHUT_RD,
         or socket.SHUT_WR.
         """
         raise NotImplementError()
@@ -474,7 +547,7 @@ class HTTPConnection(ConnectionHandler):
         else:
             body = self.body
 
-        if self.socketOpen:
+        if self.stream.isOpen():
             if self.willClose:
                 self.closeConnection()
                 self.changeState('closed')
@@ -491,7 +564,6 @@ class HTTPConnection(ConnectionHandler):
                 'port'):
             response[key] = getattr(self, key)
         trapCall(self.callback, response)
-
         self.maybeSendReadyCallback()
 
     def maybeSendReadyCallback(self):
@@ -515,7 +587,25 @@ class HTTPConnection(ConnectionHandler):
     def handleError(self, error):
         self.closeConnection()
         trapCall(self.errback, error)
-        self.closeConnection()
+
+class HTTPSConnection(HTTPConnection):
+    # TODO: I think the class hierarchy is a little weird here, but I'm not
+    # sure how to fix it.  I would like to have a 
+
+    def openConnection(self, host, port, callback, errback):
+        def onConnectionOpen(self):
+            self.socket.setblocking(1)
+            eventloop.callInThread(onSSLOpen, errback, socket.ssl,
+                    self.socket)
+        def onSSLOpen(ssl):
+            self.socket.setblocking(0)
+            self.ssl = ssl
+            # finally we can call the actuall callback
+            callback(self)
+        super(HTTPSConnection, self).openConnection(host, port,
+                onConnectionOpen, errback)
+        self.host = host
+        self.port = port
 
 def parseURL(url):
     (scheme, host, path, params, query, fragment) = urlparse(url)

@@ -36,9 +36,13 @@ class TestingHTTPConnection(httpclient.HTTPConnection):
     """HTTPConnection that doesn't actually connect to the network."""
 
     def __init__(self, closeCallback=None, readyCallback=None):
+        class FakeStream(object):
+            def isOpen(self):
+                return True
         super(TestingHTTPConnection, self).__init__(closeCallback,
                 readyCallback)
         self.output = ''
+        self.stream = FakeStream()
 
     def openConnection(self, host, port):
         self.host = host
@@ -55,7 +59,6 @@ class TestingHTTPConnection(httpclient.HTTPConnection):
 
     def updateReadCallback(self):
         pass
-
 
 class TestingHTTPConnectionPool(httpclient.HTTPConnectionPool):
     MAX_CONNECTIONS = 4 # makes testing more sane
@@ -210,7 +213,7 @@ class ConnectionHandlerTest(EventLoopTest):
 
     def testClose(self):
         self.connectionHandler.closeConnection()
-        self.assertEquals(self.connectionHandler.socketOpen, False)
+        self.assert_(not self.connectionHandler.stream.isOpen())
         # second close shouldn't throw any exceptions
         self.connectionHandler.closeConnection()
 
@@ -869,3 +872,13 @@ class HTTPConnectionPoolTest(EventLoopTest):
         self.assert_('http:www.bar.com:80' in self.pool.connections)
         self.assert_('http:www.baz.com:80' in self.pool.connections)
         self.assert_('http:www.qux.com:80' in self.pool.connections)
+
+class HTTPSConnectionTest(EventLoopTest):
+    def testConnect(self):
+        return
+        conn = httpclient.HTTPSConnection()
+        def stopEventLoop(data):
+            eventloop.quit()
+        conn.openConnection("channelguide.participatoryculture.org", 443,
+                stopEventLoop, stopEventLoop)
+        self.runEventLoop()

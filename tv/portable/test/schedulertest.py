@@ -10,13 +10,13 @@ class HadToStopEventLoop(Exception):
 class EventLoopTest(unittest.TestCase):
     def setUp(self):
         # reset the event loop
-        eventloop._eventLoop.resolver.closeThreads()
+        eventloop._eventLoop.threadPool.closeThreads()
         eventloop._eventLoop = eventloop.EventLoop() 
         self.hadToStopEventLoop = False
 
     def tearDown(self):
         # this prevents weird errors when we quit
-        eventloop._eventLoop.resolver.closeThreads()
+        eventloop._eventLoop.threadPool.closeThreads()
 
     def stopEventLoop(self):
         self.hadToStopEventLoop = True

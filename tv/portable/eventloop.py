@@ -16,7 +16,6 @@ import Queue
 import util
 
 from BitTornado.clock import clock
-#from time import time
 
 import util
 
@@ -33,15 +32,13 @@ class DelayedCall(object):
 
     def dispatch(self):
         if not self.canceled:
-            try:
-                #start = time()
-                self.function(*self.args, **self.kwargs)
-                #end = time()
-                #if end-start > 0.05:
-                #    print "WARNING: %s too slow (%.3f secs)" % (
-                #        self.name, end-start)
-            except:
-                util.failedExn("While handling timeout (%s)" % self.name)
+            when = "While handling timeout (%s)" % self.name
+            #start = clock()
+            util.trapCall(when, self.function, *self.args, **self.kwargs)
+            #end = clock()
+            #if end-start > 0.05:
+            #    print "WARNING: %s too slow (%.3f secs)" % (
+            #        self.name, end-start)
 
 class Scheduler(object):
     def __init__(self):
@@ -82,30 +79,28 @@ class IdleQueue(object):
     def processIdles(self):
         while not self.queue.empty():
             function, name, args, kwargs = self.queue.get()
-            try:
-                #start = time()
-                function(*args, **kwargs)
-                #end = time()
-                #if end-start > 0.05:
-                #    print "WARNING: %s too slow (%.3f secs)" % (
-                #        name, end-start)
-            except:
-                util.failedExn("While handling idle call (%s)" % (name,))
+            #start = clock()
+            util.trapCall("While handling idle call (%s)" % (name,),
+                    function, *args, **kwargs)
+            #end = clock()
+            #if end-start > 0.05:
+            #    print "WARNING: %s too slow (%.3f secs)" % (
+            #        name, end-start)
 
-class Resolver(object):
-    """The getaddrinfo() function blocks, so we can't use it in our main
-    eventloop thread.  This class creates a really small thread pool, that
-    handles the call, and passing the data back in the main event loop thread
-    as a callback.
+class ThreadPool(object):
+    """The thread pool is used to handle calls like gethostbyname() that block
+    and there's no asynchronous workaround.  What we do instead is call them
+    in a separate thread and return the result in a callback that executes in
+    the event loop.
     """
-    THREADS = 2
+    THREADS = 3
 
     def __init__(self, eventLoop):
         self.eventLoop = eventLoop
         self.queue = Queue.Queue()
         self.threads = []
         for x in xrange(self.THREADS):
-            t = threading.Thread(name='Resolver Thread %d' % x,
+            t = threading.Thread(name='ThreadPool - %d' % x,
                     target=self.threadLoop)
             t.setDaemon(True)
             t.start()
@@ -117,19 +112,19 @@ class Resolver(object):
             if nextItem == "QUIT":
                 break
             else:
-                host, callback, errback = nextItem
+                callback, errback, func, args, kwargs, = nextItem
             try:
-                address = socket.gethostbyname(host)
+                result = func(*args, **kwargs)
             except Exception, e:
-                self.eventLoop.idleQueue.addIdle(errback, 'Resolver Errback',
-                        args=(e,))
+                self.eventLoop.idleQueue.addIdle(errback, 
+                        'Thread Pool Errback', args=(e,))
             else:
                 self.eventLoop.idleQueue.addIdle(callback, 
-                    'Resolver Callback', args=(address,))
+                    'Thread Pool Callback', args=(result,))
             self.eventLoop.wakeup()
 
-    def queueResolve(self, callback, errback, host):
-        self.queue.put((callback, errback, host))
+    def queueCall(self, callback, errback, function, *args, **kwargs):
+        self.queue.put((callback, errback, function, args, kwargs))
 
     def closeThreads(self):
         for x in xrange(self.THREADS):
@@ -141,7 +136,7 @@ class EventLoop(object):
     def __init__(self):
         self.scheduler = Scheduler()
         self.idleQueue = IdleQueue()
-        self.resolver = Resolver(self)
+        self.threadPool = ThreadPool(self)
         self.readCallbacks = {}
         self.writeCallbacks = {}
         self.wakeSender, self.wakeReceiver = util.makeDummySocketPair()
@@ -166,8 +161,8 @@ class EventLoop(object):
     def wakeup(self):
         self.wakeSender.send("b")
 
-    def resolveAddress(self, host, callback, errback):
-        self.resolver.queueResolve(host, callback, errback)
+    def callInThread(self, callback, errback, function, *args, **kwargs):
+        self.threadPool.queueCall(callback, errback, function, *args, **kwargs)
 
     def doCallbacks(self, readyList, map):
         for fd in readyList:
@@ -176,10 +171,8 @@ class EventLoop(object):
             except KeyError:
                 util.failedExn("While talking to the network")
             else:
-                try:
-                    function()
-                except:
-                    util.failedExn("While talking to the network")
+                when = "While talking to the network"
+                if not util.trapCall(when, function):
                     del map[fd] 
                     # remove the callback, since it's likely to fail forever
 
@@ -210,15 +203,29 @@ class EventLoop(object):
 _eventLoop = EventLoop()
 
 def addReadCallback(socket, callback):
+    """Add a read callback.  When socket is ready for reading, callback will
+    be called.  If there is already a read callback installed, it will be
+    replaced.
+    """
     _eventLoop.addReadCallback(socket, callback)
 
 def removeReadCallback(socket):
+    """Remove a read callback.  If there is not a read callback installed for
+    socket, a KeyError will be thrown.
+    """
     _eventLoop.removeReadCallback(socket)
 
 def addWriteCallback(socket, callback):
+    """Add a write callback.  When socket is ready for writing, callback will
+    be called.  If there is already a write callback installed, it will be
+    replaced.
+    """
     _eventLoop.addWriteCallback(socket, callback)
 
 def removeWriteCallback(socket):
+    """Remove a write callback.  If there is not a write callback installed for
+    socket, a KeyError will be thrown.
+    """
     _eventLoop.removeWriteCallback(socket)
 
 def stopHandlingSocket(socket):
@@ -250,12 +257,12 @@ def addIdle(function, name, args=None, kwargs=None):
     _eventLoop.idleQueue.addIdle(function, name, args, kwargs)
     _eventLoop.wakeup()
 
-def resolveAddress(host, callback, errback):
+def callInThread(callback, errback, function, *args, **kwargs):
     """Get the numerical IP address for a IPv4 host, on success callback will
     be called with the adrress, on failure errback will be called with the
     exception.
     """
-    _eventLoop.resolveAddress(host, callback, errback)
+    _eventLoop.callInThread(callback, errback, function, *args, **kwargs)
 
 def startup():
     lt = threading.Thread(target=_eventLoop.loop, name="Event Loop")

@@ -219,11 +219,14 @@ def makeDummySocketPair():
 
 def trapCall(when, function, *args, **kwargs):
     """Make a call to a function, but trap any exceptions and do a failedExn
-    call for them.
+    call for them.  Return True if the function successfully completed, False
+    if it threw an exception
     """
 
     try:
         function(*args, **kwargs)
+        return True
     except:
         failedExn(when)
+        return False
 
