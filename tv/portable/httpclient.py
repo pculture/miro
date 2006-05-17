@@ -273,7 +273,7 @@ class AsyncSSLStream(AsyncSocket):
             else:
                 eventloop.addWriteCallback(self.socket, self.onWriteReady)
         elif code in (socket.SSL_ERROR_ZERO_RETURN, socket.SSL_ERROR_SSL,
-                socket.SSL_ERROR_SYSCALL):
+                socket.SSL_ERROR_SYSCALL, socket.SSL_ERROR_EOF):
             self.handleEarlyClose(operation)
         else:
             super(AsyncSSLStream, self).handleSocketError(code, msg,
@@ -400,9 +400,10 @@ class NotReadyToSendError(Exception):
     pass
 
 class HTTPConnection(ConnectionHandler):
+    scheme = 'http'
+
     def __init__(self, closeCallback=None, readyCallback=None):
         super(HTTPConnection, self).__init__()
-        self.scheme = 'http'
         self.shortVersion = 0
         self.states['ready'] = None
         self.states['response-status'] = self.onStatusData
@@ -694,9 +695,8 @@ class HTTPConnection(ConnectionHandler):
         trapCall(self.errback, error)
 
 class HTTPSConnection(HTTPConnection):
-    # TODO: I think the class hierarchy is a little weird here, but I'm not
-    # sure how to fix it.  I would like to have a 
     streamFactory = AsyncSSLStream
+    scheme = 'https'
 
 def parseURL(url):
     (scheme, host, path, params, query, fragment) = urlparse(url)

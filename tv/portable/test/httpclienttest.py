@@ -261,6 +261,10 @@ class HTTPClientTestBase(EventLoopTest):
         eventloop.quit()
 
 class HTTPClientTest(HTTPClientTestBase):
+    def testScheme(self):
+        conn = httpclient.HTTPConnectio()
+        self.assertEquals(conn.scheme, 'http')
+
     def testRequestLine(self):
         self.assertEquals(self.testRequest.output.split("\r\n")[0],
                 'GET /bar/baz;123?a=b HTTP/1.1')
@@ -880,6 +884,11 @@ class HTTPSConnectionTest(HTTPClientTestBase):
     # The first https site I found was:
     # WAVE - Web Automated Verification of Enrollment
     # https://www.gibill.va.gov/wave/
+
+    def testScheme(self):
+        conn = httpclient.HTTPSConnection()
+        self.assertEquals(conn.scheme, 'https')
+
     def testHTTPSConnection(self):
         conn = httpclient.HTTPSConnection()
         def handleOpen(data):

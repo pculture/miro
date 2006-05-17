@@ -246,7 +246,6 @@ def addTimeout(delay, function, name, args=None, kwargs=None):
     """
 
     dc = _eventLoop.scheduler.addTimeout(delay, function, name, args, kwargs)
-    _eventLoop.wakeup()
     return dc
 
 def addIdle(function, name, args=None, kwargs=None):

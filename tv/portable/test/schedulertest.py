@@ -24,12 +24,14 @@ class EventLoopTest(unittest.TestCase):
 
     def runEventLoop(self, timeout=10, timeoutNormal=False):
         self.hadToStopEventLoop = False
-        eventloop.addTimeout(timeout, self.stopEventLoop, 
+        timeout = eventloop.addTimeout(timeout, self.stopEventLoop, 
                 "Stop test event loop")
         eventloop._eventLoop.quitFlag = False
         eventloop._eventLoop.loop()
         if self.hadToStopEventLoop and not timeoutNormal:
             raise HadToStopEventLoop()
+        else:
+            timeout.cancel()
 
 class SchedulerTest(EventLoopTest):
     def setUp(self):
