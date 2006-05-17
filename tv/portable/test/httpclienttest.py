@@ -236,7 +236,7 @@ class ConnectionHandlerTest(EventLoopTest):
         # just make sure it doesn't throw an exception
         str(self.connectionHandler)
 
-class HTTPClientTest(EventLoopTest):
+class HTTPClientTestBase(EventLoopTest):
     def setUp(self):
         EventLoopTest.setUp(self)
         self.data = None
@@ -260,6 +260,7 @@ class HTTPClientTest(EventLoopTest):
         self.errbackCalled = True
         eventloop.quit()
 
+class HTTPClientTest(HTTPClientTestBase):
     def testRequestLine(self):
         self.assertEquals(self.testRequest.output.split("\r\n")[0],
                 'GET /bar/baz;123?a=b HTTP/1.1')
@@ -873,12 +874,27 @@ class HTTPConnectionPoolTest(EventLoopTest):
         self.assert_('http:www.baz.com:80' in self.pool.connections)
         self.assert_('http:www.qux.com:80' in self.pool.connections)
 
-class HTTPSConnectionTest(EventLoopTest):
-    def testConnect(self):
-        return
+class HTTPSConnectionTest(HTTPClientTestBase):
+    # We should have more tests here, but I have no idea how to fake SSL
+    # connections.  So I just put some attemps to connect to an https site
+    # The first https site I found was:
+    # WAVE - Web Automated Verification of Enrollment
+    # https://www.gibill.va.gov/wave/
+    def testHTTPSConnection(self):
         conn = httpclient.HTTPSConnection()
-        def stopEventLoop(data):
+        def handleOpen(data):
+            conn.sendRequest(self.callback, self.errback, 
+                    method="GET", path='/wave/')
+        def handleError(error):
             eventloop.quit()
-        conn.openConnection("channelguide.participatoryculture.org", 443,
-                stopEventLoop, stopEventLoop)
+        conn.openConnection("www.gibill.va.gov", 443, handleOpen, handleError)
         self.runEventLoop()
+        self.assert_(self.callbackCalled)
+        self.assertEquals(self.data['status'], 200)
+
+    def testGrabURL(self):
+        httpclient.grabURL('https://www.gibill.va.gov/wave/', self.callback,
+                self.errback)
+        self.runEventLoop()
+        self.assert_(self.callbackCalled)
+        self.assertEquals(self.data['status'], 200)

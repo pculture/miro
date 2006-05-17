@@ -31,7 +31,9 @@ def setDelegate(newDelegate):
     delegate = newDelegate
 
 def trapCall(function, *args, **kwargs):
-    """Do a util.trapCall, where when = 'While talking to the network'"""
+    """Convenience function do a util.trapCall, where when = 'While talking to
+    the network'
+    """
     util.trapCall("While talking to the network", function, *args, **kwargs)
 
 class NetworkBuffer(object):
@@ -168,39 +170,126 @@ class AsyncSocket(object):
         self.readCallback = None
         eventloop.removeReadCallback(self.socket)
 
+    def handleSocketError(self, code, msg, operation):
+        if code in (errno.EWOULDBLOCK, errno.EINTR):
+            return
+
+        if operation == "write":
+            expectedErrors = (errno.EPIPE, errno.ECONNRESET)
+        else:
+            expectedErrors = (errno.ECONNREFUSED,)
+        if code not in expectedErrors:
+            print "WARNING, got unexpected error during %s" % operation
+            print "%s: %s" % (errno.errorcode.get(code), msg)
+        self.handleEarlyClose(operation)
+
     def onWriteReady(self):
         try:
             sent = self.socket.send(self.toSend)
         except socket.error, (code, msg):
-            if code not in (errno.EWOULDBLOCK, errno.EINTR):
-                if code not in (errno.ECONNRESET, errno.EPIPE):
-                    print "WARNING, got unexpected error from send"
-                    print "%s: %s" % (errno.errorcode.get(code), msg)
-                self.closeConnection()
-                if self.closeCallback:
-                    trapCall(self.closeCallback, self, socket.SHUT_WR)
+            self.handleSocketError(code, msg, "write")
         else:
-            self.toSend = self.toSend[sent:]
-            if self.toSend == '':
-                eventloop.removeWriteCallback(self.socket)
+            self.handleSentData(sent)
+
+    def handleSentData(self, sent):
+        self.toSend = self.toSend[sent:]
+        if self.toSend == '':
+            eventloop.removeWriteCallback(self.socket)
 
     def onReadReady(self):
         try:
             data = self.socket.recv(self.readSize)
         except socket.error, (code, msg):
-            if code not in (errno.EWOULDBLOCK, errno.EINTR):
-                if code != errno.ECONNREFUSED:
-                    print "WARNING, got unexpected error from recv"
-                    print "%s: %s" % (errno.errorcode.get(code), msg)
-                self.closeConnection()
-                if self.closeCallback:
-                    trapCall(self.closeCallback, self, socket.SHUT_RD)
+            self.handleSocketError(code, msg, "read")
         else:
-            if data == '':
-                if self.closeCallback:
-                    trapCall(self.closeCallback, self, socket.SHUT_RD)
+            self.handleReadData(data)
+
+    def handleReadData(self, data):
+        if data == '':
+            if self.closeCallback:
+                trapCall(self.closeCallback, self, socket.SHUT_RD)
+        else:
+            trapCall(self.readCallback, data)
+
+    def handleEarlyClose(self, operation):
+        self.closeConnection()
+        if self.closeCallback:
+            if operation == 'read':
+                type = socket.SHUT_RD
             else:
-                trapCall(self.readCallback, data)
+                type = socket.SHUT_WR
+            trapCall(self.closeCallback, self, type)
+
+class AsyncSSLStream(AsyncSocket):
+    def __init__(self, closeCallback=None):
+        super(AsyncSSLStream, self).__init__(closeCallback)
+        self.interruptedOperation = None
+
+    def openConnection(self, host, port, callback, errback):
+        def onSocketOpen(self):
+            self.socket.setblocking(1)
+            eventloop.callInThread(onSSLOpen, errback, socket.ssl,
+                    self.socket)
+        def onSSLOpen(ssl):
+            self.socket.setblocking(0)
+            self.ssl = ssl
+            # finally we can call the actuall callback
+            callback(self)
+        super(AsyncSSLStream, self).openConnection(host, port, onSocketOpen,
+                errback)
+
+    def resumeNormalCallbacks(self):
+        if self.readCallback is not None:
+            eventloop.addReadCallback(self.socket, self.onReadReady)
+        if self.toSend != '':
+            eventloop.addWriteCallback(self.socket, self.onWriteReady)
+
+    def handleSocketError(self, code, msg, operation):
+        if code in (socket.SSL_ERROR_WANT_READ, socket.SSL_ERROR_WANT_WRITE):
+            if self.interruptedOperation is None:
+                self.interruptedOperation = operation
+            elif self.interruptedOperation != operation:
+                util.failed("When talking to the network", 
+                details="socket error for the wrong SSL operation")
+                self.closeConnection()
+                return
+            eventloop.stopHandlingSocket(self.socket)
+            if code == socket.SSL_ERROR_WANT_READ:
+                eventloop.addReadCallback(self.socket, self.onReadReady)
+            else:
+                eventloop.addWriteCallback(self.socket, self.onWriteReady)
+        elif code in (socket.SSL_ERROR_ZERO_RETURN, socket.SSL_ERROR_SSL,
+                socket.SSL_ERROR_SYSCALL):
+            self.handleEarlyClose(operation)
+        else:
+            super(AsyncSSLStream, self).handleSocketError(code, msg,
+                    operation)
+
+    def onWriteReady(self):
+        if self.interruptedOperation == 'read':
+            return self.onReadReady()
+        try:
+            sent = self.ssl.write(self.toSend)
+        except socket.error, (code, msg):
+            self.handleSocketError(code, msg, "write")
+        else:
+            if self.interruptedOperation == 'write':
+                self.resumeNormalCallbacks()
+                self.interruptedOperation = None
+            self.handleSentData(sent)
+
+    def onReadReady(self):
+        if self.interruptedOperation == 'write':
+            return self.onWriteReady()
+        try:
+            data = self.ssl.read(self.readSize)
+        except socket.error, (code, msg):
+            self.handleSocketError(code, msg, "read")
+        else:
+            if self.interruptedOperation == 'read':
+                self.resumeNormalCallbacks()
+                self.interruptedOperation = None
+            self.handleReadData(data)
 
 class ConnectionHandler(object):
     """Base class to handle asynchronous network streams.  It implements a
@@ -218,10 +307,12 @@ class ConnectionHandler(object):
     socket closing.
     """
 
+    streamFactory = AsyncSocket
+
     def __init__(self):
         self.buffer = NetworkBuffer()
         self.states = {'initializing': None, 'closed': None}
-        self.stream = AsyncSocket(closeCallback=self.closeCallback)
+        self.stream = self.streamFactory(closeCallback=self.closeCallback)
         self.changeState('initializing')
 
     def openConnection(self, host, port, callback, errback):
@@ -268,7 +359,7 @@ class ConnectionHandler(object):
         """Handle our stream becoming closed.  Type is either socket.SHUT_RD,
         or socket.SHUT_WR.
         """
-        raise NotImplementError()
+        raise NotImplementedError()
 
     def __str__(self):
         return "%s -- %s" % (self.__class__, self.state)
@@ -591,21 +682,7 @@ class HTTPConnection(ConnectionHandler):
 class HTTPSConnection(HTTPConnection):
     # TODO: I think the class hierarchy is a little weird here, but I'm not
     # sure how to fix it.  I would like to have a 
-
-    def openConnection(self, host, port, callback, errback):
-        def onConnectionOpen(self):
-            self.socket.setblocking(1)
-            eventloop.callInThread(onSSLOpen, errback, socket.ssl,
-                    self.socket)
-        def onSSLOpen(ssl):
-            self.socket.setblocking(0)
-            self.ssl = ssl
-            # finally we can call the actuall callback
-            callback(self)
-        super(HTTPSConnection, self).openConnection(host, port,
-                onConnectionOpen, errback)
-        self.host = host
-        self.port = port
+    streamFactory = AsyncSSLStream
 
 def parseURL(url):
     (scheme, host, path, params, query, fragment) = urlparse(url)
@@ -757,12 +834,13 @@ class HTTPConnectionPool(object):
         if req['scheme'] == 'http':
             conn = HTTPConnection(self._onConnectionClosed,
                     self._onConnectionReady) 
-            conn.openConnection(req['host'], req['port'],
-                    openConnectionCallback, openConnectionErrback)
         elif req['scheme'] == 'https':
-            raise NotImplementError()
+            conn = HTTPSConnection(self._onConnectionClosed,
+                    self._onConnectionReady) 
         else:
             raise ValueError("Unknown scheme: %s" % req['scheme'])
+        conn.openConnection(req['host'], req['port'],
+                openConnectionCallback, openConnectionErrback)
         return conn
 
     def _dropAFreeConnection(self):
