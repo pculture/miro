@@ -10,6 +10,9 @@ import traceback
 import time
 import sys
 
+inDownloader = False
+# this gets set to True when we're in the download process.
+
 # Perform escapes needed for Javascript string contents.
 def quoteJS(x):
     x = x.replace("\\", "\\\\") # \       -> \\
@@ -179,14 +182,18 @@ def failed(when, withExn = False, details = None):
     print header
     print "----- END OF CRASH REPORT -----"
 
-    try:
-        import app
-        app.controller.getBackendDelegate(). \
-            notifyUnkownErrorOccurence(when, log = report)
-    except Exception, e:
-        print "Execption when reporting errror.."
-        traceback.print_exc()
-
+    if not inDownloader:
+        try:
+            import app
+            app.controller.getBackendDelegate(). \
+                notifyUnkownErrorOccurence(when, log = report)
+        except Exception, e:
+            print "Execption when reporting errror.."
+            traceback.print_exc()
+    else:
+        from dl_daemon import command, daemon
+        c = command.DownloaderErrorCommand(daemon.lastDaemon, report)
+        c.send(block=False)
 
 class AutoflushingStream:
     """Converts a stream to an auto-flushing one.  It behaves in exactly the

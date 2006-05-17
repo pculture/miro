@@ -9,6 +9,7 @@ import tempfile
 import config
 import prefs
 import eventloop
+import util
 from httpclient import ConnectionHandler
 
 SIZE_OF_INT = calcsize("I")
@@ -126,8 +127,7 @@ class Daemon(ConnectionHandler):
             self.changeState('ready')
 
     def processCommand(self, comm):
-        eventloop.addIdle(self.runCommand,
-                          "DL Daemon Process Command", args=(comm,))
+        util.trapCall("Talking to the downloader", self.runCommand, comm)
 
     def runCommand(self, comm):
         comm.setDaemon(self)
@@ -183,6 +183,7 @@ class ControllerDaemon(Daemon):
                    prefs.APP_REVISION,
                    prefs.PUBLISHER,
                    prefs.PROJECT_URL,
+                   prefs.DOWNLOADER_LOG_PATHNAME,
                    prefs.LOG_PATHNAME,
                 ]
 

@@ -130,7 +130,8 @@ def grabURL(url, type="GET",start = 0, etag=None,modified=None,findHTTPAuth=None
     (scheme, host, path, params, query, fragment) = parseURL(url)
     #print "grab URL called for "+host
 
-    auth = findHTTPAuth(host,path)
+    #auth = findHTTPAuth(host,path)
+    auth = None
     if not auth is None:
         #print " adding auth header"
         myHeaders["Authorization"] = auth.getAuthScheme()+' '+auth.getAuthToken()
@@ -176,7 +177,8 @@ def grabURL(url, type="GET",start = 0, etag=None,modified=None,findHTTPAuth=None
                 del myHeaders["Authorization"]
             except KeyError:
                 pass
-            auth = findHTTPAuth(host,path)
+            #auth = findHTTPAuth(host,path)
+            auth = None
             if not auth is None:
                 #print " adding auth header"
                 myHeaders["Authorization"] = auth.getAuthScheme()+' '+auth.getAuthToken()

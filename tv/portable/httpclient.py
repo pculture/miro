@@ -936,7 +936,8 @@ class HTTPClient(object):
 
     def setAuthHeader(self):
         scheme, host, port, path = parseURL(self.url)
-        auth = self.findHTTPAuth(host, path)
+        #auth = self.findHTTPAuth(host, path)
+        auth = None
         if not auth is None:
             authHeader = "%s %s" % (auth.getAuthScheme(), auth.getAuthToken())
             self.headers["Authorization"] = authHeader

@@ -4,6 +4,7 @@
 # Make all output flush immediately.
 import sys
 import util
+util.inDownloader = True
 import os
 import threading
 
