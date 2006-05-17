@@ -69,7 +69,7 @@ function eventURL(url) {
     	// XUL strategy: async HTTP request to our in-process HTTP
         // server.  Since it falls under the "same origin" security
         // model exemption, no need for complicated preferences
-        // shenanigans -- what a nice day!
+        // shenanigans - what a nice day!
         //        url = "http://127.0.0.1:" + getServerPort() + "/dtv/action/" +
         //            getEventCookie() + "?" + url; NEEDS: remove
         url = "/dtv/action/" + getEventCookie() + "?" + url;
