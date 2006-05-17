@@ -1,5 +1,6 @@
 import random
 import socket
+import eventloop
 
 class Command:
     def __init__(self, daemon, *args, **kws):
@@ -14,12 +15,10 @@ class Command:
 
     def send(self, block = True, retry = True):
         if block:
-            print "WARNING: blocking %s" % repr(self)
-        try:
-            return self.daemon.send(self, block)
-        except socket.error, e:
-            self.daemon.handleSocketError(e)
-            raise
+            print "WARNING: ignoring blocking command %s" % repr(self)
+        # FIXME: Once everything is in the same thread we can remove
+        #        the addIdle()
+        eventloop.addIdle(lambda : self.daemon.send(self), "sending command %s" % repr(self))
 
     def setReturnValue(self, ret):
         self.orig = False
@@ -113,7 +112,6 @@ class MigrateDownloadCommand(Command):
         from dl_daemon import download
         return download.migrateDownload(*self.args, **self.kws)
 
-# This is a special command that's trapped by the daemon
 class ShutDownCommand(Command):
     def action(self):
         import eventloop

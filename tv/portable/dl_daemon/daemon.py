@@ -3,11 +3,11 @@ import os
 import cPickle
 import socket
 import traceback
-from threading import Lock, Thread, Event
 from time import sleep
 from struct import pack, unpack, calcsize
 import tempfile
 import eventloop
+from httpclient import ConnectionHandler
 
 SIZE_OF_INT = calcsize("I")
 
@@ -85,133 +85,59 @@ def readPid():
 
 lastDaemon = None
 
-class Daemon:
+class Daemon(ConnectionHandler):
     def __init__(self):
+        ConnectionHandler.__init__(self)
         global lastDaemon
         lastDaemon = self
         self.waitingCommands = {}
         self.returnValues = {}
-        self.sendLock = Lock() # For serializing data sent over the network
-        self.globalLock = Lock() # For serializing access to global object data
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.settimeout(None)
         self.shutdown = False
+        self.size = 0
+        self.states['ready'] = self.onSize
+        self.states['command'] = self.onCommand
+        self.queuedCommands = []
 
-    def handleSocketError(self, error):
-        """Call this when a error occurs using our socket.  It forces the
-        daemon to close its connection, causing the listen loop to end.  On
-        the downloader, this causes the downloader to quit.  On the
-        controller side, this causes the controller to restart the downloader.
+    def onError(self, error):
+        """Call this when a error occurs.  It forces the
+        daemon to close its connection.
         """
         print "socket error in daemon, closing my socket"
-        self.stream._sock.shutdown(socket.SHUT_RDWR)
+        self.closeConnection()
+        raise error
 
-    def listenLoop(self):
-        while True:
-            #print "Top of dl daemon listen loop"
-            (size,) = unpack("I", self.stream.read(SIZE_OF_INT))
-            comm = cPickle.loads(self.stream.read(size))
-            #print "dl daemon got object %s %s" % (str(comm), comm.id)
-            # Process commands in their own thread so actions that
-            # need to send stuff over the wire don't hang
-            # FIXME: We shouldn't spawn a thread for every command!
-            if not isinstance(comm, command.ShutDownCommand):
-                if comm.orig:
-                    eventloop.addIdle(self.processCommand,
-                                      "DL Daemon Process Command", args=(comm,))
-                else:
-                    self.processReturnValue(comm)
-            else:
-                # Process the shutdown command in the current thread. In the
-                # downloader daemon, this waits for all other threads to quit,
-                # so processing it in a separate thread would deadlock.
-                if comm.orig:
-                    self.processCommand(comm)
-                    # give the controller some time to get the reply before we
-                    # close our socket
-                    sleep(0.1)
-                self.shutdown = True
-                self.globalLock.acquire()
-                events = []
-                try:
-                    for comm in self.waitingCommands.keys():
-                        events = events + (self.waitingCommands[comm.id],)
-                        del self.waitingCommands[comm.id]
-                        self.returnValues[comm.id] = DaemonError("Connection shutdown")
-                finally:
-                    self.globalLock.release()
-                for event in events:
-                    event.set()
-                break
+    def onConnection(self, socket):
+        self.changeState('ready')
+        for comm in self.queuedCommands:
+            self.send(comm)
+        self.queuedCommands = []
+
+    def onSize(self):
+        if self.buffer.length >= SIZE_OF_INT:
+            (self.size,) = unpack("I", self.buffer.read(SIZE_OF_INT))
+            self.changeState('command')
+
+    def onCommand(self):
+        if self.buffer.length >= self.size:
+            comm = cPickle.loads(self.buffer.read(self.size))
+            self.processCommand(comm)
+            self.changeState('ready')
 
     def processCommand(self, comm):
-        if (self.shutdown):
-            return
+        eventloop.addIdle(self.runCommand,
+                          "DL Daemon Process Command", args=(comm,))
+
+    def runCommand(self, comm):
         comm.setDaemon(self)
-        ret = comm.action()
-        comm.setReturnValue(ret)
-        comm.send(block=False)
+        comm.action()
 
-    def processReturnValue(self, comm):
-        self.globalLock.acquire()
-        try:
-            if self.waitingCommands.has_key(comm.id):
-                event = self.waitingCommands[comm.id]
-                del self.waitingCommands[comm.id]
-                self.returnValues[comm.id] = comm.getReturnValue()
-            else:
-                return
-        finally:
-            self.globalLock.release()
-        event.set()
-
-    def waitForReturn(self, comm):
-        self.globalLock.acquire()
-        try:
-            if self.shutdown:
-                raise DaemonError ("Connection shutdown")
-            if self.waitingCommands.has_key(comm.id):
-                event = self.waitingCommands[comm.id]
-            elif self.returnValues.has_key(comm.id):
-                ret = self.returnValues[comm.id]
-                del self.returnValues[comm.id]
-                return ret
-        finally:
-            self.globalLock.release()
-        event.wait(30)
-        if not event.isSet():
-            raise DaemonError("timeout waiting for response to %s" % comm)
-        self.globalLock.acquire()
-        try:
-            ret = self.returnValues[comm.id]
-            del self.returnValues[comm.id]
-            if isinstance(ret, DaemonError):
-                raise ret
-            return ret
-        finally:
-            self.globalLock.release()
-            
-    def addToWaitingList(self, comm):
-        self.globalLock.acquire()
-        try:
-            self.waitingCommands[comm.id] = Event()
-        finally:
-            self.globalLock.release()
-
-    def send(self, comm, block):
-        if block:
-            self.addToWaitingList(comm)
-        raw = cPickle.dumps(comm, cPickle.HIGHEST_PROTOCOL)
-        self.sendLock.acquire()
-        try:
-            self.stream.write(pack("I",len(raw)))
-            self.stream.write(raw)
-            self.stream.flush()
-        finally:
-            self.sendLock.release()
-        if block:
-            return self.waitForReturn(comm)
-
+    def send(self, comm):
+        if self.state == 'initializing':
+            self.queuedCommands.append(comm)
+        else:
+            raw = cPickle.dumps(comm, cPickle.HIGHEST_PROTOCOL)
+            self.sendData(pack("I",len(raw)))
+            self.sendData(raw)
 
 class DownloaderDaemon(Daemon):
     def __init__(self, port):
@@ -219,91 +145,25 @@ class DownloaderDaemon(Daemon):
         writePid(os.getpid())
         # connect to the controller and start our listen loop
         Daemon.__init__(self)
-        self.socket.connect(('127.0.0.1', port))
-        self.stream = self.socket.makefile("r+b")
-        print "Downloader Daemon: Connected on port %s" % port
-        t = Thread(target = self.downloaderLoop, name = "Downloader Loop")
-        t.start()
+        self.openConnection('127.0.0.1', port, self.onConnection, self.onError)
 
-    def downloaderLoop(self):
-        self.listenLoop()
-        print "Downloader listen loop completed"
+    def handleClose(self, type):
+        eventloop.quit()
+        print "downloader: connection closed -- quitting"
+        from dl_daemon import download
+        download.shutDown()
+        import threading
+        for thread in threading.enumerate():
+            if thread != threading.currentThread():
+                thread.join()
 
 class ControllerDaemon(Daemon):
     def __init__(self):
         Daemon.__init__(self)
-        # open a port and start our listen loop
-        self.socket.bind( ('127.0.0.1', 0) )
-        (myAddr, myPort) = self.socket.getsockname()
-        print "Controller Daemon: Listening on %s %s" % (myAddr, myPort)
-        self.port = myPort
-        self.socket.listen(63)
-        self.ready = Event()
-        self.shutdownEvent = Event()
-        self.hardShutdown = False
-        t = Thread(target = self.controllerLoop, name = "Controller Loop")
-        t.start()
-        self.ready.wait()
-
-    def send(self, comm, block):
-        # Don't let traffic through until tho downloader child process is
-        # ready
-        if (not isinstance(comm, command.InitialConfigCommand)) and comm.orig and not self.ready.isSet():
-            print 'DTV: Delaying send of %s %s' % (str(comm), comm.id)
-            if block:
-                self.ready.wait()
-            else:
-                raise socket.error("server not ready")
-        return Daemon.send(self, comm, block)
-
-
-    def cleanupAfterError(self):
-        """Called when there's an error communicating with the downloader
-        daemon.  It tries to reset our state so that we're ready to start a
-        new downloader daemon.
-        """
-
-        self.ready.clear()
-        events = []
-        self.globalLock.acquire()
-        try:
-            for id in self.waitingCommands.keys():
-                events.append(self.waitingCommands[id])
-                del self.waitingCommands[id]
-                self.returnValues[id] = \
-                        DaemonError("Downloader connection closed")
-        finally:
-            self.globalLock.release()
-        for e in events:
-            e.set()
-
-    def controllerLoop(self):
-        try:
-            while True:
-                self.connectToDownloader()
-                try:
-                    self.listenLoop()
-                    print "Controller listen loop completed"
-                    break
-                except Exception, e:
-                    if self.hardShutdown:
-                        break
-                    self.cleanupAfterError()
-                    import util
-                    util.failedExn("While talking to downloader backend")
-                    # On socket errors, the downloader dies, but the
-                    # controller stays alive and restarts the downloader
-                    # by continuing the while loop we achieve this
-        finally:
-            self.shutdownEvent.set()
-
-    def connectToDownloader(self):
-        # launch a new daemon
+        self.shutdown = False
+        self.openConnection('127.0.0.1', 0, self.onConnection, self.onError, listen = True)
+        self.port = self.stream.port
         launchDownloadDaemon(readPid(), self.port)
-        # wait for the daemon to connect to our port
-        (conn, address) = self.socket.accept()
-        conn.settimeout(None)
-        self.stream = conn.makefile("r+b")
         from dl_daemon import remoteconfig
         import config
         data = {}
@@ -311,7 +171,11 @@ class ControllerDaemon(Daemon):
             data[desc.key] = config.get(desc)
         c = command.InitialConfigCommand(self, data)
         c.send(block=False)
-        self.ready.set()
+
+    def handleClose(self, type):
+        if not self.shutdown:
+            print "DTV: WARNING Downloader Daemon died"
+            # FIXME: add code to recover here
 
     def shutdownDownloaderDaemon(self, timeout=5):
         """Send the downloader daemon the shutdown command.  If it doesn't
@@ -319,16 +183,7 @@ class ControllerDaemon(Daemon):
         the downloader daemon has one remaining thread and that thread will
         immediately exit).
         """
-
+        self.shutdown = True
         c = command.ShutDownCommand(self)
         c.send(block=False)
-        self.shutdownEvent.wait(timeout)
-        if not self.shutdownEvent.isSet():
-            print "Downloader daemon didn't quit after %d seconds" % timeout
-            print "Starting hard shutdown"
-            self.hardShutdown = True
-            self.stream._sock.shutdown(socket.SHUT_RDWR)
-            self.shutdownEvent.wait()
-            import app
-            delegate = app.controller.getBackendDelegate()
-            delegate.killDownloadDaemon(readPid())
+        print "DTV: WARNING \"hard\" downloader shutdown not implemented"

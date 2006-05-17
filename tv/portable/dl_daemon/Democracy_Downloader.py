@@ -5,8 +5,10 @@
 import sys
 import util
 import os
-import eventloop
 import threading
+
+from dl_daemon import daemon
+import eventloop
 
 logPath = os.environ.get('DEMOCRACY_DOWNLOADER_LOG')
 if logPath is not None:
@@ -23,8 +25,6 @@ if os.environ.get('DEMOCRACY_DOWNLOADER_FIRST_LAUNCH') != '1':
     print
     print "*** Starting new downloader log ***"
     print
-
-from dl_daemon import daemon
 
 port = int(os.environ['DEMOCRACY_DOWNLOADER_PORT'])
 server = daemon.DownloaderDaemon(port)

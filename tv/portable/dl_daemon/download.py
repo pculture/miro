@@ -153,8 +153,8 @@ btconfig = defaultargs(defaults)
 _lock = RLock()
 
 def findHTTPAuth(*args, **kws):
-    x = command.FindHTTPAuthCommand(daemon.lastDaemon, *args, **kws)
-    return x.send(block = True, retry = True)
+    print "DTV: WARNING: findHTTPAuth disabled in downloader daemon"
+    return None
 
 def createDownloader(url, contentType, dlid):
     if contentType == 'application/x-bittorrent':

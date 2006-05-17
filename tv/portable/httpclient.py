@@ -19,7 +19,6 @@ from collections import deque
 from BitTornado.clock import clock
 
 import config
-import downloader
 from download_utils import cleanFilename
 import eventloop
 import util
@@ -116,7 +115,7 @@ class AsyncSocket(object):
         self.readCallback = None
         self.closeCallback = closeCallback
 
-    def openConnection(self, host, port, callback, errback):
+    def openConnection(self, host, port, callback, errback, listen = False):
         """Open a connection.  On success, callback will be called with this
         object.
         """
@@ -127,8 +126,23 @@ class AsyncSocket(object):
             if rv not in (0, errno.EINPROGRESS, errno.EWOULDBLOCK):
                 trapCall(errback, socket.error((rv, errno.errorcode[rv])))
             trapCall(callback, self)
-        eventloop.callInThread(finishOpen, errback, socket.gethostbyname,
-                host)
+
+        def finishOpenListen():
+            eventloop.removeReadCallback(self.socket)
+            origSocket = self.socket
+            (self.socket, addr) = self.socket.accept()
+            trapCall(callback, self)
+
+        if listen:
+            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.socket.bind( (host, port) )
+            (self.addr, self.port) = self.socket.getsockname()
+            self.socket.listen(63)
+            eventloop.addReadCallback(self.socket, finishOpenListen)
+        else:
+            eventloop.callInThread(finishOpen, errback, socket.gethostbyname,
+                                   host)
+
 
     def closeConnection(self):
         if self.isOpen():
@@ -315,12 +329,12 @@ class ConnectionHandler(object):
         self.stream = self.streamFactory(closeCallback=self.closeCallback)
         self.changeState('initializing')
 
-    def openConnection(self, host, port, callback, errback):
+    def openConnection(self, host, port, callback, errback, listen = False):
         self.host = host
         self.port = port
         def callbackIntercept(asyncSocket):
             trapCall(callback, self)
-        self.stream.openConnection(host, port, callbackIntercept, errback)
+        self.stream.openConnection(host, port, callbackIntercept, errback, listen)
 
     def closeConnection(self):
         if self.stream.isOpen():
@@ -881,13 +895,9 @@ class HTTPClient(object):
     connectionPool = HTTPConnectionPool() # class-wid connection pool
     MAX_REDIRECTS = 10
     MAX_AUTH_ATTEMPS = 5
-    USER_AGENT = "%s/%s (%s)" % \
-            (config.get(config.SHORT_APP_NAME),
-             config.get(config.APP_VERSION),
-             config.get(config.PROJECT_URL))
 
     def __init__(self, url, callback, errback, method="GET", start=0,
-            etag=None, modified=None, findHTTPAuth=None):
+            etag=None, modified=None, findHTTPAuth=None, useRemoteConfig = False):
         self.url = url
         self.callback = callback
         self.errback = errback
@@ -898,11 +908,23 @@ class HTTPClient(object):
         if findHTTPAuth is not None:
             self.findHTTPAuth = findHTTPAuth
         else:
+            import downloader
             self.findHTTPAuth = downloader.findHTTPAuth
         self.depth = 0
         self.authAttempts = 0
         self.updateURLOk = True
         self.originalURL = self.updatedURL = self.redirectedURL = url
+        if useRemoteConfig:
+            self.userAgent = "%s/%s (%s)" % \
+                             (config.get(config.SHORT_APP_NAME),
+                              config.get(config.APP_VERSION),
+                              config.get(config.PROJECT_URL))
+        else:
+            import remoteconfig
+            self.userAgent = "%s/%s (%s)" % \
+                             (remoteconfig.get(config.SHORT_APP_NAME),
+                              remoteconfig.get(config.APP_VERSION),
+                              remoteconfig.get(config.PROJECT_URL))
         self.initHeaders()
 
     def initHeaders(self):
@@ -913,7 +935,7 @@ class HTTPClient(object):
             self.headers["If-None-Match"] = self.etag
         if not self.modified is None:
             self.headers["If-Modified-Since"] = self.modified
-        self.headers['User-Agent'] = self.USER_AGENT
+        self.headers['User-Agent'] = self.userAgent
         self.setAuthHeader()
 
     def setAuthHeader(self):
