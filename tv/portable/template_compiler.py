@@ -15,6 +15,29 @@
 def genRepeatText(varname, tid, prefix, text):
     return '%s%s.write(%s)\n' % (prefix,varname, repr(text))
 
+# Returns translated version of text
+def genRepeatTranslate(varname, tid, prefix, args):
+    (text, funcDict) = args
+    # Strip leading and trailing whitespace and convert interior
+    # whitespace to spaces
+    text = ' '.join(text.strip().split())
+
+    if len(funcDict) == 0:
+        return '%s%s.write(_(%s))\n' % (prefix, varname, repr(text))
+    else:
+        dictName = generateId()
+        out = '%s%s = {}\n' % (prefix, dictName)
+        for name in funcDict:
+            temp = generateId()
+            out = '%s%s%s = IOBuffer()\n' % (out, prefix, temp)
+            for (func, fargs) in funcDict[name]:
+                out = '%s%s' % (out, func(temp, tid, prefix, fargs))
+            out = '%s%s%s.close()\n' % (out, prefix, temp)
+            out = '%s%s%s[%s] = %s.read()\n' % (out, prefix, dictName, repr(str(name)), temp)
+
+        out = '%s%s%s.write(Template(_(%s)).substitute(%s))\n' % (
+            out, prefix, varname, repr(text), dictName)
+        return out
 # Returns text if function does not evaluate to true
 def genRepeatTextHide(varname, tid, prefix, args):
     (ifValue, text) = args
@@ -211,12 +234,15 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         fileobj.write('from IOBuffer import IOBuffer\n')
         fileobj.write('from xhtmltools import urlencode\n')
         fileobj.write('from templatehelper import quoteattr, escape, toUni\n')
+        fileobj.write('from string import Template\n')
         fileobj.write('import app\n')
         fileobj.write('import views\n')
         fileobj.write('import sorts\n')
         fileobj.write('import indexes\n')
         fileobj.write('import filters\n')
         fileobj.write('import resource\n')
+        fileobj.write('import gettext\n')
+        fileobj.write('_ = gettext.gettext\n')
         fileobj.write('def fillTemplate(domHandler, dtvPlatform, eventCookie):\n')
         self.handle.render(fileobj)
         fileobj.write('\n\n    out = IOBuffer()\n')
@@ -257,6 +283,12 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.outputLists = [[]]
         self.outputText = []
         self.hidingParams = []
+        self.inTranslate = False
+        self.translateDepth = []
+        self.translateText = ''
+        self.translateDict = {}
+        self.translateName = ''
+        
 
     def endDocument(self):
         print "Ending compile"
@@ -264,6 +296,13 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
 
     def startElement(self,name, attrs):
         self.depth = self.depth + 1
+
+        if self.inTranslate and self.depth == self.translateDepth+1:
+            self.translateName = attrs['i18n:name']
+            self.translateText += '${%s}' % self.translateName
+            self.endText()
+            self.outputLists.append([])
+
         if self.onlyBody and not self.started:
             if name == 'body':
                 self.started = True
@@ -298,7 +337,19 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                     if (key not in ['t:hideIf']):
                         self.addAttr(key,attrs[key])
                 self.addText('>')
-                
+        elif 'i18n:translate' in attrs.keys():
+            if self.inTranslate:
+                print "Warning: nested translations"
+            self.addText('<%s'%name)
+            for key in attrs.keys():
+                if (not key.startswith('i18n:')):
+                    self.addAttr(key,attrs[key])
+            self.addText('>')
+            self.inTranslate = True
+            self.translateDepth = self.depth
+            self.translateText = ''
+            self.translateDict = {}
+            
         elif name == 't:includeTemplate':
             self.addFillTemplate(attrs['filename'])
         elif name == 't:include':
@@ -352,7 +403,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         else:
             self.addText('<%s'%name)
             for key in attrs.keys():
-                if not (key.startswith('t:')):
+                if not (key.startswith('t:') or key.startswith('i18n:')):
                     self.addAttr(key,attrs[key])
             self.addText('>')
 
@@ -397,6 +448,10 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             repeatId = generateId()
             self.addText('<span id="%s"/>'%quoteattr(repeatId))
             self.handle.addUpdate(repeatId, 'nextSibling', repeatList, self.repeatName)
+        elif self.inTranslate and self.depth == self.translateDepth:
+            self.inTranslate = False
+            self.addTranslation()
+            self.addText('</%s>'%name)
         elif name == 't:execOnUnload':
             self.inExecOnUnload = False
             self.handle.addExecOnUnload(self.code)
@@ -405,6 +460,9 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             self.handle.addExecOnLoad(self.code)
         else:
             self.addText('</%s>'%name)
+        if self.inTranslate and self.depth == self.translateDepth+1:
+            self.endText()
+            self.translateDict[self.translateName] = self.outputLists.pop()
         self.depth = self.depth - 1
 
     def characters(self,data):
@@ -412,6 +470,8 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             pass
         elif self.inReplace or self.inStaticReplace:
             pass
+        elif self.inTranslate and self.depth == self.translateDepth:
+            self.translateText += data
         elif self.inExecOnUnload or self.inExecOnLoad:
             self.code += data
         else:
@@ -419,6 +479,9 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
 
     def skippedEntity(self, name):
         self.addText("&%s;" % name)
+
+    def addTranslation(self):
+        self.addInstruction(genRepeatTranslate, (self.translateText, self.translateDict))
 
     def addInclude(self, template):
         f = open(resource.path('templates/%s'%template),'r')
