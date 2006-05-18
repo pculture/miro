@@ -206,8 +206,13 @@ URL was %s""" % self.url
             newfilename = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
                     shortFilename)
             newfilename = nextFreeFilename(newfilename)
-            shutil.move(filename, newfilename)
-            self.status['filename'] = newfilename
+            try:
+                shutil.move(filename, newfilename)
+            except IOError, error:
+                print "WARNING: Error moving %s to %s (%s)" % (self.filename,
+                        newFilename, e)
+            else:
+                self.status['filename'] = newfilename
 
     ##
     # Removes downloader from the database

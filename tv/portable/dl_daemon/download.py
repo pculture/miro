@@ -321,9 +321,14 @@ class BGDownloader:
         newfilename = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
                 self.shortFilename)
         newfilename = nextFreeFilename(newfilename)
-        shutil.move(self.filename, newfilename)
-        self.filename = newfilename
-        print "new file name is ", self.filename
+        try:
+            shutil.move(self.filename, newfilename)
+        except IOError, error:
+            print "WARNING: Error moving %s to %s (%s)" % (self.filename,
+                                                           newfilename, e)
+        else:
+            self.filename = newfilename
+            print "new file name is ", self.filename
 
     ##
     # Returns a float with the estimated number of seconds left

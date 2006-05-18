@@ -1446,6 +1446,20 @@ def getInitialChanelGuide():
             guideView.endUpdate()
     return channelGuide
 
+# Race conditions:
+
+# if a download finishes downloading during the same session after a
+# migration, the download won't be moved to the new directory because
+# the config hasn't been updated.  Even once we do pass the
+# configuration changes in, there's a race condition if the download
+# finishes before the new config data is passed over.  The fix for
+# this is to always pass the migrate command to remotedownloader.  It
+# can then handle all of that.  Since we never destroy a dlid unless
+# we're deleting the item, we can always tell the downloader to
+# migrate unless we don't have a dlid, in which case we can handle it.
+# I don't see any race conditions in that case.
+
+@eventloop.asIdle
 def changeMoviesDirectory(newDir, migrate):
     oldDir = config.get(prefs.MOVIES_DIRECTORY)
     config.set(prefs.MOVIES_DIRECTORY, newDir)
