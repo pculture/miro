@@ -3,6 +3,7 @@ import xine
 import gtk
 import traceback
 import gobject
+import eventloop
 
 def waitForAttach(func):
     """Many xine calls can't be made until we attach the object to a X window.
@@ -30,7 +31,7 @@ class XineRenderer(app.VideoRenderer):
         self.widget = widget
 
     def onEos(self):
-        app.controller.playbackController.skip(1)
+        eventloop.addIdle(lambda:app.controller.playbackController.skip(1), "onEos: Skip to next track")
 
     def onRealize(self, widget):
         # flush gdk output to ensure that our window is created

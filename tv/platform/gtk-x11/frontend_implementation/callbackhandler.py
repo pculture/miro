@@ -11,6 +11,7 @@ import prefs
 import resource
 import MainFrame
 import singleclick
+import eventloop
 from gettext import gettext as _
  
 def AttachBoolean (widget, descriptor, sensitive_widget = None):
@@ -106,10 +107,10 @@ class CallbackHandler(object):
         self.mainFrame.windowChanger.updatePlayPauseButton()
 
     def on_previous_button_clicked(self, event):
-        self.mainApp.playbackController.skip(-1)
+        eventloop.addIdle(lambda:app.controller.playbackController.skip(-1), "Skip to previous track")
 
     def on_next_button_clicked(self, event):
-        self.mainApp.playbackController.skip(1)
+        eventloop.addIdle(lambda:app.controller.playbackController.skip(1), "Skip to next track")
 
     def on_video_time_scale_button_press_event(self, scale, event):
         scale.buttonsDown.add(event.button)
