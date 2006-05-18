@@ -12,6 +12,7 @@ except:
 
 import app
 import feed
+import prefs
 import config
 import resource
 import template
@@ -168,7 +169,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         # not documented anywhere, so I assume it is not public. It is however 
         # a very clean and easy way to allow us to load our channel guide from
         # https, so let's use it here anyway :)
-        components = urlparse.urlparse(config.get(config.CHANNEL_GUIDE_URL))
+        components = urlparse.urlparse(config.get(prefs.CHANNEL_GUIDE_URL))
         channelGuideHost = components[1]
         NSURLRequest.setAllowsAnyHTTPSCertificate_forHost_(YES, channelGuideHost)
 
@@ -243,7 +244,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         
         if not supported and showError:
             summary = u'Unsupported version of Quicktime'
-            message = u'To run %s you need the most recent version of Quicktime, which is a free update.' % (config.get(config.LONG_APP_NAME), )
+            message = u'To run %s you need the most recent version of Quicktime, which is a free update.' % (config.get(prefs.LONG_APP_NAME), )
             buttons = ('Quit', 'Download Quicktime now')
             quit = showCriticalDialog(summary, message, buttons)
 
@@ -443,7 +444,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         self.saveLayout()
 
     def restoreLayout(self):
-        windowFrame = config.get(config.MAIN_WINDOW_FRAME)
+        windowFrame = config.get(prefs.MAIN_WINDOW_FRAME)
         if windowFrame is None:
             windowFrame = self.window().frame()
         else:
@@ -456,8 +457,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
                 windowFrame = visibleFrame
         self.window().setFrame_display_(windowFrame, NO)
 
-        leftFrame = config.get(config.LEFT_VIEW_SIZE)
-        rightFrame = config.get(config.RIGHT_VIEW_SIZE)
+        leftFrame = config.get(prefs.LEFT_VIEW_SIZE)
+        rightFrame = config.get(prefs.RIGHT_VIEW_SIZE)
         if leftFrame is not None and rightFrame is not None:
            leftFrame = NSRectFromString(leftFrame)
            rightFrame = NSRectFromString(rightFrame)
@@ -473,9 +474,9 @@ class MainController (NibClassBuilder.AutoBaseClass):
         rightFrame = self.splitView.subviews().objectAtIndex_(1).frame()
         rightFrame = NSStringFromRect(rightFrame)
 
-        config.set(config.MAIN_WINDOW_FRAME, windowFrame)
-        config.set(config.LEFT_VIEW_SIZE, leftFrame)
-        config.set(config.RIGHT_VIEW_SIZE, rightFrame)
+        config.set(prefs.MAIN_WINDOW_FRAME, windowFrame)
+        config.set(prefs.LEFT_VIEW_SIZE, leftFrame)
+        config.set(prefs.RIGHT_VIEW_SIZE, rightFrame)
         config.save()
 
     def updateWindowTexture(self):
@@ -668,8 +669,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     def showHelp_(self, sender):
         summary = u'Help for %s will be available soon.' % \
-            (config.get(config.LONG_APP_NAME), )
-        message = u'In the meantime, please visit our homepage for our help FAQ: %s\n\nFor individual user support, please e-mail feedback@ppolitics.org.' % (config.get(config.PROJECT_URL), )
+            (config.get(prefs.LONG_APP_NAME), )
+        message = u'In the meantime, please visit our homepage for our help FAQ: %s\n\nFor individual user support, please e-mail feedback@ppolitics.org.' % (config.get(prefs.PROJECT_URL), )
         showInformationalDialog(summary, message)
 
     itemsAlwaysAvailable = ('addChannel:', 'showHelp:', 'updateAllChannels:')
@@ -814,12 +815,12 @@ class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
 class GeneralPrefsController (NibClassBuilder.AutoBaseClass):
     
     def awakeFromNib(self):
-        run = config.get(config.RUN_DTV_AT_STARTUP)
+        run = config.get(prefs.RUN_DTV_AT_STARTUP)
         self.runAtStartupCheckBox.setState_(run and NSOnState or NSOffState)
     
     def runAtStartup_(self, sender):
         run = (sender.state() == NSOnState)
-        config.set(config.RUN_DTV_AT_STARTUP, run)
+        config.set(prefs.RUN_DTV_AT_STARTUP, run)
 
         defaults = NSUserDefaults.standardUserDefaults()
         lwdomain = defaults.persistentDomainForName_('loginwindow')
@@ -845,33 +846,33 @@ class GeneralPrefsController (NibClassBuilder.AutoBaseClass):
 class ChannelsPrefsController (NibClassBuilder.AutoBaseClass):
 
     def awakeFromNib(self):
-        minutes = config.get(config.CHECK_CHANNELS_EVERY_X_MN)
+        minutes = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)
         itemIndex = self.periodicityPopup.indexOfItemWithTag_(minutes)
         self.periodicityPopup.selectItemAtIndex_(itemIndex)
 
     def checkEvery_(self, sender):
         minutes = sender.selectedItem().tag()
-        config.set(config.CHECK_CHANNELS_EVERY_X_MN, minutes)
+        config.set(prefs.CHECK_CHANNELS_EVERY_X_MN, minutes)
 
 class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
     
     def awakeFromNib(self):
-        moviesDirPath = config.get(config.MOVIES_DIRECTORY)
+        moviesDirPath = config.get(prefs.MOVIES_DIRECTORY)
         self.moviesDirectoryField.setStringValue_(moviesDirPath)
-        limit = config.get(config.LIMIT_UPSTREAM)
+        limit = config.get(prefs.LIMIT_UPSTREAM)
         self.limitUpstreamCheckBox.setState_(limit and NSOnState or NSOffState)
         self.limitValueField.setEnabled_(limit)
-        self.limitValueField.setIntValue_(config.get(config.UPSTREAM_LIMIT_IN_KBS))
+        self.limitValueField.setIntValue_(config.get(prefs.UPSTREAM_LIMIT_IN_KBS))
     
     def limitUpstream_(self, sender):
         limit = (sender.state() == NSOnState)
         self.limitValueField.setEnabled_(limit)
-        config.set(config.LIMIT_UPSTREAM, limit)
+        config.set(prefs.LIMIT_UPSTREAM, limit)
         self.setUpstreamLimit_(self.limitValueField)
     
     def setUpstreamLimit_(self, sender):
         limit = sender.floatValue()
-        config.set(config.UPSTREAM_LIMIT_IN_KBS, limit)
+        config.set(prefs.UPSTREAM_LIMIT_IN_KBS, limit)
         
     def changeMoviesDirectory_(self):
         panel = NSOpenPanel.openPanel()
@@ -900,27 +901,27 @@ class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
 class DiskSpacePrefsController (NibClassBuilder.AutoBaseClass):
     
     def awakeFromNib(self):
-        preserve = config.get(config.PRESERVE_DISK_SPACE)
+        preserve = config.get(prefs.PRESERVE_DISK_SPACE)
         self.preserveSpaceCheckBox.setState_(preserve and NSOnState or NSOffState)
         self.minimumSpaceField.setEnabled_(preserve)
-        self.minimumSpaceField.setIntValue_(config.get(config.PRESERVE_X_GB_FREE))
-        itemTag = int(config.get(config.EXPIRE_AFTER_X_DAYS) * 24)
+        self.minimumSpaceField.setIntValue_(config.get(prefs.PRESERVE_X_GB_FREE))
+        itemTag = int(config.get(prefs.EXPIRE_AFTER_X_DAYS) * 24)
         itemIndex = self.expirationDelayPopupButton.indexOfItemWithTag_(itemTag)
         self.expirationDelayPopupButton.selectItemAtIndex_(itemIndex)
     
     def preserveDiskSpace_(self, sender):
         preserve = (sender.state() == NSOnState)
         self.minimumSpaceField.setEnabled_(preserve)
-        config.set(config.PRESERVE_DISK_SPACE, preserve)
+        config.set(prefs.PRESERVE_DISK_SPACE, preserve)
         self.setMinimumSpace_(self.minimumSpaceField)
     
     def setMinimumSpace_(self, sender):
         space = sender.floatValue()
-        config.set(config.PRESERVE_X_GB_FREE, space)
+        config.set(prefs.PRESERVE_X_GB_FREE, space)
         
     def setExpirationDelay_(self, sender):
         delay = sender.selectedItem().tag()
-        config.set(config.EXPIRE_AFTER_X_DAYS, delay / 24.0)
+        config.set(prefs.EXPIRE_AFTER_X_DAYS, delay / 24.0)
 
 
 ###############################################################################
@@ -955,30 +956,30 @@ class UIBackendDelegate:
         scraped for links instead. Returns True if the user gives
         permission, or False if not."""
         summary = u"Channel is not compatible with %s!" % \
-            (config.get(config.SHORT_APP_NAME), )
-        message = u"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.\n\nPlease contact the publishers of %s and ask if they can supply a feed in a format that will work with %s." % (url, config.get(config.SHORT_APP_NAME), )
+            (config.get(prefs.SHORT_APP_NAME), )
+        message = u"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.\n\nPlease contact the publishers of %s and ask if they can supply a feed in a format that will work with %s." % (url, config.get(prefs.SHORT_APP_NAME), )
         buttons = (u'Continue',)
         return showWarningDialog(summary, message, buttons)
 
     def updateAvailable(self, url):
         """Tell the user that an update is available and ask them if they'd
         like to download it now"""
-        summary = "%s Version Alert" % (config.get(config.SHORT_APP_NAME), )
-        message = "A new version of %s is available. Would you like to download it now?" % (config.get(config.LONG_APP_NAME), )
+        summary = "%s Version Alert" % (config.get(prefs.SHORT_APP_NAME), )
+        message = "A new version of %s is available. Would you like to download it now?" % (config.get(prefs.LONG_APP_NAME), )
         buttons = (u'Download', u'Cancel')
         download = showInformationalDialog(summary, message, buttons)
         if download:
             self.openExternalURL(url)
 
     def dtvIsUpToDate(self):
-        summary = u'%s Version Check' % (config.get(config.SHORT_APP_NAME), )
-        message = u'%s is up to date.' % (config.get(config.LONG_APP_NAME), )
+        summary = u'%s Version Check' % (config.get(prefs.SHORT_APP_NAME), )
+        message = u'%s is up to date.' % (config.get(prefs.LONG_APP_NAME), )
         showInformationalDialog(summary, message)
 
     def saveFailed(self, reason):
         summary = u'%s database save failed' % \
-            (config.get(config.SHORT_APP_NAME), )
-        message = u"%s was unable to save its database.\nRecent changes may be lost\n\n%s" % (config.get(config.LONG_APP_NAME), reason)
+            (config.get(prefs.SHORT_APP_NAME), )
+        message = u"%s was unable to save its database.\nRecent changes may be lost\n\n%s" % (config.get(prefs.LONG_APP_NAME), reason)
         buttons = (u'Continue',)
         return showCriticalDialog(summary, message, buttons)
 
@@ -1457,9 +1458,9 @@ class NullDisplay (app.Display):
         # NEEDS: take (and leak) a covering reference -- cargo cult programming
         self.view = WebView.alloc().init().retain()
         self.view.setCustomUserAgent_("%s/%s (%s)" % \
-                                      (config.get(config.SHORT_APP_NAME),
-                                       config.get(config.APP_VERSION),
-                                       config.get(config.PROJECT_URL),))
+                                      (config.get(prefs.SHORT_APP_NAME),
+                                       config.get(prefs.APP_VERSION),
+                                       config.get(prefs.PROJECT_URL),))
         app.Display.__init__(self)
         del pool
 
@@ -1585,9 +1586,9 @@ class ManagedWebView (NSObject):
                 # of having to be corrected after being displayed.
                 self.view.setFrame_(sizeHint)
             self.view.setCustomUserAgent_("%s/%s (%s)" % \
-                                          (config.get(config.SHORT_APP_NAME),
-                                           config.get(config.APP_VERSION),
-                                           config.get(config.PROJECT_URL),))
+                                          (config.get(prefs.SHORT_APP_NAME),
+                                           config.get(prefs.APP_VERSION),
+                                           config.get(prefs.PROJECT_URL),))
         else:
             #print "***** Using existing WebView %s" % self.view
             if sizeHint:

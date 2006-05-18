@@ -4,6 +4,7 @@ from PyObjCTools import Conversion
 import os
 
 import util
+import prefs
 import config
 import resource
 
@@ -26,7 +27,7 @@ def get(descriptor):
     value = None
 
     if descriptor == config.MOVIES_DIRECTORY:
-        path = os.path.join(MOVIES_DIRECTORY_PARENT, config.get(config.SHORT_APP_NAME))
+        path = os.path.join(MOVIES_DIRECTORY_PARENT, config.get(prefs.SHORT_APP_NAME))
         try:
             os.makedirs(os.path.join(path,'Incomplete Downloads'))
         except:
@@ -34,7 +35,7 @@ def get(descriptor):
         value = path
 
     elif descriptor == config.SUPPORT_DIRECTORY:
-        path = os.path.join(SUPPORT_DIRECTORY_PARENT, config.get(config.SHORT_APP_NAME))
+        path = os.path.join(SUPPORT_DIRECTORY_PARENT, config.get(prefs.SHORT_APP_NAME))
         os.environ['APPDATA'] = path # This is for the Bittorent module
         try:
             os.makedirs(path)
@@ -43,17 +44,17 @@ def get(descriptor):
         value = path
 
     elif descriptor == config.ICON_CACHE_DIRECTORY:
-        path = get(config.SUPPORT_DIRECTORY)
+        path = get(prefs.SUPPORT_DIRECTORY)
         path = os.path.join(path, 'icon-cache')
         value = path
     
     elif descriptor == config.DB_PATHNAME:
-        path = get(config.SUPPORT_DIRECTORY)
+        path = get(prefs.SUPPORT_DIRECTORY)
         path = os.path.join(path, 'tvdump')
         value = path
 
     elif descriptor == config.LOG_PATHNAME:
-        path = get(config.SUPPORT_DIRECTORY)
+        path = get(prefs.SUPPORT_DIRECTORY)
         path = os.path.join(path, 'log')
         value = path
     

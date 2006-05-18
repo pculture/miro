@@ -1,5 +1,6 @@
 import os
 import objc
+import prefs
 import config
 from Foundation import *
 
@@ -17,5 +18,5 @@ def iconCacheUrl(relative_path):
     """Like url, but for icon cache files.  These probably don't live in the
     resources directory because we need write access to them.
     """
-    iconCacheDir = config.get(config.ICON_CACHE_DIRECTORY)
+    iconCacheDir = config.get(prefs.ICON_CACHE_DIRECTORY)
     return "file://%s" % os.path.join(iconCacheDir, relative_path)
