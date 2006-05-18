@@ -485,21 +485,11 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         print "  compiling '%s' subtemplate" % name
         (tcc, handle) = compileTemplate(name, False, True)
         self.handle.addSubHandle(handle)
-        if self.hiding:
-            self.hidingList[-1].extend(tcc.getOperationList())
-        elif self.inRepeatView or self.inUpdateView:
-            self.repeatList.extend(tcc.getOperationList())
-        else:
-            self.outputList.extend(tcc.getOperationList())
+        self.addInstructions(tcc.getOperationList())
 
     def addIdAndClose(self):
         self.endText()
-        if self.hiding:
-            self.hidingList[-1].append((genRepeatAddIdAndClose,None))
-        elif self.inRepeatView or self.inUpdateView:
-            self.repeatList.append((genRepeatAddIdAndClose,None))
-        else:
-            self.outputList.append((genRepeatAddIdAndClose,None))
+        self.addInstruction(genRepeatAddIdAndClose,None)
 
     def resetRepeat(self):
         self.repeatList = []
@@ -518,12 +508,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         funcList = self.hidingList.pop()
         self.hideDepth.pop()
         self.hiding = len(self.hidingList) > 0
-        if self.hiding:
-            self.hidingList[-1].append((genHideSection, (ifValue, funcList)))
-        elif self.inRepeatView or self.inUpdateView:
-            self.repeatList.append((genHideSection, (ifValue, funcList)))
-        else:
-            self.outputList.append((genHideSection, (ifValue, funcList)))
+        self.addInstruction(genHideSection, (ifValue, funcList))
 
     def addText(self, text):
         if self.inRepeatView or self.inUpdateView:
@@ -532,15 +517,8 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             self.outputText.append( text)
 
     def addTextHide(self,ifValue,text):
-        if self.inRepeatView or self.inUpdateView:
-            self.endText()
-            if self.hiding:
-                self.hidingList[-1].append((genRepeatTextHide,(ifValue,text)))
-            else:
-                self.repeatList.append((genRepeatTextHide,(ifValue,text)))
-        else:
-            self.endText()
-            self.outputList.append((genRepeatTextHide,(ifValue,text)))
+        self.endText()
+        self.addInstruction(genRepeatTextHide,(ifValue,text))
 
     def addTextEscape(self, text):
         if self.inRepeatView or self.inUpdateView:
@@ -550,10 +528,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
 
     def addUpdateHideOnView(self, viewName, name, ifValue, attrs):
         self.endText()
-        if self.hiding:
-            self.hidingList[-1].append( (genUpdateHideOnView,(viewName, name, ifValue, attrs)))
-        else:
-            self.outputList.append( (genUpdateHideOnView,(viewName, name, ifValue, attrs)))
+        self.addInstruction(genUpdateHideOnView,(viewName, name, ifValue, attrs))
 
     def addAttr(self, attr, value):
         match = attrPattern.match(value)
@@ -562,12 +537,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             while match:
                 self.addText(quoteattr(match.group(1)))
                 self.endText()
-                if self.hiding:
-                    self.hidingList[-1].append((genQuoteAttr,match.group(2)))
-                elif self.inRepeatView or self.inUpdateView:
-                    self.repeatList.append((genQuoteAttr,match.group(2)))
-                else:
-                    self.outputList.append((genQuoteAttr,match.group(2)))
+                self.addInstruction(genQuoteAttr,match.group(2))
                 value = match.group(3)
                 match = attrPattern.match(value)
             self.addText('%s"' % quoteattr(value))
@@ -578,12 +548,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                 while match:
                     self.addText(quoteattr(match.group(1)))
                     self.endText()
-                    if self.hiding:
-                        self.hidingList[-1].append((genRawAttr,match.group(2)))
-                    elif self.inRepeatView or self.inUpdateView:
-                        self.repeatList.append((genRawAttr,match.group(2)))
-                    else:
-                        self.outputList.append((genRawAttr,match.group(2)))
+                    self.addInstruction(genRawAttr,match.group(2))
                     value = match.group(3)
                     match = rawAttrPattern.match(value)
                 self.addText('%s"' % quoteattr(value))
@@ -592,50 +557,44 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                 match = resourcePattern.match(value)
                 if match:
                     self.endText()
-                    if self.hiding:
-                        self.hidingList[-1].append((genRepeatEval,'resource.url(%s)'%repr(match.group(1))))
-                    elif self.inRepeatView or self.inUpdateView:
-                        self.repeatList.append((genRepeatEval,'resource.url(%s)'%repr(match.group(1))))
-                    else:
-                        self.outputList.append((genRepeatEval,'resource.url(%s)'%repr(match.group(1))))
+                    self.addInstruction(genRepeatEval,'resource.url(%s)'%repr(match.group(1)))
                 else:
                     self.addText(quoteattr(value))
                 self.addText('"')
 
     def addEval(self,replace):
         self.endText()
-        if self.hiding:
-            self.hidingList[-1].append((genRepeatEval,replace))
-        elif self.inRepeatView or self.inUpdateView:
-            self.repeatList.append((genRepeatEval,replace))
-        else:
-            self.outputList.append((genRepeatEval,replace))
+        self.addInstruction(genRepeatEval,replace)
 
     def addEvalEscape(self,replace):
         self.endText()
-        if self.hiding:
-            self.hidingList[-1].append((genRepeatEvalEscape,replace))
-        elif self.inRepeatView or self.inUpdateView:
-            self.repeatList.append((genRepeatEvalEscape,replace))
-        else:
-            self.outputList.append((genRepeatEvalEscape,replace))
+        self.addInstruction(genRepeatEvalEscape, replace)
 
     def endText(self):
         if self.inRepeatView or self.inUpdateView:
             if len(self.repeatText) > 0:
-                if self.hiding:
-                    self.hidingList[-1].append((genRepeatText,''.join(self.repeatText)))
-                else:
-                    self.repeatList.append((genRepeatText,''.join(self.repeatText)))
+                self.addInstruction(genRepeatText,''.join(self.repeatText))
             self.repeatText = []
         else:
             if len(self.outputText) > 0:
-                if self.hiding:
-                    self.hidingList[-1].append((genRepeatText,''.join(self.outputText)))
-                else:
-                    self.outputList.append((genRepeatText,''.join(self.outputText)))
+                self.addInstruction(genRepeatText,''.join(self.outputText))
             self.outputText = []
 
+    def addInstruction(self, instruction, args):
+        if self.hiding:
+            self.hidingList[-1].append((instruction,args))
+        elif self.inRepeatView or self.inUpdateView:
+            self.repeatList.append((instruction,args))
+        else:
+            self.outputList.append((instruction,args))
+        
+    def addInstructions(self, instructions):
+        if self.hiding:
+            self.hidingList[-1].extend(instructions)
+        elif self.inRepeatView or self.inUpdateView:
+            self.repeatList.extend(instructions)
+        else:
+            self.outputList.extend(instructions)
 
 
 ###############################################################################
