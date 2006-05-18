@@ -446,7 +446,6 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.addText(html)
 
     def addFillTemplate(self, name):
-        self.endText()
         print "  compiling '%s' subtemplate" % name
         (tcc, handle) = compileTemplate(name, False, True)
         self.handle.addSubHandle(handle)
@@ -454,7 +453,6 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
 
     def addIdAndClose(self):
         self.addText(' id="')
-        self.endText()
         self.addInstruction(genRepeatTID,None)
         self.addText('">')
 
@@ -484,7 +482,6 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             self.outputText.append( text)
 
     def addTextHide(self,ifValue,text):
-        self.endText()
         self.addInstruction(genRepeatTextHide,(ifValue,text))
 
     def addTextEscape(self, text):
@@ -499,10 +496,8 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         for key in attrs.keys():
             if not key in ['t:hideIf','t:updateHideOnView','style']:
                 self.addText(" %s=" % key)
-                self.endText()
                 self.addInstruction(genQuoteAndFill, attrs[key])
         self.addText(' id="%s"' % quoteattr(nodeId))
-        self.endText()
         self.addInstruction(genUpdateHideOnView,(viewName, ifValue, attrs, nodeId))
 
     def addAttr(self, attr, value):
@@ -511,7 +506,6 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             self.addText(' %s="' % attr)
             while match:
                 self.addText(quoteattr(match.group(1)))
-                self.endText()
                 self.addInstruction(genQuoteAttr,match.group(2))
                 value = match.group(3)
                 match = attrPattern.match(value)
@@ -522,7 +516,6 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                 self.addText(' %s="' % attr)
                 while match:
                     self.addText(quoteattr(match.group(1)))
-                    self.endText()
                     self.addInstruction(genRawAttr,match.group(2))
                     value = match.group(3)
                     match = rawAttrPattern.match(value)
@@ -531,18 +524,15 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                 self.addText(' %s="' % attr)
                 match = resourcePattern.match(value)
                 if match:
-                    self.endText()
                     self.addInstruction(genRepeatEval,'resource.url(%s)'%repr(match.group(1)))
                 else:
                     self.addText(quoteattr(value))
                 self.addText('"')
 
     def addEval(self,replace):
-        self.endText()
         self.addInstruction(genRepeatEval,replace)
 
     def addEvalEscape(self,replace):
-        self.endText()
         self.addInstruction(genRepeatEvalEscape, replace)
 
     def endText(self):
@@ -556,6 +546,8 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             self.outputText = []
 
     def addInstruction(self, instruction, args):
+        if instruction != genRepeatText:
+            self.endText()
         if self.hiding:
             self.hidingList[-1].append((instruction,args))
         elif self.inRepeatView or self.inUpdateView:
@@ -564,13 +556,9 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             self.outputList.append((instruction,args))
         
     def addInstructions(self, instructions):
-        if self.hiding:
-            self.hidingList[-1].extend(instructions)
-        elif self.inRepeatView or self.inUpdateView:
-            self.repeatList.extend(instructions)
-        else:
-            self.outputList.extend(instructions)
-
+        self.endText()
+        for (ins, arg) in instructions:
+            self.addInstruction(ins, arg)
 
 ###############################################################################
 #### Generating Javascript callbacks to keep document updated              ####
