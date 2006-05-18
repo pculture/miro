@@ -157,7 +157,7 @@ class CallbackHandler(object):
             chooser.set_current_folder(CallbackHandler.current_folder)
         if chooser.run() == gtk.RESPONSE_ACCEPT:
             files = chooser.get_filenames()
-            singleclick.parseCommandLineArgs (files)
+            eventloop.addIdle(lambda:singleclick.parseCommandLineArgs (files), "Open Files")
         CallbackHandler.current_folder = chooser.get_current_folder()
         chooser.destroy()
             
