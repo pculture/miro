@@ -973,14 +973,15 @@ class FileItem(Item):
     def migrate(self, newDir):
         self.beginChange()
         try:
-            newFilename = os.path.join(newDir, os.path.basename(self.filename))
-            try:
-                shutil.move(self.filename, newFilename)
-            except IOError, e:
-                print "WARNING: Error moving %s to %s (%s)" % (self.filename,
-                        newFilename, e)
-            else:
-                self.filename = newFilename
+            if os.path.exists(self.filename):
+                newFilename = os.path.join(newDir, os.path.basename(self.filename))
+                try:
+                    shutil.move(self.filename, newFilename)
+                except IOError, e:
+                    print "WARNING: Error moving %s to %s (%s)" % (self.filename,
+                            newFilename, e)
+                else:
+                    self.filename = newFilename
         finally:
              self.endChange()
 

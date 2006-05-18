@@ -205,16 +205,17 @@ URL was %s""" % self.url
 WARNING: can't migrate download because we don't have a filename!
 URL was %s""" % self.url
                 return
-            newfilename = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
-                    shortFilename)
-            newfilename = nextFreeFilename(newfilename)
-            try:
-                shutil.move(filename, newfilename)
-            except IOError, error:
-                print "WARNING: Error moving %s to %s (%s)" % (self.status['filename'],
-                        newfilename, error)
-            else:
-                self.status['filename'] = newfilename
+            if os.path.exists(filename):
+                newfilename = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
+                        shortFilename)
+                newfilename = nextFreeFilename(newfilename)
+                try:
+                    shutil.move(filename, newfilename)
+                except IOError, error:
+                    print "WARNING: Error moving %s to %s (%s)" % (self.status['filename'],
+                            newfilename, error)
+                else:
+                    self.status['filename'] = newfilename
 
     ##
     # Removes downloader from the database
