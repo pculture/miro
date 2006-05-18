@@ -33,6 +33,9 @@ class EventLoopTest(unittest.TestCase):
         else:
             timeout.cancel()
 
+    def processIdles(self):
+        eventloop._eventLoop.idleQueue.processIdles()
+
 class SchedulerTest(EventLoopTest):
     def setUp(self):
         self.gotArgs = []

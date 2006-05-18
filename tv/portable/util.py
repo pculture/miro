@@ -22,6 +22,27 @@ def quoteJS(x):
     x = x.replace("\r", "\\r")  # CR      -> \r
     return x
 
+def getNiceStack(tb=None):
+    """Get a stack trace that's a easier to read that the full one.  """
+    stack = traceback.extract_stack()
+    # We don't care about the unit test lines
+    while (len(stack) > 0 and
+        os.path.basename(stack[0][0]) == 'unittest.py' or 
+        (isinstance(stack[0][3], str) and 
+            stack[0][3].startswith('unittest.main'))):
+        stack = stack[1:]
+    # remove after the call to util.failed
+    for i in xrange(len(stack)):
+        if (os.path.basename(stack[i][0]) == 'util.py' and 
+                stack[i][2] in ('failed', 'failedExn')):
+            stack = stack[:i]
+            break
+    if traceback:
+        stack += tb
+    # remove trapCall calls
+    stack = [i for i in stack if i[2] != 'trapCall']
+    return stack
+
 # Parse a configuration file in a very simple format. Each line is
 # either whitespace or "Key = Value". Whitespace is ignored at the
 # beginning of Value, but the remainder of the line is taken
@@ -126,16 +147,18 @@ def failed(when, withExn = False, details = None):
 
     if withExn:
         header += "Exception\n---------\n"
-        if details:
-            header += "Details: %s" % (details, )
-        header += traceback.format_exc()
+        exc_info = sys.exc_info()
+        header += ''.join(traceback.format_exception_only(exc_info[0],
+            exc_info[1]))
         header += "\n"
+        tb = traceback.extract_tb(exc_info[2])
     else:
-        header += "Call stack\n----------\n"
-        if details:
-            header += "Details: %s" % (details, )
-        header += ''.join(traceback.format_stack())
-        header += "\n"
+        tb = None
+    if details:
+        header += "Details: %s" % (details, )
+    header += "Call stack\n----------\n"
+    header += ''.join(traceback.format_list(getNiceStack(tb)))
+    header += "\n"
 
     header += "Threads\n-------\n"
     header += "Current: %s\n" % threading.currentThread().getName()

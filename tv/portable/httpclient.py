@@ -351,10 +351,6 @@ class ConnectionHandler(object):
         self.readHandler = self.states[newState]
         self.state = newState
         self.updateReadCallback()
-        # there may be extra data that the last read handler didn't pay
-        # attention to, invoke the new readHandler now
-        if self.readHandler is not None:
-            self.readHandler()
 
     def updateReadCallback(self):
         if self.readHandler is not None:
@@ -367,7 +363,13 @@ class ConnectionHandler(object):
 
     def handleData(self, data):
         self.buffer.addData(data)
+        lastState = self.state
         self.readHandler()
+        # If we switch states, continue processing the buffer.  There may be
+        # extra data that the last read handler didn't read in
+        while self.readHandler is not None and lastState != self.state:
+            lastState = self.state
+            self.readHandler()
 
     def closeCallback(self, stream, type):
         self.handleClose(type)
@@ -414,6 +416,7 @@ class HTTPConnection(ConnectionHandler):
         self.states['response-body'] = self.onBodyData
         self.states['chunk-size'] = self.onChunkSizeData
         self.states['chunk-data'] = self.onChunkData
+        self.states['chunk-crlf'] = self.onChunkCRLFData
         self.states['chunk-trailer'] = self.onChunkTrailerData
         self.changeState('ready')
         self.idleSince = clock()
@@ -422,6 +425,7 @@ class HTTPConnection(ConnectionHandler):
         self.closeCallback = closeCallback
         self.readyCallback = readyCallback
         self.sentReadyCallback = False
+        self.headerCallback = self.bodyDataCallback = None
 
     def closeConnection(self):
         super(HTTPConnection, self).closeConnection()
@@ -434,8 +438,27 @@ class HTTPConnection(ConnectionHandler):
                 (self.state != 'closed' and self.pipelinedRequest is None and
                     not self.willClose))
 
-    def sendRequest(self, callback, errback, method="GET", path='/',
-            headers=None):
+    def sendRequest(self, callback, errback, headerCallback=None,
+            bodyDataCallback = None, method="GET", path='/', headers=None):
+        """Sending an HTTP Request.  callback will be called if the request
+        completes normally, errback will be called if there is a network
+        error.
+
+        Callback will be passed a dictionary that represents the HTTP
+        response,  it will have an entry for each header sent by the server as
+        well as as the following keys:
+            body, version, status, reason, method, path, host, port
+        They should be self explanatory, status and port will be integers, the
+        other items will be strings.
+
+        If headerCallback is given, it will be called when the headers are
+        read in.  It will be passed a response object whose body is set to
+        None.
+
+        If bodyDataCallback is given it will be called as we read in the data
+        for the body.  Also, the connection won't store the body in memory,
+        and the callback is called, it will be passed None for the body.
+        """
 
         if not self.canSendRequest():
             raise NotReadyToSendError()
@@ -448,12 +471,15 @@ class HTTPConnection(ConnectionHandler):
         headers['Accept-Encoding'] = 'identity'
 
         self.sendRequestData(method, path, headers)
+        args = (callback, errback, headerCallback, bodyDataCallback, method,
+                path, headers)
         if self.state == 'ready':
-            self.startNewRequest(callback, errback, method, path, headers)
+            self.startNewRequest(*args)
         else:
-            self.pipelinedRequest = (callback, errback, method, path, headers)
+            self.pipelinedRequest = args
 
-    def startNewRequest(self, callback, errback, method, path, headers):
+    def startNewRequest(self, callback, errback, headerCallback,
+            bodyDataCallback, method, path, headers):
         """Called when we're ready to start processing a new request, either
         because one has just been made, or because we've pipelined one, and
         the previous request is done.
@@ -461,6 +487,8 @@ class HTTPConnection(ConnectionHandler):
 
         self.callback = callback
         self.errback = errback
+        self.headerCallback = headerCallback
+        self.bodyDataCallback = bodyDataCallback
         self.method = method
         self.path = path
         self.requestHeaders = headers
@@ -500,7 +528,20 @@ class HTTPConnection(ConnectionHandler):
             self.handleHeaderLine(line)
         
     def onBodyData(self):
-        if (self.contentLength is not None and 
+        if self.bodyDataCallback:
+            if self.contentLength is None:
+                data = self.buffer.read()
+            else:
+                bytesLeft = self.contentLength - self.bodyBytesRead
+                data = self.buffer.read(bytesLeft)
+            if data == '':
+                return
+            self.bodyBytesRead += len(data)
+            trapCall(self.bodyDataCallback, data)
+            if (self.contentLength is not None and 
+                    self.bodyBytesRead == self.contentLength):
+                self.finishRequest()
+        elif (self.contentLength is not None and 
                 self.buffer.length >= self.contentLength):
             self.body = self.buffer.read(self.contentLength)
             self.finishRequest()
@@ -515,17 +556,32 @@ class HTTPConnection(ConnectionHandler):
                 self.handleError(BadChunkSize(line))
                 return
             if self.chunkSize != 0:
+                self.chunkBytesRead = 0
                 self.changeState('chunk-data')
             else:
                 self.changeState('chunk-trailer')
 
     def onChunkData(self):
-        if self.buffer.length >= self.chunkSize + 2:
+        if self.bodyDataCallback:
+            bytesLeft = self.chunkSize - self.chunkBytesRead
+            data = self.buffer.read(bytesLeft)
+            self.chunkBytesRead += len(data)
+            if data == '':
+                return
+            trapCall(self.bodyDataCallback, data)
+            if self.chunkBytesRead == self.chunkSize:
+                self.changeState('chunk-crlf')
+        elif self.buffer.length >= self.chunkSize:
             self.chunks.append(self.buffer.read(self.chunkSize))
+            self.changeState('chunk-crlf')
+
+    def onChunkCRLFData(self):
+        if self.buffer.length >= 2:
             crlf = self.buffer.read(2)
             if crlf != "\r\n":
                 self.handleError(CRLFExpected(crlf))
-            self.changeState('chunk-size')
+            else:
+                self.changeState('chunk-size')
 
     def onChunkTrailerData(self):
         # discard all trailers, we shouldn't have any
@@ -608,10 +664,14 @@ class HTTPConnection(ConnectionHandler):
             self.headers[header] += (',%s' % value)
 
     def startBody(self):
+        if self.headerCallback:
+            trapCall(self.headerCallback, self.makeResponse())
         if ((100 <= self.status <= 199) or self.status in (204, 304) or
                 self.method == 'HEAD'):
             self.finishRequest()
         else:
+            if self.bodyDataCallback:
+                self.bodyBytesRead = 0
             self.findExpectedLength()
             self.checkChunked()
             self.decideWillClose()
@@ -651,7 +711,9 @@ class HTTPConnection(ConnectionHandler):
             self.willClose = False
 
     def finishRequest(self):
-        if self.chunked:
+        if self.bodyDataCallback:
+            body = None
+        elif self.chunked:
             body = ''.join(self.chunks)
         else:
             body = self.body
@@ -667,13 +729,16 @@ class HTTPConnection(ConnectionHandler):
                 self.changeState('ready')
                 self.idleSince = clock()
 
+        trapCall(self.callback, self.makeResponse(body))
+        self.maybeSendReadyCallback()
+
+    def makeResponse(self, body=None):
         response = self.headers
         response['body'] = body
         for key in ('version', 'status', 'reason', 'method', 'path', 'host',
                 'port'):
             response[key] = getattr(self, key)
-        trapCall(self.callback, response)
-        self.maybeSendReadyCallback()
+        return response
 
     def maybeSendReadyCallback(self):
         if (self.readyCallback and self.canSendRequest() and not
@@ -690,7 +755,7 @@ class HTTPConnection(ConnectionHandler):
         else:
             self.errback(ServerClosedConnection())
         if self.pipelinedRequest is not None:
-            (callback, errback, method, path, headers) = self.pipelinedRequest
+            errback = self.pipelinedRequest[1]
             trapCall(errback, PipelinedRequestNeverStarted())
 
     def handleError(self, error):
@@ -793,7 +858,8 @@ class HTTPConnectionPool(object):
         self.freeConnectionCount += 1
         self.runPendingRequests()
 
-    def addRequest(self, callback, errback, url, method, headers):
+    def addRequest(self, callback, errback, headerCallback, bodyDataCallback,
+            url, method, headers):
         """Add a request to be run.  The request will run immediately if we
         have a free connection, otherwise it will be queued.
         """
@@ -802,6 +868,8 @@ class HTTPConnectionPool(object):
         req = {
             'callback' : callback,
             'errback': errback,
+            'headerCallback': headerCallback,
+            'bodyDataCallback': bodyDataCallback,
             'scheme': scheme,
             'host': host,
             'port': port,
@@ -827,6 +895,7 @@ class HTTPConnectionPool(object):
                 conn = conns['free'].pop()
                 self.freeConnectionCount -= 1
                 conn.sendRequest(req['callback'], req['errback'],
+                        req['headerCallback'], req['bodyDataCallback'],
                         req['method'], req['path'], req['headers'])
             else:
                 conn = self._makeNewConnection(req)
@@ -840,6 +909,7 @@ class HTTPConnectionPool(object):
     def _makeNewConnection(self, req):
         def openConnectionCallback(conn):
             conn.sendRequest(req['callback'], req['errback'],
+                    req['headerCallback'], req['bodyDataCallback'],
                     req['method'], req['path'], req['headers'])
         def openConnectionErrback(error):
             conns = self._getServerConnections(req['scheme'], req['host'], 
@@ -899,11 +969,14 @@ class HTTPClient(object):
     MAX_REDIRECTS = 10
     MAX_AUTH_ATTEMPS = 5
 
-    def __init__(self, url, callback, errback, method="GET", start=0,
-            etag=None, modified=None, findHTTPAuth=None):
+    def __init__(self, url, callback, errback, headerCallback=None,
+            bodyDataCallback=None, method="GET", start=0, etag=None,
+            modified=None, findHTTPAuth=None):
         self.url = url
         self.callback = callback
         self.errback = errback
+        self.headerCallback = headerCallback
+        self.bodyDataCallback = bodyDataCallback
         self.method = method
         self.start = start
         self.etag = etag
@@ -943,8 +1016,15 @@ class HTTPClient(object):
             self.headers["Authorization"] = authHeader
 
     def startRequest(self):
+        if self.bodyDataCallback is not None:
+            bodyDataCallback = self.onBodyData
+        else:
+            bodyDataCallback = None
         self.connectionPool.addRequest(self.callbackIntercept,
-                self.errbackIntercept, self.url, self.method, self.headers)
+                self.errbackIntercept, self.onHeaders,
+                bodyDataCallback, self.url, self.method,
+                self.headers)
+        self.willHandleResponse = False
 
     def callbackIntercept(self, response):
         if self.shouldRedirect(response):
@@ -954,6 +1034,25 @@ class HTTPClient(object):
         else:
             response = self.prepareResponse(response)
             trapCall(self.callback, response)
+
+    def errbackIntercept(self, error):
+        if isinstance(error, PipelinedRequestNeverStarted):
+            # Connection closed before our pipelined reuest started.  RFC
+            # 2616 says we should retry
+            self.startRequest() 
+            # this should give us a new connection, since our last one closed
+            return
+        trapCall(self.errback, error)
+
+    def onHeaders(self, response):
+        if self.shouldRedirect(response) or self.shouldAuthorize(response):
+            self.willHandleResponse = True
+        elif self.headerCallback is not None:
+            self.headerCallback(response)
+
+    def onBodyData(self, data):
+        if not self.willHandleResponse and self.bodyDataCallback:
+            self.bodyDataCallback(data)
 
     def prepareResponse(self, response):
         response['original-url'] = self.originalURL
@@ -1003,15 +1102,6 @@ class HTTPClient(object):
                 return charset
         return 'iso-8859-1'
 
-    def errbackIntercept(self, error):
-        if isinstance(error, PipelinedRequestNeverStarted):
-            # Connection closed before our pipelined reuest started.  RFC
-            # 2616 says we should retry
-            self.startRequest() 
-            # this should give us a new connection, since our last one closed
-            return
-        trapCall(self.errback, error)
-
     def shouldRedirect(self, response):
         return (response['status'] in (301, 302, 303, 307) and 
                 self.depth < self.MAX_REDIRECTS and 
@@ -1057,9 +1147,11 @@ class HTTPClient(object):
         else:
             trapCall(self.errback, AuthorizationFailed())
 
-def grabURL(url, callback, errback, method="GET", start=0, etag=None,
+def grabURL(url, callback, errback, bodyDataCallback=None,
+        headerCallback=None, method="GET", start=0, etag=None,
         modified=None, findHTTPAuth=None):
-    client = HTTPClient(url, callback, errback, method, start, etag, modified,
+    client = HTTPClient(url, callback, errback, headerCallback,
+            bodyDataCallback, method, start, etag, modified,
             findHTTPAuth)
     client.startRequest()
 

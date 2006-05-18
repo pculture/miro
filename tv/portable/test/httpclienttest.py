@@ -1,6 +1,7 @@
 import unittest
 import socket
 import traceback
+from copy import copy
 
 from BitTornado.clock import clock
 
@@ -72,7 +73,8 @@ class TestingHTTPConnectionPool(httpclient.HTTPConnectionPool):
         conn.scheme = req['scheme']
         conn.openConnection(req['host'], req['port'])
         conn.sendRequest(req['callback'], req['errback'],
-                req['method'], req['path'], req['headers'])
+                req['headerCallback'], req['bodyDataCallback'], req['method'],
+                req['path'], req['headers'])
         return conn
 
     def checkConnectionStarted(self, url):
@@ -244,8 +246,8 @@ class HTTPClientTestBase(EventLoopTest):
         self.callbackCalled = False
         self.testRequest = TestingHTTPConnection()
         self.testRequest.openConnection('foo.com', 80)
-        self.testRequest.sendRequest(self.callback, self.errback, 'GET',
-                '/bar/baz;123?a=b') 
+        self.testRequest.sendRequest(self.callback, self.errback, 
+                method='GET', path='/bar/baz;123?a=b') 
         self.fakeCallbackError = False
 
     def callback(self, data):
@@ -423,7 +425,7 @@ Date: Wed, 10 May 2006 22:38:39 GMT\r
         self.assertEquals(self.testRequest.canSendRequest(), True)
         self.testRequest.sendRequest(self.callback, self.errback,
                 path="/pipelined/path")
-        self.assertEquals(self.testRequest.pipelinedRequest[3],
+        self.assertEquals(self.testRequest.pipelinedRequest[5],
                 '/pipelined/path')
         self.testRequest.handleData('a' * 128)
         self.assert_(self.callbackCalled)
@@ -570,7 +572,7 @@ Date: Wed, 10 May 2006 22:38:39 GMT\r
     def testMultipleRequests(self):
         def middleCallback(data):
             self.firstData = data
-            req.sendRequest(self.callback, self.errback, 'GET', '/')
+            req.sendRequest(self.callback, self.errback, method='GET', path='/')
 
         url = 'http://www.google.com/'
         req = httpclient.HTTPConnection()
@@ -578,17 +580,14 @@ Date: Wed, 10 May 2006 22:38:39 GMT\r
             eventloop.quit()
         req.openConnection('www.google.com', 80, stopEventLoop, stopEventLoop)
         self.runEventLoop()
-        req.sendRequest(middleCallback, self.errback, 'GET', '/')
+        req.sendRequest(middleCallback, self.errback, method='GET', path='/')
         self.runEventLoop()
         self.assertEquals(self.firstData['body'], self.data['body'])
 
     def testChunkedData(self):
         url = 'http://jigsaw.w3.org/HTTP/ChunkedScript'
         httpclient.grabURL(url, self.callback, self.errback)
-        try:
-            self.runEventLoop(timeout=2)
-        except:
-            pass
+        self.runEventLoop(timeout=2)
         header = """\
 This output will be chunked encoded by the server, if your client is HTTP/1.1
 Below this line, is 1000 repeated lines of 0-9.
@@ -718,6 +717,69 @@ Below this line, is 1000 repeated lines of 0-9.
         self.assertEquals('utf-8', 
                 getIt("text/html; charset=utf-8; extraparam=2"))
 
+    def testHeaderCallback(self):
+        def headerCallback(response):
+            self.headerResponse = copy(response)
+            self.callbackCalledInHeaderCallback = self.callbackCalled
+            self.errbackCalledInHeaderCallback = self.errbackCalled
+            eventloop.quit()
+        url = 'http://participatoryculture.org/democracytest/normalpage.txt'
+        httpclient.grabURL(url, self.callback, self.errback,
+                headerCallback=headerCallback)
+        self.runEventLoop()
+        self.assert_(not self.callbackCalledInHeaderCallback)
+        self.assert_(not self.errbackCalledInHeaderCallback)
+        self.assertEquals(self.headerResponse['content-type'], 
+                'text/plain; charset=ISO-8859-1')
+        self.assertEquals(self.headerResponse['body'], None)
+
+    def testBodyDataCallback(self):
+        self.lastSeen = None
+        def bodyDataCallback(data):
+            self.lastSeen = data
+        self.testRequest.bodyDataCallback = bodyDataCallback
+        self.testRequest.handleData(self.startResponse(
+                    headers={'content-length':'20'}))
+        self.assertEquals(self.lastSeen, None)
+        self.testRequest.handleData("12345")
+        self.assertEquals(self.lastSeen, "12345")
+        self.testRequest.handleData("1234567890")
+        self.assertEquals(self.lastSeen, "1234567890")
+        self.testRequest.handleData("1234567890")
+        self.assertEquals(self.lastSeen, "12345")
+
+    def testBodyDataCallbackChunked(self):
+        self.lastSeen = None
+        def bodyDataCallback(data):
+            self.lastSeen = data
+        self.testRequest.bodyDataCallback = bodyDataCallback
+        self.testRequest.handleData(self.startResponse(
+            headers={'transfer-encoding': 'chunked'}))
+        self.testRequest.handleData("5\r\nHI")
+        self.assertEquals(self.lastSeen, "HI")
+        self.testRequest.handleData("BEN\r\n")
+        self.assertEquals(self.lastSeen, "BEN")
+        self.testRequest.handleData("A\r\n")
+        self.assertEquals(self.lastSeen, "BEN")
+        self.testRequest.handleData("1234567890\r\n0")
+        self.assertEquals(self.lastSeen, "1234567890")
+        self.assert_(not self.callbackCalled)
+        self.testRequest.handleData("\r\n\r\n")
+        self.assert_(self.callbackCalled)
+
+    def testBodyDataCallbackRealRequest(self):
+        url = 'http://participatoryculture.org/democracytest/normalpage.txt'
+        self.gotData = ''
+        def bodyDataCallback(data):
+            self.gotData += data
+            if self.gotData == 'I AM A NORMAL PAGE\n':
+                eventloop.quit()
+
+        httpclient.grabURL(url, self.callback, self.errback,
+                bodyDataCallback=bodyDataCallback)
+        self.runEventLoop()
+        self.assertEquals(self.gotData, 'I AM A NORMAL PAGE\n')
+
 class HTTPConnectionPoolTest(EventLoopTest):
     def setUp(self):
         self.pool = TestingHTTPConnectionPool()
@@ -725,7 +787,7 @@ class HTTPConnectionPoolTest(EventLoopTest):
 
     def addRequest(self, url):
         self.pool.addRequest((lambda data: 0), (lambda error: 0),
-                url, "GET", {})
+                None, None, url, "GET", {})
 
     def checkCounts(self, activeCount, freeCount):
         self.assertEquals(self.pool.activeConnectionCount, activeCount)
@@ -751,7 +813,7 @@ class HTTPConnectionPoolTest(EventLoopTest):
         def stopEventLoop(error):
             eventloop.quit()
         self.pool.addRequest(stopEventLoop, stopEventLoop,
-                "http://3:-1/", "GET", {})
+                None, None, "http://3:-1/", "GET", {})
         self.runEventLoop()
         self.checkCounts(0, 0)
 
