@@ -198,7 +198,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.onlyBody = onlyBody
 
     def getOperationList(self):
-        return self.outputList
+        return self.outputLists[0]
         
     def getOutput(self, data = None):
         fo = StringIO()
@@ -224,8 +224,8 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         if not self.onlyBody:
             fileobj.write('    out.write("<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?>\\n<!DOCTYPE html PUBLIC \\\"-//W3C//DTD XHTML 1.0 Strict//EN\\\" \\\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\\\">\\n")\n')
             
-        for count in range(len(self.outputList)):
-            (func, args) = self.outputList[count]
+        for count in range(len(self.outputLists[0])):
+            (func, args) = self.outputLists[0][count]
             fileobj.write(func('out','','    ',args))
 
         fileobj.write('    out.close()\n')        
@@ -254,19 +254,9 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.depth = 0
         self.repeatName = ''
         self.started = not self.onlyBody
-        self.outputList = []
+        self.outputLists = [[]]
         self.outputText = []
-        self.hidingList = []
         self.hidingParams = []
-
-        # When we're in repeat mode, we store output as a set of
-        # functions and arguments that, called given an object, tid,
-        # and set of arguments return the correct output
-        self.repeatList = []
-
-        # We store repeat text here before turning it into an item in
-        # repeatList. 
-        self.repeatText = []
 
     def endDocument(self):
         print "Ending compile"
@@ -280,28 +270,19 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         elif not self.started:
             pass
         elif 't:repeatForView' in attrs.keys():
-            self.inRepeatView = True
-            self.repeatDepth = self.depth
-            self.resetRepeat()
+            self.startRepeat(attrs['t:repeatForView'])
             self.addText('<%s'%name)
             for key in attrs.keys():
                 if key != 't:repeatForView':
                     self.addAttr(key,attrs[key])
             self.addIdAndClose()
-
-            self.repeatName = attrs['t:repeatForView']
-
         elif 't:updateForView' in attrs.keys():
-            self.inUpdateView = True
-            self.repeatDepth = self.depth
-            self.resetRepeat()
+            self.startUpdate(attrs['t:updateForView'])
             self.addText('<%s'%name)
             for key in attrs.keys():
                 if key != 't:updateForView':
                     self.addAttr(key,attrs[key])
             self.addIdAndClose()
-
-            self.repeatName = attrs['t:updateForView']
         elif 't:hideIf' in attrs.keys():
             ifValue = attrs['t:hideIf']
             if attrs.has_key('t:updateHideOnView'):
@@ -405,17 +386,17 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         elif self.inRepeatView and self.depth == self.repeatDepth:
             self.addText('</%s>'%name)
             self.endText()
-            self.inRepeatView = False
+            repeatList = self.endRepeat()
             repeatId = generateId()
             self.addText('<span id="%s"/>'%quoteattr(repeatId))
-            self.handle.addView(repeatId, 'nextSibling', self.repeatList, self.repeatName)
+            self.handle.addView(repeatId, 'nextSibling', repeatList, self.repeatName)
         elif self.inUpdateView and self.depth == self.repeatDepth:
             self.addText('</%s>'%name)
             self.endText()
-            self.inUpdateView = False
+            repeatList = self.endUpdate()
             repeatId = generateId()
             self.addText('<span id="%s"/>'%quoteattr(repeatId))
-            self.handle.addUpdate(repeatId, 'nextSibling', self.repeatList, self.repeatName)
+            self.handle.addUpdate(repeatId, 'nextSibling', repeatList, self.repeatName)
         elif name == 't:execOnUnload':
             self.inExecOnUnload = False
             self.handle.addExecOnUnload(self.code)
@@ -456,39 +437,51 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.addInstruction(genRepeatTID,None)
         self.addText('">')
 
-    def resetRepeat(self):
-        self.repeatList = []
-        self.repeatText = []
+    def startRepeat(self, name):
+        self.endText()
+        self.inRepeatView = True
+        self.repeatDepth = self.depth
+        self.repeatName = name
+        self.outputLists.append([])
+
+    def startUpdate(self, name):
+        self.endText()
+        self.inUpdateView = True
+        self.repeatDepth = self.depth
+        self.repeatName = name
+        self.outputLists.append([])
+
+    def endRepeat(self):
+        self.inRepeatView = False
+        return self.outputLists.pop()
+
+    def endUpdate(self):
+        self.inUpdateView = False
+        return self.outputLists.pop()
 
     def startHiding(self,ifValue):
         self.endText()
         self.hidingParams.append(ifValue)
-        self.hidingList.append([])
+        self.outputLists.append([])
         self.hideDepth.append(self.depth)
         self.hiding = True
 
     def endHiding(self):
         self.endText()
         ifValue = self.hidingParams.pop()
-        funcList = self.hidingList.pop()
+        funcList = self.outputLists.pop()
         self.hideDepth.pop()
-        self.hiding = len(self.hidingList) > 0
+        self.hiding = len(self.hideDepth) > 0
         self.addInstruction(genHideSection, (ifValue, funcList))
 
     def addText(self, text):
-        if self.inRepeatView or self.inUpdateView:
-            self.repeatText.append(text)
-        else:
-            self.outputText.append( text)
+        self.outputText.append( text)
 
     def addTextHide(self,ifValue,text):
         self.addInstruction(genRepeatTextHide,(ifValue,text))
 
     def addTextEscape(self, text):
-        if self.inRepeatView or self.inUpdateView:
-            self.repeatText.append( escape(text))
-        else:
-            self.outputText.append( escape(text))
+        self.outputText.append( escape(text))
 
     def addUpdateHideOnView(self, viewName, name, ifValue, attrs):
         nodeId = generateId()
@@ -536,24 +529,14 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.addInstruction(genRepeatEvalEscape, replace)
 
     def endText(self):
-        if self.inRepeatView or self.inUpdateView:
-            if len(self.repeatText) > 0:
-                self.addInstruction(genRepeatText,''.join(self.repeatText))
-            self.repeatText = []
-        else:
-            if len(self.outputText) > 0:
-                self.addInstruction(genRepeatText,''.join(self.outputText))
-            self.outputText = []
+        if len(self.outputText) > 0:
+            self.addInstruction(genRepeatText,''.join(self.outputText))
+        self.outputText = []
 
     def addInstruction(self, instruction, args):
         if instruction != genRepeatText:
             self.endText()
-        if self.hiding:
-            self.hidingList[-1].append((instruction,args))
-        elif self.inRepeatView or self.inUpdateView:
-            self.repeatList.append((instruction,args))
-        else:
-            self.outputList.append((instruction,args))
+        self.outputLists[-1].append((instruction,args))
         
     def addInstructions(self, instructions):
         self.endText()
