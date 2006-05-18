@@ -1348,7 +1348,7 @@ class Playlist:
 
     def itemMarkedAsViewed(self, anItem):
         if anItem is not None:
-            anItem.onViewed()
+            eventloop.addIdle(lambda:anItem.onViewed(), "Mark item viewed")
         return anItem
 
 class PlaylistItemFromItem (frontend.PlaylistItem):
