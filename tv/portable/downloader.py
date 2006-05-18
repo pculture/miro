@@ -185,10 +185,12 @@ class RemoteDownloader(DDBObject):
             c.send(block=False)
 
     def migrate(self):
-        c = command.MigrateDownloadCommand(RemoteDownloader.dldaemon,
-                self.dlid)
-        if c.send() == False:
-            # downloaded couldn't locate our dlid.  Move the file ourself.
+        if _downloads.has_key(self.dlid):
+            c = command.MigrateDownloadCommand(RemoteDownloader.dldaemon,
+                                               self.dlid)
+            c.send(block=False)
+        else:
+            # downloader doesn't have our dlid.  Move the file ourself.
             try:
                 shortFilename = self.status['shortFilename']
             except KeyError:
@@ -209,8 +211,8 @@ URL was %s""" % self.url
             try:
                 shutil.move(filename, newfilename)
             except IOError, error:
-                print "WARNING: Error moving %s to %s (%s)" % (self.filename,
-                        newFilename, e)
+                print "WARNING: Error moving %s to %s (%s)" % (self.status['filename'],
+                        newfilename, error)
             else:
                 self.status['filename'] = newfilename
 

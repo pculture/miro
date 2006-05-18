@@ -201,11 +201,11 @@ def migrateDownload(dlid):
     try:
         download = _downloads[dlid]
     except: # There is no download with this id
-        return False
+        pass
     else:
-        download.moveToMoviesDirectory()
-        download.updateClient()
-        return True
+        if download.state in ("finished", "uploading"):
+            download.moveToMoviesDirectory()
+            download.updateClient()
 
 def getDownloadStatus(dlids = None):
     statuses = {}
@@ -325,7 +325,7 @@ class BGDownloader:
             shutil.move(self.filename, newfilename)
         except IOError, error:
             print "WARNING: Error moving %s to %s (%s)" % (self.filename,
-                                                           newfilename, e)
+                                                           newfilename, error)
         else:
             self.filename = newfilename
             print "new file name is ", self.filename

@@ -1467,9 +1467,8 @@ def changeMoviesDirectory(newDir, migrate):
         views.remoteDownloads.beginRead()
         try:
             for download in views.remoteDownloads:
-                if download.getState() in ('uploading', 'finished'):
-                    print "migrating", download.getFilename()
-                    download.migrate()
+                print "migrating", download.getFilename()
+                download.migrate()
         finally:
             views.remoteDownloads.endRead()
         views.fileItems.beginRead()
