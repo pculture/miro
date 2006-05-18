@@ -11,8 +11,6 @@
 # written to in the output file, an optional id, prefix text, and an
 # argument
 
-# FIXME: These can be optimized to eliminate redundancy
-
 # Simply returns text
 def genRepeatText(varname, tid, prefix, text):
     return '%s%s.write(%s)\n' % (prefix,varname, repr(text))
@@ -31,9 +29,9 @@ def genQuoteAttr(varname, tid, prefix, value):
 def genRawAttr(varname, tid, prefix, value):
     return '%s%s.write(quoteattr(toUni(%s)))\n'%(prefix, varname, value)
 
-# Adds an id attribute to a tag and closes it
-def genRepeatAddIdAndClose(varname, tid, prefix, args):
-    return '%s%s.write(" id=\\"")\n%s%s.write(quoteattr(tid))\n%s%s.write("\\">")\n' % (prefix, varname,prefix, varname,prefix, varname)
+# Adds a tid attribute to a tag and closes it
+def genRepeatTID(varname, tid, prefix, args):
+    return '%s%s.write(quoteattr(tid))\n' % (prefix, varname)
 
 # Evaluates key with data
 def genRepeatEvalEscape(varname, tid, prefix, replace):
@@ -60,18 +58,13 @@ def genHideSection(varname, tid, prefix, args):
         out = '%s%s' % (out, func(varname,tid,prefix+'    ',newargs))
     return out
 
-def genUpdateHideOnView(varname, tid, prefix, args):
-    (viewName, name, ifValue, attrs) = args
-    nodeId = generateId()
+def genQuoteAndFillAttr(varname, tid, prefix, value):
+    return '%s%s%s.write(quoteAndFillAttr(%s,locals()))\n'%(out,prefix,varname,repr(value))
     
-    out = '%s%s.write("<%s")\n'%(prefix, varname,name)
-    for key in attrs.keys():
-        if not key in ['t:hideIf','t:updateHideOnView','style']:
-            out = '%s%s%s.write(" %s=")\n'%(out,prefix,varname,key)
-            out = '%s%s%s.write(quoteAndFillAttr("%s",locals()))\n'%(out,prefix,varname,attrs[key])
-    out = '%s%s%s.write(" id=\\\"%s\\\"")\n'%(out,prefix,varname,quoteattr(nodeId))
+def genUpdateHideOnView(varname, tid, prefix, args):
+    (viewName, ifValue, attrs, nodeId) = args
 
-    out = '%s%s_hideFunc = lambda : %s\n' % (out, prefix, ifValue)
+    out = '%s_hideFunc = lambda : %s\n' % (prefix, ifValue)
     out = '%s%s_dynHide = _hideFunc()\n' % (out, prefix)
     out = '%s%sif _dynHide:\n' % (out, prefix)
     out = '%s%s    %s.write(" style=\\\"display:none\\\">")\n' % (
@@ -286,42 +279,6 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                 self.started = True
         elif not self.started:
             pass
-        elif self.inReplace or self.inStaticReplace:
-            pass
-        elif self.inRepeatView or self.inUpdateView:
-            if attrs.has_key('t:hideIf'):
-                ifValue = attrs['t:hideIf']
-
-                if attrs.has_key('t:updateHideOnView'):
-                    print "Warning: t:updateHideOnView is unsupported inside a repeat view"
-                self.startHiding(ifValue)
-
-            if name == 't:includeTemplate':
-                self.addFillTemplate(attrs['filename'])
-            elif name == 't:include':
-                self.addInclude(attrs['filename'])
-            else:
-                self.addText('<%s'%name)
-                for key in attrs.keys():
-                    if not (key in ['t:replace','t:replaceMarkup','t:hideIf',
-                                    'style']):
-                        self.addAttr(key,attrs[key])
-
-                self.addText('>')
-                try:
-                    replace = attrs['t:replace']
-                    self.addEvalEscape(replace)
-                    self.inReplace = True
-                    self.replaceDepth = self.depth
-                except KeyError:
-                    pass
-                try:
-                    replace = attrs['t:replaceMarkup']
-                    self.addEval(replace)
-                    self.inReplace = True
-                    self.replaceDepth = self.depth
-                except KeyError:
-                    pass
         elif 't:repeatForView' in attrs.keys():
             self.inRepeatView = True
             self.repeatDepth = self.depth
@@ -348,6 +305,8 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         elif 't:hideIf' in attrs.keys():
             ifValue = attrs['t:hideIf']
             if attrs.has_key('t:updateHideOnView'):
+                if self.inRepeatView or self.inUpdateView:
+                    print "Warning: t:updateHideOnView is unsupported inside a repeat view"
                 self.addUpdateHideOnView(attrs['t:updateHideOnView'],name, ifValue, attrs)
             else:
                 self.startHiding(ifValue)
@@ -358,6 +317,11 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                     if (key not in ['t:hideIf']):
                         self.addAttr(key,attrs[key])
                 self.addText('>')
+                
+        elif name == 't:includeTemplate':
+            self.addFillTemplate(attrs['filename'])
+        elif name == 't:include':
+            self.addInclude(attrs['filename'])
 
         elif 't:replace' in attrs.keys():
                 self.addText('<%s'%name)
@@ -407,7 +371,8 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         else:
             self.addText('<%s'%name)
             for key in attrs.keys():
-                self.addAttr(key,attrs[key])
+                if not (key.startswith('t:')):
+                    self.addAttr(key,attrs[key])
             self.addText('>')
 
     def endElement(self,name):
@@ -488,8 +453,10 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.addInstructions(tcc.getOperationList())
 
     def addIdAndClose(self):
+        self.addText(' id="')
         self.endText()
-        self.addInstruction(genRepeatAddIdAndClose,None)
+        self.addInstruction(genRepeatTID,None)
+        self.addText('">')
 
     def resetRepeat(self):
         self.repeatList = []
@@ -527,8 +494,16 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             self.outputText.append( escape(text))
 
     def addUpdateHideOnView(self, viewName, name, ifValue, attrs):
+        nodeId = generateId()
+        self.addText("<%s" % name)
+        for key in attrs.keys():
+            if not key in ['t:hideIf','t:updateHideOnView','style']:
+                self.addText(" %s=" % key)
+                self.endText()
+                self.addInstruction(genQuoteAndFill, attrs[key])
+        self.addText(' id="%s"' % quoteattr(nodeId))
         self.endText()
-        self.addInstruction(genUpdateHideOnView,(viewName, name, ifValue, attrs))
+        self.addInstruction(genUpdateHideOnView,(viewName, ifValue, attrs, nodeId))
 
     def addAttr(self, attr, value):
         match = attrPattern.match(value)
