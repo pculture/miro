@@ -25,6 +25,30 @@ import eventloop
 import util
 import sys
 
+class NotReadyToSendError(Exception):
+    pass
+class ConnectionError(Exception):
+    pass
+class HTTPError(Exception):
+    pass
+class BadStatusLine(HTTPError):
+    pass
+class BadHeaderLine(HTTPError):
+    pass
+class ServerClosedConnection(HTTPError):
+    pass
+class BadChunkSize(HTTPError):
+    pass
+class CRLFExpected(HTTPError):
+    pass
+class PipelinedRequestNeverStarted(HTTPError):
+    pass
+class BadRedirect(HTTPError):
+    pass
+class AuthorizationFailed(HTTPError):
+    pass
+
+
 # Pass in a connection to the frontend
 def setDelegate(newDelegate):
     global delegate
@@ -96,8 +120,6 @@ class NetworkBuffer(object):
         self._mergeChunks()
         return self.chunks[0]
 
-class NotReadyToSendError(Exception):
-    pass
 
 class AsyncSocket(object):
     """Socket class that uses our new fangled asynchronous eventloop
@@ -120,30 +142,38 @@ class AsyncSocket(object):
         """Open a connection.  On success, callback will be called with this
         object.
         """
-        def finishOpen(address):
-            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.socket.setblocking(0)
-            rv = self.socket.connect_ex((address, port))
-            if rv not in (0, errno.EINPROGRESS, errno.EWOULDBLOCK):
-                trapCall(errback, socket.error((rv, errno.errorcode[rv])))
+
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.setblocking(0)
+        def onAddressLookup(address):
+            try:
+                sock.connect_ex((address, port))
+            except Exception, e:
+                trapCall(errback, e)
+            else:
+                eventloop.addWriteCallback(sock, onWriteReady)
+        def onWriteReady():
+            eventloop.removeWriteCallback(sock)
+            rv = sock.getsockopt(socket.SOL_SOCKET, socket.SO_ERROR)
+            if rv == 0:
+                self.socket = sock
+                trapCall(callback, self)
+            else:
+                msg = errno.errorcode[rv]
+                trapCall(errback, ConnectionError((rv, msg)))
+        eventloop.callInThread(onAddressLookup, errback,
+                socket.gethostbyname, host)
+
+    def acceptConnection(self, host, port, callback, errback):
+        def finishAccept():
+            eventloop.removeReadCallback(sock)
+            (self.socket, addr) = sock.accept()
             trapCall(callback, self)
-
-        def finishOpenListen():
-            eventloop.removeReadCallback(self.socket)
-            origSocket = self.socket
-            (self.socket, addr) = self.socket.accept()
-            trapCall(callback, self)
-
-        if listen:
-            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.socket.bind( (host, port) )
-            (self.addr, self.port) = self.socket.getsockname()
-            self.socket.listen(63)
-            eventloop.addReadCallback(self.socket, finishOpenListen)
-        else:
-            eventloop.callInThread(finishOpen, errback, socket.gethostbyname,
-                                   host)
-
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.bind( (host, port) )
+        (self.addr, self.port) = sock.getsockname()
+        sock.listen(63)
+        eventloop.addReadCallback(sock, finishAccept)
 
     def closeConnection(self):
         if self.isOpen():
@@ -383,27 +413,6 @@ class ConnectionHandler(object):
     def __str__(self):
         return "%s -- %s" % (self.__class__, self.state)
 
-class HTTPError(Exception):
-    pass
-class BadStatusLine(HTTPError):
-    pass
-class BadHeaderLine(HTTPError):
-    pass
-class ServerClosedConnection(HTTPError):
-    pass
-class BadChunkSize(HTTPError):
-    pass
-class CRLFExpected(HTTPError):
-    pass
-class PipelinedRequestNeverStarted(HTTPError):
-    pass
-class BadRedirect(HTTPError):
-    pass
-class AuthorizationFailed(HTTPError):
-    pass
-class NotReadyToSendError(Exception):
-    pass
-
 class HTTPConnection(ConnectionHandler):
     scheme = 'http'
 
@@ -538,6 +547,8 @@ class HTTPConnection(ConnectionHandler):
                 return
             self.bodyBytesRead += len(data)
             trapCall(self.bodyDataCallback, data)
+            if self.state == 'closed':
+                return 
             if (self.contentLength is not None and 
                     self.bodyBytesRead == self.contentLength):
                 self.finishRequest()
@@ -664,17 +675,19 @@ class HTTPConnection(ConnectionHandler):
             self.headers[header] += (',%s' % value)
 
     def startBody(self):
+        self.findExpectedLength()
+        self.checkChunked()
+        self.decideWillClose()
         if self.headerCallback:
             trapCall(self.headerCallback, self.makeResponse())
+        if self.state == 'closed':
+            return # maybe the header callback canceled this request
         if ((100 <= self.status <= 199) or self.status in (204, 304) or
                 self.method == 'HEAD'):
             self.finishRequest()
         else:
             if self.bodyDataCallback:
                 self.bodyBytesRead = 0
-            self.findExpectedLength()
-            self.checkChunked()
-            self.decideWillClose()
             if not self.chunked:
                 self.changeState('response-body')
             else:
@@ -736,7 +749,7 @@ class HTTPConnection(ConnectionHandler):
         response = self.headers
         response['body'] = body
         for key in ('version', 'status', 'reason', 'method', 'path', 'host',
-                'port'):
+                'port', 'contentLength'):
             response[key] = getattr(self, key)
         return response
 
@@ -811,6 +824,7 @@ class HTTPConnectionPool(object):
         self.activeConnectionCount = 0
         self.freeConnectionCount = 0
         self.connections = {}
+        self.currentRequestId = 1
         eventloop.addTimeout(60, self.cleanupPool, 
             "Check HTTP Connection Timeouts")
 
@@ -862,10 +876,15 @@ class HTTPConnectionPool(object):
             url, method, headers):
         """Add a request to be run.  The request will run immediately if we
         have a free connection, otherwise it will be queued.
+
+        returns a request id that can be passed to cancelRequest
         """
 
+        reqId = self.currentRequestId
+        self.currentRequestId += 1
         scheme, host, port, path = parseURL(url)
         req = {
+            'id' : reqId,
             'callback' : callback,
             'errback': errback,
             'headerCallback': headerCallback,
@@ -879,6 +898,23 @@ class HTTPConnectionPool(object):
         }
         self.pendingRequests.append(req)
         self.runPendingRequests()
+        return reqId
+
+    def cancelRequest(self, reqId):
+        """Cancel a request."""
+        for i in xrange(len(self.pendingRequests)):
+            if self.pendingRequests[i]['id'] == reqId:
+                del self.pendingRequests[i]
+                return
+        for conns in self.connections.values():
+            for conn in conns['active']:
+                if conn.connectionPoolReqId == reqId:
+                    conn.closeConnection()
+                    return
+            for conn in conns['free']:
+                if conn.connectionPoolReqId == reqId:
+                    conn.closeConnection()
+                    return
 
     def runPendingRequests(self):
         """Find pending requests have a free connection, otherwise it will be
@@ -899,6 +935,7 @@ class HTTPConnectionPool(object):
                         req['method'], req['path'], req['headers'])
             else:
                 conn = self._makeNewConnection(req)
+            conn.connectionPoolReqId = req['id']
             conns['active'].add(conn)
             self.activeConnectionCount += 1
             connectionCount = (self.activeConnectionCount +
@@ -914,8 +951,9 @@ class HTTPConnectionPool(object):
         def openConnectionErrback(error):
             conns = self._getServerConnections(req['scheme'], req['host'], 
                     req['port'])
-            conns['active'].remove(conn)
-            self.activeConnectionCount -= 1
+            if conn in conns['active']:
+                conns['active'].remove(conn)
+                self.activeConnectionCount -= 1
             req['errback'](error)
 
         if req['scheme'] == 'http':
@@ -1020,11 +1058,10 @@ class HTTPClient(object):
             bodyDataCallback = self.onBodyData
         else:
             bodyDataCallback = None
-        self.connectionPool.addRequest(self.callbackIntercept,
-                self.errbackIntercept, self.onHeaders,
-                bodyDataCallback, self.url, self.method,
-                self.headers)
         self.willHandleResponse = False
+        return self.connectionPool.addRequest(self.callbackIntercept,
+                self.errbackIntercept, self.onHeaders, bodyDataCallback,
+                self.url, self.method, self.headers)
 
     def callbackIntercept(self, response):
         if self.shouldRedirect(response):
@@ -1048,7 +1085,7 @@ class HTTPClient(object):
         if self.shouldRedirect(response) or self.shouldAuthorize(response):
             self.willHandleResponse = True
         elif self.headerCallback is not None:
-            self.headerCallback(response)
+            self.headerCallback(self.prepareResponse(response))
 
     def onBodyData(self, data):
         if not self.willHandleResponse and self.bodyDataCallback:
@@ -1147,11 +1184,13 @@ class HTTPClient(object):
         else:
             trapCall(self.errback, AuthorizationFailed())
 
-def grabURL(url, callback, errback, bodyDataCallback=None,
-        headerCallback=None, method="GET", start=0, etag=None,
+def grabURL(url, callback, errback, headerCallback=None,
+        bodyDataCallback=None, method="GET", start=0, etag=None,
         modified=None, findHTTPAuth=None):
     client = HTTPClient(url, callback, errback, headerCallback,
             bodyDataCallback, method, start, etag, modified,
             findHTTPAuth)
-    client.startRequest()
+    return client.startRequest()
 
+def cancelRequest(requestId):
+    HTTPClient.connectionPool.cancelRequest(requestId)

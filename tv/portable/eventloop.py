@@ -170,7 +170,8 @@ class EventLoop(object):
             try:
                 function = map[fd]
             except KeyError:
-                util.failedExn("While talking to the network")
+                # this can happen the write callback removes the read callback
+                pass
             else:
                 when = "While talking to the network"
                 if not util.trapCall(when, function):

@@ -163,7 +163,7 @@ class ControllerDaemon(Daemon):
     def __init__(self):
         Daemon.__init__(self)
         self.shutdown = False
-        self.openConnection('127.0.0.1', 0, self.onConnection, self.onError, listen = True)
+        self.stream.acceptConnection('127.0.0.1', 0, self.onConnection, self.onError)
         self.port = self.stream.port
         launchDownloadDaemon(readPid(), self.port)
         data = {}

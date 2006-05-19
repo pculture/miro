@@ -1,4 +1,5 @@
 import unittest
+import rfc822
 import socket
 import traceback
 from copy import copy
@@ -569,6 +570,13 @@ Date: Wed, 10 May 2006 22:38:39 GMT\r
         self.assert_(self.callbackCalled)
         self.assertEquals(self.data['body'], "I AM A NORMAL PAGE\n")
 
+    def testConnectionFailure(self):
+        httpclient.grabURL("http://slashdot.org:123123", self.callback, 
+                self.errback)
+        self.runEventLoop()
+        self.assert_(self.errbackCalled)
+        self.assertEquals(self.data.__class__, httpclient.ConnectionError)
+
     def testMultipleRequests(self):
         def middleCallback(data):
             self.firstData = data
@@ -733,6 +741,42 @@ Below this line, is 1000 repeated lines of 0-9.
                 'text/plain; charset=ISO-8859-1')
         self.assertEquals(self.headerResponse['body'], None)
 
+    def testHeaderCallbackCancel(self):
+        def headerCallback(response):
+            httpclient.cancelRequest(reqId)
+            eventloop.quit()
+        url = 'http://participatoryculture.org/democracytest/normalpage.txt'
+        reqId = httpclient.grabURL(url, self.callback, self.errback,
+                headerCallback=headerCallback)
+        self.failedCalled = False
+        def fakeFailed(*args, **kwargs):
+            self.failedCalled = True
+        oldFailed = util.failed
+        util.failed = fakeFailed
+        self.runEventLoop()
+        util.failed = oldFailed
+        self.assert_(not self.callbackCalled)
+        self.assert_(not self.errbackCalled)
+        self.assert_(not self.failedCalled)
+
+    def testBodyDataCallbackCancel(self):
+        def bodyDataCallback(response):
+            httpclient.cancelRequest(reqId)
+            eventloop.quit()
+        url = 'http://participatoryculture.org/democracytest/normalpage.txt'
+        reqId = httpclient.grabURL(url, self.callback, self.errback,
+                bodyDataCallback=bodyDataCallback)
+        self.failedCalled = False
+        def fakeFailed(*args, **kwargs):
+            self.failedCalled = True
+        oldFailed = util.failed
+        util.failed = fakeFailed
+        self.runEventLoop()
+        util.failed = oldFailed
+        self.assert_(not self.callbackCalled)
+        self.assert_(not self.errbackCalled)
+        self.assert_(not self.failedCalled)
+
     def testBodyDataCallback(self):
         self.lastSeen = None
         def bodyDataCallback(data):
@@ -786,10 +830,10 @@ class HTTPConnectionPoolTest(EventLoopTest):
         super(HTTPConnectionPoolTest, self).setUp()
 
     def addRequest(self, url):
-        self.pool.addRequest((lambda data: 0), (lambda error: 0),
+        return self.pool.addRequest((lambda data: 0), (lambda error: 0),
                 None, None, url, "GET", {})
 
-    def checkCounts(self, activeCount, freeCount):
+    def checkCounts(self, activeCount, freeCount, pendingCount):
         self.assertEquals(self.pool.activeConnectionCount, activeCount)
         self.assertEquals(self.pool.freeConnectionCount, freeCount)
         realFreeCount = realActiveCount = 0
@@ -798,13 +842,14 @@ class HTTPConnectionPoolTest(EventLoopTest):
             realActiveCount += len(conns['active'])
         self.assertEquals(realActiveCount, activeCount)
         self.assertEquals(realFreeCount, freeCount)
+        self.assertEquals(pendingCount, len(self.pool.pendingRequests))
 
     def testNormalUsage(self):
         self.addRequest("http://www.foo.com/")
         self.addRequest("http://www.bar.com/")
         self.addRequest("http://www.foo.com/2")
         self.addRequest("http://www.google.com/")
-        self.checkCounts(4, 0)
+        self.checkCounts(4, 0, 0)
 
     def testOpenConnectionFailed(self):
         # this is pretty dirty, but it was the only way I could think of to
@@ -815,32 +860,33 @@ class HTTPConnectionPoolTest(EventLoopTest):
         self.pool.addRequest(stopEventLoop, stopEventLoop,
                 None, None, "http://3:-1/", "GET", {})
         self.runEventLoop()
-        self.checkCounts(0, 0)
+        self.checkCounts(0, 0, 0)
 
     def testCounts(self):
         self.addRequest("http://www.foo.com/")
         self.addRequest("http://www.foo.com/2")
         self.addRequest("https://www.foo.com/")
-        self.checkCounts(3, 0)
+        self.checkCounts(3, 0, 0)
         self.pool.finishConnection('http', 'www.foo.com')
-        self.checkCounts(2, 1)
+        self.checkCounts(2, 1, 0)
         self.pool.closeConnection('https', 'www.foo.com')
-        self.checkCounts(1, 1)
+        self.checkCounts(1, 1, 0)
         self.pool.closeConnection('http', 'www.foo.com', type='free')
-        self.checkCounts(1, 0)
+        self.checkCounts(1, 0, 0)
 
     def testServerLimit(self):
         self.addRequest("http://www.foo.com/")
         self.addRequest("http://www.foo.com/2")
         self.addRequest("https://www.foo.com/")
-        self.checkCounts(3, 0)
+        self.checkCounts(3, 0, 0)
         self.addRequest("http://www.foo.com/3")
-        self.checkCounts(3, 0)
+        self.checkCounts(3, 0, 1)
         self.pool.assertConnectionNotStarted('http://www.foo.com/3')
         self.pool.finishConnection('https', 'www.foo.com')
         self.pool.assertConnectionNotStarted('http://www.foo.com/3')
         self.pool.finishConnection('http', 'www.foo.com')
         self.pool.assertConnectionStarted('http://www.foo.com/3')
+        self.checkCounts(2, 1, 0)
 
     def testTotalLimit(self):
         self.addRequest("http://www.foo.com/")
@@ -849,7 +895,7 @@ class HTTPConnectionPoolTest(EventLoopTest):
         self.addRequest("http://www.bar.com/2")
         self.addRequest("http://www.baz.com/")
         self.addRequest("http://www.froz.com/")
-        self.checkCounts(4, 0)
+        self.checkCounts(4, 0, 2)
         self.pool.assertConnectionNotStarted('http://www.baz.com/')
         self.pool.assertConnectionNotStarted('http://www.froz.com/')
         self.pool.finishConnection('http', 'www.foo.com')
@@ -858,33 +904,84 @@ class HTTPConnectionPoolTest(EventLoopTest):
         self.pool.finishConnection('http', 'www.bar.com')
         self.pool.assertConnectionStarted('http://www.froz.com/')
 
+    def testCancelActive(self):
+        reqids = []
+        reqids.append(self.addRequest("http://www.foo.com/"))
+        reqids.append(self.addRequest("http://www.foo.com/2"))
+        reqids.append(self.addRequest("https://www.bar.com/"))
+        reqids.append(self.addRequest("http://www.bar.com/2"))
+        self.checkCounts(4, 0, 0)
+        for x in xrange(4):
+            self.pool.cancelRequest(reqids[x])
+            self.checkCounts(3-x, 0, 0)
+
+    def testCancelFree(self):
+        reqid = self.addRequest("http://www.foo.com/")
+        self.checkCounts(1, 0, 0)
+        self.pool.finishConnection('http', 'www.foo.com')
+        self.checkCounts(0, 1, 0)
+        self.pool.cancelRequest(reqid)
+        self.checkCounts(0, 0, 0)
+
+    def testCancelPending(self):
+        self.addRequest("http://www.foo.com/")
+        self.addRequest("http://www.foo.com/")
+        reqids = []
+        for x in xrange(10):
+            reqids.append(self.addRequest("http://www.foo.com/"))
+        self.checkCounts(2, 0, 10)
+        for x in xrange(10):
+            self.pool.cancelRequest(reqids[x])
+            self.checkCounts(2, 0, 9-x)
+
+    def cancelMixed(self):
+        req1 = reqids.append(self.addRequest("http://www.foo.com/"))
+        req2 = reqids.append(self.addRequest("http://www.foo.com/2"))
+        req3 = reqids.append(self.addRequest("http://www.foo.com/3"))
+        req4 = reqids.append(self.addRequest("http://www.bar.com/"))
+        req5 = reqids.append(self.addRequest("http://www.bar.com/2"))
+        req6 = reqids.append(self.addRequest("http://www.bar.com/3"))
+        self.checkCounts(4, 0, 2)
+        self.pool.cancelRequest(req1)
+        self.checkCounts(4, 0, 1)
+        self.pool.cancelRequest(req6)
+        self.checkCounts(4, 0, 0)
+        self.pool.cancelRequest(req3)
+        self.checkCounts(3, 0, 0)
+        self.pool.cancelRequest(req5)
+        self.checkCounts(2, 0, 0)
+        self.pool.cancelRequest(req2)
+        self.checkCounts(1, 0, 0)
+        self.pool.cancelRequest(req4)
+        self.checkCounts(0, 0, 0)
+
     def testBothLimits(self):
         self.addRequest("http://www.foo.com/")
         self.addRequest("http://www.foo.com/2")
         self.addRequest("http://www.foo.com/3")
-        self.checkCounts(2, 0)
+        self.checkCounts(2, 0, 1)
         self.pool.assertConnectionNotStarted('http://www.foo.com/3')
         self.addRequest("https://www.bar.com/")
         self.addRequest("http://www.bar.com/2")
         self.addRequest("http://www.baz.com/")
-        self.checkCounts(4, 0)
+        self.checkCounts(4, 0, 2)
         self.pool.assertConnectionNotStarted('http://www.baz.com/')
         self.pool.finishConnection('http', 'www.bar.com')
         self.pool.finishConnection('https', 'www.bar.com')
-        self.checkCounts(3, 1)
+        self.checkCounts(3, 1, 1)
         # still hitting the limit on foo.com, but we have space for the
         # baz.com request
         self.pool.assertConnectionStarted('http://www.baz.com/')
         self.pool.assertConnectionNotStarted('http://www.foo.com/3')
         self.pool.finishConnection('http', 'www.foo.com')
-        self.checkCounts(3, 1)
+        self.checkCounts(3, 1, 0)
         self.pool.assertConnectionStarted('http://www.foo.com/3')
         self.addRequest("http://www.ben.com/")
-        self.checkCounts(4, 0)
+        self.checkCounts(4, 0, 0)
         self.pool.assertConnectionStarted('http://www.ben.com/')
         self.addRequest("http://www.ben.com/2")
         self.addRequest("http://www.foo.com/4")
-        self.checkCounts(4, 0)
+        self.checkCounts(4, 0, 2)
         self.pool.assertConnectionNotStarted('http://www.ben.com/2')
         self.pool.assertConnectionNotStarted('http://www.foo.com/4')
         self.pool.finishConnection('http', 'www.foo.com')
@@ -969,3 +1066,50 @@ class HTTPSConnectionTest(HTTPClientTestBase):
         self.runEventLoop()
         self.assert_(self.callbackCalled)
         self.assertEquals(self.data['status'], 200)
+
+class GrabURLTest(HTTPClientTestBase):
+    def testStart(self):
+        url = 'http://participatoryculture.org/democracytest/normalpage.txt'
+        httpclient.grabURL(url, self.callback, self.errback)
+        self.runEventLoop()
+        self.origData = self.data
+        httpclient.grabURL(url, self.callback, self.errback, start=4)
+        self.runEventLoop()
+        self.assertEquals(self.data['body'], self.origData['body'][4:])
+        self.assertEquals(self.data['status'], 206)
+
+    def testEtag(self):
+        url = 'http://jigsaw.w3.org/HTTP/'
+        httpclient.grabURL(url, self.callback, self.errback)
+        self.runEventLoop()
+        etag = self.data['etag']
+        httpclient.grabURL(url, self.callback, self.errback, etag=etag)
+        self.runEventLoop()
+        self.assertEquals(self.data['status'], 304)
+        self.assertEquals(self.data['body'], None)
+
+    def testBadEtag(self):
+        url = 'http://jigsaw.w3.org/HTTP/'
+        httpclient.grabURL(url, self.callback, self.errback)
+        self.runEventLoop()
+        etag = "aaaaaaa:bbbbbbbb"
+        firstBody = self.data['body']
+        httpclient.grabURL(url, self.callback, self.errback, etag=etag)
+        self.runEventLoop()
+        self.assertEquals(self.data['status'], 200)
+        self.assertEquals(self.data['body'], firstBody)
+
+    def testModified(self):
+        url = 'http://jigsaw.w3.org/HTTP/'
+        httpclient.grabURL(url, self.callback, self.errback)
+        self.runEventLoop()
+        firstBody = self.data['body']
+        modifiedTuple = rfc822.parsedate_tz(self.data['last-modified'])
+        modifiedTime = rfc822.mktime_tz(modifiedTuple)
+        modifiedTime -= 5
+        httpclient.grabURL(url, self.callback, self.errback,
+                modified=rfc822.formatdate(modifiedTime))
+        self.runEventLoop()
+        self.assertEquals(self.data['status'], 200)
+        self.assertEquals(self.data['body'], firstBody)
+
