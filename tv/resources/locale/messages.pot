@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-19 18:12-0400\n"
+"POT-Creation-Date: 2006-05-19 17:08-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,63 +16,179 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:70
-msgid "_Save Video"
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:86
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:4
+msgid "Channel requires authentication"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:70
-msgid "Save this video"
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:87
+#, python-format
+msgid "%s requires a username and password for \"%s\"."
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:71
-msgid "_Play / Pause"
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:98
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6
+msgid "Username:"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:72
-msgid "_Fullscreen"
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:109
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:7
+msgid "Password:"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:133
+msgid "Not a DTV-style channel"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:134
+#, python-format
+msgid ""
+"But we'll try our best to grab the files.\n"
+"- It may take time to list the videos\n"
+"- Descriptions may look funny\n"
+"\n"
+"Please contact the publishers of %s and ask if they have a DTV-style channel."
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:135
+msgid "Continue"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:145
+msgid "DTV Version Alert"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:146
+msgid ""
+"A new version of DTV is available.\n"
+"\n"
+"Would you like to download it now?"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:153
+msgid "DTV Version Check"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:154
+msgid "This version of DTV is up to date."
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:159
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:166
+#, python-format
+msgid "%s database save failed"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:161
+#, python-format
+msgid ""
+"%s was unable to save its database: %s.\n"
+"Recent changes may be lost."
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:167
+#, python-format
+msgid ""
+"%s was unable to save its database: %s.\n"
+"Recent changes may be lost.\n"
+"Quit Anyway?"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:176
+msgid "Remove Channel"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:177
+#, python-format
+msgid ""
+"Are you sure you want to <b>remove</b> the channel\n"
+"   '<b>%s</b>'?\n"
+"<b>This operation cannot be undone.</b>"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:207
+msgid "Are you sure you want to quit?"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:208
+#, python-format
+msgid "You have %d download%s still in progress."
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:217
+msgid "Unknown Runtime Error"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:218
+#, python-format
+msgid "An unknown error has occured %s."
 msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:75
-msgid "_Remove Channel"
+msgid "_Save Video..."
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:75
+msgid "Save this video"
 msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:76
-msgid "_Update Channel"
+msgid "_Play / Pause"
 msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:77
-msgid "Copy Channel _Link"
+msgid "_Fullscreen"
 msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:80
-msgid "_Video"
+msgid "_Remove Channel"
 msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:81
-msgid "P_references"
+msgid "_Update Channel"
 msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:82
-msgid "_Quit"
-msgstr ""
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:82
-msgid "Quit the Program"
-msgstr ""
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:83
-msgid "_Channel"
-msgstr ""
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:84
-msgid "_Add Channel"
+msgid "Copy Channel _Link"
 msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:85
-msgid "U_pdate All Channels"
+msgid "_Video"
 msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:86
+msgid "_Open..."
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:86
+msgid "Open various files"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:87
+msgid "P_references"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:88
+msgid "_Quit"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:88
+msgid "Quit the Program"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:89
+msgid "_Channel"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:90
+msgid "_Add Channel..."
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:91
+msgid "U_pdate All Channels"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:92
 msgid "_Help"
 msgstr ""
 
@@ -99,56 +215,188 @@ msgid "<b>Downloads</b>"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:10
-msgid "Add Channel"
+msgid "<b>Movies Directory</b>"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:11
-msgid "By default, videos expire after"
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:4
+msgid "Add Channel"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:12
-msgid "Check Channels for new content"
+msgid "By default, videos expire after"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:13
-msgid "Democracy - Add Channel"
+msgid "Check Channels for new content"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:14
-msgid "Democracy Player"
+msgid "Democracy - Add Channel"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:15
-msgid "Don't start a download if it leaves less than"
+msgid "Democracy Player"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:16
-msgid "Enter the URL of the channel to add"
+msgid "Don't Migrate"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:17
+msgid "Don't start a download if it leaves less than"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:18
+msgid "Enter the URL of the channel to add"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:19
 msgid ""
 "Every 30 minutes\n"
 "Every hour\n"
 "Manually"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:20
+#: ../../platform/gtk-x11/glade/democracy.glade.h:22
 msgid "GB free"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:21
+#: ../../platform/gtk-x11/glade/democracy.glade.h:23
 msgid "KB/s when my computer is active"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:22
+#: ../../platform/gtk-x11/glade/democracy.glade.h:24
+msgid "Migrate"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:25
+msgid "Migrate existing movies?"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:26
 msgid "Preferences"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:23
+#: ../../platform/gtk-x11/glade/democracy.glade.h:27
+msgid "Select Movies Directory"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:28
+msgid "Store downloaded movies in"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:29
 msgid "To avoid slowdowns, limit upstream to"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:24
+#: ../../platform/gtk-x11/glade/democracy.glade.h:30
 msgid "Volume:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:31
+msgid ""
+"You've selected a new folder to download movies to.  Should Democracy "
+"migrate your existing downloads there?  (Currently dowloading movies will "
+"not be moved until they finish.)"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:1
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:1
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:1
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:1
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1
+msgid " "
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:2
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:2
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:2
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:2
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:2
+msgid "'"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:5
+msgid "Please enter the URL of the channel you'd like to add."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:5
+msgid ""
+"But we'll try our best to grab the files. It may take extra time to list the "
+"videos, and descriptions may look funny."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:4
+msgid "Channel is not compatible with Democracy!"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:7
+msgid "Please contact the publishers of"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:8
+msgid ""
+"and ask if they can supply a feed in a format that will work with Democracy."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:5
+msgid ""
+"Please enter the username and password given to you by this channel's "
+"publisher."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:4
+msgid "Question"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:5
+msgid ""
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
+"$publisher."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:4
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:5
+msgid "About $longAppName"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:9
+msgid "Copy log to clipboard"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:8
+msgid "Open up the bug tracker"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5
+msgid "Please help us fix it. Copy and paste all the"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6
+msgid ""
+"information into our bug tracker and tell us what you were doing when the"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:8
+msgid "problem occurred."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:10
+msgid ""
+"Then, please restart Democracy Player (or you may keep getting related "
+"errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
+"with your help we're fixing problems fast!"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:4
+msgid "You found a bug in Democracy!"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:4
+msgid "$longAppName"
 msgstr ""
