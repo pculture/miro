@@ -330,6 +330,7 @@ class TestHighLevelFunctions(unittest.TestCase):
             os.unlink(self.savePath);
         except:
             pass
+        database.resetDefaultDatabase()
 
     def checkDatabaseIsTheSame(self):
         # We can't directly compare objects, since that would compare their

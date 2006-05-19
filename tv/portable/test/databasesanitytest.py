@@ -9,6 +9,7 @@ import unittest
 import item
 import feed
 import databasesanity
+import database
 import util
 
 class SanityCheckingTest(unittest.TestCase):
@@ -27,6 +28,7 @@ class SanityCheckingTest(unittest.TestCase):
         except OSError:
             pass
         util.failed = self.oldUtilDotFailed
+        database.resetDefaultDatabase()
 
     def testPhantomFeedChecking(self):
         f = feed.Feed("http://feed.uk")

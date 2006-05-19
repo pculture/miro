@@ -456,49 +456,45 @@ def restoreDatabase(db=None, pathname=None, convertOnFail=True):
     if pathname is None:
         pathname = config.get(prefs.DB_PATHNAME)
 
-    db.beginUpdate()
+    pathname = os.path.expanduser(pathname)
+    if not os.path.exists(pathname):
+        # maybe we crashed in saveDatabase() after deleting the real file, but
+        # before renaming the temp file?
+        tempPathname = pathname + '.temp'
+        if os.path.exists(tempPathname):
+            os.rename(tempPathname, pathname)
+        else:
+            return # nope, there's no database to restore
+
     try:
-        pathname = os.path.expanduser(pathname)
-        if not os.path.exists(pathname):
-            # maybe we crashed in saveDatabase() after deleting the real file, but
-            # before renaming the temp file?
-            tempPathname = pathname + '.temp'
-            if os.path.exists(tempPathname):
-                os.rename(tempPathname, pathname)
-            else:
-                return # nope, there's no database to restore
-    
-        try:
+        objects = restoreObjectList(pathname)
+    except BadFileFormatError:
+        if convertOnFail:
+            print "trying to convert database from old version"
+            olddatabaseupgrade.convertOldDatabase(pathname)
             objects = restoreObjectList(pathname)
-        except BadFileFormatError:
-            if convertOnFail:
-                print "trying to convert database from old version"
-                olddatabaseupgrade.convertOldDatabase(pathname)
-                objects = restoreObjectList(pathname)
-                print "*** Conversion Successfull ***"
-            else:
-                raise
-        except ImportError, e:
-            if e.args == ("No module named storedatabase\r",):
-                # this looks like an error caused by reading a file saved in text
-                # mode on windows, let's try converting it.
-                print "WARNING: trying to convert text-mode database"
-                f = open(pathname, 'rt')
-                data = f.read()
-                f.close()
-                f = open(pathname, 'wb')
-                f.write(data.replace("\r\n", "\n"))
-                f.close()
-                objects = restoreObjectList(pathname)
-            else:
-                raise
-    
-        try:
-            databasesanity.checkSanity(objects)
-        except databasesanity.DatabaseInsaneError, e:
-            util.failedExn("When restoring database", e)
-            # if the database fails the sanity check, try to restore it anyway.
-            # It's better than notheing
-        db.restoreFromObjectList(objects)
-    finally:
-        db.endUpdate()
+            print "*** Conversion Successfull ***"
+        else:
+            raise
+    except ImportError, e:
+        if e.args == ("No module named storedatabase\r",):
+            # this looks like an error caused by reading a file saved in text
+            # mode on windows, let's try converting it.
+            print "WARNING: trying to convert text-mode database"
+            f = open(pathname, 'rt')
+            data = f.read()
+            f.close()
+            f = open(pathname, 'wb')
+            f.write(data.replace("\r\n", "\n"))
+            f.close()
+            objects = restoreObjectList(pathname)
+        else:
+            raise
+
+    try:
+        databasesanity.checkSanity(objects)
+    except databasesanity.DatabaseInsaneError, e:
+        util.failedExn("When restoring database", e)
+        # if the database fails the sanity check, try to restore it anyway.
+        # It's better than notheing
+    db.restoreFromObjectList(objects)

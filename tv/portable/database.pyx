@@ -1097,3 +1097,9 @@ class DDBObject:
     # Call this after you change the object
     def endNoChange(self):
         unlock()
+
+# Erases the current database and replaces it with a blank slate
+def resetDefaultDatabase():
+    global defaultDatabase
+    defaultDatabase = DynamicDatabase()
+    DDBObject.dd = defaultDatabase

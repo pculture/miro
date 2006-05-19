@@ -1,5 +1,5 @@
 import unittest
-from database import *
+import database
 from os import remove
 from os.path import expanduser
 import random
@@ -9,10 +9,13 @@ import time
 import storedatabase
 from threading import Thread
 
-class EmptyViewTestCase(unittest.TestCase):
+class DatabaseTest(unittest.TestCase):
+    def tearDown(self):
+        database.resetDefaultDatabase()
+
+class EmptyViewTestCase(DatabaseTest):
     def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd 
+        self.everything = database.defaultDatabase
     def testCur(self):
         self.everything.resetCursor()
         self.assertEqual(self.everything.cur(),None)
@@ -27,17 +30,16 @@ class EmptyViewTestCase(unittest.TestCase):
     def testLen(self):
         self.assertEqual(self.everything.len(),0)
         
-class SingleItemViewTestCase(unittest.TestCase):
+class SingleItemViewTestCase(DatabaseTest):
     def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
-        self.x = DDBObject()
+        self.everything = database.defaultDatabase
+        self.x = database.DDBObject()
     def testAdd(self):
-        self.assertEqual(self.x.__class__.__name__,'DDBObject')
+        self.assertEqual(self.x.__class__, database.DDBObject)
     def testGetItem(self):
         a = self.everything[0]
         b = self.everything[1]
-        self.assertEqual(a.__class__.__name__,'DDBObject')
+        self.assertEqual(a.__class__, database.DDBObject)
         self.assertEqual(b,None)
     def testNext(self):
         self.everything.resetCursor()
@@ -45,7 +47,7 @@ class SingleItemViewTestCase(unittest.TestCase):
         b = self.everything.getNext()
         c = self.everything.cur()
         d = self.everything.getNext()
-        assert ((a == None) and (b.__class__.__name__ == 'DDBObject') and
+        assert ((a == None) and (b.__class__ == database.DDBObject) and
                 (c == b) and (d == None))
     def testGetPrev(self):
         self.everything.resetCursor()
@@ -53,12 +55,12 @@ class SingleItemViewTestCase(unittest.TestCase):
     def testLen(self):
         self.assertEqual(self.everything.len(),1)
 
-class AddBeforeViewTestCase(unittest.TestCase):
+class AddBeforeViewTestCase(DatabaseTest):
     def setUp(self):
-        self.x = DDBObject()
-        self.y = DDBObject()
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
+        self.x = database.DDBObject()
+        self.y = database.DDBObject()
+        database.resetDefaultDatabase()
+        self.everything = database.defaultDatabase
         self.everything.addBeforeCursor(self.y)
         self.everything.resetCursor()
         self.everything.addBeforeCursor(self.x)
@@ -70,8 +72,8 @@ class AddBeforeViewTestCase(unittest.TestCase):
         a = self.everything[0]
         b = self.everything[1]
         c = self.everything[2]
-        self.assertEqual(a.__class__.__name__,'DDBObject')
-        self.assertEqual(b.__class__.__name__,'DDBObject')
+        self.assertEqual(a.__class__,database.DDBObject)
+        self.assertEqual(b.__class__,database.DDBObject)
         self.assertNotEqual(a,b)
         self.assertEqual(c,None)
     def testNextGetPrev(self):
@@ -82,18 +84,18 @@ class AddBeforeViewTestCase(unittest.TestCase):
         d = self.everything.getNext()
         e = self.everything.cur()
         f = self.everything.getNext()
-        assert ((a == None) and (b.__class__.__name__ == 'DDBObject') and
-                (c == b) and (d.__class__.__name__ == 'DDBObject') and
+        assert ((a == None) and (b.__class__ == database.DDBObject) and
+                (c == b) and (d.__class__ == database.DDBObject) and
                 (d != c) and (d == e) and (f == None))
     def testLen(self):
         self.assertEqual(self.everything.len(),2)
 
-class AddAfterViewTestCase(unittest.TestCase):
+class AddAfterViewTestCase(DatabaseTest):
     def setUp(self):
-        self.x = DDBObject()
-        self.y = DDBObject()
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
+        self.x = database.DDBObject()
+        self.y = database.DDBObject()
+        database.resetDefaultDatabase()
+        self.everything = database.defaultDatabase
         self.everything.addAfterCursor(self.x)
         self.everything.resetCursor()
         self.everything.getNext()
@@ -106,8 +108,8 @@ class AddAfterViewTestCase(unittest.TestCase):
         a = self.everything[0]
         b = self.everything[1]
         c = self.everything[2]
-        self.assertEqual(a.__class__.__name__,'DDBObject')
-        self.assertEqual(b.__class__.__name__,'DDBObject')
+        self.assertEqual(a.__class__,database.DDBObject)
+        self.assertEqual(b.__class__,database.DDBObject)
         self.assertNotEqual(a,b)
         self.assertEqual(c,None)
     def testNextGetPrev(self):
@@ -118,24 +120,23 @@ class AddAfterViewTestCase(unittest.TestCase):
         d = self.everything.getNext()
         e = self.everything.cur()
         f = self.everything.getNext()
-        assert ((a == None) and (b.__class__.__name__ == 'DDBObject') and
-                (c == b) and (d.__class__.__name__ == 'DDBObject') and
+        assert ((a == None) and (b.__class__ == database.DDBObject) and
+                (c == b) and (d.__class__ == database.DDBObject) and
                 (d != c) and (d == e) and (f == None))
     def testLen(self):
         self.assertEqual(self.everything.len(),2)
 
-class DeletedItemViewTestCase(unittest.TestCase):
+class DeletedItemViewTestCase(DatabaseTest):
     def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
-        self.x = DDBObject()
-        self.y = DDBObject()
+        self.everything = database.defaultDatabase
+        self.x = database.DDBObject()
+        self.y = database.DDBObject()
         self.x.remove()
     def testRemoveMissing(self):
         self.everything.resetCursor()
-        self.assertRaises(ObjectNotFoundError,self.everything.remove)
+        self.assertRaises(database.ObjectNotFoundError,self.everything.remove)
     def testAdd(self):
-        self.assertEqual(self.x.__class__.__name__,'DDBObject')
+        self.assertEqual(self.x.__class__,database.DDBObject)
     def testGetItem(self):
         a = self.everything[0]
         b = self.everything[1]
@@ -147,17 +148,16 @@ class DeletedItemViewTestCase(unittest.TestCase):
         b = self.everything.getNext()
         c = self.everything.cur()
         d = self.everything.getNext()
-        assert ((a == None) and (b.__class__.__name__ == 'DDBObject') and
+        assert ((a == None) and (b.__class__ == database.DDBObject) and
                 (c == b) and (d == None))
     def testLen(self):
         self.assertEqual(self.everything.len(),1)
 
-class FilterViewTestCase(unittest.TestCase):
+class FilterViewTestCase(DatabaseTest):
     def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
-        self.x = DDBObject()
-        self.y = DDBObject()
+        self.everything = database.defaultDatabase
+        self.x = database.DDBObject()
+        self.y = database.DDBObject()
         self.filtered = self.everything.filter(lambda q:q != self.x)
     def testGetItem(self):
         a = self.filtered[0]
@@ -178,12 +178,11 @@ class FilterViewTestCase(unittest.TestCase):
     def testLen(self):
         self.assertEqual(self.filtered.len(),1)
 
-class RecomputeFilterViewTestCase(unittest.TestCase):
+class RecomputeFilterViewTestCase(DatabaseTest):
     def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
-        self.x = DDBObject()
-        self.y = DDBObject()
+        self.everything = database.defaultDatabase
+        self.x = database.DDBObject()
+        self.y = database.DDBObject()
         self.accept = self.x.getID()
         self.filtered = self.everything.filter(self.changeFilt)
         self.accept = self.y.getID()
@@ -209,12 +208,11 @@ class RecomputeFilterViewTestCase(unittest.TestCase):
     def testLen(self):
         self.assertEqual(self.filtered.len(),1)
 
-class SortTestCase(unittest.TestCase):
+class SortTestCase(DatabaseTest):
     def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
-        self.x = DDBObject()
-        self.y = DDBObject()
+        self.everything = database.defaultDatabase
+        self.x = database.DDBObject()
+        self.y = database.DDBObject()
         self.higher = self.x
         self.sorted = self.everything.sort(self.sortFunc)
     def sortFunc(self,x,y):
@@ -244,8 +242,8 @@ class SortTestCase(unittest.TestCase):
         d = self.sorted.getNext()
         e = self.sorted.cur()
         f = self.sorted.getNext()
-        assert ((a == None) and (b.__class__.__name__ == 'DDBObject') and
-                (c == b) and (d.__class__.__name__ == 'DDBObject') and
+        assert ((a == None) and (b.__class__ == database.DDBObject) and
+                (c == b) and (d.__class__ == database.DDBObject) and
                 (d != c) and (d == e) and (f == None))
     def testLen(self):
         self.assertEqual(self.everything.len(),2)
@@ -260,12 +258,11 @@ class SortTestCase(unittest.TestCase):
         self.assertNotEqual(a,b)
         self.assertEqual(c,None)
 
-class MapViewTestCase(unittest.TestCase):
+class MapViewTestCase(DatabaseTest):
     def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
-        self.x = DDBObject()
-        self.y = DDBObject()
+        self.everything = database.defaultDatabase
+        self.x = database.DDBObject()
+        self.y = database.DDBObject()
         self.add = 0
         self.mapped = self.everything.map(self.mapFunc)
     def mapFunc(self,obj):
@@ -301,10 +298,9 @@ class MapViewTestCase(unittest.TestCase):
     def testLen(self):
         self.assertEqual(self.everything.len(),2)
 
-class CallbackViewTestCase(unittest.TestCase):
+class CallbackViewTestCase(DatabaseTest):
     def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
+        self.everything = database.defaultDatabase
         self.filtered = self.everything.filter(lambda x:True)
         self.mapped = self.everything.map(lambda x:x)
         self.sorted = self.everything.sort(lambda x,y:0)
@@ -316,72 +312,71 @@ class CallbackViewTestCase(unittest.TestCase):
         self.callcount+=1
     def testAdd(self):
         self.everything.addAddCallback(self.call)
-        self.x = DDBObject()
+        self.x = database.DDBObject()
         self.assertEqual(self.callcount,1)
     def testChange(self):
         self.everything.addChangeCallback(self.call)
-        self.x = DDBObject()
+        self.x = database.DDBObject()
         self.x.beginChange()
         self.x.endChange()
         self.assertEqual(self.callcount,1)
     def testRemove(self):
         self.everything.addRemoveCallback(self.removeCall)
-        self.x = DDBObject()
+        self.x = database.DDBObject()
         self.x.remove()
         self.assertEqual(self.callcount,1)
     def TestFilterAdd(self):
         self.filtered.addAddCallBack(self.call)
-        self.x = DDBObject()
+        self.x = database.DDBObject()
         self.assertEqual(self.callcount,1)
     def TestFilterRemove(self):
         self.filtered.addRemoveCallBack(self.call)
-        self.x = DDBObject()
+        self.x = database.DDBObject()
         self.x.remove()
         self.assertEqual(self.callcount,1)
     def TestFilterChange(self):
         self.filtered.addChangeCallBack(self.call)
-        self.x = DDBObject()
+        self.x = database.DDBObject()
         self.x.change()
         self.assertEqual(self.callcount,1)
     def TestMapAdd(self):
         self.mapped.addAddCallBack(self.call)
-        self.x = DDBObject()
+        self.x = database.DDBObject()
         self.assertEqual(self.callcount,1)
     def TestMapRemove(self):
         self.mapped.addRemoveCallBack(self.call)
-        self.x = DDBObject()
+        self.x = database.DDBObject()
         self.x.remove()
         self.assertEqual(self.callcount,1)
     def TestMapChange(self):
         self.mapped.addChangeCallBack(self.call)
-        self.x = DDBObject()
+        self.x = database.DDBObject()
         self.x.change()
         self.assertEqual(self.callcount,1)
     def TestSortAdd(self):
         self.sorted.addAddCallBack(self.call)
-        self.x = DDBObject()
+        self.x = database.DDBObject()
         self.assertEqual(self.callcount,1)
     def TestSortRemove(self):
         self.sorted.addRemoveCallBack(self.call)
-        self.x = DDBObject()
+        self.x = database.DDBObject()
         self.x.remove()
         self.assertEqual(self.callcount,1)
     def TestSortChange(self):
         self.sorted.addChangeCallBack(self.call)
-        self.x = DDBObject()
+        self.x = database.DDBObject()
         self.x.change()
         self.assertEqual(self.callcount,1)
 
-class SaveViewTestCase(unittest.TestCase):
+class SaveViewTestCase(DatabaseTest):
     def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
-        self.x = DDBObject()
-        self.y = DDBObject()
+        self.everything = database.defaultDatabase
+        self.x = database.DDBObject()
+        self.y = database.DDBObject()
     def testSaveRestore(self):
         storedatabase.saveDatabase(self.everything)
-        self.z = DDBObject()
-        self.zz = DDBObject()
+        self.z = database.DDBObject()
+        self.zz = database.DDBObject()
         last = self.zz.getID()
         self.x.remove()
         storedatabase.restoreDatabase(self.everything)
@@ -393,25 +388,25 @@ class SaveViewTestCase(unittest.TestCase):
         if self.everything[0].getID() == self.x.getID():
             self.assertEqual(self.everything[1].getID(),self.y.getID())
         self.assertEqual(self.everything[2],None)
-        assert DDBObject().getID() >= last
+        assert database.DDBObject().getID() >= last
     def testLastID(self):
         last = self.y.getID()
         storedatabase.saveDatabase(self.everything)
         # Simulate restarting app
         self.y.remove()
         self.x.remove()
-        DDBObject.lastID = 0 # This is implementation specific and
+        database.DDBObject.lastID = 0 # This is implementation specific and
                              # needs to be updated when the
                              # implementation changes
         storedatabase.restoreDatabase(self.everything)
-        assert DDBObject().getID() >= last
+        assert database.DDBObject().getID() >= last
     def testBackup(self):
         storedatabase.saveDatabase(self.everything)
         storedatabase.backedUp = False
         storedatabase.saveDatabase(self.everything)
         remove(config.get(prefs.DB_PATHNAME))
-        self.z = DDBObject()
-        self.zz = DDBObject()
+        self.z = database.DDBObject()
+        self.zz = database.DDBObject()
         last = self.zz.getID()
         self.x.remove()
         storedatabase.restoreDatabase(self.everything,config.get(prefs.DB_PATHNAME) + '.bak')
@@ -423,15 +418,14 @@ class SaveViewTestCase(unittest.TestCase):
         if self.everything[0].getID() == self.x.getID():
             self.assertEqual(self.everything[1].getID(),self.y.getID())
         self.assertEqual(self.everything[2],None)
-        assert DDBObject().getID() >= last
+        assert database.DDBObject().getID() >= last
 
-class MapFilterRemoveViewTestCase(unittest.TestCase):
+class MapFilterRemoveViewTestCase(DatabaseTest):
     def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
+        self.everything = database.defaultDatabase
         self.objlist = []
         for x in range(0,10):
-            DDBObject()
+            database.DDBObject()
         self.add = 0
         self.mapped = self.everything.map(self.mapFunc)
         self.mapped = self.mapped.filter(lambda x:True)
@@ -448,22 +442,21 @@ class MapFilterRemoveViewTestCase(unittest.TestCase):
         for x in range(1,6):
             obj = self.everything.getNext()
         obj.remove()
-        self.everything.addBeforeCursor(DDBObject(add=False))
+        self.everything.addBeforeCursor(database.DDBObject(add=False))
         self.everything.getPrev()
         self.everything.getPrev()
-        self.everything.addAfterCursor(DDBObject(add=False))
+        self.everything.addAfterCursor(database.DDBObject(add=False))
         self.everything.resetCursor()
         for obj in self.everything:
             self.assertEqual(self.mapFunc(obj),self.mapped.getObjectByID(obj.getID()))
 
-class FilterSortMapTestCase(unittest.TestCase):
+class FilterSortMapTestCase(DatabaseTest):
     def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
+        self.everything = database.defaultDatabase
         self.callbacks = 0
         self.objlist = []
         for x in range(0,10):
-            self.objlist.append(DDBObject())
+            self.objlist.append(database.DDBObject())
         self.myfiltFunc = lambda x:x.getID()%2 == 0
         self.filted = self.everything.filter(self.filterFunc)
         self.sorted = self.filted.sort(self.sortFunc)
@@ -607,8 +600,8 @@ class FilterSortMapTestCase(unittest.TestCase):
         self.assertEqual(mapped2.cur(),mapped2[0])
         self.assertEqual(self.callbacks,2)
         self.assertEqual(self.callbacks2,1)
-        self.objlist.append(DDBObject(add = False))
-        self.objlist.append(DDBObject(add = False))
+        self.objlist.append(database.DDBObject(add = False))
+        self.objlist.append(database.DDBObject(add = False))
         self.everything.resetCursor()
         self.everything.addAfterCursor(self.objlist[10])
         self.assertEqual(self.everything[0],self.objlist[10])
@@ -639,11 +632,10 @@ class FilterSortMapTestCase(unittest.TestCase):
         self.objlist[3].endChange()
         self.assertEqual(self.callbacks2,4)
         
-class CursorTestCase(unittest.TestCase):
+class CursorTestCase(DatabaseTest):
     def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
-	self.origObjs = [DDBObject(), DDBObject(), DDBObject()]
+        self.everything = database.defaultDatabase
+	self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
 	self.objs = self.everything.filter(lambda x: True).map(self.mapToObject).sort(self.sortOldID)
     def sortOldID(self,x,y):
 	if x.oldID > y.oldID:
@@ -653,7 +645,7 @@ class CursorTestCase(unittest.TestCase):
 	else:
 	    return 0
     def mapToObject(self, obj):
-	temp = DDBObject(add = False)
+	temp = database.DDBObject(add = False)
 	temp.oldID = obj.getID()
 	return temp
     def test(self):
@@ -676,11 +668,10 @@ class CursorTestCase(unittest.TestCase):
         self.everything.restoreCursor()
         self.assertEqual(self.everything.cur(), obj)
 
-class RecomputeMapTestCase(unittest.TestCase):
+class RecomputeMapTestCase(DatabaseTest):
     def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
-	self.origObjs = [DDBObject(), DDBObject(), DDBObject()]
+        self.everything = database.defaultDatabase
+	self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
 	self.objs = self.everything.filter(lambda x: True).map(self.mapToObject).sort(self.sortOldID).map(self.mapToObject)
 	self.changeCalls = 0
     def sortOldID(self,x,y):
@@ -691,7 +682,7 @@ class RecomputeMapTestCase(unittest.TestCase):
 	else:
 	    return 0
     def mapToObject(self, obj):
-	temp = DDBObject(add = False)
+	temp = database.DDBObject(add = False)
 	temp.oldID = obj.getID()
 	return temp
     def changeCall(self,item,id):
@@ -705,11 +696,10 @@ class RecomputeMapTestCase(unittest.TestCase):
 	temp.endChange()
 	self.assertEqual(self.changeCalls,1)
 
-class FilterUpdateOnChange(unittest.TestCase):
+class FilterUpdateOnChange(DatabaseTest):
     def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
-	self.origObjs = [DDBObject(), DDBObject(), DDBObject()]
+        self.everything = database.defaultDatabase
+	self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
         self.origObjs[0].good = True
         self.origObjs[1].good = False
         self.origObjs[2].good = False
@@ -729,18 +719,17 @@ class FilterUpdateOnChange(unittest.TestCase):
         self.assertEqual(self.objs.len(),2)
 
 # Currently, we require that the database does NOT update maps on a change
-class MapUpdateOnChange(unittest.TestCase):
+class MapUpdateOnChange(DatabaseTest):
     def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
-	self.origObjs = [DDBObject(), DDBObject(), DDBObject()]
+        self.everything = database.defaultDatabase
+	self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
         self.origObjs[0].good = True
         self.origObjs[1].good = False
         self.origObjs[2].good = False
 	self.objs = self.everything.map(self.mapToObject).filter(lambda x: x.good)
 	self.changeCalls = 0
     def mapToObject(self, obj):
-	temp = DDBObject(add = False)
+	temp = database.DDBObject(add = False)
 	temp.good = obj.good
 	return temp
     def testLoss(self):
@@ -756,11 +745,10 @@ class MapUpdateOnChange(unittest.TestCase):
         self.origObjs[1].endChange()
         self.assertEqual(self.objs.len(),1)
 
-class SortUpdateOnChange(unittest.TestCase):
+class SortUpdateOnChange(DatabaseTest):
     def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
-	self.origObjs = [DDBObject(), DDBObject(), DDBObject()]
+        self.everything = database.defaultDatabase
+	self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
         self.origObjs[0].good = True
         self.origObjs[1].good = False
         self.origObjs[2].good = False
@@ -779,11 +767,10 @@ class SortUpdateOnChange(unittest.TestCase):
         self.origObjs[1].endChange()
         self.assertEqual(self.objs.len(),2)
 
-class IDBaseTraversal(unittest.TestCase):
+class IDBaseTraversal(DatabaseTest):
     def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
-	self.origObjs = [DDBObject(), DDBObject(), DDBObject()]
+        self.everything = database.defaultDatabase
+	self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
         self.sorted = self.everything.sort(self.sortID)
     def sortID(self,x,y):
 	if x.getID() > y.getID():
@@ -820,28 +807,26 @@ class IDBaseTraversal(unittest.TestCase):
         self.sorted.getNext()
         self.assertEqual(self.origObjs[2].getID(), self.sorted.getCurrentID())
 
-class ThreadTest(unittest.TestCase):
-    def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
-    def add100(self):
-        for x in range(0,100):
-            DDBObject()
-    def remove100(self):
-        for x in range(0,100):
-            self.everything[0].remove()
-    def testAddRemove(self):
-        self.add100()
-        thread = Thread(target = self.add100)
-	thread.setDaemon(False)
-	thread.start()
-        self.remove100()
-        thread.join()
+# class ThreadTest(DatabaseTest):
+#     def setUp(self):
+#         self.everything = database.defaultDatabase
+#     def add100(self):
+#         for x in range(0,100):
+#             database.DDBObject()
+#     def remove100(self):
+#         for x in range(0,100):
+#             self.everything[0].remove()
+#     def testAddRemove(self):
+#         self.add100()
+#         thread = Thread(target = self.add100)
+# 	thread.setDaemon(False)
+# 	thread.start()
+#         self.remove100()
+#         thread.join()
 
-class IndexFilterTest(unittest.TestCase):
+class IndexFilterTest(DatabaseTest):
     def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
+        self.everything = database.defaultDatabase
         self.addCallbacks = 0
         self.removeCallbacks = 0
         self.changeCallbacks = 0
@@ -867,16 +852,16 @@ class IndexFilterTest(unittest.TestCase):
         self.changeCallbacks += 1
     def testBasicIndexFilter(self):
         for x in range(0,100):
-            DDBObject()
+            database.DDBObject()
         self.everything.createIndex(self.mod10)
         for x in range(0,50):
-            DDBObject()
+            database.DDBObject()
         filtered = self.everything.filterWithIndex(self.mod10,0)
         filtered.addAddCallback(self.addCallback)
         filtered.addRemoveCallback(self.removeCallback)
         filtered.addChangeCallback(self.changeCallback)
         for x in range(0,50):
-            DDBObject()
+            database.DDBObject()
 
         self.assertEqual(self.addCallbacks,5)
         for obj in filtered:
@@ -891,7 +876,7 @@ class IndexFilterTest(unittest.TestCase):
         obj = filtered[0]
         self.everything.removeView(filtered)
         for x in range(0,50):
-            DDBObject()
+            database.DDBObject()
         self.assertEqual(self.addCallbacks,5)
         obj.beginChange()
         obj.endChange()
@@ -900,13 +885,13 @@ class IndexFilterTest(unittest.TestCase):
         self.assertEqual(self.removeCallbacks,1)
     def testRecomputeIndex(self):
         for x in range(0,100):
-            DDBObject()
+            database.DDBObject()
         self.everything.createIndex(self.mod10)
         for x in range(0,50):
-            DDBObject()
+            database.DDBObject()
         filtered = self.everything.filterWithIndex(self.mod10,0)
         for x in range(0,50):
-            DDBObject()
+            database.DDBObject()
         self.assertEqual(filtered.len(),20)
         filtered[0].remove()
         self.assertEqual(filtered.len(),19)
@@ -917,28 +902,28 @@ class IndexFilterTest(unittest.TestCase):
         self.everything.createIndex(self.mod100)
         start = time.clock()
         for x in range(0,500):
-            DDBObject()
-            DDBObject()
-            DDBObject()
-            DDBObject()
-            DDBObject()
-            DDBObject()
-            DDBObject()
-            DDBObject()
-            DDBObject()
-            DDBObject()
+            database.DDBObject()
+            database.DDBObject()
+            database.DDBObject()
+            database.DDBObject()
+            database.DDBObject()
+            database.DDBObject()
+            database.DDBObject()
+            database.DDBObject()
+            database.DDBObject()
+            database.DDBObject()
         mid = time.clock()
         for x in range(0,500):
-            DDBObject()
-            DDBObject()
-            DDBObject()
-            DDBObject()
-            DDBObject()
-            DDBObject()
-            DDBObject()
-            DDBObject()
-            DDBObject()
-            DDBObject()
+            database.DDBObject()
+            database.DDBObject()
+            database.DDBObject()
+            database.DDBObject()
+            database.DDBObject()
+            database.DDBObject()
+            database.DDBObject()
+            database.DDBObject()
+            database.DDBObject()
+            database.DDBObject()
         end = time.clock()
         # Make sure insert time doesn't increase as the size of the
         # database increases
