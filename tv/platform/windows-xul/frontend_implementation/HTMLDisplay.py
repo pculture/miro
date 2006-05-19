@@ -1,15 +1,17 @@
-import app
 import threading
 import socket
 import re
-import resource
 import xhtmltools
 import time
 import errno
 import os
+
+import app
 import config
-import util
+import prefs
 from util import quoteJS
+import resource
+import util
 
 def execChromeJS(js):
     """Execute some Javascript in the context of the privileged top-level
@@ -231,30 +233,30 @@ class httpServer:
             print "[%s] PREFJS" % (self.reqNum)
 
             self.beginSendingChunks()
-            if (config.get(config.RUN_AT_STARTUP)):
+            if (config.get(prefs.RUN_AT_STARTUP)):
                 self.queueChunk("text/plain", "setRunAtStartup(true);")
             else:
                 self.queueChunk("text/plain", "setRunAtStartup(false);")
-            checkEvery = config.get(config.CHECK_CHANNELS_EVERY_X_MN)
+            checkEvery = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)
             self.queueChunk("text/plain", "setCheckEvery('%s');" % checkEvery)
-            speed = config.get(config.UPSTREAM_LIMIT_IN_KBS)
+            speed = config.get(prefs.UPSTREAM_LIMIT_IN_KBS)
             self.queueChunk("text/plain", "setMaxUpstream(%s);" % speed)
-            moviesDir = config.get(config.MOVIES_DIRECTORY)
+            moviesDir = config.get(prefs.MOVIES_DIRECTORY)
             self.queueChunk("text/plain", "setMoviesDir(%r);" % moviesDir)
 
-            if (config.get(config.LIMIT_UPSTREAM)):
+            if (config.get(prefs.LIMIT_UPSTREAM)):
                 self.queueChunk("text/plain", "setLimitUpstream(true);")
             else:
                 self.queueChunk("text/plain", "setLimitUpstream(false);")
 
-            min = config.get(config.PRESERVE_X_GB_FREE)
+            min = config.get(prefs.PRESERVE_X_GB_FREE)
             self.queueChunk("text/plain", "setMinDiskSpace(%s);" % min)
-            if (config.get(config.PRESERVE_DISK_SPACE)):
+            if (config.get(prefs.PRESERVE_DISK_SPACE)):
                 self.queueChunk("text/plain", "setHasMinDiskSpace(true);")
             else:
                 self.queueChunk("text/plain", "setHasMinDiskSpace(false);")
 
-            expire = config.get(config.EXPIRE_AFTER_X_DAYS)
+            expire = config.get(prefs.EXPIRE_AFTER_X_DAYS)
             self.queueChunk("text/plain", "setExpire('%s');" % expire)
 
 
@@ -353,7 +355,7 @@ class httpServer:
         if match:
             relativePath = match.group(1)
             print "[%s] Icon-Cache: %s" % (self.reqNum, relativePath)
-            cachedir = config.get(config.ICON_CACHE_DIRECTORY)
+            cachedir = config.get(prefs.ICON_CACHE_DIRECTORY)
             fullPath = os.path.join(cachedir, relativePath)
             self.sendFileAndClose(fullPath)
             return

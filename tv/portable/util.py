@@ -157,7 +157,11 @@ def failed(when, withExn = False, details = None):
     if details:
         header += "Details: %s" % (details, )
     header += "Call stack\n----------\n"
-    header += ''.join(traceback.format_list(getNiceStack(tb)))
+    try:
+        stack = getNiceStack(tb)
+    except:
+        stack = traceback.extract_stack()
+    header += ''.join(traceback.format_list(stack))
     header += "\n"
 
     header += "Threads\n-------\n"

@@ -1,9 +1,6 @@
-from frontend_implementation.HTMLDisplay import execChromeJS
 from random import randint
 from threading import Event
 from urllib import unquote
-from util import quoteJS
-import config
 import os
 import subprocess
 import time
@@ -12,6 +9,11 @@ import webbrowser
 import sys
 import _winreg
 import ctypes
+
+import prefs
+import config
+from frontend_implementation.HTMLDisplay import execChromeJS
+from util import quoteJS
 
 ###############################################################################
 #### 'Delegate' objects for asynchronously asking the user questions       ####
@@ -106,19 +108,19 @@ class UIBackendDelegate:
     def updateAvailable(self, url):
         """Tell the user that an update is available and ask them if they'd
         like to download it now"""
-        title = "%s Version Alert" % (config.get(config.SHORT_APP_NAME), )
-        message = "A new version of %s is available. Would you like to download it now?" % (config.get(config.LONG_APP_NAME), )
+        title = "%s Version Alert" % (config.get(prefs.SHORT_APP_NAME), )
+        message = "A new version of %s is available. Would you like to download it now?" % (config.get(prefs.LONG_APP_NAME), )
         download = self.yesNoPrompt(title, message)
         if download:
             self.openExternalURL(url)
 
     def dtvIsUpToDate(self):
         execChromeJS("alert('%s is up to date.');" % \
-                     (quoteJS(config.get(config.LONG_APP_NAME)), ))
+                     (quoteJS(config.get(prefs.LONG_APP_NAME)), ))
 
     def saveFailed(self, reason):
         message = u"%s was unable to save its database. Recent changes may be lost %s" % \
-                     (config.get(config.SHORT_APP_NAME), reason)
+                     (config.get(prefs.SHORT_APP_NAME), reason)
         execChromeJS("alert('%s');" % quoteJS(message))
 
     def validateFeedRemoval(self, feedTitle):
@@ -186,7 +188,7 @@ class UIBackendDelegate:
         for key, value in env.items():
             os.environ[key] = value
         os.environ['DEMOCRACY_DOWNLOADER_LOG'] = \
-                config.get(config.DOWNLOADER_LOG_PATHNAME)
+                config.get(prefs.DOWNLOADER_LOG_PATHNAME)
         # Start the downloader.  We use the subprocess module to turn off the
         # console.  One slightly awkward thing is that the current process
         # might not have a valid stdin/stdout/stderr, so we create a pipe to

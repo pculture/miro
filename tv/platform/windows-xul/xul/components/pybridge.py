@@ -49,7 +49,8 @@ class PyBridge:
 
         try:
             import config
-            logFile = config.get(config.LOG_PATHNAME)
+            import prefs
+            logFile = config.get(prefs.LOG_PATHNAME)
             if logFile is not None:
                 h = open(logFile, "wt")
                 sys.stdout = sys.stderr = AutoflushingStream(h)

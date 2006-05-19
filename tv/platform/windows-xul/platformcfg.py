@@ -4,6 +4,7 @@ import config
 import _winreg
 import cPickle
 import string
+import prefs
 import tempfile
 import ctypes
 
@@ -52,7 +53,7 @@ def _findDirectories():
 _findDirectories()
 
 def _getMoviesDirectory():
-    path = os.path.join(_baseMoviesDirectory, config.get(config.SHORT_APP_NAME))
+    path = os.path.join(_baseMoviesDirectory, config.get(prefs.SHORT_APP_NAME))
     try:
         os.makedirs(os.path.join(path, 'Incomplete Downloads'))
     except:
@@ -61,8 +62,8 @@ def _getMoviesDirectory():
 
 def _getSupportDirectory():
     path = os.path.join(_appDataDirectory,
-                        config.get(config.PUBLISHER),
-                        config.get(config.LONG_APP_NAME),
+                        config.get(prefs.PUBLISHER),
+                        config.get(prefs.LONG_APP_NAME),
                         'Support')
     try:
         os.makedirs(path)
@@ -91,26 +92,26 @@ def save(data):
     cPickle.dump(data,open(file,'w'))
 
 def get(descriptor):
-    if descriptor == config.MOVIES_DIRECTORY:
+    if descriptor == prefs.MOVIES_DIRECTORY:
         return _getMoviesDirectory()
 
-    elif descriptor == config.SUPPORT_DIRECTORY:
+    elif descriptor == prefs.SUPPORT_DIRECTORY:
         return _getSupportDirectory()
 
-    elif descriptor == config.ICON_CACHE_DIRECTORY:
+    elif descriptor == prefs.ICON_CACHE_DIRECTORY:
         return os.path.join(_getSupportDirectory(), 'icon-cache')
     
-    elif descriptor == config.DB_PATHNAME:
-        path = get(config.SUPPORT_DIRECTORY)
+    elif descriptor == prefs.DB_PATHNAME:
+        path = get(prefs.SUPPORT_DIRECTORY)
         return os.path.join(path, 'tvdump')
 
-    elif descriptor == config.LOG_PATHNAME:
+    elif descriptor == prefs.LOG_PATHNAME:
         return os.path.join(tempfile.gettempdir(), 'dtv-log')
 
-    elif descriptor == config.DOWNLOADER_LOG_PATHNAME:
+    elif descriptor == prefs.DOWNLOADER_LOG_PATHNAME:
         return os.path.join(tempfile.gettempdir(), 'dtv-downloader-log')
 
-    elif descriptor == config.RUN_AT_STARTUP:
+    elif descriptor == prefs.RUN_AT_STARTUP:
         # We use the legacy startup registry key, so legacy versions
         # of Windows have a chance
         # http://support.microsoft.com/?kbid=270035

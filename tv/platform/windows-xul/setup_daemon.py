@@ -1,7 +1,9 @@
 import os
 import sys
 from distutils.core import setup
+from distutils.extension import Extension
 import py2exe
+from Pyrex.Distutils import build_ext
 
 # The name of this platform.
 platform = 'windows-xul'
@@ -16,8 +18,15 @@ sys.path[0:0] = [
     os.path.join(root, 'portable'),
 ]
 root = os.path.normpath(root)
+ext_modules=[
+    Extension("database", [os.path.join(root, 'portable', 'database.pyx')]),
+]
 
 setup(
     console=[os.path.join(root, 'portable', 'dl_daemon', 'Democracy_Downloader.py')],
-    zipfile=None
+    ext_modules=ext_modules,
+    zipfile=None,
+    cmdclass = {
+	'build_ext': build_ext,
+    }
 )

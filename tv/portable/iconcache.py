@@ -193,7 +193,7 @@ class IconCache:
 
             self.updating = True
 
-            if url is None or url.startswith("file://"):
+            if url is None or url.startswith("file://") or url.startswith("/"):
                 self.updateIconCache(None, url)
                 return
 

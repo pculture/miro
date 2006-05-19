@@ -316,6 +316,10 @@ URL was %s""" % self.url
         finally:
             self.endRead()
 
+    def onRestore(self):
+        self.status['rate'] = 0
+        self.status['eta'] = 0
+
     def restartIfNeeded(self):
         if self.getState() in ('downloading','uploading'):
             if self.dlid == 'noid' or len(self.status) == 0:

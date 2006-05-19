@@ -1,5 +1,6 @@
 #import feed
 #import config
+#import prefs
 #import resource
 #import template
 #import database
@@ -29,11 +30,11 @@ def exit(returnCode):
     windll.kernel32.ExitProcess(returnCode)
 
 # NEEDS: preferences
-#        config.set(config.RUN_DTV_AT_STARTUP, <bool>)
-#        config.set(config.CHECK_CHANNELS_EVERY_X_MN, minutes)
-#        config.set(config.LIMIT_UPSTREAM, <bool>)
-#        config.set(config.UPSTREAM_LIMIT_IN_KBS, <real>)
-#        config.set(config.PRESERVE_X_GB_FREE, <real>)
+#        config.set(prefs.RUN_DTV_AT_STARTUP, <bool>)
+#        config.set(prefs.CHECK_CHANNELS_EVERY_X_MN, minutes)
+#        config.set(prefs.LIMIT_UPSTREAM, <bool>)
+#        config.set(prefs.UPSTREAM_LIMIT_IN_KBS, <real>)
+#        config.set(prefs.PRESERVE_X_GB_FREE, <real>)
 
 
 ###############################################################################

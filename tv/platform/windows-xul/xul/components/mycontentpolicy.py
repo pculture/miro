@@ -2,6 +2,7 @@ from xpcom import components
 import traceback
 import sys
 import config
+import prefs
 import webbrowser
 
 class MyContentPolicy:
@@ -21,7 +22,7 @@ class MyContentPolicy:
             url.startswith('resource:') or
             url.startswith('about:') or
             url.startswith('javascript:') or
-            url.startswith(config.get(config.CHANNEL_GUIDE_URL)))):
+            url.startswith(config.get(prefs.CHANNEL_GUIDE_URL)))):
             return components.interfaces.nsIContentPolicy.ACCEPT
         else:
             print "DTV: openning %s in new window" % url
