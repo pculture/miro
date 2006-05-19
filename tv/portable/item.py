@@ -18,7 +18,8 @@ import feed
 import shutil
 
 import locale
-_charset = locale.nl_langinfo(locale.CODESET)
+
+_charset = locale.getpreferredencoding()
 
 ##
 # An item corresponds to a single entry in a feed. Generally, it has
