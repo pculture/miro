@@ -2,9 +2,15 @@
 #
 # Contains runtime template code
 
+import os
 from templatehelper import quoteattr, escape, toUni, attrPattern, rawAttrPattern, resourcePattern, generateId
-import resource
 from xhtmltools import urlencode
+
+if os.environ.has_key('DEMOCRACY_RECOMPILE_TEMPLATES'):
+    import template_compiler
+    import resource
+    template_compiler.setResourcePath(resource.path(''))
+
 
 ###############################################################################
 #### Public interface                                                      ####
@@ -20,16 +26,15 @@ from xhtmltools import urlencode
 # unlinkTemplate() method you should call when you no longer want to
 # receive Javascript callbacks.
 def fillTemplate(filename, domHandler, platform, eventCookie, top = True, onlyBody = False):
-    filename = filename.replace('/','.').replace('\\','.').replace('-','_')
-    mod = __import__("compiled_templates.%s"%filename)
-    mod = getattr(mod,filename)
-#     (out, blah) = mod.fillTemplate(domHandler, platform, eventCookie)
-#     print
-#     print "="*40
-#     print out.read()
-#     print "="*40
-#     print
-    return mod.fillTemplate(domHandler, platform, eventCookie)
+    if os.environ.has_key('DEMOCRACY_RECOMPILE_TEMPLATES'):
+        (tcc, handle) = template_compiler.compileTemplate(filename)
+        exec tcc.getOutput() in locals()
+        return fillTemplate(domHandler, platform, eventCookie)
+    else:
+        filename = filename.replace('/','.').replace('\\','.').replace('-','_')
+        mod = __import__("compiled_templates.%s"%filename)
+        mod = getattr(mod,filename)
+        return mod.fillTemplate(domHandler, platform, eventCookie)
 
 # As fillTemplate, but no Javascript calls are made, and no template
 # handle is returned, only the HTML or XML as a string. Effectively,

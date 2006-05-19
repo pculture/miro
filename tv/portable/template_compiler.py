@@ -18,9 +18,9 @@ def genRepeatText(varname, tid, prefix, text):
 # Returns translated version of text
 def genRepeatTranslate(varname, tid, prefix, args):
     (text, funcDict) = args
-    # Strip leading and trailing whitespace and convert interior
-    # whitespace to spaces
-    text = ' '.join(text.strip().split())
+    # Convert to ascii, strip leading and trailing whitespace and
+    # convert interior whitespace to spaces
+    text = ' '.join(str(text).strip().split())
 
     if len(funcDict) == 0:
         return '%s%s.write(_(%s))\n' % (prefix, varname, repr(text))
@@ -148,7 +148,7 @@ def setResourcePath(path):
 #
 def compileTemplate(inFile, top = True, onlyBody = False):
     handle = MetaHandle()
-    tcc = TemplateContentCompiler(handle, onlyBody = onlyBody)
+    tcc = TemplateContentCompiler(handle, inFile, onlyBody = onlyBody)
     p = sax.make_parser()
     p.setFeature(sax.handler.feature_external_ges, False)
     p.setContentHandler(tcc)
@@ -173,7 +173,6 @@ def findTemplates(root):
     return templates
 
 def compileAllTemplates(root):
-    manifest = file(os.path.join(root,'portable','compiled_templates','__init__.py'),'wb')
     setResourcePath(os.path.join(root,'resources'))
     manifest = open(os.path.join(root,'portable','compiled_templates','__init__.py'),'wb')
     manifest.write('# This is a generated file. Do not edit.\n\n')
@@ -215,10 +214,11 @@ class TemplateError(Exception):
 ##
 # SAX version of templating code
 class TemplateContentCompiler(sax.handler.ContentHandler):
-    def __init__(self, handle, debug = False, onlyBody = False):
+    def __init__(self, handle, name, debug = False, onlyBody = False):
         self.handle = handle
         self.debug = debug
         self.onlyBody = onlyBody
+        self.name = name
 
     def getOperationList(self):
         return self.outputLists[0]
@@ -264,7 +264,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             return ''
 
     def startDocument(self):
-        print "Starting compile"
+        print "Starting compile of %s" % self.name
         self.elementStack = []
         self.inInclude = False
         self.inRepeatView = False
@@ -283,11 +283,10 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.outputLists = [[]]
         self.outputText = []
         self.hidingParams = []
-        self.inTranslate = False
         self.translateDepth = []
-        self.translateText = ''
-        self.translateDict = {}
-        self.translateName = ''
+        self.translateText = []
+        self.translateDict = []
+        self.translateName = []
         
 
     def endDocument(self):
@@ -297,9 +296,10 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
     def startElement(self,name, attrs):
         self.depth = self.depth + 1
 
-        if self.inTranslate and self.depth == self.translateDepth+1:
-            self.translateName = attrs['i18n:name']
-            self.translateText += '${%s}' % self.translateName
+        if (len(self.translateDepth) > 0 and
+                                   self.depth == self.translateDepth[-1]+1):
+            self.translateName[-1] = attrs['i18n:name']
+            self.translateText[-1] += '${%s}' % self.translateName[-1]
             self.endText()
             self.outputLists.append([])
 
@@ -338,17 +338,15 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                         self.addAttr(key,attrs[key])
                 self.addText('>')
         elif 'i18n:translate' in attrs.keys():
-            if self.inTranslate:
-                print "Warning: nested translations"
             self.addText('<%s'%name)
             for key in attrs.keys():
                 if (not key.startswith('i18n:')):
                     self.addAttr(key,attrs[key])
             self.addText('>')
-            self.inTranslate = True
-            self.translateDepth = self.depth
-            self.translateText = ''
-            self.translateDict = {}
+            self.translateDepth.append(self.depth)
+            self.translateText.append('')
+            self.translateDict.append({})
+            self.translateName.append('')
             
         elif name == 't:includeTemplate':
             self.addFillTemplate(attrs['filename'])
@@ -448,8 +446,8 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             repeatId = generateId()
             self.addText('<span id="%s"/>'%quoteattr(repeatId))
             self.handle.addUpdate(repeatId, 'nextSibling', repeatList, self.repeatName)
-        elif self.inTranslate and self.depth == self.translateDepth:
-            self.inTranslate = False
+        elif (len(self.translateDepth) > 0 and
+                                     self.depth == self.translateDepth[-1]):
             self.addTranslation()
             self.addText('</%s>'%name)
         elif name == 't:execOnUnload':
@@ -460,9 +458,10 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             self.handle.addExecOnLoad(self.code)
         else:
             self.addText('</%s>'%name)
-        if self.inTranslate and self.depth == self.translateDepth+1:
+        if (len(self.translateDepth) > 0 and
+                                   self.depth == self.translateDepth[-1]+1):
             self.endText()
-            self.translateDict[self.translateName] = self.outputLists.pop()
+            self.translateDict[-1][self.translateName[-1]] = self.outputLists.pop()
         self.depth = self.depth - 1
 
     def characters(self,data):
@@ -470,8 +469,9 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             pass
         elif self.inReplace or self.inStaticReplace:
             pass
-        elif self.inTranslate and self.depth == self.translateDepth:
-            self.translateText += data
+        elif (len(self.translateDepth) > 0 and
+                                        self.depth == self.translateDepth[-1]):
+            self.translateText[-1] += data
         elif self.inExecOnUnload or self.inExecOnLoad:
             self.code += data
         else:
@@ -481,7 +481,9 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.addText("&%s;" % name)
 
     def addTranslation(self):
-        self.addInstruction(genRepeatTranslate, (self.translateText, self.translateDict))
+        self.translateDepth.pop()
+        self.translateName.pop()
+        self.addInstruction(genRepeatTranslate, (self.translateText.pop(), self.translateDict.pop()))
 
     def addInclude(self, template):
         f = open(resource.path('templates/%s'%template),'r')
