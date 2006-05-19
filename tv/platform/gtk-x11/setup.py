@@ -224,10 +224,12 @@ class install_data (distutils.command.install_data.install_data):
         self.outfiles.append(dest)
 
         for lang in ():
+            posource = os.path.join (resource_dir, "locale", "%s.po" % lang)
+            source = os.path.join (resource_dir, "locale", "%s.mo" % lang)
+            os.system ("msgfmt %s -o %s" % (posource, source))
             dest = '/usr/share/locale/%s/LC_MESSAGES/democracyplayer.mo' % lang
             if self.root:
                 dest = change_root(self.root, dest)
-            source = os.path.join (resource_dir, "locale", "%s.mo" % lang)
             self.mkpath(os.path.dirname(dest))
             self.copy_file(source, dest)
             self.outfiles.append(dest)
