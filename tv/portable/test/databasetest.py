@@ -4,7 +4,9 @@ from os import remove
 from os.path import expanduser
 import random
 import config
+import prefs
 import time
+import storedatabase
 from threading import Thread
 
 class EmptyViewTestCase(unittest.TestCase):
@@ -377,12 +379,12 @@ class SaveViewTestCase(unittest.TestCase):
         self.x = DDBObject()
         self.y = DDBObject()
     def testSaveRestore(self):
-        self.everything.save()
+        storedatabase.saveDatabase(self.everything)
         self.z = DDBObject()
         self.zz = DDBObject()
         last = self.zz.getID()
         self.x.remove()
-        self.everything.restore()
+        storedatabase.restoreDatabase(self.everything)
         self.assertEqual(self.everything.len(),2)
         assert (self.everything[0].getID() == self.y.getID() or
                 self.everything[0].getID() == self.x.getID())
@@ -394,24 +396,25 @@ class SaveViewTestCase(unittest.TestCase):
         assert DDBObject().getID() >= last
     def testLastID(self):
         last = self.y.getID()
-        self.everything.save()
+        storedatabase.saveDatabase(self.everything)
         # Simulate restarting app
         self.y.remove()
         self.x.remove()
         DDBObject.lastID = 0 # This is implementation specific and
                              # needs to be updated when the
                              # implementation changes
-        self.everything.restore()
+        storedatabase.restoreDatabase(self.everything)
         assert DDBObject().getID() >= last
     def testBackup(self):
-        self.everything.save()
-        self.everything.save()
-        remove(config.get(config.DB_PATHNAME))
+        storedatabase.saveDatabase(self.everything)
+        storedatabase.backedUp = False
+        storedatabase.saveDatabase(self.everything)
+        remove(config.get(prefs.DB_PATHNAME))
         self.z = DDBObject()
         self.zz = DDBObject()
         last = self.zz.getID()
         self.x.remove()
-        self.everything.restore()
+        storedatabase.restoreDatabase(self.everything,config.get(prefs.DB_PATHNAME) + '.bak')
         self.assertEqual(self.everything.len(),2)
         assert (self.everything[0].getID() == self.y.getID() or
                 self.everything[0].getID() == self.x.getID())
@@ -636,24 +639,6 @@ class FilterSortMapTestCase(unittest.TestCase):
         self.objlist[3].endChange()
         self.assertEqual(self.callbacks2,4)
         
-class RemoveMatchingViewTestCase(unittest.TestCase):
-    def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
-        self.x = DDBObject()
-        self.y = DDBObject()
-        self.z = DDBObject()
-
-    def testRemove(self):
-        self.everything.removeMatching(lambda x:x.getID() == self.x.getID())
-        self.assertEqual(self.everything.len(), 2)
-        self.everything.removeMatching(lambda x:x.getID() == self.z.getID())
-        self.assertEqual(self.everything.len(), 1)
-        self.everything.removeMatching(lambda x:x.getID() == self.z.getID())
-        self.assertEqual(self.everything.len(), 1)
-        self.everything.removeMatching(lambda x:x.getID() == self.y.getID())
-        self.assertEqual(self.everything.len(), 0)
-
 class CursorTestCase(unittest.TestCase):
     def setUp(self):
         DDBObject.dd = DynamicDatabase()
@@ -678,7 +663,7 @@ class CursorTestCase(unittest.TestCase):
 	self.objs.getNext()
 	self.objs.getNext()
 	self.assertEqual(self.objs.cur(),self.objs[2])
-	self.everything.removeMatching(lambda x: x.getID() == max(map(lambda x:x.getID(),self.origObjs)))
+        self.origObjs[2].remove()
 	self.assertEqual(self.objs.cur(),self.objs[1])
 	self.objs.getPrev()
 	self.assertEqual(self.objs.cur(),self.objs[0])

@@ -403,7 +403,6 @@ backedUp = False
 def saveDatabase(db=None, pathname=None, scheduleAnother=False):
     """Save a database object."""
 
-    print "Saving database"
     retval = False
 
     if db is None:
