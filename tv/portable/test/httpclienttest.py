@@ -11,6 +11,7 @@ import eventloop
 import httpclient
 import util
 from test.schedulertest import EventLoopTest
+from test.framework import DemocracyTestCase
 
 class TestingConnectionHandler(httpclient.ConnectionHandler):
     def __init__(self):
@@ -129,7 +130,7 @@ class TestingAuthDelegate:
         else:
             return None
 
-class NetworkBufferTest(unittest.TestCase):
+class NetworkBufferTest(DemocracyTestCase):
     def setUp(self):
         self.buffer = httpclient.NetworkBuffer()
 
@@ -266,7 +267,6 @@ class HTTPClientTestBase(EventLoopTest):
 
     def tearDown(self):
         # clear out any HTTPAuth objects in there
-        database.resetDefaultDatabase()
         EventLoopTest.tearDown(self)
 
     def callback(self, data):

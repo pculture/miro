@@ -7,6 +7,8 @@ import time
 from template import *
 from database import *
 
+from framework.test import DemocracyTestCase
+
 HTMLPattern = re.compile("^.*<body.*?>(.*)</body\s*>", re.S)
 
 class HTMLObject(DDBObject):
@@ -35,7 +37,7 @@ class ChangeDelayedDOMTracker(DOMTracker):
         time.sleep(0.1)
         self.callList.append({'name':'changeItem','xml':xml,'id':id})
 
-class SimpleTest(unittest.TestCase):
+class SimpleTest(DemocracyTestCase):
     def setUp(self):
         handle = file(resource.path("templates/unittest/simple"),"r")
         self.text = handle.read()
@@ -46,7 +48,7 @@ class SimpleTest(unittest.TestCase):
         text = HTMLPattern.match(text).group(1)
         self.assertEqual(text,self.text)
 
-class ReplaceTest(unittest.TestCase):
+class ReplaceTest(DemocracyTestCase):
     def setUp(self):
         handle = file(resource.path("templates/unittest/replace-result"),"r")
         self.text = handle.read()
@@ -57,7 +59,7 @@ class ReplaceTest(unittest.TestCase):
         text = HTMLPattern.match(text).group(1)
         self.assertEqual(text,self.text)
 
-class HideTest(unittest.TestCase):
+class HideTest(DemocracyTestCase):
     def setUp(self):
         handle = file(resource.path("templates/unittest/hide-result"),"r")
         self.text = handle.read()
@@ -71,7 +73,7 @@ class HideTest(unittest.TestCase):
         text = HTMLPattern.match(text).group(1)
         self.assertEqual(text,self.text)
 
-class ViewTest(unittest.TestCase):
+class ViewTest(DemocracyTestCase):
     pattern = re.compile("^\n<h1>view test template</h1>\n<span id=\"([^\"]+)\"/>\n", re.S)
     doublePattern = re.compile("^\n<h1>view test template</h1>\n<span id=\"([^\"]+)\"/>\n<span id=\"([^\"]+)\"/>\n", re.S)
 

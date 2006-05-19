@@ -9,8 +9,9 @@ import schema
 from schema import SchemaString, SchemaInt, SchemaFloat, SchemaBool
 from schema import SchemaDateTime, SchemaList, SchemaDict, SchemaObject
 from schema import SchemaSimpleContainer, ValidationError
+from test.framework import DemocracyTestCase
 
-class TestValidation(unittest.TestCase):
+class TestValidation(DemocracyTestCase):
     def testModuleVariablesDefined(self):
         self.assert_(hasattr(schema, 'VERSION'))
         self.assert_(hasattr(schema, 'objectSchemas'))

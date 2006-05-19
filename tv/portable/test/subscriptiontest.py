@@ -3,6 +3,8 @@ import unittest
 
 import subscription
 
+from test.framework import DemocracyTestCase
+
 # =============================================================================
 # Test data
 # =============================================================================
@@ -174,7 +176,7 @@ OPML_NESTED = u"""\
 # Test case
 # =============================================================================
 
-class TestSubscription (unittest.TestCase):
+class TestSubscription (DemocracyTestCase):
         
     subscription.reflexiveAutoDiscoveryOpener = open
 

@@ -10,6 +10,7 @@ import feed
 import schema
 import storedatabase
 
+from test.framework import DemocracyTestCase
 # sooo much easier to type...
 from schema import SchemaString, SchemaInt, SchemaFloat, SchemaSimpleContainer
 from schema import SchemaList, SchemaDict, SchemaObject
@@ -95,8 +96,9 @@ class PCFProgramerSchema(HumanSchema):
 testObjectSchemas = [HumanSchema, DogSchema, HouseSchema, PCFProgramerSchema,
     RestorableHumanSchema]
 
-class SchemaTest(unittest.TestCase):
+class SchemaTest(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         storedatabase.skipUpgrade = True
         databaseupgrade.chatter = False
         self.lee = Human("lee", 25, 1.4, [], {'virtual bowling': 212})
@@ -115,6 +117,7 @@ class SchemaTest(unittest.TestCase):
             os.unlink(self.savePath)
         except OSError:
             pass
+        DemocracyTestCase.tearDown(self)
 
     def addSubclassObjects(self):
         self.ben = PCFProgramer('ben', 25, 3.4, [], 'programmer',
@@ -311,8 +314,9 @@ class UpgradeTest(SchemaTest):
         newDb = storedatabase.restoreObjectList(self.savePath,
                 self.nextGenObjectSchemas)
 
-class TestHighLevelFunctions(unittest.TestCase):
+class TestHighLevelFunctions(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         storedatabase.skipUpgrade = True
         self.database = database.DynamicDatabase()
         self.savePath = tempfile.mktemp()
@@ -330,7 +334,7 @@ class TestHighLevelFunctions(unittest.TestCase):
             os.unlink(self.savePath);
         except:
             pass
-        database.resetDefaultDatabase()
+        DemocracyTestCase.tearDown(self)
 
     def checkDatabaseIsTheSame(self):
         # We can't directly compare objects, since that would compare their

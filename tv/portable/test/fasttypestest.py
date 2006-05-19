@@ -1,10 +1,12 @@
 import unittest
 import fasttypes
 
+from test.framework import DemocracyTestCase
+
 class Dummy:
     pass
 
-class LinkedListTestCase(unittest.TestCase):
+class LinkedListTestCase(DemocracyTestCase):
     def setUp(self):
         self.list = fasttypes.LinkedList()
     def test(self):
@@ -110,7 +112,7 @@ class LinkedListTestCase(unittest.TestCase):
         assert self.list.firstIter() == self.list.lastIter()
         assert not self.list.firstIter() != self.list.lastIter()
 
-class SortedListTestCase(unittest.TestCase):
+class SortedListTestCase(DemocracyTestCase):
     def setUp(self):
         self.list = fasttypes.SortedList(self.cmp)
     def cmp(self, obj1, obj2):

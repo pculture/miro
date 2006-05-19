@@ -9,12 +9,11 @@ import time
 import storedatabase
 from threading import Thread
 
-class DatabaseTest(unittest.TestCase):
-    def tearDown(self):
-        database.resetDefaultDatabase()
+from test.framework import DemocracyTestCase
 
-class EmptyViewTestCase(DatabaseTest):
+class EmptyViewTestCase(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
     def testCur(self):
         self.everything.resetCursor()
@@ -30,8 +29,9 @@ class EmptyViewTestCase(DatabaseTest):
     def testLen(self):
         self.assertEqual(self.everything.len(),0)
         
-class SingleItemViewTestCase(DatabaseTest):
+class SingleItemViewTestCase(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.x = database.DDBObject()
     def testAdd(self):
@@ -55,8 +55,9 @@ class SingleItemViewTestCase(DatabaseTest):
     def testLen(self):
         self.assertEqual(self.everything.len(),1)
 
-class AddBeforeViewTestCase(DatabaseTest):
+class AddBeforeViewTestCase(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.x = database.DDBObject()
         self.y = database.DDBObject()
         database.resetDefaultDatabase()
@@ -90,8 +91,9 @@ class AddBeforeViewTestCase(DatabaseTest):
     def testLen(self):
         self.assertEqual(self.everything.len(),2)
 
-class AddAfterViewTestCase(DatabaseTest):
+class AddAfterViewTestCase(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.x = database.DDBObject()
         self.y = database.DDBObject()
         database.resetDefaultDatabase()
@@ -126,8 +128,9 @@ class AddAfterViewTestCase(DatabaseTest):
     def testLen(self):
         self.assertEqual(self.everything.len(),2)
 
-class DeletedItemViewTestCase(DatabaseTest):
+class DeletedItemViewTestCase(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.x = database.DDBObject()
         self.y = database.DDBObject()
@@ -153,8 +156,9 @@ class DeletedItemViewTestCase(DatabaseTest):
     def testLen(self):
         self.assertEqual(self.everything.len(),1)
 
-class FilterViewTestCase(DatabaseTest):
+class FilterViewTestCase(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.x = database.DDBObject()
         self.y = database.DDBObject()
@@ -178,8 +182,9 @@ class FilterViewTestCase(DatabaseTest):
     def testLen(self):
         self.assertEqual(self.filtered.len(),1)
 
-class RecomputeFilterViewTestCase(DatabaseTest):
+class RecomputeFilterViewTestCase(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.x = database.DDBObject()
         self.y = database.DDBObject()
@@ -208,8 +213,9 @@ class RecomputeFilterViewTestCase(DatabaseTest):
     def testLen(self):
         self.assertEqual(self.filtered.len(),1)
 
-class SortTestCase(DatabaseTest):
+class SortTestCase(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.x = database.DDBObject()
         self.y = database.DDBObject()
@@ -258,8 +264,9 @@ class SortTestCase(DatabaseTest):
         self.assertNotEqual(a,b)
         self.assertEqual(c,None)
 
-class MapViewTestCase(DatabaseTest):
+class MapViewTestCase(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.x = database.DDBObject()
         self.y = database.DDBObject()
@@ -298,8 +305,9 @@ class MapViewTestCase(DatabaseTest):
     def testLen(self):
         self.assertEqual(self.everything.len(),2)
 
-class CallbackViewTestCase(DatabaseTest):
+class CallbackViewTestCase(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.filtered = self.everything.filter(lambda x:True)
         self.mapped = self.everything.map(lambda x:x)
@@ -368,8 +376,9 @@ class CallbackViewTestCase(DatabaseTest):
         self.x.change()
         self.assertEqual(self.callcount,1)
 
-class SaveViewTestCase(DatabaseTest):
+class SaveViewTestCase(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.x = database.DDBObject()
         self.y = database.DDBObject()
@@ -420,8 +429,9 @@ class SaveViewTestCase(DatabaseTest):
         self.assertEqual(self.everything[2],None)
         assert database.DDBObject().getID() >= last
 
-class MapFilterRemoveViewTestCase(DatabaseTest):
+class MapFilterRemoveViewTestCase(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.objlist = []
         for x in range(0,10):
@@ -450,8 +460,9 @@ class MapFilterRemoveViewTestCase(DatabaseTest):
         for obj in self.everything:
             self.assertEqual(self.mapFunc(obj),self.mapped.getObjectByID(obj.getID()))
 
-class FilterSortMapTestCase(DatabaseTest):
+class FilterSortMapTestCase(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.callbacks = 0
         self.objlist = []
@@ -632,8 +643,9 @@ class FilterSortMapTestCase(DatabaseTest):
         self.objlist[3].endChange()
         self.assertEqual(self.callbacks2,4)
         
-class CursorTestCase(DatabaseTest):
+class CursorTestCase(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
 	self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
 	self.objs = self.everything.filter(lambda x: True).map(self.mapToObject).sort(self.sortOldID)
@@ -668,8 +680,9 @@ class CursorTestCase(DatabaseTest):
         self.everything.restoreCursor()
         self.assertEqual(self.everything.cur(), obj)
 
-class RecomputeMapTestCase(DatabaseTest):
+class RecomputeMapTestCase(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
 	self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
 	self.objs = self.everything.filter(lambda x: True).map(self.mapToObject).sort(self.sortOldID).map(self.mapToObject)
@@ -696,8 +709,9 @@ class RecomputeMapTestCase(DatabaseTest):
 	temp.endChange()
 	self.assertEqual(self.changeCalls,1)
 
-class FilterUpdateOnChange(DatabaseTest):
+class FilterUpdateOnChange(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
 	self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
         self.origObjs[0].good = True
@@ -719,8 +733,9 @@ class FilterUpdateOnChange(DatabaseTest):
         self.assertEqual(self.objs.len(),2)
 
 # Currently, we require that the database does NOT update maps on a change
-class MapUpdateOnChange(DatabaseTest):
+class MapUpdateOnChange(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
 	self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
         self.origObjs[0].good = True
@@ -745,8 +760,9 @@ class MapUpdateOnChange(DatabaseTest):
         self.origObjs[1].endChange()
         self.assertEqual(self.objs.len(),1)
 
-class SortUpdateOnChange(DatabaseTest):
+class SortUpdateOnChange(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
 	self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
         self.origObjs[0].good = True
@@ -767,8 +783,9 @@ class SortUpdateOnChange(DatabaseTest):
         self.origObjs[1].endChange()
         self.assertEqual(self.objs.len(),2)
 
-class IDBaseTraversal(DatabaseTest):
+class IDBaseTraversal(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
 	self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
         self.sorted = self.everything.sort(self.sortID)
@@ -807,7 +824,7 @@ class IDBaseTraversal(DatabaseTest):
         self.sorted.getNext()
         self.assertEqual(self.origObjs[2].getID(), self.sorted.getCurrentID())
 
-# class ThreadTest(DatabaseTest):
+# class ThreadTest(DemocracyTestCase):
 #     def setUp(self):
 #         self.everything = database.defaultDatabase
 #     def add100(self):
@@ -824,8 +841,9 @@ class IDBaseTraversal(DatabaseTest):
 #         self.remove100()
 #         thread.join()
 
-class IndexFilterTest(DatabaseTest):
+class IndexFilterTest(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.addCallbacks = 0
         self.removeCallbacks = 0

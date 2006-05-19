@@ -8,7 +8,9 @@ import storedatabase
 import databaseupgrade
 import resource
 
-class TestConvert(unittest.TestCase):
+from test.framework import DemocracyTestCase
+
+class TestConvert(DemocracyTestCase):
     def setUp(self):
         storedatabase.skipOnRestore = True
         databaseupgrade.chatter = False
@@ -20,6 +22,7 @@ class TestConvert(unittest.TestCase):
             os.unlink(self.tmpPath)
         except:
             pass
+        DemocracyTestCase.tearDown(self)
 
     def checkConversion(self):
         olddatabaseupgrade.convertOldDatabase(self.tmpPath)

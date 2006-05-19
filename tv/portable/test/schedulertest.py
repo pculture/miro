@@ -3,20 +3,15 @@ from time import time, sleep
 import threading
 
 import eventloop
+from test.framework import DemocracyTestCase
 
 class HadToStopEventLoop(Exception):
     pass
 
-class EventLoopTest(unittest.TestCase):
+class EventLoopTest(DemocracyTestCase):
     def setUp(self):
-        # reset the event loop
-        eventloop._eventLoop.threadPool.closeThreads()
-        eventloop._eventLoop = eventloop.EventLoop() 
+        DemocracyTestCase.setUp(self)
         self.hadToStopEventLoop = False
-
-    def tearDown(self):
-        # this prevents weird errors when we quit
-        eventloop._eventLoop.threadPool.closeThreads()
 
     def stopEventLoop(self):
         self.hadToStopEventLoop = True

@@ -12,8 +12,11 @@ import databasesanity
 import database
 import util
 
-class SanityCheckingTest(unittest.TestCase):
+from test.framework import DemocracyTestCase
+
+class SanityCheckingTest(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.savePath = tempfile.mktemp()
         # reroute util.failed
         self.oldUtilDotFailed = util.failed
@@ -28,7 +31,7 @@ class SanityCheckingTest(unittest.TestCase):
         except OSError:
             pass
         util.failed = self.oldUtilDotFailed
-        database.resetDefaultDatabase()
+        DemocracyTestCase.tearDown(self)
 
     def testPhantomFeedChecking(self):
         f = feed.Feed("http://feed.uk")

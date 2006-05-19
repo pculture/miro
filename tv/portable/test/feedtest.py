@@ -5,7 +5,9 @@ from time import sleep
 from feed import *
 from database import *
 
-class FeedURLValidationTest(unittest.TestCase):
+from test.framework import DemocracyTestCase
+
+class FeedURLValidationTest(DemocracyTestCase):
     def test(self):
         self.assertEqual(validateFeedURL("http://foo.bar.com"), True)
         self.assertEqual(validateFeedURL("https://foo.bar.com"), True)
@@ -27,7 +29,7 @@ class FeedURLValidationTest(unittest.TestCase):
         self.assertEqual(validateFeedURL("crap://foo.bar.com"), False)
         self.assertEqual(validateFeedURL("crap:///foo.bar.com"), False)
 
-class FeedURLNormalizationTest(unittest.TestCase):
+class FeedURLNormalizationTest(DemocracyTestCase):
     def test(self):
         self.assertEqual(normalizeFeedURL("http://foo.bar.com"), "http://foo.bar.com")
         self.assertEqual(normalizeFeedURL("https://foo.bar.com"), "https://foo.bar.com")
@@ -49,7 +51,7 @@ class FeedURLNormalizationTest(unittest.TestCase):
         self.assertEqual(normalizeFeedURL("crap://foo.bar.com"), "http://foo.bar.com")
         self.assertEqual(normalizeFeedURL("crap:///foo.bar.com"), "http://foo.bar.com")
 
-class SimpleFeedTestCase(unittest.TestCase):
+class SimpleFeedTestCase(DemocracyTestCase):
     def setUp(self):
         DDBObject.dd = DynamicDatabase()
         self.everything = DDBObject.dd
@@ -117,7 +119,7 @@ class SimpleFeedTestCase(unittest.TestCase):
         self.assertEqual(items.len(),4)
         myFeed.remove()
 
-class EnclosureFeedTestCase(unittest.TestCase):
+class EnclosureFeedTestCase(DemocracyTestCase):
     def setUp(self):
         DDBObject.dd = DynamicDatabase()
         self.everything = DDBObject.dd
