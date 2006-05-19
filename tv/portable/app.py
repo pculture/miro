@@ -887,11 +887,8 @@ class TemplateDisplay(frontend.HTMLDisplay):
 			key = key.encode('utf8')
                     args[key] = value[0]
 
-                if self.dispatchAction(action, **args):
-                    return False
-                else:
-                    print "Ignored bad action URL: %s" % url
-                    return False
+                self.dispatchAction(action, **args)
+                return False
 
             # Let channel guide URLs pass through
             if url.startswith(config.get(prefs.CHANNEL_GUIDE_URL)):
@@ -922,9 +919,8 @@ class TemplateDisplay(frontend.HTMLDisplay):
         for handler in self.actionHandlers:
             if hasattr(handler, action):
                 getattr(handler, action)(**kwargs)
-                return True
-
-        return False
+                return
+        print "Ignored bad action URL: %s" % url
 
     @eventloop.asIdle
     def onDeselected(self, frame):
