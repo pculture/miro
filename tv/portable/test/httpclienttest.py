@@ -6,6 +6,7 @@ from copy import copy
 
 from BitTornado.clock import clock
 
+import database
 import eventloop
 import httpclient
 import util
@@ -117,6 +118,16 @@ Content-Length: 4
         conn = self.getConnection(scheme, host, port, type)
         conn.handleClose(socket.SHUT_RDWR)
 
+class TestingAuthDelegate:
+    def __init__(self):
+        self.logins = []
+    def addLogin(self, user, password):
+        self.logins.append((user, password))
+    def getHTTPAuth(self, host, realm):
+        if self.logins:
+            return self.logins.pop(0)
+        else:
+            return None
 
 class NetworkBufferTest(unittest.TestCase):
     def setUp(self):
@@ -250,6 +261,14 @@ class HTTPClientTestBase(EventLoopTest):
         self.testRequest.sendRequest(self.callback, self.errback, 
                 method='GET', path='/bar/baz;123?a=b') 
         self.fakeCallbackError = False
+        self.authDelegate = TestingAuthDelegate()
+        httpclient.setDelegate(self.authDelegate)
+
+    def tearDown(self):
+        # clear out any HTTPAuth objects in there
+        for obj in database.defaultDatabase:
+            database.defaultDatabase.removeObj(obj)
+        EventLoopTest.tearDown(self)
 
     def callback(self, data):
         if self.fakeCallbackError:
@@ -823,6 +842,40 @@ Below this line, is 1000 repeated lines of 0-9.
                 bodyDataCallback=bodyDataCallback)
         self.runEventLoop()
         self.assertEquals(self.gotData, 'I AM A NORMAL PAGE\n')
+
+    def testAuth(self):
+        self.authDelegate.addLogin('ben', 'baddpassword')
+        self.authDelegate.addLogin('guest', 'guest')
+        url = 'http://jigsaw.w3.org/HTTP/Basic/'
+        client = httpclient.HTTPClient(url, self.callback, self.errback)
+        client.startRequest()
+        self.runEventLoop()
+        self.assert_(self.callbackCalled)
+        self.assertEquals(self.data['status'], 200)
+        self.assertEquals(client.authAttempts, 2)
+
+    def testBadAuth(self):
+        self.authDelegate.addLogin('baduser', 'baddpass')
+        self.authDelegate.addLogin('anotherbadtry', 'god')
+        self.authDelegate.addLogin('billgates', 'password')
+        url = 'http://jigsaw.w3.org/HTTP/Basic/'
+        client = httpclient.HTTPClient(url, self.callback, self.errback)
+        client.startRequest()
+        self.runEventLoop()
+        self.assert_(self.errbackCalled)
+        self.assert_(isinstance(self.data, httpclient.AuthorizationFailed))
+        self.assertEquals(client.authAttempts, 3)
+
+    def testDigestAuth(self):
+        # we don't support digest authorization yet, make sure we get the
+        # right errback at least
+        url = 'http://jigsaw.w3.org/HTTP/Digest/'
+        client = httpclient.HTTPClient(url, self.callback, self.errback)
+        client.startRequest()
+        self.runEventLoop()
+        self.assert_(self.errbackCalled)
+        self.assert_(isinstance(self.data, httpclient.AuthorizationFailed))
+        self.assertEquals(client.authAttempts, 0)
 
 class HTTPConnectionPoolTest(EventLoopTest):
     def setUp(self):

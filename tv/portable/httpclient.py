@@ -1047,8 +1047,7 @@ class HTTPClient(object):
 
     def setAuthHeader(self):
         scheme, host, port, path = parseURL(self.url)
-        #auth = self.findHTTPAuth(host, path)
-        auth = None
+        auth = self.findHTTPAuth(host, path)
         if not auth is None:
             authHeader = "%s %s" % (auth.getAuthScheme(), auth.getAuthToken())
             self.headers["Authorization"] = authHeader
@@ -1163,19 +1162,23 @@ class HTTPClient(object):
     def shouldAuthorize(self, response):
         return (response['status'] == 401 and 
                 self.authAttempts < self.MAX_AUTH_ATTEMPS and
-                'www-authorization' in response)
+                'www-authenticate' in response)
 
     def handleAuthorize(self, response):
-        self.authAttempts += 1
-        info = download.msg
-        download.close()
-        match = re.search("^(.*?)\s+realm\s*=\s*\"(.*?)\"$",
+        match = re.search("(\w+)\s+realm\s*=\s*\"(.*?)\"$",
             response['www-authenticate'])
+        if match is None:
+            trapCall(self.errback, AuthorizationFailed())
+            return
         authScheme = match.expand("\\1")
         realm = match.expand("\\2")
+        if authScheme.lower() != 'basic':
+            trapCall(self.errback, AuthorizationFailed())
+            return
         scheme, host, port, path = parseURL(self.url)
         result = delegate.getHTTPAuth(host, realm)
         if not result is None:
+            self.authAttempts += 1
             import downloader
             auth = downloader.HTTPAuthPassword(result[0], result[1], host, 
                     realm, path, authScheme)
