@@ -49,8 +49,6 @@ import databasehelper
 import fasttypes
 import urllib
 
-from dl_daemon import daemon
-
 # Global Controller singleton
 controller = None
 
@@ -920,7 +918,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
             if hasattr(handler, action):
                 getattr(handler, action)(**kwargs)
                 return
-        print "Ignored bad action URL: %s" % url
+        print "Ignored bad action URL: action=%s" % action
 
     @eventloop.asIdle
     def onDeselected(self, frame):
