@@ -16,7 +16,10 @@ import prefs
 import os
 import feed
 import shutil
-    
+
+import locale
+_charset = locale.nl_langinfo(locale.CODESET)
+
 ##
 # An item corresponds to a single entry in a feed. Generally, it has
 # a single url associated with it
@@ -629,7 +632,7 @@ class Item(DDBObject):
         self.beginRead()
         try:
             try:
-                ret = datetime(*self.entry.modified_parsed[0:7]).strftime("%b %d %Y")
+                ret = datetime(*self.entry.modified_parsed[0:7]).strftime("%b %d %Y").decode(_charset)
             except:
                 ret = ""
         finally:
@@ -658,11 +661,11 @@ class Item(DDBObject):
             return self.releaseDate
         except:
             try:
-                self.releaseDate = datetime(*self.getFirstVideoEnclosure().modified_parsed[0:7]).strftime("%b %d %Y")
+                self.releaseDate = datetime(*self.getFirstVideoEnclosure().modified_parsed[0:7]).strftime("%b %d %Y").decode(_charset)
                 return self.releaseDate
             except:
                 try:
-                    self.releaseDate = datetime(*self.entry.modified_parsed[0:7]).strftime("%b %d %Y")
+                    self.releaseDate = datetime(*self.entry.modified_parsed[0:7]).strftime("%b %d %Y").decode(_charset)
                     return self.releaseDate
                 except:
                     self.releaseDate = ""
