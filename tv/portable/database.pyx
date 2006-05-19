@@ -1101,5 +1101,6 @@ class DDBObject:
 # Erases the current database and replaces it with a blank slate
 def resetDefaultDatabase():
     global defaultDatabase
-    defaultDatabase = DynamicDatabase()
-    DDBObject.dd = defaultDatabase
+    defaultDatabase.__init__()
+    import views
+    reload(views)

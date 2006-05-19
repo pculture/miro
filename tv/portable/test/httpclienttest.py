@@ -266,8 +266,7 @@ class HTTPClientTestBase(EventLoopTest):
 
     def tearDown(self):
         # clear out any HTTPAuth objects in there
-        for obj in database.defaultDatabase:
-            database.defaultDatabase.removeObj(obj)
+        database.resetDefaultDatabase()
         EventLoopTest.tearDown(self)
 
     def callback(self, data):
