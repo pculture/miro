@@ -223,16 +223,16 @@ class CallbackHandler(object):
             self.mainFrame.setFullscreen(True)
 
     def on_remove_channel_activate(self, event = None):
-        app.ModelActionHandler(frontend.UIBackendDelegate()).removeCurrentFeed()
+        eventloop.addIdle (lambda:app.ModelActionHandler(frontend.UIBackendDelegate()).removeCurrentFeed(), "Remove Channel")
 
     def on_update_channel_activate(self, event = None):
-        app.ModelActionHandler(frontend.UIBackendDelegate()).updateCurrentFeed()
+        eventloop.addIdle (lambda:app.ModelActionHandler(frontend.UIBackendDelegate()).updateCurrentFeed(), "Update Channel")
 
     def on_update_all_channels_activate(self, event = None):
-        app.ModelActionHandler(frontend.UIBackendDelegate()).updateAllFeeds()
+        eventloop.addIdle (lambda:app.ModelActionHandler(frontend.UIBackendDelegate()).updateAllFeeds(), "Update All Channels")
 
     def on_copy_channel_link_activate(self, event = None):
-        app.ModelActionHandler(frontend.UIBackendDelegate()).copyCurrentFeedURL()
+        eventloop.addIdle (lambda:app.ModelActionHandler(frontend.UIBackendDelegate()).copyCurrentFeedURL(), "Copy feed URL")
 
     def on_add_channel_button_clicked(self, event = None):
         # get our add channel dialog
@@ -245,7 +245,7 @@ class CallbackHandler(object):
 
         if response == gtk.RESPONSE_OK:
             channel = widgetTree['add-channel-entry'].get_text()
-            app.controller.addAndSelectFeed(channel)
+            eventloop.addIdle(lambda:app.controller.addAndSelectFeed(channel), "Add Channel")
 
         dialog.destroy()
 
