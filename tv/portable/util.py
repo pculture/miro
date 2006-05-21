@@ -22,7 +22,7 @@ def quoteJS(x):
     x = x.replace("\r", "\\r")  # CR      -> \r
     return x
 
-def getNiceStack(tb=None):
+def getNiceStack():
     """Get a stack trace that's a easier to read that the full one.  """
     stack = traceback.extract_stack()
     # We don't care about the unit test lines
@@ -35,10 +35,8 @@ def getNiceStack(tb=None):
     for i in xrange(len(stack)):
         if (os.path.basename(stack[i][0]) == 'util.py' and 
                 stack[i][2] in ('failed', 'failedExn')):
-            stack = stack[:i]
+            stack = stack[:i+1]
             break
-    if traceback:
-        stack += tb
     # remove trapCall calls
     stack = [i for i in stack if i[2] != 'trapCall']
     return stack
@@ -147,18 +145,13 @@ def failed(when, withExn = False, details = None):
 
     if withExn:
         header += "Exception\n---------\n"
-        exc_info = sys.exc_info()
-        header += ''.join(traceback.format_exception_only(exc_info[0],
-            exc_info[1]))
+        header += ''.join(traceback.format_exception(*sys.exc_info()))
         header += "\n"
-        tb = traceback.extract_tb(exc_info[2])
-    else:
-        tb = None
     if details:
         header += "Details: %s" % (details, )
     header += "Call stack\n----------\n"
     try:
-        stack = getNiceStack(tb)
+        stack = getNiceStack()
     except:
         stack = traceback.extract_stack()
     header += ''.join(traceback.format_list(stack))

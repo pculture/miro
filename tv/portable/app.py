@@ -528,6 +528,21 @@ class Controller (frontend.Application):
             print "DTV: Starting event loop thread"
             eventloop.startup()
 
+            # Uncomment the following to test the ChoiceDialog
+            #import dialogs
+            #d = dialogs.ChoiceDialog("HI", "long hi", dialogs.BUTTON_YES,
+                    #dialogs.BUTTON_NO)
+            #def callback(dialog):
+                #if dialog.choice is None:
+                    #print "CLOSED"
+                #elif dialog.choice == dialogs.BUTTON_NO:
+                    #print "NO"
+                #elif dialog.choice == dialogs.BUTTON_YES:
+                    #print "YES"
+                #else:
+                    #print "OOPSS: ", dialog.__dict__
+            #d.run(callback)
+
         except:
             util.failedExn("while starting up")
             frontend.exit(1)

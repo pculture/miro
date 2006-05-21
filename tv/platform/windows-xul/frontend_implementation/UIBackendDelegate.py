@@ -8,10 +8,12 @@ import resource
 import webbrowser
 import sys
 import _winreg
+import traceback
 import ctypes
 
 import prefs
 import config
+import dialogs
 from frontend_implementation.HTMLDisplay import execChromeJS
 from util import quoteJS
 
@@ -20,8 +22,14 @@ from util import quoteJS
 ###############################################################################
 
 def dispatchResultByCookie(cookie, url):
-    UIBackendDelegate.returnValues[cookie] = unquote(url)
-    UIBackendDelegate.events[cookie].set()
+    if cookie in UIBackendDelegate.waitingDialogs:
+        dialog, handler = UIBackendDelegate.waitingDialogs[cookie]
+        handler(dialog, unquote(url))
+    elif cookie in UIBackendDelegate.events:
+        UIBackendDelegate.returnValues[cookie] = unquote(url)
+        UIBackendDelegate.events[cookie].set()
+    else:
+        print "WARNING, don't know what to do with result cookie: ", cookie
 
 #FIXME: is this sufficient?
 def generateCookie():
@@ -29,8 +37,9 @@ def generateCookie():
 
 class UIBackendDelegate:
 
+    waitingDialogs = {}
     events = {}
-    returnValues ={}
+    returnValues = {}
 
     def initializeReturnEvent(self):
         """Set up the data structures to listen for a return event
@@ -38,6 +47,11 @@ class UIBackendDelegate:
 
         cookie = generateCookie()
         UIBackendDelegate.events[cookie] = Event()
+        return cookie
+
+    def initializeReturnEventAsync(self, dialog, handler):
+        cookie = generateCookie()
+        UIBackendDelegate.waitingDialogs[cookie] = (dialog, handler)
         return cookie
 
     def getReturnValue(self, cookie):
@@ -49,6 +63,59 @@ class UIBackendDelegate:
         del UIBackendDelegate.events[cookie]
         del UIBackendDelegate.returnValues[cookie]
         return retval
+
+    def runDialog(self, dialog):
+        if isinstance(dialog, dialogs.ChoiceDialog):
+            print "showing ChoiceDialog"
+            cookie = self.initializeReturnEventAsync(dialog,
+                    self.handleChoiceDialog)
+            execChromeJS("showChoiceDialog('%s','%s','%s','%s','%s');" % 
+                    (cookie, dialog.title, dialog.description,
+                        dialog.buttons[0].text, dialog.buttons[1].text))
+        elif isinstance(dialog, dialogs.HTTPAuthDialog):
+            print "showing HTTPAuthDialog"
+            cookie = self.initializeReturnEventAsync(dialog,
+                    self.handleHTTPAuthDialog)
+            execChromeJS("showPasswordDialog('%s','%s');" % (cookie,
+                dialog.description))
+        else:
+            dialog.runCallback(None)
+
+    def handleChoiceDialog(self, dialog, ret):
+        print "handling choice dialog: ", ret
+        try:
+            choice = dialog.buttons[int(ret)]
+        except (ValueError, IndexError):
+            choice = None
+        print "choice is %r" % choice
+        dialog.runCallback(choice)
+
+    def handleHTTPAuthDialog(self, dialog, ret):
+        # FIXME find a saner way of marshalling data
+        # Currently, the pair of strings is separated by "|", escaped by "\\"
+        print "handling password respnose: ", ret
+        if ret == '':
+            dialog.runCallback(None)
+            return
+        try:
+            ret = ret.split("|",1)
+            while ((len(ret[0])>0) and (ret[0][-1] == "\\") and 
+                   (len(ret[0]) == 1 or ret[0][-2] != "\\")):
+                temp = ret.pop(0)
+                ret[0] = temp + '|' + ret[0]
+            while ((len(ret[1])>0) and (ret[1][-1] == "\\") and 
+                   (len(ret[1]) == 1 or ret[1][-2] != "\\")):
+                temp = ret.pop(1)
+                ret[1] = temp + '|' + ret[1]
+            user = ret[0].replace("\\|","|").replace("\\\\","\\")
+            password = ret[1].replace("\\|","|").replace("\\\\","\\")
+            print "Username is (%s)" % user
+            print "Password is (%s)" % password
+            dialog.runCallback(dialogs.BUTTON_OK, user, password)
+        except Exception, e:
+            print "WARNING: exception in handleHTTPAuthDialog"
+            traceback.print_exc()
+            dialog.runCallback(None)
 
     # Private function to pop up a dialog asking a yes no question
     # Returns true or false

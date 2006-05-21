@@ -20,6 +20,7 @@ from BitTornado.clock import clock
 
 import config
 import prefs
+import dialogs
 from download_utils import cleanFilename
 import eventloop
 import util
@@ -502,8 +503,8 @@ class HTTPConnection(ConnectionHandler):
         self.path = path
         self.requestHeaders = headers
         self.headers = {}
-        self.version = self.status = self.reason = self.body = None
-        self.contentLength = None
+        self.contentLength = self.version = self.status = self.reason = None
+        self.body = ''
         self.willClose = True 
         # Assume we will close, until we get the headers
         self.chunked = False
@@ -1175,17 +1176,20 @@ class HTTPClient(object):
         if authScheme.lower() != 'basic':
             trapCall(self.errback, AuthorizationFailed())
             return
+
         scheme, host, port, path = parseURL(self.url)
-        result = delegate.getHTTPAuth(host, realm)
-        if not result is None:
-            self.authAttempts += 1
+        def handleLoginResponse(dialog):
             import downloader
-            auth = downloader.HTTPAuthPassword(result[0], result[1], host, 
-                    realm, path, authScheme)
-            self.setAuthHeader()
-            self.startRequest()
-        else:
-            trapCall(self.errback, AuthorizationFailed())
+            if dialog.choice == dialogs.BUTTON_OK:
+                self.authAttempts += 1
+                auth = downloader.HTTPAuthPassword(dialog.username, 
+                        dialog.password, host, realm, path, authScheme)
+                self.setAuthHeader()
+                self.startRequest()
+            else:
+                trapCall(self.errback, AuthorizationFailed())
+        dialogs.HTTPAuthDialog(self.url, realm).run(handleLoginResponse)
+
 
 def grabURL(url, callback, errback, headerCallback=None,
         bodyDataCallback=None, method="GET", start=0, etag=None,

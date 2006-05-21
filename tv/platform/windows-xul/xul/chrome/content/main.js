@@ -541,6 +541,13 @@ function showYesNoDialog(cookie,title, text) {
   delegateReturnURL(cookie, params.out);
 }
 
+function showChoiceDialog(cookie, title, text, defaultButton, otherButton) {
+  var params = {"text" : text, "title": title, "defaultButton": defaultButton, 
+  "otherButton": otherButton, "out" : null};
+  window.openDialog('chrome://dtv/content/choice_dialog.xul', 'choice', 
+          'chrome,dependent,centerscreen,modal', params);
+  delegateReturnURL(cookie, params.out);
+}
 
 function showPasswordDialog(cookie,text) {
   var params = {"in" : text, "out" : null};

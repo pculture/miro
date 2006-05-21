@@ -1,10 +1,12 @@
-from download_utils import grabURLAsync
+# FIXME import * is really bad practice..  At the very least, lest keep it at
+# the top, so it cant overwrite otheroue symbols.
+from item import *
 from HTMLParser import HTMLParser,HTMLParseError
 import xml
 from urlparse import urlparse, urljoin
 from urllib import urlopen
 from database import defaultDatabase
-from item import *
+from httpclient import grabURL
 import eventloop
 from copy import copy
 from xhtmltools import unescape,xhtmlify,fixXMLHeader, fixHTMLHeader, toUTF8Bytes, urlencode
@@ -69,15 +71,13 @@ def addFeedFromFile(file):
 #
 # Adds a new feed based on a link tag in a web page
 def addFeedFromWebPage(url):
-    grabURLAsync(_addFeedFromWebPage, url, "Add feed from web page")
-
-def _addFeedFromWebPage(info):
-    if info is None:
-        return
-    else:
+    def callback(info):
         url = HTMLFeedURLParser().getLink(info['updated-url'],info['body'])
         if url:
             Feed(url)
+    def errback(error):
+        print "WARNING: unhandled error in addFeedFromWebPage: ", error
+    grabURL(url, callback, errback)
 
 # URL validitation and normalization
 def validateFeedURL(url):
@@ -675,7 +675,9 @@ class Feed(DDBObject):
         elif (self.origURL == "dtv:manualFeed"):
             newFeed = ManualFeedImpl(self)
         else:
-            grabURLAsync(lambda info:self._generateFeedCallback(info, removeOnError),self.origURL, "generate feed")
+            grabURL(self.origURL,
+                    lambda info:self._generateFeedCallback(info, removeOnError),
+                    self._generateFeedErrback)
             #print "added async callback to create feed %s" % self.origURL
         if newFeed:
             self.actualFeed = newFeed
@@ -687,95 +689,95 @@ class Feed(DDBObject):
             self.beginChange()
             self.endChange()
 
+    def _generateFeedErrback(self, error):
+        print "DTV: Warning couldn't load feed at %s" % self.origURL
+
     def _generateFeedCallback(self, info, removeOnError):
-        """This is called by grabURLAsync to generate a feed based on
+        """This is called by grabURL to generate a feed based on
         the type of data found at the given URL
         """
-        #print "got generate feed callback for %s" % self.origURL
+        print "got generate feed callback for %s" % self.origURL
         # FIXME: This probably should be split up a bit. The logic is
         #        a bit daunting
 
         # Holds our new FeedImpl
         temp = None
         
-        if info is None:
-            print "DTV: Warning couldn't load feed at %s" % self.origURL
-        else:
+        try:
+            modified = info['last-modified']
+        except KeyError:
+            modified = None
+        try:
+            etag = info['etag']
+        except KeyError:
+            etag = None
+        #Definitely an HTML feed
+        if (info['content-type'].startswith('text/html') or 
+            info['content-type'].startswith('application/xhtml+xml')):
+            #print "Scraping HTML"
+            html = info['body']
+            if info.has_key('charset'):
+                html = fixHTMLHeader(html,info['charset'])
+                charset = info['charset']
+            else:
+                charset = None
+            if delegate.isScrapeAllowed(info['updated-url']):
+                temp = ScraperFeedImpl(info['updated-url'],initialHTML=html,etag=etag,modified=modified, charset=charset, ufeed=self)
+        #It's some sort of feed we don't know how to scrape
+        elif (info['content-type'].startswith('application/rdf+xml') or
+              info['content-type'].startswith('application/atom+xml')):
+            #print "ATOM or RDF"
+            html = info['body']
+            if info.has_key('charset'):
+                xmldata = fixXMLHeader(html,info['charset'])
+            else:
+                xmldata = html
+            temp = RSSFeedImpl(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, ufeed=self)
+            # If it's not HTML, we can't be sure what it is.
+            #
+            # If we get generic XML, it's probably RSS, but it still could
+            # be XHTML.
+            #
+            # application/rss+xml links are definitely feeds. However, they
+            # might be pre-enclosure RSS, so we still have to download them
+            # and parse them before we can deal with them correctly.
+        elif (info['content-type'].startswith('application/rss+xml') or
+              info['content-type'].startswith('application/podcast+xml') or
+              info['content-type'].startswith('text/xml') or 
+              info['content-type'].startswith('application/xml') or
+              (info['content-type'].startswith('text/plain') and
+               info['updated-url'].endswith('.xml'))):
+            #print " It's doesn't look like HTML..."
+            html = info["body"]
+            if info.has_key('charset'):
+                xmldata = fixXMLHeader(html,info['charset'])
+                html = fixHTMLHeader(html,info['charset'])
+                charset = info['charset']
+            else:
+                xmldata = html
+                charset = None
             try:
-                modified = info['last-modified']
-            except KeyError:
-                modified = None
-            try:
-                etag = info['etag']
-            except KeyError:
-                etag = None
-            #Definitely an HTML feed
-            if (info['content-type'].startswith('text/html') or 
-                info['content-type'].startswith('application/xhtml+xml')):
-                #print "Scraping HTML"
-                html = info['body']
-                if info.has_key('charset'):
-                    html = fixHTMLHeader(html,info['charset'])
-                    charset = info['charset']
-                else:
-                    charset = None
+                parser = xml.sax.make_parser()
+                parser.setFeature(xml.sax.handler.feature_namespaces, 1)
+                handler = RSSLinkGrabber(info['redirected-url'],charset)
+                parser.setContentHandler(handler)
+                parser.parse(StringIO(xmldata))
+            except xml.sax.SAXException: #it doesn't parse as RSS, so it must be HTML
+                #print " Nevermind! it's HTML"
                 if delegate.isScrapeAllowed(info['updated-url']):
                     temp = ScraperFeedImpl(info['updated-url'],initialHTML=html,etag=etag,modified=modified, charset=charset, ufeed=self)
-            #It's some sort of feed we don't know how to scrape
-            elif (info['content-type'].startswith('application/rdf+xml') or
-                  info['content-type'].startswith('application/atom+xml')):
-                #print "ATOM or RDF"
-                html = info['body']
-                if info.has_key('charset'):
-                    xmldata = fixXMLHeader(html,info['charset'])
-                else:
-                    xmldata = html
+            except UnicodeDecodeError:
+                print "Unicode issue parsing... %s" % xmldata[0:300]
+                traceback.print_exc()
+            if handler.enclosureCount > 0 or handler.itemCount == 0:
+                #print " It's RSS with enclosures"
                 temp = RSSFeedImpl(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, ufeed=self)
-                # If it's not HTML, we can't be sure what it is.
-                #
-                # If we get generic XML, it's probably RSS, but it still could
-                # be XHTML.
-                #
-                # application/rss+xml links are definitely feeds. However, they
-                # might be pre-enclosure RSS, so we still have to download them
-                # and parse them before we can deal with them correctly.
-            elif (info['content-type'].startswith('application/rss+xml') or
-                  info['content-type'].startswith('application/podcast+xml') or
-                  info['content-type'].startswith('text/xml') or 
-                  info['content-type'].startswith('application/xml') or
-                  (info['content-type'].startswith('text/plain') and
-                   info['updated-url'].endswith('.xml'))):
-                #print " It's doesn't look like HTML..."
-                html = info["body"]
-                if info.has_key('charset'):
-                    xmldata = fixXMLHeader(html,info['charset'])
-                    html = fixHTMLHeader(html,info['charset'])
-                    charset = info['charset']
-                else:
-                    xmldata = html
-                    charset = None
-                try:
-                    parser = xml.sax.make_parser()
-                    parser.setFeature(xml.sax.handler.feature_namespaces, 1)
-                    handler = RSSLinkGrabber(info['redirected-url'],charset)
-                    parser.setContentHandler(handler)
-                    parser.parse(StringIO(xmldata))
-                except xml.sax.SAXException: #it doesn't parse as RSS, so it must be HTML
-                    #print " Nevermind! it's HTML"
-                    if delegate.isScrapeAllowed(info['updated-url']):
-                        temp = ScraperFeedImpl(info['updated-url'],initialHTML=html,etag=etag,modified=modified, charset=charset, ufeed=self)
-                except UnicodeDecodeError:
-                    print "Unicode issue parsing... %s" % xmldata[0:300]
-                    traceback.print_exc()
-                if handler.enclosureCount > 0 or handler.itemCount == 0:
-                    #print " It's RSS with enclosures"
-                    temp = RSSFeedImpl(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, ufeed=self)
-                else:
-                    #print " It's pre-enclosure RSS"
-                    if delegate.isScrapeAllowed(info['updated-url']):
-                        temp = ScraperFeedImpl(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, charset=charset, ufeed=self)
             else:
-                print "DTV doesn't know how to deal with "+info['content-type']+" feeds"
+                #print " It's pre-enclosure RSS"
+                if delegate.isScrapeAllowed(info['updated-url']):
+                    temp = ScraperFeedImpl(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, charset=charset, ufeed=self)
+        else:
+            print "DTV doesn't know how to deal with "+info['content-type']+" feeds"
 
         # At this point, temp is the correct FeedImpl
         self.beginRead()
@@ -917,26 +919,28 @@ class RSSFeedImpl(FeedImpl):
                 modified = self.modified
             except:
                 modified = None
-            grabURLAsync(self._updateCallback,self.url,"RSSFeedImpl.update()",
-                         etag=etag,modified=modified)
+            grabURL(self.url, self._updateCallback, self._updateErrback, 
+                    etag=etag,modified=modified)
+
+    def _updateErrback(self, error):
+        print "WARNING, unhandled error in Feed.update", error
 
     def _updateCallback(self,info):
-        #print "Got update callback for %s" % self.url
+        print "Got update callback for %s" % self.url
         self.updating = False
-        if info is not None:
-            html = info['body']
-            if info.has_key('charset'):
-                html = fixXMLHeader(html,info['charset'])
-            if info['status'] == 304:
-                self.ufeed.beginChange()
-                self.ufeed.endChange()
-                return
-            self.url = info['updated-url']
-            if info.has_key('etag'):
-                self.etag = info['etag']
-            if info.has_key('last-modified'):
-                self.modified = info['last-modified']
-            self.updateUsingXML(html)
+        html = info['body']
+        if info.has_key('charset'):
+            html = fixXMLHeader(html,info['charset'])
+        if info['status'] == 304:
+            self.ufeed.beginChange()
+            self.ufeed.endChange()
+            return
+        self.url = info['updated-url']
+        if info.has_key('etag'):
+            self.etag = info['etag']
+        if info.has_key('last-modified'):
+            self.modified = info['last-modified']
+        self.updateUsingXML(html)
         if not self.updateUandA():
             self.ufeed.beginChange()
             self.ufeed.endChange()
@@ -1111,33 +1115,32 @@ class ScraperFeedImpl(FeedImpl):
                 etag = self.linkHistory[url]['etag']
             if self.linkHistory[url].has_key('modified'):
                 modified = self.linkHistory[url]['modified']
-        grabURLAsync(lambda info:self.processDownloadedHTML(
+        grabURL(url, lambda info:self.processDownloadedHTML(
                                    info, urlList, depth, linkNumber, top),
-               url, "ScraperFeedImple.getHTML()", etag=etag, modified=modified)
+                self.getHTMLErrback, etag=etag, modified=modified)
+    def getHTMLErrback(self, error):
+        print "WARNING unhandled error for ScraperFeedImpl.getHTML: ", error
 
     def processDownloadedHTML(self, info, urlList, depth, linkNumber, top = False):
         self.pendingDownloads -= 1
-        if info is None:
-            return
-        else:
-            #print "Done grabbing %s" % info['updated-url']
+        #print "Done grabbing %s" % info['updated-url']
 
-            if not self.tempHistory.has_key(info['updated-url']):
-                self.tempHistory[info['updated-url']] = {}
-            if info.has_key('etag'):
-                self.tempHistory[info['updated-url']]['etag'] = info['etag']
-            if info.has_key('last-modified'):
-                self.tempHistory[info['updated-url']]['modified'] = info['last-modified']
+        if not self.tempHistory.has_key(info['updated-url']):
+            self.tempHistory[info['updated-url']] = {}
+        if info.has_key('etag'):
+            self.tempHistory[info['updated-url']]['etag'] = info['etag']
+        if info.has_key('last-modified'):
+            self.tempHistory[info['updated-url']]['modified'] = info['last-modified']
 
-            if (info['status'] != 304) and (info.has_key('body')):
-                if info.has_key('charset'):
-                    subLinks = self.scrapeLinks(info['body'], info['redirected-url'],charset=info['charset'], setTitle = top)
-                else:
-                    subLinks = self.scrapeLinks(info['body'], info['redirected-url'], setTitle = top)
-                if top:
-                    self.processLinks(subLinks,0,linkNumber)
-                else:
-                    self.processLinks(subLinks,depth+1,linkNumber)
+        if (info['status'] != 304) and (info.has_key('body')):
+            if info.has_key('charset'):
+                subLinks = self.scrapeLinks(info['body'], info['redirected-url'],charset=info['charset'], setTitle = top)
+            else:
+                subLinks = self.scrapeLinks(info['body'], info['redirected-url'], setTitle = top)
+            if top:
+                self.processLinks(subLinks,0,linkNumber)
+            else:
+                self.processLinks(subLinks,depth+1,linkNumber)
         if len(urlList) > 0:
             self.getHTML(urlList, depth, linkNumber)
         elif (self.pendingDownloads == 0):

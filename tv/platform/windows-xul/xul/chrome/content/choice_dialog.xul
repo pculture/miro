@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin" type="text/css"?>
+<?xml-stylesheet href="main.css" type="text/css"?>
+
+<dialog id="main"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+        title=""
+        buttons="accept,cancel"
+        ondialogaccept="window.arguments[0].out = '0';"
+        ondialogcancel="window.arguments[0].out = '1';"
+        onload="onload()">
+    <script type="text/javascript">
+function onload() {
+  var args = window.arguments[0];
+  var label = document.getElementById("label1");
+  label.setAttribute("value", args["text"]);
+  var dialog = document.getElementById("main");
+  document.title = args['title'];
+  dialog.getButton('accept').label = args['defaultButton'];
+  dialog.getButton('cancel').label = args['otherButton'];
+  /*
+  dialog.setAttribute("buttonlabelaccept", args["defaultButton"]);
+  dialog.setAttribute("buttonlabalcancel", args["otherButton"]);
+  */
+}
+    </script>
+   <label id="label1" value="" />
+</dialog>
