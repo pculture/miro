@@ -117,6 +117,8 @@ class MainFrame:
             self.videoInfoDisplay : self.widgetTree['video-info-box'],
         }
 
+        self.widgetTree['main-window'].set_icon_from_file (resource.sharePath('pixmaps/democracyplayer-128x128.png'))
+
         # create the buttonsDown attribute to the video time scale.  It will
         # track which mouse buttons are currently pressed.  This is usefull
         # because we don't want to update widget when the user is in the

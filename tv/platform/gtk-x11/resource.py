@@ -8,6 +8,10 @@ resource_root = os.environ.get('DEMOCRACY_RESOURCE_ROOT',
         '/usr/share/democracy/resources/')
 resource_root = os.path.abspath(resource_root)
 
+share_root = os.environ.get('DEMOCRACY_SHARE_ROOT',
+                            '/usr/share/')
+share_root = os.path.abspath(share_root)
+
 # Note: some of these functions are probably not absolutely correct in
 # the face of funny characters in the input paths. In particular,
 # url() doesn't DTRT when the path contains spaces. But they should be
@@ -19,6 +23,9 @@ resource_root = os.path.abspath(resource_root)
 # separators. 
 def path(relative_path):
     return os.path.join(resource_root, relative_path)
+
+def sharePath(relative_path):
+    return os.path.join(share_root, relative_path)
 
 # As path(), but return a file: URL instead.
 def url(relative_path):
