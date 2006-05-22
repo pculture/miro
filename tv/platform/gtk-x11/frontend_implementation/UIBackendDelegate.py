@@ -268,9 +268,11 @@ class UIBackendDelegate:
         if pidIsRunning(oldpid):
             try:
                 os.kill(oldpid, signal.SIGTERM)
-                time.sleep(1)
-                if pidIsRunning(oldpid):
-                    os.kill(oldpid, signal.SIGKILL)
+                for i in xrange(100):
+                    time.sleep(.01)
+                    if not pidIsRunning(oldpid):
+                        return
+                os.kill(oldpid, signal.SIGKILL)
             except:
                 print "error killing download daemon"
                 traceback.print_exc()
@@ -279,24 +281,20 @@ class UIBackendDelegate:
         # Use UNIX style kill
         if oldpid is not None and pidIsRunning(oldpid):
             self.killDownloadDaemon(oldpid)
-        pid = os.fork()
-        if pid == 0:
-            # child process
-            # insert the dl_daemon.private directory, then the democracy
-            # directory at the top of PYTOHNPATH
-            import democracy
-            democracyPath = os.path.dirname(democracy.__file__)
-            dlDaemonPath = os.path.join(democracyPath, 'dl_daemon')
-            privatePath = os.path.join(dlDaemonPath, 'private')
-            pythonPath = os.environ.get('PYTHONPATH', '').split(':')
-            pythonPath[0:0] = [privatePath, democracyPath]
-            os.environ['PYTHONPATH'] = ':'.join(pythonPath)
-            for key, value in env.items():
-                os.environ[key] = value
-            # run the Democracy_Downloader script
-            script = os.path.join(dlDaemonPath,  'Democracy_Downloader.py')
-            os.execlp("python2.4", "python2.4", script)
-        else:
-            # parent processes, nothing to do here
-#            print "spawned download daemon (PID %d)" % pid
-            pass
+
+        environ = os.environ.copy()
+        import democracy
+        democracyPath = os.path.dirname(democracy.__file__)
+        dlDaemonPath = os.path.join(democracyPath, 'dl_daemon')
+        privatePath = os.path.join(dlDaemonPath, 'private')
+
+        pythonPath = environ.get('PYTHONPATH', '').split(':')
+        pythonPath[0:0] = [privatePath, democracyPath]
+        environ['PYTHONPATH'] = ':'.join(pythonPath)
+
+        environ.update(env)
+
+        # run the Democracy_Downloader script
+        script = os.path.join(dlDaemonPath,  'Democracy_Downloader.py')
+
+        os.spawnlpe(os.P_NOWAIT, "python2.4", "python2.4", script, environ)
