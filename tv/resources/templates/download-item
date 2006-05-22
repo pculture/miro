@@ -330,7 +330,7 @@ eventURL('action:keepItem?item=@@@this.getID()@@@');" i18n:translate="">Save</a>
 			<!-- EXPIRY -->
 			<span>
 				<div class="main-video-details-expiry">
-					<p><span i18n:translate="">Expires</a>: <span 
+					<p><span i18n:translate="">Expires</span>: <span 
 t:replace="this.getExpirationTime()" /></p>
 				</div>
 				<div class="main-video-details-save">

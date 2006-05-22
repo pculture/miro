@@ -135,7 +135,7 @@ t:updateForView="newItems" class="video-count"><span t:replace="newItems.len()"
     <span t:hideIf="unwatchedItems.len()==0" t:updateHideOnView="unwatchedItems">
         <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-unwatched');">#&nbsp;</a></div>
         <div id="main-channelbar" class="main-channelbar">
-        	<h1 i18n:translate="" Unwatched</h1>
+        	<h1 i18n:translate="">Unwatched</h1>
         	<h2 t:updateForView="unwatchedItems"><span t:replace="unwatchedItems.len()" /></h2>
         </div>
 

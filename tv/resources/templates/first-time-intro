@@ -19,18 +19,17 @@
   <div id="sidebar">	
     <div class="captioned_image"> <img src="resource:images/intro-fullscreen_button.png" 
 alt="fullscreen button" /><br />
-      <span i18n:translate=""><strong>GO BIG:</strong> This is your fullscreen button.  
-Click it and lean back.</span> </div>
+      <strong i18n:translate="">GO BIG:</strong>
+      <span i18n:translate="">This is your fullscreen button.  Click it and lean back.</span> </div>
 			
     <div class="captioned_image"> <img src="resource:images/intro-circles.png" alt="circles" /><br />
-      <span i18n:translate=""><strong>NEW STUFF:</strong> Blue circles mean the channel 
-has new 
-videos available, green circles mean you have downloaded videos ready to watch.</span> 
+      <strong i18n:translate="">NEW STUFF:</strong>
+      <span i18n:translate="">Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch.</span> 
 </div>
   </div>
 	
 	
-	<p style="color: #090;" i18n:translate=""><strong>SKIP INTRO: <a style="color: 
+	<p style="color: #090;" i18n:translate=""><strong i18n:translate="">SKIP INTRO: <a style="color: 
 #090;" href="#" 
 onclick="eventURL('action:doneWithIntro');">Go to Channel Guide >></a></strong></p>
 	
