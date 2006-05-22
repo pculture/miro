@@ -27,6 +27,8 @@ from sha import sha
 
 from dl_daemon import command, daemon
 
+import platformutils
+
 chatter = True
 
 # a hash of download ids to downloaders
@@ -559,17 +561,13 @@ class HTTPDownloader(BGDownloader):
     # Checks the download file size to see if we can accept it based on the 
     # user disk space preservation preference
     def acceptDownloadSize(self, size):
-        if chatter:
-            print "WARNING: acceptDownloadSize is a stub"
-        return True
+        if size < 0:
+            size = 0
+        available = platformutils.getAvailableGBytesForMovies()
         if config.get(prefs.PRESERVE_DISK_SPACE):
-            sizeInGB = size / 1024 / 1024 / 1024
-            if (sizeInGB > platformutils.getAvailableGBytesForMovies() - 
-                    config.get(prefs.PRESERVE_X_GB_FREE)):
-                self.state = "failed"
-                self.reasonFailed = "File is too big"
-                return False
-        return True
+            available = available - config.get(prefs.PRESERVE_X_GB_FREE)
+        available = available * 1024 * 1024 * 1024
+        return size <= available
 
     ##
     # Pauses the download.
