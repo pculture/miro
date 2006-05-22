@@ -253,6 +253,7 @@ fakeClasses = {
     'downloader.BTDownloader': DropItLikeItsHot,
     'downloader.BTDisplay': DropItLikeItsHot,
     'downloader.HTTPDownloader': DropItLikeItsHot,
+    'scheduler.ScheduleEvent': DropItLikeItsHot,
 }
 
 
