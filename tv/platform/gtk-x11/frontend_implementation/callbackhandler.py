@@ -94,8 +94,8 @@ class CallbackHandler(object):
             ])
         return actionGroups
 
-    def on_main_destroy(self, event):
-        gtk.main_quit()
+    def on_main_delete(self, *args):
+        app.controller.quit()
 
     def on_play_pause_button_clicked(self, event = None):
         videoDisplay = self.mainApp.videoDisplay
@@ -208,7 +208,7 @@ class CallbackHandler(object):
             # sure what to do here.
 
     def on_quit_activate(self, event):
-        gtk.main_quit()
+        app.controller.quit()
 
     def on_fullscreen_activate(self, event):
         self.mainFrame.setFullscreen(True)

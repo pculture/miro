@@ -400,10 +400,9 @@ def restoreObjectList(pathname, objectSchemas=None):
 
 backedUp = False
 
-def saveDatabase(db=None, pathname=None, scheduleAnother=False):
+def saveDatabase(db=None, pathname=None):
     """Save a database object."""
 
-    retval = False
 
     if db is None:
         db = database.defaultDatabase
@@ -438,15 +437,17 @@ def saveDatabase(db=None, pathname=None, scheduleAnother=False):
             pass
         os.rename(tempPathname, pathname)
     except IOError, err:
-        print "IO Error"
-        app.controller.getBackendDelegate().saveFailed(err.strerror)
+        return err.strerror
     except:
-        util.failedExn("While saving database")
-    else:
-        retval = True
-    if scheduleAnother:
-        eventloop.addTimeout(300, saveDatabase, "Database Save", args=(db, pathname, scheduleAnother))
-    return retval
+        return "Unknown"
+    return None
+
+def saveDatabaseIdle (db=None, pathname=None):
+    err = saveDatabase(db, pathname)
+    if err:
+        print "IO Error"
+        app.controller.getBackendDelegate().saveFailed(err)
+    eventloop.addTimeout(300, saveDatabaseIdle, "Database Save", args=(db, pathname))
 
 def restoreDatabase(db=None, pathname=None, convertOnFail=True):
     """Restore a database object."""

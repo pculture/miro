@@ -41,6 +41,7 @@ import datetime
 import traceback
 import datetime
 import threading
+import dialogs
 from iconcache import iconCacheUpdater
 
 # Something needs to import this outside of Pyrex. Might as well be app
@@ -48,6 +49,7 @@ import templatehelper
 import databasehelper
 import fasttypes
 import urllib
+from gettext import gettext as _
 
 # Global Controller singleton
 controller = None
@@ -504,7 +506,7 @@ class Controller (frontend.Application):
             self.videoDisplay.playbackController = self.playbackController
             self.videoDisplay.setVolume(config.get(prefs.VOLUME_LEVEL))
 
-            eventloop.addTimeout (300, storedatabase.saveDatabase, "Database Save", kwargs={"scheduleAnother": True})
+            eventloop.addTimeout (300, storedatabase.saveDatabaseIdle, "Database Save")
             eventloop.addTimeout (30, autoupdate.checkForUpdates, "Check for updates")
 
             # Set up tab list (on left); this will automatically set up the
@@ -531,7 +533,7 @@ class Controller (frontend.Application):
             # Uncomment the following to test the ChoiceDialog
             #import dialogs
             #d = dialogs.ChoiceDialog("HI", "long hi", dialogs.BUTTON_YES,
-                    #dialogs.BUTTON_NO)
+                                     #dialogs.BUTTON_NO)
             #def callback(dialog):
                 #if dialog.choice is None:
                     #print "CLOSED"
@@ -613,6 +615,22 @@ class Controller (frontend.Application):
         if downloadsCount > 0:
             allow = self.getBackendDelegate().interruptDownloadsAtShutdown(downloadsCount)
         return allow
+
+    @eventloop.asIdle
+    def quit(self):
+        err = storedatabase.saveDatabase()
+        if err is None:
+            frontend.quit()
+        else:
+            def callback(dialog):
+                if dialog.choice == dialogs.BUTTON_QUIT:
+                    frontend.quit()
+
+            title = _("%s database save failed") % (config.get(prefs.SHORT_APP_NAME), )
+            description = _("%s was unable to save its database: %s.\nRecent changes may be lost.\nQuit Anyway?") \
+                          % (config.get(prefs.LONG_APP_NAME), err)
+            dialog = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_QUIT, dialogs.BUTTON_CANCEL)
+            dialog.run (callback)
 
     def onShutdown(self):
         try:

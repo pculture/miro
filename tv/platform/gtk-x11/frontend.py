@@ -1,6 +1,7 @@
 import os
 import config
 import prefs
+import gtk
 
 # Import MozillaBrowser ASAP.  On some systems the gtkmozembed module is
 # linked against a different libxpcom than MozillaBrowser.  Importing it first
@@ -30,6 +31,8 @@ mozsetup.setupMozillaEnvironment()
 
 def exit(returnCode):
     return returnCode
+def quit():
+    gtk.main_quit()
 
 ###############################################################################
 ###############################################################################
