@@ -5,7 +5,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Democracy - External Playback Template</title>
+    <title i18n:translate="">Democracy - External Playback Template</title>
 
     <link href="resource:css/external.css" rel="stylesheet" type="text/css" />
     <link href="resource:css/video-info.css" rel="stylesheet" type="text/css" />
@@ -24,14 +24,15 @@ app.controller.videoInfoItem = None
 
 <body onload="startCountdown(@@@this.getID()@@@)">
     <div id="external-container-basic">
-    	<span>This file type (<span t:replace="this.getFormat()" />) can't be played in the main Democracy window.</span>
+    	<span i18n:translate="">This file type (<span t:replace="this.getFormat()" 
+/>) can't be played in the main Democracy window.</span>
 
         <a id="external-button-left" href="javascript:playItemExternally(@@@this.getID()@@@)">
-            <span>Play Externally</span>
+            <span i18n:translate="">Play Externally</span>
         </a>
 
         <a id="external-button-right" href="javascript:skipItem(@@@this.getID()@@@)">
-            <span>Skip Video <b id="countdown" /></span>
+            <span i18n:translate="">Skip Video <b id="countdown" /></span>
         </a>
     </div>
     
