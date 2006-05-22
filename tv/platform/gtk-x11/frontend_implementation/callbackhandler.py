@@ -120,8 +120,13 @@ class CallbackHandler(object):
         # yet, because we haven't run the default signal handler yet, which
         # will emit the value-changed signal.  So we use use idle_add, to
         # remove the buttons once we're done with signal processing.
-        button = event.button 
-        gobject.idle_add(lambda: scale.buttonsDown.remove(button))
+        button = event.button
+        def remove():
+            try:
+                scale.buttonsDown.remove(button)
+            except KeyError:
+                pass
+        gobject.idle_add(remove)
 
     def on_video_time_scale_value_changed(self, videoTimeScale):
         videoDisplay = self.mainApp.videoDisplay
