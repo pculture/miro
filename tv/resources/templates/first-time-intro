@@ -14,40 +14,26 @@
 <body>
 
 <div id="container">
-  <h1 i18n:translate="">Democracy Internet TV: How to Get Started</h1>
+  <h1>Democracy Internet TV: How to Get Started</h1>
 	
   <div id="sidebar">	
-    <div class="captioned_image"> <img src="resource:images/intro-fullscreen_button.png" 
-alt="fullscreen button" /><br />
-      <strong i18n:translate="">GO BIG:</strong>
-      <span i18n:translate="">This is your fullscreen button.  Click it and lean back.</span> </div>
+    <div class="captioned_image"> <img src="resource:images/intro-fullscreen_button.png" alt="fullscreen button" /><br />
+      <strong>GO BIG:</strong> This is your fullscreen button.  Click it and lean back. </div>
 			
     <div class="captioned_image"> <img src="resource:images/intro-circles.png" alt="circles" /><br />
-      <strong i18n:translate="">NEW STUFF:</strong>
-      <span i18n:translate="">Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch.</span> 
-</div>
+      <strong>NEW STUFF:</strong> Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch. </div>
   </div>
 	
 	
-	<p style="color: #090;" i18n:translate=""><strong i18n:translate="">SKIP INTRO: <a style="color: 
-#090;" href="#" 
-onclick="eventURL('action:doneWithIntro');">Go to Channel Guide >></a></strong></p>
+	<p style="color: #090;"><strong>SKIP INTRO: <a style="color: #090;" href="#" onclick="eventURL('action:doneWithIntro');">Go to Channel Guide >></a></strong></p>
 	
-  <p i18n:translate=""><strong>Add Channels:</strong> The Channel Guide is your home base 
-for internet TV 
-channels.  Click 'ADD' to subscribe to a channel-- <strong>the channels in the guide are free.</strong></p>
+  <p><strong>Add Channels:</strong> The Channel Guide is your home base for internet TV channels.  Click 'ADD' to subscribe to a channel-- <strong>the channels in the guide are free.</strong></p>
 	
-  <p i18n:translate=""><strong>Don't Wait:</strong> Democracy is different than watching 
-webpage videos-- 
-publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later.</p>
+  <p><strong>Don't Wait:</strong> Democracy is different than watching webpage videos-- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later.</p>
 	
-  <p i18n:translate=""><strong>Leave it On:</strong> Democracy Player regularly checks 
-channels for new 
-videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.</p>
+  <p><strong>Leave it On:</strong> Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.</p>
 	
-  <p i18n:translate=""> <strong>Don't Worry About Disk Space:</strong> Like a TiVo, 
-Democracy Player 
-features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically. </p>
+  <p> <strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically. </p>
 	
   <div class="gotoguide"> <a href="#" onclick="eventURL('action:doneWithIntro');"><img src="resource:images/intro-go_to_channel_guide.png" alt="go to channel guide" /></a> </div>
 	

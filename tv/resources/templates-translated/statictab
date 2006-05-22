@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html  xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n">
+<head>
+</head>
+<body>
+<!-- Normal Guide -->
+<a class="feeditem" t:hideIf="not (this.getState() == 'normal' and this.tabTemplateBase == 'guidetab')">
+<img class="icon" src="resource:images/channelguide-icon-tablist.png" /><span><span class="name" i18n:translate="">Channel Guide</span></span>
+</a>
+
+<!-- Selected Guide -->
+<a t:hideIf="not (this.getState() == 'selected' and this.tabTemplateBase == 'guidetab')" class="feeditem selected_feeditem">
+<img class="icon" src="resource:images/channelguide-icon-tablist.png" /><span><span class="name" i18n:translate="">Channel Guide</span></span>
+</a>
+
+<!-- Selected-Incactive Guide -->
+<a  t:hideIf="not (this.getState() == 'selected-inactive' and this.tabTemplateBase == 'guidetab')" class="feeditem selected_feeditem_inactive">
+<img class="icon" src="resource:images/channelguide-icon-tablist.png" /><span><span class="name" i18n:translate="">Channel Guide</span></span>
+</a>
+
+<!-- Normal Library -->
+<a class="feeditem" t:hideIf="not (this.getState() == 'normal' and this.tabTemplateBase == 'librarytab')">
+<img class="icon" src="resource:images/collection-icon-tablist.png" /><span><span class="name" i18n:translate="">My Collection</span></span>
+</a>
+
+<!-- Selected Library -->
+<a t:hideIf="not (this.getState() == 'selected' and this.tabTemplateBase == 'librarytab')" class="feeditem selected_feeditem">
+<img class="icon" src="resource:images/collection-icon-tablist.png" /><span><span class="name" i18n:translate="">My Collection</span></span>
+</a>
+
+<!-- Selected-Incactive Library -->
+<a t:hideIf="not (this.getState() == 'selected-inactive' and this.tabTemplateBase == 'librarytab')" class="feeditem selected_feeditem_inactive">
+<img class="icon" src="resource:images/collection-icon-tablist.png" /><span><span class="name" i18n:translate="">My Collection</span></span>
+</a>
+
+<!-- Normal New -->
+<a class="feeditem" t:hideIf="not (this.getState() == 'normal' and this.tabTemplateBase == 'newtab')">
+
+    <img class="icon" src="resource:images/newvideos-icon-tablist.png" />
+
+    <div class="green_left" t:hideIf="views.availableItems.len() == 0">
+        <div class="green_right">
+            <div class="number_count" t:replace="views.availableItems.len()" />
+        </div>
+    </div>
+
+    <span><span class="name" i18n:translate="">New Videos</span></span>
+    
+</a>
+
+<!-- Selected New -->
+<a t:hideIf="not (this.getState() == 'selected' and this.tabTemplateBase == 'newtab')" class="feeditem selected_feeditem">
+
+    <img class="icon" src="resource:images/newvideos-icon-tablist.png" />
+
+    <div class="green_left" t:hideIf="views.availableItems.len() == 0">
+        <div class="green_right">
+            <div class="number_count" t:replace="views.availableItems.len()" />
+        </div>
+    </div>
+
+    <span><span class="name" i18n:translate="">New Videos</span></span>
+
+</a>
+
+<!-- Selected-Incactive Library -->
+<a t:hideIf="not (this.getState() == 'selected-inactive' and this.tabTemplateBase == 'newtab')" class="feeditem selected_feeditem_inactive">
+
+    <img class="icon" src="resource:images/newvideos-icon-tablist.png" />
+
+    <div class="green_left" t:hideIf="views.availableItems.len() == 0">
+        <div class="green_right">
+            <div class="number_count" t:replace="views.availableItems.len()" />
+        </div>
+    </div>
+
+    <span><span class="name" i18n:translate="">New Videos</span></span>
+
+</a>
+
+<!-- Normal Search -->
+<a class="feeditem last_static" t:hideIf="not (this.getState() == 'normal' and this.tabTemplateBase == 'searchtab')">
+    <img class="icon" src="resource:images/search-icon-tablist.png" />
+    <span><span class="name" i18n:translate="">Search</span></span>
+    <div class="channel_bar_divider" />
+</a>
+
+<!-- Selected Search -->
+<a t:hideIf="not (this.getState() == 'selected' and this.tabTemplateBase == 'searchtab')" class="feeditem selected_feeditem last_static">
+    <img class="icon" src="resource:images/search-icon-tablist.png" />
+    <span><span class="name" i18n:translate="">Search</span></span>
+    <div class="channel_bar_divider" />
+</a>
+
+<!-- Selected-Incactive Search -->
+<a  t:hideIf="not (this.getState() == 'selected-inactive' and this.tabTemplateBase == 'searchtab')" class="feeditem selected_feeditem_inactive last_static">
+    <img class="icon" src="resource:images/search-icon-tablist.png" />
+    <span><span class="name" i18n:translate="">Search</span></span>
+    <div class="channel_bar_divider" />
+</a>
+
+<!-- Normal Download -->
+<a class="sidebar-download" t:hideIf="not (this.getState() == 'normal' and this.tabTemplateBase == 'downloadtab')">
+	<div class="sidebar-download-inner">
+		<span>
+			<p>Active Downloads</p>
+			<div class="circle-orange-left" t:hideIf="views.downloadingItems.len() == 0">
+				<div class="circle-orange-right">
+					<div class="circle-orange-number" t:replace="views.downloadingItems.len()" />
+				</div>
+			</div>
+		</span>
+	</div>
+</a>
+
+<!-- Selected Download -->
+<a class="sidebar-download" t:hideIf="not (this.getState() == 'selected' and this.tabTemplateBase == 'downloadtab')">
+	<div class="sidebar-download-inner-selected">
+		<span>
+			<p>Active Downloads</p>
+			<div class="circle-orange-left" t:hideIf="views.downloadingItems.len() == 0">
+				<div class="circle-orange-right">
+					<div class="circle-orange-number" t:replace="views.downloadingItems.len()" />
+				</div>
+			</div>
+		</span>
+	</div>
+</a>
+
+<!-- Selected-Incactive Download -->
+<a class="sidebar-download" t:hideIf="not (this.getState() == 'selected-inactive' and this.tabTemplateBase == 'downloadtab')">
+	<div class="sidebar-download-inner-inactive">
+		<span>
+			<p>Active Downloads</p>
+			<div class="circle-orange-left" t:hideIf="views.downloadingItems.len() == 0">
+				<div class="circle-orange-right">
+					<div class="circle-orange-number" t:replace="views.downloadingItems.len()" />
+				</div>
+			</div>
+		</span>
+	</div>
+</a>
+</body>
+</html>

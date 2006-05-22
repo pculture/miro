@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+<link href="resource:css/main.css" rel="stylesheet" type="text/css" />
+<t:include filename="dynamic.js" />
+<t:include filename="settings.js" />
+
+    <t:execOnLoad><![CDATA[
+global searchFilter
+searchFilter = lambda x: filters.matchingItems(x, None)
+
+allDlItems = views.items.filter(filters.downloadingItems)
+
+matchingDlItems = allDlItems.filter(lambda x:searchFilter(x))
+
+dlItems = matchingDlItems.sort(sorts.item)
+
+def updateSearchString(newSearch):
+    global searchFilter
+    if len(newSearch) == 0:
+        searchFilter = lambda x: filters.matchingItems(x, None)
+    else:
+        searchFilter = lambda x: filters.matchingItems(x, newSearch)
+    allDlItems.recomputeFilter(matchingDlItems)
+
+]]>
+    </t:execOnLoad>
+    <t:execOnUnload><![CDATA[
+allDlItems.unlink()
+]]>
+    </t:execOnUnload>
+
+</head>
+
+<body onload="beginUpdates();">
+
+<!-- TITLE BAR ************************************************************ -->
+<div id="main-titlebar">
+	<div id="main-titlebar-avatar" style="border:0px;"><img src="resource:images/download-icon.png" /></div>
+	<div id="main-titlebar-channelname">
+		<h1 i18n:translate="">Active Downloads</h1>
+	</div>
+	<div id="main-titlebar-tasks">
+		<div id="main-titlebar-tasks-search" style="margin-top:38px;"><input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search" onfocus="startEditSearch(this)" onblur="endEditSearch()" /></div>
+	</div>
+</div>
+<!-- / TITLE BAR -->
+
+<div id="main-container">
+
+	<!-- VIDEOS ************************************************** -->
+	<div>
+		<span t:repeatForView="dlItems">		
+		<t:includeTemplate filename="download-item" />
+ 		</span>
+	</div>
+	<!-- / VIDEOS -->
+	
+</div>
+
+</body>
+</html>
