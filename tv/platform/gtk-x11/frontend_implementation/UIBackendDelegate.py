@@ -7,6 +7,7 @@ import gtk
 import threading
 import traceback
 import app
+import dialogs
 from gettext import gettext as _
 
 import config
@@ -42,28 +43,38 @@ def ShowDialog (title, message, buttons, default = gtk.RESPONSE_CANCEL):
     dialog.destroy()
     return response
 
-dialogs = {}
+once_dialogs = {}
 
-def AsyncDialogDestroy (dialog):
-    try:
-        del dialogs[dialog.once]
-    except:
-        pass
-
-def AsyncDialogResponse(dialog, response):
-    dialog.destroy()
 
 @gtkAsyncMethod
-def ShowDialogAsync (title, message, buttons, default = gtk.RESPONSE_CANCEL, once=None):
-    if once is not None and dialogs.has_key (once):
+def ShowDialogAsync (title, message, buttons, default = gtk.RESPONSE_CANCEL, once=None, callback=None):
+
+    def AsyncDialogResponse(dialog, response):
+        if callback:
+            callback (response)
+        dialog.destroy()
+
+    def AsyncDialogDestroy (dialog):
+        try:
+            del once_dialogs[once]
+        except:
+            pass
+
+    if once is not None and once_dialogs.has_key (once):
         return
     dialog = BuildDialog (title, message, buttons, default)
-    dialog.show()
     dialog.connect("response", AsyncDialogResponse)
     dialog.connect("destroy", AsyncDialogDestroy)
+    dialog.show()
     if once is not None:
-        dialogs[once] = dialog
-        dialog.once = once
+        once_dialogs[once] = dialog
+
+_stock = { dialogs.BUTTON_OK.text : gtk.STOCK_OK,
+           dialogs.BUTTON_CANCEL.text : gtk.STOCK_CANCEL,
+           dialogs.BUTTON_YES.text : gtk.STOCK_YES,
+           dialogs.BUTTON_NO.text : gtk.STOCK_NO,
+           dialogs.BUTTON_QUIT.text : gtk.STOCK_QUIT}
+
 
 def pidIsRunning(pid):
     try:
@@ -74,8 +85,8 @@ def pidIsRunning(pid):
 
 class UIBackendDelegate:
 
-    @gtkSyncMethod
-    def getHTTPAuth(self, url, domain, prefillUser = None, prefillPassword = None):
+    @gtkAsyncMethod
+    def BuildHTTPAuth(self, summary, message, prefillUser = None, prefillPassword = None):
         """Ask the user for HTTP login information for a location, identified
         to the user by its URL and the domain string provided by the
         server requesting the authorization. Default values can be
@@ -83,8 +94,6 @@ class UIBackendDelegate:
         information, it's returned as a (user, password)
         tuple. Otherwise, if the user presses Cancel or similar, None
         is returned."""
-        summary = _("Channel requires authentication")
-        message = _("%s requires a username and password for \"%s\".") % (EscapeMessagePart(url), EscapeMessagePart(domain))
         dialog = gtk.Dialog(summary, None, (), (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OK, gtk.RESPONSE_OK))
         table = gtk.Table()
         dialog.vbox.add(table)
@@ -100,10 +109,10 @@ class UIBackendDelegate:
         label.set_alignment (1.0, 0.5)
         table.attach (label, 0, 1, 1, 2, gtk.FILL, gtk.FILL)
 
-        user = gtk.Entry()
+        dialog.user = gtk.Entry()
         if (prefillUser != None):
-            user.set_text(prefillUser)
-        table.attach (user, 1, 2, 1, 2, gtk.FILL | gtk.EXPAND, gtk.FILL, 6, 6)
+            dialog.user.set_text(prefillUser)
+        table.attach (dialog.user, 1, 2, 1, 2, gtk.FILL | gtk.EXPAND, gtk.FILL, 6, 6)
 
         label = gtk.Label()
         label.set_markup(_("Password:"))
@@ -111,17 +120,21 @@ class UIBackendDelegate:
         label.set_alignment (1.0, 0.5)
         table.attach (label, 0, 1, 2, 3, gtk.FILL, gtk.FILL)
 
-        password = gtk.Entry()
+        dialog.password = gtk.Entry()
         if (prefillPassword != None):
-            password.set_text(prefillPassword)
-        table.attach (password, 1, 2, 2, 3, gtk.FILL | gtk.EXPAND, gtk.FILL, 6, 6)
+            dialog.password.set_text(prefillPassword)
+        table.attach (dialog.password, 1, 2, 2, 3, gtk.FILL | gtk.EXPAND, gtk.FILL, 6, 6)
 
         table.show_all()
         dialog.set_default_response (gtk.RESPONSE_OK)
+        return dialog
+
+    def getHTTPAuth(self, url, domain, prefillUser = None, prefillPassword = None):
+        dialog = BuildHTTPAuth (self, _("Channel requires authentication"), _("%s requires a username and password for \"%s\".") % (EscapeMessagePart(url), EscapeMessagePart(domain)), prefillUser, prefillPassword)
         response = dialog.run()
         retval = None
         if (response == gtk.RESPONSE_OK):
-            retval = (user.get_text(), password.get_text())
+            retval = (dialog.user.get_text(), dialog.password.get_text())
         dialog.destroy()
         return retval
 
@@ -158,7 +171,7 @@ class UIBackendDelegate:
     def saveFailed(self, reason):
         summary = _("%s database save failed") % \
             (config.get(prefs.SHORT_APP_NAME), )
-        message = _("%s was unable to save its database.\nRecent changes may be lost\n\n%s") % (EscapeMessagePart(config.get(prefs.LONG_APP_NAME)), EscapeMessagePart(reason))
+        message = _("%s was unable to save its database: %s.\nRecent changes may be lost.") % (EscapeMessagePart(config.get(prefs.LONG_APP_NAME)), EscapeMessagePart(reason))
         buttons = (gtk.STOCK_CLOSE, gtk.RESPONSE_OK)
         ShowDialogAsync (summary, message, buttons, once="saveFailed")
 
@@ -205,10 +218,46 @@ class UIBackendDelegate:
 
     def notifyUnkownErrorOccurence(self, when, log = ''):
         summary = _("Unknown Runtime Error")
-        message = _("An unknown error has occured %s.") % EscapeMessagePart(when)
+        message = _("An unknown error has occurred %s.") % EscapeMessagePart(when)
         buttons = (gtk.STOCK_CLOSE, gtk.RESPONSE_OK)
         ShowDialogAsync (summary, message, buttons, once="UnknownError")
         return True
+
+    def runDialog (self, dialog):
+        if isinstance(dialog, dialogs.ChoiceDialog):
+            buttons = []
+            i = 0
+            for button in dialog.buttons:
+                if _stock.has_key(button.text):
+                    buttons [0:0] = (_stock[button.text], i)
+                else:
+                    buttons [0:0] = (button.text, i)
+                i = i + 1
+    
+            def Callback (response):
+                if response == gtk.RESPONSE_DELETE_EVENT:
+                    dialog.runCallback (None)
+                elif response >= 0 and response < i:
+                    dialog.runCallback (dialog.buttons [response])
+                else:
+                    dialog.runCallback (None)
+    
+            ShowDialogAsync (EscapeMessagePart(dialog.title), EscapeMessagePart(dialog.description), tuple(buttons), default=0, callback = Callback)
+        elif isinstance(dialog, dialogs.HTTPAuthDialog):
+
+            def AsyncDialogResponse(dialog, response):
+                retval = None
+                if (response == gtk.RESPONSE_OK):
+                    dialog.runCallback(dialog.BUTTON_OK, dialog.user.get_text(), dialog.password.get_text())
+                else:
+                    dialog.runCallback(None)
+                dialog.destroy()
+
+            dialog = BuildHTTPAuth (self, EscapeMessagePart(dialog.title), EscapeMessagePart(dialog.description), dialog.prefillUser, dialog.prefillPassword)
+            dialog.connect("response", AsyncDialogResponse)
+            dialog.show()
+        else:
+            dialog.runCallback (None)
 
     @gtkSyncMethod
     def copyTextToClipboard(self, text):

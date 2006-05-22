@@ -35,11 +35,11 @@ class ExceptionContainer:
 class MainloopQueue:
     # Class to send data back to the other thread.
     class ReturnData:
-        def __init__ (self, callback, *args, **kargs):
+        def __init__ (self, callback, args = [], kwargs = {}):
             # The action to take
             self.callback = callback
             self.args = args
-            self.kargs = kargs
+            self.kwargs = kwargs
             # Condition to signal that the data is ready.
             self.cond = threading.Condition()
             # The return value
@@ -49,7 +49,7 @@ class MainloopQueue:
         def main_thread (self):
             # Call the callback as requested, and then notify that the retval is calculated
             try:
-                self.retval = self.callback (*self.args, **self.kargs)
+                self.retval = self.callback (*self.args, **self.kwargs)
             except Exception, e:
                 self.retval = ExceptionContainer(sys.exc_info())
             self.cond.acquire()
@@ -76,21 +76,21 @@ class MainloopQueue:
         self.idle_running = 0
         self.main_thread = main_thread
 
-    def call_nowait(self, callback, *args, **kargs):
+    def call_nowait(self, callback, args = [], kwargs = {}):
         # put the action on the queue and then make sure the idle is running.
-        self.queue.put((callback, args, kargs))
+        self.queue.put((callback, args, kwargs))
         self.idle_running_lock.acquire()
         if (self.idle_running == 0):
             gobject.idle_add(self._idle)
             self.idle_running = 1
         self.idle_running_lock.release()
 
-    def call(self, callback, *args, **kargs):
+    def call(self, callback, args = [], kwargs = {}):
         # If we're in the main thread, just call the function
         if self.main_thread == threading.currentThread():
-            return callback (*args, **kargs)
+            return callback (*args, **kwargs)
         # Otherwise create a ReturnData and use call_nowait to signal it
-        return_data = self.ReturnData(callback, *args, **kargs)
+        return_data = self.ReturnData(callback, args, kwargs)
         self.call_nowait (return_data.main_thread)
         # And then wait for the return value.
         retval = return_data.get_retval()
@@ -103,7 +103,7 @@ class MainloopQueue:
         gtk.threads_enter()
         self.idle_running_lock.acquire()
         try:
-            (callback, args, kargs) = self.queue.get_nowait()
+            (callback, args, kwargs) = self.queue.get_nowait()
         except Queue.Empty:
             self.idle_running = 0
             self.idle_running_lock.release()
@@ -112,7 +112,7 @@ class MainloopQueue:
         else:
             self.idle_running_lock.release()
             try:
-                callback (*args, **kargs)
+                callback (*args, **kwargs)
             except:
                 print "Exception in a gtkAsyncMethod:"
                 traceback.print_exc()
@@ -136,8 +136,8 @@ def gtkAsyncMethod(func):
     Then calling foo() is exactly the same as calling queue.call_nowait(bar).
     """
 
-    def queuer(*args, **kargs):
-        queue.call_nowait(func, *args, **kargs)
+    def queuer(*args, **kwargs):
+        queue.call_nowait(func, args=args, kwargs=kwargs)
     return queuer
 
 
@@ -155,6 +155,6 @@ def gtkSyncMethod(func):
 
     Then calling foo() is exactly the same as calling queue.call(bar).
     """
-    def locker(*args, **kargs):
-        return queue.call(func, *args, **kargs)
+    def locker(*args, **kwargs):
+        return queue.call(func, args=args, kwargs=kwargs)
     return locker

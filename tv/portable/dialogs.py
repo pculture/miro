@@ -55,6 +55,7 @@ BUTTON_OK = DialogButton("Ok")
 BUTTON_CANCEL = DialogButton("Cancel")
 BUTTON_YES = DialogButton("Yes")
 BUTTON_NO = DialogButton("No")
+BUTTON_QUIT = DialogButton("Quit")
 BUTTON_MIGRATE = DialogButton("Migrate")
 BUTTON_DONT_MIGRATE = DialogButton("Don't Migrate")
 
