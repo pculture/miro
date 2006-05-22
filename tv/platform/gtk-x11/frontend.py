@@ -2,6 +2,7 @@ import os
 import config
 import prefs
 import gtk
+from frontend_implementation.gtk_queue import gtkAsyncMethod
 
 # Import MozillaBrowser ASAP.  On some systems the gtkmozembed module is
 # linked against a different libxpcom than MozillaBrowser.  Importing it first
@@ -31,6 +32,8 @@ mozsetup.setupMozillaEnvironment()
 
 def exit(returnCode):
     return returnCode
+
+@gtkAsyncMethod
 def quit():
     gtk.main_quit()
 
