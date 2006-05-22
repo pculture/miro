@@ -1,7 +1,7 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 %define VERSION 0.8.3
-%define RELEASE_CANDIDATE rc0
+%define RELEASE_CANDIDATE rc1
 #define RELEASE_CANDIDATE
 %define FULL_VERSION %{VERSION}%{?RELEASE_CANDIDATE:-}%{RELEASE_CANDIDATE}
 %define RELEASE 1
@@ -21,6 +21,8 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      i386 x86_64
 BuildRequires:  python-devel
 BuildRequires:  xine-lib-devel libfame Pyrex
+BuildRequires:  boost-devel
+BuildRequires:  mozilla-devel
 Requires:   	python-abi = %(%{__python} -c "import sys ; print sys.version[:3]")
 Requires:	xine-lib gnome-python2-gtkmozembed libfame gnome-python2-gconf dbus-python
 
