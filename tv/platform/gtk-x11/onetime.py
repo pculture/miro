@@ -92,7 +92,7 @@ class OneTime (dbus.service.Object):
 
     @dbus.service.method('org.participatoryculture.dtv.OneTimeIface')
     def HandleArgs (self, args):
-        singleclick.parseCommandLineArgs (args)
+        eventloop.addIdle(lambda:singleclick.parseCommandLineArgs (args), "Open Files from dbus")
         app.controller.frame.widgetTree['main-window'].present()
 
 
