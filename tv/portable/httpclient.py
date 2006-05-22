@@ -1029,6 +1029,7 @@ class HTTPClient(object):
                          (config.get(prefs.SHORT_APP_NAME),
                           config.get(prefs.APP_VERSION),
                           config.get(prefs.PROJECT_URL))
+        self.requestId = None
         self.initHeaders()
 
     def initHeaders(self):
@@ -1055,11 +1056,17 @@ class HTTPClient(object):
         else:
             bodyDataCallback = None
         self.willHandleResponse = False
-        return self.connectionPool.addRequest(self.callbackIntercept,
-                self.errbackIntercept, self.onHeaders, bodyDataCallback,
-                self.url, self.method, self.headers)
+        self.requestId = self.connectionPool.addRequest(
+                self.callbackIntercept, self.errbackIntercept, self.onHeaders,
+                bodyDataCallback, self.url, self.method, self.headers)
+        return self.requestId
+
+    def cancelRequest(self):
+        cancelRequest(self.requestId)
+        self.requestId = None
 
     def callbackIntercept(self, response):
+        self.requestId = None
         if self.shouldRedirect(response):
             self.handleRedirect(response)
         elif self.shouldAuthorize(response):
@@ -1069,8 +1076,9 @@ class HTTPClient(object):
             trapCall(self.callback, response)
 
     def errbackIntercept(self, error):
+        self.requestId = None
         if isinstance(error, PipelinedRequestNeverStarted):
-            # Connection closed before our pipelined reuest started.  RFC
+            # Connection closed before our pipelined request started.  RFC
             # 2616 says we should retry
             self.startRequest() 
             # this should give us a new connection, since our last one closed
@@ -1081,11 +1089,14 @@ class HTTPClient(object):
         if self.shouldRedirect(response) or self.shouldAuthorize(response):
             self.willHandleResponse = True
         elif self.headerCallback is not None:
-            self.headerCallback(self.prepareResponse(response))
+            response = self.prepareResponse(response)
+            if not trapCall(self.headerCallback, response):
+                self.cancelRequest()
 
     def onBodyData(self, data):
         if not self.willHandleResponse and self.bodyDataCallback:
-            self.bodyDataCallback(data)
+            if not trapCall(self.bodyDataCallback, data):
+                self.cancelRequest()
 
     def prepareResponse(self, response):
         response['original-url'] = self.originalURL

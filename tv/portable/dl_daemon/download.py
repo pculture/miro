@@ -320,7 +320,7 @@ class BGDownloader:
         """
 
         if chatter:
-            print "moving to movies directory fliename is ", self.filename
+            print "moving to movies directory filename is ", self.filename
         newfilename = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
                 self.shortFilename)
         newfilename = nextFreeFilename(newfilename)
