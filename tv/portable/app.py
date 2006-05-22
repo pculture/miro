@@ -892,35 +892,35 @@ class TemplateDisplay(frontend.HTMLDisplay):
         #print "DTV: got %s" % url
         try:
             # Special-case non-'action:'-format URL
-            match = re.compile(r"^template:(.*)$").match(url)
-            if match:
-                self.dispatchAction('switchTemplate', name = match.group(1))
+            if url.startswith ("template:"):
+                self.dispatchAction ('switchTemplate', name = url[len("template:"):])
                 return False
 
             # Standard 'action:' URL
-            match = re.compile(r"^action:([^?]+)(\?(.*))?$").match(url)
-            if match:
-                action = match.group(1)
-                argString = match.group(3)
-                if argString is None:
-                    argString = ''
-                argLists = cgi.parse_qs(argString, keep_blank_values=True)
-
-                # argLists is a dictionary from parameter names to a list
-                # of values given for that parameter. Take just one value
-                # for each parameter, raising an error if more than one
-                # was given.
-                args = {}
-                for key in argLists.keys():
-                    value = argLists[key]
-                    if len(value) != 1:
-                        raise template.TemplateError, "Multiple values of '%s' argument passed to '%s' action" % (key, action)
-		    if type(key) == unicode:
-			key = key.encode('utf8')
-                    args[key] = value[0]
-
-                self.dispatchAction(action, **args)
-                return False
+            if url.startswith ("action:"):
+                match = re.compile(r"^action:([^?]+)(\?(.*))?$").match(url)
+                if match:
+                    action = match.group(1)
+                    argString = match.group(3)
+                    if argString is None:
+                        argString = ''
+                    argLists = cgi.parse_qs(argString, keep_blank_values=True)
+    
+                    # argLists is a dictionary from parameter names to a list
+                    # of values given for that parameter. Take just one value
+                    # for each parameter, raising an error if more than one
+                    # was given.
+                    args = {}
+                    for key in argLists.keys():
+                        value = argLists[key]
+                        if len(value) != 1:
+                            raise template.TemplateError, "Multiple values of '%s' argument passed to '%s' action" % (key, action)
+                        if type(key) == unicode:
+                            key = key.encode('utf8')
+                        args[key] = value[0]
+    
+                    self.dispatchAction(action, **args)
+                    return False
 
             # Let channel guide URLs pass through
             if url.startswith(config.get(prefs.CHANNEL_GUIDE_URL)):
