@@ -228,14 +228,15 @@ class UIBackendDelegate:
 
     # This is windows specific right now. We don't need it on other platforms
     def setRunAtStartup(self, value):
+        print "setting run at startup %r" % value
+
         if (value):
             filename = os.path.join(resource.resourceRoot(),"..","Democracy.exe")
             filename = os.path.normpath(filename)
-            print "Filename is %s" % filename
-            folder = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,"Software\Microsoft\Windows\CurrentVersion\Run",0, _winreg.KEY_SET_VALUE)
+            folder = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER,"Software\Microsoft\Windows\CurrentVersion\Run",0, _winreg.KEY_SET_VALUE)
             _winreg.SetValueEx(folder, "Democracy Player", 0,_winreg.REG_SZ, filename)
         else:
-            folder = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,"Software\Microsoft\Windows\CurrentVersion\Run",0, _winreg.KEY_SET_VALUE)
+            folder = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER,"Software\Microsoft\Windows\CurrentVersion\Run",0, _winreg.KEY_SET_VALUE)
             _winreg.DeleteValue(folder, "Democracy Player")
 
     def killDownloadDaemon(self, oldpid):

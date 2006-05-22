@@ -21,7 +21,7 @@
 	<!--GENERAL-->
 	<groupbox orient="horizontal">
 		<caption label="General"/>
-		<checkbox id="runonstartup" label="Automatically run DTV when Windows starts" value="1" oncommand="runOnStartupChange()"/>
+		<checkbox id="runonstartup" label="Automatically run Democracy Player when I login" value="1" oncommand="runOnStartupChange()"/>
 	</groupbox>
 	<!--/GENERAL-->
 		

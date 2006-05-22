@@ -154,6 +154,13 @@ lbl_winnt:
   File  /r vlc-plugins
   File  /r xulrunner
 
+  ; Old versions used HKEY_LOCAL_MACHINE for the RunAtStartup value, we use
+  ; HKEY_CURRENT_USER now
+  ReadRegStr $R0 HKLM  "Software\Microsoft\Windows\CurrentVersion\Run" "Democracy Player"
+  StrCmp $R0 "" +3
+    DeleteRegValue HKLM  "Software\Microsoft\Windows\CurrentVersion\Run" "Democracy Player"
+    WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Run" "Democracy Player" $R0
+
   ; Create a ProgID for Democracy
   WriteRegStr HKCR "Democracy.Player.1" "" "Democracy Player"
   WriteRegDword HKCR "Democracy.Player.1" "EditFlags" 0x00010000

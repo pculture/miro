@@ -116,7 +116,7 @@ def get(descriptor):
         # of Windows have a chance
         # http://support.microsoft.com/?kbid=270035
 
-        folder = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,"Software\Microsoft\Windows\CurrentVersion\Run")
+        folder = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER,"Software\Microsoft\Windows\CurrentVersion\Run")
         count = 0
         while True:
             try:
