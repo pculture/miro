@@ -696,7 +696,6 @@ class Feed(DDBObject):
         """This is called by grabURL to generate a feed based on
         the type of data found at the given URL
         """
-        print "got generate feed callback for %s" % self.origURL
         # FIXME: This probably should be split up a bit. The logic is
         #        a bit daunting
 
@@ -926,7 +925,6 @@ class RSSFeedImpl(FeedImpl):
         print "WARNING, unhandled error in Feed.update", error
 
     def _updateCallback(self,info):
-        print "Got update callback for %s" % self.url
         self.updating = False
         html = info['body']
         if info.has_key('charset'):

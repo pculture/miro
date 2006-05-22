@@ -41,7 +41,11 @@ Frontend requirements:
     """
 
 import eventloop
-import app
+
+# Pass in a connection to the frontend
+def setDelegate(newDelegate):
+    global delegate
+    delegate = newDelegate
 
 class DialogButton(object):
     def __init__(self, text):
@@ -71,7 +75,7 @@ class Dialog(object):
         self.callback = callback
         self.choice = None
         try:
-            app.controller.getBackendDelegate().runDialog(self)
+            delegate.runDialog(self)
         except:
             import traceback
             print "WARNING, exception in runDialog()"

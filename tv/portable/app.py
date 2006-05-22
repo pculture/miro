@@ -28,6 +28,7 @@ import xhtmltools
 import guide
 import idlenotifier 
 import eventloop
+import dialogs
 
 import os
 import re
@@ -433,6 +434,7 @@ class Controller (frontend.Application):
             download_utils.setDelegate(delegate)
             autoupdate.setDelegate(delegate)
             database.setDelegate(delegate)
+            dialogs.setDelegate(delegate)
 
             #Restoring
             print "DTV: Restoring database..."
@@ -531,7 +533,6 @@ class Controller (frontend.Application):
             eventloop.startup()
 
             # Uncomment the following to test the ChoiceDialog
-            #import dialogs
             #d = dialogs.ChoiceDialog("HI", "long hi", dialogs.BUTTON_YES,
                                      #dialogs.BUTTON_NO)
             #def callback(dialog):

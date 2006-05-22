@@ -416,7 +416,7 @@ class HTTPDownloader(BGDownloader):
         self.cancelRequest()
 
     def handleWriteError(self, exc):
-        msg = "Could not write %s: %s" % (self.filename, exc.strerror)
+        msg = "Could not write to %s: %s" % (self.filename, exc)
         self.handleError(msg)
         try:
             self.filehandle.close()

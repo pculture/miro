@@ -50,11 +50,6 @@ class AuthorizationFailed(HTTPError):
     pass
 
 
-# Pass in a connection to the frontend
-def setDelegate(newDelegate):
-    global delegate
-    delegate = newDelegate
-
 def trapCall(function, *args, **kwargs):
     """Convenience function do a util.trapCall, where when = 'While talking to
     the network'
@@ -986,7 +981,8 @@ class HTTPConnectionPool(object):
             conns = self.connections[serverKey]
             toRemove = []
             for conn in conns['free']:
-                if conn.idleSince + self.CONNECTION_TIMEOUT <= clock():
+                if (conn.idleSince is not None and 
+                        conn.idleSince + self.CONNECTION_TIMEOUT <= clock()):
                     toRemove.append(conn)
             for x in toRemove:
                 conn.closeConnection()
@@ -1189,7 +1185,6 @@ class HTTPClient(object):
             else:
                 trapCall(self.errback, AuthorizationFailed())
         dialogs.HTTPAuthDialog(self.url, realm).run(handleLoginResponse)
-
 
 def grabURL(url, callback, errback, headerCallback=None,
         bodyDataCallback=None, method="GET", start=0, etag=None,

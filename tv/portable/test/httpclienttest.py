@@ -7,6 +7,7 @@ from copy import copy
 from BitTornado.clock import clock
 
 import database
+import dialogs
 import eventloop
 import httpclient
 import util
@@ -124,11 +125,25 @@ class TestingAuthDelegate:
         self.logins = []
     def addLogin(self, user, password):
         self.logins.append((user, password))
-    def getHTTPAuth(self, host, realm):
+
+    def runDialog(self, dialog):
         if self.logins:
-            return self.logins.pop(0)
+            user, password = self.logins.pop(0)
+            dialog.runCallback(dialogs.BUTTON_OK, user, password)
         else:
-            return None
+            dialog.runCallback(None)
+
+def startResponse(version='1.1', status=200, headers={}):
+    rv = """\
+HTTP/%s %s OK\r
+Content-Type: text/plain; charset=ISO-8859-1\r
+Last-Modified: Wed, 10 May 2006 22:30:33 GMT\r
+Date: Wed, 10 May 2006 22:38:39 GMT\r
+""" % (version, status)
+    for key, value in headers.items():
+        rv += '%s: %s\r\n' % (key, value)
+    rv += '\r\n'
+    return rv
 
 class NetworkBufferTest(DemocracyTestCase):
     def setUp(self):
@@ -263,7 +278,7 @@ class HTTPClientTestBase(EventLoopTest):
                 method='GET', path='/bar/baz;123?a=b') 
         self.fakeCallbackError = False
         self.authDelegate = TestingAuthDelegate()
-        httpclient.setDelegate(self.authDelegate)
+        dialogs.setDelegate(self.authDelegate)
 
     def tearDown(self):
         # clear out any HTTPAuth objects in there
@@ -399,47 +414,35 @@ HELLO: WORLD\r\n"""
         self.assert_(self.errbackCalled)
         self.assert_(isinstance(self.data, httpclient.BadHeaderLine))
 
-    def startResponse(self, version='1.1', status=200, headers={}):
-        rv = """\
-HTTP/%s %s OK\r
-Content-Type: text/plain; charset=ISO-8859-1\r
-Last-Modified: Wed, 10 May 2006 22:30:33 GMT\r
-Date: Wed, 10 May 2006 22:38:39 GMT\r
-""" % (version, status)
-        for key, value in headers.items():
-            rv += '%s: %s\r\n' % (key, value)
-        rv += '\r\n'
-        return rv
-
     def testWillClose(self):
-        self.testRequest.handleData(self.startResponse(
+        self.testRequest.handleData(startResponse(
             headers={'Content-Length': 128}))
         self.assertEquals(self.testRequest.willClose, False)
 
     def testWillClose2(self):
-        self.testRequest.handleData(self.startResponse(
+        self.testRequest.handleData(startResponse(
             headers={'Transfer-Encoding':'chunked'}))
         self.assertEquals(self.testRequest.willClose, False)
 
     def testWillClose3(self):
-        self.testRequest.handleData(self.startResponse(version='1.0',
+        self.testRequest.handleData(startResponse(version='1.0',
             headers={'Content-Length': 128}))
         # HTTP1.0 connections always close
         self.assertEquals(self.testRequest.willClose, True)
 
     def testWillClose4(self):
-        self.testRequest.handleData(self.startResponse())
+        self.testRequest.handleData(startResponse())
         # No content-length and not chunked, we need to close
         self.assertEquals(self.testRequest.willClose, True)
 
     def testWillClose5(self):
-        self.testRequest.handleData(self.startResponse(
+        self.testRequest.handleData(startResponse(
                 headers={'Connection': 'close'}))
         self.assertEquals(self.testRequest.willClose, True)
 
     def testPipeline(self):
         self.assertEqual(self.testRequest.pipelinedRequest, None)
-        self.testRequest.handleData(self.startResponse(
+        self.testRequest.handleData(startResponse(
             headers={'Content-Length': 128}))
         self.assertEquals(self.testRequest.canSendRequest(), True)
         self.testRequest.sendRequest(self.callback, self.errback,
@@ -454,7 +457,7 @@ Date: Wed, 10 May 2006 22:38:39 GMT\r
         self.assertEquals(self.testRequest.pipelinedRequest, None)
 
     def testBadPipeline(self):
-        self.testRequest.handleData(self.startResponse())
+        self.testRequest.handleData(startResponse())
         # no content length means we can't pipeline a request
         self.assertEquals(self.testRequest.canSendRequest(), False)
         self.assertRaises(httpclient.NotReadyToSendError,
@@ -462,7 +465,7 @@ Date: Wed, 10 May 2006 22:38:39 GMT\r
 
     def testPipelineNeverStarted(self):
         self.pipelineError = None
-        self.testRequest.handleData(self.startResponse(
+        self.testRequest.handleData(startResponse(
             headers={'Content-Length': 128}))
         def pipelineErrback(error):
             self.pipelineError = error
@@ -486,7 +489,7 @@ Date: Wed, 10 May 2006 22:38:39 GMT\r
         def pipelineErrback(error):
             self.pipelineError = error
         conn = testPool.getConnection('http', 'www.foo.com')
-        conn.handleData(self.startResponse(headers={'Content-Length': 128}))
+        conn.handleData(startResponse(headers={'Content-Length': 128}))
         client2 = httpclient.HTTPClient(url, pipelineCallback, 
                 pipelineErrback) 
         client2.connectionPool = testPool
@@ -501,31 +504,31 @@ Date: Wed, 10 May 2006 22:38:39 GMT\r
         self.assertEquals(self.pipelineResponse['body'], "HELLO: WORLD\r\n")
 
     def testContentLengthHandling(self):
-        self.testRequest.handleData(self.startResponse(
+        self.testRequest.handleData(startResponse(
             headers={'Content-Length': '5'}))
         self.testRequest.handleData("12345EXTRASTUFF")
         self.assertEquals(self.testRequest.body, '12345')
 
     def testTransferEncodingTrumpsContentLength(self):
-        self.testRequest.handleData(self.startResponse(
+        self.testRequest.handleData(startResponse(
             headers={'Content-Length': '5', 'Transfer-Encoding': 'chunked'}))
         self.assertEquals(self.testRequest.contentLength, None)
 
     def testNoBody(self):
-        self.testRequest.handleData(self.startResponse(status=204))
+        self.testRequest.handleData(startResponse(status=204))
         self.assertEquals(self.testRequest.state, 'closed')
-        self.assertEquals(self.testRequest.body, None)
+        self.assertEquals(self.testRequest.body, '')
 
     def testNoBody2(self):
-        self.testRequest.handleData(self.startResponse(status=123))
+        self.testRequest.handleData(startResponse(status=123))
         self.assertEquals(self.testRequest.state, 'closed')
-        self.assertEquals(self.testRequest.body, None)
+        self.assertEquals(self.testRequest.body, '')
 
     def testNoBody3(self):
         self.testRequest.method='HEAD'
-        self.testRequest.handleData(self.startResponse())
+        self.testRequest.handleData(startResponse())
         self.assertEquals(self.testRequest.state, 'closed')
-        self.assertEquals(self.testRequest.body, None)
+        self.assertEquals(self.testRequest.body, '')
 
     def testSplitUpMessage(self):
         data = self.fakeResponse
@@ -552,14 +555,14 @@ Date: Wed, 10 May 2006 22:38:39 GMT\r
         self.assertEquals(self.testRequest.body, 'HELLO: WORLD\r\n')
 
     def testBadChunkSize(self):
-        self.testRequest.handleData(self.startResponse(
+        self.testRequest.handleData(startResponse(
             headers={'Transfer-Encoding': 'chunked'}))
         self.testRequest.handleData("Fifty\r\n")
         self.assert_(self.errbackCalled)
         self.assert_(isinstance(self.data, httpclient.BadChunkSize))
 
     def testIgnoreChunkExtensions(self):
-        self.testRequest.handleData(self.startResponse(
+        self.testRequest.handleData(startResponse(
             headers={'Transfer-Encoding': 'chunked'}))
         self.testRequest.handleData("ff ;ext1=2 ; ext3=4\r\n")
         self.assert_(not self.errbackCalled)
@@ -567,7 +570,7 @@ Date: Wed, 10 May 2006 22:38:39 GMT\r
         self.assertEquals(self.testRequest.chunkSize, 255)
 
     def testChunkWithoutCRLF(self):
-        self.testRequest.handleData(self.startResponse(
+        self.testRequest.handleData(startResponse(
             headers={'Transfer-Encoding': 'chunked'}))
         self.testRequest.handleData("5\r\n")
         self.testRequest.handleData("12345RN") # "RN" should have been "\r\n"
@@ -600,7 +603,7 @@ Date: Wed, 10 May 2006 22:38:39 GMT\r
             self.firstData = data
             req.sendRequest(self.callback, self.errback, method='GET', path='/')
 
-        url = 'http://www.google.com/'
+        url = 'http://jigsaw.w3.org/HTTP/'
         req = httpclient.HTTPConnection()
         def stopEventLoop(conn):
             eventloop.quit()
@@ -800,7 +803,7 @@ Below this line, is 1000 repeated lines of 0-9.
         def bodyDataCallback(data):
             self.lastSeen = data
         self.testRequest.bodyDataCallback = bodyDataCallback
-        self.testRequest.handleData(self.startResponse(
+        self.testRequest.handleData(startResponse(
                     headers={'content-length':'20'}))
         self.assertEquals(self.lastSeen, None)
         self.testRequest.handleData("12345")
@@ -815,7 +818,7 @@ Below this line, is 1000 repeated lines of 0-9.
         def bodyDataCallback(data):
             self.lastSeen = data
         self.testRequest.bodyDataCallback = bodyDataCallback
-        self.testRequest.handleData(self.startResponse(
+        self.testRequest.handleData(startResponse(
             headers={'transfer-encoding': 'chunked'}))
         self.testRequest.handleData("5\r\nHI")
         self.assertEquals(self.lastSeen, "HI")
@@ -1088,6 +1091,10 @@ class HTTPConnectionPoolTest(EventLoopTest):
         self.assert_('http:www.bar.com:80' in self.pool.connections)
         self.assert_('http:www.baz.com:80' in self.pool.connections)
         self.assert_('http:www.qux.com:80' in self.pool.connections)
+        qux.handleData(startResponse(headers={'Content-Length': 128}))
+        # qux is now a free connection, but its idleSince is None
+        self.pool.cleanupPool()
+        self.assert_('http:www.qux.com:80' in self.pool.connections)
 
 class HTTPSConnectionTest(HTTPClientTestBase):
     # We should have more tests here, but I have no idea how to fake SSL
@@ -1138,7 +1145,7 @@ class GrabURLTest(HTTPClientTestBase):
         httpclient.grabURL(url, self.callback, self.errback, etag=etag)
         self.runEventLoop()
         self.assertEquals(self.data['status'], 304)
-        self.assertEquals(self.data['body'], None)
+        self.assertEquals(self.data['body'], '')
 
     def testBadEtag(self):
         url = 'http://jigsaw.w3.org/HTTP/'
