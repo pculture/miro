@@ -12,12 +12,24 @@ MOVIES_DIRECTORY_PARENT = os.path.expanduser('~/Movies')
 SUPPORT_DIRECTORY_PARENT = os.path.expanduser('~/Library/Application Support')
 
 def load():
-    domain = NSBundle.mainBundle().bundleIdentifier()
+    domain = getBundleIdentifier()
     plist =  NSUserDefaults.standardUserDefaults().persistentDomainForName_(domain)
-    return Conversion.pythonCollectionFromPropertyList(plist)
+    pydict = Conversion.pythonCollectionFromPropertyList(plist)
+
+    # A bug in the 'Downloads' preference panel allowed float values to be
+    # used for the upstream limit, which when being pickled would cause a
+    # bad crash because this value was coming as an instance of 
+    # objc._pythonify.OC_PythonFloat, which apparently cannot be correctly
+    # pickled. We now correctly use integer, but we need to fix any previous
+    # incorrect value here.
+    oldval = pydict[prefs.UPSTREAM_LIMIT_IN_KBS.key]
+    newval = int(oldval)
+    pydict[prefs.UPSTREAM_LIMIT_IN_KBS.key] = newval
+
+    return pydict
 
 def save(data):
-    domain = NSBundle.mainBundle().bundleIdentifier()
+    domain = getBundleIdentifier()
     plist = Conversion.propertyListFromPythonCollection(data)
     defaults = NSUserDefaults.standardUserDefaults()
     defaults.setPersistentDomain_forName_(plist, domain)
@@ -60,6 +72,27 @@ def get(descriptor):
     
     return value
 
+###############################################################################
+#### Bundle information accessors                                          ####
+###############################################################################
+
+def getBundleIdentifier():
+    if os.environ.has_key('BUNDLEIDENTIFIER'):
+        return os.environ['BUNDLEIDENTIFIER']
+    else:
+        return NSBundle.mainBundle().bundleIdentifier()
+
+def getBundlePath():
+    if os.environ.has_key('BUNDLEPATH'):
+        return os.environ['BUNDLEPATH']
+    else:
+        return NSBundle.mainBundle().bundlePath()
+
+def getBundleResourcePath():
+    if os.environ.has_key('RESOURCEPATH'):
+        return os.environ['RESOURCEPATH']
+    else:
+        return NSBundle.mainBundle().resourcePath()
 
 ###############################################################################
 #### Migrate to Democracy                                                  ####
@@ -78,7 +111,7 @@ def migrateToDemocracy():
     # Migrate preferences
     
     prefsPath = os.path.expanduser('~/Library/Preferences')
-    newDomain = NSBundle.mainBundle().bundleIdentifier()
+    newDomain = getBundleIdentifier()
     newPrefs = '%s.plist' % os.path.join(prefsPath, newDomain)
     oldDomain = newDomain.replace(newAppName, oldAppName)
     oldPrefs = '%s.plist' % os.path.join(prefsPath, oldDomain)
@@ -109,5 +142,5 @@ def ensureMigratedMoviePath(pathname):
         print "DTV: Migrating movie to %s" % pathname
     return pathname
 
-
-migrateToDemocracy();
+if not util.inDownloader:
+    migrateToDemocracy()

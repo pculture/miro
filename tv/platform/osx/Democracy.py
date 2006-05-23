@@ -1,13 +1,17 @@
 import os
 import sys
+import Foundation
 
-# Add extra stuff to the search path that will let us find our source
-# directories when we have built a development bundle with py2app -A.
-platform = 'osx'
-root = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), '..', '..')
-sys.path[0:0]=['%s/platform/%s' % (root, platform), '%s/platform' % root, '%s/portable' % root]
+# If the bundle is an alias bundle, we need to tweak the search path
+bundle = Foundation.NSBundle.mainBundle()
+bundleInfo = bundle.infoDictionary()
+if bundleInfo['PyOptions']['alias']:
+    root = os.path.dirname(bundle.bundlePath())
+    root = os.path.join(root, '..', '..')
+    root = os.path.normpath(root)
+    sys.path[0:0] = ['%s/portable' % root]
 
-# Now we can import our stuff
+# We can now import our stuff
 import app
 import prefs
 import config

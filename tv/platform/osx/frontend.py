@@ -173,6 +173,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         channelGuideHost = components[1]
         NSURLRequest.setAllowsAnyHTTPSCertificate_forHost_(YES, channelGuideHost)
 
+        # Startup
         self.actualApp.onStartup()
     
     def applicationDidBecomeActive_(self, notification):
@@ -871,7 +872,7 @@ class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
         self.setUpstreamLimit_(self.limitValueField)
     
     def setUpstreamLimit_(self, sender):
-        limit = sender.floatValue()
+        limit = sender.intValue()
         config.set(prefs.UPSTREAM_LIMIT_IN_KBS, limit)
         
     def changeMoviesDirectory_(self):
@@ -1059,13 +1060,33 @@ class UIBackendDelegate:
 
     def launchDownloadDaemon(self, oldpid, env):
         self.killDownloadDaemon(oldpid)
-        # Setup environement
-        for key, value in env.items():
-            os.environ[key] = value
-        # Find and launch the daemon
+
+        print "DTV: Launching Download Daemon"
         pool = NSAutoreleasePool.alloc().init()
-        p = NSBundle.mainBundle().pathForResource_ofType_('Democracy_Downloader', 'app')
-        NSWorkspace.sharedWorkspace().launchApplication_(p)
+        
+        bundle = NSBundle.mainBundle()
+        info = bundle.infoDictionary()
+        pyexe = info['PythonInfoDict']['PythonExecutable']
+        script = bundle.pathForResource_ofType_('Democracy_Downloader', 'py')
+
+        import imp
+        mfile, mpath, mdesc = imp.find_module('dl_daemon')
+        daemonPrivatePath = os.path.join(mpath, 'private')
+        pythonPath = list(sys.path)
+        pythonPath[0:0] = [daemonPrivatePath]
+
+        env['PYTHONPATH'] = ':'.join(pythonPath)
+        env['BUNDLEPATH'] = bundle.bundlePath()
+        env['RESOURCEPATH'] = bundle.resourcePath()
+        env['BUNDLEIDENTIFIER'] = bundle.bundleIdentifier()
+        env['DYLD_LIBRARY_PATH'] = os.path.join(bundle.bundlePath(), 'Contents', 'Frameworks')
+
+        task = NSTask.alloc().init()
+        task.setLaunchPath_(pyexe)
+        task.setArguments_([script])
+        task.setEnvironment_(env)
+        task.launch()
+        
         del pool
 
 class ExceptionReporterController (NibClassBuilder.AutoBaseClass):
