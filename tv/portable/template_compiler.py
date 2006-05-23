@@ -183,6 +183,10 @@ def compileTemplates(tpath = None):
     if tpath is not None:
         print "Compiling %s" % tpath
         outdir = os.path.join(outdir, tpath)
+        try:
+            os.makedirs(outdir)
+        except:
+            pass
         indir = os.path.join(indir, tpath)
     
     manifest = open(os.path.join(outdir,'__init__.py'),'wb')
