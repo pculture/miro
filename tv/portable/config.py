@@ -8,7 +8,7 @@ import util
 import resource
 
 __appConfig = None
-__data = {}
+__data = None
 __lock = RLock()
 __callbacks = set()
 
@@ -19,32 +19,34 @@ def removeChangeCallback(callback):
     __callbacks.discard(callback)
 
 def load():
+    global __appConfig
     global __data
-    __lock.acquire()
-    try:
-        # There's some sleight-of-hand here. The Windows port needs to
-        # look up config.LONG_APP_NAME and config.PUBLISHER to compute
-        # the path to the data file that is read when load() is
-        # called. Setting __appConfig to a true value (and populating
-        # it with those keys) before calling load() ensures that (a)
-        # the values will be available and (b) we won't get caught in
-        # an infinite loop of load()s. But in general, you shouldn't
-        # call config.get() or config.set() from platformcfg.load()
-        # unless you know exactly what you are doing, and maybe not
-        # even then.
-        global __appConfig
-        __appConfig = util.readSimpleConfigFile(resource.path('app.config'))
+    if __appConfig is None and __data is None:
+        __lock.acquire()
+        try:
+            # There's some sleight-of-hand here. The Windows port needs to
+            # look up config.LONG_APP_NAME and config.PUBLISHER to compute
+            # the path to the data file that is read when load() is
+            # called. Setting __appConfig to a true value (and populating
+            # it with those keys) before calling load() ensures that (a)
+            # the values will be available and (b) we won't get caught in
+            # an infinite loop of load()s. But in general, you shouldn't
+            # call config.get() or config.set() from platformcfg.load()
+            # unless you know exactly what you are doing, and maybe not
+            # even then.
+            __appConfig = util.readSimpleConfigFile(resource.path('app.config'))
 
-        __data = platformcfg.load()
-        if __data is None:
-            __data = dict()
+            # Load the preferences
+            __data = platformcfg.load()
+            if __data is None:
+                __data = dict()
 
-        # This is a bit of a hack to automagically get the serial
-        # number for this platform
-        prefs.APP_SERIAL.key = ('appSerial-%s' % get(prefs.APP_PLATFORM))
+            # This is a bit of a hack to automagically get the serial
+            # number for this platform
+            prefs.APP_SERIAL.key = ('appSerial-%s' % get(prefs.APP_PLATFORM))
 
-    finally:
-        __lock.release()
+        finally:
+            __lock.release()
 
 def save():
     __lock.acquire()
