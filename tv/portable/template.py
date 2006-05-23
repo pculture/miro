@@ -32,8 +32,10 @@ def fillTemplate(filename, domHandler, platform, eventCookie, top = True, onlyBo
         return fillTemplate(domHandler, platform, eventCookie)
     else:
         filename = filename.replace('/','.').replace('\\','.').replace('-','_')
+        components = filename.split('.')
         mod = __import__("compiled_templates.%s"%filename)
-        mod = getattr(mod,filename)
+        for comp in components:
+            mod = getattr(mod,comp)
         return mod.fillTemplate(domHandler, platform, eventCookie)
 
 # As fillTemplate, but no Javascript calls are made, and no template

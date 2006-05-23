@@ -106,6 +106,7 @@ from StringIO import StringIO
 from templatehelper import quoteattr, escape, HTMLPattern, attrPattern, resourcePattern, rawAttrPattern, generateId
 import re
 import os
+import stat
 
 #Setup gettext
 #gettext.install('dtv', 'resources/gettext')
@@ -157,48 +158,52 @@ def compileTemplate(inFile, top = True, onlyBody = False):
 
 # Returns a list of templates with URLs relative to the template
 # resource directory
-def findTemplates(root):
+def findTemplates(tpath):
     templates = []
-    tpath = os.path.join(root,'resources','templates')
-    for r, dirs, files in os.walk(tpath):
-        for template in files:
-            # Find the path relative to the resource directory
-            fullpath = os.path.join(r,template)
-            template = fullpath[len(tpath)+1:]
-            if (template.find('.svn') == -1 and
-                not (template.startswith('.') or template.startswith('#') or 
-                     template.endswith('~') or template.endswith('.js') or 
-                     template.endswith('.html'))):
-                templates.append(template)
-    return templates
+    folders = []
+    for template in os.listdir(tpath):
+        if (template.find('.svn') == -1 and
+            not (template.startswith('.') or template.startswith('#') or 
+                 template.endswith('~') or template.endswith('.js') or 
+                 template.endswith('.html'))):
+            mode = os.stat(os.path.join(tpath,template))[stat.ST_MODE]
+            if stat.S_ISDIR(mode):
+                folders.append(template)
+            else:
+                templates.append(template)        
+    return (folders, templates)
 
 def compileAllTemplates(root):
     setResourcePath(os.path.join(root,'resources'))
-    manifest = open(os.path.join(root,'portable','compiled_templates','__init__.py'),'wb')
-    manifest.write('# This is a generated file. Do not edit.\n\n')
-        
-    for template in findTemplates(root):
-        outFile = os.path.join(root,'portable','compiled_templates',template.replace('-','_')+'.py')
-        sourceFile = resource.path("templates/%s" % template)
-        outDir = os.path.dirname(outFile)
-        try:
-            os.makedirs(outDir)
-        except:
-            pass
-        try:
-            open(os.path.join(outDir,'__init__.py'), "r")
-        except:
-            package = open(os.path.join(outDir,'__init__.py'), "wb")
-            package.write('# This is a generated file. Do not edit.\n\n')
-            package.close()
+    compileTemplates()
 
-        if dep_util.newer(sourceFile, outFile):
-            print "Compiling '%s' template to %s" % (template, outFile)
-            (tcc, handle) = compileTemplate(template)
-            f = open(outFile,"wb")
-            f.write(tcc.getOutput())
-            f.close()
+def compileTemplates(tpath = None):
+    outdir = resource.path(os.path.join('..','portable','compiled_templates'))
+    indir = resource.path('templates')
+    if tpath is not None:
+        print "Compiling %s" % tpath
+        outdir = os.path.join(outdir, tpath)
+        indir = os.path.join(indir, tpath)
+    
+    manifest = open(os.path.join(outdir,'__init__.py'),'wb')
+    manifest.write('# This is a generated file. Do not edit.\n\n')
+
+    (folders, templates) = findTemplates(indir)
+    for template in templates:
+        outFile = os.path.join(outdir,template.replace('-','_')+'.py')
+        if tpath is None:
+            sourceFile = template
+        else:
+            sourceFile = os.path.join(tpath, template)
+        print "Compiling '%s' template to %s" % (sourceFile, outFile)
+        (tcc, handle) = compileTemplate(sourceFile)
+        f = open(outFile,"wb")
+        f.write(tcc.getOutput())
+        f.close()
         manifest.write("import %s\n" % template.replace('/','.').replace('\\','.').replace('-','_'))
+    for folder in folders:
+        manifest.write("import %s\n" % folder.replace('/','.').replace('\\','.').replace('-','_'))
+        compileTemplates(folder)
     manifest.close()
 
 class TemplateError(Exception):

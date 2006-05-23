@@ -49,7 +49,6 @@ bittorrent_dir2 = os.path.join(portable_dir, 'BitTornado','BT1')
 dl_daemon_dir = os.path.join(portable_dir, 'dl_daemon')
 test_dir = os.path.join(portable_dir, 'test')
 compiled_templates_dir = os.path.join(portable_dir, 'compiled_templates')
-compiled_templates_test_dir = os.path.join(compiled_templates_dir,'test')
 compiled_templates_unittest_dir = os.path.join(compiled_templates_dir,'unittest')
 resource_dir = os.path.join(root_dir, 'resources')
 platform_dir = os.path.join(root_dir, 'platform', 'gtk-x11')
@@ -187,7 +186,7 @@ files.append(os.path.join(platform_dir, 'glade', 'democracy.glade'))
 files.append(os.path.join(platform_dir, 'ui', 'Democracy.xml'))
 data_files.append(('/usr/share/democracy/resources/', files))
 # handle the sub directories.
-for dir in ('templates', 'css', 'images', 'testdata'):
+for dir in ('templates', 'css', 'images', 'testdata', os.path.join('templates','unittest')):
     source_dir = os.path.join(resource_dir, dir)
     dest_dir = os.path.join('/usr/share/democracy/resources/', dir)
     data_files.append((dest_dir, listfiles(source_dir)))
@@ -364,6 +363,7 @@ setup(name='democracy',
         'democracy.dl_daemon',
         'democracy.test',
         'democracy.compiled_templates',
+        'democracy.compiled_templates.unittest',
         'democracy.dl_daemon.private',
     ],
     package_dir = {
@@ -373,6 +373,7 @@ setup(name='democracy',
         'democracy.dl_daemon' : dl_daemon_dir,
         'democracy.test' : test_dir,
         'democracy.compiled_templates' : compiled_templates_dir,
+        'democracy.compiled_templates.unittest' : compiled_templates_unittest_dir,
     },
     cmdclass = {
         'build_ext': build_ext, 
