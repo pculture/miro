@@ -67,10 +67,6 @@ class TranslationTest(DemocracyTestCase):
         compiled_templates.unittest.translationtest._ = self.oldgettext
         text = tch.read()
         text = HTMLPattern.match(text).group(1)
-        print
-        print repr(text)
-        print repr(self.text)
-        print
         self.assertEqual(text,self.text)
 
 class ReplaceTest(DemocracyTestCase):
