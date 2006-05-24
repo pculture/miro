@@ -1079,8 +1079,6 @@ class HTTPClient(object):
         return self.requestId
 
     def cancelRequest(self):
-        import traceback
-        traceback.print_stack()
         cancelRequest(self.requestId)
         self.requestId = None
 
