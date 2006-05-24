@@ -16,8 +16,7 @@ import random
 
 from download_utils import grabURL, parseURL, cleanFilename, nextFreeFilename
 
-# a hash of URLs to downloaders
-_downloads_by_url = {}
+# a hash of download ids that the server knows about.
 _downloads = {}
 
 # Returns an HTTP auth object corresponding to the given host, path or
@@ -72,14 +71,30 @@ class HTTPAuthPassword(DDBObject):
 
 _lock = RLock()
 
+def _getDownloader (dlid = None, url = None):
+    if dlid is not None:
+        view = views.remoteDownloads.filterWithIndex(
+            indexes.downloadsByDLID,dlid)
+        try:
+            view.resetCursor()
+            dler = view.getNext()
+        finally:   
+            views.remoteDownloads.removeView(view)
+        return dler
+    if url is not None:
+        view = views.remoteDownloads.filterWithIndex(
+            indexes.downloadsByURL,url)
+        try:
+            view.resetCursor()
+            dler = view.getNext()
+        finally:   
+            views.remoteDownloads.removeView(view)
+        return dler
+
 def generateDownloadID():
-    _lock.acquire()
-    try:
+    dlid = "download%08d" % random.randint(0,99999999)
+    while _getDownloader (dlid=dlid):
         dlid = "download%08d" % random.randint(0,99999999)
-        while _downloads.has_key(dlid):
-            dlid = "download%08d" % random.randint(0,99999999)
-    finally:
-        _lock.release()
     return dlid
 
 class RemoteDownloader(DDBObject):
@@ -89,35 +104,23 @@ class RemoteDownloader(DDBObject):
         self.url = url
         self.itemList = [item]
         self.contentType = contentType
-        self.dlid = "noid"
+        self.dlid = generateDownloadID()
         self.status = {}
         self.runDownloader()
         DDBObject.__init__(self)
-
+ 
     @classmethod
     def initializeDaemon(cls):
         RemoteDownloader.dldaemon = daemon.ControllerDaemon()
 
     @classmethod
     def updateStatus(cls, data):
+        self = _getDownloader (dlid=data['dlid'])
         # print data
-        view = views.remoteDownloads.filterWithIndex(
-            indexes.downloadsByDLID,data['dlid'])
-        try:
-            view.resetCursor()
-            self = view.getNext()
-        finally:   
-            views.remoteDownloads.removeView(view)
-        if not self is None:
+        if self is not None:
             oldState = self.getState()
             self.status = data
             # Store the time the download finished
-            if ((self.getState() not in ['downloading','uploading']) and
-                (oldState in ['downloading', 'uploading'])):
-                _downloads_by_url[self.url]["count"] -= 1
-                if _downloads_by_url[self.url]["count"] == 0:
-                    del _downloads[self.dlid]
-                    del _downloads_by_url[self.url]
             if ((self.getState() in ['finished','uploading']) and
                 (oldState not in ['finished', 'uploading'])):
                 for item in self.itemList:
@@ -129,25 +132,10 @@ class RemoteDownloader(DDBObject):
     ##
     # This is the actual download thread.
     def runDownloader(self):
-        _lock.acquire()
-        try:
-            if _downloads_by_url.has_key(self.url):
-                self.dlid = _downloads_by_url[self.url]["dlid"]
-                _downloads_by_url[self.url]["count"] += 1
-            else:
-                if self.dlid == "noid":
-                    dlid = generateDownloadID()
-                    self.dlid = dlid
-                _downloads_by_url[self.url] = {}
-                _downloads_by_url[self.url]["dlid"] = self.dlid
-                _downloads_by_url[self.url]["count"] = 1
-                _downloads[self.dlid] = self.dlid
-                c = command.StartNewDownloadCommand(RemoteDownloader.dldaemon,
-                                                    self.url, self.dlid, self.contentType)
-                c.send(block=False)
-        finally:
-            _lock.release()
-        views.remoteDownloads.recomputeIndex(indexes.downloadsByDLID)
+        c = command.StartNewDownloadCommand(RemoteDownloader.dldaemon,
+                                            self.url, self.dlid, self.contentType)
+        c.send(block=False)
+        _downloads[self.dlid] = self
         for item in self.itemList:
             item.beginChange()
             item.endChange()
@@ -155,34 +143,46 @@ class RemoteDownloader(DDBObject):
     ##
     # Pauses the download.
     def pause(self, block=False):
-        c = command.PauseDownloadCommand(RemoteDownloader.dldaemon,
-                                            self.dlid)
-        c.send(block=block)
+        if _downloads.has_key(self.dlid):
+            c = command.PauseDownloadCommand(RemoteDownloader.dldaemon,
+                                             self.dlid)
+            c.send(block=block)
+        else:
+            self.status["state"] = "paused"
 
     ##
     # Stops the download and removes the partially downloaded
     # file.
     def stop(self):
         if ((self.getState() in ['downloading','uploading'])):
-            _downloads_by_url[self.url]["count"] -= 1
-            if _downloads_by_url[self.url]["count"] == 0:
-                del _downloads[self.dlid]
-                del _downloads_by_url[self.url]
+            if _downloads.has_key(self.dlid):
                 c = command.StopDownloadCommand(RemoteDownloader.dldaemon,
                                                 self.dlid)
                 c.send(block=False)
-                
+                del _downloads[self.dlid]
+            else:
+                self.status["state"] = "stopped"
+
     ##
     # Continues a paused, stopped, or failed download thread
     def start(self):
         if self.getState() == 'failed':
-            self.dlid = "noid"
+            if _downloads.has_key (self.dlid):
+                del _downloads[self.dlid]
+            self.dlid = generateDownloadID()
+            views.remoteDownloads.recomputeIndex(indexes.downloadsByDLID)
             self.status = {}
             self.runDownloader()
         else:
-            c = command.StartDownloadCommand(RemoteDownloader.dldaemon,
-                                             self.dlid)
-            c.send(block=False)
+            if _downloads.has_key(self.dlid):
+                c = command.StartDownloadCommand(RemoteDownloader.dldaemon,
+                                                 self.dlid)
+                c.send(block=False)
+            else:
+                _downloads[self.dlid] = self
+                c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, 
+                                                     self.status)
+                c.send(retry = True, block = False)
 
     def migrate(self):
         if _downloads.has_key(self.dlid):
@@ -322,16 +322,10 @@ URL was %s""" % self.url
 
     def restartIfNeeded(self):
         if self.getState() in ('downloading','uploading'):
-            if self.dlid == 'noid' or len(self.status) == 0:
+            if len(self.status) == 0:
                 self.runDownloader()
             else:
-                if _downloads_by_url.has_key(self.url):
-                    _downloads_by_url[self.url]["count"] += 1
-                else:
-                    _downloads_by_url[self.url] = {}
-                    _downloads_by_url[self.url]["dlid"] = self.dlid
-                    _downloads_by_url[self.url]["count"] = 1
-                    _downloads[self.dlid] = self.dlid
+                _downloads[self.dlid] = self
                 c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, 
                                                      self.status)
                 c.send(retry = True, block = False)
@@ -384,8 +378,8 @@ def startupDownloader():
     RemoteDownloader.initializeDaemon()
     restartDownloads()
 
-def shutdownDownloader():
-    RemoteDownloader.dldaemon.shutdownDownloaderDaemon()
+def shutdownDownloader(callback = None):
+    RemoteDownloader.dldaemon.shutdownDownloaderDaemon(callback=callback)
 
 class DownloaderFactory:
     lock = RLock()
@@ -393,6 +387,9 @@ class DownloaderFactory:
         self.item = item
 
     def getDownloader(self, url):
+        downloader = _getDownloader (url=url)
+        if downloader:
+            return downloader
         if url.startswith('file://'):
             if url.endswith('.torrent'):
                 return RemoteDownloader(url, self.item,

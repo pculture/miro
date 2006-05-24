@@ -617,15 +617,20 @@ class Controller (frontend.Application):
             allow = self.getBackendDelegate().interruptDownloadsAtShutdown(downloadsCount)
         return allow
 
+    def downloaderShutdown(self):
+        frontend.quit()
+
     @eventloop.asIdle
     def quit(self):
         err = storedatabase.saveDatabase()
         if err is None:
-            frontend.quit()
+            print "DTV: Shutting down Downloader..."
+            downloader.shutdownDownloader(self.downloaderShutdown)
         else:
             def callback(dialog):
                 if dialog.choice == dialogs.BUTTON_QUIT:
-                    frontend.quit()
+                    print "DTV: Shutting down Downloader..."
+                    downloader.shutdownDownloader(self.downloaderShutdown)
 
             title = _("%s database save failed") % (config.get(prefs.SHORT_APP_NAME), )
             description = _("%s was unable to save its database: %s.\nRecent changes may be lost.\nQuit Anyway?") \
@@ -655,9 +660,6 @@ class Controller (frontend.Application):
             #    print str(item.__class__.__name__) + " of id "+str(item.getID())
             print "DTV: Saving database..."
             storedatabase.saveDatabase()
-
-            print "DTV: Shutting down Downloader..."
-            downloader.shutdownDownloader()
 
             if self.idlingNotifier is not None:
                 print "DTV: Shutting down IdleNotifier"
@@ -887,7 +889,8 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 newPage = True
                 break
         return newPage
-        
+
+    # Returns true if the browser should handle the URL.
     def onURLLoad(self, url):
         #print "DTV: got %s" % url
         try:

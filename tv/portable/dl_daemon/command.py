@@ -13,12 +13,14 @@ class Command:
     def setDaemon(self, daemon):
         self.daemon = daemon
 
-    def send(self, block = True, retry = True):
+    def send(self, block = True, retry = True, callback=None):
+        if self.daemon.shutdown:
+            return
         if block:
             print "WARNING: ignoring blocking command %s" % repr(self)
         # FIXME: Once everything is in the same thread we can remove
         #        the addIdle()
-        eventloop.addIdle(lambda : self.daemon.send(self), "sending command %s" % repr(self))
+        eventloop.addIdle(lambda : self.daemon.send(self, callback), "sending command %s" % repr(self))
 
     def setReturnValue(self, ret):
         self.orig = False
@@ -67,6 +69,10 @@ class DownloaderErrorCommand(Command):
         import util
         util.failed("In Downloader process", details=self.args[0])
 
+class ShutDownResponseCommand(Command):
+    def action(self):
+        self.daemon.shutdownResponse()
+
 #############################################################################
 #  App to Downloader commands                                               #
 #############################################################################
@@ -113,13 +119,18 @@ class MigrateDownloadCommand(Command):
         return download.migrateDownload(*self.args, **self.kws)
 
 class ShutDownCommand(Command):
-    def action(self):
+    def response_sent(self):
         import eventloop
         eventloop.quit()
-        print "starting ShutDownCommand"
+
+    def action(self):
         from dl_daemon import download
         download.shutDown()
         import threading
         for thread in threading.enumerate():
-            if thread != threading.currentThread():
+            if thread != threading.currentThread() and not thread.isDaemon():
                 thread.join()
+        c = ShutDownResponseCommand(self.daemon)
+        c.send(block=False, callback=self.response_sent)
+        self.daemon.shutdown = True
+        

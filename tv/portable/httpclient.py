@@ -54,7 +54,7 @@ def trapCall(function, *args, **kwargs):
     """Convenience function do a util.trapCall, where when = 'While talking to
     the network'
     """
-    util.trapCall("While talking to the network", function, *args, **kwargs)
+    return util.trapCall("While talking to the network", function, *args, **kwargs)
 
 class NetworkBuffer(object):
     """Responsible for storing incomming network data and doing some basic
@@ -116,6 +116,12 @@ class NetworkBuffer(object):
         self._mergeChunks()
         return self.chunks[0]
 
+class _Packet(object):
+    """A packet of data for the AsyncSocket class
+    """
+    def __init__ (self, data, callback = None):
+        self.data = data
+        self.callback = callback
 
 class AsyncSocket(object):
     """Socket class that uses our new fangled asynchronous eventloop
@@ -128,7 +134,7 @@ class AsyncSocket(object):
         read/write operation.  The arguments will be the AsyncSocket object
         and either socket.SHUT_RD or socket.SHUT_WR.
         """
-        self.toSend = ''
+        self.toSend = []
         self.readSize = 4096
         self.socket = None
         self.readCallback = None
@@ -180,7 +186,7 @@ class AsyncSocket(object):
     def isOpen(self):
         return self.socket is not None
 
-    def sendData(self, data):
+    def sendData(self, data, callback = None):
         """Send data out to the socket when it becomes ready.
         
         NOTE: currently we have no way of detecting when the data gets sent
@@ -189,7 +195,7 @@ class AsyncSocket(object):
 
         if not self.isOpen():
             raise ValueError("Socket not connected")
-        self.toSend += data
+        self.toSend.append(_Packet(data, callback))
         eventloop.addWriteCallback(self.socket, self.onWriteReady)
 
     def startReading(self, readCallback):
@@ -226,15 +232,23 @@ class AsyncSocket(object):
 
     def onWriteReady(self):
         try:
-            sent = self.socket.send(self.toSend)
+            if len(self.toSend) > 0:
+                sent = self.socket.send(self.toSend[0].data)
+            else:
+                sent = 0
         except socket.error, (code, msg):
             self.handleSocketError(code, msg, "write")
         else:
             self.handleSentData(sent)
 
     def handleSentData(self, sent):
-        self.toSend = self.toSend[sent:]
-        if self.toSend == '':
+        if len(self.toSend) > 0:
+            self.toSend[0].data = self.toSend[0].data[sent:]
+            if len(self.toSend[0].data) == 0:
+                if self.toSend[0].callback:
+                    self.toSend[0].callback()
+                self.toSend = self.toSend[1:]
+        if len(self.toSend) == 0:
             eventloop.removeWriteCallback(self.socket)
 
     def onReadReady(self):
@@ -284,7 +298,7 @@ class AsyncSSLStream(AsyncSocket):
     def resumeNormalCallbacks(self):
         if self.readCallback is not None:
             eventloop.addReadCallback(self.socket, self.onReadReady)
-        if self.toSend != '':
+        if len(self.toSend) != 0:
             eventloop.addWriteCallback(self.socket, self.onWriteReady)
 
     def handleSocketError(self, code, msg, operation):
@@ -312,7 +326,10 @@ class AsyncSSLStream(AsyncSocket):
         if self.interruptedOperation == 'read':
             return self.onReadReady()
         try:
-            sent = self.ssl.write(self.toSend)
+            if len(self.toSend) > 0:
+                sent = self.ssl.write(self.toSend[0].data)
+            else:
+                sent = 0
         except socket.error, (code, msg):
             self.handleSocketError(code, msg, "write")
         else:
@@ -370,8 +387,8 @@ class ConnectionHandler(object):
             self.stream.closeConnection()
         self.changeState('closed')
 
-    def sendData(self, data):
-        self.stream.sendData(data)
+    def sendData(self, data, callback = None):
+        self.stream.sendData(data, callback)
 
     def changeState(self, newState):
         self.readHandler = self.states[newState]
@@ -1062,6 +1079,8 @@ class HTTPClient(object):
         return self.requestId
 
     def cancelRequest(self):
+        import traceback
+        traceback.print_stack()
         cancelRequest(self.requestId)
         self.requestId = None
 

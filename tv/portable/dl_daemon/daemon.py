@@ -95,11 +95,11 @@ class Daemon(ConnectionHandler):
         lastDaemon = self
         self.waitingCommands = {}
         self.returnValues = {}
-        self.shutdown = False
         self.size = 0
         self.states['ready'] = self.onSize
         self.states['command'] = self.onCommand
         self.queuedCommands = []
+        self.shutdown = False
 
     def onError(self, error):
         """Call this when a error occurs.  It forces the
@@ -111,8 +111,8 @@ class Daemon(ConnectionHandler):
 
     def onConnection(self, socket):
         self.changeState('ready')
-        for comm in self.queuedCommands:
-            self.send(comm)
+        for (comm, callback) in self.queuedCommands:
+            self.send(comm, callback)
         self.queuedCommands = []
 
     def onSize(self):
@@ -133,13 +133,12 @@ class Daemon(ConnectionHandler):
         comm.setDaemon(self)
         comm.action()
 
-    def send(self, comm):
+    def send(self, comm, callback = None):
         if self.state == 'initializing':
-            self.queuedCommands.append(comm)
+            self.queuedCommands.append((comm, callback))
         else:
             raw = cPickle.dumps(comm, cPickle.HIGHEST_PROTOCOL)
-            self.sendData(pack("I",len(raw)))
-            self.sendData(raw)
+            self.sendData(pack("I",len(raw)) + raw, callback)
 
 class DownloaderDaemon(Daemon):
     def __init__(self, port):
@@ -150,19 +149,21 @@ class DownloaderDaemon(Daemon):
         self.openConnection('127.0.0.1', port, self.onConnection, self.onError)
 
     def handleClose(self, type):
+        if self.shutdown:
+            return
+        self.shutdown = True
         eventloop.quit()
         print "downloader: connection closed -- quitting"
         from dl_daemon import download
         download.shutDown()
         import threading
         for thread in threading.enumerate():
-            if thread != threading.currentThread():
+            if thread != threading.currentThread() and not thread.isDaemon():
                 thread.join()
 
 class ControllerDaemon(Daemon):
     def __init__(self):
         Daemon.__init__(self)
-        self.shutdown = False
         self.stream.acceptConnection('127.0.0.1', 0, self.onConnection, self.onError)
         self.port = self.stream.port
         launchDownloadDaemon(readPid(), self.port)
@@ -195,15 +196,28 @@ class ControllerDaemon(Daemon):
     def handleClose(self, type):
         if not self.shutdown:
             print "DTV: WARNING Downloader Daemon died"
-            # FIXME: add code to recover here
+            # FIXME: replace with code to recover here, but for now,
+            # stop sending.
+            self.shutdown = True
 
-    def shutdownDownloaderDaemon(self, timeout=5):
+    def shutdown_timeout_cb(self):
+        print "DTV: WARNING \"hard\" downloader shutdown not implemented"
+        self.shutdownResponse()
+
+    def shutdownResponse(self):
+        if self.shutdown_callback:
+            self.shutdown_callback()
+        self.shutdown_timeout_dc.cancel()
+
+    def shutdownDownloaderDaemon(self, timeout=5, callback = None):
         """Send the downloader daemon the shutdown command.  If it doesn't
         reply before timeout expires, kill it.  (The reply is not sent until
         the downloader daemon has one remaining thread and that thread will
         immediately exit).
         """
-        self.shutdown = True
+        self.shutdown_callback = callback
         c = command.ShutDownCommand(self)
         c.send(block=False)
-        print "DTV: WARNING \"hard\" downloader shutdown not implemented"
+        self.shutdown = True
+        self.shutdown_timeout_dc = eventloop.addTimeout(timeout, self.shutdown_timeout_cb, "Waiting for dl_daemon shutdown")
+

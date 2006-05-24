@@ -227,7 +227,7 @@ def getDownloadStatus(dlids = None):
 def shutDown():
     print "Shutting down downloaders..."
     for dlid in _downloads:
-        _downloads[dlid].pause()
+        _downloads[dlid].shutdown()
     shutdownBTDownloader()
 
 def restoreDownloader(downloader):
@@ -602,6 +602,10 @@ class HTTPDownloader(BGDownloader):
             self.startDownload()
             self.updateClient()
 
+    def shutdown(self):
+        self.cancelRequest()
+        self.updateClient()
+
 ##
 # BitTorrent uses this class to display status information. We use
 # it to update Downloader information
@@ -813,6 +817,15 @@ class BTDownloader(BGDownloader):
         self.updateClient()
         if metainfo is not None:
             self._startTorrent()
+
+    def shutdown(self):
+        try:
+            self._shutdownTorrent()
+        except KeyError:
+            pass
+        except AttributeError:
+            pass
+        self.updateClient()
 
     def getMetainfo(self):
         if self.metainfo is None:

@@ -25,6 +25,7 @@ httpauths = db.filterWithIndex(indexes.objectsByClass,downloader.HTTPAuthPasswor
 staticTabs = db.filterWithIndex(indexes.objectsByClass,tabs.StaticTab)
 
 remoteDownloads.createIndex(indexes.downloadsByDLID)
+remoteDownloads.createIndex(indexes.downloadsByURL)
 items.createIndex(indexes.itemsByFeed)
 feeds.createIndex(indexes.feedsByURL)
 allTabs.createIndex(indexes.tabIDIndex)
