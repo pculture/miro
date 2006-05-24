@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-19 17:08-0400\n"
+"POT-Creation-Date: 2006-05-24 13:32-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,31 +16,31 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:86
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:4
-msgid "Channel requires authentication"
-msgstr ""
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:87
-#, python-format
-msgid "%s requires a username and password for \"%s\"."
-msgstr ""
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:98
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:107
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6
 msgid "Username:"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:109
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:118
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:7
 msgid "Password:"
 msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:133
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:4
+msgid "Channel requires authentication"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:133
+#, python-format
+msgid "%s requires a username and password for \"%s\"."
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:146
 msgid "Not a DTV-style channel"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:134
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:147
 #, python-format
 msgid ""
 "But we'll try our best to grab the files.\n"
@@ -50,55 +50,47 @@ msgid ""
 "Please contact the publishers of %s and ask if they have a DTV-style channel."
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:135
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:148
 msgid "Continue"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:145
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:158
 msgid "DTV Version Alert"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:146
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:159
 msgid ""
 "A new version of DTV is available.\n"
 "\n"
 "Would you like to download it now?"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:153
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:166
 msgid "DTV Version Check"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:154
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:167
 msgid "This version of DTV is up to date."
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:159
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:166
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:172
+#: ../../portable/app.py:635
 #, python-format
 msgid "%s database save failed"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:161
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:174
 #, python-format
 msgid ""
 "%s was unable to save its database: %s.\n"
 "Recent changes may be lost."
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:167
-#, python-format
-msgid ""
-"%s was unable to save its database: %s.\n"
-"Recent changes may be lost.\n"
-"Quit Anyway?"
-msgstr ""
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:176
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:179
 msgid "Remove Channel"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:177
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:180
 #, python-format
 msgid ""
 "Are you sure you want to <b>remove</b> the channel\n"
@@ -106,22 +98,22 @@ msgid ""
 "<b>This operation cannot be undone.</b>"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:207
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:210
 msgid "Are you sure you want to quit?"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:208
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:211
 #, python-format
 msgid "You have %d download%s still in progress."
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:217
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:220
 msgid "Unknown Runtime Error"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:218
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:221
 #, python-format
-msgid "An unknown error has occured %s."
+msgid "An unknown error has occurred %s."
 msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:75
@@ -192,6 +184,100 @@ msgstr ""
 msgid "_Help"
 msgstr ""
 
+#: ../../portable/compiled_templates/new.py:741
+#: ../../portable/compiled_templates/tablist.py:212
+#: ../../portable/compiled_templates/tablist.py:224
+#: ../../portable/compiled_templates/tablist.py:236
+#: ../../portable/compiled_templates/statictab.py:79
+#: ../../portable/compiled_templates/statictab.py:91
+#: ../../portable/compiled_templates/statictab.py:103
+msgid "New Videos"
+msgstr ""
+
+#: ../../portable/compiled_templates/download.py:388
+msgid "Active Downloads"
+msgstr ""
+
+#: ../../portable/compiled_templates/feed_settings.py:48
+#: ../../portable/compiled_templates/channel.py:2092
+msgid "Auto Download"
+msgstr ""
+
+#: ../../portable/compiled_templates/feed_settings.py:56
+#: ../../portable/compiled_templates/channel.py:2100
+msgid "Recommend"
+msgstr ""
+
+#: ../../portable/compiled_templates/tablist.py:165
+#: ../../portable/compiled_templates/tablist.py:172
+#: ../../portable/compiled_templates/tablist.py:179
+#: ../../portable/compiled_templates/statictab.py:32
+#: ../../portable/compiled_templates/statictab.py:39
+#: ../../portable/compiled_templates/statictab.py:46
+msgid "Channel Guide"
+msgstr ""
+
+#: ../../portable/compiled_templates/tablist.py:186
+#: ../../portable/compiled_templates/tablist.py:193
+#: ../../portable/compiled_templates/tablist.py:200
+#: ../../portable/compiled_templates/library.py:388
+#: ../../portable/compiled_templates/statictab.py:53
+#: ../../portable/compiled_templates/statictab.py:60
+#: ../../portable/compiled_templates/statictab.py:67
+msgid "My Collection"
+msgstr ""
+
+#: ../../portable/compiled_templates/tablist.py:243
+#: ../../portable/compiled_templates/tablist.py:250
+#: ../../portable/compiled_templates/tablist.py:257
+#: ../../portable/compiled_templates/statictab.py:110
+#: ../../portable/compiled_templates/statictab.py:117
+#: ../../portable/compiled_templates/statictab.py:124
+msgid "Search"
+msgstr ""
+
+#: ../../portable/compiled_templates/search.py:387
+msgid "Video Search"
+msgstr ""
+
+#: ../../portable/dialogs.py:61
+msgid "Ok"
+msgstr ""
+
+#: ../../portable/dialogs.py:62
+msgid "Cancel"
+msgstr ""
+
+#: ../../portable/dialogs.py:63
+msgid "Yes"
+msgstr ""
+
+#: ../../portable/dialogs.py:64
+msgid "No"
+msgstr ""
+
+#: ../../portable/dialogs.py:65
+msgid "Quit"
+msgstr ""
+
+#: ../../portable/dialogs.py:66
+#: ../../platform/gtk-x11/glade/democracy.glade.h:24
+msgid "Migrate"
+msgstr ""
+
+#: ../../portable/dialogs.py:67
+#: ../../platform/gtk-x11/glade/democracy.glade.h:16
+msgid "Don't Migrate"
+msgstr ""
+
+#: ../../portable/app.py:636
+#, python-format
+msgid ""
+"%s was unable to save its database: %s.\n"
+"Recent changes may be lost.\n"
+"Quit Anyway?"
+msgstr ""
+
 #: ../../platform/gtk-x11/glade/democracy.glade.h:1
 msgid ""
 "1 day\n"
@@ -239,10 +325,6 @@ msgstr ""
 msgid "Democracy Player"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:16
-msgid "Don't Migrate"
-msgstr ""
-
 #: ../../platform/gtk-x11/glade/democracy.glade.h:17
 msgid "Don't start a download if it leaves less than"
 msgstr ""
@@ -264,10 +346,6 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:23
 msgid "KB/s when my computer is active"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/democracy.glade.h:24
-msgid "Migrate"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:25
