@@ -315,6 +315,8 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.translateText = []
         self.translateDict = []
         self.translateName = []
+        self.inRaw = False
+        self.rawDepth = None
         
 
     def endDocument(self):
@@ -326,12 +328,22 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
 
         if (len(self.translateDepth) > 0 and
                                    self.depth == self.translateDepth[-1]+1):
-            self.translateName[-1] = attrs['i18n:name']
-            self.translateText[-1] += '${%s}' % self.translateName[-1]
-            self.endText()
-            self.outputLists.append([])
+            if not attrs.has_key('i18n:name'):
+                print "in raw for %s" % name
+                self.inRaw = True
+                self.rawDepth = self.depth
+            else:
+                self.translateName[-1] = attrs['i18n:name']
+                self.translateText[-1] += '${%s}' % self.translateName[-1]
+                self.endText()
+                self.outputLists.append([])
 
-        if self.onlyBody and not self.started:
+        if self.inRaw:
+            self.translateText[-1] += "<%s" % name
+            for attr in attrs.keys():
+                self.translateText[-1] += ' %s="%s"' % (attr, quoteattr(attrs[attr]))
+            self.translateText[-1] += '>'
+        elif self.onlyBody and not self.started:
             if name == 'body':
                 self.started = True
         elif not self.started:
@@ -436,6 +448,8 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
     def endElement(self,name):
         if not self.started:
             pass
+        elif self.inRaw:
+            self.translateText[-1] += '</%s>' % name
         elif self.onlyBody and name == 'body':
             self.started = False
         elif name == 't:include':
@@ -488,8 +502,12 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             self.addText('</%s>'%name)
         if (len(self.translateDepth) > 0 and
                                    self.depth == self.translateDepth[-1]+1):
-            self.endText()
-            self.translateDict[-1][self.translateName[-1]] = self.outputLists.pop()
+            if self.inRaw:
+                print "ending raw for %s" % name
+                self.inRaw = False
+            else:
+                self.endText()
+                self.translateDict[-1][self.translateName[-1]] = self.outputLists.pop()
         self.depth = self.depth - 1
 
     def characters(self,data):
@@ -497,9 +515,10 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             pass
         elif self.inReplace or self.inStaticReplace:
             pass
-        elif (len(self.translateDepth) > 0 and
-                                        self.depth == self.translateDepth[-1]):
-            self.translateText[-1] += data
+        elif ((len(self.translateDepth) > 0 and
+                                      self.depth == self.translateDepth[-1]) or
+                self.inRaw):
+              self.translateText[-1] += data
         elif self.inExecOnUnload or self.inExecOnLoad:
             self.code += data
         else:
