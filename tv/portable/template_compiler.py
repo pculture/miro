@@ -99,7 +99,6 @@ def genUpdateHideOnView(varname, tid, prefix, args):
         out, prefix, repr(nodeId), viewName)
     return out
 
-from distutils import dep_util
 from xml import sax
 from xhtmltools import toUTF8Bytes
 from StringIO import StringIO
@@ -173,9 +172,29 @@ def findTemplates(tpath):
                 templates.append(template)        
     return (folders, templates)
 
+def modifiedTime(dir):
+    maxTime = 0
+    try:
+        for (dirpath, dirnames, filenames) in os.walk(dir):
+            for f in filenames:
+                t = os.stat(os.path.join(dirpath, f)).st_mtime
+                if t > maxTime:
+                    maxTime = t
+            for f in dirnames:
+                t = os.stat(os.path.join(dirpath, f)).st_mtime
+                if t > maxTime:
+                    maxTime = t
+        return maxTime
+    except:
+        return 0
+
 def compileAllTemplates(root):
     setResourcePath(os.path.join(root,'resources'))
-    compileTemplates()
+    source = resource.path('templates')
+    dest = resource.path(os.path.join('..','portable','compiled_templates'))
+    
+    if modifiedTime(source) > modifiedTime(dest):
+        compileTemplates()
 
 def compileTemplates(tpath = None):
     outdir = resource.path(os.path.join('..','portable','compiled_templates'))
