@@ -13,10 +13,15 @@ replace = "<span>This is a database replace</span>"
 testview = database.defaultDatabase
 testview2 = database.defaultDatabase
 ]]></t:execOnLoad>
+<t:execOnUnload><![CDATA[
+import test.templatetest
+test.templatetest.ranOnUnload += 1
+]]></t:execOnUnload>
 </head>
 <body>
 <h1>view test template</h1>
 <div t:repeatForView="testview">
+<span t:replace="viewName" />
 <span t:replace="this.html" />
 <span t:replaceMarkup="this.html" />
 <div t:hideIf="True">
@@ -35,6 +40,7 @@ hideIf:False
 </div>
 </div>
 <div t:repeatForView="testview2">
+<span t:replace="viewName" />
 <span t:replace="this.html" />
 <span t:replaceMarkup="this.html" />
 <div t:hideIf="True">
