@@ -177,13 +177,15 @@ def modifiedTime(dir):
     try:
         for (dirpath, dirnames, filenames) in os.walk(dir):
             for f in filenames:
-                t = os.stat(os.path.join(dirpath, f)).st_mtime
-                if t > maxTime:
-                    maxTime = t
+                if not f.startswith('.'):
+                    t = os.stat(os.path.join(dirpath, f)).st_mtime
+                    if t > maxTime:
+                        maxTime = t
             for f in dirnames:
-                t = os.stat(os.path.join(dirpath, f)).st_mtime
-                if t > maxTime:
-                    maxTime = t
+                if not f.startswith('.'):
+                    t = os.stat(os.path.join(dirpath, f)).st_mtime
+                    if t > maxTime:
+                        maxTime = t
         return maxTime
     except:
         return 0
