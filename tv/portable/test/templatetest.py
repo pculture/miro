@@ -100,7 +100,7 @@ class HideTest(DemocracyTestCase):
 class ViewTest(DemocracyTestCase):
     pattern = re.compile("^\n<h1>view test template</h1>\n<span id=\"([^\"]+)\"/>\n", re.S)
     doublePattern = re.compile("^\n<h1>view test template</h1>\n<span id=\"([^\"]+)\"/>\n<span id=\"([^\"]+)\"/>\n", re.S)
-
+    updatePattern = re.compile("^\n<h1>update test template</h1>\n<span id=\"([^\"]+)\"/>\n", re.S)
     itemPattern = re.compile("<div id=\"(.*?)\">\n<span>testview\d*</span>\n<span>&lt;span&gt;object&lt;/span&gt;</span>\n<span><span>object</span></span>\n\n<div>\nhideIf:False\n<span>This is an include</span>\n\n<span>This is a template include</span>\n\n<span>&lt;span&gt;This is a database replace&lt;/span&gt;</span>\n<span><span>This is a database replace</span></span>\n</div>\n</div>",re.S)
 
     def setUp(self):
@@ -125,6 +125,27 @@ class ViewTest(DemocracyTestCase):
         match = self.itemPattern.findall(self.domHandle.callList[0]['xml'])
         self.assertEqual(len(match),2)
         self.assertNotEqual(match[0], match[1])
+        self.assertEqual(ranOnUnload, 0)
+        handle.unlinkTemplate()
+        self.assertEqual(ranOnUnload, 1)
+
+    def testUpdate(self):
+        (tch, handle) = fillTemplate("unittest/update",self.domHandle,'gtk-x11-MozillaBrowser','platform')
+        text = tch.read()
+        text = HTMLPattern.match(text).group(1)
+        self.assert_(self.updatePattern.match(text)) #span for template inserted
+        id = self.updatePattern.match(text).group(1)
+        handle.initialFillIn()
+        self.assertEqual(len(self.domHandle.callList),1)
+        self.assertEqual(self.domHandle.callList[0]['name'],'addItemBefore')
+        self.assertEqual(self.domHandle.callList[0]['id'],id)
+        match = self.itemPattern.findall(self.domHandle.callList[0]['xml'])
+        self.assertEqual(len(match),1)
+        self.x.beginChange()
+        self.x.endChange()
+        self.assertEqual(len(self.domHandle.callList),2)
+        self.assertEqual(self.domHandle.callList[1]['name'],'changeItem')
+        self.assertEqual(self.domHandle.callList[1]['id'],match[0])
         self.assertEqual(ranOnUnload, 0)
         handle.unlinkTemplate()
         self.assertEqual(ranOnUnload, 1)
@@ -180,3 +201,4 @@ class ViewTest(DemocracyTestCase):
         self.assertEqual(ranOnUnload, 0)
         handle.unlinkTemplate()
         self.assertEqual(ranOnUnload, 1)
+
