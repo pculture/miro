@@ -1228,7 +1228,7 @@ def grabHeadersFinalCallback (info, callback, requestID):
 
 def grabHeadersErrback (url, callback, errback, findHTTPAuth):
     client = HTTPClient(url,
-                        None
+                        None,
                         errback,
                         lambda (info): grabHeadersFinalCallback (info, callback, requestID),
                         None, "GET", 0, None, None, findHTTPAuth)

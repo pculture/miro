@@ -66,7 +66,7 @@ def get(descriptor):
     try:
         __checkValidity()
 
-        if descriptor.key in __data:
+        if __data is not None and descriptor.key in __data:
             return __data[descriptor.key]
         elif descriptor.platformSpecific:
             return platformcfg.get(descriptor)
