@@ -12,28 +12,13 @@
 <link rel="stylesheet" type="text/css" href="resource:css/sidebar.css" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <t:include filename="dynamic.js" />
-
-    <t:execOnLoad><![CDATA[
-# This is a bit of a hack
-
-]]>
-    </t:execOnLoad>
-
 </head>
 <body onload="beginUpdates();"> 
 
 <div id="sidebar">
-<span i18n:translate="">
-Simple translation
-</span>
+<span>!Simple translation!</span>
 
-<span i18n:translate="">
-
-This is a <span i18n:name="car">car</span>
-and this is a <span i18n:name="truck" i18n:translate="">truck stop in a <span i18n:name="can">can</span></span>
-
-<span>This text is <b style="color:red">raw</b> text</span>
-</span>
+<span>!This is a <span>car</span> and this is a <span>!truck stop in a <span>can</span>!</span> <span>This text is <b style="color:red">raw</b> text</span>!</span>
 
 </div>
 

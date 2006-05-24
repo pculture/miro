@@ -6,6 +6,8 @@ import time
 
 from template import *
 import database
+import gettext
+import compiled_templates
 
 from test.framework import DemocracyTestCase
 
@@ -47,6 +49,28 @@ class SimpleTest(DemocracyTestCase):
         (tch, handle) = fillTemplate("unittest/simple",DOMTracker(),'gtk-x11-MozillaBrowser','platform')
         text = tch.read()
         text = HTMLPattern.match(text).group(1)
+        self.assertEqual(text,self.text)
+
+class TranslationTest(DemocracyTestCase):
+    def setUp(self):
+        handle = file(resource.path("testdata/translation-result"),"r")
+        self.text = handle.read()
+        handle.close()
+        self.text = HTMLPattern.match(self.text).group(1)
+        self.oldgettext = gettext.gettext
+    def tearDown(self):
+
+        DemocracyTestCase.tearDown(self)
+    def test(self):
+        compiled_templates.unittest.translationtest._ = lambda x : '!%s!' % x
+        (tch, handle) = fillTemplate("unittest/translationtest",DOMTracker(),'gtk-x11-MozillaBrowser','platform')
+        compiled_templates.unittest.translationtest._ = self.oldgettext
+        text = tch.read()
+        text = HTMLPattern.match(text).group(1)
+        print
+        print repr(text)
+        print repr(self.text)
+        print
         self.assertEqual(text,self.text)
 
 class ReplaceTest(DemocracyTestCase):
