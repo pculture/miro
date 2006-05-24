@@ -13,8 +13,10 @@ from dl_daemon import daemon, command
 import views
 import indexes
 import random
+import httpclient
 
-from download_utils import grabURL, parseURL, cleanFilename, nextFreeFilename
+from download_utils import parseURL, cleanFilename, nextFreeFilename
+from gettext import gettext as _
 
 # a hash of download ids that the server knows about.
 _downloads = {}
@@ -100,14 +102,41 @@ def generateDownloadID():
 class RemoteDownloader(DDBObject):
     """Download a file using the downloader daemon."""
 
-    def __init__(self, url, item, contentType):
+    def __init__(self, url, item, contentType = None):
         self.url = url
         self.itemList = [item]
         self.contentType = contentType
         self.dlid = generateDownloadID()
         self.status = {}
-        self.runDownloader()
+        if contentType is None:
+            self.contentType = ""
+            self.getContentType()
+        else:
+            self.contentType = contentType
+            self.runDownloader()
         DDBObject.__init__(self)
+
+    def onContentType (self, info):
+        print "onContentType: %s" % (info['content-type'],)
+        if info['status'] == 200:
+            self.url = info['updated-url']
+            self.contentType = info['content-type']
+            self.runDownloader()
+        else:
+            self.onContentTypeError(info['reason'])
+
+    def onContentTypeError (self, error):
+        print error
+        self.status['state'] = "failed"
+        self.status['reasonFailed'] = str(error)
+        for item in self.itemList:
+            item.beginChange()
+            item.endChange()
+        import traceback
+        traceback.print_stack()
+
+    def getContentType(self):
+        httpclient.grabHeaders(self.url, self.onContentType, self.onContentTypeError)
  
     @classmethod
     def initializeDaemon(cls):
@@ -132,6 +161,7 @@ class RemoteDownloader(DDBObject):
     ##
     # This is the actual download thread.
     def runDownloader(self):
+        print "Sending startup command"
         c = command.StartNewDownloadCommand(RemoteDownloader.dldaemon,
                                             self.url, self.dlid, self.contentType)
         c.send(block=False)
@@ -172,7 +202,10 @@ class RemoteDownloader(DDBObject):
             self.dlid = generateDownloadID()
             views.remoteDownloads.recomputeIndex(indexes.downloadsByDLID)
             self.status = {}
-            self.runDownloader()
+            if self.contentType == "":
+                self.getContentType()
+            else:
+                self.runDownloader()
         else:
             if _downloads.has_key(self.dlid):
                 c = command.StartDownloadCommand(RemoteDownloader.dldaemon,
@@ -323,7 +356,10 @@ URL was %s""" % self.url
     def restartIfNeeded(self):
         if self.getState() in ('downloading','uploading'):
             if len(self.status) == 0:
-                self.runDownloader()
+                if self.contentType == "":
+                    self.getContentType()
+                else:
+                    self.runDownloader()
             else:
                 _downloads[self.dlid] = self
                 c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, 
@@ -397,16 +433,4 @@ class DownloaderFactory:
             else:
                 raise ValueError("Don't know how to handle %s" % url)
         else:
-            return self.getDownloaderFromWeb(url)
-
-    def getDownloaderFromWeb(self, url):
-        info = grabURL(url, 'HEAD')
-        if info is None: # some websites don't support HEAD requests
-            info = grabURL(url, 'GET')
-            if info is None:
-                # info is still None, we can't create a downloader
-                return None
-            else:
-                info['file-handle'].close()
-        return RemoteDownloader(info['updated-url'], self.item,
-                info['content-type'])
+            return RemoteDownloader(url, self.item)

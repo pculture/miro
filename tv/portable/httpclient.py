@@ -1222,5 +1222,30 @@ def grabURL(url, callback, errback, headerCallback=None,
             findHTTPAuth)
     return client.startRequest()
 
+def grabHeadersFinalCallback (info, callback, requestID):
+    callback (info)
+    cancelRequest(requestID)
+
+def grabHeadersErrback (url, callback, errback, findHTTPAuth):
+    client = HTTPClient(url,
+                        None
+                        errback,
+                        lambda (info): grabHeadersFinalCallback (info, callback, requestID),
+                        None, "GET", 0, None, None, findHTTPAuth)
+    requestID = client.startRequest()
+
+def grabHeadersCallback (info, url, callback, errback, findHTTPAuth):
+    if info and info['status'] == 200:
+        callback (info)
+    else:
+        grabHeadersErrback (url, callback, errback, findHTTPAuth)
+
+def grabHeaders (url, callback, errback, findHTTPAuth=None):
+    client = HTTPClient(url,
+                        lambda (info): grabHeadersCallback (info, url, callback, errback, findHTTPAuth),
+                        lambda (error): grabHeadersErrback (url, callback, errback, findHTTPAuth),
+                        None, None, "HEAD", 0, None, None, findHTTPAuth)
+    client.startRequest()
+
 def cancelRequest(requestId):
     HTTPClient.connectionPool.cancelRequest(requestId)
