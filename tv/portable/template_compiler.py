@@ -191,9 +191,12 @@ def modifiedTime(dir):
 def compileAllTemplates(root):
     setResourcePath(os.path.join(root,'resources'))
     source = resource.path('templates')
+    sourceTime = modifiedTime(source)
     dest = resource.path(os.path.join('..','portable','compiled_templates'))
-    
-    if modifiedTime(source) > modifiedTime(dest):
+    destTime = modifiedTime(dest)
+    compilerTime = os.stat(resource.path(os.path.join(
+                            '..','portable','template_compiler.py'))).st_mtime
+    if (sourceTime > destTime) or (compilerTime > destTime):
         compileTemplates()
 
 def compileTemplates(tpath = None):
