@@ -359,16 +359,6 @@ class BGDownloader:
                 rate = 0
         return rate
 
-    def downloadThread(self, *args, **kwargs):
-        try:
-            self.runDownloader(*args, **kwargs)
-        except:
-            c = command.DownloaderErrorCommand(daemon.lastDaemon, 
-                    traceback.format_exc())
-            c.send(block=False)
-            raise
-        self.updateClient()
-
 class HTTPDownloader(BGDownloader):
     UPDATE_CLIENT_INTERVAL = 3
 
@@ -704,10 +694,7 @@ class BTDownloader(BGDownloader):
             self.uploaded = 0
             self.torrent = None
             BGDownloader.__init__(self,url,item)
-            self.thread = Thread(target=self.downloadThread, 
-                                 name="downloader -- %s" % self.shortFilename)
-            self.thread.setDaemon(False)
-            self.thread.start()
+            self.runDownloader(*args, **kwargs)
 
     def _shutdownTorrent(self):
         try:
@@ -769,10 +756,7 @@ class BTDownloader(BGDownloader):
         if self.state == 'downloading' or (
             self.state not in ['paused','stopped'] and
             self.uploaded < 1.5*self.totalSize):
-            self.thread = Thread(target=self.restartDL, \
-                                 name="downloader -- %s" % self.shortFilename)
-            self.thread.setDaemon(False)
-            self.thread.start()
+            self.restartDL ()
 
     def getStatus(self):
         data = BGDownloader.getStatus(self)
@@ -827,57 +811,74 @@ class BTDownloader(BGDownloader):
             pass
         self.updateClient()
 
-    def getMetainfo(self):
-        if self.metainfo is None:
-            if self.url.startswith('file://'):
-                path = self.url[len('file://'):]
-                metainfoFile = open(path, 'rb')
-            else:
-                h = grabURL(self.getURL(), "GET", findHTTPAuth = findHTTPAuth)
-                if h is None:
-                    return False
-                else:
-                    metainfoFile = h['file-handle']
+    def readMetainfo (self, metainfo):
+
+        # FIXME: BitTorrent did lots of checking here for
+        # invalid torrents. We should do the same
+        self.metainfo = bdecode(metainfo)
+        info = self.metainfo['info']
+        self.infohash = sha(bencode(info)).digest()
+        self.shortFilename = cleanFilename(self.metainfo['info']['name'])
+        
+        if self.metainfo['info'].has_key('length'):
             try:
-                metainfo = metainfoFile.read()
-            finally:
-                metainfoFile.close()
+                totalSize = self.metainfo['info']['length']
+            except KeyError: # There are multiple files in this here torrent
+                totalSize = 0
+                for f in self.metainfo['info']['files']:
+                    totalSize += f['length']
+            self.totalSize = totalSize
 
-            # FIXME: BitTorrent did lots of checking here for
-            # invalid torrents. We should do the same
-            self.metainfo = bdecode(metainfo)
-            info = self.metainfo['info']
-            self.infohash = sha(bencode(info)).digest()
-            self.shortFilename = cleanFilename(self.metainfo['info']['name'])
-            
-            if self.metainfo['info'].has_key('length'):
-                try:
-                    totalSize = self.metainfo['info']['length']
-                except KeyError: # There are multiple files in this here torrent
-                    totalSize = 0
-                    for f in self.metainfo['info']['files']:
-                        totalSize += f['length']
-                self.totalSize = totalSize
-            return True
-        else:
-            return True
-
-    def runDownloader(self,done=False):
-        self.updateClient()
-        if not self.getMetainfo():
-            self.state = "failed"
-            self.reasonFailed = "Could not connect to server"
-            self.updateClient()
-            return
-        self.updateClient()
+    def gotMetainfo(self):
         # FIXME: If the client is stopped before a BT download gets
         #        its metadata, we never run this. It's not a huge deal
         #        because it only affects the incomplete filename
-        if not done:
+        if not self.restarting:
             self.pickInitialFilename()
         self.updateClient()
         self._startTorrent()
 
+    def onDescriptionDownload(self, info):
+        if info is None or info['status'] != 200:
+            self.state = "failed"
+            if info is None:
+                self.reasonFailed = _("Could not connect to server")
+            else:
+                self.reasonFailed = _("Could not connect to server: %s") % (info['reason'],)
+            self.updateClient()
+            return
+        else:
+            self.readMetainfo(info['body'])
+            self.gotMetainfo()
+
+    def onDescriptionDownloadFailed(self, exception):
+        self.state = "failed"
+        self.reasonFailed = str(exception)
+        self.updateClient()
+
+    def getMetainfo(self):
+        if self.metainfo is None:
+            print self.url
+            if self.url.startswith('file://'):
+                path = self.url[len('file://'):]
+                metainfoFile = open(path, 'rb')
+                try:
+                    metainfo = metainfoFile.read()
+                finally:
+                    metainfoFile.close()
+
+                self.readMetainfo(metainfo)
+                self.gotMetainfo()
+            else:
+                httpclient.grabURL(self.getURL(), self.onDescriptionDownload, self.onDescriptionDownloadFailed, findHTTPAuth = findHTTPAuth)
+        else:
+            self.gotMetainfo()
+                
+
+    def runDownloader(self,done=False):
+        self.restarting = done
+        self.updateClient()
+        self.getMetainfo()
 
     def restartDL(self):
         self.runDownloader(done = True)
