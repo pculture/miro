@@ -8,14 +8,14 @@
 [scriptable, uuid(7E70142F-ABC9-4d6e-BDB8-EDC747FCD2A3)]
 interface pcfIDTVJSBridge : nsISupports
 {
-
-  void xulNavigateDisplay(in nsISupports mainDocument, in AString displayName,
-                          in AString uri);
-
-  void xulAddElementAtEnd(in nsISupports elt, in AString xml, in AString id);
-  void xulAddElementBefore(in nsISupports elt, in AString xml, in AString id);
-  void xulRemoveElement(in nsISupports elt, in AString id);
-  void xulChangeElement(in nsISupports elt, in AString id, in AString xml);
-  void xulHideElement(in nsISupports elt, in AString id);
-  void xulShowElement(in nsISupports elt, in AString id);
+  void init(in nsIDOMDocument mainWindowDocument);
+  void closeWindow();
+  void xulNavigateDisplay(in string area, in AString uri);
+  void xulAddElementAtEnd(in string area, in AString xml, in AString id);
+  void xulAddElementBefore(in string area, in AString xml, in AString id);
+  void xulRemoveElement(in string area, in AString id);
+  void xulChangeElement(in string area, in AString id, in AString xml);
+  void xulHideElement(in string area, in AString id);
+  void xulShowElement(in string area, in AString id);
+  void copyTextToClipboard(in AString text);
 };

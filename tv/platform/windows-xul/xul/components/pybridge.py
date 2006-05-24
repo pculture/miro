@@ -5,6 +5,23 @@ import sys
 import os
 import time
 
+import app
+import eventloop
+import util
+import config
+import prefs
+import singleclick
+import frontend
+from frontend_implementation import HTMLDisplay
+from frontend_implementation.UIBackendDelegate import UIBackendDelegate
+
+nsIEventQueueService = components.interfaces.nsIEventQueueService
+nsIProperties = components.interfaces.nsIProperties
+nsIFile = components.interfaces.nsIFile
+nsIProxyObjectManager = components.interfaces.nsIProxyObjectManager
+pcfIDTVPyBridge = components.interfaces.pcfIDTVPyBridge
+pcfIDTVJSBridge = components.interfaces.pcfIDTVJSBridge
+
 def getArgumentList(commandLine):
     """Convert a nsICommandLine component to a list of arguments to pass
     to the singleclick module."""
@@ -15,95 +32,106 @@ def getArgumentList(commandLine):
         args = args[1:]
     return args
 
-#print "PYBRIDGE TOP"
+def makeComp(clsid, iid):
+    """Helper function to create an XPCOM component"""
+    return components.classes[clsid].createInstance(iid)
+
+def makeService(clsid, iid):
+    """Helper function to get an XPCOM service"""
+    return components.classes[clsid].getService(iid)
+
+def makeJSBridgeProxy(mainWindowDocument):
+    """Creates our JSBridge component, then wraps it in a Proxy object.  This
+    ensures that all its methods run in the main xul event loop.
+    """
+
+    jsBridge = makeComp("@participatoryculture.org/dtv/jsbridge;1",
+            pcfIDTVJSBridge)
+    jsBridge.init(mainWindowDocument)
+    proxyManager = makeService("@mozilla.org/xpcomproxy;1",
+            nsIProxyObjectManager)
+    eventQueueService = makeService("@mozilla.org/event-queue-service;1",
+            nsIEventQueueService)
+    xulEventQueue = eventQueueService.getSpecialEventQueue(
+            nsIEventQueueService.UI_THREAD_EVENT_QUEUE)
+    return proxyManager.getProxyForObject(xulEventQueue, pcfIDTVJSBridge,
+            jsBridge, nsIProxyObjectManager.INVOKE_ASYNC |
+            nsIProxyObjectManager.FORCE_PROXY_CREATION)
 
 # Copied from resource.py; if you change this function here, change it
 # there too.
 def appRoot():
     klass = components.classes["@mozilla.org/file/directory_service;1"]
-    service = klass.getService(components.interfaces.nsIProperties)
-    file = service.get("XCurProcD", components.interfaces.nsIFile)
+    service = klass.getService(nsIProperties)
+    file = service.get("XCurProcD", nsIFile)
     return file.path
 
 class PyBridge:
-    _com_interfaces_ = [components.interfaces.pcfIDTVPyBridge]
+    _com_interfaces_ = [pcfIDTVPyBridge]
     _reg_clsid_ = "{F87D30FF-C117-401e-9194-DF3877C926D4}"
     _reg_contractid_ = "@participatoryculture.org/dtv/pybridge;1"
     _reg_desc_ = "Bridge into DTV Python core"
 
     def __init__(self):
         self.started = False
-        self.booted = False
 
     def onStartup(self, mainWindowDocument):
         if self.started:
-            import util
             util.failed("Loading window", details="onStartup called twice")
             return
         else:
             self.started = True
-        print "onStartup"
-        self.mainWindowDocument = mainWindowDocument
-
-        from util import AutoflushingStream
-
         try:
-            import config
-            import prefs
             logFile = config.get(prefs.LOG_PATHNAME)
             if logFile is not None:
                 h = open(logFile, "wt")
-                sys.stdout = sys.stderr = AutoflushingStream(h)
+                sys.stdout = sys.stderr = util.AutoflushingStream(h)
         except:
             pass
-#        try:
-#           print "got:: %s" % mainWindowDocument
 
-#           klass = components.classes["@participatoryculture.org/dtv/jsbridge;1"]
-#           jsb = klass.getService(components.interfaces.pcfIDTVJSBridge)
-#           jsb.xulLoadURI(elt, "http://www.achewood.com")
-#
-#        except:
-#            traceback.print_exc()
+        frontend.jsBridge = makeJSBridgeProxy(mainWindowDocument)
+        app.main()
+
     def handleCommandLine(self, commandLine):
-        import singleclick
         singleclick.setCommandLineArgs(getArgumentList(commandLine))
 
     def handleSecondCommandLine(self, commandLine):
-        import singleclick
         singleclick.parseCommandLineArgs(getArgumentList(commandLine))
 
-    def bootApp(self):
-        if self.booted:
-            import util
-            util.failed("Loading window", details="bootApp called twice")
-            return
-        else:
-            self.booted = True
-        import app
-        app.start()
-
     def onShutdown(self):
-        import app
         app.controller.onShutdown()
 
-    def eventURL(self, cookie, url):
-        import frontend
-        frontend.HTMLDisplay.dispatchEventByCookie(cookie, url)
+    def pageLoadFinished(self, area):
+        eventloop.addIdle(HTMLDisplay.runPageFinishCallback, 
+                "%s finish callback" % area, args=(area,))
 
-    def openURL(self, url):
-        import webbrowser
-        webbrowser.open(url, new=1)
+    @eventloop.asIdle
+    def setVolume(self, volume):
+        app.controller.videoDisplay.setVolume(volume)
 
-    def addChannel(self, url):
-        print "Add Channel %s" % url
-        import feed
-        feed.Feed(url)
+    @eventloop.asIdle
+    def quit(self):
+        app.controller.quit()
 
-    def getServerPort(self):
-        # Frontend has to go first, because it knows the right time to
-        # import frontend for the first time (after the right set of classes
-        # have been set up)
-        import app
-        import frontend
-        return frontend.getServerPort()
+    @eventloop.asIdle
+    def removeCurrentChannel(self):
+        app.ModelActionHandler(UIBackendDelegate()).removeCurrentFeed()
+
+    @eventloop.asIdle
+    def updateCurrentChannel(self):
+        print "UPDATE CURRENT"
+        app.ModelActionHandler(UIBackendDelegate()).updateCurrentFeed()
+
+    @eventloop.asIdle
+    def updateChannels(self):
+        print "UPDATE ALL"
+        app.ModelActionHandler(UIBackendDelegate()).updateAllFeeds()
+
+    @eventloop.asIdle
+    def showHelp(self):
+        print "SHOULD SHOW HELP"
+        pass
+
+    @eventloop.asIdle
+    def copyChannelLink(self):
+        app.ModelActionHandler(UIBackendDelegate()).copyCurrentFeedURL()

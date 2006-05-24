@@ -2,13 +2,9 @@ import app
 import frontend
 import frontend_implementation
 import os
-import threading
 import template
 import util
 import re
-
-_genMutator = frontend_implementation.HTMLDisplay._genMutator
-execChromeJS = frontend_implementation.HTMLDisplay.execChromeJS
 
 ###############################################################################
 #### The Playback Controller                                               ####
@@ -32,26 +28,6 @@ class PlaybackController (app.PlaybackControllerBase):
 
 class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
     "Video player shown in a MainFrame's right-hand pane."
-
-    def __init__(self):
-        print "VideoDisplay init"
-        html = template.fillStaticTemplate("video-display-vlc", platform = 'xul', eventCookie = self.getEventCookie())
-        frontend.HTMLDisplay.__init__(self,html)
-        app.VideoDisplayBase.__init__(self)
-        print "Display initialized"
-
-    elapseRe = re.compile('elapsed=(-?\d+)')
-    lengthRe = re.compile('len=(-?\d+)')
-
-    # The mutation functions.
-    videoPlay = _genMutator('videoPlay')
-    videoPause = _genMutator('videoPause')
-    videoReset = _genMutator('videoReset')
-    videoStop = _genMutator('videoStop')
-    videoFullscreen = _genMutator('videoFullscreen')
-    videoSetVolume = _genMutator('videoSetVolume')
-    videoSetRate = _genMutator('videoSetRate')
-    videoSetPos = _genMutator('videoSetPos')
 
     def initRenderers(self):
         print "initRenderers"
@@ -86,6 +62,9 @@ class VideoDisplay (app.VideoDisplayBase, frontend.HTMLDisplay):
     def exitFullScreen(self):
         print "VideoDisplay exit fullscreen"
         app.VideoDisplayBase.exitFullScreen(self)
+
+    def videoSetVolume(self, level):
+        print "should set volume to ", level
 
     def setVolume(self, level):
         print "VideoDisplay set volume %s" % level

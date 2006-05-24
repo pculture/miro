@@ -18,8 +18,25 @@ sys.path[0:0] = [
     os.path.join(root, 'portable'),
 ]
 root = os.path.normpath(root)
+
+defaultBinaryKitRoot = os.path.join(os.path.dirname(sys.argv[0]), \
+				    '..', '..', '..', 'dtv-binary-kit')
+BINARY_KIT_ROOT = defaultBinaryKitRoot
+BOOST_ROOT = os.path.join(BINARY_KIT_ROOT, 'boost', 'win32')
+BOOST_LIB_PATH = os.path.join(BOOST_ROOT, 'lib')
+BOOST_LIB = os.path.join(BOOST_LIB_PATH, 'boost_python-vc71-mt-1_33.lib')
+BOOST_INCLUDE_PATH = os.path.join(BOOST_ROOT, 'include', 'boost-1_33')
+BOOST_RUNTIMES = [
+    os.path.join(BOOST_LIB_PATH, 'boost_python-vc71-mt-1_33.dll'),
+    ]
+
 ext_modules=[
     Extension("database", [os.path.join(root, 'portable', 'database.pyx')]),
+    Extension("fasttypes", 
+        sources = [os.path.join(root, 'portable', 'fasttypes.cpp')],
+        extra_objects = [BOOST_LIB],
+        include_dirs = [BOOST_INCLUDE_PATH]
+    )
 ]
 
 setup(

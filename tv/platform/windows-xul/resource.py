@@ -1,6 +1,7 @@
 from xpcom import components
 import os, sys
 import re
+import urllib
 
 # Strategy: ask the directory service for
 # NS_XPCOM_CURRENT_PROCESS_DIR, the directory "associated with this
@@ -36,17 +37,11 @@ def resourceRoot():
 # expected to be supplied in Unix format, with forward-slashes as
 # separators. The output, though, uses the native platform separator.
 def path(relative_path):
-    rootParts = re.split(r'\\', resourceRoot())
-    myParts = re.split(r'/', relative_path)
-    return '\\'.join(rootParts + myParts)
+    abspath = os.path.abspath(os.path.join(resourceRoot(), relative_path))
+    return abspath.replace("/", "\\")
 
-# As path(), but return a URL that will retrieve the resource
-# instead. (We end up returning a relative URL that will work on the
-# webserver we serve on 127.0.0.1. That way, loading stylesheets from
-# a resource URL will be legal under the Mozilla "same origin"
-# policy.)
 def url(relative_path):
-    return "/dtv/resource/" + relative_path
+    return "file://" + path(relative_path)
 
 def iconCacheUrl(relative_path):
     """Like url, but for icon cache files.  These probably don't live in the

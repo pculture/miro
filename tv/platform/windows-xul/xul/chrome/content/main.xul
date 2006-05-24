@@ -205,15 +205,15 @@
 <!-- / BOTTOM -->
 <command id="addchannel" oncommand="window.openDialog('chrome://dtv/content/addchannel.xul','addchannel','chrome,dependent,centerscreen');" />
 <command id="open" oncommand="openFile();" />
-<command id="exit" oncommand="window.close();" />
+<command id="exit" oncommand="handleExit();" />
 <command id="copy" oncommand="clipboardCopy();" />
 <command id="cut" oncommand="clipboardCut();" />
 <command id="paste" oncommand="clibboardPaste();" />
-<command id="removechannel" oncommand="eventURL(getCookieFromBrowserId('channelsDisplay'),'action:removeCurrentFeed');" />
-<command id="updatechannel" oncommand="eventURL(getCookieFromBrowserId('channelsDisplay'),'action:updateCurrentFeed');" />
-<command id="updateall" oncommand="eventURL(getCookieFromBrowserId('channelsDisplay'),'action:updateAllFeeds');" />
-<command id="showhelp" oncommand="eventURL(getCookieFromBrowserId('channelsDisplay'),'action:showHelp');" />
-<command id="copychannellink" oncommand="eventURL(getCookieFromBrowserId('channelsDisplay'),'action:copyCurrentFeedURL');" />
+<command id="removechannel" oncommand="pybridge.removeCurrentChannel();" />
+<command id="updatechannel" oncommand="pybridge.updateCurrentChannel();" />
+<command id="updateall" oncommand="pybridge.updateChannels();" />
+<command id="showhelp" oncommand="pybridge.showHelp();" />
+<command id="copychannellink" oncommand="pybridge.copyChannelLink();" />
 <!--
 <command id="about" oncommand="alert('DTV Windows version 0.8.0 Copyright (c) 2005, 2006 Participatry Culture Foundation');" />
 <command id="about" oncommand="window.openDialog('chrome://dtv/content/about.xul',about','chrome,dependent,centerscreen');" />

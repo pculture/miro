@@ -15,7 +15,7 @@ class DemocracyCLH:
         chromeURL = "chrome://dtv/content/main.xul"
         windowName = "DemocracyPlayer"
         wwatch = components.classes["@mozilla.org/embedcomp/window-watcher;1"]\
-                .getService(components.interfaces.nsIWindowWatcher);
+                .getService(components.interfaces.nsIWindowWatcher)
         pybridgeCID = "@participatoryculture.org/dtv/pybridge;1"
         pybridge = components.classes[pybridgeCID].getService()
         existingWindow = wwatch.getWindowByName(windowName, None)

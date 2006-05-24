@@ -11,26 +11,6 @@ function handleUpdate(event) {
 }
 
 function beginUpdates() {
-    if (getDTVPlatform() == 'xul') {
-        // Under XUL, open a 'push' HTTP connection to the controller to
-        // receive updates. This avoids calling across the Python/XPCOM
-        // boundary, which causes deadlocks sometimes for poorly understood
-        // reasons.
-        //        port = getServerPort();
-        var cookie = getEventCookie();
-        //        url = "http://127.0.0.1:" + port + "/dtv/mutators/" + cookie;
-        var url = "/dtv/mutators/" + cookie;
-
-        var xr = new XMLHttpRequest();
-        /*
-        netscape.security.PrivilegeManager.
-            enablePrivilege("UniversalBrowserRead");
-        */
-        xr.multipart = true;
-        xr.open("GET", url, true);
-        xr.onload = handleUpdate;
-        xr.send(null);
-    }
 }
      
 ///////////////////////////////////////////////////////////////////////////////
@@ -43,46 +23,25 @@ function jsdump(str) {
 	.logStringMessage(str);
 }
 
-function getEventCookie() {
-    var elt = document.getElementsByTagName("html")[0];
-    return elt.getAttribute('eventCookie');
-}
-
 function getDTVPlatform() {
     var elt = document.getElementsByTagName("html")[0];
     return elt.getAttribute('dtvPlatform');
 }
 
-/*
-// NEEDS: eliminate! just use relative URLs
-function getServerPort() {
-    var elt = document.getElementsByTagName("html")[0];
-    return elt.getAttribute('serverPort');
-}
-*/
-
 // For calling from page Javascript: Cause a URL to be loaded. The
 // assumption is that the application will notice, abort the load, and
 // take some action based on the URL.
 function eventURL(url) {
-    if (getDTVPlatform() == 'xul') {
-    	// XUL strategy: async HTTP request to our in-process HTTP
-        // server.  Since it falls under the "same origin" security
-        // model exemption, no need for complicated preferences
-        // shenanigans - what a nice day!
-        //        url = "http://127.0.0.1:" + getServerPort() + "/dtv/action/" +
-        //            getEventCookie() + "?" + url; NEEDS: remove
-        url = "/dtv/action/" + getEventCookie() + "?" + url;
-    	var req = new XMLHttpRequest();
-        req.open("GET", url, true);
-        req.send(null);
-        // NEEDS: there is another copy of this in main.js.
-    }
-    else if (typeof(window.frontend) == 'undefined') {
+    if (typeof(window.frontend) == 'undefined') {
 	// Generic strategy: trigger a load, and hope the application
 	// catches it and cancels it without creating a race
 	// condition.
-	document.location.href = url;
+        try {
+            document.location.href = url;
+        } catch (e) {
+            // This may happen if the backend decides to handle the url load
+            // itself.
+        }
     } else {
 	// OS X WebKit (KHTML) strategy: pass in an Objective C object
 	// through the window object and call a method on it.

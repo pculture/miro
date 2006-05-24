@@ -14,7 +14,6 @@ import ctypes
 import prefs
 import config
 import dialogs
-from frontend_implementation.HTMLDisplay import execChromeJS
 from util import quoteJS
 
 ###############################################################################
@@ -224,7 +223,7 @@ class UIBackendDelegate:
         return True
 
     def copyTextToClipboard(self, text):
-        execChromeJS("copyTextToClipboard('%s');" % quoteJS(text))
+        frontend.jsBridge.copyTextToClipboard(text)
 
     # This is windows specific right now. We don't need it on other platforms
     def setRunAtStartup(self, value):
@@ -252,6 +251,7 @@ class UIBackendDelegate:
             ctypes.windll.kernel32.CloseHandle(handle)
 
     def launchDownloadDaemon(self, oldpid, env):
+        print "LANCHING"
         self.killDownloadDaemon(oldpid)
         for key, value in env.items():
             os.environ[key] = value

@@ -1,7 +1,6 @@
 import sys
 import frontend
 import time
-import threading
 
 ###############################################################################
 #### Application object                                                    ####
@@ -12,7 +11,7 @@ class Application:
     def __init__(self):
 	print "Application init"
 
-    def runNonblocking(self):
+    def Run(self):
         import psyco
         #psyco.log('\\dtv.psyco')
         psyco.profile(.03)
