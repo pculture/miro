@@ -726,7 +726,7 @@ class HTTPConnection(ConnectionHandler):
         if self.shortVersion != 11:
             # Close all connections to HTTP/1.0 servers.
             self.willClose = True
-        elif 'close' in self.headers.get('connection', ''):
+        elif 'close' in self.headers.get('connection', '').lower():
             self.willClose = True
         elif not self.chunked and self.contentLength is None:
             # if we aren't chunked and didn't get a content length, we have to
