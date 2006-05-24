@@ -437,7 +437,12 @@ HELLO: WORLD\r\n"""
 
     def testWillClose5(self):
         self.testRequest.handleData(startResponse(
-                headers={'Connection': 'close'}))
+                headers={'Connection': 'close', 'Content-Length': 128}))
+        self.assertEquals(self.testRequest.willClose, True)
+
+    def testWillClose6(self):
+        self.testRequest.handleData(startResponse(
+                headers={'Connection': 'CLoSe', 'Content-Length': 128}))
         self.assertEquals(self.testRequest.willClose, True)
 
     def testPipeline(self):
