@@ -51,60 +51,85 @@ feed = app.controller.currentSelectedTab.obj
 	<input name="feed" type="hidden" value="@@@feed.getID()@@@" />
 	
 	<div class="main-content" style="text-align:center; margin-left:-40px;">
-		<h3><a onclick="eventURL('template:channel');" href="#">Back to Channel</a></h3>
+		<h3><a onclick="eventURL('template:channel');" href="#" 
+i18n:translate="">Back to Channel</a></h3>
 	</div>
 
 	<div id="main-channelbar" class="main-channelbar">
-		<h1>Channel Settings</h1>
+		<h1 i18n:translate="">Channel Settings</h1>
 	</div>
 
 	<div style="margin:20px 10px;">
-		<span style="display:inline; width:150px;">
+		<span style="display:inline; width:150px;" i18n:translate="">
 			Videos expire after:
 		</span>
 		<select name="expireAfter" onChange="javascript:setExpiration();">
-			<option value="system" selected="1" t:hideIf="feed.getExpirationType() != 'system'">Default (<span t:replace="feed.getFormattedDefaultExpiration()" />)</option>
-			<option value="system" t:hideIf="feed.getExpirationType() == 'system'">Default (<span t:replace="feed.getFormattedDefaultExpiration()" />)</option>
-			<option value="3" selected="1" t:hideIf="feed.getExpirationTime() != 3">3 hours</option>
-			<option value="3" t:hideIf="feed.getExpirationTime() == 3">3 hours</option>
-			<option value="24" selected="1" t:hideIf="feed.getExpirationTime() != 24">1 day</option>
-			<option value="24" t:hideIf="feed.getExpirationTime() == 24">1 day</option>
-			<option value="72" selected="1" t:hideIf="feed.getExpirationTime() != 72">3 days</option>
-			<option value="72" t:hideIf="feed.getExpirationTime() == 72">3 days</option>
-			<option value="144" selected="1" t:hideIf="feed.getExpirationTime() != 144">6 days</option>
-			<option value="144" t:hideIf="feed.getExpirationTime() == 144">6 days</option>
-			<option value="240" selected="1" t:hideIf="feed.getExpirationTime() != 240">10 days</option>
-			<option value="240" t:hideIf="feed.getExpirationTime() == 240">10 days</option>
-			<option value="720" selected="1" t:hideIf="feed.getExpirationTime() != 720">1 month</option>
-			<option value="720" t:hideIf="feed.getExpirationTime() == 720">1 month</option>
-			<option value="never" selected="1" t:hideIf="feed.getExpirationType() != 'never'">Never</option>
-			<option value="never" t:hideIf="feed.getExpirationType() == 'never'">Never</option>
+			<option value="system" selected="1" 
+t:hideIf="feed.getExpirationType() != 'system'"><span i18n:translate="">Default</span> 
+(<span t:replace="feed.getFormattedDefaultExpiration()" />)</option>
+			<option value="system" t:hideIf="feed.getExpirationType() == 
+'system'"><span i18n:translate="">Default</span> (<span i18n:name="expiration"
+t:replace="feed.getFormattedDefaultExpiration()" />)</option>
+			<option value="3" selected="1" t:hideIf="feed.getExpirationTime() 
+!= 3" i18n:translate="">3 hours</option>
+			<option value="3" t:hideIf="feed.getExpirationTime() == 3" 
+i18n:translate="">3 hours</option>
+			<option value="24" selected="1" 
+t:hideIf="feed.getExpirationTime() != 24" i18n:translate="">1 day</option>
+			<option value="24" t:hideIf="feed.getExpirationTime() == 24" 
+i18n:translate="">1 day</option>
+			<option value="72" selected="1" 
+t:hideIf="feed.getExpirationTime() != 72" i18n:translate="">3 days</option>
+			<option value="72" t:hideIf="feed.getExpirationTime() == 72" 
+i18n:translate="">3 days</option>
+			<option value="144" selected="1" 
+t:hideIf="feed.getExpirationTime() != 144" i18n:translate="">6 days</option>
+			<option value="144" t:hideIf="feed.getExpirationTime() == 144" 
+i18n:translate="">6 days</option>
+			<option value="240" selected="1" 
+t:hideIf="feed.getExpirationTime() != 240" i18n:translate="">10 days</option>
+			<option value="240" t:hideIf="feed.getExpirationTime() == 240" 
+i18n:translate="" >10 days</option>
+			<option value="720" selected="1" 
+t:hideIf="feed.getExpirationTime() != 720" i18n:translate="">1 month</option>
+			<option value="720" t:hideIf="feed.getExpirationTime() == 720" 
+i18n:translate="">1 month</option>
+			<option value="never" selected="1" 
+t:hideIf="feed.getExpirationType() != 'never'" i18n:translate="">Never</option>
+			<option value="never" t:hideIf="feed.getExpirationType() == 
+'never'" i18n:translate="">Never</option>
 		</select>
 	</div>
 	<div style="margin:0px 10px 20px 10px;">
-		<span style="width:150px;">
+		<span style="width:150px;" i18n:translate="">
 			Auto download should:
 		</span>
 		<select name="autoDownloadGets" onChange="javascript:setAutoDownloadGets();">
-			<option t:hideIf="feed.getEverything" selected="1" value="False">Download new videos only</option>
-			<option t:hideIf="not feed.getEverything" value="False">Download new videos only</option>
-			<option t:hideIf="not feed.getEverything" value="True" selected="1">Download all videos</option>
-			<option t:hideIf="feed.getEverything" value="True">Download all videos</option>
+			<option t:hideIf="feed.getEverything" selected="1" value="False" 
+i18n:translate="" >Download new videos only</option>
+			<option t:hideIf="not feed.getEverything" value="False" 
+i18n:translate="">Download new videos only</option>
+			<option t:hideIf="not feed.getEverything" value="True" 
+selected="1" i18n:translate="">Download all videos</option>
+			<option t:hideIf="feed.getEverything" value="True" 
+i18n:translate="">Download all videos</option>
 		</select>
 	</div>
 
 	<div style="margin:0px 10px;">
 		<input type="checkbox" name="maxOutDownloads" onClick="javascript:setMaxNew();" checked="checked" t:hideIf="feed.getMaxNew() == 'unlimited'" />
 		<input type="checkbox" name="maxOutDownloads" onClick="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() != 'unlimited'"/>
-		If I have
-		<input name="maxNew" type="text" size="4" value="0" disabled="1" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() != 'unlimited'"/>
-		<input name="maxNew" type="text" size="4" value="@@@feed.getMaxNew()@@@" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() == 'unlimited'"/>
-		videos waiting, don't auto download more.<br />
-		<span style="font-size:90%; color:#666666; margin-left: 25px">(Keeps channel from hogging disk space)</span>
+		<span i18n:translate="">If I have
+		<input i18n:name="maxnew" name="maxNew" type="text" size="4" value="0" disabled="1" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() != 'unlimited'"/>
+		<input i18n:name="maxnew2" name="maxNew" type="text" size="4" value="@@@feed.getMaxNew()@@@" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() == 'unlimited'"/>
+		videos waiting, don't auto download more.</span><br />
+		<span style="font-size:90%; color:#666666; margin-left: 25px" 
+i18n:translate="">(Keeps channel from hogging disk space)</span>
 	</div>
 
     <div style="position: absolute; bottom:0%; margin:0px 10px 10px 10px;">
-        Channel URL: <span t:replace="feed.getURL()" class="selectable" />
+        <span i18n:translate="">Channel URL</span>: <span t:replace="feed.getURL()" 
+class="selectable" />
     </div>
 
 </form>

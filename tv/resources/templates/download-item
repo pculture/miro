@@ -214,7 +214,8 @@
 -->			<!-- / FILE INFO -->
 			
 			<!-- MESSAGE -->
-			<p style="clear:both; padding-bottom:3px;">Pending Auto Download</p>
+			<p style="clear:both; padding-bottom:3px;" 
+i18n:translate="">Pending Auto Download</p>
 			<!-- MESSAGE -->
 			
 			
@@ -247,7 +248,8 @@
 -->			<!-- / FILE INFO -->
 			
 			<!-- MESSAGE -->
-			<p style="clear:both; padding-bottom:3px;">Pending Manual Download</p>
+			<p style="clear:both; padding-bottom:3px;" 
+i18n:translate="">Pending Manual Download</p>
 			<!-- MESSAGE -->
 
 			
@@ -285,10 +287,11 @@
 			<!-- UNWATCHED -->
 			<span>
 				<div class="main-video-details-unwatched">
-					<p>Unwatched</p>
+					<p i18n:translate="">Unwatched</p>
 				</div>
 				<div class="main-video-details-save">
-					<p><a href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');">Save</a></p>
+					<p><a href="#" onclick="return 
+eventURL('action:keepItem?item=@@@this.getID()@@@');" i18n:translate="">Save</a></p>
 				</div>
 			</span>
 			<!-- / UNWATCHED -->
@@ -327,10 +330,12 @@
 			<!-- EXPIRY -->
 			<span>
 				<div class="main-video-details-expiry">
-					<p>Expires: <span t:replace="this.getExpirationTime()" /></p>
+					<p><span i18n:translate="">Expires</span>: <span 
+t:replace="this.getExpirationTime()" /></p>
 				</div>
 				<div class="main-video-details-save">
-					<p><a href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');">Save</a></p>
+					<p><a href="#" onclick="return 
+eventURL('action:keepItem?item=@@@this.getID()@@@');" i18n:translate="">Save</a></p>
 				</div>
 			</span>
 			<!-- / EXPIRY -->
@@ -403,10 +408,11 @@
 			<!-- UNWATCHED -->
 			<span>
 				<div class="main-video-details-unwatched">
-					<p>Unwatched</p>
+					<p i18n:translate="">Unwatched</p>
 				</div>
 				<div class="main-video-details-save">
-					<p><a href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');">Save</a></p>
+					<p><a href="#" onclick="return 
+eventURL('action:keepItem?item=@@@this.getID()@@@');" i18n:translate="">Save</a></p>
 				</div>
 			</span>
 			<!-- / UNWATCHED -->
@@ -441,7 +447,8 @@
 -->			<!-- / FILE INFO -->
 			
 			<!-- ERROR -->
-			<p>Download Error: <span t:replace="this.getFailureReason()" /></p>
+			<p><span i18n:translate="">Download Error</span>: <span 
+t:replace="this.getFailureReason()" /></p>
 			<!-- / ERROR -->
 			
 			
