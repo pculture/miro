@@ -222,7 +222,7 @@ class install_data (distutils.command.install_data.install_data):
                 APP_PLATFORM='gtk-x11')
         self.outfiles.append(dest)
 
-        for lang in ("ka",):
+        for lang in ("fr","ka",):
             posource = os.path.join (resource_dir, "locale", "%s.po" % lang)
             source = os.path.join (resource_dir, "locale", "%s.mo" % lang)
             os.system ("msgfmt %s -o %s" % (posource, source))
