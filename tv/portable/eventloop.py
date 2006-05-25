@@ -61,12 +61,18 @@ class Scheduler(object):
         else:
             return max(0, self.heap[0][0] - clock())
 
-    def processTimeouts(self):
-        while len(self.heap) > 0 and self.heap[0][0] < clock():
-            time, dc = heapq.heappop(self.heap)
-            dc.dispatch()
+    def hasPendingTimeout(self):
+        return len(self.heap) > 0 and self.heap[0][0] < clock()
 
-class IdleQueue(object):
+    def processNextTimeout(self):
+        time, dc = heapq.heappop(self.heap)
+        dc.dispatch()
+
+    def processTimeouts(self):
+        while self.hasPendingTimeout():
+            self.processNextTimeout()
+
+class CallQueue(object):
     def __init__(self):
         self.queue = Queue.Queue()
 
@@ -77,16 +83,22 @@ class IdleQueue(object):
             kwargs = {}
         self.queue.put((function, name, args, kwargs))
 
+    def processNextIdle(self):
+        function, name, args, kwargs = self.queue.get()
+        #start = clock()
+        util.trapCall("While handling idle call (%s)" % (name,),
+                function, *args, **kwargs)
+        #end = clock()
+        #if end-start > 0.05:
+        #    print "WARNING: %s too slow (%.3f secs)" % (
+        #        name, end-start)
+
+    def hasPendingIdle(self):
+        return not self.queue.empty()
+
     def processIdles(self):
-        while not self.queue.empty():
-            function, name, args, kwargs = self.queue.get()
-            #start = clock()
-            util.trapCall("While handling idle call (%s)" % (name,),
-                    function, *args, **kwargs)
-            #end = clock()
-            #if end-start > 0.05:
-            #    print "WARNING: %s too slow (%.3f secs)" % (
-            #        name, end-start)
+        while self.hasPendingIdle():
+            self.processNextIdle()
 
 class ThreadPool(object):
     """The thread pool is used to handle calls like gethostbyname() that block
@@ -136,7 +148,8 @@ class ThreadPool(object):
 class EventLoop(object):
     def __init__(self):
         self.scheduler = Scheduler()
-        self.idleQueue = IdleQueue()
+        self.idleQueue = CallQueue()
+        self.urgentQueue = CallQueue()
         self.threadPool = ThreadPool(self)
         self.readCallbacks = {}
         self.writeCallbacks = {}
@@ -165,19 +178,6 @@ class EventLoop(object):
     def callInThread(self, callback, errback, function, *args, **kwargs):
         self.threadPool.queueCall(callback, errback, function, *args, **kwargs)
 
-    def doCallbacks(self, readyList, map):
-        for fd in readyList:
-            try:
-                function = map[fd]
-            except KeyError:
-                # this can happen the write callback removes the read callback
-                pass
-            else:
-                when = "While talking to the network"
-                if not util.trapCall(when, function):
-                    del map[fd] 
-                    # remove the callback, since it's likely to fail forever
-
     def loop(self):
         database.set_thread()
         while not self.quitFlag:
@@ -192,16 +192,49 @@ class EventLoop(object):
                     print "DTV: eventloop: %s" % detail
                 else:
                     raise
-            self.doCallbacks(writeables, self.writeCallbacks)
-            self.doCallbacks(readables, self.readCallbacks)
             if self.quitFlag:
                 break
-            self.scheduler.processTimeouts()
-            if self.quitFlag:
-                break
-            self.idleQueue.processIdles()
-            if self.quitFlag:
-                break
+            self.urgentQueue.processIdles()
+            for event in self.generateEvents(readables, writeables):
+                event()
+                if self.quitFlag:
+                    break
+                self.urgentQueue.processIdles()
+                if self.quitFlag:
+                    break
+
+    def generateEvents(self, readables, writeables):
+        """Generator that creates the list of events that should be dealt with
+        on this iteration of the event loop.  This includes all socket
+        read/write callbacks, timeouts and idle calls.  "events" are
+        implemented as functions that should be called with no arguments.
+        """
+
+        for callback in self.generateCallbacks(writeables,
+                self.writeCallbacks):
+            yield callback
+        for callback in self.generateCallbacks(readables,
+                self.readCallbacks):
+            yield callback
+        while self.scheduler.hasPendingTimeout():
+            yield self.scheduler.processNextTimeout
+        while self.idleQueue.hasPendingIdle():
+            yield self.idleQueue.processNextIdle
+
+    def generateCallbacks(self, readyList, map):
+        for fd in readyList:
+            try:
+                function = map[fd]
+            except KeyError:
+                # this can happen the write callback removes the read callback
+                # or vise versa
+                pass
+            else:
+                when = "While talking to the network"
+                def callbackEvent():
+                    if not util.trapCall(when, function):
+                        del map[fd] 
+                yield callbackEvent
 
 _eventLoop = EventLoop()
 
@@ -259,6 +292,15 @@ def addIdle(function, name, args=None, kwargs=None):
     _eventLoop.idleQueue.addIdle(function, name, args, kwargs)
     _eventLoop.wakeup()
 
+def addUrgentCall(function, name, args=None, kwargs=None):
+    """Schedule a function to be called as soon as possible.  This method
+    should be used for things like GUI actions, where the user is waiting on
+    us.
+    """
+
+    _eventLoop.urgentQueue.addIdle(function, name, args, kwargs)
+    _eventLoop.wakeup()
+
 def callInThread(callback, errback, function, *args, **kwargs):
     """Get the numerical IP address for a IPv4 host, on success callback will
     be called with the adrress, on failure errback will be called with the
@@ -300,4 +342,11 @@ def asIdle(func):
 
     def queuer(*args, **kwargs):
         return addIdle(func, "%s() (using asIdle)" % func.__name__, args=args, kwargs=kwargs)
+    return queuer
+
+def asUrgent(func):
+    """Like asIdle, but uses addUrgentCall() instead of addIdle()."""
+
+    def queuer(*args, **kwargs):
+        return addUrgentCall(func, "%s() (using asUrgent)" % func.__name__, args=args, kwargs=kwargs)
     return queuer

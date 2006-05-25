@@ -30,6 +30,7 @@ class EventLoopTest(DemocracyTestCase):
 
     def processIdles(self):
         eventloop._eventLoop.idleQueue.processIdles()
+        eventloop._eventLoop.urgentQueue.processIdles()
 
 class SchedulerTest(EventLoopTest):
     def setUp(self):
