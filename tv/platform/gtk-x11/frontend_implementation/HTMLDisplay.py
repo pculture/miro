@@ -11,8 +11,6 @@ from util import quoteJS
 
 import os
 import re
-import threading
-import time
 
 # These are used by the channel guide. This platform uses the
 # old-style 'magic URL' guide API, so we just return None. See
@@ -32,47 +30,62 @@ def deferUntilAfterLoad(func):
         self.execAfterLoad(lambda: func(self, *args, **kwargs))
     return schedFunc
 
+_impls = {}
+
+def getImpl (area):
+    if not _impls.has_key(area):
+        _impls[area] = HTMLDisplayImpl()
+    return _impls[area]
+
+count = 0
 class HTMLDisplay(app.Display):
-    "Selectable Display that shows a HTML document."
-
     def __init__(self, html, frameHint=None, areaHint=None, baseURL=None):
-        """'html' is the initial contents of the display, as a string. If
-        frameHint is provided, it is used to guess the initial size the HTML
-        display will be rendered at, which might reduce flicker when the
-        display is installed."""
+        global count
+        app.Display.__init__(self)
 
+        self.html = html
+        self.count = count
+        count = count + 1
+        self.impl = None
+        self.deferred = []
         if baseURL is not None:
             # This is something the Mac port uses. Complain about that.
             print "WARNING: HTMLDisplay ignoring baseURL '%s'" % baseURL
 
-        app.Display.__init__(self)
+    def __getattr__ (self, attr):
+        # Since this is for methods calling into HTMLDisplayImpl, we
+        # handle the async here.
+        @gtkAsyncMethod
+        def maybe_defer (*args, **kwargs):
+            if self.impl != None:
+                if self.impl.display is self:
+                    func = getattr (self.impl, attr)
+                    func(*args, **kwargs)
+                else:
+                    pass
+            else:
+                self.deferred.append((attr, args, kwargs))
+        return maybe_defer
+        
 
-        self.initialLoadFinished = False
-        self.execQueue = []
+    def __str__ (self):
+        return str (self.count)
 
-        (handle, location) = tempfile.mkstemp('.html')
-        handle = os.fdopen(handle,"w")
-        handle.write(html)
-        handle.close()
+    def __nonzero__ (self):
+        return True
 
-        # Translate path into URL.
-        parts = re.split(r'/', location)
-        self.urlToLoad = "file:///" + '/'.join(parts)
+    def onSelected_private(self, frame):
+        self.impl.load_html (self)
+        for deferment in self.deferred:
+            (attr, args, kwargs) = deferment
+            func = getattr (self.impl, attr)
+            func(*args, **kwargs)
+        self.deferred = []
+        app.Display.onSelected_private (self, frame)
 
-        self.widgetDestroyed = False
-        self.widget = None
-        self._gtkInit()
-
-    @gtkAsyncMethod
-    def _gtkInit(self):
-        self.mb = MozillaBrowser()
-        self.widget = self.mb.getWidget()
-        self.widget.connect("net-stop", self.loadFinished)
-        self.widget.connect("destroy", self.onBrowserDestroy)
-        self.mb.setURICallBack(self.onURLLoad)
-        self.mb.setContextMenuCallBack(self.onContextMenu)
-        self.widget.load_url(self.urlToLoad)
-        self.widget.show()
+    def getWidget(self, area = None):
+        self.impl = getImpl (area)
+        return self.impl.widget
 
     def getEventCookie(self):
         return ''
@@ -80,8 +93,47 @@ class HTMLDisplay(app.Display):
     def getDTVPlatformName(self):
         return 'gtk-x11-MozillaBrowser'
 
-    def getWidget(self):
-        return self.widget
+    def onURLLoad (self, url):
+        # For overriding
+        return True
+
+class HTMLDisplayImpl:
+    "Selectable Display that shows a HTML document."
+
+    def __init__(self):
+        """'html' is the initial contents of the display, as a string. If
+        frameHint is provided, it is used to guess the initial size the HTML
+        display will be rendered at, which might reduce flicker when the
+        display is installed."""
+
+        self.initialLoadFinished = False
+        self.execQueue = []
+        self.widgetDestroyed = False
+
+        self.mb = MozillaBrowser()
+        self.display = None
+        self.widget = self.mb.getWidget()
+        self.widget.connect("net-stop", self.loadFinished)
+        self.widget.connect("destroy", self.onBrowserDestroy)
+        self.widget.connect("unrealize", self.onUnrealize)
+        self.mb.setURICallBack(self.onURLLoad)
+        self.mb.setContextMenuCallBack(self.onContextMenu)
+        self.widget.show()
+
+    def load_html(self, display):
+        self.initialLoadFinished = False
+        self.execQueue = []
+        self.display = display
+
+        (handle, location) = tempfile.mkstemp('.html')
+        handle = os.fdopen(handle,"w")
+        handle.write(display.html)
+        handle.close()
+
+        # Translate path into URL.
+        parts = re.split(r'/', location)
+        self.urlToLoad = "file:///" + '/'.join(parts)
+        self.widget.load_url(self.urlToLoad)
 
     def loadFinished(self, widget):
         if (not self.initialLoadFinished):
@@ -108,51 +160,41 @@ class HTMLDisplay(app.Display):
         else:
             func()
 
-    def onSelected(self, *args):
-        # Give focus whenever the display is installed. Probably the best
-        # of several not especially attractive options.
-        app.Display.onSelected(self, *args)
+# These functions are now only called from maybe_defer and
+# onSelected_private, so we don't have to worry about gtkAsyncMethod
+# anymore.
 
-#defer and then async, which means make an async function and then
-#defer that async function.
     @deferUntilAfterLoad
-    @gtkAsyncMethod
     def execJS(self, js):
         self.widget.load_url('javascript:%s' % js)
 
     # DOM hooks used by the dynamic template code
     @deferUntilAfterLoad
-    @gtkAsyncMethod
     def addItemAtEnd(self, xml, id):
         if not self.widgetDestroyed:
             self.mb.addItemAtEnd(xml, id)
 
     @deferUntilAfterLoad
-    @gtkAsyncMethod
     def addItemBefore(self, xml, id):
         if not self.widgetDestroyed:
             self.mb.addItemBefore(xml, id)
     
     @deferUntilAfterLoad
-    @gtkAsyncMethod
     def removeItem(self, id):
         if not self.widgetDestroyed:
             self.mb.removeItem(id)
     
     @deferUntilAfterLoad
-    @gtkAsyncMethod
     def changeItem(self, id, xml):
         if not self.widgetDestroyed:
             self.mb.changeItem(id, xml)
 
     @deferUntilAfterLoad
-    @gtkAsyncMethod
     def hideItem(self, id):
         if not self.widgetDestroyed:
             self.mb.hideItem(id)
         
     @deferUntilAfterLoad
-    @gtkAsyncMethod
     def showItem(self, id):
         if not self.widgetDestroyed:
             self.mb.showItem(id)
@@ -165,11 +207,16 @@ class HTMLDisplay(app.Display):
         an item to be downloaded.) Implementation in HTMLDisplay always
         returns true; override in a subclass to implement special
         behavior."""
-        # For overriding
-        return True
+        retval = self.display.onURLLoad(url)
+        return retval
 
     def onBrowserDestroy(self, widget):
         self.widgetDestroyed = True
+
+    def onUnrealize (self, widget):
+        for (key, value) in _impls.items():
+            if value is self:
+                del _impls[key]
 
     def onDocumentLoadFinished(self):
         pass

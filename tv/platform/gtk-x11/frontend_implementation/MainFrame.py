@@ -202,12 +202,18 @@ class MainFrame:
         if oldDisplay:
             oldDisplay.onDeselected_private(self)
             oldDisplay.onDeselected(self)
-            displayBox.remove(oldDisplay.getWidget())
-        # Leave a reference to oldDisplay around.  This protect it from
-        # getting garbage collected at least until new displays's in
-        displayBox.add(newDisplay.getWidget())
-        newDisplay.onSelected_private(self)
-        newDisplay.onSelected(self)
+            if oldDisplay.getWidget(area) != newDisplay.getWidget(area):
+                displayBox.remove(oldDisplay.getWidget(area))
+                # Leave a reference to oldDisplay around.  This protect it from
+                # getting garbage collected at least until new displays's in
+                displayBox.add(newDisplay.getWidget(area))
+            newDisplay.onSelected_private(self)
+            newDisplay.onSelected(self)
+        else:
+            displayBox.add(newDisplay.getWidget(area))
+            newDisplay.onSelected_private(self)
+            newDisplay.onSelected(self)
+
         self.selectedDisplays[area] = newDisplay
         # show the video info display when we are showing a movie.
         if area == self.mainDisplay:
@@ -220,7 +226,7 @@ class MainFrame:
             else:
                 self.windowChanger.changeState(self.windowChanger.BROWSING)
             if isinstance(newDisplay, HTMLDisplay):
-                newDisplay.widget.child.grab_focus()
+                newDisplay.getWidget(area).child.grab_focus()
 
     @gtkSyncMethod
     def getDisplay(self, area):
@@ -313,7 +319,7 @@ class NullDisplay (app.Display):
         scrolled_window.show_all()
         self.widget = scrolled_window
 
-    def getWidget(self):
+    def getWidget(self, *args):
         return self.widget
 
     def unlink(self):

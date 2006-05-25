@@ -74,7 +74,7 @@ class VideoDisplay (app.VideoDisplayBase):
         app.VideoDisplayBase.pause(self)
         app.controller.frame.windowChanger.updatePlayPauseButton()
 
-    def getWidget(self):
+    def getWidget(self, area = None):
         return self.widget
 
     @gtkSyncMethod
