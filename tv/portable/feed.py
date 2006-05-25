@@ -991,6 +991,8 @@ class RSSFeedImpl(FeedImpl):
                     sortedItems = list(self.items)
                     sortedItems.sort(lambda x, y: cmp(x.getPubDateParsed(), y.getPubDateParsed()))
                     self.startfrom = sortedItems[-1].getPubDateParsed()
+                else:
+                    self.startfrom = datetime.min
         finally:
             self.ufeed.endRead()
 
