@@ -620,7 +620,7 @@ class Controller (frontend.Application):
     def downloaderShutdown(self):
         frontend.quit()
 
-    @eventloop.asIdle
+    @eventloop.asUrgent
     def quit(self):
         err = storedatabase.saveDatabase()
         if err is None:
@@ -949,7 +949,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
         return True
 
-    @eventloop.asIdle
+    @eventloop.asUrgent
     def dispatchAction(self, action, **kwargs):
         for handler in self.actionHandlers:
             if hasattr(handler, action):
@@ -957,7 +957,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 return
         print "Ignored bad action URL: action=%s" % action
 
-    @eventloop.asIdle
+    @eventloop.asUrgent
     def onDeselected(self, frame):
         unloadTriggers = self.templateHandle.getTriggerActionURLsOnUnload()
         self.runActionURLs(unloadTriggers)
@@ -1496,7 +1496,7 @@ def getInitialChanelGuide():
 # migrate unless we don't have a dlid, in which case we can handle it.
 # I don't see any race conditions in that case.
 
-@eventloop.asIdle
+@eventloop.asUrgent
 def changeMoviesDirectory(newDir, migrate):
     oldDir = config.get(prefs.MOVIES_DIRECTORY)
     config.set(prefs.MOVIES_DIRECTORY, newDir)

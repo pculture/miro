@@ -157,9 +157,8 @@ jsBridge.prototype = {
     var document = this.getDocument(area);
     var elt = document.getElementById(id);
     var next = elt.nextSibling;
-    var parent = elt.parentNode;
-    parent.removeChild(elt);
-    parent.insertBefore(this.createNode(document, xml), next);
+    elt.parentNode.removeChild(elt);
+    next.parentNode.insertBefore(this.createNode(document, xml), next);
   },
   xulHideElement: function(area, id) {
     var document = this.getDocument(area);

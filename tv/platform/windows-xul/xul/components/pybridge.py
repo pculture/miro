@@ -106,49 +106,49 @@ class PyBridge:
         eventloop.addIdle(HTMLDisplay.runPageFinishCallback, 
                 "%s finish callback" % area, args=(area,))
 
-    @eventloop.asIdle
+    @eventloop.asUrgent
     def setVolume(self, volume):
         app.controller.videoDisplay.setVolume(volume)
 
-    @eventloop.asIdle
+    @eventloop.asUrgent
     def quit(self):
         app.controller.quit()
 
-    @eventloop.asIdle
+    @eventloop.asUrgent
     def removeCurrentChannel(self):
         app.ModelActionHandler(self.delegate).removeCurrentFeed()
 
-    @eventloop.asIdle
+    @eventloop.asUrgent
     def updateCurrentChannel(self):
         print "UPDATE CURRENT"
         app.ModelActionHandler(self.delegate).updateCurrentFeed()
 
-    @eventloop.asIdle
+    @eventloop.asUrgent
     def updateChannels(self):
         print "UPDATE ALL"
         app.ModelActionHandler(self.delegate).updateAllFeeds()
 
-    @eventloop.asIdle
+    @eventloop.asUrgent
     def showHelp(self):
         self.delegate.openExternalURL('http://www.getdemocracy.com/help')
 
-    @eventloop.asIdle
+    @eventloop.asUrgent
     def copyChannelLink(self):
         app.ModelActionHandler(self.delegate).copyCurrentFeedURL()
 
-    @eventloop.asIdle
+    @eventloop.asUrgent
     def handleChoiceDialog(self, id, buttonIndex):
         self.delegate.handleChoiceDialog(id, buttonIndex)
 
-    @eventloop.asIdle
+    @eventloop.asUrgent
     def handleHTTPAuthDialog(self, id, buttonIndex, username, password):
         self.delegate.handleHTTPAuthDialog(id, buttonIndex, username,
                 password)
 
-    @eventloop.asIdle
+    @eventloop.asUrgent
     def addChannel(self, url):
         app.controller.addAndSelectFeed(url)
 
-    @eventloop.asIdle
+    @eventloop.asUrgent
     def openURL(self, url):
         self.delegate.openExternalURL(url)

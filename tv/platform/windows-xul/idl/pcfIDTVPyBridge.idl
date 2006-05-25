@@ -27,5 +27,5 @@ interface pcfIDTVPyBridge : nsISupports
   void handleHTTPAuthDialog(in unsigned long id, 
           in unsigned short buttonIndex, in string username, 
           in string password);
-  void openURL(in Astring url);
+  void openURL(in AString url);
 };
