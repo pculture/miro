@@ -96,6 +96,7 @@ class CallbackHandler(object):
 
     def on_main_delete(self, *args):
         app.controller.quit()
+        return True
 
     def on_play_pause_button_clicked(self, event = None):
         videoDisplay = self.mainApp.videoDisplay
