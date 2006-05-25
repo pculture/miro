@@ -696,7 +696,7 @@ class HTTPConnection(ConnectionHandler):
         if self.state == 'closed':
             return # maybe the header callback canceled this request
         if ((100 <= self.status <= 199) or self.status in (204, 304) or
-                self.method == 'HEAD'):
+                self.method == 'HEAD' or self.contentLength == 0):
             self.finishRequest()
         else:
             if self.bodyDataCallback:
