@@ -535,6 +535,13 @@ HELLO: WORLD\r\n"""
         self.assertEquals(self.testRequest.state, 'closed')
         self.assertEquals(self.testRequest.body, '')
 
+    def testNoBody4(self):
+        self.testRequest.bodyDataCallback = lambda data: 0
+        self.testRequest.handleData(startResponse(
+            headers={"Content-Length":'0'}))
+        self.assertEquals(self.testRequest.state, 'ready')
+        self.assertEquals(self.testRequest.body, '')
+
     def testSplitUpMessage(self):
         data = self.fakeResponse
         for cutoff in [3, 6, 10, 4, 100, 52]:
