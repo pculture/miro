@@ -1,14 +1,11 @@
 #include "nsISupports.idl"
-#include "nsIDOMDocument.idl"
-#include "nsIDOMElement.idl"
-#include "nsIWebProgressListener.idl"
-#include "nsIURIContentListener.idl"
-#include "nsIDOMWindow.idl"
+
+interface nsIDOMWindow;
 
 [scriptable, uuid(7E70142F-ABC9-4d6e-BDB8-EDC747FCD2A3)]
 interface pcfIDTVJSBridge : nsISupports
 {
-  void init(in nsIDOMDocument mainWindowDocument);
+  void init(in nsIDOMWindow window);
   void closeWindow();
   void xulNavigateDisplay(in string area, in AString uri);
   void xulAddElementAtEnd(in string area, in AString xml, in AString id);
@@ -18,4 +15,9 @@ interface pcfIDTVJSBridge : nsISupports
   void xulHideElement(in string area, in AString id);
   void xulShowElement(in string area, in AString id);
   void copyTextToClipboard(in AString text);
+  void showChoiceDialog(in unsigned long id, in AString title, 
+        in AString description, in AString defaultLabel, 
+        in AString otherLabel);
+  void showHTTPAuthDialog(in unsigned long id, in AString description);
+  void showBugReportDialog(in AString when, in AString report);
 };

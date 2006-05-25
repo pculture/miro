@@ -1016,10 +1016,16 @@ class ModelActionHandler:
         if currentFeed:
             self.removeFeed(currentFeed)
 
-    def removeFeed(self, feed):
-        obj = db.getObjectByID(int(feed))
-        if self.backEndDelegate.validateFeedRemoval(obj.getTitle()):
-            obj.remove()
+    def removeFeed(self, feedID):
+        obj = db.getObjectByID(int(feedID))
+        title = 'Remove Channel'
+        description = """Are you sure you want to remove the channel \'%s\'? This operation cannot be undone.""" % obj.getTitle()
+        dialog = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_YES,
+                dialogs.BUTTON_NO)
+        def dialogCallback(dialog):
+            if dialog.choice == dialogs.BUTTON_YES:
+                obj.remove()
+        dialog.run(dialogCallback)
 
     def updateCurrentFeed(self):
         currentFeed = controller.currentSelectedTab.feedID()

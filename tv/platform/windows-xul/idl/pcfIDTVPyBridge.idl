@@ -1,6 +1,6 @@
 #include "nsISupports.idl"
-#include "nsIDOMDocument.idl"
 
+interface nsIDOMWindow;
 interface nsICommandLine;
 
 [scriptable, uuid(8ABB2E1D-6624-4457-A4BD-EBFA6156D426)]
@@ -9,7 +9,7 @@ interface pcfIDTVPyBridge : nsISupports
   /**
    * Called on application startup.
    */
-  void onStartup(in nsIDOMDocument mainWindowDocument);
+  void onStartup(in nsIDOMWindow window);
   void onShutdown();
   void handleCommandLine(in nsICommandLine commandLine);
   void handleSecondCommandLine(in nsICommandLine commandLine);
@@ -20,5 +20,12 @@ interface pcfIDTVPyBridge : nsISupports
   void updateCurrentChannel();
   void updateChannels();
   void showHelp();
+  void addChannel(in AString url);
   void copyChannelLink();
+  void handleChoiceDialog(in unsigned long id, 
+        in unsigned short buttonIndex);
+  void handleHTTPAuthDialog(in unsigned long id, 
+          in unsigned short buttonIndex, in string username, 
+          in string password);
+  void openURL(in Astring url);
 };

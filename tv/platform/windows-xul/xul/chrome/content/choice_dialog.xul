@@ -7,23 +7,28 @@
 	xmlns:html="http://www.w3.org/1999/xhtml"
         title=""
         buttons="accept,cancel"
-        ondialogaccept="window.arguments[0].out = '0';"
-        ondialogcancel="window.arguments[0].out = '1';"
+        ondialogaccept="onaccept();"
+        ondialogcancel="oncancel();"
         onload="onload()">
     <script type="text/javascript">
 function onload() {
   var args = window.arguments[0];
   var label = document.getElementById("label1");
-  label.setAttribute("value", args["text"]);
+  label.setAttribute("value", args["description"]);
   var dialog = document.getElementById("main");
   document.title = args['title'];
-  dialog.getButton('accept').label = args['defaultButton'];
-  dialog.getButton('cancel').label = args['otherButton'];
-  /*
-  dialog.setAttribute("buttonlabelaccept", args["defaultButton"]);
-  dialog.setAttribute("buttonlabalcancel", args["otherButton"]);
-  */
+  dialog.getButton('accept').label = args['defaultLabel'];
+  dialog.getButton('cancel').label = args['otherLabel'];
 }
-    </script>
+
+var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
+                getService(Components.interfaces.pcfIDTVPyBridge);
+function onaccept() {
+  pybridge.handleChoiceDialog(window.arguments[0]['id'], 0);
+}
+function oncancel() {
+  pybridge.handleChoiceDialog(window.arguments[0]['id'], 1);
+}
+   </script>
    <label id="label1" value="" />
 </dialog>

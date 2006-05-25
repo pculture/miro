@@ -355,7 +355,7 @@ URL was %s""" % self.url
 
     def restartIfNeeded(self):
         if self.getState() in ('downloading','uploading'):
-            if len(self.status) == 0:
+            if len(self.status) == 0 or self.status.get('dlerType') is None:
                 if self.contentType == "":
                     self.getContentType()
                 else:

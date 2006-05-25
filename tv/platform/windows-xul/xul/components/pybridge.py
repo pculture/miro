@@ -40,14 +40,14 @@ def makeService(clsid, iid):
     """Helper function to get an XPCOM service"""
     return components.classes[clsid].getService(iid)
 
-def makeJSBridgeProxy(mainWindowDocument):
+def makeJSBridgeProxy(window):
     """Creates our JSBridge component, then wraps it in a Proxy object.  This
     ensures that all its methods run in the main xul event loop.
     """
 
     jsBridge = makeComp("@participatoryculture.org/dtv/jsbridge;1",
             pcfIDTVJSBridge)
-    jsBridge.init(mainWindowDocument)
+    jsBridge.init(window)
     proxyManager = makeService("@mozilla.org/xpcomproxy;1",
             nsIProxyObjectManager)
     eventQueueService = makeService("@mozilla.org/event-queue-service;1",
@@ -74,8 +74,9 @@ class PyBridge:
 
     def __init__(self):
         self.started = False
+        self.delegate = UIBackendDelegate()
 
-    def onStartup(self, mainWindowDocument):
+    def onStartup(self, window):
         if self.started:
             util.failed("Loading window", details="onStartup called twice")
             return
@@ -89,7 +90,7 @@ class PyBridge:
         except:
             pass
 
-        frontend.jsBridge = makeJSBridgeProxy(mainWindowDocument)
+        frontend.jsBridge = makeJSBridgeProxy(window)
         app.main()
 
     def handleCommandLine(self, commandLine):
@@ -115,23 +116,39 @@ class PyBridge:
 
     @eventloop.asIdle
     def removeCurrentChannel(self):
-        app.ModelActionHandler(UIBackendDelegate()).removeCurrentFeed()
+        app.ModelActionHandler(self.delegate).removeCurrentFeed()
 
     @eventloop.asIdle
     def updateCurrentChannel(self):
         print "UPDATE CURRENT"
-        app.ModelActionHandler(UIBackendDelegate()).updateCurrentFeed()
+        app.ModelActionHandler(self.delegate).updateCurrentFeed()
 
     @eventloop.asIdle
     def updateChannels(self):
         print "UPDATE ALL"
-        app.ModelActionHandler(UIBackendDelegate()).updateAllFeeds()
+        app.ModelActionHandler(self.delegate).updateAllFeeds()
 
     @eventloop.asIdle
     def showHelp(self):
-        print "SHOULD SHOW HELP"
-        pass
+        self.delegate.openExternalURL('http://www.getdemocracy.com/help')
 
     @eventloop.asIdle
     def copyChannelLink(self):
-        app.ModelActionHandler(UIBackendDelegate()).copyCurrentFeedURL()
+        app.ModelActionHandler(self.delegate).copyCurrentFeedURL()
+
+    @eventloop.asIdle
+    def handleChoiceDialog(self, id, buttonIndex):
+        self.delegate.handleChoiceDialog(id, buttonIndex)
+
+    @eventloop.asIdle
+    def handleHTTPAuthDialog(self, id, buttonIndex, username, password):
+        self.delegate.handleHTTPAuthDialog(id, buttonIndex, username,
+                password)
+
+    @eventloop.asIdle
+    def addChannel(self, url):
+        app.controller.addAndSelectFeed(url)
+
+    @eventloop.asIdle
+    def openURL(self, url):
+        self.delegate.openExternalURL(url)

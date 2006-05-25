@@ -207,7 +207,7 @@ function onLoad() {
     var qo = new quitObserver();
 
     // Bring up Python environment.
-    pybridge.onStartup(document);
+    pybridge.onStartup(window, document);
 
     // Set up listeners for the volume knobby
     var knob = document.getElementById("volume");
@@ -341,40 +341,6 @@ function doResize(event) {
     window.outerHeight=500;
   }
   return true;  
-}
-
-function showIsScrapeAllowedDialog(cookie,text) {
-  var params = {"in" : text, "out" : null};
-  window.openDialog('chrome://dtv/content/canscrape.xul','canscrape','chrome,dependent,centerscreen,modal',params);
-  delegateReturnURL(cookie, params.out);
-}
-
-function showYesNoDialog(cookie,title, text) {
-  var params = {"text" : text, "title": title, "out" : null};
-  window.openDialog('chrome://dtv/content/yesno.xul','yesno','chrome,dependent,centerscreen,modal',params);
-  delegateReturnURL(cookie, params.out);
-}
-
-function showChoiceDialog(cookie, title, text, defaultButton, otherButton) {
-  var params = {"text" : text, "title": title, "defaultButton": defaultButton, 
-  "otherButton": otherButton, "out" : null};
-  window.openDialog('chrome://dtv/content/choice_dialog.xul', 'choice', 
-          'chrome,dependent,centerscreen,modal', params);
-  delegateReturnURL(cookie, params.out);
-}
-
-function showPasswordDialog(cookie,text) {
-  var params = {"in" : text, "out" : null};
-  window.openDialog('chrome://dtv/content/password.xul','password','chrome,dependent,centerscreen,modal',params);
-  delegateReturnURL(cookie, params.out);
-}
-
-function showBugReportDialog(when, report) {
-    var params = {"when" : when, "report": report};
-    window.openDialog('chrome://dtv/content/bugreport.xul','bugreport','chrome,dependent,centerscreen,modal',params);
-
-    //  var params = {"in" : when, "out" : null};
-    //  window.openDialog('chrome://dtv/content/bugreport.xul','password','chrome,dependent,centerscreen,modal',params);
 }
 
 function clipboardCopy() {
