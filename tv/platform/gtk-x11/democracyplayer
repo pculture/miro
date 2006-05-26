@@ -32,6 +32,9 @@ parser.add_option('--bias', metavar='BIAS', help='set profiling bias to BIAS', t
 
 def startapp():
     import singleclick
+    for i in xrange(len(args)):
+        if args[i].startswith('file://'):
+            args[i] = args[i][len('file://'):]
     singleclick.setCommandLineArgs(args)
     import app
     app.main()

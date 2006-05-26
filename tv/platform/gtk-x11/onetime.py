@@ -92,6 +92,9 @@ class OneTime (dbus.service.Object):
 
     @dbus.service.method('org.participatoryculture.dtv.OneTimeIface')
     def HandleArgs (self, args):
+        for i in xrange(len(args)):
+            if args[i].startswith('file://'):
+                args[i] = args[i][len('file://'):]
         eventloop.addIdle(lambda:singleclick.parseCommandLineArgs (args), "Open Files from dbus")
         app.controller.frame.widgetTree['main-window'].present()
 
