@@ -437,7 +437,7 @@ def saveDatabase(db=None, pathname=None):
             pass
         os.rename(tempPathname, pathname)
     except IOError, err:
-        return err.strerror
+        return err
     except:
         return "Unknown"
     return None
@@ -445,7 +445,10 @@ def saveDatabase(db=None, pathname=None):
 def saveDatabaseIdle (db=None, pathname=None):
     err = saveDatabase(db, pathname)
     if err:
-        print "IO Error"
+        try:
+            err = err.strerror
+        except:
+            pass
         app.controller.getBackendDelegate().saveFailed(err)
     eventloop.addTimeout(300, saveDatabaseIdle, "Database Save", args=(db, pathname))
 

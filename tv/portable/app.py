@@ -632,9 +632,25 @@ class Controller (frontend.Application):
                     print "DTV: Shutting down Downloader..."
                     downloader.shutdownDownloader(self.downloaderShutdown)
 
+            try:
+                errno = err.errno
+            except:
+                errno = 0
+            try:
+                if err.filename:
+                    err = "%s: %s" % (err.filename, err.strerror)
+                else:
+                    err = err.strerror
+            except:
+                pass
+
             title = _("%s database save failed") % (config.get(prefs.SHORT_APP_NAME), )
-            description = _("%s was unable to save its database: %s.\nRecent changes may be lost.\nQuit Anyway?") \
-                          % (config.get(prefs.LONG_APP_NAME), err)
+            ENOSPC = 28
+            if errno == ENOSPC:
+                description = _("%s was unable to save its database: %s.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost.\nQuit Anyway?") % (config.get(prefs.LONG_APP_NAME), err)
+            else:
+                description = _("%s was unable to save its database: %s.\nRecent changes may be lost.\nQuit Anyway?") \
+                              % (config.get(prefs.LONG_APP_NAME), err)
             dialog = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_QUIT, dialogs.BUTTON_CANCEL)
             dialog.run (callback)
 
