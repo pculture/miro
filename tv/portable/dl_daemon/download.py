@@ -696,7 +696,7 @@ class BTDownloader(BGDownloader):
             self.uploaded = 0
             self.torrent = None
             BGDownloader.__init__(self,url,item)
-            self.runDownloader(*args, **kwargs)
+            self.runDownloader()
 
     def _shutdownTorrent(self):
         try:
