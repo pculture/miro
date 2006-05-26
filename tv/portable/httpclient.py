@@ -379,7 +379,8 @@ class ConnectionHandler(object):
         self.host = host
         self.port = port
         def callbackIntercept(asyncSocket):
-            trapCall(callback, self)
+            if callback:
+                trapCall(callback, self)
         self.stream.openConnection(host, port, callbackIntercept, errback, listen)
 
     def closeConnection(self):
@@ -1089,8 +1090,9 @@ class HTTPClient(object):
         elif self.shouldAuthorize(response):
             self.handleAuthorize(response)
         else:
-            response = self.prepareResponse(response)
-            trapCall(self.callback, response)
+            if self.callback:
+                response = self.prepareResponse(response)
+                trapCall(self.callback, response)
 
     def errbackIntercept(self, error):
         self.requestId = None
