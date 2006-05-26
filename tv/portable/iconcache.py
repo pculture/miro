@@ -1,7 +1,7 @@
 import item
 import os
 import threading
-from download_utils import grabURLAsync
+import httpclient
 from fasttypes import LinkedList
 from eventloop import asIdle, addIdle
 import config
@@ -47,7 +47,7 @@ class IconCacheUpdater:
         else:
             self.runningCount -= 1
             return
-
+        
         addIdle (item.requestIcon, "Icon Request")
 
     @asIdle
@@ -95,24 +95,35 @@ class IconCache:
                 newname = '.'.join(parts)
         return newname
 
-    def updateIconCache (self, info, url):
+    def errorCallback(self, url, error = None):
+        # Error during download, or no url.  To reflect that,
+        # clear the cache if there was one before.
         self.dbItem.beginChange()
         try:
             try:
-                # Error during download, or no url.  To reflect that,
-                # clear the cache if there was one before.
-                if (info == None):
-                    try:
-                        if (self.filename):
-                            os.remove (self.filename)
-                    except:
-                        pass
-                    self.url = url
-                    self.filename = None
-                    self.etag = None
-                    self.modified = None
-                    return
+                if (self.filename):
+                    os.remove (self.filename)
+            except:
+                pass
+            self.url = url
+            self.filename = None
+            self.etag = None
+            self.modified = None
+        finally:
+            self.updating = False
+            if self.needsUpdate:
+                self.needsUpdate = False
+                self.requestUpdate()
+            self.dbItem.endChange()
+            iconCacheUpdater.updateFinished ()
 
+    def updateIconCache (self, url, info):
+        if info == None or (info['status'] != 304 and info['status'] != 200):
+            self.errorCallback(url)
+            return
+        self.dbItem.beginChange()
+        try:
+            try:
                 # Our cache is good.  Hooray!
                 if (info['status'] == 304):
                     self.updated = True
@@ -181,26 +192,28 @@ class IconCache:
         try:
             if (self.updating):
                 self.needsUpdate = True
+                iconCacheUpdater.updateFinished ()
                 return
             try:
                 url = self.dbItem.getThumbnailURL()
             except:
-                url = old_url
+                url = self.url
 
             # Only verify each icon once per run unless the url changes
             if (self.updated and url == self.url):
+                iconCacheUpdater.updateFinished ()
                 return
 
             self.updating = True
 
             if url is None or url.startswith("file://") or url.startswith("/"):
-                self.updateIconCache(None, url)
+                self.errorCallback(url)
                 return
 
             if (url == self.url and self.filename and os.access (self.filename, os.R_OK)):
-                grabURLAsync (self.updateIconCache, url, "Icon Cache", etag=self.etag, modified=self.modified, args=(url,))
+                httpclient.grabURL (url, lambda(info):self.updateIconCache(url, info), lambda(error):self.errorCallback(url, error), etag=self.etag, modified=self.modified)
             else:
-                grabURLAsync (self.updateIconCache, url, "Icon Cache", args=(url,))
+                httpclient.grabURL (url, lambda(info):self.updateIconCache(url, info), lambda(error):self.errorCallback(url, error))
         finally:
             self.dbItem.endRead()
 
