@@ -37,7 +37,7 @@ allDlItems.unlink()
 
 </head>
 
-<body onload="beginUpdates();">
+<body>
 
 <!-- TITLE BAR ************************************************************ -->
 <div id="main-titlebar">

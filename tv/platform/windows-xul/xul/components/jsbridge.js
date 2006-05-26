@@ -33,7 +33,7 @@ LoadFinishedListener.prototype =
     var allFlags = (Components.interfaces.nsIWebProgressListener.STATE_STOP |
         Components.interfaces.nsIWebProgressListener.STATE_IS_WINDOW);
     if((aStateFlags & allFlags) == allFlags) {
-      pybridge.pageLoadFinished(this.area);
+      pybridge.pageLoadFinished(this.area, aRequest.name);
     }
   },
   onProgressChange : function(aWebProgress, aRequest, aCurSelfProgress,
@@ -120,6 +120,39 @@ jsBridge.prototype = {
     var params = {"when" : when, "report": report};
     this.window.openDialog("chrome://dtv/content/bugreport.xul",
             "choice", "chrome,dependent,centerscreen,modal", params);
+  },
+
+  setCollapsed: function(id, value) {
+    var elt = this.document.getElementById(id);
+    elt.setAttribute("collapsed", value);
+  },
+
+  setActive: function(id, active) {
+    var elt = this.document.getElementById(id);
+    if(active) elt.className = id;
+    else elt.className = id + "-inactive";
+  },
+
+  showVideoDisplay: function() {
+    this.setCollapsed("video-box", "false");
+    this.setCollapsed("mainDisplay", "true");
+    this.setActive("bottom-buttons-previous", true);
+    this.setActive("bottom-buttons-stop", true);
+    this.setActive("bottom-buttons-play", true);
+    this.setActive("bottom-buttons-fullscreen", true);
+    this.setActive("bottom-buttons-next", true);
+    this.setActive("progress-slider", true);
+  },
+
+  hideVideoDisplay: function() {
+    this.setCollapsed("video-box", "true");
+    this.setCollapsed("mainDisplay", "false");
+    this.setActive("bottom-buttons-previous", false);
+    this.setActive("bottom-buttons-stop", false);
+    this.setActive("bottom-buttons-play", false);
+    this.setActive("bottom-buttons-fullscreen", false);
+    this.setActive("bottom-buttons-next", false);
+    this.setActive("progress-slider", false);
   },
 
   xulNavigateDisplay: function(area, uri) {

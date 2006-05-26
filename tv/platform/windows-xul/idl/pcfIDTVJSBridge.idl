@@ -20,4 +20,6 @@ interface pcfIDTVJSBridge : nsISupports
         in AString otherLabel);
   void showHTTPAuthDialog(in unsigned long id, in AString description);
   void showBugReportDialog(in AString when, in AString report);
+  void showVideoDisplay();
+  void hideVideoDisplay();
 };

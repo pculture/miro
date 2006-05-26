@@ -1,9 +1,6 @@
-import sys
-from xpcom import components, nsError, ServerException
+from xpcom import components
 import traceback
 import sys
-import os
-import time
 
 import app
 import eventloop
@@ -21,6 +18,44 @@ nsIFile = components.interfaces.nsIFile
 nsIProxyObjectManager = components.interfaces.nsIProxyObjectManager
 pcfIDTVPyBridge = components.interfaces.pcfIDTVPyBridge
 pcfIDTVJSBridge = components.interfaces.pcfIDTVJSBridge
+pcfIDTVVLCRenderer = components.interfaces.pcfIDTVVLCRenderer
+
+def makeComp(clsid, iid):
+    """Helper function to get an XPCOM component"""
+    return components.classes[clsid].createInstance(iid)
+
+def makeService(clsid, iid):
+    """Helper function to get an XPCOM service"""
+    return components.classes[clsid].getService(iid)
+
+def initializeProxyObjects(window):
+    """Creates the jsbridge and vlcrenderer xpcom components, then wraps them in
+    a proxy object, then stores them in the frontend module.  By making them
+    proxy objects, we ensure that the calls to them get made in the xul event
+    loop.
+    """
+
+    proxyManager = makeComp("@mozilla.org/xpcomproxy;1",
+            nsIProxyObjectManager)
+    eventQueueService = makeService("@mozilla.org/event-queue-service;1",
+            nsIEventQueueService)
+    xulEventQueue = eventQueueService.getSpecialEventQueue(
+            nsIEventQueueService.UI_THREAD_EVENT_QUEUE)
+
+    jsBridge = makeComp("@participatoryculture.org/dtv/jsbridge;1",
+            pcfIDTVJSBridge)
+    jsBridge.init(window)
+    frontend.jsBridge = proxyManager.getProxyForObject(xulEventQueue,
+            pcfIDTVJSBridge, jsBridge, nsIProxyObjectManager.INVOKE_ASYNC |
+            nsIProxyObjectManager.FORCE_PROXY_CREATION)
+
+    vlcRenderer = makeService("@participatoryculture.org/dtv/vlc-renderer;1",
+            pcfIDTVVLCRenderer)
+    vlcRenderer.init(window)
+    frontend.vlcRenderer = proxyManager.getProxyForObject(xulEventQueue,
+            pcfIDTVVLCRenderer, vlcRenderer, 
+            nsIProxyObjectManager.INVOKE_SYNC |
+            nsIProxyObjectManager.FORCE_PROXY_CREATION)
 
 def getArgumentList(commandLine):
     """Convert a nsICommandLine component to a list of arguments to pass
@@ -31,32 +66,6 @@ def getArgumentList(commandLine):
     if args[0].lower().endswith('application.ini'):
         args = args[1:]
     return args
-
-def makeComp(clsid, iid):
-    """Helper function to create an XPCOM component"""
-    return components.classes[clsid].createInstance(iid)
-
-def makeService(clsid, iid):
-    """Helper function to get an XPCOM service"""
-    return components.classes[clsid].getService(iid)
-
-def makeJSBridgeProxy(window):
-    """Creates our JSBridge component, then wraps it in a Proxy object.  This
-    ensures that all its methods run in the main xul event loop.
-    """
-
-    jsBridge = makeComp("@participatoryculture.org/dtv/jsbridge;1",
-            pcfIDTVJSBridge)
-    jsBridge.init(window)
-    proxyManager = makeService("@mozilla.org/xpcomproxy;1",
-            nsIProxyObjectManager)
-    eventQueueService = makeService("@mozilla.org/event-queue-service;1",
-            nsIEventQueueService)
-    xulEventQueue = eventQueueService.getSpecialEventQueue(
-            nsIEventQueueService.UI_THREAD_EVENT_QUEUE)
-    return proxyManager.getProxyForObject(xulEventQueue, pcfIDTVJSBridge,
-            jsBridge, nsIProxyObjectManager.INVOKE_ASYNC |
-            nsIProxyObjectManager.FORCE_PROXY_CREATION)
 
 # Copied from resource.py; if you change this function here, change it
 # there too.
@@ -90,7 +99,7 @@ class PyBridge:
         except:
             pass
 
-        frontend.jsBridge = makeJSBridgeProxy(window)
+        initializeProxyObjects(window)
         app.main()
 
     def handleCommandLine(self, commandLine):
@@ -100,11 +109,12 @@ class PyBridge:
         singleclick.parseCommandLineArgs(getArgumentList(commandLine))
 
     def onShutdown(self):
+        frontend.vlcRenderer.stop()
         app.controller.onShutdown()
 
-    def pageLoadFinished(self, area):
+    def pageLoadFinished(self, area, url):
         eventloop.addIdle(HTMLDisplay.runPageFinishCallback, 
-                "%s finish callback" % area, args=(area,))
+                "%s finish callback" % area, args=(area, url))
 
     @eventloop.asUrgent
     def setVolume(self, volume):
@@ -120,12 +130,10 @@ class PyBridge:
 
     @eventloop.asUrgent
     def updateCurrentChannel(self):
-        print "UPDATE CURRENT"
         app.ModelActionHandler(self.delegate).updateCurrentFeed()
 
     @eventloop.asUrgent
     def updateChannels(self):
-        print "UPDATE ALL"
         app.ModelActionHandler(self.delegate).updateAllFeeds()
 
     @eventloop.asUrgent
@@ -152,3 +160,11 @@ class PyBridge:
     @eventloop.asUrgent
     def openURL(self, url):
         self.delegate.openExternalURL(url)
+
+    @eventloop.asUrgent
+    def playPause(self):
+        app.controller.playbackController.playPause()
+
+    @eventloop.asUrgent
+    def skip(self, step):
+        app.controller.playbackController.skip(step)

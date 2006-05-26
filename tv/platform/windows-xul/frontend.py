@@ -7,8 +7,9 @@ from frontend_implementation.UIBackendDelegate import UIBackendDelegate
 from frontend_implementation.MainFrame import MainFrame
 from frontend_implementation.VideoDisplay import VideoDisplay, PlaylistItem, PlaybackController
 
-
+# these get set in components.pybridge.onStartup
 jsBridge = None
+vlcRenderer = None
 
 def quit():
     jsBridge.closeWindow()

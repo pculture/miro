@@ -26,9 +26,14 @@ quitObserver.prototype = {
   }
 }
 
-function setVideoInfoDisplayHidden(value) {
-  videoInfo = document.getElementById("videoInfoDisplay");
-  videoInfo.setAttribute("collasped", value);
+function getPageCoords (element) {
+  var coords = {x : 0, y : 0};
+  while (element) {
+    coords.x += element.offsetLeft;
+    coords.y += element.offsetTop;
+    element = element.offsetParent;
+  }
+  return coords;
 }
 
 /*****************************************************************************
@@ -73,74 +78,6 @@ function volumeKnobUp(event) {
  Video Progress Slider
  *****************************************************************************/
 
-var progressDragStart = 0;
-var progressPos = 61;
-
-var progressDragEnabled = false;
-var progressDragging = false;
-
-function twoDigits(data) {
-    if (data < 10) return "0" + data;
-    else return ""+data;
-}
-
-function videoProgressUpdate(elapsed, len) {
-    //FIXME: these are stored in two places
-    var left = 61;
-    var right = 204;
-    if (len < 1) len = 1;
-    if (elapsed < 0) elapsed = 0;
-    if (elapsed > len) elapsed = len;
-    if (progressDragStart == 0) {
-        var hours = Math.floor(elapsed/3600);
-        var mins = Math.floor((elapsed - hours*3600)/60);
-        var secs = elapsed - hours*3600 - mins*60;
-        var sliderText = document.getElementById("progress-text");
-        sliderText.childNodes[0].nodeValue = twoDigits(hours)+":"+twoDigits(mins)+":"+twoDigits(secs);
-
-        var slider = document.getElementById("progress-slider");
-        var newSliderPos = Math.floor(left + (elapsed/len)*(right-left));
-        slider.style.left = newSliderPos+"px";
-    }
-}
-
-function videoEnableControls() {
-    //jsdump('Enabling controls');
-    progressDragEnabled = true;
-    progressDragStart = 0;
-    var prevButton = document.getElementById("bottom-buttons-previous");
-    prevButton.className = "bottom-buttons-previous";
-    var stopButton = document.getElementById("bottom-buttons-stop");
-    stopButton.className = "bottom-buttons-stop";
-    var playButton = document.getElementById("bottom-buttons-play");
-    playButton.className = "bottom-buttons-pause";
-    var fullButton = document.getElementById("bottom-buttons-fullscreen");
-    fullButton.className = "bottom-buttons-fullscreen";
-    var nextButton = document.getElementById("bottom-buttons-next");
-    nextButton.className = "bottom-buttons-next";
-
-    var slider = document.getElementById("progress-slider");
-    slider.className = "progress-slider";
-}
-function videoDisableControls() {
-    //jsdump('Disabling Controls');
-    progressDragEnabled = false;
-    progressDragStart = 0;
-    videoProgressUpdate(0,1);
-    var prevButton = document.getElementById("bottom-buttons-previous");
-    prevButton.className = "bottom-buttons-previous-inactive";
-    var stopButton = document.getElementById("bottom-buttons-stop");
-    stopButton.className = "bottom-buttons-stop-inactive";
-    var playButton = document.getElementById("bottom-buttons-play");
-    playButton.className = "bottom-buttons-play";
-    var fullButton = document.getElementById("bottom-buttons-fullscreen");
-    fullButton.className = "bottom-buttons-fullscreen-inactive";
-    var nextButton = document.getElementById("bottom-buttons-next");
-    nextButton.className = "bottom-buttons-next-inactive";
-    var slider = document.getElementById("progress-slider");
-    slider.className = "progress-slider-inactive";
-}
-
 function videoEnablePauseButton() {
     var playButton = document.getElementById("bottom-buttons-play");
     playButton.className = "bottom-buttons-pause";
@@ -151,53 +88,54 @@ function videoDisablePauseButton() {
     playButton.className = "bottom-buttons-play";
 }
 
-function setVideoProgress(percent) {
-  //jsdump("Video now at "+percent);
-  eventURL(getCookieFromBrowserId('mainDisplay'),'action:setVideoProgress?pos='+percent);
+var PROGRESS_SLIDER_LEFT = 61;
+var PROGRESS_SLIDER_RIGHT = 204;
+var PROGRESS_SLIDER_WIDTH = PROGRESS_SLIDER_RIGHT - PROGRESS_SLIDER_LEFT;
+
+
+function translateToProgressX(pageX) 
+{
+  var progressSliderPageCoords = getPageCoords(
+        document.getElementById("progress"));
+  var x = pageX - progressSliderPageCoords['x'];
+  return Math.max(PROGRESS_SLIDER_LEFT, Math.min(PROGRESS_SLIDER_RIGHT, x));
+}
+
+function videoProgressDown(event) {
+  var slider = document.getElementById("progress-slider");
+  slider.beingDragged = true;
+}
+
+function videoProgressOut(event) {
+  var slider = document.getElementById("progress-slider");
+  slider.beingDragged = false;
 }
 
 function videoProgressMove(event) {
   //jsdump("Video progress move");
-  if (progressDragStart > 0) {
-    var left = 61;
-    var right= 204;
-    var slider = document.getElementById("progress-slider");
-    progressPos += event.clientX - progressDragStart;
-    if (progressPos < left) progressPos = left;
-    if (progressPos > right) progressPos = right;
-    progressDragStart = event.clientX;
-    slider.style.left = progressPos +"px";
-    setVideoProgress((progressPos - left)/(right-left));
+  var slider = document.getElementById("progress-slider");
+  if (slider.beingDragged) {
+    slider.style.left = translateToProgressX(event.pageX) + 'px';
   }
 }
-function videoProgressDown(event) {
-  //jsdump("Video progress down");
-  if (progressDragEnabled) {
-    progressDragStart = event.clientX;
-  }
-}
-function videoProgressOut(event) {
-  //jsdump("Video progress out: "+event.target.getAttribute("id")+" "+event.currentTarget.getAttribute("id"));
-  /* Ignore a move from the knob to the slider or vice-versa */
-  if (!((event.target.getAttribute("id") == "progress-slider" &&
-        event.currentTarget.getAttribute("id") == "progress") ||
-        (event.target.getAttribute("id") == "progress" &&
-         event.currentTarget.getAttribute("id") == "progress") ||
-        (event.target.getAttribute("id") == "progress-text" &&
-         event.currentTarget.getAttribute("id") == "progress")))
-  {
-    progressDragStart = 0;
-  }
-  event.stopPropagation();
-}
+
 function videoProgressUp(event) {
-  //jsdump("Video progress up");
-  progressDragStart = 0;
+  var slider = document.getElementById("progress-slider");
+  if (slider.beingDragged) {
+    var x = translateToProgressX(event.pageX);
+    var fractionDone = (x - PROGRESS_SLIDER_LEFT) / PROGRESS_SLIDER_WIDTH;
+    var totalTime = vlc.get_length();
+    var seekTime = Math.round(totalTime * fractionDone);
+    vlc.seek(seekTime, 0);
+    slider.beingDragged = false;
+  }
 }
 
 /*****************************************************************************
  Main functions
  *****************************************************************************/
+
+var vlc = null;
 
 function onLoad() {
     jsdump("onLoad running.");
@@ -209,28 +147,56 @@ function onLoad() {
     // Bring up Python environment.
     pybridge.onStartup(window, document);
 
-    // Set up listeners for the volume knobby
+    // Get a reference te tho vlc plugin
+    var videoBrowser = document.getElementById("mainDisplayVideo");
+    vlc = videoBrowser.contentDocument.getElementById("video1");
+
+    setupHandlers();
+    jsdump("onload done");
+}
+
+function setupHandlers() {
     var knob = document.getElementById("volume");
     knob.onmousemove = volumeKnobMove;
     knob.onmousedown = volumeKnobDown;
     knob.onmouseout = volumeKnobOut;
+    knob.onmouseup = volumeKnobUp;
 
     // Set up listeners for the progress slider
     var progress = document.getElementById("progress");
-    progress.onmousemove = videoProgressMove;
     progress.onmousedown = videoProgressDown;
-    progress.onmouseout = videoProgressOut;
+    //progress.onmouseout = videoProgressOut;
+    // the mousout event is really messed up, so the callback is disabled for
+    // now.  Things get weird if you start a drag, then move out of the
+    // progress area, but it's less weird enabling the mousout callback.
+    progress.onmousemove = videoProgressMove;
+    progress.onmouseup = videoProgressUp;
 
-    window.onmouseup = windowMouseUp;
+    document.getElementById("bottom-buttons-previous").onclick = function() {
+        pybridge.skip(-1);
+    };
+    document.getElementById("bottom-buttons-play").onclick = function() {
+        pybridge.playPause();
+    };
+    document.getElementById("bottom-buttons-stop").onclick = function() {
+        pybridge.playPause();
+    };
+    document.getElementById("bottom-buttons-next").onclick = function() {
+        pybridge.skip(1);
+    };
+    document.getElementById("bottom-buttons-fullscreen").onclick = function() {
+        vlc.fullscreen();
+    };
 }
 
-function windowMouseUp(event) {
-  volumeKnobUp(event);
-  videoProgressUp(event);
+function onClose()
+{
+   vlc.stop();
 }
 
 function onUnload() {
     jsdump("onUnload running.");
+    vlc.stop();
     // Make sure the app exits (even if there is still another window
     // open such as the Javascript console, for example)
     closeApp();
@@ -284,25 +250,6 @@ function getContextClickMenu(element) {
     // ultimately preventing us from getting the state change event
     // indicating that the load succeeded.
     return "";
-}
-
-function getCookieFromElement(element) {
-  while (element != null) {
-    if (element.tagName == "HTML")
-      return element.getAttribute('eventCookie');
-    else {
-      element = element.parentNode;
-    }
-  }
-  return "";
-}
-
-function getCookieFromBrowserId(elementId) {
-  try {
-    return document.getElementById(elementId).contentWindow.document.getElementsByTagName('html')[0].getAttribute('eventCookie');
-  } catch(e) {
-  return "";
-  }
 }
 
 function xulcontexthandler(event) {
@@ -359,76 +306,6 @@ function clipboardPaste() {
   clip = Components.classes["@mozilla.org/webshell;1"].getService();
   clip.QueryInterface(Components.interfaces.nsIClipboardCommands);
   clip.paste()
-}
-
-var dtvFFMode = false;
-var dtvWillFF = false;
-var dtvLastTimeout = 0;
-
-function startFastForward() {
-    dump("\n\nFF\n\n");
-    if (dtvWillFF) {
-    dump("\n\nin FF\n\n");
-      dtvFFMode = true;
-      eventURL(getCookieFromBrowserId('mainDisplay'),'action:setRate?rate=3.0');
-    }
-}
-
-function fastForwardMouseDown() {
-  dump("\n\nMouse Down\n\n");
-  dtvFFMode = false;
-  dtvWillFF = true;
-  eventURL(getCookieFromBrowserId('mainDisplay'),'action:setRate?rate=1.0');
-  dtvLastTimeout = setTimeout(startFastForward,500);
-}
-
-function fastForwardMouseUp() {
-    dump("\n\nMouse Up\n\n");
-    clearTimeout(dtvLastTimeout);
-    dtvWillFF = false;
-    if (!dtvFFMode) {
-      dump("\n\nNext\n\n");
-      eventURL(getCookieFromBrowserId('mainDisplay'),'action:videoNext');
-    }
-    eventURL(getCookieFromBrowserId('mainDisplay'),'action:setRate?rate=1.0');
-    dtvFFMode = false;
-}
-
-function startRewind() {
-    dump("\n\nFF\n\n");
-    if (dtvWillFF) {
-    dump("\n\nin FF\n\n");
-      dtvFFMode = true;
-      eventURL(getCookieFromBrowserId('mainDisplay'),'action:setRate?rate=-3.0');
-    }
-}
-
-function rewindMouseDown() {
-  dump("\n\nMouse Down\n\n");
-  dtvFFMode = false;
-  dtvWillFF = true;
-  eventURL(getCookieFromBrowserId('mainDisplay'),'action:setRate?rate=1.0');
-  dtvLastTimeout = setTimeout(startRewind,500);
-}
-
-function rewindMouseUp() {
-    dump("\n\nMouse Up\n\n");
-    clearTimeout(dtvLastTimeout);
-    dtvWillFF = false;
-    if (!dtvFFMode) {
-      dump("\n\nNext\n\n");
-      eventURL(getCookieFromBrowserId('mainDisplay'),'action:videoPrev');
-    }
-    eventURL(getCookieFromBrowserId('mainDisplay'),'action:setRate?rate=1.0');
-    dtvFFMode = false;
-}
-
-function rewindFFMouseOut() {
-    dump("\n\nMouse Out\n\n");
-    clearTimeout(dtvLastTimeout);
-    dtvWillFF = false;
-    eventURL(getCookieFromBrowserId('mainDisplay'),'action:setRate?rate=1.0');
-    dtvFFMode = false;
 }
 
 function openFile() {

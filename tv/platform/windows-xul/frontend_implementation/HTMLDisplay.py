@@ -19,13 +19,13 @@ def getDTVAPIURL():
     return None
 
 pageFinishCallbacks = {}
-def runPageFinishCallback(area):
+def runPageFinishCallback(area, url):
     try:
         callback = pageFinishCallbacks[area]
     except KeyError:
         return
     else:
-        callback()
+        callback(url)
 
 def deferUntilLoad(function):
     def wrapper(self, *args):
@@ -55,20 +55,31 @@ class HTMLDisplay (app.Display):
         finally:
             handle.close()
         self.location = os.path.abspath(location)
-        url = "file:///%s" % self.location.replace("\\", "/")
-        urlcallbacks.installCallback(url, self.onURLLoad)
-        frontend.jsBridge.xulNavigateDisplay(self.area, url)
+        self.url = "file:///%s" % self.location.replace("\\", "/")
+        urlcallbacks.installCallback(self.url, self.onURLLoad)
+        frontend.jsBridge.xulNavigateDisplay(self.area, self.url)
 
-    def pageFinishCallback(self):
-        self.pageLoadFinised = True
-        for function, args in self.deferedCalls:
-            function(self, *args)
+    def pageFinishCallback(self, url):
+        # make sure that the page that finished was our page, if we install
+        # enough HTMLDisplays in a short time, then the last HTMLDisplay can
+        # get callbacks for the earlier loads.
+        if url == self.url:
+            self.pageLoadFinised = True
+            for function, args in self.deferedCalls:
+                function(self, *args)
 
     def setArea(self, area):
         self.area = area
         self.pageLoadFinised = False
         pageFinishCallbacks[self.area] = self.pageFinishCallback
         self.setInitialHTML()
+
+    def removedFromArea(self):
+        try:
+            del pageFinishCallbacks[self.area]
+        except KeyError:
+            pass
+        self.area = None
 
     @deferUntilLoad
     def addItemAtEnd(self, xml, id):
@@ -95,11 +106,7 @@ class HTMLDisplay (app.Display):
         frontend.jsBridge.xulShowElement(self.area, id)
 
     def onDeselected(self, frame):
-        self.area = None
-        try:
-            del pageFinishCallbacks[self.area]
-        except KeyError:
-            pass
+        pass
 
     def getEventCookie(self):
         return ''

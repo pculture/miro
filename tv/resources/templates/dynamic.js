@@ -2,26 +2,8 @@
 <!-- // Protect from our XML parser, which doesn't know to protect <script>
 
 ///////////////////////////////////////////////////////////////////////////////
-//// Machinery related to dynamic updates in full XUL mode                 ////
-///////////////////////////////////////////////////////////////////////////////
-
-function handleUpdate(event) {
-    r = event.target;
-    eval(r.responseText);
-}
-
-function beginUpdates() {
-}
-     
-///////////////////////////////////////////////////////////////////////////////
 //// For use on your page                                                  ////
 ///////////////////////////////////////////////////////////////////////////////
-
-function jsdump(str) {
-    Components.classes['@mozilla.org/consoleservice;1']
-	.getService(Components.interfaces.nsIConsoleService)	
-	.logStringMessage(str);
-}
 
 function getDTVPlatform() {
     var elt = document.getElementsByTagName("html")[0];

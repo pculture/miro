@@ -46,7 +46,7 @@ matchingItems.unlink()
 
 </head>
 
-<body onload="toggleLayer('main-newlyavailable'); toggleLayer('main-unwatched'); toggleLayer('main-expiring'); toggleLayer('main-saved'); toggleLayer('show-more-videos-label');toggleLayer('no-new-videos-label'); beginUpdates();">
+<body onload="toggleLayer('main-newlyavailable'); toggleLayer('main-unwatched'); toggleLayer('main-expiring'); toggleLayer('main-saved'); toggleLayer('show-more-videos-label');toggleLayer('no-new-videos-label');">
     
 <!-- TITLE BAR ************************************************************ -->
 <div id="main-titlebar">

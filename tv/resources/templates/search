@@ -24,7 +24,7 @@ searchItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
 
     </head>
 
-    <body onload="beginUpdates();">
+    <body>
         <div id="main-titlebar">
         	<div id="main-titlebar-avatar" style="border:0px;"><img src="resource:images/search-icon.png" /></div>
         	<div id="main-titlebar-channelname">

@@ -21,7 +21,7 @@ tabs = views.allTabs.sort(sorts.tabs)
     </t:execOnLoad>
 
 </head>
-<body onload="beginUpdates();"> 
+<body>
 
 <div id="sidebar">
   <div id="channels">

@@ -43,7 +43,7 @@ allExpiringItems.unlink()
 
 </head>
 
-<body onload="toggleLayer('main-unwatched'); toggleLayer('main-expiring'); beginUpdates();">
+<body onload="toggleLayer('main-unwatched'); toggleLayer('main-expiring');">
 
 <!-- TITLE BAR ************************************************************ -->
 <div id="main-titlebar">

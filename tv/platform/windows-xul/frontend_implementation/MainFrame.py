@@ -29,6 +29,7 @@ class MainFrame:
             if oldDisplay:
                 oldDisplay.onDeselected_private(self)
                 oldDisplay.onDeselected(self)
+                oldDisplay.removedFromArea()
 
 	# Generate a selection message for the new display, if any
         self.selectedDisplays[area] = newDisplay
@@ -36,14 +37,11 @@ class MainFrame:
 	    newDisplay.onSelected_private(self)
 	    newDisplay.onSelected(self)
             newDisplay.setArea(area)
-        return
-        # NEEDS: case out instances for HTMLDisplay and VideoDisplay
-        self.selectHTML(newDisplay, area)
         if area == self.mainDisplay:
             if isinstance(newDisplay, VideoDisplay):
-                frontend.execChromeJS("setVideoInfoDisplayHidden('false')")
+                frontend.jsBridge.showVideoDisplay()
             else:
-                frontend.execChromeJS("setVideoInfoDisplayHidden('true')")
+                frontend.jsBridge.hideVideoDisplay()
 
     def getDisplay(self, area):
         return self.selectedDisplays[area]

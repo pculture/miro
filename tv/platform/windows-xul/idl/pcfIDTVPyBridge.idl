@@ -13,7 +13,7 @@ interface pcfIDTVPyBridge : nsISupports
   void onShutdown();
   void handleCommandLine(in nsICommandLine commandLine);
   void handleSecondCommandLine(in nsICommandLine commandLine);
-  void pageLoadFinished(in string area);
+  void pageLoadFinished(in string area, in AString url);
   void setVolume(in float volume);
   void quit();
   void removeCurrentChannel();
@@ -28,4 +28,6 @@ interface pcfIDTVPyBridge : nsISupports
           in unsigned short buttonIndex, in string username, 
           in string password);
   void openURL(in AString url);
+  void skip(in short step);
+  void playPause();
 };

@@ -10,7 +10,9 @@
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         xmlns:html="http://www.w3.org/1999/xhtml"
         hidechrome="true"
-        onload="onLoad();" onunload="onUnload();"
+        onload="onLoad();" 
+        onunload="onUnload();"
+        onclose="onClose();"
         orient="vertical"
         sizemode="normal"
         width="800" height="600"
@@ -127,17 +129,17 @@
   <!-- DIVIDER -->
 	<splitter collapse="before" width="10"/>
 	<!-- / DIVIDER -->
-	
-        <vbox flex="1">
-            <!-- MAIN WINDOW -->
-            <browser id="mainDisplay" src="" type="content" flex="1"
-                     context="contextPopup"
-                     oncontextmenu="return xulcontexthandler(event);" />
-            <!-- / MAIN WINDOW -->
-            <!-- VIDEO INFO BISPLAY -->
+
+        <browser id="mainDisplay" src="" type="content" flex="1"
+             context="contextPopup"
+             oncontextmenu="return xulcontexthandler(event);" />
+        <vbox id="video-box" flex="1" collapsed="true">
+            <browser id="mainDisplayVideo" 
+                src="chrome://dtv/content/video-display-vlc.html" 
+                type="content" flex="1" context="contextPopup"
+                oncontextmenu="return xulcontexthandler(event);" />
             <browser id="videoInfoDisplay" src="" type="content"
-                    collapsed="true" height="40px"/>
-             <!-- / VIDEO INFO BISPLAY -->
+                    height="40px"/>
         </vbox>
                 
 	
@@ -178,11 +180,11 @@
 		<!-- CONTROLS -->
 		<hbox flex="0" width="180">
 			<html:ul id="bottom-buttons">
-				<html:li id="bottom-buttons-previous" class="bottom-buttons-previous-inactive"><html:a  onmousedown="rewindMouseDown();" onmouseup="rewindMouseUp();" onmouseout="rewindFFMouseOut();">Previous</html:a></html:li>
-				<html:li id="bottom-buttons-stop" class="bottom-buttons-stop-inactive"><html:a onclick="eventURL(getCookieFromBrowserId('mainDisplay'),'action:videoStop');">Stop</html:a></html:li>
-				<html:li id="bottom-buttons-play" class="bottom-buttons-play"><html:a onclick="eventURL(getCookieFromBrowserId('mainDisplay'),'action:videoPlayPause');">Play</html:a></html:li>
-				<html:li id="bottom-buttons-fullscreen" class="bottom-buttons-fullscreen-inactive"><html:a onclick="eventURL(getCookieFromBrowserId('mainDisplay'),'action:videoFullscreen');">Fullscreen</html:a></html:li>
-				<html:li id="bottom-buttons-next" class="bottom-buttons-next-inactive"><html:a onmousedown="fastForwardMouseDown();" onmouseup="fastForwardMouseUp();" onmouseout="rewindFFMouseOut();">Next</html:a></html:li>
+				<html:li id="bottom-buttons-previous" class="bottom-buttons-previous-inactive"><html:a >Previous</html:a></html:li>
+				<html:li id="bottom-buttons-stop" class="bottom-buttons-stop-inactive"><html:a>Stop</html:a></html:li>
+				<html:li id="bottom-buttons-play" class="bottom-buttons-play"><html:a>Play</html:a></html:li>
+                                <html:li id="bottom-buttons-fullscreen" class="bottom-buttons-fullscreen-inactive"><html:a>Fullscreen</html:a></html:li>
+				<html:li id="bottom-buttons-next" class="bottom-buttons-next-inactive"><html:a>Next</html:a></html:li>
 			</html:ul>
 		</hbox>
 		<!-- / CONTROLS -->

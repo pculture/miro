@@ -1,0 +1,19 @@
+#include "nsISupports.idl"
+
+interface nsIDOMWindow;
+
+[scriptable, uuid(506247A1-775B-4377-9687-ADD4FEED198A)]
+interface pcfIDTVVLCRenderer : nsISupports
+{
+    void init(in nsIDOMWindow window);
+    void reset();
+    boolean canPlayURL(in string url);
+    void selectURL(in string url);
+    void play();
+    void pause();
+    void stop();
+    void goToBeginningOfMovie();
+    float getCurrentTime();
+    void setVolume(in float volume);
+    void goFullscreen();
+};
