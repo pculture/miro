@@ -156,9 +156,13 @@ class EventLoop(object):
         self.wakeSender, self.wakeReceiver = util.makeDummySocketPair()
         self.addReadCallback(self.wakeReceiver, self._slurpWakerData)
         self.quitFlag = False
+        self.delegate = None
 
     def _slurpWakerData(self):
         self.wakeReceiver.recv(1024)
+
+    def setDelegate(self, delegate):
+        self.delegate = delegate
 
     def addReadCallback(self, socket, callback):
         self.readCallbacks[socket.fileno()] = callback
@@ -178,9 +182,18 @@ class EventLoop(object):
     def callInThread(self, callback, errback, function, *args, **kwargs):
         self.threadPool.queueCall(callback, errback, function, *args, **kwargs)
 
+    def _beginLoop(self):
+        if self.delegate is not None and hasattr(self.delegate, "beginLoop"):
+            self.delegate.beginLoop(self)
+
+    def _endLoop(self):
+        if self.delegate is not None and hasattr(self.delegate, "endLoop"):
+            self.delegate.endLoop(self)
+
     def loop(self):
         database.set_thread()
         while not self.quitFlag:
+            self._beginLoop()
             timeout = self.scheduler.nextTimeout()
             readfds = self.readCallbacks.keys()
             writefds = self.writeCallbacks.keys()
@@ -202,6 +215,7 @@ class EventLoop(object):
                 self.urgentQueue.processIdles()
                 if self.quitFlag:
                     break
+            self._endLoop()
 
     def generateEvents(self, readables, writeables):
         """Generator that creates the list of events that should be dealt with
@@ -237,6 +251,9 @@ class EventLoop(object):
                 yield callbackEvent
 
 _eventLoop = EventLoop()
+
+def setDelegate(delegate):
+    _eventLoop.setDelegate(delegate)
 
 def addReadCallback(socket, callback):
     """Add a read callback.  When socket is ready for reading, callback will
