@@ -2,6 +2,7 @@ import threading
 import Foundation
 
 import config
+import prefs
 
 ###############################################################################
 #### THREADING UTILITIES                                                   ####
@@ -130,7 +131,7 @@ class CallerObject (Foundation.NSObject):
 def getAvailableGBytesForMovies():
     pool = Foundation.NSAutoreleasePool.alloc().init()
     fm = Foundation.NSFileManager.defaultManager()
-    info = fm.fileSystemAttributesAtPath_(config.get(config.MOVIES_DIRECTORY))
+    info = fm.fileSystemAttributesAtPath_(config.get(prefs.MOVIES_DIRECTORY))
     bytesFree = info[Foundation.NSFileSystemFreeSize]
     del pool
     return bytesFree / float(1024 * 1024 * 1024)
