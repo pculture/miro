@@ -17,8 +17,10 @@ import config
 import resource
 import template
 import database
+import eventloop
 import autoupdate
 import singleclick
+import platformutils
 
 import re
 import os
@@ -95,9 +97,10 @@ def showDialog(summary, message, buttons, style):
         for title in buttons:
             alert.addButtonWithTitle_(title)
     result = alert.runModal()
+    result -= NSAlertFirstButtonReturn
     del alert
     del pool
-    return (result == NSAlertFirstButtonReturn)
+    return result
 
 
 ###############################################################################
@@ -119,6 +122,7 @@ class Application:
         NSThread.detachNewThreadSelector_toTarget_withObject_("noop", controller, controller)
 
     def Run(self):
+        eventloop.setDelegate(self)
         AppHelper.runEventLoop()
 
     def getBackendDelegate(self):
@@ -139,6 +143,14 @@ class Application:
     def addAndSelectFeed(self, url):
         # For overriding
         pass
+
+    ### eventloop (the Democracy one, not the Cocoa one) delegate methods
+
+    def beginLoop(self, loop):
+        loop.pool = NSAutoreleasePool.alloc().init()
+
+    def endLoop(self, loop):
+        del loop.pool
 
 class AppController (NibClassBuilder.AutoBaseClass):
 
@@ -194,7 +206,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         self.actualApp.onShutdown()
 
     def application_openFiles_(self, app, filenames):
-        AppHelper.callAfter(self.openFiles, filenames)
+        platformutils.callOnMainThreadAndWaitUntilDone(self.openFiles, filenames)
         app.replyToOpenOrPrint_(NSApplicationDelegateReplySuccess)
 
     def addTorrent(self, path):
@@ -247,9 +259,8 @@ class AppController (NibClassBuilder.AutoBaseClass):
             summary = u'Unsupported version of Quicktime'
             message = u'To run %s you need the most recent version of Quicktime, which is a free update.' % (config.get(prefs.LONG_APP_NAME), )
             buttons = ('Quit', 'Download Quicktime now')
-            quit = showCriticalDialog(summary, message, buttons)
-
-            if quit:
+            result = showCriticalDialog(summary, message, buttons)
+            if result == 0:
                 NSApplication.sharedApplication().terminate_(nil)
             else:
                 url = NSURL.URLWithString_('http://www.apple.com/quicktime/download')
@@ -366,10 +377,8 @@ class DisplayHostView (NibClassBuilder.AutoBaseClass):
         if self.scheduledDisplay is not None:
             self.scheduledDisplay.cancel()
         self.scheduledDisplay = display
-        
+    
     def setDisplay(self, display, owner):
-        pool = NSAutoreleasePool.alloc().init()
-
         self.scheduledDisplay = None
 
         # Send notification to old display if any
@@ -411,8 +420,6 @@ class DisplayHostView (NibClassBuilder.AutoBaseClass):
         # Send notification to new display
         display.onSelected_private(owner)
         display.onSelected(owner)
-        
-        del pool
 
 
 class MainController (NibClassBuilder.AutoBaseClass):
@@ -515,6 +522,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
             # back when it's ready to display without flickering.
             display.callWhenReadyToDisplay(lambda: self.doSelectDisplay(display, area))
 
+    @platformutils.onMainThread
     def doSelectDisplay(self, display, area):
         if area is not None:
             area.setDisplay(display, self.frame)
@@ -612,7 +620,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         feedID = app.controller.currentSelectedTab.feedID()
         if feedID is not None:
             backEndDelegate = self.appl.getBackendDelegate()
-            app.ModelActionHandler(backEndDelegate).removeFeed(feedID)
+            eventloop.addUrgentCall(lambda:app.ModelActionHandler(backEndDelegate).removeFeed(feedID), "Remove channel")
 
     def copyChannelLink_(self, sender):
         NSPasteboard.generalPasteboard().declareTypes_owner_([NSURLPboardType], self)
@@ -621,11 +629,11 @@ class MainController (NibClassBuilder.AutoBaseClass):
         feedID = app.controller.currentSelectedTab.feedID()
         if feedID is not None:
             backEndDelegate = self.appl.getBackendDelegate()
-            app.ModelActionHandler(backEndDelegate).updateFeed(feedID)
+            eventloop.addUrgentCall(lambda:app.ModelActionHandler(backEndDelegate).updateFeed(feedID), "Update channel")
 
     def updateAllChannels_(self, sender):
         backEndDelegate = self.appl.getBackendDelegate()
-        app.ModelActionHandler(backEndDelegate).updateAllFeeds()
+        eventloop.addUrgentCall(lambda:app.ModelActionHandler(backEndDelegate).updateAllFeeds(), "Update all channels")
 
     def renameChannel_(self, sender):
         print "NOT IMPLEMENTED"
@@ -895,7 +903,8 @@ class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
                 summary = u'Migrate existing movies?'
                 message = u'You\'ve selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish).'
                 buttons = (u'Yes', u'No')
-                migrate = showWarningDialog(summary, message, buttons)
+                result = showWarningDialog(summary, message, buttons)
+                migrate = (result == 0)
                 app.changeMoviesDirectory(newMoviesDirectory, migrate)
                 
 
@@ -935,6 +944,11 @@ class UIBackendDelegate:
     # and prevent multiple authentication dialogs to pop up at once.
     httpAuthLock = threading.Lock()
 
+    def runDialog(self, dialog):
+        buttons = map(lambda x:x.text, dialog.buttons)
+        result = showWarningDialog(dialog.title, dialog.description, buttons)
+        dialog.runCallback(dialog.buttons[result])
+
     def getHTTPAuth(self, url, domain, prefillUser = None, prefillPassword = None):
         """Ask the user for HTTP login information for a location, identified
         to the user by its URL and the domain string provided by the
@@ -960,7 +974,8 @@ class UIBackendDelegate:
             (config.get(prefs.SHORT_APP_NAME), )
         message = u"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.\n\nPlease contact the publishers of %s and ask if they can supply a feed in a format that will work with %s." % (url, config.get(prefs.SHORT_APP_NAME), )
         buttons = (u'Continue',)
-        return showWarningDialog(summary, message, buttons)
+        showWarningDialog(summary, message, buttons)
+        return True
 
     def updateAvailable(self, url):
         """Tell the user that an update is available and ask them if they'd
@@ -968,8 +983,8 @@ class UIBackendDelegate:
         summary = "%s Version Alert" % (config.get(prefs.SHORT_APP_NAME), )
         message = "A new version of %s is available. Would you like to download it now?" % (config.get(prefs.LONG_APP_NAME), )
         buttons = (u'Download', u'Cancel')
-        download = showInformationalDialog(summary, message, buttons)
-        if download:
+        result = showInformationalDialog(summary, message, buttons)
+        if result == 0:
             self.openExternalURL(url)
 
     def dtvIsUpToDate(self):
@@ -982,13 +997,15 @@ class UIBackendDelegate:
             (config.get(prefs.SHORT_APP_NAME), )
         message = u"%s was unable to save its database.\nRecent changes may be lost\n\n%s" % (config.get(prefs.LONG_APP_NAME), reason)
         buttons = (u'Continue',)
-        return showCriticalDialog(summary, message, buttons)
+        showCriticalDialog(summary, message, buttons)
+        return True
 
     def validateFeedRemoval(self, feedTitle):
         summary = u'Remove Channel'
         message = u'Are you sure you want to remove the channel \'%s\'? This operation cannot be undone.' % feedTitle
         buttons = (u'Remove', u'Cancel')
-        return showCriticalDialog(summary, message, buttons)
+        result = showCriticalDialog(summary, message, buttons)
+        return (result == 0)
 
     def openExternalURL(self, url):
         # We could use Python's webbrowser.open() here, but
@@ -1038,7 +1055,8 @@ class UIBackendDelegate:
         summary = u'Are you sure you want to quit?'
         message = u'You have %d download%s still in progress.' % (downloadsCount, downloadsCount > 1 and 's' or '')
         buttons = (u'Quit', u'Cancel')
-        return showWarningDialog(summary, message, buttons)
+        result = showWarningDialog(summary, message, buttons)
+        return (result == 0)
         
     def notifyUnkownErrorOccurence(self, when, log = ''):
         controller = ExceptionReporterController.alloc().initWithMoment_log_(when, log)
@@ -1375,6 +1393,7 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         self.updateTimer = nil
         self.wasPlaying = False
 
+    @platformutils.onMainThread
     def setup(self, renderer):
         if self.renderer != renderer:
             self.renderer = renderer
@@ -1580,7 +1599,7 @@ class HTMLDisplay (app.Display):
     
     def cancel(self):
         print "DTV: Canceling load of WebView %s" % self.web.getView()
-        self.web.getView().stopLoading_(nil)
+        platformutils.callOnMainThread(self.web.getView().stopLoading_, nil)
         self.readyToDisplay = False
         self.readyToDisplayHook = None
                         
@@ -1596,6 +1615,10 @@ class ManagedWebView (NSObject):
         self.onLoadURL = onLoadURL
         self.initialLoadFinished = False
         self.view = existingView
+        platformutils.callOnMainThreadAndWaitUntilDone(self.initWebView, initialHTML, sizeHint, baseURL)        
+        return self
+
+    def initWebView(self, initialHTML, sizeHint, baseURL):
         if not self.view:
             self.view = WebView.alloc().init()
             #print "***** Creating new WebView %s" % self.view
@@ -1625,9 +1648,7 @@ class ManagedWebView (NSObject):
         if baseURL is not None:
             baseURL = NSURL.URLWithString_(baseURL)
 
-        AppHelper.callAfter(self.view.mainFrame().loadData_MIMEType_textEncodingName_baseURL_, data, 'text/html', 'utf-8', baseURL)        
-        
-        return self
+        self.view.mainFrame().loadData_MIMEType_textEncodingName_baseURL_(data, 'text/html', 'utf-8', baseURL)        
 
     def isKeyExcludedFromWebScript_(self,key):
         return YES
@@ -1644,6 +1665,7 @@ class ManagedWebView (NSObject):
     ##
     # Create CTRL-click menu on the fly
     def webView_contextMenuItemsForElement_defaultMenuItems_(self,webView,contextMenu,defaultMenuItems):
+        platformutils.warnIfNotOnMainThread("webView_contextMenuItemsForElement_defaultMenuItems_")
         menuItems = []
         if self.initialLoadFinished:
             exists = webView.windowScriptObject().evaluateWebScript_("typeof(getContextClickMenu)") == "function"
@@ -1667,26 +1689,6 @@ class ManagedWebView (NSObject):
                             menuItems.append(menuItem)
         return menuItems
 
-    ##
-    # Process a click on an item in a context menu
-    def processContextClick_(self,item):
-        self.execJS("document.location.href = \""+item.representedObject()+"\";")
-
-    # Return the actual WebView that we're managing
-    def getView(self):
-        return self.view
-
-    # Call func() once the document has finished loading. If the
-    # document has already finished loading, call it right away. But
-    # in either case, the call is executed on the main thread, by
-    # queueing an event, since WebViews are not documented to be
-    # thread-safe, and we have seen crashes.
-    def execAfterLoad(self, func):
-        if not self.initialLoadFinished:
-            self.execQueue.append(func)
-        else:
-            AppHelper.callAfter(func)
-
     # Generate callbacks when the initial HTML (passed in the constructor)
     # has been loaded
     def webView_didFinishLoadForFrame_(self, webview, frame):
@@ -1697,7 +1699,7 @@ class ManagedWebView (NSObject):
             # from dropping something in the queue just after we have finished
             # processing it
             for func in self.execQueue:
-                AppHelper.callAfter(func)
+                platformutils.callOnMainThreadAndWaitUntilDone(func)
             self.execQueue = []
             self.initialLoadFinished = True
 
@@ -1706,20 +1708,6 @@ class ManagedWebView (NSObject):
 
             scriptObj = self.view.windowScriptObject()
             scriptObj.setValue_forKey_(self,'frontend')
-
-    # Decorator to make using execAfterLoad easier
-    def deferUntilAfterLoad(func):
-        def runFunc(*args, **kwargs):
-            func(*args, **kwargs)
-        def schedFunc(self, *args, **kwargs):
-            rf = lambda: runFunc(self, *args, **kwargs)
-            self.execAfterLoad(rf)
-        return schedFunc
-
-    # Execute given Javascript string in context of the HTML document
-    @deferUntilAfterLoad
-    def execJS(self, js):
-        self.view.stringByEvaluatingJavaScriptFromString_(js)
 
     # Intercept navigation actions and give program a chance to respond
     def webView_decidePolicyForNavigationAction_request_frame_decisionListener_(self, webview, action, request, frame, listener):
@@ -1750,6 +1738,40 @@ class ManagedWebView (NSObject):
             urlObject = NSURL.fileURLWithPath_(path)
             return NSURLRequest.requestWithURL_(urlObject)
         return request
+
+    ##
+    # Process a click on an item in a context menu
+    def processContextClick_(self,item):
+        self.execJS("document.location.href = \""+item.representedObject()+"\";")
+
+    # Return the actual WebView that we're managing
+    def getView(self):
+        return self.view
+
+    # Call func() once the document has finished loading. If the
+    # document has already finished loading, call it right away. But
+    # in either case, the call is executed on the main thread, by
+    # queueing an event, since WebViews are not documented to be
+    # thread-safe, and we have seen crashes.
+    def execAfterLoad(self, func):
+        if not self.initialLoadFinished:
+            self.execQueue.append(func)
+        else:
+            platformutils.callOnMainThread(func)
+
+    # Decorator to make using execAfterLoad easier
+    def deferUntilAfterLoad(func):
+        def runFunc(*args, **kwargs):
+            func(*args, **kwargs)
+        def schedFunc(self, *args, **kwargs):
+            rf = lambda: runFunc(self, *args, **kwargs)
+            self.execAfterLoad(rf)
+        return schedFunc
+
+    # Execute given Javascript string in context of the HTML document
+    @deferUntilAfterLoad
+    def execJS(self, js):
+        self.view.stringByEvaluatingJavaScriptFromString_(js)
 
     ## DOM mutators called, ultimately, by dynamic template system ##
 
@@ -2023,8 +2045,8 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.updatePlayPauseButton('play')
 
     def stop_(self, sender):
-        app.controller.playbackController.stop()
-        
+        eventloop.addUrgentCall(lambda:app.controller.playbackController.stop(), "Stop Video")
+    
     def stop(self):
         nc.postNotificationName_object_('videoWillStop', nil)
         self.updatePlayPauseButton('play')
@@ -2044,19 +2066,19 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.videoAreaView.exitFullScreen()
 
     def forward_(self, sender):
-        self.performSeek(sender, 1)
+        eventloop.addUrgentCall(lambda:self.performSeek(sender, 1), "Forward")
         
     def skipForward_(self, sender):
-        app.controller.playbackController.skip(1)
+        eventloop.addUrgentCall(lambda:app.controller.playbackController.skip(1), "Skip Forward")
 
     def fastForward_(self, sender):
         self.performSeek(sender, 1, 0.0)
 
     def backward_(self, sender):
-        self.performSeek(sender, -1)
+        eventloop.addUrgentCall(lambda:self.performSeek(sender, -1), "Backward")
 
     def skipBackward_(self, sender):
-        app.controller.playbackController.skip(-1)
+        eventloop.addUrgentCall(lambda:app.controller.playbackController.skip(-1), "Skip Backward")
 
     def fastBackward_(self, sender):
         self.performSeek(sender, -1, 0.0)
@@ -2064,10 +2086,8 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     def performSeek(self, sender, direction, seekDelay=0.5):
         if sender.state() == NSOnState:
             sender.sendActionOn_(NSLeftMouseUpMask)
-            info = {'seekDirection': direction}
             if seekDelay > 0.0:
-                self.fastSeekTimer = NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_(seekDelay, self, 'fastSeek:', info, NO)
-                NSRunLoop.currentRunLoop().addTimer_forMode_(self.fastSeekTimer, NSEventTrackingRunLoopMode)
+                self.scheduleFastSeek(seekDelay, direction)
             else:
                 self.fastSeekTimer = nil
                 self.fastSeek(direction)
@@ -2084,6 +2104,12 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
                 self.fastSeekTimer.invalidate()
                 self.fastSeekTimer = nil
                 app.controller.playbackController.skip(direction)
+
+    @platformutils.onMainThread
+    def scheduleFastSeek(self, delay, direction):
+        info = {'seekDirection': direction}
+        self.fastSeekTimer = NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_(delay, self, 'fastSeek:', info, NO)
+        NSRunLoop.currentRunLoop().addTimer_forMode_(self.fastSeekTimer, NSEventTrackingRunLoopMode)
 
     def fastSeek_(self, timer):
         info = timer.userInfo()
@@ -2141,7 +2167,7 @@ class VideoAreaView (NibClassBuilder.AutoBaseClass):
         if not self.videoWindow.isFullScreen:
             self.adjustVideoWindowFrame()
         self.videoWindow.setup(renderer, item)
-        AppHelper.callAfter(self.activateVideoWindow)
+        platformutils.callOnMainThreadAndWaitUntilDone(self.activateVideoWindow)
 
     def activateVideoWindow(self):
         self.videoWindow.orderFront_(nil)
@@ -2208,7 +2234,7 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
             self.setContentView_(renderer.view)
         self.palette.setup(item, renderer)
         if self.isFullScreen:
-            AppHelper.callLater(0.5, self.palette.reveal, self)
+            platformUtils.callOnMainThreadAfterDelay(0.5, self.palette.reveal, self)
     
     def teardown(self):
         self.setContentView_(nil)
@@ -2279,9 +2305,11 @@ class QuicktimeRenderer (app.VideoRenderer):
         self.delegate = delegate
         self.cachedMovie = nil
 
+    @platformutils.onMainThread
     def registerMovieObserver(self, movie):
         nc.addObserver_selector_name_object_(self.delegate, 'handleMovieNotification:', QTMovieDidEndNotification, movie)
 
+    @platformutils.onMainThread
     def unregisterMovieObserver(self, movie):
         nc.removeObserver_name_object_(self.delegate, QTMovieDidEndNotification, movie)
 
@@ -2290,6 +2318,7 @@ class QuicktimeRenderer (app.VideoRenderer):
         self.view.setMovie_(nil)
         self.cachedMovie = nil
 
+    @platformutils.onMainThreadWithReturn
     def canPlayItem(self, item):
         canPlay = False
         pathname = item.getPath()
@@ -2336,6 +2365,7 @@ class QuicktimeRenderer (app.VideoRenderer):
     def hasFlip4MacComponent(self):
         return len(glob.glob('/Library/Quicktime/Flip4Mac*')) > 0
 
+    @platformutils.onMainThread
     def selectItem(self, item):
         pathname = item.getPath()
         if self.cachedMovie is not nil and self.cachedMovie.attributeForKey_(QTMovieFileNameAttribute) == pathname:
@@ -2349,14 +2379,14 @@ class QuicktimeRenderer (app.VideoRenderer):
             self.registerMovieObserver(qtmovie)
 
     def play(self):
-        self.view.play_(self)
+        platformutils.callOnMainThread(self.view.play_, self)
         self.view.setNeedsDisplay_(YES)
 
     def pause(self):
-        self.view.pause_(nil)
+        platformutils.callOnMainThread(self.view.pause_, nil)
 
     def stop(self):
-        self.view.pause_(nil)
+        platformutils.callOnMainThread(self.view.pause_, nil)
 
     def goToBeginningOfMovie(self):
         if self.view.movie() is not nil:
