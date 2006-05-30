@@ -3,34 +3,7 @@ from time import time, sleep
 import threading
 
 import eventloop
-from test.framework import DemocracyTestCase
-
-class HadToStopEventLoop(Exception):
-    pass
-
-class EventLoopTest(DemocracyTestCase):
-    def setUp(self):
-        DemocracyTestCase.setUp(self)
-        self.hadToStopEventLoop = False
-
-    def stopEventLoop(self):
-        self.hadToStopEventLoop = True
-        eventloop.quit()
-
-    def runEventLoop(self, timeout=10, timeoutNormal=False):
-        self.hadToStopEventLoop = False
-        timeout = eventloop.addTimeout(timeout, self.stopEventLoop, 
-                "Stop test event loop")
-        eventloop._eventLoop.quitFlag = False
-        eventloop._eventLoop.loop()
-        if self.hadToStopEventLoop and not timeoutNormal:
-            raise HadToStopEventLoop()
-        else:
-            timeout.cancel()
-
-    def processIdles(self):
-        eventloop._eventLoop.idleQueue.processIdles()
-        eventloop._eventLoop.urgentQueue.processIdles()
+from test.framework import EventLoopTest
 
 class SchedulerTest(EventLoopTest):
     def setUp(self):

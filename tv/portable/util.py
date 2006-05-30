@@ -205,7 +205,7 @@ def failed(when, withExn = False, details = None):
     if not inDownloader:
         try:
             import app
-            app.controller.getBackendDelegate(). \
+            app.delegate. \
                 notifyUnkownErrorOccurence(when, log = report)
         except Exception, e:
             print "Execption when reporting errror.."

@@ -225,7 +225,7 @@ def getDownloadStatus(dlids = None):
     return statuses
 
 def shutDown():
-    print "Shutting down downloaders..."
+    #print "Shutting down downloaders..."
     for dlid in _downloads:
         _downloads[dlid].shutdown()
     shutdownBTDownloader()

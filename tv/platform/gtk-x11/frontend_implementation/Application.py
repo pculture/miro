@@ -15,7 +15,8 @@ import resource
 class Application:
 
     def __init__(self):
-	print "Application init"
+	#print "Application init"
+        pass
 
     def Run(self):
         locale.setlocale(locale.LC_ALL, '')
