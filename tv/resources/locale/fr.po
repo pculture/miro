@@ -5,15 +5,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Democracy Player 0.8.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-05-24 13:58-0400\n"
-"PO-Revision-Date: 2006-05-26 00:08+0100\n"
+"PO-Revision-Date: 2006-05-30 17:24-0400\n"
 "Last-Translator: Le Berre <claude.le.berre@free.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:75
 msgid "_Save Video..."
@@ -85,11 +86,11 @@ msgstr "_Aide"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:107
 msgid "Username:"
-msgstr "Nom d'utilisateur"
+msgstr "Nom d'utilisateur:"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:118
 msgid "Password:"
-msgstr "Mot de passe"
+msgstr "Mot de passe:"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:133
 msgid "Channel requires authentication"
@@ -182,7 +183,7 @@ msgstr "Etes vous sûr de vouloir quitter l'application?"
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:211
 #, python-format
 msgid "You have %d download%s still in progress."
-msgstr "Vous avez %d téléchargements %s encore en cours."
+msgstr "Vous avez %d téléchargement%s encore en cours."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:220
 msgid "Unknown Runtime Error"
@@ -340,7 +341,7 @@ msgstr "Recherche vidéo"
 #: ../../portable/compiled_templates/tablist.py:172
 #: ../../portable/compiled_templates/tablist.py:179
 msgid "Channel Guide"
-msgstr "Guides des canaux"
+msgstr "Guide des canaux"
 
 #: ../../portable/compiled_templates/statictab.py:53
 #: ../../portable/compiled_templates/statictab.py:60
@@ -360,7 +361,7 @@ msgstr "Ma collection"
 #: ../../portable/compiled_templates/tablist.py:236
 #: ../../portable/compiled_templates/new.py:777
 msgid "New Videos"
-msgstr "Nouvelle vidéo"
+msgstr "Nouvelles vidéos"
 
 #: ../../portable/compiled_templates/statictab.py:110
 #: ../../portable/compiled_templates/statictab.py:117
@@ -378,7 +379,7 @@ msgstr "Democracy - Template de lecture externe"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:54
 msgid "Continue To Next Video"
-msgstr "Continuer vers la nouvelle vidéo"
+msgstr "Continuer vers la vidéo prochaine"
 
 #: ../../portable/compiled_templates/feed_settings.py:48
 #: ../../portable/compiled_templates/channel.py:2200
@@ -396,11 +397,11 @@ msgstr "Retour au canal"
 
 #: ../../portable/compiled_templates/feed_settings.py:62
 msgid "Channel Settings"
-msgstr "Réglage de canal"
+msgstr "Réglages du canal"
 
 #: ../../portable/compiled_templates/feed_settings.py:64
 msgid "Videos expire after:"
-msgstr "Vidéo expire après :"
+msgstr "Les vidéos expirent après:"
 
 #: ../../portable/compiled_templates/feed_settings.py:68
 #: ../../portable/compiled_templates/feed_settings.py:75
@@ -421,7 +422,7 @@ msgstr "(Prévenir un usage trop gourmand d'espace disque)"
 
 #: ../../portable/compiled_templates/feed_settings.py:159
 msgid "Channel URL"
-msgstr "URL de canal"
+msgstr "URL du canal"
 
 #: ../../portable/compiled_templates/channel.py:2202
 msgid "Settings"
@@ -466,7 +467,7 @@ msgstr "Titre du fil"
 
 #: ../../portable/compiled_templates/external_playback.py:62
 msgid "This file type (${format}) can't be played in the main Democracy window."
-msgstr "Ce type de fichier(${format}) ne peut être joué dans la fenêtre principale de Democracy."
+msgstr "Ce type de fichier (${format}) ne peut être joué dans la fenêtre principale de Democracy."
 
 #: ../../portable/compiled_templates/external_playback.py:66
 msgid "Play Externally"
@@ -474,7 +475,7 @@ msgstr "Jouer en dehors de l'application"
 
 #: ../../portable/compiled_templates/external_playback.py:75
 msgid "Skip Video ${countdown}"
-msgstr "Sauter la vidéo $(countdown)"
+msgstr "Sauter la vidéo ${countdown}"
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:41
 msgid "Simple translation"
@@ -486,7 +487,7 @@ msgstr "camion stoppé dans un ${can}"
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:59
 msgid "This is a ${car} and this is a ${truck} <span> This text is <b>raw</b> text</span>"
-msgstr "C'est une${car} et c'est un ${truck} <span> Ce texte est  du texte <b>brut</b></span>"
+msgstr "C'est une ${car} et c'est un ${truck} <span> Ce texte est du texte <b>brut</b></span>"
 
 #: ../../portable/compiled_templates/download.py:406
 msgid "Active Downloads"
@@ -498,7 +499,7 @@ msgstr "Expire"
 
 #: ../../portable/compiled_templates/first_time_intro.py:34
 msgid "Democracy Internet TV: How to Get Started"
-msgstr "Democracy TV sur Internet : Par où commencer"
+msgstr "Democracy TV sur Internet: Par où commencer"
 
 #: ../../portable/compiled_templates/first_time_intro.py:38
 msgid "GO BIG:"
@@ -510,7 +511,7 @@ msgstr "Ceci est le bouton de plein écran. Cliquez le et reculez-vous."
 
 #: ../../portable/compiled_templates/first_time_intro.py:44
 msgid "NEW STUFF:"
-msgstr "NOUVEAU :"
+msgstr "NOUVEAUX:"
 
 #: ../../portable/compiled_templates/first_time_intro.py:46
 msgid "Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch."
@@ -660,4 +661,5 @@ msgstr "Volume :"
 #: ../../platform/gtk-x11/glade/democracy.glade.h:31
 msgid "You've selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)"
 msgstr "Vous avez sélectionné un nouveau dossier pour y télécharger de nouveaux films. Est-ce que l'application Democracy doit migrer vos téléchargements existants vers ce nouvel emplacement? (Les films en cours de téléchargement ne  seront pas déplacés tant qu'ils ne sont pas terminés)"
+
 
