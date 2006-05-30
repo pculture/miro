@@ -22,9 +22,11 @@ def load():
     # objc._pythonify.OC_PythonFloat, which apparently cannot be correctly
     # pickled. We now correctly use integer, but we need to fix any previous
     # incorrect value here.
-    oldval = pydict[prefs.UPSTREAM_LIMIT_IN_KBS.key]
-    newval = int(oldval)
-    pydict[prefs.UPSTREAM_LIMIT_IN_KBS.key] = newval
+    upstreamLimitKey = prefs.UPSTREAM_LIMIT_IN_KBS.key
+    if pydict.has_key(upstreamLimitKey):
+        oldval = pydict[upstreamLimitKey]
+        newval = int(oldval)
+        pydict[upstreamLimitKey] = newval
 
     return pydict
 
