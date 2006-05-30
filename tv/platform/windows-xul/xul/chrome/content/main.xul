@@ -12,7 +12,7 @@
         hidechrome="true"
         onload="onLoad();" 
         onunload="onUnload();"
-        onclose="onClose();"
+        onclose="return onClose();"
         orient="vertical"
         sizemode="normal"
         width="800" height="600"
@@ -104,7 +104,7 @@
 		<html:ul id="titlebar-buttons">
 			<html:li id="titlebar-buttons-minimize"><html:a onclick="window.minimize();">Minimize</html:a></html:li>
 			<html:li id="titlebar-buttons-maximize"><html:a onclick="maximizeOrRestore();">Maximize</html:a></html:li>
-			<html:li id="titlebar-buttons-close"><html:a onclick="window.close();">Close</html:a></html:li>
+                        <html:li id="titlebar-buttons-close"><html:a onclick="handleExit();">Close</html:a></html:li>
 		</html:ul>
 	</hbox>
 	<!-- / WINDOW BUTTONS -->

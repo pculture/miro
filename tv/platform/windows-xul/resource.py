@@ -3,6 +3,9 @@ import os, sys
 import re
 import urllib
 
+import config
+import prefs
+
 # Strategy: ask the directory service for
 # NS_XPCOM_CURRENT_PROCESS_DIR, the directory "associated with this
 # process," which is read to mean the root of the Mozilla
@@ -41,10 +44,12 @@ def path(relative_path):
     return abspath.replace("/", "\\")
 
 def url(relative_path):
-    return "file://" + path(relative_path)
+    return "file://" + path(relative_path).replace("\\", "/")
 
 def iconCacheUrl(relative_path):
     """Like url, but for icon cache files.  These probably don't live in the
     resources directory because we need write access to them.
     """
-    return "/dtv/icon-cache/" + relative_path
+    dir = config.get(prefs.ICON_CACHE_DIRECTORY)
+    path = os.path.join(dir, relative_path)
+    return "file://" + path.replace("\\", "/")

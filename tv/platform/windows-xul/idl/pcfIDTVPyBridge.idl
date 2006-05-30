@@ -30,4 +30,5 @@ interface pcfIDTVPyBridge : nsISupports
   void openURL(in AString url);
   void skip(in short step);
   void playPause();
+  void openFile(in AString path);
 };

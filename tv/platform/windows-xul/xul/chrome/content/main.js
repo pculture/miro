@@ -107,8 +107,12 @@ function videoProgressDown(event) {
 }
 
 function videoProgressOut(event) {
-  var slider = document.getElementById("progress-slider");
-  slider.beingDragged = false;
+  if(event.target.id == 'progress' && 
+        event.relatedTarget.id != "progress-text" &&
+        event.relatedTarget.id != "progress-slider") {
+    var slider = document.getElementById("progress-slider");
+    slider.beingDragged = false;
+  }
 }
 
 function videoProgressMove(event) {
@@ -165,10 +169,7 @@ function setupHandlers() {
     // Set up listeners for the progress slider
     var progress = document.getElementById("progress");
     progress.onmousedown = videoProgressDown;
-    //progress.onmouseout = videoProgressOut;
-    // the mousout event is really messed up, so the callback is disabled for
-    // now.  Things get weird if you start a drag, then move out of the
-    // progress area, but it's less weird enabling the mousout callback.
+    progress.onmouseout = videoProgressOut;
     progress.onmousemove = videoProgressMove;
     progress.onmouseup = videoProgressUp;
 
@@ -192,6 +193,7 @@ function setupHandlers() {
 function onClose()
 {
    vlc.stop();
+   closeApp();
 }
 
 function onUnload() {
@@ -315,11 +317,11 @@ function openFile() {
             Components.interfaces.nsIFilePicker.modeGetFile);
     var res = fp.show();
     if (res == Components.interfaces.nsIFilePicker.returnOK){
-            eventURL(getCookieFromBrowserId('channelsDisplay'),
-            'action:openFile?path=' + escape(fp.file.path));
+        pybridge.openFile(fp.file.path);
     }
 }
 
 function handleExit() {
+    vlc.stop();
     pybridge.quit();
 }

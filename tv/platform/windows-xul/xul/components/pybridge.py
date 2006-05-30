@@ -113,8 +113,12 @@ class PyBridge:
         app.controller.onShutdown()
 
     def pageLoadFinished(self, area, url):
-        eventloop.addIdle(HTMLDisplay.runPageFinishCallback, 
+        eventloop.addUrgentCall(HTMLDisplay.runPageFinishCallback, 
                 "%s finish callback" % area, args=(area, url))
+
+    @eventloop.asUrgent
+    def openFile(self, path):
+        singleclick.openFile(path)
 
     @eventloop.asUrgent
     def setVolume(self, volume):
