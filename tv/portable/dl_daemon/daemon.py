@@ -29,7 +29,7 @@ def launchDownloadDaemon(oldpid, port):
         'DEMOCRACY_DOWNLOADER_FIRST_LAUNCH' : firstDaemonLaunch,
     }
     import app
-    delegate = app.controller.getBackendDelegate()
+    delegate = app.delegate
     delegate.launchDownloadDaemon(oldpid, daemonEnv)
     firstDaemonLaunch = '0'
 

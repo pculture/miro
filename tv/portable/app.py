@@ -55,6 +55,9 @@ from gettext import gettext as _
 # Global Controller singleton
 controller = None
 
+# Backend delegate singleton
+delegate = None
+
 # Run the application. Call this, not start(), on platforms where we
 # are responsible for the event loop.
 def main():
@@ -416,9 +419,12 @@ class Controller (frontend.Application):
 
     def __init__(self):
         global controller
+        global delegate
         frontend.Application.__init__(self)
         assert controller is None
+        assert delegate is None
         controller = self
+        delegate = self.getBackendDelegate()
 
     ### Startup and shutdown ###
 
@@ -861,6 +867,10 @@ class Controller (frontend.Application):
         else:
             # upstream limit should be unset here
             pass
+
+    def getBackendDelegate(self):
+        print "WARNING: using deprecated getBackendDelegate(). Use app.delegate instead"
+        return frontend.Application.getBackendDelegate(self)
 
 ###############################################################################
 #### TemplateDisplay: a HTML-template-driven right-hand display panel      ####
