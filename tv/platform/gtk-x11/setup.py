@@ -190,12 +190,14 @@ for dir in ('templates', 'css', 'images', 'testdata', os.path.join('templates','
     source_dir = os.path.join(resource_dir, dir)
     dest_dir = os.path.join('/usr/share/democracy/resources/', dir)
     data_files.append((dest_dir, listfiles(source_dir)))
-# add the desktop file and the icons
+# add the desktop file, icons, mime data, and man page.
 data_files += [
     ('/usr/share/pixmaps', 
      glob(os.path.join(platform_dir, 'democracyplayer-*.png'))),
     ('/usr/share/applications', 
      [os.path.join(platform_dir, 'democracyplayer.desktop')]),
+    ('/usr/share/mime/packages', 
+     [os.path.join(platform_dir, 'democracy.xml')]),
     ('/usr/share/man/man1',
      [os.path.join(platform_dir, 'democracyplayer.1.gz')]),
 ]
