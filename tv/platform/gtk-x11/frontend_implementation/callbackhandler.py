@@ -269,6 +269,10 @@ class CallbackHandler(object):
         AttachCombo (widgetTree['combobox-poll'], prefs.CHECK_CHANNELS_EVERY_X_MN, (30, 60, -1))
         AttachCombo (widgetTree['combobox-expiration'], prefs.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))
 
+        try:
+            os.makedirs (movie_dir)
+        except:
+            pass
         chooser = widgetTree['filechooserbutton-movies-directory']
         chooser.set_filename (movie_dir + "/")
         # run the dialog
