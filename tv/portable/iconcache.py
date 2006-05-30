@@ -98,36 +98,37 @@ class IconCache:
     def errorCallback(self, url, error = None):
         # Error during download, or no url.  To reflect that,
         # clear the cache if there was one before.
-        self.dbItem.beginChange()
+        wasValid = self.isValid()
         try:
-            try:
-                if (self.filename):
-                    os.remove (self.filename)
-            except:
-                pass
-            self.url = url
-            self.filename = None
-            self.etag = None
-            self.modified = None
-        finally:
-            self.updating = False
-            if self.needsUpdate:
-                self.needsUpdate = False
-                self.requestUpdate()
+            if (self.filename):
+                os.remove (self.filename)
+        except:
+            pass
+        self.url = url
+        self.filename = None
+        self.etag = None
+        self.modified = None
+        self.updated = True
+        self.updating = False
+        if self.needsUpdate:
+            self.needsUpdate = False
+            self.requestUpdate()
+        if wasValid:
+            self.dbItem.beginChange()
             self.dbItem.endChange()
-            iconCacheUpdater.updateFinished ()
+        iconCacheUpdater.updateFinished ()
 
     def updateIconCache (self, url, info):
         if info == None or (info['status'] != 304 and info['status'] != 200):
             self.errorCallback(url)
             return
-        self.dbItem.beginChange()
         try:
+            # Our cache is good.  Hooray!
+            if (info['status'] == 304):
+                self.updated = True
+                return
+            self.dbItem.beginChange()
             try:
-                # Our cache is good.  Hooray!
-                if (info['status'] == 304):
-                    self.updated = True
-                    return
 
                 # We have to update it, and if we can't write to the file, we
                 # should pick a new filename.
@@ -178,14 +179,13 @@ class IconCache:
                 self.url = url
             finally:
                 #two separate finally sections in case something here throws an exception.
-                self.updating = False
-                if self.needsUpdate:
-                    self.needsUpdate = False
-                    self.requestUpdate()
-                iconCacheUpdater.updateFinished ()
+                self.dbItem.endChange()
         finally:
-            self.dbItem.endChange()
-        
+            self.updating = False
+            if self.needsUpdate:
+                self.needsUpdate = False
+                self.requestUpdate()
+            iconCacheUpdater.updateFinished ()
 
     def requestIcon (self):
         self.dbItem.beginRead()
