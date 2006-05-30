@@ -328,7 +328,7 @@ class BGDownloader:
             shutil.move(self.filename, newfilename)
         except IOError, e:
             print "WARNING: Error moving %s to %s (%s)" % (self.filename,
-                                                           newfilename, error)
+                                                           newfilename, e)
         else:
             self.filename = newfilename
             if chatter:
