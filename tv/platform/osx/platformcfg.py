@@ -23,7 +23,7 @@ def load():
     # pickled. We now correctly use integer, but we need to fix any previous
     # incorrect value here.
     upstreamLimitKey = prefs.UPSTREAM_LIMIT_IN_KBS.key
-    if pydict.has_key(upstreamLimitKey):
+    if pydict is not None and pydict.has_key(upstreamLimitKey):
         oldval = pydict[upstreamLimitKey]
         newval = int(oldval)
         pydict[upstreamLimitKey] = newval
