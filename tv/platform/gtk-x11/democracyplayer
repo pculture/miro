@@ -48,11 +48,13 @@ if options.version:
     print "under certain conditions.  See license.txt for details."
 elif options.profile:
     import profile
+    import eventloop
     def main():
         import app
         app.main()
     if (options.bias):
         profile.Profile.bias = options.bias
+    eventloop.profile_file = options.profile
     profile.run ('main()', options.profile)
 else:
     try:

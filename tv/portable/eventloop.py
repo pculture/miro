@@ -327,11 +327,26 @@ def callInThread(callback, errback, function, *args, **kwargs):
 
 lt = None
 
+profile_file = None
+
 def startup():
+
+
+    def profile_startup():
+        import profile
+        def start_loop():
+            _eventLoop.loop()
+        profile.runctx ('_eventLoop.loop()', globals(), locals(), profile_file + ".event_loop")
+
     global lt
-    lt = threading.Thread(target=_eventLoop.loop, name="Event Loop")
+    if profile_file:
+        lt = threading.Thread(target=profile_startup, name="Event Loop")
+    else:
+        lt = threading.Thread(target=_eventLoop.loop, name="Event Loop")
     lt.setDaemon(False)
     lt.start()
+        
+        
 
 def join():
     global lt
