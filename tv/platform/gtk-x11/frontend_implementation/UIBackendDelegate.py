@@ -208,7 +208,7 @@ class UIBackendDelegate:
 
     def interruptDownloadsAtShutdown(self, downloadsCount):
         summary = _("Are you sure you want to quit?")
-        message = _("You have %d download%s still in progress.") % (downloadsCount, downloadsCount > 1 and 's' or '')
+        message = ngettext ("You have %d download still in progress.", "You have %d download still in progress.", downloadsCount) % (downloadsCount,)
         buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_QUIT, gtk.RESPONSE_OK)
         response = ShowDialog (summary, message, buttons)
         if (response == gtk.RESPONSE_OK):
