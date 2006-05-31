@@ -41,6 +41,7 @@ Frontend requirements:
     """
 
 import eventloop
+from gettext import gettext as _
 
 # Pass in a connection to the frontend
 def setDelegate(newDelegate):
@@ -55,13 +56,13 @@ class DialogButton(object):
     def __str__(self):
         return "DialogButton(%r)" % self.text
 
-BUTTON_OK = DialogButton("Ok")
-BUTTON_CANCEL = DialogButton("Cancel")
-BUTTON_YES = DialogButton("Yes")
-BUTTON_NO = DialogButton("No")
-BUTTON_QUIT = DialogButton("Quit")
-BUTTON_MIGRATE = DialogButton("Migrate")
-BUTTON_DONT_MIGRATE = DialogButton("Don't Migrate")
+BUTTON_OK = DialogButton(_("Ok"))
+BUTTON_CANCEL = DialogButton(_("Cancel"))
+BUTTON_YES = DialogButton(_("Yes"))
+BUTTON_NO = DialogButton(_("No"))
+BUTTON_QUIT = DialogButton(_("Quit"))
+BUTTON_MIGRATE = DialogButton(_("Migrate"))
+BUTTON_DONT_MIGRATE = DialogButton(_("Don't Migrate"))
 
 class Dialog(object):
     """Abstract base class for dialogs."""
