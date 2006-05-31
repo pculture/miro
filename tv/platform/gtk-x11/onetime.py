@@ -1,8 +1,6 @@
 import dbus
 import dbus.service
 import dbus.dbus_bindings
-import singleclick
-import app
 
 if getattr(dbus, 'version', (0,0,0)) >= (0,41,0):
     import dbus.glib
@@ -92,6 +90,9 @@ class OneTime (dbus.service.Object):
 
     @dbus.service.method('org.participatoryculture.dtv.OneTimeIface')
     def HandleArgs (self, args):
+        import singleclick
+        import app
+        import eventloop
         for i in xrange(len(args)):
             if args[i].startswith('file://'):
                 args[i] = args[i][len('file://'):]
