@@ -1,5 +1,5 @@
 from database import DDBObject
-from download_utils import grabURLAsync
+from httpclient import grabURL
 from xhtmltools import urlencode
 from copy import copy
 import re
@@ -166,19 +166,24 @@ class ChannelGuide(DDBObject):
 
     def processUpdate(self, info):
         try:
-            if info is not None:
-                html = info["body"]
+            html = info["body"]
 
-                # Put the HTML into the cache
-                self.cond.acquire()
-                try:
-                    self.cachedGuideBody = HTMLPattern.match(html).group(1)
-                    self.loadedThisSession = True
-                    self.cond.notify()
-                finally:
-                    self.cond.release()
+            # Put the HTML into the cache
+            self.cond.acquire()
+            try:
+                self.cachedGuideBody = HTMLPattern.match(html).group(1)
+                self.loadedThisSession = True
+                self.cond.notify()
+            finally:
+                self.cond.release()
         finally:
             self.dc = eventloop.addTimeout(3600, self.update, "Channel Guide Update")
+
+    def processUpdateErrback(self, error):
+        print "WARNING: HTTP error while downloading the channel guide (%s)" \
+                % error
+        self.dc = eventloop.addTimeout(3600, self.update, 
+                "Channel Guide Update")
 
     def update(self):
         # We grab the URL and convert the HTML to JavaScript so it can
@@ -187,5 +192,4 @@ class ChannelGuide(DDBObject):
         # for non-programmers to work with
         print "DTV: updating the Guide"
         url = config.get(prefs.CHANNEL_GUIDE_URL)
-
-        self.dc = grabURLAsync(self.processUpdate, url, "Channel Guide update")
+        self.dc = grabURL(url, self.processUpdate, self.processUpdateErrback)

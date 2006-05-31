@@ -711,8 +711,8 @@ Below this line, is 1000 repeated lines of 0-9.
         client.MAX_REDIRECTS = 2
         client.startRequest()
         self.runEventLoop()
-        self.assertEquals(self.data['redirected-url'], 
-                'http://participatoryculture.org/democracytest/redirect3.php')
+        self.assert_(self.errbackCalled)
+        self.assert_(isinstance(self.data, httpclient.UnexpectedStatusCode))
 
     def testGetFilenameFromResponse(self):
         client = httpclient.HTTPClient('http://www.foo.com', self.callback,

@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 from database import DDBObject, defaultDatabase
 from downloader import DownloaderFactory
-from download_utils import grabURL
 import eventloop
 from copy import copy
 from xhtmltools import unescape,xhtmlify
@@ -233,6 +232,9 @@ class Item(DDBObject):
         return ret
 
     def isTorrent(self):
+        # FIXME: we need to reorganize the auto downloader to use the async
+        # grabURL
+        return False
         url = self.getURL()
         info = grabURL(url, "HEAD")
         if info is not None:

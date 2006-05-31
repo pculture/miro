@@ -22,7 +22,6 @@ import template
 import singleclick
 import storedatabase
 import downloader
-import download_utils
 import autoupdate
 import xhtmltools
 import guide
@@ -432,20 +431,20 @@ class Controller (frontend.Application):
         assert controller is None
         assert delegate is None
         controller = self
-        delegate = self.getBackendDelegate()
+        delegate = frontend.Application.getBackendDelegate(self)
 
     ### Startup and shutdown ###
 
     def onStartup(self):
+        global delegate
+
         try:
             print "DTV: Loading preferences..."
             config.load()
             config.addChangeCallback(self.configDidChange)
             
-            delegate = self.getBackendDelegate()
             feed.setDelegate(delegate)
             feed.setSortFunc(sorts.item)
-            download_utils.setDelegate(delegate)
             autoupdate.setDelegate(delegate)
             database.setDelegate(delegate)
             dialogs.setDelegate(delegate)
@@ -625,10 +624,11 @@ class Controller (frontend.Application):
         return self.checkTabUsingIndex(indexes.tabObjIDIndex, id)
 
     def allowShutdown(self):
+        global delegate
         allow = True
         downloadsCount = views.downloadingItems.len()
         if downloadsCount > 0:
-            allow = self.getBackendDelegate().interruptDownloadsAtShutdown(downloadsCount)
+            allow = delegate.interruptDownloadsAtShutdown(downloadsCount)
         return allow
 
     def downloaderShutdown(self):
@@ -859,8 +859,9 @@ class Controller (frontend.Application):
         self.downloadTab.redraw()
 
     def updateAvailableItemsCountFeedback(self):
+        global delegate
         count = views.availableItems.len()
-        self.getBackendDelegate().updateAvailableItemsCountFeedback(count)
+        delegate.updateAvailableItemsCountFeedback(count)
 
     ### ----
 
@@ -895,7 +896,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
         html = tch.getOutput()
 
         self.actionHandlers = [
-            ModelActionHandler(controller.getBackendDelegate()),
+            ModelActionHandler(delegate),
             GUIActionHandler(),
             TemplateActionHandler(self, self.templateHandle),
             ]
@@ -974,7 +975,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
             # in an external browser.
             if (url.startswith('http://') or url.startswith('https://') or
                 url.startswith('ftp://') or url.startswith('mailto:')):
-                controller.getBackendDelegate().openExternalURL(url)
+                delegate.openExternalURL(url)
                 return False
 
         except:
@@ -1252,13 +1253,13 @@ class GUIActionHandler:
 
     def showHelp(self):
         # FIXME don't hardcode this URL
-        controller.getBackendDelegate().openExternalURL('http://www.getdemocracy.com/help')
+        delegate.openExternalURL('http://www.getdemocracy.com/help')
 
     def testGetHTTPAuth(self, **args):
-        printResultThread("testGetHTTPAuth: got %s", lambda: controller.getBackendDelegate().getHTTPAuth(**args)).start()
+        printResultThread("testGetHTTPAuth: got %s", lambda: delegate.getHTTPAuth(**args)).start()
 
     def testIsScrapeAllowed(self, url):
-        printResultThread("testIsScrapeAllowed: got %s", lambda: controller.getBackendDelegate().isScrapeAllowed(url)).start()
+        printResultThread("testIsScrapeAllowed: got %s", lambda: delegate.isScrapeAllowed(url)).start()
 
 # Functions that are safe to call from action: URLs that change state
 # specific to a particular instantiation of a template, and so have to

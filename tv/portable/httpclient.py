@@ -36,6 +36,8 @@ class BadStatusLine(HTTPError):
     pass
 class BadHeaderLine(HTTPError):
     pass
+class UnexpectedStatusCode(HTTPError):
+    pass
 class ServerClosedConnection(HTTPError):
     pass
 class BadChunkSize(HTTPError):
@@ -1090,9 +1092,18 @@ class HTTPClient(object):
         elif self.shouldAuthorize(response):
             self.handleAuthorize(response)
         else:
-            if self.callback:
-                response = self.prepareResponse(response)
-                trapCall(self.callback, response)
+            expectedStatusCodes = [200]
+            if self.start != 0:
+                expectedStatusCodes.append(206)
+            if self.etag is not None or self.modified is not None:
+                expectedStatusCodes.append(304)
+            if response['status'] in expectedStatusCodes:
+                if self.callback:
+                    response = self.prepareResponse(response)
+                    trapCall(self.callback, response)
+            elif self.errback:
+                error = UnexpectedStatusCode(response['status'])
+                trapCall(self.errback, error)
 
     def errbackIntercept(self, error):
         self.requestId = None
@@ -1247,7 +1258,7 @@ def grabHeaders (url, callback, errback, findHTTPAuth=None):
                         lambda (info): grabHeadersCallback (info, url, callback, errback, findHTTPAuth),
                         lambda (error): grabHeadersErrback (url, callback, errback, findHTTPAuth),
                         None, None, "HEAD", 0, None, None, findHTTPAuth)
-    client.startRequest()
+    return client.startRequest()
 
 def cancelRequest(requestId):
     HTTPClient.connectionPool.cancelRequest(requestId)

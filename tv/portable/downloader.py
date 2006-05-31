@@ -6,7 +6,6 @@ from base64 import b64encode
 import app
 import config
 import prefs
-from download_utils import grabURL
 from database import DDBObject, defaultDatabase
 from dl_daemon import daemon, command
 

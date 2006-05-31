@@ -9,7 +9,7 @@ from threading import RLock, Event, Thread
 import traceback
 from copy import copy
 
-from download_utils import grabURL, cleanFilename, parseURL, nextFreeFilename
+from download_utils import cleanFilename, parseURL, nextFreeFilename
 import httpclient
 
 import config
