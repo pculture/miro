@@ -48,11 +48,11 @@ searchItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
         <div id="main-container">
             <div t:updateForView="searchFeed">
                 <div class="search-message" t:hideIf="feed.getStatus() != 'idle-empty'">
-                    Nothing to display.<br />
-                    Enter a query in the search field above.
+                    <span i18n:translate="">Nothing to display.<br />
+                    Enter a query in the search field above.</span>
                 </div>
                 <div class="search-message" t:hideIf="feed.getStatus() != 'searching'">
-                    Searching...
+                    <span i18n:translate="">Searching...</span>
                 </div>
             </div>
             
