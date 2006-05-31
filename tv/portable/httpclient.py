@@ -25,6 +25,7 @@ from download_utils import cleanFilename
 import eventloop
 import util
 import sys
+import time
 
 class NotReadyToSendError(Exception):
     pass
@@ -1026,7 +1027,7 @@ class HTTPClient(object):
 
     def __init__(self, url, callback, errback, headerCallback=None,
             bodyDataCallback=None, method="GET", start=0, etag=None,
-            modified=None, findHTTPAuth=None):
+            modified=None, findHTTPAuth=None, cookies={}):
         self.url = url
         self.callback = callback
         self.errback = errback
@@ -1036,6 +1037,14 @@ class HTTPClient(object):
         self.start = start
         self.etag = etag
         self.modified = modified
+        self.cookies = cookies # A dictionary of cookie names to
+                               # dictionaries containing the keys
+                               # 'Value', 'Version', 'received',
+                               # 'Path', 'Domain', 'Port', 'Max-Age',
+                               # 'Discard', 'Secure', and optionally
+                               # one or more of the following:
+                               # 'Comment', 'CommentURL', 'origPath',
+                               # 'origDomain', 'origPort'
         if findHTTPAuth is not None:
             self.findHTTPAuth = findHTTPAuth
         else:
@@ -1052,6 +1061,41 @@ class HTTPClient(object):
         self.requestId = None
         self.initHeaders()
 
+    def isValidCookie(self, cookie, scheme, host, port, path):
+        return ((time.time() - cookie['received'] < cookie['Max-Age']) and
+                (cookie['Version'] == '1') and
+                self.hostMatches(host, cookie['Domain']) and
+                path.startswith(cookie['Path']) and
+                self.portMatches(str(port), cookie['Port']) and
+                (scheme == 'https' or not cookie['Secure']))
+
+    def dropStaleCookies(self):
+        """Remove cookies that have expired or are invalid for this URL"""
+        scheme, host, port, path = parseURL(self.url)
+        temp = {}
+        for name in self.cookies:
+            if self.isValidCookie(self.cookies[name], scheme, host, port, path):
+                temp[name] = self.cookies[name]
+        self.cookies = temp
+
+    def hostMatches(self, host, host2):
+        host = host.lower()
+        host2 = host2.lower()
+        if host.find('.') == -1:
+            host = host+'.local'
+        if host2.find('.') == -1:
+            host2 = host2+'.local'
+        if host2.startswith('.'):
+            return host.endswith(host2)
+        else:
+            return host == host2
+
+    def portMatches(self, port, portlist):
+        if portlist is None:
+            return True
+        portlist = portlist.replace(',',' ').split()
+        return port in portlist
+
     def initHeaders(self):
         self.headers = {}
         if self.start > 0:
@@ -1062,6 +1106,7 @@ class HTTPClient(object):
             self.headers["If-Modified-Since"] = self.modified
         self.headers['User-Agent'] = self.userAgent
         self.setAuthHeader()
+        self.setCookieHeader()
 
     def setAuthHeader(self):
         scheme, host, port, path = parseURL(self.url)
@@ -1069,6 +1114,23 @@ class HTTPClient(object):
         if not auth is None:
             authHeader = "%s %s" % (auth.getAuthScheme(), auth.getAuthToken())
             self.headers["Authorization"] = authHeader
+
+    def setCookieHeader(self):
+        self.dropStaleCookies()
+        if len(self.cookies) > 0:
+            header = "$Version=1"
+            for name in self.cookies:
+                header = '%s;%s=%s' % (header,name,self.cookies[name]['Value'])
+                if self.cookies[name].has_key('origPath'):
+                    header = '%s;$Path=%s' % \
+                                       (header,self.cookies[name]['origPath'])
+                if self.cookies[name].has_key('origDomain'):
+                    header = '%s;$Domain=%s' % \
+                                       (header,self.cookies[name]['origDomain'])
+                if self.cookies[name].has_key('origPort'):
+                    header = '%s;$Port=%s' % \
+                                       (header,self.cookies[name]['origPort'])
+            self.headers['Cookie'] = header
 
     def startRequest(self):
         if self.bodyDataCallback is not None:
@@ -1134,7 +1196,108 @@ class HTTPClient(object):
         response['redirected-url'] = self.redirectedURL
         response['filename'] = self.getFilenameFromResponse(response)
         response['charset'] = self.getCharsetFromResponse(response)
+        response['cookies'] = self.getCookiesFromResponse(response)
         return response
+
+    def getCookiesFromResponse(self, response):
+        """Generates a cookie dictionary from headers in response
+        """
+        cookies = {}
+        cookieStrings = []
+        if response.has_key('set-cookie') or response.has_key('set-cookie2'):
+            scheme, host, port, path = parseURL(self.redirectedURL)
+
+            # Split header into cookie strings, respecting commas in
+            # the middle of stuff
+            if response.has_key('set-cookie'):
+                cookieStrings.extend(response['set-cookie'].split(','))
+            if response.has_key('set-cookie2'):
+                cookieStrings.extend(response['set-cookie2'].split(','))
+            temp = []
+            for string in cookieStrings:
+                if (len(temp) > 0 and
+                    (temp[-1].count('"')%2 == 1) or
+                    (string.find('=') == -1) or
+                    (string.find('=') > string.find(';'))):
+                    temp[-1] = '%s,%s' % (temp[-1],string)
+                else:
+                    temp.append(string)
+            cookieStrings = temp
+            
+            for string in cookieStrings:
+                # Strip whitespace from the cookie string and split
+                # into name-value pairs.
+                string = string.strip()
+                pairs = string.split(';')
+                temp = []
+                for pair in pairs:
+                    if (len(temp) > 0 and
+                        (temp[-1].count('"')%2 == 1)):
+                        temp[-1] = '%s;%s' % (temp[-1],pair)
+                    else:
+                        temp.append(pair)
+                pairs = temp
+
+                (name, value) = pairs.pop(0).strip().split('=')
+                cookie = {'Value' : value,
+                          'Version' : '1',
+                          'received' : time.time(),
+                          # Path is everything up until the last /
+                          'Path' : '/'.join(path.split('/')[:-1])+'/',
+                          'Domain' : host,
+                          'Port' : str(port),
+                          'Secure' : False}
+                for attr in pairs:
+                    attr = attr.strip()
+                    if attr.lower() == 'discard':
+                        cookie['Discard'] = True
+                    elif attr.lower() == 'secure':
+                        cookie['Secure'] = True
+                    elif attr.lower().startswith('version='):
+                        cookie['Version'] = attr.split('=')[1]
+                    elif attr.lower().startswith('comment='):
+                        cookie['Comment'] = attr.split('=')[1]
+                    elif attr.lower().startswith('commenturl='):
+                        cookie['CommentURL'] = attr.split('=')[1]
+                    elif attr.lower().startswith('max-age='):
+                        cookie['Max-Age'] = attr.split('=')[1]
+                    elif attr.lower().startswith('expires='):
+                        now = time.time()
+                        # FIXME: "expires" isn't very well defined and
+                        # this code will probably puke in certain cases
+                        try:
+                            expires = time.mktime(time.strptime(
+                                                attr.split('=')[1],
+                                              '%a, %d %b %Y %H:%M:%S %Z'))
+                        except:
+                            try:
+                                expires = time.mktime(time.strptime(
+                                              attr.split('=')[1],
+                                              '%a, %d-%b-%Y %H:%M:%S %Z'))
+                            except:
+                                print "DTV: Warning: Can't process cookie expiration: %s" % attr.split('=')[1]
+                                expires = 0
+                        expires -= time.timezone
+                        if expires < now:
+                            cookie['Max-Age'] = 0
+                        else:
+                            cookie['Max-Age'] = int(expires - now)
+                    elif attr.lower().startswith('domain='):
+                        cookie['origDomain'] = attr.split('=')[1]
+                        cookie['Domain'] = cookie['origDomain']
+                    elif attr.lower().startswith('port='):
+                        cookie['origPort'] = attr.split('=')[1]
+                        cookie['Port'] = cookie['origPort']
+                    elif attr.lower().startswith('path='):
+                        cookie['origPath'] = attr.split('=')[1]
+                        cookie['Path'] = cookie['origPath']
+                if not cookie.has_key('Discard'):
+                    cookie['Discard'] = not cookie.has_key('Max-Age')
+                if not cookie.has_key('Max-Age'):
+                    cookie['Max-Age'] = str(2**30)
+                if self.isValidCookie(cookie,scheme, host, port, path):
+                    cookies[name] = cookie
+        return cookies
 
     def findValueFromHeader(self, header, targetName):
         """Finds a value from a response header that uses key=value pairs with
@@ -1229,10 +1392,10 @@ class HTTPClient(object):
 
 def grabURL(url, callback, errback, headerCallback=None,
         bodyDataCallback=None, method="GET", start=0, etag=None,
-        modified=None, findHTTPAuth=None):
+        modified=None, findHTTPAuth=None, cookies = {}):
     client = HTTPClient(url, callback, errback, headerCallback,
             bodyDataCallback, method, start, etag, modified,
-            findHTTPAuth)
+            findHTTPAuth, cookies)
     return client.startRequest()
 
 def grabHeadersFinalCallback (info, callback, requestID):

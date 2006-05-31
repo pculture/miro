@@ -643,6 +643,17 @@ Below this line, is 1000 repeated lines of 0-9.
         for x in range(3, 1003):
             self.assertEquals(lines[x], bodyLine)
 
+    def testCookie(self):
+        url = 'http://participatoryculture.org/democracytest/cookie.php'
+        httpclient.grabURL(url, self.callback, self.errback)
+        self.runEventLoop(timeout=2)
+        self.assertEquals(len(self.data['cookies']),1)
+        self.assert_(self.data['cookies'].has_key('DemocracyTestCookie'))
+        self.assertEquals(self.data['cookies']['DemocracyTestCookie']['Value'], 'foobar')
+        httpclient.grabURL(url, self.callback, self.errback,cookies = self.data['cookies'])
+        self.runEventLoop(timeout=2)
+        self.assertNotEqual(self.data['body'].find('DemocracyTestCookie:foobar'),-1)
+
     def testParseURL(self):
         (scheme, host, port, path) = \
                 httpclient.parseURL("https://www.foo.com/abc;123?a=b#4")
