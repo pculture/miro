@@ -58,8 +58,7 @@ class XineRenderer(app.VideoRenderer):
         self.xine.gotExposeEvent(event.area.x, event.area.y, event.area.width,
                 event.area.height)
 
-    def canPlayItem(self, item):
-        url = 'file://%s' % item.getPath()
+    def canPlayUrl(self, url):
         return self.xine.canPlayUrl(url)
 
     def goFullscreen(self):
@@ -81,10 +80,9 @@ class XineRenderer(app.VideoRenderer):
         """Handle when the video window exits fullscreen mode."""
         # nothing to do here
         pass
-    
+
     @waitForAttach
-    def selectItem(self, item):
-        url = 'file://%s' % item.getPath()
+    def selectUrl(self, url):
         self.xine.playUrl(url)
 
     def getProgress(self):
