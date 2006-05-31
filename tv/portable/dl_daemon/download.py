@@ -412,10 +412,12 @@ class HTTPDownloader(BGDownloader):
         self.handleError(msg)
         try:
             self.filehandle.close()
+        except:
+            pass
+        try:
             os.remove(self.filename)
         except:
-            print "WARNING: error while removing file in downloader:"
-            traceback.print_exc()
+            pass
 
     def onHeaders(self, info):
         if info['contentLength'] != None:
