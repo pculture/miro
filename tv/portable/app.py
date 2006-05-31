@@ -83,7 +83,7 @@ class PlaybackControllerBase:
     
     def reset(self):
         if self.currentPlaylist is not None:
-            self.currentPlaylist.reset()
+            eventloop.addIdle (self.currentPlaylist.reset, "Reset Playlist")
             self.currentPlaylist = None
     
     def enterPlayback(self):
@@ -356,6 +356,10 @@ class VideoRenderer:
         self.interactivelySeeking = False
     
     def canPlayItem(self, anItem):
+        url = 'file://%s' % anItem.getPath()
+        return self.canPlayUrl (url)
+    
+    def canPlayUrl(self, url):
         return False
     
     def getDisplayTime(self):
@@ -370,8 +374,12 @@ class VideoRenderer:
 
     def setProgress(self, progress):
         self.setCurrentTime(self.getDuration() * progress)
-    
+
     def selectItem(self, anItem):
+        url = 'file://%s' % anItem.getPath()
+        self.selectUrl (url)
+
+    def selectUrl(self, url):
         pass
         
     def reset(self):
