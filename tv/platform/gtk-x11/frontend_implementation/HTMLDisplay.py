@@ -74,14 +74,17 @@ class HTMLDisplay(app.Display):
     def __nonzero__ (self):
         return True
 
+    def __eq__ (self, other):
+        return self is other
+
     def onSelected_private(self, frame):
+        app.Display.onSelected_private (self, frame)
         self.impl.load_html (self)
         for deferment in self.deferred:
             (attr, args, kwargs) = deferment
             func = getattr (self.impl, attr)
             func(*args, **kwargs)
         self.deferred = []
-        app.Display.onSelected_private (self, frame)
 
     def getWidget(self, area = None):
         self.impl = getImpl (area)
@@ -119,8 +122,11 @@ class HTMLDisplayImpl:
         self.mb.setURICallBack(self.onURLLoad)
         self.mb.setContextMenuCallBack(self.onContextMenu)
         self.widget.show()
+        self.in_load_html = False
 
     def load_html(self, display):
+
+        self.in_load_html = True
         self.initialLoadFinished = False
         self.execQueue = []
         self.display = display
@@ -134,8 +140,11 @@ class HTMLDisplayImpl:
         parts = re.split(r'/', location)
         self.urlToLoad = "file:///" + '/'.join(parts)
         self.widget.load_url(self.urlToLoad)
+        self.in_load_html = False
 
     def loadFinished(self, widget):
+        if self.in_load_html:
+            return
         if (not self.initialLoadFinished):
             # Execute any function calls we queued because the page load
             # hadn't completed
@@ -160,9 +169,9 @@ class HTMLDisplayImpl:
         else:
             func()
 
-# These functions are now only called from maybe_defer and
-# onSelected_private, so we don't have to worry about gtkAsyncMethod
-# anymore.
+# These functions are now only called from maybe_defer,
+# onSelected_private, and loadFinished, so we don't have to worry
+# about gtkAsyncMethod anymore.
 
     @deferUntilAfterLoad
     def execJS(self, js):
