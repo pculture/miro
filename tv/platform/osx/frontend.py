@@ -2096,7 +2096,9 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         if sender.state() == NSOnState:
             sender.sendActionOn_(NSLeftMouseUpMask)
             if seekDelay > 0.0:
-                self.scheduleFastSeek(seekDelay, direction)
+                info = {'seekDirection': direction}
+                self.fastSeekTimer = NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_(seekDelay, self, 'fastSeek:', info, NO)
+                self.scheduleFastSeek(self.fastSeekTimer)
             else:
                 self.fastSeekTimer = nil
                 self.fastSeek(direction)
@@ -2115,10 +2117,9 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
                 app.controller.playbackController.skip(direction)
 
     @platformutils.onMainThread
-    def scheduleFastSeek(self, delay, direction):
-        info = {'seekDirection': direction}
-        self.fastSeekTimer = NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_(delay, self, 'fastSeek:', info, NO)
-        NSRunLoop.currentRunLoop().addTimer_forMode_(self.fastSeekTimer, NSEventTrackingRunLoopMode)
+    def scheduleFastSeek(self, timer):
+        platformutils.warnIfNotOnMainThread('scheduleFastSeek')
+        NSRunLoop.currentRunLoop().addTimer_forMode_(timer, NSEventTrackingRunLoopMode)
 
     def fastSeek_(self, timer):
         info = timer.userInfo()
@@ -2428,6 +2429,7 @@ class QuicktimeRenderer (app.VideoRenderer):
         if self.view.movie() is not nil:
             self.view.movie().setRate_(rate)
         
+    @platformutils.onMainThread
     def setVolume(self, level):
         if self.view.movie() is not nil:
             self.view.movie().setVolume_(level)
