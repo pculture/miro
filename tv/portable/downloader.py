@@ -116,23 +116,19 @@ class RemoteDownloader(DDBObject):
         DDBObject.__init__(self)
 
     def onContentType (self, info):
-        print "onContentType: %s" % (info['content-type'],)
         if info['status'] == 200:
             self.url = info['updated-url']
-            self.contentType = info['content-type']
+            self.contentType = info.get('content-type',None)
             self.runDownloader()
         else:
             self.onContentTypeError(info['reason'])
 
     def onContentTypeError (self, error):
-        print error
         self.status['state'] = "failed"
         self.status['reasonFailed'] = str(error)
         for item in self.itemList:
             item.beginChange()
             item.endChange()
-        import traceback
-        traceback.print_stack()
 
     def getContentType(self):
         httpclient.grabHeaders(self.url, self.onContentType, self.onContentTypeError)
@@ -160,7 +156,6 @@ class RemoteDownloader(DDBObject):
     ##
     # This is the actual download thread.
     def runDownloader(self):
-        print "Sending startup command"
         c = command.StartNewDownloadCommand(RemoteDownloader.dldaemon,
                                             self.url, self.dlid, self.contentType)
         c.send(block=False)
@@ -205,7 +200,7 @@ class RemoteDownloader(DDBObject):
                 self.getContentType()
             else:
                 self.runDownloader()
-        else:
+        elif self.getState() in ('stopped', 'paused'):
             if _downloads.has_key(self.dlid):
                 c = command.StartDownloadCommand(RemoteDownloader.dldaemon,
                                                  self.dlid)
