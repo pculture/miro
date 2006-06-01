@@ -135,10 +135,6 @@ class Application:
         # For overriding
         pass
 
-    def allowShutdown(self):
-        # For overriding
-        pass
-
     def onShutdown(self):
         # For overriding
         pass
@@ -195,12 +191,6 @@ class AppController (NibClassBuilder.AutoBaseClass):
         # This should hopefully avoid weird things like #1722
         app.controller.frame.controller.window().contentView().setNeedsDisplay_(YES)
     
-    def applicationShouldTerminate_(self, application):
-        reply = NSTerminateNow
-        if not self.actualApp.allowShutdown():
-            reply = NSTerminateCancel 
-        return reply
-
     def applicationWillTerminate_(self, notification):
         # Reset the application icon to its default state
         defaultAppIcon = NSImage.imageNamed_('NSApplicationIcon')
@@ -1004,13 +994,6 @@ class UIBackendDelegate:
         buttons = (u'Continue',)
         showCriticalDialog(summary, message, buttons)
         return True
-
-    def saveFailedOnQuit(self, reason):
-        summary = u"%s database save failed" % (config.get(prefs.SHORT_APP_NAME), )
-        message = u"%s was unable to save its database: %s.\nRecent changes may be lost.\n\nQuit Anyway?" % (config.get(prefs.LONG_APP_NAME), reason)
-        buttons = (u'Quit', 'Cancel')
-        result = showCriticalDialog(summary, message, buttons)
-        return (result == 0)
 
     def validateFeedRemoval(self, feedTitle):
         summary = u'Remove Channel'

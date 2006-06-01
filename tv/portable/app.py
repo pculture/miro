@@ -623,19 +623,18 @@ class Controller (frontend.Application):
     def checkTabByObjID(self, id):
         return self.checkTabUsingIndex(indexes.tabObjIDIndex, id)
 
-    def allowShutdown(self):
-        global delegate
-        allow = True
-        downloadsCount = views.downloadingItems.len()
-        if downloadsCount > 0:
-            allow = delegate.interruptDownloadsAtShutdown(downloadsCount)
-        return allow
-
     def downloaderShutdown(self):
         frontend.quit()
 
     @eventloop.asUrgent
     def quit(self):
+        global delegate
+        downloadsCount = views.downloadingItems.len()
+        if downloadsCount > 0:
+            allow = delegate.interruptDownloadsAtShutdown(downloadsCount)
+            if not allow:
+                return
+
         err = storedatabase.saveDatabase()
         if err is None:
             print "DTV: Shutting down Downloader..."
