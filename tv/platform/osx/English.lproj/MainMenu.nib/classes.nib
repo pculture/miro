@@ -6,6 +6,7 @@
                 donate = id; 
                 openFile = id; 
                 showPreferencesWindow = id; 
+                shutdown = id; 
             }; 
             CLASS = AppController; 
             LANGUAGE = ObjC; 

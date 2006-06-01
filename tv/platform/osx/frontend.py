@@ -48,6 +48,9 @@ nc = NSNotificationCenter.defaultCenter()
 def exit(returnCode):
    sys.exit(returnCode)
 
+def quit():
+    NSApplication.sharedApplication().terminate_(nil)
+
 # These are used by the channel guide. This platform uses the
 # old-style 'magic URL' guide API, so we just return None. See
 # ChannelGuideToDtvApi in the Trac wiki for the full writeup.
@@ -316,7 +319,10 @@ class AppController (NibClassBuilder.AutoBaseClass):
     def donate_(self, sender):
         print "NOT IMPLEMENTED"
 
-    itemsAlwaysAvailable = ('checkForUpdates:', 'showPreferencesWindow:', 'openFile:')
+    def shutdown_(self, sender):
+        app.controller.quit()
+
+    itemsAlwaysAvailable = ('checkForUpdates:', 'showPreferencesWindow:', 'openFile:', 'shutdown:')
     def validateMenuItem_(self, item):
         return item.action() in self.itemsAlwaysAvailable
         
@@ -993,12 +999,18 @@ class UIBackendDelegate:
         showInformationalDialog(summary, message)
 
     def saveFailed(self, reason):
-        summary = u'%s database save failed' % \
-            (config.get(prefs.SHORT_APP_NAME), )
+        summary = u'%s database save failed' % (config.get(prefs.SHORT_APP_NAME), )
         message = u"%s was unable to save its database.\nRecent changes may be lost\n\n%s" % (config.get(prefs.LONG_APP_NAME), reason)
         buttons = (u'Continue',)
         showCriticalDialog(summary, message, buttons)
         return True
+
+    def saveFailedOnQuit(self, reason):
+        summary = u"%s database save failed" % (config.get(prefs.SHORT_APP_NAME), )
+        message = u"%s was unable to save its database: %s.\nRecent changes may be lost.\n\nQuit Anyway?" % (config.get(prefs.LONG_APP_NAME), reason)
+        buttons = (u'Quit', 'Cancel')
+        result = showCriticalDialog(summary, message, buttons)
+        return (result == 0)
 
     def validateFeedRemoval(self, feedTitle):
         summary = u'Remove Channel'
