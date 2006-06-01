@@ -459,7 +459,6 @@ class Controller (frontend.Application):
             db.recomputeFilters()
             downloader.startupDownloader()
 
-            channelGuide = getInitialChanelGuide()
             self.setupGlobalFeed('dtv:manualFeed', initiallyAutoDownloadable=False)
             views.availableItems.addAddCallback(self.onAvailableItemsCountChange)
             views.availableItems.addRemoveCallback(self.onAvailableItemsCountChange)
@@ -530,6 +529,7 @@ class Controller (frontend.Application):
             self.frame.selectDisplay(self.tabDisplay, self.frame.channelsDisplay)
             views.allTabs.addRemoveCallback(lambda oldObject, oldIndex: self.checkSelectedTab())
 
+            channelGuide = getInitialChannelGuide()
             self.checkSelectedTab()
 
             # If we have newly available items, provide feedback
@@ -1197,11 +1197,11 @@ class GUIActionHandler:
     def selectTab(self, id, templateNameHint = None):
         controller.selectTab(id)
 
-    # NEEDS: name should change to addAndSelectFeed; then we should create
-    # a non-GUI addFeed to match removeFeed. (requires template updates)
     def openFile(self, path):
         singleclick.openFile(path)
 
+    # NEEDS: name should change to addAndSelectFeed; then we should create
+    # a non-GUI addFeed to match removeFeed. (requires template updates)
     def addFeed(self, url, showTemplate = None, selected = '1'):
         url = feed.normalizeFeedURL(url)
         db.beginUpdate()
@@ -1476,30 +1476,34 @@ def getSingletonDDBObject(view):
     finally:
         view.endRead()
 
-def getInitialChanelGuide():
+def getInitialChannelGuide():
     try:
         channelGuide = getSingletonDDBObject(views.guide)
     except LookupError:
         print "DTV: Spawning Channel Guide..."
         channelGuide = guide.ChannelGuide()
-        feed.Feed('http://del.icio.us/rss/representordie/system:media:video', 
-                initiallyAutoDownloadable=False)
-        feed.Feed('http://www.videobomb.com/rss/posts/front',
-                initiallyAutoDownloadable=False)
-        feed.Feed('http://www.mediarights.org/bm/rss.php?i=1',
-                initiallyAutoDownloadable=False)
-        feed.Feed('http://www.telemusicvision.com/videos/rss.php?i=1',
-                initiallyAutoDownloadable=False)
-        feed.Feed('http://www.rocketboom.com/vlog/quicktime_daily_enclosures.xml',
-                initiallyAutoDownloadable=False)
-        feed.Feed('http://www.channelfrederator.com/rss',
-                initiallyAutoDownloadable=False)
-        feed.Feed('http://revision3.com/diggnation/feed/small.mov',
-                initiallyAutoDownloadable=False)
-        feed.Feed('http://live.watchmactv.com/wp-rss2.php',
-                initiallyAutoDownloadable=False)
-        feed.Feed('http://some-pig.net/videos/rss.php?i=2',
-                initiallyAutoDownloadable=False)
+        initialFeeds = resource.path("initial-feeds.democracy")
+        if os.path.exists(initialFeeds):
+            singleclick.openFile (initialFeeds)
+        else:
+            feed.Feed('http://del.icio.us/rss/representordie/system:media:video', 
+                      initiallyAutoDownloadable=False)
+            feed.Feed('http://www.videobomb.com/rss/posts/front',
+                      initiallyAutoDownloadable=False)
+            feed.Feed('http://www.mediarights.org/bm/rss.php?i=1',
+                      initiallyAutoDownloadable=False)
+            feed.Feed('http://www.telemusicvision.com/videos/rss.php?i=1',
+                      initiallyAutoDownloadable=False)
+            feed.Feed('http://www.rocketboom.com/vlog/quicktime_daily_enclosures.xml',
+                      initiallyAutoDownloadable=False)
+            feed.Feed('http://www.channelfrederator.com/rss',
+                      initiallyAutoDownloadable=False)
+            feed.Feed('http://revision3.com/diggnation/feed/small.mov',
+                      initiallyAutoDownloadable=False)
+            feed.Feed('http://live.watchmactv.com/wp-rss2.php',
+                      initiallyAutoDownloadable=False)
+            feed.Feed('http://some-pig.net/videos/rss.php?i=2',
+                      initiallyAutoDownloadable=False)
     except TooManySingletonsError:
         print "DTV: Multiple Channel Guides!  Using the first one"
         guideView = views.guide
@@ -1521,14 +1525,7 @@ def getInitialChanelGuide():
 
 # if a download finishes downloading during the same session after a
 # migration, the download won't be moved to the new directory because
-# the config hasn't been updated.  Even once we do pass the
-# configuration changes in, there's a race condition if the download
-# finishes before the new config data is passed over.  The fix for
-# this is to always pass the migrate command to remotedownloader.  It
-# can then handle all of that.  Since we never destroy a dlid unless
-# we're deleting the item, we can always tell the downloader to
-# migrate unless we don't have a dlid, in which case we can handle it.
-# I don't see any race conditions in that case.
+# the config hasn't been updated.
 
 @eventloop.asUrgent
 def changeMoviesDirectory(newDir, migrate):
