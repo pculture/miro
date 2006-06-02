@@ -1511,6 +1511,12 @@ class SearchFeedImpl (RSSFeedImpl):
             url += "&sortby=date"
         return url
 
+    def updateUsingXML(self, xml):
+        RSSFeedImpl.updateUsingXML(self, xml)
+        self.searching = False
+        self.ufeed.beginChange()
+        self.ufeed.endChange()
+
     def update(self):
         if self.url is not None and self.url != '':
             RSSFeedImpl.update(self)
