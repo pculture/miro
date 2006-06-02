@@ -331,15 +331,15 @@ def quoteAndFillAttr(value, localVars):
 
 # FIXME: we should parse the attribute values ahead of time
 def fillAttr(_value, _localVars):
-    _l = locals()
-    _l.update(_localVars)
     match = attrPattern.match(_value)
     if match:
-        return ''.join((match.group(1), urlencode(toUni(eval(match.group(2)))), match.group(3)))
+        result = eval(match.group(2), globals(), _localVars)
+        return ''.join((match.group(1), urlencode(toUni(result)), match.group(3)))
     else:
         match = rawAttrPattern.match(_value)
         if match:
-            return ''.join((match.group(1), toUni(eval(match.group(2))), match.group(3)))
+            result = eval(match.group(2), globals(), _localVars)
+            return ''.join((match.group(1), toUni(result), match.group(3)))
         else:
             match = resourcePattern.match(_value)
             if match:

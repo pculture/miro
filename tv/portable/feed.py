@@ -1,27 +1,32 @@
 # FIXME import * is really bad practice..  At the very least, lest keep it at
-# the top, so it cant overwrite otheroue symbols.
+# the top, so it cant overwrite other symbols.
 from item import *
+
 from HTMLParser import HTMLParser,HTMLParseError
-import xml
-from urlparse import urlparse, urljoin
-from urllib import urlopen
-from database import defaultDatabase
-from httpclient import grabURL
-import eventloop
-from copy import copy
-from xhtmltools import unescape,xhtmlify,fixXMLHeader, fixHTMLHeader, toUTF8Bytes, urlencode
 from cStringIO import StringIO
-import traceback #FIXME get rid of this
+from copy import copy
 from datetime import datetime, timedelta
+from gettext import gettext as _
 from inspect import isfunction
 from new import instancemethod
-from iconcache import iconCacheUpdater, IconCache
-import resource
-import config
-import prefs
+from urllib import urlopen
+from urlparse import urlparse, urljoin
+from xhtmltools import unescape,xhtmlify,fixXMLHeader, fixHTMLHeader, toUTF8Bytes, urlencode
 import os
+import string
 import re
+import traceback 
+import xml
+
+from database import defaultDatabase
+from httpclient import grabURL
+from iconcache import iconCacheUpdater, IconCache
 import app
+import config
+import dialogs
+import eventloop
+import prefs
+import resource
 import views
 
 whitespacePattern = re.compile(r"^[ \t\r\n]*$")
@@ -81,26 +86,36 @@ def addFeedFromWebPage(url):
 
 # URL validitation and normalization
 def validateFeedURL(url):
-    return re.match(r"^(http|https|feed)://[^/].*", url) is not None
+    return re.match(r"^(http|https|feed)://[^/]+/.*", url) is not None
 
 def normalizeFeedURL(url):
     # Valid URL are returned as-is
     if validateFeedURL(url):
         return url
+
+    originalURL = url
     
     # Check valid schemes with invalid separator
     match = re.match(r"^(http|https|feed):/*(.*)$", url)
     if match is not None:
-        return "%s://%s" % match.group(1,2)
+        url = "%s://%s" % match.group(1,2)
 
     # Replace invalid schemes by http
     match = re.match(r"^(.*:/*)*(.*)$", url)
     if match is not None:
-        return "http://%s" % match.group(2)
+        url = "http://%s" % match.group(2)
 
-    # We weren't able to normalize
-    print "DTV: unable to normalize URL %s" % url
-    return url
+    # Make sure there is a leading / character in the path
+    match = re.match(r"^(http|https|feed)://[^/]*$", url)
+    if match is not None:
+        url = url + "/"
+
+    if not validateFeedURL(url):
+        print "DTV: unable to normalize URL %s" % originalURL
+        return originalURL
+    else:
+        print "normalized: %s -> %s" % (originalURL, url)
+        return url
 
 
 ##
@@ -681,9 +696,6 @@ class Feed(DDBObject):
             #print "added async callback to create feed %s" % self.origURL
         if newFeed:
             self.actualFeed = newFeed
-            # Yeah, this is sort of cheating. But setting variables is
-            # thread safe thanks to the GIL, so this doesn't need to be
-            # locked
             self.loading = False
 
             self.beginChange()
@@ -699,20 +711,13 @@ class Feed(DDBObject):
         # FIXME: This probably should be split up a bit. The logic is
         #        a bit daunting
 
-        # Holds our new FeedImpl
-        temp = None
-        
-        try:
-            modified = info['last-modified']
-        except KeyError:
-            modified = None
-        try:
-            etag = info['etag']
-        except KeyError:
-            etag = None
+        modified = info.get('last-modified')
+        etag = info.get('etag')
+        contentType = info.get('content-type', 'text/html')
+
         #Definitely an HTML feed
-        if (info['content-type'].startswith('text/html') or 
-            info['content-type'].startswith('application/xhtml+xml')):
+        if (contentType.startswith('text/html') or 
+            contentType.startswith('application/xhtml+xml')):
             #print "Scraping HTML"
             html = info['body']
             if info.has_key('charset'):
@@ -720,18 +725,18 @@ class Feed(DDBObject):
                 charset = info['charset']
             else:
                 charset = None
-            if delegate.isScrapeAllowed(info['updated-url']):
-                temp = ScraperFeedImpl(info['updated-url'],initialHTML=html,etag=etag,modified=modified, charset=charset, ufeed=self)
+            self.askForScrape(info, html, charset)
         #It's some sort of feed we don't know how to scrape
-        elif (info['content-type'].startswith('application/rdf+xml') or
-              info['content-type'].startswith('application/atom+xml')):
+        elif (contentType.startswith('application/rdf+xml') or
+              contentType.startswith('application/atom+xml')):
             #print "ATOM or RDF"
             html = info['body']
             if info.has_key('charset'):
                 xmldata = fixXMLHeader(html,info['charset'])
             else:
                 xmldata = html
-            temp = RSSFeedImpl(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, ufeed=self)
+            self.finishGenerateFeed(RSSFeedImpl(info['updated-url'],
+                initialHTML=xmldata,etag=etag,modified=modified, ufeed=self))
             # If it's not HTML, we can't be sure what it is.
             #
             # If we get generic XML, it's probably RSS, but it still could
@@ -740,11 +745,11 @@ class Feed(DDBObject):
             # application/rss+xml links are definitely feeds. However, they
             # might be pre-enclosure RSS, so we still have to download them
             # and parse them before we can deal with them correctly.
-        elif (info['content-type'].startswith('application/rss+xml') or
-              info['content-type'].startswith('application/podcast+xml') or
-              info['content-type'].startswith('text/xml') or 
-              info['content-type'].startswith('application/xml') or
-              (info['content-type'].startswith('text/plain') and
+        elif (contentType.startswith('application/rss+xml') or
+              contentType.startswith('application/podcast+xml') or
+              contentType.startswith('text/xml') or 
+              contentType.startswith('application/xml') or
+              (contentType.startswith('text/plain') and
                info['updated-url'].endswith('.xml'))):
             #print " It's doesn't look like HTML..."
             html = info["body"]
@@ -761,36 +766,64 @@ class Feed(DDBObject):
                 handler = RSSLinkGrabber(info['redirected-url'],charset)
                 parser.setContentHandler(handler)
                 parser.parse(StringIO(xmldata))
-            except xml.sax.SAXException: #it doesn't parse as RSS, so it must be HTML
+            except xml.sax.SAXException: 
+                #it doesn't parse as RSS, so it must be HTML
                 #print " Nevermind! it's HTML"
-                if delegate.isScrapeAllowed(info['updated-url']):
-                    temp = ScraperFeedImpl(info['updated-url'],initialHTML=html,etag=etag,modified=modified, charset=charset, ufeed=self)
+                self.askForScrape(info, html, charset)
             except UnicodeDecodeError:
                 print "Unicode issue parsing... %s" % xmldata[0:300]
                 traceback.print_exc()
+                self.finishGenerateFeed(None)
+                if removeOnError:
+                    self.remove()
+
             if handler.enclosureCount > 0 or handler.itemCount == 0:
                 #print " It's RSS with enclosures"
-                temp = RSSFeedImpl(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, ufeed=self)
+                self.finishGenerateFeed(RSSFeedImpl(info['updated-url'],
+                    initialHTML=xmldata, etag=etag, modified=modified,
+                    ufeed=self))
             else:
                 #print " It's pre-enclosure RSS"
-                if delegate.isScrapeAllowed(info['updated-url']):
-                    temp = ScraperFeedImpl(info['updated-url'],initialHTML=xmldata,etag=etag,modified=modified, charset=charset, ufeed=self)
+                self.askForScrape(info, xmldata, charset)
         else:
-            print "DTV doesn't know how to deal with "+info['content-type']+" feeds"
+            print "DTV doesn't know how to deal with "+contentType+" feeds"
+            self.finishGenerateFeed(None)
+            if removeOnError:
+                self.remove()
 
-        # At this point, temp is the correct FeedImpl
+    def finishGenerateFeed(self, feedImpl):
         self.beginRead()
         try:
             self.loading = False
-            if temp is None:
-                self.errorState = True
+            if feedImpl is not None:
+                self.actualFeed = feedImpl
+                self.errorState = False
             else:
-                self.actualFeed = temp
+                self.errorState = True
         finally:
             self.endRead()
 
-        if removeOnError and self.errorState:
-            self.remove()
+    def askForScrape(self, info, initialHTML, charset):
+        title = _("Channel is not compatible with Democracy!")
+        descriptionTemplate = string.Template(_("""\
+    But we'll try our best to grab the files. It may take extra time to list the \
+    videos, and descriptions may look funny.  Please contact the publishers of \
+    $url and ask if they can supply a feed in a format that will work with \
+    Democracy."""))
+        description = descriptionTemplate.substitute(url=info['updated-url'])
+        dialog = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_YES,
+                dialogs.BUTTON_NO)
+
+        def callback(dialog):
+            if dialog.choice == dialogs.BUTTON_YES:
+                impl = ScraperFeedImpl(info['updated-url'],
+                    initialHTML=initialHTML, etag=info.get('etag'),
+                    modified=info.get('modified'), charset=charset,
+                    ufeed=self) 
+                self.finishGenerateFeed(impl)
+            else:
+                self.remove()
+        dialog.run(callback)
 
     def getActualFeed(self):
         return self.actualFeed
@@ -1085,8 +1118,8 @@ class ScraperFeedImpl(FeedImpl):
             self.linkHistory[url]['etag'] = etag
         if not modified is None:
             self.linkHistory[url]['modified'] = modified
-        self.scheduleUpdateEvents(0)
         self.setUpdateFrequency(360)
+        self.scheduleUpdateEvents(0)
 
     def getMimeType(self,link):
         raise StandardError, "ScraperFeedImpl.getMimeType not implemented"

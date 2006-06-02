@@ -78,16 +78,6 @@ function volumeKnobUp(event) {
  Video Progress Slider
  *****************************************************************************/
 
-function videoEnablePauseButton() {
-    var playButton = document.getElementById("bottom-buttons-play");
-    playButton.className = "bottom-buttons-pause";
-}
-
-function videoDisablePauseButton() {
-    var playButton = document.getElementById("bottom-buttons-play");
-    playButton.className = "bottom-buttons-play";
-}
-
 var PROGRESS_SLIDER_LEFT = 61;
 var PROGRESS_SLIDER_RIGHT = 204;
 var PROGRESS_SLIDER_WIDTH = PROGRESS_SLIDER_RIGHT - PROGRESS_SLIDER_LEFT;
@@ -180,7 +170,7 @@ function setupHandlers() {
         pybridge.playPause();
     };
     document.getElementById("bottom-buttons-stop").onclick = function() {
-        pybridge.playPause();
+        pybridge.stop();
     };
     document.getElementById("bottom-buttons-next").onclick = function() {
         pybridge.skip(1);

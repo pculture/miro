@@ -79,8 +79,19 @@ VLCRenderer.prototype = {
     progressSlider.style.left = newSliderPos+"px";
   },
 
+  showPauseButton: function() {
+    var playButton = this.document.getElementById("bottom-buttons-play");
+    playButton.className = "bottom-buttons-pause";
+  },
+
+  showPlayButton: function() {
+    var playButton = this.document.getElementById("bottom-buttons-play");
+    playButton.className = "bottom-buttons-play";
+  },
+
   reset: function() {
     this.stop();
+    this.showPlayButton();
   },
 
   canPlayURL: function(url) {
@@ -98,16 +109,19 @@ VLCRenderer.prototype = {
     this.scheduleUpdates = true;
     this.startedPlaying = false;
     this.updateVideoControls();
+    this.showPauseButton();
   },
 
   pause: function() {
     this.scheduleUpdates = false;
     this.vlc.pause();
+    this.showPlayButton();
   },
 
   stop: function() {
     this.scheduleUpdates = false;
     this.vlc.stop();
+    this.showPlayButton();
   },
 
   goToBeginningOfMovie: function() {

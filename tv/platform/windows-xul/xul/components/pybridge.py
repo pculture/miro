@@ -170,5 +170,9 @@ class PyBridge:
         app.controller.playbackController.playPause()
 
     @eventloop.asUrgent
+    def stop(self):
+        app.controller.playbackController.stop()
+
+    @eventloop.asUrgent
     def skip(self, step):
         app.controller.playbackController.skip(step)

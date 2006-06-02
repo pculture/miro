@@ -1,9 +1,11 @@
-from httpclient import grabURL
+import xml.dom.minidom
+import traceback
+
 import config
 import prefs
-import xml.dom.minidom
 import eventloop
 import util
+from httpclient import grabURL
 
 # Pass in a connection to the frontend
 def setDelegate(newDelegate):
@@ -24,7 +26,13 @@ def _checkForUpdates(info, notifyIfUpToDate):
         platform = config.get(prefs.APP_PLATFORM)
         serial = int(config.get(prefs.APP_SERIAL))
         updated = False
-        domObj = xml.dom.minidom.parseString(info['body'])
+        body = info['body']
+        try:
+            domObj = xml.dom.minidom.parseString(body)
+        except:
+            print "WARNING: Error parsing autoupdate page"
+            traceback.print_exc()
+            return
         versions = domObj.getElementsByTagNameNS("http://www.getdemocracy.com/versionfile/1.0","version")
         for version in versions:
             attributes = version.attributes
