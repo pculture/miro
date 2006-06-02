@@ -231,21 +231,6 @@ class Item(DDBObject):
             self.endRead()
         return ret
 
-    def isTorrent(self):
-        # FIXME: we need to reorganize the auto downloader to use the async
-        # grabURL
-        return False
-        url = self.getURL()
-        info = grabURL(url, "HEAD")
-        if info is not None:
-            return info['content-type'] == 'application/x-bittorrent'
-        # HEAD request didn't work, try GET
-        info = grabURL(url, "GET")
-        if info is None:
-            return False
-        info["file-handle"].close()
-        return info['content-type'] == 'application/x-bittorrent'
-
     def download(self,autodl=False):
         eventloop.addIdle(lambda : self.actualDownload(autodl), "Spawning Download %s" % self.getURL())
 

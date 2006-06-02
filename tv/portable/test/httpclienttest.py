@@ -188,6 +188,66 @@ class NetworkBufferTest(DemocracyTestCase):
         # check to make sure the value doesn't change as a result
         self.assertEquals(self.buffer.getValue(), "ONETWOTHREE")
 
+class AsyncSocketTest(EventLoopTest):
+    def setUp(self):
+        self.data = None
+        self.errbackCalled = False
+        self.callbackCalled = False
+        self.fakeCallbackError = False
+        EventLoopTest.setUp(self)
+
+    def callback(self, data):
+        if self.fakeCallbackError:
+            1/0
+        self.data = data
+        self.callbackCalled = True
+        eventloop.quit()
+
+    def errback(self, error):
+        self.data = error
+        self.errbackCalled = True
+        eventloop.quit()
+
+    def testCloseDuringOpenConnection(self):
+        # Test opening a connection, then closing the HTTPConnection before it
+        # happens.  The openConnection callback shouldn't be called
+        #
+        # open a socket on localhost and try to connect to that, this should
+        # be pretty much instantanious, so we don't need a long timeout to
+        # runEventLoop
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.bind( ('127.0.0.1', 0))
+        sock.listen(1)
+        host, port = sock.getsockname()
+        try:
+            conn = httpclient.AsyncSocket()
+            conn.openConnection(host, port, self.callback, self.errback)
+            conn.closeConnection()
+            self.runEventLoop(timeout=1, timeoutNormal=True)
+            self.assert_(not self.callbackCalled)
+            self.assert_(self.errbackCalled)
+        finally:
+            sock.close()
+
+    def testCloseDurringAcceptConnection(self):
+        # Test opening a connection, then closing the HTTPConnection before it
+        # happens.  The openConnection callback shouldn't be called
+        #
+        # open a socket on localhost and try to connect to that, this should
+        # be pretty much instantanious, so we don't need a long timeout to
+        # runEventLoop
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            conn = httpclient.AsyncSocket()
+            conn.acceptConnection('127.0.0.1', 0, self.callback, self.errback)
+            sock.connect((conn.addr, conn.port))
+            conn.closeConnection()
+            self.runEventLoop(timeout=1, timeoutNormal=True)
+            self.assert_(not self.callbackCalled)
+            self.assert_(self.errbackCalled)
+        finally:
+            sock.close()
+
 class ConnectionHandlerTest(EventLoopTest):
     def setUp(self):
         super(ConnectionHandlerTest, self).setUp()
@@ -266,35 +326,19 @@ class ConnectionHandlerTest(EventLoopTest):
         # just make sure it doesn't throw an exception
         str(self.connectionHandler)
 
-class HTTPClientTestBase(EventLoopTest):
+class HTTPClientTestBase(AsyncSocketTest):
     def setUp(self):
-        EventLoopTest.setUp(self)
-        self.data = None
-        self.errbackCalled = False
-        self.callbackCalled = False
+        AsyncSocketTest.setUp(self)
         self.testRequest = TestingHTTPConnection()
         self.testRequest.openConnection('foo.com', 80)
         self.testRequest.sendRequest(self.callback, self.errback, 
                 method='GET', path='/bar/baz;123?a=b') 
-        self.fakeCallbackError = False
         self.authDelegate = TestingAuthDelegate()
         dialogs.setDelegate(self.authDelegate)
 
     def tearDown(self):
         # clear out any HTTPAuth objects in there
-        EventLoopTest.tearDown(self)
-
-    def callback(self, data):
-        if self.fakeCallbackError:
-            1/0
-        self.data = data
-        self.callbackCalled = True
-        eventloop.quit()
-
-    def errback(self, error):
-        self.data = error
-        self.errbackCalled = True
-        eventloop.quit()
+        AsyncSocketTest.tearDown(self)
 
 class HTTPClientTest(HTTPClientTestBase):
     def testScheme(self):
@@ -628,7 +672,7 @@ HELLO: WORLD\r\n"""
     def testChunkedData(self):
         url = 'http://jigsaw.w3.org/HTTP/ChunkedScript'
         httpclient.grabURL(url, self.callback, self.errback)
-        self.runEventLoop(timeout=2)
+        self.runEventLoop(timeout=5)
         header = """\
 This output will be chunked encoded by the server, if your client is HTTP/1.1
 Below this line, is 1000 repeated lines of 0-9.
@@ -646,7 +690,7 @@ Below this line, is 1000 repeated lines of 0-9.
     def testCookie(self):
         url = 'http://participatoryculture.org/democracytest/cookie.php'
         httpclient.grabURL(url, self.callback, self.errback)
-        self.runEventLoop(timeout=2)
+        self.runEventLoop(timeout=5)
         self.assertEquals(len(self.data['cookies']),1)
         self.assert_(self.data['cookies'].has_key('DemocracyTestCookie'))
         self.assertEquals(self.data['cookies']['DemocracyTestCookie']['Value'], 'foobar')

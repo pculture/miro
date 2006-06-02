@@ -410,10 +410,11 @@ class HTTPDownloader(BGDownloader):
     def handleWriteError(self, exc):
         msg = "Could not write to %s: %s" % (self.filename, exc)
         self.handleError(msg)
-        try:
-            self.filehandle.close()
-        except:
-            pass
+        if self.filehandle is not None:
+            try:
+                self.filehandle.close()
+            except:
+                pass
         try:
             os.remove(self.filename)
         except:
@@ -494,7 +495,7 @@ class HTTPDownloader(BGDownloader):
         else:
             self.requestID = None
             if isinstance(error, httpclient.HTTPError):
-                print "Got HTTP Error: ", error
+                print "Got HTTP Error: %r" % error
                 traceback.print_stack()
                 reason = "HTTP error"
             elif isinstance(error, httpclient.ConnectionError):
@@ -576,13 +577,14 @@ class HTTPDownloader(BGDownloader):
     # file.
     def stop(self):
         if self.state == "downloading":
-            try:
-                if not self.filehandle.closed:
-                    self.filehandle.close()
-                remove(self.filename)
-            except:
-                print "WARNING: error removing file in downloader.stop()"
-                traceback.print_exc()
+            if self.filehandle is not None:
+                try:
+                    if not self.filehandle.closed:
+                        self.filehandle.close()
+                    remove(self.filename)
+                except:
+                    print "WARNING: error removing file in downloader.stop()"
+                    traceback.print_exc()
         self.currentSize = 0
         self.cancelRequest()
         self.state = "stopped"

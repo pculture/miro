@@ -1650,3 +1650,10 @@ class HTMLFeedURLParser(HTMLParser):
                                          'text/xml',
                                          'application/xml']):
             self.link = urljoin(self.baseurl,attrdict['href'])
+
+def expireItems():
+    try:
+        for feed in views.feeds:
+            feed.expireItems()
+    finally:
+        eventloop.addTimeout(300, expireItems, "Expire Items")

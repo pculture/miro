@@ -142,49 +142,62 @@ class AsyncSocket(object):
         self.socket = None
         self.readCallback = None
         self.closeCallback = closeCallback
+        self.connectionErrback = None
 
-    def openConnection(self, host, port, callback, errback, listen = False):
+    def openConnection(self, host, port, callback, errback):
         """Open a connection.  On success, callback will be called with this
         object.
         """
 
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.setblocking(0)
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.setblocking(0)
+        self.connectionErrback = errback
         def onAddressLookup(address):
+            if self.socket is None:
+                # the connection was closed while we were calling gethostbyname
+                return
             try:
-                sock.connect_ex((address, port))
+                self.socket.connect_ex((address, port))
             except Exception, e:
                 trapCall(errback, e)
             else:
-                eventloop.addWriteCallback(sock, onWriteReady)
+                eventloop.addWriteCallback(self.socket, onWriteReady)
         def onWriteReady():
-            eventloop.removeWriteCallback(sock)
-            rv = sock.getsockopt(socket.SOL_SOCKET, socket.SO_ERROR)
+            eventloop.removeWriteCallback(self.socket)
+            rv = self.socket.getsockopt(socket.SOL_SOCKET, socket.SO_ERROR)
             if rv == 0:
-                self.socket = sock
                 trapCall(callback, self)
             else:
                 msg = errno.errorcode[rv]
                 trapCall(errback, ConnectionError((rv, msg)))
+            self.connectionErrback = None
+
         eventloop.callInThread(onAddressLookup, errback,
                 socket.gethostbyname, host)
 
     def acceptConnection(self, host, port, callback, errback):
         def finishAccept():
-            eventloop.removeReadCallback(sock)
-            (self.socket, addr) = sock.accept()
+            eventloop.removeReadCallback(self.socket)
+            (self.socket, addr) = self.socket.accept()
             trapCall(callback, self)
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.bind( (host, port) )
-        (self.addr, self.port) = sock.getsockname()
-        sock.listen(63)
-        eventloop.addReadCallback(sock, finishAccept)
+            self.connectionErrback = None
+
+        self.connectionErrback = errback
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.bind( (host, port) )
+        (self.addr, self.port) = self.socket.getsockname()
+        self.socket.listen(63)
+        eventloop.addReadCallback(self.socket, finishAccept)
 
     def closeConnection(self):
         if self.isOpen():
             eventloop.stopHandlingSocket(self.socket)
             self.socket.close()
             self.socket = None
+            if self.connectionErrback is not None:
+                error = ConnectionError("Connection closed")
+                trapCall(self.connectionErrback, error)
+                self.connectionErrback = None
 
     def isOpen(self):
         return self.socket is not None
@@ -283,9 +296,7 @@ class AsyncSSLStream(AsyncSocket):
         super(AsyncSSLStream, self).__init__(closeCallback)
         self.interruptedOperation = None
 
-    def openConnection(self, host, port, callback, errback, listen = False):
-        if listen:
-            raise ValueError("We don't support listening on SSL streams")
+    def openConnection(self, host, port, callback, errback):
         def onSocketOpen(self):
             self.socket.setblocking(1)
             eventloop.callInThread(onSSLOpen, errback, socket.ssl,
@@ -378,13 +389,13 @@ class ConnectionHandler(object):
         self.stream = self.streamFactory(closeCallback=self.closeCallback)
         self.changeState('initializing')
 
-    def openConnection(self, host, port, callback, errback, listen = False):
+    def openConnection(self, host, port, callback, errback):
         self.host = host
         self.port = port
         def callbackIntercept(asyncSocket):
             if callback:
                 trapCall(callback, self)
-        self.stream.openConnection(host, port, callbackIntercept, errback, listen)
+        self.stream.openConnection(host, port, callbackIntercept, errback)
 
     def closeConnection(self):
         if self.stream.isOpen():

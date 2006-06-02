@@ -37,5 +37,5 @@ manualFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:manualFeed')
 directoryFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:directoryfeed')
 
 availableItems = items.filter(lambda x:x.getState() == 'finished' or x.getState() == 'uploading')
-downloadingItems = items.filter(lambda x:x.getState() == 'downloading')
+downloadingItems = items.filter(filters.downloadingItems)
 

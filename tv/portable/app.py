@@ -522,6 +522,7 @@ class Controller (frontend.Application):
 
             eventloop.addTimeout (300, storedatabase.saveDatabaseIdle, "Database Save")
             eventloop.addTimeout (30, autoupdate.checkForUpdates, "Check for updates")
+            feed.expireItems()
 
             # Set up tab list (on left); this will automatically set up the
             # display area (on right) and currentSelectedTab
