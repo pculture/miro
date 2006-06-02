@@ -101,7 +101,7 @@ class ViewTest(DemocracyTestCase):
     pattern = re.compile("^\n<h1>view test template</h1>\n<span id=\"([^\"]+)\"/>\n", re.S)
     doublePattern = re.compile("^\n<h1>view test template</h1>\n<span id=\"([^\"]+)\"/>\n<span id=\"([^\"]+)\"/>\n", re.S)
     updatePattern = re.compile("^\n<h1>update test template</h1>\n<span id=\"([^\"]+)\"/>\n", re.S)
-    hidePattern = re.compile("^\n<h1>update hide test template</h1>\n<div[^>]+id=\"([^\"]+)\"", re.S)
+    hidePattern = re.compile("^\n<h1>update hide test template</h1>\n<div class=\"foo\" id=\"([^\"]+)\"", re.S)
     itemPattern = re.compile("<div id=\"(.*?)\">\n<span>testview\d*</span>\n<span>&lt;span&gt;object&lt;/span&gt;</span>\n<span><span>object</span></span>\n\n<div>\nhideIf:False\n<span>This is an include</span>\n\n<span>This is a template include</span>\n\n<span>&lt;span&gt;This is a database replace&lt;/span&gt;</span>\n<span><span>This is a database replace</span></span>\n</div>\n</div>",re.S)
 
     def setUp(self):

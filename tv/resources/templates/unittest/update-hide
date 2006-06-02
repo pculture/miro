@@ -19,7 +19,7 @@ test.templatetest.ranOnUnload += 1
 </head>
 <body>
 <h1>update hide test template</h1>
-<div t:hideIf="len(testview) % 2 == 0" t:updateHideOnView="testview">
+<div class="foo" t:hideIf="len(testview) % 2 == 0" t:updateHideOnView="testview">
 <span t:replace="testview[0].html" />
 <span t:replaceMarkup="testview[1].html" />
 <div t:hideIf="True">

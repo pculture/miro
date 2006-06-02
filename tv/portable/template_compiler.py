@@ -82,7 +82,7 @@ def genHideSection(varname, tid, prefix, args):
     return out
 
 def genQuoteAndFillAttr(varname, tid, prefix, value):
-    return '%s%s%s.write(quoteAndFillAttr(%s,locals()))\n'%(out,prefix,varname,repr(value))
+    return '%s%s.write(quoteAndFillAttr(%s,locals()))\n'%(prefix,varname,repr(value))
     
 def genUpdateHideOnView(varname, tid, prefix, args):
     (viewName, ifValue, attrs, nodeId) = args
@@ -601,7 +601,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         for key in attrs.keys():
             if not key in ['t:hideIf','t:updateHideOnView','style']:
                 self.addText(" %s=" % key)
-                self.addInstruction(genQuoteAndFill, attrs[key])
+                self.addInstruction(genQuoteAndFillAttr, attrs[key])
         self.addText(' id="%s"' % quoteattr(nodeId))
         self.addInstruction(genUpdateHideOnView,(viewName, ifValue, attrs, nodeId))
 
