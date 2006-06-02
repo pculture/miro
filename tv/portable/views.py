@@ -38,4 +38,6 @@ directoryFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:directoryfeed')
 
 availableItems = items.filter(lambda x:x.getState() == 'finished' or x.getState() == 'uploading')
 downloadingItems = items.filter(filters.downloadingItems)
+downloadingItemsExternal = items.filter(filters.downloadingItemsExternal)
+downloadingItemsNonExternal = items.filter(filters.downloadingItemsNonExternal)
 

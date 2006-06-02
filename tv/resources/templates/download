@@ -14,11 +14,14 @@
 global searchFilter
 searchFilter = lambda x: filters.matchingItems(x, None)
 
-allDlItems = views.items.filter(filters.downloadingItems)
+allDlItems = views.items.filter(filters.downloadingItemsNonExternal)
+allExternalTorrents = views.items.filter(filters.downloadingItemsExternal)
 
 matchingDlItems = allDlItems.filter(lambda x:searchFilter(x))
+matchingExternalTorrents = allExternalTorrents.filter(lambda x:searchFilter(x))
 
 dlItems = matchingDlItems.sort(sorts.item)
+externalTorrents = matchingExternalTorrents.sort(sorts.item)
 
 def updateSearchString(newSearch):
     global searchFilter
@@ -27,6 +30,7 @@ def updateSearchString(newSearch):
     else:
         searchFilter = lambda x: filters.matchingItems(x, newSearch)
     allDlItems.recomputeFilter(matchingDlItems)
+    externalTorrents.recomputeFilter(matchingExternalTorrents)
 
 ]]>
     </t:execOnLoad>
@@ -60,6 +64,16 @@ allDlItems.unlink()
  		</span>
 	</div>
 	<!-- / VIDEOS -->
+        <div id="external-torrent-bar" class="main-channelbar">
+		<h1 i18n:translate="">External Torrents 
+			<a il8n:translate="" href="#" onclick="return eventURL('action:clearCompletedTorrents');" style="text-decoration: underline; margin-left: 15px; font-weight: normal;" title="Clear Completed">Clear Completed</a>
+		</h1>
+        </div>
+	<div>
+		<span t:repeatForView="externalTorrents">		
+		<t:includeTemplate filename="download-item" />
+ 		</span>
+	</div>
 	
 </div>
 

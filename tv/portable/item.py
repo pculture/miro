@@ -372,6 +372,17 @@ class Item(DDBObject):
         self.endRead()
         return ret
 
+    def looksLikeTorrent(self):
+        """Returns true if we think this item is a torrent.  (For items that
+        haven't been downloaded this uses the file extension which isn't
+        totally reliable).
+        """
+
+        if len(self.downloaders) > 0:
+            return self.downloaders[0].getType() == 'bittorrent'
+        else:
+            return self.getURL().endswith('.torrent')
+
     ##
     # Returns formatted XHTML with release date, duration, format, and size
     def getDetails(self):
@@ -388,6 +399,8 @@ class Item(DDBObject):
             details.append('<span class="details-format">%s</span>' % escape(format))
         if len(size) > 0:
             details.append('<span class="details-size">%s</span>' % escape(size))
+        if self.looksLikeTorrent():
+            details.append('<span class="details-torrent" il8n:translate="">TORRENT</span>')
         out = ' - '.join(details)
         return '<div class="main-video-details-under">%s</div>' % out
 

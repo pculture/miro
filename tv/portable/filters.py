@@ -19,6 +19,12 @@ def undownloadedItems(obj):
 def downloadingItems(obj):
     return obj.getState() == 'downloading'
 
+def downloadingItemsNonExternal(obj):
+    return obj.getState() == 'downloading' and obj.feed.url != 'dtv:manualFeed'
+
+def downloadingItemsExternal(obj):
+    return obj.getState() == 'downloading' and obj.feed.url == 'dtv:manualFeed'
+
 def unwatchedItems(obj):
     return (obj.getState() in ['finished','uploading'] or
             obj.getState() == 'saved' and not obj.getSeen())
