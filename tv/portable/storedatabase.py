@@ -445,6 +445,7 @@ def saveDatabase(db=None, pathname=None):
 def saveDatabaseIdle (db=None, pathname=None):
     err = saveDatabase(db, pathname)
     if err:
+        print "Save failed: %s" % (err,)
         try:
             err = err.strerror
         except:
