@@ -32,7 +32,13 @@ class NotReadyToSendError(Exception):
 class ConnectionError(Exception):
     pass
 class HTTPError(Exception):
-    pass
+    def __init__(self, description=None):
+        self.description = description
+    def __str__(self):
+        if self.description is not None:
+            return "%s: %s" % (self.__class__, self.description)
+        else:
+            return str(self.__class__)
 class BadStatusLine(HTTPError):
     pass
 class BadHeaderLine(HTTPError):
