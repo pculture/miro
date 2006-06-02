@@ -212,14 +212,7 @@ class SocketHandler:
             raise socket.error('unable to open server port')
         if upnp:
             if not UPnP_open_port(port):
-                for server in self.servers.values():
-                    try:
-                        server.close()
-                    except:
-                        pass
-                    self.servers = None
-                    self.interfaces = None
-                raise socket.error(UPnP_ERROR)
+                print "WARNING: can't open port with UPnP"
             self.port_forwarded = port
         self.port = port
 
