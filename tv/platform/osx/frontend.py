@@ -1076,45 +1076,14 @@ class UIBackendDelegate:
 
         print "DTV: Launching Download Daemon"
         pool = NSAutoreleasePool.alloc().init()
-        
         bundle = NSBundle.mainBundle()
-        pyexe = self.__findPythonExecutableInBundle(bundle)
-        if pyexe is not None:
-            import imp
-            mfile, mpath, mdesc = imp.find_module('dl_daemon')
-            daemonPrivatePath = os.path.join(mpath, 'private')
-            pythonPath = list(sys.path)
-            pythonPath[0:0] = [daemonPrivatePath]
-
-            env['PYTHONPATH'] = ':'.join(pythonPath)
-            env['BUNDLEPATH'] = bundle.bundlePath()
-            env['RESOURCEPATH'] = bundle.resourcePath()
-            env['BUNDLEIDENTIFIER'] = bundle.bundleIdentifier()
-            env['DYLD_LIBRARY_PATH'] = os.path.join(bundle.bundlePath(), 'Contents', 'Frameworks')
-
-            script = bundle.pathForResource_ofType_('Democracy_Downloader', 'py')
-
-            task = NSTask.alloc().init()
-            task.setLaunchPath_(pyexe)
-            task.setArguments_([script])
-            task.setEnvironment_(env)
-            task.launch()
-        else:
-            print "DTV: WARNING! Unable to launch python subprocess for the downloader"
-        
+        exe = bundle.executablePath()
+        task = NSTask.alloc().init()
+        task.setLaunchPath_(exe)
+        task.setArguments_(['download_daemon'])
+        task.setEnvironment_(env)
+        task.launch()
         del pool
-        
-    def __findPythonExecutableInBundle(self, bundle):
-        info = bundle.infoDictionary()
-        for location in info['PyRuntimeLocations']:
-            if location.startswith('@executable_path'):
-                location = location.replace('@executable_path', os.path.dirname(bundle.executablePath()))
-            location = os.path.dirname(location)
-            location = os.path.join(location, "bin", "python")
-            location = os.path.normpath(location)
-            if os.path.exists(location):
-                return location
-        return None
 
 class ExceptionReporterController (NibClassBuilder.AutoBaseClass):
     

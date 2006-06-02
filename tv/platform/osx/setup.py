@@ -87,7 +87,6 @@ print "Building Democracy Player v%s (%s)" % (conf['appVersion'], conf['appRevis
 
 resourceFiles = ['Resources/%s' % x for x in os.listdir('Resources')]
 resourceFiles.append('English.lproj')
-resourceFiles.append('%s/portable/dl_daemon/Democracy_Downloader.py' % root)
 
 py2app_options = dict(
     plist = infoPlist,
