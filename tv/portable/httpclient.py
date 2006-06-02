@@ -1413,7 +1413,8 @@ def grabURL(url, callback, errback, headerCallback=None,
     client = HTTPClient(url, callback, errback, headerCallback,
             bodyDataCallback, method, start, etag, modified,
             findHTTPAuth, cookies)
-    return client.startRequest()
+    id = client.startRequest()
+    return CancellableId (id)
 
 def grabHeadersFinalCallback (info, callback, requestID):
     callback (info)
@@ -1438,7 +1439,13 @@ def grabHeaders (url, callback, errback, findHTTPAuth=None):
                         lambda (info): grabHeadersCallback (info, url, callback, errback, findHTTPAuth),
                         lambda (error): grabHeadersErrback (url, callback, errback, findHTTPAuth),
                         None, None, "HEAD", 0, None, None, findHTTPAuth)
-    return client.startRequest()
+    client.startRequest()
 
 def cancelRequest(requestId):
     HTTPClient.connectionPool.cancelRequest(requestId)
+
+class CancellableId:
+    def __init__ (self, id):
+        self.id = id
+    def cancel(self):
+        cancelRequest (self.id)

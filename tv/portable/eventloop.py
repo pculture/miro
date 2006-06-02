@@ -20,6 +20,8 @@ from BitTornado.clock import clock
 
 import util
 
+#cumulative = {}
+
 class DelayedCall(object):
     def __init__(self, function, name, args, kwargs):
         self.function = function
@@ -33,13 +35,22 @@ class DelayedCall(object):
 
     def dispatch(self):
         if not self.canceled:
-            when = "While handling timeout (%s)" % self.name
+            when = "While handling %s" % self.name
             #start = clock()
             util.trapCall(when, self.function, *self.args, **self.kwargs)
             #end = clock()
             #if end-start > 0.05:
             #    print "WARNING: %s too slow (%.3f secs)" % (
             #        self.name, end-start)
+            #try:
+            #    total = cumulative[self.name]
+            #except:
+            #    total = 0
+            #total += end - start
+            #cumulative[self.name] = total
+            #if total > 0.1:
+            #    print "WARNING: %s cumulative is too slow (%.3f secs)" % (
+            #        self.name, total)
 
 class Scheduler(object):
     def __init__(self):
@@ -51,7 +62,7 @@ class Scheduler(object):
         if kwargs is None:
             kwargs = {}
         scheduledTime = clock() + delay
-        dc = DelayedCall(function, name, args, kwargs)
+        dc = DelayedCall(function,  "timeout (%s)" % (name,), args, kwargs)
         heapq.heappush(self.heap, (scheduledTime, dc))
         return dc
 
@@ -81,17 +92,19 @@ class CallQueue(object):
             args = ()
         if kwargs is None:
             kwargs = {}
-        self.queue.put((function, name, args, kwargs))
+        dc = DelayedCall (function, "idle (%s)" % (name,), args, kwargs)
+        self.queue.put (dc)
+        #self.queue.put((dc, clock()))
+        return dc
 
     def processNextIdle(self):
-        function, name, args, kwargs = self.queue.get()
+        dc = self.queue.get()
+        #dc, requested = self.queue.get()
         #start = clock()
-        util.trapCall("While handling idle call (%s)" % (name,),
-                function, *args, **kwargs)
-        #end = clock()
-        #if end-start > 0.05:
-        #    print "WARNING: %s too slow (%.3f secs)" % (
-        #        name, end-start)
+        dc.dispatch()
+        #if start - requested > 0.01:
+        #    print "WARNING: %s took too long to fire (%.3f secs)" % (
+        #        dc.name, start - requested)
 
     def hasPendingIdle(self):
         return not self.queue.empty()
@@ -306,8 +319,9 @@ def addIdle(function, name, args=None, kwargs=None):
     Returns a DelayedCall object that can be used to cancel the call.
     """
 
-    _eventLoop.idleQueue.addIdle(function, name, args, kwargs)
+    dc = _eventLoop.idleQueue.addIdle(function, name, args, kwargs)
     _eventLoop.wakeup()
+    return dc
 
 def addUrgentCall(function, name, args=None, kwargs=None):
     """Schedule a function to be called as soon as possible.  This method
@@ -315,8 +329,9 @@ def addUrgentCall(function, name, args=None, kwargs=None):
     us.
     """
 
-    _eventLoop.urgentQueue.addIdle(function, name, args, kwargs)
+    dc = _eventLoop.urgentQueue.addIdle(function, name, args, kwargs)
     _eventLoop.wakeup()
+    return dc
 
 def callInThread(callback, errback, function, *args, **kwargs):
     """Get the numerical IP address for a IPv4 host, on success callback will

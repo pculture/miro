@@ -398,7 +398,7 @@ class HTTPDownloader(BGDownloader):
 
     def cancelRequest(self):
         if self.requestID is not None:
-            httpclient.cancelRequest(self.requestID)
+            self.requestID.cancel()
             self.requestID = None
 
     def handleError(self, reason):
