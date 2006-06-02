@@ -2329,14 +2329,9 @@ class QuicktimeRenderer (app.VideoRenderer):
         self.cachedMovie = nil
 
     @platformutils.onMainThreadWithReturn
-    def canPlayItem(self, item):
+    def canPlayUrl(self, url):
         canPlay = False
-        pathname = item.getPath()
-        if self.cachedMovie is not nil and self.cachedMovie.attributeForKey_(QTMovieFileNameAttribute) == pathname:
-            qtmovie = self.cachedMovie
-        else:
-            (qtmovie, error) = QTMovie.alloc().initWithFile_error_(pathname)
-            self.cachedMovie = qtmovie
+        qtmovie = self.getMovieFromURL(url)
 
         # Purely referential movies have a no duration, no track and need to be 
         # streamed first. Since we don't support this yet, we delegate the 
@@ -2360,7 +2355,7 @@ class QuicktimeRenderer (app.VideoRenderer):
                     mediaDuration = media.attributeForKey_(QTMediaDurationAttribute).QTTimeValue().timeValue
                     if mediaType in self.CORRECT_QTMEDIA_TYPES and mediaDuration > 0:
                         # We have one, see if the file is something we support
-                        (path, ext) = os.path.splitext(pathname.lower())
+                        (unused, ext) = os.path.splitext(str(url).lower())
                         if ext in self.POSSIBLY_SUPPORTED_EXT and self.hasFlip4MacComponent():
                             canPlay = True
                             break
@@ -2376,17 +2371,22 @@ class QuicktimeRenderer (app.VideoRenderer):
         return len(glob.glob('/Library/Quicktime/Flip4Mac*')) > 0
 
     @platformutils.onMainThread
-    def selectItem(self, item):
-        pathname = item.getPath()
-        if self.cachedMovie is not nil and self.cachedMovie.attributeForKey_(QTMovieFileNameAttribute) == pathname:
-            qtmovie = self.cachedMovie
-        else:
-            (qtmovie, error) = QTMovie.alloc().initWithFile_error_(pathname)
+    def selectUrl(self, url):
+        qtmovie = self.getMovieFromURL(url)
         self.reset()
         if qtmovie is not nil:
             self.view.setMovie_(qtmovie)
             self.view.setNeedsDisplay_(YES)
             self.registerMovieObserver(qtmovie)
+
+    def getMovieFromURL(self, url):
+        url = NSURL.URLWithString_(url)
+        if self.cachedMovie is not nil and self.cachedMovie.attributeForKey_(QTMovieURLAttribute) == url:
+            qtmovie = self.cachedMovie
+        else:
+            (qtmovie, error) = QTMovie.alloc().initWithURL_error_(url)
+            self.cachedMovie = qtmovie
+        return qtmovie
 
     def play(self):
         platformutils.callOnMainThread(self.view.play_, self)
