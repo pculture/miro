@@ -1498,9 +1498,9 @@ def _defaultFeeds():
     feed.Feed('http://some-pig.net/videos/rss.php?i=2',
               initiallyAutoDownloadable=False)
 
-_BUTTON_DEFAULT_CHANNELS = dialogs.DialogButton(_("Default Channels"))
-_BUTTON_FILE_CHANNELS = dialogs.DialogButton(_("Downloaded Channels"))
-_BUTTON_BOTH_CHANNELS = dialogs.DialogButton(_("Both"))
+_BUTTON_DEFAULT_CHANNELS = dialogs.DialogButton(_("Continue with Default Channels"))
+_BUTTON_FILE_CHANNELS = dialogs.DialogButton(_("Continue with Custom Channels"))
+_BUTTON_BOTH_CHANNELS = dialogs.DialogButton(_("Continue with Both"))
 
 def _defaultChannelsAnswer(dialog):
     if dialog.choice is None:
@@ -1516,9 +1516,10 @@ def _defaultChannelsAnswer(dialog):
         singleclick.openFile (initialFeeds)
 
 def _defaultChannelsQuestion():
-    dialog = dialogs.ChoiceDialog(_("Custom Channel Download"),
-                                  _("It appears you have downloaded a channel specific installer.\nWould you like to use the channels from this download of the default channels?"),
+    dialog = dialogs.ChoiceDialog(_("Custom Channels"),
+                                  _("This Democracy Player has a custom set of video channels that were included\nby the website where you initiated your download."),
                                   _BUTTON_DEFAULT_CHANNELS, _BUTTON_FILE_CHANNELS)
+    #FIXME: add support for _BUTTON_BOTH_CHANNELS
     dialog.run(_defaultChannelsAnswer)
 
 def _getInitialChannelGuide():
