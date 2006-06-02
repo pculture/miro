@@ -845,17 +845,8 @@ class BTDownloader(BGDownloader):
         self._startTorrent()
 
     def onDescriptionDownload(self, info):
-        if info is None or info['status'] != 200:
-            self.state = "failed"
-            if info is None:
-                self.reasonFailed = _("Could not connect to server")
-            else:
-                self.reasonFailed = _("Could not connect to server: %s") % (info['reason'],)
-            self.updateClient()
-            return
-        else:
-            self.readMetainfo(info['body'])
-            self.gotMetainfo()
+        self.readMetainfo(info['body'])
+        self.gotMetainfo()
 
     def onDescriptionDownloadFailed(self, exception):
         self.state = "failed"
