@@ -575,10 +575,7 @@ class Controller (frontend.Application):
 
     def getGlobalFeed(self, url):
         feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
-        feedView.resetCursor()
-        feed = feedView.getNext()
-        feedView.unlink()
-        return feed
+        return feedView[0]
 
     def removeGlobalFeed(self, url):
         feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
