@@ -480,6 +480,8 @@ class Controller (frontend.Application):
             self.currentSelectedTab = None
             self.tabListActive = True
 
+            channelGuide = _getInitialChannelGuide()
+
             # Keep a ref of the 'new' and 'download' tabs, we'll need'em later
             self.newTab = None
             self.downloadTab = None
@@ -530,7 +532,6 @@ class Controller (frontend.Application):
             self.frame.selectDisplay(self.tabDisplay, self.frame.channelsDisplay)
             views.allTabs.addRemoveCallback(lambda oldObject, oldIndex: self.checkSelectedTab())
 
-            channelGuide = getInitialChannelGuide()
             self.checkSelectedTab()
 
             # If we have newly available items, provide feedback
@@ -1477,7 +1478,50 @@ def getSingletonDDBObject(view):
     finally:
         view.endRead()
 
-def getInitialChannelGuide():
+def _defaultFeeds():
+    feed.Feed('http://del.icio.us/rss/representordie/system:media:video', 
+              initiallyAutoDownloadable=False)
+    feed.Feed('http://www.videobomb.com/rss/posts/front',
+              initiallyAutoDownloadable=False)
+    feed.Feed('http://www.mediarights.org/bm/rss.php?i=1',
+              initiallyAutoDownloadable=False)
+    feed.Feed('http://www.telemusicvision.com/videos/rss.php?i=1',
+              initiallyAutoDownloadable=False)
+    feed.Feed('http://www.rocketboom.com/vlog/quicktime_daily_enclosures.xml',
+              initiallyAutoDownloadable=False)
+    feed.Feed('http://www.channelfrederator.com/rss',
+              initiallyAutoDownloadable=False)
+    feed.Feed('http://revision3.com/diggnation/feed/small.mov',
+              initiallyAutoDownloadable=False)
+    feed.Feed('http://live.watchmactv.com/wp-rss2.php',
+              initiallyAutoDownloadable=False)
+    feed.Feed('http://some-pig.net/videos/rss.php?i=2',
+              initiallyAutoDownloadable=False)
+
+_BUTTON_DEFAULT_CHANNELS = dialogs.DialogButton(_("Default Channels"))
+_BUTTON_FILE_CHANNELS = dialogs.DialogButton(_("Downloaded Channels"))
+_BUTTON_BOTH_CHANNELS = dialogs.DialogButton(_("Both"))
+
+def _defaultChannelsAnswer(dialog):
+    if dialog.choice is None:
+        _defaultChannelsQuestion()
+    elif dialog.choice == _BUTTON_DEFAULT_CHANNELS:
+        _defaultFeeds()
+    elif dialog.choice == _BUTTON_FILE_CHANNELS:
+        initialFeeds = resource.path("initial-feeds.democracy")
+        singleclick.openFile (initialFeeds)
+    elif dialog.choice == _BUTTON_BOTH_CHANNELS:
+        initialFeeds = resource.path("initial-feeds.democracy")
+        _defaultFeeds()
+        singleclick.openFile (initialFeeds)
+
+def _defaultChannelsQuestion():
+    dialog = dialogs.ChoiceDialog(_("Custom Channel Download"),
+                                  _("It appears you have downloaded a channel specific installer.\nWould you like to use the channels from this download of the default channels?"),
+                                  _BUTTON_DEFAULT_CHANNELS, _BUTTON_FILE_CHANNELS)
+    dialog.run(_defaultChannelsAnswer)
+
+def _getInitialChannelGuide():
     try:
         channelGuide = getSingletonDDBObject(views.guide)
     except LookupError:
@@ -1485,26 +1529,9 @@ def getInitialChannelGuide():
         channelGuide = guide.ChannelGuide()
         initialFeeds = resource.path("initial-feeds.democracy")
         if os.path.exists(initialFeeds):
-            singleclick.openFile (initialFeeds)
+            _defaultChannelsQuestion()
         else:
-            feed.Feed('http://del.icio.us/rss/representordie/system:media:video', 
-                      initiallyAutoDownloadable=False)
-            feed.Feed('http://www.videobomb.com/rss/posts/front',
-                      initiallyAutoDownloadable=False)
-            feed.Feed('http://www.mediarights.org/bm/rss.php?i=1',
-                      initiallyAutoDownloadable=False)
-            feed.Feed('http://www.telemusicvision.com/videos/rss.php?i=1',
-                      initiallyAutoDownloadable=False)
-            feed.Feed('http://www.rocketboom.com/vlog/quicktime_daily_enclosures.xml',
-                      initiallyAutoDownloadable=False)
-            feed.Feed('http://www.channelfrederator.com/rss',
-                      initiallyAutoDownloadable=False)
-            feed.Feed('http://revision3.com/diggnation/feed/small.mov',
-                      initiallyAutoDownloadable=False)
-            feed.Feed('http://live.watchmactv.com/wp-rss2.php',
-                      initiallyAutoDownloadable=False)
-            feed.Feed('http://some-pig.net/videos/rss.php?i=2',
-                      initiallyAutoDownloadable=False)
+            _defaultFeeds()
     except TooManySingletonsError:
         print "DTV: Multiple Channel Guides!  Using the first one"
         guideView = views.guide
