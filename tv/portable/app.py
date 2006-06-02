@@ -1203,6 +1203,8 @@ class GUIActionHandler:
     # a non-GUI addFeed to match removeFeed. (requires template updates)
     def addFeed(self, url, showTemplate = None, selected = '1'):
         url = feed.normalizeFeedURL(url)
+        if not feed.validateFeedURL(url):
+            return
         db.beginUpdate()
         try:
             feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
