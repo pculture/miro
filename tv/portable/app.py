@@ -355,7 +355,7 @@ class VideoRenderer:
         self.interactivelySeeking = False
     
     def canPlayItem(self, anItem):
-        url = 'file://%s' % anItem.getPath()
+        url = 'file://%s' % urllib.pathname2url(anItem.getPath())
         return self.canPlayUrl (url)
     
     def canPlayUrl(self, url):
@@ -375,7 +375,7 @@ class VideoRenderer:
         self.setCurrentTime(self.getDuration() * progress)
 
     def selectItem(self, anItem):
-        url = 'file://%s' % anItem.getPath()
+        url = 'file://%s' % urllib.pathname2url(anItem.getPath())
         self.selectUrl (url)
 
     def selectUrl(self, url):
