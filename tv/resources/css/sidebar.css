@@ -28,8 +28,11 @@
 	margin-right: 0px;
 	padding-bottom: 0px;
 	background-color: #e6edf7;
+	
+
 	border-top: 1px solid #b6bfce;
 	border-bottom: 2px solid #e6edf7;
+
 }
 
 .sidebar-download-inner-selected {
@@ -127,7 +130,7 @@
 .circle-orange-left {
 	float: right;
 	display: inline;
-	margin: 5px 1px 0px 0px;
+	margin: 4px 0px 0px 0px;
 	background: url(../images/circle-orange-left.png) left top no-repeat;
 }
 

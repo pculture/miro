@@ -79,67 +79,101 @@
 
 </a>
 
+
+
+
+
+
 <!-- Normal Search -->
-<a class="feeditem last_static" t:hideIf="not (this.getState() == 'normal' and this.tabTemplateBase == 'searchtab')">
+<a class="feeditem" t:hideIf="not (this.getState() == 'normal' and this.tabTemplateBase == 'searchtab')">
     <img class="icon" src="resource:images/search-icon-tablist.png" />
     <span><span class="name" i18n:translate="">Search</span></span>
-    <div class="channel_bar_divider" />
+
 </a>
 
 <!-- Selected Search -->
-<a t:hideIf="not (this.getState() == 'selected' and this.tabTemplateBase == 'searchtab')" class="feeditem selected_feeditem last_static">
+<a t:hideIf="not (this.getState() == 'selected' and this.tabTemplateBase == 'searchtab')" class="feeditem selected_feeditem">
     <img class="icon" src="resource:images/search-icon-tablist.png" />
     <span><span class="name" i18n:translate="">Search</span></span>
-    <div class="channel_bar_divider" />
+
 </a>
 
 <!-- Selected-Incactive Search -->
-<a  t:hideIf="not (this.getState() == 'selected-inactive' and this.tabTemplateBase == 'searchtab')" class="feeditem selected_feeditem_inactive last_static">
+<a  t:hideIf="not (this.getState() == 'selected-inactive' and this.tabTemplateBase == 'searchtab')" class="feeditem selected_feeditem_inactive">
     <img class="icon" src="resource:images/search-icon-tablist.png" />
     <span><span class="name" i18n:translate="">Search</span></span>
-    <div class="channel_bar_divider" />
+
 </a>
 
+
+
+
+
+
+
+
+
+
+
 <!-- Normal Download -->
-<a class="sidebar-download" t:hideIf="not (this.getState() == 'normal' and this.tabTemplateBase == 'downloadtab')">
-	<div class="sidebar-download-inner">
-		<span>
-			<p>Active Downloads</p>
-			<div class="circle-orange-left" t:hideIf="views.downloadingItems.len() == 0">
-				<div class="circle-orange-right">
-					<div class="circle-orange-number" t:replace="views.downloadingItems.len()" />
+<a class="feeditem last_static" t:hideIf="not (this.getState() == 'normal' and this.tabTemplateBase == 'downloadtab')">
+	
+	
+	   <img class="icon" src="resource:images/download-icon-tab.png" />
+
+			<div class="orange_left" t:hideIf="views.downloadingItems.len() == 0">
+				<div class="orange_right">
+					<div class="orange_number_count" t:replace="views.downloadingItems.len()" />
 				</div>
 			</div>
-		</span>
-	</div>
+
+    <span><span class="name" i18n:translate="">Active Downloads</span></span>
+	    <div class="channel_bar_divider" />
+	
 </a>
 
 <!-- Selected Download -->
-<a class="sidebar-download" t:hideIf="not (this.getState() == 'selected' and this.tabTemplateBase == 'downloadtab')">
-	<div class="sidebar-download-inner-selected">
-		<span>
-			<p>Active Downloads</p>
-			<div class="circle-orange-left" t:hideIf="views.downloadingItems.len() == 0">
-				<div class="circle-orange-right">
-					<div class="circle-orange-number" t:replace="views.downloadingItems.len()" />
+<a class="feeditem selected_feeditem last_static" t:hideIf="not (this.getState() == 'selected' and this.tabTemplateBase == 'downloadtab')">
+
+
+   <img class="icon" src="resource:images/download-icon-tab.png" />
+
+			<div class="orange_left" t:hideIf="views.downloadingItems.len() == 0">
+				<div class="orange_right">
+					<div class="orange_number_count" t:replace="views.downloadingItems.len()" />
 				</div>
 			</div>
-		</span>
-	</div>
+			
+    <span><span class="name" i18n:translate="">Active Downloads</span></span>
+    <div class="channel_bar_divider" />
+
 </a>
 
 <!-- Selected-Incactive Download -->
-<a class="sidebar-download" t:hideIf="not (this.getState() == 'selected-inactive' and this.tabTemplateBase == 'downloadtab')">
-	<div class="sidebar-download-inner-inactive">
-		<span>
-			<p>Active Downloads</p>
-			<div class="circle-orange-left" t:hideIf="views.downloadingItems.len() == 0">
-				<div class="circle-orange-right">
-					<div class="circle-orange-number" t:replace="views.downloadingItems.len()" />
+<a class="feeditem selected_feeditem_inactive last_static" t:hideIf="not (this.getState() == 'selected-inactive' and this.tabTemplateBase == 'downloadtab')">
+
+
+   <img class="icon" src="resource:images/download-icon-tab.png" />
+
+			<div class="orange_left" t:hideIf="views.downloadingItems.len() == 0">
+				<div class="orange_right">
+					<div class="orange_number_count" t:replace="views.downloadingItems.len()" />
 				</div>
 			</div>
-		</span>
-	</div>
+
+    <span><span class="name" i18n:translate="">Active Downloads</span></span>
+    <div class="channel_bar_divider" />
+
 </a>
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>

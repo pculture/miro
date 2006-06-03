@@ -148,6 +148,24 @@ li {
 	height: 23px;
 }
 
+.triangle {
+	background: url(../images/black_yellow_triangle.png) no-repeat left top;
+	display: block;
+	float: left;
+	width: 15px;
+	height: 16px;
+	margin-top: 2px;
+}
+
+.triangledown {
+	background: url(../images/black_yellow_triangle_down.png) no-repeat left top;
+	display: block;
+	float: left;
+	width: 15px;
+	height: 16px;
+	margin-top: 2px;
+}
+
 .main-channelbar-download h1 {
 	color: #000000;
 	text-decoration: none;
@@ -194,7 +212,7 @@ li {
 	text-decoration: none;	
 }
 
-#main-newlyavailable, #main-downloads, #main-unwatched, #main-expiring, #main-saved, #main-autodownload, #main-expiration, #main-newlyavailable-seen, #show-more-videos-label, #no-new-videos-label {
+#main-newlyavailable, #main-downloads, #main-unwatched, #main-expiring, #main-saved, #main-autodownload, #main-expiration, #main-newlyavailable-seen, #show-more-videos-label, #no-new-videos-label, #triangle, #triangledown {
 	display: none;
 }
 
