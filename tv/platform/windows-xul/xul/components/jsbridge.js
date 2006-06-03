@@ -106,14 +106,21 @@ jsBridge.prototype = {
     var params = { "id": id, "title": title, "description" : description, 
         "defaultLabel": defaultLabel, "otherLabel": otherLabel, "out" : -1};
     this.window.openDialog("chrome://dtv/content/choice_dialog.xul",
-            "choice", "chrome,dependent,centerscreen,modal", params);
+            "dialog", "chrome,dependent,centerscreen,modal", params);
+  },
+
+  showMessageBoxDialog: function(id, title, description) {
+    var params = { "id": id, "title": title, "description" : description,
+            "out" : -1};
+    this.window.openDialog("chrome://dtv/content/message_box_dialog.xul",
+            "dialog", "chrome,dependent,centerscreen,modal", params);
   },
 
   showHTTPAuthDialog: function(id, description, prefillUser, prefillPassword) {
     var params = {"id": id, "text" : description, "prefillUser": prefillUser,
         "prefillPassword": prefillPassword, "out" : null};
     this.window.openDialog("chrome://dtv/content/password.xul",
-            "choice", "chrome,dependent,centerscreen,modal", params);
+            "dialog", "chrome,dependent,centerscreen,modal", params);
   },
 
   showBugReportDialog: function(when, report) {

@@ -2,12 +2,12 @@
 <?xml-stylesheet href="chrome://global/skin" type="text/css"?>
 <?xml-stylesheet href="main.css" type="text/css"?>
 
-<dialog id="democracy-dialog"
+<dialog id="democracy-messagebox"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 	xmlns:html="http://www.w3.org/1999/xhtml"
         title=""
         maxwidth="400"
-        buttons="accept,cancel"
+        buttons="accept"
         ondialogaccept="onaccept();"
         ondialogcancel="oncancel();"
         onload="onload()">
@@ -16,10 +16,9 @@ function onload() {
   var args = window.arguments[0];
   var description = document.getElementById("description");
   description.appendChild(document.createTextNode(args["description"]));
-  var dialog = document.getElementById("democracy-dialog");
+  var dialog = document.getElementById("democracy-messagebox");
   document.title = args['title'];
-  dialog.getButton('accept').label = args['defaultLabel'];
-  dialog.getButton('cancel').label = args['otherLabel'];
+  dialog.getButton('accept').label = "Okay";
 }
 
 var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
@@ -27,9 +26,7 @@ var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
 function onaccept() {
   pybridge.handleSimpleDialog(window.arguments[0]['id'], 0);
 }
-function oncancel() {
-  pybridge.handleSimpleDialog(window.arguments[0]['id'], 1);
-}
+
    </script>
    <description id="description" />
 </dialog>

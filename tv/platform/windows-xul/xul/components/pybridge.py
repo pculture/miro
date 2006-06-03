@@ -189,13 +189,13 @@ class PyBridge:
         app.ModelActionHandler(self.delegate).copyCurrentFeedURL()
 
     @eventloop.asUrgent
-    def handleChoiceDialog(self, id, buttonIndex):
-        self.delegate.handleChoiceDialog(id, buttonIndex)
+    def handleSimpleDialog(self, id, buttonIndex):
+        self.delegate.handleDialog(id, buttonIndex)
 
     @eventloop.asUrgent
     def handleHTTPAuthDialog(self, id, buttonIndex, username, password):
-        self.delegate.handleHTTPAuthDialog(id, buttonIndex, username,
-                password)
+        self.delegate.handleDialog(id, buttonIndex, username=username,
+                password=password)
 
     @eventloop.asUrgent
     def addChannel(self, url):

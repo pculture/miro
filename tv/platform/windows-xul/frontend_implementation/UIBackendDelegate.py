@@ -5,6 +5,7 @@ import webbrowser
 import _winreg
 import traceback
 import ctypes
+from gettext import gettext as _
 
 import prefs
 import config
@@ -28,6 +29,9 @@ class UIBackendDelegate:
             frontend.jsBridge.showChoiceDialog(id, dialog.title,
                     dialog.description, dialog.buttons[0].text,
                     dialog.buttons[1].text)
+        elif isinstance(dialog, dialogs.MessageBoxDialog):
+            frontend.jsBridge.showMessageBoxDialog(id, dialog.title,
+                    dialog.description)
         elif isinstance(dialog, dialogs.HTTPAuthDialog):
             frontend.jsBridge.showHTTPAuthDialog(id, dialog.description)
         else:
@@ -44,14 +48,6 @@ class UIBackendDelegate:
         else:
             choice = None
         dialog.runCallback(choice, *args, **kwargs)
-
-    def handleChoiceDialog(self, dialogID, buttonIndex):
-        self.handleDialog(dialogID, buttonIndex)
-
-    def handleHTTPAuthDialog(self, dialogID, buttonIndex, username, password):
-        print "Username is (%s)" % username
-        print "Password is (%s)" % password
-        self.handleDialog(dialogID, buttonIndex, username=username, password=password)
 
     def dtvIsUpToDate(self):
         msg = '%s is up to date.' % config.get(prefs.LONG_APP_NAME)
@@ -78,6 +74,14 @@ class UIBackendDelegate:
 
     def copyTextToClipboard(self, text):
         frontend.jsBridge.copyTextToClipboard(text)
+
+    def saveFailed(self, reason):
+        title = _("%s database save failed") % \
+                config.get(prefs.SHORT_APP_NAME)
+        message = _("""%s was unable to save its database: %s.
+Recent changes may be lost.""") % (config.get(prefs.LONG_APP_NAME), reason)
+        d = dialogs.MessageBoxDialog(title, message)
+        d.run()
 
     # This is windows specific right now. We don't need it on other platforms
     def setRunAtStartup(self, value):

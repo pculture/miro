@@ -18,6 +18,8 @@ interface pcfIDTVJSBridge : nsISupports
   void showChoiceDialog(in unsigned long id, in AString title, 
         in AString description, in AString defaultLabel, 
         in AString otherLabel);
+  void showMessageBoxDialog(in unsigned long id, in AString title, 
+        in AString description);
   void showHTTPAuthDialog(in unsigned long id, in AString description);
   void showBugReportDialog(in AString when, in AString report);
   void showVideoDisplay();

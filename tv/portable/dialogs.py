@@ -93,6 +93,20 @@ class Dialog(object):
         eventloop.addIdle(self.callback, "%s callback" % self.__class__, 
                 args=(self,))
 
+class MessageBoxDialog(Dialog):
+    """Show the user some info in a dialog box.  The only button is Okay.  The
+    callback is optional for a message box dialog.  """
+
+    def __init__(self, title, description):
+        Dialog.__init__(self, title, description, [BUTTON_OK])
+
+    def run(self, callback=None):
+        Dialog.run(self, callback)
+
+    def runCallback(self, choice):
+        if self.callback is not None:
+            Dialog.runCallback(self, choice)
+
 class ChoiceDialog(Dialog):
     """Give the user a choice of 2 options (Yes/No, Ok/Cancel,
     Migrate/Don't Migrate, etc.)
