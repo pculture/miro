@@ -437,8 +437,11 @@ def saveDatabase(db=None, pathname=None):
             pass
         os.rename(tempPathname, pathname)
     except IOError, err:
+        print "IOError Saving database: ", err
         return err
     except:
+        print "ERROR Saving database!"
+        traceback.print_exc()
         return "Unknown"
     return None
 

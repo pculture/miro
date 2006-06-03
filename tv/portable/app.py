@@ -50,6 +50,7 @@ import databasehelper
 import fasttypes
 import urllib
 from gettext import gettext as _
+from gettext import ngettext
 
 # Global Controller singleton
 controller = None
@@ -630,10 +631,20 @@ class Controller (frontend.Application):
         global delegate
         downloadsCount = views.downloadingItems.len()
         if downloadsCount > 0:
-            allow = delegate.interruptDownloadsAtShutdown(downloadsCount)
-            if not allow:
-                return
+            title = _("Are you sure you want to quit?")
+            message = ngettext ("You have %d download still in progress.", 
+                                "You have %d downloads still in progress.", 
+                                downloadsCount) % (downloadsCount,)
+            dialog = dialogs.ChoiceDialog(title, message, 
+                    dialogs.BUTTON_CANCEL, dialogs.BUTTON_QUIT)
+            def callback(dialog):
+                if dialog.choice == dialogs.BUTTON_QUIT:
+                    self.quitStage2()
+            dialog.run(callback)
+        else:
+            quitStage2()
 
+    def quitStage2(self):
         err = storedatabase.saveDatabase()
         if err is None:
             print "DTV: Shutting down Downloader..."
