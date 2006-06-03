@@ -93,9 +93,9 @@ i18n:translate="">Settings</span></a></p>
 
 <!-- THIS IS SUPPOSED TO HAVE A TRIANGLE OPEN AND CLOSE, FIX WHEN YOU CAN <span id="triangle" class="triangle">&nbsp;</span><span id="triangledown" class="triangledown" style="display: none;">&nbsp;</span> -->
 
-<span t:hideIf="downloadingItems.len()==1" i18n:translate="">
-<span t:replace="downloadingItems.len()" i18n:name="count"/> Downloads in Progress</span>
-<span t:hideIf="downloadingItems.len()!=1" i18n:translate="">1 Download in Progress</span>
+<span t:hideIf="downloadingItems.len()==1"><span i18n:translate="">
+<span t:replace="downloadingItems.len()" i18n:name="count"/> Downloads in Progress</span></span>
+<span t:hideIf="downloadingItems.len()!=1"><span i18n:translate="">1 Download in Progress</span></span>
                 </h1>
         </div>
         <div id="main-downloads">

@@ -377,6 +377,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                     if (key not in ['t:hideIf']):
                         self.addAttr(key,attrs[key])
                 self.addText('>')
+                #FIXME: support i18n tags within a t:hideIf
         elif 'i18n:translate' in attrs.keys():
             self.addText('<%s'%name)
             for key in attrs.keys():
