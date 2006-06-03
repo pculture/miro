@@ -642,7 +642,7 @@ class Controller (frontend.Application):
                     self.quitStage2()
             dialog.run(callback)
         else:
-            quitStage2()
+            self.quitStage2()
 
     def quitStage2(self):
         err = storedatabase.saveDatabase()
