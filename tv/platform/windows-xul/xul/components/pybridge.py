@@ -63,7 +63,7 @@ def getArgumentList(commandLine):
 
     args = [commandLine.getArgument(i) for i in range(commandLine.length)]
     # filter out the application.ini that gets included
-    if args[0].lower().endswith('application.ini'):
+    if len(args) > 0 and args[0].lower().endswith('application.ini'):
         args = args[1:]
     return args
 
