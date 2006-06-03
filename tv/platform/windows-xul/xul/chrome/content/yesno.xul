@@ -3,22 +3,27 @@
 <?xml-stylesheet href="main.css" type="text/css"?>
 
 <!DOCTYPE window SYSTEM "chrome://dtv/locale/yesno.dtd">
-<dialog id="main"
+<dialog id="democracy-yesno"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 	xmlns:html="http://www.w3.org/1999/xhtml"
         title="&yesno.title;"
-        ondialogaccept="window.arguments[0].out = '1';"
-        ondialogcancel="window.arguments[0].out = '0';"
+        maxwidth="400"
+        ondialogaccept="window.arguments[0].out = true;"
+        ondialogcancel="window.arguments[0].out = false;"
         onload="updateLabel()"
         buttons="accept,cancel">
     <script type="text/javascript">
 function updateLabel() {
-  var label = document.getElementById("label1");
-  label.setAttribute("value", window.arguments[0]["text"]);
-  var ele = document.getElementById("main");
-  ele.setAttribute("title", window.arguments[0]["title"]);
+  var text = window.arguments[0]["text"];
+  var description = document.getElementById("description");
+  description.appendChild(document.createTextNode(text));
+
+  var dialog = document.getElementById("democracy-yesno");
+  dialog.title = window.arguments[0]["title"];
+  dialog.getButton('accept').label = "Yes";
+  dialog.getButton('cancel').label = "No";
 }
     </script>
-   <label id="label1" value="" />
+    <description id="description" />
 
 </dialog>

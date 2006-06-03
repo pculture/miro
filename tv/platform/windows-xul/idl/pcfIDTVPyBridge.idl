@@ -1,6 +1,7 @@
 #include "nsISupports.idl"
 
 interface nsIDOMWindow;
+interface nsIDOMDocument;
 interface nsICommandLine;
 
 [scriptable, uuid(8ABB2E1D-6624-4457-A4BD-EBFA6156D426)]
@@ -32,4 +33,20 @@ interface pcfIDTVPyBridge : nsISupports
   void stop();
   void playPause();
   void openFile(in AString path);
+  boolean getRunAtStartup();
+  void setRunAtStartup(in boolean value);
+  short getCheckEvery();
+  void setCheckEvery(in short value);
+  AString getMoviesDirectory();
+  void changeMoviesDirectory(in AString path, in boolean migrate);
+  boolean getLimitUpstream();
+  void setLimitUpstream(in boolean value);
+  short getLimitUpstreamAmount();
+  void setLimitUpstreamAmount(in short value);
+  boolean getPreserveDiskSpace();
+  void setPreserveDiskSpace(in boolean value);
+  short getPreserveDiskSpaceAmount();
+  void setPreserveDiskSpaceAmount(in short value);
+  short getExpireAfter();
+  void setExpireAfter(in short value);
 };

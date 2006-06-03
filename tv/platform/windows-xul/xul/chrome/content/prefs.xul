@@ -5,13 +5,12 @@
 <!DOCTYPE window SYSTEM "chrome://dtv/locale/main.dtd">
 
 <!-- add hidechrome="true" to eliminate title bar -->
-<dialog id="main" title="Preferences"
+<dialog id="democracy-preferences" title="Preferences"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	orient="vertical"
-        ondialogaccept="finalizeChanges()"
-        ondialogcancel="finalizeChanges()"
-        onload="openPrefServerCommunications();"
+        onload="onload();"
+        ondialogaccept="checkMoviesDirChanged();"
         buttons="accept"
         class="preferences">
 <script src="chrome://dtv/content/main.js" />

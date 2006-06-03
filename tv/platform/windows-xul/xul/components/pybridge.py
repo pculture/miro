@@ -102,15 +102,55 @@ class PyBridge:
         initializeProxyObjects(window)
         app.main()
 
-    def handleCommandLine(self, commandLine):
-        singleclick.setCommandLineArgs(getArgumentList(commandLine))
-
-    def handleSecondCommandLine(self, commandLine):
-        singleclick.parseCommandLineArgs(getArgumentList(commandLine))
-
     def onShutdown(self):
         frontend.vlcRenderer.stop()
         app.controller.onShutdown()
+
+    # Preference setters/getters.
+    #
+    # NOTE: these are not in the mail event loop, so we have to be careful in
+    # accessing data.  config.get and config.set are threadsafe though.
+    #
+    def getRunAtStartup(self):
+        return config.get(prefs.RUN_AT_STARTUP)
+    def setRunAtStartup(self, value):
+        config.set(prefs.RUN_AT_STARTUP, value)
+    def getCheckEvery(self):
+        return config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)
+    def setCheckEvery(self, value):
+        return config.set(prefs.CHECK_CHANNELS_EVERY_X_MN, value)
+    def getMoviesDirectory(self):
+        return config.get(prefs.MOVIES_DIRECTORY)
+    def changeMoviesDirectory(self, path, migrate):
+        app.changeMoviesDirectory(path, migrate)
+    def getLimitUpstream(self):
+        return config.get(prefs.LIMIT_UPSTREAM)
+    def setLimitUpstream(self, value):
+        config.set(prefs.LIMIT_UPSTREAM, value)
+    def getLimitUpstreamAmount(self):
+        return config.get(prefs.UPSTREAM_LIMIT_IN_KBS)
+    def setLimitUpstreamAmount(self, value):
+        return config.set(prefs.UPSTREAM_LIMIT_IN_KBS, value)
+    def getPreserveDiskSpace(self):
+        return config.get(prefs.PRESERVE_DISK_SPACE)
+    def setPreserveDiskSpace(self, value):
+        config.set(prefs.PRESERVE_DISK_SPACE, value)
+    def getPreserveDiskSpaceAmount(self):
+        return config.get(prefs.PRESERVE_X_GB_FREE)
+    def setPreserveDiskSpaceAmount(self, value):
+        return config.set(prefs.PRESERVE_X_GB_FREE, value)
+    def getExpireAfter(self):
+        return config.get(prefs.EXPIRE_AFTER_X_DAYS)
+    def setExpireAfter(self, value):
+        return config.set(prefs.EXPIRE_AFTER_X_DAYS, value)
+
+    @eventloop.asUrgent
+    def handleCommandLine(self, commandLine):
+        singleclick.setCommandLineArgs(getArgumentList(commandLine))
+
+    @eventloop.asUrgent
+    def handleSecondCommandLine(self, commandLine):
+        singleclick.parseCommandLineArgs(getArgumentList(commandLine))
 
     def pageLoadFinished(self, area, url):
         eventloop.addUrgentCall(HTMLDisplay.runPageFinishCallback, 
