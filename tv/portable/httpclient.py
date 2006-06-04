@@ -308,6 +308,9 @@ class AsyncSSLStream(AsyncSocket):
             eventloop.callInThread(onSSLOpen, errback, socket.ssl,
                     self.socket)
         def onSSLOpen(ssl):
+            if self.socket is None:
+                # the connection was closed while we were calling socket.ssl
+                return
             self.socket.setblocking(0)
             self.ssl = ssl
             # finally we can call the actuall callback
