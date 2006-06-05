@@ -615,8 +615,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
     def removeChannel_(self, sender):
         feedID = app.controller.currentSelectedTab.feedID()
         if feedID is not None:
-            backEndDelegate = self.appl.getBackendDelegate()
-            eventloop.addUrgentCall(lambda:app.ModelActionHandler(backEndDelegate).removeFeed(feedID), "Remove channel")
+            eventloop.addUrgentCall(lambda:app.ModelActionHandler(app.delegate).removeFeed(feedID), "Remove channel")
 
     def copyChannelLink_(self, sender):
         NSPasteboard.generalPasteboard().declareTypes_owner_([NSURLPboardType], self)
@@ -624,12 +623,10 @@ class MainController (NibClassBuilder.AutoBaseClass):
     def updateChannel_(self, sender):
         feedID = app.controller.currentSelectedTab.feedID()
         if feedID is not None:
-            backEndDelegate = self.appl.getBackendDelegate()
-            eventloop.addUrgentCall(lambda:app.ModelActionHandler(backEndDelegate).updateFeed(feedID), "Update channel")
+            eventloop.addUrgentCall(lambda:app.ModelActionHandler(app.delegate).updateFeed(feedID), "Update channel")
 
     def updateAllChannels_(self, sender):
-        backEndDelegate = self.appl.getBackendDelegate()
-        eventloop.addUrgentCall(lambda:app.ModelActionHandler(backEndDelegate).updateAllFeeds(), "Update all channels")
+        eventloop.addUrgentCall(lambda:app.ModelActionHandler(app.delegate).updateAllFeeds(), "Update all channels")
 
     def renameChannel_(self, sender):
         print "NOT IMPLEMENTED"
@@ -2131,7 +2128,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     def handleMovieNotification_(self, notification):
         renderer = self.videoDisplay.activeRenderer
         if notification.name() == QTMovieDidEndNotification and not renderer.interactivelySeeking:
-            app.controller.playbackController.onMovieFinished()
+            eventloop.addUrgentCall(lambda:app.controller.playbackController.onMovieFinished(), "Movie Finished Callback")
 
 
 ###############################################################################
