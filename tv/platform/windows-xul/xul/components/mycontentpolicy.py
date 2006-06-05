@@ -21,7 +21,8 @@ class MyContentPolicy:
     def shouldLoad(self, contentType, contentLocation, requestOrigin, context, mimeTypeGuess,  extra):
         rv = nsIContentPolicy.ACCEPT
         if (requestOrigin is not None and 
-                contentType == nsIContentPolicy.TYPE_DOCUMENT):
+                contentType in (nsIContentPolicy.TYPE_DOCUMENT,
+                    nsIContentPolicy.TYPE_SUBDOCUMENT)):
             url = contentLocation.spec
             referrer = requestOrigin.spec
             if not urlcallbacks.runCallback(referrer, url):

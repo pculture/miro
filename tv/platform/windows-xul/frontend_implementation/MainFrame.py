@@ -2,6 +2,7 @@ import frontend
 from xpcom import components
 from util import quoteJS
 from frontend_implementation.VideoDisplay import VideoDisplay
+from frontend_implementation import urlcallbacks
 
 ###############################################################################
 #### Main window                                                           ####
@@ -18,6 +19,7 @@ class MainFrame:
         # Displays selected in each area, for generating deselection
         # messages.
         self.selectedDisplays = {}
+        urlcallbacks.installChannelGuideCallback(self.channelGuideCallback)
 
     def selectDisplay(self, newDisplay, area):
         """Install the provided 'newDisplay' in the requested area"""
@@ -42,6 +44,13 @@ class MainFrame:
                 frontend.jsBridge.showVideoDisplay()
             else:
                 frontend.jsBridge.hideVideoDisplay()
+
+    def channelGuideCallback(self, url):
+        try:
+            # assume all channel guide URLS come from the mainDisplay
+            return self.selectedDisplays[self.mainDisplay].onURLLoad(url)
+        except KeyError:
+            return True
 
     def getDisplay(self, area):
         return self.selectedDisplays[area]

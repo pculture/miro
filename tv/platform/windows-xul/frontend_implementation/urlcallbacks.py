@@ -10,6 +10,11 @@ import util
 from threading import Lock
 
 callbacks = {}
+channelGuideCallback = None
+# We specialcase all urls that begin with
+# "https://channelguide.particapatoryculture.org" to a single callback (the
+# mainDisplay HTTPArea registers for it).  FIXME: we may want a cleaner way
+# to do this.
 callbacksLock = Lock()
 
 def installCallback(referrer, callback):
@@ -21,6 +26,16 @@ def installCallback(referrer, callback):
     callbacksLock.acquire()
     try:
         callbacks[referrer] = callback
+    finally:
+        callbacksLock.release()
+
+def installChannelGuideCallback(callback):
+    """Install a callback for urls where the referrerer is any channel guide
+    page.  """
+    global channelGuideCallback
+    callbacksLock.acquire()
+    try:
+        channelGuideCallback = callback
     finally:
         callbacksLock.release()
 
@@ -40,18 +55,22 @@ def runCallback(referrerURL, url):
     should stop.
     """
 
+    callbacksLock.acquire()
     try:
-        callbacksLock.acquire()
         try:
             callback = callbacks[referrerURL]
-        finally:
-            callbacksLock.release()
-    except KeyError:
+        except KeyError:
+            cgStart = "https://channelguide.participatoryculture.org"
+            if (referrerURL.startswith(cgStart) and
+                    channelGuideCallback is not None):
+                callback = channelGuideCallback
+            else:
+                return True
+    finally:
+        callbacksLock.release()
+    try:
+        rv = callback(url)
+        return rv
+    except:
+        util.failedExn(when="When running URL callback")
         return True
-    else:
-        try:
-            rv = callback(url)
-            return rv
-        except:
-            util.failedExn(when="When running URL callback")
-            return True
