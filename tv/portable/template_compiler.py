@@ -442,7 +442,8 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         else:
             self.addText('<%s'%name)
             for key in attrs.keys():
-                if not (key.startswith('t:') or key.startswith('i18n:')):
+                if (not (key.startswith('t:') or key.startswith('i18n:')) or
+                        key == 't:contextMenu'):
                     self.addAttr(key,attrs[key])
             self.addText('>')
 
