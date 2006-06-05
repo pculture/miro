@@ -58,21 +58,23 @@ def get(descriptor):
         value = path
 
     elif descriptor == config.ICON_CACHE_DIRECTORY:
-        path = get(prefs.SUPPORT_DIRECTORY)
-        path = os.path.join(path, 'icon-cache')
-        value = path
+        value = _makeSupportFilePath('icon-cache')
     
     elif descriptor == config.DB_PATHNAME:
-        path = get(prefs.SUPPORT_DIRECTORY)
-        path = os.path.join(path, 'tvdump')
-        value = path
+        value = _makeSupportFilePath('tvdump')
 
     elif descriptor == config.LOG_PATHNAME:
-        path = get(prefs.SUPPORT_DIRECTORY)
-        path = os.path.join(path, 'log')
-        value = path
+        value = _makeSupportFilePath('dtv-log')
+
+    elif descriptor == config.DOWNLOADER_LOG_PATHNAME:
+        value = _makeSupportFilePath('dtv-downloader-log')
     
     return value
+
+def _makeSupportFilePath(filename):
+    path = get(prefs.SUPPORT_DIRECTORY)
+    path = os.path.join(path, filename)
+    return path
 
 ###############################################################################
 #### Bundle information accessors                                          ####
