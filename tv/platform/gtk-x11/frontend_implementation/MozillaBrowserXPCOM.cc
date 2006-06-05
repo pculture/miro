@@ -203,6 +203,7 @@ nsresult setElementStyle(GtkMozEmbed *gtkembed, char *id, char *name,
     // Get the node
     nsCOMPtr<nsIDOMElement> elt;
     rv = domDocument->GetElementById(idConverted, getter_AddRefs(elt));
+    if (NS_FAILED(rv)) return rv;      
 
     nsCOMPtr<nsIDOMElementCSSInlineStyle> styleElt(do_QueryInterface(elt,
                 &rv));
