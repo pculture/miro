@@ -245,9 +245,14 @@ URL was %s""" % self.url
                     self.status['filename'] = newfilename
 
     ##
-    # Removes downloader from the database
+    # Removes downloader from the database and deletes the file.
     def remove(self):
         self.stop()
+        try:
+            filename = self.status['filename']
+            os.remove (filename)
+        except:
+            pass
         DDBObject.remove(self)
 
     def getType(self):
