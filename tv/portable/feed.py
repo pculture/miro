@@ -937,7 +937,11 @@ class RSSFeedImpl(FeedImpl):
         if hasattr(self, 'initialHTML') and self.initialHTML is not None:
             html = self.initialHTML
             self.initialHTML = None
-            self.updateUsingXML(html)
+            try:
+                self.updateUsingXML(html)
+            except:
+                print "Error updating feed: %s" % (self.url,)
+                raise
             if not self.updateUandA():
                 self.ufeed.beginChange()
                 self.ufeed.endChange()
