@@ -178,8 +178,7 @@ def failed(when, withExn = False, details = None):
             logContents += f.read()
             f.close()
         except:
-            logContents = "Couldn't read logfile '%s':\n" % (logFile, )
-            logContents += traceback.format_exc()
+            logContents = None
         return logContents
 
     logFile = config.get(prefs.LOG_PATHNAME)
@@ -189,9 +188,13 @@ def failed(when, withExn = False, details = None):
     else:
         logContents = readLog(logFile)
     if downloaderLogFile is not None:
-        logContents += "\n" + readLog(downloaderLogFile, "Downloader Log")
+        if logContents is not None:
+            logContents += "\n" + readLog(downloaderLogFile, "Downloader Log")
+        else:
+            logContents = readLog(downloaderLogFile)
 
-    report += "{{{\n%s}}}\n" % logContents
+    if logContents is not None:
+        report += "{{{\n%s}}}\n" % logContents
 
     # Dump the header for the report we just generated to the log, in
     # case there are multiple failures or the user sends in the log
