@@ -244,11 +244,11 @@ function getContextClickMenu(element) {
     return "";
 }
 
-function xulcontexthandler(event) {
+function xulcontexthandler(browserID, event) {
   var itemsAdded = 0;
   var menu = getContextClickMenu(event.target);
-  var cookie = getCookieFromElement(event.target);
   var popup = document.getElementById('contextPopup');
+  if(menu == '') return false;
   while (popup.firstChild) {
     popup.removeChild(popup.firstChild);
   }
@@ -257,8 +257,9 @@ function xulcontexthandler(event) {
     var line = menu.shift().split('|');
     if (line.length > 1) {
       var newItem = document.createElement('menuitem');
-      newItem.setAttribute('label',line[1]);
-      newItem.setAttribute('oncommand','eventURL("'+cookie+'","'+line[0]+'");');
+      newItem.setAttribute("label", line[1]);
+      newItem.setAttribute("oncommand", 
+      "pybridge.loadURLInBrowser('" + browserID + "', '" + line[0] + "');");
       popup.appendChild(newItem);
       itemsAdded++;
     } else {

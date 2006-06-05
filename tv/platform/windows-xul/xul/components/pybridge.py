@@ -216,3 +216,12 @@ class PyBridge:
     @eventloop.asUrgent
     def skip(self, step):
         app.controller.playbackController.skip(step)
+
+    @eventloop.asUrgent
+    def loadURLInBrowser(self, browserId, url):
+        try:
+            display = app.controller.frame.selectedDisplays[browserId]
+        except KeyError:
+            print "No HTMLDisplay for %s in loadURLInBrowser: "% browserId
+        else:
+            display.onURLLoad(url)

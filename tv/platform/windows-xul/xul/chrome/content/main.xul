@@ -123,7 +123,7 @@
   	<browser id="channelsDisplay" src="" type="content"
                  flex="0" width="200" minwidth="50" maxwidth="400"
                  context="contextPopup"
-                 oncontextmenu="return xulcontexthandler(event);" />
+                 oncontextmenu="return xulcontexthandler('channelsDisplay', event);" />
 	<!-- / CHANNEL BAR -->
 	
   <!-- DIVIDER -->
@@ -132,12 +132,12 @@
 
         <browser id="mainDisplay" src="" type="content" flex="1"
              context="contextPopup"
-             oncontextmenu="return xulcontexthandler(event);" />
+             oncontextmenu="return xulcontexthandler('mainDisplay', event);" />
         <vbox id="video-box" flex="1" collapsed="true">
             <browser id="mainDisplayVideo" 
                 src="chrome://dtv/content/video-display-vlc.html" 
                 type="content" flex="1" context="contextPopup"
-                oncontextmenu="return xulcontexthandler(event);" />
+                oncontextmenu="return xulcontexthandler('mainDisplayVideo', event);" />
             <browser id="videoInfoDisplay" src="" type="content"
                     height="40px"/>
         </vbox>
