@@ -971,7 +971,11 @@ class RSSFeedImpl(FeedImpl):
             self.etag = info['etag']
         if info.has_key('last-modified'):
             self.modified = info['last-modified']
-        self.updateUsingXML(html)
+        try:
+            self.updateUsingXML(html)
+        except:
+            print "Error updating feed: %s" % (self.url,)
+            raise
         if not self.updateUandA():
             self.ufeed.beginChange()
             self.ufeed.endChange()
