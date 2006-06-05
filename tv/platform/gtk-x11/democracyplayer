@@ -41,7 +41,7 @@ def startapp():
     app.main()
 if options.version:
     print "Democracy Player"
-    print "Version: 0.8.2a-rc2"
+    print "Version: 0.8.4"
     print ""
     print "Democracy Player comes with ABSOLUTELY NO WARRANTY."
     print "This is free software, and you are welcome to redistribute it"
