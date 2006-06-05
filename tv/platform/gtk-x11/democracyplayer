@@ -11,6 +11,8 @@ pygtk.require('2.0')
 import democracy
 # Make sure democracy modules are on the search path
 sys.path.insert(0, os.path.abspath(os.path.dirname(democracy.__file__)))
+import config
+import prefs
 
 if '--unittest' in sys.argv:
     # handle this outside optparse, because unittest has its own option set
@@ -41,7 +43,7 @@ def startapp():
     app.main()
 if options.version:
     print "Democracy Player"
-    print "Version: 0.8.4"
+    print "Version: %s" % config.get(prefs.APP_VERSION)
     print ""
     print "Democracy Player comes with ABSOLUTELY NO WARRANTY."
     print "This is free software, and you are welcome to redistribute it"
