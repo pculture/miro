@@ -262,7 +262,8 @@ class FakeClassUnpickler(pickle.Unpickler):
         'datetime.datetime', 
         'datetime.timedelta', 
         'time.struct_time',
-        'feedparser.FeedParserDict'
+        'feedparser.FeedParserDict',
+        '__builtin__.unicode',
     ]
 
     def find_class(self, module, name):

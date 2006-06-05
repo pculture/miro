@@ -28,14 +28,64 @@ def EscapeMessagePart(message_part):
 
 def BuildDialog (title, message, buttons, default):
     dialog = gtk.Dialog(title, None, (), buttons)
+    dialog.set_default_size(425, -1)
     label = gtk.Label()
-    alignment = gtk.Alignment()
+    label.set_line_wrap(True)
+    label.set_selectable(True)
     label.set_markup(message)
     label.set_padding (6, 6)
     dialog.vbox.add(label)
     label.show()
     dialog.set_default_response (default)
     return dialog
+
+def BuildHTTPAuth(summary, message, prefillUser = None, prefillPassword = None):
+    """Ask the user for HTTP login information for a location, identified
+    to the user by its URL and the domain string provided by the
+    server requesting the authorization. Default values can be
+    provided for prefilling the form. If the user submits
+    information, it's returned as a (user, password)
+    tuple. Otherwise, if the user presses Cancel or similar, None
+    is returned."""
+    dialog = gtk.Dialog(summary, None, (), (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OK, gtk.RESPONSE_OK))
+    dialog.set_default_size(425, -1)
+    table = gtk.Table()
+    dialog.vbox.add(table)
+    
+    label = gtk.Label()
+    label.set_line_wrap(True)
+    label.set_selectable(True)
+    label.set_markup(message)
+    label.set_padding (6, 6)
+    table.attach (label, 0, 2, 0, 1, gtk.FILL, gtk.FILL)
+
+    label = gtk.Label()
+    label.set_markup(_("Username:"))
+    label.set_padding (6, 6)
+    label.set_alignment (1.0, 0.5)
+    table.attach (label, 0, 1, 1, 2, gtk.FILL, gtk.FILL)
+
+    dialog.user = gtk.Entry()
+    if (prefillUser != None):
+        dialog.user.set_text(prefillUser)
+    table.attach (dialog.user, 1, 2, 1, 2, gtk.FILL | gtk.EXPAND, gtk.FILL, 6, 6)
+
+    label = gtk.Label()
+    label.set_markup(_("Password:"))
+    label.set_padding (6, 6)
+    label.set_alignment (1.0, 0.5)
+    table.attach (label, 0, 1, 2, 3, gtk.FILL, gtk.FILL)
+
+    dialog.password = gtk.Entry()
+    dialog.password.set_activates_default(True)
+    if (prefillPassword != None):
+        dialog.password.set_text(prefillPassword)
+    table.attach (dialog.password, 1, 2, 2, 3, gtk.FILL | gtk.EXPAND, gtk.FILL, 6, 6)
+
+    table.show_all()
+    dialog.set_default_response (gtk.RESPONSE_OK)
+    return dialog
+
 
 @gtkSyncMethod
 def ShowDialog (title, message, buttons, default = gtk.RESPONSE_CANCEL):
@@ -89,52 +139,8 @@ primary = None
 
 class UIBackendDelegate:
 
-    @gtkAsyncMethod
-    def BuildHTTPAuth(self, summary, message, prefillUser = None, prefillPassword = None):
-        """Ask the user for HTTP login information for a location, identified
-        to the user by its URL and the domain string provided by the
-        server requesting the authorization. Default values can be
-        provided for prefilling the form. If the user submits
-        information, it's returned as a (user, password)
-        tuple. Otherwise, if the user presses Cancel or similar, None
-        is returned."""
-        dialog = gtk.Dialog(summary, None, (), (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OK, gtk.RESPONSE_OK))
-        table = gtk.Table()
-        dialog.vbox.add(table)
-        
-        label = gtk.Label()
-        label.set_markup(message)
-        label.set_padding (6, 6)
-        table.attach (label, 0, 2, 0, 1, gtk.FILL, gtk.FILL)
-
-        label = gtk.Label()
-        label.set_markup(_("Username:"))
-        label.set_padding (6, 6)
-        label.set_alignment (1.0, 0.5)
-        table.attach (label, 0, 1, 1, 2, gtk.FILL, gtk.FILL)
-
-        dialog.user = gtk.Entry()
-        if (prefillUser != None):
-            dialog.user.set_text(prefillUser)
-        table.attach (dialog.user, 1, 2, 1, 2, gtk.FILL | gtk.EXPAND, gtk.FILL, 6, 6)
-
-        label = gtk.Label()
-        label.set_markup(_("Password:"))
-        label.set_padding (6, 6)
-        label.set_alignment (1.0, 0.5)
-        table.attach (label, 0, 1, 2, 3, gtk.FILL, gtk.FILL)
-
-        dialog.password = gtk.Entry()
-        if (prefillPassword != None):
-            dialog.password.set_text(prefillPassword)
-        table.attach (dialog.password, 1, 2, 2, 3, gtk.FILL | gtk.EXPAND, gtk.FILL, 6, 6)
-
-        table.show_all()
-        dialog.set_default_response (gtk.RESPONSE_OK)
-        return dialog
-
     def getHTTPAuth(self, url, domain, prefillUser = None, prefillPassword = None):
-        dialog = BuildHTTPAuth (self, _("Channel requires authentication"), _("%s requires a username and password for \"%s\".") % (EscapeMessagePart(url), EscapeMessagePart(domain)), prefillUser, prefillPassword)
+        dialog = BuildHTTPAuth (_("Channel requires authentication"), _("%s requires a username and password for \"%s\".") % (EscapeMessagePart(url), EscapeMessagePart(domain)), prefillUser, prefillPassword)
         response = dialog.run()
         retval = None
         if (response == gtk.RESPONSE_OK):
@@ -249,17 +255,17 @@ class UIBackendDelegate:
             ShowDialogAsync (EscapeMessagePart(dialog.title), EscapeMessagePart(dialog.description), tuple(buttons), default=0, callback = Callback)
         elif isinstance(dialog, dialogs.HTTPAuthDialog):
 
-            def AsyncDialogResponse(dialog, response):
+            def AsyncDialogResponse(gtkDialog, response):
                 retval = None
                 if (response == gtk.RESPONSE_OK):
-                    dialog.runCallback(dialog.BUTTON_OK, dialog.user.get_text(), dialog.password.get_text())
+                    dialog.runCallback(dialogs.BUTTON_OK, gtkDialog.user.get_text(), gtkDialog.password.get_text())
                 else:
                     dialog.runCallback(None)
-                dialog.destroy()
+                gtkDialog.destroy()
 
-            dialog = BuildHTTPAuth (self, EscapeMessagePart(dialog.title), EscapeMessagePart(dialog.description), dialog.prefillUser, dialog.prefillPassword)
-            dialog.connect("response", AsyncDialogResponse)
-            dialog.show()
+            gtkDialog = BuildHTTPAuth (EscapeMessagePart(dialog.title), EscapeMessagePart(dialog.description), dialog.prefillUser, dialog.prefillPassword)
+            gtkDialog.connect("response", AsyncDialogResponse)
+            gtkDialog.show()
         else:
             dialog.runCallback (None)
 

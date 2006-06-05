@@ -806,10 +806,10 @@ class Feed(DDBObject):
     def askForScrape(self, info, initialHTML, charset):
         title = _("Channel is not compatible with Democracy!")
         descriptionTemplate = string.Template(_("""\
-    But we'll try our best to grab the files. It may take extra time to list the \
-    videos, and descriptions may look funny.  Please contact the publishers of \
-    $url and ask if they can supply a feed in a format that will work with \
-    Democracy."""))
+But we'll try our best to grab the files. It may take extra time to list the \
+videos, and descriptions may look funny.  Please contact the publishers of \
+$url and ask if they can supply a feed in a format that will work with \
+Democracy."""))
         description = descriptionTemplate.substitute(url=info['updated-url'])
         dialog = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_YES,
                 dialogs.BUTTON_NO)

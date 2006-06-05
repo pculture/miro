@@ -68,7 +68,9 @@ allExternalTorrents.unlink()
 	<div t:hideIf="externalTorrents.len() == 0" 
 		t:updateHideOnView="externalTorrents" class="main-channelbar">
 		<h1 i18n:translate="">External Torrents 
+			<!--
 			<a il8n:translate="" href="#" onclick="return eventURL('action:clearCompletedTorrents');" style="text-decoration: underline; margin-left: 15px; font-weight: normal;" title="Clear Completed">Clear Completed</a>
+			-->
 		</h1>
         </div>
 	<span t:repeatForView="externalTorrents">		
