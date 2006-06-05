@@ -159,7 +159,7 @@ class ChannelGuide(DDBObject):
                 return guideNotAvailableBody
             else:
                 if not self.loadedThisSession:
-                    print "DTV: *** WARNING *** loading a stale copy of the chanel guide from cache"
+                    print "DTV: *** WARNING *** loading a stale copy of the channel guide from cache"
                 return self.cachedGuideBody
         finally:
             self.cond.release()
