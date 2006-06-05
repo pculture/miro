@@ -84,6 +84,9 @@ def pidIsRunning(pid):
     except OSError, err:
         return err.errno == errno.EPERM
 
+clipboard = None
+primary = None
+
 class UIBackendDelegate:
 
     @gtkAsyncMethod
@@ -219,7 +222,7 @@ class UIBackendDelegate:
 
     def notifyUnkownErrorOccurence(self, when, log = ''):
         summary = _("Unknown Runtime Error")
-        message = _("An unknown error has occurred %s.") % EscapeMessagePart(when)
+        message = _("An unknown error has occurred %s.") % (EscapeMessagePart(when),)
         buttons = (gtk.STOCK_CLOSE, gtk.RESPONSE_OK)
         ShowDialogAsync (summary, message, buttons, once="UnknownError")
         return True
@@ -260,10 +263,16 @@ class UIBackendDelegate:
         else:
             dialog.runCallback (None)
 
-    @gtkSyncMethod
+    @gtkAsyncMethod
     def copyTextToClipboard(self, text):
-        gtk.Clipboard(selection="CLIPBOARD").set_text(text)
-        gtk.Clipboard(selection="PRIMARY").set_text(text)
+        global clipboard
+        global primary
+        if clipboard is None:
+            clipboard = gtk.Clipboard(selection="CLIPBOARD")
+        if primary is None:
+            primary = gtk.Clipboard(selection="PRIMARY")
+        clipboard.set_text(text)
+        primary.set_text(text)
 
     def killDownloadDaemon(self, oldpid):
         if pidIsRunning(oldpid):
