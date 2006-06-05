@@ -721,7 +721,7 @@ class AddChannelSheetController (NibClassBuilder.AutoBaseClass):
 
     def addChannelSheetDone_(self, sender):
         sheetURL = self.addChannelSheetURL.stringValue()
-        self.parentController.addAndSelectFeed(sheetURL)
+        eventloop.addUrgentCall(lambda:self.parentController.addAndSelectFeed(sheetURL), "Add Feed")
         self.closeSheet()
 
     def addChannelSheetCancel_(self, sender):
@@ -1640,7 +1640,6 @@ class ManagedWebView (NSObject):
     ##
     # Create CTRL-click menu on the fly
     def webView_contextMenuItemsForElement_defaultMenuItems_(self,webView,contextMenu,defaultMenuItems):
-        platformutils.warnIfNotOnMainThread("webView_contextMenuItemsForElement_defaultMenuItems_")
         menuItems = []
         if self.initialLoadFinished:
             exists = webView.windowScriptObject().evaluateWebScript_("typeof(getContextClickMenu)") == "function"
@@ -1882,15 +1881,15 @@ class VideoDisplay (app.VideoDisplayBase):
  
     def play(self):
         app.VideoDisplayBase.play(self)
-        self.controller.play()
+        platformutils.callOnMainThread(self.controller.play)
 
     def pause(self):
         app.VideoDisplayBase.pause(self)
-        self.controller.pause()
+        platformutils.callOnMainThread(self.controller.pause)
 
     def stop(self):
         app.VideoDisplayBase.stop(self)
-        self.controller.stop()
+        platformutils.callOnMainThread(self.controller.stop)
     
     def goFullScreen(self):
         app.VideoDisplayBase.goFullScreen(self)
@@ -2041,7 +2040,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.videoAreaView.exitFullScreen()
 
     def forward_(self, sender):
-        eventloop.addUrgentCall(lambda:self.performSeek(sender, 1), "Forward")
+        self.performSeek(sender, 1)
         
     def skipForward_(self, sender):
         eventloop.addUrgentCall(lambda:app.controller.playbackController.skip(1), "Skip Forward")
@@ -2050,7 +2049,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.performSeek(sender, 1, 0.0)
 
     def backward_(self, sender):
-        eventloop.addUrgentCall(lambda:self.performSeek(sender, -1), "Backward")
+        self.performSeek(sender, -1)
 
     def skipBackward_(self, sender):
         eventloop.addUrgentCall(lambda:app.controller.playbackController.skip(-1), "Skip Backward")
@@ -2080,11 +2079,10 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             else:
                 self.fastSeekTimer.invalidate()
                 self.fastSeekTimer = nil
-                app.controller.playbackController.skip(direction)
+                eventloop.addUrgentCall(lambda:app.controller.playbackController.skip(direction), "Skip Item")
 
     @platformutils.onMainThread
     def scheduleFastSeek(self, timer):
-        platformutils.warnIfNotOnMainThread('scheduleFastSeek')
         NSRunLoop.currentRunLoop().addTimer_forMode_(timer, NSEventTrackingRunLoopMode)
 
     def fastSeek_(self, timer):
@@ -2281,14 +2279,13 @@ class QuicktimeRenderer (app.VideoRenderer):
         self.delegate = delegate
         self.cachedMovie = nil
 
-    @platformutils.onMainThread
     def registerMovieObserver(self, movie):
         nc.addObserver_selector_name_object_(self.delegate, 'handleMovieNotification:', QTMovieDidEndNotification, movie)
 
-    @platformutils.onMainThread
     def unregisterMovieObserver(self, movie):
         nc.removeObserver_name_object_(self.delegate, QTMovieDidEndNotification, movie)
 
+    @platformutils.onMainThread
     def reset(self):
         self.unregisterMovieObserver(self.view.movie())
         self.view.setMovie_(nil)

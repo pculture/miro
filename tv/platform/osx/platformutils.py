@@ -15,6 +15,9 @@ def warnIfNotOnMainThread(name="(unknown)"):
     if threading.currentThread().getName() != 'MainThread':
         print "WARNING: function %s not on main thread" % name
 
+def isOnMainThread():
+    return (threading.currentThread().getName() == 'MainThread')
+
 ###############################################################################
 
 def callOnMainThread(func, *args, **kwargs):
@@ -65,17 +68,27 @@ callLock = threading.Lock()
 callEvent = threading.Event()
 callResult = None
 
-def _call(args, delay=0.0, waitUntilDone=False, waitForResult=False):
-    obj = CallerObject.alloc().initWithArgs_(args)
+def _performCall(func, args, kwargs):
+    pool = Foundation.NSAutoreleasePool.alloc().init()
     try:
-        if waitForResult:
-            return obj.performCallAndWaitReturn()
-        elif delay == 0.0:
-            obj.performCall(waitUntilDone)
-        else:
-            obj.performCallLater(delay)
+        return func(*args, **kwargs)
     finally:
-        del obj
+        del pool
+
+def _call(args, delay=0.0, waitUntilDone=False, waitForResult=False):
+    if isOnMainThread():
+        return _performCall(*args)
+    else:
+        obj = CallerObject.alloc().initWithArgs_(args)
+        try:
+            if waitForResult:
+                return obj.performCallAndWaitReturn()
+            elif delay == 0.0:
+                obj.performCall(waitUntilDone)
+            else:
+                obj.performCallLater(delay)
+        finally:
+            del obj
 
 class CallerObject (Foundation.NSObject):
     
@@ -108,20 +121,12 @@ class CallerObject (Foundation.NSObject):
         return r
         
     def perform_(self, (func, args, kwargs)):
-        pool = Foundation.NSAutoreleasePool.alloc().init()
-        try:
-            return func(*args, **kwargs)
-        finally:
-            del pool
+        return _performCall(func, args, kwargs)
 
     def performAndNotify_(self, (func, args, kwargs)):
         global callResult
-        pool = Foundation.NSAutoreleasePool.alloc().init()
-        try:
-            callResult = func(*args, **kwargs)
-        finally:
-            del pool
-            callEvent.set()
+        callResult = _performCall(func, args, kwargs)
+        callEvent.set()
 
 ###############################################################################
 #### Helper method used to get the free space on the disk where downloaded ####
