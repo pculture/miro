@@ -233,7 +233,6 @@ fakeClasses = {
     'downloader.HTTPAuthPassword': OldHTTPAuthPassword,
     'downloader.RemoteDownloader': OldRemoteDownloader,
     'guide.ChannelGuide': OldChannelGuide,
-    'BitTorrent.ConvertedMetainfo.ConvertedMetainfo': OldMetainfo,
 
     # Drop these classes like they're hot!
     #
@@ -245,8 +244,12 @@ fakeClasses = {
     # and BitTorrent.ConvertedMetainfo.ConvertedMetainfo objects, drop those
     # too.
     #
+    # We use BitTornado now, so drop the metainfo... We should recreate it
+    # after the upgrade.
+    #
     # DownloaderFactory and StaticTab shouldn't be pickled, but I've seen
     # databases where it is.
+    'BitTorrent.ConvertedMetainfo.ConvertedMetainfo': DropItLikeItsHot,
     'downloader.DownloaderFactory': DropItLikeItsHot,
     'app.StaticTab': DropItLikeItsHot,
     'feed.YahooSearchFeedImpl': DropItLikeItsHot,
