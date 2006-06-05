@@ -1060,8 +1060,8 @@ class ModelActionHandler:
         if currentFeed:
             self.removeFeed(currentFeed)
 
-    def removeFeed(self, feedID):
-        obj = db.getObjectByID(int(feedID))
+    def removeFeed(self, feed):
+        obj = db.getObjectByID(int(feed))
         title = 'Remove Channel'
         description = """Are you sure you want to remove the channel \'%s\'? This operation cannot be undone.""" % obj.getTitle()
         dialog = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_YES,
