@@ -91,6 +91,7 @@ VLCRenderer.prototype = {
 
   reset: function() {
     this.stop();
+    this.vlc.clear_playlist();
     this.showPlayButton();
   },
 
