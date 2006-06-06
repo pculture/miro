@@ -13,6 +13,7 @@ except:
 import app
 import feed
 import prefs
+import views
 import config
 import resource
 import template
@@ -216,28 +217,34 @@ class AppController (NibClassBuilder.AutoBaseClass):
         app.controller.selectTabByTemplateBase('librarytab')
 
     def workspaceWillSleep_(self, notification):
-        downloads = app.globalViewList['remoteDownloads']
-        dlCount = len(downloads)
-        if dlCount > 0:
-            print "DTV: System is going to sleep, suspending downloads."
-            downloads.beginRead()
-            try:
-                for dl in downloads:
-                    dl.pause(block=True)
-            finally:
-                downloads.endRead()
+        def pauseAllDownloaders():
+            dlCount = len(views.remoteDownloads)
+            if dlCount > 0:
+                print "DTV: System is going to sleep, suspending downloads."
+                views.remoteDownloads.beginRead()
+                try:
+                    for dl in views.remoteDownloads:
+                        dl.pause(block=True)
+                finally:
+                    views.remoteDownloads.endRead()
+        dc = eventloop.addUrgentCall(lambda:pauseAllDownloaders(), "Suspending downloaders")
+        # Until we can get proper delayed call completion notification, we're
+        # just going to wait a couple seconds here :)
+        time.sleep(2)
+        #dc.waitCompletion()
 
     def workspaceDidWake_(self, notification):
-        downloads = app.globalViewList['remoteDownloads']
-        dlCount = len(downloads)
-        if dlCount > 0:
-            print "DTV: System is awake, resuming downloads."
-            downloads.beginRead()
-            try:
-                for dl in downloads:
-                    dl.start()
-            finally:
-                downloads.endRead()
+        def retstartAllDownloaders():
+            dlCount = len(views.remoteDownloads)
+            if dlCount > 0:
+                print "DTV: System is awake, resuming downloads."
+                views.remoteDownloads.beginRead()
+                try:
+                    for dl in views.remoteDownloads:
+                        dl.start()
+                finally:
+                    views.remoteDownloads.endRead()
+        eventloop.addUrgentCall(lambda:retstartAllDownloaders(), "Restarting downloaders")
 
     def videoWillPlay_(self, notification):
         self.playPauseMenuItem.setTitle_('Pause Video')
