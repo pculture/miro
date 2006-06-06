@@ -104,14 +104,11 @@ def addSubscriptions(path):
 
 def setCommandLineArgs(args):
     global _commandLineArgs
-    print "setting args to ", args
     _commandLineArgs = args
 
 def parseCommandLineArgs(args=None):
-    print "parsing %r" % args
     if args is None:
         args = _commandLineArgs
-    print "real args: %r" % args
 
     resetCommandLineView()
 
