@@ -440,6 +440,10 @@ class Controller (frontend.Application):
         global delegate
 
         try:
+            print "DTV: Starting up Democracy Player"
+            print "DTV: Version:  %s" % config.get(prefs.APP_VERSION)
+            print "DTV: Revision: %s" % config.get(prefs.APP_REVISION)
+            
             print "DTV: Loading preferences..."
             config.load()
             config.addChangeCallback(self.configDidChange)
