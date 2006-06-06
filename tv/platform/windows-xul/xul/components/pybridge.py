@@ -180,10 +180,6 @@ class PyBridge:
 
     @eventloop.asUrgent
     def handleCommandLine(self, commandLine):
-        singleclick.setCommandLineArgs(getArgumentList(commandLine))
-
-    @eventloop.asUrgent
-    def handleSecondCommandLine(self, commandLine):
         singleclick.parseCommandLineArgs(getArgumentList(commandLine))
 
     def pageLoadFinished(self, area, url):
