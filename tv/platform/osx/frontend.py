@@ -861,7 +861,7 @@ class ChannelsPrefsController (NibClassBuilder.AutoBaseClass):
 
     def checkEvery_(self, sender):
         minutes = sender.selectedItem().tag()
-        config.set(prefs.CHECK_CHANNELS_EVERY_X_MN, minutes)
+        eventloop.addUrgentCall(lambda:config.set(prefs.CHECK_CHANNELS_EVERY_X_MN, minutes), "Setting update frequency pref.")
 
 class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
     
