@@ -86,7 +86,7 @@ def addFeedFromWebPage(url):
 
 # URL validitation and normalization
 def validateFeedURL(url):
-    return re.match(r"^(http|https|feed)://[^/]+/.*", url) is not None
+    return re.match(r"^(http|https)://[^/]+/.*", url) is not None
 
 def normalizeFeedURL(url):
     # Valid URL are returned as-is
@@ -96,17 +96,19 @@ def normalizeFeedURL(url):
     originalURL = url
     
     # Check valid schemes with invalid separator
-    match = re.match(r"^(http|https|feed):/*(.*)$", url)
+    match = re.match(r"^(http|https):/*(.*)$", url)
     if match is not None:
         url = "%s://%s" % match.group(1,2)
 
     # Replace invalid schemes by http
-    match = re.match(r"^(.*:/*)*(.*)$", url)
-    if match is not None:
-        url = "http://%s" % match.group(2)
+    match = re.match(r"^(([A-Za-z]*):/*)*(.*)$", url)
+    if match.group(2) in ['feed', 'podcast']:
+        url = "http://%s" % match.group(3)
+    elif match.group(1) == 'feeds':
+        url = "https://%s" % match.group(3)
 
     # Make sure there is a leading / character in the path
-    match = re.match(r"^(http|https|feed)://[^/]*$", url)
+    match = re.match(r"^(http|https)://[^/]*$", url)
     if match is not None:
         url = url + "/"
 
