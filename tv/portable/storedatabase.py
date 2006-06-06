@@ -187,22 +187,23 @@ class ConverterBase(object):
 
         try:
             objectSchema = self.getObjectSchema(object)
-            convertedObject = self.makeNewConvert(objectSchema.classString)
-            self.memory[id(object)] = convertedObject
-
-            for name, schema in objectSchema.fields:
-                data = self.getSourceAttr(object, name)
-                try:
-                    dataStr = str(data)
-                except Exception, e:
-                    # this will happen when data is invalid unicode
-                    dataStr = "<couldn't convert (%s)>" % e
-                newPath = path + "\n%s -> %s" % (name, dataStr)
-                convertedData = self.convertData(data, schema, newPath)
-                self.setTargetAttr(convertedObject, name, convertedData)
-            return convertedObject
         except schema_mod.ValidationError, e:
             self.handleValidationError(e, object, path, schema)
+
+        convertedObject = self.makeNewConvert(objectSchema.classString)
+        self.memory[id(object)] = convertedObject
+
+        for name, schema in objectSchema.fields:
+            data = self.getSourceAttr(object, name)
+            try:
+                dataStr = str(data)
+            except Exception, e:
+                # this will happen when data is invalid unicode
+                dataStr = "<couldn't convert (%s)>" % e
+            newPath = path + "\n%s -> %s" % (name, dataStr)
+            convertedData = self.convertData(data, schema, newPath)
+            self.setTargetAttr(convertedObject, name, convertedData)
+        return convertedObject
 
 
     # Methods that may be overridden by SavableConverter/SavableUnconverter

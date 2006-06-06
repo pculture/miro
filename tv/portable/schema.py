@@ -267,7 +267,7 @@ class FeedImplSchema(ObjectSchema):
         ('visible', SchemaBool()),
         ('updating', SchemaBool()),
         ('lastViewed', SchemaDateTime()),
-        ('thumbURL', SchemaString()),
+        ('thumbURL', SchemaString(noneOk=True)),
         ('updateFreq', SchemaInt()),
         ('expireTime', SchemaTimeDelta(noneOk=True)),
         ('initialUpdate', SchemaBool()),
