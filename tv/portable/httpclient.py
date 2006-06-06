@@ -59,11 +59,11 @@ class AuthorizationFailed(HTTPError):
     pass
 
 
-def trapCall(function, *args, **kwargs):
+def trapCall(object, function, *args, **kwargs):
     """Convenience function do a util.trapCall, where when = 'While talking to
     the network'
     """
-    return util.trapCall("While talking to the network", function, *args, **kwargs)
+    return util.timeTrapCall("Calling %s on %s" % (function, object), function, *args, **kwargs)
 
 class NetworkBuffer(object):
     """Responsible for storing incomming network data and doing some basic
@@ -149,11 +149,20 @@ class AsyncSocket(object):
         self.readCallback = None
         self.closeCallback = closeCallback
         self.connectionErrback = None
+        self.name = ""
+
+    def __str__(self):
+        if self.name:
+            return "%s: %s" % (type(self).__name__, self.name)
+        else:
+            return "Unknown %s" % (type(self).__name__,)
 
     def openConnection(self, host, port, callback, errback):
         """Open a connection.  On success, callback will be called with this
         object.
         """
+
+        self.name = "Outgoing %s:%s" % (host, port)
 
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.setblocking(0)
@@ -165,17 +174,17 @@ class AsyncSocket(object):
             try:
                 self.socket.connect_ex((address, port))
             except Exception, e:
-                trapCall(errback, e)
+                trapCall(self, errback, e)
             else:
                 eventloop.addWriteCallback(self.socket, onWriteReady)
         def onWriteReady():
             eventloop.removeWriteCallback(self.socket)
             rv = self.socket.getsockopt(socket.SOL_SOCKET, socket.SO_ERROR)
             if rv == 0:
-                trapCall(callback, self)
+                trapCall(self, callback, self)
             else:
                 msg = errno.errorcode[rv]
-                trapCall(errback, ConnectionError((rv, msg)))
+                trapCall(self, errback, ConnectionError((rv, msg)))
             self.connectionErrback = None
 
         eventloop.callInThread(onAddressLookup, errback,
@@ -185,9 +194,10 @@ class AsyncSocket(object):
         def finishAccept():
             eventloop.removeReadCallback(self.socket)
             (self.socket, addr) = self.socket.accept()
-            trapCall(callback, self)
+            trapCall(self, callback, self)
             self.connectionErrback = None
 
+        self.name = "Incoming %s:%s" % (host, port)
         self.connectionErrback = errback
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.bind( (host, port) )
@@ -202,7 +212,7 @@ class AsyncSocket(object):
             self.socket = None
             if self.connectionErrback is not None:
                 error = ConnectionError("Connection closed")
-                trapCall(self.connectionErrback, error)
+                trapCall(self, self.connectionErrback, error)
                 self.connectionErrback = None
 
     def isOpen(self):
@@ -284,9 +294,9 @@ class AsyncSocket(object):
     def handleReadData(self, data):
         if data == '':
             if self.closeCallback:
-                trapCall(self.closeCallback, self, socket.SHUT_RD)
+                trapCall(self, self.closeCallback, self, socket.SHUT_RD)
         else:
-            trapCall(self.readCallback, data)
+            trapCall(self, self.readCallback, data)
 
     def handleEarlyClose(self, operation):
         self.closeConnection()
@@ -295,7 +305,7 @@ class AsyncSocket(object):
                 type = socket.SHUT_RD
             else:
                 type = socket.SHUT_WR
-            trapCall(self.closeCallback, self, type)
+            trapCall(self, self.closeCallback, self, type)
 
 class AsyncSSLStream(AsyncSocket):
     def __init__(self, closeCallback=None):
@@ -397,13 +407,21 @@ class ConnectionHandler(object):
         self.states = {'initializing': None, 'closed': None}
         self.stream = self.streamFactory(closeCallback=self.closeCallback)
         self.changeState('initializing')
+        self.name = ""
+
+    def __str__(self):
+        if self.name:
+            return "%s: %s" % (type(self).__name__, self.name)
+        else:
+            return "Unknown %s" % (type(self).__name__,)
 
     def openConnection(self, host, port, callback, errback):
+        self.name = "Outgoing %s:%s" % (host, port)
         self.host = host
         self.port = port
         def callbackIntercept(asyncSocket):
             if callback:
-                trapCall(callback, self)
+                trapCall(self, callback, self)
         self.stream.openConnection(host, port, callbackIntercept, errback)
 
     def closeConnection(self):
@@ -583,7 +601,7 @@ class HTTPConnection(ConnectionHandler):
             if data == '':
                 return
             self.bodyBytesRead += len(data)
-            trapCall(self.bodyDataCallback, data)
+            trapCall(self, self.bodyDataCallback, data)
             if self.state == 'closed':
                 return 
             if (self.contentLength is not None and 
@@ -616,7 +634,7 @@ class HTTPConnection(ConnectionHandler):
             self.chunkBytesRead += len(data)
             if data == '':
                 return
-            trapCall(self.bodyDataCallback, data)
+            trapCall(self, self.bodyDataCallback, data)
             if self.chunkBytesRead == self.chunkSize:
                 self.changeState('chunk-crlf')
         elif self.buffer.length >= self.chunkSize:
@@ -716,7 +734,7 @@ class HTTPConnection(ConnectionHandler):
         self.checkChunked()
         self.decideWillClose()
         if self.headerCallback:
-            trapCall(self.headerCallback, self.makeResponse())
+            trapCall(self, self.headerCallback, self.makeResponse())
         if self.state == 'closed':
             return # maybe the header callback canceled this request
         if ((100 <= self.status <= 199) or self.status in (204, 304) or
@@ -779,7 +797,7 @@ class HTTPConnection(ConnectionHandler):
                 self.changeState('ready')
                 self.idleSince = clock()
 
-        trapCall(self.callback, self.makeResponse(body))
+        trapCall(self, self.callback, self.makeResponse(body))
         self.maybeSendReadyCallback()
 
     def makeResponse(self, body=None):
@@ -806,11 +824,11 @@ class HTTPConnection(ConnectionHandler):
             self.errback(ServerClosedConnection())
         if self.pipelinedRequest is not None:
             errback = self.pipelinedRequest[1]
-            trapCall(errback, PipelinedRequestNeverStarted())
+            trapCall(self, errback, PipelinedRequestNeverStarted())
 
     def handleError(self, error):
         self.closeConnection()
-        trapCall(self.errback, error)
+        trapCall(self, self.errback, error)
 
 class HTTPSConnection(HTTPConnection):
     streamFactory = AsyncSSLStream
@@ -1089,6 +1107,9 @@ class HTTPClient(object):
         self.requestId = None
         self.initHeaders()
 
+    def __str__(self):
+        return "%s: %s" % (type(self).__name__, self.url)
+
     def isValidCookie(self, cookie, scheme, host, port, path):
         return ((time.time() - cookie['received'] < cookie['Max-Age']) and
                 (cookie['Version'] == '1') and
@@ -1190,10 +1211,10 @@ class HTTPClient(object):
             if response['status'] in expectedStatusCodes:
                 if self.callback:
                     response = self.prepareResponse(response)
-                    trapCall(self.callback, response)
+                    trapCall(self, self.callback, response)
             elif self.errback:
                 error = UnexpectedStatusCode(response['status'])
-                trapCall(self.errback, error)
+                trapCall(self, self.errback, error)
 
     def errbackIntercept(self, error):
         self.requestId = None
@@ -1203,19 +1224,19 @@ class HTTPClient(object):
             self.startRequest() 
             # this should give us a new connection, since our last one closed
             return
-        trapCall(self.errback, error)
+        trapCall(self, self.errback, error)
 
     def onHeaders(self, response):
         if self.shouldRedirect(response) or self.shouldAuthorize(response):
             self.willHandleResponse = True
         elif self.headerCallback is not None:
             response = self.prepareResponse(response)
-            if not trapCall(self.headerCallback, response):
+            if not trapCall(self, self.headerCallback, response):
                 self.cancelRequest()
 
     def onBodyData(self, data):
         if not self.willHandleResponse and self.bodyDataCallback:
-            if not trapCall(self.bodyDataCallback, data):
+            if not trapCall(self, self.bodyDataCallback, data):
                 self.cancelRequest()
 
     def prepareResponse(self, response):
@@ -1397,12 +1418,12 @@ class HTTPClient(object):
         match = re.search("(\w+)\s+realm\s*=\s*\"(.*?)\"$",
             response['www-authenticate'])
         if match is None:
-            trapCall(self.errback, AuthorizationFailed())
+            trapCall(self, self.errback, AuthorizationFailed())
             return
         authScheme = match.expand("\\1")
         realm = match.expand("\\2")
         if authScheme.lower() != 'basic':
-            trapCall(self.errback, AuthorizationFailed())
+            trapCall(self, self.errback, AuthorizationFailed())
             return
 
         scheme, host, port, path = parseURL(self.url)
@@ -1415,7 +1436,7 @@ class HTTPClient(object):
                 self.setAuthHeader()
                 self.startRequest()
             else:
-                trapCall(self.errback, AuthorizationFailed())
+                trapCall(self, self.errback, AuthorizationFailed())
         dialogs.HTTPAuthDialog(self.url, realm).run(handleLoginResponse)
 
 def grabURL(url, callback, errback, headerCallback=None,

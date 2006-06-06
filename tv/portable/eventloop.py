@@ -20,7 +20,7 @@ from BitTornado.clock import clock
 
 import util
 
-#cumulative = {}
+cumulative = {}
 
 class DelayedCall(object):
     def __init__(self, function, name, args, kwargs):
@@ -36,21 +36,22 @@ class DelayedCall(object):
     def dispatch(self):
         if not self.canceled:
             when = "While handling %s" % self.name
-            #start = clock()
+            start = clock()
             util.trapCall(when, self.function, *self.args, **self.kwargs)
-            #end = clock()
-            #if end-start > 0.05:
-            #    print "WARNING: %s too slow (%.3f secs)" % (
-            #        self.name, end-start)
-            #try:
-            #    total = cumulative[self.name]
-            #except:
-            #    total = 0
-            #total += end - start
-            #cumulative[self.name] = total
-            #if total > 0.1:
-            #    print "WARNING: %s cumulative is too slow (%.3f secs)" % (
-            #        self.name, total)
+            end = clock()
+            if end-start > 0.5:
+                print "WARNING: %s too slow (%.3f secs)" % (
+                    self.name, end-start)
+            try:
+                total = cumulative[self.name]
+            except:
+                total = 0
+            total += end - start
+            cumulative[self.name] = total
+            if total > 5.0:
+                print "WARNING: %s cumulative is too slow (%.3f secs)" % (
+                    self.name, total)
+                cumulative[self.name] = 0
 
 class Scheduler(object):
     def __init__(self):
@@ -102,7 +103,7 @@ class CallQueue(object):
         #dc, requested = self.queue.get()
         #start = clock()
         dc.dispatch()
-        #if start - requested > 0.01:
+        #if start - requested > 1.0:
         #    print "WARNING: %s took too long to fire (%.3f secs)" % (
         #        dc.name, start - requested)
 

@@ -9,6 +9,7 @@ import threading
 import traceback
 import time
 import sys
+from BitTornado.clock import clock
 
 inDownloader = False
 # this gets set to True when we're in the download process.
@@ -261,3 +262,31 @@ def trapCall(when, function, *args, **kwargs):
         failedExn(when)
         return False
 
+cumulative = {}
+cancel = False
+
+def timeTrapCall(when, function, *args, **kwargs):
+    global cancel
+    cancel = False
+    start = clock()
+    retval = trapCall (when, function, *args, **kwargs)
+    end = clock()
+    if cancel:
+        return retval
+    if end-start > 0.5:
+        print "WARNING: %s too slow (%.3f secs)" % (
+            when, end-start)
+    try:
+        total = cumulative[when]
+    except:
+        total = 0
+    total += end - start
+    cumulative[when] = total
+    if total > 5.0:
+        print "WARNING: %s cumulative is too slow (%.3f secs)" % (
+            when, total)
+        cumulative[when] = 0
+    cancel = True
+    return retval
+
+        
