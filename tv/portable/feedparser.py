@@ -1293,7 +1293,7 @@ class _FeedParserMixin:
     _end_itunes_summary = _end_summary
         
     def _start_enclosure(self, attrsD):
-        self.inenclosure = 1
+        self.inenclosure += 1
         attrsD = self._itsAnHrefDamnIt(attrsD)
         self._getContext().setdefault('enclosures', []).append(FeedParserDict(attrsD))
         href = attrsD.get('href')
@@ -1304,7 +1304,7 @@ class _FeedParserMixin:
     _start_media_content = _start_enclosure
 
     def _end_enclosure(self):
-        self.inenclosure = 0
+        self.inenclosure -= 1
     _end_media_content = _end_enclosure
 
     def _start_media_thumbnail(self,attrsD):
