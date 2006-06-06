@@ -162,6 +162,14 @@ jsBridge.prototype = {
     this.setActive("progress-slider", false);
   },
 
+  positionVolumeSlider: function(volume) {
+    var left = 25;
+    var right= 98;
+    var position = left + (right-left) * volume;
+    position = Math.min(right, Math.max(left, position));
+    this.document.getElementById("knob").style.left = position + "px";
+  },
+
   xulNavigateDisplay: function(area, uri) {
     var browser = this.document.getElementById(area);
     browser.contentDocument.location = uri;

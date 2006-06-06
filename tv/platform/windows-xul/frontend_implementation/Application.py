@@ -1,6 +1,8 @@
 import sys
 import frontend
 import time
+import config
+import prefs
 
 ###############################################################################
 #### Application object                                                    ####
@@ -18,6 +20,7 @@ class Application:
 
         # Start the core.
 	self.onStartup()
+        frontend.jsBridge.positionVolumeSlider(config.get(prefs.VOLUME_LEVEL))
 
     def getBackendDelegate(self):
         return frontend.UIBackendDelegate()

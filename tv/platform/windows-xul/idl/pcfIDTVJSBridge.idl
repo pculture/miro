@@ -24,4 +24,5 @@ interface pcfIDTVJSBridge : nsISupports
   void showBugReportDialog(in AString when, in AString report);
   void showVideoDisplay();
   void hideVideoDisplay();
+  void positionVolumeSlider(in float volume);
 };

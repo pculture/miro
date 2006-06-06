@@ -40,16 +40,14 @@ class VideoDisplay (app.VideoDisplayBase):
         pass
 
     def goFullScreen(self):
-        app.VideoDisplayBase.goFullScreen(self)
         return frontend.vlcRenderer.goFullscreen(url)
 
     def exitFullScreen(self):
-        print "VideoDisplay exit fullscreen"
-        return
-        app.VideoDisplayBase.exitFullScreen(self)
+        return frontend.vlcRenderer.exitFullScreen(url)
 
     def setVolume(self, volume): 
-        return frontend.vlcRenderer.setVolume(volume)
+        self.volume = volume
+        frontend.vlcRenderer.setVolume(volume)
 
 class VLCRenderer:
     """The VLC renderer is very thin wrapper around the xine-renderer xpcom

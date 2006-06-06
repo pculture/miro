@@ -163,6 +163,7 @@ class PyBridge:
 
     @eventloop.asUrgent
     def setVolume(self, volume):
+        config.set(prefs.VOLUME_LEVEL, volume)
         app.controller.videoDisplay.setVolume(volume)
 
     @eventloop.asUrgent
