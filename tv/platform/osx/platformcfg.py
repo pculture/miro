@@ -2,6 +2,7 @@ from AppKit import NSUserDefaults, NSBundle
 from PyObjCTools import Conversion
 
 import os
+import objc
 
 import util
 import prefs
@@ -16,17 +17,14 @@ def load():
     plist =  NSUserDefaults.standardUserDefaults().persistentDomainForName_(domain)
     pydict = Conversion.pythonCollectionFromPropertyList(plist)
 
-    # A bug in the 'Downloads' preference panel allowed float values to be
-    # used for the upstream limit, which when being pickled would cause a
-    # bad crash because this value was coming as an instance of 
-    # objc._pythonify.OC_PythonFloat, which apparently cannot be correctly
-    # pickled. We now correctly use integer, but we need to fix any previous
-    # incorrect value here.
-    upstreamLimitKey = prefs.UPSTREAM_LIMIT_IN_KBS.key
-    if pydict is not None and pydict.has_key(upstreamLimitKey):
-        oldval = pydict[upstreamLimitKey]
-        newval = int(oldval)
-        pydict[upstreamLimitKey] = newval
+    # Sanitize the dictionary we just got, some value might be of type which can
+    # cause massive problems when being pickled.
+    if pydict is not None:
+        for k, v in pydict.iteritems():
+            if type(v) is objc._pythonify.OC_PythonFloat:
+                pydict[k] = float(v)
+            elif type(v) is objc._pythonify.OC_PythonInt:
+                pydict[k] = int(v)
 
     return pydict
 
