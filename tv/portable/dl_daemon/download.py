@@ -378,7 +378,8 @@ class HTTPDownloader(BGDownloader):
                 self.startDownload()
             else:
                 self.startNewDownload()
-        self.updateClient()
+        else:
+            self.updateClient()
 
     def startNewDownload(self):
         self.currentSize = 0
@@ -595,7 +596,6 @@ class HTTPDownloader(BGDownloader):
         if self.state == 'paused' or self.state == 'stopped':
             self.state = "downloading"
             self.startDownload()
-            self.updateClient()
 
     def shutdown(self):
         self.cancelRequest()
