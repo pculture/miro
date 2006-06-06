@@ -1079,6 +1079,7 @@ class UIBackendDelegate:
         self.killDownloadDaemon(oldpid)
 
         env['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
+        env.update(os.environ)
                 
         print "DTV: Launching Download Daemon"
         pool = NSAutoreleasePool.alloc().init()
