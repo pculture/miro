@@ -131,6 +131,11 @@ function videoProgressUp(event) {
 
 var vlc = null;
 
+function buttonIsActive(buttonId) {
+    var elt = document.getElementById(buttonId);
+    return (elt.className.indexOf('inactive') == -1);
+}
+
 function onLoad() {
     jsdump("onLoad running.");
 
@@ -149,6 +154,40 @@ function onLoad() {
     jsdump("onload done");
 }
 
+// SeekButton is used for both the rewind/previous and fast forward/next
+// buttons.  If clicked, they skip to the next/previous button.  If held downl
+// they do a fast forward/rewind.  direction should be 1 for forward, -1 for
+// backward.
+function setupSeekButton(direction, buttonId) {
+  var didSeek = false;
+  var timeoutId = null;
+  var element = document.getElementById(buttonId);
+  var handleTimeout = function() {
+    var seekAmount = direction * 3 - 0.5;
+    // we want to seek at 3X speed in our current direction (-1 for back, 1
+    // for forward).  We also need to take into account that we've played back
+    // 0.5 seconds worth of video before the timeout.
+    vlc.seek(seekAmount, true);
+    didSeek = true;
+    timeoutId = setTimeout(handleTimeout, 500);
+  }
+  element.onmousedown = function() { 
+    if(!buttonIsActive(buttonId)) return false;
+    didSeek = false;
+    timeoutId = setTimeout(handleTimeout, 500);
+    return false;
+  }
+  element.onmouseup = function() { 
+    if(!buttonIsActive(buttonId)) return false;
+    if(timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+    }
+    if(!didSeek) pybridge.skip(direction);
+    return false;
+  }
+}
+
 function setupHandlers() {
     var knob = document.getElementById("volume");
     knob.onmousemove = volumeKnobMove;
@@ -163,21 +202,17 @@ function setupHandlers() {
     progress.onmousemove = videoProgressMove;
     progress.onmouseup = videoProgressUp;
 
-    document.getElementById("bottom-buttons-previous").onclick = function() {
-        pybridge.skip(-1);
-    };
     document.getElementById("bottom-buttons-play").onclick = function() {
-        pybridge.playPause();
+        if(buttonIsActive("bottom-buttons-play")) pybridge.playPause();
     };
     document.getElementById("bottom-buttons-stop").onclick = function() {
-        pybridge.stop();
-    };
-    document.getElementById("bottom-buttons-next").onclick = function() {
-        pybridge.skip(1);
+        if(buttonIsActive("bottom-buttons-stop")) pybridge.stop();
     };
     document.getElementById("bottom-buttons-fullscreen").onclick = function() {
-        vlc.fullscreen();
+        if(buttonIsActive("bottom-buttons-fullscreen")) vlc.fullscreen();
     };
+    setupSeekButton(-1, "bottom-buttons-previous");
+    setupSeekButton(1, "bottom-buttons-next");
 }
 
 function onClose()
