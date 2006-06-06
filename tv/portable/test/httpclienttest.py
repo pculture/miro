@@ -717,10 +717,6 @@ Below this line, is 1000 repeated lines of 0-9.
                 httpclient.parseURL("http://www.foo.com:123:123/abc;123?a=b#4")
         self.assertEquals(port, 123)
 
-    def testBadScheme(self):
-        self.assertRaises(ValueError, httpclient.grabURL,
-                "rstp://www.foo.com/", self.callback, self.errback)
-
     def checkRedirect(self, url, redirectUrl, updatedUrl, **extra):
         httpclient.grabURL(url, self.callback, self.errback, **extra)
         self.runEventLoop(timeout=20)
@@ -831,7 +827,7 @@ Below this line, is 1000 repeated lines of 0-9.
 
     def testHeaderCallbackCancel(self):
         def headerCallback(response):
-            httpclient.cancelRequest(reqId)
+            reqId.cancel()
             eventloop.quit()
         url = 'http://participatoryculture.org/democracytest/normalpage.txt'
         reqId = httpclient.grabURL(url, self.callback, self.errback,
@@ -849,7 +845,7 @@ Below this line, is 1000 repeated lines of 0-9.
 
     def testBodyDataCallbackCancel(self):
         def bodyDataCallback(response):
-            httpclient.cancelRequest(reqId)
+            reqId.cancel()
             eventloop.quit()
         url = 'http://participatoryculture.org/democracytest/normalpage.txt'
         reqId = httpclient.grabURL(url, self.callback, self.errback,
@@ -1238,4 +1234,30 @@ class GrabURLTest(HTTPClientTestBase):
         self.runEventLoop()
         self.assertEquals(self.data['status'], 200)
         self.assertEquals(self.data['body'], firstBody)
+
+
+class BadURLTest(HTTPClientTestBase):
+    def testScheme(self):
+        url = 'participatoryculture.org/democracytest/normalpage.txt'
+        httpclient.grabURL(url, self.callback, self.errback)
+        self.assertEquals(self.errbackCalled, True)
+        self.assertEquals(self.callbackCalled, False)
+
+    def testSlashes(self):
+        url = 'http:jigsaw.w3.org/HTTP/'
+        httpclient.grabURL(url, self.callback, self.errback)
+        self.assertEquals(self.errbackCalled, True)
+        self.assertEquals(self.callbackCalled, False)
+
+    def testHost(self):
+        url = 'http:///HTTP/'
+        httpclient.grabURL(url, self.callback, self.errback)
+        self.assertEquals(self.errbackCalled, True)
+        self.assertEquals(self.callbackCalled, False)
+
+    def testOtherScheme(self):
+        url = 'rtsp://jigsaw.w3.org/'
+        httpclient.grabURL(url, self.callback, self.errback)
+        self.assertEquals(self.errbackCalled, True)
+        self.assertEquals(self.callbackCalled, False)
 

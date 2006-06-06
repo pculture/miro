@@ -833,6 +833,11 @@ def parseURL(url):
         else:
             port = 80
 
+    host = host.lower()
+    scheme = scheme.lower()
+
+    if path == '' or path[0] != '/':
+        path = '/' + path
     fullPath = path
     if params:
         fullPath += ';%s' % params
@@ -920,6 +925,9 @@ class HTTPConnectionPool(object):
         reqId = self.currentRequestId
         self.currentRequestId += 1
         scheme, host, port, path = parseURL(url)
+        if (scheme not in ['http', 'https'] or host == ''):
+            errback (ValueError("Bad URL: %s" % (url,)))
+            return reqId
         req = {
             'id' : reqId,
             'callback' : callback,
@@ -976,7 +984,7 @@ class HTTPConnectionPool(object):
             conns['active'].add(conn)
             self.activeConnectionCount += 1
             connectionCount = (self.activeConnectionCount +
-                    self.freeConnectionCount)
+                               self.freeConnectionCount)
             if connectionCount > self.MAX_CONNECTIONS:
                 self._dropAFreeConnection()
 
@@ -1000,7 +1008,7 @@ class HTTPConnectionPool(object):
             conn = HTTPSConnection(self._onConnectionClosed,
                     self._onConnectionReady) 
         else:
-            raise ValueError("Unknown scheme: %s" % req['scheme'])
+            raise AssertionError ("Code shouldn't reach here.")
         conn.openConnection(req['host'], req['port'],
                 openConnectionCallback, openConnectionErrback)
         return conn
