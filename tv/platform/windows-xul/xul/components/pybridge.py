@@ -138,6 +138,7 @@ class PyBridge:
     def getPreserveDiskSpaceAmount(self):
         return config.get(prefs.PRESERVE_X_GB_FREE)
     def setPreserveDiskSpaceAmount(self, value):
+        print "Setting disk space amt to %s" % value
         return config.set(prefs.PRESERVE_X_GB_FREE, value)
     def getExpireAfter(self):
         return config.get(prefs.EXPIRE_AFTER_X_DAYS)

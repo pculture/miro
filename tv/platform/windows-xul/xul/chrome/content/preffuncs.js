@@ -105,7 +105,7 @@ function hasMinSpaceChange() {
 
 function minSpaceChange() {
   var textbox = document.getElementById("minspace");
-  var value = parseInt(textbox.value);
+  var value = parseFloat(textbox.value);
   if ((value == 0) || (isNaN(value))) value = 1;
   textbox.value=value;
   pybridge.setPreserveDiskSpaceAmount(value);

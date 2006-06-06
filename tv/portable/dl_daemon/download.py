@@ -561,7 +561,7 @@ class HTTPDownloader(BGDownloader):
         available = platformutils.getAvailableGBytesForMovies()
         if config.get(prefs.PRESERVE_DISK_SPACE):
             available = available - config.get(prefs.PRESERVE_X_GB_FREE)
-        available = available * 1024 * 1024 * 1024
+        available = int(available * 1024 * 1024 * 1024)
         return size <= available
 
     ##

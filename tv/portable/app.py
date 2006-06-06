@@ -1138,10 +1138,6 @@ class ModelActionHandler:
         value = (value == "1")
         config.set(prefs.PRESERVE_DISK_SPACE,value)
 
-    def setMinDiskSpace(self, value):
-        value = int(value)
-        config.set(prefs.PRESERVE_X_GB_FREE,value)
-
     def setDefaultExpiration(self, value):
         value = int(value)
         config.set(prefs.EXPIRE_AFTER_X_DAYS,value)
