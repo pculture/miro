@@ -35,6 +35,16 @@ def AttachInteger (widget, descriptor):
     widget.set_text (str(config.get(descriptor)))
     widget.connect ('changed', IntegerChanged)
 
+def AttachFloat (widget, descriptor):
+    def FloatChanged (widget):
+        try:
+            config.set (descriptor, float(widget.get_text()))
+        except:
+            pass
+
+    widget.set_text (str(config.get(descriptor)))
+    widget.connect ('changed', FloatChanged)
+
 def AttachCombo (widget, descriptor, values):
     def ComboChanged (widget):
         config.set (descriptor, values[widget.get_active()])
@@ -265,7 +275,7 @@ class CallbackHandler(object):
         AttachBoolean (widgetTree['checkbutton-limit'], prefs.LIMIT_UPSTREAM, widgetTree['entry-limit'])
         AttachBoolean (widgetTree['checkbutton-padding'], prefs.PRESERVE_DISK_SPACE, widgetTree['entry-padding'])
         AttachInteger (widgetTree['entry-limit'], prefs.UPSTREAM_LIMIT_IN_KBS)
-        AttachInteger (widgetTree['entry-padding'], prefs.PRESERVE_X_GB_FREE)
+        AttachFloat(widgetTree['entry-padding'], prefs.PRESERVE_X_GB_FREE)
         AttachCombo (widgetTree['combobox-poll'], prefs.CHECK_CHANNELS_EVERY_X_MN, (30, 60, -1))
         AttachCombo (widgetTree['combobox-expiration'], prefs.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))
 
