@@ -583,8 +583,7 @@ class HTTPDownloader(BGDownloader):
                         self.filehandle.close()
                     remove(self.filename)
                 except:
-                    print "WARNING: error removing file in downloader.stop()"
-                    traceback.print_exc()
+                    pass
         self.currentSize = 0
         self.cancelRequest()
         self.state = "stopped"
