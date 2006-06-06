@@ -149,7 +149,7 @@ def failed(when, withExn = False, details = None):
         header += ''.join(traceback.format_exception(*sys.exc_info()))
         header += "\n"
     if details:
-        header += "Details: %s" % (details, )
+        header += "Details: %s\n" % (details, )
     header += "Call stack\n----------\n"
     try:
         stack = getNiceStack()
