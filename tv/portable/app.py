@@ -1312,7 +1312,7 @@ class TemplateActionHandler:
             controller.frame.selectURL(location, \
                                             controller.frame.mainDisplay)
         else:
-            assert False, "Invalid guide load mode '%s'" % mode
+            raise StandardError("DTV: Invalid guide load mode '%s'" % mode)
 
     def setViewFilter(self, viewName, fieldKey, functionKey, parameter, invert):
         print "Warning! setViewFilter deprecated"
