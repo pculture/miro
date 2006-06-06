@@ -45,7 +45,7 @@ function selectMoviesDirectory() {
             Components.interfaces.nsIFilePicker.modeGetFolder);
     var res = fp.show();
     if (res == Components.interfaces.nsIFilePicker.returnOK){
-        moviesDirBox.value = fp.file.path;
+        moviesDirBox.value = pybridge.shortenDirectoryName(fp.file.path);
     }
 
 }

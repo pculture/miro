@@ -1,6 +1,9 @@
 from xpcom import components
-import traceback
+import ctypes
+import os
 import sys
+import traceback
+import _winreg
 
 import app
 import eventloop
@@ -106,6 +109,36 @@ class PyBridge:
         frontend.vlcRenderer.stop()
         app.controller.onShutdown()
 
+    def shortenDirectoryName(self, path):
+        """Shorten a directory name by recognizing well-known nicknames, like
+        "Desktop", and "My Documents"
+        """
+
+        tries = [ 
+            ("My Music", (0x000d)),
+            ("My Pictures", (0x0027)),
+            ("My Videos", (0x000e)),
+            ("My Documents", (0x0005)),
+            ("Desktop", (0x0000))
+        ]
+
+        buf = ctypes.create_string_buffer(256) 
+        SHGetSpecialFolderPath = ctypes.windll.shell32.SHGetSpecialFolderPathA
+        for name, csidl in tries:
+            if not SHGetSpecialFolderPath(None, buf, csidl, False):
+                continue
+            virtualPath = buf.value
+            if path == virtualPath:
+                return name
+            elif path.startswith(virtualPath):
+                relativePath = path[len(virtualPath):]
+                if relativePath.startswith("\\"):
+                    return name + relativePath
+                else:
+                    return "%s\\%s" % (name, relativePath)
+        return path
+
+
     # Preference setters/getters.
     #
     # NOTE: these are not in the mail event loop, so we have to be careful in
@@ -120,7 +153,7 @@ class PyBridge:
     def setCheckEvery(self, value):
         return config.set(prefs.CHECK_CHANNELS_EVERY_X_MN, value)
     def getMoviesDirectory(self):
-        return config.get(prefs.MOVIES_DIRECTORY)
+        return self.shortenDirectoryName(config.get(prefs.MOVIES_DIRECTORY))
     def changeMoviesDirectory(self, path, migrate):
         app.changeMoviesDirectory(path, migrate)
     def getLimitUpstream(self):
