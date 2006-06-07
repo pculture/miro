@@ -454,7 +454,7 @@ def saveDatabaseIdle (db=None, pathname=None):
             err = err.strerror
         except:
             pass
-        app.controller.getBackendDelegate().saveFailed(err)
+        app.delegate.saveFailed(err)
     eventloop.addTimeout(300, saveDatabaseIdle, "Database Save", args=(db, pathname))
 
 def restoreDatabase(db=None, pathname=None, convertOnFail=True):
