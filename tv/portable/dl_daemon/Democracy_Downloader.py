@@ -9,6 +9,8 @@ import os
 import threading
 
 from dl_daemon import daemon
+# This isn't used here, we just want to load it sooner.
+from dl_daemon import download
 import eventloop
 
 logPath = os.environ.get('DEMOCRACY_DOWNLOADER_LOG')
