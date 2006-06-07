@@ -175,6 +175,22 @@ except NameError:
             rc[k] = v
         return rc
 
+def _entry_equal(a, b):
+    if type(a) == list and type(b) == list:
+        if len(a) != len(b):
+            return False
+        for i in xrange (len(a)):
+            if not _entry_equal(a[i], b[i]):
+                return False
+        return True
+    try:
+        return a.equal(b)
+    except:
+        try:
+            return b.equal(a)
+        except:
+            return a == b
+
 class FeedParserDict(UserDict):
     keymap = {'channel': 'feed',
               'items': 'entries',
@@ -193,6 +209,50 @@ class FeedParserDict(UserDict):
               'copyright_detail': 'rights_detail',
               'tagline': 'subtitle',
               'tagline_detail': 'subtitle_detail'}
+
+    reverse_keymap = {}
+    for key in keymap:
+        if type (keymap[key]) == types.ListType:
+            for k in keymap[key]:
+                reverse_keymap[k] = key
+        else:
+            reverse_keymap[keymap[key]] = key
+
+    def reverse_key (self, key):
+        if self.reverse_keymap.has_key(key):
+            return self.reverse_keymap[key]
+        else:
+            return key
+
+    def get_iter (self):
+        class ExtendedIter:
+            def __init__ (self, container):
+                self.container = container
+                self.subiter = UserDict.__iter__(container)
+            def __iter__ (self):
+                return self
+            def next(self):
+                return self.container.reverse_key(self.subiter.next())
+        return ExtendedIter (self)
+
+    def equal (self, other):
+        try:
+            iter = other.get_iter()
+        except:
+            iter = other.__iter__()
+        try:
+            checked = {}
+            for key in iter:
+                if not _entry_equal (self[key], other[key]):
+                    return False
+                checked[key] = key
+            for key in self.get_iter():
+                if not checked.has_key (key):
+                    return False
+            return True
+        except:
+            return False
+
     def __getitem__(self, key):
         if key == 'category':
             return UserDict.__getitem__(self, 'tags')[0]['term']

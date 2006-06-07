@@ -873,6 +873,15 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
     def __str__(self):
         return "Feed - %s" % self.getTitle()
 
+def _entry_equal(a, b):
+    try:
+        return a.equal(b)
+    except:
+        try:
+            return b.equal(a)
+        except:
+            return a == b
+
 class RSSFeedImpl(FeedImpl):
     firstImageRE = re.compile('\<\s*img\s+[^>]*src\s*=\s*"(.*?)"[^>]*\>',re.I|re.M)
     
@@ -966,12 +975,12 @@ class RSSFeedImpl(FeedImpl):
     def _updateCallback(self,info):
         self.updating = False
         html = info['body']
-        if info.has_key('charset'):
-            html = fixXMLHeader(html,info['charset'])
         if info['status'] == 304:
             self.ufeed.beginChange()
             self.ufeed.endChange()
             return
+        if info.has_key('charset'):
+            html = fixXMLHeader(html,info['charset'])
         self.url = info['updated-url']
         if info.has_key('etag'):
             self.etag = info['etag']
@@ -1005,19 +1014,22 @@ class RSSFeedImpl(FeedImpl):
                 self.parsed.feed.image.has_key('url')):
                 self.thumbURL = self.parsed.feed.image.url
                 self.ufeed.iconCache.requestUpdate(is_vital=True)
+            items_byid = {}
+            for item in self.items:
+                items_byid[item.getRSSID()] = item
             for entry in self.parsed.entries:
                 entry = self.addScrapedThumbnail(entry)
                 new = True
-                for item in self.items:
-                    try:
-                        if item.getRSSID() == entry["id"]:
+                if entry.has_key("id"):
+                    id = entry["id"]
+                    if items_byid.has_key (id):
+                        item = items_byid[id]
+                        if not _entry_equal(entry, item.getRSSEntry()):
                             item.update(entry)
-                            new = False
-                    except KeyError:
-                        # If the item changes at all, it results in a
-                        # new entry
-                        if (item.getRSSEntry() == entry):
-                            item.update(entry)
+                        new = False
+                else:
+                    for item in self.items:
+                        if _entry_equal(entry, item.getRSSEntry()):
                             new = False
                 if (new and entry.has_key('enclosures') and
                     self.hasVideoFeed(entry.enclosures)):
@@ -1036,6 +1048,7 @@ class RSSFeedImpl(FeedImpl):
                     self.startfrom = sortedItems[-1].getPubDateParsed()
                 else:
                     self.startfrom = datetime.min
+
         finally:
             self.ufeed.endRead()
 
