@@ -127,7 +127,7 @@ class Daemon(ConnectionHandler):
             self.changeState('ready')
 
     def processCommand(self, comm):
-        util.trapCall("Talking to the downloader", self.runCommand, comm)
+        util.timeTrapCall("Running: %s" % (comm,), self.runCommand, comm)
 
     def runCommand(self, comm):
         comm.setDaemon(self)
