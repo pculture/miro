@@ -123,6 +123,7 @@ class HTMLDisplayImpl:
         self.mb.setContextMenuCallBack(self.onContextMenu)
         self.widget.show()
         self.in_load_html = False
+        self.location = None
 
     def load_html(self, display):
 
@@ -131,13 +132,13 @@ class HTMLDisplayImpl:
         self.execQueue = []
         self.display = display
 
-        (handle, location) = tempfile.mkstemp('.html')
+        (handle, self.location) = tempfile.mkstemp('.html')
         handle = os.fdopen(handle,"w")
         handle.write(display.html)
         handle.close()
 
         # Translate path into URL.
-        parts = re.split(r'/', location)
+        parts = re.split(r'/', self.location)
         self.urlToLoad = "file:///" + '/'.join(parts)
         self.widget.load_url(self.urlToLoad)
         self.in_load_html = False
@@ -152,6 +153,10 @@ class HTMLDisplayImpl:
                 func()
             self.execQueue = []
             self.initialLoadFinished = True
+            try:
+                os.remove (self.location)
+            except:
+                pass
 
             try:
                 self.onInitialLoadFinished()
