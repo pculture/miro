@@ -913,6 +913,7 @@ class HTTPConnectionPool(object):
                     req['port'])
             if (len(conns['free']) > 0 or 
                     len(conns['active']) < self.MAX_CONNECTIONS_PER_SERVER):
+                # This doesn't mess up the xrange above since we return immediately.
                 del self.pendingRequests[i]
                 return req
         return None
@@ -931,20 +932,22 @@ class HTTPConnectionPool(object):
         conns = self._getServerConnections(conn.scheme, conn.host, conn.port)
         conns['active'].remove(conn)
         self.activeConnectionCount -= 1
+        conn.connectionPoolReqId = 0
         conns['free'].add(conn)
         self.freeConnectionCount += 1
         self.runPendingRequests()
 
     def addRequest(self, callback, errback, headerCallback, bodyDataCallback,
-            url, method, headers):
+            url, method, headers, reqId = None):
         """Add a request to be run.  The request will run immediately if we
         have a free connection, otherwise it will be queued.
 
         returns a request id that can be passed to cancelRequest
         """
 
-        reqId = self.currentRequestId
-        self.currentRequestId += 1
+        if reqId is None:
+            reqId = self.currentRequestId
+            self.currentRequestId += 1
         scheme, host, port, path = parseURL(url)
         if (scheme not in ['http', 'https'] or host == ''):
             errback (ValueError("Bad URL: %s" % (url,)))
@@ -1192,7 +1195,7 @@ class HTTPClient(object):
         self.willHandleResponse = False
         self.requestId = self.connectionPool.addRequest(
                 self.callbackIntercept, self.errbackIntercept, self.onHeaders,
-                bodyDataCallback, self.url, self.method, self.headers)
+                bodyDataCallback, self.url, self.method, self.headers, self.requestId)
         return self.requestId
 
     def cancelRequest(self):
@@ -1200,12 +1203,15 @@ class HTTPClient(object):
         self.requestId = None
 
     def callbackIntercept(self, response):
-        self.requestId = None
         if self.shouldRedirect(response):
             self.handleRedirect(response)
         elif self.shouldAuthorize(response):
+            # FIXME: We reuse the id here, but if the request is
+            # cancelled while the auth dialog is up, it won't actually
+            # get cancelled.
             self.handleAuthorize(response)
         else:
+            self.requestId = None
             expectedStatusCodes = [200]
             if self.start != 0:
                 expectedStatusCodes.append(206)
