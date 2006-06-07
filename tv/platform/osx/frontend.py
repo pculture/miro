@@ -914,7 +914,7 @@ class DiskSpacePrefsController (NibClassBuilder.AutoBaseClass):
         preserve = config.get(prefs.PRESERVE_DISK_SPACE)
         self.preserveSpaceCheckBox.setState_(preserve and NSOnState or NSOffState)
         self.minimumSpaceField.setEnabled_(preserve)
-        self.minimumSpaceField.setIntValue_(config.get(prefs.PRESERVE_X_GB_FREE))
+        self.minimumSpaceField.setFloatValue_(config.get(prefs.PRESERVE_X_GB_FREE))
         itemTag = int(config.get(prefs.EXPIRE_AFTER_X_DAYS) * 24)
         itemIndex = self.expirationDelayPopupButton.indexOfItemWithTag_(itemTag)
         self.expirationDelayPopupButton.selectItemAtIndex_(itemIndex)
