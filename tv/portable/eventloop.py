@@ -216,7 +216,7 @@ class EventLoop(object):
                                                          timeout)
             except select.error, (err, detail):
                 if err == errno.EINTR:
-                    print "DTV: eventloop: %s" % detail
+                    print "DTV: eventloop: Warning: %s" % detail
                 else:
                     raise
             if self.quitFlag:
