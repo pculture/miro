@@ -724,7 +724,12 @@ class HTTPConnection(ConnectionHandler):
         if value == '':
             self.handleError(BadHeaderLine(line))
             return
-        if header not in self.headers:
+        # FIXME: self.headers[header] should never be None, but it is for
+        #        http://www.openalpha.tv/images/openalpha.gif in feed
+        #        http://feeds.feedburner.com/openalpha/h264
+        if header not in self.headers or self.headers[header] is None:
+            if header in self.headers:
+                print "DTV: Warning: header %s is None for %s:%s%s in parseHeader for httpclient" % (header, self.host, self.port, self.path)
             self.headers[header] = value
         else:
             self.headers[header] += (',%s' % value)
