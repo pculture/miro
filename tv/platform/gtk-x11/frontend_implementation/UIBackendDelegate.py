@@ -126,6 +126,13 @@ _stock = { dialogs.BUTTON_OK.text : gtk.STOCK_OK,
            dialogs.BUTTON_NO.text : gtk.STOCK_NO,
            dialogs.BUTTON_QUIT.text : gtk.STOCK_QUIT}
 
+@gtkAsyncMethod
+def ShowHTTPAuthDialogAsync(title, description, prefillUser, prefillPassword,
+        callback):
+    gtkDialog = BuildHTTPAuth (title, description, prefillUser,
+            prefillPassword)
+    gtkDialog.connect("response", callback)
+    gtkDialog.show()
 
 def pidIsRunning(pid):
     try:
@@ -263,9 +270,9 @@ class UIBackendDelegate:
                     dialog.runCallback(None)
                 gtkDialog.destroy()
 
-            gtkDialog = BuildHTTPAuth (EscapeMessagePart(dialog.title), EscapeMessagePart(dialog.description), dialog.prefillUser, dialog.prefillPassword)
-            gtkDialog.connect("response", AsyncDialogResponse)
-            gtkDialog.show()
+            ShowHTTPAuthDialogAsync(EscapeMessagePart(dialog.title),
+                    EscapeMessagePart(dialog.description), dialog.prefillUser,
+                    dialog.prefillPassword, callback=AsyncDialogResponse)
         else:
             dialog.runCallback (None)
 

@@ -159,11 +159,6 @@ btconfig = defaultargs(defaults)
 
 _lock = RLock()
 
-def findHTTPAuth(*args, **kws):
-    if chatter:
-        print "DTV: WARNING: findHTTPAuth disabled in downloader daemon"
-    return None
-
 def createDownloader(url, contentType, dlid):
     if contentType == 'application/x-bittorrent':
         return BTDownloader(url, dlid)
@@ -285,7 +280,7 @@ class BGDownloader:
     ##
     # Returns a reasonable filename for saving the given url
     def filenameFromURL(self, url):
-        (scheme, host, path, params, query, fragment) = parseURL(url)
+        scheme, host, port, path = parseURL(url)
         if len(path):
             try:
                 ret = re.compile("^(.*/)?([^/]*)/*$").search(path).expand("\\2")
@@ -393,8 +388,7 @@ class HTTPDownloader(BGDownloader):
             headerCallback = self.onHeadersRestart
         self.requestID = httpclient.grabURL(self.url,
                 self.onDownloadFinished, self.onDownloadError,
-                headerCallback, self.onBodyData, start=self.currentSize,
-                findHTTPAuth=findHTTPAuth)
+                headerCallback, self.onBodyData, start=self.currentSize)
         self.updateClient()
 
     def cancelRequest(self):
@@ -855,7 +849,6 @@ class BTDownloader(BGDownloader):
 
     def getMetainfo(self):
         if self.metainfo is None:
-            print self.url
             if self.url.startswith('file://'):
                 path = self.url[len('file://'):]
                 metainfoFile = open(path, 'rb')
@@ -867,7 +860,8 @@ class BTDownloader(BGDownloader):
                 self.readMetainfo(metainfo)
                 self.gotMetainfo()
             else:
-                httpclient.grabURL(self.getURL(), self.onDescriptionDownload, self.onDescriptionDownloadFailed, findHTTPAuth = findHTTPAuth)
+                httpclient.grabURL(self.getURL(), self.onDescriptionDownload,
+                        self.onDescriptionDownloadFailed)
         else:
             self.gotMetainfo()
                 

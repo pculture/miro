@@ -18,10 +18,11 @@ from collections import deque
 
 from BitTornado.clock import clock
 
+import httpauth
 import config
 import prefs
 import dialogs
-from download_utils import cleanFilename
+from download_utils import cleanFilename, parseURL
 import eventloop
 import util
 import sys
@@ -837,35 +838,6 @@ class HTTPSConnection(HTTPConnection):
     streamFactory = AsyncSSLStream
     scheme = 'https'
 
-def parseURL(url):
-    (scheme, host, path, params, query, fragment) = urlparse(url)
-    # Filter invalid URLs with duplicated ports (http://foo.bar:123:123/baz)
-    # which seem to be part of #441.
-    if host.count(':') > 1:
-        host = host[0:host.rfind(':')]
-
-    if ':' in host:
-        host, port = host.split(':')
-        port = int(port)
-    else:
-        host = host
-        if scheme == 'https':
-            port = 443
-        else:
-            port = 80
-
-    host = host.lower()
-    scheme = scheme.lower()
-
-    if path == '' or path[0] != '/':
-        path = '/' + path
-    fullPath = path
-    if params:
-        fullPath += ';%s' % params
-    if query:
-        fullPath += '?%s' % query
-    return scheme, host, port, fullPath
-
 class HTTPConnectionPool(object):
     """Handle a pool of HTTP connections.
 
@@ -1079,7 +1051,7 @@ class HTTPClient(object):
 
     def __init__(self, url, callback, errback, headerCallback=None,
             bodyDataCallback=None, method="GET", start=0, etag=None,
-            modified=None, findHTTPAuth=None, cookies={}):
+            modified=None, cookies={}):
         self.url = url
         self.callback = callback
         self.errback = errback
@@ -1097,11 +1069,6 @@ class HTTPClient(object):
                                # one or more of the following:
                                # 'Comment', 'CommentURL', 'origPath',
                                # 'origDomain', 'origPort'
-        if findHTTPAuth is not None:
-            self.findHTTPAuth = findHTTPAuth
-        else:
-            import downloader
-            self.findHTTPAuth = downloader.findHTTPAuth
         self.depth = 0
         self.authAttempts = 0
         self.updateURLOk = True
@@ -1160,15 +1127,7 @@ class HTTPClient(object):
         if not self.modified is None:
             self.headers["If-Modified-Since"] = self.modified
         self.headers['User-Agent'] = self.userAgent
-        self.setAuthHeader()
         self.setCookieHeader()
-
-    def setAuthHeader(self):
-        scheme, host, port, path = parseURL(self.url)
-        auth = self.findHTTPAuth(host, path)
-        if not auth is None:
-            authHeader = "%s %s" % (auth.getAuthScheme(), auth.getAuthToken())
-            self.headers["Authorization"] = authHeader
 
     def setCookieHeader(self):
         self.dropStaleCookies()
@@ -1188,6 +1147,17 @@ class HTTPClient(object):
             self.headers['Cookie'] = header
 
     def startRequest(self):
+        if 'Authorization' not in self.headers:
+            scheme, host, port, path = parseURL(self.redirectedURL)
+            def callback(authHeader):
+                if authHeader is not None:
+                    self.headers["Authorization"] = authHeader
+                self.reallyStartRequest()
+            httpauth.findHTTPAuth(callback, host, path)
+        else:
+            self.reallyStartRequest()
+
+    def reallyStartRequest(self):
         if self.bodyDataCallback is not None:
             bodyDataCallback = self.onBodyData
         else:
@@ -1423,7 +1393,6 @@ class HTTPClient(object):
             self.method = "GET"
         if 'Authorization' in self.headers:
             del self.headers["Authorization"]
-        self.setAuthHeader()
         self.startRequest()
 
     def shouldAuthorize(self, response):
@@ -1442,26 +1411,20 @@ class HTTPClient(object):
         if authScheme.lower() != 'basic':
             trapCall(self, self.errback, AuthorizationFailed())
             return
-
-        scheme, host, port, path = parseURL(self.url)
-        def handleLoginResponse(dialog):
-            import downloader
-            if dialog.choice == dialogs.BUTTON_OK:
+        def callback(authHeader):
+            if authHeader is not None:
+                self.headers["Authorization"] = authHeader
                 self.authAttempts += 1
-                auth = downloader.HTTPAuthPassword(dialog.username, 
-                        dialog.password, host, realm, path, authScheme)
-                self.setAuthHeader()
                 self.startRequest()
             else:
                 trapCall(self, self.errback, AuthorizationFailed())
-        dialogs.HTTPAuthDialog(self.url, realm).run(handleLoginResponse)
+        httpauth.askForHTTPAuth(callback, self.url, realm, authScheme)
 
 def grabURL(url, callback, errback, headerCallback=None,
         bodyDataCallback=None, method="GET", start=0, etag=None,
-        modified=None, findHTTPAuth=None, cookies = {}):
+        modified=None, cookies = {}):
     client = HTTPClient(url, callback, errback, headerCallback,
-            bodyDataCallback, method, start, etag, modified,
-            findHTTPAuth, cookies)
+            bodyDataCallback, method, start, etag, modified, cookies)
     id = client.startRequest()
     return CancellableId (id)
 
@@ -1469,25 +1432,25 @@ def grabHeadersFinalCallback (info, callback, requestID):
     callback (info)
     cancelRequest(requestID)
 
-def grabHeadersErrback (url, callback, errback, findHTTPAuth):
+def grabHeadersErrback (url, callback, errback):
     client = HTTPClient(url,
                         None,
                         errback,
                         lambda (info): grabHeadersFinalCallback (info, callback, requestID),
-                        None, "GET", 0, None, None, findHTTPAuth)
+                        None, "GET", 0, None, None)
     requestID = client.startRequest()
 
-def grabHeadersCallback (info, url, callback, errback, findHTTPAuth):
+def grabHeadersCallback (info, url, callback, errback):
     if info and info['status'] == 200:
         callback (info)
     else:
-        grabHeadersErrback (url, callback, errback, findHTTPAuth)
+        grabHeadersErrback (url, callback, errback)
 
-def grabHeaders (url, callback, errback, findHTTPAuth=None):
+def grabHeaders (url, callback, errback):
     client = HTTPClient(url,
-                        lambda (info): grabHeadersCallback (info, url, callback, errback, findHTTPAuth),
-                        lambda (error): grabHeadersErrback (url, callback, errback, findHTTPAuth),
-                        None, None, "HEAD", 0, None, None, findHTTPAuth)
+                        lambda (info): grabHeadersCallback (info, url, callback, errback),
+                        lambda (error): grabHeadersErrback (url, callback, errback),
+                        None, None, "HEAD", 0, None, None)
     client.startRequest()
 
 def cancelRequest(requestId):

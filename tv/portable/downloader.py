@@ -70,8 +70,6 @@ class HTTPAuthPassword(DDBObject):
             self.endRead()
         return ret
 
-_lock = RLock()
-
 def _getDownloader (dlid = None, url = None):
     if dlid is not None:
         view = views.remoteDownloads.filterWithIndex(

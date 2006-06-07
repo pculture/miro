@@ -56,8 +56,21 @@ class Command:
 #############################################################################
 class FindHTTPAuthCommand(Command):
     def action(self):
-        import downloader
-        return downloader.findHTTPAuth(*self.args, **self.kws)
+        import httpauth
+        id, args = self.args[0], self.args[1:]
+        def callback(authHeader):
+            c = GotHTTPAuthCommand(self.daemon, id, authHeader)
+            c.send(block=False)
+        httpauth.findHTTPAuth(callback, *args)
+
+class AskForHTTPAuthCommand(Command):
+    def action(self):
+        import httpauth
+        id, args = self.args[0], self.args[1:]
+        def callback(authHeader):
+            c = GotHTTPAuthCommand(self.daemon, id, authHeader)
+            c.send(block=False)
+        httpauth.askForHTTPAuth(callback, *args)
 
 class UpdateDownloadStatus(Command):
     def action(self):
@@ -117,6 +130,14 @@ class MigrateDownloadCommand(Command):
     def action(self):
         from dl_daemon import download
         return download.migrateDownload(*self.args, **self.kws)
+
+class GotHTTPAuthCommand(Command):
+    def action(self):
+        id, authHeader = self.args
+        import httpauth 
+        # note since we're in the downloader process here, httpauth is
+        # dl_daemon/private/httpauth.py
+        httpauth.handleHTTPAuthResponse(id, authHeader)
 
 class ShutDownCommand(Command):
     def response_sent(self):
