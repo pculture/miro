@@ -100,13 +100,16 @@ VLCRenderer.prototype = {
   },
 
   selectURL: function(url) {
-    this.vlc.stop();
-    this.vlc.clear_playlist();
     this.vlc.add_item(url);
+    this.vlc.next();
+    // FIXME: This doesn't quite follow the interface since we shouldn't be
+    // playing the item at this point.  However currently, all calls to
+    // selectItem are followed immediately by play, so this doesn't matter.
+    // Also, VLC seems to have problems with quickly stopping and playing.
   },
 
   play: function() {
-    this.vlc.play(0);
+    if(!this.vlc.isplaying()) this.vlc.play();
     this.scheduleUpdates = true;
     this.startedPlaying = false;
     this.updateVideoControls();
