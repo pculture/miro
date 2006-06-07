@@ -73,8 +73,9 @@
 		<hbox>
 			<checkbox id="hasminspace" checked="true" label="Don't start a download if it leaves less than" value="1" oncommand="hasMinSpaceChange();"/>
 			<textbox id="minspace" flex="0" value="1" style="max-width: 30px;" onchange="minSpaceChange()"/>
-			<description style="padding-top:5px;">GB free.</description>
+                        <description style="padding-top:5px;">GB free.</description>
 		</hbox>				
+                <description style="margin-bottom: 10px;">WARNING: This setting will not go into effect until you restart Democracy Player.</description>
 		<hbox>
 			<description style="padding-top:4px;">By default, videos expire after</description>
 			<menulist id="expiration">

@@ -12,6 +12,21 @@ function onload() {
   setExpire(pybridge.getExpireAfter());
 }
 
+/* Convert a floating point object into a string to show to the user.  We
+ * round it to 2 decimal places to get arround binary to decimal conversions.
+ */ 
+function floatToPrintable(value) {
+    value = Math.round(value * 100);
+    var intPart = Math.floor(value / 100);
+    var decimalPart = value % 100;
+    while(decimalPart % 10 == 0) {
+        if(decimalPart == 0) return intPart;
+        decimalPart /= 10;
+    }
+    return intPart + "." + decimalPart;
+}
+
+
 function runOnStartupChange() {
   if (document.getElementById("runonstartup").checked)
       pybridge.setRunAtStartup(true);
@@ -89,8 +104,9 @@ function maxUpstreamChange() {
 }
 
 function setMinDiskSpace(min) {
-    document.getElementById("minspace").value = min;
+    document.getElementById("minspace").value = floatToPrintable(min);
 }
+
 function setHasMinDiskSpace(hasit) {
     document.getElementById("hasminspace").checked = hasit;
     document.getElementById("minspace").disabled = !hasit;
