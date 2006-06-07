@@ -13,6 +13,8 @@ import os
 import frontend
 from frontend_implementation import urlcallbacks
 
+tempdir = os.path.join(tempfile.gettempdir(), "Democracy")
+
 def getDTVAPICookie():
     return None
 def getDTVAPIURL():
@@ -35,6 +37,16 @@ def deferUntilLoad(function):
             self.deferedCalls.append((function, args))
     return wrapper
 
+def initTempDir():
+    if os.path.exists(tempdir):
+        # get rid of stale temp files
+        for child in os.listdir(tempdir):
+            try:
+                os.unlink(os.path.join(tempdir, child))
+            except:
+                pass
+    else:
+        os.mkdir(tempdir)
 
 class HTMLDisplay (app.Display):
     "Selectable Display that shows a HTML document."
@@ -48,7 +60,7 @@ class HTMLDisplay (app.Display):
         self.location = None
 
     def setInitialHTML(self):
-        handle, location = tempfile.mkstemp('.html')
+        handle, location = tempfile.mkstemp('.html', dir=tempdir)
         handle = os.fdopen(handle, "wt")
         try:
             handle.write(self.initialHTML)
@@ -67,6 +79,10 @@ class HTMLDisplay (app.Display):
             self.pageLoadFinised = True
             for function, args in self.deferedCalls:
                 function(self, *args)
+            try:
+                os.unlink(self.location)
+            except:
+                pass
 
     def setArea(self, area):
         self.area = area

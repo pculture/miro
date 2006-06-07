@@ -4,6 +4,8 @@ import time
 import config
 import prefs
 
+from frontend_implementation import HTMLDisplay
+
 ###############################################################################
 #### Application object                                                    ####
 ###############################################################################
@@ -14,6 +16,7 @@ class Application:
 	print "Application init"
 
     def Run(self):
+        HTMLDisplay.initTempDir()
         import psyco
         #psyco.log('\\dtv.psyco')
         psyco.profile(.03)
