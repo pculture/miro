@@ -1254,6 +1254,14 @@ class HTTPClient(object):
     def getCookiesFromResponse(self, response):
         """Generates a cookie dictionary from headers in response
         """
+        def getAttrPair(attr):
+            result = attr.strip().split('=',1)
+            if len(result) == 2:
+                (name, value) = result
+            else:
+                name = result[0]
+                value = ''
+            return (name, value)
         cookies = {}
         cookieStrings = []
         if response.has_key('set-cookie') or response.has_key('set-cookie2'):
@@ -1290,7 +1298,7 @@ class HTTPClient(object):
                         temp.append(pair)
                 pairs = temp
 
-                (name, value) = pairs.pop(0).strip().split('=')
+                (name, value) = getAttrPair(pairs.pop(0))
                 cookie = {'Value' : value,
                           'Version' : '1',
                           'received' : time.time(),
@@ -1306,28 +1314,28 @@ class HTTPClient(object):
                     elif attr.lower() == 'secure':
                         cookie['Secure'] = True
                     elif attr.lower().startswith('version='):
-                        cookie['Version'] = attr.split('=')[1]
+                        cookie['Version'] = getAttrPair(attr)[1]
                     elif attr.lower().startswith('comment='):
-                        cookie['Comment'] = attr.split('=')[1]
+                        cookie['Comment'] = getAttrPair(attr)[1]
                     elif attr.lower().startswith('commenturl='):
-                        cookie['CommentURL'] = attr.split('=')[1]
+                        cookie['CommentURL'] = getAttrPair(attr)[1]
                     elif attr.lower().startswith('max-age='):
-                        cookie['Max-Age'] = attr.split('=')[1]
+                        cookie['Max-Age'] = getAttrPair(attr)[1]
                     elif attr.lower().startswith('expires='):
                         now = time.time()
                         # FIXME: "expires" isn't very well defined and
                         # this code will probably puke in certain cases
                         try:
                             expires = time.mktime(time.strptime(
-                                                attr.split('=')[1],
+                                                getAttrPair(attr)[1],
                                               '%a, %d %b %Y %H:%M:%S %Z'))
                         except:
                             try:
                                 expires = time.mktime(time.strptime(
-                                              attr.split('=')[1],
+                                              getAttrPair(attr)[1],
                                               '%a, %d-%b-%Y %H:%M:%S %Z'))
                             except:
-                                print "DTV: Warning: Can't process cookie expiration: %s" % attr.split('=')[1]
+                                print "DTV: Warning: Can't process cookie expiration: %s" % getAttrPair(attr)[1]
                                 expires = 0
                         expires -= time.timezone
                         if expires < now:
@@ -1335,13 +1343,13 @@ class HTTPClient(object):
                         else:
                             cookie['Max-Age'] = int(expires - now)
                     elif attr.lower().startswith('domain='):
-                        cookie['origDomain'] = attr.split('=')[1]
+                        cookie['origDomain'] = getAttrPair(attr)[1]
                         cookie['Domain'] = cookie['origDomain']
                     elif attr.lower().startswith('port='):
-                        cookie['origPort'] = attr.split('=')[1]
+                        cookie['origPort'] = getAttrPair(attr)[1]
                         cookie['Port'] = cookie['origPort']
                     elif attr.lower().startswith('path='):
-                        cookie['origPath'] = attr.split('=')[1]
+                        cookie['origPath'] = getAttrPair(attr)[1]
                         cookie['Path'] = cookie['origPath']
                 if not cookie.has_key('Discard'):
                     cookie['Discard'] = not cookie.has_key('Max-Age')
