@@ -102,7 +102,7 @@ def normalizeFeedURL(url):
 
     # Replace invalid schemes by http
     match = re.match(r"^(([A-Za-z]*):/*)*(.*)$", url)
-    if match.group(2) in ['feed', 'podcast']:
+    if match.group(2) in ['feed', 'podcast', None]:
         url = "http://%s" % match.group(3)
     elif match.group(1) == 'feeds':
         url = "https://%s" % match.group(3)
