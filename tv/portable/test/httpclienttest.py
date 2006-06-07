@@ -208,6 +208,7 @@ class AsyncSocketTest(EventLoopTest):
         self.errbackCalled = True
         eventloop.quit()
 
+class WeirdCloseConnectionTest(AsyncSocketTest):
     def testCloseDuringOpenConnection(self):
         # Test opening a connection, then closing the HTTPConnection before it
         # happens.  The openConnection callback shouldn't be called
@@ -1260,4 +1261,3 @@ class BadURLTest(HTTPClientTestBase):
         httpclient.grabURL(url, self.callback, self.errback)
         self.assertEquals(self.errbackCalled, True)
         self.assertEquals(self.callbackCalled, False)
-

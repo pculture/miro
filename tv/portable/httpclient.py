@@ -724,12 +724,7 @@ class HTTPConnection(ConnectionHandler):
         if value == '':
             self.handleError(BadHeaderLine(line))
             return
-        # FIXME: self.headers[header] should never be None, but it is for
-        #        http://www.openalpha.tv/images/openalpha.gif in feed
-        #        http://feeds.feedburner.com/openalpha/h264
-        if header not in self.headers or self.headers[header] is None:
-            if header in self.headers:
-                print "DTV: Warning: header %s is None for %s:%s%s in parseHeader for httpclient" % (header, self.host, self.port, self.path)
+        if header not in self.headers:
             self.headers[header] = value
         else:
             self.headers[header] += (',%s' % value)
@@ -784,12 +779,15 @@ class HTTPConnection(ConnectionHandler):
             self.willClose = False
 
     def finishRequest(self):
+        # figure out what the response was before we do things like start a
+        # pipelined response.
         if self.bodyDataCallback:
             body = None
         elif self.chunked:
             body = ''.join(self.chunks)
         else:
             body = self.body
+        response = self.makeResponse(body)
 
         if self.stream.isOpen():
             if self.willClose:
@@ -802,11 +800,11 @@ class HTTPConnection(ConnectionHandler):
                 self.changeState('ready')
                 self.idleSince = clock()
 
-        trapCall(self, self.callback, self.makeResponse(body))
+        trapCall(self, self.callback, response)
         self.maybeSendReadyCallback()
 
     def makeResponse(self, body=None):
-        response = self.headers
+        response = self.headers.copy()
         response['body'] = body
         for key in ('version', 'status', 'reason', 'method', 'path', 'host',
                 'port', 'contentLength'):
