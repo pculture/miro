@@ -505,6 +505,11 @@ HELLO: WORLD\r\n"""
         self.assertEquals(self.testRequest.state, 'response-status')
         self.assertEquals(self.testRequest.path, '/pipelined/path')
         self.assertEquals(self.testRequest.pipelinedRequest, None)
+        # make sure that the previous request doesn't mess with the current
+        # request
+        self.assertEquals(self.testRequest.headers, {})
+        self.assertEquals(self.testRequest.body, '')
+        self.assertEquals(self.testRequest.status, None)
 
     def testBadPipeline(self):
         self.testRequest.handleData(startResponse())
