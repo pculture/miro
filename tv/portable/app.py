@@ -1065,7 +1065,11 @@ class ModelActionHandler:
             self.removeFeed(currentFeed)
 
     def removeFeed(self, feed):
-        obj = db.getObjectByID(int(feed))
+        try:
+            obj = db.getObjectByID(int(feed))
+        except:
+            print "DTV: Warning: tried to remove feed that doesn't exist with id %d" % int(feed)
+            return
         title = 'Remove Channel'
         description = """Are you sure you want to remove the channel \'%s\'? This operation cannot be undone.""" % obj.getTitle()
         dialog = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_YES,
