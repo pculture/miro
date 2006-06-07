@@ -1119,8 +1119,11 @@ class ModelActionHandler:
             pass
 
     def expireItem(self, item):
-        obj = db.getObjectByID(int(item))
-        obj.expire()
+        try:
+            obj = db.getObjectByID(int(item))
+            obj.expire()
+        except:
+            print "DTV: Warning: tried to expire item that doesn't exist with id %d" % int(item)
 
     def keepItem(self, item):
         obj = db.getObjectByID(int(item))
