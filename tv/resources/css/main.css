@@ -391,8 +391,8 @@ float: left;
 
 .main-video-desc p {
 	display: inline;
-	padding: 0;
-	margin: 0;
+	padding: 0px;
+	margin: 0px;
 }
 
 .main-video-desc p br {
