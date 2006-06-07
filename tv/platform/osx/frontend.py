@@ -176,6 +176,8 @@ class AppController (NibClassBuilder.AutoBaseClass):
         wsnc.addObserver_selector_name_object_(self, 'workspaceWillSleep:', NSWorkspaceWillSleepNotification, nil)
         wsnc.addObserver_selector_name_object_(self, 'workspaceDidWake:',   NSWorkspaceDidWakeNotification,   nil)
         
+        self.pausedDownloaders = None
+        
     def applicationDidFinishLaunching_(self, notification):
         # The [NSURLRequest setAllowsAnyHTTPSCertificate:forHost:] selector is
         # not documented anywhere, so I assume it is not public. It is however 
@@ -217,34 +219,35 @@ class AppController (NibClassBuilder.AutoBaseClass):
         app.controller.selectTabByTemplateBase('librarytab')
 
     def workspaceWillSleep_(self, notification):
-        def pauseAllDownloaders():
-            dlCount = len(views.remoteDownloads)
+        def pauseRunningDownloaders():
+            views.remoteDownloads.beginRead()
+            try:
+                for dl in views.remoteDownloads:
+                    if dl.getState() == 'downloading':
+                        self.pausedDownloaders.append(dl)
+            finally:
+                views.remoteDownloads.endRead()
+            dlCount = len(self.pausedDownloaders)
             if dlCount > 0:
-                print "DTV: System is going to sleep, suspending downloads."
-                views.remoteDownloads.beginRead()
-                try:
-                    for dl in views.remoteDownloads:
-                        dl.pause(block=True)
-                finally:
-                    views.remoteDownloads.endRead()
-        dc = eventloop.addUrgentCall(lambda:pauseAllDownloaders(), "Suspending downloaders")
+                print "DTV: System is going to sleep, suspending %d download(s)." % dlCount
+                for dl in self.pausedDownloaders:
+                    dl.pause(block=True)
+        self.pausedDownloaders = list()
+        dc = eventloop.addUrgentCall(lambda:pauseRunningDownloaders(), "Suspending downloaders for sleep")
         # Until we can get proper delayed call completion notification, we're
-        # just going to wait a couple seconds here :)
-        time.sleep(2)
+        # just going to wait a few seconds here :)
+        time.sleep(3)
         #dc.waitCompletion()
 
     def workspaceDidWake_(self, notification):
-        def retstartAllDownloaders():
-            dlCount = len(views.remoteDownloads)
+        def retstartDownloaders():
+            dlCount = len(self.pausedDownloaders)
             if dlCount > 0:
-                print "DTV: System is awake, resuming downloads."
-                views.remoteDownloads.beginRead()
-                try:
-                    for dl in views.remoteDownloads:
-                        dl.start()
-                finally:
-                    views.remoteDownloads.endRead()
-        eventloop.addUrgentCall(lambda:retstartAllDownloaders(), "Restarting downloaders")
+                print "DTV: System is awake from sleep, resuming %s download(s)." % dlCount
+                for dl in self.pausedDownloaders:
+                    dl.start()
+            self.pausedDownloaders = None
+        eventloop.addUrgentCall(lambda:retstartDownloaders(), "Resuming downloaders after sleep")
 
     def videoWillPlay_(self, notification):
         self.playPauseMenuItem.setTitle_('Pause Video')
