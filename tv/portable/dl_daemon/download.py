@@ -557,13 +557,14 @@ class HTTPDownloader(BGDownloader):
     # Checks the download file size to see if we can accept it based on the 
     # user disk space preservation preference
     def acceptDownloadSize(self, size):
-        if size < 0:
-            size = 0
-        available = platformutils.getAvailableGBytesForMovies()
+        accept = True
         if config.get(prefs.PRESERVE_DISK_SPACE):
-            available = available - config.get(prefs.PRESERVE_X_GB_FREE)
-        available = int(available * 1024 * 1024 * 1024)
-        return size <= available
+            if size < 0:
+                size = 0
+            preserved = config.get(prefs.PRESERVE_X_GB_FREE) * 1024 * 1024 * 1024
+            available = platformutils.getAvailableBytesForMovies() - preserved
+            accept = (size <= available)
+        return accept
 
     ##
     # Pauses the download.

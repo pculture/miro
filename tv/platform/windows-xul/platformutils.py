@@ -3,6 +3,6 @@
 #### movies are stored                                                     ####
 ###############################################################################
 
-def getAvailableGBytesForMovies():
+def getAvailableBytesForMovies():
     # TODO: windows implementation
-    return 100
+    return 100 * 1024 * 1024 * 1024

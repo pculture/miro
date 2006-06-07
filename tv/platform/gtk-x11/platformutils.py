@@ -6,6 +6,6 @@ import os
 import config
 import prefs
 
-def getAvailableGBytesForMovies():
+def getAvailableBytesForMovies():
     statinfo = os.statvfs (config.get(prefs.MOVIES_DIRECTORY))
-    return statinfo.f_frsize * statinfo.f_bavail / float(1024 * 1024 * 1024)
+    return statinfo.f_frsize * statinfo.f_bavail
