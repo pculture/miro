@@ -122,7 +122,7 @@ def parseCommandLineArgs(args=None):
                 try:
                     torrentInfohash = getTorrentInfoHash(arg)
                 except ValueError:
-                    print "WARNING: %s doesn't seem to be a torrent file"
+                    print "WARNING: %s doesn't seem to be a torrent file" % arg
                     continue
                 addTorrent(arg, torrentInfohash)
                 addedTorrents = True
