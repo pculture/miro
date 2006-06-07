@@ -2221,7 +2221,7 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
             self.setContentView_(renderer.view)
         self.palette.setup(item, renderer)
         if self.isFullScreen:
-            platformUtils.callOnMainThreadAfterDelay(0.5, self.palette.reveal, self)
+            platformutils.callOnMainThreadAfterDelay(0.5, self.palette.reveal, self)
     
     def teardown(self):
         self.setContentView_(nil)
