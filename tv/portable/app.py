@@ -1055,9 +1055,10 @@ class ModelActionHandler:
             print "DTV: Warning: tried to remove feed that doesn't exist with id %d" % int(feed)
             return
         title = 'Remove Channel'
-        description = """Are you sure you want to remove the channel \'%s\'? \
-This will delete all videos and cancel any downloads contained in it.  This \
-operation cannot be undone.""" % obj.getTitle()
+        description = """\
+Are you sure you want to remove the %s channel?  This will delete the video \
+list and cancel any downloads on this channel.  You must resubscribe to this \
+channel to get these videos back""" % obj.getTitle()
         dialog = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_YES,
                 dialogs.BUTTON_NO)
         def dialogCallback(dialog):
