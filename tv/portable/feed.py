@@ -28,6 +28,7 @@ import eventloop
 import prefs
 import resource
 import views
+from BitTornado.clock import clock
 
 whitespacePattern = re.compile(r"^[ \t\r\n]*$")
 
@@ -933,6 +934,39 @@ class RSSFeedImpl(FeedImpl):
                 break
         return hasOne
 
+    def feedparser_finished (self):
+        if not self.updateUandA():
+            self.ufeed.beginChange()
+            self.ufeed.endChange()
+        self.scheduleUpdateEvents(-1)
+        self.updating = False
+
+    def feedparser_errback (self, e):
+        print "Error updating feed: %s: %s" % (self.url, e)
+        self.updating = False
+
+    def feedparser_callback (self, parsed):
+        start = clock()
+        self.updateUsingParsed(parsed)
+        self.feedparser_finished()
+        end = clock()
+        if end - start > 0.1:
+            print "WARNING: feed update for: %s too slow (%.3f secs)" % (self.url, end - start)
+
+    def call_feedparser (self, html):
+        in_thread = False
+        if in_thread:
+            try:
+                parsed = feedparser.parse(html)
+                self.updateUsingParsed(parsed)
+            except:
+                print "Error updating feed: %s" % (self.url,)
+                self.updating = False
+                raise
+            self.feedparser_finished()
+        else:
+            eventloop.callInThread (self.feedparser_callback, self.feedparser_errback, feedparser.parse, html)
+
     ##
     # Updates a feed
     def update(self):
@@ -948,15 +982,7 @@ class RSSFeedImpl(FeedImpl):
         if hasattr(self, 'initialHTML') and self.initialHTML is not None:
             html = self.initialHTML
             self.initialHTML = None
-            try:
-                self.updateUsingXML(html)
-            except:
-                print "Error updating feed: %s" % (self.url,)
-                raise
-            if not self.updateUandA():
-                self.ufeed.beginChange()
-                self.ufeed.endChange()
-            self.scheduleUpdateEvents(-1)
+            self.call_feedparser (html)
         else:
             try:
                 etag = self.etag
@@ -973,12 +999,9 @@ class RSSFeedImpl(FeedImpl):
         print "WARNING, unhandled error in Feed.update", error
 
     def _updateCallback(self,info):
-        self.updating = False
-        html = info['body']
         if info['status'] == 304:
-            self.ufeed.beginChange()
-            self.ufeed.endChange()
             return
+        html = info['body']
         if info.has_key('charset'):
             html = fixXMLHeader(html,info['charset'])
         self.url = info['updated-url']
@@ -986,20 +1009,11 @@ class RSSFeedImpl(FeedImpl):
             self.etag = info['etag']
         if info.has_key('last-modified'):
             self.modified = info['last-modified']
-        try:
-            self.updateUsingXML(html)
-        except:
-            print "Error updating feed: %s" % (self.url,)
-            raise
-        if not self.updateUandA():
-            self.ufeed.beginChange()
-            self.ufeed.endChange()
-        self.scheduleUpdateEvents(-1)
+        self.call_feedparser (html)
 
-    def updateUsingXML(self, xml):
-        """Update the feed using XML passed in"""
-        d = feedparser.parse(xml)
-        self.parsed = d
+    def updateUsingParsed(self, parsed):
+        """Update the feed using parsed XML passed in"""
+        self.parsed = parsed
 
         self.ufeed.beginRead()
         try:
@@ -1534,8 +1548,8 @@ class SearchFeedImpl (RSSFeedImpl):
             url += "&sortby=date"
         return url
 
-    def updateUsingXML(self, xml):
-        RSSFeedImpl.updateUsingXML(self, xml)
+    def updateUsingParsed(self, parsed):
+        RSSFeedImpl.updateUsingParsed(self, parsed)
         self.searching = False
         self.ufeed.beginChange()
         self.ufeed.endChange()
