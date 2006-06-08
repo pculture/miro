@@ -508,6 +508,7 @@ float: left;
 .main-video-details-tasks {
 	clear: both;
 	padding: 5px 0px 7px 0px;
+        height: 30px;
 }
 
 .main-video-details-task-delete, .main-video-details-task-bomb, .main-video-details-task-mail {
