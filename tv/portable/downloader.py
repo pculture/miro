@@ -342,7 +342,7 @@ URL was %s""" % self.url
     def getFilename(self):
         self.beginRead()
         try:
-            return self.status.get('filename')
+            return self.status.get('filename', '')
         finally:
             self.endRead()
 
