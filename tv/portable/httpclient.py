@@ -58,6 +58,8 @@ class BadRedirect(HTTPError):
     pass
 class AuthorizationFailed(HTTPError):
     pass
+class RequestCanceledError(HTTPError):
+    pass
 
 
 def trapCall(object, function, *args, **kwargs):
@@ -1154,10 +1156,13 @@ class HTTPClient(object):
     def startRequest(self):
         self.canceled = False
         self.requestId = None
+        self.willHandleResponse = False
         if 'Authorization' not in self.headers:
             scheme, host, port, path = parseURL(self.redirectedURL)
             def callback(authHeader):
                 if self.canceled:
+                    error = RequestCanceledError()
+                    self.errback(error)
                     return
                 if authHeader is not None:
                     self.headers["Authorization"] = authHeader
@@ -1171,7 +1176,6 @@ class HTTPClient(object):
             bodyDataCallback = self.onBodyData
         else:
             bodyDataCallback = None
-        self.willHandleResponse = False
         self.requestId = self.connectionPool.addRequest(
                 self.callbackIntercept, self.errbackIntercept, self.onHeaders,
                 bodyDataCallback, self.url, self.method, self.headers)
@@ -1198,7 +1202,7 @@ class HTTPClient(object):
                     trapCall(self, self.callback, response)
             elif self.errback:
                 error = UnexpectedStatusCode(response['status'])
-                trapCall(self, self.errback, error)
+                self.errbackIntercept(error)
 
     def errbackIntercept(self, error):
         self.requestId = None
@@ -1437,30 +1441,44 @@ def grabURL(url, callback, errback, headerCallback=None,
     client.startRequest()
     return client
 
-def grabHeadersFinalCallback (info, callback, requestID):
-    callback (info)
-    cancelRequest(requestID)
+class HTTPHeaderGrabber(HTTPClient):
+    """Modified HTTPClient to get the headers for a URL.  It tries to do a
+    HEAD request, then falls back on doing a GET request, and closing the
+    connection right after the headers.
+    """
 
-def grabHeadersErrback (url, callback, errback, requestId):
-    client = HTTPClient(url,
-                        None,
-                        errback,
-                        lambda (info): grabHeadersFinalCallback (info, callback, requestID),
-                        None, "GET", 0, None, None, requestId=requestId)
+    def __init__(self, url, callback, errback):
+        """HTTPHeaderGrabber support a lot less features than a real
+        HTTPClient, mostly this is because they don't make sense in this
+        context."""
+        HTTPClient.__init__(self, url, callback, errback)
+    
+    def startRequest(self):
+        self.method = "HEAD"
+        HTTPClient.startRequest(self)
 
-def grabHeadersCallback (info, url, callback, errback):
-    if info and info['status'] == 200:
-        callback (info)
-    else:
-        grabHeadersErrback (url, callback, errback)
+    def errbackIntercept(self, error):
+        if self.method == 'HEAD' and not self.canceled:
+            self.method = "GET"
+            HTTPClient.startRequest(self)
+        else:
+            HTTPClient.errbackIntercept(self, error)
+
+    def callbackIntercept(self, response):
+        # we send the callback for GET requests during the headers
+        if self.method != 'GET':
+            HTTPClient.callbackIntercept(self, response)
+
+    def onHeaders(self, headers):
+        if self.method == 'GET':
+            headers['body'] = '' 
+            # make it match the behaviour of a HEAD request
+            self.callback(headers)
+            self.cancel()
+        else:
+            HTTPClient.onHeaders(self, headers)
 
 def grabHeaders (url, callback, errback):
-    client = HTTPClient(url,
-                        lambda (info): grabHeadersCallback (info, url, callback, errback),
-                        lambda (error): grabHeadersErrback (url, callback, errback, requestId),
-                        None, None, "HEAD", 0, None, None)
-    requestId = client.startRequest()
-    return CancellableId (requestId)
-
-def cancelRequest(requestId):
-    HTTPClient.connectionPool.cancelRequest(requestId)
+    client = HTTPHeaderGrabber(url, callback, errback)
+    client.startRequest()
+    return client

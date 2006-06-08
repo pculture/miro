@@ -655,6 +655,33 @@ HELLO: WORLD\r\n"""
         self.assert_(self.callbackCalled)
         self.assertEquals(self.data['body'], "I AM A NORMAL PAGE\n")
 
+    def testGrabHeaders(self):
+        url = 'http://participatoryculture.org/democracytest/normalpage.txt'
+        httpclient.grabHeaders(url, self.callback, self.errback)
+        self.runEventLoop(timeout=10)
+        self.assert_(self.callbackCalled)
+        self.assertEquals(self.data['body'], "")
+        self.assertEquals(self.data['status'], 200)
+
+                #'http://participatoryculture.org/democracytest/redirect.php',
+                #'http://participatoryculture.org/democracytest/end.txt',
+                #'http://participatoryculture.org/democracytest/redirect3.php')
+
+    def testGrabHeaders2(self):
+        url = 'http://participatoryculture.org/democracytest/nohead.php'
+        httpclient.grabHeaders(url, self.callback, self.errback)
+        self.runEventLoop(timeout=10)
+        self.assert_(self.callbackCalled)
+        self.assertEquals(self.data['body'], "")
+        self.assertEquals(self.data['status'], 200)
+
+    def testGrabHeadersCancel(self):
+        url = 'http://participatoryculture.org/democracytest/normalpage.txt'
+        client = httpclient.grabHeaders(url, self.callback, self.errback)
+        client.cancel()
+        self.runEventLoop(timeout=10)
+        self.assert_(self.errbackCalled)
+
     def testConnectionFailure(self):
         httpclient.grabURL("http://slashdot.org:123123", self.callback, 
                 self.errback)
