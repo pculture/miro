@@ -386,7 +386,7 @@ float: left;
 	line-height: 14px;
 	display: block;
 	height: 44px;
-	overflow: auto;
+	overflow: hidden;
 }
 
 .main-video-desc p {
