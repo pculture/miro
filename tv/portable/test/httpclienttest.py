@@ -1044,10 +1044,12 @@ class HTTPConnectionPoolTest(EventLoopTest):
     def testCancelFree(self):
         reqid = self.addRequest("http://www.foo.com/")
         self.checkCounts(1, 0, 0)
-        self.pool.finishConnection('http', 'www.foo.com')
+        conn = self.pool.getConnection('http', 'www.foo.com')
+        conn.handleData(startResponse(headers={'Content-Length': 128}))
+        # conn is now ready for a new request
         self.checkCounts(0, 1, 0)
         self.pool.cancelRequest(reqid)
-        self.checkCounts(0, 1, 0)
+        self.checkCounts(0, 0, 0)
 
     def testCancelPending(self):
         self.addRequest("http://www.foo.com/")
@@ -1248,23 +1250,27 @@ class BadURLTest(HTTPClientTestBase):
     def testScheme(self):
         url = 'participatoryculture.org/democracytest/normalpage.txt'
         httpclient.grabURL(url, self.callback, self.errback)
+        self.runPendingIdles()
         self.assertEquals(self.errbackCalled, True)
         self.assertEquals(self.callbackCalled, False)
 
     def testSlashes(self):
         url = 'http:jigsaw.w3.org/HTTP/'
         httpclient.grabURL(url, self.callback, self.errback)
+        self.runPendingIdles()
         self.assertEquals(self.errbackCalled, True)
         self.assertEquals(self.callbackCalled, False)
 
     def testHost(self):
         url = 'http:///HTTP/'
         httpclient.grabURL(url, self.callback, self.errback)
+        self.runPendingIdles()
         self.assertEquals(self.errbackCalled, True)
         self.assertEquals(self.callbackCalled, False)
 
     def testOtherScheme(self):
         url = 'rtsp://jigsaw.w3.org/'
         httpclient.grabURL(url, self.callback, self.errback)
+        self.runPendingIdles()
         self.assertEquals(self.errbackCalled, True)
         self.assertEquals(self.callbackCalled, False)

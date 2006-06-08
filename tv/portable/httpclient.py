@@ -904,22 +904,20 @@ class HTTPConnectionPool(object):
         conns = self._getServerConnections(conn.scheme, conn.host, conn.port)
         conns['active'].remove(conn)
         self.activeConnectionCount -= 1
-        conn.connectionPoolReqId = 0
         conns['free'].add(conn)
         self.freeConnectionCount += 1
         self.runPendingRequests()
 
     def addRequest(self, callback, errback, headerCallback, bodyDataCallback,
-            url, method, headers, reqId = None):
+            url, method, headers):
         """Add a request to be run.  The request will run immediately if we
         have a free connection, otherwise it will be queued.
 
         returns a request id that can be passed to cancelRequest
         """
 
-        if reqId is None:
-            reqId = self.currentRequestId
-            self.currentRequestId += 1
+        reqId = self.currentRequestId
+        self.currentRequestId += 1
         scheme, host, port, path = parseURL(url)
         if (scheme not in ['http', 'https'] or host == ''):
             errback (ValueError("Bad URL: %s" % (url,)))
@@ -1078,10 +1076,17 @@ class HTTPClient(object):
                           config.get(prefs.APP_VERSION),
                           config.get(prefs.PROJECT_URL))
         self.requestId = requestId
+        self.canceled = False
         self.initHeaders()
 
     def __str__(self):
         return "%s: %s" % (type(self).__name__, self.url)
+
+    def cancel(self):
+        self.canceled = True
+        if self.requestId is not None:
+            self.connectionPool.cancelRequest(self.requestId)
+            self.requestId = None
 
     def isValidCookie(self, cookie, scheme, host, port, path):
         return ((time.time() - cookie['received'] < cookie['Max-Age']) and
@@ -1147,13 +1152,13 @@ class HTTPClient(object):
             self.headers['Cookie'] = header
 
     def startRequest(self):
-        return self.reallyStartRequest()
-        # FIXME: we should do something like the below code, but then the
-        # requestId doesn't get returnned.  I'll fix this mess in the morning.
-
+        self.canceled = False
+        self.requestId = None
         if 'Authorization' not in self.headers:
             scheme, host, port, path = parseURL(self.redirectedURL)
             def callback(authHeader):
+                if self.canceled:
+                    return
                 if authHeader is not None:
                     self.headers["Authorization"] = authHeader
                 self.reallyStartRequest()
@@ -1169,14 +1174,10 @@ class HTTPClient(object):
         self.willHandleResponse = False
         self.requestId = self.connectionPool.addRequest(
                 self.callbackIntercept, self.errbackIntercept, self.onHeaders,
-                bodyDataCallback, self.url, self.method, self.headers, self.requestId)
-        return self.requestId
-
-    def cancelRequest(self):
-        cancelRequest(self.requestId)
-        self.requestId = None
+                bodyDataCallback, self.url, self.method, self.headers)
 
     def callbackIntercept(self, response):
+        self.requestId = None
         if self.shouldRedirect(response):
             self.handleRedirect(response)
         elif self.shouldAuthorize(response):
@@ -1215,12 +1216,12 @@ class HTTPClient(object):
         elif self.headerCallback is not None:
             response = self.prepareResponse(response)
             if not trapCall(self, self.headerCallback, response):
-                self.cancelRequest()
+                self.cancel()
 
     def onBodyData(self, data):
         if not self.willHandleResponse and self.bodyDataCallback:
             if not trapCall(self, self.bodyDataCallback, data):
-                self.cancelRequest()
+                self.cancel()
 
     def prepareResponse(self, response):
         response['original-url'] = self.originalURL
@@ -1228,7 +1229,11 @@ class HTTPClient(object):
         response['redirected-url'] = self.redirectedURL
         response['filename'] = self.getFilenameFromResponse(response)
         response['charset'] = self.getCharsetFromResponse(response)
-        response['cookies'] = self.getCookiesFromResponse(response)
+        try:
+            response['cookies'] = self.getCookiesFromResponse(response)
+        except:
+            print "ERROR in getCookiesFromResponse()"
+            traceback.print_exc()
         return response
 
     def getCookiesFromResponse(self, response):
@@ -1429,8 +1434,8 @@ def grabURL(url, callback, errback, headerCallback=None,
         modified=None, cookies = {}):
     client = HTTPClient(url, callback, errback, headerCallback,
             bodyDataCallback, method, start, etag, modified, cookies)
-    id = client.startRequest()
-    return CancellableId (id)
+    client.startRequest()
+    return client
 
 def grabHeadersFinalCallback (info, callback, requestID):
     callback (info)
@@ -1459,9 +1464,3 @@ def grabHeaders (url, callback, errback):
 
 def cancelRequest(requestId):
     HTTPClient.connectionPool.cancelRequest(requestId)
-
-class CancellableId:
-    def __init__ (self, id):
-        self.id = id
-    def cancel(self):
-        cancelRequest (self.id)

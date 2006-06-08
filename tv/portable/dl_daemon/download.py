@@ -366,7 +366,7 @@ class HTTPDownloader(BGDownloader):
             BGDownloader.__init__(self, url, dlid)
             self.restartOnError = False
         self.lastUpdated = 0
-        self.requestID = None
+        self.client = None
         self.filehandle = None
         if self.state == 'downloading':
             if restore is not None:
@@ -386,15 +386,15 @@ class HTTPDownloader(BGDownloader):
             headerCallback = self.onHeaders
         else:
             headerCallback = self.onHeadersRestart
-        self.requestID = httpclient.grabURL(self.url,
+        self.client = httpclient.grabURL(self.url,
                 self.onDownloadFinished, self.onDownloadError,
                 headerCallback, self.onBodyData, start=self.currentSize)
         self.updateClient()
 
     def cancelRequest(self):
-        if self.requestID is not None:
-            self.requestID.cancel()
-            self.requestID = None
+        if self.client is not None:
+            self.client.cancel()
+            self.client = None
 
     def handleError(self, reason):
         self.state = "failed"
@@ -488,7 +488,7 @@ class HTTPDownloader(BGDownloader):
             self.restartOnError = False
             self.startNewDownload()
         else:
-            self.requestID = None
+            self.client = None
             if isinstance(error, httpclient.HTTPError):
                 print "Got HTTP Error: %r" % error
                 traceback.print_stack()
@@ -509,7 +509,7 @@ class HTTPDownloader(BGDownloader):
             self.handleWriteError(e)
 
     def onDownloadFinished(self, response):
-        self.requestID = None
+        self.client = None
         try:
             self.filehandle.close()
         except Exception, e:
