@@ -662,10 +662,8 @@ HELLO: WORLD\r\n"""
         self.assert_(self.callbackCalled)
         self.assertEquals(self.data['body'], "")
         self.assertEquals(self.data['status'], 200)
-
-                #'http://participatoryculture.org/democracytest/redirect.php',
-                #'http://participatoryculture.org/democracytest/end.txt',
-                #'http://participatoryculture.org/democracytest/redirect3.php')
+        self.assertEquals(self.data['original-url'], self.data['updated-url'])
+        self.assertEquals(self.data['original-url'], self.data['redirected-url'])
 
     def testGrabHeaders2(self):
         url = 'http://participatoryculture.org/democracytest/nohead.php'
@@ -674,6 +672,8 @@ HELLO: WORLD\r\n"""
         self.assert_(self.callbackCalled)
         self.assertEquals(self.data['body'], "")
         self.assertEquals(self.data['status'], 200)
+        self.assertEquals(self.data['original-url'], self.data['updated-url'])
+        self.assertEquals(self.data['original-url'], self.data['redirected-url'])
 
     def testGrabHeadersCancel(self):
         url = 'http://participatoryculture.org/democracytest/normalpage.txt'

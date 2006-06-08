@@ -1473,7 +1473,7 @@ class HTTPHeaderGrabber(HTTPClient):
         if self.method == 'GET':
             headers['body'] = '' 
             # make it match the behaviour of a HEAD request
-            self.callback(headers)
+            self.callback(self.prepareResponse(headers))
             self.cancel()
         else:
             HTTPClient.onHeaders(self, headers)
