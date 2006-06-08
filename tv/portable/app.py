@@ -1057,8 +1057,8 @@ class ModelActionHandler:
         title = 'Remove Channel'
         description = """\
 Are you sure you want to remove the %s channel?  This will delete the video \
-list and cancel any downloads on this channel.  You must resubscribe to this \
-channel to get these videos back""" % obj.getTitle()
+list and cancel any downloads on this channel.  You must resubscribe and \
+redownload to get the videos back.""" % obj.getTitle()
         dialog = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_YES,
                 dialogs.BUTTON_NO)
         def dialogCallback(dialog):

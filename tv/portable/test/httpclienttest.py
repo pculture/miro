@@ -58,6 +58,7 @@ class TestingHTTPConnection(httpclient.HTTPConnection):
         self.socketOpen = False
         if self.closeCallback:
             self.closeCallback(self)
+        self.checkPipelineNotStarted()
 
     def sendData(self, data):
         self.output += data
@@ -77,8 +78,9 @@ class TestingHTTPConnectionPool(httpclient.HTTPConnectionPool):
         conn.scheme = req['scheme']
         conn.openConnection(req['host'], req['port'])
         conn.sendRequest(req['callback'], req['errback'],
-                req['headerCallback'], req['bodyDataCallback'], req['method'],
-                req['path'], req['headers'])
+                req['requestStartCallback'], req['headerCallback'],
+                req['bodyDataCallback'], req['method'], req['path'],
+                req['headers'])
         return conn
 
     def checkConnectionStarted(self, url):
@@ -497,7 +499,7 @@ HELLO: WORLD\r\n"""
         self.assertEquals(self.testRequest.canSendRequest(), True)
         self.testRequest.sendRequest(self.callback, self.errback,
                 path="/pipelined/path")
-        self.assertEquals(self.testRequest.pipelinedRequest[5],
+        self.assertEquals(self.testRequest.pipelinedRequest[6],
                 '/pipelined/path')
         self.testRequest.handleData('a' * 128)
         self.assert_(self.callbackCalled)
@@ -530,35 +532,17 @@ HELLO: WORLD\r\n"""
         self.assert_(isinstance(self.pipelineError,
             httpclient.PipelinedRequestNeverStarted))
 
-    def testPipelineRetry(self):
-        testPool = TestingHTTPConnectionPool()
-        testPool.MAX_CONNECTIONS_PER_SERVER = 1
-        url = "http://www.foo.com/"
-        client = httpclient.HTTPClient(url, self.callback, self.errback) 
-        client.connectionPool = testPool
-        client.startRequest()
-        url = "http://www.foo.com/2"
-        self.pipelineResponse = self.pipelineError = None
-        def pipelineCallback(response):
-            self.pipelineResponse = response
+    def testPipelineNeverStarted2(self):
+        self.pipelineError = None
+        self.testRequest.handleData(startResponse(
+            headers={'Content-Length': 128}))
         def pipelineErrback(error):
             self.pipelineError = error
-        self.runPendingIdles()
-        conn = testPool.getConnection('http', 'www.foo.com')
-        conn.handleData(startResponse(headers={'Content-Length': 128}))
-        client2 = httpclient.HTTPClient(url, pipelineCallback, 
-                pipelineErrback) 
-        client2.connectionPool = testPool
-        client2.startRequest()
-        # client2 should be pipelined here
-        conn.closeConnection()
-        conn.handleClose(socket.SHUT_RD)
-        self.assertEquals(self.pipelineError, None)
-        self.assertEquals(self.pipelineResponse, None)
-        self.runPendingIdles()
-        conn = testPool.getConnection('http', 'www.foo.com')
-        conn.handleData(self.fakeResponse)
-        self.assertEquals(self.pipelineResponse['body'], "HELLO: WORLD\r\n")
+        self.testRequest.sendRequest(self.callback, pipelineErrback,
+                path="/pipelined/path")
+        self.testRequest.closeConnection()
+        self.assert_(isinstance(self.pipelineError,
+            httpclient.PipelinedRequestNeverStarted))
 
     def testContentLengthHandling(self):
         self.testRequest.handleData(startResponse(
@@ -984,7 +968,7 @@ class HTTPConnectionPoolTest(EventLoopTest):
 
     def addRequest(self, url):
         return self.pool.addRequest((lambda data: 0), (lambda error: 0),
-                None, None, url, "GET", {})
+                None, None, None, url, "GET", {})
 
     def checkCounts(self, activeCount, freeCount, pendingCount):
         self.assertEquals(self.pool.activeConnectionCount, activeCount)
@@ -1011,7 +995,7 @@ class HTTPConnectionPoolTest(EventLoopTest):
         def stopEventLoop(error):
             eventloop.quit()
         self.pool.addRequest(stopEventLoop, stopEventLoop,
-                None, None, "http://3:-1/", "GET", {})
+                None, None, None, "http://3:-1/", "GET", {})
         self.runEventLoop()
         self.checkCounts(0, 0, 0)
 
@@ -1056,59 +1040,6 @@ class HTTPConnectionPoolTest(EventLoopTest):
         self.pool.assertConnectionNotStarted('http://www.froz.com/')
         self.pool.finishConnection('http', 'www.bar.com')
         self.pool.assertConnectionStarted('http://www.froz.com/')
-
-    def testCancelActive(self):
-        reqids = []
-        reqids.append(self.addRequest("http://www.foo.com/"))
-        reqids.append(self.addRequest("http://www.foo.com/2"))
-        reqids.append(self.addRequest("https://www.bar.com/"))
-        reqids.append(self.addRequest("http://www.bar.com/2"))
-        self.checkCounts(4, 0, 0)
-        for x in xrange(4):
-            self.pool.cancelRequest(reqids[x])
-            self.checkCounts(3-x, 0, 0)
-
-    def testCancelFree(self):
-        reqid = self.addRequest("http://www.foo.com/")
-        self.checkCounts(1, 0, 0)
-        conn = self.pool.getConnection('http', 'www.foo.com')
-        conn.handleData(startResponse(headers={'Content-Length': 128}))
-        # conn is now ready for a new request
-        self.checkCounts(0, 1, 0)
-        self.pool.cancelRequest(reqid)
-        self.checkCounts(0, 0, 0)
-
-    def testCancelPending(self):
-        self.addRequest("http://www.foo.com/")
-        self.addRequest("http://www.foo.com/")
-        reqids = []
-        for x in xrange(10):
-            reqids.append(self.addRequest("http://www.foo.com/"))
-        self.checkCounts(2, 0, 10)
-        for x in xrange(10):
-            self.pool.cancelRequest(reqids[x])
-            self.checkCounts(2, 0, 9-x)
-
-    def cancelMixed(self):
-        req1 = reqids.append(self.addRequest("http://www.foo.com/"))
-        req2 = reqids.append(self.addRequest("http://www.foo.com/2"))
-        req3 = reqids.append(self.addRequest("http://www.foo.com/3"))
-        req4 = reqids.append(self.addRequest("http://www.bar.com/"))
-        req5 = reqids.append(self.addRequest("http://www.bar.com/2"))
-        req6 = reqids.append(self.addRequest("http://www.bar.com/3"))
-        self.checkCounts(4, 0, 2)
-        self.pool.cancelRequest(req1)
-        self.checkCounts(4, 0, 1)
-        self.pool.cancelRequest(req6)
-        self.checkCounts(4, 0, 0)
-        self.pool.cancelRequest(req3)
-        self.checkCounts(3, 0, 0)
-        self.pool.cancelRequest(req5)
-        self.checkCounts(2, 0, 0)
-        self.pool.cancelRequest(req2)
-        self.checkCounts(1, 0, 0)
-        self.pool.cancelRequest(req4)
-        self.checkCounts(0, 0, 0)
 
     def testBothLimits(self):
         self.addRequest("http://www.foo.com/")
@@ -1272,6 +1203,62 @@ class GrabURLTest(HTTPClientTestBase):
         self.assertEquals(self.data['status'], 200)
         self.assertEquals(self.data['body'], firstBody)
 
+class PipelineTest(HTTPClientTestBase):
+    def setUp(self):
+        self.pool = TestingHTTPConnectionPool()
+        self.pool.MAX_CONNECTIONS_PER_SERVER = 1
+        url = "http://www.foo.com/"
+        self.firstClient = httpclient.HTTPClient(url, self.callback,
+                self.errback) 
+        self.firstClient.connectionPool = self.pool
+        self.firstClient.startRequest()
+        url = "http://www.foo.com/2"
+        self.pipelineResponse = self.pipelineError = None
+        def pipelineCallback(response):
+            self.pipelineResponse = response
+        def pipelineErrback(error):
+            self.pipelineError = error
+        self.runPendingIdles()
+        conn = self.pool.getConnection('http', 'www.foo.com')
+        conn.handleData(startResponse(headers={'Content-Length': 128}))
+        self.pipelinedClient = httpclient.HTTPClient(url, pipelineCallback, 
+                pipelineErrback) 
+        self.pipelinedClient.connectionPool = self.pool
+        self.pipelinedClient.startRequest()
+        self.runPendingIdles()
+
+    def testPipelineRetry(self):
+        conn = self.pool.getConnection('http', 'www.foo.com')
+        self.assertEquals(self.firstClient.connection, conn)
+        self.assertEquals(self.pipelinedClient.connection, None)
+        conn.closeConnection()
+        conn.handleClose(socket.SHUT_RD)
+        self.runPendingIdles()
+        self.assertEquals(self.pipelineError, None)
+        self.assertEquals(self.pipelineResponse, None)
+        conn = self.pool.getConnection('http', 'www.foo.com')
+        conn.handleData(HTTPClientTest.fakeResponse)
+        self.assertEquals(self.pipelineResponse['body'], "HELLO: WORLD\r\n")
+
+    def testPipelineCancel(self):
+        # canceling the pipelined request shouldn't affect the earlier one.
+        self.pipelinedClient.cancel()
+        conn = self.pool.getConnection('http', 'www.foo.com')
+        self.assert_(conn is not None)
+        conn.handleData('a' * 128)
+        conn = self.pool.getConnection('http', 'www.foo.com', 'free')
+        self.assert_(conn is None)
+
+    def testPipelineCancel2(self):
+        # canceling the earlier request should result in the pipeline request
+        # retrying
+        self.firstClient.cancel()
+        self.runPendingIdles()
+        self.assertEquals(self.pipelineError, None)
+        self.assertEquals(self.pipelineResponse, None)
+        conn = self.pool.getConnection('http', 'www.foo.com')
+        conn.handleData(HTTPClientTest.fakeResponse)
+        self.assertEquals(self.pipelineResponse['body'], "HELLO: WORLD\r\n")
 
 class BadURLTest(HTTPClientTestBase):
     def testScheme(self):

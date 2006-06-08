@@ -14,7 +14,7 @@ import indexes
 import random
 import httpclient
 
-from download_utils import parseURL, cleanFilename, nextFreeFilename
+from download_utils import nextFreeFilename
 from gettext import gettext as _
 
 # a hash of download ids that the server knows about.

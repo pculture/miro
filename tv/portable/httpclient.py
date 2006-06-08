@@ -499,14 +499,26 @@ class HTTPConnection(ConnectionHandler):
         if self.closeCallback is not None:
             self.closeCallback(self)
             self.closeCallback = None
+        self.checkPipelineNotStarted()
+
+    def checkPipelineNotStarted(self):
+        """Call this when the connection is closed by Democracy or the other
+        side.  It will check if we have an unstarted pipeline request and 
+        send it the PipelinedRequestNeverStarted error
+        """
+
+        if self.pipelinedRequest is not None:
+            errback = self.pipelinedRequest[1]
+            trapCall(self, errback, PipelinedRequestNeverStarted())
 
     def canSendRequest(self):
         return (self.state == 'ready' or 
                 (self.state != 'closed' and self.pipelinedRequest is None and
                     not self.willClose))
 
-    def sendRequest(self, callback, errback, headerCallback=None,
-            bodyDataCallback = None, method="GET", path='/', headers=None):
+    def sendRequest(self, callback, errback, requestStartCallback=None,
+            headerCallback=None, bodyDataCallback = None, method="GET",
+            path='/', headers=None):
         """Sending an HTTP Request.  callback will be called if the request
         completes normally, errback will be called if there is a network
         error.
@@ -517,6 +529,11 @@ class HTTPConnection(ConnectionHandler):
             body, version, status, reason, method, path, host, port
         They should be self explanatory, status and port will be integers, the
         other items will be strings.
+
+        If requestStartCallback is given, it will be called just before the
+        we start receiving data for the request (this can be a while after
+        sending the request in the case of pipelined requests).  It will be
+        passed this connection object.
 
         If headerCallback is given, it will be called when the headers are
         read in.  It will be passed a response object whose body is set to
@@ -538,19 +555,24 @@ class HTTPConnection(ConnectionHandler):
         headers['Accept-Encoding'] = 'identity'
 
         self.sendRequestData(method, path, headers)
-        args = (callback, errback, headerCallback, bodyDataCallback, method,
-                path, headers)
+        args = (callback, errback, requestStartCallback, headerCallback,
+                bodyDataCallback, method, path, headers)
         if self.state == 'ready':
             self.startNewRequest(*args)
         else:
             self.pipelinedRequest = args
 
-    def startNewRequest(self, callback, errback, headerCallback,
-            bodyDataCallback, method, path, headers):
+    def startNewRequest(self, callback, errback, requestStartCallback,
+            headerCallback, bodyDataCallback, method, path, headers):
         """Called when we're ready to start processing a new request, either
         because one has just been made, or because we've pipelined one, and
         the previous request is done.
         """
+
+        if requestStartCallback:
+            trapCall(self, requestStartCallback, self)
+            if self.state == 'closed':
+                return
 
         self.callback = callback
         self.errback = errback
@@ -739,7 +761,7 @@ class HTTPConnection(ConnectionHandler):
         if self.headerCallback:
             trapCall(self, self.headerCallback, self.makeResponse())
         if self.state == 'closed':
-            return # maybe the header callback canceled this request
+            return # maybe the header callback cancelled this request
         if ((100 <= self.status <= 199) or self.status in (204, 304) or
                 self.method == 'HEAD' or self.contentLength == 0):
             self.finishRequest()
@@ -828,9 +850,7 @@ class HTTPConnection(ConnectionHandler):
             self.finishRequest()
         else:
             self.errback(ServerClosedConnection())
-        if self.pipelinedRequest is not None:
-            errback = self.pipelinedRequest[1]
-            trapCall(self, errback, PipelinedRequestNeverStarted())
+        self.checkPipelineNotStarted()
 
     def handleError(self, error):
         self.closeConnection()
@@ -861,7 +881,6 @@ class HTTPConnectionPool(object):
         self.activeConnectionCount = 0
         self.freeConnectionCount = 0
         self.connections = {}
-        self.currentRequestId = 1
         eventloop.addTimeout(60, self.cleanupPool, 
             "Check HTTP Connection Timeouts")
 
@@ -910,24 +929,22 @@ class HTTPConnectionPool(object):
         self.freeConnectionCount += 1
         self.runPendingRequests()
 
-    def addRequest(self, callback, errback, headerCallback, bodyDataCallback,
-            url, method, headers):
+    def addRequest(self, callback, errback, requestStartCallback,
+            headerCallback, bodyDataCallback, url, method, headers):
         """Add a request to be run.  The request will run immediately if we
         have a free connection, otherwise it will be queued.
 
         returns a request id that can be passed to cancelRequest
         """
 
-        reqId = self.currentRequestId
-        self.currentRequestId += 1
         scheme, host, port, path = parseURL(url)
-        if (scheme not in ['http', 'https'] or host == ''):
+        if scheme not in ['http', 'https'] or host == '' or path == '':
             errback (ValueError("Bad URL: %s" % (url,)))
-            return reqId
+            return
         req = {
-            'id' : reqId,
             'callback' : callback,
             'errback': errback,
+            'requestStartCallback': requestStartCallback,
             'headerCallback': headerCallback,
             'bodyDataCallback': bodyDataCallback,
             'scheme': scheme,
@@ -939,23 +956,6 @@ class HTTPConnectionPool(object):
         }
         self.pendingRequests.append(req)
         self.runPendingRequests()
-        return reqId
-
-    def cancelRequest(self, reqId):
-        """Cancel a request."""
-        for i in xrange(len(self.pendingRequests)):
-            if self.pendingRequests[i]['id'] == reqId:
-                del self.pendingRequests[i]
-                return
-        for conns in self.connections.values():
-            for conn in conns['active']:
-                if conn.connectionPoolReqId == reqId:
-                    conn.closeConnection()
-                    return
-            for conn in conns['free']:
-                if conn.connectionPoolReqId == reqId:
-                    conn.closeConnection()
-                    return
 
     def runPendingRequests(self):
         """Find pending requests have a free connection, otherwise it will be
@@ -972,11 +972,11 @@ class HTTPConnectionPool(object):
                 conn = conns['free'].pop()
                 self.freeConnectionCount -= 1
                 conn.sendRequest(req['callback'], req['errback'],
-                        req['headerCallback'], req['bodyDataCallback'],
-                        req['method'], req['path'], req['headers'])
+                        req['requestStartCallback'], req['headerCallback'],
+                        req['bodyDataCallback'], req['method'], req['path'],
+                        req['headers'])
             else:
                 conn = self._makeNewConnection(req)
-            conn.connectionPoolReqId = req['id']
             conns['active'].add(conn)
             self.activeConnectionCount += 1
             connectionCount = (self.activeConnectionCount +
@@ -987,8 +987,9 @@ class HTTPConnectionPool(object):
     def _makeNewConnection(self, req):
         def openConnectionCallback(conn):
             conn.sendRequest(req['callback'], req['errback'],
-                    req['headerCallback'], req['bodyDataCallback'],
-                    req['method'], req['path'], req['headers'])
+                    req['requestStartCallback'], req['headerCallback'],
+                    req['bodyDataCallback'], req['method'], req['path'],
+                    req['headers'])
         def openConnectionErrback(error):
             conns = self._getServerConnections(req['scheme'], req['host'], 
                     req['port'])
@@ -1051,7 +1052,7 @@ class HTTPClient(object):
 
     def __init__(self, url, callback, errback, headerCallback=None,
             bodyDataCallback=None, method="GET", start=0, etag=None,
-            modified=None, cookies={}, requestId=None):
+            modified=None, cookies={}):
         self.url = url
         self.callback = callback
         self.errback = errback
@@ -1077,18 +1078,18 @@ class HTTPClient(object):
                          (config.get(prefs.SHORT_APP_NAME),
                           config.get(prefs.APP_VERSION),
                           config.get(prefs.PROJECT_URL))
-        self.requestId = requestId
-        self.canceled = False
+        self.connection = None
+        self.cancelled = False
         self.initHeaders()
 
     def __str__(self):
         return "%s: %s" % (type(self).__name__, self.url)
 
     def cancel(self):
-        self.canceled = True
-        if self.requestId is not None:
-            self.connectionPool.cancelRequest(self.requestId)
-            self.requestId = None
+        self.cancelled = True
+        if self.connection is not None:
+            self.connection.closeConnection()
+            self.connection = None
 
     def isValidCookie(self, cookie, scheme, host, port, path):
         return ((time.time() - cookie['received'] < cookie['Max-Age']) and
@@ -1154,13 +1155,13 @@ class HTTPClient(object):
             self.headers['Cookie'] = header
 
     def startRequest(self):
-        self.canceled = False
-        self.requestId = None
+        self.cancelled = False
+        self.connection = None
         self.willHandleResponse = False
         if 'Authorization' not in self.headers:
             scheme, host, port, path = parseURL(self.redirectedURL)
             def callback(authHeader):
-                if self.canceled:
+                if self.cancelled:
                     error = RequestCanceledError()
                     self.errback(error)
                     return
@@ -1176,12 +1177,12 @@ class HTTPClient(object):
             bodyDataCallback = self.onBodyData
         else:
             bodyDataCallback = None
-        self.requestId = self.connectionPool.addRequest(
-                self.callbackIntercept, self.errbackIntercept, self.onHeaders,
-                bodyDataCallback, self.url, self.method, self.headers)
+        self.connectionPool.addRequest(self.callbackIntercept,
+                self.errbackIntercept, self.onRequestStart, self.onHeaders,
+                bodyDataCallback,
+                self.url, self.method, self.headers)
 
     def callbackIntercept(self, response):
-        self.requestId = None
         if self.shouldRedirect(response):
             self.handleRedirect(response)
         elif self.shouldAuthorize(response):
@@ -1190,7 +1191,7 @@ class HTTPClient(object):
             # get cancelled.
             self.handleAuthorize(response)
         else:
-            self.requestId = None
+            self.connection = None
             expectedStatusCodes = [200]
             if self.start != 0:
                 expectedStatusCodes.append(206)
@@ -1205,7 +1206,7 @@ class HTTPClient(object):
                 self.errbackIntercept(error)
 
     def errbackIntercept(self, error):
-        self.requestId = None
+        self.connection = None
         if isinstance(error, PipelinedRequestNeverStarted):
             # Connection closed before our pipelined request started.  RFC
             # 2616 says we should retry
@@ -1213,6 +1214,12 @@ class HTTPClient(object):
             # this should give us a new connection, since our last one closed
             return
         trapCall(self, self.errback, error)
+
+    def onRequestStart(self, connection):
+        if self.cancelled:
+            connection.closeConnection()
+        else:
+            self.connection = connection
 
     def onHeaders(self, response):
         if self.shouldRedirect(response) or self.shouldAuthorize(response):
@@ -1458,7 +1465,7 @@ class HTTPHeaderGrabber(HTTPClient):
         HTTPClient.startRequest(self)
 
     def errbackIntercept(self, error):
-        if self.method == 'HEAD' and not self.canceled:
+        if self.method == 'HEAD' and not self.cancelled:
             self.method = "GET"
             HTTPClient.startRequest(self)
         else:
