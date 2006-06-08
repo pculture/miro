@@ -29,6 +29,11 @@ def addVideo(path):
     views.items.beginRead()
     try:
         for i in views.items:
+            # FIXME: we should handle case-insensitivity on OS X and 8.3
+            # pathnames on windows.  This probably means adding a
+            # platformutils.samefile function, which I don't want to do for
+            # the 0.8.4 release.  (BTW: This will be supor easy on linux and
+            # OS X: from os.path import samefile).
             if i.getFilename() == os.path.abspath(path):
                 print "Not adding duplicate video: %s" % path
                 commandLineVideoIds.add(i.getID())
