@@ -294,10 +294,6 @@ class FeedParserDict(UserDict):
         
     def __getattr__(self, key):
         try:
-            return self.__dict__[key]
-        except KeyError:
-            pass
-        try:
             assert not key.startswith('_')
             return self.__getitem__(key)
         except:
@@ -1611,6 +1607,15 @@ class _BaseHTMLProcessor(sgmllib.SGMLParser):
         attrs = [(k.lower(), v) for k, v in attrs]
         attrs = [(k, k in ('rel', 'type') and v.lower() or v) for k, v in attrs]
         return attrs
+
+    def parse_starttag(self, i):
+        retval = sgmllib.SGMLParser.parse_starttag(self, i)
+        try:
+            if self.get_starttag_text()[-2:] == "/>":
+                self.finish_endtag(self.lasttag)
+        except:
+            pass
+        return retval
 
     def unknown_starttag(self, tag, attrs):
         # called for each start tag
