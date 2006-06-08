@@ -9,7 +9,7 @@ from threading import RLock, Event, Thread
 import traceback
 from copy import copy
 
-from download_utils import cleanFilename, parseURL, nextFreeFilename
+from download_utils import cleanFilename, nextFreeFilename
 import httpclient
 
 import config
@@ -280,16 +280,11 @@ class BGDownloader:
     ##
     # Returns a reasonable filename for saving the given url
     def filenameFromURL(self, url):
-        scheme, host, port, path = parseURL(url)
-        if len(path):
-            try:
-                ret = re.compile("^(.*/)?([^/]*)/*$").search(path).expand("\\2")
-                return cleanFilename(ret)
-
-            except:
-                return 'unknown'
-        else:
-            return "unknown"
+        try:
+            ret = re.compile(r'^(.*?/)?([^/]*)/*$'), search(url).expand("\\2")
+            return cleanFilename(ret)
+        except:
+            return 'unknown'
 
     ##
     def pickInitialFilename(self):
