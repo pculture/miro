@@ -1051,7 +1051,7 @@ class HTTPClient(object):
 
     def __init__(self, url, callback, errback, headerCallback=None,
             bodyDataCallback=None, method="GET", start=0, etag=None,
-            modified=None, cookies={}):
+            modified=None, cookies={}, requestId=None):
         self.url = url
         self.callback = callback
         self.errback = errback
@@ -1077,7 +1077,7 @@ class HTTPClient(object):
                          (config.get(prefs.SHORT_APP_NAME),
                           config.get(prefs.APP_VERSION),
                           config.get(prefs.PROJECT_URL))
-        self.requestId = None
+        self.requestId = requestId
         self.initHeaders()
 
     def __str__(self):
@@ -1255,10 +1255,10 @@ class HTTPClient(object):
                 cookieStrings.extend(response['set-cookie2'].split(','))
             temp = []
             for string in cookieStrings:
-                if (len(temp) > 0 and
+                if (len(temp) > 0 and (
                     (temp[-1].count('"')%2 == 1) or
                     (string.find('=') == -1) or
-                    (string.find('=') > string.find(';'))):
+                    (string.find('=') > string.find(';')))):
                     temp[-1] = '%s,%s' % (temp[-1],string)
                 else:
                     temp.append(string)
@@ -1436,13 +1436,12 @@ def grabHeadersFinalCallback (info, callback, requestID):
     callback (info)
     cancelRequest(requestID)
 
-def grabHeadersErrback (url, callback, errback):
+def grabHeadersErrback (url, callback, errback, requestId):
     client = HTTPClient(url,
                         None,
                         errback,
                         lambda (info): grabHeadersFinalCallback (info, callback, requestID),
-                        None, "GET", 0, None, None)
-    requestID = client.startRequest()
+                        None, "GET", 0, None, None, requestId=requestId)
 
 def grabHeadersCallback (info, url, callback, errback):
     if info and info['status'] == 200:
@@ -1453,9 +1452,10 @@ def grabHeadersCallback (info, url, callback, errback):
 def grabHeaders (url, callback, errback):
     client = HTTPClient(url,
                         lambda (info): grabHeadersCallback (info, url, callback, errback),
-                        lambda (error): grabHeadersErrback (url, callback, errback),
+                        lambda (error): grabHeadersErrback (url, callback, errback, requestId),
                         None, None, "HEAD", 0, None, None)
-    client.startRequest()
+    requestId = client.startRequest()
+    return CancellableId (requestId)
 
 def cancelRequest(requestId):
     HTTPClient.connectionPool.cancelRequest(requestId)
