@@ -26,16 +26,16 @@ commandLineVideoIds = None
 commandLineView = None 
 
 def addVideo(path):
-    manualFeed = app.getSingletonDDBObject(views.manualFeed)
-    manualFeed.beginRead()
+    views.items.beginRead()
     try:
-        for i in manualFeed.items:
+        for i in views.items:
             if i.getFilename() == os.path.abspath(path):
                 print "Not adding duplicate video: %s" % path
                 commandLineVideoIds.add(i.getID())
                 return
     finally:
-        manualFeed.endRead()
+        views.items.endRead()
+    manualFeed = app.getSingletonDDBObject(views.manualFeed)
     fileItem = item.FileItem(manualFeed, path)
     manualFeed.actualFeed.addItem(fileItem)
     commandLineVideoIds.add(fileItem.getID())
