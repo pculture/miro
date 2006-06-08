@@ -12,6 +12,8 @@ import resource
 import MainFrame
 import singleclick
 import eventloop
+import math
+import dialogs
 from gettext import gettext as _
  
 def AttachBoolean (widget, descriptor, sensitive_widget = None):
@@ -268,6 +270,10 @@ class CallbackHandler(object):
     def on_preference(self, event = None):
         # get our add channel dialog
         movie_dir = config.get(prefs.MOVIES_DIRECTORY)
+        if config.get(prefs.PRESERVE_DISK_SPACE):
+            old_disk = config.get(prefs.PRESERVE_X_GB_FREE)
+        else:
+            old_disk = 0
         widgetTree = MainFrame.WidgetTree(resource.path('democracy.glade'), 'dialog-preferences', 'democracyplayer')
         dialog = widgetTree['dialog-preferences']
         mainWindow = self.mainFrame.widgetTree['main-window']
@@ -298,6 +304,13 @@ class CallbackHandler(object):
 
             migrate_dialog.destroy()
         dialog.destroy()
+        if config.get(prefs.PRESERVE_DISK_SPACE):
+            new_disk = config.get(prefs.PRESERVE_X_GB_FREE)
+        else:
+            new_disk = 0
+        if math.fabs(new_disk - old_disk) > 0.001:
+            d = dialogs.MessageBoxDialog (_("Restart for changes"), _("Reserved disk space changed from %s GB to %s GB.\nPlease restart democracy to apply this change.") % (old_disk, new_disk))
+            d.run()
 
     def on_about_clicked(self, event = None):
         self.mainFrame.about()

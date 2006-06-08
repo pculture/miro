@@ -241,7 +241,7 @@ class UIBackendDelegate:
         return True
 
     def runDialog (self, dialog):
-        if isinstance(dialog, dialogs.ChoiceDialog):
+        if isinstance(dialog, dialogs.ChoiceDialog) or isinstance(dialog, dialogs.MessageBoxDialog):
             buttons = []
             i = 0
             for button in dialog.buttons:
