@@ -1147,6 +1147,10 @@ class HTTPClient(object):
             self.headers['Cookie'] = header
 
     def startRequest(self):
+        return self.reallyStartRequest()
+        # FIXME: we should do something like the below code, but then the
+        # requestId doesn't get returnned.  I'll fix this mess in the morning.
+
         if 'Authorization' not in self.headers:
             scheme, host, port, path = parseURL(self.redirectedURL)
             def callback(authHeader):

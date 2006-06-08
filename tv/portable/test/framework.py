@@ -30,6 +30,13 @@ class EventLoopTest(DemocracyTestCase):
         self.hadToStopEventLoop = True
         eventloop.quit()
 
+    def runPendingIdles(self):
+        idleQueue = eventloop._eventLoop.idleQueue
+        urgentQueue = eventloop._eventLoop.urgentQueue
+        while idleQueue.hasPendingIdle() or urgentQueue.hasPendingIdle():
+            urgentQueue.processIdles()
+            idleQueue.processNextIdle()
+
     def runEventLoop(self, timeout=10, timeoutNormal=False):
         self.hadToStopEventLoop = False
         timeout = eventloop.addTimeout(timeout, self.stopEventLoop, 

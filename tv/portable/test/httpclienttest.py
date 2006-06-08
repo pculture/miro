@@ -543,6 +543,7 @@ HELLO: WORLD\r\n"""
             self.pipelineResponse = response
         def pipelineErrback(error):
             self.pipelineError = error
+        self.runPendingIdles()
         conn = testPool.getConnection('http', 'www.foo.com')
         conn.handleData(startResponse(headers={'Content-Length': 128}))
         client2 = httpclient.HTTPClient(url, pipelineCallback, 
@@ -554,6 +555,7 @@ HELLO: WORLD\r\n"""
         conn.handleClose(socket.SHUT_RD)
         self.assertEquals(self.pipelineError, None)
         self.assertEquals(self.pipelineResponse, None)
+        self.runPendingIdles()
         conn = testPool.getConnection('http', 'www.foo.com')
         conn.handleData(self.fakeResponse)
         self.assertEquals(self.pipelineResponse['body'], "HELLO: WORLD\r\n")
@@ -835,7 +837,7 @@ Below this line, is 1000 repeated lines of 0-9.
         def headerCallback(response):
             reqId.cancel()
             eventloop.quit()
-        url = 'http://participatoryculture.org/democracytest/normalpage.txt'
+        url = 'http://www.getdemocracy.com/images/layout/linux-screen.jpg'
         reqId = httpclient.grabURL(url, self.callback, self.errback,
                 headerCallback=headerCallback)
         self.failedCalled = False
@@ -853,7 +855,7 @@ Below this line, is 1000 repeated lines of 0-9.
         def bodyDataCallback(response):
             reqId.cancel()
             eventloop.quit()
-        url = 'http://participatoryculture.org/democracytest/normalpage.txt'
+        url = 'http://www.getdemocracy.com/images/layout/linux-screen.jpg'
         reqId = httpclient.grabURL(url, self.callback, self.errback,
                 bodyDataCallback=bodyDataCallback)
         self.failedCalled = False
@@ -1045,7 +1047,7 @@ class HTTPConnectionPoolTest(EventLoopTest):
         self.pool.finishConnection('http', 'www.foo.com')
         self.checkCounts(0, 1, 0)
         self.pool.cancelRequest(reqid)
-        self.checkCounts(0, 0, 0)
+        self.checkCounts(0, 1, 0)
 
     def testCancelPending(self):
         self.addRequest("http://www.foo.com/")
