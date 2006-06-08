@@ -27,7 +27,6 @@ import xhtmltools
 import guide
 import idlenotifier 
 import eventloop
-import dialogs
 
 import os
 import re
@@ -551,21 +550,6 @@ class Controller (frontend.Application):
 
             print "DTV: Starting event loop thread"
             eventloop.startup()
-
-            # Uncomment the following to test the ChoiceDialog
-            #d = dialogs.ChoiceDialog("HI", "long hi", dialogs.BUTTON_YES,
-                                     #dialogs.BUTTON_NO)
-            #def callback(dialog):
-                #if dialog.choice is None:
-                    #print "CLOSED"
-                #elif dialog.choice == dialogs.BUTTON_NO:
-                    #print "NO"
-                #elif dialog.choice == dialogs.BUTTON_YES:
-                    #print "YES"
-                #else:
-                    #print "OOPSS: ", dialog.__dict__
-            #d.run(callback)
-
         except:
             util.failedExn("while starting up")
             frontend.exit(1)
@@ -1071,7 +1055,9 @@ class ModelActionHandler:
             print "DTV: Warning: tried to remove feed that doesn't exist with id %d" % int(feed)
             return
         title = 'Remove Channel'
-        description = """Are you sure you want to remove the channel \'%s\'? This operation cannot be undone.""" % obj.getTitle()
+        description = """Are you sure you want to remove the channel \'%s\'? \
+This will delete all videos and cancel any downloads contained in it.  This \
+operation cannot be undone.""" % obj.getTitle()
         dialog = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_YES,
                 dialogs.BUTTON_NO)
         def dialogCallback(dialog):
