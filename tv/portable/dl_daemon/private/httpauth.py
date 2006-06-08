@@ -8,7 +8,6 @@ waitingHTTPAuthCallbacks = {}
 
 def handleHTTPAuthResponse(id, authHeader):
     callback = waitingHTTPAuthCallbacks.pop(id)
-    print "response: ", id
     callback(authHeader)
 
 def findHTTPAuth(callback, host, path):
@@ -20,7 +19,6 @@ def findHTTPAuth(callback, host, path):
 
 def askForHTTPAuth(callback, host, path, authScheme):
     id = requestIdGenerator.next()
-    print "request: ", id
     waitingHTTPAuthCallbacks[id] = callback
     from dl_daemon import daemon
     c = command.AskForHTTPAuthCommand(daemon.lastDaemon, id, host, path,
