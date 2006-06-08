@@ -42,7 +42,7 @@ function recommendItem(title, url, feedURL) {
     body = body + url + "\n\n";
     body = body + "I found it while using the Democracy Player, which you can download here:\n";
     body = body + "http://www.getdemocracy.com\n\n";
-    body = body + "The video was on this channel (click 'subscribe' in Democracy and paste in this address):\n"
+    body = body + "The video was on this channel (click 'Add Channel' in Democracy and paste in this address):\n"
     body = body + feedURL + "\n\n"
     
     url = 'mailto:';
