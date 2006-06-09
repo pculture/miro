@@ -1359,6 +1359,9 @@ class ScraperFeedImpl(FeedImpl):
                 parser.parse(StringIO(xmldata))
             except IOError, e:
                 pass
+            except:
+                print "DTV: Warning couldn't parse HTML at %s" % baseurl
+                traceback.print_exc()
             links = handler.links
             linkDict = {}
             for link in links:
