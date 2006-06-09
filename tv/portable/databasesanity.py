@@ -22,7 +22,8 @@ def checkBrokenFeeds(objectList, fixIfPossible):
 
     if not feedsInItems.issubset(topLevelFeeds):
         phantoms = feedsInItems.difference(topLevelFeeds)
-        msg = "Phantom feed(s) referenced in items: %s" % phantoms
+        phantomsString = ', '.join([str(p) for p in phantoms])
+        msg = "Phantom feed(s) referenced in items: %s" % phantomsString
         if fixIfPossible:
             util.failed("While checking database", details=msg)
             for f in phantoms:
