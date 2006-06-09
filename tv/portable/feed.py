@@ -949,6 +949,7 @@ class RSSFeedImpl(FeedImpl):
 
     def feedparser_errback (self, e):
         print "Error updating feed: %s: %s" % (self.url, e)
+        self.scheduleUpdateEvents(-1)
         self.updating = False
 
     def feedparser_callback (self, parsed):
@@ -976,7 +977,6 @@ class RSSFeedImpl(FeedImpl):
     ##
     # Updates a feed
     def update(self):
-        #print "Updating %s" % self.url
         self.ufeed.beginRead()
         try:
             if self.updating:
@@ -1002,10 +1002,14 @@ class RSSFeedImpl(FeedImpl):
                     etag=etag,modified=modified)
 
     def _updateErrback(self, error):
-        print "WARNING, unhandled error in Feed.update", error
+        print "WARNING, error in Feed.update", error
+        self.scheduleUpdateEvents(-1)
+        self.updating = False
 
     def _updateCallback(self,info):
         if info['status'] == 304:
+            self.scheduleUpdateEvents(-1)
+            self.updating = False
             return
         html = info['body']
         if info.has_key('charset'):
