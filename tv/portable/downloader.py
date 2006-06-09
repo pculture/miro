@@ -347,6 +347,9 @@ URL was %s""" % self.url
             self.endRead()
 
     def onRestore(self):
+        if self.dlid == 'noid':
+            # this won't happen nowadays, but it can for old databases
+            self.dlid = generateDownloadID()
         self.status['rate'] = 0
         self.status['eta'] = 0
 
