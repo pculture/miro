@@ -626,6 +626,11 @@ class FeedImpl:
         self.ufeed.endRead()
         return count
 
+    def onRemove(self):
+        """Called when the feed uses this FeedImpl is removed from the DB.
+        subclasses can perform cleanup here."""
+        pass
+
 ##
 # This class is a magic class that can become any type of feed it wants
 #
@@ -845,6 +850,7 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
                 item.remove()
         finally:
             self.endChange()
+        self.actualFeed.onRemove()
 
     def getThumbnail(self):
         self.beginRead()
@@ -1155,6 +1161,7 @@ class ScraperFeedImpl(FeedImpl):
             self.linkHistory[url]['etag'] = etag
         if not modified is None:
             self.linkHistory[url]['modified'] = modified
+        self.downloads = set()
         self.setUpdateFrequency(360)
         self.scheduleUpdateEvents(0)
 
@@ -1186,11 +1193,15 @@ class ScraperFeedImpl(FeedImpl):
                 etag = self.linkHistory[url]['etag']
             if self.linkHistory[url].has_key('modified'):
                 modified = self.linkHistory[url]['modified']
-        grabURL(url, lambda info:self.processDownloadedHTML(
-                                   info, urlList, depth, linkNumber, top),
-                self.getHTMLErrback, etag=etag, modified=modified)
-    def getHTMLErrback(self, error):
-        print "WARNING unhandled error for ScraperFeedImpl.getHTML: ", error
+        def callback(info):
+            self.downloads.discard(download)
+            self.processDownloadedHTML(info, urlList, depth,linkNumber, top)
+        def errback(error):
+            self.downloads.discard(download)
+            print "WARNING unhandled error for ScraperFeedImpl.getHTML: ", error
+        download = grabURL(url, callback, errback, etag=etag,
+                modified=modified)
+        self.downloads.add(download)
 
     def processDownloadedHTML(self, info, urlList, depth, linkNumber, top = False):
         self.pendingDownloads -= 1
@@ -1222,8 +1233,6 @@ class ScraperFeedImpl(FeedImpl):
             finally:
                 self.ufeed.endRead()
             self.scheduleUpdateEvents(-1)
-
-
 
     def addVideoItem(self,link,dict,linkNumber):
         link = link.strip()
@@ -1297,6 +1306,12 @@ class ScraperFeedImpl(FeedImpl):
                         self.addVideoItem(link, links[link],linkNumber)
             if len(newURLs) > 0:
                 self.getHTML(newURLs, depth, linkNumber)
+
+    def onRemove(self):
+        for download in self.downloads:
+            print "cancling download: ", download.url
+            download.cancel()
+        self.downloads = set()
 
     #FIXME: go through and add error handling
     def update(self):
