@@ -1036,7 +1036,10 @@ class RSSFeedImpl(FeedImpl):
                 self.ufeed.iconCache.requestUpdate(is_vital=True)
             items_byid = {}
             for item in self.items:
-                items_byid[item.getRSSID()] = item
+                try:
+                    items_byid[item.getRSSID()] = item
+                except KeyError:
+                    pass
             for entry in self.parsed.entries:
                 entry = self.addScrapedThumbnail(entry)
                 new = True
