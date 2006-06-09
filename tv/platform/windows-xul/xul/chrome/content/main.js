@@ -283,7 +283,10 @@ function xulcontexthandler(browserID, event) {
   var itemsAdded = 0;
   var menu = getContextClickMenu(event.target);
   var popup = document.getElementById('contextPopup');
-  if(menu == '') return false;
+  if(menu == '') {
+    popup.hidePopup();
+    return false;
+  }
   while (popup.firstChild) {
     popup.removeChild(popup.firstChild);
   }
@@ -302,10 +305,12 @@ function xulcontexthandler(browserID, event) {
       popup.appendChild(newItem);
     }
   }
-  return (itemsAdded > 0); // Return false if there are no items in the menu
-                           // This should hide empty menus, but
-                           // apparently doesn't...
-
+  if(itemsAdded == 0) {
+    popup.hidePopup();
+    return false;
+  } else {
+    return true;
+  }
 }
 
 function doResize(event) {
