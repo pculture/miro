@@ -2280,7 +2280,7 @@ class QuicktimeRenderer (app.VideoRenderer):
 
     POSSIBLY_SUPPORTED_EXT = ('.wmv', '.avi', '.asf')
     UNSUPPORTED_EXT = ('.ram', '.rm', '.rpm', '.rv', '.ra')
-    CORRECT_QTMEDIA_TYPES = (QTMediaTypeVideo, QTMediaTypeMPEG, QTMediaTypeMovie)
+    CORRECT_QTMEDIA_TYPES = (QTMediaTypeVideo, QTMediaTypeMPEG, QTMediaTypeMovie, QTMediaTypeFlash)
 
     def __init__(self, delegate):
         app.VideoRenderer.__init__(self)
