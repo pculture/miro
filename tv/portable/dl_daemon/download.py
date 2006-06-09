@@ -781,7 +781,10 @@ class BTDownloader(BGDownloader):
         self.updateClient()
         self._shutdownTorrent()
         try:
-            remove(self.filename)
+            if os.path.isdir(self.filename):
+                shutil.rmtree(self.filename)
+            else:
+                remove(self.filename)
         except:
             pass
 
