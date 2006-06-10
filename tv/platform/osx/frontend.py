@@ -1268,7 +1268,6 @@ class MetalSliderCell (NSSliderCell):
     def init(self):
         self = super(MetalSliderCell, self).init()
         self.knob = NSImage.imageNamed_('volume_knob')
-        self.knobPressed = NSImage.imageNamed_('volume_knob_blue')
         self.knobSize = self.knob.size()
         return self
 
