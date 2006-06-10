@@ -4,7 +4,10 @@ import os
 import util
 
 from xpcom import components
+from threading import Lock
 import frontend
+
+selectItemLock = Lock()
 
 ###############################################################################
 #### The Playback Controller                                               ####
@@ -60,9 +63,16 @@ class VLCRenderer:
         return frontend.vlcRenderer.canPlayURL(url)
 
     def selectItem(self, item):
-        path = item.getFilename()
-        url = util.absolutePathToFileURL(path)
-        return frontend.vlcRenderer.selectURL(url)
+        # Our current implementation of selectURL crashes if we don't
+        # wrap it in a lock. I'm not sure why...
+        global selectItemLock
+        selectItemLock.acquire()
+        try:
+            path = item.getFilename()
+            url = util.absolutePathToFileURL(path)
+            return frontend.vlcRenderer.selectURL(url)
+        finally:
+            selectItemLock.release()
 
     def setVolume(self, volume): 
         return frontend.vlcRenderer.setVolume(volume)

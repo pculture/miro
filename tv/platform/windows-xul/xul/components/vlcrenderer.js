@@ -100,12 +100,19 @@ VLCRenderer.prototype = {
   },
 
   selectURL: function(url) {
-    this.vlc.add_item(url);
-    this.vlc.next();
     // FIXME: This doesn't quite follow the interface since we shouldn't be
     // playing the item at this point.  However currently, all calls to
     // selectItem are followed immediately by play, so this doesn't matter.
     // Also, VLC seems to have problems with quickly stopping and playing.
+
+    // It appears that clear_playlist() always leaves one item in
+    // the playlist. This is the only way I could figure out to
+    // actually clear it... -NN  
+    this.stop();
+    this.vlc.clear_playlist();
+    this.vlc.add_item(url);
+    this.vlc.play();
+    this.vlc.next();
   },
 
   play: function() {
