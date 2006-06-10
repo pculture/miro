@@ -1673,7 +1673,8 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler):
         self.firstTag = True
 
     def startElementNS(self, name, qname, attrs):
-        (uri, tag) = name
+        uri = name[0]
+        tag = name[1]
         if self.firstTag:
             self.firstTag = False
             if tag != 'rss':
@@ -1692,7 +1693,8 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler):
         elif tag.lower() == 'title' and not self.inItem:
             self.inTitle = True
     def endElementNS(self, name, qname):
-        (uri, tag) = name
+        uri = name[0]
+        tag = name[1]
         if tag.lower() == 'description':
             lg = HTMLLinkGrabber()
             try:
