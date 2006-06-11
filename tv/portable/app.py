@@ -51,6 +51,8 @@ import urllib
 from gettext import gettext as _
 from gettext import ngettext
 
+from BitTornado.clock import clock
+
 # Global Controller singleton
 controller = None
 
@@ -983,10 +985,14 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
     @eventloop.asUrgent
     def dispatchAction(self, action, **kwargs):
+        start = clock()
         for handler in self.actionHandlers:
             if hasattr(handler, action):
                 getattr(handler, action)(**kwargs)
                 return
+        end = clock()
+        if end - start > 0.5:
+            print "WARNING: dispatch action %s too slow (%.3f secs)" % (action, end - start)
         print "Ignored bad action URL: action=%s" % action
 
     @eventloop.asUrgent
