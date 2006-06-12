@@ -376,11 +376,12 @@ def cleanupIncompleteDownloads():
     views.remoteDownloads.beginRead()
     try:
         for downloader in views.remoteDownloads:
-            if downloader.status.get('state') in ('downloading', 'paused'):
-                filename = downloader.status['filename']
-                if not os.path.isabs(filename):
-                    filename = os.path.join(downloadDir, file)
-                filesInUse.add(filename)
+            if downloader.getState() in ('downloading', 'paused'):
+                filename = downloader.getFilename()
+                if len(filename) > 0:
+                    if not os.path.isabs(filename):
+                        filename = os.path.join(downloadDir, file)
+                    filesInUse.add(filename)
     finally:
         views.remoteDownloads.endRead()
 
