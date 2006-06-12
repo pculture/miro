@@ -851,7 +851,7 @@ class HTTPConnection(ConnectionHandler):
             self.body = self.buffer.read()
             self.finishRequest()
         else:
-            self.errback(ServerClosedConnection())
+            self.errback(ServerClosedConnection("%s: %s" % (self.host, self.port)))
         self.checkPipelineNotStarted()
 
     def handleError(self, error):
