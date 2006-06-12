@@ -19,6 +19,7 @@ import app
 import item
 import feed
 import views
+import platformutils
 import subscription
 
 _commandLineArgs = []
@@ -26,6 +27,7 @@ commandLineVideoIds = None
 commandLineView = None 
 
 def addVideo(path):
+    path = os.path.abspath(path)
     views.items.beginRead()
     try:
         for i in views.items:
@@ -34,7 +36,9 @@ def addVideo(path):
             # platformutils.samefile function, which I don't want to do for
             # the 0.8.4 release.  (BTW: This will be supor easy on linux and
             # OS X: from os.path import samefile).
-            if i.getFilename() == os.path.abspath(path):
+            itemFilename = i.getFilename()
+            if (itemFilename != '' and 
+                    platformutils.samefile(itemFilename, path)):
                 print "Not adding duplicate video: %s" % path
                 commandLineVideoIds.add(i.getID())
                 return
@@ -84,13 +88,13 @@ def resetCommandLineView():
         commandLineView = None
     commandLineVideoIds = set()
 
+def inCommandLineVideoIDs(item):
+    return item.getID() in commandLineVideoIds
 def playCommandLineView():
     global commandLineView, commandLineVideoIds
     if len(commandLineVideoIds) == 0:
         return
-    def inCommandLineVideoIDs(item):
-        return item.getID() in commandLineVideoIds
-    commandLineView = views.fileItems.filter(inCommandLineVideoIDs)
+    commandLineView = views.items.filter(inCommandLineVideoIDs)
     firstItemId = commandLineVideoIds.__iter__().next()
     app.controller.playbackController.configure(commandLineView, firstItemId)
     app.controller.playbackController.enterPlayback()

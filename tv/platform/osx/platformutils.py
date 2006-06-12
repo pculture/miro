@@ -4,6 +4,10 @@ import Foundation
 import config
 import prefs
 
+# We need to define samefile for the portable code.  Lucky for us, this is
+# very easy.
+from os.path import samefile
+
 ###############################################################################
 #### THREADING UTILITIES                                                   ####
 ###############################################################################
