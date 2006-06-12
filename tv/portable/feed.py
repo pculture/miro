@@ -1414,6 +1414,7 @@ class ScraperFeedImpl(FeedImpl):
 
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
+        self.downloads = set()
         self.updating = False
         self.tempHistory = {}
         self.scheduleUpdateEvents(.1)
