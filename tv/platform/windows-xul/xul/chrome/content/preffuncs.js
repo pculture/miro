@@ -1,10 +1,13 @@
 var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
                 getService(Components.interfaces.pcfIDTVPyBridge);
 
+var originalMoviesDir = null;
+
 function onload() {
   document.getElementById("runonstartup").checked = pybridge.getRunAtStartup();
   setCheckEvery(pybridge.getCheckEvery());
   setMoviesDir(pybridge.getMoviesDirectory());
+  originalMoviesDir = pybridge.getMoviesDirectory();
   setLimitUpstream(pybridge.getLimitUpstream());
   setMaxUpstream(pybridge.getLimitUpstreamAmount());
   setHasMinDiskSpace(pybridge.getPreserveDiskSpace());
@@ -45,14 +48,13 @@ function checkEveryChange(minutes) {
    pybridge.setCheckEvery(parseInt(minutes));
 }
 
-var originalMoviesDir = null;
 function setMoviesDir(directory) {
     var moviesDirBox = document.getElementById('movies-directory');
-    moviesDirBox.value = originalMoviesDir = directory;
+    moviesDirBox.abspath = directory;
+    moviesDirBox.value = pybridge.shortenDirectoryName(directory);
 }
 
 function selectMoviesDirectory() {
-    var moviesDirBox = document.getElementById('movies-directory');
     var fp = Components.classes["@mozilla.org/filepicker;1"]
             .createInstance(Components.interfaces.nsIFilePicker);
 
@@ -60,21 +62,17 @@ function selectMoviesDirectory() {
             Components.interfaces.nsIFilePicker.modeGetFolder);
     var res = fp.show();
     if (res == Components.interfaces.nsIFilePicker.returnOK){
-        moviesDirBox.value = pybridge.shortenDirectoryName(fp.file.path);
+        setMoviesDir(fp.file.path);
     }
 
 }
 
 function checkMoviesDirChanged() {
     var moviesDirBox = document.getElementById('movies-directory');
-    var currentMoviesDir = moviesDirBox.value;
+    var currentMoviesDir = moviesDirBox.abspath;
     if(originalMoviesDir != null && originalMoviesDir != currentMoviesDir) {
-        var params = {
-              "title": "Migrate existing movies?",
-              "text": "You've selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)",
-              "out" : null
-        }
-        window.openDialog('chrome://dtv/content/yesno.xul', 'yesno',
+        var params = { "out" : null }
+        window.openDialog('chrome://dtv/content/migrate.xul', 'migrate',
                 'chrome,dependent,centerscreen,modal', params);
         pybridge.changeMoviesDirectory(currentMoviesDir, params.out);
     }
