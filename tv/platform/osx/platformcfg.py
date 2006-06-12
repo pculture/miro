@@ -29,11 +29,17 @@ def load():
     return pydict
 
 def save(data):
-    domain = getBundleIdentifier()
-    plist = Conversion.propertyListFromPythonCollection(data)
-    defaults = NSUserDefaults.standardUserDefaults()
-    defaults.setPersistentDomain_forName_(plist, domain)
-    defaults.synchronize()
+    try:
+        plist = Conversion.propertyListFromPythonCollection(data)
+    except:
+        print "WARNING!! Error while converting the settings dictionary to a property list:"
+        print data
+        raise
+    else:
+        domain = getBundleIdentifier()
+        defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setPersistentDomain_forName_(plist, domain)
+        defaults.synchronize()
 
 def get(descriptor):
     value = None
