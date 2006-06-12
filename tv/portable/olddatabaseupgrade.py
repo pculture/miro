@@ -178,6 +178,8 @@ class OldDirectoryFeedImpl(OldFeedImpl):
         (version, data) = state
         assert(version == 0)
         data['updating'] = False
+        if not data.has_key('initialUpdate'):
+            data['initialUpdate'] = False
         OldFeedImpl.__setstate__(self, data)
 
 class OldRemoteDownloader(OldDDBObject):
