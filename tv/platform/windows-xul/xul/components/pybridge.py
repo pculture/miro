@@ -153,7 +153,7 @@ class PyBridge:
     def setCheckEvery(self, value):
         return config.set(prefs.CHECK_CHANNELS_EVERY_X_MN, value)
     def getMoviesDirectory(self):
-        return self.shortenDirectoryName(config.get(prefs.MOVIES_DIRECTORY))
+        return config.get(prefs.MOVIES_DIRECTORY)
     def changeMoviesDirectory(self, path, migrate):
         app.changeMoviesDirectory(path, migrate)
     def getLimitUpstream(self):
