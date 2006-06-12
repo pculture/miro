@@ -604,6 +604,8 @@ class HTTPConnection(ConnectionHandler):
         line = self.buffer.readline()
         if line is not None:
             self.handleStatusLine(line)
+            if self.state == 'closed':
+                return
             if self.shortVersion != 9:
                 self.changeState('response-headers')
             else:
