@@ -202,7 +202,7 @@ data_files += [
      [os.path.join(platform_dir, 'democracyplayer.1.gz')]),
 ]
 
-os.system ("gzip < " + os.path.join(platform_dir, 'democracyplayer.1') + " > " + os.path.join(platform_dir, 'democracyplayer.1.gz'))
+os.system ("gzip -9 < " + os.path.join(platform_dir, 'democracyplayer.1') + " > " + os.path.join(platform_dir, 'democracyplayer.1.gz'))
 
 #### Our specialized install_data command ####
 class install_data (distutils.command.install_data.install_data):
