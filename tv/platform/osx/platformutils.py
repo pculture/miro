@@ -51,7 +51,15 @@ def onMainThread(method):
     def scheduled(self, *args, **kwargs):
         callOnMainThread(method, self, *args, **kwargs)
     return scheduled
-    
+
+def onMainThreadWaitingUntilDone(method):
+    """Decorator which specifies that a method should always be called on the 
+    main GUI thread and that the called must wait for it to be done.
+    """
+    def scheduled(self, *args, **kwargs):
+        callOnMainThreadAndWaitUntilDone(method, self, *args, **kwargs)
+    return scheduled
+
 def onMainThreadWithReturn(method):
     """Decorator which specifies that a method should always be called on the 
     main GUI thread and that the called must wait for its result.
