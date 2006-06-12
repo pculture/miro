@@ -33,15 +33,31 @@ class SanityCheckingTest(DemocracyTestCase):
         util.failed = self.oldUtilDotFailed
         DemocracyTestCase.tearDown(self)
 
+    def checkObjectListFailsTest(self, objectList):
+        self.assertRaises(databasesanity.DatabaseInsaneError,
+                databasesanity.checkSanity, objectList, False)
+
+    def checkFixIfPossible(self, startList, fixedList):
+        self.failedCalled = False
+        self.assertEquals(databasesanity.checkSanity(startList), fixedList)
+        self.assertEquals(self.failedCalled, True)
+
+    def checkObjectListPassesTest(self, objectList):
+        databasesanity.checkSanity(objectList)
+
     def testPhantomFeedChecking(self):
         f = feed.Feed("http://feed.uk")
         i = item.Item(f, {})
-        # Databases with item's that have missing feeds are insane
-        self.assertRaises(databasesanity.DatabaseInsaneError,
-                databasesanity.checkSanity, [i], False)
-        # test fixing the list 
-        self.assertEquals(self.failedCalled, False)
-        self.assertEquals(databasesanity.checkSanity([i]), [i, f])
+        self.checkObjectListFailsTest([i])
+        self.checkFixIfPossible([i], [i, f])
+        self.checkObjectListPassesTest([i, f])
+
+    def testManualFeedChecking(self):
+        f = feed.Feed("dtv:manualFeed")
+        f2 = feed.Feed("dtv:manualFeed")
+        f3 = feed.Feed("dtv:manualFeed")
+        self.checkObjectListPassesTest([f])
+        self.checkObjectListFailsTest([f, f2])
+        self.failedCalled = False
+        self.assertEquals(len(databasesanity.checkSanity([f, f2, f3])), 1)
         self.assertEquals(self.failedCalled, True)
-        # Once the feed is there too, we're okay again
-        databasesanity.checkSanity([i, f])

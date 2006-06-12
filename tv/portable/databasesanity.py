@@ -8,56 +8,95 @@ import guide
 class DatabaseInsaneError(Exception):
     pass
 
-def checkBrokenFeeds(objectList, fixIfPossible):
+class SanityTest(object):
+    """Base class for the sanity test objects."""
+
+    def checkObject(self, object):
+        """checkObject will be called for each object in the object list.
+        If there is an error return a string describing it.  If not return
+        None (or just let the function hit the bottom).
+        """
+        raise NotImplementedError()
+
+    def finished(self):
+        """Called when we reach the end of the object list, SanityTest
+        subclasses may implement additional checking here."""
+        return
+
+    def fixIfPossible(self, objectList):
+        """Subclasses may implement this method if it's possible to fix broken
+        databases.  The default implementation just raises a
+        DatabaseInsaneError.
+        """
+        raise DatabaseInsaneError()
+
+class PhontomFeedTest(SanityTest):
     """Check that no items reference a Feed that isn't around anymore."""
+    def __init__(self):
+        self.feedsInItems = set()
+        self.topLevelFeeds = set()
 
-    feedsInItems = set()
-    topLevelFeeds = set()
-
-    for obj in objectList:
+    def checkObject(self, obj):
         if isinstance(obj, item.Item):
-            feedsInItems.add(obj.feed)
+            self.feedsInItems.add(obj.feed)
         elif isinstance(obj, feed.Feed):
-            topLevelFeeds.add(obj)
+            self.topLevelFeeds.add(obj)
 
-    if not feedsInItems.issubset(topLevelFeeds):
-        phantoms = feedsInItems.difference(topLevelFeeds)
-        phantomsString = ', '.join([str(p) for p in phantoms])
-        msg = "Phantom feed(s) referenced in items: %s" % phantomsString
-        if fixIfPossible:
-            util.failed("While checking database", details=msg)
+    def finished(self):
+        if not self.feedsInItems.issubset(self.topLevelFeeds):
+            phantoms = self.feedsInItems.difference(self.topLevelFeeds)
+            phantomsString = ', '.join([str(p) for p in phantoms])
+            return "Phantom feed(s) referenced in items: %s" % phantomsString
+
+    def fixIfPossible(self, objectList):
+        if not self.feedsInItems.issubset(self.topLevelFeeds):
+            phantoms = self.feedsInItems.difference(self.topLevelFeeds)
             for f in phantoms:
                 objectList.append(f)
+
+class SingletonTest(SanityTest):
+    """Check that singleton DB objects are really singletons.
+
+    This is a baseclass for the channle guide test, manual feed test, etc.
+    """
+
+    def __init__(self):
+        self.count = 0
+
+    def checkObject(self, obj):
+        if self.objectIsSingleton(obj):
+            self.count += 1
+            if self.count > 1:
+                return "Extra %s in database" % self.singletonName
+    
+    def finished(self):
+        if self.count == 0:
+            return "No %s in database" % self.singletonName
+
+    def fixIfPossible(self, objectList):
+        if self.count == 0:
+            # For all our singletons (currently at least), we don't need to
+            # create them here.  It'll happen when democracy is restarted.
+            return
         else:
-            raise DatabaseInsaneError(msg)
+            seenObject = False
+            for i in reversed(xrange(len(objectList))):
+                if self.objectIsSingleton(objectList[i]):
+                    if seenObject:
+                        del objectList[i]
+                    else:
+                        seenObject = True
 
-def checkSingleChannelGuide(objectList, fixIfPossible):
-    guideCount = 0
-    for i in reversed(xrange(len(objectList))):
-        if isinstance(objectList[i], guide.ChannelGuide):
-            guideCount += 1
-            if guideCount > 1:
-                msg = "Extra channel Guide"
-                if fixIfPossible:
-                    util.failed("While checking database", details=msg)
-                    del objectList[i]
-                else:
-                    raise DatabaseInsaneError(msg)
+class ChannelGuideSingletonTest(SingletonTest):
+    singletonName = "Channel Guide"
+    def objectIsSingleton(self, obj):
+        return isinstance(obj, guide.ChannelGuide)
 
-def checkSingletonManualFeed(objectList, fixIfPossible):
-    count = 0
-    for i in reversed(xrange(len(objectList))):
-        obj = objectList[i]
-        if (isinstance(obj, feed.Feed) and 
-                isinstance(obj.actualFeed, feed.ManualFeedImpl)):
-            count += 1
-            if count > 1:
-                msg = "Extra ManualFeedImpl"
-                if fixIfPossible:
-                    util.failed("While checking database", details=msg)
-                    del objectList[i]
-                else:
-                    raise DatabaseInsaneError(msg)
+class ManualFeedSingletonTest(SingletonTest):
+    singletonName = "Manual Feed"
+    def objectIsSingleton(self, obj):
+        return (isinstance(obj, feed.Feed) and 
+                isinstance(obj.actualFeed, feed.ManualFeedImpl))
 
 def checkSanity(objectList, fixIfPossible=True):
     """Do all sanity checks on a list of objects.
@@ -71,7 +110,36 @@ def checkSanity(objectList, fixIfPossible=True):
     Returns a reference to objectList (mostly for the unit tests)
     """
 
-    checkBrokenFeeds(objectList, fixIfPossible)
-    checkSingleChannelGuide(objectList, fixIfPossible)
-    checkSingletonManualFeed(objectList, fixIfPossible)
+    tests = set([
+        PhontomFeedTest(),
+        ChannelGuideSingletonTest(),
+        ManualFeedSingletonTest(),
+    ])
+
+    errors = []
+    failedTests = set()
+    for obj in objectList:
+        for test in tests:
+            rv = test.checkObject(obj)
+            if rv is not None:
+                errors.append(rv)
+                failedTests.add(test)
+        tests = tests.difference(failedTests)
+    for test in tests:
+        rv = test.finished()
+        if rv is not None:
+            errors.append(rv)
+            failedTests.add(test)
+
+    if errors:
+        errorMsg = "The database failed the following sanity tests:\n"
+        errorMsg += "\n".join(errors)
+        if fixIfPossible:
+            util.failed(when="While checking database", details=errorMsg)
+            for test in failedTests:
+                test.fixIfPossible(objectList)
+                # fixIfPossible will throw a DatabaseInsaneError if it fails,
+                # which we let get raised to our caller
+        else:
+            raise DatabaseInsaneError(errorMsg)
     return objectList
