@@ -143,6 +143,7 @@ class ShutDownCommand(Command):
     def response_sent(self):
         import eventloop
         eventloop.quit()
+        print "Shutdown complete"
 
     def action(self):
         from dl_daemon import download

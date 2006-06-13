@@ -45,6 +45,7 @@ NibClassBuilder.extractClasses("ExceptionReporterPanel")
 
 doNotCollect = {}
 nc = NSNotificationCenter.defaultCenter()
+dlTask = None
 
 def exit(returnCode):
    sys.exit(returnCode)
@@ -199,8 +200,20 @@ class AppController (NibClassBuilder.AutoBaseClass):
         # Reset the application icon to its default state
         defaultAppIcon = NSImage.imageNamed_('NSApplicationIcon')
         NSApplication.sharedApplication().setApplicationIconImage_(defaultAppIcon)
+
+        # Ensure that the download daemon is not running anymore at this point
+        global dlTask
+        if dlTask is not None:
+            dlTask.waitUntilExit()
+            dlTask = None      
+            
         # Call shutdown on backend
         self.actualApp.onShutdown()
+
+    def downloaderDaemonDidTerminate_(self, notification):
+        task = notification.object()
+        status = task.terminationStatus()
+        print "DTV: Downloader daemon has been successfully shutdowned (termination status: %d)" % status
 
     def application_openFiles_(self, app, filenames):
         eventloop.addUrgentCall(lambda:self.openFiles(filenames), "Open local file(s)")
@@ -1075,8 +1088,7 @@ class UIBackendDelegate:
     def copyTextToClipboard(self, text):
         print "WARNING: copyTextToClipboard not implemented"
 
-    def killDownloadDaemon(self, oldpid):
-        # Use UNIX style kill
+    def killDownloadDaemon(self, oldpid=None):
         if oldpid is not None:
             try:
                 os.kill(oldpid, signal.SIGTERM)
@@ -1086,6 +1098,7 @@ class UIBackendDelegate:
                 pass
 
     def launchDownloadDaemon(self, oldpid, env):
+        platformutils.warnIfNotOnMainThread('UIBackendDelegate.launchDownloadDaemon')
         self.killDownloadDaemon(oldpid)
 
         env['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
@@ -1095,11 +1108,17 @@ class UIBackendDelegate:
         pool = NSAutoreleasePool.alloc().init()
         bundle = NSBundle.mainBundle()
         exe = bundle.executablePath()
-        task = NSTask.alloc().init()
-        task.setLaunchPath_(exe)
-        task.setArguments_(['download_daemon'])
-        task.setEnvironment_(env)
-        task.launch()
+        
+        global dlTask
+        dlTask = NSTask.alloc().init()
+        dlTask.setLaunchPath_(exe)
+        dlTask.setArguments_(['download_daemon'])
+        dlTask.setEnvironment_(env)
+        dlTask.launch()
+        
+        controller = NSApplication.sharedApplication().delegate()
+        nc.addObserver_selector_name_object_(controller, 'downloaderDaemonDidTerminate:', NSTaskDidTerminateNotification, dlTask)
+
         del pool
 
 class ExceptionReporterController (NibClassBuilder.AutoBaseClass):
