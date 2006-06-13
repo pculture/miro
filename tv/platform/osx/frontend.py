@@ -45,6 +45,7 @@ NibClassBuilder.extractClasses("ExceptionReporterPanel")
 
 doNotCollect = {}
 nc = NSNotificationCenter.defaultCenter()
+dlTask = None
 
 def exit(returnCode):
    sys.exit(returnCode)
@@ -100,6 +101,7 @@ def showDialog(summary, message, buttons, style):
     if buttons is not None:
         for title in buttons:
             alert.addButtonWithTitle_(title)
+    platformutils.warnIfNotOnMainThread('showDialog')
     result = alert.runModal()
     result -= NSAlertFirstButtonReturn
     del alert
@@ -198,8 +200,20 @@ class AppController (NibClassBuilder.AutoBaseClass):
         # Reset the application icon to its default state
         defaultAppIcon = NSImage.imageNamed_('NSApplicationIcon')
         NSApplication.sharedApplication().setApplicationIconImage_(defaultAppIcon)
+
+        # Ensure that the download daemon is not running anymore at this point
+        global dlTask
+        if dlTask is not None:
+            dlTask.waitUntilExit()
+            dlTask = None      
+            
         # Call shutdown on backend
         self.actualApp.onShutdown()
+
+    def downloaderDaemonDidTerminate_(self, notification):
+        task = notification.object()
+        status = task.terminationStatus()
+        print "DTV: Downloader daemon has been successfully shutdowned (termination status: %d)" % status
 
     def application_openFiles_(self, app, filenames):
         eventloop.addUrgentCall(lambda:self.openFiles(filenames), "Open local file(s)")
@@ -385,6 +399,7 @@ class DisplayHostView (NibClassBuilder.AutoBaseClass):
         self.scheduledDisplay = display
     
     def setDisplay(self, display, owner):
+        platformutils.warnIfNotOnMainThread('DisplayHostView.setDisplay')
         self.scheduledDisplay = None
 
         # Send notification to old display if any
@@ -963,6 +978,7 @@ class UIBackendDelegate:
         ret = None
         self.httpAuthLock.acquire()
         try:
+            platformutils.warnIfNotOnMainThread('UIBackendDelegate.getHTTPAuth')
             message = "%s requires a username and password for \"%s\"." % (url, domain)
             ret = PasswordController.alloc().init(message, prefillUser, prefillPassword).getAnswer()
         finally:
@@ -1013,11 +1029,13 @@ class UIBackendDelegate:
         # We could use Python's webbrowser.open() here, but
         # unfortunately, it doesn't have the same semantics under UNIX
         # as under other OSes. Sometimes it blocks, sometimes it doesn't.
+        platformutils.warnIfNotOnMainThread('UIBackendDelegate.openExternalURL')
         pool = NSAutoreleasePool.alloc().init()
         NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
         del pool
 
     def updateAvailableItemsCountFeedback(self, count):
+        platformutils.warnIfNotOnMainThread('UIBackendDelegate.updateAvailableItemsCountFeedback')
         pool = NSAutoreleasePool.alloc().init()
         appIcon = NSImage.imageNamed_('NSApplicationIcon')
         badgedIcon = NSImage.alloc().initWithSize_(appIcon.size())
@@ -1054,6 +1072,7 @@ class UIBackendDelegate:
         del pool
         
     def interruptDownloadsAtShutdown(self, downloadsCount):
+        platformutils.warnIfNotOnMainThread('UIBackendDelegate.interruptDownloadsAtShutdown')
         summary = u'Are you sure you want to quit?'
         message = u'You have %d download%s still in progress.' % (downloadsCount, downloadsCount > 1 and 's' or '')
         buttons = (u'Quit', u'Cancel')
@@ -1061,6 +1080,7 @@ class UIBackendDelegate:
         return (result == 0)
         
     def notifyUnkownErrorOccurence(self, when, log = ''):
+        platformutils.warnIfNotOnMainThread('UIBackendDelegate.notifyUnkownErrorOccurence')
         controller = ExceptionReporterController.alloc().initWithMoment_log_(when, log)
         controller.showPanel()
         return True
@@ -1068,8 +1088,7 @@ class UIBackendDelegate:
     def copyTextToClipboard(self, text):
         print "WARNING: copyTextToClipboard not implemented"
 
-    def killDownloadDaemon(self, oldpid):
-        # Use UNIX style kill
+    def killDownloadDaemon(self, oldpid=None):
         if oldpid is not None:
             try:
                 os.kill(oldpid, signal.SIGTERM)
@@ -1079,6 +1098,7 @@ class UIBackendDelegate:
                 pass
 
     def launchDownloadDaemon(self, oldpid, env):
+        platformutils.warnIfNotOnMainThread('UIBackendDelegate.launchDownloadDaemon')
         self.killDownloadDaemon(oldpid)
 
         env['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
@@ -1088,11 +1108,17 @@ class UIBackendDelegate:
         pool = NSAutoreleasePool.alloc().init()
         bundle = NSBundle.mainBundle()
         exe = bundle.executablePath()
-        task = NSTask.alloc().init()
-        task.setLaunchPath_(exe)
-        task.setArguments_(['download_daemon'])
-        task.setEnvironment_(env)
-        task.launch()
+        
+        global dlTask
+        dlTask = NSTask.alloc().init()
+        dlTask.setLaunchPath_(exe)
+        dlTask.setArguments_(['download_daemon'])
+        dlTask.setEnvironment_(env)
+        dlTask.launch()
+        
+        controller = NSApplication.sharedApplication().delegate()
+        nc.addObserver_selector_name_object_(controller, 'downloaderDaemonDidTerminate:', NSTaskDidTerminateNotification, dlTask)
+
         del pool
 
 class ExceptionReporterController (NibClassBuilder.AutoBaseClass):
@@ -1121,6 +1147,7 @@ class ExceptionReporterController (NibClassBuilder.AutoBaseClass):
         self.logView.setString_(logmsg)
     
     def showPanel(self):
+        platformutils.warnIfNotOnMainThread('ExceptionReporterController.showPanel')
         NSApplication.sharedApplication().runModalForWindow_(self.window())
     
     def dismissPanel_(self, sender):
@@ -1131,6 +1158,7 @@ class ExceptionReporterController (NibClassBuilder.AutoBaseClass):
 class PasswordController (NibClassBuilder.AutoBaseClass):
 
     def init(self, message, prefillUser = None, prefillPassword = None):
+        platformutils.warnIfNotOnMainThread('PasswordController.init')
         pool = NSAutoreleasePool.alloc().init()
         # sets passwordField, textArea, usernameField, window
         NSBundle.loadNibNamed_owner_("PasswordWindow", self)
@@ -1152,6 +1180,7 @@ class PasswordController (NibClassBuilder.AutoBaseClass):
         password) if the user pressed OK, or None if the user pressed Cancel."""
         # PasswordController is likely to get release()d by Python in response
         # to getAnswer returning.
+        print "DTV: Presenting password dialog"
         self.performSelectorOnMainThread_withObject_waitUntilDone_("showAtModalLevel:", nil, NO)
         self.condition.acquire()
         self.condition.wait()
@@ -1582,6 +1611,7 @@ class HTMLDisplay (app.Display):
     def unlink(self):
         webView = self.web.getView()
         if webView is not nil:
+            platformutils.warnIfNotOnMainThread('HTMLDisplay.unlink')
             webView.setHostWindow_(self.currentFrame.obj.window()) # not very pretty
     
     def cancel(self):
@@ -1679,6 +1709,7 @@ class ManagedWebView (NSObject):
     # has been loaded
     def webView_didFinishLoadForFrame_(self, webview, frame):
         if (not self.initialLoadFinished) and (frame is self.view.mainFrame()):
+            platformutils.warnIfNotOnMainThread('ManagedWebView.webView_didFinishLoadForFrame_')
             # Execute any function calls we queued because the page load
             # hadn't completed
             # NEEDS: there should be a lock here, preventing execAfterLoad
@@ -1697,6 +1728,7 @@ class ManagedWebView (NSObject):
 
     # Intercept navigation actions and give program a chance to respond
     def webView_decidePolicyForNavigationAction_request_frame_decisionListener_(self, webview, action, request, frame, listener):
+        platformutils.warnIfNotOnMainThread('ManagedWebView.webView_decidePolicyForNavigationAction_request_frame_decisionListener_')
         method = request.HTTPMethod()
         url = request.URL()
         body = request.HTTPBody()
@@ -1717,6 +1749,7 @@ class ManagedWebView (NSObject):
 
     # Redirect resource: links to files in resource bundle
     def webView_resource_willSendRequest_redirectResponse_fromDataSource_(self, webview, resourceCookie, request, redirectResponse, dataSource):
+        platformutils.warnIfNotOnMainThread('ManagedWebView.webView_resource_willSendRequest_redirectResponse_fromDataSource_')
         url = "%s" % request.URL() # Make sure it's a Python string
         match = re.compile("resource:(.*)$").match(url)
         if match:
@@ -1757,11 +1790,13 @@ class ManagedWebView (NSObject):
     # Execute given Javascript string in context of the HTML document
     @deferUntilAfterLoad
     def execJS(self, js):
+        platformutils.warnIfNotOnMainThread('ManagedWebView.execJS')
         self.view.stringByEvaluatingJavaScriptFromString_(js)
 
     ## DOM mutators called, ultimately, by dynamic template system ##
 
     def findElt(self, id):
+        platformutils.warnIfNotOnMainThread('ManagedWebView.findElt')
         doc = self.view.mainFrame().DOMDocument()
         elt = doc.getElementById_(id)
         return elt
@@ -1773,6 +1808,7 @@ class ManagedWebView (NSObject):
 #         print "--- End Document HTML ---"
 
     def createElt(self, xml):
+        platformutils.warnIfNotOnMainThread('ManagedWebView.createElt')
         parent = self.view.mainFrame().DOMDocument().createElement_("div")
         if len(xml) == 0:
             #FIXME: this is awfully ugly but it fixes the symptoms described
@@ -1792,6 +1828,7 @@ class ManagedWebView (NSObject):
         
     @deferUntilAfterLoad
     def addItemAtEnd(self, xml, id):
+        platformutils.warnIfNotOnMainThread('ManagedWebView.addItemAtEnd')
         elt = self.findElt(id)
         if not elt:
             print "warning: addItemAtEnd: missing element %s" % id
@@ -1802,6 +1839,7 @@ class ManagedWebView (NSObject):
 
     @deferUntilAfterLoad
     def addItemBefore(self, xml, id):
+        platformutils.warnIfNotOnMainThread('ManagedWebView.addItemBefore')
         elt = self.findElt(id)
         if not elt:
             print "warning: addItemBefore: missing element %s" % id
@@ -1817,6 +1855,7 @@ class ManagedWebView (NSObject):
 
     @deferUntilAfterLoad
     def removeItem(self, id):
+        platformutils.warnIfNotOnMainThread('ManagedWebView.removeItem')
         elt = self.findElt(id)
         if not elt:
             print "warning: removeItem: missing element %s" % id
@@ -1826,6 +1865,7 @@ class ManagedWebView (NSObject):
 
     @deferUntilAfterLoad
     def changeItem(self, id, xml):
+        platformutils.warnIfNotOnMainThread('ManagedWebView.changeItem')
         elt = self.findElt(id)
         if not elt:
             print "warning: changeItem: missing element %s" % id
@@ -1841,6 +1881,7 @@ class ManagedWebView (NSObject):
 
     @deferUntilAfterLoad
     def hideItem(self, id):
+        platformutils.warnIfNotOnMainThread('ManagedWebView.hideItem')
         elt = self.findElt(id)
         if not elt:
             print "warning: hideItem: missing element %s" % id
@@ -1850,6 +1891,7 @@ class ManagedWebView (NSObject):
 
     @deferUntilAfterLoad
     def showItem(self, id):
+        platformutils.warnIfNotOnMainThread('ManagedWebView.showItem')
         elt = self.findElt(id)
         if not elt:
             print "warning: showItem: missing element %s" % id
@@ -1985,6 +2027,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.fastSeekTimer = nil
 
     def preventSystemSleep(self, prevent):
+        platformutils.warnIfNotOnMainThread('VideoDisplayController.preventSystemSleep')
         if prevent and self.systemActivityUpdaterTimer is nil:
             print "DTV: Launching system activity updater timer"
             self.systemActivityUpdaterTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(30, self, 'updateSystemActivity:', nil, YES)
@@ -1994,15 +2037,18 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             self.systemActivityUpdaterTimer = nil
 
     def updateSystemActivity_(self, timer):
+        platformutils.warnIfNotOnMainThread('VideoDisplayController.updateSystemActivity_')
         UpdateSystemActivity(OverallAct)
 
     def enablePrimaryControls(self, enabled):
+        platformutils.warnIfNotOnMainThread('VideoDisplayController.enablePrimaryControls')
         self.playPauseButton.setEnabled_(enabled)
         self.fullscreenButton.setEnabled_(enabled)
         self.muteButton.setEnabled_(enabled)
         self.volumeSlider.setEnabled_(enabled and self.muteButton.state() is NSOnState)
 
     def enableSecondaryControls(self, enabled, allowFastSeeking=YES):
+        platformutils.warnIfNotOnMainThread('VideoDisplayController.enableSecondaryControls')
         self.backwardButton.setEnabled_(enabled)
         self.stopButton.setEnabled_(enabled)
         self.forwardButton.setEnabled_(enabled)
@@ -2014,6 +2060,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             self.forwardButton.setAction_('skipForward:')
 
     def updatePlayPauseButton(self, prefix):
+        platformutils.warnIfNotOnMainThread('VideoDisplayController.updatePlayPauseButton')
         self.playPauseButton.setImage_(NSImage.imageNamed_('%s' % prefix))
         self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('%s_blue' % prefix))
 
@@ -2021,12 +2068,14 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         app.controller.playbackController.playPause()
 
     def play(self):
+        platformutils.warnIfNotOnMainThread('VideoDisplayController.play')
         nc.postNotificationName_object_('videoWillPlay', nil)
         self.enablePrimaryControls(YES)
         self.enableSecondaryControls(YES)
         self.updatePlayPauseButton('pause')
 
     def pause(self):
+        platformutils.warnIfNotOnMainThread('VideoDisplayController.pause')
         nc.postNotificationName_object_('videoWillPause', nil)
         self.updatePlayPauseButton('play')
 
@@ -2034,6 +2083,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         eventloop.addUrgentCall(lambda:app.controller.playbackController.stop(), "Stop Video")
     
     def stop(self):
+        platformutils.warnIfNotOnMainThread('VideoDisplayController.stop')
         nc.postNotificationName_object_('videoWillStop', nil)
         self.updatePlayPauseButton('play')
 
@@ -2070,6 +2120,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.performSeek(sender, -1, 0.0)
 
     def performSeek(self, sender, direction, seekDelay=0.5):
+        platformutils.warnIfNotOnMainThread('VideoDisplayController.performSeek')
         if sender.state() == NSOnState:
             sender.sendActionOn_(NSLeftMouseUpMask)
             if seekDelay > 0.0:
@@ -2113,6 +2164,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.videoDisplay.setVolume(sender.floatValue())
 
     def setVolume(self, level):
+        platformutils.warnIfNotOnMainThread('VideoDisplayController.setVolume')
         if self.muteButton.state() == NSOnState:
             self.volumeSlider.setFloatValue_(level)
 
@@ -2165,6 +2217,7 @@ class VideoAreaView (NibClassBuilder.AutoBaseClass):
         NSRectFill(rect)
     
     def teardown(self):
+        platformutils.warnIfNotOnMainThread('VideoAreaView.teardown')
         if self.videoWindow.isFullScreen:
             self.videoWindow.exitFullScreen()
         self.window().removeChildWindow_(self.videoWindow)
@@ -2174,16 +2227,19 @@ class VideoAreaView (NibClassBuilder.AutoBaseClass):
     def adjustVideoWindowFrame(self):
         if self.window() is nil:
             return
+        platformutils.warnIfNotOnMainThread('VideoAreaView.adjustVideoWindowFrame')
         frame = self.frame()
         frame.origin = self.convertPoint_toView_(NSZeroPoint, nil)
         frame.origin = self.window().convertBaseToScreen_(frame.origin)
         self.videoWindow.setFrame_display_(frame, YES)
         
     def setFrame_(self, frame):
+        platformutils.warnIfNotOnMainThread('VideoAreaView.setFrame_')
         super(VideoAreaView, self).setFrame_(frame)
         self.adjustVideoWindowFrame()
     
     def enterFullScreen(self):
+        platformutils.warnIfNotOnMainThread('VideoAreaView.enterFullScreen')
         self.adjustVideoWindowFrame()
         if self.window() is not nil:
             self.videoWindow.enterFullScreen(self.window().screen())
@@ -2191,6 +2247,7 @@ class VideoAreaView (NibClassBuilder.AutoBaseClass):
             self.window().orderOut_(nil)
 
     def exitFullScreen(self):
+        platformutils.warnIfNotOnMainThread('VideoAreaView.exitFullScreen')
         if self.videoWindow.isFullScreen:
             self.window().addChildWindow_ordered_(self.videoWindow, NSWindowAbove)
             self.window().makeKeyAndOrderFront_(nil)
@@ -2205,6 +2262,7 @@ class VideoAreaView (NibClassBuilder.AutoBaseClass):
 class VideoWindow (NibClassBuilder.AutoBaseClass):
     
     def initWithContentRect_styleMask_backing_defer_(self, rect, style, backing, defer):
+        platformutils.warnIfNotOnMainThread('VideoWindow.initWithContentRect_styleMask_backing_defer_')
         self = super(VideoWindow, self).initWithContentRect_styleMask_backing_defer_(
             rect,
             NSBorderlessWindowMask,
@@ -2216,6 +2274,7 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
         return self
 
     def setup(self, renderer, item):
+        platformutils.warnIfNotOnMainThread('VideoWindow.setup')
         if self.contentView() != renderer.view:
             self.setContentView_(renderer.view)
         self.palette.setup(item, renderer)
@@ -2223,6 +2282,7 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
             platformutils.callOnMainThreadAfterDelay(0.5, self.palette.reveal, self)
     
     def teardown(self):
+        platformutils.warnIfNotOnMainThread('VideoWindow.teardown')
         self.setContentView_(nil)
 
     def canBecomeMainWindow(self):
@@ -2232,6 +2292,7 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
         return self.isFullScreen
 
     def enterFullScreen(self, screen):
+        platformutils.warnIfNotOnMainThread('VideoWindow.enterFullScreen')
         SetSystemUIMode(kUIModeAllHidden, 0)
         NSCursor.setHiddenUntilMouseMoves_(YES)
         self.isFullScreen = YES
@@ -2240,6 +2301,7 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
         self.makeKeyAndOrderFront_(nil)
 
     def exitFullScreen(self):
+        platformutils.warnIfNotOnMainThread('VideoWindow.exitFullScreen')
         NSCursor.setHiddenUntilMouseMoves_(NO)
         self.isFullScreen = NO
         self.palette.remove()
@@ -2282,6 +2344,7 @@ class QuicktimeRenderer (app.VideoRenderer):
     CORRECT_QTMEDIA_TYPES = (QTMediaTypeVideo, QTMediaTypeMPEG, QTMediaTypeMovie, QTMediaTypeFlash)
 
     def __init__(self, delegate):
+        platformutils.warnIfNotOnMainThread('QuicktimeRenderer.__init__')
         app.VideoRenderer.__init__(self)
         self.view = QTMovieView.alloc().initWithFrame_(((0,0),(100,100)))
         self.view.setFillColor_(NSColor.blackColor())
@@ -2292,9 +2355,11 @@ class QuicktimeRenderer (app.VideoRenderer):
         self.cachedMovie = nil
 
     def registerMovieObserver(self, movie):
+        platformutils.warnIfNotOnMainThread('QuicktimeRenderer.registerMovieObserver')
         nc.addObserver_selector_name_object_(self.delegate, 'handleMovieNotification:', QTMovieDidEndNotification, movie)
 
     def unregisterMovieObserver(self, movie):
+        platformutils.warnIfNotOnMainThread('QuicktimeRenderer.unregisterMovieObserver')
         nc.removeObserver_name_object_(self.delegate, QTMovieDidEndNotification, movie)
 
     @platformutils.onMainThread
@@ -2374,6 +2439,7 @@ class QuicktimeRenderer (app.VideoRenderer):
         platformutils.callOnMainThread(self.view.pause_, nil)
 
     def goToBeginningOfMovie(self):
+        platformutils.warnIfNotOnMainThread('QuicktimeRenderer.goToBeginningOfMovie')
         if self.view.movie() is not nil:
             self.view.movie().gotoBeginning()
 
@@ -2390,6 +2456,7 @@ class QuicktimeRenderer (app.VideoRenderer):
         return qttime.timeValue / float(qttime.timeScale)
 
     def setCurrentTime(self, time):
+        platformutils.warnIfNotOnMainThread('QuicktimeRenderer.setCurrentTime')
         if self.view.movie() is not nil:
             qttime = self.view.movie().currentTime()
             qttime.timeValue = time * float(qttime.timeScale)
@@ -2401,6 +2468,7 @@ class QuicktimeRenderer (app.VideoRenderer):
         return self.view.movie().rate()
 
     def setRate(self, rate):
+        platformutils.warnIfNotOnMainThread('QuicktimeRenderer.setRate')
         if self.view.movie() is not nil:
             self.view.movie().setRate_(rate)
         
@@ -2449,6 +2517,7 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
     HOLD_TIME = 2
     
     def initWithContentRect_styleMask_backing_defer_(self, rect, style, backing, defer):
+        platformutils.warnIfNotOnMainThread('FullScreenPalette.initWithContentRect_styleMask_backing_defer_')
         self = super(FullScreenPalette, self).initWithContentRect_styleMask_backing_defer_(
             rect,
             NSBorderlessWindowMask,
@@ -2494,6 +2563,7 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         self.update_(nil)
 
     def reveal(self, parent):
+        platformutils.warnIfNotOnMainThread('FullScreenPalette.reveal')
         if not self.isVisible():
             self.update_(nil)
             self.volumeSlider.setFloatValue_(app.controller.videoDisplay.getVolume())
@@ -2514,6 +2584,7 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
             self.update_(nil)
     
     def conceal(self):
+        platformutils.warnIfNotOnMainThread('FullScreenPalette.conceal')
         if self.autoConcealTimer is not nil:
             self.autoConcealTimer.invalidate()
             self.autoConcealTimer = nil
@@ -2544,6 +2615,7 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         self.progressSlider.setFloatValue_(self.renderer.getProgress())
             
     def progressSliderWasClicked(self, slider):
+        platformutils.warnIfNotOnMainThread('FullScreenPalette.progressSliderWasClicked')
         if app.controller.videoDisplay.isPlaying:
             self.wasPlaying = True
             self.renderer.pause()
@@ -2552,28 +2624,34 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         self.resetAutoConceal()
         
     def progressSliderWasDragged(self, slider):
+        platformutils.warnIfNotOnMainThread('FullScreenPalette.progressSliderWasDragged')
         self.renderer.setProgress(slider.floatValue())
         self.resetAutoConceal()
         
     def progressSliderWasReleased(self, slider):
+        platformutils.warnIfNotOnMainThread('FullScreenPalette.progressSliderWasReleased')
         self.renderer.interactivelySeeking = False
         if self.wasPlaying:
             self.wasPlaying = False
             self.renderer.play()
 
     def volumeSliderWasDragged(self, slider):
+        platformutils.warnIfNotOnMainThread('FullScreenPalette.volumeSliderWasDragged')
         app.controller.videoDisplay.setVolume(slider.floatValue())
         self.resetAutoConceal()
 
     def videoWillPlay_(self, notification):
+        platformutils.warnIfNotOnMainThread('FullScreenPalette.videoWillPlay_')
         self.playPauseButton.setImage_(NSImage.imageNamed_('fs-button-pause'))
         self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('fs-button-pause-alt'))
 
     def videoWillPause_(self, notification):
+        platformutils.warnIfNotOnMainThread('FullScreenPalette.videoWillPause_')
         self.playPauseButton.setImage_(NSImage.imageNamed_('fs-button-play'))
         self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('fs-button-play-alt'))
 
     def remove(self):
+        platformutils.warnIfNotOnMainThread('FullScreenPalette.remove')
         if self.parentWindow() is not nil:
             self.parentWindow().removeChildWindow_(self)
         self.orderOut_(nil)

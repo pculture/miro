@@ -29,6 +29,8 @@ if os.environ.get('DEMOCRACY_DOWNLOADER_FIRST_LAUNCH') != '1':
     print
     print "*** Starting new downloader log ***"
     print
+else:
+    print "*** Launching Democracy Downloader Daemon ****"
 
 port = int(os.environ['DEMOCRACY_DOWNLOADER_PORT'])
 server = daemon.DownloaderDaemon(port)
@@ -39,3 +41,5 @@ httpclient.HTTPConnectionPool.MAX_CONNECTIONS_PER_SERVER = sys.maxint
 httpclient.HTTPConnectionPool.MAX_CONNECTIONS = sys.maxint
 
 eventloop.startup()
+
+print "*** Daemon ready ***"
