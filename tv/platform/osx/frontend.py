@@ -983,7 +983,7 @@ class UIBackendDelegate:
             ret = PasswordController.alloc().init(message, prefillUser, prefillPassword).getAnswer()
         finally:
             self.httpAuthLock.release()
-        return ret;
+        return ret
 
     def isScrapeAllowed(self, url):
         """Tell the user that URL wasn't a valid feed and ask if it should be
@@ -1078,7 +1078,8 @@ class UIBackendDelegate:
         buttons = (u'Quit', u'Cancel')
         result = showWarningDialog(summary, message, buttons)
         return (result == 0)
-        
+    
+    @platformutils.onMainThread
     def notifyUnkownErrorOccurence(self, when, log = ''):
         platformutils.warnIfNotOnMainThread('UIBackendDelegate.notifyUnkownErrorOccurence')
         controller = ExceptionReporterController.alloc().initWithMoment_log_(when, log)
