@@ -1103,7 +1103,6 @@ class RSSFeedImpl(FeedImpl):
         #self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
-        self.downloads = set()
         self.updating = False
         self.scheduleUpdateEvents(0.1)
 
