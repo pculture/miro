@@ -2245,9 +2245,9 @@ class VideoAreaView (NibClassBuilder.AutoBaseClass):
             self.videoWindow.enterFullScreen(self.window().screen())
             self.window().removeChildWindow_(self.videoWindow)
             self.window().orderOut_(nil)
-
+    
+    @platformutils.onMainThread
     def exitFullScreen(self):
-        platformutils.warnIfNotOnMainThread('VideoAreaView.exitFullScreen')
         if self.videoWindow.isFullScreen:
             self.window().addChildWindow_ordered_(self.videoWindow, NSWindowAbove)
             self.window().makeKeyAndOrderFront_(nil)
