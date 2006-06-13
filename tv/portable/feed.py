@@ -28,6 +28,7 @@ import eventloop
 import prefs
 import resource
 import views
+import indexes
 from BitTornado.clock import clock
 
 whitespacePattern = re.compile(r"^[ \t\r\n]*$")
@@ -144,7 +145,7 @@ class FeedImpl:
         self.unwatched = 0
         self.url = url
         self.ufeed = ufeed
-        self.items = []
+        self.calc_item_list()
         if title == None:
             self.title = url
         else:
@@ -163,6 +164,9 @@ class FeedImpl:
         self.initialUpdate = True
         self.updateFreq = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)*60
         self.expireTime = None
+
+    def calc_item_list(self):
+        self.items = views.items.filterWithIndex(indexes.itemsByFeed, self.ufeed.id)
 
     # Sets the update frequency (in minutes). 
     # - A frequency of -1 means that auto-update is disabled.
@@ -333,7 +337,7 @@ class FeedImpl:
             newitems = 0
 
             #Find the next item we should get
-            self.items.sort(sortFunc)
+#            self.items.sort(sortFunc)
             for item in self.items:
                 if (item.getState() == "autopending") and not item in dontUse:
                     eligibile += 1
@@ -367,7 +371,7 @@ class FeedImpl:
     def downloadNextManual(self):
         self.ufeed.beginRead()
         next = None
-        self.items.sort(sortFunc)
+#        self.items.sort(sortFunc)
         for item in self.items:
             if item.getState() == "manualpending":
                 if next is None:
@@ -626,6 +630,9 @@ class FeedImpl:
         self.ufeed.endRead()
         return count
 
+    def onRestore(self):
+        self.calc_item_list()
+
     def onRemove(self):
         """Called when the feed uses this FeedImpl is removed from the DB.
         subclasses can perform cleanup here."""
@@ -881,6 +888,13 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
         return "Feed - %s" % self.getTitle()
 
 def _entry_equal(a, b):
+    if type(a) == list and type(b) == list:
+        if len(a) != len(b):
+            return False
+        for i in xrange (len(a)):
+            if not _entry_equal(a[i], b[i]):
+                return False
+        return True
     try:
         return a.equal(b)
     except:
@@ -1039,11 +1053,12 @@ class RSSFeedImpl(FeedImpl):
                 self.thumbURL = self.parsed.feed.image.url
                 self.ufeed.iconCache.requestUpdate(is_vital=True)
             items_byid = {}
+            items_nokey = []
             for item in self.items:
                 try:
                     items_byid[item.getRSSID()] = item
                 except KeyError:
-                    pass
+                    items_nokey.append (item)
             for entry in self.parsed.entries:
                 entry = self.addScrapedThumbnail(entry)
                 new = True
@@ -1054,13 +1069,20 @@ class RSSFeedImpl(FeedImpl):
                         if not _entry_equal(entry, item.getRSSEntry()):
                             item.update(entry)
                         new = False
-                else:
-                    for item in self.items:
+                if new:
+                    for item in items_nokey:
                         if _entry_equal(entry, item.getRSSEntry()):
                             new = False
+                        else:
+                            try:
+                                if _entry_equal (entry["enclosures"], item.getRSSEntry()["enclosures"]):
+                                    item.update(entry)
+                                    new = False
+                            except:
+                                pass
                 if (new and entry.has_key('enclosures') and
                     self.hasVideoFeed(entry.enclosures)):
-                    self.items.append(Item(self.ufeed,entry))
+                    Item(self.ufeed.id,entry)
             try:
                 updateFreq = self.parsed["feed"]["ttl"]
             except KeyError:
@@ -1103,6 +1125,7 @@ class RSSFeedImpl(FeedImpl):
         #self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
+        FeedImpl.onRestore(self)
         self.updating = False
         self.scheduleUpdateEvents(0.1)
 
@@ -1251,13 +1274,10 @@ class ScraperFeedImpl(FeedImpl):
             if item.getURL() == link:
                 return
         if dict.has_key('thumbnail') > 0:
-            i=Item(self.ufeed, FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link,'thumbnail':FeedParserDict({'url':dict['thumbnail']})})]}),linkNumber = linkNumber)
+            i=Item(self.ufeed.id, FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link,'thumbnail':FeedParserDict({'url':dict['thumbnail']})})]}),linkNumber = linkNumber)
         else:
-            i=Item(self.ufeed, FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link})]}),linkNumber = linkNumber)
-        self.items.append(i)
-        if not self.updateUandA():
-            self.ufeed.beginChange()
-            self.ufeed.endChange()
+            i=Item(self.ufeed.id, FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link})]}),linkNumber = linkNumber)
+        self.updateUandA()
 
     #FIXME: compound names for titles at each depth??
     def processLinks(self,links, depth = 0,linkNumber = 0):
@@ -1410,6 +1430,7 @@ class ScraperFeedImpl(FeedImpl):
     ##
     # Called by pickle during deserialization
     def onRestore(self):
+        FeedImpl.onRestore(self)
         #self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
 
         #FIXME: the update dies if all of the items aren't restored, so we 
@@ -1456,7 +1477,7 @@ class DirectoryFeedImpl(FeedImpl):
         #Files known about by real feeds
         knownFiles = set()
         for item in views.items:
-            if not item.feed is self.ufeed:
+            if not item.feed_id is self.ufeed.id:
                 for f in item.getFilenames():
                     knownFiles.add(os.path.normcase(f))
         #Remove items that are in feeds, but we have in our list
@@ -1466,7 +1487,6 @@ class DirectoryFeedImpl(FeedImpl):
         try:
             for x in reversed(range(len(self.items))):
                 if self.items[x].getFilename() in knownFiles:
-                    self.items[x].remove()
                     del self.items[x]
         finally:
             self.ufeed.endChange()
@@ -1491,13 +1511,14 @@ class DirectoryFeedImpl(FeedImpl):
             self.ufeed.beginChange()
             try:
                 for file in toAdd:
-                    self.items.append(FileItem(self.ufeed, file))
+                    FileItem(self.ufeed.id, file)
             finally:
                 self.ufeed.endChange()
         self.updating = False
         self.scheduleUpdateEvents(-1)
 
     def onRestore(self):
+        FeedImpl.onRestore(self)
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
         self.updating = False
@@ -1533,7 +1554,6 @@ class SearchFeedImpl (RSSFeedImpl):
         try:
             for item in self.items:
                 item.remove()
-            self.items = []
             self.url = url
             self.searching = searchState
         finally:
@@ -1542,10 +1562,9 @@ class SearchFeedImpl (RSSFeedImpl):
     def preserveDownloads(self, downloadsFeed):
         self.ufeed.beginRead()
         try:
-            allItems = [] + self.items
-            for item in allItems:
+            for item in self.items:
                 if item.getState() != 'stopped':
-                    downloadsFeed.addItem(item)
+                    item.setFeed(downloadsFeed.id)
         finally:
             self.ufeed.endRead()
         
@@ -1590,20 +1609,6 @@ class SearchDownloadsFeedImpl(FeedImpl):
                 title=None, visible=False)
         self.setUpdateFrequency(-1)
 
-    def addItem(self, item):
-        self.ufeed.beginRead()
-        try:
-            if not item in self.items:
-                item.beginRead()
-                try:
-                    item.feed.items.remove(item)
-                    item.feed = self.ufeed
-                finally:
-                    item.endRead()
-                self.items.append(item)
-        finally:
-            self.ufeed.endRead()
-
 class ManualFeedImpl(FeedImpl):
     """Videos/Torrents that have been added using by the user opening them
     with democracy.
@@ -1614,14 +1619,6 @@ class ManualFeedImpl(FeedImpl):
                 title=None, visible=False)
         self.expire = 'never'
         self.setUpdateFrequency(-1)
-        
-    def addItem(self, item):
-        self.ufeed.beginRead()
-        try:
-            if not item in self.items:
-                self.items.append(item)
-        finally:
-            self.ufeed.endRead()
 
 ##
 # Parse HTML document and grab all of the links and their title

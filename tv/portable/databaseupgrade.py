@@ -81,3 +81,10 @@ def upgrade7(objectList):
             feedImpl = o.savedData['actualFeed']
             if feedImpl is not None:
                 feedImpl.savedData['initialUpdate'] = False
+
+def upgrade8(objectList):
+    """Have items point to feed_id instead of feed."""
+    for o in objectList:
+        if o.classString in ('item', 'file-item'):
+            o.savedData['feed_id'] = o.savedData['feed'].savedData['id']
+            

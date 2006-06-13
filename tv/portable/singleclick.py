@@ -46,7 +46,6 @@ def addVideo(path):
         views.items.endRead()
     manualFeed = app.getSingletonDDBObject(views.manualFeed)
     fileItem = item.FileItem(manualFeed, path)
-    manualFeed.actualFeed.addItem(fileItem)
     commandLineVideoIds.add(fileItem.getID())
 
 def getTorrentInfoHash(path):
@@ -78,7 +77,6 @@ def addTorrent(path, torrentInfohash):
     finally:
         manualFeed.endRead()
     newItem = item.Item(manualFeed, item.getEntryForFile(path))
-    manualFeed.actualFeed.addItem(newItem)
     newItem.download()
 
 def resetCommandLineView():

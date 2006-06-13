@@ -13,7 +13,6 @@ import resource
 import config
 import prefs
 import os
-import feed
 import shutil
 
 import locale
@@ -26,8 +25,8 @@ _charset = locale.getpreferredencoding()
 class Item(DDBObject):
     manualDownloads = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.getState() == "downloading" and not x.getAutoDownloaded())
 
-    def __init__(self, feed, entry, linkNumber = 0):
-        self.feed = feed
+    def __init__(self, feed_id, entry, linkNumber = 0):
+        self.feed_id = feed_id
         self.seen = False
         self.downloaders = []
         self.autoDownloaded = False
@@ -55,13 +54,13 @@ class Item(DDBObject):
     # get updated when an item changes
     def endChange(self):
         DDBObject.endChange(self)
-        self.feed.updateUandA()
+        self.getFeed().updateUandA()
 
     #
     # Returns True iff this item has never been viewed in the interface
     # Note the difference between "viewed" and seen
     def getViewed(self):
-        return self.creationTime <= self.feed.lastViewed
+        return self.creationTime <= self.getFeed().lastViewed
 
     ##
     # Returns the first video enclosure in the item
@@ -96,10 +95,13 @@ class Item(DDBObject):
     ##
     # Returns the feed this item came from
     def getFeed(self):
-        self.beginRead()
-        ret = self.feed
-        self.endRead()
-        return ret
+        return self.dd.getObjectByID(self.feed_id)
+
+    ##
+    # Moves this item to another feed.
+    def setFeed(self, feed_id):
+        self.feed_id = feed_id
+        self.endChange()
 
     ##
     # Returns the number of videos associated with this item
@@ -131,15 +133,16 @@ class Item(DDBObject):
     def getExpirationTime(self):
         ret = "???"
         self.beginRead()
-        self.feed.beginRead()
+        ufeed = self.getFeed()
+        ufeed.beginRead()
         try:
-            if self.feed.expire == 'never' or (self.feed.expire == 'system'
+            if ufeed.expire == 'never' or (ufeed.expire == 'system'
                     and config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
                 ret = "never"
             else:
-                if self.feed.expire == "feed":
-                    expireTime = self.feed.expireTime
-                elif self.feed.expire == "system":
+                if ufeed.expire == "feed":
+                    expireTime = ufeed.expireTime
+                elif ufeed.expire == "system":
                     expireTime = timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS))
                 
                 exp = expireTime - (datetime.now() - self.getDownloadedTime())
@@ -150,7 +153,7 @@ class Item(DDBObject):
                 else:
                     ret = "%d min." % (ceil(exp.seconds/60.0))
         finally:
-            self.feed.endRead()
+            ufeed.endRead()
             self.endRead()
         return ret
 
@@ -420,19 +423,20 @@ class Item(DDBObject):
     ##
     # returns status of the download in plain text
     def getState(self):
+        ufeed = self.getFeed()
         self.beginRead()
-        self.feed.beginRead()
+        ufeed.beginRead()
         try:
             state = self.getStateNoAuto()
             lastPubDate = self.getPubDateParsed()
             if ((state == "stopped") and 
-                self.feed.isAutoDownloadable() and 
-                (self.feed.getEverything or 
-                 (lastPubDate >= self.feed.startfrom and
+                ufeed.isAutoDownloadable() and 
+                (ufeed.getEverything or 
+                 (lastPubDate >= ufeed.startfrom and
                   lastPubDate != datetime.max))):
                 state = "autopending"
         finally:
-            self.feed.endRead()
+            ufeed.endRead()
             self.endRead()
             
         return state
@@ -752,7 +756,7 @@ class Item(DDBObject):
                 ret = self.entry.license
             except:
                 try:
-                    ret = self.feed.getLicense()
+                    ret = self.getFeed().getLicense()
                 except:
                     ret = ""
         finally:
@@ -847,7 +851,7 @@ class Item(DDBObject):
             self.downloadedTime = datetime.now()
 
             # Hack to immediately "save" items in feeds set to never expire
-            self.keep = (self.feed.expire == "never")
+            self.keep = (self.getFeed().expire == "never")
         finally:
             self.endRead()
 
@@ -923,6 +927,12 @@ class Item(DDBObject):
     ##
     # Called by pickle during serialization
     def onRestore(self):
+#        self.downloaders = []
+#        try:
+#            for enclosure in self.entry["enclosures"]:
+#                downloader = downloadersByURL[enclosure["url"]]
+#                if downloader:
+#                    self.downloaders.append(downloader)
         self.startingDownload = False
         self.dlFactory = DownloaderFactory(self)
         if (self.iconCache == None):
@@ -942,10 +952,10 @@ def getEntryForFile(filename):
 # An Item that exists as a local file
 class FileItem(Item):
 
-    def __init__(self,feed,filename):
+    def __init__(self,feed_id,filename):
         filename = os.path.abspath(filename)
         self.filename = filename
-        Item.__init__(self, feed, getEntryForFile(filename))
+        Item.__init__(self, feed_id, getEntryForFile(filename))
 
     def getState(self):
         if self.getSeen():

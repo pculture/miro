@@ -1,3 +1,4 @@
+# -*- mode: python -*-
 # Pyrex version of the DTV object database
 #
 # 09/26/2005 Checked in change that speeds up inserts, but changes
@@ -582,12 +583,15 @@ class DynamicDatabase:
     #
     # Removes the object from the database
     def changeObj(self, obj):
+        changed = False
         self.beginUpdate()
         try:
             if self.objectLocs.has_key(obj.id):
+                changed = True
                 self.change(self.objectLocs[obj.id])
         finally:
             self.endUpdate()
+        return changed
 
     ##
     # remove the object the given iterator points to
@@ -686,17 +690,20 @@ class DynamicDatabase:
                         if view.objectLocs.has_key(tempid):
                             view.changeObj(tempobj)
                         else:
-                            view.addBeforeCursor(tempobj,tempmapped)
+                            view.addBeforeCursor(tempobj, tempmapped)
                     else:
                         if view.objectLocs.has_key(tempid):
                             view.removeObj(tempobj)
                 finally:
                     view.endUpdate()
-            for (key, views) in self.indexes.iteritems():
-                # FIXME: Keep an index of items to
-                # views. Eliminate this loop
-                for (value, view) in views.iteritems():
-                    view.changeObj(tempobj)
+            for f, views in self.indexes.iteritems():
+                index = f (tempmapped)
+                if not views[index].changeObj(tempobj):
+                    for (value, view) in views.iteritems():
+                        if value == index:
+                            view.addBeforeCursor(tempobj, tempmapped)
+                        else:
+                            view.removeObj(tempobj)
         finally:
             self.endUpdate()
 
@@ -1094,7 +1101,7 @@ class DDBObject:
 
 
     ##
-    # Call this after you change the object
+    # Call this after you don't change the object
     def endNoChange(self):
         unlock()
 

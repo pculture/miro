@@ -38,21 +38,15 @@ class PhontomFeedTest(SanityTest):
 
     def checkObject(self, obj):
         if isinstance(obj, item.Item):
-            self.feedsInItems.add(obj.feed)
+            self.feedsInItems.add(obj.feed_id)
         elif isinstance(obj, feed.Feed):
-            self.topLevelFeeds.add(obj)
+            self.topLevelFeeds.add(obj.id)
 
     def finished(self):
         if not self.feedsInItems.issubset(self.topLevelFeeds):
             phantoms = self.feedsInItems.difference(self.topLevelFeeds)
             phantomsString = ', '.join([str(p) for p in phantoms])
             return "Phantom feed(s) referenced in items: %s" % phantomsString
-
-    def fixIfPossible(self, objectList):
-        if not self.feedsInItems.issubset(self.topLevelFeeds):
-            phantoms = self.feedsInItems.difference(self.topLevelFeeds)
-            for f in phantoms:
-                objectList.append(f)
 
 class SingletonTest(SanityTest):
     """Check that singleton DB objects are really singletons.
