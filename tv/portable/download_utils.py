@@ -1,7 +1,21 @@
 from os import access, F_OK
 from urlparse import urlparse
+import re
+import urllib
+
+def fixFileURLS(url):
+    """Fix file URLS that start with file:// instead of file:///.  Note: this
+    breaks for file URLS that include a hostname, but we never use those and
+    it's not so clear what that would mean anyway -- file URLs is an ad-hoc
+    spec as I can tell.."""
+    if url.startswith('file://'):
+        if not url.startswith('file:///'):
+            url = 'file:///%s' % url[len('file://'):]
+        url = url.replace('\\', '/')
+    return url
 
 def parseURL(url):
+    url = fixFileURLS(url)
     (scheme, host, path, params, query, fragment) = urlparse(url)
     # Filter invalid URLs with duplicated ports (http://foo.bar:123:123/baz)
     # which seem to be part of #441.
@@ -12,11 +26,12 @@ def parseURL(url):
         host, port = host.split(':')
         port = int(port)
     else:
-        host = host
         if scheme == 'https':
             port = 443
-        else:
+        elif scheme == 'http':
             port = 80
+        else:
+            port = None
 
     host = host.lower()
     scheme = scheme.lower()
