@@ -843,11 +843,11 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
         self.beginChange()
         self.cancelUpdateEvents()
         try:
-            DDBObject.remove(self)
             for item in self.items:
                 if not item.getKeep():
                     item.expire()
                 item.remove()
+            DDBObject.remove(self)
         finally:
             self.endChange()
         self.actualFeed.onRemove()
