@@ -1160,6 +1160,7 @@ class HTTPClient(object):
         self.cancelled = False
         self.connection = None
         self.willHandleResponse = False
+        self.gotBadStatusCode = False
         if 'Authorization' not in self.headers:
             scheme, host, port, path = parseURL(self.redirectedURL)
             def callback(authHeader):
@@ -1184,6 +1185,14 @@ class HTTPClient(object):
                 bodyDataCallback,
                 self.url, self.method, self.headers)
 
+    def statusCodeExpected(self, status):
+        expectedStatusCodes = set([200])
+        if self.start != 0:
+            expectedStatusCodes.add(206)
+        if self.etag is not None or self.modified is not None:
+            expectedStatusCodes.add(304)
+        return status in expectedStatusCodes
+
     def callbackIntercept(self, response):
         if self.shouldRedirect(response):
             self.handleRedirect(response)
@@ -1195,11 +1204,7 @@ class HTTPClient(object):
         else:
             self.connection = None
             expectedStatusCodes = [200]
-            if self.start != 0:
-                expectedStatusCodes.append(206)
-            if self.etag is not None or self.modified is not None:
-                expectedStatusCodes.append(304)
-            if response['status'] in expectedStatusCodes:
+            if not self.gotBadStatusCode:
                 if self.callback:
                     response = self.prepareResponse(response)
                     trapCall(self, self.callback, response)
@@ -1226,13 +1231,17 @@ class HTTPClient(object):
     def onHeaders(self, response):
         if self.shouldRedirect(response) or self.shouldAuthorize(response):
             self.willHandleResponse = True
-        elif self.headerCallback is not None:
-            response = self.prepareResponse(response)
-            if not trapCall(self, self.headerCallback, response):
-                self.cancel()
+        else:
+            if not self.statusCodeExpected(response['status']):
+                self.gotBadStatusCode = True
+            if self.headerCallback is not None:
+                response = self.prepareResponse(response)
+                if not trapCall(self, self.headerCallback, response):
+                    self.cancel()
 
     def onBodyData(self, data):
-        if not self.willHandleResponse and self.bodyDataCallback:
+        if (not self.willHandleResponse and not self.gotBadStatusCode and 
+                self.bodyDataCallback):
             if not trapCall(self, self.bodyDataCallback, data):
                 self.cancel()
 

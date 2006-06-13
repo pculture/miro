@@ -828,6 +828,34 @@ Below this line, is 1000 repeated lines of 0-9.
         self.assertEquals('utf-8', 
                 getIt("text/html; charset=utf-8; extraparam=2"))
 
+    def testUnexpectedStatusCode(self):
+        """Test what happens when we get a bad status code.  
+        
+        The header callback should be called, but the on body data callback
+        shouldn't.  Also, we should call the errback instead of the callback.
+        """
+        self.onHeadersCalled = self.onBodyDataCalled = False
+        def onHeaders(headers):
+            self.onHeadersCalled = True
+        def onBodyData(data):
+            self.onBodyDataCalled = True
+        url = "http://www.foo.com/index.html"
+        client = httpclient.HTTPClient(url, self.callback, self.errback,
+                onHeaders, onBodyData) 
+        pool = TestingHTTPConnectionPool()
+        client.connectionPool = pool
+        client.startRequest()
+        self.runPendingIdles()
+        conn = pool.getConnection('http', 'www.foo.com')
+        conn.handleData(startResponse(status=404))
+        self.runPendingIdles()
+        self.assert_(self.onHeadersCalled)
+        conn.handleData("data" * 100)
+        conn.handleClose(socket.SHUT_RD)
+        self.assert_(not self.onBodyDataCalled)
+        self.assert_(not self.callbackCalled)
+        self.assert_(self.errbackCalled)
+
     def testHeaderCallback(self):
         def headerCallback(response):
             self.headerResponse = copy(response)
