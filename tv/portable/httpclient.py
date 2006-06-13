@@ -781,14 +781,26 @@ class HTTPConnection(ConnectionHandler):
         self.chunked = (te.lower() == 'chunked')
 
     def findExpectedLength(self):
-        if self.headers.get('transfer-encoding', 'identity') == 'identity':
+        self.contentLength = None
+        if self.status == 416:
+            try:
+                contentRange = self.headers['content-range']
+            except KeyError:
+                pass
+            else:
+                m = re.search('bytes\s+\*/(\d+)', contentRange)
+                if m is not None:
+                    try:
+                        self.contentLength = int(m.group(1))
+                    except (ValueError, TypeError):
+                        pass
+        if (self.contentLength is None and 
+                self.headers.get('transfer-encoding') in ('identity', None)):
             try:
                 self.contentLength = int(self.headers['content-length'])
             except (ValueError, KeyError):
                 pass
-            if self.contentLength < 0:
-                self.contentLength = None
-        else:
+        if self.contentLength < 0:
             self.contentLength = None
 
     def decideWillClose(self):

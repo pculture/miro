@@ -555,6 +555,12 @@ HELLO: WORLD\r\n"""
             headers={'Content-Length': '5', 'Transfer-Encoding': 'chunked'}))
         self.assertEquals(self.testRequest.contentLength, None)
 
+    def test416ContentLength(self):
+        """Test the content length after a 416 status code."""
+        self.testRequest.handleData(startResponse(
+            status=416, headers={'Content-Range': 'bytes */1234'}))
+        self.assertEquals(self.testRequest.contentLength, 1234)
+
     def testNoBody(self):
         self.testRequest.handleData(startResponse(status=204))
         self.assertEquals(self.testRequest.state, 'closed')

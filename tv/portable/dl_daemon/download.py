@@ -439,17 +439,15 @@ class HTTPDownloader(BGDownloader):
 
     def onHeadersRestart(self, info):
         self.restartOnError = False
-        try:
-            contentRange = info['content-range']
-        except KeyError:
+        if info['status'] != 206 or 'content-range' not in info:
             self.currentSize = 0
             self.totalSize = -1
             return self.onHeaders(info)
         try:
-            self.parseContentRange(contentRange)
+            self.parseContentRange(info['content-range'])
         except ValueError:
             if chatter:
-                print "WARNING, bad content-range: %r" % contentRange
+                print "WARNING, bad content-range: %r" % info['content-range']
                 print "currentSize: %d totalSize: %d" % (self.currentSize,
                         self.totalSize)
             self.cancelRequest()
