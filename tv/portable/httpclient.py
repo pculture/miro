@@ -23,6 +23,7 @@ import config
 import prefs
 import dialogs
 from download_utils import cleanFilename, parseURL
+from xhtmltools import URLEncodeDict
 import eventloop
 import util
 import sys
@@ -518,7 +519,7 @@ class HTTPConnection(ConnectionHandler):
 
     def sendRequest(self, callback, errback, requestStartCallback=None,
             headerCallback=None, bodyDataCallback = None, method="GET",
-            path='/', headers=None):
+            path='/', headers=None, postVariables = None):
         """Sending an HTTP Request.  callback will be called if the request
         completes normally, errback will be called if there is a network
         error.
@@ -554,7 +555,14 @@ class HTTPConnection(ConnectionHandler):
         headers['Host'] = self.host.encode('idna')
         headers['Accept-Encoding'] = 'identity'
 
-        self.sendRequestData(method, path, headers)
+        if method == "POST" and len(postVariables) > 0:
+            postData = URLEncodeDict(postVariables)
+            headers['Content-Type'] = 'application/x-www-form-urlencoded'
+            headers['Content-Length'] = '%d' % len(postData)
+        else:
+            postData = None
+
+        self.sendRequestData(method, path, headers, postData)
         args = (callback, errback, requestStartCallback, headerCallback,
                 bodyDataCallback, method, path, headers)
         if self.state == 'ready':
@@ -592,12 +600,14 @@ class HTTPConnection(ConnectionHandler):
         self.sentReadyCallback = False
         self.changeState('response-status')
 
-    def sendRequestData(self, method, path, headers):
+    def sendRequestData(self, method, path, headers, data = None):
         sendOut = []
         sendOut.append('%s %s HTTP/1.1\r\n' % (method, path))
         for header, value in headers.items():
             sendOut.append('%s: %s\r\n' % (header, value))
         sendOut.append('\r\n')
+        if data is not None:
+            sendOut.append(data)
         self.sendData(''.join(sendOut))
 
     def onStatusData(self):
@@ -827,7 +837,6 @@ class HTTPConnection(ConnectionHandler):
         else:
             body = self.body
         response = self.makeResponse(body)
-
         if self.stream.isOpen():
             if self.willClose:
                 self.closeConnection()
@@ -838,7 +847,6 @@ class HTTPConnection(ConnectionHandler):
             else:
                 self.changeState('ready')
                 self.idleSince = clock()
-
         trapCall(self, self.callback, response)
         self.maybeSendReadyCallback()
 
@@ -944,7 +952,8 @@ class HTTPConnectionPool(object):
         self.runPendingRequests()
 
     def addRequest(self, callback, errback, requestStartCallback,
-            headerCallback, bodyDataCallback, url, method, headers):
+            headerCallback, bodyDataCallback, url, method, headers,
+            postVariables = None):
         """Add a request to be run.  The request will run immediately if we
         have a free connection, otherwise it will be queued.
 
@@ -967,6 +976,7 @@ class HTTPConnectionPool(object):
             'method': method,
             'path': path,
             'headers': headers,
+            'postVariables': postVariables,
         }
         self.pendingRequests.append(req)
         self.runPendingRequests()
@@ -988,7 +998,7 @@ class HTTPConnectionPool(object):
                 conn.sendRequest(req['callback'], req['errback'],
                         req['requestStartCallback'], req['headerCallback'],
                         req['bodyDataCallback'], req['method'], req['path'],
-                        req['headers'])
+                        req['headers'], req['postVariables'])
             else:
                 conn = self._makeNewConnection(req)
             conns['active'].add(conn)
@@ -1003,7 +1013,7 @@ class HTTPConnectionPool(object):
             conn.sendRequest(req['callback'], req['errback'],
                     req['requestStartCallback'], req['headerCallback'],
                     req['bodyDataCallback'], req['method'], req['path'],
-                    req['headers'])
+                    req['headers'], req['postVariables'])
         def openConnectionErrback(error):
             conns = self._getServerConnections(req['scheme'], req['host'], 
                     req['port'])
@@ -1066,7 +1076,7 @@ class HTTPClient(object):
 
     def __init__(self, url, callback, errback, headerCallback=None,
             bodyDataCallback=None, method="GET", start=0, etag=None,
-            modified=None, cookies={}):
+            modified=None, cookies={}, postVariables = None):
         self.url = url
         self.callback = callback
         self.errback = errback
@@ -1084,6 +1094,7 @@ class HTTPClient(object):
                                # one or more of the following:
                                # 'Comment', 'CommentURL', 'origPath',
                                # 'origDomain', 'origPort'
+        self.postVariables = postVariables
         self.depth = 0
         self.authAttempts = 0
         self.updateURLOk = True
@@ -1195,7 +1206,7 @@ class HTTPClient(object):
         self.connectionPool.addRequest(self.callbackIntercept,
                 self.errbackIntercept, self.onRequestStart, self.onHeaders,
                 bodyDataCallback,
-                self.url, self.method, self.headers)
+                self.url, self.method, self.headers, self.postVariables)
 
     def statusCodeExpected(self, status):
         expectedStatusCodes = set([200])
@@ -1434,6 +1445,7 @@ class HTTPClient(object):
         if response['status'] == 303:
             # "See Other" we must do a get request for the result
             self.method = "GET"
+            self.postVariables = None
         if 'Authorization' in self.headers:
             del self.headers["Authorization"]
         self.startRequest()
@@ -1465,9 +1477,9 @@ class HTTPClient(object):
 
 def grabURL(url, callback, errback, headerCallback=None,
         bodyDataCallback=None, method="GET", start=0, etag=None,
-        modified=None, cookies = {}):
+        modified=None, cookies = {}, postVariables = None):
     client = HTTPClient(url, callback, errback, headerCallback,
-            bodyDataCallback, method, start, etag, modified, cookies)
+            bodyDataCallback, method, start, etag, modified, cookies, postVariables)
     client.startRequest()
     return client
 

@@ -1,8 +1,9 @@
 import xml.sax.saxutils
 import xml.dom
 import re
-from urllib import quote
+from urllib import quote, quote_plus
 from HTMLParser import HTMLParser
+import types
 
 ##
 # very simple parser to convert HTML to XHTML
@@ -131,3 +132,14 @@ def toUTF8Bytes(string, encoding=None):
     # Encoding wasn't provided, or it was wrong. Interpret provided string
     # liberally as a fixed defaultEncoding (see above.)
     return string.decode(defaultEncoding, 'replace').encode('utf-8')
+
+# Converts a Python dictionary to data suitable for a POST or GET submission
+def URLEncodeDict(orig):
+    output = []
+    for key in orig.keys():
+        if type(orig[key]) is types.ListType:
+            for value in orig[key]:
+                output.append('%s=%s' % (quote_plus(key), quote_plus(value)))
+        else:
+            output.append('%s=%s' % (quote_plus(key), quote_plus(orig[key])))
+    return '&'.join(output)

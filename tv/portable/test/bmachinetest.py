@@ -48,7 +48,7 @@ class BroadcastMachineTest(DownloaderTestCase):
         launchArgs.extend(glob.glob(os.path.join(self.loc, '*')))
         launchArgs.append("%s:%s" % (self.server, self.server_loc))
         self.assertEqual(os.spawnvp(os.P_WAIT, "scp", launchArgs),0)
-        httpclient.grabURL (self.url, self.URLCallback, self.errorCallback)
+        httpclient.grabURL (self.url, self.setupCallback, self.errorCallback)
         self.runEventLoop()
 
     def fixPermissions(self):
@@ -58,17 +58,29 @@ class BroadcastMachineTest(DownloaderTestCase):
             os.spawnlp(os.P_WAIT, "ssh", "-C", self.server, 'mkdir %s 2>&1' % os.path.join(self.server_loc, d))
             os.spawnlp(os.P_WAIT, "ssh", "-C", self.server, 'chmod 777 %s 2>&1' % os.path.join(self.server_loc, d))
 
-    def URLCallback(self, info):
+    def setupCallback(self, info):
         self.info = info
         self.assertEqual(info['status'], 200)
         if info['body'].find("Before you can use Broadcast Machine, we need to create a few directories.  There are several ways to do this listed below.") != -1:
             self.fixPermissions()
-            httpclient.grabURL (self.url, self.URLCallback, self.errorCallback)
+            httpclient.grabURL (self.url, self.setupCallback, self.errorCallback)
         else:
-            self.assert_(info['redirected-url'].endswith('/newuser.php'))
             self.assertNotEqual(info['body'].find("This looks like your first time using Broadcast Machine."), -1)
             self.assertNotEqual(info['body'].find("You should create a new user account before continuing."), -1)
-            eventloop.quit()
+            httpclient.grabURL(info['redirected-url'], self.createAccountCallback,
+                               self.errorCallback, method="POST",
+                               postVariables = {"do_login" : "1",
+                                                "email": "nassar@pculture.org",
+                                                "username": "admin",
+                                                "pass1": "PCF is cool",
+                                                "pass2": "PCF is cool"})
+
+    def createAccountCallback(self, info):
+        self.assertNotEqual(info['body'].find("The account admin was added successfully."), -1)
+        self.assertEqual(info['cookies']['bm_username']['Value'],'admin')
+        self.assert_(info['cookies'].has_key('bm_userhash'))
+        self.assert_(info['cookies'].has_key('PHPSESSID'))
+        eventloop.quit()
 
     def errorCallback(self, error):
         print "Broadcast Machine URL load died with %s" % error
