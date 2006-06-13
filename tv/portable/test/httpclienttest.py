@@ -769,6 +769,12 @@ Below this line, is 1000 repeated lines of 0-9.
                 'http://jigsaw.w3.org/HTTP/300/Go_303', method="POST", postVariables={})
         self.assertEquals(self.data['method'], 'GET')
 
+    def test303RedirectWithData(self):
+        self.checkRedirect('http://jigsaw.w3.org/HTTP/300/Go_303',
+                'http://jigsaw.w3.org/HTTP/300/303_ok.html',
+                'http://jigsaw.w3.org/HTTP/300/Go_303', method="POST", postVariables={'foo':'bar'})
+        self.assertEquals(self.data['method'], 'GET')
+
     def testMultipleRedirect(self):
         # The redirect chain is:
         # redirect.php PERMAMENT REDIRECT -> redirect2.php
