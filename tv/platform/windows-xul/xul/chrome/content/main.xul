@@ -21,11 +21,12 @@
         <popupset><popup id="contextPopup"></popup></popupset>
 
         <!-- TITLEBAR -->
-        <hbox height="25" container="1" id="titlebar" class="titlebar">
-
+        <hbox height="25" container="1" id="titlebar" class="titlebar"
+                ondblclick="maximizeOrRestore();" >
 	<!-- MAIN MENUBAR -->
 	<hbox>
-		<menubar id="titlebar-menu">
+                <menubar id="titlebar-menu"
+                        ondblclick="event.stopPropagation(); return false;">
 		
 			<!-- FILE MENU -->
 			<menu id="file-menu" label="File" accesskey="F" class="titlebar-toplevel" style="margin-left: 10px;">
