@@ -321,12 +321,12 @@ class TestHighLevelFunctions(DemocracyTestCase):
         self.database = database.DynamicDatabase()
         self.savePath = tempfile.mktemp()
 
+        database.DDBObject.dd = self.database
         f = feed.Feed("http://feed.uk")
-        i = item.Item(f, {})
-        i2 = item.Item(f, {})
-        f.items = [i, i2]
-        self.objects = [i, i2, f]
-        self.database.restoreFromObjectList(self.objects)
+        i = item.Item(f.id, {})
+        i2 = item.Item(f.id, {})
+        self.objects = [f, i, i2]
+        database.DDBObject.dd = database.defaultDatabase
 
     def tearDown(self):
         storedatabase.skipUpgrade = False
