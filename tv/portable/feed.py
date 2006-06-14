@@ -1471,22 +1471,20 @@ class DirectoryFeedImpl(FeedImpl):
                 self.updating = True
         finally:
             self.ufeed.endRead()
+
         #Files known about by real feeds
         knownFiles = set()
         for item in views.items:
             if not item.feed_id is self.ufeed.id:
                 for f in item.getFilenames():
                     knownFiles.add(os.path.normcase(f))
+
         #Remove items that are in feeds, but we have in our list
         # NOTE: we rely on the fact that all our items are single files, so we
         # only need to use getFilename(), instead of getFilenames().
-        self.ufeed.beginChange()
-        try:
-            for x in reversed(range(len(self.items))):
-                if self.items[x].getFilename() in knownFiles:
-                    del self.items[x]
-        finally:
-            self.ufeed.endChange()
+        for item in self.items:
+            if item.getFilename() in knownFiles:
+                item.remove()
 
         self.ufeed.beginRead()
         try:
@@ -1500,17 +1498,10 @@ class DirectoryFeedImpl(FeedImpl):
         if os.path.isdir(moviesDir):
             existingFiles = [os.path.normcase(os.path.join(moviesDir, f)) 
                     for f in os.listdir(moviesDir)]
-            toAdd = []
             for file in existingFiles:
                 if (os.path.isfile(file) and os.path.basename(file)[0] != '.' and 
                         not file in knownFiles and not file in myFiles):
-                    toAdd.append(file)
-            self.ufeed.beginChange()
-            try:
-                for file in toAdd:
                     FileItem(self.ufeed.id, file)
-            finally:
-                self.ufeed.endChange()
         self.updating = False
         self.scheduleUpdateEvents(-1)
 
