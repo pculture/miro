@@ -1046,8 +1046,11 @@ class ModelActionHandler:
         obj.setMaxNew(int(maxNew))
 
     def startDownload(self, item):
-        obj = db.getObjectByID(int(item))
-        obj.download()
+        try:
+            obj = db.getObjectByID(int(item))
+            obj.download()
+        except database.ObjectNotFoundError:
+            pass
 
     def removeCurrentFeed(self):
         currentFeed = controller.currentSelectedTab.feedID()
