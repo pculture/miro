@@ -512,6 +512,7 @@ class HTTPConnection(ConnectionHandler):
             trapCall(self, errback, PipelinedRequestNeverStarted())
 
     def canSendRequest(self):
+        return self.state == 'ready'
         return (self.state == 'ready' or 
                 (self.state != 'closed' and self.pipelinedRequest is None and
                     not self.willClose))
