@@ -14,6 +14,7 @@ import config
 import prefs
 import os
 import shutil
+import views
 
 import locale
 
@@ -924,15 +925,21 @@ class Item(DDBObject):
             dler.remove()
         DDBObject.remove(self)
 
+    def reconnectDownloaders(self):
+        changed = False
+        for enclosure in self.entry["enclosures"]:
+            url = enclosure["url"]
+            downloader = self.dlFactory.getDownloader(url, create=False)
+            if downloader:
+                self.downloaders.append(downloader)
+                downloader.addItem(self)
+                changed = True
+        if changed:
+            self.endChange()
+
     ##
     # Called by pickle during serialization
     def onRestore(self):
-#        self.downloaders = []
-#        try:
-#            for enclosure in self.entry["enclosures"]:
-#                downloader = downloadersByURL[enclosure["url"]]
-#                if downloader:
-#                    self.downloaders.append(downloader)
         self.startingDownload = False
         self.dlFactory = DownloaderFactory(self)
         if (self.iconCache == None):
@@ -940,9 +947,14 @@ class Item(DDBObject):
         else:
             self.iconCache.dbItem = self
             self.iconCache.requestUpdate()
+        self.downloaders = []
 
     def __str__(self):
         return "Item - %s" % self.getTitle()
+
+def reconnectDownloaders():
+    for item in views.items:
+        item.reconnectDownloaders()
 
 def getEntryForFile(filename):
     return FeedParserDict({'title':os.path.basename(filename),

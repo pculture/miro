@@ -463,6 +463,7 @@ class Controller (frontend.Application):
                 util.failedExn("While restoring database")
             print "DTV: Recomputing filters..."
             db.recomputeFilters()
+
             downloader.startupDownloader()
 
             self.setupGlobalFeed('dtv:manualFeed', initiallyAutoDownloadable=False)
@@ -517,6 +518,9 @@ class Controller (frontend.Application):
 
             # Set up the playback controller
             self.playbackController = frontend.PlaybackController()
+
+            # Reconnect items to downloaders.
+            item.reconnectDownloaders()
 
             # Put up the main frame
             print "DTV: Displaying main frame..."
@@ -1213,6 +1217,23 @@ class GUIActionHandler:
     def openFile(self, path):
         singleclick.openFile(path)
 
+    def _getFeed (self, url):
+
+        retval = None
+        
+        feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
+        exists = feedView.len() > 0
+        if feedView.len() > 0:
+            feedView.resetCursor()
+            retval = feedView.getNext()
+        feedView.unlink()
+        
+        return retval
+
+    def selectFeedByObject (self, myFeed):
+        controller.checkTabByObjID(myFeed.getID())
+        controller.checkSelectedTab(showTemplate)
+        
     # NEEDS: name should change to addAndSelectFeed; then we should create
     # a non-GUI addFeed to match removeFeed. (requires template updates)
     def addFeed(self, url, showTemplate = None, selected = '1'):
@@ -1221,47 +1242,30 @@ class GUIActionHandler:
             return
         db.beginUpdate()
         try:
-            feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
-            exists = feedView.len() > 0
-
-            if not exists:
+            myFeed = self._getFeed (url)
+            if myFeed is None:
                 myFeed = feed.Feed(url)
-            else:
-                feedView.resetCursor()
-                myFeed = feedView.getNext()
-                # At this point, the addition is guaranteed to be reflected
-                # in the tab list.
-
-            feedView.unlink()
 
             if selected == '1':
-                controller.checkTabByObjID(myFeed.getID())
-                controller.checkSelectedTab(showTemplate)
-
+                self._selectFeedByObject (myFeed)
         finally:
             db.endUpdate()
 
-    # NEEDS: factor out common code with addFeed
     def selectFeed(self, url):
         url = feed.normalizeFeedURL(url)
         db.beginUpdate()
         try:
             # Find the feed
-            feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
-            exists = feedView.len() > 0
-            if not exists:
+            myFeed = self._getFeed (url)
+            if myFeed is None:
                 print "selectFeed: no such feed: %s" % url
                 return
-            feedView.resetCursor()
-            myFeed = feedView.getNext()
-            feedView.unlink()
 
-            # Select it
-            controller.checkTabByObjID(myFeed.getID())
-            controller.checkSelectedTab()
+            self._selectFeedByObject (myFeed)
 
         finally:
             db.endUpdate()
+
 
     # Following for testing/debugging
 

@@ -213,7 +213,6 @@ class ItemSchema(DDBObjectSchema):
     fields = DDBObjectSchema.fields + [
         ('feed_id', SchemaInt()),
         ('seen', SchemaBool()),
-        ('downloaders', SchemaList(SchemaObject(RemoteDownloader))),
         ('autoDownloaded', SchemaBool()),
         ('startingDownload', SchemaBool()),
         ('lastDownloadFailed', SchemaBool()),
@@ -319,7 +318,6 @@ class RemoteDownloaderSchema(DDBObjectSchema):
     classString = 'remote-downloader'
     fields = DDBObjectSchema.fields + [
         ('url', SchemaString()),
-        ('itemList', SchemaList(SchemaObject(Item))),
         ('dlid', SchemaString()),
         ('contentType', SchemaString(noneOk=True)),
         ('status', SchemaSimpleContainer()),

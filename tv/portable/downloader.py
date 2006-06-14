@@ -70,6 +70,7 @@ class HTTPAuthPassword(DDBObject):
             self.endRead()
         return ret
 
+
 def _getDownloader (dlid = None, url = None):
     if dlid is not None:
         view = views.remoteDownloads.filterWithIndex(
@@ -347,6 +348,7 @@ URL was %s""" % self.url
             self.endRead()
 
     def onRestore(self):
+        self.itemList = []
         if self.dlid == 'noid':
             # this won't happen nowadays, but it can for old databases
             self.dlid = generateDownloadID()
@@ -419,14 +421,15 @@ def shutdownDownloader(callback = None):
     RemoteDownloader.dldaemon.shutdownDownloaderDaemon(callback=callback)
 
 class DownloaderFactory:
-    lock = RLock()
     def __init__(self,item):
         self.item = item
 
-    def getDownloader(self, url):
+    def getDownloader(self, url, create=True):
         downloader = _getDownloader (url=url)
         if downloader:
             return downloader
+        if not create:
+            return None
         if url.startswith('file://'):
             if url.endswith('.torrent'):
                 return RemoteDownloader(url, self.item,
