@@ -69,8 +69,11 @@ class XineRenderer(app.VideoRenderer):
         # a short time delay.
 
         def fullscreenExposeWorkaround():
-            _, _, width, height, _ = self.widget.window.get_geometry()
-            self.xine.gotExposeEvent(0, 0, width, height)
+            try:
+                _, _, width, height, _ = self.widget.window.get_geometry()
+                self.xine.gotExposeEvent(0, 0, width, height)
+            except:
+                return True
             return False
 
         gobject.timeout_add(500, fullscreenExposeWorkaround)
