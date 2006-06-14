@@ -1476,17 +1476,16 @@ class HTTPHeaderGrabber(HTTPClient):
 
     def callbackIntercept(self, response):
         # we send the callback for GET requests during the headers
-        if self.method != 'GET':
+        if self.method != 'GET' or self.willHandleResponse:
             HTTPClient.callbackIntercept(self, response)
 
     def onHeaders(self, headers):
-        if self.method == 'GET':
+        HTTPClient.onHeaders(self, headers)
+        if (self.method == 'GET' and not self.willHandleResponse):
             headers['body'] = '' 
             # make it match the behaviour of a HEAD request
             self.callback(self.prepareResponse(headers))
             self.cancel()
-        else:
-            HTTPClient.onHeaders(self, headers)
 
 def grabHeaders (url, callback, errback):
     client = HTTPHeaderGrabber(url, callback, errback)
