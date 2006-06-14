@@ -99,13 +99,7 @@ class IconCache:
         # Error during download, or no url.  To reflect that,
         # clear the cache if there was one before.
         wasValid = self.isValid()
-        try:
-            if (self.filename):
-                os.remove (self.filename)
-        except:
-            pass
         self.url = url
-        self.filename = None
         self.etag = None
         self.modified = None
         self.updated = True
