@@ -3,7 +3,7 @@ import os
 import threading
 import httpclient
 from fasttypes import LinkedList
-from eventloop import asIdle, addIdle
+from eventloop import asIdle, addIdle, addTimeout
 import config
 import prefs
 import time
@@ -113,6 +113,9 @@ class IconCache:
         if self.needsUpdate:
             self.needsUpdate = False
             self.requestUpdate()
+        elif (error is not None):
+            self.updated = False
+            addTimeout(3600,self.requestUpdate, "Thumbnail request for %s" % url)
         if wasValid:
             self.dbItem.beginChange()
             self.dbItem.endChange()
