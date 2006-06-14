@@ -1,9 +1,10 @@
 import unittest
 import feedparser
+import resource
 
 from test.framework import DemocracyTestCase
 
-class FeedURLValidationTest(DemocracyTestCase):
+class FeedParserDictTest(DemocracyTestCase):
     def test(self):
         a = feedparser.FeedParserDict ()
         a["href"] = "hello"
@@ -26,6 +27,10 @@ class FeedURLValidationTest(DemocracyTestCase):
         self.assertEqual(c.equal(b), False)
         self.assertEqual(a.equal(d), False)
         self.assertEqual(d.equal(a), False)
+
+class FeedParserTest (DemocracyTestCase):
+    def test_ooze(self):
+        feedparser.parse(resource.path("testdata/ooze.rss"))
 
 if __name__ == "__main__":
     unittest.main()
