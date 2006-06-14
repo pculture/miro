@@ -51,6 +51,7 @@ def exit(returnCode):
    sys.exit(returnCode)
 
 def quit():
+    app.delegate.ensureDownloadDaemonIsTerminated()
     NSApplication.sharedApplication().terminate_(nil)
 
 # These are used by the channel guide. This platform uses the
@@ -201,19 +202,13 @@ class AppController (NibClassBuilder.AutoBaseClass):
         defaultAppIcon = NSImage.imageNamed_('NSApplicationIcon')
         NSApplication.sharedApplication().setApplicationIconImage_(defaultAppIcon)
 
-        # Ensure that the download daemon is not running anymore at this point
-        global dlTask
-        if dlTask is not None:
-            dlTask.waitUntilExit()
-            dlTask = None      
-            
         # Call shutdown on backend
         self.actualApp.onShutdown()
 
     def downloaderDaemonDidTerminate_(self, notification):
         task = notification.object()
         status = task.terminationStatus()
-        print "DTV: Downloader daemon has been successfully shutdowned (termination status: %d)" % status
+        print "DTV: Downloader daemon has been terminated (status: %d)" % status
 
     def application_openFiles_(self, app, filenames):
         eventloop.addUrgentCall(lambda:self.openFiles(filenames), "Open local file(s)")
@@ -1088,6 +1083,30 @@ class UIBackendDelegate:
     def copyTextToClipboard(self, text):
         print "WARNING: copyTextToClipboard not implemented"
 
+    def ensureDownloadDaemonIsTerminated(self):
+        global dlTask
+        # Calling dlTask.waitUntilExit() here could cause problems since we 
+        # cannot specify a timeout, so if the daemon fails to shutdown we could
+        # wait here indefinitely. We therefore manually poll for a specific 
+        # amount of time beyond which we force quit the daemon.
+        if dlTask is not None and dlTask.isRunning():
+            print "DTV: Waiting for the downloader daemon to terminate..."
+            timeout = 5.0
+            sleepTime = 0.2
+            loopCount = int(timeout / sleepTime)
+            for i in range(loopCount):
+                if dlTask.isRunning():
+                    time.sleep(sleepTime)
+                else:
+                    break
+            else:
+                # If the daemon is still alive at this point, it's likely to be
+                # in a bad state, so nuke it.
+                print "DTV: Timeout expired - Killing downloader daemon!"
+                dlTask.terminate()
+                dlTask.waitUntilExit()
+        dlTask = None
+
     def killDownloadDaemon(self, oldpid=None):
         if oldpid is not None:
             try:
@@ -1104,7 +1123,6 @@ class UIBackendDelegate:
         env['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
         env.update(os.environ)
                 
-        print "DTV: Launching Download Daemon"
         pool = NSAutoreleasePool.alloc().init()
         bundle = NSBundle.mainBundle()
         exe = bundle.executablePath()
@@ -1114,12 +1132,15 @@ class UIBackendDelegate:
         dlTask.setLaunchPath_(exe)
         dlTask.setArguments_(['download_daemon'])
         dlTask.setEnvironment_(env)
+
+        print "DTV: Launching Download Daemon"
         dlTask.launch()
         
         controller = NSApplication.sharedApplication().delegate()
         nc.addObserver_selector_name_object_(controller, 'downloaderDaemonDidTerminate:', NSTaskDidTerminateNotification, dlTask)
 
         del pool
+
 
 class ExceptionReporterController (NibClassBuilder.AutoBaseClass):
     
