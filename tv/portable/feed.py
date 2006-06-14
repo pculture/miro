@@ -774,16 +774,16 @@ class Feed(DDBObject):
                 handler = RSSLinkGrabber(info['redirected-url'],charset)
                 parser.setContentHandler(handler)
                 parser.parse(StringIO(xmldata))
-            except xml.sax.SAXException: 
-                #it doesn't parse as RSS, so it must be HTML
-                #print " Nevermind! it's HTML"
-                self.askForScrape(info, html, charset)
             except UnicodeDecodeError:
                 print "Unicode issue parsing... %s" % xmldata[0:300]
                 traceback.print_exc()
                 self.finishGenerateFeed(None)
                 if removeOnError:
                     self.remove()
+            except:
+                #it doesn't parse as RSS, so it must be HTML
+                #print " Nevermind! it's HTML"
+                self.askForScrape(info, html, charset)
 
             if handler.enclosureCount > 0 or handler.itemCount == 0:
                 #print " It's RSS with enclosures"
@@ -1359,9 +1359,6 @@ class ScraperFeedImpl(FeedImpl):
                 parser.parse(StringIO(xmldata))
             except IOError, e:
                 pass
-            except:
-                print "DTV: Warning couldn't parse HTML at %s" % baseurl
-                traceback.print_exc()
             links = handler.links
             linkDict = {}
             for link in links:
@@ -1379,7 +1376,7 @@ class ScraperFeedImpl(FeedImpl):
                 finally:
                     self.ufeed.endChange()
             return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')], linkDict)
-        except (xml.sax.SAXException, IOError):
+        except (xml.sax.SAXException, IOError, xml.sax.SAXNotRecognizedException):
             (links, linkDict) = self.scrapeHTMLLinks(html,baseurl,setTitle=setTitle, charset=charset)
             return (links, linkDict)
 
