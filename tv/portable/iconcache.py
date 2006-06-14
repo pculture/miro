@@ -96,23 +96,19 @@ class IconCache:
         return newname
 
     def errorCallback(self, url, error = None):
-        # Error during download, or no url.  To reflect that,
-        # clear the cache if there was one before.
-        wasValid = self.isValid()
-        self.url = url
-        self.etag = None
-        self.modified = None
-        self.updated = True
+        # Don't clear the cache on an error.
+        if self.url != url:
+            self.url = url
+            self.etag = None
+            self.modified = None
         self.updating = False
         if self.needsUpdate:
             self.needsUpdate = False
             self.requestUpdate()
-        elif (error is not None):
-            self.updated = False
+        elif error is not None:
             addTimeout(3600,self.requestUpdate, "Thumbnail request for %s" % url)
-        if wasValid:
-            self.dbItem.beginChange()
-            self.dbItem.endChange()
+        else:
+            self.updated = True
         iconCacheUpdater.updateFinished ()
 
     def updateIconCache (self, url, info):
