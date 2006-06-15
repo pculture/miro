@@ -90,8 +90,10 @@ VLCRenderer.prototype = {
   },
 
   reset: function() {
-    this.stop();
-    this.vlc.clear_playlist();
+    // We don't need these, and stops seem to cause problems, so I'm
+    // commenting them out --NN
+    // this.stop();
+    // this.vlc.clear_playlist();
     this.showPlayButton();
   },
 
