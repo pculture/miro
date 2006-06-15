@@ -1355,10 +1355,8 @@ class ScraperFeedImpl(FeedImpl):
             else:
                 handler = RSSLinkGrabber(baseurl)
             parser.setContentHandler(handler)
-            try:
-                parser.parse(StringIO(xmldata))
-            except IOError, e:
-                pass
+            parser.parse(StringIO(xmldata))
+
             links = handler.links
             linkDict = {}
             for link in links:
@@ -1376,7 +1374,7 @@ class ScraperFeedImpl(FeedImpl):
                 finally:
                     self.ufeed.endChange()
             return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')], linkDict)
-        except (xml.sax.SAXException, IOError, xml.sax.SAXNotRecognizedException):
+        except:
             (links, linkDict) = self.scrapeHTMLLinks(html,baseurl,setTitle=setTitle, charset=charset)
             return (links, linkDict)
 
