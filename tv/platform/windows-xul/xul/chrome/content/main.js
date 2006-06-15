@@ -172,17 +172,23 @@ function setupSeekButton(direction, buttonId) {
     timeoutId = setTimeout(handleTimeout, 500);
   }
   element.onmousedown = function() { 
-    if(!buttonIsActive(buttonId)) return false;
     didSeek = false;
     timeoutId = setTimeout(handleTimeout, 500);
     return false;
   }
-  element.onmouseup = element.onmouseout = function() { 
+  element.onmouseup = function() { 
     if(timeoutId) {
         clearTimeout(timeoutId);
         timeoutId = null;
     }
     if(!didSeek) pybridge.skip(direction);
+    return false;
+  }
+  element.onmouseout = function() { 
+    if(timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+    }
     return false;
   }
 }
