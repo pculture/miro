@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-31 18:38-0400\n"
+"POT-Creation-Date: 2006-06-05 12:34-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,31 +17,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:107
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:108
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6
 msgid "Username:"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:118
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:119
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:7
 msgid "Password:"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:133
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:134
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:4
 msgid "Channel requires authentication"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:133
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:134
 #, python-format
 msgid "%s requires a username and password for \"%s\"."
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:146
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:147
 msgid "Not a DTV-style channel"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:147
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:148
 #, python-format
 msgid ""
 "But we'll try our best to grab the files.\n"
@@ -51,47 +51,49 @@ msgid ""
 "Please contact the publishers of %s and ask if they have a DTV-style channel."
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:148
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:149
 msgid "Continue"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:158
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:159
 msgid "DTV Version Alert"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:159
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:160
 msgid ""
 "A new version of DTV is available.\n"
 "\n"
 "Would you like to download it now?"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:166
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:167
 msgid "DTV Version Check"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:167
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:168
 msgid "This version of DTV is up to date."
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:172
-#: ../../portable/app.py:661
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:173
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:79
+#: ../../portable/app.py:670
 #, python-format
 msgid "%s database save failed"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:174
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:175
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:81
 #, python-format
 msgid ""
 "%s was unable to save its database: %s.\n"
 "Recent changes may be lost."
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:179
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:180
 msgid "Remove Channel"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:180
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:181
 #, python-format
 msgid ""
 "Are you sure you want to <b>remove</b> the channel\n"
@@ -99,22 +101,24 @@ msgid ""
 "<b>This operation cannot be undone.</b>"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:210
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:211
+#: ../../portable/app.py:634
 msgid "Are you sure you want to quit?"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:211
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:212
+#: ../../portable/app.py:635
 #, python-format
 msgid "You have %d download still in progress."
-msgid_plural "You have %d download still in progress."
+msgid_plural "You have %d downloads still in progress."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:220
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:221
 msgid "Unknown Runtime Error"
 msgstr ""
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:221
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:222
 #, python-format
 msgid "An unknown error has occurred %s."
 msgstr ""
@@ -189,7 +193,8 @@ msgstr ""
 
 #: ../../portable/compiled_templates/new.py:233
 #: ../../portable/compiled_templates/new.py:569
-#: ../../portable/compiled_templates/download.py:228
+#: ../../portable/compiled_templates/download.py:232
+#: ../../portable/compiled_templates/download.py:568
 #: ../../portable/compiled_templates/channel.py:235
 #: ../../portable/compiled_templates/channel.py:571
 #: ../../portable/compiled_templates/channel.py:907
@@ -204,7 +209,8 @@ msgstr ""
 
 #: ../../portable/compiled_templates/new.py:253
 #: ../../portable/compiled_templates/new.py:589
-#: ../../portable/compiled_templates/download.py:248
+#: ../../portable/compiled_templates/download.py:252
+#: ../../portable/compiled_templates/download.py:588
 #: ../../portable/compiled_templates/channel.py:255
 #: ../../portable/compiled_templates/channel.py:591
 #: ../../portable/compiled_templates/channel.py:927
@@ -222,8 +228,10 @@ msgstr ""
 #: ../../portable/compiled_templates/new.py:613
 #: ../../portable/compiled_templates/new.py:693
 #: ../../portable/compiled_templates/new.py:787
-#: ../../portable/compiled_templates/download.py:272
-#: ../../portable/compiled_templates/download.py:352
+#: ../../portable/compiled_templates/download.py:276
+#: ../../portable/compiled_templates/download.py:356
+#: ../../portable/compiled_templates/download.py:612
+#: ../../portable/compiled_templates/download.py:692
 #: ../../portable/compiled_templates/channel.py:279
 #: ../../portable/compiled_templates/channel.py:359
 #: ../../portable/compiled_templates/channel.py:615
@@ -236,7 +244,7 @@ msgstr ""
 #: ../../portable/compiled_templates/channel.py:1703
 #: ../../portable/compiled_templates/channel.py:1959
 #: ../../portable/compiled_templates/channel.py:2039
-#: ../../portable/compiled_templates/channel.py:2251
+#: ../../portable/compiled_templates/channel.py:2276
 #: ../../portable/compiled_templates/library.py:272
 #: ../../portable/compiled_templates/library.py:352
 #: ../../portable/compiled_templates/download_item.py:249
@@ -252,9 +260,12 @@ msgstr ""
 #: ../../portable/compiled_templates/new.py:617
 #: ../../portable/compiled_templates/new.py:647
 #: ../../portable/compiled_templates/new.py:697
-#: ../../portable/compiled_templates/download.py:276
-#: ../../portable/compiled_templates/download.py:306
-#: ../../portable/compiled_templates/download.py:356
+#: ../../portable/compiled_templates/download.py:280
+#: ../../portable/compiled_templates/download.py:310
+#: ../../portable/compiled_templates/download.py:360
+#: ../../portable/compiled_templates/download.py:616
+#: ../../portable/compiled_templates/download.py:646
+#: ../../portable/compiled_templates/download.py:696
 #: ../../portable/compiled_templates/channel.py:283
 #: ../../portable/compiled_templates/channel.py:313
 #: ../../portable/compiled_templates/channel.py:363
@@ -287,7 +298,8 @@ msgstr ""
 
 #: ../../portable/compiled_templates/new.py:305
 #: ../../portable/compiled_templates/new.py:641
-#: ../../portable/compiled_templates/download.py:300
+#: ../../portable/compiled_templates/download.py:304
+#: ../../portable/compiled_templates/download.py:640
 #: ../../portable/compiled_templates/channel.py:307
 #: ../../portable/compiled_templates/channel.py:643
 #: ../../portable/compiled_templates/channel.py:979
@@ -302,7 +314,8 @@ msgstr ""
 
 #: ../../portable/compiled_templates/new.py:381
 #: ../../portable/compiled_templates/new.py:717
-#: ../../portable/compiled_templates/download.py:376
+#: ../../portable/compiled_templates/download.py:380
+#: ../../portable/compiled_templates/download.py:716
 #: ../../portable/compiled_templates/channel.py:383
 #: ../../portable/compiled_templates/channel.py:719
 #: ../../portable/compiled_templates/channel.py:1055
@@ -405,17 +418,31 @@ msgstr ""
 msgid "Skip Video ${countdown}"
 msgstr ""
 
-#: ../../portable/compiled_templates/download.py:406
+#: ../../portable/compiled_templates/download.py:754
+#: ../../portable/compiled_templates/tablist.py:269
+#: ../../portable/compiled_templates/tablist.py:281
+#: ../../portable/compiled_templates/tablist.py:293
+#: ../../portable/compiled_templates/statictab.py:136
+#: ../../portable/compiled_templates/statictab.py:148
+#: ../../portable/compiled_templates/statictab.py:160
 msgid "Active Downloads"
 msgstr ""
 
+#: ../../portable/compiled_templates/download.py:757
+msgid ""
+"External Torrents <a title=\"Clear Completed\" style=\"text-decoration: "
+"underline; margin-left: 15px; font-weight: normal;\" href=\"#\" onclick="
+"\"return eventURL('action:clearCompletedTorrents');\" il8n:translate="
+"\"\">Clear Completed</a>"
+msgstr ""
+
 #: ../../portable/compiled_templates/feed_settings.py:48
-#: ../../portable/compiled_templates/channel.py:2200
+#: ../../portable/compiled_templates/channel.py:2222
 msgid "Auto Download"
 msgstr ""
 
 #: ../../portable/compiled_templates/feed_settings.py:56
-#: ../../portable/compiled_templates/channel.py:2210
+#: ../../portable/compiled_templates/channel.py:2232
 msgid "Recommend"
 msgstr ""
 
@@ -453,19 +480,31 @@ msgstr ""
 msgid "Channel URL"
 msgstr ""
 
-#: ../../portable/compiled_templates/channel.py:2202
+#: ../../portable/compiled_templates/channel.py:2086
+msgid "${count} Downloads in Progress"
+msgstr ""
+
+#: ../../portable/compiled_templates/channel.py:2091
+msgid "1 Download in Progress"
+msgstr ""
+
+#: ../../portable/compiled_templates/channel.py:2224
 msgid "Settings"
 msgstr ""
 
-#: ../../portable/compiled_templates/channel.py:2230
+#: ../../portable/compiled_templates/channel.py:2244
+msgid "On This Channel"
+msgstr ""
+
+#: ../../portable/compiled_templates/channel.py:2265
 msgid "Videos on this Channel"
 msgstr ""
 
-#: ../../portable/compiled_templates/channel.py:2263
+#: ../../portable/compiled_templates/channel.py:2288
 msgid "Watched"
 msgstr ""
 
-#: ../../portable/compiled_templates/channel.py:2275
+#: ../../portable/compiled_templates/channel.py:2300
 msgid "Saved"
 msgstr ""
 
@@ -527,15 +566,6 @@ msgstr ""
 msgid "Continue To Next Video"
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:849
-msgid "Could not connect to server"
-msgstr ""
-
-#: ../../portable/dl_daemon/download.py:851
-#, python-format
-msgid "Could not connect to server: %s"
-msgstr ""
-
 #: ../../portable/dialogs.py:59
 msgid "Ok"
 msgstr ""
@@ -566,7 +596,20 @@ msgstr ""
 msgid "Don't Migrate"
 msgstr ""
 
-#: ../../portable/app.py:664
+#: ../../portable/feed.py:807
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:4
+msgid "Channel is not compatible with Democracy!"
+msgstr ""
+
+#: ../../portable/feed.py:808
+msgid ""
+"    But we'll try our best to grab the files. It may take extra time to list "
+"the     videos, and descriptions may look funny.  Please contact the "
+"publishers of     $url and ask if they can supply a feed in a format that "
+"will work with     Democracy."
+msgstr ""
+
+#: ../../portable/app.py:673
 #, python-format
 msgid ""
 "%s was unable to save its database: %s.\n"
@@ -576,12 +619,34 @@ msgid ""
 "Quit Anyway?"
 msgstr ""
 
-#: ../../portable/app.py:666
+#: ../../portable/app.py:675
 #, python-format
 msgid ""
 "%s was unable to save its database: %s.\n"
 "Recent changes may be lost.\n"
 "Quit Anyway?"
+msgstr ""
+
+#: ../../portable/app.py:1511
+msgid "Continue with Default Channels"
+msgstr ""
+
+#: ../../portable/app.py:1512
+msgid "Continue with Custom Channels"
+msgstr ""
+
+#: ../../portable/app.py:1513
+msgid "Continue with Both"
+msgstr ""
+
+#: ../../portable/app.py:1529
+msgid "Custom Channels"
+msgstr ""
+
+#: ../../portable/app.py:1530
+msgid ""
+"This Democracy Player has a custom set of video channels that were included\n"
+"by the website where you initiated your download."
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:1
@@ -713,10 +778,6 @@ msgstr ""
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
 "videos, and descriptions may look funny."
-msgstr ""
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:4
-msgid "Channel is not compatible with Democracy!"
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:7
