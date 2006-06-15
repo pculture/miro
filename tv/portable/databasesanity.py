@@ -48,6 +48,12 @@ class PhontomFeedTest(SanityTest):
             phantomsString = ', '.join([str(p) for p in phantoms])
             return "Phantom feed(s) referenced in items: %s" % phantomsString
 
+    def fixIfPossible(self, objectList):
+        for i in reversed(xrange(len(objectList))):
+            if (isinstance(objectList[i], item.Item) and 
+                    objectList[i].feed_id not in self.topLevelFeeds):
+                del objectList[i]
+
 class SingletonTest(SanityTest):
     """Check that singleton DB objects are really singletons.
 

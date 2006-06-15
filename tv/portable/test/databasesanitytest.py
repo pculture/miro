@@ -49,8 +49,9 @@ class SanityCheckingTest(DemocracyTestCase):
         f = feed.Feed("http://feed.uk")
         i = item.Item(f.id, {})
         self.checkObjectListFailsTest([i])
-        self.checkFixIfPossible([i], [i, f])
+        self.checkFixIfPossible([i], [])
         self.checkObjectListPassesTest([i, f])
+        self.checkObjectListPassesTest([])
 
     def testManualFeedChecking(self):
         f = feed.Feed("dtv:manualFeed")
