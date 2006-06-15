@@ -177,8 +177,7 @@ function setupSeekButton(direction, buttonId) {
     timeoutId = setTimeout(handleTimeout, 500);
     return false;
   }
-  element.onmouseup = function() { 
-    if(!buttonIsActive(buttonId)) return false;
+  element.onmouseup = element.onmouseout = function() { 
     if(timeoutId) {
         clearTimeout(timeoutId);
         timeoutId = null;
