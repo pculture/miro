@@ -736,7 +736,10 @@ class HTTPConnection(ConnectionHandler):
     def handleHeaderLine(self, line):
         if self.unparsedHeaderLine == '':
             if line == '':
-                self.startBody()
+                if self.status != 100:
+                    self.startBody()
+                else:
+                    self.changeState('response-status')
             elif ':' in line:
                 self.parseHeader(line)
             else:

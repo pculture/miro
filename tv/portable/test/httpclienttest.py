@@ -743,8 +743,11 @@ Below this line, is 1000 repeated lines of 0-9.
         self.assertEquals(port, 123)
 
     def checkRedirect(self, url, redirectUrl, updatedUrl, **extra):
+        self.errbackCalled = self.callbackCalled = False
         httpclient.grabURL(url, self.callback, self.errback, **extra)
         self.runEventLoop(timeout=20)
+        self.assert_(not self.errbackCalled)
+        self.assert_(self.callbackCalled)
         self.assertEquals(self.data['redirected-url'], redirectUrl)
         self.assertEquals(self.data['updated-url'], updatedUrl)
 
