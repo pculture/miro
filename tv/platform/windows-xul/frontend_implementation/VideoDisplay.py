@@ -6,6 +6,7 @@ import util
 from xpcom import components
 from threading import Lock
 import frontend
+import time
 
 selectItemLock = Lock()
 
@@ -52,6 +53,20 @@ class VideoDisplay (app.VideoDisplayBase):
         self.volume = volume
         frontend.vlcRenderer.setVolume(volume)
 
+# This is a major hack to avoid VLC crashes by giving it time to
+# process each stop or play command. --NN
+def lockAndPlay(func):
+    def locked(*args, **kwargs):
+        global selectItemLock
+        selectItemLock.acquire()
+        try:
+            ret = func(*args, **kwargs)
+            time.sleep(1)
+            return ret
+        finally:
+            selectItemLock.release()
+    return locked
+
 class VLCRenderer:
     """The VLC renderer is very thin wrapper around the xine-renderer xpcom
     component. 
@@ -62,26 +77,22 @@ class VLCRenderer:
         url = util.absolutePathToFileURL(path)
         return frontend.vlcRenderer.canPlayURL(url)
 
+    @lockAndPlay
     def selectItem(self, item):
-        # Our current implementation of selectURL crashes if we don't
-        # wrap it in a lock. I'm not sure why...
-        global selectItemLock
-        selectItemLock.acquire()
-        try:
-            path = item.getFilename()
-            url = util.absolutePathToFileURL(path)
-            return frontend.vlcRenderer.selectURL(url)
-        finally:
-            selectItemLock.release()
-
+        path = item.getFilename()
+        url = util.absolutePathToFileURL(path)
+        return frontend.vlcRenderer.selectURL(url)
     def setVolume(self, volume): 
         return frontend.vlcRenderer.setVolume(volume)
+    @lockAndPlay
     def reset(self): 
         return frontend.vlcRenderer.reset()
+    @lockAndPlay
     def play(self): 
         return frontend.vlcRenderer.play()
     def pause(self): 
         return frontend.vlcRenderer.pause()
+    @lockAndPlay
     def stop(self): 
         return frontend.vlcRenderer.stop()
     def goToBeginningOfMovie(self): 
