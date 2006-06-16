@@ -80,16 +80,10 @@ callLock = threading.Lock()
 callEvent = threading.Event()
 callResult = None
 
-def _performCall(func, args, kwargs):
-    pool = Foundation.NSAutoreleasePool.alloc().init()
-    try:
-        return func(*args, **kwargs)
-    finally:
-        del pool
-
 def _call(args, delay=0.0, waitUntilDone=False, waitForResult=False):
     if isOnMainThread():
-        return _performCall(*args)
+        (func, fargs, fkwargs) = args
+        return func(*fargs, **fkwargs)
     else:
         obj = CallerObject.alloc().initWithArgs_(args)
         try:
@@ -133,11 +127,11 @@ class CallerObject (Foundation.NSObject):
         return r
         
     def perform_(self, (func, args, kwargs)):
-        return _performCall(func, args, kwargs)
+        return func(*args, **kwargs)
 
     def performAndNotify_(self, (func, args, kwargs)):
         global callResult
-        callResult = _performCall(func, args, kwargs)
+        callResult = func(*args, **kwargs)
         callEvent.set()
 
 ###############################################################################
@@ -146,9 +140,6 @@ class CallerObject (Foundation.NSObject):
 ###############################################################################
 
 def getAvailableBytesForMovies():
-    pool = Foundation.NSAutoreleasePool.alloc().init()
     fm = Foundation.NSFileManager.defaultManager()
     info = fm.fileSystemAttributesAtPath_(config.get(prefs.MOVIES_DIRECTORY))
-    bytesFree = info[Foundation.NSFileSystemFreeSize]
-    del pool
-    return bytesFree
+    return info[Foundation.NSFileSystemFreeSize]
