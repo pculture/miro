@@ -15,6 +15,7 @@ import feed
 import prefs
 import views
 import config
+import dialogs
 import resource
 import template
 import database
@@ -92,8 +93,8 @@ def showWarningDialog(summary, message, buttons=None):
 def showCriticalDialog(summary, message, buttons=None):
     return showDialog(summary, message, buttons, NSCriticalAlertStyle)
 
+@platformutils.onMainThreadWithReturn
 def showDialog(summary, message, buttons, style):
-    pool = NSAutoreleasePool.alloc().init()
     alert = NSAlert.alloc().init()
     alert.setAlertStyle_(style)
     alert.setMessageText_(summary)
@@ -101,11 +102,9 @@ def showDialog(summary, message, buttons, style):
     if buttons is not None:
         for title in buttons:
             alert.addButtonWithTitle_(title)
-    platformutils.warnIfNotOnMainThread('showDialog')
     result = alert.runModal()
     result -= NSAlertFirstButtonReturn
     del alert
-    del pool
     return result
 
 
@@ -963,27 +962,25 @@ class UIBackendDelegate:
     httpAuthLock = threading.Lock()
 
     def runDialog(self, dialog):
-        buttons = map(lambda x:x.text, dialog.buttons)
-        result = showWarningDialog(dialog.title, dialog.description, buttons)
-        dialog.runCallback(dialog.buttons[result])
+        if isinstance(dialog, dialogs.HTTPAuthDialog):
+            self.httpAuthLock.acquire()
+            try:
+                authDlog = PasswordController.alloc().initWithDialog_(dialog)
+                result = authDlog.getAnswer()
+                if result is not None:
+                    dialog.runCallback(dialogs.BUTTON_OK, *result)
+                else:
+                    dialog.runCallback(None)
+            finally:
+                self.httpAuthLock.release()
+        else:
+            buttons = map(lambda x:x.text, dialog.buttons)
+            result = showWarningDialog(dialog.title, dialog.description, buttons)
+            dialog.runCallback(dialog.buttons[result])
 
     def getHTTPAuth(self, url, domain, prefillUser = None, prefillPassword = None):
-        """Ask the user for HTTP login information for a location, identified
-        to the user by its URL and the domain string provided by the
-        server requesting the authorization. Default values can be
-        provided for prefilling the form. If the user submits
-        information, it's returned as a (user, password)
-        tuple. Otherwise, if the user presses Cancel or similar, None
-        is returned."""
-        ret = None
-        self.httpAuthLock.acquire()
-        try:
-            platformutils.warnIfNotOnMainThread('UIBackendDelegate.getHTTPAuth')
-            message = "%s requires a username and password for \"%s\"." % (url, domain)
-            ret = PasswordController.alloc().init(message, prefillUser, prefillPassword).getAnswer()
-        finally:
-            self.httpAuthLock.release()
-        return ret
+        # This looks deprecated
+        return None
 
     def isScrapeAllowed(self, url):
         """Tell the user that URL wasn't a valid feed and ask if it should be
@@ -1158,58 +1155,36 @@ class ExceptionReporterController (NibClassBuilder.AutoBaseClass):
        
 class PasswordController (NibClassBuilder.AutoBaseClass):
 
-    def init(self, message, prefillUser = None, prefillPassword = None):
-        platformutils.warnIfNotOnMainThread('PasswordController.init')
+    def initWithDialog_(self, dialog):
         pool = NSAutoreleasePool.alloc().init()
-        # sets passwordField, textArea, usernameField, window
         NSBundle.loadNibNamed_owner_("PasswordWindow", self)
-
-        self.usernameField.setStringValue_(prefillUser or "")
-        self.passwordField.setStringValue_(prefillPassword or "")
-        self.textArea.setStringValue_(message)
+        self.window.setTitle_(dialog.title)
+        self.usernameField.setStringValue_(dialog.prefillUser or "")
+        self.passwordField.setStringValue_(dialog.prefillPassword or "")
+        self.textArea.setStringValue_(dialog.description)
         self.result = None
-        self.condition = threading.Condition()
-
-        # Ensure we're not deallocated until the window that has actions
-        # that point at us is closed
-        self.retain()
         del pool
         return self
 
     def getAnswer(self):
         """Present the dialog and wait for user answer. Returns (username,
         password) if the user pressed OK, or None if the user pressed Cancel."""
-        # PasswordController is likely to get release()d by Python in response
-        # to getAnswer returning.
-        print "DTV: Presenting password dialog"
-        self.performSelectorOnMainThread_withObject_waitUntilDone_("showAtModalLevel:", nil, NO)
-        self.condition.acquire()
-        self.condition.wait()
-        self.condition.release()
-        self.release()
+        NSApplication.sharedApplication().runModalForWindow_(self.window)
         return self.result
-
-    # executes in GUI thread
-    def showAtModalLevel_(self, sender):
-        self.window.setLevel_(NSModalPanelWindowLevel)
-        self.window.makeKeyAndOrderFront_(nil)
 
     # bound to button in nib
     def acceptEntry_(self, sender):
-        self.condition.acquire()
-        self.result = (self.usernameField.stringValue(),
-        self.passwordField.stringValue())
-        self.window.close()
-        self.condition.notify()
-        self.condition.release()
+        result = (self.usernameField.stringValue(), self.passwordField.stringValue())
+        self.closeWithResult(result)
 
     # bound to button in nib
     def cancelEntry_(self, sender):
-        self.condition.acquire()
-        self.result = None
+        self.closeWithResult(None)
+        
+    def closeWithResult(self, result):
+        self.result = result
         self.window.close()
-        self.condition.notify()
-        self.condition.release()
+        NSApplication.sharedApplication().stopModal()
 
 
 ###############################################################################
