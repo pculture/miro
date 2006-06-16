@@ -1613,7 +1613,7 @@ class ManualFeedImpl(FeedImpl):
 # FIXME: Grab link title from ALT tags in images
 # FIXME: Grab document title from TITLE tags
 class HTMLLinkGrabber(HTMLParser):
-    linkPattern = re.compile("^.*?<(a|embed)\s.*?(href|src)\s*=\s*\"(.*?)\".*?>(.*?)</a>(.*)$", re.S)
+    linkPattern = re.compile("<(a|embed)\s[^>]*(href|src)\s*=\s*\"([^\"]*)\"[^>]*>(.*?)</a(.*)", re.S)
     imgPattern = re.compile(".*<img\s.*?src\s*=\s*\"(.*?)\".*?>", re.S)
     tagPattern = re.compile("<.*?>")
     def getLinks(self,data, baseurl):
@@ -1626,7 +1626,7 @@ class HTMLLinkGrabber(HTMLParser):
         self.title = None
         self.thumbnailUrl = None
 
-        match = HTMLLinkGrabber.linkPattern.match(data)
+        match = HTMLLinkGrabber.linkPattern.search(data)
         while match:
             link = urljoin(baseurl, match.group(3))
             desc = match.group(4)
@@ -1637,7 +1637,7 @@ class HTMLLinkGrabber(HTMLParser):
                 thumb = None
             desc =  HTMLLinkGrabber.tagPattern.sub(' ',desc)
             self.links.append( (link, desc, thumb))
-            match = HTMLLinkGrabber.linkPattern.match(match.group(5))
+            match = HTMLLinkGrabber.linkPattern.search(match.group(5))
         return self.links
 
 class RSSLinkGrabber(xml.sax.handler.ContentHandler):
