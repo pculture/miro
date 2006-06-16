@@ -4,6 +4,8 @@
 
 var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
                 getService(Components.interfaces.pcfIDTVPyBridge);
+var jsbridge = Components.classes["@participatoryculture.org/dtv/jsbridge;1"].
+                getService(Components.interfaces.pcfIDTVJSBridge);
 
 function quitObserver()
 {
@@ -52,7 +54,7 @@ function volumeKnobMove(event) {
     if (knobPos < left) knobPos = left;
     if (knobPos > right) knobPos = right;
     knobDragStart = event.clientX;
-    knob.style.left = knobPos +"px";
+    knob.left = knobPos;
     pybridge.setVolume((knobPos - left)/(right-left));
   }
 }
@@ -83,21 +85,21 @@ var PROGRESS_SLIDER_RIGHT = 204;
 var PROGRESS_SLIDER_WIDTH = PROGRESS_SLIDER_RIGHT - PROGRESS_SLIDER_LEFT;
 
 
-function translateToProgressX(pageX) 
+function translateToProgressX(event) 
 {
-  var progressSliderPageCoords = getPageCoords(
-        document.getElementById("progress"));
-  var x = pageX - progressSliderPageCoords['x'];
+  var bottomProgress = document.getElementById("bottom-progress");
+  var x = event.screenX - bottomProgress.boxObject.screenX;
   return Math.max(PROGRESS_SLIDER_LEFT, Math.min(PROGRESS_SLIDER_RIGHT, x));
 }
 
 function videoProgressDown(event) {
   var slider = document.getElementById("progress-slider");
   slider.beingDragged = true;
+  slider.left = translateToProgressX(event);
 }
 
 function videoProgressOut(event) {
-  if(event.target.id == 'progress' && 
+  if(event.target.id == 'bottom-progress' && 
         event.relatedTarget.id != "progress-text" &&
         event.relatedTarget.id != "progress-slider") {
     var slider = document.getElementById("progress-slider");
@@ -109,14 +111,14 @@ function videoProgressMove(event) {
   //jsdump("Video progress move");
   var slider = document.getElementById("progress-slider");
   if (slider.beingDragged) {
-    slider.style.left = translateToProgressX(event.pageX) + 'px';
+    slider.left = translateToProgressX(event);
   }
 }
 
 function videoProgressUp(event) {
   var slider = document.getElementById("progress-slider");
   if (slider.beingDragged) {
-    var x = translateToProgressX(event.pageX);
+    var x = translateToProgressX(event);
     var fractionDone = (x - PROGRESS_SLIDER_LEFT) / PROGRESS_SLIDER_WIDTH;
     var totalTime = vlc.get_length();
     var seekTime = Math.round(totalTime * fractionDone);
@@ -201,7 +203,7 @@ function setupHandlers() {
     knob.onmouseup = volumeKnobUp;
 
     // Set up listeners for the progress slider
-    var progress = document.getElementById("progress");
+    var progress = document.getElementById("bottom-progress");
     progress.onmousedown = videoProgressDown;
     progress.onmouseout = videoProgressOut;
     progress.onmousemove = videoProgressMove;
@@ -213,9 +215,9 @@ function setupHandlers() {
     document.getElementById("bottom-buttons-stop").onclick = function() {
         if(buttonIsActive("bottom-buttons-stop")) pybridge.stop();
     };
-    document.getElementById("bottom-buttons-fullscreen").onclick = function() {
-        if(buttonIsActive("bottom-buttons-fullscreen")) vlc.fullscreen();
-    };
+    document.getElementById("bottom-buttons-fullscreen").onclick = function() { 
+        if(buttonIsActive("bottom-buttons-fullscreen")) jsbridge.toggleFullscreen();
+    }
     setupSeekButton(-1, "bottom-buttons-previous");
     setupSeekButton(1, "bottom-buttons-next");
 }
@@ -257,7 +259,6 @@ function closeApp() {
        getService(Components.interfaces.nsIAppStartup);
   startup.quit(startup.eAttemptQuit);
 }
-
 /*****************************************************************************
  Context menus
  *****************************************************************************/

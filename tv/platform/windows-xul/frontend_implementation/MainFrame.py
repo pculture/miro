@@ -44,6 +44,7 @@ class MainFrame:
                 frontend.jsBridge.showVideoDisplay()
             else:
                 frontend.jsBridge.hideVideoDisplay()
+                frontend.jsBridge.leaveFullscreen()
 
     def channelGuideCallback(self, url):
         try:

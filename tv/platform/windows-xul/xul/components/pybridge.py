@@ -45,7 +45,7 @@ def initializeProxyObjects(window):
     xulEventQueue = eventQueueService.getSpecialEventQueue(
             nsIEventQueueService.UI_THREAD_EVENT_QUEUE)
 
-    jsBridge = makeComp("@participatoryculture.org/dtv/jsbridge;1",
+    jsBridge = makeService("@participatoryculture.org/dtv/jsbridge;1",
             pcfIDTVJSBridge)
     jsBridge.init(window)
     frontend.jsBridge = proxyManager.getProxyForObject(xulEventQueue,
@@ -87,6 +87,7 @@ class PyBridge:
     def __init__(self):
         self.started = False
         self.delegate = UIBackendDelegate()
+        self.cursorDisplayCount = 0
 
     def onStartup(self, window):
         if self.started:
@@ -256,3 +257,23 @@ class PyBridge:
             print "No HTMLDisplay for %s in loadURLInBrowser: "% browserId
         else:
             display.onURLLoad(url)
+
+    def showCursor(self, display):
+        # ShowCursor has an amazing API.  From Microsoft:
+        #
+        # This function sets an internal display counter that determines
+        # whether the cursor should be displayed. The cursor is displayed
+        # only if the display count is greater than or equal to 0. If a
+        # mouse is installed, the initial display count is 0.  If no mouse
+        # is installed, the display count is -1
+        #
+        # How do we get the initial display count?  There's no method.  We
+        # assume it's 0 and the mouse is plugged in.
+        if ((display and self.cursorDisplayCount >= 0) or
+                (not display and self.cursorDisplayCount < 0)):
+            return
+        if display:
+            arg = 1
+        else:
+            arg = 0
+        self.cursorDisplayCount = ctypes.windll.user32.ShowCursor(arg)

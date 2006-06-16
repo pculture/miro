@@ -50,4 +50,5 @@ interface pcfIDTVPyBridge : nsISupports
   void setPreserveDiskSpaceAmount(in float value);
   short getExpireAfter();
   void setExpireAfter(in short value);
+  void showCursor(in boolean display);
 };

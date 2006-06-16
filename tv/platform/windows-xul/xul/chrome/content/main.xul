@@ -101,12 +101,10 @@
 	<!-- / WINDOW TITLE -->
 	
 	<!-- WINDOW BUTTONS -->
-	<hbox flex="0" width="55" minheight="24">	
-		<html:ul id="titlebar-buttons">
-			<html:li id="titlebar-buttons-minimize"><html:a onclick="window.minimize();">Minimize</html:a></html:li>
-			<html:li id="titlebar-buttons-maximize"><html:a onclick="maximizeOrRestore();">Maximize</html:a></html:li>
-                        <html:li id="titlebar-buttons-close"><html:a onclick="handleExit();">Close</html:a></html:li>
-		</html:ul>
+	<hbox flex="0" width="55" height="24" align="center">
+                <image id="titlebar-buttons-minimize" class="titlebar-button" onclick="minimize();" />
+                <image id="titlebar-buttons-maximize" class="titlebar-button" onclick="maximizeOrRestore();" />
+                <image id="titlebar-buttons-close" class="titlebar-button" onclick="handleExit();" />
 	</hbox>
 	<!-- / WINDOW BUTTONS -->
 	
@@ -128,16 +126,16 @@
 	<!-- / CHANNEL BAR -->
 	
   <!-- DIVIDER -->
-	<splitter collapse="before" width="10"/>
+	<splitter id="mainSplitter" collapse="before" width="10"/>
 	<!-- / DIVIDER -->
 
         <browser id="mainDisplay" src="" type="content" flex="1"
              context="contextPopup"
              oncontextmenu="return xulcontexthandler('mainDisplay', event);" />
         <vbox id="video-box" flex="1" collapsed="true">
-            <browser id="mainDisplayVideo" 
+            <browser flex="1" id="mainDisplayVideo" 
                 src="chrome://dtv/content/video-display-vlc.html" 
-                type="content" flex="1" context="contextPopup"
+                type="content" context="contextPopup"
                 oncontextmenu="return xulcontexthandler('mainDisplayVideo', event);" />
             <browser id="videoInfoDisplay" src="" type="content"
                     height="40px"/>
@@ -152,10 +150,8 @@
 <!-- / CONTENT AREA -->
 
 <!-- BOTTOM -->
-<hbox flex="0" id="bottom" class="bottom" align="center">
-
-	<!-- BUTTONS -->
-	<hbox flex="0" container="1" width="250" height="64" minheight="64" id="bottom-left">
+<hbox flex="0" height="64" id="bottom" class="bottom" align="center">
+	<hbox flex="0" container="1" width="245" height="64" minheight="64" id="bottom-left">
 		<hbox flex="0" maxheight="20" id="bottom-left-addchannel">
 			<button id="add-channel" label="Add Channel" disabled="false" accesskey="A" command="addchannel"/>
 		</hbox>
@@ -163,46 +159,28 @@
 			<button id="Preferences" label="Options" disabled="false" accesskey="O" command="openprefs"/>
 		</hbox>
 	</hbox>
-	<!-- / BUTTONS -->
-	
-	<!-- PLAYBACK PROGRESS/CONTROLS -->
-	<hbox flex="1" class="bottom-center">
-		<hbox flex="1"/>
-		
-		<!-- PROGRESS BAR -->
-		<hbox flex="0" width="220" id="bottom-progress">
-                     <html:div id="progress">
-          	         <html:span id="progress-slider" class="progress-slider-inactive"/>
-          	         <html:span id="progress-text">00:00:00</html:span>
-                     </html:div>
-		</hbox>
-		<!-- / PROGRESS BAR -->
-		
-		<!-- CONTROLS -->
-		<hbox flex="0" width="180">
-			<html:ul id="bottom-buttons">
-				<html:li id="bottom-buttons-previous" class="bottom-buttons-previous-inactive"><html:a >Previous</html:a></html:li>
-				<html:li id="bottom-buttons-stop" class="bottom-buttons-stop-inactive"><html:a>Stop</html:a></html:li>
-				<html:li id="bottom-buttons-play" class="bottom-buttons-play"><html:a>Play</html:a></html:li>
-                                <html:li id="bottom-buttons-fullscreen" class="bottom-buttons-fullscreen-inactive"><html:a>Fullscreen</html:a></html:li>
-				<html:li id="bottom-buttons-next" class="bottom-buttons-next-inactive"><html:a>Next</html:a></html:li>
-			</html:ul>
-		</hbox>
-		<!-- / CONTROLS -->
-		
-		<hbox flex="1"/>
-	</hbox>
-	<!-- / PLAYBACK PROGRESS/CONTROLS -->
-	
-	<!-- VOLUME SLIDER -->
-	<html:div id="volume">
-  	<html:span id="knob"/>
-	</html:div>
-	<!-- / VOLUME SLIDER -->
-	
-	<hbox flex="0" id="bottom-right">
-  	<resizer dir="bottomright" id="resizer-bottomright" oncommand="return doResize(event);"/>
-	</hbox>
+        <spacer flex="0" width="245" id="bottom-left-blank" collapsed="true" />
+        <stack flex="0" width="220" id="bottom-progress">
+                <label id="progress-text" left="5" top="7">00:00:00</label>
+                <image id="progress-slider" class="progress-slider-inactive" left="61" top="10"/>
+        </stack>
+        <spacer flex="1"/>
+
+        <hbox flex="0" id="bottom-buttons" width="185" align="center">
+                <image id="bottom-buttons-previous" class="bottom-buttons-previous-inactive" />
+                <image id="bottom-buttons-stop" class="bottom-buttons-stop-inactive" />
+                <image id="bottom-buttons-play" class="bottom-buttons-play-inactive" />
+                <image id="bottom-buttons-fullscreen" class="bottom-buttons-fullscreen-inactive" />
+                <image id="bottom-buttons-next" class="bottom-buttons-next-inactive" />
+        </hbox>
+        <spacer flex="1"/>
+
+        <stack flex="0" id="volume">
+                <image left="98" top="26" src="images/bottom-volume-slider.png" id="knob"/>
+        </stack>
+
+  	<resizer dir="bottomright" id="resizer-bottom-right" oncommand="return doResize(event);"/>
+        <spacer flex="0" width="20" id="bottom-right-blank" collapsed="true" />
 </hbox>
 
 <!-- / BOTTOM -->

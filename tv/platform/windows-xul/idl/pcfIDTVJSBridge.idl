@@ -25,4 +25,7 @@ interface pcfIDTVJSBridge : nsISupports
   void showVideoDisplay();
   void hideVideoDisplay();
   void positionVolumeSlider(in float volume);
+  void toggleFullscreen();
+  void enterFullscreen();
+  void leaveFullscreen();
 };

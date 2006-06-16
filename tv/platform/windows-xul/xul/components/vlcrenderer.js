@@ -76,7 +76,7 @@ VLCRenderer.prototype = {
     var left = 61;
     var right = 204;
     var newSliderPos = Math.floor(left + fractionDone*(right-left));
-    progressSlider.style.left = newSliderPos+"px";
+    progressSlider.left = newSliderPos;
   },
 
   showPauseButton: function() {

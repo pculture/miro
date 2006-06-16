@@ -48,20 +48,7 @@ aMaxSelfProgress, aCurTotalProgress, aMaxTotalProgress) { },
 // will magically disapear
 var progressListeners = {}
 
-function WindowObserver() { }
-
-WindowObserver.prototype = {
-  observe: function(window, topic, data) {
-    if(topic == 'domwindowclosed') {
-        var id = window.arguments[0]['id'];
-        var out = window.arguments[0]['out'];
-        writelog(id + ":" + out);
-    }
-  }
-}
-
 function jsBridge() { }
-
 
 jsBridge.prototype = {
   QueryInterface: function(iid) {
@@ -77,13 +64,8 @@ jsBridge.prototype = {
     this.initBrowser("mainDisplay");
     this.initBrowser("videoInfoDisplay");
     this.initBrowser("channelsDisplay");
-    this.windowWatcher = 
-        Components.classes["@mozilla.org/embedcomp/window-watcher;1"]
-        .getService(Components.interfaces.nsIWindowWatcher);
-   /*
-    this.windowObserver = new WindowObserver();
-    this.windowWatcher.registerNotification(this.windowObserver);
-    */
+    this.hideVideoControlsTimer = Components.classes["@mozilla.org/timer;1"].
+          createInstance(Components.interfaces.nsITimer);
   },
 
   closeWindow: function() {
@@ -167,7 +149,70 @@ jsBridge.prototype = {
     var right= 98;
     var position = left + (right-left) * volume;
     position = Math.min(right, Math.max(left, position));
-    this.document.getElementById("knob").style.left = position + "px";
+    this.document.getElementById("knob").left = position;
+  },
+
+  hideForFullscreen: Array('titlebar', 'channelsDisplay', 'mainSplitter',
+        'resizer-left', 'bottom-left', 'resizer-bottom-right'),
+  showForFullscreen: Array('bottom-left-blank', 'bottom-right-blank'),
+
+  toggleFullscreen: function() {
+    if(this.window.fullScreen) this.leaveFullscreen();
+    else this.enterFullscreen();
+  },
+
+  enterFullscreen: function() {
+    if(this.window.fullScreen) return;
+    this.window.fullScreen = true;
+    for(var i = 0; i < this.hideForFullscreen.length; i++) {
+          var elt = this.document.getElementById(this.hideForFullscreen[i]);
+          elt.collapsed = true;
+    }
+    for(var i = 0; i < this.showForFullscreen.length; i++) {
+          var elt = this.document.getElementById(this.showForFullscreen[i]);
+          elt.collapsed = false;
+    }
+
+
+    var self = this;
+    this.mousemoveListener = function(event) { self.onMouseMoveFullscreen(); }
+    this.document.addEventListener('mousemove', this.mousemoveListener, true);
+    this.startHideVideoControlsTimer();
+  },
+
+  onMouseMoveFullscreen: function() {
+      this.document.getElementById('bottom').collapsed = false;
+      this.hideVideoControlsTimer.cancel();
+      this.startHideVideoControlsTimer();
+      pybridge.showCursor(true);
+  },
+
+  startHideVideoControlsTimer: function() {
+    var bottom = this.document.getElementById('bottom')
+    var callback = {notify: function() {
+        bottom.collapsed = true;
+        pybridge.showCursor(false);
+    }};
+    this.hideVideoControlsTimer.initWithCallback(callback, 3000,
+            Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+  },
+
+
+  leaveFullscreen: function() {
+    if(!this.window.fullScreen) return;
+    this.window.fullScreen = false;
+    for(var i = 0; i < this.hideForFullscreen.length; i++) {
+          var elt = this.document.getElementById(this.hideForFullscreen[i]);
+          elt.collapsed = false;
+    }
+    for(var i = 0; i < this.showForFullscreen.length; i++) {
+          var elt = this.document.getElementById(this.showForFullscreen[i]);
+          elt.collapsed = true;
+    }
+    this.document.getElementById('bottom').collapsed = false;
+    this.hideVideoControlsTimer.cancel();
+    this.document.removeEventListener('mousemove', this.mousemoveListener, true);
+    pybridge.showCursor(true);
   },
 
   xulNavigateDisplay: function(area, uri) {
