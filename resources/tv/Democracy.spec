@@ -1,9 +1,11 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
-%define VERSION 0.8.3
-%define RELEASE_CANDIDATE rc1
-#define RELEASE_CANDIDATE
-%define FULL_VERSION %{VERSION}%{?RELEASE_CANDIDATE:-}%{RELEASE_CANDIDATE}
+%define VERSION 0.8.4
+#define RELEASE_CANDIDATE rc3
+#define NIGHTLY 2006-05-31
+#define RELEASE_CANDIDATE 2006_05_31
+%define FULL_VERSION %{VERSION}%{?RELEASE_CANDIDATE:-%{RELEASE_CANDIDATE}}
+#define FULL_VERSION %{NIGHTLY}
 %define RELEASE 1
 
 Name:           Democracy
@@ -47,6 +49,9 @@ cd platform/gtk-x11 && %{__python} setup.py install -O1 --skip-build --root $RPM
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post
+update-desktop-database %{_datadir}/applications
+
 
 # Include files and dirs below %{python_sitelib} (for noarch packages) and
 # %{python_sitearch} (for arch-dependent packages) as appropriate, and mark
@@ -54,10 +59,12 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 /usr/bin/*
-/usr/share/democracy
-/usr/share/pixmaps/*
-/usr/share/applications/*.desktop
-/usr/share/man/man1/*
+%{_datadir}/democracy
+%{_datadir}/pixmaps/*
+%{_datadir}/applications/*.desktop
+%{_datadir}/man/man1/*
+%{_datadir}/mime/packages/*.xml
+%{_datadir}/locale/*/LC_MESSAGES/democracyplayer.mo
 %dir %{python_sitearch}/democracy
 %dir %{python_sitearch}/democracy/compiled_templates
 %dir %{python_sitearch}/democracy/dl_daemon
