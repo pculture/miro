@@ -846,14 +846,21 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
     def __getattr__(self,attr):
         return getattr(self.getActualFeed(),attr)
 
-    def remove(self):
+    def remove(self, moveItemsTo=None):
+        """Remove the feed.  If moveItemsTo is None (the default), the items
+        in this feed will be removed too.  If moveItemsTo is given, the items
+        in this feed will be moved to that feed.
+        """
+
         self.beginChange()
         self.cancelUpdateEvents()
         try:
             for item in self.items:
-                if not item.getKeep():
-                    item.expire()
-                item.remove()
+                if moveItemsTo is None:
+                    item.remove()
+                else:
+                    item.setFeed(moveItemsTo.getID())
+            self.items = []
             DDBObject.remove(self)
         finally:
             self.endChange()

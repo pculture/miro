@@ -66,6 +66,8 @@ BUTTON_DONT_MIGRATE = DialogButton(_("Don't Migrate"))
 BUTTON_DOWNLOAD = DialogButton(_("Download"))
 BUTTON_REMOVE_ENTRY = DialogButton(_("Remove Entry"))
 BUTTON_DELETE_FILE = DialogButton(_("Delete File"))
+BUTTON_KEEP_VIDEOS = DialogButton(_("Keep Videos"))
+BUTTON_DELETE_VIDEOS = DialogButton(_("Delete Videos"))
 
 class Dialog(object):
     """Abstract base class for dialogs."""
