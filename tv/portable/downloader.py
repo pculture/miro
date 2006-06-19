@@ -427,9 +427,8 @@ class DownloaderFactory:
         downloader = _getDownloader (url=url)
         if downloader:
             return downloader
-        url = url.lower()
         if url.startswith('file://'):
-            if url.endswith('.torrent') or url.endswith('.tor'):
+            if url.lower().endswith('.torrent') or url.lower().endswith('.tor'):
                 return RemoteDownloader(url, self.item,
                         'application/x-bittorrent')
             else:
