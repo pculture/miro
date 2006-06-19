@@ -10,7 +10,14 @@ def parseURL(url):
 
     if ':' in host:
         host, port = host.split(':')
-        port = int(port)
+        try:
+            port = int(port)
+        except:
+            print "DTV: parseURL: WARNING: invalid port for %s" % url
+            if scheme == 'https':
+                port = 443
+            else:
+                port = 80
     else:
         host = host
         if scheme == 'https':
