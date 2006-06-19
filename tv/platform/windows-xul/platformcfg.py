@@ -13,9 +13,9 @@ _baseMoviesDirectory = None
 
 def _getRegString(key, subkey):
     def doExpand(val):
-        out = ctypes.create_string_buffer(4096)
-        indata = ctypes.create_string_buffer(val)
-        bytes = ctypes.windll.kernel32.ExpandEnvironmentStringsA(indata,out,4093)
+        out = ctypes.create_unicode_buffer(8192)
+        indata = ctypes.create_unicode_buffer(val.decode('utf_16'))
+        bytes = ctypes.windll.kernel32.ExpandEnvironmentStringsW(indata,out,8188)
         return out.value
 
     (val, t) = _winreg.QueryValueEx(key, subkey)
