@@ -432,12 +432,6 @@ HELLO: WORLD\r\n"""
             util.failed = oldFailed
         self.assert_(self.failedCalled)
 
-    def testBadHeader(self):
-        self.testRequest.handleData("HTTP/1.0 200 OK\r\n")
-        self.testRequest.handleData("FOO:\r\n")
-        self.assert_(self.errbackCalled)
-        self.assert_(isinstance(self.data, httpclient.BadHeaderLine))
-
     def testHeaderContinuation(self):
         self.testRequest.handleData("HTTP/1.0 200 OK\r\n")
         self.testRequest.handleData("Cont\r\n")
