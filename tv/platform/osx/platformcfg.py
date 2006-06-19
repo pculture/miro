@@ -15,7 +15,11 @@ SUPPORT_DIRECTORY_PARENT = os.path.expanduser('~/Library/Application Support')
 def load():
     domain = getBundleIdentifier()
     plist =  NSUserDefaults.standardUserDefaults().persistentDomainForName_(domain)
-    pydict = Conversion.pythonCollectionFromPropertyList(plist)
+    try:
+        pydict = Conversion.pythonCollectionFromPropertyList(plist)
+    except:
+        print "WARNING!! Error while converting the preference property list to python dictionary:"
+        print plist
 
     # Sanitize the dictionary we just got, some value might be of type which can
     # cause massive problems when being pickled.
@@ -25,6 +29,8 @@ def load():
                 pydict[k] = float(v)
             elif type(v) is objc._pythonify.OC_PythonInt:
                 pydict[k] = int(v)
+            elif type(v) is objc._pythonify.OC_PythonLong:
+                pydict[k] = long(v)
 
     return pydict
 
