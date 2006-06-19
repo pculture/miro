@@ -1232,13 +1232,17 @@ class GUIActionHandler:
 
     def selectFeedByObject (self, myFeed):
         controller.checkTabByObjID(myFeed.getID())
-        controller.checkSelectedTab(showTemplate)
+        controller.checkSelectedTab()
         
     # NEEDS: name should change to addAndSelectFeed; then we should create
     # a non-GUI addFeed to match removeFeed. (requires template updates)
     def addFeed(self, url, showTemplate = None, selected = '1'):
         url = feed.normalizeFeedURL(url)
         if not feed.validateFeedURL(url):
+            title = "Invalid URL"
+            message = """The address you entered is not a valid URL. \
+Please double check and try again."""
+            dialogs.MessageBoxDialog(title, message).run()
             return
         db.beginUpdate()
         try:
@@ -1247,7 +1251,7 @@ class GUIActionHandler:
                 myFeed = feed.Feed(url)
 
             if selected == '1':
-                self._selectFeedByObject (myFeed)
+                self.selectFeedByObject (myFeed)
         finally:
             db.endUpdate()
 
@@ -1261,7 +1265,7 @@ class GUIActionHandler:
                 print "selectFeed: no such feed: %s" % url
                 return
 
-            self._selectFeedByObject (myFeed)
+            self.selectFeedByObject (myFeed)
 
         finally:
             db.endUpdate()
