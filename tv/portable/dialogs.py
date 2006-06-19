@@ -63,6 +63,7 @@ BUTTON_NO = DialogButton(_("No"))
 BUTTON_QUIT = DialogButton(_("Quit"))
 BUTTON_MIGRATE = DialogButton(_("Migrate"))
 BUTTON_DONT_MIGRATE = DialogButton(_("Don't Migrate"))
+BUTTON_DOWNLOAD = DialogButton(_("Download"))
 
 class Dialog(object):
     """Abstract base class for dialogs."""

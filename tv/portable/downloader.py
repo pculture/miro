@@ -1,21 +1,21 @@
-import os
-import shutil
-from threading import RLock
 from base64 import b64encode
+from gettext import gettext as _
+from threading import RLock
+import os
+import re
+import shutil
 
-import app
-import config
-import prefs
 from database import DDBObject, defaultDatabase
 from dl_daemon import daemon, command
-
-import views
-import indexes
-import random
+from download_utils import nextFreeFilename, parseURL
+from singleclick import getTorrentInfoHash
+import app
+import config
 import httpclient
-
-from download_utils import nextFreeFilename
-from gettext import gettext as _
+import indexes
+import prefs
+import random
+import views
 
 # a hash of download ids that the server knows about.
 _downloads = {}
@@ -431,10 +431,15 @@ class DownloaderFactory:
         if not create:
             return None
         if url.startswith('file://'):
-            if url.endswith('.torrent'):
+            scheme, host, port, path = parseURL(url)
+            if re.match(r'/[a-zA-Z]:', path):
+                path = path[1:]
+            try:
+                getTorrentInfoHash(path)
+            except ValueError:
+                raise ValueError("Don't know how to handle %s" % url)
+            else:
                 return RemoteDownloader(url, self.item,
                         'application/x-bittorrent')
-            else:
-                raise ValueError("Don't know how to handle %s" % url)
         else:
             return RemoteDownloader(url, self.item)

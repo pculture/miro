@@ -76,7 +76,7 @@ def addTorrent(path, torrentInfohash):
                 i.endRead()
     finally:
         manualFeed.endRead()
-    newItem = item.Item(manualFeed, item.getEntryForFile(path))
+    newItem = item.Item(manualFeed.getID(), item.getEntryForFile(path))
     newItem.download()
 
 def resetCommandLineView():
