@@ -29,6 +29,10 @@ class UIBackendDelegate:
             frontend.jsBridge.showChoiceDialog(id, dialog.title,
                     dialog.description, dialog.buttons[0].text,
                     dialog.buttons[1].text)
+        elif isinstance(dialog, dialogs.ThreeChoiceDialog):
+            frontend.jsBridge.showThreeChoiceDialog(id, dialog.title,
+                    dialog.description, dialog.buttons[0].text,
+                    dialog.buttons[1].text, dialog.buttons[2].text)
         elif isinstance(dialog, dialogs.MessageBoxDialog):
             frontend.jsBridge.showMessageBoxDialog(id, dialog.title,
                     dialog.description)

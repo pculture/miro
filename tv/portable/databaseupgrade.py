@@ -88,3 +88,9 @@ def upgrade8(objectList):
         if o.classString in ('item', 'file-item'):
             o.savedData['feed_id'] = o.savedData['feed'].savedData['id']
             
+def upgrade9(objectList):
+    """Added the deleted field to file items"""
+    for o in objectList:
+        if o.classString == 'file-item':
+            o.savedData['deleted'] = False
+            

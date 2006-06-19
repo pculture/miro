@@ -64,6 +64,8 @@ BUTTON_QUIT = DialogButton(_("Quit"))
 BUTTON_MIGRATE = DialogButton(_("Migrate"))
 BUTTON_DONT_MIGRATE = DialogButton(_("Don't Migrate"))
 BUTTON_DOWNLOAD = DialogButton(_("Download"))
+BUTTON_REMOVE_ENTRY = DialogButton(_("Remove Entry"))
+BUTTON_DELETE_FILE = DialogButton(_("Delete File"))
 
 class Dialog(object):
     """Abstract base class for dialogs."""
@@ -116,6 +118,16 @@ class ChoiceDialog(Dialog):
     def __init__(self, title, description, defaultButton, otherButton):
         super(ChoiceDialog, self).__init__(title, description,
                 [defaultButton, otherButton])
+
+class ThreeChoiceDialog(Dialog):
+    """Give the user a choice of 3 options (e.g. Remove entry/
+    Delete file/Cancel).
+    """
+
+    def __init__(self, title, description, defaultButton, secondButton,
+            thirdButton):
+        super(ThreeChoiceDialog, self).__init__(title, description,
+                [defaultButton, secondButton, thirdButton])
 
 class HTTPAuthDialog(Dialog):
     """Ask for a username and password for HTTP authorization.  Frontends

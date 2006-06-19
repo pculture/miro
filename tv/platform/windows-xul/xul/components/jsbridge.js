@@ -91,6 +91,15 @@ jsBridge.prototype = {
             "dialog", "chrome,dependent,centerscreen,modal", params);
   },
 
+  showThreeChoiceDialog: function(id, title, description, defaultLabel,
+                        secondLabel, thirdLabel) {
+    var params = { "id": id, "title": title, "description" : description, 
+        "defaultLabel": defaultLabel, "secondLabel": secondLabel, 
+        "thirdLabel": thirdLabel, "out" : -1};
+    this.window.openDialog("chrome://dtv/content/three_choice_dialog.xul",
+            "dialog", "chrome,dependent,centerscreen,modal", params);
+  },
+
   showMessageBoxDialog: function(id, title, description) {
     var params = { "id": id, "title": title, "description" : description,
             "out" : -1};

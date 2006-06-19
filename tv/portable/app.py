@@ -1122,7 +1122,7 @@ redownload to get the videos back.""" % obj.getTitle()
         try:
             obj = db.getObjectByID(int(item))
             obj.expire()
-        except:
+        except database.ObjectNotFoundError:
             print "DTV: Warning: tried to expire item that doesn't exist with id %d" % int(item)
 
     def keepItem(self, item):

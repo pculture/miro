@@ -1,22 +1,27 @@
-from datetime import datetime, timedelta
-from database import DDBObject, defaultDatabase
-from downloader import DownloaderFactory
-import eventloop
 from copy import copy
+from datetime import datetime, timedelta
+from gettext import gettext as _
+from math import ceil
 from xhtmltools import unescape,xhtmlify
 from xml.sax.saxutils import unescape
-from feedparser import FeedParserDict
-from math import ceil
-from templatehelper import escape
-from iconcache import IconCache
-import resource
-import config
-import prefs
+import locale
 import os
 import shutil
+import traceback
+
+from feedparser import FeedParserDict
+
+from database import DDBObject, defaultDatabase
+from downloader import DownloaderFactory
+from iconcache import IconCache
+from templatehelper import escape
+import config
+import dialogs
+import eventloop
+import prefs
+import resource
 import views
 
-import locale
 
 _charset = locale.getpreferredencoding()
 
@@ -967,16 +972,41 @@ class FileItem(Item):
     def __init__(self,feed_id,filename):
         filename = os.path.abspath(filename)
         self.filename = filename
+        self.deleted = False
         Item.__init__(self, feed_id, getEntryForFile(filename))
 
     def getState(self):
-        if self.getSeen():
+        if self.deleted:
+            return "deleted"
+        elif self.getSeen():
             return "saved"
         else:
             return "finished"
 
     def expire(self):
-        self.remove()
+        title = _("Removing %s") % (os.path.basename(self.filename))
+        description = _("Would you like to delete this file or just remove "
+                "its entry from My Collection?")
+        d = dialogs.ThreeChoiceDialog(title, description,
+                dialogs.BUTTON_REMOVE_ENTRY, dialogs.BUTTON_DELETE_FILE,
+                dialogs.BUTTON_CANCEL)
+        def callback(dialog):
+            print 'CB: ', dialog.choice.text
+            if dialog.choice == dialogs.BUTTON_DELETE_FILE:
+                try:
+                    os.remove(self.filename)
+                except:
+                    print "WARNING: Error deleting %s" % self.filename
+                    traceback.print_exc()
+                self.remove()
+            elif dialog.choice == dialogs.BUTTON_REMOVE_ENTRY:
+                self.beginChange()
+                try:
+                    self.deleted = True
+                finally:
+                    self.endChange()
+
+        d.run(callback)
 
     def getDownloadedTime(self):
         self.beginRead()
