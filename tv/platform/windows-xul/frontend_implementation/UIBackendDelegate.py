@@ -53,6 +53,16 @@ class UIBackendDelegate:
         msg = '%s is up to date.' % config.get(prefs.LONG_APP_NAME)
         return
 
+    def updateAvailable(self, url):
+        summary = "%s Version Alert" % (config.get(prefs.SHORT_APP_NAME), )
+        message = "A new version of %s is available. Would you like to download it now?" % (config.get(prefs.LONG_APP_NAME), )
+        d = dialogs.ChoiceDialog(summary, message, dialogs.BUTTON_DOWNLOAD,
+                dialogs.BUTTON_CANCEL)
+        def callback(dialog):
+            if dialog.choice == dialogs.BUTTON_DOWNLOAD:
+                self.openExternalURL(url)
+        d.run(callback)
+
     def openExternalURL(self, url):
         # It looks like the maximum URL length is about 2k. I can't
         # seem to find the exact value

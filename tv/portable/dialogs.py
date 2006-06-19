@@ -58,6 +58,7 @@ class DialogButton(object):
 
 BUTTON_OK = DialogButton(_("Ok"))
 BUTTON_CANCEL = DialogButton(_("Cancel"))
+BUTTON_DOWNLOAD = DialogButton(_("Download"))
 BUTTON_YES = DialogButton(_("Yes"))
 BUTTON_NO = DialogButton(_("No"))
 BUTTON_QUIT = DialogButton(_("Quit"))
