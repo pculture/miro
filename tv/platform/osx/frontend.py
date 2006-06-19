@@ -225,7 +225,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         app.controller.selectTabByTemplateBase('librarytab')
 
     def workspaceWillSleep_(self, notification):
-        def pauseRunningDownloaders():
+        def pauseRunningDownloaders(self=self):
             views.remoteDownloads.beginRead()
             try:
                 for dl in views.remoteDownloads:
@@ -246,14 +246,14 @@ class AppController (NibClassBuilder.AutoBaseClass):
         #dc.waitCompletion()
 
     def workspaceDidWake_(self, notification):
-        def retstartDownloaders():
+        def restartPausedDownloaders(self=self):
             dlCount = len(self.pausedDownloaders)
             if dlCount > 0:
                 print "DTV: System is awake from sleep, resuming %s download(s)." % dlCount
                 for dl in self.pausedDownloaders:
                     dl.start()
             self.pausedDownloaders = None
-        eventloop.addUrgentCall(lambda:retstartDownloaders(), "Resuming downloaders after sleep")
+        eventloop.addUrgentCall(lambda:restartPausedDownloaders(), "Resuming downloaders after sleep")
 
     def videoWillPlay_(self, notification):
         self.playPauseMenuItem.setTitle_('Pause Video')
