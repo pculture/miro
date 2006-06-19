@@ -762,8 +762,7 @@ class HTTPConnection(ConnectionHandler):
         value = value.strip()
         header = header.lstrip().lower()
         if value == '':
-            self.handleError(BadHeaderLine(line))
-            return
+            print "DTV: Warning: Bad Header from %s:%s%s (%s)" % (self.host, self.port, self.path, line)
         if header not in self.headers:
             self.headers[header] = value
         else:
