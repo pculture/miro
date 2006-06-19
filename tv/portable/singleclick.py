@@ -15,6 +15,7 @@ from sha import sha
 
 from BitTornado.bencode import bdecode, bencode
 
+from util import getTorrentInfoHash
 import app
 import item
 import feed
@@ -47,16 +48,6 @@ def addVideo(path):
     manualFeed = app.getSingletonDDBObject(views.manualFeed)
     fileItem = item.FileItem(manualFeed.getID(), path)
     commandLineVideoIds.add(fileItem.getID())
-
-def getTorrentInfoHash(path):
-    f = open(path, 'rb')
-    try:
-        data = f.read()
-        metainfo = bdecode(data)
-        infohash = sha(bencode(metainfo['info'])).digest()
-        return infohash
-    finally:
-        f.close()
 
 def addTorrent(path, torrentInfohash):
     manualFeed = app.getSingletonDDBObject(views.manualFeed)

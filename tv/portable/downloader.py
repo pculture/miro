@@ -8,7 +8,7 @@ import shutil
 from database import DDBObject, defaultDatabase
 from dl_daemon import daemon, command
 from download_utils import nextFreeFilename, parseURL
-from singleclick import getTorrentInfoHash
+from util import getTorrentInfoHash
 import app
 import config
 import httpclient

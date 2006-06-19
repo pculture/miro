@@ -991,7 +991,6 @@ class FileItem(Item):
                 dialogs.BUTTON_REMOVE_ENTRY, dialogs.BUTTON_DELETE_FILE,
                 dialogs.BUTTON_CANCEL)
         def callback(dialog):
-            print 'CB: ', dialog.choice.text
             if dialog.choice == dialogs.BUTTON_DELETE_FILE:
                 try:
                     os.remove(self.filename)

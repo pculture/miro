@@ -289,4 +289,12 @@ def timeTrapCall(when, function, *args, **kwargs):
     cancel = True
     return retval
 
-        
+def getTorrentInfoHash(path):
+    f = open(path, 'rb')
+    try:
+        data = f.read()
+        metainfo = bdecode(data)
+        infohash = sha(bencode(metainfo['info'])).digest()
+        return infohash
+    finally:
+        f.close()
