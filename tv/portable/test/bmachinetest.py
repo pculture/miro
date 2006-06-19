@@ -75,11 +75,40 @@ class BroadcastMachineTest(DownloaderTestCase):
                                                 "pass1": "PCF is cool",
                                                 "pass2": "PCF is cool"})
 
+    def makeBMCookies(self):
+        return {'PHPSESSID':self.PHPSESSID,
+                'bm_userhash': self.bm_userhash,
+                'bm_username': self.bm_username}
+
+    def storeBMCookie(self, cookies):
+        self.assert_(cookies.has_key('bm_userhash'))
+        self.assert_(cookies.has_key('bm_username'))
+        self.assert_(cookies.has_key('PHPSESSID'))
+        self.PHPSESSID = cookies['PHPSESSID']
+        self.bm_userhash = cookies['bm_userhash']
+        self.bm_username = cookies['bm_username']
+
     def createAccountCallback(self, info):
         self.assertNotEqual(info['body'].find("The account admin was added successfully."), -1)
         self.assertEqual(info['cookies']['bm_username']['Value'],'admin')
-        self.assert_(info['cookies'].has_key('bm_userhash'))
-        self.assert_(info['cookies'].has_key('PHPSESSID'))
+        self.storeBMCookie(info['cookies'])
+        httpclient.grabURL(self.url+'admin.php', self.adminNoCookies,
+                           self.errorCallback)
+
+    def adminNoCookies(self, info):
+        self.assert_(info['redirected-url'].endswith('/index.php'))
+        httpclient.grabURL(self.url+'admin.php', self.adminLoad,
+                           self.errorCallback, cookies = self.makeBMCookies())
+        
+
+    def adminLoad(self, info):
+        self.assert_(info['redirected-url'].endswith('/admin.php'))
+        self.assertNotEqual(info['body'].find('Dashboard'), -1)
+        self.assertNotEqual(info['body'].find('admin'), -1)
+        self.assertNotEqual(info['body'].find('nassar@pculture.org'), -1)
+        self.assertNotEqual(info['body'].find('Go to Users'), -1)
+        self.assertNotEqual(info['body'].find('Go to Files'), -1)
+        self.storeBMCookie(info['cookies'])
         eventloop.quit()
 
     def errorCallback(self, error):
