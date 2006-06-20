@@ -434,6 +434,7 @@ class Controller (frontend.Application):
         assert delegate is None
         controller = self
         delegate = frontend.Application.getBackendDelegate(self)
+        self.frame = None
 
     ### Startup and shutdown ###
 

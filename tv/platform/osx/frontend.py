@@ -49,7 +49,7 @@ nc = NSNotificationCenter.defaultCenter()
 dlTask = None
 
 def exit(returnCode):
-   sys.exit(returnCode)
+    NSApplication.sharedApplication().stop_(nil)
 
 def quit():
     app.delegate.ensureDownloadDaemonIsTerminated()
@@ -192,8 +192,9 @@ class AppController (NibClassBuilder.AutoBaseClass):
         self.actualApp.onStartup()
     
     def applicationDidBecomeActive_(self, notification):
-        # This should hopefully avoid weird things like #1722
-        app.controller.frame.controller.window().contentView().setNeedsDisplay_(YES)
+        if app.controller.frame is not None:
+            # This should hopefully avoid weird things like #1722
+            app.controller.frame.controller.window().contentView().setNeedsDisplay_(YES)
     
     def applicationWillTerminate_(self, notification):
         # Reset the application icon to its default state
