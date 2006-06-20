@@ -1056,7 +1056,8 @@ class UIBackendDelegate:
                     badgeLabel.drawInRect_withAttributes_((badgeLabelLoc, badgeSize), badgeLabelAttributes)
         finally:
             badgedIcon.unlockFocus()
-        NSApplication.sharedApplication().setApplicationIconImage_(badgedIcon)
+        appl = NSApplication.sharedApplication()
+        platformutils.callOnMainThreadAndWaitUntilDone(appl.setApplicationIconImage_, badgedIcon)
         
     def interruptDownloadsAtShutdown(self, downloadsCount):
         platformutils.warnIfNotOnMainThread('UIBackendDelegate.interruptDownloadsAtShutdown')
