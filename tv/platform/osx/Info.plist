@@ -142,7 +142,7 @@
 		</dict>
 	</array>
 	<key>CFBundleGetInfoString</key>
-	<string>$appVersion, $copyright $publisher</string>
+	<string>$appVersion ($appRevision), $copyright $publisher</string>
 	<key>CFBundleIdentifier</key>
 	<string>org.participatoryculture.$shortAppName</string>
 	<key>CFBundleName</key>
@@ -161,7 +161,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>$appRevision</string>
+	<string>r$appRevisionNum</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.3.9</string>
 	<key>NSHumanReadableCopyright</key>
