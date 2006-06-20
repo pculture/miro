@@ -126,6 +126,8 @@ class OldFeed(OldDDBObject):
             version += 1
         assert(version == 3)
         data['updating'] = False
+        if not data.has_key('initiallyAutoDownloadable'):
+            data['initiallyAutoDownloadable'] = True
         self.__dict__ = data
         # This object is useless without a FeedImpl associated with it
         if not data.has_key('actualFeed'):
@@ -208,7 +210,8 @@ class OldChannelGuide(OldDDBObject):
             self.__dict__ = data
             self.cond = threading.Condition()
             self.loadedThisSession = False
-
+        if not data.has_key('id'):
+            self.__class__ = DropItLikeItsHot
 
         # No need to load a fresh channel guide here.
         #
