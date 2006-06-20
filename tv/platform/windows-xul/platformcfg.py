@@ -14,7 +14,7 @@ _baseMoviesDirectory = None
 def _getRegString(key, subkey):
     def doExpand(val):
         out = ctypes.create_unicode_buffer(8192)
-        indata = ctypes.create_unicode_buffer(val.decode('utf_16'))
+        indata = ctypes.create_unicode_buffer(val)
         bytes = ctypes.windll.kernel32.ExpandEnvironmentStringsW(indata,out,8188)
         return out.value
 
