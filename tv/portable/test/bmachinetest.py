@@ -2,6 +2,7 @@ import unittest
 import os
 import os.path
 import glob
+from copy import copy
 
 import httpclient
 import eventloop
@@ -27,6 +28,8 @@ from test.framework import DownloaderTestCase
 # BMACHINE_LOCATION - the location of Broadcast Machine on the testing
 #                     computer ie "/home/user/bmachine"
 #
+
+ADMIN_ONLY_PAGES = ['admin.php', 'channels.php', 'create_channel.php', 'delete.php','donation.php','donations.php', 'edit_channel.php',  'edit_videos.php', 'generate_htaccess.php', 'pause.php', 'start.php', 'stop.php', 'users.php', 'user_edit.php', 'settings.php']
 
 class BroadcastMachineTest(DownloaderTestCase):
     def setUp(self):
@@ -81,24 +84,31 @@ class BroadcastMachineTest(DownloaderTestCase):
                 'bm_username': self.bm_username}
 
     def storeBMCookie(self, cookies):
-        self.assert_(cookies.has_key('bm_userhash'))
-        self.assert_(cookies.has_key('bm_username'))
-        self.assert_(cookies.has_key('PHPSESSID'))
-        self.PHPSESSID = cookies['PHPSESSID']
-        self.bm_userhash = cookies['bm_userhash']
-        self.bm_username = cookies['bm_username']
+        if cookies.has_key('bm_userhash'):
+            self.bm_userhash = cookies['bm_userhash']
+        if cookies.has_key('bm_username'):
+            self.bm_username = cookies['bm_username']
+        if cookies.has_key('PHPSESSID'):
+            self.PHPSESSID = cookies['PHPSESSID']
 
     def createAccountCallback(self, info):
         self.assertNotEqual(info['body'].find("The account admin was added successfully."), -1)
         self.assertEqual(info['cookies']['bm_username']['Value'],'admin')
         self.storeBMCookie(info['cookies'])
-        httpclient.grabURL(self.url+'admin.php', self.adminNoCookies,
-                           self.errorCallback)
+        self.loadNoCookies(None, ADMIN_ONLY_PAGES)
 
-    def adminNoCookies(self, info):
-        self.assert_(info['redirected-url'].endswith('/index.php'))
-        httpclient.grabURL(self.url+'admin.php', self.adminLoad,
-                           self.errorCallback, cookies = self.makeBMCookies())
+    def loadNoCookies(self, info, urllist):
+        if info is not None:
+            self.assert_(info['redirected-url'].endswith('/index.php'))
+        if len(urllist) > 0:
+            nexturl = self.url + urllist.pop()
+            httpclient.grabURL(nexturl,
+                               lambda info: self.loadNoCookies(info, urllist),
+                               self.errorCallback)
+        else:
+            httpclient.grabURL(self.url+'admin.php',
+                               self.adminLoad,
+                               self.errorCallback, cookies = self.makeBMCookies())
         
 
     def adminLoad(self, info):
