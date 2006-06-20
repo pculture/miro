@@ -95,7 +95,7 @@ def queryRevision(file):
         p.stdout.close()
         url = re.search("URL: (.*)", info).group(1)
         revision = re.search("Revision: (.*)", info).group(1)
-        return "%s - %s" % (url, revision)
+        return (url, revision)
     except:
         # whatever
         return None

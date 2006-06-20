@@ -216,6 +216,8 @@ class install_data (distutils.command.install_data.install_data):
         revision = util.queryRevision(root_dir)
         if revision is None:
             revision = "unknown"
+        else:
+            revision = "%s - %s" % revision
         if self.root:
             dest = change_root(self.root, dest)
         self.mkpath(os.path.dirname(dest))

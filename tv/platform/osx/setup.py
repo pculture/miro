@@ -51,16 +51,22 @@ else:
 import util
 revision = util.queryRevision(root)
 if revision is None:
+    revisionURL = 'unknown'
+    revisionNum = '0000'
     revision = 'unknown'
 else:
-    revision = '%s' % revision
+    revisionURL, revisionNum = revision
+    revision = '%s - %s' % revision
 
 # Inject the revision number into app.config.template to get app.config.
 # NEEDS: Very sloppy. The new file is just dropped in the source tree
 # next to the old one.
 appConfigPath = os.path.join(root, 'resources', 'app.config')
 s = open("%s.template" % appConfigPath, "rt").read()
-s = string.Template(s).safe_substitute(APP_REVISION = revision, APP_PLATFORM = 'osx')
+s = string.Template(s).safe_substitute(APP_REVISION = revision, 
+                                       APP_REVISION_URL = revisionURL, 
+                                       APP_REVISION_NUM = revisionNum, 
+                                       APP_PLATFORM = 'osx')
 f = open(appConfigPath, "wt")
 f.write(s)
 f.close()
