@@ -216,14 +216,20 @@ class install_data (distutils.command.install_data.install_data):
         revision = util.queryRevision(root_dir)
         if revision is None:
             revision = "unknown"
+            revisionurl = "unknown"
+            revisionnum = "unknown"
         else:
+            revisionurl = revision[0]
+            revisionnum = revision[1]
             revision = "%s - %s" % revision
         if self.root:
             dest = change_root(self.root, dest)
         self.mkpath(os.path.dirname(dest))
         self.copy_file(source, dest)
         expand_file_contents(dest, APP_REVISION=revision,
-                APP_PLATFORM='gtk-x11')
+                             APP_REVISION_NUM=revisionnum,
+                             APP_REVISION_URL=revisionurl,
+                             APP_PLATFORM='gtk-x11')
         self.outfiles.append(dest)
 
         for lang in ("fr","it","ka","pl","ro"):
