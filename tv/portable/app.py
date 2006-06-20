@@ -1315,18 +1315,22 @@ class TemplateActionHandler:
         self.goToGuide()
 
     def goToGuide(self):
-        guide = getSingletonDDBObject(views.guide)
-        # Does the Guide want to implement itself as a redirection to
-        # a URL?
-        (mode, location) = guide.getLocation()
+        # Only switch to the guide if the template display is already
+        # selected This prevents doubling clicking on a movie from
+        # openning the channel guide instead of the video
+        if controller.frame.getDisplay(controller.frame.mainDisplay) is self.display:
+            guide = getSingletonDDBObject(views.guide)
+            # Does the Guide want to implement itself as a redirection to
+            # a URL?
+            (mode, location) = guide.getLocation()
 
-        if mode == 'template':
-            self.switchTemplate(location, baseURL=config.get(prefs.CHANNEL_GUIDE_URL))
-        elif mode == 'url':
-            controller.frame.selectURL(location, \
-                                            controller.frame.mainDisplay)
-        else:
-            raise StandardError("DTV: Invalid guide load mode '%s'" % mode)
+            if mode == 'template':
+                self.switchTemplate(location, baseURL=config.get(prefs.CHANNEL_GUIDE_URL))
+            elif mode == 'url':
+                controller.frame.selectURL(location, \
+                                           controller.frame.mainDisplay)
+            else:
+                raise StandardError("DTV: Invalid guide load mode '%s'" % mode)
 
     def setViewFilter(self, viewName, fieldKey, functionKey, parameter, invert):
         print "Warning! setViewFilter deprecated"
