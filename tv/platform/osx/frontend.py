@@ -790,6 +790,10 @@ class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
             self.window().setShowsToolbarButton_(NO)
         self.switchPreferenceView_(initialItem)
 
+    def windowWillClose_(self, notification):
+        self.window().endEditingFor_(nil)
+        config.save()
+
     def makePreferenceItem(self, identifier, label, imageName, view):
         item = self.PreferenceItem.alloc().initWithItemIdentifier_(identifier)
         item.setLabel_(label)
