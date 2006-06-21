@@ -58,7 +58,7 @@ class Item(DDBObject):
     # so we have this hack to make sure that unwatched and available
     # get updated when an item changes
     def signalChange(self, needsSave=True):
-        DDBObject.signalChange(self)
+        DDBObject.signalChange(self, needsSave=needsSave)
         self.getFeed().updateUandA()
 
     #
@@ -780,7 +780,7 @@ class Item(DDBObject):
                 downloader.addItem(self)
                 changed = True
         if changed:
-            self.signalChange()
+            self.signalChange(needsSave=False)
 
     ##
     # Called by pickle during serialization

@@ -498,7 +498,7 @@ class DynamicDatabase:
         self.confirmDBThread()
         if self.objectLocs.has_key(obj.id):
             changed = True
-            self.change(self.objectLocs[obj.id], needsSave=True)
+            self.change(self.objectLocs[obj.id], needsSave=needsSave)
         return changed
 
     ##

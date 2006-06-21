@@ -114,6 +114,9 @@ class IconCache:
     def updateIconCache (self, url, info):
         self.dbItem.confirmDBThread()
 
+        needsSave = False
+        needsChange = False
+
         if info == None or (info['status'] != 304 and info['status'] != 200):
             self.errorCallback(url)
             return
@@ -122,10 +125,14 @@ class IconCache:
             if (info['status'] == 304):
                 self.updated = True
                 return
+
+            needsChange = True
+
             # We have to update it, and if we can't write to the file, we
             # should pick a new filename.
             if (self.filename and not os.access (self.filename, os.R_OK | os.W_OK)):
                 self.filename = None
+                seedsSave = True
 
             cachedir = config.get(prefs.ICON_CACHE_DIRECTORY)
             try:
@@ -134,7 +141,7 @@ class IconCache:
                 pass
 
             try:
-                # Download to a temp file.
+                # Write to a temp file.
                 if (self.filename):
                     tmp_filename = self.filename + ".part"
                 else:
@@ -151,6 +158,7 @@ class IconCache:
             if (self.filename == None):
                 self.filename = os.path.join(cachedir, info["filename"])
                 self.filename = self.nextFreeFilename (self.filename)
+                needsSave = True
             try:
                 os.remove (self.filename)
             except:
@@ -159,18 +167,30 @@ class IconCache:
                 os.rename (tmp_filename, self.filename)
             except:
                 self.filename = None
+                needsSave = True
         
             if (info.has_key ("etag")):
-                self.etag = info["etag"]
+                etag = info["etag"]
             else:
-                self.etag = None
+                etag = None
+
             if (info.has_key ("modified")):
-                self.modified = info["modified"]
+                modified = info["modified"]
             else:
-                self.modified = None
-            self.url = url
+                modified = None
+
+            if self.etag != etag:
+                needsSave = True
+                self.etag = etag
+            if self.modified != modified:
+                needsSave = True
+                self.modified = modified
+            if self.url != url:
+                needsSave = True
+                self.url = url
         finally:
-            self.dbItem.signalChange()
+            if needsChange:
+                self.dbItem.signalChange(needsSave=needsSave)
             self.updating = False
             if self.needsUpdate:
                 self.needsUpdate = False

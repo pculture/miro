@@ -602,6 +602,7 @@ class LiveStorage:
                     raise
         cursor.close()
         if upgrade:
+            print "Upgrading database..."
             txn = self.dbenv.txn_begin()
             for (key, savable) in toSave:
                 data = cPickle.dumps(savable)
