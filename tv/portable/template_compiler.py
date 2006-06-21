@@ -350,18 +350,10 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             pass
         elif 't:repeatForView' in attrs.keys():
             self.startRepeat(attrs['t:repeatForView'])
-            self.addText('<%s'%name)
-            for key in attrs.keys():
-                if key != 't:repeatForView':
-                    self.addAttr(key,attrs[key])
-            self.addIdAndClose()
+            self.addElementStart(name, attrs, addId=True)
         elif 't:updateForView' in attrs.keys():
             self.startUpdate(attrs['t:updateForView'])
-            self.addText('<%s'%name)
-            for key in attrs.keys():
-                if key != 't:updateForView':
-                    self.addAttr(key,attrs[key])
-            self.addIdAndClose()
+            self.addElementStart(name, attrs, addId=True)
         elif 't:hideIf' in attrs.keys():
             ifValue = attrs['t:hideIf']
             if attrs.has_key('t:updateHideOnView'):
@@ -370,20 +362,20 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                 self.addUpdateHideOnView(attrs['t:updateHideOnView'],name, ifValue, attrs)
             else:
                 self.startHiding(ifValue)
-
-                self.addText('<%s'%name)
-
-                for key in attrs.keys():
-                    if (key not in ['t:hideIf']):
-                        self.addAttr(key,attrs[key])
-                self.addText('>')
+                self.addElementStart(name, attrs)
                 #FIXME: support i18n tags within a t:hideIf
+        elif 't:showIf' in attrs.keys():
+            ifValue = "not (%s)" % attrs['t:showIf']
+            if attrs.has_key('t:updateHideOnView'):
+                if self.inRepeatView or self.inUpdateView:
+                    print "Warning: t:updateHideOnView is unsupported inside a repeat view"
+                self.addUpdateHideOnView(attrs['t:updateHideOnView'],name, ifValue, attrs)
+            else:
+                self.startHiding(ifValue)
+                self.addElementStart(name, attrs)
+                #FIXME: support i18n tags within a t:showIf
         elif 'i18n:translate' in attrs.keys():
-            self.addText('<%s'%name)
-            for key in attrs.keys():
-                if (not key.startswith('i18n:')):
-                    self.addAttr(key,attrs[key])
-            self.addText('>')
+            self.addElementStart(name, attrs)
             self.translateDepth.append(self.depth)
             self.translateText.append('')
             self.translateDict.append({})
@@ -395,21 +387,13 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             self.addInclude(attrs['filename'])
 
         elif 't:replace' in attrs.keys():
-                self.addText('<%s'%name)
-                for key in attrs.keys():
-                    if key != 't:replace':
-                        self.addAttr(key,attrs[key])
-                self.addText('>')
+                self.addElementStart(name, attrs)
                 replace = attrs['t:replace']
                 self.addEvalEscape(replace)
                 self.inReplace = True
                 self.replaceDepth = self.depth      
         elif 't:replaceMarkup' in attrs.keys():
-                self.addText('<%s'%name)
-                for key in attrs.keys():
-                    if key != 't:replaceMarkup':
-                        self.addAttr(key,attrs[key])
-                self.addText('>')
+                self.addElementStart(name, attrs)
                 replace = attrs['t:replaceMarkup']
                 self.addEval(replace)
                 self.inReplace = True
@@ -440,12 +424,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         elif name == 't:triggerActionOnUnload':
             self.handle.addTriggerActionURLOnUnload(attrs['url'])
         else:
-            self.addText('<%s'%name)
-            for key in attrs.keys():
-                if (not (key.startswith('t:') or key.startswith('i18n:')) or
-                        key == 't:contextMenu'):
-                    self.addAttr(key,attrs[key])
-            self.addText('>')
+            self.addElementStart(name, attrs)
 
     def endElement(self,name):
         if not self.started:
@@ -591,8 +570,16 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
     def addText(self, text):
         self.outputText.append( text)
 
-    def addTextHide(self,ifValue,text):
-        self.addInstruction(genRepeatTextHide,(ifValue,text))
+    def addElementStart(self, name, attrs, addId=False):
+        self.addText('<%s'%name)
+        for key in attrs.keys():
+            if (not (key.startswith('t:') or key.startswith('i18n:')) or
+                    key == 't:contextMenu'):
+                self.addAttr(key,attrs[key])
+        if addId:
+            self.addIdAndClose()
+        else:
+            self.addText('>')
 
     def addTextEscape(self, text):
         self.outputText.append( escape(text))
