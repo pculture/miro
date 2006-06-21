@@ -28,8 +28,43 @@ def upgrade(savedObjects, saveVersion, upgradeTo=None):
         if chatter:
             print "upgrading database to version %s" % (saveVersion + 1)
         upgradeFunc = globals()['upgrade%d' % (saveVersion + 1)]
-        upgradeFunc(savedObjects)
+        if upgradeFunc is not None:
+            upgradeFunc(savedObjects)
+        else:
+            upgradeFunc = globals()['upgradeObject%d' % (saveVersion + 1)]
+            for o in savedObjects:
+                upgradeFunc(o)
         saveVersion += 1
+
+def upgradeObject(object, saveVersion, upgradeTo=None):
+    """Upgrade a list of SavableObjects that were saved using an old version 
+    of the database schema.
+
+    This method will call upgradeObjectX for each number X between saveVersion and
+    upgradeTo.  For example, if saveVersion is 2 and upgradeTo is 4, this
+    method is equivelant to:
+
+        upgradeObject3(object)
+        upgradeObject4(object)
+
+    returning True if any of them returned True.
+
+    upgradeObjectX should return True if it has changed the object.
+
+    By default, upgradeTo will be the VERSION variable in schema.
+    """
+
+    retval = False
+
+    if upgradeTo is None:
+        upgradeTo = schema.VERSION
+
+    while saveVersion < upgradeTo:
+        upgradeFunc = globals()['upgradeObject%d' % (saveVersion + 1)]
+        if (upgradeFunc(object)):
+            retval = True
+        saveVersion += 1
+    return retval
 
 def upgrade2(objectList):
     """Add a dlerType variable to all RemoteDownloader objects."""
@@ -94,3 +129,9 @@ def upgrade9(objectList):
         if o.classString == 'file-item':
             o.savedData['deleted'] = False
             
+#def upgradeObjectX (o):
+#    """ upgrade an object to X.  return True if object is changed and False otherwise. """
+#    if objectneedschange:
+#        changeObject()
+#        return True
+#    return False

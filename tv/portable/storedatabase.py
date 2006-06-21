@@ -579,6 +579,9 @@ class LiveStorage:
             print "Database load slow: %.3f" % (end - start,)
 
     def loadDatabase(self):
+        upgrade = (self.version != schema_mod.VERSION)
+        if upgrade:
+            toSave = []
         objects = []
         cursor = self.db.cursor()
         while True:
@@ -589,12 +592,24 @@ class LiveStorage:
             if key != VERSION_KEY:
                 try:
                     savable = cPickle.loads(data)
+                    if upgrade:
+                        if (databaseupgrade.upgradeObject(savable, self.version)):
+                            toSave.append((key, savable))
                     object = savableToObject(savable)
                     objects.append(object)
                 except:
                     print data
                     raise
         cursor.close()
+        if upgrade:
+            txn = self.dbenv.txn_begin()
+            for (key, savable) in toSave:
+                data = cPickle.dumps(savable)
+                self.db.put (key, data, txn=txn)
+            self.version = schema_mod.VERSION
+            self.db.put (VERSION_KEY, str(self.version), txn=txn)
+            txn.commit()
+            self.db.sync()
         db = database.defaultDatabase
         db.restoreFromObjectList(objects)
 
