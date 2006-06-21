@@ -29,44 +29,34 @@ commandLineView = None
 
 def addVideo(path):
     path = os.path.abspath(path)
-    views.items.beginRead()
-    try:
-        for i in views.items:
-            # FIXME: we should handle case-insensitivity on OS X and 8.3
-            # pathnames on windows.  This probably means adding a
-            # platformutils.samefile function, which I don't want to do for
-            # the 0.8.4 release.  (BTW: This will be supor easy on linux and
-            # OS X: from os.path import samefile).
-            itemFilename = i.getFilename()
-            if (itemFilename != '' and 
-                    platformutils.samefile(itemFilename, path)):
-                print "Not adding duplicate video: %s" % path
-                commandLineVideoIds.add(i.getID())
-                return
-    finally:
-        views.items.endRead()
+    views.items.confirmDBThread()
+    for i in views.items:
+        # FIXME: we should handle case-insensitivity on OS X and 8.3
+        # pathnames on windows.  This probably means adding a
+        # platformutils.samefile function, which I don't want to do for
+        # the 0.8.4 release.  (BTW: This will be supor easy on linux and
+        # OS X: from os.path import samefile).
+        itemFilename = i.getFilename()
+        if (itemFilename != '' and 
+                platformutils.samefile(itemFilename, path)):
+            print "Not adding duplicate video: %s" % path
+            commandLineVideoIds.add(i.getID())
+            return
     manualFeed = app.getSingletonDDBObject(views.manualFeed)
     fileItem = item.FileItem(manualFeed.getID(), path)
     commandLineVideoIds.add(fileItem.getID())
 
 def addTorrent(path, torrentInfohash):
     manualFeed = app.getSingletonDDBObject(views.manualFeed)
-    manualFeed.beginRead()
-    try:
-        for i in manualFeed.items:
-            i.beginRead()
-            try:
-                for d in i.downloaders:
-                    if d.status.get('infohash') == torrentInfohash:
-                        print ("Not downloading %s, it's already a "
-                                "download for %s" % (path, i))
-                        if i.getState() in ('paused', 'stopped'):
-                            i.download()
-                        return
-            finally:
-                i.endRead()
-    finally:
-        manualFeed.endRead()
+    manualFeed.confirmDBThread()
+    for i in manualFeed.items:
+        for d in i.downloaders:
+            if d.status.get('infohash') == torrentInfohash:
+                print ("Not downloading %s, it's already a "
+                        "download for %s" % (path, i))
+                if i.getState() in ('paused', 'stopped'):
+                    i.download()
+                return
     newItem = item.Item(manualFeed.getID(), item.getEntryForFile(path))
     newItem.download()
 

@@ -36,7 +36,6 @@ class Item(DDBObject):
         self.seen = False
         self.downloaders = []
         self.autoDownloaded = False
-        self.startingDownload = False
         self.lastDownloadFailed = False
         self.pendingManualDL = False
         self.downloadedTime = None
@@ -58,8 +57,8 @@ class Item(DDBObject):
     # Unfortunately, our database does not scale well with many views,
     # so we have this hack to make sure that unwatched and available
     # get updated when an item changes
-    def endChange(self):
-        DDBObject.endChange(self)
+    def signalChange(self, needsSave=True):
+        DDBObject.signalChange(self)
         self.getFeed().updateUandA()
 
     #
@@ -72,32 +71,24 @@ class Item(DDBObject):
     # Returns the first video enclosure in the item
     def getFirstVideoEnclosure(self):
         first = None
-        self.beginRead()
+        self.confirmDBThread()
         try:
-            try:
-                for enclosure in self.entry.enclosures:
-                    if isVideoEnclosure(enclosure):
-                        first = enclosure
-                        break
-            except:
-                pass
-        finally:
-            self.endRead()
+            for enclosure in self.entry.enclosures:
+                if isVideoEnclosure(enclosure):
+                    first = enclosure
+                    break
+        except:
+            pass
         return first
 
     ##
     # Returns the URL associated with the first enclosure in the item
     def getURL(self):
-        ret = ''
-        self.beginRead()
+        self.confirmDBThread()
         try:
-            try:
-                ret = self.getFirstVideoEnclosure().url
-            except:
-                pass
-        finally:
-            self.endRead()
-        return ret
+            return self.getFirstVideoEnclosure().url
+        except:
+            return ""
     ##
     # Returns the feed this item came from
     def getFeed(self):
@@ -107,138 +98,101 @@ class Item(DDBObject):
     # Moves this item to another feed.
     def setFeed(self, feed_id):
         self.feed_id = feed_id
-        self.endChange()
+        self.signalChange()
 
     ##
     # Returns the number of videos associated with this item
     def getAvailableVideos(self):
-        ret = 0
-        self.beginRead()
-        try:
-            ret = len(self.entry.enclosures)
-        finally:
-            self.endRead()
-        return ret
+        self.confirmDBThread()
+        return len(self.entry.enclosures)
 
     ##
     # Marks this item as expired
     def expire(self):
-        self.beginRead()
-        try:
-            self.stopDownload()
-            # FIXME: should expired items be marked as "seen?"
-            # self.markItemSeen()
-            self.expired = True
-        finally:
-            self.endRead()        
-        self.beginChange()
-        self.endChange()
+        self.confirmDBThread()
+        self.stopDownload()
+        # FIXME: should expired items be marked as "seen?"
+        # self.markItemSeen()
+        self.expired = True
+        self.signalChange()
 
     ##
     # Returns string with days or hours until this gets deleted
     def getExpirationTime(self):
+        self.confirmDBThread()
         ret = "???"
-        self.beginRead()
         ufeed = self.getFeed()
-        ufeed.beginRead()
-        try:
-            if ufeed.expire == 'never' or (ufeed.expire == 'system'
-                    and config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
-                ret = "never"
+        if ufeed.expire == 'never' or (ufeed.expire == 'system'
+                and config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
+            ret = "never"
+        else:
+            if ufeed.expire == "feed":
+                expireTime = ufeed.expireTime
+            elif ufeed.expire == "system":
+                expireTime = timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS))
+            
+            exp = expireTime - (datetime.now() - self.getDownloadedTime())
+            if exp.days > 0:
+                ret = "%d days" % exp.days
+            elif exp.seconds > 3600:
+                ret = "%d hours" % (ceil(exp.seconds/3600.0))
             else:
-                if ufeed.expire == "feed":
-                    expireTime = ufeed.expireTime
-                elif ufeed.expire == "system":
-                    expireTime = timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS))
-                
-                exp = expireTime - (datetime.now() - self.getDownloadedTime())
-                if exp.days > 0:
-                    ret = "%d days" % exp.days
-                elif exp.seconds > 3600:
-                    ret = "%d hours" % (ceil(exp.seconds/3600.0))
-                else:
-                    ret = "%d min." % (ceil(exp.seconds/60.0))
-        finally:
-            ufeed.endRead()
-            self.endRead()
+                ret = "%d min." % (ceil(exp.seconds/60.0))
         return ret
 
     def getKeep(self):
-        self.beginRead()
-        ret = self.keep
-        self.endRead()
-        return ret
+        self.confirmDBThread()
+        return self.keep
 
     def setKeep(self,val):
-        self.beginRead()
+        self.confirmDBThread()
         self.keep = val
-        self.endRead()
-        self.beginChange()
-        self.endChange()
+        self.signalChange()
 
     ##
     # returns true iff video has been seen
     # Note the difference between "viewed" and "seen"
     def getSeen(self):
-        self.beginRead()
-        ret = self.seen
-        self.endRead()
-        return ret
+        self.confirmDBThread()
+        return self.seen
 
     ##
     # Marks the item as seen
     def markItemSeen(self):
-        self.beginChange()
-        try:
-            self.seen = True
-        finally:
-            self.endChange()
+        self.confirmDBThread()
+        self.seen = True
+        self.signalChange()
 
     ##
     # Returns a list of downloaders associated with this object
     def getDownloaders(self):
-        self.beginRead()
-        ret = self.downloaders
-        self.endRead()
-        return ret
+        self.confirmDBThread()
+        return self.downloaders
 
     def getRSSID(self):
-        self.beginRead()
-        try:
-            ret = self.entry["id"]
-        finally:
-            self.endRead()
-        return ret
+        self.confirmDBThread()
+        return self.entry["id"]
 
     def setAutoDownloaded(self,autodl = True):
-        self.beginRead()
+        self.confirmDBThread()
         self.autoDownloaded = autodl
-        self.endRead()
+        self.signalChange()
 
     def getPendingReason(self):
-        ret = ""
-        self.beginRead()
-        ret = self.pendingReason
-        self.endRead()
-        return ret
+        self.confirmDBThread()
+        return self.pendingReason
 
     ##
     # Returns true iff item was auto downloaded
     def getAutoDownloaded(self):
-        self.beginRead()
-        ret = self.autoDownloaded
-        self.endRead()
-        return ret
+        self.confirmDBThread()
+        return self.autoDownloaded
 
     ##
     # Returns the linkNumber
     def getLinkNumber(self):
-        self.beginRead()
-        try:
-            ret = self.linkNumber
-        finally:
-            self.endRead()
-        return ret
+        self.confirmDBThread()
+        return self.linkNumber
 
     def download(self,autodl=False):
         eventloop.addIdle(lambda : self.actualDownload(autodl), "Spawning Download %s" % self.getURL())
@@ -246,114 +200,61 @@ class Item(DDBObject):
     ##
     # Starts downloading the item
     def actualDownload(self,autodl=False):
-        spawn = True
-        self.beginRead()
-        try:
-            # FIXME: For locking reasons, downloaders don't always
-            #        call beginChange() and endChange(), so we have to
-            #        recompute this filter
-            defaultDatabase.recomputeFilter(self.manualDownloads)
-            if ((not autodl) and 
-                self.manualDownloads.len() >= config.get(prefs.MAX_MANUAL_DOWNLOADS)):
-                self.pendingManualDL = True
-                self.pendingReason = "Too many manual downloads"
-                spawn = False
-                self.expired = False
-            else:
-                #Don't spawn two downloaders
-                if self.startingDownload:
-                    spawn = False
-                else:
-                    self.setAutoDownloaded(autodl)
-                    self.expired = False
-                    self.keep = False
-                    self.pendingManualDL = False
-                    self.lastDownloadFailed = False
-                    downloadURLs = map(lambda x:x.getURL(),self.downloaders)
-                    self.startingDownload = True
-            try:
-                enclosures = self.entry["enclosures"]
-            except:
-                enclosures = []
-        finally:
-            self.endRead()
-        self.beginChange()
-        self.endChange()
+        self.confirmDBThread()
 
-        if not spawn:
+        # FIXME: For locking reasons, downloaders don't always
+        #        call signalChange(), so we have to recompute this filter
+        # defaultDatabase.recomputeFilter(self.manualDownloads)
+        if ((not autodl) and 
+            self.manualDownloads.len() >= config.get(prefs.MAX_MANUAL_DOWNLOADS)):
+            self.pendingManualDL = True
+            self.pendingReason = "Too many manual downloads"
+            self.expired = False
+            self.signalChange()
             return
+        else:
+            self.setAutoDownloaded(autodl)
+            self.expired = False
+            self.keep = False
+            self.pendingManualDL = False
+            self.lastDownloadFailed = False
 
         try:
-            justStartedDownloaders = set()
-            for enclosure in enclosures:
-                try:
-                    if enclosure["url"] not in downloadURLs:
-                        dler = self.dlFactory.getDownloader(enclosure["url"])
-                        if dler != None:
-                            self.beginRead()
-                            try:
-                                self.downloaders.append(dler)
-                                downloadURLs.append(dler.getURL())
-                                justStartedDownloaders.add(dler.getURL())
-                            finally:
-                                self.endRead()
-                        else:
-                            self.beginRead()
-                            try:
-                                self.lastDownloadFailed = True
-                            finally:
-                                self.endRead()
-                    elif enclosure['url'] not in justStartedDownloaders:
-                        for dler in self.downloaders:
-                            if dler.getURL() == enclosure['url']:
-                                dler.start()
-                except KeyError:
-                    pass
-        except KeyError:
-            pass
-        self.beginRead()
-        try:
-            self.startingDownload = False
-        finally:
-            self.endRead()
-        self.beginChange()
-        self.endChange()
+            enclosures = self.entry["enclosures"]
+        except:
+            enclosures = []
+
+        for enclosure in enclosures:
+            dler = self.dlFactory.getDownloader(enclosure["url"])
+            if dler not in self.downloaders:
+                self.downloaders.append(dler)
+            dler.start()
+
+        self.signalChange()
 
 
     ##
     # Returns a link to the thumbnail of the video
     def getThumbnailURL(self):
-        ret = None
-        self.beginRead()
-        try:
-            if self.entry.has_key('enclosures'):
+        self.confirmDBThread()
+        if self.entry.has_key('enclosures'):
+            for enc in self.entry['enclosures']:
                 try:
-                    self.entry.enclosures
-                except AttributeError:
-                    print "self.entry.enclosures doesn't work"
-                    print "self.entry['enclosures'] is: "
-                    print self.entry['enclosures']
-                for enc in self.entry.enclosures:
-                    if enc.has_key('thumbnail') and enc['thumbnail'].has_key('url'):
-                        ret = enc["thumbnail"]["url"]
-                        break
-            if (ret is None and self.entry.has_key('thumbnail') and
-                self.entry['thumbnail'].has_key('url')):
-                ret =  self.entry["thumbnail"]["url"]
-        finally:
-            self.endRead()
-        return ret
+                    return enc["thumbnail"]["url"]
+                except:
+                    pass
+        try:
+            return self.entry["thumbnail"]["url"]
+        except:
+            return None
 
     def getThumbnail (self):
-        self.beginRead()
-        try:
-            if self.iconCache.isValid():
-                basename = os.path.basename(self.iconCache.getFilename())
-                return resource.iconCacheUrl(basename)
-            else:
-                return "resource:images/thumb.png"
-        finally:
-            self.endRead()
+        self.confirmDBThread()
+        if self.iconCache.isValid():
+            basename = os.path.basename(self.iconCache.getFilename())
+            return resource.iconCacheUrl(basename)
+        else:
+            return "resource:images/thumb.png"
     ##
     # returns the title of the item
     def getTitle(self):
@@ -369,17 +270,15 @@ class Item(DDBObject):
     ##
     # Returns valid XHTML containing a description of the video
     def getDescription(self):
-        self.beginRead()
+        self.confirmDBThread()
         try:
             enclosure = self.getFirstVideoEnclosure()
-            ret = xhtmlify('<span>'+unescape(enclosure["text"])+'</span>')
+            return xhtmlify('<span>'+unescape(enclosure["text"])+'</span>')
         except:
             try:
-                ret = xhtmlify('<span>'+unescape(self.entry.description)+'</span>')
+                return xhtmlify('<span>'+unescape(self.entry.description)+'</span>')
             except:
-                ret = '<span />'
-        self.endRead()
-        return ret
+                return '<span />'
 
     def looksLikeTorrent(self):
         """Returns true if we think this item is a torrent.  (For items that
@@ -416,34 +315,28 @@ class Item(DDBObject):
     ##
     # Stops downloading the item
     def stopDownload(self):
+        self.confirmDBThread()
         for dler in self.downloaders:
-            dler.remove()
-        self.beginRead()
-        try:
-            self.downloaders = []
-            self.keep = False
-            self.pendingManualDL = False
-        finally:
-            self.endRead()
+            dler.removeItem(self)
+        self.downloaders = []
+        self.keep = False
+        self.pendingManualDL = False
+        self.signalChange()
 
     ##
     # returns status of the download in plain text
     def getState(self):
+        self.confirmDBThread()
         ufeed = self.getFeed()
-        self.beginRead()
-        ufeed.beginRead()
-        try:
-            state = self.getStateNoAuto()
-            lastPubDate = self.getPubDateParsed()
-            if ((state == "stopped") and 
-                ufeed.isAutoDownloadable() and 
-                (ufeed.getEverything or 
-                 (lastPubDate >= ufeed.startfrom and
-                  lastPubDate != datetime.max))):
-                state = "autopending"
-        finally:
-            ufeed.endRead()
-            self.endRead()
+
+        state = self.getStateNoAuto()
+        lastPubDate = self.getPubDateParsed()
+        if ((state == "stopped") and 
+            ufeed.isAutoDownloadable() and 
+            (ufeed.getEverything or 
+             (lastPubDate >= ufeed.startfrom and
+              lastPubDate != datetime.max))):
+            state = "autopending"
             
         return state
     
@@ -452,49 +345,39 @@ class Item(DDBObject):
     # returns the state of the download, without checking automatic dl
     # eligibility
     def getStateNoAuto(self):
-        self.beginRead()
-        try:
-            if self.expired:
-                state = "expired"
-            elif self.startingDownload:
-                state = "downloading"
-            elif self.keep:
-                state = "saved"
-            elif self.pendingManualDL:
-                state = "manualpending"
-            elif len(self.downloaders) == 0:
-                if self.lastDownloadFailed:
-                    state = "failed"
-                else:
-                    state = "stopped"
+        self.confirmDBThread()
+        if self.expired:
+            state = "expired"
+        elif self.keep:
+            state = "saved"
+        elif self.pendingManualDL:
+            state = "manualpending"
+        elif len(self.downloaders) == 0:
+            if self.lastDownloadFailed:
+                state = "failed"
             else:
-                state = "finished"
-                for dler in self.downloaders:
-                    newState = dler.getState()
-                    if newState != "finished":
-                        state = newState
-                    if state == "failed":
-                        break
-            if (state == "finished" or state=="uploading") and self.seen:
-                state = "watched"
-        finally:
-            self.endRead()
+                state = "stopped"
+        else:
+            state = "finished"
+            for dler in self.downloaders:
+                newState = dler.getState()
+                if newState != "finished":
+                    state = newState
+                if state == "failed":
+                    break
+        if (state == "finished" or state=="uploading") and self.seen:
+            state = "watched"
         return state
 
     def getFailureReason(self):
-        ret = ""
-        self.beginRead()
-        try:
-            if self.lastDownloadFailed:
-                ret = "Could not connect to server"
-            else:
-                for dler in self.downloaders:
-                    if dler.getState() == "failed":
-                        ret = dler.getReasonFailed()
-                        break
-        finally:
-            self.endRead()
-        return ret
+        self.confirmDBThread()
+        if self.lastDownloadFailed:
+            return "Could not connect to server"
+        else:
+            for dler in self.downloaders:
+                if dler.getState() == "failed":
+                    return dler.getReasonFailed()
+        return ""
     
     ##
     # Returns the size of the item to be displayed. If the item has a corresponding
@@ -568,20 +451,17 @@ class Item(DDBObject):
     # Returns the download progress in absolute percentage [0.0 - 100.0].
     def downloadProgress(self):
         progress = 0
-        self.beginRead()
-        try:
-            size = 0
-            dled = 0
-            for dler in self.downloaders:
-                try:
-                    size += dler.getTotalSize()
-                    dled += dler.getCurrentSize()
-                except:
-                    pass
-            if size > 0:
-                progress = (100.0*dled) / size
-        finally:
-            self.endRead()
+        self.confirmDBThread()
+        size = 0
+        dled = 0
+        for dler in self.downloaders:
+            try:
+                size += dler.getTotalSize()
+                dled += dler.getCurrentSize()
+            except:
+                pass
+        if size > 0:
+            progress = (100.0*dled) / size
         return progress
 
     ##
@@ -640,30 +520,22 @@ class Item(DDBObject):
     ##
     # Returns the published date of the item
     def getPubDate(self):
-        self.beginRead()
+        self.confirmDBThread()
         try:
-            try:
-                ret = datetime(*self.entry.modified_parsed[0:7]).strftime("%b %d %Y").decode(_charset)
-            except:
-                ret = ""
-        finally:
-            self.endRead()
-        return ret
+            return datetime(*self.entry.modified_parsed[0:7]).strftime("%b %d %Y").decode(_charset)
+        except:
+            return ""
     
     ##
     # Returns the published date of the item as a datetime object
     def getPubDateParsed(self):
-        self.beginRead()
+        self.confirmDBThread()
         try:
-            try:
-                ret = datetime(*self.entry.modified_parsed[0:7])
-            except:
-                ret = datetime.max # Is this reasonable? It should
-                                   # avoid type issues for now, if
-                                   # nothing else
-        finally:
-            self.endRead()
-        return ret
+            return datetime(*self.entry.modified_parsed[0:7])
+        except:
+            return datetime.max # Is this reasonable? It should
+                                # avoid type issues for now, if
+                                # nothing else
 
     ##
     # returns the date this video was released or when it was published
@@ -688,17 +560,14 @@ class Item(DDBObject):
     def getReleaseDateObj(self):
         if hasattr(self,'releaseDateObj'):
             return self.releaseDateObj
-        self.beginRead()
+        self.confirmDBThread()
         try:
+            self.releaseDateObj = datetime(*self.getFirstVideoEnclosure().modified_parsed[0:7])
+        except:
             try:
-                self.releaseDateObj = datetime(*self.getFirstVideoEnclosure().modified_parsed[0:7])
+                self.releaseDateObj = datetime(*self.entry.modified_parsed[0:7])
             except:
-                try:
-                    self.releaseDateObj = datetime(*self.entry.modified_parsed[0:7])
-                except:
-                    self.releaseDateObj = datetime.min
-        finally:
-            self.endRead()
+                self.releaseDateObj = datetime.min
         return self.releaseDateObj
 
     ##
@@ -743,95 +612,73 @@ class Item(DDBObject):
     ##
     # return keyword tags associated with the video separated by commas
     def getTags(self):
-        self.beginRead()
+        self.confirmDBThread()
         try:
-            try:
-                ret = self.entry.categories.join(", ")
-            except:
-                ret = ""
-        finally:
-            self.endRead()
-        return ret
+            return self.entry.categories.join(", ")
+        except:
+            return ""
 
     ##
     # return the license associated with the video
     def getLicence(self):
-        self.beginRead()
+        self.confirmDBThread()
         try:
+            return self.entry.license
+        except:
             try:
-                ret = self.entry.license
+                return self.getFeed().getLicense()
             except:
-                try:
-                    ret = self.getFeed().getLicense()
-                except:
-                    ret = ""
-        finally:
-            self.endRead()
-        return ret
+                return ""
 
     ##
     # return the people associated with the video, separated by commas
     def getPeople(self):
         ret = []
-        self.beginRead()
+        self.confirmDBThread()
         try:
-            try:
-                for role in self.getFirstVideoEnclosure().roles:
-                    for person in self.getFirstVideoEnclosure().roles[role]:
-                        ret.append(person)
-                for role in self.entry.roles:
-                    for person in self.entry.roles[role]:
-                        ret.append(person)
-            except:
-                pass
-        finally:
-            self.endRead()
+            for role in self.getFirstVideoEnclosure().roles:
+                for person in self.getFirstVideoEnclosure().roles[role]:
+                    ret.append(person)
+            for role in self.entry.roles:
+                for person in self.entry.roles[role]:
+                    ret.append(person)
+        except:
+            pass
         return ', '.join(ret)
 
     ##
     # returns the URL of the webpage associated with the item
     def getLink(self):
-        self.beginRead()
+        self.confirmDBThread()
         try:
-            try:
-                ret = self.entry.link
-            except:
-                ret = ""
-        finally:
-            self.endRead()
-        return ret
+            return self.entry.link
+        except:
+            return ""
 
     ##
     # returns the URL of the payment page associated with the item
     def getPaymentLink(self):
-        self.beginRead()
+        self.confirmDBThread()
         try:
+            return self.getFirstVideoEnclosure().payment_url
+        except:
             try:
-                ret = self.getFirstVideoEnclosure().payment_url
+                return self.entry.payment_url
             except:
-                try:
-                    ret = self.entry.payment_url
-                except:
-                    ret = ""
-        finally:
-            self.endRead()
-        return ret
+                return ""
 
     ##
     # returns a snippet of HTML containing a link to the payment page
     # HTML has already been sanitized by feedparser
     def getPaymentHTML(self):
-        self.beginRead()
+        self.confirmDBThread()
         try:
+            ret = self.getFirstVideoEnclosure().payment_html
+        except:
             try:
-                ret = self.getFirstVideoEnclosure().payment_html
+                ret = self.entry.payment_html
             except:
-                try:
-                    ret = self.entry.payment_html
-                except:
-                    ret = ""
-        finally:
-            self.endRead()
+                ret = ""
         # feedparser returns escaped CDATA so we either have to change its
         # behavior when it parses dtv:paymentlink elements, or simply unescape
         # here...
@@ -842,92 +689,70 @@ class Item(DDBObject):
     #
     # @param entry a dict object containing the new data
     def update(self, entry):
-        self.beginChange()
+        self.confirmDBThread()
         try:
             self.entry = entry
             self.iconCache.requestUpdate()
         finally:
-            self.endChange()
+            self.signalChange()
 
     ##
     # marks the item as having been downloaded now
     def setDownloadedTime(self):
-        self.beginRead()
-        try:
-            self.downloadedTime = datetime.now()
+        self.confirmDBThread()
+        self.downloadedTime = datetime.now()
 
-            # Hack to immediately "save" items in feeds set to never expire
-            self.keep = (self.getFeed().expire == "never")
-        finally:
-            self.endRead()
+        # Hack to immediately "save" items in feeds set to never expire
+        self.keep = (self.getFeed().expire == "never")
+        self.signalChange()
 
     ##
     # gets the time the video was downloaded
     # Only valid if the state of this item is "finished"
     def getDownloadedTime(self):
-        self.beginRead()
-        try:
-            if self.downloadedTime is None:
-                return datetime.min
-            else:
-                return self.downloadedTime
-        finally:
-            self.endRead()
+        if self.downloadedTime is None:
+            return datetime.min
+        else:
+            return self.downloadedTime
 
     ##
     # gets the time the video started downloading
     def getDLStartTime(self):
-        self.beginRead()
+        self.confirmDBThread()
         try:
-            try:
-                ret = self.DLStartTime
-            except:
-                ret = None
-        finally:
-            self.endRead()
-        return ret
+            return self.DLStartTime
+        except:
+            return None
 
     ##
     # Returns the filename of the first downloaded video or the empty string
     # NOTE: this will always return the absolute path to the file.
     def getFilename(self):
-        ret = ""
-        self.beginRead()
+        self.confirmDBThread()
         try:
-            try:
-                ret = self.downloaders[0].getFilename()
-            except:
-                pass
-        finally:
-            self.endRead()
-        return ret
+            return self.downloaders[0].getFilename()
+        except:
+            return ""
 
     ##
     # Returns a list with the filenames of all of the videos in the item
     def getFilenames(self):
         ret = []
-        self.beginRead()
+        self.confirmDBThread()
         try:
-            try:
-                for dl in self.downloaders:
-                    ret.append(dl.getFilename())
-            except:
-                pass
-        finally:
-            self.endRead()
+            for dl in self.downloaders:
+                ret.append(dl.getFilename())
+        except:
+            pass
         return ret
 
     def getRSSEntry(self):
-        self.beginRead()
-        try:
-            ret = self.entry
-        finally:
-            self.endRead()
-        return ret
+        self.confirmDBThread()
+        return self.entry
 
     def remove(self):
         for dler in self.downloaders:
-            dler.remove()
+            dler.removeItem(self)
         DDBObject.remove(self)
 
     def reconnectDownloaders(self):
@@ -940,12 +765,11 @@ class Item(DDBObject):
                 downloader.addItem(self)
                 changed = True
         if changed:
-            self.endChange()
+            self.signalChange()
 
     ##
     # Called by pickle during serialization
     def onRestore(self):
-        self.startingDownload = False
         self.dlFactory = DownloaderFactory(self)
         if (self.iconCache == None):
             self.iconCache = IconCache (self)
@@ -1008,25 +832,20 @@ class FileItem(Item):
         d.run(callback)
 
     def getDownloadedTime(self):
-        self.beginRead()
+        self.confirmDBThread()
         try:
-            try:
-                time = datetime.fromtimestamp(os.getctime(self.filename))
-            except:
-                return datetime.min
-        finally:
-            self.endRead()
+            return datetime.fromtimestamp(os.getctime(self.filename))
+        except:
+            return datetime.min
 
     def getFilename(self):
-        ret = ''
         try:
-            ret = self.filename
+            return self.filename
         except:
-            pass
-        return ret
+            return ""
 
     def migrate(self, newDir):
-        self.beginChange()
+        self.confirmDBThread()
         try:
             if os.path.exists(self.filename):
                 newFilename = os.path.join(newDir, os.path.basename(self.filename))
@@ -1038,15 +857,13 @@ class FileItem(Item):
                 else:
                     self.filename = newFilename
         finally:
-             self.endChange()
+             self.signalChange()
 
     def getFilenames(self):
-        ret = []
         try:
-            ret = [self.filename]
+            return [self.filename]
         except:
-            pass
-        return ret
+            return []
 
 
 def isVideoEnclosure(enclosure):

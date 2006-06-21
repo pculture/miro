@@ -55,8 +55,7 @@ class Tab:
     def redraw(self):
         # Force a redraw by sending a change notification on the underlying
         # DB object.
-        self.obj.beginChange()
-        self.obj.endChange()
+        self.obj.signalChange()
 
     def isFeed(self):
         """True if this Tab represents a Feed."""
@@ -81,27 +80,21 @@ class Tab:
 
 # Remove all static tabs from the database
 def removeStaticTabs():
-    app.db.beginUpdate()
-    try:
-        for obj in views.staticTabs:
-            obj.remove()
-    finally:
-        app.db.endUpdate()
+    app.db.confirmDBThread()
+    for obj in views.staticTabs:
+        obj.remove()
 
 # Reload the StaticTabs in the database from the statictabs.xml resource file.
 def reloadStaticTabs():
-    app.db.beginUpdate()
-    try:
-        # Wipe all of the StaticTabs currently in the database.
-        removeStaticTabs()
+    app.db.confirmDBThread()
+    # Wipe all of the StaticTabs currently in the database.
+    removeStaticTabs()
 
-        # Load them anew from the resource file.
-        # NEEDS: maybe better error reporting?
-        document = parse(resource.path('statictabs.xml'))
-        for n in document.getElementsByTagName('statictab'):
-            tabTemplateBase = n.getAttribute('tabtemplatebase')
-            contentsTemplate = n.getAttribute('contentstemplate')
-            order = int(n.getAttribute('order'))
-            StaticTab(tabTemplateBase, contentsTemplate, order)
-    finally:
-        app.db.endUpdate()
+    # Load them anew from the resource file.
+    # NEEDS: maybe better error reporting?
+    document = parse(resource.path('statictabs.xml'))
+    for n in document.getElementsByTagName('statictab'):
+        tabTemplateBase = n.getAttribute('tabtemplatebase')
+        contentsTemplate = n.getAttribute('contentstemplate')
+        order = int(n.getAttribute('order'))
+        StaticTab(tabTemplateBase, contentsTemplate, order)

@@ -185,11 +185,11 @@ class FeedImpl:
             if newFreq != self.updateFreq:
                 self.updateFreq = newFreq
                 self.scheduleUpdateEvents(-1)
+        self.ufeed.signalChange()
 
     def scheduleUpdateEvents(self, firstTriggerDelay):
         self.cancelUpdateEvents()
         if self.updateFreq > 0:
-
             if firstTriggerDelay >= 0:
                 self.scheduler = eventloop.addTimeout(firstTriggerDelay, self.update, "Feed update (%s)" % self.getTitle())
             else:
@@ -208,8 +208,7 @@ class FeedImpl:
 
     # Returns true iff this feed has been looked at
     def getViewed(self):
-        ret = self.lastViewed != datetime.min
-        return ret
+        return self.lastViewed != datetime.min
 
     # Returns the ID of the actual feed, never that of the UniversalFeed wrapper
     def getFeedID(self):
@@ -231,33 +230,23 @@ class FeedImpl:
         return state == 'finished' or state == 'uploading'
 
     # Updates the state of unwatched and available items to meet
-    # Returns true iff endChange() is called
+    # Returns true iff signalChange() is called
     def updateUandA(self):
-        # Note: I'm not locking this with the assumption that we don't
-        #       care if these totals reflect an actual snapshot of the
-        #       database. If items change in the middle of this, oh well.
+        self.ufeed.confirmDBThread()
         newU = 0
         newA = 0
-        ret = False
 
         for item in self.items:
             if self.isAvailable(item):
                 newA += 1
             if self.isUnwatched(item):
                 newU += 1
-        self.ufeed.beginRead()
-        try:
-            if newU != self.unwatched or newA != self.available:
-                self.ufeed.beginChange()
-                try:
-                    ret = True
-                    self.unwatched = newU
-                    self.available = newA
-                finally:
-                    self.ufeed.endChange()
-        finally:
-            self.ufeed.endRead()
-        return ret
+        if newU != self.unwatched or newA != self.available:
+            self.unwatched = newU
+            self.available = newA
+            self.ufeed.signalChange()
+            return True
+        return False
             
     # Returns string with number of unwatched videos in feed
     def numUnwatched(self):
@@ -325,33 +314,29 @@ class FeedImpl:
     # Figure out the next available auto download item taking into account
     # maxNew, fallbehind, and getEverything
     def getNextAutoDownload(self, dontUse = []):
-        self.ufeed.beginRead()
-        try:
-            next = None
+        self.ufeed.confirmDBThread()
+        next = None
 
-            #The number of items downloading from this feed
-            dling = 0
-            #The number of items eligibile to download
-            eligibile = 0
-            #The number of unwatched, downloaded items
-            newitems = 0
+        #The number of items downloading from this feed
+        dling = 0
+        #The number of items eligibile to download
+        eligibile = 0
+        #The number of unwatched, downloaded items
+        newitems = 0
 
-            #Find the next item we should get
-#            self.items.sort(sortFunc)
-            for item in self.items:
-                if (item.getState() == "autopending") and not item in dontUse:
-                    eligibile += 1
-                    if next == None:
-                        next = item
-                    elif item.getPubDateParsed() > next.getPubDateParsed():
-                        next = item
-                if item.getState() == "downloading":
-                    dling += 1
-                if item.getState() == "finished" or item.getState() == "uploading" and not item.getSeen():
-                    newitems += 1
-
-        finally:
-            self.ufeed.endRead()
+        #Find the next item we should get
+#        self.items.sort(sortFunc)
+        for item in self.items:
+            if (item.getState() == "autopending") and not item in dontUse:
+                eligibile += 1
+                if next == None:
+                    next = item
+                elif item.getPubDateParsed() > next.getPubDateParsed():
+                    next = item
+            if item.getState() == "downloading":
+                dling += 1
+            if item.getState() == "finished" or item.getState() == "uploading" and not item.getSeen():
+                newitems += 1
 
         if self.maxNew >= 0 and newitems >= self.maxNew:
             return None
@@ -359,17 +344,14 @@ class FeedImpl:
             dontUse.append(next)
             return self.getNextAutoDownload(dontUse)
         elif next != None:
-            self.ufeed.beginRead()
-            try:
-                self.startfrom = next.getPubDateParsed()
-            finally:
-                self.ufeed.endRead()
+            self.ufeed.confirmDBThread()
+            self.startfrom = next.getPubDateParsed()
             return next
         else:
             return None
 
     def downloadNextManual(self):
-        self.ufeed.beginRead()
+        self.ufeed.confirmDBThread()
         next = None
 #        self.items.sort(sortFunc)
         for item in self.items:
@@ -380,7 +362,6 @@ class FeedImpl:
                     next = item
         if not next is None:
             next.download(autodl = False)
-        self.ufeed.endRead()
 
     ##
     # Returns marks expired items as expired
@@ -405,59 +386,48 @@ class FeedImpl:
     ##
     # Returns true iff feed should be visible
     def isVisible(self):
-        self.ufeed.beginRead()
-        try:
-            ret = self.visible
-        finally:
-            self.ufeed.endRead()
-        return ret
+        self.ufeed.confirmDBThread()
+        return self.visible
 
     ##
     # Switch the auto-downloadable state
     def setAutoDownloadable(self, automatic):
-        self.ufeed.beginRead()
-        try:
-            self.autoDownloadable = (automatic == "1")
-            if self.autoDownloadable:
-                self.startfrom = datetime.now()
-            else:
-                self.startfrom = datetime.max
-        finally:
-            self.ufeed.endRead()
+        self.ufeed.confirmDBThread()
+        self.autoDownloadable = (automatic == "1")
+        if self.autoDownloadable:
+            self.startfrom = datetime.now()
+        else:
+            self.startfrom = datetime.max
+        self.ufeed.signalChange()
 
     ##
     # Sets the 'getEverything' attribute, True or False
     def setGetEverything(self, everything):
-        self.ufeed.beginRead()
-        try:
-            self.getEverything = everything
-        finally:
-            self.ufeed.endRead()
+        self.ufeed.confirmDBThread()
+        self.getEverything = everything
+        self.ufeed.signalChange()
 
     ##
     # Sets the expiration attributes. Valid types are 'system', 'feed' and 'never'
     # Expiration time is in hour(s).
     def setExpiration(self, type, time):
-        self.ufeed.beginRead()
-        try:
-            self.expire = type
-            self.expireTime = timedelta(hours=time)
+        self.ufeed.confirmDBThread()
+        self.expire = type
+        self.expireTime = timedelta(hours=time)
 
-            if self.expire == "never":
-                for item in self.items:
-                    if item.getState() in ['finished','uploading','watched']:
-                        item.setKeep(True)
-        finally:
-            self.ufeed.endRead()
+        if self.expire == "never":
+            for item in self.items:
+                if item.getState() in ['finished','uploading','watched']:
+                    item.setKeep(True)
+
+        self.ufeed.signalChange()
 
     ##
     # Sets the maxNew attributes. -1 means unlimited.
     def setMaxNew(self, maxNew):
-        self.ufeed.beginRead()
-        try:
-            self.maxNew = maxNew
-        finally:
-            self.ufeed.endRead()
+        self.ufeed.confirmDBThread()
+        self.maxNew = maxNew
+        self.ufeed.signalChange()
 
     ##
     # Return the 'system' expiration delay, in days (can be < 1.0)
@@ -484,86 +454,67 @@ class FeedImpl:
     ##
     # Returns "feed," "system," or "never"
     def getExpirationType(self):
-        self.ufeed.beginRead()
-        ret = self.expire
-        self.ufeed.endRead()
-        return ret
+        self.ufeed.confirmDBThread()
+        return self.expire
 
     ##
     # Returns"unlimited" or the maximum number of items this feed can fall behind
     def getMaxFallBehind(self):
-        self.ufeed.beginRead()
+        self.ufeed.confirmDBThread()
         if self.fallBehind < 0:
-            ret = "unlimited"
+            return "unlimited"
         else:
-            ret = self.fallBehind
-        self.ufeed.endRead()
-        return ret
+            return self.fallBehind
 
     ##
     # Returns "unlimited" or the maximum number of items this feed wants
     def getMaxNew(self):
-        self.ufeed.beginRead()
+        self.ufeed.confirmDBThread()
         if self.maxNew < 0:
-            ret = "unlimited"
+            return "unlimited"
         else:
-            ret = self.maxNew
-        self.ufeed.endRead()
-        return ret
+            return self.maxNew
 
     ##
     # Returns the total absolute expiration time in hours.
     # WARNING: 'system' and 'never' expiration types return 0
     def getExpirationTime(self):
         delta = None
-        self.ufeed.beginRead()
-        try:
-            expireAfterSetting = config.get(prefs.EXPIRE_AFTER_X_DAYS)
-            if (self.expireTime is None or self.expire == 'never' or 
-                    (self.expire == 'system' and expireAfterSetting <= 0)):
-                return 0
-            else:
-                return (self.expireTime.days * 24 + 
-                        self.expireTime.seconds / 3600)
-        finally:
-            self.ufeed.endRead()
+        self.ufeed.confirmDBThread()
+        expireAfterSetting = config.get(prefs.EXPIRE_AFTER_X_DAYS)
+        if (self.expireTime is None or self.expire == 'never' or 
+            (self.expire == 'system' and expireAfterSetting <= 0)):
+            return 0
+        else:
+            return (self.expireTime.days * 24 + 
+                    self.expireTime.seconds / 3600)
 
     ##
     # Returns the number of days until a video expires
     def getExpireDays(self):
         ret = 0
-        self.ufeed.beginRead()
+        self.ufeed.confirmDBThread()
         try:
-            try:
-                ret = self.expireTime.days
-            except:
-                ret = timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS)).days
-        finally:
-            self.ufeed.endRead()
-        return ret
+            return self.expireTime.days
+        except:
+            return timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS)).days
 
     ##
     # Returns the number of hours until a video expires
     def getExpireHours(self):
         ret = 0
-        self.ufeed.beginRead()
+        self.ufeed.confirmDBThread()
         try:
-            try:
-                ret = int(self.expireTime.seconds/3600)
-            except:
-                ret = int(timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS)).seconds/3600)
-        finally:
-            self.ufeed.endRead()
-        return ret
+            return int(self.expireTime.seconds/3600)
+        except:
+            return int(timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS)).seconds/3600)
         
 
     ##
     # Returns true iff item is autodownloadable
     def isAutoDownloadable(self):
-        self.ufeed.beginRead()
-        ret = self.autoDownloadable
-        self.ufeed.endRead()
-        return ret
+        self.ufeed.confirmDBThread()
+        return self.autoDownloadable
 
     def autoDownloadStatus(self):
         status = self.isAutoDownloadable()
@@ -619,7 +570,7 @@ class FeedImpl:
     ##
     # Returns the number of new items with the feed
     def getNewItems(self):
-        self.ufeed.beginRead()
+        self.ufeed.confirmDBThread()
         count = 0
         for item in self.items:
             try:
@@ -627,7 +578,6 @@ class FeedImpl:
                     count += 1
             except:
                 pass
-        self.ufeed.endRead()
         return count
 
     def onRestore(self):
@@ -668,30 +618,21 @@ class Feed(DDBObject):
         return DDBObject.getID(self)
 
     def hasError(self):
-        ret = False
-        self.beginRead()
-        try:
-            ret = self.errorState
-        finally:
-            self.endRead()
-        return ret
+        self.confirmDBThread()
+        return self.errorState
 
     def getError(self):
         return "Could not load feed"
 
     def update(self):
-        self.beginRead()
-        try:
-            if self.loading:
-                return
-            elif self.errorState:
-                self.loading = True
-                self.errorState = False
-                self.beginChange()
-                self.endChange()
-                return self.generateFeed()
-        finally:
-            self.endRead()
+        self.confirmDBThread()
+        if self.loading:
+            return
+        elif self.errorState:
+            self.loading = True
+            self.errorState = False
+            self.signalChange()
+            return self.generateFeed()
         self.actualFeed.update()
 
     def generateFeed(self, removeOnError=False):
@@ -713,10 +654,10 @@ class Feed(DDBObject):
             self.actualFeed = newFeed
             self.loading = False
 
-            self.beginChange()
-            self.endChange()
+            self.signalChange()
 
     def _generateFeedErrback(self, error):
+        self.errorState = True
         print "DTV: Warning couldn't load feed at %s" % self.origURL
 
     def _generateFeedCallback(self, info, removeOnError):
@@ -807,16 +748,14 @@ class Feed(DDBObject):
                 self.remove()
 
     def finishGenerateFeed(self, feedImpl):
-        self.beginRead()
-        try:
-            self.loading = False
-            if feedImpl is not None:
-                self.actualFeed = feedImpl
-                self.errorState = False
-            else:
-                self.errorState = True
-        finally:
-            self.endRead()
+        self.confirmDBThread()
+        self.loading = False
+        if feedImpl is not None:
+            self.actualFeed = feedImpl
+            self.errorState = False
+        else:
+            self.errorState = True
+        self.signalChange()
 
     def askForScrape(self, info, initialHTML, charset):
         title = _("Channel is not compatible with Democracy!")
@@ -852,30 +791,23 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
         in this feed will be moved to that feed.
         """
 
-        self.beginChange()
+        self.confirmDBThread()
         self.cancelUpdateEvents()
-        try:
-            for item in self.items:
-                if moveItemsTo is None:
-                    item.remove()
-                else:
-                    item.setFeed(moveItemsTo.getID())
-            self.items = []
-            DDBObject.remove(self)
-        finally:
-            self.endChange()
+        for item in self.items:
+            if moveItemsTo is None:
+                item.remove()
+            else:
+                item.setFeed(moveItemsTo.getID())
+        DDBObject.remove(self)
         self.actualFeed.onRemove()
 
     def getThumbnail(self):
-        self.beginRead()
-        try:
-            if self.iconCache.isValid():
-                basename = os.path.basename(self.iconCache.getFilename())
-                return resource.iconCacheUrl(basename)
-            else:
-                return defaultFeedIconURL()
-        finally:
-            self.endRead()
+        self.confirmDBThread()
+        if self.iconCache.isValid():
+            basename = os.path.basename(self.iconCache.getFilename())
+            return resource.iconCacheUrl(basename)
+        else:
+            return defaultFeedIconURL()
 
     def updateIcons(self):
         iconCacheUpdater.clearVital()
@@ -923,35 +855,29 @@ class RSSFeedImpl(FeedImpl):
     ##
     # Returns the description of the feed
     def getDescription(self):
-        self.ufeed.beginRead()
+        self.ufeed.confirmDBThread()
         try:
-            ret = xhtmlify('<span>'+unescape(self.parsed.summary)+'</span>')
+            return xhtmlify('<span>'+unescape(self.parsed.summary)+'</span>')
         except:
-            ret = "<span />"
-        self.ufeed.endRead()
-        return ret
+            return "<span />"
 
     ##
     # Returns a link to a webpage associated with the feed
     def getLink(self):
-        self.ufeed.beginRead()
+        self.ufeed.confirmDBThread()
         try:
-            ret = self.parsed.link
+            return self.parsed.link
         except:
-            ret = ""
-        self.ufeed.endRead()
-        return ret
+            return ""
 
     ##
     # Returns the URL of the library associated with the feed
     def getLibraryLink(self):
-        self.ufeed.beginRead()
+        self.ufeed.confirmDBThread()
         try:
-            ret = self.parsed.libraryLink
+            return self.parsed.libraryLink
         except:
-            ret = ""
-        self.ufeed.endRead()
-        return ret        
+            return ""
 
     def hasVideoFeed(self, enclosures):
         hasOne = False
@@ -963,8 +889,7 @@ class RSSFeedImpl(FeedImpl):
 
     def feedparser_finished (self):
         if not self.updateUandA():
-            self.ufeed.beginChange()
-            self.ufeed.endChange()
+            self.ufeed.signalChange()
         self.scheduleUpdateEvents(-1)
         self.updating = False
 
@@ -974,6 +899,7 @@ class RSSFeedImpl(FeedImpl):
         self.updating = False
 
     def feedparser_callback (self, parsed):
+        self.ufeed.confirmDBThread()
         start = clock()
         self.updateUsingParsed(parsed)
         self.feedparser_finished()
@@ -982,6 +908,7 @@ class RSSFeedImpl(FeedImpl):
             print "WARNING: feed update for: %s too slow (%.3f secs)" % (self.url, end - start)
 
     def call_feedparser (self, html):
+        self.ufeed.confirmDBThread()
         in_thread = False
         if in_thread:
             try:
@@ -998,14 +925,11 @@ class RSSFeedImpl(FeedImpl):
     ##
     # Updates a feed
     def update(self):
-        self.ufeed.beginRead()
-        try:
-            if self.updating:
-                return
-            else:
-                self.updating = True
-        finally:
-            self.ufeed.endRead()
+        self.ufeed.confirmDBThread()
+        if self.updating:
+            return
+        else:
+            self.updating = True
         if hasattr(self, 'initialHTML') and self.initialHTML is not None:
             html = self.initialHTML
             self.initialHTML = None
@@ -1046,67 +970,63 @@ class RSSFeedImpl(FeedImpl):
         """Update the feed using parsed XML passed in"""
         self.parsed = parsed
 
-        self.ufeed.beginRead()
         try:
+            self.title = self.parsed["feed"]["title"]
+        except KeyError:
             try:
-                self.title = self.parsed["feed"]["title"]
+                self.title = self.parsed["channel"]["title"]
             except KeyError:
-                try:
-                    self.title = self.parsed["channel"]["title"]
-                except KeyError:
-                    pass
-            if (self.parsed.feed.has_key('image') and 
-                self.parsed.feed.image.has_key('url')):
-                self.thumbURL = self.parsed.feed.image.url
-                self.ufeed.iconCache.requestUpdate(is_vital=True)
-            items_byid = {}
-            items_nokey = []
-            for item in self.items:
-                try:
-                    items_byid[item.getRSSID()] = item
-                except KeyError:
-                    items_nokey.append (item)
-            for entry in self.parsed.entries:
-                entry = self.addScrapedThumbnail(entry)
-                new = True
-                if entry.has_key("id"):
-                    id = entry["id"]
-                    if items_byid.has_key (id):
-                        item = items_byid[id]
-                        if not _entry_equal(entry, item.getRSSEntry()):
-                            item.update(entry)
+                pass
+        if (self.parsed.feed.has_key('image') and 
+            self.parsed.feed.image.has_key('url')):
+            self.thumbURL = self.parsed.feed.image.url
+            self.ufeed.iconCache.requestUpdate(is_vital=True)
+        items_byid = {}
+        items_nokey = []
+        for item in self.items:
+            try:
+                items_byid[item.getRSSID()] = item
+            except KeyError:
+                items_nokey.append (item)
+        for entry in self.parsed.entries:
+            entry = self.addScrapedThumbnail(entry)
+            new = True
+            if entry.has_key("id"):
+                id = entry["id"]
+                if items_byid.has_key (id):
+                    item = items_byid[id]
+                    if not _entry_equal(entry, item.getRSSEntry()):
+                        item.update(entry)
+                    new = False
+            if new:
+                for item in items_nokey:
+                    if _entry_equal(entry, item.getRSSEntry()):
                         new = False
-                if new:
-                    for item in items_nokey:
-                        if _entry_equal(entry, item.getRSSEntry()):
-                            new = False
-                        else:
-                            try:
-                                if _entry_equal (entry["enclosures"], item.getRSSEntry()["enclosures"]):
-                                    item.update(entry)
-                                    new = False
-                            except:
-                                pass
-                if (new and entry.has_key('enclosures') and
-                    self.hasVideoFeed(entry.enclosures)):
-                    Item(self.ufeed.id,entry)
-            try:
-                updateFreq = self.parsed["feed"]["ttl"]
-            except KeyError:
-                updateFreq = 0
-            self.setUpdateFrequency(updateFreq)
-            
-            if self.initialUpdate:
-                self.initialUpdate = False
-                if len(self.items) > 0:
-                    sortedItems = list(self.items)
-                    sortedItems.sort(lambda x, y: cmp(x.getPubDateParsed(), y.getPubDateParsed()))
-                    self.startfrom = sortedItems[-1].getPubDateParsed()
-                else:
-                    self.startfrom = datetime.min
-
-        finally:
-            self.ufeed.endRead()
+                    else:
+                        try:
+                            if _entry_equal (entry["enclosures"], item.getRSSEntry()["enclosures"]):
+                                item.update(entry)
+                                new = False
+                        except:
+                            pass
+            if (new and entry.has_key('enclosures') and
+                self.hasVideoFeed(entry.enclosures)):
+                Item(self.ufeed.id,entry)
+        try:
+            updateFreq = self.parsed["feed"]["ttl"]
+        except KeyError:
+            updateFreq = 0
+        self.setUpdateFrequency(updateFreq)
+        
+        if self.initialUpdate:
+            self.initialUpdate = False
+            if len(self.items) > 0:
+                sortedItems = list(self.items)
+                sortedItems.sort(lambda x, y: cmp(x.getPubDateParsed(), y.getPubDateParsed()))
+                self.startfrom = sortedItems[-1].getPubDateParsed()
+            else:
+                self.startfrom = datetime.min
+        
 
     def addScrapedThumbnail(self,entry):
         if (entry.has_key('enclosures') and len(entry['enclosures'])>0 and
@@ -1147,12 +1067,9 @@ class Collection(FeedImpl):
     # Adds an item to the collection
     def addItem(self,item):
         if isinstance(item,Item):
-            self.ufeed.beginRead()
-            try:
-                self.removeItem(item)
-                self.items.append(item)
-            finally:
-                self.ufeed.endRead()
+            self.ufeed.confirmDBThread()
+            self.removeItem(item)
+            self.items.append(item)
             return True
         else:
             return False
@@ -1160,27 +1077,21 @@ class Collection(FeedImpl):
     ##
     # Moves an item to another spot in the collection
     def moveItem(self,item,pos):
-        self.ufeed.beginRead()
-        try:
-            self.removeItem(item)
-            if pos < len(self.items):
-                self.items[pos:pos] = [item]
-            else:
-                self.items.append(item)
-        finally:
-            self.ufeed.endRead()
+        self.ufeed.confirmDBThread()
+        self.removeItem(item)
+        if pos < len(self.items):
+            self.items[pos:pos] = [item]
+        else:
+            self.items.append(item)
 
     ##
     # Removes an item from the collection
     def removeItem(self,item):
-        self.ufeed.beginRead()
-        try:
-            for x in range(0,len(self.items)):
-                if self.items[x] == item:
-                    self.items[x:x+1] = []
-                    break
-        finally:
-            self.ufeed.endRead()
+        self.ufeed.confirmDBThread()
+        for x in range(0,len(self.items)):
+            if self.items[x] == item:
+                self.items[x:x+1] = []
+                break
         return True
 
 ##
@@ -1210,13 +1121,10 @@ class ScraperFeedImpl(FeedImpl):
     # linkHistory. This should be called at the end of an updated so that
     # the next time we update we don't unnecessarily follow old links
     def saveCacheHistory(self):
-        self.ufeed.beginRead()
-        try:
-            for url in self.tempHistory.keys():
-                self.linkHistory[url] = self.tempHistory[url]
-            self.tempHistory = {}
-        finally:
-            self.ufeed.endRead()
+        self.ufeed.confirmDBThread()
+        for url in self.tempHistory.keys():
+            self.linkHistory[url] = self.tempHistory[url]
+        self.tempHistory = {}
     ##
     # grabs HTML at the given URL, then processes it
     def getHTML(self, urlList, depth = 0, linkNumber = 0, top = False):
@@ -1241,6 +1149,7 @@ class ScraperFeedImpl(FeedImpl):
         self.downloads.add(download)
 
     def processDownloadedHTML(self, info, urlList, depth, linkNumber, top = False):
+        self.ufeed.confirmDBThread()
         self.pendingDownloads -= 1
         #print "Done grabbing %s" % info['updated-url']
 
@@ -1263,12 +1172,8 @@ class ScraperFeedImpl(FeedImpl):
         if len(urlList) > 0:
             self.getHTML(urlList, depth, linkNumber)
         elif (self.pendingDownloads == 0):
-            self.ufeed.beginRead()
-            try:
-                self.saveCacheHistory()
-                self.updating = False
-            finally:
-                self.ufeed.endRead()
+            self.saveCacheHistory()
+            self.updating = False
             self.scheduleUpdateEvents(-1)
 
     def addVideoItem(self,link,dict,linkNumber):
@@ -1349,14 +1254,12 @@ class ScraperFeedImpl(FeedImpl):
 
     #FIXME: go through and add error handling
     def update(self):
-        self.ufeed.beginRead()
-        try:
-            if self.updating:
-                return
-            else:
-                self.updating = True
-        finally:
-            self.ufeed.endRead()
+        self.ufeed.confirmDBThread()
+        if self.updating:
+            return
+        else:
+            self.updating = True
+
         if not self.initialHTML is None:
             html = self.initialHTML
             self.initialHTML = None
@@ -1366,7 +1269,6 @@ class ScraperFeedImpl(FeedImpl):
             self.initialCharset = None
             subLinks = self.scrapeLinks(html, redirURL, charset=charset, setTitle = True)
             self.processLinks(subLinks,0,0)
-
         else:
             self.getHTML([self.url], top = True)
 
@@ -1397,11 +1299,11 @@ class ScraperFeedImpl(FeedImpl):
                     if not link[2] is None:
                         linkDict[toUTF8Bytes(link[0])]['thumbnail'] = toUTF8Bytes(link[2],charset)
             if setTitle and not handler.title is None:
-                self.ufeed.beginChange()
+                self.ufeed.confirmDBThread()
                 try:
                     self.title = toUTF8Bytes(handler.title)
                 finally:
-                    self.ufeed.endChange()
+                    self.ufeed.signalChange()
             return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')], linkDict)
         except (xml.sax.SAXException, IOError, xml.sax.SAXNotRecognizedException):
             (links, linkDict) = self.scrapeHTMLLinks(html,baseurl,setTitle=setTitle, charset=charset)
@@ -1414,11 +1316,11 @@ class ScraperFeedImpl(FeedImpl):
         lg = HTMLLinkGrabber()
         links = lg.getLinks(html, baseurl)
         if setTitle and not lg.title is None:
-            self.ufeed.beginChange()
+            self.ufeed.confirmDBThread()
             try:
                 self.title = toUTF8Bytes(lg.title)
             finally:
-                self.ufeed.endChange()
+                self.ufeed.signalChange()
             
         linkDict = {}
         for link in links:
@@ -1470,14 +1372,11 @@ class DirectoryFeedImpl(FeedImpl):
                 self.scheduleUpdateEvents(-1)
 
     def update(self):
-        self.ufeed.beginRead()
-        try:
-            if self.updating:
-                return
-            else:
-                self.updating = True
-        finally:
-            self.ufeed.endRead()
+        self.ufeed.confirmDBThread()
+        if self.updating:
+            return
+        else:
+            self.updating = True
 
         #Files known about by real feeds
         knownFiles = set()
@@ -1493,11 +1392,7 @@ class DirectoryFeedImpl(FeedImpl):
             if item.getFilename() in knownFiles:
                 item.remove()
 
-        self.ufeed.beginRead()
-        try:
-            myFiles = set(x.getFilename() for x in self.items)
-        finally:
-            self.ufeed.endRead()
+        myFiles = set(x.getFilename() for x in self.items)
 
         #Adds any files we don't know about
         #Files on the filesystem
@@ -1545,29 +1440,27 @@ class SearchFeedImpl (RSSFeedImpl):
         return status
 
     def reset(self, url='', searchState=False):
-        self.ufeed.beginChange()
+        self.ufeed.confirmDBThread()
         try:
             for item in self.items:
                 item.remove()
             self.url = url
             self.searching = searchState
         finally:
-            self.ufeed.endChange()
+            self.ufeed.signalChange()
     
     def preserveDownloads(self, downloadsFeed):
-        self.ufeed.beginRead()
-        try:
-            for item in self.items:
-                if item.getState() != 'stopped':
-                    item.setFeed(downloadsFeed.id)
-        finally:
-            self.ufeed.endRead()
+        self.ufeed.confirmDBThread()
+        for item in self.items:
+            if item.getState() != 'stopped':
+                item.setFeed(downloadsFeed.id)
         
     def lookup(self, engine, query):
         url = self.getRequestURL(engine, query)
         self.reset(url, True)
         self.lastQuery = query
         self.update()
+        self.ufeed.signalChange()
 
     def getRequestURL(self, engine, query, filterAdultContents=True, limit=50):
         if query == "LET'S TEST DTV'S CRASH REPORTER TODAY":
@@ -1589,10 +1482,8 @@ class SearchFeedImpl (RSSFeedImpl):
         return url
 
     def updateUsingParsed(self, parsed):
-        RSSFeedImpl.updateUsingParsed(self, parsed)
         self.searching = False
-        self.ufeed.beginChange()
-        self.ufeed.endChange()
+        RSSFeedImpl.updateUsingParsed(self, parsed)
 
     def update(self):
         if self.url is not None and self.url != '':

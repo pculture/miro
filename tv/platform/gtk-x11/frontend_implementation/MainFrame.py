@@ -104,8 +104,8 @@ class MainFrame:
         self.videoLength = None
         self.callbackHandler = CallbackHandler(self)
         self.isFullscreen = False
-        self._gtkInit()
         self.aboutWidget = None
+        self._gtkInit()
 
     @gtkAsyncMethod
     def _gtkInit(self):

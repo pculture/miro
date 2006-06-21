@@ -75,20 +75,17 @@ class TrackedView:
     # This is called after the HTML has been rendered to fill in the
     # data for each view and register callbacks to keep it updated
     def initialFillIn(self):
-        self.view.beginRead()
-        try:
-            #print "Filling in %d items" % self.view.len()
-            #start = time.clock()
-            xmls = []
-            for x in self.view:
-                xmls.append(self.currentXML(x))
-            self.addHTMLAtEnd(''.join(xmls))
-            self.view.addChangeCallback(self.onChange)
-            self.view.addAddCallback(self.onAdd)
-            self.view.addRemoveCallback(self.onRemove)
-            #print "done (%f)" % (time.clock()-start)
-        finally:
-            self.view.endRead()
+        self.view.confirmDBThread()
+        #print "Filling in %d items" % self.view.len()
+        #start = time.clock()
+        xmls = []
+        for x in self.view:
+            xmls.append(self.currentXML(x))
+        self.addHTMLAtEnd(''.join(xmls))
+        self.view.addChangeCallback(self.onChange)
+        self.view.addAddCallback(self.onAdd)
+        self.view.addRemoveCallback(self.onRemove)
+        #print "done (%f)" % (time.clock()-start)
 
 
     def currentXML(self, item):
@@ -155,15 +152,12 @@ class UpdateRegion:
     # This is called after the HTML has been rendered to fill in the
     # data for each view and register callbacks to keep it updated
     def initialFillIn(self):
-        self.view.beginRead()
-        try:
-            if self.parent.domHandler:
-                self.parent.domHandler.addItemBefore(self.currentXML(), self.anchorId)
-            self.view.addChangeCallback(self.onChange)
-            self.view.addAddCallback(self.onChange)
-            self.view.addRemoveCallback(self.onChange)
-        finally:
-            self.view.endRead()
+        self.view.confirmDBThread()
+        if self.parent.domHandler:
+            self.parent.domHandler.addItemBefore(self.currentXML(), self.anchorId)
+        self.view.addChangeCallback(self.onChange)
+        self.view.addAddCallback(self.onChange)
+        self.view.addRemoveCallback(self.onChange)
 
 
     def currentXML(self):

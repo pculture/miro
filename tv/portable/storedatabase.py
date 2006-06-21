@@ -39,6 +39,9 @@ import util
 import schema as schema_mod
 import eventloop
 import app
+import bsddb.db
+
+from BitTornado.clock import clock
 
 # FILEMAGIC should be the first portion of the database file.  After that the
 # file will contain pickle data
@@ -359,12 +362,39 @@ def objectsToSavables(objects, objectSchemas=None):
     saver = SavableConverter(objectSchemas)
     return saver.convertObjectList(objects)
 
+oneSaver = SavableConverter()
+oneRestorer = SavableUnconverter()
+
+def objectToSavable(object):
+    """Transform a list of objects into something that we can save to disk.
+    This means converting any DDBObjects into SavebleObjects.
+    """
+
+    global oneSaver
+    if object.__class__ in oneSaver.classesToStrings:
+        oneSaver.memory = {}
+        return oneSaver.convertObject(object, schema_mod.SchemaObject(object.__class__), "")
+    else:
+        return None
+
 def savablesToObjects(savedObjects, objectSchemas=None):
     """Reverses the work of objectsToSavables"""
 
     restorer = SavableUnconverter(objectSchemas)
     restorer.objectSchemas = objectSchemas
     return restorer.convertObjectList(savedObjects)
+
+def savableToObject(savedObject):
+    """Transform a list of objects into something that we can save to disk.
+    This means converting any DDBObjects into SavebleObjects.
+    """
+
+    global oneRestorer
+    oneRestorer.memory = {}
+    klass = oneRestorer.stringsToClasses[savedObject.classString]
+    object = oneRestorer.convertObject(savedObject, schema_mod.SchemaObject(klass), "")
+    oneRestorer.onPostConversion()
+    return object
 
 def saveObjectList(objects, pathname, objectSchemas=None, version=None):
     """Save a list of objects to disk."""
@@ -380,7 +410,7 @@ def saveObjectList(objects, pathname, objectSchemas=None, version=None):
     finally:
         f.close()
 
-def restoreObjectList(pathname, objectSchemas=None):
+def loadPickle(pathname, objectSchemas=None):
     """Restore a list of objects saved with saveObjectList."""
 
     f = open(pathname, 'rb')
@@ -398,6 +428,11 @@ def restoreObjectList(pathname, objectSchemas=None):
         databaseupgrade.upgrade(savedObjects, version)
 
     return savablesToObjects(savedObjects, objectSchemas)
+
+def restoreObjectList(pathname, objectSchemas=None):
+    """Restore a list of objects saved with saveObjectList."""
+
+    return loadPickle (pathname, objectSchemas)
 
 backedUp = False
 
@@ -423,15 +458,12 @@ def saveDatabase(db=None, pathname=None):
 
     tempPathname = pathname + '.temp'
     try:
-        db.beginRead()
-        try:
-            objectsToSave = []
-            for o in db.objects:
-                objectsToSave.append(o[0])
-            databasesanity.checkSanity(objectsToSave)
-            saveObjectList(objectsToSave, tempPathname)
-        finally:
-            db.endRead()
+        db.confirmDBThread()
+        objectsToSave = []
+        for o in db.objects:
+            objectsToSave.append(o[0])
+        databasesanity.checkSanity(objectsToSave)
+        saveObjectList(objectsToSave, tempPathname)
         try:
             os.remove(pathname)
         except:
@@ -457,13 +489,8 @@ def saveDatabaseIdle (db=None, pathname=None):
         app.delegate.saveFailed(err)
     eventloop.addTimeout(300, saveDatabaseIdle, "Database Save", args=(db, pathname))
 
-def restoreDatabase(db=None, pathname=None, convertOnFail=True):
+def getObjects(pathname, convertOnFail):
     """Restore a database object."""
-
-    if db is None:
-        db = database.defaultDatabase
-    if pathname is None:
-        pathname = config.get(prefs.DB_PATHNAME)
 
     pathname = os.path.expanduser(pathname)
     if not os.path.exists(pathname):
@@ -473,7 +500,7 @@ def restoreDatabase(db=None, pathname=None, convertOnFail=True):
         if os.path.exists(tempPathname):
             os.rename(tempPathname, pathname)
         else:
-            return # nope, there's no database to restore
+            return None # nope, there's no database to restore
 
     try:
         objects = restoreObjectList(pathname)
@@ -506,4 +533,122 @@ def restoreDatabase(db=None, pathname=None, convertOnFail=True):
         util.failedExn("When restoring database", e)
         # if the database fails the sanity check, try to restore it anyway.
         # It's better than notheing
-    db.restoreFromObjectList(objects)
+    return objects
+
+def restoreDatabase(db=None, pathname=None, convertOnFail=True):
+    if db is None:
+        db = database.defaultDatabase
+    if pathname is None:
+        pathname = config.get(prefs.DB_PATHNAME)
+
+    objects = getObjects (pathname, convertOnFail)
+    if objects:
+        db.restoreFromObjectList(objects)
+
+VERSION_KEY = "Democracy Version"
+
+class LiveStorage:
+    def __init__(self):
+        self.txn = None
+        try:
+            os.makedirs(config.get(prefs.BSDDB_PATHNAME))
+        except:
+            pass
+        start = clock()
+        self.dbenv = bsddb.db.DBEnv()
+        self.dbenv.set_flags (bsddb.db.DB_AUTO_COMMIT | bsddb.db.DB_TXN_NOSYNC, True)
+        self.dbenv.set_lg_max (1024 * 1024)
+        self.dbenv.open (config.get(prefs.BSDDB_PATHNAME), bsddb.db.DB_INIT_LOG | bsddb.db.DB_INIT_MPOOL | bsddb.db.DB_INIT_TXN | bsddb.db.DB_RECOVER | bsddb.db.DB_CREATE)
+        self.db = bsddb.db.DB(self.dbenv)
+        self.closed = False
+        try:
+            self.db.open ("database")
+            self.version = int(self.db[VERSION_KEY])
+            self.loadDatabase()
+        except (bsddb.db.DBNoSuchFileError, KeyError):
+            try:
+                self.db.close()
+            except:
+                pass
+            self.db = None
+            restoreDatabase()
+            self.saveDatabase()
+        eventloop.addIdle(self.checkpoint, "Remove Unused Database Logs")
+        end = clock()
+        if end - start > 0.05:
+            print "Database load slow: %.3f" % (end - start,)
+
+    def loadDatabase(self):
+        objects = []
+        cursor = self.db.cursor()
+        while True:
+            next = cursor.next()
+            if next is None:
+                break
+            key, data = next
+            if key != VERSION_KEY:
+                try:
+                    savable = cPickle.loads(data)
+                    object = savableToObject(savable)
+                    objects.append(object)
+                except:
+                    print data
+                    raise
+        cursor.close()
+        db = database.defaultDatabase
+        db.restoreFromObjectList(objects)
+
+    def saveDatabase(self):
+        db = database.defaultDatabase
+        self.txn = self.dbenv.txn_begin()
+        try:
+            self.dbenv.dbremove("database", txn=self.txn)
+        except:
+            pass
+        self.db = bsddb.db.DB(self.dbenv)
+        self.db.open ("database", flags = bsddb.db.DB_CREATE, dbtype = bsddb.db.DB_HASH, txn=self.txn)
+        for o in db.objects:
+            self.update(o[0])
+        self.version = schema_mod.VERSION
+        self.db.put (VERSION_KEY, str(self.version), txn=self.txn)
+        self.txn.commit()
+        self.txn = None
+        self.db.sync()
+
+    def sync(self):
+        self.db.sync()
+
+    def close(self):
+        self.closed = True
+        self.db.close()
+        self.dbenv.close()
+
+    def update (self, object):
+        if self.closed:
+            return
+        start = clock()
+        savable = objectToSavable (object)
+        if savable:
+            key = str(object.id)
+            data = cPickle.dumps(savable)
+            self.db.put (key, data, txn=self.txn)
+        end = clock()
+        if end - start > 0.05:
+            print "Database update %s slow: %.3f" % (object, end - start)
+
+    def checkpoint (self):
+        if self.closed:
+            return
+        self.dbenv.txn_checkpoint()
+        self.sync()
+        for logfile in self.dbenv.log_archive(bsddb.db.DB_ARCH_ABS):
+            try:
+                os.remove(logfile)
+            except:
+                pass
+        eventloop.addTimeout(60, self.checkpoint, "Remove Unused Database Logs")
+
+    def remove (self, object):
+        if self.closed:
+            return
+        self.db.delete (str(object.id), txn=self.txn)

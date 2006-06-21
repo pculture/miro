@@ -24,18 +24,13 @@ _downloads = {}
 # None if it doesn't exist
 def findHTTPAuth(host,path,realm = None,scheme = None):
     #print "Trying to find HTTPAuth with host %s, path %s, realm %s, and scheme %s" %(host,path,realm,scheme)
-    ret = None
-    defaultDatabase.beginRead()
-    try:
-        for obj in views.httpauths:
-            if (obj.host == host and path.startswith(obj.path) and
-                (realm is None or obj.realm == realm) and
-                (scheme is None or obj.authScheme == scheme)):
-                ret = obj
-                break
-    finally:
-        defaultDatabase.endRead()
-    return ret
+    defaultDatabase.confirmDBThread()
+    for obj in views.httpauths:
+        if (obj.host == host and path.startswith(obj.path) and
+            (realm is None or obj.realm == realm) and
+            (scheme is None or obj.authScheme == scheme)):
+            return obj
+    return None
 
 
 class HTTPAuthPassword(DDBObject):
@@ -54,21 +49,13 @@ class HTTPAuthPassword(DDBObject):
 
     def getAuthToken(self):
         authString = ':'
-        self.beginRead()
-        try:
-            authString = self.username+':'+self.password
-        finally:
-            self.endRead()
+        self.confirmDBThread()
+        authString = self.username+':'+self.password
         return b64encode(authString)
 
     def getAuthScheme(self):
-        ret = ""
-        self.beginRead()
-        try:
-            ret = self.authScheme
-        finally:
-            self.endRead()
-        return ret
+        self.confirmDBThread()
+        return self.authScheme
 
 
 def _getDownloader (dlid = None, url = None):
@@ -114,6 +101,11 @@ class RemoteDownloader(DDBObject):
             self.runDownloader()
         DDBObject.__init__(self)
 
+    def signalChange (self, needsSave=True):
+        for item in self.itemList:
+            item.signalChange(needsSave=False)
+        DDBObject.signalChange (self, needsSave=needsSave)
+
     def onContentType (self, info):
         if info['status'] == 200:
             self.url = info['updated-url']
@@ -125,9 +117,7 @@ class RemoteDownloader(DDBObject):
     def onContentTypeError (self, error):
         self.status['state'] = "failed"
         self.status['reasonFailed'] = str(error)
-        for item in self.itemList:
-            item.beginChange()
-            item.endChange()
+        self.signalChange()
 
     def getContentType(self):
         httpclient.grabHeaders(self.url, self.onContentType, self.onContentTypeError)
@@ -148,9 +138,7 @@ class RemoteDownloader(DDBObject):
                 (oldState not in ['finished', 'uploading'])):
                 for item in self.itemList:
                     item.setDownloadedTime()
-            for item in self.itemList:
-                item.beginChange()
-                item.endChange()
+            self.signalChange()
 
     ##
     # This is the actual download thread.
@@ -159,9 +147,7 @@ class RemoteDownloader(DDBObject):
                                             self.url, self.dlid, self.contentType)
         c.send(block=False)
         _downloads[self.dlid] = self
-        for item in self.itemList:
-            item.beginChange()
-            item.endChange()
+        self.signalChange()
 
     ##
     # Pauses the download.
@@ -172,6 +158,7 @@ class RemoteDownloader(DDBObject):
             c.send(block=block)
         else:
             self.status["state"] = "paused"
+            self.signalChange()
 
     ##
     # Stops the download and removes the partially downloaded
@@ -185,6 +172,7 @@ class RemoteDownloader(DDBObject):
                 del _downloads[self.dlid]
             else:
                 self.status["state"] = "stopped"
+                self.signalChange()
 
     ##
     # Continues a paused, stopped, or failed download thread
@@ -199,6 +187,7 @@ class RemoteDownloader(DDBObject):
                 self.getContentType()
             else:
                 self.runDownloader()
+            self.signalChange()
         elif self.getState() in ('stopped', 'paused'):
             if _downloads.has_key(self.dlid):
                 c = command.StartDownloadCommand(RemoteDownloader.dldaemon,
@@ -209,6 +198,7 @@ class RemoteDownloader(DDBObject):
                 c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, 
                                                      self.status)
                 c.send(retry = True, block = False)
+                self.signalChange()
 
     def migrate(self):
         if _downloads.has_key(self.dlid):
@@ -242,6 +232,7 @@ URL was %s""" % self.url
                             newfilename, error)
                 else:
                     self.status['filename'] = newfilename
+            self.signalChange()
 
     ##
     # Removes downloader from the database and deletes the file.
@@ -258,14 +249,11 @@ URL was %s""" % self.url
         """Get the type of download.  Will return either "http" or
         "bittorrent".
         """
-        self.beginRead()
-        try:
-            if self.contentType == 'application/x-bittorrent':
-                return "bittorrent"
-            else:
-                return "http"
-        finally:
-            self.endRead()
+        self.confirmDBThread()
+        if self.contentType == 'application/x-bittorrent':
+            return "bittorrent"
+        else:
+            return "http"
 
     ##
     # In case multiple downloaders are getting the same file, we can support
@@ -273,19 +261,18 @@ URL was %s""" % self.url
     def addItem(self,item):
         self.itemList.append(item)
 
+    def removeItem(self, item):
+        self.itemList.remove(item)
+        if len (self.itemList) == 0:
+            self.remove()
+
     def getRate(self):
-        self.beginRead()
-        try:
-            return self.status.get('rate', 0)
-        finally:
-            self.endRead()
+        self.confirmDBThread()
+        return self.status.get('rate', 0)
 
     def getETA(self):
-        self.beginRead()
-        try:
-            return self.status.get('eta', 0)
-        finally:
-            self.endRead()
+        self.confirmDBThread()
+        return self.status.get('eta', 0)
 
     ##
     # Returns the reason for the failure of this download
@@ -294,58 +281,40 @@ URL was %s""" % self.url
         if not self.getState() == 'failed':
             msg = "getReasonFailed() called on a non-failed downloader"
             raise ValueError(msg)
-        self.beginRead()
-        try:
-            return self.status['reasonFailed']
-        finally:
-            self.endRead()
+        self.confirmDBThread()
+        return self.status['reasonFailed']
 
     ##
     # Returns the URL we're downloading
     def getURL(self):
-        self.beginRead()
-        try:
-            return self.url
-        finally:
-            self.endRead()
+        self.confirmDBThread()
+        return self.url
 
     ##    
     # Returns the state of the download: downloading, paused, stopped,
     # failed, or finished
     def getState(self):
-        self.beginRead()
-        try:
-            return self.status.get('state', 'downloading')
-        finally:
-            self.endRead()
+        self.confirmDBThread()
+        return self.status.get('state', 'downloading')
 
     ##
     # Returns the total size of the download in bytes
     def getTotalSize(self):
-        self.beginRead()
-        try:
-            return self.status.get('totalSize', -1)
-        finally:
-            self.endRead()
+        self.confirmDBThread()
+        return self.status.get('totalSize', -1)
 
     ##
     # Returns the current amount downloaded in bytes
     def getCurrentSize(self):
-        self.beginRead()
-        try:
-            return self.status.get('currentSize', 0)
-        finally:
-            self.endRead()
+        self.confirmDBThread()
+        return self.status.get('currentSize', 0)
 
     ##
     # Returns the filename that we're downloading to. Should not be
     # called until state is "finished."
     def getFilename(self):
-        self.beginRead()
-        try:
-            return self.status.get('filename', '')
-        finally:
-            self.endRead()
+        self.confirmDBThread()
+        return self.status.get('filename', '')
 
     def onRestore(self):
         self.itemList = []
@@ -375,17 +344,14 @@ def cleanupIncompleteDownloads():
         return
 
     filesInUse = set()
-    views.remoteDownloads.beginRead()
-    try:
-        for downloader in views.remoteDownloads:
-            if downloader.getState() in ('downloading', 'paused'):
-                filename = downloader.getFilename()
-                if len(filename) > 0:
-                    if not os.path.isabs(filename):
-                        filename = os.path.join(downloadDir, file)
-                    filesInUse.add(filename)
-    finally:
-        views.remoteDownloads.endRead()
+    views.remoteDownloads.confirmDBThread()
+    for downloader in views.remoteDownloads:
+        if downloader.getState() in ('downloading', 'paused'):
+            filename = downloader.getFilename()
+            if len(filename) > 0:
+                if not os.path.isabs(filename):
+                    filename = os.path.join(downloadDir, file)
+                filesInUse.add(filename)
 
     for file in os.listdir(downloadDir):
         file = os.path.join(downloadDir, file)
@@ -396,13 +362,9 @@ def cleanupIncompleteDownloads():
                 pass # maybe a permissions error?  
 
 def restartDownloads():
-    views.remoteDownloads.beginRead()
-    try:
-        for downloader in views.remoteDownloads:
-            downloader.restartIfNeeded()
-    finally:
-        views.remoteDownloads.endRead()
-
+    views.remoteDownloads.confirmDBThread()
+    for downloader in views.remoteDownloads:
+        downloader.restartIfNeeded()
 
 def startupDownloader():
     """Initialize the downloaders.

@@ -17,10 +17,9 @@ def isAutoDownloader(x):
 
 def isManualDownloader(x):
     """Returns true iff x is a manual downloader"""
-    ret = False
     if not x.getAutoDownloaded() and x.getState() == 'downloading':
-        ret = True
-    return ret
+        return True
+    return False
 
 def eligibileFeedFilter(x):
     """Returns true iff x is a feed and is automatically downloadable"""
@@ -28,16 +27,11 @@ def eligibileFeedFilter(x):
 
 def manualFeedFilter(x):
     """Returns true iff x is a feed with a manual download item"""
-    ret = False
-    x.beginRead()
-    try:
-        for item in x.items:
-            if item.getState() == 'manualpending':
-                ret = True
-                break
-    finally:
-        x.endRead()
-    return ret
+    x.confirmDBThread()
+    for item in x.items:
+        if item.getState() == 'manualpending':
+            return True
+    return False
 
 def isBitTorrentDownloader(item):
     """Returns true iff x is an item with a bit torrent download """
@@ -59,9 +53,9 @@ def downloadItem(item):
 def sortFeeds(feedList):
     """Sort feeds so that the least-recently downloaded are first in the list.
     """
-    decorated = [(downloadTimes.get(f, 0), f) for f in feedList]
-    decorated.sort()
-    return [d[1] for d in decorated]
+    copy = [f for f in feedList]
+    copy.sort(key=lambda(f): downloadTimes.get(f, 0))
+    return copy
 
 
 class AutoDownloadSpawner:
@@ -158,7 +152,9 @@ class AutoDownloader:
 
 
     def spawnManualDownloads(self):
-        maxDownloads = config.get(prefs.MAX_MANUAL_DOWNLOADS) 
+        maxDownloads = config.get(prefs.MAX_MANUAL_DOWNLOADS)
+        if self.manualDownloaders.len() >= maxDownloads:
+            return
         candidates = sortFeeds(self.manualFeeds)
         for feed in candidates:
             if self.manualDownloaders.len() < maxDownloads:

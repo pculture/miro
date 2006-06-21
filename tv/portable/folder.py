@@ -21,11 +21,11 @@ class Folder(DDBObject):
     def addFeed(self, theFeed):
 	if isinstance(theFeed,feed.Feed):
 	    theFeed = theFeed.getID()
-	self.beginChange()
+	self.confirmDBThread()
 	try:
 	    self.feeds.append(theFeed)
 	finally:
-	    self.endChange()
+	    self.signalChange()
 
     ##
     # Called by pickle during deserialization
@@ -37,9 +37,9 @@ class Folder(DDBObject):
     def removeFeed(self, theFeed):
 	if isinstance(theFeed,feed.Feed):
 	    theFeed = theFeed.getID()
-	self.beginChange()
+	self.confirmDBThread()
 	try:
 	    self.feeds.remove(theFeed)
 	finally:
-	    self.endChange()
+	    self.signalThread()
 	

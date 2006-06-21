@@ -325,8 +325,7 @@ class CallbackViewTestCase(DemocracyTestCase):
     def testChange(self):
         self.everything.addChangeCallback(self.call)
         self.x = database.DDBObject()
-        self.x.beginChange()
-        self.x.endChange()
+        self.x.signalChange()
         self.assertEqual(self.callcount,1)
     def testRemove(self):
         self.everything.addRemoveCallback(self.removeCall)
@@ -505,11 +504,9 @@ class FilterSortMapTestCase(DemocracyTestCase):
         self.mapped.addChangeCallback(self.call)
         mapped2.addChangeCallback(call2)
         if self.myfiltFunc(self.objlist[0]):
-            self.objlist[1].beginChange()
-            self.objlist[1].endChange()
+            self.objlist[1].signalChange()
         else:
-            self.objlist[0].beginChange()
-            self.objlist[0].endChange()
+            self.objlist[0].signalChange()
         self.assertEqual(self.callbacks,0)
         self.assertEqual(self.callbacks2,1)
         self.everything.recomputeFilters()
@@ -519,11 +516,9 @@ class FilterSortMapTestCase(DemocracyTestCase):
         self.assertEqual(self.callbacks,0)
         self.assertEqual(self.callbacks2,1)
         if self.myfiltFunc(self.objlist[0]):
-            self.objlist[0].beginChange()
-            self.objlist[0].endChange()
+            self.objlist[0].signalChange()
         else:
-            self.objlist[1].beginChange()
-            self.objlist[1].endChange()
+            self.objlist[1].signalChange()
         self.assertEqual(self.callbacks,1)
         self.assertEqual(self.callbacks2,2)
         self.everything.recomputeFilters()
@@ -554,11 +549,9 @@ class FilterSortMapTestCase(DemocracyTestCase):
         self.assertEqual(self.mapped.cur(),self.mapped[2])
         self.assertEqual(mapped2.cur(),mapped2[0])
         if self.myfiltFunc(self.objlist[0]):
-            self.objlist[1].beginChange()
-            self.objlist[1].endChange()
+            self.objlist[1].signalChange()
         else:
-            self.objlist[0].beginChange()
-            self.objlist[0].endChange()
+            self.objlist[0].signalChange()
         self.assertEqual(self.mapped.cur(),self.mapped[2])
         self.assertEqual(mapped2.cur(),mapped2[0])
         self.assertEqual(self.callbacks,0)
@@ -574,11 +567,9 @@ class FilterSortMapTestCase(DemocracyTestCase):
         self.assertEqual(self.callbacks,0)
         self.assertEqual(self.callbacks2,1)
         if self.myfiltFunc(self.objlist[0]):
-            self.objlist[0].beginChange()
-            self.objlist[0].endChange()
+            self.objlist[0].signalChange()
         else:
-            self.objlist[1].beginChange()
-            self.objlist[1].endChange()
+            self.objlist[1].signalChange()
         self.assertEqual(self.mapped.cur(),self.mapped[2])
         self.assertEqual(mapped2.cur(),mapped2[0])
         self.assertEqual(self.callbacks,1)
@@ -623,10 +614,8 @@ class FilterSortMapTestCase(DemocracyTestCase):
         self.assertEqual(mapped2.cur(),mapped2[0])
         self.assertEqual(self.callbacks,3)
         self.assertEqual(self.callbacks2,2)
-        self.objlist[10].beginChange()
-        self.objlist[10].endChange()
-        self.objlist[11].beginChange()
-        self.objlist[11].endChange()
+        self.objlist[10].signalChange()
+        self.objlist[11].signalChange()
         self.assertEqual(self.mapped.cur(),self.mapped[1])
         self.assertEqual(mapped2.cur(),mapped2[0])
         self.assertEqual(self.callbacks,4)
@@ -637,10 +626,8 @@ class FilterSortMapTestCase(DemocracyTestCase):
         self.myfiltFunc = lambda x:x is self.objlist[2]
         self.everything.recomputeFilters()
         self.assertEqual(self.callbacks2,3)
-        self.objlist[2].beginChange()
-        self.objlist[2].endChange()
-        self.objlist[3].beginChange()
-        self.objlist[3].endChange()
+        self.objlist[2].signalChange()
+        self.objlist[3].signalChange()
         self.assertEqual(self.callbacks2,4)
         
 class CursorTestCase(DemocracyTestCase):
@@ -705,8 +692,7 @@ class RecomputeMapTestCase(DemocracyTestCase):
 	self.everything.recomputeFilters()
 	self.everything.recomputeFilters()
 	temp = self.everything.getNext()
-	temp.beginChange()
-	temp.endChange()
+	temp.signalChange()
 	self.assertEqual(self.changeCalls,1)
 
 class FilterUpdateOnChange(DemocracyTestCase):
@@ -721,15 +707,13 @@ class FilterUpdateOnChange(DemocracyTestCase):
 	self.changeCalls = 0
     def testLoss(self):
         self.assertEqual(self.objs.len(),1)
-        self.origObjs[0].beginChange()
         self.origObjs[0].good = False
-        self.origObjs[0].endChange()
+        self.origObjs[0].signalChange()
         self.assertEqual(self.objs.len(),0)
     def testAdd(self):
         self.assertEqual(self.objs.len(),1)
-        self.origObjs[1].beginChange()
         self.origObjs[1].good = True
-        self.origObjs[1].endChange()
+        self.origObjs[1].signalChange()
         self.assertEqual(self.objs.len(),2)
 
 # Currently, we require that the database does NOT update maps on a change
@@ -749,15 +733,13 @@ class MapUpdateOnChange(DemocracyTestCase):
 	return temp
     def testLoss(self):
         self.assertEqual(self.objs.len(),1)
-        self.origObjs[0].beginChange()
         self.origObjs[0].good = False
-        self.origObjs[0].endChange()
+        self.origObjs[0].signalChange()
         self.assertEqual(self.objs.len(),1)
     def testAdd(self):
         self.assertEqual(self.objs.len(),1)
-        self.origObjs[1].beginChange()
         self.origObjs[1].good = True
-        self.origObjs[1].endChange()
+        self.origObjs[1].signalChange()
         self.assertEqual(self.objs.len(),1)
 
 class SortUpdateOnChange(DemocracyTestCase):
@@ -772,15 +754,13 @@ class SortUpdateOnChange(DemocracyTestCase):
 	self.changeCalls = 0
     def testLoss(self):
         self.assertEqual(self.objs.len(),1)
-        self.origObjs[0].beginChange()
         self.origObjs[0].good = False
-        self.origObjs[0].endChange()
+        self.origObjs[0].signalChange()
         self.assertEqual(self.objs.len(),0)
     def testAdd(self):
         self.assertEqual(self.objs.len(),1)
-        self.origObjs[1].beginChange()
         self.origObjs[1].good = True
-        self.origObjs[1].endChange()
+        self.origObjs[1].signalChange()
         self.assertEqual(self.objs.len(),2)
 
 class IDBaseTraversal(DemocracyTestCase):
@@ -887,8 +867,7 @@ class IndexFilterTest(DemocracyTestCase):
         filtered[0].remove()
         self.assertEqual(filtered.len(),19)
         self.assertEqual(self.removeCallbacks,1)
-        filtered[0].beginChange()
-        filtered[0].endChange()
+        filtered[0].signalChange()
         self.assertEqual(self.changeCallbacks,1)
 
         obj = filtered[0]
@@ -896,8 +875,7 @@ class IndexFilterTest(DemocracyTestCase):
         for x in range(0,50):
             database.DDBObject()
         self.assertEqual(self.addCallbacks,5)
-        obj.beginChange()
-        obj.endChange()
+        obj.signalChange()
         self.assertEqual(self.changeCallbacks,1)
         obj.remove()
         self.assertEqual(self.removeCallbacks,1)
@@ -951,7 +929,7 @@ class IndexFilterTest(DemocracyTestCase):
 
 
 #FIXME: Add test for explicitly recomputing sorts
-#FIXME: Add test for recomputing sorts on endChange()
+#FIXME: Add test for recomputing sorts on signalChange()
 #FIXME: Add test for unlink()
 
 if __name__ == "__main__":

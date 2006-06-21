@@ -83,6 +83,10 @@ def get(descriptor):
         path = get(prefs.SUPPORT_DIRECTORY)
         path = os.path.join(path, 'tvdump')
 
+    elif descriptor == prefs.BSDDB_PATHNAME:
+        path = get(prefs.SUPPORT_DIRECTORY)
+        path = os.path.join(path, 'database')
+
     elif descriptor == prefs.LOG_PATHNAME:
         path = get(prefs.SUPPORT_DIRECTORY)
         path = os.path.join(path, 'log')

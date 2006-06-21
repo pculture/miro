@@ -233,13 +233,10 @@ class AppController (NibClassBuilder.AutoBaseClass):
 
     def workspaceWillSleep_(self, notification):
         def pauseRunningDownloaders(self=self):
-            views.remoteDownloads.beginRead()
-            try:
-                for dl in views.remoteDownloads:
-                    if dl.getState() == 'downloading':
-                        self.pausedDownloaders.append(dl)
-            finally:
-                views.remoteDownloads.endRead()
+            views.remoteDownloads.confirmDBThread()
+            for dl in views.remoteDownloads:
+                if dl.getState() == 'downloading':
+                    self.pausedDownloaders.append(dl)
             dlCount = len(self.pausedDownloaders)
             if dlCount > 0:
                 print "DTV: System is going to sleep, suspending %d download(s)." % dlCount

@@ -73,6 +73,9 @@ def get(descriptor):
     elif descriptor == config.DB_PATHNAME:
         value = _makeSupportFilePath('tvdump')
 
+    elif descriptor == prefs.BSDDB_PATHNAME:
+        value = _makeSupportFilePath('database')
+
     elif descriptor == config.LOG_PATHNAME:
         value = _makeSupportFilePath('dtv-log')
 

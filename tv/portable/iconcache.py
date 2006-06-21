@@ -20,12 +20,9 @@ class IconCacheUpdater:
     @asIdle
     def requestUpdate (self, item, is_vital = False):
         if is_vital:
-            item.dbItem.beginRead()
-            try:
-                if item.filename and os.access (item.filename, os.R_OK):
-                    is_vital = False
-            finally:
-                item.dbItem.endRead()
+            item.dbItem.confirmDBThread()
+            if item.filename and os.access (item.filename, os.R_OK):
+                is_vital = False
         if self.runningCount < RUNNING_MAX:
             addIdle (item.requestIcon, "Icon Request")
             self.runningCount += 1
@@ -96,11 +93,14 @@ class IconCache:
         return newname
 
     def errorCallback(self, url, error = None):
+        self.dbItem.confirmDBThread()
+
         # Don't clear the cache on an error.
         if self.url != url:
             self.url = url
             self.etag = None
             self.modified = None
+            self.dbItem.signalChange()
         self.updating = False
         if self.needsUpdate:
             self.needsUpdate = False
@@ -112,6 +112,8 @@ class IconCache:
         iconCacheUpdater.updateFinished ()
 
     def updateIconCache (self, url, info):
+        self.dbItem.confirmDBThread()
+
         if info == None or (info['status'] != 304 and info['status'] != 200):
             self.errorCallback(url)
             return
@@ -120,60 +122,55 @@ class IconCache:
             if (info['status'] == 304):
                 self.updated = True
                 return
-            self.dbItem.beginChange()
+            # We have to update it, and if we can't write to the file, we
+            # should pick a new filename.
+            if (self.filename and not os.access (self.filename, os.R_OK | os.W_OK)):
+                self.filename = None
+
+            cachedir = config.get(prefs.ICON_CACHE_DIRECTORY)
             try:
+                os.makedirs (cachedir)
+            except:
+                pass
 
-                # We have to update it, and if we can't write to the file, we
-                # should pick a new filename.
-                if (self.filename and not os.access (self.filename, os.R_OK | os.W_OK)):
-                    self.filename = None
+            try:
+                # Download to a temp file.
+                if (self.filename):
+                    tmp_filename = self.filename + ".part"
+                else:
+                    tmp_filename = os.path.join(cachedir, info["filename"]) + ".part"
 
-                cachedir = config.get(prefs.ICON_CACHE_DIRECTORY)
-                try:
-                    os.makedirs (cachedir)
-                except:
-                    pass
+                tmp_filename = self.nextFreeFilename (tmp_filename)
+                output = file (tmp_filename, 'wb')
+                output.write(info["body"])
+                output.close()
+            except IOError:
+                os.remove (tmp_filename)
+                return
 
-                try:
-                    # Download to a temp file.
-                    if (self.filename):
-                        tmp_filename = self.filename + ".part"
-                    else:
-                        tmp_filename = os.path.join(cachedir, info["filename"]) + ".part"
-
-                    tmp_filename = self.nextFreeFilename (tmp_filename)
-                    output = file (tmp_filename, 'wb')
-                    output.write(info["body"])
-                    output.close()
-                except IOError:
-                    os.remove (tmp_filename)
-                    return
-
-                if (self.filename == None):
-                    self.filename = os.path.join(cachedir, info["filename"])
-                    self.filename = self.nextFreeFilename (self.filename)
-                try:
-                    os.remove (self.filename)
-                except:
-                    pass
-                try:
-                    os.rename (tmp_filename, self.filename)
-                except:
-                    self.filename = None
+            if (self.filename == None):
+                self.filename = os.path.join(cachedir, info["filename"])
+                self.filename = self.nextFreeFilename (self.filename)
+            try:
+                os.remove (self.filename)
+            except:
+                pass
+            try:
+                os.rename (tmp_filename, self.filename)
+            except:
+                self.filename = None
         
-                if (info.has_key ("etag")):
-                    self.etag = info["etag"]
-                else:
-                    self.etag = None
-                if (info.has_key ("modified")):
-                    self.modified = info["modified"]
-                else:
-                    self.modified = None
-                self.url = url
-            finally:
-                #two separate finally sections in case something here throws an exception.
-                self.dbItem.endChange()
+            if (info.has_key ("etag")):
+                self.etag = info["etag"]
+            else:
+                self.etag = None
+            if (info.has_key ("modified")):
+                self.modified = info["modified"]
+            else:
+                self.modified = None
+            self.url = url
         finally:
+            self.dbItem.signalChange()
             self.updating = False
             if self.needsUpdate:
                 self.needsUpdate = False
@@ -181,34 +178,31 @@ class IconCache:
             iconCacheUpdater.updateFinished ()
 
     def requestIcon (self):
-        self.dbItem.beginRead()
+        self.dbItem.confirmDBThread()
+        if (self.updating):
+            self.needsUpdate = True
+            iconCacheUpdater.updateFinished ()
+            return
         try:
-            if (self.updating):
-                self.needsUpdate = True
-                iconCacheUpdater.updateFinished ()
-                return
-            try:
-                url = self.dbItem.getThumbnailURL()
-            except:
-                url = self.url
+            url = self.dbItem.getThumbnailURL()
+        except:
+            url = self.url
 
-            # Only verify each icon once per run unless the url changes
-            if (self.updated and url == self.url):
-                iconCacheUpdater.updateFinished ()
-                return
+        # Only verify each icon once per run unless the url changes
+        if (self.updated and url == self.url):
+            iconCacheUpdater.updateFinished ()
+            return
 
-            self.updating = True
+        self.updating = True
 
-            if url is None or url.startswith("file://") or url.startswith("/"):
-                self.errorCallback(url)
-                return
+        if url is None or url.startswith("file://") or url.startswith("/"):
+            self.errorCallback(url)
+            return
 
-            if (url == self.url and self.filename and os.access (self.filename, os.R_OK)):
-                httpclient.grabURL (url, lambda(info):self.updateIconCache(url, info), lambda(error):self.errorCallback(url, error), etag=self.etag, modified=self.modified)
-            else:
-                httpclient.grabURL (url, lambda(info):self.updateIconCache(url, info), lambda(error):self.errorCallback(url, error))
-        finally:
-            self.dbItem.endRead()
+        if (url == self.url and self.filename and os.access (self.filename, os.R_OK)):
+            httpclient.grabURL (url, lambda(info):self.updateIconCache(url, info), lambda(error):self.errorCallback(url, error), etag=self.etag, modified=self.modified)
+        else:
+            httpclient.grabURL (url, lambda(info):self.updateIconCache(url, info), lambda(error):self.errorCallback(url, error))
 
     def requestUpdate (self, is_vital = False):
         if hasattr (self, "updating") and hasattr (self, "dbItem"):
@@ -221,14 +215,14 @@ class IconCache:
         self.requestUpdate ()
 
     def isValid(self):
-        self.dbItem.beginRead()
-        try:
-            return self.filename is not None and os.path.exists(self.filename)
-        finally:
-            self.dbItem.endRead()
+        self.dbItem.confirmDBThread()
+        return self.filename is not None and os.path.exists(self.filename)
 
     def getFilename(self):
+        self.dbItem.confirmDBThread()
         if self.url and self.url.startswith ("file://"):
             return self.url[len("file://"):]
+        elif self.url and self.url.startswith ("/"):
+            return self.url
         else:
             return self.filename

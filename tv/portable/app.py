@@ -458,10 +458,10 @@ class Controller (frontend.Application):
 
             #Restoring
             print "DTV: Restoring database..."
-            try:
-                storedatabase.restoreDatabase()
-            except Exception:
-                util.failedExn("While restoring database")
+            #            try:
+            database.defaultDatabase.liveStorage = storedatabase.LiveStorage()
+            #            except Exception:
+            #                util.failedExn("While restoring database")
             print "DTV: Recomputing filters..."
             db.recomputeFilters()
 
@@ -533,7 +533,6 @@ class Controller (frontend.Application):
             self.videoDisplay.playbackController = self.playbackController
             self.videoDisplay.setVolume(config.get(prefs.VOLUME_LEVEL))
 
-            eventloop.addTimeout (300, storedatabase.saveDatabaseIdle, "Database Save")
             eventloop.addTimeout (30, autoupdate.checkForUpdates, "Check for updates")
             feed.expireItems()
 
@@ -551,7 +550,7 @@ class Controller (frontend.Application):
             # NEEDS: our strategy above with addRemoveCallback doesn't
             # work. I'm not sure why, but it seems to have to do with the
             # reentrant call back into the database when checkSelectedTab ends 
-            # up calling endChange to force a tab to get rerendered.
+            # up calling signalChange to force a tab to get rerendered.
 
             singleclick.parseCommandLineArgs()
 
@@ -587,7 +586,7 @@ class Controller (frontend.Application):
     def checkTabUsingIndex(self, index, id):
         # view should contain only one tab object
         view = views.allTabs.filterWithIndex(index, id)
-        view.beginUpdate()
+        view.confirmDBThread()
         try:
             view.resetCursor()
             obj = view.getNext()
@@ -604,7 +603,6 @@ class Controller (frontend.Application):
         # cleanly and give sane error messages (See #1053 and #1155)
             views.allTabs.cursor = views.allTabs.objectLocs[view.objects[view.cursor][0].getID()]
         finally:
-            view.endUpdate()
             view.unlink()
         return obj
 
@@ -619,6 +617,8 @@ class Controller (frontend.Application):
         return self.checkTabUsingIndex(indexes.tabObjIDIndex, id)
 
     def downloaderShutdown(self):
+        print "DTV: Closing Database..."
+        database.defaultDatabase.liveStorage.close()
         frontend.quit()
 
     @eventloop.asUrgent
@@ -640,37 +640,8 @@ class Controller (frontend.Application):
             self.quitStage2()
 
     def quitStage2(self):
-        err = storedatabase.saveDatabase()
-        if err is None:
-            print "DTV: Shutting down Downloader..."
-            downloader.shutdownDownloader(self.downloaderShutdown)
-        else:
-            def callback(dialog):
-                if dialog.choice == dialogs.BUTTON_QUIT:
-                    print "DTV: Shutting down Downloader..."
-                    downloader.shutdownDownloader(self.downloaderShutdown)
-
-            try:
-                errno = err.errno
-            except:
-                errno = 0
-            try:
-                if err.filename:
-                    err = "%s: %s" % (err.filename, err.strerror)
-                else:
-                    err = err.strerror
-            except:
-                pass
-
-            title = _("%s database save failed") % (config.get(prefs.SHORT_APP_NAME), )
-            ENOSPC = 28
-            if errno == ENOSPC:
-                description = _("%s was unable to save its database: %s.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost.\nQuit Anyway?") % (config.get(prefs.LONG_APP_NAME), err)
-            else:
-                description = _("%s was unable to save its database: %s.\nRecent changes may be lost.\nQuit Anyway?") \
-                              % (config.get(prefs.LONG_APP_NAME), err)
-            dialog = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_QUIT, dialogs.BUTTON_CANCEL)
-            dialog.run (callback)
+        print "DTV: Shutting down Downloader..."
+        downloader.shutdownDownloader(self.downloaderShutdown)
 
     def onShutdown(self):
         try:
@@ -690,10 +661,6 @@ class Controller (frontend.Application):
 
             print "DTV: Removing static tabs..."
             tabs.removeStaticTabs()
-            # for item in db:
-            #    print str(item.__class__.__name__) + " of id "+str(item.getID())
-            print "DTV: Saving database..."
-            storedatabase.saveDatabase()
 
             if self.idlingNotifier is not None:
                 print "DTV: Shutting down IdleNotifier"
@@ -834,20 +801,17 @@ class Controller (frontend.Application):
         self.checkSelectedTab()
 
     def selectTabByTemplateBase(self, templatebase):
-        views.allTabs.beginRead()
-        try:
-            views.allTabs.resetCursor()
-            while 1:
-                obj = views.allTabs.getNext()
-                if obj is None:
-                    print ("WARNING, couldn't find tab with template base %s"
-                            % templatebase)
-                    return
-                elif obj.tabTemplateBase == templatebase:
-                    self.selectTab(obj.id)
-                    return
-        finally:
-            views.allTabs.endRead()
+        views.allTabs.confirmDBThread()
+        views.allTabs.resetCursor()
+        while 1:
+            obj = views.allTabs.getNext()
+            if obj is None:
+                print ("WARNING, couldn't find tab with template base %s"
+                        % templatebase)
+                return
+            elif obj.tabTemplateBase == templatebase:
+                self.selectTab(obj.id)
+                return
 
 
     ### Keep track of currently available+downloading items and refresh the
@@ -1234,7 +1198,7 @@ class GUIActionHandler:
         
         return retval
 
-    def selectFeedByObject (self, myFeed):
+    def _selectFeedByObject (self, myFeed):
         controller.checkTabByObjID(myFeed.getID())
         controller.checkSelectedTab()
         
@@ -1248,32 +1212,23 @@ class GUIActionHandler:
 Please double check and try again."""
             dialogs.MessageBoxDialog(title, message).run()
             return
-        db.beginUpdate()
-        try:
-            myFeed = self._getFeed (url)
-            if myFeed is None:
-                myFeed = feed.Feed(url)
+        db.confirmDBThread()
+        myFeed = self._getFeed (url)
+        if myFeed is None:
+            myFeed = feed.Feed(url)
 
-            if selected == '1':
-                self.selectFeedByObject (myFeed)
-        finally:
-            db.endUpdate()
+        if selected == '1':
+            self._selectFeedByObject (myFeed)
 
     def selectFeed(self, url):
         url = feed.normalizeFeedURL(url)
-        db.beginUpdate()
-        try:
-            # Find the feed
-            myFeed = self._getFeed (url)
-            if myFeed is None:
-                print "selectFeed: no such feed: %s" % url
-                return
-
-            self.selectFeedByObject (myFeed)
-
-        finally:
-            db.endUpdate()
-
+        db.confirmDBThread()
+        # Find the feed
+        myFeed = self._getFeed (url)
+        if myFeed is None:
+            print "selectFeed: no such feed: %s" % url
+            return
+        self._selectFeedByObject (myFeed)
 
     # Following for testing/debugging
 
@@ -1416,22 +1371,19 @@ class Playlist:
         # Move the cursor to the requested item; if there's no
         # such item in the view, move the cursor to the first
         # item
-        self.view.beginRead()
-        try:
-            self.view.resetCursor()
-            while True:
-                cur = self.view.getNext()
-                if cur == None:
-                    # Item not found in view. Put cursor at the first
-                    # item, if any.
-                    self.view.resetCursor()
-                    self.view.getNext()
-                    break
-                if str(cur.getID()) == firstItemId:
-                    # The cursor is now on the requested item.
-                    break
-        finally:
-            self.view.endRead()
+        self.view.confirmDBThread()
+        self.view.resetCursor()
+        while True:
+            cur = self.view.getNext()
+            if cur == None:
+                # Item not found in view. Put cursor at the first
+                # item, if any.
+                self.view.resetCursor()
+                self.view.getNext()
+                break
+            if str(cur.getID()) == firstItemId:
+                # The cursor is now on the requested item.
+                break
 
     def reset(self):
         self.initialView.removeView(self.filteredView)
@@ -1493,19 +1445,16 @@ class TooManySingletonsError(Exception):
     pass
 
 def getSingletonDDBObject(view):
-    view.beginRead()
-    try:
-        viewLength = view.len()
-        if viewLength == 1:
-            view.resetCursor()
-            return view.next()
-        elif viewLength == 0:
-            raise LookupError("Can't find singleton in %s" % repr(view))
-        else:
-            msg = "%d objects in %s" % (viewLength, len(view))
-            raise TooManySingletonsError(msg)
-    finally:
-        view.endRead()
+    view.confirmDBThread()
+    viewLength = view.len()
+    if viewLength == 1:
+        view.resetCursor()
+        return view.next()
+    elif viewLength == 0:
+        raise LookupError("Can't find singleton in %s" % repr(view))
+    else:
+        msg = "%d objects in %s" % (viewLength, len(view))
+        raise TooManySingletonsError(msg)
 
 def _defaultFeeds():
     feed.Feed('http://del.icio.us/rss/representordie/system:media:video', 
@@ -1565,18 +1514,15 @@ def _getInitialChannelGuide():
     except TooManySingletonsError:
         print "DTV: Multiple Channel Guides!  Using the first one"
         guideView = views.guide
-        guideView.beginUpdate()
-        try:
-            guideView.resetCursor()
-            channelGuide = guideView.getNext()
-            while 1:
-                thowOut = guideView.getNext()
-                if thowOut is None:
-                    break
-                else:
-                    thowOut.remove()
-        finally:
-            guideView.endUpdate()
+        guideView.confirmDBThread()
+        guideView.resetCursor()
+        channelGuide = guideView.getNext()
+        while 1:
+            thowOut = guideView.getNext()
+            if thowOut is None:
+                break
+            else:
+                thowOut.remove()
     return channelGuide
 
 # Race conditions:
@@ -1590,19 +1536,12 @@ def changeMoviesDirectory(newDir, migrate):
     oldDir = config.get(prefs.MOVIES_DIRECTORY)
     config.set(prefs.MOVIES_DIRECTORY, newDir)
     if migrate:
-        views.remoteDownloads.beginRead()
-        try:
-            for download in views.remoteDownloads:
-                print "migrating", download.getFilename()
-                download.migrate()
-        finally:
-            views.remoteDownloads.endRead()
-        views.fileItems.beginRead()
-        try:
-            for item in views.fileItems:
-                currentFilename = item.getFilename()
-                if os.path.dirname(currentFilename) == oldDir:
-                    item.migrate(newDir)
-        finally:
-             views.fileItems.endRead()
+        views.remoteDownloads.confirmDBThread()
+        for download in views.remoteDownloads:
+            print "migrating", download.getFilename()
+            download.migrate()
+        for item in views.fileItems:
+            currentFilename = item.getFilename()
+            if os.path.dirname(currentFilename) == oldDir:
+                item.migrate(newDir)
     getSingletonDDBObject(views.directoryFeed).update()
