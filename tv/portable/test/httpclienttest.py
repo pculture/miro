@@ -3,6 +3,7 @@ import rfc822
 import socket
 import traceback
 from copy import copy
+from StringIO import StringIO
 
 from BitTornado.clock import clock
 
@@ -783,6 +784,21 @@ Below this line, is 1000 repeated lines of 0-9.
                 'http://participatoryculture.org/democracytest/redirect.php',
                 'http://participatoryculture.org/democracytest/end.txt',
                 'http://participatoryculture.org/democracytest/redirect3.php')
+
+    def testFileUpload(self):
+        self.errbackCalled = self.callbackCalled = False
+        httpclient.grabURL('http://participatoryculture.org/democracytest/fileupload.php', self.callback, self.errback, method="POST", postFiles = {'myfile': {
+            'filename' : 'tempfile.txt',
+            'mimetype' : 'application/octet-stream',
+            'handle'   : StringIO('This is a test file')
+            }})
+        self.runEventLoop(timeout=20)
+        self.assert_(not self.errbackCalled)
+        self.assert_(self.callbackCalled)
+        result = self.data['body'].split()
+        self.assertEqual(result[0], 'tempfile.txt')
+        self.assertEqual(result[1], 'application/octet-stream')
+        self.assertEqual(result[2], '0b26e313ed4a7ca6904b0e9369e5b957')        
 
     def testRedirectLimit(self):
         url = 'http://participatoryculture.org/democracytest/redirect.php'

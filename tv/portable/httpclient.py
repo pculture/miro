@@ -23,7 +23,7 @@ import config
 import prefs
 import dialogs
 from download_utils import cleanFilename, parseURL
-from xhtmltools import URLEncodeDict
+from xhtmltools import URLEncodeDict, multipartEncode
 import eventloop
 import util
 import sys
@@ -519,7 +519,7 @@ class HTTPConnection(ConnectionHandler):
 
     def sendRequest(self, callback, errback, requestStartCallback=None,
             headerCallback=None, bodyDataCallback = None, method="GET",
-            path='/', headers=None, postVariables = None):
+            path='/', headers=None, postVariables = None, postFiles = None):
         """Sending an HTTP Request.  callback will be called if the request
         completes normally, errback will be called if there is a network
         error.
@@ -543,6 +543,12 @@ class HTTPConnection(ConnectionHandler):
         If bodyDataCallback is given it will be called as we read in the data
         for the body.  Also, the connection won't store the body in memory,
         and the callback is called, it will be passed None for the body.
+
+        postVariables is a dictionary of variable names to values
+
+        postFiles is a dictionary of variable names to dictionaries
+        containing filename, mimetype, and handle attributes. Handle
+        should be an already open file handle.
         """
 
         if not self.canSendRequest():
@@ -555,10 +561,15 @@ class HTTPConnection(ConnectionHandler):
         headers['Host'] = self.host.encode('idna')
         headers['Accept-Encoding'] = 'identity'
 
-        if method == "POST" and len(postVariables) > 0:
+        if (method == "POST" and postVariables is not None and
+                            len(postVariables) > 0 and postFiles is None):
             postData = URLEncodeDict(postVariables)
             headers['Content-Type'] = 'application/x-www-form-urlencoded'
             headers['Content-Length'] = '%d' % len(postData)
+        elif method == "POST" and postFiles is not None:
+            (postData, boundary) = multipartEncode(postVariables, postFiles)
+            headers['Content-Type'] = 'multipart/form-data; boundary=%s' % boundary
+            headers['Content-Length'] = '%d' % len(postData)            
         else:
             postData = None
 
@@ -955,7 +966,7 @@ class HTTPConnectionPool(object):
 
     def addRequest(self, callback, errback, requestStartCallback,
             headerCallback, bodyDataCallback, url, method, headers,
-            postVariables = None):
+            postVariables = None, postFiles = None):
         """Add a request to be run.  The request will run immediately if we
         have a free connection, otherwise it will be queued.
 
@@ -979,6 +990,7 @@ class HTTPConnectionPool(object):
             'path': path,
             'headers': headers,
             'postVariables': postVariables,
+            'postFiles': postFiles,
         }
         self.pendingRequests.append(req)
         self.runPendingRequests()
@@ -1000,7 +1012,7 @@ class HTTPConnectionPool(object):
                 conn.sendRequest(req['callback'], req['errback'],
                         req['requestStartCallback'], req['headerCallback'],
                         req['bodyDataCallback'], req['method'], req['path'],
-                        req['headers'], req['postVariables'])
+                        req['headers'], req['postVariables'], req['postFiles'])
             else:
                 conn = self._makeNewConnection(req)
             conns['active'].add(conn)
@@ -1015,7 +1027,7 @@ class HTTPConnectionPool(object):
             conn.sendRequest(req['callback'], req['errback'],
                     req['requestStartCallback'], req['headerCallback'],
                     req['bodyDataCallback'], req['method'], req['path'],
-                    req['headers'], req['postVariables'])
+                    req['headers'], req['postVariables'], req['postFiles'])
         def openConnectionErrback(error):
             conns = self._getServerConnections(req['scheme'], req['host'], 
                     req['port'])
@@ -1078,7 +1090,7 @@ class HTTPClient(object):
 
     def __init__(self, url, callback, errback, headerCallback=None,
             bodyDataCallback=None, method="GET", start=0, etag=None,
-            modified=None, cookies={}, postVariables = None):
+            modified=None, cookies={}, postVariables = None, postFiles = None):
         self.url = url
         self.callback = callback
         self.errback = errback
@@ -1097,6 +1109,7 @@ class HTTPClient(object):
                                # 'Comment', 'CommentURL', 'origPath',
                                # 'origDomain', 'origPort'
         self.postVariables = postVariables
+        self.postFiles = postFiles
         self.depth = 0
         self.authAttempts = 0
         self.updateURLOk = True
@@ -1208,7 +1221,8 @@ class HTTPClient(object):
         self.connectionPool.addRequest(self.callbackIntercept,
                 self.errbackIntercept, self.onRequestStart, self.onHeaders,
                 bodyDataCallback,
-                self.url, self.method, self.headers, self.postVariables)
+                self.url, self.method, self.headers, self.postVariables,
+                self.postFiles)
 
     def statusCodeExpected(self, status):
         expectedStatusCodes = set([200])
@@ -1479,9 +1493,9 @@ class HTTPClient(object):
 
 def grabURL(url, callback, errback, headerCallback=None,
         bodyDataCallback=None, method="GET", start=0, etag=None,
-        modified=None, cookies = {}, postVariables = None):
+        modified=None, cookies = {}, postVariables = None, postFiles = None):
     client = HTTPClient(url, callback, errback, headerCallback,
-            bodyDataCallback, method, start, etag, modified, cookies, postVariables)
+            bodyDataCallback, method, start, etag, modified, cookies, postVariables, postFiles)
     client.startRequest()
     return client
 

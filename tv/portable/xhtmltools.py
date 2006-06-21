@@ -4,6 +4,7 @@ import re
 from urllib import quote, quote_plus
 from HTMLParser import HTMLParser
 import types
+import random
 
 ##
 # very simple parser to convert HTML to XHTML
@@ -143,3 +144,27 @@ def URLEncodeDict(orig):
         else:
             output.append('%s=%s' % (quote_plus(key), quote_plus(orig[key])))
     return '&'.join(output)
+
+def multipartEncode(postVars, files):
+    # Generate a random 64bit number for our boundaries
+    boundary = 'dp%s'% (hex(random.getrandbits(64))[2:-1])
+    output = []
+    if postVars is not None:
+        for key in postVars.keys():
+            output.append('--%s\r\n' % boundary)
+            output.append('Content-Disposition: form-data; name="%s"\r\n\r\n' %
+                          quote_plus(key))
+            output.append(postVars[key])
+            output.append('\r\n')
+    if files is not None:
+        for key in files.keys():
+            output.append('--%s\r\n' % boundary)
+            output.append('Content-Disposition: form-data; name="%s"; filename="%s"\r\n' %
+                          (quote_plus(key),
+                           quote_plus(files[key]['filename'])))
+            output.append('Content-Type: %s\r\n\r\n' % files[key]['mimetype'])
+            
+            output.append(files[key]['handle'].read())
+            output.append('\r\n')
+    output.append('--%s--' % boundary)
+    return (''.join(output), boundary)
