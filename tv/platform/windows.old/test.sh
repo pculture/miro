@@ -1,1 +1,0 @@
-python setup.py py2exe && dist/DTV.exe
