@@ -930,11 +930,23 @@ def shutdownBTDownloader():
     BTDownloader.rawserver.wakeup()
     BTDownloader.dlthread.join()
 
+def updateBTConfig(key, value):
+    if key in [prefs.LIMIT_UPSTREAM.key, prefs.UPSTREAM_LIMIT_IN_KBS.key]:
+        if config.get(prefs.LIMIT_UPSTREAM):
+            btconfig['max_upload_rate'] = config.get(prefs.UPSTREAM_LIMIT_IN_KBS)
+        else:
+            btconfig['max_upload_rate'] = -1
+    if key == prefs.BT_MIN_PORT.key:
+        btconfig['minport'] = config.get(prefs.BT_MIN_PORT)
+    if key == prefs.BT_MAX_PORT.key:
+        btconfig['maxport'] = config.get(prefs.BT_MAX_PORT)
+
 def startBTDownloader():
     if config.get(prefs.LIMIT_UPSTREAM):
         btconfig['max_upload_rate'] = config.get(prefs.UPSTREAM_LIMIT_IN_KBS)
     btconfig['minport'] = config.get(prefs.BT_MIN_PORT)
     btconfig['maxport'] = config.get(prefs.BT_MAX_PORT)
+    config.addChangeCallback (updateBTConfig)
     BTDownloader.dlthread = Thread(target=BTDownloader.handler.listen_forever)
     BTDownloader.dlthread.setName("bittornado downloader")
     BTDownloader.dlthread.start()
