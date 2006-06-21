@@ -11,9 +11,9 @@ def getAvailableBytesForMovies():
     # TODO: windows implementation
     moviesDir = config.get(prefs.MOVIES_DIRECTORY)
     print "GETTING disk space for ", moviesDir
-    freeSpace = ctypes.c_ulong(0)
-    availableSpace = ctypes.c_ulong(0)
-    totalSpace = ctypes.c_ulong(0)
+    freeSpace = ctypes.c_ulonglong(0)
+    availableSpace = ctypes.c_ulonglong(0)
+    totalSpace = ctypes.c_ulonglong(0)
     rv = ctypes.windll.kernel32.GetDiskFreeSpaceExW(unicode(moviesDir),
             ctypes.byref(availableSpace), ctypes.byref(totalSpace),
             ctypes.byref(freeSpace)) 
