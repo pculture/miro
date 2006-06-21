@@ -206,11 +206,15 @@ Section "Handle AVI files" SecRegisterAvi
 SectionEnd
 
 Section "Handle MPEG files" SecRegisterMpg
+  WriteRegStr HKCR ".m4v" "" "Democracy.Player.1"
   WriteRegStr HKCR ".mpg" "" "Democracy.Player.1"
   WriteRegStr HKCR ".mpeg" "" "Democracy.Player.1"
   WriteRegStr HKCR ".mp2" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".mp3" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".mp4" "" "Democracy.Player.1"
   WriteRegStr HKCR ".mpa" "" "Democracy.Player.1"
   WriteRegStr HKCR ".mpe" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".mpv" "" "Democracy.Player.1"
   WriteRegStr HKCR ".mpv2" "" "Democracy.Player.1"
 SectionEnd
 
@@ -225,6 +229,50 @@ SectionEnd
 
 Section "Handle Windows Media files" SecRegisterWmv
   WriteRegStr HKCR ".wmv" "" "Democracy.Player.1"
+SectionEnd
+
+Section "DTS files" SecRegisterDts
+  WriteRegStr HKCR ".dts" "" "Democracy.Player.1"
+SectionEnd
+
+Section "Handle Ogg Media files" SecRegisterOgg
+  WriteRegStr HKCR ".ogg" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".ogm" "" "Democracy.Player.1"
+SectionEnd
+
+Section "Handle Matroska Media files" SecRegisterMkv
+  WriteRegStr HKCR ".mkv" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".mka" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".mks" "" "Democracy.Player.1"
+SectionEnd
+
+Section "Handle 3gp Media files" SecRegister3gp
+  WriteRegStr HKCR ".3gp" "" "Democracy.Player.1"
+SectionEnd
+
+Section "Handle 3g2 Media files" SecRegister3g2
+  WriteRegStr HKCR ".3g2" "" "Democracy.Player.1"
+SectionEnd
+
+Section "Handle Flash Video files" SecRegisterFlv
+  WriteRegStr HKCR ".flv" "" "Democracy.Player.1"
+SectionEnd
+
+Section "Handle Nullsoft Video files" SecRegisterNsv
+  WriteRegStr HKCR ".nsv" "" "Democracy.Player.1"
+SectionEnd
+
+Section "Handle pva Video files" SecRegisterPva
+  WriteRegStr HKCR ".pva" "" "Democracy.Player.1"
+SectionEnd
+
+Section "Handle Annodex Video files" SecRegisterAnx
+  WriteRegStr HKCR ".anx" "" "Democracy.Player.1"
+SectionEnd
+
+Section "Handle Xvid Video files" SecRegisterXvid
+  WriteRegStr HKCR ".xvid" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".3ivx" "" "Democracy.Player.1"
 SectionEnd
 
 Section -NotifyShellExentionChange
@@ -252,16 +300,34 @@ installed.  Do you want to continue and overwrite it?" \
   !insertmacro checkExtensionHandled ".torrent" ${SecRegisterTorrent}
   !insertmacro checkExtensionHandled ".democracy" ${SecRegisterDemocracy}
   !insertmacro checkExtensionHandled ".avi" ${SecRegisterAvi}
+  !insertmacro checkExtensionHandled ".m4v" ${SecRegisterMpg}
   !insertmacro checkExtensionHandled ".mpg" ${SecRegisterMpg}
   !insertmacro checkExtensionHandled ".mpeg" ${SecRegisterMpg}
+  !insertmacro checkExtensionHandled ".mp2" ${SecRegisterMpg}
   !insertmacro checkExtensionHandled ".mp3" ${SecRegisterMpg}
+  !insertmacro checkExtensionHandled ".mp4" ${SecRegisterMpg}
   !insertmacro checkExtensionHandled ".mpa" ${SecRegisterMpg}
   !insertmacro checkExtensionHandled ".mpe" ${SecRegisterMpg}
   !insertmacro checkExtensionHandled ".mpv" ${SecRegisterMpg}
+  !insertmacro checkExtensionHandled ".mpv2" ${SecRegisterMpg}
   !insertmacro checkExtensionHandled ".mov" ${SecRegisterMov}
   !insertmacro checkExtensionHandled ".qa" ${SecRegisterMov}
   !insertmacro checkExtensionHandled ".asf" ${SecRegisterAsf}
   !insertmacro checkExtensionHandled ".wmv" ${SecRegisterWmv}
+  !insertmacro checkExtensionHandled ".dts" ${SecRegisterDts}
+  !insertmacro checkExtensionHandled ".ogg" ${SecRegisterOgg}
+  !insertmacro checkExtensionHandled ".ogm" ${SecRegisterOgg}
+  !insertmacro checkExtensionHandled ".mkv" ${SecRegisterMkv}
+  !insertmacro checkExtensionHandled ".mka" ${SecRegisterMkv}
+  !insertmacro checkExtensionHandled ".mks" ${SecRegisterMkv}
+  !insertmacro checkExtensionHandled ".3gp" ${SecRegister3gp}
+  !insertmacro checkExtensionHandled ".3g2" ${SecRegister3g2}
+  !insertmacro checkExtensionHandled ".flv" ${SecRegisterFlv}
+  !insertmacro checkExtensionHandled ".nsv" ${SecRegisterNsv}
+  !insertmacro checkExtensionHandled ".pva" ${SecRegisterPva}
+  !insertmacro checkExtensionHandled ".anx" ${SecRegisterAnx}
+  !insertmacro checkExtensionHandled ".xvid" ${SecRegisterXvid}
+  !insertmacro checkExtensionHandled ".3ivx" ${SecRegisterXvid}
 FunctionEnd
 
 Section -Post
