@@ -254,7 +254,7 @@ class Item(DDBObject):
             basename = os.path.basename(self.iconCache.getFilename())
             return resource.iconCacheUrl(basename)
         else:
-            return "resource:images/thumb.png"
+            return resource.url("images/thumb.png")
     ##
     # returns the title of the item
     def getTitle(self):
@@ -323,6 +323,7 @@ class Item(DDBObject):
         self.pendingManualDL = False
         self.signalChange()
 
+
     ##
     # returns status of the download in plain text
     def getState(self):
@@ -368,6 +369,20 @@ class Item(DDBObject):
         if (state == "finished" or state=="uploading") and self.seen:
             state = "watched"
         return state
+
+    def getDownloadState(self):
+        """Get the downloading state for this item.  
+
+        It's one of three values: not-downloaded, downloading downloaded.
+        """
+
+        state = self.getState()
+        if state == "downloading":
+            return "downloading"
+        elif state in ("finished", "watched", "saved", "uploading"):
+            return "downloaded"
+        else:
+            return "not-downloaded"
 
     def getFailureReason(self):
         self.confirmDBThread()
@@ -806,6 +821,11 @@ class FileItem(Item):
             return "saved"
         else:
             return "finished"
+
+    def getViewed(self):
+        """Since the manual feed isn't a real channel, FileItems are always
+        considered to be viewed."""
+        return True
 
     def expire(self):
         title = _("Removing %s") % (os.path.basename(self.filename))

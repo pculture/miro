@@ -12,454 +12,73 @@
 <body>
 
 <div class="main-video">
+    <div class="main-video-hitbox">
+        <a t:hideIf="this.getDownloadState() != 'not-downloaded'" 
+            class="download-icon" href="#" 
+            title="Download '***this.getTitle()***'" 
+            onclick="return eventURL('action:startDownload?item=@@@this.getID()@@@');"  />
+        <span t:hideIf="this.getDownloadState() != 'downloading'"
+            class="inprogress-background" 
+            title="Downloading '***this.getTitle()***'">
+            <img class="inprogress-arrows"  
+                src="resource:images/main-video-inprogress-arrows.gif" />
+        </span>
+        <a t:hideIf="this.getDownloadState() != 'downloaded'" 
+            class="play-icon" href="#" 
+            title="Play '***this.getTitle()***'" 
+            onclick="return eventURL('action:playViewNamed?viewName=@@@viewName@@@&amp;firstItemId=@@@this.getID()@@@');" />
+    </div>
+    <img class="main-video-tnail" src="***this.getThumbnail()***" alt="" />
 
+    <div class="main-video-details">
+        <div class="main-video-details-tasks">
+            <a t:hideIf="this.getURL() == ''" href="#" 
+                class="main-video-details-task-mail" 
+                onclick="recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@'); return false;" />
+            <a href="#" t:hideIf="this.getURL() == ''" 
+                class="main-video-details-task-bomb" 
+                onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" />
+            <a t:hideIf="this.getDownloadState() != 'downloaded'" href="#" 
+                class="main-video-details-task-delete" 
+                onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" />
+        </div>
+        <div t:hideIf="this.getViewed()" i18n:translate=""
+            class="main-video-details-state new">NEW</div>
+        <div t:hideIf="this.getState() not in ('finished', 'uploading')"
+            class="main-video-details-state unwatched" 
+            i18n:translate="">UNWATCHED</div>
+        <div t:hideIf="this.getState() != 'watched'"
+            class="main-video-details-state expiry"
+            i18n:translate="">Expires: <span i18n:name="expiration" t:replace="this.getExpirationTime()" />
+        </div>
+        <div t:hideIf="this.getState() != 'downloading'" 
+            class="main-video-details-state downloading">
+            <div class="main-progress-bar">
+                <img src="resource:images/status.png" width="@@@this.downloadProgressWidth()@@@" height="12" />
+            </div>
+            <span t:replace="this.downloadETA()" />
+            <span t:hideIf="this.downloadRate() == '0k/s'">
+                    <span t:replace="this.downloadRate()" />
+            </span>
+            <a class="main-progress-cancel" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" title="Cancel Download" />
+        </div>
+        <div t:hideIf="this.getState() not in ('finished', 'uploading', 'watched')"
+            class="main-video-details-save-button">
 
-	<!-- THUMBNAIL, TITLE AND DESCRIPTION -->
-	<div class="main-video-container">
-		<div class="main-video-content">
-		
-			<!-- THUMBNAIL -->
-			<div class="main-video-tnail">
-				<img src="***this.getThumbnail()***" alt="" />
-			</div>
-	
-			<div class="main-video-hitbox">
-				<span class="inprogress" t:hideIf="this.getState() != 'downloading'">
-						<span title="Downloading '***this.getTitle()***'" /><img src="resource:images/main-video-inprogress-arrows.gif" style="position:absolute; margin: 56px 0px 0px -31px; z-index:4;" />
-				</span>
-				<span class="downloadable" t:hideIf="this.getState() != 'stopped'">
-						<a href="#" onclick="return eventURL('action:startDownload?item=@@@this.getID()@@@');" title="Download '***this.getTitle()***'" />
-				</span>
-				<span class="downloadable" t:hideIf="this.getState() != 'failed'">
-						<a href="#" onclick="return eventURL('action:startDownload?item=@@@this.getID()@@@');" title="Download '***this.getTitle()***'" />
-				</span>
-				<span class="downloadable" t:hideIf="this.getState() != 'expired'">
-						<a href="#" onclick="return eventURL('action:startDownload?item=@@@this.getID()@@@');" title="Download '***this.getTitle()***'" />
-				</span>
-				<span class="downloadable" t:hideIf="this.getState() != 'autopending'">
-						<a href="#" onclick="return eventURL('action:startDownload?item=@@@this.getID()@@@');" title="Download '***this.getTitle()***'" />
-				</span>
-				<span class="downloadable" t:hideIf="this.getState() != 'manualpending'">
-						<a href="#" onclick="return eventURL('action:startDownload?item=@@@this.getID()@@@');" title="Download '***this.getTitle()***'" />
-				</span>
-				<span class="playable" t:hideIf="this.getState() != 'finished'">
-						<a href="#" onclick="return eventURL('action:playViewNamed?viewName=@@@viewName@@@&amp;firstItemId=@@@this.getID()@@@');" title="Play '***this.getTitle()***'" />
-				</span>
-				<span class="playable" t:hideIf="this.getState() != 'watched'">
-						<a href="#" onclick="return eventURL('action:playViewNamed?viewName=@@@viewName@@@&amp;firstItemId=@@@this.getID()@@@');" title="Play '***this.getTitle()***'" />
-				</span>
-				<span class="playable" t:hideIf="this.getState() != 'uploading'">
-						<a href="#" onclick="return eventURL('action:playViewNamed?viewName=@@@viewName@@@&amp;firstItemId=@@@this.getID()@@@');" title="Play '***this.getTitle()***'" />
-				</span>
-				<span class="playable" t:hideIf="this.getState() != 'saved'">
-						<a href="#" onclick="return eventURL('action:playViewNamed?viewName=@@@viewName@@@&amp;firstItemId=@@@this.getID()@@@');" title="Play '***this.getTitle()***'" />
-				</span>
-			</div>
-			<!-- / THUMBNAIL -->
-		
-			<!-- TITLE AND DESCRIPTION -->
-			<div class="main-video-desc">
-				<h1 t:replace="this.getTitle()" />
-				
-				<div class="main-video-desc-desc">
-				<p t:replaceMarkup="this.getDescription()" />
-				</div>
-				
-<span t:replaceMarkup="this.getDetails()" />
-
-
-				
-			</div>
-			<!-- / TITLE AND DESCRIPTION -->
-			
-		</div>
-	</div>
-	<!-- / THUMBNAIL, TITLE AND DESCRIPTION -->
-	
-	
-	
-	<!-- STOPPED **************************************************** -->
-	<span t:hideIf="this.getState() != 'stopped'">
-		<div class="main-video-details">
-		
-		
-					<!-- FILE TASKS -->
-			<div class="main-video-details-tasks">
-				 <a t:hideIf="this.getURL() == ''"
-				   href="#" onclick="recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
-			   <a href="#" t:hideIf="this.getFeed().url == 'dtv:manualFeed'" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a> 
-				<div class="clearer"></div>
-			</div>
-			<!-- / FILE TASKS -->
-
-		
-			<!-- FILE INFO -->
-<!--			<p class="main-video-details-left"><strong t:replace="this.getReleaseDate()" /></p>
-			<p class="main-video-details-right" t:replace="this.getDuration()" />
-			<p class="main-video-details-left" t:replace="this.getFormat()" />
-			<p class="main-video-details-right" t:replace="this.getEnclosuresSize()" />
--->			<!-- / FILE INFO -->
-					
-			<!-- NEW -->
-			<span t:hideIf="this.getViewed()">
-				<div class="main-video-details-new">
-					<p>New</p>
-				</div>
-			</span>
-			<!-- / NEW -->
-
-			
-		</div>
-		<div class="clearer"></div>
-	</span>
-	<!-- / STOPPED -->
-	
-	
-	
-	<!-- STOPPED **************************************************** -->
-	<span t:hideIf="this.getState() != 'expired'">
-		<div class="main-video-details">
-		
-			<!-- FILE TASKS -->
-			<div class="main-video-details-tasks">
-				 <a t:hideIf="this.getURL() == ''"
-				   href="#" onclick="recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
-					 <a href="#" t:hideIf="this.getFeed().url == 'dtv:manualFeed'" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a> 
-				<div class="clearer"></div>
-			</div>
-			<!-- / FILE TASKS -->
-		
-		
-			<!-- FILE INFO -->
-<!--			<p class="main-video-details-left"><strong t:replace="this.getReleaseDate()" /></p>
-			<p class="main-video-details-right" t:replace="this.getDuration()" />
-			<p class="main-video-details-left" t:replace="this.getFormat()" />
-			<p class="main-video-details-right" t:replace="this.getEnclosuresSize()" />
--->			<!-- / FILE INFO -->
-			
-		</div>
-		<div class="clearer"></div>
-	</span>
-	<!-- / STOPPED -->
-	
-	
-	
-	
-	<!-- DOWNLOADING **************************************************** -->
-	<span t:hideIf="this.getState() != 'downloading'">
-		<div class="main-video-details">
-		
-		
-		<!-- FILE TASKS -->
-			<div class="main-video-details-tasks">
-				 <a t:hideIf="this.getURL() == ''"
-				   href="#" onclick="recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
-					 <a href="#" t:hideIf="this.getFeed().url == 'dtv:manualFeed'" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a> 
-				<div class="clearer"></div>
-			</div>
-			<!-- / FILE TASKS -->
-			
-		
-			<!-- FILE INFO -->
-<!--			<p class="main-video-details-left"><strong t:replace="this.getReleaseDate()" /></p>
-			<p class="main-video-details-right" t:replace="this.getDuration()" />
-			<p class="main-video-details-left" t:replace="this.getFormat()" />
-			<p class="main-video-details-right" t:replace="this.getEnclosuresSize()" />
--->			<!-- / FILE INFO -->
-			
-			<!-- DOWNLOAD PROGRESS -->
-			<div class="main-video-progress">
-				<div class="main-progress-bar">
-					<img src="resource:images/status.png" width="@@@this.downloadProgressWidth()@@@" height="12" />
-				</div>
-				<a class="main-progress-cancel" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" title="Cancel Download" />
-			</div>
-			<p style="clear:both;">
-				<span t:replace="this.downloadETA()" />
-				<span t:hideIf="this.downloadRate() == '0k/s'">
-					<span t:replace="this.downloadRate()" />
-				</span>
-			</p>
-			<!-- / DOWNLOAD PROGRESS -->
-			
-			
-		</div>
-		<div class="clearer"></div>
-	</span>
-	<!-- / DOWNLOADING -->	
-	
-	
-	
-	<!-- AUTO-DOWNLOAD PENDING **************************************************** -->
-	<span t:hideIf="this.getState() != 'autopending'">
-		<div class="main-video-details">
-
-
-			<!-- FILE TASKS -->
-			<div class="main-video-details-tasks">
-				 <a t:hideIf="this.getURL() == ''"
-				   href="#" onclick="recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
-					 <a href="#" t:hideIf="this.getFeed().url == 'dtv:manualFeed'" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a> 
-				<div class="clearer"></div>
-			</div>
-			<!-- / FILE TASKS -->
-
-		
-			<!-- FILE INFO -->
-<!--			<p class="main-video-details-left"><strong t:replace="this.getReleaseDate()" /></p>
-			<p class="main-video-details-right" t:replace="this.getDuration()" />
-			<p class="main-video-details-left" t:replace="this.getFormat()" />
-			<p class="main-video-details-right" t:replace="this.getEnclosuresSize()" />
--->			<!-- / FILE INFO -->
-			
-			<!-- MESSAGE -->
-			<p style="clear:both; padding-bottom:3px;" 
-i18n:translate="">Pending Auto Download</p>
-			<!-- MESSAGE -->
-			
-			
-		</div>
-		<div class="clearer"></div>
-	</span>
-	<!-- / AUTO-DOWNLOAD PENDING -->
-	
-	
-	
-	<!-- MANUAL-DOWNLOAD PENDING **************************************************** -->
-	<span t:hideIf="this.getState() != 'manualpending'">
-		<div class="main-video-details">
-
-			<!-- FILE TASKS -->
-			<div class="main-video-details-tasks">
-				 <a t:hideIf="this.getURL() == ''"
-				   href="#" onclick="recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
-					 <a href="#" t:hideIf="this.getFeed().url == 'dtv:manualFeed'" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a> 
-				<div class="clearer"></div>
-			</div>
-			<!-- / FILE TASKS -->
-
-		
-			<!-- FILE INFO -->
-<!--			<p class="main-video-details-left"><strong t:replace="this.getReleaseDate()" /></p>
-			<p class="main-video-details-right" t:replace="this.getDuration()" />
-			<p class="main-video-details-left" t:replace="this.getFormat()" />
-			<p class="main-video-details-right" t:replace="this.getEnclosuresSize()" />
--->			<!-- / FILE INFO -->
-			
-			<!-- MESSAGE -->
-			<p style="clear:both; padding-bottom:3px;" 
-i18n:translate="">Pending Manual Download</p>
-			<!-- MESSAGE -->
-
-			
-		</div>
-		<div class="clearer"></div>
-	</span>
-	<!-- / MANUAL-DOWNLOAD PENDING -->
-	
-	
-
-	<!-- UNWATCHED **************************************************** -->
-	<span t:hideIf="this.getState() != 'finished'">
-		<div class="main-video-details">
-
-
-			<!-- FILE TASKS -->
-			<div class="main-video-details-tasks">
-								
-	<a t:hideIf="this.getURL() == ''"
-				   href="#" onclick="recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>					 
-				<a href="#" t:hideIf="this.getFeed().url == 'dtv:manualFeed'" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a> <a href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
- 
-				<div class="clearer"></div>
-			</div>
-			<!-- / FILE TASKS -->
-
-		
-			<!-- FILE INFO -->
-<!--			<p class="main-video-details-left"><strong t:replace="this.getReleaseDate()" /></p>
-			<p class="main-video-details-right" t:replace="this.getDuration()" />
-			<p class="main-video-details-left" t:replace="this.getFormat()" />
-			<p class="main-video-details-right" t:replace="this.getEnclosuresSize()" />
--->			<!-- / FILE INFO -->		
-			
-			<!-- UNWATCHED -->
-			<span>
-				<div class="main-video-details-unwatched">
-					<p i18n:translate="">Unwatched</p>
-				</div>
-				<div class="main-video-details-save">
-					<p><a href="#" onclick="return 
-eventURL('action:keepItem?item=@@@this.getID()@@@');" i18n:translate="">Save</a></p>
-				</div>
-			</span>
-			<!-- / UNWATCHED -->
-			
-			
-		</div>
-		<div class="clearer"></div>
-	</span>
-	<!-- / UNWATCHED -->
-	
-	
-	
-	<!-- WATCHED **************************************************** -->
-	<span t:hideIf="this.getState() != 'watched'">
-		<div class="main-video-details">
-
-			<!-- FILE TASKS -->
-			<div class="main-video-details-tasks">
-								
-	<a t:hideIf="this.getURL() == ''"
-				   href="#" onclick="recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>					 
-				<a href="#" t:hideIf="this.getFeed().url == 'dtv:manualFeed'" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a> <a href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
-
-				<div class="clearer"></div>
-			</div>
-			<!-- / FILE TASKS -->
-
-		
-			<!-- FILE INFO -->
-<!--			<p class="main-video-details-left"><strong t:replace="this.getReleaseDate()" /></p>
-			<p class="main-video-details-right" t:replace="this.getDuration()" />
-			<p class="main-video-details-left" t:replace="this.getFormat()" />
-			<p class="main-video-details-right" t:replace="this.getEnclosuresSize()" />
--->			<!-- / FILE INFO -->			
-			
-			<!-- EXPIRY -->
-			<span>
-				<div class="main-video-details-expiry">
-					<p><span i18n:translate="">Expires</span>: <span 
-t:replace="this.getExpirationTime()" /></p>
-				</div>
-				<div class="main-video-details-save">
-					<p><a href="#" onclick="return 
-eventURL('action:keepItem?item=@@@this.getID()@@@');" i18n:translate="">Save</a></p>
-				</div>
-			</span>
-			<!-- / EXPIRY -->
-			
-			
-		</div>
-		<div class="clearer"></div>
-	</span>
-	<!-- / WATCHED -->
-	
-	
-	
-	<!-- SAVED **************************************************** -->
-	<span t:hideIf="this.getState() != 'saved'">
-		<div class="main-video-details">
-		
-		
-		
-			<!-- FILE TASKS -->
-			<div class="main-video-details-tasks" style="padding-top:19px;">
-								
-	<a t:hideIf="this.getURL() == ''"
-				   href="#" onclick="recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>					 
-				<a href="#" t:hideIf="this.getFeed().url == 'dtv:manualFeed'" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a> <a href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
-
-				<div class="clearer"></div>
-			</div>
-			<!-- / FILE TASKS -->
-			
-		
-			<!-- FILE INFO -->
-<!--			<p class="main-video-details-left"><strong t:replace="this.getReleaseDate()" /></p>
-			<p class="main-video-details-right" t:replace="this.getDuration()" />
-			<p class="main-video-details-left" t:replace="this.getFormat()" />
-			<p class="main-video-details-right" t:replace="this.getEnclosuresSize()" />
--->			<!-- / FILE INFO -->			
-			
-			
-		</div>
-		<div class="clearer"></div>
-	</span>
-	<!-- / SAVED -->
-	
-	
-
-	<!-- UPLOADING **************************************************** -->
-	<span t:hideIf="this.getState() != 'uploading'">
-		<div class="main-video-details">
-
-
-			<!-- FILE TASKS -->
-			<div class="main-video-details-tasks">
-								
-	<a t:hideIf="this.getURL() == ''"
-				   href="#" onclick="recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>					 
-				<a href="#" t:hideIf="this.getFeed().url == 'dtv:manualFeed'" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a> <a href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-delete" /></a>
-
-				<div class="clearer"></div>
-			</div>
-			<!-- / FILE TASKS -->
-			
-		
-			<!-- FILE INFO -->
-<!--			<p class="main-video-details-left"><strong t:replace="this.getReleaseDate()" /></p>
-			<p class="main-video-details-right" t:replace="this.getDuration()" />
-			<p class="main-video-details-left" t:replace="this.getFormat()" />
-			<p class="main-video-details-right" t:replace="this.getEnclosuresSize()" />
--->			<!-- / FILE INFO -->
-			
-			<!-- UNWATCHED -->
-			<span>
-				<div class="main-video-details-unwatched">
-					<p i18n:translate="">Unwatched</p>
-				</div>
-				<div class="main-video-details-save">
-					<p><a href="#" onclick="return 
-eventURL('action:keepItem?item=@@@this.getID()@@@');" i18n:translate="">Save</a></p>
-				</div>
-			</span>
-			<!-- / UNWATCHED -->
-			
-
-			
-		</div>
-		<div class="clearer"></div>
-	</span>
-	<!-- / UPLOADING -->
-	
-	
-	
-	<!-- FAILED DOWNLOAD **************************************************** -->
-	<span t:hideIf="this.getState() != 'failed'">
-		<div class="main-video-details">
-		
-		<!-- FILE TASKS -->
-			<div class="main-video-details-tasks">
-				 <a t:hideIf="this.getURL() == ''"
-				   href="#" onclick="recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@'); return false;"><img src="resource:images/clear.png" width="14" height="12" alt="" border="0" class="main-video-details-task-mail" /></a>
-					 <a href="#" t:hideIf="this.getFeed().url == 'dtv:manualFeed'" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');"><img src="resource:images/clear.png" width="13" height="12" alt="" border="0" class="main-video-details-task-bomb" /></a> 
-				<div class="clearer"></div>
-			</div>
-			<!-- / FILE TASKS -->
-		
-			<!-- FILE INFO -->
-<!--			<p class="main-video-details-left"><strong t:replace="this.getReleaseDate()" /></p>
-			<p class="main-video-details-right" t:replace="this.getDuration()" />
-			<p class="main-video-details-left" t:replace="this.getFormat()" />
-			<p class="main-video-details-right" t:replace="this.getEnclosuresSize()" />
--->			<!-- / FILE INFO -->
-			
-			<!-- ERROR -->
-			<p><span i18n:translate="">Download Error</span>: <span 
-t:replace="this.getFailureReason()" /></p>
-			<!-- / ERROR -->
-			
-			
-			
-		</div>
-		<div class="clearer"></div>
-	</span>
-	<!-- / FAILED DOWNLOAD -->
-	
-	
-
+            <a href="#" 
+               onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');"
+               i18n:translate="">SAVE</a>
+        </div>
+    </div>
+    <div class="main-video-desc">
+        <h1 t:replace="this.getTitle()" />
+        <div class="main-video-desc-desc">
+            <p t:replaceMarkup="this.getDescription()" />
+        </div>
+        <span t:replaceMarkup="this.getDetails()" />
+    </div>
 </div>
+
 
 </body>
 </html>

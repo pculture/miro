@@ -1133,8 +1133,8 @@ downloaded?""")
                 paramList["rss_url"] = rss_url
         except:
             pass
-        thumb_url = obj.getThumbnail()
-        if (not thumb_url.startswith('resource:')):
+        thumb_url = obj.getThumbnailURL()
+        if thumb_url is not None:
             paramList["thumb_url"] = thumb_url
 
         # FIXME: add "explicit" and "tags" parameters when we get them in item
