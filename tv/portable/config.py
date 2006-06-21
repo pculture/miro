@@ -92,8 +92,9 @@ def set(descriptor, value):
     __lock.acquire()
     try:
         __checkValidity()
-        __data[ descriptor.key ] = value
-        __notifyListeners(descriptor.key, value)
+        if __data[ descriptor.key ] != value:
+            __data[ descriptor.key ] = value
+            __notifyListeners(descriptor.key, value)
     finally:
         __lock.release()
 

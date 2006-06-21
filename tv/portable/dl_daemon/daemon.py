@@ -192,13 +192,20 @@ class ControllerDaemon(Daemon):
             data[desc.key] = config.get(desc)
         c = command.InitialConfigCommand(self, data)
         c.send(block=False)
+        config.addChangeCallback (self.updateConfig)
 
+    def updateConfig (self, key, value):
+        if not self.shutdown:
+            c = command.UpdateConfigCommand (self, key, value)
+            c.send(block=False)
+            
     def handleClose(self, type):
         if not self.shutdown:
             print "DTV: WARNING Downloader Daemon died"
             # FIXME: replace with code to recover here, but for now,
             # stop sending.
             self.shutdown = True
+            config.removeChangeCallback (self.updateConfig)
 
     def shutdown_timeout_cb(self):
         print "DTV: WARNING \"hard\" downloader shutdown not implemented"
@@ -219,5 +226,6 @@ class ControllerDaemon(Daemon):
         c = command.ShutDownCommand(self)
         c.send(block=False)
         self.shutdown = True
+        config.removeChangeCallback (self.updateConfig)
         self.shutdown_timeout_dc = eventloop.addTimeout(timeout, self.shutdown_timeout_cb, "Waiting for dl_daemon shutdown")
 

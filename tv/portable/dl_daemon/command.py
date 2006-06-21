@@ -96,6 +96,11 @@ class InitialConfigCommand(Command):
         from dl_daemon import download
         download.startBTDownloader()
 
+class UpdateConfigCommand(Command):
+    def action(self):
+        import config
+        config.updateDictionary(*self.args, **self.kws)
+
 class StartNewDownloadCommand(Command):
     def action(self):
         from dl_daemon import download
