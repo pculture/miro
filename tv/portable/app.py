@@ -357,6 +357,12 @@ class VideoRenderer:
         self.interactivelySeeking = False
     
     def canPlayItem(self, anItem):
+        if os.path.isdir(anItem.getPath()):
+          for filename in os.listdir(anItem.getPath()):
+            filename = os.path.join(anItem.getPath(), filename)
+            url = 'file://%s' % urllib.pathname2url(filename)
+            if self.canPlayUrl (url):
+              return True
         url = 'file://%s' % urllib.pathname2url(anItem.getPath())
         return self.canPlayUrl (url)
     
@@ -378,7 +384,15 @@ class VideoRenderer:
 
     def selectItem(self, anItem):
         url = 'file://%s' % urllib.pathname2url(anItem.getPath())
-        self.selectUrl (url)
+        if self.canPlayUrl (url):
+          self.selectUrl (url)
+        elif os.path.isdir(anItem.getPath()):
+          for filename in os.listdir(anItem.getPath()):
+            filename = os.path.join(anItem.getPath(), filename)
+            url = 'file://%s' % urllib.pathname2url(filename)
+            if self.canPlayUrl (url):
+              self.selectUrl (url)
+              return
 
     def selectUrl(self, url):
         pass
