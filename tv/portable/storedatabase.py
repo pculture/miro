@@ -643,7 +643,6 @@ class LiveStorage:
         if self.closed:
             return
         start = clock()
-        print "Database Update: %s" % (object,)
         savable = objectToSavable (object)
         if savable:
             key = str(object.id)
