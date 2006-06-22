@@ -22,6 +22,10 @@ import prefs
 import resource
 import views
 
+def updateUandA (feed):
+    # Not toplevel to avoid a dependency loop at load time.
+    import feed as feed_mod
+    feed_mod.updateUandA (feed)
 
 _charset = locale.getpreferredencoding()
 
@@ -53,13 +57,14 @@ class Item(DDBObject):
         self.linkNumber = linkNumber
         self.creationTime = datetime.now()
         DDBObject.__init__(self)
+        updateUandA(self.getFeed())
 
     # Unfortunately, our database does not scale well with many views,
     # so we have this hack to make sure that unwatched and available
     # get updated when an item changes
     def signalChange(self, needsSave=True):
         DDBObject.signalChange(self, needsSave=needsSave)
-        self.getFeed().updateUandA()
+        updateUandA(self.getFeed())
 
     #
     # Returns True iff this item has never been viewed in the interface
@@ -781,6 +786,12 @@ class Item(DDBObject):
                 changed = True
         if changed:
             self.signalChange(needsSave=False)
+        else:
+            # Do this here instead of onRestore in case the feed
+            # hasn't been loaded yet.  signalChange calls this
+            # function, so we only need to do it if we don't call
+            # signalChange.
+            updateUandA(self.getFeed())
 
     ##
     # Called by pickle during serialization

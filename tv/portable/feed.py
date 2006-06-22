@@ -231,7 +231,7 @@ class FeedImpl:
 
     # Updates the state of unwatched and available items to meet
     # Returns true iff signalChange() is called
-    def updateUandA(self):
+    def updateUandA(self, signal = True):
         self.ufeed.confirmDBThread()
         newU = 0
         newA = 0
@@ -244,9 +244,8 @@ class FeedImpl:
         if newU != self.unwatched or newA != self.available:
             self.unwatched = newU
             self.available = newA
-            self.ufeed.signalChange()
-            return True
-        return False
+            if signal:
+                self.ufeed.signalChange(needsSave=False)
             
     # Returns string with number of unwatched videos in feed
     def numUnwatched(self):
@@ -286,7 +285,8 @@ class FeedImpl:
     def markAsViewed(self):
         # FIXME uncomment to make "new" state last 6 hours. See #655, #733
         self.lastViewed = datetime.now() #- timedelta(hours=6)
-        self.updateUandA()
+        self.updateUandA(False)
+        self.ufeed.signalChange()
 
     ##
     # Returns true iff the feed is loading. Only makes sense in the
@@ -581,12 +581,32 @@ class FeedImpl:
         return count
 
     def onRestore(self):
+        self.available = 0
+        self.unwatched = 0
         self.calc_item_list()
 
     def onRemove(self):
         """Called when the feed uses this FeedImpl is removed from the DB.
         subclasses can perform cleanup here."""
         pass
+
+
+updaterDC = None
+updaterSet = set()
+def updateUandAs():
+    global updaterSet
+    global updaterDC
+    for feedimpl in updaterSet:
+        feedimpl.updateUandA()
+    updaterSet = set()
+    updaterDC = None
+
+def updateUandA(feed):
+    global updaterSet
+    global updaterDC
+    updaterSet.add (feed.actualFeed)
+    if updaterDC is None:
+        updaterDC = eventloop.addIdle(updateUandAs, "Update unwatched counts")
 
 ##
 # This class is a magic class that can become any type of feed it wants
@@ -888,8 +908,8 @@ class RSSFeedImpl(FeedImpl):
         return hasOne
 
     def feedparser_finished (self):
-        if not self.updateUandA():
-            self.ufeed.signalChange()
+        self.updateUandA(False)
+        self.ufeed.signalChange()
         self.scheduleUpdateEvents(-1)
         self.updating = False
 
@@ -1189,7 +1209,7 @@ class ScraperFeedImpl(FeedImpl):
             i=Item(self.ufeed.id, FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link,'thumbnail':FeedParserDict({'url':dict['thumbnail']})})]}),linkNumber = linkNumber)
         else:
             i=Item(self.ufeed.id, FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link})]}),linkNumber = linkNumber)
-        self.updateUandA()
+        updateUandA(self.ufeed)
 
     #FIXME: compound names for titles at each depth??
     def processLinks(self,links, depth = 0,linkNumber = 0):

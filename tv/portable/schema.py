@@ -250,8 +250,6 @@ class FeedImplSchema(ObjectSchema):
     klass = FeedImpl
     classString = 'field-impl'
     fields = [
-        ('available', SchemaInt()),
-        ('unwatched', SchemaInt()),
         ('url', SchemaString()),
         ('ufeed', SchemaObject(Feed)),
         ('title', SchemaString()),
