@@ -619,6 +619,9 @@ class Controller (frontend.Application):
     def downloaderShutdown(self):
         print "DTV: Closing Database..."
         database.defaultDatabase.liveStorage.close()
+        print "DTV: Shutting down event loop"
+        eventloop.quit()
+        print "DTV: Shutting down frontend"
         frontend.quit()
 
     @eventloop.asUrgent
@@ -645,10 +648,8 @@ class Controller (frontend.Application):
 
     def onShutdown(self):
         try:
-            print "DTV: Shutting down event loop"
-            eventloop.quit()
-            eventloop.join()
-            
+            eventloop.join()        
+
             print "DTV: Saving preferences..."
             config.save()
 

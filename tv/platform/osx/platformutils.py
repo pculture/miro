@@ -140,6 +140,9 @@ class CallerObject (Foundation.NSObject):
 ###############################################################################
 
 def getAvailableBytesForMovies():
+    pool = Foundation.NSAutoreleasePool.alloc().init()
     fm = Foundation.NSFileManager.defaultManager()
     info = fm.fileSystemAttributesAtPath_(config.get(prefs.MOVIES_DIRECTORY))
-    return info[Foundation.NSFileSystemFreeSize]
+    available = info[Foundation.NSFileSystemFreeSize]
+    del pool
+    return available
