@@ -820,7 +820,7 @@ def copyTreeExceptSvn(src, dest):
     if not os.access(dest, os.F_OK):
 	os.mkdir(dest)
     for name in names:
-	if name == ".svn":
+	if name in [".svn", "_svn"]:
 	    continue
 	srcname = os.path.join(src, name)
 	destname = os.path.join(dest, name)

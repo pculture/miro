@@ -162,6 +162,7 @@ def findTemplates(tpath):
     folders = []
     for template in os.listdir(tpath):
         if (template.find('.svn') == -1 and
+            template.find('_svn') == -1 and
             not (template.startswith('.') or template.startswith('#') or 
                  template.endswith('~') or template.endswith('.js') or 
                  template.endswith('.html'))):
@@ -177,7 +178,7 @@ def modifiedTime(dir):
     try:
         for (dirpath, dirnames, filenames) in os.walk(dir):
             for f in filenames:
-                if -1 == dirpath.find('.svn'):
+                if -1 == dirpath.find('.svn') and -1 == dirpath.find('_svn'):
                     t = os.stat(os.path.join(dirpath, f)).st_mtime
                     if t > maxTime:
                         maxTime = t
