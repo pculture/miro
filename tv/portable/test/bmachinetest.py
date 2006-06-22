@@ -6,6 +6,7 @@ from copy import copy
 
 import httpclient
 import eventloop
+import resource
 
 from test.framework import DownloaderTestCase
 
@@ -106,18 +107,39 @@ class BroadcastMachineTest(DownloaderTestCase):
                                lambda info: self.loadNoCookies(info, urllist),
                                self.errorCallback)
         else:
-            httpclient.grabURL(self.url+'admin.php',
-                               self.adminLoad,
-                               self.errorCallback, cookies = self.makeBMCookies())
+            httpclient.grabURL(self.url+'create_channel.php',
+                               self.createChannelLoad,
+                               self.errorCallback, method="POST",
+                               cookies = self.makeBMCookies(),
+
+                               postVariables = {
+                'Name' : 'Test Channel 1',
+                'Description' : 'This is a test channel',
+                'Publisher' : 'Democracy/Broadcast Machine tester',
+                'Icon' : 'http://images.slashdot.org/topics/topiccommunications.gif',
+                'post_use_auto' : "1",
+                'Options[Thumbnail]' : "1",
+                'Options[Title]' : "1",
+                'Options[Creator]' : "1",
+                'Options[Description]' : "1",
+                'Options[Length]' : "1",
+                'Options[Filesize]' : "1",
+                'Options[Torrent]' : "1",
+                'Options[URL]' : "1",
+                'Options[Keywords]' : "1",
+                'SubscribeOptions[0]' : "1",
+                'SubscribeOptions[1]' : "2",
+                'SubscribeOptions[2]' : "4",
+                
+                })
         
 
-    def adminLoad(self, info):
-        self.assert_(info['redirected-url'].endswith('/admin.php'))
-        self.assertNotEqual(info['body'].find('Dashboard'), -1)
-        self.assertNotEqual(info['body'].find('admin'), -1)
-        self.assertNotEqual(info['body'].find('nassar@pculture.org'), -1)
-        self.assertNotEqual(info['body'].find('Go to Users'), -1)
-        self.assertNotEqual(info['body'].find('Go to Files'), -1)
+    def createChannelLoad(self, info):
+        self.assert_(info['redirected-url'].endswith('/channels.php'))
+        
+        self.assertNotEqual(info['body'].find('Test Channel 1'), -1)
+        self.assertNotEqual(info['body'].find('Democracy/Broadcast Machine tester'), -1)
+        self.assertNotEqual(info['body'].find('http://images.slashdot.org/topics/topiccommunications.gif'), -1)
         self.storeBMCookie(info['cookies'])
         eventloop.quit()
 
