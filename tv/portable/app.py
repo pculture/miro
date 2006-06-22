@@ -629,6 +629,9 @@ class Controller (frontend.Application):
         return self.checkTabUsingIndex(indexes.tabObjIDIndex, id)
 
     def downloaderShutdown(self):
+        print "DTV: Shutting down event loop"
+        eventloop.quit()
+        print "DTV: Shutting down frontend"
         frontend.quit()
 
     @eventloop.asUrgent
@@ -684,10 +687,8 @@ class Controller (frontend.Application):
 
     def onShutdown(self):
         try:
-            print "DTV: Shutting down event loop"
-            eventloop.quit()
-            eventloop.join()
-            
+            eventloop.join()        
+
             print "DTV: Saving preferences..."
             config.save()
 
