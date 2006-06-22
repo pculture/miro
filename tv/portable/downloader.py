@@ -132,6 +132,8 @@ class RemoteDownloader(DDBObject):
         # print data
         if self is not None:
             oldState = self.getState()
+            if self.status == data:
+                return
             self.status = data
             # Store the time the download finished
             if ((self.getState() in ['finished','uploading']) and
