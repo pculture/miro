@@ -221,7 +221,7 @@ class Common:
 
         vlcPlugins = os.listdir(VLC_PLUGINS_DIR)
         for f in vlcPlugins:
-            if f[0] != '.':
+            if f[0] != '.' and f != '_svn':
                 shutil.copy2(os.path.join(VLC_PLUGINS_DIR, f), vlcPluginDest)
 
     def copyMiscFiles(self, destDir):
