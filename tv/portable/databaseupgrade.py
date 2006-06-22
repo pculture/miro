@@ -7,6 +7,12 @@ olddatabaseupgrade.py)
 import schema
 chatter = True # set to False in the unittests
 
+class DatabaseTooNewError(Exception):
+    """Error that we raise when we see a database that is newer than the
+    version that we can update too.
+    """
+    pass
+
 def upgrade(savedObjects, saveVersion, upgradeTo=None):
     """Upgrade a list of SavableObjects that were saved using an old version 
     of the database schema.
@@ -23,6 +29,11 @@ def upgrade(savedObjects, saveVersion, upgradeTo=None):
 
     if upgradeTo is None:
         upgradeTo = schema.VERSION
+
+    if saveVersion > upgradeTo:
+        msg = ("Database was created by a newer version of Democracy " 
+               "(db version is %s)" % saveVersion)
+        raise DatabaseTooNewError(msg)
 
     while saveVersion < upgradeTo:
         if chatter:

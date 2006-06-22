@@ -306,6 +306,17 @@ class UpgradeTest(SchemaTest):
             elif isinstance(object, Dog):
                 self.assert_('color' in object.__dict__)
 
+    def testRestoreWithNewerVersion(self):
+        newDb = storedatabase.restoreObjectList(self.savePath,
+                self.nextGenObjectSchemas)
+        storedatabase.saveObjectList(newDb, self.savePath,
+                testObjectSchemas)
+        # saved database is now version 3
+        schema.VERSION = 1
+        self.assertRaises(databaseupgrade.DatabaseTooNewError,
+                storedatabase.restoreObjectList, self.savePath, 
+                testObjectSchemas)
+
     def testSavingUpgradedDb(self):
         newDb = storedatabase.restoreObjectList(self.savePath,
                 self.nextGenObjectSchemas)
