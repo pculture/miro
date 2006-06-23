@@ -37,100 +37,125 @@
      run "make"
 
  */
+#define _WIN32_WINNT 0x0500
 #include <windows.h>
-#include "tackon.h"
-#include "Platform.h"
+#include <windowsx.h>
+#include "../ExDLL/exdll.h"
 
 HINSTANCE g_hInstance;
 
-HWND g_hwndParent;
-
-extern unsigned long NSISCALL CRC32(unsigned long crc, const unsigned char *buf, unsigned int len);
-
-void __declspec(dllexport) writeToFile(HWND hwndParent, int string_size, 
-                                      char *variables, stack_t **stacktop)
+// this is based on the (slow,small) CRC32 implementation from zlib.
+static unsigned long CRC32(unsigned long crc, const unsigned char *buf, unsigned int len)
 {
-  g_hwndParent=hwndParent;
+    static unsigned long crc_table[256] = {0};
 
-  TACKON_INIT();
+    if (!crc_table[1])
+    {
+      unsigned long c;
+      int n, k;
 
-  {
-    char filename[1024];
-    char exename[1024];
-    char buffer[32768];
-    int attr;
-    int exesize;
-    HANDLE outfile;
-    unsigned int datasize, crc, id,left,thischunk;
-    unsigned long fcrc;
-    DWORD rd;
-    HANDLE exefile;
-
-    //get command line parameter
-    if (popstring(filename))
-      MessageBox(g_hwndParent,"Please supply a filename for tackon::writeToFile",0,MB_OK);
-
-    //get name of main exe file
-    GetModuleFileName(NULL, exename, 1023);
-    exename[1023]=0;
-
-    //open the exe file as read only
-    attr = GetFileAttributes(exename);
-    exefile = CreateFile(exename,GENERIC_READ,FILE_SHARE_READ,NULL,OPEN_EXISTING,attr == INVALID_FILE_ATTRIBUTES ? 0 : attr,NULL);
-    exesize = GetFileSize(exefile,NULL);
-
-    //Read in CRC, size of data, and ID
-    SetFilePointer(exefile,exesize-12,NULL,FILE_BEGIN);
-    ReadFile(exefile,&crc,4,&rd,NULL);
-    ReadFile(exefile,&datasize,4,&rd,NULL);
-    ReadFile(exefile,&id,4,&rd,NULL);
-
-    //If the ID is okay, extract the data
-    if (id==560097380) {
-      //Initialize CRC
-      fcrc=0;
-
-      //Open the output file
-      outfile = CreateFile(filename, GENERIC_WRITE, 0,NULL,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
-
-      //Set the pointer to the start of the data
-      SetFilePointer(exefile,exesize-12-datasize,NULL,FILE_BEGIN);
-
-      left = datasize;
-      rd = 0;
-      thischunk=0;
-
-      //Write data out to file
-      while ((left>0) && (thischunk==rd)) {
-	//Read up to 32768 bytes
-	if (left<32768)
-	  thischunk=left;
-	else
-	  thischunk=32768;
-
-	//Read data
-	ReadFile(exefile,buffer,thischunk,&rd,NULL);
-	//update the CRC
-	fcrc=CRC32(fcrc,buffer,rd);
-	left -=rd;
-	//Write data
-	WriteFile(outfile,buffer, rd, &rd,NULL);
-      }
-      //Complain if there were errors
-      if ((crc!=fcrc)||(left>0)) {
-	MessageBox(g_hwndParent,"Warning: error writing tacked on file!",0,MB_OK);
+      for (n = 0; n < 256; n++)
+      {
+        c = (unsigned long)n;
+        for (k = 0; k < 8; k++) c = (c >> 1) ^ (c & 1 ? 0xedb88320L : 0);
+        crc_table[n] = c;
       }
     }
 
-    CloseHandle(exefile);
-    CloseHandle(outfile);
-  }
+    crc = crc ^ 0xffffffffL;
+    while (len-- > 0) {
+      crc = crc_table[(crc ^ (*buf++)) & 0xff] ^ (crc >> 8);
+    }
+    return crc ^ 0xffffffffL;
 }
-
-
 
 BOOL WINAPI DllMain(HANDLE hInst, ULONG ul_reason_for_call, LPVOID lpReserved)
 {
   g_hInstance=hInst;
-	return TRUE;
+  return TRUE;
+}
+
+#define BUF_SIZE 32768
+
+void __declspec(dllexport) write(HWND hwndParent, int string_size, 
+				 char *variables, stack_t ** stacktop)
+{
+  char *filename = {0};
+  char *exename = {0};
+  char *buffer = {0};
+  int attr;
+  int exesize;
+  HANDLE outfile;
+  unsigned int datasize, crc, id,left,thischunk;
+  unsigned long fcrc;
+  DWORD rd;
+  HANDLE exefile;
+
+  EXDLL_INIT();
+
+  filename = GlobalAlloc(GPTR, 1024);
+  exename = GlobalAlloc(GPTR, 1024);
+  buffer = GlobalAlloc(GPTR, BUF_SIZE);
+
+  //get command line parameter
+  if (popstring(filename))
+    MessageBox(hwndParent,"Please supply a filename for tackon::writeToFile",0,MB_OK);
+
+  //get name of main exe file
+  GetModuleFileName(NULL, exename, 1023);
+  exename[1023]=0;
+
+  //open the exe file as read only
+  attr = GetFileAttributes(exename);
+  exefile = CreateFile(exename,GENERIC_READ,FILE_SHARE_READ,NULL,OPEN_EXISTING,attr == INVALID_FILE_ATTRIBUTES ? 0 : attr,NULL);
+  exesize = GetFileSize(exefile,NULL);
+
+  //Read in CRC, size of data, and ID
+  SetFilePointer(exefile,exesize-12,NULL,FILE_BEGIN);
+  ReadFile(exefile,&crc,4,&rd,NULL);
+  ReadFile(exefile,&datasize,4,&rd,NULL);
+  ReadFile(exefile,&id,4,&rd,NULL);
+
+  //If the ID is okay, extract the data
+  if (id==560097380) {
+    //Initialize CRC
+    fcrc=0;
+
+    //Open the output file
+    outfile = CreateFile(filename, GENERIC_WRITE, 0,NULL,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
+
+    //Set the pointer to the start of the data
+    SetFilePointer(exefile,exesize-12-datasize,NULL,FILE_BEGIN);
+
+    left = datasize;
+    rd = 0;
+    thischunk=0;
+
+    //Write data out to file
+    while ((left>0) && (thischunk==rd)) {
+      //Read up to 32768 bytes
+      if (left<BUF_SIZE)
+	thischunk=left;
+      else
+	thischunk=BUF_SIZE;
+
+      //Read data
+      ReadFile(exefile,buffer,thischunk,&rd,NULL);
+      //update the CRC
+      fcrc=CRC32(fcrc,buffer,rd);
+      left -=rd;
+      //Write data
+      WriteFile(outfile,buffer, rd, &rd,NULL);
+    }
+    //Complain if there were errors
+    if ((crc!=fcrc)||(left>0)) {
+      MessageBox(hwndParent,"Warning: error writing tacked on file!",0,MB_OK);
+    }
+  }
+
+  CloseHandle(exefile);
+  CloseHandle(outfile);
+  GlobalFree (exename);
+  GlobalFree (filename);
+  GlobalFree (buffer);
 }
