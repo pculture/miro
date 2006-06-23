@@ -17,7 +17,7 @@ def manualFeedFilter(x):
     """Returns true iff x is a feed with a manual download item"""
     x.confirmDBThread()
     for item in x.items:
-        if item.getState() == 'manualpending':
+        if item.isPendingDownload():
             return True
     return False
 

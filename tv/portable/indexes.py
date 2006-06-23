@@ -20,6 +20,8 @@ def objectsByClass(x):
     else:
         return x.__class__
 
+def itemsByState(x):
+    return x.getState()
 
 tabIDIndex = lambda x: x.id
 

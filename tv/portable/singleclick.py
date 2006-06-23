@@ -31,11 +31,6 @@ def addVideo(path):
     path = os.path.abspath(path)
     views.items.confirmDBThread()
     for i in views.items:
-        # FIXME: we should handle case-insensitivity on OS X and 8.3
-        # pathnames on windows.  This probably means adding a
-        # platformutils.samefile function, which I don't want to do for
-        # the 0.8.4 release.  (BTW: This will be supor easy on linux and
-        # OS X: from os.path import samefile).
         itemFilename = i.getFilename()
         if (itemFilename != '' and 
                 platformutils.samefile(itemFilename, path)):
@@ -54,7 +49,7 @@ def addTorrent(path, torrentInfohash):
                 i.downloader.status.get('infohash') == torrentInfohash):
             print ("Not downloading %s, it's already a "
                     "download for %s" % (path, i))
-            if i.getState() in ('paused', 'stopped'):
+            if i.downloader.getState() in ('paused', 'stopped'):
                 i.download()
             return
     newItem = item.Item(manualFeed.getID(), item.getEntryForFile(path))

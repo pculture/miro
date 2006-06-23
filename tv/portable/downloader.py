@@ -114,15 +114,14 @@ class RemoteDownloader(DDBObject):
         self = _getDownloader (dlid=data['dlid'])
         # print data
         if self is not None:
-            oldState = self.getState()
             if self.status == data:
                 return
+            wasFinished = self.isFinished()
             self.status = data
             # Store the time the download finished
-            if ((self.getState() in ['finished','uploading']) and
-                (oldState not in ['finished', 'uploading'])):
+            if self.isFinished and not wasFinished:
                 for item in self.itemList:
-                    item.setDownloadedTime()
+                    item.onDownloadFinished()
             self.signalChange()
 
     ##
@@ -282,6 +281,9 @@ URL was %s""" % self.url
     def getState(self):
         self.confirmDBThread()
         return self.status.get('state', 'downloading')
+
+    def isFinished(self):
+        return self.getState() in ('finished', 'uploading')
 
     ##
     # Returns the total size of the download in bytes

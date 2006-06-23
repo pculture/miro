@@ -1432,12 +1432,7 @@ class PlaylistItemFromItem (frontend.PlaylistItem):
         return getattr(self.item, attr)
 
 def mappableToPlaylistItem(obj):
-    if not isinstance(obj, item.Item):
-        return False
-
-    return (obj.getState() == "finished" or obj.getState() == "uploading" or
-
-            obj.getState() == "watched" or obj.getState() == "saved")
+    return (isinstance(obj, item.Item) and obj.isDownloaded())
 
 def mapToPlaylistItem(obj):
     return PlaylistItemFromItem(obj)

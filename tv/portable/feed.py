@@ -220,15 +220,6 @@ class FeedImpl:
         except:
             print "%s has no ufeed" % self
 
-    # Returns true if x is a newly available item, otherwise returns false
-    def isAvailable(self, x):
-        return x.creationTime > self.lastViewed and (x.getState() == 'stopped' or x.getState() == 'downloading')
-
-    # Returns true if x is an unwatched item, otherwise returns false
-    def isUnwatched(self, x):
-        state = x.getState()
-        return state == 'finished' or state == 'uploading'
-
     # Updates the state of unwatched and available items to meet
     # Returns true iff signalChange() is called
     def updateUandA(self, signal = True):
@@ -237,9 +228,10 @@ class FeedImpl:
         newA = 0
 
         for item in self.items:
-            if self.isAvailable(item):
+            state = item.getState()
+            if state == 'new':
                 newA += 1
-            if self.isUnwatched(item):
+            elif state == 'newly-downloaded':
                 newU += 1
         if newU != self.unwatched or newA != self.available:
             self.unwatched = newU
@@ -283,8 +275,7 @@ class FeedImpl:
     ##
     # Sets the last time the feed was viewed to now
     def markAsViewed(self):
-        # FIXME uncomment to make "new" state last 6 hours. See #655, #733
-        self.lastViewed = datetime.now() #- timedelta(hours=6)
+        self.lastViewed = datetime.now() 
         self.updateUandA(False)
         self.ufeed.signalChange()
 
@@ -315,6 +306,8 @@ class FeedImpl:
     # maxNew, fallbehind, and getEverything
     def getNextAutoDownload(self, dontUse = []):
         self.ufeed.confirmDBThread()
+        if not self.ufeed.isAutoDownloadable():
+            return None
         next = None
 
         #The number of items downloading from this feed
@@ -327,15 +320,16 @@ class FeedImpl:
         #Find the next item we should get
 #        self.items.sort(sortFunc)
         for item in self.items:
-            if (item.getState() == "autopending") and not item in dontUse:
+            state = item.getState()
+            if item.isEligibleForAutoDownload() and not item in dontUse:
                 eligibile += 1
                 if next == None:
                     next = item
                 elif item.getPubDateParsed() > next.getPubDateParsed():
                     next = item
-            if item.getState() == "downloading":
+            elif state == "downloading":
                 dling += 1
-            if item.getState() == "finished" or item.getState() == "uploading" and not item.getSeen():
+            elif state == 'newly-downloaded':
                 newitems += 1
 
         if self.maxNew >= 0 and newitems >= self.maxNew:
@@ -355,7 +349,7 @@ class FeedImpl:
         next = None
 #        self.items.sort(sortFunc)
         for item in self.items:
-            if item.getState() == "manualpending":
+            if item.isPendingDownload():
                 if next is None:
                     next = item
                 elif item.getPubDateParsed() < next.getPubDateParsed():
@@ -366,21 +360,10 @@ class FeedImpl:
     ##
     # Returns marks expired items as expired
     def expireItems(self):
-        expireTime = datetime.max - datetime.min
-        if self.expire == "feed":
-            expireTime = self.expireTime
-        elif self.expire == "system":
-            expireTime = timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS))
-            if expireTime <= timedelta(0):
-                return
-        elif self.expire == "never":
-            return
         for item in self.items:
-            local = item.getFilename() is not ""
-            expiring = datetime.now() - item.getDownloadedTime() > expireTime
-            stateOk = item.getState() in ('finished', 'stopped', 'watched')
-            keepIt = item.getKeep()
-            if local and expiring and stateOk and not keepIt:
+            expireTime = item.getExpirationTime()
+            if (item.getState() == 'expiring' and expireTime is not None and 
+                    expireTime >= datetime.now()):
                 item.expire()
 
     ##
@@ -417,8 +400,8 @@ class FeedImpl:
 
         if self.expire == "never":
             for item in self.items:
-                if item.getState() in ['finished','uploading','watched']:
-                    item.setKeep(True)
+                if item.isDownloaded():
+                    item.save()
 
         self.ufeed.signalChange()
 
@@ -574,7 +557,7 @@ class FeedImpl:
         count = 0
         for item in self.items:
             try:
-                if item.getState() == 'finished' and not item.getSeen():
+                if item.getState() == 'newly-downloaded':
                     count += 1
             except:
                 pass
@@ -1469,7 +1452,7 @@ class SearchFeedImpl (RSSFeedImpl):
     def preserveDownloads(self, downloadsFeed):
         self.ufeed.confirmDBThread()
         for item in self.items:
-            if item.getState() != 'stopped':
+            if item.getState() not in ('new', 'not-downloaded'):
                 item.setFeed(downloadsFeed.id)
         
     def lookup(self, engine, query):

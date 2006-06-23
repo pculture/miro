@@ -13,9 +13,6 @@ def unviewedItems(obj):
 def viewedItems(obj):
     return obj.getViewed()
 
-def undownloadedItems(obj):
-    return obj.getState() in ['stopped', 'downloading']
-
 def downloadingItems(obj):
     return obj.getState() == 'downloading'
 
@@ -26,21 +23,16 @@ def downloadingItemsExternal(obj):
     return obj.getState() == 'downloading' and obj.getFeed().url == 'dtv:manualFeed'
 
 def unwatchedItems(obj):
-    return (obj.getState() in ['finished','uploading'] or
-            obj.getState() == 'saved' and not obj.getSeen())
+    return obj.getState() == 'newly-downloaded'
 
 def expiringItems(obj):
-    return obj.getState() == 'watched'
-
-def recentItems(obj):
-    #FIXME make this look at the feed's time until expiration
-    return obj.getState() in ['finished','uploading','watched']
+    return obj.getState() == 'expiring'
 
 def oldItems(obj):
-    return obj.getState() == 'saved' and obj.getSeen()
+    return obj.getState() == 'saved'
 
 def watchableItems(obj):
-    return obj.getState() in ['finished', 'uploading', 'watched', 'saved']
+    return obj.isDownloaded()
     
 # Return True if a tab should be shown for obj in the frontend. The filter
 # used on the database to get the list of tabs.

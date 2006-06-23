@@ -30,10 +30,11 @@ def updateUandA (feed):
 
 _charset = locale.getpreferredencoding()
 
-##
-# An item corresponds to a single entry in a feed. Generally, it has
-# a single url associated with it
 class Item(DDBObject):
+    """An item corresponds to a single entry in a feed. It has a single url
+    associated with it.
+    """
+
     def __init__(self, feed_id, entry, linkNumber = 0):
         self.feed_id = feed_id
         self.seen = False
@@ -98,56 +99,49 @@ class Item(DDBObject):
         self.feed_id = feed_id
         self.signalChange()
 
-    ##
-    # Returns the number of videos associated with this item
-    def getAvailableVideos(self):
-        self.confirmDBThread()
-        return len(self.entry.enclosures)
 
     ##
     # Marks this item as expired
     def expire(self):
         self.confirmDBThread()
         self.stopDownload()
-        # FIXME: should expired items be marked as "seen?"
-        # self.markItemSeen()
         self.expired = True
         self.keep = False
         self.pendingManualDL = False
         self.signalChange()
 
-    ##
-    # Returns string with days or hours until this gets deleted
+    def getExpirationString(self):
+        """Get the expiration time a string to display to the user."""
+        expireTime = self.getExpirationTime()
+        if expireTime is None:
+            return 'never'
+        else:
+            exp = expireTime - datetime.now()
+            if exp.days > 0:
+                return "%d days" % exp.days
+            elif exp.seconds > 3600:
+                return "%d hours" % (ceil(exp.seconds/3600.0))
+            else:
+                return "%d min." % (ceil(exp.seconds/60.0))
+
     def getExpirationTime(self):
+        """Get the time when this item will expire. 
+        Returns a datetime object,  or None if it doesn't expire.
+        """
+
         self.confirmDBThread()
-        ret = "???"
+        if self.downloadedTime is None:
+            return None
         ufeed = self.getFeed()
         if ufeed.expire == 'never' or (ufeed.expire == 'system'
                 and config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
-            ret = "never"
+            return None
         else:
             if ufeed.expire == "feed":
                 expireTime = ufeed.expireTime
             elif ufeed.expire == "system":
                 expireTime = timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS))
-            
-            exp = expireTime - (datetime.now() - self.getDownloadedTime())
-            if exp.days > 0:
-                ret = "%d days" % exp.days
-            elif exp.seconds > 3600:
-                ret = "%d hours" % (ceil(exp.seconds/3600.0))
-            else:
-                ret = "%d min." % (ceil(exp.seconds/60.0))
-        return ret
-
-    def getKeep(self):
-        self.confirmDBThread()
-        return self.keep
-
-    def setKeep(self,val):
-        self.confirmDBThread()
-        self.keep = val
-        self.signalChange()
+            return self.downloadedTime + expireTime
 
     ##
     # returns true iff video has been seen
@@ -214,6 +208,20 @@ class Item(DDBObject):
             self.downloader = downloader.getDownloader(self)
         self.downloader.start()
         self.signalChange()
+        
+    def isPendingDownload(self):
+        self.confirmDBThread()
+        return self.pendingManualDL
+
+    def isEligibleForAutoDownload(self):
+        self.confirmDBThread()
+        if self.getState() not in ('new', 'not-downloaded'):
+            return False
+        ufeed = self.getFeed()
+        if ufeed.getEverything:
+            return True
+        pubDate = self.getPubDateParsed()
+        return pubDate >= ufeed.startfrom and pubDate != datetime.max
 
     ##
     # Returns a link to the thumbnail of the video
@@ -311,55 +319,37 @@ class Item(DDBObject):
             self.downloader = None
             self.signalChange()
 
-    ##
-    # returns status of the download in plain text
     def getState(self):
-        self.confirmDBThread()
-        ufeed = self.getFeed()
+        """Get the state of this item.  The state will be on of the following:
 
-        state = self.getStateNoAuto()
-        lastPubDate = self.getPubDateParsed()
-        if ((state == "stopped") and 
-            ufeed.isAutoDownloadable() and 
-            (ufeed.getEverything or 
-             (lastPubDate >= ufeed.startfrom and
-              lastPubDate != datetime.max))):
-            state = "autopending"
-            
-        return state
-
-    ##
-    # returns the state of the download, without checking automatic dl
-    # eligibility
-    def getStateNoAuto(self):
-        self.confirmDBThread()
-        if self.expired:
-            state = "expired"
-        elif self.keep:
-            state = "saved"
-        elif self.pendingManualDL:
-            state = "manualpending"
-        elif self.downloader is None:
-            state = "stopped"
-        else:
-            state = self.downloader.getState()
-        if (state == "finished" or state=="uploading") and self.seen:
-            state = "watched"
-        return state
-
-    def getDownloadState(self):
-        """Get the downloading state for this item.  
-
-        It's one of three values: not-downloaded, downloading downloaded.
+        * new -- User has never seen this item
+        * not-downloaded -- User has seen the item, but not downloaded it
+        * downloading -- Item is currently downloading
+        * newly-downloaded -- Item has been downoladed, but not played
+        * expiring -- Item has been played and is set to expire
+        * saved -- Item has been played and has been saved
+        * expired -- Item has expired.
         """
-
-        state = self.getState()
-        if state == "downloading":
-            return "downloading"
-        elif state in ("finished", "watched", "saved", "uploading"):
-            return "downloaded"
+        
+        self.confirmDBThread()
+        if self.downloader is None:
+            if not self.getViewed():
+                return 'new'
+            elif self.expired:
+                return 'expired'
+            else:
+                return 'not-downloaded'
+        elif not self.downloader.isFinished():
+            return 'downloading'
+        elif not self.seen:
+            return 'newly-downloaded'
+        elif not self.keep:
+            return 'expired'
         else:
-            return "not-downloaded"
+            return 'saved'
+
+    def isDownloaded(self):
+        return self.getState() in ("newly-downloaded", "expiring", "saved")
 
     def getFailureReason(self):
         self.confirmDBThread()
@@ -665,15 +655,14 @@ class Item(DDBObject):
         finally:
             self.signalChange()
 
-    ##
-    # marks the item as having been downloaded now
-    def setDownloadedTime(self):
+    def onDownloadFinished(self):
+        """Called when the download for this item finishes."""
+
         self.confirmDBThread()
         self.downloadedTime = datetime.now()
-
-        # Hack to immediately "save" items in feeds set to never expire
         self.keep = (self.getFeed().expire == "never")
         self.signalChange()
+
 
     ##
     # gets the time the video was downloaded
@@ -683,15 +672,6 @@ class Item(DDBObject):
             return datetime.min
         else:
             return self.downloadedTime
-
-    ##
-    # gets the time the video started downloading
-    def getDLStartTime(self):
-        self.confirmDBThread()
-        try:
-            return self.DLStartTime
-        except:
-            return None
 
     ##
     # Returns the filename of the first downloaded video or the empty string
@@ -763,15 +743,13 @@ class FileItem(Item):
 
     def getState(self):
         if self.deleted:
-            return "deleted"
+            return "expired"
         elif self.getSeen():
             return "saved"
         else:
-            return "finished"
+            return "newly-downloaded"
 
     def getViewed(self):
-        """Since the manual feed isn't a real channel, FileItems are always
-        considered to be viewed."""
         return True
 
     def expire(self):
