@@ -855,6 +855,13 @@ class IndexFilterTest(DemocracyTestCase):
         for x in range(0,50):
             database.DDBObject()
         filtered = self.everything.filterWithIndex(self.mod10,0)
+        for i in range(10):
+            obj = self.everything.getItemWithIndex(self.mod10, i)
+            self.assertEqual(self.mod10(obj), i)
+        obj = self.everything.getItemWithIndex(self.mod10, 10)
+        self.assertEqual(obj, None)
+        obj = self.everything.getItemWithIndex(self.mod10, -1, default=123123)
+        self.assertEqual(obj, 123123)
         filtered.addAddCallback(self.addCallback)
         filtered.addRemoveCallback(self.removeCallback)
         filtered.addChangeCallback(self.changeCallback)

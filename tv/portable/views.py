@@ -40,4 +40,4 @@ availableItems = items.filter(lambda x:x.getState() == 'finished' or x.getState(
 downloadingItems = items.filter(filters.downloadingItems)
 downloadingItemsExternal = items.filter(filters.downloadingItemsExternal)
 downloadingItemsNonExternal = items.filter(filters.downloadingItemsNonExternal)
-
+manualDownloads = items.filter(filters.manualDownloads)

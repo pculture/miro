@@ -862,6 +862,22 @@ class DynamicDatabase:
             views[value] = DynamicDatabase([],False, parent=self)
             return views[value]
 
+    def getItemWithIndex(self, indexFunc, value, default=None):
+        """Get a single item using an index.
+
+        This will return an item such that indexFunc(item) == value.  If
+        multiple objects match have the same index value, the one choosen is
+        not defined.  If no items in the db map to the value, default will be
+        returned.
+
+        If there isn't an index for indexFunc, a KeyError will be raised.
+        """
+
+        views = self.indexes[indexFunc]
+        try:
+            return views[value].objects[0][1]
+        except (KeyError, IndexError):
+            return default
 
 ##
 # Global default database

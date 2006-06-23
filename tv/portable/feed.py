@@ -1398,16 +1398,13 @@ class DirectoryFeedImpl(FeedImpl):
         else:
             self.updating = True
 
-        #Files known about by real feeds
+        # Files known about by real feeds
         knownFiles = set()
         for item in views.items:
             if not item.feed_id is self.ufeed.id:
-                for f in item.getFilenames():
-                    knownFiles.add(os.path.normcase(f))
+                knownFiles.add(os.path.normcase(item.getFilename()))
 
-        #Remove items that are in feeds, but we have in our list
-        # NOTE: we rely on the fact that all our items are single files, so we
-        # only need to use getFilename(), instead of getFilenames().
+        # Remove items that are in feeds, but we have in our list
         for item in self.items:
             if item.getFilename() in knownFiles:
                 item.remove()

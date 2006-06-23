@@ -1,6 +1,5 @@
 from download_utils import parseURL
 import dialogs
-import downloader
 import eventloop
 import views
 
@@ -12,6 +11,7 @@ def findHTTPAuth(callback, host, path):
     be called with a string to use for the Authorization header or None if we
     can't find anything in the DB.
     """
+    import downloader
 
     auth = downloader.findHTTPAuth(host, path)
     if auth is not None:

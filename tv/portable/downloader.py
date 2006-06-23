@@ -58,25 +58,8 @@ class HTTPAuthPassword(DDBObject):
         return self.authScheme
 
 
-def _getDownloader (dlid = None, url = None):
-    if dlid is not None:
-        view = views.remoteDownloads.filterWithIndex(
-            indexes.downloadsByDLID,dlid)
-        try:
-            view.resetCursor()
-            dler = view.getNext()
-        finally:   
-            views.remoteDownloads.removeView(view)
-        return dler
-    if url is not None:
-        view = views.remoteDownloads.filterWithIndex(
-            indexes.downloadsByURL,url)
-        try:
-            view.resetCursor()
-            dler = view.getNext()
-        finally:   
-            views.remoteDownloads.removeView(view)
-        return dler
+def _getDownloader (dlid):
+    return views.remoteDownloads.getItemWithIndex(indexes.downloadsByDLID, dlid)
 
 def generateDownloadID():
     dlid = "download%08d" % random.randint(0,99999999)
@@ -261,7 +244,8 @@ URL was %s""" % self.url
     # In case multiple downloaders are getting the same file, we can support
     # multiple items
     def addItem(self,item):
-        self.itemList.append(item)
+        if item not in self.itemList:
+            self.itemList.append(item)
 
     def removeItem(self, item):
         self.itemList.remove(item)
@@ -384,26 +368,25 @@ def startupDownloader():
 def shutdownDownloader(callback = None):
     RemoteDownloader.dldaemon.shutdownDownloaderDaemon(callback=callback)
 
-class DownloaderFactory:
-    def __init__(self,item):
-        self.item = item
-
-    def getDownloader(self, url, create=True):
-        downloader = _getDownloader (url=url)
-        if downloader:
-            return downloader
-        if not create:
-            return None
-        if url.startswith('file://'):
-            scheme, host, port, path = parseURL(url)
-            if re.match(r'/[a-zA-Z]:', path):
-                path = path[1:]
-            try:
-                getTorrentInfoHash(path)
-            except ValueError:
-                raise ValueError("Don't know how to handle %s" % url)
-            else:
-                return RemoteDownloader(url, self.item,
-                        'application/x-bittorrent')
+def getDownloader(item, create=True):
+    url = item.getURL()
+    downloader = views.remoteDownloads.getItemWithIndex(indexes.downloadsByURL, 
+            url)
+    if downloader:
+        downloader.addItem(item)
+        return downloader
+    if not create:
+        return None
+    if url.startswith('file://'):
+        scheme, host, port, path = parseURL(url)
+        if re.match(r'/[a-zA-Z]:', path): 
+            # fix windows pathnames (/C:/blah/blah/blah)
+            path = path[1:]
+        try:
+            getTorrentInfoHash(path)
+        except ValueError:
+            raise ValueError("Don't know how to handle %s" % url)
         else:
-            return RemoteDownloader(url, self.item)
+            return RemoteDownloader(url, item, 'application/x-bittorrent')
+    else:
+        return RemoteDownloader(url, item)

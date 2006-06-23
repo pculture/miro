@@ -214,7 +214,6 @@ class ItemSchema(DDBObjectSchema):
         ('feed_id', SchemaInt()),
         ('seen', SchemaBool()),
         ('autoDownloaded', SchemaBool()),
-        ('lastDownloadFailed', SchemaBool()),
         ('pendingManualDL', SchemaBool()),
         ('pendingReason', SchemaString()),
         ('entry', SchemaSimpleContainer()),

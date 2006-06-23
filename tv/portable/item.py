@@ -12,12 +12,13 @@ import traceback
 from feedparser import FeedParserDict
 
 from database import DDBObject, defaultDatabase
-from downloader import DownloaderFactory
 from iconcache import IconCache
 from templatehelper import escape
+import downloader
 import config
 import dialogs
 import eventloop
+import filters
 import prefs
 import resource
 import views
@@ -33,19 +34,15 @@ _charset = locale.getpreferredencoding()
 # An item corresponds to a single entry in a feed. Generally, it has
 # a single url associated with it
 class Item(DDBObject):
-    manualDownloads = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.getState() == "downloading" and not x.getAutoDownloaded())
-
     def __init__(self, feed_id, entry, linkNumber = 0):
         self.feed_id = feed_id
         self.seen = False
-        self.downloaders = []
+        self.downloader = None
         self.autoDownloaded = False
-        self.lastDownloadFailed = False
         self.pendingManualDL = False
         self.downloadedTime = None
         self.pendingReason = ""
         self.entry = entry
-        self.dlFactory = DownloaderFactory(self)
         self.expired = False
         self.keep = False
 
@@ -75,25 +72,21 @@ class Item(DDBObject):
     ##
     # Returns the first video enclosure in the item
     def getFirstVideoEnclosure(self):
-        first = None
         self.confirmDBThread()
-        try:
-            for enclosure in self.entry.enclosures:
-                if isVideoEnclosure(enclosure):
-                    first = enclosure
-                    break
-        except:
-            pass
-        return first
+        for enclosure in self.entry.enclosures:
+            if isVideoEnclosure(enclosure):
+                return enclosure
+        return None
 
     ##
     # Returns the URL associated with the first enclosure in the item
     def getURL(self):
         self.confirmDBThread()
-        try:
-            return self.getFirstVideoEnclosure().url
-        except:
-            return ""
+        videoEnclosure = self.getFirstVideoEnclosure()
+        if videoEnclosure is not None and 'url' in videoEnclosure:
+            return videoEnclosure['url']
+        else:
+            return None
     ##
     # Returns the feed this item came from
     def getFeed(self):
@@ -119,6 +112,8 @@ class Item(DDBObject):
         # FIXME: should expired items be marked as "seen?"
         # self.markItemSeen()
         self.expired = True
+        self.keep = False
+        self.pendingManualDL = False
         self.signalChange()
 
     ##
@@ -168,12 +163,6 @@ class Item(DDBObject):
         self.seen = True
         self.signalChange()
 
-    ##
-    # Returns a list of downloaders associated with this object
-    def getDownloaders(self):
-        self.confirmDBThread()
-        return self.downloaders
-
     def getRSSID(self):
         self.confirmDBThread()
         return self.entry["id"]
@@ -206,12 +195,10 @@ class Item(DDBObject):
     # Starts downloading the item
     def actualDownload(self,autodl=False):
         self.confirmDBThread()
+        manualDownloadCount = views.manualDownloads.len()
 
-        # FIXME: For locking reasons, downloaders don't always
-        #        call signalChange(), so we have to recompute this filter
-        # defaultDatabase.recomputeFilter(self.manualDownloads)
         if ((not autodl) and 
-            self.manualDownloads.len() >= config.get(prefs.MAX_MANUAL_DOWNLOADS)):
+                manualDownloadCount >= config.get(prefs.MAX_MANUAL_DOWNLOADS)):
             self.pendingManualDL = True
             self.pendingReason = "Too many manual downloads"
             self.expired = False
@@ -222,35 +209,33 @@ class Item(DDBObject):
             self.expired = False
             self.keep = False
             self.pendingManualDL = False
-            self.lastDownloadFailed = False
 
-        try:
-            enclosures = self.entry["enclosures"]
-        except:
-            enclosures = []
-
-        for enclosure in enclosures:
-            dler = self.dlFactory.getDownloader(enclosure["url"])
-            if dler not in self.downloaders:
-                self.downloaders.append(dler)
-            dler.start()
-
+        if self.downloader is None:
+            self.downloader = downloader.getDownloader(self)
+        self.downloader.start()
         self.signalChange()
-
 
     ##
     # Returns a link to the thumbnail of the video
     def getThumbnailURL(self):
         self.confirmDBThread()
-        if self.entry.has_key('enclosures'):
-            for enc in self.entry['enclosures']:
-                try:
-                    return enc["thumbnail"]["url"]
-                except:
-                    pass
+        # Try to get the thumbnail specific to the video enclosure
+        videoEnclosure = self.getFirstVideoEnclosure()
+        if videoEnclosure is not None:
+            try:
+                return videoEnclosure["thumbnail"]["url"]
+            except:
+                pass 
+        # Try to get any enclosure thumbnail
+        for enclosure in self.entry.enclosures:
+            try:
+                return enclosure["thumbnail"]["url"]
+            except KeyError:
+                pass
+        # Try to get the thumbnail for our entry
         try:
             return self.entry["thumbnail"]["url"]
-        except:
+        except KeyError:
             return None
 
     def getThumbnail (self):
@@ -291,8 +276,8 @@ class Item(DDBObject):
         totally reliable).
         """
 
-        if len(self.downloaders) > 0:
-            return self.downloaders[0].getType() == 'bittorrent'
+        if self.downloader is not None:
+            return self.downloader.getType() == 'bittorrent'
         else:
             return self.getURL().endswith('.torrent')
 
@@ -321,13 +306,10 @@ class Item(DDBObject):
     # Stops downloading the item
     def stopDownload(self):
         self.confirmDBThread()
-        for dler in self.downloaders:
-            dler.removeItem(self)
-        self.downloaders = []
-        self.keep = False
-        self.pendingManualDL = False
-        self.signalChange()
-
+        if self.downloader is not None:
+            self.downloader.removeItem(self)
+            self.downloader = None
+            self.signalChange()
 
     ##
     # returns status of the download in plain text
@@ -345,7 +327,6 @@ class Item(DDBObject):
             state = "autopending"
             
         return state
-    
 
     ##
     # returns the state of the download, without checking automatic dl
@@ -358,19 +339,10 @@ class Item(DDBObject):
             state = "saved"
         elif self.pendingManualDL:
             state = "manualpending"
-        elif len(self.downloaders) == 0:
-            if self.lastDownloadFailed:
-                state = "failed"
-            else:
-                state = "stopped"
+        elif self.downloader is None:
+            state = "stopped"
         else:
-            state = "finished"
-            for dler in self.downloaders:
-                newState = dler.getState()
-                if newState != "finished":
-                    state = newState
-                if state == "failed":
-                    break
+            state = self.downloader.getState()
         if (state == "finished" or state=="uploading") and self.seen:
             state = "watched"
         return state
@@ -391,18 +363,15 @@ class Item(DDBObject):
 
     def getFailureReason(self):
         self.confirmDBThread()
-        if self.lastDownloadFailed:
-            return "Could not connect to server"
+        if self.downloader is not None:
+            return self.downloader.getReasonFailed()
         else:
-            for dler in self.downloaders:
-                if dler.getState() == "failed":
-                    return dler.getReasonFailed()
-        return ""
+            return ""
     
     ##
-    # Returns the size of the item to be displayed. If the item has a corresponding
-    # downloaded enclosure we use the pysical size of the file, otherwise we use
-    # the RSS enclosure tag values.
+    # Returns the size of the item to be displayed. If the item has a
+    # corresponding downloaded enclosure we use the pysical size of the file,
+    # otherwise we use the RSS enclosure tag values.
     def getSizeForDisplay(self):
         fname = self.getFilename()
         if fname != "" and os.path.exists(fname):
@@ -416,36 +385,18 @@ class Item(DDBObject):
     def getEnclosuresSize(self):
         size = 0
         try:
-            if self.entry.has_key('enclosures'):
-                enclosures = self.entry['enclosures']
-                for enclosure in enclosures:
-                    try:
-                        size += int(enclosure['length'])
-                    except:
-                        pass
+            size = int(self.getFirstVideoEnclosure()['length'])
         except:
             pass
         return self.sizeFormattedForDisplay(size)
 
     ##
     # returns status of the download in plain text
-    def getTotalSize(self):
-        size = 0
-        for dler in self.downloaders:
-            try:
-                size += dler.getTotalSize()
-            except:
-                pass
-        if size == 0:
-            return ""
-        return self.sizeFormattedForDisplay(size)
-
-    ##
-    # returns status of the download in plain text
     def getCurrentSize(self):
-        size = 0
-        for dler in self.downloaders:
-            size += dler.getCurrentSize()
+        if self.downloader is not None:
+            size = self.downloader.getCurrentSize()
+        else:
+            size = 0
         if size == 0:
             return ""
         return self.sizeFormattedForDisplay(size)
@@ -472,17 +423,15 @@ class Item(DDBObject):
     def downloadProgress(self):
         progress = 0
         self.confirmDBThread()
-        size = 0
-        dled = 0
-        for dler in self.downloaders:
-            try:
-                size += dler.getTotalSize()
-                dled += dler.getCurrentSize()
-            except:
-                pass
-        if size > 0:
-            progress = (100.0*dled) / size
-        return progress
+        if self.downloader is None:
+            return 0
+        else:
+            size = self.downloader.getTotalSize()
+            dled = self.downloader.getCurrentSize()
+            if size == 0:
+                return 0
+            else:
+                return (100.0*dled) / size
 
     ##
     # Returns the width of the progress bar corresponding to the current
@@ -505,9 +454,10 @@ class Item(DDBObject):
     ##
     # Returns string with estimate time until download completes
     def downloadETA(self):
-        secs = 0
-        for dler in self.downloaders:
-            secs += dler.getETA()
+        if self.downloader is not None:
+            secs = self.downloader.getETA()
+        else:
+            secs = 0
         if secs == 0:
             return 'starting up...'
         elif (secs < 120):
@@ -522,16 +472,15 @@ class Item(DDBObject):
     def downloadRate(self):
         rate = 0
         unit = "k/s"
-        if len(self.downloaders) > 0:
-            for dler in self.downloaders:
-                rate = dler.getRate()
-            rate /= len(self.downloaders)
-
+        if self.downloader is not None:
+            rate = self.downloader.getRate()
+        else:
+            rate = 0
         rate /= 1024
-        if rate > 1000:
+        if rate > 1024:
             rate /= 1024
             unit = "m/s"
-        if rate > 1000:
+        if rate > 1024:
             rate /= 1024
             unit = "g/s"
             
@@ -750,42 +699,30 @@ class Item(DDBObject):
     def getFilename(self):
         self.confirmDBThread()
         try:
-            return self.downloaders[0].getFilename()
+            return self.downloader.getFilename()
         except:
             return ""
-
-    ##
-    # Returns a list with the filenames of all of the videos in the item
-    def getFilenames(self):
-        ret = []
-        self.confirmDBThread()
-        try:
-            for dl in self.downloaders:
-                ret.append(dl.getFilename())
-        except:
-            pass
-        return ret
 
     def getRSSEntry(self):
         self.confirmDBThread()
         return self.entry
 
     def remove(self):
-        for dler in self.downloaders:
-            dler.removeItem(self)
+        if self.downloader is not None:
+            self.downloader.remove()
+            self.downloader = None
         DDBObject.remove(self)
 
-    def reconnectDownloaders(self):
-        changed = False
-        for enclosure in self.entry["enclosures"]:
-            url = enclosure["url"]
-            downloader = self.dlFactory.getDownloader(url, create=False)
-            if downloader:
-                self.downloaders.append(downloader)
-                downloader.addItem(self)
-                changed = True
-        if changed:
-            self.signalChange(needsSave=False)
+    def reconnectDownloader(self):
+        """This is called after we restore the database.  Since we don't store
+        references between objects, we need a way to reconnect downloaders to
+        the items after the restore.
+        """
+
+        if self.downloader is None:
+            self.downloader = downloader.getDownloader(self, create=False)
+            if self.downloader is not None:
+                self.signalChange(needsSave=False)
         else:
             # Do this here instead of onRestore in case the feed
             # hasn't been loaded yet.  signalChange calls this
@@ -796,20 +733,19 @@ class Item(DDBObject):
     ##
     # Called by pickle during serialization
     def onRestore(self):
-        self.dlFactory = DownloaderFactory(self)
         if (self.iconCache == None):
             self.iconCache = IconCache (self)
         else:
             self.iconCache.dbItem = self
             self.iconCache.requestUpdate()
-        self.downloaders = []
+        self.downloader = None
 
     def __str__(self):
         return "Item - %s" % self.getTitle()
 
 def reconnectDownloaders():
     for item in views.items:
-        item.reconnectDownloaders()
+        item.reconnectDownloader()
 
 def getEntryForFile(filename):
     return FeedParserDict({'title':os.path.basename(filename),
@@ -889,13 +825,6 @@ class FileItem(Item):
                     self.filename = newFilename
         finally:
              self.signalChange()
-
-    def getFilenames(self):
-        try:
-            return [self.filename]
-        except:
-            return []
-
 
 def isVideoEnclosure(enclosure):
     """

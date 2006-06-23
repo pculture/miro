@@ -1,5 +1,6 @@
 from BitTornado.clock import clock
 
+import filters
 import views
 import config
 import prefs
@@ -7,19 +8,6 @@ import eventloop
 import httpclient
 
 # filter functions we use to create views.
-
-def isAutoDownloader(x):
-    """Returns true iff x is an autodownloader"""
-    ret = False
-    if x.getAutoDownloaded() and x.getState() == 'downloading':
-        ret = True
-    return ret
-
-def isManualDownloader(x):
-    """Returns true iff x is a manual downloader"""
-    if not x.getAutoDownloaded() and x.getState() == 'downloading':
-        return True
-    return False
 
 def eligibileFeedFilter(x):
     """Returns true iff x is a feed and is automatically downloadable"""
@@ -35,9 +23,8 @@ def manualFeedFilter(x):
 
 def isBitTorrentDownloader(item):
     """Returns true iff x is an item with a bit torrent download """
-    downloaders = item.getDownloaders()
-    return (len(downloaders) > 0 and 
-            downloaders[0].getType() == 'bittorrent' and 
+    return (item.downloader is not None and 
+            item.downloader.getType() == 'bittorrent' and 
             item.getState() == 'downloading')
 
 
@@ -153,11 +140,11 @@ class AutoDownloader:
 
     def spawnManualDownloads(self):
         maxDownloads = config.get(prefs.MAX_MANUAL_DOWNLOADS)
-        if self.manualDownloaders.len() >= maxDownloads:
+        if self.manualDownloads.len() >= maxDownloads:
             return
         candidates = sortFeeds(self.manualFeeds)
         for feed in candidates:
-            if self.manualDownloaders.len() < maxDownloads:
+            if self.manualDownloads.len() < maxDownloads:
                 feed.downloadNextManual()
                 downloadTimes[feed] = clock()
             else:
@@ -170,7 +157,7 @@ class AutoDownloader:
         AutoDownloadSpawner(self.spawnAutoDownloadsDone,
                 config.get(prefs.DOWNLOADS_TARGET),
                 config.get(prefs.TORRENT_DOWNLOADS_TARGET),
-                self.autoDownloaders.len(),
+                self.autoDownloads.len(),
                 self.btAutoDownloaders.len(),
                 sortFeeds(self.autoFeeds))
 
@@ -180,7 +167,7 @@ class AutoDownloader:
     def __init__(self):
         self.autoFeeds = views.feeds.filter(eligibileFeedFilter)
         self.manualFeeds = views.feeds.filter(manualFeedFilter)
-        self.autoDownloaders = views.items.filter(isAutoDownloader)
+        self.autoDownloads = views.items.filter(filters.autoDownloads)
         self.btAutoDownloaders = views.items.filter(isBitTorrentDownloader)
-        self.manualDownloaders = views.items.filter(isManualDownloader)
+        self.manualDownloads = views.items.filter(filters.manualDownloads)
         eventloop.addTimeout(10, self.spawnDownloads, "Auto downloader")

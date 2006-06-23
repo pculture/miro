@@ -47,3 +47,10 @@ def watchableItems(obj):
 def mappableToTab(obj):
     return isinstance(obj, tabs.StaticTab) or (isinstance(obj, feed.Feed) and
                                                obj.isVisible())
+
+def autoDownloads(item):
+    return item.getAutoDownloaded() and item.getState() == 'downloading'
+
+def manualDownloads(item):
+    return not item.getAutoDownloaded() and item.getState() == 'downloading'
+
