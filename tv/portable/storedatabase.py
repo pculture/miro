@@ -594,7 +594,13 @@ class LiveStorage:
     def runUpdate(self):
         self.txn = self.dbenv.txn_begin()
         for object in self.toRemove:
-            self.remove (object)
+            # If an object was created and removed between saves, it
+            # won't be in the database to be removed, so catch the
+            # exception
+            try:
+                self.remove (object)
+            except bsddb.db.DBNotFoundError:
+                pass
         for object in self.toUpdate:
             self.update (object)
         self.txn.commit()
@@ -609,10 +615,6 @@ class LiveStorage:
             return
         if not self.txn:
             self.toUpdate.add (object)
-#            try:
-#                self.toRemove.remove (object)
-#            except:
-#                pass
             if self.dc is None:
                 self.dc = eventloop.addTimeout(self.TRANSACTION_TIMEOUT, self.runUpdate, self.TRANSACTION_NAME)
         else:
