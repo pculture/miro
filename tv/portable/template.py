@@ -75,7 +75,7 @@ class TrackedView:
         self.toAddSet = set()
         self.toChange = {}
         self.toRemove = {}
-        self.dc = None
+        self.idle_queued = False
 
     #
     # This is called after the HTML has been rendered to fill in the
@@ -122,11 +122,16 @@ class TrackedView:
         self.toAddSet = set()
         self.toChange = {}
         self.toRemove = {}
-        self.dc = None
+        self.idle_queued = False
 
     def addCallback(self):
-        if self.dc is None:
-            eventloop.addTimeout(1, self.callback, "Update UI")
+        if not self.idle_queued:
+            import frontend
+            try:
+                frontend.inMainThread(lambda:eventloop.addIdle(self.callback, "Update UI"))
+            except:
+                eventloop.addIdle(self.callback, "Update UI")
+            self.idle_queued = True
 
     def onChange(self,obj,id):
         if id in self.toAddSet:
@@ -198,6 +203,7 @@ class UpdateRegion:
         self.parent = parent
         self.name = name
         self.tid = generateId()
+        self.idle_queued = False
 
     #
     # This is called after the HTML has been rendered to fill in the
@@ -209,7 +215,6 @@ class UpdateRegion:
         self.view.addChangeCallback(self.onChange)
         self.view.addAddCallback(self.onChange)
         self.view.addRemoveCallback(self.onChange)
-        self.dc = None
 
 
     def currentXML(self):
@@ -227,14 +232,19 @@ class UpdateRegion:
             return ret
 
     def onChange(self,obj=None,id=None):
-        if self.dc is None:
-            eventloop.addTimeout(1, self.doChange, "Update UI")
+        if not self.idle_queued:
+            import frontend
+            try:
+                frontend.inMainThread(lambda:eventloop.addIdle(self.doChange, "Update UI"))
+            except:
+                eventloop.addIdle(self.doChange, "Update UI")
+            self.idle_queued = True
 
     def doChange(self):
         xmlString = self.currentXML()
         if self.parent.domHandler:
             self.parent.domHandler.changeItem(self.tid, xmlString)
-        self.dc = None
+        self.idle_queued = False
 
 # Object representing a set of registrations for Javascript callbacks when
 # the contents of some set of database views change. One of these Handles

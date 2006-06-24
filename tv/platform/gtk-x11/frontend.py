@@ -85,5 +85,13 @@ if hasGTK:
     def quit():
         gtk.main_quit()
 
+    @gtkAsyncMethod
+    def inMainThread(function, args=None, kwargs=None):
+        if args is None:
+            args = ()
+        if kwargs is None:
+            kwargs = {}
+        function(*args, **kwargs)
+
 ###############################################################################
 ###############################################################################
