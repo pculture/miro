@@ -615,12 +615,12 @@ class LiveStorage:
 #                pass
             if self.dc is None:
                 self.dc = eventloop.addTimeout(self.TRANSACTION_TIMEOUT, self.runUpdate, self.TRANSACTION_NAME)
-            return
-        savable = objectToSavable (object)
-        if savable:
-            key = str(object.id)
-            data = cPickle.dumps(savable)
-            self.db.put (key, data, txn=self.txn)
+        else:
+            savable = objectToSavable (object)
+            if savable:
+                key = str(object.id)
+                data = cPickle.dumps(savable)
+                self.db.put (key, data, txn=self.txn)
 
     def remove (self, object):
         if self.closed:
@@ -633,8 +633,8 @@ class LiveStorage:
                 pass
             if self.dc is None:
                 self.dc = eventloop.addTimeout(self.TRANSACTION_TIMEOUT, self.runUpdate, self.TRANSACTION_NAME)
-            return
-        self.db.delete (str(object.id), txn=self.txn)
+        else:
+            self.db.delete (str(object.id), txn=self.txn)
 
     def checkpoint (self):
         if self.closed:
