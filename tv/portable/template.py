@@ -3,6 +3,7 @@
 # Contains runtime template code
 
 import os
+import eventloop
 from templatehelper import quoteattr, escape, toUni, attrPattern, rawAttrPattern, resourcePattern, generateId
 from xhtmltools import urlencode
 
@@ -70,6 +71,11 @@ class TrackedView:
         self.templateFunc = templateFunc
         self.parent = parent
         self.name = name
+        self.toAdd = []
+        self.toAddSet = set()
+        self.toChange = {}
+        self.toRemove = {}
+        self.dc = None
 
     #
     # This is called after the HTML has been rendered to fill in the
@@ -105,13 +111,58 @@ class TrackedView:
                     pass
             return ret
 
+    def callback (self):
+        for id, obj in self.toAdd:
+            self.doAdd(obj, id)
+        for id in self.toChange:
+            self.doChange(self.toChange[id], id)
+        for id in self.toRemove:
+            self.doRemove(self.toRemove[id], id)
+        self.toAdd = []
+        self.toAddSet = set()
+        self.toChange = {}
+        self.toRemove = {}
+        self.dc = None
+
+    def addCallback(self):
+        if self.dc is None:
+            eventloop.addTimeout(1, self.callback, "Update UI")
+
     def onChange(self,obj,id):
+        if id in self.toAddSet:
+            for i in xrange (len(self.toAdd)):
+                if self.toAdd[i][0] == id:
+                    self.toAdd[i][1] = obj
+                    return
+        self.toChange[id] = obj
+        self.addCallback()
+
+    def onAdd(self, obj, id):
+        self.toAdd.append ([id, obj])
+        self.toAddSet.add (id)
+        if id in self.toRemove:
+            del self.toRemove[id]
+        self.addCallback()
+
+    def onRemove(self, obj, id):
+        if id in self.toAddSet:
+            for i in xrange (len(self.toAdd)):
+                if self.toAdd[i][0] == id:
+                    del self.toAdd[i]
+                    break
+            self.toAddSet.remove (id)
+        if id in self.toChange:
+            del self.toChange[id]
+        self.toRemove[id] = obj
+        self.addCallback()
+
+    def doChange(self,obj,id):
         tid = obj.tid
         xmlString = self.currentXML(obj)
         if self.parent.domHandler:
             self.parent.domHandler.changeItem(tid, xmlString)
 
-    def onAdd(self, obj, id):
+    def doAdd(self, obj, id):
         if self.parent.domHandler:
             next = self.view.getNextID(id) 
             if next == None:
@@ -124,7 +175,7 @@ class TrackedView:
             else:
                 self.parent.domHandler.addItemBefore(self.currentXML(obj), self.view.getObjectByID(next).tid)
 
-    def onRemove(self, obj, id):
+    def doRemove(self, obj, id):
         if self.parent.domHandler:
             self.parent.domHandler.removeItem(obj.tid)
 
@@ -158,6 +209,7 @@ class UpdateRegion:
         self.view.addChangeCallback(self.onChange)
         self.view.addAddCallback(self.onChange)
         self.view.addRemoveCallback(self.onChange)
+        self.dc = None
 
 
     def currentXML(self):
@@ -175,9 +227,14 @@ class UpdateRegion:
             return ret
 
     def onChange(self,obj=None,id=None):
+        if self.dc is None:
+            eventloop.addTimeout(1, self.doChange, "Update UI")
+
+    def doChange(self):
         xmlString = self.currentXML()
         if self.parent.domHandler:
             self.parent.domHandler.changeItem(self.tid, xmlString)
+        self.dc = None
 
 # Object representing a set of registrations for Javascript callbacks when
 # the contents of some set of database views change. One of these Handles
