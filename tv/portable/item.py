@@ -87,7 +87,7 @@ class Item(DDBObject):
         if videoEnclosure is not None and 'url' in videoEnclosure:
             return videoEnclosure['url']
         else:
-            return None
+            return ''
     ##
     # Returns the feed this item came from
     def getFeed(self):
@@ -200,8 +200,7 @@ class Item(DDBObject):
             return
         else:
             self.setAutoDownloaded(autodl)
-            self.expired = False
-            self.keep = False
+            self.expired = self.keep = self.seen = False
             self.pendingManualDL = False
 
         if self.downloader is None:
@@ -344,7 +343,7 @@ class Item(DDBObject):
         elif not self.seen:
             return 'newly-downloaded'
         elif not self.keep:
-            return 'expired'
+            return 'expiring'
         else:
             return 'saved'
 
