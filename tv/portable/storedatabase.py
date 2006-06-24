@@ -434,61 +434,6 @@ def restoreObjectList(pathname, objectSchemas=None):
 
     return loadPickle (pathname, objectSchemas)
 
-backedUp = False
-
-def saveDatabase(db=None, pathname=None):
-    """Save a database object."""
-
-
-    if db is None:
-        db = database.defaultDatabase
-    if pathname is None:
-        pathname = config.get(prefs.DB_PATHNAME)
-
-    pathname = os.path.expanduser(pathname)
-
-    global backedUp
-    if (not backedUp):
-        try:
-            shutil.copyfile(pathname, pathname + '.bak')
-        except:
-            pass
-        else:
-            backedUp = True
-
-    tempPathname = pathname + '.temp'
-    try:
-        db.confirmDBThread()
-        objectsToSave = []
-        for o in db.objects:
-            objectsToSave.append(o[0])
-        databasesanity.checkSanity(objectsToSave)
-        saveObjectList(objectsToSave, tempPathname)
-        try:
-            os.remove(pathname)
-        except:
-            pass
-        os.rename(tempPathname, pathname)
-    except IOError, err:
-        print "IOError Saving database: ", err
-        return err
-    except:
-        print "ERROR Saving database!"
-        traceback.print_exc()
-        return "Unknown"
-    return None
-
-def saveDatabaseIdle (db=None, pathname=None):
-    err = saveDatabase(db, pathname)
-    if err:
-        print "Save failed: %s" % (err,)
-        try:
-            err = err.strerror
-        except:
-            pass
-        app.delegate.saveFailed(err)
-    eventloop.addTimeout(300, saveDatabaseIdle, "Database Save", args=(db, pathname))
-
 def getObjects(pathname, convertOnFail):
     """Restore a database object."""
 
@@ -548,8 +493,14 @@ def restoreDatabase(db=None, pathname=None, convertOnFail=True):
 VERSION_KEY = "Democracy Version"
 
 class LiveStorage:
+    TRANSACTION_TIMEOUT = 10
+    TRANSACTION_NAME = "Save database"
+
     def __init__(self):
         self.txn = None
+        self.dc = None
+        self.toUpdate = set()
+        self.toRemove = set()
         try:
             os.makedirs(config.get(prefs.BSDDB_PATHNAME))
         except:
@@ -635,22 +586,55 @@ class LiveStorage:
         self.db.sync()
 
     def close(self):
+        self.runUpdate()
         self.closed = True
         self.db.close()
         self.dbenv.close()
 
+    def runUpdate(self):
+        self.txn = self.dbenv.txn_begin()
+        for object in self.toRemove:
+            self.remove (object)
+        for object in self.toUpdate:
+            self.update (object)
+        self.txn.commit()
+        self.sync()
+        self.txn = None
+        self.dc = None
+        self.toUpdate = set()
+        self.toRemove = set()
+
     def update (self, object):
         if self.closed:
             return
-        start = clock()
+        if not self.txn:
+            self.toUpdate.add (object)
+#            try:
+#                self.toRemove.remove (object)
+#            except:
+#                pass
+            if self.dc is None:
+                self.dc = eventloop.addTimeout(self.TRANSACTION_TIMEOUT, self.runUpdate, self.TRANSACTION_NAME)
+            return
         savable = objectToSavable (object)
         if savable:
             key = str(object.id)
             data = cPickle.dumps(savable)
             self.db.put (key, data, txn=self.txn)
-        end = clock()
-        if end - start > 0.05:
-            print "Database update %s slow: %.3f" % (object, end - start)
+
+    def remove (self, object):
+        if self.closed:
+            return
+        if self.txn is None:
+            self.toRemove.add (object)
+            try:
+                self.toUpdate.remove (object)
+            except:
+                pass
+            if self.dc is None:
+                self.dc = eventloop.addTimeout(self.TRANSACTION_TIMEOUT, self.runUpdate, self.TRANSACTION_NAME)
+            return
+        self.db.delete (str(object.id), txn=self.txn)
 
     def checkpoint (self):
         if self.closed:
@@ -663,8 +647,3 @@ class LiveStorage:
             except:
                 pass
         eventloop.addTimeout(60, self.checkpoint, "Remove Unused Database Logs")
-
-    def remove (self, object):
-        if self.closed:
-            return
-        self.db.delete (str(object.id), txn=self.txn)
