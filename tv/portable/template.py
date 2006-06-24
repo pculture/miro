@@ -3,6 +3,7 @@
 # Contains runtime template code
 
 import os
+import eventloop
 from templatehelper import quoteattr, escape, toUni, attrPattern, rawAttrPattern, resourcePattern, generateId
 from xhtmltools import urlencode
 
@@ -70,6 +71,10 @@ class TrackedView:
         self.templateFunc = templateFunc
         self.parent = parent
         self.name = name
+        self.toChange = {}
+        self.toRemove = []
+        self.toAdd = []
+        self.idle_queued = False
 
     #
     # This is called after the HTML has been rendered to fill in the
@@ -105,28 +110,74 @@ class TrackedView:
                     pass
             return ret
 
+    def callback (self):
+        if self.parent.domHandler:
+            addXml = ""
+            for obj in self.toAdd:
+                addXml = addXml + self.currentXML (obj)
+            if len (addXml) > 0:
+                self.doAdd(addXml)
+            for id in self.toChange:
+                self.doChange(self.toChange[id], id)
+            for obj in self.toRemove:
+                self.parent.domHandler.removeItem(obj.tid)
+#            tids = [obj.tid for obj in self.toRemove]
+#            try:
+#                self.parent.domHandler.removeItems(tids)
+#            except:
+#                for tid in tids:
+#                    self.parent.domHandler.removeItem(tid)
+            
+        self.toChange = {}
+        self.toRemove = []
+        self.toAdd = []
+        self.idle_queued = False
+
+    def addCallback(self):
+        if not self.idle_queued:
+            import frontend
+            try:
+                frontend.inMainThread(lambda:eventloop.addIdle(self.callback, "Update UI"))
+            except:
+                eventloop.addIdle(self.callback, "Update UI")
+            self.idle_queued = True
+
     def onChange(self,obj,id):
+        self.toChange[id] = obj
+        self.addCallback()
+
+    def doChange(self,obj,id):
         tid = obj.tid
         xmlString = self.currentXML(obj)
-        if self.parent.domHandler:
-            self.parent.domHandler.changeItem(tid, xmlString)
+        self.parent.domHandler.changeItem(tid, xmlString)
 
     def onAdd(self, obj, id):
+        if len(self.toChange) > 0 or len(self.toRemove) > 0:
+            self.callback()
         if self.parent.domHandler:
             next = self.view.getNextID(id) 
             if next == None:
-                # Adding it at the end of the list. Must add it relative to
-                # the anchor.
-                if self.anchorType == 'parentNode':
-                    self.parent.domHandler.addItemAtEnd(self.currentXML(obj), self.anchorId)
-                if self.anchorType == 'nextSibling':
-                    self.parent.domHandler.addItemBefore(self.currentXML(obj), self.anchorId)
+                self.toAdd.append(obj)
+                self.addCallback()
             else:
+                self.callback()
                 self.parent.domHandler.addItemBefore(self.currentXML(obj), self.view.getObjectByID(next).tid)
 
-    def onRemove(self, obj, id):
-        if self.parent.domHandler:
-            self.parent.domHandler.removeItem(obj.tid)
+    def doAdd(self, xml):
+        # Adding it at the end of the list. Must add it relative to
+        # the anchor.
+        if self.anchorType == 'parentNode':
+            self.parent.domHandler.addItemAtEnd(xml, self.anchorId)
+        if self.anchorType == 'nextSibling':
+            self.parent.domHandler.addItemBefore(xml, self.anchorId)
+
+    def onRemove (self, obj, id):
+        if len (self.toAdd) > 0:
+            self.callback()
+        if id in self.toChange:
+            del self.toChange[id]
+        self.toRemove.append(obj)
+        self.addCallback()
 
     # Add the HTML for the item at newIndex in the view to the
     # display. It should only be called by initialFillIn()
@@ -147,6 +198,7 @@ class UpdateRegion:
         self.parent = parent
         self.name = name
         self.tid = generateId()
+        self.idle_queued = False
 
     #
     # This is called after the HTML has been rendered to fill in the
@@ -175,9 +227,19 @@ class UpdateRegion:
             return ret
 
     def onChange(self,obj=None,id=None):
+        if not self.idle_queued:
+            import frontend
+            try:
+                frontend.inMainThread(lambda:eventloop.addIdle(self.doChange, "Update UI"))
+            except:
+                eventloop.addIdle(self.doChange, "Update UI")
+            self.idle_queued = True
+
+    def doChange(self):
         xmlString = self.currentXML()
         if self.parent.domHandler:
             self.parent.domHandler.changeItem(self.tid, xmlString)
+        self.idle_queued = False
 
 # Object representing a set of registrations for Javascript callbacks when
 # the contents of some set of database views change. One of these Handles
