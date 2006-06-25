@@ -1561,8 +1561,12 @@ class HTMLDisplay (app.Display):
         return self.web.addItemBefore(xml, id)
     def removeItem(self, id):
         return self.web.removeItem(id)
+    def removeItems(self, ids):
+        return self.web.removeItems(ids)
     def changeItem(self, id, xml):
         return self.web.changeItem(id, xml)
+    def changeItems(self, pairs):
+        return self.web.changeItems(pairs)
     def hideItem(self, id):
         return self.web.hideItem(id)
     def showItem(self, id):
@@ -1845,6 +1849,15 @@ class ManagedWebView (NSObject):
     @deferUntilAfterLoad
     def removeItem(self, id):
         platformutils.warnIfNotOnMainThread('ManagedWebView.removeItem')
+        self._removeElement(id)
+
+    @deferUntilAfterLoad
+    def removeItems(self, ids):
+        platformutils.warnIfNotOnMainThread('ManagedWebView.removeItems')
+        for id in ids:
+            self._removeElement(id)
+
+    def _removeElement(self, id):
         elt = self.findElt(id)
         if not elt:
             print "warning: removeItem: missing element %s" % id
@@ -1855,6 +1868,15 @@ class ManagedWebView (NSObject):
     @deferUntilAfterLoad
     def changeItem(self, id, xml):
         platformutils.warnIfNotOnMainThread('ManagedWebView.changeItem')
+        self._changeElement(id, xml)
+
+    @deferUntilAfterLoad
+    def changeItems(self, pairs):
+        platformutils.warnIfNotOnMainThread('ManagedWebView.changeItems')
+        for id, xml in pairs:
+            self._changeElement(id, xml)
+
+    def _changeElement(self, id, xml):
         elt = self.findElt(id)
         if not elt:
             print "warning: changeItem: missing element %s" % id

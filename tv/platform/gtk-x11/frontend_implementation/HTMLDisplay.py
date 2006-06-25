@@ -199,9 +199,21 @@ class HTMLDisplayImpl:
             self.mb.removeItem(id)
     
     @deferUntilAfterLoad
+    def removeItems(self, ids):
+        if not self.widgetDestroyed:
+            for id in ids:
+                self.mb.removeItem(id)
+
+    @deferUntilAfterLoad
     def changeItem(self, id, xml):
         if not self.widgetDestroyed:
             self.mb.changeItem(id, xml)
+
+    @deferUntilAfterLoad
+    def changeItems(self, pairs):
+        if not self.widgetDestroyed:
+            for id, xml in pairs:
+                self.mb.changeItem(id, xml)
 
     @deferUntilAfterLoad
     def hideItem(self, id):

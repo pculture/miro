@@ -112,21 +112,25 @@ class TrackedView:
 
     def callback (self):
         if self.parent.domHandler:
-            addXml = ""
-            for obj in self.toAdd:
-                addXml = addXml + self.currentXML (obj)
-            if len (addXml) > 0:
+            if len (self.toAdd) > 0:
+                adds = [self.currentXML(obj) for obj in self.toAdd]
+                addXml = "".join (adds)
                 self.doAdd(addXml)
-            for id in self.toChange:
-                self.doChange(self.toChange[id], id)
-            for obj in self.toRemove:
-                self.parent.domHandler.removeItem(obj.tid)
-#            tids = [obj.tid for obj in self.toRemove]
-#            try:
-#                self.parent.domHandler.removeItems(tids)
-#            except:
-#                for tid in tids:
-#                    self.parent.domHandler.removeItem(tid)
+
+#            Equivalent code:
+
+#            changes = []
+#            for id in self.toChange:
+#                obj = self.toChange[id]
+#                changes.append( (obj.tid, self.currentXML(obj)) )
+                
+            changes = [(self.toChange[id].tid, self.currentXML(self.toChange[id])) for id in self.toChange]
+            if len(changes) > 0:
+                self.parent.domHandler.changeItems(changes)
+
+            tids = [obj.tid for obj in self.toRemove]
+            if len(tids) > 0:
+                self.parent.domHandler.removeItems(tids)
             
         self.toChange = {}
         self.toRemove = []
@@ -143,13 +147,10 @@ class TrackedView:
             self.idle_queued = True
 
     def onChange(self,obj,id):
+        if obj in self.toAdd:
+            return
         self.toChange[id] = obj
         self.addCallback()
-
-    def doChange(self,obj,id):
-        tid = obj.tid
-        xmlString = self.currentXML(obj)
-        self.parent.domHandler.changeItem(tid, xmlString)
 
     def onAdd(self, obj, id):
         if len(self.toChange) > 0 or len(self.toRemove) > 0:
