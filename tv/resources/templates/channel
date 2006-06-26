@@ -17,16 +17,19 @@ global searchFilter
 searchFilter = lambda x: filters.matchingItems(x, None)
 
 feed = app.controller.currentSelectedTab.obj
-
 allItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
 matchingItems = allItems.filter(lambda x: searchFilter(x))
 
-newUnseenItems = matchingItems.filter(filters.unviewedItems).sort(sorts.item)
-newItems = matchingItems.filter(filters.viewedItems).sort(sorts.item)
-downloadingItems = matchingItems.filter(filters.downloadingItems).sort(sorts.item)
-unwatchedItems = matchingItems.filter(filters.unwatchedItems).sort(sorts.item)
-expiringItems = matchingItems.filter(filters.expiringItems).sort(sorts.item)
-savedItems = matchingItems.filter(filters.oldItems).sort(sorts.item)
+matchingItems.createIndex(indexes.itemsByState)
+def makeStateView(state):
+    view = matchingItems.filterWithIndex(indexes.itemsByState, state)
+    return view.sort(sorts.item)
+newUnseenItems = makeStateView('new')
+newItems = makeStateView('not-downloaded')
+downloadingItems = makeStateView('downloading')
+unwatchedItems = makeStateView('newly-downloaded')
+expiringItems = makeStateView('expiring')
+savedItems = makeStateView('saved')
 
 def updateSearchString(newSearch):
     global searchFilter
@@ -80,10 +83,6 @@ i18n:translate="">Settings</span></a></p>
 
 <!-- CHANNEL CONTAINER **************************************************** -->
 <div id="main-container">
-
-
-
-
 
     <!-- DOWNLOADS ******************************************************** -->
     <span t:hideIf="downloadingItems.len()==0" t:updateHideOnView="downloadingItems">

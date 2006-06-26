@@ -37,19 +37,7 @@ manualFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:manualFeed')
 directoryFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:directoryfeed')
 
 availableItems = items.filter(lambda x:x.isDownloaded())
+downloadingItems = items.filter(filters.downloadingItems)
 downloadingItemsExternal = items.filter(filters.downloadingItemsExternal)
 downloadingItemsNonExternal = items.filter(filters.downloadingItemsNonExternal)
 manualDownloads = items.filter(filters.manualDownloads)
-
-items.createIndex(indexes.itemsByState)
-def makeItemStateView(state):
-    view = items.filterWithIndex(indexes.itemsByState, state)
-    view.createIndex(indexes.itemsByFeed)
-    return view
-newItems = makeItemStateView('new')
-notDownloadedItems = makeItemStateView('not-downloaded')
-downloadingItems = makeItemStateView('downloading')
-newlyDownloadedItems = makeItemStateView('newly-downloaded')
-expiringItems = makeItemStateView('expiring')
-savedItems = makeItemStateView('saved')
-expiredItems = makeItemStateView('expired')
