@@ -11,4 +11,4 @@ appRevision = $APP_REVISION
 appPlatform = $APP_PLATFORM
 appSerial-gtk-x11 = 2006062600
 appSerial-osx = 20060062600
-appSerial-windows-xul = 20060626000
+appSerial-windows-xul = 2006062600
