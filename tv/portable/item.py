@@ -662,6 +662,10 @@ class Item(DDBObject):
         self.keep = (self.getFeed().expire == "never")
         self.signalChange()
 
+    def save(self):
+        self.confirmDBThread()
+        self.keep = True
+        self.signalChange()
 
     ##
     # gets the time the video was downloaded

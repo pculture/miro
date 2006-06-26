@@ -1096,7 +1096,7 @@ downloaded?""")
 
     def keepItem(self, item):
         obj = db.getObjectByID(int(item))
-        obj.setKeep(True)
+        obj.save()
 
     def setRunAtStartup(self, value):
         value = (value == "1")

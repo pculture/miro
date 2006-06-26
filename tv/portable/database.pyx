@@ -96,6 +96,82 @@ def findUnpicklableParts(obj, seen = {}, depth=0):
                     out = out + findUnpicklableParts(val, seen, depth+1)
             return out
 
+class IndexMap:
+    """Maps index values to database views.
+    """
+
+    def __init__(self, indexFunc, parentDB):
+        self.indexFunc = indexFunc
+        self.parentDB = parentDB
+        self.views = {}
+        self.mappings = {}
+
+    def addObject(self, newobject, value):
+        """Add a new object to the IndexMap."""
+
+        indexValue = self.indexFunc(value)
+        self.getViewForValue(indexValue).addBeforeCursor(newobject, value)
+        self.mappings[newobject.getID()] = indexValue
+
+    def removeObject(self, obj):
+        """Remove an object from the IndexMap."""
+        indexValue = self.mappings.pop(obj.getID())
+        self.views[indexValue].removeObj(obj)
+
+    def _changeOrRecompute(self, obj, value, isChange):
+        indexValue = self.indexFunc(value)
+        oldIndexValue = self.mappings[obj.getID()]
+        if indexValue == oldIndexValue:
+            if isChange:
+                self.views[indexValue].changeObj(obj, needsSave=False)
+        else:
+            self.views[oldIndexValue].removeObj(obj)
+            self.addObject(obj, value)
+            # Calling addObject takes care of creating the new view if
+            # nessecary and updating self.mappings
+
+    def changeObject(self, obj, value):
+        """Call this method when an object has been changed.  
+
+        If the object now maps to a new view, it will be moved from the old
+        view to the new one.  Otherwise, we will call changeObj() on the old
+        view.
+        """
+        self._changeOrRecompute(obj, value, True)
+
+    def recomputeObject(self, obj, value):
+        """Recompute which view an object maps to.  This function must be
+        called when the output of an index function changes (at least
+        potentially), but the object itself hasn't changed.
+        """
+        if obj.getID() not in self.mappings:
+            self.addObject(obj, value)
+        else:
+            self._changeOrRecompute(obj, value, False)
+
+    def getViewForValue(self, indexValue):
+        """Get a view for an index value.  The view will be all objects such
+        that indexFunc(object) == indexValue.
+        """
+        try:
+            view = self.views[indexValue]
+        except KeyError:
+            view = DynamicDatabase([], False, parent=self.parentDB)
+            self.views[indexValue] = view
+        return view
+
+    def getItemForValue(self, indexValue, default):
+        """Get a single item that maps to a given value.  If no items map to
+        indexValue, default will be returned.  If multiple items map to
+        indexValue, the one returned is not defined.
+        """
+        try:
+            return self.views[indexValue].objects[0][1]
+        except (KeyError, IndexError):
+            return default
+
+    def getViews(self):
+        return self.views.values()
 
 ##
 # Implements a view of the database
@@ -455,13 +531,8 @@ class DynamicDatabase:
 #                 print
 #                 print e
 #                 print "--------------"
-        for filter in self.indexes.keys():
-            view = self.indexes[filter]
-            try:
-                view[filter(value)].addBeforeCursor(newobject,value)
-            except KeyError:
-                view[filter(value)] = DynamicDatabase([],False,parent=self)
-                view[filter(value)].addBeforeCursor(newobject,value)
+        for indexFunc, indexMap in self.indexes.iteritems():
+            indexMap.addObject(newobject, value)
 
         if self.liveStorage:
             self.liveStorage.update (newobject)
@@ -560,11 +631,8 @@ class DynamicDatabase:
             view.removeObj(tempobj)
         for [view, f] in self.subFilters:
             view.removeObj(tempobj)
-        for (key, views) in self.indexes.iteritems():
-            # FIXME: Keep an index of items to
-            # views. Eliminate this loop
-            for (value, view) in views.iteritems():
-                view.removeObj(tempobj)
+        for (indexFunc, indexMap) in self.indexes.iteritems():
+            indexMap.removeObject(tempobj)
         #self.checkObjLocs()
 
     ##
@@ -603,14 +671,8 @@ class DynamicDatabase:
             else:
                 if view.objectLocs.has_key(tempid):
                     view.removeObj(tempobj)
-        for f, views in self.indexes.iteritems():
-            index = f (tempmapped)
-            if not views[index].changeObj(tempobj, needsSave=needsSave):
-                for (value, view) in views.iteritems():
-                    if value == index:
-                        view.addBeforeCursor(tempobj, tempmapped)
-                    else:
-                        view.removeObj(tempobj)
+        for indexFunc, indexMap in self.indexes.iteritems():
+            indexMap.changeObject(tempobj, tempmapped)
 
     # Recomputes a single filter in the database
     def recomputeFilter(self,filter, all = False):
@@ -642,30 +704,16 @@ class DynamicDatabase:
     def recomputeIndex(self,filter, all = False):
         self.confirmDBThread()
         # Go through each one of the filter subviews
-        for filt, views in self.indexes.iteritems():
-            if all or filt is filter:
+        for indexFunc, indexMap in self.indexes.iteritems():
+            if all or indexFunc is filter:
                 self.saveCursor()
                 try:
                     self.resetCursor()
-                    for myObj in self.objects:
-                        myObjObj = myObj[0]
-                        myObjVal = myObj[1]
-                        filtVal = filt(myObjVal)
-                        if not views.has_key(filtVal):
-                            views[filtVal] = DynamicDatabase([],False,parent=self)
-                            views[filtVal].addBeforeCursor(myObjObj,
-                                                           myObjVal)
-                        if not views[filtVal].objectLocs.has_key(myObjObj.id):
-                            # FIXME: Keep an index of items to
-                            # views. Eliminate this loop
-                            for val, view in views.iteritems():
-                                if view.objectLocs.has_key(myObjObj.id):
-                                    view.removeObj(myObjObj)
-                                    break
-                            views[filtVal].addBeforeCursor(myObjObj,myObjVal)
+                    for obj, value in self.objects:
+                        indexMap.recomputeObject(obj, value)
                 finally:
                     self.restoreCursor()
-                for val, view in views.iteritems():
+                for view in indexMap.getViews():
                     view.recomputeFilters()
 
     #Recompute a single subSort
@@ -790,9 +838,9 @@ class DynamicDatabase:
             if self.subMaps[count][0] is oldView:
                 self.subMaps[count:count+1] =  []
                 return
-        for func, views in self.indexes.iteritems():
+        for indexFunc, indexMap in self.indexes.iteritems():
             # Clear out subfilters and callbacks on this view
-            for key, view in views.iteritems():
+            for view in indexMap.getViews():
                 if view is oldView:
                     view.subFilters = []
                     view.subMaps = []
@@ -845,22 +893,14 @@ class DynamicDatabase:
 
     def createIndex(self, indexFunc):
         self.confirmDBThread()
-        indexViews = {}
-        for obj in self.objects:
-            index = indexFunc(obj[1])
-            if not indexViews.has_key(index):
-                indexViews[index] = DynamicDatabase([],False, parent=self)
-            indexViews[index].addBeforeCursor(obj[0],obj[1])
-        self.indexes[indexFunc] = indexViews
+        indexMap = IndexMap(indexFunc, self)
+        for obj, value in self.objects:
+            indexMap.addObject(obj, value)
+        self.indexes[indexFunc] = indexMap
 
     def filterWithIndex(self, indexFunc, value):
         # Throw an exception if there's no filter for this func
-        views = self.indexes[indexFunc]
-        try:
-            return views[value]
-        except:
-            views[value] = DynamicDatabase([],False, parent=self)
-            return views[value]
+        return self.indexes[indexFunc].getViewForValue(value)
 
     def getItemWithIndex(self, indexFunc, value, default=None):
         """Get a single item using an index.
@@ -873,11 +913,7 @@ class DynamicDatabase:
         If there isn't an index for indexFunc, a KeyError will be raised.
         """
 
-        views = self.indexes[indexFunc]
-        try:
-            return views[value].objects[0][1]
-        except (KeyError, IndexError):
-            return default
+        return self.indexes[indexFunc].getItemForValue(value, default)
 
 ##
 # Global default database

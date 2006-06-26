@@ -852,9 +852,11 @@ class IndexFilterTest(DemocracyTestCase):
         for x in range(0,100):
             database.DDBObject()
         self.everything.createIndex(self.mod10)
+        filtered = self.everything.filterWithIndex(self.mod10,0)
+        self.assertEqual(filtered.len(),10)
         for x in range(0,50):
             database.DDBObject()
-        filtered = self.everything.filterWithIndex(self.mod10,0)
+        self.assertEqual(filtered.len(),15)
         for i in range(10):
             obj = self.everything.getItemWithIndex(self.mod10, i)
             self.assertEqual(self.mod10(obj), i)
@@ -886,6 +888,44 @@ class IndexFilterTest(DemocracyTestCase):
         self.assertEqual(self.changeCallbacks,1)
         obj.remove()
         self.assertEqual(self.removeCallbacks,1)
+    def testIndexChanges(self):
+        class IndexedObject(database.DDBObject):
+            def __init__(self, myValue):
+                database.DDBObject.__init__(self)
+                self.myValue = myValue
+        def indexFunc(obj):
+            return obj.myValue
+        foo = IndexedObject('blue')
+        bar = IndexedObject('red')
+        baz = IndexedObject('red')
+        self.everything.createIndex(indexFunc)
+        blueView = self.everything.filterWithIndex(indexFunc, 'blue')
+        redView = self.everything.filterWithIndex(indexFunc, 'red')
+        self.assertEquals(blueView.len(), 1)
+        self.assertEquals(redView.len(), 2)
+        baz.myValue = 'blue'
+        baz.signalChange()
+        self.assertEquals(blueView.len(), 2)
+        self.assertEquals(redView.len(), 1)
+        # test changing to a new view that we've never referenced before.
+        foo.myValue = 'green'
+        foo.signalChange()
+        greenView = self.everything.filterWithIndex(indexFunc, 'green')
+        self.assertEquals(blueView.len(), 1)
+        self.assertEquals(redView.len(), 1)
+        self.assertEquals(greenView.len(), 1)
+    def testRemoveIndexedView(self):
+        for x in range(0,100):
+            database.DDBObject()
+        self.everything.createIndex(self.mod10)
+        views = [self.everything.filterWithIndex(self.mod10, i) \
+                for i in range(10)]
+        # remove half the views with parent.removeView()
+        for view in views[:5]:
+            self.everything.removeView(view)
+        # remove the other half with unlink()
+        for view in views[5:]:
+            view.unlink()
     def testRecomputeIndex(self):
         for x in range(0,100):
             database.DDBObject()
