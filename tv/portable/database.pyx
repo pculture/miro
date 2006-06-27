@@ -98,13 +98,17 @@ def findUnpicklableParts(obj, seen = {}, depth=0):
 
 class IndexMap:
     """Maps index values to database views.
+
+    An IndexMap is a dict that maps index values to views, and also remembers
+    what values each object maps to.  Remembering the mapped values allows us
+    to efficently locate objects after their mapped value changes.
     """
 
     def __init__(self, indexFunc, parentDB):
         self.indexFunc = indexFunc
         self.parentDB = parentDB
-        self.views = {}
-        self.mappings = {}
+        self.views = {} # maps index values -> view
+        self.mappings = {} # maps object id -> index value
 
     def addObject(self, newobject, value):
         """Add a new object to the IndexMap."""

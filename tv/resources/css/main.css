@@ -52,15 +52,11 @@ li {
 
 #main-titlebar-avatar {
     position: absolute;
+    left: 5px;
+    top: 5px;
     width: 60px;
     height: 60px;
     border: 2px solid #FFFFFF;
-    margin: 5px 0px 0px 5px;
-}
-
-#main-titlebar-avatar img {
-    width: 60px;
-    height: 60px;
 }
 
 #main-titlebar-channelname {
@@ -212,10 +208,6 @@ li {
     text-decoration: none;  
 }
 
-#main-newlyavailable, #main-downloads, #main-unwatched, #main-expiring, #main-saved, #main-autodownload, #main-expiration, #main-newlyavailable-seen, #show-more-videos-label, #no-new-videos-label, #triangle, #triangledown {
-    display: none;
-}
-
 .video-count {
     display: block;
     float: left;
@@ -227,6 +219,8 @@ li {
     width: 230px;
     height: 80px;
     margin: 0px 0px 0px 5px;    
+    text-decoration: none;
+    color: #ffffff;
 }
 
 .main-notification-nonew h3 {
