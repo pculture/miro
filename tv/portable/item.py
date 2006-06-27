@@ -190,17 +190,16 @@ class Item(DDBObject):
     def actualDownload(self,autodl=False):
         self.confirmDBThread()
         manualDownloadCount = views.manualDownloads.len()
+        self.expired = self.keep = self.seen = False
 
         if ((not autodl) and 
                 manualDownloadCount >= config.get(prefs.MAX_MANUAL_DOWNLOADS)):
             self.pendingManualDL = True
-            self.pendingReason = "Too many manual downloads"
-            self.expired = False
+            self.pendingReason = "queued for download"
             self.signalChange()
             return
         else:
             self.setAutoDownloaded(autodl)
-            self.expired = self.keep = self.seen = False
             self.pendingManualDL = False
 
         if self.downloader is None:
@@ -331,8 +330,14 @@ class Item(DDBObject):
         """
         
         self.confirmDBThread()
-        if self.downloader is None:
-            if not self.getViewed():
+        # FIXME, 'failed', and 'paused' should get download icons.  The user
+        # should be able to restart or cancel them (put them into the stopped
+        # state).
+        if (self.downloader is None  or 
+                self.downloader.getState() in ('failed', 'stopped', 'paused')):
+            if self.pendingManualDL:
+                return 'downloading'
+            elif not self.getViewed():
                 return 'new'
             elif self.expired:
                 return 'expired'
@@ -477,6 +482,8 @@ class Item(DDBObject):
     def downloadETA(self):
         if self.downloader is not None:
             secs = self.downloader.getETA()
+        elif self.pendingManualDL:
+            return self.pendingReason
         else:
             secs = 0
         if secs == 0:
