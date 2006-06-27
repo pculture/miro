@@ -719,11 +719,11 @@ class Feed(DDBObject):
             else:
                 xmldata = html
                 charset = None
+            parser = xml.sax.make_parser()
+            parser.setFeature(xml.sax.handler.feature_namespaces, 1)
+            handler = RSSLinkGrabber(info['redirected-url'],charset)
+            parser.setContentHandler(handler)
             try:
-                parser = xml.sax.make_parser()
-                parser.setFeature(xml.sax.handler.feature_namespaces, 1)
-                handler = RSSLinkGrabber(info['redirected-url'],charset)
-                parser.setContentHandler(handler)
                 parser.parse(StringIO(xmldata))
             except UnicodeDecodeError:
                 print "Unicode issue parsing... %s" % xmldata[0:300]
