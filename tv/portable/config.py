@@ -92,7 +92,7 @@ def set(descriptor, value):
     __lock.acquire()
     try:
         __checkValidity()
-        if __data[ descriptor.key ] != value:
+        if descriptor.key not in __data or __data[ descriptor.key ] != value:
             __data[ descriptor.key ] = value
             __notifyListeners(descriptor.key, value)
     finally:

@@ -803,11 +803,9 @@ class FileItem(Item):
                     traceback.print_exc()
                 self.remove()
             elif dialog.choice == dialogs.BUTTON_REMOVE_ENTRY:
-                self.beginChange()
-                try:
-                    self.deleted = True
-                finally:
-                    self.endChange()
+                self.confirmDBThread()
+                self.deleted = True
+                self.signalChange()
 
         d.run(callback)
 
