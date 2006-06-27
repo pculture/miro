@@ -572,8 +572,10 @@ class LiveStorage:
                 else:
                     try:
                         self.db.remove (o.savedData['id'])
-                    except:
-                        print "Error removing %s" % (o.savedData['id'],)
+                    except bsddb.db.DBNotFoundError:
+                        # If an object was created and removed during
+                        # upgrade, it won't be in the database to be
+                        # removed, so catch the exception
                         pass
         self.version = schema_mod.VERSION
         self.db.put (VERSION_KEY, str(self.version), txn=txn)
