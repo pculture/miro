@@ -1,7 +1,8 @@
 body {
     background: #FFFFFF;
     margin: 0px;
-    font: 12px "Lucida Grande", "Tahoma", Arial, sans-serif;
+    font-size: 12px;
+    font-family: "Lucida Grande", "Tahoma", "Bitstream Vera Sans", Arial, sans-serif;
     color: #333333;
     /* The following property is used by Safari to prevent text selection */
     /* NEEDS: generates spammy console warnings in strict mode under
@@ -424,18 +425,30 @@ li {
     left: 10px;
     width: 125px;
     font-size: 10px;
-    font-weight: bold;
     margin: 0px;
+    color: #000;
 }
 
 .main-video-details-state.new, .main-video-details-state.unwatched {
+    font-weight: bold;
     color: #090;
 }
 
 .main-video-details-state.expiry {
     /* What kind of work is expiry?? I have no clue, but I like the sound of
     * it so I'm keeping it -- Ben */
+    font-weight: bold;
     color: #486D9F;
+}
+
+.main-video-details-state-secondary {
+    position: absolute;
+    top: 68px;
+    left: 10px;
+    width: 125px;
+    font-size: 10px;
+    margin: 0px;
+    color: #000;
 }
 
 .main-video-details-save-button {

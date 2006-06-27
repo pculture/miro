@@ -349,7 +349,7 @@ class FeedImpl:
         next = None
 #        self.items.sort(sortFunc)
         for item in self.items:
-            if item.isPendingDownload():
+            if item.isPendingManualDownload():
                 if next is None:
                     next = item
                 elif item.getPubDateParsed() < next.getPubDateParsed():
@@ -382,6 +382,8 @@ class FeedImpl:
         else:
             self.startfrom = datetime.max
         self.ufeed.signalChange()
+        for item in self.items:
+            item.signalChange(needsSave=False)
 
     ##
     # Sets the 'getEverything' attribute, True or False
@@ -389,6 +391,8 @@ class FeedImpl:
         self.ufeed.confirmDBThread()
         self.getEverything = everything
         self.ufeed.signalChange()
+        for item in self.items:
+            item.signalChange(needsSave=False)
 
     ##
     # Sets the expiration attributes. Valid types are 'system', 'feed' and 'never'
@@ -404,6 +408,8 @@ class FeedImpl:
                     item.save()
 
         self.ufeed.signalChange()
+        for item in self.items:
+            item.signalChange(needsSave=False)
 
     ##
     # Sets the maxNew attributes. -1 means unlimited.
@@ -411,6 +417,8 @@ class FeedImpl:
         self.ufeed.confirmDBThread()
         self.maxNew = maxNew
         self.ufeed.signalChange()
+        for item in self.items:
+            item.signalChange(needsSave=False)
 
     ##
     # Return the 'system' expiration delay, in days (can be < 1.0)

@@ -68,7 +68,7 @@ class Item(DDBObject):
     # Returns True iff this item has never been viewed in the interface
     # Note the difference between "viewed" and seen
     def getViewed(self):
-        return self.creationTime <= self.getFeed().lastViewed
+        return self.creationTime <= self.getFeed().lastViewed 
 
     ##
     # Returns the first video enclosure in the item
@@ -206,8 +206,8 @@ class Item(DDBObject):
             self.downloader = downloader.getDownloader(self)
         self.downloader.start()
         self.signalChange()
-        
-    def isPendingDownload(self):
+
+    def isPendingManualDownload(self):
         self.confirmDBThread()
         return self.pendingManualDL
 
@@ -215,11 +215,21 @@ class Item(DDBObject):
         self.confirmDBThread()
         if self.getState() not in ('new', 'not-downloaded'):
             return False
+        if self.downloader and self.downloader.getState() in ('failed',
+                'stopped', 'paused'):
+            return False
         ufeed = self.getFeed()
         if ufeed.getEverything:
             return True
         pubDate = self.getPubDateParsed()
         return pubDate >= ufeed.startfrom and pubDate != datetime.max
+
+    def isPendingAutoDownload(self):
+        return (self.getFeed().isAutoDownloadable() and
+                self.isEligibleForAutoDownload())
+
+    def isFailedDownload(self):
+        return self.downloader and self.downloader.getState() == 'failed'
 
     ##
     # Returns a link to the thumbnail of the video
