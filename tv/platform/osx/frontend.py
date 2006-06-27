@@ -1026,7 +1026,6 @@ class UIBackendDelegate:
         # We could use Python's webbrowser.open() here, but
         # unfortunately, it doesn't have the same semantics under UNIX
         # as under other OSes. Sometimes it blocks, sometimes it doesn't.
-        platformutils.warnIfNotOnMainThread('UIBackendDelegate.openExternalURL')
         NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
 
     def updateAvailableItemsCountFeedback(self, count):
@@ -1074,7 +1073,6 @@ class UIBackendDelegate:
     
     @platformutils.onMainThread
     def notifyUnkownErrorOccurence(self, when, log = ''):
-        platformutils.warnIfNotOnMainThread('UIBackendDelegate.notifyUnkownErrorOccurence')
         controller = ExceptionReporterController.alloc().initWithMoment_log_(when, log)
         controller.showPanel()
         return True
@@ -1116,7 +1114,6 @@ class UIBackendDelegate:
                 pass
 
     def launchDownloadDaemon(self, oldpid, env):
-        platformutils.warnIfNotOnMainThread('UIBackendDelegate.launchDownloadDaemon')
         self.killDownloadDaemon(oldpid)
 
         env['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
@@ -1783,13 +1780,11 @@ class ManagedWebView (NSObject):
     # Execute given Javascript string in context of the HTML document
     @deferUntilAfterLoad
     def execJS(self, js):
-        platformutils.warnIfNotOnMainThread('ManagedWebView.execJS')
         self.view.stringByEvaluatingJavaScriptFromString_(js)
 
     ## DOM mutators called, ultimately, by dynamic template system ##
 
     def findElt(self, id):
-        platformutils.warnIfNotOnMainThread('ManagedWebView.findElt')
         doc = self.view.mainFrame().DOMDocument()
         elt = doc.getElementById_(id)
         return elt
@@ -1801,7 +1796,6 @@ class ManagedWebView (NSObject):
 #         print "--- End Document HTML ---"
 
     def createElt(self, xml):
-        platformutils.warnIfNotOnMainThread('ManagedWebView.createElt')
         parent = self.view.mainFrame().DOMDocument().createElement_("div")
         if len(xml) == 0:
             #FIXME: this is awfully ugly but it fixes the symptoms described
@@ -1821,7 +1815,6 @@ class ManagedWebView (NSObject):
         
     @deferUntilAfterLoad
     def addItemAtEnd(self, xml, id):
-        platformutils.warnIfNotOnMainThread('ManagedWebView.addItemAtEnd')
         elt = self.findElt(id)
         if not elt:
             print "warning: addItemAtEnd: missing element %s" % id
@@ -1832,7 +1825,6 @@ class ManagedWebView (NSObject):
 
     @deferUntilAfterLoad
     def addItemBefore(self, xml, id):
-        platformutils.warnIfNotOnMainThread('ManagedWebView.addItemBefore')
         elt = self.findElt(id)
         if not elt:
             print "warning: addItemBefore: missing element %s" % id
@@ -1848,12 +1840,10 @@ class ManagedWebView (NSObject):
 
     @deferUntilAfterLoad
     def removeItem(self, id):
-        platformutils.warnIfNotOnMainThread('ManagedWebView.removeItem')
         self._removeElement(id)
 
     @deferUntilAfterLoad
     def removeItems(self, ids):
-        platformutils.warnIfNotOnMainThread('ManagedWebView.removeItems')
         for id in ids:
             self._removeElement(id)
 
@@ -1867,12 +1857,10 @@ class ManagedWebView (NSObject):
 
     @deferUntilAfterLoad
     def changeItem(self, id, xml):
-        platformutils.warnIfNotOnMainThread('ManagedWebView.changeItem')
         self._changeElement(id, xml)
 
     @deferUntilAfterLoad
     def changeItems(self, pairs):
-        platformutils.warnIfNotOnMainThread('ManagedWebView.changeItems')
         for id, xml in pairs:
             self._changeElement(id, xml)
 
@@ -1892,7 +1880,6 @@ class ManagedWebView (NSObject):
 
     @deferUntilAfterLoad
     def hideItem(self, id):
-        platformutils.warnIfNotOnMainThread('ManagedWebView.hideItem')
         elt = self.findElt(id)
         if not elt:
             print "warning: hideItem: missing element %s" % id
@@ -1902,7 +1889,6 @@ class ManagedWebView (NSObject):
 
     @deferUntilAfterLoad
     def showItem(self, id):
-        platformutils.warnIfNotOnMainThread('ManagedWebView.showItem')
         elt = self.findElt(id)
         if not elt:
             print "warning: showItem: missing element %s" % id
@@ -2040,7 +2026,6 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.fastSeekTimer = nil
 
     def preventSystemSleep(self, prevent):
-        platformutils.warnIfNotOnMainThread('VideoDisplayController.preventSystemSleep')
         if prevent and self.systemActivityUpdaterTimer is nil:
             print "DTV: Launching system activity updater timer"
             self.systemActivityUpdaterTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(30, self, 'updateSystemActivity:', nil, YES)
@@ -2050,18 +2035,15 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             self.systemActivityUpdaterTimer = nil
 
     def updateSystemActivity_(self, timer):
-        platformutils.warnIfNotOnMainThread('VideoDisplayController.updateSystemActivity_')
         UpdateSystemActivity(OverallAct)
 
     def enablePrimaryControls(self, enabled):
-        platformutils.warnIfNotOnMainThread('VideoDisplayController.enablePrimaryControls')
         self.playPauseButton.setEnabled_(enabled)
         self.fullscreenButton.setEnabled_(enabled)
         self.muteButton.setEnabled_(enabled)
         self.volumeSlider.setEnabled_(enabled and self.muteButton.state() is NSOnState)
 
     def enableSecondaryControls(self, enabled, allowFastSeeking=YES):
-        platformutils.warnIfNotOnMainThread('VideoDisplayController.enableSecondaryControls')
         self.backwardButton.setEnabled_(enabled)
         self.stopButton.setEnabled_(enabled)
         self.forwardButton.setEnabled_(enabled)
@@ -2073,7 +2055,6 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
             self.forwardButton.setAction_('skipForward:')
 
     def updatePlayPauseButton(self, prefix):
-        platformutils.warnIfNotOnMainThread('VideoDisplayController.updatePlayPauseButton')
         self.playPauseButton.setImage_(NSImage.imageNamed_('%s' % prefix))
         self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('%s_blue' % prefix))
 
@@ -2628,7 +2609,6 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         self.progressSlider.setFloatValue_(self.renderer.getProgress())
             
     def progressSliderWasClicked(self, slider):
-        platformutils.warnIfNotOnMainThread('FullScreenPalette.progressSliderWasClicked')
         if app.controller.videoDisplay.isPlaying:
             self.wasPlaying = True
             self.renderer.pause()
@@ -2637,29 +2617,24 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         self.resetAutoConceal()
         
     def progressSliderWasDragged(self, slider):
-        platformutils.warnIfNotOnMainThread('FullScreenPalette.progressSliderWasDragged')
         self.renderer.setProgress(slider.floatValue())
         self.resetAutoConceal()
         
     def progressSliderWasReleased(self, slider):
-        platformutils.warnIfNotOnMainThread('FullScreenPalette.progressSliderWasReleased')
         self.renderer.interactivelySeeking = False
         if self.wasPlaying:
             self.wasPlaying = False
             self.renderer.play()
 
     def volumeSliderWasDragged(self, slider):
-        platformutils.warnIfNotOnMainThread('FullScreenPalette.volumeSliderWasDragged')
         app.controller.videoDisplay.setVolume(slider.floatValue())
         self.resetAutoConceal()
 
     def videoWillPlay_(self, notification):
-        platformutils.warnIfNotOnMainThread('FullScreenPalette.videoWillPlay_')
         self.playPauseButton.setImage_(NSImage.imageNamed_('fs-button-pause'))
         self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('fs-button-pause-alt'))
 
     def videoWillPause_(self, notification):
-        platformutils.warnIfNotOnMainThread('FullScreenPalette.videoWillPause_')
         self.playPauseButton.setImage_(NSImage.imageNamed_('fs-button-play'))
         self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('fs-button-play-alt'))
 
