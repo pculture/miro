@@ -529,10 +529,66 @@ class LiveStorage:
         if end - start > 0.05:
             print "Database load slow: %.3f" % (end - start,)
 
+    def upgradeDatabase(self):
+        print "Upgrading database..."
+        savables = []
+        cursor = self.db.cursor()
+        while True:
+            next = cursor.next()
+            if next is None:
+                break
+            key, data = next
+            if key != VERSION_KEY:
+                try:
+                    savable = cPickle.loads(data)
+                    savables.append(savable)
+                except:
+                    print data
+                    raise
+        cursor.close()
+        changed = databaseupgrade.upgrade(savables, self.version)
+        
+        txn = self.dbenv.txn_begin()
+        if changed is None:
+            print "Rewriting database"
+            cursor = self.db.cursor(txn=txn)
+            while True:
+                next = cursor.next()
+                if next is None:
+                    break
+                cursor.delete()
+            cursor.close()
+            for o in savables:
+                data = cPickle.dumps(o)
+                self.db.put (str(o.savedData['id']), data, txn=txn)
+        else:
+            savables_set = set()
+            for o in savables:
+                savables_set.add(o)
+            for o in changed:
+                if o in savables_set:
+                    data = cPickle.dumps(o)
+                    self.db.put (str(o.savedData['id']), data, txn=txn)
+                else:
+                    try:
+                        self.db.remove (o.savedData['id'])
+                    except:
+                        print "Error removing %s" % (o.savedData['id'],)
+                        pass
+        self.version = schema_mod.VERSION
+        self.db.put (VERSION_KEY, str(self.version), txn=txn)
+        txn.commit()
+        self.db.sync()
+
+        objects = savablesToObjects (savables)
+        db = database.defaultDatabase
+        db.restoreFromObjectList(objects)
+
+
     def loadDatabase(self):
         upgrade = (self.version != schema_mod.VERSION)
         if upgrade:
-            toSave = []
+            return self.upgradeDatabase()
         objects = []
         cursor = self.db.cursor()
         while True:
@@ -543,25 +599,12 @@ class LiveStorage:
             if key != VERSION_KEY:
                 try:
                     savable = cPickle.loads(data)
-                    if upgrade:
-                        if (databaseupgrade.upgradeObject(savable, self.version)):
-                            toSave.append((key, savable))
                     object = savableToObject(savable)
                     objects.append(object)
                 except:
                     print data
                     raise
         cursor.close()
-        if upgrade:
-            print "Upgrading database..."
-            txn = self.dbenv.txn_begin()
-            for (key, savable) in toSave:
-                data = cPickle.dumps(savable)
-                self.db.put (key, data, txn=txn)
-            self.version = schema_mod.VERSION
-            self.db.put (VERSION_KEY, str(self.version), txn=txn)
-            txn.commit()
-            self.db.sync()
         db = database.defaultDatabase
         db.restoreFromObjectList(objects)
 
