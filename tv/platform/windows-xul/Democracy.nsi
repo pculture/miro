@@ -30,6 +30,9 @@ Var STARTMENU_FOLDER
 !include "MUI.nsh"
 !include "Sections.nsh"
 
+; Runs in tv/platform/windows-xul/dist, so 4 ..s.
+!addplugindir ..\..\..\..\dtv-binary-kit\NSIS-Plugins\
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Pages                                                                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -153,6 +156,9 @@ lbl_winnt:
   File  /r resources
   File  /r vlc-plugins
   File  /r xulrunner
+
+  SetOutPath "$INSTDIR\resources"
+  TackOn::writeToFile initial-feeds.democracy
 
   ; Old versions used HKEY_LOCAL_MACHINE for the RunAtStartup value, we use
   ; HKEY_CURRENT_USER now
