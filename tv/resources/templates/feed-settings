@@ -19,7 +19,7 @@ feed = app.controller.currentSelectedTab.obj
 
 <!-- TITLE BAR ************************************************************ -->
 <div id="main-titlebar">
-	<div id="main-titlebar-avatar"><img src="***feed.getThumbnail()***" alt="" /></div>
+        <img id="main-titlebar-avatar" src="***feed.getThumbnail()***" alt="" style="background-color:#FFFFFF;" />
 	<div id="main-titlebar-channelname">
 		<h1 t:replaceMarkup="feed.getTitle()" />
 		<div id="main-titlebar-autodownload">

@@ -468,8 +468,8 @@ class Controller (frontend.Application):
             downloader.startupDownloader()
 
             self.setupGlobalFeed('dtv:manualFeed', initiallyAutoDownloadable=False)
-            views.availableItems.addAddCallback(self.onAvailableItemsCountChange)
-            views.availableItems.addRemoveCallback(self.onAvailableItemsCountChange)
+            views.newlyDownloadedItems.addAddCallback(self.onNewlyDownloadedItemsCountChange)
+            views.newlyDownloadedItems.addRemoveCallback(self.onNewlyDownloadedItemsCountChange)
             views.downloadingItems.addAddCallback(self.onDownloadingItemsCountChange)
             views.downloadingItems.addRemoveCallback(self.onDownloadingItemsCountChange)
 
@@ -818,7 +818,7 @@ class Controller (frontend.Application):
     ### Keep track of currently available+downloading items and refresh the
     ### corresponding tabs accordingly.
 
-    def onAvailableItemsCountChange(self, obj, id):
+    def onNewlyDownloadedItemsCountChange(self, obj, id):
         assert self.newTab is not None
         self.newTab.redraw()
         self.updateAvailableItemsCountFeedback()
@@ -829,7 +829,7 @@ class Controller (frontend.Application):
 
     def updateAvailableItemsCountFeedback(self):
         global delegate
-        count = views.availableItems.len()
+        count = views.newlyDownloadedItems.len()
         delegate.updateAvailableItemsCountFeedback(count)
 
     ### ----

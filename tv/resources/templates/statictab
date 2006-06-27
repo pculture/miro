@@ -39,9 +39,9 @@
 
     <img class="icon" src="resource:images/newvideos-icon-tablist.png" />
 
-    <div class="green_left" t:hideIf="views.availableItems.len() == 0">
+    <div class="green_left" t:hideIf="views.newlyDownloadedItems.len() == 0">
         <div class="green_right">
-            <div class="number_count" t:replace="views.availableItems.len()" />
+            <div class="number_count" t:replace="views.newlyDownloadedItems.len()" />
         </div>
     </div>
 
@@ -54,9 +54,9 @@
 
     <img class="icon" src="resource:images/newvideos-icon-tablist.png" />
 
-    <div class="green_left" t:hideIf="views.availableItems.len() == 0">
+    <div class="green_left" t:hideIf="views.newlyDownloadedItems.len() == 0">
         <div class="green_right">
-            <div class="number_count" t:replace="views.availableItems.len()" />
+            <div class="number_count" t:replace="views.newlyDownloadedItems.len()" />
         </div>
     </div>
 
@@ -69,9 +69,9 @@
 
     <img class="icon" src="resource:images/newvideos-icon-tablist.png" />
 
-    <div class="green_left" t:hideIf="views.availableItems.len() == 0">
+    <div class="green_left" t:hideIf="views.newlyDownloadedItems.len() == 0">
         <div class="green_right">
-            <div class="number_count" t:replace="views.availableItems.len()" />
+            <div class="number_count" t:replace="views.newlyDownloadedItems.len()" />
         </div>
     </div>
 

@@ -25,13 +25,13 @@ matchingItems.createIndex(indexes.itemsByChannelCategory)
 def makeStateView(cat):
     view = matchingItems.filterWithIndex(indexes.itemsByChannelCategory, cat)
     return view.sort(sorts.item)
-newUnseenItems = makeStateView('new')
-notDownloadedItems = makeStateView('not-downloaded')
+newItems = makeStateView('new')
+oldItems = matchingItems.filter(filters.viewedItems).sort(sorts.item)
 unwatchedItems = makeStateView('newly-downloaded')
 expiringItems = makeStateView('expiring')
 savedItems = makeStateView('saved')
 
-if newUnseenItems.len() == 0:
+if newItems.len() == 0:
     mainChannelbarAvailableDisplay = newlyAvailableSeenDisplay = "block"
     showMoreVideosDisplay = "none"
 else:
@@ -118,20 +118,20 @@ i18n:translate="">Settings</span></a></p>
     </h1>
  </div>
     <div id="main-newlyavailable">
-        <span t:repeatForView="newUnseenItems">
+        <span t:repeatForView="newItems">
             <t:includeTemplate filename="download-item" />
         </span>
-        <div t:hideIf="notDownloadedItems.len()==0" t:updateHideOnView="notDownloadedItems">
+        <div t:hideIf="oldItems.len()==0" t:updateHideOnView="oldItems">
             <div id="show-more-videos-label" class="main-content" style="display: @@@showMoreVideosDisplay@@@;">
 				<a href="javascript:toggleLayer('main-newlyavailable-seen');toggleLayer('show-more-videos-label');toggleLayer('main-channelbar-available');" class="main-notification-nonew">
-				<div class="main-notification"><span i18n:translate=""><span i18n:name="count" t:replace="notDownloadedItems.len()" class="video-count"/> Videos on this Channel</span> &gt;&gt;</div>
+				<div class="main-notification"><span i18n:translate=""><span i18n:name="count" t:replace="oldItems.len()" class="video-count"/> Videos on this Channel</span> &gt;&gt;</div>
     				<div class="main-notification-right">&nbsp;</div>
     				<br clear="left" />
 				</a>
             </div>
 	</div>
 	<div id="main-newlyavailable-seen" style="display: @@@newlyAvailableSeenDisplay@@@;">
-            <div t:repeatForView="notDownloadedItems">
+            <div t:repeatForView="oldItems">
                 <t:includeTemplate filename="download-item" />
             </div>
         </div>
