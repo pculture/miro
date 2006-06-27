@@ -347,6 +347,38 @@ class Item(DDBObject):
         else:
             return 'saved'
 
+    def getChannelCategory(self):
+        """Get the category to use for the channel template.  
+        
+        This method is similar to getState(), but has some subtle differences.
+        getState() is used by the download-item template and is usually more
+        useful to determine what's actually happening with an item.
+        getChannelCategory() is used by by the channel template to figure out
+        which heading to put an item under.
+
+        * downloading and not-downloaded are grouped together as
+          not-downloaded
+        * Items are always new if their feed hasn't been marked as viewed
+          after the item's pub date.  This is so that when a user gets a list
+          of items and starts downloading them, the list doesn't reorder
+          itself.
+        """
+
+        self.confirmDBThread()
+        if not self.getViewed():
+            return 'new'
+        elif self.downloader is None or not self.downloader.isFinished():
+            if self.expired:
+                return 'expired'
+            else:
+                return 'not-downloaded'
+        elif not self.seen:
+            return 'newly-downloaded'
+        elif not self.keep:
+            return 'expiring'
+        else:
+            return 'saved'
+
     def isDownloaded(self):
         return self.getState() in ("newly-downloaded", "expiring", "saved")
 

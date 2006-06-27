@@ -21,13 +21,7 @@ def objectsByClass(x):
         return x.__class__
 
 def itemsByChannelCategory(x):
-    # the channel categories are almost exactly like getState, however
-    # downloading items get mixed in with not-downloaded items.
-    state = x.getState()
-    if state != 'downloading':
-        return state
-    else:
-        return 'not-downloaded'
+    return x.getChannelCategory()
 
 tabIDIndex = lambda x: x.id
 
