@@ -40,6 +40,8 @@ import schema as schema_mod
 import eventloop
 import app
 import bsddb.db
+import dialogs
+from gettext import gettext as _
 
 from BitTornado.clock import clock
 
@@ -497,37 +499,41 @@ class LiveStorage:
     TRANSACTION_NAME = "Save database"
 
     def __init__(self):
-        self.txn = None
-        self.dc = None
-        self.toUpdate = set()
-        self.toRemove = set()
         try:
-            os.makedirs(config.get(prefs.BSDDB_PATHNAME))
-        except:
-            pass
-        start = clock()
-        self.dbenv = bsddb.db.DBEnv()
-        self.dbenv.set_flags (bsddb.db.DB_AUTO_COMMIT | bsddb.db.DB_TXN_NOSYNC, True)
-        self.dbenv.set_lg_max (1024 * 1024)
-        self.dbenv.open (config.get(prefs.BSDDB_PATHNAME), bsddb.db.DB_INIT_LOG | bsddb.db.DB_INIT_MPOOL | bsddb.db.DB_INIT_TXN | bsddb.db.DB_RECOVER | bsddb.db.DB_CREATE)
-        self.db = bsddb.db.DB(self.dbenv)
-        self.closed = False
-        try:
-            self.db.open ("database")
-            self.version = int(self.db[VERSION_KEY])
-            self.loadDatabase()
-        except (bsddb.db.DBNoSuchFileError, KeyError):
+            self.txn = None
+            self.dc = None
+            self.toUpdate = set()
+            self.toRemove = set()
+            self.errorState = False
             try:
-                self.db.close()
+                os.makedirs(config.get(prefs.BSDDB_PATHNAME))
             except:
                 pass
-            self.db = None
-            restoreDatabase()
-            self.saveDatabase()
-        eventloop.addIdle(self.checkpoint, "Remove Unused Database Logs")
-        end = clock()
-        if end - start > 0.05:
-            print "Database load slow: %.3f" % (end - start,)
+            start = clock()
+            self.dbenv = bsddb.db.DBEnv()
+            self.dbenv.set_flags (bsddb.db.DB_AUTO_COMMIT | bsddb.db.DB_TXN_NOSYNC, True)
+            self.dbenv.set_lg_max (1024 * 1024)
+            self.dbenv.open (config.get(prefs.BSDDB_PATHNAME), bsddb.db.DB_INIT_LOG | bsddb.db.DB_INIT_MPOOL | bsddb.db.DB_INIT_TXN | bsddb.db.DB_RECOVER | bsddb.db.DB_CREATE)
+            self.db = bsddb.db.DB(self.dbenv)
+            self.closed = False
+            try:
+                self.db.open ("database")
+                self.version = int(self.db[VERSION_KEY])
+                self.loadDatabase()
+            except (bsddb.db.DBNoSuchFileError, KeyError):
+                try:
+                    self.db.close()
+                except:
+                    pass
+                self.db = None
+                restoreDatabase()
+                self.saveDatabase()
+            eventloop.addIdle(self.checkpoint, "Remove Unused Database Logs")
+            end = clock()
+            if end - start > 0.05:
+                print "Database load slow: %.3f" % (end - start,)
+        except bsddb.db.DBNoSpaceError:
+            frontend.exit(28)
 
     def upgradeDatabase(self):
         print "Upgrading database..."
@@ -613,10 +619,6 @@ class LiveStorage:
     def saveDatabase(self):
         db = database.defaultDatabase
         self.txn = self.dbenv.txn_begin()
-        try:
-            self.dbenv.dbremove("database", txn=self.txn)
-        except:
-            pass
         self.db = bsddb.db.DB(self.dbenv)
         self.db.open ("database", flags = bsddb.db.DB_CREATE, dbtype = bsddb.db.DB_HASH, txn=self.txn)
         for o in db.objects:
@@ -637,28 +639,40 @@ class LiveStorage:
         self.dbenv.close()
 
     def runUpdate(self):
-        self.txn = self.dbenv.txn_begin()
-        for object in self.toRemove:
-            # If an object was created and removed between saves, it
-            # won't be in the database to be removed, so catch the
-            # exception
-            try:
-                self.remove (object)
-            except bsddb.db.DBNotFoundError:
-                pass
-        for object in self.toUpdate:
-            self.update (object)
-        self.txn.commit()
-        self.sync()
-        self.txn = None
-        self.dc = None
-        self.toUpdate = set()
-        self.toRemove = set()
+        try:
+            self.txn = self.dbenv.txn_begin()
+            for object in self.toRemove:
+                # If an object was created and removed between saves, it
+                # won't be in the database to be removed, so catch the
+                # exception
+                try:
+                    self.remove (object)
+                except bsddb.db.DBNotFoundError:
+                    pass
+            for object in self.toUpdate:
+                self.update (object)
+            self.txn.commit()
+            self.sync()
+            self.txn = None
+            self.dc = None
+            self.toUpdate = set()
+            self.toRemove = set()
+            self.errorState = False
+        except bsddb.db.DBNoSpaceError, err:
+            if not self.errorState:
+                title = _("%s database save failed") % (config.get(prefs.SHORT_APP_NAME), )
+                description = _("%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost.") % (config.get(prefs.LONG_APP_NAME)) 
+                dialog = dialogs.MessageBoxDialog(title, description)
+                dialog.run (lambda(response):None)
+                self.errorState = True
+            self.txn = None
+            self.dc = eventloop.addTimeout(self.TRANSACTION_TIMEOUT, self.runUpdate, self.TRANSACTION_NAME)
+            
 
     def update (self, object):
         if self.closed:
             return
-        if not self.txn:
+        if self.txn is None:
             self.toUpdate.add (object)
             if self.dc is None:
                 self.dc = eventloop.addTimeout(self.TRANSACTION_TIMEOUT, self.runUpdate, self.TRANSACTION_NAME)
@@ -684,13 +698,16 @@ class LiveStorage:
             self.db.delete (str(object.id), txn=self.txn)
 
     def checkpoint (self):
-        if self.closed:
-            return
-        self.dbenv.txn_checkpoint()
-        self.sync()
-        for logfile in self.dbenv.log_archive(bsddb.db.DB_ARCH_ABS):
-            try:
-                os.remove(logfile)
-            except:
-                pass
+        try:
+            if self.closed:
+                return
+            self.dbenv.txn_checkpoint()
+            self.sync()
+            for logfile in self.dbenv.log_archive(bsddb.db.DB_ARCH_ABS):
+                try:
+                    os.remove(logfile)
+                except:
+                    pass
+        except bsddb.db.DBNoSpaceError:
+            pass
         eventloop.addTimeout(60, self.checkpoint, "Remove Unused Database Logs")
