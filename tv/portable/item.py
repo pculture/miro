@@ -242,7 +242,7 @@ class Item(DDBObject):
         # Try to get the thumbnail for our entry
         try:
             return self.entry["thumbnail"]["url"]
-        except KeyError:
+        except:
             return None
 
     def getThumbnail (self):
