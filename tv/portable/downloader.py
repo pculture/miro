@@ -119,7 +119,7 @@ class RemoteDownloader(DDBObject):
             wasFinished = self.isFinished()
             self.status = data
             # Store the time the download finished
-            if self.isFinished and not wasFinished:
+            if self.isFinished() and not wasFinished:
                 for item in self.itemList:
                     item.onDownloadFinished()
             self.signalChange()
