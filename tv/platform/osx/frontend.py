@@ -284,16 +284,18 @@ class AppController (NibClassBuilder.AutoBaseClass):
 
     @objc.signature('v@:@@')
     def openURL_withReplyEvent_(self, event, replyEvent):
-        print "**** got open URL event"
         keyDirectObject = struct.unpack(">i", "----")[0]
         url = event.paramDescriptorForKeyword_(keyDirectObject).stringValue()
 
-        # Convert feed: URL to http:
-        # (we only get here if the URL is a feed: URL, because of what
-        # we've claimed in Info.plist)
-        match = re.compile(r"^feed:(.*)$").match(url)
-        if match:
-            url = "http:%s" % match.group(1)
+        urlPattern = re.compile(r"^(.*?)://(.*)$")
+        match = urlPattern.match(url)
+        if match and match.group(1) == 'feed':
+            url = match.group(2)
+            match = urlPattern.match(url)
+            if not match:
+                url = 'http://%s' % url
+
+        if url.startswith('http'):
             self.actualApp.addAndSelectFeed(url)
 
     def checkForUpdates_(self, sender):
