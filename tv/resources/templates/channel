@@ -31,7 +31,7 @@ unwatchedItems = makeStateView('newly-downloaded')
 expiringItems = makeStateView('expiring')
 savedItems = makeStateView('saved')
 
-if newItems.len() == 0:
+if newItems.len() == unwatchedItems.len() == expiringItems.len() == savedItems.len() == 0:
     mainChannelbarAvailableDisplay = newlyAvailableSeenDisplay = "block"
     showMoreVideosDisplay = "none"
 else:
