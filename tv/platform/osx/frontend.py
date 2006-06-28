@@ -2330,8 +2330,11 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
 
 class QuicktimeRenderer (app.VideoRenderer):
 
-    POSSIBLY_SUPPORTED_EXT = ('.wmv', '.avi', '.asf')
-    UNSUPPORTED_EXT = ('.ram', '.rm', '.rpm', '.rv', '.ra')
+    FLIP4MAC_EXT = ('.wmv', '.avi', '.asf')
+    XIPH_EXT = ('.ogg', '.anx', '.spx')
+    KNOWN_UNSUPPORTED_EXT = ('.ram', '.rm', '.rpm', '.rv', '.ra')
+    NON_NATIVE_EXT = FLIP4MAC_EXT + XIPH_EXT + KNOWN_UNSUPPORTED_EXT
+    
     CORRECT_QTMEDIA_TYPES = (QTMediaTypeVideo, QTMediaTypeMPEG, QTMediaTypeMovie, QTMediaTypeFlash)
 
     def __init__(self, delegate):
@@ -2387,10 +2390,13 @@ class QuicktimeRenderer (app.VideoRenderer):
                     if mediaType in self.CORRECT_QTMEDIA_TYPES and mediaDuration > 0:
                         # We have one, see if the file is something we support
                         (unused, ext) = os.path.splitext(str(url).lower())
-                        if ext in self.POSSIBLY_SUPPORTED_EXT and self.hasFlip4MacComponent():
+                        if ext in self.FLIP4MAC_EXT and self.hasFlip4MacComponent():
                             canPlay = True
                             break
-                        elif ext not in self.POSSIBLY_SUPPORTED_EXT and ext not in self.UNSUPPORTED_EXT:
+                        elif ext in self.XIPH_EXT and self.hasXiphComponent():
+                            canPlay = True
+                            break
+                        elif ext not in self.NON_NATIVE_EXT:
                             canPlay = True
                             break
         else:
@@ -2400,6 +2406,9 @@ class QuicktimeRenderer (app.VideoRenderer):
 
     def hasFlip4MacComponent(self):
         return len(glob.glob('/Library/Quicktime/Flip4Mac*')) > 0
+
+    def hasXiphComponent(self):
+        return len(glob.glob('/Library/QuickTime/Ogg*')) > 0
 
     @platformutils.onMainThread
     def selectUrl(self, url):
