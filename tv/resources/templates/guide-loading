@@ -16,8 +16,8 @@ setTimeout(loadguide, 10);
 </script>
 </head>
 
-<body class="loading_body">
-	<div id="loading_channel">
+<body class="channel-guide-body">
+	<div id="channel-guide-loading-image">
 		&nbsp;
 	</div>
 </body>

@@ -26,56 +26,7 @@ body {
 	/* NEEDS: generates spammy console warnings in strict mode under
            Mozilla -- conditionally enable somehow? */
 	-khtml-user-select: none;
-	}
-
-
-
-/*///////////////////////////////////////////////
-
-Some common classes
- 
-/////////////////////////////////////////////*/
-
-
-.topbox{
-	padding: 10px;
-	background: #666;
-	text-shadow: 0px 1px 0px black;
-	color: #fff;
-	text-align: center;
-	text-align: left;
-	margin: 0;
-	}
-
-.lighttopbox{
-	padding: 10px;
-	background: #ddd;
-	text-shadow: 0px 1px 0px white;
-	color: #333;
-	margin: 0;
-	}
-
-
-
-.displayblock{
-	display: block;
-	}
-	
-.alignright{
-	text-align: right;
-	}
-
-.warning{
-	color: #D4A100;
-	padding: 3px;
-/*	color: #fff;
-	display: block;  */
-	}
-
-
-
-
-
+}
 
 /*/////////////////////////////////////////////
 
@@ -96,1193 +47,164 @@ Contains the channels
 	width: 100%;
 	}
 
+.tab-list {
+       padding-left: 0px;
+       margin: 0;
+       width: 100%;
+}
+       
+.tab-list li{
+       list-style: none;
+       clear: both;
+       margin: 0;
+}
 
-#sidebar h2{
-	font: 12px Arial, Helvetica, sans-serif;
-	background: #ddd;
-	margin: 0;
-	padding: 4px;
-	}
-
-#sidebar ul{
-	padding-left: 0px;
-	margin: 0;
-	width: 100%;
-	}
-	
-#sidebar ul li{
-	list-style: none;
-	clear: both;
-	margin: 0;
-	}
-
-
-#sidebar ul ul li {
-	padding: 1px 0px 1px 0px;
-	color: #333;
-	text-decoration: none;
-	clear: both;
-	}
-
-#sidebar ul ul {
-	padding: 0;
-	margin: 0;
-	display: none;
-	}
-
-.alt{
-	background: #f9f9f9;
-	}
-
-#sidebar ul li:hover{
+.tab-list li:hover {
 	cursor: default;
-	}
+}
 
-#sidebar ul li a{
-	padding: 2px 5px 2px 4px;
-	color: #000;
-	font-size: 11px;
-	text-decoration: none;
-	clear: both;
-	height: 20px;
-	vertical-align: middle;
-	}
-
-#sidebar ul li a img{
-	height: 20px;
-	width: 20px;
-	margin: 0;
-	}
-
-
-#sidebar ul li a span{
-	display: block;
-	padding: 0px 0 5px 0px;
-	overflow: hidden;
-	}
-
-#sidebar ul li a span span{
-	display: block;
-	padding: 3px 0 3px 3px;
-	overflow: hidden;
-	}
-
-#sidebar ul li a span.new{
-	background: url(../images/play.png) 100% 100% no-repeat;
-	display: inline;
-	width: 40px;
-	padding: 0 10px 0 5px;
-	color: #009900;
-	}
-
-#sidebar ul li a img.icon{
-	border: 0;
-	float: left;
-	}
-
-	
 a.feeditem{
-	display: block;
-   white-space: nowrap;
-
-	}
-
-a.feeditem:hover{
-	}
-
-#sidebar a.selected_feeditem {
-	background: url(../images/channel_bg.png) 0% 0% repeat-x; 
-	color: #fff;
-	font-weight: bold;
-	}
-
-#sidebar a.selected_feeditem_inactive {
-	background: url(../images/channel_bg.png) 0px -50px repeat-x; 
-	color: #fff;
-	font-weight: bold;
-	}
-
-
-a.selected_feeditem span {
-	color: #fff;
-	}
-
-a.infolder {
- margin-left: 20px
+    display: block;
+    padding: 2px 5px 2px 4px;
+    color: #000;
+    font-size: 11px;
+    text-decoration: none;
+    height: 20px;
+    white-space: nowrap;
 }
 
-
-
-#sidebar a.last_static {
-height: 28px;
+a.feeditem.selected, a.feeditem.selected-inactive {
+    color: #fff;
+    font-weight: bold;
 }
 
-.channel_bar_divider {
-margin: 1px 2px 1px 0px;
-height: 2px;
-overflow: hidden;
-font-size: 2px;
-border-top: 1px solid #b6bfce;
+a.feeditem span {
+    margin-left: 6px;
+    margin-top: 3px;
+    padding: 0px 0 5px 0px;
+    overflow: hidden;
 }
 
-
-
-/*/////////////////////////////////////////////
-
-Buttons
------------------------------------------------
-Various Buttons
- 
-/////////////////////////////////////////////*/
-
-/*
-
-Download Queue Button
------------------------------------------------
-
-*/
-
-
-#sidebar a.queuebutton {
-	position: fixed;
-	display: block;
-	padding: 0px;
-	margin: 0px;
-	text-decoration: none;
-	color: #333;
-	bottom: 0px;
-	left: 0px; 
-	width: 100%;
-	z-index: 100;
-	background: url(../images/dqueue_back.png) repeat-x; 
-	height: 52px;
-	text-align: center;
-	}
-
-#sidebar a.selected_queuebutton {
-	position: fixed;
-	display: block;
-	padding: 0px;
-	margin: 0px;
-	text-decoration: none;
-	color: #333;
-	bottom: 0px;
-	left: 0px; 
-	width: 100%;
-	z-index: 100;
-	background: url(../images/selected_dqueue_back.png) repeat-x; 
-	height: 52px;
-	text-align: center;
-	}
-
-
-
-#sidebar a.queuebutton span.name, #sidebar a.selected_queuebutton span.name {
-	padding-top: 25px;
-	height: 50px;
-	/*
-	display: block;
-	position: fixed;
-	bottom: 10px;
-	width: 100%
-	*/
-	
-	}
-
-
-#sidebar a.queuebutton span.name span, #sidebar a.selected_queuebutton span.name span {
-	display: inline;
-	padding: 5px 0 5px 20px;
-	margin: 0 0 0 -30px;
-	background: url(../images/queue_arrow.png) 0 4px no-repeat;
-	text-shadow: 0px 1px 0px white;
-	
-	}
-
-a.queuebutton img, a.selected_queuebutton img{
-	display: none;
-	}
-
-
-
-
-/*/////////////////////////////////////////////
-
-MAIN WINDOW
------------------------------------------------
-A wrapper around the content
- 
-/////////////////////////////////////////////*/
-
-#main_window {
-	background-color: #fff;
-	padding-right: 0px;
-	}
-
-
-#content_window {
-	background-color: #fff;
-	padding-right: 0px;
-	margin-top: 95px;
-	}
-
-#library {
-	width: 597px;
-	height: 355px;
-	background: url(../images/itunes.jpg);
-	}
-
-
-/*/////////////////////////////////////////////
-
-Channel Specific Tabs
------------------------------------------------
-watch, choose...
- 
-/////////////////////////////////////////////*/
-
-
-.channel_tabs {
-	height: 25px;
-	border-top: 1px solid #ccc;
-	border-top: 1px solid #666;
-	border-bottom: 1px solid #999;
-	background-color: #ccc;
-	background: url(../images/tabback.png);
-	position: fixed;
-	top: 24px;
-	width: 100%;
-	left: 0;
-	z-index: 200;
-	}
-
-.channel_tabs a{
-	text-decoration: none;
-	}
-
-.tab {
-	padding: 5px 6px 5px 6px;
-	font-size: 12px;
-	float: left;
-	color: #333;
-	height: 13px;
-	font-weight: bold;
-	text-shadow: 0px 1px 0px white;
-	text-align: center;
-	margin:0;
-	}
-	
-.tab:hover {
-	cursor: default;
-	}
-	
-.tab:active {
-	background: url(../images/tab_active.png) repeat-x;	
-	}
-	
-.emptytab {
-	width: 40px
-        }
-.active_tab {
-	background: url(../images/tab_active.png) repeat-x;
-	color: #333;
-	text-shadow: 0px 1px 0px white;
-	}
-
-#searchfield{
-	position: absolute;
-	right: 10px;
-	top: 3px;
-	}
-
-#searchfield input{
-	font-size: 11px;	
-	margin: 0 3px;
-	}
-	
-	
-.no_new {
-	padding: 20px 20px 30px 10px;
-	color: #990000;
-	text-align: center;
-	font-size: 15px;
+a.feeditem.selected span, a.feeditem.selected-inactive span {
+    color: #fff;
 }
 
-.no_new a {
-	text-decoration: none;
-	color: #990000;
-	padding-right: 24px;
-	background: url(../images/red_arrow.png) right 3px no-repeat;
+a.feeditem.selected {
+    background: url(../images/channel_bg.png) 0% 0% repeat-x; 
 }
 
-.no_new a:hover {
-	text-decoration: underline;
+a.feeditem.selected-inactive {
+    background: url(../images/channel_bg.png) 0px -50px repeat-x; 
 }
 
+a.feeditem img.icon {
+    height: 20px;
+    width: 20px;
+    margin: 0;
+    border: 0;
+    float: left;
+}
 
-/*/////////////////////////////////////////////
-
-Main List Items
------------------------------------------------
-Where the videos show up
- 
-/////////////////////////////////////////////*/
-
-#main_window ul {
-	margin: 0;
-	padding: 0;
-	clear: both;
-	}
-
-
-#main_window ul li {
-	border-bottom: 4px solid #eee;
-	background: url(../images/video_back.png) bottom left repeat-x;
-	display: block;
-	clear: both;
-	padding: 7px 0 4px 0;
-	list-style: none;
-	height: 76px;
-	}
-
-#main_window li:hover{
-	cursor: default;
-	}
-
-
-#main_window li:hover, #main_window li:hover .short_description, #main_window li:hover .video_title{
-
-	}
-
-#main_window li:hover .file_size, #main_window li:hover .length{
-	}
-
-#main_window ul li.alt {
-	background: #EDF3FE;
-	}
-
-#main_window ul li.divider {
-	border: none;
-	display: block;
-	clear: both;
-	padding: 0px;
-	height: 12px;
-	font-size: 10px;
-	padding-left: 6px;
-	padding-top: 0px;
-	background: #ddd;
-	color: #fff;
-	text-shadow: 0px 1px 0px #ddd;
-	font-weight: normal;
-	}
-
-#main_window ul li.divider img{
-	}
-
-
-
-#main_window li .thumbnail_placeholder{
-	display: block;
-	float: left;
-	padding: 0px;
-	margin-top: 0px;
-	margin-right: 7px;
-	margin-left: 8px;
-	width: 101px;
-	height: 75px;
-	}
-	
-#main_window li .thumbnail_placeholder img{
-	border: 1px solid #ddd;
-	}
-
-
-.desc{
-	margin-right: 125px;
-	}
-
-.file_size{
-	display: block;
-	font-size: 10px;
-	color: #777;
-	margin-top: 2px;
-	padding-top: 2px;
-	}
-
-.file_size span{
-	margin-right: 10px;
-
-	}
-
-.file_size span strong.length{
-	padding-right: 7px;
-	}
-
-.video_title {
-	font-weight: bold;
-	color: #222;
+a.feeditem div.name {
+	padding: 3px;
 	overflow: hidden;
-	height: 20px;
-	font-size: 16px;
-	padding-top: 1px;
-	}
+}
 
-.video_creator {
-	}
-
-.short_description {
-	color: #444;  
-	line-height: 17px;
-	height: 34px;
+.tab-list-divider {
+	margin: 9px 2px 1px 0px;
+	height: 2px;
 	overflow: hidden;
-	}
-
-.download_button {
-	display: block;
-	margin-left: 80px;
-	margin-top: 10px;
-	width: 34px;
-	height: 34px;
-	background: url(../images/download_button_green.png) top left no-repeat;
-	}
-
-
-/*/////////////////////////////////////////////
-
-Right side of the Videos
------------------------------------------------
-play button, download button, error/expire
-messages
- 
-/////////////////////////////////////////////*/
-
-
-.right_box{
-	text-align: right;
-	width: 120px;
-	float: right;
-	z-index: 100;
-	padding-right: 10px;
-	}
-
-.right_box a{
-	color: darkblue;
-	font-size: 11px;
-	text-decoration: none;
-	}
-
-.right_box a:hover{
-	color: blue;
-	font-size: 11px;
-	text-decoration: underline;
-	}
-
-
-.right_box img {
-	vertical-align: bottom;
-}
-
-.delete_button {
-	display: block; 
-	float: right;
-	width: 14px;
-	height: 14px;
-	background: url(../images/delete_file.png) 0px 0px no-repeat;
-	margin-left: 3px;
-}
-
-.delete_button:hover {
-	display: block; 
-	float: right;
-	width: 14px;
-	height: 14px;
-	background: url(../images/delete_file.png) 0px -16px no-repeat;
+	font-size: 2px;
+	border-top: 1px solid #b6bfce;
 }
 
 
-.unwatched{
-	font-size: 10px;
-	color: #00B904;
-	background: url(../images/icons/calendar.png) 0 2px no-repeat;
-	padding: 3px 0 3px 15px;
-	}
-
-
-.report_expire{
-	font-size: 10px;
-	background: url(../images/icons/calendar.png) 0 2px no-repeat;
-	padding: 3px 0 3px 15px;
-	}
-
-.report_pending{
-	font-size: 10px;
-	background: url(../images/icons/pending.png) 0 2px no-repeat;
-	padding: 3px 0 3px 15px;
-	}
-	
-	
-.report_downloaderror {
-	font-size: 10px;
-}
-	
-/* ---- Play Button ----- */
-	
-.play_button{
-	width: 42px;
-	height: 42px;
-	background: url(../images/play_button.png) no-repeat;
-	display: block;
-	margin-left: 75px;
-	}
-	
-.play_button:active{
-	background: url(../images/play_button_active.png) no-repeat;
-	}
-
-
-/*/////////////////////////////////////////////
-
-Progress Bar
- 
-/////////////////////////////////////////////*/
-
-
-.bar_holder{
-	width: 100px;
-	height: 20px;
-	padding: 0 1px 0 1px;
-	background: url(../images/status_background.png) top left no-repeat;
-	}
-
-.progress_box{
-	float: right;
-	width: 102px;
-	font-size: 11px;
-	padding-top: 20px;
-	margin-right: 10px;
-	}
-
-.cancel_button{
-	float: right;
-	margin: 3px 0px 3px 3px;
-	}
-	
-.est_time{
-	display: block;
-	padding-top: 4px;
-	text-align: left;
-	}
-
-/*/////////////////////////////////////////////
-
-Settings Section
------------------------------------------------
-The settings of each channel
- 
-/////////////////////////////////////////////*/
-
-
-.settings_section{
-	padding: 10px;
-	border: 1px solid #999;
-	background-color: #fff;
-	padding-right: 0px;
-	border-left: 1px solid #999;
-	}
-
-.settings_section .option{
-	padding: 5px;
-	}
-
-.settings_title {
-	padding: 8px 0 0 8px;
-	margin: 0;
-	font-size: 16px;
-	}
-
-.settings_url {
-	padding: 2px 0 0 8px;
-	margin: 0;
-	font-weight: normal;
-	font-size: 13px;
-	color: #333;
-	}
-
-
-div.settings{
-	background: #eee;
-	margin: 0 30px 0 30px;
-	padding: 5px;
-	}
-
-
-div.settings div{
-	display: block;
-	padding: 10px;
-	border-bottom: 0px solid white;
-	}
-
-
-#editcachelink{
-	padding: 0;
-	margin: 0;
-	text-shadow: none;
-	color: #333;
-	}
-	
-
-.settings_auto_mode{
-	background-color: #FFF9B4;
-	padding: 15px;
-	width: 450px;
-	margin: 20px auto 10px auto;
-	border: 1px solid #ddb;
-}
-
-
-.settings_auto_mode h2 input {
-	vertical-align: top;
-	padding-top: 2px;
-}
-
-.settings_auto_mode h2{
-	padding: 0;
-	margin: 0;
-	font-size: 18px;
-	}
-
-
-	
-.setting_heading{
-	padding: 15px 5px 5px 30px;
-	}
-
-.setting_heading h2{
-	font-size: 15px;
-	margin: 0;
-	padding: 0;
-}
-
-
-.setting_link{
-	background: #bbb;
-	padding: 5px;
-	margin-bottom: 2px;
-	}
-
-
-.heading_desc{
-	padding-left: 0px;
-	color: #666;
-	font-size: 12px;
-	}
-	
-	
-#expiration_tips {
-margin-top: 10px;
-padding: 8px;
-background-color: #eee;
-}
-
-#main_window #expiration_tips li, #main_window #expiration_tips ul {
-padding: 0;
-margin: 0;
-background-color: #eee;
-height: inherit;
-width: inherit;
-background-image: none;
-list-style-type: disc;
-}
-
-#main_window #expiration_tips li {
-padding: 3px 0 3px 0;
-}
-
-
-/*/////////////////////////////////////////////
-
-Channel Heading
------------------------------------------------
-search, title, recommend link
- 
-/////////////////////////////////////////////*/
-
-
-#ultra_top_wrapper{
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	z-index: 100;
-	background: url(../images/channel_top_background7.png) repeat-x;
-	}
-	
-	
-#top_wrapper{
-	clear: both;
-	height: 63px;
-	}
-
-
-#channel_info{
-	float: left;
-	width: 60%;
-	padding: 5px 0 0 5px;
-	}
-
-
-#channel_info img{
-	display: block;
-	float: left;
-	width: 55px;
-	height: 55px;
-	margin: 0 4px 0 0;
-	border: 1px solid #dadde3;
-	background-color: #fafbfe;
-	}
-
-#channel_info h2{
-	margin: 0 0 0 59px;
-	padding: 0;
-	font-weight: normal;
-	max-height: 40px;
-	font-size: 17px;
-	line-height: 21px;
-	overflow: hidden;
-	color: black;
-	text-shadow: 0px 1px 0px #eee;
-	}
-
-
-
-#right_half{
-	text-align: left;
-	float: right;
-	padding: 5px 5px 0 0;
-	}
-
-
-.auto_link{
-	color: #00B904;
-	font-size: 14px;
-	}
-
-.settings_link{
-	margin-top: 1px;
-	color: black;
-	background: url(../images/orange_arrow.png) top right no-repeat;
-	padding-right: 25px;
-	font-size: 11px;
-	text-decoration: none;
-	}
-
-.recommend_link{
-	color: black;
-	padding-right: 19px;
-	font-size: 11px;
-	background: url(../images/green_arrow.png) top right no-repeat;
-	display: block;
-	width: 190px;
-	font-size: 11px;
-	text-decoration: none;
-	}
-
-.settings_link:hover {
-	text-decoration: underline;
-	}
-
-.recommend_link:hover {
-	text-decoration: underline;
-	}
-
-.search_wrap {
-	float: right;
-	padding-left: 15px;
-	background: url(../images/magnifying_glass.png) 0 7px no-repeat;
-	display: block;
-	padding-top: 2px;
-	padding-right: 3px;
-}
-
-.search_field{
-	font-size: 12px;
-	}
-
-/*/////////////////////////////////////////////
-
-Channel Navigation
------------------------------------------------
-The settings of each channel
- 
-/////////////////////////////////////////////*/
-
-#navigation_wrapper	{
-	height: 35px;
-	margin: 0;
-	}
-
-#navigation	{
-	height: 25px;
-	width: 140px;
-	margin: 0px auto 0 auto;
-	}
-
-#navigation	a{
-	margin: 0;
-	display: block;
-	float: left;
-	}
-
-	
-#tabs {
-	height: 24px;
-	font: normal 13px "Lucida Grande", "Lucida Sans Unicode";
-	color: #000000;
-	text-decoration: none;
-/*	text-shadow: 0px 1px 0px #eee; */
-}
-
-.tabs a:link, .tabs a:visited, .tabs a:active, .tabs a:hover {
-	color: #000000;
-	text-decoration: none;	
-}
-
-.tab_left {
-/*	background: url(../images/tab_divider.png) no-repeat right top; */
-	padding: 3px 0px 4px 0px;
-	height: 24px;
-	display: block;
-	float: left;
-}
-
-.tab_right {
-	background: url(../images/tab_divider.png) no-repeat left top;
-	background-position: 0px 3px;
-	padding: 3px 0px 4px 1px;
-	height: 24px;
-	display: block;
-	float: left;
-} 
-
-.watch {
-	background: url(../images/tab_left.png) no-repeat left top;
-	padding: 3px 8px 4px 12px;
-
-}
-
-.watch_active {
-	background: url(../images/tab_left_active.png) no-repeat left top;
-	padding: 3px 8px 4px 12px;
-	text-shadow: 0px 1px 0px #eee;
-	color: #999;
-}
-
-.browse {
-	background: url(../images/tab_center.png) no-repeat left top;
-	padding: 3px 8px 4px 8px;
-
-}
-
-.browse_active {
-	background: url(../images/tab_center_active.png) no-repeat left top;
-	padding: 3px 8px 4px 8px;
-	text-shadow: 0px 1px 0px #eee;
-}
-
-.library {
-	background: url(../images/tab_right.png) no-repeat right top;
-	padding: 3px 12px 4px 8px;
-
-}
-
-.library_active {
-	background: url(../images/tab_right_active.png) no-repeat right top;
-	padding: 3px 12px 4px 8px;
-	text-shadow: 0px 1px 0px #eee;
-}	
-
-a.browse_nolibrary{
-	padding: 3px 12px 4px 8px;
-	background: url(../images/tab_right.png) right top no-repeat;
-
-	}
-
-.browse_nolibrary_active{
-	padding: 3px 12px 4px 8px;
-	background: url(../images/tab_right_active.png) right top no-repeat;
-		text-shadow: 0px 1px 0px #eee;
-
-	}
-
-/*/////////////////////////////////////////////
-
-SIDEBAR
------------------------------------------------
-
-
-/////////////////////////////////////////////*/
-
-#sidebar_tabs a{
-	margin: 0;
-	padding: 4px 0;
-	height: 15px;
-	display: block;
-	float: left;
-	font-size: 13px;
-	color: black;
-	text-decoration: none;
-	text-shadow: 0px 1px 0px white;
-	text-align: center;
-	width: 49%;
-	}
-
-#sidebar_tabs a.channel{
-	border-right: 1px solid white;
-	}
-
-#sidebar_tabs a.collection{
-	border-left: 1px solid #ccc;
-	}
-
-#sidebar_tabs{
-	clear: both;
-	overflow: auto;
-	padding: 0;
-	margin: 0;
-	background: url(../images/sidebar_tab_back.png) repeat-x;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	z-index: 80;
-	}
-
-
-.numbercount_holder{
-	float: right;
-	margin-left: 5px;
-	}
-
-.number_count{
-	background: #00B904;
+.number-count {
 	font-size: 11px;
 	line-height: 13px;
 	color: #FFFFFF;
-	margin: 0px 7px 0px 8px;
+	margin: 0px 8px 0px 8px;
 	padding: 2px 0px 3px 0px;
-	z-index: 2;
-	}
+}
 
-.number_count_active{
-	background: #00B904;
-	font-size: 11px;
-	line-height: 13px;
+.left-bubble {
+	display: inline;
+	margin: 1px 0px 0 0;
+	float: right;
 	position: relative;
-	height: 18px;
-	margin: 0px 7px 0px 8px;
-	overflow: hidden;
-	z-index: 1;
-	}	
-
-.number_count_active_play{
-	background: url(../images/green_play.png) top center no-repeat;
 	z-index: 2;
-	margin-top: -16px;
-	left: 1px;
-	height: 18px;
-	overflow: hidden;
-	position: relative;
-	}
+}
 
-.green_left{
+.left-bubble.second {
+	right: -7px;
+}
+
+
+.left-bubble.green {
 	background: url(../images/green_left.png) top left no-repeat;
-	display: inline;
-	margin: 1px 0 0 0;
-	float: right;
-	}
+}
 
-.green_right{
+.right-bubble.green {
 	background: url(../images/green_right.png) top right no-repeat;
-	}
+}
 
-.gray_number_count{
-	padding: 2px 0px 3px 0px;
-	color: #333;
-	margin: 0 7px 0 8px;
-	background: #4081EC;
-	font-size: 11px;
-	line-height: 13px;
-/*	text-shadow: 0px 1px 0px #fff;  */
-	}
-
-.gray_left{
-	background: url(../images/gray_left.png) top left no-repeat;
-	display: inline;
-	margin: 1px 0 0 0;
-	float: right;
-	}
-
-.gray_right{
-	background: url(../images/gray_right.png) top right no-repeat;
-	}
-
-
-.blue_number_count{
-	padding: 2px 0px 3px 0px;
-	color: #FFFFFF;
-	margin: 0 8px 0 8px;
-	background: #4081EC;
-	font-size: 11px;
-	line-height: 13px;
-/*	text-shadow: 0px 1px 0px #fff;  */
-	}
-
-.blue_left{
-	background: url(../images/blue_left.png) top left no-repeat;
-	display: inline;
-	margin: 1px 0 0 0;
-	float: right;
-	}
-
-.blue_right{
-	background: url(../images/blue_right.png) top right no-repeat;
-	}
-
-.blue_number_count_active{
-	padding: 2px 0px 3px 0px;
-	color: #4081EC;
-	margin: 0 8px 0 8px;
-	background: #FFFFFF;
-	font-size: 11px;
-	line-height: 13px;
-/*	text-shadow: 0px 1px 0px #fff;  */
-	}
-
-.white_left{
-	background: url(../images/white_left.png) top left no-repeat;
-	display: inline;
-	margin: 1px 0 0 0;
-	float: right;
-	}
-
-.white_right{
-	background: url(../images/white_right.png) top right no-repeat;
-	}
-
-.both_number_count{
-	padding: 2px 0 3px 0;
-	color: #fff;
-	margin: 0 8px 0 8px;
+.number-count.green {
 	background: #00B904;
-	font-size: 11px;
-	line-height: 13px;
-/*	text-shadow: 0px 1px 0px #333;  */
-	}
+	margin-right: 7px; 
+	/* FIXME: Why is green_right a different size then all the other
+	* _right.png files?  */
+}
 
-.both_green_left{
-	background: url(../images/green_left.png) top left no-repeat;
-	display: inline;
-	margin: 1px -9px 0 0;
-	float: right;
-	}
+.left-bubble.orange {
+    background: url(../images/orange_left.png) top left no-repeat;
+}
 
-.both_green_right{
-	background: url(../images/green_right.png) top right no-repeat;
-	}
+.right-bubble.orange {
+    background: url(../images/orange_right.png) top right no-repeat;
+}
 
+.number-count.orange {
+	background: #dd7119;
+}
 
-.both_blue_number_count{
-	padding: 2px 0px 3px 1px;
-	color: #FFFFFF;
-	margin: 0 8px 0 8px;
-	background: #4081EC;
-	font-size: 11px;
-	line-height: 13px;
-/*	text-shadow: 0px 1px 0px #fff;  */
-	}
-
-.both_blue_left{
+.left-bubble.blue {
 	background: url(../images/blue_left.png) top left no-repeat;
-	display: inline;
-	margin: 1px 0 0 0;
-	float: right;
-	}
+}
 
-.both_blue_right{
+.right-bubble.blue {
 	background: url(../images/blue_right.png) top right no-repeat;
-	}
+}
 
-.both_white_number_count{
-	padding: 2px 0px 3px 1px;
-	color: #4081EC;
-	margin: 0 7px 0 8px;
-	background: #FFFFFF;
-	font-size: 11px;
-	line-height: 13px;
-/*	text-shadow: 0px 1px 0px #fff;  */
-	}
+.number-count.blue {
+	background: #4081EC;
+}
 
-.both_white_left{
+/* Reverse the color scheme for blue bubbles when they are selected */
+
+a.feeditem.selected .left-bubble.blue {
 	background: url(../images/white_left.png) top left no-repeat;
-	display: inline;
-	margin: 1px 0 0 0;
-	float: right;
-	}
+}
 
-.both_white_right{
+a.feeditem.selected .right-bubble.blue {
 	background: url(../images/white_right.png) top right no-repeat;
-	}
-span.newchannel{
-	display: none;
-	}
+}
 
-.orange_left{
-	background: url(../images/orange_left.png) top left no-repeat;
-	display: inline;
-	margin: 1px 0 0 0;
-	float: right;
-	}
+a.feeditem.selected .number-count.blue {
+	color: #4081EC;
+	background: #FFFFFF;
+}
 
-.orange_right{
-	background: url(../images/orange_right.png) top right no-repeat;
-	}
+/*///////////////////////////////////////////////
 
-.orange_number_count{
-	padding: 2px 0px 3px 0px;
-	color: #FFFFFF;
-	margin: 0 8px 0 8px;
-	background: #ef5900;
-	font-size: 11px;
-	line-height: 13px;
-/*	text-shadow: 0px 1px 0px #fff;  */
-	}
-
-/*/////////////////////////////////////////////
-
-Buttons
------------------------------------------------
-Various Buttons
+Channel guide
  
 /////////////////////////////////////////////*/
 
-
-
-.more_link{
-	margin-bottom: -3px;
-	vertical-align: bottom;
-	}
-	
-/*/////////////////////////////////////////////
-
-Loading Channel
- 
-/////////////////////////////////////////////*/
-
-.loading_body {
+.channel-guide-body {
 background-color: #e7e7e7;
 }
 
-#loading_channel{
+#channel-guide-loading-image{
 	width: 324px;
 	height: 128px;
 	position: absolute;
@@ -1291,99 +213,3 @@ background-color: #e7e7e7;
 	margin: -64px 0 0 -162px;
 	background: url(../images/loading.gif) no-repeat left top;
 	}
-	
-	/*/////////////////////////////////////////////
-
-Scraping Channel
- 
-/////////////////////////////////////////////*/
-
-
-
-#scraping_first_time {
-	background-color: #FFF9B4;
-	padding: 10px;
-	margin-top: 5px;
-	margin-bottom: 10px;
-	border-bottom: 1px solid #ddd;
-}
-
-.scraping_first_time_inner {
-	font-size: 15px;
-	color: #333;
-	font-weight: bold;
-	margin: 0 auto 0 auto;
-/*	background-color: #fff;  */
-	width: 330px;
-	padding-top: 10px;
-/*	border: 1px solid #eeeeee; */
-	}
-	
-.non_standard {
-	font-size: 11px;
-	text-transform: uppercase;
-	font-weight: normal;
-}
-
-
-
-
-
-/*/////////////////////////////////////////////
-
-Bottom Feedback Strip
-
-/////////////////////////////////////////////*/
-
-.bottom_strip {
-position: fixed;
-bottom: 0;
-left: 0;
-height: 16px;
-background-color: #FFF9B4;
-border-top: 1px solid #DFD9A4;
-padding: 1px 0 0px 0;
-font-size: 11px;
-width: 100%;
-color: #333;
-text-align: center;
-}
-
-.bottom_strip a, .bottom_strip a:visited {
-color: #222;
-}
-
-
-/*/////////////////////////////////////////////
-
-First Time Intro
- 
-/////////////////////////////////////////////*/
-
-
-.first_time {
-padding: 10px 20px 10px 20px;
-background-color: #FFF;
-color: #000;
-font-size: 12px;
-width: auto;
-}
-
-.first_time h1 {
-padding-top: 10px;
-margin: 0;
-font-size: 20px;
-color: #00487D;
-}
-
-.first_time h3 {
-font-size: 15px;
-font-weight: bold;
-margin: 0;
-padding: 2px 0 6px 0;
-}
-
-.first_time p {
-margin: 0;
-padding: 0 0 12px 0;
-}

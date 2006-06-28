@@ -249,28 +249,15 @@ class FeedImpl:
 
     # Returns true iff both unwatched and available numbers should be shown
     def showBothUAndA(self):
-        return ((not self.isAutoDownloadable()) and
-                self.unwatched > 0 and 
-                self.available > 0)
+        return self.showU() and self.showA()
 
-    # Returns true iff unwatched should be shown and available shouldn't
-    def showOnlyU(self):
-        return ((self.unwatched > 0 and 
-                 self.available == 0) or 
-                (self.isAutoDownloadable() and
-                 self.unwatched > 0))
+    # Returns true iff unwatched should be shown 
+    def showU(self):
+        return self.unwatched > 0
 
-    # Returns true iff available should be shown and unwatched shouldn't
-    def showOnlyA(self):
-        return ((not self.isAutoDownloadable()) and 
-                self.unwatched == 0 and 
-                self.available > 0)
-
-    # Returns true iff neither unwatched nor available should be shown
-    def showNeitherUNorA(self):
-        return (self.unwatched == 0 and
-                (self.isAutoDownloadable() or 
-                 self.available == 0))
+    # Returns true iff available should be shown
+    def showA(self):
+        return (not self.isAutoDownloadable()) and self.available > 0
 
     ##
     # Sets the last time the feed was viewed to now

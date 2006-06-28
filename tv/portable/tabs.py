@@ -6,6 +6,7 @@ import feed
 import resource
 
 from xml.dom.minidom import parse
+from gettext import gettext as _
 
 ###############################################################################
 #### Tabs                                                                  ####
@@ -14,11 +15,49 @@ from xml.dom.minidom import parse
 
 # Database object representing a static (non-feed-associated) tab.
 class StaticTab(database.DDBObject):
+    tabTitles = {
+        'guidetab': _('Channel Guide'),
+        'librarytab': _('My Collection'),
+        'newtab': _('New Videos'),
+        'searchtab': _('Search'),
+        'downloadtab': _('Active Downloads'),
+    }
+
+    tabIcons = {
+        'guidetab': 'channelguide-icon-tablist.png',
+        'librarytab': 'collection-icon-tablist.png',
+        'newtab': 'newvideos-icon-tablist.png',
+        'searchtab': 'search-icon-tablist.png',
+        'downloadtab': 'download-icon-tab.png',
+    }
+
     def __init__(self, tabTemplateBase, contentsTemplate, order):
         self.tabTemplateBase = tabTemplateBase
         self.contentsTemplate = contentsTemplate
         self.order = order
         database.DDBObject.__init__(self)
+
+    def getTitle(self):
+        return self.tabTitles[self.tabTemplateBase]
+
+    def getIconURL(self):
+        return resource.url("images/%s" % self.tabIcons[self.tabTemplateBase])
+
+    def getNumberColor(self):
+        if self.tabTemplateBase == 'downloadtab':
+            return 'orange'
+        elif self.tabTemplateBase == 'newtab':
+            return 'green'
+        else:
+            return None
+
+    def getNumber(self):
+        if self.tabTemplateBase == 'downloadtab':
+            return views.downloadingItems.len()
+        elif self.tabTemplateBase == 'newtab':
+            return views.newlyDownloadedItems.len()
+        else:
+            return 0
 
 class Tab:
     idCounter = 0
@@ -81,7 +120,7 @@ class Tab:
 # Remove all static tabs from the database
 def removeStaticTabs():
     app.db.confirmDBThread()
-    for obj in views.staticTabs:
+    for obj in views.staticTabsObjects:
         obj.remove()
 
 # Reload the StaticTabs in the database from the statictabs.xml resource file.

@@ -14,6 +14,8 @@ import sorts
 db.createIndex(indexes.objectsByClass)
 
 allTabs = db.filter(filters.mappableToTab).map(maps.mapToTab).sort(sorts.tabs)
+staticTabs = allTabs.filter(lambda t: not t.isFeed()).sort(sorts.tabs)
+feedTabs = allTabs.filter(lambda t: t.isFeed()).sort(sorts.tabs)
 
 items = db.filterWithIndex(indexes.objectsByClass,item.Item)
 fileItems = db.filter(lambda x: isinstance(x, item.FileItem))
@@ -22,7 +24,7 @@ fileItems = db.filter(lambda x: isinstance(x, item.FileItem))
 feeds = db.filterWithIndex(indexes.objectsByClass,feed.Feed)
 remoteDownloads = db.filterWithIndex(indexes.objectsByClass, downloader.RemoteDownloader)
 httpauths = db.filterWithIndex(indexes.objectsByClass,downloader.HTTPAuthPassword)
-staticTabs = db.filterWithIndex(indexes.objectsByClass,tabs.StaticTab)
+staticTabsObjects = db.filterWithIndex(indexes.objectsByClass,tabs.StaticTab)
 
 remoteDownloads.createIndex(indexes.downloadsByDLID)
 remoteDownloads.createIndex(indexes.downloadsByURL)
