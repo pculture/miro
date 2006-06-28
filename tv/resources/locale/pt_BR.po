@@ -1,38 +1,45 @@
+# Portuguese (Brazil) translation for democracy
+# Copyright (c) (c) 2006 Canonical Ltd, and Rosetta Contributors 2006
+# This file is distributed under the same license as the democracy package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2006.
+#
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: democracy\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2006-05-31 18:38-0400\n"
-"PO-Revision-Date: 2006-06-06 21:17+0000\n"
-"Last-Translator: Bogdan Toma <bog_tom@yahoo.com>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2006-06-23 08:04+0000\n"
+"Last-Translator: Geraldo <moura.costa@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n == 1 ? 0: (((n %\n"
+"Plural-Forms: nplurals=2; plural=n > 1\n"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:107
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6
 msgid "Username:"
-msgstr "Nume utilizator:"
+msgstr "Usuário:"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:118
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:7
 msgid "Password:"
-msgstr "Parolă:"
+msgstr "Senha:"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:133
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:4
 msgid "Channel requires authentication"
-msgstr "Canalul necesită autentificare"
+msgstr "O Canal requer autenticação"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:133
 #, python-format
 msgid "%s requires a username and password for \"%s\"."
-msgstr "%s necesită un nume de utilizator şi o parolă pentru \"%s\"."
+msgstr "%s requer um usuário e senha para \"%s\"."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:146
 msgid "Not a DTV-style channel"
-msgstr "Nu este un canal de tipul DTV"
+msgstr "Não é um canal do tipo DTV"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:147
 #, python-format
@@ -43,20 +50,20 @@ msgid ""
 "\n"
 "Please contact the publishers of %s and ask if they have a DTV-style channel."
 msgstr ""
-"Dar vom încerca tot ceea ce e posibil pentru a prelua fişierele\n"
-"- S-ar putea sa ia timp pentru a lista secvenţele video\n"
-"- Descrierile pot arata ciudat\n"
+"Mas faremos o melhor para capturar os arquivos.\n"
+"- Pode levar um tempo para listar os vídeos.\n"
+"- As descrições podem parecer engraçadas.\n"
 "\n"
-"Vă rugăm contactaţi editorii lui %s şi întrebaţi-i dacă au un canal de tipul "
-"DTV."
+"Por favor contate os editores de %s e verifique se eles possuem um canal do "
+"tipo DTV."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:148
 msgid "Continue"
-msgstr "Continuare"
+msgstr "Continue"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:158
 msgid "DTV Version Alert"
-msgstr "Alertă - versiunea DTV"
+msgstr "Aviso de Versão DTV"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:159
 msgid ""
@@ -64,23 +71,23 @@ msgid ""
 "\n"
 "Would you like to download it now?"
 msgstr ""
-"O nouă versiune DTV este disponibilă.\n"
+"Um nova versão da DTV está disponível.\n"
 "\n"
-"Vrei să o descarc acum ?"
+"Deseja baixar agora?"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:166
 msgid "DTV Version Check"
-msgstr "Verificare versiune DTV"
+msgstr "Verificação de Versão da DTV"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:167
 msgid "This version of DTV is up to date."
-msgstr "Ai ultima versiune DTV."
+msgstr "Essa versão de DTV é a mais recente."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:172
 #: ../../portable/app.py:661
 #, python-format
 msgid "%s database save failed"
-msgstr "Salvarea bazei de date %s a eşuat."
+msgstr "Falha no salvamento da base de dados de %s"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:174
 #, python-format
@@ -88,12 +95,12 @@ msgid ""
 "%s was unable to save its database: %s.\n"
 "Recent changes may be lost."
 msgstr ""
-"%s nu a putut să-şi salveze baza de date: %s.\n"
-"Schimbările recente pot fi pierdute."
+"%s não pôde salvar a base de dados: %s.\n"
+"Mudanças recentes podem ter sido perdidas."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:179
 msgid "Remove Channel"
-msgstr "Şterge canalul"
+msgstr "Remover Canal"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:180
 #, python-format
@@ -102,82 +109,81 @@ msgid ""
 "   '<b>%s</b>'?\n"
 "<b>This operation cannot be undone.</b>"
 msgstr ""
-"Eşti sigur ca vrei să <b>ştergi</b> canalul\n"
+"Tem certeza que deseja <b>remover</b> o canal\n"
 "   '<b>%s</b>'?\n"
-"<b>Această operaţie este definitivă.</b>"
+"<b>Essa operação não poderá ser desfeita.</b>"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:210
 msgid "Are you sure you want to quit?"
-msgstr "Eşti sigur că vrei să renunţi?"
+msgstr "Tem certeza que deseja sair?"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:211
 #, python-format
 msgid "You have %d download still in progress."
 msgid_plural "You have %d download still in progress."
-msgstr[0] "Ai %d descărcare în derulare."
-msgstr[1] "Ai %d descărcări în derulare."
-msgstr[2] "Ai %d descărcări în derulare."
+msgstr[0] "Você tem %d download ainda em progresso."
+msgstr[1] "Você tem %d downloads ainda em progresso."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:220
 msgid "Unknown Runtime Error"
-msgstr "Eroare de execuţie necunoscută"
+msgstr "Erro desconhecido em tempo de execução"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:221
 #, python-format
 msgid "An unknown error has occurred %s."
-msgstr "O eroare necunoscută a apărut %s."
+msgstr "Ocorreu um erro desconhecido %s."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:75
 msgid "_Save Video..."
-msgstr "_Salvează secvenţa video"
+msgstr "_Salvar Vídeo..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:75
 msgid "Save this video"
-msgstr "Salvează acest fişier"
+msgstr "Salvar este vídeo"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:76
 msgid "_Play / Pause"
-msgstr "_Porneşte / Pauză"
+msgstr "Re_produzir / Pausar"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:77
 msgid "_Fullscreen"
-msgstr "_Tot ecranul"
+msgstr "Tela Cheia (_Fullscreen)"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:80
 msgid "_Remove Channel"
-msgstr "Şter_ge canalul"
+msgstr "_Remover Canal"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:81
 msgid "_Update Channel"
-msgstr "_Actualizează canalul"
+msgstr "At_ualizar Canal"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:82
 msgid "Copy Channel _Link"
-msgstr "Copiaza a_dresa canalului"
+msgstr "Copiar Ata_lho para Canal"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:85
 msgid "_Video"
-msgstr "Secvenţa _video"
+msgstr "_Vídeo"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:86
 msgid "_Open..."
-msgstr "_Deschide"
+msgstr "_Abrir..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:86
 msgid "Open various files"
-msgstr "Deschide diferite fişiere"
+msgstr "Abrir vários arquivos"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:87
 msgid "P_references"
-msgstr "_Preferinţe"
+msgstr "P_referências"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:88
 msgid "_Quit"
-msgstr "_Renunţă"
+msgstr "_Sair"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:88
 msgid "Quit the Program"
-msgstr "Închide programul"
+msgstr "Sair do Programa"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:89
 msgid "_Channel"
@@ -185,15 +191,15 @@ msgstr "_Canal"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:90
 msgid "_Add Channel..."
-msgstr "_Adauga canal..."
+msgstr "_Adicionar Canal..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:91
 msgid "U_pdate All Channels"
-msgstr "Actuali_zează toate canalele"
+msgstr "At_ualizar Todos os Canais"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:92
 msgid "_Help"
-msgstr "A_jutor"
+msgstr "Ajuda (_Help)"
 
 #: ../../portable/compiled_templates/new.py:233
 #: ../../portable/compiled_templates/new.py:569
@@ -208,7 +214,7 @@ msgstr "A_jutor"
 #: ../../portable/compiled_templates/download_item.py:205
 #: ../../portable/compiled_templates/search.py:211
 msgid "Pending Auto Download"
-msgstr "Aştept descărcarea automată"
+msgstr "Download Automático Pendente"
 
 #: ../../portable/compiled_templates/new.py:253
 #: ../../portable/compiled_templates/new.py:589
@@ -223,7 +229,7 @@ msgstr "Aştept descărcarea automată"
 #: ../../portable/compiled_templates/download_item.py:225
 #: ../../portable/compiled_templates/search.py:231
 msgid "Pending Manual Download"
-msgstr "Aştept descărcarea manuală"
+msgstr "Download Manual Pendente"
 
 #: ../../portable/compiled_templates/new.py:277
 #: ../../portable/compiled_templates/new.py:357
@@ -252,7 +258,7 @@ msgstr "Aştept descărcarea manuală"
 #: ../../portable/compiled_templates/search.py:255
 #: ../../portable/compiled_templates/search.py:335
 msgid "Unwatched"
-msgstr "Nevizionat"
+msgstr "Não assistido"
 
 #: ../../portable/compiled_templates/new.py:281
 #: ../../portable/compiled_templates/new.py:311
@@ -291,7 +297,7 @@ msgstr "Nevizionat"
 #: ../../portable/compiled_templates/search.py:289
 #: ../../portable/compiled_templates/search.py:339
 msgid "Save"
-msgstr "Salvează"
+msgstr "Salvar"
 
 #: ../../portable/compiled_templates/new.py:305
 #: ../../portable/compiled_templates/new.py:641
@@ -306,7 +312,7 @@ msgstr "Salvează"
 #: ../../portable/compiled_templates/download_item.py:277
 #: ../../portable/compiled_templates/search.py:283
 msgid "Expires"
-msgstr "Expiră"
+msgstr "Expira em"
 
 #: ../../portable/compiled_templates/new.py:381
 #: ../../portable/compiled_templates/new.py:717
@@ -321,7 +327,7 @@ msgstr "Expiră"
 #: ../../portable/compiled_templates/download_item.py:353
 #: ../../portable/compiled_templates/search.py:359
 msgid "Download Error"
-msgstr "Eroare la descărcare"
+msgstr "Erro no Download"
 
 #: ../../portable/compiled_templates/new.py:777
 #: ../../portable/compiled_templates/tablist.py:212
@@ -331,35 +337,35 @@ msgstr "Eroare la descărcare"
 #: ../../portable/compiled_templates/statictab.py:91
 #: ../../portable/compiled_templates/statictab.py:103
 msgid "New Videos"
-msgstr "Secvenţe video noi"
+msgstr "Novos Vídeos"
 
 #: ../../portable/compiled_templates/new.py:799
 msgid "Expiring"
-msgstr "Expiră"
+msgstr "Expirando"
 
 #: ../../portable/compiled_templates/first_time_intro.py:34
 msgid "Democracy Internet TV: How to Get Started"
-msgstr "Democracy Internet TV: Cum să începem"
+msgstr "Democracy Internet TV: Como Começar"
 
 #: ../../portable/compiled_templates/first_time_intro.py:38
 msgid "GO BIG:"
-msgstr "ÎN MARE:"
+msgstr "GRANDE:"
 
 #: ../../portable/compiled_templates/first_time_intro.py:40
 msgid "This is your fullscreen button. Click it and lean back."
-msgstr "Acesta este butonul pentru tot ecranul. Apasă-l şi lasă-te pe spate."
+msgstr "Este é o botão de tela cheia. Clique nele e relaxe."
 
 #: ../../portable/compiled_templates/first_time_intro.py:44
 msgid "NEW STUFF:"
-msgstr "CE MAI E NOU PRIN ZONĂ:"
+msgstr "COISAS NOVAS:"
 
 #: ../../portable/compiled_templates/first_time_intro.py:46
 msgid ""
 "Blue circles mean the channel has new videos available, green circles mean "
 "you have downloaded videos ready to watch."
 msgstr ""
-"Cercurile albastre înseamnă că avem secvenţe video noi în canal iar cele "
-"verzi că secvenţele video descărcate sunt gata pentru vizionare."
+"Círculos azuis significam que o canal tem novos vídeos disponíveis, círculos "
+"verdes significam que você baixou vídeos que estão prontos para assistir."
 
 #: ../../portable/compiled_templates/first_time_intro.py:48
 msgid ""
@@ -367,9 +373,9 @@ msgid ""
 "onclick=\"eventURL('action:doneWithIntro');\">Go to Channel Guide "
 ">></a></strong>"
 msgstr ""
-"<strong i18n:translate=\"\">Sari peste introducere: <a style=\"color: "
-"#090;\" href=\"#\" onclick=\"eventURL('action:doneWithIntro');\">Du-te la "
-"Ghidul canalului>></a></strong>"
+"<strong i18n:translate=\"\">PULAR INTRO: <a style=\"color: #090;\" "
+"href=\"#\" onclick=\"eventURL('action:doneWithIntro');\">Ir para o Guia de "
+"Canais >></a></strong>"
 
 #: ../../portable/compiled_templates/first_time_intro.py:50
 msgid ""
@@ -377,9 +383,9 @@ msgid ""
 "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
 "channels in the guide are free.</strong>"
 msgstr ""
-"<strong>Adaugă canale:</strong> Ghidul canalului este locaţia de bază pentru "
-"canalele de internet TV. Apasă 'Adaugă' ca să te abonezi la un canal-- "
-"<strong>canalele din ghid sunt gratuite.</strong>"
+"<strong>Adicionar Canais:</strong> O Guia de Canais é sua plataforma para "
+"canais de TV via internet. Clique 'Adicionar' para assisnar um canal-- "
+"<strong>os canais no guia são gratuitos.</strong>"
 
 #: ../../portable/compiled_templates/first_time_intro.py:52
 msgid ""
@@ -387,10 +393,10 @@ msgid ""
 "videos-- publishers can offer big, high quality videos. So don't sit around "
 "waiting for videos: start some downloads and check back later."
 msgstr ""
-"<strong>Nu aştepta:</strong> Democracy este diferit faţă de o pagină web ce "
-"conţine secvenţe video-- editorii pot oferi secvenţe video mari la o "
-"calitate foarte bună. Aşa că nu aştepta secvenţele video: porneşte câteva "
-"descărcări şi verifică mai târziu."
+"<strong>Não Espere:</strong> Democracy é diferente de assistir vídeos em "
+"páginas web-- publicadores podem oferecer vídeos maiores, de alta qualidade. "
+"Então não fique sentado aguardando os vídeos: comece alguns downloads e "
+"verifique depois."
 
 #: ../../portable/compiled_templates/first_time_intro.py:54
 msgid ""
@@ -398,10 +404,10 @@ msgid ""
 "new videos and downloads in the background. Leaving it running means you'll "
 "have new videos when you're ready to watch."
 msgstr ""
-"<strong>Lasă-l pornit:</strong> În mod regulat Democracy Player  verifică "
-"dacă au mai apărut secvenţe video noi în canale şi le descarcă în "
-"background. Lăsându-l pornit înseamnă că vei avea secvenţe video noi când "
-"eşti pregătit pentru vizionare."
+"<strong>Deixe-o Ligado:</strong> Democracy Player verifica com regularidade "
+"os canais em busca de novos vídeos e os baixa em segundo plano. Deixando-o "
+"ligado significa que você terá novos vídeos quando você estiver disposto a "
+"assistir."
 
 #: ../../portable/compiled_templates/first_time_intro.py:56
 msgid ""
@@ -410,97 +416,97 @@ msgid ""
 "room for new videos. You can always keep a video permanently by clicking "
 "'save' and you can set a channel's settings to save videos automatically."
 msgstr ""
-"<strong>Nu vă îngrijoraţi de spaţiul de pe disc:</strong> Ca şi un TiVo, "
-"funcţionalităţile aplicaţiei Democracy Player au un sistem de 'expirare' "
-"care ajută la înlăturarea secvenţelor video mai vechi pentru a face loc "
-"celor noi. Puteţi ţine o secvenţă video permanent apăsând 'Salvează' şi "
-"puteţi specifica setările canalului pentru a salva secvenţele video automat."
+"<strong>Não Se Preocupe Com Espaço Em Disco:</strong> Como um TiVo, "
+"Democracy Player possui um sistema de 'expiração' que ajuda a remover os "
+"vídeos antigos deixando espaço para os novos. Você pode sempre manter vídeos "
+"permanentemente clicando em 'salvar' e você pode configurar um canal para "
+"salvar os vídeos automaticamente."
 
 #: ../../portable/compiled_templates/external_playback.py:47
 #: ../../portable/compiled_templates/external_playback_continue.py:46
 msgid "Democracy - External Playback Template"
-msgstr "Democracy - Şablonul extern de redare"
+msgstr "Democracy - Template Externo de Reprodução"
 
 #: ../../portable/compiled_templates/external_playback.py:62
 msgid ""
 "This file type (${format}) can't be played in the main Democracy window."
 msgstr ""
-"Acest tip de fişier (${format}) nu poate fi rulat în fereastra principală a "
-"aplicaţiei Democracy."
+"Este tipo de arquivo (${format}) não pode ser tocado na janela principal do "
+"Democracy."
 
 #: ../../portable/compiled_templates/external_playback.py:66
 msgid "Play Externally"
-msgstr "Rulează extern"
+msgstr "Usar Tocador Externo"
 
 #: ../../portable/compiled_templates/external_playback.py:75
 msgid "Skip Video ${countdown}"
-msgstr "Sări peste secvenţa video ${countdown}"
+msgstr "Pular Vídeo ${countdown}"
 
 #: ../../portable/compiled_templates/download.py:406
 msgid "Active Downloads"
-msgstr "Descarcări active"
+msgstr "Downloads Ativos"
 
 #: ../../portable/compiled_templates/feed_settings.py:48
 #: ../../portable/compiled_templates/channel.py:2200
 msgid "Auto Download"
-msgstr "Descărcare automată"
+msgstr "Download Automático"
 
 #: ../../portable/compiled_templates/feed_settings.py:56
 #: ../../portable/compiled_templates/channel.py:2210
 msgid "Recommend"
-msgstr "Recomandă"
+msgstr "Recomendado"
 
 #: ../../portable/compiled_templates/feed_settings.py:60
 msgid "Back to Channel"
-msgstr "Înapoi la canal"
+msgstr "Voltar ao Canal"
 
 #: ../../portable/compiled_templates/feed_settings.py:62
 msgid "Channel Settings"
-msgstr "Setările canalului"
+msgstr "Configurações do Canal"
 
 #: ../../portable/compiled_templates/feed_settings.py:64
 msgid "Videos expire after:"
-msgstr "Secvenţa video expiră după:"
+msgstr "Vídeos expiram depois de:"
 
 #: ../../portable/compiled_templates/feed_settings.py:68
 #: ../../portable/compiled_templates/feed_settings.py:75
 msgid "Default"
-msgstr "Standard"
+msgstr "Padrão"
 
 #: ../../portable/compiled_templates/feed_settings.py:122
 msgid "Auto download should:"
-msgstr "Descărcarea auto ar trebui:"
+msgstr "Download automático deve:"
 
 #: ../../portable/compiled_templates/feed_settings.py:155
 msgid ""
 "If I have ${maxnew} ${maxnew2} videos waiting, don't auto download more."
 msgstr ""
-"Daca am ${maxnew} ${maxnew2} secvenţe video ce aşteaptă, nu mai descarc "
-"automat."
+"Se eu possuir ${maxnew} ${maxnew2} vídeos esperando, não faça mais download "
+"automático."
 
 #: ../../portable/compiled_templates/feed_settings.py:157
 msgid "(Keeps channel from hogging disk space)"
-msgstr "(Menţine canalul să nu ocupe prea mult spaţiu pe disc)"
+msgstr "(Evita que o canal fique ocupando espaço em disco)"
 
 #: ../../portable/compiled_templates/feed_settings.py:159
 msgid "Channel URL"
-msgstr "URL-ul canalului"
+msgstr "URL do Canal"
 
 #: ../../portable/compiled_templates/channel.py:2202
 msgid "Settings"
-msgstr "Setări"
+msgstr "Configurações"
 
 #: ../../portable/compiled_templates/channel.py:2230
 msgid "Videos on this Channel"
-msgstr "Secvenţe video în acest canal"
+msgstr "Vídeos neste Canal"
 
 #: ../../portable/compiled_templates/channel.py:2263
 msgid "Watched"
-msgstr "Vizionat"
+msgstr "Assistido"
 
 #: ../../portable/compiled_templates/channel.py:2275
 msgid "Saved"
-msgstr "Salvat"
+msgstr "Salvo"
 
 #: ../../portable/compiled_templates/tablist.py:165
 #: ../../portable/compiled_templates/tablist.py:172
@@ -509,7 +515,7 @@ msgstr "Salvat"
 #: ../../portable/compiled_templates/statictab.py:39
 #: ../../portable/compiled_templates/statictab.py:46
 msgid "Channel Guide"
-msgstr "Ghid canale"
+msgstr "Guia do Canal"
 
 #: ../../portable/compiled_templates/tablist.py:186
 #: ../../portable/compiled_templates/tablist.py:193
@@ -519,7 +525,7 @@ msgstr "Ghid canale"
 #: ../../portable/compiled_templates/statictab.py:60
 #: ../../portable/compiled_templates/statictab.py:67
 msgid "My Collection"
-msgstr "Colecţia mea"
+msgstr "Minha coleção"
 
 #: ../../portable/compiled_templates/tablist.py:243
 #: ../../portable/compiled_templates/tablist.py:250
@@ -528,80 +534,79 @@ msgstr "Colecţia mea"
 #: ../../portable/compiled_templates/statictab.py:117
 #: ../../portable/compiled_templates/statictab.py:124
 msgid "Search"
-msgstr "Caută"
+msgstr "Procurar"
 
 #: ../../portable/compiled_templates/search.py:375
 msgid "Nothing to display.<br></br> Enter a query in the search field above."
-msgstr ""
-"Nu este nimic de afişat.<br></br> Introdu un criteriu în câmpul de căutare "
-"de mai sus."
+msgstr "Nada a exibir.<br></br> Entre uma expressão no campo de busca acima."
 
 #: ../../portable/compiled_templates/search.py:380
 msgid "Searching..."
-msgstr "Caut..."
+msgstr "Procurando..."
 
 #: ../../portable/compiled_templates/search.py:409
 msgid "Video Search"
-msgstr "Căutare secvenţe video"
+msgstr "Proucurar Vídeo"
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:41
 msgid "Simple translation"
-msgstr "Traducere simplă"
+msgstr "Tradução simples"
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:55
+#, fuzzy
 msgid "truck stop in a ${can}"
-msgstr "opreşte camionul într-o ${can}"
+msgstr "Parada de caminhões em ${can}"
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:59
 msgid ""
 "This is a ${car} and this is a ${truck} <span>This text is <b "
 "style=\"color:red\">raw</b> text</span>"
 msgstr ""
-"Aceasta este o ${maşină} şi acesta este un ${camion} <span> Acest text este "
-"test <b>neprelucrat</b></span>"
+"Esse é um ${car} e esse é um ${truck} <span>Esse é um texto <b "
+"style=\"color:red\">cru - não convertido</b></span>"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:54
 msgid "Continue To Next Video"
-msgstr "Continuă cu următoarea secvenţă video"
+msgstr "Continuar com o Próximo Vídeo"
 
 #: ../../portable/dl_daemon/download.py:849
 msgid "Could not connect to server"
-msgstr "Nu mă pot conecta la server"
+msgstr "Não foi possível conectar-se ao servidor"
 
 #: ../../portable/dl_daemon/download.py:851
 #, python-format
 msgid "Could not connect to server: %s"
-msgstr "Nu mă pot conecta la server: %s"
+msgstr "Não foi possível conectar-se ao servidor: %s"
 
 #: ../../portable/dialogs.py:59
 msgid "Ok"
-msgstr "În regulă"
+msgstr "Ok"
 
 #: ../../portable/dialogs.py:60
 msgid "Cancel"
-msgstr "Renunţă"
+msgstr "Cancelar"
 
 #: ../../portable/dialogs.py:61
 msgid "Yes"
-msgstr "Da"
+msgstr "Sim"
 
 #: ../../portable/dialogs.py:62
 msgid "No"
-msgstr "Nu"
+msgstr "Não"
 
 #: ../../portable/dialogs.py:63
 msgid "Quit"
-msgstr "Renunţă"
+msgstr "Sair"
 
 #: ../../portable/dialogs.py:64
 #: ../../platform/gtk-x11/glade/democracy.glade.h:24
 msgid "Migrate"
-msgstr "Migrează"
+msgstr "Migrar"
 
 #: ../../portable/dialogs.py:65
 #: ../../platform/gtk-x11/glade/democracy.glade.h:16
 msgid "Don't Migrate"
-msgstr "Nu migra"
+msgstr "Não Migrar"
 
 #: ../../portable/app.py:664
 #, python-format
@@ -612,11 +617,11 @@ msgid ""
 "Recent changes may be lost.\n"
 "Quit Anyway?"
 msgstr ""
-"%s nu a putut să-şi salveze baza de date: %s.\\n\n"
-"Sugerăm ştergerea fişierelor de pe discul plin sau ştergerea câtorva filme "
-"din colecţia ta.\n"
-"Schimbările recente pot fi pierdute.\n"
-"Renunţi oricum?"
+"%s não pôde salvar a base de dados: %s.\n"
+"Sugerimos que delete arquivos do disco ou simplesmente delete alguns filmes "
+"de sua coleção.\n"
+"Mudanças recentes podem ter sido perdidas.\n"
+"Sair de qualquer forma?"
 
 #: ../../portable/app.py:666
 #, python-format
@@ -625,9 +630,9 @@ msgid ""
 "Recent changes may be lost.\n"
 "Quit Anyway?"
 msgstr ""
-"%s nu a reuşit să-şi salveze baza de date: %s.\n"
-"Schimbările recente pot fi pierdute.\n"
-"Renunţi oricum?"
+"%s não pôde salvar a base de dados: %s.\n"
+"Mudanças recentes podem ter sido perdidas.\n"
+"Sair de qualquer forma?"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:1
 msgid ""
@@ -638,45 +643,45 @@ msgid ""
 "1 month\n"
 "Never"
 msgstr ""
-"1 zi\n"
-"3 zile\n"
-"6 zile\n"
-"10 zile\n"
-"1 luna\n"
-"Niciodată"
+"1 dia\n"
+"3 dias\n"
+"6 dias\n"
+"10 dias\n"
+"1 mês\n"
+"Nunca"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:7
 msgid "<b>Channels</b>"
-msgstr "<b>Canale</b>"
+msgstr "<b>Canais</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:8
 msgid "<b>Disk Space</b>"
-msgstr "<b>Spaţiu pe disc</b>"
+msgstr "<b>Espaço em disco</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:9
 msgid "<b>Downloads</b>"
-msgstr "<b>Descărcări</b>"
+msgstr "<b>Downloads</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:10
 msgid "<b>Movies Directory</b>"
-msgstr "<b>Directorul cu filme</b>"
+msgstr "<b>Diretório de Filmes</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:11
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:4
 msgid "Add Channel"
-msgstr "Adaugă canal"
+msgstr "Adicionar Canal"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:12
 msgid "By default, videos expire after"
-msgstr "În mod standard secvenţele video expiră după"
+msgstr "Por padrão, os vídeos expiram depois de"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:13
 msgid "Check Channels for new content"
-msgstr "Verfic canalul daca are conţinut nou"
+msgstr "Verificar Canais por novos conteúdos"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:14
 msgid "Democracy - Add Channel"
-msgstr "Democracy - Adaugă canal"
+msgstr "Democracy - Adicionar Canal"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:15
 msgid "Democracy Player"
@@ -684,11 +689,11 @@ msgstr "Democracy Player"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:17
 msgid "Don't start a download if it leaves less than"
-msgstr "Nu porni o descărcare dacă rămâne mai puţin de"
+msgstr "Não inicie um download se ele deixar menos que"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:18
 msgid "Enter the URL of the channel to add"
-msgstr "Introdu URL-ul canalului de adăugat"
+msgstr "Entre com a URL do canal a adicionar"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:19
 msgid ""
@@ -696,41 +701,42 @@ msgid ""
 "Every hour\n"
 "Manually"
 msgstr ""
-"Fiecare 30 minute\n"
-"Fiecare oră\n"
-"Manual"
+"A cada 30 minutos\n"
+"A cada hora\n"
+"Manualmente"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:22
 msgid "GB free"
-msgstr "GB liberi"
+msgstr "GB livres"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:23
 msgid "KB/s when my computer is active"
-msgstr "KB/s când calculatorul meu este activ"
+msgstr "KB/s quando meu computador estiver ativo"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:25
 msgid "Migrate existing movies?"
-msgstr "Migrez filmele existente?"
+msgstr "Migrar filmes existentes?"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:26
 msgid "Preferences"
-msgstr "Preferinţe"
+msgstr "Preferências"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:27
 msgid "Select Movies Directory"
-msgstr "Selectează directorul cu filme"
+msgstr "Selecione o Diretório de Filmes"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:28
 msgid "Store downloaded movies in"
-msgstr "Pastrează filmele descărcate în"
+msgstr "Armazene os filmes baixados em"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:29
 msgid "To avoid slowdowns, limit upstream to"
-msgstr "Pentru a evita descărcările lente, mareşte stream-ul la"
+msgstr ""
+"Para evitar diminuição da velocidade, limite a transferência de dados a"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:30
 msgid "Volume:"
-msgstr "Volum:"
+msgstr "Volume:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:31
 msgid ""
@@ -738,10 +744,9 @@ msgid ""
 "migrate your existing downloads there?  (Currently dowloading movies will "
 "not be moved until they finish.)"
 msgstr ""
-"Ai selectat un director nou în care să descarci filmele. Ar trebui ca "
-"Democracy să mute fişierele descărcate deja în această nouă locaţie? "
-"(Filmele care se descarcă în prezent nu vor fi mutate până ce nu se termină "
-"de descărcat.)"
+"Você selecionou uma nova pasta para baixar os filmes. O Democracy deve "
+"migrar seus downloads existentes para lá? (Os filmes que estão sendo "
+"baixados atualmente não serão movidos até que tenham terminado.)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:1
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:1
@@ -761,34 +766,34 @@ msgstr " "
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:2
 msgid "'"
-msgstr "'"
+msgstr "\""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:5
 msgid "Please enter the URL of the channel you'd like to add."
-msgstr "Te rog să introduci URL-ul canalului pe care ai vrea să-l adaugi."
+msgstr "Por favor coloque a URL do canal que você deseja adicionar."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:5
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
 "videos, and descriptions may look funny."
 msgstr ""
-"Dar noi vom face tot ceea ce e posibil ca să preluam fişierele. E posibil să "
-"necesite timp suplimentar pentru a afişa secvenţele video iar descrierile "
-"pot parea distractive."
+"Mas faremos o melhor que pudermos para tentar capturar os arquivos. Pode "
+"levar um pouco mais de tempo para listar os vídeos, e as descrições podem "
+"parecer engraçadas."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:4
 msgid "Channel is not compatible with Democracy!"
-msgstr "Canalul nu este compatibil cu Democracy!"
+msgstr "Canal não compatível com o Democracy!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:7
 msgid "Please contact the publishers of"
-msgstr "Te rog contactează editorul lui"
+msgstr "Por favor contate os veiculadores do"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:8
 msgid ""
 "and ask if they can supply a feed in a format that will work with Democracy."
 msgstr ""
-"şi întreabă dacă ei pot furniza o sursă într-un format care este suportat de "
+"e verifique se eles podem fornecer uma fonte em formato compatível com o "
 "Democracy."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:5
@@ -796,46 +801,47 @@ msgid ""
 "Please enter the username and password given to you by this channel's "
 "publisher."
 msgstr ""
-"Te rog specifică numele de utilizator şi parola ce ti-au fost furnizate de "
-"către editorul canalului."
+"Por favor entre com o usuário e a senha fornecidos pelos veiculadores do "
+"canal."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:4
 msgid "Question"
-msgstr "Întrebare"
+msgstr "Pergunta"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:5
 msgid ""
 "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
 "$publisher."
 msgstr ""
-"$longAppName versiunea $appVersion ($appRevision); drepturi de autor (c) "
-"2005, 2006 $publisher."
+"$longAppName versão $appVersion ($appRevision); copyright (c) 2005, 2006 "
+"$publisher."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:4
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:5
 msgid "About $longAppName"
-msgstr "Despre $longAppName"
+msgstr "Sobre $longAppName"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:9
 msgid "Copy log to clipboard"
-msgstr "Copiază log-ul în memorie"
+msgstr "Copiar log para a área de transferência"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:8
 msgid "Open up the bug tracker"
-msgstr "Deschide catalogul cu erori"
+msgstr "Abrir o bug tracker"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5
 msgid "Please help us fix it. Copy and paste all the"
-msgstr "Te rog ajută-ne să-l reparăm. Copiază şi reproduce toate"
+msgstr "Por favor ajude-nos a corrigí-lo. Copie e cole todas as"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6
 msgid ""
 "information into our bug tracker and tell us what you were doing when the"
-msgstr "informaţiile în catalogul nostru cu erori şi spune-ne ce făceai când"
+msgstr ""
+"informações em nosso bug tracker e diga-nos o que estava fazendo quando o"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:8
 msgid "problem occurred."
-msgstr "a apărut problema."
+msgstr "problema ocorreu."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:10
 msgid ""
@@ -843,28 +849,15 @@ msgid ""
 "errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
 "with your help we're fixing problems fast!"
 msgstr ""
-"Apoi, te rog, restartează Democracy Player-ul (sau tu poţi obţine erori "
-"asemănătoare). Scuze pentru neplăceri. Democracy Player este încă în fază "
-"beta dar cu ajutorul tău putem rezolva problemele repede !"
+"Em seguida, por favor reinicie o Democracy Player (ou você pode continuar "
+"recebendo erros semelhantes). Desculpe-nos pelo inconveniente. Democracy "
+"Palyer ainda está em fase beta, mas com sua ajuda nós estamos corrigindo "
+"rapidamente os problemas."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:4
 msgid "You found a bug in Democracy!"
-msgstr "Ai găsit o eroare în Democracy!"
+msgstr "Você detectou um bug no Democracy!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:4
 msgid "$longAppName"
 msgstr "$longAppName"
-
-#, python-format
-#~ msgid "You have %d download%s still in progress."
-#~ msgstr "Aii %d descărcări%s înca în derulare."
-
-#~ msgid "Feed Title"
-#~ msgstr "Titlul fluxului"
-
-#~ msgid ""
-#~ "This is a ${car} and this is a ${truck} <span> This text is <b>raw</b> "
-#~ "text</span>"
-#~ msgstr ""
-#~ "Aceasta este o ${car} şi acesta este un ${truck} <span> Acest text este test "
-#~ "<b>neprelucrat</b></span>"

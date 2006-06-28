@@ -1,27 +1,138 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-24 13:58-0400\n"
-"PO-Revision-Date: 2006-06-01 14:20+0100\n"
-"Last-Translator: stefano <slacentra@gmail.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Project-Id-Version: Democracy\n"
+"POT-Creation-Date: 2006-05-31 18:38-0400\n"
+"PO-Revision-Date: 2006-06-24 12:58+0000\n"
+"Last-Translator: Emanuele Vulcano <millenomi@gmail.com>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:107
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6
+msgid "Username:"
+msgstr "Nome utente:"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:118
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:7
+msgid "Password:"
+msgstr "Password:"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:133
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:4
+msgid "Channel requires authentication"
+msgstr "Il Canale richiede l'autenticazione"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:133
+#, python-format
+msgid "%s requires a username and password for \"%s\"."
+msgstr "%s richiede un Nome utente e parola segreta per \"%s\"."
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:146
+msgid "Not a DTV-style channel"
+msgstr "Non è un canale \"stile DTV\""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:147
+#, python-format
+msgid ""
+"But we'll try our best to grab the files.\n"
+"- It may take time to list the videos\n"
+"- Descriptions may look funny\n"
+"\n"
+"Please contact the publishers of %s and ask if they have a DTV-style channel."
+msgstr ""
+"Proverò comunque a scaricare i file. Attenzione:\n"
+"- Ci potrebbe volere un po' di tempo a mostrare la lista dei video;\n"
+"- Le descrizioni possono apparire in modo strano.\n"
+"\n"
+"Per risolvere, contatta gli editori dei %s e chiedi se hanno un canale stile "
+"DTV."
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:148
+msgid "Continue"
+msgstr "Continua"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:158
+msgid "DTV Version Alert"
+msgstr "Avviso: Nuova versione di DTV"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:159
+msgid ""
+"A new version of DTV is available.\n"
+"\n"
+"Would you like to download it now?"
+msgstr ""
+"Una nuova versione di DTV è disponibile.\n"
+"\n"
+"Vuoi scaricarla ora?"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:166
+msgid "DTV Version Check"
+msgstr "Controllo Versione DTV"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:167
+msgid "This version of DTV is up to date."
+msgstr "Questa versione di DTV è aggiornata."
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:172
+#: ../../portable/app.py:661
+#, python-format
+msgid "%s database save failed"
+msgstr "%s non è riusc saito alvare il proprio database"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:174
+#, python-format
+msgid ""
+"%s was unable to save its database: %s.\n"
+"Recent changes may be lost."
+msgstr ""
+"%s non è riuscito a salvare il proprio database: %s.\n"
+"Gli ultimi cambiamenti possono essere andati persi."
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:179
+msgid "Remove Channel"
+msgstr "Rimuovi Canale"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:180
+#, python-format
+msgid ""
+"Are you sure you want to <b>remove</b> the channel\n"
+"   '<b>%s</b>'?\n"
+"<b>This operation cannot be undone.</b>"
+msgstr ""
+"Sicuro di voler <b>rimuovere</b> il canale\n"
+"   '<b>%s</b>'?\n"
+"<b>Questa operazione non potrà essere annullata.</b>"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:210
+msgid "Are you sure you want to quit?"
+msgstr "Sei sicuro di voler uscire?"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:211
+#, python-format
+msgid "You have %d download still in progress."
+msgid_plural "You have %d download still in progress."
+msgstr[0] "Hai ancora %d download in corso."
+msgstr[1] "Hai ancora %d download in corso."
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:220
+msgid "Unknown Runtime Error"
+msgstr "Errore sconosciuto di runtime"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:221
+#, python-format
+msgid "An unknown error has occurred %s."
+msgstr "Si è verificato un errore sconosciuto %s."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:75
 msgid "_Save Video..."
-msgstr "_Salva il video"
+msgstr "_Salva Video..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:75
 msgid "Save this video"
-msgstr "Salva questo video"
+msgstr "Salva questo video."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:76
 msgid "_Play / Pause"
@@ -29,11 +140,11 @@ msgstr "_Riproduci / Pausa"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:77
 msgid "_Fullscreen"
-msgstr "_A tutto schermo"
+msgstr "_A schermo pieno"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:80
 msgid "_Remove Channel"
-msgstr "_Rimuovi canale"
+msgstr "_Rimuovi Canale"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:81
 msgid "_Update Channel"
@@ -41,7 +152,7 @@ msgstr "Aggiorna Canale"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:82
 msgid "Copy Channel _Link"
-msgstr "Copia _Link Canale"
+msgstr "Copia _Link al Canale"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:85
 msgid "_Video"
@@ -49,7 +160,7 @@ msgstr "_Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:86
 msgid "_Open..."
-msgstr "_Apri"
+msgstr "_Apri..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:86
 msgid "Open various files"
@@ -65,7 +176,7 @@ msgstr "_Esci"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:88
 msgid "Quit the Program"
-msgstr "Esci dall'applicazione"
+msgstr "Esci dal Programma"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:89
 msgid "_Channel"
@@ -73,158 +184,55 @@ msgstr "_Canale"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:90
 msgid "_Add Channel..."
-msgstr "_Aggiungi canale..."
+msgstr "_Aggiungi Canale..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:91
 msgid "U_pdate All Channels"
-msgstr "A_ggiorna tutti i canali"
+msgstr "A_ggiorna Tutti i Canali"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:92
 msgid "_Help"
-msgstr "Ai_uto"
+msgstr "_Aiuto"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:107
-msgid "Username:"
-msgstr "Nome utente:"
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:118
-msgid "Password:"
-msgstr "Password:"
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:133
-msgid "Channel requires authentication"
-msgstr "Il canale richiede l'autenticazione"
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:133
-#, python-format
-msgid "%s requires a username and password for \"%s\"."
-msgstr "%s richiede nome utente e password per \"%s\"."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:146
-msgid "Not a DTV-style channel"
-msgstr "Canale non compatibile con DTV"
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:147
-#, python-format
-msgid ""
-"But we'll try our best to grab the files.\n"
-"- It may take time to list the videos\n"
-"- Descriptions may look funny\n"
-"\n"
-"Please contact the publishers of %s and ask if they have a DTV-style channel."
-msgstr ""
-"Ma noi faremo del nostro meglio per recuperare i files.\n"
-"- Ci può volere tempo per listare i video\n"
-"- Le descrizioni potrebbero essere bizzarre\n"
-"\n"
-"Per favore contatta l'editore di %s e chiedi se hanno un canale compatibile con DTV."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:148
-msgid "Continue"
-msgstr "Continua"
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:158
-msgid "DTV Version Alert"
-msgstr "Avvertimento aggiornamento DTV"
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:159
-msgid ""
-"A new version of DTV is available.\n"
-"\n"
-"Would you like to download it now?"
-msgstr ""
-"È disponibile una nuova versione di DTV.\n"
-"\n"
-"Vuoi scaricarla adesso?"
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:166
-msgid "DTV Version Check"
-msgstr "Controllo versione DTV"
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:167
-msgid "This version of DTV is up to date."
-msgstr "Questa versione di DTV è aggiornata."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:172
-#: ../../portable/app.py:635
-#, python-format
-msgid "%s database save failed"
-msgstr "Il salvataggio di %s nel database è fallito"
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:174
-#, python-format
-msgid ""
-"%s was unable to save its database: %s.\n"
-"Recent changes may be lost."
-msgstr ""
-"%s non ha potuto registrare il database: %s.\n"
-"Modificazioni recenti potrebbero essere andate perse."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:179
-msgid "Remove Channel"
-msgstr "Rimuovi canale"
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:180
-#, python-format
-msgid ""
-"Are you sure you want to <b>remove</b> the channel\n"
-"   '<b>%s</b>'?\n"
-"<b>This operation cannot be undone.</b>"
-msgstr ""
-"Sei sicuro di voler <b>rimuovere</b> il canale\n"
-"   '<b>%s</b>'?\n"
-"<b>Questa operazione è irreversibile.</b>"
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:210
-msgid "Are you sure you want to quit?"
-msgstr "Sei sicuro di volere uscire dall'applicazione?"
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:211
-#, python-format
-msgid "You have %d download%s still in progress."
-msgstr "Hai ancora %d download%s in corso."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:220
-msgid "Unknown Runtime Error"
-msgstr "Errore d'esecuzione ignoto"
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:221
-#, python-format
-msgid "An unknown error has occurred %s."
-msgstr "Si è verificato un errore sconosciuto %s."
-
-#: ../../portable/compiled_templates/search.py:211
+#: ../../portable/compiled_templates/new.py:233
+#: ../../portable/compiled_templates/new.py:569
+#: ../../portable/compiled_templates/download.py:228
 #: ../../portable/compiled_templates/channel.py:235
 #: ../../portable/compiled_templates/channel.py:571
 #: ../../portable/compiled_templates/channel.py:907
 #: ../../portable/compiled_templates/channel.py:1243
 #: ../../portable/compiled_templates/channel.py:1579
 #: ../../portable/compiled_templates/channel.py:1915
-#: ../../portable/compiled_templates/download_item.py:205
-#: ../../portable/compiled_templates/download.py:228
 #: ../../portable/compiled_templates/library.py:228
-#: ../../portable/compiled_templates/new.py:233
-#: ../../portable/compiled_templates/new.py:569
+#: ../../portable/compiled_templates/download_item.py:205
+#: ../../portable/compiled_templates/search.py:211
+#, fuzzy
 msgid "Pending Auto Download"
-msgstr "Download automatico in attesa"
+msgstr "In attesa dell'autoscaricamento"
 
-#: ../../portable/compiled_templates/search.py:231
+#: ../../portable/compiled_templates/new.py:253
+#: ../../portable/compiled_templates/new.py:589
+#: ../../portable/compiled_templates/download.py:248
 #: ../../portable/compiled_templates/channel.py:255
 #: ../../portable/compiled_templates/channel.py:591
 #: ../../portable/compiled_templates/channel.py:927
 #: ../../portable/compiled_templates/channel.py:1263
 #: ../../portable/compiled_templates/channel.py:1599
 #: ../../portable/compiled_templates/channel.py:1935
-#: ../../portable/compiled_templates/download_item.py:225
-#: ../../portable/compiled_templates/download.py:248
 #: ../../portable/compiled_templates/library.py:248
-#: ../../portable/compiled_templates/new.py:253
-#: ../../portable/compiled_templates/new.py:589
+#: ../../portable/compiled_templates/download_item.py:225
+#: ../../portable/compiled_templates/search.py:231
+#, fuzzy
 msgid "Pending Manual Download"
-msgstr "Download manuale in attesa"
+msgstr "In attesa di download manuale"
 
-#: ../../portable/compiled_templates/search.py:255
-#: ../../portable/compiled_templates/search.py:335
+#: ../../portable/compiled_templates/new.py:277
+#: ../../portable/compiled_templates/new.py:357
+#: ../../portable/compiled_templates/new.py:613
+#: ../../portable/compiled_templates/new.py:693
+#: ../../portable/compiled_templates/new.py:787
+#: ../../portable/compiled_templates/download.py:272
+#: ../../portable/compiled_templates/download.py:352
 #: ../../portable/compiled_templates/channel.py:279
 #: ../../portable/compiled_templates/channel.py:359
 #: ../../portable/compiled_templates/channel.py:615
@@ -238,23 +246,24 @@ msgstr "Download manuale in attesa"
 #: ../../portable/compiled_templates/channel.py:1959
 #: ../../portable/compiled_templates/channel.py:2039
 #: ../../portable/compiled_templates/channel.py:2251
-#: ../../portable/compiled_templates/download_item.py:249
-#: ../../portable/compiled_templates/download_item.py:329
-#: ../../portable/compiled_templates/download.py:272
-#: ../../portable/compiled_templates/download.py:352
 #: ../../portable/compiled_templates/library.py:272
 #: ../../portable/compiled_templates/library.py:352
-#: ../../portable/compiled_templates/new.py:277
-#: ../../portable/compiled_templates/new.py:357
-#: ../../portable/compiled_templates/new.py:613
-#: ../../portable/compiled_templates/new.py:693
-#: ../../portable/compiled_templates/new.py:787
+#: ../../portable/compiled_templates/download_item.py:249
+#: ../../portable/compiled_templates/download_item.py:329
+#: ../../portable/compiled_templates/search.py:255
+#: ../../portable/compiled_templates/search.py:335
 msgid "Unwatched"
 msgstr "Non visto"
 
-#: ../../portable/compiled_templates/search.py:259
-#: ../../portable/compiled_templates/search.py:289
-#: ../../portable/compiled_templates/search.py:339
+#: ../../portable/compiled_templates/new.py:281
+#: ../../portable/compiled_templates/new.py:311
+#: ../../portable/compiled_templates/new.py:361
+#: ../../portable/compiled_templates/new.py:617
+#: ../../portable/compiled_templates/new.py:647
+#: ../../portable/compiled_templates/new.py:697
+#: ../../portable/compiled_templates/download.py:276
+#: ../../portable/compiled_templates/download.py:306
+#: ../../portable/compiled_templates/download.py:356
 #: ../../portable/compiled_templates/channel.py:283
 #: ../../portable/compiled_templates/channel.py:313
 #: ../../portable/compiled_templates/channel.py:363
@@ -273,117 +282,173 @@ msgstr "Non visto"
 #: ../../portable/compiled_templates/channel.py:1963
 #: ../../portable/compiled_templates/channel.py:1993
 #: ../../portable/compiled_templates/channel.py:2043
-#: ../../portable/compiled_templates/download_item.py:253
-#: ../../portable/compiled_templates/download_item.py:283
-#: ../../portable/compiled_templates/download_item.py:333
-#: ../../portable/compiled_templates/download.py:276
-#: ../../portable/compiled_templates/download.py:306
-#: ../../portable/compiled_templates/download.py:356
 #: ../../portable/compiled_templates/library.py:276
 #: ../../portable/compiled_templates/library.py:306
 #: ../../portable/compiled_templates/library.py:356
-#: ../../portable/compiled_templates/new.py:281
-#: ../../portable/compiled_templates/new.py:311
-#: ../../portable/compiled_templates/new.py:361
-#: ../../portable/compiled_templates/new.py:617
-#: ../../portable/compiled_templates/new.py:647
-#: ../../portable/compiled_templates/new.py:697
+#: ../../portable/compiled_templates/download_item.py:253
+#: ../../portable/compiled_templates/download_item.py:283
+#: ../../portable/compiled_templates/download_item.py:333
+#: ../../portable/compiled_templates/search.py:259
+#: ../../portable/compiled_templates/search.py:289
+#: ../../portable/compiled_templates/search.py:339
 msgid "Save"
 msgstr "Salva"
 
-#: ../../portable/compiled_templates/search.py:283
+#: ../../portable/compiled_templates/new.py:305
+#: ../../portable/compiled_templates/new.py:641
+#: ../../portable/compiled_templates/download.py:300
 #: ../../portable/compiled_templates/channel.py:307
 #: ../../portable/compiled_templates/channel.py:643
 #: ../../portable/compiled_templates/channel.py:979
 #: ../../portable/compiled_templates/channel.py:1315
 #: ../../portable/compiled_templates/channel.py:1651
 #: ../../portable/compiled_templates/channel.py:1987
-#: ../../portable/compiled_templates/download_item.py:277
-#: ../../portable/compiled_templates/download.py:300
 #: ../../portable/compiled_templates/library.py:300
-#: ../../portable/compiled_templates/new.py:305
-#: ../../portable/compiled_templates/new.py:641
+#: ../../portable/compiled_templates/download_item.py:277
+#: ../../portable/compiled_templates/search.py:283
 msgid "Expires"
-msgstr "Scaduto"
+msgstr "Scade il"
 
-#: ../../portable/compiled_templates/search.py:359
+#: ../../portable/compiled_templates/new.py:381
+#: ../../portable/compiled_templates/new.py:717
+#: ../../portable/compiled_templates/download.py:376
 #: ../../portable/compiled_templates/channel.py:383
 #: ../../portable/compiled_templates/channel.py:719
 #: ../../portable/compiled_templates/channel.py:1055
 #: ../../portable/compiled_templates/channel.py:1391
 #: ../../portable/compiled_templates/channel.py:1727
 #: ../../portable/compiled_templates/channel.py:2063
-#: ../../portable/compiled_templates/download_item.py:353
-#: ../../portable/compiled_templates/download.py:376
 #: ../../portable/compiled_templates/library.py:376
-#: ../../portable/compiled_templates/new.py:381
-#: ../../portable/compiled_templates/new.py:717
+#: ../../portable/compiled_templates/download_item.py:353
+#: ../../portable/compiled_templates/search.py:359
 msgid "Download Error"
-msgstr "Errore di download"
+msgstr "Errore di Scaricamento"
 
-#: ../../portable/compiled_templates/search.py:375
-msgid "Nothing to display.<br></br> Enter a query in the search field above."
-msgstr "Nessun risultato da visualizzare.<br></br> Inserisci una richiesta nel campo di ricerca qui sopra."
-
-#: ../../portable/compiled_templates/search.py:380
-msgid "Searching..."
-msgstr "Ricerca in corso..."
-
-#: ../../portable/compiled_templates/search.py:409
-msgid "Video Search"
-msgstr "Ricerca video"
-
-#: ../../portable/compiled_templates/statictab.py:32
-#: ../../portable/compiled_templates/statictab.py:39
-#: ../../portable/compiled_templates/statictab.py:46
-#: ../../portable/compiled_templates/tablist.py:165
-#: ../../portable/compiled_templates/tablist.py:172
-#: ../../portable/compiled_templates/tablist.py:179
-msgid "Channel Guide"
-msgstr "Guida canali"
-
-#: ../../portable/compiled_templates/statictab.py:53
-#: ../../portable/compiled_templates/statictab.py:60
-#: ../../portable/compiled_templates/statictab.py:67
-#: ../../portable/compiled_templates/tablist.py:186
-#: ../../portable/compiled_templates/tablist.py:193
-#: ../../portable/compiled_templates/tablist.py:200
-#: ../../portable/compiled_templates/library.py:406
-msgid "My Collection"
-msgstr "Mia collezione"
-
-#: ../../portable/compiled_templates/statictab.py:79
-#: ../../portable/compiled_templates/statictab.py:91
-#: ../../portable/compiled_templates/statictab.py:103
+#: ../../portable/compiled_templates/new.py:777
 #: ../../portable/compiled_templates/tablist.py:212
 #: ../../portable/compiled_templates/tablist.py:224
 #: ../../portable/compiled_templates/tablist.py:236
-#: ../../portable/compiled_templates/new.py:777
+#: ../../portable/compiled_templates/statictab.py:79
+#: ../../portable/compiled_templates/statictab.py:91
+#: ../../portable/compiled_templates/statictab.py:103
 msgid "New Videos"
-msgstr "Nuovi video"
+msgstr "Nuovi Video"
 
-#: ../../portable/compiled_templates/statictab.py:110
-#: ../../portable/compiled_templates/statictab.py:117
-#: ../../portable/compiled_templates/statictab.py:124
-#: ../../portable/compiled_templates/tablist.py:243
-#: ../../portable/compiled_templates/tablist.py:250
-#: ../../portable/compiled_templates/tablist.py:257
-msgid "Search"
-msgstr "Cerca"
+#: ../../portable/compiled_templates/new.py:799
+msgid "Expiring"
+msgstr "In scadenza"
 
-#: ../../portable/compiled_templates/external_playback_continue.py:46
+#: ../../portable/compiled_templates/first_time_intro.py:34
+msgid "Democracy Internet TV: How to Get Started"
+msgstr "Democrazia Internet TV: Come iniziare"
+
+#: ../../portable/compiled_templates/first_time_intro.py:38
+msgid "GO BIG:"
+msgstr "VAI GRANDE:"
+
+#: ../../portable/compiled_templates/first_time_intro.py:40
+msgid "This is your fullscreen button. Click it and lean back."
+msgstr ""
+"Questo è il bottone per lo schermo pieno. Cliccalo e vai a stenderti un po'"
+
+#: ../../portable/compiled_templates/first_time_intro.py:44
+msgid "NEW STUFF:"
+msgstr "NOVITA':"
+
+#: ../../portable/compiled_templates/first_time_intro.py:46
+msgid ""
+"Blue circles mean the channel has new videos available, green circles mean "
+"you have downloaded videos ready to watch."
+msgstr ""
+"I cerchi blu indicano i video disponibili nel canale, i cerchi verdi "
+"indicano che i video scaricati sono pronti per essere guardati."
+
+#: ../../portable/compiled_templates/first_time_intro.py:48
+msgid ""
+"<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
+"onclick=\"eventURL('action:doneWithIntro');\">Go to Channel Guide "
+">></a></strong>"
+msgstr ""
+"<strong i18n:translate=\"\">SALTA INTRODUZIONE: <a style=\"color: #090;\" "
+"href=\"#\" onclick=\"eventURL('action:doneWithIntro');\">Vai alla Guida "
+"Canali >></a></strong>"
+
+#: ../../portable/compiled_templates/first_time_intro.py:50
+msgid ""
+"<strong>Add Channels:</strong> The Channel Guide is your home base for "
+"internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
+"channels in the guide are free.</strong>"
+msgstr ""
+"<strong>Aggiungi Canale:</strong> La Guida Canali è la tua guida per i "
+"canali di internet TV. Clicca 'ADD' per sottoscrivere il canale-- <strong>i "
+"canali della guida sono gratuiti.</strong>"
+
+#: ../../portable/compiled_templates/first_time_intro.py:52
+#, fuzzy
+msgid ""
+"<strong>Don't Wait:</strong> Democracy is different than watching webpage "
+"videos-- publishers can offer big, high quality videos. So don't sit around "
+"waiting for videos: start some downloads and check back later."
+msgstr ""
+"<strong>Non Aspettare:</strong> Democrazia è diverso dai siti web video-- "
+"gli editori possono offrire video di grande dimensione e qualità. Non si "
+"deve attendere per i video: scaricane quanti ne vuoi e guardali con calma in "
+"seguito."
+
+#: ../../portable/compiled_templates/first_time_intro.py:54
+#, fuzzy
+msgid ""
+"<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
+"new videos and downloads in the background. Leaving it running means you'll "
+"have new videos when you're ready to watch."
+msgstr ""
+"<strong>Lascialo Lavorare per Te:</strong> Il lettore Democrazia controlla "
+"regolarmente i canali cercando nuovi video e li scarica in sottofondo. "
+"Lasciandolo lavorare avrai i tuoi nuovi video, pronti per quando sarai "
+"disponibile a guardarli."
+
+#: ../../portable/compiled_templates/first_time_intro.py:56
+msgid ""
+"<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
+"features an 'expiration' system that helps clean out older videos to make "
+"room for new videos. You can always keep a video permanently by clicking "
+"'save' and you can set a channel's settings to save videos automatically."
+msgstr ""
+"<strong>Non preoccuparti per lo spazio su disco:</strong> Come i "
+"registratori digitali, il lettore Democrazia è dotato di un sistema di "
+"'scadenze' che aiuta ad eliminare i tuoi vecchi video per far posto ai "
+"nuovi. Comunque puoi sempre mantenere permanentemente un video cliccando "
+"'salva' e impostare un canale affinché salvi i video automaticamente."
+
 #: ../../portable/compiled_templates/external_playback.py:47
+#: ../../portable/compiled_templates/external_playback_continue.py:46
+#, fuzzy
 msgid "Democracy - External Playback Template"
-msgstr "Democracy - Template di lettura esterna"
+msgstr "Democrazia - Altro Modello"
 
-#: ../../portable/compiled_templates/external_playback_continue.py:54
-msgid "Continue To Next Video"
-msgstr "Vai al prossimo video"
+#: ../../portable/compiled_templates/external_playback.py:62
+msgid ""
+"This file type (${format}) can't be played in the main Democracy window."
+msgstr ""
+"Questo tipo di file (${format}) non può essere riprodotto nella finestra "
+"principale di Democracy."
+
+#: ../../portable/compiled_templates/external_playback.py:66
+msgid "Play Externally"
+msgstr "Riproduci Esternamente"
+
+#: ../../portable/compiled_templates/external_playback.py:75
+msgid "Skip Video ${countdown}"
+msgstr "Salta Video ${countdown}"
+
+#: ../../portable/compiled_templates/download.py:406
+msgid "Active Downloads"
+msgstr "In download"
 
 #: ../../portable/compiled_templates/feed_settings.py:48
 #: ../../portable/compiled_templates/channel.py:2200
 msgid "Auto Download"
-msgstr "Download automatico"
+msgstr "Autoscaricamento"
 
 #: ../../portable/compiled_templates/feed_settings.py:56
 #: ../../portable/compiled_templates/channel.py:2210
@@ -392,15 +457,16 @@ msgstr "Consiglia"
 
 #: ../../portable/compiled_templates/feed_settings.py:60
 msgid "Back to Channel"
-msgstr "Ritorna al canale"
+msgstr "Torna al Canale"
 
 #: ../../portable/compiled_templates/feed_settings.py:62
+#, fuzzy
 msgid "Channel Settings"
-msgstr "Settaggi canale"
+msgstr "Impostazioni Canale"
 
 #: ../../portable/compiled_templates/feed_settings.py:64
 msgid "Videos expire after:"
-msgstr "I video scadono dopo:"
+msgstr "Video scade dopo:"
 
 #: ../../portable/compiled_templates/feed_settings.py:68
 #: ../../portable/compiled_templates/feed_settings.py:75
@@ -409,27 +475,29 @@ msgstr "Predefinito"
 
 #: ../../portable/compiled_templates/feed_settings.py:122
 msgid "Auto download should:"
-msgstr "Il download automatico dovrebbe:"
+msgstr "L'autoscaricamento dovrebbe:"
 
 #: ../../portable/compiled_templates/feed_settings.py:155
-msgid "If I have ${maxnew} ${maxnew2} videos waiting, don't auto download more."
-msgstr "Se ho ${maxnew} ${maxnew2} video in attesa di download, non effettuare ulteriori auto download."
+msgid ""
+"If I have ${maxnew} ${maxnew2} videos waiting, don't auto download more."
+msgstr ""
+"Se ho ${maxnew} ${maxnew2} video in attesa, non autoscaricarne altri."
 
 #: ../../portable/compiled_templates/feed_settings.py:157
 msgid "(Keeps channel from hogging disk space)"
-msgstr "(Evita che il canale consumi troppo spazio su disco)"
+msgstr "(Evita che il canale divori spazio su disco)"
 
 #: ../../portable/compiled_templates/feed_settings.py:159
 msgid "Channel URL"
-msgstr "URL del canale"
+msgstr "URL Canale"
 
 #: ../../portable/compiled_templates/channel.py:2202
 msgid "Settings"
-msgstr "Settaggi"
+msgstr "Impostazioni"
 
 #: ../../portable/compiled_templates/channel.py:2230
 msgid "Videos on this Channel"
-msgstr "Video in questo canale"
+msgstr "Video in questo Canale"
 
 #: ../../portable/compiled_templates/channel.py:2263
 msgid "Watched"
@@ -439,112 +507,129 @@ msgstr "Visto"
 msgid "Saved"
 msgstr "Salvato"
 
-#: ../../portable/compiled_templates/tablist.py:49
-#: ../../portable/compiled_templates/tablist.py:58
-#: ../../portable/compiled_templates/tablist.py:74
-#: ../../portable/compiled_templates/tablist.py:88
-#: ../../portable/compiled_templates/tablist.py:97
-#: ../../portable/compiled_templates/tablist.py:106
-#: ../../portable/compiled_templates/tablist.py:113
-#: ../../portable/compiled_templates/tablist.py:127
-#: ../../portable/compiled_templates/tablist.py:136
-#: ../../portable/compiled_templates/tablist.py:145
-#: ../../portable/compiled_templates/tablist.py:152
-#: ../../portable/compiled_templates/feedtab.py:38
-#: ../../portable/compiled_templates/feedtab.py:47
-#: ../../portable/compiled_templates/feedtab.py:63
-#: ../../portable/compiled_templates/feedtab.py:77
-#: ../../portable/compiled_templates/feedtab.py:86
-#: ../../portable/compiled_templates/feedtab.py:95
-#: ../../portable/compiled_templates/feedtab.py:102
-#: ../../portable/compiled_templates/feedtab.py:116
-#: ../../portable/compiled_templates/feedtab.py:125
-#: ../../portable/compiled_templates/feedtab.py:134
-#: ../../portable/compiled_templates/feedtab.py:141
-msgid "Feed Title"
-msgstr "Titolo del feed"
+#: ../../portable/compiled_templates/tablist.py:165
+#: ../../portable/compiled_templates/tablist.py:172
+#: ../../portable/compiled_templates/tablist.py:179
+#: ../../portable/compiled_templates/statictab.py:32
+#: ../../portable/compiled_templates/statictab.py:39
+#: ../../portable/compiled_templates/statictab.py:46
+msgid "Channel Guide"
+msgstr "Guida Canali"
 
-#: ../../portable/compiled_templates/external_playback.py:62
-msgid "This file type (${format}) can't be played in the main Democracy window."
-msgstr "Questo tipo di file (${format}) non può essere riprodotto nella finestra principale di Democracy."
+#: ../../portable/compiled_templates/tablist.py:186
+#: ../../portable/compiled_templates/tablist.py:193
+#: ../../portable/compiled_templates/tablist.py:200
+#: ../../portable/compiled_templates/library.py:406
+#: ../../portable/compiled_templates/statictab.py:53
+#: ../../portable/compiled_templates/statictab.py:60
+#: ../../portable/compiled_templates/statictab.py:67
+msgid "My Collection"
+msgstr "La mia Collezione"
 
-#: ../../portable/compiled_templates/external_playback.py:66
-msgid "Play Externally"
-msgstr "Riproduci esternamente"
+#: ../../portable/compiled_templates/tablist.py:243
+#: ../../portable/compiled_templates/tablist.py:250
+#: ../../portable/compiled_templates/tablist.py:257
+#: ../../portable/compiled_templates/statictab.py:110
+#: ../../portable/compiled_templates/statictab.py:117
+#: ../../portable/compiled_templates/statictab.py:124
+msgid "Search"
+msgstr "Cerca"
 
-#: ../../portable/compiled_templates/external_playback.py:75
-msgid "Skip Video ${countdown}"
-msgstr "Salta il video $(countdown)"
+#: ../../portable/compiled_templates/search.py:375
+msgid "Nothing to display.<br></br> Enter a query in the search field above."
+msgstr "Nienete da vedere.<br></br> Immetti una richiesta nel campo Ricerca."
+
+#: ../../portable/compiled_templates/search.py:380
+msgid "Searching..."
+msgstr "Sto cercando..."
+
+#: ../../portable/compiled_templates/search.py:409
+msgid "Video Search"
+msgstr "Ricerca Video"
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:41
 msgid "Simple translation"
-msgstr "Traduzione semplificata"
+msgstr "Traduzione semplice"
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:55
 msgid "truck stop in a ${can}"
-msgstr "Il camion si è fermato in un ${can}"
+msgstr "fermata in un  ${can}"
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:59
-msgid "This is a ${car} and this is a ${truck} <span> This text is <b>raw</b> text</span>"
-msgstr "Questa è una ${car} e questo è un ${truck} <span> Questo testo è un testo di <b>prova</b></span>"
+msgid ""
+"This is a ${car} and this is a ${truck} <span>This text is <b "
+"style=\"color:red\">raw</b> text</span>"
+msgstr ""
+"This is a ${car} and this is a ${truck} <span>This text is <b "
+"style=\"color:red\">raw</b> text</span>"
 
-#: ../../portable/compiled_templates/download.py:406
-msgid "Active Downloads"
-msgstr "Downloads attivi"
+#: ../../portable/compiled_templates/external_playback_continue.py:54
+msgid "Continue To Next Video"
+msgstr "Continua col Prossimo Video"
 
-#: ../../portable/compiled_templates/new.py:799
-msgid "Expiring"
-msgstr "In scadenza"
+#: ../../portable/dl_daemon/download.py:849
+msgid "Could not connect to server"
+msgstr "Non riesco a collegarmi al server."
 
-#: ../../portable/compiled_templates/first_time_intro.py:34
-msgid "Democracy Internet TV: How to Get Started"
-msgstr "Democracy TV su Internet : Per incominciare"
+#: ../../portable/dl_daemon/download.py:851
+#, python-format
+msgid "Could not connect to server: %s"
+msgstr "Non riesco a collegarmi al server: %s."
 
-#: ../../portable/compiled_templates/first_time_intro.py:38
-msgid "GO BIG:"
-msgstr "VAI GRANDE:"
+#: ../../portable/dialogs.py:59
+msgid "Ok"
+msgstr "OK"
 
-#: ../../portable/compiled_templates/first_time_intro.py:40
-msgid "This is your fullscreen button. Click it and lean back."
-msgstr "Questo è il pulsante per la visione a tutto schermo. Cliccalo e distenditi."
+#: ../../portable/dialogs.py:60
+msgid "Cancel"
+msgstr "Annulla"
 
-#: ../../portable/compiled_templates/first_time_intro.py:44
-msgid "NEW STUFF:"
-msgstr "NOVITA':"
+#: ../../portable/dialogs.py:61
+msgid "Yes"
+msgstr "Sì"
 
-#: ../../portable/compiled_templates/first_time_intro.py:46
-msgid "Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch."
-msgstr "I cerchi blu indicano che ci sono nuovi video disponibili sul canale, i cerchi verdi, invece, che ci sono nuovi filmati già scaricati disponibili per la riproduzione."
+#: ../../portable/dialogs.py:62
+msgid "No"
+msgstr "No"
 
-#: ../../portable/compiled_templates/first_time_intro.py:48
-msgid "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"eventURL('action:doneWithIntro');\">Go to Channel Guide >></a></strong>"
-msgstr "<strong i18n:translate=\"\">SALTA L'INTRODUZIONE: <a style=\"color: #090;\" href=\"#\" onclick=\"eventURL('action:doneWithIntro');\">Vai alla Guida Canali >></a></strong>"
+#: ../../portable/dialogs.py:63
+msgid "Quit"
+msgstr "Esci"
 
-#: ../../portable/compiled_templates/first_time_intro.py:50
-msgid "<strong>Add Channels:</strong> The Channel Guide is your home base for internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the channels in the guide are free.</strong>"
-msgstr "<strong>Aggiungi canali:</strong>La Guida Canali è il punto di ingresso ai canali TV via internet. Clicca su 'ADD' per abbonarti ad un canale-- <strong>I canali presenti in questa guida sono gratuiti.</strong>"
+#: ../../portable/dialogs.py:64
+#: ../../platform/gtk-x11/glade/democracy.glade.h:24
+msgid "Migrate"
+msgstr "Migra"
 
-#: ../../portable/compiled_templates/first_time_intro.py:52
-msgid "<strong>Don't Wait:</strong> Democracy is different than watching webpage videos-- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later."
-msgstr "<strong>Non aspettare:</strong> Democracy è diverso dalla consultazione di video presenti su una pagina web-- gli editori possono offrire filmati di alta qualità. Quindi, non aspettare che i video siano stati scaricati: inizia qualche download e guardali più tardi."
+#: ../../portable/dialogs.py:65
+#: ../../platform/gtk-x11/glade/democracy.glade.h:16
+msgid "Don't Migrate"
+msgstr "Non Migrare"
 
-#: ../../portable/compiled_templates/first_time_intro.py:54
-msgid "<strong>Leave it On:</strong> Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch."
-msgstr "<strong>Lascialo aperto:</strong> Il Player Democracy verifica periodicamente la presenza di nuovi video nei canali e li scarica automaticamente in background. Lasciarlo aperto vuol dire avere nuovi video a disposizione quando si desidera guardarli."
+#: ../../portable/app.py:664
+#, python-format
+msgid ""
+"%s was unable to save its database: %s.\n"
+"We suggest deleting files from the full disk or simply deleting some movies "
+"from your collection.\n"
+"Recent changes may be lost.\n"
+"Quit Anyway?"
+msgstr ""
+"%s non è riuscito a salvare il proprio database: %s.\n"
+"Il disco potrebbe essere pieno. Prova a cancellare qualche file di grandi "
+"dimensioni o qualche video dalla tua collezione.\n"
+"Le ultime modifiche potrebbero essere state perse.\n"
+"Uscire comunque?"
 
-#: ../../portable/compiled_templates/first_time_intro.py:56
-msgid "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically."
-msgstr "<strong>Non preoccuparti per lo spazio sull'HD:</strong> Come TiVo, il Player Democracy è dotato di un sistema di 'gestione delle scadenze' che si occupa di cancellare i vecchi filmati per fare spazio a quelli nuovi. In ogni caso, se desideri conservare un video, clicca 'SALVA', oppure sistema i settaggi del canale affichè i filmati vengano automaticamente salvati."
-
-#: ../../portable/app.py:636
+#: ../../portable/app.py:666
 #, python-format
 msgid ""
 "%s was unable to save its database: %s.\n"
 "Recent changes may be lost.\n"
 "Quit Anyway?"
 msgstr ""
-"%s non è stato in grado di salvare il suo database: %s.\n"
-"I cambiamenti recenti potrebbero essere andati persi.\n"
+"%s non è riuscito a salvare il proprio database: %s.\n"
+"Le ultime modifiche potrebbero essere state perse.\n"
 "Uscire comunque?"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:1
@@ -569,47 +654,44 @@ msgstr "<b>Canali</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:8
 msgid "<b>Disk Space</b>"
-msgstr "<b>Spazio su disco</b>"
+msgstr "Spazio su Disco"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:9
 msgid "<b>Downloads</b>"
-msgstr "<b>Downloads</b>"
+msgstr "<b>Download</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:10
 msgid "<b>Movies Directory</b>"
-msgstr "<b>Cartella Filmati</b>"
+msgstr "<b>Archivio Video</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:11
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:4
 msgid "Add Channel"
-msgstr "Aggiungi canale"
+msgstr "Aggiungi Canale"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:12
 msgid "By default, videos expire after"
-msgstr "Per default, i video scadono dopo"
+msgstr "Normalmente i video scadono dopo"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:13
 msgid "Check Channels for new content"
-msgstr "Controlla se nel canale esistono nuovi contenuti"
+msgstr "Controlla se ci sono nuovi video nei Canali"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:14
 msgid "Democracy - Add Channel"
-msgstr "Democracy - Aggiungi canale"
+msgstr "Democracy - Aggiungi Canale"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:15
 msgid "Democracy Player"
 msgstr "Democracy Player"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:16
-msgid "Don't Migrate"
-msgstr "Non spostare"
-
 #: ../../platform/gtk-x11/glade/democracy.glade.h:17
 msgid "Don't start a download if it leaves less than"
-msgstr "Non iniziare il download se lascia meno di"
+msgstr "Non avviare download se lascerebbe meno di"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:18
 msgid "Enter the URL of the channel to add"
-msgstr "Inserisci l'URL del canale da aggiungere"
+msgstr "Scrivi l'URL del canale da aggiungere"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:19
 msgid ""
@@ -627,15 +709,11 @@ msgstr "GB liberi"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:23
 msgid "KB/s when my computer is active"
-msgstr "KB/s quando il computer è attivo"
-
-#: ../../platform/gtk-x11/glade/democracy.glade.h:24
-msgid "Migrate"
-msgstr "Sposta"
+msgstr "KB/s quando il mio computer è attivo"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:25
 msgid "Migrate existing movies?"
-msgstr "Sposto i filmati esistenti?"
+msgstr "Migro i video esistenti?"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:26
 msgid "Preferences"
@@ -643,21 +721,153 @@ msgstr "Preferenze"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:27
 msgid "Select Movies Directory"
-msgstr "Seleziona la directory di destinazione dei filmati"
+msgstr "Seleziona cartella per i video"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:28
 msgid "Store downloaded movies in"
-msgstr "Archivia i filmati scaricati in"
+msgstr "Registra i video scaricati in"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:29
 msgid "To avoid slowdowns, limit upstream to"
-msgstr "Per evitare rallentamenti, limita l'upload a"
+msgstr "Per evitare rallentamenti, limita il flusso a"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:30
 msgid "Volume:"
 msgstr "Volume:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:31
-msgid "You've selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)"
-msgstr "Hai selezionato una nuova cartella in cui scaricare i filmati. Vuoi che Democracy sposti i video già scaricati in quella cartella? (I video attualmente in download non saranno spostati finchè lo scaricamento non sarà terminato)."
+msgid ""
+"You've selected a new folder to download movies to.  Should Democracy "
+"migrate your existing downloads there?  (Currently dowloading movies will "
+"not be moved until they finish.)"
+msgstr ""
+"Hai selezionato una nuova cartella per scaricare i video. Vuoi che "
+"Democrazia migri i tuoi scaricamenti qui?  (I video in download saranno "
+"spostati quando il download viene completato.)"
 
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:1
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:1
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:1
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:1
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1
+msgid " "
+msgstr " "
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:2
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:2
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:2
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:2
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:2
+msgid "'"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:5
+msgid "Please enter the URL of the channel you'd like to add."
+msgstr "Inserisci l'URL del canale che vuoi aggiungere."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:5
+msgid ""
+"But we'll try our best to grab the files. It may take extra time to list the "
+"videos, and descriptions may look funny."
+msgstr ""
+"Le proverò comunque tutte per ottenere i file. Potrebbe volerci più tempo "
+"del normale, e le descrizioni potrebbero non essere leggibili."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:4
+msgid "Channel is not compatible with Democracy!"
+msgstr "Canale non compatibile con Democracy!"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:7
+msgid "Please contact the publishers of"
+msgstr "Contatta gli editori di"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:8
+msgid ""
+"and ask if they can supply a feed in a format that will work with Democracy."
+msgstr ""
+"e chiedi se possono fornire un feed in un formato che funzioni con Democracy."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:5
+msgid ""
+"Please enter the username and password given to you by this channel's "
+"publisher."
+msgstr ""
+"Inserisci nome utente e password che ti sono state assegnati dall'editore "
+"del canale."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:4
+msgid "Question"
+msgstr "Domanda"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:5
+msgid ""
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
+"$publisher."
+msgstr ""
+"$longAppName versione $appVersion ($appRevision); copyright © 2005, 2006 "
+"$publisher"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:4
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:5
+msgid "About $longAppName"
+msgstr "Informazioni su $longAppName"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:9
+msgid "Copy log to clipboard"
+msgstr "Copia registro negli appunti"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:8
+msgid "Open up the bug tracker"
+msgstr "Apri il bug tracker"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5
+msgid "Please help us fix it. Copy and paste all the"
+msgstr "Aiutaci a correggerlo. Copia e incolla tutto il"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6
+msgid ""
+"information into our bug tracker and tell us what you were doing when the"
+msgstr ""
+"infomazioni nel nostro bug tracker e riporta le azioni che stavi eseguendo "
+"quando"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:8
+msgid "problem occurred."
+msgstr "si è verificato il problema."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:10
+msgid ""
+"Then, please restart Democracy Player (or you may keep getting related "
+"errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
+"with your help we're fixing problems fast!"
+msgstr ""
+"Dopo che lo hai fatto, chiudi e riapri Democracy Player (per evitare che si "
+"mostrino a catena nuovi errori). Ci scusiamo per l'inconveniente. Democracy "
+"Player è ancora un programma in sviluppo, ma col tuo aiuto stiamo risolvendo "
+"man mano moltissimi problemi!"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:4
+msgid "You found a bug in Democracy!"
+msgstr "Hai trovato un bug in Democracy!"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:4
+msgid "$longAppName"
+msgstr "$longAppName"
+
+#, python-format
+#~ msgid "You have %d download%s still in progress."
+#~ msgstr "Hai %d scaricamenti%s still in progress."
+
+#~ msgid "Feed Title"
+#~ msgstr "Titolo Feed"
+
+#~ msgid ""
+#~ "This is a ${car} and this is a ${truck} <span> This text is <b>raw</b> "
+#~ "text</span>"
+#~ msgstr ""
+#~ "Questa è una ${car} e questo è un ${truck} <span> Questo testo è un testo "
+#~ "<b>grezzo</b></span>"
