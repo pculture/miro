@@ -486,9 +486,7 @@ class HTTPDownloader(BGDownloader):
         else:
             self.client = None
             if isinstance(error, httpclient.HTTPError):
-                print "Got HTTP Error: %r" % error
-                traceback.print_stack()
-                reason = "HTTP error"
+                reason = "HTTP error: %r" % error
             elif isinstance(error, httpclient.ConnectionError):
                 reason = "Couldn't connect to server"
             else:
