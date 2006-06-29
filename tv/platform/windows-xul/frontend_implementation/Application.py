@@ -13,7 +13,7 @@ from frontend_implementation import HTMLDisplay
 class Application:
 
     def __init__(self):
-	print "Application init"
+        print "Application init"
 
     def Run(self):
         HTMLDisplay.initTempDir()
@@ -22,11 +22,8 @@ class Application:
         psyco.profile(.03)
 
         # Start the core.
-	self.onStartup()
+        self.onStartup()
         frontend.jsBridge.positionVolumeSlider(config.get(prefs.VOLUME_LEVEL))
-
-    def getBackendDelegate(self):
-        return frontend.UIBackendDelegate()
 
     def onStartup(self):
         # For overriding

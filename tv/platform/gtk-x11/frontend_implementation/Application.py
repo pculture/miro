@@ -1,6 +1,5 @@
 import gtk
 
-import frontend
 import threading
 from frontend_implementation.gtk_queue import queue
 import gettext
@@ -15,7 +14,7 @@ import resource
 class Application:
 
     def __init__(self):
-	#print "Application init"
+        #print "Application init"
         pass
 
     def Run(self):
@@ -28,12 +27,9 @@ class Application:
 
         queue.main_thread = threading.currentThread()
         gtk.threads_init()
-	self.onStartup()
+        self.onStartup()
         gtk.main()
-	self.onShutdown()
-
-    def getBackendDelegate(self):
-        return frontend.UIBackendDelegate()
+        self.onShutdown()
 
     def onStartup(self):
         # For overriding

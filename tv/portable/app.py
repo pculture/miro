@@ -433,7 +433,7 @@ class Controller (frontend.Application):
         assert controller is None
         assert delegate is None
         controller = self
-        delegate = frontend.Application.getBackendDelegate(self)
+        delegate = frontend.UIBackendDelegate()
         self.frame = None
 
     ### Startup and shutdown ###
@@ -846,10 +846,6 @@ class Controller (frontend.Application):
             # upstream limit should be unset here
             pass
 
-    def getBackendDelegate(self):
-        print "WARNING: using deprecated getBackendDelegate(). Use app.delegate instead"
-        return frontend.Application.getBackendDelegate(self)
-
 ###############################################################################
 #### TemplateDisplay: a HTML-template-driven right-hand display panel      ####
 ###############################################################################
@@ -1236,12 +1232,6 @@ Please double check and try again."""
     def showHelp(self):
         # FIXME don't hardcode this URL
         delegate.openExternalURL('http://www.getdemocracy.com/help')
-
-    def testGetHTTPAuth(self, **args):
-        printResultThread("testGetHTTPAuth: got %s", lambda: delegate.getHTTPAuth(**args)).start()
-
-    def testIsScrapeAllowed(self, url):
-        printResultThread("testIsScrapeAllowed: got %s", lambda: delegate.isScrapeAllowed(url)).start()
 
 # Functions that are safe to call from action: URLs that change state
 # specific to a particular instantiation of a template, and so have to

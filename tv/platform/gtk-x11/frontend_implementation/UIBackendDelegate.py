@@ -146,62 +146,6 @@ primary = None
 
 class UIBackendDelegate:
 
-    def getHTTPAuth(self, url, domain, prefillUser = None, prefillPassword = None):
-        dialog = BuildHTTPAuth (_("Channel requires authentication"), _("%s requires a username and password for \"%s\".") % (EscapeMessagePart(url), EscapeMessagePart(domain)), prefillUser, prefillPassword)
-        response = dialog.run()
-        retval = None
-        if (response == gtk.RESPONSE_OK):
-            retval = (dialog.user.get_text(), dialog.password.get_text())
-        dialog.destroy()
-        return retval
-
-    # Called from another thread.
-    def isScrapeAllowed(self, url):
-        """Tell the user that URL wasn't a valid feed and ask if it should be
-        scraped for links instead. Returns True if the user gives
-        permission, or False if not."""
-        summary = _("Not a DTV-style channel")
-        message = _("But we'll try our best to grab the files.\n- It may take time to list the videos\n- Descriptions may look funny\n\nPlease contact the publishers of %s and ask if they have a DTV-style channel.") % EscapeMessagePart(url)
-        buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, _("Continue"), gtk.RESPONSE_OK)
-        response = ShowDialog (summary, message, buttons)
-        if (response == gtk.RESPONSE_OK):
-            return True
-        else:
-            return False
-
-    def updateAvailable(self, url):
-        """Tell the user that an update is available and ask them if they'd
-        like to download it now"""
-        title = _("DTV Version Alert")
-        message = _("A new version of DTV is available.\n\nWould you like to download it now?")
-        # NEEDS
-        # right now, if user says yes, self.openExternalURL(url)
-        print "WARNING: ignoring new version available at URL: %s" % url
-#        raise NotImplementedError
-
-    def dtvIsUpToDate(self):
-        summary = _("DTV Version Check")
-        message = _("This version of DTV is up to date.")
-        # NEEDS inform user
-        print "DTV: is up to date"
-
-    def saveFailed(self, reason):
-        summary = _("%s database save failed") % \
-            (config.get(prefs.SHORT_APP_NAME), )
-        message = _("%s was unable to save its database: %s.\nRecent changes may be lost.") % (EscapeMessagePart(config.get(prefs.LONG_APP_NAME)), EscapeMessagePart(reason))
-        buttons = (gtk.STOCK_CLOSE, gtk.RESPONSE_OK)
-        ShowDialogAsync (summary, message, buttons, once="saveFailed")
-
-    def validateFeedRemoval(self, feedTitle):
-        summary = _("Remove Channel")
-        message = _("Are you sure you want to <b>remove</b> the channel\n   \'<b>%s</b>\'?\n<b>This operation cannot be undone.</b>") % EscapeMessagePart(feedTitle)
-        buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_REMOVE, gtk.RESPONSE_OK)
-        response = ShowDialog (summary, message, buttons)
-        if (response == gtk.RESPONSE_OK):
-            return True
-        else:
-            return False
-
     @gtkAsyncMethod
     def openExternalURL(self, url):
         inKDE = False
@@ -222,16 +166,6 @@ class UIBackendDelegate:
         # Inform the user in a way or another that newly available items are
         # available
         pass
-
-    def interruptDownloadsAtShutdown(self, downloadsCount):
-        summary = _("Are you sure you want to quit?")
-        message = ngettext ("You have %d download still in progress.", "You have %d downloads still in progress.", downloadsCount) % (downloadsCount,)
-        buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_QUIT, gtk.RESPONSE_OK)
-        response = ShowDialog (summary, message, buttons)
-        if (response == gtk.RESPONSE_OK):
-            return True
-        else:
-            return False
 
     def notifyUnkownErrorOccurence(self, when, log = ''):
         summary = _("Unknown Runtime Error")

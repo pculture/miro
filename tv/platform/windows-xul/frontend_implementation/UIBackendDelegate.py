@@ -53,20 +53,6 @@ class UIBackendDelegate:
             choice = None
         dialog.runCallback(choice, *args, **kwargs)
 
-    def dtvIsUpToDate(self):
-        msg = '%s is up to date.' % config.get(prefs.LONG_APP_NAME)
-        return
-
-    def updateAvailable(self, url):
-        summary = "%s Version Alert" % (config.get(prefs.SHORT_APP_NAME), )
-        message = "A new version of %s is available. Would you like to download it now?" % (config.get(prefs.LONG_APP_NAME), )
-        d = dialogs.ChoiceDialog(summary, message, dialogs.BUTTON_DOWNLOAD,
-                dialogs.BUTTON_CANCEL)
-        def callback(dialog):
-            if dialog.choice == dialogs.BUTTON_DOWNLOAD:
-                self.openExternalURL(url)
-        d.run(callback)
-
     def openExternalURL(self, url):
         # It looks like the maximum URL length is about 2k. I can't
         # seem to find the exact value
@@ -88,14 +74,6 @@ class UIBackendDelegate:
 
     def copyTextToClipboard(self, text):
         frontend.jsBridge.copyTextToClipboard(text)
-
-    def saveFailed(self, reason):
-        title = _("%s database save failed") % \
-                config.get(prefs.SHORT_APP_NAME)
-        message = _("""%s was unable to save its database: %s.
-Recent changes may be lost.""") % (config.get(prefs.LONG_APP_NAME), reason)
-        d = dialogs.MessageBoxDialog(title, message)
-        d.run()
 
     # This is windows specific right now. We don't need it on other platforms
     def setRunAtStartup(self, value):

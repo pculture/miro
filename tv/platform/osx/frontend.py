@@ -131,9 +131,6 @@ class Application:
         eventloop.setDelegate(self)
         AppHelper.runEventLoop()
 
-    def getBackendDelegate(self):
-        return UIBackendDelegate()
-
     def onStartup(self):
         # For overriding
         pass
@@ -299,7 +296,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
             self.actualApp.addAndSelectFeed(url)
 
     def checkForUpdates_(self, sender):
-        autoupdate.checkForUpdates(True)
+        eventloop.addUrgentCall(lambda:autoupdate.checkForUpdates(True), "Checking for new version")
 
     def showPreferencesWindow_(self, sender):
         prefController = PreferencesWindowController.alloc().init()
@@ -958,8 +955,8 @@ class DiskSpacePrefsController (NibClassBuilder.AutoBaseClass):
 
 class UIBackendDelegate:
 
-    # This lock is used by getHTTPAuth to serialize HTTP authentication requests 
-    # and prevent multiple authentication dialogs to pop up at once.
+    # This lock is used by the HTTPAuthDialog to serialize HTTP authentication 
+    # requests and prevent multiple authentication dialogs to pop up at once.
     httpAuthLock = threading.Lock()
 
     def runDialog(self, dialog):
@@ -978,50 +975,6 @@ class UIBackendDelegate:
             buttons = map(lambda x:x.text, dialog.buttons)
             result = showWarningDialog(dialog.title, dialog.description, buttons)
             dialog.runCallback(dialog.buttons[result])
-
-    def getHTTPAuth(self, url, domain, prefillUser = None, prefillPassword = None):
-        # This looks deprecated
-        return None
-
-    def isScrapeAllowed(self, url):
-        """Tell the user that URL wasn't a valid feed and ask if it should be
-        scraped for links instead. Returns True if the user gives
-        permission, or False if not."""
-        summary = u"Channel is not compatible with %s!" % \
-            (config.get(prefs.SHORT_APP_NAME), )
-        message = u"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.\n\nPlease contact the publishers of %s and ask if they can supply a feed in a format that will work with %s." % (url, config.get(prefs.SHORT_APP_NAME), )
-        buttons = (u'Continue',)
-        showWarningDialog(summary, message, buttons)
-        return True
-
-    def updateAvailable(self, url):
-        """Tell the user that an update is available and ask them if they'd
-        like to download it now"""
-        summary = "%s Version Alert" % (config.get(prefs.SHORT_APP_NAME), )
-        message = "A new version of %s is available. Would you like to download it now?" % (config.get(prefs.LONG_APP_NAME), )
-        buttons = (u'Download', u'Cancel')
-        result = showInformationalDialog(summary, message, buttons)
-        if result == 0:
-            self.openExternalURL(url)
-
-    def dtvIsUpToDate(self):
-        summary = u'%s Version Check' % (config.get(prefs.SHORT_APP_NAME), )
-        message = u'%s is up to date.' % (config.get(prefs.LONG_APP_NAME), )
-        showInformationalDialog(summary, message)
-
-    def saveFailed(self, reason):
-        summary = u'%s database save failed' % (config.get(prefs.SHORT_APP_NAME), )
-        message = u"%s was unable to save its database.\nRecent changes may be lost\n\n%s" % (config.get(prefs.LONG_APP_NAME), reason)
-        buttons = (u'Continue',)
-        showCriticalDialog(summary, message, buttons)
-        return True
-
-    def validateFeedRemoval(self, feedTitle):
-        summary = u'Remove Channel'
-        message = u'Are you sure you want to remove the channel \'%s\'? This operation cannot be undone.' % feedTitle
-        buttons = (u'Remove', u'Cancel')
-        result = showCriticalDialog(summary, message, buttons)
-        return (result == 0)
 
     def openExternalURL(self, url):
         # We could use Python's webbrowser.open() here, but
@@ -1064,14 +1017,6 @@ class UIBackendDelegate:
         appl = NSApplication.sharedApplication()
         platformutils.callOnMainThreadAndWaitUntilDone(appl.setApplicationIconImage_, badgedIcon)
         
-    def interruptDownloadsAtShutdown(self, downloadsCount):
-        platformutils.warnIfNotOnMainThread('UIBackendDelegate.interruptDownloadsAtShutdown')
-        summary = u'Are you sure you want to quit?'
-        message = u'You have %d download%s still in progress.' % (downloadsCount, downloadsCount > 1 and 's' or '')
-        buttons = (u'Quit', u'Cancel')
-        result = showWarningDialog(summary, message, buttons)
-        return (result == 0)
-    
     @platformutils.onMainThread
     def notifyUnkownErrorOccurence(self, when, log = ''):
         controller = ExceptionReporterController.alloc().initWithMoment_log_(when, log)
@@ -1079,7 +1024,9 @@ class UIBackendDelegate:
         return True
 
     def copyTextToClipboard(self, text):
-        print "WARNING: copyTextToClipboard not implemented"
+        pb = NSPasteboard.generalPasteboard()
+        pb.declareTypes_owner_([NSStringPboardType], self)
+        pb.setString_forType_(text, NSStringPboardType)
 
     def ensureDownloadDaemonIsTerminated(self):
         global dlTask
