@@ -622,6 +622,9 @@ class Feed(DDBObject):
     def getError(self):
         return "Could not load feed"
 
+    def isUpdating(self):
+        return self.loading or (self.actualFeed and self.actualFeed.updating)
+
     def update(self):
         self.confirmDBThread()
         if self.loading:
@@ -807,6 +810,13 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
         else:
             return defaultFeedIconURL()
 
+    def hasDownloadedItems(self):
+        self.confirmDBThread()
+        for item in self.items:
+            if item.isDownloaded():
+                return True
+        return False
+
     def updateIcons(self):
         iconCacheUpdater.clearVital()
         for item in self.items:
@@ -887,14 +897,15 @@ class RSSFeedImpl(FeedImpl):
 
     def feedparser_finished (self):
         self.updateUandA(False)
-        self.ufeed.signalChange()
-        self.scheduleUpdateEvents(-1)
         self.updating = False
+        self.ufeed.signalChange(needsSave=False)
+        self.scheduleUpdateEvents(-1)
 
     def feedparser_errback (self, e):
         print "Error updating feed: %s: %s" % (self.url, e)
-        self.scheduleUpdateEvents(-1)
         self.updating = False
+        self.ufeed.signalChange()
+        self.scheduleUpdateEvents(-1)
 
     def feedparser_callback (self, parsed):
         self.ufeed.confirmDBThread()
@@ -915,6 +926,7 @@ class RSSFeedImpl(FeedImpl):
             except:
                 print "Error updating feed: %s" % (self.url,)
                 self.updating = False
+                self.ufeed.signalChange(needsSave=False)
                 raise
             self.feedparser_finished()
         else:
@@ -928,6 +940,7 @@ class RSSFeedImpl(FeedImpl):
             return
         else:
             self.updating = True
+            self.ufeed.signalChange(needsSave=False)
         if hasattr(self, 'initialHTML') and self.initialHTML is not None:
             html = self.initialHTML
             self.initialHTML = None
@@ -948,11 +961,13 @@ class RSSFeedImpl(FeedImpl):
         print "WARNING, error in Feed.update", error
         self.scheduleUpdateEvents(-1)
         self.updating = False
+        self.ufeed.signalChange(needsSave=False)
 
     def _updateCallback(self,info):
         if info['status'] == 304:
             self.scheduleUpdateEvents(-1)
             self.updating = False
+            self.ufeed.signalChange()
             return
         html = info['body']
         if info.has_key('charset'):
@@ -1097,7 +1112,6 @@ class Collection(FeedImpl):
 class ScraperFeedImpl(FeedImpl):
     def __init__(self,url,ufeed, title = None, visible = True, initialHTML = None,etag=None,modified = None,charset = None):
         FeedImpl.__init__(self,url,ufeed,title,visible)
-        self.pendingDownloads = 0
         self.initialHTML = initialHTML
         self.initialCharset = charset
         self.linkHistory = {}
@@ -1128,7 +1142,6 @@ class ScraperFeedImpl(FeedImpl):
     def getHTML(self, urlList, depth = 0, linkNumber = 0, top = False):
         url = urlList.pop(0)
         #print "Grabbing %s" % url
-        self.pendingDownloads +=1
         etag = None
         modified = None
         if self.linkHistory.has_key(url):
@@ -1138,17 +1151,20 @@ class ScraperFeedImpl(FeedImpl):
                 modified = self.linkHistory[url]['modified']
         def callback(info):
             self.downloads.discard(download)
-            self.processDownloadedHTML(info, urlList, depth,linkNumber, top)
+            try:
+                self.processDownloadedHTML(info, urlList, depth,linkNumber, top)
+            finally:
+                self.checkDone()
         def errback(error):
             self.downloads.discard(download)
             print "WARNING unhandled error for ScraperFeedImpl.getHTML: ", error
+            self.checkDone()
         download = grabURL(url, callback, errback, etag=etag,
                 modified=modified)
         self.downloads.add(download)
 
     def processDownloadedHTML(self, info, urlList, depth, linkNumber, top = False):
         self.ufeed.confirmDBThread()
-        self.pendingDownloads -= 1
         #print "Done grabbing %s" % info['updated-url']
 
         if not self.tempHistory.has_key(info['updated-url']):
@@ -1169,9 +1185,12 @@ class ScraperFeedImpl(FeedImpl):
                 self.processLinks(subLinks,depth+1,linkNumber)
         if len(urlList) > 0:
             self.getHTML(urlList, depth, linkNumber)
-        elif (self.pendingDownloads == 0):
+
+    def checkDone(self):
+        if len(self.downloads) == 0:
             self.saveCacheHistory()
             self.updating = False
+            self.ufeed.signalChange()
             self.scheduleUpdateEvents(-1)
 
     def addVideoItem(self,link,dict,linkNumber):
@@ -1257,6 +1276,7 @@ class ScraperFeedImpl(FeedImpl):
             return
         else:
             self.updating = True
+            self.ufeed.signalChange(needsSave=False)
 
         if not self.initialHTML is None:
             html = self.initialHTML
@@ -1343,7 +1363,6 @@ class ScraperFeedImpl(FeedImpl):
         self.updating = False
         self.tempHistory = {}
         self.scheduleUpdateEvents(.1)
-        self.pendingDownloads = 0
 
 ##
 # A feed of all of the Movies we find in the movie folder that don't
@@ -1371,11 +1390,6 @@ class DirectoryFeedImpl(FeedImpl):
 
     def update(self):
         self.ufeed.confirmDBThread()
-        if self.updating:
-            return
-        else:
-            self.updating = True
-
         # Files known about by real feeds
         knownFiles = set()
         for item in views.items:
@@ -1399,7 +1413,6 @@ class DirectoryFeedImpl(FeedImpl):
                 if (os.path.isfile(file) and os.path.basename(file)[0] != '.' and 
                         not file in knownFiles and not file in myFiles):
                     FileItem(self.ufeed.id, file)
-        self.updating = False
         self.scheduleUpdateEvents(-1)
 
     def onRestore(self):
@@ -1408,7 +1421,6 @@ class DirectoryFeedImpl(FeedImpl):
         # wait a little while before we start the update
         self.updating = False
         self.scheduleUpdateEvents(.1)
-
 
 ##
 # Search and Search Results feeds

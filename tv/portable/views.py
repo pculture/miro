@@ -38,8 +38,10 @@ guide = db.filterWithIndex(indexes.objectsByClass,guide.ChannelGuide)
 manualFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:manualFeed')
 directoryFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:directoryfeed')
 
-newlyDownloadedItems = items.filter(lambda x:x.getState() == 'newly-downloaded')
-downloadingItems = items.filter(filters.downloadingItems)
+items.createIndex(indexes.itemsByState)
+newlyDownloadedItems = items.filterWithIndex(indexes.itemsByState,
+        'newly-downloaded')
+downloadingItems = items.filterWithIndex(indexes.itemsByState, 'downloading')
 downloadingItemsExternal = items.filter(filters.downloadingItemsExternal)
 downloadingItemsNonExternal = items.filter(filters.downloadingItemsNonExternal)
 manualDownloads = items.filter(filters.manualDownloads)

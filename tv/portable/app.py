@@ -1029,6 +1029,9 @@ class ModelActionHandler:
         except:
             print "DTV: Warning: tried to remove feed that doesn't exist with id %d" % int(feed)
             return
+        if not obj.hasDownloadedItems():
+            obj.remove()
+            return
         title = _('Remove %s') % obj.getTitle()
         description = _("""\
 What would you like to do with the videos in this channel that you've \

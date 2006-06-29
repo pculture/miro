@@ -118,6 +118,14 @@ a.feeditem div.name {
 	border-top: 1px solid #b6bfce;
 }
 
+.feed-loading-icon {
+	margin: 1px 0px 0 0;
+	padding: 1px;
+	float: right;
+	position: relative;
+	z-index: 2;
+	background: url(../images/feed-loading-bg.png) top left no-repeat;
+}
 
 .number-count {
 	font-size: 11px;
@@ -129,7 +137,7 @@ a.feeditem div.name {
 
 .left-bubble {
 	display: inline;
-	margin: 1px 0px 0 0;
+	margin: 1px 0px 0px 0px;
 	float: right;
 	position: relative;
 	z-index: 2;
