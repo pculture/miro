@@ -74,6 +74,7 @@ class TrackedView:
         self.toChange = {}
         self.toRemove = []
         self.toAdd = []
+        self.addBefore = None
         self.idle_queued = False
 
     #
@@ -135,6 +136,7 @@ class TrackedView:
         self.toChange = {}
         self.toRemove = []
         self.toAdd = []
+        self.addBefore = None
         self.idle_queued = False
 
     def addCallback(self):
@@ -160,17 +162,26 @@ class TrackedView:
             if next == None:
                 self.toAdd.append(obj)
                 self.addCallback()
+            elif len (self.toAdd) > 0 and self.view.getObjectByID(next).tid == self.toAdd[0].tid:
+                self.toAdd.insert(0, obj)
+                self.addCallback()
             else:
                 self.callback()
-                self.parent.domHandler.addItemBefore(self.currentXML(obj), self.view.getObjectByID(next).tid)
+                self.toAdd.append(obj)
+                self.addBefore = self.view.getObjectByID(next).tid
+                self.addCallback()
 
     def doAdd(self, xml):
         # Adding it at the end of the list. Must add it relative to
         # the anchor.
-        if self.anchorType == 'parentNode':
-            self.parent.domHandler.addItemAtEnd(xml, self.anchorId)
-        if self.anchorType == 'nextSibling':
-            self.parent.domHandler.addItemBefore(xml, self.anchorId)
+
+        if self.addBefore:
+            self.parent.domHandler.addItemBefore(xml, self.addBefore)
+        else:
+            if self.anchorType == 'parentNode':
+                self.parent.domHandler.addItemAtEnd(xml, self.anchorId)
+            if self.anchorType == 'nextSibling':
+                self.parent.domHandler.addItemBefore(xml, self.anchorId)
 
     def onRemove (self, obj, id):
         if len (self.toAdd) > 0:
