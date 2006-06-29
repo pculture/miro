@@ -640,7 +640,12 @@ class MainController (NibClassBuilder.AutoBaseClass):
             eventloop.addUrgentCall(lambda:app.ModelActionHandler(app.delegate).removeFeed(feedID), "Remove channel")
 
     def copyChannelLink_(self, sender):
-        NSPasteboard.generalPasteboard().declareTypes_owner_([NSURLPboardType], self)
+        pb = NSPasteboard.generalPasteboard()
+        pb.declareTypes_owner_([NSStringPboardType, NSURLPboardType], self)
+        feedURL = app.controller.currentSelectedTab.feedURL()
+        pb.setString_forType_(feedURL, NSStringPboardType)
+        feedURL = NSURL.URLWithString_(feedURL)
+        feedURL.writeToPasteboard_(pb)
 
     def updateChannel_(self, sender):
         feedID = app.controller.currentSelectedTab.feedID()
@@ -716,12 +721,6 @@ class MainController (NibClassBuilder.AutoBaseClass):
             return self.frame.mainDisplay.hostedDisplay is app.controller.videoDisplay
         else:
             return item.action() in self.itemsAlwaysAvailable
-
-    def pasteboard_provideDataForType_(self, pasteboard, type):
-        feedURL = app.controller.currentSelectedTab.feedURL()
-        if feedURL is not None:
-            url = NSURL.URLWithString_(feedURL)
-            url.writeToPasteboard_(NSPasteboard.generalPasteboard())
 
 
 ###############################################################################
