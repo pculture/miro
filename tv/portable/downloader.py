@@ -178,10 +178,7 @@ class RemoteDownloader(DDBObject):
                                                  self.dlid)
                 c.send(block=False)
             else:
-                _downloads[self.dlid] = self
-                c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, 
-                                                     self.status)
-                c.send(retry = True, block = False)
+                self.restart()
                 self.signalChange()
 
     def migrate(self):
@@ -314,16 +311,19 @@ URL was %s""" % self.url
 
     def restartIfNeeded(self):
         if self.getState() in ('downloading','uploading'):
-            if len(self.status) == 0 or self.status.get('dlerType') is None:
-                if self.contentType == "":
-                    self.getContentType()
-                else:
-                    self.runDownloader()
+            self.restart()
+
+    def restart(self):
+        if len(self.status) == 0 or self.status.get('dlerType') is None:
+            if self.contentType == "":
+                self.getContentType()
             else:
-                _downloads[self.dlid] = self
-                c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, 
-                                                     self.status)
-                c.send(retry = True, block = False)
+                self.runDownloader()
+        else:
+            _downloads[self.dlid] = self
+            c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, 
+                                                 self.status)
+            c.send(retry = True, block = False)
 
 def cleanupIncompleteDownloads():
     downloadDir = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
