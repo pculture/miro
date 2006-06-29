@@ -67,8 +67,17 @@ class IconCache:
         self.updating = False
         self.needsUpdate = False
         self.dbItem = dbItem
+        self.removed = False
 
         self.requestUpdate (is_vital=is_vital)
+
+    def remove (self):
+        self.removed = True
+        try:
+            if self.filename:
+                os.remove (self.filename)
+        except:
+            pass
 
     ##
     # Finds a filename that's unused and similar the the file we want
@@ -95,6 +104,10 @@ class IconCache:
     def errorCallback(self, url, error = None):
         self.dbItem.confirmDBThread()
 
+        if self.removed:
+            iconCacheUpdater.updateFinished()
+            return
+
         # Don't clear the cache on an error.
         if self.url != url:
             self.url = url
@@ -113,6 +126,10 @@ class IconCache:
 
     def updateIconCache (self, url, info):
         self.dbItem.confirmDBThread()
+
+        if self.removed:
+            iconCacheUpdater.updateFinished()
+            return
 
         needsSave = False
         needsChange = False
@@ -198,6 +215,10 @@ class IconCache:
             iconCacheUpdater.updateFinished ()
 
     def requestIcon (self):
+        if self.removed:
+            iconCacheUpdater.updateFinished()
+            return
+
         self.dbItem.confirmDBThread()
         if (self.updating):
             self.needsUpdate = True
@@ -226,9 +247,13 @@ class IconCache:
 
     def requestUpdate (self, is_vital = False):
         if hasattr (self, "updating") and hasattr (self, "dbItem"):
+            if self.removed:
+                return
+
             iconCacheUpdater.requestUpdate (self, is_vital = is_vital)
 
     def onRestore(self):
+        self.removed = False
         self.updated = False
         self.updating = False
         self.needsUpdate = False

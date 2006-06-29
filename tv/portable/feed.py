@@ -799,6 +799,9 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
                 item.remove()
             else:
                 item.setFeed(moveItemsTo.getID())
+        if self.iconCache is not None:
+            self.iconCache.remove()
+            self.iconCache = None
         DDBObject.remove(self)
         self.actualFeed.onRemove()
 

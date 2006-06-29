@@ -62,7 +62,11 @@ class Item(DDBObject):
     # get updated when an item changes
     def signalChange(self, needsSave=True):
         DDBObject.signalChange(self, needsSave=needsSave)
-        updateUandA(self.getFeed())
+        try:
+            # If the feed has been deleted, getFeed will throw an exception
+            updateUandA(self.getFeed())
+        except:
+            pass
 
     #
     # Returns True iff this item has never been viewed in the interface
@@ -743,6 +747,9 @@ class Item(DDBObject):
         if self.downloader is not None:
             self.downloader.remove()
             self.downloader = None
+        if self.iconCache is not None:
+            self.iconCache.remove()
+            self.iconCache = None
         DDBObject.remove(self)
 
     def reconnectDownloader(self):
