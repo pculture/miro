@@ -626,7 +626,7 @@ class Feed(DDBObject):
         return self.loading or (self.actualFeed and self.actualFeed.updating)
 
     def isScraped(self):
-        return True or isinstance(self.actualFeed, ScraperFeedImpl)
+        return isinstance(self.actualFeed, ScraperFeedImpl)
 
     def update(self):
         self.confirmDBThread()

@@ -90,7 +90,7 @@ i18n:translate="">Settings</span></a></p>
 <!-- / TITLE BAR -->
 <!-- CHANNEL CONTAINER **************************************************** -->
 <div id="main-container">
-    <div class="main-container-scraping" t:showIf="feed.isUpdating()" t:updateHideOnView="thisFeedView">
+    <div class="main-container-scraping" t:showIf="feed.isScraped() and feed.isUpdating()" t:updateHideOnView="thisFeedView">
 	<img src="resource:images/scraping-indicator.gif" />
     </div>
     <!-- DOWNLOADS ******************************************************** -->
