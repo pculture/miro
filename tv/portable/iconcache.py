@@ -169,7 +169,10 @@ class IconCache:
                 output.write(info["body"])
                 output.close()
             except IOError:
-                os.remove (tmp_filename)
+                try:
+                    os.remove (tmp_filename)
+                except:
+                    pass
                 return
 
             if (self.filename == None):
