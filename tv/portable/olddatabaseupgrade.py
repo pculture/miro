@@ -465,9 +465,15 @@ def convertOldDatabase(databasePath):
     objects = [o for o in objects if not hasattr(o, '__DropMeLikeItsHot')]
     # drop any downloaders that are referenced by items
     for o in objects:
+        def dropItFilter(obj):
+            return not hasattr(obj, '__DropMeLikeItsHot')
         if isinstance(o, OldItem):
-            o.downloaders = [d for d in o.downloaders \
-                    if not hasattr(d, '__DropMeLikeItsHot')]
+            o.downloaders = filter(dropItFilter, o.downloaders)
+        # The above code should be enough, but some old databases have items
+        # referenced in feeds, that aren't in the top level, see bug #2003
+        if isinstance(o, OldFeed):
+            for item in o.actualFeed.items:
+                item.downloaders = filter(dropItFilter, item.downloaders)
 
     storedatabase.saveObjectList(objects, databasePath,
             objectSchemas=objectSchemas, version=6)

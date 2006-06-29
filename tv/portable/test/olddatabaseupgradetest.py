@@ -43,3 +43,11 @@ class TestConvert(DemocracyTestCase):
         shutil.copyfile(resource.path("testdata/olddatabase-0.8.1"), 
                 self.tmpPath)
         self.checkConversion()
+
+    def testBug2003(self):
+        # the olddatabase.bug.2003 file is a database I (BDK) created in a
+        # fairly hackish way to simulate old databases like the one reported
+        # in 2003.  If we had a real database here it would be better.
+        shutil.copyfile(resource.path("testdata/olddatabase.bug.2003"),
+                self.tmpPath)
+        self.checkConversion()
