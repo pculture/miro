@@ -199,7 +199,10 @@ class ConverterBase(object):
         self.memory[id(object)] = convertedObject
 
         for name, schema in objectSchema.fields:
-            data = self.getSourceAttr(object, name)
+            try:
+                data = self.getSourceAttr(object, name)
+            except schema_mod.ValidationError, e:
+                self.handleValidationError(e, object, path, schema)
             try:
                 dataStr = str(data)
             except Exception, e:

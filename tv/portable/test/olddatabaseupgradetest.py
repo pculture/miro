@@ -64,3 +64,9 @@ class TestConvert(DemocracyTestCase):
         shutil.copyfile(resource.path("testdata/olddatabase.bug.2515"),
                 self.tmpPath)
         self.checkConversion()
+
+    def testBug2685(self):
+        # Database created by ben to simulate bug #2685
+        shutil.copyfile(resource.path("testdata/olddatabase.bug.2685"),
+                self.tmpPath)
+        self.checkConversion()
