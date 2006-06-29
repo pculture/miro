@@ -131,6 +131,10 @@ li {
     color: #1c5180;
 }
 
+.main-container-scraping {
+    text-align: center;
+}
+
 #main-container {
     padding-top: 76px;
 }

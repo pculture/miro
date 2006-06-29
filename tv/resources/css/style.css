@@ -124,7 +124,8 @@ a.feeditem div.name {
 	float: right;
 	position: relative;
 	z-index: 2;
-	background: url(../images/feed-loading-bg.png) top left no-repeat;
+/*	background: url(../images/feed-loading-bg.png) top left no-repeat;
+	*/
 }
 
 .number-count {

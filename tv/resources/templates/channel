@@ -20,6 +20,7 @@ feed = app.controller.currentSelectedTab.obj
 allItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
 matchingItems = allItems.filter(lambda x: searchFilter(x))
 downloadingItems = matchingItems.filter(filters.downloadingItems)
+thisFeedView = views.feeds.filter(lambda x: x is feed)
 
 matchingItems.createIndex(indexes.itemsByChannelCategory)
 def makeStateView(cat):
@@ -87,10 +88,11 @@ i18n:translate="">Settings</span></a></p>
         </div>
 </div>
 <!-- / TITLE BAR -->
-
 <!-- CHANNEL CONTAINER **************************************************** -->
 <div id="main-container">
-
+    <div class="main-container-scraping" t:showIf="feed.isUpdating()" t:updateHideOnView="thisFeedView">
+	<img src="resource:images/scraping-indicator.gif" />
+    </div>
     <!-- DOWNLOADS ******************************************************** -->
     <span t:hideIf="downloadingItems.len()==0" t:updateHideOnView="downloadingItems">
         <div class="main-channelbar-hitbox"><a href="javascript:toggleLayerWithTriangle('main-downloads', 'main-downloads-triangle');">#&nbsp;</a></div>
