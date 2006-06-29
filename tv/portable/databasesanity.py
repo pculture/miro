@@ -101,7 +101,7 @@ class ManualFeedSingletonTest(SingletonTest):
         return (isinstance(obj, feed.Feed) and 
                 isinstance(obj.actualFeed, feed.ManualFeedImpl))
 
-def checkSanity(objectList, fixIfPossible=True):
+def checkSanity(objectList, fixIfPossible=True, quiet=False):
     """Do all sanity checks on a list of objects.
 
     If fixIfPossible is True, the sanity checks will try to fix errors.  If
@@ -109,6 +109,10 @@ def checkSanity(objectList, fixIfPossible=True):
 
     If fixIfPossible is False, or if it's not possible to fix the errors
     checkSanity will raise a DatabaseInsaneError.
+
+    If quiet is True, we print to the log instead of poping up an error dialog
+    on fixable problems.  We set this when we are converting old databases,
+    since sanity errors are somewhat expected.
 
     Returns a reference to objectList (mostly for the unit tests)
     """
@@ -138,7 +142,11 @@ def checkSanity(objectList, fixIfPossible=True):
         errorMsg = "The database failed the following sanity tests:\n"
         errorMsg += "\n".join(errors)
         if fixIfPossible:
-            util.failed(when="While checking database", details=errorMsg)
+            if not quiet:
+                util.failed(when="While checking database", details=errorMsg)
+            else:
+                print "WARNING: Database sanity error"
+                print errorMsg
             for test in failedTests:
                 test.fixIfPossible(objectList)
                 # fixIfPossible will throw a DatabaseInsaneError if it fails,

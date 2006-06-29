@@ -5,6 +5,7 @@ import eventloop
 import frontend
 import app
 import downloader
+import util
 
 class HadToStopEventLoop(Exception):
     pass
@@ -15,6 +16,14 @@ class DemocracyTestCase(unittest.TestCase):
         database.resetDefaultDatabase()
         eventloop._eventLoop.threadPool.closeThreads()
         eventloop._eventLoop = eventloop.EventLoop() 
+        self.oldUtilDotFailed = util.failed
+        self.failedCalled = False
+        def newUtilDotFailed(*args, **kwargs):
+            if self.utilDotFailedOkay:
+                self.failedCalled = True
+            else:
+                raise Exception("util.failed called")
+        util.failed = newUtilDotFailed
 
     def tearDown(self):
         # this prevents weird errors when we quit

@@ -19,11 +19,7 @@ class SanityCheckingTest(DemocracyTestCase):
         DemocracyTestCase.setUp(self)
         self.savePath = tempfile.mktemp()
         # reroute util.failed
-        self.oldUtilDotFailed = util.failed
-        self.failedCalled = False
-        def newUtilDotFailed(*args, **kwargs):
-            self.failedCalled = True
-        util.failed = newUtilDotFailed
+        self.utilDotFailedOkay = True
 
     def tearDown(self):
         try:

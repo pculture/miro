@@ -440,6 +440,7 @@ def getObjects(pathname, convertOnFail):
     """Restore a database object."""
 
     pathname = os.path.expanduser(pathname)
+    checkSanityQuietly = False
     if not os.path.exists(pathname):
         # maybe we crashed in saveDatabase() after deleting the real file, but
         # before renaming the temp file?
@@ -457,6 +458,7 @@ def getObjects(pathname, convertOnFail):
             olddatabaseupgrade.convertOldDatabase(pathname)
             objects = restoreObjectList(pathname)
             print "*** Conversion Successfull ***"
+            checkSanityQuietly = True
         else:
             raise
     except ImportError, e:
@@ -475,7 +477,7 @@ def getObjects(pathname, convertOnFail):
             raise
 
     try:
-        databasesanity.checkSanity(objects)
+        databasesanity.checkSanity(objects, quiet=checkSanityQuietly)
     except databasesanity.DatabaseInsaneError, e:
         util.failedExn("When restoring database", e)
         # if the database fails the sanity check, try to restore it anyway.

@@ -72,7 +72,14 @@ class DropItLikeItsHot(object):
 class OldDDBObject(object):
     pass
 
+
 class OldItem(OldDDBObject):
+    # allOldItems is a hack to get around the fact that old databases can have
+    # items that aren't at the top level.  In fact, they can be in fairly
+    # crazy places.  See bug #2515.  So we need to keep track of the items
+    # when we unpickle the objects.
+    allOldItems = set()
+
     def __setstate__(self, state):
         (version, data) = state
         if version == 0:
@@ -107,6 +114,7 @@ class OldItem(OldDDBObject):
         self.iconCache = None
         if not 'downloadedTime' in data:
             self.downloadedTime = None
+        OldItem.allOldItems.add(self)
 
 class OldFileItem(OldItem):
     pass
@@ -449,6 +457,7 @@ objectSchemas = [
 ]
 
 def convertOldDatabase(databasePath):
+    OldItem.allOldItems = set()
     shutil.copyfile(databasePath, databasePath + '.old')
     f = open(databasePath, 'rb')
     p = FakeClassUnpickler(f)
@@ -464,16 +473,10 @@ def convertOldDatabase(databasePath):
     # drop any top-level DropItLikeItsHot instances
     objects = [o for o in objects if not hasattr(o, '__DropMeLikeItsHot')]
     # drop any downloaders that are referenced by items
-    for o in objects:
-        def dropItFilter(obj):
-            return not hasattr(obj, '__DropMeLikeItsHot')
-        if isinstance(o, OldItem):
-            o.downloaders = filter(dropItFilter, o.downloaders)
-        # The above code should be enough, but some old databases have items
-        # referenced in feeds, that aren't in the top level, see bug #2003
-        if isinstance(o, OldFeed):
-            for item in o.actualFeed.items:
-                item.downloaders = filter(dropItFilter, item.downloaders)
+    def dropItFilter(obj):
+        return not hasattr(obj, '__DropMeLikeItsHot')
+    for i in OldItem.allOldItems:
+        i.downloaders = filter(dropItFilter, i.downloaders)
 
     storedatabase.saveObjectList(objects, databasePath,
             objectSchemas=objectSchemas, version=6)
