@@ -78,7 +78,11 @@ class Item(DDBObject):
     # Returns the first video enclosure in the item
     def getFirstVideoEnclosure(self):
         self.confirmDBThread()
-        for enclosure in self.entry.enclosures:
+        try:
+            enclosures = self.entry.enclosures
+        except (KeyError, AttributeError):
+            return None
+        for enclosure in enclosures:
             if isVideoEnclosure(enclosure):
                 return enclosure
         return None
