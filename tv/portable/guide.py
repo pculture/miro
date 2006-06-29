@@ -171,7 +171,11 @@ class ChannelGuide(DDBObject):
             # Put the HTML into the cache
             self.cond.acquire()
             try:
-                self.cachedGuideBody = HTMLPattern.match(html).group(1)
+                match = HTMLPattern.match(html)
+                if match:
+                    self.cachedGuideBody = match.group(1)
+                else:
+                    self.cachedGuideBody = html
                 self.loadedThisSession = True
                 self.cond.notify()
             finally:
