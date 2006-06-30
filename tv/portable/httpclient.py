@@ -29,6 +29,9 @@ import util
 import sys
 import time
 
+# This pattern matches all possible strings.  I promise.
+URIPattern = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
+
 class NotReadyToSendError(Exception):
     pass
 class ConnectionError(Exception):
@@ -1429,10 +1432,21 @@ class HTTPClient(object):
             filename = self.findValueFromHeader(disposition, 'filename')
             if filename is not None:
                 return cleanFilename(filename)
-        match = re.search("([^/]+)/?$", response['path'])
-        if match is not None:
-            return cleanFilename(match.group(1))
-        return 'unknown'
+        match = URIPattern.match(response['path'])
+        if match is None:
+            # This code path will never be executed.
+            return cleanFilename(response['path'])
+        filename = match.group(2)
+        query = match.group(4)
+        if not filename:
+            ret = query
+        elif not query:
+            ret = filename
+        else:
+            ret = "%s-%s" % (filename, query)
+        if ret is None:
+            ret = 'unknown'
+        return cleanFilename(ret)
 
     def getCharsetFromResponse(self, response):
         try:

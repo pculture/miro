@@ -29,6 +29,9 @@ from dl_daemon import command, daemon
 
 import platformutils
 
+# This pattern matches all possible strings.  I promise.
+URIPattern = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
+
 chatter = True
 
 # a hash of download ids to downloaders
@@ -281,7 +284,20 @@ class BGDownloader:
     # Returns a reasonable filename for saving the given url
     def filenameFromURL(self, url):
         try:
-            ret = re.compile(r'^(.*?/)?([^/]*)/*$'), search(url).expand("\\2")
+            match = URIPattern.match(url)
+            if match is None:
+                # This code path will never be executed.
+                return cleanFilename(url)
+            filename = match.group(2)
+            query = match.group(4)
+            if not filename:
+                ret = query
+            elif not query:
+                ret = filename
+            else:
+                ret = "%s-%s" % (filename, query)
+            if ret is None:
+                ret = 'unknown'
             return cleanFilename(ret)
         except:
             return 'unknown'
