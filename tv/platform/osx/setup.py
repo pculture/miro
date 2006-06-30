@@ -114,3 +114,17 @@ setup(
         ],
     cmdclass = dict(build_ext = build_ext)
 )
+
+# Create a hard link to the main executable with a different name for the 
+# downloader. This is to avoid having 'Democracy' shown twice in the Activity 
+# Monitor since the downloader is basically Democracy itself, relaunched with a 
+# specific command line parameter.
+
+srcRoot = 'Democracy.app/Contents/MacOS'
+srcPath = '%s/Democracy' % srcRoot
+linkName = 'Downloader'
+linkPath = '%s/%s' % (srcRoot, linkName)
+
+if os.path.exists(linkPath):
+    os.remove(linkPath)
+os.link(srcPath, linkPath)

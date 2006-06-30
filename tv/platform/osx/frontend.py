@@ -1068,19 +1068,20 @@ class UIBackendDelegate:
         env.update(os.environ)
                 
         bundle = NSBundle.mainBundle()
-        exe = bundle.executablePath()
+        bundleExe = bundle.executablePath()
+        exe = "%s/Downloader" % os.path.dirname(bundleExe)
         
         global dlTask
         dlTask = NSTask.alloc().init()
         dlTask.setLaunchPath_(exe)
         dlTask.setArguments_(['download_daemon'])
         dlTask.setEnvironment_(env)
-
-        print "DTV: Launching Download Daemon"
-        dlTask.launch()
         
         controller = NSApplication.sharedApplication().delegate()
         nc.addObserver_selector_name_object_(controller, 'downloaderDaemonDidTerminate:', NSTaskDidTerminateNotification, dlTask)
+
+        print "DTV: Launching Download Daemon"
+        dlTask.launch()
 
 
 class ExceptionReporterController (NibClassBuilder.AutoBaseClass):
