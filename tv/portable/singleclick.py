@@ -11,9 +11,6 @@ to be called in the existing democracy process.
 """
 
 import os
-from sha import sha
-
-from BitTornado.bencode import bdecode, bencode
 
 from util import getTorrentInfoHash
 import app

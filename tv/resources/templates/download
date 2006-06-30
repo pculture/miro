@@ -1,8 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
-
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
@@ -14,14 +13,19 @@
 global searchFilter
 searchFilter = lambda x: filters.matchingItems(x, None)
 
-allDlItems = views.items.filter(filters.downloadingItemsNonExternal)
-allExternalTorrents = views.items.filter(filters.downloadingItemsExternal)
+def makeDownloadCategoryView(cat):
+    return views.downloadingItems.filterWithIndex(indexes.downloadsByCategory, cat)
+allNormalDownloads = makeDownloadCategoryView('normal')
+allExternalDownloads = makeDownloadCategoryView('external')
+allPendingDownloads = makeDownloadCategoryView('pending')
 
-matchingDlItems = allDlItems.filter(lambda x:searchFilter(x))
-matchingExternalTorrents = allExternalTorrents.filter(lambda x:searchFilter(x))
+matchingNormalDLs = allNormalDownloads.filter(lambda x:searchFilter(x))
+matchingExternalDLs = allExternalDownloads.filter(lambda x:searchFilter(x))
+matchingPendingDLs = allPendingDownloads.filter(lambda x:searchFilter(x))
 
-dlItems = matchingDlItems.sort(sorts.item)
-externalTorrents = matchingExternalTorrents.sort(sorts.item)
+normalDownloads = matchingNormalDLs.sort(sorts.item)
+externalDownloads = matchingExternalDLs.sort(sorts.item)
+pendingDownloads = matchingPendingDLs.sort(sorts.item)
 
 def updateSearchString(newSearch):
     global searchFilter
@@ -29,16 +33,18 @@ def updateSearchString(newSearch):
         searchFilter = lambda x: filters.matchingItems(x, None)
     else:
         searchFilter = lambda x: filters.matchingItems(x, newSearch)
-    allDlItems.recomputeFilter(matchingDlItems)
-    externalTorrents.recomputeFilter(matchingExternalTorrents)
-
+    views.normalDownloads.recomputeFilter(matchingNormalDLs)
+    views.externalDownloads.recomputeFilter(matchingExternalDLs)
+    views.pendingDownloads.recomputeFilter(matchingPendingDLs)
 ]]>
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
-allDlItems.unlink()
-allExternalTorrents.unlink()
+allNormalDownloads.unlink()
+allPendingDownloads.unlink()
+allExternalDownloads.unlink()
 ]]>
     </t:execOnUnload>
+
 
 </head>
 
@@ -59,24 +65,24 @@ allExternalTorrents.unlink()
 <div id="main-container">
 
 	<!-- VIDEOS ************************************************** -->
-	<div>
-		<span t:repeatForView="dlItems">		
-		<t:includeTemplate filename="download-item" />
- 		</span>
-	</div>
+	<span t:repeatForView="normalDownloads">
+	<t:includeTemplate filename="download-item" />
+	</span>
+	<span t:repeatForView="pendingDownloads">
+	<t:includeTemplate filename="download-item" />
+	</span>
 	<!-- / VIDEOS -->
-	<div t:hideIf="externalTorrents.len() == 0" 
-		t:updateHideOnView="externalTorrents" class="main-channelbar">
+	<div t:hideIf="externalDownloads.len() == 0" 
+		t:updateHideOnView="externalDownloads" class="main-channelbar">
 		<h1 i18n:translate="">External Torrents 
 			<!--
 			<a i18n:translate="" href="#" onclick="return eventURL('action:clearCompletedTorrents');" style="text-decoration: underline; margin-left: 15px; font-weight: normal;" title="Clear Completed">Clear Completed</a>
 			-->
 		</h1>
         </div>
-	<span t:repeatForView="externalTorrents">		
+	<span t:repeatForView="externalDownloads">
 	<t:includeTemplate filename="download-item" />
 	</span>
-	
 </div>
 
 </body>

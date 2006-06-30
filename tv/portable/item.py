@@ -96,6 +96,15 @@ class Item(DDBObject):
             return videoEnclosure['url']
         else:
             return ''
+
+    def hasSharableURL(self):
+        """Does this item have a URL that the user can share with others?
+
+        This returns True when the item has a non-file URL.
+        """
+        url = self.getURL()
+        return url != '' and not url.startswith("file:")
+
     ##
     # Returns the feed this item came from
     def getFeed(self):
@@ -122,15 +131,43 @@ class Item(DDBObject):
         """Get the expiration time a string to display to the user."""
         expireTime = self.getExpirationTime()
         if expireTime is None:
-            return 'never'
+            return _('never')
         else:
             exp = expireTime - datetime.now()
             if exp.days > 0:
-                return "%d days" % exp.days
+                return _("%d days") % exp.days
             elif exp.seconds > 3600:
-                return "%d hours" % (ceil(exp.seconds/3600.0))
+                return _("%d hrs") % (ceil(exp.seconds/3600.0))
             else:
-                return "%d min." % (ceil(exp.seconds/60.0))
+                return _("%d min") % (ceil(exp.seconds/60.0))
+
+    def getStateCSSClass(self):
+        """Get the CSS class to display our state string."""
+        if self.isPendingAutoDownload():
+            return 'pending-autdownload'
+        elif self.isFailedDownload():
+            return 'failed-download'
+        elif not self.getViewed():
+            return 'new'
+        else:
+            return self.getState()
+
+    def getStateString(self):
+        """Get a human-readable string to display to the user."""
+        if self.isPendingAutoDownload():
+            return _('Pending Auto Download')
+        elif self.isFailedDownload():
+            return self.getFailureReason()
+        elif not self.getViewed():
+            return _('NEW')
+        else:
+            state = self.getState()
+            if state == 'newly-downloaded':
+                return _('UNWATCHED')
+            elif state == 'expiring':
+                return _('Expires: %s') % self.getExpirationString()
+            else:
+                return ''
 
     def getExpirationTime(self):
         """Get the time when this item will expire. 
@@ -324,7 +361,7 @@ class Item(DDBObject):
         if self.looksLikeTorrent():
             details.append('<span class="details-torrent" il8n:translate="">TORRENT</span>')
         out = ' - '.join(details)
-        return '<div class="main-video-details-under">%s</div>' % out
+        return out
 
     ##
     # Stops downloading the item
@@ -355,10 +392,10 @@ class Item(DDBObject):
                 self.downloader.getState() in ('failed', 'stopped', 'paused')):
             if self.pendingManualDL:
                 return 'downloading'
-            elif not self.getViewed():
-                return 'new'
             elif self.expired:
                 return 'expired'
+            elif not self.getViewed():
+                return 'new'
             else:
                 return 'not-downloaded'
         elif not self.downloader.isFinished():
@@ -404,6 +441,9 @@ class Item(DDBObject):
 
     def isDownloaded(self):
         return self.getState() in ("newly-downloaded", "expiring", "saved")
+
+    def showSaveButton(self):
+        return self.getState() in ('newly-downloaded', 'expiring')
 
     def getFailureReason(self):
         self.confirmDBThread()
@@ -811,6 +851,9 @@ class FileItem(Item):
             return "saved"
         else:
             return "newly-downloaded"
+
+    def showSaveButton(self):
+        return False
 
     def getViewed(self):
         return True

@@ -42,6 +42,5 @@ items.createIndex(indexes.itemsByState)
 newlyDownloadedItems = items.filterWithIndex(indexes.itemsByState,
         'newly-downloaded')
 downloadingItems = items.filterWithIndex(indexes.itemsByState, 'downloading')
-downloadingItemsExternal = items.filter(filters.downloadingItemsExternal)
-downloadingItemsNonExternal = items.filter(filters.downloadingItemsNonExternal)
+downloadingItems.createIndex(indexes.downloadsByCategory)
 manualDownloads = items.filter(filters.manualDownloads)

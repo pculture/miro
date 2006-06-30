@@ -208,7 +208,7 @@ li {
     color: #CDDFF6;
 }
 
-.main-channelbar a:link, .main-channelbar a:visited, .main-channelbar a:active {
+.main-channelbar a {
     color: #FFFFFF;
     text-decoration: none;  
 }
@@ -267,7 +267,7 @@ li {
 .main-video-tnail {
     position: absolute;
     left: 5px;
-    top: 5px;
+    top: 2px;
     width: 100px;
     height: 75px;
     border: 1px solid #e6e6eA;
@@ -277,6 +277,7 @@ li {
 .main-video-desc {
     margin-left: 115px;
     margin-right: 145px;
+    margin-top: 3px;
     height: 80px;
     overflow: hidden;
 }
@@ -284,7 +285,7 @@ li {
 .main-video-desc h1 {
     margin: 0px;
     padding: 0px;
-    font-size: 110%;
+    font-size: 14px;
     font-weight: bold;
     color: #000000;
     text-decoration: none;
@@ -292,15 +293,17 @@ li {
     overflow: hidden;
 }
 
-.main-video-desc-desc {
+.main-video-desc div {
     margin: 0px;
     padding: 0px;
-    font-size: 95%;
-    color: #222;
-    line-height: 14px;
-    display: block;
-    height: 44px;
+    font-size: 11px;
     overflow: hidden;
+    line-height: 14px;
+}
+
+.main-video-desc-desc {
+    color: #222;
+    height: 44px;
 }
 
 .main-video-desc p {
@@ -308,13 +311,13 @@ li {
     padding: 0px;
     margin: 0px;
 }
-
 .main-video-desc p br {
     display: inline;
     padding: 0;
     margin: 0;
     height: 0;
 }
+
 
 .main-video-desc a:link, .main-video-desc a:active, .main-content a:link, .main-content a:active {
     color: #215ccf;
@@ -333,7 +336,7 @@ li {
 
 .main-video-hitbox {
     position: absolute;
-    top: 5px;
+    top: 2px;
     left: 5px;
     width: 100px;
     height: 75px;
@@ -367,8 +370,10 @@ li {
 }
 
 .main-video-hitbox img.inprogress-arrows {
-    margin-left: 77px;
-    margin-top: 52px;
+    display: block;
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
 }
 
 .main-video-details {
@@ -381,8 +386,8 @@ li {
 
 .main-video-details-tasks {
     position: absolute;
-    top: 15px;
-    left: 10px;
+    top: 11px;
+    left: 5px;
     height: 30px;
     width: 115px;
 }
@@ -391,7 +396,7 @@ li {
     display: block;
     position: absolute;
     top: 0px;
-    width: 35px;
+    width: 40px;
     height: 30px;
 }
 
@@ -425,39 +430,36 @@ li {
 
 .main-video-details-state {
     position: absolute;
-    top: 55px;
-    left: 10px;
+    top: 50px;
+    left: 8px;
     width: 125px;
-    font-size: 10px;
     margin: 0px;
     color: #000;
+    font-size: 10px;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
-.main-video-details-state.new, .main-video-details-state.unwatched {
+.main-video-details-state.new, .main-video-details-state.newly-downloaded, .main-video-details-state.expiring {
+    font-size: 11px;
     font-weight: bold;
-    color: #090;
 }
 
-.main-video-details-state.expiry {
-    /* What kind of work is expiry?? I have no clue, but I like the sound of
-    * it so I'm keeping it -- Ben */
-    font-weight: bold;
+.main-video-details-state.new {
     color: #486D9F;
 }
 
-.main-video-details-state-secondary {
-    position: absolute;
-    top: 68px;
-    left: 10px;
-    width: 125px;
-    font-size: 10px;
-    margin: 0px;
-    color: #000;
+.main-video-details-state.newly-downloaded {
+    color: #090;
+}
+
+.main-video-details-state.expiring {
+    color: #444;
 }
 
 .main-video-details-save-button {
     position: absolute;
-    top: 52px;
+    top: 48px;
     left: 90px;
     width: 38px;
     height: 17px;
@@ -482,13 +484,14 @@ li {
   width: 94px;
   height: 12px;
   background: url(../images/status_background.png) top left no-repeat;
+  margin-bottom: 3px;
 }
 
 .main-progress-cancel {
     display: block;
     position: absolute;
     top: 0px;
-    right: 3px;
+    left: 98px;
     width: 11px;
     height: 13px;
     background: url(../images/main-cancel.png) top left no-repeat;

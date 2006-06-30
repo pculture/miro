@@ -16,12 +16,6 @@ def viewedItems(obj):
 def downloadingItems(obj):
     return obj.getState() == 'downloading'
 
-def downloadingItemsNonExternal(obj):
-    return obj.getState() == 'downloading' and obj.getFeed().url != 'dtv:manualFeed'
-
-def downloadingItemsExternal(obj):
-    return obj.getState() == 'downloading' and obj.getFeed().url == 'dtv:manualFeed'
-
 def unwatchedItems(obj):
     return obj.getState() == 'newly-downloaded'
 

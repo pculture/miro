@@ -32,33 +32,19 @@
 
     <div class="main-video-details">
         <div class="main-video-details-tasks">
-            <a t:hideIf="this.getURL() == ''" href="#" 
+            <a t:showIf="this.hasSharableURL()" href="#" 
                 class="main-video-details-task-mail" 
                 onclick="recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@'); return false;" />
-            <a href="#" t:hideIf="this.getURL() == ''" 
+            <a href="#" t:showIf="this.hasSharableURL()" 
                 class="main-video-details-task-bomb" 
                 onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" />
             <a t:showIf="this.isDownloaded()" href="#" 
                 class="main-video-details-task-delete" 
                 onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" />
         </div>
-        <div t:hideIf="this.getViewed()" class="main-video-details-state new">
-            <span i18n:translate="">NEW</span>
-        </div>
-        <div t:showIf="this.getState() == 'unwatched'"
-             class="main-video-details-state unwatched" >
-             <span i18n:translate="">UNWATCHED</span>
-        </div>
-        <div t:showIf="this.getState() == 'expiring'"
-            class="main-video-details-state expiry">
-            <span i18n:translate="">Expires: <span i18n:name="expiration"
-                    t:replace="this.getExpirationString()" /></span>
-        </div>
-	<div t:showIf="this.isPendingAutoDownload()" class="main-video-details-state-secondary">
-            <span i18n:translate="">Pending Auto Download</span>
-        </div>
-	<div t:showIf="this.isFailedDownload()" class="main-video-details-state-secondary">
-		<span t:replace="this.getFailureReason()" />
+	<div t:hideIf="this.getState() == 'downloading'"
+		class="main-video-details-state @@@this.getStateCSSClass()@@@">
+		<span t:replace="this.getStateString()" />
 	</div>
         <div t:showIf="this.getState() == 'downloading'" 
             class="main-video-details-state downloading">
@@ -71,7 +57,7 @@
             </span>
             <a class="main-progress-cancel" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" title="Cancel Download" />
         </div>
-        <div t:showIf="this.isDownloaded()"
+        <div t:showIf="this.showSaveButton()"
             class="main-video-details-save-button">
             <a href="#" 
                onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');"
@@ -83,7 +69,9 @@
         <div class="main-video-desc-desc">
             <p t:replaceMarkup="this.getDescription()" />
         </div>
-        <span t:replaceMarkup="this.getDetails()" />
+	<div class="main-video-desc-details">
+		<span t:replaceMarkup="this.getDetails()" />
+	</div>
     </div>
 </div>
 

@@ -26,6 +26,19 @@ def itemsByState(x):
 def itemsByChannelCategory(x):
     return x.getChannelCategory()
 
+def downloadsByCategory(x):
+    """Splits downloading items into 3 categories:
+        normal -- not pending or external
+        pending  -- pending manual downloads
+        external -- external torrents
+    """
+    if x.getFeed().url == 'dtv:manualFeed':
+        return 'external'
+    elif x.isPendingManualDownload():
+        return 'pending'
+    else:
+        return 'normal'
+
 tabIDIndex = lambda x: x.id
 
 tabObjIDIndex = lambda x: x.obj.getID()

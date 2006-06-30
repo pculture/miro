@@ -1,3 +1,4 @@
+from sha import sha
 import re
 import subprocess
 import string
@@ -9,7 +10,9 @@ import threading
 import traceback
 import time
 import sys
+
 from BitTornado.clock import clock
+from BitTornado.bencode import bdecode, bencode
 
 inDownloader = False
 # this gets set to True when we're in the download process.
