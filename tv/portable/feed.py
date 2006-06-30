@@ -228,7 +228,12 @@ class FeedImpl:
         newA = 0
 
         for item in self.items:
-            state = item.getState()
+            # FIXME: I think it's bad style to use the CSS class here.  The
+            # problem is that what we want isn't getState() or
+            # getChannelCategory(), since we don't want to count new items
+            # that are also going to be auto-downloaded.  Maybe make a
+            # method called getDisplayState or something?.  
+            state = item.getStateCSSClass()
             if state == 'new':
                 newA += 1
             elif state == 'newly-downloaded':
@@ -257,7 +262,7 @@ class FeedImpl:
 
     # Returns true iff available should be shown
     def showA(self):
-        return (not self.isAutoDownloadable()) and self.available > 0
+        return self.available > 0
 
     ##
     # Sets the last time the feed was viewed to now
@@ -350,7 +355,7 @@ class FeedImpl:
         for item in self.items:
             expireTime = item.getExpirationTime()
             if (item.getState() == 'expiring' and expireTime is not None and 
-                    expireTime >= datetime.now()):
+                    expireTime < datetime.now()):
                 item.expire()
 
     ##

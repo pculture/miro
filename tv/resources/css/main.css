@@ -336,8 +336,8 @@ li {
 
 .main-video-hitbox {
     position: absolute;
-    top: 2px;
-    left: 5px;
+    top: 3px;
+    left: 6px;
     width: 100px;
     height: 75px;
     z-index: 2;
@@ -432,15 +432,15 @@ li {
     position: absolute;
     top: 50px;
     left: 8px;
-    width: 125px;
+    width: 82px;
+    height: 30px;
     margin: 0px;
     color: #000;
     font-size: 10px;
     overflow: hidden;
-    white-space: nowrap;
 }
 
-.main-video-details-state.new, .main-video-details-state.newly-downloaded, .main-video-details-state.expiring {
+.main-video-details-state.new, .main-video-details-state.newly-downloaded {
     font-size: 11px;
     font-weight: bold;
 }
@@ -454,7 +454,21 @@ li {
 }
 
 .main-video-details-state.expiring {
+    font-weight: bold;
     color: #444;
+    font-size: 9px;
+}
+
+.main-video-details-download-info {
+    position: absolute;
+    top: 50px;
+    left: 8px;
+    width: 125px;
+    height: 30px;
+    margin: 0px;
+    color: #000;
+    font-size: 10px;
+    overflow: hidden;
 }
 
 .main-video-details-save-button {

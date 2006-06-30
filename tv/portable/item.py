@@ -141,33 +141,35 @@ class Item(DDBObject):
             else:
                 return _("%d min") % (ceil(exp.seconds/60.0))
 
+    def _getStateCSSClassAndState(self):
+        """Does the work for both getStateCSSClass() and getStateString().
+        It's in one function to make sure that they stay in sync
+        """
+
+        if self.isPendingAutoDownload():
+            return 'pending-autdownload', _('Pending Auto Download')
+        elif self.isFailedDownload():
+            return 'failed-download', self.getFailureReason()
+        elif self.isDownloaded():
+            if self.getState() == 'newly-downloaded':
+                return 'newly-downloaded', _('UNWATCHED')
+            elif self.getState() == 'expiring':
+                msg = _('Expires: %s') % self.getExpirationString()
+                return 'expiring', msg
+            else:
+                return '', ''
+        elif not self.getViewed():
+            return 'new', _('NEW')
+        else:
+            return '', ''
+
     def getStateCSSClass(self):
         """Get the CSS class to display our state string."""
-        if self.isPendingAutoDownload():
-            return 'pending-autdownload'
-        elif self.isFailedDownload():
-            return 'failed-download'
-        elif not self.getViewed():
-            return 'new'
-        else:
-            return self.getState()
+        return self._getStateCSSClassAndState()[0]
 
     def getStateString(self):
         """Get a human-readable string to display to the user."""
-        if self.isPendingAutoDownload():
-            return _('Pending Auto Download')
-        elif self.isFailedDownload():
-            return self.getFailureReason()
-        elif not self.getViewed():
-            return _('NEW')
-        else:
-            state = self.getState()
-            if state == 'newly-downloaded':
-                return _('UNWATCHED')
-            elif state == 'expiring':
-                return _('Expires: %s') % self.getExpirationString()
-            else:
-                return ''
+        return self._getStateCSSClassAndState()[1]
 
     def getExpirationTime(self):
         """Get the time when this item will expire. 

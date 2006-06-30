@@ -95,21 +95,7 @@ class TrackedView:
 
 
     def currentXML(self, item):
-        output = []
-        output.append(self.templateFunc(item.object, self.name, item.tid).read())
-        try:
-#             print "-----"
-#             print str(''.join(output))
-#             print "-----"
-            return ''.join(output)
-        except UnicodeDecodeError:
-            ret = ''
-            for string in output:
-                try:
-                    ret = ret + string
-                except:
-                    pass
-            return ret
+        return self.templateFunc(item.object, self.name, item.tid).read()
 
     def callback (self):
         if self.parent.domHandler:
@@ -225,18 +211,7 @@ class UpdateRegion:
 
 
     def currentXML(self):
-        output = []
-        output.append(self.templateFunc(self.name, self.tid).read())
-        try:
-            return ''.join(output) 
-        except UnicodeDecodeError:
-            ret = ''
-            for string in output:
-                try:
-                    ret = ret + string
-                except:
-                    pass
-            return ret
+        return self.templateFunc(self.name, self.tid).read()
 
     def onChange(self,obj=None,id=None):
         if not self.idle_queued:
