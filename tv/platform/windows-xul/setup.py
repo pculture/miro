@@ -4,6 +4,7 @@ import copy
 import sys
 import string
 import subprocess
+import zipfile as zip
 
 ###############################################################################
 ## Paths and configuration                                                   ##
@@ -21,7 +22,7 @@ NSIS_PATH = 'C:\\Program Files\\NSIS\\makensis.exe'
 # the Binary Kit, ignore this setting and change all of the settings
 # below.
 defaultBinaryKitRoot = os.path.join(os.path.dirname(sys.argv[0]), \
-				    '..', '..', '..', 'dtv-binary-kit')
+                                    '..', '..', '..', 'dtv-binary-kit')
 BINARY_KIT_ROOT = defaultBinaryKitRoot
 
 # Set BOOST_LIB, BOOST_INCLUDE_PATH, and BOOST_RUNTIMES as appropriate
@@ -208,16 +209,16 @@ class Common:
     # to do it so your app is cleanly separated from xulrunner.
     def copyVLCPluginFiles(self, baseDir, xulrunnerDir):
         destDir = os.path.join(xulrunnerDir, 'plugins')
-	if not os.access(destDir, os.F_OK):
-	    os.mkdir(destDir)
+        if not os.access(destDir, os.F_OK):
+            os.mkdir(destDir)
 
         pluginFiles = ['npvlc.dll', 'vlcintf.xpt']
         for f in pluginFiles:
             shutil.copy2(os.path.join(VLC_MOZ_PLUGIN_DIR, f), destDir)
 
         vlcPluginDest = os.path.join(baseDir, "vlc-plugins")
-	if not os.access(vlcPluginDest, os.F_OK):
-	    os.mkdir(vlcPluginDest)
+        if not os.access(vlcPluginDest, os.F_OK):
+            os.mkdir(vlcPluginDest)
 
         vlcPlugins = os.listdir(VLC_PLUGINS_DIR)
         for f in vlcPlugins:
@@ -228,49 +229,49 @@ class Common:
         shutil.copy2(os.path.join(root,"license.txt"),destDir)
 
     def compileIDL(self):
-	buildDir = os.path.join(self.bdist_base, "idl")
-	pattern = re.compile(r"(.*)\.idl$")
-	xpidl = os.path.join(IDL_TOOLS_PATH, "xpidl")
-	xpt_link = os.path.join(IDL_TOOLS_PATH, "xpt_link")
+        buildDir = os.path.join(self.bdist_base, "idl")
+        pattern = re.compile(r"(.*)\.idl$")
+        xpidl = os.path.join(IDL_TOOLS_PATH, "xpidl")
+        xpt_link = os.path.join(IDL_TOOLS_PATH, "xpt_link")
 
-	if not os.access(buildDir, os.F_OK):
-	    os.mkdir(buildDir)
+        if not os.access(buildDir, os.F_OK):
+            os.mkdir(buildDir)
 
-	idlDir = os.path.join(root, 'platform', platform, 'idl')
-	generatedFiles = []
-	if not os.access(idlDir, os.F_OK):
-	    self.typeLibrary = None
-	    return
+        idlDir = os.path.join(root, 'platform', platform, 'idl')
+        generatedFiles = []
+        if not os.access(idlDir, os.F_OK):
+            self.typeLibrary = None
+            return
 
-	for name in os.listdir(idlDir):
-	    m = pattern.match(name)
-	    if not m:
-		continue
-	    inPath = os.path.join(idlDir, name)
-	    outPath = os.path.join(buildDir, m.group(1) + ".xpt")
+        for name in os.listdir(idlDir):
+            m = pattern.match(name)
+            if not m:
+                continue
+            inPath = os.path.join(idlDir, name)
+            outPath = os.path.join(buildDir, m.group(1) + ".xpt")
 
-	    result = os.spawnl(os.P_WAIT, xpidl, xpidl, "-m", "typelib",
-			       "-w", "-v", "-e", outPath,
-			       "-I", IDL_INCLUDE_PATH, inPath)
-	    if result != 0:
-		raise OSError, "Couldn't compile %s (error code %s)" % \
-		    (inPath, result)
+            result = os.spawnl(os.P_WAIT, xpidl, xpidl, "-m", "typelib",
+                               "-w", "-v", "-e", outPath,
+                               "-I", IDL_INCLUDE_PATH, inPath)
+            if result != 0:
+                raise OSError, "Couldn't compile %s (error code %s)" % \
+                    (inPath, result)
 
-	    generatedFiles.append(outPath)
+            generatedFiles.append(outPath)
 
-	if len(generatedFiles) == 0:
-	    self.typeLibrary = None
-	    return
+        if len(generatedFiles) == 0:
+            self.typeLibrary = None
+            return
 
-	outXpt = os.path.join(self.bdist_base, 'xpcom_typelib.xpt')
+        outXpt = os.path.join(self.bdist_base, 'xpcom_typelib.xpt')
         log.info("linking IDL files to %s", outXpt)
-	result = os.spawnl(os.P_WAIT, xpt_link, xpt_link, outXpt,
-			   *generatedFiles)
-	if result != 0:
-	    raise OSError, "Couldn't link compiled IDL to %s (error code %s)" \
-		% (outXpt, )
+        result = os.spawnl(os.P_WAIT, xpt_link, xpt_link, outXpt,
+                           *generatedFiles)
+        if result != 0:
+            raise OSError, "Couldn't link compiled IDL to %s (error code %s)" \
+                % (outXpt, )
 
-	self.typeLibrary = outXpt
+        self.typeLibrary = outXpt
 
     # Fill the app.config.template, to generate the real app.config.
     # NEEDS: Very sloppy. The new file is just dropped in the source tree
@@ -349,17 +350,17 @@ class runxul(Command, Common):
          'base directory for build library (default is build)'),
         ('dist-dir=', 'd',
          "directory to put final built distributions in (default is dist)"),
-	('bdist-dir=', 'd',
-	 "temporary directory for creating the distribution"),
+        ('bdist-dir=', 'd',
+         "temporary directory for creating the distribution"),
         ]
 
     def initialize_options(self):
         self.bdist_base = None
-	self.bdist_dir = None
+        self.bdist_dir = None
         self.dist_dir = 'dist'
 
-	self.childPythonPaths = []
-	self.childDLLPaths = []
+        self.childPythonPaths = []
+        self.childDLLPaths = []
 
     def finalize_options(self):
         if self.bdist_dir is None:
@@ -370,25 +371,25 @@ class runxul(Command, Common):
                                    ('dist_dir', 'dist_dir'),
                                    ('bdist_base', 'bdist_base'))
 
-	# Find our 'resources' tree (NEEDS)
-	self.appResources = os.path.join(root, 'resources')
+        # Find our 'resources' tree (NEEDS)
+        self.appResources = os.path.join(root, 'resources')
 
     def buildXulrunnerInstallation(self):
-	buildBase = os.path.join(self.bdist_base, "xulrunner")
-	self.xulrunnerDir = buildBase
-	markFile = os.path.join(buildBase, ".xulrunnerBuilt")
-	if os.access(markFile, os.F_OK):
-	    # Mark file exists. We take this to mean that there is
-	    # valid xulrunner tree already built in buildBase.
-	    return
+        buildBase = os.path.join(self.bdist_base, "xulrunner")
+        self.xulrunnerDir = buildBase
+        markFile = os.path.join(buildBase, ".xulrunnerBuilt")
+        if os.access(markFile, os.F_OK):
+            # Mark file exists. We take this to mean that there is
+            # valid xulrunner tree already built in buildBase.
+            return
 
         log.info("assembling temporary xulrunner tree in %s" % buildBase)
 
-	# First, copy in the basic Xulrunner distribution.
-	copyTreeExceptSvn(XULRUNNER_DIR, buildBase)
+        # First, copy in the basic Xulrunner distribution.
+        copyTreeExceptSvn(XULRUNNER_DIR, buildBase)
 
-	# Then, copy the extra PyXPCOM files over it.
-	copyTreeExceptSvn(PYXPCOM_DIR, buildBase)
+        # Then, copy the extra PyXPCOM files over it.
+        copyTreeExceptSvn(PYXPCOM_DIR, buildBase)
 
         # Copy the license file over
         # NEEDS: (huh? this doesn't belong here at all)
@@ -397,8 +398,8 @@ class runxul(Command, Common):
         # Finally, drop in our plugins.
         self.copyVLCPluginFiles(self.bdist_base, buildBase)
 
-	# Create the mark file to indicate that we now have a build.
-	open(markFile, 'w')
+        # Create the mark file to indicate that we now have a build.
+        open(markFile, 'w')
 
     def run(self):
         self.makeAppConfig()
@@ -412,54 +413,54 @@ class runxul(Command, Common):
         build.build_base = self.bdist_base
         build.run()
         if build.build_platlib is not None:
-	    self.childPythonPaths.append(build.build_platlib)
+            self.childPythonPaths.append(build.build_platlib)
         if build.build_lib is not None:
-	    self.childPythonPaths.append(build.build_lib)
+            self.childPythonPaths.append(build.build_lib)
 
-	# Add application Python modules to child search path
-	self.childPythonPaths. \
-	    extend([
-		os.path.join(root, 'platform', platform),
-		os.path.join(root, 'platform'),
-		os.path.join(root, 'portable'),
-		])
+        # Add application Python modules to child search path
+        self.childPythonPaths. \
+            extend([
+                os.path.join(root, 'platform', platform),
+                os.path.join(root, 'platform'),
+                os.path.join(root, 'portable'),
+                ])
 
-	# Put together an xulrunner installation that meets our standards.
-	self.buildXulrunnerInstallation()
-	xulrunnerBinary = os.path.join(self.xulrunnerDir, "xulrunner")
+        # Put together an xulrunner installation that meets our standards.
+        self.buildXulrunnerInstallation()
+        xulrunnerBinary = os.path.join(self.xulrunnerDir, "xulrunner")
 
-	# Find application -- presently hardcoded to a tree in
-	# 'xul'.
-	self.applicationRoot = os.path.join(root, 'platform', platform,
-					    'xul')
-	applicationIni = os.path.join(self.applicationRoot, 'application.ini')
+        # Find application -- presently hardcoded to a tree in
+        # 'xul'.
+        self.applicationRoot = os.path.join(root, 'platform', platform,
+                                            'xul')
+        applicationIni = os.path.join(self.applicationRoot, 'application.ini')
 
-	# Compile any IDL in the application
+        # Compile any IDL in the application
         log.info("compiling type libraries")
-	self.compileIDL()
+        self.compileIDL()
 
-	# Run the app. NEEDS: The main hack here is how we write the
-	# type library into the source tree, which is pretty odious.
-	if self.typeLibrary:
-	    # NEEDS: even if we did it this way, ensure that 'components'
-	    # exists
-	    typeLibraryPath = os.path.join(self.applicationRoot, 'components',
-					   'types.xpt')
-	    shutil.copy2(self.typeLibrary, typeLibraryPath)
+        # Run the app. NEEDS: The main hack here is how we write the
+        # type library into the source tree, which is pretty odious.
+        if self.typeLibrary:
+            # NEEDS: even if we did it this way, ensure that 'components'
+            # exists
+            typeLibraryPath = os.path.join(self.applicationRoot, 'components',
+                                           'types.xpt')
+            shutil.copy2(self.typeLibrary, typeLibraryPath)
 
         self.buildDownloadDaemon(self.bdist_base)
 
-	newEnv = copy.deepcopy(os.environ)
-	oldPath = 'PATH' in newEnv and [newEnv['PATH']] or []
-	newEnv['PATH'] = \
-	    ';'.join(oldPath + self.childDLLPaths)
-	oldPyPath = 'PYTHONPATH' in newEnv and [newEnv['PYTHONPATH']] or []
-	newEnv['PYTHONPATH'] = \
-	    ';'.join(oldPyPath + self.childPythonPaths)
-	newEnv['RUNXUL_RESOURCES'] = self.appResources
-	print "Starting application"
-#	os.execle(xulrunnerBinary, xulrunnerBinary, applicationIni, newEnv)
-	os.execle(xulrunnerBinary, xulrunnerBinary, applicationIni, "-jsconsole", "-console", newEnv)
+        newEnv = copy.deepcopy(os.environ)
+        oldPath = 'PATH' in newEnv and [newEnv['PATH']] or []
+        newEnv['PATH'] = \
+            ';'.join(oldPath + self.childDLLPaths)
+        oldPyPath = 'PYTHONPATH' in newEnv and [newEnv['PYTHONPATH']] or []
+        newEnv['PYTHONPATH'] = \
+            ';'.join(oldPyPath + self.childPythonPaths)
+        newEnv['RUNXUL_RESOURCES'] = self.appResources
+        print "Starting application"
+#        os.execle(xulrunnerBinary, xulrunnerBinary, applicationIni, newEnv)
+        os.execle(xulrunnerBinary, xulrunnerBinary, applicationIni, "-jsconsole", "-console", newEnv)
 
 ###############################################################################
 
@@ -477,18 +478,18 @@ class bdist_xul_dumb(Command, Common):
          'base directory for build library (default is build)'),
         ('dist-dir=', 'd',
          "directory to put final built distribution in (default is dist)"),
-	('bdist-dir=', 'd',
-	 "temporary directory for creating the distribution"),
+        ('bdist-dir=', 'd',
+         "temporary directory for creating the distribution"),
         ]
 
     def initialize_options(self):
         # NEEDS: allow 'includes' and 'excludes' options?
         self.bdist_base = None
-	self.bdist_dir = None
+        self.bdist_dir = None
         self.dist_dir = 'dist'
 
-	self.childPythonPaths = []
-	self.childDLLPaths = []
+        self.childPythonPaths = []
+        self.childDLLPaths = []
 
     def finalize_options(self):
         if self.bdist_dir is None:
@@ -499,10 +500,10 @@ class bdist_xul_dumb(Command, Common):
                                    ('dist_dir', 'dist_dir'),
                                    ('bdist_base', 'bdist_base'))
 
-	# Find our 'resources' tree (NEEDS)
-	self.appResources = os.path.join(root, 'resources')
+        # Find our 'resources' tree (NEEDS)
+        self.appResources = os.path.join(root, 'resources')
         # Find our various data bits (NEEDS)
-	self.xulTemplateDir = os.path.join(root, 'platform', platform,
+        self.xulTemplateDir = os.path.join(root, 'platform', platform,
                                            'xul')
 
     def run(self):
@@ -526,18 +527,18 @@ class bdist_xul_dumb(Command, Common):
         build.build_base = self.bdist_base
         build.run()
         if build.build_platlib is not None:
-	    packagePaths.append(build.build_platlib)
+            packagePaths.append(build.build_platlib)
         if build.build_lib is not None:
-	    packagePaths.append(build.build_lib)
+            packagePaths.append(build.build_lib)
 
-	# Add application Python modules to search path
+        # Add application Python modules to search path
         # NEEDS: should compile all Python files, and add the *build*
         # directories to the path.
-	packagePaths.extend([
+        packagePaths.extend([
                 os.path.join(root, 'platform', platform),
-		os.path.join(root, 'platform'),
-		os.path.join(root, 'portable'),
-		])
+                os.path.join(root, 'platform'),
+                os.path.join(root, 'portable'),
+                ])
 
         # Add PyXPCOM's runtime scripts directory to the search path,
         # and call out a list of top-level modules (those imported by
@@ -545,7 +546,7 @@ class bdist_xul_dumb(Command, Common):
         # cause the dependency scanner to conclude that all of the
         # PyXPCOM scripts are necessary.
         # NEEDS: again, should arrange to have these get built.
-	packagePaths.extend([
+        packagePaths.extend([
                 os.path.join(PYXPCOM_DIR, "python"),
                 ])
         moduleIncludes = [# Public to Python code
@@ -593,10 +594,10 @@ class bdist_xul_dumb(Command, Common):
         copyTreeExceptSvn(self.xulTemplateDir, self.dist_dir)
         log.info("assembling xulrunner")
         self.xulrunnerOut = os.path.join(self.dist_dir, 'xulrunner')
-	copyTreeExceptSvn(XULRUNNER_DIR, self.xulrunnerOut)
+        copyTreeExceptSvn(XULRUNNER_DIR, self.xulrunnerOut)
         # (Copy *only* the components part, not the Python part; that
         #  got sucked into the dependency scan above)
-	copyTreeExceptSvn(os.path.join(PYXPCOM_DIR, 'components'),
+        copyTreeExceptSvn(os.path.join(PYXPCOM_DIR, 'components'),
                           os.path.join(self.xulrunnerOut, 'components'))
 
         # Copy the license file over
@@ -608,7 +609,7 @@ class bdist_xul_dumb(Command, Common):
         # NEEDS: make IDL directory configurable
         log.info("compiling type libraries")
         self.compileIDL()
-	if self.typeLibrary:
+        if self.typeLibrary:
             componentDir = os.path.join(self.dist_dir, 'components')
             if not os.access(componentDir, os.F_OK):
                 os.makedirs(componentDir)
@@ -792,15 +793,17 @@ class bdist_xul (bdist_xul_dumb):
             ]:
             nsisVars[nsisName] = self.getTemplateVariable(ourName)
 
+        # Hardcoded elsewhere in this file, so why not here too?
+        nsisVars['CONFIG_EXECUTABLE'] = "Democracy.exe"
+        nsisVars['CONFIG_ICON'] = "Democracy.ico"
+
+        # One stage installer
         outputFile = "%s-%s.exe" % \
             (self.getTemplateVariable('shortAppName'),
              self.getTemplateVariable('appVersion'),
              )
         nsisVars['CONFIG_OUTPUT_FILE'] = outputFile
-
-        # Hardcoded elsewhere in this file, so why not here too?
-        nsisVars['CONFIG_EXECUTABLE'] = "Democracy.exe"
-        nsisVars['CONFIG_ICON'] = "Democracy.ico"
+        nsisVars['CONFIG_TWOSTAGE'] = "No"
 
         nsisArgs = ["/D%s=%s" % (k, v) for (k, v) in nsisVars.iteritems()]
         nsisArgs.append(os.path.join(self.dist_dir, "Democracy.nsi"))
@@ -808,6 +811,54 @@ class bdist_xul (bdist_xul_dumb):
         if os.access(outputFile, os.F_OK):
             os.remove(outputFile)
         subprocess.call([NSIS_PATH] + nsisArgs)
+
+        # Two stage installer
+        outputFile = "%s-%s-twostage.exe" % \
+            (self.getTemplateVariable('shortAppName'),
+             self.getTemplateVariable('appVersion'),
+             )
+        nsisVars['CONFIG_OUTPUT_FILE'] = outputFile
+        nsisVars['CONFIG_TWOSTAGE'] = "Yes"
+
+        nsisArgs = ["/D%s=%s" % (k, v) for (k, v) in nsisVars.iteritems()]
+        nsisArgs.append(os.path.join(self.dist_dir, "Democracy.nsi"))
+
+        if os.access(outputFile, os.F_OK):
+            os.remove(outputFile)
+        subprocess.call([NSIS_PATH] + nsisArgs)
+
+        self.zipfile = zip.ZipFile(os.path.join (self.dist_dir, "Democracy-Contents-%s.zip" % (self.getTemplateVariable('appVersion'),)), 'w', zip.ZIP_DEFLATED)
+        self.addFile (nsisVars['CONFIG_EXECUTABLE'])
+	self.addFile (nsisVars['CONFIG_ICON'])
+	self.addFile ("Democracy_Downloader.exe")
+	self.addFile ("application.ini")
+	self.addFile ("msvcp71.dll")
+	self.addFile ("msvcr71.dll")
+	self.addFile ("python24.dll")
+	self.addFile ("boost_python-vc71-mt-1_33.dll")
+
+	self.addDirectory ("chrome")
+	self.addDirectory ("components")
+	self.addDirectory ("defaults")
+	self.addDirectory ("resources")
+	self.addDirectory ("vlc-plugins")
+	self.addDirectory ("xulrunner")
+
+	self.zipfile.close()
+
+    def addFile(self, filename):
+	length = len(self.dist_dir)
+	if filename[:length] == (self.dist_dir):
+	    filename = filename[length:]
+	    while len(filename) > 0 and (filename[0] == '/' or filename[0] == '\\'):
+	        filename = filename[1:]
+	print "Compressing %s" % (filename,)
+	self.zipfile.write (os.path.join (self.dist_dir, filename), filename)
+
+    def addDirectory (self, dirname):
+	for root, dirs, files in os.walk (os.path.join (self.dist_dir, dirname)):
+	    for name in files:
+		self.addFile (os.path.join (root, name))
 
 def copyTreeExceptSvn(src, dest):
     """Copy the contents of the given source directory into the given
@@ -818,23 +869,23 @@ def copyTreeExceptSvn(src, dest):
 
     names = os.listdir(src)
     if not os.access(dest, os.F_OK):
-	os.mkdir(dest)
+        os.mkdir(dest)
     for name in names:
-	if name in [".svn", "_svn"]:
-	    continue
-	srcname = os.path.join(src, name)
-	destname = os.path.join(dest, name)
-	if os.path.isdir(srcname):
-	    copyTreeExceptSvn(srcname, destname)
-	else:
-	    shutil.copy2(srcname, destname)
+        if name in [".svn", "_svn"]:
+            continue
+        srcname = os.path.join(src, name)
+        destname = os.path.join(dest, name)
+        if os.path.isdir(srcname):
+            copyTreeExceptSvn(srcname, destname)
+        else:
+            shutil.copy2(srcname, destname)
 
 setup(
     ext_modules = ext_modules,
     cmdclass = {
-	'build_ext': build_ext,
-	'runxul': runxul,
-	'bdist_xul_dumb': bdist_xul_dumb,
-	'bdist_xul': bdist_xul,
-	}
+        'build_ext': build_ext,
+        'runxul': runxul,
+        'bdist_xul_dumb': bdist_xul_dumb,
+        'bdist_xul': bdist_xul,
+        }
 )

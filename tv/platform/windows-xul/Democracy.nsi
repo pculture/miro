@@ -27,11 +27,14 @@ Icon ${CONFIG_ICON}
 
 Var STARTMENU_FOLDER
 
-!include "MUI.nsh"
-!include "Sections.nsh"
-
 ; Runs in tv/platform/windows-xul/dist, so 4 ..s.
 !addplugindir ..\..\..\..\dtv-binary-kit\NSIS-Plugins\
+
+!addincludedir ..\..\..\..\dtv-binary-kit\NSIS-Plugins\
+
+!include "MUI.nsh"
+!include "Sections.nsh"
+!include zipdll.nsh
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Pages                                                                     ;;
@@ -141,6 +144,18 @@ lbl_winnt:
   SetShellVarContext all
   SetOutPath "$INSTDIR"
 
+!if ${CONFIG_TWOSTAGE} = "Yes"
+
+  InetLoad::load http://www.participatoryculture.org/nightlies/Democracy-Contents-${CONFIG_VERSION}.zip $INSTDIR/Democracy-contents.zip
+  Pop $0
+  StrCmp $0 "OK" dlok
+  MessageBox MB_OK|MB_ICONEXCLAMATION "Download Error, click OK to abort installation: $0" /SD IDOK
+  Abort
+dlok:
+  !insertmacro ZIPDLL_EXTRACT $INSTDIR/Democracy-contents.zip $INSTDIR <ALL>
+
+!else
+
   File  ${CONFIG_EXECUTABLE}
   File  ${CONFIG_ICON}
   File  Democracy_Downloader.exe
@@ -156,6 +171,8 @@ lbl_winnt:
   File  /r resources
   File  /r vlc-plugins
   File  /r xulrunner
+
+!endif
 
   SetOutPath "$INSTDIR\resources"
   TackOn::writeToFile initial-feeds.democracy
