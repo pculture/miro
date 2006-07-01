@@ -104,7 +104,8 @@ def __checkValidity():
 
 def __notifyListeners(key, value):
     for callback in __callbacks:
-        callback(key, value)
+        eventloop.addIdle(callback, 'config callback: %s' % callback,
+                args=(key,value))
 
 def ensureMigratedMoviePath(pathname):
     if hasattr(platformcfg, 'ensureMigratedMoviePath'):
