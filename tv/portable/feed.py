@@ -197,11 +197,9 @@ class FeedImpl:
                 self.scheduler = eventloop.addTimeout(self.updateFreq, self.update, "Feed update (%s)" % self.getTitle())
 
     def cancelUpdateEvents(self):
-        try:
+        if hasattr(self, 'scheduler') and self.scheduler is not None:
             self.scheduler.cancel()
             self.scheduler = None
-        except:
-            pass
 
     # Subclasses should override this
     def update(self):
@@ -604,6 +602,7 @@ class Feed(DDBObject):
         self.initiallyAutoDownloadable = initiallyAutoDownloadable
         self.loading = True
         self.actualFeed = FeedImpl(url,self)
+        self.download = None
         self.generateFeed(True)
         self.iconCache = IconCache(self, is_vital = True)
         self.informOnError = True
@@ -658,7 +657,7 @@ class Feed(DDBObject):
         elif (self.origURL == "dtv:manualFeed"):
             newFeed = ManualFeedImpl(self)
         else:
-            grabURL(self.origURL,
+            self.download = grabURL(self.origURL,
                     lambda info:self._generateFeedCallback(info, removeOnError),
                     lambda error:self._generateFeedErrback(error, removeOnError))
             #print "added async callback to create feed %s" % self.origURL
@@ -668,8 +667,8 @@ class Feed(DDBObject):
 
             self.signalChange()
 
-
     def _generateFeedErrback(self, error, removeOnError):
+        self.download = None
         print "DTV: Warning couldn't load feed at %s (%s)" % \
                 (self.origURL, error)
         self.errorState = True
@@ -701,6 +700,7 @@ class Feed(DDBObject):
         # FIXME: This probably should be split up a bit. The logic is
         #        a bit daunting
 
+        self.download = None
         modified = info.get('last-modified')
         etag = info.get('etag')
         contentType = info.get('content-type', 'text/html')
@@ -827,6 +827,9 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
 
         self.confirmDBThread()
         self.cancelUpdateEvents()
+        if self.download is not None:
+            self.download.cancel()
+            self.download = None
         for item in self.items:
             if moveItemsTo is None:
                 item.remove()
@@ -867,6 +870,7 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
             self.iconCache.dbItem = self
             self.iconCache.requestUpdate(True)
         self.informOnError = False
+        self.download = None
         if self.actualFeed.__class__ == FeedImpl:
             # Our initial FeedImpl was never updated, call generateFeed again
             self.loading = True
@@ -899,6 +903,7 @@ class RSSFeedImpl(FeedImpl):
         self.initialHTML = initialHTML
         self.etag = etag
         self.modified = modified
+        self.download = None
         self.scheduleUpdateEvents(0)
 
     ##
@@ -995,8 +1000,8 @@ class RSSFeedImpl(FeedImpl):
                 modified = self.modified
             except:
                 modified = None
-            grabURL(self.url, self._updateCallback, self._updateErrback, 
-                    etag=etag,modified=modified)
+            self.download = grabURL(self.url, self._updateCallback,
+                    self._updateErrback, etag=etag,modified=modified)
 
     def _updateErrback(self, error):
         print "WARNING, error in Feed.update", error
@@ -1100,6 +1105,11 @@ class RSSFeedImpl(FeedImpl):
             ret = ""
         return ret
 
+    def onRemove(self):
+        if self.download is not None:
+            self.download.cancel()
+            self.download = None
+
     ##
     # Called by pickle during deserialization
     def onRestore(self):
@@ -1107,6 +1117,7 @@ class RSSFeedImpl(FeedImpl):
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
         FeedImpl.onRestore(self)
+        self.download = None
         self.scheduleUpdateEvents(0.1)
 
 
