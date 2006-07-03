@@ -60,6 +60,8 @@ class HTMLDisplay (app.Display):
         self.location = None
 
     def setInitialHTML(self):
+        if not os.path.exists(tempdir):
+            os.mkdir(tempdir)
         handle, location = tempfile.mkstemp('.html', dir=tempdir)
         handle = os.fdopen(handle, "wt")
         try:
