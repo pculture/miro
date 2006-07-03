@@ -1185,18 +1185,8 @@ class GUIActionHandler:
     def openFile(self, path):
         singleclick.openFile(path)
 
-    def _getFeed (self, url):
-
-        retval = None
-        
-        feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
-        exists = feedView.len() > 0
-        if feedView.len() > 0:
-            feedView.resetCursor()
-            retval = feedView.getNext()
-        feedView.unlink()
-        
-        return retval
+    def _getFeed(self, url):
+        return views.feeds.getItemWithIndex(indexes.feedsByURL, url)
 
     def _selectFeedByObject (self, myFeed):
         controller.checkTabByObjID(myFeed.getID())
