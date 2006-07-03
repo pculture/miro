@@ -77,6 +77,7 @@ def BuildHTTPAuth(summary, message, prefillUser = None, prefillPassword = None):
     table.attach (label, 0, 1, 2, 3, gtk.FILL, gtk.FILL)
 
     dialog.password = gtk.Entry()
+    dialog.password.set_visibility(False)
     dialog.password.set_activates_default(True)
     if (prefillPassword != None):
         dialog.password.set_text(prefillPassword)
@@ -146,7 +147,6 @@ primary = None
 
 class UIBackendDelegate:
 
-    @gtkAsyncMethod
     def openExternalURL(self, url):
         inKDE = False
         # We could use Python's webbrowser.open() here, but
