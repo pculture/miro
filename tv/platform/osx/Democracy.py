@@ -48,6 +48,22 @@ if bundleInfo['PyOptions']['alias']:
     root = os.path.normpath(root)
     sys.path[0:0] = ['%s/portable' % root]
 
+# Detect cpu type
+import subprocess
+p = subprocess.Popen(["uname", "-p"], stdout=subprocess.PIPE) 
+cpu = p.stdout.read().strip()
+p.stdout.close()
+
+# Use psyco if we are on an Intel Mac.
+if cpu == 'i386':
+    try:
+        print "DTV: Intel CPU detected, using psyco charge profiler."
+        import psyco
+        psyco.profile()
+    except:
+        print "DTV: Error while trying to launch psyco charge profiler."
+
+# Launch player or downloader, depending on command line parameter
 if len(sys.argv) > 1 and sys.argv[1] == "download_daemon":
     launchDownloaderDaemon()
 else:
