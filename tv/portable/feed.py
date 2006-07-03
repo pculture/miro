@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from gettext import gettext as _
 from inspect import isfunction
 from new import instancemethod
-from urllib import urlopen
+from urllib import urlopen, quote
 from urlparse import urlparse, urljoin
 from xhtmltools import unescape,xhtmlify,fixXMLHeader, fixHTMLHeader, toUTF8Bytes, urlencode
 import os
@@ -1544,15 +1544,15 @@ class HTMLLinkGrabber(HTMLParser):
 
         match = HTMLLinkGrabber.linkPattern.search(data)
         while match:
-            link = urljoin(baseurl, match.group(3))
+            link = urljoin(baseurl, quote(match.group(3)))
             desc = match.group(4)
             imgMatch = HTMLLinkGrabber.imgPattern.match(desc)
             if imgMatch:
-                thumb = urljoin(baseurl, imgMatch.group(1))
+                thumb = urljoin(baseurl, quote(imgMatch.group(1)))
             else:
                 thumb = None
             desc =  HTMLLinkGrabber.tagPattern.sub(' ',desc)
-            self.links.append( (link, desc, thumb))
+            self.links.append((link, desc, thumb))
             match = HTMLLinkGrabber.linkPattern.search(match.group(5))
         return self.links
 
