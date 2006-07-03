@@ -52,6 +52,8 @@ class UnexpectedStatusCode(HTTPError):
     pass
 class ServerClosedConnection(HTTPError):
     pass
+class ConnectionTimeout(HTTPError):
+    pass
 class BadChunkSize(HTTPError):
     pass
 class CRLFExpected(HTTPError):
@@ -155,6 +157,8 @@ class AsyncSocket(object):
         self.socket = None
         self.readCallback = None
         self.closeCallback = closeCallback
+        self.readTimeout = None
+        self.timedOut = False
         self.connectionErrback = None
         self.name = ""
 
@@ -163,6 +167,17 @@ class AsyncSocket(object):
             return "%s: %s" % (type(self).__name__, self.name)
         else:
             return "Unknown %s" % (type(self).__name__,)
+
+    def startReadTimeout(self, delay):
+        if self.readTimeout is not None:
+            self.stopReadTimeout()
+        self.readTimeout = eventloop.addTimeout(delay, self.onReadTimeout,
+            "AsyncSocket.onReadTimeout")
+
+    def stopReadTimeout(self):
+        if self.readTimeout is not None:
+            self.readTimeout.cancel()
+            self.readTimeout = None
 
     def openConnection(self, host, port, callback, errback):
         """Open a connection.  On success, callback will be called with this
@@ -215,6 +230,7 @@ class AsyncSocket(object):
     def closeConnection(self):
         if self.isOpen():
             eventloop.stopHandlingSocket(self.socket)
+            self.stopReadTimeout()
             self.socket.close()
             self.socket = None
             if self.connectionErrback is not None:
@@ -247,6 +263,7 @@ class AsyncSocket(object):
             raise ValueError("Socket not connected")
         self.readCallback = readCallback
         eventloop.addReadCallback(self.socket, self.onReadReady)
+        self.startReadTimeout(30)
 
     def stopReading(self):
         """Stop reading from the socket."""
@@ -255,6 +272,12 @@ class AsyncSocket(object):
             raise ValueError("Socket not connected")
         self.readCallback = None
         eventloop.removeReadCallback(self.socket)
+        self.stopReadTimeout()
+
+    def onReadTimeout(self):
+        self.stopReadTimeout()
+        self.timedOut = True
+        self.handleEarlyClose('read')
 
     def handleSocketError(self, code, msg, operation):
         if code in (errno.EWOULDBLOCK, errno.EINTR):
@@ -886,6 +909,8 @@ class HTTPConnection(ConnectionHandler):
         if oldState == 'response-body' and self.contentLength is None:
             self.body = self.buffer.read()
             self.finishRequest()
+        elif self.stream.timedOut:
+            self.errback(ConnectionTimeout("%s: %s" % (self.host, self.port)))
         else:
             self.errback(ServerClosedConnection("%s: %s" % (self.host, self.port)))
         self.checkPipelineNotStarted()

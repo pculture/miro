@@ -303,3 +303,15 @@ def getTorrentInfoHash(path):
         return infohash
     finally:
         f.close()
+
+class ExponentialBackoffTracker:
+    """Utility class to track exponential backoffs."""
+    def __init__(self, baseDelay):
+        self.baseDelay = self.currentDelay = baseDelay
+    def nextDelay(self):
+        rv = self.currentDelay
+        self.currentDelay *= 2
+        print "DELAY IS ", rv
+        return rv
+    def reset(self):
+        self.currentDelay = self.baseDelay

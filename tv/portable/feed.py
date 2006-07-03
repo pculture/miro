@@ -27,6 +27,7 @@ import dialogs
 import eventloop
 import prefs
 import resource
+import util
 import views
 import indexes
 from BitTornado.clock import clock
@@ -564,6 +565,7 @@ class FeedImpl:
         return count
 
     def onRestore(self):
+        self.updating = False
         self.available = 0
         self.unwatched = 0
         self.calc_item_list()
@@ -604,6 +606,7 @@ class Feed(DDBObject):
         self.actualFeed = FeedImpl(url,self)
         self.generateFeed(True)
         self.iconCache = IconCache(self, is_vital = True)
+        self.backoff = util.ExponentialBackoffTracker(60)
         DDBObject.__init__(self)
 
     # Returns javascript to mark the feed as viewed
@@ -657,7 +660,7 @@ class Feed(DDBObject):
         else:
             grabURL(self.origURL,
                     lambda info:self._generateFeedCallback(info, removeOnError),
-                    self._generateFeedErrback)
+                    lambda error:self._generateFeedErrback(error, removeOnError))
             #print "added async callback to create feed %s" % self.origURL
         if newFeed:
             self.actualFeed = newFeed
@@ -665,9 +668,20 @@ class Feed(DDBObject):
 
             self.signalChange()
 
-    def _generateFeedErrback(self, error):
+    def restartGenerateFeed(self, removeOnError):
+        self.loading = True
+        self.signalChange()
+        self.generateFeed()
+
+    def _generateFeedErrback(self, error, removeOnError):
+        print "DTV: Warning couldn't load feed at %s (%s)" % \
+                (self.origURL, error)
         self.errorState = True
-        print "DTV: Warning couldn't load feed at %s" % self.origURL
+        self.loading = False
+        self.signalChange()
+        eventloop.addTimeout(self.backoff.nextDelay(),
+                lambda: self.restartGenerateFeed(removeOnError),
+                "Feed.restartGenerateFeed")
 
     def _generateFeedCallback(self, info, removeOnError):
         """This is called by grabURL to generate a feed based on
@@ -676,6 +690,7 @@ class Feed(DDBObject):
         # FIXME: This probably should be split up a bit. The logic is
         #        a bit daunting
 
+        self.backoff.reset()
         modified = info.get('last-modified')
         etag = info.get('etag')
         contentType = info.get('content-type', 'text/html')
@@ -841,6 +856,11 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
         else:
             self.iconCache.dbItem = self
             self.iconCache.requestUpdate(True)
+        self.backoff = util.ExponentialBackoffTracker(60)
+        if self.actualFeed.__class__ == FeedImpl:
+            # Our initial FeedImpl was never updated, call generateFeed again
+            self.loading = True
+            self.generateFeed(True)
 
     def __str__(self):
         return "Feed - %s" % self.getTitle()
@@ -1077,7 +1097,6 @@ class RSSFeedImpl(FeedImpl):
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
         FeedImpl.onRestore(self)
-        self.updating = False
         self.scheduleUpdateEvents(0.1)
 
 
@@ -1371,7 +1390,6 @@ class ScraperFeedImpl(FeedImpl):
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
         self.downloads = set()
-        self.updating = False
         self.tempHistory = {}
         self.scheduleUpdateEvents(.1)
 
@@ -1430,7 +1448,6 @@ class DirectoryFeedImpl(FeedImpl):
         FeedImpl.onRestore(self)
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
-        self.updating = False
         self.scheduleUpdateEvents(.1)
 
 ##
