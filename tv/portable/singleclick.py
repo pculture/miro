@@ -30,6 +30,7 @@ def addVideo(path):
     for i in views.items:
         itemFilename = i.getFilename()
         if (itemFilename != '' and 
+                os.path.exists(itemFilename) and
                 platformutils.samefile(itemFilename, path)):
             print "Not adding duplicate video: %s" % path
             commandLineVideoIds.add(i.getID())
