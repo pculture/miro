@@ -19,7 +19,7 @@ import traceback
 import xml
 
 from database import defaultDatabase
-from httpclient import grabURL
+from httpclient import grabURL, HTTPError
 from iconcache import iconCacheUpdater, IconCache
 import app
 import config
@@ -203,7 +203,7 @@ class FeedImpl:
         except:
             pass
 
-    # Subclasses should implement this
+    # Subclasses should override this
     def update(self):
         self.scheduleUpdateEvents(-1)
 
@@ -606,7 +606,7 @@ class Feed(DDBObject):
         self.actualFeed = FeedImpl(url,self)
         self.generateFeed(True)
         self.iconCache = IconCache(self, is_vital = True)
-        self.backoff = util.ExponentialBackoffTracker(60)
+        self.informOnError = True
         DDBObject.__init__(self)
 
     # Returns javascript to mark the feed as viewed
@@ -668,10 +668,6 @@ class Feed(DDBObject):
 
             self.signalChange()
 
-    def restartGenerateFeed(self, removeOnError):
-        self.loading = True
-        self.signalChange()
-        self.generateFeed()
 
     def _generateFeedErrback(self, error, removeOnError):
         print "DTV: Warning couldn't load feed at %s (%s)" % \
@@ -679,9 +675,24 @@ class Feed(DDBObject):
         self.errorState = True
         self.loading = False
         self.signalChange()
-        eventloop.addTimeout(self.backoff.nextDelay(),
-                lambda: self.restartGenerateFeed(removeOnError),
-                "Feed.restartGenerateFeed")
+        if self.informOnError:
+            title = _('Error loading feed')
+            description = _("Couldn't load the feed at %s.") % self.url
+            if isinstance(error, HTTPError):
+                description += "\n\n"
+                description += _("The error was: %s") % \
+                        error.getFriendlyDescription()
+            else:
+                print "WARNING: unknown error in _generateFeedErrback (%s)" \
+                        % error
+            dialogs.MessageBoxDialog(title, description).run()
+            self.informOnError = False
+        delay = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)
+        def regenerateFeed():
+            self.loading = True
+            self.signalChange()
+            self.generateFeed()
+        eventloop.addTimeout(delay, regenerateFeed, "regenerateFeed")
 
     def _generateFeedCallback(self, info, removeOnError):
         """This is called by grabURL to generate a feed based on
@@ -690,7 +701,6 @@ class Feed(DDBObject):
         # FIXME: This probably should be split up a bit. The logic is
         #        a bit daunting
 
-        self.backoff.reset()
         modified = info.get('last-modified')
         etag = info.get('etag')
         contentType = info.get('content-type', 'text/html')
@@ -856,7 +866,7 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
         else:
             self.iconCache.dbItem = self
             self.iconCache.requestUpdate(True)
-        self.backoff = util.ExponentialBackoffTracker(60)
+        self.informOnError = False
         if self.actualFeed.__class__ == FeedImpl:
             # Our initial FeedImpl was never updated, call generateFeed again
             self.loading = True

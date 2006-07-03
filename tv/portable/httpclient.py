@@ -15,6 +15,7 @@ import socket
 import threading
 from urlparse import urlparse, urljoin
 from collections import deque
+from gettext import gettext as _
 
 from BitTornado.clock import clock
 
@@ -44,6 +45,8 @@ class HTTPError(Exception):
             return "%s: %s" % (self.__class__, self.description)
         else:
             return str(self.__class__)
+    def getFriendlyDescription(self):
+        return "HTTP Error"
 class BadStatusLine(HTTPError):
     pass
 class BadHeaderLine(HTTPError):
@@ -51,9 +54,15 @@ class BadHeaderLine(HTTPError):
 class UnexpectedStatusCode(HTTPError):
     pass
 class ServerClosedConnection(HTTPError):
-    pass
+    def __init__(self, host):
+        self.host = self.description = host
+    def getFriendlyDescription(self):
+        return _('%s closed connection') % self.host
 class ConnectionTimeout(HTTPError):
-    pass
+    def __init__(self, host):
+        self.host = self.description = host
+    def getFriendlyDescription(self):
+        return _('%s timed out') % self.host
 class BadChunkSize(HTTPError):
     pass
 class CRLFExpected(HTTPError):
@@ -66,7 +75,6 @@ class AuthorizationFailed(HTTPError):
     pass
 class RequestCanceledError(HTTPError):
     pass
-
 
 def trapCall(object, function, *args, **kwargs):
     """Convenience function do a util.trapCall, where when = 'While talking to
@@ -518,8 +526,14 @@ class HTTPConnection(ConnectionHandler):
         self.pipelinedRequest = None
         self.closeCallback = closeCallback
         self.readyCallback = readyCallback
+        self.requestsFinished = 0
+        self.bytesRead = 0
         self.sentReadyCallback = False
         self.headerCallback = self.bodyDataCallback = None
+
+    def handleData(self, data):
+        self.bytesRead += len(data)
+        super(HTTPConnection, self).handleData(data)
 
     def closeConnection(self):
         super(HTTPConnection, self).closeConnection()
@@ -628,6 +642,7 @@ class HTTPConnection(ConnectionHandler):
         self.requestHeaders = headers
         self.headers = {}
         self.contentLength = self.version = self.status = self.reason = None
+        self.bytesRead = 0
         self.body = ''
         self.willClose = True 
         # Assume we will close, until we get the headers
@@ -887,6 +902,7 @@ class HTTPConnection(ConnectionHandler):
                 self.changeState('ready')
                 self.idleSince = clock()
         trapCall(self, self.callback, response)
+        self.requestsFinished += 1
         self.maybeSendReadyCallback()
 
     def makeResponse(self, body=None):
@@ -910,9 +926,9 @@ class HTTPConnection(ConnectionHandler):
             self.body = self.buffer.read()
             self.finishRequest()
         elif self.stream.timedOut:
-            self.errback(ConnectionTimeout("%s: %s" % (self.host, self.port)))
+            self.errback(ConnectionTimeout(self.host))
         else:
-            self.errback(ServerClosedConnection("%s: %s" % (self.host, self.port)))
+            self.errback(ServerClosedConnection(self.host))
         self.checkPipelineNotStarted()
 
     def handleError(self, error):
@@ -1280,17 +1296,24 @@ class HTTPClient(object):
                 self.errbackIntercept(error)
 
     def errbackIntercept(self, error):
-        self.connection = None
         if isinstance(error, PipelinedRequestNeverStarted):
             # Connection closed before our pipelined request started.  RFC
             # 2616 says we should retry
             self.startRequest() 
             # this should give us a new connection, since our last one closed
-            return
-        trapCall(self, self.errback, error)
+        elif (isinstance(error, ServerClosedConnection) and
+                self.connection.requestsFinished > 0 and 
+                self.connection.bytesRead == 0):
+            # Connection closed when trying to reuse an http connection.  We
+            # should retry with a fresh connection
+            self.startRequest()
+        else:
+            self.connection = None
+            trapCall(self, self.errback, error)
 
     def onRequestStart(self, connection):
         if self.cancelled:
+            print "CANCELED!"
             connection.closeConnection()
         else:
             self.connection = connection

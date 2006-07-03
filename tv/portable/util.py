@@ -311,7 +311,6 @@ class ExponentialBackoffTracker:
     def nextDelay(self):
         rv = self.currentDelay
         self.currentDelay *= 2
-        print "DELAY IS ", rv
         return rv
     def reset(self):
         self.currentDelay = self.baseDelay
