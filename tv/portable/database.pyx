@@ -864,6 +864,10 @@ class DynamicDatabase:
         except:
             raise ObjectNotFoundError, "No object with id %s in the database" % id
 
+    def idExists(self, id):
+        self.confirmDBThread()
+        return id in self.objectLocs
+
     ##
     # returns the id of the object the cursor is currently pointing to
     def getCurrentID(self):

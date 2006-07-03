@@ -110,6 +110,9 @@ class Item(DDBObject):
     def getFeed(self):
         return self.dd.getObjectByID(self.feed_id)
 
+    def feedExists(self):
+        return self.dd.idExists(self.feed_id)
+
     ##
     # Moves this item to another feed.
     def setFeed(self, feed_id):

@@ -105,10 +105,15 @@ class AutoDownloadSpawner:
         """
 
         def onHeaders(info):
-            if info.get('content-type') == 'application/x-bittorrent':
-                self.handleTorrentCandidate(item)
+            # Check if the feed was deleted while we were grabbing the headers
+            if item.feedExists():
+                if info.get('content-type') == 'application/x-bittorrent':
+                    self.handleTorrentCandidate(item)
+                else:
+                    self.handleHTTPCandidate(item)
             else:
-                self.handleHTTPCandidate(item)
+                print "WARNING: auto-download item's feed no longer exists"
+                print "item is: %s" % item
             eventloop.addIdle(self.chooseNextDownload, "autodl iteration")
         def errback(error):
             eventloop.addIdle(self.chooseNextDownload, "autodl iteration")
