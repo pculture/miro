@@ -18,4 +18,5 @@ from test.httpclienttest import *
 from test.httpdownloadertest import *
 from test.feedparsertest import *
 from test.parseurltest import *
+from test.utiltest import *
 import test.bmachinetest

@@ -229,8 +229,10 @@ class AutoflushingStream:
     """
     def __init__(self, stream):
         self.__dict__['stream'] = stream
-    def write(self, *args):
-        self.stream.write(*args)
+    def write(self, data):
+        if isinstance(data, unicode):
+            data = data.encode('ascii', 'backslashreplace')
+        self.stream.write(data)
         self.stream.flush()
     def __getattr__(self, name):
         return self.stream.__getattr__(name)
