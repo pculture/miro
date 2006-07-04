@@ -5,7 +5,7 @@ def itemsByFeed(x):
     return x.getFeed().getID()
 
 def feedsByURL(x):
-    return str(x.getURL())
+    return x.getOriginalURL()
 
 def downloadsByDLID(x):
     return str(x.dlid)

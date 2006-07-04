@@ -626,6 +626,10 @@ class Feed(DDBObject):
         self.confirmDBThread()
         return self.errorState
 
+    def getOriginalURL(self):
+        self.confirmDBThread()
+        return self.origURL
+
     def getError(self):
         return "Could not load feed"
 
@@ -1004,7 +1008,7 @@ class RSSFeedImpl(FeedImpl):
                     self._updateErrback, etag=etag,modified=modified)
 
     def _updateErrback(self, error):
-        print "WARNING, error in Feed.update", error
+        print "WARNING: error in Feed.update for %s -- %s" % (self.ufeed, error)
         self.scheduleUpdateEvents(-1)
         self.updating = False
         self.ufeed.signalChange(needsSave=False)
