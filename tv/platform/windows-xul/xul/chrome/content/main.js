@@ -358,11 +358,7 @@ function openFile() {
     }
 }
 
-var sentQuit = false;
 function handleExit() {
     vlc.stop();
-    if(!sentQuit) {
-      pybridge.quit();
-      sentQuit = true;
-    }
+    pybridge.quit();
 }

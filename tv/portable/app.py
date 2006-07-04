@@ -435,6 +435,7 @@ class Controller (frontend.Application):
         controller = self
         delegate = frontend.UIBackendDelegate()
         self.frame = None
+        self.inQuit = False
 
     ### Startup and shutdown ###
 
@@ -627,6 +628,8 @@ class Controller (frontend.Application):
     @eventloop.asUrgent
     def quit(self):
         global delegate
+        if self.inQuit:
+            return
         downloadsCount = views.downloadingItems.len()
         if downloadsCount > 0:
             title = _("Are you sure you want to quit?")
@@ -638,7 +641,10 @@ class Controller (frontend.Application):
             def callback(dialog):
                 if dialog.choice == dialogs.BUTTON_QUIT:
                     self.quitStage2()
+                else:
+                    self.inQuit = False
             dialog.run(callback)
+            self.inQuit = True
         else:
             self.quitStage2()
 
