@@ -176,10 +176,10 @@ class AsyncSocket(object):
         else:
             return "Unknown %s" % (type(self).__name__,)
 
-    def startReadTimeout(self, delay):
+    def startReadTimeout(self):
         if self.readTimeout is not None:
             self.stopReadTimeout()
-        self.readTimeout = eventloop.addTimeout(delay, self.onReadTimeout,
+        self.readTimeout = eventloop.addTimeout(30, self.onReadTimeout,
             "AsyncSocket.onReadTimeout")
 
     def stopReadTimeout(self):
@@ -271,7 +271,7 @@ class AsyncSocket(object):
             raise ValueError("Socket not connected")
         self.readCallback = readCallback
         eventloop.addReadCallback(self.socket, self.onReadReady)
-        self.startReadTimeout(30)
+        self.startReadTimeout()
 
     def stopReading(self):
         """Stop reading from the socket."""
@@ -330,6 +330,7 @@ class AsyncSocket(object):
             self.handleReadData(data)
 
     def handleReadData(self, data):
+        self.startReadTimeout()
         if data == '':
             if self.closeCallback:
                 trapCall(self, self.closeCallback, self, socket.SHUT_RD)
@@ -882,8 +883,9 @@ class HTTPConnection(ConnectionHandler):
             self.willClose = False
 
     def finishRequest(self):
-        # figure out what the response was before we do things like start a
-        # pipelined response.
+        # calculate the response and and remember our callback.  They may
+        # change after we start a pielined response.
+        origCallback = self.callback 
         if self.bodyDataCallback:
             body = None
         elif self.chunked:
@@ -901,7 +903,7 @@ class HTTPConnection(ConnectionHandler):
             else:
                 self.changeState('ready')
                 self.idleSince = clock()
-        trapCall(self, self.callback, response)
+        trapCall(self, origCallback, response)
         self.requestsFinished += 1
         self.maybeSendReadyCallback()
 
@@ -1313,7 +1315,6 @@ class HTTPClient(object):
 
     def onRequestStart(self, connection):
         if self.cancelled:
-            print "CANCELED!"
             connection.closeConnection()
         else:
             self.connection = connection
