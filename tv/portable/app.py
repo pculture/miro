@@ -1029,10 +1029,25 @@ class ModelActionHandler:
         except:
             print "DTV: Warning: tried to remove feed that doesn't exist with id %d" % int(feed)
             return
-        if not obj.hasDownloadedItems():
-            obj.remove()
-            return
-        title = _('Remove %s') % obj.getTitle()
+        if obj.hasDownloadedItems():
+            self.removeFeedWithDownloads(obj)
+        else:
+            self.removeFeedWithoutDownloads(obj)
+
+    def removeFeedWithoutDownloads(self, feed):
+        title = _('Remove %s') % feed.getTitle()
+        description = _("""\
+Are you sure you want to remove the feed %s?  Any downloads in progress will
+be canceled.""") % feed.getTitle()
+        dialog = dialogs.ChoiceDialog(title, description, 
+                dialogs.BUTTON_YES, dialogs.BUTTON_NO)
+        def dialogCallback(dialog):
+            if dialog.choice == dialogs.BUTTON_YES:
+                feed.remove()
+        dialog.run(dialogCallback)
+
+    def removeFeedWithDownloads(self, feed):
+        title = _('Remove %s') % feed.getTitle()
         description = _("""\
 What would you like to do with the videos in this channel that you've \
 downloaded?""")
@@ -1042,9 +1057,9 @@ downloaded?""")
         def dialogCallback(dialog):
             if dialog.choice == dialogs.BUTTON_KEEP_VIDEOS:
                 manualFeed = getSingletonDDBObject(views.manualFeed)
-                obj.remove(moveItemsTo=manualFeed)
+                feed.remove(moveItemsTo=manualFeed)
             elif dialog.choice == dialogs.BUTTON_DELETE_VIDEOS:
-                obj.remove()
+                feed.remove()
         dialog.run(dialogCallback)
 
     def updateCurrentFeed(self):
