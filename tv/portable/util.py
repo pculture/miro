@@ -108,8 +108,16 @@ def queryRevision(file):
 # that would refer to the same file.
 def absolutePathToFileURL(path):
     if isinstance(path, unicode):
-        path = path.encode('utf-8')
-    return 'file://%s' % urllib.pathname2url(path)
+        path = path.encode("utf-8")
+    parts = string.split(path, os.sep)
+    parts = [urllib.quote(x, ':') for x in parts]
+    if len(parts) > 0 and parts[0] == '':
+        # Don't let "/foo/bar" become "file:////foo/bar", but leave
+        # "c:/foo/bar" becoming "file://c:/foo/bar" -- technically :
+        # should become | (but only in a drive name?) but most
+        # consumers will let us get by with that.
+        parts = parts[1:]
+    return "file:///" + '/'.join(parts)
 
 
 # Shortcut for 'failed' with the exception flag.
