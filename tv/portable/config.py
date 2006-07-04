@@ -2,10 +2,11 @@ from threading import RLock
 import os
 import traceback
 
-import platformcfg
-import prefs
 import util
+import prefs
 import resource
+import eventloop
+import platformcfg
 
 __appConfig = None
 __data = None
