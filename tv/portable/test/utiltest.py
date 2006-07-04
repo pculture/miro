@@ -30,3 +30,13 @@ class AutoflushingStreamTest(DemocracyTestCase):
 
     def testUnicodeWrite(self):
         self.afs.write(u'\xf8')
+
+class UtilTest(DemocracyTestCase):
+    def testAbsolutePathToFileURL(self):
+        testPaths = {
+            '/ben/dean/kawamura' : 'file:///ben/dean/kawamura',
+            '/eight/bit/path/\xe4' : 'file:///eight/bit/path/%E4',
+            u'/unicode/path/\xe4' : 'file:///unicode/path/%C3%A4',
+        }
+        for source, target in testPaths.items():
+            self.assertEquals(util.absolutePathToFileURL(source), target)
