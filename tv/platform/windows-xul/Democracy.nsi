@@ -146,13 +146,18 @@ lbl_winnt:
 
 !if ${CONFIG_TWOSTAGE} = "Yes"
 
-  InetLoad::load http://www.participatoryculture.org/nightlies/Democracy-Contents-${CONFIG_VERSION}.zip $INSTDIR/Democracy-contents.zip
+  InetLoad::load http://www.participatoryculture.org/nightlies/Democracy-Contents-${CONFIG_VERSION}.zip $INSTDIR/Democracy-Contents.zip
   Pop $0
   StrCmp $0 "OK" dlok
   MessageBox MB_OK|MB_ICONEXCLAMATION "Download Error, click OK to abort installation: $0" /SD IDOK
   Abort
 dlok:
-  !insertmacro ZIPDLL_EXTRACT $INSTDIR/Democracy-contents.zip $INSTDIR <ALL>
+  !insertmacro ZIPDLL_EXTRACT $INSTDIR/Democracy-Contents.zip $INSTDIR <ALL>
+  Pop $0
+  StrCmp $0 "success" unzipok
+  MessageBox MB_OK|MB_ICONEXCLAMATION "Unzip error, click OK to abort installation: $0" /SD IDOK
+  Abort
+unzipok:
 
 !else
 
