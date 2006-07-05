@@ -140,7 +140,7 @@ Var STARTMENU_FOLDER
   RMDir /r "${directory}\xulrunner"
 
   RMDIR ${directory} 
-
+!macroend
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
