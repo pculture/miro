@@ -145,10 +145,10 @@ a.feeditem.selected-inactive .feed-loading-icon {
 	color: #FFFFFF;
 	margin: 0px 8px 0px 8px;
 	padding: 2px 0px 3px 0px;
+	font-weight: normal;
 }
 
 .left-bubble {
-	display: inline;
 	margin: 1px 0px 0px 0px;
 	float: right;
 	position: relative;

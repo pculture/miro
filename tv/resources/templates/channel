@@ -51,7 +51,8 @@ def updateSearchString(newSearch):
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
 # This should unlink matchingItems and all of it's children
-matchingItems.unlink()
+allItems.unlink()
+thisFeedView.unlink()
 ]]>
     </t:execOnUnload>
 
@@ -90,8 +91,18 @@ i18n:translate="">Settings</span></a></p>
 <!-- / TITLE BAR -->
 <!-- CHANNEL CONTAINER **************************************************** -->
 <div id="main-container">
-    <div class="main-container-scraping" t:showIf="feed.isScraped() and feed.isUpdating()" t:updateHideOnView="thisFeedView">
-	<img src="resource:images/scraping-indicator.gif" />
+    <div class="main-container-scraping" t:showIf="1 or feed.isScraped() and feed.isUpdating()" t:updateHideOnView="thisFeedView">
+	<center>
+	    <table cellpadding="0" cellspacing="0">
+	    <tr valign="bottom">
+	    <td><img src="resource:images/scraping-indicator-left.gif" alt="" /></td>
+	    <td class="content">
+		<div i18n:translate="">Looking for videos at this URL</div>
+	    </td>
+	    <td><img src="resource:images/scraping-indicator-right.gif" alt="" /></td>
+	    </tr>
+	    </table>
+	</center>
     </div>
     <!-- DOWNLOADS ******************************************************** -->
     <span t:hideIf="downloadingItems.len()==0" t:updateHideOnView="downloadingItems">

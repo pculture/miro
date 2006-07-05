@@ -132,7 +132,28 @@ li {
 }
 
 .main-container-scraping {
+    height: 56px;
     text-align: center;
+}
+
+.main-container-scraping td.content {
+    background-color: #efefef;
+}
+
+.main-container-scraping div {
+    color: #085ffe;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 0px 5px 20px 0px;
+    white-space: nowrap;
+}
+
+.main-container-scraping-left {
+    background: url(../images/scraping-indicator-left.gif) no-repeat top left;
+}
+
+.main-container-scraping-right {
+    background: url(../images/scraping-indicator-right.gif) no-repeat top right;
 }
 
 #main-container {
