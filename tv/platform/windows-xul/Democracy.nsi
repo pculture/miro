@@ -146,13 +146,14 @@ lbl_winnt:
 
 !if ${CONFIG_TWOSTAGE} = "Yes"
 
-  InetLoad::load http://www.participatoryculture.org/nightlies/Democracy-Contents-${CONFIG_VERSION}.zip $INSTDIR/Democracy-Contents.zip
+  InetLoad::load http://www.participatoryculture.org/nightlies/Democracy-Contents-${CONFIG_VERSION}.zip $INSTDIR\Democracy-Contents.zip
   Pop $0
   StrCmp $0 "OK" dlok
   MessageBox MB_OK|MB_ICONEXCLAMATION "Download Error, click OK to abort installation: $0" /SD IDOK
   Abort
 dlok:
-  !insertmacro ZIPDLL_EXTRACT $INSTDIR/Democracy-Contents.zip $INSTDIR <ALL>
+  !insertmacro ZIPDLL_EXTRACT $INSTDIR\Democracy-Contents.zip $INSTDIR <ALL>
+  Delete $INSTDIR\Democracy-Contents.zip
   Pop $0
   StrCmp $0 "success" unzipok
   MessageBox MB_OK|MB_ICONEXCLAMATION "Unzip error, click OK to abort installation: $0" /SD IDOK
@@ -376,7 +377,23 @@ Section "Uninstall" SEC91
   SetShellVarContext all
 
   ; Remove the program
-  RMDir /r $INSTDIR
+  Delete   "$INSTDIR\${CONFIG_EXECUTABLE}"
+  Delete   "$INSTDIR\${CONFIG_ICON}"
+  Delete   "$INSTDIR\Democracy_Downloader.exe"
+  Delete   "$INSTDIR\application.ini"
+  Delete   "$INSTDIR\msvcp71.dll"
+  Delete   "$INSTDIR\msvcr71.dll"
+  Delete   "$INSTDIR\python24.dll"
+  Delete   "$INSTDIR\boost_python-vc71-mt-1_33.dll"
+
+  RMDir /r "$INSTDIR\chrome"
+  RMDir /r "$INSTDIR\components"
+  RMDir /r "$INSTDIR\defaults"
+  RMDir /r "$INSTDIR\resources"
+  RMDir /r "$INSTDIR\vlc-plugins"
+  RMDir /r "$INSTDIR\xulrunner"
+
+  RMDIR $INSTDIR 
 
   ; Remove Start Menu shortcuts
   !insertmacro MUI_STARTMENU_GETFOLDER Application $R0
