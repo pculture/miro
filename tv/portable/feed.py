@@ -9,7 +9,6 @@ from datetime import datetime, timedelta
 from gettext import gettext as _
 from inspect import isfunction
 from new import instancemethod
-from urllib import urlopen, quote
 from urlparse import urlparse, urljoin
 from xhtmltools import unescape,xhtmlify,fixXMLHeader, fixHTMLHeader, toUTF8Bytes, urlencode
 import os
@@ -1586,15 +1585,27 @@ class HTMLLinkGrabber(HTMLParser):
 
         match = HTMLLinkGrabber.linkPattern.search(data)
         while match:
-            link = urljoin(baseurl, quote(match.group(3)))
-            desc = match.group(4)
-            imgMatch = HTMLLinkGrabber.imgPattern.match(desc)
-            if imgMatch:
-                thumb = urljoin(baseurl, quote(imgMatch.group(1)))
+            try:
+                linkURL = match.group(3).encode('ascii')
+            except UnicodeDecodeError:
+                print "WARNING: scraped URL is non-ascii (%s)-- discarding" \
+                        % match.group(3)
             else:
-                thumb = None
-            desc =  HTMLLinkGrabber.tagPattern.sub(' ',desc)
-            self.links.append((link, desc, thumb))
+                link = urljoin(baseurl, linkURL)
+                desc = match.group(4)
+                imgMatch = HTMLLinkGrabber.imgPattern.match(desc)
+                if imgMatch:
+                    try:
+                        thumb = urljoin(baseurl,
+                                imgMatch.group(1).encode('ascii'))
+                    except UnicodeDecodeError:
+                        print ("WARNING: scraped thumbnail url is non-ascii "
+                        "(%s) -- discarding"  % imgMatch.group(1))
+                        thumb = None
+                else:
+                    thumb = None
+                desc =  HTMLLinkGrabber.tagPattern.sub(' ',desc)
+                self.links.append((link, desc, thumb))
             match = HTMLLinkGrabber.linkPattern.search(match.group(5))
         return self.links
 
