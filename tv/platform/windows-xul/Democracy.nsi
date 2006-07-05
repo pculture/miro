@@ -121,6 +121,28 @@ Var STARTMENU_FOLDER
   Pop $0
 !macroend
 
+!macro uninstall directory
+  ; Remove the program
+  Delete   "${directory}\${CONFIG_EXECUTABLE}"
+  Delete   "${directory}\${CONFIG_ICON}"
+  Delete   "${directory}\Democracy_Downloader.exe"
+  Delete   "${directory}\application.ini"
+  Delete   "${directory}\msvcp71.dll"
+  Delete   "${directory}\msvcr71.dll"
+  Delete   "${directory}\python24.dll"
+  Delete   "${directory}\boost_python-vc71-mt-1_33.dll"
+
+  RMDir /r "${directory}\chrome"
+  RMDir /r "${directory}\components"
+  RMDir /r "${directory}\defaults"
+  RMDir /r "${directory}\resources"
+  RMDir /r "${directory}\vlc-plugins"
+  RMDir /r "${directory}\xulrunner"
+
+  RMDIR ${directory} 
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Sections                                                                  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -138,8 +160,6 @@ Section "-${CONFIG_LONG_APP_NAME}"
 lbl_winnt:
 
   Pop $R0
-  ; Remove anything already in the installation dir if it exists
-  RMDir /r $INSTDIR
 
   SetShellVarContext all
   SetOutPath "$INSTDIR"
@@ -320,7 +340,7 @@ installed.  Do you want to continue and overwrite it?" \
        IDOK continue
   Quit
   continue:
-  RMDir /r $R0 ; Remove the old installation
+  !insertmacro uninstall $R0
 
   done:
   !insertmacro MUI_LANGDLL_DISPLAY
@@ -376,24 +396,7 @@ SectionEnd
 Section "Uninstall" SEC91
   SetShellVarContext all
 
-  ; Remove the program
-  Delete   "$INSTDIR\${CONFIG_EXECUTABLE}"
-  Delete   "$INSTDIR\${CONFIG_ICON}"
-  Delete   "$INSTDIR\Democracy_Downloader.exe"
-  Delete   "$INSTDIR\application.ini"
-  Delete   "$INSTDIR\msvcp71.dll"
-  Delete   "$INSTDIR\msvcr71.dll"
-  Delete   "$INSTDIR\python24.dll"
-  Delete   "$INSTDIR\boost_python-vc71-mt-1_33.dll"
-
-  RMDir /r "$INSTDIR\chrome"
-  RMDir /r "$INSTDIR\components"
-  RMDir /r "$INSTDIR\defaults"
-  RMDir /r "$INSTDIR\resources"
-  RMDir /r "$INSTDIR\vlc-plugins"
-  RMDir /r "$INSTDIR\xulrunner"
-
-  RMDIR $INSTDIR 
+  !insertmacro uninstall $INSTDIR
 
   ; Remove Start Menu shortcuts
   !insertmacro MUI_STARTMENU_GETFOLDER Application $R0
