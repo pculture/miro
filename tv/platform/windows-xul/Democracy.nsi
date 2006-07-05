@@ -35,6 +35,7 @@ Var STARTMENU_FOLDER
 !include "MUI.nsh"
 !include "Sections.nsh"
 !include zipdll.nsh
+!include nsProcess.nsh
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Pages                                                                     ;;
@@ -131,6 +132,7 @@ Var STARTMENU_FOLDER
   Delete   "${directory}\msvcr71.dll"
   Delete   "${directory}\python24.dll"
   Delete   "${directory}\boost_python-vc71-mt-1_33.dll"
+  Delete   "${directory}\uninstall.exe"
 
   RMDir /r "${directory}\chrome"
   RMDir /r "${directory}\components"
@@ -335,13 +337,12 @@ TestRunning:
   StrCmp $R0 0 0 NotRunning
   MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
   "It looks like you're already running ${CONFIG_LONG_APP_NAME}.$\n\
-Please shut it down before continuing?" \
+Please shut it down before continuing." \
        IDOK TestRunning
   Quit
 NotRunning:
 
   ; Is the downloader running?  Stop it if so.
-TestDownloaderRunning:
   ${nsProcess::FindProcess} "democracy-downloader.exe" $R0
   StrCmp $R0 0 0 NotDownloaderRunning
   ${nsProcess::KillProcess} "democracy-downloader.exe" $R0
