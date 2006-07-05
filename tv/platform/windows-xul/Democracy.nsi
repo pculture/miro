@@ -329,6 +329,24 @@ Section -NotifyShellExentionChange
 SectionEnd
 
 Function .onInit
+  ; Is the app running?  Stop it if so.
+TestRunning:
+  ${nsProcess::FindProcess} "democracy.exe" $R0
+  StrCmp $R0 0 0 NotRunning
+  MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
+  "It looks like you're already running ${CONFIG_LONG_APP_NAME}.$\n\
+Please shut it down before continuing?" \
+       IDOK TestRunning
+  Quit
+NotRunning:
+
+  ; Is the downloader running?  Stop it if so.
+TestDownloaderRunning:
+  ${nsProcess::FindProcess} "democracy-downloader.exe" $R0
+  StrCmp $R0 0 0 NotDownloaderRunning
+  ${nsProcess::KillProcess} "democracy-downloader.exe" $R0
+NotDownloaderRunning:
+
   ; Is the app already installed? Bail if so.
   ReadRegStr $R0 HKLM "${INST_KEY}" "InstallDir"
   StrCmp $R0 "" done
@@ -339,7 +357,7 @@ Function .onInit
 installed.  Do you want to continue and overwrite it?" \
        IDOK continue
   Quit
-  continue:
+continue:
   !insertmacro uninstall $R0
 
   done:
