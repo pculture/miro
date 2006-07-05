@@ -929,7 +929,7 @@ def isVideoEnclosure(enclosure):
           enclosure['url'][-4:].lower() in ['.mov','.wmv','.mp4', '.m4v',
                                       '.mp3','.ogg','.anx','.mpg','.avi']) or
          (len(enclosure['url']) > 8 and
-          enclosure['url'][-8].lower() == '.torrent') or
+          enclosure['url'][-8:].lower() == '.torrent') or
          (len(enclosure['url']) > 5 and
-          enclosure['url'][-5].lower() == '.mpeg')))
+          enclosure['url'][-5:].lower() == '.mpeg')))
     return hasVideoType or hasVideoExtension
