@@ -18,7 +18,7 @@
   <div class="number-count green" t:replace="this.obj.numUnwatched()" />
  </div>
 </div>
-<img t:showIf="this.obj.isUpdating()" class="feed-loading-icon" src="resource:images/feed-loading-fg.gif" />
+<div t:showIf="this.obj.isUpdating()" class="feed-loading-icon" />
 
 <img class="icon" src="***this.obj.getThumbnail()***" /><div class="name" 
 t:replaceMarkup="this.obj.getTitle()" />

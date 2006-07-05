@@ -119,13 +119,24 @@ a.feeditem div.name {
 }
 
 .feed-loading-icon {
-	margin: 1px 0px 0 0;
-	padding: 1px;
 	float: right;
 	position: relative;
+	width: 16px;
+	height: 16px;
+	margin: 1px 0px 0 0;
+	padding: 1px;
 	z-index: 2;
-/*	background: url(../images/feed-loading-bg.png) top left no-repeat;
-	*/
+	background: url(../images/feed-loading-normal.gif) top left no-repeat;
+}
+
+a.feeditem.normal .feed-loading-icon {
+	background: url(../images/feed-loading-normal.gif) top left no-repeat;
+}
+a.feeditem.selected .feed-loading-icon {
+	background: url(../images/feed-loading-selected.gif) top left no-repeat;
+}
+a.feeditem.selected-inactive .feed-loading-icon {
+	background: url(../images/feed-loading-selected-inactive.gif) top left no-repeat;
 }
 
 .number-count {

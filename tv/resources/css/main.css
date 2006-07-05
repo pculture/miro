@@ -432,7 +432,7 @@ li {
     position: absolute;
     top: 50px;
     left: 8px;
-    width: 82px;
+    width: 120px;
     height: 30px;
     margin: 0px;
     color: #000;
@@ -472,9 +472,8 @@ li {
 }
 
 .main-video-details-save-button {
-    position: absolute;
-    top: 48px;
-    left: 90px;
+    float: right;
+    font-size: 12px;
     width: 38px;
     height: 17px;
     background: url(../images/main-save-bg.png) no-repeat right top; 

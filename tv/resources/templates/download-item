@@ -44,6 +44,12 @@
         </div>
 	<div t:hideIf="this.getState() == 'downloading'"
 		class="main-video-details-state @@@this.getStateCSSClass()@@@">
+		<div t:showIf="this.showSaveButton()"
+		    class="main-video-details-save-button">
+		    <a href="#" 
+		       onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');"
+		       i18n:translate="">SAVE</a>
+		</div>
 		<span t:replace="this.getStateString()" />
 	</div>
 	<div t:showIf="this.getState() == 'downloading'"
@@ -56,12 +62,6 @@
                     <span t:replace="this.downloadRate()" />
             </span>
             <a class="main-progress-cancel" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" title="Cancel Download" />
-        </div>
-        <div t:showIf="this.showSaveButton()"
-            class="main-video-details-save-button">
-            <a href="#" 
-               onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');"
-               i18n:translate="">SAVE</a>
         </div>
     </div>
     <div class="main-video-desc">
