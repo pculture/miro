@@ -4,6 +4,24 @@ import Foundation
 
 # =============================================================================
 
+def activatePsyco():
+    # Detect cpu type
+    import subprocess
+    p = subprocess.Popen(["uname", "-p"], stdout=subprocess.PIPE) 
+    cpu = p.stdout.read().strip()
+    p.stdout.close()
+
+    # Activate only if we are on an Intel Mac.
+    if cpu == 'i386':
+        try:
+            print "DTV: Intel CPU detected, using psyco charge profiler."
+            import psyco
+            psyco.profile()
+        except:
+            print "DTV: Error while trying to launch psyco charge profiler."
+
+# =============================================================================
+
 def launchDemocracy():
     # We can now import our stuff
     import app
@@ -48,20 +66,14 @@ if bundleInfo['PyOptions']['alias']:
     root = os.path.normpath(root)
     sys.path[0:0] = ['%s/portable' % root]
 
-# Detect cpu type
-import subprocess
-p = subprocess.Popen(["uname", "-p"], stdout=subprocess.PIPE) 
-cpu = p.stdout.read().strip()
-p.stdout.close()
+# Activate psyco, if we are running on an Intel Mac
+#
+# We currently dont do it because psyco does not work correctly on Intel Macs 
+# yet, as explained here: 
+# http://mail.python.org/pipermail/pythonmac-sig/2006-June/017533.html
 
-# Use psyco if we are on an Intel Mac.
-if cpu == 'i386':
-    try:
-        print "DTV: Intel CPU detected, using psyco charge profiler."
-        import psyco
-        psyco.profile()
-    except:
-        print "DTV: Error while trying to launch psyco charge profiler."
+#activatePsyco()
+
 
 # Launch player or downloader, depending on command line parameter
 if len(sys.argv) > 1 and sys.argv[1] == "download_daemon":
