@@ -85,12 +85,22 @@ class UIBackendDelegate:
             if e.errno == 2: # registry key doesn't exist
                 folder = _winreg.CreateKey(_winreg.HKEY_CURRENT_USER,
                         runSubkey)
+            else:
+                raise
         if (value):
             filename = os.path.join(resource.resourceRoot(),"..","Democracy.exe")
             filename = os.path.normpath(filename)
             _winreg.SetValueEx(folder, "Democracy Player", 0,_winreg.REG_SZ, filename)
         else:
-            _winreg.DeleteValue(folder, "Democracy Player")
+            try:
+                _winreg.DeleteValue(folder, "Democracy Player")
+            except WindowsError, e:
+                if e.errno == 2: 
+                    # registry key doesn't exist, user must have deleted it
+                    # manual
+                    pass
+                else:
+                    raise
 
     def killDownloadDaemon(self, oldpid):
         # Kill the old process, if it exists

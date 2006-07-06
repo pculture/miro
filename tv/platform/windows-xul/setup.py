@@ -674,7 +674,8 @@ class bdist_xul_dumb(Command, Common):
         # Copy in our application's resources.
         log.info("copying application resources")
         copyTreeExceptSvn(self.appResources,
-                          os.path.join(self.dist_dir, 'resources'))
+                          os.path.join(self.dist_dir, 'resources'),
+                          filterOut=['unittest', 'testdata'])
         shutil.copy2("Democracy.nsi", self.dist_dir)
         shutil.copy2("Democracy.ico", self.dist_dir)
 
@@ -810,7 +811,9 @@ class bdist_xul (bdist_xul_dumb):
 
         if os.access(outputFile, os.F_OK):
             os.remove(outputFile)
-        subprocess.call([NSIS_PATH] + nsisArgs)
+        if subprocess.call([NSIS_PATH] + nsisArgs) != 0:
+            print "ERROR creating the 1 stage installer, quitting"
+            return
 
         # Two stage installer
         outputFile = "%s-%s-twostage.exe" % \
@@ -860,23 +863,31 @@ class bdist_xul (bdist_xul_dumb):
 	    for name in files:
 		self.addFile (os.path.join (root, name))
 
-def copyTreeExceptSvn(src, dest):
+def copyTreeExceptSvn(src, dest, filterOut=None):
     """Copy the contents of the given source directory into the given
     destination directory, creating the destination directory first if
     necessary. Preserve all file attributes. If the source directory
     contains directories, recursively copy them as well. However,
-    under no circumstances copy a file or directory named '.svn'."""
+    under no circumstances copy a file or directory named '.svn'.  If
+    filterOut is given, it should be a list of strings, we won't copy any of
+    those either.
+    """
+
+    if filterOut is None:
+        filterOut = ['.svn', "_svn"]
+    else:
+        filterOut.extend(['.svn', "_svn"])
 
     names = os.listdir(src)
     if not os.access(dest, os.F_OK):
         os.mkdir(dest)
     for name in names:
-        if name in [".svn", "_svn"]:
+        if name in filterOut:
             continue
         srcname = os.path.join(src, name)
         destname = os.path.join(dest, name)
         if os.path.isdir(srcname):
-            copyTreeExceptSvn(srcname, destname)
+            copyTreeExceptSvn(srcname, destname, filterOut)
         else:
             shutil.copy2(srcname, destname)
 
