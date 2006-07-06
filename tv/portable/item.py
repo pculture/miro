@@ -61,13 +61,14 @@ class Item(DDBObject):
     # Unfortunately, our database does not scale well with many views,
     # so we have this hack to make sure that unwatched and available
     # get updated when an item changes
-    def signalChange(self, needsSave=True):
+    def signalChange(self, needsSave=True, needsUpdateUandA=True):
         DDBObject.signalChange(self, needsSave=needsSave)
-        try:
-            # If the feed has been deleted, getFeed will throw an exception
-            updateUandA(self.getFeed())
-        except:
-            pass
+        if needsUpdateUandA:
+            try:
+                # If the feed has been deleted, getFeed will throw an exception
+                updateUandA(self.getFeed())
+            except:
+                pass
 
     #
     # Returns True iff this item has never been viewed in the interface
@@ -124,11 +125,12 @@ class Item(DDBObject):
     ##
     # Marks this item as expired
     def expire(self):
+        UandA = self.getUandA()
         self.confirmDBThread()
         self.stopDownload()
         self.expired = True
         self.seen = self.keep = self.pendingManualDL = False
-        self.signalChange()
+        self.signalChange(needsUpdateUandA = (UandA != self.getUandA()))
 
     def getExpirationString(self):
         """Get the expiration time a string to display to the user."""
@@ -173,6 +175,16 @@ class Item(DDBObject):
     def getStateString(self):
         """Get a human-readable string to display to the user."""
         return self._getStateCSSClassAndState()[1]
+
+    def getUandA(self):
+        """Get whether this item is new, or newly-downloaded, or neither."""
+        state = self.getStateCSSClass()
+        if state == 'new':
+            return (0, 1)
+        elif state == 'newly-downloaded':
+            return (1, 0)
+        else:
+            return (0, 0)
 
     def getExpirationTime(self):
         """Get the time when this item will expire. 
@@ -751,12 +763,13 @@ class Item(DDBObject):
     #
     # @param entry a dict object containing the new data
     def update(self, entry):
+        UandA = self.getUandA()
         self.confirmDBThread()
         try:
             self.entry = entry
             self.iconCache.requestUpdate()
         finally:
-            self.signalChange()
+            self.signalChange(needsUpdateUandA = (UandA != self.getUandA()))
 
     def onDownloadFinished(self):
         """Called when the download for this item finishes."""

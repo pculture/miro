@@ -230,12 +230,10 @@ class FeedImpl:
             # problem is that what we want isn't getState() or
             # getChannelCategory(), since we don't want to count new items
             # that are also going to be auto-downloaded.  Maybe make a
-            # method called getDisplayState or something?.  
-            state = item.getStateCSSClass()
-            if state == 'new':
-                newA += 1
-            elif state == 'newly-downloaded':
-                newU += 1
+            # method called getDisplayState or something?.
+            (u, a) = item.getUandA()
+            newA += a
+            newU += u
         if newU != self.unwatched or newA != self.available:
             self.unwatched = newU
             self.available = newA
@@ -362,27 +360,48 @@ class FeedImpl:
         self.ufeed.confirmDBThread()
         return self.visible
 
+    def signalAutoItems (self, wereAuto):
+        for item in self.items:
+            if item in wereAuto:
+                if not item.isEligibleForAutoDownload():
+                    item.signalChange(needsSave=False)
+            else:
+                if item.isEligibleForAutoDownload():
+                    item.signalChange(needsSave=False)
+
+    def signalItems (self):
+        for item in self.items:
+            item.signalChange(needsSave=False)
+
     ##
     # Switch the auto-downloadable state
     def setAutoDownloadable(self, automatic):
         self.ufeed.confirmDBThread()
+        auto = set()
+        for item in self.items:
+            if item.isEligibleForAutoDownload():
+                auto.add(item)
         self.autoDownloadable = (automatic == "1")
         if self.autoDownloadable:
             self.startfrom = datetime.now()
         else:
             self.startfrom = datetime.max
-        self.ufeed.signalChange()
         for item in self.items:
-            item.signalChange(needsSave=False)
+            if item.isEligibleForAutoDownload() or item in auto:
+                item.signalChange(needsSave=False)
+        self.ufeed.signalChange()
 
     ##
     # Sets the 'getEverything' attribute, True or False
     def setGetEverything(self, everything):
         self.ufeed.confirmDBThread()
+        wereAuto = set()
+        for item in self.items:
+            if item.isEligibleForAutoDownload():
+                wereAuto.add(item)
         self.getEverything = everything
         self.ufeed.signalChange()
-        for item in self.items:
-            item.signalChange(needsSave=False)
+        self.signalAutoItems(wereAuto)
 
     ##
     # Sets the expiration attributes. Valid types are 'system', 'feed' and 'never'
@@ -1086,6 +1105,7 @@ class RSSFeedImpl(FeedImpl):
                 sortedItems = list(self.items)
                 sortedItems.sort(lambda x, y: cmp(x.getPubDateParsed(), y.getPubDateParsed()))
                 self.startfrom = sortedItems[-1].getPubDateParsed()
+                sortedItems[-1].signalChange(needsSave=False)
             else:
                 self.startfrom = datetime.min
         
