@@ -541,3 +541,7 @@ li {
 img {
     border: 0px;
 }
+
+#show-more-videos-label a {
+    text-decoration: none;
+}

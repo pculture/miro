@@ -429,7 +429,7 @@ class HTTPDownloader(BGDownloader):
     def onHeaders(self, info):
         if info['contentLength'] != None:
             self.totalSize = info['contentLength']
-        if self.client is not None and self.client.gotBadStatusCode:
+        if self.client.gotBadStatusCode:
             self.handleError("HTTP Error")
             return
         if not self.acceptDownloadSize(self.totalSize):
