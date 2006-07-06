@@ -524,7 +524,6 @@ class LiveStorage:
             try:
                 self.db.open ("database")
                 self.version = int(self.db[VERSION_KEY])
-                self.loadDatabase()
             except (bsddb.db.DBNoSuchFileError, KeyError):
                 try:
                     self.db.close()
@@ -533,6 +532,8 @@ class LiveStorage:
                 self.db = None
                 restoreDatabase()
                 self.saveDatabase()
+            else:
+                self.loadDatabase()
             eventloop.addIdle(self.checkpoint, "Remove Unused Database Logs")
             end = clock()
             if end - start > 0.05:

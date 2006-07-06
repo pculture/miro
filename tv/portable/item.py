@@ -42,6 +42,7 @@ class Item(DDBObject):
         self.autoDownloaded = False
         self.pendingManualDL = False
         self.downloadedTime = None
+        self.watchedTime = None
         self.pendingReason = ""
         self.entry = entry
         self.expired = False
@@ -126,8 +127,7 @@ class Item(DDBObject):
         self.confirmDBThread()
         self.stopDownload()
         self.expired = True
-        self.keep = False
-        self.pendingManualDL = False
+        self.seen = self.keep = self.pendingManualDL = False
         self.signalChange()
 
     def getExpirationString(self):
@@ -180,7 +180,7 @@ class Item(DDBObject):
         """
 
         self.confirmDBThread()
-        if self.downloadedTime is None:
+        if self.watchedTime is None or not self.isDownloaded():
             return None
         ufeed = self.getFeed()
         if ufeed.expire == 'never' or (ufeed.expire == 'system'
@@ -191,7 +191,7 @@ class Item(DDBObject):
                 expireTime = ufeed.expireTime
             elif ufeed.expire == "system":
                 expireTime = timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS))
-            return self.downloadedTime + expireTime
+            return self.watchedTime + expireTime
 
     ##
     # returns true iff video has been seen
@@ -205,6 +205,8 @@ class Item(DDBObject):
     def markItemSeen(self):
         self.confirmDBThread()
         self.seen = True
+        if self.watchedTime is None:
+            self.watchedTime = datetime.now()
         self.signalChange()
 
     def getRSSID(self):

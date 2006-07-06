@@ -974,22 +974,6 @@ class TemplateDisplay(frontend.HTMLDisplay):
         self.templateHandle.unlinkTemplate()
         frontend.HTMLDisplay.onDeselected(self, frame)
 
-    def getWatchable(self):
-        view = None
-        for name in ('watchable-items', 'unwatched-items', 'expiring-items', 'saved-items'):
-            try:
-                namedView = self.templateHandle.findNamedView(name)
-                if namedView.getView().len() > 0:
-                    view = namedView
-                    break
-            except:
-                pass
-        if view is None:
-            return None
-        
-        return view.getView()
-
-
 ###############################################################################
 #### Handlers for actions generated from templates, the OS, etc            ####
 ###############################################################################

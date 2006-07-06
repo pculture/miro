@@ -223,6 +223,7 @@ class ItemSchema(DDBObjectSchema):
         ('linkNumber', SchemaInt(noneOk=True)),
         ('iconCache', SchemaObject(IconCache, noneOk=True)),
         ('downloadedTime', SchemaDateTime(noneOk=True)),
+        ('watchedTime', SchemaDateTime(noneOk=True)),
     ]
 
 class FileItemSchema(ItemSchema):
@@ -348,7 +349,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('loadedThisSession', SchemaBool()),
     ]
 
-VERSION = 9
+VERSION = 10
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,

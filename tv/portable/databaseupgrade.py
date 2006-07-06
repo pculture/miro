@@ -112,6 +112,22 @@ def upgrade9(objectList):
         if o.classString == 'file-item':
             o.savedData['deleted'] = False
 
+def upgrade10(objectList):
+    """Add a watchedTime attribute to items.  Since we don't know when that
+    was, we use the downloaded time which matches with our old behaviour.
+    """
+
+    import datetime
+    changed = set()
+    for o in objectList:
+        if o.classString in ('item', 'file-item'):
+            if o.savedData['seen']:
+                o.savedData['watchedTime'] = o.savedData['downloadedTime']
+            else:
+                o.savedData['watchedTime'] = None
+            changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()
