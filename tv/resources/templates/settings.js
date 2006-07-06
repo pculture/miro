@@ -49,8 +49,14 @@
         url += '?feed=' + document.forms['setAuto']['feed'].value;
         if (document.forms['settings']['maxOutDownloads'].checked)
         {
-            document.forms['settings']['maxNew'].disabled = false;
-            url += '&maxNew=' + document.forms['settings']['maxNew'].value;
+            var maxNew = document.forms['settings']['maxNew'];
+            maxNew.disabled = false;
+            if(maxNew.value == '') maxNew.value = '0';
+            if(!(parseInt(maxNew.value) >= 0)) {
+               eventURL('action:invalidMaxNew?value=' + escape(maxNew.value));
+               maxNew.value = '0';
+            }
+            url += '&maxNew=' + maxNew.value;
         }
         else
         {

@@ -1001,6 +1001,12 @@ class ModelActionHandler:
         obj = db.getObjectByID(int(feed))
         obj.setMaxNew(int(maxNew))
 
+    def invalidMaxNew(self, value):
+        title = _("Invalid Value")
+        description = _("%s is invalid.  You must enter a non-negative "
+                "number.") % value
+        dialogs.MessageBoxDialog(title, description).run()
+
     def startDownload(self, item):
         try:
             obj = db.getObjectByID(int(item))
