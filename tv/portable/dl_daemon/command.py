@@ -160,9 +160,3 @@ class ShutDownCommand(Command):
         c = ShutDownResponseCommand(self.daemon)
         c.send(block=False, callback=self.response_sent)
         self.daemon.shutdown = True
-        
-
-class PingCommand(Command):
-    """Sent every so often to let the downloader know we're still alive."""
-    def action(self):
-        pass

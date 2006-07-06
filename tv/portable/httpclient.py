@@ -168,6 +168,7 @@ class AsyncSocket(object):
         self.readTimeout = None
         self.timedOut = False
         self.connectionErrback = None
+        self.disableReadTimeout = False
         self.name = ""
 
     def __str__(self):
@@ -177,6 +178,8 @@ class AsyncSocket(object):
             return "Unknown %s" % (type(self).__name__,)
 
     def startReadTimeout(self):
+        if self.disableReadTimeout:
+            return
         if self.readTimeout is not None:
             self.stopReadTimeout()
         self.readTimeout = eventloop.addTimeout(30, self.onReadTimeout,

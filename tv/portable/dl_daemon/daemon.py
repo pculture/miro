@@ -100,11 +100,10 @@ class Daemon(ConnectionHandler):
         self.states['command'] = self.onCommand
         self.queuedCommands = []
         self.shutdown = False
-        eventloop.addTimeout(10, self.ping, "Downloader ping")
-
-    def ping(self):
-        command.PingCommand(self).send(block=False)
-        eventloop.addTimeout(10, self.ping, "Downloader ping")
+        self.stream.disableReadTimeout = True
+        # disable read timeouts for the downloader daemon communication.  Our
+        # normal state is to wait for long periods of time for without seeing
+        # any data.
 
     def onError(self, error):
         """Call this when a error occurs.  It forces the
