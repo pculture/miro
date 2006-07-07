@@ -132,28 +132,28 @@ li {
 }
 
 .main-container-scraping {
-    height: 56px;
     text-align: center;
+    margin: 15px 0px;
+    padding: 0px;
 }
 
-.main-container-scraping td.content {
-    background-color: #efefef;
-}
-
-.main-container-scraping div {
+div.scraping-indicator {
+    margin: auto;
+    width: 600px;
+    height: 56px;
+    background: #efefef;
+    font-size: 18px;
     color: #085ffe;
     font-weight: bold;
-    font-size: 18px;
-    margin: 0px 5px 20px 0px;
     white-space: nowrap;
+    margin-top: 18px;
+    position:relative;
 }
 
-.main-container-scraping-left {
-    background: url(../images/scraping-indicator-left.gif) no-repeat top left;
-}
-
-.main-container-scraping-right {
-    background: url(../images/scraping-indicator-right.gif) no-repeat top right;
+div.scraping-content {
+    position: absolute;
+    left: 20px;
+    bottom: 16px;
 }
 
 #main-container {

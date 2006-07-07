@@ -27,7 +27,6 @@
 	    <t:includeTemplate filename="feedtab" />
 	  </span>
       </li>
-       <li style="height:40px;">&nbsp;</li>
     </ul>
   </div>
 	<div id="sidebar-download-fade">&nbsp;</div>
