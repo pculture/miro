@@ -114,7 +114,7 @@ def checkSanity(objectList, fixIfPossible=True, quiet=False):
     on fixable problems.  We set this when we are converting old databases,
     since sanity errors are somewhat expected.
 
-    Returns a reference to objectList (mostly for the unit tests)
+    Returns True if the database passed all sanity tests, false otherwise.
     """
 
     tests = set([
@@ -153,4 +153,4 @@ def checkSanity(objectList, fixIfPossible=True, quiet=False):
                 # which we let get raised to our caller
         else:
             raise DatabaseInsaneError(errorMsg)
-    return objectList
+    return (errors == [])

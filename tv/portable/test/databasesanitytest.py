@@ -35,7 +35,9 @@ class SanityCheckingTest(DemocracyTestCase):
 
     def checkFixIfPossible(self, startList, fixedList):
         self.failedCalled = False
-        self.assertEquals(databasesanity.checkSanity(startList), fixedList)
+        rv = databasesanity.checkSanity(startList)
+        self.assertEquals(startList, fixedList)
+        self.assertEquals(rv, False)
         self.assertEquals(self.failedCalled, True)
 
     def checkObjectListPassesTest(self, objectList):
@@ -56,5 +58,7 @@ class SanityCheckingTest(DemocracyTestCase):
         self.checkObjectListPassesTest([f])
         self.checkObjectListFailsTest([f, f2])
         self.failedCalled = False
-        self.assertEquals(len(databasesanity.checkSanity([f, f2, f3])), 1)
+        testList = [f, f2, f3]
+        databasesanity.checkSanity(testList)
+        self.assertEquals(len(testList), 1)
         self.assertEquals(self.failedCalled, True)

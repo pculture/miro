@@ -560,20 +560,10 @@ class LiveStorage:
         cursor.close()
         changed = databaseupgrade.upgrade(savables, self.version)
         
-        txn = self.dbenv.txn_begin()
         if changed is None:
-            print "Rewriting database"
-            cursor = self.db.cursor(txn=txn)
-            while True:
-                next = cursor.next()
-                if next is None:
-                    break
-                cursor.delete()
-            cursor.close()
-            for o in savables:
-                data = cPickle.dumps(o)
-                self.db.put (str(o.savedData['id']), data, txn=txn)
+            self.rewriteDatabase(savables)
         else:
+            txn = self.dbenv.txn_begin()
             savables_set = set()
             for o in savables:
                 savables_set.add(o)
@@ -598,6 +588,24 @@ class LiveStorage:
         db = database.defaultDatabase
         db.restoreFromObjectList(objects)
 
+    def rewriteDatabase(self, savables):
+        """Delete, then rewrite the entire database.  savables is a list of
+        SavableObjects that will be in the new database.  WARNING: This method
+        will probably take a long time.
+        """
+
+        print "Rewriting database"
+        txn = self.dbenv.txn_begin()
+        cursor = self.db.cursor(txn=txn)
+        while True:
+            next = cursor.next()
+            if next is None:
+                break
+            cursor.delete()
+        cursor.close()
+        for o in savables:
+            data = cPickle.dumps(o)
+            self.db.put (str(o.savedData['id']), data, txn=txn)
 
     def loadDatabase(self):
         upgrade = (self.version != schema_mod.VERSION)
@@ -619,7 +627,9 @@ class LiveStorage:
                     print data
                     raise
         cursor.close()
-        databasesanity.checkSanity(objects)
+        if not databasesanity.checkSanity(objects):
+            savables = objectsToSavables(objects)
+            self.rewriteDatabase(savables)
         db = database.defaultDatabase
         db.restoreFromObjectList(objects)
 
