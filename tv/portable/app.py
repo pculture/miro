@@ -840,10 +840,6 @@ class Controller (frontend.Application):
 
     ### ----
 
-    def onDisplaySwitch(self, newDisplay):
-        # Nick, your turn ;)
-        pass
-        
     def setUpstreamLimit(self, setLimit):
         if setLimit:
             limit = config.get(prefs.UPSTREAM_LIMIT_IN_KBS)

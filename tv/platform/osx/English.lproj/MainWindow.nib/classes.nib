@@ -16,6 +16,8 @@
                 progressSlider = id; 
                 seekBackwardButton = id; 
                 seekForwardButton = id; 
+                skipBackwardButton = id; 
+                skipForwardButton = id; 
                 timeIndicator = id; 
                 titleLabel = id; 
                 volumeSlider = id; 
@@ -51,7 +53,6 @@
         {CLASS = ProgressSlider; LANGUAGE = ObjC; SUPERCLASS = Slider; }, 
         {CLASS = Slider; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {CLASS = TabButtonCell; LANGUAGE = ObjC; SUPERCLASS = NSButtonCell; }, 
-        {CLASS = TrackButton; LANGUAGE = ObjC; SUPERCLASS = NSButton; }, 
         {
             CLASS = VideoAreaView; 
             LANGUAGE = ObjC; 
@@ -60,11 +61,9 @@
         }, 
         {
             ACTIONS = {
-                backward = id; 
                 exitFullScreen = id; 
                 fastBackward = id; 
                 fastForward = id; 
-                forward = id; 
                 muteUnmuteVolume = id; 
                 playFullScreen = id; 
                 playPause = id; 

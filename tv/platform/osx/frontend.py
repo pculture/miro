@@ -1938,8 +1938,8 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
     def awakeFromNib(self):
         VideoDisplayController._instance = self
-        self.forwardButton.sendActionOn_(NSLeftMouseDownMask)
-        self.backwardButton.sendActionOn_(NSLeftMouseDownMask)
+        self.forwardButton.setCell_(SkipSeekButtonCell.cellFromButtonCell_direction_delay_(self.forwardButton.cell(), 1, 0.5))
+        self.backwardButton.setCell_(SkipSeekButtonCell.cellFromButtonCell_direction_delay_(self.backwardButton.cell(), -1, 0.5))
         nc.addObserver_selector_name_object_(
             self, 
             'handleWatchableDisplayNotification:', 
@@ -1972,7 +1972,6 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
     def reset(self):
         self.currentWatchableDisplay = None
-        self.fastSeekTimer = nil
 
     def preventSystemSleep(self, prevent):
         if prevent and self.systemActivityUpdaterTimer is nil:
@@ -1994,14 +1993,10 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
     def enableSecondaryControls(self, enabled, allowFastSeeking=YES):
         self.backwardButton.setEnabled_(enabled)
+        self.backwardButton.cell().setAllowsFastSeeking(allowFastSeeking)
         self.stopButton.setEnabled_(enabled)
         self.forwardButton.setEnabled_(enabled)
-        if allowFastSeeking:
-            self.backwardButton.setAction_('backward:')
-            self.forwardButton.setAction_('forward:')
-        else:
-            self.backwardButton.setAction_('skipBackward:')
-            self.forwardButton.setAction_('skipForward:')
+        self.forwardButton.cell().setAllowsFastSeeking(allowFastSeeking)
 
     def updatePlayPauseButton(self, prefix):
         self.playPauseButton.setImage_(NSImage.imageNamed_('%s' % prefix))
@@ -2046,60 +2041,31 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     def exitFullScreen(self):
         self.videoAreaView.exitFullScreen()
 
-    def forward_(self, sender):
-        self.performSeek(sender, 1)
-        
     def skipForward_(self, sender):
         eventloop.addUrgentCall(lambda:app.controller.playbackController.skip(1), "Skip Forward")
 
     def fastForward_(self, sender):
-        self.performSeek(sender, 1, 0.0)
-
-    def backward_(self, sender):
-        self.performSeek(sender, -1)
+        self.fastSeek(1)
 
     def skipBackward_(self, sender):
         eventloop.addUrgentCall(lambda:app.controller.playbackController.skip(-1), "Skip Backward")
 
     def fastBackward_(self, sender):
-        self.performSeek(sender, -1, 0.0)
-
-    def performSeek(self, sender, direction, seekDelay=0.5):
-        platformutils.warnIfNotOnMainThread('VideoDisplayController.performSeek')
-        if sender.state() == NSOnState:
-            sender.sendActionOn_(NSLeftMouseUpMask)
-            if seekDelay > 0.0:
-                info = {'seekDirection': direction}
-                self.fastSeekTimer = NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_(seekDelay, self, 'fastSeek:', info, NO)
-                NSRunLoop.currentRunLoop().addTimer_forMode_(self.fastSeekTimer, NSEventTrackingRunLoopMode)
-            else:
-                self.fastSeekTimer = nil
-                self.fastSeek(direction)
-        else:
-            sender.sendActionOn_(NSLeftMouseDownMask)
-            if self.fastSeekTimer is nil:
-                rate = 1.0
-                if not self.videoDisplay.isPlaying:
-                    rate = 0.0
-                    self.updatePlayPauseButton('play')
-                if self.videoDisplay.activeRenderer is not None:
-                    self.videoDisplay.activeRenderer.setRate(rate)
-            else:
-                self.fastSeekTimer.invalidate()
-                self.fastSeekTimer = nil
-                eventloop.addUrgentCall(lambda:app.controller.playbackController.skip(direction), "Skip Item")
-
-    def fastSeek_(self, timer):
-        info = timer.userInfo()
-        direction = info['seekDirection']
-        self.fastSeek(direction)
+        self.fastSeek(-1)
 
     def fastSeek(self, direction):
         if not self.videoDisplay.isPlaying:
             self.updatePlayPauseButton('pause')
         rate = 3 * direction
         self.videoDisplay.activeRenderer.setRate(rate)
-        self.fastSeekTimer = nil
+
+    def stopSeeking(self):
+        rate = 1.0
+        if not self.videoDisplay.isPlaying:
+            rate = 0.0
+            self.updatePlayPauseButton('play')
+        if self.videoDisplay.activeRenderer is not None:
+            self.videoDisplay.activeRenderer.setRate(rate)
 
     def setVolume_(self, sender):
         self.videoDisplay.setVolume(sender.floatValue())
@@ -2132,6 +2098,75 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         renderer = self.videoDisplay.activeRenderer
         if notification.name() == QTMovieDidEndNotification and not renderer.interactivelySeeking:
             eventloop.addUrgentCall(lambda:app.controller.playbackController.onMovieFinished(), "Movie Finished Callback")
+
+
+###############################################################################
+#### A custom NSButtonCell which allows us to provide custom mouse         ####
+#### tracking for things like fast seeking.                                ####
+###############################################################################
+
+class SkipSeekButtonCell (NSButtonCell):
+
+    @classmethod
+    def cellFromButtonCell_direction_delay_(self, cell, direction, delay):
+        newCell = SkipSeekButtonCell.alloc().initWithPrimaryAction_direction_delay_(cell.action(), direction, delay)
+        newCell.setType_(cell.type())
+        newCell.setBezeled_(cell.isBezeled())
+        newCell.setBezelStyle_(cell.bezelStyle())
+        newCell.setBordered_(cell.isBordered())
+        newCell.setTransparent_(cell.isTransparent())
+        newCell.setImage_(cell.image())
+        newCell.setAlternateImage_(cell.alternateImage())
+        newCell.setState_(cell.state())
+        newCell.setHighlightsBy_(cell.highlightsBy())
+        newCell.setShowsStateBy_(cell.showsStateBy())
+        newCell.setEnabled_(cell.isEnabled())
+        newCell.setTarget_(cell.target())
+        newCell.setAction_(nil)
+        return newCell
+    
+    def initWithPrimaryAction_direction_delay_(self, action, direction, delay):
+        self = NSButtonCell.init(self)
+        self.primaryAction = action
+        self.direction = direction
+        self.seekTimer = nil
+        self.seekDelay = delay
+        self.allowSkipping = True
+        self.allowSeeking = True
+        return self
+    
+    def setAllowsFastSeeking(self, allow):
+        self.allowSeeking = allow
+    
+    def setAllowsSkipping(self, allow):
+        self.allowSkipping = allow
+    
+    def trackMouse_inRect_ofView_untilMouseUp_(self, event, frame, control, untilMouseUp):
+        if self.allowSeeking:
+            if self.seekDelay > 0.0:
+                self.seekTimer = NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_(self.seekDelay, self, 'fastSeek:', nil, NO)
+                NSRunLoop.currentRunLoop().addTimer_forMode_(self.seekTimer, NSEventTrackingRunLoopMode)
+            else:
+                self.fastSeek_(nil)
+
+        mouseIsUp = NSButtonCell.trackMouse_inRect_ofView_untilMouseUp_(self, event, frame, control, YES)
+
+        if self.seekTimer is not nil or not self.allowSeeking:
+            self.resetSeekTimer()
+            control.sendAction_to_(self.primaryAction, self.target())
+        else:
+            self.target().stopSeeking()
+            
+        return mouseIsUp
+
+    def fastSeek_(self, timer):
+        self.target().fastSeek(self.direction)
+        self.resetSeekTimer()
+    
+    def resetSeekTimer(self):
+        if self.seekTimer is not nil:
+            self.seekTimer.invalidate()
+            self.seekTimer = nil
 
 
 ###############################################################################
@@ -2488,8 +2523,10 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         return self
 
     def awakeFromNib(self):
-        self.seekForwardButton.sendActionOn_(NSLeftMouseDownMask)
-        self.seekBackwardButton.sendActionOn_(NSLeftMouseDownMask)
+        self.seekForwardButton.setCell_(SkipSeekButtonCell.cellFromButtonCell_direction_delay_(self.seekForwardButton.cell(), 1, 0.0))
+        self.seekForwardButton.cell().setAllowsSkipping(False)
+        self.seekBackwardButton.setCell_(SkipSeekButtonCell.cellFromButtonCell_direction_delay_(self.seekBackwardButton.cell(), -1, 0.0))
+        self.seekBackwardButton.cell().setAllowsSkipping(False)
         self.progressSlider.track = NSImage.imageNamed_('fs-progress-background')
         self.progressSlider.cursor = NSImage.imageNamed_('fs-progress-slider')
         self.progressSlider.sliderWasClicked = self.progressSliderWasClicked
