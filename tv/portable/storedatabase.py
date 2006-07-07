@@ -619,6 +619,7 @@ class LiveStorage:
                     print data
                     raise
         cursor.close()
+        databasesanity.checkSanity(objects)
         db = database.defaultDatabase
         db.restoreFromObjectList(objects)
 
