@@ -629,7 +629,7 @@ class LiveStorage:
         if not databasesanity.checkSanity(objects):
             savables = objectsToSavables(objects)
             txn = self.dbenv.txn_begin()
-            self.rewriteDatabase(savables)
+            self.rewriteDatabase(savables, txn)
             self.version = schema_mod.VERSION
             self.db.put (VERSION_KEY, str(self.version), txn=txn)
             txn.commit()
