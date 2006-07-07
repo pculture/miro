@@ -246,12 +246,9 @@ class Item(DDBObject):
         self.confirmDBThread()
         return self.linkNumber
 
-    def download(self,autodl=False):
-        eventloop.addIdle(lambda : self.actualDownload(autodl), "Spawning Download %s" % self.getURL())
-
     ##
     # Starts downloading the item
-    def actualDownload(self,autodl=False):
+    def download(self,autodl=False):
         self.confirmDBThread()
         manualDownloadCount = views.manualDownloads.len()
         self.expired = self.keep = self.seen = False

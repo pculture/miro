@@ -289,61 +289,27 @@ class FeedImpl:
         else:
             return False
 
-    ##
-    # Figure out the next available auto download item taking into account
-    # maxNew, fallbehind, and getEverything
-    def getNextAutoDownload(self, dontUse = []):
-        self.ufeed.confirmDBThread()
-        if not self.ufeed.isAutoDownloadable():
-            return None
+    def startManualDownload(self):
         next = None
-
-        #The number of items downloading from this feed
-        dling = 0
-        #The number of items eligibile to download
-        eligibile = 0
-        #The number of unwatched, downloaded items
-        newitems = 0
-
-        #Find the next item we should get
-#        self.items.sort(sortFunc)
-        for item in self.items:
-            state = item.getState()
-            if item.isEligibleForAutoDownload() and not item in dontUse:
-                eligibile += 1
-                if next == None:
-                    next = item
-                elif item.getPubDateParsed() > next.getPubDateParsed():
-                    next = item
-            elif state == "downloading":
-                dling += 1
-            elif state == 'newly-downloaded':
-                newitems += 1
-
-        if self.maxNew >= 0 and newitems >= self.maxNew:
-            return None
-        elif self.fallBehind>=0 and eligibile > self.fallBehind:
-            dontUse.append(next)
-            return self.getNextAutoDownload(dontUse)
-        elif next != None:
-            self.ufeed.confirmDBThread()
-            self.startfrom = next.getPubDateParsed()
-            return next
-        else:
-            return None
-
-    def downloadNextManual(self):
-        self.ufeed.confirmDBThread()
-        next = None
-#        self.items.sort(sortFunc)
         for item in self.items:
             if item.isPendingManualDownload():
                 if next is None:
                     next = item
-                elif item.getPubDateParsed() < next.getPubDateParsed():
+                elif item.getPubDateParsed() > next.getPubDateParsed():
                     next = item
         if not next is None:
             next.download(autodl = False)
+
+    def startAutoDownload(self):
+        next = None
+        for item in self.items:
+            if item.isEligibleForAutoDownload():
+                if next is None:
+                    next = item
+                elif item.getPubDateParsed() > next.getPubDateParsed():
+                    next = item
+        if not next is None:
+            next.download(autodl = True)
 
     ##
     # Returns marks expired items as expired
@@ -1119,7 +1085,7 @@ class RSSFeedImpl(FeedImpl):
                 sortedItems[-1].signalChange(needsSave=False)
             else:
                 self.startfrom = datetime.min
-        
+            self.ufeed.signalChange()
 
     def addScrapedThumbnail(self,entry):
         if (entry.has_key('enclosures') and len(entry['enclosures'])>0 and

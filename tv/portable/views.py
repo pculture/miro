@@ -44,3 +44,4 @@ newlyDownloadedItems = items.filterWithIndex(indexes.itemsByState,
 downloadingItems = items.filterWithIndex(indexes.itemsByState, 'downloading')
 downloadingItems.createIndex(indexes.downloadsByCategory)
 manualDownloads = items.filter(filters.manualDownloads)
+autoDownloads = items.filter(filters.autoDownloads)

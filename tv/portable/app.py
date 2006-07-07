@@ -508,7 +508,7 @@ class Controller (frontend.Application):
 
             # Start the automatic downloader daemon
             print "DTV: Spawning auto downloader..."
-            autodler.AutoDownloader()
+            autodler.startDownloader()
 
             # Start the idle notifier daemon
             if config.get(prefs.LIMIT_UPSTREAM) is True:
