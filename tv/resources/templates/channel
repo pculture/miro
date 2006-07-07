@@ -125,10 +125,20 @@ i18n:translate="">Settings</span></a></p>
     <!-- NEWLY AVAILABLE ************************************************** -->
   <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-newlyavailable');">#&nbsp;</a></div>
   <div id="main-channelbar-available" class="main-channelbar" style="display: @@@mainChannelbarAvailableDisplay@@@;">
-    <h1 i18n:translate="">
-        <span i18n:name="len" t:replace="allItems.len()" /> 
-        Videos On This Channel
-    </h1>
+    <div t:updateForView="matchingItems">
+      <div t:showIf="allItems.len() == matchingItems.len()">
+	<h1 i18n:translate="">
+	    <span i18n:name="len" t:replace="allItems.len()" /> 
+	    Videos On This Channel
+	</h1>
+      </div>
+      <div t:showIf="allItems.len() != matchingItems.len()">
+	<h1 i18n:translate="">
+	    <span i18n:name="len" t:replace="matchingItems.len()" /> 
+	    Videos Match This Search
+	</h1>
+      </div>
+    </div>
  </div>
     <div id="main-newlyavailable">
         <span t:repeatForView="newItems">
