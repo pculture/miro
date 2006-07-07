@@ -825,7 +825,6 @@ class BTDownloader(BGDownloader):
         self.updateClient()
 
     def readMetainfo (self, metainfo):
-
         # FIXME: BitTorrent did lots of checking here for
         # invalid torrents. We should do the same
         self.metainfo = bdecode(metainfo)
@@ -851,9 +850,18 @@ class BTDownloader(BGDownloader):
         self.updateClient()
         self._startTorrent()
 
+    def handleMetainfo (self, metainfo):
+        try:
+            self.readMetainfo(metainfo)
+        except ValueError:
+            self.reasonFailed = "Invalid BitTorrent metadata"
+            self.state = "failed"
+            self.updateClient()
+        else:
+            self.gotMetainfo()
+
     def onDescriptionDownload(self, info):
-        self.readMetainfo(info['body'])
-        self.gotMetainfo()
+        self.handleMetainfo (info['body'])
 
     def onDescriptionDownloadFailed(self, exception):
         self.state = "failed"
@@ -870,8 +878,7 @@ class BTDownloader(BGDownloader):
                 finally:
                     metainfoFile.close()
 
-                self.readMetainfo(metainfo)
-                self.gotMetainfo()
+                self.handleMetainfo(metainfo)
             else:
                 httpclient.grabURL(self.getURL(), self.onDescriptionDownload,
                         self.onDescriptionDownloadFailed)
