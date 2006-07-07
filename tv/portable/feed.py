@@ -690,6 +690,8 @@ class Feed(DDBObject):
             self.signalChange()
 
     def _generateFeedErrback(self, error, removeOnError):
+        if not self.idExists():
+            return
         self.download = None
         print "DTV: Warning couldn't load feed at %s (%s)" % \
                 (self.origURL, error)
@@ -721,7 +723,8 @@ class Feed(DDBObject):
         """
         # FIXME: This probably should be split up a bit. The logic is
         #        a bit daunting
-
+        if not self.idExists():
+            return
         self.download = None
         modified = info.get('last-modified')
         etag = info.get('etag')
@@ -970,12 +973,16 @@ class RSSFeedImpl(FeedImpl):
         self.scheduleUpdateEvents(-1)
 
     def feedparser_errback (self, e):
+        if not self.idExists():
+            return
         print "Error updating feed: %s: %s" % (self.url, e)
         self.updating = False
         self.ufeed.signalChange()
         self.scheduleUpdateEvents(-1)
 
     def feedparser_callback (self, parsed):
+        if not self.idExists():
+            return
         self.ufeed.confirmDBThread()
         start = clock()
         self.updateUsingParsed(parsed)
@@ -1026,12 +1033,18 @@ class RSSFeedImpl(FeedImpl):
                     self._updateErrback, etag=etag,modified=modified)
 
     def _updateErrback(self, error):
+        if not self.idExists():
+            return
         print "WARNING: error in Feed.update for %s -- %s" % (self.ufeed, error)
+        if not self.idExists():
+            return
         self.scheduleUpdateEvents(-1)
         self.updating = False
         self.ufeed.signalChange(needsSave=False)
 
     def _updateCallback(self,info):
+        if not self.idExists():
+            return
         if info['status'] == 304:
             self.scheduleUpdateEvents(-1)
             self.updating = False
@@ -1224,12 +1237,16 @@ class ScraperFeedImpl(FeedImpl):
             if self.linkHistory[url].has_key('modified'):
                 modified = self.linkHistory[url]['modified']
         def callback(info):
+            if not self.idExists():
+                return
             self.downloads.discard(download)
             try:
                 self.processDownloadedHTML(info, urlList, depth,linkNumber, top)
             finally:
                 self.checkDone()
         def errback(error):
+            if not self.idExists():
+                return
             self.downloads.discard(download)
             print "WARNING unhandled error for ScraperFeedImpl.getHTML: ", error
             self.checkDone()
