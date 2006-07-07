@@ -958,6 +958,10 @@ class DDBObject:
     def getID(self):
         return self.id
 
+    def idExists(self):
+        self.confirmDBThread()
+        return self.dd.idExists(self.id)
+
     #
     #Call this after you've removed all references to the object
     def remove(self):
