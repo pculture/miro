@@ -191,6 +191,7 @@ jsBridge.prototype = {
 
   onMouseMoveFullscreen: function() {
       this.document.getElementById('bottom').collapsed = false;
+      this.document.getElementById('videoInfoDisplay').collapsed = false;
       this.hideVideoControlsTimer.cancel();
       this.startHideVideoControlsTimer();
       pybridge.showCursor(true);
@@ -198,8 +199,9 @@ jsBridge.prototype = {
 
   startHideVideoControlsTimer: function() {
     var bottom = this.document.getElementById('bottom')
+    var videoInfoDisplay = this.document.getElementById('videoInfoDisplay')
     var callback = {notify: function() {
-        bottom.collapsed = true;
+        videoInfoDisplay.collapsed = bottom.collapsed = true;
         pybridge.showCursor(false);
     }};
     this.hideVideoControlsTimer.initWithCallback(callback, 3000,
