@@ -184,7 +184,7 @@ a.feeditem.selected-inactive .feed-loading-icon {
 }
 
 .number-count.orange {
-	background: #dd7119;
+    background: url(../images/orange_filler.png) repeat;
 }
 
 .left-bubble.blue {

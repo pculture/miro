@@ -92,17 +92,12 @@ i18n:translate="">Settings</span></a></p>
 <!-- CHANNEL CONTAINER **************************************************** -->
 <div id="main-container">
     <div class="main-container-scraping" t:showIf="feed.isScraped() and feed.isUpdating()" t:updateHideOnView="thisFeedView">
-	<center>
-	    <table cellpadding="0" cellspacing="0">
-	    <tr valign="bottom">
-	    <td><img src="resource:images/scraping-indicator-left.gif" alt="" /></td>
-	    <td class="content">
-		<div i18n:translate="">Looking for videos at this URL</div>
-	    </td>
-	    <td><img src="resource:images/scraping-indicator-right.gif" alt="" /></td>
-	    </tr>
-	    </table>
-	</center>
+    <div class="scraping-indicator">
+      <img align="left" src="resource:images/scraping-indicator-left.gif" />
+      <img align="right" src="resource:images/scraping-indicator-right.gif" />
+      <div class="scraping-content" i18n:translate="">Looking for videos 
+      at this URL</div>
+    </div>
     </div>
     <!-- DOWNLOADS ******************************************************** -->
     <span t:hideIf="downloadingItems.len()==0" t:updateHideOnView="downloadingItems">
