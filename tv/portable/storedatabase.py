@@ -560,10 +560,10 @@ class LiveStorage:
         cursor.close()
         changed = databaseupgrade.upgrade(savables, self.version)
         
+        txn = self.dbenv.txn_begin()
         if changed is None:
-            self.rewriteDatabase(savables)
+            self.rewriteDatabase(savables, txn)
         else:
-            txn = self.dbenv.txn_begin()
             savables_set = set()
             for o in savables:
                 savables_set.add(o)
@@ -588,14 +588,13 @@ class LiveStorage:
         db = database.defaultDatabase
         db.restoreFromObjectList(objects)
 
-    def rewriteDatabase(self, savables):
+    def rewriteDatabase(self, savables, txn):
         """Delete, then rewrite the entire database.  savables is a list of
         SavableObjects that will be in the new database.  WARNING: This method
         will probably take a long time.
         """
 
         print "Rewriting database"
-        txn = self.dbenv.txn_begin()
         cursor = self.db.cursor(txn=txn)
         while True:
             next = cursor.next()
@@ -629,7 +628,12 @@ class LiveStorage:
         cursor.close()
         if not databasesanity.checkSanity(objects):
             savables = objectsToSavables(objects)
+            txn = self.dbenv.txn_begin()
             self.rewriteDatabase(savables)
+            self.version = schema_mod.VERSION
+            self.db.put (VERSION_KEY, str(self.version), txn=txn)
+            txn.commit()
+            self.db.sync()
         db = database.defaultDatabase
         db.restoreFromObjectList(objects)
 
