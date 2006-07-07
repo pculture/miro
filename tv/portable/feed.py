@@ -757,15 +757,15 @@ class Feed(DDBObject):
                 #it doesn't parse as RSS, so it must be HTML
                 #print " Nevermind! it's HTML"
                 self.askForScrape(info, html, charset)
-
-            if handler.enclosureCount > 0 or handler.itemCount == 0:
-                #print " It's RSS with enclosures"
-                self.finishGenerateFeed(RSSFeedImpl(info['updated-url'],
-                    initialHTML=xmldata, etag=etag, modified=modified,
-                    ufeed=self))
             else:
-                #print " It's pre-enclosure RSS"
-                self.askForScrape(info, xmldata, charset)
+                if handler.enclosureCount > 0 or handler.itemCount == 0:
+                    #print " It's RSS with enclosures"
+                    self.finishGenerateFeed(RSSFeedImpl(info['updated-url'],
+                        initialHTML=xmldata, etag=etag, modified=modified,
+                        ufeed=self))
+                else:
+                    #print " It's pre-enclosure RSS"
+                    self.askForScrape(info, xmldata, charset)
         else:
             print "DTV doesn't know how to deal with "+contentType+" feeds"
             self.finishGenerateFeed(None)
