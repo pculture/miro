@@ -18,6 +18,12 @@ class DemocracyCLH:
                 .getService(components.interfaces.nsIWindowWatcher)
         pybridgeCID = "@participatoryculture.org/dtv/pybridge;1"
         pybridge = components.classes[pybridgeCID].getService()
+        startupError = pybridge.getStartupError()
+        if startupError:
+            startupErrorURL = "chrome://dtv/content/startuperror.xul"
+            wwatch.openWindow(None, startupErrorURL, "DemocracyPlayerError", 
+                    "chrome,dialog=yes,all", None)
+            return
         existingWindow = wwatch.getWindowByName(windowName, None)
         if existingWindow is None:
             pybridge.handleCommandLine(commandLine)

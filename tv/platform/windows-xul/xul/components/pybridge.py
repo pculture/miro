@@ -1,3 +1,4 @@
+from gettext import gettext as _
 from xpcom import components
 import ctypes
 import os
@@ -5,15 +6,35 @@ import sys
 import traceback
 import _winreg
 
-import app
-import eventloop
-import util
-import config
-import prefs
-import singleclick
-import frontend
-from frontend_implementation import HTMLDisplay
-from frontend_implementation.UIBackendDelegate import UIBackendDelegate
+try:
+    import app
+    import eventloop
+    import config
+    import prefs
+    import singleclick
+    import frontend
+    import util
+    from frontend_implementation import HTMLDisplay
+    from frontend_implementation.UIBackendDelegate import UIBackendDelegate
+    from eventloop import asUrgent
+except:
+    errorOnImport = True
+    # get a fallback error message in case we can't import util either
+    import traceback
+    importErrorMessage = (_("Error importing democracy modules:\n%s") %
+        traceback.format_exc())
+    try:
+        import util
+        importErrorMessage = util.formatFailedMessage(_("Starting up"),
+                withExn=True)
+    except:
+        pass
+    # we need to make a fake asUrgent since we probably couldn't import
+    # eventloop.
+    def asUrgent(func):
+        return func
+else:
+    errorOnImport = False
 
 nsIEventQueueService = components.interfaces.nsIEventQueueService
 nsIProperties = components.interfaces.nsIProperties
@@ -86,12 +107,20 @@ class PyBridge:
 
     def __init__(self):
         self.started = False
-        self.delegate = UIBackendDelegate()
         self.cursorDisplayCount = 0
+        if not errorOnImport:
+            self.delegate = UIBackendDelegate()
+
+    def getStartupError(self):
+        if not errorOnImport:
+            return ""
+        else:
+            return importErrorMessage
 
     def onStartup(self, window):
         if self.started:
-            util.failed("Loading window", details="onStartup called twice")
+            util.failed(_("Loading window"), 
+                details=_("onStartup called twice"))
             return
         else:
             self.started = True
@@ -180,7 +209,7 @@ class PyBridge:
     def setExpireAfter(self, value):
         return config.set(prefs.EXPIRE_AFTER_X_DAYS, value)
 
-    @eventloop.asUrgent
+    @asUrgent
     def handleCommandLine(self, commandLine):
         singleclick.parseCommandLineArgs(getArgumentList(commandLine))
 
@@ -188,69 +217,69 @@ class PyBridge:
         eventloop.addUrgentCall(HTMLDisplay.runPageFinishCallback, 
                 "%s finish callback" % area, args=(area, url))
 
-    @eventloop.asUrgent
+    @asUrgent
     def openFile(self, path):
         singleclick.openFile(path)
 
-    @eventloop.asUrgent
+    @asUrgent
     def setVolume(self, volume):
         config.set(prefs.VOLUME_LEVEL, volume)
         app.controller.videoDisplay.setVolume(volume)
 
-    @eventloop.asUrgent
+    @asUrgent
     def quit(self):
         app.controller.quit()
 
-    @eventloop.asUrgent
+    @asUrgent
     def removeCurrentChannel(self):
         app.ModelActionHandler(self.delegate).removeCurrentFeed()
 
-    @eventloop.asUrgent
+    @asUrgent
     def updateCurrentChannel(self):
         app.ModelActionHandler(self.delegate).updateCurrentFeed()
 
-    @eventloop.asUrgent
+    @asUrgent
     def updateChannels(self):
         app.ModelActionHandler(self.delegate).updateAllFeeds()
 
-    @eventloop.asUrgent
+    @asUrgent
     def showHelp(self):
         self.delegate.openExternalURL('http://www.getdemocracy.com/help')
 
-    @eventloop.asUrgent
+    @asUrgent
     def copyChannelLink(self):
         app.ModelActionHandler(self.delegate).copyCurrentFeedURL()
 
-    @eventloop.asUrgent
+    @asUrgent
     def handleSimpleDialog(self, id, buttonIndex):
         self.delegate.handleDialog(id, buttonIndex)
 
-    @eventloop.asUrgent
+    @asUrgent
     def handleHTTPAuthDialog(self, id, buttonIndex, username, password):
         self.delegate.handleDialog(id, buttonIndex, username=username,
                 password=password)
 
-    @eventloop.asUrgent
+    @asUrgent
     def addChannel(self, url):
         app.controller.addAndSelectFeed(url)
 
-    @eventloop.asUrgent
+    @asUrgent
     def openURL(self, url):
         self.delegate.openExternalURL(url)
 
-    @eventloop.asUrgent
+    @asUrgent
     def playPause(self):
         app.controller.playbackController.playPause()
 
-    @eventloop.asUrgent
+    @asUrgent
     def stop(self):
         app.controller.playbackController.stop()
 
-    @eventloop.asUrgent
+    @asUrgent
     def skip(self, step):
         app.controller.playbackController.skip(step)
 
-    @eventloop.asUrgent
+    @asUrgent
     def loadURLInBrowser(self, browserId, url):
         try:
             display = app.controller.frame.selectedDisplays[browserId]

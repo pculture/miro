@@ -10,6 +10,7 @@ interface pcfIDTVPyBridge : nsISupports
   /**
    * Called on application startup.
    */
+  AString getStartupError();
   void onStartup(in nsIDOMWindow window);
   void onShutdown();
   void handleCommandLine(in nsICommandLine commandLine);
