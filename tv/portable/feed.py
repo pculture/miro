@@ -20,6 +20,7 @@ import xml
 from database import defaultDatabase
 from httpclient import grabURL, HTTPError
 from iconcache import iconCacheUpdater, IconCache
+from templatehelper import quoteattr
 import app
 import config
 import dialogs
@@ -1521,6 +1522,9 @@ class SearchFeedImpl (RSSFeedImpl):
         self.searching = False
         self.lastEngine = 'yahoo'
         self.lastQuery = ''
+
+    def quoteLastQuery(self):
+        return quoteattr(self.lastQuery)
 
     def getURL(self):
         return 'dtv:search'

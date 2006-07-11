@@ -17,8 +17,6 @@ searchFeed = views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search')
 feed = searchFeed[0]
 
 searchItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
-
-
 ]]>
     </t:execOnLoad>
 
@@ -38,7 +36,7 @@ searchItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
                         <option t:hideIf="not feed.lastEngine == 'blogdigger'" selected="selected" value="blogdigger">Blogdigger</option>
                         <option t:hideIf="feed.lastEngine == 'blogdigger'" value="blogdigger">Blogdigger</option>
                     </select>
-                    <input type="search" name="query" value="@@@feed.lastQuery@@@" placeholder="" 
+		    <input type="search" name="query" value="***feed.quoteLastQuery()***" placeholder="" 
                            class="main-titlebar-tasks-search" style="margin:35px 55px 0px 0px; width:200px; font-size: 120%;" 
                            onKeyUp="fillSearch()" onKeyPress="validateSearch(event)" />
                 </form>
