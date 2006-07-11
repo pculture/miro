@@ -1413,7 +1413,7 @@ class ScraperFeedImpl(FeedImpl):
                 finally:
                     self.ufeed.signalChange()
             return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')], linkDict)
-        except (xml.sax.SAXException, IOError, xml.sax.SAXNotRecognizedException):
+        except (xml.sax.SAXException, ValueError, IOError, xml.sax.SAXNotRecognizedException):
             (links, linkDict) = self.scrapeHTMLLinks(html,baseurl,setTitle=setTitle, charset=charset)
             return (links, linkDict)
 
@@ -1626,7 +1626,7 @@ class HTMLLinkGrabber(HTMLParser):
         while match:
             try:
                 linkURL = match.group(3).encode('ascii')
-            except UnicodeDecodeError:
+            except UnicodeError:
                 print "WARNING: scraped URL is non-ascii (%s)-- discarding" \
                         % match.group(3)
             else:
@@ -1637,7 +1637,7 @@ class HTMLLinkGrabber(HTMLParser):
                     try:
                         thumb = urljoin(baseurl,
                                 imgMatch.group(1).encode('ascii'))
-                    except UnicodeDecodeError:
+                    except UnicodeError:
                         print ("WARNING: scraped thumbnail url is non-ascii "
                         "(%s) -- discarding"  % imgMatch.group(1))
                         thumb = None
