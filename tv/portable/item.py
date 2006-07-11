@@ -136,15 +136,16 @@ class Item(DDBObject):
         """Get the expiration time a string to display to the user."""
         expireTime = self.getExpirationTime()
         if expireTime is None:
-            return _('never')
+            return ""
         else:
             exp = expireTime - datetime.now()
             if exp.days > 0:
-                return _("%d days") % exp.days
+                time = _("%d days") % exp.days
             elif exp.seconds > 3600:
-                return _("%d hrs") % (ceil(exp.seconds/3600.0))
+                time = _("%d hrs") % (ceil(exp.seconds/3600.0))
             else:
-                return _("%d min") % (ceil(exp.seconds/60.0))
+                time = _("%d min") % (ceil(exp.seconds/60.0))
+        return _('Expires: %s') % time
 
     def _getStateCSSClassAndState(self):
         """Does the work for both getStateCSSClass() and getStateString().
@@ -159,8 +160,7 @@ class Item(DDBObject):
             if self.getState() == 'newly-downloaded':
                 return 'newly-downloaded', _('UNWATCHED')
             elif self.getState() == 'expiring':
-                msg = _('Expires: %s') % self.getExpirationString()
-                return 'expiring', msg
+                return 'expiring', self.getExpirationString()
             else:
                 return '', ''
         elif not self.getViewed():
@@ -462,7 +462,8 @@ class Item(DDBObject):
         return self.getState() in ("newly-downloaded", "expiring", "saved")
 
     def showSaveButton(self):
-        return self.getState() in ('newly-downloaded', 'expiring')
+        return (self.getState() in ('newly-downloaded', 'expiring') and
+                self.getExpirationTime() is not None)
 
     def getFailureReason(self):
         self.confirmDBThread()
