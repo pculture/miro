@@ -686,6 +686,7 @@ class LiveStorage:
                 dialog = dialogs.MessageBoxDialog(title, description)
                 dialog.run (lambda(response):None)
                 self.errorState = True
+            self.txn.abort()
             self.txn = None
             self.dc = eventloop.addTimeout(self.TRANSACTION_TIMEOUT, self.runUpdate, self.TRANSACTION_NAME)
             

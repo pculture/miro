@@ -450,6 +450,7 @@ class Controller (frontend.Application):
         delegate = frontend.UIBackendDelegate()
         self.frame = None
         self.inQuit = False
+        self.initial_feeds = False # True if this is the first run and there's an initial-feeds.democracy file.
 
     ### Startup and shutdown ###
 
@@ -515,7 +516,13 @@ class Controller (frontend.Application):
                     self.downloadTab = tab
 
             views.allTabs.resetCursor()
-            views.allTabs.getNext()
+            next = views.allTabs.getNext()
+            if self.initial_feeds:
+                while next and ((not isinstance(next.obj, feed.Feed)) or next.obj.getOriginalURL ().startswith("dtv:")):
+                    next = views.allTabs.getNext()
+                if next is None:
+                    views.allTabs.resetCursor()
+                    views.allTabs.getNext()
 
             # If we're missing the file system videos feed, create it
             self.setupGlobalFeed('dtv:directoryfeed')
@@ -770,6 +777,9 @@ class Controller (frontend.Application):
         # Why use the cursor at all? It's necessary because we want
         # the database code to handle moving the cursor on a deleted
         # record automatically for us.
+
+        if self.frame is None:
+            return
 
         oldSelected = self.currentSelectedTab
         newSelected = views.allTabs.cur()
@@ -1476,30 +1486,6 @@ def _defaultFeeds():
     feed.Feed('http://some-pig.net/videos/rss.php?i=2',
               initiallyAutoDownloadable=False)
 
-_BUTTON_DEFAULT_CHANNELS = dialogs.DialogButton(_("Continue with Default Channels"))
-_BUTTON_FILE_CHANNELS = dialogs.DialogButton(_("Continue with Custom Channels"))
-_BUTTON_BOTH_CHANNELS = dialogs.DialogButton(_("Continue with Both"))
-
-def _defaultChannelsAnswer(dialog):
-    if dialog.choice is None:
-        _defaultChannelsQuestion()
-    elif dialog.choice == _BUTTON_DEFAULT_CHANNELS:
-        _defaultFeeds()
-    elif dialog.choice == _BUTTON_FILE_CHANNELS:
-        initialFeeds = resource.path("initial-feeds.democracy")
-        singleclick.openFile (initialFeeds)
-    elif dialog.choice == _BUTTON_BOTH_CHANNELS:
-        initialFeeds = resource.path("initial-feeds.democracy")
-        _defaultFeeds()
-        singleclick.openFile (initialFeeds)
-
-def _defaultChannelsQuestion():
-    dialog = dialogs.ChoiceDialog(_("Custom Channels"),
-                                  _("This Democracy Player has a custom set of video channels that were included\nby the website where you initiated your download."),
-                                  _BUTTON_DEFAULT_CHANNELS, _BUTTON_FILE_CHANNELS)
-    #FIXME: add support for _BUTTON_BOTH_CHANNELS
-    dialog.run(_defaultChannelsAnswer)
-
 def _getInitialChannelGuide():
     try:
         channelGuide = getSingletonDDBObject(views.guide)
@@ -1508,7 +1494,10 @@ def _getInitialChannelGuide():
         channelGuide = guide.ChannelGuide()
         initialFeeds = resource.path("initial-feeds.democracy")
         if os.path.exists(initialFeeds):
-            _defaultChannelsQuestion()
+            singleclick.openFile (initialFeeds)
+            dialog = dialogs.MessageBoxDialog(_("Custom Channels"), _("You are running a version of Democracy Player with a custom set of channels."))
+            dialog.run()
+            controller.initial_feeds = True
         else:
             _defaultFeeds()
     except TooManySingletonsError:
@@ -1527,9 +1516,8 @@ def _getInitialChannelGuide():
 
 # Race conditions:
 
-# if a download finishes downloading during the same session after a
-# migration, the download won't be moved to the new directory because
-# the config hasn't been updated.
+# We do the migration in the dl_daemon if the dl_daemon knows about it
+# so that we don't get a race condition.
 
 @eventloop.asUrgent
 def changeMoviesDirectory(newDir, migrate):
