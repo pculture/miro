@@ -388,6 +388,7 @@ class _FeedParserMixin:
                   'http://example.com/DTDs/PodCast-1.0.dtd':              'itunes',
                   'http://purl.org/rss/1.0/modules/link/':                'l',
                   'http://search.yahoo.com/mrss':                         'media',
+                  'http://search.yahoo.com/mrss/':                         'media',
                   'http://docs.yahoo.com/mediaModule':                    'media',
                   'http://tools.search.yahoo.com/mrss/':                  'media',
                   'http://madskills.com/public/xml/rss/module/pingback/': 'pingback',
