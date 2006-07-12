@@ -622,10 +622,10 @@ class Feed(DDBObject):
         self.loading = True
         self.actualFeed = FeedImpl(url,self)
         self.download = None
-        self.generateFeed(True)
         self.iconCache = IconCache(self, is_vital = True)
         self.informOnError = True
         DDBObject.__init__(self)
+        self.generateFeed(True)
 
     # Returns javascript to mark the feed as viewed
     # FIXME: Using setTimeout is a hack to get around JavaScript bugs
