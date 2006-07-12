@@ -343,6 +343,8 @@ class BGDownloader:
     ##
     # Returns a float with the estimated number of seconds left
     def getETA(self):
+        if self.totalSize == -1:
+            return -1
         rate = self.getRate()
         if rate > 0:
             return (self.totalSize - self.currentSize)/rate
