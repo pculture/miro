@@ -934,8 +934,6 @@ class DDBObject:
 
     #The database associated with this object
     dd = defaultDatabase
-    #The id number associated with this object
-    id = 0
 
     ##
     #

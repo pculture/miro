@@ -141,12 +141,14 @@ config.addChangeCallback(configDidChange)
 ##
 # Actual implementation of a basic feed.
 class FeedImpl:
-    def __init__(self, url, ufeed, title = None, visible = True):
+    def __init__(self, url, ufeed, title = None, visible = True,
+            calcItems=True):
         self.available = 0
         self.unwatched = 0
         self.url = url
         self.ufeed = ufeed
-        self.calc_item_list()
+        if calcItems:
+            self.calc_item_list()
         if title == None:
             self.title = url
         else:
@@ -586,12 +588,15 @@ class Feed(DDBObject):
         self.errorState = False
         self.initiallyAutoDownloadable = initiallyAutoDownloadable
         self.loading = True
-        self.actualFeed = FeedImpl(url,self)
+        self.actualFeed = FeedImpl(url,self, calcItems=False)
         self.download = None
-        self.generateFeed(True)
         self.iconCache = IconCache(self, is_vital = True)
         self.informOnError = True
         DDBObject.__init__(self)
+        startActualFeed = self.actualFeed
+        self.generateFeed(True)
+        if self.actualFeed == startActualFeed:
+            self.actualFeed.calc_item_list()
 
     # Returns javascript to mark the feed as viewed
     # FIXME: Using setTimeout is a hack to get around JavaScript bugs
@@ -1484,7 +1489,6 @@ class SearchFeedImpl (RSSFeedImpl):
     def __init__(self, ufeed):
         RSSFeedImpl.__init__(self, url='', ufeed=ufeed, title='dtv:search', visible=False)
         self.setUpdateFrequency(-1)
-        self.setAutoDownloadable(False)
         self.searching = False
         self.lastEngine = 'yahoo'
         self.lastQuery = ''
