@@ -561,7 +561,9 @@ class Item(DDBObject):
             return self.pendingReason
         else:
             secs = 0
-        if secs == 0:
+        if secs == -1:
+            return 'downloading...'
+        elif secs == 0:
             return 'starting up...'
         elif (secs < 120):
             return '%1.0f secs left - ' % secs
@@ -666,12 +668,22 @@ class Item(DDBObject):
     def getFormat(self, emptyForUnknown=True):
         try:
             enclosure = self.entry['enclosures'][0]
+            try:
+                extension = enclosure['url'].split('.')[-1].lower()
+            except:
+                extension == ''
+            # Hack for mp3s, "mpeg audio" isn't clear enough
+            if extension.lower() == 'mp3':
+                return 'MP3'
             if enclosure.has_key('type') and len(enclosure['type']) > 0:
                 type, subtype = enclosure['type'].split('/')
-                if type.lower() in self.KNOWN_MIME_TYPES:
-                    return subtype.split(';')[0].upper()
+                type = type.lower()
+                if type in self.KNOWN_MIME_TYPES:
+                    format = subtype.split(';')[0].upper()
+                    if type == 'audio':
+                        format += ' AUDIO'
+                    return format
             else:
-                extension = enclosure['url'].split('.')[-1].lower()
                 if extension in self.KNOWN_MIME_SUBTYPES:
                     return extension.upper()
         except:

@@ -10,10 +10,12 @@ democracy is already running.  They should arange for addVideo or addTorrent
 to be called in the existing democracy process.
 """
 
+from gettext import gettext as _
 import os
 
 from util import getTorrentInfoHash
 import app
+import dialogs
 import item
 import feed
 import views
@@ -103,7 +105,10 @@ def parseCommandLineArgs(args=None):
                 try:
                     torrentInfohash = getTorrentInfoHash(arg)
                 except ValueError:
-                    print "WARNING: %s doesn't seem to be a torrent file" % arg
+                    title = _("Invalid Torrent")
+                    msg = _("The torrent file %s appears to be corrupt and "
+                            "cannot be opened. [OK]") % os.path.basename(arg)
+                    dialogs.MessageBoxDialog(title, msg).run()
                     continue
                 addTorrent(arg, torrentInfohash)
                 addedTorrents = True
