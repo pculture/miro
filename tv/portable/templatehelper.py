@@ -9,7 +9,6 @@ import gettext
 import inspect
 import shutil
 import re
-import types
 import traceback
 import random
 from xhtmltools import toUTF8Bytes, urlencode
@@ -27,7 +26,7 @@ def escape(orig):
     return unicode(orig).replace('&','&amp;').replace('<','&lt;').replace('>','&gt;')
 
 def toUni(orig):
-    if type(orig) == types.IntType:
+    if type(orig) in (int, long):
         return "%d" % orig
     else:
         orig = toUTF8Bytes(orig)
