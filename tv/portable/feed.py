@@ -20,7 +20,7 @@ import xml
 from database import defaultDatabase
 from httpclient import grabURL, HTTPError
 from iconcache import iconCacheUpdater, IconCache
-from templatehelper import quoteattr
+from templatehelper import quoteattr, escape
 import app
 import config
 import dialogs
@@ -168,6 +168,12 @@ class FeedImpl:
 
     def calc_item_list(self):
         self.items = views.items.filterWithIndex(indexes.itemsByFeed, self.ufeed.id)
+
+    def getBaseHref(self):
+        """Get a URL to use in the <base> tag for this channel.  This is used
+        for relative links in this channel's items.
+        """
+        return escape(self.url)
 
     # Sets the update frequency (in minutes). 
     # - A frequency of -1 means that auto-update is disabled.
@@ -932,6 +938,12 @@ class RSSFeedImpl(FeedImpl):
         self.download = None
         self.scheduleUpdateEvents(0)
 
+    def getBaseHref(self):
+        try:
+            return escape(self.parsed.link)
+        except:
+            return FeedImpl.getBaseHref(self)
+
     ##
     # Returns the description of the feed
     def getDescription(self):
@@ -1524,7 +1536,7 @@ class SearchFeedImpl (RSSFeedImpl):
         self.lastQuery = ''
 
     def quoteLastQuery(self):
-        return quoteattr(self.lastQuery)
+        return escape(self.lastQuery)
 
     def getURL(self):
         return 'dtv:search'

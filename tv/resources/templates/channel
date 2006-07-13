@@ -4,6 +4,7 @@
       eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 
 <head>
+    <base href="***feed.getBaseHref()***" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Democracy Channel View</title>
 
