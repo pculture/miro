@@ -141,14 +141,12 @@ config.addChangeCallback(configDidChange)
 ##
 # Actual implementation of a basic feed.
 class FeedImpl:
-    def __init__(self, url, ufeed, title = None, visible = True,
-            calcItems=True):
+    def __init__(self, url, ufeed, title = None, visible = True):
         self.available = 0
         self.unwatched = 0
         self.url = url
         self.ufeed = ufeed
-        if calcItems:
-            self.calc_item_list()
+        self.calc_item_list()
         if title == None:
             self.title = url
         else:
@@ -584,19 +582,17 @@ def updateUandA(feed):
 # It works by passing on attributes to the actual feed.
 class Feed(DDBObject):
     def __init__(self,url, initiallyAutoDownloadable=True):
+        DDBObject.__init__(self, add=False)
         self.origURL = url
         self.errorState = False
         self.initiallyAutoDownloadable = initiallyAutoDownloadable
         self.loading = True
-        self.actualFeed = FeedImpl(url,self, calcItems=False)
+        self.actualFeed = FeedImpl(url,self)
         self.download = None
         self.iconCache = IconCache(self, is_vital = True)
         self.informOnError = True
-        DDBObject.__init__(self)
-        startActualFeed = self.actualFeed
         self.generateFeed(True)
-        if self.actualFeed == startActualFeed:
-            self.actualFeed.calc_item_list()
+        self.dd.addAfterCursor(self)
 
     # Returns javascript to mark the feed as viewed
     # FIXME: Using setTimeout is a hack to get around JavaScript bugs
