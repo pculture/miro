@@ -6,7 +6,9 @@ when it sees a new URL.  This means that installCallback is called from the
 backend event loop, while runCallback is called from the frontend event loop.
 """
 
+import config
 import util
+import prefs
 from threading import Lock
 
 callbacks = {}
@@ -60,7 +62,7 @@ def runCallback(referrerURL, url):
         try:
             callback = callbacks[referrerURL]
         except KeyError:
-            cgStart = "https://channelguide.participatoryculture.org"
+            cgStart = config.get(prefs.CHANNEL_GUIDE_URL)
             if (referrerURL.startswith(cgStart) and
                     channelGuideCallback is not None):
                 callback = channelGuideCallback
