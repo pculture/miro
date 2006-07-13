@@ -1,8 +1,10 @@
 import frontend
 import app
+import config
 import gobject
 import gtk
 import gtkmozembed
+import prefs
 import tempfile
 from xml.sax.saxutils import escape
 from MozillaBrowser import MozillaBrowser
@@ -48,9 +50,7 @@ class HTMLDisplay(app.Display):
         count = count + 1
         self.impl = None
         self.deferred = []
-        if baseURL is not None:
-            # This is something the Mac port uses. Complain about that.
-            print "WARNING: HTMLDisplay ignoring baseURL '%s'" % baseURL
+        self.baseURL = baseURL
 
     def __getattr__ (self, attr):
         # Since this is for methods calling into HTMLDisplayImpl, we
@@ -132,8 +132,15 @@ class HTMLDisplayImpl:
         self.execQueue = []
         self.display = display
 
-        (handle, self.location) = tempfile.mkstemp('.html')
-        handle = os.fdopen(handle,"w")
+        if display.baseURL == config.get(prefs.CHANNEL_GUIDE_URL):
+            self.removeFile = False
+            self.location = os.path.join(tempfile.gettempdir(),
+                    'democracy-channel-guide.html')
+            handle = open(self.location, 'w')
+        else:
+            self.removeFile = True
+            (handle, self.location) = tempfile.mkstemp('.html')
+            handle = os.fdopen(handle,"w")
         handle.write(display.html)
         handle.close()
 
@@ -153,10 +160,11 @@ class HTMLDisplayImpl:
                 func()
             self.execQueue = []
             self.initialLoadFinished = True
-            try:
-                os.remove (self.location)
-            except:
-                pass
+            if self.removeFile:
+                try:
+                    os.remove (self.location)
+                except:
+                    pass
 
             try:
                 self.onInitialLoadFinished()
