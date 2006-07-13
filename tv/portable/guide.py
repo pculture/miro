@@ -109,6 +109,7 @@ class ChannelGuide(DDBObject):
 
     def setSawIntro(self):
         self.sawIntro = True
+        self.signalChange()
 
     def startUpdates(self):
         if self.dc:

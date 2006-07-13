@@ -1467,24 +1467,20 @@ def getSingletonDDBObject(view):
         raise TooManySingletonsError(msg)
 
 def _defaultFeeds():
-    feed.Feed('http://del.icio.us/rss/representordie/system:media:video', 
-              initiallyAutoDownloadable=False)
-    feed.Feed('http://www.videobomb.com/rss/posts/front',
-              initiallyAutoDownloadable=False)
-    feed.Feed('http://www.mediarights.org/bm/rss.php?i=1',
-              initiallyAutoDownloadable=False)
-    feed.Feed('http://www.telemusicvision.com/videos/rss.php?i=1',
-              initiallyAutoDownloadable=False)
-    feed.Feed('http://www.rocketboom.com/vlog/quicktime_daily_enclosures.xml',
-              initiallyAutoDownloadable=False)
-    feed.Feed('http://www.channelfrederator.com/rss',
-              initiallyAutoDownloadable=False)
-    feed.Feed('http://revision3.com/diggnation/feed/small.mov',
-              initiallyAutoDownloadable=False)
-    feed.Feed('http://live.watchmactv.com/wp-rss2.php',
-              initiallyAutoDownloadable=False)
-    feed.Feed('http://some-pig.net/videos/rss.php?i=2',
-              initiallyAutoDownloadable=False)
+    defaultFeedURLs = [
+        'http://del.icio.us/rss/representordie/system:media:video', 
+        'http://www.videobomb.com/rss/posts/front',
+        'http://www.mediarights.org/bm/rss.php?i=1',
+        'http://www.telemusicvision.com/videos/rss.php?i=1',
+        'http://www.rocketboom.com/vlog/quicktime_daily_enclosures.xml',
+        'http://www.channelfrederator.com/rss',
+        'http://revision3.com/diggnation/feed/small.mov',
+        'http://live.watchmactv.com/wp-rss2.php',
+        'http://some-pig.net/videos/rss.php?i=2',
+        'http://videobomb.com/rss/posts/list',
+    ]
+    for url in defaultFeedURLs:
+        feed.Feed(url, initiallyAutoDownloadable=False)
 
 def _getInitialChannelGuide():
     try:

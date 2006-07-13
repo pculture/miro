@@ -593,6 +593,7 @@ class Feed(DDBObject):
         self.informOnError = True
         self.generateFeed(True)
         self.dd.addAfterCursor(self)
+        self.generateFeed(True)
 
     # Returns javascript to mark the feed as viewed
     # FIXME: Using setTimeout is a hack to get around JavaScript bugs
