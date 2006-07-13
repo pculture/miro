@@ -7,9 +7,10 @@ import errno
 import os
 
 import app
+import config
 import tempfile
 import os
-
+import prefs
 import frontend
 from frontend_implementation import urlcallbacks
 
@@ -58,6 +59,11 @@ class HTMLDisplay (app.Display):
         self.pageLoadFinised = False
         self.deferedCalls = []
         self.location = None
+        if baseURL == config.get(prefs.CHANNEL_GUIDE_URL):
+            self.removeTempFile = False
+        else:
+            self.removeTempFile = True
+
 
     def setInitialHTML(self):
         if not os.path.exists(tempdir):
@@ -81,10 +87,11 @@ class HTMLDisplay (app.Display):
             self.pageLoadFinised = True
             for function, args in self.deferedCalls:
                 function(self, *args)
-            try:
-                os.unlink(self.location)
-            except:
-                pass
+            if self.removeTempFile:
+                try:
+                    os.unlink(self.location)
+                except:
+                    pass
 
     def setArea(self, area):
         self.area = area
