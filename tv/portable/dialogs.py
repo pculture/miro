@@ -95,7 +95,7 @@ class Dialog(object):
         """
 
         self.choice = choice
-        eventloop.addIdle(self.callback, "%s callback" % self.__class__, 
+        eventloop.addUrgentCall(self.callback, "%s callback" % self.__class__, 
                 args=(self,))
 
 class MessageBoxDialog(Dialog):

@@ -9,6 +9,7 @@ import gconf
 
 import resource
 from frontend import *
+from frontend_implementation import UIBackendDelegate
 from frontend_implementation.gtk_queue import gtkAsyncMethod, gtkSyncMethod
 from frontend_implementation.VideoDisplay import VideoDisplay
 from frontend_implementation.HTMLDisplay import HTMLDisplay
@@ -116,6 +117,8 @@ class MainFrame:
             self.channelsDisplay : self.widgetTree['channels-box'],
             self.videoInfoDisplay : self.widgetTree['video-info-box'],
         }
+
+        UIBackendDelegate.dialogParent = self.widgetTree['main-window']
 
         self.widgetTree['main-window'].set_icon_from_file (resource.sharePath('pixmaps/democracyplayer-128x128.png'))
 
