@@ -348,11 +348,16 @@ class ConfigDir:
             p = os.path.join(self.dir_datacache,f)
             try:
                 f = unhex(os.path.basename(f))
-                assert len(f) == 20
+                if len(f) != 20:
+                    continue
             except:
                 continue
+            try:
+                 mtime = os.path.getmtime(p)
+            except OSError:
+                 continue
             names.setdefault(f,[]).append(p)
-            times.setdefault(f,[]).append(os.path.getmtime(p))
+            times.setdefault(f,[]).append(mtime)
 
         for f in os.listdir(self.dir_piececache):
             p = os.path.join(self.dir_piececache,f)
