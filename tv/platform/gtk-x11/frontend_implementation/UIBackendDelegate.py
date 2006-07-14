@@ -20,6 +20,8 @@ from frontend_implementation.gtk_queue import gtkSyncMethod, gtkAsyncMethod
 #### 'Delegate' objects for asynchronously asking the user questions       ####
 ###############################################################################
 
+dialogParent = None
+
 def EscapeMessagePart(message_part):
     if '&' in message_part or '<' in message_part:
         message_part = message_part.replace ("&", "&amp;")
@@ -27,7 +29,8 @@ def EscapeMessagePart(message_part):
     return message_part
 
 def BuildDialog (title, message, buttons, default):
-    dialog = gtk.Dialog(title, None, (), buttons)
+    flags = gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT
+    dialog = gtk.Dialog(title, dialogParent, flags, buttons)
     dialog.set_default_size(425, -1)
     label = gtk.Label()
     label.set_line_wrap(True)

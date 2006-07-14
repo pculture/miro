@@ -212,7 +212,10 @@ class ControllerDaemon(Daemon):
             config.removeChangeCallback (self.updateConfig)
 
     def shutdown_timeout_cb(self):
-        print "DTV: WARNING \"hard\" downloader shutdown not implemented"
+        print "WARNING: killing download daemon"
+        import app
+        delegate = app.delegate
+        delegate.killDownloadDaemon(readPid())
         self.shutdownResponse()
 
     def shutdownResponse(self):
