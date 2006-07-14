@@ -204,8 +204,6 @@ class MainFrame:
             oldDisplay.onDeselected(self)
             if oldDisplay.getWidget(area) != newDisplay.getWidget(area):
                 displayBox.remove(oldDisplay.getWidget(area))
-                # Leave a reference to oldDisplay around.  This protect it from
-                # getting garbage collected at least until new displays's in
                 displayBox.add(newDisplay.getWidget(area))
             newDisplay.onSelected_private(self)
             newDisplay.onSelected(self)
@@ -230,7 +228,7 @@ class MainFrame:
 
     @gtkSyncMethod
     def getDisplay(self, area):
-        return self.selectedDisplays[area]
+        return self.selectedDisplays.get(area)
 
     @gtkAsyncMethod
     def about(self):
