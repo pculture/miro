@@ -748,6 +748,7 @@ class HTTPConnection(ConnectionHandler):
         while line is not None:
             if line == '':
                 self.finishRequest()
+                break
             line = self.buffer.readline()
 
     def handleStatusLine(self, line):
