@@ -64,16 +64,18 @@ thisFeedView.unlink()
 <!-- TITLE BAR ************************************************************ -->
 <div id="main-titlebar">
         <img id="main-titlebar-avatar" src="***feed.getThumbnail()***" alt="" style="background-color:#FFFFFF;" />
-        <div id="main-titlebar-channelname">
+	<div id="main-titlebar-channelname">
+	    <div t:updateForView="thisFeedView">
                 <h1 t:replaceMarkup="feed.getTitle()" />
                 <div id="main-titlebar-autodownload">
-            <form name="setAuto" >
-                <input type="hidden" name="feed" value="@@@feed.getID()@@@" />
-                <input type="checkbox" name="automatic" value="1" checked="checked" onClick="javascript:setAutoDownloadableFeed()" t:hideIf="not feed.isAutoDownloadable()" />
-                <input type="checkbox" name="automatic" value="1"                   onClick="javascript:setAutoDownloadableFeed()" t:hideIf="feed.isAutoDownloadable()" />
-                <span class="auto_link" i18n:translate="">Auto Download</span>
-            </form>
+		<form name="setAuto" >
+		    <input type="hidden" name="feed" value="@@@feed.getID()@@@" />
+		    <input type="checkbox" name="automatic" value="1" checked="checked" onClick="javascript:setAutoDownloadableFeed()" t:hideIf="not feed.isAutoDownloadable()" />
+		    <input type="checkbox" name="automatic" value="1"                   onClick="javascript:setAutoDownloadableFeed()" t:hideIf="feed.isAutoDownloadable()" />
+		    <span class="auto_link" i18n:translate="">Auto Download</span>
+		</form>
                 </div>
+	    </div>
         </div>
         <div id="main-titlebar-tasks">
                 <div id="main-titlebar-tasks-settings">
