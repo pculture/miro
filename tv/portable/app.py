@@ -574,8 +574,11 @@ class Controller (frontend.Application):
             # reentrant call back into the database when checkSelectedTab ends 
             # up calling signalChange to force a tab to get rerendered.
 
-            singleclick.parseCommandLineArgs()
-
+            # Use an idle for parseCommandLineArgs because the frontend may
+            # have put in idle calls to do set up video playback or similar
+            # things.
+            eventloop.addIdle(singleclick.parseCommandLineArgs, 
+                    'parse command line')
             print "DTV: Starting event loop thread"
             eventloop.startup()
         except:

@@ -7,6 +7,7 @@ import gnomevfs
 from gtk_queue import gtkAsyncMethod, gtkSyncMethod
 
 from xinerenderer import XineRenderer
+from threading import Event
 
 ###############################################################################
 #### The Playback Controller                                               ####
@@ -29,6 +30,7 @@ class VideoDisplay (app.VideoDisplayBase):
         app.VideoDisplayBase.__init__(self)
         self.videoUpdateTimeout = None
         self._gtkInit()
+        self.renderersReady = Event()
 
     @gtkAsyncMethod
     def initRenderers(self):
@@ -38,6 +40,11 @@ class VideoDisplay (app.VideoDisplayBase):
         ]
         for renderer in self.renderers:
             renderer.setWidget(self.widget)
+        self.renderersReady.set()
+
+    def getRendererForItem(self, anItem):
+        self.renderersReady.wait()
+        return app.VideoDisplayBase.getRendererForItem(self, anItem)
 
     @gtkAsyncMethod
     def _gtkInit(self):
