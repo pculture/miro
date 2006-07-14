@@ -718,11 +718,7 @@ class Feed(DDBObject):
             dialogs.MessageBoxDialog(title, description).run()
             self.informOnError = False
         delay = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)
-        def regenerateFeed():
-            self.loading = True
-            self.signalChange()
-            self.generateFeed()
-        eventloop.addTimeout(delay, regenerateFeed, "regenerateFeed")
+        eventloop.addTimeout(delay, self.update, "update failed feed")
 
     def _generateFeedCallback(self, info, removeOnError):
         """This is called by grabURL to generate a feed based on
