@@ -61,6 +61,7 @@ elif options.profile:
 else:
     try:
         import dbus
+        import dbus_bindings
         import onetime
         try:
             onetime.OneTime()
@@ -73,5 +74,7 @@ else:
             dbusargs = dbus.Array(args, signature="s")
     
             iface.HandleArgs(dbusargs)
+        except dbus_bindings.DBusException:
+            startapp()
     except ImportError:
         startapp()
