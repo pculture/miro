@@ -642,6 +642,9 @@ class BTDisplay:
     def display(self, statistics):
         update = False
         now = clock()
+        if statistics['errorTime'] != 0:
+            self.dler.state = 'failed'
+            self.dler.reasonFailed = statistics['errorMessage']
         if statistics.get('upTotal') != None:
             if self.lastUpTotal > statistics.get('upTotal'):
                 self.dler.uploaded += statistics.get('upTotal')
@@ -727,16 +730,23 @@ class BTDownloader(BGDownloader):
         self.torrent = SingleDownload(self, self.infohash, self.metainfo, btconfig, peer_id)
         self.torrent.start()
         self.rawserver.add_task(self.get_status,0)
+        self.rawserver.wakeup()
 
     def _getTorrentStatus(self):
         downRate = 0.0
         timeEst = 0
         fractionDone = 0.0
         upTotal = 0
+        errorTime = 0
+        errorMessage = ""
         
         if not (self.torrent.is_dead() or self.torrent.waiting or
                 self.torrent.checking):
-            
+            errorTime = self.torrent.status_errtime
+            try:
+                errorMessage = self.torrent.status_err[-1]
+            except IndexError:
+                pass
             # BitTornado keeps status all over the place. Joy!
             stats = self.torrent.statsfunc()
             s = stats['stats']
@@ -751,7 +761,8 @@ class BTDownloader(BGDownloader):
                 upTotal = s.upTotal
                    
         return {'downRate':downRate, 'timeEst':timeEst,
-                'fractionDone': fractionDone, 'upTotal': upTotal}
+                'fractionDone': fractionDone, 'upTotal': upTotal, 
+                'errorTime': errorTime, 'errorMessage': errorMessage}
 
     def moveToMoviesDirectory(self):
         if self.state in ('uploading', 'downloading'):
