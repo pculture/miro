@@ -208,6 +208,7 @@ class IconCache:
             if self.url != url:
                 needsSave = True
                 self.url = url
+            self.updated = True
         finally:
             if needsChange:
                 self.dbItem.signalChange(needsSave=needsSave)
