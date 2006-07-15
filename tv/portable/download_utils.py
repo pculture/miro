@@ -15,6 +15,15 @@ def fixFileURLS(url):
         url = url.replace('\\', '/')
     return url
 
+def defaultPort(scheme):
+    if scheme == 'https':
+        return 443
+    elif scheme == 'http':
+        return 80
+    else:
+        print "WARNING: Assuming port 80 for scheme: %s" % scheme
+        return 80
+
 def parseURL(url):
     url = fixFileURLS(url)
     (scheme, host, path, params, query, fragment) = urlparse(url)
@@ -29,17 +38,9 @@ def parseURL(url):
             port = int(port)
         except:
             print "DTV: parseURL: WARNING: invalid port for %s" % url
-            if scheme == 'https':
-                port = 443
-            else:
-                port = 80
+            port = defaultPort(scheme)
     else:
-        if scheme == 'https':
-            port = 443
-        elif scheme == 'http':
-            port = 80
-        else:
-            port = None
+        port = defaultPort(scheme)
 
     host = host.lower()
     scheme = scheme.lower()

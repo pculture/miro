@@ -385,7 +385,7 @@ class VideoRenderer:
     def selectItem(self, anItem):
         url = 'file://%s' % urllib.pathname2url(anItem.getPath())
         if self.canPlayUrl (url):
-          self.selectUrl (url)
+            self.selectUrl (url)
         elif os.path.isdir(anItem.getPath()):
           for filename in os.listdir(anItem.getPath()):
             filename = os.path.join(anItem.getPath(), filename)

@@ -23,7 +23,7 @@ import httpauth
 import config
 import prefs
 import dialogs
-from download_utils import cleanFilename, parseURL
+from download_utils import cleanFilename, parseURL, defaultPort
 from xhtmltools import URLEncodeDict, multipartEncode
 import eventloop
 import util
@@ -603,6 +603,8 @@ class HTTPConnection(ConnectionHandler):
         else:
             headers = headers.copy()
         headers['Host'] = self.host.encode('idna')
+        if self.port != defaultPort(self.scheme):
+            headers['Host'] += ':%d' % self.port
         headers['Accept-Encoding'] = 'identity'
 
         if (method == "POST" and postVariables is not None and
