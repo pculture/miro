@@ -1,12 +1,15 @@
 import unittest
 import rfc822
 import socket
+import tempfile
 import traceback
 from copy import copy
 from StringIO import StringIO
 
 from BitTornado.clock import clock
+import os
 
+from download_utils import cleanFilename
 import database
 import dialogs
 import eventloop
@@ -43,6 +46,7 @@ class TestingHTTPConnection(httpclient.HTTPConnection):
 
     def __init__(self, closeCallback=None, readyCallback=None):
         class FakeStream(object):
+            timedOut = False
             def isOpen(self):
                 return True
         super(TestingHTTPConnection, self).__init__(closeCallback,
@@ -809,6 +813,22 @@ Below this line, is 1000 repeated lines of 0-9.
         self.assert_(self.errbackCalled)
         self.assert_(isinstance(self.data, httpclient.UnexpectedStatusCode))
 
+    def testCleanFilename(self):
+        tempdir = tempfile.gettempdir()
+        def testIt(filename):
+            cleaned = cleanFilename(filename)
+            self.assertEqual(cleaned.__class__, str)
+            self.assertNotEqual(cleaned, '')
+            path = os.path.join(tempdir, cleaned)
+            f = open(path, 'w')
+            f.write("AOEUOAEU")
+            f.close()
+            os.remove(path)
+        testIt(u'iamnormal.txt')
+        testIt(u'???')
+        testIt(u'\xf8benben.jpg')
+        testIt(u'\xf8???.\xf2\xf3x')
+
     def testGetFilenameFromResponse(self):
         client = httpclient.HTTPClient('http://www.foo.com', self.callback,
                 self.errback)
@@ -820,7 +840,7 @@ Below this line, is 1000 repeated lines of 0-9.
         self.assertEquals("unknown", getIt("/"))
         self.assertEquals("index.html", getIt("/index.html"))
         self.assertEquals("index.html", getIt("/path/path2/index.html"))
-        self.assertEquals("path2", getIt("/path/path2/"))
+        self.assertEquals("unknown", getIt("/path/path2/"))
         self.assertEquals("myfile.txt", getIt("/", 'filename="myfile.txt"'))
         self.assertEquals("myfile.txt", getIt("/",
             'filename="myfile.txt"; size=45'))
@@ -833,7 +853,7 @@ Below this line, is 1000 repeated lines of 0-9.
             getIt("/", 'filename="lots.of.extensions"'))
         self.assertEquals("uncleanfilename", 
                 getIt("/index", 'filename="\\un/cl:ean*fi?lena<m>|e"'))
-        self.assertEquals("uncleanfilename2", 
+        self.assertEquals("uncleanfil-ename2", 
                 getIt('/uncl*ean"fil?"ena|m""e2"'))
 
     def testGetCharsetFromResponse(self):

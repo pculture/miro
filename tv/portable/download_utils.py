@@ -1,5 +1,6 @@
 from os import access, F_OK
 from urlparse import urlparse
+import os.path
 import re
 import urllib
 
@@ -54,7 +55,14 @@ def parseURL(url):
 
 # Returns a filename minus nasty characters
 def cleanFilename(filename):
-    return filename.replace("\\","").replace("/","").replace(":","").replace("*","").replace("?","").replace("\"","").replace("<","").replace(">","").replace("|","")
+    if not os.path.supports_unicode_filenames:
+        filename = filename.encode('ascii', 'ignore')
+    stripped = filename.replace("\\","").replace("/","").replace(":","").replace("*","").replace("?","").replace("\"","").replace("<","").replace(">","").replace("|","")
+    if stripped == '':
+        # What can we do here?  This seems as good as anything.
+        return '_' 
+    else:
+        return stripped
 
 ##
 # Finds a filename that's unused and similar the the file we want
