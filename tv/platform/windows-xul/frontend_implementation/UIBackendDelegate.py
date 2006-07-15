@@ -6,6 +6,7 @@ import _winreg
 import traceback
 import ctypes
 from gettext import gettext as _
+from urlparse import urlparse
 
 import prefs
 import config
@@ -60,8 +61,23 @@ class UIBackendDelegate:
             url = url[:2047]
         try:
             webbrowser.open(url)
-        except webbrowser.Error:
-            util.failedExn("while opening %s in a new window" % url)
+        except:
+            print "WARNING: Error opening URL: %r" % url
+            traceback.print_exc()
+            recommendURL = 'http://www.videobomb.com/index/democracyemail'
+
+            if url.startswith(config.get(prefs.VIDEOBOMB_URL)):
+                title = _('Error Bombing Item')
+            elif url.startswith(recommendURL):
+                title = _('Error Recommending Item')
+            else:
+                title = _("Error Opening Website")
+
+            scheme, host, path, params, query, fragment = urlparse(url)
+            shortURL = '%s:%s%s' % (scheme, host, path)
+            msg = _("There was an error opening %s.  Please try again in "
+                    "a few seconds") % shortURL
+            dialogs.MessageBoxDialog(title, msg).run()
 
     def updateAvailableItemsCountFeedback(self, count):
         # Inform the user in a way or another that newly available items are
