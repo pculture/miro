@@ -18,10 +18,15 @@ class DemocracyTestCase(unittest.TestCase):
         eventloop._eventLoop = eventloop.EventLoop() 
         self.oldUtilDotFailed = util.failed
         self.failedCalled = False
+        self.utilDotFailedOkay = False
         def newUtilDotFailed(*args, **kwargs):
             if self.utilDotFailedOkay:
                 self.failedCalled = True
             else:
+                print "util.failed called!"
+                print "args: %s kwargs: %s"  % (args, kwargs)
+                import traceback
+                traceback.print_exc()
                 raise Exception("util.failed called")
         util.failed = newUtilDotFailed
 

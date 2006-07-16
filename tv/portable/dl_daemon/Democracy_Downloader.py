@@ -36,9 +36,11 @@ port = int(os.environ['DEMOCRACY_DOWNLOADER_PORT'])
 server = daemon.DownloaderDaemon(port)
 
 # remove the limits for the connection pool, we limit them ourselves in the
-# downloader code.
+# downloader code.  Don't try to pipeline requests, it doesn't make sense when
+# the download size is so large.
 httpclient.HTTPConnectionPool.MAX_CONNECTIONS_PER_SERVER = sys.maxint
 httpclient.HTTPConnectionPool.MAX_CONNECTIONS = sys.maxint
+httpclient.PIPELINING_ENABLED = False
 
 eventloop.startup()
 

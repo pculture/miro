@@ -30,6 +30,8 @@ import util
 import sys
 import time
 
+PIPELINING_ENABLED = True
+
 # This pattern matches all possible strings.  I promise.
 URIPattern = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
 
@@ -559,7 +561,7 @@ class HTTPConnection(ConnectionHandler):
     def canSendRequest(self):
         return (self.state == 'ready' or 
                 (self.state != 'closed' and self.pipelinedRequest is None and
-                    not self.willClose))
+                    not self.willClose and PIPELINING_ENABLED))
 
     def sendRequest(self, callback, errback, requestStartCallback=None,
             headerCallback=None, bodyDataCallback = None, method="GET",
@@ -904,8 +906,9 @@ class HTTPConnection(ConnectionHandler):
                 self.closeConnection()
                 self.changeState('closed')
             elif self.pipelinedRequest is not None:
-                self.startNewRequest(*self.pipelinedRequest)
+                req = self.pipelinedRequest
                 self.pipelinedRequest = None
+                self.startNewRequest(*req)
             else:
                 self.changeState('ready')
                 self.idleSince = clock()
@@ -1285,6 +1288,11 @@ class HTTPClient(object):
         return status in expectedStatusCodes
 
     def callbackIntercept(self, response):
+        if self.cancelled:
+            print "WARNING: Callback on a cancelled request for %s" % self.url
+            import traceback
+            traceback.print_stack()
+            return
         if self.shouldRedirect(response):
             self.handleRedirect(response)
         elif self.shouldAuthorize(response):
@@ -1304,10 +1312,17 @@ class HTTPClient(object):
                 self.errbackIntercept(error)
 
     def errbackIntercept(self, error):
+        if (self.cancelled and not 
+                isinstance(error, PipelinedRequestNeverStarted)):
+            print "WARNING: Errrback on a cancelled request for %s" % self.url
+            import traceback
+            traceback.print_stack()
+            return
         if isinstance(error, PipelinedRequestNeverStarted):
             # Connection closed before our pipelined request started.  RFC
             # 2616 says we should retry
-            self.startRequest() 
+            if not self.cancelled:
+                self.startRequest() 
             # this should give us a new connection, since our last one closed
         elif (isinstance(error, ServerClosedConnection) and
                 self.connection.requestsFinished > 0 and 
