@@ -677,15 +677,24 @@ class LiveStorage:
             self.dc = None
             self.toUpdate = set()
             self.toRemove = set()
-            self.errorState = False
+            if self.errorState:
+                title = _("%s database save succeeded") % (config.get(prefs.SHORT_APP_NAME), )
+                description = _("The database has been successfully saved. "
+                               "It is now safe to quit without losing any "
+                               "data.")
+                dialogs.MessageBoxDialog(title, description).run()
+                self.errorState = False
         except bsddb.db.DBNoSpaceError, err:
             if not self.errorState:
                 title = _("%s database save failed") % (config.get(prefs.SHORT_APP_NAME), )
                 description = _("%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost.") % (config.get(prefs.LONG_APP_NAME)) 
-                dialog = dialogs.MessageBoxDialog(title, description)
-                dialog.run (lambda(response):None)
+                dialogs.MessageBoxDialog(title, description).run()
                 self.errorState = True
-            self.txn.abort()
+            try:
+                self.txn.abort()
+            except:
+                # if we tried to do a commit and failed an abort doesn't work
+                pass
             self.txn = None
             self.dc = eventloop.addTimeout(self.TRANSACTION_TIMEOUT, self.runUpdate, self.TRANSACTION_NAME)
             
