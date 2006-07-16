@@ -152,8 +152,8 @@ class PyBridge:
             ("Desktop", (0x0000))
         ]
 
-        buf = ctypes.create_string_buffer(260) 
-        SHGetSpecialFolderPath = ctypes.windll.shell32.SHGetSpecialFolderPathA
+        buf = ctypes.create_unicode_buffer(260) 
+        SHGetSpecialFolderPath = ctypes.windll.shell32.SHGetSpecialFolderPathW
         for name, csidl in tries:
             if not SHGetSpecialFolderPath(None, buf, csidl, False):
                 continue

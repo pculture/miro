@@ -184,7 +184,10 @@ def failed(when, withExn = False, details = None):
             logContents += f.read()
             f.close()
         except:
-            logContents = None
+            print "WARNING: Error reading logfile: %s" % logFile
+            import traceback
+            traceback.print_exc()
+            logContents = ''
         return logContents
 
     logFile = config.get(prefs.LOG_PATHNAME)
