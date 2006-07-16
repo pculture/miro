@@ -529,26 +529,19 @@ class LiveStorage:
                 try:
                     self.dbenv.open (db_path, open_flags)
                 except bsddb.db.DBRunRecoveryError:
-                    print "Din't work deleting log files"
-                    for file in os.listdir(db_path):
-                        if file.startswith('log.'):
-                            os.remove(os.path.join(db_path, file))
-		    try:
-                        self.dbenv.open (db_path, open_flags)
-                    except bsddb.db.DBRunRecoveryError:
-                        i = 0
-			support_dir = config.get(prefs.SUPPORT_DIRECTORY)
-                        while True:
-			    new_name = os.path.join(support_dir, 
-				"corrupt-db.%d" % i)
-			    if os.path.exists(new_name):
-				i += 1
-			    else:
-				break
-                        print "Nothing worked... moving to %s" % new_name
-                        os.rename(db_path, new_name)
-			os.makedirs(config.get(prefs.BSDDB_PATHNAME))
-                        self.dbenv.open (db_path, open_flags)
+		    i = 0
+		    support_dir = config.get(prefs.SUPPORT_DIRECTORY)
+		    while True:
+			new_name = os.path.join(support_dir, 
+			    "corrupt-db.%d" % i)
+			if os.path.exists(new_name):
+			    i += 1
+			else:
+			    break
+		    print "Didn't work... moving to %s" % new_name
+		    os.rename(db_path, new_name)
+		    os.makedirs(config.get(prefs.BSDDB_PATHNAME))
+		    self.dbenv.open (db_path, open_flags)
             self.db = bsddb.db.DB(self.dbenv)
             self.closed = False
             try:
