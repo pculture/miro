@@ -80,7 +80,7 @@ thisFeedView.unlink()
         <div id="main-titlebar-tasks">
                 <div id="main-titlebar-tasks-settings">
                         <p><a href="#" 
-onclick="eventURL('template:feed-settings');"><span 
+onclick="return eventURL('template:feed-settings');"><span 
 i18n:translate="">Settings</span></a></p>
                 </div>
                 <div id="main-titlebar-tasks-recommend">

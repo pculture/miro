@@ -826,11 +826,6 @@ class Controller (frontend.Application):
         oldSelected = self.currentSelectedTab
         newSelected = cur
 
-        # Handle reselection action (checkSelectedTab won't; it doesn't
-        # see a difference)
-        if oldSelected and oldSelected.id == newSelected.id:
-            newSelected.start(self.frame, None)
-
         # Handle case where a different tab was clicked
         self.checkSelectedTab()
 
