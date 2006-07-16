@@ -518,7 +518,37 @@ class LiveStorage:
             self.dbenv = bsddb.db.DBEnv()
             self.dbenv.set_flags (bsddb.db.DB_AUTO_COMMIT | bsddb.db.DB_TXN_NOSYNC, True)
             self.dbenv.set_lg_max (1024 * 1024)
-            self.dbenv.open (config.get(prefs.BSDDB_PATHNAME), bsddb.db.DB_INIT_LOG | bsddb.db.DB_INIT_MPOOL | bsddb.db.DB_INIT_TXN | bsddb.db.DB_RECOVER | bsddb.db.DB_CREATE)
+            open_flags = (bsddb.db.DB_INIT_LOG | bsddb.db.DB_INIT_MPOOL | bsddb.db.DB_INIT_TXN | bsddb.db.DB_RECOVER | bsddb.db.DB_CREATE)
+	    db_path = config.get(prefs.BSDDB_PATHNAME)
+            try:
+                self.dbenv.open (db_path, open_flags)
+            except bsddb.db.DBRunRecoveryError:
+                print "DB open failed!  Trying DB_RECOVER_FATAL"
+                open_flags ^= bsddb.db.DB_RECOVER
+                open_flags |= bsddb.db.DB_RECOVER_FATAL
+                try:
+                    self.dbenv.open (db_path, open_flags)
+                except bsddb.db.DBRunRecoveryError:
+                    print "Din't work deleting log files"
+                    for file in os.listdir(db_path):
+                        if file.startswith('log.'):
+                            os.remove(os.path.join(db_path, file))
+		    try:
+                        self.dbenv.open (db_path, open_flags)
+                    except bsddb.db.DBRunRecoveryError:
+                        i = 0
+			support_dir = config.get(prefs.SUPPORT_DIRECTORY)
+                        while True:
+			    new_name = os.path.join(support_dir, 
+				"corrupt-db.%d" % i)
+			    if os.path.exists(new_name):
+				i += 1
+			    else:
+				break
+                        print "Nothing worked... moving to %s" % new_name
+                        os.rename(db_path, new_name)
+			os.makedirs(config.get(prefs.BSDDB_PATHNAME))
+                        self.dbenv.open (db_path, open_flags)
             self.db = bsddb.db.DB(self.dbenv)
             self.closed = False
             try:
