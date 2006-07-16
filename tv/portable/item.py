@@ -90,6 +90,15 @@ class Item(DDBObject):
         return None
 
     ##
+    # Returns mime-type of the first video enclosure in the item
+    def getFirstVideoEnclosureType(self):
+        enclosure = self.getFirstVideoEnclosure()
+        if enclosure and enclosure.has_key('type'):
+            return enclosure['type']
+        return None
+
+
+    ##
     # Returns the URL associated with the first enclosure in the item
     def getURL(self):
         self.confirmDBThread()
