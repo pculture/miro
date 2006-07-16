@@ -171,6 +171,11 @@ class EventLoop(object):
         self.addReadCallback(self.wakeReceiver, self._slurpWakerData)
         self.quitFlag = False
         self.delegate = None
+        self.clearRemovedCallbacks()
+
+    def clearRemovedCallbacks(self):
+        self.removedReadCallbacks = set()
+        self.removedWriteCallbacks = set()
 
     def _slurpWakerData(self):
         self.wakeReceiver.recv(1024)
@@ -183,12 +188,14 @@ class EventLoop(object):
 
     def removeReadCallback(self, socket):
         del self.readCallbacks[socket.fileno()]
+        self.removedReadCallbacks.add(socket.fileno())
 
     def addWriteCallback(self, socket, callback):
         self.writeCallbacks[socket.fileno()] = callback
 
     def removeWriteCallback(self, socket):
         del self.writeCallbacks[socket.fileno()]
+        self.removedWriteCallbacks.add(socket.fileno())
 
     def wakeup(self):
         self.wakeSender.send("b")
@@ -208,6 +215,7 @@ class EventLoop(object):
         database.set_thread()
         while not self.quitFlag:
             self._beginLoop()
+            self.clearRemovedCallbacks()
             timeout = self.scheduler.nextTimeout()
             readfds = self.readCallbacks.keys()
             writefds = self.writeCallbacks.keys()
@@ -239,17 +247,17 @@ class EventLoop(object):
         """
 
         for callback in self.generateCallbacks(writeables,
-                self.writeCallbacks):
+                self.writeCallbacks, self.removedWriteCallbacks):
             yield callback
         for callback in self.generateCallbacks(readables,
-                self.readCallbacks):
+                self.readCallbacks, self.removedReadCallbacks):
             yield callback
         while self.scheduler.hasPendingTimeout():
             yield self.scheduler.processNextTimeout
         while self.idleQueue.hasPendingIdle():
             yield self.idleQueue.processNextIdle
 
-    def generateCallbacks(self, readyList, map):
+    def generateCallbacks(self, readyList, map, removed):
         for fd in readyList:
             try:
                 function = map[fd]
@@ -258,6 +266,8 @@ class EventLoop(object):
                 # or vise versa
                 pass
             else:
+                if fd in removed:
+                    continue
                 when = "While talking to the network"
                 def callbackEvent():
                     if not util.trapCall(when, function):

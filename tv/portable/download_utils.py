@@ -4,6 +4,8 @@ import os.path
 import re
 import urllib
 
+chatter = True
+
 def fixFileURLS(url):
     """Fix file URLS that start with file:// instead of file:///.  Note: this
     breaks for file URLS that include a hostname, but we never use those and
@@ -21,7 +23,8 @@ def defaultPort(scheme):
     elif scheme == 'http':
         return 80
     else:
-        print "WARNING: Assuming port 80 for scheme: %s" % scheme
+        if chatter:
+            print "WARNING: Assuming port 80 for scheme: %s" % scheme
         return 80
 
 def parseURL(url):

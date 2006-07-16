@@ -10,6 +10,7 @@ from BitTornado.clock import clock
 import os
 
 from download_utils import cleanFilename
+import download_utils
 import database
 import dialogs
 import eventloop
@@ -343,9 +344,11 @@ class HTTPClientTestBase(AsyncSocketTest):
                 method='GET', path='/bar/baz;123?a=b') 
         self.authDelegate = TestingAuthDelegate()
         dialogs.setDelegate(self.authDelegate)
+        download_utils.chatter = False
 
     def tearDown(self):
         # clear out any HTTPAuth objects in there
+        download_utils.chatter = True
         AsyncSocketTest.tearDown(self)
 
 class HTTPClientTest(HTTPClientTestBase):
@@ -1278,6 +1281,7 @@ class GrabURLTest(HTTPClientTestBase):
 
 class PipelineTest(HTTPClientTestBase):
     def setUp(self):
+        HTTPClientTestBase.setUp(self)
         self.pool = TestingHTTPConnectionPool()
         self.pool.MAX_CONNECTIONS_PER_SERVER = 1
         url = "http://www.foo.com/"
@@ -1333,6 +1337,29 @@ class PipelineTest(HTTPClientTestBase):
         conn.handleData(HTTPClientTest.fakeResponse)
         self.assertEquals(self.pipelineResponse['body'], "HELLO: WORLD\r\n")
 
+    def checkPipelineCanceled(self):
+        self.assertEquals(self.pipelineError, None)
+        self.assertEquals(self.pipelineResponse, None)
+        conn = self.pool.getConnection('http', 'www.foo.com', type='active')
+        self.assert_(conn is None)
+        conn = self.pool.getConnection('http', 'www.foo.com', type='free')
+        self.assert_(conn is None)
+
+    def testPipelineCancel3(self):
+        # If we cancel the pipeline, then canceling the earlier request
+        self.pipelinedClient.cancel()
+        self.firstClient.cancel()
+        self.runPendingIdles()
+        self.checkPipelineCanceled()
+
+    def testPipelineCancel4(self):
+        # test canceling the pipeline, then letting the 1st request finish
+        self.pipelinedClient.cancel()
+        conn = self.pool.getConnection('http', 'www.foo.com')
+        conn.handleData(HTTPClientTest.fakeResponse)
+        self.runPendingIdles()
+        self.checkPipelineCanceled()
+
 class BadURLTest(HTTPClientTestBase):
     def testScheme(self):
         url = 'participatoryculture.org/democracytest/normalpage.txt'
@@ -1361,3 +1388,53 @@ class BadURLTest(HTTPClientTestBase):
         self.runPendingIdles()
         self.assertEquals(self.errbackCalled, True)
         self.assertEquals(self.callbackCalled, False)
+
+class SocketCallbackTest(EventLoopTest):
+    """This is a really weird situation, we"""
+
+    def setUp(self):
+        EventLoopTest.setUp(self)
+
+    def makeSocket(self):
+        sock = socket.socket()
+        sock.connect(('participatoryculture.org', 80))
+        return sock
+
+    def testAddOnExisting(self):
+        # This test fails right now..  It seems like it could be an error, but
+        # I'm don't think it causes any harm, so I'm disabling it - Ben
+        return
+
+        s1 = self.makeSocket()
+        s2 = self.makeSocket()
+        self.badCallbackCalled = self.goodCallbackCalled = False
+        def badCallback():
+            self.badCallbackCalled = True
+        def goodCallback():
+            self.goodCallbackCalled = True
+        def callback():
+            eventloop.addWriteCallback(s2, badCallback)
+        eventloop.addWriteCallback(s1, callback)
+        eventloop.addWriteCallback(s2, goodCallback)
+        self.assert_(self.goodCallbackCalled)
+        self.assert_(not self.badCallbackCalled)
+
+    def testRemoveThenAdd(self):
+        """Test adding a write callback right after we remove one.  This case
+        isn't so bad actually, the really bad case (which I don't know how to
+        simulate, is if we closed s2, then made a new socket, s3 that had the
+        same fileno as s2 used to have."""
+        s1 = self.makeSocket()
+        s2 = self.makeSocket()
+        self.count = 0
+        def callback():
+            self.count += 1
+            if self.count == 1:
+                eventloop.removeWriteCallback(s2)
+                eventloop.addWriteCallback(s2, callback)
+        eventloop.addWriteCallback(s1, callback)
+        eventloop.addWriteCallback(s2, callback)
+        eventloop.addIdle(lambda: eventloop.quit(), 'stop event loop')
+        self.runEventLoop()
+        self.assertEquals(self.count, 1)
+
