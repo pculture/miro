@@ -33,9 +33,9 @@ def updateSearchString(newSearch):
         searchFilter = lambda x: filters.matchingItems(x, None)
     else:
         searchFilter = lambda x: filters.matchingItems(x, newSearch)
-    views.normalDownloads.recomputeFilter(matchingNormalDLs)
-    views.externalDownloads.recomputeFilter(matchingExternalDLs)
-    views.pendingDownloads.recomputeFilter(matchingPendingDLs)
+    allNormalDownloads.recomputeFilter(matchingNormalDLs)
+    allExternalDownloads.recomputeFilter(matchingExternalDLs)
+    allPendingDownloads.recomputeFilter(matchingPendingDLs)
 ]]>
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[

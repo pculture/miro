@@ -39,4 +39,3 @@ def autoDownloads(item):
 
 def manualDownloads(item):
     return not item.getAutoDownloaded() and not item.isPendingManualDownload() and item.getState() == 'downloading'
-
