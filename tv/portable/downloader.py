@@ -73,9 +73,16 @@ class RemoteDownloader(DDBObject):
     def __init__(self, url, item, contentType = None):
         self.url = url
         self.itemList = [item]
-        self.contentType = contentType
         self.dlid = generateDownloadID()
         self.status = {}
+        if contentType is None:
+            # HACK:  Some servers report the wrong content-type for torrent
+            # files.  We try to work around that by assuming if the enclosure
+            # states that something is a torrent, it's a torrent.
+            # Thanks to j@v2v.cc
+            enclosureContentType = item.getFirstVideoEnclosureType()
+            if enclosureContentType == 'application/x-bittorrent':
+                contentType = enclosureContentType
         if contentType is None:
             self.contentType = ""
             self.getContentType()

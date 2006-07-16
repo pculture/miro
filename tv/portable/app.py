@@ -826,11 +826,15 @@ class Controller (frontend.Application):
         oldSelected = self.currentSelectedTab
         newSelected = cur
 
-        # Handle reselection action but only for the channel guide.  If we do
-        # this for a feed tab, it will screw up our view callbacks.
-        if (oldSelected and oldSelected.id == newSelected.id and
-                newSelected.tabTemplateBase == 'guidetab'):
-            newSelected.start(self.frame, None)
+        # Handle reselection action.
+        if oldSelected and oldSelected.id == newSelected.id: 
+            # HACK: only for the channel guide, the we aren't displaying the
+            # tab's display anymore.  Otherwise if we do this for a feed tab,
+            # or one of the videos tabs, it will screw up our view callbacks.
+            mainDisplay = self.frame.getDisplay(controller.frame.mainDisplay) 
+            if (newSelected.tabTemplateBase == 'guidetab' or
+                    oldSelected.display is not mainDisplay):
+                newSelected.start(self.frame, None)
 
         # Handle case where a different tab was clicked
         self.checkSelectedTab()

@@ -176,7 +176,6 @@ class ChannelGuide(DDBObject):
             else:
                 self.cachedGuideBody = html
 
-            print "GUIDE UPDATE"
             currentTab = app.controller.currentSelectedTab
             if currentTab.tabTemplateBase == 'guidetab' and wasLoading:
                 app.controller.selectTab(currentTab.id)
