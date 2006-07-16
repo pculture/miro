@@ -826,6 +826,12 @@ class Controller (frontend.Application):
         oldSelected = self.currentSelectedTab
         newSelected = cur
 
+        # Handle reselection action but only for the channel guide.  If we do
+        # this for a feed tab, it will screw up our view callbacks.
+        if (oldSelected and oldSelected.id == newSelected.id and
+                newSelected.tabTemplateBase == 'guidetab'):
+            newSelected.start(self.frame, None)
+
         # Handle case where a different tab was clicked
         self.checkSelectedTab()
 
@@ -1294,7 +1300,11 @@ class TemplateActionHandler:
             (mode, location) = guide.getLocation()
 
             if mode == 'template':
-                self.switchTemplate(location, baseURL=config.get(prefs.CHANNEL_GUIDE_URL))
+                if location == 'guide':
+                    baseURL = config.get(prefs.CHANNEL_GUIDE_URL)
+                else:
+                    baseURL = None
+                self.switchTemplate(location, baseURL=baseURL)
             elif mode == 'url':
                 controller.frame.selectURL(location, \
                                            controller.frame.mainDisplay)

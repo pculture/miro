@@ -3,6 +3,7 @@ from httpclient import grabURL
 from xhtmltools import urlencode
 from copy import copy
 import re
+import app
 import config
 import prefs
 import threading
@@ -79,7 +80,6 @@ class ChannelGuide(DDBObject):
         self.loadedThisSession = False
         # Condition variable protecting access to above; signalled when
         # loadedThisSession changes.
-        self.cond = threading.Condition()
         DDBObject.__init__(self)
         # Start loading the channel guide.
         self.startLoadsIfNecessary()
@@ -87,7 +87,6 @@ class ChannelGuide(DDBObject):
     ##
     # Called by pickle during deserialization
     def onRestore(self):
-        self.cond = threading.Condition()
         self.loadedThisSession = False
         self.dc = None
 
@@ -136,51 +135,53 @@ class ChannelGuide(DDBObject):
 
         # We're on a platform that uses template inclusions and URL
         # interception.
-        return ('template', 'guide')
+        if self.cachedGuideBody is not None:
+            return ('template', 'guide')
+        else:
+            return ('template', 'guide-loading')
 
     def getHTML(self):
-        self.cond.acquire()
-        try:
-            # In the future, may want to use
-            # self.loadedThisSession to tell if this is a fresh
-            # copy of the channel guide, and/or block a bit to
-            # give the initial load a chance to succeed or fail
-            # (but this would require changing the frontend code
-            # to expect the template code to block, and in general
-            # seems like a bad idea.)
-            #
-            # A better solution would be to put up a "loading" page and
-            # somehow shove an event to the page when the channel guide
-            # load finishes that causes the browser to reload the page.
-            if not self.cachedGuideBody:
-                # Start a new attempt, so that clicking on the guide
-                # tab again has at least a chance of working
-                print "DTV: No guide available! Sending apology instead."
-                self.startUpdates()
-                return guideNotAvailableBody
-            else:
-                if not self.loadedThisSession:
-                    print "DTV: *** WARNING *** loading a stale copy of the channel guide from cache"
-                return self.cachedGuideBody
-        finally:
-            self.cond.release()
+        # In the future, may want to use
+        # self.loadedThisSession to tell if this is a fresh
+        # copy of the channel guide, and/or block a bit to
+        # give the initial load a chance to succeed or fail
+        # (but this would require changing the frontend code
+        # to expect the template code to block, and in general
+        # seems like a bad idea.)
+        #
+        # A better solution would be to put up a "loading" page and
+        # somehow shove an event to the page when the channel guide
+        # load finishes that causes the browser to reload the page.
+        if not self.cachedGuideBody:
+            # Start a new attempt, so that clicking on the guide
+            # tab again has at least a chance of working
+            print "DTV: No guide available! Sending apology instead."
+            self.startUpdates()
+            return guideNotAvailableBody
+        else:
+            if not self.loadedThisSession:
+                print "DTV: *** WARNING *** loading a stale copy of the channel guide from cache"
+            return self.cachedGuideBody
 
     def processUpdate(self, info):
         try:
             html = info["body"]
 
             # Put the HTML into the cache
-            self.cond.acquire()
-            try:
-                match = HTMLPattern.match(html)
-                if match:
-                    self.cachedGuideBody = match.group(1)
-                else:
-                    self.cachedGuideBody = html
-                self.loadedThisSession = True
-                self.cond.notify()
-            finally:
-                self.cond.release()
+            match = HTMLPattern.match(html)
+            wasLoading = self.cachedGuideBody is None
+
+            if match:
+                self.cachedGuideBody = match.group(1)
+            else:
+                self.cachedGuideBody = html
+
+            print "GUIDE UPDATE"
+            currentTab = app.controller.currentSelectedTab
+            if currentTab.tabTemplateBase == 'guidetab' and wasLoading:
+                app.controller.selectTab(currentTab.id)
+
+            self.loadedThisSession = True
         finally:
             self.dc = eventloop.addTimeout(3600, self.update, "Channel Guide Update")
 
