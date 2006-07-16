@@ -175,7 +175,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         wsnc.addObserver_selector_name_object_(self, 'workspaceWillSleep:', NSWorkspaceWillSleepNotification, nil)
         wsnc.addObserver_selector_name_object_(self, 'workspaceDidWake:',   NSWorkspaceDidWakeNotification,   nil)
         
-        self.pausedDownloaders = None
+        self.pausedDownloaders = list()
         
     def applicationDidFinishLaunching_(self, notification):
         # The [NSURLRequest setAllowsAnyHTTPSCertificate:forHost:] selector is
@@ -232,6 +232,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
     def workspaceWillSleep_(self, notification):
         def pauseRunningDownloaders(self=self):
             views.remoteDownloads.confirmDBThread()
+            self.pausedDownloaders = list()
             for dl in views.remoteDownloads:
                 if dl.getState() == 'downloading':
                     self.pausedDownloaders.append(dl)
@@ -240,7 +241,6 @@ class AppController (NibClassBuilder.AutoBaseClass):
                 print "DTV: System is going to sleep, suspending %d download(s)." % dlCount
                 for dl in self.pausedDownloaders:
                     dl.pause(block=True)
-        self.pausedDownloaders = list()
         dc = eventloop.addUrgentCall(lambda:pauseRunningDownloaders(), "Suspending downloaders for sleep")
         # Until we can get proper delayed call completion notification, we're
         # just going to wait a few seconds here :)
@@ -252,9 +252,11 @@ class AppController (NibClassBuilder.AutoBaseClass):
             dlCount = len(self.pausedDownloaders)
             if dlCount > 0:
                 print "DTV: System is awake from sleep, resuming %s download(s)." % dlCount
-                for dl in self.pausedDownloaders:
-                    dl.start()
-            self.pausedDownloaders = None
+                try:
+                    for dl in self.pausedDownloaders:
+                        dl.start()
+                finally:
+                    self.pausedDownloaders = list()
         eventloop.addUrgentCall(lambda:restartPausedDownloaders(), "Resuming downloaders after sleep")
 
     def videoWillPlay_(self, notification):
