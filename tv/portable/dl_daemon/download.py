@@ -845,14 +845,13 @@ class BTDownloader(BGDownloader):
         self.infohash = sha(bencode(info)).digest()
         self.shortFilename = cleanFilename(self.metainfo['info']['name'])
         
-        if self.metainfo['info'].has_key('length'):
-            try:
-                totalSize = self.metainfo['info']['length']
-            except KeyError: # There are multiple files in this here torrent
-                totalSize = 0
-                for f in self.metainfo['info']['files']:
-                    totalSize += f['length']
-            self.totalSize = totalSize
+        try:
+            totalSize = self.metainfo['info']['length']
+        except KeyError: # There are multiple files in this here torrent
+            totalSize = 0
+            for f in self.metainfo['info']['files']:
+                totalSize += f['length']
+        self.totalSize = totalSize
 
     def gotMetainfo(self):
         # FIXME: If the client is stopped before a BT download gets

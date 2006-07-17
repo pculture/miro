@@ -31,6 +31,7 @@ import sys
 import time
 
 PIPELINING_ENABLED = True
+SOCKET_READ_TIMEOUT = 30
 
 # This pattern matches all possible strings.  I promise.
 URIPattern = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
@@ -184,8 +185,8 @@ class AsyncSocket(object):
             return
         if self.readTimeout is not None:
             self.stopReadTimeout()
-        self.readTimeout = eventloop.addTimeout(30, self.onReadTimeout,
-            "AsyncSocket.onReadTimeout")
+        self.readTimeout = eventloop.addTimeout(SOCKET_READ_TIMEOUT,
+                self.onReadTimeout, "AsyncSocket.onReadTimeout")
 
     def stopReadTimeout(self):
         if self.readTimeout is not None:
@@ -1312,17 +1313,12 @@ class HTTPClient(object):
                 self.errbackIntercept(error)
 
     def errbackIntercept(self, error):
-        if (self.cancelled and not 
-                isinstance(error, PipelinedRequestNeverStarted)):
-            print "WARNING: Errrback on a cancelled request for %s" % self.url
-            import traceback
-            traceback.print_stack()
+        if self.cancelled:
             return
-        if isinstance(error, PipelinedRequestNeverStarted):
+        elif isinstance(error, PipelinedRequestNeverStarted):
             # Connection closed before our pipelined request started.  RFC
             # 2616 says we should retry
-            if not self.cancelled:
-                self.startRequest() 
+            self.startRequest() 
             # this should give us a new connection, since our last one closed
         elif (isinstance(error, ServerClosedConnection) and
                 self.connection.requestsFinished > 0 and 

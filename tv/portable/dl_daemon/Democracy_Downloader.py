@@ -41,6 +41,7 @@ server = daemon.DownloaderDaemon(port)
 httpclient.HTTPConnectionPool.MAX_CONNECTIONS_PER_SERVER = sys.maxint
 httpclient.HTTPConnectionPool.MAX_CONNECTIONS = sys.maxint
 httpclient.PIPELINING_ENABLED = False
+httpclient.SOCKET_READ_TIMEOUT = 120
 
 eventloop.startup()
 

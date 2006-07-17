@@ -22,6 +22,8 @@ def defaultPort(scheme):
         return 443
     elif scheme == 'http':
         return 80
+    elif scheme == 'file':
+        return None
     else:
         if chatter:
             print "WARNING: Assuming port 80 for scheme: %s" % scheme
