@@ -108,7 +108,14 @@ class PlaybackControllerBase:
 
     def playItem(self, anItem):
         try:
-            anItem = self.skipIfItemFileIsMissing(anItem)
+            while not os.path.exists(anItem.getPath()):
+                print "DTV: movie file '%s' is missing, skipping to next" % \
+                        anItem.getPath()
+                anItem = self.currentPlaylist.getNext()
+                if anItem is None:
+                    self.stop()
+                    return
+
             if anItem is not None:
                 videoDisplay = controller.videoDisplay
                 videoRenderer = videoDisplay.getRendererForItem(anItem)
@@ -172,14 +179,6 @@ class PlaybackControllerBase:
         else:
             self.playItem(nextItem)
         return nextItem
-
-    def skipIfItemFileIsMissing(self, anItem):
-        path = anItem.getPath()
-        if not os.path.exists(path):
-            print "DTV: movie file '%s' is missing, skipping to next" % path
-            return self.skip(1)
-        else:
-            return anItem
 
     def onMovieFinished(self):
         return self.skip(1)
