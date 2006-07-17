@@ -121,8 +121,8 @@ i18n:translate="">Settings</span></a></p>
     </span>
     <!-- / DOWNLOADS -->
     <!-- NEWLY AVAILABLE ************************************************** -->
-  <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-newlyavailable');">#&nbsp;</a></div>
   <div id="main-channelbar-available" class="main-channelbar" style="display: @@@mainChannelbarAvailableDisplay@@@;">
+  <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-newlyavailable');">#&nbsp;</a></div>
     <div t:updateForView="matchingItems">
       <div t:showIf="allItems.len() == matchingItems.len()">
 	<h1 i18n:translate="">
