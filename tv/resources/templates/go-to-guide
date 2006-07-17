@@ -9,10 +9,20 @@
 <link rel="stylesheet" type="text/css" href="resource:css/style.css" />
 <t:include filename="dynamic.js" />
 <script type="text/javascript">
-eventURL('action:goToGuide');
+function goToGuide() {
+  eventURL('action:goToGuide');
+}
+setTimeout(goToGuide, 100);
+/* We use setTimeout because we want to make sure that the loading image has a
+ * chance to render. Otherwise we get a blank screen when the channel guide is
+ * rendering.
+ */
 </script>
 </head>
 
-<body>
+<body class="channel-guide-body">
+	<div id="channel-guide-loading-image">
+		&nbsp;
+	</div>
 </body>
 </html>

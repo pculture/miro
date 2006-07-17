@@ -327,7 +327,7 @@ class FeedImpl:
             elif state == 'newly-downloaded':
                 newitems += 1
 
-        if self.maxNew >= 0 and newitems >= self.maxNew:
+        if self.maxNew >= 0 and newitems + dling >= self.maxNew:
             return None
         elif self.fallBehind>=0 and eligibile > self.fallBehind:
             dontUse.append(next)
