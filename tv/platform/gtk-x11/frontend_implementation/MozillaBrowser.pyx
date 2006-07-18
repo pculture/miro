@@ -43,7 +43,7 @@ cdef extern from "MozillaBrowserXPCOM.h":
 cdef extern from "stdio.h":
     int printf(char* str, ...)
 cdef extern from "stdlib.h":
-   void free(void *ptr)
+    void free(void *ptr)
 
 class DOMError(Exception):
     pass
