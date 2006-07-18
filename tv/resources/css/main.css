@@ -514,11 +514,16 @@ div.scraping-content {
     text-decoration: underline; 
 }
 
-.main-progress-bar {
-  width: 94px;
-  height: 12px;
-  background: url(../images/status_background.png) top left no-repeat;
+.main-progress-bar-bg {
+  width: 92px;
+  height: 11px;
   margin-bottom: 3px;
+  background: url(../images/progress-bar-bg.png) no-repeat left top; 
+}
+
+.main-progress-bar {
+  height: 11px;
+  background: url(../images/progress-bar.png) no-repeat left top; 
 }
 
 .main-progress-cancel {
