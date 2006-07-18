@@ -54,9 +54,10 @@
 	</div>
 	<div t:showIf="this.getState() == 'downloading'"
 		class="main-video-details-download-info">
-            <div class="main-progress-bar">
-                <img src="resource:images/status.png" width="@@@this.downloadProgressWidth()@@@" height="12" />
-            </div>
+	    <div class="main-progress-bar-bg">
+	        <div class="main-progress-bar" 
+		    style="width: ***this.downloadProgressWidth()***px;" />
+	    </div>
             <span t:replace="this.downloadETA()" />
             <span t:hideIf="this.downloadRate() == '0k/s'">
                     <span t:replace="this.downloadRate()" />
