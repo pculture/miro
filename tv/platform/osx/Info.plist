@@ -153,6 +153,14 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
+			<string>Democracy URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>democracy</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
 			<string>RSS URL</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
