@@ -119,15 +119,14 @@ def getCommandOutput(cmd, warnOnStderr = True, warnOnReturnCode = True):
 
     p = subprocess.Popen(cmd, shell=True, close_fds = True,
             stdout=subprocess.PIPE, stderr = subprocess.PIPE)
-    p.wait()
-    stderr = p.stderr.read()
+    stdout, stderr = p.communicate()
     if warnOnStderr and stderr != '':
         raise RuntimeError("%s outputted the following error:\n%s" % 
                 (cmd, stderr))
     if warnOnReturnCode and p.returncode != 0:
         raise RuntimeError("%s had non-zero return code %d" % 
                 (cmd, p.returncode))
-    return p.stdout.read()
+    return stdout
 
 def parsePkgConfig(command, components, options_dict = None):
     """Helper function to parse compiler/linker arguments from 
