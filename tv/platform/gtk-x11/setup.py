@@ -173,9 +173,27 @@ fasttypes_ext = \
     )
 
 #### MozillaBrowser Extension ####
+packages = getCommandOutput("pkg-config --list-all")
+if re.search("^xulrunner-xpcom", packages, re.MULTILINE):
+    xpcom = 'xulrunner-xpcom'
+    gtkmozembed = 'xulrunner-gtkmozembed'
+elif re.search("^mozilla-xpcom", packages, re.MULTILINE):
+    xpcom = 'mozilla-xpcom'
+    gtkmozembed = 'mozilla-gtkmozembed'
+else:
+    raise RuntimeError("Can't find xulrunner-xpcom or mozilla-xpcom")
 mozilla_browser_options = parsePkgConfig("pkg-config" , 
-        "gtk+-2.0 glib-2.0 pygtk-2.0 mozilla-gtkmozembed mozilla-xpcom")
-mozilla_lib_path = parsePkgConfig('pkg-config', 'mozilla-gtkmozembed')['library_dirs']
+        "gtk+-2.0 glib-2.0 pygtk-2.0 %s %s" % (gtkmozembed, xpcom))
+mozilla_lib_path = parsePkgConfig('pkg-config', 
+        '%s' % gtkmozembed)['library_dirs']
+# hack to get #include <nsIDOMElementCSSInlineStyle.h> to work.
+# For mozilla 1.7, this file is in the dom/ subdirectory, but for xulrunner ,
+# it's in the top level.
+for dir in mozilla_browser_options['include_dirs']:
+    if os.path.exists(os.path.join(dir, 'dom',
+        'nsIDOMElementCSSInlineStyle.h')):
+        mozilla_browser_options['include_dirs'].append(os.path.join(dir, 'dom'))
+
 mozilla_browser_ext = Extension("democracy.MozillaBrowser",
         [ os.path.join(frontend_implementation_dir,'MozillaBrowser.pyx'),
           os.path.join(frontend_implementation_dir,'MozillaBrowserXPCOM.cc'),
