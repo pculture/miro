@@ -52,13 +52,17 @@
 			<!-- VIDEO MENU -->
 			<menu id="video-menu" label="Video" accesskey="V" class="titlebar-toplevel">
 				<menupopup id="video-popup">
+                                        <!--
 					<menuitem label="Play Video" accesskey="P" disabled="true"/>
 					<menuitem label="Stop Video" accesskey="S" disabled="true"/>
-					<menuitem label="Full Screen" acceltext="Alt+Enter" accesskey="F" disabled="true"/>
+                                        -->
+                                        <menuitem label="Full Screen" accesskey="F" command="fullscreen" acceltext="Alt+Enter" disabled="true" />
+                                        <!--
 					<menuseparator/>
 					<menuitem label="Delete Video" accesskey="D" disabled="true"/>
 					<menuitem label="Save Video" accesskey="a" disabled="true"/>
 					<menuitem label="Copy Video Link" accesskey="L" disabled="true"/>
+                                        -->
 				</menupopup>
 			</menu>
 			<!-- / VIDEO MENU -->
@@ -66,12 +70,12 @@
 			<!-- CHANNEL MENU -->
 			<menu id="channel-menu" label="Channel" accesskey="C" class="titlebar-toplevel">
 				<menupopup id="channel-popup">
-					<menuitem label="Add Channel" accesskey="A" disabled="false" command="addchannel"/>
-					<menuitem label="Remove Channel" accesskey="R" disabled="false" command="removechannel"/>
-					<menuitem label="Copy Channel Link" accesskey="L" disabled="false" command="copychannellink"/>
+					<menuitem label="Add Channel" accesskey="A" command="addchannel"/>
+					<menuitem label="Remove Channel" accesskey="R" command="removechannel"/>
+					<menuitem label="Copy Channel Link" accesskey="L" command="copychannellink"/>
 					<menuseparator/>
-					<menuitem label="Update Channel" accesskey="U" disabled="false" command="updatechannel"/>
-					<menuitem label="Update All Channels" accesskey="A" disabled="false" command="updateall"/>
+					<menuitem label="Update Channel" accesskey="U" command="updatechannel"/>
+					<menuitem label="Update All Channels" accesskey="A" command="updateall"/>
 					<menuseparator/>
 					<menuitem label="Rename Channel" accesskey="e" disabled="true"/>
 					<menuseparator/>
@@ -190,6 +194,7 @@
 <command id="copy" oncommand="clipboardCopy();" />
 <command id="cut" oncommand="clipboardCut();" />
 <command id="paste" oncommand="clibboardPaste();" />
+<command id="fullscreen" oncommand="onFullscreenActivate();" />
 <command id="removechannel" oncommand="pybridge.removeCurrentChannel();" />
 <command id="updatechannel" oncommand="pybridge.updateCurrentChannel();" />
 <command id="updateall" oncommand="pybridge.updateChannels();" />

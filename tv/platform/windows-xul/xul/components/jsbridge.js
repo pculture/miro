@@ -161,7 +161,7 @@ jsBridge.prototype = {
     this.document.getElementById("knob").left = position;
   },
 
-  hideForFullscreen: Array('titlebar', 'channelsDisplay', 'mainSplitter',
+  hideForFullscreen: Array('channelsDisplay', 'mainSplitter',
         'resizer-left', 'bottom-left', 'resizer-bottom-right'),
   showForFullscreen: Array('bottom-left-blank', 'bottom-right-blank'),
 
@@ -189,19 +189,25 @@ jsBridge.prototype = {
     this.startHideVideoControlsTimer();
   },
 
+  leaveTotallyFullscreen: function() {
+    this.document.getElementById('titlebar').collapsed = false;
+    this.document.getElementById('bottom').collapsed = false;
+    this.document.getElementById('videoInfoDisplay').collapsed = false;
+    this.hideVideoControlsTimer.cancel();
+    pybridge.showCursor(true);
+  },
+
   onMouseMoveFullscreen: function() {
-      this.document.getElementById('bottom').collapsed = false;
-      this.document.getElementById('videoInfoDisplay').collapsed = false;
-      this.hideVideoControlsTimer.cancel();
+      this.leaveTotallyFullscreen();
       this.startHideVideoControlsTimer();
-      pybridge.showCursor(true);
   },
 
   startHideVideoControlsTimer: function() {
     var bottom = this.document.getElementById('bottom')
     var videoInfoDisplay = this.document.getElementById('videoInfoDisplay')
+    var titlebar = this.document.getElementById('titlebar');
     var callback = {notify: function() {
-        videoInfoDisplay.collapsed = bottom.collapsed = true;
+        titlebar.collapsed = videoInfoDisplay.collapsed = bottom.collapsed = true;
         pybridge.showCursor(false);
     }};
     this.hideVideoControlsTimer.initWithCallback(callback, 3000,
@@ -220,10 +226,8 @@ jsBridge.prototype = {
           var elt = this.document.getElementById(this.showForFullscreen[i]);
           elt.collapsed = true;
     }
-    this.document.getElementById('bottom').collapsed = false;
-    this.hideVideoControlsTimer.cancel();
+    this.leaveTotallyFullscreen();
     this.document.removeEventListener('mousemove', this.mousemoveListener, true);
-    pybridge.showCursor(true);
   },
 
   xulNavigateDisplay: function(area, uri) {
