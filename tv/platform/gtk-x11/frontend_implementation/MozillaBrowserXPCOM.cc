@@ -1,3 +1,4 @@
+#define MOZILLA_INTERNAL_API
 #include "MozillaBrowserXPCOM.h"
 
 #include <gtkmozembed.h>
@@ -8,7 +9,7 @@
 #include <nsIDOMDocumentFragment.h>
 #include <nsIDOMDocumentRange.h>
 #include <nsIDOMElement.h>
-#include <dom/nsIDOMElementCSSInlineStyle.h>
+#include <nsIDOMElementCSSInlineStyle.h>
 #include <nsIDOMEventTarget.h>
 #include <nsIDOMMouseEvent.h>
 #include <dom/nsIDOMNSRange.h>
