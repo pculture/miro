@@ -34,6 +34,7 @@ interface pcfIDTVPyBridge : nsISupports
   void stop();
   void playPause();
   void openFile(in AString path);
+  void deleteVLCCache();
   AString shortenDirectoryName(in AString path);
   boolean getRunAtStartup();
   void setRunAtStartup(in boolean value);

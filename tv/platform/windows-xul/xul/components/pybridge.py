@@ -2,6 +2,7 @@ from gettext import gettext as _
 from xpcom import components
 import ctypes
 import os
+import shutil
 import sys
 import traceback
 import _winreg
@@ -138,6 +139,13 @@ class PyBridge:
     def onShutdown(self):
         frontend.vlcRenderer.stop()
         app.controller.onShutdown()
+
+    def deleteVLCCache(self):
+        buf = ctypes.create_unicode_buffer(260) 
+        SHGetSpecialFolderPath = ctypes.windll.shell32.SHGetSpecialFolderPathW
+        csidl = 0x001a # APPDATA
+        if SHGetSpecialFolderPath(None, buf, csidl, False):
+            shutil.rmtree(buf.value, ignore_errors=True)
 
     def shortenDirectoryName(self, path):
         """Shorten a directory name by recognizing well-known nicknames, like
