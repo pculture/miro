@@ -199,6 +199,13 @@ mozilla_browser_ext = Extension("democracy.MozillaBrowser",
         ],
         runtime_library_dirs=mozilla_lib_path,
         **mozilla_browser_options)
+#### Xlib Extension ####
+xlib_ext = \
+    Extension("democracy.xlibhelper", 
+        [ os.path.join(frontend_implementation_dir,'xlibhelper.pyx') ],
+        include_dirs = ['/usr/include/X11'],
+        libraries = ['X11'],
+    )
 
 #### Xine Extension ####
 xine_options = parsePkgConfig('pkg-config', 
@@ -394,7 +401,7 @@ setup(name='democracy',
     scripts=[os.path.join(platform_dir, 'democracyplayer')],
     data_files=data_files,
     ext_modules = [
-        fasttypes_ext, mozilla_browser_ext, xine_ext,
+        fasttypes_ext, mozilla_browser_ext, xine_ext, xlib_ext,
         Extension("democracy.database", 
                 [os.path.join(portable_dir, 'database.pyx')]),
 #        Extension("democracy.feedparser", 
