@@ -146,7 +146,7 @@ class HTMLDisplayImpl:
 
         # Translate path into URL.
         parts = re.split(r'/', self.location)
-        self.urlToLoad = "file://" + '/'.join(parts)
+        self.urlToLoad = "file:///" + '/'.join(parts)
         self.widget.load_url(self.urlToLoad)
         self.in_load_html = False
 

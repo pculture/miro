@@ -1385,7 +1385,6 @@ class ScraperFeedImpl(FeedImpl):
             self.initialCharset = None
             subLinks = self.scrapeLinks(html, redirURL, charset=charset, setTitle = True)
             self.processLinks(subLinks,0,0)
-            self.checkDone()
         else:
             self.getHTML([self.url], top = True)
 

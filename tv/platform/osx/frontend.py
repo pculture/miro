@@ -296,10 +296,6 @@ class AppController (NibClassBuilder.AutoBaseClass):
 
         if url.startswith('http'):
             self.actualApp.addAndSelectFeed(url)
-        elif url.startswith('democracy:'):
-            eventloop.addUrgentCall(lambda:singleclick.addDemocracyURL(url), 
-			"Open Democracy URL")
-
 
     def checkForUpdates_(self, sender):
         eventloop.addUrgentCall(lambda:autoupdate.checkForUpdates(True), "Checking for new version")

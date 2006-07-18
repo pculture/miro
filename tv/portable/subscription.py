@@ -34,10 +34,7 @@ def parseContent(content):
         dom.unlink()
         return urls
     except:
-        import traceback
-        print "WARNING: Error parsing OPML content..."
-        traceback.print_exc()
-        return None
+        pass
 
 # =========================================================================
 

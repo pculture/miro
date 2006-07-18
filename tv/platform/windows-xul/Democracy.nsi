@@ -168,7 +168,7 @@ lbl_winnt:
 
 !if ${CONFIG_TWOSTAGE} = "Yes"
 
-  InetLoad::load http://ftp.osuosl.org/pub/pculture.org/democracy/win/Democracy-Contents-${CONFIG_VERSION}.zip $INSTDIR\Democracy-Contents.zip
+  InetLoad::load http://www.participatoryculture.org/nightlies/Democracy-Contents-${CONFIG_VERSION}.zip $INSTDIR\Democracy-Contents.zip
   Pop $0
   StrCmp $0 "OK" dlok
   MessageBox MB_OK|MB_ICONEXCLAMATION "Download Error, click OK to abort installation: $0" /SD IDOK
