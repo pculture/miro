@@ -196,6 +196,7 @@ function setupSeekButton(direction, buttonId) {
 }
 
 function setupHandlers() {
+    document.getElementById("main").onkeydown = onKeyDown;
     var knob = document.getElementById("volume");
     knob.onmousemove = volumeKnobMove;
     knob.onmousedown = volumeKnobDown;
@@ -329,6 +330,13 @@ function doResize(event) {
   return true;  
 }
 
+function onFullscreenActivate() {
+    var fullscreenButton = document.getElementById("bottom-buttons-fullscreen");
+    if(fullscreenButton.className.indexOf('-inactive') == -1) {
+      jsbridge.toggleFullscreen();
+    }
+}
+
 function clipboardCopy() {
   clip = Components.classes["@mozilla.org/webshell;1"].getService();
   clip.QueryInterface(Components.interfaces.nsIClipboardCommands);
@@ -361,4 +369,10 @@ function openFile() {
 function handleExit() {
     vlc.stop();
     pybridge.quit();
+}
+
+function onKeyDown(event) {
+  if(event.altKey && event.keyCode == 13) {
+     onFullscreenActivate();
+  }
 }

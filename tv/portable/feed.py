@@ -1673,7 +1673,7 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler):
                     html = fixHTMLHeader(html,self.charset)
                 self.links[:0] = lg.getLinks(html,self.baseurl)
             except HTMLParseError: # Don't bother with bad HTML
-                print "DTV: bad HTML in %s" % self.baseurl
+                print "DTV: bad HTML in description for %s" % self.baseurl
             self.inDescription = False
         elif tag.lower() == 'link':
             self.links.append((self.theLink,None,None))
