@@ -91,20 +91,18 @@ def addFeeds(urls):
         handler.addFeed(lastURL)
 
 def askForMultipleFeeds(urls):
-    title = _("Subscribe to %d feeds?") % len(urls)
-    description = _("Should I subscribe you to %d feeds?") % len(urls)
-    d = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_YES,
-            dialogs.BUTTON_NO)
+    title = _("Subscribing to multiple feeds") 
+    description = _("You are being subscribed to %d feeds.") % len(urls)
+    d = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_OK,
+            dialogs.BUTTON_CANCEL)
     def callback(d):
-        if d.choice == dialogs.BUTTON_YES:
+        if d.choice == dialogs.BUTTON_OK:
             addFeeds(urls)
     d.run(callback)
 
-def complainAboutDemocracyURL(error):
-    title = _("Error downloading democracy URL")
-    description = _("There was an error downloading a democracy URL: %s") \
-            % error
-    dialogs.MessageBoxDialog(title, description).run()
+def complainAboutDemocracyURL(messageText):
+    title = _("Subscription error")
+    dialogs.MessageBoxDialog(title, messageText).run()
 
 def addDemocracyURL(url):
     realURL = url[len('democracy:'):]
@@ -112,17 +110,23 @@ def addDemocracyURL(url):
         if info.get('content-type') == 'application/x-democracy':
             urls = subscription.parseContent(info['body'])
             if urls is None:
-                complainAboutDemocracyURL("Didn't parse")
+                complainAboutDemocracyURL(
+                    _("This Democracy channel file has an invalid format: "
+                    "%s. Please notify the publisher of this file.") % realURL)
             else:
                 if len(urls) > 1:
                     askForMultipleFeeds(urls)
                 else:
                     addFeeds(urls)
         else:
-            complainAboutDemocracyURL("Bad content type: %s" %
-                info.get('content-type'))
+            complainAboutDemocracyURL(
+                    _("This Democracy channel file has the wrong content "
+                    "type: %s. Please notify the publisher of this file.")
+                    % realURL)
     def errback(error):
-        complainAboutDemocracyURL("Connection failed")
+        complainAboutDemocracyURL(
+                _("Could not download the Democracy channel file: %s.") %
+                realURL)
     httpclient.grabURL(realURL, callback, errback)
 
 def setCommandLineArgs(args):
