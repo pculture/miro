@@ -26,6 +26,10 @@ class DemocracyCLH:
             return
         existingWindow = wwatch.getWindowByName(windowName, None)
         if existingWindow is None:
+            try:
+                pybridge.deleteVLCCache()
+            except:
+                print "WARNING: error in deleteVLCCache()"
             pybridge.handleCommandLine(commandLine)
             wwatch.openWindow(None, chromeURL, windowName,
                     "chrome,dialog=no,all", None)
