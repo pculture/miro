@@ -18,6 +18,7 @@ import app
 import dialogs
 import item
 import feed
+import httpclient
 import views
 import platformutils
 import subscription
@@ -77,13 +78,52 @@ def addFeed(path):
     feed.addFeedFromFile(path)
 
 def addSubscriptions(path):
-    handler = app.GUIActionHandler()
     urls = subscription.parseFile(path)
     if urls is not None:
-        lastURL = urls.pop()
+        addFeeds(urls)
+
+def addFeeds(urls):
+    if len(urls) > 0:
+        handler = app.GUIActionHandler()
+        lastURL = urls.pop(0)
         for url in urls:
             handler.addFeed(url, selected=None)
         handler.addFeed(lastURL)
+
+def askForMultipleFeeds(urls):
+    title = _("Subscribe to %d feeds?") % len(urls)
+    description = _("Should I subscribe you to %d feeds?") % len(urls)
+    d = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_YES,
+            dialogs.BUTTON_NO)
+    def callback(d):
+        if d.choice == dialogs.BUTTON_YES:
+            addFeeds(urls)
+    d.run(callback)
+
+def complainAboutDemocracyURL(error):
+    title = _("Error downloading democracy URL")
+    description = _("There was an error downloading a democracy URL: %s") \
+            % error
+    dialogs.MessageBoxDialog(title, description).run()
+
+def addDemocracyURL(url):
+    realURL = url[len('democracy:'):]
+    def callback(info):
+        if info.get('content-type') == 'application/x-democracy':
+            urls = subscription.parseContent(info['body'])
+            if urls is None:
+                complainAboutDemocracyURL("Didn't parse")
+            else:
+                if len(urls) > 1:
+                    askForMultipleFeeds(urls)
+                else:
+                    addFeeds(urls)
+        else:
+            complainAboutDemocracyURL("Bad content type: %s" %
+                info.get('content-type'))
+    def errback(error):
+        complainAboutDemocracyURL("Connection failed")
+    httpclient.grabURL(realURL, callback, errback)
 
 def setCommandLineArgs(args):
     global _commandLineArgs
@@ -99,7 +139,9 @@ def parseCommandLineArgs(args=None):
     addedTorrents = False
 
     for arg in args:
-        if os.path.exists(arg):
+        if arg.startswith('democracy:'):
+            addDemocracyURL(arg)
+        elif os.path.exists(arg):
             ext = os.path.splitext(arg)[1].lower()
             if ext in ('.torrent', '.tor'):
                 try:
