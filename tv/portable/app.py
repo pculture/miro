@@ -963,7 +963,8 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 return True
             if url.startswith('file://'):
                 if url.endswith ('.html'):
-                    return True
+                    path = url[len("file://"):]
+                    return os.path.exists(path)
                 else:
                     filename = urllib.unquote(url[len('file://'):])
                     eventloop.addIdle (lambda:singleclick.openFile (filename), "Open Local File from onURLLoad")
