@@ -204,6 +204,7 @@ xlib_ext = \
     Extension("democracy.xlibhelper", 
         [ os.path.join(frontend_implementation_dir,'xlibhelper.pyx') ],
         include_dirs = ['/usr/include/X11'],
+        library_dirs = ['/usr/X11R6/lib'],
         libraries = ['X11'],
     )
 
