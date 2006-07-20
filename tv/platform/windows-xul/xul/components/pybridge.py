@@ -145,7 +145,8 @@ class PyBridge:
         SHGetSpecialFolderPath = ctypes.windll.shell32.SHGetSpecialFolderPathW
         csidl = 0x001a # APPDATA
         if SHGetSpecialFolderPath(None, buf, csidl, False):
-            shutil.rmtree(buf.value, ignore_errors=True)
+            vlcCacheDir = os.path.join(buf.value, "PCF-VLC")
+            shutil.rmtree(vlcCacheDir, ignore_errors=True)
 
     def shortenDirectoryName(self, path):
         """Shorten a directory name by recognizing well-known nicknames, like
