@@ -68,7 +68,7 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
 
     def testStop(self):
         # nice large download so that we have time to interrupt it
-        url = 'http://www.getdemocracy.com/images/layout/video_bomb_thumb-1.png'
+        url = 'http://www.getdemocracy.com/images/linux-screen.jpg'
         self.downloader = TestingDownloader(url, "ID1")
         def stopOnData():
             if (self.downloader.state == 'downloading' and 
@@ -86,11 +86,11 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
         eventloop.addTimeout(0.5, restart, 'restarter')
         self.downloader.statusCallback = self.stopOnFinished
         self.runEventLoop()
-        self.assertEquals(self.downloader.currentSize, 73009)
-        self.assertEquals(self.downloader.totalSize, 73009)
+        self.assertEquals(self.downloader.currentSize, 45572)
+        self.assertEquals(self.downloader.totalSize, 45572)
 
     def testPause(self):
-        url = 'http://www.getdemocracy.com/images/layout/video_bomb_thumb-1.png'
+        url = 'http://www.getdemocracy.com/images/linux-screen.jpg'
         self.downloader = TestingDownloader(url, "ID1")
         def pauseOnData():
             if (self.downloader.state == 'downloading' and 
@@ -108,11 +108,11 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
         eventloop.addTimeout(0.5, restart, 'restarter')
         self.downloader.statusCallback = self.stopOnFinished
         self.runEventLoop()
-        self.assertEquals(self.downloader.currentSize, 73009)
-        self.assertEquals(self.downloader.totalSize, 73009)
+        self.assertEquals(self.downloader.currentSize, 45572)
+        self.assertEquals(self.downloader.totalSize, 45572)
 
     def testRestore(self):
-        url = 'http://www.getdemocracy.com/images/layout/video_bomb_thumb-1.png'
+        url = 'http://www.getdemocracy.com/images/linux-screen.jpg'
         self.downloader = TestingDownloader(url, "ID1")
         def pauseInMiddle():
             if (self.downloader.state == 'downloading' and 

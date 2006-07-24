@@ -1,4 +1,4 @@
-cdef extern from "Xlib.h":
+cdef extern from "X11/Xlib.h":
     int CXInitThreads "XInitThreads" ()
 
 def XInitThreads():

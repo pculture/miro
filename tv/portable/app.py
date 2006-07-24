@@ -963,7 +963,8 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 return True
             if url.startswith('file://'):
                 if url.endswith ('.html'):
-                    return True
+                    path = url[len("file://"):]
+                    return os.path.exists(path)
                 else:
                     filename = urllib.unquote(url[len('file://'):])
                     eventloop.addIdle (lambda:singleclick.openFile (filename), "Open Local File from onURLLoad")
@@ -1060,7 +1061,7 @@ class ModelActionHandler:
     def removeFeedWithoutDownloads(self, feed):
         title = _('Remove %s') % feed.getTitle()
         description = _("""\
-Are you sure you want to remove the feed %s?  Any downloads in progress will
+Are you sure you want to remove the feed %s?  Any downloads in progress will \
 be canceled.""") % feed.getTitle()
         dialog = dialogs.ChoiceDialog(title, description, 
                 dialogs.BUTTON_YES, dialogs.BUTTON_NO)
