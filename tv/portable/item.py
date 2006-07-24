@@ -691,6 +691,8 @@ class Item(DDBObject):
                     format = subtype.split(';')[0].upper()
                     if mtype == 'audio':
                         format += ' AUDIO'
+                    if format.startswith('X-'):
+                        format = format[2:]
                     return format
             else:
                 if extension in self.KNOWN_MIME_SUBTYPES:
