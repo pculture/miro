@@ -972,8 +972,9 @@ def _hasVideoType(enclosure):
 def _hasVideoExtension(enclosure, key):
     return (enclosure.has_key(key) and
             ((len(enclosure[key]) > 4 and
-              enclosure[key][-4:].lower() in ['.mov','.wmv','.mp4', '.m4v',
-                                      '.mp3','.ogg','.anx','.mpg','.avi']) or
+              enclosure[key][-4:].lower() in ['.mov', '.wmv', '.mp4', '.m4v',
+                                              '.mp3', '.ogg', '.anx', '.mpg',
+                                              '.avi', '.flv']) or
              (len(enclosure[key]) > 8 and
                   enclosure[key][-8:].lower() == '.torrent') or
              (len(enclosure[key]) > 5 and
