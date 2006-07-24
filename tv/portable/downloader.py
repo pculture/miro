@@ -16,6 +16,7 @@ import indexes
 import prefs
 import random
 import views
+import flashscraper
 
 # a hash of download ids that the server knows about.
 _downloads = {}
@@ -134,10 +135,16 @@ class RemoteDownloader(DDBObject):
     ##
     # This is the actual download thread.
     def runDownloader(self):
-        c = command.StartNewDownloadCommand(RemoteDownloader.dldaemon,
-                                            self.url, self.dlid, self.contentType)
-        c.send(block=False)
-        _downloads[self.dlid] = self
+        url = flashscraper.tryScrapingURL(self.url)
+        if url is not None:
+            self.url = url
+            c = command.StartNewDownloadCommand(RemoteDownloader.dldaemon,
+                                                self.url, self.dlid, self.contentType)
+            c.send(block=False)
+            _downloads[self.dlid] = self
+        else:
+            self.status["state"] = 'failed'
+            self.status["reasonFailed"] = 'Flash URL Scraping Error'
         self.signalChange()
 
     ##

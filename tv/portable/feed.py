@@ -737,7 +737,8 @@ class Feed(DDBObject):
               contentType.startswith('text/xml') or 
               contentType.startswith('application/xml') or
               (contentType.startswith('text/plain') and
-               info['updated-url'].endswith('.xml'))):
+               (info['updated-url'].endswith('.xml') or
+                info['updated-url'].endswith('.rss')))):
             #print " It's doesn't look like HTML..."
             html = info["body"]
             if info.has_key('charset'):

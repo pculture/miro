@@ -673,7 +673,7 @@ class Item(DDBObject):
     ##
     # returns string with the format of the video
     KNOWN_MIME_TYPES = ('audio', 'video')
-    KNOWN_MIME_SUBTYPES = ('mov', 'wmv', 'mp4', 'mp3', 'mpg', 'mpeg', 'avi')
+    KNOWN_MIME_SUBTYPES = ('mov', 'wmv', 'mp4', 'mp3', 'mpg', 'mpeg', 'avi', 'x-flv', 'x-msvideo')
     def getFormat(self, emptyForUnknown=True):
         try:
             enclosure = self.entry['enclosures'][0]
@@ -685,11 +685,11 @@ class Item(DDBObject):
             if extension.lower() == 'mp3':
                 return 'MP3'
             if enclosure.has_key('type') and len(enclosure['type']) > 0:
-                type, subtype = enclosure['type'].split('/')
-                type = type.lower()
-                if type in self.KNOWN_MIME_TYPES:
+                mtype, subtype = enclosure['type'].split('/')
+                mtype = mtype.lower()
+                if mtype in self.KNOWN_MIME_TYPES:
                     format = subtype.split(';')[0].upper()
-                    if type == 'audio':
+                    if mtype == 'audio':
                         format += ' AUDIO'
                     return format
             else:
@@ -947,23 +947,32 @@ class FileItem(Item):
         finally:
              self.signalChange()
 
+
+
 def isVideoEnclosure(enclosure):
     """
     Pass an enclosure dictionary to this method and it will return a boolean
     saying if the enclosure is a video or not.
     """
-    hasVideoType = (enclosure.has_key('type') and
-        (enclosure['type'].startswith('video/') or
-         enclosure['type'].startswith('audio/') or
-         enclosure['type'] == "application/ogg" or
-         enclosure['type'] == "application/x-annodex" or
-         enclosure['type'] == "application/x-bittorrent"))
-    hasVideoExtension = (enclosure.has_key('url') and
-        ((len(enclosure['url']) > 4 and
-          enclosure['url'][-4:].lower() in ['.mov','.wmv','.mp4', '.m4v',
+    return (_hasVideoType(enclosure) or
+            _hasVideoExtension(enclosure, 'url') or
+            _hasVideoExtension(enclosure, 'href'))
+
+def _hasVideoType(enclosure):
+    return (enclosure.has_key('type') and
+            (enclosure['type'].startswith('video/') or
+             enclosure['type'].startswith('audio/') or
+             enclosure['type'] == "application/ogg" or
+             enclosure['type'] == "application/x-annodex" or
+             enclosure['type'] == "application/x-bittorrent" or
+             enclosure['type'] == "application/x-shockwave-flash"))
+
+def _hasVideoExtension(enclosure, key):
+    return (enclosure.has_key(key) and
+            ((len(enclosure[key]) > 4 and
+              enclosure[key][-4:].lower() in ['.mov','.wmv','.mp4', '.m4v',
                                       '.mp3','.ogg','.anx','.mpg','.avi']) or
-         (len(enclosure['url']) > 8 and
-          enclosure['url'][-8:].lower() == '.torrent') or
-         (len(enclosure['url']) > 5 and
-          enclosure['url'][-5:].lower() == '.mpeg')))
-    return hasVideoType or hasVideoExtension
+             (len(enclosure[key]) > 8 and
+                  enclosure[key][-8:].lower() == '.torrent') or
+             (len(enclosure[key]) > 5 and
+                  enclosure[key][-5:].lower() == '.mpeg')))
