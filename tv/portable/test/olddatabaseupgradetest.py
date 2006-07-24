@@ -34,7 +34,8 @@ class TestConvert(DemocracyTestCase):
         # let's make sure that they are there at least.  Also, make sure the
         # sanity tests can recover from any errors
         self.assert_(len(objects) > 0)
-        databasesanity.checkSanity(objects, fixIfPossible=True)
+        databasesanity.checkSanity(objects, fixIfPossible=True, quiet=True,
+                reallyQuiet=True)
 
     def testConvert82(self):
         shutil.copyfile(resource.path("testdata/olddatabase-0.8.2"), 
@@ -68,5 +69,12 @@ class TestConvert(DemocracyTestCase):
     def testBug2685(self):
         # Database created by ben to simulate bug #2685
         shutil.copyfile(resource.path("testdata/olddatabase.bug.2685"),
+                self.tmpPath)
+        self.checkConversion()
+
+    def testBug3163(self):
+        # Database created by ben to simulate bug #3163 (channel guide doesn't
+        # have an id attribute).
+        shutil.copyfile(resource.path("testdata/olddatabase.bug.3163"),
                 self.tmpPath)
         self.checkConversion()

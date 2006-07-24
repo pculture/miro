@@ -101,7 +101,7 @@ class ManualFeedSingletonTest(SingletonTest):
         return (isinstance(obj, feed.Feed) and 
                 isinstance(obj.actualFeed, feed.ManualFeedImpl))
 
-def checkSanity(objectList, fixIfPossible=True, quiet=False):
+def checkSanity(objectList, fixIfPossible=True, quiet=False, reallyQuiet=False):
     """Do all sanity checks on a list of objects.
 
     If fixIfPossible is True, the sanity checks will try to fix errors.  If
@@ -113,6 +113,9 @@ def checkSanity(objectList, fixIfPossible=True, quiet=False):
     If quiet is True, we print to the log instead of poping up an error dialog
     on fixable problems.  We set this when we are converting old databases,
     since sanity errors are somewhat expected.
+
+    If reallyQuiet is True, won't even print out a warning on fixable
+    problems.
 
     Returns True if the database passed all sanity tests, false otherwise.
     """
@@ -144,7 +147,7 @@ def checkSanity(objectList, fixIfPossible=True, quiet=False):
         if fixIfPossible:
             if not quiet:
                 util.failed(when="While checking database", details=errorMsg)
-            else:
+            elif not reallyQuiet:
                 print "WARNING: Database sanity error"
                 print errorMsg
             for test in failedTests:

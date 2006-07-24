@@ -262,6 +262,10 @@ fakeClasses = {
     #
     # DownloaderFactory and StaticTab shouldn't be pickled, but I've seen
     # databases where it is.
+    # 
+    # We used to have classes called RSSFeed, ScraperFeed, etc.  Now we have
+    # the Feed class which contains a FeedImpl subclass.  Since this only
+    # happens on really old databases, we should just drop the old ones.
     'BitTorrent.ConvertedMetainfo.ConvertedMetainfo': DropItLikeItsHot,
     'downloader.DownloaderFactory': DropItLikeItsHot,
     'app.StaticTab': DropItLikeItsHot,
@@ -270,6 +274,11 @@ fakeClasses = {
     'downloader.BTDisplay': DropItLikeItsHot,
     'downloader.HTTPDownloader': DropItLikeItsHot,
     'scheduler.ScheduleEvent': DropItLikeItsHot,
+    'feed.RSSFeed': DropItLikeItsHot,
+    'feed.ScraperFeed': DropItLikeItsHot,
+    'feed.SearchFeed': DropItLikeItsHot,
+    'feed.DirectoryFeed': DropItLikeItsHot,
+    'feed.SearchDownloadsFeed': DropItLikeItsHot,
 }
 
 
@@ -472,6 +481,18 @@ def convertOldDatabase(databasePath):
     objects = [o[0] for o in objects]
     # drop any top-level DropItLikeItsHot instances
     objects = [o for o in objects if not hasattr(o, '__DropMeLikeItsHot')]
+    # Set obj.id for any objects missing it
+    idMissing = set()
+    lastId = 0
+    for o in objects:
+        if hasattr(o, 'id'):
+            if o.id > lastId:
+                lastId = o.id
+        else:
+            idMissing.add(o)
+    for o in idMissing:
+        lastId += 1
+        o.id = lastId
     # drop any downloaders that are referenced by items
     def dropItFilter(obj):
         return not hasattr(obj, '__DropMeLikeItsHot')

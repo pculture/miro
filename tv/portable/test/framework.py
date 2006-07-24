@@ -26,7 +26,7 @@ class DemocracyTestCase(unittest.TestCase):
                 print "util.failed called!"
                 print "args: %s kwargs: %s"  % (args, kwargs)
                 import traceback
-                traceback.print_exc()
+                traceback.print_stack()
                 raise Exception("util.failed called")
         util.failed = newUtilDotFailed
 
