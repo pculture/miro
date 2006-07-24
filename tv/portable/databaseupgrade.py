@@ -5,7 +5,7 @@ olddatabaseupgrade.py)
 """
 
 import schema
-chatter = True # set to False in the unittests
+import util
 
 class DatabaseTooNewError(Exception):
     """Error that we raise when we see a database that is newer than the
@@ -38,7 +38,7 @@ def upgrade(savedObjects, saveVersion, upgradeTo=None):
         raise DatabaseTooNewError(msg)
 
     while saveVersion < upgradeTo:
-        if chatter:
+        if util.chatter:
             print "upgrading database to version %s" % (saveVersion + 1)
         upgradeFunc = globals()['upgrade%d' % (saveVersion + 1)]
         thisChanged = upgradeFunc(savedObjects)

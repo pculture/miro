@@ -8,6 +8,7 @@ import databaseupgrade
 import item
 import feed
 import schema
+import shutil
 import storedatabase
 
 from test.framework import DemocracyTestCase
@@ -100,7 +101,6 @@ class SchemaTest(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)
         storedatabase.skipUpgrade = True
-        databaseupgrade.chatter = False
         self.lee = Human("lee", 25, 1.4, [], {'virtual bowling': 212})
         self.joe = Human("joe", 14, 1.4, [self.lee])
         self.forbesSt = House('45 Forbs St', 'Blue', [self.lee, self.joe],
@@ -329,8 +329,14 @@ class TestHighLevelFunctions(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)
         storedatabase.skipUpgrade = True
-        self.database = database.DynamicDatabase()
-        self.savePath = tempfile.mktemp()
+        self.savePath = os.path.join(tempfile.gettempdir(),
+                'democracy-temp-db')
+
+        if not os.path.exists(self.savePath):
+            os.makedirs(self.savePath)
+        self.database = database.defaultDatabase
+        self.database.liveStorage = storedatabase.LiveStorage(self.savePath,
+                restore=False)
 
         database.DDBObject.dd = self.database
         f = feed.Feed("http://feed.uk")
@@ -342,7 +348,7 @@ class TestHighLevelFunctions(DemocracyTestCase):
     def tearDown(self):
         storedatabase.skipUpgrade = False
         try:
-            os.unlink(self.savePath);
+            shutil.rmtree(self.savePath);
         except:
             pass
         DemocracyTestCase.tearDown(self)
@@ -356,26 +362,16 @@ class TestHighLevelFunctions(DemocracyTestCase):
             self.assertEquals(type(newObject), type(self.objects[i]))
 
     def saveDatabase(self):
-        storedatabase.saveDatabase(self.database, self.savePath)
+        self.database.liveStorage.saveDatabase()
 
     def restoreDatabase(self):
-        storedatabase.restoreDatabase(self.database, self.savePath, 
-                convertOnFail=False)
+        self.database.liveStorage = storedatabase.LiveStorage(self.savePath,
+                restore=False)
 
     def testSaveThenRestore(self):
         self.saveDatabase()
         self.restoreDatabase()
         self.checkDatabaseIsTheSame()
-
-    def testMissingDatabaseRestore(self):
-        # try to restore a database that isn't there.  Make sure we don't try
-        # to do anything to db
-        class CantTouchThis(object):
-            def __setattr__(self, attr, name):
-                raise TypeError("I shouldn't be messed with")
-            def __getattr__(self, attr):
-                raise TypeError("I shouldn't be messed with")
-        storedatabase.restoreDatabase(CantTouchThis(), self.savePath, False)
 
 if __name__ == '__main__':
     unittest.main()

@@ -30,8 +30,12 @@ class DOMTracker:
         self.callList.append({'name':'addItemBefore','xml':xml,'id':id})
     def removeItem(self, id):
         self.callList.append({'name':'removeItem','id':id})
+    def removeItems(self, ids):
+        self.callList.append({'name':'removeItems','ids':ids})
     def changeItem(self, id, xml):
         self.callList.append({'name':'changeItem','xml':xml,'id':id})
+    def changeItems(self, pairs):
+        self.callList.append({'name':'changeItems','pairs':pairs})
     def hideItem(self, id):
         self.callList.append({'name':'hideItem','id':id})
     def showItem(self, id):
@@ -143,14 +147,17 @@ class ViewTest(DemocracyTestCase):
         match = self.itemPattern.findall(self.domHandle.callList[0]['xml'])
         self.assertEqual(len(match),1)
         self.x.signalChange()
+        handle.updateRegions[0].doChange()
         self.assertEqual(len(self.domHandle.callList),2)
         self.assertEqual(self.domHandle.callList[1]['name'],'changeItem')
         self.assertEqual(self.domHandle.callList[1]['id'],match[0])
         temp = HTMLObject('<span>object</span>')
+        handle.updateRegions[0].doChange()
         self.assertEqual(len(self.domHandle.callList),3)
         self.assertEqual(self.domHandle.callList[2]['name'],'changeItem')
         self.assertEqual(self.domHandle.callList[2]['id'],match[0])
         temp.remove()
+        handle.updateRegions[0].doChange()
         self.assertEqual(len(self.domHandle.callList),4)
         self.assertEqual(self.domHandle.callList[3]['name'],'changeItem')
         self.assertEqual(self.domHandle.callList[3]['id'],match[0])
@@ -202,22 +209,34 @@ class ViewTest(DemocracyTestCase):
         self.assertEqual(len(match),4)
 
         self.x.signalChange()
+        handle.trackedViews[0].callback()
+        handle.trackedViews[1].callback()
         self.x.remove()
+        handle.trackedViews[0].callback()
+        handle.trackedViews[1].callback()
         self.assertEqual(len(self.domHandle.callList),6)
-        self.assertEqual(self.domHandle.callList[2]['name'],'changeItem')
-        self.assertEqual(self.domHandle.callList[3]['name'],'changeItem')
-        self.assert_(((self.domHandle.callList[2]['id'] in items1) and
-                          (self.domHandle.callList[3]['id'] in items2)) or
-                         ((self.domHandle.callList[2]['id'] in items2) and
-                          (self.domHandle.callList[3]['id'] in items1)))
-        self.assertEqual(self.domHandle.callList[4]['name'],'removeItem')
-        self.assertEqual(self.domHandle.callList[5]['name'],'removeItem')
-        self.assert_(((self.domHandle.callList[4]['id'] in items1) and
-                          (self.domHandle.callList[5]['id'] in items2)) or
-                         ((self.domHandle.callList[4]['id'] in items2) and
-                          (self.domHandle.callList[5]['id'] in items1)))
+        self.assertEqual(self.domHandle.callList[2]['name'],'changeItems')
+        self.assertEqual(self.domHandle.callList[3]['name'],'changeItems')
+        self.assertEqual(self.domHandle.callList[4]['name'],'removeItems')
+        self.assertEqual(self.domHandle.callList[5]['name'],'removeItems')
+        changed1 = [p[0] for p in self.domHandle.callList[2]['pairs']]
+        changed2 = [p[0] for p in self.domHandle.callList[3]['pairs']]
+        self.assertEqual(len(changed1), 1)
+        self.assertEqual(len(changed2), 1)
+        self.assert_((changed1[0] in items1 and changed2[0] in items2) or
+                changed1[0] in items2 and changed2[0] in items1)
+        self.assertEqual(self.domHandle.callList[4]['name'],'removeItems')
+        self.assertEqual(self.domHandle.callList[5]['name'],'removeItems')
+        self.assertEquals(len(self.domHandle.callList[4]['ids']), 1)
+        self.assertEquals(len(self.domHandle.callList[5]['ids']), 1)
+        self.assert_(((self.domHandle.callList[4]['ids'][0] in items1) and
+                          (self.domHandle.callList[5]['ids'][0] in items2)) or
+                         ((self.domHandle.callList[4]['ids'][0] in items2) and
+                          (self.domHandle.callList[5]['ids'][0] in items1)))
 
         self.x = HTMLObject('<span>object</span>')
+        handle.trackedViews[0].callback()
+        handle.trackedViews[1].callback()
         self.assertEqual(len(self.domHandle.callList),8)
         self.assertEqual(self.domHandle.callList[6]['name'],'addItemBefore')
         match.extend(self.itemPattern.findall(self.domHandle.callList[6]['xml']))

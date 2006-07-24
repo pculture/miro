@@ -14,6 +14,9 @@ import sys
 from BitTornado.clock import clock
 from BitTornado.bencode import bdecode, bencode
 
+# Should we print out warning messages.  Turn off in the unit tests.
+chatter = True
+
 inDownloader = False
 # this gets set to True when we're in the download process.
 

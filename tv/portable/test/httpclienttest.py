@@ -344,11 +344,9 @@ class HTTPClientTestBase(AsyncSocketTest):
                 method='GET', path='/bar/baz;123?a=b') 
         self.authDelegate = TestingAuthDelegate()
         dialogs.setDelegate(self.authDelegate)
-        download_utils.chatter = False
 
     def tearDown(self):
         # clear out any HTTPAuth objects in there
-        download_utils.chatter = True
         AsyncSocketTest.tearDown(self)
 
 class HTTPClientTest(HTTPClientTestBase):
@@ -942,7 +940,7 @@ Below this line, is 1000 repeated lines of 0-9.
         def bodyDataCallback(response):
             reqId.cancel()
             eventloop.quit()
-        url = 'http://www.getdemocracy.com/images/layout/linux-screen.jpg'
+        url = 'http://www.getdemocracy.com/images/linux-screen.jpg'
         reqId = httpclient.grabURL(url, self.callback, self.errback,
                 bodyDataCallback=bodyDataCallback)
         self.failedCalled = False
@@ -1430,6 +1428,8 @@ class SocketCallbackTest(EventLoopTest):
         def callback():
             self.count += 1
             if self.count == 1:
+                eventloop.removeWriteCallback(s1)
+                eventloop.addWriteCallback(s1, callback)
                 eventloop.removeWriteCallback(s2)
                 eventloop.addWriteCallback(s2, callback)
         eventloop.addWriteCallback(s1, callback)

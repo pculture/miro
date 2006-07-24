@@ -1,4 +1,5 @@
 import re
+import util
 import urllib2
 import xml.dom.minidom
 
@@ -35,8 +36,9 @@ def parseContent(content):
         return urls
     except:
         import traceback
-        print "WARNING: Error parsing OPML content..."
-        traceback.print_exc()
+        if util.chatter:
+            print "WARNING: Error parsing OPML content..."
+            traceback.print_exc()
         return None
 
 # =========================================================================

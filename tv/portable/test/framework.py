@@ -6,6 +6,9 @@ import frontend
 import app
 import downloader
 import util
+import databaseupgrade
+import storedatabase
+import subscription
 
 class HadToStopEventLoop(Exception):
     pass
@@ -13,6 +16,7 @@ class HadToStopEventLoop(Exception):
 class DemocracyTestCase(unittest.TestCase):
     def setUp(self):
         # reset the event loop
+        util.chatter = False
         database.resetDefaultDatabase()
         eventloop._eventLoop.threadPool.closeThreads()
         eventloop._eventLoop = eventloop.EventLoop() 
@@ -31,6 +35,7 @@ class DemocracyTestCase(unittest.TestCase):
         util.failed = newUtilDotFailed
 
     def tearDown(self):
+        util.chatter = True
         # this prevents weird errors when we quit
         eventloop._eventLoop.threadPool.closeThreads()
 

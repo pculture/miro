@@ -5,7 +5,10 @@ from os.path import expanduser
 import random
 import config
 import prefs
+import os
+import shutil
 import time
+import tempfile
 import storedatabase
 from threading import Thread
 
@@ -378,16 +381,24 @@ class CallbackViewTestCase(DemocracyTestCase):
 class SaveViewTestCase(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)
+        self.tempdb = os.path.join(tempfile.gettempdir(), 'democracy-temp-db')
+        if not os.path.exists(self.tempdb):
+            os.makedirs(self.tempdb)
         self.everything = database.defaultDatabase
+        self.everything.liveStorage = storedatabase.LiveStorage(self.tempdb,
+                restore=False)
         self.x = database.DDBObject()
         self.y = database.DDBObject()
+    def tearDown(self):
+        shutil.rmtree(self.tempdb)
+        DemocracyTestCase.tearDown(self)
     def testSaveRestore(self):
-        storedatabase.saveDatabase(self.everything)
+        self.everything.liveStorage.saveDatabase()
         self.z = database.DDBObject()
         self.zz = database.DDBObject()
         last = self.zz.getID()
         self.x.remove()
-        storedatabase.restoreDatabase(self.everything)
+        self.everything.liveStorage = storedatabase.LiveStorage(self.tempdb)
         self.assertEqual(self.everything.len(),2)
         assert (self.everything[0].getID() == self.y.getID() or
                 self.everything[0].getID() == self.x.getID())
@@ -399,34 +410,15 @@ class SaveViewTestCase(DemocracyTestCase):
         assert database.DDBObject().getID() >= last
     def testLastID(self):
         last = self.y.getID()
-        storedatabase.saveDatabase(self.everything)
+        self.everything.liveStorage.saveDatabase()
         # Simulate restarting app
         self.y.remove()
         self.x.remove()
         database.DDBObject.lastID = 0 # This is implementation specific and
                              # needs to be updated when the
                              # implementation changes
-        storedatabase.restoreDatabase(self.everything)
-        assert database.DDBObject().getID() >= last
-    def testBackup(self):
-        storedatabase.saveDatabase(self.everything)
-        storedatabase.backedUp = False
-        storedatabase.saveDatabase(self.everything)
-        remove(config.get(prefs.DB_PATHNAME))
-        self.z = database.DDBObject()
-        self.zz = database.DDBObject()
-        last = self.zz.getID()
-        self.x.remove()
-        storedatabase.restoreDatabase(self.everything,config.get(prefs.DB_PATHNAME) + '.bak')
-        self.assertEqual(self.everything.len(),2)
-        assert (self.everything[0].getID() == self.y.getID() or
-                self.everything[0].getID() == self.x.getID())
-        if self.everything[0].getID() == self.y.getID():
-            self.assertEqual(self.everything[1].getID(),self.x.getID())
-        if self.everything[0].getID() == self.x.getID():
-            self.assertEqual(self.everything[1].getID(),self.y.getID())
-        self.assertEqual(self.everything[2],None)
-        assert database.DDBObject().getID() >= last
+        self.everything.liveStorage = storedatabase.LiveStorage(self.tempdb)
+        assert database.DDBObject().getID() > last
 
 class MapFilterRemoveViewTestCase(DemocracyTestCase):
     def setUp(self):

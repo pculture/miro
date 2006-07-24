@@ -29,8 +29,8 @@ class TestingDownloader(download.HTTPDownloader):
 class HTTPDownloaderTest(schedulertest.EventLoopTest):
     def setUp(self):
         super(HTTPDownloaderTest, self).setUp()
-        download.nextFreeFilename = testingNextFreeFilename
         download.chatter = False
+        download.nextFreeFilename = testingNextFreeFilename
         download._downloads = {}
         allConnections = []
         for conns in httpclient.HTTPClient.connectionPool.connections.values():

@@ -14,7 +14,6 @@ from test.framework import DemocracyTestCase
 class TestConvert(DemocracyTestCase):
     def setUp(self):
         storedatabase.skipOnRestore = True
-        databaseupgrade.chatter = False
         self.utilDotFailedOkay = True
         self.tmpPath = tempfile.mktemp()
         DemocracyTestCase.setUp(self)

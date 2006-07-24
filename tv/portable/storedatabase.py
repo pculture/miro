@@ -26,8 +26,8 @@ process.
 
 import cPickle
 import os
-import shutil
 import traceback
+import shutil
 
 import config
 import database
@@ -443,7 +443,6 @@ def getObjects(pathname, convertOnFail):
     """Restore a database object."""
 
     pathname = os.path.expanduser(pathname)
-    checkSanityQuietly = False
     if not os.path.exists(pathname):
         # maybe we crashed in saveDatabase() after deleting the real file, but
         # before renaming the temp file?
@@ -461,7 +460,6 @@ def getObjects(pathname, convertOnFail):
             olddatabaseupgrade.convertOldDatabase(pathname)
             objects = restoreObjectList(pathname)
             print "*** Conversion Successfull ***"
-            checkSanityQuietly = True
         else:
             raise
     except ImportError, e:
@@ -480,7 +478,7 @@ def getObjects(pathname, convertOnFail):
             raise
 
     try:
-        databasesanity.checkSanity(objects, quiet=checkSanityQuietly)
+        databasesanity.checkSanity(objects, quiet=True)
     except databasesanity.DatabaseInsaneError, e:
         util.failedExn("When restoring database", e)
         # if the database fails the sanity check, try to restore it anyway.
@@ -503,40 +501,47 @@ class LiveStorage:
     TRANSACTION_TIMEOUT = 10
     TRANSACTION_NAME = "Save database"
 
-    def __init__(self):
+    def __init__(self, dbPath=None, restore=True):
         try:
             self.txn = None
             self.dc = None
             self.toUpdate = set()
             self.toRemove = set()
             self.errorState = False
+            if dbPath is not None:
+                self.dbPath = dbPath
+            else:
+                self.dbPath = config.get(prefs.BSDDB_PATHNAME)
             try:
-                os.makedirs(config.get(prefs.BSDDB_PATHNAME))
+                os.makedirs(self.dbPath)
             except:
                 pass
             start = clock()
             self.dbenv = bsddb.db.DBEnv()
             self.dbenv.set_flags (bsddb.db.DB_AUTO_COMMIT | bsddb.db.DB_TXN_NOSYNC, True)
             self.dbenv.set_lg_max (1024 * 1024)
-            self.dbenv.open (config.get(prefs.BSDDB_PATHNAME), bsddb.db.DB_INIT_LOG | bsddb.db.DB_INIT_MPOOL | bsddb.db.DB_INIT_TXN | bsddb.db.DB_RECOVER | bsddb.db.DB_CREATE)
+            self.dbenv.open (self.dbPath, bsddb.db.DB_INIT_LOG | bsddb.db.DB_INIT_MPOOL | bsddb.db.DB_INIT_TXN | bsddb.db.DB_RECOVER | bsddb.db.DB_CREATE)
             self.db = bsddb.db.DB(self.dbenv)
             self.closed = False
-            try:
-                self.db.open ("database")
-                self.version = int(self.db[VERSION_KEY])
-            except (bsddb.db.DBNoSuchFileError, KeyError):
+            if restore:
                 try:
-                    self.db.close()
-                except:
-                    pass
-                self.db = None
-                restoreDatabase()
-                self.saveDatabase()
+                    self.db.open ("database")
+                    self.version = int(self.db[VERSION_KEY])
+                except (bsddb.db.DBNoSuchFileError, KeyError):
+                    try:
+                        self.db.close()
+                    except:
+                        pass
+                    self.db = None
+                    restoreDatabase()
+                    self.saveDatabase()
+                else:
+                    self.loadDatabase()
             else:
-                self.loadDatabase()
+                self.saveDatabase()
             eventloop.addIdle(self.checkpoint, "Remove Unused Database Logs")
             end = clock()
-            if end - start > 0.05:
+            if end - start > 0.05 and util.chatter:
                 print "Database load slow: %.3f" % (end - start,)
         except bsddb.db.DBNoSpaceError:
             frontend.exit(28)
