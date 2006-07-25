@@ -1,2 +1,14 @@
 content dtv file:content/
+locale dtv da file:locale/da/
+locale dtv de file:locale/de/
 locale dtv en-US file:locale/en-US/
+locale dtv es file:locale/es/
+locale dtv eu file:locale/eu/
+locale dtv fr file:locale/fr/
+locale dtv it file:locale/it/
+locale dtv ka file:locale/ka/
+locale dtv nb file:locale/nb/
+locale dtv pl file:locale/pl/
+locale dtv pt file:locale/pt/
+locale dtv pt-BR file:locale/pt_BR/
+locale dtv ro file:locale/ro/

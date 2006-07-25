@@ -679,6 +679,15 @@ class bdist_xul_dumb(Command, Common):
         shutil.copy2("Democracy.nsi", self.dist_dir)
         shutil.copy2("Democracy.ico", self.dist_dir)
 
+
+        locale_dir = os.path.join (self.appResources, "locale")
+
+        for source in glob (os.path.join (locale_dir, "*.mo")):
+            lang = os.path.basename(posource)[:-3]
+            dest = os.path.join (self.dist_dir, 'resources', 'locale', lang, "LC_MESSAGES", "democracyplayer.mo")
+            self.mkpath(os.path.dirname(dest))
+            self.copy_file(source, dest)
+
         # NEEDS: set permissions/attributes on everything uniformly?
 
         # Create the top-level executable, and rename

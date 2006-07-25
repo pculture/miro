@@ -1,6 +1,7 @@
 import sys
 import frontend
 import time
+import gettext
 import config
 import prefs
 
@@ -17,6 +18,9 @@ class Application:
 
     def Run(self):
         HTMLDisplay.initTempDir()
+        gettext.bindtextdomain("democracyplayer", resource.path("../../locale"))
+        gettext.textdomain("democracyplayer")
+        gettext.bind_textdomain_codeset("democracyplayer","UTF-8")
         import psyco
         #psyco.log('\\dtv.psyco')
         psyco.profile(.03)
