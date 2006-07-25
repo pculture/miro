@@ -684,7 +684,7 @@ class bdist_xul_dumb(Command, Common):
         locale_dir = os.path.join (self.appResources, "locale")
 
         for source in glob (os.path.join (locale_dir, "*.mo")):
-            lang = os.path.basename(posource)[:-3]
+            lang = os.path.basename(source)[:-3]
             dest = os.path.join (self.dist_dir, 'resources', 'locale', lang, "LC_MESSAGES", "democracyplayer.mo")
             self.mkpath(os.path.dirname(dest))
             self.copy_file(source, dest)
