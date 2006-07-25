@@ -228,7 +228,7 @@ def failed(when, withExn = False, details = None):
     else:
         from dl_daemon import command, daemon
         c = command.DownloaderErrorCommand(daemon.lastDaemon, report)
-        c.send(block=False)
+        c.send()
 
 class AutoflushingStream:
     """Converts a stream to an auto-flushing one.  It behaves in exactly the

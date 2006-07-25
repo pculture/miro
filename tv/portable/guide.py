@@ -88,6 +88,7 @@ class ChannelGuide(DDBObject):
     # Called by pickle during deserialization
     def onRestore(self):
         self.loadedThisSession = False
+        self.signalChange()
         self.dc = None
 
         # Try to get a fresh version.
@@ -181,6 +182,7 @@ class ChannelGuide(DDBObject):
                 app.controller.selectTab(currentTab.id)
 
             self.loadedThisSession = True
+            self.signalChange()
         finally:
             self.dc = eventloop.addTimeout(3600, self.update, "Channel Guide Update")
 

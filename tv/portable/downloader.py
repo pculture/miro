@@ -86,11 +86,14 @@ class RemoteDownloader(DDBObject):
                 contentType = enclosureContentType
         if contentType is None:
             self.contentType = ""
-            self.getContentType()
         else:
             self.contentType = contentType
-            self.runDownloader()
         DDBObject.__init__(self)
+
+        if self.contentType == '':
+            self.getContentType()
+        else:
+            self.runDownloader()
 
     def signalChange (self, needsSave=True):
         for item in self.itemList:
@@ -140,7 +143,7 @@ class RemoteDownloader(DDBObject):
             self.url = url
             c = command.StartNewDownloadCommand(RemoteDownloader.dldaemon,
                                                 self.url, self.dlid, self.contentType)
-            c.send(block=False)
+            c.send()
             _downloads[self.dlid] = self
         else:
             self.status["state"] = 'failed'
@@ -153,7 +156,7 @@ class RemoteDownloader(DDBObject):
         if _downloads.has_key(self.dlid):
             c = command.PauseDownloadCommand(RemoteDownloader.dldaemon,
                                              self.dlid)
-            c.send(block=block)
+            c.send()
         else:
             self.status["state"] = "paused"
             self.signalChange()
@@ -166,7 +169,7 @@ class RemoteDownloader(DDBObject):
             if _downloads.has_key(self.dlid):
                 c = command.StopDownloadCommand(RemoteDownloader.dldaemon,
                                                 self.dlid)
-                c.send(block=False)
+                c.send()
                 del _downloads[self.dlid]
             else:
                 self.status["state"] = "stopped"
@@ -190,7 +193,7 @@ class RemoteDownloader(DDBObject):
             if _downloads.has_key(self.dlid):
                 c = command.StartDownloadCommand(RemoteDownloader.dldaemon,
                                                  self.dlid)
-                c.send(block=False)
+                c.send()
             else:
                 self.restart()
                 self.signalChange()
@@ -199,7 +202,7 @@ class RemoteDownloader(DDBObject):
         if _downloads.has_key(self.dlid):
             c = command.MigrateDownloadCommand(RemoteDownloader.dldaemon,
                                                self.dlid)
-            c.send(block=False)
+            c.send()
         else:
             # downloader doesn't have our dlid.  Move the file ourself.
             try:
@@ -337,7 +340,7 @@ URL was %s""" % self.url
             _downloads[self.dlid] = self
             c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, 
                                                  self.status)
-            c.send(retry = True, block = False)
+            c.send()
 
 def cleanupIncompleteDownloads():
     downloadDir = os.path.join(config.get(prefs.MOVIES_DIRECTORY),

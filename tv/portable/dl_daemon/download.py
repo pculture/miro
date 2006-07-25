@@ -186,7 +186,7 @@ def startDownload(dlid):
     except KeyError:  # There is no download with this id
         err= "in startDownload(): no downloader with id %s" % dlid
         c = command.DownloaderErrorCommand(daemon.lastDaemon, err)
-        c.send(block=False)
+        c.send()
         return True
     return download.start()
 
@@ -238,7 +238,7 @@ def restoreDownloader(downloader):
     else:
         err = "in restoreDownloader(): unknown dlerType: %s" % dlerType
         c = command.DownloaderErrorCommand(daemon.lastDaemon, err)
-        c.send(block=False)
+        c.send()
         return
 
     _downloads[downloader['dlid']] = dl
@@ -278,7 +278,7 @@ class BGDownloader:
 
     def updateClient(self):
         x = command.UpdateDownloadStatus(daemon.lastDaemon, self.getStatus())
-        return x.send(block = False, retry = False)
+        return x.send()
         
     ##
     # Returns a reasonable filename for saving the given url

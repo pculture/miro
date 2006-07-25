@@ -13,13 +13,9 @@ class Command:
     def setDaemon(self, daemon):
         self.daemon = daemon
 
-    def send(self, block = True, retry = True, callback=None):
+    def send(self, callback=None):
         if self.daemon.shutdown:
             return
-        if block:
-            print "WARNING: ignoring blocking command %s" % repr(self)
-        # FIXME: Once everything is in the same thread we can remove
-        #        the addIdle()
         eventloop.addIdle(lambda : self.daemon.send(self, callback), "sending command %s" % repr(self))
 
     def setReturnValue(self, ret):
@@ -60,7 +56,7 @@ class FindHTTPAuthCommand(Command):
         id, args = self.args[0], self.args[1:]
         def callback(authHeader):
             c = GotHTTPAuthCommand(self.daemon, id, authHeader)
-            c.send(block=False)
+            c.send()
         httpauth.findHTTPAuth(callback, *args)
 
 class AskForHTTPAuthCommand(Command):
@@ -69,7 +65,7 @@ class AskForHTTPAuthCommand(Command):
         id, args = self.args[0], self.args[1:]
         def callback(authHeader):
             c = GotHTTPAuthCommand(self.daemon, id, authHeader)
-            c.send(block=False)
+            c.send()
         httpauth.askForHTTPAuth(callback, *args)
 
 class UpdateDownloadStatus(Command):
@@ -158,5 +154,5 @@ class ShutDownCommand(Command):
             if thread != threading.currentThread() and not thread.isDaemon():
                 thread.join()
         c = ShutDownResponseCommand(self.daemon)
-        c.send(block=False, callback=self.response_sent)
+        c.send(callback=self.response_sent)
         self.daemon.shutdown = True
