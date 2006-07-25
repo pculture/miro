@@ -533,7 +533,12 @@ class LiveStorage:
                     except:
                         pass
                     self.db = None
-                    restoreDatabase()
+                    try:
+                        restoreDatabase()
+                    except:
+                        print "WARNING: ERROR RESTORING OLD DATABASE"
+                        import traceback
+                        traceback.print_exc()
                     self.saveDatabase()
                 else:
                     self.loadDatabase()
