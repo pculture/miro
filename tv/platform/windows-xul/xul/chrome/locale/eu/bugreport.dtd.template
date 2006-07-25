@@ -1,0 +1,10 @@
+<!ENTITY nbsp                " ">
+<!ENTITY rsaquo              "'">
+
+<!ENTITY bugreport.title     "Akats bat aurkitu duzu Democracyn!">
+<!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
+information into our bug tracker and tell us what you were doing when the
+problem occurred.">
+<!ENTITY bugreport.openbugtracker "Akats jarraitzailea ireki">
+<!ENTITY bugreport.copytoclipboard "Log-a copiatu (portapapeles)">
+<!ENTITY bugreport.pleaserestart "Hortaz, mesedez berrarazi Democracy Player (edo tankerako erroreak jasotzen jarraituko duzu). Barkatu eragozpenak. Democracy Player oraindik beta egoeran dago, baina zure laguntzarekin arazoak azkar konpontzen ditugu!">

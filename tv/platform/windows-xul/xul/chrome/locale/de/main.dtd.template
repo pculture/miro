@@ -1,0 +1,5 @@
+<!ENTITY nbsp                " ">
+<!ENTITY rsaquo              "'">
+
+<!ENTITY main.title          "$langerProgName">
+<!ENTITY main.about          "Über $longAppName">

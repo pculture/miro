@@ -1,0 +1,8 @@
+<!ENTITY nbsp                " ">
+<!ENTITY rsaquo              "\"">
+
+<!ENTITY canscrape.title     "Canal não compatível com o Democracy!">
+<!ENTITY canscrape.body      "Mas faremos o melhor que pudermos para tentar capturar os arquivos. Pode levar um pouco mais de tempo para listar os vídeos, e as descrições podem parecer engraçadas.">
+
+<!ENTITY canscrape.prefix    "Por favor contate os veiculadores do">
+<!ENTITY canscrape.suffix    "e verifique se eles podem fornecer uma fonte em formato compatível com o Democracy.">
