@@ -346,10 +346,9 @@ class ChannelGuideSchema(DDBObjectSchema):
     fields = DDBObjectSchema.fields + [
         ('sawIntro', SchemaBool()),
         ('cachedGuideBody', SchemaString(noneOk=True)),
-        ('loadedThisSession', SchemaBool()),
     ]
 
-VERSION = 10
+VERSION = 11
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,

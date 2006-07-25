@@ -276,7 +276,7 @@ class install_data (distutils.command.install_data.install_data):
         locale_dir = os.path.join (resource_dir, "locale")
 
         for source in glob (os.path.join (locale_dir, "*.mo")):
-            lang = os.path.basename(posource)[:-3]
+            lang = os.path.basename(source)[:-3]
             dest = '/usr/share/locale/%s/LC_MESSAGES/democracyplayer.mo' % lang
             if self.root:
                 dest = change_root(self.root, dest)

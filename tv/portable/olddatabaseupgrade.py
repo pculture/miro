@@ -274,6 +274,7 @@ fakeClasses = {
     'downloader.BTDisplay': DropItLikeItsHot,
     'downloader.HTTPDownloader': DropItLikeItsHot,
     'scheduler.ScheduleEvent': DropItLikeItsHot,
+    'feed.UniversalFeed' : DropItLikeItsHot,
     'feed.RSSFeed': DropItLikeItsHot,
     'feed.ScraperFeed': DropItLikeItsHot,
     'feed.SearchFeed': DropItLikeItsHot,
