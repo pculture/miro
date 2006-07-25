@@ -15,7 +15,7 @@ def findHTTPAuth(callback, host, path):
     waitingHTTPAuthCallbacks[id] = callback
     from dl_daemon import daemon
     c = command.FindHTTPAuthCommand(daemon.lastDaemon, id, host, path)
-    c.send(block=False)
+    c.send()
 
 def askForHTTPAuth(callback, host, path, authScheme):
     id = requestIdGenerator.next()
@@ -23,4 +23,4 @@ def askForHTTPAuth(callback, host, path, authScheme):
     from dl_daemon import daemon
     c = command.AskForHTTPAuthCommand(daemon.lastDaemon, id, host, path,
             authScheme)
-    c.send(block=False)
+    c.send()
