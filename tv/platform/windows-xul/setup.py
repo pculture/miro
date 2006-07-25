@@ -5,6 +5,7 @@ import sys
 import string
 import subprocess
 import zipfile as zip
+from glob import glob
 
 ###############################################################################
 ## Paths and configuration                                                   ##
