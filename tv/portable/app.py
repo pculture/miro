@@ -789,7 +789,7 @@ class Controller (frontend.Application):
         tabChanged = ((oldSelected == None) != (newSelected == None)) or (oldSelected and newSelected and oldSelected.id != newSelected.id)
         if tabChanged: # Tab selection has changed! Deal.
             # Redraw the old and new tabs
-            if oldSelected:
+            if oldSelected and oldSelected.obj.idExists():
                 oldSelected.redraw()
             if newSelected:
                 newSelected.redraw()

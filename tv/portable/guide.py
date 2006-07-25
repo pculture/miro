@@ -88,7 +88,6 @@ class ChannelGuide(DDBObject):
     # Called by pickle during deserialization
     def onRestore(self):
         self.loadedThisSession = False
-        self.signalChange()
         self.dc = None
 
         # Try to get a fresh version.

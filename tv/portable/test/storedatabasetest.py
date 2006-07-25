@@ -325,7 +325,7 @@ class UpgradeTest(SchemaTest):
         newDb = storedatabase.restoreObjectList(self.savePath,
                 self.nextGenObjectSchemas)
 
-class TestHighLevelFunctions(DemocracyTestCase):
+class LiveStorageTest(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)
         storedatabase.skipUpgrade = True
@@ -339,11 +339,6 @@ class TestHighLevelFunctions(DemocracyTestCase):
                 restore=False)
 
         database.DDBObject.dd = self.database
-        f = feed.Feed("http://feed.uk")
-        i = item.Item(f.id, {})
-        i2 = item.Item(f.id, {})
-        self.objects = [f, i, i2]
-        database.DDBObject.dd = database.defaultDatabase
 
     def tearDown(self):
         storedatabase.skipUpgrade = False
@@ -351,7 +346,33 @@ class TestHighLevelFunctions(DemocracyTestCase):
             shutil.rmtree(self.savePath);
         except:
             pass
-        DemocracyTestCase.tearDown(self)
+
+
+class TestConstraintChecking(LiveStorageTest):
+    def testConstraintCheck(self):
+        # test creating an item with an invalid feed id
+        self.assertRaises(database.DatabaseConstraintError,
+                item.Item, 123123123, {})
+
+    def testConstraintCheck2(self):
+        # test changing an item to have an invalid feed id
+        f = feed.Feed("http://feed.uk")
+        i = item.Item(f.id, {})
+        i.feed_id = 123456789
+        self.assertRaises(database.DatabaseConstraintError, i.signalChange)
+
+    def testUpdateAfterRemove(self):
+        obj = database.DDBObject()
+        obj.remove()
+        self.assertRaises(database.DatabaseConstraintError, obj.signalChange)
+
+class TestHighLevelFunctions(LiveStorageTest):
+    def setUp(self):
+        LiveStorageTest.setUp(self)
+        f = feed.Feed("http://feed.uk")
+        i = item.Item(f.id, {})
+        i2 = item.Item(f.id, {})
+        self.objects = [f, i, i2]
 
     def checkDatabaseIsTheSame(self):
         # We can't directly compare objects, since that would compare their
@@ -372,6 +393,7 @@ class TestHighLevelFunctions(DemocracyTestCase):
         self.saveDatabase()
         self.restoreDatabase()
         self.checkDatabaseIsTheSame()
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -597,9 +597,7 @@ class Feed(DDBObject):
         self.download = None
         self.iconCache = IconCache(self, is_vital = True)
         self.informOnError = True
-        self.generateFeed(True)
         self.dd.addAfterCursor(self)
-        self.generateFeed(True)
         self.generateFeed(True)
 
     # Returns javascript to mark the feed as viewed

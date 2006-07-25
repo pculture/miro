@@ -31,7 +31,8 @@ import sys
 import time
 
 PIPELINING_ENABLED = True
-SOCKET_READ_TIMEOUT = 30
+SOCKET_READ_TIMEOUT = 60
+SOCKET_INITIAL_READ_TIMEOUT = 30
 
 # This pattern matches all possible strings.  I promise.
 URIPattern = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
@@ -172,6 +173,7 @@ class AsyncSocket(object):
         self.timedOut = False
         self.connectionErrback = None
         self.disableReadTimeout = False
+        self.readSomeData = False
         self.name = ""
 
     def __str__(self):
@@ -185,8 +187,12 @@ class AsyncSocket(object):
             return
         if self.readTimeout is not None:
             self.stopReadTimeout()
-        self.readTimeout = eventloop.addTimeout(SOCKET_READ_TIMEOUT,
-                self.onReadTimeout, "AsyncSocket.onReadTimeout")
+        if self.readSomeData:
+            timeout = SOCKET_READ_TIMEOUT
+        else:
+            timeout = SOCKET_INITIAL_READ_TIMEOUT
+        self.readTimeout = eventloop.addTimeout(timeout, self.onReadTimeout,
+                "AsyncSocket.onReadTimeout")
 
     def stopReadTimeout(self):
         if self.readTimeout is not None:
@@ -341,6 +347,7 @@ class AsyncSocket(object):
             if self.closeCallback:
                 trapCall(self, self.closeCallback, self, socket.SHUT_RD)
         else:
+            self.readSomeData = True
             trapCall(self, self.readCallback, data)
 
     def handleEarlyClose(self, operation):

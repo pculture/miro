@@ -18,6 +18,13 @@ import threading
 
 import config
 
+
+class DatabaseConstraintError(Exception):
+    """Raised when a DDBObject fails its constraint checking during
+    signalChange().
+    """
+    pass
+
 ##
 # Raised when an attempt is made to restore a database newer than the
 # one we support
@@ -949,6 +956,7 @@ class DDBObject:
         DDBObject.lastID = DDBObject.lastID + 1
         self.id =  DDBObject.lastID
         if add:
+            self.checkConstraints()
             self.dd.addAfterCursor(self)
 
     ##
@@ -977,10 +985,22 @@ class DDBObject:
     def confirmDBThread(self):
         confirmDBThread()
 
+    def checkConstraints(self):
+        """Subclasses can override this method to do constraint checking
+        before they get saved to disk.  They should raise a
+        DatabaseConstraintError on problems.
+        """
+        pass
+
     ##
     # Call this after you change the object
     def signalChange(self, needsSave=True):
         self.dd.confirmDBThread()
+        self.checkConstraints()
+        if not self.dd.idExists(self.id):
+            msg = "signalChange() called on non-existant object (id is %s)" \
+                    % self.id
+            raise DatabaseConstraintError(msg)
         self.dd.saveCursor()
         try:
             self.dd.resetCursor()

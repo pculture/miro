@@ -11,13 +11,15 @@ import traceback
 
 from feedparser import FeedParserDict
 
-from database import DDBObject, defaultDatabase
+from database import DDBObject, defaultDatabase, ObjectNotFoundError
+from database import DatabaseConstraintError
 from iconcache import IconCache
 from templatehelper import escape
 import downloader
 import config
 import dialogs
 import eventloop
+import feed
 import filters
 import prefs
 import resource
@@ -57,6 +59,16 @@ class Item(DDBObject):
         self.creationTime = datetime.now()
         DDBObject.__init__(self)
         updateUandA(self.getFeed())
+
+    def checkConstraints(self):
+        try:
+            obj = self.dd.getObjectByID(self.feed_id)
+        except ObjectNotFoundError:
+            raise DatabaseConstraintError("%s not in database" % self.feed_id)
+        else:
+            if not isinstance(obj, feed.Feed):
+                msg = "feed_id points to a %s instance" % obj.__class__
+                raise DatabaseConstraintError(msg)
 
     # Unfortunately, our database does not scale well with many views,
     # so we have this hack to make sure that unwatched and available
