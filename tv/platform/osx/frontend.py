@@ -44,7 +44,6 @@ NibClassBuilder.extractClasses("AddChannelSheet")
 NibClassBuilder.extractClasses("PasswordWindow")
 NibClassBuilder.extractClasses("ExceptionReporterPanel")
 
-doNotCollect = {}
 nc = NSNotificationCenter.defaultCenter()
 dlTask = None
 
@@ -2188,7 +2187,20 @@ class VideoAreaView (NibClassBuilder.AutoBaseClass):
             self.adjustVideoWindowFrame()
         self.videoWindow.setup(renderer, item)
         self.activateVideoWindow()
+        nc.addObserver_selector_name_object_(self, 
+                                             'handleWindowNotifications:', 
+                                             NSWindowDidMoveNotification, 
+                                             self.window())
         
+    def teardown(self):
+        platformutils.warnIfNotOnMainThread('VideoAreaView.teardown')
+        nc.removeObserver_name_object_(self, NSWindowDidMoveNotification, nil)
+        if self.videoWindow.isFullScreen:
+            self.videoWindow.exitFullScreen()
+        self.window().removeChildWindow_(self.videoWindow)
+        self.videoWindow.orderOut_(nil)
+        self.videoWindow.teardown()
+
     @platformutils.onMainThreadWaitingUntilDone
     def activateVideoWindow(self):
         self.videoWindow.orderFront_(nil)
@@ -2199,14 +2211,6 @@ class VideoAreaView (NibClassBuilder.AutoBaseClass):
         NSColor.blackColor().set()
         NSRectFill(rect)
     
-    def teardown(self):
-        platformutils.warnIfNotOnMainThread('VideoAreaView.teardown')
-        if self.videoWindow.isFullScreen:
-            self.videoWindow.exitFullScreen()
-        self.window().removeChildWindow_(self.videoWindow)
-        self.videoWindow.orderOut_(nil)
-        self.videoWindow.teardown()
-
     @platformutils.onMainThreadWaitingUntilDone
     def adjustVideoWindowFrame(self):
         if self.window() is nil:
@@ -2218,6 +2222,9 @@ class VideoAreaView (NibClassBuilder.AutoBaseClass):
         
     def setFrame_(self, frame):
         super(VideoAreaView, self).setFrame_(frame)
+        self.adjustVideoWindowFrame()
+
+    def handleWindowNotifications_(self, notification):
         self.adjustVideoWindowFrame()
     
     @platformutils.onMainThread
