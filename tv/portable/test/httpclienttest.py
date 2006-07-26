@@ -1277,6 +1277,17 @@ class GrabURLTest(HTTPClientTestBase):
         self.assertEquals(self.data['status'], 200)
         self.assertEquals(self.data['body'], firstBody)
 
+
+class HTTPClientPipelineCounter(httpclient.HTTPClient):
+    def __init__(self, url, callback, errback):
+        httpclient.HTTPClient.__init__(self, url, callback, errback)
+        self.pipelineErrorsSeen = 0
+
+    def errbackIntercept(self, error):
+        if isinstance(error, httpclient.PipelinedRequestNeverStarted):
+            self.pipelineErrorsSeen += 1
+        return httpclient.HTTPClient.errbackIntercept(self, error)
+
 class PipelineTest(HTTPClientTestBase):
     def setUp(self):
         HTTPClientTestBase.setUp(self)
@@ -1296,8 +1307,8 @@ class PipelineTest(HTTPClientTestBase):
         self.runPendingIdles()
         conn = self.pool.getConnection('http', 'www.foo.com')
         conn.handleData(startResponse(headers={'Content-Length': 128}))
-        self.pipelinedClient = httpclient.HTTPClient(url, pipelineCallback, 
-                pipelineErrback) 
+        self.pipelinedClient = HTTPClientPipelineCounter(url,
+                pipelineCallback, pipelineErrback) 
         self.pipelinedClient.connectionPool = self.pool
         self.pipelinedClient.startRequest()
         self.runPendingIdles()
@@ -1314,6 +1325,7 @@ class PipelineTest(HTTPClientTestBase):
         conn = self.pool.getConnection('http', 'www.foo.com')
         conn.handleData(HTTPClientTest.fakeResponse)
         self.assertEquals(self.pipelineResponse['body'], "HELLO: WORLD\r\n")
+        self.assertEquals(self.pipelinedClient.pipelineErrorsSeen, 1)
 
     def testPipelineCancel(self):
         # canceling the pipelined request shouldn't affect the earlier one.

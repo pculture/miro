@@ -13,6 +13,7 @@ import errno
 import re
 import socket
 import threading
+import traceback
 from urlparse import urlparse, urljoin
 from collections import deque
 from gettext import gettext as _
@@ -565,6 +566,7 @@ class HTTPConnection(ConnectionHandler):
         if self.pipelinedRequest is not None:
             errback = self.pipelinedRequest[1]
             trapCall(self, errback, PipelinedRequestNeverStarted())
+            self.pipelinedRequest = None
 
     def canSendRequest(self):
         return (self.state == 'ready' or 
@@ -1298,7 +1300,6 @@ class HTTPClient(object):
     def callbackIntercept(self, response):
         if self.cancelled:
             print "WARNING: Callback on a cancelled request for %s" % self.url
-            import traceback
             traceback.print_stack()
             return
         if self.shouldRedirect(response):
@@ -1328,7 +1329,6 @@ class HTTPClient(object):
             self.startRequest() 
             # this should give us a new connection, since our last one closed
         elif (isinstance(error, ServerClosedConnection) and
-                self.connection and 
                 self.connection.requestsFinished > 0 and 
                 self.connection.bytesRead == 0):
             # Connection closed when trying to reuse an http connection.  We
