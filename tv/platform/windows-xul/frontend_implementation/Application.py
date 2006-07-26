@@ -2,6 +2,7 @@ import sys
 import frontend
 import time
 import gettext
+import locale
 import config
 import prefs
 
@@ -18,7 +19,9 @@ class Application:
 
     def Run(self):
         HTMLDisplay.initTempDir()
-        gettext.bindtextdomain("democracyplayer", resource.path("../../locale"))
+
+        locale.setlocale(locale.LC_ALL, '')
+        gettext.bindtextdomain("democracyplayer", resource.path("locale"))
         gettext.textdomain("democracyplayer")
         gettext.bind_textdomain_codeset("democracyplayer","UTF-8")
         import psyco
