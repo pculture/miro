@@ -18,6 +18,9 @@ USA
 
 This is the port of GTK/X11 port of Democracy TV.
 
+If you want to test it Democracy, execute ./run.sh.  If you have the required
+dependencies it should build everything and run it.
+
 See https://develop.participatoryculture.org/projects/dtv/wiki/GTKX11BuildDocs
 (This is considered the authoritative source.)
 
