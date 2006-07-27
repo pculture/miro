@@ -564,6 +564,9 @@ class FeedImpl:
         subclasses can perform cleanup here."""
         pass
 
+    def __str__(self):
+        return "FeedImpl - %s" % self.getTitle()
+
 
 updaterDC = None
 updaterSet = set()
@@ -958,9 +961,9 @@ class RSSFeedImpl(FeedImpl):
         self.scheduleUpdateEvents(-1)
 
     def feedparser_callback (self, parsed):
+        self.ufeed.confirmDBThread()
         if not self.ufeed.idExists():
             return
-        self.ufeed.confirmDBThread()
         start = clock()
         self.updateUsingParsed(parsed)
         self.feedparser_finished()
@@ -988,6 +991,8 @@ class RSSFeedImpl(FeedImpl):
     # Updates a feed
     def update(self):
         self.ufeed.confirmDBThread()
+        if not self.ufeed.idExists():
+            return
         if self.updating:
             return
         else:
@@ -1478,6 +1483,12 @@ class DirectoryFeedImpl(FeedImpl):
                 if (os.path.isfile(file) and os.path.basename(file)[0] != '.' and 
                         not file in knownFiles and not file in myFiles):
                     FileItem(self.ufeed.id, file)
+
+        for item in self.items:
+            if not os.path.isfile(item.getFilename()):
+                print "Remove: ", file
+                item.remove()
+
         self.scheduleUpdateEvents(-1)
 
     def onRestore(self):
