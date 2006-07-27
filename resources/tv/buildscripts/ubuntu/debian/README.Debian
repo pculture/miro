@@ -1,0 +1,10 @@
+democracyplayer for Debian
+--------------------------
+
+ * The default Democracy Player movies directory in Debian
+   is ~/.democracy/Movies instead of ~/Movies/Democracy.
+
+ * The autoupdate feature, which checks for new versions of Democracy Player,
+   has been disabled in the Debian package.
+
+ -- Uwe Hermann <uwe@debian.org>, Mon, 12 Jun 2006 13:34:47 +0200

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+mkdir demotemp
+cp -r debian demotemp/
+cd demotemp
+
+#Check out tagged version of Democracy
+svn co https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$2/tv
+mv tv democracyplayer-$2
+
+#Build the package
+cp -r debian democracyplayer-$2/
+cd democracyplayer-$2/
+dpkg-buildpackage -us -uc -rfakeroot
+cd ..
+
+#Move the package into a nicely named folder
+mkdir $2
+mkdir $2/ubuntu
+mv democracyplayer*deb $2/ubuntu
+
+scp -r $2 $1@pcf2.osuosl.org:.
+
+#Remove the temp directory and all the files with it
+cd ..
+rm -rf demotemp
