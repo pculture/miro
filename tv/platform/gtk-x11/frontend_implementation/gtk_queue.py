@@ -25,6 +25,8 @@ import Queue
 import sys
 import traceback
 
+from BitTornado.clock import clock
+
 class ExceptionContainer:
     def __init__(self, exc_info):
         self.type, self.value, self.tb = exc_info
@@ -91,9 +93,13 @@ class MainloopQueue:
             return callback (*args, **kwargs)
         # Otherwise create a ReturnData and use call_nowait to signal it
         return_data = self.ReturnData(callback, args, kwargs)
+        start = clock()
         self.call_nowait (return_data.main_thread)
         # And then wait for the return value.
         retval = return_data.get_retval()
+        end = clock()
+        if end - start > 1:
+            print "gtkSyncMethod: %s took too long: %.3f" % (callback, end - start)
         if isinstance(retval, ExceptionContainer):
             retval.reraise()
         else:
@@ -112,7 +118,11 @@ class MainloopQueue:
         else:
             self.idle_running_lock.release()
             try:
+                start = clock()
                 callback (*args, **kwargs)
+                end = clock()
+                if end - start > 1:
+                    print "gtkAsyncMethod: %s took too long: %.3f" % (callback, end - start)
             except:
                 print "Exception in a gtkAsyncMethod:"
                 traceback.print_exc()

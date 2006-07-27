@@ -7,6 +7,7 @@ import gettext
 import locale
 import gtk.glade
 import resource
+import platformutils
 
 ###############################################################################
 #### Application object                                                    ####
@@ -17,7 +18,6 @@ class Application:
     def __init__(self):
         #print "Application init"
         pass
-
     def Run(self):
         locale.setlocale(locale.LC_ALL, '')
         gettext.bindtextdomain("democracyplayer", resource.path("../../locale"))
@@ -27,6 +27,7 @@ class Application:
         gtk.glade.textdomain("democracyplayer")
 
         queue.main_thread = threading.currentThread()
+        platformutils.setMainThread()
         if xlibhelper.XInitThreads() == 0:
             print "WARNING: XInitThreads() failed!"
         gtk.threads_init()

@@ -6,6 +6,7 @@ import gobject
 import gtk.glade
 import sets
 import gconf
+import platformutils
 
 import resource
 from frontend import *
@@ -111,6 +112,7 @@ class MainFrame:
     @gtkAsyncMethod
     def _gtkInit(self):
         # Create the widget tree, and remember important widgets
+        platformutils.confirmMainThread()
         self.widgetTree = WidgetTree(resource.path('democracy.glade'), 'main-window', 'democracyplayer')
         self.displayBoxes = {
             self.mainDisplay : self.widgetTree['main-box'],
@@ -179,6 +181,7 @@ class MainFrame:
         self.widgetTree['main-window'].show_all()
 
     def configureEvent(self, widget, event):
+        platformutils.confirmMainThread()
         (x, y) = self.widgetTree['main-window'].get_position ()
         (width, height) = self.widgetTree['main-window'].get_size()
         setInt ("width", width)
@@ -188,6 +191,7 @@ class MainFrame:
         return False
 
     def stateEvent (self, widget, event):
+        platformutils.confirmMainThread()
         maximized = (event.new_window_state & gtk.gdk.WINDOW_STATE_MAXIMIZED) != 0
         setBool ("maximized", maximized)
         
@@ -196,6 +200,7 @@ class MainFrame:
     def selectDisplay(self, newDisplay, area):
         """Install the provided 'newDisplay' in the requested area"""
 
+        platformutils.confirmMainThread()
         if area == self.collectionDisplay:
             print "TODO: Collection Display not implemented on gtk/x11"
             return
@@ -231,10 +236,12 @@ class MainFrame:
 
     @gtkSyncMethod
     def getDisplay(self, area):
+        platformutils.confirmMainThread()
         return self.selectedDisplays.get(area)
 
     @gtkAsyncMethod
     def about(self):
+        platformutils.confirmMainThread()
         if (self.aboutWidget is None):
             self.aboutWidget = gtk.AboutDialog()
             self.aboutWidget.set_name("Democracy Player")

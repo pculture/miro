@@ -14,6 +14,7 @@ import singleclick
 import eventloop
 import math
 import dialogs
+import platformutils
 from gettext import gettext as _
  
 def AttachBoolean (widget, descriptor, sensitive_widget = None):
@@ -73,6 +74,7 @@ class CallbackHandler(object):
         self.mainApp = app.controller
 
     def actionGroups (self):
+        platformutils.confirmMainThread()
         actionGroups = {}
         actionGroups["VideoPlayback"] = gtk.ActionGroup("VideoPlayback")
         actionGroups["ChannelSelected"] = gtk.ActionGroup("ChannelSelected")
@@ -107,6 +109,7 @@ class CallbackHandler(object):
         return actionGroups
 
     def on_main_delete(self, *args):
+        platformutils.confirmMainThread()
         app.controller.quit()
         return True
 
@@ -129,6 +132,7 @@ class CallbackHandler(object):
         scale.buttonsDown.add(event.button)
 
     def on_video_time_scale_button_release_event(self, scale, event):
+        platformutils.confirmMainThread()
         # we want to remove the button from the buttonsDown set, but we can't
         # yet, because we haven't run the default signal handler yet, which
         # will emit the value-changed signal.  So we use use idle_add, to

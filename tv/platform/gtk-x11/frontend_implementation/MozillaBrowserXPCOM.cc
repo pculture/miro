@@ -167,7 +167,7 @@ nsresult changeItem(GtkMozEmbed *gtkembed, char *id, char *newXml)
     rv = parent->InsertBefore(newNode, nextSibling, getter_AddRefs(nodeOut));
     return rv;
 }
-
+ 
 nsresult removeItem(GtkMozEmbed *gtkembed, char *id)
 {
     nsresult rv;

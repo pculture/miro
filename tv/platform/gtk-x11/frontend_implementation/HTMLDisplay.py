@@ -10,6 +10,7 @@ from xml.sax.saxutils import escape
 from MozillaBrowser import MozillaBrowser
 from frontend_implementation.gtk_queue import gtkAsyncMethod
 from util import quoteJS
+import platformutils
 
 import os
 import re
@@ -78,6 +79,7 @@ class HTMLDisplay(app.Display):
         return self is other
 
     def onSelected_private(self, frame):
+        platformutils.confirmMainThread()
         app.Display.onSelected_private (self, frame)
         self.impl.load_html (self)
         for deferment in self.deferred:
@@ -87,6 +89,7 @@ class HTMLDisplay(app.Display):
         self.deferred = []
 
     def getWidget(self, area = None):
+        platformutils.confirmMainThread()
         self.impl = getImpl (area)
         return self.impl.widget
 
@@ -109,6 +112,8 @@ class HTMLDisplayImpl:
         display will be rendered at, which might reduce flicker when the
         display is installed."""
 
+        platformutils.confirmMainThread()
+
         self.initialLoadFinished = False
         self.execQueue = []
         self.widgetDestroyed = False
@@ -126,6 +131,8 @@ class HTMLDisplayImpl:
         self.location = None
 
     def load_html(self, display):
+
+        platformutils.confirmMainThread()
 
         self.in_load_html = True
         self.initialLoadFinished = False
@@ -151,6 +158,8 @@ class HTMLDisplayImpl:
         self.in_load_html = False
 
     def loadFinished(self, widget):
+        platformutils.confirmMainThread()
+
         if self.in_load_html:
             return
         if (not self.initialLoadFinished):
@@ -210,7 +219,10 @@ class HTMLDisplayImpl:
     def removeItems(self, ids):
         if not self.widgetDestroyed:
             for id in ids:
-                self.mb.removeItem(id)
+                try:
+                    self.mb.removeItem(id)
+                except:
+                    pass
 
     @deferUntilAfterLoad
     def changeItem(self, id, xml):
@@ -245,9 +257,11 @@ class HTMLDisplayImpl:
         return retval
 
     def onBrowserDestroy(self, widget):
+        platformutils.confirmMainThread()
         self.widgetDestroyed = True
 
     def onUnrealize (self, widget):
+        platformutils.confirmMainThread()
         for (key, value) in _impls.items():
             if value is self:
                 del _impls[key]
