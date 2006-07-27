@@ -3,6 +3,7 @@ import frontend
 import time
 import gettext
 import locale
+import resource
 import config
 import prefs
 
