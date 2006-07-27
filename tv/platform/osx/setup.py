@@ -3,6 +3,7 @@ import sys
 import string
 import py2app
 import plistlib
+import shutil
 
 from glob import glob
 from distutils.core import setup
@@ -92,7 +93,22 @@ print "Building Democracy Player v%s (%s)" % (conf['appVersion'], conf['appRevis
 # Get a list of additional resource files to include
 
 resourceFiles = ['Resources/%s' % x for x in os.listdir('Resources')]
-resourceFiles.append('English.lproj')
+resourceFiles += glob ('*.lproj')
+
+locale_dir = os.path.join (root, 'resources', 'locale')
+
+try:
+    shutil.rmtree ('locale');
+except OSError:
+    pass
+
+for source in glob (os.path.join (locale_dir, '*.mo')):
+    lang = os.path.basename(source)[:-3]
+    dest = 'locale/%s/LC_MESSAGES/democracyplayer.mo' % lang
+    os.makedirs(os.path.dirname(dest))
+    shutil.copy2 (source, dest)
+
+resourceFiles.append ('locale')
 
 py2app_options = dict(
     plist = infoPlist,

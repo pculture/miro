@@ -37,6 +37,8 @@ import signal
 import urlparse
 import threading
 
+import gettext
+
 NibClassBuilder.extractClasses("MainMenu")
 NibClassBuilder.extractClasses("MainWindow")
 NibClassBuilder.extractClasses("PreferencesWindow")
@@ -128,6 +130,18 @@ class Application:
 
     def Run(self):
         eventloop.setDelegate(self)
+
+	languages = list (NSUserDefaults.standardUserDefaults()["AppleLanguages"])
+	for i in xrange (len(languages)):
+	    if languages[i] == "en":
+		languages[i] = "C"
+
+	os.environ["LANGUAGE"] = ':'.join (languages)
+
+	gettext_path = os.path.abspath(resource.path("../locale"))
+        gettext.bindtextdomain("democracyplayer", gettext_path)
+        gettext.textdomain("democracyplayer")
+        gettext.bind_textdomain_codeset("democracyplayer","UTF-8")
         AppHelper.runEventLoop()
 
     def onStartup(self):
