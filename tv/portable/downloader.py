@@ -84,11 +84,12 @@ class RemoteDownloader(DDBObject):
             enclosureContentType = item.getFirstVideoEnclosureType()
             if enclosureContentType == 'application/x-bittorrent':
                 contentType = enclosureContentType
+        self.contentType = ""
+        DDBObject.__init__(self)
         if contentType is None:
             self.contentType = ""
         else:
             self.contentType = contentType
-        DDBObject.__init__(self)
 
         if self.contentType == '':
             self.getContentType()
