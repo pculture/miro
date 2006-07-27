@@ -1,0 +1,19 @@
+These buildscripts are for automatically building, packaging, and uploading new 
+versions of democracy to the Participatory Culture Foundation's server for release. 
+Here's how they work:
+
+To run a script, use the following command:
+
+sudo ./scriptname username version
+
+Where:
+-username is your account on pcf2 (used to scp files)
+-version is the version number of Democracy you wish to build (must have a tag in subversion)
+
+When the script is finished, you should find a folder in your home directory 
+with all of the packages. Remember, you must run this script as a sudoer.
+
+For example, say you want to build Democracy 0.8.5 on Fedora Core 5:
+sudo ./fc5 oppy 0.8.5
+
+When the script is done, all of the files should be in /home/oppy/0.8.5/
