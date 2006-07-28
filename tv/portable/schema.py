@@ -189,6 +189,7 @@ from folder import Folder
 from guide import ChannelGuide
 from item import Item, FileItem
 from iconcache import IconCache
+from playlist import SavedPlaylist
 
 class DDBObjectSchema(ObjectSchema):
     klass = DDBObject
@@ -340,6 +341,15 @@ class FolderSchema(DDBObjectSchema):
         ('title', SchemaString()),
     ]
 
+class PlaylistSchema(DDBObjectSchema):
+    klass = SavedPlaylist
+    classString = 'playlist'
+    fields = DDBObjectSchema.fields + [
+        ('title', SchemaString()),
+        ('expanded', SchemaBool()),
+        ('items', SchemaList(SchemaInt())),
+    ]
+
 class ChannelGuideSchema(DDBObjectSchema):
     klass = ChannelGuide
     classString = 'channel-guide'
@@ -355,5 +365,5 @@ objectSchemas = [
     SearchFeedImplSchema, DirectoryFeedImplSchema,
     SearchDownloadsFeedImplSchema, RemoteDownloaderSchema,
     HTTPAuthPasswordSchema, FolderSchema, ChannelGuideSchema,
-    ManualFeedImplSchema,
+    ManualFeedImplSchema, PlaylistSchema,
 ]

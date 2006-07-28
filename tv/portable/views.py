@@ -4,6 +4,7 @@ import downloader
 import guide
 import item
 import tabs
+import playlist
 
 import indexes
 import filters
@@ -14,8 +15,11 @@ import sorts
 db.createIndex(indexes.objectsByClass)
 
 allTabs = db.filter(filters.mappableToTab).map(maps.mapToTab).sort(sorts.tabs)
-staticTabs = allTabs.filter(lambda t: not t.isFeed()).sort(sorts.tabs)
-feedTabs = allTabs.filter(lambda t: t.isFeed()).sort(sorts.tabs)
+allTabs.createIndex(indexes.tabObjectClass)
+staticTabs = allTabs.filterWithIndex(indexes.tabObjectClass, tabs.StaticTab)
+feedTabs = allTabs.filterWithIndex(indexes.tabObjectClass, feed.Feed)
+playlistTabs = allTabs.filterWithIndex(indexes.tabObjectClass,
+        playlist.SavedPlaylist)
 
 items = db.filterWithIndex(indexes.objectsByClass,item.Item)
 fileItems = db.filter(lambda x: isinstance(x, item.FileItem))
@@ -45,3 +49,6 @@ downloadingItems = items.filterWithIndex(indexes.itemsByState, 'downloading')
 downloadingItems.createIndex(indexes.downloadsByCategory)
 manualDownloads = items.filter(filters.manualDownloads)
 autoDownloads = items.filter(filters.autoDownloads)
+
+playlists = db.filterWithIndex(indexes.objectsByClass, playlist.SavedPlaylist)
+playlists.createIndex(indexes.playlistsByItem, multiValued=True)

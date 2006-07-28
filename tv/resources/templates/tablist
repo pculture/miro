@@ -27,6 +27,12 @@
 	    <t:includeTemplate filename="feedtab" />
 	  </span>
       </li>
+      <div class="tab-list-divider" />
+      <li t:repeatForView="views.playlistTabs" onmousedown="eventURL('action:selectTab?id=@@@this.id@@@')">
+	  <span t:contextMenu="action:updateFeed?feed=@@@this.obj.getID()@@@|Update Channel Now\n\naction:removeFeed?feed=@@@this.obj.getID()@@@|Remove">
+	    <t:includeTemplate filename="playlisttab" />
+	  </span>
+      </li>
     </ul>
   </div>
 	<div id="sidebar-download-fade">&nbsp;</div>

@@ -1,5 +1,6 @@
 import tabs
 import feed
+import playlist
 
 # Returns items that match search
 def matchingItems(obj, searchString):
@@ -31,8 +32,9 @@ def watchableItems(obj):
 # Return True if a tab should be shown for obj in the frontend. The filter
 # used on the database to get the list of tabs.
 def mappableToTab(obj):
-    return isinstance(obj, tabs.StaticTab) or (isinstance(obj, feed.Feed) and
-                                               obj.isVisible())
+    return (isinstance(obj, tabs.StaticTab) or 
+            (isinstance(obj, feed.Feed) and obj.isVisible()) or
+            isinstance(obj, playlist.SavedPlaylist))
 
 def autoDownloads(item):
     return item.getAutoDownloaded() and item.getState() == 'downloading'

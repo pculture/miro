@@ -1,5 +1,7 @@
 import tabs
 import feed
+import folder
+import playlist
 
 # Given an object for which mappableToTab returns true, return a Tab
 def mapToTab(obj):
@@ -11,6 +13,9 @@ def mapToTab(obj):
     elif isinstance(obj, folder.Folder):
         sortKey = obj.getTitle().lower()
         return tabs.Tab('foldertab','folder',[500,sortKey],obj)
+    elif isinstance(obj, playlist.SavedPlaylist):
+        sortKey = obj.getTitle().lower()
+        return tabs.Tab('playlisttab','playlist',[900,sortKey],obj)
     else:
         raise StandardError
     

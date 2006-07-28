@@ -10,3 +10,27 @@
 def pysort2dbsort(func):
     return lambda x, y:func(x[1],y[1]) == -1
 
+
+def makeSimpleGetSet(attributeName):
+    """Creates a simple DDBObject getter and setter for an attribute.
+
+    This exists because for many DDBOBject attributes we have methods like the
+    following:
+
+    def getFoo(self):
+        self.confirmDBThread()
+        return self.foo
+    def setFoo(self, newFoo):
+        self.confirmDBThread()
+        self.foo = newFoo
+        self.signalChange()
+    """
+
+    def getter(self):
+        self.confirmDBThread()
+        return getattr(self, attributeName)
+    def setter(self, newValue):
+        self.confirmDBThread()
+        setattr(self, attributeName, newValue)
+        self.signalChange()
+    return getter, setter

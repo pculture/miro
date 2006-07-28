@@ -5,6 +5,11 @@
       <menuitem action="SaveVideo"/>
       <menuitem action="PlayPauseVideo"/>
       <separator/>
+      <menuitem action="NewPlaylist"/>
+      <menuitem action="NewPlaylistFolder"/>
+      <menuitem action="NewChannelFolder"/>
+      <menuitem action="Rename"/>
+      <separator/>
       <menuitem action="Fullscreen"/>
       <separator/>
       <menuitem action="EditPreferences"/>

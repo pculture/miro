@@ -43,4 +43,8 @@ tabIDIndex = lambda x: x.id
 
 tabObjIDIndex = lambda x: x.obj.getID()
 
+def playlistsByItem(playlist):
+    return playlist.getItems()
 
+def tabObjectClass(tab):
+    return tab.obj.__class__

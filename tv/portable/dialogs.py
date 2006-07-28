@@ -68,6 +68,7 @@ BUTTON_REMOVE_ENTRY = DialogButton(_("Remove Entry"))
 BUTTON_DELETE_FILE = DialogButton(_("Delete File"))
 BUTTON_KEEP_VIDEOS = DialogButton(_("Keep Videos"))
 BUTTON_DELETE_VIDEOS = DialogButton(_("Delete Videos"))
+BUTTON_CREATE = DialogButton(_("Create"))
 
 class Dialog(object):
     """Abstract base class for dialogs."""
@@ -151,3 +152,17 @@ class HTTPAuthDialog(Dialog):
         self.username = username
         self.password = password
         super(HTTPAuthDialog, self).runCallback(choice)
+
+class TextEntryDialog(Dialog):
+    """Like the ChoiceDialog, but also contains a textbox for the user to
+    enter a value into.  This is used for things like the create playlist
+    dialog, the rename dialog, etc.
+    """
+
+    def __init__(self, title, description, defaultButton, otherButton):
+        super(TextEntryDialog, self).__init__(title, description,
+                [defaultButton, otherButton])
+
+    def runCallback(self, choice, value=None):
+        self.value = value
+        super(TextEntryDialog, self).runCallback(choice)

@@ -42,6 +42,13 @@ def BuildDialog (title, message, buttons, default):
     dialog.set_default_response (default)
     return dialog
 
+def BuildTextEntryDialog(title, message, buttons, default):
+    dialog = BuildDialog(title, message, buttons, default)
+    dialog.entry = gtk.Entry()
+    dialog.vbox.add(dialog.entry)
+    dialog.entry.show()
+    return dialog
+
 def BuildHTTPAuth(summary, message, prefillUser = None, prefillPassword = None):
     """Ask the user for HTTP login information for a location, identified
     to the user by its URL and the domain string provided by the
@@ -138,6 +145,12 @@ def ShowHTTPAuthDialogAsync(title, description, prefillUser, prefillPassword,
     gtkDialog.connect("response", callback)
     gtkDialog.show()
 
+@gtkAsyncMethod
+def ShowTextEntryDialogAsync(title, description, buttons, default, callback):
+    gtkDialog = BuildTextEntryDialog (title, description, buttons, default)
+    gtkDialog.connect("response", callback)
+    gtkDialog.show()
+
 def pidIsRunning(pid):
     try:
         os.kill(pid, 0)
@@ -177,28 +190,33 @@ class UIBackendDelegate:
         ShowDialogAsync (summary, message, buttons, once="UnknownError")
         return True
 
+    def makeButtonTuple (self, dialog):
+        """Given a dialog object, make a tuple of button/id pairs to pass to
+        the gtk.Dialog constructor.
+        """
+
+        buttons = []
+        i = 0
+        for button in dialog.buttons:
+            if _stock.has_key(button.text):
+                buttons [0:0] = (_stock[button.text], i)
+            else:
+                buttons [0:0] = (button.text, i)
+            i = i + 1
+        return tuple(buttons)
+
     def runDialog (self, dialog):
         if isinstance(dialog, dialogs.ChoiceDialog) or isinstance(dialog, dialogs.MessageBoxDialog) or isinstance(dialog, dialogs.ThreeChoiceDialog):
-            buttons = []
-            i = 0
-            for button in dialog.buttons:
-                if _stock.has_key(button.text):
-                    buttons [0:0] = (_stock[button.text], i)
-                else:
-                    buttons [0:0] = (button.text, i)
-                i = i + 1
-    
             def Callback (response):
                 if response == gtk.RESPONSE_DELETE_EVENT:
                     dialog.runCallback (None)
-                elif response >= 0 and response < i:
+                elif response >= 0 and response < len(dialog.buttons):
                     dialog.runCallback (dialog.buttons [response])
                 else:
                     dialog.runCallback (None)
     
-            ShowDialogAsync (EscapeMessagePart(dialog.title), EscapeMessagePart(dialog.description), tuple(buttons), default=0, callback = Callback)
+            ShowDialogAsync (EscapeMessagePart(dialog.title), EscapeMessagePart(dialog.description), self.makeButtonTuple(dialog), default=0, callback = Callback)
         elif isinstance(dialog, dialogs.HTTPAuthDialog):
-
             def AsyncDialogResponse(gtkDialog, response):
                 retval = None
                 if (response == gtk.RESPONSE_OK):
@@ -210,6 +228,18 @@ class UIBackendDelegate:
             ShowHTTPAuthDialogAsync(EscapeMessagePart(dialog.title),
                     EscapeMessagePart(dialog.description), dialog.prefillUser,
                     dialog.prefillPassword, callback=AsyncDialogResponse)
+        elif isinstance(dialog, dialogs.TextEntryDialog):
+            def AsyncDialogResponse(gtkDialog, response):
+                retval = None
+                if response == gtk.RESPONSE_DELETE_EVENT:
+                    dialog.runCallback (None)
+                elif response >= 0 and response < len(dialog.buttons):
+                    dialog.runCallback (dialog.buttons [response], gtkDialog.entry.get_text())
+                else:
+                    dialog.runCallback (None)
+                gtkDialog.destroy()
+
+            ShowTextEntryDialogAsync (EscapeMessagePart(dialog.title), EscapeMessagePart(dialog.description), self.makeButtonTuple(dialog), default=0, callback = AsyncDialogResponse)
         else:
             dialog.runCallback (None)
 

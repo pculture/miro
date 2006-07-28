@@ -14,6 +14,7 @@ import singleclick
 import eventloop
 import math
 import dialogs
+import playlist
 import platformutils
 from gettext import gettext as _
  
@@ -98,6 +99,10 @@ class CallbackHandler(object):
         actionGroups["Ubiquitous"].add_actions ([
             ('Video', None, _('_Video')),
             ('Open', gtk.STOCK_OPEN, _('_Open...'), '<Control>o', _('Open various files'), self.on_open_video_activate),
+            ('NewPlaylist', None, _('_New Playlist...'), None, _('Create new playlist'), self.on_new_playlist_activate),
+            ('NewPlaylistFolder', None, _('_New Playlist Folder...'), None, _('Create new playlist folder'), self.on_new_playlist_folder_activate),
+            ('NewChannelFolder', None, _('_New Channel Folder...'), None, _('Create new channel folder'), self.on_new_channel_folder_activate),
+            ('Rename', None, _('_Rename...'), None, _('Rename selected item '), self.on_rename_activate),
             ('EditPreferences', gtk.STOCK_PREFERENCES, _('P_references'), None, None, self.on_preference),
             ('Quit', gtk.STOCK_QUIT, _('_Quit'), '<Control>q', _('Quit the Program'), self.on_quit_activate),
             ('Channel', None, _('_Channel')),
@@ -315,3 +320,15 @@ class CallbackHandler(object):
 
     def on_about_clicked(self, event = None):
         self.mainFrame.about()
+
+    def on_new_playlist_activate(self, event=None):
+        playlist.createNewPlaylist()
+
+    def on_new_playlist_folder_activate(self, event=None):
+        print "NOT IMPLEMENTED"
+
+    def on_new_channel_folder_activate(self, event=None):
+        print "NOT IMPLEMENTED"
+
+    def on_rename_activate(self, event=None):
+        print "NOT IMPLEMENTED"
