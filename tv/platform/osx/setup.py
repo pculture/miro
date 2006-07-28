@@ -2,8 +2,8 @@ import os
 import sys
 import string
 import py2app
-import plistlib
 import shutil
+import plistlib
 
 from glob import glob
 from distutils.core import setup
@@ -48,6 +48,7 @@ if boostLib is None or boostIncludeDir is None:
 else:
     print 'Boost library found (%s)' % boostLib
 
+# Get subversion revision information.
 
 import util
 revision = util.queryRevision(root)
@@ -62,6 +63,7 @@ else:
 # Inject the revision number into app.config.template to get app.config.
 # NEEDS: Very sloppy. The new file is just dropped in the source tree
 # next to the old one.
+
 appConfigPath = os.path.join(root, 'resources', 'app.config')
 s = open("%s.template" % appConfigPath, "rt").read()
 s = string.Template(s).safe_substitute(APP_REVISION = revision, 
@@ -95,20 +97,7 @@ print "Building Democracy Player v%s (%s)" % (conf['appVersion'], conf['appRevis
 resourceFiles = ['Resources/%s' % x for x in os.listdir('Resources')]
 resourceFiles += glob ('*.lproj')
 
-locale_dir = os.path.join (root, 'resources', 'locale')
-
-try:
-    shutil.rmtree ('locale');
-except OSError:
-    pass
-
-for source in glob (os.path.join (locale_dir, '*.mo')):
-    lang = os.path.basename(source)[:-3]
-    dest = 'locale/%s/LC_MESSAGES/democracyplayer.mo' % lang
-    os.makedirs(os.path.dirname(dest))
-    shutil.copy2 (source, dest)
-
-resourceFiles.append ('locale')
+# And launch the setup process...
 
 py2app_options = dict(
     plist = infoPlist,
@@ -136,6 +125,8 @@ setup(
 # Monitor since the downloader is basically Democracy itself, relaunched with a 
 # specific command line parameter.
 
+print "Creating Downloader hard link."
+
 srcRoot = 'Democracy.app/Contents/MacOS'
 srcPath = '%s/Democracy' % srcRoot
 linkName = 'Downloader'
@@ -144,3 +135,23 @@ linkPath = '%s/%s' % (srcRoot, linkName)
 if os.path.exists(linkPath):
     os.remove(linkPath)
 os.link(srcPath, linkPath)
+
+# Copy the gettext MO files in a 'locale' folder inside the application bundle 
+# resources folder. Doing this manually at this stage instead of automatically 
+# through the py2app options allows to avoid having an intermediate unversioned 
+# 'locale' folder.
+
+print "Copying gettext MO files to application bundle."
+
+localeDir = os.path.join (root, 'resources', 'locale')
+shutil.rmtree('Democracy.app/Contents/Resources/locale', True);
+
+for source in glob(os.path.join(localeDir, '*.mo')):
+    lang = os.path.basename(source)[:-3]
+    dest = 'Democracy.app/Contents/Resources/locale/%s/LC_MESSAGES/democracyplayer.mo' % lang
+    os.makedirs(os.path.dirname(dest))
+    shutil.copy2(source, dest)
+
+# And we're done...
+
+print "------------------------------------------------"
