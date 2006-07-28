@@ -184,6 +184,83 @@ class IndexMap:
     def getViews(self):
         return self.views.values()
 
+class MultiIndexMap(IndexMap):
+    """Maps index values to database views.
+
+    A MultiIndexMap is like an IndexMap, except it expects the index function
+    to return a sequence of values.  For each value it returns, the object
+    will be added to the corresponding view.
+    """
+
+    def addObject(self, newobject, value):
+        """Add a new object to the IndexMap."""
+
+        indexValues = set(self.indexFunc(value))
+        for indexValue in indexValues:
+            self.getViewForValue(indexValue).addBeforeCursor(newobject, value)
+        self.mappings[newobject.getID()] = indexValues
+
+    def removeObject(self, obj):
+        """Remove an object from the IndexMap."""
+        indexValues = self.mappings.pop(obj.getID())
+        for indexValue in indexValues:
+            self.views[indexValue].removeObj(obj)
+
+    def _changeOrRecompute(self, obj, value, isChange):
+        indexValues = set(self.indexFunc(value))
+        oldIndexValues = self.mappings[obj.getID()]
+        for indexValue in (indexValues - oldIndexValues):
+            self.getViewForValue(indexValue).addBeforeCursor(obj, value)
+        for indexValue in (oldIndexValues - indexValues):
+            self.getViewForValue(indexValue).removeObj(obj)
+        if isChange:
+            for indexValue in indexValues.intersection(oldIndexValues):
+                self.views[indexValue].changeObj(obj, needsSave=False)
+        self.mappings[obj.getID()] = indexValues
+
+    def changeObject(self, obj, value):
+        """Call this method when an object has been changed.  
+
+        If the object now maps to a new view, it will be moved from the old
+        view to the new one.  Otherwise, we will call changeObj() on the old
+        view.
+        """
+        self._changeOrRecompute(obj, value, True)
+
+    def recomputeObject(self, obj, value):
+        """Recompute which view an object maps to.  This function must be
+        called when the output of an index function changes (at least
+        potentially), but the object itself hasn't changed.
+        """
+        if obj.getID() not in self.mappings:
+            self.addObject(obj, value)
+        else:
+            self._changeOrRecompute(obj, value, False)
+
+    def getViewForValue(self, indexValue):
+        """Get a view for an index value.  The view will be all objects such
+        that indexFunc(object) == indexValue.
+        """
+        try:
+            view = self.views[indexValue]
+        except KeyError:
+            view = DynamicDatabase([], False, parent=self.parentDB)
+            self.views[indexValue] = view
+        return view
+
+    def getItemForValue(self, indexValue, default):
+        """Get a single item that maps to a given value.  If no items map to
+        indexValue, default will be returned.  If multiple items map to
+        indexValue, the one returned is not defined.
+        """
+        try:
+            return self.views[indexValue].objects[0][1]
+        except (KeyError, IndexError):
+            return default
+
+    def getViews(self):
+        return self.views.values()
+
 ##
 # Implements a view of the database
 #
@@ -906,9 +983,12 @@ class DynamicDatabase:
         except:
             return None
 
-    def createIndex(self, indexFunc):
+    def createIndex(self, indexFunc, multiValued=False):
         self.confirmDBThread()
-        indexMap = IndexMap(indexFunc, self)
+        if not multiValued:
+            indexMap = IndexMap(indexFunc, self)
+        else:
+            indexMap = MultiIndexMap(indexFunc, self)
         for obj, value in self.objects:
             indexMap.addObject(obj, value)
         self.indexes[indexFunc] = indexMap

@@ -6,6 +6,7 @@ import random
 import config
 import prefs
 import os
+import random
 import shutil
 import time
 import tempfile
@@ -813,13 +814,23 @@ class IDBaseTraversal(DemocracyTestCase):
 #         self.remove100()
 #         thread.join()
 
-class IndexFilterTest(DemocracyTestCase):
+class IndexFilterTestBase(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.addCallbacks = 0
         self.removeCallbacks = 0
         self.changeCallbacks = 0
+    def addCallback(self,value,id):
+        self.addCallbacks += 1
+    def removeCallback(self,value,id):
+        self.removeCallbacks += 1
+    def changeCallback(self,value,id):
+        self.changeCallbacks += 1
+
+class IndexFilterTest(IndexFilterTestBase):
+    def setUp(self):
+        IndexFilterTestBase.setUp(self)
         self.shift = 0
     def mod10(self, x):
         return (x.getID() + self.shift) % 10
@@ -834,12 +845,6 @@ class IndexFilterTest(DemocracyTestCase):
             return 1
         else:
             return 0
-    def addCallback(self,value,id):
-        self.addCallbacks += 1
-    def removeCallback(self,value,id):
-        self.removeCallbacks += 1
-    def changeCallback(self,value,id):
-        self.changeCallbacks += 1
     def testBasicIndexFilter(self):
         for x in range(0,100):
             database.DDBObject()
@@ -966,6 +971,86 @@ class IndexFilterTest(DemocracyTestCase):
         filtered = self.everything.filterWithIndex(self.mod100,0).sort(self.sortFunc)
         self.assertEqual(filtered.len(),100)
 
+class MultiIndexed(database.DDBObject):
+    def __init__(self, indexValues):
+        self.indexValues = indexValues
+        database.DDBObject.__init__(self)
+def testMultiIndex(obj):
+    return obj.indexValues
+
+class MultiIndexTestCase(IndexFilterTestBase):
+    def setUp(self):
+        IndexFilterTestBase.setUp(self)
+        random.seed(12341234)
+        self.allObjects = []
+        self.objectsByValueCount = {}
+        for i in range(20):
+            self.newObject()
+        self.everything.createIndex(testMultiIndex, multiValued=True)
+
+    def genRandomValues(self):
+        values = set()
+        for i in xrange(random.randint(0, 4)):
+            values.add(random.randint(0, 10))
+        return list(values)
+
+    def newObject(self):
+        indexValues = self.genRandomValues()
+        obj = MultiIndexed(indexValues)
+        self.allObjects.append(obj)
+        try:
+            self.objectsByValueCount[len(indexValues)].append(obj)
+        except KeyError:
+            self.objectsByValueCount[len(indexValues)] = [obj]
+
+    def checkViews(self):
+        viewsShouldHave = {}
+        for obj in self.allObjects:
+            for value in obj.indexValues:
+                try:
+                    viewsShouldHave[value].add(obj)
+                except KeyError:
+                    viewsShouldHave[value] = set([obj])
+        for value, goal in viewsShouldHave.items():
+            filtered = self.everything.filterWithIndex(testMultiIndex, value)
+            reality = set([obj for obj in filtered])
+            self.assertEqual(goal, reality)
+
+    def testInitalViews(self):
+        self.checkViews()
+
+    def testRemove(self):
+        while self.allObjects:
+            obj = self.allObjects.pop()
+            obj.remove()
+            self.checkViews()
+
+    def testChange(self):
+        for obj in self.allObjects:
+            obj.indexValues = self.genRandomValues()
+            obj.signalChange(needsSave=False)
+            self.checkViews()
+
+    def testCallbacks(self):
+        filtered = self.everything.filterWithIndex(testMultiIndex, 0)
+        filtered.addAddCallback(self.addCallback)
+        filtered.addRemoveCallback(self.removeCallback)
+        filtered.addChangeCallback(self.changeCallback)
+        addCallbackGoal = removeCallbackGoal = changeCallbackGoal = 0
+        for obj in self.allObjects:
+            newValues = self.genRandomValues()
+            if 0 in newValues:
+                if 0 not in obj.indexValues:
+                    addCallbackGoal += 1
+                else:
+                    changeCallbackGoal += 1
+            elif 0 in obj.indexValues:
+                removeCallbackGoal += 1
+            obj.indexValues = newValues
+            obj.signalChange(needsSave=False)
+            self.assertEquals(self.changeCallbacks, changeCallbackGoal)
+            self.assertEquals(self.addCallbacks, addCallbackGoal)
+            self.assertEquals(self.removeCallbacks, removeCallbackGoal)
 
 #FIXME: Add test for explicitly recomputing sorts
 #FIXME: Add test for recomputing sorts on signalChange()
