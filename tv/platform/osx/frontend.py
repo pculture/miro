@@ -129,19 +129,18 @@ class Application:
         NSThread.detachNewThreadSelector_toTarget_withObject_("noop", controller, controller)
 
     def Run(self):
-        eventloop.setDelegate(self)
+        languages = list (NSUserDefaults.standardUserDefaults()["AppleLanguages"])
+        for i in xrange (len(languages)):
+            if languages[i] == "en":
+                languages[i] = "C"
 
-	languages = list (NSUserDefaults.standardUserDefaults()["AppleLanguages"])
-	for i in xrange (len(languages)):
-	    if languages[i] == "en":
-		languages[i] = "C"
-
-	os.environ["LANGUAGE"] = ':'.join (languages)
-
-	gettext_path = os.path.abspath(resource.path("../locale"))
+        os.environ["LANGUAGE"] = ':'.join (languages)
+        gettext_path = os.path.abspath(resource.path("../locale"))
         gettext.bindtextdomain("democracyplayer", gettext_path)
         gettext.textdomain("democracyplayer")
         gettext.bind_textdomain_codeset("democracyplayer","UTF-8")
+
+        eventloop.setDelegate(self)
         AppHelper.runEventLoop()
 
     def onStartup(self):
@@ -311,7 +310,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
             self.actualApp.addAndSelectFeed(url)
         elif url.startswith('democracy:'):
             eventloop.addUrgentCall(lambda:singleclick.addDemocracyURL(url), 
-			"Open Democracy URL")
+                        "Open Democracy URL")
 
 
     def checkForUpdates_(self, sender):
