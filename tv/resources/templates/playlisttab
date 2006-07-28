@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html  xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n">
+<head>
+</head>
+<body>
+<!-- Normal -->
+<a class="feeditem @@@this.getState()@@@">
+<img class="icon" src="resource:images/playlist-icon-tablist.png" /><div class="name" t:replaceMarkup="this.obj.getTitle()" />
+</a>
+</body>
+</html>
