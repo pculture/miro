@@ -514,7 +514,13 @@ class Controller (frontend.Application):
                     self.downloadTab = tab
 
             views.allTabs.resetCursor()
-            next = views.allTabs.getNext()
+            while True:
+                next = views.allTabs.getNext()
+                if next is None: 
+                    # we loop all the way arund allTabs... something is busted
+                    raise ValueErro("Can't find channel guide tab")
+                if next.tabTemplateBase == 'guidetab':
+                    break
             if self.initial_feeds:
                 while next and ((not isinstance(next.obj, feed.Feed)) or next.obj.getOriginalURL ().startswith("dtv:")):
                     next = views.allTabs.getNext()
@@ -689,6 +695,7 @@ class Controller (frontend.Application):
             iconCacheUpdater.shutdown()
 
             print "DTV: Removing static tabs..."
+            views.allTabs.unlink() 
             tabs.removeStaticTabs()
 
             if self.idlingNotifier is not None:
