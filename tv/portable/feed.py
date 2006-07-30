@@ -1563,6 +1563,13 @@ class SearchFeedImpl (RSSFeedImpl):
             url += "&media=video"
             url += "&media=torrent"
             url += "&sortby=date"
+        elif engine == 'google':
+            url = "http://video.google.com/videofeed?type=search"
+            url += "&q=%s" % urlencode(query)
+            url += "&num=%d&output=rss" % limit
+        elif engine == 'youtube':
+            url = "http://www.youtube.com/rss/tag/"
+            url += "%s.rss" % urlencode(query)
         return url
 
     def updateUsingParsed(self, parsed):
