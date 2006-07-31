@@ -133,6 +133,28 @@ def upgrade11(objectList):
     change anything for this."""
     return set()
 
+def upgrade12(objectList):
+    import item
+    from datetime import datetime
+    changed = set()
+    for o in objectList:
+        if o.classString in ('item', 'file-item'):
+            if not o.savedData.has_key('releaseDateObj'):
+                try:
+                    enclosures = o.savedData['entry'].enclosures
+                    for enc in enclosures:
+                        if item.isVideoEnclosure(enc):
+                            enclosure = enc
+                            break
+                    o.savedData['releaseDateObj'] = datetime(*enclosure.updated_parsed[0:7])
+                except:
+                    try:
+                        o.savedData['releaseDateObj'] = datetime(*o.savedData['entry'].updated_parsed[0:7])
+                    except:
+                        o.savedData['releaseDateObj'] = datetime.min
+                changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

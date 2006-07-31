@@ -6,17 +6,17 @@ def _compare(x, y):
     return 0
 
 def item(x,y):
-    if x.getReleaseDateObj() > y.getReleaseDateObj():
+    if x.releaseDateObj > y.releaseDateObj:
         return -1
-    elif x.getReleaseDateObj() < y.getReleaseDateObj():
+    elif x.releaseDateObj < y.releaseDateObj:
         return 1
-    elif x.getLinkNumber() > y.getLinkNumber():
+    elif x.linkNumber > y.linkNumber:
         return -1
-    elif x.getLinkNumber() < y.getLinkNumber():
+    elif x.linkNumber < y.linkNumber:
         return 1
-    elif x.getID() > y.getID():
+    elif x.id > y.id:
         return -1
-    elif x.getID() < y.getID():
+    elif x.id < y.id:
         return 1
     else:
         return 0

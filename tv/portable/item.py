@@ -57,8 +57,19 @@ class Item(DDBObject):
         # a page. 0 is the topmost, 1 is the next, and so on
         self.linkNumber = linkNumber
         self.creationTime = datetime.now()
+        self.updateReleaseDate()
         DDBObject.__init__(self)
         updateUandA(self.getFeed())
+
+    def updateReleaseDate(self):
+        # This should be called whenever we get a new entry
+        try:
+            self.releaseDateObj = datetime(*self.getFirstVideoEnclosure().updated_parsed[0:7])
+        except:
+            try:
+                self.releaseDateObj = datetime(*self.entry.updated_parsed[0:7])
+            except:
+                self.releaseDateObj = datetime.min
 
     def checkConstraints(self):
         try:
@@ -615,54 +626,27 @@ class Item(DDBObject):
     ##
     # Returns the published date of the item
     def getPubDate(self):
-        self.confirmDBThread()
         try:
-            return datetime(*self.entry.modified_parsed[0:7]).strftime("%b %d %Y").decode(_charset)
-        except:
+            return self.releaseDateObj.strftime("%b %d %Y").decode(_charset)
+        except: 
             return ""
     
     ##
     # Returns the published date of the item as a datetime object
     def getPubDateParsed(self):
-        self.confirmDBThread()
-        try:
-            return datetime(*self.entry.modified_parsed[0:7])
-        except:
-            return datetime.max # Is this reasonable? It should
-                                # avoid type issues for now, if
-                                # nothing else
+        return self.releaseDateObj
 
     ##
     # returns the date this video was released or when it was published
     def getReleaseDate(self):
         try:
-            return self.releaseDate
+            return self.releaseDateObj.strftime("%b %d %Y").decode(_charset)
         except:
-            try:
-                self.releaseDate = datetime(*self.getFirstVideoEnclosure().modified_parsed[0:7]).strftime("%b %d %Y").decode(_charset)
-                return self.releaseDate
-            except:
-                try:
-                    self.releaseDate = datetime(*self.entry.modified_parsed[0:7]).strftime("%b %d %Y").decode(_charset)
-                    return self.releaseDate
-                except:
-                    self.releaseDate = ""
-                    return self.releaseDate
-            
+            return ""
 
     ##
     # returns the date this video was released or when it was published
     def getReleaseDateObj(self):
-        if hasattr(self,'releaseDateObj'):
-            return self.releaseDateObj
-        self.confirmDBThread()
-        try:
-            self.releaseDateObj = datetime(*self.getFirstVideoEnclosure().modified_parsed[0:7])
-        except:
-            try:
-                self.releaseDateObj = datetime(*self.entry.modified_parsed[0:7])
-            except:
-                self.releaseDateObj = datetime.min
         return self.releaseDateObj
 
     ##
@@ -801,6 +785,7 @@ class Item(DDBObject):
         try:
             self.entry = entry
             self.iconCache.requestUpdate()
+            self.updateReleaseDate()
         finally:
             self.signalChange(needsUpdateUandA = (UandA != self.getUandA()))
 
