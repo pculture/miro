@@ -101,7 +101,7 @@ def genUpdateHideOnView(varname, tid, prefix, args):
 
 from xml import sax
 from xhtmltools import toUTF8Bytes
-from StringIO import StringIO
+from cStringIO import StringIO
 from templatehelper import quoteattr, escape, HTMLPattern, attrPattern, resourcePattern, rawAttrPattern, generateId
 import re
 import os
@@ -260,7 +260,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
     def render(self, fileobj):
         fileobj.write('# This is a generated file. Do not edit.\n')
         fileobj.write('from template import Handle, fillAttr, quoteAndFillAttr\n')
-        fileobj.write('from StringIO import StringIO\n')
+        fileobj.write('from cStringIO import StringIO\n')
         fileobj.write('from xhtmltools import urlencode\n')
         fileobj.write('from templatehelper import quoteattr, escape, toUni\n')
         fileobj.write('from string import Template\n')
