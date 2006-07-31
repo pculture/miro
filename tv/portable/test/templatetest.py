@@ -4,8 +4,14 @@ import os
 import re
 import time
 import copy
+import feedparser
+import feed
+import item
+import app
+import maps
 
 from template import *
+from time import time
 import database
 import gettext
 import compiled_templates
@@ -45,6 +51,12 @@ class ChangeDelayedDOMTracker(DOMTracker):
     def changeItem(self, id, xml):
         time.sleep(0.1)
         self.callList.append({'name':'changeItem','xml':xml,'id':id})
+
+# We use this to benchmark filling in templates with actual objects
+# 
+class FakeController:
+    def __init__(self, selectedFeed):
+        self.currentSelectedTab = maps.mapToTab(selectedFeed)
 
 class SimpleTest(DemocracyTestCase):
     def setUp(self):
@@ -250,3 +262,51 @@ class ViewTest(DemocracyTestCase):
         handle.unlinkTemplate()
         self.assertEqual(ranOnUnload, 1)
 
+class TemplatePerformance(DemocracyTestCase):
+    def setUp(self):
+        global ranOnUnload
+        ranOnUnload = 0
+        DemocracyTestCase.setUp(self)
+        self.everything = database.defaultDatabase
+        self.domHandle = DOMTracker()
+
+    def timeIt(self, func, repeat):
+        start = time()
+        for x in xrange(repeat):
+            func()
+        totalTime = time() - start
+        return totalTime
+
+    def testRender(self):
+        self.feeds = []
+        self.items = []
+        for x in range(50):
+            self.feeds.append(feed.Feed('http://www.getdemocracy.com/50'))
+            for y in range(50):
+                self.items.append(item.Item(self.feeds[-1].id,
+                                       feedparser.FeedParserDict(
+                    {'title':"%d-%d" % (x,y),
+                     'enclosures':[{'url': 'file://%d-%d.mpg' % (x,y)}]})))
+        
+        app.controller = FakeController(self.feeds[-1])
+        time1 = self.timeIt(self.fillAndUnlink, 10)
+
+        for x in range(50):
+            for y in range(450):
+                self.items.append(item.Item(self.feeds[x].id,
+                                       feedparser.FeedParserDict(
+                    {'title':"%d-%d" % (x,y),
+                     'enclosures':[{'url': 'file://%d-%d.mpg' % (x,y)}]})))
+        time2 = self.timeIt(self.fillAndUnlink, 10)
+
+        # print "Filling in a 500 item feed took roughly %.4f secs" % (time2/10.0)
+        # Check that filling in 500 items takes no more than roughly
+        # 10x filling in 50 items
+        self.assert_(time2/time1 < 11, 'Template filling does not scale linearly')
+
+
+    def fillAndUnlink(self):
+        (tch, handle) = fillTemplate("channel",self.domHandle,'gtk-x11-MozillaBrowser','platform')
+        tch.read()
+        handle.initialFillIn()
+        handle.unlinkTemplate()
