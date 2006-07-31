@@ -4,14 +4,15 @@ Here's how they work:
 
 To run a script, use the following command:
 
-sudo ./scriptname username version
+./scriptname username version
 
 Where:
 -username is your account on pcf2 (used to scp files)
 -version is the version number of Democracy you wish to build (must have a tag in subversion)
+-You must run the script with sudo in Fedora Core
 
 When the script is finished, you should find a folder in your home directory 
-with all of the packages. Remember, you must run this script as a sudoer.
+with all of the packages. 
 
 For example, say you want to build Democracy 0.8.5 on Fedora Core 5:
 sudo ./fc5 oppy 0.8.5
