@@ -17,6 +17,7 @@ import platformutils
 ###############################################################################
 
 NibClassBuilder.extractClasses("PasswordWindow")
+NibClassBuilder.extractClasses("TextEntryWindow")
 NibClassBuilder.extractClasses("ExceptionReporterPanel")
 
 dlTask = None
@@ -57,7 +58,11 @@ class UIBackendDelegate:
     httpAuthLock = threading.Lock()
 
     def runDialog(self, dialog):
-        if isinstance(dialog, dialogs.HTTPAuthDialog):
+        if isinstance(dialog, dialogs.TextEntryDialog):
+            dlog = TextEntryController.alloc().initWithDialog_(dialog)
+            dlog.run()
+            dialog.runCallback(dlog.result, dlog.value)
+        elif isinstance(dialog, dialogs.HTTPAuthDialog):
             self.httpAuthLock.acquire()
             try:
                 authDlog = PasswordController.alloc().initWithDialog_(dialog)
@@ -253,6 +258,39 @@ class PasswordController (NibClassBuilder.AutoBaseClass):
     def closeWithResult(self, result):
         self.result = result
         self.window.close()
+        NSApplication.sharedApplication().stopModal()
+
+###############################################################################
+
+class TextEntryController (NibClassBuilder.AutoBaseClass):
+    
+    def initWithDialog_(self, dialog):
+        self = super(TextEntryController, self).initWithWindowNibName_owner_("TextEntryWindow", self)
+        self.dialog = dialog
+        self.window().setTitle_(dialog.title)
+        self.messageField.setStringValue_(dialog.description)
+        self.entryField.setStringValue_("")
+        self.mainButton.setTitle_(dialog.buttons[0].text)
+        self.secondaryButton.setTitle_(dialog.buttons[1].text)
+        self.result = None
+        self.value = None
+        return self
+
+    def run(self):
+        if self.dialog.prefillCallback is not None:
+            self.entryField.setStringValue_(self.dialog.prefillCallback())
+        NSApplication.sharedApplication().runModalForWindow_(self.window())
+
+    def acceptEntry_(self, sender):
+        self.closeWithResult(self.dialog.buttons[0], self.entryField.stringValue())
+
+    def cancelEntry_(self, sender):
+        self.closeWithResult(self.dialog.buttons[1], None)
+
+    def closeWithResult(self, result, value):
+        self.result = result
+        self.value = value
+        self.window().close()
         NSApplication.sharedApplication().stopModal()
 
 ###############################################################################

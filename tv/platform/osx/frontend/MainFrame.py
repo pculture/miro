@@ -9,11 +9,11 @@ import app
 import feed
 import prefs
 import config
+import dialogs
 import eventloop
 import platformutils
 
 NibClassBuilder.extractClasses("MainWindow")
-NibClassBuilder.extractClasses("AddChannelSheet")
 
 ###############################################################################
 
@@ -234,9 +234,20 @@ class MainController (NibClassBuilder.AutoBaseClass):
         print "NOT IMPLEMENTED"
 
     def addChannel_(self, sender):
-        controller = AddChannelSheetController.alloc().init(self.appl)
-        controller.retain()
-        NSApplication.sharedApplication().beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(controller.window(), self.window(), self, nil, 0)
+        def prefillCallback():
+            url = NSPasteboard.generalPasteboard().stringForType_(NSStringPboardType)
+            if url is None or not feed.validateFeedURL(url):
+                url = ''
+            return url
+        def validationCallback(dialog):
+            if dialog.choice == dialogs.BUTTON_OK:
+                url = dialog.value
+                eventloop.addUrgentCall(lambda:app.controller.addAndSelectFeed(url), "Add Feed")
+
+        title = "Subscribe to Channel"
+        description = "Enter the URL of the channel you would like to subscribe to."
+        dlog = dialogs.TextEntryDialog(title, description, dialogs.BUTTON_OK, dialogs.BUTTON_CANCEL, prefillCallback)
+        dlog.run(validationCallback)
 
     def removeChannel_(self, sender):
         feedID = app.controller.currentSelectedTab.feedID()
@@ -637,32 +648,5 @@ class MetalSliderCell (NSSliderCell):
         else:
             self.knob.dissolveToPoint_fraction_(location, 0.5)
         self.controlView().unlockFocus()
-
-###############################################################################
-
-class AddChannelSheetController (NibClassBuilder.AutoBaseClass):
-
-    def init(self, parent):
-        super(AddChannelSheetController, self).initWithWindowNibName_owner_("AddChannelSheet", self)
-        self.parentController = parent
-        return self
-
-    def awakeFromNib(self):
-        url = NSPasteboard.generalPasteboard().stringForType_(NSStringPboardType)
-        if url is None or not feed.validateFeedURL(url):
-            url = ''
-        self.addChannelSheetURL.setStringValue_(url)
-
-    def addChannelSheetDone_(self, sender):
-        sheetURL = self.addChannelSheetURL.stringValue()
-        eventloop.addUrgentCall(lambda:self.parentController.addAndSelectFeed(sheetURL), "Add Feed")
-        self.closeSheet()
-
-    def addChannelSheetCancel_(self, sender):
-        self.closeSheet()
-
-    def closeSheet(self):
-        NSApplication.sharedApplication().endSheet_(self.window())
-        self.window().orderOut_(self)
 
 ###############################################################################

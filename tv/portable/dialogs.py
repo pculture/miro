@@ -159,9 +159,10 @@ class TextEntryDialog(Dialog):
     dialog, the rename dialog, etc.
     """
 
-    def __init__(self, title, description, defaultButton, otherButton):
+    def __init__(self, title, description, defaultButton, otherButton, prefillCallback=None):
         super(TextEntryDialog, self).__init__(title, description,
                 [defaultButton, otherButton])
+        self.prefillCallback = prefillCallback
 
     def runCallback(self, choice, value=None):
         self.value = value
