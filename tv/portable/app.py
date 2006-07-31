@@ -897,7 +897,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
         #print "Processing %s" % templateName
         self.templateName = templateName
         (tch, self.templateHandle) = template.fillTemplate(templateName, self, self.getDTVPlatformName(), self.getEventCookie())
-        html = tch.getOutput()
+        html = tch.read()
 
         self.actionHandlers = [
             ModelActionHandler(delegate),

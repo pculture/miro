@@ -29,10 +29,10 @@ def genRepeatTranslate(varname, tid, prefix, args):
         out = '%s%s = {}\n' % (prefix, dictName)
         for name in funcDict:
             temp = generateId()
-            out = '%s%s%s = IOBuffer()\n' % (out, prefix, temp)
+            out = '%s%s%s = StringIO()\n' % (out, prefix, temp)
             for (func, fargs) in funcDict[name]:
                 out = '%s%s' % (out, func(temp, tid, prefix, fargs))
-            out = '%s%s%s.close()\n' % (out, prefix, temp)
+            out = '%s%s%s.seek(0)\n' % (out, prefix, temp)
             out = '%s%s%s[%s] = %s.read()\n' % (out, prefix, dictName, repr(str(name)), temp)
 
         out = '%s%s%s.write(Template(_(%s)).substitute(%s))\n' % (
@@ -260,7 +260,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
     def render(self, fileobj):
         fileobj.write('# This is a generated file. Do not edit.\n')
         fileobj.write('from template import Handle, fillAttr, quoteAndFillAttr\n')
-        fileobj.write('from IOBuffer import IOBuffer\n')
+        fileobj.write('from StringIO import StringIO\n')
         fileobj.write('from xhtmltools import urlencode\n')
         fileobj.write('from templatehelper import quoteattr, escape, toUni\n')
         fileobj.write('from string import Template\n')
@@ -274,7 +274,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         fileobj.write('_ = gettext.gettext\n')
         fileobj.write('def fillTemplate(domHandler, dtvPlatform, eventCookie):\n')
         self.handle.render(fileobj)
-        fileobj.write('\n\n    out = IOBuffer()\n')
+        fileobj.write('\n\n    out = StringIO()\n')
         
         if not self.onlyBody:
             fileobj.write('    out.write("<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?>\\n<!DOCTYPE html PUBLIC \\\"-//W3C//DTD XHTML 1.0 Strict//EN\\\" \\\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\\\">\\n")\n')
@@ -283,7 +283,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             (func, args) = self.outputLists[0][count]
             fileobj.write(func('out','','    ',args))
 
-        fileobj.write('    out.close()\n')        
+        fileobj.write('    out.seek(0)\n')        
         fileobj.write('\n\n    return (out, handle)\n')
 
     def returnIf(self,bool,value):
@@ -729,11 +729,11 @@ class MetaHandle:
             (anchorId, anchorType, templateFuncs, name) = tv
             repFunc = "rep_%s_%s" % (count, varname)
             fileobj.write('%sdef %s(this, viewName, tid):%s' % (prefix, repFunc,ending))
-            fileobj.write('%s    out = IOBuffer()%s' % (prefix, ending))
+            fileobj.write('%s    out = StringIO()%s' % (prefix, ending))
             for count2 in range(len(templateFuncs)):
                 (func, args) = templateFuncs[count2]
                 fileobj.write(func('out','',prefix+'    ',args))
-            fileobj.write('%s    out.close()%s' % (prefix, ending))
+            fileobj.write('%s    out.seek(0)%s' % (prefix, ending))
             fileobj.write('%s    return out%s' % (prefix, ending))
 
             fileobj.write('%s%s.addView(%s,%s,%s,%s, %s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),name,repFunc,repr(name),ending))
@@ -743,11 +743,11 @@ class MetaHandle:
             (anchorId, anchorType, templateFuncs, name) = ur
             upFunc = "up_%s_%s" % (count, varname)
             fileobj.write('%sdef %s(viewName, tid):%s' % (prefix, upFunc,ending))
-            fileobj.write('%s    out = IOBuffer()%s' % (prefix, ending))
+            fileobj.write('%s    out = StringIO()%s' % (prefix, ending))
             for count2 in range(len(templateFuncs)):
                 (func, args) = templateFuncs[count2]
                 fileobj.write(func('out','',prefix+'    ',args))
-            fileobj.write('%s    out.close()%s' % (prefix, ending))
+            fileobj.write('%s    out.seek(0)%s' % (prefix, ending))
             fileobj.write('%s    return out%s' % (prefix, ending))
 
             fileobj.write('%s%s.addUpdate(%s,%s,%s,%s, %s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),name,upFunc,repr(name),ending))
