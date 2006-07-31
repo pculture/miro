@@ -809,7 +809,6 @@ class DynamicDatabase:
         self.confirmDBThread()
         for [view, f] in self.subSorts:
             if all or view is sort:
-                view.confirmDBThread()
                 #FIXME this probably doesn't even work
                 #      right. We should remove every item,
                 #      then re-add them
