@@ -558,6 +558,7 @@ class HTTPConnection(ConnectionHandler):
         if self.pipelinedRequest is not None:
             errback = self.pipelinedRequest[1]
             trapCall(self, errback, PipelinedRequestNeverStarted())
+            self.pipelinedRequest = None
 
     def canSendRequest(self):
         return (self.state == 'ready' or 
