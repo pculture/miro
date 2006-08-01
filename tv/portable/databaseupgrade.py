@@ -155,6 +155,24 @@ def upgrade12(objectList):
                 changed.add(o)
     return changed
 
+def upgrade13(objectList):
+    """Add an isContainerItem field.  Computing this requires reading
+    through files and we need to do this check anyway in onRestore, in
+    case it has only been half done."""
+    changed = set()
+    todelete = []
+    for i in xrange (len(objectList) - 1, -1, -1):
+        o = objectList [i]
+        if o.classString in ('item', 'file-item'):
+            if o.savedData['feed_id'] == None:
+                del objectList[i]
+            else:
+                o.savedData['isContainerItem'] = None
+                o.savedData['parent_id'] = None
+                o.savedData['videoFilename'] = ""
+            changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

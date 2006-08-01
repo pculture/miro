@@ -35,10 +35,17 @@ class PhontomFeedTest(SanityTest):
     def __init__(self):
         self.feedsInItems = set()
         self.topLevelFeeds = set()
+        self.parentsInItems = set()
+        self.topLevelParents = set()
 
     def checkObject(self, obj):
         if isinstance(obj, item.Item):
-            self.feedsInItems.add(obj.feed_id)
+            if obj.feed_id is not None:
+                self.feedsInItems.add(obj.feed_id)
+            if obj.parent_id is not None:
+                self.parentsInItems.add(obj.feed_id)
+            if obj.isContainerItem is None or obj.isContainerItem:
+                self.topLevelParents.add(obj.feed_id)
         elif isinstance(obj, feed.Feed):
             self.topLevelFeeds.add(obj.id)
 
@@ -47,11 +54,20 @@ class PhontomFeedTest(SanityTest):
             phantoms = self.feedsInItems.difference(self.topLevelFeeds)
             phantomsString = ', '.join([str(p) for p in phantoms])
             return "Phantom feed(s) referenced in items: %s" % phantomsString
+        if not self.parentsInItems.issubset(self.topLevelParents):
+            phantoms = self.parentsInItems.difference(self.topLevelParents)
+            phantomsString = ', '.join([str(p) for p in phantoms])
+            return "Phantom feed(s) referenced in items: %s" % phantomsString
 
     def fixIfPossible(self, objectList):
         for i in reversed(xrange(len(objectList))):
             if (isinstance(objectList[i], item.Item) and 
-                    objectList[i].feed_id not in self.topLevelFeeds):
+                    objectList[i].feed_id is not None and
+                objectList[i].feed_id not in self.topLevelFeeds):
+                del objectList[i]
+            if (isinstance(objectList[i], item.Item) and 
+                    objectList[i].parent_id is not None and
+                objectList[i].parent_id not in self.topLevelParents):
                 del objectList[i]
 
 class SingletonTest(SanityTest):

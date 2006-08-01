@@ -38,8 +38,8 @@ cdef extern from "xine_impl.h":
     void xineAttach(_Xine* xine, char* displayName, Drawable d)
     void xineSetArea(_Xine* xine, int xpos, int ypos, int width, int height)
     void xineDetach(_Xine* xine)
-    int xineCanPlayUrl(_Xine* xine, char* url)
-    void xinePlayUrl(_Xine* xine, char* url)
+    int xineCanPlayFile(_Xine* xine, char* filename)
+    void xinePlayFile(_Xine* xine, char* filename)
     void xineSetPlaying(_Xine* xine, int isPlaying)
     void xineSetVolume(_Xine* xine, int volume)
     int xineGetVolume(_Xine* xine)
@@ -66,11 +66,11 @@ cdef class Xine:
         xineDetach(self.xine)
     def setArea(self, int xpos, int ypos, int width, int height):
         xineSetArea(self.xine, xpos, ypos, width, height)
-    def canPlayUrl(self, char* url):
-        # we convert xineCanPlayUrl's return value to a python boolean
-        return xineCanPlayUrl(self.xine, url) and True or False
-    def playUrl(self, char* url):
-        xinePlayUrl(self.xine, url)
+    def canPlayFile(self, char* filename):
+        # we convert xineCanPlayFile's return value to a python boolean
+        return xineCanPlayFile(self.xine, filename) and True or False
+    def playFile(self, char* filename):
+        xinePlayFile(self.xine, filename)
     def play(self):
         xineSetPlaying(self.xine, 1)
     def pause(self):

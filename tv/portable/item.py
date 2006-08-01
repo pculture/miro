@@ -24,6 +24,7 @@ import filters
 import prefs
 import resource
 import views
+import indexes
 
 def updateUandA (feed):
     # Not toplevel to avoid a dependency loop at load time.
@@ -37,8 +38,10 @@ class Item(DDBObject):
     associated with it.
     """
 
-    def __init__(self, feed_id, entry, linkNumber = 0):
+    def __init__(self, entry, linkNumber = 0, feed_id=None, parent_id=None):
         self.feed_id = feed_id
+        self.parent_id = parent_id
+        self.isContainerItem = None
         self.seen = False
         self.downloader = None
         self.autoDownloaded = False
@@ -49,6 +52,8 @@ class Item(DDBObject):
         self.entry = entry
         self.expired = False
         self.keep = False
+        self.videoFilename = ""
+        self.childrenSeen = None
 
         self.iconCache = IconCache(self)
         
@@ -58,8 +63,38 @@ class Item(DDBObject):
         self.linkNumber = linkNumber
         self.creationTime = datetime.now()
         self.updateReleaseDate()
+        self.splitItem()
         DDBObject.__init__(self)
         updateUandA(self.getFeed())
+
+    def splitItem(self):
+        if self.isContainerItem is not None:
+            return
+        if not isinstance (self, FileItem) and (self.downloader is None or not self.downloader.isFinished()):
+            return
+        filename_root = self.getFilename()
+        if os.path.isdir(filename_root):
+            import app
+            videos = set()
+            for (dirpath, dirnames, filenames) in os.walk(filename_root):
+                for name in filenames:
+                    filename = os.path.join (dirpath, name)
+                    if isVideoFilename (filename):
+                        videos.add(filename)
+            if len(videos) > 1:
+                self.isContainerItem = True
+                for video in videos:
+                    FileItem (video, parent_id=self.id)
+            elif len(videos) > 0:
+                self.isContainerItem = False
+                for video in videos:
+                    self.videoFilename = video
+            else:
+                self.isContainerItem = False
+        else:
+            self.isContainerItem = False
+            self.videoFilename = filename_root
+        self.signalChange(needsUpdateUandA=False)
 
     def updateReleaseDate(self):
         # This should be called whenever we get a new entry
@@ -71,15 +106,34 @@ class Item(DDBObject):
             except:
                 self.releaseDateObj = datetime.min
 
+
     def checkConstraints(self):
-        try:
-            obj = self.dd.getObjectByID(self.feed_id)
-        except ObjectNotFoundError:
-            raise DatabaseConstraintError("%s not in database" % self.feed_id)
-        else:
-            if not isinstance(obj, feed.Feed):
-                msg = "feed_id points to a %s instance" % obj.__class__
-                raise DatabaseConstraintError(msg)
+        if self.feed_id is not None:
+            try:
+                obj = self.dd.getObjectByID(self.feed_id)
+            except ObjectNotFoundError:
+                raise DatabaseConstraintError("%s not in database" % self.feed_id)
+            else:
+                if not isinstance(obj, feed.Feed):
+                    msg = "feed_id points to a %s instance" % obj.__class__
+                    raise DatabaseConstraintError(msg)
+        if self.parent_id is not None:
+            try:
+                obj = self.dd.getObjectByID(self.parent_id)
+            except ObjectNotFoundError:
+                raise DatabaseConstraintError("%s not in database" % self.parent_id)
+            else:
+                if not isinstance(obj, Item):
+                    msg = "parent_id points to a %s instance" % obj.__class__
+                    raise DatabaseConstraintError(msg)
+                # If isContainerItem is None, we may be in the middle of building the children list.
+                if obj.isContainerItem is not None and not obj.isContainerItem:
+                    msg = "parent_id is not a containerItem"
+                    raise DatabaseConstraintError(msg)
+        if self.parent_id is None and self.feed_id is None:
+            raise DatabaseConstraintError ("feed_id and parent_id both None")
+        if self.parent_id is not None and self.feed_id is not None:
+            raise DatabaseConstraintError ("feed_id and parent_id both not None")
 
     # Unfortunately, our database does not scale well with many views,
     # so we have this hack to make sure that unwatched and available
@@ -160,11 +214,22 @@ class Item(DDBObject):
             # optimizing by caching the feed
             return self._feed
         except:
-            self._feed = self.dd.getObjectByID(self.feed_id)
+            if self.feed_id is not None:
+                self._feed = self.dd.getObjectByID(self.feed_id)
+            elif self.parent_id is not None:
+                self._feed = self.getParent().getFeed()
+            else:
+                self._feed = None
             return self._feed
 
+    def getParent(self):
+        if self.parent_id is not None:
+            return self.dd.getObjectByID(self.parent_id)
+        else:
+            return self
+
     def feedExists(self):
-        return self.dd.idExists(self.feed_id)
+        return self.feed_id and self.dd.idExists(self.feed_id)
 
     ##
     # Moves this item to another feed.
@@ -176,12 +241,31 @@ class Item(DDBObject):
     ##
     # Marks this item as expired
     def expire(self):
-        UandA = self.getUandA()
-        self.confirmDBThread()
-        self.stopDownload()
-        self.expired = True
-        self.seen = self.keep = self.pendingManualDL = False
-        self.signalChange(needsUpdateUandA = (UandA != self.getUandA()))
+        if self.isContainerItem:
+            title = _("Removing %s") % (os.path.basename(self.getTitle()))
+            description = _("Deleting this entry will delete all its videos.")
+            d = dialogs.ChoiceDialog(title, description,
+                                     dialogs.BUTTON_DELETE_VIDEOS,
+                                     dialogs.BUTTON_CANCEL)
+            def callback(dialog):
+                if dialog.choice == dialogs.BUTTON_DELETE_VIDEOS:
+                    doExpire()
+            d.run(callback)
+        else:
+            doExpire()
+
+        def doExpire():
+            UandA = self.getUandA()
+            self.confirmDBThread()
+            self.deleteFile()
+            self.expired = True
+            if self.isContainerItem:
+                children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
+                for item in children:
+                    item.remove()
+            self.isContainerItem = None
+            self.seen = self.keep = self.pendingManualDL = False
+            self.signalChange(needsUpdateUandA = (UandA != self.getUandA()))
 
     def getExpirationString(self):
         """Get the expiration time a string to display to the user."""
@@ -261,7 +345,17 @@ class Item(DDBObject):
     # Note the difference between "viewed" and "seen"
     def getSeen(self):
         self.confirmDBThread()
-        return self.seen
+        if self.isContainerItem:
+            if self.childrenSeen is None:
+                children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
+                self.childrenSeen = True
+                for item in children:
+                    if not item.seen:
+                        self.childrenSeen = False
+                        break
+            return self.childrenSeen
+        else:
+            return self.seen
 
     ##
     # Marks the item as seen
@@ -270,6 +364,10 @@ class Item(DDBObject):
         self.seen = True
         if self.watchedTime is None:
             self.watchedTime = datetime.now()
+        if self.parent_id:
+            parent = self.getParent()
+            parent.childrenSeen = None
+            parent.signalChange()
         self.signalChange()
 
     def getRSSID(self):
@@ -432,7 +530,7 @@ class Item(DDBObject):
 
     ##
     # Stops downloading the item
-    def stopDownload(self):
+    def deleteFile(self):
         self.confirmDBThread()
         if self.downloader is not None:
             self.downloader.removeItem(self)
@@ -824,6 +922,7 @@ class Item(DDBObject):
         self.confirmDBThread()
         self.downloadedTime = datetime.now()
         self.keep = (self.getFeed().expire == "never")
+        self.splitItem()
         self.signalChange()
 
     def save(self):
@@ -850,6 +949,13 @@ class Item(DDBObject):
         except:
             return ""
 
+    ##
+    # Returns the filename of the first downloaded video or the empty string
+    # NOTE: this will always return the absolute path to the file.
+    def getVideoFilename(self):
+        self.confirmDBThread()
+        return self.videoFilename
+
     def getRSSEntry(self):
         self.confirmDBThread()
         return self.entry
@@ -861,28 +967,31 @@ class Item(DDBObject):
         if self.iconCache is not None:
             self.iconCache.remove()
             self.iconCache = None
+        if self.isContainerItem:
+            children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
+            for item in children:
+                item.remove()
         DDBObject.remove(self)
 
-    def reconnectDownloader(self):
+    def setupLinks(self):
         """This is called after we restore the database.  Since we don't store
         references between objects, we need a way to reconnect downloaders to
         the items after the restore.
         """
 
-        if self.downloader is None:
+        if not isinstance (self, FileItem) and self.downloader is None:
             self.downloader = downloader.getDownloader(self, create=False)
             if self.downloader is not None:
-                self.signalChange(needsSave=False)
-        else:
-            # Do this here instead of onRestore in case the feed
-            # hasn't been loaded yet.  signalChange calls this
-            # function, so we only need to do it if we don't call
-            # signalChange.
-            updateUandA(self.getFeed())
+                self.signalChange(needsSave=False, needsUpdateUandA=False)
+        self.splitItem()
+        # Do this here instead of onRestore in case the feed hasn't
+        # been loaded yet.
+        updateUandA(self.getFeed())
 
     ##
     # Called by pickle during serialization
     def onRestore(self):
+        self.childrenSeen = None
         if (self.iconCache == None):
             self.iconCache = IconCache (self)
         else:
@@ -895,7 +1004,7 @@ class Item(DDBObject):
 
 def reconnectDownloaders():
     for item in views.items:
-        item.reconnectDownloader()
+        item.setupLinks()
 
 def getEntryForFile(filename):
     return FeedParserDict({'title':os.path.basename(filename),
@@ -905,11 +1014,11 @@ def getEntryForFile(filename):
 # An Item that exists as a local file
 class FileItem(Item):
 
-    def __init__(self,feed_id,filename):
+    def __init__(self,filename, feed_id=None, parent_id=None):
         filename = os.path.abspath(filename)
         self.filename = filename
         self.deleted = False
-        Item.__init__(self, feed_id, getEntryForFile(filename))
+        Item.__init__(self, getEntryForFile(filename), feed_id=feed_id, parent_id=parent_id)
 
     def getState(self):
         if self.deleted:
@@ -919,6 +1028,31 @@ class FileItem(Item):
         else:
             return "newly-downloaded"
 
+    def getChannelCategory(self):
+        """Get the category to use for the channel template.  
+        
+        This method is similar to getState(), but has some subtle differences.
+        getState() is used by the download-item template and is usually more
+        useful to determine what's actually happening with an item.
+        getChannelCategory() is used by by the channel template to figure out
+        which heading to put an item under.
+
+        * downloading and not-downloaded are grouped together as
+          not-downloaded
+        * Items are always new if their feed hasn't been marked as viewed
+          after the item's pub date.  This is so that when a user gets a list
+          of items and starts downloading them, the list doesn't reorder
+          itself.
+        """
+
+        self.confirmDBThread()
+        if self.deleted:
+            return 'expired'
+        elif not self.seen:
+            return 'newly-downloaded'
+        else:
+            return 'saved'
+
     def showSaveButton(self):
         return False
 
@@ -927,23 +1061,39 @@ class FileItem(Item):
 
     def expire(self):
         title = _("Removing %s") % (os.path.basename(self.filename))
-        description = _("Would you like to delete this file or just remove "
-                "its entry from My Collection?")
+        if self.isContainerItem:
+            description = _("Would you like to delete this directory and all of "
+                            "its videos or just remove its entry from My Collection?")
+            button = dialogs.BUTTON_DELETE_VIDEOS
+        else:
+            description = _("Would you like to delete this file or just remove "
+                            "its entry from My Collection?")
+            button = dialogs.BUTTON_DELETE_FILE
         d = dialogs.ThreeChoiceDialog(title, description,
-                dialogs.BUTTON_REMOVE_ENTRY, dialogs.BUTTON_DELETE_FILE,
+                dialogs.BUTTON_REMOVE_ENTRY, button,
                 dialogs.BUTTON_CANCEL)
         def callback(dialog):
-            if dialog.choice == dialogs.BUTTON_DELETE_FILE:
+            if dialog.choice == button:
                 try:
-                    os.remove(self.filename)
+                    if os.path.isfile(self.filename):
+                        os.remove(self.filename)
+                    elif os.path.isdir(self.filename):
+                        shutil.rmtree(self.filename)
                 except:
                     print "WARNING: Error deleting %s" % self.filename
                     traceback.print_exc()
                 self.remove()
             elif dialog.choice == dialogs.BUTTON_REMOVE_ENTRY:
                 self.confirmDBThread()
-                self.deleted = True
-                self.signalChange()
+                if self.isContainerItem:
+                    children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
+                    for item in children:
+                        item.remove()
+                if self.feed_id is None:
+                    self.remove()
+                else:
+                    self.deleted = True
+                    self.signalChange()
 
         d.run(callback)
 
@@ -997,11 +1147,14 @@ def _hasVideoType(enclosure):
 
 def _hasVideoExtension(enclosure, key):
     return (enclosure.has_key(key) and
-            ((len(enclosure[key]) > 4 and
-              enclosure[key][-4:].lower() in ['.mov', '.wmv', '.mp4', '.m4v',
-                                              '.mp3', '.ogg', '.anx', '.mpg',
-                                              '.avi', '.flv']) or
-             (len(enclosure[key]) > 8 and
-                  enclosure[key][-8:].lower() == '.torrent') or
-             (len(enclosure[key]) > 5 and
-                  enclosure[key][-5:].lower() == '.mpeg')))
+            isVideoFilename(enclosure[key]))
+
+def isVideoFilename(filename):
+    return ((len(filename) > 4 and
+             filename[-4:].lower() in ['.mov', '.wmv', '.mp4', '.m4v',
+                                       '.mp3', '.ogg', '.anx', '.mpg',
+                                       '.avi', '.flv']) or
+            (len(filename) > 8 and
+             filename[-8:].lower() == '.torrent') or
+            (len(filename) > 5 and
+             filename[-5:].lower() == '.mpeg'))

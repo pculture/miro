@@ -47,9 +47,9 @@ class QuicktimeRenderer (app.VideoRenderer):
         self.cachedMovie = nil
 
     @platformutils.onMainThreadWithReturn
-    def canPlayUrl(self, url):
+    def canPlayFile(self, filename):
         canPlay = False
-        qtmovie = self.getMovieFromURL(url)
+        qtmovie = self.getMovieFromFile(filename)
 
         # Purely referential movies have a no duration, no track and need to be 
         # streamed first. Since we don't support this yet, we delegate the 
@@ -73,7 +73,7 @@ class QuicktimeRenderer (app.VideoRenderer):
                     mediaDuration = media.attributeForKey_(QTMediaDurationAttribute).QTTimeValue().timeValue
                     if mediaType in self.CORRECT_QTMEDIA_TYPES and mediaDuration > 0:
                         # We have one, see if the file is something we support
-                        (unused, ext) = os.path.splitext(str(url).lower())
+                        (unused, ext) = os.path.splitext(str(filename).lower())
                         if ext in self.FLIP4MAC_EXT and self.hasFlip4MacComponent():
                             canPlay = True
                             break
@@ -95,16 +95,16 @@ class QuicktimeRenderer (app.VideoRenderer):
         return len(glob.glob('/Library/QuickTime/Ogg*')) > 0
 
     @platformutils.onMainThread
-    def selectUrl(self, url):
-        qtmovie = self.getMovieFromURL(url)
+    def selectFile(self, filename):
+        qtmovie = self.getMovieFromFile(filename)
         self.reset()
         if qtmovie is not nil:
             self.view.setMovie_(qtmovie)
             self.view.setNeedsDisplay_(YES)
             self.registerMovieObserver(qtmovie)
 
-    def getMovieFromURL(self, url):
-        url = NSURL.URLWithString_(url)
+    def getMovieFromFile(self, filename):
+        url = NSURL.fileURLWithPath_(filename)
         if self.cachedMovie is not nil and self.cachedMovie.attributeForKey_(QTMovieURLAttribute) == url:
             qtmovie = self.cachedMovie
         else:

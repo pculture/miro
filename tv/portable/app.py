@@ -107,9 +107,9 @@ class PlaybackControllerBase:
 
     def playItem(self, anItem):
         try:
-            while not os.path.exists(anItem.getPath()):
+            while not os.path.exists(anItem.getVideoFilename()):
                 print "DTV: movie file '%s' is missing, skipping to next" % \
-                        anItem.getPath()
+                        anItem.getVideoFilename()
                 anItem = self.currentPlaylist.getNext()
                 if anItem is None:
                     self.stop()
@@ -264,6 +264,12 @@ class VideoDisplayBase (Display):
     def canPlayItem(self, anItem):
         return self.getRendererForItem(anItem) is not None
     
+    def canPlayFile(self, file):
+        for renderer in self.renderers:
+            if renderer.canPlayFile(file):
+                return True
+        return False
+    
     def selectItem(self, anItem, renderer):
         self.stopOnDeselect = True
         controller.videoInfoItem = anItem
@@ -355,16 +361,9 @@ class VideoRenderer:
         self.interactivelySeeking = False
     
     def canPlayItem(self, anItem):
-        if os.path.isdir(anItem.getPath()):
-          for filename in os.listdir(anItem.getPath()):
-            filename = os.path.join(anItem.getPath(), filename)
-            url = 'file://%s' % urllib.pathname2url(filename)
-            if self.canPlayUrl (url):
-              return True
-        url = 'file://%s' % urllib.pathname2url(anItem.getPath())
-        return self.canPlayUrl (url)
+        return self.canPlayFile (anItem.getVideoFilename())
     
-    def canPlayUrl(self, url):
+    def canPlayFile(self, filename):
         return False
     
     def getDisplayTime(self):
@@ -381,18 +380,9 @@ class VideoRenderer:
         self.setCurrentTime(self.getDuration() * progress)
 
     def selectItem(self, anItem):
-        url = 'file://%s' % urllib.pathname2url(anItem.getPath())
-        if self.canPlayUrl (url):
-            self.selectUrl (url)
-        elif os.path.isdir(anItem.getPath()):
-          for filename in os.listdir(anItem.getPath()):
-            filename = os.path.join(anItem.getPath(), filename)
-            url = 'file://%s' % urllib.pathname2url(filename)
-            if self.canPlayUrl (url):
-              self.selectUrl (url)
-              return
+        self.selectFile (anItem.getVideoFilename())
 
-    def selectUrl(self, url):
+    def selectFile(self, filename):
         pass
         
     def reset(self):
@@ -546,9 +536,6 @@ class Controller (frontend.Application):
             # Set up the playback controller
             self.playbackController = frontend.PlaybackController()
 
-            # Reconnect items to downloaders.
-            item.reconnectDownloaders()
-
             # Put up the main frame
             print "DTV: Displaying main frame..."
             self.frame = frontend.MainFrame(self)
@@ -558,6 +545,9 @@ class Controller (frontend.Application):
             self.videoDisplay.initRenderers()
             self.videoDisplay.playbackController = self.playbackController
             self.videoDisplay.setVolume(config.get(prefs.VOLUME_LEVEL))
+
+            # Reconnect items to downloaders.
+            item.reconnectDownloaders()
 
             eventloop.addTimeout (30, autoupdate.checkForUpdates, "Check for updates")
             feed.expireItems()
@@ -1446,8 +1436,8 @@ class PlaylistItemFromItem (frontend.PlaylistItem):
     def getTitle(self):
         return self.item.getTitle()
 
-    def getPath(self):
-        return self.item.getFilename()
+    def getVideoFilename(self):
+        return self.item.getVideoFilename()
 
     def getLength(self):
         # NEEDS

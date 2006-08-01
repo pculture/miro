@@ -212,7 +212,8 @@ class ItemSchema(DDBObjectSchema):
     klass = Item
     classString = 'item'
     fields = DDBObjectSchema.fields + [
-        ('feed_id', SchemaInt()),
+        ('feed_id', SchemaInt(noneOk=True)),
+        ('parent_id', SchemaInt(noneOk=True)),
         ('seen', SchemaBool()),
         ('autoDownloaded', SchemaBool()),
         ('pendingManualDL', SchemaBool()),
@@ -225,6 +226,8 @@ class ItemSchema(DDBObjectSchema):
         ('iconCache', SchemaObject(IconCache, noneOk=True)),
         ('downloadedTime', SchemaDateTime(noneOk=True)),
         ('watchedTime', SchemaDateTime(noneOk=True)),
+        ('isContainerItem', SchemaBool(noneOk=True)),
+        ('videoFilename', SchemaString()),
         ('releaseDateObj', SchemaDateTime()),
     ]
 
@@ -359,7 +362,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('cachedGuideBody', SchemaString(noneOk=True)),
     ]
 
-VERSION = 12
+VERSION = 13
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,

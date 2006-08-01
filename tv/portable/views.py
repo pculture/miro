@@ -25,6 +25,8 @@ playlistTabs = allTabs.filterWithIndex(indexes.tabObjectClass,
 
 items = db.filterWithIndex(indexes.objectsByClass,item.Item)
 fileItems = db.filter(lambda x: isinstance(x, item.FileItem))
+toplevelItems = items.filter(lambda x: x.feed_id is not None)
+
 # NOTE: we can't use the objectsByClass index for fileItems, because it
 # agregates all Item subclasses into one group.
 feeds = db.filterWithIndex(indexes.objectsByClass,feed.Feed)
@@ -35,6 +37,8 @@ staticTabsObjects = db.filterWithIndex(indexes.objectsByClass,tabs.StaticTab)
 remoteDownloads.createIndex(indexes.downloadsByDLID)
 remoteDownloads.createIndex(indexes.downloadsByURL)
 items.createIndex(indexes.itemsByFeed)
+toplevelItems.createIndex(indexes.itemsByFeed)
+items.createIndex(indexes.itemsByParent)
 feeds.createIndex(indexes.feedsByURL)
 allTabs.createIndex(indexes.tabIDIndex)
 allTabs.createIndex(indexes.tabObjIDIndex)

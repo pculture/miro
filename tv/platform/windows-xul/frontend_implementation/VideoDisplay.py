@@ -72,15 +72,13 @@ class VLCRenderer:
     component. 
     """
 
-    def canPlayItem(self, item):
-        path = item.getFilename()
-        url = util.absolutePathToFileURL(path)
+    def canPlayFile(self, filename):
+        url = util.absolutePathToFileURL(filename)
         return frontend.vlcRenderer.canPlayURL(url)
 
     @lockAndPlay
-    def selectItem(self, item):
-        path = item.getFilename()
-        url = util.absolutePathToFileURL(path)
+    def selectFile(self, filename):
+        url = util.absolutePathToFileURL(filename)
         return frontend.vlcRenderer.selectURL(url)
     def setVolume(self, volume): 
         return frontend.vlcRenderer.setVolume(volume)

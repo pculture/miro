@@ -6,20 +6,49 @@ def _compare(x, y):
     return 0
 
 def item(x,y):
+    from item import Item, FileItem
+    if x.parent_id is not None and x.parent_id == y.getID():
+        # y is x's parent
+        return 1
+    if y.parent_id is not None and y.parent_id == x.getID():
+        # x is y's parent
+        return -1
+    if x.parent_id is None or y.parent_id is None or x.parent_id != y.parent_id:
+        # x and y are not children of the same item, so sort by the parent (which might be the self)
+        x = x.getParent()
+        y = y.getParent()
+            
     if x.releaseDateObj > y.releaseDateObj:
         return -1
-    elif x.releaseDateObj < y.releaseDateObj:
+    if x.releaseDateObj < y.releaseDateObj:
         return 1
-    elif x.linkNumber > y.linkNumber:
+    if x.linkNumber > y.linkNumber:
         return -1
-    elif x.linkNumber < y.linkNumber:
+    if x.linkNumber < y.linkNumber:
         return 1
-    elif x.id > y.id:
+
+    # Since we're sorting Items and FileItems differently, one has to
+    # come before the other for this to be a proper sorting function.
+
+    if x.__class__ is Item and y.__class__ is FileItem:
         return -1
-    elif x.id < y.id:
+    if x.__class__ is FileItem and y.__class__ is Item:
         return 1
-    else:
-        return 0
+    if x.__class__ is FileItem and y.__class__ is FileItem:
+        if x.getTitle() < y.getTitle():
+            return -1
+        if x.getTitle() > y.getTitle():
+            return 1
+    if x.id > y.id:
+        return -1
+    if x.id < y.id:
+        return 1
+    if x.__class__ is Item and y.__class__ is Item:
+        if x.getTitle() < y.getTitle():
+            return -1
+        if x.getTitle() > y.getTitle():
+            return 1
+    return 0
 
 def alphabetical(x,y):
     if x.getTitle() < y.getTitle():

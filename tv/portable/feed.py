@@ -167,7 +167,7 @@ class FeedImpl:
         self.expireTime = None
 
     def calc_item_list(self):
-        self.items = views.items.filterWithIndex(indexes.itemsByFeed, self.ufeed.id)
+        self.items = views.toplevelItems.filterWithIndex(indexes.itemsByFeed, self.ufeed.id)
 
     def getBaseHref(self):
         """Get a URL to use in the <base> tag for this channel.  This is used
@@ -1085,7 +1085,7 @@ class RSSFeedImpl(FeedImpl):
                             pass
             if (new and entry.has_key('enclosures') and
                 self.hasVideoFeed(entry.enclosures)):
-                Item(self.ufeed.id,entry)
+                Item(entry, feed_id=self.ufeed.id)
         try:
             updateFreq = self.parsed["feed"]["ttl"]
         except KeyError:
@@ -1274,9 +1274,9 @@ class ScraperFeedImpl(FeedImpl):
             if item.getURL() == link:
                 return
         if dict.has_key('thumbnail') > 0:
-            i=Item(self.ufeed.id, FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link,'thumbnail':FeedParserDict({'url':dict['thumbnail']})})]}),linkNumber = linkNumber)
+            i=Item(FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link,'thumbnail':FeedParserDict({'url':dict['thumbnail']})})]}),linkNumber = linkNumber, feed_id=self.ufeed.id)
         else:
-            i=Item(self.ufeed.id, FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link})]}),linkNumber = linkNumber)
+            i=Item(FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link})]}),linkNumber = linkNumber, feed_id=self.ufeed.id)
         updateUandA(self.ufeed)
 
     #FIXME: compound names for titles at each depth??
@@ -1460,11 +1460,14 @@ class DirectoryFeedImpl(FeedImpl):
 
     def update(self):
         self.ufeed.confirmDBThread()
+        moviesDir = config.get(prefs.MOVIES_DIRECTORY)
         # Files known about by real feeds
         knownFiles = set()
-        for item in views.items:
+        for item in views.toplevelItems:
             if not item.feed_id is self.ufeed.id:
                 knownFiles.add(os.path.normcase(item.getFilename()))
+
+        knownFiles.add(os.path.normcase(os.path.join(moviesDir, "Incomplete Downloads")))
 
         # Remove items that are in feeds, but we have in our list
         for item in self.items:
@@ -1475,18 +1478,16 @@ class DirectoryFeedImpl(FeedImpl):
 
         #Adds any files we don't know about
         #Files on the filesystem
-        moviesDir = config.get(prefs.MOVIES_DIRECTORY)
         if os.path.isdir(moviesDir):
             existingFiles = [os.path.normcase(os.path.join(moviesDir, f)) 
                     for f in os.listdir(moviesDir)]
             for file in existingFiles:
-                if (os.path.isfile(file) and os.path.basename(file)[0] != '.' and 
+                if (os.path.exists(file) and os.path.basename(file)[0] != '.' and 
                         not file in knownFiles and not file in myFiles):
-                    FileItem(self.ufeed.id, file)
+                    FileItem(file, feed_id = self.ufeed.id)
 
         for item in self.items:
-            if not os.path.isfile(item.getFilename()):
-                print "Remove: ", file
+            if not os.path.exists(item.getFilename()):
                 item.remove()
 
         self.scheduleUpdateEvents(-1)

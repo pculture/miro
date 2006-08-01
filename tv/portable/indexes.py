@@ -2,7 +2,11 @@ import app
 import item
 
 def itemsByFeed(x):
+    # This specifically sorts subitems by their parent's feed.
     return x.getFeed().getID()
+
+def itemsByParent(x):
+    return x.parent_id
 
 def feedsByURL(x):
     return x.getOriginalURL()

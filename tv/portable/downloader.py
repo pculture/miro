@@ -239,7 +239,10 @@ URL was %s""" % self.url
         self.stop()
         try:
             filename = self.status['filename']
-            os.remove (filename)
+            if os.path.isfile(filename):
+                os.remove (filename)
+            elif os.path.isdir(filename):
+                shutil.rmtree (filename)
         except:
             pass
         DDBObject.remove(self)

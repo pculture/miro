@@ -167,29 +167,29 @@ void xineSetArea(_Xine* xine, int xpos, int ypos, int width, int height)
     g_mutex_unlock(xine->frameInfo.lock);
 }
 
-int xineCanPlayUrl(_Xine* xine, const char* url)
+int xineCanPlayFile(_Xine* xine, const char* filename)
 {
     /* Implementation note: The tester stream is not quite the same as the
-     * xine stream that we use to play the urls.  In particular, it has a NULL
+     * xine stream that we use to play the files.  In particular, it has a NULL
      * visual, instead of visual that points to the window we will draw in.
      * This doesn't seem to produce bad results, however.
      */
 
     int rv;
-    rv = xine_open(xine->tester.stream, url);
+    rv = xine_open(xine->tester.stream, filename);
     if(rv) {
         xine_close(xine->tester.stream);
     }
     return rv;
 }
 
-void xinePlayUrl(_Xine* xine, const char* url)
+void xinePlayFile(_Xine* xine, const char* filename)
 {
     if(!xine->attached) return;
     xine_close(xine->stream);
-    if (!xine_open(xine->stream, url) || 
+    if (!xine_open(xine->stream, filename) || 
         !xine_play(xine->stream, 0, 0)) {
-        printf("Unable to open mrl '%s'\n", url);
+        printf("Unable to open file '%s'\n", filename);
     }
 }
 
