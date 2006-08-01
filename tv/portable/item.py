@@ -85,6 +85,7 @@ class Item(DDBObject):
     # so we have this hack to make sure that unwatched and available
     # get updated when an item changes
     def signalChange(self, needsSave=True, needsUpdateUandA=True):
+        self._calcState()
         DDBObject.signalChange(self, needsSave=needsSave)
         if needsUpdateUandA:
             try:
@@ -439,8 +440,17 @@ class Item(DDBObject):
         * expiring -- Item has been played and is set to expire
         * saved -- Item has been played and has been saved
         * expired -- Item has expired.
+
+        Uses caching to prevent recalculating state over and over
         """
-        
+        try:
+            return self._state
+        except:
+            self._calcState()
+            return self._state
+
+    # Recalculate the state of an item after a change
+    def _calcState(self):
         self.confirmDBThread()
         # FIXME, 'failed', and 'paused' should get download icons.  The user
         # should be able to restart or cancel them (put them into the stopped
@@ -448,21 +458,21 @@ class Item(DDBObject):
         if (self.downloader is None  or 
                 self.downloader.getState() in ('failed', 'stopped', 'paused')):
             if self.pendingManualDL:
-                return 'downloading'
+                self._state = 'downloading'
             elif self.expired:
-                return 'expired'
+                self._state = 'expired'
             elif not self.getViewed():
-                return 'new'
+                self._state = 'new'
             else:
-                return 'not-downloaded'
+                self._state = 'not-downloaded'
         elif not self.downloader.isFinished():
-            return 'downloading'
+            self._state = 'downloading'
         elif not self.seen:
-            return 'newly-downloaded'
+            self._state = 'newly-downloaded'
         elif not self.keep:
-            return 'expiring'
+            self._state = 'expiring'
         else:
-            return 'saved'
+            self._state = 'saved'
 
     def getChannelCategory(self):
         """Get the category to use for the channel template.  

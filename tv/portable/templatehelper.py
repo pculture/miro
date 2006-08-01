@@ -16,15 +16,21 @@ HTMLPattern = re.compile("^.*<body.*?>(.*)</body\s*>", re.S)
 attrPattern = re.compile("^(.*?)@@@(.*?)@@@(.*)$")
 resourcePattern = re.compile("^resource:(.*)$")
 rawAttrPattern = re.compile("^(.*)\*\*\*(.*?)\*\*\*(.*)$")
-evalCache = {}
+
+_unicache = {}
+_escapecache = {}
 
 def quoteattr(orig):
     return orig.replace('"','&quot;')
 
 def escape(orig):
-    return unicode(orig).replace('&','&amp;').replace('<','&lt;').replace('>','&gt;')
+    global _escapecache
+    try:
+        return _escapecache[orig]
+    except:
+        _escapecache[orig] = orig.replace('&','&amp;').replace('<','&lt;').replace('>','&gt;')
+        return _escapecache[orig]
 
-_unicache = {}
 
 def toUni(orig):
     global _unicache
