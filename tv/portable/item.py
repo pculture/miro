@@ -63,8 +63,8 @@ class Item(DDBObject):
         self.linkNumber = linkNumber
         self.creationTime = datetime.now()
         self.updateReleaseDate()
-        self.splitItem()
         DDBObject.__init__(self)
+        self.splitItem()
         updateUandA(self.getFeed())
 
     def splitItem(self):
@@ -94,7 +94,7 @@ class Item(DDBObject):
         else:
             self.isContainerItem = False
             self.videoFilename = filename_root
-        self.signalChange(needsUpdateUandA=False)
+        self.signalChange()
 
     def updateReleaseDate(self):
         # This should be called whenever we get a new entry
@@ -241,6 +241,19 @@ class Item(DDBObject):
     ##
     # Marks this item as expired
     def expire(self):
+        def doExpire():
+            UandA = self.getUandA()
+            self.confirmDBThread()
+            self.deleteFile()
+            self.expired = True
+            if self.isContainerItem:
+                children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
+                for item in children:
+                    item.remove()
+            self.isContainerItem = None
+            self.seen = self.keep = self.pendingManualDL = False
+            self.signalChange(needsUpdateUandA = (UandA != self.getUandA()))
+
         if self.isContainerItem:
             title = _("Removing %s") % (os.path.basename(self.getTitle()))
             description = _("Deleting this entry will delete all its videos.")
@@ -254,18 +267,6 @@ class Item(DDBObject):
         else:
             doExpire()
 
-        def doExpire():
-            UandA = self.getUandA()
-            self.confirmDBThread()
-            self.deleteFile()
-            self.expired = True
-            if self.isContainerItem:
-                children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
-                for item in children:
-                    item.remove()
-            self.isContainerItem = None
-            self.seen = self.keep = self.pendingManualDL = False
-            self.signalChange(needsUpdateUandA = (UandA != self.getUandA()))
 
     def getExpirationString(self):
         """Get the expiration time a string to display to the user."""

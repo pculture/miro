@@ -57,7 +57,7 @@ class PhontomFeedTest(SanityTest):
         if not self.parentsInItems.issubset(self.topLevelParents):
             phantoms = self.parentsInItems.difference(self.topLevelParents)
             phantomsString = ', '.join([str(p) for p in phantoms])
-            return "Phantom feed(s) referenced in items: %s" % phantomsString
+            return "Phantom items(s) referenced in items: %s" % phantomsString
 
     def fixIfPossible(self, objectList):
         for i in reversed(xrange(len(objectList))):
