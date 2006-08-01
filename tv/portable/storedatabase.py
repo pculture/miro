@@ -583,7 +583,7 @@ class LiveStorage:
                     self.db.put (str(o.savedData['id']), data, txn=txn)
                 else:
                     try:
-                        self.db.remove (o.savedData['id'])
+                        self.db.delete (str(o.savedData['id']))
                     except bsddb.db.DBNotFoundError:
                         # If an object was created and removed during
                         # upgrade, it won't be in the database to be
