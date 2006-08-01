@@ -816,7 +816,7 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
         return self.actualFeed
 
     def __getattr__(self,attr):
-        return getattr(self.getActualFeed(),attr)
+        return getattr(self.actualFeed,attr)
 
     def remove(self, moveItemsTo=None):
         """Remove the feed.  If moveItemsTo is None (the default), the items

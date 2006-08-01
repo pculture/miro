@@ -97,7 +97,11 @@ class Item(DDBObject):
     # Returns True iff this item has never been viewed in the interface
     # Note the difference between "viewed" and seen
     def getViewed(self):
-        return self.creationTime <= self.getFeed().lastViewed 
+        try:
+            # optimizing by trying the cached feed
+            return self._feed.lastViewed >= self.creationTime
+        except:
+            return self.creationTime <= self.getFeed().lastViewed 
 
     ##
     # Returns the first video enclosure in the item
@@ -142,7 +146,12 @@ class Item(DDBObject):
     ##
     # Returns the feed this item came from
     def getFeed(self):
-        return self.dd.getObjectByID(self.feed_id)
+        try:
+            # optimizing by caching the feed
+            return self._feed
+        except:
+            self._feed = self.dd.getObjectByID(self.feed_id)
+            return self._feed
 
     def feedExists(self):
         return self.dd.idExists(self.feed_id)
