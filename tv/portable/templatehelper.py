@@ -24,13 +24,19 @@ def quoteattr(orig):
 def escape(orig):
     return unicode(orig).replace('&','&amp;').replace('<','&lt;').replace('>','&gt;')
 
-def toUni(orig):
-    if type(orig) in (int, long):
-        return "%d" % orig
-    else:
-        orig = toUTF8Bytes(orig)
-        return unicode(orig,'utf-8')
+_unicache = {}
 
+def toUni(orig):
+    global _unicache
+    try:
+        return _unicache[orig]
+    except:
+        if type(orig) in (int, long):
+            _unicache[orig] = "%d" % orig
+        else:
+            orig = toUTF8Bytes(orig)
+            _unicache[orig] = unicode(orig,'utf-8')
+        return _unicache[orig]
 
 # Generate an arbitrary string to use as an ID attribute.
 def generateId():
