@@ -10,7 +10,7 @@ democracy is already running.  They should arange for addVideo or addTorrent
 to be called in the existing democracy process.
 """
 
-from gettext import gettext as _
+from gtcache import gettext as _
 import os
 
 from util import getTorrentInfoHash

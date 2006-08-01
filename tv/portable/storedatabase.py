@@ -41,7 +41,7 @@ import eventloop
 import app
 import bsddb.db
 import dialogs
-from gettext import gettext as _
+from gtcache import gettext as _
 
 from BitTornado.clock import clock
 

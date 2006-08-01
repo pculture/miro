@@ -6,7 +6,7 @@ from HTMLParser import HTMLParser,HTMLParseError
 from cStringIO import StringIO
 from copy import copy
 from datetime import datetime, timedelta
-from gettext import gettext as _
+from gtcache import gettext as _
 from inspect import isfunction
 from new import instancemethod
 from urlparse import urlparse, urljoin

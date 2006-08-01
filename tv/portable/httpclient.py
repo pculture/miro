@@ -16,7 +16,7 @@ import threading
 import traceback
 from urlparse import urlparse, urljoin
 from collections import deque
-from gettext import gettext as _
+from gtcache import gettext as _
 
 from BitTornado.clock import clock
 

@@ -1,5 +1,5 @@
 from base64 import b64encode
-from gettext import gettext as _
+from gtcache import gettext as _
 from threading import RLock
 import os
 import re

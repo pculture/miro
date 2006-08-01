@@ -48,8 +48,8 @@ import templatehelper
 import databasehelper
 import fasttypes
 import urllib
-from gettext import gettext as _
-from gettext import ngettext
+from gtcache import gettext as _
+from gtcache import ngettext
 
 from BitTornado.clock import clock
 

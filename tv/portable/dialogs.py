@@ -41,7 +41,7 @@ Frontend requirements:
     """
 
 import eventloop
-from gettext import gettext as _
+from gtcache import gettext as _
 
 # Pass in a connection to the frontend
 def setDelegate(newDelegate):

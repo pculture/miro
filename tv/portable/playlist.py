@@ -1,6 +1,6 @@
 """Democracy playlist support."""
 
-from gettext import gettext as _
+from gtcache import gettext as _
 
 import dialogs
 import database

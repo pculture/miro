@@ -5,7 +5,6 @@
 # by the entension module. This place seems as good as any.
 import cPickle #for database.pyx
 
-import gettext
 import inspect
 import shutil
 import re

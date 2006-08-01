@@ -6,7 +6,7 @@ import feed
 import resource
 
 from xml.dom.minidom import parse
-from gettext import gettext as _
+from gtcache import gettext as _
 
 ###############################################################################
 #### Tabs                                                                  ####
