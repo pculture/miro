@@ -16,6 +16,7 @@ import app
 import views
 import prefs
 import config
+import dialogs
 import resource
 import eventloop
 import autoupdate
@@ -34,7 +35,6 @@ class Application:
         NSBundle.loadNibNamed_owner_("MainMenu", appl)
         controller = appl.delegate()
         controller.actualApp = self
-        controller.checkQuicktimeVersion(True)
 
     def Run(self):
         languages = list(NSUserDefaults.standardUserDefaults()["AppleLanguages"])
@@ -106,6 +106,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
 
         # Startup
         self.actualApp.onStartup()
+        self.checkQuicktimeVersion(True)
     
     def applicationDidBecomeActive_(self, notification):
         if app.controller.frame is not None:
@@ -183,16 +184,17 @@ class AppController (NibClassBuilder.AutoBaseClass):
     def checkQuicktimeVersion(self, showError):
         supported = gestalt('qtim') >= 0x07000000
         
-        if not supported and showError:
+        if supported and showError:
             summary = u'Unsupported version of Quicktime'
             message = u'To run %s you need the most recent version of Quicktime, which is a free update.' % (config.get(prefs.LONG_APP_NAME), )
-            buttons = ('Quit', 'Download Quicktime now')
-            result = showCriticalDialog(summary, message, buttons)
-            if result == 0:
-                NSApplication.sharedApplication().terminate_(nil)
-            else:
-                url = NSURL.URLWithString_('http://www.apple.com/quicktime/download')
-                NSWorkspace.sharedWorkspace().openURL_(url)
+            def callback(dialog):
+                if dialog.choice == dialogs.BUTTON_DOWNLOAD:
+                    url = NSURL.URLWithString_('http://www.apple.com/quicktime/download')
+                    NSWorkspace.sharedWorkspace().openURL_(url)
+                else:
+                    self.shutdown_(nil)              
+            dlog = dialogs.ChoiceDialog(summary, message, dialogs.BUTTON_DOWNLOAD, dialogs.BUTTON_QUIT)
+            dlog.run(callback)
         
         return supported
 
@@ -214,7 +216,6 @@ class AppController (NibClassBuilder.AutoBaseClass):
         elif url.startswith('democracy:'):
             eventloop.addUrgentCall(lambda:singleclick.addDemocracyURL(url), 
                         "Open Democracy URL")
-
 
     def checkForUpdates_(self, sender):
         eventloop.addUrgentCall(lambda:autoupdate.checkForUpdates(True), "Checking for new version")

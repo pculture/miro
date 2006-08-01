@@ -6,6 +6,7 @@ from PyObjCTools import NibClassBuilder, Conversion
 import app
 import prefs
 import config
+import dialogs
 import eventloop
 
 NibClassBuilder.extractClasses("PreferencesWindow")
@@ -183,10 +184,11 @@ class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
                 self.moviesDirectoryField.setStringValue_(newMoviesDirectory)
                 summary = u'Migrate existing movies?'
                 message = u'You\'ve selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish).'
-                buttons = (u'Yes', u'No')
-                result = showWarningDialog(summary, message, buttons)
-                migrate = (result == 0)
-                app.changeMoviesDirectory(newMoviesDirectory, migrate)
+                def migrationCallback(dialog):
+                    migrate = (dialog.choice == dialogs.BUTTON_YES)
+                    app.changeMoviesDirectory(newMoviesDirectory, migrate)
+                dlog = dialogs.ChoiceDialog(summary, message, dialogs.BUTTON_YES, dialogs.BUTTON_NO)
+                dlog.run(migrationCallback)
                 
 ###############################################################################
 

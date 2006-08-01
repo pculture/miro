@@ -314,7 +314,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
     def showHelp_(self, sender):
         summary = u'Help for %s will be available soon.' % (config.get(prefs.LONG_APP_NAME), )
         message = u'In the meantime, please visit our homepage for our help FAQ: %s\n\nFor individual user support, please e-mail feedback@ppolitics.org.' % (config.get(prefs.PROJECT_URL), )
-        showInformationalDialog(summary, message)
+        dialogs.MessageBoxDialog(summary, message).run()
 
     itemsAlwaysAvailable = ('addChannel:', 'showHelp:', 'updateAllChannels:')
     selectedChannelItems = ('removeChannel:', 'copyChannelLink:', 'updateChannel:')
