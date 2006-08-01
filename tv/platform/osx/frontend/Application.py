@@ -184,7 +184,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
     def checkQuicktimeVersion(self, showError):
         supported = gestalt('qtim') >= 0x07000000
         
-        if supported and showError:
+        if not supported and showError:
             summary = u'Unsupported version of Quicktime'
             message = u'To run %s you need the most recent version of Quicktime, which is a free update.' % (config.get(prefs.LONG_APP_NAME), )
             def callback(dialog):
