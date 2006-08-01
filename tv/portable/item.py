@@ -107,15 +107,24 @@ class Item(DDBObject):
     ##
     # Returns the first video enclosure in the item
     def getFirstVideoEnclosure(self):
-        self.confirmDBThread()
+        try:
+            return self._firstVidEnc
+        except:
+            self._calcFirstEnc()
+            return self._firstVidEnc
+
+    def _calcFirstEnc(self):
         try:
             enclosures = self.entry.enclosures
         except (KeyError, AttributeError):
-            return None
+            self._firstVidEnc = None
+            return
         for enclosure in enclosures:
             if isVideoEnclosure(enclosure):
-                return enclosure
-        return None
+                self._firstVidEnc = enclosure
+                return
+        self._firstVidEnc = None
+        
 
     ##
     # Returns mime-type of the first video enclosure in the item
@@ -805,6 +814,7 @@ class Item(DDBObject):
             self.entry = entry
             self.iconCache.requestUpdate()
             self.updateReleaseDate()
+            self._calcFirstEnc()
         finally:
             self.signalChange(needsUpdateUandA = (UandA != self.getUandA()))
 
