@@ -11,6 +11,9 @@ def itemsByParent(x):
 def feedsByURL(x):
     return x.getOriginalURL()
 
+def guidesByURL(x):
+    return x.getURL()
+
 def downloadsByDLID(x):
     return str(x.dlid)
 

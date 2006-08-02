@@ -4,6 +4,7 @@ import template
 import views
 import feed
 import resource
+import guide
 
 from xml.dom.minidom import parse
 from gtcache import gettext as _
@@ -16,7 +17,6 @@ from gtcache import gettext as _
 # Database object representing a static (non-feed-associated) tab.
 class StaticTab(database.DDBObject):
     tabTitles = {
-        'guidetab': _('Channel Guide'),
         'librarytab': _('My Collection'),
         'newtab': _('New Videos'),
         'searchtab': _('Search'),
@@ -24,7 +24,6 @@ class StaticTab(database.DDBObject):
     }
 
     tabIcons = {
-        'guidetab': 'channelguide-icon-tablist.png',
         'librarytab': 'collection-icon-tablist.png',
         'newtab': 'newvideos-icon-tablist.png',
         'searchtab': 'search-icon-tablist.png',
@@ -102,10 +101,14 @@ class Tab:
 
     def feedURL(self):
         """If this Tab represents a Feed, the feed's URL. Otherwise None."""
-        if self.isFeed():
+        if self.isFeed() or self.isGuide():
             return self.obj.getURL()
         else:
             return None
+
+    def isGuide(self):
+        """True if this Tab represents a Feed."""
+        return isinstance(self.obj, guide.ChannelGuide)
 
     def feedID(self):
         """If this Tab represents a Feed, the feed's ID. Otherwise None."""

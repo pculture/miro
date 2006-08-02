@@ -16,6 +16,8 @@ db.createIndex(indexes.objectsByClass)
 
 allTabs = db.filter(filters.mappableToTab).map(maps.mapToTab)
 allTabs.createIndex(indexes.tabObjectClass)
+guideTabs = allTabs.filterWithIndex(indexes.tabObjectClass, 
+        guide.ChannelGuide).sort(sorts.tabs)
 staticTabs = allTabs.filterWithIndex(indexes.tabObjectClass, 
         tabs.StaticTab).sort(sorts.tabs)
 feedTabs = allTabs.filterWithIndex(indexes.tabObjectClass,
@@ -44,7 +46,8 @@ allTabs.createIndex(indexes.tabIDIndex)
 allTabs.createIndex(indexes.tabObjIDIndex)
 
 #FIXME: These should just be globals
-guide = db.filterWithIndex(indexes.objectsByClass,guide.ChannelGuide)
+guides = db.filterWithIndex(indexes.objectsByClass,guide.ChannelGuide)
+default_guide = guides.filter(lambda x: x.getDefault())
 manualFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:manualFeed')
 directoryFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:directoryfeed')
 

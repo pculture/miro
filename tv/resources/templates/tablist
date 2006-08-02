@@ -18,6 +18,9 @@
 <div id="sidebar">
   <div id="channels">
     <ul class="tab-list">
+      <li t:repeatForView="views.guideTabs" onmousedown="eventURL('action:selectTab?id=@@@this.id@@@')">
+          <t:includeTemplate filename="guidetab" />
+      </li>
       <li t:repeatForView="views.staticTabs" onmousedown="eventURL('action:selectTab?id=@@@this.id@@@')">
           <t:includeTemplate filename="statictab" />
       </li>

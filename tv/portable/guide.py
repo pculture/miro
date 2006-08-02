@@ -1,3 +1,4 @@
+import resource
 from database import DDBObject
 from httpclient import grabURL
 from xhtmltools import urlencode
@@ -9,29 +10,43 @@ import prefs
 import threading
 import urllib
 import eventloop
+from gtcache import gettext as _
 
 HTMLPattern = re.compile("^.*(<head.*?>.*</body\s*>)", re.S)
 
-# NEEDS: Make this something more attractive
-guideNotAvailableBody = """
-<body>
-  <script type=\"text/javascript\">
-    function tryAgain() {
-      eventURL('template:guide-loading');
-    }
-  </script>
+#  # NEEDS: Make this something more attractive
+#  guideNotAvailableBody = """
+#  <body>
+#    <script type=\"text/javascript\">
+#      function tryAgain() {
+#        eventURL('template:guide-loading');
+#      }
+#    </script>
+#  
+#    <p>
+#      The channel guide could not be loaded. Perhaps you're not connected to the
+#      Internet?
+#    </p>
+#    <p>
+#      <a href="#" onclick="tryAgain();">Try again</a>
+#    </p>
+#  </body>
+#  """
+#  
+#  #""" Fix emacs misparse for coloration.
 
-  <p>
-    The channel guide could not be loaded. Perhaps you're not connected to the
-    Internet?
-  </p>
-  <p>
-    <a href="#" onclick="tryAgain();">Try again</a>
-  </p>
+guideNotAvailableBody = """
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="resource:css/style.css" />
+</head>
+
+<body class="channel-guide-body">
+	<div id="channel-guide-loading-image">
+		&nbsp;
+	</div>
 </body>
 """
-
-#""" Fix emacs misparse for coloration.
 
 # Desired semantics:
 #  * The first time getHTML() is called (ever, across sessions), the user
@@ -66,7 +81,7 @@ guideNotAvailableBody = """
 # event handler calling into Python.)
 
 class ChannelGuide(DDBObject):
-    def __init__(self):
+    def __init__(self, url=None):
         # Delayed callback for eventloop.
         self.dc = None
         # True if user has seen the tutorial
@@ -78,8 +93,10 @@ class ChannelGuide(DDBObject):
         # True if we have successfully loaded the channel guide in this
         # session.
         self.loadedThisSession = False
-        # Condition variable protecting access to above; signalled when
-        # loadedThisSession changes.
+
+        # None means this is the default channel guide.
+        self.url = url
+
         DDBObject.__init__(self)
         # Start loading the channel guide.
         self.startLoadsIfNecessary()
@@ -127,18 +144,14 @@ class ChannelGuide(DDBObject):
         apiurl = frontend.getDTVAPIURL()
         if apiurl:
             # We're on a platform that uses direct loads and DTVAPI.
-            url = config.get(prefs.CHANNEL_GUIDE_URL)
             apiurl = urllib.quote_plus(apiurl)
             apicookie = urllib.quote_plus(frontend.getDTVAPICookie())
-            url = "%s?dtvapiURL=%s&dtvapiCookie=%s" % (url, apiurl, apicookie)
+            url = "%s?dtvapiURL=%s&dtvapiCookie=%s" % (self.getURL(), apiurl, apicookie)
             return ('url', url)
 
         # We're on a platform that uses template inclusions and URL
         # interception.
-        if self.cachedGuideBody is not None:
-            return ('template', 'guide')
-        else:
-            return ('template', 'guide-loading')
+        return ('template', 'guide')
 
     def getHTML(self):
         # In the future, may want to use
@@ -197,5 +210,24 @@ class ChannelGuide(DDBObject):
         # making another kind of feed object, but it makes it easier
         # for non-programmers to work with
         print "DTV: updating the Guide"
-        url = config.get(prefs.CHANNEL_GUIDE_URL)
-        self.dc = grabURL(url, self.processUpdate, self.processUpdateErrback)
+        self.dc = grabURL(self.getURL(), self.processUpdate, self.processUpdateErrback)
+
+    def getURL(self):
+        if self.url is not None:
+            return self.url
+        else:
+            return config.get(prefs.CHANNEL_GUIDE_URL)
+
+    def getDefault(self):
+        return self.url is None
+
+    # For the tabs
+    def getTitle(self):
+        if self.getDefault():
+            return _('Channel Guide')
+        else:
+            return self.getURL()
+
+    def getIconURL(self):
+        return resource.url("images/channelguide-icon-tablist.png")
+

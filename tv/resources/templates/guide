@@ -6,7 +6,7 @@
 <t:include filename="dynamic.js" />
     <t:execOnLoad><![CDATA[
 import app
-guide = app.getSingletonDDBObject(views.guide)
+guide = app.controller.currentSelectedTab.obj
 ]]></t:execOnLoad>
 <t:staticReplaceMarkup t:replaceData="guide.getHTML()" />
 

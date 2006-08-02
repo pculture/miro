@@ -508,8 +508,8 @@ class Controller (frontend.Application):
                 next = views.allTabs.getNext()
                 if next is None: 
                     # we loop all the way arund allTabs... something is busted
-                    raise ValueErro("Can't find channel guide tab")
-                if next.tabTemplateBase == 'guidetab':
+                    raise ValueError("Can't find channel guide tab")
+                if next.tabTemplateBase == 'guidetab' and next.obj.getDefault():
                     break
             if self.initial_feeds:
                 while next and ((not isinstance(next.obj, feed.Feed)) or next.obj.getOriginalURL ().startswith("dtv:")):
@@ -1286,7 +1286,7 @@ class TemplateActionHandler:
         controller.frame.selectDisplay(template, controller.frame.mainDisplay)
 
     def doneWithIntro(self):
-        getSingletonDDBObject(views.guide).setSawIntro()
+        getSingletonDDBObject(views.default_guide).setSawIntro()
         self.goToGuide()
 
     def goToGuide(self):
@@ -1294,7 +1294,7 @@ class TemplateActionHandler:
         # selected This prevents doubling clicking on a movie from
         # openning the channel guide instead of the video
         if controller.frame.getDisplay(controller.frame.mainDisplay) is self.display:
-            guide = getSingletonDDBObject(views.guide)
+            guide = getSingletonDDBObject(views.default_guide)
             # Does the Guide want to implement itself as a redirection to
             # a URL?
             (mode, location) = guide.getLocation()
@@ -1491,11 +1491,16 @@ def _defaultFeeds():
         feed.Feed(url, initiallyAutoDownloadable=False)
 
 def _getInitialChannelGuide():
-    try:
-        channelGuide = getSingletonDDBObject(views.guide)
-    except LookupError:
+    default_guide = None
+    for guide in views.guides:
+        if default_guide is None:
+            if guide.getDefault():
+                default_guide = guide
+        else:
+            guide.remove()
+    if default_guide is None:
         print "DTV: Spawning Channel Guide..."
-        channelGuide = guide.ChannelGuide()
+        default_guide = guide.ChannelGuide()
         initialFeeds = resource.path("initial-feeds.democracy")
         if os.path.exists(initialFeeds):
             singleclick.openFile (initialFeeds)
@@ -1504,19 +1509,7 @@ def _getInitialChannelGuide():
             controller.initial_feeds = True
         else:
             _defaultFeeds()
-    except TooManySingletonsError:
-        print "DTV: Multiple Channel Guides!  Using the first one"
-        guideView = views.guide
-        guideView.confirmDBThread()
-        guideView.resetCursor()
-        channelGuide = guideView.getNext()
-        while 1:
-            thowOut = guideView.getNext()
-            if thowOut is None:
-                break
-            else:
-                thowOut.remove()
-    return channelGuide
+    return default_guide
 
 # Race conditions:
 

@@ -1,6 +1,7 @@
 import tabs
 import feed
 import playlist
+import guide
 
 # Returns items that match search
 def matchingItems(obj, searchString):
@@ -34,7 +35,7 @@ def watchableItems(obj):
 def mappableToTab(obj):
     return (isinstance(obj, tabs.StaticTab) or 
             (isinstance(obj, feed.Feed) and obj.isVisible()) or
-            isinstance(obj, playlist.SavedPlaylist))
+            isinstance(obj, playlist.SavedPlaylist) or isinstance(obj, guide.ChannelGuide))
 
 def autoDownloads(item):
     return item.getAutoDownloaded() and item.getState() == 'downloading'

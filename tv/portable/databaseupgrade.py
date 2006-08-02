@@ -173,6 +173,16 @@ def upgrade13(objectList):
             changed.add(o)
     return changed
 
+def upgrade14(objectList):
+    """Add default and url fields to channel guide."""
+    changed = set()
+    todelete = []
+    for o in objectList:
+        if o.classString == 'channel-guide':
+            o.savedData['url'] = None
+            changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()
