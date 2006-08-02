@@ -65,7 +65,7 @@ class PhontomFeedTest(SanityTest):
                     objectList[i].feed_id is not None and
                 objectList[i].feed_id not in self.topLevelFeeds):
                 del objectList[i]
-            if (isinstance(objectList[i], item.Item) and 
+            elif (isinstance(objectList[i], item.Item) and 
                     objectList[i].parent_id is not None and
                 objectList[i].parent_id not in self.topLevelParents):
                 del objectList[i]

@@ -357,7 +357,7 @@ class TestConstraintChecking(LiveStorageTest):
     def testConstraintCheck2(self):
         # test changing an item to have an invalid feed id
         f = feed.Feed("http://feed.uk")
-        i = item.Item(f.id, {})
+        i = item.Item({}, feed_id=f.id)
         i.feed_id = 123456789
         self.assertRaises(database.DatabaseConstraintError, i.signalChange)
 
@@ -370,8 +370,8 @@ class TestHighLevelFunctions(LiveStorageTest):
     def setUp(self):
         LiveStorageTest.setUp(self)
         f = feed.Feed("http://feed.uk")
-        i = item.Item(f.id, {})
-        i2 = item.Item(f.id, {})
+        i = item.Item({}, feed_id=f.id)
+        i2 = item.Item({}, feed_id=f.id)
         self.objects = [f, i, i2]
 
     def checkDatabaseIsTheSame(self):

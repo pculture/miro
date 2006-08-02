@@ -8,10 +8,10 @@ class PlaylistTestCase(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)
         self.feed = Feed("http://feed.uk")
-        self.i1 = Item(self.feed.id, FeedParserDict({'title': 'item1'}))
-        self.i2 = Item(self.feed.id, FeedParserDict({'title': 'item2'}))
-        self.i3 = Item(self.feed.id, FeedParserDict({'title': 'item3'}))
-        self.i4 = Item(self.feed.id, FeedParserDict({'title': 'item4'}))
+        self.i1 = Item(FeedParserDict({'title': 'item1'}), feed_id=self.feed.id)
+        self.i2 = Item(FeedParserDict({'title': 'item2'}), feed_id=self.feed.id)
+        self.i3 = Item(FeedParserDict({'title': 'item3'}), feed_id=self.feed.id)
+        self.i4 = Item(FeedParserDict({'title': 'item4'}), feed_id=self.feed.id)
 
     def testBasicOperations(self):
         playlist = SavedPlaylist("rocketboom")
