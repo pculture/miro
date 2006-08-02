@@ -248,10 +248,14 @@ class Item(DDBObject):
             return self._feed
 
     def getParent(self):
-        if self.parent_id is not None:
-            return self.dd.getObjectByID(self.parent_id)
-        else:
-            return self
+        try:
+            return self._parent
+        except:
+            if self.parent_id is not None:
+                self._parent = self.dd.getObjectByID(self.parent_id)
+            else:
+                self._parent = self
+            return self._parent
 
     def feedExists(self):
         return self.feed_id and self.dd.idExists(self.feed_id)

@@ -112,7 +112,8 @@ setup(
     options = dict(py2app = py2app_options),
     ext_modules = [
         Extension("idletime",["%s/platform/osx/idletime.c" % root]),
-        Extension("database",["%s/portable/database.pyx" % root]),
+	Extension("database",["%s/portable/database.pyx" % root]),
+        Extension("sorts",["%s/portable/sorts.pyx" % root]),
         Extension("fasttypes",["%s/portable/fasttypes.cpp" % root],
                   extra_objects=[boostLib],
                   include_dirs=[boostIncludeDir])

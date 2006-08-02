@@ -151,6 +151,7 @@ ext_modules = [
     # Pyrex sources.
     #Extension("vlc", [os.path.join(root, 'platform',platform, 'vlc.pyx')],libraries=["simplevlc"]),
     Extension("database", [os.path.join(root, 'portable', 'database.pyx')]),
+    Extension("sorts", [os.path.join(root, 'portable', 'sorts.pyx')]),
     #Extension("template", [os.path.join(root, 'portable', 'template.pyx')]),
 ]
 
