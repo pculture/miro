@@ -27,7 +27,7 @@ static PyObject* idletime_get(PyObject* self, PyObject* args)
     RETURN_ZERO_IF(result != KERN_SUCCESS || hidProperties == NULL);
     
     CFTypeRef   hidIdleTime = CFDictionaryGetValue(hidProperties, CFSTR("HIDIdleTime"));
-    float       seconds = 0;
+    float       seconds = 0.0f;
     
     if (hidIdleTime != NULL)
     {
@@ -44,7 +44,7 @@ static PyObject* idletime_get(PyObject* self, PyObject* args)
             CFNumberGetValue((CFNumberRef)hidIdleTime, kCFNumberSInt64Type, &handle);
         }
 
-        seconds = handle / 1000000000;
+        seconds = handle / 1000000000.0;
     }
 
     IOObjectRelease(hidEntry);

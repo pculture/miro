@@ -41,7 +41,12 @@ class IdleNotifier:
         self.lastTimeout = eventloop.addTimeout(self.periodicity,self.run,"Idle notifier")
 
     def run(self):
-        seconds = idletime.get()
+        try:
+            seconds = int(idletime.get())
+        except:
+            print "WARNING: idletime module returned an invalid value..."
+            seconds = 0.0
+
         if self.idling:
             self._whenIdling(seconds)
         else:
