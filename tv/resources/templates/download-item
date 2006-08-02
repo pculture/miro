@@ -7,6 +7,16 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <t:include filename="dynamic.js" />
+    <t:execOnLoad><![CDATA[
+try:
+    this = kargs['this']
+except:
+    pass
+try:
+    viewName = kargs['viewName']
+except:
+    pass
+]]></t:execOnLoad>
 </head>
 
 <body>

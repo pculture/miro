@@ -66,10 +66,10 @@ allExternalDownloads.unlink()
 
 	<!-- VIDEOS ************************************************** -->
 	<span t:repeatForView="normalDownloads">
-	<t:includeTemplate filename="download-item" />
+                <span t:replaceMarkup="this.getItemXML(viewName)" />
 	</span>
 	<span t:repeatForView="pendingDownloads">
-	<t:includeTemplate filename="download-item" />
+                <span t:replaceMarkup="this.getItemXML(viewName)" />
 	</span>
 	<!-- / VIDEOS -->
 	<div t:hideIf="externalDownloads.len() == 0" 
@@ -81,7 +81,7 @@ allExternalDownloads.unlink()
 		</h1>
         </div>
 	<span t:repeatForView="externalDownloads">
-	<t:includeTemplate filename="download-item" />
+            <span t:replaceMarkup="this.getItemXML(viewName)" />
 	</span>
 </div>
 

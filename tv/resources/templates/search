@@ -60,7 +60,7 @@ searchItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
             
             <div id="search-results">
                 <span t:repeatForView="searchItems">
-                    <t:includeTemplate filename="download-item" />
+                    <span t:replaceMarkup="this.getItemXML(viewName)" />
                 </span>
             </div>
         </div>

@@ -62,7 +62,7 @@ def genRepeatEvalEscape(varname, tid, prefix, replace):
 
 # Evaluates key with data
 def genRepeatEval(varname, tid, prefix, replace):
-    return '%s%s.write(toUni(%s))\n' % (prefix, varname, replace)
+    return '%s%s.write(%s)\n' % (prefix, varname, replace)
 
 # Returns include iff function does not evaluate to true
 def genRepeatIncludeHide(varname, tid, prefix, args):
@@ -272,7 +272,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         fileobj.write('import resource\n')
         fileobj.write('import gtcache\n')
         fileobj.write('_ = gtcache.gettext\n')
-        fileobj.write('def fillTemplate(domHandler, dtvPlatform, eventCookie):\n')
+        fileobj.write('def fillTemplate(domHandler, dtvPlatform, eventCookie, *args, **kargs):\n')
         self.handle.render(fileobj)
         fileobj.write('\n\n    out = StringIO()\n')
         

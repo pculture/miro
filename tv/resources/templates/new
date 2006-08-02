@@ -73,7 +73,7 @@ allExpiringItems.unlink()
 
         <div id="main-unwatched">
             <span t:repeatForView="unwatchedItems">
-                <t:includeTemplate filename="download-item" />
+                <span t:replaceMarkup="this.getItemXML(viewName)" />
             </span>
         </div>
     </span>
@@ -89,7 +89,7 @@ allExpiringItems.unlink()
 
         <div id="main-expiring">
             <span t:repeatForView="expiringItems">
-                <t:includeTemplate filename="download-item" />
+                <span t:replaceMarkup="this.getItemXML(viewName)" />
             </span>
         </div>
     </span>

@@ -15,6 +15,7 @@ from database import DDBObject, defaultDatabase, ObjectNotFoundError
 from database import DatabaseConstraintError
 from iconcache import IconCache
 from templatehelper import escape
+import template
 import downloader
 import config
 import dialogs
@@ -24,7 +25,13 @@ import filters
 import prefs
 import resource
 import views
+import random
 import indexes
+
+# FIXME add support for onlyBody parameter for static templates so we
+#       don't need to strip the outer HTML
+import re
+HTMLPattern = re.compile("^.*<body.*?>(.*)</body\s*>", re.S)
 
 def updateUandA (feed):
     # Not toplevel to avoid a dependency loop at load time.
@@ -147,6 +154,24 @@ class Item(DDBObject):
                 updateUandA(self.getFeed())
             except:
                 pass
+
+    # Returns the rendered download-item template, hopefully from the cache
+    #
+    # viewName is the name of the view we're in. It's the only piece
+    # that needs to be calculated on the fly
+    def getItemXML(self, viewName):
+        try:
+            return self._itemXML.replace(self._XMLViewName, viewName)
+        except:
+            self._calcItemXML()
+            return self._itemXML.replace(self._XMLViewName, viewName)
+
+    # Regenerates an expired item XML from the download-item template
+    # _XMLViewName is a random string we use for the name of the view
+    # _itemXML is the rendered XML
+    def _calcItemXML(self):
+        self._XMLViewName = "view%dview" % random.randint(9999999,99999999)
+        self._itemXML = HTMLPattern.match(template.fillStaticTemplate('download-item','unknown','noCookie', this=self, viewName = self._XMLViewName)).group(1)
 
     #
     # Returns True iff this item has never been viewed in the interface
@@ -914,6 +939,10 @@ class Item(DDBObject):
             self.iconCache.requestUpdate()
             self.updateReleaseDate()
             self._calcFirstEnc()
+            try:
+                del self._itemXML
+            except:
+                pass
         finally:
             self.signalChange(needsUpdateUandA = (UandA != self.getUandA()))
 

@@ -115,7 +115,7 @@ i18n:translate="">Settings</span></a></p>
         </div>
         <div id="main-downloads" style="display: none;">
             <span t:repeatForView="downloadingItems">
-                <t:includeTemplate filename="download-item" />
+                <span t:replaceMarkup="this.getItemXML(viewName)" />
             </span>
         </div>
     </span>
@@ -140,7 +140,7 @@ i18n:translate="">Settings</span></a></p>
  </div>
     <div id="main-newlyavailable">
         <span t:repeatForView="newItems">
-            <t:includeTemplate filename="download-item" />
+            <span t:replaceMarkup="this.getItemXML(viewName)" />
         </span>
         <div t:hideIf="oldItems.len()==0" t:updateHideOnView="oldItems">
             <div id="show-more-videos-label" style="display: @@@showMoreVideosDisplay@@@;">
@@ -153,7 +153,7 @@ i18n:translate="">Settings</span></a></p>
 	</div>
 	<div id="main-newlyavailable-seen" style="display: @@@newlyAvailableSeenDisplay@@@;">
             <div t:repeatForView="oldItems">
-                <t:includeTemplate filename="download-item" />
+                <span t:replaceMarkup="this.getItemXML(viewName)" />
             </div>
         </div>
     </div>              
@@ -168,7 +168,7 @@ i18n:translate="">Settings</span></a></p>
 
         <div id="main-unwatched">
             <span t:repeatForView="unwatchedItems">
-                <t:includeTemplate filename="download-item" />
+               <span t:replaceMarkup="this.getItemXML(viewName)" />
             </span>
         </div>
     </span>
@@ -183,7 +183,7 @@ i18n:translate="">Settings</span></a></p>
 
         <div id="main-expiring">
             <span t:repeatForView="expiringItems">
-                <t:includeTemplate filename="download-item" />
+                <span t:replaceMarkup="this.getItemXML(viewName)" />
             </span>
         </div>
     </span>
@@ -198,7 +198,7 @@ i18n:translate="">Settings</span></a></p>
 
         <div id="main-saved">
             <span t:repeatForView="savedItems">
-                <t:includeTemplate filename="download-item" />
+                <span t:replaceMarkup="this.getItemXML(viewName)" />
             </span>
         </div>
     </span>

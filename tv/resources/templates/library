@@ -58,8 +58,8 @@ watchableItems.unlink()
 	<!-- VIDEOS ************************************************** -->
 	<div>
     	<span t:repeatForView="libraryItems">
-    	<t:includeTemplate filename="download-item" />
-   		</span>
+                <span t:replaceMarkup="this.getItemXML(viewName)" />
+	</span>
 	</div>
 	<!-- / VIDEOS -->
 	
