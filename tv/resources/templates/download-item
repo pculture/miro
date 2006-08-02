@@ -21,7 +21,7 @@ except:
 
 <body>
 
-<div class="main-video">
+<div class="main-video" dragsourcetype="item">
     <div class="main-video-hitbox">
         <a t:showIf="this.getState() in ('new', 'not-downloaded', 'expired')"
             class="download-icon" href="#" 
@@ -75,12 +75,12 @@ except:
             <a class="main-progress-cancel" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" title="Cancel Download" />
         </div>
     </div>
-    <div class="main-video-desc">
-        <h1 t:replace="this.getTitle()" />
-        <div class="main-video-desc-desc">
+    <div class="main-video-desc noselect">
+        <h1 t:replace="this.getTitle()" class="noselect"/>
+        <div class="main-video-desc-desc noselect">
             <p t:replaceMarkup="this.getDescription()" />
         </div>
-	<div class="main-video-desc-details">
+	<div class="main-video-desc-details noselect">
 		<span t:replaceMarkup="this.getDetails()" />
 	</div>
     </div>

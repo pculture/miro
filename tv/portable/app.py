@@ -1365,6 +1365,9 @@ class TemplateActionHandler:
 
         return (searchFeed, searchDownloadsFeed)
 
+    def handleDrop(self, data):
+        print 'HANDLE DROP: %r' % data
+
     # The Windows XUL port can send a setVolume or setVideoProgress at
     # any time, even when there's no video display around. We can just
     # ignore it

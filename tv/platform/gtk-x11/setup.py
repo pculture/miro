@@ -188,14 +188,17 @@ mozilla_lib_path = parsePkgConfig('pkg-config',
 # hack to get #include <nsIDOMElementCSSInlineStyle.h> to work.
 # For mozilla 1.7, this file is in the dom/ subdirectory, but for xulrunner ,
 # it's in the top level.
-for dir in mozilla_browser_options['include_dirs']:
-    if os.path.exists(os.path.join(dir, 'dom',
-        'nsIDOMElementCSSInlineStyle.h')):
-        mozilla_browser_options['include_dirs'].append(os.path.join(dir, 'dom'))
+xpcom_includes = parsePkgConfig("pkg-config", xpcom)
+mozIncludeBase = os.path.commonprefix(xpcom_includes['include_dirs'])
+for subdir in ['dom', 'gfx', 'widget', 'commandhandler']:
+    path = os.path.join(mozIncludeBase, subdir)
+    mozilla_browser_options['include_dirs'].append(path)
 
 mozilla_browser_ext = Extension("democracy.MozillaBrowser",
         [ os.path.join(frontend_implementation_dir,'MozillaBrowser.pyx'),
           os.path.join(frontend_implementation_dir,'MozillaBrowserXPCOM.cc'),
+          os.path.join(frontend_implementation_dir,'DragAndDrop.cc'),
+          os.path.join(frontend_implementation_dir,'XPCOMUtil.cc'),
         ],
         runtime_library_dirs=mozilla_lib_path,
         **mozilla_browser_options)

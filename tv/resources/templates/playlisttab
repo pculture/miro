@@ -5,7 +5,8 @@
 </head>
 <body>
 <!-- Normal -->
-<a class="feeditem @@@this.getState()@@@">
+<a class="feeditem @@@this.getState()@@@" dragdesttype="item"
+	dragdestdata="playlist-***this.obj.getID()***">
 <img class="icon" src="resource:images/playlist-icon-tablist.png" /><div class="name" t:replaceMarkup="this.obj.getTitle()" />
 </a>
 </body>

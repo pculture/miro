@@ -18,9 +18,13 @@ nsresult hideItem(GtkMozEmbed *gtkembed, char *id);
  * dom event.  domEvent should be an nsIDOMMouseEvent object, we accept a void
  * here because C code doesn't understand what a nsIDOMMouseEvent is.  Returns
  * a string specifying the context menu or NULL if we shouldn't pop one up.
- * If we return a non-NULL string, it's the callers responsibility to free it.
  */
 char* getContextMenu(void* domEvent);
+/*
+ * If we return a non-NULL string from getContextMenu, the callers must free
+ * it using freeString
+ */
+void freeString(char* str);
 #ifdef __cplusplus
 }
 #endif

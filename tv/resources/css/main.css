@@ -295,6 +295,11 @@ div.scraping-content {
     z-index: 1;
 }
 
+.noselect {
+    -moz-user-select: none;
+    cursor: default;
+}
+
 .main-video-desc {
     margin-left: 115px;
     margin-right: 145px;

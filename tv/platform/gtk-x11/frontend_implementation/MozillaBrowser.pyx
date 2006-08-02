@@ -39,13 +39,17 @@ cdef extern from "MozillaBrowserXPCOM.h":
     nsresult showItem(GtkMozEmbed *gtkembed, char *id)
     nsresult hideItem(GtkMozEmbed *gtkembed, char *id)
     char* getContextMenu(void* domEvent)
+    void freeString(char* str)
+
+cdef extern from "DragAndDrop.h":
+    nsresult setupDragAndDrop(GtkMozEmbed *gtkembed)
 
 cdef extern from "stdio.h":
     int printf(char* str, ...)
-cdef extern from "stdlib.h":
-    void free(void *ptr)
 
 class DOMError(Exception):
+    pass
+class XPCOMError(Exception):
     pass
 
 cdef class MozillaBrowser:
@@ -66,6 +70,13 @@ cdef class MozillaBrowser:
                 <void *>open_uri_cb, <gpointer>self)
         g_signal_connect(<gpointer *>self.cWidget, "dom_mouse_down", 
                 <void *>on_dom_mouse_down, <gpointer>self)
+        self.widget.connect("realize", self.onRealize)
+
+    def onRealize(self, widget):
+        rv = setupDragAndDrop(self.cWidget)
+        if rv != NS_OK:
+            print "WARNING! setupDragAndDrop failed"
+
     def getWidget(self):
         return self.widget
 
@@ -189,7 +200,7 @@ cdef gint on_dom_mouse_down (GtkMozEmbed *embed, gpointer domEvent,
         Py_INCREF(self)
         callbackResult = PyObject_CallMethod(self, "createContextMenu", "s",
                 contextMenu, NULL)
-        free(contextMenu)
+        freeString(contextMenu)
         if callbackResult == NULL:
             PyErr_Print()
         else:
