@@ -10,6 +10,7 @@ import eventloop
 import platformutils
 
 from QuicktimeRenderer import QuicktimeRenderer
+from QTKit import QTMovieDidEndNotification
 
 ###############################################################################
 #### Dynamically link some specific Carbon functions which we need but     ####
