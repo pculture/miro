@@ -13,10 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  
-USA
-
-
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 
 This is the source for Democracy Player, the client-side component of
@@ -27,7 +24,7 @@ such as Linux, with a native look and feel on each platform, and there
 is a clean separation between the portable backend and the
 platform-specific frontend in the event that new ports are desired in
 the future. It is written primarily in Python and is distributed under
-the terms of the GNU Public License; see license.txt.
+the terms of the GNU General Public License; see license.txt.
 
 Prebuilt versions are available from:
 http://www.getdemocracy.com/downloads/
@@ -55,5 +52,5 @@ To build for...              See...
 There is also a fourth port, which also targets MS Windows but embeds
 Mozilla in a window made with native Windows widgets instead of using
 Mozilla's XUL widgets. This port is incomplete and long-abandoned, but
-will remains in 'platform/windows.old' for a while longer for easy
+will remain in 'platform/windows.old' for a while longer for easy
 reference.

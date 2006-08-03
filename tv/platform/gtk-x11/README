@@ -13,20 +13,19 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  
-USA
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-This is the port of GTK/X11 port of Democracy TV.
+This is the GTK/X11 port of Democracy TV.
 
-If you want to test it Democracy, execute ./run.sh.  If you have the required
+If you want to test it, execute ./run.sh. If you have the required
 dependencies it should build everything and run it.
 
 See https://develop.participatoryculture.org/projects/dtv/wiki/GTKX11BuildDocs
 (This is considered the authoritative source.)
 
 There are several major installation theories to respect here in the Linux
-world: a) Debian b) Fedora (Red Hat).   We will need to get someone from the
-Gentoo or Ubuntu spheres to contribute here.  Other GTK/X11 ports should 
+world: a) Debian b) Fedora (Red Hat). We will need to get someone from the
+Gentoo or Ubuntu spheres to contribute here. Other GTK/X11 ports should 
 follow one of these or bring their own conventions.
 
 In addition to the major distribution theoretics, there is also the issue of
@@ -42,14 +41,9 @@ Debian:
 -------
 
 To run:
-    ... TODO ...
-To build:
-    python-pyrex
-    libboost-python-dev
-    python-gtk2-dev
-    python-gnome2-extras-dev
-    mozilla-dev
-    ... and dependents here ...
+    democracyplayer
+To install:
+    apt-get install democracyplayer
 
 
 Fedora (Red Hat):
