@@ -1495,12 +1495,12 @@ def _defaultFeeds():
 
 def _getInitialChannelGuide():
     default_guide = None
-    for guide in views.guides:
+    for guideObj in views.guides:
         if default_guide is None:
-            if guide.getDefault():
-                default_guide = guide
+            if guideObj.getDefault():
+                default_guide = guideObj
         else:
-            guide.remove()
+            guideObj.remove()
     if default_guide is None:
         print "DTV: Spawning Channel Guide..."
         default_guide = guide.ChannelGuide()
