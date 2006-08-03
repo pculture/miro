@@ -94,6 +94,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         wsnc.addObserver_selector_name_object_(self, 'workspaceDidWake:',   NSWorkspaceDidWakeNotification,   nil)
         
         self.pausedDownloaders = list()
+        self.internalShutdown = False
         
     def applicationDidFinishLaunching_(self, notification):
         # The [NSURLRequest setAllowsAnyHTTPSCertificate:forHost:] selector is
@@ -112,6 +113,18 @@ class AppController (NibClassBuilder.AutoBaseClass):
         if app.controller.frame is not None:
             # This should hopefully avoid weird things like #1722
             app.controller.frame.controller.window().contentView().setNeedsDisplay_(YES)
+
+    def applicationShouldTerminate_(self, sender):
+        # External termination requests (through Dock menu or AppleScript) call
+        # [NSApplication terminate:] directly, which breaks our shutdown sequence.
+        # To fix this we simply check an internal flag which is only True when 
+        # the correct shutdown call is made. Otherwise we cancel the current
+        # shutdown process and schedule the correct one.
+        result = NSTerminateNow
+        if not self.internalShutdown:
+            eventloop.addUrgentCall(lambda:self.shutdown_(nil), "Shutdowning")
+            result = NSTerminateCancel
+        return result
     
     def applicationWillTerminate_(self, notification):
         # Reset the application icon to its default state
@@ -252,6 +265,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         print "NOT IMPLEMENTED"
 
     def shutdown_(self, sender):
+        self.internalShutdown = True
         app.controller.quit()
 
     itemsAlwaysAvailable = ('checkForUpdates:', 'showPreferencesWindow:', 'openFile:', 'shutdown:')
