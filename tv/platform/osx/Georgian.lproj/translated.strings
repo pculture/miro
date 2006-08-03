@@ -7,120 +7,120 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2006-08-03 15:42-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:75 */
-"_Save Video..." = "_Sauvegarder la vidéo";
+"_Save Video..." = "_ვიდეოს შენახვა...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:75 */
-"Save this video" = "Sauvegarder cette vidéo";
+"Save this video" = "ამ ვიდეოს შენახვა";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:76 */
-"_Play / Pause" = "_Lecture / Pause";
+"_Play / Pause" = "_დაკვრა / პაუზა";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:77 */
-"_Fullscreen" = "_Plein écran";
+"_Fullscreen" = "_მთელ ეკრანზე";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:80 */
-"_Remove Channel" = "_Suppression canal";
+"_Remove Channel" = "_არხის წაშლა";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:81 */
-"_Update Channel" = "_Mise à jour canal";
+"_Update Channel" = "_არხის განახლება";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:82 */
-"Copy Channel _Link" = "Copier le lien du canal";
+"Copy Channel _Link" = "არხის ბმულის _ასლი";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:85 */
-"_Video" = "_Video";
+"_Video" = "_ვიდეო";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:86 */
-"_Open..." = "_Ouvrir";
+"_Open..." = "_გახსნა...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:86 */
-"Open various files" = "Ouvrir divers fichiers";
+"Open various files" = "სხვადასხვა ფაილის გახსნა";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:87 */
-"P_references" = "P_references";
+"P_references" = "_პარამეტრები";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:88 */
-"_Quit" = "_Quitter";
+"_Quit" = "_გასვლა";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:88 */
-"Quit the Program" = "Quitter le programme";
+"Quit the Program" = "პროგრამიდან გასვლა";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:89 */
-"_Channel" = "_Canal";
+"_Channel" = "_არხი";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:90 */
-"_Add Channel..." = "_Rajouter un canal";
+"_Add Channel..." = "_არხის დამატება...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:91 */
-"U_pdate All Channels" = "_Mettre à jour tous les canaux";
+"U_pdate All Channels" = "ყვე_ლა არხის განახლება";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:92 */
-"_Help" = "_Aide";
+"_Help" = "_დახმარება";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:107 */
-"Username:" = "Nom d'utilisateur:";
+"Username:" = "მომხმარებლის სახელი:";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:118 */
-"Password:" = "Mot de passe:";
+"Password:" = "პაროლი:";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:133 */
-"Channel requires authentication" = "Le canal requiert une authentification";
+"Channel requires authentication" = "სერვერი ავთენტიფიკაციას მოითხოვს";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:133 */
 /* Flag: python-format */
-"%s requires a username and password for \"%s\"." = "%s requiert un nom d'utilisateur et un mot de passe pour \"%s\".";
+"%s requires a username and password for \"%s\"." = "%s მომხმარებლის სახელსა და პაროლს მოითხოვს „%s”-სთვის.";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:146 */
-"Not a DTV-style channel" = "N'est pas un canal compatible DTV";
+"Not a DTV-style channel" = "არხი DTV-სტილის არ არის";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:147 */
 /* Flag: python-format */
-"But we'll try our best to grab the files.\n- It may take time to list the videos\n- Descriptions may look funny\n\nPlease contact the publishers of %s and ask if they have a DTV-style channel." = "Mais nous allons faire de notre mieux pour récupérer les fichiers.\n- Le listage des vidéos peut prendre quelque temps\n- Les descriptions peuvent paraitre bizarre\n\nContactez s'il vous plait les publieurs de %s et demandez leur s'ils ont un canal compatible DTV.";
+"But we'll try our best to grab the files.\n- It may take time to list the videos\n- Descriptions may look funny\n\nPlease contact the publishers of %s and ask if they have a DTV-style channel." = "მაგრამ ჩვენ მაინც შევეცდებით ფაილების მიღებას.\n- ვიდეოთა სიის ნახვას შესაძლოა დრო დაჭირდეს\n- შესაძლებელია აღწერილობები სასაცილოდ გამოიყურებოდეს\n\nგთხოვთ დაუკავშირდეთ %s-ის გამომცემელს და კითხოთ, გააჩნიათ თუ არა DTV-სტილის არხი.";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:148 */
-"Continue" = "Continuer";
+"Continue" = "გაგრძელება";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:158 */
-"DTV Version Alert" = "Alerte de version DTV";
+"DTV Version Alert" = "DTV ვერსიის გაფრთხილება";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:159 */
-"A new version of DTV is available.\n\nWould you like to download it now?" = "Une nouvelle version de DTV est disponible.\n\nSouhaitez vous la télécharger maintenant?";
+"A new version of DTV is available.\n\nWould you like to download it now?" = "გამოვიდა DTV-ს ახალი ვერსია.\n\nგსურთ მისი ჩამოტვირთვა?";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:166 */
-"DTV Version Check" = "Test de version DTV";
+"DTV Version Check" = "DTV ვერსიის შემოწმება";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:167 */
-"This version of DTV is up to date." = "Cette version de DTV est à jour.";
+"This version of DTV is up to date." = "DTV-ს ეს ვერსია აქტუალურია.";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:172 */
 /* File: ../../portable/app.py:635 */
 /* Flag: python-format */
-"%s database save failed" = "échec de la sauvegade de la base de donnée %s";
+"%s database save failed" = "%s მონაცემთა ბაზის შენახვა ვერ განხორციელდა";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:174 */
 /* Flag: python-format */
-"%s was unable to save its database: %s.\nRecent changes may be lost." = "%s n'est pas parvenu à sauvegarder sa base de données : %s.\nLes changements récents on pu être perdus.";
+"%s was unable to save its database: %s.\nRecent changes may be lost." = "%s-მ ვერ მოახერხა შემდეგი მონაცემთა ბაზის შენახვა: %s.\nბოლო ცვლილებები შესაძლოა დაიკარგოს.";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:179 */
-"Remove Channel" = "Supprimer le canal";
+"Remove Channel" = "არხის წაშლა";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:180 */
 /* Flag: python-format */
-"Are you sure you want to <b>remove</b> the channel\n   '<b>%s</b>'?\n<b>This operation cannot be undone.</b>" = "Etes vous sûr de vouloir <b>supprimer</b> le canal\n   '<b>%s</b>'?\n<b>Cette opération est irréversible.</b>";
+"Are you sure you want to <b>remove</b> the channel\n   '<b>%s</b>'?\n<b>This operation cannot be undone.</b>" = "დარწმუნებული ხართ, რომ გსურთ <b>წაშალოთ</b> არხი\n   „<b>%s</b>”?\n<b>ამ ოპერაციის დაბრუნება შეუძლებელია.</b>";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:210 */
-"Are you sure you want to quit?" = "Etes vous sûr de vouloir quitter l'application?";
+"Are you sure you want to quit?" = "დარწმუნებული ხართ რომ გსურთ გასვლა?";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:211 */
 /* Flag: python-format */
-"You have %d download%s still in progress." = "Vous avez %d téléchargement%s encore en cours.";
+"You have %d download%s still in progress." = "ამჟამად მიმდინარეობს %d ჩამოტვირთვა%s.";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:220 */
-"Unknown Runtime Error" = "Erreur d'execution inconnue";
+"Unknown Runtime Error" = "უცნობი შეცდომა";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:221 */
 /* Flag: python-format */
-"An unknown error has occurred %s." = "Une erreur inconnue a eu lieu %s.";
+"An unknown error has occurred %s." = "წარმოიშვა უცნობი შეცდომა %s.";
 
 /* File: ../../portable/compiled_templates/search.py:211 */
 /* File: ../../portable/compiled_templates/channel.py:235 */
@@ -134,7 +134,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/compiled_templates/library.py:228 */
 /* File: ../../portable/compiled_templates/new.py:233 */
 /* File: ../../portable/compiled_templates/new.py:569 */
-"Pending Auto Download" = "Téléchargement automatique en cours";
+"Pending Auto Download" = "რიგშია ავტო-ჩამოტვირთვა";
 
 /* File: ../../portable/compiled_templates/search.py:231 */
 /* File: ../../portable/compiled_templates/channel.py:255 */
@@ -148,7 +148,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/compiled_templates/library.py:248 */
 /* File: ../../portable/compiled_templates/new.py:253 */
 /* File: ../../portable/compiled_templates/new.py:589 */
-"Pending Manual Download" = "Téléchargement manuel en cours";
+"Pending Manual Download" = "რიგშია ხელით ჩამოტვირთვა";
 
 /* File: ../../portable/compiled_templates/search.py:255 */
 /* File: ../../portable/compiled_templates/search.py:335 */
@@ -176,7 +176,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/compiled_templates/new.py:613 */
 /* File: ../../portable/compiled_templates/new.py:693 */
 /* File: ../../portable/compiled_templates/new.py:787 */
-"Unwatched" = "Non visionné";
+"Unwatched" = "მაყურებლის გარეშე";
 
 /* File: ../../portable/compiled_templates/search.py:259 */
 /* File: ../../portable/compiled_templates/search.py:289 */
@@ -214,7 +214,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/compiled_templates/new.py:617 */
 /* File: ../../portable/compiled_templates/new.py:647 */
 /* File: ../../portable/compiled_templates/new.py:697 */
-"Save" = "Sauvegarder";
+"Save" = "დამახსოვრება";
 
 /* File: ../../portable/compiled_templates/search.py:283 */
 /* File: ../../portable/compiled_templates/channel.py:307 */
@@ -228,7 +228,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/compiled_templates/library.py:300 */
 /* File: ../../portable/compiled_templates/new.py:305 */
 /* File: ../../portable/compiled_templates/new.py:641 */
-"Expires" = "Expire";
+"Expires" = "ვადა გადის";
 
 /* File: ../../portable/compiled_templates/search.py:359 */
 /* File: ../../portable/compiled_templates/channel.py:383 */
@@ -242,16 +242,16 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/compiled_templates/library.py:376 */
 /* File: ../../portable/compiled_templates/new.py:381 */
 /* File: ../../portable/compiled_templates/new.py:717 */
-"Download Error" = "Erreur de téléchargement";
+"Download Error" = "ჩამოტვირთვის შეცდომა";
 
 /* File: ../../portable/compiled_templates/search.py:375 */
-"Nothing to display.<br></br> Enter a query in the search field above." = "Rien à afficher.<br></br> Saisissez une requête dans le champ de recherche ci-dessus.";
+"Nothing to display.<br></br> Enter a query in the search field above." = "არაფერია საჩვენებელი.<br></br> შეიყვანეთ საძიებელი ფრაზა ზემოთა ველში.";
 
 /* File: ../../portable/compiled_templates/search.py:380 */
-"Searching..." = "Recherche en cours...";
+"Searching..." = "მიმდინარეობს ძიება...";
 
 /* File: ../../portable/compiled_templates/search.py:409 */
-"Video Search" = "Recherche vidéo";
+"Video Search" = "ვიდეოთა ძიება";
 
 /* File: ../../portable/compiled_templates/statictab.py:32 */
 /* File: ../../portable/compiled_templates/statictab.py:39 */
@@ -259,7 +259,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/compiled_templates/tablist.py:165 */
 /* File: ../../portable/compiled_templates/tablist.py:172 */
 /* File: ../../portable/compiled_templates/tablist.py:179 */
-"Channel Guide" = "Guide des canaux";
+"Channel Guide" = "არხთა მეგზური";
 
 /* File: ../../portable/compiled_templates/statictab.py:53 */
 /* File: ../../portable/compiled_templates/statictab.py:60 */
@@ -268,7 +268,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/compiled_templates/tablist.py:193 */
 /* File: ../../portable/compiled_templates/tablist.py:200 */
 /* File: ../../portable/compiled_templates/library.py:406 */
-"My Collection" = "Ma collection";
+"My Collection" = "ჩემი კოლექცია";
 
 /* File: ../../portable/compiled_templates/statictab.py:79 */
 /* File: ../../portable/compiled_templates/statictab.py:91 */
@@ -277,7 +277,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/compiled_templates/tablist.py:224 */
 /* File: ../../portable/compiled_templates/tablist.py:236 */
 /* File: ../../portable/compiled_templates/new.py:777 */
-"New Videos" = "Nouvelles vidéos";
+"New Videos" = "ახალი ვიდეოები";
 
 /* File: ../../portable/compiled_templates/statictab.py:110 */
 /* File: ../../portable/compiled_templates/statictab.py:117 */
@@ -285,59 +285,59 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/compiled_templates/tablist.py:243 */
 /* File: ../../portable/compiled_templates/tablist.py:250 */
 /* File: ../../portable/compiled_templates/tablist.py:257 */
-"Search" = "Rechercher";
+"Search" = "ძებნა";
 
 /* File: ../../portable/compiled_templates/external_playback_continue.py:46 */
 /* File: ../../portable/compiled_templates/external_playback.py:47 */
-"Democracy - External Playback Template" = "Democracy - Template de lecture externe";
+"Democracy - External Playback Template" = "Democracy - გარე დაკვრის შაბლონი";
 
 /* File: ../../portable/compiled_templates/external_playback_continue.py:54 */
-"Continue To Next Video" = "Continuer vers la vidéo prochaine";
+"Continue To Next Video" = "შემდეგ ვიდეოზე გადასვლა";
 
 /* File: ../../portable/compiled_templates/feed_settings.py:48 */
 /* File: ../../portable/compiled_templates/channel.py:2200 */
-"Auto Download" = "Téléchargement automatique";
+"Auto Download" = "ავტო გადმოწერა";
 
 /* File: ../../portable/compiled_templates/feed_settings.py:56 */
 /* File: ../../portable/compiled_templates/channel.py:2210 */
-"Recommend" = "Recommander";
+"Recommend" = "რეკომენდაცია";
 
 /* File: ../../portable/compiled_templates/feed_settings.py:60 */
-"Back to Channel" = "Retour au canal";
+"Back to Channel" = "არხთან დაბრუნება";
 
 /* File: ../../portable/compiled_templates/feed_settings.py:62 */
-"Channel Settings" = "Réglages du canal";
+"Channel Settings" = "არხის პარამეტრები";
 
 /* File: ../../portable/compiled_templates/feed_settings.py:64 */
-"Videos expire after:" = "Les vidéos expirent après:";
+"Videos expire after:" = "ვიდეოს ვადა გადის:";
 
 /* File: ../../portable/compiled_templates/feed_settings.py:68 */
 /* File: ../../portable/compiled_templates/feed_settings.py:75 */
-"Default" = "Défaut";
+"Default" = "სტანდარტული";
 
 /* File: ../../portable/compiled_templates/feed_settings.py:122 */
-"Auto download should:" = "Le téléchargement automatique devrait :";
+"Auto download should:" = "ავტო ჩამოტვირთვა:";
 
 /* File: ../../portable/compiled_templates/feed_settings.py:155 */
-"If I have ${maxnew} ${maxnew2} videos waiting, don't auto download more." = "Si j'ai ${maxnew} ${maxnew2} videos en attente, ne pas en télécharger d'avantage.";
+"If I have ${maxnew} ${maxnew2} videos waiting, don't auto download more." = "თუ უკევ რიგში ${maxnew} ${maxnew2} ვიდეოა, ავტომატურად აღარ ჩამოტვირთო";
 
 /* File: ../../portable/compiled_templates/feed_settings.py:157 */
-"(Keeps channel from hogging disk space)" = "(Prévenir un usage trop gourmand d'espace disque)";
+"(Keeps channel from hogging disk space)" = "(არხებს დისკის ადგილის დაკავების ნება არ მისცე)";
 
 /* File: ../../portable/compiled_templates/feed_settings.py:159 */
-"Channel URL" = "URL du canal";
+"Channel URL" = "არხის URL";
 
 /* File: ../../portable/compiled_templates/channel.py:2202 */
-"Settings" = "Réglages";
+"Settings" = "პარამეტრები";
 
 /* File: ../../portable/compiled_templates/channel.py:2230 */
-"Videos on this Channel" = "Vidéos sur ce canal";
+"Videos on this Channel" = "ვიდეოები ამ არხზე";
 
 /* File: ../../portable/compiled_templates/channel.py:2263 */
-"Watched" = "Visionné";
+"Watched" = "მაყურებლით";
 
 /* File: ../../portable/compiled_templates/channel.py:2275 */
-"Saved" = "Sauegardé";
+"Saved" = "შენახულია";
 
 /* File: ../../portable/compiled_templates/tablist.py:49 */
 /* File: ../../portable/compiled_templates/tablist.py:58 */
@@ -361,134 +361,134 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/compiled_templates/feedtab.py:125 */
 /* File: ../../portable/compiled_templates/feedtab.py:134 */
 /* File: ../../portable/compiled_templates/feedtab.py:141 */
-"Feed Title" = "Titre du fil";
+"Feed Title" = "არხის სათაური";
 
 /* File: ../../portable/compiled_templates/external_playback.py:62 */
-"This file type (${format}) can't be played in the main Democracy window." = "Ce type de fichier (${format}) ne peut être joué dans la fenêtre principale de Democracy.";
+"This file type (${format}) can't be played in the main Democracy window." = "ფაილის ეს ტიპი (${format}) Democracy-ს მთავარ ფანჯარაში ვერ დაიკვრება.";
 
 /* File: ../../portable/compiled_templates/external_playback.py:66 */
-"Play Externally" = "Jouer en dehors de l'application";
+"Play Externally" = "გარე დაკვრა";
 
 /* File: ../../portable/compiled_templates/external_playback.py:75 */
-"Skip Video ${countdown}" = "Sauter la vidéo ${countdown}";
+"Skip Video ${countdown}" = "ვიდეოს გამოტოვება ${countdown}";
 
 /* File: ../../portable/compiled_templates/unittest/translationtest.py:41 */
-"Simple translation" = "Traduction simple";
+"Simple translation" = "მარტივი თარგმანი";
 
 /* File: ../../portable/compiled_templates/unittest/translationtest.py:55 */
-"truck stop in a ${can}" = "camion stoppé dans un ${can}";
+"truck stop in a ${can}" = "სასადილო შეგხვდებათ ${can}-ში";
 
 /* File: ../../portable/compiled_templates/unittest/translationtest.py:59 */
-"This is a ${car} and this is a ${truck} <span> This text is <b>raw</b> text</span>" = "C'est une ${car} et c'est un ${truck} <span> Ce texte est du texte <b>brut</b></span>";
+"This is a ${car} and this is a ${truck} <span> This text is <b>raw</b> text</span>" = "ეს გახლავთ ${car}, ხოლო ეს კი - ${truck} <span> ამ ტექსტს <b>ფორმატირება</b> არ გააჩნია</span>";
 
 /* File: ../../portable/compiled_templates/download.py:406 */
-"Active Downloads" = "Téléchargements actifs";
+"Active Downloads" = "აქტიური ჩამოტვირთვები";
 
 /* File: ../../portable/compiled_templates/new.py:799 */
-"Expiring" = "Expire";
+"Expiring" = "ვადა გადის";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:34 */
-"Democracy Internet TV: How to Get Started" = "Democracy TV sur Internet: Par où commencer";
+"Democracy Internet TV: How to Get Started" = "Democracy ინტერნეტ-ტელევიზია: როგორ გამოვიყენოთ";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:38 */
-"GO BIG:" = "FAITES LES CHOSES EN GRAND:";
+"GO BIG:" = "დიიდი:";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:40 */
-"This is your fullscreen button. Click it and lean back." = "Ceci est le bouton de plein écran. Cliquez le et reculez-vous.";
+"This is your fullscreen button. Click it and lean back." = "ეს გახლავთ მთელ ეკრანზე ხილვის ღილაკი. დააჭირეთ და ისიამოვნეთ.";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:44 */
-"NEW STUFF:" = "NOUVEAUX:";
+"NEW STUFF:" = "ახალი მასალა:";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:46 */
-"Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch." = "Les cercles bleus signifient qu'un canal a des nouvelles vidéos disponibles, les cercles verts signifient que vous avez téléchargés des vidéos qui sont désormais prêtes à être installées.";
+"Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch." = "ლურჯი წრეები ნიშნავს, რომ არხ ახალი ვიდეოები აქვს, ხოლო მწვანე წრეები კი მიგვანიშნებს, რომ თქვენ კვე ჩამოტვირთეთ ვიდეოეი და საყურებლად მზად არის.";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:48 */
-"<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"eventURL('action:doneWithIntro');\">Go to Channel Guide >></a></strong>" = "<strong i18n:translate=\"\">PASSER L'INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"eventURL('action:doneWithIntro');\">Aller au guide des canaux >></a></strong>";
+"<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"eventURL('action:doneWithIntro');\">Go to Channel Guide >></a></strong>" = "<strong i18n:translate=\"\">შესავალის გამოტოვება: <a style=\"color: #090;\" href=\"#\" onclick=\"eventURL('action:doneWithIntro');\">არხთა მეგზურის მონახულება >></a></strong>";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:50 */
-"<strong>Add Channels:</strong> The Channel Guide is your home base for internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the channels in the guide are free.</strong>" = "<strong>Ajouter des canaux:</strong>Le guide des canaux est votre point d'entrée pour définir des canaux de TV internet. Cliquez sur 'ADD' pour souscrire à un canal-- <strong>Les canaux de ce guide sont gratuits.</strong>";
+"<strong>Add Channels:</strong> The Channel Guide is your home base for internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the channels in the guide are free.</strong>" = "<strong>არხების დამატება:</strong> არხთა მეგზური თქვენი საწყისი წერტილია ინტერნეტ-ტელევიზიათა სამყაროში. დააწკაპუნეთ „დამატება”-ზე არხის გამოსაწერად-- <strong>მეგზურში არსებული არხები უფასოა.</strong>";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:52 */
-"<strong>Don't Wait:</strong> Democracy is different than watching webpage videos-- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later." = "<strong>N'attendez pas:</strong> Democracy est différent de la consultation des vidéos d'une page web-- les publieurs peuvrent offrir des vidéos de haute qualité. Donc, ne vous posez pas en attendant le téléchargement des vidéos : lancez quelques téléchargements et vérifiez les plus tard.";
+"<strong>Don't Wait:</strong> Democracy is different than watching webpage videos-- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later." = "<strong>ნუ დაელოდებით:</strong> Democracy ძირეულად განსხვავდება ვებგვერდებზე განთავსებული ვიდეოების ყურებისაგან-- გამომცემლებს შეუძლიათ დიდი, მაღალხარისხიანი ვიდეო-ჩანაწერები შემოგთავაზონ. ასე რომ, ნუ დაელოდებით ვიდეოს უმალ დაკვრას: დაიწყეთ ჩამოტვირთვა და შეამოწმეთ მოგვიანებით.";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:54 */
-"<strong>Leave it On:</strong> Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch." = "<strong>Laisser activé:</strong> Le lecteur Democracy vérifie périodiquement la présence de nouveaux films dans les canaux et les télécharge automatiquement en arrière plan. Le laisser tourner signifie que vous aurez des nouvelles vidéos prête à être visionner.";
+"<strong>Leave it On:</strong> Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch." = "<strong>დატოვეთ ჩართული:</strong> Democracy Player დროდადრო ამოწმებს არხებს ახალ ვიდეოებზე და მათ უკანა ფონზე ჩამოტვირთავს. თუ პროგრამას ჩართულს დატოვებთ, ყურების სუვილისას ვიდეოები ჩამოტვირთული დაგხვდებათ.";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:56 */
-"<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "<strong>Ne vous souciez pas de l'espace disque:</strong> Comme un TiVo, le lecteur Democracy contient une fonctionnalité 'd'expiration' qui permet de supprimer les vidéos plus anciennes pour faire de la place pour les vidéos plus récentes. Vous pouvez toujours conserver une vidéo de manière permanente en cliquant sur 'sauvegarder' et vous pouvez définir un réglage de canal pour sauvegarder automatiquement.";
+"<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "<strong>დისკის თავისუფალ ადგილზე ნუ იდარდებთ:</strong> როგორც „TiVo” მოწყობილობა, Democracy Player ვადის გასვლის ფუნციით არის აღჭურვილი, რაც საშუალებას იძლევა ავტომატურად წაიშალოს ვადაგასული ვიდეო, რათა ადგილი ახალი ვიდეოსათვის გათავისუფლდეს. ვიდეოს სამუდამოდ შენახვა „შენახვა”-ზე დაწკაპუნებით შეგიძლიათ. ასევე შეგიძლიათ დააყენოთ არხის პარამეტრებში, რომ ავტომატურად შენახულ იქნას ვიდეოები.";
 
 /* File: ../../portable/app.py:636 */
 /* Flag: python-format */
-"%s was unable to save its database: %s.\nRecent changes may be lost.\nQuit Anyway?" = "%s n'est pas parvenu à sauvegarder sa base de données: %s.\nLes changements récents sont peut-être perdus.\nQuitter malgré tout?";
+"%s was unable to save its database: %s.\nRecent changes may be lost.\nQuit Anyway?" = "%s-, შემდეგი მონაცემთა ბაზა ვერ შეინახა: %s.\nბოლო ცვლილებები შესაძლოა დაიკარგოს.\nმაინც გსურთ გასვლა?";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:1 */
-"1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 jour\n3 jours\n6 jours\n10 jours\n1 mois\nJamais";
+"1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 დღეში\n3 დღეში\n6 დღეში\n10 დღეში\n1 დღეში\nარასოდეს";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:7 */
-"<b>Channels</b>" = "<b>Canaux</b>";
+"<b>Channels</b>" = "<b>არხები</b>";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:8 */
-"<b>Disk Space</b>" = "<b>Espace disque</b>";
+"<b>Disk Space</b>" = "<b>ადგილი დისკზე</b>";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:9 */
-"<b>Downloads</b>" = "<b>Téléchargements</b>";
+"<b>Downloads</b>" = "<b>ჩამოტვირთვები</b>";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:10 */
-"<b>Movies Directory</b>" = "<b>Répertoire des films</b>";
+"<b>Movies Directory</b>" = "<b>ფილმების დირექტორია</b>";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:11 */
-"Add Channel" = "Rajouter un canal";
+"Add Channel" = "არხის დამატება";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:12 */
-"By default, videos expire after" = "Par défaut, les vidéos expirent après";
+"By default, videos expire after" = "სტანდარტულად, ვიდეოებს ვადა გადის";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:13 */
-"Check Channels for new content" = "Cherchez des nouveaux contenus dans les canaux";
+"Check Channels for new content" = "არხების ახალ მასალაზე შემოწმება";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:14 */
-"Democracy - Add Channel" = "Democracy - Rajouter un canal";
+"Democracy - Add Channel" = "Democracy - არხის დამატება";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:15 */
-"Democracy Player" = "Lecteur Democracy";
+"Democracy Player" = "Democracy Player";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:16 */
-"Don't Migrate" = "Ne pas migrer";
+"Don't Migrate" = "არ გააერთიანო";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:17 */
-"Don't start a download if it leaves less than" = "Ne pas démarrer de téléchargement si il laisse moins de";
+"Don't start a download if it leaves less than" = "აღარ დაიწყო ჩამოტვირთვა, თუ დისკზე დარჩება";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:18 */
-"Enter the URL of the channel to add" = "Saisir une URL du canal à rajouter";
+"Enter the URL of the channel to add" = "შემოიყვანეთ დასამატებელი არხის URL";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:19 */
-"Every 30 minutes\nEvery hour\nManually" = "Toutes les 30 minutes\nToutes les heures\nManuellement";
+"Every 30 minutes\nEvery hour\nManually" = "ყოველ 30 წუთში\nყოველ საათში\nხელით";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:22 */
-"GB free" = "Go libre";
+"GB free" = "გბაიტი თავისუფალია";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:23 */
-"KB/s when my computer is active" = "Ko/s quand mon ordinateur est actif";
+"KB/s when my computer is active" = "კბაიტი/წმ როდესაც კომპიუტერი აქტიურია";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:24 */
-"Migrate" = "Migrer";
+"Migrate" = "მიგრირება";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:25 */
-"Migrate existing movies?" = "Migrer les films existants?";
+"Migrate existing movies?" = "არსებულ ფილმები შეუერთდეს?";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:26 */
-"Preferences" = "Preferences";
+"Preferences" = "პარამეტრები";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:27 */
-"Select Movies Directory" = "Sélectionner le répertoire des films";
+"Select Movies Directory" = "აირჩიეთ ფილმების დირექტორია";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:28 */
-"Store downloaded movies in" = "Stocker les films téléchargés dans";
+"Store downloaded movies in" = "ჩამოტვირთული ფილმების მდებარეობა";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:29 */
-"To avoid slowdowns, limit upstream to" = "Pour éviter les ralentissements, limiter l'upload à";
+"To avoid slowdowns, limit upstream to" = "შეფერხებების ასაცილებლად ატვირთვა შეზღუდე";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:30 */
-"Volume:" = "Volume :";
+"Volume:" = "ხმის სიმაღლე:";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:31 */
-"You've selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "Vous avez sélectionné un nouveau dossier pour y télécharger de nouveaux films. Est-ce que l'application Democracy doit migrer vos téléchargements existants vers ce nouvel emplacement? (Les films en cours de téléchargement ne  seront pas déplacés tant qu'ils ne sont pas terminés)";
+"You've selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "თქვენ ფილმების ჩამოსატვირთად ახალი ფოლდერი მიუთითეთ.  გსურთ Democracy-მ თქვენი არსებული ჩამოტვირთვებიც იქ გადაიტანოს?  (ჩამოტვირთვის პროცესში მყოფი ფილმები დასრულებამდე არ გადაადგილდება.)";
