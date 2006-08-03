@@ -67,7 +67,7 @@ def lockAndPlay(func):
             selectItemLock.release()
     return locked
 
-class VLCRenderer (VideoRenderer):
+class VLCRenderer (app.VideoRenderer):
     """The VLC renderer is very thin wrapper around the xine-renderer xpcom
     component. 
     """
