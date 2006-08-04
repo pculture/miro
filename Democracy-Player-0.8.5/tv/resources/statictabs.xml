@@ -1,0 +1,13 @@
+<tabs>
+<statictab tabtemplatebase="guidetab" contentstemplate="go-to-guide" order="1"/>
+<statictab tabtemplatebase="searchtab" contentstemplate="search" order="2"/>
+<statictab tabtemplatebase="librarytab" contentstemplate="library" order="3"/>
+<statictab tabtemplatebase="newtab" contentstemplate="new" order="4"/>
+
+<statictab tabtemplatebase="downloadtab" contentstemplate="download" order="5"/>
+
+<!--
+<statictab tabtemplatebase="debugtab" contentstemplate="debug" order="1000000"/>
+-->
+
+</tabs>

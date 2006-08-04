@@ -1,0 +1,56 @@
+#include "nsISupports.idl"
+
+interface nsIDOMWindow;
+interface nsIDOMDocument;
+interface nsICommandLine;
+
+[scriptable, uuid(8ABB2E1D-6624-4457-A4BD-EBFA6156D426)]
+interface pcfIDTVPyBridge : nsISupports
+{
+  /**
+   * Called on application startup.
+   */
+  AString getStartupError();
+  void onStartup(in nsIDOMWindow window);
+  void onShutdown();
+  void handleCommandLine(in nsICommandLine commandLine);
+  void pageLoadFinished(in string area, in AString url);
+  void setVolume(in float volume);
+  void quit();
+  void removeCurrentChannel();
+  void updateCurrentChannel();
+  void updateChannels();
+  void showHelp();
+  void addChannel(in AString url);
+  void copyChannelLink();
+  void handleSimpleDialog(in unsigned long id, 
+        in unsigned short buttonIndex);
+  void handleHTTPAuthDialog(in unsigned long id, 
+          in unsigned short buttonIndex, in string username, 
+          in string password);
+  void openURL(in AString url);
+  void loadURLInBrowser(in string browserAreaId, in AString url);
+  void skip(in short step);
+  void stop();
+  void playPause();
+  void openFile(in AString path);
+  void deleteVLCCache();
+  AString shortenDirectoryName(in AString path);
+  boolean getRunAtStartup();
+  void setRunAtStartup(in boolean value);
+  short getCheckEvery();
+  void setCheckEvery(in short value);
+  AString getMoviesDirectory();
+  void changeMoviesDirectory(in AString path, in boolean migrate);
+  boolean getLimitUpstream();
+  void setLimitUpstream(in boolean value);
+  short getLimitUpstreamAmount();
+  void setLimitUpstreamAmount(in short value);
+  boolean getPreserveDiskSpace();
+  void setPreserveDiskSpace(in boolean value);
+  float getPreserveDiskSpaceAmount();
+  void setPreserveDiskSpaceAmount(in float value);
+  short getExpireAfter();
+  void setExpireAfter(in short value);
+  void showCursor(in boolean display);
+};

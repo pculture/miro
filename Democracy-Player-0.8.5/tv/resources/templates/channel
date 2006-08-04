@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
+
+<head>
+    <base href="***feed.getBaseHref()***" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Democracy Channel View</title>
+
+    <link href="resource:css/main.css" rel="stylesheet" type="text/css" />
+    <t:include filename="dynamic.js" />
+    <t:include filename="settings.js" />
+    <script type="text/javascript" src="resource:templates/shide.js" />
+
+    <t:execOnLoad><![CDATA[
+global searchFilter
+searchFilter = lambda x: filters.matchingItems(x, None)
+
+feed = app.controller.currentSelectedTab.obj
+allItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
+matchingItems = allItems.filter(lambda x: searchFilter(x))
+downloadingItems = matchingItems.filter(filters.downloadingItems)
+thisFeedView = views.feeds.filter(lambda x: x is feed)
+
+matchingItems.createIndex(indexes.itemsByChannelCategory)
+def makeStateView(cat):
+    view = matchingItems.filterWithIndex(indexes.itemsByChannelCategory, cat)
+    return view.sort(sorts.item)
+newItems = makeStateView('new')
+oldItems = matchingItems.filter(filters.viewedItems).sort(sorts.item)
+unwatchedItems = makeStateView('newly-downloaded')
+expiringItems = makeStateView('expiring')
+savedItems = makeStateView('saved')
+
+if newItems.len() == unwatchedItems.len() == expiringItems.len() == savedItems.len() == 0:
+    mainChannelbarAvailableDisplay = newlyAvailableSeenDisplay = "block"
+    showMoreVideosDisplay = "none"
+else:
+    mainChannelbarAvailableDisplay = newlyAvailableSeenDisplay = "none"
+    showMoreVideosDisplay = "block"
+
+def updateSearchString(newSearch):
+    global searchFilter
+    if len(newSearch) == 0:
+        searchFilter = lambda x: filters.matchingItems(x, None)
+    else:
+        searchFilter = lambda x: filters.matchingItems(x, newSearch)
+    allItems.recomputeFilter(matchingItems)
+
+]]>
+    </t:execOnLoad>
+    <t:execOnUnload><![CDATA[
+# This should unlink matchingItems and all of it's children
+allItems.unlink()
+thisFeedView.unlink()
+]]>
+    </t:execOnUnload>
+
+</head>
+
+<body>
+    
+<!-- TITLE BAR ************************************************************ -->
+<div id="main-titlebar">
+        <img id="main-titlebar-avatar" src="***feed.getThumbnail()***" alt="" style="background-color:#FFFFFF;" />
+	<div id="main-titlebar-channelname">
+	    <div t:updateForView="thisFeedView">
+                <h1 t:replaceMarkup="feed.getTitle()" />
+                <div id="main-titlebar-autodownload">
+		<form name="setAuto" >
+		    <input type="hidden" name="feed" value="@@@feed.getID()@@@" />
+		    <input type="checkbox" name="automatic" value="1" checked="checked" onClick="javascript:setAutoDownloadableFeed()" t:hideIf="not feed.isAutoDownloadable()" />
+		    <input type="checkbox" name="automatic" value="1"                   onClick="javascript:setAutoDownloadableFeed()" t:hideIf="feed.isAutoDownloadable()" />
+		    <span class="auto_link" i18n:translate="">Auto Download</span>
+		</form>
+                </div>
+	    </div>
+        </div>
+        <div id="main-titlebar-tasks">
+                <div id="main-titlebar-tasks-settings">
+                        <p><a href="#" 
+onclick="return eventURL('template:feed-settings');"><span 
+i18n:translate="">Settings</span></a></p>
+                </div>
+                <div id="main-titlebar-tasks-recommend">
+                    <p><a href="mailto:?subject=@@@feed.getTitle()@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed.getTitle()@@@&quot;. If you don't have the Democracy Player, you can get it here:%0D%0A%0D%0Ahttp://www.getdemocracy.com/%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed.getURL()@@@" class="recommend_link" i18n:translate="">Recommend</a></p>
+                </div>
+                <div id="main-titlebar-tasks-search">
+                    <input type="search" placeholder="Search Channel" class="main-titlebar-tasks-search" onfocus="startEditSearch(this)" onblur="endEditSearch()" />
+                </div>
+        </div>
+</div>
+<!-- / TITLE BAR -->
+<!-- CHANNEL CONTAINER **************************************************** -->
+<div id="main-container">
+    <div class="main-container-scraping" t:showIf="feed.isScraped() and feed.isUpdating()" t:updateHideOnView="thisFeedView">
+    <div class="scraping-indicator">
+      <img align="left" src="resource:images/scraping-indicator-left.gif" />
+      <img align="right" src="resource:images/scraping-indicator-right.gif" />
+      <div class="scraping-content" i18n:translate="">Looking for videos 
+      at this URL</div>
+    </div>
+    </div>
+    <!-- DOWNLOADS ******************************************************** -->
+    <span t:hideIf="downloadingItems.len()==0" t:updateHideOnView="downloadingItems">
+        <div class="main-channelbar-hitbox"><a href="javascript:toggleLayerWithTriangle('main-downloads', 'main-downloads-triangle');">#&nbsp;</a></div>
+        <div id="main-channelbar" class="main-channelbar-download">
+                <h1 t:updateForView="downloadingItems">
+        <span id="main-downloads-triangle" class="triangle">&nbsp;</span>
+<span t:hideIf="downloadingItems.len()==1"><span i18n:translate="">
+<span t:replace="downloadingItems.len()" i18n:name="count"/> Downloads in Progress</span></span>
+<span t:hideIf="downloadingItems.len()!=1"><span i18n:translate="">1 Download in Progress</span></span>
+                </h1>
+        </div>
+        <div id="main-downloads" style="display: none;">
+            <span t:repeatForView="downloadingItems">
+                <t:includeTemplate filename="download-item" />
+            </span>
+        </div>
+    </span>
+    <!-- / DOWNLOADS -->
+    <!-- NEWLY AVAILABLE ************************************************** -->
+  <div id="main-channelbar-available" class="main-channelbar" style="display: @@@mainChannelbarAvailableDisplay@@@;">
+  <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-newlyavailable');">#&nbsp;</a></div>
+    <div t:updateForView="matchingItems">
+      <div t:showIf="allItems.len() == matchingItems.len()">
+	<h1 i18n:translate="">
+	    <span i18n:name="len" t:replace="allItems.len()" /> 
+	    Videos On This Channel
+	</h1>
+      </div>
+      <div t:showIf="allItems.len() != matchingItems.len()">
+	<h1 i18n:translate="">
+	    <span i18n:name="len" t:replace="matchingItems.len()" /> 
+	    Videos Match This Search
+	</h1>
+      </div>
+    </div>
+ </div>
+    <div id="main-newlyavailable">
+        <span t:repeatForView="newItems">
+            <t:includeTemplate filename="download-item" />
+        </span>
+        <div t:hideIf="oldItems.len()==0" t:updateHideOnView="oldItems">
+            <div id="show-more-videos-label" style="display: @@@showMoreVideosDisplay@@@;">
+				<a href="javascript:toggleLayer('main-newlyavailable-seen');toggleLayer('show-more-videos-label');toggleLayer('main-channelbar-available');" class="main-notification-nonew">
+				<div class="main-notification"><span i18n:translate=""><span i18n:name="count" t:replace="oldItems.len()" class="video-count"/> Videos on this Channel</span> &gt;&gt;</div>
+    				<div class="main-notification-right">&nbsp;</div>
+    				<br clear="left" />
+				</a>
+            </div>
+	</div>
+	<div id="main-newlyavailable-seen" style="display: @@@newlyAvailableSeenDisplay@@@;">
+            <div t:repeatForView="oldItems">
+                <t:includeTemplate filename="download-item" />
+            </div>
+        </div>
+    </div>              
+
+
+    <!-- UNWATCHED ******************************************************** -->
+    <span t:hideIf="unwatchedItems.len()==0" t:updateHideOnView="unwatchedItems">
+        <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-unwatched');">#&nbsp;</a></div>
+        <div id="main-channelbar" class="main-channelbar">
+                <h1 i18n:translate="">Unwatched</h1>
+        </div>
+
+        <div id="main-unwatched">
+            <span t:repeatForView="unwatchedItems">
+                <t:includeTemplate filename="download-item" />
+            </span>
+        </div>
+    </span>
+    <!-- / UNWATCHED -->
+
+    <!-- EXPIRING ********************************************************* -->
+    <span t:hideIf="expiringItems.len()==0" t:updateHideOnView="expiringItems">
+        <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-expiring');">#&nbsp;</a></div>
+        <div id="main-channelbar" class="main-channelbar">
+                <h1 i18n:translate="">Watched</h1>
+        </div>
+
+        <div id="main-expiring">
+            <span t:repeatForView="expiringItems">
+                <t:includeTemplate filename="download-item" />
+            </span>
+        </div>
+    </span>
+    <!-- / EXPIRING -->
+
+    <!-- SAVED ************************************************************ -->
+    <span t:hideIf="savedItems.len()==0" t:updateHideOnView="savedItems">
+        <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-saved');">#&nbsp;</a></div>
+        <div id="main-channelbar" class="main-channelbar">
+                <h1 i18n:translate="">Saved</h1>
+        </div>
+
+        <div id="main-saved">
+            <span t:repeatForView="savedItems">
+                <t:includeTemplate filename="download-item" />
+            </span>
+        </div>
+    </span>
+    <!-- / SAVED -->
+</div>
+<!-- / CHANNEL ITEMS LIST -->
+
+<t:triggerActionOnUnload url="action:markFeedViewed?feed=@@@feed.getID()@@@" />
+<t:triggerActionOnLoad url="action:updateIcons?feed=@@@feed.getID()@@@" />
+
+</body>
+</html>

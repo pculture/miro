@@ -1,0 +1,162 @@
+/* NSMenuItem : <title:About Democracy> (oid:58) */
+"About Democracy" = "About Democracy";
+
+/* NSMenuItem : <title:Add a Channel...> (oid:227) */
+"Add a Channel..." = "Add a Channel...";
+
+/* NSMenuItem : <title:Bring All to Front> (oid:5) */
+"Bring All to Front" = "Bring All to Front";
+
+/* NSMenu : <title:Channel> (oid:226) */
+"Channel" = "Channel";
+
+/* NSMenuItem : <title:Check for Update> (oid:213) */
+"Check for Update" = "Check for Update";
+
+/* NSMenuItem : <title:Clear Menu> (oid:126) */
+"Clear Menu" = "Clear Menu";
+
+/* NSMenuItem : <title:Close> (oid:73) */
+"Close" = "Close";
+
+/* NSMenu : <title:Collection> (oid:229) */
+"Collection" = "Collection";
+
+/* NSMenuItem : <title:Copy> (oid:157) */
+"Copy" = "Copy";
+
+/* NSMenuItem : <title:Copy Channel Link> (oid:232) */
+"Copy Channel Link" = "Copy Channel Link";
+
+/* NSMenuItem : <title:Copy Video Link> (oid:224) */
+"Copy Video Link" = "Copy Video Link";
+
+/* NSMenuItem : <title:Create Collection> (oid:230) */
+"Create Collection" = "Create Collection";
+
+/* NSMenuItem : <title:Cut> (oid:160) */
+"Cut" = "Cut";
+
+/* NSMenuItem : <title:Delete> (oid:164) */
+"Delete" = "Delete";
+
+/* NSMenuItem : <title:Delete Collection> (oid:240) */
+"Delete Collection" = "Delete Collection";
+
+/* NSMenuItem : <title:Delete Video...> (oid:222) */
+"Delete Video..." = "Delete Video...";
+
+/* NSMenu : <title:Democracy> (oid:57) */
+"Democracy" = "Democracy";
+
+/* NSMenuItem : <title:Democracy Help> (oid:111) */
+"Democracy Help" = "Democracy Help";
+
+/* NSMenuItem : <title:Donate to Democracy> (oid:214) */
+"Donate to Democracy" = "Donate to Democracy";
+
+/* NSMenu : <title:Edit> (oid:169) */
+"Edit" = "Edit";
+
+/* NSMenuItem : <title:File> (oid:83) */
+"File" = "File";
+
+/* NSMenuItem : <title:Full Screen> (oid:219) */
+"Full Screen" = "Full Screen";
+
+/* NSMenuItem : <title:Half Screen> (oid:220) */
+"Half Screen" = "Half Screen";
+
+/* NSMenu : <title:Help> (oid:106) */
+"Help" = "Help";
+
+/* NSMenuItem : <title:Hide Democracy> (oid:134) */
+"Hide Democracy" = "Hide Democracy";
+
+/* NSMenuItem : <title:Hide Others> (oid:145) */
+"Hide Others" = "Hide Others";
+
+/* NSMenu : <title:MainMenu> (oid:29) */
+"MainMenu" = "MainMenu";
+
+/* NSMenuItem : <title:Minimize> (oid:23) */
+"Minimize" = "Minimize";
+
+/* NSMenuItem : <title:New> (oid:82) */
+"New" = "New";
+
+/* NSMenu : <title:Open Recent> (oid:125) */
+"Open Recent" = "Open Recent";
+
+/* NSMenuItem : <title:Open...> (oid:72) */
+"Open..." = "Open...";
+
+/* NSMenuItem : <title:Page Setup…> (oid:77) */
+"Page Setup…" = "Page Setup…";
+
+/* NSMenuItem : <title:Paste> (oid:171) */
+"Paste" = "Paste";
+
+/* NSMenuItem : <title:Play Video> (oid:217) */
+"Play Video" = "Play Video";
+
+/* NSMenuItem : <title:Preferences…> (oid:129) */
+"Preferences…" = "Preferences…";
+
+/* NSMenuItem : <title:Print…> (oid:78) */
+"Print…" = "Print…";
+
+/* NSMenuItem : <title:Quit Democracy> (oid:136) */
+"Quit Democracy" = "Quit Democracy";
+
+/* NSMenuItem : <title:Remove Channel...> (oid:231) */
+"Remove Channel..." = "Remove Channel...";
+
+/* NSMenuItem : <title:Rename Channel> (oid:238) */
+"Rename Channel" = "Rename Channel";
+
+/* NSMenuItem : <title:Revert> (oid:112) */
+"Revert" = "Revert";
+
+/* NSMenuItem : <title:Save> (oid:75) */
+"Save" = "Save";
+
+/* NSMenuItem : <title:Save As…> (oid:80) */
+"Save As…" = "Save As…";
+
+/* NSMenuItem : <title:Save Video...> (oid:223) */
+"Save Video..." = "Save Video...";
+
+/* NSMenuItem : <title:Select All> (oid:172) */
+"Select All" = "Select All";
+
+/* NSMenuItem : <title:Send Collection to a Friend> (oid:242) */
+"Send Collection to a Friend" = "Send Collection to a Friend";
+
+/* NSMenuItem : <title:Services> (oid:131) */
+"Services" = "Services";
+
+/* NSMenuItem : <title:Show All> (oid:150) */
+"Show All" = "Show All";
+
+/* NSMenuItem : <title:Stop Video> (oid:272) */
+"Stop Video" = "Stop Video";
+
+/* NSMenuItem : <title:Tell a Friend> (oid:239) */
+"Tell a Friend" = "Tell a Friend";
+
+/* NSMenuItem : <title:Update All Channels> (oid:235) */
+"Update All Channels" = "Update All Channels";
+
+/* NSMenuItem : <title:Update Channel> (oid:234) */
+"Update Channel" = "Update Channel";
+
+/* NSMenu : <title:Video> (oid:216) */
+"Video" = "Video";
+
+/* NSMenu : <title:Window> (oid:24) */
+"Window" = "Window";
+
+/* NSMenuItem : <title:Zoom> (oid:197) */
+"Zoom" = "Zoom";
+

@@ -1,0 +1,27 @@
+/* NSTextField (%channel feed%) : <title:%channel feed%> (oid:255) */
+"%channel feed%" = "%channel feed%";
+
+/* NSTextField (%channel title%) : <title:%channel title%> (oid:241) */
+"%channel title%" = "%channel title%";
+
+/* NSTextField (%donation label%) : <title:%donation label%> (oid:256) */
+"%donation label%" = "%donation label%";
+
+/* NSTextField (00:00:00) : <title:00:00:00> (oid:280) */
+"00:00:00" = "00:00:00";
+
+/* NSButton (Add Channel) : <title:Add Channel> (oid:53) */
+"Add Channel" = "Add Channel";
+
+/* NSBox (Box) : <title:Box> (oid:227) */
+"Box" = "Box";
+
+/* NSWindow (Democracy) : <title:Democracy> (oid:7) */
+"Democracy" = "Democracy";
+
+/* FullScreenPalette (FullScreen Controls) : <title:FullScreen Controls> (oid:237) */
+"FullScreen Controls" = "FullScreen Controls";
+
+/* VideoWindow (VideoWindow) : <title:VideoWindow> (oid:242) */
+"VideoWindow" = "VideoWindow";
+

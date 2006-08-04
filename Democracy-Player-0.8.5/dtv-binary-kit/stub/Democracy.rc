@@ -1,0 +1,29 @@
+#include <winver.h>
+
+IDI_ICON1       ICON    DISCARDABLE     "Democracy.ico"
+
+1 VERSIONINFO
+ FILEVERSION    0,8,2,0
+ PRODUCTVERSION 0,8,2,0
+ FILEFLAGSMASK  0x3fL
+ FILEFLAGS      0x0L
+ FILEOS         VOS_NT_WINDOWS32
+ FILETYPE       VFT_APP
+ FILESUBTYPE    0x0L
+BEGIN
+ BLOCK "StringFileInfo"
+ BEGIN
+  // 0409 means "US English"; 04B0 means "Unicode encoding"
+  BLOCK "040904B0"
+  BEGIN
+   VALUE "CompanyName",      "Participatory Culture Foundation\0"
+   VALUE "FileDescription",  "Democracy Player\0"
+   VALUE "FileVersion",      "0.8.2\0"
+   VALUE "InternalName",     "Democracy\0"
+   VALUE "LegalCopyright",   "Copyright \xA9 2006 Participatory Culture Foundation; see LICENSE file\0"
+   VALUE "OriginalFilename", "Democracy.exe\0"
+   VALUE "ProductName",      "Democracy Player\0"
+   VALUE "ProductVersion",   "0.8.2\0"
+  END
+ END
+END

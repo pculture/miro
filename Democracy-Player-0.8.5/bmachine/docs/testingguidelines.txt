@@ -1,0 +1,135 @@
+ low-level testing
+
+- make sure that data access operations work
+   - get/save/edit/delete
+- test UTF-8 storage/retrieval
+- test junky data
+- test html fragments and urls
+- test for stripping 'bad' html
+- test with magic quotes on and off
+- test with session url rewriting on and off
+- test posting links to non-existant servers
+- test posting links to 404s
+- test posting links to file:// urls
+- test everything with MySQL enabled/disabled
+- test for one database, two trackers 1161681
+
+
+- TODO - allow simple html - links, bold, italics
+- TODO - write data integrity checking code
+  - make sure that there aren't any orphaned files on the system
+  - and extra files
+  - log owner/group/filesize also
+
+- test client detection
+- test downloading helper apps
+
+- test upload.php
+
+- test for bug 1257011 1231507 1226790
+
+- test bencode/bdecode
+  - junky data
+  - data that matches bencode tokens
+  - utf-8
+
+- test xhtml validation
+  - local validator or somehow post to w3c?
+
+RSS
+- test generation
+- test logic for when rss needs to be generated - REFACTOR THIS
+- test conditional gets
+- make sure feeds validate
+- test download links to make sure they work (maybe use HTTP HEAD)
+- test that mime types start with video/ or audio/
+- test to make sure bogus RSS links give a 404
+
+General Web Testing
+- test posting each form with valid data
+- test posting each form with random crap
+- test posting each form with carefully crafted bad data, i.e. bad urls
+- test error conditions
+- ensure 200 response
+
+Frontend Pages
+- index/library
+  - test display data
+- logout
+  - make sure session and cookie info is destroyed
+- login
+  - test bad login data
+  - good login data
+  - potential hacks?
+
+
+Download page
+- test downloading both installers
+- test helper generation
+- test torrent download
+- test file download
+- test URL redirection
+- test 404 on file missing
+
+Download headers
+- test for proper mime type
+- test for size
+- etc
+
+
+Admin Pages
+- test admin checks + potential hacks
+
+Publishing
+- test all 3 file publish options - torrents, URLs and uploads
+- test for bad data entry
+- test for UTF-8 functionality
+- test create/edit date and timestamp - DOCUMENT these!
+- test donation setup
+- test auto fill?
+- test thumbnail uploading
+- test transcripts - uploading, url, entered text
+- test tags
+- test people
+
+Channels
+- test create page
+  - test bad data - no name/description
+  - test UTF-8
+  - test icon upload
+  - test icon url
+  - test custom library
+
+Channel Display
+- test adding sections
+  - test bad data
+  - test UTF-8
+- test deleting sections
+- test link to custom css?
+- test deleting channels
+- test restricted channel access
+- test publishing to open channels
+- test publishing to closed channels while not logged in
+
+Donations
+- test creation
+- test editing
+- test deleting
+  - test while empty
+  - test while files point to it
+  - test rss generation
+- test utf-8
+
+Settings
+- test editing
+  - test rss generation
+- test front page display options
+- test server sharing - on/off
+  - make sure seeds are actually started/stopped?
+
+Users
+- editing
+- deleting
+- changing user settings - open publishing, etc
+- test adding user
+- test admin hacks - make sure hacker can't send admin=1

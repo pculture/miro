@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="resource:css/main.css" rel="stylesheet" type="text/css" />
+<t:include filename="dynamic.js" />
+<t:include filename="settings.js" />
+<script type="text/javascript" src="resource:templates/shide.js" />
+
+    <t:execOnLoad><![CDATA[
+global searchFilter
+searchFilter = lambda x: filters.matchingItems(x, None)
+
+allUnwatchedItems = views.items.filter(filters.unwatchedItems)
+allExpiringItems = views.items.filter(filters.expiringItems)
+
+matchingUnwatchedItems = allUnwatchedItems.filter(lambda x:searchFilter(x))
+matchingExpiringItems = allExpiringItems.filter(lambda x:searchFilter(x))
+
+unwatchedItems = matchingUnwatchedItems.sort(sorts.item)
+expiringItems = matchingExpiringItems.sort(sorts.item)
+
+def updateSearchString(newSearch):
+    global searchFilter
+    if len(newSearch) == 0:
+        searchFilter = lambda x: filters.matchingItems(x, None)
+    else:
+        searchFilter = lambda x: filters.matchingItems(x, newSearch)
+    allUnwatchedItems.recomputeFilter(matchingUnwatchedItems)
+    allExpiringItems.recomputeFilter(matchingExpiringItems)
+
+]]>
+    </t:execOnLoad>
+    <t:execOnUnload><![CDATA[
+allUnwatchedItems.unlink()
+allExpiringItems.unlink()
+]]>
+    </t:execOnUnload>
+
+</head>
+
+<body>
+
+<!-- TITLE BAR ************************************************************ -->
+<div id="main-titlebar">
+	<div id="main-titlebar-avatar" style="border:0px;"><img src="resource:images/newvideos-icon.png" /></div>
+	<div id="main-titlebar-channelname">
+		<h1 i18n:translate="">New Videos</h1>
+	</div>
+	<div id="main-titlebar-tasks" style="width:100%; text-align:center;">
+		<div id="main-titlebar-tasks-search">
+		    <input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search"  style="margin:35px 55px 0px 0px; width:200px; font-size: 120%;"
+		           onfocus="startEditSearch(this)" 
+		           onblur="endEditSearch()" />
+		</div>
+	</div>
+</div>
+<!-- / TITLE BAR -->
+
+<div id="main-container">
+
+    <!-- UNWATCHED ******************************************************** -->
+    <span t:hideIf="len(unwatchedItems) == 0" t:updateHideOnView="unwatchedItems">
+        <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-unwatched');">#&nbsp;</a></div>
+        <div id="main-channelbar" class="main-channelbar">
+        	<h1 i18n:translate="">Unwatched</h1>
+        	<h2 t:updateForView="unwatchedItems"><span t:replace="len(unwatchedItems)" /></h2>
+        </div>
+
+        <div id="main-unwatched">
+            <span t:repeatForView="unwatchedItems">
+                <t:includeTemplate filename="download-item" />
+            </span>
+        </div>
+    </span>
+    <!-- / UNWATCHED -->
+
+    <!-- EXPIRING ********************************************************* -->
+    <span t:hideIf="len(expiringItems) == 0" t:updateHideOnView="expiringItems">
+        <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-expiring');">#&nbsp;</a></div>
+        <div id="main-channelbar" class="main-channelbar">
+        	<h1 i18n:translate="">Expiring</h1>
+        	<h2 t:updateForView="expiringItems"><span t:replace="len(expiringItems)" /></h2>
+        </div>
+
+        <div id="main-expiring">
+            <span t:repeatForView="expiringItems">
+                <t:includeTemplate filename="download-item" />
+            </span>
+        </div>
+    </span>
+    <!-- / EXPIRING -->
+	
+</div>
+
+</body>
+</html>

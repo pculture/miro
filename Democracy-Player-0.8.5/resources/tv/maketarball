@@ -1,0 +1,15 @@
+mkdir temp-democracy
+cd temp-democracy
+if [ "x-$1" == "x-" ]; then
+    svn co https://svn.participatoryculture.org/svn/dtv/trunk/tv
+    tag=`date +%Y-%m-%d`
+else
+    svn co https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$1/tv
+    tag=$1
+fi
+mv tv Democracy-$tag
+tar zcvf Democracy-$tag.tar.gz --exclude=.svn Democracy-$tag
+mv Democracy-$tag.tar.gz ..
+cd ..
+rm -Rf temp-democracy
+

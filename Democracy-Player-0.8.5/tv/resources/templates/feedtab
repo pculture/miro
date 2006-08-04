@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html  xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n">
+<head>
+</head>
+<body>
+<!-- Normal -->
+<a class="feeditem @@@this.getState()@@@">
+
+<div t:showIf="this.obj.showA()" class="left-bubble blue">
+ <div class="right-bubble blue">
+  <div class="number-count blue" t:replace="this.obj.numAvailable()" />
+ </div>
+</div>
+
+<div t:showIf="this.obj.showU()" class="left-bubble green ***this.obj.showBothUAndA() and 'second' or ''***">
+ <div class="right-bubble green">
+  <div class="number-count green" t:replace="this.obj.numUnwatched()" />
+ </div>
+</div>
+<div t:showIf="this.obj.isUpdating()" class="feed-loading-icon" />
+
+<img class="icon" src="***this.obj.getThumbnail()***" /><div class="name" 
+t:replaceMarkup="this.obj.getTitle()" />
+
+</a>
+
+</body>
+</html>
+
