@@ -1054,7 +1054,7 @@ class ModelActionHandler:
 
     def removeCurrentGuide(self):
         tab = controller.currentSelectedTab
-        if tab.isGuide():
+        if tab.isGuide() and not tab.obj.isDefault():
             currentGuide = tab.objID()
             if currentGuide:
                 self.removeGuide(currentGuide)
