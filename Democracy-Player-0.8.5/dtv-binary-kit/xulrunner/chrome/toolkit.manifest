@@ -1,6 +1,0 @@
-content help jar:toolkit.jar!/content/help/ xpcnativewrappers=yes
-content passwordmgr jar:toolkit.jar!/content/passwordmgr/ xpcnativewrappers=yes
-content global-region jar:toolkit.jar!/content/global-region/ xpcnativewrappers=yes
-content global jar:toolkit.jar!/content/global/ xpcnativewrappers=yes
-content global-platform jar:toolkit.jar!/content/global-platform/ platform xpcnativewrappers=yes
-content mozapps jar:toolkit.jar!/content/mozapps/ xpcnativewrappers=yes

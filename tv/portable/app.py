@@ -1490,6 +1490,7 @@ def _defaultFeeds():
         'http://live.watchmactv.com/wp-rss2.php',
         'http://some-pig.net/videos/rss.php?i=2',
         'http://videobomb.com/rss/posts/list',
+	'http://www.vh1.com/rss/podcast/bestweekever.jhtml',
     ]
     for url in defaultFeedURLs:
         feed.Feed(url, initiallyAutoDownloadable=False)
