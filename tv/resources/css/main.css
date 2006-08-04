@@ -4,15 +4,6 @@ body {
     font-size: 12px;
     font-family: "Lucida Grande", "Tahoma", "Bitstream Vera Sans", Arial, sans-serif;
     color: #333333;
-    /* The following property is used by Safari to prevent text selection */
-    /* NEEDS: generates spammy console warnings in strict mode under
-           Mozilla -- conditionally enable somehow? */
-    -khtml-user-select: none;
-}
-
-.selectable {
-    /* This allows to enable selectability on a per-element basis */
-    -khtml-user-select: text;
 }
 
 .clearer {
@@ -296,6 +287,7 @@ div.scraping-content {
 }
 
 .noselect {
+    -khtml-user-select: none;
     -moz-user-select: none;
     cursor: default;
 }

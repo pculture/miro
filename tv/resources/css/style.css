@@ -22,11 +22,14 @@ body {
 	margin: 0;
 	padding: 0;
 	width: 100%;
-	/* The following property is used by Safari to prevent text selection */
-	/* NEEDS: generates spammy console warnings in strict mode under
-           Mozilla -- conditionally enable somehow? */
-	-khtml-user-select: none;
 }
+
+.noselect {
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    cursor: default;
+}
+
 
 /*/////////////////////////////////////////////
 
