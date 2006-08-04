@@ -7,6 +7,9 @@
 #include <nsIDragService.h>
 #include <nsIDragSession.h>
 #include <nsIDOMEvent.h>
+#include <nsIDOMEventListener.h>
+#include <nsIDOMEventTarget.h>
+#include <nsIDOMMouseEvent.h>
 #include <nsIDOMWindow.h>
 #include <nsILocalFile.h>
 #include <nsIComponentRegistrar.h>
@@ -20,7 +23,6 @@
 #include <nsICollection.h>
 #include <stdio.h>
 #include <string.h>
-
 
 nsresult getDragData(nsIDOMElement* element, nsISupportsArray *dragArray) {
     // Create a transferable
@@ -71,7 +73,7 @@ nsresult startDrag(nsISupportsArray* dragArray) {
     return rv;
 }
 
-nsresult isDragTypeSupported(nsAString &dragType, PRBool *supported)
+nsresult isSingleDragTypeSupported(const nsAString &dragType, PRBool *supported)
 {
     nsresult rv;
 
@@ -89,63 +91,90 @@ nsresult isDragTypeSupported(nsAString &dragType, PRBool *supported)
     return rv;
 }
 
-
-nsresult addDragHighlightCSSClass(nsIDOMElement* element) {
-    nsAutoString classStr = NS_ConvertUTF8toUTF16(nsDependentCString("class"));
-    nsAutoString cssClass;
+nsresult isDragTypeSupported(const nsAString& dragAttribute, 
+        PRBool *supported, nsAString* dragType = nsnull)
+{
+    PRInt32 start, currentColon;
+    start = currentColon = 0;
+    *supported = false;
     nsresult rv;
-    rv = element->GetAttribute(classStr, cssClass);
-    if(NS_FAILED(rv)) return rv;
-    nsAString::const_iterator start, end;
 
-    cssClass.BeginReading(start);
-    cssClass.EndReading(end);
-    nsAutoString dragHighlightStr = NS_ConvertUTF8toUTF16(
-                    nsDependentCString("drag-highlight"));
-    if (!FindInReadable(dragHighlightStr, start, end)) {
-        cssClass.Append(NS_ConvertUTF8toUTF16(
-                    nsDependentCString(" ")));
-        cssClass.Append(dragHighlightStr);
-        rv = element->SetAttribute(classStr, cssClass);
+    while(start < dragAttribute.Length()) {
+        currentColon = dragAttribute.FindChar(':', start);
+        if(currentColon < 0) {
+            const nsAString& singleDragType = Substring(dragAttribute, start, 
+                    dragAttribute.Length());
+            rv = isSingleDragTypeSupported(singleDragType, supported);
+            if(NS_FAILED(rv)) return rv;
+            if(*supported && dragType) {
+                dragType->Replace(0, dragType->Length(), singleDragType);
+            }
+            return NS_OK;
+        }
+        const nsAString& singleDragType = Substring(dragAttribute, start, 
+                currentColon);
+        rv = isSingleDragTypeSupported(singleDragType, supported);
         if(NS_FAILED(rv)) return rv;
+        if(*supported) {
+            if(dragType) {
+                dragType->Replace(0, dragType->Length(), singleDragType);
+            }
+            return NS_OK;
+        }
+        start = currentColon + 1;
     }
     return NS_OK;
 }
 
-nsresult removeDragHighlightCSSClass(nsIDOMElement* element) {
+static nsCOMPtr<nsIDOMElement> highlightedElement;
+static nsAutoString currentHighlightClass;
+
+nsresult removeCurrentHighlight() {
+    if(!highlightedElement) return NS_OK;
     nsAutoString classStr = NS_ConvertUTF8toUTF16(nsDependentCString("class"));
     nsAutoString cssClass;
     nsresult rv;
-    rv = element->GetAttribute(classStr, cssClass);
+    rv = highlightedElement->GetAttribute(classStr, cssClass);
     if(NS_FAILED(rv)) return rv;
-    nsAutoString dragHighlightStr = NS_ConvertUTF8toUTF16(
-                    nsDependentCString(" drag-highlight"));
-    for(int i = 0; i <= cssClass.Length() - 15; i++) {
-        if(Substring(cssClass, i, 15).Equals(dragHighlightStr)) {
-            cssClass.Cut(i, 15);
+    int hlLength = currentHighlightClass.Length();
+    for(int i = 0; i <= cssClass.Length() - hlLength; i++) {
+        if(Substring(cssClass, i, hlLength).Equals(currentHighlightClass)) {
+            cssClass.Cut(i, hlLength);
             break;
         }
     }
-    rv = element->SetAttribute(classStr, cssClass);
-    return rv;
+    rv = highlightedElement->SetAttribute(classStr, cssClass);
+    if(NS_FAILED(rv)) return rv;
+    highlightedElement = nsnull;
+    return NS_OK;
 }
 
-class DemocracyDNDHook : public nsIClipboardDragDropHooks {
+nsresult setNewHighlight(nsIDOMElement *element, const nsAString &dragType) {
+    nsresult rv;
+    if(highlightedElement) {
+        rv = removeCurrentHighlight();
+        if(NS_FAILED(rv)) return rv;
+    }
+    currentHighlightClass.Cut(0, currentHighlightClass.Length());
+    currentHighlightClass.Append(NS_ConvertUTF8toUTF16(
+                nsDependentCString(" drag-highlight ")));
+    currentHighlightClass.Append(dragType);
+
+    nsAutoString classStr = NS_ConvertUTF8toUTF16(nsDependentCString("class"));
+    nsAutoString cssClass;
+    rv = element->GetAttribute(classStr, cssClass);
+    if(NS_FAILED(rv)) return rv;
+
+    cssClass.Append(currentHighlightClass);
+    rv = element->SetAttribute(classStr, cssClass);
+    if(NS_FAILED(rv)) return rv;
+    highlightedElement = element;
+    return NS_OK;
+}
+
+class DemocracyDNDHook : public nsIClipboardDragDropHooks, nsIDOMEventListener {
 protected:
     GtkMozEmbed* embed;
-    nsCOMPtr<nsIDOMElement> highlightedElement;
-
-    void removeOldHighlight() {
-        if(this->highlightedElement) {
-            removeDragHighlightCSSClass(highlightedElement);
-        }
-        this->highlightedElement = nsnull;
-    }
-
-    void setNewHighlight(nsIDOMElement *element) {
-        addDragHighlightCSSClass(element);
-        this->highlightedElement = element;
-    }
 
 public:   
     DemocracyDNDHook(GtkMozEmbed* embed) {
@@ -159,9 +188,10 @@ public:
         nsresult rv;
         PRBool supported;
         *retval = false;
-        
-        this->removeOldHighlight();
 
+        rv = removeCurrentHighlight();
+        if(NS_FAILED(rv)) return rv;
+        
         nsCOMPtr<nsIDOMElement> element;
         nsAutoString dragDestTypeString = NS_ConvertUTF8toUTF16(
                 nsDependentCString("dragdesttype"));
@@ -172,16 +202,13 @@ public:
             nsAutoString dragDestType;
             rv = element->GetAttribute(dragDestTypeString, dragDestType);
             if(NS_FAILED(rv)) return rv;
-            nsCAutoString dragDestMimeType =
-                NS_ConvertUTF16toUTF8(dragDestType);
-            dragDestMimeType.Insert("application/x-democracy-", 0);
-            dragDestMimeType.Append("-drag");
-            rv = session->IsDataFlavorSupported(PromiseFlatCString(
-                            dragDestMimeType).get(), &supported);
+            nsString singleDragType;
+            rv = isDragTypeSupported(dragDestType, &supported, &singleDragType);
             if(NS_FAILED(rv)) return rv;
             if(supported) {
                 *retval = true;
-                this->setNewHighlight(element);
+                rv = setNewHighlight(element, singleDragType);
+                if(NS_FAILED(rv)) return rv;
             }
         }
         return NS_OK;
@@ -225,9 +252,10 @@ public:
 
     nsresult OnPasteOrDrop(nsIDOMEvent *event, nsITransferable *trans, 
                     PRBool* retval) {
-        this->removeOldHighlight();
         *retval = false;
         nsresult rv;
+        rv = removeCurrentHighlight();
+        if(NS_FAILED(rv)) return rv;
         nsCOMPtr<nsIDOMElement> element;
         nsAutoString dragDestTypeString = NS_ConvertUTF8toUTF16(
                 nsDependentCString("dragdesttype"));
@@ -257,9 +285,15 @@ public:
             return NS_OK;
         }
     }
+
+    nsresult HandleEvent(nsIDOMEvent *event) {
+        // This fires for dragexit events
+        removeCurrentHighlight();
+        return NS_OK;
+    }
 };
 
-NS_IMPL_ISUPPORTS1(DemocracyDNDHook, nsIClipboardDragDropHooks) 
+NS_IMPL_ISUPPORTS2(DemocracyDNDHook, nsIClipboardDragDropHooks, nsIDOMEventListener)
 
 nsresult setupDragAndDrop(GtkMozEmbed* gtkembed)
 {
@@ -290,6 +324,15 @@ nsresult setupDragAndDrop(GtkMozEmbed* gtkembed)
     if (NS_FAILED(rv)) return rv;
     rv = commandManager->DoCommand("cmd_clipboardDragDropHook", params,
             domWindow);
+    nsCOMPtr<nsIDOMEventTarget> eventTarget(
+            do_QueryInterface(domWindow, &rv));
+    if(NS_FAILED(rv)) return rv;
+    nsCOMPtr<nsIDOMEventListener> dndEventListener(
+            do_QueryInterface(democracyDNDHook, &rv));
+    if(NS_FAILED(rv)) return rv;
+    nsAutoString type = NS_ConvertUTF8toUTF16(
+            nsDependentCString("dragexit"));
+    rv = eventTarget->AddEventListener(type, dndEventListener, true);
+    if(NS_FAILED(rv)) return rv;
     return rv;
 }
-
