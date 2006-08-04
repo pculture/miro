@@ -264,26 +264,36 @@ function closeApp() {
  Context menus
  *****************************************************************************/
 
-// FIXME: Duplicated from dynamic.js
-function getContextClickMenu(element) {
+function searchUpForElementWithAttribute(element, attributeName) {
     while (1) {
-	if (element.nodeType == 1 && element.getAttribute('t:contextMenu')) {
-	    var ret = element.getAttribute('t:contextMenu');
-	    ret = ret.replace(/\\n/g,"\n");
-	    ret = ret.replace(/\\\\/g,"\\");
-	    return ret;
+	if (element.nodeType == 1 && element.getAttribute(attributeName)) {
+            return element;
 	}
-	if (element.parentNode)
+	if (element.parentNode) {
 	    element = element.parentNode;
-	else
-	    return "";
+        } else {
+            return null;
+        }
     }
 
     // Satisfy Mozilla that the function always returns a
     // value. Otherwise, we get an error if strict mode is enabled,
     // ultimately preventing us from getting the state change event
     // indicating that the load succeeded.
-    return "";
+    return null;
+}
+
+// FIXME: Duplicated from dynamic.js
+function getContextClickMenu(element) {
+    var elt = searchUpForElementWithAttribute('t:contextMenu');
+    if(elt) {
+      var ret = elt.getAttribute('t:contextMenu');
+      ret = ret.replace(/\\n/g,"\n");
+      ret = ret.replace(/\\\\/g,"\\");
+      return ret;
+    } else {
+      return "";
+    }
 }
 
 function xulcontexthandler(browserID, event) {

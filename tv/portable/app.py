@@ -875,6 +875,9 @@ class Controller (frontend.Application):
             # upstream limit should be unset here
             pass
 
+    def handleDrop(self, dropData):
+        print "GOT DROP: ", dropData
+
 ###############################################################################
 #### TemplateDisplay: a HTML-template-driven right-hand display panel      ####
 ###############################################################################
@@ -1257,6 +1260,9 @@ Please double check and try again."""
 
     # Following for testing/debugging
 
+    def handleDrop(self, data):
+        controller.handleDrop(data)
+
     def showHelp(self):
         # FIXME don't hardcode this URL
         delegate.openExternalURL('http://www.getdemocracy.com/help')
@@ -1364,9 +1370,6 @@ class TemplateActionHandler:
         assert searchDownloadsFeed is not None
 
         return (searchFeed, searchDownloadsFeed)
-
-    def handleDrop(self, data):
-        print 'HANDLE DROP: %r' % data
 
     # The Windows XUL port can send a setVolume or setVideoProgress at
     # any time, even when there's no video display around. We can just

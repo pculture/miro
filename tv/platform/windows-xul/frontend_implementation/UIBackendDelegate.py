@@ -39,6 +39,10 @@ class UIBackendDelegate:
                     dialog.description)
         elif isinstance(dialog, dialogs.HTTPAuthDialog):
             frontend.jsBridge.showHTTPAuthDialog(id, dialog.description)
+        elif isinstance(dialog, dialogs.TextEntryDialog):
+            frontend.jsBridge.showTextEntryDialog(id, dialog.title,
+                    dialog.description, dialog.buttons[0].text,
+                    dialog.buttons[1].text)
         else:
             del self.openDialogs[id]
             dialog.runCallback(None)

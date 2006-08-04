@@ -17,6 +17,7 @@
         sizemode="normal"
         width="1000" height="680"
         persist="screenX screenY width height">
+        <script src="chrome://dtv/content/dnd.js"/>
         <script src="chrome://dtv/content/main.js"/>
         <popupset><popup id="contextPopup"></popup></popupset>
 
@@ -32,6 +33,12 @@
 			<menu id="file-menu" label="File" accesskey="F" class="titlebar-toplevel" style="margin-left: 10px;">
 				<menupopup id="file-popup">
 					<menuitem label="Open" acceltext="Ctrl+O" accesskey="O" command="open"/>
+                                        <menuseparator/>
+                                        <menuitem label="New Playlist..." accesskey="P" command="createnewplaylist"/>
+                                        <menuitem label="New Playlist Folder..." accesskey="P" command="createnewplaylistfolder"/>
+                                        <menuitem label="New Channel Folder..." accesskey="P" command="createnewchannelfolder"/>
+                                        <menuitem label="Rename..." accesskey="P" command="rename"/>
+                                        <menuseparator/>
 					<menuitem label="Exit" acceltext="Ctrl+Q" accesskey="E" command="exit"/>
 				</menupopup>
 			</menu>
@@ -126,6 +133,10 @@
   	<browser id="channelsDisplay" src="" type="content"
                  flex="0" width="200" minwidth="50" maxwidth="400"
                  context="contextPopup"
+                 ondraggesture="return onDragGesture(event, 'channelsDisplay');"
+                 ondragover="return onDragOver(event, 'channelsDisplay');"
+                 ondragexit="return onDragExit(event, 'channelsDisplay');"
+                 ondragdrop="return onDragDrop(event, 'channelsDisplay');"
                  oncontextmenu="return xulcontexthandler('channelsDisplay', event);" />
 	<!-- / CHANNEL BAR -->
 	
@@ -135,6 +146,10 @@
 
         <browser id="mainDisplay" src="" type="content" flex="1"
              context="contextPopup"
+             ondraggesture="return onDragGesture(event, 'mainDisplay');"
+             ondragover="return onDragOver(event, 'mainDisplay');"
+             ondragexit="return onDragExit(event, 'mainDisplay');"
+             ondragdrop="return onDragDrop(event, 'mainDisplay');"
              oncontextmenu="return xulcontexthandler('mainDisplay', event);" />
         <vbox id="video-box" flex="1" collapsed="true">
             <browser flex="1" id="mainDisplayVideo" 
@@ -157,7 +172,7 @@
 <hbox flex="0" height="64" id="bottom" class="bottom" align="center">
 	<hbox flex="0" container="1" width="245" height="64" minheight="64" id="bottom-left">
 		<hbox flex="0" maxheight="20" id="bottom-left-addchannel">
-			<button id="add-channel" label="Add Channel" disabled="false" accesskey="A" command="addchannel"/>
+                        <button id="add-channel" label="Add Channel" disabled="false" accesskey="A" command="addchannel" />
 		</hbox>
 		<hbox flex="0" maxheight="20" id="bottom-left-preferences">
 			<button id="Preferences" label="Options" disabled="false" accesskey="O" command="openprefs"/>
@@ -200,6 +215,7 @@
 <command id="updateall" oncommand="pybridge.updateChannels();" />
 <command id="showhelp" oncommand="pybridge.showHelp();" />
 <command id="copychannellink" oncommand="pybridge.copyChannelLink();" />
+<command id="createnewplaylist" oncommand="pybridge.createNewPlaylist();" />
 <!--
 <command id="about" oncommand="alert('DTV Windows version 0.8.0 Copyright (c) 2005, 2006 Participatry Culture Foundation');" />
 <command id="about" oncommand="window.openDialog('chrome://dtv/content/about.xul',about','chrome,dependent,centerscreen');" />

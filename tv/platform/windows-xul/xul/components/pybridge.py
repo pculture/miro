@@ -11,6 +11,7 @@ try:
     import app
     import eventloop
     import config
+    import playlist
     import prefs
     import singleclick
     import frontend
@@ -269,6 +270,10 @@ class PyBridge:
                 password=password)
 
     @asUrgent
+    def handleTextEntryDialog(self, id, buttonIndex, text):
+        self.delegate.handleDialog(id, buttonIndex, value=text)
+
+    @asUrgent
     def addChannel(self, url):
         app.controller.addAndSelectFeed(url)
 
@@ -316,3 +321,11 @@ class PyBridge:
         else:
             arg = 0
         self.cursorDisplayCount = ctypes.windll.user32.ShowCursor(arg)
+
+    @asUrgent
+    def createNewPlaylist(self):
+        playlist.createNewPlaylist()
+
+    @asUrgent
+    def handleDrop(self, dropData):
+        app.controller.handleDrop(dropData)

@@ -28,6 +28,8 @@ interface pcfIDTVPyBridge : nsISupports
   void handleHTTPAuthDialog(in unsigned long id, 
           in unsigned short buttonIndex, in string username, 
           in string password);
+  void handleTextEntryDialog(in unsigned long id, 
+        in unsigned short buttonIndex, in string text);
   void openURL(in AString url);
   void loadURLInBrowser(in string browserAreaId, in AString url);
   void skip(in short step);
@@ -53,4 +55,6 @@ interface pcfIDTVPyBridge : nsISupports
   short getExpireAfter();
   void setExpireAfter(in short value);
   void showCursor(in boolean display);
+  void createNewPlaylist();
+  void handleDrop(in string dropData);
 };
