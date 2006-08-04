@@ -604,9 +604,9 @@ class Item(DDBObject):
                 self._state = 'not-downloaded'
         elif not self.downloader.isFinished():
             self._state = 'downloading'
-        elif not self.seen:
+        elif not self.getSeen():
             self._state = 'newly-downloaded'
-        elif not self.keep:
+        elif not self.getSaved():
             self._state = 'expiring'
         else:
             self._state = 'saved'
@@ -636,12 +636,15 @@ class Item(DDBObject):
                 return 'expired'
             else:
                 return 'not-downloaded'
-        elif not self.seen:
+        elif not self.getSeen():
             return 'newly-downloaded'
-        elif not self.keep:
+        elif not self.getSaved():
             return 'expiring'
         else:
             return 'saved'
+
+    def getSaved(self):
+        return self.keep or not self.getFeed().getExpires()
 
     def isDownloaded(self):
         return self.getState() in ("newly-downloaded", "expiring", "saved")
@@ -955,7 +958,6 @@ class Item(DDBObject):
 
         self.confirmDBThread()
         self.downloadedTime = datetime.now()
-        self.keep = (self.getFeed().expire == "never")
         self.splitItem()
         self.signalChange()
 
@@ -1082,7 +1084,7 @@ class FileItem(Item):
         self.confirmDBThread()
         if self.deleted:
             return 'expired'
-        elif not self.seen:
+        elif not self.getSeen():
             return 'newly-downloaded'
         else:
             return 'saved'
