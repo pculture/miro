@@ -481,7 +481,11 @@ class FeedImpl:
             return int(self.expireTime.seconds/3600)
         except:
             return int(timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS)).seconds/3600)
-        
+
+    def getExpires (self):
+        expireAfterSetting = config.get(prefs.EXPIRE_AFTER_X_DAYS)
+        return (self.expireTime is None or self.expire == 'never' or 
+                (self.expire == 'system' and expireAfterSetting <= 0))
 
     ##
     # Returns true iff item is autodownloadable
