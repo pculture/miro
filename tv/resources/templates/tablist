@@ -19,26 +19,31 @@
   <div id="channels">
     <ul class="tab-list">
       <li t:repeatForView="views.guideTabs" onmousedown="eventURL('action:selectTab?id=@@@this.id@@@')">
-          <t:includeTemplate filename="guidetab" />
+        <span t:hideIf="this.obj.getDefault()" t:contextMenu="action:removeGuide?guide_id=@@@this.obj.getID()@@@|Remove">
+            <t:includeTemplate filename="guidetab" />
+        </span>
+        <span t:hideIf="not this.obj.getDefault()">
+            <t:includeTemplate filename="guidetab" />
+        </span>
       </li>
       <li t:repeatForView="views.staticTabs" onmousedown="eventURL('action:selectTab?id=@@@this.id@@@')">
           <t:includeTemplate filename="statictab" />
       </li>
       <div class="tab-list-divider" />
       <li t:repeatForView="views.feedTabs" onmousedown="eventURL('action:selectTab?id=@@@this.id@@@')">
-	  <span t:contextMenu="action:updateFeed?feed=@@@this.obj.getID()@@@|Update Channel Now\n\naction:removeFeed?feed=@@@this.obj.getID()@@@|Remove">
-	    <t:includeTemplate filename="feedtab" />
-	  </span>
+          <span t:contextMenu="action:updateFeed?feed=@@@this.obj.getID()@@@|Update Channel Now\n\naction:removeFeed?feed=@@@this.obj.getID()@@@|Remove">
+            <t:includeTemplate filename="feedtab" />
+          </span>
       </li>
       <div class="tab-list-divider" />
       <li t:repeatForView="views.playlistTabs" onmousedown="eventURL('action:selectTab?id=@@@this.id@@@')">
-	  <span t:contextMenu="action:updateFeed?feed=@@@this.obj.getID()@@@|Update Channel Now\n\naction:removeFeed?feed=@@@this.obj.getID()@@@|Remove">
-	    <t:includeTemplate filename="playlisttab" />
-	  </span>
+          <span t:contextMenu="action:updateFeed?feed=@@@this.obj.getID()@@@|Update Channel Now\n\naction:removeFeed?feed=@@@this.obj.getID()@@@|Remove">
+            <t:includeTemplate filename="playlisttab" />
+          </span>
       </li>
     </ul>
   </div>
-	<div id="sidebar-download-fade">&nbsp;</div>
+        <div id="sidebar-download-fade">&nbsp;</div>
 </div>
 
 </body>

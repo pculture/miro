@@ -212,6 +212,10 @@ class ChannelGuide(DDBObject):
         print "DTV: updating the Guide"
         self.dc = grabURL(self.getURL(), self.processUpdate, self.processUpdateErrback)
 
+    def remove(self):
+        self.dc.cancel()
+        DDBObject.remove(self)
+
     def getURL(self):
         if self.url is not None:
             return self.url

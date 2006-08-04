@@ -79,6 +79,7 @@ class CallbackHandler(object):
         actionGroups = {}
         actionGroups["VideoPlayback"] = gtk.ActionGroup("VideoPlayback")
         actionGroups["ChannelSelected"] = gtk.ActionGroup("ChannelSelected")
+        actionGroups["GuideSelected"] = gtk.ActionGroup("GuideSelected")
         actionGroups["Ubiquitous"] = gtk.ActionGroup("Ubiquitous")
 
         try:
@@ -96,6 +97,9 @@ class CallbackHandler(object):
             ('UpdateChannel', None, _("_Update Channel"), None, None, self.on_update_channel_activate),
             ('CopyChannelURL', None, _("Copy Channel _Link"), None, None, self.on_copy_channel_link_activate)
             ])
+        actionGroups["GuideSelected"].add_actions ([
+            ('RemoveGuide', None, _("_Remove Channel Guide"), None, None, self.on_remove_guide_activate),
+            ])
         actionGroups["Ubiquitous"].add_actions ([
             ('Video', None, _('_Video')),
             ('Open', gtk.STOCK_OPEN, _('_Open...'), '<Control>o', _('Open various files'), self.on_open_video_activate),
@@ -107,6 +111,7 @@ class CallbackHandler(object):
             ('Quit', gtk.STOCK_QUIT, _('_Quit'), '<Control>q', _('Quit the Program'), self.on_quit_activate),
             ('Channel', None, _('_Channel')),
             ('AddChannel', None, _("_Add Channel..."), None, None, self.on_add_channel_button_clicked),
+            ('AddGuide', None, _("_Add Channel Guide..."), None, None, self.on_add_guide_button_clicked),
             ('UpdateAllChannels', None, _("U_pdate All Channels"), None, None, self.on_update_all_channels_activate),
             ('Help', None, _('_Help')),
             ('About', gtk.STOCK_ABOUT, None, None, None, self.on_about_clicked)
@@ -275,6 +280,24 @@ class CallbackHandler(object):
             eventloop.addIdle(lambda:app.controller.addAndSelectFeed(channel), "Add Channel")
 
         dialog.destroy()
+
+    def on_add_guide_button_clicked(self, event = None):
+        # get our add channel dialog
+        widgetTree = MainFrame.WidgetTree(resource.path('democracy.glade'), 'add-guide-dialog', 'democracyplayer')
+        dialog = widgetTree['add-guide-dialog']
+        mainWindow = self.mainFrame.widgetTree['main-window']
+        dialog.set_transient_for(mainWindow)
+        # run the dialog
+        response = dialog.run()
+
+        if response == gtk.RESPONSE_OK:
+            channel = widgetTree['add-guide-entry'].get_text()
+            eventloop.addIdle(lambda:app.controller.addAndSelectGuide(channel), "Add Guide")
+
+        dialog.destroy()
+
+    def on_remove_guide_activate(self, event = None):
+        eventloop.addIdle (lambda:app.ModelActionHandler(frontend.UIBackendDelegate()).removeCurrentGuide(), "Remove Guide")
 
     def on_preference(self, event = None):
         # get our add channel dialog

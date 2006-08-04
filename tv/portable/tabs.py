@@ -99,20 +99,20 @@ class Tab:
         """True if this Tab represents a Feed."""
         return isinstance(self.obj, feed.Feed)
 
+    def isGuide(self):
+        """True if this Tab represents a Feed."""
+        return isinstance(self.obj, guide.ChannelGuide)
+
     def feedURL(self):
-        """If this Tab represents a Feed, the feed's URL. Otherwise None."""
+        """If this Tab represents a Feed or a Guide, the URL. Otherwise None."""
         if self.isFeed() or self.isGuide():
             return self.obj.getURL()
         else:
             return None
 
-    def isGuide(self):
-        """True if this Tab represents a Feed."""
-        return isinstance(self.obj, guide.ChannelGuide)
-
-    def feedID(self):
+    def objID(self):
         """If this Tab represents a Feed, the feed's ID. Otherwise None."""
-        if self.isFeed():
+        if isinstance (self.obj, database.DDBObject):
             return self.obj.getID()
         else:
             return None

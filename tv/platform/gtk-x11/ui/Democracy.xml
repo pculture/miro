@@ -13,6 +13,8 @@
       <menuitem action="Fullscreen"/>
       <separator/>
       <menuitem action="EditPreferences"/>
+      <menuitem action="AddGuide"/>
+      <menuitem action="RemoveGuide"/>
       <separator/>
       <menuitem action="Quit"/>
     </menu>

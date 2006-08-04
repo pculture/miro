@@ -8,8 +8,5 @@
     <img class="icon" alt="" src="***this.obj.getIconURL()***" />
     <div class="name" t:replace="this.obj.getTitle()" />
 </a>
-<!--
-	<div class="channel_bar_divider" />
--->
 </body>
 </html>

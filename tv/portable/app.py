@@ -630,7 +630,7 @@ class Controller (frontend.Application):
     def checkTabByID(self, id):
         return self.checkTabUsingIndex(indexes.tabIDIndex, id)
 
-    # Select a tab given an object id (as opposed to an object id)
+    # Select a tab given an object id (as opposed to a tab id)
     # Returns the selected tab
     def checkTabByObjID(self, id):
         return self.checkTabUsingIndex(indexes.tabObjIDIndex, id)
@@ -730,6 +730,9 @@ class Controller (frontend.Application):
     # Called by Frontend via Application base class in response to OS request.
     def addAndSelectFeed(self, url, showTemplate = None):
         return GUIActionHandler().addFeed(url, showTemplate)
+
+    def addAndSelectGuide(self, url):
+        return GUIActionHandler().addGuide(url)
 
     ### Handling 'DTVAPI' events from the channel guide ###
 
@@ -958,7 +961,8 @@ class TemplateDisplay(frontend.HTMLDisplay):
                     return False
 
             # Let channel guide URLs pass through
-            if url.startswith(config.get(prefs.CHANNEL_GUIDE_URL)):
+            tab = controller.currentSelectedTab
+            if tab.isGuide() and url.startswith(tab.obj.getURL()):
                 return True
             if url.startswith('file://'):
                 if url.endswith ('.html'):
@@ -1042,9 +1046,18 @@ class ModelActionHandler:
             pass
 
     def removeCurrentFeed(self):
-        currentFeed = controller.currentSelectedTab.feedID()
-        if currentFeed:
-            self.removeFeed(currentFeed)
+        tab = controller.currentSelectedTab
+        if tab.isFeed():
+            currentFeed = tab.objID()
+            if currentFeed:
+                self.removeFeed(currentFeed)
+
+    def removeCurrentGuide(self):
+        tab = controller.currentSelectedTab
+        if tab.isGuide():
+            currentGuide = tab.objID()
+            if currentGuide:
+                self.removeGuide(currentGuide)
 
     def removeFeed(self, feed):
         try:
@@ -1056,6 +1069,22 @@ class ModelActionHandler:
             self.removeFeedWithDownloads(obj)
         else:
             self.removeFeedWithoutDownloads(obj)
+
+    def removeGuide(self, guide_id):
+        try:
+            obj = db.getObjectByID(int(guide_id))
+        except:
+            print "DTV: Warning: tried to remove guide that doesn't exist with id %d" % int(guide_id)
+            return
+        uguide = obj
+        title = _('Remove %s') % uguide.getTitle()
+        description = _("Are you sure you want to remove the guide %s?") % (uguide.getTitle(),)
+        dialog = dialogs.ChoiceDialog(title, description, 
+                dialogs.BUTTON_YES, dialogs.BUTTON_NO)
+        def dialogCallback(dialog):
+            if dialog.choice == dialogs.BUTTON_YES:
+                uguide.remove()
+        dialog.run(dialogCallback)
 
     def removeFeedWithoutDownloads(self, feed):
         title = _('Remove %s') % feed.getTitle()
@@ -1086,9 +1115,11 @@ downloaded?""")
         dialog.run(dialogCallback)
 
     def updateCurrentFeed(self):
-        currentFeed = controller.currentSelectedTab.feedID()
-        if currentFeed:
-            self.updateFeed(currentFeed)
+        tab = controller.currentSelectedTab
+        if tab.isFeed():
+            currentFeed = tab.objID()
+            if currentFeed:
+                self.updateFeed(currentFeed)
 
     def updateFeed(self, feed):
         obj = db.getObjectByID(int(feed))
@@ -1101,9 +1132,11 @@ downloaded?""")
             f.update()
 
     def copyCurrentFeedURL(self):
-        currentFeed = controller.currentSelectedTab.feedID()
-        if currentFeed:
-            self.copyFeedURL(currentFeed)
+        tab = controller.currentSelectedTab
+        if tab.isFeed():
+            currentFeed = tab.objID()
+            if currentFeed:
+                self.copyFeedURL(currentFeed)
 
     def copyFeedURL(self, feed):
         obj = db.getObjectByID(int(feed))
@@ -1226,8 +1259,11 @@ class GUIActionHandler:
     def _getFeed(self, url):
         return views.feeds.getItemWithIndex(indexes.feedsByURL, url)
 
-    def _selectFeedByObject (self, myFeed):
-        controller.checkTabByObjID(myFeed.getID())
+    def _getGuide(self, url):
+        return views.guides.getItemWithIndex(indexes.guidesByURL, url)
+
+    def _selectTabByObject (self, obj):
+        controller.checkTabByObjID(obj.getID())
         controller.checkSelectedTab()
         
     # NEEDS: name should change to addAndSelectFeed; then we should create
@@ -1246,7 +1282,7 @@ Please double check and try again."""
             myFeed = feed.Feed(url)
 
         if selected == '1':
-            self._selectFeedByObject (myFeed)
+            self._selectTabByObject (myFeed)
 
     def selectFeed(self, url):
         url = feed.normalizeFeedURL(url)
@@ -1256,7 +1292,23 @@ Please double check and try again."""
         if myFeed is None:
             print "selectFeed: no such feed: %s" % url
             return
-        self._selectFeedByObject (myFeed)
+        self._selectTabByObject (myFeed)
+        
+    def addGuide(self, url, selected = '1'):
+        url = feed.normalizeFeedURL(url)
+        if not feed.validateFeedURL(url):
+            title = "Invalid URL"
+            message = """The address you entered is not a valid URL. \
+Please double check and try again."""
+            dialogs.MessageBoxDialog(title, message).run()
+            return
+        db.confirmDBThread()
+        myGuide = self._getGuide (url)
+        if myGuide is None:
+            myGuide = guide.ChannelGuide(url)
+
+        if selected == '1':
+            self._selectTabByObject (myGuide)
 
     # Following for testing/debugging
 
@@ -1307,7 +1359,7 @@ class TemplateActionHandler:
 
             if mode == 'template':
                 if location == 'guide':
-                    baseURL = config.get(prefs.CHANNEL_GUIDE_URL)
+                    baseURL = guide.getURL()
                 else:
                     baseURL = None
                 self.switchTemplate(location, baseURL=baseURL)

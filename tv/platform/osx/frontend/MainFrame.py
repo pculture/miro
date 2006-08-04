@@ -250,9 +250,9 @@ class MainController (NibClassBuilder.AutoBaseClass):
         dlog.run(validationCallback)
 
     def removeChannel_(self, sender):
-        feedID = app.controller.currentSelectedTab.feedID()
-        if feedID is not None:
-            eventloop.addUrgentCall(lambda:app.ModelActionHandler(app.delegate).removeFeed(feedID), "Remove channel")
+        objID = app.controller.currentSelectedTab.objID()
+        if app.controller.currentSelectedTab.isFeed() and objID is not None:
+            eventloop.addUrgentCall(lambda:app.ModelActionHandler(app.delegate).removeFeed(objID), "Remove channel")
 
     def copyChannelLink_(self, sender):
         pb = NSPasteboard.generalPasteboard()
@@ -263,9 +263,9 @@ class MainController (NibClassBuilder.AutoBaseClass):
         feedURL.writeToPasteboard_(pb)
 
     def updateChannel_(self, sender):
-        feedID = app.controller.currentSelectedTab.feedID()
-        if feedID is not None:
-            eventloop.addUrgentCall(lambda:app.ModelActionHandler(app.delegate).updateFeed(feedID), "Update channel")
+        objID = app.controller.currentSelectedTab.objID()
+        if app.controller.currentSelectedTab.isFeed() and objID is not None:
+            eventloop.addUrgentCall(lambda:app.ModelActionHandler(app.delegate).updateFeed(objID), "Update channel")
 
     def updateAllChannels_(self, sender):
         eventloop.addUrgentCall(lambda:app.ModelActionHandler(app.delegate).updateAllFeeds(), "Update all channels")

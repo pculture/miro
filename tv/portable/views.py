@@ -47,6 +47,7 @@ allTabs.createIndex(indexes.tabObjIDIndex)
 
 #FIXME: These should just be globals
 guides = db.filterWithIndex(indexes.objectsByClass,guide.ChannelGuide)
+guides.createIndex(indexes.guidesByURL)
 default_guide = guides.filter(lambda x: x.getDefault())
 manualFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:manualFeed')
 directoryFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:directoryfeed')
