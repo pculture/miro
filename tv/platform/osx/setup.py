@@ -95,7 +95,6 @@ print "Building Democracy Player v%s (%s)" % (conf['appVersion'], conf['appRevis
 # Get a list of additional resource files to include
 
 resourceFiles = ['Resources/%s' % x for x in os.listdir('Resources')]
-resourceFiles += glob ('*.lproj')
 
 # And launch the setup process...
 
