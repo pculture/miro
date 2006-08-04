@@ -109,7 +109,7 @@ class SingletonTest(SanityTest):
 class ChannelGuideSingletonTest(SingletonTest):
     singletonName = "Channel Guide"
     def objectIsSingleton(self, obj):
-        return isinstance(obj, guide.ChannelGuide)
+        return isinstance(obj, guide.ChannelGuide) and obj.url is None
 
 class ManualFeedSingletonTest(SingletonTest):
     singletonName = "Manual Feed"
