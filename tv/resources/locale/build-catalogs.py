@@ -15,6 +15,15 @@ for dtd in glob.glob ("../../platform/windows-xul/xul/chrome/locale/en-US/*.dtd"
 # Let's use xgettext for this since it supports string tables.
 langs = (("fr", "French"),
          ("es", "Spanish"),
+         ("de", "German"),
+         ("it", "Italian"),
+         ("pt", "Portuguese"),
+         ("da", "Danish"),
+         ("eu", "Basque"),
+         ("ka", "Georgian"),
+         ("nb", "Norwegian"),
+         ("pl", "Polish"),
+         ("ro", "Romanian"),
          )
 for lang in langs:
     try:
