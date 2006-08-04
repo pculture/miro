@@ -185,11 +185,20 @@ mozilla_browser_options = parsePkgConfig("pkg-config" ,
         "gtk+-2.0 glib-2.0 pygtk-2.0 %s %s" % (gtkmozembed, xpcom))
 mozilla_lib_path = parsePkgConfig('pkg-config', 
         '%s' % gtkmozembed)['library_dirs']
-# hack to get #include <nsIDOMElementCSSInlineStyle.h> to work.
-# For mozilla 1.7, this file is in the dom/ subdirectory, but for xulrunner ,
-# it's in the top level.
+# Find the base mozilla directory, and add the subdirs we need.
+def allIsDir(directory, subdirs):
+    for subdir in subdirs:
+        if not os.path.isdir(os.path.join(directory, subdir)):
+            return False
+    return True
 xpcom_includes = parsePkgConfig("pkg-config", xpcom)
-mozIncludeBase = os.path.commonprefix(xpcom_includes['include_dirs'])
+subdirs = ['dom', 'gfx', 'widget', 'commandhandler']
+mozIncludeBase = None
+for dir in xpcom_includes['include_dirs']:
+    if allIsDir(dir, subdirs):
+        mozIncludeBase = dir
+if mozIncludeBase is None:
+    raise ValueError("Can't find mozilla include base directory")
 for subdir in ['dom', 'gfx', 'widget', 'commandhandler']:
     path = os.path.join(mozIncludeBase, subdir)
     mozilla_browser_options['include_dirs'].append(path)
