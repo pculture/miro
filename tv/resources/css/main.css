@@ -6,6 +6,10 @@ body {
     color: #333333;
 }
 
+.draggable {
+    -khtml-user-drag: element;
+}
+
 .clearer {
     clear: both;
     height: 0px;

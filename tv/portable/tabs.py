@@ -75,17 +75,6 @@ class Tab:
         self.display = app.TemplateDisplay(templateNameHint or self.contentsTemplate, frameHint=frame, areaHint=frame.mainDisplay)
         frame.selectDisplay(self.display, frame.mainDisplay)
 
-    def markup(self):
-        """Get HTML giving the visual appearance of the tab. 'state' is
-        one of 'selected' (tab is currently selected), 'normal' (tab is
-        not selected), or 'selected-inactive' (tab is selected but
-        setTabListActive was called with a false value on the MainFrame
-        for which the tab is being rendered.) The HTML should be returned
-        as a xml.dom.minidom element or document fragment."""
-        state = app.controller.getTabState(self.id)
-        file = "%s-%s" % (self.tabTemplateBase, state)
-        return template.fillStaticTemplate(file)
-
     # Returns "normal" "selected" or "selected-inactive"
     def getState(self):
         return  app.controller.getTabState(self.id)

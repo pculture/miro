@@ -149,6 +149,9 @@ class HTMLDisplay (app.Display):
     def getDTVPlatformName(self):
         return 'xul'
 
+    def getBodyTagExtra(self):
+        return ''
+
     def onURLLoad(self, url):
         """Called when this HTML browser attempts to load a URL (either
         through user action or Javascript.) The URL is provided as a

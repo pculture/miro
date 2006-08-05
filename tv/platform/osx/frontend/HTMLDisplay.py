@@ -46,6 +46,8 @@ class HTMLDisplay (app.Display):
         return ''
     def getDTVPlatformName(self):
         return 'webkit'
+    def getBodyTagExtra(self):
+        return 'ondragstart="handleDragStart(event);" ondragover="return handleDragOver(event);" ondragleave="return handleDragLeave(event);" ondrop="return handleDrop(event);" '
 
     def getView(self):
         return self.web.getView()

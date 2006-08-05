@@ -99,6 +99,9 @@ def genUpdateHideOnView(varname, tid, prefix, args):
         out, prefix, repr(nodeId), viewName)
     return out
 
+def genInsertBodyTagExtra(varname, tid, prefix, args):
+    return '%s%s.write(" " + bodyTagExtra)\n' % (prefix, varname)
+
 from xml import sax
 from xhtmltools import toUTF8Bytes
 from cStringIO import StringIO
@@ -272,7 +275,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         fileobj.write('import resource\n')
         fileobj.write('import gtcache\n')
         fileobj.write('_ = gtcache.gettext\n')
-        fileobj.write('def fillTemplate(domHandler, dtvPlatform, eventCookie, *args, **kargs):\n')
+        fileobj.write('def fillTemplate(domHandler, dtvPlatform, eventCookie, bodyTagExtra, *args, **kargs):\n')
         self.handle.render(fileobj)
         fileobj.write('\n\n    out = StringIO()\n')
         
@@ -577,6 +580,8 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             if (not (key.startswith('t:') or key.startswith('i18n:')) or
                     key == 't:contextMenu'):
                 self.addAttr(key,attrs[key])
+        if name.lower() == 'body':
+	    self.addInstruction(genInsertBodyTagExtra, None)
         if addId:
             self.addIdAndClose()
         else:

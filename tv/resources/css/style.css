@@ -29,6 +29,10 @@ body {
     -moz-user-select: none;
     cursor: default;
 }
+ 
+.draggable {
+    -khtml-user-drag: element;
+}
 
 
 /*/////////////////////////////////////////////

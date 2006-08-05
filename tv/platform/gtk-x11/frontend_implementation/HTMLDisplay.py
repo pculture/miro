@@ -99,6 +99,9 @@ class HTMLDisplay(app.Display):
     def getDTVPlatformName(self):
         return 'gtk-x11-MozillaBrowser'
 
+    def getBodyTagExtra(self):
+        return ''
+
     def onURLLoad (self, url):
         # For overriding
         return True

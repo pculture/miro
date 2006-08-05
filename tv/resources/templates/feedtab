@@ -5,7 +5,7 @@
 </head>
 <body>
 <!-- Normal -->
-<a class="feeditem @@@this.getState()@@@">
+<a class="feeditem @@@this.getState()@@@ draggable noselect">
 
 <div t:showIf="this.obj.showA()" class="left-bubble blue">
  <div class="right-bubble blue">

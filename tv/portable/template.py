@@ -26,27 +26,27 @@ if os.environ.has_key('DEMOCRACY_RECOMPILE_TEMPLATES'):
 # from filling the template, and a "template handle" whose
 # unlinkTemplate() method you should call when you no longer want to
 # receive Javascript callbacks.
-def fillTemplate(filename, domHandler, platform, eventCookie, top = True, onlyBody = False, *args, **kargs):
+def fillTemplate(filename, domHandler, platform, eventCookie, bodyTagExtra, top = True, onlyBody = False, *args, **kargs):
     # FIXME add support for "onlyBody"
     if os.environ.has_key('DEMOCRACY_RECOMPILE_TEMPLATES'):
         (tcc, handle) = template_compiler.compileTemplate(filename)
         exec tcc.getOutput() in locals()
-        return fillTemplate(domHandler, platform, eventCookie, *args, **kargs)
+        return fillTemplate(domHandler, platform, eventCookie, bodyTagExtra, *args, **kargs)
     else:
         filename = filename.replace('/','.').replace('\\','.').replace('-','_')
         components = filename.split('.')
         mod = __import__("compiled_templates.%s"%filename)
         for comp in components:
             mod = getattr(mod,comp)
-        return mod.fillTemplate(domHandler, platform, eventCookie, *args, **kargs)
+        return mod.fillTemplate(domHandler, platform, eventCookie, bodyTagExtra, *args, **kargs)
 
 # As fillTemplate, but no Javascript calls are made, and no template
 # handle is returned, only the HTML or XML as a string. Effectively,
 # you get a static snapshot of the page at the time the call is made.
-def fillStaticTemplate(filename, platform, eventCookie, *args, **kargs):
+def fillStaticTemplate(filename, platform, eventCookie, bodyTagExtra, *args, **kargs):
     # FIXME add support for "onlyBody" parameter. See item.py for an
     # example of how we're working around not having that.
-    (tch, handle) = fillTemplate(filename, None, platform, eventCookie, *args, **kargs)
+    (tch, handle) = fillTemplate(filename, None, platform, eventCookie, bodyTagExtra, *args, **kargs)
     handle.unlinkTemplate()
     return tch.read()
 

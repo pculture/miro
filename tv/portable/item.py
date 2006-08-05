@@ -171,7 +171,7 @@ class Item(DDBObject):
     # _itemXML is the rendered XML
     def _calcItemXML(self):
         self._XMLViewName = "view%dview" % random.randint(9999999,99999999)
-        self._itemXML = HTMLPattern.match(template.fillStaticTemplate('download-item','unknown','noCookie', this=self, viewName = self._XMLViewName)).group(1)
+        self._itemXML = HTMLPattern.match(template.fillStaticTemplate('download-item','unknown','noCookie', '', this=self, viewName = self._XMLViewName)).group(1)
 
     #
     # Returns True iff this item has never been viewed in the interface

@@ -21,7 +21,7 @@ except:
 
 <body>
 
-<div class="main-video" dragsourcetype="item">
+<div class="main-video draggable" dragsourcetype="item" dragicon="video-tnail-***this.getID()***">
     <div class="main-video-hitbox">
         <a t:showIf="this.getState() in ('new', 'not-downloaded', 'expired')"
             class="download-icon" href="#" 
@@ -38,7 +38,7 @@ except:
             title="Play '***this.getTitle()***'" 
             onclick="return eventURL('action:playViewNamed?viewName=@@@viewName@@@&amp;firstItemId=@@@this.getID()@@@');" />
     </div>
-    <img class="main-video-tnail" src="***this.getThumbnail()***" alt="" />
+    <img class="main-video-tnail" src="***this.getThumbnail()***" alt="" id="video-tnail-***this.getID()***" />
 
     <div class="main-video-details">
         <div class="main-video-details-tasks">

@@ -11,6 +11,7 @@
     <link href="resource:css/main.css" rel="stylesheet" type="text/css" />
     <t:include filename="dynamic.js" />
     <t:include filename="settings.js" />
+    <script type="text/javascript" src="resource:templates/osxdnd.js" />
     <script type="text/javascript" src="resource:templates/shide.js" />
 
     <t:execOnLoad><![CDATA[
