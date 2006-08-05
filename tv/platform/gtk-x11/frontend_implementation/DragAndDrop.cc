@@ -24,6 +24,18 @@
 #include <stdio.h>
 #include <string.h>
 
+
+PRInt32 stringToDragAction(const nsAString &str) {
+    nsCAutoString cstr = NS_ConvertUTF16toUTF8(str);
+    if(cstr.Equals("move")) return nsIDragService::DRAGDROP_ACTION_MOVE;
+    if(cstr.Equals("copy")) return nsIDragService::DRAGDROP_ACTION_COPY;
+    if(cstr.Equals("link")) return nsIDragService::DRAGDROP_ACTION_LINK;
+    printf("WARNING: bad dragEffect string: %s\n", 
+            PromiseFlatCString(cstr).get());
+    return nsIDragService::DRAGDROP_ACTION_NONE;
+}
+
+
 nsresult getDragData(nsIDOMElement* element, nsISupportsArray *dragArray) {
     // Create a transferable
     nsresult rv;
@@ -206,7 +218,15 @@ public:
             rv = isDragTypeSupported(dragDestType, &supported, &singleDragType);
             if(NS_FAILED(rv)) return rv;
             if(supported) {
+                nsAutoString dragEffectStr = NS_ConvertUTF8toUTF16(
+                        nsDependentCString("drageffect"));
+                dragEffectStr.Append(singleDragType);
+                nsAutoString dragEffect;
+                rv = element->GetAttribute(dragEffectStr, dragEffect);
+                if(NS_FAILED(rv)) return rv;
                 *retval = true;
+                rv = session->SetDragAction(stringToDragAction(dragEffect));
+                if(NS_FAILED(rv)) return rv;
                 rv = setNewHighlight(element, singleDragType);
                 if(NS_FAILED(rv)) return rv;
             }
