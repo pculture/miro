@@ -963,7 +963,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
             # Let channel guide URLs pass through
             tab = controller.currentSelectedTab
-            if tab.isGuide() and url.startswith(tab.obj.getURL()):
+            if tab and tab.isGuide() and url.startswith(tab.obj.getURL()):
                 return True
             if url.startswith('file://'):
                 if url.endswith ('.html'):
