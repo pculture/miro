@@ -11,6 +11,13 @@ function writelog(str) {
 }
 
 
+function getDragAction(effect) {
+  if(effect == "copy") return nsIDragService.DRAGDROP_ACTION_COPY;
+  if(effect == "move") return nsIDragService.DRAGDROP_ACTION_MOVE;
+  if(effect == "link") return nsIDragService.DRAGDROP_ACTION_LINK;
+  return nsIDragService.DRAGDROP_ACTION_NONE;
+}
+
 function getDragData(element) {
   var dragSourceType = element.getAttribute("dragsourcetype") 
   var mimeType = "application/x-democracy-" + dragSourceType + "-drag";
@@ -83,6 +90,8 @@ function onDragOver(event, browser) {
   if(elt) {
     var dragDestType = canElementSupportDrag(elt, dragSession);
     if(dragDestType) {
+      var dragEffect = elt.getAttribute('drageffect' + dragDestType);
+      dragSession.dragAction = getDragAction(dragEffect);
       dragHighlight.setHightlight(elt, dragDestType);
       canDrop = true;
     } 
