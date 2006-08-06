@@ -2,9 +2,11 @@
     IBClasses = (
         {
             ACTIONS = {
+                addGuide = id; 
                 checkForUpdates = id; 
                 donate = id; 
                 openFile = id; 
+                removeGuide = id; 
                 showPreferencesWindow = id; 
                 shutdown = id; 
             }; 

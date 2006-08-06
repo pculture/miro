@@ -238,6 +238,18 @@ class AppController (NibClassBuilder.AutoBaseClass):
         prefController.retain()
         prefController.showWindow_(nil)
 
+    def addGuide_(self, sender):
+        # As discussed on the dev-list, this call (or any other one) should take 
+        # care of displaying the TextEntry dialog instead of using a platform
+        # specific one like it's currently done on gtk. Until this is the case,
+        # just bail...
+        
+        # eventloop.addIdle(lambda:app.controller.addAndSelectGuide(channel), "Add Guide")
+        pass
+
+    def removeGuide_(self, sender):
+        eventloop.addIdle(lambda:app.ModelActionHandler(app.delegate).removeCurrentGuide(), "Remove Guide")
+
     def openFile_(self, sender):
         openPanel = NSOpenPanel.openPanel()
         openPanel.setAllowsMultipleSelection_(YES)
@@ -268,8 +280,12 @@ class AppController (NibClassBuilder.AutoBaseClass):
         self.internalShutdown = True
         app.controller.quit()
 
-    itemsAlwaysAvailable = ('checkForUpdates:', 'showPreferencesWindow:', 'openFile:', 'shutdown:')
+    itemsAlwaysAvailable = ('checkForUpdates:', 'showPreferencesWindow:', 'addGuide:', 'openFile:', 'shutdown:')
     def validateMenuItem_(self, item):
-        return item.action() in self.itemsAlwaysAvailable
+        if item.action() == 'removeGuide:':
+            tab = app.controller.currentSelectedTab
+            return tab.isGuide() and not tab.obj.isDefault()
+        else:
+            return item.action() in self.itemsAlwaysAvailable
 
 ###############################################################################
