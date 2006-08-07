@@ -15,6 +15,11 @@ from threading import Thread
 
 from test.framework import DemocracyTestCase
 
+class SortableObject(database.DDBObject):
+    def __init__(self, value):
+        self.value = value
+        database.DDBObject.__init__(self)
+
 class EmptyViewTestCase(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)
@@ -1067,8 +1072,44 @@ class MultiIndexTestCase(IndexFilterTestBase):
             self.assertEquals(self.addCallbacks, addCallbackGoal)
             self.assertEquals(self.removeCallbacks, removeCallbackGoal)
 
+class ReSortTestCase(DemocracyTestCase):
+    def setUp(self):
+        DemocracyTestCase.setUp(self)
+        self.everything = database.defaultDatabase
+        self.addCallbacks = 0
+        self.removeCallbacks = 0
+        self.changeCallbacks = 0
+        self.objlist = []
+        for x in range(0,10):
+            self.objlist.append(SortableObject(x))
+        self.filterFunc = lambda x:x.getID()%2 == 0
+        self.sorted = self.everything.sort(self.sortFunc, resort = True)
+        self.filted = self.sorted.filter(self.filterFunc)
+        self.mapped = self.filted.map(lambda x:x)
+        self.filted2 = self.mapped.filter(lambda x: True)
+
+    def sortFunc(self, x, y):
+        return cmp(x.value,y.value)
+
+    def testResort(self):
+        ff = self.filted2.getNext()
+        self.filted2.resetCursor()
+        for obj in self.sorted:
+            if self.filterFunc(obj):
+                self.assertEqual(obj, self.filted2.getNext())
+
+        self.filted2.resetCursor()
+        self.sorted.resetCursor()
+        ff.value = 100
+        ff.signalChange()
+        for obj in self.sorted:
+            if self.filterFunc(obj):
+                self.assertEqual(obj, self.filted2.getNext())
+                last = obj
+        self.assertEqual(last, ff)
+        
+
 #FIXME: Add test for explicitly recomputing sorts
-#FIXME: Add test for recomputing sorts on signalChange()
 #FIXME: Add test for unlink()
 
 if __name__ == "__main__":
