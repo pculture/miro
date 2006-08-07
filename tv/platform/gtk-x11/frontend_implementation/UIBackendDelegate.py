@@ -42,10 +42,12 @@ def BuildDialog (title, message, buttons, default):
     dialog.set_default_response (default)
     return dialog
 
-def BuildTextEntryDialog(title, message, buttons, default):
+def BuildTextEntryDialog(title, message, buttons, default, prefill):
     dialog = BuildDialog(title, message, buttons, default)
     dialog.entry = gtk.Entry()
     dialog.vbox.add(dialog.entry)
+    if prefill:
+        dialog.entry.set_text(prefill)
     dialog.entry.show()
     return dialog
 
@@ -146,8 +148,8 @@ def ShowHTTPAuthDialogAsync(title, description, prefillUser, prefillPassword,
     gtkDialog.show()
 
 @gtkAsyncMethod
-def ShowTextEntryDialogAsync(title, description, buttons, default, callback):
-    gtkDialog = BuildTextEntryDialog (title, description, buttons, default)
+def ShowTextEntryDialogAsync(title, description, buttons, default, prefill, callback):
+    gtkDialog = BuildTextEntryDialog (title, description, buttons, default, prefill)
     gtkDialog.connect("response", callback)
     gtkDialog.show()
 
@@ -239,7 +241,13 @@ class UIBackendDelegate:
                     dialog.runCallback (None)
                 gtkDialog.destroy()
 
-            ShowTextEntryDialogAsync (EscapeMessagePart(dialog.title), EscapeMessagePart(dialog.description), self.makeButtonTuple(dialog), default=0, callback = AsyncDialogResponse)
+            prefill = None
+            if dialog.prefillCallback:
+                prefill = dialog.prefillCallback()
+                if prefill == "":
+                    prefill = None
+
+            ShowTextEntryDialogAsync (EscapeMessagePart(dialog.title), EscapeMessagePart(dialog.description), self.makeButtonTuple(dialog), default=0, prefill=prefill, callback = AsyncDialogResponse)
         else:
             dialog.runCallback (None)
 
