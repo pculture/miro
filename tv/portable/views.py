@@ -61,4 +61,4 @@ manualDownloads = items.filter(filters.manualDownloads)
 autoDownloads = items.filter(filters.autoDownloads)
 
 playlists = db.filterWithIndex(indexes.objectsByClass, playlist.SavedPlaylist)
-playlists.createIndex(indexes.playlistsByItem, multiValued=True)
+
