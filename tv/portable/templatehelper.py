@@ -37,7 +37,12 @@ def toUni(orig):
     try:
         return _unicache[orig]
     except:
-        if type(orig) in (int, long):
+        if type(orig) is unicode:
+            # Let's not bother putting this in the cache.  Calculating
+            # it is very fast, and since this is a very common case,
+            # not caching here should help with memory usage.
+            return orig
+        elif type(orig) in (int, long):
             _unicache[orig] = "%d" % orig
         else:
             orig = toUTF8Bytes(orig)
