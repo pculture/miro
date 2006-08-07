@@ -267,6 +267,15 @@ class SortTestCase(DemocracyTestCase):
         self.assertEqual(b,self.y)
         self.assertNotEqual(a,b)
         self.assertEqual(c,None)
+    def testSignalChange(self):
+        self.higher = self.y
+        # normal signalChange doesn't recomput the sort
+        self.x.signalChange()
+        self.assertEqual(self.sorted[0],self.y)
+        self.assertEqual(self.sorted[1],self.x)
+        self.x.signalChange(resort=True)
+        self.assertEqual(self.sorted[0],self.x)
+        self.assertEqual(self.sorted[1],self.y)
 
 class MapViewTestCase(DemocracyTestCase):
     def setUp(self):
