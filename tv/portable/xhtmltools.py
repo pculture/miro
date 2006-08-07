@@ -124,21 +124,22 @@ def toUTF8Bytes(string, encoding=None):
     try:
         return _utf8cache[(string, encoding)]
     except:
+        result = None
         # If we got a Unicode string, half of our work is already done.
         if type(string) == unicode:
-            _utf8cache[(string, encoding)] = string.encode('utf-8')
+            result = string.encode('utf-8')
+        if result is None and encoding is not None:
+            # If we knew the encoding of the string, try that.
+            try:
+                result = string.decode(encoding).encode('utf-8')
+            except UnicodeDecodeError:
+                pass
+        if result is None:
+            # Encoding wasn't provided, or it was wrong. Interpret provided string
+            # liberally as a fixed defaultEncoding (see above.)
+            result = string.decode(defaultEncoding, 'replace').encode('utf-8')
 
-        # If we knew the encoding of the string, try that.
-        try:
-            if encoding is not None:
-                _utf8cache[(string, encoding)] = string.decode(encoding).encode('utf-8')
-        except UnicodeDecodeError:
-            # string is not really encoded in 'encoding'.
-            pass
-
-        # Encoding wasn't provided, or it was wrong. Interpret provided string
-        # liberally as a fixed defaultEncoding (see above.)
-        _utf8cache[(string, encoding)] = string.decode(defaultEncoding, 'replace').encode('utf-8')
+        _utf8cache[(string, encoding)] = result
         return _utf8cache[(string, encoding)]
 
 # Converts a Python dictionary to data suitable for a POST or GET submission
