@@ -6,7 +6,7 @@ import dialogs
 import database
 import indexes
 import views
-from databasehelper import makeSimpleGetSet
+from databasehelper import makeSimpleGetSet, TrackedIDList
 
 class SavedPlaylist(database.DDBObject):
     """An ordered list of videos that the user has saved.
@@ -20,31 +20,39 @@ class SavedPlaylist(database.DDBObject):
         self.title = title
         self.expanded = expanded
         if items is not None:
-            self.items = items
+            self.item_ids = [i.getID() for i in items]
         else:
-            self.items = []
+            self.item_ids = []
+        self.trackedItems = TrackedIDList(views.items, self.item_ids)
         database.DDBObject.__init__(self)
+
+    def onRestore(self):
+        self.trackedItems = TrackedIDList(views.items, self.item_ids)
 
     getTitle, setTitle = makeSimpleGetSet('title')
     getExpanded, setExpanded = makeSimpleGetSet('expanded')
 
     def getItems(self):
-        """Get a view containing all the items in this playlist."""
+        """Get the items in this playlist."""
         self.confirmDBThread()
-        return self.items
+        return [i for i in self.getView()]
+
+    def getView(self):
+        """Get a database view for this playlist."""
+        return self.trackedItems.view
 
     def addItem(self, item):
         """Add a new item to end of the playlist.  
         """
         self.confirmDBThread()
-        self.items.append(item)
+        self.trackedItems.appendID(item.getID())
         self.signalChange()
 
     def removeItem(self, item):
         """Remove an item from the playlist."""
 
         self.confirmDBThread()
-        self.items.remove(item)
+        self.trackedItems.removeID(item.getID())
         self.signalChange()
 
     def changeItemPosition(self, item, newPosition):
@@ -58,8 +66,7 @@ class SavedPlaylist(database.DDBObject):
         """
 
         self.confirmDBThread()
-        self.items.remove(item)
-        self.items.insert(newPosition, item)
+        self.trackedItems.moveID(item.getID(), newPosition)
         self.signalChange()
 
 def createNewPlaylist():

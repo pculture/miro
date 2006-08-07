@@ -665,8 +665,8 @@ class DynamicDatabase:
         tempmapped = temp[1]
 
         if self.resort:
-            newIt = self.objects.insertBefore(it, (tempobj, tempmapped))
             self.objects.remove(it)
+            newIt = self.objects.append((tempobj, tempmapped))
             self.objectLocs[tempid] = newIt
         
         if needsSave and self.liveStorage:

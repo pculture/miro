@@ -183,6 +183,16 @@ def upgrade14(objectList):
             changed.add(o)
     return changed
 
+def upgrade15(objectList):
+    """In the unlikely event that someone has a playlist around, change items
+    to item_ids."""
+    changed = set()
+    for o in objectList:
+        if o.classString == 'playlist':
+            o.savedData['item_ids'] = o.savedData['items']
+            changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

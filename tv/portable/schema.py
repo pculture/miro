@@ -351,7 +351,7 @@ class PlaylistSchema(DDBObjectSchema):
     fields = DDBObjectSchema.fields + [
         ('title', SchemaString()),
         ('expanded', SchemaBool()),
-        ('items', SchemaList(SchemaInt())),
+        ('item_ids', SchemaList(SchemaInt())),
     ]
 
 class ChannelGuideSchema(DDBObjectSchema):
@@ -363,7 +363,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('url', SchemaString(noneOk=True)),
     ]
 
-VERSION = 14
+VERSION = 15
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,
