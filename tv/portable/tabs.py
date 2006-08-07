@@ -5,6 +5,7 @@ import views
 import feed
 import resource
 import guide
+import playlist
 
 from xml.dom.minidom import parse
 from gtcache import gettext as _
@@ -91,6 +92,10 @@ class Tab:
     def isGuide(self):
         """True if this Tab represents a Feed."""
         return isinstance(self.obj, guide.ChannelGuide)
+
+    def isPlaylist(self):
+        """True if this Tab represents a Playlist."""
+        return isinstance(self.obj, playlist.SavedPlaylist)
 
     def feedURL(self):
         """If this Tab represents a Feed or a Guide, the URL. Otherwise None."""

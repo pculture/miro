@@ -10,6 +10,7 @@ import feed
 import prefs
 import config
 import dialogs
+import playlist
 import eventloop
 import platformutils
 
@@ -273,13 +274,13 @@ class MainController (NibClassBuilder.AutoBaseClass):
     def renameChannel_(self, sender):
         print "NOT IMPLEMENTED"
 
-    def createCollection_(self, sender):
+    def createPlaylist_(self, sender):
+        playlist.createNewPlaylist()
+
+    def deletePlaylist_(self, sender):
         print "NOT IMPLEMENTED"
 
-    def deleteCollection_(self, sender):
-        print "NOT IMPLEMENTED"
-
-    def sendCollectionToFriend_(self, sender):
+    def sendPlaylistToFriend_(self, sender):
         print "NOT IMPLEMENTED"
 
     def tellAFriend_(self, sender):
@@ -316,11 +317,11 @@ class MainController (NibClassBuilder.AutoBaseClass):
         message = u'In the meantime, please visit our homepage for our help FAQ: %s\n\nFor individual user support, please e-mail feedback@ppolitics.org.' % (config.get(prefs.PROJECT_URL), )
         dialogs.MessageBoxDialog(summary, message).run()
 
-    itemsAlwaysAvailable = ('addChannel:', 'showHelp:', 'updateAllChannels:')
+    itemsAlwaysAvailable = ('addChannel:', 'showHelp:', 'updateAllChannels:', 'createPlaylist:')
     selectedChannelItems = ('removeChannel:', 'copyChannelLink:', 'updateChannel:')
     def validateMenuItem_(self, item):
+        currentTab = app.controller.currentSelectedTab
         if item.action() in self.selectedChannelItems:
-            currentTab = app.controller.currentSelectedTab
             return currentTab is not None and currentTab.isFeed()
         elif item.action() == 'playPause:' or item.action() == 'playFullScreen:':
             display = self.frame.mainDisplay.hostedDisplay
@@ -333,6 +334,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
                 return NO
         elif item.action() == 'stopVideo:':
             return self.frame.mainDisplay.hostedDisplay is app.controller.videoDisplay
+        elif item.action() == 'deletePlaylist:':
+            return currentTab is not None and currentTab.isPlaylist()
         else:
             return item.action() in self.itemsAlwaysAvailable
 

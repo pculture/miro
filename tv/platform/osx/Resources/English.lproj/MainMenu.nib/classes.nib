@@ -20,8 +20,8 @@
                 addChannel = id; 
                 copyChannelLink = id; 
                 copyVideoLink = id; 
-                createCollection = id; 
-                deleteCollection = id; 
+                createPlaylist = id; 
+                deletePlaylist = id; 
                 deleteVideo = id; 
                 playFullScreen = id; 
                 playHalfScreen = id; 
@@ -29,7 +29,7 @@
                 removeChannel = id; 
                 renameChannel = id; 
                 saveVideo = id; 
-                sendCollectionToFriend = id; 
+                sendPlaylistToFriend = id; 
                 stopVideo = id; 
                 tellAFriend = id; 
                 updateAllChannels = id; 
