@@ -75,10 +75,11 @@ class Item(DDBObject):
         updateUandA(self.getFeed())
 
     def splitItem(self):
+        """returns True if it ran signalChange()"""
         if self.isContainerItem is not None:
-            return
+            return False
         if not isinstance (self, FileItem) and (self.downloader is None or not self.downloader.isFinished()):
-            return
+            return False
         filename_root = self.getFilename()
         if os.path.isdir(filename_root):
             import app
@@ -102,6 +103,7 @@ class Item(DDBObject):
             self.isContainerItem = False
             self.videoFilename = filename_root
         self.signalChange()
+        return True
 
     def updateReleaseDate(self):
         # This should be called whenever we get a new entry
@@ -145,9 +147,14 @@ class Item(DDBObject):
     # Unfortunately, our database does not scale well with many views,
     # so we have this hack to make sure that unwatched and available
     # get updated when an item changes
-    def signalChange(self, needsSave=True, needsUpdateUandA=True):
+    def signalChange(self, needsSave=True, needsUpdateUandA=True, needsUpdateXML=True):
         self._calcState()
         DDBObject.signalChange(self, needsSave=needsSave)
+        if needsUpdateXML:
+            try:
+                del self._itemXML
+            except:
+                pass
         if needsUpdateUandA:
             try:
                 # If the feed has been deleted, getFeed will throw an exception
@@ -391,14 +398,15 @@ class Item(DDBObject):
     # Marks the item as seen
     def markItemSeen(self):
         self.confirmDBThread()
-        self.seen = True
-        if self.watchedTime is None:
-            self.watchedTime = datetime.now()
-        if self.parent_id:
-            parent = self.getParent()
-            parent.childrenSeen = None
-            parent.signalChange()
-        self.signalChange()
+        if self.seen == False:
+            self.seen = True
+            if self.watchedTime is None:
+                self.watchedTime = datetime.now()
+            if self.parent_id:
+                parent = self.getParent()
+                parent.childrenSeen = None
+                parent.signalChange()
+            self.signalChange()
 
     def getRSSID(self):
         self.confirmDBThread()
@@ -406,8 +414,9 @@ class Item(DDBObject):
 
     def setAutoDownloaded(self,autodl = True):
         self.confirmDBThread()
-        self.autoDownloaded = autodl
-        self.signalChange()
+        if autodl != self.autoDownloaded:
+            self.autoDownloaded = autodl
+            self.signalChange()
 
     def getPendingReason(self):
         self.confirmDBThread()
@@ -946,10 +955,6 @@ class Item(DDBObject):
             self.iconCache.requestUpdate()
             self.updateReleaseDate()
             self._calcFirstEnc()
-            try:
-                del self._itemXML
-            except:
-                pass
         finally:
             self.signalChange(needsUpdateUandA = (UandA != self.getUandA()))
 
@@ -958,13 +963,14 @@ class Item(DDBObject):
 
         self.confirmDBThread()
         self.downloadedTime = datetime.now()
-        self.splitItem()
-        self.signalChange()
+        if not self.splitItem():
+            self.signalChange()
 
     def save(self):
         self.confirmDBThread()
-        self.keep = True
-        self.signalChange()
+        if self.keep != True:
+            self.keep = True
+            self.signalChange()
 
     ##
     # gets the time the video was downloaded
