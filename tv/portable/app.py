@@ -728,15 +728,15 @@ class Controller (frontend.Application):
     ### Handling events received from the OS (via our base class) ###
 
     # Called by Frontend via Application base class in response to OS request.
-    def addAndSelectFeed(self, url, showTemplate = None):
+    def addAndSelectFeed(self, url = None, showTemplate = None):
         return GUIActionHandler().addFeed(url, showTemplate)
 
-    def addAndSelectGuide(self, url):
+    def addAndSelectGuide(self, url = None):
         return GUIActionHandler().addGuide(url)
 
     ### Handling 'DTVAPI' events from the channel guide ###
 
-    def addFeed(self, url):
+    def addFeed(self, url = None):
         return GUIActionHandler().addFeed(url, selected = None)
 
     def selectFeed(self, url):
@@ -1055,7 +1055,7 @@ class ModelActionHandler:
 
     def removeCurrentGuide(self):
         tab = controller.currentSelectedTab
-        if tab.isGuide() and not tab.obj.isDefault():
+        if tab.isGuide() and not tab.obj.getDefault():
             currentGuide = tab.objID()
             if currentGuide:
                 self.removeGuide(currentGuide)
@@ -1267,23 +1267,43 @@ class GUIActionHandler:
         controller.checkTabByObjID(obj.getID())
         controller.checkSelectedTab()
         
+    def addURL(self, title, message, callback, url = None):
+        def createDialog(ltitle, lmessage, prefill = None):
+            def prefillCallback():
+                if prefill:
+                    return prefill
+                else:
+                    return ""
+            dialog = dialogs.TextEntryDialog(ltitle, lmessage, dialogs.BUTTON_OK, dialogs.BUTTON_CANCEL, prefillCallback)
+            def callback(dialog):
+                if dialog.choice == dialogs.BUTTON_OK:
+                    doAdd(dialog.value)
+            dialog.run(callback)
+        def doAdd(url):
+            url = feed.normalizeFeedURL(url)
+            if not feed.validateFeedURL(url):
+                ltitle = title + _(" - Invalid URL")
+                lmessage = _("The address you entered is not a valid URL.\nPlease double check and try again.\n\n") + message
+                createDialog(ltitle, lmessage, url)
+                return
+            callback(url)
+        if url is None:
+            createDialog(title, message)
+        else:
+            doAdd(url)
+        
     # NEEDS: name should change to addAndSelectFeed; then we should create
     # a non-GUI addFeed to match removeFeed. (requires template updates)
-    def addFeed(self, url, showTemplate = None, selected = '1'):
-        url = feed.normalizeFeedURL(url)
-        if not feed.validateFeedURL(url):
-            title = "Invalid URL"
-            message = """The address you entered is not a valid URL. \
-Please double check and try again."""
-            dialogs.MessageBoxDialog(title, message).run()
-            return
-        db.confirmDBThread()
-        myFeed = self._getFeed (url)
-        if myFeed is None:
-            myFeed = feed.Feed(url)
-
-        if selected == '1':
-            self._selectTabByObject (myFeed)
+    def addFeed(self, url = None, showTemplate = None, selected = '1'):
+        def doAdd (url):
+            db.confirmDBThread()
+            myFeed = self._getFeed (url)
+            if myFeed is None:
+                myFeed = feed.Feed(url)
+    
+            if selected == '1':
+                self._selectTabByObject (myFeed)
+        self.addURL (_("Democracy - Add Channel"), _("Enter the URL of the channel to add"), doAdd, url)
 
     def selectFeed(self, url):
         url = feed.normalizeFeedURL(url)
@@ -1295,21 +1315,16 @@ Please double check and try again."""
             return
         self._selectTabByObject (myFeed)
         
-    def addGuide(self, url, selected = '1'):
-        url = feed.normalizeFeedURL(url)
-        if not feed.validateFeedURL(url):
-            title = "Invalid URL"
-            message = """The address you entered is not a valid URL. \
-Please double check and try again."""
-            dialogs.MessageBoxDialog(title, message).run()
-            return
-        db.confirmDBThread()
-        myGuide = self._getGuide (url)
-        if myGuide is None:
-            myGuide = guide.ChannelGuide(url)
-
-        if selected == '1':
-            self._selectTabByObject (myGuide)
+    def addGuide(self, url = None, selected = '1'):
+        def doAdd(url):
+            db.confirmDBThread()
+            myGuide = self._getGuide (url)
+            if myGuide is None:
+                myGuide = guide.ChannelGuide(url)
+    
+            if selected == '1':
+                self._selectTabByObject (myGuide)
+        self.addURL (_("Democracy - Add Channel Guide"), _("Enter the URL of the channel guide to add"), doAdd, url)
 
     # Following for testing/debugging
 

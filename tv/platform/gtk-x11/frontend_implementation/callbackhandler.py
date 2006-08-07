@@ -267,34 +267,10 @@ class CallbackHandler(object):
         eventloop.addIdle (lambda:app.ModelActionHandler(frontend.UIBackendDelegate()).copyCurrentFeedURL(), "Copy feed URL")
 
     def on_add_channel_button_clicked(self, event = None):
-        # get our add channel dialog
-        widgetTree = MainFrame.WidgetTree(resource.path('democracy.glade'), 'add-channel-dialog', 'democracyplayer')
-        dialog = widgetTree['add-channel-dialog']
-        mainWindow = self.mainFrame.widgetTree['main-window']
-        dialog.set_transient_for(mainWindow)
-        # run the dialog
-        response = dialog.run()
-
-        if response == gtk.RESPONSE_OK:
-            channel = widgetTree['add-channel-entry'].get_text()
-            eventloop.addIdle(lambda:app.controller.addAndSelectFeed(channel), "Add Channel")
-
-        dialog.destroy()
+        eventloop.addIdle(lambda:app.controller.addAndSelectFeed(), "Add Channel")
 
     def on_add_guide_button_clicked(self, event = None):
-        # get our add channel dialog
-        widgetTree = MainFrame.WidgetTree(resource.path('democracy.glade'), 'add-guide-dialog', 'democracyplayer')
-        dialog = widgetTree['add-guide-dialog']
-        mainWindow = self.mainFrame.widgetTree['main-window']
-        dialog.set_transient_for(mainWindow)
-        # run the dialog
-        response = dialog.run()
-
-        if response == gtk.RESPONSE_OK:
-            channel = widgetTree['add-guide-entry'].get_text()
-            eventloop.addIdle(lambda:app.controller.addAndSelectGuide(channel), "Add Guide")
-
-        dialog.destroy()
+        eventloop.addIdle(lambda:app.controller.addAndSelectGuide(), "Add Guide")
 
     def on_remove_guide_activate(self, event = None):
         eventloop.addIdle (lambda:app.ModelActionHandler(frontend.UIBackendDelegate()).removeCurrentGuide(), "Remove Guide")
