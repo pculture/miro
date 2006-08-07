@@ -8,46 +8,25 @@ def _compare(x, y):
     return 0
 
 def item(x,y):
-    if x.parent_id == y.id:
-        # y is x's parent
-        return 1
-    elif y.parent_id == x.id:
-        # x is y's parent
-        return -1
-    elif x.parent_id is None or x.parent_id != y.parent_id:
-        # x and y are not children of the same item, so sort by the parent (which might be the self)
-        x = x.getParent()
-        y = y.getParent()
-            
-    if x.releaseDateObj > y.releaseDateObj:
-        return -1
-    elif x.releaseDateObj < y.releaseDateObj:
-        return 1
-    elif x.linkNumber > y.linkNumber:
-        return -1
-    elif x.linkNumber < y.linkNumber:
-        return 1
-
-    # Since we're sorting Items and FileItems differently, one has to
-    # come before the other for this to be a proper sorting function.
-
-    elif x.__class__ is itemmod.Item and y.__class__ is itemmod.FileItem:
-        return -1
-    elif x.__class__ is itemmod.FileItem and y.__class__ is itemmod.Item:
-        return 1
-    elif x.__class__ is itemmod.FileItem and y.__class__ is itemmod.FileItem:
-        if x.getTitle() < y.getTitle():
-            return -1
-        elif x.getTitle() > y.getTitle():
-            return 1
+    if x.parent_id is y.parent_id:
+        out = cmp(y.releaseDateObj, x.releaseDateObj)
+        if out != 0: return out
+        if x.__class__ is itemmod.FileItem:
+            out = cmp (y.linkNumber, x.linkNumber)
+            if out != 0: return out
+            return cmp(x.getTitle(), y.getTitle)
         else:
-            return 0
-    elif x.id > y.id:
-        return -1
-    elif x.id < y.id:
-        return 1
+            return cmp(y.id, x.id)
     else:
-        return 0
+        if x.parent_id == y.id:
+            # y is x's parent
+            return 1
+        elif y.parent_id == x.id:
+            # x is y's parent
+            return -1
+        else:
+            # x and y are not children of the same item, so sort by the parent (which might be the self)
+            return item(x.getParent(), y.getParent())
 
 def alphabetical(x,y):
     if x.getTitle() < y.getTitle():
