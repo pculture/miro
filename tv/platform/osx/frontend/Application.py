@@ -239,13 +239,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         prefController.showWindow_(nil)
 
     def addGuide_(self, sender):
-        # As discussed on the dev-list, this call (or any other one) should take 
-        # care of displaying the TextEntry dialog instead of using a platform
-        # specific one like it's currently done on gtk. Until this is the case,
-        # just bail...
-        
-        # eventloop.addIdle(lambda:app.controller.addAndSelectGuide(channel), "Add Guide")
-        pass
+        eventloop.addIdle(lambda:app.controller.addAndSelectGuide(), "Add Guide")
 
     def removeGuide_(self, sender):
         eventloop.addIdle(lambda:app.ModelActionHandler(app.delegate).removeCurrentGuide(), "Remove Guide")
