@@ -11,12 +11,21 @@ def item(x,y):
     if x.parent_id is y.parent_id:
         out = cmp(y.releaseDateObj, x.releaseDateObj)
         if out != 0: return out
+        # If we're going to sort file items and non-file items
+        # differently, then one must precede the other or it won't be
+        # a valid sort.
         if x.__class__ is itemmod.FileItem:
-            return cmp(x.getTitle(), y.getTitle)
+            if y.__class__ is itemmod.FileItem:
+                return cmp(x.getTitle(), y.getTitle())
+            else:
+                return 1
         else:
-            out = cmp (y.linkNumber, x.linkNumber)
-            if out != 0: return out
-            return cmp(y.id, x.id)
+            if y.__class__ is not itemmod.FileItem:
+                out = cmp (y.linkNumber, x.linkNumber)
+                if out != 0: return out
+                return cmp(y.id, x.id)
+            else:
+                return -1
     else:
         if x.parent_id == y.id:
             # y is x's parent
