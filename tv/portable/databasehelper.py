@@ -1,5 +1,3 @@
-from itertools import izip, count
-
 # PyRex has no lambda, so we need this separated
 #
 # It takes in a Python style sort function that returns -1 for x<y, 0
