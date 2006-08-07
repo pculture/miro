@@ -273,7 +273,7 @@ class DynamicDatabase:
     # @param objects A list of object/mapped value pairs to create the
     # initial view
     # @param rootDB true iff this is not a subview of another DD. Should never be used outside of this class.
-    def __init__(self, objects = [], rootDB = True, sortFunc = None, filterFunc = None, mapFunc = None, cursorID = None, parent = None):
+    def __init__(self, objects = [], rootDB = True, sortFunc = None, filterFunc = None, mapFunc = None, cursorID = None, parent = None, resort = False):
         self.rootDB = rootDB
         self.cursor = None
         self.parent = parent
@@ -293,10 +293,10 @@ class DynamicDatabase:
         # other objects can see this object
         if sortFunc is not None:
             self.objects = SortedList(pysort2dbsort(sortFunc))
-            self.sorted = True
+            self.resort = resort
         else:
             self.objects = LinkedList()
-            self.sorted = False
+            self.resort = False
         for temp in objects:
             if filterFunc is None or filterFunc(temp[1]):
                 if mapFunc is not None:
@@ -499,14 +499,14 @@ class DynamicDatabase:
     ##
     # returns a View of the data filtered through a sort function
     # @param f comparision function to use for sorting
-    def sort(self, f):
+    def sort(self, f, resort = False):
         #assert(not self.rootDB) # Dude! Don't sort the entire DB! Are you crazy?
         self.confirmDBThread()
         try:
             curID = self.objects[self.cursor][0].id
         except:
             curID = None
-        new = DynamicDatabase(self.objects,False, sortFunc = f, cursorID = curID, parent = self)
+        new = DynamicDatabase(self.objects,False, sortFunc = f, cursorID = curID, parent = self, resort = resort)
         self.subSorts.append([new,f])
         return new
 
@@ -654,13 +654,12 @@ class DynamicDatabase:
 
     #
     # Removes the object from the database
-    def changeObj(self, obj, needsSave=True, resort=False):
+    def changeObj(self, obj, needsSave=True):
         changed = False
         self.confirmDBThread()
         if self.objectLocs.has_key(obj.id):
             changed = True
-            self.change(self.objectLocs[obj.id], needsSave=needsSave,
-                    resort=resort)
+            self.change(self.objectLocs[obj.id], needsSave=needsSave)
         return changed
 
     ##
@@ -731,7 +730,7 @@ class DynamicDatabase:
     #
     # Private function. Should only be called by DynmaicDatabase class members
     # @param item optional position of item to remove in place of cursor
-    def change(self, it = None, needsSave=True, resort=False):
+    def change(self, it = None, needsSave=True):
         self.confirmDBThread()
         if it is None:
             it = self.cursor
@@ -742,7 +741,7 @@ class DynamicDatabase:
         tempid = tempobj.id
         tempmapped = temp[1]
 
-        if self.sorted and resort:
+        if self.resort:
             newIt = self.objects.insertBefore(it, (tempobj, tempmapped))
             self.objects.remove(it)
             self.objectLocs[tempid] = newIt
@@ -753,16 +752,15 @@ class DynamicDatabase:
         for callback in self.changeCallbacks:
             callback(tempmapped,tempid)
         for [view, f] in self.subMaps:
-            view.changeObj(tempobj, needsSave=needsSave, resort=resort)
+            view.changeObj(tempobj, needsSave=needsSave)
         for [view, f] in self.subSorts:
-            view.changeObj(tempobj, needsSave=needsSave, resort=resort)
+            view.changeObj(tempobj, needsSave=needsSave)
         for [view, f] in self.subFilters:
             view.confirmDBThread()
             #view.checkObjLocs()
             if f(tempmapped):
                 if view.objectLocs.has_key(tempid):
-                    view.changeObj(tempobj, needsSave=needsSave,
-                            resort=resort)
+                    view.changeObj(tempobj, needsSave=needsSave)
                 else:
                     view.addBeforeCursor(tempobj, tempmapped)
             else:
@@ -1082,7 +1080,7 @@ class DDBObject:
 
     ##
     # Call this after you change the object
-    def signalChange(self, needsSave=True, resort=False):
+    def signalChange(self, needsSave=True):
         self.dd.confirmDBThread()
         self.checkConstraints()
         if not self.dd.idExists(self.id):
@@ -1092,7 +1090,7 @@ class DDBObject:
         self.dd.saveCursor()
         try:
             self.dd.resetCursor()
-            self.dd.changeObj(self, needsSave=needsSave, resort=resort)
+            self.dd.changeObj(self, needsSave=needsSave)
         finally:
             self.dd.restoreCursor()
 

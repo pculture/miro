@@ -269,11 +269,17 @@ class SortTestCase(DemocracyTestCase):
         self.assertEqual(c,None)
     def testSignalChange(self):
         self.higher = self.y
-        # normal signalChange doesn't recomput the sort
+        self.assertEqual(self.sorted[0],self.y)
+        self.assertEqual(self.sorted[1],self.x)
         self.x.signalChange()
         self.assertEqual(self.sorted[0],self.y)
         self.assertEqual(self.sorted[1],self.x)
-        self.x.signalChange(resort=True)
+    def testResort(self):
+        self.sorted = self.everything.sort(self.sortFunc, resort=True)
+        self.assertEqual(self.sorted[0],self.y)
+        self.assertEqual(self.sorted[1],self.x)
+        self.higher = self.y
+        self.x.signalChange()
         self.assertEqual(self.sorted[0],self.x)
         self.assertEqual(self.sorted[1],self.y)
 
