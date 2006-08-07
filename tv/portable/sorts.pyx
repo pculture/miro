@@ -12,10 +12,10 @@ def item(x,y):
         out = cmp(y.releaseDateObj, x.releaseDateObj)
         if out != 0: return out
         if x.__class__ is itemmod.FileItem:
-            out = cmp (y.linkNumber, x.linkNumber)
-            if out != 0: return out
             return cmp(x.getTitle(), y.getTitle)
         else:
+            out = cmp (y.linkNumber, x.linkNumber)
+            if out != 0: return out
             return cmp(y.id, x.id)
     else:
         if x.parent_id == y.id:
