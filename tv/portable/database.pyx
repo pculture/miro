@@ -111,8 +111,9 @@ class IndexMap:
     to efficently locate objects after their mapped value changes.
     """
 
-    def __init__(self, indexFunc, parentDB):
+    def __init__(self, indexFunc, parentDB, sortFunc = None):
         self.indexFunc = indexFunc
+        self.sortFunc = sortFunc
         self.parentDB = parentDB
         self.views = {} # maps index values -> view
         self.mappings = {} # maps object id -> index value
@@ -167,7 +168,7 @@ class IndexMap:
         try:
             view = self.views[indexValue]
         except KeyError:
-            view = DynamicDatabase([], False, parent=self.parentDB)
+            view = DynamicDatabase([], False, parent=self.parentDB, sortFunc = self.sortFunc, resort = True)
             self.views[indexValue] = view
         return view
 
@@ -244,7 +245,7 @@ class MultiIndexMap(IndexMap):
         try:
             view = self.views[indexValue]
         except KeyError:
-            view = DynamicDatabase([], False, parent=self.parentDB)
+            view = DynamicDatabase([], False, parent=self.parentDB, sortFunc = self.sortFunc, resort = True)
             self.views[indexValue] = view
         return view
 
@@ -1012,10 +1013,10 @@ class DynamicDatabase:
         except:
             return None
 
-    def createIndex(self, indexFunc, multiValued=False):
+    def createIndex(self, indexFunc, sortFunc = None, multiValued=False):
         self.confirmDBThread()
         if not multiValued:
-            indexMap = IndexMap(indexFunc, self)
+            indexMap = IndexMap(indexFunc, self, sortFunc = sortFunc)
         else:
             indexMap = MultiIndexMap(indexFunc, self)
         for obj, value in self.objects:

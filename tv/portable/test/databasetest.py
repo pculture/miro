@@ -856,6 +856,8 @@ class IndexFilterTest(IndexFilterTestBase):
         return (x.getID() + self.shift) % 10
     def mod100(self, x):
         return (x.getID() + self.shift) % 100
+    def sortIndexFunc(self, x, y):
+        return cmp(x.myValue, y.myValue)
     def sortFunc(self, x, y):
         x = x.getID()
         y = y.getID()
@@ -990,6 +992,56 @@ class IndexFilterTest(IndexFilterTestBase):
         assert ( (end-mid) - (mid-start) < (mid-start)/2)
         filtered = self.everything.filterWithIndex(self.mod100,0).sort(self.sortFunc)
         self.assertEqual(filtered.len(),100)
+    def testSortedIndex(self):
+        class IndexedObject(database.DDBObject):
+            def __init__(self, myValue):
+                self.myValue = myValue
+                database.DDBObject.__init__(self)
+        self.everything.createIndex(self.mod10,self.sortIndexFunc)
+        self.objects = []
+        for x in range(100):
+            self.objects.append(IndexedObject(x))
+
+        # Test basic sorting
+        filtered = self.everything.filterWithIndex(self.mod10,0)
+        self.assertEqual(filtered.len(), 10)
+        last = None
+        for obj in filtered:
+            if last is not None:
+                self.assert_(last.myValue < obj.myValue)
+            last = obj
+
+        # Test changing values without signaling
+        filtered[0].myValue = 1000
+        filtered[1].myValue = -1000
+
+        unordered = False
+        last = None
+        filtered.resetCursor()
+        for obj in filtered:
+            if last is not None:
+                if not (last.myValue < obj.myValue):
+                    unordered = True
+            last = obj
+        self.assert_(unordered)
+
+        # Test that things get re-ordered correctly on signalChange
+        filtered[0].signalChange()
+        filtered[1].signalChange()
+        last = None
+        filtered.resetCursor()
+        for obj in filtered:
+            if last is not None:
+                self.assert_(last.myValue < obj.myValue)
+            last = obj
+        # Test that a new filter on the index is sorted
+        filtered2 = self.everything.filterWithIndex(self.mod10,0)
+        self.assertEqual(filtered2.len(), 10)
+        last = None
+        for obj in filtered2:
+            if last is not None:
+                self.assert_(last.myValue < obj.myValue)
+            last = obj
 
 class MultiIndexed(database.DDBObject):
     def __init__(self, indexValues):
