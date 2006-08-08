@@ -1,3 +1,5 @@
+from itertools import count
+
 # PyRex has no lambda, so we need this separated
 #
 # It takes in a Python style sort function that returns -1 for x<y, 0
@@ -58,8 +60,9 @@ class TrackedIDList(object):
         self.positions = {}
         self.list = idList
         self.db = db
+        pos = count()
         for id in idList:
-            self.positions[id] = len(self.list)
+            self.positions[id] = pos.next()
             self.trackedIDs.add(id)
         self.view = db.filter(self.filter).sort(self.sort, resort=True)
 

@@ -37,6 +37,10 @@ class PlaylistTestCase(DemocracyTestCase):
         self.checkList(playlist, [self.i4, self.i1, self.i3, self.i2])
         playlist.addItem(self.i2)
         self.checkList(playlist, [self.i4, self.i1, self.i3, self.i2])
+        self.assert_(self.i1.keep)
+        self.assert_(self.i2.keep)
+        self.assert_(self.i3.keep)
+        self.assert_(self.i4.keep)
         playlist.moveItem(self.i2, 1)
         self.checkList(playlist, [self.i4, self.i2, self.i1, self.i3])
         playlist.moveItem(self.i3, 0)
@@ -52,5 +56,5 @@ class PlaylistTestCase(DemocracyTestCase):
         initialList = [self.i1, self.i2, self.i3]
         playlist = SavedPlaylist("rocketboom", initialList)
         self.assertEquals(playlist.getTitle(), 'rocketboom')
-        self.assertEquals(playlist.getItems(), initialList)
+        self.checkList(playlist, initialList)
         self.assertEquals(playlist.getExpanded(), False)

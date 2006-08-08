@@ -44,6 +44,8 @@ class SavedPlaylist(database.DDBObject):
     def addID(self, id):
         """Add a new item to end of the playlist.  """
         self.confirmDBThread()
+        item = views.items.getObjectByID(id)
+        item.save()
         if id not in self.trackedItems:
             self.trackedItems.appendID(id)
             self.signalChange()
