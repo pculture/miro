@@ -112,8 +112,38 @@ a.feeditem img.icon {
     float: left;
 }
 
-a.feeditem.drag-highlight {
-	background: #acf;
+.dnd-background-left  {
+    position: relative;
+    width: 100%;
+    height: 26px;
+}
+
+.dnd-background-mid  {
+    position: absolute;
+    left: 5px;
+    right: 5px;
+    height: 26px;
+    z-index: -1;
+}
+
+.dnd-background-right {
+    position: absolute;
+    width: 5px;
+    right: 0px;
+    height: 26px;
+    z-index: -1;
+}
+
+.drag-highlight.dnd-background-left {
+    background: url(../images/dnd-highlight-left.png) top left no-repeat;
+}
+
+.drag-highlight .dnd-background-mid {
+    background: url(../images/dnd-highlight-mid.png) top left repeat-x;
+}
+
+.drag-highlight .dnd-background-right {
+    background: url(../images/dnd-highlight-right.png) top right no-repeat;
 }
 
 a.feeditem div.name {
