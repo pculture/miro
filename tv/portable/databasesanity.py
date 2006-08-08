@@ -43,9 +43,9 @@ class PhontomFeedTest(SanityTest):
             if obj.feed_id is not None:
                 self.feedsInItems.add(obj.feed_id)
             if obj.parent_id is not None:
-                self.parentsInItems.add(obj.feed_id)
-            if obj.isContainerItem is None or obj.isContainerItem:
-                self.topLevelParents.add(obj.feed_id)
+                self.parentsInItems.add(obj.parent_id)
+            if obj.isContainerItem in (None, True):
+                self.topLevelParents.add(obj.id)
         elif isinstance(obj, feed.Feed):
             self.topLevelFeeds.add(obj.id)
 
