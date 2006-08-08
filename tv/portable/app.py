@@ -1282,8 +1282,8 @@ class GUIActionHandler:
                 if prefill:
                     return prefill
                 else:
-                    return ""
-            dialog = dialogs.TextEntryDialog(ltitle, lmessage, dialogs.BUTTON_OK, dialogs.BUTTON_CANCEL, prefillCallback)
+                    return None
+            dialog = dialogs.TextEntryDialog(ltitle, lmessage, dialogs.BUTTON_OK, dialogs.BUTTON_CANCEL, prefillCallback, fillWithClipboardURL=(prefill is None))
             def callback(dialog):
                 if dialog.choice == dialogs.BUTTON_OK:
                     doAdd(dialog.value)

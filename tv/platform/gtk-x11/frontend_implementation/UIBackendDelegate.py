@@ -10,6 +10,7 @@ import app
 import dialogs
 from gettext import gettext as _
 from gettext import ngettext
+import re
 
 import config
 import prefs
@@ -21,6 +22,42 @@ from frontend_implementation.gtk_queue import gtkAsyncMethod
 ###############################################################################
 
 dialogParent = None
+
+# Copied from feed.py and modified for edge cases.
+# URL validitation and normalization
+def validateFeedURL(url):
+    return re.match(r"^(http|https)://[^/]+/.*", url) is not None
+
+def normalizeFeedURL(url):
+    if url is None:
+        return url
+    # Valid URL are returned as-is
+    if validateFeedURL(url):
+        return url
+
+    originalURL = url
+    
+    # Check valid schemes with invalid separator
+    match = re.match(r"^(http|https):/*(.*)$", url)
+    if match is not None:
+        url = "%s://%s" % match.group(1,2)
+
+    # Replace invalid schemes by http
+    match = re.match(r"^(([A-Za-z]*):/*)*(.*)$", url)
+    if match.group(2) in ['feed', 'podcast', None]:
+        url = "http://%s" % match.group(3)
+    elif match.group(1) == 'feeds':
+        url = "https://%s" % match.group(3)
+
+    # Make sure there is a leading / character in the path
+    match = re.match(r"^(http|https)://[^/]*$", url)
+    if match is not None:
+        url = url + "/"
+
+    if not validateFeedURL(url):
+        return None
+    else:
+        return url
 
 def EscapeMessagePart(message_part):
     if '&' in message_part or '<' in message_part:
@@ -42,10 +79,25 @@ def BuildDialog (title, message, buttons, default):
     dialog.set_default_response (default)
     return dialog
 
-def BuildTextEntryDialog(title, message, buttons, default, prefill):
+def BuildTextEntryDialog(title, message, buttons, default, prefillCallback, fillWithClipboardURL):
     dialog = BuildDialog(title, message, buttons, default)
     dialog.entry = gtk.Entry()
     dialog.vbox.add(dialog.entry)
+    
+    prefill = None
+    if fillWithClipboardURL:
+        global clipboard
+        global primary
+        init_clipboard()
+        prefill = clipboard.wait_for_text()
+        prefill = normalizeFeedURL(prefill)
+        if prefill is None:
+            prefill = primary.wait_for_text()
+            prefill = normalizeFeedURL(prefill)
+    if prefill is None and prefillCallback:
+        prefill = prefillCallback()
+        if prefill == "":
+            prefill = None
     if prefill:
         dialog.entry.set_text(prefill)
     dialog.entry.show()
@@ -137,8 +189,8 @@ def ShowHTTPAuthDialogAsync(title, description, prefillUser, prefillPassword,
     gtkDialog.show()
 
 @gtkAsyncMethod
-def ShowTextEntryDialogAsync(title, description, buttons, default, prefill, callback):
-    gtkDialog = BuildTextEntryDialog (title, description, buttons, default, prefill)
+def ShowTextEntryDialogAsync(title, description, buttons, default, prefillCallback, fillWithClipboardURL, callback):
+    gtkDialog = BuildTextEntryDialog (title, description, buttons, default, prefillCallback, fillWithClipboardURL)
     gtkDialog.connect("response", callback)
     gtkDialog.show()
 
@@ -151,6 +203,14 @@ def pidIsRunning(pid):
 
 clipboard = None
 primary = None
+
+def init_clipboard ():
+    global clipboard
+    global primary
+    if clipboard is None:
+        clipboard = gtk.Clipboard(selection="CLIPBOARD")
+    if primary is None:
+        primary = gtk.Clipboard(selection="PRIMARY")
 
 class UIBackendDelegate:
 
@@ -230,13 +290,9 @@ class UIBackendDelegate:
                     dialog.runCallback (None)
                 gtkDialog.destroy()
 
-            prefill = None
-            if dialog.prefillCallback:
-                prefill = dialog.prefillCallback()
-                if prefill == "":
-                    prefill = None
-
-            ShowTextEntryDialogAsync (EscapeMessagePart(dialog.title), EscapeMessagePart(dialog.description), self.makeButtonTuple(dialog), default=0, prefill=prefill, callback = AsyncDialogResponse)
+            ShowTextEntryDialogAsync (EscapeMessagePart(dialog.title), EscapeMessagePart(dialog.description), self.makeButtonTuple(dialog), default=0,
+                                      prefillCallback=dialog.prefillCallback, fillWithClipboardURL=dialog.fillWithClipboardURL,
+                                      callback = AsyncDialogResponse)
         else:
             dialog.runCallback (None)
 
@@ -244,10 +300,7 @@ class UIBackendDelegate:
     def copyTextToClipboard(self, text):
         global clipboard
         global primary
-        if clipboard is None:
-            clipboard = gtk.Clipboard(selection="CLIPBOARD")
-        if primary is None:
-            primary = gtk.Clipboard(selection="PRIMARY")
+        init_clipboard()
         clipboard.set_text(text)
         primary.set_text(text)
 
