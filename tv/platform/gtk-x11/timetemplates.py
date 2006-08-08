@@ -110,7 +110,7 @@ def timeDownloadedItem():
         def __getitem__(self, key):
             return self.__dict__[key]
 
-    i = item.Item(f.getID(), FakeEntry())
+    i = item.Item(FakeEntry(), feed_id=f.getID())
     func = getSubtemplateRenderFunc('download-item', i)
     def render():
         func(i, 'arbitraryView', "arbitrary-tid")

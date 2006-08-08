@@ -53,7 +53,7 @@ def addTorrent(path, torrentInfohash):
             if i.downloader.getState() in ('paused', 'stopped'):
                 i.download()
             return
-    newItem = item.Item(manualFeed.getID(), item.getEntryForFile(path))
+    newItem = item.Item(item.getEntryForFile(path), feed_id=manualFeed.getID())
     newItem.download()
 
 def resetCommandLineView():
