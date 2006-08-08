@@ -11,7 +11,7 @@ def pysort2dbsort(func):
     return lambda x, y:func(x[1],y[1]) == -1
 
 
-def makeSimpleGetSet(attributeName):
+def makeSimpleGetSet(attributeName, changeNeedsSave=True):
     """Creates a simple DDBObject getter and setter for an attribute.
 
     This exists because for many DDBOBject attributes we have methods like the
@@ -32,7 +32,7 @@ def makeSimpleGetSet(attributeName):
     def setter(self, newValue):
         self.confirmDBThread()
         setattr(self, attributeName, newValue)
-        self.signalChange()
+        self.signalChange(needsSave=changeNeedsSave)
     return getter, setter
 
 class TrackedIDList(object):
@@ -56,11 +56,12 @@ class TrackedIDList(object):
 
         self.trackedIDs = set()
         self.positions = {}
-        for id in idList:
-            self.appendID(self, id)
-        self.view = db.filter(self.filter).sort(self.sort, resort=True)
         self.list = idList
         self.db = db
+        for id in idList:
+            self.positions[id] = len(self.list)
+            self.trackedIDs.add(id)
+        self.view = db.filter(self.filter).sort(self.sort, resort=True)
 
     def sort(self, a, b):
         return cmp(self.positions[a.getID()], self.positions[b.getID()])
@@ -71,13 +72,20 @@ class TrackedIDList(object):
     def _sendSignalChange(self, id):
         self.db.getObjectByID(id).signalChange(needsSave=False)
 
+    def __contains__(self, id):
+        return id in self.trackedIDs
+
     def appendID(self, id):
+        if id in self:
+            raise ValueError("%s is already being tracked" % id)
         self.positions[id] = len(self.list)
         self.trackedIDs.add(id)
         self.list.append(id)
         self._sendSignalChange(id)
 
     def insertID(self, pos, id):
+        if id in self:
+            raise ValueError("%s is already being tracked" % id)
         for id, oldPos in self.positions.items():
             if oldPos >= pos:
                 self.positions[id] += 1

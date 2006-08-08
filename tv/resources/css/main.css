@@ -280,6 +280,10 @@ div.scraping-content {
     top: 0px;
 }
 
+.main-video.selected {
+    background: #ffff44;
+}
+
 .main-video-tnail {
     position: absolute;
     left: 5px;

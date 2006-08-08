@@ -204,6 +204,29 @@ function forceRedisplay(elt) {
     r.insertNode(frag);
 }
 
+var handleMouseUp = false;
+
+function handleSelect(event) {
+    if(event.type == 'mousedown' &&
+       event.currentTarget.className.indexOf("selected") != -1) {
+       handleMouseUp = true;
+       return true;
+    }
+    if(event.type == 'mouseup') {
+      if(!handleMouseUp) return
+      else handleMouseUp = false;
+    }
+    var id = event.currentTarget.getAttribute("selectID");
+    var viewName = event.currentTarget.getAttribute("selectViewName");
+    var shiftKey = '0';
+    var ctrlKey = '0';
+    if(event.shiftKey) shiftKey = '1';
+    if(event.ctrlKey) ctrlKey = '1';
+    eventURL('action:handleSelect?viewName=' + viewName + '&id=' + id + 
+       '&shiftDown=' + shiftKey + '&ctrlDown=' + ctrlKey);
+    return true;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 

@@ -2,9 +2,9 @@
 
 from gtcache import gettext as _
 
+import app
 import dialogs
 import database
-import indexes
 import views
 from databasehelper import makeSimpleGetSet, TrackedIDList
 
@@ -41,21 +41,21 @@ class SavedPlaylist(database.DDBObject):
         """Get a database view for this playlist."""
         return self.trackedItems.view
 
-    def addItem(self, item):
-        """Add a new item to end of the playlist.  
-        """
+    def addID(self, id):
+        """Add a new item to end of the playlist.  """
         self.confirmDBThread()
-        self.trackedItems.appendID(item.getID())
-        self.signalChange()
+        if id not in self.trackedItems:
+            self.trackedItems.appendID(id)
+            self.signalChange()
 
-    def removeItem(self, item):
+    def removeID(self, id):
         """Remove an item from the playlist."""
 
         self.confirmDBThread()
-        self.trackedItems.removeID(item.getID())
+        self.trackedItems.removeID(id)
         self.signalChange()
 
-    def changeItemPosition(self, item, newPosition):
+    def moveID(self, id, newPosition):
         """Change the position of an item in the playlist.
 
         This method works the same as list.insert().  The item will be
@@ -66,8 +66,30 @@ class SavedPlaylist(database.DDBObject):
         """
 
         self.confirmDBThread()
-        self.trackedItems.moveID(item.getID(), newPosition)
+        self.trackedItems.moveID(id, newPosition)
         self.signalChange()
+
+
+    def addItem(self, item):
+        return self.addID(item.getID())
+
+    def removeItem(self, item):
+        return self.removeID(item.getID())
+
+    def moveItem(self, item, newPosition):
+        return self.moveID(item.getID(), newPosition)
+
+    def handleDrop(self):
+        """Called when something gets dropped onto this playlist."""
+
+        selection = app.controller.selection
+        selectionType = selection.getType()
+        if selectionType == 'item':
+            for id in selection.currentSelection:
+                self.addID(id)
+        else:
+            raise ValueError("can't drop type %s onto a playlist" %
+                    selectionType)
 
 def createNewPlaylist():
     """Start the new playlist creation process.  This should be called in

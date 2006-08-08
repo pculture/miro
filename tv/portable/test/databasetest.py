@@ -991,6 +991,87 @@ class IndexFilterTest(IndexFilterTestBase):
         filtered = self.everything.filterWithIndex(self.mod100,0).sort(self.sortFunc)
         self.assertEqual(filtered.len(),100)
 
+class MultiIndexed(database.DDBObject):
+    def __init__(self, indexValues):
+        self.indexValues = indexValues
+        database.DDBObject.__init__(self)
+def testMultiIndex(obj):
+    return obj.indexValues
+
+class MultiIndexTestCase(IndexFilterTestBase):
+    def setUp(self):
+        IndexFilterTestBase.setUp(self)
+        random.seed(12341234)
+        self.allObjects = []
+        self.objectsByValueCount = {}
+        for i in range(20):
+            self.newObject()
+        self.everything.createIndex(testMultiIndex, multiValued=True)
+
+    def genRandomValues(self):
+        values = set()
+        for i in xrange(random.randint(0, 4)):
+            values.add(random.randint(0, 10))
+        return list(values)
+
+    def newObject(self):
+        indexValues = self.genRandomValues()
+        obj = MultiIndexed(indexValues)
+        self.allObjects.append(obj)
+        try:
+            self.objectsByValueCount[len(indexValues)].append(obj)
+        except KeyError:
+            self.objectsByValueCount[len(indexValues)] = [obj]
+
+    def checkViews(self):
+        viewsShouldHave = {}
+        for obj in self.allObjects:
+            for value in obj.indexValues:
+                try:
+                    viewsShouldHave[value].add(obj)
+                except KeyError:
+                    viewsShouldHave[value] = set([obj])
+        for value, goal in viewsShouldHave.items():
+            filtered = self.everything.filterWithIndex(testMultiIndex, value)
+            reality = set([obj for obj in filtered])
+            self.assertEqual(goal, reality)
+
+    def testInitalViews(self):
+        self.checkViews()
+
+    def testRemove(self):
+        while self.allObjects:
+            obj = self.allObjects.pop()
+            obj.remove()
+            self.checkViews()
+
+    def testChange(self):
+        for obj in self.allObjects:
+            obj.indexValues = self.genRandomValues()
+            obj.signalChange(needsSave=False)
+            self.checkViews()
+
+    def testCallbacks(self):
+        filtered = self.everything.filterWithIndex(testMultiIndex, 0)
+        filtered.addAddCallback(self.addCallback)
+        filtered.addRemoveCallback(self.removeCallback)
+        filtered.addChangeCallback(self.changeCallback)
+        addCallbackGoal = removeCallbackGoal = changeCallbackGoal = 0
+        for obj in self.allObjects:
+            newValues = self.genRandomValues()
+            if 0 in newValues:
+                if 0 not in obj.indexValues:
+                    addCallbackGoal += 1
+                else:
+                    changeCallbackGoal += 1
+            elif 0 in obj.indexValues:
+                removeCallbackGoal += 1
+            obj.indexValues = newValues
+            obj.signalChange(needsSave=False)
+            self.assertEquals(self.changeCallbacks, changeCallbackGoal)
+            self.assertEquals(self.addCallbacks, addCallbackGoal)
+            self.assertEquals(self.removeCallbacks, removeCallbackGoal)
+
 class ReSortTestCase(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)

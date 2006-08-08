@@ -13,6 +13,7 @@ from feedparser import FeedParserDict
 
 from database import DDBObject, defaultDatabase, ObjectNotFoundError
 from database import DatabaseConstraintError
+from databasehelper import makeSimpleGetSet
 from iconcache import IconCache
 from templatehelper import escape
 import template
@@ -50,7 +51,6 @@ class Item(DDBObject):
         self.parent_id = parent_id
         self.isContainerItem = None
         self.seen = False
-        self.downloader = None
         self.autoDownloaded = False
         self.pendingManualDL = False
         self.downloadedTime = None
@@ -60,7 +60,6 @@ class Item(DDBObject):
         self.expired = False
         self.keep = False
         self.videoFilename = ""
-        self.childrenSeen = None
 
         self.iconCache = IconCache(self)
         
@@ -70,9 +69,29 @@ class Item(DDBObject):
         self.linkNumber = linkNumber
         self.creationTime = datetime.now()
         self.updateReleaseDate()
+        self._initRestore()
         DDBObject.__init__(self)
         self.splitItem()
         updateUandA(self.getFeed())
+
+    ##
+    # Called by pickle during serialization
+    def onRestore(self):
+        if (self.iconCache == None):
+            self.iconCache = IconCache (self)
+        else:
+            self.iconCache.dbItem = self
+            self.iconCache.requestUpdate()
+        self._initRestore()
+
+    def _initRestore(self):
+        """Common code shared between onRestore and __init__."""
+        self.selected = False
+        self.childrenSeen = None
+        self.downloader = None
+
+    getSelected, setSelected = makeSimpleGetSet('selected',
+            changeNeedsSave=False)
 
     def splitItem(self):
         """returns True if it ran signalChange()"""
@@ -339,6 +358,12 @@ class Item(DDBObject):
             return 'new', _('NEW')
         else:
             return '', ''
+
+    def getDragType(self):
+        if self.isDownloaded():
+            return 'downloadeditem'
+        else:
+            return ''
 
     def getStateCSSClass(self):
         """Get the CSS class to display our state string."""
@@ -1029,17 +1054,6 @@ class Item(DDBObject):
         # Do this here instead of onRestore in case the feed hasn't
         # been loaded yet.
         updateUandA(self.getFeed())
-
-    ##
-    # Called by pickle during serialization
-    def onRestore(self):
-        self.childrenSeen = None
-        if (self.iconCache == None):
-            self.iconCache = IconCache (self)
-        else:
-            self.iconCache.dbItem = self
-            self.iconCache.requestUpdate()
-        self.downloader = None
 
     def __str__(self):
         return "Item - %s" % self.getTitle()

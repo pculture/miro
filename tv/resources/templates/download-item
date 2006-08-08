@@ -21,7 +21,11 @@ except:
 
 <body>
 
-<div class="main-video draggable" dragsourcetype="item" dragicon="video-tnail-***this.getID()***">
+<div class="main-video draggable ***this.getSelected() and 'selected' or ''***" 
+	dragsourcetype="***this.getDragType()***" dragicon="video-tnail-***this.getID()***" 
+	selectID="***this.getID()***" selectViewName="@@@viewName@@@"
+	onmousedown="return handleSelect(event)"
+	onmouseup="return handleSelect(event)" >
     <div class="main-video-hitbox">
         <a t:showIf="this.getState() in ('new', 'not-downloaded', 'expired')"
             class="download-icon" href="#" 

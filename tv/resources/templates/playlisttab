@@ -5,8 +5,10 @@
 </head>
 <body>
 <!-- Normal -->
-<a class="feeditem @@@this.getState()@@@ noselect" dragdesttype="playlist:item"
-	dragdestdata="playlist-***this.obj.getID()***" drageffectitem="copy" drageffectplaylist="move">
+<a class="feeditem @@@this.getState()@@@ noselect" 
+	dragdesttype="playlist:downloadeditem"
+	dragdestdata="playlist-***this.obj.getID()***" 
+	drageffectdownloadeditem="copy" drageffectplaylist="move">
 <img class="icon" src="resource:images/playlist-icon-tablist.png" /><div class="name" t:replaceMarkup="this.obj.getTitle()" />
 </a>
 </body>

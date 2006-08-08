@@ -18,6 +18,7 @@ import tabs
 import folder
 import autodler
 import resource
+import selection
 import template
 import singleclick
 import storedatabase
@@ -563,6 +564,8 @@ class Controller (frontend.Application):
             # If we have newly available items, provide feedback
             self.updateAvailableItemsCountFeedback()
 
+            self.selection = selection.SelectionHandler(db)
+
             # NEEDS: our strategy above with addRemoveCallback doesn't
             # work. I'm not sure why, but it seems to have to do with the
             # reentrant call back into the database when checkSelectedTab ends 
@@ -821,6 +824,7 @@ class Controller (frontend.Application):
             print "Tab %s doesn't exist! Cannot select it." % str(id)
             return
 
+        self.selection.clearSelection()
         oldSelected = self.currentSelectedTab
         newSelected = cur
 
@@ -879,7 +883,12 @@ class Controller (frontend.Application):
             pass
 
     def handleDrop(self, dropData):
-        print "GOT DROP: ", dropData
+        if dropData.startswith("playlist-"):
+            id = int(dropData[len("playlist-"):])
+            playlist = db.getObjectByID(id)
+            playlist.handleDrop()
+        else:
+            print "Unknown drop data: ", dropData
 
 ###############################################################################
 #### TemplateDisplay: a HTML-template-driven right-hand display panel      ####
@@ -1429,6 +1438,12 @@ class TemplateActionHandler:
         if searchFeed is not None and searchDownloadsFeed is not None:
             searchFeed.preserveDownloads(searchDownloadsFeed)
             searchFeed.reset()
+
+    def handleSelect(self, viewName, id, shiftDown, ctrlDown):
+        shift = (shiftDown == '1')
+        ctrl = (ctrlDown == '1')
+        view = self.templateHandle.getTemplateVariable(viewName)
+        controller.selection.selectItem(view, int(id), shift, ctrl)
         
     def __getSearchFeeds(self):
         searchFeed = controller.getGlobalFeed('dtv:search')

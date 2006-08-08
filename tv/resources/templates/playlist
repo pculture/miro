@@ -8,15 +8,37 @@
     <title>Democracy Playlist View</title>
 
     <link href="resource:css/main.css" rel="stylesheet" type="text/css" />
+    <t:include filename="dynamic.js" />
     <t:execOnLoad><![CDATA[
 
 playlist = app.controller.currentSelectedTab.obj
-items = '[' + ' '.join([str(i) for i in playlist.getItems()]) + ']'
+playlistView = playlist.getView()
+thisPlaylistView = views.feeds.filter(lambda x: x is playlist)
 ]]>
     </t:execOnLoad>
 </head>
 <body>
-	<div t:replace="playlist.getTitle()" />
-	<div t:replace="items" />
+<!-- TITLE BAR ************************************************************ -->
+<div id="main-titlebar">
+        <img id="main-titlebar-avatar" src="resource:images/playlist-icon.png" alt="" />
+	<div id="main-titlebar-channelname">
+	    <div t:updateForView="thisPlaylistView">
+                <h1 t:replaceMarkup="playlist.getTitle()" />
+	    </div>
+        </div>
+        <div id="main-titlebar-tasks">
+                <div id="main-titlebar-tasks-search">
+                    <input type="search" placeholder="Search Channel" class="main-titlebar-tasks-search" onfocus="startEditSearch(this)" onblur="endEditSearch()" />
+                </div>
+        </div>
+</div>
+<!-- / TITLE BAR -->
+<!-- CHANNEL CONTAINER **************************************************** -->
+<div id="main-container">
+    <span t:repeatForView="playlistView">
+        <span t:replaceMarkup="this.getItemXML(viewName)" />
+    </span>
+</div>
+<!-- / CHANNEL ITEMS LIST -->
 </body>
 </html>
