@@ -14,7 +14,7 @@ from gettext import ngettext
 import config
 import prefs
 from frontend import *
-from frontend_implementation.gtk_queue import gtkSyncMethod, gtkAsyncMethod
+from frontend_implementation.gtk_queue import gtkAsyncMethod
 
 ###############################################################################
 #### 'Delegate' objects for asynchronously asking the user questions       ####
@@ -98,17 +98,6 @@ def BuildHTTPAuth(summary, message, prefillUser = None, prefillPassword = None):
     table.show_all()
     dialog.set_default_response (gtk.RESPONSE_OK)
     return dialog
-
-
-@gtkSyncMethod
-def ShowDialog (title, message, buttons, default = gtk.RESPONSE_CANCEL):
-    dialog = BuildDialog (title, message, buttons, default)
-    response = dialog.run()
-    dialog.destroy()
-    return response
-
-once_dialogs = {}
-
 
 @gtkAsyncMethod
 def ShowDialogAsync (title, message, buttons, default = gtk.RESPONSE_CANCEL, once=None, callback=None):
