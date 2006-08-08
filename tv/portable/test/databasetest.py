@@ -1082,32 +1082,46 @@ class ReSortTestCase(DemocracyTestCase):
         self.objlist = []
         for x in range(0,10):
             self.objlist.append(SortableObject(x))
-        self.filterFunc = lambda x:x.getID()%2 == 0
         self.sorted = self.everything.sort(self.sortFunc, resort = True)
-        self.filted = self.sorted.filter(self.filterFunc)
-        self.mapped = self.filted.map(lambda x:x)
-        self.filted2 = self.mapped.filter(lambda x: True)
+        self.sorted.addAddCallback(self.addCall)
+        self.sorted.addRemoveCallback(self.removeCall)
+        self.sorted.addChangeCallback(self.changeCall)
 
     def sortFunc(self, x, y):
         return cmp(x.value,y.value)
 
-    def testResort(self):
-        ff = self.filted2.getNext()
-        self.filted2.resetCursor()
-        for obj in self.sorted:
-            if self.filterFunc(obj):
-                self.assertEqual(obj, self.filted2.getNext())
-
-        self.filted2.resetCursor()
-        self.sorted.resetCursor()
-        ff.value = 100
-        ff.signalChange()
-        for obj in self.sorted:
-            if self.filterFunc(obj):
-                self.assertEqual(obj, self.filted2.getNext())
-                last = obj
-        self.assertEqual(last, ff)
+    def addCall(self, obj, id):
+        # We have a convention of setting the cursor after the object
+        self.assertEqual(self.sorted.getPrev().getID(),id)
         
+        self.addCallbacks += 1
+
+    def removeCall(self, obj, id):
+        self.removeCallbacks += 1
+
+    def changeCall(self, obj, id):
+        self.changeCallbacks += 1
+
+    def testResort(self):
+        self.sorted.resetCursor()
+        last = None
+        for obj in self.sorted:
+            if last is not None:
+                self.assert_(last.value < obj.value)
+            last = obj
+            
+        self.objlist[0].value = 100
+        self.objlist[0].signalChange()
+
+        self.sorted.resetCursor()
+        last = None
+        for obj in self.sorted:
+            if last is not None:
+                self.assert_(last.value < obj.value)
+            last = obj
+        self.assertEqual(self.addCallbacks, 1)
+        self.assertEqual(self.removeCallbacks, 1)
+        self.assertEqual(self.changeCallbacks, 0)
 
 #FIXME: Add test for explicitly recomputing sorts
 #FIXME: Add test for unlink()

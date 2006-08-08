@@ -732,6 +732,7 @@ class DynamicDatabase:
     # @param item optional position of item to remove in place of cursor
     def change(self, it = None, needsSave=True):
         self.confirmDBThread()
+        madeCallback = False
         if it is None:
             it = self.cursor
             if it is None:
@@ -740,17 +741,39 @@ class DynamicDatabase:
         tempobj = temp[0]
         tempid = tempobj.id
         tempmapped = temp[1]
-
-        if self.resort:
-            self.objects.remove(it)
-            newIt = self.objects.append((tempobj, tempmapped))
-            self.objectLocs[tempid] = newIt
         
         if needsSave and self.liveStorage:
             self.liveStorage.update (tempobj)
 
-        for callback in self.changeCallbacks:
-            callback(tempmapped,tempid)
+        if self.resort:
+            before = it.copy()
+            after = it.copy()
+            before.back()
+            after.forward()
+            self.objects.remove(it)
+            newIt = self.objects.insertBefore(after, (tempobj, tempmapped))
+            self.objectLocs[tempid] = newIt
+            newBefore = newIt.copy()
+            newAfter = newIt.copy()
+            newBefore.back()
+            newAfter.forward()
+            if before != newBefore or after != newAfter:
+                # Item Moved -- trigger remove and add callbacks
+                self.saveCursor()
+                try:
+                    self.cursor = newIt.copy()
+                    self.cursor.forward()
+                    for callback in self.removeCallbacks:
+                        callback(tempmapped, tempid)
+                    for callback in self.addCallbacks:
+                        callback(tempmapped,tempid)
+                finally:
+                    self.restoreCursor()
+                    madeCallback = True
+
+        if not madeCallback:
+            for callback in self.changeCallbacks:
+                callback(tempmapped,tempid)
         for [view, f] in self.subMaps:
             view.changeObj(tempobj, needsSave=needsSave)
         for [view, f] in self.subSorts:
