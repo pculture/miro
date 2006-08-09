@@ -13,6 +13,7 @@ import maps
 import util
 import feed
 import item
+import playlist
 import tabs
 
 import folder
@@ -1103,16 +1104,32 @@ class ModelActionHandler:
             if currentGuide:
                 self.removeGuide(currentGuide)
 
-    def removeFeed(self, feed):
+    def remove(self, id):
         try:
-            obj = db.getObjectByID(int(feed))
+            obj = db.getObjectByID(int(id))
         except:
-            print "DTV: Warning: tried to remove feed that doesn't exist with id %d" % int(feed)
+            print "Warning: tried to remove object that doesn't exist with id %d" % int(feed)
             return
-        if obj.hasDownloadedItems():
-            self.removeFeedWithDownloads(obj)
+        if isinstance(obj, feed.Feed):
+            if obj.hasDownloadedItems():
+                self.removeFeedWithDownloads(obj)
+            else:
+                self.removeFeedWithoutDownloads(obj)
+        elif isinstance(obj, playlist.SavedPlaylist):
+            obj.remove()
         else:
-            self.removeFeedWithoutDownloads(obj)
+            print "WARNING: Unknown object type in remove() %s" % type(obj)
+
+    def rename(self, id):
+        try:
+            obj = db.getObjectByID(int(id))
+        except:
+            print "Warning: tried to rename object that doesn't exist with id %d" % int(feed)
+            return
+        if isinstance(obj, playlist.SavedPlaylist):
+            obj.rename()
+        else:
+            print "WARNING: Unknown object type in remove() %s" % type(obj)
 
     def removeGuide(self, guide_id):
         try:

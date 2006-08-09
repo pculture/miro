@@ -32,13 +32,13 @@
       </li>
       <div class="tab-list-divider" />
       <li t:repeatForView="views.feedTabs" onmousedown="eventURL('action:selectTab?id=@@@this.id@@@')">
-          <span t:contextMenu="action:updateFeed?feed=@@@this.obj.getID()@@@|Update Channel Now\naction:copyFeedURL?feed=@@@this.obj.getID()@@@|Copy URL to clipboard\n\naction:removeFeed?feed=@@@this.obj.getID()@@@|Remove">
+          <span t:contextMenu="action:updateFeed?feed=@@@this.obj.getID()@@@|Update Channel Now\naction:copyFeedURL?feed=@@@this.obj.getID()@@@|Copy URL to clipboard\n\naction:remove?id=@@@this.obj.getID()@@@|Remove">
             <t:includeTemplate filename="feedtab" />
           </span>
       </li>
       <div class="tab-list-divider" />
       <li t:repeatForView="views.playlistTabs" onmousedown="eventURL('action:selectTab?id=@@@this.id@@@')">
-          <span t:contextMenu="action:updateFeed?feed=@@@this.obj.getID()@@@|Update Channel Now\n\naction:removeFeed?feed=@@@this.obj.getID()@@@|Remove">
+          <span t:contextMenu="action:rename?id=@@@this.obj.getID()@@@|Rename Playlist\n\naction:remove?id=@@@this.obj.getID()@@@|Remove">
             <t:includeTemplate filename="playlisttab" />
           </span>
       </li>

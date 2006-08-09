@@ -93,6 +93,7 @@ def BuildDialog (title, message, buttons, default):
 def BuildTextEntryDialog(title, message, buttons, default, prefillCallback, fillWithClipboardURL):
     dialog = BuildDialog(title, message, buttons, default)
     dialog.entry = gtk.Entry()
+    dialog.entry.set_activates_default(True)
     dialog.vbox.add(dialog.entry)
     
     prefill = None

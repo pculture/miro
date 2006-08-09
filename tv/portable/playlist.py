@@ -137,6 +137,16 @@ class SavedPlaylist(database.DDBObject):
                 self.trackedItems.appendID(id)
         self.signalChange()
 
+    def rename(self):
+        title = _("Rename Playlist")
+        description = _("Enter a new name for the playlist %s" % self.getTitle())
+
+        def callback(dialog):
+            if self.idExists() and dialog.choice == dialogs.BUTTON_OK:
+                self.setTitle(dialog.value)
+        dialogs.TextEntryDialog(title, description, dialogs.BUTTON_OK,
+                dialogs.BUTTON_CANCEL).run(callback)
+
 def createNewPlaylist():
     """Start the new playlist creation process.  This should be called in
     response to the user clicking on the new playlist menu option.
