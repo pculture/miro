@@ -11,6 +11,7 @@ import shutil
 import time
 import tempfile
 import storedatabase
+import fasttypes
 from threading import Thread
 
 from test.framework import DemocracyTestCase
@@ -1174,6 +1175,98 @@ class ReSortTestCase(DemocracyTestCase):
         self.assertEqual(self.addCallbacks, 1)
         self.assertEqual(self.removeCallbacks, 1)
         self.assertEqual(self.changeCallbacks, 0)
+
+class SortingFilterTestCase(DemocracyTestCase):
+    def setUp(self):
+        DemocracyTestCase.setUp(self)
+        self.everything = database.defaultDatabase
+        self.sortCalls = 0
+        self.objs = []
+
+    def sortFunc(self, x, y):
+        self.sortCalls += 1
+        return cmp(x.value,y.value)
+
+    def testSort(self):
+        sortView = self.everything.sort(self.sortFunc)
+        for x in range(2000):
+            a = SortableObject(2000)
+            self.objs.append(a)
+        initialSorts = self.sortCalls
+        self.sortCalls = 0
+        filtView = sortView.filter(lambda x:True,sortFunc=self.sortFunc)
+        filterSorts = self.sortCalls
+        self.sortCalls = 0
+
+        self.assertEqual(sortView.len(),filtView.len())
+        sortView.resetCursor()
+        filtView.resetCursor()
+        for obj in sortView:
+            self.assertEqual(obj,filtView.getNext())
+
+        self.objs[-1].value = -10
+        self.objs[-1].signalChange()
+        self.objs[-2].value = 0
+        self.objs[-2].signalChange()
+        self.assertEqual(self.sortCalls, 0)
+        sortView.unlink()
+        filtView.unlink()
+
+    def testResort(self):
+        sortView = self.everything.sort(self.sortFunc, resort = True)
+        for x in range(2000):
+            a = SortableObject(x)
+            self.objs.append(a)
+        initialSorts = self.sortCalls
+        self.sortCalls = 0
+        filtView = sortView.filter(lambda x:True,sortFunc=self.sortFunc,
+                                   resort=True)
+        filterSorts = self.sortCalls
+        self.sortCalls = 0
+
+        self.assertEqual(sortView.len(),filtView.len())
+        sortView.resetCursor()
+        filtView.resetCursor()
+        last = None
+        for obj in sortView:
+            self.assertEqual(obj,filtView.getNext())
+            if last != None:
+                self.assert_(obj.value >= last.value)
+            last = obj
+
+        self.objs[-1].value = -10
+        self.objs[-1].signalChange()
+        self.objs[-2].value = -1
+        self.objs[-2].signalChange()
+        self.assert_(self.sortCalls > 0)
+
+        sortView.resetCursor()
+        filtView.resetCursor()
+        last = None
+        for obj in sortView:
+            self.assertEqual(obj,filtView.getNext())
+            if last != None:
+                self.assert_(obj.value >= last.value)
+            last = obj
+        
+        sortView.unlink()
+        filtView.unlink()
+
+    def testPerformance(self):
+        sortView = self.everything.sort(self.sortFunc)
+        initialSorts = []
+        filterSorts = []
+        for n in [100, 900, 9100]:
+            for x in range(n):
+                a = SortableObject(n)
+                self.objs.append(a)
+            initialSorts.append(self.sortCalls)
+            self.sortCalls = 0
+            filtView = sortView.filter(lambda x:True,sortFunc=self.sortFunc)
+            filterSorts.append(self.sortCalls)
+            self.sortCalls = 0
+        self.assertEqual(filterSorts[0]/filterSorts[1], filterSorts[1]/filterSorts[2])
+
 
 #FIXME: Add test for explicitly recomputing sorts
 #FIXME: Add test for unlink()

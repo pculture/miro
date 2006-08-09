@@ -471,13 +471,13 @@ class DynamicDatabase:
     ##
     # returns a View of the data filtered through a boolean function
     # @param f boolean function to use as a filter
-    def filter(self, f):
+    def filter(self, f, sortFunc = None, resort = False):
         self.confirmDBThread()
         try:
             curID = self.objects[self.cursor][0].id
         except:
             curID = None
-        new = DynamicDatabase(self.objects,False,cursorID = curID, filterFunc = f, parent = self)
+        new = DynamicDatabase(self.objects,False,cursorID = curID, filterFunc = f, parent = self, sortFunc = sortFunc, resort = resort)
         self.subFilters.append([new, f])
         return new
 
