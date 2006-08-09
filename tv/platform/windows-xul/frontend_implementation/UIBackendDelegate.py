@@ -87,7 +87,7 @@ class UIBackendDelegate:
             dialogs.MessageBoxDialog(title, msg).run()
 
     def revealFile (self, filename):
-        pass
+        os.startfile(os.path.dirname(filename))
 
     def updateAvailableItemsCountFeedback(self, count):
         # Inform the user in a way or another that newly available items are

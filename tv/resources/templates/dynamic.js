@@ -213,7 +213,7 @@ function handleSelect(event) {
        return true;
     }
     if(event.type == 'mouseup') {
-      if(!handleMouseUp) return
+      if(!handleMouseUp) return true;
       else handleMouseUp = false;
     }
     var id = event.currentTarget.getAttribute("selectID");
