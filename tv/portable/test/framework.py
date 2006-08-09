@@ -9,9 +9,14 @@ import util
 import databaseupgrade
 import storedatabase
 import subscription
+import selection
 
 class HadToStopEventLoop(Exception):
     pass
+
+class DummyController:
+    def __init__(self):
+        self.selection = selection.SelectionHandler(database.defaultDatabase)
 
 class DemocracyTestCase(unittest.TestCase):
     def setUp(self):
@@ -33,6 +38,7 @@ class DemocracyTestCase(unittest.TestCase):
                 traceback.print_stack()
                 raise Exception("util.failed called")
         util.failed = newUtilDotFailed
+        app.controller = DummyController()
 
     def tearDown(self):
         util.chatter = True

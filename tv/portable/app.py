@@ -904,6 +904,14 @@ class Controller (frontend.Application):
             id = int(dropData[len("playlist-"):])
             playlist = db.getObjectByID(id)
             playlist.handleDrop()
+        elif dropData.startswith("playlistitem-"):
+            playlist = controller.currentSelectedTab.obj
+            idStr = dropData[len("playlistitem-"):]
+            if idStr != 'END':
+                item = db.getObjectByID(int(idStr))
+            else:
+                item = None
+            playlist.moveSelection(item)
         else:
             print "Unknown drop data: ", dropData
 

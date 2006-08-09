@@ -93,6 +93,50 @@ class SavedPlaylist(database.DDBObject):
             raise ValueError("can't drop type %s onto a playlist" %
                     selectionType)
 
+    def moveSelection(self, anchorItem):
+        """Move the current selection to be above anchorItem.
+
+        More precicely, we move the current selection so that it's one
+        contiguous block, and the position for the item on top of the
+        selection is the anchorItem's position at the start of the move.
+
+        The selection must contain items inside this playlist, or a ValueError
+        will be thrown.
+        """
+        selection = app.controller.selection
+        if selection.getType() != 'item':
+            raise ValueError("Bad selection type: %s" % selection.getType())
+        # Figure out what the current selection in.  Since the selection is
+        # unordered, we also need to get the items in the order they appear in
+        # the playlist.
+        toMove = []
+        for id in selection.currentSelection:
+            if id not in self.trackedItems:
+                raise ValueError("%s is not in this playlist",
+                        views.items.getObjectByID(id))
+            else:
+                pos = self.trackedItems.getPosition(id)
+                toMove.append((pos, id))
+        toMove.sort()
+        toMove = [id for (pos, id) in toMove]
+        if anchorItem is not None:
+            anchorPos = self.trackedItems.getPosition(anchorItem.getID())
+        else:
+            anchorPos = None
+        for id in toMove:
+            self.trackedItems.removeID(id)
+        if anchorPos >= len(self.item_ids):
+            # removing the items made the anchor position go off the end of
+            # the list.
+            anchorPos = None
+        for id in toMove:
+            if anchorPos is not None:
+                self.trackedItems.insertID(anchorPos, id)
+                anchorPos += 1
+            else:
+                self.trackedItems.appendID(id)
+        self.signalChange()
+
 def createNewPlaylist():
     """Start the new playlist creation process.  This should be called in
     response to the user clicking on the new playlist menu option.

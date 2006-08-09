@@ -38,6 +38,10 @@ thisPlaylistView = views.feeds.filter(lambda x: x is playlist)
     <span t:repeatForView="playlistView">
         <span t:replaceMarkup="this.getItemXML(viewName)" />
     </span>
+    <div class="playlist-end-drag-hitbox"
+	dragdesttype="downloadeditem"
+	dragdestdata="playlistitem-END"
+	drageffectdownloadeditem="move" />
 </div>
 <!-- / CHANNEL ITEMS LIST -->
 </body>

@@ -147,16 +147,22 @@ class TrackedView:
             self.callback()
         if self.parent.domHandler:
             next = self.view.getNextID(id) 
-            if next == None:
+            if next is not None:
+                nextTid = self.view.getObjectByID(next).tid 
+            else:
+                nextTid = None
+            for i in range(len(self.toAdd)):
+                if self.toAdd[i].tid == nextTid:
+                    self.toAdd.insert(i, obj)
+                    self.addCallback()
+                    return
+            if len(self.toAdd) > 0 and nextTid == self.addBefore:
                 self.toAdd.append(obj)
-                self.addCallback()
-            elif len (self.toAdd) > 0 and self.view.getObjectByID(next).tid == self.toAdd[0].tid:
-                self.toAdd.insert(0, obj)
                 self.addCallback()
             else:
                 self.callback()
                 self.toAdd.append(obj)
-                self.addBefore = self.view.getObjectByID(next).tid
+                self.addBefore = nextTid
                 self.addCallback()
 
     def doAdd(self, xml):

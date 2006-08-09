@@ -8,21 +8,19 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <t:include filename="dynamic.js" />
     <t:execOnLoad><![CDATA[
-try:
-    this = kargs['this']
-except:
-    pass
-try:
-    viewName = kargs['viewName']
-except:
-    pass
+this = kargs['this']
+viewName = kargs['viewName']
 ]]></t:execOnLoad>
 </head>
 
 <body>
 
 <div class="main-video draggable ***this.getSelected() and 'selected' or ''***" 
-	dragsourcetype="***this.getDragType()***" dragicon="video-tnail-***this.getID()***" 
+	dragsourcetype="***this.getDragType()***" 
+	dragicon="video-tnail-***this.getID()***" 
+	dragdesttype="---DRAGDESTTYPE---"
+	dragdestdata="playlistitem-***this.getID()***"
+	drageffectdownloadeditem="move"
 	selectID="***this.getID()***" selectViewName="@@@viewName@@@"
 	onmousedown="return handleSelect(event)"
 	onmouseup="return handleSelect(event)" >

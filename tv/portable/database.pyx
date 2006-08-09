@@ -288,6 +288,7 @@ class DynamicDatabase:
         self.objectLocs = {}
         self.indexes = {}
         self.liveStorage = None
+        self.sortFunc = sortFunc
 
         # Normally, any access to fasttypes should be surrounded by a
         # lock. However, inside of an __init__, we can be sure that no
@@ -549,10 +550,6 @@ class DynamicDatabase:
         point = self.cursor
         if point is None:
             point = self.objects.firstIter().copy()
-        try:
-            origObj = self.objects[point]
-        except IndexError:
-            origObj = None
         if value is NoValue:
             value = newobject
         it = self.objects.insertBefore(point, (newobject,value))
@@ -653,6 +650,22 @@ class DynamicDatabase:
         if self.objectLocs.has_key(obj.id):
             self.remove(self.objectLocs[obj.id])
 
+    def _removeIter(self, it):
+        first = self.objects.firstIter()
+        if it == self.cursor:
+            if self.cursor == first:
+                self.cursor = None
+            else:
+                self.cursor.back()
+        for i in range(len(self.cursorStack)):
+            cursor = self.cursorStack[i]
+            if it == cursor:
+                if cursor == first:
+                    self.cursorStack[i] = None
+                else:
+                    cursor.back()
+        self.objects.remove(it)
+
     #
     # Removes the object from the database
     def changeObj(self, obj, needsSave=True):
@@ -681,31 +694,18 @@ class DynamicDatabase:
         if point is None:
             raise ObjectNotFoundError, "No object with id %s in database" % point
         
-
         #Save a reference to the item to compare with subViews
         temp = self.objects[point]
         tempobj = temp[0]
         tempid = tempobj.id
         tempmapped = temp[1]
 
-        try:
-            if point == self.cursor:
-                self.cursor.back()
-        except:
-            pass
-        for cursor in self.cursorStack:
-            try:
-                if point == cursor:
-                    cursor.back()
-            except:
-                pass
-        
         #Update the location dictionary
         #self.checkObjLocs()
         self.objectLocs.pop(tempid)
 
-         #Remove it
-        self.objects.remove(point)
+        #Remove it
+        self._removeIter(point)
         #self.checkObjLocs()
 
          #Perform callbacks
@@ -751,16 +751,32 @@ class DynamicDatabase:
             after = it.copy()
             before.back()
             after.forward()
-            self.objects.remove(it)
-            newIt = self.objects.insertBefore(after, (tempobj, tempmapped))
-            self.objectLocs[tempid] = newIt
-            newBefore = newIt.copy()
-            newAfter = newIt.copy()
-            newBefore.back()
-            newAfter.forward()
-            if before != newBefore or after != newAfter:
+            if (it == self.objects.firstIter() and 
+                    after == self.objects.lastIter()):
+                # changed the only item in the list
+                doResort = False
+            elif it == self.objects.firstIter():
+                # changed the first item in the list
+                nextmapped = self.objects[after][1]
+                doResort = (self.sortFunc(tempmapped, nextmapped) > 0)
+            elif after == self.objects.lastIter():
+                # changed the last item in the list
+                prevmapped = self.objects[before][1]
+                doResort = (self.sortFunc(tempmapped, prevmapped) < 0)
+            else:
+                # changed an item in the middle
+                nextmapped = self.objects[after][1]
+                prevmapped = self.objects[before][1]
+                doResort = ((self.sortFunc(tempmapped, prevmapped) < 0) or
+                        (self.sortFunc(tempmapped, nextmapped) > 0))
+            if doResort:
                 # Item Moved -- trigger remove and add callbacks
+                self._removeIter(it)
+                newIt = self.objects.insertBefore(after, (tempobj, tempmapped))
+                self.objectLocs[tempid] = newIt
                 self.saveCursor()
+                iterAfter = newIt.copy()
+                iterAfter.forward()
                 try:
                     self.cursor = newIt.copy()
                     self.cursor.forward()
@@ -768,6 +784,21 @@ class DynamicDatabase:
                         callback(tempmapped, tempid)
                     for callback in self.addCallbacks:
                         callback(tempmapped,tempid)
+                    try:
+                        nextId = self.objects[iterAfter][0].id
+                    except IndexError:
+                        nextId = None
+                    for [view, f] in self.subMaps:
+                        view.saveCursor()
+                        try:
+                            if nextId is not None:
+                                view.cursor = view.objectLocs[nextId]
+                            else:
+                                view.cursor = view.objects.lastIter()
+                            view.removeObj(tempobj)
+                            view.addBeforeCursor(tempobj, f(tempmapped))
+                        finally:
+                            view.restoreCursor()
                 finally:
                     self.restoreCursor()
                     madeCallback = True

@@ -78,6 +78,11 @@ class TrackedIDList(object):
     def __contains__(self, id):
         return id in self.trackedIDs
 
+    def getPosition(self, id):
+        """Get the position of an id in the list.  If id is not in the list a
+        KeyError will be raised."""
+        return self.positions[id]
+
     def appendID(self, id):
         if id in self:
             raise ValueError("%s is already being tracked" % id)
@@ -89,9 +94,9 @@ class TrackedIDList(object):
     def insertID(self, pos, id):
         if id in self:
             raise ValueError("%s is already being tracked" % id)
-        for id, oldPos in self.positions.items():
+        for toMove, oldPos in self.positions.items():
             if oldPos >= pos:
-                self.positions[id] += 1
+                self.positions[toMove] += 1
         self.positions[id] = pos
         self.list.insert(pos, id)
         self.trackedIDs.add(id)

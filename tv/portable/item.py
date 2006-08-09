@@ -187,10 +187,16 @@ class Item(DDBObject):
     # that needs to be calculated on the fly
     def getItemXML(self, viewName):
         try:
-            return self._itemXML.replace(self._XMLViewName, viewName)
-        except:
+            if viewName == 'playlistView':
+                dragDestType = 'downloadeditem'
+            else:
+                dragDestType = ''
+            xml = self._itemXML
+        except AttributeError:
             self._calcItemXML()
-            return self._itemXML.replace(self._XMLViewName, viewName)
+            xml = self._itemXML
+        return xml.replace(self._XMLViewName, viewName).replace(
+                "---DRAGDESTTYPE---", dragDestType)
 
     # Regenerates an expired item XML from the download-item template
     # _XMLViewName is a random string we use for the name of the view
@@ -363,7 +369,7 @@ class Item(DDBObject):
         if self.isDownloaded():
             return 'downloadeditem'
         else:
-            return ''
+            return 'item'
 
     def getStateCSSClass(self):
         """Get the CSS class to display our state string."""

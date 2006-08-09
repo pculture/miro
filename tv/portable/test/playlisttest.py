@@ -2,6 +2,8 @@ from feed import Feed
 from feedparser import FeedParserDict
 from item import Item
 from playlist import SavedPlaylist
+import app
+import views
 from test.framework import DemocracyTestCase
 
 class PlaylistTestCase(DemocracyTestCase):
@@ -12,6 +14,14 @@ class PlaylistTestCase(DemocracyTestCase):
         self.i2 = Item(FeedParserDict({'title': 'item2'}), feed_id=self.feed.id)
         self.i3 = Item(FeedParserDict({'title': 'item3'}), feed_id=self.feed.id)
         self.i4 = Item(FeedParserDict({'title': 'item4'}), feed_id=self.feed.id)
+        self.addCallbacks = []
+        self.removeCallbacks = []
+
+    def addCallback(self, obj, id):
+        self.addCallbacks.append((obj, id))
+
+    def removeCallback(self, obj, id):
+        self.removeCallbacks.append((obj, id))
 
     def checkList(self, playlist, correctOrder):
         realPositions = {}
@@ -58,3 +68,70 @@ class PlaylistTestCase(DemocracyTestCase):
         self.assertEquals(playlist.getTitle(), 'rocketboom')
         self.checkList(playlist, initialList)
         self.assertEquals(playlist.getExpanded(), False)
+
+    def checkCallbacks(self, movedItems):
+        correctCallbackList = [(i, i.getID()) for i in movedItems]
+        self.assertEquals(self.addCallbacks, correctCallbackList)
+        self.assertEquals(self.removeCallbacks, correctCallbackList)
+
+    def testCallbacks(self):
+        initialList = [self.i1, self.i2, self.i3]
+        playlist = SavedPlaylist("rocketboom", initialList)
+        playlist.getView().addAddCallback(self.addCallback)
+        playlist.getView().addRemoveCallback(self.removeCallback)
+        playlist.moveItem(self.i2, 0)
+        self.checkCallbacks([self.i2])
+        playlist.moveItem(self.i3, 0)
+        self.checkCallbacks([self.i2, self.i3])
+
+    def testHandleDrop(self):
+        playlist = SavedPlaylist("rocketboom")
+        selection = app.controller.selection
+        selection.selectItem(views.items, self.i1.getID(), shiftSelect=False,
+                controlSelect=False)
+        playlist.handleDrop()
+        self.checkList(playlist, [self.i1])
+        selection.selectItem(views.items, self.i3.getID(), shiftSelect=False,
+                controlSelect=False)
+        selection.selectItem(views.items, self.i4.getID(), shiftSelect=False,
+                controlSelect=True)
+        playlist.handleDrop()
+        self.checkList(playlist, [self.i1, self.i3, self.i4])
+
+    def testMoveSelectionAboveItem(self):
+        playlist = SavedPlaylist("rocketboom", [self.i1, self.i2, self.i3,
+                self.i4])
+        selection = app.controller.selection
+        view = playlist.getView()
+        selection.selectItem(view, self.i1.getID(), shiftSelect=False,
+                controlSelect=False)
+        playlist.moveSelection(self.i3)
+        self.checkList(playlist, [self.i2, self.i3, self.i1, self.i4])
+        playlist.moveSelection(None)
+        self.checkList(playlist, [self.i2, self.i3, self.i4, self.i1])
+        playlist.moveSelection(self.i2)
+        self.checkList(playlist, [self.i1, self.i2, self.i3, self.i4])
+        selection.selectItem(view, self.i2.getID(), shiftSelect=False,
+                controlSelect=False)
+        selection.selectItem(view, self.i4.getID(), shiftSelect=True,
+                controlSelect=False)
+        playlist.moveSelection(self.i1)
+        self.checkList(playlist, [self.i2, self.i3, self.i4, self.i1])
+        selection.selectItem(view, self.i1.getID(), shiftSelect=False,
+                controlSelect=False)
+        selection.selectItem(view, self.i2.getID(), shiftSelect=False,
+                controlSelect=True)
+        playlist.moveSelection(self.i4)
+        self.checkList(playlist, [self.i3, self.i4, self.i2, self.i1])
+        selection.selectItem(view, self.i1.getID(), shiftSelect=False,
+                controlSelect=False)
+        selection.selectItem(view, self.i4.getID(), shiftSelect=False,
+                controlSelect=True)
+        playlist.moveSelection(None)
+        self.checkList(playlist, [self.i3, self.i2, self.i4, self.i1])
+        selection.selectItem(view, self.i3.getID(), shiftSelect=False,
+                controlSelect=False)
+        selection.selectItem(view, self.i4.getID(), shiftSelect=True,
+                controlSelect=False)
+        playlist.moveSelection(None)
+        self.checkList(playlist, [self.i1, self.i3, self.i2, self.i4])
