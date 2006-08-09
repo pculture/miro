@@ -4,12 +4,13 @@
       eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<link href="resource:css/main.css" rel="stylesheet" type="text/css" />
-<t:include filename="dynamic.js" />
-<t:include filename="settings.js" />
-<script type="text/javascript" src="resource:templates/shide.js" />
+    <link href="resource:css/main.css" rel="stylesheet" type="text/css" />
+    <t:include filename="dynamic.js" />
+    <t:include filename="settings.js" />
+    <script type="text/javascript" src="resource:templates/shide.js" />
+    <script type="text/javascript" src="resource:templates/osxdnd.js" />
 
     <t:execOnLoad><![CDATA[
 global searchFilter

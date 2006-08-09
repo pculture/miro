@@ -8,6 +8,7 @@
     <title>Democracy Playlist View</title>
 
     <link href="resource:css/main.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="resource:templates/osxdnd.js" />
     <t:include filename="dynamic.js" />
     <t:execOnLoad><![CDATA[
 
