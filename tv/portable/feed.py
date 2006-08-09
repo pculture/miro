@@ -119,7 +119,7 @@ def normalizeFeedURL(url):
         print "DTV: unable to normalize URL %s" % originalURL
         return originalURL
     else:
-        print "normalized: %s -> %s" % (originalURL, url)
+        #print "normalized: %s -> %s" % (originalURL, url)
         return url
 
 
