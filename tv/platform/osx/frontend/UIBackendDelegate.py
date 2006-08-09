@@ -92,9 +92,7 @@ class UIBackendDelegate:
         NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
 
     def revealFile(self, filename):
-        if not os.path.isdir(filename):
-            filename = os.path.dirname(filename)
-        NSWorkspace.sharedWorkspace().openURL_(NSURL.fileURLWithPath_(filename))
+        NSWorkspace.sharedWorkspace().selectFile_inFileViewerRootedAtPath_(filename, nil)
 
     def updateAvailableItemsCountFeedback(self, count):
         appIcon = NSImage.imageNamed_('NSApplicationIcon')
