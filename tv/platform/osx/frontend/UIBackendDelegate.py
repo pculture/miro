@@ -4,15 +4,17 @@ import string
 import signal
 import threading
 
-from objc import nil
+from objc import YES, NO, nil
 from AppKit import *
 from Foundation import *
-from PyObjCTools import NibClassBuilder
+from PyObjCTools import NibClassBuilder, Conversion
 
 import prefs
 import config
 import dialogs
 import platformutils
+
+from StartupPanel import StartupPanelController
 
 ###############################################################################
 
@@ -56,6 +58,11 @@ class UIBackendDelegate:
     # This lock is used by the HTTPAuthDialog to serialize HTTP authentication 
     # requests and prevent multiple authentication dialogs to pop up at once.
     httpAuthLock = threading.Lock()
+
+    def performStartupTasks(self, terminationCallback):
+        NSApplication.sharedApplication().delegate().checkQuicktimeVersion(True)
+        startupController = StartupPanelController.alloc().init()
+        startupController.run(terminationCallback)
 
     def runDialog(self, dialog):
         if isinstance(dialog, dialogs.TextEntryDialog):
@@ -191,6 +198,28 @@ class UIBackendDelegate:
 
         print "DTV: Launching Download Daemon"
         dlTask.launch()
+        
+    def makeDemocracyRunAtStartup(self, run):
+        defaults = NSUserDefaults.standardUserDefaults()
+        lwdomain = defaults.persistentDomainForName_('loginwindow')
+        lwdomain = Conversion.pythonCollectionFromPropertyList(lwdomain)
+        launchedApps = lwdomain['AutoLaunchedApplicationDictionary']
+        ourPath = NSBundle.mainBundle().bundlePath()
+        ourEntry = None
+        for entry in launchedApps:
+            if entry['Path'] == ourPath:
+                ourEntry = entry
+                break
+
+        if run and ourEntry is None:
+            launchInfo = dict(Path=ourPath, Hide=NO)
+            launchedApps.append(launchInfo)
+        elif ourEntry is not None:
+            launchedApps.remove(entry)
+
+        lwdomain = Conversion.propertyListFromPythonCollection(lwdomain)
+        defaults.setPersistentDomain_forName_(lwdomain, 'loginwindow')
+        defaults.synchronize()
 
 ###############################################################################
 

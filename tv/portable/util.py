@@ -1,15 +1,16 @@
-from sha import sha
-import re
-import subprocess
-import string
 import os
-import prefs
+import re
+import sys
+import sha
+import time
+import string
 import urllib
 import socket
 import threading
 import traceback
-import time
-import sys
+import subprocess
+
+import prefs
 
 from BitTornado.clock import clock
 from BitTornado.bencode import bdecode, bencode
@@ -307,7 +308,7 @@ def getTorrentInfoHash(path):
     try:
         data = f.read()
         metainfo = bdecode(data)
-        infohash = sha(bencode(metainfo['info'])).digest()
+        infohash = sha.sha(bencode(metainfo['info'])).digest()
         return infohash
     finally:
         f.close()
@@ -322,3 +323,33 @@ class ExponentialBackoffTracker:
         return rv
     def reset(self):
         self.currentDelay = self.baseDelay
+
+
+# Gather movie files on the disk. Used by the startup dialog.
+def gatherVideos(path, progressCallback):
+    import item
+    import config
+    keepGoing = True
+    parsed = 0
+    found = list()
+    try:
+        for root, dirs, files in os.walk(path):
+            for f in files:
+                parsed = parsed + 1
+                if item.isVideoFilename(f):
+                    found.append(os.path.join(root, f))
+                if parsed > 1000:
+                    adjustedParsed = int(parsed / 100.0) * 100
+                elif parsed > 100:
+                    adjustedParsed = int(parsed / 10.0) * 10
+                else:
+                    adjustedParsed = parsed
+                keepGoing = progressCallback(adjustedParsed, len(found))
+                if not keepGoing:
+                    found = None
+                    raise
+            if 'Democracy' in dirs:
+                dirs.remove('Democracy')
+    except:
+        pass
+    return found

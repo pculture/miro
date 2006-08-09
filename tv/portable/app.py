@@ -440,12 +440,12 @@ class Controller (frontend.Application):
         self.frame = None
         self.inQuit = False
         self.initial_feeds = False # True if this is the first run and there's an initial-feeds.democracy file.
+        self.currentSelectedTab = None
+        self.tabListActive = True
 
     ### Startup and shutdown ###
 
     def onStartup(self):
-        global delegate
-
         try:
             print "DTV: Starting up Democracy Player"
             print "DTV: Version:  %s" % config.get(prefs.APP_VERSION)
@@ -455,12 +455,24 @@ class Controller (frontend.Application):
             config.load()
             config.addChangeCallback(self.configDidChange)
             
+            global delegate
             feed.setDelegate(delegate)
             feed.setSortFunc(sorts.item)
             autoupdate.setDelegate(delegate)
             database.setDelegate(delegate)
             dialogs.setDelegate(delegate)
+            
+            if not config.get(prefs.STARTUP_TASKS_DONE):
+                delegate.performStartupTasks(self.finishStartup)
+                config.set(prefs.STARTUP_TASKS_DONE, True)
+            else:
+                self.finishStartup()
+        except:
+            util.failedExn("while starting up")
+            frontend.exit(1)
 
+    def finishStartup(self, gatheredVideos=None):
+        try:
             #Restoring
             print "DTV: Restoring database..."
             #            try:
@@ -489,9 +501,6 @@ class Controller (frontend.Application):
             # Our tab selection logic assumes we have at least one tab
             # and will freak out if there aren't any
             assert(len(views.allTabs) > 0)
-
-            self.currentSelectedTab = None
-            self.tabListActive = True
 
             channelGuide = _getInitialChannelGuide()
 
@@ -571,15 +580,23 @@ class Controller (frontend.Application):
             # reentrant call back into the database when checkSelectedTab ends 
             # up calling signalChange to force a tab to get rerendered.
 
+            # Now adding the video files we possibly gathered from the startup
+            # dialog
+            if gatheredVideos is not None and len(gatheredVideos) > 0:
+                singleclick.resetCommandLineView()
+                for v in gatheredVideos:
+                    singleclick.addVideo(v)
+
             # Use an idle for parseCommandLineArgs because the frontend may
             # have put in idle calls to do set up video playback or similar
             # things.
             eventloop.addIdle(singleclick.parseCommandLineArgs, 
                     'parse command line')
+
             print "DTV: Starting event loop thread"
-            eventloop.startup()
+            eventloop.startup()            
         except:
-            util.failedExn("while starting up")
+            util.failedExn("while finishing starting up")
             frontend.exit(1)
 
     def setupGlobalFeed(self, url, *args, **kwargs):

@@ -214,6 +214,9 @@ def init_clipboard ():
 
 class UIBackendDelegate:
 
+    def performStartupTasks(self, terminationCallback):
+        terminationCallback(None)
+        
     def openExternalURL(self, url):
         inKDE = False
         # We could use Python's webbrowser.open() here, but

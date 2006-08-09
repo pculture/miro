@@ -1,7 +1,7 @@
 from objc import YES, NO, nil
 from AppKit import *
 from Foundation import *
-from PyObjCTools import NibClassBuilder, Conversion
+from PyObjCTools import NibClassBuilder
 
 import app
 import prefs
@@ -107,28 +107,8 @@ class GeneralPrefsController (NibClassBuilder.AutoBaseClass):
     
     def runAtStartup_(self, sender):
         run = (sender.state() == NSOnState)
+        app.delegate.makeDemocracyRunAtStartup(run)
         config.set(prefs.RUN_DTV_AT_STARTUP, run)
-
-        defaults = NSUserDefaults.standardUserDefaults()
-        lwdomain = defaults.persistentDomainForName_('loginwindow')
-        lwdomain = Conversion.pythonCollectionFromPropertyList(lwdomain)
-        launchedApps = lwdomain['AutoLaunchedApplicationDictionary']
-        ourPath = NSBundle.mainBundle().bundlePath()
-        ourEntry = None
-        for entry in launchedApps:
-            if entry['Path'] == ourPath:
-                ourEntry = entry
-                break
-
-        if run and ourEntry is None:
-            launchInfo = dict(Path=ourPath, Hide=NO)
-            launchedApps.append(launchInfo)
-        elif ourEntry is not None:
-            launchedApps.remove(entry)
-
-        lwdomain = Conversion.propertyListFromPythonCollection(lwdomain)
-        defaults.setPersistentDomain_forName_(lwdomain, 'loginwindow')
-        defaults.synchronize()
                     
 ###############################################################################
 

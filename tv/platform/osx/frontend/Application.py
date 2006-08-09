@@ -34,7 +34,6 @@ class Application:
         appl = NSApplication.sharedApplication()
         NSBundle.loadNibNamed_owner_("MainMenu", appl)
         controller = appl.delegate()
-        controller.actualApp = self
 
     def Run(self):
         languages = list(NSUserDefaults.standardUserDefaults()["AppleLanguages"])
@@ -106,8 +105,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         NSURLRequest.setAllowsAnyHTTPSCertificate_forHost_(YES, channelGuideHost)
 
         # Startup
-        self.actualApp.onStartup()
-        self.checkQuicktimeVersion(True)
+        app.controller.onStartup()
     
     def applicationDidBecomeActive_(self, notification):
         if app.controller.frame is not None:
@@ -134,7 +132,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         app.delegate.waitUntilDownloadDaemonExit()
             
         # Call shutdown on backend
-        self.actualApp.onShutdown()
+        app.controller.onShutdown()
 
     def downloaderDaemonDidTerminate_(self, notification):
         task = notification.object()
@@ -225,7 +223,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
                 url = 'http://%s' % url
 
         if url.startswith('http'):
-            self.actualApp.addAndSelectFeed(url)
+            app.controller.addAndSelectFeed(url)
         elif url.startswith('democracy:'):
             eventloop.addUrgentCall(lambda:singleclick.addDemocracyURL(url), 
                         "Open Democracy URL")
@@ -276,8 +274,8 @@ class AppController (NibClassBuilder.AutoBaseClass):
 
     itemsAlwaysAvailable = ('checkForUpdates:', 'showPreferencesWindow:', 'addGuide:', 'openFile:', 'shutdown:')
     def validateMenuItem_(self, item):
-        if item.action() == 'removeGuide:':
-            tab = app.controller.currentSelectedTab
+        tab = app.controller.currentSelectedTab
+        if item.action() == 'removeGuide:' and tab is not None:
             return tab.isGuide() and not tab.obj.getDefault()
         else:
             return item.action() in self.itemsAlwaysAvailable

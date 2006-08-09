@@ -23,6 +23,9 @@ def nextDialogId():
 class UIBackendDelegate:
     openDialogs = {}
 
+    def performStartupTasks(self, terminationCallback):
+        terminationCallback(None)
+
     def runDialog(self, dialog):
         id = nextDialogId()
         self.openDialogs[id] = dialog

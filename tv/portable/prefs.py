@@ -27,6 +27,7 @@ VOLUME_LEVEL                = Pref( key='VolumeLevel',           default=1.0,   
 BT_MIN_PORT                 = Pref( key='BitTorrentMinPort',     default=6980,  platformSpecific=False )
 BT_MAX_PORT                 = Pref( key='BitTorrentMaxPort',     default=6999,  platformSpecific=False )
 UPLOAD_RATIO                = Pref( key='uploadRatio',           default=2.0,   platformSpecific=False )
+STARTUP_TASKS_DONE          = Pref( key='startupTasksDone',      default=False, platformSpecific=False )
 
 # These have a hardcoded default which can be overridden by setting an
 # environment variable.
