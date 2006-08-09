@@ -20,7 +20,7 @@
   <div id="channels">
     <ul class="tab-list">
       <li t:repeatForView="views.guideTabs" onmousedown="eventURL('action:selectTab?id=@@@this.id@@@')">
-        <span t:hideIf="this.obj.getDefault()" t:contextMenu="action:removeGuide?guide_id=@@@this.obj.getID()@@@|Remove">
+        <span t:hideIf="this.obj.getDefault()" t:contextMenu="action:copyFeedURL?feed=@@@this.obj.getID()@@@|Copy URL to clipboard\n\naction:removeGuide?guide_id=@@@this.obj.getID()@@@|Remove">
             <t:includeTemplate filename="guidetab" />
         </span>
         <span t:hideIf="not this.obj.getDefault()">
@@ -32,7 +32,7 @@
       </li>
       <div class="tab-list-divider" />
       <li t:repeatForView="views.feedTabs" onmousedown="eventURL('action:selectTab?id=@@@this.id@@@')">
-          <span t:contextMenu="action:updateFeed?feed=@@@this.obj.getID()@@@|Update Channel Now\n\naction:removeFeed?feed=@@@this.obj.getID()@@@|Remove">
+          <span t:contextMenu="action:updateFeed?feed=@@@this.obj.getID()@@@|Update Channel Now\naction:copyFeedURL?feed=@@@this.obj.getID()@@@|Copy URL to clipboard\n\naction:removeFeed?feed=@@@this.obj.getID()@@@|Remove">
             <t:includeTemplate filename="feedtab" />
           </span>
       </li>
