@@ -1203,6 +1203,12 @@ downloaded?""")
         obj = db.getObjectByID(int(item))
         obj.save()
 
+    def revealItem(self, item):
+        obj = db.getObjectByID(int(item))
+        filename = obj.getFilename()
+        self.backEndDelegate.revealFile(filename)
+        obj.save()
+
     def setRunAtStartup(self, value):
         value = (value == "1")
         self.backEndDelegate.setRunAtStartup(value)

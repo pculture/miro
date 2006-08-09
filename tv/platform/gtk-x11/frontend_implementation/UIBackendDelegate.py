@@ -23,6 +23,17 @@ from frontend_implementation.gtk_queue import gtkAsyncMethod
 
 dialogParent = None
 
+inKDE = None
+def checkKDE():
+    global inKDE
+    if inKDE is None:
+        inKDE = False
+        try:
+            if (os.environ["KDE_FULL_SESSION"]):
+                inKDE = True
+        except:
+            pass
+    return inKDE
 # Copied from feed.py and modified for edge cases.
 # URL validitation and normalization
 def validateFeedURL(url):
@@ -220,19 +231,21 @@ class UIBackendDelegate:
         terminationCallback(None)
         
     def openExternalURL(self, url):
-        inKDE = False
         # We could use Python's webbrowser.open() here, but
         # unfortunately, it doesn't have the same semantics under UNIX
         # as under other OSes. Sometimes it blocks, sometimes it doesn't.
-        try:
-            if (os.environ["KDE_FULL_SESSION"]):
-                inKDE = True
-        except:
-            pass
-        if (inKDE):
+        if (checkKDE()):
             os.spawnlp (os.P_NOWAIT, "kfmclient", "kfmclient", "exec", url)
         else:
             os.spawnlp (os.P_NOWAIT, "gnome-open", "gnome-open", url)
+
+    def revealFile(self, filename):
+        if not os.path.isdir(filename):
+            filename = os.path.dirname(filename)
+        if (checkKDE()):
+            os.spawnlp (os.P_NOWAIT, "kfmclient", "kfmclient", "exec", "file://" + filename)
+        else:
+            os.spawnlp (os.P_NOWAIT, "nautilus", "nautilus", "file://" + filename)
 
     def updateAvailableItemsCountFeedback(self, count):
         # Inform the user in a way or another that newly available items are
