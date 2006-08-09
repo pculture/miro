@@ -55,6 +55,9 @@ class SelectionHandler(object):
     def selectItem(self, view, id, shiftSelect, controlSelect):
         if (controlSelect or shiftSelect) and view != self.currentView:
             return
+        if controlSelect and shiftSelect:
+            controlSelect = False
+
         if not controlSelect:
             self.clearSelection()
 
@@ -65,8 +68,20 @@ class SelectionHandler(object):
         else:
             self._doMultiSelect(view, self.lastSelected, id)
 
-        self.currentView = view
+        self.switchView(view)
         self.lastSelected = id
+
+    def switchView(self, view):
+        if self.currentView == view:
+            return
+        if self.currentView is not None:
+            self.currentView.removeRemoveCallback(self.onRemove)
+        self.currentView = view
+        self.currentView.addRemoveCallback(self.onRemove)
+
+    def onRemove(self, obj, id):
+        if id in self.currentSelection:
+            self._doUnselect(id)
 
     def getType(self):
         """Get the type of objects that are selected.  This will be one of

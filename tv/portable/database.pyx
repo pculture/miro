@@ -539,6 +539,18 @@ class DynamicDatabase:
         self.confirmDBThread()
         self.removeCallbacks.append(function)
 
+    def removeChangeCallback(self, function):
+        self.confirmDBThread()
+        self.changeCallbacks.remove(function)
+
+    def removeAddCallback(self, function):
+        self.confirmDBThread()
+        self.addCallbacks.remove(function)
+
+    def removeRemoveCallback(self, function):
+        self.confirmDBThread()
+        self.removeCallbacks.remove(function)
+
 
     ##
     # Adds an item to the object database, filtering changes to subViews
