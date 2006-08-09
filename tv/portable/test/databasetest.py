@@ -1253,6 +1253,7 @@ class SortingFilterTestCase(DemocracyTestCase):
         filtView.unlink()
 
     def testPerformance(self):
+        # Filtering an already sorted function must be O(n)
         sortView = self.everything.sort(self.sortFunc)
         initialSorts = []
         filterSorts = []
