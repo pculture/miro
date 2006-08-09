@@ -4,6 +4,9 @@
 /* NSMenuItem : <title:Add a Channel...> (oid:227) */
 "Add a Channel..." = "Add a Channel...";
 
+/* NSMenuItem : <title:Add a Guide...> (oid:285) */
+"Add a Guide..." = "Add a Guide...";
+
 /* NSMenuItem : <title:Bring All to Front> (oid:5) */
 "Bring All to Front" = "Bring All to Front";
 
@@ -19,9 +22,6 @@
 /* NSMenuItem : <title:Close> (oid:73) */
 "Close" = "Close";
 
-/* NSMenu : <title:Collection> (oid:229) */
-"Collection" = "Collection";
-
 /* NSMenuItem : <title:Copy> (oid:157) */
 "Copy" = "Copy";
 
@@ -31,8 +31,8 @@
 /* NSMenuItem : <title:Copy Video Link> (oid:224) */
 "Copy Video Link" = "Copy Video Link";
 
-/* NSMenuItem : <title:Create Collection> (oid:230) */
-"Create Collection" = "Create Collection";
+/* NSMenuItem : <title:Create Playlist...> (oid:230) */
+"Create Playlist..." = "Create Playlist...";
 
 /* NSMenuItem : <title:Cut> (oid:160) */
 "Cut" = "Cut";
@@ -40,8 +40,8 @@
 /* NSMenuItem : <title:Delete> (oid:164) */
 "Delete" = "Delete";
 
-/* NSMenuItem : <title:Delete Collection> (oid:240) */
-"Delete Collection" = "Delete Collection";
+/* NSMenuItem : <title:Delete Playlist> (oid:240) */
+"Delete Playlist" = "Delete Playlist";
 
 /* NSMenuItem : <title:Delete Video...> (oid:222) */
 "Delete Video..." = "Delete Video...";
@@ -100,6 +100,9 @@
 /* NSMenuItem : <title:Play Video> (oid:217) */
 "Play Video" = "Play Video";
 
+/* NSMenu : <title:Playlists> (oid:229) */
+"Playlists" = "Playlists";
+
 /* NSMenuItem : <title:Preferences…> (oid:129) */
 "Preferences…" = "Preferences…";
 
@@ -111,6 +114,9 @@
 
 /* NSMenuItem : <title:Remove Channel...> (oid:231) */
 "Remove Channel..." = "Remove Channel...";
+
+/* NSMenuItem : <title:Remove Guide> (oid:286) */
+"Remove Guide" = "Remove Guide";
 
 /* NSMenuItem : <title:Rename Channel> (oid:238) */
 "Rename Channel" = "Rename Channel";
@@ -130,8 +136,8 @@
 /* NSMenuItem : <title:Select All> (oid:172) */
 "Select All" = "Select All";
 
-/* NSMenuItem : <title:Send Collection to a Friend> (oid:242) */
-"Send Collection to a Friend" = "Send Collection to a Friend";
+/* NSMenuItem : <title:Send Playlist to a Friend> (oid:242) */
+"Send Playlist to a Friend" = "Send Playlist to a Friend";
 
 /* NSMenuItem : <title:Services> (oid:131) */
 "Services" = "Services";
