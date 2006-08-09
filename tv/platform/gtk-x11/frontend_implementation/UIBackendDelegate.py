@@ -151,6 +151,8 @@ def BuildHTTPAuth(summary, message, prefillUser = None, prefillPassword = None):
     dialog.set_default_response (gtk.RESPONSE_OK)
     return dialog
 
+once_dialogs = {}
+
 @gtkAsyncMethod
 def ShowDialogAsync (title, message, buttons, default = gtk.RESPONSE_CANCEL, once=None, callback=None):
 
