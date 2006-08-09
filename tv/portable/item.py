@@ -296,8 +296,13 @@ class Item(DDBObject):
     # Moves this item to another feed.
     def setFeed(self, feed_id):
         self.feed_id = feed_id
+        del self._feed
+        if self.isContainerItem:
+            children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
+            for item in children:
+                del item._feed
+                item.signalChange()
         self.signalChange()
-
 
     ##
     # Marks this item as expired
@@ -1221,4 +1226,3 @@ def isVideoFilename(filename):
 
 def isTorrentFilename(filename):
     return filename.endswith('.torrent')
-    
