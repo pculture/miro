@@ -8,7 +8,7 @@ def _compare(x, y):
     return 0
 
 def item(x,y):
-    if x.parent_id is y.parent_id:
+    if x.parent_id == y.parent_id:
         out = cmp(y.releaseDateObj, x.releaseDateObj)
         if out != 0: return out
         # If we're going to sort file items and non-file items
