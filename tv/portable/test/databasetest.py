@@ -1253,7 +1253,10 @@ class SortingFilterTestCase(DemocracyTestCase):
         filtView.unlink()
 
     def testPerformance(self):
-        # Filtering an already sorted function must be O(n)
+        # Filtering an already sorted list with a sort must be O(n)
+        #
+        # In other words, we need to make sure that the list isn't
+        # being resorted
         sortView = self.everything.sort(self.sortFunc)
         initialSorts = []
         filterSorts = []
@@ -1266,7 +1269,11 @@ class SortingFilterTestCase(DemocracyTestCase):
             filtView = sortView.filter(lambda x:True,sortFunc=self.sortFunc)
             filterSorts.append(self.sortCalls)
             self.sortCalls = 0
-        self.assertEqual(filterSorts[0]/filterSorts[1], filterSorts[1]/filterSorts[2])
+        ratio1 = float(filterSorts[1])/filterSorts[0]
+        ratio2 = float(filterSorts[2])/filterSorts[1]
+
+        # Make sure the ratios are within 1% of each other
+        self.assert_(abs(ratio1-ratio2)/ratio1 < 0.01)
 
 
 #FIXME: Add test for explicitly recomputing sorts
