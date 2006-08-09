@@ -86,8 +86,8 @@ class UIBackendDelegate:
                     "a few seconds") % shortURL
             dialogs.MessageBoxDialog(title, msg).run()
 
-        def revealFile (self, filename):
-            pass
+    def revealFile (self, filename):
+        pass
 
     def updateAvailableItemsCountFeedback(self, count):
         # Inform the user in a way or another that newly available items are
