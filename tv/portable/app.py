@@ -779,7 +779,7 @@ class Controller (frontend.Application):
         else:
             return 'normal'
 
-    def checkSelectedTab(self, templateNameHint = None):
+    def checkSelectedTab(self):
         # NEEDS: locking ...
         # NEEDS: ensure is reentrant (as in two threads calling it simultaneously by accident)
 
@@ -814,11 +814,11 @@ class Controller (frontend.Application):
             if newSelected:
                 newSelected.redraw()
             # Boot up the new tab's template.
-            self.displayCurrentTabContent(templateNameHint)
+            self.displayCurrentTabContent()
 
-    def displayCurrentTabContent(self, templateNameHint = None):
+    def displayCurrentTabContent(self):
         if self.currentSelectedTab is not None:
-            self.currentSelectedTab.start(self.frame, templateNameHint)
+            self.currentSelectedTab.start(self.frame)
         else:
             # If we're in the middle of a shutdown, selectDisplay
             # might not be there... I'm not sure why...
@@ -853,7 +853,7 @@ class Controller (frontend.Application):
             mainDisplay = self.frame.getDisplay(controller.frame.mainDisplay) 
             if (newSelected.tabTemplateBase == 'guidetab' or
                     oldSelected.display is not mainDisplay):
-                newSelected.start(self.frame, None)
+                newSelected.start(self.frame)
 
         # Handle case where a different tab was clicked
         self.checkSelectedTab()
@@ -921,13 +921,15 @@ class Controller (frontend.Application):
 
 class TemplateDisplay(frontend.HTMLDisplay):
 
-    def __init__(self, templateName, frameHint=None, areaHint=None, baseURL=None):
+    def __init__(self, templateName, frameHint=None, areaHint=None, 
+            baseURL=None, *args, **kargs):
         "'templateName' is the name of the inital template file. 'data' is keys for the template."
 
         #print "Processing %s" % templateName
         self.templateName = templateName
-        (tch, self.templateHandle) = template.fillTemplate(templateName, self, self.getDTVPlatformName(), self.getEventCookie(),
-		self.getBodyTagExtra())
+        (tch, self.templateHandle) = template.fillTemplate(templateName, self,
+                self.getDTVPlatformName(), self.getEventCookie(),
+                self.getBodyTagExtra(), *args, **kargs)
         html = tch.read()
 
         self.actionHandlers = [
@@ -960,40 +962,47 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 break
         return newPage
 
+    def parseEventURL(self, url):
+        match = re.match(r"[a-zA-Z]+:([^?]+)(\?(.*))?$", url)
+        if match:
+            path = match.group(1)
+            argString = match.group(3)
+            if argString is None:
+                argString = ''
+            argLists = cgi.parse_qs(argString, keep_blank_values=True)
+
+            # argLists is a dictionary from parameter names to a list
+            # of values given for that parameter. Take just one value
+            # for each parameter, raising an error if more than one
+            # was given.
+            args = {}
+            for key in argLists.keys():
+                value = argLists[key]
+                if len(value) != 1:
+                    raise template.TemplateError, "Multiple values of '%s' argument passed to '%s' action" % (key, action)
+                if type(key) == unicode:
+                    key = key.encode('utf8')
+                args[key] = value[0]
+            return path, args
+        else:
+            raise ValueError("Badly formed eventURL: %s" % url)
+
+
     # Returns true if the browser should handle the URL.
     def onURLLoad(self, url):
         #print "DTV: got %s" % url
         try:
             # Special-case non-'action:'-format URL
             if url.startswith ("template:"):
-                self.dispatchAction ('switchTemplate', name = url[len("template:"):])
+                name, args = self.parseEventURL(url)
+                self.dispatchAction('switchTemplate', name=name, **args)
                 return False
 
             # Standard 'action:' URL
             if url.startswith ("action:"):
-                match = re.compile(r"^action:([^?]+)(\?(.*))?$").match(url)
-                if match:
-                    action = match.group(1)
-                    argString = match.group(3)
-                    if argString is None:
-                        argString = ''
-                    argLists = cgi.parse_qs(argString, keep_blank_values=True)
-    
-                    # argLists is a dictionary from parameter names to a list
-                    # of values given for that parameter. Take just one value
-                    # for each parameter, raising an error if more than one
-                    # was given.
-                    args = {}
-                    for key in argLists.keys():
-                        value = argLists[key]
-                        if len(value) != 1:
-                            raise template.TemplateError, "Multiple values of '%s' argument passed to '%s' action" % (key, action)
-                        if type(key) == unicode:
-                            key = key.encode('utf8')
-                        args[key] = value[0]
-    
-                    self.dispatchAction(action, **args)
-                    return False
+                action, args = self.parseEventURL(url)
+                self.dispatchAction(action, **args)
+                return False
 
             # Let channel guide URLs pass through
             tab = controller.currentSelectedTab
@@ -1291,7 +1300,7 @@ class printResultThread(threading.Thread):
 # the GUI presentation (and may or may not manipulate the database.)
 class GUIActionHandler:
 
-    def selectTab(self, id, templateNameHint = None):
+    def selectTab(self, id):
         controller.selectTab(id)
 
     def openFile(self, path):
@@ -1384,7 +1393,7 @@ class TemplateActionHandler:
         self.display = display
         self.templateHandle = templateHandle
 
-    def switchTemplate(self, name, baseURL=None):
+    def switchTemplate(self, name, baseURL=None, *args, **kargs):
         # Graphically indicate that we're not at the home
         # template anymore
         controller.setTabListActive(False)
@@ -1396,7 +1405,9 @@ class TemplateActionHandler:
         # that these links always affect the right-hand 'content'
         # area, even if they are loaded from the left-hand 'tab'
         # area. Actually this whole invocation is pretty hacky.
-        template = TemplateDisplay(name, frameHint=controller.frame, areaHint=controller.frame.mainDisplay, baseURL=baseURL)
+        template = TemplateDisplay(name, frameHint=controller.frame,
+                areaHint=controller.frame.mainDisplay, baseURL=baseURL,
+                *args, **kargs)
         controller.frame.selectDisplay(template, controller.frame.mainDisplay)
 
     def doneWithIntro(self):
@@ -1418,7 +1429,8 @@ class TemplateActionHandler:
                     baseURL = guide.getURL()
                 else:
                     baseURL = None
-                self.switchTemplate(location, baseURL=baseURL)
+                self.switchTemplate(location, baseURL=baseURL,
+                        id=guide.getID())
             elif mode == 'url':
                 controller.frame.selectURL(location, \
                                            controller.frame.mainDisplay)
@@ -1475,7 +1487,7 @@ class TemplateActionHandler:
         ctrl = (ctrlDown == '1')
         view = self.templateHandle.getTemplateVariable(viewName)
         controller.selection.selectItem(view, int(id), shift, ctrl)
-        
+
     def __getSearchFeeds(self):
         searchFeed = controller.getGlobalFeed('dtv:search')
         assert searchFeed is not None

@@ -12,7 +12,7 @@
 <t:include filename="settings.js" />
 </head>
     <t:execOnLoad><![CDATA[
-feed = app.controller.currentSelectedTab.obj
+feed = views.feeds.getObjectByID(int(kargs['id']))
 ]]></t:execOnLoad>
 
 <body>
@@ -51,7 +51,7 @@ feed = app.controller.currentSelectedTab.obj
 	<input name="feed" type="hidden" value="@@@feed.getID()@@@" />
 	
 	<div class="main-content" style="text-align:center; margin-left:-40px;">
-		<h3><a onclick="eventURL('template:channel');" href="#" 
+		<h3><a onclick="eventURL('template:channel?id=@@@feed.getID()@@@');" href="#" 
 i18n:translate="">Back to Channel</a></h3>
 	</div>
 

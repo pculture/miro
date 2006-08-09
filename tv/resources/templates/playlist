@@ -12,7 +12,7 @@
     <t:include filename="dynamic.js" />
     <t:execOnLoad><![CDATA[
 
-playlist = app.controller.currentSelectedTab.obj
+playlist = views.playlists.getObjectByID(int(kargs['id']))
 playlistView = playlist.getView()
 thisPlaylistView = views.feeds.filter(lambda x: x is playlist)
 ]]>

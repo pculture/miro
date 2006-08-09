@@ -71,9 +71,11 @@ class Tab:
         Tab.idCounter += 1
         self.obj = obj
 
-    def start(self, frame, templateNameHint):
+    def start(self, frame):
         app.controller.setTabListActive(True)
-        self.display = app.TemplateDisplay(templateNameHint or self.contentsTemplate, frameHint=frame, areaHint=frame.mainDisplay)
+        self.display = app.TemplateDisplay(self.contentsTemplate, 
+                frameHint=frame, areaHint=frame.mainDisplay, 
+                id=self.obj.getID())
         frame.selectDisplay(self.display, frame.mainDisplay)
 
     # Returns "normal" "selected" or "selected-inactive"

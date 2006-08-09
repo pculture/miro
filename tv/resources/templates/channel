@@ -15,10 +15,11 @@
     <script type="text/javascript" src="resource:templates/shide.js" />
 
     <t:execOnLoad><![CDATA[
+feed = views.feeds.getObjectByID(int(kargs['id']))
+
 global searchFilter
 searchFilter = lambda x: filters.matchingItems(x, None)
 
-feed = app.controller.currentSelectedTab.obj
 allItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
 matchingItems = allItems.filter(lambda x: searchFilter(x))
 downloadingItems = matchingItems.filter(filters.downloadingItems)
@@ -80,9 +81,7 @@ thisFeedView.unlink()
         </div>
         <div id="main-titlebar-tasks">
                 <div id="main-titlebar-tasks-settings">
-                        <p><a href="#" 
-onclick="return eventURL('template:feed-settings');"><span 
-i18n:translate="">Settings</span></a></p>
+                        <p><a href="#" onclick="return eventURL('template:feed-settings?id=@@@feed.getID()@@@');"><span i18n:translate="">Settings</span></a></p>
                 </div>
                 <div id="main-titlebar-tasks-recommend">
                     <p><a href="mailto:?subject=@@@feed.getTitle()@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed.getTitle()@@@&quot;. If you don't have the Democracy Player, you can get it here:%0D%0A%0D%0Ahttp://www.getdemocracy.com/%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed.getURL()@@@" class="recommend_link" i18n:translate="">Recommend</a></p>

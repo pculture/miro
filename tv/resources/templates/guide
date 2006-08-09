@@ -5,8 +5,7 @@
       eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 <t:include filename="dynamic.js" />
     <t:execOnLoad><![CDATA[
-import app
-guide = app.controller.currentSelectedTab.obj
+guide = views.guides.getObjectByID(int(kargs['id']))
 ]]></t:execOnLoad>
 <t:staticReplaceMarkup t:replaceData="guide.getHTML()" />
 
