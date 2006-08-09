@@ -92,9 +92,6 @@ class UIBackendDelegate:
         NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
 
     def revealFile(self, filename):
-        # We could use Python's webbrowser.open() here, but
-        # unfortunately, it doesn't have the same semantics under UNIX
-        # as under other OSes. Sometimes it blocks, sometimes it doesn't.
         if not os.path.isdir(filename):
             filename = os.path.dirname(filename)
         NSWorkspace.sharedWorkspace().openURL_(NSURL.fileURLWithPath_(filename))
