@@ -35,7 +35,7 @@ viewName = kargs['viewName']
             <img class="inprogress-arrows"  
                 src="resource:images/main-video-inprogress-arrows.gif" />
         </span>
-        <a t:showIf="this.isDownloaded() and not this.isContainerItem"
+        <a t:showIf="this.isDownloaded() and this.getVideoFilename() != ''"
             class="play-icon" href="#" 
             title="Play '***this.getTitle()***'" 
             onclick="return eventURL('action:playViewNamed?viewName=@@@viewName@@@&amp;firstItemId=@@@this.getID()@@@');" />
