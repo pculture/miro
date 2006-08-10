@@ -25,6 +25,7 @@ feedTabs = allTabs.filterWithIndex(indexes.tabObjectClass,
 playlistTabs = allTabs.filterWithIndex(indexes.tabObjectClass,
         playlist.SavedPlaylist).sort(sorts.tabs)
 
+# items includes fileItems.
 items = db.filterWithIndex(indexes.objectsByClass,item.Item)
 fileItems = db.filter(lambda x: isinstance(x, item.FileItem))
 toplevelItems = items.filter(lambda x: x.feed_id is not None)
