@@ -467,6 +467,7 @@ class Controller (frontend.Application):
                 print "DTV: Showing startup dialog..."
                 delegate.performStartupTasks(self.finishStartup)
                 config.set(prefs.STARTUP_TASKS_DONE, True)
+                config.save()
             else:
                 self.finishStartup()
         except:
