@@ -150,11 +150,11 @@ class AppController (NibClassBuilder.AutoBaseClass):
             print "WARNING: %s doesn't seem to be a torrent file" % path
         else:
             singleclick.addTorrent(path, infoHash)
-            app.controller.selectTabByTemplateBase('downloadtab')
+            app.controller.selection.selectTabByTemplateBase('downloadtab')
         
     def addVideo(self, path):
         singleclick.addVideo(path)
-        app.controller.selectTabByTemplateBase('librarytab')
+        app.controller.selection.selectTabByTemplateBase('librarytab')
 
     def workspaceWillSleep_(self, notification):
         def pauseRunningDownloaders(self=self):
