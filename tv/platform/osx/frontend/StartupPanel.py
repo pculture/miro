@@ -23,11 +23,6 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
         self = super(StartupPanelController, self).initWithWindowNibName_("StartupPanel")
         self.gathered = None
         self.panels = {
-            'welcome':
-            {
-                'prepare':  self.prepareWelcomePanel,
-                'perform':  self.performWelcomePanelTask
-            },
             'run-at-startup':
             {
                 'prepare':  self.prepareRunAtStartupPanel,
@@ -87,18 +82,8 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
 
     # -------------------------------------------------------------------------
 
-    def prepareWelcomePanel(self):
-        self.backButton.setEnabled_(NO)
-        self.validateButton.setEnabled_(YES)
-        self.validateButton.setTitle_('Next')
-
-    def performWelcomePanelTask(self):
-        return True
-
-    # -------------------------------------------------------------------------
-
     def prepareRunAtStartupPanel(self):
-        self.backButton.setEnabled_(YES)
+        self.backButton.setEnabled_(NO)
         self.validateButton.setEnabled_(YES)
         self.validateButton.setTitle_('Next')
         tag = int(config.get(prefs.RUN_DTV_AT_STARTUP))
