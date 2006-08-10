@@ -199,7 +199,7 @@ class MainWindowChanger(object):
         platformutils.confirmMainThread()
         isFeed = False
         isGuide = False
-        tab = app.controller.currentSelectedTab
+        tab = app.controller.selection.currentTab
         if tab:
             isFeed = tab.isFeed()
             isGuide = tab.isGuide() and not tab.obj.getDefault()

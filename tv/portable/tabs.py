@@ -69,10 +69,21 @@ class Tab:
         self.display = None
         self.id = "tab%d" % Tab.idCounter
         Tab.idCounter += 1
+        self.selected = False
+        self.active = False
         self.obj = obj
 
+    def setActive(self, newValue):
+        self.obj.confirmDBThread()
+        self.active = newValue
+        self.obj.signalChange(needsSave=False)
+
+    def setSelected(self, newValue):
+        self.obj.confirmDBThread()
+        self.selected = newValue
+        self.obj.signalChange(needsSave=False)
+
     def start(self, frame):
-        app.controller.setTabListActive(True)
         self.display = app.TemplateDisplay(self.contentsTemplate, 
                 frameHint=frame, areaHint=frame.mainDisplay, 
                 id=self.obj.getID())
@@ -80,12 +91,21 @@ class Tab:
 
     # Returns "normal" "selected" or "selected-inactive"
     def getState(self):
-        return  app.controller.getTabState(self.id)
+        if not self.selected:
+            return 'normal'
+        elif not self.active:
+            return 'selected-inactive'
+        else:
+            return 'selected'
 
     def redraw(self):
         # Force a redraw by sending a change notification on the underlying
         # DB object.
         self.obj.signalChange()
+
+    def isStatic(self):
+        """True if this Tab represents a StaticTab."""
+        return isinstance(self.obj, StaticTab)
 
     def isFeed(self):
         """True if this Tab represents a Feed."""

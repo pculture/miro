@@ -308,7 +308,7 @@ class TemplatePerformance(DemocracyTestCase):
 
 
     def fillAndUnlink(self):
-        (tch, handle) = fillTemplate("channel",self.domHandle,'gtk-x11-MozillaBrowser','platform')
+        (tch, handle) = fillTemplate("channel",self.domHandle,'gtk-x11-MozillaBrowser','platform', id=self.feeds[-1].getID())
         tch.read()
         handle.initialFillIn()
         handle.unlinkTemplate()

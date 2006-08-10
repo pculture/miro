@@ -97,7 +97,7 @@ class PlaybackControllerBase:
     def exitPlayback(self, switchDisplay=True):
         self.reset()
         if switchDisplay:
-            controller.displayCurrentTabContent()
+            controller.selection.displayCurrentTabContent()
     
     def playPause(self):
         videoDisplay = controller.videoDisplay
@@ -441,8 +441,6 @@ class Controller (frontend.Application):
         self.frame = None
         self.inQuit = False
         self.initial_feeds = False # True if this is the first run and there's an initial-feeds.democracy file.
-        self.currentSelectedTab = None
-        self.tabListActive = True
 
     ### Startup and shutdown ###
 
@@ -500,11 +498,6 @@ class Controller (frontend.Application):
             # Set up tab list
             tabs.reloadStaticTabs()
 
-            # If we don't have any tabs by now, something is wrong
-            # Our tab selection logic assumes we have at least one tab
-            # and will freak out if there aren't any
-            assert(len(views.allTabs) > 0)
-
             channelGuide = _getInitialChannelGuide()
 
             # Keep a ref of the 'new' and 'download' tabs, we'll need'em later
@@ -515,21 +508,6 @@ class Controller (frontend.Application):
                     self.newTab = tab
                 elif tab.tabTemplateBase == 'downloadtab':
                     self.downloadTab = tab
-
-            views.allTabs.resetCursor()
-            while True:
-                next = views.allTabs.getNext()
-                if next is None: 
-                    # we loop all the way arund allTabs... something is busted
-                    raise ValueError("Can't find channel guide tab")
-                if next.tabTemplateBase == 'guidetab' and next.obj.getDefault():
-                    break
-            if self.initial_feeds:
-                while next and ((not isinstance(next.obj, feed.Feed)) or next.obj.getOriginalURL ().startswith("dtv:")):
-                    next = views.allTabs.getNext()
-                if next is None:
-                    views.allTabs.resetCursor()
-                    views.allTabs.getNext()
 
             # If we're missing the file system videos feed, create it
             self.setupGlobalFeed('dtv:directoryfeed')
@@ -559,29 +537,29 @@ class Controller (frontend.Application):
             self.videoDisplay.playbackController = self.playbackController
             self.videoDisplay.setVolume(config.get(prefs.VOLUME_LEVEL))
 
+            # create our selection handler
+
+            self.selection = selection.SelectionHandler()
+
+            self.selection.selectFirstGuide()
+            if self.initial_feeds:
+                views.feedTabs.resetCursor()
+                f = views.feedTabs.getNext()
+                if f is not None:
+                    self.selection.selectTabByObject(f)
+
+
             # Reconnect items to downloaders.
             item.reconnectDownloaders()
 
             eventloop.addTimeout (30, autoupdate.checkForUpdates, "Check for updates")
             feed.expireItems()
 
-            # Set up tab list (on left); this will automatically set up the
-            # display area (on right) and currentSelectedTab
             self.tabDisplay = TemplateDisplay('tablist')
             self.frame.selectDisplay(self.tabDisplay, self.frame.channelsDisplay)
-            views.allTabs.addRemoveCallback(lambda oldObject, oldIndex: self.checkSelectedTab())
-
-            self.checkSelectedTab()
 
             # If we have newly available items, provide feedback
             self.updateAvailableItemsCountFeedback()
-
-            self.selection = selection.SelectionHandler(db)
-
-            # NEEDS: our strategy above with addRemoveCallback doesn't
-            # work. I'm not sure why, but it seems to have to do with the
-            # reentrant call back into the database when checkSelectedTab ends 
-            # up calling signalChange to force a tab to get rerendered.
 
             # Now adding the video files we possibly gathered from the startup
             # dialog
@@ -622,41 +600,6 @@ class Controller (frontend.Application):
         if feed is not None:
             print "DTV: Removing global feed %s" % url
             feed.remove()
-
-    # Change the currently selected tab to the one remaining when
-    # filtered by index and id. Returns the currently selected tab.
-    def checkTabUsingIndex(self, index, id):
-        # view should contain only one tab object
-        view = views.allTabs.filterWithIndex(index, id)
-        view.confirmDBThread()
-        try:
-            view.resetCursor()
-            obj = view.getNext()
-
-        #FIXME: This is a hack.
-        # It takes the cursor into view and makes a cursor into self.tabs
-        #
-        # view.objects[view.cursor][0] is the object in view before it was
-        # mapped into a tab
-        # 
-        # objectLocs is an internal dictionary of object IDs to cursors
-        #
-        # We need to change the database API to allow this to happen
-        # cleanly and give sane error messages (See #1053 and #1155)
-            views.allTabs.cursor = views.allTabs.objectLocs[view.objects[view.cursor][0].getID()]
-        finally:
-            view.unlink()
-        return obj
-
-    # Select a tab given a tab id (as opposed to an object id)
-    # Returns the selected tab
-    def checkTabByID(self, id):
-        return self.checkTabUsingIndex(indexes.tabIDIndex, id)
-
-    # Select a tab given an object id (as opposed to a tab id)
-    # Returns the selected tab
-    def checkTabByObjID(self, id):
-        return self.checkTabUsingIndex(indexes.tabObjIDIndex, id)
 
     def downloaderShutdown(self):
         print "DTV: Closing Database..."
@@ -765,116 +708,6 @@ class Controller (frontend.Application):
     def selectFeed(self, url):
         return GUIActionHandler().selectFeed(url)
 
-    ### Keeping track of the selected tab and showing the right template ###
-
-    def getTabState(self, tabId):
-        # Determine if this tab is selected
-        isSelected = False
-        if self.currentSelectedTab:
-            isSelected = (self.currentSelectedTab.id == tabId)
-
-        # Compute status string
-        if isSelected:
-            if self.tabListActive:
-                return 'selected'
-            else:
-                return 'selected-inactive'
-        else:
-            return 'normal'
-
-    def checkSelectedTab(self):
-        # NEEDS: locking ...
-        # NEEDS: ensure is reentrant (as in two threads calling it simultaneously by accident)
-
-        # We'd like to track the currently selected tab entirely with
-        # the cursor on self.tabs. Alas, it is not to be -- when
-        # getTabState is called from the database code in response to
-        # a change to a tab object (say), the cursor has been
-        # temporarily moved by the database code. Long-term, we should
-        # make the database code not do this. But short-term, we track
-        # the the currently selected tab separately too, synchronizing
-        # it to the cursor here. This isn't really wasted effort,
-        # because this variable is also the mechanism by which we
-        # check to see if the cursor has moved since the last call to
-        # checkSelectedTab.
-        #
-        # Why use the cursor at all? It's necessary because we want
-        # the database code to handle moving the cursor on a deleted
-        # record automatically for us.
-
-        if self.frame is None:
-            return
-
-        oldSelected = self.currentSelectedTab
-        newSelected = views.allTabs.cur()
-        self.currentSelectedTab = newSelected
-
-        tabChanged = ((oldSelected == None) != (newSelected == None)) or (oldSelected and newSelected and oldSelected.id != newSelected.id)
-        if tabChanged: # Tab selection has changed! Deal.
-            # Redraw the old and new tabs
-            if oldSelected and oldSelected.obj.idExists():
-                oldSelected.redraw()
-            if newSelected:
-                newSelected.redraw()
-            # Boot up the new tab's template.
-            self.displayCurrentTabContent()
-
-    def displayCurrentTabContent(self):
-        if self.currentSelectedTab is not None:
-            self.currentSelectedTab.start(self.frame)
-        else:
-            # If we're in the middle of a shutdown, selectDisplay
-            # might not be there... I'm not sure why...
-            if hasattr(self,'selectDisplay'):
-                self.selectDisplay(NullDisplay())
-
-    def setTabListActive(self, active):
-        """If active is true, show the tab list normally. If active is
-        false, show the tab list a different way to indicate that it
-        doesn't pertain directly to what is going on (for example, a
-        video is playing) but that it can still be clicked on."""
-        self.tabListActive = active
-        if views.allTabs.cur():
-            views.allTabs.cur().redraw()
-
-    def selectTab(self, id):
-        try:
-            cur = self.checkTabByID(id)
-        except: # That tab doesn't exist anymore! Give up.
-            print "Tab %s doesn't exist! Cannot select it." % str(id)
-            return
-
-        self.selection.clearSelection()
-        oldSelected = self.currentSelectedTab
-        newSelected = cur
-
-        # Handle reselection action.
-        if oldSelected and oldSelected.id == newSelected.id: 
-            # HACK: only for the channel guide, the we aren't displaying the
-            # tab's display anymore.  Otherwise if we do this for a feed tab,
-            # or one of the videos tabs, it will screw up our view callbacks.
-            mainDisplay = self.frame.getDisplay(controller.frame.mainDisplay) 
-            if (newSelected.tabTemplateBase == 'guidetab' or
-                    oldSelected.display is not mainDisplay):
-                newSelected.start(self.frame)
-
-        # Handle case where a different tab was clicked
-        self.checkSelectedTab()
-
-    def selectTabByTemplateBase(self, templatebase):
-        views.allTabs.confirmDBThread()
-        views.allTabs.resetCursor()
-        while 1:
-            obj = views.allTabs.getNext()
-            if obj is None:
-                print ("WARNING, couldn't find tab with template base %s"
-                        % templatebase)
-                return
-            elif obj.tabTemplateBase == templatebase:
-                self.selectTab(obj.id)
-                return
-
-
     ### Keep track of currently available+downloading items and refresh the
     ### corresponding tabs accordingly.
 
@@ -908,7 +741,7 @@ class Controller (frontend.Application):
             playlist = db.getObjectByID(id)
             playlist.handleDrop()
         elif dropData.startswith("playlistitem-"):
-            playlist = controller.currentSelectedTab.obj
+            playlist = controller.selection.currentTab.obj
             idStr = dropData[len("playlistitem-"):]
             if idStr != 'END':
                 item = db.getObjectByID(int(idStr))
@@ -1008,7 +841,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 return False
 
             # Let channel guide URLs pass through
-            tab = controller.currentSelectedTab
+            tab = controller.selection.currentTab
             if tab and tab.isGuide() and url.startswith(tab.obj.getURL()):
                 return True
             if url.startswith('file://'):
@@ -1093,14 +926,14 @@ class ModelActionHandler:
             pass
 
     def removeCurrentFeed(self):
-        tab = controller.currentSelectedTab
+        tab = controller.selection.currentTab
         if tab.isFeed():
             currentFeed = tab.objID()
             if currentFeed:
                 self.removeFeed(currentFeed)
 
     def removeCurrentGuide(self):
-        tab = controller.currentSelectedTab
+        tab = controller.selection.currentTab
         if tab.isGuide() and not tab.obj.getDefault():
             currentGuide = tab.objID()
             if currentGuide:
@@ -1178,7 +1011,7 @@ downloaded?""")
         dialog.run(dialogCallback)
 
     def updateCurrentFeed(self):
-        tab = controller.currentSelectedTab
+        tab = controller.selection.currentTab
         if tab.isFeed():
             currentFeed = tab.objID()
             if currentFeed:
@@ -1195,7 +1028,7 @@ downloaded?""")
             f.update()
 
     def copyCurrentFeedURL(self):
-        tab = controller.currentSelectedTab
+        tab = controller.selection.currentTab
         if tab.isFeed():
             currentFeed = tab.objID()
             if currentFeed:
@@ -1325,9 +1158,6 @@ class printResultThread(threading.Thread):
 # the GUI presentation (and may or may not manipulate the database.)
 class GUIActionHandler:
 
-    def selectTab(self, id):
-        controller.selectTab(id)
-
     def openFile(self, path):
         singleclick.openFile(path)
 
@@ -1337,10 +1167,6 @@ class GUIActionHandler:
     def _getGuide(self, url):
         return views.guides.getItemWithIndex(indexes.guidesByURL, url)
 
-    def _selectTabByObject (self, obj):
-        controller.checkTabByObjID(obj.getID())
-        controller.checkSelectedTab()
-        
     def addURL(self, title, message, callback, url = None):
         def createDialog(ltitle, lmessage, prefill = None):
             def prefillCallback():
@@ -1376,7 +1202,7 @@ class GUIActionHandler:
                 myFeed = feed.Feed(url)
     
             if selected == '1':
-                self._selectTabByObject (myFeed)
+                controller.selection.selectTabByObject(myFeed)
         self.addURL (_("Democracy - Add Channel"), _("Enter the URL of the channel to add"), doAdd, url)
 
     def selectFeed(self, url):
@@ -1387,7 +1213,7 @@ class GUIActionHandler:
         if myFeed is None:
             print "selectFeed: no such feed: %s" % url
             return
-        self._selectTabByObject (myFeed)
+        controller.selection.selectTabByObject(myFeed)
         
     def addGuide(self, url = None, selected = '1'):
         def doAdd(url):
@@ -1397,7 +1223,7 @@ class GUIActionHandler:
                 myGuide = guide.ChannelGuide(url)
     
             if selected == '1':
-                self._selectTabByObject (myGuide)
+                controller.selection.selectTabByObject(myGuide)
         self.addURL (_("Democracy - Add Channel Guide"), _("Enter the URL of the channel guide to add"), doAdd, url)
 
     # Following for testing/debugging
@@ -1419,10 +1245,6 @@ class TemplateActionHandler:
         self.templateHandle = templateHandle
 
     def switchTemplate(self, name, baseURL=None, *args, **kargs):
-        # Graphically indicate that we're not at the home
-        # template anymore
-        controller.setTabListActive(False)
-
         self.templateHandle.unlinkTemplate()
         # Switch to new template. It get the same variable
         # dictionary as we have.
@@ -1507,11 +1329,11 @@ class TemplateActionHandler:
             searchFeed.preserveDownloads(searchDownloadsFeed)
             searchFeed.reset()
 
-    def handleSelect(self, viewName, id, shiftDown, ctrlDown):
+    def handleSelect(self, area, viewName, id, shiftDown, ctrlDown):
         shift = (shiftDown == '1')
         ctrl = (ctrlDown == '1')
         view = self.templateHandle.getTemplateVariable(viewName)
-        controller.selection.selectItem(view, int(id), shift, ctrl)
+        controller.selection.selectItem(area, view, int(id), shift, ctrl)
 
     def __getSearchFeeds(self):
         searchFeed = controller.getGlobalFeed('dtv:search')

@@ -128,8 +128,8 @@ def timeChannel():
     class DummyObject:
         pass
     app.controller = DummyObject()
-    app.controller.currentSelectedTab = DummyObject()
-    app.controller.currentSelectedTab.obj = rocketboom
+    app.controller.selection.currentTab = DummyObject()
+    app.controller.selection.currentTab.obj = rocketboom
     def render():
         template.fillTemplate('channel', domHandler, dtvPlatform, eventCookie)
     timeIt('channel', render, 1000)

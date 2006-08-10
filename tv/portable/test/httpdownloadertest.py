@@ -73,7 +73,7 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
         def stopOnData():
             if (self.downloader.state == 'downloading' and 
                     self.downloader.currentSize > 0):
-                self.downloader.stop()
+                self.downloader.stop(False)
                 eventloop.quit()
         self.downloader.statusCallback = stopOnData
         self.runEventLoop()

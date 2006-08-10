@@ -16,7 +16,7 @@ class HadToStopEventLoop(Exception):
 
 class DummyController:
     def __init__(self):
-        self.selection = selection.SelectionHandler(database.defaultDatabase)
+        self.selection = selection.SelectionHandler()
 
 class DemocracyTestCase(unittest.TestCase):
     def setUp(self):
@@ -35,7 +35,10 @@ class DemocracyTestCase(unittest.TestCase):
                 print "util.failed called!"
                 print "args: %s kwargs: %s"  % (args, kwargs)
                 import traceback
-                traceback.print_stack()
+                if kwargs.get('withExn'):
+                    traceback.print_exc()
+                else:
+                    traceback.print_stack()
                 raise Exception("util.failed called")
         util.failed = newUtilDotFailed
         app.controller = DummyController()

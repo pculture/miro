@@ -206,7 +206,7 @@ function forceRedisplay(elt) {
 
 var handleMouseUp = false;
 
-function handleSelect(event) {
+function handleSelect(area, event) {
     if(event.type == 'mousedown' &&
        event.currentTarget.className.indexOf("selected") != -1) {
        handleMouseUp = true;
@@ -222,8 +222,8 @@ function handleSelect(event) {
     var ctrlKey = '0';
     if(event.shiftKey) shiftKey = '1';
     if(event.ctrlKey) ctrlKey = '1';
-    eventURL('action:handleSelect?viewName=' + viewName + '&id=' + id + 
-       '&shiftDown=' + shiftKey + '&ctrlDown=' + ctrlKey);
+    eventURL('action:handleSelect?area=' + area + '&viewName=' + viewName + 
+	'&id=' + id + '&shiftDown=' + shiftKey + '&ctrlDown=' + ctrlKey);
     return true;
 }
 

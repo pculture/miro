@@ -6,39 +6,58 @@
       xmlns:i18n="http://www.participatoryculture.org/i18n"
       eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 <head>
-<title>video player interface</title>
+    <title>video player interface</title>
 
-<link rel="stylesheet" type="text/css" href="resource:css/style.css" />
-<link rel="stylesheet" type="text/css" href="resource:css/sidebar.css" />
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<t:include filename="dynamic.js" />
-<script type="text/javascript" src="resource:templates/osxdnd.js" />
+    <link rel="stylesheet" type="text/css" href="resource:css/style.css" />
+    <link rel="stylesheet" type="text/css" href="resource:css/sidebar.css" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <t:include filename="dynamic.js" />
+    <script type="text/javascript" src="resource:templates/osxdnd.js" />
+    <t:execOnLoad><![CDATA[
+guideTabs = views.guideTabs
+staticTabs = views.staticTabs
+feedTabs = views.feedTabs
+playlistTabs = views.playlistTabs
+]]>
+    </t:execOnLoad>
 </head>
 <body>
 
 <div id="sidebar">
   <div id="channels">
     <ul class="tab-list">
-      <li t:repeatForView="views.guideTabs" onmousedown="eventURL('action:selectTab?id=@@@this.id@@@')">
-        <span t:hideIf="this.obj.getDefault()" t:contextMenu="action:copyFeedURL?feed=@@@this.obj.getID()@@@|Copy URL to clipboard\n\naction:removeGuide?guide_id=@@@this.obj.getID()@@@|Remove">
+      <li t:repeatForView="guideTabs" 
+	selectID="***this.objID()***" selectViewName="guideTabs"
+	onmousedown="return handleSelect('tablist', event);"
+	onmouseup="return handleSelect('tablist', event);" >
+        <span t:hideIf="this.obj.getDefault()" t:contextMenu="action:copyFeedURL?feed=@@@this.objID()@@@|Copy URL to clipboard\n\naction:removeGuide?guide_id=@@@this.objID()@@@|Remove">
             <t:includeTemplate filename="guidetab" />
         </span>
         <span t:hideIf="not this.obj.getDefault()">
             <t:includeTemplate filename="guidetab" />
         </span>
       </li>
-      <li t:repeatForView="views.staticTabs" onmousedown="eventURL('action:selectTab?id=@@@this.id@@@')">
+      <li t:repeatForView="staticTabs" 
+	selectID="***this.objID()***" selectViewName="staticTabs"
+	onmousedown="return handleSelect('tablist', event);"
+	onmouseup="return handleSelect('tablist', event);" >
           <t:includeTemplate filename="statictab" />
       </li>
       <div class="tab-list-divider" />
-      <li t:repeatForView="views.feedTabs" onmousedown="eventURL('action:selectTab?id=@@@this.id@@@')">
-          <span t:contextMenu="action:updateFeed?feed=@@@this.obj.getID()@@@|Update Channel Now\naction:copyFeedURL?feed=@@@this.obj.getID()@@@|Copy URL to clipboard\n\naction:remove?id=@@@this.obj.getID()@@@|Remove">
+      <li t:repeatForView="feedTabs" 
+	selectID="***this.objID()***" selectViewName="feedTabs"
+	onmousedown="return handleSelect('tablist', event)"
+	onmouseup="return handleSelect('tablist', event)" >
+          <span t:contextMenu="action:updateFeed?feed=@@@this.objID()@@@|Update Channel Now\naction:copyFeedURL?feed=@@@this.objID()@@@|Copy URL to clipboard\n\naction:remove?id=@@@this.objID()@@@|Remove">
             <t:includeTemplate filename="feedtab" />
           </span>
       </li>
       <div class="tab-list-divider" />
-      <li t:repeatForView="views.playlistTabs" onmousedown="eventURL('action:selectTab?id=@@@this.id@@@')">
-          <span t:contextMenu="action:rename?id=@@@this.obj.getID()@@@|Rename Playlist\n\naction:remove?id=@@@this.obj.getID()@@@|Remove">
+      <li t:repeatForView="playlistTabs" 
+	selectID="***this.objID()***" selectViewName="playlistTabs"
+	onmousedown="return handleSelect('tablist', event);"
+	onmouseup="return handleSelect('tablist', event);" >
+          <span t:contextMenu="action:rename?id=@@@this.objID()@@@|Rename Playlist\n\naction:remove?id=@@@this.objID()@@@|Remove">
             <t:includeTemplate filename="playlisttab" />
           </span>
       </li>

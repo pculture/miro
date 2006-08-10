@@ -10,6 +10,7 @@ import prefs
 import threading
 import urllib
 import eventloop
+import views
 from gtcache import gettext as _
 
 HTMLPattern = re.compile("^.*(<head.*?>.*</body\s*>)", re.S)
@@ -189,9 +190,15 @@ class ChannelGuide(DDBObject):
             else:
                 self.cachedGuideBody = html
 
-            currentTab = app.controller.currentSelectedTab
-            if currentTab.tabTemplateBase == 'guidetab' and wasLoading:
-                app.controller.selectTab(currentTab.id)
+            selection = app.controller.selection
+            if wasLoading:
+                myTab = None
+                for tab in views.tabs:
+                    if tab.obj is self:
+                        myTab = tab
+                        break
+                if myTab and self.isTabSelected(myTab):
+                    selection.displayTabContents(myTab.getID())
 
             self.loadedThisSession = True
             self.signalChange()

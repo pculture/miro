@@ -274,7 +274,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
 
     itemsAlwaysAvailable = ('checkForUpdates:', 'showPreferencesWindow:', 'addGuide:', 'openFile:', 'shutdown:')
     def validateMenuItem_(self, item):
-        tab = app.controller.currentSelectedTab
+        tab = app.controller.selection.currentTab
         if item.action() == 'removeGuide:' and tab is not None:
             return tab.isGuide() and not tab.obj.getDefault()
         else:

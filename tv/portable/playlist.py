@@ -84,7 +84,7 @@ class SavedPlaylist(database.DDBObject):
     def handleDrop(self):
         """Called when something gets dropped onto this playlist."""
 
-        selection = app.controller.selection
+        selection = app.controller.selection.itemListSelection
         selectionType = selection.getType()
         if selectionType == 'item':
             for id in selection.currentSelection:
@@ -103,7 +103,7 @@ class SavedPlaylist(database.DDBObject):
         The selection must contain items inside this playlist, or a ValueError
         will be thrown.
         """
-        selection = app.controller.selection
+        selection = app.controller.selection.itemListSelection
         if selection.getType() != 'item':
             raise ValueError("Bad selection type: %s" % selection.getType())
         # Figure out what the current selection in.  Since the selection is

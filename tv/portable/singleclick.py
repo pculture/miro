@@ -169,10 +169,10 @@ def parseCommandLineArgs(args=None):
             print "WARNING: %s doesn't exist" % arg
 
     if addedVideos:
-        app.controller.selectTabByTemplateBase('librarytab')
+        app.controller.selection.selectTabByTemplateBase('librarytab')
         playCommandLineView()
     elif addedTorrents:
-        app.controller.selectTabByTemplateBase('downloadtab')
+        app.controller.selection.selectTabByTemplateBase('downloadtab')
 
 def openFile(path):
     parseCommandLineArgs([path])
