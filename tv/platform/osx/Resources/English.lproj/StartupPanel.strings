@@ -4,6 +4,9 @@
 /* NSButton (Back) : <title:Back> (oid:19) */
 "Back" = "Back";
 
+/* NSBox (Box) : <title:Box> (oid:84) */
+"Box" = "Box";
+
 /* NSButton (Browse) : <title:Browse> (oid:78) */
 "Browse" = "Browse";
 
@@ -19,7 +22,7 @@ Would you like Democracy Player to look for video files on your computer?> (oid:
 /* NSButton (Next) : <title:Next> (oid:18) */
 "Next" = "Next";
 
-/* NSButtonCell (No) : <title:No> (oid:47) */
+/* NSButtonCell (No) : <title:No> (oid:88) */
 "No" = "No";
 
 /* NSButtonCell (Restrict to my 'Movies' folder) : <title:Restrict to my 'Movies' folder> (oid:73) */
@@ -34,21 +37,24 @@ Would you like Democracy Player to look for video files on your computer?> (oid:
 /* NSTextField (Searching for Videos) : <title:Searching for Videos> (oid:57) */
 "Searching for Videos" = "Searching for Videos";
 
+/* NSTextField (The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question.) : <title:The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question.> (oid:90) */
+"The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question." = "The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question.";
+
 /* NSTextField (We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.   Would you like to run Democracy when your computer starts up?) : <title:We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.
 
 
-Would you like to run Democracy when your computer starts up?> (oid:41) */
+Would you like to run Democracy when your computer starts up?> (oid:83) */
 "We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?" = "We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?";
 
 /* NSPanel (Welcome to Internet TV!) : <title:Welcome to Internet TV!> (oid:5) */
 "Welcome to Internet TV!" = "Welcome to Internet TV!";
 
-/* NSTextField (Welcome to Internet TV. Democracy Player is an open-source video player for finding, downloading and watching your favorite internet videos. There's a lot you can do with Democracy Player: recommend videos to friends, import your favorite video website, save videos on your computer to watch later, automatically download your favorite videos in the background, watch new videos one after the other, download torrents, all in one application.  The next few screens will help you set up Democracy Player so that it works best for you.) : <title:Welcome to Internet TV. Democracy Player is an open-source video player for finding, downloading and watching your favorite internet videos. There's a lot you can do with Democracy Player: recommend videos to friends, import your favorite video website, save videos on your computer to watch later, automatically download your favorite videos in the background, watch new videos one after the other, download torrents, all in one application.
+/* NSTextField (Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.  ) : <title:Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.
 
-The next few screens will help you set up Democracy Player so that it works best for you.> (oid:22) */
-"Welcome to Internet TV. Democracy Player is an open-source video player for finding, downloading and watching your favorite internet videos. There's a lot you can do with Democracy Player: recommend videos to friends, import your favorite video website, save videos on your computer to watch later, automatically download your favorite videos in the background, watch new videos one after the other, download torrents, all in one application.\n\nThe next few screens will help you set up Democracy Player so that it works best for you." = "Welcome to Internet TV. Democracy Player is an open-source video player for finding, downloading and watching your favorite internet videos. There's a lot you can do with Democracy Player: recommend videos to friends, import your favorite video website, save videos on your computer to watch later, automatically download your favorite videos in the background, watch new videos one after the other, download torrents, all in one application.\n\nThe next few screens will help you set up Democracy Player so that it works best for you.";
+> (oid:22) */
+"Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n";
 
-/* NSButtonCell (Yes) : <title:Yes> (oid:48) */
+/* NSButtonCell (Yes) : <title:Yes> (oid:87) */
 "Yes" = "Yes";
 
 /* NSTextView : <title:You're done!
