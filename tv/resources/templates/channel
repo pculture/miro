@@ -17,11 +17,11 @@
     <t:execOnLoad><![CDATA[
 feed = views.feeds.getObjectByID(int(kargs['id']))
 
-global searchFilter
-searchFilter = lambda x: filters.matchingItems(x, None)
+global searchTerm
+searchTerm = None
 
 allItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
-matchingItems = allItems.filter(lambda x: searchFilter(x))
+matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm))
 downloadingItems = matchingItems.filter(filters.downloadingItems)
 thisFeedView = views.feeds.filter(lambda x: x is feed)
 
@@ -43,11 +43,11 @@ else:
     showMoreVideosDisplay = "block"
 
 def updateSearchString(newSearch):
-    global searchFilter
+    global searchTerm
     if len(newSearch) == 0:
-        searchFilter = lambda x: filters.matchingItems(x, None)
+        searchTerm = None
     else:
-        searchFilter = lambda x: filters.matchingItems(x, newSearch)
+        searchTerm = newSearch
     allItems.recomputeFilter(matchingItems)
 
 ]]>
@@ -124,17 +124,25 @@ thisFeedView.unlink()
   <div id="main-channelbar-available" class="main-channelbar" style="display: @@@mainChannelbarAvailableDisplay@@@;">
   <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-newlyavailable');">#&nbsp;</a></div>
     <div t:updateForView="matchingItems">
-      <div t:showIf="allItems.len() == matchingItems.len()">
+      <div t:showIf="searchTerm is None">
 	<h1 i18n:translate="">
 	    <span i18n:name="len" t:replace="allItems.len()" /> 
 	    Videos On This Channel
 	</h1>
       </div>
-      <div t:showIf="allItems.len() != matchingItems.len()">
-	<h1 i18n:translate="">
-	    <span i18n:name="len" t:replace="matchingItems.len()" /> 
-	    Videos Match This Search
-	</h1>
+      <div t:showIf="searchTerm is not None">
+	<div t:showIf="allItems.len() == matchingItems.len()">
+	    <h1 i18n:translate="">
+	        All <span i18n:name="len" t:replace="matchingItems.len()" /> 
+	        Videos Match This Search
+	    </h1>
+	</div>
+	<div t:hideIf="allItems.len() == matchingItems.len()">
+	    <h1 i18n:translate="">
+	        <span i18n:name="len" t:replace="matchingItems.len()" /> 
+	        Videos Match This Search
+	    </h1>
+	</div>
       </div>
     </div>
  </div>
