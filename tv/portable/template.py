@@ -216,6 +216,7 @@ class UpdateRegion:
         self.view.addChangeCallback(self.onChange)
         self.view.addAddCallback(self.onChange)
         self.view.addRemoveCallback(self.onChange)
+        self.view.addViewChangeCallback (self.onChange)
 
 
     def currentXML(self):

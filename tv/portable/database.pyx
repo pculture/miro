@@ -281,6 +281,7 @@ class DynamicDatabase:
         self.changeCallbacks = []
         self.addCallbacks = []
         self.removeCallbacks = []
+        self.viewChangeCallbacks = []
         self.subFilters = []
         self.subSorts = []
         self.subMaps = []
@@ -531,6 +532,14 @@ class DynamicDatabase:
         self.addCallbacks.append(function)
 
     ##
+    # registers a function to call when the view is updated, even if no items change.
+    #
+    # @param function a function that takes in no parameters
+    def addViewChangeCallback(self, function):
+        self.confirmDBThread()
+        self.viewChangeCallbacks.append(function)
+
+    ##
     # registers a function to call when an item is removed from the view
     #
     # @param function a function that takes in one parameter: the
@@ -550,6 +559,10 @@ class DynamicDatabase:
     def removeRemoveCallback(self, function):
         self.confirmDBThread()
         self.removeCallbacks.remove(function)
+
+    def removeViewChangeCallback(self, function):
+        self.confirmDBThread()
+        self.viewChangeCallbacks.remove(function)
 
 
     ##
@@ -861,6 +874,8 @@ class DynamicDatabase:
                 self.restoreCursor()
                 view.restoreCursor()
                 view.recomputeFilters()
+                for callback in view.viewChangeCallbacks:
+                    callback()
         #self.checkObjLocs()
 
     def recomputeIndex(self,filter, all = False):
@@ -877,6 +892,8 @@ class DynamicDatabase:
                     self.restoreCursor()
                 for view in indexMap.getViews():
                     view.recomputeFilters()
+                    for callback in view.viewChangeCallbacks:
+                        callback()
 
     #Recompute a single subSort
     def recomputeSort(self,sort, all = False):
@@ -911,6 +928,8 @@ class DynamicDatabase:
                 view.objectLocs = newLocs
                 view.cursorStack = newStack
                 view.recomputeFilters()
+                for callback in view.viewChangeCallbacks:
+                    callback()
         #self.checkObjLocs()
 
     ##
@@ -1010,6 +1029,7 @@ class DynamicDatabase:
                     view.addCallbacks = []
                     view.removeCallbacks = []
                     view.changeCallbacks = []
+                    view.viewChangeCallbacks = []
                     return
 
     ##
