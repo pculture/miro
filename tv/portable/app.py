@@ -1237,6 +1237,12 @@ downloaded?""")
         self.backEndDelegate.revealFile(filename)
         obj.save()
 
+    def clearTorrents (self):
+        items = views.items.filter(lambda x: x.getFeed().url == 'dtv:manualFeed' and x.isNonVideoFile() and not x.getState() == "downloading")
+        for i in items:
+            i.downloader.setDeleteFiles(False)
+            i.remove()
+
     def setRunAtStartup(self, value):
         value = (value == "1")
         self.backEndDelegate.setRunAtStartup(value)
@@ -1675,9 +1681,20 @@ def changeMoviesDirectory(newDir, migrate):
         views.remoteDownloads.confirmDBThread()
         for download in views.remoteDownloads:
             print "migrating", download.getFilename()
-            download.migrate()
+            download.migrate(newDir)
         for item in views.fileItems:
-            currentFilename = item.getFilename()
-            if os.path.dirname(currentFilename) == oldDir:
-                item.migrate(newDir)
+            # Only migrate top level items.
+            if item.parent_id is None:
+                currentFilename = item.getFilename()
+                if os.path.dirname(currentFilename) == oldDir:
+                    item.migrate(newDir)
+        # Pass in case they don't exist or are not empty:
+        try:
+            os.rmdir(os.path.join (oldDir, 'Incomplete Downloads'))
+        except:
+            pass
+        try:
+            os.rmdir(oldDir)
+        except:
+            pass
     getSingletonDDBObject(views.directoryFeed).update()

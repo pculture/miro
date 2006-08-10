@@ -19,16 +19,16 @@ def downloadingItems(obj):
     return obj.getState() == 'downloading'
 
 def unwatchedItems(obj):
-    return obj.getState() == 'newly-downloaded'
+    return obj.getState() == 'newly-downloaded' and not obj.isNonVideoFile()
 
 def expiringItems(obj):
-    return obj.getState() == 'expiring'
+    return obj.getState() == 'expiring' and not obj.isNonVideoFile()
 
 def oldItems(obj):
     return obj.getState() == 'saved'
 
 def watchableItems(obj):
-    return obj.isDownloaded()
+    return obj.isDownloaded() and not obj.isNonVideoFile()
     
 # Return True if a tab should be shown for obj in the frontend. The filter
 # used on the database to get the list of tabs.

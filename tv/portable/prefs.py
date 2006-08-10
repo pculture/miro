@@ -58,6 +58,8 @@ AUTOUPDATE_URL    = Pref(key='AutoupdateURL',   default=effectiveAutoupdate,
 RUN_AT_STARTUP     = Pref( key='RunAtStartup',  default=False,  platformSpecific=True )
 MOVIES_DIRECTORY = \
     Pref(key='MoviesDirectory',  default=None, platformSpecific=True)
+NON_VIDEO_DIRECTORY = \
+    Pref(key='NonVideoDirectory',  default=None, platformSpecific=True)
 SUPPORT_DIRECTORY = \
     Pref(key='SupportDirectory', default=None, platformSpecific=True)
 ICON_CACHE_DIRECTORY = \

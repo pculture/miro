@@ -10,6 +10,7 @@ import ctypes
 
 _appDataDirectory = None
 _baseMoviesDirectory = None
+_nonVideoDirectory
 
 def _getRegString(key, subkey):
     def doExpand(val):
@@ -29,6 +30,7 @@ def _getRegString(key, subkey):
 def _findDirectories():
     global _appDataDirectory
     global _baseMoviesDirectory
+    global _nonVideoDirectory
 
     keyName = r'Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders'
     key = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, keyName)
@@ -49,6 +51,12 @@ def _findDirectories():
         documentsDirectory = _getRegString(key, 'Personal')
         # 'Help' the user
         _baseMoviesDirectory = os.path.join(documentsDirectory, 'My Videos')
+    try:
+        _nonVideoDirectory = _getRegString(key, 'Desktop')
+    except:
+        _nonVideoDirectory = None
+    if type(_nonVideoDirectory) is not str or len(_nonVideoDirectory) < 1:
+        _nonVideoDirectory = _getRegString(key, 'Personal')
 
 _findDirectories()
 
@@ -94,6 +102,9 @@ def save(data):
 def get(descriptor):
     if descriptor == prefs.MOVIES_DIRECTORY:
         return _getMoviesDirectory()
+
+    elif descriptor == prefs.NON_VIDEO_DIRECTORY:
+        return _nonVideoDirectory
 
     elif descriptor == prefs.SUPPORT_DIRECTORY:
         return _getSupportDirectory()

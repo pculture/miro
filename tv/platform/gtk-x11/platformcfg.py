@@ -90,6 +90,9 @@ def get(descriptor):
     if descriptor == prefs.MOVIES_DIRECTORY:
         path = os.path.expanduser('~/Movies/Democracy')
 
+    elif descriptor == prefs.NON_VIDEO_DIRECTORY:
+        path = os.path.expanduser('~/Desktop')
+
     elif descriptor == prefs.SUPPORT_DIRECTORY:
         path = os.path.expanduser('~/.democracy')
 

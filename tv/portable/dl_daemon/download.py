@@ -190,7 +190,7 @@ def startDownload(dlid):
         return True
     return download.start()
 
-def stopDownload(dlid):
+def stopDownload(dlid, delete):
     try:
         _lock.acquire()
         try:
@@ -200,16 +200,16 @@ def stopDownload(dlid):
             _lock.release()
     except: # There is no download with this id
         return True
-    return download.stop()
+    return download.stop(delete)
 
-def migrateDownload(dlid):
+def migrateDownload(dlid, directory):
     try:
         download = _downloads[dlid]
     except: # There is no download with this id
         pass
     else:
         if download.state in ("finished", "uploading"):
-            download.moveToMoviesDirectory()
+            download.moveToDirectory(directory)
             download.updateClient()
 
 def getDownloadStatus(dlids = None):
@@ -324,11 +324,14 @@ class BGDownloader:
         """Move our downloaded file from the Incomplete Downloads directoy to
         the movies directory.
         """
-
         if chatter:
             print "moving to movies directory filename is ", self.filename
-        newfilename = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
-                self.shortFilename)
+        self.moveToDirectory(config.get(prefs.MOVIES_DIRECTORY))
+
+    def moveToDirectory (self, directory):
+        newfilename = os.path.join(directory, self.shortFilename)
+        if newfilename == self.filename:
+            return
         newfilename = nextFreeFilename(newfilename)
         try:
             shutil.move(self.filename, newfilename)
@@ -583,7 +586,7 @@ class HTTPDownloader(BGDownloader):
     ##
     # Stops the download and removes the partially downloaded
     # file.
-    def stop(self):
+    def stop(self, delete):
         if self.state == "downloading":
             if self.filehandle is not None:
                 try:
@@ -592,6 +595,14 @@ class HTTPDownloader(BGDownloader):
                     remove(self.filename)
                 except:
                     pass
+        if delete:
+            try:
+                if os.path.isdir(self.filename):
+                    shutil.rmtree(self.filename)
+                else:
+                    remove(self.filename)
+            except:
+                pass
         self.currentSize = 0
         self.cancelRequest()
         self.state = "stopped"
@@ -764,13 +775,13 @@ class BTDownloader(BGDownloader):
                 'fractionDone': fractionDone, 'upTotal': upTotal, 
                 'errorTime': errorTime, 'errorMessage': errorMessage}
 
-    def moveToMoviesDirectory(self):
+    def moveToDirectory(self, directory):
         if self.state in ('uploading', 'downloading'):
             self._shutdownTorrent()
-            BGDownloader.moveToMoviesDirectory(self)
+            BGDownloader.moveToDirectory(self, directory)
             self._startTorrent()
         else:
-            BGDownloader.moveToMoviesDirectory(self)
+            BGDownloader.moveToDirectory(self, directory)
 
     def restoreState(self, data):
         self.__dict__ = data
@@ -804,17 +815,18 @@ class BTDownloader(BGDownloader):
         except AttributeError:
             pass
 
-    def stop(self):
+    def stop(self, delete):
         self.state = "stopped"
         self.updateClient()
         self._shutdownTorrent()
-        try:
-            if os.path.isdir(self.filename):
-                shutil.rmtree(self.filename)
-            else:
-                remove(self.filename)
-        except:
-            pass
+        if delete:
+            try:
+                if os.path.isdir(self.filename):
+                    shutil.rmtree(self.filename)
+                else:
+                    remove(self.filename)
+            except:
+                pass
 
     def start(self):
         self.pause()

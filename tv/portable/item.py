@@ -9,6 +9,7 @@ import os
 import shutil
 import traceback
 
+from download_utils import nextFreeFilename
 from feedparser import FeedParserDict
 
 from database import DDBObject, defaultDatabase, ObjectNotFoundError
@@ -111,12 +112,19 @@ class Item(DDBObject):
             if len(videos) > 1:
                 self.isContainerItem = True
                 for video in videos:
+                    assert video.startswith(filename_root)
                     FileItem (video, parent_id=self.id)
-            elif len(videos) > 0:
+            elif len(videos) == 1:
                 self.isContainerItem = False
                 for video in videos:
                     self.videoFilename = video
             else:
+                target_dir = config.get(prefs.NON_VIDEO_DIRECTORY)
+                if not filename_root.startswith(target_dir):
+                    if isinstance(self, FileItem):
+                        self.migrate (target_dir)
+                    else:
+                        self.downloader.migrate (target_dir)
                 self.isContainerItem = False
         else:
             self.isContainerItem = False
@@ -304,22 +312,22 @@ class Item(DDBObject):
                 item.signalChange()
         self.signalChange()
 
+    def executeExpire(self):
+        UandA = self.getUandA()
+        self.confirmDBThread()
+        self.deleteFile()
+        self.expired = True
+        if self.isContainerItem:
+            children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
+            for item in children:
+                item.remove()
+        self.isContainerItem = None
+        self.seen = self.keep = self.pendingManualDL = False
+        self.signalChange(needsUpdateUandA = (UandA != self.getUandA()))
+
     ##
     # Marks this item as expired
     def expire(self):
-        def doExpire():
-            UandA = self.getUandA()
-            self.confirmDBThread()
-            self.deleteFile()
-            self.expired = True
-            if self.isContainerItem:
-                children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
-                for item in children:
-                    item.remove()
-            self.isContainerItem = None
-            self.seen = self.keep = self.pendingManualDL = False
-            self.signalChange(needsUpdateUandA = (UandA != self.getUandA()))
-
         if self.isContainerItem:
             title = _("Removing %s") % (os.path.basename(self.getTitle()))
             description = _("Deleting this entry will delete all its videos.")
@@ -328,10 +336,10 @@ class Item(DDBObject):
                                      dialogs.BUTTON_CANCEL)
             def callback(dialog):
                 if dialog.choice == dialogs.BUTTON_DELETE_VIDEOS:
-                    doExpire()
+                    self.executeExpire()
             d.run(callback)
         else:
-            doExpire()
+            self.executeExpire()
 
 
     def getExpirationString(self):
@@ -1034,13 +1042,23 @@ class Item(DDBObject):
         self.confirmDBThread()
         return self.videoFilename
 
+    def isNonVideoFile(self):
+        return self.isContainerItem != True and self.getVideoFilename() == ""
+
     def getRSSEntry(self):
         self.confirmDBThread()
         return self.entry
 
+    def migrateChildren (self, newdir):
+        if self.isContainerItem:
+            children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
+            for item in children:
+                item.migrate(newdir)
+        
+
     def remove(self):
         if self.downloader is not None:
-            self.downloader.remove()
+            self.downloader.removeItem(self)
             self.downloader = None
         if self.iconCache is not None:
             self.iconCache.remove()
@@ -1056,7 +1074,7 @@ class Item(DDBObject):
         references between objects, we need a way to reconnect downloaders to
         the items after the restore.
         """
-
+        
         if not isinstance (self, FileItem) and self.downloader is None:
             self.downloader = downloader.getDownloader(self, create=False)
             if self.downloader is not None:
@@ -1065,6 +1083,9 @@ class Item(DDBObject):
         # Do this here instead of onRestore in case the feed hasn't
         # been loaded yet.
         updateUandA(self.getFeed())
+        # This must come after reconnecting the downloader
+        if self.isContainerItem is not None and not os.path.exists(self.getFilename()):
+            self.executeExpire()
 
     def __str__(self):
         return "Item - %s" % self.getTitle()
@@ -1081,10 +1102,14 @@ def getEntryForFile(filename):
 # An Item that exists as a local file
 class FileItem(Item):
 
-    def __init__(self,filename, feed_id=None, parent_id=None):
+    def __init__(self,filename, feed_id=None, parent_id=None, shortFilename=None):
         filename = os.path.abspath(filename)
         self.filename = filename
         self.deleted = False
+        if shortFilename:
+            self.shortFilename = shortFilename
+        else:
+            self.shortFilename = os.path.basename(self.filename)
         Item.__init__(self, getEntryForFile(filename), feed_id=feed_id, parent_id=parent_id)
 
     def getState(self):
@@ -1126,6 +1151,18 @@ class FileItem(Item):
     def getViewed(self):
         return True
 
+    def executeExpire(self):
+        self.confirmDBThread()
+        if self.isContainerItem:
+            children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
+            for item in children:
+                item.remove()
+        if self.feed_id is None or not os.path.exists (self.filename):
+            self.remove()
+        else:
+            self.deleted = True
+            self.signalChange()
+
     def expire(self):
         title = _("Removing %s") % (os.path.basename(self.filename))
         if self.isContainerItem:
@@ -1147,20 +1184,9 @@ class FileItem(Item):
                     elif os.path.isdir(self.filename):
                         shutil.rmtree(self.filename)
                 except:
-                    print "WARNING: Error deleting %s" % self.filename
-                    traceback.print_exc()
-                self.remove()
-            elif dialog.choice == dialogs.BUTTON_REMOVE_ENTRY:
-                self.confirmDBThread()
-                if self.isContainerItem:
-                    children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
-                    for item in children:
-                        item.remove()
-                if self.feed_id is None:
-                    self.remove()
-                else:
-                    self.deleted = True
-                    self.signalChange()
+                    pass
+            if dialog.choice in (button, dialogs.BUTTON_REMOVE_ENTRY):
+                self.executeExpire()
 
         d.run(callback)
 
@@ -1179,19 +1205,40 @@ class FileItem(Item):
 
     def migrate(self, newDir):
         self.confirmDBThread()
-        try:
-            if os.path.exists(self.filename):
-                newFilename = os.path.join(newDir, os.path.basename(self.filename))
-                try:
-                    shutil.move(self.filename, newFilename)
-                except IOError, e:
-                    print "WARNING: Error moving %s to %s (%s)" % (self.filename,
-                            newFilename, e)
-                else:
-                    self.filename = newFilename
-        finally:
-             self.signalChange()
+        if self.shortFilename is None:
+            print """\
+WARNING: can't migrate download because we don't have a shortFilename!
+filename was %s""" % self.filename
+            return
+        newFilename = os.path.join(newDir, self.shortFilename)
+        if self.filename == newFilename:
+            return
+        if os.path.exists(self.filename):
+            newFilename = nextFreeFilename(newFilename)
+            try:
+                shutil.move(self.filename, newFilename)
+            except IOError, e:
+                print "WARNING: Error moving %s to %s (%s)" % (self.filename,
+                        newFilename, e)
+            else:
+                self.filename = newFilename
+                self.signalChange()
+        elif os.path.exists(newFilename):
+            self.filename = newFilename
+            self.signalChange()
+        self.migrateChildren(newDir)
 
+    def setupLinks(self):
+        if self.shortFilename is None:
+            if self.parent_id is None:
+                self.shortFilename = os.path.basename(self.filename)
+            else:
+                parent_file = self.getParent().getFilename()
+                if self.filename.startswith(parent_file):
+                    self.shortFilename = self.filename[len(parent_file):]
+                else:
+                    print "WARNING: %s is not a subdirectory of %s" % (self.filename, parent_file)
+        Item.setupLinks(self)
 
 
 def isVideoEnclosure(enclosure):

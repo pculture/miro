@@ -237,6 +237,7 @@ class FileItemSchema(ItemSchema):
     fields = ItemSchema.fields + [
         ('filename', SchemaString()),
         ('deleted', SchemaBool()),
+        ('shortFilename', SchemaString(noneOk=True)),
     ]
 
 class FeedSchema(DDBObjectSchema):
@@ -363,7 +364,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('url', SchemaString(noneOk=True)),
     ]
 
-VERSION = 15
+VERSION = 16
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,

@@ -85,6 +85,7 @@ class RemoteDownloader(DDBObject):
             if enclosureContentType == 'application/x-bittorrent':
                 contentType = enclosureContentType
         self.contentType = ""
+        self.deleteFiles = True
         DDBObject.__init__(self)
         if contentType is None:
             self.contentType = ""
@@ -165,14 +166,23 @@ class RemoteDownloader(DDBObject):
     ##
     # Stops the download and removes the partially downloaded
     # file.
-    def stop(self):
+    def stop(self, delete):
         if ((self.getState() in ['downloading','uploading'])):
             if _downloads.has_key(self.dlid):
                 c = command.StopDownloadCommand(RemoteDownloader.dldaemon,
-                                                self.dlid)
+                                                self.dlid, delete)
                 c.send()
                 del _downloads[self.dlid]
             else:
+                if delete:
+                    try:
+                        filename = self.status['filename']
+                        if os.path.isfile(filename):
+                            os.remove (filename)
+                        elif os.path.isdir(filename):
+                            shutil.rmtree (filename)
+                    except:
+                        pass
                 self.status["state"] = "stopped"
                 self.signalChange()
 
@@ -199,10 +209,10 @@ class RemoteDownloader(DDBObject):
                 self.restart()
                 self.signalChange()
 
-    def migrate(self):
+    def migrate(self, directory):
         if _downloads.has_key(self.dlid):
             c = command.MigrateDownloadCommand(RemoteDownloader.dldaemon,
-                                               self.dlid)
+                                               self.dlid, directory)
             c.send()
         else:
             # downloader doesn't have our dlid.  Move the file ourself.
@@ -221,8 +231,10 @@ WARNING: can't migrate download because we don't have a filename!
 URL was %s""" % self.url
                 return
             if os.path.exists(filename):
-                newfilename = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
+                newfilename = os.path.join(directory,
                         shortFilename)
+                if newfilename == filename:
+                    return
                 newfilename = nextFreeFilename(newfilename)
                 try:
                     shutil.move(filename, newfilename)
@@ -232,19 +244,16 @@ URL was %s""" % self.url
                 else:
                     self.status['filename'] = newfilename
             self.signalChange()
+        for i in self.itemList:
+            i.migrateChildren(directory)
+
+    def setDeleteFiles(self, deleteFiles):
+        self.deleteFiles = deleteFiles
 
     ##
     # Removes downloader from the database and deletes the file.
     def remove(self):
-        self.stop()
-        try:
-            filename = self.status['filename']
-            if os.path.isfile(filename):
-                os.remove (filename)
-            elif os.path.isdir(filename):
-                shutil.rmtree (filename)
-        except:
-            pass
+        self.stop(self.deleteFiles)
         DDBObject.remove(self)
 
     def getType(self):
@@ -323,6 +332,7 @@ URL was %s""" % self.url
         return self.status.get('filename', '')
 
     def onRestore(self):
+        self.deleteFiles = True
         self.itemList = []
         if self.dlid == 'noid':
             # this won't happen nowadays, but it can for old databases
@@ -366,7 +376,10 @@ def cleanupIncompleteDownloads():
         file = os.path.join(downloadDir, file)
         if file not in filesInUse:
             try:
-                os.remove(file)
+                if os.path.isfile(file):
+                    os.remove (file)
+                elif os.path.isdir(file):
+                    shutil.rmtree (file)
             except:
                 pass # maybe a permissions error?  
 

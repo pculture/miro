@@ -58,6 +58,10 @@ def get(descriptor):
             pass
         value = path
 
+    elif descriptor == config.NON_VIDEO_DIRECTORY:
+        path = os.path.expanduser('~/')
+        value = path
+
     elif descriptor == config.SUPPORT_DIRECTORY:
         path = os.path.join(SUPPORT_DIRECTORY_PARENT, config.get(prefs.SHORT_APP_NAME))
         os.environ['APPDATA'] = path # This is for the Bittorent module
