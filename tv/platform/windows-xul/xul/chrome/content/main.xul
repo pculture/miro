@@ -35,9 +35,9 @@
 					<menuitem label="Open" acceltext="Ctrl+O" accesskey="O" command="open"/>
                                         <menuseparator/>
                                         <menuitem label="New Playlist..." accesskey="P" command="createnewplaylist"/>
-                                        <menuitem label="New Playlist Folder..." accesskey="P" command="createnewplaylistfolder"/>
-                                        <menuitem label="New Channel Folder..." accesskey="P" command="createnewchannelfolder"/>
-                                        <menuitem label="Rename..." accesskey="P" command="rename"/>
+                                        <menuitem label="New Playlist Folder..." command="createnewplaylistfolder"/>
+                                        <menuitem label="New Channel Folder..." command="createnewchannelfolder"/>
+                                        <menuitem label="Rename..." accesskey="R" command="rename"/>
                                         <menuseparator/>
 					<menuitem label="Exit" acceltext="Ctrl+Q" accesskey="E" command="exit"/>
 				</menupopup>

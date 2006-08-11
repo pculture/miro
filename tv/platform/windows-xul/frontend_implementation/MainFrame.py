@@ -1,3 +1,4 @@
+import app
 import frontend
 from xpcom import components
 from util import quoteJS
@@ -57,7 +58,7 @@ class MainFrame:
             return True
 
     def getDisplay(self, area):
-        return self.selectedDisplays[area]
+        return self.selectedDisplays.get(area)
 
     # Internal use: return an estimate of the size of a given display area
     # as a (width, height) pair, or None if no information's available.

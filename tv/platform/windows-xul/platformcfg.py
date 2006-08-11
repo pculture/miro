@@ -8,57 +8,35 @@ import prefs
 import tempfile
 import ctypes
 
-_appDataDirectory = None
-_baseMoviesDirectory = None
-_nonVideoDirectory
+_specialFolderCSIDLs = {
+    'AppData': 0x001a,
+    "My Music": 0x000d,
+    "My Pictures": 0x0027,
+    "My Videos": 0x000e,
+    "My Documents": 0x0005,
+    "Desktop": 0x0000,
+}
 
-def _getRegString(key, subkey):
-    def doExpand(val):
-        out = ctypes.create_unicode_buffer(8192)
-        indata = ctypes.create_unicode_buffer(val)
-        bytes = ctypes.windll.kernel32.ExpandEnvironmentStringsW(indata,out,8188)
-        return out.value
+def getSpecialFolder(name):
+    """Get the location of a special folder.  name should be one of the
+    following: 'AppData', 'My Music', 'My Pictures', 'My Videos', 
+    'My Documents', 'Desktop'.
 
-    (val, t) = _winreg.QueryValueEx(key, subkey)
-    if t == _winreg.REG_SZ:
-        return val
-    elif t == _winreg.REG_EXPAND_SZ:
-        return doExpand(val)
+    The path to the folder will be returned, or None if the lookup fails
+
+    """
+
+    buf = ctypes.create_unicode_buffer(260) 
+    SHGetSpecialFolderPath = ctypes.windll.shell32.SHGetSpecialFolderPathW
+    csidl = _specialFolderCSIDLs[name]
+    if SHGetSpecialFolderPath(None, buf, csidl, False):
+        return buf.value
     else:
-        raise TypeError, "Got bad type %s for registry subkey %s" % (t, subkey)
+        return None
 
-def _findDirectories():
-    global _appDataDirectory
-    global _baseMoviesDirectory
-    global _nonVideoDirectory
-
-    keyName = r'Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders'
-    key = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, keyName)
-
-    try:
-        _appDataDirectory = _getRegString(key, 'AppData')
-    except:
-        # Older versions of Windows didn't have per user Application Data
-        keyName2 = r'Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders'
-        key2 = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, keyName2)
-        _appDataDirectory = _getRegString(key2, 'AppData')
-    try:
-        _baseMoviesDirectory = _getRegString(key, 'My Video')
-    except:
-        _baseMoviesDirectory = None
-    if type(_baseMoviesDirectory) is not str or len(_baseMoviesDirectory) < 1:
-        # Apparently some machines have the key present, but blank
-        documentsDirectory = _getRegString(key, 'Personal')
-        # 'Help' the user
-        _baseMoviesDirectory = os.path.join(documentsDirectory, 'My Videos')
-    try:
-        _nonVideoDirectory = _getRegString(key, 'Desktop')
-    except:
-        _nonVideoDirectory = None
-    if type(_nonVideoDirectory) is not str or len(_nonVideoDirectory) < 1:
-        _nonVideoDirectory = _getRegString(key, 'Personal')
-
-_findDirectories()
+_appDataDirectory = getSpecialFolder('AppData')
+_baseMoviesDirectory = getSpecialFolder('My Videos')
+_nonVideoDirectory = getSpecialFolder('Desktop')
 
 def _getMoviesDirectory():
     path = os.path.join(_baseMoviesDirectory, config.get(prefs.SHORT_APP_NAME))

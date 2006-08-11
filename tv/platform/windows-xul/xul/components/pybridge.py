@@ -13,6 +13,7 @@ try:
     import config
     import playlist
     import prefs
+    import platformcfg
     import singleclick
     import frontend
     import util
@@ -142,11 +143,9 @@ class PyBridge:
         app.controller.onShutdown()
 
     def deleteVLCCache(self):
-        buf = ctypes.create_unicode_buffer(260) 
-        SHGetSpecialFolderPath = ctypes.windll.shell32.SHGetSpecialFolderPathW
-        csidl = 0x001a # APPDATA
-        if SHGetSpecialFolderPath(None, buf, csidl, False):
-            vlcCacheDir = os.path.join(buf.value, "PCF-VLC")
+        appDataPath = platformcfg.getSpecialFolder("AppData")
+        if appDataPath:
+            vlcCacheDir = os.path.join(appDataPath, "PCF-VLC")
             shutil.rmtree(vlcCacheDir, ignore_errors=True)
 
     def shortenDirectoryName(self, path):
@@ -154,20 +153,14 @@ class PyBridge:
         "Desktop", and "My Documents"
         """
 
-        tries = [ 
-            ("My Music", (0x000d)),
-            ("My Pictures", (0x0027)),
-            ("My Videos", (0x000e)),
-            ("My Documents", (0x0005)),
-            ("Desktop", (0x0000))
+        tries = [ "My Music", "My Pictures", "My Videos", "My Documents",
+            "Desktop", 
         ]
 
-        buf = ctypes.create_unicode_buffer(260) 
-        SHGetSpecialFolderPath = ctypes.windll.shell32.SHGetSpecialFolderPathW
-        for name, csidl in tries:
-            if not SHGetSpecialFolderPath(None, buf, csidl, False):
+        for name in tries:
+            virtualPath = platformcfg.getSpecialFolder(name)
+            if virtualPath is None:
                 continue
-            virtualPath = buf.value
             if path == virtualPath:
                 return name
             elif path.startswith(virtualPath):
