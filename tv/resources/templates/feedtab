@@ -7,7 +7,7 @@
 <!-- Normal -->
 <a class="feeditem @@@this.getState()@@@ draggable noselect">
 
-<div t:showIf="this.obj.showA()" class="left-bubble blue">
+<div t:showIf="this.obj.showA() and not this.obj.isAutoDownloadable()" class="left-bubble blue">
  <div class="right-bubble blue">
   <div class="number-count blue" t:replace="this.obj.numAvailable()" />
  </div>
