@@ -235,18 +235,13 @@ class MainController (NibClassBuilder.AutoBaseClass):
         print "NOT IMPLEMENTED"
 
     def addChannel_(self, sender):
-        def prefillCallback():
-            url = NSPasteboard.generalPasteboard().stringForType_(NSStringPboardType)
-            if url is None or not feed.validateFeedURL(url):
-                url = ''
-            return url
         def validationCallback(dialog):
             if dialog.choice == dialogs.BUTTON_OK:
                 url = dialog.value
                 eventloop.addUrgentCall(lambda:app.controller.addAndSelectFeed(url), "Add Feed")
-
         title = "Subscribe to Channel"
         description = "Enter the URL of the channel you would like to subscribe to."
+        prefillCallback = app.delegate.getURLFromClipboard
         dlog = dialogs.TextEntryDialog(title, description, dialogs.BUTTON_OK, dialogs.BUTTON_CANCEL, prefillCallback)
         dlog.run(validationCallback)
 

@@ -9,6 +9,8 @@ from AppKit import *
 from Foundation import *
 from PyObjCTools import NibClassBuilder, Conversion
 
+import app
+import feed
 import prefs
 import config
 import dialogs
@@ -223,6 +225,12 @@ class UIBackendDelegate:
         lwdomain = Conversion.propertyListFromPythonCollection(lwdomain)
         defaults.setPersistentDomain_forName_(lwdomain, 'loginwindow')
         defaults.synchronize()
+        
+    def getURLFromClipboard(self):
+        url = NSPasteboard.generalPasteboard().stringForType_(NSStringPboardType)
+        if url is None or not feed.validateFeedURL(url):
+            url = ""
+        return url
 
 ###############################################################################
 
@@ -309,8 +317,10 @@ class TextEntryController (NibClassBuilder.AutoBaseClass):
         return self
 
     def run(self):
-        if self.dialog.prefillCallback is not None:
-            self.entryField.setStringValue_(self.dialog.prefillCallback())
+        if self.dialog.fillWithClipboardURL:
+            self.entryField.setStringValue_(app.delegate.getURLFromClipboard())
+        elif self.dialog.prefillCallback is not None:
+            self.entryField.setStringValue_(self.dialog.prefillCallback() or "")
         NSApplication.sharedApplication().runModalForWindow_(self.window())
 
     def acceptEntry_(self, sender):
