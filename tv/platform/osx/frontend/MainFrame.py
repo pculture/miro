@@ -41,8 +41,8 @@ class MainFrame:
     def getDisplaySizeHint(self, area):
         return self.controller.getDisplaySizeHint(area)
 
-    def onSelectedTabChange(self, tabType, multiple):
-        self.controller.onSelectedTabChange(tabType, multiple)
+    def onSelectedTabChange(self, tabType, multiple, guideURL):
+        self.controller.onSelectedTabChange(tabType, multiple, guideURL)
 
 ###############################################################################
 

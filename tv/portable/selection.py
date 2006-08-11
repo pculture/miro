@@ -319,7 +319,7 @@ class SelectionHandler(object):
         mainDisplay = frame.getDisplay(frame.mainDisplay) 
         if (self.lastDisplay and
                 newDisplay.templateName == self.lastDisplay.templateName and
-                self.lastDisplay.display is mainDisplay and
+                self.lastDisplay is mainDisplay and
                 newDisplay.templateName != 'guide'):
             return
 

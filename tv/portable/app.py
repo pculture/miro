@@ -602,6 +602,18 @@ class Controller (frontend.Application):
             print "DTV: Removing global feed %s" % url
             feed.remove()
 
+    def updateCurrentFeed(self):
+        ModelActionHandler(delegate).updateCurrentFeed()
+
+    def copyCurrentFeedURL(self):
+        ModelActionHandler(delegate).copyCurrentFeedURL()
+
+    def removeCurrentFeed(self):
+        ModelActionHandler(delegate).removeCurrentFeed()
+
+    def removeCurrentGuide(self):
+        ModelActionHandler(ate).removeCurrentGuide()
+
     def downloaderShutdown(self):
         print "DTV: Closing Database..."
         database.defaultDatabase.liveStorage.close()
