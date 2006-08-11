@@ -106,7 +106,7 @@ class PlaylistTestCase(DemocracyTestCase):
         selection.selectItem('itemlist', view, self.i1.getID(),
                 shiftSelect=False, controlSelect=False)
         playlist.moveSelection(self.i3)
-        self.checkList(playlist, [self.i2, self.i3, self.i1, self.i4])
+        self.checkList(playlist, [self.i2, self.i1, self.i3, self.i4])
         playlist.moveSelection(None)
         self.checkList(playlist, [self.i2, self.i3, self.i4, self.i1])
         playlist.moveSelection(self.i2)
@@ -122,16 +122,16 @@ class PlaylistTestCase(DemocracyTestCase):
         selection.selectItem('itemlist', view, self.i2.getID(),
                 shiftSelect=False, controlSelect=True)
         playlist.moveSelection(self.i4)
-        self.checkList(playlist, [self.i3, self.i4, self.i2, self.i1])
+        self.checkList(playlist, [self.i3, self.i2, self.i1, self.i4])
         selection.selectItem('itemlist', view, self.i1.getID(),
                 shiftSelect=False, controlSelect=False)
-        selection.selectItem('itemlist', view, self.i4.getID(),
+        selection.selectItem('itemlist', view, self.i3.getID(),
                 shiftSelect=False, controlSelect=True)
         playlist.moveSelection(None)
-        self.checkList(playlist, [self.i3, self.i2, self.i4, self.i1])
-        selection.selectItem('itemlist', view, self.i3.getID(),
+        self.checkList(playlist, [self.i2, self.i4, self.i3, self.i1])
+        selection.selectItem('itemlist', view, self.i2.getID(),
                 shiftSelect=False, controlSelect=False)
-        selection.selectItem('itemlist', view, self.i4.getID(),
+        selection.selectItem('itemlist', view, self.i3.getID(),
                 shiftSelect=True, controlSelect=False)
         playlist.moveSelection(None)
-        self.checkList(playlist, [self.i1, self.i3, self.i2, self.i4])
+        self.checkList(playlist, [self.i1, self.i2, self.i4, self.i3])

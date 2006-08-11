@@ -97,8 +97,8 @@ class SavedPlaylist(database.DDBObject):
         """Move the current selection to be above anchorItem.
 
         More precicely, we move the current selection so that it's one
-        contiguous block, and the position for the item on top of the
-        selection is the anchorItem's position at the start of the move.
+        contiguous block, in between anchorItem and the first non-selected
+        item above anchorItem at the start of the move.
 
         The selection must contain items inside this playlist, or a ValueError
         will be thrown.
@@ -119,20 +119,12 @@ class SavedPlaylist(database.DDBObject):
                 toMove.append((pos, id))
         toMove.sort()
         toMove = [id for (pos, id) in toMove]
-        if anchorItem is not None:
-            anchorPos = self.trackedItems.getPosition(anchorItem.getID())
-        else:
-            anchorPos = None
         for id in toMove:
             self.trackedItems.removeID(id)
-        if anchorPos >= len(self.item_ids):
-            # removing the items made the anchor position go off the end of
-            # the list.
-            anchorPos = None
         for id in toMove:
-            if anchorPos is not None:
+            if anchorItem is not None:
+                anchorPos = self.trackedItems.getPosition(anchorItem.getID())
                 self.trackedItems.insertID(anchorPos, id)
-                anchorPos += 1
             else:
                 self.trackedItems.appendID(id)
         self.signalChange()
@@ -157,7 +149,8 @@ def createNewPlaylist():
 
     def callback(dialog):
         if dialog.choice == dialogs.BUTTON_CREATE:
-            SavedPlaylist(dialog.value)
+            playlist = SavedPlaylist(dialog.value)
+            app.controller.selection.selectTabByObject(playlist)
 
     dialogs.TextEntryDialog(title, description, dialogs.BUTTON_CREATE,
             dialogs.BUTTON_CANCEL).run(callback)

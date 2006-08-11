@@ -197,14 +197,6 @@ class MainWindowChanger(object):
 
     def changeState(self, newState):
         platformutils.confirmMainThread()
-        isFeed = False
-        isGuide = False
-        tab = app.controller.selection.currentTab
-        if tab:
-            isFeed = tab.isFeed()
-            isGuide = tab.isGuide() and not tab.obj.getDefault()
-        self.mainFrame.actionGroups["ChannelSelected"].set_sensitive (isFeed)
-        self.mainFrame.actionGroups["GuideSelected"].set_sensitive (isGuide)
         if newState == self.currentState:
             return
         self.currentState = newState

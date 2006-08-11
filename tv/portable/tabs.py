@@ -83,11 +83,13 @@ class Tab:
         self.selected = newValue
         self.obj.signalChange(needsSave=False)
 
-    def start(self, frame):
-        self.display = app.TemplateDisplay(self.contentsTemplate, 
-                frameHint=frame, areaHint=frame.mainDisplay, 
-                id=self.obj.getID())
-        frame.selectDisplay(self.display, frame.mainDisplay)
+    def getSelected(self):
+        self.obj.confirmDBThread()
+        return self.selected
+
+    def getActive(self):
+        self.obj.confirmDBThread()
+        return self.active
 
     # Returns "normal" "selected" or "selected-inactive"
     def getState(self):

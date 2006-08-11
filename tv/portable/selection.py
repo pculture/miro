@@ -2,6 +2,7 @@
 
 import app
 import database
+import guide
 import item
 import tabs
 import playlist
@@ -30,9 +31,10 @@ class SelectionArea(object):
     currentSelection -- set of object IDs that are currently selected.
     """
 
-    def __init__(self):
+    def __init__(self, selectionHandler):
         self.currentSelection = set()
         self.currentView = None
+        self.handler = selectionHandler
 
     def switchView(self, view):
         if self.currentView == view:
@@ -141,17 +143,28 @@ class SelectionArea(object):
 
     def getType(self):
         """Get the type of objects that are selected.  This will be one of
-        "item", "playlist", "channel", or None if nothing is selected.
+        "item", "playlisttab", "channeltab", 'guidetab', 'addedguidetab',
+        'statictab', or None if nothing is selected.  
         """
         type = None
         for id in self.currentSelection:
             obj = self.currentView.getObjectByID(id)
             if isinstance(obj, item.Item):
                 newType = 'item'
-            elif obj.__class__ == playlist.SavedPlaylist:
-                newType = 'playlist'
-            elif obj.__class__ == feed.Feed:
-                newType = 'channel'
+            elif isinstance(obj, tabs.Tab):
+                if obj.obj.__class__ == playlist.SavedPlaylist:
+                    newType = 'playlisttab'
+                elif obj.obj.__class__ == feed.Feed:
+                    newType = 'channeltab'
+                elif obj.obj.__class__ == guide.ChannelGuide:
+                    if obj.obj.getDefault():
+                        newType = 'guidetab'
+                    else:
+                        newType = 'addedguidetab'
+                elif obj.obj.__class__ == tabs.StaticTab:
+                    newType = 'statictab'
+                else:
+                    raise ValueError("Bad selected tab type: %s" % obj.obj)
             else:
                 raise ValueError("Bad selected object type: %s" % obj)
             if type is None:
@@ -161,6 +174,40 @@ class SelectionArea(object):
                 raise ValueError(msg)
         return type
 
+class TabSelectionArea(SelectionArea):
+    """Selection area for the tablist.  This has a couple special cases to
+    ensure that we always have at least one tab selected.
+    """
+
+    def toggleItemSelect(self, view, id):
+        # Don't let a control select deselect the last selected item in the
+        # tab list.
+        if len(self.currentSelection) == set([id]):
+            return
+        else:
+            return SelectionArea.toggleItemSelect(self, view, id)
+
+    def onRemove(self, obj, id):
+        SelectionArea.onRemove(self, obj, id)
+        if len(self.currentSelection) == 0:
+            prevTab = self.currentView.cur()
+            if prevTab is None:
+                # we remove the 1st tab in the list, try to select the new 1st
+                # tab
+                prevTab = self.currentView.getNext()
+            if prevTab is None:
+                # That was the last tab in the list, select the guide
+                self.selectFirstGuide()
+            else:
+                self.selectItem(self.currentView, prevTab.objID())
+            self.handler.displayCurrentTabContent()
+
+    def selectFirstGuide(self):
+        views.guideTabs.resetCursor()
+        guide = views.guideTabs.getNext()
+        self.selectItem(views.guideTabs, guide.objID())
+        self.handler.displayCurrentTabContent()
+
 class SelectionHandler(object):
     """Handles selection for Democracy.
 
@@ -168,13 +215,12 @@ class SelectionHandler(object):
 
     tabListSelection -- SelectionArea for the tab list
     itemListSelection -- SelectionArea for the item list
-    currentTab -- the currently selected tab
     """
 
     def __init__(self):
-        self.tabListSelection = SelectionArea()
-        self.itemListSelection = SelectionArea()
-        self.currentTab = None
+        self.tabListSelection = TabSelectionArea(self)
+        self.itemListSelection = SelectionArea(self)
+        self.lastDisplay = None
 
     def selectItem(self, area, view, id, shiftSelect, controlSelect):
         if area == 'tablist':
@@ -189,11 +235,6 @@ class SelectionHandler(object):
         # ignore control and shift when selecting static tabs
         if isinstance(selectedObj, tabs.Tab) and selectedObj.isStatic():
             controlSelect = shiftSelect = False
-        # Don't let a control select deselect the last selected item in the
-        # tab list.
-        if (controlSelect and area == 'tablist' and 
-                selection.currentSelection == set([id])):
-            return
 
         if controlSelect:
             selection.toggleItemSelect(view, id)
@@ -207,7 +248,7 @@ class SelectionHandler(object):
             self.setTabListActive(False)
         else:
             self.setTabListActive(True)
-            self.displayTabContents(id)
+            self.displayCurrentTabContent()
 
     def setTabListActive(self, value):
         for id in self.tabListSelection.currentSelection:
@@ -215,10 +256,7 @@ class SelectionHandler(object):
             tab.setActive(value)
 
     def selectFirstGuide(self):
-        views.guideTabs.resetCursor()
-        guide = views.guideTabs.getNext()
-        self.selectItem('tablist', views.guideTabs, guide.objID(),
-                shiftSelect=False, controlSelect=False)
+        self.tabListSelection.selectFirstGuide()
 
     def selectTabByTemplateBase(self, tabTemplateBase):
         tabViews = [ 
@@ -234,21 +272,6 @@ class SelectionHandler(object):
                             shiftSelect=False, controlSelect=False)
                     return
 
-    def displayTabContents(self, id):
-        tab = self.tabListSelection.currentView.getObjectByID(id)
-        if tab is self.currentTab:
-            # Don't redisplay the current tab if it's being display.  The one
-            # exception is the guide tab, where redisplaying it will open the
-            # home page.
-            mainFrame = app.controller.frame
-            mainDisplay = mainFrame.getDisplay(mainFrame.mainDisplay) 
-            if (not tab.tabTemplateBase == 'guidetab' and
-                    self.currentTab.display is mainDisplay):
-                return
-        else:
-            self.currentTab = tab
-        self.displayCurrentTabContent()
-
     def selectTabByObject(self, obj):
         tabViews = [ 
             views.guideTabs, 
@@ -263,9 +286,61 @@ class SelectionHandler(object):
                             shiftSelect=False, controlSelect=False)
                     return
 
+    def _chooseDisplayForCurrentTab(self):
+        tls = self.tabListSelection
+        frame = app.controller.frame
+
+        if len(tls.currentSelection) == 0:
+            raise AssertionError("No tabs selected")
+        elif len(tls.currentSelection) == 1:
+            for id in tls.currentSelection:
+                tab = tls.currentView.getObjectByID(id)
+                return app.TemplateDisplay(tab.contentsTemplate, 
+                        frameHint=frame, areaHint=frame.mainDisplay, 
+                        id=tab.obj.getID())
+        else:
+            selectedType = tls.getType()
+            if selectedType == 'channeltab':
+                return app.TemplateDisplay('multi-channel', frameHint=frame,
+                        areaHint=frame.mainDisplay)
+            elif selectedType == 'playlisttab':
+                return app.TemplateDisplay('multi-playlist', frameHint=frame,
+                        areaHint=frame.mainDisplay)
+            else:
+                raise AssertionError("Multiple %s tabs selected" %
+                        selectedType)
+
     def displayCurrentTabContent(self):
+        newDisplay = self._chooseDisplayForCurrentTab()
+        # Don't redisplay the current tab if it's being displayed.  It messes
+        # up our database callbacks.  The one exception is the guide tab,
+        # where redisplaying it will reopen the home page.
+        frame = app.controller.frame
+        mainDisplay = frame.getDisplay(frame.mainDisplay) 
+        if (self.lastDisplay and
+                newDisplay.templateName == self.lastDisplay.templateName and
+                self.lastDisplay.display is mainDisplay and
+                newDisplay.templateName != 'guide'):
+            return
+
         self.itemListSelection.clearSelection()
-        self.currentTab.start(app.controller.frame)
+        selectionType = self.tabListSelection.getType()
+        if selectionType in ('guidetab', 'addedguidetab'):
+            guideURL = self.getSelectedTabs()[0].obj.getURL()
+        else:
+            guideURL = None
+        frame.onSelectedTabChange(selectionType,
+                len(self.tabListSelection.currentSelection) > 1,
+                guideURL)
+        frame.selectDisplay(newDisplay, frame.mainDisplay)
+        self.lastDisplay = newDisplay
 
     def isTabSelected(self, tab):
         return tab.objID() in self.tabListSelection.currentSelection
+
+    def getSelectedTabs(self):
+        """Return a list of the currently selected Tabs. """
+
+        view = self.tabListSelection.currentView
+        selection = self.tabListSelection.currentSelection
+        return [view.getObjectByID(id) for id in selection]

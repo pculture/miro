@@ -195,6 +195,13 @@ class MainFrame:
         maximized = (event.new_window_state & gtk.gdk.WINDOW_STATE_MAXIMIZED) != 0
         setBool ("maximized", maximized)
         
+    @gtkAsyncMethod
+    def onSelectedTabChange(self, tabType, multiple, guideURL):
+        app.controller.setGuideURL(guideURL)
+        isFeed = (tabType == 'channeltab')
+        isGuide = (tabType == 'addedguidetab')
+        self.actionGroups["ChannelSelected"].set_sensitive (isFeed)
+        self.actionGroups["GuideSelected"].set_sensitive (isGuide)
 
     @gtkAsyncMethod
     def selectDisplay(self, newDisplay, area):

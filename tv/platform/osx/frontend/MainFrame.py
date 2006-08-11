@@ -41,6 +41,9 @@ class MainFrame:
     def getDisplaySizeHint(self, area):
         return self.controller.getDisplaySizeHint(area)
 
+    def onSelectedTabChange(self, tabType, multiple):
+        self.controller.onSelectedTabChange(tabType, multiple)
+
 ###############################################################################
 
 class MainController (NibClassBuilder.AutoBaseClass):
@@ -49,6 +52,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
         super(MainController, self).init()
         self.frame = frame
         self.appl = appl
+        self.selectedTabType = None
+        self.multipleTabsSelected = False
         NSBundle.loadNibNamed_owner_("MainWindow", self)
 
         nc = NSNotificationCenter.defaultCenter()
@@ -134,6 +139,12 @@ class MainController (NibClassBuilder.AutoBaseClass):
         self.window().setBackgroundColor_(NSColor.colorWithPatternImage_(bgTexture))
         
     ### Switching displays ###
+
+    @platformutils.onMainThread
+    def onSelectedTabChange(self, tabType, multiple, guideURL):
+        app.controller.setGuideURL(guideURL)
+        self.selectedTabType = tabType
+        self.multipleTabsSelected = multiple
 
     def selectDisplay(self, display, area):
         if display is not None:
@@ -246,22 +257,13 @@ class MainController (NibClassBuilder.AutoBaseClass):
         dlog.run(validationCallback)
 
     def removeChannel_(self, sender):
-        objID = app.controller.selection.currentTab.objID()
-        if app.controller.selection.currentTab.isFeed() and objID is not None:
-            eventloop.addUrgentCall(lambda:app.ModelActionHandler(app.delegate).removeFeed(objID), "Remove channel")
+        eventloop.addUrgentCall(app.controller.removeCurrentFeed, "Remove channel")
 
     def copyChannelLink_(self, sender):
-        pb = NSPasteboard.generalPasteboard()
-        pb.declareTypes_owner_([NSStringPboardType, NSURLPboardType], self)
-        feedURL = app.controller.selection.currentTab.feedURL()
-        pb.setString_forType_(feedURL, NSStringPboardType)
-        feedURL = NSURL.URLWithString_(feedURL)
-        feedURL.writeToPasteboard_(pb)
+        eventloop.addUrgentCall(app.controller.copyCurrentFeedURL, "Copy channel URL")
 
     def updateChannel_(self, sender):
-        objID = app.controller.selection.currentTab.objID()
-        if app.controller.selection.currentTab.isFeed() and objID is not None:
-            eventloop.addUrgentCall(lambda:app.ModelActionHandler(app.delegate).updateFeed(objID), "Update channel")
+        eventloop.addUrgentCall(app.controller.updateCurrentFeed, "Update current feed")
 
     def updateAllChannels_(self, sender):
         eventloop.addUrgentCall(lambda:app.ModelActionHandler(app.delegate).updateAllFeeds(), "Update all channels")
@@ -314,10 +316,11 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     itemsAlwaysAvailable = ('addChannel:', 'showHelp:', 'updateAllChannels:', 'createPlaylist:')
     selectedChannelItems = ('removeChannel:', 'copyChannelLink:', 'updateChannel:')
+    selectedMultiChannelItems = ('removeChannel:', 'updateChannel:')
+
     def validateMenuItem_(self, item):
-        currentTab = app.controller.selection.currentTab
         if item.action() in self.selectedChannelItems:
-            return currentTab is not None and currentTab.isFeed()
+            return self.selectedTabType == 'channeltab' and (not self.multipleTabsSelected or item.action() in self.selectedMultiChannelItems)
         elif item.action() == 'playPause:' or item.action() == 'playFullScreen:':
             display = self.frame.mainDisplay.hostedDisplay
             if display is not None:
@@ -330,7 +333,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         elif item.action() == 'stopVideo:':
             return self.frame.mainDisplay.hostedDisplay is app.controller.videoDisplay
         elif item.action() == 'deletePlaylist:':
-            return currentTab is not None and currentTab.isPlaylist()
+            return self.selectedTabType == 'playlisttab'
         else:
             return item.action() in self.itemsAlwaysAvailable
 

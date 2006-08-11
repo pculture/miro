@@ -440,6 +440,7 @@ class Controller (frontend.Application):
         delegate = frontend.UIBackendDelegate()
         self.frame = None
         self.inQuit = False
+        self.guideURL = None
         self.initial_feeds = False # True if this is the first run and there's an initial-feeds.democracy file.
 
     ### Startup and shutdown ###
@@ -636,6 +637,16 @@ class Controller (frontend.Application):
         print "DTV: Shutting down Downloader..."
         downloader.shutdownDownloader(self.downloaderShutdown)
 
+    def setGuideURL(self, guideURL):
+        """Change the URL of the current channel guide being displayed.  If no
+        guide is being display, pass in None.
+
+        This method must be called from the onSelectedTabChange in the
+        platform code.  URLs that begin with guideURL will be allow through in
+        onURLLoad().
+        """
+        self.guideURL = guideURL
+
     def onShutdown(self):
         try:
             eventloop.join()        
@@ -741,7 +752,7 @@ class Controller (frontend.Application):
             playlist = db.getObjectByID(id)
             playlist.handleDrop()
         elif dropData.startswith("playlistitem-"):
-            playlist = controller.selection.currentTab.obj
+            playlist = controller.selection.getSelectedTabs()[0].obj
             idStr = dropData[len("playlistitem-"):]
             if idStr != 'END':
                 item = db.getObjectByID(int(idStr))
@@ -841,8 +852,8 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 return False
 
             # Let channel guide URLs pass through
-            tab = controller.selection.currentTab
-            if tab and tab.isGuide() and url.startswith(tab.obj.getURL()):
+            if (controller.guideURL is not None and
+                    url.startswith(controller.guideURL)):
                 return True
             if url.startswith('file://'):
                 if url.endswith ('.html'):
@@ -926,18 +937,27 @@ class ModelActionHandler:
             pass
 
     def removeCurrentFeed(self):
-        tab = controller.selection.currentTab
-        if tab.isFeed():
-            currentFeed = tab.objID()
-            if currentFeed:
-                self.removeFeed(currentFeed)
+        feeds = []
+        hasDownloads = False
+        for tab in controller.selection.getSelectedTabs():
+            if tab.isFeed():
+                feed = db.getObjectByID(tab.objID())
+                if feed.hasDownloadedItems():
+                    hasDownloads = True
+                feeds.append(feed)
+
+        if hasDownloads:
+            self.removeFeedsWithDownloads(feeds)
+        else:
+            self.removeFeedsWithoutDownloads(feeds)
 
     def removeCurrentGuide(self):
-        tab = controller.selection.currentTab
+        tabs = controller.selection.getSelectedTabs()
+        if len(tabs) != 1:
+            return
+        tab = tabs[0]
         if tab.isGuide() and not tab.obj.getDefault():
-            currentGuide = tab.objID()
-            if currentGuide:
-                self.removeGuide(currentGuide)
+            self.removeGuide(tab.objID())
 
     def remove(self, id):
         try:
@@ -947,9 +967,9 @@ class ModelActionHandler:
             return
         if isinstance(obj, feed.Feed):
             if obj.hasDownloadedItems():
-                self.removeFeedWithDownloads(obj)
+                self.removeFeedsWithDownloads([obj])
             else:
-                self.removeFeedWithoutDownloads(obj)
+                self.removeFeedsWithoutDownloads([obj])
         elif isinstance(obj, playlist.SavedPlaylist):
             obj.remove()
         else:
@@ -982,20 +1002,29 @@ class ModelActionHandler:
                 uguide.remove()
         dialog.run(dialogCallback)
 
-    def removeFeedWithoutDownloads(self, feed):
-        title = _('Remove %s') % feed.getTitle()
+    def _getNameForFeeds(self, feeds):
+        if len(feeds) == 1:
+            return feeds[0].getTitle()
+        else:
+            return "%s channels" % len(feeds)
+
+    def removeFeedsWithoutDownloads(self, feeds):
+        feedName = self._getNameForFeeds(feeds)
+        title = _('Remove %s') % feedName
         description = _("""\
-Are you sure you want to remove the feed %s?  Any downloads in progress will \
-be canceled.""") % feed.getTitle()
+Are you sure you want to remove %s?  Any downloads in progress will \
+be canceled.""") % feedName
         dialog = dialogs.ChoiceDialog(title, description, 
                 dialogs.BUTTON_YES, dialogs.BUTTON_NO)
         def dialogCallback(dialog):
             if dialog.choice == dialogs.BUTTON_YES:
-                feed.remove()
+                for feed in feeds:
+                    feed.remove()
         dialog.run(dialogCallback)
 
-    def removeFeedWithDownloads(self, feed):
-        title = _('Remove %s') % feed.getTitle()
+    def removeFeedsWithDownloads(self, feeds):
+        feedName = self._getNameForFeeds(feeds)
+        title = _('Remove %s') % feedName
         description = _("""\
 What would you like to do with the videos in this channel that you've \
 downloaded?""")
@@ -1005,17 +1034,17 @@ downloaded?""")
         def dialogCallback(dialog):
             if dialog.choice == dialogs.BUTTON_KEEP_VIDEOS:
                 manualFeed = getSingletonDDBObject(views.manualFeed)
-                feed.remove(moveItemsTo=manualFeed)
+                for feed in feeds:
+                    feed.remove(moveItemsTo=manualFeed)
             elif dialog.choice == dialogs.BUTTON_DELETE_VIDEOS:
-                feed.remove()
+                for feed in feeds:
+                    feed.remove()
         dialog.run(dialogCallback)
 
     def updateCurrentFeed(self):
-        tab = controller.selection.currentTab
-        if tab.isFeed():
-            currentFeed = tab.objID()
-            if currentFeed:
-                self.updateFeed(currentFeed)
+        for tab in controller.selection.getSelectedTabs():
+            if tab.isFeed():
+                self.updateFeed(tab.objID())
 
     def updateFeed(self, feed):
         obj = db.getObjectByID(int(feed))
@@ -1028,11 +1057,9 @@ downloaded?""")
             f.update()
 
     def copyCurrentFeedURL(self):
-        tab = controller.selection.currentTab
-        if tab.isFeed():
-            currentFeed = tab.objID()
-            if currentFeed:
-                self.copyFeedURL(currentFeed)
+        tabs = controller.selection.getSelectedTabs()
+        if len(tabs) == 1 and tabs[0].isFeed():
+            self.copyFeedURL(tabs[0].objID())
 
     def copyFeedURL(self, feed):
         obj = db.getObjectByID(int(feed))

@@ -193,12 +193,12 @@ class ChannelGuide(DDBObject):
             selection = app.controller.selection
             if wasLoading:
                 myTab = None
-                for tab in views.tabs:
+                for tab in views.guideTabs:
                     if tab.obj is self:
                         myTab = tab
                         break
-                if myTab and self.isTabSelected(myTab):
-                    selection.displayTabContents(myTab.getID())
+                if myTab and selection.isTabSelected(myTab):
+                    selection.displayCurrentTabContent()
 
             self.loadedThisSession = True
             self.signalChange()

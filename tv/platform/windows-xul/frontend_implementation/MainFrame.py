@@ -21,6 +21,9 @@ class MainFrame:
         self.selectedDisplays = {}
         urlcallbacks.installChannelGuideCallback(self.channelGuideCallback)
 
+    def onSelectedTabChange(self, tabType, multiple, guideURL):
+        app.controller.setGuideURL(guideURL)
+
     def selectDisplay(self, newDisplay, area):
         """Install the provided 'newDisplay' in the requested area"""
 
