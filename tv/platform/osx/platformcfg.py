@@ -59,8 +59,7 @@ def get(descriptor):
         value = path
 
     elif descriptor == config.NON_VIDEO_DIRECTORY:
-        path = os.path.expanduser('~/Desktop')
-        value = path
+        value = os.path.expanduser('~/Desktop')
 
     elif descriptor == config.SUPPORT_DIRECTORY:
         path = os.path.join(SUPPORT_DIRECTORY_PARENT, config.get(prefs.SHORT_APP_NAME))
