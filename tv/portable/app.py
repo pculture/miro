@@ -789,6 +789,8 @@ class TemplateDisplay(frontend.HTMLDisplay):
         (tch, self.templateHandle) = template.fillTemplate(templateName, self,
                 self.getDTVPlatformName(), self.getEventCookie(),
                 self.getBodyTagExtra(), *args, **kargs)
+        self.args = args
+        self.kargs = kargs
         html = tch.read()
 
         self.actionHandlers = [
@@ -807,6 +809,12 @@ class TemplateDisplay(frontend.HTMLDisplay):
             frontend.HTMLDisplay.__init__(self, html, frameHint=frameHint, areaHint=areaHint, baseURL=baseURL)
 
             self.templateHandle.initialFillIn()
+
+    def __eq__(self, other):
+        return (other.__class__ == TemplateDisplay and 
+                self.templateName == other.templateName and 
+                self.args == other.args and 
+                self.kargs == other.kargs)
 
     def runActionURLs(self, triggers):
         newPage = False
@@ -1112,7 +1120,8 @@ downloaded?""")
     def clearTorrents (self):
         items = views.items.filter(lambda x: x.getFeed().url == 'dtv:manualFeed' and x.isNonVideoFile() and not x.getState() == "downloading")
         for i in items:
-            i.downloader.setDeleteFiles(False)
+            if i.downloader is not None:
+                i.downloader.setDeleteFiles(False)
             i.remove()
 
     def setRunAtStartup(self, value):

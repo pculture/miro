@@ -317,8 +317,7 @@ class SelectionHandler(object):
         # where redisplaying it will reopen the home page.
         frame = app.controller.frame
         mainDisplay = frame.getDisplay(frame.mainDisplay) 
-        if (self.lastDisplay and
-                newDisplay.templateName == self.lastDisplay.templateName and
+        if (self.lastDisplay and newDisplay == self.lastDisplay and
                 self.lastDisplay is mainDisplay and
                 newDisplay.templateName != 'guide'):
             return

@@ -640,6 +640,8 @@ class Feed(DDBObject):
 
     def update(self):
         self.confirmDBThread()
+        if not self.idExists():
+            return
         if self.loading:
             return
         elif self.errorState:
