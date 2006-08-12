@@ -216,6 +216,10 @@
 <command id="showhelp" oncommand="pybridge.showHelp();" />
 <command id="copychannellink" oncommand="pybridge.copyChannelLink();" />
 <command id="createnewplaylist" oncommand="pybridge.createNewPlaylist();" />
+<command id="createnewplaylistfolder"
+        oncommand="pybridge.createNewPlaylistFolder();" />
+<command id="createnewchannelfolder"
+        oncommand="pybridge.createNewChannelFolder();" />
 <!--
 <command id="about" oncommand="alert('DTV Windows version 0.8.0 Copyright (c) 2005, 2006 Participatry Culture Foundation');" />
 <command id="about" oncommand="window.openDialog('chrome://dtv/content/about.xul',about','chrome,dependent,centerscreen');" />

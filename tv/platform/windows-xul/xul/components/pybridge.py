@@ -11,6 +11,7 @@ try:
     import app
     import eventloop
     import config
+    import folder
     import playlist
     import prefs
     import platformcfg
@@ -318,6 +319,14 @@ class PyBridge:
     @asUrgent
     def createNewPlaylist(self):
         playlist.createNewPlaylist()
+
+    @asUrgent
+    def createNewPlaylistFolder(self):
+        folder.createNewPlaylistFolder()
+
+    @asUrgent
+    def createNewChannelFolder(self):
+        folder.createNewChannelFolder()
 
     @asUrgent
     def handleDrop(self, dropData, dropType):
