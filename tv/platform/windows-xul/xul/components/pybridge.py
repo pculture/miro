@@ -320,5 +320,5 @@ class PyBridge:
         playlist.createNewPlaylist()
 
     @asUrgent
-    def handleDrop(self, dropData):
-        app.controller.handleDrop(dropData)
+    def handleDrop(self, dropData, dropType):
+        app.controller.handleDrop(dropData, dropType)

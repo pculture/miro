@@ -113,10 +113,12 @@ function onDragDrop(event, browser) {
     var dragService = Components.classes[
         "@mozilla.org/widget/dragservice;1"].getService(nsIDragService);
     var dragSession = dragService.getCurrentSession();
-    if(dragSession && canElementSupportDrag(elt, dragSession)) {
-      var dragDestData = elt.getAttribute("dragdestdata");
-      var browserDoc = document.getElementById(browser).contentWindow.document;
-      pybridge.handleDrop(dragDestData);
+    if(dragSession) {
+      var dragType = canElementSupportDrag(elt, dragSession);
+      if(dragType) {
+        var dragDestData = elt.getAttribute("dragdestdata");
+        pybridge.handleDrop(dragDestData, dragType);
+      }
     }
   }
 }

@@ -16,8 +16,8 @@
     <t:execOnLoad><![CDATA[
 guideTabs = views.guideTabs
 staticTabs = views.staticTabs
-feedTabs = views.feedTabs
-playlistTabs = views.playlistTabs
+feedTabs = kargs['channelTabOrder'].getView()
+playlistTabs = kargs['playlistTabOrder'].getView()
 ]]>
     </t:execOnLoad>
 </head>
@@ -60,7 +60,11 @@ playlistTabs = views.playlistTabs
 	    </span>
           </span>
       </li>
-      <div class="tab-list-divider" />
+      <div class="tab-list-divider" 
+	      dragdesttype="channel:channelfolder"
+	      dragdestdata="channel-END"
+	      drageffectchannel="move" 
+	      drageffectchannelfolder="move"  />
       <li t:repeatForView="playlistTabs" 
 	class="***this.getState()***"
 	selectID="***this.objID()***" selectViewName="playlistTabs"
@@ -75,6 +79,11 @@ playlistTabs = views.playlistTabs
 	    </span>
           </span>
       </li>
+      <div class="tab-list-end" 
+	      dragdesttype="playlist:playlistfolder"
+	      dragdestdata="playlist-END"
+	      drageffectplaylist="move" 
+	      drageffectplaylistfolder="move"  />
     </ul>
   </div>
         <div id="sidebar-download-fade">&nbsp;</div>

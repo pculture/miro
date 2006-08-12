@@ -1,5 +1,7 @@
 from itertools import count
 
+import database
+
 # PyRex has no lambda, so we need this separated
 #
 # It takes in a Python style sort function that returns -1 for x<y, 0
@@ -73,7 +75,8 @@ class TrackedIDList(object):
         return object.getID() in self.trackedIDs
 
     def _sendSignalChange(self, id):
-        self.db.getObjectByID(id).signalChange(needsSave=False)
+        if self.db.idExists(id):
+            self.db.getObjectByID(id).signalChange(needsSave=False)
 
     def __contains__(self, id):
         return id in self.trackedIDs
@@ -132,3 +135,26 @@ class TrackedIDList(object):
         del self.list[currentPos]
         self.list.insert(pos, id)
         self._sendSignalChange(id)
+
+    def moveIDList(self, idList, anchorID):
+        """Move a set of IDs to be above anchorID.
+
+        More precicely, we move idList so it is one contiguous block, in
+        between anchorID and the first id not in idList.  The ids in idList
+        won't change position relative to each other.
+
+        If anchorID is None, idList will be positioned at the bottom.
+        """
+
+        if anchorID in idList:
+            return
+        toMove = [(self.getPosition(id), id) for id in idList]
+        toMove.sort()
+        for oldPos, id in toMove:
+            self.removeID(id)
+        for oldPos, id in toMove:
+            if anchorID is not None:
+                anchorPos = self.getPosition(anchorID)
+                self.insertID(anchorPos, id)
+            else:
+                self.appendID(id)

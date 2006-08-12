@@ -18,9 +18,16 @@ allTabs = db.filter(filters.mappableToTab).map(maps.mapToTab)
 allTabs.createIndex(indexes.tabType)
 guideTabs = allTabs.filterWithIndex(indexes.tabType, 'guide').sort(sorts.tabs)
 staticTabs = allTabs.filterWithIndex(indexes.tabType, 'statictab').sort(sorts.tabs)
-feedTabs = allTabs.filterWithIndex(indexes.tabType, 'feed').sort(sorts.tabs)
-playlistTabs = allTabs.filterWithIndex(indexes.tabType, 'playlist').sort(sorts.tabs)
+# no need to sort channel/playlist tabs...  These get ordered by the TabOrder
+# class.
+feedTabs = allTabs.filterWithIndex(indexes.tabType, 'feed')
+playlistTabs = allTabs.filterWithIndex(indexes.tabType, 'playlist')
 selectedTabs = allTabs.filter(lambda x: x.selected)
+
+tabOrders = db.filterWithIndex(indexes.objectsByClass, tabs.TabOrder)
+tabOrders.createIndex(indexes.tabOrderType)
+channelTabOrder = tabOrders.filterWithIndex(indexes.tabOrderType, 'channel')
+playlistTabOrder = tabOrders.filterWithIndex(indexes.tabOrderType, 'playlist')
 
 # items includes fileItems.
 items = db.filterWithIndex(indexes.objectsByClass,item.Item)

@@ -2,6 +2,7 @@
 
 import app
 import database
+import eventloop
 import folder
 import guide
 import item
@@ -191,6 +192,13 @@ class TabSelectionArea(SelectionArea):
 
     def onRemove(self, obj, id):
         SelectionArea.onRemove(self, obj, id)
+        # We may be removing/adding tabs quickly to reorder them.  Use an idle
+        # callback to check if none are selected so we do the Right Thing in
+        # this case.
+        eventloop.addUrgentCall(self.checkNoTabsSelected,
+                "checkNoTabsSelected")
+
+    def checkNoTabsSelected(self):
         if len(self.currentSelection) == 0:
             prevTab = self.currentView.cur()
             if prevTab is None:

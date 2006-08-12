@@ -5,9 +5,13 @@
 </head>
 <body>
 <!-- Normal -->
-<a class="feeditem draggable noselect"
+<a class="feeditem draggable noselect ***this.obj.getFolder() and 'child' or ''***"
 	dragsourcetype="channel"
-	dragicon="channel-tnail-***this.objID()***">
+	dragicon="channel-tnail-***this.objID()***"
+	dragdesttype="channel:channelfolder"
+	dragdestdata="channel-***this.objID()***"
+	drageffectchannel="move"
+	drageffectchannelfolder="move">
 
 <div t:showIf="this.obj.showA() and not this.obj.isAutoDownloadable()" class="left-bubble blue">
  <div class="right-bubble blue">

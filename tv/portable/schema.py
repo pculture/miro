@@ -190,6 +190,7 @@ from guide import ChannelGuide
 from item import Item, FileItem
 from iconcache import IconCache
 from playlist import SavedPlaylist
+from tabs import TabOrder
 
 class DDBObjectSchema(ObjectSchema):
     klass = DDBObject
@@ -362,6 +363,14 @@ class PlaylistSchema(DDBObjectSchema):
         ('item_ids', SchemaList(SchemaInt())),
     ]
 
+class TabOrderSchema(DDBObjectSchema):
+    klass = TabOrder
+    classString = 'taborder-order'
+    fields = DDBObjectSchema.fields + [
+        ('type', SchemaString()),
+        ('tab_ids', SchemaList(SchemaInt())),
+    ]
+
 class ChannelGuideSchema(DDBObjectSchema):
     klass = ChannelGuide
     classString = 'channel-guide'
@@ -379,4 +388,5 @@ objectSchemas = [
     SearchDownloadsFeedImplSchema, RemoteDownloaderSchema,
     HTTPAuthPasswordSchema, ChannelGuideSchema, ManualFeedImplSchema,
     PlaylistSchema, ChannelFolderSchema, PlaylistFolderSchema,
+    TabOrderSchema
 ]

@@ -88,9 +88,11 @@ function handleDrop(event) {
   if(elt) {
     var dragDestMimeType = "application/x-democracy-" +
         elt.getAttribute("dragdesttype") + "-drag";
-    if(canElementSupportDrag(elt, event.dataTransfer)) {
+    var dragDestType = canElementSupportDrag(elt, event.dataTransfer);
+    if(dragDestType) {
       var dragDestData = elt.getAttribute("dragdestdata");
-      eventURL('action:handleDrop?data=' + dragDestData);
+      eventURL('action:handleDrop?data=' + dragDestData + "&type=" +
+	      dragDestType);
     }
   }
 }

@@ -5,14 +5,17 @@
 </head>
 <body>
 <!-- Normal -->
-<div class="dnd-background-left" dragdesttype="downloadeditem"
-	dragsourcetype="playlist"
-	dragicon="playlist-tnail-***this.objID()***"
-	dragdestdata="playlist-***this.objID()***" 
-	drageffectdownloadeditem="copy">
+<div class="dnd-background-left dnd-playlist"
+	dragdesttype="downloadeditem:playlist:playlistfolder"
+	dragdestdata="playlist-***this.objID()***"
+	drageffectdownloadeditem="copy"
+	drageffectplaylist="move"
+	drageffectplaylistfolder="move">
 <div class="dnd-background-mid"></div>
 <div class="dnd-background-right"></div>
-<a class="feeditem noselect">
+<a class="feeditem noselect"
+	dragsourcetype="playlist"
+	dragicon="playlist-tnail-***this.objID()***">
 <img id="playlist-tnail-***this.objID()***" class="icon" src="resource:images/playlist-icon-tablist.png" /><div class="name" t:replaceMarkup="this.obj.getTitle()" />
 </a>
 </div>

@@ -6,13 +6,16 @@
 <body>
 <!-- Normal -->
 <div class="dnd-background-left" 
-	dragdesttype="channel"
+	dragdesttype="channel:channelfolder"
 	dragdestdata="channelfolder-***this.objID()***" 
-	drageffectchannel="move">
+	drageffectchannel="move"
+	drageffectchannelfolder="move">
 <div class="dnd-background-mid"></div>
 <div class="dnd-background-right"></div>
-<a class="feeditem noselect">
-<img class="icon" src="resource:images/collection-icon-tablist.png" /><div class="name" t:replaceMarkup="this.obj.getTitle()" />
+<a class="feeditem noselect draggable"
+	dragsourcetype="channelfolder"
+	dragicon="channel-tnail-***this.objID()***">
+<img id="channel-tnail-***this.objID()***" class="icon" src="resource:images/collection-icon-tablist.png" /><div class="name" t:replaceMarkup="this.obj.getTitle()" />
 </a>
 </div>
 </body>

@@ -22,11 +22,21 @@ class SavedPlaylist(database.DDBObject):
             self.item_ids = [i.getID() for i in items]
         else:
             self.item_ids = []
-        self.trackedItems = TrackedIDList(views.items, self.item_ids)
+        self.folder_id = None
+        self._initRestore()
         database.DDBObject.__init__(self)
 
     def onRestore(self):
+        self._initRestore()
+
+    def _initRestore(self):
+        """Common code shared between __init__ and onRestore()."""
         self.trackedItems = TrackedIDList(views.items, self.item_ids)
+        views.items.addRemoveCallback(self.onItemRemoved)
+
+    def onItemRemoved(self, obj, id):
+        if id in self.trackedItems:
+            self.trackedItems.removeID(id)
 
     getTitle, setTitle = makeSimpleGetSet('title')
 
@@ -93,11 +103,7 @@ class SavedPlaylist(database.DDBObject):
 
     def moveSelection(self, anchorItem):
         """Move the current selection to be above anchorItem.
-
-        More precicely, we move the current selection so that it's one
-        contiguous block, in between anchorItem and the first non-selected
-        item above anchorItem at the start of the move.
-
+        
         The selection must contain items inside this playlist, or a ValueError
         will be thrown.
         """
@@ -113,18 +119,11 @@ class SavedPlaylist(database.DDBObject):
                 raise ValueError("%s is not in this playlist",
                         views.items.getObjectByID(id))
             else:
-                pos = self.trackedItems.getPosition(id)
-                toMove.append((pos, id))
-        toMove.sort()
-        toMove = [id for (pos, id) in toMove]
-        for id in toMove:
-            self.trackedItems.removeID(id)
-        for id in toMove:
-            if anchorItem is not None:
-                anchorPos = self.trackedItems.getPosition(anchorItem.getID())
-                self.trackedItems.insertID(anchorPos, id)
-            else:
-                self.trackedItems.appendID(id)
+                toMove.append(id)
+        if anchorItem is not None:
+            self.trackedItems.moveIDList(toMove, anchorItem.getID())
+        else:
+            self.trackedItems.moveIDList(toMove, None)
         self.signalChange()
 
     def rename(self):

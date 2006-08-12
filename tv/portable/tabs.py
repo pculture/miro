@@ -2,11 +2,14 @@ import database
 import app
 import template
 import views
+import eventloop
 import feed
 import folder
 import resource
 import guide
 import playlist
+import sorts
+from databasehelper import TrackedIDList
 
 from xml.dom.minidom import parse
 from gtcache import gettext as _
@@ -155,8 +158,97 @@ class Tab:
         else:
             return None
 
+    def getID(self):
+        """Gets an id that can be used to lookup this tab from views.allTabs.
+
+        NOTE: Tabs are mapped database objects, they don't have actual
+        DDBObject ids.
+        """
+        return self.obj.getID()
+
+    def signalChange(self, needsSave=True):
+        """Call signalChange on the object that is mapped to this tab (the
+        StaticTab, Feed, Playlist, etc.)
+        """
+        self.obj.signalChange(needsSave=needsSave)
+
     def onDeselected(self, frame):
         self.display.onDeselect(frame)
+
+class TabOrder(database.DDBObject):
+    """TabOrder objects keep track of the order of the tabs.  Democracy
+    creates 2 of these, one to track channels/channel folders and another to
+    track playlists/playlist folders.
+    """
+    def __init__(self, type):
+        """Construct a TabOrder.  type should be either "channel", or
+        "playlist.
+        """
+
+        self.type = type
+        self.tab_ids = []
+        self._initRestore()
+        sortedTabs = self.tabView.sort(sorts.tabs)
+        for tab in sortedTabs:
+            self.trackedTabs.appendID(tab.getID())
+        sortedTabs.unlink()
+        database.DDBObject.__init__(self)
+
+    def onRestore(self):
+        self._initRestore()
+
+    def _initRestore(self):
+        if self.type == 'channel':
+            self.tabView = views.feedTabs
+        elif self.type == 'playlist':
+            self.tabView = views.playlistTabs
+        else:
+            raise ValueError("Bad type for TabOrder")
+        self.trackedTabs = TrackedIDList(self.tabView, self.tab_ids)
+        self.tabView.addAddCallback(self.onAddTab)
+        self.tabView.addRemoveCallback(self.onRemoveTab)
+
+    def getView(self):
+        """Get a database view for this tab ordering."""
+        return self.trackedTabs.view
+
+    def onAddTab(self, obj, id):
+        # There are weird database issues if we append the ID right now.  Let
+        # the whole operation go through, then append the ID.
+        def doit():
+            if id not in self.trackedTabs:
+                self.trackedTabs.appendID(id)
+        eventloop.addUrgentCall(doit, "add tracked tab")
+
+    def onRemoveTab(self, obj, id):
+        if id in self.trackedTabs:
+            self.trackedTabs.removeID(id)
+
+    def moveSelection(self, anchorItem):
+        """Move the current selection to be above anchorItem.
+
+        The selection must be tabs ordered by this object, or a ValueError
+        will be thrown.
+        """
+
+        selection = app.controller.selection.tabListSelection
+        if self.type == 'channel':
+            expectedType = 'channeltab'
+        else:
+            expectedType = 'playlisttab'
+        if selection.getType() != expectedType:
+            raise ValueError("Bad selection type: %s" % selection.getType())
+        # Figure out what the current selection in.  Since the selection is
+        # unordered, we also need to get the items in the order they appear in
+        # the playlist.
+        toMove = []
+        for id in selection.currentSelection:
+            toMove.append(id)
+        if anchorItem is not None:
+            self.trackedTabs.moveIDList(toMove, anchorItem.getID())
+        else:
+            self.trackedTabs.moveIDList(toMove, None)
+        self.signalChange()
 
 # Remove all static tabs from the database
 def removeStaticTabs():

@@ -92,6 +92,14 @@ a.feeditem span {
     overflow: hidden;
 }
 
+a.feeditem.child {
+   margin-left: 16px;
+}
+
+a.feeditem.drag-highlight {
+   border-top: 1px solid black;
+   padding-top: 1px;
+}
 .selected a.feeditem span, .selected-inactive a.feeditem span {
     color: #fff;
 }
@@ -146,6 +154,22 @@ a.feeditem img.icon {
     background: url(../images/dnd-highlight-right.png) top right no-repeat;
 }
 
+/* Selectors for containers that can be dropped on to up things in, but can
+* also be reordered using DND.  Is there a nicer way to do this? */
+.dnd-playlist.drag-highlight.dnd-background-left.playlist, .drag-highlight.dnd-background-left.channelfolder, .drag-highlight.dnd-background-left.playlistfolder {
+    background: none;
+    border-top: 1px solid black;
+    margin-top: -1px;
+}
+
+.dnd-playlist.drag-highlight.playlist .dnd-background-mid, .drag-highlight.channelfolder .dnd-background-mid, .drag-highlight.playlistfolder .dnd-background-mid {
+    background: none;
+}
+
+.dnd-playlist.drag-highlight.playlist .dnd-background-right, .drag-highlight.channelfolder .dnd-background-right, .drag-highlight.playlistfolder .dnd-background-right {
+    background: none;
+}
+
 a.feeditem div.name {
 	padding: 3px;
 	overflow: hidden;
@@ -157,6 +181,19 @@ a.feeditem div.name {
 	overflow: hidden;
 	font-size: 2px;
 	border-top: 1px solid #b6bfce;
+}
+
+.tab-list-divider.drag-highlight {
+	border-top: 1px solid black;
+}
+
+.tab-list-end {
+	height: 20px;
+}
+
+.tab-list-end.drag-highlight {
+	border-top: 1px solid black;
+	height: 19px;
 }
 
 .feed-loading-icon {

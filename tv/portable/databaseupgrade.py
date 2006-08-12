@@ -194,8 +194,6 @@ def upgrade15(objectList):
     return changed
 
 def upgrade16(objectList):
-    """In the unlikely event that someone has a playlist around, change items
-    to item_ids."""
     changed = set()
     for o in objectList:
         if o.classString == 'file-item':

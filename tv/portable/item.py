@@ -132,6 +132,11 @@ class Item(DDBObject):
         self.signalChange()
         return True
 
+    def removeFromPlaylists(self):
+        view = views.playlists.filterWithIndex(indexes.playlistsByItem, self)
+        for playlist in view:
+            playlist.removeItem(self)
+
     def updateReleaseDate(self):
         # This should be called whenever we get a new entry
         try:
@@ -313,8 +318,9 @@ class Item(DDBObject):
         self.signalChange()
 
     def executeExpire(self):
-        UandA = self.getUandA()
         self.confirmDBThread()
+        self.removeFromPlaylists()
+        UandA = self.getUandA()
         self.deleteFile()
         self.expired = True
         if self.isContainerItem:
@@ -1153,6 +1159,7 @@ class FileItem(Item):
 
     def executeExpire(self):
         self.confirmDBThread()
+        self.removeFromPlaylists()
         if self.isContainerItem:
             children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
             for item in children:

@@ -89,6 +89,7 @@ nsresult isSingleDragTypeSupported(const nsAString &dragType, PRBool *supported)
 {
     nsresult rv;
 
+
     nsCAutoString dragMimeType = NS_ConvertUTF16toUTF8(dragType);
     dragMimeType.Insert("application/x-democracy-", 0);
     dragMimeType.Append("-drag");
@@ -115,7 +116,7 @@ nsresult isDragTypeSupported(const nsAString& dragAttribute,
         currentColon = dragAttribute.FindChar(':', start);
         if(currentColon < 0) {
             const nsAString& singleDragType = Substring(dragAttribute, start, 
-                    dragAttribute.Length());
+                    dragAttribute.Length() - start);
             rv = isSingleDragTypeSupported(singleDragType, supported);
             if(NS_FAILED(rv)) return rv;
             if(*supported && dragType) {
@@ -124,7 +125,7 @@ nsresult isDragTypeSupported(const nsAString& dragAttribute,
             return NS_OK;
         }
         const nsAString& singleDragType = Substring(dragAttribute, start, 
-                currentColon);
+                currentColon - start);
         rv = isSingleDragTypeSupported(singleDragType, supported);
         if(NS_FAILED(rv)) return rv;
         if(*supported) {
@@ -292,11 +293,14 @@ public:
             rv = element->GetAttribute(dragDestDataString, dragDestData);
             if(NS_FAILED(rv)) return rv;
             PRBool supported;
-            rv = isDragTypeSupported(dragDestType, &supported);
+            nsString singleDragType;
+            rv = isDragTypeSupported(dragDestType, &supported, &singleDragType);
             if(supported) {
                 *retval = true;
                 nsCAutoString url = NS_ConvertUTF16toUTF8(dragDestData);
                 url.Insert("action:handleDrop?data=", 0);
+                url.Append("&type=");
+                url.Append(NS_ConvertUTF16toUTF8(singleDragType));
                 gtk_moz_embed_load_url(this->embed,
                         PromiseFlatCString(url).get());
             } 

@@ -59,3 +59,6 @@ def playlistsByItem(playlist):
 
 def tabType(tab):
     return tab.type
+
+def tabOrderType(tabOrder):
+    return tabOrder.type

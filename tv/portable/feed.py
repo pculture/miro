@@ -17,7 +17,7 @@ import re
 import traceback 
 import xml
 
-from database import defaultDatabase
+from database import defaultDatabase, DatabaseConstraintError
 from httpclient import grabURL, HTTPError
 from iconcache import iconCacheUpdater, IconCache
 from templatehelper import quoteattr, escape
@@ -25,6 +25,7 @@ import app
 import config
 import dialogs
 import eventloop
+import folder
 import prefs
 import resource
 import util
@@ -650,6 +651,10 @@ class Feed(DDBObject):
             self.signalChange()
             return self.generateFeed()
         self.actualFeed.update()
+
+    def getFolder(self):
+        self.confirmDBThread()
+        return None
 
     def generateFeed(self, removeOnError=False):
         newFeed = None

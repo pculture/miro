@@ -498,6 +498,16 @@ class Controller (frontend.Application):
 
             # Set up tab list
             tabs.reloadStaticTabs()
+            try:
+                channelTabOrder = getSingletonDDBObject(views.channelTabOrder)
+            except LookupError:
+                print "DTV: Creating channel tab order"
+                channelTabOrder = tabs.TabOrder('channel')
+            try:
+                playlistTabOrder = getSingletonDDBObject(views.playlistTabOrder)
+            except LookupError:
+                print "DTV: Creating playlist tab order"
+                playlistTabOrder = tabs.TabOrder('playlist')
 
             channelGuide = _getInitialChannelGuide()
 
@@ -556,7 +566,9 @@ class Controller (frontend.Application):
             eventloop.addTimeout (30, autoupdate.checkForUpdates, "Check for updates")
             feed.expireItems()
 
-            self.tabDisplay = TemplateDisplay('tablist')
+            self.tabDisplay = TemplateDisplay('tablist',
+                    playlistTabOrder=playlistTabOrder,
+                    channelTabOrder=channelTabOrder)
             self.frame.selectDisplay(self.tabDisplay, self.frame.channelsDisplay)
 
             # If we have newly available items, provide feedback
@@ -758,21 +770,44 @@ class Controller (frontend.Application):
             # upstream limit should be unset here
             pass
 
-    def handleDrop(self, dropData):
-        if dropData.startswith("playlist-"):
-            id = int(dropData[len("playlist-"):])
-            playlist = db.getObjectByID(id)
+    def handleDrop(self, dropData, type):
+        try:
+            destType, destID = dropData.split("-")
+        except:
+            print "Can't parse drop.  data: %s type: %s" % (dropData, type)
+            return
+
+        if destType == 'playlist' and type == 'downloadeditem':
+            # dropping an item on a playlist
+            playlist = db.getObjectByID(int(destID))
             playlist.handleDrop()
-        elif dropData.startswith("playlistitem-"):
+        elif (destType in ('playlist', 'playlistfolder') and 
+                type in ('playlist', 'playlistfolder')):
+            # Reording the playlist tabs
+            if destID != 'END':
+                pl = db.getObjectByID(int(destID))
+            else:
+                pl = None
+            getSingletonDDBObject(views.playlistTabOrder).moveSelection(pl)
+        elif (destType in ('channel', 'channelfolder') and
+                type in ('channel', 'channelfolder')):
+            # Reordering the channel tabs
+            if destID != 'END':
+                tab = db.getObjectByID(int(destID))
+            else:
+                tab = None
+            getSingletonDDBObject(views.channelTabOrder).moveSelection(tab)
+        elif destType == "playlistitem" and type == "downloadeditem":
+            # Reording items in a playlist
             playlist = controller.selection.getSelectedTabs()[0].obj
-            idStr = dropData[len("playlistitem-"):]
-            if idStr != 'END':
-                item = db.getObjectByID(int(idStr))
+            if destID != 'END':
+                item = db.getObjectByID(int(destID))
             else:
                 item = None
             playlist.moveSelection(item)
         else:
-            print "Unknown drop data: ", dropData
+            print "Can't handle drop. Dest type: %s Dest id: %s Type: %s" % \
+                    (destType, destID, type)
 
 ###############################################################################
 #### TemplateDisplay: a HTML-template-driven right-hand display panel      ####
@@ -1276,8 +1311,8 @@ class GUIActionHandler:
 
     # Following for testing/debugging
 
-    def handleDrop(self, data):
-        controller.handleDrop(data)
+    def handleDrop(self, data, type):
+        controller.handleDrop(data, type)
 
     def showHelp(self):
         # FIXME don't hardcode this URL
