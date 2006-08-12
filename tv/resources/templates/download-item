@@ -63,12 +63,6 @@ viewName = kargs['viewName']
 		       i18n:translate="">SAVE</a>
 		</div>
 		<span t:replace="this.getStateString()" />
-		<div t:showIf="this.getState() in ('saved', 'expiring', 'newly-downloaded')"
-		    class="main-video-details-reveal-button">
-		    <a href="#"
-			onclick="return eventURL('action:revealItem?item=@@@this.getID()@@@');"
-			i18n:translate="">REVEAL</a>
-		</div>
 	</div>
 	<div t:showIf="this.getState() == 'downloading'"
 		class="main-video-details-download-info">
@@ -90,6 +84,13 @@ viewName = kargs['viewName']
         </div>
 	<div class="main-video-desc-details noselect">
 		<span t:replaceMarkup="this.getDetails()" />
+		<span t:showIf="this.getState() in ('saved', 'expiring', 'newly-downloaded')"
+		    class="main-video-details-reveal-button">
+		    - 
+		    <a href="#" class="reveal-link"
+			onclick="return eventURL('action:revealItem?item=@@@this.getID()@@@');"
+			i18n:translate="">REVEAL</a>
+		</span>
 	</div>
     </div>
 </div>

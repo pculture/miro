@@ -39,7 +39,6 @@ class PlaylistTestCase(DemocracyTestCase):
         playlist = SavedPlaylist("rocketboom")
         self.assertEquals(playlist.getTitle(), 'rocketboom')
         self.assertEquals(playlist.getItems(), [])
-        self.assertEquals(playlist.getExpanded(), False)
         playlist.addItem(self.i4)
         playlist.addItem(self.i1)
         playlist.addItem(self.i3)
@@ -67,7 +66,6 @@ class PlaylistTestCase(DemocracyTestCase):
         playlist = SavedPlaylist("rocketboom", initialList)
         self.assertEquals(playlist.getTitle(), 'rocketboom')
         self.checkList(playlist, initialList)
-        self.assertEquals(playlist.getExpanded(), False)
 
     def checkCallbacks(self, movedItems):
         correctCallbackList = [(i, i.getID()) for i in movedItems]

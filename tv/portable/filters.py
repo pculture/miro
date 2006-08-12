@@ -1,5 +1,6 @@
 import tabs
 import feed
+import folder
 import playlist
 import guide
 
@@ -33,9 +34,10 @@ def watchableItems(obj):
 # Return True if a tab should be shown for obj in the frontend. The filter
 # used on the database to get the list of tabs.
 def mappableToTab(obj):
-    return (isinstance(obj, tabs.StaticTab) or 
-            (isinstance(obj, feed.Feed) and obj.isVisible()) or
-            isinstance(obj, playlist.SavedPlaylist) or isinstance(obj, guide.ChannelGuide))
+    return ((isinstance(obj, feed.Feed) and obj.isVisible()) or
+            obj.__class__ in (tabs.StaticTab,
+                folder.ChannelFolder, playlist.SavedPlaylist,
+                folder.PlaylistFolder, guide.ChannelGuide))
 
 def autoDownloads(item):
     return item.getAutoDownloaded() and item.getState() == 'downloading'

@@ -14,9 +14,12 @@ def mapToTab(obj):
     elif isinstance(obj, feed.Feed):
         sortKey = obj.getTitle().lower()
         return tabs.Tab('feedtab', 'channel', [100, sortKey], obj)
-    elif isinstance(obj, folder.Folder):
+    elif isinstance(obj, folder.ChannelFolder):
         sortKey = obj.getTitle().lower()
-        return tabs.Tab('foldertab','folder',[500,sortKey],obj)
+        return tabs.Tab('channelfoldertab', 'channelfolder', [100,sortKey],obj)
+    elif isinstance(obj, folder.PlaylistFolder):
+        sortKey = obj.getTitle().lower()
+        return tabs.Tab('playlistfoldertab','playlistfolder', [900,sortKey],obj)
     elif isinstance(obj, playlist.SavedPlaylist):
         sortKey = obj.getTitle().lower()
         return tabs.Tab('playlisttab','playlist',[900,sortKey],obj)

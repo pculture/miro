@@ -15,15 +15,11 @@ import sorts
 db.createIndex(indexes.objectsByClass)
 
 allTabs = db.filter(filters.mappableToTab).map(maps.mapToTab)
-allTabs.createIndex(indexes.tabObjectClass)
-guideTabs = allTabs.filterWithIndex(indexes.tabObjectClass, 
-        guide.ChannelGuide).sort(sorts.tabs)
-staticTabs = allTabs.filterWithIndex(indexes.tabObjectClass, 
-        tabs.StaticTab).sort(sorts.tabs)
-feedTabs = allTabs.filterWithIndex(indexes.tabObjectClass,
-        feed.Feed).sort(sorts.tabs)
-playlistTabs = allTabs.filterWithIndex(indexes.tabObjectClass,
-        playlist.SavedPlaylist).sort(sorts.tabs)
+allTabs.createIndex(indexes.tabType)
+guideTabs = allTabs.filterWithIndex(indexes.tabType, 'guide').sort(sorts.tabs)
+staticTabs = allTabs.filterWithIndex(indexes.tabType, 'statictab').sort(sorts.tabs)
+feedTabs = allTabs.filterWithIndex(indexes.tabType, 'feed').sort(sorts.tabs)
+playlistTabs = allTabs.filterWithIndex(indexes.tabType, 'playlist').sort(sorts.tabs)
 selectedTabs = allTabs.filter(lambda x: x.selected)
 
 # items includes fileItems.

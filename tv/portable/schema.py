@@ -185,7 +185,7 @@ from downloader import RemoteDownloader, HTTPAuthPassword
 from feed import Feed, FeedImpl, RSSFeedImpl, ScraperFeedImpl
 from feed import SearchFeedImpl, DirectoryFeedImpl, SearchDownloadsFeedImpl
 from feed import ManualFeedImpl
-from folder import Folder
+from folder import ChannelFolder, PlaylistFolder
 from guide import ChannelGuide
 from item import Item, FileItem
 from iconcache import IconCache
@@ -338,11 +338,19 @@ class HTTPAuthPasswordSchema(DDBObjectSchema):
         ('authScheme', SchemaString()),
     ]
 
-class FolderSchema(DDBObjectSchema):
-    klass = Folder
-    classString = 'folder'
+class ChannelFolderSchema(DDBObjectSchema):
+    klass = ChannelFolder
+    classString = 'channel-folder'
     fields = DDBObjectSchema.fields + [
-        ('feeds', SchemaList(SchemaInt())),
+        ('expanded', SchemaBool()),
+        ('title', SchemaString()),
+    ]
+
+class PlaylistFolderSchema(DDBObjectSchema):
+    klass = PlaylistFolder
+    classString = 'playlist-folder'
+    fields = DDBObjectSchema.fields + [
+        ('expanded', SchemaBool()),
         ('title', SchemaString()),
     ]
 
@@ -351,7 +359,6 @@ class PlaylistSchema(DDBObjectSchema):
     classString = 'playlist'
     fields = DDBObjectSchema.fields + [
         ('title', SchemaString()),
-        ('expanded', SchemaBool()),
         ('item_ids', SchemaList(SchemaInt())),
     ]
 
@@ -370,6 +377,6 @@ objectSchemas = [
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,
     SearchFeedImplSchema, DirectoryFeedImplSchema,
     SearchDownloadsFeedImplSchema, RemoteDownloaderSchema,
-    HTTPAuthPasswordSchema, FolderSchema, ChannelGuideSchema,
-    ManualFeedImplSchema, PlaylistSchema,
+    HTTPAuthPasswordSchema, ChannelGuideSchema, ManualFeedImplSchema,
+    PlaylistSchema, ChannelFolderSchema, PlaylistFolderSchema,
 ]

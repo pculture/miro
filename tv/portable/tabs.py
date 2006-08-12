@@ -3,6 +3,7 @@ import app
 import template
 import views
 import feed
+import folder
 import resource
 import guide
 import playlist
@@ -73,6 +74,17 @@ class Tab:
         self.active = False
         self.obj = obj
 
+        if obj.__class__ == guide.ChannelGuide:
+            self.type = 'guide'
+        elif obj.__class__ == StaticTab: 
+            self.type = 'statictab'
+        elif obj.__class__ in (feed.Feed, folder.ChannelFolder): 
+            self.type = 'feed'
+        elif obj.__class__ in (playlist.SavedPlaylist, folder.PlaylistFolder):
+            self.type = 'playlist'
+        else:
+            raise TypeError("Bad tab object type: %s" % type(obj))
+
     def setActive(self, newValue):
         self.obj.confirmDBThread()
         self.active = newValue
@@ -113,13 +125,21 @@ class Tab:
         """True if this Tab represents a Feed."""
         return isinstance(self.obj, feed.Feed)
 
+    def isChannelFolder(self):
+        """True if this Tab represents a Channel Folder."""
+        return isinstance(self.obj, folder.ChannelFolder)
+
     def isGuide(self):
-        """True if this Tab represents a Feed."""
+        """True if this Tab represents a Channel Guide."""
         return isinstance(self.obj, guide.ChannelGuide)
 
     def isPlaylist(self):
         """True if this Tab represents a Playlist."""
         return isinstance(self.obj, playlist.SavedPlaylist)
+
+    def isPlaylistFolder(self):
+        """True if this Tab represents a Playlist Folder."""
+        return isinstance(self.obj, folder.PlaylistFolder)
 
     def feedURL(self):
         """If this Tab represents a Feed or a Guide, the URL. Otherwise None."""

@@ -336,6 +336,7 @@ div.scraping-content {
     height: 44px;
 }
 
+
 .main-video-desc p {
     display: inline;
     padding: 0px;
@@ -363,6 +364,12 @@ div.scraping-content {
     color: #666666;
     text-decoration: underline;
 }
+
+.main-video-desc-details a:link, .main-video-desc-details a:active, .main-video-desc-details a:hover {
+    color: #222;
+    text-decoration: underline;
+}
+
 
 .main-video-hitbox {
     position: absolute;

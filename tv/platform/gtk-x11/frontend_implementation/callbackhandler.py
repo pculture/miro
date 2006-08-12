@@ -14,6 +14,7 @@ import singleclick
 import eventloop
 import math
 import dialogs
+import folder
 import playlist
 import platformutils
 from gettext import gettext as _
@@ -324,10 +325,10 @@ class CallbackHandler(object):
         playlist.createNewPlaylist()
 
     def on_new_playlist_folder_activate(self, event=None):
-        print "NOT IMPLEMENTED"
+        folder.createNewPlaylistFolder()
 
     def on_new_channel_folder_activate(self, event=None):
-        print "NOT IMPLEMENTED"
+        folder.createNewChannelFolder()
 
     def on_rename_activate(self, event=None):
         print "NOT IMPLEMENTED"

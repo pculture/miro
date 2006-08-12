@@ -2,6 +2,7 @@
 
 import app
 import database
+import folder
 import guide
 import item
 import tabs
@@ -152,9 +153,10 @@ class SelectionArea(object):
             if isinstance(obj, item.Item):
                 newType = 'item'
             elif isinstance(obj, tabs.Tab):
-                if obj.obj.__class__ == playlist.SavedPlaylist:
+                if obj.obj.__class__ in (playlist.SavedPlaylist,
+                        folder.PlaylistFolder):
                     newType = 'playlisttab'
-                elif obj.obj.__class__ == feed.Feed:
+                elif obj.obj.__class__ in (feed.Feed, folder.ChannelFolder):
                     newType = 'channeltab'
                 elif obj.obj.__class__ == guide.ChannelGuide:
                     if obj.obj.getDefault():

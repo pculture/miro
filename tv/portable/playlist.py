@@ -16,9 +16,8 @@ class SavedPlaylist(database.DDBObject):
     now.
     """
 
-    def __init__(self, title, items=None, expanded=False):
+    def __init__(self, title, items=None):
         self.title = title
-        self.expanded = expanded
         if items is not None:
             self.item_ids = [i.getID() for i in items]
         else:
@@ -30,7 +29,6 @@ class SavedPlaylist(database.DDBObject):
         self.trackedItems = TrackedIDList(views.items, self.item_ids)
 
     getTitle, setTitle = makeSimpleGetSet('title')
-    getExpanded, setExpanded = makeSimpleGetSet('expanded')
 
     def getItems(self):
         """Get the items in this playlist."""

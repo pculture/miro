@@ -63,7 +63,7 @@ Contains the channels
 .tab-list li{
        list-style: none;
        clear: both;
-       margin: 0;
+       margin: 1px 0px 0px 0px;
 }
 
 .tab-list li:hover {
@@ -80,7 +80,7 @@ a.feeditem{
     white-space: nowrap;
 }
 
-a.feeditem.selected, a.feeditem.selected-inactive {
+.selected a.feeditem, .selected-inactive a.feeditem {
     color: #fff;
     font-weight: bold;
 }
@@ -92,15 +92,15 @@ a.feeditem span {
     overflow: hidden;
 }
 
-a.feeditem.selected span, a.feeditem.selected-inactive span {
+.selected a.feeditem span, .selected-inactive a.feeditem span {
     color: #fff;
 }
 
-a.feeditem.selected {
+.selected a.feeditem {
     background: url(../images/channel_bg.png) 0% 0% repeat-x; 
 }
 
-a.feeditem.selected-inactive {
+.selected-inactive a.feeditem {
     background: url(../images/channel_bg.png) 0px -50px repeat-x; 
 }
 

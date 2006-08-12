@@ -1,5 +1,9 @@
 import app
 import item
+import folder
+import feed
+import guide
+import tabs
 
 def itemsByFeed(x):
     # This specifically sorts subitems by their parent's feed.
@@ -53,5 +57,5 @@ tabObjIDIndex = lambda x: x.obj.getID()
 def playlistsByItem(playlist):
     return playlist.getItems()
 
-def tabObjectClass(tab):
-    return tab.obj.__class__
+def tabType(tab):
+    return tab.type

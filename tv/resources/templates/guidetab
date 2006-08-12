@@ -4,7 +4,7 @@
 <head>
 </head>
 <body>
-<a class="feeditem @@@this.getState()@@@">
+<a class="feeditem">
     <img class="icon" alt="" src="***this.obj.getIconURL()***" />
     <div class="name" t:replace="this.obj.getTitle()" />
 </a>

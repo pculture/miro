@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html  xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n">
+<head>
+</head>
+<body>
+<!-- Normal -->
+<div class="dnd-background-left" 
+	dragdesttype="playlist"
+	dragdestdata="playlistfolder-***this.objID()***" 
+	drageffectplaylist="move">
+<div class="dnd-background-mid"></div>
+<div class="dnd-background-right"></div>
+<a class="feeditem noselect">
+<img class="icon" src="resource:images/collection-icon-tablist.png" /><div class="name" t:replaceMarkup="this.obj.getTitle()" />
+</a>
+</div>
+</body>
+</html>
