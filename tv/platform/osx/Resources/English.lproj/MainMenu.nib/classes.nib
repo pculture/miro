@@ -20,14 +20,14 @@
                 addChannel = id; 
                 copyChannelLink = id; 
                 copyVideoLink = id; 
+                createChannelFolder = id; 
                 createPlaylist = id; 
-                deletePlaylist = id; 
-                deleteVideo = id; 
+                createPlaylistFolder = id; 
                 playFullScreen = id; 
                 playHalfScreen = id; 
                 playPause = id; 
                 removeChannel = id; 
-                renameChannel = id; 
+                rename = id; 
                 saveVideo = id; 
                 sendPlaylistToFriend = id; 
                 stopVideo = id; 

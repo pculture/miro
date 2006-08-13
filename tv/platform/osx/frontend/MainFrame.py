@@ -9,6 +9,7 @@ import app
 import feed
 import prefs
 import config
+import folder
 import dialogs
 import playlist
 import eventloop
@@ -224,25 +225,19 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     ### Actions ###
 
-    def playPause_(self, sender):
-        VideoDisplayController.getInstance().playPause_(sender)
+    def createPlaylist_(self, sender):
+        playlist.createNewPlaylist()
 
-    def stopVideo_(self, sender):
-        VideoDisplayController.getInstance().stop_(sender)
+    def createPlaylistFolder_(self, sender):
+        folder.createNewPlaylistFolder()
 
-    def playFullScreen_(self, sender):
-        VideoDisplayController.getInstance().playFullScreen_(sender)
+    def createChannelFolder_(self, sender):
+        folder.createNewChannelFolder()
 
-    def playHalfScreen_(self, sender):
-        pass
-
-    def deleteVideo_(self, sender):
+    def rename_(self, sender):
         print "NOT IMPLEMENTED"
 
-    def saveVideo_(self, sender):
-        print "NOT IMPLEMENTED"
-
-    def copyVideoLink_(self, sender):
+    def delete_(self, sender):
         print "NOT IMPLEMENTED"
 
     def addChannel_(self, sender):
@@ -268,19 +263,25 @@ class MainController (NibClassBuilder.AutoBaseClass):
     def updateAllChannels_(self, sender):
         eventloop.addUrgentCall(lambda:app.ModelActionHandler(app.delegate).updateAllFeeds(), "Update all channels")
 
-    def renameChannel_(self, sender):
-        print "NOT IMPLEMENTED"
-
-    def createPlaylist_(self, sender):
-        playlist.createNewPlaylist()
-
-    def deletePlaylist_(self, sender):
-        print "NOT IMPLEMENTED"
-
-    def sendPlaylistToFriend_(self, sender):
-        print "NOT IMPLEMENTED"
-
     def tellAFriend_(self, sender):
+        print "NOT IMPLEMENTED"
+
+    def playPause_(self, sender):
+        VideoDisplayController.getInstance().playPause_(sender)
+
+    def stopVideo_(self, sender):
+        VideoDisplayController.getInstance().stop_(sender)
+
+    def playFullScreen_(self, sender):
+        VideoDisplayController.getInstance().playFullScreen_(sender)
+
+    def playHalfScreen_(self, sender):
+        pass
+
+    def saveVideo_(self, sender):
+        print "NOT IMPLEMENTED"
+
+    def copyVideoLink_(self, sender):
         print "NOT IMPLEMENTED"
 
     def showActionMenu_(self, sender):
@@ -314,7 +315,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         message = u'In the meantime, please visit our homepage for our help FAQ: %s\n\nFor individual user support, please e-mail feedback@ppolitics.org.' % (config.get(prefs.PROJECT_URL), )
         dialogs.MessageBoxDialog(summary, message).run()
 
-    itemsAlwaysAvailable = ('addChannel:', 'showHelp:', 'updateAllChannels:', 'createPlaylist:')
+    itemsAlwaysAvailable = ('addChannel:', 'showHelp:', 'updateAllChannels:', 'createPlaylist:', 'createPlaylistFolder:', 'createChannelFolder:')
     selectedChannelItems = ('removeChannel:', 'copyChannelLink:', 'updateChannel:')
     selectedMultiChannelItems = ('removeChannel:', 'updateChannel:')
 

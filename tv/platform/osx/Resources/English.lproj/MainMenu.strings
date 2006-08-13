@@ -19,9 +19,6 @@
 /* NSMenuItem : <title:Clear Menu> (oid:126) */
 "Clear Menu" = "Clear Menu";
 
-/* NSMenuItem : <title:Close> (oid:73) */
-"Close" = "Close";
-
 /* NSMenuItem : <title:Copy> (oid:157) */
 "Copy" = "Copy";
 
@@ -31,20 +28,11 @@
 /* NSMenuItem : <title:Copy Video Link> (oid:224) */
 "Copy Video Link" = "Copy Video Link";
 
-/* NSMenuItem : <title:Create Playlist...> (oid:230) */
-"Create Playlist..." = "Create Playlist...";
-
 /* NSMenuItem : <title:Cut> (oid:160) */
 "Cut" = "Cut";
 
 /* NSMenuItem : <title:Delete> (oid:164) */
 "Delete" = "Delete";
-
-/* NSMenuItem : <title:Delete Playlist> (oid:240) */
-"Delete Playlist" = "Delete Playlist";
-
-/* NSMenuItem : <title:Delete Video...> (oid:222) */
-"Delete Video..." = "Delete Video...";
 
 /* NSMenu : <title:Democracy> (oid:57) */
 "Democracy" = "Democracy";
@@ -82,8 +70,14 @@
 /* NSMenuItem : <title:Minimize> (oid:23) */
 "Minimize" = "Minimize";
 
-/* NSMenuItem : <title:New> (oid:82) */
-"New" = "New";
+/* NSMenuItem : <title:New Channel Folder...> (oid:291) */
+"New Channel Folder..." = "New Channel Folder...";
+
+/* NSMenuItem : <title:New Playlist Folder...> (oid:290) */
+"New Playlist Folder..." = "New Playlist Folder...";
+
+/* NSMenuItem : <title:New Playlist...> (oid:292) */
+"New Playlist..." = "New Playlist...";
 
 /* NSMenu : <title:Open Recent> (oid:125) */
 "Open Recent" = "Open Recent";
@@ -91,23 +85,14 @@
 /* NSMenuItem : <title:Open...> (oid:72) */
 "Open..." = "Open...";
 
-/* NSMenuItem : <title:Page Setup…> (oid:77) */
-"Page Setup…" = "Page Setup…";
-
 /* NSMenuItem : <title:Paste> (oid:171) */
 "Paste" = "Paste";
 
 /* NSMenuItem : <title:Play Video> (oid:217) */
 "Play Video" = "Play Video";
 
-/* NSMenu : <title:Playlists> (oid:229) */
-"Playlists" = "Playlists";
-
 /* NSMenuItem : <title:Preferences…> (oid:129) */
 "Preferences…" = "Preferences…";
-
-/* NSMenuItem : <title:Print…> (oid:78) */
-"Print…" = "Print…";
 
 /* NSMenuItem : <title:Quit Democracy> (oid:136) */
 "Quit Democracy" = "Quit Democracy";
@@ -115,29 +100,14 @@
 /* NSMenuItem : <title:Remove Channel...> (oid:231) */
 "Remove Channel..." = "Remove Channel...";
 
-/* NSMenuItem : <title:Remove Guide> (oid:286) */
-"Remove Guide" = "Remove Guide";
-
-/* NSMenuItem : <title:Rename Channel> (oid:238) */
-"Rename Channel" = "Rename Channel";
-
-/* NSMenuItem : <title:Revert> (oid:112) */
-"Revert" = "Revert";
-
-/* NSMenuItem : <title:Save> (oid:75) */
-"Save" = "Save";
-
-/* NSMenuItem : <title:Save As…> (oid:80) */
-"Save As…" = "Save As…";
+/* NSMenuItem : <title:Rename...> (oid:293) */
+"Rename..." = "Rename...";
 
 /* NSMenuItem : <title:Save Video...> (oid:223) */
 "Save Video..." = "Save Video...";
 
 /* NSMenuItem : <title:Select All> (oid:172) */
 "Select All" = "Select All";
-
-/* NSMenuItem : <title:Send Playlist to a Friend> (oid:242) */
-"Send Playlist to a Friend" = "Send Playlist to a Friend";
 
 /* NSMenuItem : <title:Services> (oid:131) */
 "Services" = "Services";
