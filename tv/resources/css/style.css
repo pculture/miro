@@ -123,14 +123,14 @@ a.feeditem img.icon {
 .dnd-background-left  {
     position: relative;
     width: 100%;
-    height: 26px;
+    height: 24px;
 }
 
 .dnd-background-mid  {
     position: absolute;
     left: 5px;
     right: 5px;
-    height: 26px;
+    height: 24px;
     z-index: -1;
 }
 
@@ -138,7 +138,7 @@ a.feeditem img.icon {
     position: absolute;
     width: 5px;
     right: 0px;
-    height: 26px;
+    height: 24px;
     z-index: -1;
 }
 
