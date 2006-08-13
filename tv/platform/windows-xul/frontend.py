@@ -5,7 +5,7 @@ from frontend_implementation.HTMLDisplay import HTMLDisplay, getDTVAPIURL, getDT
 from frontend_implementation.Application import Application
 from frontend_implementation.UIBackendDelegate import UIBackendDelegate
 from frontend_implementation.MainFrame import MainFrame
-from frontend_implementation.VideoDisplay import VideoDisplay, PlaylistItem, PlaybackController
+from frontend_implementation.VideoDisplay import VideoDisplay, PlaybackController
 
 # these get set in components.pybridge.onStartup
 jsBridge = None

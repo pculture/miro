@@ -202,7 +202,7 @@ class CallbackHandler(object):
         # than me about the system should fix this.
         try:
             item = self.mainApp.playbackController.currentPlaylist.cur()
-            videoPath = item.getPath()
+            videoPath = item.getVideoFilename()
         except:
             return
         self.mainApp.videoDisplay.pause()

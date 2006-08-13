@@ -47,7 +47,7 @@ if hasGTK:
     from frontend_implementation.MainFrame import MainFrame, NullDisplay
     from frontend_implementation.UIBackendDelegate import UIBackendDelegate
     from frontend_implementation.HTMLDisplay import HTMLDisplay, getDTVAPICookie, getDTVAPIURL
-    from frontend_implementation.VideoDisplay import VideoDisplay, PlaylistItem
+    from frontend_implementation.VideoDisplay import VideoDisplay
     from frontend_implementation.VideoDisplay import PlaybackController
 else:
     class Application:
@@ -61,8 +61,6 @@ else:
     class HTMLDisplay:
         pass
     class VideoDisplay:
-        pass
-    class PlaylistItem:
         pass
     class PlaybackController:
         pass

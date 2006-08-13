@@ -1490,7 +1490,7 @@ class Playlist:
             eventloop.addIdle(lambda:anItem.onViewed(), "Mark item viewed")
         return anItem
 
-class PlaylistItemFromItem (frontend.PlaylistItem):
+class PlaylistItemFromItem:
 
     def __init__(self, anItem):
         self.item = anItem

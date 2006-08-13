@@ -1,7 +1,7 @@
 from MainFrame import MainFrame, NullDisplay
 from Application import Application
 from HTMLDisplay import HTMLDisplay, getDTVAPICookie, getDTVAPIURL
-from VideoDisplay import VideoDisplay, PlaylistItem, PlaybackController
+from VideoDisplay import VideoDisplay, PlaybackController
 from UIBackendDelegate import UIBackendDelegate
 
 from objc import nil
