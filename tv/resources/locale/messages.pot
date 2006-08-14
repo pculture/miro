@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-14 12:49-0400\n"
+"POT-Creation-Date: 2006-08-14 13:09-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -133,6 +133,7 @@ msgid "Edit"
 msgstr "Edit"
 
 # NSMenuItem : <title:File> (oid:83)
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7
 msgid "File"
 msgstr "File"
 
@@ -165,17 +166,17 @@ msgid "Minimize"
 msgstr "Minimize"
 
 # NSMenuItem : <title:New Channel Folder...> (oid:291)
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11
 msgid "New Channel Folder..."
 msgstr "New Channel Folder..."
 
 # NSMenuItem : <title:New Playlist Folder...> (oid:290)
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:9
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10
 msgid "New Playlist Folder..."
 msgstr "New Playlist Folder..."
 
 # NSMenuItem : <title:New Playlist...> (oid:292)
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:8
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:9
 msgid "New Playlist..."
 msgstr "New Playlist..."
 
@@ -184,7 +185,7 @@ msgid "Open Recent"
 msgstr "Open Recent"
 
 # NSMenuItem : <title:Open...> (oid:72)
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:8
 msgid "Open..."
 msgstr "Open..."
 
@@ -209,7 +210,7 @@ msgid "Remove Channel..."
 msgstr "Remove Channel..."
 
 # NSMenuItem : <title:Rename...> (oid:293)
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:12
 msgid "Rename..."
 msgstr "Rename..."
 
@@ -1517,6 +1518,6 @@ msgstr ""
 msgid "$longAppName"
 msgstr ""
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:12
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:13
 msgid "Exit"
 msgstr ""
