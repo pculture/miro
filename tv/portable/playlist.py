@@ -89,37 +89,45 @@ class SavedPlaylist(database.DDBObject):
     def moveItem(self, item, newPosition):
         return self.moveID(item.getID(), newPosition)
 
-    def handleDrop(self):
+    def handleDrop(self, sourceID):
         """Called when something gets dropped onto this playlist."""
 
         selection = app.controller.selection.itemListSelection
-        selectionType = selection.getType()
-        if selectionType == 'item':
+        if sourceID in selection.currentSelection:
+            if selection.getType() != 'item':
+                raise ValueError("can't drop type %s onto a playlist" %
+                        selection.getType())
             for id in selection.currentSelection:
                 self.addID(id)
         else:
-            raise ValueError("can't drop type %s onto a playlist" %
-                    selectionType)
+            self.addID(sourceID)
 
-    def moveSelection(self, anchorItem):
-        """Move the current selection to be above anchorItem.
+    def handleDNDReorder(self, anchorItem, sourceID):
+        """Handle drag-and-drop reordering of the playlist.
+
+        Arguments:
+
+        anchorItem -- The affected items will be moved above this item.
+        sourceID -- The source of the drag action.  If sourceID is in the
+            current selection, the entire selection will be moved.  Otherwise,
+            only the object corresponding to sourceID will be move.
         
-        The selection must contain items inside this playlist, or a ValueError
-        will be thrown.
+        If sourceID is inside the current selection, it must contain items
+        inside this playlist, or a ValueError will be thrown.
         """
         selection = app.controller.selection.itemListSelection
-        if selection.getType() != 'item':
-            raise ValueError("Bad selection type: %s" % selection.getType())
-        # Figure out what the current selection in.  Since the selection is
-        # unordered, we also need to get the items in the order they appear in
-        # the playlist.
-        toMove = []
-        for id in selection.currentSelection:
-            if id not in self.trackedItems:
-                raise ValueError("%s is not in this playlist",
-                        views.items.getObjectByID(id))
-            else:
-                toMove.append(id)
+        if sourceID in selection.currentSelection:
+            if selection.getType() != 'item':
+                raise ValueError("Bad selection type: %s" % selection.getType())
+            for id in selection.currentSelection:
+                if id not in self.trackedItems:
+                    raise ValueError("%s is not in this playlist",
+                            views.items.getObjectByID(id))
+            toMove = selection.currentSelection
+        else:
+            if sourceID not in self.trackedItems:
+                raise ValueError("id not in playlist: %s", sourceID)
+            toMove = [sourceID]
         if anchorItem is not None:
             self.trackedItems.moveIDList(toMove, anchorItem.getID())
         else:

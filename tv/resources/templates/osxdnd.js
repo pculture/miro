@@ -58,7 +58,7 @@ function handleDragStart(event) {
    if(elt) {
       var dragSourceType = elt.getAttribute("dragsourcetype") 
       var mimeType = "application/x-democracy-" + dragSourceType + "-drag";
-      event.dataTransfer.setData(mimeType, "BOGUSDATA");
+      event.dataTransfer.setData(mimeType, elt.getAttribute("dragsourcedata");
       event.dataTransfer.effectAllowed = "all";
       var dragImage = document.getElementById(elt.getAttribute('dragicon'));
       event.dataTransfer.setDragImage(dragImage, 5, 5);
@@ -86,13 +86,13 @@ function handleDrop(event) {
   dragHighlight.removeHighlight();
   var elt = searchUpForElementWithAttribute(event.target, "dragdesttype");
   if(elt) {
-    var dragDestMimeType = "application/x-democracy-" +
-        elt.getAttribute("dragdesttype") + "-drag";
     var dragDestType = canElementSupportDrag(elt, event.dataTransfer);
+    var dragDestMimeType = "application/x-democracy-" + dragDestType + "-drag";
+    var sourceData = event.dataTransfer.getData(dragDestMimeType);
     if(dragDestType) {
       var dragDestData = elt.getAttribute("dragdestdata");
       eventURL('action:handleDrop?data=' + dragDestData + "&type=" +
-	      dragDestType);
+	      dragDestType + "&sourcedata=" + sourceData);
     }
   }
 }

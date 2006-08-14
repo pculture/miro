@@ -329,5 +329,5 @@ class PyBridge:
         folder.createNewChannelFolder()
 
     @asUrgent
-    def handleDrop(self, dropData, dropType):
-        app.controller.handleDrop(dropData, dropType)
+    def handleDrop(self, dropData, dropType, sourceData):
+        app.controller.handleDrop(dropData, dropType, sourceData)

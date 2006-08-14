@@ -770,17 +770,19 @@ class Controller (frontend.Application):
             # upstream limit should be unset here
             pass
 
-    def handleDrop(self, dropData, type):
+    def handleDrop(self, dropData, type, sourceData):
         try:
             destType, destID = dropData.split("-")
+            sourceID = int(sourceData)
         except:
-            print "Can't parse drop.  data: %s type: %s" % (dropData, type)
+            print "Can't parse drop.  data: %s type: %s sourcedata: %s" % \
+                    (dropData, type, sourceData)
             return
 
         if destType == 'playlist' and type == 'downloadeditem':
             # dropping an item on a playlist
             playlist = db.getObjectByID(int(destID))
-            playlist.handleDrop()
+            playlist.handleDrop(sourceID)
         elif (destType in ('playlist', 'playlistfolder') and 
                 type in ('playlist', 'playlistfolder')):
             # Reording the playlist tabs
@@ -788,7 +790,8 @@ class Controller (frontend.Application):
                 pl = db.getObjectByID(int(destID))
             else:
                 pl = None
-            getSingletonDDBObject(views.playlistTabOrder).moveSelection(pl)
+            tabOrder = getSingletonDDBObject(views.playlistTabOrder)
+            tabOrder.handleDNDReorder(pl, sourceID)
         elif (destType in ('channel', 'channelfolder') and
                 type in ('channel', 'channelfolder')):
             # Reordering the channel tabs
@@ -796,7 +799,8 @@ class Controller (frontend.Application):
                 tab = db.getObjectByID(int(destID))
             else:
                 tab = None
-            getSingletonDDBObject(views.channelTabOrder).moveSelection(tab)
+            tabOrder = getSingletonDDBObject(views.channelTabOrder)
+            tabOrder.handleDNDReorder(tab, sourceID)
         elif destType == "playlistitem" and type == "downloadeditem":
             # Reording items in a playlist
             playlist = controller.selection.getSelectedTabs()[0].obj
@@ -804,7 +808,7 @@ class Controller (frontend.Application):
                 item = db.getObjectByID(int(destID))
             else:
                 item = None
-            playlist.moveSelection(item)
+            playlist.handleDNDReorder(item, sourceID)
         else:
             print "Can't handle drop. Dest type: %s Dest id: %s Type: %s" % \
                     (destType, destID, type)
@@ -1311,8 +1315,8 @@ class GUIActionHandler:
 
     # Following for testing/debugging
 
-    def handleDrop(self, data, type):
-        controller.handleDrop(data, type)
+    def handleDrop(self, data, type, sourcedata):
+        controller.handleDrop(data, type, sourcedata)
 
     def showHelp(self):
         # FIXME don't hardcode this URL

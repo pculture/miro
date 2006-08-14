@@ -26,7 +26,7 @@ function getDragData(element) {
   transferable.addDataFlavor(mimeType);
   var supportsString = Components.classes[
       "@mozilla.org/supports-string;1"].createInstance(nsISupportsString);
-  supportsString.data = "BOGUS DATA";
+  supportsString.data = elt.getAttribute("dragsourcedata");
   transferable.setTransferData(mimeType, supportsString, 
           supportsString.data.length * 2);
   var dragArray = Components.classes[
@@ -108,8 +108,6 @@ function onDragDrop(event, browser) {
   dragHighlight.removeHighlight();
   var elt = searchUpForElementWithAttribute(event.target, "dragdesttype");
   if(elt) {
-    var dragDestMimeType = "application/x-democracy-" +
-        elt.getAttribute("dragdesttype") + "-drag";
     var dragService = Components.classes[
         "@mozilla.org/widget/dragservice;1"].getService(nsIDragService);
     var dragSession = dragService.getCurrentSession();
@@ -117,7 +115,15 @@ function onDragDrop(event, browser) {
       var dragType = canElementSupportDrag(elt, dragSession);
       if(dragType) {
         var dragDestData = elt.getAttribute("dragdestdata");
-        pybridge.handleDrop(dragDestData, dragType);
+        var trans = Components.classes[
+          "@mozilla.org/widget/transferable;1"].createInstance(nsITransferable)
+        var mimeType = "application/x-democracy-" + dragType + "-drag";
+        trans.addDataFlavor(mimeType);
+        dragSession.getData(trans, 0);
+        var sourceData = new Object();
+        var length = new Object();
+        trans.getTransferData(mimeType, sourceData, length);
+        pybridge.handleDrop(dragDestData, dragType, sourceData);
       }
     }
   }

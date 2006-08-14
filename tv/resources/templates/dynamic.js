@@ -204,18 +204,7 @@ function forceRedisplay(elt) {
     r.insertNode(frag);
 }
 
-var handleMouseUp = false;
-
 function handleSelect(area, event) {
-    if(event.type == 'mousedown' &&
-       event.currentTarget.className.indexOf("selected") != -1) {
-       handleMouseUp = true;
-       return true;
-    }
-    if(event.type == 'mouseup') {
-      if(!handleMouseUp) return true;
-      else handleMouseUp = false;
-    }
     var id = event.currentTarget.getAttribute("selectID");
     var viewName = event.currentTarget.getAttribute("selectViewName");
     var shiftKey = '0';

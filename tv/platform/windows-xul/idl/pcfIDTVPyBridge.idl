@@ -58,5 +58,5 @@ interface pcfIDTVPyBridge : nsISupports
   void createNewPlaylist();
   void createNewPlaylistFolder();
   void createNewChannelFolder();
-  void handleDrop(in string dropData, in string dropType);
+  void handleDrop(in string dropData, in string dropType, in string sourceData);
 };

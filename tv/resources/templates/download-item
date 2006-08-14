@@ -17,13 +17,13 @@ viewName = kargs['viewName']
 
 <div class="main-video draggable ***this.getSelected() and 'selected' or ''***" 
 	dragsourcetype="***this.getDragType()***" 
+	dragsourcedata="***this.getID()***" 
 	dragicon="video-tnail-***this.getID()***" 
 	dragdesttype="---DRAGDESTTYPE---"
 	dragdestdata="playlistitem-***this.getID()***"
 	drageffectdownloadeditem="move"
 	selectID="***this.getID()***" selectViewName="@@@viewName@@@"
-	onmousedown="return handleSelect('itemlist', event)"
-	onmouseup="return handleSelect('itemlist', event)" >
+	onclick="return handleSelect('itemlist', event)" >
     <div class="main-video-hitbox">
         <a t:showIf="this.getState() in ('new', 'not-downloaded', 'expired')"
             class="download-icon" href="#" 

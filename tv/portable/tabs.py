@@ -224,26 +224,30 @@ class TabOrder(database.DDBObject):
         if id in self.trackedTabs:
             self.trackedTabs.removeID(id)
 
-    def moveSelection(self, anchorItem):
-        """Move the current selection to be above anchorItem.
+    def handleDNDReorder(self, anchorItem, sourceID):
+        """Handle drag-and-drop reordering of the tab order.
 
-        The selection must be tabs ordered by this object, or a ValueError
-        will be thrown.
+        Arguments:
+
+        anchorItem -- The affected items will be moved above this item.
+        sourceID -- The source of the drag action.  If sourceID is in the
+            current selection, the entire selection will be moved.  Otherwise,
+            only the object corresponding to sourceID will be move.
         """
 
         selection = app.controller.selection.tabListSelection
-        if self.type == 'channel':
-            expectedType = 'channeltab'
+        if sourceID in selection.currentSelection:
+            if self.type == 'channel':
+                expectedType = 'channeltab'
+            else:
+                expectedType = 'playlisttab'
+            if selection.getType() != expectedType:
+                raise ValueError("Bad selection type: %s" % selection.getType())
+            toMove = selection.currentSelection
         else:
-            expectedType = 'playlisttab'
-        if selection.getType() != expectedType:
-            raise ValueError("Bad selection type: %s" % selection.getType())
-        # Figure out what the current selection in.  Since the selection is
-        # unordered, we also need to get the items in the order they appear in
-        # the playlist.
-        toMove = []
-        for id in selection.currentSelection:
-            toMove.append(id)
+            if sourceID not in self.trackedTabs:
+                raise ValueError("ID not in TabOrder: %s", sourceID)
+            toMove = [sourceID]
         if anchorItem is not None:
             self.trackedTabs.moveIDList(toMove, anchorItem.getID())
         else:

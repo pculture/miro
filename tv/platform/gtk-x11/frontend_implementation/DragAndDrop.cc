@@ -35,8 +35,7 @@ PRInt32 stringToDragAction(const nsAString &str) {
     return nsIDragService::DRAGDROP_ACTION_NONE;
 }
 
-
-nsresult getDragData(nsIDOMElement* element, nsISupportsArray *dragArray) {
+nsresult makeDragData(nsIDOMElement* element, nsISupportsArray *dragArray) {
     // Create a transferable
     nsresult rv;
     nsCOMPtr<nsITransferable> trans(do_CreateInstance(
@@ -52,14 +51,16 @@ nsresult getDragData(nsIDOMElement* element, nsISupportsArray *dragArray) {
     trans->AddDataFlavor(PromiseFlatCString(mimeType).get());
     if(NS_FAILED(rv)) return rv;
     // Add the data
-    nsAutoString bogusString = NS_ConvertUTF8toUTF16(
-            nsDependentCString("BOGUS DATA"));
-    nsCOMPtr<nsISupportsString> bogusData(do_CreateInstance(
+    nsAutoString dragSourceDataStr = NS_ConvertUTF8toUTF16(
+            nsDependentCString("dragsourcedata"));
+    nsAutoString sourceDataStr;
+    rv = element->GetAttribute(dragSourceDataStr, sourceDataStr);
+    nsCOMPtr<nsISupportsString> sourceData(do_CreateInstance(
                 "@mozilla.org/supports-string;1", &rv));
-    rv = bogusData->SetData(bogusString);
+    rv = sourceData->SetData(sourceDataStr);
     if(NS_FAILED(rv)) return rv;
-    rv = trans->SetTransferData(PromiseFlatCString(mimeType).get(), bogusData,
-            bogusString.Length() * 2);
+    rv = trans->SetTransferData(PromiseFlatCString(mimeType).get(), sourceData,
+            sourceDataStr.Length() * 2);
     if(NS_FAILED(rv)) return rv;
     // Turn that transferable into an nsISupportsArray
     nsCOMPtr<nsISupports> transSupports(do_QueryInterface(trans, &rv));
@@ -127,6 +128,7 @@ nsresult isDragTypeSupported(const nsAString& dragAttribute,
         const nsAString& singleDragType = Substring(dragAttribute, start, 
                 currentColon - start);
         rv = isSingleDragTypeSupported(singleDragType, supported);
+
         if(NS_FAILED(rv)) return rv;
         if(*supported) {
             if(dragType) {
@@ -138,6 +140,36 @@ nsresult isDragTypeSupported(const nsAString& dragAttribute,
     }
     return NS_OK;
 }
+
+nsresult getDragSourceData(const nsAString &dragType, nsAString &output)
+{
+    nsresult rv;
+
+    nsCAutoString dragMimeType = NS_ConvertUTF16toUTF8(dragType);
+    dragMimeType.Insert("application/x-democracy-", 0);
+    dragMimeType.Append("-drag");
+    nsCOMPtr<nsIDragService> dragService(do_GetService(
+                "@mozilla.org/widget/dragservice;1", &rv));
+    if(NS_FAILED(rv)) return rv;
+    nsCOMPtr<nsIDragSession> dragSession;
+    rv = dragService->GetCurrentSession(getter_AddRefs(dragSession));
+    if(NS_FAILED(rv)) return rv;
+    nsCOMPtr<nsITransferable> trans(do_CreateInstance(
+                "@mozilla.org/widget/transferable;1", &rv));
+    if(NS_FAILED(rv)) return rv;
+    trans->AddDataFlavor(PromiseFlatCString(dragMimeType).get());
+    if(NS_FAILED(rv)) return rv;
+    rv = dragSession->GetData(trans, 0);
+    if(NS_FAILED(rv)) return rv;
+    nsCOMPtr<nsISupportsString> data;
+    PRUint32 length;
+    rv = trans->GetTransferData(PromiseFlatCString(dragMimeType).get(), 
+            getter_AddRefs(data), &length);
+    if(NS_FAILED(rv)) return rv;
+    rv = data->GetData(output);
+    return rv;
+}
+
 
 static nsCOMPtr<nsIDOMElement> highlightedElement;
 static nsAutoString currentHighlightClass;
@@ -248,7 +280,7 @@ public:
             nsCOMPtr<nsISupportsArray> dragArray(do_CreateInstance(
                         "@mozilla.org/supports-array;1", &rv));
             if (NS_FAILED(rv)) return rv;
-            getDragData(element, dragArray);
+            makeDragData(element, dragArray);
             rv = startDrag(dragArray);
             if (NS_FAILED(rv)) {
                 printf("WARNING: startDrag failed\n");
@@ -296,11 +328,16 @@ public:
             nsString singleDragType;
             rv = isDragTypeSupported(dragDestType, &supported, &singleDragType);
             if(supported) {
+                nsAutoString sourceData;
+                rv = getDragSourceData(singleDragType, sourceData);
+                if(NS_FAILED(rv)) return rv;
                 *retval = true;
                 nsCAutoString url = NS_ConvertUTF16toUTF8(dragDestData);
                 url.Insert("action:handleDrop?data=", 0);
                 url.Append("&type=");
                 url.Append(NS_ConvertUTF16toUTF8(singleDragType));
+                url.Append("&sourcedata=");
+                url.Append(NS_ConvertUTF16toUTF8(sourceData));
                 gtk_moz_embed_load_url(this->embed,
                         PromiseFlatCString(url).get());
             } 

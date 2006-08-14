@@ -14,6 +14,7 @@
 <div class="dnd-background-right"></div>
 <a class="feeditem noselect draggable"
 	dragsourcetype="channelfolder"
+	dragsourcedata="***this.objID***"
 	dragicon="channel-tnail-***this.objID()***">
 <img id="channel-tnail-***this.objID()***" class="icon" src="resource:images/collection-icon-tablist.png" /><div class="name" t:replaceMarkup="this.obj.getTitle()" />
 </a>
