@@ -26,7 +26,7 @@ function getDragData(element) {
   transferable.addDataFlavor(mimeType);
   var supportsString = Components.classes[
       "@mozilla.org/supports-string;1"].createInstance(nsISupportsString);
-  supportsString.data = elt.getAttribute("dragsourcedata");
+  supportsString.data = element.getAttribute("dragsourcedata");
   transferable.setTransferData(mimeType, supportsString, 
           supportsString.data.length * 2);
   var dragArray = Components.classes[
@@ -120,10 +120,11 @@ function onDragDrop(event, browser) {
         var mimeType = "application/x-democracy-" + dragType + "-drag";
         trans.addDataFlavor(mimeType);
         dragSession.getData(trans, 0);
-        var sourceData = new Object();
+        var rawData = new Object();
         var length = new Object();
-        trans.getTransferData(mimeType, sourceData, length);
-        pybridge.handleDrop(dragDestData, dragType, sourceData);
+        trans.getTransferData(mimeType, rawData, length);
+        var sourceData = rawData.value.QueryInterface(nsISupportsString);
+        pybridge.handleDrop(dragDestData, dragType, sourceData.data);
       }
     }
   }
