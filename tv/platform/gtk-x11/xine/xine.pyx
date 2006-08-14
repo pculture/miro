@@ -70,6 +70,7 @@ cdef class Xine:
         # we convert xineCanPlayFile's return value to a python boolean
         return xineCanPlayFile(self.xine, filename) and True or False
     def playFile(self, char* filename):
+        print "Beginning playback %s" % (filename,)
         xinePlayFile(self.xine, filename)
     def play(self):
         xineSetPlaying(self.xine, 1)
