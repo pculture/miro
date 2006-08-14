@@ -1379,7 +1379,7 @@ class ScraperFeedImpl(FeedImpl):
             xmldata = html
             parser = xml.sax.make_parser()
             parser.setFeature(xml.sax.handler.feature_namespaces, 1)
-            if not charset is None:
+            if charset is not None:
                 handler = RSSLinkGrabber(baseurl,charset)
             else:
                 handler = RSSLinkGrabber(baseurl)
