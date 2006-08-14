@@ -654,7 +654,18 @@ class Feed(DDBObject):
 
     def getFolder(self):
         self.confirmDBThread()
-        return None
+        if self.folder_id is not None:
+            return self.dd.getObjectByID(self.folder_id)
+        else:
+            return None
+
+    def setFolder(self, newFolder):
+        self.confirmDBThread()
+        if newFolder is not None:
+            self.folder_id = newFolder.getID()
+        else:
+            self.folder_id = None
+        self.signalChange()
 
     def generateFeed(self, removeOnError=False):
         newFeed = None

@@ -218,6 +218,14 @@ class TabSelectionArea(SelectionArea):
         self.selectItem(views.guideTabs, guide.objID())
         self.handler.displayCurrentTabContent()
 
+    def isFolderSelected(self):
+        """Returns if a channel/playlist folder is selected."""
+        for id in self.currentSelection:
+            obj = self.currentView.getObjectByID(id),
+            if isinstance(obj, folder.FolderBase):
+                return True
+        return False
+
 class SelectionHandler(object):
     """Handles selection for Democracy.
 
@@ -232,14 +240,16 @@ class SelectionHandler(object):
         self.itemListSelection = SelectionArea(self)
         self.lastDisplay = None
 
-    def selectItem(self, area, view, id, shiftSelect, controlSelect):
+    def getSelectionForArea(self, area):
         if area == 'tablist':
-            selection = self.tabListSelection
+            return self.tabListSelection
         elif area == 'itemlist':
-            selection = self.itemListSelection
+            return self.itemListSelection
         else:
             raise ValueError("Unknown area: %s" % area)
 
+    def selectItem(self, area, view, id, shiftSelect, controlSelect):
+        selection = self.getSelectionForArea(area)
         selectedObj = view.getObjectByID(id)
 
         # ignore control and shift when selecting static tabs
@@ -264,6 +274,19 @@ class SelectionHandler(object):
         for id in self.tabListSelection.currentSelection:
             tab = self.tabListSelection.currentView.getObjectByID(id)
             tab.setActive(value)
+
+    def getDraggedIDs(self, area, sourceID):
+        """Get a set of ids that the user dragged in a drag-and-drop
+        operation.  If sourceID is in the current selection, this will all the
+        objects in the current selection, otherwise it will be only the object
+        that corresponds to sourceID.  
+        """
+
+        selection = self.getSelectionForArea(area)
+        if sourceID in selection.currentSelection:
+            return set(selection.currentSelection)
+        else:
+            return set([sourceID])
 
     def selectFirstGuide(self):
         self.tabListSelection.selectFirstGuide()

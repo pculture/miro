@@ -51,7 +51,7 @@ class TrackedIDList(object):
     """
 
     def __init__(self, db, idList):
-        """Construct an IDListView.  
+        """Construct an TrackedIDList.  
 
         This object will keep a reference to idList.  When insertID, appendID,
         removeID, or moveID are called idList will be modified to
@@ -66,13 +66,23 @@ class TrackedIDList(object):
         for id in idList:
             self.positions[id] = pos.next()
             self.trackedIDs.add(id)
-        self.view = db.filter(self.filter).sort(self.sort, resort=True)
+        self.extraFilterFunc = lambda x: True
+        self.filter1 = db.filter(self.filter)
+        self.filter2 = self.filter1.filter(self.extraFilter)
+        self.view = self.filter2.sort(self.sort, resort=True)
 
     def sort(self, a, b):
         return cmp(self.positions[a.getID()], self.positions[b.getID()])
 
     def filter(self, object):
         return object.getID() in self.trackedIDs
+
+    def extraFilter(self, object):
+        return self.extraFilterFunc(object)
+
+    def setFilter(self, extraFilterFunc):
+        self.extraFilterFunc = extraFilterFunc
+        self.filter1.recomputeFilter(self.filter2)
 
     def _sendSignalChange(self, id):
         if self.db.idExists(id):

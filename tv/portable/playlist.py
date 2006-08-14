@@ -5,6 +5,7 @@ from gtcache import gettext as _
 import app
 import dialogs
 import database
+import item
 import views
 from databasehelper import makeSimpleGetSet, TrackedIDList
 
@@ -39,6 +40,21 @@ class SavedPlaylist(database.DDBObject):
             self.trackedItems.removeID(id)
 
     getTitle, setTitle = makeSimpleGetSet('title')
+
+    def getFolder(self):
+        self.confirmDBThread()
+        if self.folder_id is not None:
+            return self.dd.getObjectByID(self.folder_id)
+        else:
+            return None
+
+    def setFolder(self, newFolder):
+        self.confirmDBThread()
+        if newFolder is not None:
+            self.folder_id = newFolder.getID()
+        else:
+            self.folder_id = None
+        self.signalChange()
 
     def getItems(self):
         """Get the items in this playlist."""
@@ -89,49 +105,23 @@ class SavedPlaylist(database.DDBObject):
     def moveItem(self, item, newPosition):
         return self.moveID(item.getID(), newPosition)
 
-    def handleDrop(self, sourceID):
+    def handleDrop(self, draggedIds):
         """Called when something gets dropped onto this playlist."""
 
-        selection = app.controller.selection.itemListSelection
-        if sourceID in selection.currentSelection:
-            if selection.getType() != 'item':
-                raise ValueError("can't drop type %s onto a playlist" %
-                        selection.getType())
-            for id in selection.currentSelection:
-                self.addID(id)
-        else:
-            self.addID(sourceID)
+        for id in draggedIds:
+            if not views.items.idExists(id):
+                raise KeyError("%s is not an item id" % id)
+            self.addID(id)
 
-    def handleDNDReorder(self, anchorItem, sourceID):
-        """Handle drag-and-drop reordering of the playlist.
-
-        Arguments:
-
-        anchorItem -- The affected items will be moved above this item.
-        sourceID -- The source of the drag action.  If sourceID is in the
-            current selection, the entire selection will be moved.  Otherwise,
-            only the object corresponding to sourceID will be move.
-        
-        If sourceID is inside the current selection, it must contain items
-        inside this playlist, or a ValueError will be thrown.
-        """
-        selection = app.controller.selection.itemListSelection
-        if sourceID in selection.currentSelection:
-            if selection.getType() != 'item':
-                raise ValueError("Bad selection type: %s" % selection.getType())
-            for id in selection.currentSelection:
-                if id not in self.trackedItems:
-                    raise ValueError("%s is not in this playlist",
-                            views.items.getObjectByID(id))
-            toMove = selection.currentSelection
-        else:
-            if sourceID not in self.trackedItems:
+    def handleDNDReorder(self, anchorItem, draggedItems):
+        """Handle drag-and-drop reordering of the playlist."""
+        for id in draggedItems:
+            if id not in self.trackedItems:
                 raise ValueError("id not in playlist: %s", sourceID)
-            toMove = [sourceID]
         if anchorItem is not None:
-            self.trackedItems.moveIDList(toMove, anchorItem.getID())
+            self.trackedItems.moveIDList(draggedItems, anchorItem.getID())
         else:
-            self.trackedItems.moveIDList(toMove, None)
+            self.trackedItems.moveIDList(draggedItems, None)
         self.signalChange()
 
     def rename(self):

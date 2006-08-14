@@ -17,7 +17,7 @@ viewName = kargs['viewName']
 
 <div class="main-video draggable ***this.getSelected() and 'selected' or ''***" 
 	dragsourcetype="***this.getDragType()***" 
-	dragsourcedata="***this.getID()***" 
+	dragsourcedata="itemlist-***this.getID()***" 
 	dragicon="video-tnail-***viewName + str(this.getID())***" 
 	dragdesttype="---DRAGDESTTYPE---"
 	dragdestdata="playlistitem-***this.getID()***"

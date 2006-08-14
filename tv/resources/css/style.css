@@ -120,6 +120,12 @@ a.feeditem img.icon {
     float: left;
 }
 
+.expanded-triangle {
+    margin: 0;
+    border: 0;
+    float: left;
+}
+
 .dnd-background-left  {
     position: relative;
     width: 100%;

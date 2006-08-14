@@ -251,6 +251,7 @@ class FeedSchema(DDBObjectSchema):
         ('loading', SchemaBool()),
         ('actualFeed', SchemaObject(FeedImpl)),
         ('iconCache', SchemaObject(IconCache, noneOk=True)),
+        ('folder_id', SchemaInt(noneOk=True)),
     ]
 
 class FeedImplSchema(ObjectSchema):
@@ -353,6 +354,7 @@ class PlaylistFolderSchema(DDBObjectSchema):
     fields = DDBObjectSchema.fields + [
         ('expanded', SchemaBool()),
         ('title', SchemaString()),
+        ('item_ids', SchemaList(SchemaInt())),
     ]
 
 class PlaylistSchema(DDBObjectSchema):
@@ -361,6 +363,7 @@ class PlaylistSchema(DDBObjectSchema):
     fields = DDBObjectSchema.fields + [
         ('title', SchemaString()),
         ('item_ids', SchemaList(SchemaInt())),
+        ('folder_id', SchemaInt(noneOk=True)),
     ]
 
 class TabOrderSchema(DDBObjectSchema):
@@ -380,7 +383,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('url', SchemaString(noneOk=True)),
     ]
 
-VERSION = 16
+VERSION = 17
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,

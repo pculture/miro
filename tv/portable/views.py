@@ -47,6 +47,7 @@ items.createIndex(indexes.itemsByFeed)
 toplevelItems.createIndex(indexes.itemsByFeed)
 items.createIndex(indexes.itemsByParent)
 feeds.createIndex(indexes.feedsByURL)
+feeds.createIndex(indexes.byFolder)
 allTabs.createIndex(indexes.tabIDIndex)
 allTabs.createIndex(indexes.tabObjIDIndex)
 
@@ -67,3 +68,4 @@ autoDownloads = items.filter(filters.autoDownloads)
 
 playlists = db.filterWithIndex(indexes.objectsByClass, playlist.SavedPlaylist)
 playlists.createIndex(indexes.playlistsByItem, multiValued=True)
+playlists.createIndex(indexes.byFolder)

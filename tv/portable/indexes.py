@@ -62,3 +62,6 @@ def tabType(tab):
 
 def tabOrderType(tabOrder):
     return tabOrder.type
+
+def byFolder(obj):
+    return obj.getFolder()

@@ -88,6 +88,23 @@ class Tab:
         else:
             raise TypeError("Bad tab object type: %s" % type(obj))
 
+    def getDragSourceType(self):
+        if self.type == 'feed':
+            selection = app.controller.selection.tabListSelection
+            if (isinstance(self.obj, folder.ChannelFolder) or
+                    (self.selected and selection.isFolderSelected())):
+                return 'channelfolder'
+            else:
+                return 'channel'
+        elif self.type == 'playlist':
+            if (isinstance(self.obj, folder.PlaylistFolder) or
+                    (self.selected and selection.isFolderSelecter())):
+                return 'playlistfolder'
+            else:
+                return 'playlist'
+        else:
+            return ''
+
     def setActive(self, newValue):
         self.obj.confirmDBThread()
         self.active = newValue
@@ -175,6 +192,10 @@ class Tab:
     def onDeselected(self, frame):
         self.display.onDeselect(frame)
 
+def expandedFolderFilter(tab):
+    folder = tab.obj.getFolder()
+    return folder is None or folder.getExpanded()
+
 class TabOrder(database.DDBObject):
     """TabOrder objects keep track of the order of the tabs.  Democracy
     creates 2 of these, one to track channels/channel folders and another to
@@ -205,6 +226,7 @@ class TabOrder(database.DDBObject):
         else:
             raise ValueError("Bad type for TabOrder")
         self.trackedTabs = TrackedIDList(self.tabView, self.tab_ids)
+        self.trackedTabs.setFilter(expandedFolderFilter)
         self.tabView.addAddCallback(self.onAddTab)
         self.tabView.addRemoveCallback(self.onRemoveTab)
 
@@ -224,35 +246,35 @@ class TabOrder(database.DDBObject):
         if id in self.trackedTabs:
             self.trackedTabs.removeID(id)
 
-    def handleDNDReorder(self, anchorItem, sourceID):
-        """Handle drag-and-drop reordering of the tab order.
+    def handleDNDReorder(self, anchorItem, draggedIDs):
+        """Handle drag-and-drop reordering of the tab order."""
 
-        Arguments:
-
-        anchorItem -- The affected items will be moved above this item.
-        sourceID -- The source of the drag action.  If sourceID is in the
-            current selection, the entire selection will be moved.  Otherwise,
-            only the object corresponding to sourceID will be move.
-        """
-
-        selection = app.controller.selection.tabListSelection
-        if sourceID in selection.currentSelection:
-            if self.type == 'channel':
-                expectedType = 'channeltab'
-            else:
-                expectedType = 'playlisttab'
-            if selection.getType() != expectedType:
-                raise ValueError("Bad selection type: %s" % selection.getType())
-            toMove = selection.currentSelection
-        else:
-            if sourceID not in self.trackedTabs:
+        for id in draggedIDs:
+            if id not in self.trackedTabs:
                 raise ValueError("ID not in TabOrder: %s", sourceID)
-            toMove = [sourceID]
+        if anchorItem is None:
+            newFolder = None
+        else:
+            newFolder = anchorItem.getFolder()
+
+        childrenIDs = set()
+        for id in draggedIDs:
+            tab = self.trackedTabs.view.getObjectByID(id)
+            tab.obj.setFolder(newFolder)
+            if isinstance(tab.obj, folder.FolderBase):
+                for child in tab.obj.getChildrenView():
+                    childrenIDs.add(child.getID())
+        toMove = draggedIDs.union(childrenIDs)
+        self.moveTabs(anchorItem, toMove, sendSignalChange=False)
+        self.signalChange()
+
+    def moveTabs(self, anchorItem, toMove, sendSignalChange=True):
         if anchorItem is not None:
             self.trackedTabs.moveIDList(toMove, anchorItem.getID())
         else:
             self.trackedTabs.moveIDList(toMove, None)
-        self.signalChange()
+        if sendSignalChange:
+            self.signalChange()
 
 # Remove all static tabs from the database
 def removeStaticTabs():

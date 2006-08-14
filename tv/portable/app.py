@@ -773,42 +773,41 @@ class Controller (frontend.Application):
     def handleDrop(self, dropData, type, sourceData):
         try:
             destType, destID = dropData.split("-")
-            sourceID = int(sourceData)
+            if destID != 'END':
+                destObj = db.getObjectByID(int(destID))
+            else:
+                destObj = None
+            sourceArea, sourceID = sourceData.split("-")
+            sourceID = int(sourceID)
+            draggedIDs = controller.selection.getDraggedIDs(sourceArea, 
+                    sourceID)
         except:
-            print "Can't parse drop.  data: %s type: %s sourcedata: %s" % \
+            print "WARNING: error parsing drop (%r, %r, %r)" % \
                     (dropData, type, sourceData)
+            traceback.print_exc()
             return
 
         if destType == 'playlist' and type == 'downloadeditem':
             # dropping an item on a playlist
-            playlist = db.getObjectByID(int(destID))
-            playlist.handleDrop(sourceID)
+            destObj.handleDrop(draggedIDs)
+        elif (destType == 'channelfolder' and type == 'channel'):
+            # Dropping a channel onto a folder
+            obj = db.getObjectByID(int(destID))
+            obj.handleDNDAppend(draggedIDs)
         elif (destType in ('playlist', 'playlistfolder') and 
                 type in ('playlist', 'playlistfolder')):
             # Reording the playlist tabs
-            if destID != 'END':
-                pl = db.getObjectByID(int(destID))
-            else:
-                pl = None
             tabOrder = getSingletonDDBObject(views.playlistTabOrder)
-            tabOrder.handleDNDReorder(pl, sourceID)
+            tabOrder.handleDNDReorder(destObj, draggedIDs)
         elif (destType in ('channel', 'channelfolder') and
                 type in ('channel', 'channelfolder')):
             # Reordering the channel tabs
-            if destID != 'END':
-                tab = db.getObjectByID(int(destID))
-            else:
-                tab = None
             tabOrder = getSingletonDDBObject(views.channelTabOrder)
-            tabOrder.handleDNDReorder(tab, sourceID)
+            tabOrder.handleDNDReorder(destObj, draggedIDs)
         elif destType == "playlistitem" and type == "downloadeditem":
             # Reording items in a playlist
             playlist = controller.selection.getSelectedTabs()[0].obj
-            if destID != 'END':
-                item = db.getObjectByID(int(destID))
-            else:
-                item = None
-            playlist.handleDNDReorder(item, sourceID)
+            playlist.handleDNDReorder(destObj, draggedIDs)
         else:
             print "Can't handle drop. Dest type: %s Dest id: %s Type: %s" % \
                     (destType, destID, type)
@@ -1162,6 +1161,10 @@ downloaded?""")
             if i.downloader is not None:
                 i.downloader.setDeleteFiles(False)
             i.remove()
+
+    def toggleExpand(self, id):
+        obj = db.getObjectByID(int(id))
+        obj.setExpanded(not obj.getExpanded())
 
     def setRunAtStartup(self, value):
         value = (value == "1")

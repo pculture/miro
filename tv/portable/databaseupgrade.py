@@ -201,6 +201,20 @@ def upgrade16(objectList):
             changed.add(o)
     return changed
 
+def upgrade17(objectList):
+    """Add folder_id attributes to Feed and SavedPlaylist.  Add item_ids
+    attribute to PlaylistFolder.
+    """
+    changed = set()
+    for o in objectList:
+        if o.classString in ('feed', 'playlist'):
+            o.savedData['folder_id'] = None
+            changed.add(o)
+        elif o.classString == 'playlist-folder':
+            o.savedData['item_ids'] = []
+            changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

@@ -6,8 +6,8 @@
 <body>
 <!-- Normal -->
 <a class="feeditem draggable noselect ***this.obj.getFolder() and 'child' or ''***"
-	dragsourcetype="channel"
-	dragsourcedata="***this.objID()***"
+	dragsourcetype="***this.getDragSourceType()***"
+	dragsourcedata="tablist-***this.objID()***"
 	dragicon="channel-tnail-***this.objID()***"
 	dragdesttype="channel:channelfolder"
 	dragdestdata="channel-***this.objID()***"
