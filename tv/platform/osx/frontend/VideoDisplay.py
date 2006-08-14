@@ -547,13 +547,14 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         if not self.isVisible():
             self.update_(nil)
             self.volumeSlider.setFloatValue_(app.controller.videoDisplay.getVolume())
+            screenOrigin = parent.screen().frame().origin
             screenSize = parent.screen().frame().size
             height = self.frame().size.height
-            frame = ((0, -height), (screenSize.width, height))
+            frame = ((screenOrigin.x, screenOrigin.y-height), (screenSize.width, height))
             self.setFrame_display_(frame, NO)        
             parent.addChildWindow_ordered_(self, NSWindowAbove)
             self.orderFront_(nil)
-            frame = ((0, 0), (screenSize.width, height))
+            frame = (screenOrigin, (screenSize.width, height))
             self.setFrame_display_animate_(frame, YES, YES)
             self.holdStartTime = time.time()
             self.autoConcealTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
