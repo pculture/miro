@@ -32,14 +32,14 @@
 			<!-- FILE MENU -->
 			<menu id="file-menu" label="File" accesskey="F" class="titlebar-toplevel" style="margin-left: 10px;">
 				<menupopup id="file-popup">
-					<menuitem label="Open" acceltext="Ctrl+O" accesskey="O" command="open"/>
+					<menuitem label="&main.menu.file.open;" acceltext="Ctrl+O" accesskey="O" command="open"/>
                                         <menuseparator/>
-                                        <menuitem label="New Playlist..." accesskey="P" command="createnewplaylist"/>
-                                        <menuitem label="New Playlist Folder..." command="createnewplaylistfolder"/>
-                                        <menuitem label="New Channel Folder..." command="createnewchannelfolder"/>
-                                        <menuitem label="Rename..." accesskey="R" command="rename"/>
+                                        <menuitem label="&main.menu.file.new.playlist;" accesskey="P" command="createnewplaylist"/>
+                                        <menuitem label="&main.menu.file.new.playlistfolder;" command="createnewplaylistfolder"/>
+                                        <menuitem label="&main.menu.file.new.chanelfolder;" command="createnewchannelfolder"/>
+                                        <menuitem label="&main.menu.file.rename;" accesskey="R" command="rename"/>
                                         <menuseparator/>
-					<menuitem label="Exit" acceltext="Ctrl+Q" accesskey="E" command="exit"/>
+					<menuitem label="&main.menu.file.exit;" acceltext="Ctrl+Q" accesskey="E" command="exit"/>
 				</menupopup>
 			</menu>
 			<!-- / FILE MENU -->

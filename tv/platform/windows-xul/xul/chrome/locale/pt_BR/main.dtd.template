@@ -1,5 +1,12 @@
-<!ENTITY nbsp                " ">
-<!ENTITY rsaquo              "\"">
+<!ENTITY nbsp				" ">
+<!ENTITY rsaquo				"\"">
 
-<!ENTITY main.title          "$longAppName">
-<!ENTITY main.about          "Sobre $longAppName">
+<!ENTITY main.title	"$longAppName">
+<!ENTITY main.about	"Sobre $longAppName">
+
+<!ENTITY main.menu.file.open			"Open...">
+<!ENTITY main.menu.file.new.playlist		"New Playlist...">
+<!ENTITY main.menu.file.new.playlistfolder	"New Playlist Folder...">
+<!ENTITY main.menu.file.new.channelfolder	"New Channel Folder...">
+<!ENTITY main.menu.file.rename			"Rename...">
+<!ENTITY main.menu.file.exit			"Exit">
