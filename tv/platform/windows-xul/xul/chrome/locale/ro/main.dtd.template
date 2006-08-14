@@ -4,6 +4,7 @@
 <!ENTITY main.title	"$longAppName">
 <!ENTITY main.about	"Despre $longAppName">
 
+<!ENTITY main.menu.file				"File">
 <!ENTITY main.menu.file.open			"Open...">
 <!ENTITY main.menu.file.new.playlist		"New Playlist...">
 <!ENTITY main.menu.file.new.playlistfolder	"New Playlist Folder...">
