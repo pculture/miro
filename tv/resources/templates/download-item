@@ -18,7 +18,7 @@ viewName = kargs['viewName']
 <div class="main-video draggable ***this.getSelected() and 'selected' or ''***" 
 	dragsourcetype="***this.getDragType()***" 
 	dragsourcedata="***this.getID()***" 
-	dragicon="video-tnail-***this.getID()***" 
+	dragicon="video-tnail-***viewName + str(this.getID())***" 
 	dragdesttype="---DRAGDESTTYPE---"
 	dragdestdata="playlistitem-***this.getID()***"
 	drageffectdownloadeditem="move"
@@ -40,7 +40,7 @@ viewName = kargs['viewName']
             title="Play '***this.getTitle()***'" 
             onclick="return eventURL('action:playViewNamed?viewName=@@@viewName@@@&amp;firstItemId=@@@this.getID()@@@');" />
     </div>
-    <img class="main-video-tnail" src="***this.getThumbnail()***" alt="" id="video-tnail-***this.getID()***" />
+    <img class="main-video-tnail" src="***this.getThumbnail()***" alt="" id="video-tnail-***viewName + str(this.getID())***" />
 
     <div class="main-video-details">
         <div class="main-video-details-tasks">

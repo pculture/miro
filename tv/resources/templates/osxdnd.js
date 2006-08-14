@@ -58,7 +58,7 @@ function handleDragStart(event) {
    if(elt) {
       var dragSourceType = elt.getAttribute("dragsourcetype") 
       var mimeType = "application/x-democracy-" + dragSourceType + "-drag";
-      event.dataTransfer.setData(mimeType, elt.getAttribute("dragsourcedata");
+      event.dataTransfer.setData(mimeType, elt.getAttribute("dragsourcedata"));
       event.dataTransfer.effectAllowed = "all";
       var dragImage = document.getElementById(elt.getAttribute('dragicon'));
       event.dataTransfer.setDragImage(dragImage, 5, 5);
