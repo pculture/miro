@@ -7,6 +7,7 @@ import resource
 import config
 import prefs
 import _winreg
+import os
 
 from frontend_implementation import HTMLDisplay
 
@@ -40,18 +41,28 @@ langs = {
 0x41f: "tr",
 }
 
-def getLocale():
+def getKey (keyName, subkey, typ):
     try:
-    	keyName = "Software\Policies\Microsoft\Control Panel\Desktop"
         key = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, keyName)
-    	subkey = "MultiUILanguageID"
-    	(val, t) = _winreg.QueryValueEx(key, subkey)
-    	if t == _winreg.REG_DWORD:
-            return langs[val]
+        (val, t) = _winreg.QueryValueEx(key, subkey)
+        if t == typ:
+            return val
     except:
         pass
-    return ''
-    
+    return None
+
+def getLocale():
+    keyName = r"Software\Policies\Microsoft\Control Panel\Desktop"
+    subkey = "MultiUILanguageID"
+    val = getKey(keyName, subkey, _winreg.REG_DWORD)
+    if val is None:
+        keyName = r"Control Panel\Desktop"
+        val = getKey(keyName, subkey, _winreg.REG_DWORD)
+    if val is None:
+        return None
+    else:
+        return langs[val]
+
 class Application:
 
     def __init__(self):
