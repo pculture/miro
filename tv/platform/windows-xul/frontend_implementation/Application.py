@@ -74,14 +74,19 @@ class Application:
         lang = getLocale()
         if lang:
             os.environ["LANGUAGE"] = lang
-            from xpcom import components
-            ps_cls = components.classes["@mozilla.org/preferences-service;1"]
-            print ps_cls
-            ps = ps_cls.getService(components.interfaces.nsIPrefService)
-            print ps
-            branch = ps.getBranch("general.useragent.")
-            branch.setCharPref("locale", lang)
-            locale.setlocale(locale.LC_ALL, '')
+            if not os.path.exists(resource.path(r"..\chrome\locale\%s" % (lang,))):
+                lang = "en-US"
+        else:
+            lang = "en-US"
+
+        from xpcom import components
+        ps_cls = components.classes["@mozilla.org/preferences-service;1"]
+        ps = ps_cls.getService(components.interfaces.nsIPrefService)
+        branch = ps.getBranch("general.useragent.")
+        branch.setCharPref("locale", lang)
+
+        locale.setlocale(locale.LC_ALL, '')
+
         gettext.bindtextdomain("democracyplayer", resource.path("locale"))
         gettext.textdomain("democracyplayer")
         gettext.bind_textdomain_codeset("democracyplayer","UTF-8")
