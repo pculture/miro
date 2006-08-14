@@ -30,13 +30,13 @@
                         ondblclick="event.stopPropagation(); return false;">
 		
 			<!-- FILE MENU -->
-			<menu id="file-menu" label="File" accesskey="F" class="titlebar-toplevel" style="margin-left: 10px;">
+			<menu id="file-menu" label="&main.menu.file;" accesskey="F" class="titlebar-toplevel" style="margin-left: 10px;">
 				<menupopup id="file-popup">
 					<menuitem label="&main.menu.file.open;" acceltext="Ctrl+O" accesskey="O" command="open"/>
                                         <menuseparator/>
                                         <menuitem label="&main.menu.file.new.playlist;" accesskey="P" command="createnewplaylist"/>
                                         <menuitem label="&main.menu.file.new.playlistfolder;" command="createnewplaylistfolder"/>
-                                        <menuitem label="&main.menu.file.new.chanelfolder;" command="createnewchannelfolder"/>
+                                        <menuitem label="&main.menu.file.new.channelfolder;" command="createnewchannelfolder"/>
                                         <menuitem label="&main.menu.file.rename;" accesskey="R" command="rename"/>
                                         <menuseparator/>
 					<menuitem label="&main.menu.file.exit;" acceltext="Ctrl+Q" accesskey="E" command="exit"/>

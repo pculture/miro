@@ -327,14 +327,14 @@ class Common:
         self.fillTemplate(os.path.join(xulBase, 'defaults', 'preferences',
                                        'prefs.js'))
 
-        # NEEDS: generalize to do the whole tree, so as to handle all
-        # locales
-        self.fillTemplate(os.path.join(xulBase, 'chrome', 'locale',
-                                       'en-US', 'main.dtd'))        
-        self.fillTemplate(os.path.join(xulBase, 'chrome', 'locale',
-                                       'en-US', 'about.dtd'))        
-        self.fillTemplate(os.path.join(xulBase, 'chrome', 'locale',
-                                       'en-US', 'bugreport.dtd'))        
+        for lang in glob (os.path.join (xulBase, 'chrome', 'locale', '*')):
+            if len(lang) >= 4 and lang[-4:] in ("_svn", ".svn"):
+                continue
+    	    # NEEDS: generalize to do the whole tree, so as to handle all
+    	    # locales
+    	    self.fillTemplate(os.path.join(lang, 'main.dtd'))        
+    	    self.fillTemplate(os.path.join(lang, 'about.dtd'))        
+    	    self.fillTemplate(os.path.join(lang, 'bugreport.dtd'))        
 
 ###############################################################################
 
