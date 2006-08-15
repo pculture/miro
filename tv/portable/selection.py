@@ -130,11 +130,8 @@ class SelectionArea(object):
 
     def onRemove(self, obj, id):
         if id in self.currentSelection:
-            try:
-                obj = self.currentView.getObjectByID(id)
+            if obj.idExists():
                 obj.setSelected(False)
-            except database.ObjectNotFoundError:
-                pass
             self.currentSelection.remove(id)
 
     def onAdd(self, obj, id):
@@ -306,11 +303,13 @@ class SelectionHandler(object):
                     return
 
     def selectTabByObject(self, obj):
+        channelTabOrder = app.getSingletonDDBObject(views.channelTabOrder)
+        playlistTabOrder = app.getSingletonDDBObject(views.playlistTabOrder)
         tabViews = [ 
             views.guideTabs, 
             views.staticTabs, 
-            views.feedTabs, 
-            views.playlistTabs,
+            channelTabOrder.getView(), 
+            playlistTabOrder.getView(), 
         ]
         for view in tabViews:
             for tab in view:
@@ -332,16 +331,26 @@ class SelectionHandler(object):
                         frameHint=frame, areaHint=frame.mainDisplay, 
                         id=tab.obj.getID())
         else:
-            selectedType = tls.getType()
-            if selectedType == 'channeltab':
-                return app.TemplateDisplay('multi-channel', frameHint=frame,
-                        areaHint=frame.mainDisplay)
-            elif selectedType == 'playlisttab':
-                return app.TemplateDisplay('multi-playlist', frameHint=frame,
-                        areaHint=frame.mainDisplay)
-            else:
-                raise AssertionError("Multiple %s tabs selected" %
-                        selectedType)
+            foldersSelected = False
+            templateName = None
+            for tab in self.getSelectedTabs():
+                if isinstance(tab.obj, folder.FolderBase):
+                    foldersSelected = True
+                if tab.isFeed() or tab.isChannelFolder():
+                    if templateName == 'multi-playlist':
+                        raise AssertionError("channels and playlists selected")
+                    templateName = 'multi-channel'
+                elif tab.isPlaylist() or tab.isPlaylistFolder():
+                    if templateName == 'multi-channel':
+                        raise AssertionError("channels and playlists selected")
+                    templateName = 'multi-playlist'
+                else:
+                    raise AssertionError("Multiple %s tabs selected" % 
+                            type(tab.obj))
+            return app.TemplateDisplay(templateName, frameHint=frame,
+                    areaHint=frame.mainDisplay,
+                    selectedCount=len(tls.currentSelection),
+                    foldersSelected=foldersSelected)
 
     def displayCurrentTabContent(self):
         newDisplay = self._chooseDisplayForCurrentTab()

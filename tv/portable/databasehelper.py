@@ -96,13 +96,14 @@ class TrackedIDList(object):
         KeyError will be raised."""
         return self.positions[id]
 
-    def appendID(self, id):
+    def appendID(self, id, sendSignalChange=True):
         if id in self:
             raise ValueError("%s is already being tracked" % id)
         self.positions[id] = len(self.list)
         self.trackedIDs.add(id)
         self.list.append(id)
-        self._sendSignalChange(id)
+        if sendSignalChange:
+            self._sendSignalChange(id)
 
     def insertID(self, pos, id):
         if id in self:

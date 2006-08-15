@@ -1095,6 +1095,24 @@ class ModelActionHandler:
         except database.ObjectNotFoundError:
             pass
 
+    def removeCurrentFeed(self):
+        controller.removeCurrentFeed()
+
+    def removeCurrentPlaylist(self):
+        controller.removeCurrentPlaylist()
+
+    def mergeToFolder(self):
+        tls = controller.selection.tabListSelection
+        selectionType = tls.getType()
+        childIDs = set(tls.currentSelection)
+        if selectionType == 'channeltab':
+            folder.createNewChannelFolder(childIDs)
+        elif selectionType == 'playlisttab':
+            folder.createNewPlaylistFolder(childIDs)
+        else:
+            print "WARNING: bad selection type %s in mergeToFolder" % \
+                selectionType
+
     def remove(self, area, id):
         selectedIDs = controller.selection.calcSelection(area, int(id))
         selectedObjects = [db.getObjectByID(id) for id in selectedIDs]

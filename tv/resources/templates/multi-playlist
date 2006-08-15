@@ -8,11 +8,24 @@
 
     <link href="resource:css/main.css" rel="stylesheet" type="text/css" />
     <t:include filename="dynamic.js" />
+    <t:execOnLoad><![CDATA[
+selectedCount = kargs['selectedCount']
+foldersSelected = kargs['foldersSelected']
+]]>
+    </t:execOnLoad>
 </head>
 
 <body>
-
-LOTS OF PLAYLISTS
-
+    <h1 i18n:translate="">
+        <span i18n:name="count" t:replace="selectedCount" /> Playlists selected
+    </h1>
+    <a i18n:translate="" href="#" onclick="return eventURL('action:removeCurrentPlaylist');">
+        Delete selected playlists
+    </a>
+    <div t:hideIf="foldersSelected">
+        <a href="#" onclick="return eventURL('action:mergeToFolder');">
+            Create new folder with selected playlists
+        </a>
+    </div>
 </body>
 </html>

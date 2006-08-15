@@ -189,6 +189,13 @@ class Tab:
         """
         self.obj.signalChange(needsSave=needsSave)
 
+    def idExists(self):
+        """Returns True if the object that maps to this tab still exists in
+        the DB.
+        """
+
+        return self.obj.idExists()
+
     def onDeselected(self, frame):
         self.display.onDeselect(frame)
 
@@ -235,12 +242,10 @@ class TabOrder(database.DDBObject):
         return self.trackedTabs.view
 
     def onAddTab(self, obj, id):
-        # There are weird database issues if we append the ID right now.  Let
-        # the whole operation go through, then append the ID.
-        def doit():
-            if id not in self.trackedTabs:
-                self.trackedTabs.appendID(id)
-        eventloop.addUrgentCall(doit, "add tracked tab")
+        if id not in self.trackedTabs:
+            self.trackedTabs.appendID(id, sendSignalChange=False)
+        eventloop.addUrgentCall(obj.signalChange, "tab signal change", 
+                kwargs={'needsSave': False})
 
     def onRemoveTab(self, obj, id):
         if id in self.trackedTabs:

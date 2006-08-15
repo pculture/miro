@@ -147,26 +147,30 @@ class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
     def getChildrenView(self):
         return views.playlists.filterWithIndex(indexes.byFolder, self)
 
-def createNewChannelFolder():
+def createNewChannelFolder(childIDs=None):
     title = _("Create Channel Folder")
     description = _("Enter a name for the new channel folder")
 
     def callback(dialog):
         if dialog.choice == dialogs.BUTTON_CREATE:
-            playlist = ChannelFolder(dialog.value)
-            app.controller.selection.selectTabByObject(playlist)
+            folder = ChannelFolder(dialog.value)
+            app.controller.selection.selectTabByObject(folder)
+            if childIDs:
+                folder.handleDNDAppend(childIDs)
 
     dialogs.TextEntryDialog(title, description, dialogs.BUTTON_CREATE,
             dialogs.BUTTON_CANCEL).run(callback)
 
-def createNewPlaylistFolder():
+def createNewPlaylistFolder(childIDs=None):
     title = _("Create Playlist Folder")
     description = _("Enter a name for the new playlist folder")
 
     def callback(dialog):
         if dialog.choice == dialogs.BUTTON_CREATE:
-            playlist = PlaylistFolder(dialog.value)
-            app.controller.selection.selectTabByObject(playlist)
+            folder = PlaylistFolder(dialog.value)
+            app.controller.selection.selectTabByObject(folder)
+            if childIDs:
+                folder.handleDNDAppend(childIDs)
 
     dialogs.TextEntryDialog(title, description, dialogs.BUTTON_CREATE,
             dialogs.BUTTON_CANCEL).run(callback)
