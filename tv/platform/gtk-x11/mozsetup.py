@@ -38,8 +38,8 @@ def createPrefsJS():
     prefsContent = """\
 # Mozilla User Preferences
 user_pref("security.warn_entering_secure", false);
+user_pref("security.warn_entering_weak", false);
 user_pref("security.warn_leaving_secure", false);
-user_pref("security.warn_leaving_secure.show_once", false);
 user_pref("security.warn_submit_insecure", false);
 user_pref("general.useragent.vendor", %s);
 user_pref("general.useragent.vendorSub", %s);
