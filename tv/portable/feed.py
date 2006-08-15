@@ -605,6 +605,7 @@ class Feed(DDBObject):
         self.download = None
         self.iconCache = IconCache(self, is_vital = True)
         self.informOnError = True
+        self.folder_id = None
         self.dd.addAfterCursor(self)
         self.generateFeed(True)
 
