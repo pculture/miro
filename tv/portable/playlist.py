@@ -5,6 +5,7 @@ from gtcache import gettext as _
 import app
 import dialogs
 import database
+import filters
 import item
 import views
 from databasehelper import makeSimpleGetSet, TrackedIDList
@@ -29,6 +30,11 @@ class PlaylistMixin:
 
     def getView(self):
         return self.trackedItems.view
+
+    def setSearch(self, searchTerms):
+        def searchFilter(obj):
+            return filters.matchingItems(obj, searchTerms)
+        self.trackedItems.setFilter(searchFilter)
 
     def addID(self, id):
         """Add a new item to end of the playlist.  """
@@ -59,7 +65,6 @@ class PlaylistMixin:
         self.confirmDBThread()
         self.trackedItems.moveID(id, newPosition)
         self.signalChange()
-
 
     def addItem(self, item):
         return self.addID(item.getID())

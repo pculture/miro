@@ -15,6 +15,10 @@
 playlist = views.db.getObjectByID(int(kargs['id']))
 playlistView = playlist.getView()
 thisPlaylistView = views.feeds.filter(lambda x: x is playlist)
+playlist.setSearch(None)
+
+def updateSearchString(newSearch):
+    playlist.setSearch(newSearch)
 ]]>
     </t:execOnLoad>
 </head>

@@ -9,6 +9,9 @@ def itemsByFeed(x):
     # This specifically sorts subitems by their parent's feed.
     return x.getFeed().getID()
 
+def itemsByChannelFolder(x):
+    return x.getFeed().getFolder()
+
 def itemsByParent(x):
     return x.parent_id
 

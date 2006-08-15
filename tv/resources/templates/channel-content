@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n"
+      eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<!-- DOWNLOADS ******************************************************** -->
+<span t:hideIf="downloadingItems.len()==0" t:updateHideOnView="downloadingItems">
+    <div class="main-channelbar-hitbox"><a href="javascript:toggleLayerWithTriangle('main-downloads', 'main-downloads-triangle');">#&nbsp;</a></div>
+    <div id="main-channelbar" class="main-channelbar-download">
+            <h1 t:updateForView="downloadingItems">
+    <span id="main-downloads-triangle" class="triangle">&nbsp;</span>
+<span t:hideIf="downloadingItems.len()==1"><span i18n:translate="">
+<span t:replace="downloadingItems.len()" i18n:name="count"/> Downloads in Progress</span></span>
+<span t:hideIf="downloadingItems.len()!=1"><span i18n:translate="">1 Download in Progress</span></span>
+            </h1>
+    </div>
+    <div id="main-downloads" style="display: none;">
+        <span t:repeatForView="downloadingItems">
+            <span t:replaceMarkup="this.getItemXML(viewName)" />
+        </span>
+    </div>
+</span>
+<!-- / DOWNLOADS -->
+<!-- NEWLY AVAILABLE ************************************************** -->
+<div id="main-channelbar-available" class="main-channelbar" style="display: @@@mainChannelbarAvailableDisplay@@@;">
+<div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-newlyavailable');">#&nbsp;</a></div>
+<div t:updateForView="matchingItems">
+  <div t:showIf="searchTerm is None">
+    <h1 i18n:translate="">
+        <span i18n:name="len" t:replace="allItems.len()" /> 
+        Videos On This Channel
+    </h1>
+  </div>
+  <div t:showIf="searchTerm is not None">
+    <div t:showIf="allItems.len() == matchingItems.len()">
+        <h1 i18n:translate="">
+            All <span i18n:name="len" t:replace="matchingItems.len()" /> 
+            Videos Match This Search
+        </h1>
+    </div>
+    <div t:hideIf="allItems.len() == matchingItems.len()">
+        <h1 i18n:translate="">
+            <span i18n:name="len" t:replace="matchingItems.len()" /> 
+            Videos Match This Search
+        </h1>
+    </div>
+  </div>
+</div>
+</div>
+<div id="main-newlyavailable">
+    <span t:repeatForView="newItems">
+        <span t:replaceMarkup="this.getItemXML(viewName)" />
+    </span>
+    <div t:hideIf="oldItems.len()==0" t:updateHideOnView="oldItems">
+        <div id="show-more-videos-label" style="display: @@@showMoreVideosDisplay@@@;">
+                            <a href="javascript:toggleLayer('main-newlyavailable-seen');toggleLayer('show-more-videos-label');toggleLayer('main-channelbar-available');" class="main-notification-nonew">
+                            <div class="main-notification"><span i18n:translate=""><span i18n:name="count" t:replace="oldItems.len()" class="video-count"/> Videos on this Channel</span> &gt;&gt;</div>
+                            <div class="main-notification-right">&nbsp;</div>
+                            <br clear="left" />
+                            </a>
+        </div>
+    </div>
+    <div id="main-newlyavailable-seen" style="display: @@@newlyAvailableSeenDisplay@@@;">
+        <div t:repeatForView="oldItems">
+            <span t:replaceMarkup="this.getItemXML(viewName)" />
+        </div>
+    </div>
+</div>              
+
+
+<!-- UNWATCHED ******************************************************** -->
+<span t:hideIf="unwatchedItems.len()==0" t:updateHideOnView="unwatchedItems">
+    <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-unwatched');">#&nbsp;</a></div>
+    <div id="main-channelbar" class="main-channelbar">
+            <h1 i18n:translate="">Unwatched</h1>
+    </div>
+
+    <div id="main-unwatched">
+        <span t:repeatForView="unwatchedItems">
+           <span t:replaceMarkup="this.getItemXML(viewName)" />
+        </span>
+    </div>
+</span>
+<!-- / UNWATCHED -->
+
+<!-- EXPIRING ********************************************************* -->
+<span t:hideIf="expiringItems.len()==0" t:updateHideOnView="expiringItems">
+    <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-expiring');">#&nbsp;</a></div>
+    <div id="main-channelbar" class="main-channelbar">
+            <h1 i18n:translate="">Watched</h1>
+    </div>
+
+    <div id="main-expiring">
+        <span t:repeatForView="expiringItems">
+            <span t:replaceMarkup="this.getItemXML(viewName)" />
+        </span>
+    </div>
+</span>
+<!-- / EXPIRING -->
+
+<!-- SAVED ************************************************************ -->
+<span t:hideIf="savedItems.len()==0" t:updateHideOnView="savedItems">
+    <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-saved');">#&nbsp;</a></div>
+    <div id="main-channelbar" class="main-channelbar">
+            <h1 i18n:translate="">Saved</h1>
+    </div>
+
+    <div id="main-saved">
+        <span t:repeatForView="savedItems">
+            <span t:replaceMarkup="this.getItemXML(viewName)" />
+        </span>
+    </div>
+</span>
+<!-- / SAVED -->
+</body>
+</html>
