@@ -1424,25 +1424,28 @@ class ScraperFeedImpl(FeedImpl):
     # Given a string containing an HTML file, return a dictionary of
     # links to titles and thumbnails
     def scrapeHTMLLinks(self,html, baseurl,setTitle=False, charset = None):
-        lg = HTMLLinkGrabber()
-        links = lg.getLinks(html, baseurl)
-        if setTitle and not lg.title is None:
-            self.ufeed.confirmDBThread()
-            try:
-                self.title = toUTF8Bytes(lg.title)
-            finally:
-                self.ufeed.signalChange()
-            
-        linkDict = {}
-        for link in links:
-            if link[0].startswith('http://') or link[0].startswith('https://'):
-                if not linkDict.has_key(toUTF8Bytes(link[0],charset)):
-                    linkDict[toUTF8Bytes(link[0])] = {}
-                if not link[1] is None:
-                    linkDict[toUTF8Bytes(link[0])]['title'] = toUTF8Bytes(link[1],charset).strip()
-                if not link[2] is None:
-                    linkDict[toUTF8Bytes(link[0])]['thumbnail'] = toUTF8Bytes(link[2],charset)
-        return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')],linkDict)
+        try:
+            lg = HTMLLinkGrabber()
+            links = lg.getLinks(html, baseurl)
+            if setTitle and not lg.title is None:
+                self.ufeed.confirmDBThread()
+                try:
+                    self.title = toUTF8Bytes(lg.title)
+                finally:
+                    self.ufeed.signalChange()
+                
+            linkDict = {}
+            for link in links:
+                if link[0].startswith('http://') or link[0].startswith('https://'):
+                    if not linkDict.has_key(toUTF8Bytes(link[0],charset)):
+                        linkDict[toUTF8Bytes(link[0])] = {}
+                    if not link[1] is None:
+                        linkDict[toUTF8Bytes(link[0])]['title'] = toUTF8Bytes(link[1],charset).strip()
+                    if not link[2] is None:
+                        linkDict[toUTF8Bytes(link[0])]['thumbnail'] = toUTF8Bytes(link[2],charset)
+            return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')],linkDict)
+        except (LookupError,):
+            return ([],{})
         
     ##
     # Called by pickle during deserialization
