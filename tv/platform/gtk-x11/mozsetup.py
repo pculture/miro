@@ -40,6 +40,7 @@ def createPrefsJS():
 user_pref("security.warn_entering_secure", false);
 user_pref("security.warn_leaving_secure", false);
 user_pref("security.warn_leaving_secure.show_once", false);
+user_pref("security.warn_submit_insecure", false);
 user_pref("general.useragent.vendor", %s);
 user_pref("general.useragent.vendorSub", %s);
 user_pref("general.useragent.vendorComment", %s);
