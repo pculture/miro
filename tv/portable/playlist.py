@@ -9,29 +9,12 @@ import item
 import views
 from databasehelper import makeSimpleGetSet, TrackedIDList
 
-class SavedPlaylist(database.DDBObject):
-    """An ordered list of videos that the user has saved.
-
-    This class is called SavedPlaylist to distinguish it from app.Playlist,
-    which is a temporary playlist that holds the videos we're playing right
-    now.
+class PlaylistMixin:
+    """Class that handles basic playlist functionality.  PlaylistMixin is used
+    by both SavedPlaylist and folder.PlaylistFolder.
     """
 
-    def __init__(self, title, items=None):
-        self.title = title
-        if items is not None:
-            self.item_ids = [i.getID() for i in items]
-        else:
-            self.item_ids = []
-        self.folder_id = None
-        self._initRestore()
-        database.DDBObject.__init__(self)
-
-    def onRestore(self):
-        self._initRestore()
-
-    def _initRestore(self):
-        """Common code shared between __init__ and onRestore()."""
+    def setupTrackedItemView(self):
         self.trackedItems = TrackedIDList(views.items, self.item_ids)
         views.items.addRemoveCallback(self.onItemRemoved)
 
@@ -39,30 +22,12 @@ class SavedPlaylist(database.DDBObject):
         if id in self.trackedItems:
             self.trackedItems.removeID(id)
 
-    getTitle, setTitle = makeSimpleGetSet('title')
-
-    def getFolder(self):
-        self.confirmDBThread()
-        if self.folder_id is not None:
-            return self.dd.getObjectByID(self.folder_id)
-        else:
-            return None
-
-    def setFolder(self, newFolder):
-        self.confirmDBThread()
-        if newFolder is not None:
-            self.folder_id = newFolder.getID()
-        else:
-            self.folder_id = None
-        self.signalChange()
-
     def getItems(self):
         """Get the items in this playlist."""
         self.confirmDBThread()
         return [i for i in self.getView()]
 
     def getView(self):
-        """Get a database view for this playlist."""
         return self.trackedItems.view
 
     def addID(self, id):
@@ -72,7 +37,7 @@ class SavedPlaylist(database.DDBObject):
         item.save()
         if id not in self.trackedItems:
             self.trackedItems.appendID(id)
-            self.signalChange()
+        self.signalChange()
 
     def removeID(self, id):
         """Remove an item from the playlist."""
@@ -105,10 +70,8 @@ class SavedPlaylist(database.DDBObject):
     def moveItem(self, item, newPosition):
         return self.moveID(item.getID(), newPosition)
 
-    def handleDrop(self, draggedIds):
-        """Called when something gets dropped onto this playlist."""
-
-        for id in draggedIds:
+    def handleDNDAppend(self, draggedIDs):
+        for id in draggedIDs:
             if not views.items.idExists(id):
                 raise KeyError("%s is not an item id" % id)
             self.addID(id)
@@ -117,12 +80,67 @@ class SavedPlaylist(database.DDBObject):
         """Handle drag-and-drop reordering of the playlist."""
         for id in draggedItems:
             if id not in self.trackedItems:
-                raise ValueError("id not in playlist: %s", sourceID)
+                raise ValueError("id not in playlist folder: %s", sourceID)
         if anchorItem is not None:
             self.trackedItems.moveIDList(draggedItems, anchorItem.getID())
         else:
             self.trackedItems.moveIDList(draggedItems, None)
         self.signalChange()
+
+class SavedPlaylist(database.DDBObject, PlaylistMixin):
+    """An ordered list of videos that the user has saved.
+
+    This class is called SavedPlaylist to distinguish it from app.Playlist,
+    which is a temporary playlist that holds the videos we're playing right
+    now.
+    """
+
+    def __init__(self, title, items=None):
+        self.title = title
+        if items is not None:
+            self.item_ids = [i.getID() for i in items]
+        else:
+            self.item_ids = []
+        self.folder_id = None
+        self.setupTrackedItemView()
+        database.DDBObject.__init__(self)
+
+    def onRestore(self):
+        self.setupTrackedItemView()
+
+    getTitle, setTitle = makeSimpleGetSet('title')
+
+    def getFolder(self):
+        self.confirmDBThread()
+        if self.folder_id is not None:
+            return self.dd.getObjectByID(self.folder_id)
+        else:
+            return None
+
+    def setFolder(self, newFolder):
+        self.confirmDBThread()
+        old_folder_id = self.folder_id
+        if newFolder is not None:
+            self.folder_id = newFolder.getID()
+        else:
+            self.folder_id = None
+        self.signalChange()
+        if old_folder_id is not None:
+            folder = views.playlistFolders.getObjectByID(old_folder_id)
+            for id in self.item_ids:
+                folder.checkItemIDRemoved(id)
+
+    def handleRemove(self, ids):
+        """Handle the user removing a set of IDs.  This method will also check
+        the playlist folder we're in and remove the ID from there.
+        """
+
+        for id in ids:
+            self.removeID(id)
+        folder = self.getFolder()
+        if folder:
+            for id in ids:
+                folder.checkItemIDRemoved(id)
 
     def rename(self):
         title = _("Rename Playlist")

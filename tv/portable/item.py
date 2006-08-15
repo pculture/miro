@@ -133,7 +133,11 @@ class Item(DDBObject):
         return True
 
     def removeFromPlaylists(self):
-        view = views.playlists.filterWithIndex(indexes.playlistsByItem, self)
+        itemIDIndex = indexes.playlistsByItemID
+        view = views.playlists.filterWithIndex(itemIDIndex, self.getID())
+        for playlist in view:
+            playlist.removeItem(self)
+        view = views.playlistFolders.filterWithIndex(itemIDIndex, self.getID())
         for playlist in view:
             playlist.removeItem(self)
 

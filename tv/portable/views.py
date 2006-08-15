@@ -1,5 +1,6 @@
 from app import db
 import feed
+import folder
 import downloader
 import guide
 import item
@@ -67,5 +68,8 @@ manualDownloads = items.filter(filters.manualDownloads)
 autoDownloads = items.filter(filters.autoDownloads)
 
 playlists = db.filterWithIndex(indexes.objectsByClass, playlist.SavedPlaylist)
-playlists.createIndex(indexes.playlistsByItem, multiValued=True)
+playlists.createIndex(indexes.playlistsByItemID, multiValued=True)
+playlists.createIndex(indexes.playlistsByItemAndFolderID, multiValued=True)
 playlists.createIndex(indexes.byFolder)
+playlistFolders = db.filterWithIndex(indexes.objectsByClass, folder.PlaylistFolder)
+playlistFolders.createIndex(indexes.playlistsByItemID, multiValued=True)

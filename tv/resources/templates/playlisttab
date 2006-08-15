@@ -13,7 +13,7 @@
 	drageffectplaylistfolder="move">
 <div class="dnd-background-mid"></div>
 <div class="dnd-background-right"></div>
-<a class="feeditem noselect"
+<a class="feeditem draggable noselect ***this.obj.getFolder() and 'child' or ''***"
 	dragsourcetype="playlist"
 	dragsourcedata="tablist-***this.objID()***"
 	dragicon="playlist-tnail-***this.objID()***">

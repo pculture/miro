@@ -3,6 +3,7 @@ from gettext import gettext as _
 import app
 import dialogs
 import indexes
+import playlist
 import views
 from database import DDBObject
 from databasehelper import makeSimpleGetSet
@@ -54,7 +55,7 @@ class FolderBase(DDBObject):
         if len(selection.currentSelection) == 0:
             # we appended tabs to a non-expanded folder and now nothing is
             # selected.  Select that folder.
-            app.controller.selection.selectItem('tablist', tabOrder.getView(),
+            app.controller.selection.selectItem('tablist', tabOrder.tabView,
                     self.getID(), False, False)
         self.signalChange()
 
@@ -99,7 +100,31 @@ class ChannelFolder(FolderBase):
     def getChildrenView(self):
         return views.feeds.filterWithIndex(indexes.byFolder, self)
 
-class PlaylistFolder(FolderBase):
+class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
+    def __init__(self, title):
+        self.item_ids = []
+        self.setupTrackedItemView()
+        FolderBase.__init__(self, title)
+
+    def onRestore(self):
+        self.setupTrackedItemView()
+
+    def handleDNDAppend(self, draggedIDs):
+        FolderBase.handleDNDAppend(self, draggedIDs)
+        for id in draggedIDs:
+            tab = self.getTabOrder().tabView.getObjectByID(id)
+            for item in tab.obj.getView():
+                if item.getID() not in self.trackedItems:
+                    self.trackedItems.appendID(item.getID())
+        self.signalChange()
+
+    def checkItemIDRemoved(self, id):
+        index = indexes.playlistsByItemAndFolderID
+        value = (id, self.getID())
+        view = views.playlists.filterWithIndex(index, value)
+        if view.len() == 0:
+            self.removeID(id)
+
     def renameTitle(self):
         return _("Rename Playlist Folder")
     def renameText(self):

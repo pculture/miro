@@ -14,9 +14,27 @@ import selection
 class HadToStopEventLoop(Exception):
     pass
 
+class DummyMainFrame:
+    def __init__(self):
+        self.displays = {}
+        self.mainDisplay = "mainDisplay"
+        self.channelsDisplay = "channelsDisplay"
+        self.collectionDisplay = "collectionDisplay"
+        self.videoInfoDisplay = "videoInfoDisplay"
+
+    def selectDisplay(self, display, area):
+        self.displays[area] = display
+
+    def getDisplay(self, area):
+        return self.displays.get(area)
+
+    def onSelectedTabChange(self, tabType, multiple, guideURL):
+        pass
+
 class DummyController:
     def __init__(self):
         self.selection = selection.SelectionHandler()
+        self.frame = DummyMainFrame()
 
 class DemocracyTestCase(unittest.TestCase):
     def setUp(self):

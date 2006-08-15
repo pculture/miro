@@ -19,7 +19,7 @@ def mapToTab(obj):
         return tabs.Tab('channelfoldertab', 'channelfolder', [100,sortKey],obj)
     elif isinstance(obj, folder.PlaylistFolder):
         sortKey = obj.getTitle().lower()
-        return tabs.Tab('playlistfoldertab','playlistfolder', [900,sortKey],obj)
+        return tabs.Tab('playlistfoldertab','playlist', [900,sortKey],obj)
     elif isinstance(obj, playlist.SavedPlaylist):
         sortKey = obj.getTitle().lower()
         return tabs.Tab('playlisttab','playlist',[900,sortKey],obj)

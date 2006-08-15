@@ -789,9 +789,10 @@ class Controller (frontend.Application):
 
         if destType == 'playlist' and type == 'downloadeditem':
             # dropping an item on a playlist
-            destObj.handleDrop(draggedIDs)
-        elif (destType == 'channelfolder' and type == 'channel'):
-            # Dropping a channel onto a folder
+            destObj.handleDNDAppend(draggedIDs)
+        elif ((destType == 'channelfolder' and type == 'channel') or
+                (destType == 'playlistfolder' and type == 'playlist')):
+            # Dropping a channel/playlist onto a folder
             obj = db.getObjectByID(int(destID))
             obj.handleDNDAppend(draggedIDs)
         elif (destType in ('playlist', 'playlistfolder') and 
@@ -1039,7 +1040,8 @@ class ModelActionHandler:
         except:
             print "Warning: tried to rename object that doesn't exist with id %d" % int(feed)
             return
-        if isinstance(obj, playlist.SavedPlaylist):
+        if obj.__class__ in (playlist.SavedPlaylist, folder.ChannelFolder,
+                folder.PlaylistFolder):
             obj.rename()
         else:
             print "WARNING: Unknown object type in remove() %s" % type(obj)

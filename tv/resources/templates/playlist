@@ -12,7 +12,7 @@
     <t:include filename="dynamic.js" />
     <t:execOnLoad><![CDATA[
 
-playlist = views.playlists.getObjectByID(int(kargs['id']))
+playlist = views.db.getObjectByID(int(kargs['id']))
 playlistView = playlist.getView()
 thisPlaylistView = views.feeds.filter(lambda x: x is playlist)
 ]]>
@@ -29,7 +29,7 @@ thisPlaylistView = views.feeds.filter(lambda x: x is playlist)
         </div>
         <div id="main-titlebar-tasks">
                 <div id="main-titlebar-tasks-search">
-                    <input type="search" placeholder="Search Channel" class="main-titlebar-tasks-search" onfocus="startEditSearch(this)" onblur="endEditSearch()" />
+                    <input type="search" placeholder="Search Playlist" class="main-titlebar-tasks-search" onfocus="startEditSearch(this)" onblur="endEditSearch()" />
                 </div>
         </div>
 </div>
