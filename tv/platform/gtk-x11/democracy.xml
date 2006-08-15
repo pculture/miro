@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <!--
 # Democracy Player - an RSS based video player application
 # Copyright (C) 2005-2006 Participatory Culture Foundation
@@ -17,7 +19,6 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 -->
 
-<?xml version="1.0" encoding="UTF-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
    <mime-type type="application/x-democracy">
      <comment>Democracy Subscription File</comment>
