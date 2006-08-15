@@ -614,17 +614,117 @@ class Controller (frontend.Application):
             print "DTV: Removing global feed %s" % url
             feed.remove()
 
-    def updateCurrentFeed(self):
-        ModelActionHandler(delegate).updateCurrentFeed()
-
     def copyCurrentFeedURL(self):
-        ModelActionHandler(delegate).copyCurrentFeedURL()
+        tabs = controller.selection.getSelectedTabs()
+        if len(tabs) == 1 and tabs[0].isFeed():
+            delegate.copyTextToClipboard(tabs[0].obj.getURL())
 
     def removeCurrentFeed(self):
-        ModelActionHandler(delegate).removeCurrentFeed()
+        if self.selection.tabListSelection.getType() == 'channeltab':
+            feeds = [t.obj for t in self.selection.getSelectedTabs()]
+            self.removeFeeds(feeds)
 
     def removeCurrentGuide(self):
-        ModelActionHandler(ate).removeCurrentGuide()
+        if self.selection.tabListSelection.getType() == 'addedguidetab':
+            guides = [t.obj for t in self.selection.getSelectedTabs()]
+            if len(guides) != 1:
+                raise AssertionErro("Multiple guides selected")
+            self.removeGuide(guides[0])
+
+    def removeCurrentPlaylist(self):
+        if self.selection.tabListSelection.getType() == 'playlisttab':
+            playlists = [t.obj for t in self.selection.getSelectedTabs()]
+            self.removePlaylists(playlists)
+
+    def updateCurrentFeed(self):
+        for tab in controller.selection.getSelectedTabs():
+            if tab.isFeed():
+                self.updateFeed(tab.objID())
+
+    def updateAllFeeds(self):
+        for f in views.feeds:
+            f.update()
+
+    def removeGuide(self, guide):
+        if guide.getDefault():
+            print "WARNING: attempt to remove default guide"
+            return
+        title = _('Remove %s') % guide.getTitle()
+        description = _("Are you sure you want to remove the guide %s?") % (guide.getTitle(),)
+        dialog = dialogs.ChoiceDialog(title, description, 
+                dialogs.BUTTON_YES, dialogs.BUTTON_NO)
+        def dialogCallback(dialog):
+            if dialog.choice == dialogs.BUTTON_YES:
+                guide.remove()
+        dialog.run(dialogCallback)
+
+    def removePlaylists(self, playlists):
+        if len(playlists) == 1:
+            title = _('Remove %s') % playlists[0].getTitle()
+            description = _("Are you sure you want to remove %s") % \
+                    playlists[0].getTitle()
+        else:
+            title = _('Remove %s channels') % len(playlists)
+            description = \
+                    _("Are you sure you want to remove these %s playlists") % \
+                    len(playlists)
+        dialog = dialogs.ChoiceDialog(title, description, 
+                dialogs.BUTTON_YES, dialogs.BUTTON_NO)
+        def dialogCallback(dialog):
+            if dialog.choice == dialogs.BUTTON_YES:
+                for playlist in playlists:
+                    playlist.remove()
+        dialog.run(dialogCallback)
+
+    def removeFeeds(self, feeds):
+        for feed in feeds:
+            if feed.hasDownloadedItems():
+                self.removeFeedsWithDownloads(feeds)
+                return
+        self.removeFeedsWithoutDownloads(feeds)
+
+    def removeFeedsWithoutDownloads(self, feeds):
+        if len(feeds) == 1:
+            title = _('Remove %s') % feeds[0].getTitle()
+            description = _("""\
+Are you sure you want to remove %s?  Any downloads in progress will \
+be canceled.""") % feeds[0].getTitle()
+        else:
+            title = _('Remove %s channels') % len(feeds)
+            description = _("""\
+Are you sure you want to remove these %s channels?  Any downloads in \
+progress will be canceled.""") % len(feeds)
+        dialog = dialogs.ChoiceDialog(title, description, 
+                dialogs.BUTTON_YES, dialogs.BUTTON_NO)
+        def dialogCallback(dialog):
+            if dialog.choice == dialogs.BUTTON_YES:
+                for feed in feeds:
+                    feed.remove()
+        dialog.run(dialogCallback)
+
+    def removeFeedsWithDownloads(self, feeds):
+        if len(feeds) == 1:
+            title = _('Remove %s') % feeds[0].getTitle()
+            description = _("""\
+What would you like to do with the videos in this channel that you've \
+downloaded?""")
+        else:
+            title = _('Remove %s channels') % len(feeds)
+            description = _("""\
+What would you like to do with the videos in these channels that you've \
+downloaded?""")
+        dialog = dialogs.ThreeChoiceDialog(title, description, 
+                dialogs.BUTTON_KEEP_VIDEOS, dialogs.BUTTON_DELETE_VIDEOS,
+                dialogs.BUTTON_CANCEL)
+        def dialogCallback(dialog):
+            if dialog.choice == dialogs.BUTTON_KEEP_VIDEOS:
+                manualFeed = getSingletonDDBObject(views.manualFeed)
+                for feed in feeds:
+                    feed.remove(moveItemsTo=manualFeed)
+            elif dialog.choice == dialogs.BUTTON_DELETE_VIDEOS:
+                for feed in feeds:
+                    feed.remove()
+        dialog.run(dialogCallback)
 
     def downloaderShutdown(self):
         print "DTV: Closing Database..."
@@ -779,7 +879,7 @@ class Controller (frontend.Application):
                 destObj = None
             sourceArea, sourceID = sourceData.split("-")
             sourceID = int(sourceID)
-            draggedIDs = controller.selection.getDraggedIDs(sourceArea, 
+            draggedIDs = controller.selection.calcSelection(sourceArea,
                     sourceID)
         except:
             print "WARNING: error parsing drop (%r, %r, %r)" % \
@@ -995,44 +1095,24 @@ class ModelActionHandler:
         except database.ObjectNotFoundError:
             pass
 
-    def removeCurrentFeed(self):
-        feeds = []
-        hasDownloads = False
-        for tab in controller.selection.getSelectedTabs():
-            if tab.isFeed():
-                feed = db.getObjectByID(tab.objID())
-                if feed.hasDownloadedItems():
-                    hasDownloads = True
-                feeds.append(feed)
+    def remove(self, area, id):
+        selectedIDs = controller.selection.calcSelection(area, int(id))
+        selectedObjects = [db.getObjectByID(id) for id in selectedIDs]
+        objType = selectedObjects[0].__class__
 
-        if hasDownloads:
-            self.removeFeedsWithDownloads(feeds)
+        if objType in (feed.Feed, folder.ChannelFolder):
+            controller.removeFeeds(selectedObjects)
+        elif objType in (playlist.SavedPlaylist, folder.PlaylistFolder):
+            controller.removePlaylists(selectedObjects)
+        elif objType == guide.ChannelGuide:
+            if len(selectedObjects) != 1:
+                raise AssertionError("Multiple guides selected in remove")
+            controller.removeGuide(oneObject)
+        elif objType == item.Item:
+            pl = controller.selection.getSelectedTabs()[0].obj
+            pl.handleRemove(destObj, selectedIDs)
         else:
-            self.removeFeedsWithoutDownloads(feeds)
-
-    def removeCurrentGuide(self):
-        tabs = controller.selection.getSelectedTabs()
-        if len(tabs) != 1:
-            return
-        tab = tabs[0]
-        if tab.isGuide() and not tab.obj.getDefault():
-            self.removeGuide(tab.objID())
-
-    def remove(self, id):
-        try:
-            obj = db.getObjectByID(int(id))
-        except:
-            print "Warning: tried to remove object that doesn't exist with id %d" % int(feed)
-            return
-        if isinstance(obj, feed.Feed):
-            if obj.hasDownloadedItems():
-                self.removeFeedsWithDownloads([obj])
-            else:
-                self.removeFeedsWithoutDownloads([obj])
-        elif isinstance(obj, playlist.SavedPlaylist):
-            obj.remove()
-        else:
-            print "WARNING: Unknown object type in remove() %s" % type(obj)
+            print ("Warning: Can't handle type %s in remove()" % objType)
 
     def rename(self, id):
         try:
@@ -1046,80 +1126,9 @@ class ModelActionHandler:
         else:
             print "WARNING: Unknown object type in remove() %s" % type(obj)
 
-    def removeGuide(self, guide_id):
-        try:
-            obj = db.getObjectByID(int(guide_id))
-        except:
-            print "DTV: Warning: tried to remove guide that doesn't exist with id %d" % int(guide_id)
-            return
-        uguide = obj
-        title = _('Remove %s') % uguide.getTitle()
-        description = _("Are you sure you want to remove the guide %s?") % (uguide.getTitle(),)
-        dialog = dialogs.ChoiceDialog(title, description, 
-                dialogs.BUTTON_YES, dialogs.BUTTON_NO)
-        def dialogCallback(dialog):
-            if dialog.choice == dialogs.BUTTON_YES:
-                uguide.remove()
-        dialog.run(dialogCallback)
-
-    def _getNameForFeeds(self, feeds):
-        if len(feeds) == 1:
-            return feeds[0].getTitle()
-        else:
-            return "%s channels" % len(feeds)
-
-    def removeFeedsWithoutDownloads(self, feeds):
-        feedName = self._getNameForFeeds(feeds)
-        title = _('Remove %s') % feedName
-        description = _("""\
-Are you sure you want to remove %s?  Any downloads in progress will \
-be canceled.""") % feedName
-        dialog = dialogs.ChoiceDialog(title, description, 
-                dialogs.BUTTON_YES, dialogs.BUTTON_NO)
-        def dialogCallback(dialog):
-            if dialog.choice == dialogs.BUTTON_YES:
-                for feed in feeds:
-                    feed.remove()
-        dialog.run(dialogCallback)
-
-    def removeFeedsWithDownloads(self, feeds):
-        feedName = self._getNameForFeeds(feeds)
-        title = _('Remove %s') % feedName
-        description = _("""\
-What would you like to do with the videos in this channel that you've \
-downloaded?""")
-        dialog = dialogs.ThreeChoiceDialog(title, description, 
-                dialogs.BUTTON_KEEP_VIDEOS, dialogs.BUTTON_DELETE_VIDEOS,
-                dialogs.BUTTON_CANCEL)
-        def dialogCallback(dialog):
-            if dialog.choice == dialogs.BUTTON_KEEP_VIDEOS:
-                manualFeed = getSingletonDDBObject(views.manualFeed)
-                for feed in feeds:
-                    feed.remove(moveItemsTo=manualFeed)
-            elif dialog.choice == dialogs.BUTTON_DELETE_VIDEOS:
-                for feed in feeds:
-                    feed.remove()
-        dialog.run(dialogCallback)
-
-    def updateCurrentFeed(self):
-        for tab in controller.selection.getSelectedTabs():
-            if tab.isFeed():
-                self.updateFeed(tab.objID())
-
     def updateFeed(self, feed):
         obj = db.getObjectByID(int(feed))
         obj.update()
-
-    def updateAllFeeds(self):
-        # We might want to limit the number of simultaneous threads but for
-        # now, this naive and simple implementation will do the trick.
-        for f in views.feeds:
-            f.update()
-
-    def copyCurrentFeedURL(self):
-        tabs = controller.selection.getSelectedTabs()
-        if len(tabs) == 1 and tabs[0].isFeed():
-            self.copyFeedURL(tabs[0].objID())
 
     def copyFeedURL(self, feed):
         obj = db.getObjectByID(int(feed))

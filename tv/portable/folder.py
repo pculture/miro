@@ -66,6 +66,12 @@ class FolderBase(DDBObject):
         dialogs.TextEntryDialog(self.renameTitle(), self.renameText(), 
                 dialogs.BUTTON_OK, dialogs.BUTTON_CANCEL).run(callback)
 
+    def remove(self):
+        children = [child for child in self.getChildrenView()]
+        for child in children:
+            child.remove()
+        DDBObject.remove(self)
+
     # getFolder and setFolder are here so that channels/playlists and folders
     # have a consistent API.  They don't do much since we don't allow nested
     # folders.
@@ -99,6 +105,12 @@ class ChannelFolder(FolderBase):
         return app.getSingletonDDBObject(views.channelTabOrder)
     def getChildrenView(self):
         return views.feeds.filterWithIndex(indexes.byFolder, self)
+
+    def hasDownloadedItems(self):
+        for feed in self.getChildrenView():
+            if feed.hasDownloadedItems():
+                return True
+        return False
 
 class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
     def __init__(self, title):

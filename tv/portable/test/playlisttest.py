@@ -98,6 +98,8 @@ class PlaylistTestCase(PlaylistTestBase):
         playlist = SavedPlaylist("rocketboom")
         self.doAppend(playlist, [self.i1])
         self.checkList(playlist, [self.i1])
+        self.doAppend(playlist, [self.i3])
+        self.checkList(playlist, [self.i1, self.i3])
         self.doAppend(playlist, [self.i3, self.i4])
         self.checkList(playlist, [self.i1, self.i3, self.i4])
 
@@ -133,9 +135,8 @@ class PlaylistFolderTestCase(PlaylistTestBase):
         PlaylistTestBase.setUp(self)
         self.playlistTabOrder = tabs.TabOrder('playlist')
         self.p1 = SavedPlaylist("rocketboom", [self.i1, self.i3])
-        self.p2 = SavedPlaylist("telemusicvisnon", [self.i4, self.i3])
-        self.p3 = SavedPlaylist("telemusicvisnon", [self.i1, self.i2, self.i3,
-                self.i4])
+        self.p2 = SavedPlaylist("telemusicvision", [self.i4, self.i3])
+        self.p3 = SavedPlaylist("digg", [self.i1, self.i2, self.i3, self.i4])
         self.folder = PlaylistFolder("My Best Vids")
         self.folder.setExpanded(True)
         self.runPendingIdles() # The TabOrder gets updated in an idle call
@@ -198,16 +199,19 @@ class PlaylistFolderTestCase(PlaylistTestBase):
         self.checkList(self.p3, [self.i1, self.i2, self.i3, self.i4])
 
         self.p1 = SavedPlaylist("rocketboom", [self.i1, self.i3])
-        self.p2 = SavedPlaylist("telemusicvisnon", [self.i4, self.i3])
-        self.p3 = SavedPlaylist("telemusicvisnon", [self.i1, self.i2, self.i3,
-                self.i4])
+        self.p2 = SavedPlaylist("telemusicvision", [self.i4, self.i3])
+        self.p3 = SavedPlaylist("digg", [self.i1, self.i2, self.i3, self.i4])
 
     def testRemoveItemFromPlaylist(self):
-        self.doAppend(self.folder, [self.p1])
-        self.doAppend(self.folder, [self.p2])
-        self.doAppend(self.folder, [self.p3])
+        for pl in [self.p1, self.p2, self.p3]:
+            self.doAppend(self.folder, [pl])
         self.checkList(self.folder, [self.i1, self.i3, self.i4, self.i2])
         self.doPlaylistRemove(self.p1, [self.i1])
         self.checkList(self.folder, [self.i1, self.i3, self.i4, self.i2])
         self.doPlaylistRemove(self.p3, [self.i1])
         self.checkList(self.folder, [self.i3, self.i4, self.i2])
+
+    def testRemoveFolderRemovesPlaylist(self):
+        self.doAppend(self.folder, [self.p1, self.p2, self.p3])
+        self.folder.remove()
+        self.assertEquals(len(views.playlists), 0)

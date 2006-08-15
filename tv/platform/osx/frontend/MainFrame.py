@@ -261,7 +261,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         eventloop.addUrgentCall(app.controller.updateCurrentFeed, "Update current feed")
 
     def updateAllChannels_(self, sender):
-        eventloop.addUrgentCall(lambda:app.ModelActionHandler(app.delegate).updateAllFeeds(), "Update all channels")
+        eventloop.addUrgentCall(app.controller.updateAllFeeds, "Update all channels")
 
     def tellAFriend_(self, sender):
         print "NOT IMPLEMENTED"

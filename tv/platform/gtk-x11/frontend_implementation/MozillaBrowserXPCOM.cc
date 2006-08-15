@@ -247,6 +247,7 @@ char* getContextMenu(void* domEvent)
     result = searchUpForElementWithAttribute(event, contextMenuString,
             getter_AddRefs(element));
     if(NS_FAILED(result)) return NULL;
+    if(element == nsnull) return NULL;
     nsString value;
     result = element->GetAttribute(contextMenuString, value);
     if(NS_FAILED(result)) return NULL;

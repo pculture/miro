@@ -236,15 +236,15 @@ class PyBridge:
 
     @asUrgent
     def removeCurrentChannel(self):
-        app.ModelActionHandler(self.delegate).removeCurrentFeed()
+        app.controller.removeCurrentFeed()
 
     @asUrgent
     def updateCurrentChannel(self):
-        app.ModelActionHandler(self.delegate).updateCurrentFeed()
+        app.controller.updateCurrentFeed()
 
     @asUrgent
     def updateChannels(self):
-        app.ModelActionHandler(self.delegate).updateAllFeeds()
+        app.controller.updateAllFeeds()
 
     @asUrgent
     def showHelp(self):
@@ -252,7 +252,7 @@ class PyBridge:
 
     @asUrgent
     def copyChannelLink(self):
-        app.ModelActionHandler(self.delegate).copyCurrentFeedURL()
+        app.controller.copyCurrentFeedURL()
 
     @asUrgent
     def handleSimpleDialog(self, id, buttonIndex):

@@ -256,16 +256,16 @@ class CallbackHandler(object):
             self.mainFrame.setFullscreen(True)
 
     def on_remove_channel_activate(self, event = None):
-        eventloop.addIdle (lambda:app.ModelActionHandler(frontend.UIBackendDelegate()).removeCurrentFeed(), "Remove Channel")
+        eventloop.addIdle (app.controller.removeCurrentFeed, "Remove Channel")
 
     def on_update_channel_activate(self, event = None):
-        eventloop.addIdle (lambda:app.ModelActionHandler(frontend.UIBackendDelegate()).updateCurrentFeed(), "Update Channel")
+        eventloop.addIdle (app.controller.updateCurrentFeed, "Update Channel")
 
     def on_update_all_channels_activate(self, event = None):
-        eventloop.addIdle (lambda:app.ModelActionHandler(frontend.UIBackendDelegate()).updateAllFeeds(), "Update All Channels")
+        eventloop.addIdle (app.controller.updateAllFeeds, "Update All Channels")
 
     def on_copy_channel_link_activate(self, event = None):
-        eventloop.addIdle (lambda:app.ModelActionHandler(frontend.UIBackendDelegate()).copyCurrentFeedURL(), "Copy feed URL")
+        eventloop.addIdle (app.controller.copyCurrentFeedURL, "Copy feed URL")
 
     def on_add_channel_button_clicked(self, event = None):
         eventloop.addIdle(lambda:app.controller.addAndSelectFeed(), "Add Channel")
@@ -274,7 +274,7 @@ class CallbackHandler(object):
         eventloop.addIdle(lambda:app.controller.addAndSelectGuide(), "Add Guide")
 
     def on_remove_guide_activate(self, event = None):
-        eventloop.addIdle (lambda:app.ModelActionHandler(frontend.UIBackendDelegate()).removeCurrentGuide(), "Remove Guide")
+        eventloop.addIdle (app.controller.removeCurrentGuide, "Remove Guide")
 
     def on_preference(self, event = None):
         # get our add channel dialog

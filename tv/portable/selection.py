@@ -275,9 +275,9 @@ class SelectionHandler(object):
             tab = self.tabListSelection.currentView.getObjectByID(id)
             tab.setActive(value)
 
-    def getDraggedIDs(self, area, sourceID):
-        """Get a set of ids that the user dragged in a drag-and-drop
-        operation.  If sourceID is in the current selection, this will all the
+    def calcSelection(self, area, sourceID):
+        """Calculate the selection, given the ID of an object that was clicked
+        on.  If sourceID is in the current selection, this will all the
         objects in the current selection, otherwise it will be only the object
         that corresponds to sourceID.  
         """

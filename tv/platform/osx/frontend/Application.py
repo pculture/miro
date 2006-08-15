@@ -240,7 +240,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         eventloop.addIdle(lambda:app.controller.addAndSelectGuide(), "Add Guide")
 
     def removeGuide_(self, sender):
-        eventloop.addIdle(lambda:app.ModelActionHandler(app.delegate).removeCurrentGuide(), "Remove Guide")
+        eventloop.addIdle(app.controller.removeCurrentGuide, "Remove Guide")
 
     def openFile_(self, sender):
         openPanel = NSOpenPanel.openPanel()

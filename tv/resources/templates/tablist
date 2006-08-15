@@ -49,12 +49,12 @@ playlistTabs = kargs['playlistTabOrder'].getView()
 	selectID="***this.objID()***" selectViewName="feedTabs"
 	onclick="return handleSelect('tablist', event)" >
 	  <span t:showIf="this.isFeed()">
-	    <span t:contextMenu="action:updateFeed?feed=@@@this.objID()@@@|Update Channel Now\naction:copyFeedURL?feed=@@@this.objID()@@@|Copy URL to clipboard\n\naction:remove?id=@@@this.objID()@@@|Remove">
+	    <span t:contextMenu="action:updateFeed?feed=@@@this.objID()@@@|Update Channel Now\naction:copyFeedURL?feed=@@@this.objID()@@@|Copy URL to clipboard\n\naction:remove?area=tablist&amp;id=@@@this.objID()@@@|Remove">
 	      <t:includeTemplate filename="feedtab" />
 	    </span>
 	  </span>
 	  <span t:showIf="this.isChannelFolder()">
-	    <span t:contextMenu="action:rename?id=@@@this.objID()@@@|Rename Channel Folder\n\naction:remove?id=@@@this.objID()@@@|Remove">
+	    <span t:contextMenu="action:rename?id=@@@this.objID()@@@|Rename Channel Folder\n\naction:remove?area=tablist&amp;id=@@@this.objID()@@@|Remove">
 	      <t:includeTemplate filename="channelfoldertab" />
 	    </span>
 	  </span>
@@ -69,12 +69,12 @@ playlistTabs = kargs['playlistTabOrder'].getView()
 	selectID="***this.objID()***" selectViewName="playlistTabs"
 	onclick="return handleSelect('tablist', event);" >
 	  <span t:showIf="this.isPlaylist()">
-	    <span t:contextMenu="action:rename?id=@@@this.objID()@@@|Rename Playlist\n\naction:remove?id=@@@this.objID()@@@|Remove">
+	    <span t:contextMenu="action:rename?id=@@@this.objID()@@@|Rename Playlist\n\naction:remove?area=tablist&amp;id=@@@this.objID()@@@|Remove">
 	      <t:includeTemplate filename="playlisttab" />
 	    </span>
 	  </span>
 	  <span t:showIf="this.isPlaylistFolder()">
-	    <span t:contextMenu="action:rename?id=@@@this.objID()@@@|Rename Playlist Folder\n\naction:remove?id=@@@this.objID()@@@|Remove">
+	    <span t:contextMenu="action:rename?id=@@@this.objID()@@@|Rename Playlist Folder\n\naction:remove?area=tablist&amp;id=@@@this.objID()@@@|Remove">
               <t:includeTemplate filename="playlistfoldertab" />
 	    </span>
 	  </span>
