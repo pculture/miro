@@ -4,6 +4,7 @@ import threading
 import httpclient
 from fasttypes import LinkedList
 from eventloop import asIdle, addIdle, addTimeout
+from download_utils import nextFreeFilename, shortenFilename
 import config
 import prefs
 import time
@@ -79,27 +80,6 @@ class IconCache:
         except:
             pass
 
-    ##
-    # Finds a filename that's unused and similar the the file we want
-    # to download
-    def nextFreeFilename(self, name):
-        if not os.access(name,os.F_OK):
-            return name
-        parts = name.split('.')
-        count = 1
-        if len(parts) == 1:
-            newname = "%s.%s" % (name, count)
-            while os.access(newname,os.F_OK):
-                count += 1
-                newname = "%s.%s" % (name, count)
-        else:
-            parts[-1:-1] = [str(count)]
-            newname = '.'.join(parts)
-            while os.access(newname,os.F_OK):
-                count += 1
-                parts[-2] = str(count)
-                newname = '.'.join(parts)
-        return newname
 
     def errorCallback(self, url, error = None):
         self.dbItem.confirmDBThread()
@@ -164,7 +144,8 @@ class IconCache:
                 else:
                     tmp_filename = os.path.join(cachedir, info["filename"]) + ".part"
 
-                tmp_filename = self.nextFreeFilename (tmp_filename)
+                tmp_filename = shortenFilename (tmp_filename)
+                tmp_filename = nextFreeFilename (tmp_filename)
                 output = file (tmp_filename, 'wb')
                 output.write(info["body"])
                 output.close()
@@ -177,7 +158,8 @@ class IconCache:
 
             if (self.filename == None):
                 self.filename = os.path.join(cachedir, info["filename"])
-                self.filename = self.nextFreeFilename (self.filename)
+                self.filename = shortenFilename (self.filename)
+                self.filename = nextFreeFilename (self.filename)
                 needsSave = True
             try:
                 os.remove (self.filename)

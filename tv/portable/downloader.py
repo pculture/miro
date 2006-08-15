@@ -7,7 +7,7 @@ import shutil
 
 from database import DDBObject, defaultDatabase
 from dl_daemon import daemon, command
-from download_utils import nextFreeFilename, parseURL
+from download_utils import nextFreeFilename, parseURL, shortenFilename
 from util import getTorrentInfoHash
 import app
 import config
@@ -233,6 +233,7 @@ URL was %s""" % self.url
             if os.path.exists(filename):
                 newfilename = os.path.join(directory,
                         shortFilename)
+                newfilename = shortenFilename(newfilename)
                 if newfilename == filename:
                     return
                 newfilename = nextFreeFilename(newfilename)

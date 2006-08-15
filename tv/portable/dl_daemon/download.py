@@ -9,7 +9,7 @@ from threading import RLock, Event, Thread
 import traceback
 from copy import copy
 
-from download_utils import cleanFilename, nextFreeFilename
+from download_utils import cleanFilename, nextFreeFilename, shortenFilename
 import httpclient
 
 import config
@@ -318,6 +318,7 @@ class BGDownloader:
         except:
             pass
         baseFilename = os.path.join(downloadDir, self.shortFilename+".part")
+        baseFilename = shortenFilename(baseFilename)
         self.filename = nextFreeFilename(baseFilename)
 
     def moveToMoviesDirectory(self):
@@ -330,6 +331,7 @@ class BGDownloader:
 
     def moveToDirectory (self, directory):
         newfilename = os.path.join(directory, self.shortFilename)
+        newfilename = shortenFilename(newfilename)
         if newfilename == self.filename:
             return
         newfilename = nextFreeFilename(newfilename)

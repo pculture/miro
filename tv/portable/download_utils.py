@@ -83,11 +83,23 @@ def nextFreeFilename(name):
             count += 1
             newname = "%s.%s" % (name, count)
     else:
-        insertPoint = len(parts)-1
-        parts[insertPoint:insertPoint] = [str(count)]
+        parts[-1:-1] = [str(count)]
         newname = '.'.join(parts)
         while access(newname,F_OK):
             count += 1
-            parts[insertPoint] = str(count)
+            parts[-2] = str(count)
             newname = '.'.join(parts)
     return newname
+
+def shortenFilename(name):
+    if len(name) < 200:
+        return name
+    (path, basename) = os.path.split(name)
+    split = basename.rsplit(".", 1)
+    if len(split[0]) > 100:
+        split[0] = split[0][:100]
+    if len(split[1]) > 100:
+        split[1] = split[1][:100]
+    basename = ".".join(split)
+    name = os.path.join (path, basename)
+    return name
