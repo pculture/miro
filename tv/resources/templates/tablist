@@ -29,7 +29,9 @@ playlistTabs = kargs['playlistTabOrder'].getView()
       <li t:repeatForView="guideTabs" 
 	class="***this.getState()***"
 	selectID="***this.objID()***" selectViewName="guideTabs"
-	selectArea='tablist' onclick="return handleSelect(event);" >
+	selectArea='tablist' 
+	onmousedown="return handleContextMenuSelect(event);" 
+	onclick="return handleSelect(event);" >
         <span t:hideIf="this.obj.getDefault()" t:contextMenu="action:copyFeedURL?feed=@@@this.objID()@@@|Copy URL to clipboard\n\naction:removeGuide?guide_id=@@@this.objID()@@@|Remove">
             <t:includeTemplate filename="guidetab" />
         </span>
@@ -40,14 +42,18 @@ playlistTabs = kargs['playlistTabOrder'].getView()
       <li t:repeatForView="staticTabs" 
 	class="***this.getState()***"
 	selectID="***this.objID()***" selectViewName="staticTabs"
-	selectArea='tablist' onclick="return handleSelect(event);" >
+	selectArea='tablist' 
+	onmousedown="return handleContextMenuSelect(event);" 
+	onclick="return handleSelect(event);" >
           <t:includeTemplate filename="statictab" />
       </li>
       <div class="tab-list-divider" />
       <li t:repeatForView="feedTabs" 
 	class="***this.getState()***"
 	selectID="***this.objID()***" selectViewName="feedTabs"
-	selectArea='tablist' onclick="return handleSelect(event)" >
+	selectArea='tablist' 
+	onmousedown="return handleContextMenuSelect(event);" 
+	onclick="return handleSelect(event)" >
 	  <span t:showIf="this.isFeed()">
 	    <span t:contextMenu="action:updateFeed?feed=@@@this.objID()@@@|Update Channel Now\naction:copyFeedURL?feed=@@@this.objID()@@@|Copy URL to clipboard\n\naction:remove?area=tablist&amp;id=@@@this.objID()@@@|Remove">
 	      <t:includeTemplate filename="feedtab" />
@@ -67,7 +73,9 @@ playlistTabs = kargs['playlistTabOrder'].getView()
       <li t:repeatForView="playlistTabs" 
 	class="***this.getState()***"
 	selectID="***this.objID()***" selectViewName="playlistTabs"
-	selectArea='tablist' onclick="return handleSelect(event);" >
+	selectArea='tablist' 
+	onmousedown="return handleContextMenuSelect(event);" 
+	onclick="return handleSelect(event);" >
 	  <span t:showIf="this.isPlaylist()">
 	    <span t:contextMenu="action:rename?id=@@@this.objID()@@@|Rename Playlist\n\naction:remove?area=tablist&amp;id=@@@this.objID()@@@|Remove">
 	      <t:includeTemplate filename="playlisttab" />

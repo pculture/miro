@@ -10,8 +10,6 @@
 #include <nsIDOMDocumentRange.h>
 #include <nsIDOMElement.h>
 #include <nsIDOMElementCSSInlineStyle.h>
-#include <nsIDOMEventTarget.h>
-#include <nsIDOMHTMLElement.h>
 #include <nsIDOMMouseEvent.h>
 #include <nsIDOMNSRange.h>
 #include <nsIDOMNodeList.h>
@@ -241,8 +239,7 @@ char* getContextMenu(void* domEvent)
     if(button != 2) return NULL;
     // Get the target of the event.  That's the element we will begin
     // searching for a context menu.
-    nsCOMPtr<nsIDOMEvent> event(do_QueryInterface(mouseEvent, &result));
-    if(NS_FAILED(result)) return NULL;
+    nsCOMPtr<nsIDOMEvent> event(mouseEvent);
 
     nsString contextMenuString = NS_ConvertUTF8toUTF16(
             nsDependentCString("t:contextMenu"));
@@ -260,52 +257,4 @@ char* getContextMenu(void* domEvent)
 void freeString(char* str)
 {
     nsMemory::Free(str);
-}
-
-void sendHandleSelect(GtkMozEmbed* gtkembed, void* domEvent)
-{
-    nsresult result;
-    nsIDOMMouseEvent *mouseEvent =  (nsIDOMMouseEvent*)domEvent;
-    nsCOMPtr<nsIDOMEvent> event(do_QueryInterface(mouseEvent, &result));
-    if (NS_FAILED(result)) return;
-    nsCOMPtr<nsIDOMElement> element;
-    nsString selectIDStr = NS_ConvertUTF8toUTF16(
-            nsDependentCString("selectID"));
-    result = searchUpForElementWithAttribute(event, selectIDStr,
-            getter_AddRefs(element));
-    if (NS_FAILED(result)) return;
-    nsCOMPtr<nsIDOMHTMLElement> htmlElt(do_QueryInterface(element, &result));
-    if (NS_FAILED(result)) return;
-    nsAutoString id;
-    result = element->GetAttribute(selectIDStr, id);
-    if (NS_FAILED(result)) return;
-    nsAutoString viewName;
-    nsString selectViewNameStr = NS_ConvertUTF8toUTF16(
-            nsDependentCString("selectViewName"));
-    result = element->GetAttribute(selectViewNameStr, viewName);
-    if (NS_FAILED(result)) return;
-    nsAutoString area;
-    nsString selectAreaStr = NS_ConvertUTF8toUTF16(
-            nsDependentCString("selectArea"));
-    result = element->GetAttribute(selectAreaStr, area);
-    if (NS_FAILED(result)) return;
-    PRBool ctrlKey, shiftKey;
-    result = mouseEvent->GetCtrlKey(&ctrlKey);
-    if (NS_FAILED(result)) return;
-    result = mouseEvent->GetShiftKey(&shiftKey);
-    if (NS_FAILED(result)) return;
-    nsCAutoString url;
-    url.Append("action:handleSelect?area=");
-    url.Append(NS_ConvertUTF16toUTF8(area));
-    url.Append("&viewName=");
-    url.Append(NS_ConvertUTF16toUTF8(viewName));
-    url.Append("&id=");
-    url.Append(NS_ConvertUTF16toUTF8(id));
-    url.Append("&shiftDown=");
-    if(shiftKey) url.Append("1");
-    else url.Append("0");
-    url.Append("&ctrlDown=");
-    if(ctrlKey) url.Append("1");
-    else url.Append("0");
-    gtk_moz_embed_load_url(gtkembed, PromiseFlatCString(url).get());
 }

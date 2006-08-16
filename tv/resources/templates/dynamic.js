@@ -204,6 +204,15 @@ function forceRedisplay(elt) {
     r.insertNode(frag);
 }
 
+// If we are going to popup a context menu, we should select the item that was
+// clicked
+function handleContextMenuSelect(event) {
+  if(event.button == 2 && getContextClickMenu(event.target)) {
+    handleSelect(event);
+  }
+  return true;
+}
+
 function handleSelect(event) {
     var id = event.currentTarget.getAttribute("selectID");
     var viewName = event.currentTarget.getAttribute("selectViewName");

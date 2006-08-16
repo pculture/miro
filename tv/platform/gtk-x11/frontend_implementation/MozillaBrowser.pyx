@@ -39,7 +39,6 @@ cdef extern from "MozillaBrowserXPCOM.h":
     nsresult showItem(GtkMozEmbed *gtkembed, char *id)
     nsresult hideItem(GtkMozEmbed *gtkembed, char *id)
     char* getContextMenu(void* domEvent)
-    void sendHandleSelect(GtkMozEmbed* gtkembed, void* domEvent)
     void freeString(char* str)
 
 cdef extern from "DragAndDrop.h":
@@ -206,7 +205,6 @@ cdef gint on_dom_mouse_down (GtkMozEmbed *embed, gpointer domEvent,
             PyErr_Print()
         else:
             Py_DECREF(callbackResult)
-        sendHandleSelect(embed, domEvent)
         Py_DECREF(self)
         PyGILState_Release(gil)
     return 0
