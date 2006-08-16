@@ -247,7 +247,11 @@ class SelectionHandler(object):
 
     def selectItem(self, area, view, id, shiftSelect, controlSelect):
         selection = self.getSelectionForArea(area)
-        selectedObj = view.getObjectByID(id)
+        try:
+            selectedObj = view.getObjectByID(id)
+        except database.ObjectNotFoundError:
+            # Item got deleted before the select went through.
+            return
 
         # ignore control and shift when selecting static tabs
         if isinstance(selectedObj, tabs.Tab) and selectedObj.isStatic():
