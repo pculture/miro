@@ -22,17 +22,31 @@ def _getScrapeFunctionFor(url):
 
 def _scrapeYouTubeURL(url):
     print "DTV: Scraping YouTube URL: %s" % url
+    videoIDPattern = re.compile('\?video_id=([^&]+)')
+    paramPattern = re.compile('&t=([^&?]+)')
     scrapedURL = None
     try:
-        components = urlparse.urlparse(url)
-        http = httplib.HTTPConnection(components[1])
-        http.request('GET', components[2])
-        response = http.getresponse()
-        if response.status == 303:
-            location = response.getheader('location')
-            videoID = re.compile('\?video_id=([^&]+)').search(location).group(1)
-            tParam = re.compile('&t=([^&]+)').search(location).group(1)
-            scrapedURL = "http://youtube.com/get_video.php?video_id=%s&t=%s" % (videoID, tParam)
+        status = 0
+        while status != 200:
+            components = list(urlparse.urlsplit(url))
+            http = httplib.HTTPConnection(components[1])
+            http.request('HEAD', "%s?%s" % (components[2], components[3]))
+            response = http.getresponse()
+            status = response.status
+            if status in (301, 302, 303, 307):
+                location = response.getheader('location')
+                if location.startswith('http://'):
+                    url = location
+                else:
+                    components[2] = location
+                    url = urlparse.urlunsplit(components)
+            elif status == 200:
+                videoID = videoIDPattern.search(url).group(1)
+                tParam = paramPattern.search(url).group(1)
+                scrapedURL = "http://youtube.com/get_video.php?video_id=%s&t=%s" % (videoID, tParam)
+            else:
+                print "DTV: WARNING, unsupported HTTP status code %d" % status
+                raise
     except:
         print "DTV: WARNING, unable to scrape YouTube URL: %s" % url
     return scrapedURL
