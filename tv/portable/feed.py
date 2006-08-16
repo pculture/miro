@@ -774,7 +774,7 @@ class Feed(DDBObject):
                 charset = None
             parser = xml.sax.make_parser()
             parser.setFeature(xml.sax.handler.feature_namespaces, 1)
-            handler = RSSLinkGrabber(info['redirected-url'],charset)
+            handler = RSSLinkGrabber(info['redirected-url'],charset, parser=parser)
             parser.setContentHandler(handler)
             try:
                 parser.parse(StringIO(xmldata))
@@ -1392,9 +1392,9 @@ class ScraperFeedImpl(FeedImpl):
             parser = xml.sax.make_parser()
             parser.setFeature(xml.sax.handler.feature_namespaces, 1)
             if charset is not None:
-                handler = RSSLinkGrabber(baseurl,charset)
+                handler = RSSLinkGrabber(baseurl,charset, parser=parser)
             else:
-                handler = RSSLinkGrabber(baseurl)
+                handler = RSSLinkGrabber(baseurl, parser=parser)
             parser.setContentHandler(handler)
             try:
                 parser.parse(StringIO(xmldata))
@@ -1669,9 +1669,10 @@ class HTMLLinkGrabber(HTMLParser):
         return self.links
 
 class RSSLinkGrabber(xml.sax.handler.ContentHandler):
-    def __init__(self,baseurl,charset=None):
+    def __init__(self,baseurl,charset=None, parser=None):
         self.baseurl = baseurl
         self.charset = charset
+        self.parser = parser
     def startDocument(self):
         #print "Got start document"
         self.enclosureCount = 0
@@ -1685,6 +1686,10 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler):
         self.theLink = ''
         self.title = None
         self.firstTag = True
+        try:
+            self.parser._parser.StartDoctypeDeclHandler = self.startDoctypeDecl
+        except:
+            pass
 
     def startElementNS(self, name, qname, attrs):
         uri = name[0]
@@ -1706,6 +1711,20 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler):
             self.inItem = True
         elif tag.lower() == 'title' and not self.inItem:
             self.inTitle = True
+    def startDoctypeDecl(self, doctypeName, systemId, publicId, has_internal_subset):
+        try:
+            if "rss" in doctypeName.lower(): return
+        except:
+            pass
+        try:
+            if "rss" in systemId.lower(): return
+        except:
+            pass
+        try:
+            if "rss" in publicId.lower(): return
+        except:
+            pass
+        raise xml.sax.SAXNotRecognizedException, "Not an RSS file"
     def endElementNS(self, name, qname):
         uri = name[0]
         tag = name[1]
