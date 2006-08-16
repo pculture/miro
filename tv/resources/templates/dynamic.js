@@ -204,9 +204,10 @@ function forceRedisplay(elt) {
     r.insertNode(frag);
 }
 
-function handleSelect(area, event) {
+function handleSelect(event) {
     var id = event.currentTarget.getAttribute("selectID");
     var viewName = event.currentTarget.getAttribute("selectViewName");
+    var area = event.currentTarget.getAttribute("selectArea");
     var shiftKey = '0';
     var ctrlKey = '0';
     if(event.shiftKey) shiftKey = '1';

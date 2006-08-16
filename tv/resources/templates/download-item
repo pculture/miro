@@ -23,7 +23,7 @@ viewName = kargs['viewName']
 	dragdestdata="playlistitem-***this.getID()***"
 	drageffectdownloadeditem="move"
 	selectID="***this.getID()***" selectViewName="@@@viewName@@@"
-	onclick="return handleSelect('itemlist', event)" >
+	selectArea='itemlist' onclick="return handleSelect(event);" >
     <div class="main-video-hitbox">
         <a t:showIf="this.getState() in ('new', 'not-downloaded', 'expired')"
             class="download-icon" href="#" 

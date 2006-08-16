@@ -25,6 +25,11 @@ char* getContextMenu(void* domEvent);
  * it using freeString
  */
 void freeString(char* str);
+/*
+ * Send the handleSelect action URL for a domEvent that results in us showing
+ * a context menu.
+ */
+void sendHandleSelect(GtkMozEmbed* gtkembed, void* domEvent);
 #ifdef __cplusplus
 }
 #endif
