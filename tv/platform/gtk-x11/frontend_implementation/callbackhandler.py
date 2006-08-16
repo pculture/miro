@@ -165,7 +165,7 @@ class CallbackHandler(object):
 
     def on_video_time_scale_format_value(self, scale, seconds):
         videoLength = self.mainFrame.videoLength
-        if videoLength is None:
+        if videoLength is None or videoLength <= 0:
             return ""
         def formatTime(seconds):
             mins, secs = divmod(seconds, 60)
