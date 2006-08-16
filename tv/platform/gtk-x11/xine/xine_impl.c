@@ -15,10 +15,22 @@
 #include <string.h>
 #include "xine_impl.h"
 
+static void initX(void)
+{
+    static int xinited = 0;
+    if (! xinited)
+        if (!XInitThreads ())
+	    printf("Can't initialize X threads.  We will probably crash soon.\n");
+    xinited = 1;
+}
+
 _Xine* xineCreate(xine_event_listener_cb_t event_callback, 
         void* event_callback_data)
 {
     _Xine* xine;
+
+    initX();
+
     xine = (_Xine*)malloc(sizeof(_Xine));
     if(xine == NULL) return NULL;
     xine->xine = xine_new();
@@ -102,9 +114,6 @@ void xineAttach(_Xine* xine, const char* displayName, Drawable d)
     /* Store drawable info in the */
     xine->drawable = d;
 
-    if (!XInitThreads ()) {
-        printf("Can't initialize X threads.  We will probably crash soon.\n");
-    }
     xine->display = XOpenDisplay(displayName);
     xine->screen = XDefaultScreen(xine->display);
     screenWidth = (DisplayWidth(xine->display, xine->screen) * 1000 /
