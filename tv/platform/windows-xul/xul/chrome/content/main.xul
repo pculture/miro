@@ -132,12 +132,11 @@
 	<!-- CHANNEL BAR -->
   	<browser id="channelsDisplay" src="" type="content"
                  flex="0" width="200" minwidth="50" maxwidth="400"
-                 context="contextPopup"
                  ondraggesture="return onDragGesture(event, 'channelsDisplay');"
                  ondragover="return onDragOver(event, 'channelsDisplay');"
                  ondragexit="return onDragExit(event, 'channelsDisplay');"
                  ondragdrop="return onDragDrop(event, 'channelsDisplay');"
-                 oncontextmenu="return xulcontexthandler('channelsDisplay', event);" />
+                 onmousedown="return xulcontexthandler('channelsDisplay', event);" />
 	<!-- / CHANNEL BAR -->
 	
   <!-- DIVIDER -->
@@ -145,17 +144,16 @@
 	<!-- / DIVIDER -->
 
         <browser id="mainDisplay" src="" type="content" flex="1"
-             context="contextPopup"
              ondraggesture="return onDragGesture(event, 'mainDisplay');"
              ondragover="return onDragOver(event, 'mainDisplay');"
              ondragexit="return onDragExit(event, 'mainDisplay');"
              ondragdrop="return onDragDrop(event, 'mainDisplay');"
-             oncontextmenu="return xulcontexthandler('mainDisplay', event);" />
+             onmousedown="return xulcontexthandler('mainDisplay', event);" />
         <vbox id="video-box" flex="1" collapsed="true">
             <browser flex="1" id="mainDisplayVideo" 
                 src="chrome://dtv/content/video-display-vlc.html" 
-                type="content" context="contextPopup"
-                oncontextmenu="return xulcontexthandler('mainDisplayVideo', event);" />
+                type="content" 
+                onmousedown="return xulcontexthandler('mainDisplayVideo', event);" />
             <browser id="videoInfoDisplay" src="" type="content"
                     height="40px"/>
         </vbox>

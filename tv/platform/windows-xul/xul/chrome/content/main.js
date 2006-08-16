@@ -285,7 +285,7 @@ function searchUpForElementWithAttribute(element, attributeName) {
 
 // FIXME: Duplicated from dynamic.js
 function getContextClickMenu(element) {
-    var elt = searchUpForElementWithAttribute('t:contextMenu');
+    var elt = searchUpForElementWithAttribute(element, 't:contextMenu');
     if(elt) {
       var ret = elt.getAttribute('t:contextMenu');
       ret = ret.replace(/\\n/g,"\n");
@@ -297,6 +297,7 @@ function getContextClickMenu(element) {
 }
 
 function xulcontexthandler(browserID, event) {
+  if(event.button != 2) return true;
   var itemsAdded = 0;
   var menu = getContextClickMenu(event.target);
   var popup = document.getElementById('contextPopup');
@@ -326,6 +327,8 @@ function xulcontexthandler(browserID, event) {
     popup.hidePopup();
     return false;
   } else {
+    popup.showPopup(document.documentElement, event.screenX, event.screenY, 
+                    "popup", null, null);
     return true;
   }
 }
