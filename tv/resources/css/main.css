@@ -119,6 +119,9 @@ li {
 }
 
 .main-titlebar-tasks-search {
+    position: absolute;
+    left: 0px;
+    top: 40px;
     width: 115px; 
     border: 1px solid #5392e3;
     padding: 2px;
@@ -130,6 +133,18 @@ li {
     text-align: center;
     margin: 15px 0px;
     padding: 0px;
+}
+
+#main-titlebar-tasks.big-search {
+    width:100%; 
+    text-align:center;
+}
+
+#main-titlebar-tasks.big-search .main-titlebar-tasks-search {
+    position: static;
+    margin: 35px 55px 0px 0px;
+    width: 200px;
+    font-size: 120%;
 }
 
 div.scraping-indicator {

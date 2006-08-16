@@ -56,8 +56,10 @@ allExternalDownloads.unlink()
 	<div id="main-titlebar-channelname">
 		<h1 i18n:translate="">Active Downloads</h1>
 	</div>
-	<div id="main-titlebar-tasks">
-		<div id="main-titlebar-tasks-search" style="margin-top:38px;"><input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search" onfocus="startEditSearch(this)" onblur="endEditSearch()" /></div>
+	<div id="main-titlebar-tasks" class="big-search">
+		<div id="main-titlebar-tasks-search">
+		<input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search"  onfocus="startEditSearch(this, null)" onblur="endEditSearch()" />
+		</div>
 	</div>
 </div>
 <!-- / TITLE BAR -->

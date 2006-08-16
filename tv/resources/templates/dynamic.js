@@ -73,11 +73,13 @@ function playViewNamed(viewName, firstItemId) {
 var editSearchField = null;
 var editSearchOldValue = '';
 var editSearchTimer = null;
+var editSearchCallback = null;
 
-function startEditSearch(obj) {
+function startEditSearch(obj, callback) {
   editSearchOldValue = obj.value;
 
   editSearchField = obj;
+  editSearchCallback = callback;
   editSearchTimerTick();
 }
 
@@ -87,6 +89,7 @@ function editSearchUpdate() {
 	url = 'action:setSearchString?searchString=' + URLencode(value);
 	eventURL(url);
 	editSearchOldValue = value;
+	if(editSearchCallback) editSearchCallback();
     }
 }
 

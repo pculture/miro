@@ -33,7 +33,7 @@ def updateSearchString(newSearch):
         </div>
         <div id="main-titlebar-tasks">
                 <div id="main-titlebar-tasks-search">
-                    <input type="search" placeholder="Search Playlist" class="main-titlebar-tasks-search" onfocus="startEditSearch(this)" onblur="endEditSearch()" />
+                    <input type="search" placeholder="Search Playlist" class="main-titlebar-tasks-search" onfocus="startEditSearch(this, null)" onblur="endEditSearch()" />
                 </div>
         </div>
 </div>

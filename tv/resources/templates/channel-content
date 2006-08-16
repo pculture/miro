@@ -58,7 +58,7 @@
     </span>
     <div t:hideIf="oldItems.len()==0" t:updateHideOnView="oldItems">
         <div id="show-more-videos-label" style="display: @@@showMoreVideosDisplay@@@;">
-                            <a href="javascript:toggleLayer('main-newlyavailable-seen');toggleLayer('show-more-videos-label');toggleLayer('main-channelbar-available');" class="main-notification-nonew">
+                            <a href="javascript:showAllVideos();" class="main-notification-nonew">
                             <div class="main-notification"><span i18n:translate=""><span i18n:name="count" t:replace="oldItems.len()" class="video-count"/> Videos on this Channel</span> &gt;&gt;</div>
                             <div class="main-notification-right">&nbsp;</div>
                             <br clear="left" />
