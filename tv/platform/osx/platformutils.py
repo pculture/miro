@@ -1,4 +1,6 @@
 import threading
+
+from objc import NO
 import Foundation
 
 import config
@@ -81,7 +83,7 @@ callEvent = threading.Event()
 callResult = None
 
 def _call(args, delay=0.0, waitUntilDone=False, waitForResult=False):
-    if isOnMainThread():
+    if isOnMainThread() and delay == 0.0:
         (func, fargs, fkwargs) = args
         return func(*fargs, **fkwargs)
     else:
@@ -90,9 +92,9 @@ def _call(args, delay=0.0, waitUntilDone=False, waitForResult=False):
             if waitForResult:
                 return obj.performCallAndWaitReturn()
             elif delay == 0.0:
-                obj.performCall(waitUntilDone)
+                obj.performCall_(waitUntilDone)
             else:
-                obj.performCallLater(delay)
+                obj.performCallLater_(delay)
         finally:
             del obj
 
@@ -103,11 +105,12 @@ class CallerObject (Foundation.NSObject):
         self.args = args
         return self
         
-    def performCall(self, waitUntilDone):
+    def performCall_(self, waitUntilDone):
         self.performSelectorOnMainThread_withObject_waitUntilDone_(self.perform_, self.args, waitUntilDone)
 
-    def performCallLater(self, delay):
-        self.performSelector_withObject_afterDelay_(self.performCall, None, delay)
+    def performCallLater_(self, delay):
+        dontWait = Foundation.NSNumber.numberWithBool_(NO)
+        self.performSelector_withObject_afterDelay_(self.performCall_, dontWait, delay)
         
     def performCallAndWaitReturn(self):
         global callLock

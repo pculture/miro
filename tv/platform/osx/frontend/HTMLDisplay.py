@@ -130,7 +130,20 @@ class HTMLDisplay (app.Display):
 
 ###############################################################################
 
+class ManagedWebHTMLView (WebHTMLView):
+
+    def rightMouseDown_(self, event):
+        # We want a right click to also select what's underneath so we intercept
+        # the event here, force the left click handler first and reschedule the
+        # right click handler.
+        platformutils.callOnMainThread(self.mouseDown_, event)
+        platformutils.callOnMainThreadAfterDelay(0.2, WebHTMLView.rightMouseDown_, self, event)
+
+###############################################################################
+
 class ManagedWebView (NSObject):
+
+    WebView.registerViewClass_representationClass_forMIMEType_(ManagedWebHTMLView, WebHTMLRepresentation, 'text/html')
 
     def init(self, initialHTML, existingView=nil, onInitialLoadFinished=None, onLoadURL=None, sizeHint=None, baseURL=None):
         self.onInitialLoadFinished = onInitialLoadFinished
