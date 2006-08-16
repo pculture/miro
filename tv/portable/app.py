@@ -579,7 +579,10 @@ class Controller (frontend.Application):
             if gatheredVideos is not None and len(gatheredVideos) > 0:
                 singleclick.resetCommandLineView()
                 for v in gatheredVideos:
-                    singleclick.addVideo(v)
+                    try:
+                        singleclick.addVideo(v)
+                    except:
+                        print "DTV: WARNING, error while adding file %s" % v
 
             # Use an idle for parseCommandLineArgs because the frontend may
             # have put in idle calls to do set up video playback or similar
