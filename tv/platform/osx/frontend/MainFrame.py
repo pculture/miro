@@ -67,6 +67,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
         return self
 
     def awakeFromNib(self):
+        from VideoDisplay import VideoDisplayController
+        self.videoDisplayController = VideoDisplayController.getInstance()
         self.frame.channelsDisplay = self.channelsHostView
         self.frame.mainDisplay = self.mainHostView
         self.frame.videoInfoDisplay = self.videoInfoHostView
@@ -267,13 +269,13 @@ class MainController (NibClassBuilder.AutoBaseClass):
         print "NOT IMPLEMENTED"
 
     def playPause_(self, sender):
-        VideoDisplayController.getInstance().playPause_(sender)
+        self.videoDisplayController.playPause_(sender)
 
     def stopVideo_(self, sender):
-        VideoDisplayController.getInstance().stop_(sender)
+        self.videoDisplayController.stop_(sender)
 
     def playFullScreen_(self, sender):
-        VideoDisplayController.getInstance().playFullScreen_(sender)
+        self.videoDisplayController.playFullScreen_(sender)
 
     def playHalfScreen_(self, sender):
         pass
