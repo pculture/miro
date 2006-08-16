@@ -56,7 +56,8 @@ for feed in allFeeds:
 allItems.unlink()
 thisFolderView.unlink()
 for feed in allFeeds:
-    feed.markAsViewed()
+    if feed.idExists():
+        feed.markAsViewed()
 ]]>
     </t:execOnUnload>
 </head>

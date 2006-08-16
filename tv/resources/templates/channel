@@ -57,7 +57,8 @@ feed.updateIcons()
 # This should unlink matchingItems and all of it's children
 allItems.unlink()
 thisFeedView.unlink()
-feed.markAsViewed()
+if feed.idExists():
+    feed.markAsViewed()
 ]]>
     </t:execOnUnload>
 

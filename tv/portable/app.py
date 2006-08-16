@@ -642,7 +642,7 @@ class Controller (frontend.Application):
     def updateCurrentFeed(self):
         for tab in controller.selection.getSelectedTabs():
             if tab.isFeed():
-                self.updateFeed(tab.objID())
+                tab.obj.update()
 
     def updateAllFeeds(self):
         for f in views.feeds:

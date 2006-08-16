@@ -20,7 +20,7 @@
  </div>
 </div>
 
-<div t:showIf="this.obj.showU()" class="left-bubble green ***this.obj.showBothUAndA() and 'second' or ''***">
+<div t:showIf="this.obj.showU()" class="left-bubble green">
  <div class="right-bubble green">
   <div class="number-count green" t:replace="this.obj.numUnwatched()" />
  </div>

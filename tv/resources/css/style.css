@@ -216,10 +216,10 @@ a.feeditem div.name {
 a.feeditem.normal .feed-loading-icon {
 	background: url(../images/feed-loading-normal.gif) top left no-repeat;
 }
-a.feeditem.selected .feed-loading-icon {
+.selected a.feeditem .feed-loading-icon {
 	background: url(../images/feed-loading-selected.gif) top left no-repeat;
 }
-a.feeditem.selected-inactive .feed-loading-icon {
+.selected-inactive a.feeditem .feed-loading-icon {
 	background: url(../images/feed-loading-selected-inactive.gif) top left no-repeat;
 }
 
@@ -230,6 +230,7 @@ a.feeditem.selected-inactive .feed-loading-icon {
 	margin: 0px 8px 0px 8px;
 	padding: 2px 0px 3px 0px;
 	font-weight: normal;
+	background: left top repeat-x;
 }
 
 .left-bubble {
@@ -237,65 +238,61 @@ a.feeditem.selected-inactive .feed-loading-icon {
 	float: right;
 	position: relative;
 	z-index: 2;
+	background: left top no-repeat;
 }
 
-.left-bubble.second {
-	right: -7px;
+.right-bubble {
+	background: right top no-repeat;
 }
-
 
 .left-bubble.green {
-	background: url(../images/green_left.png) top left no-repeat;
+	background-image: url(../images/circle-green-left.png);
 }
 
 .right-bubble.green {
-	background: url(../images/green_right.png) top right no-repeat;
+	background-image: url(../images/circle-green-right.png);
 }
 
 .number-count.green {
-	background: #00B904;
-	margin-right: 7px; 
-	/* FIXME: Why is green_right a different size then all the other
-	* _right.png files?  */
-}
-
-.left-bubble.orange {
-    background: url(../images/orange_left.png) top left no-repeat;
-}
-
-.right-bubble.orange {
-    background: url(../images/orange_right.png) top right no-repeat;
-}
-
-.number-count.orange {
-    background: url(../images/orange_filler.png) repeat;
+	background-image: url(../images/circle-green-mid.png);
 }
 
 .left-bubble.blue {
-	background: url(../images/blue_left.png) top left no-repeat;
+	background-image: url(../images/circle-blue-left.png);
 }
 
 .right-bubble.blue {
-	background: url(../images/blue_right.png) top right no-repeat;
+	background-image: url(../images/circle-blue-right.png);
 }
 
 .number-count.blue {
-	background: #4081EC;
+	background-image: url(../images/circle-blue-mid.png);
 }
 
+.left-bubble.orange {
+	background-image: url(../images/circle-orange-left.png);
+}
+
+.right-bubble.orange {
+	background-image: url(../images/circle-orange-right.png);
+}
+
+.number-count.orange {
+	background-image: url(../images/circle-orange-mid.png);
+}
 /* Reverse the color scheme for blue bubbles when they are selected */
 
-a.feeditem.selected .left-bubble.blue {
-	background: url(../images/white_left.png) top left no-repeat;
+.selected a.feeditem .left-bubble.blue {
+	background-image: url(../images/circle-white-left.png);
 }
 
-a.feeditem.selected .right-bubble.blue {
-	background: url(../images/white_right.png) top right no-repeat;
+.selected a.feeditem .right-bubble.blue {
+	background-image: url(../images/circle-white-right.png);
 }
 
-a.feeditem.selected .number-count.blue {
+.selected a.feeditem .number-count.blue {
 	color: #4081EC;
-	background: #FFFFFF;
+	background-image: url(../images/circle-white-mid.png);
 }
 
 /*///////////////////////////////////////////////
