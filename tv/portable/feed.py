@@ -831,6 +831,8 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
                 dialogs.BUTTON_NO)
 
         def callback(dialog):
+            if not self.idExists():
+                return
             if dialog.choice == dialogs.BUTTON_YES:
                 impl = ScraperFeedImpl(info['updated-url'],
                     initialHTML=initialHTML, etag=info.get('etag'),

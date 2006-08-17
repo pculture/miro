@@ -347,7 +347,7 @@ folder will also be deleted.""")
                                      dialogs.BUTTON_DELETE_FILES,
                                      dialogs.BUTTON_CANCEL)
             def callback(dialog):
-                if dialog.choice == dialogs.BUTTON_DELETE_FILES:
+                if self.idExists() and dialog.choice == dialogs.BUTTON_DELETE_FILES:
                     self.executeExpire()
             d.run(callback)
         else:
@@ -1195,6 +1195,8 @@ Collection?""")
                 dialogs.BUTTON_REMOVE_ENTRY, button,
                 dialogs.BUTTON_CANCEL)
         def callback(dialog):
+            if not self.idExists():
+                return
             if dialog.choice == button:
                 self.deleteFiles()
             if dialog.choice in (button, dialogs.BUTTON_REMOVE_ENTRY):
@@ -1302,11 +1304,13 @@ any items inside that folder will also be removed or deleted.""")
     def callback(dialog):
         if dialog.choice == dialogs.BUTTON_DELETE_FILES:
             for item in items:
-                item.deleteFiles()
+                if item.idExists():
+                    item.deleteFiles()
         if dialog.choice in (dialogs.BUTTON_OK, dialogs.BUTTON_REMOVE_ENTRY,
                 dialogs.BUTTON_DELETE_FILES):
             for item in items:
-                item.executeExpire()
+                if item.idExists():
+                    item.executeExpire()
     d.run(callback)
 
 def isVideoEnclosure(enclosure):

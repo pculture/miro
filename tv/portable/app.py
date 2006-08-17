@@ -676,7 +676,7 @@ class Controller (frontend.Application):
         dialog = dialogs.ChoiceDialog(title, description, 
                 dialogs.BUTTON_YES, dialogs.BUTTON_NO)
         def dialogCallback(dialog):
-            if dialog.choice == dialogs.BUTTON_YES:
+            if guide.idExists() and dialog.choice == dialogs.BUTTON_YES:
                 guide.remove()
         dialog.run(dialogCallback)
 
@@ -695,7 +695,8 @@ class Controller (frontend.Application):
         def dialogCallback(dialog):
             if dialog.choice == dialogs.BUTTON_YES:
                 for playlist in playlists:
-                    playlist.remove()
+                    if playlist.idExists():
+                        playlist.remove()
         dialog.run(dialogCallback)
 
     def removeFeeds(self, feeds):
@@ -721,7 +722,8 @@ progress will be canceled.""") % len(feeds)
         def dialogCallback(dialog):
             if dialog.choice == dialogs.BUTTON_YES:
                 for feed in feeds:
-                    feed.remove()
+                    if feed.idExists():
+                        feed.remove()
         dialog.run(dialogCallback)
 
     def removeFeedsWithDownloads(self, feeds):
@@ -742,10 +744,12 @@ downloaded?""")
             if dialog.choice == dialogs.BUTTON_KEEP_VIDEOS:
                 manualFeed = getSingletonDDBObject(views.manualFeed)
                 for feed in feeds:
-                    feed.remove(moveItemsTo=manualFeed)
+                    if feed.idExists():
+                        feed.remove(moveItemsTo=manualFeed)
             elif dialog.choice == dialogs.BUTTON_DELETE_VIDEOS:
                 for feed in feeds:
-                    feed.remove()
+                    if feed.idExists():
+                        feed.remove()
         dialog.run(dialogCallback)
 
     def downloaderShutdown(self):
