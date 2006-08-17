@@ -50,6 +50,37 @@ def fillStaticTemplate(filename, platform, eventCookie, bodyTagExtra="", *args, 
     handle.unlinkTemplate()
     return tch.read()
 
+def queueDOMChange(func, name):
+    """Queue function that does a bunch of DOM updates to a display.
+
+    What happens is a little weird, we queue a call in the main gui thread
+    loop, then we queue a second call in the backend loop.  If that call does
+    any DOM updates like changeItems, addItemBefore, etc., those will almost
+    certainly be queued back into the main loop.
+
+    The rational for this is that if the main loop is busy it's better to wait
+    for it to be idle if we have a bunch of changes.  That way we can group
+    things together and have them happen all at once.  This may seem like it
+    adds a bunch of latency, but this doesn't seem to be the case,
+    addUrgentCall() happens quickly and if we are waiting on the gui thread,
+    that means we're doing some other kind of gui update.
+    """
+
+    import frontend
+    try:
+        frontend.inMainThread(lambda:eventloop.addUrgentCall(func, name))
+    except:
+        eventloop.addIdle(func, name)
+
+def queueSelectDisplay(frame, display, area):
+    """Queue a call to MainFrame.selectDisplay using queueDOMChange.  This is
+    useful if you want it to happen after template DOM updates (see
+    selection.py for an example).
+    """
+
+    queueDOMChange(lambda: frame.selectDisplay(display, area),
+            "Select display")
+
 class TemplateError(Exception):
     def __init__(self, message):
         self.message = message
@@ -129,11 +160,7 @@ class TrackedView:
 
     def addCallback(self):
         if not self.idle_queued:
-            import frontend
-            try:
-                frontend.inMainThread(lambda:eventloop.addIdle(self.callback, "Update UI"))
-            except:
-                eventloop.addIdle(self.callback, "Update UI")
+            queueDOMChange(self.callback, "Update UI")
             self.idle_queued = True
 
     def onChange(self,obj,id):
@@ -224,11 +251,7 @@ class UpdateRegion:
 
     def onChange(self,obj=None,id=None):
         if not self.idle_queued:
-            import frontend
-            try:
-                frontend.inMainThread(lambda:eventloop.addIdle(self.doChange, "Update UI"))
-            except:
-                eventloop.addIdle(self.doChange, "Update UI")
+            queueDOMChange(self.doChange, "Update UI")
             self.idle_queued = True
 
     def doChange(self):

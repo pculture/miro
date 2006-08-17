@@ -10,6 +10,7 @@ import tabs
 import playlist
 import feed
 import views
+import template
 
 def getID(obj):
     """Gets an ID to use for an object.  For tabs, this is the object ID that
@@ -377,7 +378,10 @@ class SelectionHandler(object):
         frame.onSelectedTabChange(selectionType,
                 len(self.tabListSelection.currentSelection) > 1,
                 guideURL)
-        frame.selectDisplay(newDisplay, frame.mainDisplay)
+        # do a queueSelectDisplay to make sure that the selectDisplay gets
+        # executed after our changes to the tablist template.  This makes tab
+        # selection feel faster because the selection changes quickly.
+        template.queueSelectDisplay(frame, newDisplay, frame.mainDisplay)
         self.lastDisplay = newDisplay
 
     def isTabSelected(self, tab):
