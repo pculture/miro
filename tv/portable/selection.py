@@ -175,6 +175,10 @@ class SelectionArea(object):
                 raise ValueError(msg)
         return type
 
+    def getObjects(self):
+        view = self.currentView
+        return [view.getObjectByID(id) for id in self.currentSelection]
+
 class TabSelectionArea(SelectionArea):
     """Selection area for the tablist.  This has a couple special cases to
     ensure that we always have at least one tab selected.
@@ -231,12 +235,15 @@ class SelectionHandler(object):
 
     tabListSelection -- SelectionArea for the tab list
     itemListSelection -- SelectionArea for the item list
+    tabListActive -- does the tabListSelection the have the "active"
+        selection?  In other words, is that the one that was clicked on last.
     """
 
     def __init__(self):
         self.tabListSelection = TabSelectionArea(self)
         self.itemListSelection = SelectionArea(self)
         self.lastDisplay = None
+        self.tabListActive = True
 
     def getSelectionForArea(self, area):
         if area == 'tablist':
@@ -273,6 +280,7 @@ class SelectionHandler(object):
             self.displayCurrentTabContent()
 
     def setTabListActive(self, value):
+        self.tabListActive = value
         for id in self.tabListSelection.currentSelection:
             tab = self.tabListSelection.currentView.getObjectByID(id)
             tab.setActive(value)
@@ -390,6 +398,9 @@ class SelectionHandler(object):
     def getSelectedTabs(self):
         """Return a list of the currently selected Tabs. """
 
-        view = self.tabListSelection.currentView
-        selection = self.tabListSelection.currentSelection
-        return [view.getObjectByID(id) for id in selection]
+        return self.tabListSelection.getObjects()
+
+    def getSelectedItems(self):
+        """Return a list of the currently selected items. """
+
+        return self.itemListSelection.getObjects()

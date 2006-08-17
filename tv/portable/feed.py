@@ -266,7 +266,7 @@ class FeedImpl:
 
     # Returns true iff available should be shown
     def showA(self):
-        return self.available > 0
+        return self.available > 0 and not self.isAutoDownloadable()
 
     ##
     # Sets the last time the feed was viewed to now

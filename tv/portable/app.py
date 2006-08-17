@@ -622,6 +622,21 @@ class Controller (frontend.Application):
         if len(tabs) == 1 and tabs[0].isFeed():
             delegate.copyTextToClipboard(tabs[0].obj.getURL())
 
+    def removeCurrentSelection(self):
+        if self.selection.tabListActive:
+            selection = self.selection.tabListSelection
+        else:
+            selection = self.selection.itemListSelection
+        type = selection.getType()
+        if type == 'channeltab':
+            self.removeCurrentFeed()
+        elif type == 'addedguidetab':
+            self.removeCurrentGuide()
+        elif type == 'playlisttab':
+            self.removeCurrentPlaylist()
+        elif type == 'item':
+            self.expireCurrentItems()
+
     def removeCurrentFeed(self):
         if self.selection.tabListSelection.getType() == 'channeltab':
             feeds = [t.obj for t in self.selection.getSelectedTabs()]
@@ -638,6 +653,10 @@ class Controller (frontend.Application):
         if self.selection.tabListSelection.getType() == 'playlisttab':
             playlists = [t.obj for t in self.selection.getSelectedTabs()]
             self.removePlaylists(playlists)
+
+    def expireCurrentItems(self):
+        if self.selection.itemListSelection.getType() == 'item':
+            item.expireItems(self.selection.getSelectedItems())
 
     def updateCurrentFeed(self):
         for tab in controller.selection.getSelectedTabs():

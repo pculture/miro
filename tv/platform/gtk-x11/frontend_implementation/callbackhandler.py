@@ -3,6 +3,7 @@
 import app
 import gobject
 import gtk
+import gtk.gdk
 import os
 import shutil
 import frontend
@@ -332,3 +333,8 @@ class CallbackHandler(object):
 
     def on_rename_activate(self, event=None):
         print "NOT IMPLEMENTED"
+
+    def on_key_press_event(self, widget, event):
+        if gtk.gdk.keyval_name(event.keyval) == 'Delete':
+            eventloop.addUrgentCall(app.controller.removeCurrentSelection, 
+                    "remove current selection")

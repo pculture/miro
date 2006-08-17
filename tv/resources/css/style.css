@@ -228,17 +228,22 @@ a.feeditem.normal .feed-loading-icon {
 	line-height: 13px;
 	color: #FFFFFF;
 	margin: 0px 8px 0px 8px;
-	padding: 2px 0px 3px 0px;
+	padding: 2px 0px 4px 0px;
 	font-weight: normal;
 	background: left top repeat-x;
 }
 
+
 .left-bubble {
-	margin: 1px 0px 0px 0px;
+	margin: 1px 0px 0px 5px;
 	float: right;
 	position: relative;
 	z-index: 2;
 	background: left top no-repeat;
+}
+
+.left-bubble.second {
+	margin-left: 0px;
 }
 
 .right-bubble {

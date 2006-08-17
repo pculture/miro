@@ -339,13 +339,15 @@ class Item(DDBObject):
     # Marks this item as expired
     def expire(self):
         if self.isContainerItem:
-            title = _("Removing %s") % (os.path.basename(self.getTitle()))
-            description = _("Deleting this entry will delete all its videos.")
+            title = _("Deleting %s") % (os.path.basename(self.getTitle()))
+            description = _("""\
+This item is a folder.  When you delete a folder, any items inside that \
+folder will also be deleted.""")
             d = dialogs.ChoiceDialog(title, description,
-                                     dialogs.BUTTON_DELETE_VIDEOS,
+                                     dialogs.BUTTON_DELETE_FILES,
                                      dialogs.BUTTON_CANCEL)
             def callback(dialog):
-                if dialog.choice == dialogs.BUTTON_DELETE_VIDEOS:
+                if dialog.choice == dialogs.BUTTON_DELETE_FILES:
                     self.executeExpire()
             d.run(callback)
         else:
@@ -1177,29 +1179,36 @@ class FileItem(Item):
     def expire(self):
         title = _("Removing %s") % (os.path.basename(self.filename))
         if self.isContainerItem:
-            description = _("Would you like to delete this directory and all of "
-                            "its videos or just remove its entry from My Collection?")
-            button = dialogs.BUTTON_DELETE_VIDEOS
+            description = _("""\
+Would you like to delete this folder and all of its videos or just remove \
+its entry from My Collection?""")
+            button = dialogs.BUTTON_DELETE_FILES
         else:
-            description = _("Would you like to delete this file or just remove "
-                            "its entry from My Collection?")
+            description = _("""\
+Would you like to delete this file or just remove its entry from My \
+Collection?""")
             button = dialogs.BUTTON_DELETE_FILE
         d = dialogs.ThreeChoiceDialog(title, description,
                 dialogs.BUTTON_REMOVE_ENTRY, button,
                 dialogs.BUTTON_CANCEL)
         def callback(dialog):
             if dialog.choice == button:
-                try:
-                    if os.path.isfile(self.filename):
-                        os.remove(self.filename)
-                    elif os.path.isdir(self.filename):
-                        shutil.rmtree(self.filename)
-                except:
-                    pass
+                self.deleteFiles()
             if dialog.choice in (button, dialogs.BUTTON_REMOVE_ENTRY):
                 self.executeExpire()
 
         d.run(callback)
+
+    def deleteFiles(self):
+        try:
+            if os.path.isfile(self.filename):
+                os.remove(self.filename)
+            elif os.path.isdir(self.filename):
+                shutil.rmtree(self.filename)
+        except:
+            import traceback
+            print "WARNING: error delete file"
+            traceback.print_exc()
 
     def getDownloadedTime(self):
         self.confirmDBThread()
@@ -1251,6 +1260,51 @@ filename was %s""" % self.filename
                     print "WARNING: %s is not a subdirectory of %s" % (self.filename, parent_file)
         Item.setupLinks(self)
 
+def expireItems(items):
+    if len(items) == 1:
+        return items[0].expire()
+
+    hasContainers = False
+    hasFileItems = False
+    for item in items:
+        if item.isContainerItem:
+            hasContainers = True
+        elif isinstance(item, FileItem):
+            hasFileItems = True
+        if hasContainers and hasFileItems:
+            break
+
+    title = _("Removing %s items") % len(items)
+    if hasFileItems:
+        description = _("""One or more of these videos was not downloaded \
+from a channel.  Would you like to delete these items or just remove their \
+entries from My Collection?""")
+    else:
+        description = "Are you sure you want to delete all %s videos?" % \
+                len(items)
+
+    if hasContainers:
+        description += "\n\n" + _("""\
+One or more of these items is a folder.  When you remove or delete a folder, \
+any items inside that folder will also be removed or deleted.""")
+
+    if hasFileItems:
+        d = dialogs.ThreeChoiceDialog(title, description,
+                dialogs.BUTTON_REMOVE_ENTRY, dialogs.BUTTON_DELETE_FILES,
+                dialogs.BUTTON_CANCEL)
+    else:
+        d = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_OK,
+                dialogs.BUTTON_CANCEL)
+
+    def callback(dialog):
+        if dialog.choice == dialogs.BUTTON_DELETE_FILES:
+            for item in items:
+                item.deleteFiles()
+        if dialog.choice in (dialogs.BUTTON_OK, dialogs.BUTTON_REMOVE_ENTRY,
+                dialogs.BUTTON_DELETE_FILES):
+            for item in items:
+                item.executeExpire()
+    d.run(callback)
 
 def isVideoEnclosure(enclosure):
     """

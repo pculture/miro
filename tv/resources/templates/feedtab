@@ -14,12 +14,11 @@
 	drageffectchannel="move"
 	drageffectchannelfolder="move">
 
-<div t:showIf="this.obj.showA() and not this.obj.isAutoDownloadable()" class="left-bubble blue">
+<div t:showIf="this.obj.showA()" class="left-bubble blue ***this.obj.showU() and 'second' or ''***">
  <div class="right-bubble blue">
   <div class="number-count blue" t:replace="this.obj.numAvailable()" />
  </div>
 </div>
-
 <div t:showIf="this.obj.showU()" class="left-bubble green">
  <div class="right-bubble green">
   <div class="number-count green" t:replace="this.obj.numUnwatched()" />
