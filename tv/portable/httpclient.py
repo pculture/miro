@@ -1329,6 +1329,7 @@ class HTTPClient(object):
             self.startRequest() 
             # this should give us a new connection, since our last one closed
         elif (isinstance(error, ServerClosedConnection) and
+                self.connection is not None and
                 self.connection.requestsFinished > 0 and 
                 self.connection.bytesRead == 0):
             # Connection closed when trying to reuse an http connection.  We
