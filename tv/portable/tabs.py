@@ -244,8 +244,7 @@ class TabOrder(database.DDBObject):
     def onAddTab(self, obj, id):
         if id not in self.trackedTabs:
             self.trackedTabs.appendID(id, sendSignalChange=False)
-        eventloop.addUrgentCall(obj.signalChange, "tab signal change", 
-                kwargs={'needsSave': False})
+            obj.signalChange(needsSave=False)
 
     def onRemoveTab(self, obj, id):
         if id in self.trackedTabs:

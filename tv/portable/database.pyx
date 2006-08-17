@@ -122,8 +122,8 @@ class IndexMap:
         """Add a new object to the IndexMap."""
 
         indexValue = self.indexFunc(value)
-        self.getViewForValue(indexValue).addBeforeCursor(newobject, value)
         self.mappings[newobject.getID()] = indexValue
+        self.getViewForValue(indexValue).addBeforeCursor(newobject, value)
 
     def removeObject(self, obj):
         """Remove an object from the IndexMap."""
@@ -132,7 +132,12 @@ class IndexMap:
 
     def _changeOrRecompute(self, obj, value, isChange):
         indexValue = self.indexFunc(value)
-        oldIndexValue = self.mappings[obj.getID()]
+        try:
+            oldIndexValue = self.mappings[obj.getID()]
+        except KeyError:
+            # This can happen when an object gets a signalChange() right
+            # before we've seen gotten addObject call.
+            return
         if indexValue == oldIndexValue:
             if isChange:
                 self.views[indexValue].changeObj(obj, needsSave=False)
@@ -197,9 +202,9 @@ class MultiIndexMap(IndexMap):
         """Add a new object to the IndexMap."""
 
         indexValues = set(self.indexFunc(value))
+        self.mappings[newobject.getID()] = indexValues
         for indexValue in indexValues:
             self.getViewForValue(indexValue).addBeforeCursor(newobject, value)
-        self.mappings[newobject.getID()] = indexValues
 
     def removeObject(self, obj):
         """Remove an object from the IndexMap."""
@@ -209,7 +214,10 @@ class MultiIndexMap(IndexMap):
 
     def _changeOrRecompute(self, obj, value, isChange):
         indexValues = set(self.indexFunc(value))
-        oldIndexValues = self.mappings[obj.getID()]
+        try:
+            oldIndexValues = self.mappings[obj.getID()]
+        except KeyError:
+            return
         for indexValue in (indexValues - oldIndexValues):
             self.getViewForValue(indexValue).addBeforeCursor(obj, value)
         for indexValue in (oldIndexValues - indexValues):
