@@ -78,8 +78,13 @@ def queueSelectDisplay(frame, display, area):
     selection.py for an example).
     """
 
-    queueDOMChange(lambda: frame.selectDisplay(display, area),
-            "Select display")
+    toSelect[area] = display
+    queueDOMChange(lambda: doSelectDisplay(frame, area), "Select display")
+
+toSelect = {}
+def doSelectDisplay(frame, area):
+    if area in toSelect:
+        frame.selectDisplay(toSelect.pop(area), area)
 
 class TemplateError(Exception):
     def __init__(self, message):
