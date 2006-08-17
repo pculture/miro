@@ -22,17 +22,17 @@ Would you like Democracy Player to look for video files on your computer?> (oid:
 /* NSButton (Next) : <title:Next> (oid:18) */
 "Next" = "Next";
 
-/* NSButtonCell (No) : <title:No> (oid:88) */
+/* NSButtonCell (No) : <title:No> (oid:87) */
 "No" = "No";
 
-/* NSButtonCell (Restrict to my 'Movies' folder) : <title:Restrict to my 'Movies' folder> (oid:73) */
-"Restrict to my 'Movies' folder" = "Restrict to my 'Movies' folder";
+/* NSButtonCell (Only search my Movies folder.) : <title:Only search my Movies folder.> (oid:73) */
+"Only search my Movies folder." = "Only search my Movies folder.";
 
-/* NSButtonCell (Restrict to my full home folder) : <title:Restrict to my full home folder> (oid:74) */
-"Restrict to my full home folder" = "Restrict to my full home folder";
+/* NSButtonCell (Search my entire Home folder.) : <title:Search my entire Home folder.> (oid:74) */
+"Search my entire Home folder." = "Search my entire Home folder.";
 
-/* NSButtonCell (Search custom location:) : <title:Search custom location:> (oid:75) */
-"Search custom location:" = "Search custom location:";
+/* NSButtonCell (Search this location:) : <title:Search this location:> (oid:75) */
+"Search this location:" = "Search this location:";
 
 /* NSTextField (Searching for Videos) : <title:Searching for Videos> (oid:57) */
 "Searching for Videos" = "Searching for Videos";
@@ -54,7 +54,7 @@ Would you like to run Democracy when your computer starts up?> (oid:83) */
 > (oid:22) */
 "Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n";
 
-/* NSButtonCell (Yes) : <title:Yes> (oid:87) */
+/* NSButtonCell (Yes) : <title:Yes> (oid:88) */
 "Yes" = "Yes";
 
 /* NSTextView : <title:You're done!
