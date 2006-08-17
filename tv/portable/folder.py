@@ -134,7 +134,7 @@ class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
         index = indexes.playlistsByItemAndFolderID
         value = (id, self.getID())
         view = views.playlists.filterWithIndex(index, value)
-        if view.len() == 0:
+        if view.len() == 0 and id in self.trackedItems:
             self.removeID(id)
 
     def renameTitle(self):
