@@ -157,7 +157,7 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
         dialogs.TextEntryDialog(title, description, dialogs.BUTTON_OK,
                 dialogs.BUTTON_CANCEL).run(callback)
 
-def createNewPlaylist():
+def createNewPlaylist(childIDs=None):
     """Start the new playlist creation process.  This should be called in
     response to the user clicking on the new playlist menu option.
     """
@@ -169,6 +169,8 @@ def createNewPlaylist():
         if dialog.choice == dialogs.BUTTON_CREATE:
             playlist = SavedPlaylist(dialog.value)
             app.controller.selection.selectTabByObject(playlist)
+            if childIDs:
+                playlist.handleDNDAppend(childIDs)
 
     dialogs.TextEntryDialog(title, description, dialogs.BUTTON_CREATE,
             dialogs.BUTTON_CANCEL).run(callback)

@@ -1123,6 +1123,29 @@ class ModelActionHandler:
     def removeCurrentPlaylist(self):
         controller.removeCurrentPlaylist()
 
+    def removeCurrentItems(self):
+        selected = controller.selection.getSelectedItems()
+        removable = [i for i in selected if i.isDownloaded() ]
+        if removable:
+            item.expireItems(removable)
+
+    def downloadCurrentItems(self):
+        selected = controller.selection.getSelectedItems()
+        downloadable = [i for i in selected if i.isDownloadable() ]
+        for item in downloadable:
+            item.download()
+
+    def stopDownloadingCurrentItems(self):
+        selected = controller.selection.getSelectedItems()
+        downloading = [i for i in selected if i.getState() == 'downloading']
+        for item in downloading:
+            item.expire()
+
+    def addToNewPlaylist(self):
+        selected = controller.selection.getSelectedItems()
+        childIds = [i.getID() for i in selected if i.isDownloaded()]
+        playlist.createNewPlaylist(childIDs)
+
     def mergeToFolder(self):
         tls = controller.selection.tabListSelection
         selectionType = tls.getType()

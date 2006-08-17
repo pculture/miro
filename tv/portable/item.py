@@ -711,6 +711,9 @@ folder will also be deleted.""")
     def getSaved(self):
         return self.keep or not self.getFeed().getExpires()
 
+    def isDownloadable(self):
+        return self.getState() in ('new', 'not-downloaded', 'expired')
+
     def isDownloaded(self):
         return self.getState() in ("newly-downloaded", "expiring", "saved")
 

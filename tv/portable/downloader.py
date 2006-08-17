@@ -103,6 +103,9 @@ class RemoteDownloader(DDBObject):
         DDBObject.signalChange (self, needsSave=needsSave)
 
     def onContentType (self, info):
+        if not self.idExists():
+            return
+
         if info['status'] == 200:
             self.url = info['updated-url']
             self.contentType = info.get('content-type',None)
@@ -111,6 +114,9 @@ class RemoteDownloader(DDBObject):
             self.onContentTypeError(info['reason'])
 
     def onContentTypeError (self, error):
+        if not self.idExists():
+            return
+
         self.status['state'] = "failed"
         self.status['reasonFailed'] = str(error)
         self.signalChange()

@@ -210,7 +210,8 @@ function forceRedisplay(elt) {
 // If we are going to popup a context menu, we should select the item that was
 // clicked
 function handleContextMenuSelect(event) {
-  if(event.button == 2 && getContextClickMenu(event.target)) {
+  if(event.button == 2 && getContextClickMenu(event.target) &&
+      event.currentTarget.className.indexOf("selected") == -1) {
     handleSelect(event);
   }
   return true;
