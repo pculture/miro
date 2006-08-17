@@ -398,10 +398,14 @@ class FeedImpl:
     # Sets the maxNew attributes. -1 means unlimited.
     def setMaxNew(self, maxNew):
         self.ufeed.confirmDBThread()
+        oldMaxNew = self.maxNew
         self.maxNew = maxNew
         self.ufeed.signalChange()
-        for item in self.items:
-            item.signalChange(needsSave=False)
+#        for item in self.items:
+#            item.signalChange(needsSave=False)
+        if self.maxNew >= oldMaxNew or self.maxNew < 0:
+            import autodler
+            autodler.autoDownloader.startDownloads()
 
     ##
     # Return the 'system' expiration delay, in days (can be < 1.0)
