@@ -18,7 +18,7 @@ import traceback
 import xml
 
 from database import defaultDatabase, DatabaseConstraintError
-from httpclient import grabURL, HTTPError
+from httpclient import grabURL, NetworkError
 from iconcache import iconCacheUpdater, IconCache
 from templatehelper import quoteattr, escape
 import app
@@ -708,10 +708,9 @@ class Feed(DDBObject):
         if self.informOnError:
             title = _('Error loading feed')
             description = _("Couldn't load the feed at %s.") % self.url
-            if isinstance(error, HTTPError):
+            if isinstance(error, NetworkError):
                 description += "\n\n"
-                description += _("The error was: %s") % \
-                        error.getFriendlyDescription()
+                description += error.getFriendlyDescription()
             else:
                 print "WARNING: unknown error in _generateFeedErrback (%s)" \
                         % error

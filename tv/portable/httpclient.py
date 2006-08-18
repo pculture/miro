@@ -38,48 +38,80 @@ SOCKET_INITIAL_READ_TIMEOUT = 30
 # This pattern matches all possible strings.  I promise.
 URIPattern = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
 
-class NotReadyToSendError(Exception):
-    pass
-class ConnectionError(Exception):
-    pass
-class HTTPError(Exception):
-    def __init__(self, description=None):
-        self.description = description
-    def __str__(self):
-        if self.description is not None:
-            return "%s: %s" % (self.__class__, self.description)
-        else:
-            return str(self.__class__)
+class NetworkError(Exception):
+    """Base class for all errors that will be passed to errbacks from getURL
+    and friends.  NetworkErrors can be display in 2 ways:
+
+    getFriendlyDescription() -- short, newbie friendly description 
+    getLongDescription() -- detailed description
+    """
+
+    def __init__(self, shortDescription, longDescription=None):
+        if longDescription is None:
+            longDescription = shortDescription
+        self.friendlyDescription = _("Error: %s") % shortDescription
+        self.longDescription = longDescription
+
     def getFriendlyDescription(self):
-        return "HTTP Error"
+        return self.friendlyDescription
+
+    def getLongDescription(self):
+        return self.longDescription
+
+    def __str__(self):
+        return "%s: %s -- %s" % (self.__class__,
+                self.getFriendlyDescription(), self.getLongDescription())
+
+class ConnectionError(NetworkError):
+    friendlyDescription = _("Can't connect")
+    def __init__(self, errorMessage):
+        self.longDescription = _("Connection Error: %s") % errorMessage
+
+class SSLConnectionError(ConnectionError):
+    def __init__(self):
+        self.longDescription = _("SSL connection error")
+
+class HTTPError(NetworkError):
+    def __init__(self, longDescription):
+        NetworkError.__init__(self, _("HTTP error"), longDescription)
 class BadStatusLine(HTTPError):
-    pass
+    def __init__(self, line):
+        HTTPError.__init__(self, _("Bad Status Line: %s" % line))
 class BadHeaderLine(HTTPError):
-    pass
-class UnexpectedStatusCode(HTTPError):
-    pass
+    def __init__(self, line):
+        HTTPError.__init__(self, _("Bad Header Line: %s" % line))
+class BadChunkSize(HTTPError):
+    def __init__(self, line):
+        HTTPError.__init__(self, _("Bad Chunk size: %s" % line))
+class CRLFExpected(HTTPError):
+    def __init__(self, crlf):
+        HTTPError.__init__(self, _("Expected CRLF got: %r" % crlf))
 class ServerClosedConnection(HTTPError):
     def __init__(self, host):
-        self.host = self.description = host
-    def getFriendlyDescription(self):
-        return _('%s closed connection') % self.host
-class ConnectionTimeout(HTTPError):
+        HTTPError.__init__(self, _('%s closed connection') % host)
+
+class UnexpectedStatusCode(HTTPError):
+    def __init__(self, code):
+        if code == 404:
+            self.friendlyDescription = _("File not found")
+            self.longDescription = _("Got 404 status code")
+        else:
+            HTTPError.__init__(self, _("Bad Status Code: %s" % code))
+
+class AuthorizationFailed(NetworkError):
+    def __init__(self):
+        NetworkError.__init__(self, _("Authorization failed"))
+
+class PipelinedRequestNeverStarted(NetworkError):
+    # User should never see this one
+    def __init__(self):
+        NetworkError.__init__(self, _("Internal Error"),
+                _("Pipeline request never started"))
+
+class ConnectionTimeout(NetworkError):
     def __init__(self, host):
-        self.host = self.description = host
-    def getFriendlyDescription(self):
-        return _('%s timed out') % self.host
-class BadChunkSize(HTTPError):
-    pass
-class CRLFExpected(HTTPError):
-    pass
-class PipelinedRequestNeverStarted(HTTPError):
-    pass
-class BadRedirect(HTTPError):
-    pass
-class AuthorizationFailed(HTTPError):
-    pass
-class RequestCanceledError(HTTPError):
-    pass
+        NetworkError.__init__(self, _('Timeout'),
+                _('Connection to %s timed out') % host)
 
 def trapCall(object, function, *args, **kwargs):
     """Convenience function do a util.trapCall, where when = 'While talking to
@@ -210,16 +242,18 @@ class AsyncSocket(object):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.setblocking(0)
         self.connectionErrback = errback
+        def handleGetHostByNameException(e):
+            trapCall(self, errback, ConnectionError(e[1]))
         def onAddressLookup(address):
             if self.socket is None:
                 # the connection was closed while we were calling gethostbyname
                 return
-            try:
-                self.socket.connect_ex((address, port))
-            except Exception, e:
-                trapCall(self, errback, e)
-            else:
+            rv = self.socket.connect_ex((address, port))
+            if rv in (0, errno.EINPROGRESS):
                 eventloop.addWriteCallback(self.socket, onWriteReady)
+            else:
+                msg = errno.errorcode[rv]
+                trapCall(self, errback, ConnectionError(msg))
         def onWriteReady():
             eventloop.removeWriteCallback(self.socket)
             rv = self.socket.getsockopt(socket.SOL_SOCKET, socket.SO_ERROR)
@@ -227,10 +261,9 @@ class AsyncSocket(object):
                 trapCall(self, callback, self)
             else:
                 msg = errno.errorcode[rv]
-                trapCall(self, errback, ConnectionError((rv, msg)))
+                trapCall(self, errback, ConnectionError(msg))
             self.connectionErrback = None
-
-        eventloop.callInThread(onAddressLookup, errback,
+        eventloop.callInThread(onAddressLookup, handleGetHostByNameException,
                 socket.gethostbyname, host)
 
     def acceptConnection(self, host, port, callback, errback):
@@ -255,7 +288,7 @@ class AsyncSocket(object):
             self.socket.close()
             self.socket = None
             if self.connectionErrback is not None:
-                error = ConnectionError("Connection closed")
+                error = NetworkError(_("Connection closed"))
                 trapCall(self, self.connectionErrback, error)
                 self.connectionErrback = None
 
@@ -368,7 +401,7 @@ class AsyncSSLStream(AsyncSocket):
     def openConnection(self, host, port, callback, errback):
         def onSocketOpen(self):
             self.socket.setblocking(1)
-            eventloop.callInThread(onSSLOpen, errback, socket.ssl,
+            eventloop.callInThread(onSSLOpen, handleSSLError, socket.ssl,
                     self.socket)
         def onSSLOpen(ssl):
             if self.socket is None:
@@ -378,6 +411,8 @@ class AsyncSSLStream(AsyncSocket):
             self.ssl = ssl
             # finally we can call the actuall callback
             callback(self)
+        def handleSSLError(error):
+            errback(SSLConnectionError())
         super(AsyncSSLStream, self).openConnection(host, port, onSocketOpen,
                 errback)
 
@@ -608,7 +643,8 @@ class HTTPConnection(ConnectionHandler):
         """
 
         if not self.canSendRequest():
-            raise NotReadyToSendError()
+            raise NetworkError(_("Unknown"), 
+                    _("Internal Error: Not ready to send"))
 
         if headers is None:
             headers = {}
@@ -1268,8 +1304,6 @@ class HTTPClient(object):
             scheme, host, port, path = parseURL(self.redirectedURL)
             def callback(authHeader):
                 if self.cancelled:
-                    error = RequestCanceledError()
-                    self.errback(error)
                     return
                 if authHeader is not None:
                     self.headers["Authorization"] = authHeader

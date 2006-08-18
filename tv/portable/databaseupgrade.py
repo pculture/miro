@@ -215,6 +215,17 @@ def upgrade17(objectList):
             changed.add(o)
     return changed
 
+def upgrade18(objectList):
+    """Add shortReasonFailed to RemoteDownloader status dicts. """
+
+    changed = set()
+    for o in objectList:
+        if o.classString == 'remote-downloader':
+            o.savedData['status']['shortReasonFailed'] = \
+                    o.savedData['status']['reasonFailed']
+            changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

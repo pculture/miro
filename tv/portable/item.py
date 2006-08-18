@@ -724,7 +724,7 @@ folder will also be deleted.""")
     def getFailureReason(self):
         self.confirmDBThread()
         if self.downloader is not None:
-            return self.downloader.getReasonFailed()
+            return self.downloader.getShortReasonFailed()
         else:
             return ""
     

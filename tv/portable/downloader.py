@@ -111,14 +111,16 @@ class RemoteDownloader(DDBObject):
             self.contentType = info.get('content-type',None)
             self.runDownloader()
         else:
-            self.onContentTypeError(info['reason'])
+            error = httpclient.UnexpectedStatusCode(info['status'])
+            self.onContentTypeError(error)
 
     def onContentTypeError (self, error):
         if not self.idExists():
             return
 
         self.status['state'] = "failed"
-        self.status['reasonFailed'] = str(error)
+        self.status['shortReasonFailed'] = error.getFriendlyDescription()
+        self.status['reasonFailed'] = error.getLongDescription()
         self.signalChange()
 
     def getContentType(self):
@@ -155,7 +157,8 @@ class RemoteDownloader(DDBObject):
             _downloads[self.dlid] = self
         else:
             self.status["state"] = 'failed'
-            self.status["reasonFailed"] = 'Flash URL Scraping Error'
+            self.status["shortReasonFailed"] = _('File not found')
+            self.status["reasonFailed"] = _('Flash URL Scraping Error')
         self.signalChange()
 
     ##
@@ -303,6 +306,12 @@ URL was %s""" % self.url
         self.confirmDBThread()
         return self.status['reasonFailed']
 
+    def getShortReasonFailed(self):
+        if not self.getState() == 'failed':
+            msg = "getShortReasonFailed() called on a non-failed downloader"
+            raise ValueError(msg)
+        self.confirmDBThread()
+        return self.status['shortReasonFailed']
     ##
     # Returns the URL we're downloading
     def getURL(self):

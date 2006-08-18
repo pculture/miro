@@ -517,7 +517,7 @@ HELLO: WORLD\r\n"""
         self.testRequest.handleData(startResponse())
         # no content length means we can't pipeline a request
         self.assertEquals(self.testRequest.canSendRequest(), False)
-        self.assertRaises(httpclient.NotReadyToSendError,
+        self.assertRaises(httpclient.NetworkError,
             self.testRequest.sendRequest, self.callback, self.errback)
 
     def testPipelineNeverStarted(self):

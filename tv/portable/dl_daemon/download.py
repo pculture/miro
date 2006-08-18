@@ -256,7 +256,7 @@ class BGDownloader:
         self.currentSize = 0
         self.totalSize = -1
         self.blockTimes = []
-        self.reasonFailed = "No Error"
+        self.shortReasonFailed = self.reasonFailed = "No Error"
 
     def getURL(self):
         return self.url
@@ -275,6 +275,7 @@ class BGDownloader:
             'endTime': self.endTime,
             'shortFilename': self.shortFilename,
             'reasonFailed': self.reasonFailed,
+            'shortReasonFailed': self.shortReasonFailed,
             'dlerType': None }
 
     def updateClient(self):
@@ -373,6 +374,24 @@ class BGDownloader:
                 rate = 0
         return rate
 
+    def handleError(self, shortReason, reason):
+        self.state = "failed"
+        self.reasonFailed = reason
+        self.shortReasonFailed = shortReason
+        self.updateClient()
+
+    def handleNetworkError(self, error):
+        if isinstance(error, httpclient.NetworkError):
+            self.handleError(error.getFriendlyDescription(),
+                    error.getLongDescription())
+        else:
+            print "WARNING: grabURL errback not called with NetworkError"
+            self.handleError(str(error), str(error))
+
+    def handleGenericError(self, longDescription):
+        self.handleError(_("Error"), longDescription)
+
+
 class HTTPDownloader(BGDownloader):
     UPDATE_CLIENT_INTERVAL = 3
 
@@ -427,15 +446,12 @@ class HTTPDownloader(BGDownloader):
             self.client.cancel()
             self.client = None
 
-    def handleError(self, reason):
-        self.state = "failed"
-        self.reasonFailed = reason
-        self.updateClient()
+    def handleError(self, shortReason, reason):
+        BGDownloader.handleError(self, shortReason, reason)
         self.cancelRequest()
 
-    def handleWriteError(self, exc):
-        msg = "Could not write to %s: %s" % (self.filename, exc)
-        self.handleError(msg)
+    def handleWriteError(self, error):
+        self.handleGenericError(_("Could not write to %s") % self.filename)
         if self.filehandle is not None:
             try:
                 self.filehandle.close()
@@ -450,10 +466,13 @@ class HTTPDownloader(BGDownloader):
         if info['contentLength'] != None:
             self.totalSize = info['contentLength']
         if self.client.gotBadStatusCode:
-            self.handleError("HTTP Error")
+            error = httpclient.UnexpectedStatusCode(info['status'])
+            self.handleNetworkError(error)
             return
         if not self.acceptDownloadSize(self.totalSize):
-            self.handleError("Not enough free space")
+            self.handleError(_("Not enough disk space"),
+                _("%s MB required to store this video") % 
+                self.totalSize / (2 ** 20))
             return
         #Get the length of the file, then create it
         self.shortFilename = cleanFilename(info['filename'])
@@ -461,7 +480,8 @@ class HTTPDownloader(BGDownloader):
         try:
             self.filehandle = file(self.filename,"w+b")
         except IOError:
-            self.handleError("Couldn't open %s for writing" % self.filename)
+            self.handleGenericError("Couldn't open %s for writing" % 
+                self.filename)
             return
         if self.totalSize > 0:
             try:
@@ -522,13 +542,7 @@ class HTTPDownloader(BGDownloader):
             self.startNewDownload()
         else:
             self.client = None
-            if isinstance(error, httpclient.HTTPError):
-                reason = "HTTP error: %r" % error
-            elif isinstance(error, httpclient.ConnectionError):
-                reason = "Couldn't connect to server"
-            else:
-                reason = str(error)
-            self.handleError(reason)
+            self.handleNetworkError(error)
 
     def onBodyData(self, data):
         if self.state != 'downloading':
@@ -665,15 +679,18 @@ class BTDisplay:
         self.lastUpdated = clock()
         self.dler.updateClient()
 
-    def error(self, errormsg):
-        print errormsg
+    def handleBitTorrentError(self, errorMessage):
+        if "problem connecting to the tracker" in errorMessage.lower():
+            shortReason = _("Can't connect")
+        else:
+            shortReason = _("Error")
+        self.handleError(shortReason, errorMessage)
             
     def display(self, statistics):
         update = False
         now = clock()
         if statistics['errorTime'] != 0:
-            self.dler.state = 'failed'
-            self.dler.reasonFailed = statistics['errorMessage']
+            self.handleBitTorrentError(statistics['errorMessage'])
         if statistics.get('upTotal') != None:
             if self.lastUpTotal > statistics.get('upTotal'):
                 self.dler.uploaded += statistics.get('upTotal')
@@ -850,7 +867,8 @@ class BTDownloader(BGDownloader):
         self.pause()
         metainfo = self.metainfo
         if metainfo is None:
-            self.reasonFailed = "Could not read BitTorrent metadata"
+            msg = _("Could not read BitTorrent metadata")
+            self.handleGenericError(msg)
             self.state = "failed"
         else:
             self.state = "downloading"
@@ -896,7 +914,7 @@ class BTDownloader(BGDownloader):
         try:
             self.readMetainfo(metainfo)
         except ValueError:
-            self.reasonFailed = "Invalid BitTorrent metadata"
+            self.handleGenericError(_("Invalid BitTorrent metadata"))
             self.state = "failed"
             self.updateClient()
         else:
@@ -906,9 +924,7 @@ class BTDownloader(BGDownloader):
         self.handleMetainfo (info['body'])
 
     def onDescriptionDownloadFailed(self, exception):
-        self.state = "failed"
-        self.reasonFailed = str(exception)
-        self.updateClient()
+        self.handleNetworkError(exception)
 
     def getMetainfo(self):
         if self.metainfo is None:
