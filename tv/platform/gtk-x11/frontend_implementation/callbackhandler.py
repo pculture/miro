@@ -79,9 +79,13 @@ class CallbackHandler(object):
     def actionGroups (self):
         platformutils.confirmMainThread()
         actionGroups = {}
-        actionGroups["VideoPlayback"] = gtk.ActionGroup("VideoPlayback")
-        actionGroups["ChannelSelected"] = gtk.ActionGroup("ChannelSelected")
-        actionGroups["GuideSelected"] = gtk.ActionGroup("GuideSelected")
+        actionGroups["VideoSelected"] = gtk.ActionGroup("VideoSelected")
+        actionGroups["VideoPlaying"] = gtk.ActionGroup("VideoPlaying")
+        actionGroups["ChannelsSelected"] = gtk.ActionGroup("ChannelsSelected")
+        actionGroups["ChannelLikeSelected"] = gtk.ActionGroup("ChannelLikeSelected")
+        actionGroups["ChannelLikesSelected"] = gtk.ActionGroup("ChannelLikesSelected")
+        actionGroups["PlaylistLikeSelected"] = gtk.ActionGroup("PlaylistLikeSelected")
+        actionGroups["PlaylistLikesSelected"] = gtk.ActionGroup("PlaylistLikesSelected")
         actionGroups["Ubiquitous"] = gtk.ActionGroup("Ubiquitous")
 
         try:
@@ -89,34 +93,54 @@ class CallbackHandler(object):
         except:
             fullscreen = None
 
-        actionGroups["VideoPlayback"].add_actions ([
-            ('SaveVideo', gtk.STOCK_SAVE, _('_Save Video...'), '<Control>s', _('Save this video'), self.on_save_video_activate),
-            ('PlayPauseVideo', gtk.STOCK_MEDIA_PLAY, _('_Play / Pause'), 'p', None, self.on_play_pause_button_clicked),
-            ('Fullscreen', fullscreen, _('_Fullscreen'), 'f', None, self.on_fullscreen_button_clicked)
+        actionGroups["VideoSelected"].add_actions ([
+            ('SaveVideo', gtk.STOCK_SAVE, _('Save Video _As...'), '<Control>s', _('Save this video'), self.on_save_video_activate),
+            ('PlayPauseVideo', gtk.STOCK_MEDIA_PLAY, _('_Play / Pause'), '<Control>space', None, self.on_play_pause_button_clicked),
+            ('RemoveVideo', None, _('_Remove Video'), None, None, self.on_remove_video_activate),
+            ('CopyVideoURL', None, _('_Copy Video URL'), None, None, self.on_copy_video_link_activate),
             ])
-        actionGroups["ChannelSelected"].add_actions ([
-            ('RemoveChannel', None, _("_Remove Channel"), None, None, self.on_remove_channel_activate),
+        actionGroups["VideoPlaying"].add_actions ([
+            ('Fullscreen', fullscreen, _('_Fullscreen'), '<Control>f', None, self.on_fullscreen_button_clicked),
+            ('StopVideo', None, _('_Stop Video'), None, None, self.on_stop_activate),
+            ('NextVideo', None, _('_Next Video'), '<Alt>Right', None, self.on_next_button_clicked),
+            ('PreviousVideo', None, _('_Previous Video'), '<Alt>Left', None, self.on_previous_button_clicked),
+            ])
+        actionGroups["ChannelsSelected"].add_actions ([
             ('UpdateChannel', None, _("_Update Channel"), None, None, self.on_update_channel_activate),
-            ('CopyChannelURL', None, _("Copy Channel _Link"), None, None, self.on_copy_channel_link_activate)
+            ('CopyChannelURL', None, _("Copy Channel _Link"), None, None, self.on_copy_channel_link_activate),
+            ('MailChannels', None, _("_Send this channel to a friend"), None, None, self.on_mail_channel_link_activate),
             ])
-        actionGroups["GuideSelected"].add_actions ([
-            ('RemoveGuide', None, _("_Remove Channel Guide"), None, None, self.on_remove_guide_activate),
+        actionGroups["ChannelLikeSelected"].add_actions ([
+            ('RenameChannel', None, _("Re_name Channel"), None, None, self.on_rename_channel_activate),
+            ])
+        actionGroups["ChannelLikesSelected"].add_actions ([
+            ('RemoveChannels', None, _("_Remove Channel"), None, None, self.on_remove_channel_activate),
+            ])
+        actionGroups["PlaylistLikeSelected"].add_actions ([
+            ('RenamePlaylist', None, _("Re_name Playlist"), None, None, self.on_rename_playlist_activate),
+            ])
+        actionGroups["PlaylistLikesSelected"].add_actions ([
+            ('RemovePlaylists', None, _("_Remove Playlist"), None, None, self.on_remove_playlist_activate),
             ])
         actionGroups["Ubiquitous"].add_actions ([
             ('Video', None, _('_Video')),
+            ('Channels', None, _('_Channels')),
+            ('Playlists', None, _('_Playlists')),
+            ('Playback', None, _('P_layback')),
             ('Open', gtk.STOCK_OPEN, _('_Open...'), '<Control>o', _('Open various files'), self.on_open_video_activate),
-            ('NewPlaylist', None, _('_New Playlist...'), None, _('Create new playlist'), self.on_new_playlist_activate),
-            ('NewPlaylistFolder', None, _('_New Playlist Folder...'), None, _('Create new playlist folder'), self.on_new_playlist_folder_activate),
-            ('NewChannelFolder', None, _('_New Channel Folder...'), None, _('Create new channel folder'), self.on_new_channel_folder_activate),
-            ('Rename', None, _('_Rename...'), None, _('Rename selected item '), self.on_rename_activate),
+
+            ('NewPlaylist', None, _('New _Playlist...'), None, _('Create new playlist'), self.on_new_playlist_activate),
+            ('NewPlaylistFolder', None, _('New Playlist _Folder...'), None, _('Create new playlist folder'), self.on_new_playlist_folder_activate),
+            ('NewChannelFolder', None, _('New Channel _Folder...'), None, _('Create new channel folder'), self.on_new_channel_folder_activate),
+            ('NewChannel', None, _("Add _Channel..."), None, None, self.on_add_channel_button_clicked),
+            ('NewGuide', None, _("New Channel _Guide..."), None, None, self.on_add_guide_button_clicked),
+
             ('EditPreferences', gtk.STOCK_PREFERENCES, _('P_references'), None, None, self.on_preference),
             ('Quit', gtk.STOCK_QUIT, _('_Quit'), '<Control>q', _('Quit the Program'), self.on_quit_activate),
-            ('Channel', None, _('_Channel')),
-            ('AddChannel', None, _("_Add Channel..."), None, None, self.on_add_channel_button_clicked),
-            ('AddGuide', None, _("_Add Channel Guide..."), None, None, self.on_add_guide_button_clicked),
             ('UpdateAllChannels', None, _("U_pdate All Channels"), None, None, self.on_update_all_channels_activate),
             ('Help', None, _('_Help')),
-            ('About', gtk.STOCK_ABOUT, None, None, None, self.on_about_clicked)
+            ('About', gtk.STOCK_ABOUT, None, None, None, self.on_about_clicked),
+            ('Donate', None, _("_Donate"), None, None, self.on_donate_clicked),
             ])
         return actionGroups
 
@@ -259,6 +283,18 @@ class CallbackHandler(object):
     def on_remove_channel_activate(self, event = None):
         eventloop.addIdle (app.controller.removeCurrentFeed, "Remove Channel")
 
+    def on_rename_channel_activate(self, event = None):
+        print "Rename Channel unimplemented"
+
+    def on_remove_playlist_activate(self, event = None):
+        print "Remove Playlist unimplemented"
+
+    def on_remove_video_activate(self, event = None):
+        print "Remove Video unimplemented"
+
+    def on_rename_playlist_activate(self, event = None):
+        print "Rename Playlist unimplemented"
+
     def on_update_channel_activate(self, event = None):
         eventloop.addIdle (app.controller.updateCurrentFeed, "Update Channel")
 
@@ -268,14 +304,26 @@ class CallbackHandler(object):
     def on_copy_channel_link_activate(self, event = None):
         eventloop.addIdle (app.controller.copyCurrentFeedURL, "Copy feed URL")
 
+    def on_mail_channel_link_activate(self, event = None):
+        print "Mail Chanel Link unimplemented"
+
+    def on_copy_video_link_activate(self, event = None):
+        print "Copy Video Link unimplemented"
+
     def on_add_channel_button_clicked(self, event = None):
         eventloop.addIdle(lambda:app.controller.addAndSelectFeed(), "Add Channel")
 
     def on_add_guide_button_clicked(self, event = None):
         eventloop.addIdle(lambda:app.controller.addAndSelectGuide(), "Add Guide")
 
-    def on_remove_guide_activate(self, event = None):
-        eventloop.addIdle (app.controller.removeCurrentGuide, "Remove Guide")
+    def on_new_playlist_activate(self, event=None):
+        playlist.createNewPlaylist()
+
+    def on_new_playlist_folder_activate(self, event=None):
+        folder.createNewPlaylistFolder()
+
+    def on_new_channel_folder_activate(self, event=None):
+        folder.createNewChannelFolder()
 
     def on_preference(self, event = None):
         # get our add channel dialog
@@ -322,17 +370,8 @@ class CallbackHandler(object):
     def on_about_clicked(self, event = None):
         self.mainFrame.about()
 
-    def on_new_playlist_activate(self, event=None):
-        playlist.createNewPlaylist()
-
-    def on_new_playlist_folder_activate(self, event=None):
-        folder.createNewPlaylistFolder()
-
-    def on_new_channel_folder_activate(self, event=None):
-        folder.createNewChannelFolder()
-
-    def on_rename_activate(self, event=None):
-        print "NOT IMPLEMENTED"
+    def on_donate_clicked(self, event = None):
+        print "Donate unimplemented"
 
     def on_key_press_event(self, widget, event):
         if gtk.gdk.keyval_name(event.keyval) == 'Delete':
