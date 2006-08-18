@@ -807,7 +807,7 @@ class Feed(DDBObject):
                     #print " It's pre-enclosure RSS"
                     self.askForScrape(info, xmldata, charset)
         else:
-            print "DTV doesn't know how to deal with "+contentType+" feeds"
+            print "DTV doesn't know how to deal with", contentType, "feeds:", str(self)
             self.finishGenerateFeed(None)
             if removeOnError:
                 self.remove()
