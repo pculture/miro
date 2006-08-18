@@ -10,6 +10,7 @@ import traceback
 from copy import copy
 
 from download_utils import cleanFilename, nextFreeFilename, shortenFilename
+import eventloop
 import httpclient
 
 import config
@@ -386,6 +387,7 @@ class HTTPDownloader(BGDownloader):
         self.lastUpdated = 0
         self.client = None
         self.filehandle = None
+        self.timeout = None
         if self.state == 'downloading':
             if restore is not None:
                 self.startDownload()
@@ -408,6 +410,17 @@ class HTTPDownloader(BGDownloader):
                 self.onDownloadFinished, self.onDownloadError,
                 headerCallback, self.onBodyData, start=self.currentSize)
         self.updateClient()
+        self.startTimeout()
+
+    def startTimeout(self):
+        self.cancelTimeout()
+        self.timeout = eventloop.addTimeout(self.UPDATE_CLIENT_INTERVAL,
+                lambda: self.updateRateAndETA(0), "update rate")
+
+    def cancelTimeout(self):
+        if self.timeout:
+            self.timeout.cancel()
+            self.timeout = None
 
     def cancelRequest(self):
         if self.client is not None:
@@ -503,6 +516,7 @@ class HTTPDownloader(BGDownloader):
         self.totalSize = totalSize
 
     def onDownloadError(self, error):
+        self.cancelTimeout()
         if self.restartOnError:
             self.restartOnError = False
             self.startNewDownload()
@@ -524,8 +538,10 @@ class HTTPDownloader(BGDownloader):
             self.filehandle.write(data)
         except IOError, e:
             self.handleWriteError(e)
+        self.startTimeout()
 
     def onDownloadFinished(self, response):
+        self.cancelTimeout()
         self.client = None
         try:
             self.filehandle.close()
