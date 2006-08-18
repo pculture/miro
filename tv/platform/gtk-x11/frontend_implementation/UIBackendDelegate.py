@@ -101,10 +101,10 @@ def BuildTextEntryDialog(title, message, buttons, default, prefillCallback, fill
         global clipboard
         global primary
         init_clipboard()
-        prefill = clipboard.wait_for_text()
+        prefill = primary.wait_for_text()
         prefill = normalizeFeedURL(prefill)
         if prefill is None:
-            prefill = primary.wait_for_text()
+            prefill = clipboard.wait_for_text()
             prefill = normalizeFeedURL(prefill)
     if prefill is None and prefillCallback:
         prefill = prefillCallback()
