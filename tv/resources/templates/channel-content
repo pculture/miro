@@ -27,8 +27,23 @@
 </span>
 <!-- / DOWNLOADS -->
 <!-- NEWLY AVAILABLE ************************************************** -->
-<div id="main-channelbar-available" class="main-channelbar" style="display: @@@mainChannelbarAvailableDisplay@@@;">
-<div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-newlyavailable');">#&nbsp;</a></div>
+<div id="main-newlyavailable">
+    <span t:repeatForView="newItems">
+        <span t:replaceMarkup="this.getItemXML(viewName)" />
+    </span>
+    <div t:hideIf="matchingItems.len()==newItems.len()"
+	    t:updateHideOnView="matchingItems">
+        <div id="show-more-videos-label" style="display: @@@showMoreVideosDisplay@@@;">
+                            <a href="javascript:showAllVideos();" class="main-notification-nonew">
+                            <div class="main-notification"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()" class="video-count"/> Videos on this Channel</span> &gt;&gt;</div>
+                            <div class="main-notification-right">&nbsp;</div>
+                            <br clear="left" />
+                            </a>
+        </div>
+    </div>
+</div>              
+<div id="main-channelbar-available" class="main-channelbar" style="display: @@@mainChannelbarAvailableDisplay@@@">
+<div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-matching');">#&nbsp;</a></div>
 <div t:updateForView="matchingItems">
   <div t:showIf="searchTerm is None">
     <h1 i18n:translate="">
@@ -52,25 +67,11 @@
   </div>
 </div>
 </div>
-<div id="main-newlyavailable">
-    <span t:repeatForView="newItems">
+<div id="main-matching" style="display: @@@mainMatchingDisplay@@@;">
+    <div t:repeatForView="matchingItems">
         <span t:replaceMarkup="this.getItemXML(viewName)" />
-    </span>
-    <div t:hideIf="oldItems.len()==0" t:updateHideOnView="oldItems">
-        <div id="show-more-videos-label" style="display: @@@showMoreVideosDisplay@@@;">
-                            <a href="javascript:showAllVideos();" class="main-notification-nonew">
-                            <div class="main-notification"><span i18n:translate=""><span i18n:name="count" t:replace="oldItems.len()" class="video-count"/> Videos on this Channel</span> &gt;&gt;</div>
-                            <div class="main-notification-right">&nbsp;</div>
-                            <br clear="left" />
-                            </a>
-        </div>
     </div>
-    <div id="main-newlyavailable-seen" style="display: @@@newlyAvailableSeenDisplay@@@;">
-        <div t:repeatForView="oldItems">
-            <span t:replaceMarkup="this.getItemXML(viewName)" />
-        </div>
-    </div>
-</div>              
+</div>
 
 
 <!-- UNWATCHED ******************************************************** -->

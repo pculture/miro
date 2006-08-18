@@ -23,6 +23,7 @@ searchTerm = None
 
 allItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
 matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm))
+matchingItems = matchingItems.sort(sorts.item)
 downloadingItems = matchingItems.filter(filters.downloadingItems)
 thisFeedView = views.feeds.filter(lambda x: x is feed)
 
@@ -31,16 +32,15 @@ def makeStateView(cat):
     view = matchingItems.filterWithIndex(indexes.itemsByChannelCategory, cat)
     return view.sort(sorts.item)
 newItems = makeStateView('new')
-oldItems = matchingItems.filter(filters.viewedItems).sort(sorts.item)
 unwatchedItems = makeStateView('newly-downloaded')
 expiringItems = makeStateView('expiring')
 savedItems = makeStateView('saved')
 
 if newItems.len() == unwatchedItems.len() == expiringItems.len() == savedItems.len() == 0:
-    mainChannelbarAvailableDisplay = newlyAvailableSeenDisplay = "block"
+    mainChannelbarAvailableDisplay = mainMatchingDisplay = "block"
     showMoreVideosDisplay = "none"
 else:
-    mainChannelbarAvailableDisplay = newlyAvailableSeenDisplay = "none"
+    mainChannelbarAvailableDisplay = mainMatchingDisplay = "none"
     showMoreVideosDisplay = "block"
 
 def updateSearchString(newSearch):
