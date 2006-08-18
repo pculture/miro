@@ -671,6 +671,9 @@ class Feed(DDBObject):
         else:
             self.folder_id = None
         self.signalChange()
+        for item in self.items:
+            item.signalChange(needsSave=False, needsUpdateUandA=False,
+                    needsUpdateXML=False)
 
     def generateFeed(self, removeOnError=False):
         newFeed = None

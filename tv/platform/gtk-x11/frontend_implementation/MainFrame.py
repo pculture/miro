@@ -196,8 +196,11 @@ class MainFrame:
         setBool ("maximized", maximized)
         
     @gtkAsyncMethod
-    def onSelectedTabChange(self, tabType, multiple, guideURL):
+    def onSelectedTabChange(self, tabTypes, multiple, guideURL):
         app.controller.setGuideURL(guideURL)
+        print "WARNING: ignoring onSelectedTabChange (%s, %s, %s)" % \
+                (tabTypes, multiple, guideURL)
+        return
         isFeed = (tabType == 'channeltab')
         isGuide = (tabType == 'addedguidetab')
         self.actionGroups["ChannelSelected"].set_sensitive (isFeed)

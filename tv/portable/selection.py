@@ -141,39 +141,65 @@ class SelectionArea(object):
             # playlist
             self.currentSelection.add(id)
 
-    def getType(self):
-        """Get the type of objects that are selected.  This will be one of
-        "item", "playlisttab", "channeltab", 'guidetab', 'addedguidetab',
-        'statictab', or None if nothing is selected.  
+    def getTypesDetailed(self):
+        """Get the type of objects that are selected.  getTypesDetailed()
+        works like getType, but is more fine grained.  It differentiates
+        between playlist/channels and folders.  Instead of a single value it
+        will return a set of types selected.  It's possible to have a
+        playlist and a playlist folder selected for example.
         """
-        type = None
+
+        types = set()
         for id in self.currentSelection:
             obj = self.currentView.getObjectByID(id)
             if isinstance(obj, item.Item):
                 newType = 'item'
             elif isinstance(obj, tabs.Tab):
-                if obj.obj.__class__ in (playlist.SavedPlaylist,
-                        folder.PlaylistFolder):
+                objClass = obj.obj.__class__
+                if objClass == playlist.SavedPlaylist:
                     newType = 'playlisttab'
-                elif obj.obj.__class__ in (feed.Feed, folder.ChannelFolder):
+                elif objClass == folder.PlaylistFolder:
+                    newType = 'playlistfoldertab'
+                elif objClass == feed.Feed:
                     newType = 'channeltab'
-                elif obj.obj.__class__ == guide.ChannelGuide:
+                elif objClass == folder.ChannelFolder:
+                    newType = 'channelfoldertab'
+                elif objClass == guide.ChannelGuide:
                     if obj.obj.getDefault():
                         newType = 'guidetab'
                     else:
                         newType = 'addedguidetab'
-                elif obj.obj.__class__ == tabs.StaticTab:
+                elif objClass == tabs.StaticTab:
                     newType = 'statictab'
                 else:
                     raise ValueError("Bad selected tab type: %s" % obj.obj)
             else:
                 raise ValueError("Bad selected object type: %s" % obj)
-            if type is None:
-                type = newType
-            elif type != newType:
-                msg = "Multiple types selected: %s and %s" % (type, newType)
-                raise ValueError(msg)
-        return type
+            types.add(newType)
+        self.simplifyTypes(types) 
+        # we don't care about the result of simplifyTypes, but the error
+        # checking is useful
+        return types
+
+    def simplifyTypes(self, types):
+        if len(types) == 0:
+            return None
+        elif types.issubset(set(["playlistfoldertab", "playlisttab"])):
+                return "playlisttab"
+        elif types.issubset(set(["channelfoldertab", "channeltab"])):
+                return "channeltab"
+        elif len(types) == 1:
+            for type in types:
+                return type
+        else:
+            raise ValueError("Multiple types selected: %s" % types)
+
+    def getType(self):
+        """Get the type of objects that are selected.  This will be one of
+        "item", "playlisttab", "channeltab", 'guidetab', 'addedguidetab',
+        'statictab', or None if nothing is selected.  
+        """
+        return self.simplifyTypes(self.getTypesDetailed())
 
     def getObjects(self):
         view = self.currentView
@@ -378,8 +404,8 @@ class SelectionHandler(object):
             return
 
         self.itemListSelection.clearSelection()
-        selectionType = self.tabListSelection.getType()
-        if selectionType in ('guidetab', 'addedguidetab'):
+        selectionType = self.tabListSelection.getTypesDetailed()
+        if selectionType.issubset(set(['guidetab', 'addedguidetab'])):
             guideURL = self.getSelectedTabs()[0].obj.getURL()
         else:
             guideURL = None
