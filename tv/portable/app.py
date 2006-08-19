@@ -1147,7 +1147,7 @@ class ModelActionHandler:
 
     def addToNewPlaylist(self):
         selected = controller.selection.getSelectedItems()
-        childIds = [i.getID() for i in selected if i.isDownloaded()]
+        childIDs = [i.getID() for i in selected if i.isDownloaded()]
         playlist.createNewPlaylist(childIDs)
 
     def mergeToFolder(self):
