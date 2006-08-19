@@ -3,6 +3,7 @@ import sys
 import bsddb
 import shutil
 import types
+from gettext import gettext as _
 from os import remove
 import re
 from threading import RLock, Event, Thread
