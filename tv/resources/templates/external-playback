@@ -15,17 +15,19 @@
 
     <t:execOnLoad><![CDATA[
 this = app.controller.videoInfoItem
+app.controller.videoInfoItem = None
+import os.path
+filename = os.path.basename(this.getFilename())
 ]]></t:execOnLoad>
     <t:execOnUnload><![CDATA[
-app.controller.videoInfoItem = None
+import os.path
 ]]></t:execOnUnload>
 
 </head>
 
 <body onload="startCountdown(@@@this.getID()@@@)">
     <div id="external-container-basic">
-    	<span i18n:translate="">This file type (<span i18n:name="format" t:replace="this.getFormat(emptyForUnknown=False)" 
-/>) can't be played in the main Democracy window.</span>
+    	<span i18n:translate="">The file <span i18n:name="filename" t:replace="filename"/> of type <span i18n:name="format" t:replace="this.getFormat(emptyForUnknown=False)"/> can't be played in the main Democracy window.</span>
 
         <a id="external-button-left" href="javascript:playItemExternally(@@@this.getID()@@@)">
             <span i18n:translate="">Play Externally</span>
