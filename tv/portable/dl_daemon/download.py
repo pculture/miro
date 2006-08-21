@@ -1024,6 +1024,8 @@ def updateBTConfig(key, value):
 def startBTDownloader():
     if config.get(prefs.LIMIT_UPSTREAM):
         btconfig['max_upload_rate'] = config.get(prefs.UPSTREAM_LIMIT_IN_KBS)
+    else:
+        btconfig['max_upload_rate'] = -1
     btconfig['minport'] = config.get(prefs.BT_MIN_PORT)
     btconfig['maxport'] = config.get(prefs.BT_MAX_PORT)
     config.addChangeCallback (updateBTConfig)
