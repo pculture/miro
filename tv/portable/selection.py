@@ -142,18 +142,25 @@ class SelectionArea(object):
             self.currentSelection.add(id)
 
     def getTypesDetailed(self):
-        """Get the type of objects that are selected.  getTypesDetailed()
-        works like getType, but is more fine grained.  It differentiates
-        between playlist/channels and folders.  Instead of a single value it
-        will return a set of types selected.  It's possible to have a
-        playlist and a playlist folder selected for example.
+        """Get the type of objects that are selected.  
+
+        Returns a set, containing all the type of objects selected.  The
+        members will be one of the following:
+
+        'item', 'downloadeditem' 'playlisttab', playlistfoldertab,
+        'channeltab', 'channelfoldertab', 'guidetab', 'addedguidetab',
+        'statictab'.
+
         """
 
         types = set()
         for id in self.currentSelection:
             obj = self.currentView.getObjectByID(id)
             if isinstance(obj, item.Item):
-                newType = 'item'
+                if obj.isDownloaded():
+                    newType = 'downloadeditem'
+                else:
+                    newType = 'item'
             elif isinstance(obj, tabs.Tab):
                 objClass = obj.obj.__class__
                 if objClass == playlist.SavedPlaylist:
@@ -184,6 +191,8 @@ class SelectionArea(object):
     def simplifyTypes(self, types):
         if len(types) == 0:
             return None
+        elif types.issubset(set(["item", "downloadeditem"])):
+                return "item"
         elif types.issubset(set(["playlistfoldertab", "playlisttab"])):
                 return "playlisttab"
         elif types.issubset(set(["channelfoldertab", "channeltab"])):
@@ -195,10 +204,18 @@ class SelectionArea(object):
             raise ValueError("Multiple types selected: %s" % types)
 
     def getType(self):
-        """Get the type of objects that are selected.  This will be one of
+        """Get the simplified version of the type of objects that are
+        selected.  getType() works like getTypesDetailed(), but it just
+        returns one value.  It doesn't differentiate between playlists and
+        playlist folders, and items and downloaded items for example.
+
+        The return value will be one of
+
         "item", "playlisttab", "channeltab", 'guidetab', 'addedguidetab',
         'statictab', or None if nothing is selected.  
+
         """
+
         return self.simplifyTypes(self.getTypesDetailed())
 
     def getObjects(self):
@@ -301,6 +318,9 @@ class SelectionHandler(object):
 
         if area == 'itemlist':
             self.setTabListActive(False)
+            print 'item list selection changed: %s %s' % (
+                    self.itemListSelection.getTypesDetailed(),
+                    len(self.itemListSelection.currentSelection))
         else:
             self.setTabListActive(True)
             self.displayCurrentTabContent()
