@@ -14,8 +14,10 @@
 
 playlist = views.db.getObjectByID(int(kargs['id']))
 playlistView = playlist.getView()
-thisPlaylistView = views.playlists.filter(lambda x: x is playlist)
 playlist.setSearch(None)
+thisPlaylistView = views.playlistFolders.filter(lambda x: x is playlist)
+childrenView = views.playlists.filterWithIndex(indexes.byFolder,
+        playlist)
 
 def updateSearchString(newSearch):
     playlist.setSearch(newSearch)
@@ -24,6 +26,7 @@ def updateSearchString(newSearch):
     <t:execOnUnload><![CDATA[
 thisPlaylistView
 playlistView
+childrenView
 ]]>
 </t:execOnUnload>
 </head>
@@ -50,15 +53,24 @@ playlistView
 	dragdestdata="playlistitem-END"
 	drageffectdownloadeditem="move" />
 </div>
-<div t:updateForView="playlistView">
+<div t:updateForView="childrenView">
 <div t:showIf="playlistView.len() == 0">
    <div class="channel-blank">
-    <div class="channel-message" i18n:translate="">
-        Empty Playlist
-    </div>
-    <div class="channel-message-small" i18n:translate="">
-        Drag downloaded videos to this playlist to add them.
-    </div>
+       <div t:showIf="childrenView.len() == 0">
+            <div class="channel-message" i18n:translate="">
+                Empty Playlist
+            </div>
+        </div>
+        <div t:showIf="childrenView.len() > 0">
+            <div class="channel-message" i18n:translate="">
+            This folder contains
+            <span t:replace="childrenView.len()" i18n:name="count" />
+            playlists, but the playlists do not contain any items.
+            </div>
+        </div>
+        <div class="channel-message-small" i18n:translate="">
+            Drag downloaded videos to this playlist to add them.
+        </div>
     </div>
 </div>
 </div>

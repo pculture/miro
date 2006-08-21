@@ -52,6 +52,8 @@ def updateSearchString(newSearch):
     allItems.recomputeFilter(matchingItems)
 feed.updateIcons()
 ]]>
+
+channelNoun = _("Channel")
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
 # This should unlink matchingItems and all of it's children

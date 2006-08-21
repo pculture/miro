@@ -22,6 +22,7 @@ matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm))
 matchingItems = matchingItems.sort(sorts.item)
 downloadingItems = matchingItems.filter(filters.downloadingItems)
 thisFolderView = views.channelFolders.filter(lambda x: x is folder)
+childrenView = views.feeds.filterWithIndex(indexes.byFolder, folder)
 
 matchingItems.createIndex(indexes.itemsByChannelCategory)
 def makeStateView(cat):
@@ -50,11 +51,14 @@ def updateSearchString(newSearch):
 for feed in allFeeds:
     feed.updateIcons()
 ]]>
+
+channelNoun = _("Channel Folder")
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
 # This should unlink matchingItems and all of it's children
 allItems.unlink()
 thisFolderView.unlink()
+childrenView.unlink()
 for feed in allFeeds:
     if feed.idExists():
         feed.markAsViewed()
@@ -63,27 +67,33 @@ for feed in allFeeds:
 </head>
 
 <body>
-
-<!-- TITLE BAR ************************************************************ -->
 <div id="main-titlebar">
-        <img id="main-titlebar-avatar" src="resource:images/playlist-icon.png" alt="" />
-	<div id="main-titlebar-channelname">
-	    <div t:updateForView="thisFolderView">
-                <h1 t:replaceMarkup="folder.getTitle()" />
-	    </div>
+    <img id="main-titlebar-avatar" src="resource:images/playlist-icon.png" alt="" />
+    <div id="main-titlebar-channelname">
+        <div t:updateForView="thisFolderView">
+            <h1 t:replaceMarkup="folder.getTitle()" />
         </div>
-        <div id="main-titlebar-tasks">
-                <div id="main-titlebar-tasks-search">
-                    <input type="search" placeholder="Search Folder" class="main-titlebar-tasks-search" onfocus="startEditSearch(this, showAllVideos)" onblur="endEditSearch()" />
-                </div>
+    </div>
+    <div id="main-titlebar-tasks">
+        <div id="main-titlebar-tasks-search">
+            <input type="search" placeholder="Search Folder" class="main-titlebar-tasks-search" onfocus="startEditSearch(this, showAllVideos)" onblur="endEditSearch()" />
         </div>
+    </div>
 </div>
-<!-- / TITLE BAR -->
-<!-- CHANNEL CONTAINER **************************************************** -->
 <div id="main-container">
     <t:includeTemplate filename="channel-content" />
 </div>
-<!-- / CHANNEL ITEMS LIST -->
-
+<div t:updateForView="childrenView">
+<div t:showIf="childrenView.len() == 0">
+    <div class="channel-blank">
+    <div class="channel-message" i18n:translate="">
+        Empty Channel Folder
+    </div>
+    <div class="channel-message-small" i18n:translate="">
+        Drag channels to this folder to add them.
+    </div>
+    </div>
+</div>
+</div>
 </body>
 </html>

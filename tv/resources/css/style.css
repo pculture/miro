@@ -194,12 +194,12 @@ a.feeditem div.name {
 }
 
 .tab-list-end {
-	height: 20px;
+	height: 5px;
 }
 
 .tab-list-end.drag-highlight {
 	border-top: 1px solid black;
-	height: 19px;
+	height: 4px;
 }
 
 .feed-loading-icon {

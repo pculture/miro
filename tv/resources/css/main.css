@@ -546,7 +546,7 @@ div.scraping-content {
 }
 
 .playlist-end-drag-hitbox {
-    height: 50px;
+    height: 10px;
     width: 100%;
 }
 
@@ -577,8 +577,8 @@ div.scraping-content {
 }
 
 .search-message {
-    font:       28px "Lucida Grande", "Lucida Sans", Arial, "Trebuchet MS";
-    color:      #DDD;
+    font-size: 28px;
+    color: #DDD;
     text-align: center;
     margin-top: 50px;
 }
@@ -589,4 +589,28 @@ img {
 
 #show-more-videos-label a {
     text-decoration: none;
+}
+
+.channel-blank {
+    text-align: center;
+    padding: 30px;
+}
+
+.channel-message {
+    font-size: 28px;
+    color:      #999;
+    text-align: center;
+    margin-top: 50px;
+    font-weight: bold;
+}
+
+.channel-message-small {
+    font-size: 20px;
+    color:      #999;
+    text-align: center;
+    margin-top: 20px;
+}
+
+body.gray-background {
+    background-color: #f7f7f7;
 }

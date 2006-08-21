@@ -31,14 +31,15 @@
     <span t:repeatForView="newItems">
         <span t:replaceMarkup="this.getItemXML(viewName)" />
     </span>
-    <div t:hideIf="matchingItems.len()==newItems.len()"
-	    t:updateHideOnView="matchingItems">
-        <div id="show-more-videos-label" style="display: @@@showMoreVideosDisplay@@@;">
-                            <a href="javascript:showAllVideos();" class="main-notification-nonew">
-                            <div class="main-notification"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()" class="video-count"/> Videos on this Channel</span> &gt;&gt;</div>
-                            <div class="main-notification-right">&nbsp;</div>
-                            <br clear="left" />
-                            </a>
+    <div t:updateForView="matchingItems">
+        <div t:hideIf="matchingItems.len()==newItems.len()">
+            <div id="show-more-videos-label" style="display: @@@showMoreVideosDisplay@@@;">
+                <a href="javascript:showAllVideos();" class="main-notification-nonew">
+                    <div class="main-notification"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()" class="video-count"/> Videos on this <span t:replace="channelNoun" i18n:name="channelOrFolder" /></span> &gt;&gt;</div>
+                    <div class="main-notification-right">&nbsp;</div>
+                    <br clear="left" />
+                </a>
+            </div>
         </div>
     </div>
 </div>              
@@ -48,7 +49,7 @@
   <div t:showIf="searchTerm is None">
     <h1 i18n:translate="">
         <span i18n:name="len" t:replace="allItems.len()" /> 
-        Videos On This Channel
+        Videos On This <span t:replace="channelNoun" i18n:name="channelOrFolder" />
     </h1>
   </div>
   <div t:showIf="searchTerm is not None">

@@ -14,18 +14,17 @@ foldersSelected = kargs['foldersSelected']
 ]]>
     </t:execOnLoad>
 </head>
-
-<body>
-    <h1 i18n:translate="">
-        <span i18n:name="count" t:replace="selectedCount" /> Channels selected
-    </h1>
-    <a i18n:translate="" href="#" onclick="return eventURL('action:removeCurrentFeed');">
-        Delete selected channels
-    </a>
-    <div t:hideIf="foldersSelected">
-        <a href="#" onclick="return eventURL('action:mergeToFolder');">
-            Create new folder with selected channels
-        </a>
+<body class="gray-background">
+    <div class="channel-blank">
+        <div class="channel-message" i18n:translate="">
+            <span i18n:name="count" t:replace="selectedCount" /> Channels Selected
+        </div>
+        <br /><br />
+        <span t:hideIf="foldersSelected"><a style="color: red;" href="#" onclick="return eventURL('action:mergeToFolder');">Put Channels in a New Folder</a>
+        </span>
+        <br /><br />
+        <a style="color: red;" i18n:translate="" href="#" onclick="return eventURL('action:removeCurrentFeed');">Delete These Channels</a><br /><br />
     </div>
+    
 </body>
 </html>
