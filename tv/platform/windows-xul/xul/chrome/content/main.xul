@@ -24,124 +24,124 @@
         <!-- TITLEBAR -->
         <hbox height="25" container="1" id="titlebar" class="titlebar"
                 ondblclick="maximizeOrRestore();" >
-	<!-- MAIN MENUBAR -->
-	<hbox>
+<!-- MAIN MENUBAR -->
+<hbox>
                 <menubar id="titlebar-menu"
                         ondblclick="event.stopPropagation(); return false;">
-		
-			<!-- FILE MENU -->
-			<menu id="file-menu" label="&main.menu.file;" accesskey="F" class="titlebar-toplevel" style="margin-left: 10px;">
-				<menupopup id="file-popup">
-					<menuitem label="&main.menu.file.open;" acceltext="Ctrl+O" accesskey="O" command="open"/>
+
+<!-- FILE MENU -->
+<menu id="file-menu" label="&main.menu.file;" accesskey="F" class="titlebar-toplevel" style="margin-left: 10px;">
+<menupopup id="file-popup">
+<menuitem label="&main.menu.file.open;" acceltext="Ctrl+O" accesskey="O" command="open"/>
                                         <menuseparator/>
                                         <menuitem label="&main.menu.file.new.playlist;" accesskey="P" command="createnewplaylist"/>
                                         <menuitem label="&main.menu.file.new.playlistfolder;" command="createnewplaylistfolder"/>
                                         <menuitem label="&main.menu.file.new.channelfolder;" command="createnewchannelfolder"/>
                                         <menuitem label="&main.menu.file.rename;" accesskey="R" command="rename"/>
                                         <menuseparator/>
-					<menuitem label="&main.menu.file.exit;" acceltext="Ctrl+Q" accesskey="E" command="exit"/>
-				</menupopup>
-			</menu>
-			<!-- / FILE MENU -->
-			
-			<!-- EDIT MENU -->
-			<menu id="edit-menu" label="Edit" accesskey="E" class="titlebar-toplevel">
-				<menupopup id="edit-popup">
-					<menuitem label="Cut" acceltext="Ctrl+X" accesskey="T" command="cut"/>
-					<menuitem label="Copy" acceltext="Ctrl+C" accesskey="C" command="copy"/>
-					<menuitem label="Paste" acceltext="Ctrl+V" accesskey="P" command="paste"/>
+<menuitem label="&main.menu.file.exit;" acceltext="Ctrl+Q" accesskey="E" command="exit"/>
+</menupopup>
+</menu>
+<!-- / FILE MENU -->
+
+<!-- EDIT MENU -->
+<menu id="edit-menu" label="&main.menu.edit" accesskey="E" class="titlebar-toplevel">
+<menupopup id="edit-popup">
+<menuitem label="&main.menu.edit.cut" acceltext="Ctrl+X" accesskey="T" command="cut"/>
+<menuitem label="&main.menu.edit.copy" acceltext="Ctrl+C" accesskey="C" command="copy"/>
+<menuitem label="&main.menu.edit.paste" acceltext="Ctrl+V" accesskey="P" command="paste"/>
                                         <menuseparator/>
-					<menuitem label="Preferences" command="openprefs"/>
-				</menupopup>
-			</menu>
-			<!-- / EDIT MENU -->
-			
-			<!-- VIDEO MENU -->
-			<menu id="video-menu" label="Video" accesskey="V" class="titlebar-toplevel">
-				<menupopup id="video-popup">
+<menuitem label="&main.menu.edit.preferences" command="openprefs"/>
+</menupopup>
+</menu>
+<!-- / EDIT MENU -->
+
+<!-- VIDEO MENU -->
+<menu id="video-menu" label="&main.menu.video" accesskey="V" class="titlebar-toplevel">
+<menupopup id="video-popup">
                                         <!--
-					<menuitem label="Play Video" accesskey="P" disabled="true"/>
-					<menuitem label="Stop Video" accesskey="S" disabled="true"/>
+<menuitem label="&main.menu.video.play" accesskey="P" disabled="true"/>
+<menuitem label="&main.menu.video.stop" accesskey="S" disabled="true"/>
                                         -->
-                                        <menuitem label="Full Screen" accesskey="F" command="fullscreen" acceltext="Alt+Enter" disabled="true" />
+                                        <menuitem label="&main.menu.video.fullscreen" accesskey="F" command="fullscreen" acceltext="Alt+Enter" disabled="true" />
                                         <!--
-					<menuseparator/>
-					<menuitem label="Delete Video" accesskey="D" disabled="true"/>
-					<menuitem label="Save Video" accesskey="a" disabled="true"/>
-					<menuitem label="Copy Video Link" accesskey="L" disabled="true"/>
+<menuseparator/>
+<menuitem label="&main.menu.video.delete" accesskey="D" disabled="true"/>
+<menuitem label="&main.menu.video.save" accesskey="a" disabled="true"/>
+<menuitem label="&main.menu.video.copy" accesskey="L" disabled="true"/>
                                         -->
-				</menupopup>
-			</menu>
-			<!-- / VIDEO MENU -->
-			
-			<!-- CHANNEL MENU -->
-			<menu id="channel-menu" label="Channel" accesskey="C" class="titlebar-toplevel">
-				<menupopup id="channel-popup">
-					<menuitem label="Add Channel" accesskey="A" command="addchannel"/>
-					<menuitem label="Remove Channel" accesskey="R" command="removechannel"/>
-					<menuitem label="Copy Channel Link" accesskey="L" command="copychannellink"/>
-					<menuseparator/>
-					<menuitem label="Update Channel" accesskey="U" command="updatechannel"/>
-					<menuitem label="Update All Channels" accesskey="A" command="updateall"/>
-					<menuseparator/>
-					<menuitem label="Rename Channel" accesskey="e" disabled="true"/>
-					<menuseparator/>
-					<menuitem label="Tell A Friend About This Channel" accesskey="F" disabled="true"/>
-				</menupopup>
-			</menu>
-			<!-- / CHANNEL MENU -->
-			
-			<!-- HELP MENU -->
-			<menu id="help-menu" label="Help" accesskey="H" class="titlebar-toplevel">
-				<menupopup id="help-popup">
-					<menuitem label="Help Contents" acceltext="F1" accesskey="H" command="showhelp"/>
-					<menuseparator/>
-					<menuitem label="&main.about;" accesskey="A" command="about"/>
-				</menupopup>
-			</menu>
-			<!-- / HELP MENU -->
-		
-		</menubar>
-	</hbox>
-	<!-- / MAIN MENUBAR -->
-	
-	<!-- WINDOW TITLE -->
-	<titlebar flex="1" container="1">
-		<caption flex="1" label="&main.title;"/>
-	</titlebar>
-	<!-- / WINDOW TITLE -->
-	
-	<!-- WINDOW BUTTONS -->
-	<hbox flex="0" width="55" height="24" align="center">
+</menupopup>
+</menu>
+<!-- / VIDEO MENU -->
+
+<!-- CHANNEL MENU -->
+<menu id="channel-menu" label="&main.menu.channel" accesskey="C" class="titlebar-toplevel">
+<menupopup id="channel-popup">
+<menuitem label="&main.menu.channel.add" accesskey="A" command="addchannel"/>
+<menuitem label="&main.menu.channel.remove" accesskey="R" command="removechannel"/>
+<menuitem label="&main.menu.channel.copy" accesskey="L" command="copychannellink"/>
+<menuseparator/>
+<menuitem label="&main.menu.channel.update" accesskey="U" command="updatechannel"/>
+<menuitem label="&main.menu.channel.updateall" accesskey="A" command="updateall"/>
+<menuseparator/>
+<menuitem label="&main.menu.channel.rename" accesskey="e" disabled="true"/>
+<menuseparator/>
+<menuitem label="&main.menu.channel.tellafriend" accesskey="F" disabled="true"/>
+</menupopup>
+</menu>
+<!-- / CHANNEL MENU -->
+
+<!-- HELP MENU -->
+<menu id="help-menu" label="&main.menu.help" accesskey="H" class="titlebar-toplevel">
+<menupopup id="help-popup">
+<menuitem label="&main.menu.help.contents" acceltext="F1" accesskey="H" command="showhelp"/>
+<menuseparator/>
+<menuitem label="&main.about;" accesskey="A" command="about"/>
+</menupopup>
+</menu>
+<!-- / HELP MENU -->
+
+</menubar>
+</hbox>
+<!-- / MAIN MENUBAR -->
+
+<!-- WINDOW TITLE -->
+<titlebar flex="1" container="1">
+<caption flex="1" label="&main.title;"/>
+</titlebar>
+<!-- / WINDOW TITLE -->
+
+<!-- WINDOW BUTTONS -->
+<hbox flex="0" width="55" height="24" align="center">
                 <image id="titlebar-buttons-minimize" class="titlebar-button" onclick="minimize();" />
                 <image id="titlebar-buttons-maximize" class="titlebar-button" onclick="maximizeOrRestore();" />
                 <image id="titlebar-buttons-close" class="titlebar-button" onclick="handleExit();" />
-	</hbox>
-	<!-- / WINDOW BUTTONS -->
-	
+</hbox>
+<!-- / WINDOW BUTTONS -->
+
 </hbox>
 <!-- / TITLEBAR -->
 
 <!-- CONTENT AREA -->
 <hbox flex="1">
 
-	<resizer dir="left" id="resizer-left" oncommand="return doResize(event);">
-		<hbox flex="0" width="5" minwidth="5" style="background-color:#000000;"/>
-	</resizer>
+<resizer dir="left" id="resizer-left" oncommand="return doResize(event);">
+<hbox flex="0" width="5" minwidth="5" style="background-color:#000000;"/>
+</resizer>
 
-	<!-- CHANNEL BAR -->
-  	<browser id="channelsDisplay" src="" type="content"
-                 flex="0" width="200" minwidth="50" 
+<!-- CHANNEL BAR -->
+  <browser id="channelsDisplay" src="" type="content"
+                 flex="0" width="200" minwidth="50" maxwidth="400"
                  ondraggesture="return onDragGesture(event, 'channelsDisplay');"
                  ondragover="return onDragOver(event, 'channelsDisplay');"
                  ondragexit="return onDragExit(event, 'channelsDisplay');"
                  ondragdrop="return onDragDrop(event, 'channelsDisplay');"
                  onmousedown="return xulcontexthandler('channelsDisplay', event);" />
-	<!-- / CHANNEL BAR -->
-	
+<!-- / CHANNEL BAR -->
+
   <!-- DIVIDER -->
-	<splitter id="mainSplitter" collapse="before" width="10"/>
-	<!-- / DIVIDER -->
+<splitter id="mainSplitter" collapse="before" width="10"/>
+<!-- / DIVIDER -->
 
         <browser id="mainDisplay" src="" type="content" flex="1"
              ondraggesture="return onDragGesture(event, 'mainDisplay');"
@@ -158,24 +158,24 @@
                     height="40px"/>
         </vbox>
                 
-	
-	<resizer dir="right" id="resizer-left" oncommand="return doResize(event);">
-		<hbox flex="0" width="5" minwidth="5" style="background-color:#000000;"/>
-	</resizer>
-	
+
+<resizer dir="right" id="resizer-left" oncommand="return doResize(event);">
+<hbox flex="0" width="5" minwidth="5" style="background-color:#000000;"/>
+</resizer>
+
 </hbox>
 <!-- / CONTENT AREA -->
 
 <!-- BOTTOM -->
 <hbox flex="0" height="64" id="bottom" class="bottom" align="center">
-	<hbox flex="0" container="1" width="245" height="64" minheight="64" id="bottom-left">
-		<hbox flex="0" maxheight="20" id="bottom-left-addchannel">
+<hbox flex="0" container="1" width="245" height="64" minheight="64" id="bottom-left">
+<hbox flex="0" maxheight="20" id="bottom-left-addchannel">
                         <button id="add-channel" label="Add Channel" disabled="false" accesskey="A" command="addchannel" />
-		</hbox>
-		<hbox flex="0" maxheight="20" id="bottom-left-preferences">
-			<button id="Preferences" label="Options" disabled="false" accesskey="O" command="openprefs"/>
-		</hbox>
-	</hbox>
+</hbox>
+<hbox flex="0" maxheight="20" id="bottom-left-preferences">
+<button id="Preferences" label="Options" disabled="false" accesskey="O" command="openprefs"/>
+</hbox>
+</hbox>
         <spacer flex="0" width="245" id="bottom-left-blank" collapsed="true" />
         <stack flex="0" width="220" id="bottom-progress">
                 <label id="progress-text" left="5" top="7">00:00:00</label>
@@ -196,7 +196,7 @@
                 <image left="98" top="26" src="images/bottom-volume-slider.png" id="knob"/>
         </stack>
 
-  	<resizer dir="bottomright" id="resizer-bottom-right" oncommand="return doResize(event);"/>
+  <resizer dir="bottomright" id="resizer-bottom-right" oncommand="return doResize(event);"/>
         <spacer flex="0" width="20" id="bottom-right-blank" collapsed="true" />
 </hbox>
 
