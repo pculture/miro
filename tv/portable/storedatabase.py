@@ -512,27 +512,14 @@ class LiveStorage:
                 self.dbPath = dbPath
             else:
                 self.dbPath = config.get(prefs.BSDDB_PATHNAME)
-            try:
-                os.makedirs(self.dbPath)
-            except:
-                pass
             start = clock()
-            self.dbenv = bsddb.db.DBEnv()
-            self.dbenv.set_flags (bsddb.db.DB_AUTO_COMMIT | bsddb.db.DB_TXN_NOSYNC, True)
-            self.dbenv.set_lg_max (1024 * 1024)
-            self.dbenv.open (self.dbPath, bsddb.db.DB_INIT_LOG | bsddb.db.DB_INIT_MPOOL | bsddb.db.DB_INIT_TXN | bsddb.db.DB_RECOVER | bsddb.db.DB_CREATE)
-            self.db = bsddb.db.DB(self.dbenv)
-            self.closed = False
+            self.openEmptyDB()
             if restore:
                 try:
                     self.db.open ("database")
                     self.version = int(self.db[VERSION_KEY])
                 except (bsddb.db.DBNoSuchFileError, KeyError):
-                    try:
-                        self.db.close()
-                    except:
-                        pass
-                    self.db = None
+                    self.closeInvalidDB()
                     try:
                         restoreDatabase()
                     except:
@@ -541,7 +528,14 @@ class LiveStorage:
                         traceback.print_exc()
                     self.saveDatabase()
                 else:
-                    self.loadDatabase()
+                    try:
+                        self.loadDatabase()
+                    except bsddb.db.DBPageNotFoundError:
+                        print "WARNING: DBPageNotFoundError while loading database"
+                        self.closeInvalidDB()
+                        shutil.rmtree(self.dbPath, ignore_errors=True)
+                        self.openEmptyDB()
+                        self.saveDatabase()
             else:
                 self.saveDatabase()
             eventloop.addIdle(self.checkpoint, "Remove Unused Database Logs")
@@ -550,6 +544,25 @@ class LiveStorage:
                 print "Database load slow: %.3f" % (end - start,)
         except bsddb.db.DBNoSpaceError:
             frontend.exit(28)
+
+    def openEmptyDB(self):
+        try:
+            os.makedirs(self.dbPath)
+        except:
+            pass
+        self.dbenv = bsddb.db.DBEnv()
+        self.dbenv.set_flags (bsddb.db.DB_AUTO_COMMIT | bsddb.db.DB_TXN_NOSYNC, True)
+        self.dbenv.set_lg_max (1024 * 1024)
+        self.dbenv.open (self.dbPath, bsddb.db.DB_INIT_LOG | bsddb.db.DB_INIT_MPOOL | bsddb.db.DB_INIT_TXN | bsddb.db.DB_RECOVER | bsddb.db.DB_CREATE)
+        self.db = bsddb.db.DB(self.dbenv)
+        self.closed = False
+
+    def closeInvalidDB(self):
+        try:
+            self.db.close()
+        except:
+            pass
+        self.db = None
 
     def upgradeDatabase(self):
         print "Upgrading database..."
