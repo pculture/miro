@@ -27,7 +27,7 @@ import os.path
 
 <body onload="startCountdown(@@@this.getID()@@@)">
     <div id="external-container-basic">
-    	<span i18n:translate="">The file <span i18n:name="filename" t:replace="filename"/> of type <span i18n:name="format" t:replace="this.getFormat(emptyForUnknown=False)"/> can't be played in the main Democracy window.</span>
+    	<span i18n:translate="">Democracy can't play: <span i18n:name="filename" t:replace="filename"/> (type <span i18n:name="format" t:replace="this.getFormat(emptyForUnknown=False)"/>) You may be able to open it with a different program.</span>
 
         <a id="external-button-left" href="javascript:playItemExternally(@@@this.getID()@@@)">
             <span i18n:translate="">Play Externally</span>
