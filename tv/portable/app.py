@@ -646,7 +646,7 @@ class Controller (frontend.Application):
         if self.selection.tabListSelection.getType() == 'addedguidetab':
             guides = [t.obj for t in self.selection.getSelectedTabs()]
             if len(guides) != 1:
-                raise AssertionErro("Multiple guides selected")
+                raise AssertionError("Multiple guides selected")
             self.removeGuide(guides[0])
 
     def removeCurrentPlaylist(self):
@@ -666,6 +666,17 @@ class Controller (frontend.Application):
             playlist = self.selection.getSelectedTabs()[0].obj
             for i in selected:
                 playlist.removeItem(i)
+
+    def renameCurrentTab(self):
+        selected = self.selection.getSelectedTabs()
+        if len(selected) != 1:
+            return
+        obj = selected[0].obj
+        if obj.__class__ in (playlist.SavedPlaylist, folder.ChannelFolder,
+                folder.PlaylistFolder):
+            obj.rename()
+        else:
+            print "WARNING: Unknown object type in remove() %s" % obj.__class__
 
     def updateCurrentFeed(self):
         for tab in self.selection.getSelectedTabs():

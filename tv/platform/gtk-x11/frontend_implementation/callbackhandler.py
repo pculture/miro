@@ -293,16 +293,16 @@ class CallbackHandler(object):
         eventloop.addIdle (app.controller.removeCurrentFeed, "Remove Channel")
 
     def on_rename_channel_activate(self, event = None):
-        print "Rename Channel unimplemented"
+        eventloop.addIdle (app.controller.renameCurrentTab, "Rename Tab")
 
     def on_remove_playlist_activate(self, event = None):
-        print "Remove Playlist unimplemented"
+        eventloop.addIdle (app.controller.removeCurrentPlaylist, "Remove Playlist")
 
     def on_remove_video_activate(self, event = None):
-        print "Remove Video unimplemented"
+        eventloop.addIdle (app.controller.removeCurrentItems, "Remove Videos")
 
     def on_rename_playlist_activate(self, event = None):
-        print "Rename Playlist unimplemented"
+        eventloop.addIdle (app.controller.renameCurrentTab, "Rename Tab")
 
     def on_update_channel_activate(self, event = None):
         eventloop.addIdle (app.controller.updateCurrentFeed, "Update Channel")
@@ -382,7 +382,10 @@ class CallbackHandler(object):
     def on_donate_clicked(self, event = None):
         print "Donate unimplemented"
 
-    def on_key_press_event(self, widget, event):
-        if gtk.gdk.keyval_name(event.keyval) == 'Delete':
+    def on_delete(self, event = None):
             eventloop.addUrgentCall(app.controller.removeCurrentSelection, 
                     "remove current selection")
+
+    def on_key_press_event(self, widget, event):
+        if gtk.gdk.keyval_name(event.keyval) == 'Delete':
+            self.onDelete (event)
