@@ -318,9 +318,7 @@ class SelectionHandler(object):
 
         if area == 'itemlist':
             self.setTabListActive(False)
-            print 'item list selection changed: %s %s' % (
-                    self.itemListSelection.getTypesDetailed(),
-                    len(self.itemListSelection.currentSelection))
+            self.updateMenus()
         else:
             self.setTabListActive(True)
             self.displayCurrentTabContent()
@@ -431,6 +429,7 @@ class SelectionHandler(object):
         strings["channel_update"] = UIStrings.UPDATE_CHANNEL
         strings["playlist_remove"] = UIStrings.REMOVE
         strings["playlist_rename"] = UIStrings.RENAME
+        strings["video_remove"] = UIStrings.REMOVE_VIDEO
         if len (tabTypes) == 1:
             if multiple:
                 if 'playlisttab' in tabTypes:
@@ -469,6 +468,21 @@ class SelectionHandler(object):
         actionGroups["PlaylistLikesSelected"] = is_playlistlike
         actionGroups["ChannelSelected"] = tabTypes.issubset (set(['channeltab'])) and not multiple
         actionGroups["ChannelsSelected"] = tabTypes.issubset (set(['channeltab', 'channelfoldertab']))
+
+        # Handle video item area.
+        actionGroups["VideoSelected"] = False
+        actionGroups["VideosSelected"] = False
+        actionGroups["VideoPlayable"] = False
+        if 'downloadeditem' in self.itemListSelection.getTypesDetailed():
+            actionGroups["VideosSelected"] = True
+            actionGroups["VideoPlayable"] = True
+            if len(self.itemListSelection.currentSelection) == 1:
+                actionGroups["VideoSelected"] = True
+            else:
+                strings["video_remove"] = UIStrings.REMOVE_VIDEOS
+#        if len(self.itemListSelection.currentSelection) == 0:
+#            if playable_videos:
+#                actionGroups["VideoPlayable"] = True
 
         app.controller.frame.onSelectedTabChange(strings, actionGroups, guideURL)
 

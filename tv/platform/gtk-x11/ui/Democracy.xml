@@ -55,7 +55,7 @@ P_layback
     <menu action="Video">
       <menuitem action="Open"/>
       <separator/>
-      <menuitem action="RemoveVideo"/>
+      <menuitem action="RemoveVideos"/>
       <menuitem action="SaveVideo"/>
       <menuitem action="CopyVideoURL"/>
       <separator/>

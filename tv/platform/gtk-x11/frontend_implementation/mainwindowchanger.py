@@ -55,13 +55,13 @@ class MainWindowChanger(object):
         if app.controller.videoDisplay.isPlaying:
             pixbuf = playPauseImage.render_icon(gtk.STOCK_MEDIA_PAUSE, 
                     gtk.ICON_SIZE_LARGE_TOOLBAR)
-            self.mainFrame.actionGroups["VideoSelected"].get_action ("PlayPauseVideo").set_property("label", "_Pause")
-            self.mainFrame.actionGroups["VideoSelected"].get_action ("PlayPauseVideo").set_property("stock-id", gtk.STOCK_MEDIA_PAUSE)
+            self.mainFrame.actionGroups["VideoPlayable"].get_action ("PlayPauseVideo").set_property("label", "_Pause")
+            self.mainFrame.actionGroups["VideoPlayable"].get_action ("PlayPauseVideo").set_property("stock-id", gtk.STOCK_MEDIA_PAUSE)
         else:
             pixbuf = playPauseImage.render_icon(gtk.STOCK_MEDIA_PLAY, 
                     gtk.ICON_SIZE_LARGE_TOOLBAR)
-            self.mainFrame.actionGroups["VideoSelected"].get_action ("PlayPauseVideo").set_property("label", "_Play")
-            self.mainFrame.actionGroups["VideoSelected"].get_action ("PlayPauseVideo").set_property("stock-id", gtk.STOCK_MEDIA_PLAY)
+            self.mainFrame.actionGroups["VideoPlayable"].get_action ("PlayPauseVideo").set_property("label", "_Play")
+            self.mainFrame.actionGroups["VideoPlayable"].get_action ("PlayPauseVideo").set_property("stock-id", gtk.STOCK_MEDIA_PLAY)
         playPauseImage.set_from_pixbuf(pixbuf)
 
     def updateFullScreenButton(self):

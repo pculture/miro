@@ -1,0 +1,25 @@
+"Menu strings"
+
+from gettext import gettext as _
+
+REMOVE = _("_Remove...")
+REMOVE_PLAYLIST = _("_Remove Playlist...")
+REMOVE_PLAYLISTS = _("_Remove Playlists...")
+REMOVE_PLAYLIST_FOLDER = _("_Remove Playlist Folder...")
+REMOVE_PLAYLIST_FOLDERS = _("_Remove Playlist Folders...")
+REMOVE_CHANNEL = _("_Remove Channel...")
+REMOVE_CHANNELS = _("_Remove Channels...")
+REMOVE_CHANNEL_FOLDER = _("_Remove Channel Folder...")
+REMOVE_CHANNEL_FOLDERS = _("_Remove Channel Folders...")
+REMOVE_CHANNEL_GUIDE = _("_Remove Channel Guide...")
+REMOVE_CHANNEL_GUIDES = _("_Remove Channel Guides...")
+REMOVE_VIDEO = _("_Remove Video...")
+REMOVE_VIDEOS = _("_Remove Videos...")
+RENAME = _("Re_name...")
+RENAME_PLAYLIST = _("Re_name Playlist...")
+RENAME_PLAYLIST_FOLDER = _("Re_name Playlist Folder...")
+RENAME_CHANNEL = _("Re_name Channel...")
+RENAME_CHANNEL_FOLDER = _("Re_name Channel Folder...")
+RENAME_CHANNEL_GUIDE = _("Re_name Channel Guide...")
+UPDATE_CHANNEL = _("_Update Channel...")
+UPDATE_CHANNELS = _("_Update Channels...")

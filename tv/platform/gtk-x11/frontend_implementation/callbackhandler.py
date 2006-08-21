@@ -80,8 +80,10 @@ class CallbackHandler(object):
         platformutils.confirmMainThread()
         actionGroups = {}
         actionGroups["VideoSelected"] = gtk.ActionGroup("VideoSelected")
+        actionGroups["VideosSelected"] = gtk.ActionGroup("VideosSelected")
         actionGroups["VideoPlaying"] = gtk.ActionGroup("VideoPlaying")
-        actionGroups["ChannelSelected"] = gtk.ActionGroup("ChannelsSelected")
+        actionGroups["VideoPlayable"] = gtk.ActionGroup("VideoPlayable")
+        actionGroups["ChannelSelected"] = gtk.ActionGroup("ChannelSelected")
         actionGroups["ChannelsSelected"] = gtk.ActionGroup("ChannelsSelected")
         actionGroups["ChannelLikeSelected"] = gtk.ActionGroup("ChannelLikeSelected")
         actionGroups["ChannelLikesSelected"] = gtk.ActionGroup("ChannelLikesSelected")
@@ -96,15 +98,19 @@ class CallbackHandler(object):
 
         actionGroups["VideoSelected"].add_actions ([
             ('SaveVideo', gtk.STOCK_SAVE, _('Save Video _As...'), '<Control>s', _('Save this video'), self.on_save_video_activate),
-            ('PlayPauseVideo', gtk.STOCK_MEDIA_PLAY, _('_Play / Pause'), '<Control>space', None, self.on_play_pause_button_clicked),
-            ('RemoveVideo', None, _('_Remove Video'), None, None, self.on_remove_video_activate),
             ('CopyVideoURL', None, _('_Copy Video URL'), None, None, self.on_copy_video_link_activate),
+            ])
+        actionGroups["VideosSelected"].add_actions ([
+            ('RemoveVideos', None, _('_Remove Video'), None, None, self.on_remove_video_activate),
             ])
         actionGroups["VideoPlaying"].add_actions ([
             ('Fullscreen', fullscreen, _('_Fullscreen'), '<Control>f', None, self.on_fullscreen_button_clicked),
             ('StopVideo', None, _('_Stop Video'), None, None, self.on_stop_activate),
             ('NextVideo', None, _('_Next Video'), '<Alt>Right', None, self.on_next_button_clicked),
             ('PreviousVideo', None, _('_Previous Video'), '<Alt>Left', None, self.on_previous_button_clicked),
+            ])
+        actionGroups["VideoPlayable"].add_actions ([
+            ('PlayPauseVideo', gtk.STOCK_MEDIA_PLAY, _('_Play / Pause'), '<Control>space', None, self.on_play_pause_button_clicked),
             ])
         actionGroups["ChannelSelected"].add_actions ([
             ('CopyChannelURL', None, _("Copy Channel _Link"), None, None, self.on_copy_channel_link_activate),

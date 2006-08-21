@@ -208,6 +208,7 @@ class MainFrame:
         self.actionGroups["ChannelsSelected"].get_action("UpdateChannels").set_property("label", strings["channel_update"])
         self.actionGroups["PlaylistLikeSelected"]. get_action("RenamePlaylist"). set_property("label", strings["playlist_rename"])
         self.actionGroups["PlaylistLikesSelected"].get_action("RemovePlaylists").set_property("label", strings["playlist_remove"])
+        self.actionGroups["VideosSelected"].get_action("RemoveVideos").set_property("label", strings["video_remove"])
 
     @gtkAsyncMethod
     def selectDisplay(self, newDisplay, area):
