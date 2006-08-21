@@ -131,7 +131,7 @@
 
 	<!-- CHANNEL BAR -->
   	<browser id="channelsDisplay" src="" type="content"
-                 flex="0" width="200" minwidth="50" maxwidth="400"
+                 flex="0" width="200" minwidth="50" 
                  ondraggesture="return onDragGesture(event, 'channelsDisplay');"
                  ondragover="return onDragOver(event, 'channelsDisplay');"
                  ondragexit="return onDragExit(event, 'channelsDisplay');"
