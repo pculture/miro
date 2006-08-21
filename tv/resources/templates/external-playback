@@ -24,13 +24,15 @@ app.controller.videoInfoItem = None
 
 <body onload="startCountdown(@@@this.getID()@@@)">
     <div id="external-container-basic">
-    	<span i18n:translate="">This file type (<span i18n:name="format" t:replace="this.getFormat()" 
+    	<span i18n:translate="">This file type (<span i18n:name="format" t:replace="this.getFormat(emptyForUnknown=False)" 
 />) can't be played in the main Democracy window.</span>
 
         <a id="external-button-left" href="javascript:playItemExternally(@@@this.getID()@@@)">
             <span i18n:translate="">Play Externally</span>
         </a>
-
+        <a id="external-button-center" href="javascript:revealItem(@@@this.getID()@@@);">
+            <span i18n:translate="">Reveal</span>
+        </a>
         <a id="external-button-right" href="javascript:skipItem(@@@this.getID()@@@)">
             <span i18n:translate="">Skip Video <b i18n:name="countdown" id="countdown" /></span>
         </a>

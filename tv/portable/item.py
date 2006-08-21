@@ -925,7 +925,7 @@ folder will also be deleted.""")
         if emptyForUnknown:
             return ""
         else:
-            return "n/a"
+            return "unknown"
 
     ##
     # return keyword tags associated with the video separated by commas

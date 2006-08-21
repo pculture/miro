@@ -44,5 +44,11 @@ function skipItem(itemID)
     eventURL('action:skipItem?itemID=' + itemID)
 }
 
+function revealItem(itemID)
+{
+    stopCountdown();
+    eventURL('action:revealItem?item=' + itemID)
+}
+
 -->
 </script>

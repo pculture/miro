@@ -8,11 +8,11 @@ body {
 
 #external-container-basic {
 	position: absolute;
-	width: 500px;
+	width: 600px;
 	height: 150px;
 	left: 50%;
 	top: 50%;
-	margin: -125px 0px 0px -250px;
+	margin: -150px 0px 0px -300px;
 	text-align: center;
 }
 
@@ -36,7 +36,7 @@ body {
 
 #external-button-center {
     float: left;
-	margin: 0px;
+    margin: 50px 0px 0px 50px;
 }
 
 #external-button-left, #external-button-right, #external-button-center {
