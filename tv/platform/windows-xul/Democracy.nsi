@@ -107,6 +107,57 @@ Var STARTMENU_FOLDER
 !insertmacro MUI_RESERVEFILE_INSTALLOPTIONS
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Functions
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Author: Lilla (lilla@earthlink.net) 2003-06-13
+; function IsUserAdmin uses plugin \NSIS\PlusgIns\UserInfo.dll
+; This function is based upon code in \NSIS\Contrib\UserInfo\UserInfo.nsi
+; This function was tested under NSIS 2 beta 4 (latest CVS as of this writing).
+;
+; Removed a bunch of comments --Ben
+;
+; Usage:
+;   Call IsUserAdmin
+;   Pop $R0   ; at this point $R0 is "true" or "false"
+;
+Function IsUserAdmin
+Push $R0
+Push $R1
+Push $R2
+ 
+ClearErrors
+UserInfo::GetName
+IfErrors Win9x
+Pop $R1
+UserInfo::GetAccountType
+Pop $R2
+ 
+StrCmp $R2 "Admin" 0 Continue
+; Observation: I get here when running Win98SE. (Lilla)
+; The functions UserInfo.dll looks for are there on Win98 too, 
+; but just don't work. So UserInfo.dll, knowing that admin isn't required
+; on Win98, returns admin anyway. (per kichik)
+StrCpy $R0 "true"
+Goto Done
+ 
+Continue:
+; You should still check for an empty string because the functions
+; UserInfo.dll looks for may not be present on Windows 95. (per kichik)
+StrCmp $R2 "" Win9x
+StrCpy $R0 "false"
+Goto Done
+ 
+Win9x:
+StrCpy $R0 "true"
+ 
+Done:
+Pop $R2
+Pop $R1
+Exch $R0
+FunctionEnd
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Macros
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -163,7 +214,15 @@ lbl_winnt:
 
   Pop $R0
 
+  Call IsUserAdmin
+  Pop $R0
+  StrCmp $R0 "true" is_admin
+  MessageBox MB_OK|MB_ICONEXCLAMATION "You must have administrator privileges to install Democracy.  Please log in using an administrator account and try again."
+  Quit
+  
+is_admin:
   SetShellVarContext all
+
   SetOutPath "$INSTDIR"
 
 !if ${CONFIG_TWOSTAGE} = "Yes"
@@ -204,6 +263,12 @@ unzipok:
 
   SetOutPath "$INSTDIR\resources"
   TackOn::writeToFile initial-feeds.democracy
+  IfErrors 0 files_ok
+  
+  MessageBox MB_OK|MB_ICONEXCLAMATION "Installation failed.  An error occured writing to the Democracy Folder."
+  Quit
+
+files_ok:
 
   ; Old versions used HKEY_LOCAL_MACHINE for the RunAtStartup value, we use
   ; HKEY_CURRENT_USER now
@@ -241,6 +306,11 @@ SectionEnd
 
 Section "Desktop icon" SecDesktop
   CreateShortcut "$DESKTOP\${RUN_SHORTCUT}" "$INSTDIR\${CONFIG_EXECUTABLE}" \
+    "" "$INSTDIR\${CONFIG_ICON}"
+SectionEnd
+
+Section /o "Quick launch icon" SecQuickLaunch
+  CreateShortcut "$QUICKLAUNCH\${RUN_SHORTCUT}" "$INSTDIR\${CONFIG_EXECUTABLE}" \
     "" "$INSTDIR\${CONFIG_ICON}"
 SectionEnd
 
@@ -423,8 +493,9 @@ Section "Uninstall" SEC91
   Delete "$SMPROGRAMS\$R0\${UNINSTALL_SHORTCUT}"
   RMDir "$SMPROGRAMS\$R0"
 
-  ; Remove desktop shortcut
+  ; Remove desktop and quick launch shortcuts
   Delete "$DESKTOP\${RUN_SHORTCUT}"
+  Delete "$QUICKLAUNCH\${RUN_SHORTCUT}"
 
   ; Remove registry keys
   DeleteRegKey HKLM "${INST_KEY}"
