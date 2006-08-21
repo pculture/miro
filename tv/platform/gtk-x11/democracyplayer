@@ -31,7 +31,7 @@ parser.add_option('-v', '--version', dest='version', default=False,
     action='store_true', help='print version info')
 parser.add_option('--profile', metavar='FILE', help='write profiling information to FILE')
 parser.add_option('--bias', metavar='BIAS', help='set profiling bias to BIAS', type=float, default=None)
-parser.add_option('--sync', metavar='SYNC', help='Use X Syncronously')
+parser.add_option('--sync', metavar='SYNC', help='Use X Syncronously', default=False, action="store_true")
 (options, args) = parser.parse_args()
 
 def startapp():
