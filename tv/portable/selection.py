@@ -411,6 +411,67 @@ class SelectionHandler(object):
                     selectedCount=len(tls.currentSelection),
                     foldersSelected=foldersSelected)
 
+    def updateMenus(self):
+        from frontend import UIStrings
+        tabTypes = self.tabListSelection.getTypesDetailed()
+        if tabTypes.issubset(set(['guidetab', 'addedguidetab'])):
+            guideURL = self.getSelectedTabs()[0].obj.getURL()
+        else:
+            guideURL = None
+        multiple = len(self.tabListSelection.currentSelection) > 1
+
+        actionGroups = {}
+        strings = {}
+
+        is_playlistlike = tabTypes.issubset (set(['playlisttab', 'playlistfoldertab']))
+        is_channellike = tabTypes.issubset (set(['channeltab', 'channelfoldertab', 'addedguidetab']))
+        is_channel = tabTypes.issubset (set(['channeltab', 'channelfoldertab']))
+        strings["channel_remove"] = UIStrings.REMOVE
+        strings["channel_rename"] = UIStrings.RENAME
+        strings["channel_update"] = UIStrings.UPDATE_CHANNEL
+        strings["playlist_remove"] = UIStrings.REMOVE
+        strings["playlist_rename"] = UIStrings.RENAME
+        if len (tabTypes) == 1:
+            if multiple:
+                if 'playlisttab' in tabTypes:
+                    strings["playlist_remove"] = UIStrings.REMOVE_PLAYLISTS
+                elif 'playlistfoldertab' in tabTypes:
+                    strings["playlist_remove"] = UIStrings.REMOVE_PLAYLIST_FOLDERS
+                elif 'channeltab' in tabTypes:
+                    strings["channel_remove"] = UIStrings.REMOVE_CHANNELS
+                elif 'channelfoldertab' in tabTypes:
+                    strings["channel_remove"] = UIStrings.REMOVE_CHANNEL_FOLDERS
+                elif 'addedguidetab' in tabTypes:
+                    strings["channel_remove"] = UIStrings.REMOVE_CHANNEL_GUIDES
+            else:
+                if 'playlisttab' in tabTypes:
+                    strings["playlist_remove"] = UIStrings.REMOVE_PLAYLIST
+                    strings["playlist_rename"] = UIStrings.RENAME_PLAYLIST
+                elif 'playlistfoldertab' in tabTypes:
+                    strings["playlist_remove"] = UIStrings.REMOVE_PLAYLIST_FOLDER
+                    strings["playlist_rename"] = UIStrings.RENAME_PLAYLIST_FOLDER
+                elif 'channeltab' in tabTypes:
+                    strings["channel_remove"] = UIStrings.REMOVE_CHANNEL
+                    strings["channel_rename"] = UIStrings.RENAME_CHANNEL
+                elif 'channelfoldertab' in tabTypes:
+                    strings["channel_remove"] = UIStrings.REMOVE_CHANNEL_FOLDER
+                    strings["channel_rename"] = UIStrings.RENAME_CHANNEL_FOLDER
+                elif 'addedguidetab' in tabTypes:
+                    strings["channel_remove"] = UIStrings.REMOVE_CHANNEL_GUIDE
+                    strings["channel_rename"] = UIStrings.RENAME_CHANNEL_GUIDE
+
+        if multiple and is_channel:
+            strings["channel_update"] = UIStrings.UPDATE_CHANNELS
+
+        actionGroups["ChannelLikeSelected"] = is_channellike and not multiple
+        actionGroups["ChannelLikesSelected"] = is_channellike
+        actionGroups["PlaylistLikeSelected"] = is_playlistlike and not multiple
+        actionGroups["PlaylistLikesSelected"] = is_playlistlike
+        actionGroups["ChannelSelected"] = tabTypes.issubset (set(['channeltab'])) and not multiple
+        actionGroups["ChannelsSelected"] = tabTypes.issubset (set(['channeltab', 'channelfoldertab']))
+
+        app.controller.frame.onSelectedTabChange(strings, actionGroups, guideURL)
+
     def displayCurrentTabContent(self):
         newDisplay = self._chooseDisplayForCurrentTab()
         # Don't redisplay the current tab if it's being displayed.  It messes
@@ -424,14 +485,7 @@ class SelectionHandler(object):
             return
 
         self.itemListSelection.clearSelection()
-        selectionType = self.tabListSelection.getTypesDetailed()
-        if selectionType.issubset(set(['guidetab', 'addedguidetab'])):
-            guideURL = self.getSelectedTabs()[0].obj.getURL()
-        else:
-            guideURL = None
-        frame.onSelectedTabChange(selectionType,
-                len(self.tabListSelection.currentSelection) > 1,
-                guideURL)
+        self.updateMenus()
         # do a queueSelectDisplay to make sure that the selectDisplay gets
         # executed after our changes to the tablist template.  This makes tab
         # selection feel faster because the selection changes quickly.

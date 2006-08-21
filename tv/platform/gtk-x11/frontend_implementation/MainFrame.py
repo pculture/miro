@@ -197,54 +197,17 @@ class MainFrame:
         setBool ("maximized", maximized)
         
     @gtkAsyncMethod
-    def onSelectedTabChange(self, tabTypes, multiple, guideURL):
+    def onSelectedTabChange(self, strings, actionGroups, guideURL):
         app.controller.setGuideURL(guideURL)
-        is_playlist = tabTypes.issubset (set(['playlisttab', 'playlistfoldertab']))
-        is_channel = tabTypes.issubset (set(['channeltab', 'channelfoldertab', 'addedguidetab']))
-        channel_remove = _("_Remove...")
-        channel_rename = _("Re_name...")
-        playlist_remove = _("_Remove...")
-        playlist_rename = _("Re_name...")
-        if len (tabTypes) == 1:
-            if multiple:
-                if 'playlisttab' in tabTypes:
-                    playlist_remove = _("_Remove Playlists...")
-                elif 'playlistfoldertab' in tabTypes:
-                    playlist_remove = _("_Remove Playlist Folders...")
-                elif 'channeltab' in tabTypes:
-                    channel_remove = _("_Remove Channels...")
-                elif 'channelfoldertab' in tabTypes:
-                    channel_remove = _("_Remove Channel Folders...")
-                elif 'addedguidetab' in tabTypes:
-                    channel_remove = _("_Remove Channel Guides...")
-            else:
-                if 'playlisttab' in tabTypes:
-                    playlist_remove = _("_Remove Playlist...")
-                    playlist_rename = _("Re_name Playlist...")
-                elif 'playlistfoldertab' in tabTypes:
-                    playlist_remove = _("_Remove Playlist Folder...")
-                    playlist_rename = _("Re_name Playlist Folder...")
-                elif 'channeltab' in tabTypes:
-                    channel_remove = _("_Remove Channel...")
-                    channel_rename = _("Re_name Channel...")
-                elif 'channelfoldertab' in tabTypes:
-                    channel_remove = _("_Remove Channel Folder...")
-                    channel_rename = _("Re_name Channel Folder...")
-                elif 'addedguidetab' in tabTypes:
-                    channel_remove = _("_Remove Channel Guide...")
-                    channel_rename = _("Re_name Channel Guide...")
 
-        self.actionGroups["ChannelLikeSelected"]. set_sensitive (is_channel and not multiple)
-        self.actionGroups["ChannelLikeSelected"]. get_action("RenameChannel"). set_property("label", channel_rename)
-        self.actionGroups["ChannelLikesSelected"].set_sensitive (is_channel)
-        self.actionGroups["ChannelLikesSelected"].get_action("RemoveChannels").set_property("label", channel_remove)
+        for actionGroup, setting in actionGroups.iteritems():
+            self.actionGroups[actionGroup].set_sensitive(setting)
 
-        self.actionGroups["PlaylistLikeSelected"]. set_sensitive (is_playlist and not multiple)
-        self.actionGroups["PlaylistLikeSelected"]. get_action("RenamePlaylist"). set_property("label", playlist_rename)
-        self.actionGroups["PlaylistLikesSelected"].set_sensitive (is_playlist)
-        self.actionGroups["PlaylistLikesSelected"].get_action("RemovePlaylists").set_property("label", playlist_remove)
-
-        self.actionGroups["ChannelsSelected"]. set_sensitive ('channeltab' in tabTypes)
+        self.actionGroups["ChannelLikeSelected"]. get_action("RenameChannel"). set_property("label", strings["channel_rename"])
+        self.actionGroups["ChannelLikesSelected"].get_action("RemoveChannels").set_property("label", strings["channel_remove"])
+        self.actionGroups["ChannelsSelected"].get_action("UpdateChannels").set_property("label", strings["channel_update"])
+        self.actionGroups["PlaylistLikeSelected"]. get_action("RenamePlaylist"). set_property("label", strings["playlist_rename"])
+        self.actionGroups["PlaylistLikesSelected"].get_action("RemovePlaylists").set_property("label", strings["playlist_remove"])
 
     @gtkAsyncMethod
     def selectDisplay(self, newDisplay, area):

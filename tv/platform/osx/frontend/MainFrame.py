@@ -42,8 +42,8 @@ class MainFrame:
     def getDisplaySizeHint(self, area):
         return self.controller.getDisplaySizeHint(area)
 
-    def onSelectedTabChange(self, tabTypes, multiple, guideURL):
-        self.controller.onSelectedTabChange(tabTypes, multiple, guideURL)
+    def onSelectedTabChange(self, strings, actionGroups, guideURL):
+        self.controller.onSelectedTabChange(string, actionGroups, guideURL)
 
 ###############################################################################
 
@@ -144,10 +144,10 @@ class MainController (NibClassBuilder.AutoBaseClass):
     ### Switching displays ###
 
     @platformutils.onMainThread
-    def onSelectedTabChange(self, tabTypes, multiple, guideURL):
+    def onSelectedTabChange(self, strings, actionGroups, guideURL):
         app.controller.setGuideURL(guideURL)
         print "WARNING: ignoring onSelectedTabChange (%s, %s, %s)" % \
-                (tabTypes, multiple, guideURL)
+                (strings, actionGroups, guideURL)
         return
         self.selectedTabType = tabType
         self.multipleTabsSelected = multiple

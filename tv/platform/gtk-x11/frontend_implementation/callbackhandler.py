@@ -81,6 +81,7 @@ class CallbackHandler(object):
         actionGroups = {}
         actionGroups["VideoSelected"] = gtk.ActionGroup("VideoSelected")
         actionGroups["VideoPlaying"] = gtk.ActionGroup("VideoPlaying")
+        actionGroups["ChannelSelected"] = gtk.ActionGroup("ChannelsSelected")
         actionGroups["ChannelsSelected"] = gtk.ActionGroup("ChannelsSelected")
         actionGroups["ChannelLikeSelected"] = gtk.ActionGroup("ChannelLikeSelected")
         actionGroups["ChannelLikesSelected"] = gtk.ActionGroup("ChannelLikesSelected")
@@ -105,10 +106,12 @@ class CallbackHandler(object):
             ('NextVideo', None, _('_Next Video'), '<Alt>Right', None, self.on_next_button_clicked),
             ('PreviousVideo', None, _('_Previous Video'), '<Alt>Left', None, self.on_previous_button_clicked),
             ])
-        actionGroups["ChannelsSelected"].add_actions ([
-            ('UpdateChannel', None, _("_Update Channel"), None, None, self.on_update_channel_activate),
+        actionGroups["ChannelSelected"].add_actions ([
             ('CopyChannelURL', None, _("Copy Channel _Link"), None, None, self.on_copy_channel_link_activate),
-            ('MailChannels', None, _("_Send this channel to a friend"), None, None, self.on_mail_channel_link_activate),
+            ('MailChannel', None, _("_Send this channel to a friend"), None, None, self.on_mail_channel_link_activate),
+            ])
+        actionGroups["ChannelsSelected"].add_actions ([
+            ('UpdateChannels', None, _("_Update Channel"), None, None, self.on_update_channel_activate),
             ])
         actionGroups["ChannelLikeSelected"].add_actions ([
             ('RenameChannel', None, _("Re_name Channel"), None, None, self.on_rename_channel_activate),

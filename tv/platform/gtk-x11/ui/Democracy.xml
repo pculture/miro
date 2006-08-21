@@ -70,10 +70,10 @@ P_layback
       <menuitem action="RenameChannel"/>
       <menuitem action="RemoveChannels"/>
       <separator/>
-      <menuitem action="UpdateChannel"/>
+      <menuitem action="UpdateChannels"/>
       <menuitem action="UpdateAllChannels"/>
       <separator/>
-      <menuitem action="MailChannels"/>
+      <menuitem action="MailChannel"/>
       <menuitem action="CopyChannelURL"/>
     </menu>
     <menu action="Playlists">

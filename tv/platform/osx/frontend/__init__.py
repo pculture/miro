@@ -3,6 +3,7 @@ from Application import Application
 from HTMLDisplay import HTMLDisplay, getDTVAPICookie, getDTVAPIURL
 from VideoDisplay import VideoDisplay, PlaybackController
 from UIBackendDelegate import UIBackendDelegate
+import UIStrings
 
 from objc import nil
 from AppKit import NSApplication
