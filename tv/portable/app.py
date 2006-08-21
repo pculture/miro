@@ -618,7 +618,7 @@ class Controller (frontend.Application):
             feed.remove()
 
     def copyCurrentFeedURL(self):
-        tabs = controller.selection.getSelectedTabs()
+        tabs = self.selection.getSelectedTabs()
         if len(tabs) == 1 and tabs[0].isFeed():
             delegate.copyTextToClipboard(tabs[0].obj.getURL())
 
@@ -635,7 +635,7 @@ class Controller (frontend.Application):
         elif type == 'playlisttab':
             self.removeCurrentPlaylist()
         elif type == 'item':
-            self.expireCurrentItems()
+            self.removeCurrentItems()
 
     def removeCurrentFeed(self):
         if self.selection.tabListSelection.getType() == 'channeltab':
@@ -654,12 +654,21 @@ class Controller (frontend.Application):
             playlists = [t.obj for t in self.selection.getSelectedTabs()]
             self.removePlaylists(playlists)
 
-    def expireCurrentItems(self):
-        if self.selection.itemListSelection.getType() == 'item':
-            item.expireItems(self.selection.getSelectedItems())
+    def removeCurrentItems(self):
+        if self.selection.itemListSelection.getType() != 'item':
+            return
+        selected = self.selection.getSelectedItems()
+        if self.selection.tabListSelection.getType() != 'playlisttab':
+            removable = [i for i in selected if i.isDownloaded() ]
+            if removable:
+                item.expireItems(removable)
+        else:
+            playlist = self.selection.getSelectedTabs()[0].obj
+            for i in selected:
+                playlist.removeItem(i)
 
     def updateCurrentFeed(self):
-        for tab in controller.selection.getSelectedTabs():
+        for tab in self.selection.getSelectedTabs():
             if tab.isFeed():
                 tab.obj.update()
 
@@ -905,8 +914,7 @@ downloaded?""")
                 destObj = None
             sourceArea, sourceID = sourceData.split("-")
             sourceID = int(sourceID)
-            draggedIDs = controller.selection.calcSelection(sourceArea,
-                    sourceID)
+            draggedIDs = self.selection.calcSelection(sourceArea, sourceID)
         except:
             print "WARNING: error parsing drop (%r, %r, %r)" % \
                     (dropData, type, sourceData)
@@ -933,7 +941,7 @@ downloaded?""")
             tabOrder.handleDNDReorder(destObj, draggedIDs)
         elif destType == "playlistitem" and type == "downloadeditem":
             # Reording items in a playlist
-            playlist = controller.selection.getSelectedTabs()[0].obj
+            playlist = self.selection.getSelectedTabs()[0].obj
             playlist.handleDNDReorder(destObj, draggedIDs)
         else:
             print "Can't handle drop. Dest type: %s Dest id: %s Type: %s" % \
@@ -1128,10 +1136,7 @@ class ModelActionHandler:
         controller.removeCurrentPlaylist()
 
     def removeCurrentItems(self):
-        selected = controller.selection.getSelectedItems()
-        removable = [i for i in selected if i.isDownloaded() ]
-        if removable:
-            item.expireItems(removable)
+        controller.removeCurrentItems()
 
     def downloadCurrentItems(self):
         selected = controller.selection.getSelectedItems()
