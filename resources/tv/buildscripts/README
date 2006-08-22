@@ -3,7 +3,20 @@ versions of democracy to the Participatory Culture Foundation's server for relea
 Here's how they work:
 
 To run a script, use the following command:
+#For mac:
 
+To make a nightly build and place it on your desktop:
+./osx
+ 
+To make a build and upload it to nightlies:
+./osx username tag 
+
+Where:
+-Username is your login name on pcf2.osuosl.org (you'll be prompted for your password later).
+-tag is the version of DP you wish to build.
+If you don't specify a tag, the build will be made from the latest trunk revision.
+
+#For everything else:
 ./scriptname username version
 
 Where:
