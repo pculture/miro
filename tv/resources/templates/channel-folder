@@ -52,7 +52,7 @@ for feed in allFeeds:
     feed.updateIcons()
 ]]>
 
-channelNoun = _("Channel Folder")
+isFolder = True
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
 # This should unlink matchingItems and all of it's children
@@ -68,7 +68,7 @@ for feed in allFeeds:
 
 <body>
 <div id="main-titlebar">
-    <img id="main-titlebar-avatar" src="resource:images/playlist-icon.png" alt="" />
+    <img id="main-titlebar-avatar" src="resource:images/folder-icon.png" alt="" />
     <div id="main-titlebar-channelname">
         <div t:updateForView="thisFolderView">
             <h1 t:replaceMarkup="folder.getTitle()" />

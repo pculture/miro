@@ -53,7 +53,7 @@ def updateSearchString(newSearch):
 feed.updateIcons()
 ]]>
 
-channelNoun = _("Channel")
+isFolder = False
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
 # This should unlink matchingItems and all of it's children

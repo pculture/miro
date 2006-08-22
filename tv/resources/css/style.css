@@ -72,12 +72,20 @@ Contains the channels
 
 a.feeditem {
     display: block;
-    padding: 2px 5px 2px 4px;
+    padding: 1px 5px 1px 16px;
     color: #000;
     font-size: 11px;
     text-decoration: none;
     height: 20px;
     white-space: nowrap;
+}
+
+a.feeditem.folder {
+    padding-left: 3px;
+}
+
+.child a.feeditem {
+   padding-left: 36px;
 }
 
 .selected a.feeditem, .selected-inactive a.feeditem {
@@ -113,20 +121,20 @@ a.feeditem img.icon {
 }
 
 .expanded-triangle {
-    margin: 0;
-    border: 0;
+    margin: 4px 0px;
+    border: 0px;
     float: left;
 }
 
 .dnd-background-outer  {
     position: relative;
-    height: 24px;
+    height: 22px;
     width: 100%;
 }
 
 .dnd-background-inner1, .dnd-background-inner2  {
     position: absolute;
-    height: 24px;
+    height: 22px;
     z-index: -1;
 }
 
@@ -150,25 +158,34 @@ a.feeditem img.icon {
 .drag-highlight .dnd-background-inner1 {
     background: url(../images/dnd-reorder-circle.png) top left no-repeat;
     top: -4px;
-    left: 4px;
-    width: 5px;
+    left: 11px;
+    width: 8px;
+    height: 8px;
+    z-index: 3;
 }
 
 .drag-highlight .dnd-background-inner2 {
-    background: url(../images/dnd-reorder-line.png) 3px 0px repeat-x;
+    background: url(../images/dnd-reorder-line.png) top left repeat-x;
     top: -2px;
-    left: 4px;
+    left: 17px;
     right: 0px;
     width: auto;
+    height: 4px;
+    z-index: 3;
 }
 
-.drag-highlight.child .dnd-background-inner1, .drag-highlight.child .dnd-background-inner2 {
-   left: 26px;
+.drag-highlight.child .dnd-background-inner1 {
+   left: 31px;
+}
+
+.drag-highlight.child .dnd-background-inner2 {
+   left: 37px;
 }
 
 /* DND Folder highlight effects */
 .playlist-folder.drag-highlight.playlist.dnd-background-outer, .channel-folder.drag-highlight.channel.dnd-background-outer, .playlist.drag-highlight.downloadeditem.dnd-background-outer {
     background: url(../images/dnd-highlight-left.png) top left no-repeat;
+    z-index: -1;
 }
 
 .playlist-folder.drag-highlight.playlist .dnd-background-inner1, .channel-folder.drag-highlight.channel .dnd-background-inner1, .playlist.drag-highlight.downloadeditem .dnd-background-inner1 {
@@ -177,18 +194,18 @@ a.feeditem img.icon {
     left: 5px;
     right: 5px;
     width: auto;
+    height: 22px;
+    z-index: -1;
 }
 
 .playlist-folder.drag-highlight.playlist .dnd-background-inner2, .channel-folder.drag-highlight.channel .dnd-background-inner2, .playlist.drag-highlight.downloadeditem .dnd-background-inner2 {
     background: url(../images/dnd-highlight-right.png) top right no-repeat;
     left: auto;
     top: 0px;
-    width: 5px;
     right: 0px;
-}
-
-.child a.feeditem {
-   padding-left: 30px;
+    width: 5px;
+    height: 22px;
+    z-index: -1;
 }
 
 a.feeditem div.name {

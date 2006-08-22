@@ -35,7 +35,11 @@
         <div t:hideIf="matchingItems.len()==newItems.len()">
             <div id="show-more-videos-label" style="display: @@@showMoreVideosDisplay@@@;">
                 <a href="javascript:showAllVideos();" class="main-notification-nonew">
-                    <div class="main-notification"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()" class="video-count"/> Videos on this <span t:replace="channelNoun" i18n:name="channelOrFolder" /></span> &gt;&gt;</div>
+		<div class="main-notification">
+		    <div t:hideIf="isFolder"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()" class="video-count"/> videos on this channel</span></div>
+		    <div t:showIf="isFolder"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()" class="video-count"/> videos on this channel folder</span></div>
+		    &gt;&gt;
+		</div>
                     <div class="main-notification-right">&nbsp;</div>
                     <br clear="left" />
                 </a>
@@ -47,10 +51,18 @@
 <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-matching');">#&nbsp;</a></div>
 <div t:updateForView="matchingItems">
   <div t:showIf="searchTerm is None">
-    <h1 i18n:translate="">
-        <span i18n:name="len" t:replace="allItems.len()" /> 
-        Videos On This <span t:replace="channelNoun" i18n:name="channelOrFolder" />
-    </h1>
+    <div t:hideIf="isFolder">
+      <h1 i18n:translate="">
+          <span i18n:name="len" t:replace="allItems.len()" /> 
+          videos on this channel
+      </h1>
+    </div>
+    <div t:showIf="isFolder">
+      <h1 i18n:translate="">
+          <span i18n:name="len" t:replace="allItems.len()" /> 
+          videos on this channel folder
+      </h1>
+    </div>
   </div>
   <div t:showIf="searchTerm is not None">
     <div t:showIf="allItems.len() == matchingItems.len()">

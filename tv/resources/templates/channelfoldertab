@@ -12,17 +12,17 @@
     drageffectchannelfolder="move">
 <div class="dnd-background-inner1"></div>
 <div class="dnd-background-inner2"></div>
-<a class="feeditem noselect draggable"
+<a class="feeditem noselect draggable folder"
     dragsourcetype="channelfolder"
     dragsourcedata="tablist-***this.objID()***"
     dragicon="channel-tnail-***this.objID()***">
 <img class="expanded-triangle" t:hideIf="this.obj.getExpanded()"
     onmousedown="return eventURL('action:toggleExpand?id=' + ***this.objID()***);" 
-    src="resource:images/black_yellow_triangle.png" alt="expanded" />
+    src="resource:images/tab-arrow-up.png" alt="expanded" />
 <img class="expanded-triangle" t:showIf="this.obj.getExpanded()"
     onmousedown="return eventURL('action:toggleExpand?id=' + ***this.objID()***);" 
-    src="resource:images/black_yellow_triangle_down.png" alt="unexpanded" />
-<img id="channel-tnail-***this.objID()***" class="icon" src="resource:images/collection-icon-tablist.png" /><div class="name" t:replaceMarkup="this.obj.getTitle()" />
+    src="resource:images/tab-arrow-down.png" alt="unexpanded" />
+<img id="channel-tnail-***this.objID()***" class="icon" src="resource:images/folder-icon-tablist.png" /><div class="name" t:replaceMarkup="this.obj.getTitle()" />
 </a>
 </div>
 </body>

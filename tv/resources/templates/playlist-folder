@@ -32,7 +32,7 @@ childrenView
 </head>
 <body>
 <div id="main-titlebar">
-        <img id="main-titlebar-avatar" src="resource:images/playlist-icon.png" alt="" />
+        <img id="main-titlebar-avatar" src="resource:images/folder-icon.png" alt="" />
 	<div id="main-titlebar-channelname">
 	    <div t:updateForView="thisPlaylistView">
                 <h1 t:replaceMarkup="playlist.getTitle()" />
