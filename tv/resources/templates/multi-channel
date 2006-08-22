@@ -9,18 +9,30 @@
     <link href="resource:css/main.css" rel="stylesheet" type="text/css" />
     <t:include filename="dynamic.js" />
     <t:execOnLoad><![CDATA[
-selectedCount = kargs['selectedCount']
-foldersSelected = kargs['foldersSelected']
+selectedFolders = kargs['selectedFolders']
+selectedChildren = kargs['selectedChildren']
+containedChildren = kargs['containedChildren']
 ]]>
     </t:execOnLoad>
 </head>
 <body class="gray-background">
     <div class="channel-blank">
-        <div class="channel-message" i18n:translate="">
-            <span i18n:name="count" t:replace="selectedCount" /> Channels Selected
+        <div t:showIf="selectedFolders > 0">
+            <div class="channel-message" i18n:translate="">
+                <span i18n:name="count" t:replace="selectedFolders" />
+                    Channel Folders Selected (containing 
+                    <span i18n:name="containedcount" t:replace="containedChildren" />
+                    channels)
+            </div>
+        </div>
+        <div t:showIf="selectedChildren > 0">
+            <div class="channel-message" i18n:translate="">
+                <span i18n:name="count" t:replace="selectedChildren" />
+                    Channels Selected
+            </div>
         </div>
         <br /><br />
-        <span t:hideIf="foldersSelected"><a style="color: red;" href="#" onclick="return eventURL('action:mergeToFolder');">Put Channels in a New Folder</a>
+        <span t:hideIf="selectedFolders > 0"><a style="color: red;" href="#" onclick="return eventURL('action:mergeToFolder');">Put Channels in a New Folder</a>
         </span>
         <br /><br />
         <a style="color: red;" i18n:translate="" href="#" onclick="return eventURL('action:removeCurrentFeed');">Delete These Channels</a><br /><br />

@@ -287,7 +287,7 @@ div.scraping-content {
 .main-video {
     border-top: 1px solid #f0fcfe;
     border-bottom: 1px solid #d5ddea;
-    background: #f9f9f9 url(../images/main-video-bg.png) no-repeat right top;
+    background: url(../images/main-video-bg.png) no-repeat right top;
     height: 83px;
     width: 100%;
     position: relative;
@@ -300,7 +300,7 @@ div.scraping-content {
 }
 
 .main-video.selected {
-    background: #ffff44;
+    background: url(../images/main-video-bg-selected.png) repeat-x left top;
 }
 
 .main-video-tnail {

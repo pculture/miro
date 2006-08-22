@@ -389,25 +389,29 @@ class SelectionHandler(object):
                         id=tab.obj.getID())
         else:
             foldersSelected = False
-            templateName = None
+            type = tls.getType()
+            if type == 'playlisttab':
+                templateName = 'multi-playlist'
+            elif type == 'channeltab':
+                templateName = 'multi-channel'
+            selectedChildren = 0
+            selectedFolders = 0
+            containedChildren = 0
             for tab in self.getSelectedTabs():
                 if isinstance(tab.obj, folder.FolderBase):
-                    foldersSelected = True
-                if tab.isFeed() or tab.isChannelFolder():
-                    if templateName == 'multi-playlist':
-                        raise AssertionError("channels and playlists selected")
-                    templateName = 'multi-channel'
-                elif tab.isPlaylist() or tab.isPlaylistFolder():
-                    if templateName == 'multi-channel':
-                        raise AssertionError("channels and playlists selected")
-                    templateName = 'multi-playlist'
+                    selectedFolders += 1
+                    view = tab.obj.getChildrenView()
+                    containedChildren += view.len()
+                    for child in view:
+                        if child.getID() in tls.currentSelection:
+                            selectedChildren -= 1
                 else:
-                    raise AssertionError("Multiple %s tabs selected" % 
-                            type(tab.obj))
+                    selectedChildren += 1
             return app.TemplateDisplay(templateName, frameHint=frame,
                     areaHint=frame.mainDisplay,
-                    selectedCount=len(tls.currentSelection),
-                    foldersSelected=foldersSelected)
+                    selectedFolders=selectedFolders,
+                    selectedChildren=selectedChildren,
+                    containedChildren=containedChildren)
 
     def updateMenus(self):
         from frontend import UIStrings

@@ -895,6 +895,13 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
         for feed in views.feeds:
             feed.iconCache.requestUpdate(True)
 
+    def getDragDestType(self):
+        self.confirmDBThread()
+        if self.folder_id is not None:
+            return 'channel'
+        else:
+            return 'channel:channelfolder'
+
     def onRestore(self):
         if (self.iconCache == None):
             self.iconCache = IconCache (self, is_vital = True)

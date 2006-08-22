@@ -5,15 +5,17 @@
 </head>
 <body>
 <!-- Normal -->
-<a class="feeditem draggable noselect ***this.obj.getFolder() and 'child' or ''***"
-	dragsourcetype="***this.getDragSourceType()***"
-	dragsourcedata="tablist-***this.objID()***"
-	dragicon="channel-tnail-***this.objID()***"
-	dragdesttype="channel:channelfolder"
+<div class="dnd-background-outer ***this.obj.getFolder() and 'child' or ''***"
+	dragdesttype="***this.obj.getDragDestType()***"
 	dragdestdata="channel-***this.objID()***"
 	drageffectchannel="move"
 	drageffectchannelfolder="move">
-
+<div class="dnd-background-inner1"></div>
+<div class="dnd-background-inner2"></div>
+<a class="feeditem draggable noselect"
+	dragsourcetype="***this.getDragSourceType()***"
+	dragsourcedata="tablist-***this.objID()***"
+	dragicon="channel-tnail-***this.objID()***">
 <div t:showIf="this.obj.showA()" class="left-bubble blue ***this.obj.showU() and 'second' or ''***">
  <div class="right-bubble blue">
   <div class="number-count blue" t:replace="this.obj.numAvailable()" />
@@ -28,6 +30,7 @@
 
 <img id="channel-tnail-***this.objID()***" class="icon" src="***this.obj.getThumbnail()***" /><div class="name noselect" t:replaceMarkup="this.obj.getTitle()" />
 </a>
+</div>
 
 </body>
 </html>

@@ -70,7 +70,7 @@ Contains the channels
 	cursor: default;
 }
 
-a.feeditem{
+a.feeditem {
     display: block;
     padding: 2px 5px 2px 4px;
     color: #000;
@@ -92,14 +92,6 @@ a.feeditem span {
     overflow: hidden;
 }
 
-a.feeditem.child {
-   margin-left: 16px;
-}
-
-a.feeditem.drag-highlight {
-   border-top: 1px solid black;
-   padding-top: 1px;
-}
 .selected a.feeditem span, .selected-inactive a.feeditem span {
     color: #fff;
 }
@@ -126,54 +118,77 @@ a.feeditem img.icon {
     float: left;
 }
 
-.dnd-background-left  {
+.dnd-background-outer  {
     position: relative;
+    height: 24px;
     width: 100%;
-    height: 24px;
 }
 
-.dnd-background-mid  {
+.dnd-background-inner1, .dnd-background-inner2  {
     position: absolute;
-    left: 5px;
-    right: 5px;
     height: 24px;
     z-index: -1;
 }
 
-.dnd-background-right {
-    position: absolute;
+/* DND Effects.  There is some nasty CSS stuff going on.  
+
+* The basic idea is that for tabs, we surround the content with a
+* .dnd-background-outer DIV.  We also add 2 extra absolutely positiond DIVS
+* inside .dnd.background-outer, called .dnd-background-inner1 and
+* .dnd-background-inner2.  The when the DIVs are being dragged over, they get
+* 2 extra classes, "drag-highlight" and the type of data that is being dragged
+* onto it ("playlist", "channelfolder", etc).
+* 
+* There are 2 kinds of DND effects we have for tabs, reordering a them and
+* dropping a playlist/channel on a folder or an item on a playlist.
+*/
+
+/* DND reorder effects */
+.drag-highlight.dnd-background-outer {
+}
+
+.drag-highlight .dnd-background-inner1 {
+    background: url(../images/dnd-reorder-circle.png) top left no-repeat;
+    top: -4px;
+    left: 4px;
     width: 5px;
-    right: 0px;
-    height: 24px;
-    z-index: -1;
 }
 
-.drag-highlight.dnd-background-left {
+.drag-highlight .dnd-background-inner2 {
+    background: url(../images/dnd-reorder-line.png) 3px 0px repeat-x;
+    top: -2px;
+    left: 4px;
+    right: 0px;
+    width: auto;
+}
+
+.drag-highlight.child .dnd-background-inner1, .drag-highlight.child .dnd-background-inner2 {
+   left: 26px;
+}
+
+/* DND Folder highlight effects */
+.playlist-folder.drag-highlight.playlist.dnd-background-outer, .channel-folder.drag-highlight.channel.dnd-background-outer, .playlist.drag-highlight.downloadeditem.dnd-background-outer {
     background: url(../images/dnd-highlight-left.png) top left no-repeat;
 }
 
-.drag-highlight .dnd-background-mid {
+.playlist-folder.drag-highlight.playlist .dnd-background-inner1, .channel-folder.drag-highlight.channel .dnd-background-inner1, .playlist.drag-highlight.downloadeditem .dnd-background-inner1 {
     background: url(../images/dnd-highlight-mid.png) top left repeat-x;
+    top: 0px;
+    left: 5px;
+    right: 5px;
+    width: auto;
 }
 
-.drag-highlight .dnd-background-right {
+.playlist-folder.drag-highlight.playlist .dnd-background-inner2, .channel-folder.drag-highlight.channel .dnd-background-inner2, .playlist.drag-highlight.downloadeditem .dnd-background-inner2 {
     background: url(../images/dnd-highlight-right.png) top right no-repeat;
+    left: auto;
+    top: 0px;
+    width: 5px;
+    right: 0px;
 }
 
-/* Selectors for containers that can be dropped on to up things in, but can
-* also be reordered using DND.  Is there a nicer way to do this? */
-.dnd-playlist.drag-highlight.dnd-background-left.playlist, .drag-highlight.dnd-background-left.channelfolder, .drag-highlight.dnd-background-left.playlistfolder {
-    background: none;
-    border-top: 1px solid black;
-    margin-top: -1px;
-}
-
-.dnd-playlist.drag-highlight.playlist .dnd-background-mid, .drag-highlight.channelfolder .dnd-background-mid, .drag-highlight.playlistfolder .dnd-background-mid {
-    background: none;
-}
-
-.dnd-playlist.drag-highlight.playlist .dnd-background-right, .drag-highlight.channelfolder .dnd-background-right, .drag-highlight.playlistfolder .dnd-background-right {
-    background: none;
+.child a.feeditem {
+   padding-left: 30px;
 }
 
 a.feeditem div.name {
