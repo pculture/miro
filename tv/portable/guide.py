@@ -141,7 +141,7 @@ class ChannelGuide(DDBObject):
 
             #print "DTV: No guide available! Sending apology instead."
             self.startUpdates()
-            return fillStaticTemplate("go-to-guide", platform="", eventCookie="")
+            return fillStaticTemplate("go-to-guide", platform="", eventCookie="", id=self.getID())
         else:
             return self.cachedGuideBody
 

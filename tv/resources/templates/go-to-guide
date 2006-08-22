@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:t="http://www.participatorypolitics.org/"
       xmlns:i18n="http://www.participatoryculture.org/i18n"
+      guideId="@@@kargs['id']@@@"
       eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -10,7 +11,9 @@
 <t:include filename="dynamic.js" />
 <script type="text/javascript">
 function goToGuide() {
-  eventURL('action:goToGuide');
+    var elt = document.getElementsByTagName("html")[0];
+    var guideId = elt.getAttribute('guideId');
+  eventURL('action:goToGuide?id=' + guideId);
 }
 setTimeout(goToGuide, 1000);
 /* We use setTimeout because we want to make sure that the loading image has a

@@ -1193,7 +1193,7 @@ class ModelActionHandler:
         elif objType == guide.ChannelGuide:
             if len(selectedObjects) != 1:
                 raise AssertionError("Multiple guides selected in remove")
-            controller.removeGuide(oneObject)
+            controller.removeGuide(selectedObjects[0])
         elif objType == item.Item:
             pl = controller.selection.getSelectedTabs()[0].obj
             pl.handleRemove(destObj, selectedIDs)
@@ -1444,16 +1444,20 @@ class TemplateActionHandler:
                 *args, **kargs)
         controller.frame.selectDisplay(template, controller.frame.mainDisplay)
 
-    def doneWithIntro(self):
-        getSingletonDDBObject(views.default_guide).setSawIntro()
-        self.goToGuide()
+    def doneWithIntro(self, id):
+        guide = views.guides.getObjectByID(int(id)).setSawIntro()
+        self.goToGuide(id)
 
-    def goToGuide(self):
+    def goToGuide(self, id):
         # Only switch to the guide if the template display is already
         # selected This prevents doubling clicking on a movie from
         # openning the channel guide instead of the video
         if controller.frame.getDisplay(controller.frame.mainDisplay) is self.display:
-            guide = getSingletonDDBObject(views.default_guide)
+            if id is None:
+                guide = getSingletonDDBObject(views.default_guide)
+            else:
+                guide = views.guides.getObjectByID(int(id))
+
             # Does the Guide want to implement itself as a redirection to
             # a URL?
             (mode, location) = guide.getLocation()

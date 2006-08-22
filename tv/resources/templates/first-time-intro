@@ -3,12 +3,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:t="http://www.participatorypolitics.org/"
       xmlns:i18n="http://www.participatoryculture.org/i18n"
+      guideId="@@@kargs['id']@@@"
       eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 						
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" type="text/css" href="resource:css/intro.css" />
 	<t:include filename="dynamic.js" />
+<script type="text/javascript">
+function doneWithIntro() {
+    var elt = document.getElementsByTagName("html")[0];
+    var guideId = elt.getAttribute('guideId');
+    eventURL('action:doneWithIntro?id=' + guideId);
+}
+</script>
 </head>
 
 <body>
@@ -30,8 +38,7 @@ alt="fullscreen button" /><br />
 	
 	
 	<p style="color: #090;" i18n:translate=""><strong i18n:translate="">SKIP INTRO: <a style="color: 
-#090;" href="#" 
-onclick="eventURL('action:doneWithIntro');">Go to Channel Guide >></a></strong></p>
+#090;" href="#" onclick="doneWithIntro();">Go to Channel Guide >></a></strong></p>
 	
   <p i18n:translate=""><strong>Add Channels:</strong> The Channel Guide is your home base 
 for internet TV 
@@ -49,7 +56,7 @@ videos and downloads in the background. Leaving it running means you'll have new
 Democracy Player 
 features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically. </p>
 	
-  <div class="gotoguide"> <a href="#" onclick="eventURL('action:doneWithIntro');"><img src="resource:images/intro-go_to_channel_guide.png" alt="go to channel guide" /></a> </div>
+  <div class="gotoguide"> <a href="#" onclick="doneWithIntro();"><img src="resource:images/intro-go_to_channel_guide.png" alt="go to channel guide" /></a> </div>
 	
 </div>
 
