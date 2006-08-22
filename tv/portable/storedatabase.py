@@ -533,7 +533,7 @@ class LiveStorage:
                     except bsddb.db.DBPageNotFoundError:
                         print "WARNING: DBPageNotFoundError while loading database"
                         self.closeInvalidDB()
-                        shutil.rmtree(self.dbPath, ignore_errors=True)
+                        self.saveInvalidDB()
                         self.openEmptyDB()
                         self.saveDatabase()
             else:
@@ -544,6 +544,16 @@ class LiveStorage:
                 print "Database load slow: %.3f" % (end - start,)
         except bsddb.db.DBNoSpaceError:
             frontend.exit(28)
+
+    def saveInvalidDB(self):
+        dir = os.path.dirname(self.dbPath)
+        saveName = "corrupt_database"
+        i = 0
+        while os.path.exists(os.path.join(dir, saveName)):
+            i += 1
+            saveName = "corrupt_database.%d" % i
+
+        os.rename(self.dbPath, os.path.join(dir, saveName))
 
     def openEmptyDB(self):
         try:
