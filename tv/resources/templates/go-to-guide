@@ -12,7 +12,7 @@
 function goToGuide() {
   eventURL('action:goToGuide');
 }
-setTimeout(goToGuide, 100);
+setTimeout(goToGuide, 1000);
 /* We use setTimeout because we want to make sure that the loading image has a
  * chance to render. Otherwise we get a blank screen when the channel guide is
  * rendering.

@@ -1,5 +1,6 @@
 import resource
 from database import DDBObject
+from template import fillStaticTemplate
 from httpclient import grabURL
 from xhtmltools import urlencode
 from copy import copy
@@ -14,40 +15,6 @@ import views
 from gtcache import gettext as _
 
 HTMLPattern = re.compile("^.*(<head.*?>.*</body\s*>)", re.S)
-
-#  # NEEDS: Make this something more attractive
-#  guideNotAvailableBody = """
-#  <body>
-#    <script type=\"text/javascript\">
-#      function tryAgain() {
-#        eventURL('template:guide-loading');
-#      }
-#    </script>
-#  
-#    <p>
-#      The channel guide could not be loaded. Perhaps you're not connected to the
-#      Internet?
-#    </p>
-#    <p>
-#      <a href="#" onclick="tryAgain();">Try again</a>
-#    </p>
-#  </body>
-#  """
-#  
-#  #""" Fix emacs misparse for coloration.
-
-guideNotAvailableBody = """
-<head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" href="resource:css/style.css" />
-</head>
-
-<body class="channel-guide-body">
-	<div id="channel-guide-loading-image">
-		&nbsp;
-	</div>
-</body>
-"""
 
 # Desired semantics:
 #  * The first time getHTML() is called (ever, across sessions), the user
@@ -129,9 +96,8 @@ class ChannelGuide(DDBObject):
         self.signalChange()
 
     def startUpdates(self):
-        if self.dc:
-            self.dc.cancel()
-        self.dc = eventloop.addIdle (self.update, "Channel Guide Update")
+        if not self.dc:
+            self.dc = eventloop.addIdle (self.update, "Channel Guide Update")
 
     # How should we load the guide? Returns (scheme, value). If scheme is
     # 'url', value is a URL that should be loaded directly in the frame.
@@ -166,15 +132,14 @@ class ChannelGuide(DDBObject):
         # A better solution would be to put up a "loading" page and
         # somehow shove an event to the page when the channel guide
         # load finishes that causes the browser to reload the page.
-        if not self.cachedGuideBody:
+        if (not self.cachedGuideBody) or (not self.loadedThisSession):
             # Start a new attempt, so that clicking on the guide
             # tab again has at least a chance of working
-            print "DTV: No guide available! Sending apology instead."
+
+            #print "DTV: No guide available! Sending apology instead."
             self.startUpdates()
-            return guideNotAvailableBody
+            return fillStaticTemplate("go-to-guide", platform="", eventCookie="")
         else:
-            if not self.loadedThisSession:
-                print "DTV: *** WARNING *** loading a stale copy of the channel guide from cache"
             return self.cachedGuideBody
 
     def processUpdate(self, info):
