@@ -1,3 +1,4 @@
+#define MOZILLA_INTERNAL_API
 #include "XPCOMUtil.h"
 #include <nsCOMPtr.h>
 #include <nsIDOMEventTarget.h>
