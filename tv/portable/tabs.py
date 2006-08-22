@@ -210,7 +210,7 @@ class TabOrder(database.DDBObject):
     """
     def __init__(self, type):
         """Construct a TabOrder.  type should be either "channel", or
-        "playlist.
+        "playlist".
         """
 
         self.type = type
