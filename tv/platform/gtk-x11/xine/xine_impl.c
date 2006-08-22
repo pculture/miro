@@ -154,8 +154,10 @@ void xineAttach(_Xine* xine, const char* displayName, Drawable d)
 void xineDetach(_Xine* xine)
 {
     if(!xine->attached) return;
-    xine_port_send_gui_data(xine->videoPort, XINE_GUI_SEND_SELECT_VISUAL, 
-            NULL);
+    // This was a XINE_GUI_SEND_SELECT_VISUAL, but that was crashing
+    // See ticket #3649
+     xine_port_send_gui_data(xine->videoPort,
+                             XINE_GUI_SEND_WILL_DESTROY_DRAWABLE, NULL);
     xine_close(xine->stream);
     xine_event_dispose_queue(xine->eventQueue);
     xine_dispose(xine->stream);
