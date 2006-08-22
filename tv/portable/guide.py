@@ -69,6 +69,9 @@ class ChannelGuide(DDBObject):
         # Start loading the channel guide.
         self.startLoadsIfNecessary()
 
+    def __str__(self):
+        return "Channel Guide <%s>" % (self.url,)
+
     ##
     # Called by pickle during deserialization
     def onRestore(self):
