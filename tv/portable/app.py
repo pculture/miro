@@ -1000,6 +1000,9 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 self.args == other.args and 
                 self.kargs == other.kargs)
 
+    def __str__(self):
+        return "Template <%s> args=%s kargs=%s" % (self.templateName, self.args, self.kargs)
+
     def runActionURLs(self, triggers):
         newPage = False
         for url in triggers:
