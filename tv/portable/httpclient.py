@@ -249,7 +249,7 @@ class AsyncSocket(object):
                 # the connection was closed while we were calling gethostbyname
                 return
             rv = self.socket.connect_ex((address, port))
-            if rv in (0, errno.EINPROGRESS):
+            if rv in (0, errno.EINPROGRESS, errno.EWOULDBLOCK):
                 eventloop.addWriteCallback(self.socket, onWriteReady)
             else:
                 msg = errno.errorcode[rv]
