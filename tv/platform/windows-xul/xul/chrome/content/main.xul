@@ -45,56 +45,56 @@
 <!-- / FILE MENU -->
 
 <!-- EDIT MENU -->
-<menu id="edit-menu" label="&main.menu.edit" accesskey="E" class="titlebar-toplevel">
+<menu id="edit-menu" label="&main.menu.edit;" accesskey="E" class="titlebar-toplevel">
 <menupopup id="edit-popup">
-<menuitem label="&main.menu.edit.cut" acceltext="Ctrl+X" accesskey="T" command="cut"/>
-<menuitem label="&main.menu.edit.copy" acceltext="Ctrl+C" accesskey="C" command="copy"/>
-<menuitem label="&main.menu.edit.paste" acceltext="Ctrl+V" accesskey="P" command="paste"/>
+<menuitem label="&main.menu.edit.cut;" acceltext="Ctrl+X" accesskey="T" command="cut"/>
+<menuitem label="&main.menu.edit.copy;" acceltext="Ctrl+C" accesskey="C" command="copy"/>
+<menuitem label="&main.menu.edit.paste;" acceltext="Ctrl+V" accesskey="P" command="paste"/>
                                         <menuseparator/>
-<menuitem label="&main.menu.edit.preferences" command="openprefs"/>
+<menuitem label="&main.menu.edit.preferences;" command="openprefs"/>
 </menupopup>
 </menu>
 <!-- / EDIT MENU -->
 
 <!-- VIDEO MENU -->
-<menu id="video-menu" label="&main.menu.video" accesskey="V" class="titlebar-toplevel">
+<menu id="video-menu" label="&main.menu.video;" accesskey="V" class="titlebar-toplevel">
 <menupopup id="video-popup">
                                         <!--
-<menuitem label="&main.menu.video.play" accesskey="P" disabled="true"/>
-<menuitem label="&main.menu.video.stop" accesskey="S" disabled="true"/>
+<menuitem label="&main.menu.video.play;" accesskey="P" disabled="true"/>
+<menuitem label="&main.menu.video.stop;" accesskey="S" disabled="true"/>
                                         -->
-                                        <menuitem label="&main.menu.video.fullscreen" accesskey="F" command="fullscreen" acceltext="Alt+Enter" disabled="true" />
+                                        <menuitem label="&main.menu.video.fullscreen;" accesskey="F" command="fullscreen" acceltext="Alt+Enter" disabled="true" />
                                         <!--
 <menuseparator/>
-<menuitem label="&main.menu.video.delete" accesskey="D" disabled="true"/>
-<menuitem label="&main.menu.video.save" accesskey="a" disabled="true"/>
-<menuitem label="&main.menu.video.copy" accesskey="L" disabled="true"/>
+<menuitem label="&main.menu.video.delete;" accesskey="D" disabled="true"/>
+<menuitem label="&main.menu.video.save;" accesskey="a" disabled="true"/>
+<menuitem label="&main.menu.video.copy;" accesskey="L" disabled="true"/>
                                         -->
 </menupopup>
 </menu>
 <!-- / VIDEO MENU -->
 
 <!-- CHANNEL MENU -->
-<menu id="channel-menu" label="&main.menu.channel" accesskey="C" class="titlebar-toplevel">
+<menu id="channel-menu" label="&main.menu.channel;" accesskey="C" class="titlebar-toplevel">
 <menupopup id="channel-popup">
-<menuitem label="&main.menu.channel.add" accesskey="A" command="addchannel"/>
-<menuitem label="&main.menu.channel.remove" accesskey="R" command="removechannel"/>
-<menuitem label="&main.menu.channel.copy" accesskey="L" command="copychannellink"/>
+<menuitem label="&main.menu.channel.add;" accesskey="A" command="addchannel"/>
+<menuitem label="&main.menu.channel.remove;" accesskey="R" command="removechannel"/>
+<menuitem label="&main.menu.channel.copy;" accesskey="L" command="copychannellink"/>
 <menuseparator/>
-<menuitem label="&main.menu.channel.update" accesskey="U" command="updatechannel"/>
-<menuitem label="&main.menu.channel.updateall" accesskey="A" command="updateall"/>
+<menuitem label="&main.menu.channel.update;" accesskey="U" command="updatechannel"/>
+<menuitem label="&main.menu.channel.updateall;" accesskey="A" command="updateall"/>
 <menuseparator/>
-<menuitem label="&main.menu.channel.rename" accesskey="e" disabled="true"/>
+<menuitem label="&main.menu.channel.rename;" accesskey="e" disabled="true"/>
 <menuseparator/>
-<menuitem label="&main.menu.channel.tellafriend" accesskey="F" disabled="true"/>
+<menuitem label="&main.menu.channel.tellafriend;" accesskey="F" disabled="true"/>
 </menupopup>
 </menu>
 <!-- / CHANNEL MENU -->
 
 <!-- HELP MENU -->
-<menu id="help-menu" label="&main.menu.help" accesskey="H" class="titlebar-toplevel">
+<menu id="help-menu" label="&main.menu.help;" accesskey="H" class="titlebar-toplevel">
 <menupopup id="help-popup">
-<menuitem label="&main.menu.help.contents" acceltext="F1" accesskey="H" command="showhelp"/>
+<menuitem label="&main.menu.help.contents;" acceltext="F1" accesskey="H" command="showhelp"/>
 <menuseparator/>
 <menuitem label="&main.about;" accesskey="A" command="about"/>
 </menupopup>
