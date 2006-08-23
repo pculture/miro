@@ -1612,7 +1612,7 @@ class SearchFeedImpl (RSSFeedImpl):
             url += "&sortby=date"
         elif engine == 'google':
             url = "http://video.google.com/videofeed?type=search"
-            url += "&q=%s" % urlencode(query)
+            url += "&q=%s" % urlencode(query+" is:free")
             url += "&num=%d&output=rss" % limit
         elif engine == 'youtube':
             url = "http://www.youtube.com/rss/tag/"
