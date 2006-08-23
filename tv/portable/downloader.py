@@ -182,18 +182,18 @@ class RemoteDownloader(DDBObject):
                                                 self.dlid, delete)
                 c.send()
                 del _downloads[self.dlid]
-            else:
-                if delete:
-                    try:
-                        filename = self.status['filename']
-                        if os.path.isfile(filename):
-                            os.remove (filename)
-                        elif os.path.isdir(filename):
-                            shutil.rmtree (filename)
-                    except:
-                        pass
-                self.status["state"] = "stopped"
-                self.signalChange()
+        else:
+            if delete:
+                try:
+                    filename = self.status['filename']
+                    if os.path.isfile(filename):
+                        os.remove (filename)
+                    elif os.path.isdir(filename):
+                        shutil.rmtree (filename)
+                except:
+                    pass
+            self.status["state"] = "stopped"
+            self.signalChange()
 
     ##
     # Continues a paused, stopped, or failed download thread
