@@ -118,7 +118,7 @@ class Item(DDBObject):
             for (dirpath, dirnames, filenames) in os.walk(filename_root):
                 for name in filenames:
                     filename = os.path.join (dirpath, name)
-                    if isVideoFilename(filename) or isTorrentFilename(filename):
+                    if isAllowedFilename(filename):
                         videos.add(filename)
             if len(videos) > 1:
                 self.isContainerItem = True
@@ -1320,7 +1320,7 @@ def isVideoEnclosure(enclosure):
             _hasVideoExtension(enclosure, 'href'))
 
 def _hasVideoType(enclosure):
-    return (enclosure.has_key('type') and
+    return ('type' in enclosure and
             (enclosure['type'].startswith('video/') or
              enclosure['type'].startswith('audio/') or
              enclosure['type'] == "application/ogg" or
@@ -1329,16 +1329,23 @@ def _hasVideoType(enclosure):
              enclosure['type'] == "application/x-shockwave-flash"))
 
 def _hasVideoExtension(enclosure, key):
-    return (enclosure.has_key(key) and
-            (isVideoFilename(enclosure[key]) or isTorrentFilename(enclosure[key])))
+    return (key in enclosure and isAllowedFilename(enclosure[key]))
+
+def isAllowedFilename(filename):
+    return (isVideoFilename(filename) or
+            isAudioFilename(filename) or
+            isTorrentFilename(filename))
 
 def isVideoFilename(filename):
     return ((len(filename) > 4 and
              filename[-4:].lower() in ['.mov', '.wmv', '.mp4', '.m4v',
-                                       '.mp3', '.ogg', '.anx', '.mpg',
-                                       '.avi', '.flv']) or
+                                       '.ogg', '.anx', '.mpg', '.avi', 
+                                       '.flv']) or
             (len(filename) > 5 and
              filename[-5:].lower() == '.mpeg'))
+
+def isAudioFilename(filename):
+    return len(filename) > 4 and filename[-4:].lower() in ['mp3', 'm4a']
 
 def isTorrentFilename(filename):
     return filename.endswith('.torrent')
