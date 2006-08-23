@@ -1,3 +1,5 @@
+import os
+
 import gtk
 import app
 import gobject
@@ -196,6 +198,14 @@ class MainWindowChanger(object):
         platformutils.confirmMainThread()
         if (self.isFullScreen == fullscreen):
             return
+        if fullscreen:
+            cmd = "xset s off"
+        else:
+            cmd = "xset s"
+        rv = os.system(cmd)
+        if rv != 0:
+            print "WARNING: %s returned %s" % (cmd, rv)
+
         self.isFullScreen = fullscreen
         self.updateState()
 

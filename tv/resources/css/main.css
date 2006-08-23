@@ -315,6 +315,7 @@ div.scraping-content {
 
 .main-video.selected {
     background: url(../images/main-video-bg-selected.png) repeat-x left top;
+    color: white;
 }
 
 .main-video.selected-inactive {
@@ -369,6 +370,10 @@ div.scraping-content {
     height: 44px;
 }
 
+.main-video.selected .main-video-desc h1, .main-video.selected .main-video-desc-desc {
+    color: white;
+}
+
 
 .main-video-desc p {
     display: inline;
@@ -399,7 +404,7 @@ div.scraping-content {
 }
 
 .main-video-desc-details a:link, .main-video-desc-details a:active, .main-video-desc-details a:hover {
-    color: #222;
+    color: inherit;
     text-decoration: underline;
 }
 
@@ -458,7 +463,7 @@ div.scraping-content {
     position: absolute;
     top: 11px;
     left: 5px;
-    height: 30px;
+    height: 26px;
     width: 115px;
 }
 
@@ -466,37 +471,24 @@ div.scraping-content {
     display: block;
     position: absolute;
     top: 0px;
-    width: 40px;
-    height: 30px;
+    width: 36px;
+    height: 36px;
 }
 
 .main-video-details-task-mail { 
-    left: 0px;
+    left: 2px;
     background: url(../images/main-icon-mail.png) top left no-repeat;
 }
 
-.main-video-details-task-mail:hover {   
-    background: url(../images/main-icon-mail.png) bottom left no-repeat;
-}
-
 .main-video-details-task-bomb { 
-    left: 40px;
+    left: 42px;
     background: url(../images/main-icon-bomb.png) top left no-repeat;
 }
 
-.main-video-details-task-bomb:hover {   
-    background: url(../images/main-icon-bomb.png) bottom left no-repeat;
-}
-
 .main-video-details-task-delete {   
-    left: 80px;
+    left: 82px;
     background: url(../images/main-icon-trash.png) top left no-repeat;
 }
-
-.main-video-details-task-delete:hover { 
-    background: url(../images/main-icon-trash.png) bottom left no-repeat;
-}
-
 
 .main-video-details-state {
     position: absolute;
