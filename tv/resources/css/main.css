@@ -374,7 +374,6 @@ div.scraping-content {
     color: white;
 }
 
-
 .main-video-desc p {
     display: inline;
     padding: 0px;
@@ -533,6 +532,11 @@ div.scraping-content {
     overflow: hidden;
 }
 
+
+.main-video.selected .main-video-details-download-info, .main-video.selected .main-video-details-state {
+    color: white;
+}
+
 .main-video-details-save-button {
     float: right;
     font-size: 12px;
@@ -623,4 +627,34 @@ img {
 
 body.gray-background {
     background-color: #f7f7f7;
+}
+
+
+.gray-button-bg {
+    background: url(../images/graybutton-mid.png) top left repeat-x;
+    margin: 0px 8px;
+    height: 31px;
+    cursor: pointer;
+    width: 350px;
+    margin: auto;
+}
+
+
+.gray-button-left {
+    background: url(../images/graybutton-left.png) top left no-repeat;
+    width: 8px;
+    height: 31px;
+    float: left;
+}
+
+.gray-button-right {
+    background: url(../images/graybutton-right.png) top left no-repeat;
+    width: 8px;
+    height: 31px;
+    float: right;
+}
+
+
+.gray-button-content {
+    padding-top: 8px;
 }

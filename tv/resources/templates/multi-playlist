@@ -20,7 +20,7 @@ containedChildren = kargs['containedChildren']
         <div t:showIf="selectedFolders > 0">
             <div class="channel-message" i18n:translate="">
                 <span i18n:name="count" t:replace="selectedFolders" />
-                    Playlist Folders Selected (containing 
+		    Playlist Folders Selected<br />(contains 
                     <span i18n:name="containedcount" t:replace="containedChildren" />
                     playlists)
             </div>
@@ -32,10 +32,19 @@ containedChildren = kargs['containedChildren']
             </div>
         </div>
         <br /><br />
-        <span t:hideIf="selectedFolders > 0"><a style="color: red;" href="#" onclick="return eventURL('action:mergeToFolder');">Put Playlists in a New Folder</a>
-        </span>
+        <div t:hideIf="selectedFolders > 0">
+            <div class="gray-button-bg" onclick="return eventURL('action:mergeToFolder');" >
+                <div class="gray-button-left" />
+                <div class="gray-button-right" />
+                <div class="gray-button-content">Put Playlists in a New Folder</div>
+            </div>
+	</div>
         <br /><br />
-        <a style="color: red;" i18n:translate="" href="#" onclick="return eventURL('action:removeCurrentFeed');">Delete These Playlists</a><br /><br />
+	<div class="gray-button-bg" onclick="return eventURL('action:removeCurrentFeed');" >
+            <div class="gray-button-left" />
+            <div class="gray-button-right" />
+	    <div class="gray-button-content">Delete These Playlists</div>
+        </div>
     </div>
 </body>
 </html>
