@@ -75,10 +75,15 @@ else:
 	</div>
 	<div t:showIf="this.getState() == 'downloading'"
 		class="main-video-details-download-info">
-	    <div class="main-progress-bar-bg">
-	        <div class="main-progress-bar" 
-		    style="width: ***this.downloadProgressWidth()***px;" />
-	    </div>
+	    <div t:showIf="this.gotContentLength()">
+                <div class="main-progress-bar-bg">
+                    <div class="main-progress-bar" 
+                        style="width: ***this.downloadProgressWidth()***px;" />
+                </div>
+            </div>
+	    <div t:hideIf="this.gotContentLength()">
+                <img src="resource:images/progress-throbber.gif" />
+            </div>
             <span t:replace="this.downloadETA()" />
             <span t:hideIf="this.downloadRate() == '0k/s'">
                     <span t:replace="this.downloadRate()" />

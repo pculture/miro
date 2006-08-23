@@ -230,7 +230,7 @@ class TabSelectionArea(SelectionArea):
     def toggleItemSelect(self, view, id):
         # Don't let a control select deselect the last selected item in the
         # tab list.
-        if len(self.currentSelection) == set([id]):
+        if self.currentSelection == set([id]):
             return
         else:
             return SelectionArea.toggleItemSelect(self, view, id)
