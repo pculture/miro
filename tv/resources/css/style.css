@@ -135,7 +135,6 @@ a.feeditem img.icon {
 .dnd-background-inner1, .dnd-background-inner2  {
     position: absolute;
     height: 22px;
-    z-index: -1;
 }
 
 /* DND Effects.  There is some nasty CSS stuff going on.  
@@ -185,7 +184,6 @@ a.feeditem img.icon {
 /* DND Folder highlight effects */
 .playlist-folder.drag-highlight.playlist.dnd-background-outer, .channel-folder.drag-highlight.channel.dnd-background-outer, .playlist.drag-highlight.downloadeditem.dnd-background-outer {
     background: url(../images/dnd-highlight-left.png) top left no-repeat;
-    z-index: -1;
 }
 
 .playlist-folder.drag-highlight.playlist .dnd-background-inner1, .channel-folder.drag-highlight.channel .dnd-background-inner1, .playlist.drag-highlight.downloadeditem .dnd-background-inner1 {
