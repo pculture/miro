@@ -209,6 +209,8 @@ def ShowTextEntryDialogAsync(title, description, buttons, default, prefillCallba
     gtkDialog.show()
 
 def pidIsRunning(pid):
+    if pid is None:
+        return False
     try:
         os.kill(pid, 0)
         return True
@@ -324,6 +326,8 @@ class UIBackendDelegate:
         primary.set_text(text)
 
     def killDownloadDaemon(self, oldpid):
+        if oldpid is None:
+            return
         if pidIsRunning(oldpid):
             try:
                 os.kill(oldpid, signal.SIGTERM)
