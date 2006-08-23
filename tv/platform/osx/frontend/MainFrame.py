@@ -53,8 +53,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
         super(MainController, self).init()
         self.frame = frame
         self.appl = appl
-        self.selectedTabType = None
-        self.multipleTabsSelected = False
+        self.menuStrings = dict()
+        self.actionGroups = dict()
         NSBundle.loadNibNamed_owner_("MainWindow", self)
 
         nc = NSNotificationCenter.defaultCenter()
@@ -75,7 +75,6 @@ class MainController (NibClassBuilder.AutoBaseClass):
         self.frame.videoInfoDisplay.backgroundColor = NSColor.blackColor()
         self.restoreLayout()
         self.updateWindowTexture()
-        self.actionButton.sendActionOn_(NSLeftMouseDownMask)
         self.showWindow_(nil)
 
     def appWillTerminate_(self, notification):
@@ -146,11 +145,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
     @platformutils.onMainThread
     def onSelectedTabChange(self, strings, actionGroups, guideURL):
         app.controller.setGuideURL(guideURL)
-        print "WARNING: ignoring onSelectedTabChange (%s, %s, %s)" % \
-                (strings, actionGroups, guideURL)
-        return
-        self.selectedTabType = tabType
-        self.multipleTabsSelected = multiple
+        self.menuStrings = strings
+        self.actionGroups = actionGroups
 
     def selectDisplay(self, display, area):
         if display is not None:
@@ -230,20 +226,18 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     ### Actions ###
 
-    def createPlaylist_(self, sender):
-        playlist.createNewPlaylist()
+    # File menu #
 
-    def createPlaylistFolder_(self, sender):
-        folder.createNewPlaylistFolder()
+    def removeVideos_(self, sender):
+        print "NOT IMPLEMENTED" # $$$$$$$$$$$$$$
 
-    def createChannelFolder_(self, sender):
-        folder.createNewChannelFolder()
+    def saveVideoAs_(self, sender):
+        print "NOT IMPLEMENTED" # $$$$$$$$$$$$$$
 
-    def rename_(self, sender):
-        print "NOT IMPLEMENTED"
+    def copyVideoURL_(self, sender):
+        print "NOT IMPLEMENTED" # $$$$$$$$$$$$$$
 
-    def delete_(self, sender):
-        print "NOT IMPLEMENTED"
+    # Channels menu #
 
     def addChannel_(self, sender):
         def validationCallback(dialog):
@@ -256,11 +250,17 @@ class MainController (NibClassBuilder.AutoBaseClass):
         dlog = dialogs.TextEntryDialog(title, description, dialogs.BUTTON_OK, dialogs.BUTTON_CANCEL, prefillCallback)
         dlog.run(validationCallback)
 
+    def createChannelFolder_(self, sender):
+        folder.createNewChannelFolder()
+
+    def addGuide_(self, sender):
+        eventloop.addIdle(lambda:app.controller.addAndSelectGuide(), "Add Guide")
+
+    def renameChannelFolder_(self, sender):
+        print "NOT IMPLEMENTED" # $$$$$$$$$$$$$$
+
     def removeChannel_(self, sender):
         eventloop.addUrgentCall(app.controller.removeCurrentFeed, "Remove channel")
-
-    def copyChannelLink_(self, sender):
-        eventloop.addUrgentCall(app.controller.copyCurrentFeedURL, "Copy channel URL")
 
     def updateChannel_(self, sender):
         eventloop.addUrgentCall(app.controller.updateCurrentFeed, "Update current feed")
@@ -269,79 +269,115 @@ class MainController (NibClassBuilder.AutoBaseClass):
         eventloop.addUrgentCall(app.controller.updateAllFeeds, "Update all channels")
 
     def tellAFriend_(self, sender):
-        print "NOT IMPLEMENTED"
+        print "NOT IMPLEMENTED" # $$$$$$$$$$$$$$
+
+    def copyChannelURL_(self, sender):
+        eventloop.addUrgentCall(app.controller.copyCurrentFeedURL, "Copy channel URL")
+
+#    def removeGuide_(self, sender):
+#        eventloop.addIdle(app.controller.removeCurrentGuide, "Remove Guide")
+
+    # Playlists menu # 
+
+    def createPlaylist_(self, sender):
+        playlist.createNewPlaylist()
+
+    def createPlaylistFolder_(self, sender):
+        folder.createNewPlaylistFolder()
+
+    def renamePlaylist_(self, sender):
+        print "NOT IMPLEMENTED" # $$$$$$$$$$$$$$
+
+    def removePlaylist_(self, sender):
+        print "NOT IMPLEMENTED" # $$$$$$$$$$$$$$
+
+    # Playback menu #
 
     def playPause_(self, sender):
-        self.videoDisplayController.playPause_(sender)
+        if self.frame.mainDisplay.hostedDisplay is not app.controller.videoDisplay:
+            app.controller.playbackController.enterPlayback()
+        else:
+            self.videoDisplayController.playPause_(sender)
 
     def stopVideo_(self, sender):
         self.videoDisplayController.stop_(sender)
 
+    def nextVideo_(self, sender):
+        print "NOT IMPLEMENTED" # $$$$$$$$$$$$$$
+
+    def previousVideo_(self, sender):
+        print "NOT IMPLEMENTED" # $$$$$$$$$$$$$$
+
     def playFullScreen_(self, sender):
         self.videoDisplayController.playFullScreen_(sender)
 
-    def playHalfScreen_(self, sender):
-        pass
-
-    def saveVideo_(self, sender):
-        print "NOT IMPLEMENTED"
-
-    def copyVideoLink_(self, sender):
-        print "NOT IMPLEMENTED"
-
-    def showActionMenu_(self, sender):
-        mainMenu = NSApplication.sharedApplication().mainMenu()
-        # collections do not really work just yet so we hardcode the action menu
-        # to the channel menu
-        # tag = self.switcherMatrix.selectedCell().tag()
-        tag = 1
-        menu = mainMenu.itemWithTag_(tag).submenu()
-
-        location = sender.frame().origin
-        location.x += 10.0
-        location.y += 3.0
-
-        curEvent = NSApplication.sharedApplication().currentEvent()
-        event = NSEvent.mouseEventWithType_location_modifierFlags_timestamp_windowNumber_context_eventNumber_clickCount_pressure_(
-            curEvent.type(),
-            location,
-            curEvent.modifierFlags(),
-            curEvent.timestamp(),
-            curEvent.windowNumber(),
-            nil,
-            curEvent.eventNumber(),
-            curEvent.clickCount(),
-            curEvent.pressure() )
-
-        NSMenu.popUpContextMenu_withEvent_forView_( menu, event, sender )
+    # Help menu #
 
     def showHelp_(self, sender):
         summary = u'Help for %s will be available soon.' % (config.get(prefs.LONG_APP_NAME), )
         message = u'In the meantime, please visit our homepage for our help FAQ: %s\n\nFor individual user support, please e-mail feedback@ppolitics.org.' % (config.get(prefs.PROJECT_URL), )
         dialogs.MessageBoxDialog(summary, message).run()
 
-    itemsAlwaysAvailable = ('addChannel:', 'showHelp:', 'updateAllChannels:', 'createPlaylist:', 'createPlaylistFolder:', 'createChannelFolder:')
-    selectedChannelItems = ('removeChannel:', 'copyChannelLink:', 'updateChannel:')
-    selectedMultiChannelItems = ('removeChannel:', 'updateChannel:')
+    ### Menu items validation ###
 
     def validateMenuItem_(self, item):
-        if item.action() in self.selectedChannelItems:
-            return self.selectedTabType == 'channeltab' and (not self.multipleTabsSelected or item.action() in self.selectedMultiChannelItems)
-        elif item.action() == 'playPause:' or item.action() == 'playFullScreen:':
-            display = self.frame.mainDisplay.hostedDisplay
-            if display is not None:
-                if display is app.controller.videoDisplay:
-                    return YES
-                else:
-                    return display.getWatchable() is not None
-            else:
-                return NO
-        elif item.action() == 'stopVideo:':
-            return self.frame.mainDisplay.hostedDisplay is app.controller.videoDisplay
-        elif item.action() == 'deletePlaylist:':
-            return self.selectedTabType == 'playlisttab'
-        else:
-            return item.action() in self.itemsAlwaysAvailable
+        result = False
+        action = item.action()
+        display = self.frame.mainDisplay.hostedDisplay
+        
+        if action == 'removeVideos:':
+            self.updateMenuItem(item, 'video_remove')
+            result = self.actionGroups['VideoSelected'] or self.actionGroups['VideosSelected']
+        elif action == 'saveVideoAs:':
+            result = False
+        elif action == 'copyVideoURL:':
+            result = self.actionGroups['VideoSelected']
+        elif action == 'addChannel:':
+            result = True
+        elif action == 'createChannelFolder:':
+            result = True
+        elif action == 'addGuide:':
+            result = True
+        elif action == 'renameChannelFolder:':
+            self.updateMenuItem(item, 'channel_rename')
+            result = self.actionGroups['ChannelLikeSelected']
+        elif action == 'removeChannel:':
+            self.updateMenuItem(item, 'channel_remove')
+            result = self.actionGroups['ChannelLikeSelected'] or self.actionGroups['ChannelLikesSelected']
+        elif action == 'updateChannel:':
+            self.updateMenuItem(item, 'channel_update')
+            result = self.actionGroups['ChannelLikeSelected'] or self.actionGroups['ChannelLikesSelected']
+        elif action == 'updateAllChannels:':
+            result = True
+        elif action == 'tellAFriend:':
+            result = self.actionGroups['ChannelSelected']
+        elif action == 'copyChannelURL:':
+            result = self.actionGroups['ChannelSelected']
+        elif action == 'createPlaylist:':
+            return True
+        elif action == 'createPlaylistFolder:':
+            return True
+        elif action == 'renamePlaylist:':
+            self.updateMenuItem(item, 'playlist_rename')
+            return self.actionGroups['PlaylistLikeSelected']
+        elif action == 'removePlaylist:':
+            self.updateMenuItem(item, 'playlist_remove')
+            return self.actionGroups['PlaylistLikeSelected'] or self.actionGroups['PlaylistLikesSelected']
+        elif action == 'playPause:':
+            return self.actionGroups['VideosSelected'] or display is app.controller.videoDisplay
+        elif action == 'stopVideo:':
+            return display is app.controller.videoDisplay
+        elif action == 'nextVideo:':
+            return display is app.controller.videoDisplay
+        elif action == 'previousVideo:':
+            return display is app.controller.videoDisplay
+        elif action == 'playFullScreen:':
+            return display is app.controller.videoDisplay
+        return result
+
+    def updateMenuItem(self, item, key):
+        if key in self.menuStrings:
+            item.setTitle_(self.menuStrings[key].replace('_', ''))
 
 ###############################################################################
 

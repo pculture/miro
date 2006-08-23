@@ -53,6 +53,8 @@ VIDEOBOMB_URL     = Pref(key='VideobombURL',    default=effectiveVideobomb,
                          platformSpecific=False)
 AUTOUPDATE_URL    = Pref(key='AutoupdateURL',   default=effectiveAutoupdate,
                          platformSpecific=False)
+DONATE_URL        = Pref(key='DonateURL',   default="http://www.getdemocracy.com/donate/",
+                         platformSpecific=False)
 
 # These are computed by special platform code.
 RUN_AT_STARTUP     = Pref( key='RunAtStartup',  default=False,  platformSpecific=True )

@@ -228,6 +228,10 @@ class AppController (NibClassBuilder.AutoBaseClass):
             eventloop.addUrgentCall(lambda:singleclick.addDemocracyURL(url), 
                         "Open Democracy URL")
 
+    def donate_(self, sender):
+        donateURL = NSURL.URLWithString_(config.get(prefs.DONATE_URL))
+        NSWorkspace.sharedWorkspace().openURL_(donateURL)
+
     def checkForUpdates_(self, sender):
         eventloop.addUrgentCall(lambda:autoupdate.checkForUpdates(True), "Checking for new version")
 
@@ -235,12 +239,6 @@ class AppController (NibClassBuilder.AutoBaseClass):
         prefController = PreferencesWindowController.alloc().init()
         prefController.retain()
         prefController.showWindow_(nil)
-
-    def addGuide_(self, sender):
-        eventloop.addIdle(lambda:app.controller.addAndSelectGuide(), "Add Guide")
-
-    def removeGuide_(self, sender):
-        eventloop.addIdle(app.controller.removeCurrentGuide, "Remove Guide")
 
     def openFile_(self, sender):
         openPanel = NSOpenPanel.openPanel()
@@ -265,19 +263,13 @@ class AppController (NibClassBuilder.AutoBaseClass):
                 self.addVideo(filename)
         singleclick.playCommandLineView()
 
-    def donate_(self, sender):
-        print "NOT IMPLEMENTED"
-
     def shutdown_(self, sender):
         self.internalShutdown = True
         app.controller.quit()
 
-    itemsAlwaysAvailable = ('checkForUpdates:', 'showPreferencesWindow:', 'addGuide:', 'openFile:', 'shutdown:')
     def validateMenuItem_(self, item):
-        mainFrame = app.controller.frame
-        if item.action() == 'removeGuide:':
-            return mainFrame.selectedTabType == 'addedguidetab'
-        else:
-            return item.action() in self.itemsAlwaysAvailable
+        return item.action() in ('donate:', 'checkForUpdates:', 
+                                 'showPreferencesWindow:', 'addGuide:', 
+                                 'openFile:', 'shutdown:')
 
 ###############################################################################

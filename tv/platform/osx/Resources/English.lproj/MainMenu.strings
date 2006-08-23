@@ -1,20 +1,17 @@
 /* NSMenuItem : <title:About Democracy> (oid:58) */
 "About Democracy" = "About Democracy";
 
-/* NSMenuItem : <title:Add a Channel...> (oid:227) */
-"Add a Channel..." = "Add a Channel...";
-
-/* NSMenuItem : <title:Add a Guide...> (oid:285) */
-"Add a Guide..." = "Add a Guide...";
+/* NSMenuItem : <title:Add Channel...> (oid:227) */
+"Add Channel..." = "Add Channel...";
 
 /* NSMenuItem : <title:Bring All to Front> (oid:5) */
 "Bring All to Front" = "Bring All to Front";
 
-/* NSMenu : <title:Channel> (oid:226) */
-"Channel" = "Channel";
+/* NSMenu : <title:Channels> (oid:226) */
+"Channels" = "Channels";
 
-/* NSMenuItem : <title:Check for Update> (oid:213) */
-"Check for Update" = "Check for Update";
+/* NSMenuItem : <title:Check for New Version> (oid:213) */
+"Check for New Version" = "Check for New Version";
 
 /* NSMenuItem : <title:Clear Menu> (oid:126) */
 "Clear Menu" = "Clear Menu";
@@ -22,11 +19,11 @@
 /* NSMenuItem : <title:Copy> (oid:157) */
 "Copy" = "Copy";
 
-/* NSMenuItem : <title:Copy Channel Link> (oid:232) */
-"Copy Channel Link" = "Copy Channel Link";
+/* NSMenuItem : <title:Copy Channel URL> (oid:232) */
+"Copy Channel URL" = "Copy Channel URL";
 
-/* NSMenuItem : <title:Copy Video Link> (oid:224) */
-"Copy Video Link" = "Copy Video Link";
+/* NSMenuItem : <title:Copy Video URL> (oid:343) */
+"Copy Video URL" = "Copy Video URL";
 
 /* NSMenuItem : <title:Cut> (oid:160) */
 "Cut" = "Cut";
@@ -40,8 +37,8 @@
 /* NSMenuItem : <title:Democracy Help> (oid:111) */
 "Democracy Help" = "Democracy Help";
 
-/* NSMenuItem : <title:Donate to Democracy> (oid:214) */
-"Donate to Democracy" = "Donate to Democracy";
+/* NSMenuItem : <title:Donate> (oid:341) */
+"Donate" = "Donate";
 
 /* NSMenu : <title:Edit> (oid:169) */
 "Edit" = "Edit";
@@ -51,9 +48,6 @@
 
 /* NSMenuItem : <title:Full Screen> (oid:219) */
 "Full Screen" = "Full Screen";
-
-/* NSMenuItem : <title:Half Screen> (oid:220) */
-"Half Screen" = "Half Screen";
 
 /* NSMenu : <title:Help> (oid:106) */
 "Help" = "Help";
@@ -70,14 +64,20 @@
 /* NSMenuItem : <title:Minimize> (oid:23) */
 "Minimize" = "Minimize";
 
-/* NSMenuItem : <title:New Channel Folder...> (oid:291) */
+/* NSMenuItem : <title:New Channel Folder...> (oid:312) */
 "New Channel Folder..." = "New Channel Folder...";
 
-/* NSMenuItem : <title:New Playlist Folder...> (oid:290) */
+/* NSMenuItem : <title:New Channel Guide...> (oid:317) */
+"New Channel Guide..." = "New Channel Guide...";
+
+/* NSMenuItem : <title:New Playlist Folder...> (oid:307) */
 "New Playlist Folder..." = "New Playlist Folder...";
 
-/* NSMenuItem : <title:New Playlist...> (oid:292) */
+/* NSMenuItem : <title:New Playlist...> (oid:306) */
 "New Playlist..." = "New Playlist...";
+
+/* NSMenuItem : <title:Next Video> (oid:321) */
+"Next Video" = "Next Video";
 
 /* NSMenu : <title:Open Recent> (oid:125) */
 "Open Recent" = "Open Recent";
@@ -91,23 +91,35 @@
 /* NSMenuItem : <title:Play Video> (oid:217) */
 "Play Video" = "Play Video";
 
+/* NSMenu : <title:Playback> (oid:216) */
+"Playback" = "Playback";
+
+/* NSMenu : <title:Playlists> (oid:305) */
+"Playlists" = "Playlists";
+
 /* NSMenuItem : <title:Preferences…> (oid:129) */
 "Preferences…" = "Preferences…";
+
+/* NSMenuItem : <title:Previous Video> (oid:323) */
+"Previous Video" = "Previous Video";
 
 /* NSMenuItem : <title:Quit Democracy> (oid:136) */
 "Quit Democracy" = "Quit Democracy";
 
-/* NSMenuItem : <title:Remove Channel...> (oid:231) */
-"Remove Channel..." = "Remove Channel...";
+/* NSMenuItem : <title:Remove...> (oid:309) */
+"Remove..." = "Remove...";
 
-/* NSMenuItem : <title:Rename...> (oid:293) */
+/* NSMenuItem : <title:Rename...> (oid:314) */
 "Rename..." = "Rename...";
 
-/* NSMenuItem : <title:Save Video...> (oid:223) */
-"Save Video..." = "Save Video...";
+/* NSMenuItem : <title:Save Video As...> (oid:303) */
+"Save Video As..." = "Save Video As...";
 
 /* NSMenuItem : <title:Select All> (oid:172) */
 "Select All" = "Select All";
+
+/* NSMenuItem : <title:Send This Channel to a Friend> (oid:239) */
+"Send This Channel to a Friend" = "Send This Channel to a Friend";
 
 /* NSMenuItem : <title:Services> (oid:131) */
 "Services" = "Services";
@@ -118,17 +130,11 @@
 /* NSMenuItem : <title:Stop Video> (oid:272) */
 "Stop Video" = "Stop Video";
 
-/* NSMenuItem : <title:Tell a Friend> (oid:239) */
-"Tell a Friend" = "Tell a Friend";
-
 /* NSMenuItem : <title:Update All Channels> (oid:235) */
 "Update All Channels" = "Update All Channels";
 
 /* NSMenuItem : <title:Update Channel> (oid:234) */
 "Update Channel" = "Update Channel";
-
-/* NSMenu : <title:Video> (oid:216) */
-"Video" = "Video";
 
 /* NSMenu : <title:Window> (oid:24) */
 "Window" = "Window";
