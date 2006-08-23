@@ -29,6 +29,7 @@ import resource
 import views
 import random
 import indexes
+import util
 
 # FIXME add support for onlyBody parameter for static templates so we
 #       don't need to strip the outer HTML
@@ -88,11 +89,21 @@ class Item(DDBObject):
     def _initRestore(self):
         """Common code shared between onRestore and __init__."""
         self.selected = False
+        self.active = False
         self.childrenSeen = None
         self.downloader = None
 
     getSelected, setSelected = makeSimpleGetSet('selected',
             changeNeedsSave=False)
+    getActive, setActive = makeSimpleGetSet('active', changeNeedsSave=False)
+
+    def getSelectedState(self):
+        if not self.selected:
+            return 'normal'
+        elif not self.active:
+            return 'selected-inactive'
+        else:
+            return 'selected'
 
     def splitItem(self):
         """returns True if it ran signalChange()"""
@@ -738,7 +749,7 @@ folder will also be deleted.""")
         fname = self.getFilename()
         try:
             size = os.stat(fname)[6]
-            return self.sizeFormattedForDisplay(size)
+            return util.formatSizeForUser(size)
         except:
             return self.getEnclosuresSize()
     
@@ -750,7 +761,7 @@ folder will also be deleted.""")
             size = int(self.getFirstVideoEnclosure()['length'])
         except:
             pass
-        return self.sizeFormattedForDisplay(size)
+        return util.formatSizeForUser(size)
 
     ##
     # returns status of the download in plain text
@@ -759,26 +770,7 @@ folder will also be deleted.""")
             size = self.downloader.getCurrentSize()
         else:
             size = 0
-        if size == 0:
-            return ""
-        return self.sizeFormattedForDisplay(size)
-
-    ##
-    # Returns a byte size formatted for display
-    def sizeFormattedForDisplay(self, bytes, emptyForZero=True):
-        if bytes > (1 << 30):
-            return "%1.1fGB" % (bytes / (1024.0 * 1024.0 * 1024.0))
-        elif bytes > (1 << 20):
-            return "%1.1fMB" % (bytes / (1024.0 * 1024.0))
-        elif bytes > (1 << 10):
-            return "%1.1fKB" % (bytes / 1024.0)
-        elif bytes > 1:
-            return "%0.0fB" % bytes
-        else:
-            if emptyForZero:
-                return ""
-            else:
-                return "n/a"
+        return util.formatSizeForUser(size)
 
     ##
     # Returns the download progress in absolute percentage [0.0 - 100.0].

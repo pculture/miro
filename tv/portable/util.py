@@ -353,3 +353,19 @@ def gatherVideos(path, progressCallback):
     except:
         pass
     return found
+
+def formatSizeForUser(bytes, zeroString=""):
+    """Format an int containing the number of bytes into a string suitable for
+    printing out to the user.  zeroString is the string to use if bytes == 0.
+    """
+
+    if bytes > (1 << 30):
+        return "%1.1fGB" % (bytes / (1024.0 * 1024.0 * 1024.0))
+    elif bytes > (1 << 20):
+        return "%1.1fMB" % (bytes / (1024.0 * 1024.0))
+    elif bytes > (1 << 10):
+        return "%1.1fKB" % (bytes / 1024.0)
+    elif bytes > 1:
+        return "%0.0fB" % bytes
+    else:
+        return zeroString

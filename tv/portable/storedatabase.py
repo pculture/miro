@@ -658,14 +658,6 @@ class LiveStorage:
                     print data
                     raise
         cursor.close()
-        if not databasesanity.checkSanity(objects):
-            savables = objectsToSavables(objects)
-            txn = self.dbenv.txn_begin()
-            self.rewriteDatabase(savables, txn)
-            self.version = schema_mod.VERSION
-            self.db.put (VERSION_KEY, str(self.version), txn=txn)
-            txn.commit()
-            self.db.sync()
         db = database.defaultDatabase
         db.restoreFromObjectList(objects)
 

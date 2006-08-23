@@ -3,6 +3,7 @@
 # Contains runtime template code
 
 import os
+import config
 import eventloop
 from templatehelper import quoteattr, escape, toUni, attrPattern, rawAttrPattern, resourcePattern, generateId
 from xhtmltools import urlencode
@@ -223,18 +224,24 @@ class TrackedView:
         if self.parent.domHandler:
             self.parent.domHandler.addItemBefore(xml, self.anchorId)
 
-# Class used internally by Handle to track a t:updateForView clause.
-class UpdateRegion:
-    def __init__(self, anchorId, anchorType, view, templateFunc, parent, name):
+# UpdateRegion and ConfigUpdateRegion are used internally by Handle to track
+# the t:updateForView and t:updateForConfigChange clauses.
+
+class UpdateRegionBase:
+    """Base class for UpdateRegion and ConfigUpdateRegion.  Subclasses must
+    define currentXML, which returns a string representing the up-to-date XML
+    for this region.  Also, hookupCallbacks() which hooks up any callbacks
+    needed.  Subclasses can use onChange() as the handler for any callbacks.
+    """
+
+    def __init__(self, anchorId, anchorType, templateFunc, parent):
         # arguments as Handle.addView(), plus 'parent', a pointer to the Handle
         # that is used to find domHandler and invoke checkHides
         self.anchorId = anchorId
         self.anchorType = anchorType
 
-        self.view = view
         self.templateFunc = templateFunc
         self.parent = parent
-        self.name = name
         self.tid = generateId()
         self.idle_queued = False
 
@@ -242,19 +249,11 @@ class UpdateRegion:
     # This is called after the HTML has been rendered to fill in the
     # data for each view and register callbacks to keep it updated
     def initialFillIn(self):
-        self.view.confirmDBThread()
         if self.parent.domHandler:
             self.parent.domHandler.addItemBefore(self.currentXML(), self.anchorId)
-        self.view.addChangeCallback(self.onChange)
-        self.view.addAddCallback(self.onChange)
-        self.view.addRemoveCallback(self.onChange)
-        self.view.addViewChangeCallback (self.onChange)
+        self.hookupCallbacks()
 
-
-    def currentXML(self):
-        return self.templateFunc(self.name, self.tid).read()
-
-    def onChange(self,obj=None,id=None):
+    def onChange(self, *args, **kwargs):
         if not self.idle_queued:
             queueDOMChange(self.doChange, "Update UI")
             self.idle_queued = True
@@ -264,6 +263,28 @@ class UpdateRegion:
         if self.parent.domHandler:
             self.parent.domHandler.changeItem(self.tid, xmlString)
         self.idle_queued = False
+
+class UpdateRegion(UpdateRegionBase):
+    def __init__(self, anchorId, anchorType, view, templateFunc, parent, name):
+        UpdateRegionBase.__init__(self, anchorId, anchorType, templateFunc, parent)
+        self.view = view
+        self.name = name
+
+    def currentXML(self):
+        return self.templateFunc(self.name, self.tid).read()
+
+    def hookupCallbacks(self):
+        self.view.addChangeCallback(self.onChange)
+        self.view.addAddCallback(self.onChange)
+        self.view.addRemoveCallback(self.onChange)
+        self.view.addViewChangeCallback (self.onChange)
+
+class ConfigUpdateRegion(UpdateRegionBase):
+    def hookupCallbacks(self):
+        config.addChangeCallback(self.onChange)
+
+    def currentXML(self):
+        return self.templateFunc(self.tid).read()
 
 # Object representing a set of registrations for Javascript callbacks when
 # the contents of some set of database views change. One of these Handles
@@ -333,6 +354,10 @@ class Handle:
 
     def addUpdate(self, anchorId, anchorType, view, templateFunc, name):
         ur = UpdateRegion(anchorId, anchorType, view, templateFunc, self, name)
+        self.updateRegions.append(ur)
+
+    def addConfigUpdate(self, anchorId, anchorType, templateFunc):
+        ur = ConfigUpdateRegion(anchorId, anchorType, templateFunc, self)
         self.updateRegions.append(ur)
 
     def unlinkTemplate(self):

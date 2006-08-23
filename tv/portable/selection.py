@@ -135,6 +135,15 @@ class SelectionArea(object):
                 obj.setSelected(False)
             self.currentSelection.remove(id)
 
+    def setObjectsActive(self, newValue):
+        """Iterate through all selected objects and call setActive on them,
+        passing in newValue.
+        """
+
+        for id in self.currentSelection:
+            obj = self.currentView.getObjectByID(id)
+            obj.setActive(newValue)
+
     def onAdd(self, obj, id):
         if obj.getSelected() and id not in self.currentSelection:
             # this happens when we remove/add the object to reorder it in a
@@ -324,9 +333,8 @@ class SelectionHandler(object):
 
     def setTabListActive(self, value):
         self.tabListActive = value
-        for id in self.tabListSelection.currentSelection:
-            tab = self.tabListSelection.currentView.getObjectByID(id)
-            tab.setActive(value)
+        self.tabListSelection.setObjectsActive(value)
+        self.itemListSelection.setObjectsActive(not value)
 
     def calcSelection(self, area, sourceID):
         """Calculate the selection, given the ID of an object that was clicked

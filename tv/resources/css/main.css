@@ -129,12 +129,6 @@ li {
     color: #1c5180;
 }
 
-.main-container-scraping {
-    text-align: center;
-    margin: 15px 0px;
-    padding: 0px;
-}
-
 #main-titlebar-tasks.big-search {
     width:100%; 
     text-align:center;
@@ -146,6 +140,26 @@ li {
     width: 200px;
     font-size: 120%;
 }
+
+
+#main-titlebar-free-space {
+    position: absolute;
+    bottom: 41px;
+    right: 15px;
+    color: white;
+    font-size: 12px;
+}
+
+#main-titlebar-free-space p {
+	margin: 0px;
+}
+
+.main-container-scraping {
+    text-align: center;
+    margin: 15px 0px;
+    padding: 0px;
+}
+
 
 div.scraping-indicator {
     margin: auto;
@@ -301,6 +315,10 @@ div.scraping-content {
 
 .main-video.selected {
     background: url(../images/main-video-bg-selected.png) repeat-x left top;
+}
+
+.main-video.selected-inactive {
+    background: #ccc;
 }
 
 .main-video-tnail {

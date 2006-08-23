@@ -10,6 +10,23 @@
 <t:include filename="settings.js" />
 
     <t:execOnLoad><![CDATA[
+import config
+import prefs
+import platformutils
+import util
+
+def getFreeSpace():
+    bytes = platformutils.getAvailableBytesForMovies()
+    return util.formatSizeForUser(bytes, "0B")
+
+def getAvailableSpace():
+    bytes = platformutils.getAvailableBytesForMovies()
+    if config.get(prefs.PRESERVE_DISK_SPACE):
+        preserved = config.get(prefs.PRESERVE_X_GB_FREE) * 1024 * 1024 * 1024
+        bytes -= preserved
+    return util.formatSizeForUser(bytes, "0B")
+
+
 global searchFilter
 searchFilter = lambda x: filters.matchingItems(x, None)
 
@@ -60,6 +77,14 @@ allExternalDownloads.unlink()
 		<div id="main-titlebar-tasks-search">
 		<input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search"  onfocus="startEditSearch(this, null)" onblur="endEditSearch()" />
 		</div>
+	</div>
+	<div t:updateForConfigChange="">
+	<div id="main-titlebar-free-space">
+		<div t:hideIf="getFreeSpace() == getAvailableSpace()">
+			<p i18n:translate=""><span i18n:name="size" t:replace="getFreeSpace()" /> disk space free</p>
+		</div>
+		<p i18n:translate=""><span i18n:name="size" t:replace="getAvailableSpace()" /> available for downloads</p>
+	</div>
 	</div>
 </div>
 <!-- / TITLE BAR -->

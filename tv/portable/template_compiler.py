@@ -301,6 +301,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.inInclude = False
         self.inRepeatView = False
         self.inUpdateView = False
+        self.inConfigUpdate = False
         self.inReplace = False
         self.inStaticReplace = False
         self.inExecOnUnload = False
@@ -357,6 +358,9 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             self.addElementStart(name, attrs, addId=True)
         elif 't:updateForView' in attrs.keys():
             self.startUpdate(attrs['t:updateForView'])
+            self.addElementStart(name, attrs, addId=True)
+        elif 't:updateForConfigChange' in attrs.keys():
+            self.startConfigUpdate()
             self.addElementStart(name, attrs, addId=True)
         elif 't:hideIf' in attrs.keys():
             ifValue = attrs['t:hideIf']
@@ -473,6 +477,13 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             repeatId = generateId()
             self.addText('<span id="%s"/>'%quoteattr(repeatId))
             self.handle.addUpdate(repeatId, 'nextSibling', repeatList, self.repeatName)
+        elif self.inConfigUpdate and self.depth == self.repeatDepth:
+            self.addText('</%s>'%name)
+            self.endText()
+            repeatList = self.endConfigUpdate()
+            repeatId = generateId()
+            self.addText('<span id="%s"/>'%quoteattr(repeatId))
+            self.handle.addConfigUpdate(repeatId, 'nextSibling', repeatList)
         elif (len(self.translateDepth) > 0 and
                                      self.depth == self.translateDepth[-1]):
             self.addTranslation()
@@ -548,12 +559,22 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.repeatName = name
         self.outputLists.append([])
 
+    def startConfigUpdate(self):
+        self.endText()
+        self.inConfigUpdate = True
+        self.repeatDepth = self.depth
+        self.outputLists.append([])
+
     def endRepeat(self):
         self.inRepeatView = False
         return self.outputLists.pop()
 
     def endUpdate(self):
         self.inUpdateView = False
+        return self.outputLists.pop()
+
+    def endConfigUpdate(self):
+        self.inConfigUpdate = False
         return self.outputLists.pop()
 
     def startHiding(self,ifValue):
@@ -662,6 +683,7 @@ class MetaHandle:
     def __init__(self):
         self.trackedViews = []
         self.updateRegions = []
+        self.configUpdateRegions = []
         self.subHandles = []
         self.triggerActionURLsOnLoad = []
         self.triggerActionURLsOnUnload = []
@@ -705,6 +727,10 @@ class MetaHandle:
     def addUpdate(self, anchorId, anchorType, templateFuncs, name):
         ur = (anchorId, anchorType, templateFuncs, name)
         self.updateRegions.append(ur)
+
+    def addConfigUpdate(self, anchorId, anchorType, templateFuncs):
+        ur = (anchorId, anchorType, templateFuncs)
+        self.configUpdateRegions.append(ur)
     
     def addSubHandle(self, handle):
         self.subHandles.append(handle)
@@ -756,6 +782,20 @@ class MetaHandle:
             fileobj.write('%s    return out%s' % (prefix, ending))
 
             fileobj.write('%s%s.addUpdate(%s,%s,%s,%s, %s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),name,upFunc,repr(name),ending))
+            count += 1
+
+        for ur in self.configUpdateRegions:
+            (anchorId, anchorType, templateFuncs) = ur
+            upFunc = "config_up_%s_%s" % (count, varname)
+            fileobj.write('%sdef %s(tid):%s' % (prefix, upFunc, ending))
+            fileobj.write('%s    out = StringIO()%s' % (prefix, ending))
+            for count2 in range(len(templateFuncs)):
+                (func, args) = templateFuncs[count2]
+                fileobj.write(func('out','',prefix+'    ',args))
+            fileobj.write('%s    out.seek(0)%s' % (prefix, ending))
+            fileobj.write('%s    return out%s' % (prefix, ending))
+
+            fileobj.write('%s%s.addConfigUpdate(%s,%s,%s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),upFunc,ending))
             count += 1
             
         for action in self.triggerActionURLsOnLoad:

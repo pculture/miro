@@ -22,7 +22,7 @@ else:
 
 <body>
 
-<div class="main-video draggable ***this.getSelected() and 'selected' or ''***" 
+<div class="main-video draggable ***this.getSelectedState()***"
 	dragsourcetype="***this.getDragType()***" 
 	dragsourcedata="itemlist-***this.getID()***" 
 	dragicon="video-tnail-***viewName + str(this.getID())***" 
