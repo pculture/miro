@@ -14,7 +14,7 @@
 <div class="dnd-background-inner1"></div>
 <div class="dnd-background-inner2"></div>
 <a class="feeditem draggable noselect"
-	dragsourcetype="playlist"
+	dragsourcetype="***this.getDragSourceType()***"
 	dragsourcedata="tablist-***this.objID()***"
 	dragicon="playlist-tnail-***this.objID()***">
 <img id="playlist-tnail-***this.objID()***" class="icon" src="resource:images/playlist-icon-tablist.png" /><div class="name" t:replaceMarkup="this.obj.getTitle()" />

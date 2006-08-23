@@ -98,7 +98,7 @@ def shortenFilename(name):
     split = basename.rsplit(".", 1)
     if len(split[0]) > 100:
         split[0] = split[0][:100]
-    if len(split[1]) > 100:
+    if len(split) > 1 and len(split[1]) > 100:
         split[1] = split[1][:100]
     basename = ".".join(split)
     name = os.path.join (path, basename)

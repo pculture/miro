@@ -564,6 +564,8 @@ folder will also be deleted.""")
         if self.iconCache.isValid():
             basename = os.path.basename(self.iconCache.getFilename())
             return resource.iconCacheUrl(basename)
+        elif self.isContainerItem:
+            return resource.url("images/container-icon.png")
         else:
             return resource.url("images/thumb.png")
     ##

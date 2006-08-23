@@ -38,6 +38,9 @@ whitespacePattern = re.compile(r"^[ \t\r\n]*$")
 def defaultFeedIconURL():
     return resource.url("images/feedicon.png")
 
+def defaultFeedIconURLTablist():
+    return resource.url("images/feedicon-tablist.png")
+
 # Notes on character set encoding of feeds:
 #
 # The parsing libraries built into Python mostly use byte strings
@@ -880,6 +883,14 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
             return resource.iconCacheUrl(basename)
         else:
             return defaultFeedIconURL()
+
+    def getTablistThumbnail(self):
+        self.confirmDBThread()
+        if self.iconCache.isValid():
+            basename = os.path.basename(self.iconCache.getFilename())
+            return resource.iconCacheUrl(basename)
+        else:
+            return defaultFeedIconURLTablist()
 
     def hasDownloadedItems(self):
         self.confirmDBThread()

@@ -22,8 +22,8 @@ global searchTerm
 searchTerm = None
 
 allItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
-matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm))
-matchingItems = matchingItems.sort(sorts.item)
+matchingItemsUnsorted = allItems.filter(lambda x: filters.matchingItems(x, searchTerm))
+matchingItems = matchingItemsUnsorted.sort(sorts.item)
 downloadingItems = matchingItems.filter(filters.downloadingItems)
 thisFeedView = views.feeds.filter(lambda x: x is feed)
 
@@ -49,7 +49,7 @@ def updateSearchString(newSearch):
         searchTerm = None
     else:
         searchTerm = newSearch
-    allItems.recomputeFilter(matchingItems)
+    allItems.recomputeFilter(matchingItemsUnsorted)
 feed.updateIcons()
 ]]>
 

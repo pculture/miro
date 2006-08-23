@@ -98,7 +98,7 @@ else:
 		    - 
 		    <a href="#" class="reveal-link"
 			onclick="return eventURL('action:revealItem?item=@@@this.getID()@@@');"
-			i18n:translate="">REVEAL</a>
+			i18n:translate="">REVEAL FILE</a>
 		</span>
 	</div>
     </div>

@@ -524,14 +524,14 @@ class LiveStorage:
                         restoreDatabase()
                     except:
                         print "WARNING: ERROR RESTORING OLD DATABASE"
-                        import traceback
                         traceback.print_exc()
                     self.saveDatabase()
                 else:
                     try:
                         self.loadDatabase()
-                    except bsddb.db.DBPageNotFoundError:
-                        print "WARNING: DBPageNotFoundError while loading database"
+                    except Exception, e:
+                        print "WARNING: exception while loading database"
+                        traceback.print_exc()
                         self.closeInvalidDB()
                         self.saveInvalidDB()
                         self.openEmptyDB()

@@ -33,7 +33,7 @@ import os.path
             <span i18n:translate="">Play Externally</span>
         </a>
         <a id="external-button-center" href="javascript:revealItem(@@@this.getID()@@@);">
-            <span i18n:translate="">Reveal</span>
+            <span i18n:translate="">Reveal File</span>
         </a>
         <a id="external-button-right" href="javascript:skipItem(@@@this.getID()@@@)">
             <span i18n:translate="">Skip Video <b i18n:name="countdown" id="countdown" /></span>

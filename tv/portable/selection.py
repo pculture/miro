@@ -265,9 +265,8 @@ class TabSelectionArea(SelectionArea):
 
     def isFolderSelected(self):
         """Returns if a channel/playlist folder is selected."""
-        for id in self.currentSelection:
-            obj = self.currentView.getObjectByID(id),
-            if isinstance(obj, folder.FolderBase):
+        for tab in self.getObjects():
+            if isinstance(tab.obj, folder.FolderBase):
                 return True
         return False
 
