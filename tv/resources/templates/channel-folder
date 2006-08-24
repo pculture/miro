@@ -9,6 +9,7 @@
     <link href="resource:css/main.css" rel="stylesheet" type="text/css" />
     <t:include filename="dynamic.js" />
     <script type="text/javascript" src="resource:templates/shide.js" />
+    <script type="text/javascript" src="resource:templates/osxdnd.js" />
     <script type="text/javascript" src="resource:templates/channel.js" />
     <t:execOnLoad><![CDATA[
 folder = views.channelFolders.getObjectByID(int(kargs['id']))
