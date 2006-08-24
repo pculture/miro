@@ -19,7 +19,11 @@ var dragHighlight = {
 
   setHightlight: function(element, type) {
     this.removeHighlight();
-    this.highlightCSSClass = " drag-highlight " + type;
+    if(element.className) {
+      this.highlightCSSClass = " drag-highlight " + type;
+    } else {
+      this.highlightCSSClass = "drag-highlight " + type;
+    }
     element.className += this.highlightCSSClass;
     this.highlightedElement = element;
   }

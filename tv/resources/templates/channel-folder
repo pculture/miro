@@ -66,7 +66,9 @@ for feed in allFeeds:
     </t:execOnUnload>
 </head>
 
-<body>
+<body dragdesttype="channel"
+	dragdestdata="channelfolder-***folder.getID()***"
+	drageffectchannel="move">
 <div id="main-titlebar">
     <img id="main-titlebar-avatar" src="resource:images/folder-icon.png" alt="" />
     <div id="main-titlebar-channelname">
@@ -89,7 +91,7 @@ for feed in allFeeds:
     <div class="channel-message" i18n:translate="">
         Empty Channel Folder
     </div>
-    <div class="channel-message-small" i18n:translate="">
+    <div class="channel-message small" i18n:translate="">
         Drag channels to this folder to add them.
     </div>
     </div>

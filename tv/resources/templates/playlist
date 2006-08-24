@@ -56,7 +56,7 @@ playlistView
     <div class="channel-message" i18n:translate="">
         Empty Playlist
     </div>
-    <div class="channel-message-small" i18n:translate="">
+    <div class="channel-message small" i18n:translate="">
         Drag downloaded videos to this playlist to add them.
     </div>
     </div>

@@ -30,7 +30,9 @@ childrenView
 ]]>
 </t:execOnUnload>
 </head>
-<body>
+<body dragdesttype="playlist"
+	dragdestdata="playlistfolder-***playlist.getID()***"
+	drageffectplaylist="move">
 <div id="main-titlebar">
         <img id="main-titlebar-avatar" src="resource:images/folder-icon.png" alt="" />
 	<div id="main-titlebar-channelname">
@@ -58,7 +60,7 @@ childrenView
    <div class="channel-blank">
        <div t:showIf="childrenView.len() == 0">
             <div class="channel-message" i18n:translate="">
-                Empty Playlist
+                Empty Playlist Folder
             </div>
         </div>
         <div t:showIf="childrenView.len() > 0">
@@ -68,8 +70,8 @@ childrenView
             playlists, but the playlists do not contain any items.
             </div>
         </div>
-        <div class="channel-message-small" i18n:translate="">
-            Drag downloaded videos to this playlist to add them.
+        <div class="channel-message small" i18n:translate="">
+            Drag playlists to this folder to add them.
         </div>
     </div>
 </div>

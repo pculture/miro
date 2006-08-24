@@ -200,15 +200,19 @@ nsresult setNewHighlight(nsIDOMElement *element, const nsAString &dragType) {
         rv = removeCurrentHighlight();
         if(NS_FAILED(rv)) return rv;
     }
-    currentHighlightClass.Cut(0, currentHighlightClass.Length());
-    currentHighlightClass.Append(NS_ConvertUTF8toUTF16(
-                nsDependentCString(" drag-highlight ")));
-    currentHighlightClass.Append(dragType);
-
     nsAutoString classStr = NS_ConvertUTF8toUTF16(nsDependentCString("class"));
     nsAutoString cssClass;
     rv = element->GetAttribute(classStr, cssClass);
     if(NS_FAILED(rv)) return rv;
+
+    currentHighlightClass.Cut(0, currentHighlightClass.Length());
+    if(!cssClass.IsEmpty()) {
+        currentHighlightClass.Append(NS_ConvertUTF8toUTF16(
+                    nsDependentCString(" ")));
+    }
+    currentHighlightClass.Append(NS_ConvertUTF8toUTF16(
+                nsDependentCString("drag-highlight ")));
+    currentHighlightClass.Append(dragType);
 
     cssClass.Append(currentHighlightClass);
     rv = element->SetAttribute(classStr, cssClass);
