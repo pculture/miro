@@ -44,20 +44,22 @@ Contains the channels
 /////////////////////////////////////////////*/
 
 #sidebar{
-	padding: 0px 0px 0 0;
+	padding: 0px;
+	margin: 0px;
 	width: 100%;
 	overflow: hidden;
-	}
-
-#channels{
-	padding: 0;
-	width: 100%;
-	}
+}
 
 .tab-list {
-       padding-left: 0px;
-       margin: 0;
+       padding: 2px 0px 3px 0px;
+       margin: 0px;
        width: 100%;
+       border-top: 1px solid #b6bfce;
+}
+
+.tab-list.first {
+	padding-top: 0px;
+	border-top: none;
 }
        
 .tab-list li{
@@ -137,73 +139,132 @@ a.feeditem img.icon {
     height: 22px;
 }
 
-/* DND Effects.  There is some nasty CSS stuff going on.  
+/* DND Folder drop effects 
 
-* The basic idea is that for tabs, we surround the content with a
-* .dnd-background-outer DIV.  We also add 2 extra absolutely positiond DIVS
-* inside .dnd.background-outer, called .dnd-background-inner1 and
-* .dnd-background-inner2.  The when the DIVs are being dragged over, they get
-* 2 extra classes, "drag-highlight" and the type of data that is being dragged
-* onto it ("playlist", "channelfolder", etc).
-* 
-* There are 2 kinds of DND effects we have for tabs, reordering a them and
-* dropping a playlist/channel on a folder or an item on a playlist.
+The basic strategy here is to create 3 hidden DIVs for the left, right and
+middle highlight images.  When a drag is in place, the div that the mouse is
+over gets the drag-highlight class and we use that to show the divs. 
+
+The divs are absolutely positioned so they don't interrupt the layout of the
+tab lists.
 */
 
-/* DND reorder effects */
-.drag-highlight.dnd-background-outer {
+.tab-container-drop-target {
+    position: relative;
+    margin: 0px;
+    padding: 0px;
 }
 
-.drag-highlight .dnd-background-inner1 {
-    background: url(../images/dnd-reorder-circle.png) top left no-repeat;
-    top: -4px;
-    left: 11px;
-    width: 8px;
-    height: 8px;
-    z-index: 3;
+.tab-container-drop-target .dnd-container-drop-indicator {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 22px;
+    z-index: -1;
 }
 
-.drag-highlight .dnd-background-inner2 {
-    background: url(../images/dnd-reorder-line.png) top left repeat-x;
-    top: -2px;
-    left: 17px;
-    right: 0px;
-    width: auto;
-    height: 4px;
-    z-index: 3;
+.tab-container-drop-target.drag-highlight .dnd-container-drop-indicator {
+    display: block;
 }
 
-.drag-highlight.child .dnd-background-inner1 {
-   left: 31px;
-}
 
-.drag-highlight.child .dnd-background-inner2 {
-   left: 37px;
-}
-
-/* DND Folder highlight effects */
-.playlist-folder.drag-highlight.playlist.dnd-background-outer, .channel-folder.drag-highlight.channel.dnd-background-outer, .playlist.drag-highlight.downloadeditem.dnd-background-outer {
-    background: url(../images/dnd-highlight-left.png) top left no-repeat;
-}
-
-.playlist-folder.drag-highlight.playlist .dnd-background-inner1, .channel-folder.drag-highlight.channel .dnd-background-inner1, .playlist.drag-highlight.downloadeditem .dnd-background-inner1 {
+.dnd-container-drop-indicator.mid {
     background: url(../images/dnd-highlight-mid.png) top left repeat-x;
-    top: 0px;
     left: 5px;
     right: 5px;
     width: auto;
-    height: 22px;
-    z-index: -1;
 }
 
-.playlist-folder.drag-highlight.playlist .dnd-background-inner2, .channel-folder.drag-highlight.channel .dnd-background-inner2, .playlist.drag-highlight.downloadeditem .dnd-background-inner2 {
+.dnd-container-drop-indicator.left {
+    background: url(../images/dnd-highlight-left.png) top left no-repeat;
+}
+
+.dnd-container-drop-indicator.right {
     background: url(../images/dnd-highlight-right.png) top right no-repeat;
-    left: auto;
-    top: 0px;
+}
+
+/* DND reorder effects */
+
+.tab-drop-target {
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+}
+
+.dnd-reorder-indicator {
+    display: none;
+    position: absolute;
+}
+
+.drag-highlight > .dnd-reorder-indicator {
+    display: block;
+}
+
+.dnd-reorder-indicator.circle  {
+    width: 8px;
+    height: 8px;
+    background: url("../images/dnd-reorder-circle.png");
+}
+
+.dnd-reorder-indicator.line  {
+    width: auto;
+    height: 4px;
+    background: url("../images/dnd-reorder-line.png") repeat-x;
+}
+
+.tab-drop-target .dnd-reorder-indicator.circle  {
+    top: -4px;
+    left: 11px;
+}
+
+.tab-drop-target .dnd-reorder-indicator.line {
+    top: -2px;
+    left: 17px;
     right: 0px;
-    width: 5px;
-    height: 22px;
-    z-index: -1;
+}
+
+.tab-drop-target.child .dnd-reorder-indicator.line {
+   left: 37px;
+}
+
+.tab-drop-target.child .dnd-reorder-indicator.circle {
+   left: 31px;
+}
+
+/* These next ones catch things like dragging a playlist all the way up to the
+* channels tablist */
+
+.tab-list-drop-target {
+       position: relative;
+       margin: 0px;
+       padding: 0px;
+       min-height: 10px;
+}
+
+.tab-list-drop-target > .dnd-reorder-indicator {
+    z-index: 3;
+}
+
+.tab-list-drop-target > .dnd-reorder-indicator.circle  {
+    left: 11px;
+    bottom: -8px;
+    height: 8px;
+    width: 8px;
+}
+
+.tab-list-drop-target > .dnd-reorder-indicator.line {
+    left: 17px;
+    bottom: -6px;
+    height: 4px;
+    width: 100%;
+}
+
+.tab-list-drop-target > .dnd-reorder-indicator.show-on-top.circle {
+    top: -7px;
+}
+
+.tab-list-drop-target > .dnd-reorder-indicator.show-on-top.line {
+    top: -5px;
 }
 
 a.feeditem div.name {
@@ -211,25 +272,8 @@ a.feeditem div.name {
 	overflow: hidden;
 }
 
-.tab-list-divider {
-	margin: 2px 2px 1px 0px;
-	height: 2px;
-	overflow: hidden;
-	font-size: 2px;
-	border-top: 1px solid #b6bfce;
-}
-
-.tab-list-divider.drag-highlight {
-	border-top: 1px solid black;
-}
-
 .tab-list-end {
 	height: 5px;
-}
-
-.tab-list-end.drag-highlight {
-	border-top: 1px solid black;
-	height: 4px;
 }
 
 .feed-loading-icon {

@@ -919,10 +919,19 @@ downloaded?""")
     def handleDrop(self, dropData, type, sourceData):
         try:
             destType, destID = dropData.split("-")
-            if destID != 'END':
-                destObj = db.getObjectByID(int(destID))
-            else:
+            if destID == 'END':
                 destObj = None
+            elif destID == 'START':
+                if destType == 'channel':
+                    tabOrder = getSingletonDDBObject(views.channelTabOrder)
+                else:
+                    tabOrder = getSingletonDDBObject(views.playlistTabOrder)
+                for tab in tabOrder.getView():
+                    destObj = tab.obj
+                    break
+                print "destOBJ is ", destObj
+            else:
+                destObj = db.getObjectByID(int(destID))
             sourceArea, sourceID = sourceData.split("-")
             sourceID = int(sourceID)
             draggedIDs = self.selection.calcSelection(sourceArea, sourceID)

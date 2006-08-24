@@ -35,6 +35,23 @@ function getDragData(element) {
   return dragArray;
 }
 
+function findDragInfo(startElement) {
+  var dragService = Components.classes[
+      "@mozilla.org/widget/dragservice;1"].getService(nsIDragService);
+  var dragSession = dragService.getCurrentSession();
+  if(!dragSession) return null;
+
+  var elt = searchUpForElementWithAttribute(startElement, "dragdesttype");
+  while(elt) {
+    var dragDestType = canElementSupportDrag(elt, dragSession);
+    if(dragDestType) {
+      return {'dragDestType': dragDestType, 'element': elt};
+    } 
+    elt = searchUpForElementWithAttribute(elt.parentNode, 'dragdesttype');
+  } 
+  return null;
+}
+
 var dragHighlight = {
   highlightedElement: null,
   highlightCSSClass: null,
@@ -85,47 +102,49 @@ function onDragOver(event, browser) {
   if(!dragSession) return;
 
   var canDrop = false;
-
-  var elt = searchUpForElementWithAttribute(event.target, "dragdesttype");
-  if(elt) {
-    var dragDestType = canElementSupportDrag(elt, dragSession);
-    if(dragDestType) {
-      var dragEffect = elt.getAttribute('drageffect' + dragDestType);
-      dragSession.dragAction = getDragAction(dragEffect);
-      dragHighlight.setHightlight(elt, dragDestType);
-      canDrop = true;
-    } 
+  
+  var dragInfo = findDragInfo(event.target);
+  if(dragInfo) {
+    var elt = dragInfo['element'];
+    var dragDestType = dragInfo['dragDestType'];
+    var dragEffect = elt.getAttribute('drageffect' + dragDestType);
+    dragSession.dragAction = getDragAction(dragEffect);
+    dragHighlight.setHightlight(elt, dragDestType);
+    canDrop = true;
   } 
   dragSession.canDrop = canDrop;
+  if(!canDrop) dragSession.dragAction = nsIDragService.DRAGDROP_ACTION_NONE;
+
   event.stopPropagation();
 }
 
 function onDragExit(event, browser) {
-  dragHighlight.removeHighlight();
+   if(event.screenX == 0 && event.screenY == 0) {
+     dragHighlight.removeHighlight();
+   }
 }
 
 function onDragDrop(event, browser) {
   dragHighlight.removeHighlight();
-  var elt = searchUpForElementWithAttribute(event.target, "dragdesttype");
-  if(elt) {
+  var dragInfo = findDragInfo(event.target);
+  if(dragInfo) {
+    var elt = dragInfo['element'];
+    var dragType = dragInfo['dragDestType'];
     var dragService = Components.classes[
         "@mozilla.org/widget/dragservice;1"].getService(nsIDragService);
     var dragSession = dragService.getCurrentSession();
     if(dragSession) {
-      var dragType = canElementSupportDrag(elt, dragSession);
-      if(dragType) {
-        var dragDestData = elt.getAttribute("dragdestdata");
-        var trans = Components.classes[
-          "@mozilla.org/widget/transferable;1"].createInstance(nsITransferable)
-        var mimeType = "application/x-democracy-" + dragType + "-drag";
-        trans.addDataFlavor(mimeType);
-        dragSession.getData(trans, 0);
-        var rawData = new Object();
-        var length = new Object();
-        trans.getTransferData(mimeType, rawData, length);
-        var sourceData = rawData.value.QueryInterface(nsISupportsString);
-        pybridge.handleDrop(dragDestData, dragType, sourceData.data);
-      }
+      var dragDestData = elt.getAttribute("dragdestdata");
+      var trans = Components.classes[
+        "@mozilla.org/widget/transferable;1"].createInstance(nsITransferable)
+      var mimeType = "application/x-democracy-" + dragType + "-drag";
+      trans.addDataFlavor(mimeType);
+      dragSession.getData(trans, 0);
+      var rawData = new Object();
+      var length = new Object();
+      trans.getTransferData(mimeType, rawData, length);
+      var sourceData = rawData.value.QueryInterface(nsISupportsString);
+      pybridge.handleDrop(dragDestData, dragType, sourceData.data);
     }
   }
 }

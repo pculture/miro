@@ -147,6 +147,13 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
             for id in ids:
                 folder.checkItemIDRemoved(id)
 
+    def getDragDestType(self):
+        self.confirmDBThread()
+        if self.folder_id is not None:
+            return 'playlist'
+        else:
+            return 'playlist:playlistfolder'
+
     def rename(self):
         title = _("Rename Playlist")
         description = _("Enter a new name for the playlist %s" % self.getTitle())

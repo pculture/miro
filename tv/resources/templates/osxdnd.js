@@ -52,6 +52,18 @@ function searchUpForElementWithAttribute(element, attributeName) {
     return null;
 }
 
+function findDropInfo(startElement) {
+  var elt = searchUpForElementWithAttribute(event.target, "dragdesttype");
+  while(elt) {
+    var dragDestType = canElementSupportDrag(elt, event.dataTransfer);
+    if(dragDestType) {
+        return {'dragDestType': dragDestType, 'element': elt};
+    } 
+    elt = searchUpForElementWithAttribute(elt.parentNode, "dragdesttype");
+  }
+  return null;
+}
+
 
 function handleDragStart(event) {
    var elt = searchUpForElementWithAttribute(event.target, "dragsourcetype");
@@ -67,14 +79,13 @@ function handleDragStart(event) {
 }
 
 function handleDragOver(event) {
-  var elt = searchUpForElementWithAttribute(event.target, "dragdesttype");
-  if(elt) {
-    var dragDestType = canElementSupportDrag(elt, event.dataTransfer);
-    if(dragDestType) {
-      event.dataTransfer.dropEffect = elt.getAttribute('drageffect' + dragDestType);
-      event.preventDefault();
-      dragHighlight.setHightlight(elt, dragDestType);
-    } 
+  var dropInfo = findDropInfo(event.target);
+  if(dropInfo) {
+    var dragDestType = dropInfo['dragDestType'];
+    var elt = dropInfo['element'];
+    event.dataTransfer.dropEffect = elt.getAttribute('drageffect' + dragDestType);
+    event.preventDefault();
+    dragHighlight.setHightlight(elt, dragDestType);
   } 
 }
 
@@ -84,15 +95,14 @@ function handleDragLeave(event) {
 
 function handleDrop(event) {
   dragHighlight.removeHighlight();
-  var elt = searchUpForElementWithAttribute(event.target, "dragdesttype");
-  if(elt) {
-    var dragDestType = canElementSupportDrag(elt, event.dataTransfer);
+  var dropInfo = findDropInfo(event.target);
+  if(dropInfo) {
+    var dragDestType = dropInfo['dragDestType'];
+    var elt = dropInfo['element'];
     var dragDestMimeType = "application/x-democracy-" + dragDestType + "-drag";
     var sourceData = event.dataTransfer.getData(dragDestMimeType);
-    if(dragDestType) {
       var dragDestData = elt.getAttribute("dragdestdata");
       eventURL('action:handleDrop?data=' + dragDestData + "&type=" +
 	      dragDestType + "&sourcedata=" + sourceData);
-    }
   }
 }

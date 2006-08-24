@@ -309,8 +309,17 @@ div.scraping-content {
     top: 0px;
 }
 
-.main-video.drag-highlight {
-    border-top: 1px solid #0752d7;
+.main-video .dnd-reorder-line {
+    position: absolute;
+    top: -1px;
+    height: 2px;
+    width: 100%;
+    background: #0752d7;
+    display: none;
+}
+
+.main-video.drag-highlight .dnd-reorder-line {
+    display: block;
 }
 
 .main-video.selected {

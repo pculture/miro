@@ -23,30 +23,43 @@ playlistTabs = kargs['playlistTabOrder'].getView()
 <body>
 
 <div id="sidebar">
-  <div id="channels">
+  <div class="tab-list-drop-target"
+          dragdesttype="channel:channelfolder"
+          dragdestdata="channel-START"
+          drageffectchannel="move" 
+	  drageffectchannelfolder="move" >
+    <ul class="tab-list first">
+	<li t:repeatForView="guideTabs" 
+	  class="***this.getState()***"
+	  selectID="***this.objID()***" selectViewName="guideTabs"
+	  selectArea='tablist' 
+	  onmousedown="return handleContextMenuSelect(event);" 
+	  onclick="return handleSelect(event);" >
+	  <span t:hideIf="this.obj.getDefault()" t:contextMenu="action:copyFeedURL?feed=@@@this.objID()@@@|Copy URL to clipboard\n\naction:remove?area=tablist&amp;id=@@@this.objID()@@@|Remove">
+	      <t:includeTemplate filename="guidetab" />
+	  </span>
+	  <span t:hideIf="not this.obj.getDefault()">
+	      <t:includeTemplate filename="guidetab" />
+	  </span>
+	</li>
+	<li t:repeatForView="staticTabs" 
+	  class="***this.getState()***"
+	  selectID="***this.objID()***" selectViewName="staticTabs"
+	  selectArea='tablist' 
+	  onmousedown="return handleContextMenuSelect(event);" 
+	  onclick="return handleSelect(event);" >
+	    <t:includeTemplate filename="statictab" />
+	</li>
+    </ul>
+    <div class="dnd-reorder-indicator circle" />
+    <div class="dnd-reorder-indicator line" />
+  </div>
+  <div class="tab-list-drop-target"
+	dragdesttype="playlist:playlistfolder"
+	dragdestdata="playlist-START"
+	drageffectplaylist="move" 
+	drageffectplaylistfolder="move" >
     <ul class="tab-list">
-      <li t:repeatForView="guideTabs" 
-	class="***this.getState()***"
-	selectID="***this.objID()***" selectViewName="guideTabs"
-	selectArea='tablist' 
-	onmousedown="return handleContextMenuSelect(event);" 
-	onclick="return handleSelect(event);" >
-	<span t:hideIf="this.obj.getDefault()" t:contextMenu="action:copyFeedURL?feed=@@@this.objID()@@@|Copy URL to clipboard\n\naction:remove?area=tablist&amp;id=@@@this.objID()@@@|Remove">
-            <t:includeTemplate filename="guidetab" />
-        </span>
-        <span t:hideIf="not this.obj.getDefault()">
-            <t:includeTemplate filename="guidetab" />
-        </span>
-      </li>
-      <li t:repeatForView="staticTabs" 
-	class="***this.getState()***"
-	selectID="***this.objID()***" selectViewName="staticTabs"
-	selectArea='tablist' 
-	onmousedown="return handleContextMenuSelect(event);" 
-	onclick="return handleSelect(event);" >
-          <t:includeTemplate filename="statictab" />
-      </li>
-      <div class="tab-list-divider" />
       <li t:repeatForView="feedTabs" 
 	class="***this.getState()***"
 	selectID="***this.objID()***" selectViewName="feedTabs"
@@ -64,11 +77,18 @@ playlistTabs = kargs['playlistTabOrder'].getView()
 	    </span>
 	  </span>
       </li>
-      <div class="tab-list-divider" 
-	      dragdesttype="channel:channelfolder"
-	      dragdestdata="channel-END"
-	      drageffectchannel="move" 
-	      drageffectchannelfolder="move"  />
+    </ul>
+    <div class="dnd-reorder-indicator circle" />
+    <div class="dnd-reorder-indicator line" />
+  </div>
+  <div class="tab-list-drop-target"
+	dragdesttype="channel:channelfolder"
+	dragdestdata="channel-END"
+	drageffectchannel="move" 
+	drageffectchannelfolder="move" >
+	<div class="dnd-reorder-indicator show-on-top circle" />
+	<div class="dnd-reorder-indicator show-on-top line" />
+      <ul class="tab-list">
       <li t:repeatForView="playlistTabs" 
 	class="***this.getState()***"
 	selectID="***this.objID()***" selectViewName="playlistTabs"
@@ -86,13 +106,16 @@ playlistTabs = kargs['playlistTabOrder'].getView()
 	    </span>
 	  </span>
       </li>
-      <div class="tab-list-end" 
-	      dragdesttype="playlist:playlistfolder"
-	      dragdestdata="playlist-END"
-	      drageffectplaylist="move" 
-	      drageffectplaylistfolder="move"  />
     </ul>
   </div>
+  <div class="tab-list-drop-target"
+      dragdesttype="playlist:playlistfolder"
+      dragdestdata="playlist-END"
+      drageffectplaylist="move" 
+      drageffectplaylistfolder="move" >
+      <div class="dnd-reorder-indicator show-on-top circle" />
+      <div class="dnd-reorder-indicator show-on-top line" />
+    </div>
 </div>
 
 </body>

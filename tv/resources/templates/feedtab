@@ -5,13 +5,13 @@
 </head>
 <body>
 <!-- Normal -->
-<div class="dnd-background-outer ***this.obj.getFolder() and 'child' or ''***"
+<div class="tab-drop-target ***this.obj.getFolder() and 'child' or ''***"
 	dragdesttype="***this.obj.getDragDestType()***"
 	dragdestdata="channel-***this.objID()***"
 	drageffectchannel="move"
 	drageffectchannelfolder="move">
-<div class="dnd-background-inner1"></div>
-<div class="dnd-background-inner2"></div>
+<div class="dnd-reorder-indicator circle" />
+<div class="dnd-reorder-indicator line" />
 <a class="feeditem draggable noselect"
 	dragsourcetype="***this.getDragSourceType()***"
 	dragsourcedata="tablist-***this.objID()***"

@@ -217,6 +217,44 @@ nsresult setNewHighlight(nsIDOMElement *element, const nsAString &dragType) {
     return NS_OK;
 }
 
+nsresult findDropElement(nsIDOMEvent* event, nsIDOMElement** element,
+        nsString& singleDragType)
+{
+    nsresult rv;
+    *element = nsnull;
+    nsCOMPtr<nsIDOMEventTarget> target;
+    rv = event->GetTarget(getter_AddRefs(target));
+    if (NS_FAILED(rv)) return rv;
+    nsCOMPtr<nsIDOMNode> node (do_QueryInterface(target, &rv));
+    if (NS_FAILED(rv)) return rv;
+
+    nsAutoString dragDestTypeString = NS_ConvertUTF8toUTF16(
+            nsDependentCString("dragdesttype"));
+    nsAutoString dragDestType;
+    nsCOMPtr <nsIDOMElement> currentElement;
+    PRBool supported;
+    while(1) {
+        rv = searchUpForElementWithAttribute(node, dragDestTypeString,
+                getter_AddRefs(currentElement));
+        if(NS_FAILED(rv)) return rv;
+        if(currentElement == nsnull) return NS_OK;
+        rv = currentElement->GetAttribute(dragDestTypeString, dragDestType);
+        if(NS_FAILED(rv)) return rv;
+        rv = isDragTypeSupported(dragDestType, &supported, &singleDragType);
+        if(NS_FAILED(rv)) return rv;
+        if(supported) {
+            *element = currentElement;
+            (*element)->AddRef();
+            return NS_OK;
+        } 
+        nsCOMPtr<nsIDOMNode> parent;
+        rv = node->GetParentNode(getter_AddRefs(parent));
+        if(NS_FAILED(rv)) return rv;
+        if(parent == nsnull) return NS_OK;
+        node = parent;
+    }
+}
+
 class DemocracyDNDHook : public nsIClipboardDragDropHooks, nsIDOMEventListener {
 protected:
     GtkMozEmbed* embed;
@@ -238,31 +276,21 @@ public:
         if(NS_FAILED(rv)) return rv;
         
         nsCOMPtr<nsIDOMElement> element;
-        nsAutoString dragDestTypeString = NS_ConvertUTF8toUTF16(
-                nsDependentCString("dragdesttype"));
-        rv = searchUpForElementWithAttribute(event,
-                dragDestTypeString, getter_AddRefs(element));
+        nsString singleDragType;
+        rv = findDropElement(event, getter_AddRefs(element), singleDragType);
         if(NS_FAILED(rv)) return rv;
         if(element) {
-            nsAutoString dragDestType;
-            rv = element->GetAttribute(dragDestTypeString, dragDestType);
+            nsAutoString dragEffectStr = NS_ConvertUTF8toUTF16(
+                    nsDependentCString("drageffect"));
+            dragEffectStr.Append(singleDragType);
+            nsAutoString dragEffect;
+            rv = element->GetAttribute(dragEffectStr, dragEffect);
             if(NS_FAILED(rv)) return rv;
-            nsString singleDragType;
-            rv = isDragTypeSupported(dragDestType, &supported, &singleDragType);
+            *retval = true;
+            rv = session->SetDragAction(stringToDragAction(dragEffect));
             if(NS_FAILED(rv)) return rv;
-            if(supported) {
-                nsAutoString dragEffectStr = NS_ConvertUTF8toUTF16(
-                        nsDependentCString("drageffect"));
-                dragEffectStr.Append(singleDragType);
-                nsAutoString dragEffect;
-                rv = element->GetAttribute(dragEffectStr, dragEffect);
-                if(NS_FAILED(rv)) return rv;
-                *retval = true;
-                rv = session->SetDragAction(stringToDragAction(dragEffect));
-                if(NS_FAILED(rv)) return rv;
-                rv = setNewHighlight(element, singleDragType);
-                if(NS_FAILED(rv)) return rv;
-            }
+            rv = setNewHighlight(element, singleDragType);
+            if(NS_FAILED(rv)) return rv;
         }
         return NS_OK;
     }
@@ -310,37 +338,27 @@ public:
         rv = removeCurrentHighlight();
         if(NS_FAILED(rv)) return rv;
         nsCOMPtr<nsIDOMElement> element;
-        nsAutoString dragDestTypeString = NS_ConvertUTF8toUTF16(
-                nsDependentCString("dragdesttype"));
-        nsAutoString dragDestDataString = NS_ConvertUTF8toUTF16(
-                nsDependentCString("dragdestdata"));
-        rv = searchUpForElementWithAttribute(event,
-                dragDestTypeString, getter_AddRefs(element));
+        nsString singleDragType;
+        rv = findDropElement(event, getter_AddRefs(element), singleDragType);
         if(NS_FAILED(rv)) return rv;
         if(element) {
-            nsAutoString dragDestType;
-            rv = element->GetAttribute(dragDestTypeString, dragDestType);
-            if(NS_FAILED(rv)) return rv;
+            nsAutoString dragDestDataString = NS_ConvertUTF8toUTF16(
+                nsDependentCString("dragdestdata"));
             nsAutoString dragDestData;
             rv = element->GetAttribute(dragDestDataString, dragDestData);
             if(NS_FAILED(rv)) return rv;
-            PRBool supported;
-            nsString singleDragType;
-            rv = isDragTypeSupported(dragDestType, &supported, &singleDragType);
-            if(supported) {
-                nsAutoString sourceData;
-                rv = getDragSourceData(singleDragType, sourceData);
-                if(NS_FAILED(rv)) return rv;
-                *retval = true;
-                nsCAutoString url = NS_ConvertUTF16toUTF8(dragDestData);
-                url.Insert("action:handleDrop?data=", 0);
-                url.Append("&type=");
-                url.Append(NS_ConvertUTF16toUTF8(singleDragType));
-                url.Append("&sourcedata=");
-                url.Append(NS_ConvertUTF16toUTF8(sourceData));
-                gtk_moz_embed_load_url(this->embed,
-                        PromiseFlatCString(url).get());
-            } 
+            nsAutoString sourceData;
+            rv = getDragSourceData(singleDragType, sourceData);
+            if(NS_FAILED(rv)) return rv;
+            *retval = true;
+            nsCAutoString url = NS_ConvertUTF16toUTF8(dragDestData);
+            url.Insert("action:handleDrop?data=", 0);
+            url.Append("&type=");
+            url.Append(NS_ConvertUTF16toUTF8(singleDragType));
+            url.Append("&sourcedata=");
+            url.Append(NS_ConvertUTF16toUTF8(sourceData));
+            gtk_moz_embed_load_url(this->embed,
+                    PromiseFlatCString(url).get());
             return rv;
         } else {
             return NS_OK;
@@ -349,7 +367,18 @@ public:
 
     nsresult HandleEvent(nsIDOMEvent *event) {
         // This fires for dragexit events
-        removeCurrentHighlight();
+        PRInt32 screenX, screenY;
+        nsresult rv;
+        nsCOMPtr<nsIDOMMouseEvent> mouseEvent(do_QueryInterface(event, &rv));
+        if(NS_FAILED(rv)) return rv;
+        rv = mouseEvent->GetScreenX(&screenX);
+        if(NS_FAILED(rv)) return rv;
+        rv = mouseEvent->GetScreenY(&screenY);
+        if(NS_FAILED(rv)) return rv;
+        if(screenX == 0 && screenY == 0) {
+            rv = removeCurrentHighlight();
+            if(NS_FAILED(rv)) return rv;
+        }
         return NS_OK;
     }
 };

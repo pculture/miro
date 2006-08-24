@@ -5,20 +5,27 @@
 </head>
 <body>
 <!-- Normal -->
-<div class="dnd-background-outer playlist ***this.obj.getFolder() and 'child' or ''***"
-	dragdesttype="downloadeditem:playlist:playlistfolder"
+<div class="tab-drop-target ***this.obj.getFolder() and 'child' or ''***"
+	dragdesttype="***this.obj.getDragDestType()***"
 	dragdestdata="playlist-***this.objID()***"
-	drageffectdownloadeditem="copy"
 	drageffectplaylist="move"
 	drageffectplaylistfolder="move">
-<div class="dnd-background-inner1"></div>
-<div class="dnd-background-inner2"></div>
+<div class="dnd-reorder-indicator circle" />
+<div class="dnd-reorder-indicator line" />
+<div class="tab-container-drop-target"
+	dragdesttype="downloadeditem"
+	dragdestdata="playlist-***this.objID()***"
+	drageffectdownloadeditem="copy">
+<div class="dnd-container-drop-indicator left" />
+<div class="dnd-container-drop-indicator mid" />
+<div class="dnd-container-drop-indicator right" />
 <a class="feeditem draggable noselect"
 	dragsourcetype="***this.getDragSourceType()***"
 	dragsourcedata="tablist-***this.objID()***"
 	dragicon="playlist-tnail-***this.objID()***">
 <img id="playlist-tnail-***this.objID()***" class="icon" src="resource:images/playlist-icon-tablist.png" /><div class="name" t:replaceMarkup="this.obj.getTitle()" />
 </a>
+</div>
 </div>
 </body>
 </html>

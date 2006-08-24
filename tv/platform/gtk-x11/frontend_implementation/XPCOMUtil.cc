@@ -23,6 +23,15 @@ nsresult searchUpForElementWithAttribute(nsIDOMEvent *event,
     if (NS_FAILED(result)) return result;
     nsCOMPtr<nsIDOMNode> node (do_QueryInterface(target, &result));
     if (NS_FAILED(result)) return result;
+    return searchUpForElementWithAttribute(node, attributeName, element);
+}
+
+nsresult searchUpForElementWithAttribute(nsIDOMNode* startNode,
+        nsAString& attributeName, nsIDOMElement** element)
+{
+    nsresult result;
+    *element = nsnull;
+    nsCOMPtr<nsIDOMNode> node = startNode;
     while(1) {
         PRUint16 nodeType;
         result = node->GetNodeType(&nodeType);

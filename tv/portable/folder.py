@@ -13,7 +13,7 @@ class FolderBase(DDBObject):
 
     def __init__(self, title):
 	self.title = title
-        self.expanded = False
+        self.expanded = True
 	DDBObject.__init__(self)
 
     getTitle, setTitle = makeSimpleGetSet('title')
