@@ -140,7 +140,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         print "DTV: Downloader daemon has been terminated (status: %d)" % status
 
     def application_openFiles_(self, app, filenames):
-        eventloop.addUrgentCall(lambda:self.openFiles(filenames), "Open local file(s)")
+        eventloop.addUrgentCall(lambda:singleclick.parseCommandLineArgs(filenames), "Open local file(s)")
         app.replyToOpenOrPrint_(NSApplicationDelegateReplySuccess)
 
     def addTorrent(self, path):
@@ -152,10 +152,6 @@ class AppController (NibClassBuilder.AutoBaseClass):
             singleclick.addTorrent(path, infoHash)
             app.controller.selection.selectTabByTemplateBase('downloadtab')
         
-    def addVideo(self, path):
-        singleclick.addVideo(path)
-        app.controller.selection.selectTabByTemplateBase('librarytab')
-
     def workspaceWillSleep_(self, notification):
         def pauseRunningDownloaders(self=self):
             views.remoteDownloads.confirmDBThread()
@@ -247,22 +243,8 @@ class AppController (NibClassBuilder.AutoBaseClass):
         result = openPanel.runModalForDirectory_file_types_(NSHomeDirectory(), nil, nil)
         if result == NSOKButton:
             filenames = openPanel.filenames()
-            eventloop.addUrgentCall(lambda:self.openFiles(filenames), "Open local file(s)")
+            eventloop.addUrgentCall(lambda:singleclick.parseCommandLineArgs(filenames), "Open local file(s)")
                 
-    def openFiles(self, filenames):
-        singleclick.resetCommandLineView()
-        for filename in filenames:
-            root, ext = os.path.splitext(filename.lower())
-            if ext == ".democracy":
-                singleclick.addSubscriptions(filename)
-            elif ext == ".torrent":
-                self.addTorrent(filename)
-            elif ext in (".rss", ".rdf", ".atom"):
-                singleclick.addFeed(filename)
-            else:
-                self.addVideo(filename)
-        singleclick.playCommandLineView()
-
     def shutdown_(self, sender):
         self.internalShutdown = True
         app.controller.quit()
