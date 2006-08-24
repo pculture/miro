@@ -5,8 +5,8 @@
 import os
 import config
 import eventloop
-from templatehelper import quoteattr, escape, toUni, attrPattern, rawAttrPattern, resourcePattern, generateId
-from xhtmltools import urlencode
+from templatehelper import quoteattr, escape, attrPattern, rawAttrPattern, resourcePattern, generateId
+from xhtmltools import urlencode, toUTF8Bytes
 
 if os.environ.has_key('DEMOCRACY_RECOMPILE_TEMPLATES'):
     import template_compiler
@@ -439,12 +439,12 @@ def fillAttr(_value, _localVars):
     match = attrPattern.match(_value)
     if match:
         result = eval(match.group(2), globals(), _localVars)
-        return ''.join((match.group(1), urlencode(toUni(result)), match.group(3)))
+        return ''.join((match.group(1), urlencode(toUTF8Bytes(result)), match.group(3)))
     else:
         match = rawAttrPattern.match(_value)
         if match:
             result = eval(match.group(2), globals(), _localVars)
-            return ''.join((match.group(1), toUni(result), match.group(3)))
+            return ''.join((match.group(1), toUTF8Bytes(result), match.group(3)))
         else:
             match = resourcePattern.match(_value)
             if match:

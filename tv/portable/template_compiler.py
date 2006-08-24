@@ -46,11 +46,11 @@ def genRepeatTextHide(varname, tid, prefix, args):
     return out
         
 def genQuoteAttr(varname, tid, prefix, value):
-    return '%s%s.write(quoteattr(urlencode(toUni(%s))))\n'%(
+    return '%s%s.write(quoteattr(urlencode(toUTF8Bytes(%s))))\n'%(
         prefix, varname, value)
 
 def genRawAttr(varname, tid, prefix, value):
-    return '%s%s.write(quoteattr(toUni(%s)))\n'%(prefix, varname, value)
+    return '%s%s.write(quoteattr(toUTF8Bytes(%s)))\n'%(prefix, varname, value)
 
 # Adds a tid attribute to a tag and closes it
 def genRepeatTID(varname, tid, prefix, args):
@@ -58,7 +58,7 @@ def genRepeatTID(varname, tid, prefix, args):
 
 # Evaluates key with data
 def genRepeatEvalEscape(varname, tid, prefix, replace):
-    return '%s%s.write(escape(toUni(%s)))\n' % (prefix, varname, replace)
+    return '%s%s.write(escape(toUTF8Bytes(%s)))\n' % (prefix, varname, replace)
 
 # Evaluates key with data
 def genRepeatEval(varname, tid, prefix, replace):
@@ -264,8 +264,8 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         fileobj.write('# This is a generated file. Do not edit.\n')
         fileobj.write('from template import Handle, fillAttr, quoteAndFillAttr\n')
         fileobj.write('from cStringIO import StringIO\n')
-        fileobj.write('from xhtmltools import urlencode\n')
-        fileobj.write('from templatehelper import quoteattr, escape, toUni\n')
+        fileobj.write('from xhtmltools import urlencode, toUTF8Bytes\n')
+        fileobj.write('from templatehelper import quoteattr, escape\n')
         fileobj.write('from string import Template\n')
         fileobj.write('import app\n')
         fileobj.write('import views\n')
