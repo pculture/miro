@@ -21,7 +21,6 @@
   <property name="focus_on_map">True</property>
   <property name="urgency_hint">False</property>
   <signal name="delete_event" handler="on_main_delete" last_modification_time="Thu, 25 May 2006 20:38:56 GMT"/>
-  <signal name="key_press_event" handler="on_key_press_event" last_modification_time="Thu, 17 Aug 2006 18:38:01 GMT"/>
 
   <child>
     <widget class="GtkVBox" id="vbox2">

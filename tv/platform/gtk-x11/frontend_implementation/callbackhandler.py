@@ -150,6 +150,9 @@ class CallbackHandler(object):
             ('Help', None, _('_Help')),
             ('About', gtk.STOCK_ABOUT, None, None, None, self.on_about_clicked),
             ('Donate', None, _("_Donate"), None, None, self.on_donate_clicked),
+
+            ('Delete', None, _('Delete selection'), 'Delete', None, self.on_delete),
+            ('Backspace', None, _('Delete selection'), 'BackSpace', None, self.on_delete),
             ])
         return actionGroups
 
@@ -385,7 +388,3 @@ class CallbackHandler(object):
     def on_delete(self, event = None):
             eventloop.addUrgentCall(app.controller.removeCurrentSelection, 
                     "remove current selection")
-
-    def on_key_press_event(self, widget, event):
-        if gtk.gdk.keyval_name(event.keyval) == 'Delete':
-            self.onDelete (event)
