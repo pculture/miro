@@ -13,7 +13,7 @@
 
 # Simply returns text
 def genRepeatText(varname, tid, prefix, text):
-    return '%s%s.write(%s)\n' % (prefix,varname, repr(text))
+    return '%s%s.write(%s)\n' % (prefix,varname, repr(toUTF8Bytes(text)))
 
 # Returns translated version of text
 def genRepeatTranslate(varname, tid, prefix, args):
@@ -42,7 +42,7 @@ def genRepeatTranslate(varname, tid, prefix, args):
 def genRepeatTextHide(varname, tid, prefix, args):
     (ifValue, text) = args
     out = '%sif not (%s):\n'%(prefix, ifValue)
-    out = '%s%s    %s.write(%s)\n' % (out, prefix, varname, repr(text))
+    out = '%s%s    %s.write(%s)\n' % (out, prefix, varname, repr(toUTF8Bytes(text)))
     return out
         
 def genQuoteAttr(varname, tid, prefix, value):
@@ -71,7 +71,7 @@ def genRepeatIncludeHide(varname, tid, prefix, args):
     text = f.read()
     f.close()
     out = '%sif not (%s):\n'%(prefix, ifValue)
-    out = '%s%s    %s.write(%s)\n' % (out, prefix, varname, repr(text))
+    out = '%s%s    %s.write(%s)\n' % (out, prefix, varname, repr(toUTF8Bytes(text)))
     return out
 
 def genHideSection(varname, tid, prefix, args):
