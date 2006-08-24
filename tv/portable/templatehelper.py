@@ -32,7 +32,7 @@ def escape(orig):
         return _escapecache[orig]
 
 
-def toUni(orig):
+def toUni(orig, encoding = None):
     global _unicache
     try:
         return _unicache[orig]
@@ -43,9 +43,9 @@ def toUni(orig):
             # not caching here should help with memory usage.
             return orig
         elif type(orig) in (int, long):
-            _unicache[orig] = "%d" % orig
+            _unicache[orig] = u"%d" % orig
         else:
-            orig = toUTF8Bytes(orig)
+            orig = toUTF8Bytes(orig, encoding)
             _unicache[orig] = unicode(orig,'utf-8')
         return _unicache[orig]
 
