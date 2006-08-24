@@ -191,7 +191,7 @@ div.scraping-content {
 
 .main-channelbar-download {
     background: url(../images/main-bar-bg-download.png) repeat-x left bottom;
-    height: 23px;
+    height: 22px;
 }
 
 .triangle {
@@ -213,7 +213,7 @@ div.scraping-content {
 }
 
 .main-channelbar-download h1 {
-    color: #000000;
+    color: #111;
     text-decoration: none;
 }
 
@@ -232,25 +232,24 @@ div.scraping-content {
 .main-channelbar h1, .main-channelbar-download h1, .main-channelbar h2 {
     display: inline;
     padding: 0px;
-    font-size: 100%;
-    font-weight: bold;
+    font-size: 14px;
     text-decoration: none;
     line-height: 16px;
 }
 
 .main-channelbar h1, .main-channelbar h2 {
-    color: #FFFFFF;
+    font-size: 14px;
+    color: #111;
 }
 
 .main-channelbar h1, .main-channelbar-download h1 {
     float: left;
-    margin: 4px 0px 0px 5px;
+    margin: 3px 0px 0px 5px;
 }
 
 .main-channelbar h2 {
-    float: right;
-    margin: 4px 5px 0px 0px;
-    color: #CDDFF6;
+    margin: 3px 5px 0px 0px;
+    color: #111;
 }
 
 .main-channelbar a {
@@ -403,12 +402,15 @@ div.scraping-content {
 
 .main-video-desc a:hover, .main-content a:hover {
     color: #4181e0;
-    text-decoration: none;
 }
 
 .main-video-desc a:visited, .main-content a:visited {
     color: #666666;
     text-decoration: underline;
+}
+
+.main-video.selected .main-video-desc a:link {
+    color: white;
 }
 
 .main-video-desc-details a:link, .main-video-desc-details a:active, .main-video-desc-details a:hover {

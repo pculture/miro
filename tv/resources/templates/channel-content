@@ -11,11 +11,11 @@
 <!-- DOWNLOADS ******************************************************** -->
 <span t:hideIf="downloadingItems.len()==0" t:updateHideOnView="downloadingItems">
     <div class="main-channelbar-hitbox"><a href="javascript:toggleLayerWithTriangle('main-downloads', 'main-downloads-triangle');">#&nbsp;</a></div>
-    <div id="main-channelbar" class="main-channelbar-download">
+    <div class="main-channelbar-download">
             <h1 t:updateForView="downloadingItems">
     <span id="main-downloads-triangle" class="triangle">&nbsp;</span>
 <span t:hideIf="downloadingItems.len()==1"><span i18n:translate="">
-<span t:replace="downloadingItems.len()" i18n:name="count"/> Downloads in Progress</span></span>
+<span t:replace="downloadingItems.len()" i18n:name="count"/> downloads in progress</span></span>
 <span t:hideIf="downloadingItems.len()!=1"><span i18n:translate="">1 Download in Progress</span></span>
             </h1>
     </div>
@@ -37,7 +37,7 @@
                 <a href="javascript:showAllVideos();" class="main-notification-nonew">
 		<div class="main-notification">
 		    <div t:hideIf="isFolder"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()" class="video-count"/> videos on this channel</span></div>
-		    <div t:showIf="isFolder"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()" class="video-count"/> videos on this channel folder</span></div>
+		    <div t:showIf="isFolder"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()" class="video-count"/> videos in this channel folder</span></div>
 		    &gt;&gt;
 		</div>
                     <div class="main-notification-right">&nbsp;</div>
@@ -60,7 +60,7 @@
     <div t:showIf="isFolder">
       <h1 i18n:translate="">
           <span i18n:name="len" t:replace="allItems.len()" /> 
-          videos on this channel folder
+          videos in this channel folder
       </h1>
     </div>
   </div>
@@ -90,14 +90,14 @@
 <!-- UNWATCHED ******************************************************** -->
 <span t:hideIf="unwatchedItems.len()==0" t:updateHideOnView="unwatchedItems">
     <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-unwatched');">#&nbsp;</a></div>
-    <div id="main-channelbar" class="main-channelbar">
-            <h1 i18n:translate="">Unwatched</h1>
-    </div>
-
     <div id="main-unwatched">
         <span t:repeatForView="unwatchedItems">
            <span t:replaceMarkup="this.getItemXML(viewName)" />
         </span>
+    </div>
+
+    <div id="main-channelbar" class="main-channelbar">
+            <h1 i18n:translate="">Unwatched</h1>
     </div>
 </span>
 <!-- / UNWATCHED -->

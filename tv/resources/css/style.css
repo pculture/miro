@@ -87,7 +87,7 @@ a.feeditem.folder {
 }
 
 .child a.feeditem {
-   padding-left: 36px;
+   padding-left: 37px;
 }
 
 .selected a.feeditem, .selected-inactive a.feeditem {
@@ -224,11 +224,11 @@ tab lists.
 }
 
 .tab-drop-target.child .dnd-reorder-indicator.line {
-   left: 37px;
+   left: 38px;
 }
 
 .tab-drop-target.child .dnd-reorder-indicator.circle {
-   left: 31px;
+   left: 32px;
 }
 
 /* These next ones catch things like dragging a playlist all the way up to the

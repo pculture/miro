@@ -32,7 +32,8 @@ else:
 	t:contextMenu="***contextMenu***"
 	drageffectdownloadeditem="move"
 	selectID="***this.getID()***" selectViewName="@@@viewName@@@"
-	selectArea='itemlist' onclick="return handleSelect(event);" >
+	selectArea='itemlist' onclick="return handleSelect(event);" 
+        ondblclick="return eventURL('action:playViewNamed?viewName=@@@viewName@@@&amp;firstItemId=@@@this.getID()@@@');" >
     <div class="dnd-reorder-line" />
     <div class="main-video-hitbox">
         <a t:showIf="this.isDownloadable()"
