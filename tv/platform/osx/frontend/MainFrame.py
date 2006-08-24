@@ -157,7 +157,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
             # back when it's ready to display without flickering.
             display.callWhenReadyToDisplay(lambda: self.doSelectDisplay(display, area))
 
-    @platformutils.onMainThread
+    @platformutils.onMainThreadWaitingUntilDone
     def doSelectDisplay(self, display, area):
         if area is not None:
             area.setDisplay(display, self.frame)
