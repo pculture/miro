@@ -131,7 +131,7 @@ def toUTF8Bytes(string, encoding=None):
         if result is None and encoding is not None:
             # If we knew the encoding of the string, try that.
             try:
-                result = string.decode(encoding).encode('utf-8')
+                result = string.decode(encoding,'replace').encode('utf-8')
             except UnicodeDecodeError:
                 pass
         if result is None:
