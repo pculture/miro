@@ -20,4 +20,5 @@ from test.feedparsertest import *
 from test.parseurltest import *
 from test.utiltest import *
 from test.playlisttest import *
+from test.unicodetest import *
 import test.bmachinetest
