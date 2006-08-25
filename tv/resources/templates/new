@@ -64,10 +64,13 @@ allExpiringItems.unlink()
 
     <!-- UNWATCHED ******************************************************** -->
     <span t:hideIf="len(unwatchedItems) == 0" t:updateHideOnView="unwatchedItems">
+        <div class="main-channelbar">
         <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-unwatched');">#&nbsp;</a></div>
-        <div id="main-channelbar" class="main-channelbar">
-        	<h1 i18n:translate="">Unwatched</h1>
-        	<h2 t:updateForView="unwatchedItems"><span t:replace="len(unwatchedItems)" /></h2>
+	<div>
+		<h1 i18n:translate="">
+			<span t:replaceMarkup="len(unwatchedItems)" /> 13 unwatched
+		</h1>
+		</div>
         </div>
 
         <div id="main-unwatched">

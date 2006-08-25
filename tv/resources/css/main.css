@@ -48,8 +48,8 @@ li {
 
 #main-titlebar-avatar {
     position: absolute;
-    left: 5px;
-    top: 5px;
+    left: 9px;
+    top: 6px;
     width: 60px;
     height: 60px;
     border: 2px solid #FFFFFF;
@@ -235,6 +235,7 @@ div.scraping-content {
     font-size: 14px;
     text-decoration: none;
     line-height: 16px;
+    font-weight: normal;
 }
 
 .main-channelbar h1, .main-channelbar h2 {
@@ -421,7 +422,7 @@ div.scraping-content {
 
 .main-video-hitbox {
     position: absolute;
-    top: 3px;
+    top: 4px;
     left: 6px;
     width: 100px;
     height: 75px;
@@ -644,13 +645,31 @@ body.gray-background {
 }
 
 
+.button-zone-two {
+margin: 0 auto 0 auto;
+text-align: center;
+width: 500px;
+}
+
+.button-zone-one {
+margin: 0 auto 0 auto;
+text-align: center;
+width: 270px;
+}
+
+
+.gray-button-wrap {
+margin-right: 10px;
+float: left;
+}
+
 .gray-button-bg {
     background: url(../images/graybutton-mid.png) top left repeat-x;
-    margin: 0px 8px;
+    margin: 0 8px;
     height: 31px;
     cursor: pointer;
-    width: 350px;
     margin: auto;
+	width: 240px;
 }
 
 

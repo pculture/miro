@@ -31,20 +31,57 @@ containedChildren = kargs['containedChildren']
                     Channels Selected
             </div>
         </div>
-        <br /><br />
-        <div t:hideIf="selectedFolders > 0">
+        <br /><br /><br />
+        
+        
+        
+        <span t:hideIf="selectedFolders > 0">
+            
+            
+            <div class="button-zone-two">
+
+            
+            <div class="gray-button-wrap">
             <div class="gray-button-bg" onclick="return eventURL('action:mergeToFolder');" >
                 <div class="gray-button-left" />
                 <div class="gray-button-right" />
-                <div class="gray-button-content">Put Channels in a New Folder</div>
+                <div class="gray-button-content">Put Into a New Folder</div>
             </div>
-	</div>
-        <br /><br />
-	<div class="gray-button-bg" onclick="return eventURL('action:removeCurrentFeed');" >
-            <div class="gray-button-left" />
-            <div class="gray-button-right" />
-	    <div class="gray-button-content">Delete These Channels</div>
-        </div>
-    </div>
+            </div>
+         
+         
+            <div class="gray-button-wrap">
+		   	<div class="gray-button-bg" onclick="return eventURL('action:removeCurrentFeed');" >
+        	    <div class="gray-button-left" />
+            	<div class="gray-button-right" />
+	    		<div class="gray-button-content">Delete</div>
+        	</div>
+        	</div>
+        	
+        	</div>
+         
+		</span>
+
+
+        <span t:showIf="selectedFolders > 0">
+
+            <div class="button-zone-one">
+
+            <div class="gray-button-wrap">
+		   	<div class="gray-button-bg" onclick="return eventURL('action:removeCurrentFeed');" >
+        	    <div class="gray-button-left" />
+            	<div class="gray-button-right" />
+	    		<div class="gray-button-content">Delete All</div>
+        	</div>
+        	</div>
+
+			</div>
+
+		</span>
+
+         
+</div>
+        
+        
 </body>
 </html>
