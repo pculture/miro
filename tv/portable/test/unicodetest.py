@@ -57,4 +57,33 @@ class UnicodeFeedTestCase(DemocracyTestCase):
 
         # Again, description is the same as title, but surrounded by a <span>
         self.assertEqual(len(item.getDescription()), 23)
+
+    # This is a latin1 feed that clains to be UTF-8
+    def testInvalidLatin1Feed(self):
+        [handle, self.filename] = mkstemp(".xml")
+        handle =file(self.filename,"wb")
+        handle.write("""<?xml version="1.0"?>
+<rss version="2.0">
+   <channel>
+      <title>Häppy Birthday</title>
+      <description>Häppy Birthday</description>
+      <language>zh-zh</language>
+      <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>
+      <generator>Weblog Editor 2.0</generator>
+      <managingEditor>editor@example.com</managingEditor>
+      <webMaster>webmaster@example.com</webMaster>
+      <item>
+         <title>Häppy Birthday</title>
+         <link>http://participatoryculture.org/boguslink</link>
+         <description>Häppy Birthday</description>
+         <enclosure url="file://crap" length="0" type="video/mpeg"/>
+         <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>
+      </item>
+   </channel>
+</rss>""")
+        handle.close()
+
+        # This is a bit of a hack: We expect Feed creation to fail for
+        # scraped feeds because we can't find the platform delegate
+        self.failUnlessRaises(NameError, lambda: myFfeed.Feed("file://"+self.filename))
         
