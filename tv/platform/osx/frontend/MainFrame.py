@@ -308,9 +308,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
     # Help menu #
 
     def showHelp_(self, sender):
-        summary = u'Help for %s will be available soon.' % (config.get(prefs.LONG_APP_NAME), )
-        message = u'In the meantime, please visit our homepage for our help FAQ: %s\n\nFor individual user support, please e-mail feedback@ppolitics.org.' % (config.get(prefs.PROJECT_URL), )
-        dialogs.MessageBoxDialog(summary, message).run()
+        helpURL = NSURL.URLWithString_(config.get(prefs.HELP_URL))
+        NSWorkspace.sharedWorkspace().openURL_(helpURL)
 
     ### Menu items validation ###
 
@@ -367,6 +366,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
             return display is app.controller.videoDisplay
         elif action == 'playFullScreen:':
             return display is app.controller.videoDisplay
+        elif action == 'showHelp:':
+            return True
         return result
 
     def updateMenuItem(self, item, key):
