@@ -82,13 +82,7 @@ class Dialog(object):
     def run(self, callback):
         self.callback = callback
         self.choice = None
-        try:
-            delegate.runDialog(self)
-        except:
-            import traceback
-            print "WARNING, exception in runDialog()"
-            traceback.print_exc()
-            self.runCallback(None)
+        delegate.runDialog(self)
 
     def runCallback(self, choice):
         """Run the callback for this dialog.  Choice should be the button that
