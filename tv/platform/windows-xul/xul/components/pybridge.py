@@ -9,6 +9,7 @@ import _winreg
 
 try:
     import app
+    import autoupdate
     import eventloop
     import config
     import folder
@@ -331,3 +332,49 @@ class PyBridge:
     @asUrgent
     def handleDrop(self, dropData, dropType, sourceData):
         app.controller.handleDrop(dropData, dropType, sourceData)
+
+
+    @asUrgent
+    def removeCurrentSelection(self):
+        app.controller.removeCurrentSelection()
+
+    
+    @asUrgent
+    def checkForUpdates(self):
+        autoupdate.checkForUpdates()
+
+    @asUrgent
+    def removeCurrentItems(self):
+        app.controller.removeCurrentItems()
+
+    @asUrgent
+    def copyCurrentItemURL(self):
+        app.controller.copyCurrentItemURL()
+
+    @asUrgent
+    def selectAllItems(self):
+        app.controller.selectAllItems()
+
+    @asUrgent
+    def createNewChannelFolder(self):
+        folder.createNewChannelFolder()
+
+    @asUrgent
+    def createNewChannelGuide(self):
+        app.GUIActionHandler().addGuide()
+
+    @asUrgent
+    def renameCurrentChannel(self):
+        app.controller.renameCurrentChannel()
+
+    @asUrgent
+    def recommendCurrentChannel(self):
+        print "WARNING: recommendCurrentChannel not supported"
+
+    @asUrgent
+    def renameCurrentPlaylist(self):
+        app.controller.renameCurrentPlaylist()
+
+    @asUrgent
+    def removeCurrentPlaylist(self):
+        app.controller.removeCurrentPlaylist()

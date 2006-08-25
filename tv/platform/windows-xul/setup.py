@@ -902,12 +902,13 @@ def copyTreeExceptSvn(src, dest, filterOut=None):
         else:
             shutil.copy2(srcname, destname)
 
-setup(
-    ext_modules = ext_modules,
-    cmdclass = {
-        'build_ext': build_ext,
-        'runxul': runxul,
-        'bdist_xul_dumb': bdist_xul_dumb,
-        'bdist_xul': bdist_xul,
-        }
-)
+if __name__ == "__main__":
+    setup(
+        ext_modules = ext_modules,
+        cmdclass = {
+            'build_ext': build_ext,
+            'runxul': runxul,
+            'bdist_xul_dumb': bdist_xul_dumb,
+            'bdist_xul': bdist_xul,
+            }
+    )

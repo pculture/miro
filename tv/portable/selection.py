@@ -80,6 +80,16 @@ class SelectionArea(object):
             self.currentView.removeAddCallback(self.onAdd)
             self.currentView = None
 
+    def selectAll(self):
+        """Select all objects in the current View."""
+        
+        view = self.currentView
+        if view:
+            for obj in view:
+                if obj.getID not in self.currentSelection:
+                    self.selectItem(view, obj.getID())
+
+
     def calcExtendRange(self, view, id):
         idIsBefore = False
         gotFirst = False

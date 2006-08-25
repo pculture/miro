@@ -622,6 +622,17 @@ class Controller (frontend.Application):
         if len(tabs) == 1 and tabs[0].isFeed():
             delegate.copyTextToClipboard(tabs[0].obj.getURL())
 
+    def copyCurrentItemURL(self):
+        tabs = self.selection.getSelectedItems()
+        if len(tabs) == 1 and isinstance(tabs[0], item.Item):
+            url = tabs[0].getURL()
+            if url:
+                delegate.copyTextToClipboard(url)
+
+    def selectAllItems(self):
+        self.selection.itemListSelection.selectAll()
+        self.selection.setTabListActive(False)
+
     def removeCurrentSelection(self):
         if self.selection.tabListActive:
             selection = self.selection.tabListSelection
@@ -667,16 +678,25 @@ class Controller (frontend.Application):
             for i in selected:
                 playlist.removeItem(i)
 
-    def renameCurrentTab(self):
+    def renameCurrentTab(self, typeCheckList=None):
         selected = self.selection.getSelectedTabs()
         if len(selected) != 1:
             return
         obj = selected[0].obj
-        if obj.__class__ in (playlist.SavedPlaylist, folder.ChannelFolder,
-                folder.PlaylistFolder):
+        if typeCheckList is None:
+            typeCheckList = (playlist.SavedPlaylist, folder.ChannelFolder,
+                folder.PlaylistFolder)
+        if obj.__class__ in typeCheckList:
             obj.rename()
         else:
-            print "WARNING: Unknown object type in remove() %s" % obj.__class__
+            print "WARNING: Bad object type in renameCurrentTab() %s" % obj.__class__
+
+    def renameCurrentChannel(self):
+        self.renameCurrentTab(typeCheckList=[folder.ChannelFolder])
+
+    def renameCurrentPlaylist(self):
+        self.renameCurrentTab(typeCheckList=[playlist.SavedPlaylist,
+                folder.PlaylistFolder])
 
     def updateCurrentFeed(self):
         for tab in self.selection.getSelectedTabs():

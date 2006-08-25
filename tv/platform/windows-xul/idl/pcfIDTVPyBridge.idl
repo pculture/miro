@@ -59,4 +59,14 @@ interface pcfIDTVPyBridge : nsISupports
   void createNewPlaylistFolder();
   void createNewChannelFolder();
   void handleDrop(in string dropData, in string dropType, in string sourceData);
+  void removeCurrentSelection();
+  void checkForUpdates();
+  void removeCurrentItems();
+  void copyCurrentItemURL();
+  void selectAllItems();
+  void createNewChannelGuide();
+  void renameCurrentChannel();
+  void recommendCurrentChannel();
+  void renameCurrentPlaylist();
+  void removeCurrentPlaylist();
 };

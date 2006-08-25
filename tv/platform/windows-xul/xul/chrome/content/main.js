@@ -385,7 +385,10 @@ function handleExit() {
 }
 
 function onKeyDown(event) {
-  if(event.altKey && event.keyCode == 13) {
+  if(event.altKey && event.keyCode == 13) { // Alt Enter
      onFullscreenActivate();
+  }
+  else if(event.keyCode == 8 || event.keyCode == 46) {  // Delete/Backspace
+     pybridge.removeCurrentSelection();
   }
 }
