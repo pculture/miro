@@ -975,7 +975,7 @@ class RSSFeedImpl(FeedImpl):
     def getDescription(self):
         self.ufeed.confirmDBThread()
         try:
-            return xhtmlify('<span>'+unescape(self.parsed.summary)+'</span>')
+            return xhtmlify('<span>'+unescape(self.parsed.feed.description)+'</span>')
         except:
             return "<span />"
 
