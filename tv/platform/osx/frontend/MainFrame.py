@@ -229,13 +229,13 @@ class MainController (NibClassBuilder.AutoBaseClass):
     # File menu #
 
     def removeVideos_(self, sender):
-        print "NOT IMPLEMENTED" # $$$$$$$$$$$$$$
+        eventloop.addIdle(app.controller.removeCurrentItems, "Remove Videos")
 
     def saveVideoAs_(self, sender):
         print "NOT IMPLEMENTED" # $$$$$$$$$$$$$$
 
     def copyVideoURL_(self, sender):
-        print "NOT IMPLEMENTED" # $$$$$$$$$$$$$$
+        eventloop.addIdle(app.controller.copyCurrentItemURL, "Copy Video URL")
 
     # Channels menu #
 
@@ -257,25 +257,22 @@ class MainController (NibClassBuilder.AutoBaseClass):
         eventloop.addIdle(lambda:app.controller.addAndSelectGuide(), "Add Guide")
 
     def renameChannelFolder_(self, sender):
-        print "NOT IMPLEMENTED" # $$$$$$$$$$$$$$
+        eventloop.addIdle(app.controller.renameCurrentChannel, "Rename Channel Tab")
 
     def removeChannel_(self, sender):
-        eventloop.addUrgentCall(app.controller.removeCurrentFeed, "Remove channel")
+        eventloop.addIdle(app.controller.removeCurrentFeed, "Remove channel")
 
     def updateChannel_(self, sender):
-        eventloop.addUrgentCall(app.controller.updateCurrentFeed, "Update current feed")
+        eventloop.addIdle(app.controller.updateCurrentFeed, "Update current feed")
 
     def updateAllChannels_(self, sender):
-        eventloop.addUrgentCall(app.controller.updateAllFeeds, "Update all channels")
+        eventloop.addIdle(app.controller.updateAllFeeds, "Update all channels")
 
     def tellAFriend_(self, sender):
         print "NOT IMPLEMENTED" # $$$$$$$$$$$$$$
 
     def copyChannelURL_(self, sender):
-        eventloop.addUrgentCall(app.controller.copyCurrentFeedURL, "Copy channel URL")
-
-#    def removeGuide_(self, sender):
-#        eventloop.addIdle(app.controller.removeCurrentGuide, "Remove Guide")
+        eventloop.addIdle(app.controller.copyCurrentFeedURL, "Copy channel URL")
 
     # Playlists menu # 
 
@@ -286,27 +283,24 @@ class MainController (NibClassBuilder.AutoBaseClass):
         folder.createNewPlaylistFolder()
 
     def renamePlaylist_(self, sender):
-        print "NOT IMPLEMENTED" # $$$$$$$$$$$$$$
+        eventloop.addIdle(app.controller.renameCurrentPlaylist, "Rename Playlist")
 
     def removePlaylist_(self, sender):
-        print "NOT IMPLEMENTED" # $$$$$$$$$$$$$$
+        eventloop.addIdle(app.controller.removeCurrentPlaylist, "Remove Playlist")
 
     # Playback menu #
 
     def playPause_(self, sender):
-        if self.frame.mainDisplay.hostedDisplay is not app.controller.videoDisplay:
-            app.controller.playbackController.enterPlayback()
-        else:
-            self.videoDisplayController.playPause_(sender)
+        self.videoDisplayController.playPause_(sender)
 
     def stopVideo_(self, sender):
         self.videoDisplayController.stop_(sender)
 
     def nextVideo_(self, sender):
-        print "NOT IMPLEMENTED" # $$$$$$$$$$$$$$
+        eventloop.addIdle(lambda:app.controller.playbackController.skip(1), "Skip Video")
 
     def previousVideo_(self, sender):
-        print "NOT IMPLEMENTED" # $$$$$$$$$$$$$$
+        eventloop.addIdle(lambda:app.controller.playbackController.skip(-1), "Skip Video")
 
     def playFullScreen_(self, sender):
         self.videoDisplayController.playFullScreen_(sender)
@@ -364,7 +358,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
             self.updateMenuItem(item, 'playlist_remove')
             return self.actionGroups['PlaylistLikeSelected'] or self.actionGroups['PlaylistLikesSelected']
         elif action == 'playPause:':
-            return self.actionGroups['VideosSelected'] or display is app.controller.videoDisplay
+            return display is app.controller.videoDisplay
         elif action == 'stopVideo:':
             return display is app.controller.videoDisplay
         elif action == 'nextVideo:':
