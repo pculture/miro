@@ -688,6 +688,14 @@ class Feed(DDBObject):
             newFeed = SearchDownloadsFeedImpl(self)
         elif (self.origURL == "dtv:manualFeed"):
             newFeed = ManualFeedImpl(self)
+        elif (self.origURL.startswith("file://")):
+              self._generateFeedCallback(
+                  {"body":file(self.origURL[7:]).read(),
+                   "updated-url":self.origURL,
+                   "redirected-url":self.origURL,
+                   "content-type": 'application/rss+xml',
+                   },
+                  removeOnError)
         else:
             self.download = grabURL(self.origURL,
                     lambda info:self._generateFeedCallback(info, removeOnError),
