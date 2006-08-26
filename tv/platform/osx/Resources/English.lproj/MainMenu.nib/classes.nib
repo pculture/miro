@@ -24,6 +24,7 @@
                 createChannelFolder = id; 
                 createPlaylist = id; 
                 createPlaylistFolder = id; 
+                deleteSelected = id; 
                 nextVideo = id; 
                 playFullScreen = id; 
                 playPause = id; 

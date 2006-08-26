@@ -237,6 +237,11 @@ class MainController (NibClassBuilder.AutoBaseClass):
     def copyVideoURL_(self, sender):
         eventloop.addIdle(app.controller.copyCurrentItemURL, "Copy Video URL")
 
+    # Edit menu #
+    
+    def deleteSelected_(self, sender):
+        eventloop.addIdle(app.controller.removeCurrentSelection, "Copy Video URL")
+
     # Channels menu #
 
     def addChannel_(self, sender):
@@ -325,6 +330,13 @@ class MainController (NibClassBuilder.AutoBaseClass):
             result = False
         elif action == 'copyVideoURL:':
             result = self.actionGroups['VideoSelected']
+        elif action == 'deleteSelected:':
+            result = (self.actionGroups['ChannelLikeSelected'] or
+                      self.actionGroups['ChannelLikesSelected'] or
+                      self.actionGroups['PlaylistLikeSelected'] or
+                      self.actionGroups['PlaylistLikesSelected'] or
+                      self.actionGroups['VideoSelected'] or
+                      self.actionGroups['VideosSelected'])
         elif action == 'addChannel:':
             result = True
         elif action == 'createChannelFolder:':
