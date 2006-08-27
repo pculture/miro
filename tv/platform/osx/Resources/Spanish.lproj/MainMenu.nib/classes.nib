@@ -2,9 +2,11 @@
     IBClasses = (
         {
             ACTIONS = {
+                addGuide = id; 
                 checkForUpdates = id; 
                 donate = id; 
                 openFile = id; 
+                removeGuide = id; 
                 showPreferencesWindow = id; 
                 shutdown = id; 
             }; 
@@ -16,18 +18,25 @@
         {
             ACTIONS = {
                 addChannel = id; 
-                copyChannelLink = id; 
-                copyVideoLink = id; 
-                createCollection = id; 
-                deleteCollection = id; 
-                deleteVideo = id; 
+                addGuide = id; 
+                copyChannelURL = id; 
+                copyVideoURL = id; 
+                createChannelFolder = id; 
+                createPlaylist = id; 
+                createPlaylistFolder = id; 
+                deleteSelected = id; 
+                nextVideo = id; 
                 playFullScreen = id; 
-                playHalfScreen = id; 
                 playPause = id; 
+                previousVideo = id; 
                 removeChannel = id; 
-                renameChannel = id; 
-                saveVideo = id; 
-                sendCollectionToFriend = id; 
+                removeGuide = id; 
+                removePlaylist = id; 
+                removeVideos = id; 
+                renameChannelFolder = id; 
+                renamePlaylist = id; 
+                saveVideoAs = id; 
+                sendPlaylistToFriend = id; 
                 stopVideo = id; 
                 tellAFriend = id; 
                 updateAllChannels = id; 

@@ -27,11 +27,10 @@
         {CLASS = FullScreenPaletteView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {CLASS = FullScreenSlider; LANGUAGE = ObjC; SUPERCLASS = Slider; }, 
         {
-            ACTIONS = {addChannel = id; showActionMenu = id; switchTabs = id; }; 
+            ACTIONS = {addChannel = id; switchTabs = id; }; 
             CLASS = MainController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                actionButton = id; 
                 channelsHostView = id; 
                 collectionHostView = id; 
                 mainHostView = id; 
