@@ -10,6 +10,7 @@ import shutil
 import re
 import traceback
 import random
+import types
 from xhtmltools import toUTF8Bytes, urlencode
 
 HTMLPattern = re.compile("^.*<body.*?>(.*)</body\s*>", re.S)
@@ -37,13 +38,13 @@ def toUni(orig, encoding = None):
     try:
         return _unicache[orig]
     except:
-        if type(orig) is unicode:
+        if isinstance(orig, types.UnicodeType):
             # Let's not bother putting this in the cache.  Calculating
             # it is very fast, and since this is a very common case,
             # not caching here should help with memory usage.
             return orig
-        elif type(orig) in (int, long):
-            _unicache[orig] = u"%d" % orig
+        elif not isinstance(orig, types.StringType):
+            _unicache[orig] = unicode(orig)
         else:
             orig = toUTF8Bytes(orig, encoding)
             _unicache[orig] = unicode(orig,'utf-8')

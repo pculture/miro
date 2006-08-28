@@ -126,9 +126,9 @@ def toUTF8Bytes(string, encoding=None):
     except:
         result = None
         # If we got a Unicode string, half of our work is already done.
-        if type(string) == types.UnicodeType:
+        if isinstance(string, types.UnicodeType):
             result = string.encode('utf-8')
-        elif type(string) != types.StringType:
+        elif not isinstance(string, types.StringType):
             string = str(string)
         if result is None and encoding is not None:
             # If we knew the encoding of the string, try that.
