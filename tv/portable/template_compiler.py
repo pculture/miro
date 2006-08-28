@@ -280,7 +280,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         fileobj.write('\n\n    out = StringIO()\n')
         
         if not self.onlyBody:
-            fileobj.write('    out.write("<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?>\\n<!DOCTYPE html PUBLIC \\\"-//W3C//DTD XHTML 1.0 Strict//EN\\\" \\\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\\\">\\n")\n')
+            fileobj.write('    out.write("<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\"?>\\n<!DOCTYPE html PUBLIC \\\"-//W3C//DTD XHTML 1.0 Strict//EN\\\" \\\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\\\">\\n")\n')
             
         for count in range(len(self.outputLists[0])):
             (func, args) = self.outputLists[0][count]
