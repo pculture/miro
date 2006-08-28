@@ -22,11 +22,8 @@ class QuicktimeRenderer (app.VideoRenderer):
     def __init__(self, delegate):
         platformutils.warnIfNotOnMainThread('QuicktimeRenderer.__init__')
         app.VideoRenderer.__init__(self)
-        self.view = QTMovieView.alloc().initWithFrame_(((0,0),(100,100)))
-        self.view.setFillColor_(NSColor.blackColor())
-        self.view.setControllerVisible_(NO)
-        self.view.setEditable_(NO)
-        self.view.setPreservesAspectRatio_(YES)
+        self.view = nil
+        self.movie = nil
         self.delegate = delegate
         self.cachedMovie = nil
 
@@ -42,8 +39,11 @@ class QuicktimeRenderer (app.VideoRenderer):
 
     @platformutils.onMainThread
     def reset(self):
-        self.unregisterMovieObserver(self.view.movie())
-        self.view.setMovie_(nil)
+        if self.view is not nil:
+            self.view.setMovie_(nil)
+        self.unregisterMovieObserver(self.movie)
+        self.view = nil
+        self.movie = nil
         self.cachedMovie = nil
 
     @platformutils.onMainThreadWithReturn
@@ -99,7 +99,13 @@ class QuicktimeRenderer (app.VideoRenderer):
         qtmovie = self.getMovieFromFile(filename)
         self.reset()
         if qtmovie is not nil:
-            self.view.setMovie_(qtmovie)
+            self.movie = qtmovie
+            self.view = QTMovieView.alloc().initWithFrame_(((0,0),(100,100)))
+            self.view.setFillColor_(NSColor.blackColor())
+            self.view.setControllerVisible_(NO)
+            self.view.setEditable_(NO)
+            self.view.setPreservesAspectRatio_(YES)
+            self.view.setMovie_(self.movie)
             self.view.setNeedsDisplay_(YES)
             self.registerMovieObserver(qtmovie)
 
@@ -127,41 +133,41 @@ class QuicktimeRenderer (app.VideoRenderer):
 
     @platformutils.onMainThread
     def goToBeginningOfMovie(self):
-        if self.view.movie() is not nil:
-            self.view.movie().gotoBeginning()
+        if self.movie is not nil:
+            self.movie.gotoBeginning()
 
     def getDuration(self):
-        if self.view.movie() is nil:
+        if self.movie is nil:
             return 0
-        qttime = self.view.movie().duration()
+        qttime = self.movie.duration()
         return qttime.timeValue / float(qttime.timeScale)
 
     def getCurrentTime(self):
-        if self.view.movie() is nil:
+        if self.movie is nil:
             return 0
-        qttime = self.view.movie().currentTime()
+        qttime = self.movie.currentTime()
         return qttime.timeValue / float(qttime.timeScale)
 
     def setCurrentTime(self, time):
         platformutils.warnIfNotOnMainThread('QuicktimeRenderer.setCurrentTime')
-        if self.view.movie() is not nil:
-            qttime = self.view.movie().currentTime()
+        if self.movie is not nil:
+            qttime = self.movie.currentTime()
             qttime.timeValue = time * float(qttime.timeScale)
-            self.view.movie().setCurrentTime_(qttime)
+            self.movie.setCurrentTime_(qttime)
 
     def getRate(self):
-        if self.view.movie() is nil:
+        if self.movie is nil:
             return 0.0
-        return self.view.movie().rate()
+        return self.movie.rate()
 
     def setRate(self, rate):
         platformutils.warnIfNotOnMainThread('QuicktimeRenderer.setRate')
-        if self.view.movie() is not nil:
-            self.view.movie().setRate_(rate)
+        if self.movie is not nil:
+            self.movie.setRate_(rate)
         
     @platformutils.onMainThread
     def setVolume(self, level):
-        if self.view.movie() is not nil:
-            self.view.movie().setVolume_(level)
+        if self.movie is not nil:
+            self.movie.setVolume_(level)
 
 ###############################################################################
