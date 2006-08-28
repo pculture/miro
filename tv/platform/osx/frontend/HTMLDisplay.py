@@ -39,6 +39,11 @@ class HTMLDisplay (app.Display):
         display is installed."""
         self.readyToDisplayHook = None
         self.readyToDisplay = False
+
+	# The template system currently generates UTF-8. For now, we
+	# just convert that back to unicode as necessary. See #3708
+	html = html.decode('utf-8')
+
         self.web = ManagedWebView.alloc().init(html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(x), frameHint and areaHint and frameHint.getDisplaySizeHint(areaHint) or None, baseURL)
         app.Display.__init__(self)
 
@@ -55,6 +60,7 @@ class HTMLDisplay (app.Display):
     def execJS(self, js):
         """Execute the given Javascript code (provided as a string) in the
         context of this HTML document."""
+        js = js.decode('utf-8')
         try:
             self.web.execJS(js)
         except AttributeError:
@@ -64,9 +70,11 @@ class HTMLDisplay (app.Display):
     # DOM hooks used by the dynamic template code -- do they need a 
     # try..except wrapper like the above?
     def addItemAtEnd(self, xml, id):
+        xml = xml.decode('utf-8')
         return self.web.addItemAtEnd(xml, id)
 
     def addItemBefore(self, xml, id):
+        xml = xml.decode('utf-8')
         return self.web.addItemBefore(xml, id)
 
     def removeItem(self, id):
@@ -76,10 +84,14 @@ class HTMLDisplay (app.Display):
         return self.web.removeItems(ids)
 
     def changeItem(self, id, xml):
+        xml = xml.decode('utf-8')
         return self.web.changeItem(id, xml)
 
     def changeItems(self, pairs):
-        return self.web.changeItems(pairs)
+	newPairs = []
+        for id, xml in pairs:
+	    newPairs.append((id, xml.decode('utf-8')))
+        return self.web.changeItems(newPairs)
 
     def hideItem(self, id):
         return self.web.hideItem(id)
