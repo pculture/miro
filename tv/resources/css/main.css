@@ -40,6 +40,7 @@ li {
     background: url(../images/main-titlebar-bg.png) repeat-x left bottom;
     height: 77px;
     width: 100%;
+    min-width: 600px;
     margin: 0px 0px 1px;
     position: fixed;
     top: 0px;
@@ -53,6 +54,10 @@ li {
     width: 60px;
     height: 60px;
     border: 2px solid #FFFFFF;
+}
+
+#main-titlebar-avatar.noborder {
+    border: 0px;
 }
 
 #main-titlebar-channelname {
