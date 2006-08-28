@@ -1063,7 +1063,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 value = argLists[key]
                 if len(value) != 1:
                     raise template.TemplateError, "Multiple values of '%s' argument passed to '%s' action" % (key, action)
-                args[key] = value[0]
+                args[str(key)] = value[0]
             return path, args
         else:
             raise ValueError("Badly formed eventURL: %s" % url)
