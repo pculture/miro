@@ -788,7 +788,10 @@ folder will also be deleted.""")
                 return (100.0*dled) / size
 
     def gotContentLength(self):
-        return self.downloader.getTotalSize() != -1
+        if self.downloader is None:
+            return False
+        else:
+            return self.downloader.getTotalSize() != -1
 
     ##
     # Returns the width of the progress bar corresponding to the current
