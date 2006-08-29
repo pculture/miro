@@ -222,13 +222,6 @@ class OldChannelGuide(OldDDBObject):
             self.__class__ = DropItLikeItsHot
 
         # No need to load a fresh channel guide here.
-        #
-        # Try to get a fresh version.
-        # NEEDS: There's a race between self.update finishing and
-        # getHTML() being called. If the latter happens first, we might get
-        # the version of the channel guide from the last time DTV was run even
-        # if we have a perfectly good net connection.
-        #self.startLoadsIfNecessary()
 
 class OldMetainfo(OldDDBObject):
     pass

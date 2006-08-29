@@ -331,7 +331,7 @@ class Common:
             if len(lang) >= 4 and lang[-4:] in ("_svn", ".svn"):
                 continue
     	    # NEEDS: generalize to do the whole tree, so as to handle all
-    	    # locales
+    	    # templates
     	    self.fillTemplate(os.path.join(lang, 'main.dtd'))        
     	    self.fillTemplate(os.path.join(lang, 'about.dtd'))        
     	    self.fillTemplate(os.path.join(lang, 'bugreport.dtd'))        
