@@ -867,10 +867,10 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
             self.download.cancel()
             self.download = None
         for item in self.items:
-            if moveItemsTo is None:
-                item.remove()
-            else:
+            if moveItemsTo is not None and item.isDownloaded():
                 item.setFeed(moveItemsTo.getID())
+            else:
+                item.remove()
         if self.iconCache is not None:
             self.iconCache.remove()
             self.iconCache = None
