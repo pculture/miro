@@ -7,6 +7,8 @@ import database
 import feedparser
 import app
 import dialogs
+import eventloop
+import schedulertest
 
 from test.framework import DemocracyTestCase
 
@@ -21,10 +23,9 @@ class UnicodeTestDelegate:
         # a bit of a hack to avoid using eventloop
         dialog.callback(dialog)
 
-class UnicodeFeedTestCase(DemocracyTestCase):
+class UnicodeFeedTestCase(schedulertest.EventLoopTest):
     def setUp(self):
-        database.DDBObject.dd = database.DynamicDatabase()
-        self.everything = database.DDBObject.dd
+        super(UnicodeFeedTestCase, self).setUp()
 
     def testValidUTF8Feed(self):
         [handle, self.filename] = mkstemp(".xml")
@@ -63,7 +64,7 @@ class UnicodeFeedTestCase(DemocracyTestCase):
         # The description is the same, but surrounded by a <span>
         self.assertEqual(len(myFeed.getDescription()), 39)
         
-        items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
+        items = database.defaultDatabase.filter(lambda x:x.__class__.__name__ == 'Item')
         self.assertEqual(items.len(),1)
         item = items[0]
         self.assertEqual(len(item.getTitle()), 10)

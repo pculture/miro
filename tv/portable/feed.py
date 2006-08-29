@@ -688,18 +688,11 @@ class Feed(DDBObject):
             newFeed = SearchDownloadsFeedImpl(self)
         elif (self.origURL == "dtv:manualFeed"):
             newFeed = ManualFeedImpl(self)
-        elif (self.origURL.startswith("file://")):
-              self._generateFeedCallback(
-                  {"body":file(self.origURL[7:]).read(),
-                   "updated-url":self.origURL,
-                   "redirected-url":self.origURL,
-                   "content-type": 'application/rss+xml',
-                   },
-                  removeOnError)
         else:
             self.download = grabURL(self.origURL,
                     lambda info:self._generateFeedCallback(info, removeOnError),
-                    lambda error:self._generateFeedErrback(error, removeOnError))
+                    lambda error:self._generateFeedErrback(error, removeOnError),
+                    defaultMimeType='application/rss+xml')
             #print "added async callback to create feed %s" % self.origURL
         if newFeed:
             self.actualFeed = newFeed
@@ -1071,7 +1064,7 @@ class RSSFeedImpl(FeedImpl):
             except:
                 modified = None
             self.download = grabURL(self.url, self._updateCallback,
-                    self._updateErrback, etag=etag,modified=modified)
+                    self._updateErrback, etag=etag,modified=modified,defaultMimeType='application/rss+xml',)
 
     def _updateErrback(self, error):
         if not self.ufeed.idExists():
@@ -1290,7 +1283,7 @@ class ScraperFeedImpl(FeedImpl):
             print "WARNING unhandled error for ScraperFeedImpl.getHTML: ", error
             self.checkDone()
         download = grabURL(url, callback, errback, etag=etag,
-                modified=modified)
+                modified=modified,defaultMimeType='text/html',)
         self.downloads.add(download)
 
     def processDownloadedHTML(self, info, urlList, depth, linkNumber, top = False):

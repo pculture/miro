@@ -1614,13 +1614,23 @@ class HTTPClient(object):
                 trapCall(self, self.errback, AuthorizationFailed())
         httpauth.askForHTTPAuth(callback, self.url, realm, authScheme)
 
+# Grabs a URL in the background using the eventloop
+# defaultMimeType is used for file:// URLs
 def grabURL(url, callback, errback, headerCallback=None,
         bodyDataCallback=None, method="GET", start=0, etag=None,
-        modified=None, cookies = {}, postVariables = None, postFiles = None):
-    client = HTTPClient(url, callback, errback, headerCallback,
+        modified=None, cookies = {}, postVariables = None, postFiles = None,
+        defaultMimeType='application/octet-stream'):
+    if url.startswith("file://"):
+        callback({"body":file(url[7:]).read(),
+                      "updated-url":url,
+                      "redirected-url":url,
+                      "content-type": defaultMimeType,
+                   })
+    else:
+        client = HTTPClient(url, callback, errback, headerCallback,
             bodyDataCallback, method, start, etag, modified, cookies, postVariables, postFiles)
-    client.startRequest()
-    return client
+        client.startRequest()
+        return client
 
 class HTTPHeaderGrabber(HTTPClient):
     """Modified HTTPClient to get the headers for a URL.  It tries to do a
