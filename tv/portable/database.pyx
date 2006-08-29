@@ -135,14 +135,18 @@ class IndexMap:
         try:
             oldIndexValue = self.mappings[obj.getID()]
         except KeyError:
-            # This can happen when an object gets a signalChange() right
-            # before we've seen gotten addObject call.
+            # This happens when an object gets a signalChange() before the
+            # addObject call.  There are two cases that cause this:  getting a
+            # signalChange call before the original addObject percolates down
+            # to the IndexMap and getting a signalChange call in a remove
+            # callback during the removeObject call below, but before the
+            # addObject call.
             return
         if indexValue == oldIndexValue:
             if isChange:
                 self.views[indexValue].changeObj(obj, needsSave=False)
         else:
-            self.views[oldIndexValue].removeObj(obj)
+            self.removeObject(obj)
             self.addObject(obj, value)
             # Calling addObject takes care of creating the new view if
             # nessecary and updating self.mappings

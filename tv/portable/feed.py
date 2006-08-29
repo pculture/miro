@@ -97,6 +97,7 @@ def validateFeedURL(url):
 
 def normalizeFeedURL(url):
     # Valid URL are returned as-is
+    url = url.strip()
     if validateFeedURL(url):
         return url
 
@@ -250,6 +251,8 @@ class FeedImpl:
             self.available = newA
             if signal:
                 self.ufeed.signalChange(needsSave=False)
+            if self.ufeed.folder_id:
+                self.ufeed.getFolder().signalChange(needsSave=False)
             
     # Returns string with number of unwatched videos in feed
     def numUnwatched(self):
@@ -669,6 +672,7 @@ class Feed(DDBObject):
 
     def setFolder(self, newFolder):
         self.confirmDBThread()
+        oldFolder = self.getFolder()
         if newFolder is not None:
             self.folder_id = newFolder.getID()
         else:
@@ -677,6 +681,10 @@ class Feed(DDBObject):
         for item in self.items:
             item.signalChange(needsSave=False, needsUpdateUandA=False,
                     needsUpdateXML=False)
+        if newFolder:
+            newFolder.signalChange(needsSave=False)
+        if oldFolder:
+            oldFolder.signalChange(needsSave=False)
 
     def generateFeed(self, removeOnError=False):
         newFeed = None
@@ -1431,6 +1439,10 @@ class ScraperFeedImpl(FeedImpl):
             try:
                 parser.parse(StringIO(xmldata))
             except IOError, e:
+                pass
+            except AttributeError:
+                # bug in the python standard library causes this to be raised
+                # sometimes.  See #3201.
                 pass
             links = handler.links
             linkDict = {}

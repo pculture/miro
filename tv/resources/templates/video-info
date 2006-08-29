@@ -24,8 +24,9 @@ app.controller.videoInfoItem = None
 <div id="videodetails-container">
 
 	<div id="videodetails-channeltitle">
-		<h1 t:replace="this.getTitle()" /> <h2 t:replaceMarkup="this.getFeed().getTitle()" />
-		<h3 t:replaceMarkup="this.getPaymentHTML()" />
+            <h1 t:replace="this.getTitle()" /> 
+            <h2 t:replaceMarkup="this.getFeed().getTitle()" />
+            <h3 t:replaceMarkup="this.getPaymentHTML()" />
 	</div>
 	
 

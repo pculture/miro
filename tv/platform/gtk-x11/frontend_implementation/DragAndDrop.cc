@@ -4,6 +4,7 @@
 #include <nsICommandManager.h>
 #include <gtkmozembed.h>
 #include <gtkmozembed_internal.h>
+#include <nsEscape.h>
 #include <nsIDragService.h>
 #include <nsIDragSession.h>
 #include <nsIDOMEvent.h>
@@ -105,6 +106,20 @@ nsresult isSingleDragTypeSupported(const nsAString &dragType, PRBool *supported)
     return rv;
 }
 
+nsresult checkForURLs(PRBool* hasURLs)
+{
+    nsresult rv;
+    nsCOMPtr<nsIDragService> dragService(do_GetService(
+                "@mozilla.org/widget/dragservice;1", &rv));
+    if(NS_FAILED(rv)) return rv;
+    nsCOMPtr<nsIDragSession> dragSession;
+    rv = dragService->GetCurrentSession(getter_AddRefs(dragSession));
+    if(NS_FAILED(rv)) return rv;
+    rv = dragSession->IsDataFlavorSupported(kURLMime, hasURLs);
+    if(NS_FAILED(rv)) return rv;
+    return NS_OK;
+}
+
 nsresult isDragTypeSupported(const nsAString& dragAttribute, 
         PRBool *supported, nsAString* dragType = nsnull)
 {
@@ -141,13 +156,9 @@ nsresult isDragTypeSupported(const nsAString& dragAttribute,
     return NS_OK;
 }
 
-nsresult getDragSourceData(const nsAString &dragType, nsAString &output)
+nsresult extractDragData(const char* mimeType, nsAString& output, int index=0) 
 {
     nsresult rv;
-
-    nsCAutoString dragMimeType = NS_ConvertUTF16toUTF8(dragType);
-    dragMimeType.Insert("application/x-democracy-", 0);
-    dragMimeType.Append("-drag");
     nsCOMPtr<nsIDragService> dragService(do_GetService(
                 "@mozilla.org/widget/dragservice;1", &rv));
     if(NS_FAILED(rv)) return rv;
@@ -157,17 +168,28 @@ nsresult getDragSourceData(const nsAString &dragType, nsAString &output)
     nsCOMPtr<nsITransferable> trans(do_CreateInstance(
                 "@mozilla.org/widget/transferable;1", &rv));
     if(NS_FAILED(rv)) return rv;
-    trans->AddDataFlavor(PromiseFlatCString(dragMimeType).get());
+    trans->AddDataFlavor(mimeType);
     if(NS_FAILED(rv)) return rv;
-    rv = dragSession->GetData(trans, 0);
+    rv = dragSession->GetData(trans, index);
     if(NS_FAILED(rv)) return rv;
     nsCOMPtr<nsISupportsString> data;
     PRUint32 length;
-    rv = trans->GetTransferData(PromiseFlatCString(dragMimeType).get(), 
-            getter_AddRefs(data), &length);
+    rv = trans->GetTransferData(mimeType, getter_AddRefs(data), &length);
     if(NS_FAILED(rv)) return rv;
     rv = data->GetData(output);
     return rv;
+}
+
+nsresult getDragSourceData(const nsAString &dragType, nsAString &output)
+{
+    nsresult rv;
+
+    nsCAutoString dragMimeType = NS_ConvertUTF16toUTF8(dragType);
+    dragMimeType.Insert("application/x-democracy-", 0);
+    dragMimeType.Append("-drag");
+    rv = extractDragData(PromiseFlatCString(dragMimeType).get(), output);
+    if(NS_FAILED(rv)) return rv;
+    return NS_OK;
 }
 
 
@@ -226,9 +248,11 @@ nsresult findDropElement(nsIDOMEvent* event, nsIDOMElement** element,
 {
     nsresult rv;
     *element = nsnull;
+    if(event == nsnull) return NS_OK;
     nsCOMPtr<nsIDOMEventTarget> target;
     rv = event->GetTarget(getter_AddRefs(target));
     if (NS_FAILED(rv)) return rv;
+    if(target == nsnull) return NS_OK;
     nsCOMPtr<nsIDOMNode> node (do_QueryInterface(target, &rv));
     if (NS_FAILED(rv)) return rv;
 
@@ -273,7 +297,6 @@ public:
     nsresult AllowDrop(nsIDOMEvent *event, nsIDragSession *session, 
                     PRBool* retval) {
         nsresult rv;
-        PRBool supported;
         *retval = false;
 
         rv = removeCurrentHighlight();
@@ -295,6 +318,17 @@ public:
             if(NS_FAILED(rv)) return rv;
             rv = setNewHighlight(element, singleDragType);
             if(NS_FAILED(rv)) return rv;
+        } else {
+            PRBool hasURLs;
+            rv = checkForURLs(&hasURLs);
+            if(NS_FAILED(rv)) return rv;
+            if(hasURLs) {
+                rv = session->SetDragAction(
+                        nsIDragService::DRAGDROP_ACTION_COPY);
+                if(NS_FAILED(rv)) return rv;
+                *retval = true;
+                return NS_OK;
+            }
         }
         return NS_OK;
     }
@@ -337,6 +371,11 @@ public:
 
     nsresult OnPasteOrDrop(nsIDOMEvent *event, nsITransferable *trans, 
                     PRBool* retval) {
+        if(event == nsnull) {
+            // Event was a paste, let mozilla handle it.
+            *retval = true;
+            return NS_OK;
+        }
         *retval = false;
         nsresult rv;
         rv = removeCurrentHighlight();
@@ -365,6 +404,37 @@ public:
                     PromiseFlatCString(url).get());
             return rv;
         } else {
+            PRBool hasURLs;
+            rv = checkForURLs(&hasURLs);
+            if(NS_FAILED(rv)) return rv;
+            if(hasURLs) {
+                nsCOMPtr<nsIDragService> dragService(do_GetService(
+                            "@mozilla.org/widget/dragservice;1", &rv));
+                if(NS_FAILED(rv)) return rv;
+                nsCOMPtr<nsIDragSession> dragSession;
+                rv = dragService->GetCurrentSession(getter_AddRefs(dragSession));
+                if(NS_FAILED(rv)) return rv;
+                PRUint32 urlCount;
+                rv = dragSession->GetNumDropItems(&urlCount);
+                if(NS_FAILED(rv)) return rv;
+
+                nsAutoString data;
+                nsCAutoString utf8Data, escapedData;
+                if(NS_FAILED(rv)) return rv;
+                nsCAutoString url("action:handleURIDrop?data=");
+                for(int i = 0; i < urlCount; i++) {
+                    rv = extractDragData(kURLMime, data, i);
+                    if(NS_FAILED(rv)) return rv;
+                    utf8Data = NS_ConvertUTF16toUTF8(data);
+                    NS_EscapeURL(PromiseFlatCString(utf8Data).get(),
+                            utf8Data.Length(), esc_Query | esc_Forced,
+                            escapedData);
+                    url.Append(escapedData);
+                    url.Append("%0A"); // "\n" 
+                }
+                gtk_moz_embed_load_url(this->embed,
+                        PromiseFlatCString(url).get());
+            }
             return NS_OK;
         }
     }

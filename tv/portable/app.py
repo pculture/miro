@@ -936,6 +936,32 @@ downloaded?""")
             # upstream limit should be unset here
             pass
 
+    def handleURIDrop(self, data, **kwargs):
+        """Handle an external drag that contains a text/uri-list mime-type.
+        data should be the text/uri-list data, in escaped form.
+
+        kwargs is thrown away.  It exists to catch weird URLs, like
+        javascript: which sometime result in us getting extra arguments.
+        """
+
+        lastAddedFeed = None
+        data = urllib.unquote(data)
+        for url in data.split("\n"):
+            url = url.strip()
+            if url == "":
+                continue
+            if url.startswith("file://"):
+                filename = url[len('file://'):]
+                eventloop.addIdle (singleclick.openFile,
+                    "Open Dropped file", args=(filename,))
+            elif url.startswith("http:") or url.startswith("https:"):
+                url = feed.normalizeFeedURL(url)
+                if feed.validateFeedURL(url) and not _getFeed(url):
+                    lastAddedFeed = feed.Feed(url)
+
+        if lastAddedFeed:
+            controller.selection.selectTabByObject(lastAddedFeed)
+
     def handleDrop(self, dropData, type, sourceData):
         try:
             destType, destID = dropData.split("-")
@@ -1090,13 +1116,8 @@ class TemplateDisplay(frontend.HTMLDisplay):
                     url.startswith(controller.guideURL)):
                 return True
             if url.startswith('file://'):
-                if url.endswith ('.html'):
-                    path = url[len("file://"):]
-                    return os.path.exists(path)
-                else:
-                    filename = urllib.unquote(url[len('file://'):])
-                    eventloop.addIdle (lambda:singleclick.openFile (filename), "Open Local File from onURLLoad")
-                    return False
+                path = url[len("file://"):]
+                return os.path.exists(path)
 
             # If we get here, this isn't a DTV URL. We should open it
             # in an external browser.
@@ -1375,12 +1396,6 @@ class GUIActionHandler:
     def openFile(self, path):
         singleclick.openFile(path)
 
-    def _getFeed(self, url):
-        return views.feeds.getItemWithIndex(indexes.feedsByURL, url)
-
-    def _getGuide(self, url):
-        return views.guides.getItemWithIndex(indexes.guidesByURL, url)
-
     def addURL(self, title, message, callback, url = None):
         def createDialog(ltitle, lmessage, prefill = None):
             def prefillCallback():
@@ -1411,7 +1426,7 @@ class GUIActionHandler:
     def addFeed(self, url = None, showTemplate = None, selected = '1'):
         def doAdd (url):
             db.confirmDBThread()
-            myFeed = self._getFeed (url)
+            myFeed = _getFeed (url)
             if myFeed is None:
                 myFeed = feed.Feed(url)
     
@@ -1423,7 +1438,7 @@ class GUIActionHandler:
         url = feed.normalizeFeedURL(url)
         db.confirmDBThread()
         # Find the feed
-        myFeed = self._getFeed (url)
+        myFeed = _getFeed (url)
         if myFeed is None:
             print "selectFeed: no such feed: %s" % url
             return
@@ -1432,7 +1447,7 @@ class GUIActionHandler:
     def addGuide(self, url = None, selected = '1'):
         def doAdd(url):
             db.confirmDBThread()
-            myGuide = self._getGuide (url)
+            myGuide = _getGuide (url)
             if myGuide is None:
                 myGuide = guide.ChannelGuide(url)
     
@@ -1440,10 +1455,11 @@ class GUIActionHandler:
                 controller.selection.selectTabByObject(myGuide)
         self.addURL (_("Democracy - Add Channel Guide"), _("Enter the URL of the channel guide to add"), doAdd, url)
 
-    # Following for testing/debugging
-
     def handleDrop(self, data, type, sourcedata):
         controller.handleDrop(data, type, sourcedata)
+
+    def handleURIDrop(self, data, **kwargs):
+        controller.handleURIDrop(data, **kwargs)
 
     def showHelp(self):
         # FIXME don't hardcode this URL
@@ -1707,6 +1723,12 @@ def _getInitialChannelGuide():
         else:
             _defaultFeeds()
     return default_guide
+
+def _getFeed(url):
+    return views.feeds.getItemWithIndex(indexes.feedsByURL, url)
+
+def _getGuide(url):
+    return views.guides.getItemWithIndex(indexes.guidesByURL, url)
 
 # Race conditions:
 

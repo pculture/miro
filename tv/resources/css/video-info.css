@@ -32,6 +32,8 @@ body {
 	font-size: 14px;
 	font-weight: bold;
 	color: #FFFFFF;
+	max-width: 500px;
+	overflow: hidden;
 }
 
 #videodetails-channeltitle h2 {

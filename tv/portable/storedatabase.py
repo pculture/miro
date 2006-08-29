@@ -525,17 +525,15 @@ class LiveStorage:
                     except:
                         print "WARNING: ERROR RESTORING OLD DATABASE"
                         traceback.print_exc()
-                    self.saveDatabase()
+                    try:
+                        self.saveDatabase()
+                    except:
+                        self.handleDatabaseLoadError()
                 else:
                     try:
                         self.loadDatabase()
                     except Exception, e:
-                        print "WARNING: exception while loading database"
-                        traceback.print_exc()
-                        self.closeInvalidDB()
-                        self.saveInvalidDB()
-                        self.openEmptyDB()
-                        self.saveDatabase()
+                        self.handleDatabaseLoadError()
             else:
                 self.saveDatabase()
             eventloop.addIdle(self.checkpoint, "Remove Unused Database Logs")
@@ -544,6 +542,14 @@ class LiveStorage:
                 print "Database load slow: %.3f" % (end - start,)
         except bsddb.db.DBNoSpaceError:
             frontend.exit(28)
+
+    def handleDatabaseLoadError(self):
+        print "WARNING: exception while loading database"
+        traceback.print_exc()
+        self.closeInvalidDB()
+        self.saveInvalidDB()
+        self.openEmptyDB()
+        self.saveDatabase()
 
     def saveInvalidDB(self):
         dir = os.path.dirname(self.dbPath)
