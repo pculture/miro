@@ -5,8 +5,21 @@ from time import sleep
 import feed
 import database
 import feedparser
+import app
+import dialogs
 
 from test.framework import DemocracyTestCase
+
+class UnicodeTestDelegate:
+    def __init__(self):
+        self.choice = None
+        self.numCalls = 0
+    def runDialog(self, dialog):
+        self.numCalls += 1
+        # print "rundialog called from %s" % dialog.title
+        dialog.choice = self.choice
+        # a bit of a hack to avoid using eventloop
+        dialog.callback(dialog)
 
 class UnicodeFeedTestCase(DemocracyTestCase):
     def setUp(self):
@@ -83,7 +96,9 @@ class UnicodeFeedTestCase(DemocracyTestCase):
 </rss>""")
         handle.close()
 
-        # This is a bit of a hack: We expect Feed creation to fail for
-        # scraped feeds because we can't find the platform delegate
-        self.failUnlessRaises(NameError, lambda: myFfeed.Feed("file://"+self.filename))
+        dialogs.delegate = UnicodeTestDelegate()
+        dialogs.delegate.choice = dialogs.BUTTON_YES
+
+        myFeed = feed.Feed("file://"+self.filename)
         
+        self.assertEqual(dialogs.delegate.numCalls,1)
