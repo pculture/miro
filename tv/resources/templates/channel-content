@@ -90,14 +90,14 @@
 <!-- UNWATCHED ******************************************************** -->
 <span t:hideIf="unwatchedItems.len()==0" t:updateHideOnView="unwatchedItems">
     <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-unwatched');">#&nbsp;</a></div>
+    <div id="main-channelbar" class="main-channelbar">
+            <h1 i18n:translate="">Unwatched</h1>
+    </div>
+
     <div id="main-unwatched">
         <span t:repeatForView="unwatchedItems">
            <span t:replaceMarkup="this.getItemXML(viewName)" />
         </span>
-    </div>
-
-    <div id="main-channelbar" class="main-channelbar">
-            <h1 i18n:translate="">Unwatched</h1>
     </div>
 </span>
 <!-- / UNWATCHED -->
