@@ -292,7 +292,7 @@ class UIBackendDelegate:
             def AsyncDialogResponse(gtkDialog, response):
                 retval = None
                 if (response == gtk.RESPONSE_OK):
-                    dialog.runCallback(dialogs.BUTTON_OK, gtkDialog.user.get_text(), gtkDialog.password.get_text())
+                    dialog.runCallback(dialogs.BUTTON_OK, gtkDialog.user.get_text().decode('utf8', 'replace'), gtkDialog.password.get_text().decode('utf8', 'replace'))
                 else:
                     dialog.runCallback(None)
                 gtkDialog.destroy()
@@ -306,7 +306,7 @@ class UIBackendDelegate:
                 if response == gtk.RESPONSE_DELETE_EVENT:
                     dialog.runCallback (None)
                 elif response >= 0 and response < len(dialog.buttons):
-                    dialog.runCallback (dialog.buttons [response], gtkDialog.entry.get_text())
+                    dialog.runCallback (dialog.buttons [response], gtkDialog.entry.get_text().decode('utf8', 'replace'))
                 else:
                     dialog.runCallback (None)
                 gtkDialog.destroy()
