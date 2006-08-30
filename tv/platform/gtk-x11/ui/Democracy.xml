@@ -98,6 +98,8 @@ P_layback
       <menuitem action="Donate"/>
     </menu>
   </menubar>
+<!--
   <accelerator action="Delete"/>
   <accelerator action="Backspace"/>
+-->
 </ui>
