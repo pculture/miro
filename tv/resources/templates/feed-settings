@@ -51,7 +51,7 @@ feed = views.feeds.getObjectByID(int(kargs['id']))
 	<input name="feed" type="hidden" value="@@@feed.getID()@@@" />
 	
 	<div class="main-content" style="text-align:center; margin-left:-40px;">
-		<h3><a onclick="eventURL('template:channel?id=@@@feed.getID()@@@');" href="#" 
+		<h3><a href="javascript:eventURL('template:channel?id=@@@feed.getID()@@@');"
 i18n:translate="">Back to Channel</a></h3>
 	</div>
 
