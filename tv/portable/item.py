@@ -700,21 +700,24 @@ folder will also be deleted.""")
 
         * downloading and not-downloaded are grouped together as
           not-downloaded
-        * Items are always new if their feed hasn't been marked as viewed
-          after the item's pub date.  This is so that when a user gets a list
-          of items and starts downloading them, the list doesn't reorder
-          itself.
+        * Newly downloaded and downloading items are always new if
+          their feed hasn't been marked as viewed after the item's pub
+          date.  This is so that when a user gets a list of items and
+          starts downloading them, the list doesn't reorder itself.
+          Once they start watching them, then it reorders itself.
         """
 
         self.confirmDBThread()
-        if not self.getViewed():
-            return 'new'
-        elif self.downloader is None or not self.downloader.isFinished():
+        if self.downloader is None or not self.downloader.isFinished():
+            if not self.getViewed():
+                return 'new'
             if self.expired:
                 return 'expired'
             else:
                 return 'not-downloaded'
         elif not self.getSeen():
+            if not self.getViewed():
+                return 'new'
             return 'newly-downloaded'
         elif not self.getSaved():
             return 'expiring'
