@@ -1693,7 +1693,7 @@ def _defaultFeeds():
         'http://www.videobomb.com/rss/posts/front',
         'http://www.mediarights.org/bm/rss.php?i=1',
         'http://www.telemusicvision.com/videos/rss.php?i=1',
-        'http://www.rocketboom.com/vlog/quicktime_daily_enclosures.xml',
+        'http://rocketboom.com/vlog/prodigem.xml',
         'http://www.channelfrederator.com/rss',
         'http://revision3.com/diggnation/feed/small.mov',
         'http://live.watchmactv.com/wp-rss2.php',
