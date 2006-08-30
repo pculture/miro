@@ -94,7 +94,7 @@ class QuicktimeRenderer (app.VideoRenderer):
     def hasXiphComponent(self):
         return len(glob.glob('/Library/QuickTime/Ogg*')) > 0
 
-    @platformutils.onMainThread
+    @platformutils.onMainThreadWaitingUntilDone
     def selectFile(self, filename):
         qtmovie = self.getMovieFromFile(filename)
         self.reset()
