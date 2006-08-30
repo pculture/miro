@@ -9,11 +9,10 @@ body {
 #external-container-basic {
 	position: absolute;
 	width: 600px;
-	height: 150px;
+/*	height: 150px; */
 	left: 50%;
 	top: 50%;
 	margin: -150px 0px 0px -300px;
-	text-align: center;
 }
 
 #external-container-button {
@@ -26,17 +25,17 @@ body {
 
 #external-button-left {
 	float: left;
-	margin: 50px 0px 0px 50px;
-}
-
-#external-button-right {
-	float: right;
-	margin: 50px 50px 0px 0px;
+	margin: 50px 0px 0px 120px;
 }
 
 #external-button-center {
     float: left;
     margin: 50px 0px 0px 50px;
+}
+
+#external-button-right {
+	float: left;
+	margin: 50px 0px 0px 50px;
 }
 
 #external-button-left, #external-button-right, #external-button-center {

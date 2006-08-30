@@ -27,16 +27,15 @@ import os.path
 
 <body onload="startCountdown(@@@this.getID()@@@)">
     <div id="external-container-basic">
-    	<span i18n:translate="">Democracy can't play: <span i18n:name="filename" t:replace="filename"/> (type <span i18n:name="format" t:replace="this.getFormat(emptyForUnknown=False)"/>) You may be able to open it with a different program.</span>
+    	<span i18n:translate="">Democracy can't play this file.  You may be able to open it with a different program.<br /><br /><strong>Filename:</strong> <span i18n:name="filename" t:replace="filename"/><Br /><strong>File type:</strong> <span i18n:name="format" t:replace="this.getFormat(emptyForUnknown=False)"/></span><br /><a style="color: white;" href="javascript:revealItem(@@@this.getID()@@@);"><span i18n:translate="">REVEAL FILE</span></a>
 
+<br style="clear: both;" />
         <a id="external-button-left" href="javascript:playItemExternally(@@@this.getID()@@@)">
             <span i18n:translate="">Play Externally</span>
         </a>
-        <a id="external-button-center" href="javascript:revealItem(@@@this.getID()@@@);">
-            <span i18n:translate="">Reveal File</span>
-        </a>
+        
         <a id="external-button-right" href="javascript:skipItem(@@@this.getID()@@@)">
-            <span i18n:translate="">Skip Video <b i18n:name="countdown" id="countdown" /></span>
+            <span i18n:translate="">Skip &gt;&gt; <b i18n:name="countdown" id="countdown" /></span>
         </a>
     </div>
     
