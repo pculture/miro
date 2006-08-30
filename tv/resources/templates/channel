@@ -77,9 +77,13 @@ if feed.idExists():
                 <div id="main-titlebar-autodownload">
 		<form name="setAuto" >
 		    <input type="hidden" name="feed" value="@@@feed.getID()@@@" />
-		    <input type="checkbox" name="automatic" value="1" checked="checked" onClick="javascript:setAutoDownloadableFeed()" t:hideIf="not feed.isAutoDownloadable()" />
-		    <input type="checkbox" name="automatic" value="1"                   onClick="javascript:setAutoDownloadableFeed()" t:hideIf="feed.isAutoDownloadable()" />
-		    <span class="auto_link" i18n:translate="">Auto Download</span>
+		    <span t:showIf="feed.isAutoDownloadable()">
+			<input type="checkbox" name="automatic" id="automatic" value="1" checked="checked" onClick="javascript:setAutoDownloadableFeed()" />
+		    </span>
+		    <span t:hideIf="feed.isAutoDownloadable()">
+			<input type="checkbox" name="automatic" id="automatic" value="1"                   onClick="javascript:setAutoDownloadableFeed()" />
+		    </span>
+		    <span class="auto_link" i18n:translate=""><label for="automatic">Auto Download</label></span>
 		</form>
                 </div>
 	    </div>

@@ -24,10 +24,14 @@ feed = views.feeds.getObjectByID(int(kargs['id']))
 		<h1 t:replaceMarkup="feed.getTitle()" />
 		<div id="main-titlebar-autodownload">
 			<form name="setAuto">
-				<input type="hidden" name="feed" value="@@@feed.getID()@@@" />
-				<input type="checkbox" name="automatic" t:hideIf="not feed.isAutoDownloadable()" value="1" checked="checked" onClick="javascript:setAutoDownloadableFeed()" />
-				<input type="checkbox" name="automatic" t:hideIf="feed.isAutoDownloadable()" value="1" onClick="javascript:setAutoDownloadableFeed()" />
-				<span class="auto_link" i18n:translate="">Auto Download</span>
+			    <input type="hidden" name="feed" value="@@@feed.getID()@@@" />
+			    <span t:showIf="feed.isAutoDownloadable()">
+				<input type="checkbox" name="automatic" id="automatic" value="1" checked="checked" onClick="javascript:setAutoDownloadableFeed()" />
+			    </span>
+			    <span t:hideIf="feed.isAutoDownloadable()">
+				<input type="checkbox" name="automatic" id="automatic" value="1"                   onClick="javascript:setAutoDownloadableFeed()" />
+			    </span>
+			    <span class="auto_link" i18n:translate=""><label for="automatic">Auto Download</label></span>
 			</form>
 		</div>
 	</div>
