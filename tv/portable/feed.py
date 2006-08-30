@@ -97,11 +97,11 @@ def validateFeedURL(url):
 
 def normalizeFeedURL(url):
     # Valid URL are returned as-is
-    url = url.strip()
     if validateFeedURL(url):
         return url
 
     originalURL = url
+    url = url.strip()
     
     # Check valid schemes with invalid separator
     match = re.match(r"^(http|https):/*(.*)$", url)
@@ -124,7 +124,6 @@ def normalizeFeedURL(url):
         print "DTV: unable to normalize URL %s" % originalURL
         return originalURL
     else:
-        #print "normalized: %s -> %s" % (originalURL, url)
         return url
 
 
