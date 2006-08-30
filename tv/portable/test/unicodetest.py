@@ -13,6 +13,7 @@ import os
 import gtcache
 import gettext
 import resource
+import template
 
 from test.framework import DemocracyTestCase
 
@@ -378,16 +379,45 @@ class UnicodeFeedTestCase(schedulertest.EventLoopTest):
 
     def testGetText(self):
         # FIXME this only works on GTK platforms. See #3831
-        gettext.bindtextdomain("democracyplayer",resource.path("../../locale"))
-        gettext.textdomain("democracyplayer")
-        gettext.bind_textdomain_codeset("democracyplayer","UTF-8")
         oldLang = None
         try:
             oldLang = os.environ["LANGUAGE"]
         except:
             pass
         os.environ["LANGUAGE"] = "fr"
+        gtcache._gtcache = {}
+
+        gettext.bindtextdomain("democracyplayer",resource.path("../../locale"))
+        gettext.textdomain("democracyplayer")
+        gettext.bind_textdomain_codeset("democracyplayer","UTF-8")
         self.assertEqual(gtcache.gettext("Settings"),u"Réglages")
+        if oldLang is None:
+            del os.environ["LANGUAGE"]
+        else:
+            os.environ["LANGUAGE"] = oldLang
+
+    def testTemplates(self):
+        # This tests that templates output valid UTF-8
+        
+        # FIXME this only works on GTK platforms. See #3831
+        oldLang = None
+        try:
+            oldLang = os.environ["LANGUAGE"]
+        except:
+            pass
+        os.environ["LANGUAGE"] = "fr"
+        gtcache._gtcache = {}
+
+        gettext.bindtextdomain("democracyplayer",resource.path("../../locale"))
+        gettext.textdomain("democracyplayer")
+        gettext.bind_textdomain_codeset("democracyplayer","UTF-8")
+
+        out = template.fillStaticTemplate("unittest/simpleunicode", "gtk-x11", "noCookie")
+        self.assert_(out.find("<h1>HÃ¤ppy Birthday</h1>") != -1)
+        self.assert_(out.find("<p>RÃ©glages</p>") != -1)
+        out = out.decode('utf-8')
+        self.assert_(out.find(u"<h1>Häppy Birthday</h1>") != -1)
+        self.assert_(out.find(u"<p>Réglages</p>") != -1)
         if oldLang is None:
             del os.environ["LANGUAGE"]
         else:
