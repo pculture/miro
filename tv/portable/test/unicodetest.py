@@ -72,7 +72,7 @@ class UnicodeFeedTestCase(schedulertest.EventLoopTest):
         # Again, description is the same as title, but surrounded by a <span>
         self.assertEqual(len(item.getDescription()), 23)
 
-    # This is a latin1 feed that clains to be UTF-8
+    # This is a latin1 feed that claims to be UTF-8
     def testInvalidLatin1Feed(self):
         [handle, self.filename] = mkstemp(".xml")
         handle =file(self.filename,"wb")
@@ -101,5 +101,273 @@ class UnicodeFeedTestCase(schedulertest.EventLoopTest):
         dialogs.delegate.choice = dialogs.BUTTON_YES
 
         myFeed = feed.Feed("file://"+self.filename)
+
+        # Make sure the feed shows up as invalid
+        self.assertEqual(dialogs.delegate.numCalls,1)
+
+    # This is latin1 HTML that claims to be Latin 1
+    def testLatin1HTML(self):
+        [handle, self.filename] = mkstemp(".html")
+        handle =file(self.filename,"wb")
+        handle.write("""<?xml version="1.0" encoding="iso-8859-1"?>
+<html>
+   <head>
+       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+      <title>Häppy Birthday</title>
+   </head>
+   <body>
+   <a href="http://www.wccatv.com/files/video/hbml.mov">Häppy Birthday</a>
+   </body>
+</html>""")
+        handle.close()
+
+        dialogs.delegate = UnicodeTestDelegate()
+        dialogs.delegate.choice = dialogs.BUTTON_YES
+
+        myFeed = feed.Feed("file://"+self.filename)
         
         self.assertEqual(dialogs.delegate.numCalls,1)
+        myFeed.update()
+        self.assertEqual(len(myFeed.items),1)
+        myItem = myFeed.items[0]
+        self.assertEqual(len(myItem.getTitle()),14)
+        self.assertEqual(myItem.getTitle(), u"Häppy Birthday")
+
+    # This is latin1 HTML that claims to be UTF-8
+    def testInvalidLatin1HTML(self):
+        [handle, self.filename] = mkstemp(".html")
+        handle =file(self.filename,"wb")
+        handle.write("""<?xml version="1.0" encoding="utf-8"?>
+<html>
+   <head>
+       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Häppy Birthday</title>
+   </head>
+   <body>
+   <a href="http://www.wccatv.com/files/video/hbml.mov">Häppy Birthday</a>
+   </body>
+</html>""")
+        handle.close()
+
+        dialogs.delegate = UnicodeTestDelegate()
+        dialogs.delegate.choice = dialogs.BUTTON_YES
+
+        myFeed = feed.Feed("file://"+self.filename)
+        
+        self.assertEqual(dialogs.delegate.numCalls,1)
+        myFeed.update()
+        self.assertEqual(len(myFeed.items),1)
+        myItem = myFeed.items[0]
+        self.assertEqual(len(myItem.getTitle()),14)
+        self.assertEqual(myItem.getTitle(), u"Häppy Birthday")
+
+    # This is utf-8 HTML that claims to be utf-8
+    def testUTF8HTML(self):
+        [handle, self.filename] = mkstemp(".html")
+        handle =file(self.filename,"wb")
+        handle.write("""<?xml version="1.0" encoding="utf-8"?>
+<html>
+   <head>
+       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>HÃ¤ppy Birthday</title>
+   </head>
+   <body>
+   <a href="http://www.wccatv.com/files/video/hbml.mov">HÃ¤ppy Birthday</a>
+   </body>
+</html>""")
+        handle.close()
+
+        dialogs.delegate = UnicodeTestDelegate()
+        dialogs.delegate.choice = dialogs.BUTTON_YES
+
+        myFeed = feed.Feed("file://"+self.filename)
+        
+        self.assertEqual(dialogs.delegate.numCalls,1)
+        myFeed.update()
+        self.assertEqual(len(myFeed.items),1)
+        myItem = myFeed.items[0]
+        self.assertEqual(len(myItem.getTitle()),14)
+        self.assertEqual(myItem.getTitle(), u"Häppy Birthday")
+
+    def testUTF8HTMLLinks(self):
+        [handle, self.filename] = mkstemp(".html")
+        handle =file(self.filename,"wb")
+        handle.write("""<?xml version="1.0" encoding="utf-8"?>
+<html>
+   <head>
+       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>HÃ¤ppy Birthday</title>
+   </head>
+   <body>
+   <a href="http://www.wccatv.com/files/video/HÃ¤ppy.mov">HÃ¤ppy Birthday</a>
+   </body>
+</html>""")
+        handle.close()
+
+        dialogs.delegate = UnicodeTestDelegate()
+        dialogs.delegate.choice = dialogs.BUTTON_YES
+
+        myFeed = feed.Feed("file://"+self.filename)
+        
+        self.assertEqual(dialogs.delegate.numCalls,1)
+        myFeed.update()
+        # Either the item isn't added or it's added with an ascii URL
+        if len(myFeed.items) > 0:
+            self.assertEqual(len(myFeed.items),1)
+            myItem = myFeed.items[0]
+            myURL = myItem.getURL()
+            self.assertEqual(str(myURL),myURL)
+
+    def testLatin1HTMLLinks(self):
+        [handle, self.filename] = mkstemp(".html")
+        handle =file(self.filename,"wb")
+        handle.write("""<?xml version="1.0" encoding="iso-8859-1"?>
+<html>
+   <head>
+       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+      <title>Häppy Birthday</title>
+   </head>
+   <body>
+   <a href="http://www.wccatv.com/files/video/Häppy.mov">Häppy Birthday</a>
+   </body>
+</html>""")
+        handle.close()
+
+        dialogs.delegate = UnicodeTestDelegate()
+        dialogs.delegate.choice = dialogs.BUTTON_YES
+
+        myFeed = feed.Feed("file://"+self.filename)
+        
+        self.assertEqual(dialogs.delegate.numCalls,1)
+        myFeed.update()
+        # Either the item isn't added or it's added with an ascii URL
+        if len(myFeed.items) > 0:
+            self.assertEqual(len(myFeed.items),1)
+            myItem = myFeed.items[0]
+            myURL = myItem.getURL()
+            self.assertEqual(str(myURL),myURL)
+
+    def testInvalidLatin1HTMLLinks(self):
+        [handle, self.filename] = mkstemp(".html")
+        handle =file(self.filename,"wb")
+        handle.write("""<?xml version="1.0" encoding="iso-8859-1"?>
+<html>
+   <head>
+       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+      <title>HÃ¤ppy Birthday</title>
+   </head>
+   <body>
+   <a href="http://www.wccatv.com/files/video/HÃ¤ppy.mov">HÃ¤ppy Birthday</a>
+   </body>
+</html>""")
+        handle.close()
+
+        dialogs.delegate = UnicodeTestDelegate()
+        dialogs.delegate.choice = dialogs.BUTTON_YES
+
+        myFeed = feed.Feed("file://"+self.filename)
+        
+        self.assertEqual(dialogs.delegate.numCalls,1)
+        myFeed.update()
+        # Either the item isn't added or it's added with an ascii URL
+        if len(myFeed.items) > 0:
+            self.assertEqual(len(myFeed.items),1)
+            myItem = myFeed.items[0]
+            myURL = myItem.getURL()
+            self.assertEqual(str(myURL),myURL)
+
+    def testUTF8HTMLThumbs(self):
+        [handle, self.filename] = mkstemp(".html")
+        handle =file(self.filename,"wb")
+        handle.write("""<?xml version="1.0" encoding="utf-8"?>
+<html>
+   <head>
+       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>HÃ¤ppy Birthday</title>
+   </head>
+   <body>
+   <a href="http://www.wccatv.com/files/video/hbml.mov"><img src="http://www.wccatv.com/files/video/HÃ¤ppy.png"/>HÃ¤ppy Birthday</a>
+   </body>
+</html>""")
+        handle.close()
+
+        dialogs.delegate = UnicodeTestDelegate()
+        dialogs.delegate.choice = dialogs.BUTTON_YES
+
+        myFeed = feed.Feed("file://"+self.filename)
+        
+        self.assertEqual(dialogs.delegate.numCalls,1)
+        myFeed.update()
+
+        self.assertEqual(len(myFeed.items),1)
+        myItem = myFeed.items[0]
+        myURL = myItem.getURL()
+        self.assertEqual(str(myURL),myURL)
+
+        thumb = myItem.getThumbnailURL()
+        if thumb is not None:
+            self.assertEqual(str(thumb),thumb)
+
+    def testLatin1HTMLThumbs(self):
+        [handle, self.filename] = mkstemp(".html")
+        handle =file(self.filename,"wb")
+        handle.write("""<?xml version="1.0" encoding="iso-8859-1"?>
+<html>
+   <head>
+       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+      <title>Häppy Birthday</title>
+   </head>
+   <body>
+   <a href="http://www.wccatv.com/files/video/hbml.mov"><img src="http://www.wccatv.com/files/video/Häppy.png"/>Häppy Birthday</a>
+   </body>
+</html>""")
+        handle.close()
+
+        dialogs.delegate = UnicodeTestDelegate()
+        dialogs.delegate.choice = dialogs.BUTTON_YES
+
+        myFeed = feed.Feed("file://"+self.filename)
+        
+        self.assertEqual(dialogs.delegate.numCalls,1)
+        myFeed.update()
+
+        self.assertEqual(len(myFeed.items),1)
+        myItem = myFeed.items[0]
+        myURL = myItem.getURL()
+        self.assertEqual(str(myURL),myURL)
+
+        thumb = myItem.getThumbnailURL()
+        if thumb is not None:
+            self.assertEqual(str(thumb),thumb)
+
+    def testInvalidLatin1HTMLThumbs(self):
+        [handle, self.filename] = mkstemp(".html")
+        handle =file(self.filename,"wb")
+        handle.write("""<?xml version="1.0" encoding="iso-8859-1"?>
+<html>
+   <head>
+       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+      <title>HÃ¤ppy Birthday</title>
+   </head>
+   <body>
+   <a href="http://www.wccatv.com/files/video/hbml.mov"><img src="http://www.wccatv.com/files/video/HÃ¤ppy.png"/>HÃ¤ppy Birthday</a>
+   </body>
+</html>""")
+        handle.close()
+
+        dialogs.delegate = UnicodeTestDelegate()
+        dialogs.delegate.choice = dialogs.BUTTON_YES
+
+        myFeed = feed.Feed("file://"+self.filename)
+        
+        self.assertEqual(dialogs.delegate.numCalls,1)
+        myFeed.update()
+
+        self.assertEqual(len(myFeed.items),1)
+        myItem = myFeed.items[0]
+        myURL = myItem.getURL()
+        self.assertEqual(str(myURL),myURL)
+
+        thumb = myItem.getThumbnailURL()
+        if thumb is not None:
+            self.assertEqual(str(thumb),thumb)

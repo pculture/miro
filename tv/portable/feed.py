@@ -10,7 +10,7 @@ from gtcache import gettext as _
 from inspect import isfunction
 from new import instancemethod
 from urlparse import urlparse, urljoin
-from xhtmltools import unescape,xhtmlify,fixXMLHeader, fixHTMLHeader, toUTF8Bytes, urlencode
+from xhtmltools import unescape,xhtmlify,fixXMLHeader, fixHTMLHeader, urlencode
 import os
 import string
 import re
@@ -20,7 +20,7 @@ import xml
 from database import defaultDatabase, DatabaseConstraintError
 from httpclient import grabURL, NetworkError
 from iconcache import iconCacheUpdater, IconCache
-from templatehelper import quoteattr, escape
+from templatehelper import quoteattr, escape, toUni
 import app
 import config
 import dialogs
@@ -49,7 +49,7 @@ def defaultFeedIconURLTablist():
 #
 # What does what when isn't clearly documented
 #
-# We use the function toUTF8Bytes() to fix those smart conversions
+# We use the function toUni() to fix those smart conversions
 #
 # If you run into Unicode crashes, adding that function in the
 # appropriate place should fix it.
@@ -1447,16 +1447,16 @@ class ScraperFeedImpl(FeedImpl):
             linkDict = {}
             for link in links:
                 if link[0].startswith('http://') or link[0].startswith('https://'):
-                    if not linkDict.has_key(toUTF8Bytes(link[0],charset)):
-                        linkDict[toUTF8Bytes(link[0])] = {}
+                    if not linkDict.has_key(toUni(link[0],charset)):
+                        linkDict[toUni(link[0],charset)] = {}
                     if not link[1] is None:
-                        linkDict[toUTF8Bytes(link[0])]['title'] = toUTF8Bytes(link[1],charset).strip()
+                        linkDict[toUni(link[0],charset)]['title'] = toUni(link[1],charset).strip()
                     if not link[2] is None:
-                        linkDict[toUTF8Bytes(link[0])]['thumbnail'] = toUTF8Bytes(link[2],charset)
+                        linkDict[toUni(link[0],charset)]['thumbnail'] = toUni(link[2],charset)
             if setTitle and not handler.title is None:
                 self.ufeed.confirmDBThread()
                 try:
-                    self.title = toUTF8Bytes(handler.title)
+                    self.title = toUni(handler.title,charset)
                 finally:
                     self.ufeed.signalChange()
             return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')], linkDict)
@@ -1474,19 +1474,19 @@ class ScraperFeedImpl(FeedImpl):
             if setTitle and not lg.title is None:
                 self.ufeed.confirmDBThread()
                 try:
-                    self.title = toUTF8Bytes(lg.title)
+                    self.title = toUni(lg.title, charset)
                 finally:
                     self.ufeed.signalChange()
                 
             linkDict = {}
             for link in links:
                 if link[0].startswith('http://') or link[0].startswith('https://'):
-                    if not linkDict.has_key(toUTF8Bytes(link[0],charset)):
-                        linkDict[toUTF8Bytes(link[0])] = {}
+                    if not linkDict.has_key(toUni(link[0],charset)):
+                        linkDict[toUni(link[0],charset)] = {}
                     if not link[1] is None:
-                        linkDict[toUTF8Bytes(link[0])]['title'] = toUTF8Bytes(link[1],charset).strip()
+                        linkDict[toUni(link[0],charset)]['title'] = toUni(link[1],charset).strip()
                     if not link[2] is None:
-                        linkDict[toUTF8Bytes(link[0])]['thumbnail'] = toUTF8Bytes(link[2],charset)
+                        linkDict[toUni(link[0],charset)]['thumbnail'] = toUni(link[2],charset)
             return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')],linkDict)
         except (LookupError,):
             return ([],{})
