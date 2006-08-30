@@ -38,6 +38,11 @@ _appDataDirectory = getSpecialFolder('AppData')
 _baseMoviesDirectory = getSpecialFolder('My Videos')
 _nonVideoDirectory = getSpecialFolder('Desktop')
 
+# The "My Videos" folder isn't guaranteed to be listed. If it isn't
+# there, we do this hack.
+if _baseMoviesDirectory is None:
+    _baseMoviesDirectory = os.path.join(getSpecialFolder('My Documents'),'My Videos')
+
 def _getMoviesDirectory():
     path = os.path.join(_baseMoviesDirectory, config.get(prefs.SHORT_APP_NAME))
     try:
