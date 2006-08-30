@@ -366,13 +366,25 @@ class BGDownloader:
         if self.endTime != self.startTime:
             rate = self.currentSize/(self.endTime-self.startTime)
         else:
-            try:
-                if (now-self.blockTimes[0][0]) != 0:
-                    rate=(self.blockTimes[-1][1]-self.blockTimes[0][1])/(now-self.blockTimes[0][0])
+            haltedSince = now
+            for time, size in reversed(self.blockTimes):
+                if size == self.currentSize:
+                    haltedSince = time
                 else:
-                    rate = 0
-            except IndexError:
+                    break
+            if now - haltedSince > self.HALTED_THRESHOLD:
                 rate = 0
+            else:
+                try:
+                    timespan = now - self.blockTimes[0][0]
+                    if timespan != 0:
+                        endSize = self.blockTimes[-1][1]
+                        startSize = self.blockTimes[0][1]
+                        rate = (endSize - startSize) / timespan
+                    else:
+                        rate = 0
+                except IndexError:
+                    rate = 0
         return rate
 
     def handleError(self, shortReason, reason):
@@ -395,6 +407,8 @@ class BGDownloader:
 
 class HTTPDownloader(BGDownloader):
     UPDATE_CLIENT_INTERVAL = 3
+    UPDATE_CLIENT_WINDOW = 6
+    HALTED_THRESHOLD = 3 # how many secs until we consider a download halted
 
     def __init__(self, url = None,dlid = None,restore = None):
         if restore is not None:
@@ -429,6 +443,7 @@ class HTTPDownloader(BGDownloader):
         self.client = httpclient.grabURL(self.url,
                 self.onDownloadFinished, self.onDownloadError,
                 headerCallback, self.onBodyData, start=self.currentSize)
+        self.blockTimes = [(clock(), self.currentSize)]
         self.updateClient()
         self.startTimeout()
 
@@ -583,16 +598,14 @@ class HTTPDownloader(BGDownloader):
     # Update the download rate and eta based on recieving length bytes
     def updateRateAndETA(self,length):
         now = clock()
-        updated = False
         self.currentSize = self.currentSize + length
-        if self.lastUpdated < now - self.UPDATE_CLIENT_INTERVAL:
+        if self.lastUpdated <= now - self.UPDATE_CLIENT_INTERVAL:
             self.blockTimes.append((now,  self.currentSize))
-            #Only keep the last 100 packets
-            if len(self.blockTimes)>100:
+            samplesInWindow = (self.UPDATE_CLIENT_WINDOW /
+                    self.UPDATE_CLIENT_INTERVAL)
+            if len(self.blockTimes) > samplesInWindow:
                 self.blockTimes.pop(0)
-            updated = True
             self.lastUpdated = now
-        if updated:
             self.updateClient()
         
     ##

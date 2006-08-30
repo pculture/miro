@@ -84,7 +84,14 @@ else:
                 </div>
             </div>
 	    <div t:hideIf="this.gotContentLength()">
-                <img src="resource:images/progress-throbber.gif" />
+                <div class="progress-throbber-bg">
+                    <span t:showIf="this.downloadRate() != '0k/s'">
+                        <img src="resource:images/progress-throbber.gif" />
+                    </span>
+                    <span t:showIf="this.downloadRate() == '0k/s'">
+                        <img src="resource:images/progress-throbber-gray.png" />
+                    </span>
+                </div>
             </div>
             <span t:replace="this.downloadETA()" />
             <span t:hideIf="this.downloadRate() == '0k/s'">

@@ -20,30 +20,48 @@ containedChildren = kargs['containedChildren']
         <div t:showIf="selectedFolders > 0">
             <div class="channel-message" i18n:translate="">
                 <span i18n:name="count" t:replace="selectedFolders" />
-		    Playlist Folders Selected<br />(contains 
-                    <span i18n:name="containedcount" t:replace="containedChildren" />
-                    playlists)
+                 Playlist Folders Selected<br />(contains 
+                 <span i18n:name="containedcount" t:replace="containedChildren" />
+                 playlists)
             </div>
         </div>
+        
         <div t:showIf="selectedChildren > 0">
             <div class="channel-message" i18n:translate="">
                 <span i18n:name="count" t:replace="selectedChildren" />
                     Playlists Selected
             </div>
         </div>
-        <br /><br />
+        <br /><br /><br />
+
         <div t:hideIf="selectedFolders > 0">
-            <div class="gray-button-bg" onclick="return eventURL('action:mergeToFolder');" >
-                <div class="gray-button-left" />
-                <div class="gray-button-right" />
-                <div class="gray-button-content">Put Playlists in a New Folder</div>
+        <div class="button-zone-two">
+            <div class="gray-button-wrap">
+                <div class="gray-button-bg" onclick="return eventURL('action:mergeToFolder');" >
+                    <div class="gray-button-left" />
+                    <div class="gray-button-right" />
+                    <div class="gray-button-content">Put Into a New Folder</div>
+                </div>
             </div>
-	</div>
-        <br /><br />
-	<div class="gray-button-bg" onclick="return eventURL('action:removeCurrentFeed');" >
-            <div class="gray-button-left" />
-            <div class="gray-button-right" />
-	    <div class="gray-button-content">Delete These Playlists</div>
+            <div class="gray-button-wrap">
+                    <div class="gray-button-bg" onclick="return eventURL('action:removeCurrentPlaylist');" >
+                        <div class="gray-button-left" />
+                        <div class="gray-button-right" />
+                        <div class="gray-button-content">Delete</div>
+                    </div>
+            </div>
+        </div>
+        </div>
+        <div t:showIf="selectedFolders > 0">
+        <div class="button-zone-one">
+            <div class="gray-button-wrap">
+                <div class="gray-button-bg" onclick="return eventURL('action:removeCurrentPlaylist');" >
+                    <div class="gray-button-left" />
+                    <div class="gray-button-right" />
+                    <div class="gray-button-content">Delete All</div>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 </body>

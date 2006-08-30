@@ -508,13 +508,14 @@ div.scraping-content {
 
 .main-video-details-state {
     position: absolute;
-    top: 52px;
+    top: 50px;
     left: 8px;
     width: 120px;
     height: 30px;
     margin: 0px;
     color: #000;
     font-size: 10px;
+    padding-top: 2px;
     overflow: hidden;
 }
 
@@ -555,15 +556,17 @@ div.scraping-content {
 }
 
 .main-video-details-save-button {
-    float: right;
+    position: absolute;
     font-size: 12px;
+    top: 0px;
+    right: 0px;
     width: 38px;
     height: 17px;
     background: url(../images/main-save-bg.png) no-repeat right top; 
 }
 
 .main-video-details-save-button a {
-    font-size: 75%;
+    font-size: 9px;
     font-weight: bold;
     color: #333;
     padding-top: 3px;
@@ -588,13 +591,25 @@ div.scraping-content {
 .main-progress-bar-bg {
   width: 92px;
   height: 11px;
-  margin-bottom: 3px;
+  margin: 1px 1px 2px 1px;
   background: url(../images/progress-bar-bg.png) no-repeat left top; 
 }
 
 .main-progress-bar {
   height: 11px;
   background: url(../images/progress-bar.png) no-repeat left top; 
+}
+
+.main-progress-throbber-bg {
+  width: 94px;
+  height: 13px;
+  margin: 0px 0px 1px 0px;
+  background: url(../images/progress-throbber-bg.png) no-repeat left top; 
+}
+
+.main-progress-throbber-bg img {
+  margin: 1px;
+  border: 0px;
 }
 
 .main-progress-cancel {
