@@ -1225,9 +1225,7 @@ Collection?""")
             elif os.path.isdir(self.filename):
                 shutil.rmtree(self.filename)
         except:
-            import traceback
-            print "WARNING: error delete file"
-            traceback.print_exc()
+            pass
 
     def getDownloadedTime(self):
         self.confirmDBThread()
