@@ -9,12 +9,13 @@ import socket
 import threading
 import traceback
 import subprocess
-from gettext import gettext as _
 
 import prefs
 
 from BitTornado.clock import clock
 from BitTornado.bencode import bdecode, bencode
+
+from gtcache import gettext as _
 
 # Should we print out warning messages.  Turn off in the unit tests.
 chatter = True

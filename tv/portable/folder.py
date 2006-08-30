@@ -1,4 +1,4 @@
-from gettext import gettext as _
+from gtcache import gettext as _
 
 import app
 import dialogs

@@ -23,7 +23,7 @@ def genRepeatTranslate(varname, tid, prefix, args):
     text = ' '.join(str(text).strip().split())
 
     if len(funcDict) == 0:
-        return '%s%s.write(_(%s))\n' % (prefix, varname, repr(text))
+        return '%s%s.write(toUTF8Bytes(_(%s)))\n' % (prefix, varname, repr(text))
     else:
         dictName = generateId()
         out = '%s%s = {}\n' % (prefix, dictName)
@@ -35,7 +35,7 @@ def genRepeatTranslate(varname, tid, prefix, args):
             out = '%s%s%s.seek(0)\n' % (out, prefix, temp)
             out = '%s%s%s[%s] = %s.read()\n' % (out, prefix, dictName, repr(str(name)), temp)
 
-        out = '%s%s%s.write(Template(_(%s)).substitute(%s))\n' % (
+        out = '%s%s%s.write(Template(toUTF8Bytes(_(%s))).substitute(%s))\n' % (
             out, prefix, varname, repr(text), dictName)
         return out
 # Returns text if function does not evaluate to true
