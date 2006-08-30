@@ -211,6 +211,9 @@ class TrackedView:
                 self.parent.domHandler.addItemBefore(xml, self.anchorId)
 
     def onRemove (self, obj, id):
+        if obj in self.toAdd:
+            self.toAdd.remove(obj)
+            return
         if len (self.toAdd) > 0:
             self.callback()
         if id in self.toChange:
