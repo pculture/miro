@@ -122,6 +122,17 @@ class ChannelFolder(FolderBase):
         for child in self.getChildrenView():
             unwatched += child.unwatched
         return unwatched
+
+    # Returns true iff unwatched should be shown 
+    def showA(self):
+        return self.numAvailable() > 0
+
+    # Returns string with number of unwatched videos in feed
+    def numAvailable(self):
+        available = 0
+        for child in self.getChildrenView():
+            available += child.available
+        return available
     
 class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
     def __init__(self, title):

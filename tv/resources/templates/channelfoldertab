@@ -28,6 +28,11 @@
 <img class="expanded-triangle" t:showIf="this.obj.getExpanded()"
     onmousedown="return eventURL('action:toggleExpand?id=' + ***this.objID()***);" 
     src="resource:images/tab-arrow-down.png" alt="unexpanded" />
+<div t:showIf="this.obj.showA()" class="left-bubble blue ***this.obj.showU() and 'second' or ''***">
+ <div class="right-bubble blue">
+  <div class="number-count blue" t:replace="this.obj.numAvailable()" />
+ </div>
+</div>
 <div t:showIf="this.obj.showU()" class="left-bubble green">
  <div class="right-bubble green">
   <div class="number-count green" t:replace="this.obj.numUnwatched()" />
