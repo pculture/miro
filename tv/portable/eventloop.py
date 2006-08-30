@@ -143,12 +143,16 @@ class ThreadPool(object):
             try:
                 result = func(*args, **kwargs)
             except Exception, e:
-                self.eventLoop.idleQueue.addIdle(errback, 
-                        'Thread Pool Errback', args=(e,))
+                func = errback
+                name = 'Thread Pool Errback'
+                args = (e,)
             else:
-                self.eventLoop.idleQueue.addIdle(callback, 
-                    'Thread Pool Callback', args=(result,))
-            self.eventLoop.wakeup()
+                func = callback
+                name = 'Thread Pool Callback'
+                args = (result,)
+            if not self.eventLoop.quitFlag:
+                self.eventLoop.idleQueue.addIdle(func, name, args=args)
+                self.eventLoop.wakeup()
 
     def queueCall(self, callback, errback, function, *args, **kwargs):
         self.queue.put((callback, errback, function, args, kwargs))

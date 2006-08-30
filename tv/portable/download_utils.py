@@ -36,6 +36,9 @@ def parseURL(url):
     if host.count(':') > 1:
         host = host[0:host.rfind(':')]
 
+    if scheme == '':
+        print "WARNING: %s has no scheme" % url
+
     if ':' in host:
         host, port = host.split(':')
         try:
