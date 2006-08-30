@@ -224,7 +224,7 @@ function handleSelect(event) {
     var shiftKey = '0';
     var ctrlKey = '0';
     if(event.shiftKey) shiftKey = '1';
-    if(event.ctrlKey) ctrlKey = '1';
+    if(event.ctrlKey || event.metaKey) ctrlKey = '1';
     eventURL('action:handleSelect?area=' + area + '&viewName=' + viewName + 
 	'&id=' + id + '&shiftDown=' + shiftKey + '&ctrlDown=' + ctrlKey);
     return true;
