@@ -205,16 +205,12 @@ div.scraping-content {
     float: left;
     width: 15px;
     height: 16px;
-    margin-top: 2px;
+    margin-top: 5px;
+    margin-left: 5px;
 }
 
-.triangledown {
+.triangle.down {
     background: url(../images/black_yellow_triangle_down.png) no-repeat left top;
-    display: block;
-    float: left;
-    width: 15px;
-    height: 16px;
-    margin-top: 2px;
 }
 
 .main-channelbar-download h1 {
@@ -237,14 +233,14 @@ div.scraping-content {
 .main-channelbar h1, .main-channelbar-download h1, .main-channelbar h2 {
     display: inline;
     padding: 0px;
-    font-size: 14px;
+    font-size: 13px;
     text-decoration: none;
     line-height: 16px;
     font-weight: normal;
 }
 
 .main-channelbar h1, .main-channelbar h2 {
-    font-size: 14px;
+    font-size: 13px;
     color: #111;
 }
 

@@ -12,10 +12,10 @@
 <span t:hideIf="downloadingItems.len()==0" t:updateHideOnView="downloadingItems">
     <div class="main-channelbar-hitbox"><a href="javascript:toggleLayerWithTriangle('main-downloads', 'main-downloads-triangle');">#&nbsp;</a></div>
     <div class="main-channelbar-download">
-            <h1 t:updateForView="downloadingItems">
-    <span id="main-downloads-triangle" class="triangle">&nbsp;</span>
-<span t:hideIf="downloadingItems.len()==1"><span i18n:translate="">
-<span t:replace="downloadingItems.len()" i18n:name="count"/> downloads in progress</span></span>
+        <span id="main-downloads-triangle" class="triangle">&nbsp;</span>
+        <h1 t:updateForView="downloadingItems">
+            <span t:hideIf="downloadingItems.len()==1"><span i18n:translate="">
+            <span t:replace="downloadingItems.len()" i18n:name="count"/> downloads in progress</span></span>
 <span t:hideIf="downloadingItems.len()!=1"><span i18n:translate="">1 Download in Progress</span></span>
             </h1>
     </div>
@@ -36,9 +36,8 @@
             <div id="show-more-videos-label" style="display: @@@showMoreVideosDisplay@@@;">
                 <a href="javascript:showAllVideos();" class="main-notification-nonew">
 		<div class="main-notification">
-		    <div t:hideIf="isFolder"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()" class="video-count"/> videos on this channel</span></div>
-		    <div t:showIf="isFolder"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()" class="video-count"/> videos in this channel folder</span></div>
-		    &gt;&gt;
+		    <div t:hideIf="isFolder"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()" class="video-count"/> videos on this channel &gt;&gt;</span></div>
+		    <div t:showIf="isFolder"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()" class="video-count"/> videos in this channel folder &gt;&gt;</span></div>
 		</div>
                     <div class="main-notification-right">&nbsp;</div>
                     <br clear="left" />

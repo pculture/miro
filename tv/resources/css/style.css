@@ -90,6 +90,10 @@ a.feeditem.folder {
    padding-left: 37px;
 }
 
+a.feeditem.blinking {
+    background: #ff9;
+}
+
 .selected a.feeditem, .selected-inactive a.feeditem {
     color: #fff;
     font-weight: bold;

@@ -12,7 +12,7 @@
 	drageffectchannelfolder="move">
 <div class="dnd-reorder-indicator circle" />
 <div class="dnd-reorder-indicator line" />
-<a class="feeditem draggable noselect"
+<a class="feeditem draggable noselect ***this.obj.isBlinking() and 'blinking' or ''***"
 	dragsourcetype="***this.getDragSourceType()***"
 	dragsourcedata="tablist-***this.objID()***"
 	dragicon="channel-tnail-***this.objID()***">

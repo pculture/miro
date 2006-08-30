@@ -1432,6 +1432,8 @@ class GUIActionHandler:
     
             if selected == '1':
                 controller.selection.selectTabByObject(myFeed)
+            else:
+                myFeed.blink()
         self.addURL (_("Democracy - Add Channel"), _("Enter the URL of the channel to add"), doAdd, url)
 
     def selectFeed(self, url):

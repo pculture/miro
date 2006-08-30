@@ -615,8 +615,17 @@ class Feed(DDBObject):
         self.iconCache = IconCache(self, is_vital = True)
         self.informOnError = True
         self.folder_id = None
+        self.blinking = False
         self.dd.addAfterCursor(self)
         self.generateFeed(True)
+
+    isBlinking, setBlinking = makeSimpleGetSet('blinking',
+            changeNeedsSave=False)
+
+    def blink(self):
+        self.setBlinking(True)
+        eventloop.addTimeout(0.5, lambda: self.setBlinking(False),
+                'unblink feed')
 
     # Returns javascript to mark the feed as viewed
     # FIXME: Using setTimeout is a hack to get around JavaScript bugs
@@ -929,6 +938,7 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
             self.iconCache.requestUpdate(True)
         self.informOnError = False
         self.download = None
+        self.blinking = False
         if self.actualFeed.__class__ == FeedImpl:
             # Our initial FeedImpl was never updated, call generateFeed again
             self.loading = True

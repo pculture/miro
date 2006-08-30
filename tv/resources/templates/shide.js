@@ -10,7 +10,7 @@ function toggleLayerWithTriangle(layerID, triangleID)
     var triangleElt = document.getElementById(triangleID);
     if(layerElt.style.display == 'none') {
         layerElt.style.display = 'block';
-        triangleElt.className = 'triangledown';
+        triangleElt.className = 'triangle down';
     } else {
         layerElt.style.display = 'none';
         triangleElt.className = 'triangle';
