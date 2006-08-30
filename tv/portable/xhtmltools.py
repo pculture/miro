@@ -61,7 +61,7 @@ def unescape(data):
 #
 # encodes string for use in a URL
 def urlencode(data):
-    return quote(data.encode('utf-8'), '')
+    return quote(data)
 
 ##
 # Returns XHTMLified version of HTML document
