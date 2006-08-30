@@ -601,9 +601,8 @@ class HTTPDownloader(BGDownloader):
         self.currentSize = self.currentSize + length
         if self.lastUpdated <= now - self.UPDATE_CLIENT_INTERVAL:
             self.blockTimes.append((now,  self.currentSize))
-            samplesInWindow = (self.UPDATE_CLIENT_WINDOW /
-                    self.UPDATE_CLIENT_INTERVAL)
-            if len(self.blockTimes) > samplesInWindow:
+            while (len(self.blockTimes) > 0 and 
+                    now - self.blockTimes[0][0] > self.UPDATE_CLIENT_WINDOW):
                 self.blockTimes.pop(0)
             self.lastUpdated = now
             self.updateClient()

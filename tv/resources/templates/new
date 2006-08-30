@@ -75,7 +75,7 @@ allExpiringItems.unlink()
 
         <div id="main-unwatched">
             <span t:repeatForView="unwatchedItems">
-                <span t:replaceMarkup="this.getItemXML(viewName)" />
+                <span t:replaceMarkup="this.getItemXML(viewName, view)" />
             </span>
         </div>
     </span>
@@ -85,13 +85,12 @@ allExpiringItems.unlink()
     <span t:hideIf="len(expiringItems) == 0" t:updateHideOnView="expiringItems">
         <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-expiring');">#&nbsp;</a></div>
         <div id="main-channelbar" class="main-channelbar">
-        	<h1 i18n:translate="">Expiring</h1>
-        	<h2 t:updateForView="expiringItems"><span t:replace="len(expiringItems)" /></h2>
+        	<h1 i18n:translate="">Watched</h1>
         </div>
 
         <div id="main-expiring">
             <span t:repeatForView="expiringItems">
-                <span t:replaceMarkup="this.getItemXML(viewName)" />
+                <span t:replaceMarkup="this.getItemXML(viewName, view)" />
             </span>
         </div>
     </span>

@@ -43,7 +43,7 @@ playlistView
 </div>
 <div id="main-container">
     <span t:repeatForView="playlistView">
-        <span t:replaceMarkup="this.getItemXML(viewName)" />
+        <span t:replaceMarkup="this.getItemXML(viewName, view)" />
     </span>
     <div class="playlist-end-drag-hitbox"
 	dragdesttype="downloadeditem"

@@ -21,15 +21,15 @@
     </div>
     <div id="main-downloads" style="display: none;">
         <span t:repeatForView="downloadingItems">
-            <span t:replaceMarkup="this.getItemXML(viewName)" />
+            <span t:replaceMarkup="this.getItemXML(viewName, view)" />
         </span>
     </div>
 </span>
 <!-- / DOWNLOADS -->
 <!-- NEWLY AVAILABLE ************************************************** -->
-<div id="main-newlyavailable">
+<div id="main-newlyavailable" style="display: @@@newVideosDisplay@@@;">
     <span t:repeatForView="newItems">
-        <span t:replaceMarkup="this.getItemXML(viewName)" />
+        <span t:replaceMarkup="this.getItemXML(viewName, view)" />
     </span>
     <div t:updateForView="matchingItems">
         <div t:hideIf="matchingItems.len()==newItems.len()">
@@ -47,7 +47,7 @@
         </div>
     </div>
 </div>              
-<div id="main-channelbar-available" class="main-channelbar" style="display: @@@mainChannelbarAvailableDisplay@@@">
+<div id="main-channelbar-available" class="main-channelbar" style="display: @@@mainChannelbarAvailableDisplay@@@;">
 <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-matching');">#&nbsp;</a></div>
 <div t:updateForView="matchingItems">
   <div t:showIf="searchTerm is None">
@@ -82,7 +82,7 @@
 </div>
 <div id="main-matching" style="display: @@@mainMatchingDisplay@@@;">
     <div t:repeatForView="matchingItems">
-        <span t:replaceMarkup="this.getItemXML(viewName)" />
+        <span t:replaceMarkup="this.getItemXML(viewName, view)" />
     </div>
 </div>
 
@@ -96,7 +96,7 @@
 
     <div id="main-unwatched">
         <span t:repeatForView="unwatchedItems">
-           <span t:replaceMarkup="this.getItemXML(viewName)" />
+           <span t:replaceMarkup="this.getItemXML(viewName, view)" />
         </span>
     </div>
 </span>
@@ -111,7 +111,7 @@
 
     <div id="main-expiring">
         <span t:repeatForView="expiringItems">
-            <span t:replaceMarkup="this.getItemXML(viewName)" />
+            <span t:replaceMarkup="this.getItemXML(viewName, view)" />
         </span>
     </div>
 </span>
@@ -126,7 +126,7 @@
 
     <div id="main-saved">
         <span t:repeatForView="savedItems">
-            <span t:replaceMarkup="this.getItemXML(viewName)" />
+            <span t:replaceMarkup="this.getItemXML(viewName, view)" />
         </span>
     </div>
 </span>

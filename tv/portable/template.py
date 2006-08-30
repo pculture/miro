@@ -134,7 +134,7 @@ class TrackedView:
 
 
     def currentXML(self, item):
-        return self.templateFunc(item.object, self.name, item.tid).read()
+        return self.templateFunc(item.object, self.name, self.origView, item.tid).read()
 
     def callback (self):
         if self.parent.domHandler:
@@ -274,7 +274,7 @@ class UpdateRegion(UpdateRegionBase):
         self.name = name
 
     def currentXML(self):
-        return self.templateFunc(self.name, self.tid).read()
+        return self.templateFunc(self.name, self.view, self.tid).read()
 
     def hookupCallbacks(self):
         self.view.addChangeCallback(self.onChange)

@@ -52,12 +52,6 @@ class ChangeDelayedDOMTracker(DOMTracker):
         time.sleep(0.1)
         self.callList.append({'name':'changeItem','xml':xml,'id':id})
 
-# We use this to benchmark filling in templates with actual objects
-# 
-class FakeController:
-    def __init__(self, selectedFeed):
-        self.currentSelectedTab = maps.mapToTab(selectedFeed)
-
 class SimpleTest(DemocracyTestCase):
     def setUp(self):
         handle = file(resource.path("templates/unittest/simple"),"r")
@@ -289,7 +283,6 @@ class TemplatePerformance(DemocracyTestCase):
                                             feed_id = self.feeds[-1].id
                                             ))
         
-        app.controller = FakeController(self.feeds[-1])
         time1 = self.timeIt(self.fillAndUnlink, 10)
 
         for x in range(50):

@@ -113,6 +113,11 @@ class ConnectionTimeout(NetworkError):
         NetworkError.__init__(self, _('Timeout'),
                 _('Connection to %s timed out') % host)
 
+class MalformedURL(NetworkError):
+    def __init__(self, url):
+        NetworkError.__init__(self, _('Invalid URL'),
+                _('%s is not a valid URL') % url)
+
 def trapCall(object, function, *args, **kwargs):
     """Convenience function do a util.trapCall, where when = 'While talking to
     the network'
@@ -1076,7 +1081,7 @@ class HTTPConnectionPool(object):
 
         scheme, host, port, path = parseURL(url)
         if scheme not in ['http', 'https'] or host == '' or path == '':
-            errback (ValueError("Bad URL: %s" % (url,)))
+            errback (MalformedURL(url))
             return
         req = {
             'callback' : callback,

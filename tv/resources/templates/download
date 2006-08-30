@@ -93,10 +93,10 @@ allExternalDownloads.unlink()
 
 	<!-- VIDEOS ************************************************** -->
 	<span t:repeatForView="normalDownloads">
-                <span t:replaceMarkup="this.getItemXML(viewName)" />
+                <span t:replaceMarkup="this.getItemXML(viewName, view)" />
 	</span>
 	<span t:repeatForView="pendingDownloads">
-                <span t:replaceMarkup="this.getItemXML(viewName)" />
+                <span t:replaceMarkup="this.getItemXML(viewName, view)" />
 	</span>
 	<!-- / VIDEOS -->
 	<div t:hideIf="externalDownloads.len() == 0" 
@@ -106,7 +106,7 @@ allExternalDownloads.unlink()
 		</h1>
         </div>
 	<span t:repeatForView="externalDownloads">
-            <span t:replaceMarkup="this.getItemXML(viewName)" />
+            <span t:replaceMarkup="this.getItemXML(viewName, view)" />
 	</span>
 </div>
 

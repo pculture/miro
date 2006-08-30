@@ -759,7 +759,7 @@ class MetaHandle:
         for tv in self.trackedViews:
             (anchorId, anchorType, templateFuncs, name) = tv
             repFunc = "rep_%s_%s" % (count, varname)
-            fileobj.write('%sdef %s(this, viewName, tid):%s' % (prefix, repFunc,ending))
+            fileobj.write('%sdef %s(this, viewName, view, tid):%s' % (prefix, repFunc,ending))
             fileobj.write('%s    out = StringIO()%s' % (prefix, ending))
             for count2 in range(len(templateFuncs)):
                 (func, args) = templateFuncs[count2]
@@ -773,7 +773,7 @@ class MetaHandle:
         for ur in self.updateRegions:
             (anchorId, anchorType, templateFuncs, name) = ur
             upFunc = "up_%s_%s" % (count, varname)
-            fileobj.write('%sdef %s(viewName, tid):%s' % (prefix, upFunc,ending))
+            fileobj.write('%sdef %s(viewName, view, tid):%s' % (prefix, upFunc,ending))
             fileobj.write('%s    out = StringIO()%s' % (prefix, ending))
             for count2 in range(len(templateFuncs)):
                 (func, args) = templateFuncs[count2]

@@ -17,6 +17,7 @@ from database import DatabaseConstraintError
 from databasehelper import makeSimpleGetSet
 from iconcache import IconCache
 from templatehelper import escape
+import app
 import template
 import downloader
 import config
@@ -97,8 +98,9 @@ class Item(DDBObject):
             changeNeedsSave=False)
     getActive, setActive = makeSimpleGetSet('active', changeNeedsSave=False)
 
-    def getSelectedState(self):
-        if not self.selected:
+    def getSelectedState(self, view):
+        currentView = app.controller.selection.itemListSelection.currentView
+        if not self.selected or view != currentView:
             return 'normal'
         elif not self.active:
             return 'selected-inactive'
@@ -113,7 +115,6 @@ class Item(DDBObject):
             return False
         filename_root = self.getFilename()
         if os.path.isdir(filename_root):
-            import app
             videos = set()
             for (dirpath, dirnames, filenames) in os.walk(filename_root):
                 for name in filenames:
@@ -213,25 +214,37 @@ class Item(DDBObject):
 
     # Returns the rendered download-item template, hopefully from the cache
     #
-    # viewName is the name of the view we're in. It's the only piece
-    # that needs to be calculated on the fly
-    def getItemXML(self, viewName):
+    # viewName is the name of the view we're in. 
+    # view is the actual view object that we're in.
+    #
+    # Almost all of the search string is cached, but there are several pieces
+    # of data that must be generated on the fly:
+    #  * The name of the view, used for things like action:playNamedView
+    #  * The dragdesttype attribute -- it's based on the current selection
+    #  * The selected css class -- it's depends on whether the view that this
+    #     item is in is the view that's selected.  This matters when an item
+    #     is shown multiple times on a page, in different views.
+    def getItemXML(self, viewName, view):
         try:
-            if viewName == 'playlistView':
-                dragDestType = 'downloadeditem'
-            else:
-                dragDestType = ''
             xml = self._itemXML
         except AttributeError:
-            self._calcItemXML()
+            self._calcItemXML(view)
             xml = self._itemXML
-        return xml.replace(self._XMLViewName, viewName).replace(
-                "---DRAGDESTTYPE---", dragDestType)
+        if viewName == 'playlistView':
+            dragDestType = 'downloadeditem'
+        else:
+            dragDestType = ''
+        for old, new in [
+            (self._XMLViewName, viewName),
+            ("---DRAGDESTTYPE---", dragDestType),
+            ("---SELECTEDSTATE---", self.getSelectedState(view))]:
+                xml = xml.replace(old, new)
+        return xml
 
     # Regenerates an expired item XML from the download-item template
     # _XMLViewName is a random string we use for the name of the view
     # _itemXML is the rendered XML
-    def _calcItemXML(self):
+    def _calcItemXML(self, view):
         self._XMLViewName = "view%dview" % random.randint(9999999,99999999)
         self._itemXML = HTMLPattern.match(template.fillStaticTemplate('download-item','unknown','noCookie', '', this=self, viewName = self._XMLViewName)).group(1)
 

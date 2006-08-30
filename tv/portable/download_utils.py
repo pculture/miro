@@ -36,7 +36,7 @@ def parseURL(url):
     if host.count(':') > 1:
         host = host[0:host.rfind(':')]
 
-    if scheme == '':
+    if scheme == '' and util.chatter:
         print "WARNING: %s has no scheme" % url
 
     if ':' in host:

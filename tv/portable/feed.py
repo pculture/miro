@@ -1699,8 +1699,9 @@ class HTMLLinkGrabber(HTMLParser):
 #                              % match.group(3)
 #                        break
 #                    i = i - 1
-                print "WARNING: scraped URL is non-ascii (%s)-- discarding (baseURL=%s)" \
-                        % (match.group(3), self.baseurl)
+                if util.chatter:
+                    print "WARNING: scraped URL is non-ascii (%s)-- discarding (baseURL=%s)" \
+                            % (match.group(3), self.baseurl)
             else:
                 link = urljoin(baseurl, linkURL)
                 desc = match.group(4)
@@ -1710,8 +1711,9 @@ class HTMLLinkGrabber(HTMLParser):
                         thumb = urljoin(baseurl,
                                 imgMatch.group(1).encode('ascii'))
                     except UnicodeError:
-                        print ("WARNING: scraped thumbnail url is non-ascii "
-                        "(%s) -- discarding"  % imgMatch.group(1))
+                        if util.chatter:
+                            print ("WARNING: scraped thumbnail url is non-ascii "
+                            "(%s) -- discarding"  % imgMatch.group(1))
                         thumb = None
                 else:
                     thumb = None

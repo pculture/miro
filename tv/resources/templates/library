@@ -59,7 +59,7 @@ watchableItems.unlink()
 	<!-- VIDEOS ************************************************** -->
 	<div>
     	<span t:repeatForView="libraryItems">
-                <span t:replaceMarkup="this.getItemXML(viewName)" />
+                <span t:replaceMarkup="this.getItemXML(viewName, view)" />
 	</span>
 	</div>
 	<!-- / VIDEOS -->
