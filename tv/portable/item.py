@@ -196,6 +196,8 @@ class Item(DDBObject):
     # get updated when an item changes
     def signalChange(self, needsSave=True, needsUpdateUandA=True, needsUpdateXML=True):
         self._calcState()
+        if hasattr(self, "_size"):
+            del self._size
         DDBObject.signalChange(self, needsSave=needsSave)
         if needsUpdateXML:
             try:
@@ -749,12 +751,21 @@ folder will also be deleted.""")
     # corresponding downloaded enclosure we use the pysical size of the file,
     # otherwise we use the RSS enclosure tag values.
     def getSizeForDisplay(self):
-        fname = self.getFilename()
-        try:
-            size = os.stat(fname)[6]
-            return util.formatSizeForUser(size)
-        except:
-            return self.getEnclosuresSize()
+        if not hasattr(self, "_size"):
+            fname = self.getFilename()
+            try:
+                if os.path.isdir(fname):
+                    size = 0
+                    for (dirpath, dirnames, filenames) in os.walk(fname):
+                        for name in filenames:
+                            size += os.path.getsize(os.path.join(dirpath, name))
+                        size += os.path.getsize(dirpath)
+                else:
+                    size = os.path.getsize(fname)
+                self._size = util.formatSizeForUser(size)
+            except:
+                self._size = self.getEnclosuresSize()
+        return self._size
     
     ##
     # Returns the total size of all enclosures in bytes
