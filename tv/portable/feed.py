@@ -1690,8 +1690,17 @@ class HTMLLinkGrabber(HTMLParser):
             try:
                 linkURL = match.group(3).encode('ascii')
             except UnicodeError:
-                print "WARNING: scraped URL is non-ascii (%s)-- discarding" \
-                        % match.group(3)
+#                i = len (linkURL)
+#                while (i >= 0):
+#                    if 127 < linkURL[i] <= 255:
+#                        linkURL[i:i+1] = "%%%02x" % (ord(linkURL[i]))
+#                    else if linkURL[i] > 255:
+#                        print "WARNING: scraped URL is non-ascii (%s)-- discarding" \
+#                              % match.group(3)
+#                        break
+#                    i = i - 1
+                print "WARNING: scraped URL is non-ascii (%s)-- discarding (baseURL=%s)" \
+                        % (match.group(3), self.baseurl)
             else:
                 link = urljoin(baseurl, linkURL)
                 desc = match.group(4)
