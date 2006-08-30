@@ -1348,7 +1348,7 @@ def isVideoFilename(filename):
              filename[-5:].lower() == '.mpeg'))
 
 def isAudioFilename(filename):
-    return len(filename) > 4 and filename[-4:].lower() in ['mp3', 'm4a']
+    return len(filename) > 4 and filename[-4:].lower() in ['.mp3', '.m4a']
 
 def isTorrentFilename(filename):
     return filename.endswith('.torrent')
