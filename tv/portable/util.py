@@ -9,6 +9,7 @@ import socket
 import threading
 import traceback
 import subprocess
+from gettext import gettext as _
 
 import prefs
 
@@ -360,12 +361,12 @@ def formatSizeForUser(bytes, zeroString=""):
     """
 
     if bytes > (1 << 30):
-        return "%1.1fGB" % (bytes / (1024.0 * 1024.0 * 1024.0))
+        return _("%1.1fGB") % (bytes / (1024.0 * 1024.0 * 1024.0))
     elif bytes > (1 << 20):
-        return "%1.1fMB" % (bytes / (1024.0 * 1024.0))
+        return _("%1.1fMB") % (bytes / (1024.0 * 1024.0))
     elif bytes > (1 << 10):
-        return "%1.1fKB" % (bytes / 1024.0)
+        return _("%1.1fKB") % (bytes / 1024.0)
     elif bytes > 1:
-        return "%0.0fB" % bytes
+        return _("%0.0fB") % bytes
     else:
         return zeroString
