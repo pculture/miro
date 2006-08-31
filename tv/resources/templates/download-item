@@ -12,7 +12,7 @@ this = kargs['this']
 viewName = kargs['viewName']
 	
 if this.isDownloaded():
-    contextMenu = "action:addToNewPlaylist|Add to new playlist\naction:removeCurrentItems|Remove"
+    contextMenu = "action:addToNewPlaylist|Add to new playlist\naction:removeCurrentItems|Remove from ---REMOVELOCATION---"
 elif this.isDownloadable():
     contextMenu = "action:downloadCurrentItems|Download"
 else:

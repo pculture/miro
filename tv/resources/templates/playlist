@@ -22,8 +22,8 @@ def updateSearchString(newSearch):
 ]]>
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
-thisPlaylistView
-playlistView
+thisPlaylistView.unlink()
+playlistView.unlink()
 ]]>
 </t:execOnUnload>
 </head>

@@ -232,12 +232,16 @@ class Item(DDBObject):
             xml = self._itemXML
         if viewName == 'playlistView':
             dragDestType = 'downloadeditem'
+            removeLocation = 'playlist'
         else:
             dragDestType = ''
+            removeLocation = 'My Collection'
         for old, new in [
             (self._XMLViewName, viewName),
             ("---DRAGDESTTYPE---", dragDestType),
-            ("---SELECTEDSTATE---", self.getSelectedState(view))]:
+            ("---SELECTEDSTATE---", self.getSelectedState(view)),
+            ("---REMOVELOCATION---", removeLocation),
+        ]:
                 xml = xml.replace(old, new)
         return xml
 
