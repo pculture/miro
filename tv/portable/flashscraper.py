@@ -1,7 +1,8 @@
 import re
 import httplib
 import urlparse
-import xml.sax.saxutils
+import cgi
+from urllib import unquote_plus
 
 # =============================================================================
 
@@ -21,7 +22,6 @@ def _getScrapeFunctionFor(url):
     return None
 
 def _scrapeYouTubeURL(url):
-    print "DTV: Scraping YouTube URL: %s" % url
     videoIDPattern = re.compile('\?video_id=([^&]+)')
     paramPattern = re.compile('&t=([^&?]+)')
     scrapedURL = None
@@ -52,11 +52,17 @@ def _scrapeYouTubeURL(url):
     return scrapedURL
 
 def _scrapeGoogleVideoURL(url):
-    return xml.sax.saxutils.unescape(url)
+    try:
+        components = urlparse.urlsplit(url)
+        params = cgi.parse_qs(components[3])
+        url = unquote_plus(params['videoUrl'][0])
+    except:
+        print "DTV: WARNING, unable to scrape Google Video URL: %s" % url
+    return url
 
 # =============================================================================
 
 scraperInfoMap = [
     {'pattern': 'http://youtube.com',         'func': _scrapeYouTubeURL},
-    {'pattern': 'http://vp.video.google.com', 'func': _scrapeGoogleVideoURL}
+    {'pattern': 'http://video.google.com/googleplayer.swf', 'func': _scrapeGoogleVideoURL}
 ]
