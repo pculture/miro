@@ -404,6 +404,8 @@ folder will also be deleted.""")
         It's in one function to make sure that they stay in sync
         """
 
+        if self.isContainerItem:
+            return '', ''
         if self.isPendingAutoDownload():
             return 'pending-autdownload', _('Pending Auto Download')
         elif self.isFailedDownload():
@@ -642,6 +644,11 @@ folder will also be deleted.""")
         duration = self.getDuration()
         format = self.getFormat()
         size = self.getSizeForDisplay()
+
+        if self.isContainerItem:
+            children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
+            size = "CONTAINS %d ITEMS - %s" % (len(children), size)
+
         if len(reldate) > 0:
             details.append('<span class="details-date">%s</span>' % escape(reldate))
         if len(duration) > 0:
@@ -650,6 +657,12 @@ folder will also be deleted.""")
             details.append('<span class="details-format">%s</span>' % escape(format))
         if len(size) > 0:
             details.append('<span class="details-size">%s</span>' % escape(size))
+
+        if self.parent_id is not None:
+            parent = "IN FOLDER '%s'" % self.getParent().getTitle()
+            details.append('<span class="details-parent">%s</span>' %
+                    escape(parent))
+
         if self.looksLikeTorrent():
             details.append('<span class="details-torrent" il8n:translate="">TORRENT</span>')
         out = ' - '.join(details)

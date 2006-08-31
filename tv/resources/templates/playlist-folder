@@ -70,8 +70,10 @@ childrenView.unlink()
             playlists, but the playlists do not contain any items.
             </div>
         </div>
-        <div class="channel-message small" i18n:translate="">
-            Drag playlists to this folder to add them.
+        <div t:hideIf="childrenView.len() > 0">
+            <div class="channel-message small" i18n:translate="">
+                Drag playlists to this folder to add them.
+            </div>
         </div>
     </div>
 </div>
