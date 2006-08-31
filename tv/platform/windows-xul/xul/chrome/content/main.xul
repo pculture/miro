@@ -206,7 +206,7 @@
 <command id="quit" oncommand="handleExit();" />
 
 <command id="copy" oncommand="clipboardCopy();" />
-<command id="paste" oncommand="clibboardPaste();" />
+<command id="paste" oncommand="clipboardPaste();" />
 <command id="selectall" oncommand="pybridge.selectAllItems();" />
 
 <command id="addchannel" oncommand="pybridge.addChannel();" />

@@ -193,8 +193,21 @@ jsBridge.prototype = {
 
 
     var self = this;
-    this.mousemoveListener = function(event) { self.onMouseMoveFullscreen(); }
+    this.mousedown = false;
+    this.mousemoveListener = function(event) { 
+        if(!self.mousedown) self.onMouseMoveFullscreen(); 
+    }
+    this.mousedownListener = function(event) { 
+        self.mousedown = true;
+        self.hideVideoControlsTimer.cancel();
+    }
+    this.mouseupListener = function(event) { 
+        self.mousedown = false;
+        self.startHideVideoControlsTimer();
+    }
     this.document.addEventListener('mousemove', this.mousemoveListener, true);
+    this.document.addEventListener('mousedown', this.mousedownListener, true);
+    this.document.addEventListener('mouseup', this.mouseupListener, true);
     this.startHideVideoControlsTimer();
   },
 

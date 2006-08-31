@@ -1632,6 +1632,7 @@ class SearchFeedImpl (RSSFeedImpl):
     def getRequestURL(self, engine, query, filterAdultContents=True, limit=50):
         if query == "LET'S TEST DTV'S CRASH REPORTER TODAY":
             someVariable = intentionallyUndefinedVariableToTestCrashReporter
+        query = query.encode('utf-8')
 
         if engine == 'yahoo':
             url =  "http://api.search.yahoo.com/VideoSearchService/rss/videoSearch.xml"

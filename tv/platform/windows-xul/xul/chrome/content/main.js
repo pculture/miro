@@ -348,22 +348,24 @@ function onFullscreenActivate() {
     }
 }
 
+function getClipboardCommands() {
+  // This is a really strange way to get an nsIClipboardCommands object, but
+  // it's the only way I could make things work -- Ben
+  var req = window.QueryInterface(Components.interfaces.nsIInterfaceRequestor);
+  var nav = req.getInterface(Components.interfaces.nsIWebNavigation);
+  return nav.QueryInterface(Components.interfaces.nsIClipboardCommands);
+}
+
 function clipboardCopy() {
-  clip = Components.classes["@mozilla.org/webshell;1"].getService();
-  clip.QueryInterface(Components.interfaces.nsIClipboardCommands);
-  clip.copySelection()
+  getClipboardCommands().copySelection();
 }
 
 function clipboardCut() {
-  clip = Components.classes["@mozilla.org/webshell;1"].getService();
-  clip.QueryInterface(Components.interfaces.nsIClipboardCommands);
-  clip.cutSelection()
+  getClipboardCommands().cutSelection();
 }
 
 function clipboardPaste() {
-  clip = Components.classes["@mozilla.org/webshell;1"].getService();
-  clip.QueryInterface(Components.interfaces.nsIClipboardCommands);
-  clip.paste()
+  getClipboardCommands().paste();
 }
 
 function openFile() {

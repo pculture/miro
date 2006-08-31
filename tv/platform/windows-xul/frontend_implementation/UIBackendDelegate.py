@@ -13,7 +13,7 @@ import config
 import dialogs
 import feed
 import frontend
-import platformutils
+import clipboard
 
 currentId = 1
 def nextDialogId():
@@ -24,7 +24,7 @@ def nextDialogId():
 
 def getPrefillText(dialog):
     if dialog.fillWithClipboardURL:
-        text = platformutils.getClipboardText()
+        text = clipboard.getText()
         if text is not None:
             text = feed.normalizeFeedURL(text)
             if text is not None and feed.validateFeedURL(text):
