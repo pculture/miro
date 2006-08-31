@@ -31,10 +31,10 @@ searchItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
 		<div id="main-titlebar-tasks" class="big-search">
                 <form name="search" onsubmit="return false;">
                     <select name="engines" onChange="updateLastSearchEngine()">
-                        <option t:hideIf="not feed.lastEngine == 'yahoo'" value="yahoo" selected="selected">Yahoo!</option>
-                        <option t:hideIf="feed.lastEngine == 'yahoo'" value="yahoo">Yahoo!</option>
-                        <option t:hideIf="not feed.lastEngine == 'google'" selected="selected" value="google">Google</option>
-                        <option t:hideIf="feed.lastEngine == 'google'" value="google">Google</option>
+                        <option t:hideIf="not feed.lastEngine == 'yahoo'" value="yahoo" selected="selected">Yahoo! Video</option>
+                        <option t:hideIf="feed.lastEngine == 'yahoo'" value="yahoo">Yahoo! Video</option>
+                        <option t:hideIf="not feed.lastEngine == 'google'" selected="selected" value="google">Google Video</option>
+                        <option t:hideIf="feed.lastEngine == 'google'" value="google">Google Video</option>
                         <option t:hideIf="not feed.lastEngine == 'youtube'" selected="selected" value="youtube">YouTube</option>
                         <option t:hideIf="feed.lastEngine == 'youtube'" value="youtube">YouTube</option>
                         <option t:hideIf="not feed.lastEngine == 'blogdigger'" selected="selected" value="blogdigger">Blogdigger</option>
