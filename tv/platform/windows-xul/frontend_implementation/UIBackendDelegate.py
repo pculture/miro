@@ -11,7 +11,9 @@ from urlparse import urlparse
 import prefs
 import config
 import dialogs
+import feed
 import frontend
+import platformutils
 
 currentId = 1
 def nextDialogId():
@@ -19,6 +21,19 @@ def nextDialogId():
     rv = currentId
     currentId += 1
     return rv
+
+def getPrefillText(dialog):
+    if dialog.fillWithClipboardURL:
+        text = platformutils.getClipboardText()
+        if text is not None:
+            text = feed.normalizeFeedURL(text)
+            if text is not None and feed.validateFeedURL(text):
+                return text
+    if dialog.prefillCallback:
+        text = dialog.prefillCallback()
+        if text is not None:
+            return text
+    return ''
 
 class UIBackendDelegate:
     openDialogs = {}
@@ -45,7 +60,7 @@ class UIBackendDelegate:
         elif isinstance(dialog, dialogs.TextEntryDialog):
             frontend.jsBridge.showTextEntryDialog(id, dialog.title,
                     dialog.description, dialog.buttons[0].text,
-                    dialog.buttons[1].text)
+                    dialog.buttons[1].text, getPrefillText(dialog))
         else:
             del self.openDialogs[id]
             dialog.runCallback(None)

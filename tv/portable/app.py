@@ -1063,9 +1063,6 @@ class TemplateDisplay(frontend.HTMLDisplay):
         for url in triggers:
             if url.startswith('action:'):
                 self.onURLLoad(url)
-            elif url.startswith('javascript:'):
-                js = url.replace('javascript:', '')
-                self.execJS(js)
             elif url.startswith('template:'):
                 newPage = True
                 break

@@ -226,6 +226,7 @@ function setupHandlers() {
 function onClose()
 {
    vlc.stop();
+   pybridge.quit();
    closeApp();
 }
 
@@ -234,6 +235,7 @@ function onUnload() {
     vlc.stop();
     // Make sure the app exits (even if there is still another window
     // open such as the Javascript console, for example)
+    pybridge.quit();
     closeApp();
 }
 
@@ -241,10 +243,6 @@ function jsdump(str) {
     Components.classes['@mozilla.org/consoleservice;1']
 	.getService(Components.interfaces.nsIConsoleService)	
 	.logStringMessage(str);
-}
-
-function addChannel(url) {
-    pybridge.addChannel(url);
 }
 
 function maximizeOrRestore() {
@@ -389,6 +387,7 @@ function onKeyDown(event) {
      onFullscreenActivate();
   }
   else if(event.keyCode == 8 || event.keyCode == 46) {  // Delete/Backspace
+     if(event.target.tagName.toLowerCase() == 'input') return;
      pybridge.removeCurrentSelection();
   }
 }

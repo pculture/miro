@@ -6,6 +6,8 @@
 import ctypes
 import config
 import prefs
+import win32clipboard
+import win32con
 
 def samefile(path1, path2):
     buf1 = ctypes.create_string_buffer(260) 
@@ -32,3 +34,14 @@ def getAvailableBytesForMovies():
         print "GetDiskFreeSpaceExW failed, returning bogus value!"
         return 100 * 1024 * 1024 * 1024
     return availableSpace.value
+
+def getClipboardText(): 
+    win32clipboard.OpenClipboard() 
+    try:
+        try:
+            return win32clipboard.GetClipboardData(win32con.CF_TEXT) 
+        except TypeError:
+            return None
+    finally:
+        win32clipboard.CloseClipboard() 
+

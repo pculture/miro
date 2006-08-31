@@ -361,7 +361,11 @@ class PyBridge:
 
     @asUrgent
     def createNewChannelGuide(self):
-        app.GUIActionHandler().addGuide()
+        app.controller.addAndSelectGuide()
+
+    @asUrgent
+    def addChannel(self):
+        app.controller.addAndSelectFeed()
 
     @asUrgent
     def renameCurrentChannel(self):

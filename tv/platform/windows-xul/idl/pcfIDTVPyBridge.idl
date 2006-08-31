@@ -21,7 +21,7 @@ interface pcfIDTVPyBridge : nsISupports
   void updateCurrentChannel();
   void updateChannels();
   void showHelp();
-  void addChannel(in AString url);
+  void addChannel();
   void copyChannelLink();
   void handleSimpleDialog(in unsigned long id, 
         in unsigned short buttonIndex);

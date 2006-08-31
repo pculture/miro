@@ -209,7 +209,7 @@
 <command id="paste" oncommand="clibboardPaste();" />
 <command id="selectall" oncommand="pybridge.selectAllItems();" />
 
-<command id="addchannel" oncommand="window.openDialog('chrome://dtv/content/addchannel.xul','addchannel','chrome,dependent,centerscreen');" />
+<command id="addchannel" oncommand="pybridge.addChannel();" />
 <command id="newchannelfolder" oncommand="pybridge.createNewChannelFolder();" />
 <command id="newchannelguide" oncommand="pybridge.createNewChannelGuide();" />
 <command id="renamechannel" oncommand="pybridge.renameCurrentChannel();" />

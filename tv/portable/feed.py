@@ -93,7 +93,7 @@ def addFeedFromWebPage(url):
 
 # URL validitation and normalization
 def validateFeedURL(url):
-    return re.match(r"^(http|https)://[^/]+/.*", url) is not None
+    return re.match(r"^(http|https)://[^/ ]+/[^ ]*$", url) is not None
 
 def normalizeFeedURL(url):
     # Valid URL are returned as-is
@@ -110,9 +110,9 @@ def normalizeFeedURL(url):
 
     # Replace invalid schemes by http
     match = re.match(r"^(([A-Za-z]*):/*)*(.*)$", url)
-    if match.group(2) in ['feed', 'podcast', 'fireant', None]:
+    if match and match.group(2) in ['feed', 'podcast', 'fireant', None]:
         url = "http://%s" % match.group(3)
-    elif match.group(1) == 'feeds':
+    elif match and match.group(1) == 'feeds':
         url = "https://%s" % match.group(3)
 
     # Make sure there is a leading / character in the path
@@ -1547,6 +1547,9 @@ class DirectoryFeedImpl(FeedImpl):
                 knownFiles.add(os.path.normcase(item.getFilename()))
 
         knownFiles.add(os.path.normcase(os.path.join(moviesDir, "Incomplete Downloads")))
+        # thumbs.db is a windows file that speeds up thumbnails.  We know it's
+        # not a movie file.
+        knownFiles.add(os.path.normcase(os.path.join(moviesDir, "thumbs.db")))
 
         # Remove items that are in feeds, but we have in our list
         for item in self.items:

@@ -120,9 +120,11 @@ jsBridge.prototype = {
             "choice", "chrome,dependent,centerscreen,modal", params);
   },
 
-  showTextEntryDialog: function(id, title, description, defaultLabel, otherLabel) {
+  showTextEntryDialog: function(id, title, description, defaultLabel, 
+                                otherLabel, prefillText) {
     var params = { "id": id, "title": title, "description" : description, 
-        "defaultLabel": defaultLabel, "otherLabel": otherLabel, "out" : -1};
+        "defaultLabel": defaultLabel, "otherLabel": otherLabel, 
+        "prefillText": prefillText, "out" : -1};
     this.window.openDialog("chrome://dtv/content/text_entry_dialog.xul",
             "dialog", "chrome,dependent,centerscreen,modal", params);
   },

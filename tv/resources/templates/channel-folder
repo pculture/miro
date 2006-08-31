@@ -36,10 +36,10 @@ savedItems = makeStateView('saved')
 
 if newItems.len() == unwatchedItems.len() == expiringItems.len() == savedItems.len() == 0:
     mainChannelbarAvailableDisplay = mainMatchingDisplay = "block"
-    showMoreVideosDisplay = "none"
+    newVideosDisplay = showMoreVideosDisplay = "none"
 else:
     mainChannelbarAvailableDisplay = mainMatchingDisplay = "none"
-    showMoreVideosDisplay = "block"
+    newVideosDisplay = showMoreVideosDisplay = "none"
 
 def updateSearchString(newSearch):
     global searchTerm

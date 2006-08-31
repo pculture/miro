@@ -331,12 +331,15 @@ Section "Handle MPEG files" SecRegisterMpg
   WriteRegStr HKCR ".mpg" "" "Democracy.Player.1"
   WriteRegStr HKCR ".mpeg" "" "Democracy.Player.1"
   WriteRegStr HKCR ".mp2" "" "Democracy.Player.1"
-  WriteRegStr HKCR ".mp3" "" "Democracy.Player.1"
   WriteRegStr HKCR ".mp4" "" "Democracy.Player.1"
-  WriteRegStr HKCR ".mpa" "" "Democracy.Player.1"
   WriteRegStr HKCR ".mpe" "" "Democracy.Player.1"
   WriteRegStr HKCR ".mpv" "" "Democracy.Player.1"
   WriteRegStr HKCR ".mpv2" "" "Democracy.Player.1"
+SectionEnd
+
+Section "Handle MP3 files" SecRegisterMp3
+  WriteRegStr HKCR ".mp3" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".mpa" "" "Democracy.Player.1"
 SectionEnd
 
 Section "Handle Quicktime files" SecRegisterMov
@@ -442,12 +445,12 @@ continue:
   !insertmacro checkExtensionHandled ".mpg" ${SecRegisterMpg}
   !insertmacro checkExtensionHandled ".mpeg" ${SecRegisterMpg}
   !insertmacro checkExtensionHandled ".mp2" ${SecRegisterMpg}
-  !insertmacro checkExtensionHandled ".mp3" ${SecRegisterMpg}
   !insertmacro checkExtensionHandled ".mp4" ${SecRegisterMpg}
-  !insertmacro checkExtensionHandled ".mpa" ${SecRegisterMpg}
   !insertmacro checkExtensionHandled ".mpe" ${SecRegisterMpg}
   !insertmacro checkExtensionHandled ".mpv" ${SecRegisterMpg}
   !insertmacro checkExtensionHandled ".mpv2" ${SecRegisterMpg}
+  !insertmacro checkExtensionHandled ".mp3" ${SecRegisterMp3}
+  !insertmacro checkExtensionHandled ".mpa" ${SecRegisterMp3}
   !insertmacro checkExtensionHandled ".mov" ${SecRegisterMov}
   !insertmacro checkExtensionHandled ".qa" ${SecRegisterMov}
   !insertmacro checkExtensionHandled ".asf" ${SecRegisterAsf}
@@ -486,6 +489,7 @@ Section "Uninstall" SEC91
   SetShellVarContext all
 
   !insertmacro uninstall $INSTDIR
+  RMDIR "$PROGRAMFILES\${CONFIG_PUBLISHER}"
 
   ; Remove Start Menu shortcuts
   !insertmacro MUI_STARTMENU_GETFOLDER Application $R0

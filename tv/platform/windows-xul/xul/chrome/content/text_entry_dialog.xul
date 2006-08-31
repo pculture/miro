@@ -18,6 +18,7 @@ function onload() {
   description.appendChild(document.createTextNode(args["description"]));
   var dialog = document.getElementById("democracy-dialog");
   document.title = args['title'];
+  document.getElementById("textbox").value = args['prefillText'];
   dialog.getButton('accept').label = args['defaultLabel'];
   dialog.getButton('cancel').label = args['otherLabel'];
 }
