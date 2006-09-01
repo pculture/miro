@@ -314,7 +314,7 @@ class SelectionHandler(object):
         else:
             raise ValueError("Unknown area: %s" % area)
 
-    def selectItem(self, area, view, id, shiftSelect, controlSelect):
+    def selectItem(self, area, view, id, shiftSelect, controlSelect, displayTabContent=True):
         selection = self.getSelectionForArea(area)
         try:
             selectedObj = view.getObjectByID(id)
@@ -339,7 +339,8 @@ class SelectionHandler(object):
             self.updateMenus()
         else:
             self.setTabListActive(True)
-            self.displayCurrentTabContent()
+            if displayTabContent:
+                self.displayCurrentTabContent()
 
     def setTabListActive(self, value):
         self.tabListActive = value
@@ -362,7 +363,7 @@ class SelectionHandler(object):
     def selectFirstGuide(self):
         self.tabListSelection.selectFirstGuide()
 
-    def selectTabByTemplateBase(self, tabTemplateBase):
+    def selectTabByTemplateBase(self, tabTemplateBase, displayTabContent=True):
         tabViews = [ 
             views.guideTabs, 
             views.staticTabs, 
@@ -373,7 +374,8 @@ class SelectionHandler(object):
             for tab in view:
                 if tab.tabTemplateBase == tabTemplateBase:
                     self.selectItem('tablist', view, tab.objID(),
-                            shiftSelect=False, controlSelect=False)
+                            shiftSelect=False, controlSelect=False,
+                            displayTabContent=displayTabContent)
                     return
 
     def selectTabByObject(self, obj):
