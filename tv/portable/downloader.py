@@ -72,7 +72,7 @@ class RemoteDownloader(DDBObject):
     """Download a file using the downloader daemon."""
 
     def __init__(self, url, item, contentType = None):
-        self.url = url
+        self.origURL = self.url = url
         self.itemList = [item]
         self.dlid = generateDownloadID()
         self.status = {}

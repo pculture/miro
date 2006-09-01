@@ -226,6 +226,16 @@ def upgrade18(objectList):
             changed.add(o)
     return changed
 
+def upgrade19(objectList):
+    """Add origURL to RemoteDownloaders"""
+
+    changed = set()
+    for o in objectList:
+        if o.classString == 'remote-downloader':
+            o.savedData['origURL'] = o.savedData['url']
+            changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

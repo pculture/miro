@@ -430,6 +430,9 @@ class HTTPDownloader(BGDownloader):
         else:
             self.updateClient()
 
+    def resetBlockTimes(self):
+        self.blockTimes = [(clock(), self.currentSize)]
+
     def startNewDownload(self):
         self.currentSize = 0
         self.totalSize = -1
@@ -443,7 +446,7 @@ class HTTPDownloader(BGDownloader):
         self.client = httpclient.grabURL(self.url,
                 self.onDownloadFinished, self.onDownloadError,
                 headerCallback, self.onBodyData, start=self.currentSize)
-        self.blockTimes = [(clock(), self.currentSize)]
+        self.resetBlockTimes()
         self.updateClient()
         self.startTimeout()
 
@@ -514,6 +517,7 @@ class HTTPDownloader(BGDownloader):
         if info['status'] != 206 or 'content-range' not in info:
             self.currentSize = 0
             self.totalSize = -1
+            self.resetBlockTimes()
             return self.onHeaders(info)
         try:
             self.parseContentRange(info['content-range'])

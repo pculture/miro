@@ -25,7 +25,7 @@ def downloadsByDLID(x):
     return str(x.dlid)
 
 def downloadsByURL(x):
-    return str(x.url)
+    return str(x.origURL)
 
 # Returns the class of the object, aggregating all Item subtypes under Item
 def objectsByClass(x):
