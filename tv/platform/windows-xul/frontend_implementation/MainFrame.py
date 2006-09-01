@@ -24,8 +24,12 @@ class MainFrame:
 
     def onSelectedTabChange(self, strings, actionGroups, guideURL):
         app.controller.setGuideURL(guideURL)
-        print "WARNING: ignoring onSelectedTabChange (%s, %s, %s)" % \
-                (strings, actionGroups, guideURL)
+        for group, enabled in actionGroups.items():
+            print '%s -- %s' % (group, enabled)
+            frontend.jsBridge.setActionGroupEnabled(group, enabled)
+        for name, label in strings.items():
+            id = 'menuitem-%s' % name.replace('_', '-')
+            frontend.jsBridge.updateLabel(id, label)
 
     def selectDisplay(self, newDisplay, area):
         """Install the provided 'newDisplay' in the requested area"""

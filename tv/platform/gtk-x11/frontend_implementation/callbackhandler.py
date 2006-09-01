@@ -85,6 +85,7 @@ class CallbackHandler(object):
         actionGroups["VideoPlayable"] = gtk.ActionGroup("VideoPlayable")
         actionGroups["ChannelSelected"] = gtk.ActionGroup("ChannelSelected")
         actionGroups["ChannelsSelected"] = gtk.ActionGroup("ChannelsSelected")
+        actionGroups["ChannelFolderSelected"] = gtk.ActionGroup("ChannelFolderSelected")
         actionGroups["ChannelLikeSelected"] = gtk.ActionGroup("ChannelLikeSelected")
         actionGroups["ChannelLikesSelected"] = gtk.ActionGroup("ChannelLikesSelected")
         actionGroups["PlaylistLikeSelected"] = gtk.ActionGroup("PlaylistLikeSelected")
@@ -119,7 +120,7 @@ class CallbackHandler(object):
         actionGroups["ChannelsSelected"].add_actions ([
             ('UpdateChannels', None, _("_Update Channel"), None, None, self.on_update_channel_activate),
             ])
-        actionGroups["ChannelLikeSelected"].add_actions ([
+        actionGroups["ChannelFolderSelected"].add_actions ([
             ('RenameChannel', None, _("Re_name Channel"), None, None, self.on_rename_channel_activate),
             ])
         actionGroups["ChannelLikesSelected"].add_actions ([

@@ -3,7 +3,6 @@ import traceback
 import sys
 import config
 import prefs
-import webbrowser
 
 from frontend_implementation import urlcallbacks
 

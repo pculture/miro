@@ -489,6 +489,7 @@ class SelectionHandler(object):
         actionGroups["PlaylistLikesSelected"] = is_playlistlike
         actionGroups["ChannelSelected"] = tabTypes.issubset (set(['channeltab'])) and not multiple
         actionGroups["ChannelsSelected"] = tabTypes.issubset (set(['channeltab', 'channelfoldertab']))
+        actionGroups["ChannelFolderSelected"] = tabTypes.issubset(set(['channelfoldertab'])) and not multiple
 
         # Handle video item area.
         actionGroups["VideoSelected"] = False

@@ -1,5 +1,5 @@
 
-window, hbox, vbox, menu, menubar, menuitem, menupopup {	
+wnindow, hbox, vbox, menu, menubar, menuitem, menupopup {	
 	font: normal 11px "Tahoma", "Trebuchet MS", Arial;
 }
 
@@ -40,6 +40,11 @@ window, hbox, vbox, menu, menubar, menuitem, menupopup {
 	-moz-appearance: none;
 	color: #FFFFFF;
 	background-color: #444444;
+}
+
+.titlebar menu menuitem[disabled] {
+	color: #AAA;
+	background-color: inherit;
 }
 
 .titlebar menupopup {

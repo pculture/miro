@@ -34,7 +34,7 @@
         <menuitem label="&main.menu.file.open;" acceltext="&main.menu.file.open.accel;" accesskey="&main.menu.file.open.access;" command="open" />
         <menuitem label="&main.menu.file.checkversion;" accesskey="&main.menu.file.checkversion.access;" command="checkversion" />
         <menuseparator />
-        <menuitem label="&main.menu.file.removevideo;" accesskey="&main.menu.file.removevideo.access;" command="removevideo" />
+        <menuitem id="menuitem-video-remove" label="&main.menu.file.removevideo;" accesskey="&main.menu.file.removevideo.access;" command="removevideo" />
         <menuitem label="&main.menu.file.savevideoas;" accesskey="&main.menu.file.savevideoas.access;" command="savevideoas" />
         <menuitem label="&main.menu.file.copyvideourl;" accesskey="&main.menu.file.copyvideourl.access;" command="copyvideourl" />
         <menuseparator />
@@ -59,10 +59,10 @@
         <menuitem label="&main.menu.channel.newchannelfolder;" acceltext="&main.menu.channel.newchannelfolder.accel;" accesskey="&main.menu.channel.newchannelfolder.access;" command="newchannelfolder"/>
         <menuitem label="&main.menu.channel.newchannelguide;" accesskey="&main.menu.channel.newchannelguide.access;" command="newchannelguide"/>
         <menuseparator/>
-        <menuitem id="channel-menu-rename" label="&main.menu.channel.rename;" accesskey="&main.menu.channel.rename.access;" command="renamechannel"/>
-        <menuitem id="channel-menu-remove" label="&main.menu.channel.remove;" accesskey="&main.menu.channel.remove.access;" command="removechannel"/>
+        <menuitem id="menuitem-channel-rename" label="&main.menu.channel.rename;" accesskey="&main.menu.channel.rename.access;" command="renamechannel"/>
+        <menuitem id="menuitem-channel-remove" label="&main.menu.channel.remove;" accesskey="&main.menu.channel.remove.access;" command="removechannel"/>
         <menuseparator/>
-        <menuitem label="&main.menu.channel.update;" accesskey="&main.menu.channel.update.access;" command="updatechannel"/>
+        <menuitem id="menuitem-channel-update" label="&main.menu.channel.update;" accesskey="&main.menu.channel.update.access;" command="updatechannel"/>
         <menuitem label="&main.menu.channel.updateall;" accesskey="&main.menu.channel.updateall.access;" command="updateall"/>
         <menuseparator/>
         <menuitem label="&main.menu.channel.tellafriend;" accesskey="&main.menu.channel.tellafriend.access;" command="recommendcurrentchannel" />
@@ -75,14 +75,14 @@
         <menuitem label="&main.menu.playlist.newplaylist;" accesskey="&main.menu.playlist.newplaylist.access;" acceltext="&main.menu.playlist.newplaylist.accel;" command="newplaylist"/>
         <menuitem label="&main.menu.playlist.newplaylistfolder;" accesskey="&main.menu.playlist.newplaylistfolder.access;" acceltext="&main.menu.playlist.newplaylistfolder.accel;" command="newplaylistfolder"/>
         <menuseparator/>
-        <menuitem id="playlist-menu-rename" label="&main.menu.playlist.rename;" accesskey="&main.menu.playlist.rename.access;" command="renameplaylist"/>
-        <menuitem id="playlist-menu-remove" label="&main.menu.playlist.remove;" accesskey="&main.menu.playlist.remove.access;" command="removeplaylist"/>
+        <menuitem id="menuitem-playlist-rename" label="&main.menu.playlist.rename;" accesskey="&main.menu.playlist.rename.access;" command="renameplaylist"/>
+        <menuitem id="menuitem-playlist-remove" label="&main.menu.playlist.remove;" accesskey="&main.menu.playlist.remove.access;" command="removeplaylist"/>
 </menupopup>
 </menu>
 
 <menu id="playback-menu" label="&main.menu.playback;" accesskey="&main.menu.playback.access;" class="titlebar-toplevel">
     <menupopup id="video-popup">
-        <menuitem id="playback-menu-play" label="&main.menu.playback.play;" acceltext="&main.menu.playback.play.accel;" accesskey="&main.menu.playback.play.access;" command="playpausevideo" />
+        <menuitem id="menuitem-play" label="&main.menu.playback.play;" acceltext="&main.menu.playback.play.accel;" accesskey="&main.menu.playback.play.access;" command="playpausevideo" />
         <menuitem label="&main.menu.playback.stop;" acceltext="&main.menu.playback.stop.accel;" accesskey="&main.menu.playback.stop.access;" command="stopvideo" />
         <menuseparator/>
         <menuitem label="&main.menu.playback.next;" acceltext="&main.menu.playback.next.accel;" accesskey="&main.menu.playback.next.access;" command="nextvideo" />
@@ -202,6 +202,7 @@
 <command id="open" oncommand="openFile();" />
 <command id="checkversion" oncommand="pybridge.checkForUpdates();" />
 <command id="removevideo" oncommand="pybridge.removeCurrentItems();" />
+<command id="savevideoas" oncommand="" />
 <command id="copyvideourl" oncommand="pybridge.copyCurrentItemURL();" />
 <command id="quit" oncommand="handleExit();" />
 
@@ -224,11 +225,15 @@
 <command id="renameplaylist" oncommand="pybridge.renameCurrentPlaylist();" />
 <command id="removeplaylist" oncommand="pybridge.removeCurrentPlaylist();" />
 
+<command id="playpausevideo" oncommand="pybridge.playPause();" />
+<command id="stopvideo" oncommand="pybridge.stop();" />
+<command id="nextvideo" oncommand="pybridge.skip(1);" />
+<command id="previousvideo" oncommand="pybridge.skip(-1);" />
 <command id="fullscreen" oncommand="onFullscreenActivate();" />
-<command id="showhelp" oncommand="pybridge.showHelp();" />
-
 
 <command id="about" oncommand="window.openDialog('chrome://dtv/content/about.xul','aboutdialog','chrome,dependent,centerscreen');" />
+<command id="donate" oncommand="pybridge.openDonatePage();" />
+
 <command id="openprefs" oncommand="window.openDialog('chrome://dtv/content/prefs.xul','prefs','chrome,dependent,centerscreen');" />
 
 </window>

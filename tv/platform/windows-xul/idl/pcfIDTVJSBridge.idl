@@ -34,4 +34,6 @@ interface pcfIDTVJSBridge : nsISupports
   void toggleFullscreen();
   void enterFullscreen();
   void leaveFullscreen();
+  void setActionGroupEnabled(in AString group, in boolean enabled);
+  void updateLabel(in Astring id, in AString label);
 };

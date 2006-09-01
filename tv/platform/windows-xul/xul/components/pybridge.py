@@ -249,7 +249,7 @@ class PyBridge:
 
     @asUrgent
     def showHelp(self):
-        self.delegate.openExternalURL('http://www.getdemocracy.com/help')
+        self.delegate.openExternalURL(config.get(prefs.HELP_URL))
 
     @asUrgent
     def copyChannelLink(self):
@@ -382,3 +382,7 @@ class PyBridge:
     @asUrgent
     def removeCurrentPlaylist(self):
         app.controller.removeCurrentPlaylist()
+
+    @asUrgent
+    def openDonatePage(self):
+        self.delegate.openExternalURL(config.get(prefs.DONATE_URL))

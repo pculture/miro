@@ -345,7 +345,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
             result = True
         elif action == 'renameChannelFolder:':
             self.updateMenuItem(item, 'channel_rename')
-            result = self.actionGroups['ChannelLikeSelected']
+            result = self.actionGroups['ChannelFolderSelected']
         elif action == 'removeChannel:':
             self.updateMenuItem(item, 'channel_remove')
             result = self.actionGroups['ChannelLikeSelected'] or self.actionGroups['ChannelLikesSelected']

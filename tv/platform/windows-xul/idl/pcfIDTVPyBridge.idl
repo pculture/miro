@@ -69,4 +69,5 @@ interface pcfIDTVPyBridge : nsISupports
   void recommendCurrentChannel();
   void renameCurrentPlaylist();
   void removeCurrentPlaylist();
+  void openDonatePage();
 };

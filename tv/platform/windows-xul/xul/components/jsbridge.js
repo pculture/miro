@@ -15,6 +15,19 @@ function LoadFinishedListener(area)
     this.area = area;
 }
 
+var actionGroupCommands = {
+  'ChannelSelected': Array('copychannellink', 'recommendcurrentchannel'),
+  'ChannelFolderSelected': Array('renamechannel'),
+  'VideoSelected': Array('copyvideourl', 'savevideoas'),
+  'VideosSelected': Array('removevideo'),
+  'PlaylistLikeSelected': Array('renameplaylist'),
+  'PlaylistLikesSelected': Array('removeplaylist'),
+  'ChannelLikesSelected': Array(),
+  'ChannelLikeSelected': Array('removechannel', 'updatechannel'),
+  'ChannelsSelected': Array(),
+  'VideoPlayable': Array(),
+}
+
 LoadFinishedListener.prototype =
 {
   QueryInterface : function(aIID)
@@ -299,7 +312,23 @@ jsBridge.prototype = {
     var document = this.getDocument(area);
     var elt = document.getElementById(id);
     elt.style.display = '';
-  }
+  },
+
+  setActionGroupEnabled: function(group, enabled) {
+     var elements = actionGroupCommands[group];
+     for(var i = 0; i < elements.length; i++) {
+       var elt = this.document.getElementById(elements[i]);
+       if(!enabled) {
+         elt.setAttribute('disabled', true);
+       } else {
+         elt.removeAttribute('disabled');
+       }
+     }
+  },
+  updateLabel: function(id, label) {
+    var menuitem = this.document.getElementById(id);
+    menuitem.setAttribute('label', label);
+  },
 };
 
 var Module = {
