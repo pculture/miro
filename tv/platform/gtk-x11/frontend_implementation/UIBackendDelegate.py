@@ -273,7 +273,10 @@ class UIBackendDelegate:
             if _stock.has_key(button.text):
                 buttons [0:0] = (_stock[button.text], i)
             else:
-                buttons [0:0] = (button.text, i)
+                if type(button.text) == unicode:
+                    buttons [0:0] = (button.text.encode("utf8", "replace"), i)
+                else:
+                    buttons [0:0] = (button.text, i)
             i = i + 1
         return tuple(buttons)
 
