@@ -541,7 +541,10 @@ folder will also be deleted.""")
 
         if self.downloader is None:
             self.downloader = downloader.getDownloader(self)
-        self.downloader.start()
+        if self.downloader.isFinished():
+            self.onDownloadFinished()
+        else:
+            self.downloader.start()
         self.signalChange()
 
     def isPendingManualDownload(self):
