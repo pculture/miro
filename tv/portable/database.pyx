@@ -219,7 +219,10 @@ class MultiIndexMap(IndexMap):
     def _changeOrRecompute(self, obj, value, isChange):
         indexValues = set(self.indexFunc(value))
         try:
-            oldIndexValues = self.mappings[obj.getID()]
+            oldIndexValues = self.mappings.pop(obj.getID())
+            # by poping the value, we ensure that if a callback for the
+            # addBeforeCursor or removeObj calls invokes signalChange() on
+            # this object, we'll ignore it.
         except KeyError:
             return
         for indexValue in (indexValues - oldIndexValues):

@@ -1120,7 +1120,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
             # in an external browser.
             if (url.startswith('http://') or url.startswith('https://') or
                 url.startswith('ftp://') or url.startswith('mailto:')):
-                delegate.openExternalURL(url)
+                self.handleCandidateExternalURL(url)
                 return False
 
         except:
@@ -1128,6 +1128,19 @@ class TemplateDisplay(frontend.HTMLDisplay):
             util.failedExn("while handling a request", details = details)
 
         return True
+
+    @eventloop.asUrgent
+    def handleCandidateExternalURL(self, url):
+        """Open a URL that onURLLoad thinks is an external URL.
+        handleCandidateExternalURL does extra checks that onURLLoad can't do
+        because it's happens in the gui thread and can't access the DB.
+        """
+        # check if the url that came from a guide, but the user switched tabs
+        # before it went through.
+        for guide in views.guides:
+            if url.startswith(guide.getURL()):
+                return
+        delegate.openExternalURL(url)
 
     @eventloop.asUrgent
     def dispatchAction(self, action, **kwargs):
