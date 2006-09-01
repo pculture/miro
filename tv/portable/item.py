@@ -465,6 +465,16 @@ folder will also be deleted.""")
                 expireTime = timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS))
             return self.watchedTime + expireTime
 
+    def getExpiring(self):
+        if (not self.seen) or (not self.isDownloaded()):
+            return False
+        ufeed = self.getFeed()
+        if ufeed.expire == 'never' or (ufeed.expire == 'system'
+                and config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
+            return False
+        else:
+            return True
+
     ##
     # returns true iff video has been seen
     # Note the difference between "viewed" and "seen"
@@ -719,7 +729,7 @@ folder will also be deleted.""")
             self._state = 'downloading'
         elif not self.getSeen():
             self._state = 'newly-downloaded'
-        elif not self.getSaved():
+        elif self.getExpiring():
             self._state = 'expiring'
         else:
             self._state = 'saved'
@@ -754,13 +764,10 @@ folder will also be deleted.""")
             if not self.getViewed():
                 return 'new'
             return 'newly-downloaded'
-        elif not self.getSaved():
+        elif self.getExpiring():
             return 'expiring'
         else:
             return 'saved'
-
-    def getSaved(self):
-        return self.keep or not self.getFeed().getExpires()
 
     def isDownloadable(self):
         return self.getState() in ('new', 'not-downloaded', 'expired')
