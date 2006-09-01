@@ -234,14 +234,8 @@ class CallbackHandler(object):
             
 
     def on_save_video_activate(self, event = None):
-        # I think the following is the best way to get the current playlist
-        # item, but I'm not sure it will work all the time so I wrapped it in
-        # a try, except.  This is pretty ugly, IMHO.  Someone who knows more
-        # than me about the system should fix this.
-        try:
-            item = self.mainApp.playbackController.currentPlaylist.cur()
-            videoPath = item.getVideoFilename()
-        except:
+        videoPath = self.mainFrame.currentVideoFilename
+        if videoPath is None:
             return
         self.mainApp.videoDisplay.pause()
         chooser = gtk.FileChooserDialog("Save Video As...",
@@ -249,6 +243,7 @@ class CallbackHandler(object):
                 gtk.FILE_CHOOSER_ACTION_SAVE,
                 (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, 
                     gtk.STOCK_SAVE, gtk.RESPONSE_ACCEPT))
+        chooser.set_current_name(os.path.basename(videoPath))
         if (CallbackHandler.current_folder):
             chooser.set_current_folder(CallbackHandler.current_folder)
         if chooser.run() == gtk.RESPONSE_ACCEPT:

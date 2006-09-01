@@ -108,6 +108,7 @@ class MainFrame:
         self.callbackHandler = CallbackHandler(self)
         self.isFullscreen = False
         self.aboutWidget = None
+        self.currentVideoFilename = None
         self._gtkInit()
 
     @gtkAsyncMethod
@@ -200,6 +201,7 @@ class MainFrame:
     def onSelectedTabChange(self, strings, actionGroups, guideURL,
             videoFilename):
         app.controller.setGuideURL(guideURL)
+        self.currentVideoFilename = videoFilename
 
         for actionGroup, setting in actionGroups.iteritems():
             self.actionGroups[actionGroup].set_sensitive(setting)
