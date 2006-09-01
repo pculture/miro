@@ -162,7 +162,7 @@ class PlaybackControllerBase:
             videoDisplay.stop()
         self.exitPlayback(switchDisplay)
 
-    def skip(self, direction):
+    def skip(self, direction, allowMovieReset=True):
         nextItem = None
         if self.currentPlaylist is not None:
             if direction == 1:
@@ -170,11 +170,11 @@ class PlaybackControllerBase:
             else:
                 frame = controller.frame
                 currentDisplay = frame.getDisplay(frame.mainDisplay)
-                if not hasattr(currentDisplay, 'getCurrentTime') or currentDisplay.getCurrentTime() <= 2.0:
-                    nextItem = self.currentPlaylist.getPrev()
-                else:
+                if allowMovieReset and hasattr(currentDisplay, 'getCurrentTime') and currentDisplay.getCurrentTime() > 2.0:
                     currentDisplay.goToBeginningOfMovie()
                     return self.currentPlaylist.cur()
+                else:
+                    nextItem = self.currentPlaylist.getPrev()
         if nextItem is None:
             self.stop()
         else:
