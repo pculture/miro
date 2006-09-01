@@ -1,5 +1,6 @@
 import app
 import frontend
+import os
 from xpcom import components
 from util import quoteJS
 from frontend_implementation.VideoDisplay import VideoDisplay
@@ -22,10 +23,15 @@ class MainFrame:
         self.selectedDisplays = {}
         urlcallbacks.installChannelGuideCallback(self.channelGuideCallback)
 
-    def onSelectedTabChange(self, strings, actionGroups, guideURL):
+    def onSelectedTabChange(self, strings, actionGroups, guideURL,
+            videoFilename):
         app.controller.setGuideURL(guideURL)
+        if videoFilename is not None:
+            frontend.jsBridge.updateVideoFilename(os.path.basename(videoFilename))
+        else:
+            frontend.jsBridge.updateVideoFilename('')
+        frontend.currentVideoPath = videoFilename
         for group, enabled in actionGroups.items():
-            print '%s -- %s' % (group, enabled)
             frontend.jsBridge.setActionGroupEnabled(group, enabled)
         for name, label in strings.items():
             id = 'menuitem-%s' % name.replace('_', '-')

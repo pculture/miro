@@ -12,6 +12,8 @@ import frontend_implementation.UIStrings as UIStrings
 jsBridge = None
 vlcRenderer = None
 
+currentVideoPath = None # gets changed in MainFrame.onSelectedTabChange()
+
 def quit():
     jsBridge.closeWindow()
 

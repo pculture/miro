@@ -289,6 +289,10 @@ class PyBridge:
         app.controller.playbackController.skip(step)
 
     @asUrgent
+    def skipPrevious(self):
+        app.controller.playbackController.skip(-1, allowMovieReset=False)
+
+    @asUrgent
     def loadURLInBrowser(self, browserId, url):
         try:
             display = app.controller.frame.selectedDisplays[browserId]
@@ -386,3 +390,10 @@ class PyBridge:
     @asUrgent
     def openDonatePage(self):
         self.delegate.openExternalURL(config.get(prefs.DONATE_URL))
+
+    @asUrgent
+    def saveVideoFile(self, path):
+        if frontend.currentVideoPath is None:
+            return
+        print "saving video %s to %s" % (frontend.currentVideoPath, path)
+        shutil.copyfile(frontend.currentVideoPath, path)

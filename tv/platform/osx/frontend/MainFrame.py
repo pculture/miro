@@ -42,8 +42,10 @@ class MainFrame:
     def getDisplaySizeHint(self, area):
         return self.controller.getDisplaySizeHint(area)
 
-    def onSelectedTabChange(self, strings, actionGroups, guideURL):
-        self.controller.onSelectedTabChange(strings, actionGroups, guideURL)
+    def onSelectedTabChange(self, strings, actionGroups, guideURL,
+            videoFilename):
+        self.controller.onSelectedTabChange(strings, actionGroups, guideURL,
+                videoFilename)
 
 ###############################################################################
 
@@ -143,7 +145,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
     ### Switching displays ###
 
     @platformutils.onMainThread
-    def onSelectedTabChange(self, strings, actionGroups, guideURL):
+    def onSelectedTabChange(self, strings, actionGroups, guideURL,
+            videoFilename):
         app.controller.setGuideURL(guideURL)
         self.menuStrings = strings
         self.actionGroups = actionGroups

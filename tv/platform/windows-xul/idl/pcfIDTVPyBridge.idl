@@ -33,6 +33,7 @@ interface pcfIDTVPyBridge : nsISupports
   void openURL(in AString url);
   void loadURLInBrowser(in string browserAreaId, in AString url);
   void skip(in short step);
+  void skipPrevious();
   void stop();
   void playPause();
   void openFile(in AString path);
@@ -70,4 +71,5 @@ interface pcfIDTVPyBridge : nsISupports
   void renameCurrentPlaylist();
   void removeCurrentPlaylist();
   void openDonatePage();
+  void saveVideoFile(in AString path);
 };

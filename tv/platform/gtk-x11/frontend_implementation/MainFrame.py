@@ -197,7 +197,8 @@ class MainFrame:
         setBool ("maximized", maximized)
         
     @gtkAsyncMethod
-    def onSelectedTabChange(self, strings, actionGroups, guideURL):
+    def onSelectedTabChange(self, strings, actionGroups, guideURL,
+            videoFilename):
         app.controller.setGuideURL(guideURL)
 
         for actionGroup, setting in actionGroups.iteritems():

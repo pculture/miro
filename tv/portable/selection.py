@@ -497,18 +497,22 @@ class SelectionHandler(object):
         actionGroups["VideoSelected"] = False
         actionGroups["VideosSelected"] = False
         actionGroups["VideoPlayable"] = False
+        videoFileName = None
         if 'downloadeditem' in self.itemListSelection.getTypesDetailed():
             actionGroups["VideosSelected"] = True
             actionGroups["VideoPlayable"] = True
             if len(self.itemListSelection.currentSelection) == 1:
                 actionGroups["VideoSelected"] = True
+                item = self.itemListSelection.getObjects()[0]
+                videoFileName = item.getVideoFilename()
             else:
                 strings["video_remove"] = UIStrings.REMOVE_VIDEOS
 #        if len(self.itemListSelection.currentSelection) == 0:
 #            if playable_videos:
 #                actionGroups["VideoPlayable"] = True
 
-        app.controller.frame.onSelectedTabChange(strings, actionGroups, guideURL)
+        app.controller.frame.onSelectedTabChange(strings, actionGroups, 
+                guideURL, videoFileName)
 
     def displayCurrentTabContent(self):
         newDisplay = self._chooseDisplayForCurrentTab()

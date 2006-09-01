@@ -79,6 +79,7 @@ jsBridge.prototype = {
     this.initBrowser("channelsDisplay");
     this.hideVideoControlsTimer = Components.classes["@mozilla.org/timer;1"].
           createInstance(Components.interfaces.nsITimer);
+    this.videoFilename = null;
   },
 
   closeWindow: function() {
@@ -328,6 +329,24 @@ jsBridge.prototype = {
   updateLabel: function(id, label) {
     var menuitem = this.document.getElementById(id);
     menuitem.setAttribute('label', label);
+  },
+  updateVideoFilename: function(newFilename) {
+    if(newFilename) this.videoFilename = newFilename;
+    else this.videoFilename = null;
+  },
+  saveVideo: function() {
+    if(this.videoFilename == null) return;
+
+    var fp = Components.classes["@mozilla.org/filepicker;1"]
+            .createInstance(Components.interfaces.nsIFilePicker);
+    var saveMenuItem = this.document.getElementById('menuitem-video-save');
+    fp.init(this.window, saveMenuItem.getAttribute('label'),
+        Components.interfaces.nsIFilePicker.modeSave);
+    fp.defaultString = this.videoFilename;
+    var res = fp.show();
+    if (res == Components.interfaces.nsIFilePicker.returnOK){
+        pybridge.saveVideoFile(fp.file.path);
+    }
   },
 };
 

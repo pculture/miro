@@ -31,11 +31,11 @@
 
 <menu id="file-menu" label="&main.menu.file;" accesskey="&main.menu.file.access;" class="titlebar-toplevel" style="margin-left: 10px;">
     <menupopup id="file-popup">
-        <menuitem label="&main.menu.file.open;" acceltext="&main.menu.file.open.accel;" accesskey="&main.menu.file.open.access;" command="open" />
+        <menuitem id="menuitem-file-open" label="&main.menu.file.open;" acceltext="&main.menu.file.open.accel;" accesskey="&main.menu.file.open.access;" command="open" />
         <menuitem label="&main.menu.file.checkversion;" accesskey="&main.menu.file.checkversion.access;" command="checkversion" />
         <menuseparator />
         <menuitem id="menuitem-video-remove" label="&main.menu.file.removevideo;" accesskey="&main.menu.file.removevideo.access;" command="removevideo" />
-        <menuitem label="&main.menu.file.savevideoas;" accesskey="&main.menu.file.savevideoas.access;" command="savevideoas" />
+        <menuitem id="menuitem-video-save" label="&main.menu.file.savevideoas;" accesskey="&main.menu.file.savevideoas.access;" command="savevideoas" />
         <menuitem label="&main.menu.file.copyvideourl;" accesskey="&main.menu.file.copyvideourl.access;" command="copyvideourl" />
         <menuseparator />
         <menuitem label="&main.menu.file.quit;" accesskey="&main.menu.file.quit.access;" command="quit" />
@@ -202,7 +202,7 @@
 <command id="open" oncommand="openFile();" />
 <command id="checkversion" oncommand="pybridge.checkForUpdates();" />
 <command id="removevideo" oncommand="pybridge.removeCurrentItems();" />
-<command id="savevideoas" oncommand="" />
+<command id="savevideoas" oncommand="jsbridge.saveVideo();" />
 <command id="copyvideourl" oncommand="pybridge.copyCurrentItemURL();" />
 <command id="quit" oncommand="handleExit();" />
 
@@ -228,7 +228,7 @@
 <command id="playpausevideo" oncommand="pybridge.playPause();" />
 <command id="stopvideo" oncommand="pybridge.stop();" />
 <command id="nextvideo" oncommand="pybridge.skip(1);" />
-<command id="previousvideo" oncommand="pybridge.skip(-1);" />
+<command id="previousvideo" oncommand="pybridge.skipPrevious();" />
 <command id="fullscreen" oncommand="onFullscreenActivate();" />
 
 <command id="about" oncommand="window.openDialog('chrome://dtv/content/about.xul','aboutdialog','chrome,dependent,centerscreen');" />

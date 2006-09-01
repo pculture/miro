@@ -371,7 +371,8 @@ function clipboardPaste() {
 function openFile() {
     var fp = Components.classes["@mozilla.org/filepicker;1"]
             .createInstance(Components.interfaces.nsIFilePicker);
-    fp.init(window, "Open File",
+    var openMenuItem = document.getElementById('menuitem-file-open');
+    fp.init(window, openMenuItem.getAttribute('label'),
         Components.interfaces.nsIFilePicker.modeOpen);
     var res = fp.show();
     if (res == Components.interfaces.nsIFilePicker.returnOK){
