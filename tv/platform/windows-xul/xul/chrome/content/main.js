@@ -372,7 +372,7 @@ function openFile() {
     var fp = Components.classes["@mozilla.org/filepicker;1"]
             .createInstance(Components.interfaces.nsIFilePicker);
     fp.init(window, "Open File",
-            Components.interfaces.nsIFilePicker.modeGetFile);
+        Components.interfaces.nsIFilePicker.modeOpen);
     var res = fp.show();
     if (res == Components.interfaces.nsIFilePicker.returnOK){
         pybridge.openFile(fp.file.path);
@@ -391,5 +391,26 @@ function onKeyDown(event) {
   else if(event.keyCode == 8 || event.keyCode == 46) {  // Delete/Backspace
      if(event.target.tagName.toLowerCase() == 'input') return;
      pybridge.removeCurrentSelection();
+  } else if(event.keyCode == 32) { // Space
+    pybridge.playPause();
+  } else if(event.keyCode == 39) { // Right arrow
+    pybridge.skip(1);
+  } else if(event.keyCode == 37) { // Left Arrow
+    pybridge.skip(-1);
+  } else if(event.ctrlKey) {
+    var charPressed = String.fromCharCode(event.keyCode).toLowerCase();
+    if(charPressed=='o') {
+      openFile();
+    } else if(charPressed == 'p') {
+      if(event.shiftKey) pybridge.createNewPlaylistFolder();
+      else pybridge.createNewPlaylist();
+    } else if(charPressed == 'n') {
+      if(event.shiftKey) pybridge.createNewChannelFolder();
+      else pybridge.addChannel();
+    } else if(charPressed == 'd') {
+      pybridge.stop();
+    } else if(charPressed == 'f') {
+      onFullscreenActivate();
+    }
   }
 }

@@ -82,11 +82,15 @@ VLCRenderer.prototype = {
   showPauseButton: function() {
     var playButton = this.document.getElementById("bottom-buttons-play");
     playButton.className = "bottom-buttons-pause";
+    var playMenuItem = this.document.getElementById('menuitem-play');
+    playMenuItem.label = "&main.menu.playback.pause;" 
   },
 
   showPlayButton: function() {
     var playButton = this.document.getElementById("bottom-buttons-play");
     playButton.className = "bottom-buttons-play";
+    var playMenuItem = this.document.getElementById('menuitem-play');
+    playMenuItem.label = "&main.menu.playback.play;" 
   },
 
   reset: function() {
