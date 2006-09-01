@@ -1173,12 +1173,19 @@ class RSSFeedImpl(FeedImpl):
             self.ufeed.signalChange()
 
     def addScrapedThumbnail(self,entry):
-        if (entry.has_key('enclosures') and len(entry['enclosures'])>0 and
-            entry.has_key('description') and 
-            not entry['enclosures'][0].has_key('thumbnail')):
-                desc = RSSFeedImpl.firstImageRE.search(unescape(entry['description']))
-                if not desc is None:
-                    entry['enclosures'][0]['thumbnail'] = FeedParserDict({'url': desc.expand("\\1")})
+        # skip this if the entry already has a thumbnail.
+        if entry.has_key('thumbnail'):
+            return entry
+        if entry.has_key('enclosures'):
+            for enc in entry['enclosures']:
+                if enc.has_key('thumbnail'):
+                    return entry
+        # try to scape the thumbnail from the description.
+        if not entry.has_key('description'):
+            return entry
+        desc = RSSFeedImpl.firstImageRE.search(unescape(entry['description']))
+        if not desc is None:
+            entry['thumbnail'] = FeedParserDict({'url': desc.expand("\\1")})
         return entry
 
     ##
