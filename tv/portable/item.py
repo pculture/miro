@@ -93,6 +93,7 @@ class Item(DDBObject):
         self.active = False
         self.childrenSeen = None
         self.downloader = None
+        self.expiring = None
 
     getSelected, setSelected = makeSimpleGetSet('selected',
             changeNeedsSave=False)
@@ -197,6 +198,7 @@ class Item(DDBObject):
     # get updated when an item changes
     def signalChange(self, needsSave=True, needsUpdateUandA=True, needsUpdateXML=True):
         self._calcState()
+        self.expiring = None
         if hasattr(self, "_size"):
             del self._size
         DDBObject.signalChange(self, needsSave=needsSave)
@@ -363,6 +365,7 @@ class Item(DDBObject):
                 item.remove()
         self.isContainerItem = None
         self.seen = self.keep = self.pendingManualDL = False
+        self.watchedTime = None
         self.signalChange(needsUpdateUandA = (UandA != self.getUandA()))
 
     ##
@@ -405,6 +408,8 @@ folder will also be deleted.""")
         """
 
         if self.isContainerItem:
+            if self.getState() == 'expiring':
+                return 'expiring', self.getExpirationString()
             return '', ''
         if self.isPendingAutoDownload():
             return 'pending-autdownload', _('Pending Auto Download')
@@ -452,7 +457,7 @@ folder will also be deleted.""")
         """
 
         self.confirmDBThread()
-        if self.watchedTime is None or not self.isDownloaded():
+        if self.getWatchedTime() is None or not self.isDownloaded():
             return None
         ufeed = self.getFeed()
         if ufeed.expire == 'never' or (ufeed.expire == 'system'
@@ -463,17 +468,36 @@ folder will also be deleted.""")
                 expireTime = ufeed.expireTime
             elif ufeed.expire == "system":
                 expireTime = timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS))
-            return self.watchedTime + expireTime
+            return self.getWatchedTime() + expireTime
+
+    def getWatchedTime(self):
+        if not self.getSeen():
+            return None
+        if self.isContainerItem and self.watchedTime == None:
+            self.watchedTime = datetime.min
+            children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
+            for item in children:
+                childTime = item.getWatchedTime()
+                if childTime is None:
+                    self.watchedTime = None
+                    return None
+                if childTime > self.watchedTime:
+                    self.watchedTime = childTime
+            self.signalChange(needsUpdateUandA=False)
+        return self.watchedTime
 
     def getExpiring(self):
-        if (not self.seen) or (not self.isDownloaded()):
-            return False
-        ufeed = self.getFeed()
-        if ufeed.expire == 'never' or (ufeed.expire == 'system'
-                and config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
-            return False
-        else:
-            return True
+        if self.expiring is None:
+            if (not self.getSeen()) or (not self.isDownloaded()):
+                self.expiring = False
+            else:
+                ufeed = self.getFeed()
+                if ufeed.expire == 'never' or (ufeed.expire == 'system'
+                        and config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
+                    self.expiring = False
+                else:
+                    self.expiring = True
+        return self.expiring
 
     ##
     # returns true iff video has been seen
@@ -1204,6 +1228,8 @@ class FileItem(Item):
           after the item's pub date.  This is so that when a user gets a list
           of items and starts downloading them, the list doesn't reorder
           itself.
+        * Child items match their parents for expiring, where in
+          getState, they always act as not expiring.
         """
 
         self.confirmDBThread()
@@ -1212,7 +1238,13 @@ class FileItem(Item):
         elif not self.getSeen():
             return 'newly-downloaded'
         else:
-            return 'saved'
+            if self.parent_id and self.getParent().getExpiring():
+                return 'expiring'
+            else:
+                return 'saved'
+
+    def getExpiring(self):
+        return False
 
     def showSaveButton(self):
         return False
