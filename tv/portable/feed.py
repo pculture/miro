@@ -331,7 +331,7 @@ class FeedImpl:
             expireTime = item.getExpirationTime()
             if (item.getState() == 'expiring' and expireTime is not None and 
                     expireTime < datetime.now()):
-                item.expire()
+                item.executeExpire()
 
     ##
     # Returns true iff feed should be visible
