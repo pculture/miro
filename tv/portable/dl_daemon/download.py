@@ -701,7 +701,7 @@ class BTDisplay:
             shortReason = _("Can't connect")
         else:
             shortReason = _("Error")
-        self.handleError(shortReason, errorMessage)
+        self.dler.handleError(shortReason, errorMessage)
             
     def display(self, statistics):
         update = False
