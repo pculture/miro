@@ -60,9 +60,19 @@ def _scrapeGoogleVideoURL(url):
         print "DTV: WARNING, unable to scrape Google Video URL: %s" % url
     return url
 
+def _scrapeLuLuVideoURL(url):
+    try:
+        components = urlparse.urlsplit(url)
+        params = cgi.parse_qs(components[3])
+        url = unquote_plus(params['file'][0])
+    except:
+        print "DTV: WARNING, unable to scrape LuLu.tv Video URL: %s" % url
+    return url
+
 # =============================================================================
 
 scraperInfoMap = [
     {'pattern': 'http://youtube.com',         'func': _scrapeYouTubeURL},
+    {'pattern': 'http://www.lulu.tv/wp-content/flash_play/flvplayer', 'func': _scrapeLuLuVideoURL},
     {'pattern': 'http://video.google.com/googleplayer.swf', 'func': _scrapeGoogleVideoURL}
 ]
