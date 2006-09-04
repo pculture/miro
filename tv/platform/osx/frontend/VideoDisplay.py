@@ -1,3 +1,4 @@
+import os
 import time
 
 from objc import YES, NO, nil
@@ -39,9 +40,33 @@ class PlaybackController (app.PlaybackControllerBase):
     def playItemExternally(self, itemID):
         item = app.PlaybackControllerBase.playItemExternally(self, itemID)
         moviePath = item.getVideoFilename()
-        ok = NSWorkspace.sharedWorkspace().openFile_withApplication_andDeactivate_(moviePath, nil, YES)
+        application = self.getExternalViewerApp(moviePath)
+        ok = NSWorkspace.sharedWorkspace().openFile_withApplication_andDeactivate_(moviePath, application, YES)
         if not ok:
             print "DTV: movie %s could not be externally opened" % moviePath
+            
+    def getExternalViewerApp(self, filepath):
+        """If the passed movie is an FLV file, we want to open it using the
+        embedded VLC application. To check for FLV files we first check the file
+        extension and then the first 3 bytes of the files (because it's
+        currently possible to get FLV files without the .flv extension).
+        """
+        isFLV = False
+        if filepath.endswith('.flv'):
+            isFLV = True
+        else:
+            try:
+                f = open(filepath)
+                header = f.read(3)
+                if header == 'FLV':
+                    isFLV = True
+            finally:
+                f.close()
+        if isFLV:
+            vlc = os.path.join(NSBundle.mainBundle().bundlePath(), 'Contents', 'vlc', 'VLC.app')
+            if os.path.exists(vlc):
+                return vlc
+        return nil
 
 ###############################################################################
 

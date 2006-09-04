@@ -152,6 +152,28 @@ for source in glob(os.path.join(localeDir, '*.mo')):
     os.makedirs(os.path.dirname(dest))
     shutil.copy2(source, dest)
 
+# As of Democracy 0.9.0, we want to be able to play FLV files so we bundle our
+# own copy of VLC (without the DVD CSS library) and use it explicitely from the 
+# frontend code.
+
+embeddedVLCPath = 'Democracy.app/Contents/'
+if os.path.exists(os.path.join(embeddedVLCPath, 'vlc')):
+    print 'Current application bundle already has an embedded VLC, skipping embedding phase.'
+else:
+    vlcArchivePath = '../../../dtv-binary-kit/vlc/mac/vlc-0.8.5.tar.gz'
+    if not os.path.exists(vlcArchivePath):
+        print "Can't find VLC in Democracy binary kit, skipping embedding phase."
+    else:
+        import tarfile
+        print "Copying VLC to application bundle."
+        tar = tarfile.open(vlcArchivePath, 'r:gz')
+        for tarInfo in tar:
+            if tarInfo.name.endswith('vlc_libdvdcss.dylib'):
+                print "Skipping DVD CSS library."
+            else:
+                print "Unpacking %s" % tarInfo.name
+                tar.extract(tarInfo, embeddedVLCPath)
+
 # And we're done...
 
 print "------------------------------------------------"
