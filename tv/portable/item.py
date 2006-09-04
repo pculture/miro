@@ -170,7 +170,7 @@ class Item(DDBObject):
             try:
                 obj = self.dd.getObjectByID(self.feed_id)
             except ObjectNotFoundError:
-                raise DatabaseConstraintError("%s not in database" % self.feed_id)
+                raise DatabaseConstraintError("my feed (%s) is not in database" % self.feed_id)
             else:
                 if not isinstance(obj, feed.Feed):
                     msg = "feed_id points to a %s instance" % obj.__class__
@@ -179,7 +179,7 @@ class Item(DDBObject):
             try:
                 obj = self.dd.getObjectByID(self.parent_id)
             except ObjectNotFoundError:
-                raise DatabaseConstraintError("%s not in database" % self.parent_id)
+                raise DatabaseConstraintError("my parent (%s) is not in database" % self.parent_id)
             else:
                 if not isinstance(obj, Item):
                     msg = "parent_id points to a %s instance" % obj.__class__
@@ -197,8 +197,8 @@ class Item(DDBObject):
     # so we have this hack to make sure that unwatched and available
     # get updated when an item changes
     def signalChange(self, needsSave=True, needsUpdateUandA=True, needsUpdateXML=True):
-        self._calcState()
         self.expiring = None
+        self._calcState()
         if hasattr(self, "_size"):
             del self._size
         DDBObject.signalChange(self, needsSave=needsSave)
@@ -492,8 +492,9 @@ folder will also be deleted.""")
                 self.expiring = False
             else:
                 ufeed = self.getFeed()
-                if ufeed.expire == 'never' or (ufeed.expire == 'system'
-                        and config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
+                if (self.keep or ufeed.expire == 'never' or 
+                        (ufeed.expire == 'system' and
+                            config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0)):
                     self.expiring = False
                 else:
                     self.expiring = True
