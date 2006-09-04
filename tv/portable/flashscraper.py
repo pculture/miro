@@ -120,7 +120,6 @@ def _scrapeDailyMotionErrback(info, callback):
     print "DTV: WARNING, network error scraping Daily Motion Video URL"
     callback(None)
 
-# http://static.vsocial.com/flash/vp.swf?v=5b80f107fce621fad9d059f93f438d85
 def _scrapeVSocialVideoURL(url, callback):
     try:
         components = urlparse.urlsplit(url)
@@ -132,7 +131,6 @@ def _scrapeVSocialVideoURL(url, callback):
         print "DTV: WARNING, unable to scrape VSocial URL: %s" % url
         callback(None)
 
-# http://www.veoh.com/multiplayer.swf?type=v&permalinkId=e106120at7fEmJG&id=244754
 def _scrapeVeohTVVideoURL(url, callback):
     try:
         components = urlparse.urlsplit(url)
