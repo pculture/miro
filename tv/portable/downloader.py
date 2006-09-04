@@ -148,7 +148,11 @@ class RemoteDownloader(DDBObject):
     ##
     # This is the actual download thread.
     def runDownloader(self):
-        url = flashscraper.tryScrapingURL(self.url)
+        flashscraper.tryScrapingURL(self.url, self._runDownloader)
+
+    def _runDownloader(self, url, contentType = None):
+        if contentType is not None:
+            self.contentType = contentType
         if url is not None:
             self.url = url
             c = command.StartNewDownloadCommand(RemoteDownloader.dldaemon,
