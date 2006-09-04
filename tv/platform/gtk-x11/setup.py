@@ -179,27 +179,33 @@ if re.search("^xulrunner-xpcom", packages, re.MULTILINE):
 elif re.search("^mozilla-xpcom", packages, re.MULTILINE):
     xpcom = 'mozilla-xpcom'
     gtkmozembed = 'mozilla-gtkmozembed'
+elif re.search("^firefox-xpcom", packages, re.MULTILINE):
+    xpcom = 'firefox-xpcom'
+    gtkmozembed = 'firefox-gtkmozembed'
 else:
-    raise RuntimeError("Can't find xulrunner-xpcom or mozilla-xpcom")
+    raise RuntimeError("Can't find xulrunner-xpcom, mozilla-xpcom or firefox-xpcom")
 mozilla_browser_options = parsePkgConfig("pkg-config" , 
         "gtk+-2.0 glib-2.0 pygtk-2.0 %s %s" % (gtkmozembed, xpcom))
 mozilla_lib_path = parsePkgConfig('pkg-config', 
         '%s' % gtkmozembed)['library_dirs']
 # Find the base mozilla directory, and add the subdirs we need.
-def allIsDir(directory, subdirs):
+def allInDir(directory, subdirs):
     for subdir in subdirs:
-        if not os.path.isdir(os.path.join(directory, subdir)):
+        if not os.path.exists(os.path.join(directory, subdir)):
             return False
     return True
 xpcom_includes = parsePkgConfig("pkg-config", xpcom)
-subdirs = ['dom', 'gfx', 'widget', 'commandhandler']
 mozIncludeBase = None
 for dir in xpcom_includes['include_dirs']:
-    if allIsDir(dir, subdirs):
+    if allInDir(dir, ['dom', 'gfx', 'widget', 'nsIDOMHTMLElement.h']):
+        # we can be pretty confident that dir is the mozilla/firefox/xulrunner
+        # base include directory
         mozIncludeBase = dir
+        break
 if mozIncludeBase is None:
     raise ValueError("Can't find mozilla include base directory")
-for subdir in ['dom', 'gfx', 'widget', 'commandhandler']:
+for subdir in ['dom', 'gfx', 'widget', 'commandhandler', 'uriloader',
+            'webbrwsr']:
     path = os.path.join(mozIncludeBase, subdir)
     mozilla_browser_options['include_dirs'].append(path)
 
