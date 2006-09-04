@@ -21,6 +21,8 @@ fi
 			date=`date +%Y-%m-%d`
 			mv Democracy-$date.dmg Democracy-$tag.dmg
 		fi 
+		echo "Press enter to upload .dmg file..."
+		read i
 		scp Democracy-$tag.dmg $1@pcf2.osuosl.org:/data/pculture/nightlies/
 	else
 	#otherwise just copy it to the desktop
