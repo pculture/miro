@@ -1,4 +1,4 @@
-# Norwegian Bokmål translation for democracy
+# Finnish translation for democracy
 # Copyright (c) (c) 2006 Canonical Ltd, and Rosetta Contributors 2006
 # This file is distributed under the same license as the democracy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2006.
@@ -9,16 +9,16 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2006-08-16 13:07-0400\n"
-"PO-Revision-Date: 2006-06-23 11:36+0000\n"
-"Last-Translator: Tore Norderud <tore.norderud@gmail.com>\n"
-"Language-Team: Norwegian Bokmål <nb@li.org>\n"
+"PO-Revision-Date: 2006-08-24 18:47+0000\n"
+"Last-Translator: SlugO <snoopgd@yahoo.com>\n"
+"Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1\n"
 
 msgid "$log"
-msgstr ""
+msgstr "$log"
 
 msgid ""
 "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
@@ -26,6 +26,10 @@ msgid ""
 "doing, paste in the log message from the box above, and answer a few "
 "questions, and we'll get right to work.</font>"
 msgstr ""
+"<font face=\"Lucida Grande\" size=\"-1\">Virheenkirjausjärjestelmämme on "
+"osoitteessa <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Kerro meille mitä "
+"olit tekemässä, liitä mukaan virheraportti yllä olevasta laatikosta ja "
+"vastaa muutamaan kysymykseen, niin alamme korjata virhettä.</font>"
 
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
@@ -33,6 +37,10 @@ msgid ""
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
+"Jos sinulla olisi muutama minuutti aikaa, niin olisitko halukas lähettämään "
+"kaatumisraportin virheenkirjausjärjestelmäämme? Tarvitsemme vain "
+"mahdollisimman tarkan kuvauksen siitä mitä olit tekemässä ja alla olevassa "
+"laatikossa sijaitsevat höpinät:"
 
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
@@ -40,287 +48,297 @@ msgid ""
 "$shortAppName. That'll teach it, and it'll also reduce your chance of losing "
 "your preferences or channel subscriptions."
 msgstr ""
+"Voi ei! $longAppName joutui jonkinlaisen sisäisen myllerryksen uhriksi "
+"$when. Olemme pahoillamme ja ehdottaisimme, että suljet ja "
+"uudelleenkännistät $shortAppName. Eiköhän se sillä parane. Lisäksi se myös "
+"vähentää todennäköisyyttä, että menettäisit asetuksesi tai kanavatilauksesi."
 
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 msgid "The fall of $shortAppName??"
-msgstr ""
+msgstr "$shortAppName tuho??"
 
 msgid "About Democracy"
-msgstr ""
+msgstr "Tietoja Democracystä"
 
 msgid "Add a Channel..."
-msgstr ""
+msgstr "Lisää kanava..."
 
 msgid "Add a Guide..."
-msgstr ""
+msgstr "Lisää ohjelmasivu..."
 
 msgid "Bring All to Front"
-msgstr ""
+msgstr "Tuo kaikki etualalle"
 
 msgid "Channel"
-msgstr ""
+msgstr "Kanava"
 
 msgid "Check for Update"
-msgstr ""
+msgstr "Tarkista päivitykset"
 
 msgid "Clear Menu"
-msgstr ""
+msgstr "Tyhjennä valikko"
 
 msgid "Copy"
-msgstr ""
+msgstr "Kopioi"
 
 msgid "Copy Channel Link"
-msgstr ""
+msgstr "Kopioi kanavan osoite"
 
 msgid "Copy Video Link"
-msgstr ""
+msgstr "Kopioi videon osoite"
 
 msgid "Cut"
-msgstr ""
+msgstr "Leikkaa"
 
 msgid "Delete"
-msgstr ""
+msgstr "Poista"
 
 msgid "Democracy"
-msgstr ""
+msgstr "Democracy"
 
 msgid "Democracy Help"
-msgstr ""
+msgstr "Democracyn ohje"
 
 msgid "Donate to Democracy"
-msgstr ""
+msgstr "Lahjoita Democracy-projektille"
 
 msgid "Edit"
-msgstr ""
+msgstr "Muokkaa"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7
 msgid "File"
-msgstr ""
+msgstr "Tiedosto"
 
 msgid "Full Screen"
-msgstr ""
+msgstr "Kokoruutu"
 
 msgid "Half Screen"
-msgstr ""
+msgstr "Puoliruutu"
 
 msgid "Help"
-msgstr ""
+msgstr "Ohje"
 
 msgid "Hide Democracy"
-msgstr ""
+msgstr "Piilota Democracy"
 
 msgid "Hide Others"
-msgstr ""
+msgstr "Piilota muut"
 
 msgid "MainMenu"
-msgstr ""
+msgstr "Päävalikko"
 
 msgid "Minimize"
-msgstr ""
+msgstr "Pienennä"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11
 msgid "New Channel Folder..."
-msgstr ""
+msgstr "Uusi kanavakansio..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10
 msgid "New Playlist Folder..."
-msgstr ""
+msgstr "Uusi soittolistakansio..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:9
 msgid "New Playlist..."
-msgstr ""
+msgstr "Uusi soittolista..."
 
 msgid "Open Recent"
-msgstr ""
+msgstr "Avaa viimeisin"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:8
 msgid "Open..."
-msgstr ""
+msgstr "Avaa..."
 
 msgid "Paste"
-msgstr ""
+msgstr "Liitä"
 
 msgid "Play Video"
-msgstr ""
+msgstr "Toista video"
 
 msgid "Preferencesâ¦"
-msgstr ""
+msgstr "Asetukset"
 
 msgid "Quit Democracy"
-msgstr ""
+msgstr "Lopeta Democracy"
 
 msgid "Remove Channel..."
-msgstr ""
+msgstr "Poista kanava..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:12
 msgid "Rename..."
-msgstr ""
+msgstr "Nimeä uudelleen..."
 
 msgid "Save Video..."
-msgstr ""
+msgstr "Tallenna video..."
 
 msgid "Select All"
-msgstr ""
+msgstr "Valitse kaikki"
 
 msgid "Services"
-msgstr ""
+msgstr "Palvelut"
 
 msgid "Show All"
-msgstr ""
+msgstr "Näytä kaikki"
 
 msgid "Stop Video"
-msgstr ""
+msgstr "Pysäytä video"
 
 msgid "Tell a Friend"
-msgstr ""
+msgstr "Kerro kaverille"
 
 msgid "Update All Channels"
-msgstr ""
+msgstr "Päivitä kaikki kanavat"
 
 msgid "Update Channel"
-msgstr ""
+msgstr "Päivitä kanava"
 
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 msgid "Window"
-msgstr ""
+msgstr "Ikkuna"
 
 msgid "Zoom"
-msgstr ""
+msgstr "Lähennä"
 
 msgid "%channel feed%"
-msgstr ""
+msgstr "%channel feed%"
 
 msgid "%channel title%"
-msgstr ""
+msgstr "%channel title%"
 
 msgid "%donation label%"
-msgstr ""
+msgstr "%donation label%"
 
 msgid "00:00:00"
-msgstr ""
+msgstr "00:00:00"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:11
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:4
 msgid "Add Channel"
-msgstr "Legg til kanal"
+msgstr "Lisää kanava"
 
 msgid "Box"
-msgstr ""
+msgstr "Laatikko"
 
 msgid "FullScreen Controls"
-msgstr ""
+msgstr "Kokoruudun säätimet"
 
 msgid "VideoWindow"
-msgstr ""
+msgstr "Videoikkuna"
 
 #: ../../portable/dialogs.py:60
 msgid "Cancel"
-msgstr "Avbryt"
+msgstr "Peruuta"
 
 msgid ""
 "Location http://foo.bar.com/baz requires a username and password for \"text "
 "supplied by server\". (Do not localize -- test data)\n"
 msgstr ""
+"Location http://foo.bar.com/baz requires a username and password for \"text "
+"supplied by server\". (Do not localize -- test data)↵\n"
 
 msgid "Password:\n"
-msgstr ""
+msgstr "Salasana:\n"
 
 msgid "Username and password required"
-msgstr ""
+msgstr "Käyttäjätunnus ja salasana tarvitaan"
 
 msgid ""
 "Username:\n"
 "\n"
 msgstr ""
+"Käyttäjänimi:\n"
+"\n"
 
 msgid " limit upstream to"
-msgstr ""
+msgstr " rajoita lähetysnopeus"
 
 msgid "(You must restart Democracy for this change to take effect)\n"
 msgstr ""
+"(Democracy täytyy käynnistää uudestaan, jotta muutokset toteutetaan)\n"
 
 msgid "(movies directory path goes here)"
-msgstr ""
+msgstr "(videoiden kohdekansio tulee tähän)"
 
 msgid "1 day"
-msgstr ""
+msgstr "1 päivä"
 
 msgid "1 month"
-msgstr ""
+msgstr "1 kuukausi"
 
 msgid "10 days"
-msgstr ""
+msgstr "10 päivää"
 
 msgid "3 days"
-msgstr ""
+msgstr "3 päivää"
 
 msgid "3 hours"
-msgstr ""
+msgstr "3 tuntia"
 
 msgid "4"
-msgstr ""
+msgstr "4"
 
 msgid "5"
-msgstr ""
+msgstr "5"
 
 msgid "6 days"
-msgstr ""
+msgstr "6 päivää"
 
 msgid "By default, videos expire after:"
-msgstr ""
+msgstr "Oletuksena videoiden vanhenemisaika on:"
 
 msgid "Change"
-msgstr ""
+msgstr "Muuta"
 
 msgid "Check channels for new content:"
-msgstr ""
+msgstr "Tarkista kanavat uuden sisällön varalta:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:16
 msgid "Don't start a download if it leaves less than"
-msgstr "Ikke begynn nedlasting hvis det gir mindre enn"
+msgstr ""
+"Älä aloita latausta, jos sen jälkeen jää vähemmän vapaata tilaa, kuin:"
 
 msgid "GB free."
-msgstr ""
+msgstr "Gt."
 
 msgid "KB/s when my computer is active."
-msgstr ""
+msgstr "Kt/s kun tietokoneeni on käytössä."
 
 msgid "Never"
-msgstr ""
+msgstr "Ei koskaan"
 
 msgid "OtherViews"
-msgstr ""
+msgstr "MuutNäkymät"
 
 msgid "Run Democracy at startup"
-msgstr ""
+msgstr "Suorita Democracy käynnistyksen yhteydessä"
 
 msgid "Store downloaded movies in:"
-msgstr ""
+msgstr "Tallenna ladatut videot kansioon:"
 
 msgid "To avoid internet slowdowns,"
-msgstr ""
+msgstr "Välttääksesi yhteyden ruuhkautumista,"
 
 msgid "every 30 minutes"
-msgstr ""
+msgstr "joka 30. minuutti"
 
 msgid "every hour"
-msgstr ""
+msgstr "joka tunti"
 
 msgid "manually"
-msgstr ""
+msgstr "käsin"
 
 msgid "(parsed %d files - found %d videos)"
-msgstr ""
+msgstr "(jäsennetty %d tiedostoa - löydetty %d videota)"
 
 msgid "Back"
-msgstr ""
+msgstr "Edellinen"
 
 msgid "Browse"
-msgstr ""
+msgstr "Selaa"
 
 msgid ""
 "Democracy Player can find all the videos on your computer to help you "
@@ -329,30 +347,37 @@ msgid ""
 "\n"
 "Would you like Democracy Player to look for video files on your computer?"
 msgstr ""
+"Democracy Player voi etsiä kaikki videot tietokoneeltasi niiden "
+"hallinnoimisen helpottamiseksi.\n"
+"\n"
+"\n"
+"Haluatko Democracy Playerin etsivän videotiedostot tietokoneeltasi?"
 
 msgid "Next"
-msgstr ""
+msgstr "Seuraava"
 
 #: ../../portable/dialogs.py:62
 msgid "No"
-msgstr "Nei"
+msgstr "Ei"
 
 msgid "Restrict to my 'Movies' folder"
-msgstr ""
+msgstr "Rajoita etsintä Movies-kansioon"
 
 msgid "Restrict to my full home folder"
-msgstr ""
+msgstr "Rajoita etsintä kotihakemistooni"
 
 msgid "Search custom location:"
-msgstr ""
+msgstr "Etsi muita sijainteja:"
 
 msgid "Searching for Videos"
-msgstr ""
+msgstr "Etsitään videoita"
 
 msgid ""
 "The next few screens will help you set up Democracy Player so that it works "
 "best for you. Here's the first question."
 msgstr ""
+"Seuraavat sivut auttavat sinua ottamaan Democracy Playerin käyttöön. "
+"Seuraavaksi vuorossa ensimmäinen kysymys."
 
 msgid ""
 "We recommend that you allow Democracy Player to launch when your computer "
@@ -362,9 +387,15 @@ msgid ""
 "\n"
 "Would you like to run Democracy when your computer starts up?"
 msgstr ""
+"Suosittelemme, että annat Democracy Playerin käynnistyä järjestelmän "
+"käynnistyessä, jotta kesken jääneet videot ladataan loppuun ja uudet kanavat "
+"ovat ladattuna kun haluat katsoa niitä.\n"
+"\n"
+"\n"
+"Haluatko Democracyn käynnistyvän kun järjestelmä käynnistyy?"
 
 msgid "Welcome to Internet TV!"
-msgstr ""
+msgstr "Tervetuloa Internet-TV:n pariin!"
 
 msgid ""
 "Welcome to Internet TV. There's a lot you can do with Democracy Player: "
@@ -373,10 +404,15 @@ msgid ""
 "lots more.\n"
 "\n"
 msgstr ""
+"Tervetuloa Internet-TV:n pariin. Democracy Playerillä monet asiat sujuvat "
+"helposti: videot suosikkikanaviltasi latautuvat automaattisesti, torrent-"
+"tiedostot siirtyvät taustalla, voit katsoa uusimmat videot samalla kertaa, "
+"suositella videoita kavereillesi ja niin edelleen.\n"
+"\n"
 
 #: ../../portable/dialogs.py:61
 msgid "Yes"
-msgstr "Ja"
+msgstr "Kyllä"
 
 msgid ""
 "You're done!\n"
@@ -401,62 +437,86 @@ msgid ""
 "Find Videos: The Democracy Channel Guide has hundreds of internet TV "
 "channels, all of them are free. Just click 'ADD' to watch a channel.\n"
 msgstr ""
+"Ja sillä selvä!\n"
+"\n"
+"Asennus on valmis. Voit nyt ruveta etsimään kanavia ja katsomaan ohjelmia.\n"
+"\n"
+"Älä odota turhaan: Democracyn videot eivät ole samoja kuin WWW-sivuilla. "
+"Democracy sallii videoiden tekijöiden julkaista isoja, hyvälaatuisia "
+"videoita, joiden latautumisen ajaksi ei kuitenkaan täydy lopettaa muita "
+"tekemisiä. Katso videot yksinkertaisesti myöhemmin kun ne ovat latautuneet.\n"
+"\n"
+"Jätä soitin päälle: Democracy Player tarkistaa videokanavat aika ajoin "
+"uusien videoiden varalta ja lataa uudet videot automaattisesti. Jätä soitin "
+"päälle ja videot odottavat valmiina ladattuina sopivaa katseluhetkeä.\n"
+"\n"
+"Älä huolehdi levytilasta: Democracy Playerissä on \"vanhentumistoiminto,\" "
+"joka poistaa vanhat videot uusien tieltä. Voit tietysti halutessasi "
+"säilyttää videon napsauttamalla tallenna-painiketta tai asettaa kaikki "
+"kanavan videot automaattisesti säilytettäviksi.\n"
+"\n"
+"Älä ole vaatimaton: Toistonäppäimen oikealla puolella oleva painike sovittaa "
+"videon kokoruutuun.\n"
+"\n"
+"Etsi videoita: Democracyn kanavaoppaassa on satoja internet TV-kanavia, "
+"jotka eivät maksa mitään katsoa. Napsauta vain ADD, katsellaksesi kanavan "
+"tarjontaa.\n"
 
 msgid ""
 "%message%\n"
 "%message%"
-msgstr ""
+msgstr "%message%↵"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:139
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6
 msgid "Username:"
-msgstr "Brukernavn:"
+msgstr "Käyttäjätunnus:"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:150
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:7
 msgid "Password:"
-msgstr "Passord:"
+msgstr "Salasana:"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:257
 msgid "Unknown Runtime Error"
-msgstr "Ukjent kjøretidsfeil."
+msgstr "Tuntematon ajonaikainen virhe"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:258
 #, python-format
 msgid "An unknown error has occurred %s."
-msgstr "En ukjent feil har oppstått %s."
+msgstr "Tuntematon virhe tapahtui %s."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:92
 msgid "_Save Video..."
-msgstr "_Lagre video..."
+msgstr "_Tallenna video..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:92
 msgid "Save this video"
-msgstr "Lagre denne videoen"
+msgstr "Tallenna tämä video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:93
 msgid "_Play / Pause"
-msgstr "S_pill / pause"
+msgstr "_Toista / Tauko"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:94
 msgid "_Fullscreen"
-msgstr "_Fullskjerm"
+msgstr "_Kokoruutu"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:97
 msgid "_Remove Channel"
-msgstr "_Fjern kanal"
+msgstr "_Poista kanava"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:98
 msgid "_Update Channel"
-msgstr "_Oppdater kanal"
+msgstr "P_äivitä kanava"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:99
 msgid "Copy Channel _Link"
-msgstr "Kopier kanal_link"
+msgstr "Kopioi kanavan _osoite"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:102
 msgid "_Remove Channel Guide"
-msgstr ""
+msgstr "Poi_sta kanavaopas"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:105
 msgid "_Video"
@@ -464,75 +524,75 @@ msgstr "_Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:106
 msgid "_Open..."
-msgstr "_Åpne..."
+msgstr "_Avaa..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:106
 msgid "Open various files"
-msgstr "Åpne flere filer"
+msgstr "Avaa useita tiedostoja"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:107
 msgid "_New Playlist..."
-msgstr ""
+msgstr "_Uusi soittolista..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:107
 msgid "Create new playlist"
-msgstr ""
+msgstr "Luo uusi soittolista"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:108
 msgid "_New Playlist Folder..."
-msgstr ""
+msgstr "Uusi soittolista_kansio..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:108
 msgid "Create new playlist folder"
-msgstr ""
+msgstr "_Luo uusi soittolistakansio"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:109
 msgid "_New Channel Folder..."
-msgstr ""
+msgstr "Uusi k_anavakansio..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:109
 msgid "Create new channel folder"
-msgstr ""
+msgstr "Lu_o uusi kanavakansio"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:110
 msgid "_Rename..."
-msgstr ""
+msgstr "Ni_meä uudelleen..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:110
 msgid "Rename selected item "
-msgstr ""
+msgstr "Nimeä valittu kohde uudelleen "
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:111
 msgid "P_references"
-msgstr "Innstillinge_r"
+msgstr "_Asetukset"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:112
 msgid "_Quit"
-msgstr "_Avslutt"
+msgstr "_Lopeta"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:112
 msgid "Quit the Program"
-msgstr "Avslutt programmet"
+msgstr "Lopeta ohjelma"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:113
 msgid "_Channel"
-msgstr "_Kanal"
+msgstr "_Kanava"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:114
 msgid "_Add Channel..."
-msgstr "_Legg til kanal..."
+msgstr "_Lisää kanava..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:115
 msgid "_Add Channel Guide..."
-msgstr ""
+msgstr "L_isää kanavasivu..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
 msgid "U_pdate All Channels"
-msgstr "O_ppdater alle kanaler"
+msgstr "Päi_vitä kaikki kanavat"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:117
 msgid "_Help"
-msgstr "_Hjelp"
+msgstr "_Ohje"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:28
 #, python-format
@@ -540,74 +600,78 @@ msgid ""
 "Error importing democracy modules:\n"
 "%s"
 msgstr ""
+"Virhe tuodessa Democracy-moduuleja:\n"
+"%s"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:32
 msgid "Starting up"
-msgstr ""
+msgstr "Käynnistyy"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:126
 msgid "Loading window"
-msgstr ""
+msgstr "Ladataan ikkunaa"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:127
 msgid "onStartup called twice"
-msgstr ""
+msgstr "onStartup kutsuttu kahdesti."
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:77
 msgid "Error Bombing Item"
-msgstr ""
+msgstr "Virhe suositeltaessa kohdetta Bomb-palveluun"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:79
 msgid "Error Recommending Item"
-msgstr ""
+msgstr "Virhe suositeltaessa kohdetta"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:81
 msgid "Error Opening Website"
-msgstr ""
+msgstr "Virhe avattaessa sivustoa"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:85
 #, python-format
 msgid "There was an error opening %s.  Please try again in a few seconds"
 msgstr ""
+"Tapahtui virhe avattaessa kohdetta %s. Yritä uudelleen muutaman sekunnin "
+"kuluttua."
 
 #: ../../portable/compiled_templates/new.py:113 ../../portable/tabs.py:26
 msgid "New Videos"
-msgstr "Nye videoer"
+msgstr "Uudet videot"
 
 #: ../../portable/compiled_templates/new.py:123
 #: ../../portable/compiled_templates/channel.py:327
 #: ../../portable/compiled_templates/channel_content.py:210
 #: ../../portable/compiled_templates/channelfolder.py:287
 msgid "Unwatched"
-msgstr "Ikke sett"
+msgstr "Ei tarkkailtu"
 
 #: ../../portable/compiled_templates/new.py:135
 msgid "Expiring"
-msgstr "Utløper"
+msgstr "Vanhenee"
 
 #: ../../portable/compiled_templates/first_time_intro.py:36
 msgid "Democracy Internet TV: How to Get Started"
-msgstr "Democracy Internet TV: Hvordan komme igang"
+msgstr "Democracy Internet-TV: Aloitusohje"
 
 #: ../../portable/compiled_templates/first_time_intro.py:40
 msgid "GO BIG:"
-msgstr "Fullskjerm:"
+msgstr "Vaadi isompaa:"
 
 #: ../../portable/compiled_templates/first_time_intro.py:42
 msgid "This is your fullscreen button. Click it and lean back."
-msgstr "Dette er din fullskjermsknapp. Klikk den og len deg tilbake."
+msgstr "Tämä on kokoruutupainike. Napsauta sitä ja ota mukava asento."
 
 #: ../../portable/compiled_templates/first_time_intro.py:46
 msgid "NEW STUFF:"
-msgstr "NYTT INNEHOLD:"
+msgstr "Uusia juttuja:"
 
 #: ../../portable/compiled_templates/first_time_intro.py:48
 msgid ""
 "Blue circles mean the channel has new videos available, green circles mean "
 "you have downloaded videos ready to watch."
 msgstr ""
-"Blå sirkler betyr at kanalen har nye videoer tilgjengelig, grønne sirkler "
-"betyr at du har nedlastede videoer klare til avspilling."
+"Siniset ympyrät tarkoittavat, että kanavalla on uusia videoita. Vihreät "
+"ympyrät tarkoittavat, että videoita on valmiina katseltavaksi."
 
 #: ../../portable/compiled_templates/first_time_intro.py:50
 msgid ""
@@ -615,9 +679,9 @@ msgid ""
 "onclick=\"eventURL('action:doneWithIntro');\">Go to Channel Guide "
 ">></a></strong>"
 msgstr ""
-"<strong i18n:translate=\"\">AVBRYT INTRO: <a style=\"color: #090;\" "
-"href=\"#\" onclick=\"eventURL('action:doneWithIntro');\"Gå til "
-"kanaloversikten >></a></strong>"
+"<strong i18n:translate=\"\">OHITA INTRO: <a style=\"color: #090;\" "
+"href=\"#\" onclick=\"eventURL('action:doneWithIntro');\">Siirry "
+"kanavaoppaaseen >></a></strong>"
 
 #: ../../portable/compiled_templates/first_time_intro.py:52
 msgid ""
@@ -625,9 +689,9 @@ msgid ""
 "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
 "channels in the guide are free.</strong>"
 msgstr ""
-"<strong>Legg til kanaler:</strong> Kanaloversikten er din base for TV-"
-"kanaler på Internett. Klikk 'LEGG TIL' for å abonnere på en kanal-- "
-"<strong>kanalene i denne oversikten er gratis.</strong>"
+"<strong>Lisää kanavia:</strong> Kanavaopas on kotikansiosi internetin TV-"
+"kanaville. Paina Lisää-nappia tilataksesi kanava-- <strong>oppaassa olevat "
+"kanavat ovat ilmaisia.</strong>"
 
 #: ../../portable/compiled_templates/first_time_intro.py:54
 msgid ""
@@ -635,9 +699,10 @@ msgid ""
 "videos-- publishers can offer big, high quality videos. So don't sit around "
 "waiting for videos: start some downloads and check back later."
 msgstr ""
-"<strong>Ikke vent:</strong> Democracy er annerledes enn å se videoer på "
-"nettsteder-- utgiverne kan tilby store, høykvalitetsvideoer. Så ikke sitt å "
-"vent på videoer: Start noen nedlastinger og kom tilbake senere."
+"<strong>Älä odottele:</strong> Democracy on erilainen kuin nettisivuilla "
+"katseltavat videot-- julkaisijat voivat tarjota isoja, korkealaatuisia "
+"videoita. Älä siis turhaan odottele videoita: käynnistä muutama lataus ja "
+"katsele ne myöhemmin."
 
 #: ../../portable/compiled_templates/first_time_intro.py:56
 msgid ""
@@ -645,9 +710,9 @@ msgid ""
 "new videos and downloads in the background. Leaving it running means you'll "
 "have new videos when you're ready to watch."
 msgstr ""
-"<strong>La programmet kjøre:</strong> Democracy Player sjekker kanalene "
-"løpende for nye videoer og begynner å hente dem i bakgrunnen. Ved å la "
-"programmet kjøre vil du ha nye videoer klare når du vil se noe."
+"<strong>Jätä päälle:</strong> Democracy Player tarkistaa kanavat "
+"säännöllisin väliajoin uusien videoiden varalta ja lataa ne taustalla. "
+"Jättämällä ohjelman päälle saat uudet videot silloin kun haluat."
 
 #: ../../portable/compiled_templates/first_time_intro.py:58
 msgid ""
@@ -656,33 +721,33 @@ msgid ""
 "room for new videos. You can always keep a video permanently by clicking "
 "'save' and you can set a channel's settings to save videos automatically."
 msgstr ""
-"<strong>Ikke tenk på lagringsplass:</strong> Democracy Player har et "
-"avansert 'utløps'-system som hjelper med å slette gamle videoer så det er "
-"plass til nye. Du kan velge å beholde videoer ved å klikke på 'Lagre' og du "
-"kan sette innstillinger for en kanal slik at videoer lagres automatisk."
+"<strong>Älä huolehdi levytilasta:</strong> Democracy Playerissä on "
+"\"vanhenemis\"-järjestelmä, joka auttaa poistamaan vanhat videot tehdäkseen "
+"tilaa uusille. Voit myös valita videon säilytettäväksi valitsemalla Tallenna "
+"tai muuttaa kanavan asetuksia siten, että videot säilytetään automaattisesti."
 
 #: ../../portable/compiled_templates/external_playback.py:47
 #: ../../portable/compiled_templates/external_playback_continue.py:46
 msgid "Democracy - External Playback Template"
-msgstr "Democracy - Ekstern avspillingsmal"
+msgstr "Democracy - Ulkoinen toistomalli"
 
 #: ../../portable/compiled_templates/external_playback.py:64
 msgid ""
 "This file type (${format}) can't be played in the main Democracy window."
 msgstr ""
-"Denne filtypen (${format}) kan ikke avspilles i hovedvinduet til Democracy."
+"Tätä tiedostotyyppiä (${format}) ei voi toistaa Democracyn pääikkunassa."
 
 #: ../../portable/compiled_templates/external_playback.py:68
 msgid "Play Externally"
-msgstr "Avspill eksternt"
+msgstr "Toista ulkoisessa soittimessa"
 
 #: ../../portable/compiled_templates/external_playback.py:77
 msgid "Skip Video ${countdown}"
-msgstr "Hopp over video ${countdown}"
+msgstr "Ohita video ${countdown}"
 
 #: ../../portable/compiled_templates/download.py:105 ../../portable/tabs.py:28
 msgid "Active Downloads"
-msgstr "Aktive nedlastinger"
+msgstr "Keskeneräistä latausta"
 
 #: ../../portable/compiled_templates/download.py:119
 msgid ""
@@ -691,247 +756,256 @@ msgid ""
 "eventURL('action:clearTorrents');\" i18n:translate=\"\" title=\"Clear "
 "Torrents\">Clear Torrents</a>"
 msgstr ""
+"Ulkoiset torrentit <a style=\"text-decoration: underline; margin-left: 15px; "
+"font-weight: normal;\" href=\"#\" onclick=\"return "
+"eventURL('action:clearTorrents');\" i18n:translate=\"\" title=\"Clear "
+"Torrents\">Tyhjennä torrentit</a>"
 
 #: ../../portable/compiled_templates/feed_settings.py:50
 #: ../../portable/compiled_templates/channel.py:85
 msgid "Auto Download"
-msgstr "Automatisk nedlasting"
+msgstr "Lataa automaattisesti"
 
 #: ../../portable/compiled_templates/feed_settings.py:58
 #: ../../portable/compiled_templates/channel.py:262
 msgid "Recommend"
-msgstr "Anbefale"
+msgstr "Suosittele"
 
 #: ../../portable/compiled_templates/feed_settings.py:66
 msgid "Back to Channel"
-msgstr "Tilbake til kanal"
+msgstr "Palaa kanavalle"
 
 #: ../../portable/compiled_templates/feed_settings.py:68
 msgid "Channel Settings"
-msgstr "Kanalinnstillinger"
+msgstr "Kanavan asetukset"
 
 #: ../../portable/compiled_templates/feed_settings.py:70
 msgid "Videos expire after:"
-msgstr "Videoer utløper etter:"
+msgstr "Videoiden vanhentumisaika:"
 
 #: ../../portable/compiled_templates/feed_settings.py:74
 #: ../../portable/compiled_templates/feed_settings.py:81
 msgid "Default"
-msgstr "Standard"
+msgstr "Oletus"
 
 #: ../../portable/compiled_templates/feed_settings.py:128
 msgid "Auto download should:"
-msgstr "Automatisk netlastning skal:"
+msgstr "Automaattilatausten pitäisi:"
 
 #: ../../portable/compiled_templates/feed_settings.py:161
 msgid ""
 "If I have ${maxnew} ${maxnew2} videos waiting, don't auto download more."
 msgstr ""
-"Hvis jeg har ${maxnew} ${maxnew2} videoer som venter, så stopp den "
-"automatiske netlastningen av videoer."
+"Jos jonossa on enemmän kuin ${maxnew} ${maxnew2} videota, niin älä lataa "
+"automaattisesti enempää."
 
 #: ../../portable/compiled_templates/feed_settings.py:163
 msgid "(Keeps channel from hogging disk space)"
-msgstr "(Hindrer kanaler fra å bruke lagringsplass)"
+msgstr "(Estää kanavia rohmuamasta levytilaa)"
 
 #: ../../portable/compiled_templates/feed_settings.py:165
 msgid "Channel URL"
-msgstr "Kanal-URL"
+msgstr "Kanavan osoite"
 
 #: ../../portable/compiled_templates/channel.py:171
 #: ../../portable/compiled_templates/channel_content.py:97
 #: ../../portable/compiled_templates/channelfolder.py:165
 msgid "${count} Downloads in Progress"
-msgstr ""
+msgstr "${count} tiedostoa latautumassa"
 
 #: ../../portable/compiled_templates/channel.py:176
 #: ../../portable/compiled_templates/channel_content.py:102
 #: ../../portable/compiled_templates/channelfolder.py:170
 msgid "1 Download in Progress"
-msgstr ""
+msgstr "1 tiedosto latautumassa"
 
 #: ../../portable/compiled_templates/channel.py:196
 #: ../../portable/compiled_templates/channel_content.py:122
 #: ../../portable/compiled_templates/channelfolder.py:190
 msgid "${len} Videos On This Channel"
-msgstr ""
+msgstr "${len} videota tällä kanavalla"
 
 #: ../../portable/compiled_templates/channel.py:210
 #: ../../portable/compiled_templates/channel_content.py:136
 #: ../../portable/compiled_templates/channelfolder.py:204
 msgid "All ${len} Videos Match This Search"
-msgstr ""
+msgstr "Kaikki ${len} videota ovat haun mukaisia"
 
 #: ../../portable/compiled_templates/channel.py:222
 #: ../../portable/compiled_templates/channel_content.py:148
 #: ../../portable/compiled_templates/channelfolder.py:216
 msgid "${len} Videos Match This Search"
-msgstr ""
+msgstr "${len} videota on haun mukaisia"
 
 #: ../../portable/compiled_templates/channel.py:254
 msgid "Settings"
-msgstr "Innstillinger"
+msgstr "Asetukset"
 
 #: ../../portable/compiled_templates/channel.py:280
 msgid "Looking for videos at this URL"
-msgstr ""
+msgstr "Etsitään videoita tästä osoitteesta"
 
 #: ../../portable/compiled_templates/channel.py:314
 #: ../../portable/compiled_templates/channel_content.py:197
 #: ../../portable/compiled_templates/channelfolder.py:274
 msgid "${count} Videos on this Channel"
-msgstr ""
+msgstr "${count} videota tällä kanavalla"
 
 #: ../../portable/compiled_templates/channel.py:338
 #: ../../portable/compiled_templates/channel_content.py:221
 #: ../../portable/compiled_templates/channelfolder.py:298
 msgid "Watched"
-msgstr "Sett"
+msgstr "Seurattu"
 
 #: ../../portable/compiled_templates/channel.py:349
 #: ../../portable/compiled_templates/channel_content.py:232
 #: ../../portable/compiled_templates/channelfolder.py:309
 msgid "Saved"
-msgstr "Lagret"
+msgstr "Tallennettu"
 
 #: ../../portable/compiled_templates/multi_playlist.py:48
 msgid "${count} Playlists selected"
-msgstr ""
+msgstr "${count} soittolistaa valittu"
 
 #: ../../portable/compiled_templates/multi_playlist.py:50
 msgid "Delete selected playlists"
-msgstr ""
+msgstr "Poista valitut soittolistat"
 
 #: ../../portable/compiled_templates/library.py:76 ../../portable/tabs.py:25
 msgid "My Collection"
-msgstr "Min samling"
+msgstr "Kokoelmani"
 
 #: ../../portable/compiled_templates/download_item.py:105
 msgid "SAVE"
-msgstr ""
+msgstr "TALLENNA"
 
 #: ../../portable/compiled_templates/download_item.py:135
 msgid "REVEAL"
-msgstr ""
+msgstr "PALJASTA"
 
 #: ../../portable/compiled_templates/multi_channel.py:48
 msgid "${count} Channels selected"
-msgstr ""
+msgstr "${count} kanavaa valittu"
 
 #: ../../portable/compiled_templates/multi_channel.py:50
 msgid "Delete selected channels"
-msgstr ""
+msgstr "Poista valitut kanavat"
 
 #: ../../portable/compiled_templates/search.py:47
 msgid "Nothing to display.<br></br> Enter a query in the search field above."
-msgstr "Ingenting å vise.<br></br> Tast inn et søkeord i feltet over."
+msgstr ""
+"Ei mitään näytettävää.<br></br> Kirjoita hakutermit yllä olevaan hakukentään."
 
 #: ../../portable/compiled_templates/search.py:52
 msgid "Searching..."
-msgstr "Søker..."
+msgstr "Etsitään..."
 
 #: ../../portable/compiled_templates/search.py:75
 msgid "Video Search"
-msgstr "Videosøk"
+msgstr "Videohaku"
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:43
 msgid "Simple translation"
-msgstr "Enkel oversettelse"
+msgstr "Yksinkertainen käännös"
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:57
 msgid "truck stop in a ${can}"
-msgstr "truck stop in a ${can}"
+msgstr "huoltoasema ${can}:ssa"
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:61
 msgid ""
 "This is a ${car} and this is a ${truck} <span>This text is <b "
 "style=\"color:red\">raw</b> text</span>"
 msgstr ""
-"This is a ${car} and this is a ${truck} <span>This text is <b "
-"style=\"color:red\">raw</b> text</span>"
+"Tämä on ${car} ja tämä on ${truck} <span>Tämä teksti on <b "
+"style=\"color:red\">raakaa</b> tekstiä</span>"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:56
 msgid "Continue To Next Video"
-msgstr "Fortsett til neste video"
+msgstr "Jatka seuraavaan videoon"
 
 #: ../../portable/item.py:342 ../../portable/item.py:1178
 #, python-format
 msgid "Removing %s"
-msgstr ""
+msgstr "Poistetaan %s"
 
 #: ../../portable/item.py:343
 msgid "Deleting this entry will delete all its videos."
-msgstr ""
+msgstr "Tämän kohteen poistaminen poistaa myös sen kaikki videot."
 
 #: ../../portable/item.py:363
 #, python-format
 msgid "%d days"
-msgstr ""
+msgstr "%d päivässä"
 
 #: ../../portable/item.py:365
 #, python-format
 msgid "%d hrs"
-msgstr ""
+msgstr "%d tunnissa"
 
 #: ../../portable/item.py:367
 #, python-format
 msgid "%d min"
-msgstr ""
+msgstr "%d min"
 
 #: ../../portable/item.py:368
 #, python-format
 msgid "Expires: %s"
-msgstr ""
+msgstr "Vanhenee: %s"
 
 #: ../../portable/item.py:376
 msgid "Pending Auto Download"
-msgstr "Ventende automatiske nedlastinger"
+msgstr "Automaattilataus jonossa"
 
 #: ../../portable/item.py:381
 msgid "UNWATCHED"
-msgstr ""
+msgstr "EI TARKKAILTU"
 
 #: ../../portable/item.py:387
 msgid "NEW"
-msgstr ""
+msgstr "UUSI"
 
 #: ../../portable/item.py:1180
 msgid ""
 "Would you like to delete this directory and all of its videos or just remove "
 "its entry from My Collection?"
 msgstr ""
+"Tuhotaanko kansio ja kaikki sen videot vai poistetaanko kansio pelkästään "
+"kokoelmasta?"
 
 #: ../../portable/item.py:1184
 msgid ""
 "Would you like to delete this file or just remove its entry from My "
 "Collection?"
-msgstr ""
+msgstr "Tuhotaanko tiedosto vai poistetaanko se vain kokoelmasta?"
 
 #: ../../portable/httpclient.py:65
 #, python-format
 msgid "%s closed connection"
-msgstr ""
+msgstr "%s sulki yhteyden"
 
 #: ../../portable/httpclient.py:70
 #, python-format
 msgid "%s timed out"
-msgstr ""
+msgstr "%s aikakatkaistiin"
 
 #: ../../portable/storedatabase.py:691
 #, python-format
 msgid "%s database save succeeded"
-msgstr ""
+msgstr "%s tietokannan tallennus onnistui"
 
 #: ../../portable/storedatabase.py:692
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
+"Tietokanta on tallennettu onnistuneesti. Ohjelman voi nyt sammuttaa "
+"turvallisesti."
 
 #: ../../portable/storedatabase.py:699
 #, python-format
 msgid "%s database save failed"
-msgstr "%s lagring av databasen feilet"
+msgstr "%s tietokannan tallennus epäonnistui"
 
 #: ../../portable/storedatabase.py:700
 #, python-format
@@ -941,95 +1015,99 @@ msgid ""
 "from your collection.\n"
 "Recent changes may be lost."
 msgstr ""
+"%s ei onnistunut tallentamaan tietokantaansa: Levy täynnä.↵\n"
+"Suosittelemme joko poistamaan tietostoja täydeltä levyltä tai elokuvia "
+"kokoelmastasi.↵\n"
+"Viimeaikaiset muutokset on saatettu menettää."
 
 #: ../../portable/dialogs.py:59
 msgid "Ok"
-msgstr "Ok"
+msgstr "OK"
 
 #: ../../portable/dialogs.py:63
 msgid "Quit"
-msgstr "Avslutt"
+msgstr "Lopeta"
 
 #: ../../portable/dialogs.py:64
 #: ../../platform/gtk-x11/glade/democracy.glade.h:22
 msgid "Migrate"
-msgstr "Migrer"
+msgstr "Siirrä tiedot"
 
 #: ../../portable/dialogs.py:65
 #: ../../platform/gtk-x11/glade/democracy.glade.h:15
 msgid "Don't Migrate"
-msgstr "Ikke migrer"
+msgstr "Älä siirrä tietoja"
 
 #: ../../portable/dialogs.py:66
 msgid "Download"
-msgstr ""
+msgstr "Lataa"
 
 #: ../../portable/dialogs.py:67
 msgid "Remove Entry"
-msgstr ""
+msgstr "Poista kokoelmasta"
 
 #: ../../portable/dialogs.py:68
 msgid "Delete File"
-msgstr ""
+msgstr "Poista tiedosto"
 
 #: ../../portable/dialogs.py:69
 msgid "Keep Videos"
-msgstr ""
+msgstr "Säilytä videot"
 
 #: ../../portable/dialogs.py:70
 msgid "Delete Videos"
-msgstr ""
+msgstr "Poista videot"
 
 #: ../../portable/dialogs.py:71
 msgid "Create"
-msgstr ""
+msgstr "Luo"
 
 #: ../../portable/folder.py:100
 msgid "Rename Channel Folder"
-msgstr ""
+msgstr "Nimeä kanavakansio uudelleen"
 
 #: ../../portable/folder.py:102
 #, python-format
 msgid "Enter a new name for the channel folder %s"
-msgstr ""
+msgstr "Kirjoita kanavakansion %s uusi nimi"
 
 #: ../../portable/folder.py:141
 msgid "Rename Playlist Folder"
-msgstr ""
+msgstr "Nimeä soittolistakansio uudelleen"
 
 #: ../../portable/folder.py:143
 #, python-format
 msgid "Enter a new name for the playlist folder %s"
-msgstr ""
+msgstr "Kirjoita soittolistakansion %s uusi nimi"
 
 #: ../../portable/folder.py:151
 msgid "Create Channel Folder"
-msgstr ""
+msgstr "Luo kanavakansio"
 
 #: ../../portable/folder.py:152
 msgid "Enter a name for the new channel folder"
-msgstr ""
+msgstr "Kirjoita uuden kanavakansion nimi"
 
 #: ../../portable/folder.py:165
 msgid "Create Playlist Folder"
-msgstr ""
+msgstr "Luo soittolistakansio"
 
 #: ../../portable/folder.py:166
 msgid "Enter a name for the new playlist folder"
-msgstr ""
+msgstr "Kirjoita uuden soittolistakansion nimi"
 
 #: ../../portable/singleclick.py:94
 msgid "Subscribing to multiple feeds"
-msgstr ""
+msgstr "Tilataan useita syötteitä"
 
 #: ../../portable/singleclick.py:95
 #, python-format
 msgid "You are being subscribed to %d feeds."
-msgstr ""
+msgstr "Olet tilaamassa %d syötettä."
 
 #: ../../portable/singleclick.py:104
 msgid "Subscription error"
-msgstr ""
+msgstr "Tilausvirhe"
 
 #: ../../portable/singleclick.py:114
 #, python-format
@@ -1037,6 +1115,8 @@ msgid ""
 "This Democracy channel file has an invalid format: %s. Please notify the "
 "publisher of this file."
 msgstr ""
+"Tämän Democracy-kanavan tiedoston muoto on virheellisesti %s. Jos voit, "
+"ilmoita virheestä tiedoston julkaisijalla."
 
 #: ../../portable/singleclick.py:123
 #, python-format
@@ -1044,43 +1124,46 @@ msgid ""
 "This Democracy channel file has the wrong content type: %s. Please notify "
 "the publisher of this file."
 msgstr ""
+"Tämän Democracy-kanavan tiedoston \"content type\" on väärä: %s. Jos voit, "
+"ilmoita virheestä tiedoston julkaisijalla."
 
 #: ../../portable/singleclick.py:128
 #, python-format
 msgid "Could not download the Democracy channel file: %s."
-msgstr ""
+msgstr "Democracy-kanavatiedoston lataus ei onnistunut: %s."
 
 #: ../../portable/singleclick.py:154
 msgid "Invalid Torrent"
-msgstr ""
+msgstr "Virheellinen torrent-tiedosto"
 
 #: ../../portable/singleclick.py:155
 #, python-format
 msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
 msgstr ""
+"Torrent-tiedosto %s on ilmeisesti vahingoittunut, eikä sitä voida avata. [OK]"
 
 #: ../../portable/tabs.py:27
 msgid "Search"
-msgstr "Søk"
+msgstr "Etsi"
 
 #: ../../portable/feed.py:702
 msgid "Error loading feed"
-msgstr ""
+msgstr "Virhe ladattaessa syötettä"
 
 #: ../../portable/feed.py:703
 #, python-format
 msgid "Couldn't load the feed at %s."
-msgstr ""
+msgstr "Ei voitu ladata syötettä osoitteesta %s."
 
 #: ../../portable/feed.py:706
 #, python-format
 msgid "The error was: %s"
-msgstr ""
+msgstr "Virhe oli: %s"
 
 #: ../../portable/feed.py:819
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:4
 msgid "Channel is not compatible with Democracy!"
-msgstr "Kanalen er ikke kompatibel med Democracy!"
+msgstr "Kanava ei ole yhteensopiva Democracyn kanssa."
 
 #: ../../portable/feed.py:820
 msgid ""
@@ -1091,44 +1174,50 @@ msgid ""
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
+"Yritämme silti tulkita videotiedostojen osoitteet syötteestä. Videoiden "
+"listaamiseen voi kuitenkin kulua normaalia kauemmin ja kuvaukset voivat olla "
+"virheellisiä. Ota yhteyttä syötteen ($ur) julkaisijaan ja pyydä heitä "
+"julkaisemaan syöte, joka toimii Democracyn kanssa.\n"
+"\n"
+"Yritetäänkö kanava ladata kaikesta huolimatta?"
 
 #: ../../portable/guide.py:238
 msgid "Channel Guide"
-msgstr "Kanaloversikt"
+msgstr "Kanavaopas"
 
 #: ../../portable/app.py:655 ../../portable/app.py:666
 #: ../../portable/app.py:691 ../../portable/app.py:710
 #, python-format
 msgid "Remove %s"
-msgstr ""
+msgstr "Poista %s"
 
 #: ../../portable/app.py:656
 #, python-format
 msgid "Are you sure you want to remove the guide %s?"
-msgstr ""
+msgstr "Haluatko varmasti poistaa oppaan %s?"
 
 #: ../../portable/app.py:667
 #, python-format
 msgid "Are you sure you want to remove %s"
-msgstr ""
+msgstr "Poistetaanko %s"
 
 #: ../../portable/app.py:670 ../../portable/app.py:696
 #: ../../portable/app.py:715
 #, python-format
 msgid "Remove %s channels"
-msgstr ""
+msgstr "Poista %s kanavaa"
 
 #: ../../portable/app.py:672
 #, python-format
 msgid "Are you sure you want to remove these %s playlists"
-msgstr ""
+msgstr "Poistetaanko nämä %s soittolistaa"
 
 #: ../../portable/app.py:692
 #, python-format
 msgid ""
 "Are you sure you want to remove %s?  Any downloads in progress will be "
 "canceled."
-msgstr ""
+msgstr "Poistetaanko %s? Kaikki kesken jääneet lataukset peruutetaan."
 
 #: ../../portable/app.py:697
 #, python-format
@@ -1136,42 +1225,43 @@ msgid ""
 "Are you sure you want to remove these %s channels?  Any downloads in "
 "progress will be canceled."
 msgstr ""
+"Poistetaanko nämä %s kanavaa? Kaikki kesken jääneet lataukset peruutetaan."
 
 #: ../../portable/app.py:711
 msgid ""
 "What would you like to do with the videos in this channel that you've "
 "downloaded?"
-msgstr ""
+msgstr "Mitä tehdään tältä kanavalta ladatuille videoille?"
 
 #: ../../portable/app.py:716
 msgid ""
 "What would you like to do with the videos in these channels that you've "
 "downloaded?"
-msgstr ""
+msgstr "Mitä tehdään näiltä kanavilta ladatuille videoille?"
 
 #: ../../portable/app.py:747
 msgid "Are you sure you want to quit?"
-msgstr "Er du sikker på at du vil avslutte?"
+msgstr "Lopetaanko varmasti?"
 
 #: ../../portable/app.py:748
 #, python-format
 msgid "You have %d download still in progress."
 msgid_plural "You have %d downloads still in progress."
-msgstr[0] "Du har %d nedlasting fortsatt gående."
-msgstr[1] "Du har %d nedlastinger fortsatt gående."
+msgstr[0] "%d lataus on edelleen kesken."
+msgstr[1] "%d latausta on edelleen kesken."
 
 #: ../../portable/app.py:1089
 msgid "Invalid Value"
-msgstr ""
+msgstr "Virheellinen arvo"
 
 #: ../../portable/app.py:1090
 #, python-format
 msgid "%s is invalid.  You must enter a non-negative number."
-msgstr ""
+msgstr "%s on virheellinen arvo. Kirjoita ei-negatiivinen luku."
 
 #: ../../portable/app.py:1307
 msgid " - Invalid URL"
-msgstr ""
+msgstr " - virheellinen osoite"
 
 #: ../../portable/app.py:1308
 msgid ""
@@ -1179,48 +1269,51 @@ msgid ""
 "Please double check and try again.\n"
 "\n"
 msgstr ""
+"Annettu osoite ei ole oikean muotoinen.\n"
+"Tarkista osoite ja yritä uudelleen.\n"
+"\n"
 
 #: ../../portable/app.py:1328
 msgid "Democracy - Add Channel"
-msgstr "Democracy - Legg til kanal"
+msgstr "Democracy - Lisää kanava"
 
 #: ../../portable/app.py:1328
 msgid "Enter the URL of the channel to add"
-msgstr "Tast inn URL for kanalen som skal legges til"
+msgstr "Kirjoita lisättävän kanavan osoite"
 
 #: ../../portable/app.py:1349
 msgid "Democracy - Add Channel Guide"
-msgstr ""
+msgstr "Democracy - Lisää ohjelmaopas"
 
 #: ../../portable/app.py:1349
 msgid "Enter the URL of the channel guide to add"
-msgstr ""
+msgstr "Kirjoita lisättävän kanavaoppaan osoite"
 
 #: ../../portable/app.py:1608
 msgid "Custom Channels"
-msgstr ""
+msgstr "Valinnaiset kanavat"
 
 #: ../../portable/app.py:1608
 msgid ""
 "You are running a version of Democracy Player with a custom set of channels."
-msgstr ""
+msgstr "Käytössäsi on Democracy Player, jossa on muokattu valikoima kanavia."
 
 #: ../../portable/playlist.py:151
 msgid "Rename Playlist"
-msgstr ""
+msgstr "Nimeä soittolista uudelleen"
 
 #: ../../portable/playlist.py:152
 #, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr ""
+msgstr "Kirjoita soittolistan %s uusi nimi"
 
 #: ../../portable/playlist.py:165
 msgid "Create Playlist"
-msgstr ""
+msgstr "Luo soittolista"
 
 #: ../../portable/playlist.py:166
 msgid "Enter a name for the new playlist"
-msgstr ""
+msgstr "Kirjoita uuden soittolistan nimi"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:1
 msgid ""
@@ -1231,36 +1324,36 @@ msgid ""
 "1 month\n"
 "Never"
 msgstr ""
-"1 dag\n"
-"3 dager\n"
-"6 dager\n"
-"10 dager\n"
-"1 måned\n"
-"Aldri"
+"1 päivä\n"
+"3 päivää\n"
+"6 päivää\n"
+"10 päivää\n"
+"1 kuukausi\n"
+"Ei ikinä"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:7
 msgid "<b>Channels</b>"
-msgstr "<b>Kanaler</b>"
+msgstr "<b>Kanavat</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:8
 msgid "<b>Disk Space</b>"
-msgstr "<b>Lagringsplass</b>"
+msgstr "<b>Levytila</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:9
 msgid "<b>Downloads</b>"
-msgstr "<b>Nedlastinger</b>"
+msgstr "<b>Lataukset</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:10
 msgid "<b>Movies Directory</b>"
-msgstr "<b>Videobibliotek</b>"
+msgstr "<b>Videokansio</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:12
 msgid "By default, videos expire after"
-msgstr "Som standard utløper videoer etter"
+msgstr "Oletusarvona videoiden vanhenemisaika on"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:13
 msgid "Check Channels for new content"
-msgstr "Sjekk kanaler for nytt innhold"
+msgstr "Tarkista kanavat uuden sisällön varalta"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:14
 msgid "Democracy Player"
@@ -1272,41 +1365,42 @@ msgid ""
 "Every hour\n"
 "Manually"
 msgstr ""
-"Hvert 30. minutt\n"
-"Hver time\n"
-"Manuelt"
+"Joka 30. minuutti\n"
+"Joka tunti\n"
+"Käsin"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:20
 msgid "GB free"
-msgstr "GB ledig"
+msgstr "Gt vapaana"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:21
 msgid "KB/s when my computer is active"
-msgstr "KB/s når datamaskinen er aktiv"
+msgstr "kilotavuun per sekunti kun tietokonetta käytetään"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:23
 msgid "Migrate existing movies?"
-msgstr "Migrer eksisterende videoer?"
+msgstr "Siirretäänkö olemassa olevat videot?"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:24
 msgid "Preferences"
-msgstr "Innstillinger"
+msgstr "Asetukset"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:25
 msgid "Select Movies Directory"
-msgstr "Velg videobibliotek"
+msgstr "Valitse videokansio"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:26
 msgid "Store downloaded movies in"
-msgstr "Lagre nedlastede videoer i"
+msgstr "Säilytä ladattuja videoita"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:27
 msgid "To avoid slowdowns, limit upstream to"
-msgstr "For å unngå overbelastning, begrens opplasting til"
+msgstr ""
+"Välttääksesi verkkoyhteyden ruuhkautumista, rajoita tiedonsiirtonopeus"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:28
 msgid "Volume:"
-msgstr "Lydstyrke:"
+msgstr "Äänenvoimakkuus:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:29
 msgid ""
@@ -1314,9 +1408,9 @@ msgid ""
 "migrate your existing downloads there?  (Currently dowloading movies will "
 "not be moved until they finish.)"
 msgstr ""
-"Du har valgt en ny mappe å hente videoer til. Skal Democracy migrer dine "
-"eksisterende videoer til det nye stedet? (Videoer som lastes ned nå blir "
-"ikke flyttet før de er ferdige.)"
+"Olet valinnut uuden videokansion. Tulisiko Democracyn siirtää jo lataamasi "
+"videot uuteen kansioon? (Latautuvat videot siirretään vasta kun ne ovat "
+"valmistuneet.)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:1
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:1
@@ -1340,76 +1434,77 @@ msgstr "'"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:5
 msgid "Please enter the URL of the channel you'd like to add."
-msgstr "Vennligst tast inn URL for den kanalen du vil legge til."
+msgstr "Kirjoita lisättävän kanavan osoite."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:5
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
 "videos, and descriptions may look funny."
 msgstr ""
-"Men vi vil gjøre vårt beste for å hente filene. Det tar kanskje lengre tid å "
-"liste videoene, og beskrivelsene kan se rare ut."
+"Mutta yritämme parhaamme mukaan ladata tiedostot. Videoiden listaamiseen "
+"saattaa kulua tavallista enemmän aikaa ja kuvaukset saattavat näyttää "
+"omituisilta."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:7
 msgid "Please contact the publishers of"
-msgstr "Vennligst kontakt utgiveren av"
+msgstr "Ole hyvä ja ota yhteyttä julkaisijoihin:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:8
 msgid ""
 "and ask if they can supply a feed in a format that will work with Democracy."
 msgstr ""
-"og spør om de kan tilby en kanal i et format som vil virke med Democracy."
+"ja kysy voisivatko he tarjota syötteen tiedostomuodossa, joka toimii "
+"Democracyn kanssa."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:4
 msgid "Channel requires authentication"
-msgstr "Kanalen krever godkjenning"
+msgstr "Kanava vaatii tunnistautumista"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:5
 msgid ""
 "Please enter the username and password given to you by this channel's "
 "publisher."
-msgstr ""
-"Vennligst tast inn brukernavn og passord gitt til deg av kanalens utgiver."
+msgstr "Syötä tämän kanavan julkaisijalta saamasi käyttäjänimi ja salasana."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:4
 msgid "Question"
-msgstr "Spørsmål"
+msgstr "Kysymys"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:5
 msgid ""
 "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
 "$publisher."
 msgstr ""
-"$longAppName versjon $appVersion ($appRevision); copyright (c) 2005, 2006 "
+"$longAppName versio $appVersion ($appRevision); copyright (c) 2005, 2006 "
 "$publisher."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:4
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:5
 msgid "About $longAppName"
-msgstr "Om $longAppName"
+msgstr "Tietoja $longAppName"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:9
 msgid "Copy log to clipboard"
-msgstr "Kopier logg til utklippstavlen"
+msgstr "Kopioi loki leikepöydälle"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:8
 msgid "Open up the bug tracker"
-msgstr "Åpne feilrapporteringsmodulen"
+msgstr "Avaa virheentallennusjärjestelmä."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5
 msgid "Please help us fix it. Copy and paste all the"
-msgstr "Vennligst hjelp oss fikse det. Kopier og lim inn alle"
+msgstr "Auta meitä korjaamaan se. Kopioi ja liitä kaikki"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6
 msgid ""
 "information into our bug tracker and tell us what you were doing when the"
 msgstr ""
-"informasjonen i vår feilrapporteringsmodul og fortell oss hva det var du "
-"gjorde da"
+"informaatio virheenkirjausjärjestelmään ja kerro meille mitä olit tekemässä, "
+"kun"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:8
 msgid "problem occurred."
-msgstr "problemet skjedde. (Forklaringen skal være på engelsk.)"
+msgstr "virhe sattui."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:10
 msgid ""
@@ -1417,13 +1512,13 @@ msgid ""
 "errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
 "with your help we're fixing problems fast!"
 msgstr ""
-"Så, vennligst start Democracy på nytt (eller du får kanskje liknende feil). "
-"Beklager bryet. Democracy er fortsatt i beta, men med din hjelp får vi "
-"rettet feilene fortere!"
+"Käynnistä sitten Democracy Player uudestaan (tai saatat saada lisää "
+"virheitä). Olemme pahoillamme aiheutuneesta vaivasta. Democracy Player on "
+"yhä beta-asteella, mutta teidän avustuksellanne korjaamme ongelmat nopeasti!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:4
 msgid "You found a bug in Democracy!"
-msgstr "Du har funnet en feil i Democracy!"
+msgstr "Löysit virheen Democracysta!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:4
 msgid "$longAppName"
@@ -1431,113 +1526,4 @@ msgstr "$longAppName"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:13
 msgid "Exit"
-msgstr ""
-
-#, python-format
-#~ msgid "%s requires a username and password for \"%s\"."
-#~ msgstr "%s krever et brukernavn og passord for \"%s\"."
-
-#~ msgid "Not a DTV-style channel"
-#~ msgstr "Ikke en DTV-kanal"
-
-#, python-format
-#~ msgid ""
-#~ "But we'll try our best to grab the files.\n"
-#~ "- It may take time to list the videos\n"
-#~ "- Descriptions may look funny\n"
-#~ "\n"
-#~ "Please contact the publishers of %s and ask if they have a DTV-style channel."
-#~ msgstr ""
-#~ "Men vi vil prøve vårt beste å hente filene.\n"
-#~ "- Det kan ta tid å liste videoene\n"
-#~ "- Beskrivelser vises kanskje med feil\n"
-#~ "\n"
-#~ "Vennligst kontakt utgiverne av %s og spør om de har en DTV-kanal."
-
-#~ msgid "Continue"
-#~ msgstr "Fortsett"
-
-#~ msgid "DTV Version Alert"
-#~ msgstr "DTV versjonalarm"
-
-#~ msgid ""
-#~ "A new version of DTV is available.\n"
-#~ "\n"
-#~ "Would you like to download it now?"
-#~ msgstr ""
-#~ "En ny versjon av DTV er tilgjengelig.\n"
-#~ "\n"
-#~ "Vil du laste den ned nå?"
-
-#~ msgid "DTV Version Check"
-#~ msgstr "DTV versjonsjekk"
-
-#~ msgid "This version of DTV is up to date."
-#~ msgstr "Denne versjonen av DTV er oppdatert."
-
-#, python-format
-#~ msgid ""
-#~ "%s was unable to save its database: %s.\n"
-#~ "Recent changes may be lost."
-#~ msgstr ""
-#~ "%s klarte ikke å lagre databasen sin: %s.\n"
-#~ "Siste endringer kan ha blitt tapt."
-
-#~ msgid "Remove Channel"
-#~ msgstr "Fjern kanal"
-
-#, python-format
-#~ msgid ""
-#~ "Are you sure you want to <b>remove</b> the channel\n"
-#~ "   '<b>%s</b>'?\n"
-#~ "<b>This operation cannot be undone.</b>"
-#~ msgstr ""
-#~ "Er du sikker på at du vil <b>fjerne</b> kanalen\n"
-#~ "   '<b>%s</b>'?\n"
-#~ "<b>Denne operasjonen kan ikke angres.</b>"
-
-#~ msgid "Pending Manual Download"
-#~ msgstr "Ventende manuelle nedlastinger"
-
-#~ msgid "Save"
-#~ msgstr "Lagre"
-
-#~ msgid "Expires"
-#~ msgstr "Utløper"
-
-#~ msgid "Download Error"
-#~ msgstr "Nedlastingsfeil"
-
-#~ msgid "Videos on this Channel"
-#~ msgstr "Videoer i denne kanalen"
-
-#~ msgid "Could not connect to server"
-#~ msgstr "Kunne ikke koble til tjener"
-
-#, python-format
-#~ msgid "Could not connect to server: %s"
-#~ msgstr "Kunne ikke koble til tjener: %s"
-
-#, python-format
-#~ msgid ""
-#~ "%s was unable to save its database: %s.\n"
-#~ "We suggest deleting files from the full disk or simply deleting some movies "
-#~ "from your collection.\n"
-#~ "Recent changes may be lost.\n"
-#~ "Quit Anyway?"
-#~ msgstr ""
-#~ "%s klarte ikke å lagre databasen sin: %s.\n"
-#~ "Vi foreslår å slette filer fra den fulle lagringsområdet eller og enktelt "
-#~ "slette noen videoer fra din samling.\n"
-#~ "Siste endringer kan ha blitt tapt.\n"
-#~ "Avslutt likevel?"
-
-#, python-format
-#~ msgid ""
-#~ "%s was unable to save its database: %s.\n"
-#~ "Recent changes may be lost.\n"
-#~ "Quit Anyway?"
-#~ msgstr ""
-#~ "%s klarte ikke å lagre databasen sin: %s.\n"
-#~ "Siste endringer kan ha blitt tapt.\n"
-#~ "Avslutt likevel?"
+msgstr "Lopeta"
