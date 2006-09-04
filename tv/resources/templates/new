@@ -67,7 +67,7 @@ allExpiringItems.unlink()
         <div class="main-channelbar">
         <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-unwatched');">#&nbsp;</a></div>
 	<div>
-		<h1 i18n:translate="">unwatched</h1>
+		<h1 i18n:translate="">Unwatched</h1>
 		</div>
         </div>
 
