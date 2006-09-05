@@ -4,9 +4,10 @@ import gobject
 import gtk
 import gtk.gdk
 import gnomevfs
+import gconf
 from gtk_queue import gtkAsyncMethod, gtkSyncMethod
+from platformcfg import gconf_lock
 
-from xinerenderer import XineRenderer
 from threading import Event
 
 ###############################################################################
@@ -32,16 +33,30 @@ class VideoDisplay (app.VideoDisplayBase):
         self._gtkInit()
         self.renderersReady = Event()
 
+    def add_renderer(self, modname):
+        try:
+            pkg = __import__('frontend_implementation.' + modname)
+            module = getattr(pkg, modname)
+            renderer = module.Renderer()
+            renderer.setWidget(self.widget)
+            self.renderers.append(renderer)
+            print "loaded renderer '%s'" % modname
+        except ImportError, error:
+            print "initRenderers: couldn't load %s: %s" % (modname, error)
+
     @gtkAsyncMethod
     def initRenderers(self):
-        self.renderers = [
-            XineRenderer(),
-            # add additional video renderers here
-        ]
-        for renderer in self.renderers:
-            renderer.setWidget(self.widget)
+        self.renderers = []
+        gconf_lock.acquire()
+        values = gconf.client_get_default().get("/apps/democracy/player/renderers")
+        if values == None:
+            self.add_renderer("xinerenderer")
+        else:
+            for value in values.get_list():
+                self.add_renderer(value.get_string())
+        gconf_lock.release()
         self.renderersReady.set()
-
+            
     def getRendererForItem(self, anItem):
         self.renderersReady.wait()
         return app.VideoDisplayBase.getRendererForItem(self, anItem)

@@ -16,7 +16,7 @@ def waitForAttach(func):
             self.attachQueue.append((func, args))
     return waitForAttachWrapper
 
-class XineRenderer(app.VideoRenderer):
+class Renderer(app.VideoRenderer):
     def __init__(self):
         self.xine = xine.Xine()
         self.xine.setEosCallback(self.onEos)
