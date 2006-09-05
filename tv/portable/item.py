@@ -1327,7 +1327,7 @@ filename was %s""" % self.filename
             newFilename = nextFreeFilename(newFilename)
             try:
                 shutil.move(self.filename, newFilename)
-            except IOError, e:
+            except Exception, e:
                 print "WARNING: Error moving %s to %s (%s)" % (self.filename,
                         newFilename, e)
             else:
