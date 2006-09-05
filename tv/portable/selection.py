@@ -51,15 +51,15 @@ class SelectionArea(object):
     def selectItem(self, view, id):
         self.switchView(view)
         obj = view.getObjectByID(id)
-        obj.setSelected(True)
         self.currentSelection.add(id)
+        obj.setSelected(True)
 
     def deselectItem(self, view, id):
         if view != self.currentView:
             raise ValueError("view != current view in deselectItem()")
         obj = view.getObjectByID(id)
-        obj.setSelected(False)
         self.currentSelection.remove(id)
+        obj.setSelected(False)
 
     def toggleItemSelect(self, view, id):
         self.switchView(view)
@@ -141,9 +141,9 @@ class SelectionArea(object):
 
     def onRemove(self, obj, id):
         if id in self.currentSelection:
+            self.currentSelection.remove(id)
             if obj.idExists():
                 obj.setSelected(False)
-            self.currentSelection.remove(id)
 
     def setObjectsActive(self, newValue):
         """Iterate through all selected objects and call setActive on them,
