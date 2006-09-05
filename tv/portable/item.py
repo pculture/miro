@@ -198,7 +198,7 @@ class Item(DDBObject):
     # get updated when an item changes
     def signalChange(self, needsSave=True, needsUpdateUandA=True, needsUpdateXML=True):
         self.expiring = None
-        self._calcState()
+        del self._state
         if hasattr(self, "_size"):
             del self._size
         DDBObject.signalChange(self, needsSave=needsSave)
@@ -488,7 +488,7 @@ folder will also be deleted.""")
 
     def getExpiring(self):
         if self.expiring is None:
-            if (not self.getSeen()) or (not self.isDownloaded()):
+            if not self.getSeen():
                 self.expiring = False
             else:
                 ufeed = self.getFeed()
@@ -730,7 +730,7 @@ folder will also be deleted.""")
         """
         try:
             return self._state
-        except:
+        except AttributeError:
             self._calcState()
             return self._state
 
