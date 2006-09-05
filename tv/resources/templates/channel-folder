@@ -39,7 +39,7 @@ if newItems.len() == unwatchedItems.len() == expiringItems.len() == savedItems.l
     newVideosDisplay = showMoreVideosDisplay = "none"
 else:
     mainChannelbarAvailableDisplay = mainMatchingDisplay = "none"
-    newVideosDisplay = showMoreVideosDisplay = "none"
+    newVideosDisplay = showMoreVideosDisplay = "block"
 
 def updateSearchString(newSearch):
     global searchTerm
