@@ -87,6 +87,15 @@ class XineRenderer(app.VideoRenderer):
     @waitForAttach
     def selectFile(self, filename):
         self.xine.playFile(filename)
+        def exposeWorkaround():
+            try:
+                _, _, width, height, _ = self.widget.window.get_geometry()
+                self.xine.gotExposeEvent(0, 0, width, height)
+            except:
+                return True
+            return False
+
+        gobject.timeout_add(500, exposeWorkaround)
 
     def getProgress(self):
         try:
@@ -119,22 +128,22 @@ class XineRenderer(app.VideoRenderer):
     @waitForAttach
     def setVolume(self, level):
         self.xine.setVolume(int(level * 100))
-                
+
     @waitForAttach
     def play(self):
         self.xine.play()
-        
+
     @waitForAttach
     def pause(self):
         self.xine.pause()
-        
+
     @waitForAttach
     def stop(self):
         self.pause()
-    
+
     def getRate(self):
         return self.xine.getRate()
-    
+
     @waitForAttach
     def setRate(self, rate):
         self.xine.setRate(rate)
