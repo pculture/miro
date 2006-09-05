@@ -31,7 +31,8 @@ def updateSearchString(newSearch):
 ]]>
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
-# This should unlink matchingItems and all of it's children
+# This should unlink matchingItems and all of it's
+# childapp.controller.selection.itemListSelection.clearSelection()
 watchableItems.unlink()
 ]]>
     </t:execOnUnload>

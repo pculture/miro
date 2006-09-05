@@ -57,6 +57,7 @@ isFolder = True
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
 # This should unlink matchingItems and all of it's children
+app.controller.selection.itemListSelection.clearSelection()
 allItems.unlink()
 thisFolderView.unlink()
 childrenView.unlink()
