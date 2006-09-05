@@ -42,6 +42,7 @@ import datetime
 import traceback
 import datetime
 import threading
+import platform
 import dialogs
 from iconcache import iconCacheUpdater
 
@@ -1712,6 +1713,8 @@ def _defaultFeeds():
         'http://some-pig.net/videos/rss.php?i=2',
         'http://videobomb.com/rss/posts/list',
     ]
+    if len(platform.mac_ver()[0]) > 0:
+        defaultFeedURLs.append('http://libsyn.com/podcasts/donmc/_static/scoipod.xml')
     for url in defaultFeedURLs:
         feed.Feed(url, initiallyAutoDownloadable=False)
 
