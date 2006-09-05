@@ -21,7 +21,6 @@ def samefile(path1, path2):
 def getAvailableBytesForMovies():
     # TODO: windows implementation
     moviesDir = config.get(prefs.MOVIES_DIRECTORY)
-    print "GETTING disk space for ", moviesDir
     freeSpace = ctypes.c_ulonglong(0)
     availableSpace = ctypes.c_ulonglong(0)
     totalSpace = ctypes.c_ulonglong(0)
