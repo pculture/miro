@@ -23,12 +23,7 @@ def appRoot():
     return file.path
 
 def resourceRoot():
-    if 'RUNXUL_RESOURCES' in os.environ:
-	# We're being run it test mode by our 'runxul' distutils
-	# command.
-	return os.environ['RUNXUL_RESOURCES']
-#    return os.path.join(appRoot(), 'resources') # NEEDS XXX TEST
-    return os.path.join(appRoot(), '..', 'resources') # NEEDS XXX TEST
+    return os.path.join(appRoot(), '..', 'resources')
 
 # Note: some of these functions are probably not absolutely correct in
 # the face of funny characters in the input paths. In particular,

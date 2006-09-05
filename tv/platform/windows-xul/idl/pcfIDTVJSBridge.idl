@@ -35,7 +35,7 @@ interface pcfIDTVJSBridge : nsISupports
   void enterFullscreen();
   void leaveFullscreen();
   void setActionGroupEnabled(in AString group, in boolean enabled);
-  void updateLabel(in Astring id, in AString label);
-  void updateVideoFilename(in Astring newFilename);
+  void updateLabel(in AString id, in AString label);
+  void updateVideoFilename(in AString newFilename);
   void saveVideo();
 };

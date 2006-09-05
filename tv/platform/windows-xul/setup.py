@@ -159,20 +159,6 @@ import template_compiler
 
 ###############################################################################
 
-# WHEN LAUNCHING DIRECTLY ('test mode'):
-#
-# 1) Build any extensions; add results to sys.path
-# 2) Add all application Python directories to sys.path
-# 3) Find 'resources'
-# 4) Build a complete xulrunner image in a temporary directory
-# 5) Find the application template, including application.ini
-# 6) Compile all IDL files in 'idl'. [HACK: save results into the original
-#    copy of the application tree..]
-# 7) Adjust PATH and PYTHONPATH. Set RUNXUL_RESOURCES to point at 'resources'.
-#    to tell child process where to find them.
-# 8) Shell out to the xulrunner binary in the built xulrunner image, passing
-#    the path to application.ini.
-#
 # WHEN BUILDING A REDISTRIBUTABLE IMAGE:
 #
 # 1) Build any extensions; add results to sys.path
@@ -196,282 +182,12 @@ import template_compiler
 # if present. resource.resourceRoot() has already been modified in what
 # should be the appropriate way.
 
-class Common:
-    def __init__(self):
-        self.templateVars = None
-
-    def buildDownloadDaemon(self, baseDir):
-        print "building download daemon"
-        os.system("%s setup_daemon.py py2exe --dist-dir daemon --bundle-files 1" % PYTHON_BINARY)
-        shutil.copy2(os.path.join("daemon","Democracy_Downloader.exe"), baseDir)
-
-    # NEEDS: if you look at the usage of this function, we're dropping
-    # the plugin into the xulrunner plugin directory, rather than the
-    # app bundle plugin directory, which is the way you're "supposed"
-    # to do it so your app is cleanly separated from xulrunner.
-    def copyVLCPluginFiles(self, baseDir, xulrunnerDir):
-        destDir = os.path.join(xulrunnerDir, 'plugins')
-        if not os.access(destDir, os.F_OK):
-            os.mkdir(destDir)
-
-        pluginFiles = ['npvlc.dll', 'vlcintf.xpt']
-        for f in pluginFiles:
-            shutil.copy2(os.path.join(VLC_MOZ_PLUGIN_DIR, f), destDir)
-
-        vlcPluginDest = os.path.join(baseDir, "vlc-plugins")
-        if not os.access(vlcPluginDest, os.F_OK):
-            os.mkdir(vlcPluginDest)
-
-        vlcPlugins = os.listdir(VLC_PLUGINS_DIR)
-        for f in vlcPlugins:
-            if f[0] != '.' and f != '_svn':
-                shutil.copy2(os.path.join(VLC_PLUGINS_DIR, f), vlcPluginDest)
-
-    def copyMiscFiles(self, destDir):
-        shutil.copy2(os.path.join(root,"license.txt"),destDir)
-
-    def compileIDL(self):
-        buildDir = os.path.join(self.bdist_base, "idl")
-        pattern = re.compile(r"(.*)\.idl$")
-        xpidl = os.path.join(IDL_TOOLS_PATH, "xpidl")
-        xpt_link = os.path.join(IDL_TOOLS_PATH, "xpt_link")
-
-        if not os.access(buildDir, os.F_OK):
-            os.mkdir(buildDir)
-
-        idlDir = os.path.join(root, 'platform', platform, 'idl')
-        generatedFiles = []
-        if not os.access(idlDir, os.F_OK):
-            self.typeLibrary = None
-            return
-
-        for name in os.listdir(idlDir):
-            m = pattern.match(name)
-            if not m:
-                continue
-            inPath = os.path.join(idlDir, name)
-            outPath = os.path.join(buildDir, m.group(1) + ".xpt")
-
-            result = os.spawnl(os.P_WAIT, xpidl, xpidl, "-m", "typelib",
-                               "-w", "-v", "-e", outPath,
-                               "-I", IDL_INCLUDE_PATH, inPath)
-            if result != 0:
-                raise OSError, "Couldn't compile %s (error code %s)" % \
-                    (inPath, result)
-
-            generatedFiles.append(outPath)
-
-        if len(generatedFiles) == 0:
-            self.typeLibrary = None
-            return
-
-        outXpt = os.path.join(self.bdist_base, 'xpcom_typelib.xpt')
-        log.info("linking IDL files to %s", outXpt)
-        result = os.spawnl(os.P_WAIT, xpt_link, xpt_link, outXpt,
-                           *generatedFiles)
-        if result != 0:
-            raise OSError, "Couldn't link compiled IDL to %s (error code %s)" \
-                % (outXpt, )
-
-        self.typeLibrary = outXpt
-
-    # Fill the app.config.template, to generate the real app.config.
-    # NEEDS: Very sloppy. The new file is just dropped in the source tree
-    # next to the old one. This also initializes self.templateVars.
-    def makeAppConfig(self):
-        import util
-        revision = util.queryRevision(root)
-        if revision is None:
-            revision = "unknown"
-        else:
-            revision = "%s - %s" % revision
-
-        path = os.path.join(root, 'resources', 'app.config')
-        s = open("%s.template" % path, "rt").read()
-        s = string.Template(s).safe_substitute(APP_REVISION = revision, APP_PLATFORM = 'windows-xul')
-        f = open(path, "wt")
-        f.write(s)
-        f.close()
-
-        self.templateVars = util.readSimpleConfigFile(path)
-
-    def setTemplateVariable(self, key, value):
-        assert self.templateVars, \
-            "Must call makeAppConfig before setTemplateVariable"
-        self.templateVars[key] = value
-
-    def getTemplateVariable(self, key):
-        assert self.templateVars, \
-            "Must call makeAppConfig before getTemplateVariable"
-        return self.templateVars[key]
-
-    # Given a file <filename>.template, replace all applicable
-    # template variables and generate a file <filename> right next to
-    # it in the tree. 'Template variables' are anything in app.config,
-    # plus anything set with setTemplateVariable.
-    # NEEDS: same deal as makeAppConfig: sloppy; shouldn't drop files in
-    # the source tree.
-    def fillTemplate(self, filename):
-        assert self.templateVars, \
-            "Must call makeAppConfig before fillTemplate"
-        s = open("%s.template" % filename, "rt").read()
-        s = string.Template(s).safe_substitute(self.templateVars)
-        f = open(filename, "wt")
-        f.write(s)
-        f.close()
-
-    def fillTemplates(self):
-        xulBase = os.path.join(root, 'platform', platform, 'xul')
-
-        self.fillTemplate(os.path.join(xulBase, 'application.ini'))
-        self.fillTemplate(os.path.join(xulBase, 'defaults', 'preferences',
-                                       'prefs.js'))
-
-        for lang in glob (os.path.join (xulBase, 'chrome', 'locale', '*')):
-            if len(lang) >= 4 and lang[-4:] in ("_svn", ".svn"):
-                continue
-    	    # NEEDS: generalize to do the whole tree, so as to handle all
-    	    # templates
-    	    self.fillTemplate(os.path.join(lang, 'main.dtd'))        
-    	    self.fillTemplate(os.path.join(lang, 'about.dtd'))        
-    	    self.fillTemplate(os.path.join(lang, 'bugreport.dtd'))        
-
-###############################################################################
-
-class runxul(Command, Common):
-    description = "test run of a Mozilla XUL-based application"
-
-    def __init__(self, *rest):
-        Command.__init__(self, *rest)
-        Common.__init__(self)
-
-    # List of option tuples: long name, short name (None if no short
-    # name), and help string.
-    user_options = [
-        ('bdist-base=', 'b',
-         'base directory for build library (default is build)'),
-        ('dist-dir=', 'd',
-         "directory to put final built distributions in (default is dist)"),
-        ('bdist-dir=', 'd',
-         "temporary directory for creating the distribution"),
-        ]
-
-    def initialize_options(self):
-        self.bdist_base = None
-        self.bdist_dir = None
-        self.dist_dir = 'dist'
-
-        self.childPythonPaths = []
-        self.childDLLPaths = []
-
-    def finalize_options(self):
-        if self.bdist_dir is None:
-            bdist_base = self.get_finalized_command('bdist').bdist_base
-            self.bdist_dir = os.path.join(bdist_base, 'xul')
-
-        self.set_undefined_options('bdist',
-                                   ('dist_dir', 'dist_dir'),
-                                   ('bdist_base', 'bdist_base'))
-
-        # Find our 'resources' tree (NEEDS)
-        self.appResources = os.path.join(root, 'resources')
-
-    def buildXulrunnerInstallation(self):
-        buildBase = os.path.join(self.bdist_base, "xulrunner")
-        self.xulrunnerDir = buildBase
-        markFile = os.path.join(buildBase, ".xulrunnerBuilt")
-        if os.access(markFile, os.F_OK):
-            # Mark file exists. We take this to mean that there is
-            # valid xulrunner tree already built in buildBase.
-            return
-
-        log.info("assembling temporary xulrunner tree in %s" % buildBase)
-
-        # First, copy in the basic Xulrunner distribution.
-        copyTreeExceptSvn(XULRUNNER_DIR, buildBase)
-
-        # Then, copy the extra PyXPCOM files over it.
-        copyTreeExceptSvn(PYXPCOM_DIR, buildBase)
-
-        # Copy the license file over
-        # NEEDS: (huh? this doesn't belong here at all)
-        self.copyMiscFiles(self.bdist_base)
-
-        # Finally, drop in our plugins.
-        self.copyVLCPluginFiles(self.bdist_base, buildBase)
-
-        # Create the mark file to indicate that we now have a build.
-        open(markFile, 'w')
-
-    def run(self):
-        self.makeAppConfig()
-        self.setTemplateVariable("pyxpcomIsEmbedded", "false")
-        self.fillTemplates()                  
-
-        template_compiler.compileAllTemplates(root)
-
-        # Build extensions and add results to child search path
-        build = self.reinitialize_command('build')
-        build.build_base = self.bdist_base
-        build.run()
-        if build.build_platlib is not None:
-            self.childPythonPaths.append(build.build_platlib)
-        if build.build_lib is not None:
-            self.childPythonPaths.append(build.build_lib)
-
-        # Add application Python modules to child search path
-        self.childPythonPaths. \
-            extend([
-                os.path.join(root, 'platform', platform),
-                os.path.join(root, 'platform'),
-                os.path.join(root, 'portable'),
-                ])
-
-        # Put together an xulrunner installation that meets our standards.
-        self.buildXulrunnerInstallation()
-        xulrunnerBinary = os.path.join(self.xulrunnerDir, "xulrunner")
-
-        # Find application -- presently hardcoded to a tree in
-        # 'xul'.
-        self.applicationRoot = os.path.join(root, 'platform', platform,
-                                            'xul')
-        applicationIni = os.path.join(self.applicationRoot, 'application.ini')
-
-        # Compile any IDL in the application
-        log.info("compiling type libraries")
-        self.compileIDL()
-
-        # Run the app. NEEDS: The main hack here is how we write the
-        # type library into the source tree, which is pretty odious.
-        if self.typeLibrary:
-            # NEEDS: even if we did it this way, ensure that 'components'
-            # exists
-            typeLibraryPath = os.path.join(self.applicationRoot, 'components',
-                                           'types.xpt')
-            shutil.copy2(self.typeLibrary, typeLibraryPath)
-
-        self.buildDownloadDaemon(self.bdist_base)
-
-        newEnv = copy.deepcopy(os.environ)
-        oldPath = 'PATH' in newEnv and [newEnv['PATH']] or []
-        newEnv['PATH'] = \
-            ';'.join(oldPath + self.childDLLPaths)
-        oldPyPath = 'PYTHONPATH' in newEnv and [newEnv['PYTHONPATH']] or []
-        newEnv['PYTHONPATH'] = \
-            ';'.join(oldPyPath + self.childPythonPaths)
-        newEnv['RUNXUL_RESOURCES'] = self.appResources
-        print "Starting application"
-#        os.execle(xulrunnerBinary, xulrunnerBinary, applicationIni, newEnv)
-        os.execle(xulrunnerBinary, xulrunnerBinary, applicationIni, "-jsconsole", "-console", newEnv)
-
-###############################################################################
-
-class bdist_xul_dumb(Command, Common):
+class bdist_xul_dumb(Command):
     description = "build redistributable directory for Mozilla-based app"
 
     def __init__(self, *rest):
         Command.__init__(self, *rest)
-        Common.__init__(self)
+        self.templateVars = None
 
     # List of option tuples: long name, short name (None if no short
     # name), and help string.
@@ -784,6 +500,152 @@ class bdist_xul_dumb(Command, Common):
                             item.filename))
 
         return manifest
+
+    def buildDownloadDaemon(self, baseDir):
+        print "building download daemon"
+        os.system("%s setup_daemon.py py2exe --dist-dir daemon --bundle-files 1" % PYTHON_BINARY)
+        shutil.copy2(os.path.join("daemon","Democracy_Downloader.exe"), baseDir)
+
+    # NEEDS: if you look at the usage of this function, we're dropping
+    # the plugin into the xulrunner plugin directory, rather than the
+    # app bundle plugin directory, which is the way you're "supposed"
+    # to do it so your app is cleanly separated from xulrunner.
+    def copyVLCPluginFiles(self, baseDir, xulrunnerDir):
+        destDir = os.path.join(xulrunnerDir, 'plugins')
+        if not os.access(destDir, os.F_OK):
+            os.mkdir(destDir)
+
+        pluginFiles = ['npvlc.dll', 'vlcintf.xpt']
+        for f in pluginFiles:
+            shutil.copy2(os.path.join(VLC_MOZ_PLUGIN_DIR, f), destDir)
+
+        vlcPluginDest = os.path.join(baseDir, "vlc-plugins")
+        if not os.access(vlcPluginDest, os.F_OK):
+            os.mkdir(vlcPluginDest)
+
+        vlcPlugins = os.listdir(VLC_PLUGINS_DIR)
+        for f in vlcPlugins:
+            if f[0] != '.' and f != '_svn':
+                shutil.copy2(os.path.join(VLC_PLUGINS_DIR, f), vlcPluginDest)
+
+    def copyMiscFiles(self, destDir):
+        shutil.copy2(os.path.join(root,"license.txt"),destDir)
+
+    def compileIDL(self):
+        buildDir = os.path.join(self.bdist_base, "idl")
+        pattern = re.compile(r"(.*)\.idl$")
+        xpidl = os.path.join(IDL_TOOLS_PATH, "xpidl")
+        xpt_link = os.path.join(IDL_TOOLS_PATH, "xpt_link")
+
+        if not os.access(buildDir, os.F_OK):
+            os.mkdir(buildDir)
+
+        idlDir = os.path.join(root, 'platform', platform, 'idl')
+        generatedFiles = []
+        if not os.access(idlDir, os.F_OK):
+            self.typeLibrary = None
+            return
+
+        for name in os.listdir(idlDir):
+            m = pattern.match(name)
+            if not m:
+                continue
+            inPath = os.path.join(idlDir, name)
+            outPath = os.path.join(buildDir, m.group(1) + ".xpt")
+
+            result = os.spawnl(os.P_WAIT, xpidl, xpidl, "-m", "typelib",
+                               "-w", "-v", "-e", outPath,
+                               "-I", IDL_INCLUDE_PATH, inPath)
+            if result != 0:
+                raise OSError, "Couldn't compile %s (error code %s)" % \
+                    (inPath, result)
+
+            generatedFiles.append(outPath)
+
+        if len(generatedFiles) == 0:
+            self.typeLibrary = None
+            return
+
+        outXpt = os.path.join(self.bdist_base, 'xpcom_typelib.xpt')
+        log.info("linking IDL files to %s", outXpt)
+        result = os.spawnl(os.P_WAIT, xpt_link, xpt_link, outXpt,
+                           *generatedFiles)
+        if result != 0:
+            raise OSError, "Couldn't link compiled IDL to %s (error code %s)" \
+                % (outXpt, )
+
+        self.typeLibrary = outXpt
+
+    # Fill the app.config.template, to generate the real app.config.
+    # NEEDS: Very sloppy. The new file is just dropped in the source tree
+    # next to the old one. This also initializes self.templateVars.
+    def makeAppConfig(self):
+        import util
+        revision = util.queryRevision(root)
+        if revision is None:
+            revision = "unknown"
+        else:
+            revision = "%s - %s" % revision
+
+        path = os.path.join(root, 'resources', 'app.config')
+        s = open("%s.template" % path, "rt").read()
+        s = string.Template(s).safe_substitute(APP_REVISION = revision, APP_PLATFORM = 'windows-xul')
+        f = open(path, "wt")
+        f.write(s)
+        f.close()
+
+        self.templateVars = util.readSimpleConfigFile(path)
+
+    def setTemplateVariable(self, key, value):
+        assert self.templateVars, \
+            "Must call makeAppConfig before setTemplateVariable"
+        self.templateVars[key] = value
+
+    def getTemplateVariable(self, key):
+        assert self.templateVars, \
+            "Must call makeAppConfig before getTemplateVariable"
+        return self.templateVars[key]
+
+    # Given a file <filename>.template, replace all applicable
+    # template variables and generate a file <filename> right next to
+    # it in the tree. 'Template variables' are anything in app.config,
+    # plus anything set with setTemplateVariable.
+    # NEEDS: same deal as makeAppConfig: sloppy; shouldn't drop files in
+    # the source tree.
+    def fillTemplate(self, filename):
+        assert self.templateVars, \
+            "Must call makeAppConfig before fillTemplate"
+        s = open("%s.template" % filename, "rt").read()
+        s = string.Template(s).safe_substitute(self.templateVars)
+        f = open(filename, "wt")
+        f.write(s)
+        f.close()
+
+    def fillTemplates(self):
+        xulBase = os.path.join(root, 'platform', platform, 'xul')
+
+        self.fillTemplate(os.path.join(xulBase, 'application.ini'))
+        self.fillTemplate(os.path.join(xulBase, 'defaults', 'preferences',
+                                       'prefs.js'))
+
+        for lang in glob (os.path.join (xulBase, 'chrome', 'locale', '*')):
+            if len(lang) >= 4 and lang[-4:] in ("_svn", ".svn"):
+                continue
+    	    # NEEDS: generalize to do the whole tree, so as to handle all
+    	    # templates
+    	    self.fillTemplate(os.path.join(lang, 'main.dtd'))        
+    	    self.fillTemplate(os.path.join(lang, 'about.dtd'))        
+    	    self.fillTemplate(os.path.join(lang, 'bugreport.dtd'))        
+
+class runxul(bdist_xul_dumb):
+    def run(self):
+        bdist_xul_dumb.run(self)
+        log.info("starting up democracy")
+        oldDir = os.getcwd()
+        os.chdir(self.dist_dir)
+        subprocess.call(["Democracy.exe", "application.ini", "-jsconsole",
+                "-console"])
+        os.chdir(oldDir)
 
 ###############################################################################
 
