@@ -812,7 +812,7 @@ downloaded?""")
                                 "You have %d downloads still in progress.", 
                                 downloadsCount) % (downloadsCount,)
             dialog = dialogs.ChoiceDialog(title, message, 
-                    dialogs.BUTTON_CANCEL, dialogs.BUTTON_QUIT)
+                    dialogs.BUTTON_QUIT, dialogs.BUTTON_CANCEL)
             def callback(dialog):
                 if dialog.choice == dialogs.BUTTON_QUIT:
                     self.quitStage2()
