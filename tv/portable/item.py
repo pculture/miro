@@ -198,7 +198,8 @@ class Item(DDBObject):
     # get updated when an item changes
     def signalChange(self, needsSave=True, needsUpdateUandA=True, needsUpdateXML=True):
         self.expiring = None
-        del self._state
+        if hasattr(self, "_state"):
+            del self._state
         if hasattr(self, "_size"):
             del self._size
         DDBObject.signalChange(self, needsSave=needsSave)

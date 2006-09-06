@@ -197,7 +197,7 @@ def allInDir(directory, subdirs):
 xpcom_includes = parsePkgConfig("pkg-config", xpcom)
 mozIncludeBase = None
 for dir in xpcom_includes['include_dirs']:
-    if allInDir(dir, ['dom', 'gfx', 'widget', 'nsIDOMHTMLElement.h']):
+    if allInDir(dir, ['dom', 'gfx', 'widget']):
         # we can be pretty confident that dir is the mozilla/firefox/xulrunner
         # base include directory
         mozIncludeBase = dir
