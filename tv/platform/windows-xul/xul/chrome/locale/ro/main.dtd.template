@@ -4,16 +4,16 @@
 <!ENTITY main.title "$longAppName">	
 		
 <!ENTITY main.menu.file "File">	
-<!ENTITY main.menu.file.open "Open...">	
+<!ENTITY main.menu.file.open "Deschide...">	
 <!ENTITY main.menu.file.checkversion "Check Version">
 <!ENTITY main.menu.file.removevideo "Remove Video">
 <!ENTITY main.menu.file.savevideoas "Save Video As...">
 <!ENTITY main.menu.file.copyvideourl "Copy Video URL">
 <!ENTITY main.menu.file.quit "Renunţă">
 
-<!ENTITY main.menu.edit "Edit">
+<!ENTITY main.menu.edit "Editează">
 <!ENTITY main.menu.edit.copy "Copy">
-<!ENTITY main.menu.edit.paste "Paste">
+<!ENTITY main.menu.edit.paste "Lipeşte">
 <!ENTITY main.menu.edit.selectall "Select All">
 <!ENTITY main.menu.edit.preferences "Preferinţe">
 

@@ -9,7 +9,7 @@
 <!ENTITY main.menu.file.removevideo "Remove Video">
 <!ENTITY main.menu.file.savevideoas "Save Video As...">
 <!ENTITY main.menu.file.copyvideourl "Copy Video URL">
-<!ENTITY main.menu.file.quit "Quit">
+<!ENTITY main.menu.file.quit "გასვლა">
 
 <!ENTITY main.menu.edit "Edit">
 <!ENTITY main.menu.edit.copy "Copy">
