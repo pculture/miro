@@ -1,4 +1,4 @@
-# Norwegian Bokmål translation for democracy
+# Dutch translation for democracy
 # Copyright (c) (c) 2006 Canonical Ltd, and Rosetta Contributors 2006
 # This file is distributed under the same license as the democracy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2006.
@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2006-08-16 13:07-0400\n"
-"PO-Revision-Date: 2006-06-23 11:36+0000\n"
-"Last-Translator: Tore Norderud <tore.norderud@gmail.com>\n"
-"Language-Team: Norwegian Bokmål <nb@li.org>\n"
+"PO-Revision-Date: 2006-07-02 18:46+0000\n"
+"Last-Translator: elpelso <steven.pelsmaekers@ping.be>\n"
+"Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -206,7 +206,7 @@ msgstr ""
 #: ../../platform/gtk-x11/glade/democracy.glade.h:11
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:4
 msgid "Add Channel"
-msgstr "Legg til kanal"
+msgstr "Kanaal Toevoegen"
 
 msgid "Box"
 msgstr ""
@@ -219,7 +219,7 @@ msgstr ""
 
 #: ../../portable/dialogs.py:60
 msgid "Cancel"
-msgstr "Avbryt"
+msgstr "Annuleren"
 
 msgid ""
 "Location http://foo.bar.com/baz requires a username and password for \"text "
@@ -281,7 +281,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:16
 msgid "Don't start a download if it leaves less than"
-msgstr "Ikke begynn nedlasting hvis det gir mindre enn"
+msgstr "Begin een download niet als er minder overblijft dan"
 
 msgid "GB free."
 msgstr ""
@@ -335,7 +335,7 @@ msgstr ""
 
 #: ../../portable/dialogs.py:62
 msgid "No"
-msgstr "Nei"
+msgstr "Nee"
 
 msgid "Restrict to my 'Movies' folder"
 msgstr ""
@@ -410,49 +410,49 @@ msgstr ""
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:139
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6
 msgid "Username:"
-msgstr "Brukernavn:"
+msgstr "Gebruikersnaam:"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:150
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:7
 msgid "Password:"
-msgstr "Passord:"
+msgstr "Wachtwoord:"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:257
 msgid "Unknown Runtime Error"
-msgstr "Ukjent kjøretidsfeil."
+msgstr "Onbekende runtime error"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:258
 #, python-format
 msgid "An unknown error has occurred %s."
-msgstr "En ukjent feil har oppstått %s."
+msgstr "Een onbekende fout is opgetreden bij %s."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:92
 msgid "_Save Video..."
-msgstr "_Lagre video..."
+msgstr "_Sla Video op..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:92
 msgid "Save this video"
-msgstr "Lagre denne videoen"
+msgstr "Sla deze video op."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:93
 msgid "_Play / Pause"
-msgstr "S_pill / pause"
+msgstr "_Speel / Pauzeer"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:94
 msgid "_Fullscreen"
-msgstr "_Fullskjerm"
+msgstr "_Schermvullend"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:97
 msgid "_Remove Channel"
-msgstr "_Fjern kanal"
+msgstr "_Verwijder Kanaal"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:98
 msgid "_Update Channel"
-msgstr "_Oppdater kanal"
+msgstr "_Hernieuw Kanaal"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:99
 msgid "Copy Channel _Link"
-msgstr "Kopier kanal_link"
+msgstr "Kopiëer Kanaal _Link"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:102
 msgid "_Remove Channel Guide"
@@ -464,11 +464,11 @@ msgstr "_Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:106
 msgid "_Open..."
-msgstr "_Åpne..."
+msgstr "_Open..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:106
 msgid "Open various files"
-msgstr "Åpne flere filer"
+msgstr "Open verschillende bestanden"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:107
 msgid "_New Playlist..."
@@ -504,23 +504,23 @@ msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:111
 msgid "P_references"
-msgstr "Innstillinge_r"
+msgstr "Voo_rkeuren"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:112
 msgid "_Quit"
-msgstr "_Avslutt"
+msgstr "_Afsluiten"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:112
 msgid "Quit the Program"
-msgstr "Avslutt programmet"
+msgstr "Het programma afsluiten"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:113
 msgid "_Channel"
-msgstr "_Kanal"
+msgstr "_Kanaal"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:114
 msgid "_Add Channel..."
-msgstr "_Legg til kanal..."
+msgstr "_Kanaal Toevoegen..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:115
 msgid "_Add Channel Guide..."
@@ -528,11 +528,11 @@ msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
 msgid "U_pdate All Channels"
-msgstr "O_ppdater alle kanaler"
+msgstr "A_lle kanalen vernieuwen"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:117
 msgid "_Help"
-msgstr "_Hjelp"
+msgstr "_Help"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:28
 #, python-format
@@ -572,42 +572,43 @@ msgstr ""
 
 #: ../../portable/compiled_templates/new.py:113 ../../portable/tabs.py:26
 msgid "New Videos"
-msgstr "Nye videoer"
+msgstr "Nieuwe Videos"
 
 #: ../../portable/compiled_templates/new.py:123
 #: ../../portable/compiled_templates/channel.py:327
 #: ../../portable/compiled_templates/channel_content.py:210
 #: ../../portable/compiled_templates/channelfolder.py:287
 msgid "Unwatched"
-msgstr "Ikke sett"
+msgstr "Onbekeken"
 
 #: ../../portable/compiled_templates/new.py:135
 msgid "Expiring"
-msgstr "Utløper"
+msgstr "Vervalt op"
 
 #: ../../portable/compiled_templates/first_time_intro.py:36
 msgid "Democracy Internet TV: How to Get Started"
-msgstr "Democracy Internet TV: Hvordan komme igang"
+msgstr "Democracy Internet TV : Hoe beginnen"
 
 #: ../../portable/compiled_templates/first_time_intro.py:40
 msgid "GO BIG:"
-msgstr "Fullskjerm:"
+msgstr "GA GROOTS:"
 
 #: ../../portable/compiled_templates/first_time_intro.py:42
 msgid "This is your fullscreen button. Click it and lean back."
-msgstr "Dette er din fullskjermsknapp. Klikk den og len deg tilbake."
+msgstr ""
+"Dit is de knop om schermvullend te gaan.  Klik er op and leun achterover."
 
 #: ../../portable/compiled_templates/first_time_intro.py:46
 msgid "NEW STUFF:"
-msgstr "NYTT INNEHOLD:"
+msgstr "NIEUWE ZAKEN:"
 
 #: ../../portable/compiled_templates/first_time_intro.py:48
 msgid ""
 "Blue circles mean the channel has new videos available, green circles mean "
 "you have downloaded videos ready to watch."
 msgstr ""
-"Blå sirkler betyr at kanalen har nye videoer tilgjengelig, grønne sirkler "
-"betyr at du har nedlastede videoer klare til avspilling."
+"Een blauwe cirkel betekent dat een kanaal nieuwe video's beschikbaar heeft, "
+"een groene cirkel betekent dat je al video's hebt, klaar om te kijken."
 
 #: ../../portable/compiled_templates/first_time_intro.py:50
 msgid ""
@@ -615,9 +616,9 @@ msgid ""
 "onclick=\"eventURL('action:doneWithIntro');\">Go to Channel Guide "
 ">></a></strong>"
 msgstr ""
-"<strong i18n:translate=\"\">AVBRYT INTRO: <a style=\"color: #090;\" "
-"href=\"#\" onclick=\"eventURL('action:doneWithIntro');\"Gå til "
-"kanaloversikten >></a></strong>"
+"<strong i18n:translate=\"\">INTRO OVERSLAAN: <a style=\"color: #090;\" "
+"href=\"#\" onclick=\"eventURL('action:doneWithIntro');\">Ga Naar Kanaalgids "
+">></a></strong>"
 
 #: ../../portable/compiled_templates/first_time_intro.py:52
 msgid ""
@@ -625,9 +626,9 @@ msgid ""
 "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
 "channels in the guide are free.</strong>"
 msgstr ""
-"<strong>Legg til kanaler:</strong> Kanaloversikten er din base for TV-"
-"kanaler på Internett. Klikk 'LEGG TIL' for å abonnere på en kanal-- "
-"<strong>kanalene i denne oversikten er gratis.</strong>"
+"<strong>Kanelen Toevoegen:</strong> De kanalengids is je beginpunt voor "
+"internet TV kanalen. Klik op 'TOEVOEGEN' om je op een kanaal te abonneren-- "
+"<strong>de kanalen in de gids zijn gratis.</strong>"
 
 #: ../../portable/compiled_templates/first_time_intro.py:54
 msgid ""
@@ -635,9 +636,10 @@ msgid ""
 "videos-- publishers can offer big, high quality videos. So don't sit around "
 "waiting for videos: start some downloads and check back later."
 msgstr ""
-"<strong>Ikke vent:</strong> Democracy er annerledes enn å se videoer på "
-"nettsteder-- utgiverne kan tilby store, høykvalitetsvideoer. Så ikke sitt å "
-"vent på videoer: Start noen nedlastinger og kom tilbake senere."
+"<strong>Niet Wachten:</strong> Democracy is anders dan video's op een "
+"webpagina bekijken-- uitgevers kunnen grote video's van hoge kwaliteit "
+"aanbieden. Dus ga niet zitten wachten op video's: begin met downloaden en "
+"kom later nog eens terug."
 
 #: ../../portable/compiled_templates/first_time_intro.py:56
 msgid ""
@@ -645,9 +647,10 @@ msgid ""
 "new videos and downloads in the background. Leaving it running means you'll "
 "have new videos when you're ready to watch."
 msgstr ""
-"<strong>La programmet kjøre:</strong> Democracy Player sjekker kanalene "
-"løpende for nye videoer og begynner å hente dem i bakgrunnen. Ved å la "
-"programmet kjøre vil du ha nye videoer klare når du vil se noe."
+"<strong>Niet aflsuiten:</strong> Democracy Player kijkt regelmatig of er "
+"nieuwe video's op een kanaal zijn verschenen en download deze in de "
+"achtergrond. Door Democracy niet af te sluiten heb je nieuwe videos op het "
+"momet dat jij er naar wilt kijken."
 
 #: ../../portable/compiled_templates/first_time_intro.py:58
 msgid ""
@@ -656,33 +659,35 @@ msgid ""
 "room for new videos. You can always keep a video permanently by clicking "
 "'save' and you can set a channel's settings to save videos automatically."
 msgstr ""
-"<strong>Ikke tenk på lagringsplass:</strong> Democracy Player har et "
-"avansert 'utløps'-system som hjelper med å slette gamle videoer så det er "
-"plass til nye. Du kan velge å beholde videoer ved å klikke på 'Lagre' og du "
-"kan sette innstillinger for en kanal slik at videoer lagres automatisk."
+"<strong>Maak je geen zorgen over de beschikbare ruimte:</strong> Net als "
+"TiVo heeft Democracy Player een 'verloop' systeem dat er voor zorgt dat oude "
+"video's worden verwijdert om plaats te maken voor nieuwe. Je  kunt videos "
+"permanent opslaan door op 'opslaan' te klikken. Je kunt voor een kanaal ook "
+"instellen dat de video's automatisch bewaard worden."
 
 #: ../../portable/compiled_templates/external_playback.py:47
 #: ../../portable/compiled_templates/external_playback_continue.py:46
 msgid "Democracy - External Playback Template"
-msgstr "Democracy - Ekstern avspillingsmal"
+msgstr "Democracy - Extern Afspelen-sjabloon"
 
 #: ../../portable/compiled_templates/external_playback.py:64
 msgid ""
 "This file type (${format}) can't be played in the main Democracy window."
 msgstr ""
-"Denne filtypen (${format}) kan ikke avspilles i hovedvinduet til Democracy."
+"Dit bestandstype (${format}) kan niet worden afgespeeld in het Democracy "
+"hoofdscherm."
 
 #: ../../portable/compiled_templates/external_playback.py:68
 msgid "Play Externally"
-msgstr "Avspill eksternt"
+msgstr "Extern Afspelen"
 
 #: ../../portable/compiled_templates/external_playback.py:77
 msgid "Skip Video ${countdown}"
-msgstr "Hopp over video ${countdown}"
+msgstr "Sla Video ${countdown} Over"
 
 #: ../../portable/compiled_templates/download.py:105 ../../portable/tabs.py:28
 msgid "Active Downloads"
-msgstr "Aktive nedlastinger"
+msgstr "Actieve Downloads"
 
 #: ../../portable/compiled_templates/download.py:119
 msgid ""
@@ -695,48 +700,47 @@ msgstr ""
 #: ../../portable/compiled_templates/feed_settings.py:50
 #: ../../portable/compiled_templates/channel.py:85
 msgid "Auto Download"
-msgstr "Automatisk nedlasting"
+msgstr "Download Automatisch"
 
 #: ../../portable/compiled_templates/feed_settings.py:58
 #: ../../portable/compiled_templates/channel.py:262
 msgid "Recommend"
-msgstr "Anbefale"
+msgstr "Aanraden"
 
 #: ../../portable/compiled_templates/feed_settings.py:66
 msgid "Back to Channel"
-msgstr "Tilbake til kanal"
+msgstr "Terug naar Kanaal"
 
 #: ../../portable/compiled_templates/feed_settings.py:68
 msgid "Channel Settings"
-msgstr "Kanalinnstillinger"
+msgstr "Kanaalinstellingen"
 
 #: ../../portable/compiled_templates/feed_settings.py:70
 msgid "Videos expire after:"
-msgstr "Videoer utløper etter:"
+msgstr "Video wordt verwijdert na:"
 
 #: ../../portable/compiled_templates/feed_settings.py:74
 #: ../../portable/compiled_templates/feed_settings.py:81
 msgid "Default"
-msgstr "Standard"
+msgstr "Standaard"
 
 #: ../../portable/compiled_templates/feed_settings.py:128
 msgid "Auto download should:"
-msgstr "Automatisk netlastning skal:"
+msgstr "Automatisch downloaden moet:"
 
 #: ../../portable/compiled_templates/feed_settings.py:161
 msgid ""
 "If I have ${maxnew} ${maxnew2} videos waiting, don't auto download more."
 msgstr ""
-"Hvis jeg har ${maxnew} ${maxnew2} videoer som venter, så stopp den "
-"automatiske netlastningen av videoer."
+"Als er ${maxnew} ${maxnew2} videos wachten, download er dan niet nog meer."
 
 #: ../../portable/compiled_templates/feed_settings.py:163
 msgid "(Keeps channel from hogging disk space)"
-msgstr "(Hindrer kanaler fra å bruke lagringsplass)"
+msgstr "(Zorgt dat kanalen niet teveel schijfruimte innemen)"
 
 #: ../../portable/compiled_templates/feed_settings.py:165
 msgid "Channel URL"
-msgstr "Kanal-URL"
+msgstr "Kanaal URL"
 
 #: ../../portable/compiled_templates/channel.py:171
 #: ../../portable/compiled_templates/channel_content.py:97
@@ -770,7 +774,7 @@ msgstr ""
 
 #: ../../portable/compiled_templates/channel.py:254
 msgid "Settings"
-msgstr "Innstillinger"
+msgstr "Instellingen"
 
 #: ../../portable/compiled_templates/channel.py:280
 msgid "Looking for videos at this URL"
@@ -786,13 +790,13 @@ msgstr ""
 #: ../../portable/compiled_templates/channel_content.py:221
 #: ../../portable/compiled_templates/channelfolder.py:298
 msgid "Watched"
-msgstr "Sett"
+msgstr "Bekeken"
 
 #: ../../portable/compiled_templates/channel.py:349
 #: ../../portable/compiled_templates/channel_content.py:232
 #: ../../portable/compiled_templates/channelfolder.py:309
 msgid "Saved"
-msgstr "Lagret"
+msgstr "Opgeslagen"
 
 #: ../../portable/compiled_templates/multi_playlist.py:48
 msgid "${count} Playlists selected"
@@ -804,7 +808,7 @@ msgstr ""
 
 #: ../../portable/compiled_templates/library.py:76 ../../portable/tabs.py:25
 msgid "My Collection"
-msgstr "Min samling"
+msgstr "Mijn Collectie"
 
 #: ../../portable/compiled_templates/download_item.py:105
 msgid "SAVE"
@@ -824,35 +828,37 @@ msgstr ""
 
 #: ../../portable/compiled_templates/search.py:47
 msgid "Nothing to display.<br></br> Enter a query in the search field above."
-msgstr "Ingenting å vise.<br></br> Tast inn et søkeord i feltet over."
+msgstr ""
+"Niets weer te geven.<br></br> Voer in het zoek veld hierboven een "
+"zoekopdracht in."
 
 #: ../../portable/compiled_templates/search.py:52
 msgid "Searching..."
-msgstr "Søker..."
+msgstr "Zoeken..."
 
 #: ../../portable/compiled_templates/search.py:75
 msgid "Video Search"
-msgstr "Videosøk"
+msgstr "Video Zoeken"
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:43
 msgid "Simple translation"
-msgstr "Enkel oversettelse"
+msgstr "Eenvoudige vertaling"
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:57
 msgid "truck stop in a ${can}"
-msgstr "truck stop in a ${can}"
+msgstr "truck stop in een ${can}"
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:61
 msgid ""
 "This is a ${car} and this is a ${truck} <span>This text is <b "
 "style=\"color:red\">raw</b> text</span>"
 msgstr ""
-"This is a ${car} and this is a ${truck} <span>This text is <b "
-"style=\"color:red\">raw</b> text</span>"
+"Dit is een ${car} en dit is een ${truck} <span>Deze tekst is <b "
+"style=\"color:red\">ruwe</b> tekst</span>"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:56
 msgid "Continue To Next Video"
-msgstr "Fortsett til neste video"
+msgstr "Ga Verder Met Volgende Video"
 
 #: ../../portable/item.py:342 ../../portable/item.py:1178
 #, python-format
@@ -885,7 +891,7 @@ msgstr ""
 
 #: ../../portable/item.py:376
 msgid "Pending Auto Download"
-msgstr "Ventende automatiske nedlastinger"
+msgstr "Wacht Op Automatisch Inladen"
 
 #: ../../portable/item.py:381
 msgid "UNWATCHED"
@@ -931,7 +937,7 @@ msgstr ""
 #: ../../portable/storedatabase.py:699
 #, python-format
 msgid "%s database save failed"
-msgstr "%s lagring av databasen feilet"
+msgstr "%s database kon niet opgeslagen worden"
 
 #: ../../portable/storedatabase.py:700
 #, python-format
@@ -948,17 +954,17 @@ msgstr "Ok"
 
 #: ../../portable/dialogs.py:63
 msgid "Quit"
-msgstr "Avslutt"
+msgstr "Afsluiten"
 
 #: ../../portable/dialogs.py:64
 #: ../../platform/gtk-x11/glade/democracy.glade.h:22
 msgid "Migrate"
-msgstr "Migrer"
+msgstr "Verhuizen"
 
 #: ../../portable/dialogs.py:65
 #: ../../platform/gtk-x11/glade/democracy.glade.h:15
 msgid "Don't Migrate"
-msgstr "Ikke migrer"
+msgstr "Niet Verhuizen"
 
 #: ../../portable/dialogs.py:66
 msgid "Download"
@@ -1061,7 +1067,7 @@ msgstr ""
 
 #: ../../portable/tabs.py:27
 msgid "Search"
-msgstr "Søk"
+msgstr "Zoeken"
 
 #: ../../portable/feed.py:702
 msgid "Error loading feed"
@@ -1080,7 +1086,7 @@ msgstr ""
 #: ../../portable/feed.py:819
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:4
 msgid "Channel is not compatible with Democracy!"
-msgstr "Kanalen er ikke kompatibel med Democracy!"
+msgstr "Kanaal werkt niet met Democracy!"
 
 #: ../../portable/feed.py:820
 msgid ""
@@ -1094,7 +1100,7 @@ msgstr ""
 
 #: ../../portable/guide.py:238
 msgid "Channel Guide"
-msgstr "Kanaloversikt"
+msgstr "Kanalengids"
 
 #: ../../portable/app.py:655 ../../portable/app.py:666
 #: ../../portable/app.py:691 ../../portable/app.py:710
@@ -1151,14 +1157,14 @@ msgstr ""
 
 #: ../../portable/app.py:747
 msgid "Are you sure you want to quit?"
-msgstr "Er du sikker på at du vil avslutte?"
+msgstr "Weet U zeker dat U wenst te stoppen?"
 
 #: ../../portable/app.py:748
 #, python-format
 msgid "You have %d download still in progress."
 msgid_plural "You have %d downloads still in progress."
-msgstr[0] "Du har %d nedlasting fortsatt gående."
-msgstr[1] "Du har %d nedlastinger fortsatt gående."
+msgstr[0] "U bent nog %d bestand aan het inladen."
+msgstr[1] "U bent nog %d bestanden aan het inladen."
 
 #: ../../portable/app.py:1089
 msgid "Invalid Value"
@@ -1182,11 +1188,11 @@ msgstr ""
 
 #: ../../portable/app.py:1328
 msgid "Democracy - Add Channel"
-msgstr "Democracy - Legg til kanal"
+msgstr "Democracy - Kanaal Toevoegen"
 
 #: ../../portable/app.py:1328
 msgid "Enter the URL of the channel to add"
-msgstr "Tast inn URL for kanalen som skal legges til"
+msgstr "Voer de URL van het toe te voegen kanaal in"
 
 #: ../../portable/app.py:1349
 msgid "Democracy - Add Channel Guide"
@@ -1231,40 +1237,40 @@ msgid ""
 "1 month\n"
 "Never"
 msgstr ""
-"1 dag\n"
-"3 dager\n"
-"6 dager\n"
-"10 dager\n"
-"1 måned\n"
-"Aldri"
+"1 dag↵\n"
+"3 dagen↵\n"
+"6 dagen↵\n"
+"10 dagen↵\n"
+"1 maand↵\n"
+"Nooit↵"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:7
 msgid "<b>Channels</b>"
-msgstr "<b>Kanaler</b>"
+msgstr "<b>Kanalen</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:8
 msgid "<b>Disk Space</b>"
-msgstr "<b>Lagringsplass</b>"
+msgstr "<b>Schijfruimte</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:9
 msgid "<b>Downloads</b>"
-msgstr "<b>Nedlastinger</b>"
+msgstr "<b>Downloads</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:10
 msgid "<b>Movies Directory</b>"
-msgstr "<b>Videobibliotek</b>"
+msgstr "<b>Films Map</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:12
 msgid "By default, videos expire after"
-msgstr "Som standard utløper videoer etter"
+msgstr "Video's vervallen standaard na"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:13
 msgid "Check Channels for new content"
-msgstr "Sjekk kanaler for nytt innhold"
+msgstr "Controleer Kanalen op nieuwe inhoud"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:14
 msgid "Democracy Player"
-msgstr "Democracy Player"
+msgstr "Democracy Speler"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:17
 msgid ""
@@ -1272,41 +1278,41 @@ msgid ""
 "Every hour\n"
 "Manually"
 msgstr ""
-"Hvert 30. minutt\n"
-"Hver time\n"
-"Manuelt"
+"Elke 30 minuten↵\n"
+"Elk uur↵\n"
+"Handmatig"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:20
 msgid "GB free"
-msgstr "GB ledig"
+msgstr "GB vrij"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:21
 msgid "KB/s when my computer is active"
-msgstr "KB/s når datamaskinen er aktiv"
+msgstr "KB/s als mijn computer actief is"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:23
 msgid "Migrate existing movies?"
-msgstr "Migrer eksisterende videoer?"
+msgstr "Bestaande films verhuizen?"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:24
 msgid "Preferences"
-msgstr "Innstillinger"
+msgstr "Instellingen"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:25
 msgid "Select Movies Directory"
-msgstr "Velg videobibliotek"
+msgstr "Selecteer Films Map"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:26
 msgid "Store downloaded movies in"
-msgstr "Lagre nedlastede videoer i"
+msgstr "Bewaar gedownloade films in"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:27
 msgid "To avoid slowdowns, limit upstream to"
-msgstr "For å unngå overbelastning, begrens opplasting til"
+msgstr "Om vertragingen te voorkomen, beperk de uitvoersnelheid tot"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:28
 msgid "Volume:"
-msgstr "Lydstyrke:"
+msgstr "Volume:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:29
 msgid ""
@@ -1314,9 +1320,9 @@ msgid ""
 "migrate your existing downloads there?  (Currently dowloading movies will "
 "not be moved until they finish.)"
 msgstr ""
-"Du har valgt en ny mappe å hente videoer til. Skal Democracy migrer dine "
-"eksisterende videoer til det nye stedet? (Videoer som lastes ned nå blir "
-"ikke flyttet før de er ferdige.)"
+"Je hebt een nieuwe map geselecteerd om films in op te slaan. Moet Democracy "
+"je opgeslagen bestanden daarheen verplaatsen? (Films die nog ingeladen "
+"worden zullen pas verplaatst worden als ze klaar zijn.)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:1
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:1
@@ -1340,76 +1346,76 @@ msgstr "'"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:5
 msgid "Please enter the URL of the channel you'd like to add."
-msgstr "Vennligst tast inn URL for den kanalen du vil legge til."
+msgstr "Voer aub de URL in van het toe te voegen kanaal."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:5
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
 "videos, and descriptions may look funny."
 msgstr ""
-"Men vi vil gjøre vårt beste for å hente filene. Det tar kanskje lengre tid å "
-"liste videoene, og beskrivelsene kan se rare ut."
+"Maar we zullen ons best doen om de bestanden op te halen. Misschien kost het "
+"wat extra tijd om de video's te rangschikken, en zien de beschrijvingen er "
+"mogelijk vreemd uit."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:7
 msgid "Please contact the publishers of"
-msgstr "Vennligst kontakt utgiveren av"
+msgstr "Neem aub contact op met de uitgevers van"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:8
 msgid ""
 "and ask if they can supply a feed in a format that will work with Democracy."
 msgstr ""
-"og spør om de kan tilby en kanal i et format som vil virke med Democracy."
+"en vraag of zij de aanvoer kunnen leveren in een formaat dat wel met "
+"Democracy werkt."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:4
 msgid "Channel requires authentication"
-msgstr "Kanalen krever godkjenning"
+msgstr "Kanaal behoeft authenticatie"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:5
 msgid ""
 "Please enter the username and password given to you by this channel's "
 "publisher."
-msgstr ""
-"Vennligst tast inn brukernavn og passord gitt til deg av kanalens utgiver."
+msgstr "Geef aub de gebruikersnaam en het wachtwoord in voor dit kanaal."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:4
 msgid "Question"
-msgstr "Spørsmål"
+msgstr "Vraag"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:5
 msgid ""
 "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
 "$publisher."
 msgstr ""
-"$longAppName versjon $appVersion ($appRevision); copyright (c) 2005, 2006 "
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
 "$publisher."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:4
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:5
 msgid "About $longAppName"
-msgstr "Om $longAppName"
+msgstr "Over $longAppName"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:9
 msgid "Copy log to clipboard"
-msgstr "Kopier logg til utklippstavlen"
+msgstr "Kopieer log naar het plakbord"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:8
 msgid "Open up the bug tracker"
-msgstr "Åpne feilrapporteringsmodulen"
+msgstr "Open de bug tracker"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5
 msgid "Please help us fix it. Copy and paste all the"
-msgstr "Vennligst hjelp oss fikse det. Kopier og lim inn alle"
+msgstr "Help ons aub dit op te lossen. Kopieer en plak alle"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6
 msgid ""
 "information into our bug tracker and tell us what you were doing when the"
 msgstr ""
-"informasjonen i vår feilrapporteringsmodul og fortell oss hva det var du "
-"gjorde da"
+"informatie in ons bugs-registratiesysteem en vertel wat je deed toen het"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:8
 msgid "problem occurred."
-msgstr "problemet skjedde. (Forklaringen skal være på engelsk.)"
+msgstr "probleem zich voordeed."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:10
 msgid ""
@@ -1417,13 +1423,13 @@ msgid ""
 "errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
 "with your help we're fixing problems fast!"
 msgstr ""
-"Så, vennligst start Democracy på nytt (eller du får kanskje liknende feil). "
-"Beklager bryet. Democracy er fortsatt i beta, men med din hjelp får vi "
-"rettet feilene fortere!"
+"Start hierna Democracy Speler opnieuw op (anders doen zich wellicht "
+"gerelateerde fouten voor). Onze excuses voor het ongemak. Democracy Speler "
+"is nog in beta-fase, maar met jouw hulp lossen we problemen snel op!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:4
 msgid "You found a bug in Democracy!"
-msgstr "Du har funnet en feil i Democracy!"
+msgstr "Je hebt een bug in Democracy gevonden!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:4
 msgid "$longAppName"
@@ -1432,112 +1438,3 @@ msgstr "$longAppName"
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:13
 msgid "Exit"
 msgstr ""
-
-#, python-format
-#~ msgid "%s requires a username and password for \"%s\"."
-#~ msgstr "%s krever et brukernavn og passord for \"%s\"."
-
-#~ msgid "Not a DTV-style channel"
-#~ msgstr "Ikke en DTV-kanal"
-
-#, python-format
-#~ msgid ""
-#~ "But we'll try our best to grab the files.\n"
-#~ "- It may take time to list the videos\n"
-#~ "- Descriptions may look funny\n"
-#~ "\n"
-#~ "Please contact the publishers of %s and ask if they have a DTV-style channel."
-#~ msgstr ""
-#~ "Men vi vil prøve vårt beste å hente filene.\n"
-#~ "- Det kan ta tid å liste videoene\n"
-#~ "- Beskrivelser vises kanskje med feil\n"
-#~ "\n"
-#~ "Vennligst kontakt utgiverne av %s og spør om de har en DTV-kanal."
-
-#~ msgid "Continue"
-#~ msgstr "Fortsett"
-
-#~ msgid "DTV Version Alert"
-#~ msgstr "DTV versjonalarm"
-
-#~ msgid ""
-#~ "A new version of DTV is available.\n"
-#~ "\n"
-#~ "Would you like to download it now?"
-#~ msgstr ""
-#~ "En ny versjon av DTV er tilgjengelig.\n"
-#~ "\n"
-#~ "Vil du laste den ned nå?"
-
-#~ msgid "DTV Version Check"
-#~ msgstr "DTV versjonsjekk"
-
-#~ msgid "This version of DTV is up to date."
-#~ msgstr "Denne versjonen av DTV er oppdatert."
-
-#, python-format
-#~ msgid ""
-#~ "%s was unable to save its database: %s.\n"
-#~ "Recent changes may be lost."
-#~ msgstr ""
-#~ "%s klarte ikke å lagre databasen sin: %s.\n"
-#~ "Siste endringer kan ha blitt tapt."
-
-#~ msgid "Remove Channel"
-#~ msgstr "Fjern kanal"
-
-#, python-format
-#~ msgid ""
-#~ "Are you sure you want to <b>remove</b> the channel\n"
-#~ "   '<b>%s</b>'?\n"
-#~ "<b>This operation cannot be undone.</b>"
-#~ msgstr ""
-#~ "Er du sikker på at du vil <b>fjerne</b> kanalen\n"
-#~ "   '<b>%s</b>'?\n"
-#~ "<b>Denne operasjonen kan ikke angres.</b>"
-
-#~ msgid "Pending Manual Download"
-#~ msgstr "Ventende manuelle nedlastinger"
-
-#~ msgid "Save"
-#~ msgstr "Lagre"
-
-#~ msgid "Expires"
-#~ msgstr "Utløper"
-
-#~ msgid "Download Error"
-#~ msgstr "Nedlastingsfeil"
-
-#~ msgid "Videos on this Channel"
-#~ msgstr "Videoer i denne kanalen"
-
-#~ msgid "Could not connect to server"
-#~ msgstr "Kunne ikke koble til tjener"
-
-#, python-format
-#~ msgid "Could not connect to server: %s"
-#~ msgstr "Kunne ikke koble til tjener: %s"
-
-#, python-format
-#~ msgid ""
-#~ "%s was unable to save its database: %s.\n"
-#~ "We suggest deleting files from the full disk or simply deleting some movies "
-#~ "from your collection.\n"
-#~ "Recent changes may be lost.\n"
-#~ "Quit Anyway?"
-#~ msgstr ""
-#~ "%s klarte ikke å lagre databasen sin: %s.\n"
-#~ "Vi foreslår å slette filer fra den fulle lagringsområdet eller og enktelt "
-#~ "slette noen videoer fra din samling.\n"
-#~ "Siste endringer kan ha blitt tapt.\n"
-#~ "Avslutt likevel?"
-
-#, python-format
-#~ msgid ""
-#~ "%s was unable to save its database: %s.\n"
-#~ "Recent changes may be lost.\n"
-#~ "Quit Anyway?"
-#~ msgstr ""
-#~ "%s klarte ikke å lagre databasen sin: %s.\n"
-#~ "Siste endringer kan ha blitt tapt.\n"
-#~ "Avslutt likevel?"
