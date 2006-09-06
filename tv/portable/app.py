@@ -1712,6 +1712,7 @@ def _defaultFeeds():
         'http://live.watchmactv.com/wp-rss2.php',
         'http://some-pig.net/videos/rss.php?i=2',
         'http://videobomb.com/rss/posts/list',
+        'http://thechannelchannel.tv/featured.rss',
     ]
     if len(platform.mac_ver()[0]) > 0:
         defaultFeedURLs.append('http://libsyn.com/podcasts/donmc/_static/scoipod.xml')
