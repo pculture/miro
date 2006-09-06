@@ -37,6 +37,7 @@
 
 <!ENTITY main.menu.playback "Playback">
 <!ENTITY main.menu.playback.play "Play Video">
+<!ENTITY main.menu.playback.pause "Pause Video">
 <!ENTITY main.menu.playback.stop "Stop Video">
 <!ENTITY main.menu.playback.next "Next Video">
 <!ENTITY main.menu.playback.previous "Previous Video">
