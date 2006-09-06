@@ -267,6 +267,9 @@ class UpdateRegionBase:
             self.parent.domHandler.changeItem(self.tid, xmlString)
         self.idle_queued = False
 
+    def onUnlink(self):
+        pass
+
 class UpdateRegion(UpdateRegionBase):
     def __init__(self, anchorId, anchorType, view, templateFunc, parent, name):
         UpdateRegionBase.__init__(self, anchorId, anchorType, templateFunc, parent)
@@ -285,6 +288,9 @@ class UpdateRegion(UpdateRegionBase):
 class ConfigUpdateRegion(UpdateRegionBase):
     def hookupCallbacks(self):
         config.addChangeCallback(self.onChange)
+
+    def onUnlink(self):
+        config.removeChangeCallback(self.onChange)
 
     def currentXML(self):
         return self.templateFunc(self.tid).read()
@@ -372,6 +378,8 @@ class Handle:
             pass
         self.document = None
         self.trackedViews = []
+        for region in self.updateRegions:
+            region.onUnlink()
         self.updateRegions = []
         for handle in self.subHandles:
             handle.unlinkTemplate()
