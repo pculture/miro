@@ -264,6 +264,8 @@ jsBridge.prototype = {
     }
     this.leaveTotallyFullscreen();
     this.document.removeEventListener('mousemove', this.mousemoveListener, true);
+    this.document.removeEventListener('mouseup', this.mouseupListener, true);
+    this.document.removeEventListener('mousedown', this.mousedownListener, true);
   },
 
   xulNavigateDisplay: function(area, uri) {
