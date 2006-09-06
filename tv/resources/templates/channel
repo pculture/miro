@@ -56,8 +56,7 @@ feed.updateIcons()
 isFolder = False
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
-# This should unlink matchingItems and all of it's children
-allItems.unlink()
+matchingItemsUnsorted.unlink()
 thisFeedView.unlink()
 if feed.idExists():
     feed.markAsViewed()

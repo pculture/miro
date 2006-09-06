@@ -56,10 +56,8 @@ for feed in allFeeds:
 isFolder = True
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
-# This should unlink matchingItems and all of it's children
-allItems.unlink()
+matchingItemsUnsorted.unlink()
 thisFolderView.unlink()
-childrenView.unlink()
 for feed in allFeeds:
     if feed.idExists():
         feed.markAsViewed()

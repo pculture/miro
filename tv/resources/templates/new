@@ -16,11 +16,8 @@
 global searchFilter
 searchFilter = lambda x: filters.matchingItems(x, None)
 
-allUnwatchedItems = views.items.filter(filters.unwatchedItems)
-allExpiringItems = views.items.filter(filters.expiringItems)
-
-matchingUnwatchedItems = allUnwatchedItems.filter(lambda x:searchFilter(x))
-matchingExpiringItems = allExpiringItems.filter(lambda x:searchFilter(x))
+matchingUnwatchedItems = views.unwatchedItems.filter(lambda x:searchFilter(x))
+matchingExpiringItems = views.expiringItems.filter(lambda x:searchFilter(x))
 
 unwatchedItems = matchingUnwatchedItems.sort(sorts.item)
 expiringItems = matchingExpiringItems.sort(sorts.item)
@@ -31,14 +28,14 @@ def updateSearchString(newSearch):
         searchFilter = lambda x: filters.matchingItems(x, None)
     else:
         searchFilter = lambda x: filters.matchingItems(x, newSearch)
-    allUnwatchedItems.recomputeFilter(matchingUnwatchedItems)
-    allExpiringItems.recomputeFilter(matchingExpiringItems)
+    views.unwatchedItems.recomputeFilter(matchingUnwatchedItems)
+    views.expiringItems.recomputeFilter(matchingExpiringItems)
 
 ]]>
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
-allUnwatchedItems.unlink()
-allExpiringItems.unlink()
+matchingUnwatchedItems.unlink()
+matchingExpiringItems.unlink()
 ]]>
     </t:execOnUnload>
 

@@ -7,6 +7,7 @@ import config
 import eventloop
 from templatehelper import quoteattr, escape, attrPattern, rawAttrPattern, resourcePattern, generateId
 from xhtmltools import urlencode, toUTF8Bytes
+from itertools import chain
 
 if os.environ.has_key('DEMOCRACY_RECOMPILE_TEMPLATES'):
     import template_compiler
@@ -132,6 +133,10 @@ class TrackedView:
         self.view.addRemoveCallback(self.onRemove)
         #print "done (%f)" % (time.clock()-start)
 
+    def onUnlink(self):
+        self.view.removeChangeCallback(self.onChange)
+        self.view.removeAddCallback(self.onAdd)
+        self.view.removeRemoveCallback(self.onRemove)
 
     def currentXML(self, item):
         return self.templateFunc(item.object, self.name, self.origView, item.tid).read()
@@ -280,11 +285,20 @@ class UpdateRegion(UpdateRegionBase):
         self.view.addChangeCallback(self.onChange)
         self.view.addAddCallback(self.onChange)
         self.view.addRemoveCallback(self.onChange)
-        self.view.addViewChangeCallback (self.onChange)
+        self.view.addViewChangeCallback(self.onChange)
+
+    def onUnlink(self):
+        self.view.removeChangeCallback(self.onChange)
+        self.view.removeAddCallback(self.onChange)
+        self.view.removeRemoveCallback(self.onChange)
+        self.view.removeViewChangeCallback(self.onChange)
 
 class ConfigUpdateRegion(UpdateRegionBase):
     def hookupCallbacks(self):
         config.addChangeCallback(self.onChange)
+
+    def onUnlink(self):
+        config.removeChangeCallback(self.onChange)
 
     def currentXML(self):
         return self.templateFunc(self.tid).read()
@@ -371,6 +385,8 @@ class Handle:
         except:
             pass
         self.document = None
+        for o in chain(self.trackedViews, self.updateRegions):
+            o.onUnlink()
         self.trackedViews = []
         self.updateRegions = []
         for handle in self.subHandles:

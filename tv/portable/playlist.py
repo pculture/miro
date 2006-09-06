@@ -32,6 +32,16 @@ class PlaylistMixin:
         return self.trackedItems.view
 
     def setSearch(self, searchTerms):
+        """Set a search to limit the items in this playlist.  
+
+        NOTE: When this is called by the template code, it will change the
+        results of getView() and getItems().  I (BDK), feel like this is a
+        kind of ugly design, but I don't want to change things right now,
+        because that would involve extra sorts on the playlist view.  Right
+        now the only time we use getView() is in the template code, so I
+        didn't want to fix an issue that doesn't matter.
+        """
+
         def searchFilter(obj):
             return filters.matchingItems(obj, searchTerms)
         self.trackedItems.setFilter(searchFilter)

@@ -13,7 +13,7 @@
     <t:execOnLoad><![CDATA[
 
 playlist = views.db.getObjectByID(int(kargs['id']))
-playlistView = playlist.getView().filter(lambda o: True)
+playlistView = playlist.getView()
 thisPlaylistView = views.playlists.filter(lambda x: x is playlist)
 playlist.setSearch(None)
 
@@ -23,7 +23,6 @@ def updateSearchString(newSearch):
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
 thisPlaylistView.unlink()
-playlistView.unlink()
 ]]>
 </t:execOnUnload>
 </head>

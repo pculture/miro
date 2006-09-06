@@ -15,9 +15,7 @@
 global searchFilter
 searchFilter = lambda x: filters.matchingItems(x, None)
 
-watchableItems = views.items.filter(filters.watchableItems)
-
-matchingItems = watchableItems.filter(lambda x:searchFilter(x))
+matchingItems = views.watchableItems.filter(lambda x:searchFilter(x))
 libraryItems = matchingItems.sort(sorts.item)
 
 def updateSearchString(newSearch):
@@ -26,16 +24,14 @@ def updateSearchString(newSearch):
         searchFilter = lambda x: filters.matchingItems(x, None)
     else:
         searchFilter = lambda x: filters.matchingItems(x, newSearch)
-    watchableItems.recomputeFilter(matchingItems)
+    views.watchableItems.recomputeFilter(matchingItems)
 
 ]]>
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
-# This should unlink matchingItems and all of it's children
-watchableItems.unlink()
+matchingItems.unlink()
 ]]>
     </t:execOnUnload>
-
 </head>
 
 <body>

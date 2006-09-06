@@ -293,10 +293,10 @@ class DynamicDatabase:
         self.rootDB = rootDB
         self.cursor = None
         self.parent = parent
-        self.changeCallbacks = []
-        self.addCallbacks = []
-        self.removeCallbacks = []
-        self.viewChangeCallbacks = []
+        self.changeCallbacks = set()
+        self.addCallbacks = set()
+        self.removeCallbacks = set()
+        self.viewChangeCallbacks = set()
         self.subFilters = []
         self.subSorts = []
         self.subMaps = []
@@ -535,7 +535,7 @@ class DynamicDatabase:
     # index of the changed object
     def addChangeCallback(self, function):
         self.confirmDBThread()
-        self.changeCallbacks.append(function)
+        self.changeCallbacks.add(function)
 
     ##
     # registers a function to call when an item is added to the list
@@ -544,7 +544,7 @@ class DynamicDatabase:
     # index of the new object
     def addAddCallback(self, function):
         self.confirmDBThread()
-        self.addCallbacks.append(function)
+        self.addCallbacks.add(function)
 
     ##
     # registers a function to call when the view is updated, even if no items change.
@@ -552,7 +552,7 @@ class DynamicDatabase:
     # @param function a function that takes in no parameters
     def addViewChangeCallback(self, function):
         self.confirmDBThread()
-        self.viewChangeCallbacks.append(function)
+        self.viewChangeCallbacks.add(function)
 
     ##
     # registers a function to call when an item is removed from the view
@@ -561,7 +561,7 @@ class DynamicDatabase:
     # object to be deleted
     def addRemoveCallback(self, function):
         self.confirmDBThread()
-        self.removeCallbacks.append(function)
+        self.removeCallbacks.add(function)
 
     def removeChangeCallback(self, function):
         self.confirmDBThread()
@@ -1041,10 +1041,10 @@ class DynamicDatabase:
                     view.subMaps = []
                     view.subSorts = []
                     view.indexes = {}
-                    view.addCallbacks = []
-                    view.removeCallbacks = []
-                    view.changeCallbacks = []
-                    view.viewChangeCallbacks = []
+                    view.addCallbacks = set()
+                    view.removeCallbacks = set()
+                    view.changeCallbacks = set()
+                    view.viewChangeCallbacks = set()
                     return
 
     ##

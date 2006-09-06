@@ -56,13 +56,11 @@ def updateSearchString(newSearch):
 ]]>
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
-allNormalDownloads.unlink()
-allPendingDownloads.unlink()
+matchingNormalDLs.unlink()
 allExternalDownloads.unlink()
+matchingPendingDLs.unlink()
 ]]>
     </t:execOnUnload>
-
-
 </head>
 
 <body>
