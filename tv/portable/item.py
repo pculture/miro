@@ -132,12 +132,13 @@ class Item(DDBObject):
                 for video in videos:
                     self.videoFilename = video
             else:
-                target_dir = config.get(prefs.NON_VIDEO_DIRECTORY)
-                if not filename_root.startswith(target_dir):
-                    if isinstance(self, FileItem):
-                        self.migrate (target_dir)
-                    else:
-                        self.downloader.migrate (target_dir)
+                if self.getFeed().getURL() != "dtv:directoryfeed":
+                    target_dir = config.get(prefs.NON_VIDEO_DIRECTORY)
+                    if not filename_root.startswith(target_dir):
+                        if isinstance(self, FileItem):
+                            self.migrate (target_dir)
+                        else:
+                            self.downloader.migrate (target_dir)
                 self.isContainerItem = False
         else:
             self.isContainerItem = False
