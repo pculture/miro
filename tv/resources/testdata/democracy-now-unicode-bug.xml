@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.democracynow.org/podcast-style.xsl"?>
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:media="http://search.yahoo.com/mrss/" xmlns:gm="http://www.google.com/schemas/gm/1.1" version="2.0">
+ <channel>
+  <title>Democracy Now! Video</title>
+  <atom:link rel="self" href="http://www.democracynow.org/podcast-video.xml" type="application/rss+xml" title="Democracy Now! Video" xmlns:atom="http://www.w3.org/2005/Atom"/>
+  <link>http://www.democracynow.org/</link>
+  <description>A daily radio and TV program on over 350 stations, pioneering the largest community media collaboration in the U.S., offered in MPEG4 video format.</description>
+  <language>en</language>
+  <pubDate>Wed, 06 Sep 2006 16:40:01 -0400</pubDate>
+  <lastBuildDate>Wed, 06 Sep 2006 16:40:01 -0400</lastBuildDate>
+  <managingEditor>Amy Goodman &lt;mail@democracynow.org&gt;</managingEditor>
+  <webMaster>mail@democracynow.org</webMaster>
+  <image>
+   <url>http://images.democracynow.org/dn-logo-for-podcast.png</url>
+   <link>http://www.democracynow.org/</link>
+   <width>144</width><height>144</height>
+   <title>Democracy Now!</title>
+  </image>
+  <itunes:author>Amy Goodman</itunes:author>
+  <itunes:category text="News"/>
+  <itunes:category text="Public Radio"/>
+  <itunes:owner><itunes:email>mlc@democracynow.org</itunes:email><itunes:name>Mike Castleman</itunes:name></itunes:owner>
+  <itunes:image href="http://images.democracynow.org/dn-logo-for-itunes.jpg" />
+  <itunes:explicit>no</itunes:explicit>
+  <docs>http://blogs.law.harvard.edu/tech/rss</docs>
+
+  <item>
+   <title>Democracy Now! - Wednesday, September 06, 2006</title>
+   <link>http://www.democracynow.org/index.pl?issue=20060906</link>
+   <description>Headlines for September 6, 2006; Mexico Court Declares Calderon Winner of Disputed Election, Lopez Obrador Vows to Form Parallel Gov't; Father Recounts Burning Marine Van and Himself After Learning of Son's Death in Iraq; Robert Fisk on Lebanon: "The Ceasefire Can't Work"</description>
+   <pubDate>Wed, 06 Sep 2006 10:00:00 -0400</pubDate>
+   <guid isPermaLink="false">dn2006-0906_vid</guid>
+   <enclosure url="http://www.archive.org/download/dn2006-0906_vid/dn2006-0906_256kb.mp4" length="123913575" type="video/mp4" />
+   <itunes:explicit>no</itunes:explicit>
+   <itunes:duration>59:00</itunes:duration>
+   <media:content url="http://www.archive.org/download/dn2006-0906_vid/dn2006-0906_256kb.mp4" fileSize="123913575" expression="full" lang="en" type="video/mp4" duration="3540" medium="video" bitrate="256" framerate="29.97" width="320" height="240">
+    <media:title type="plain">Democracy Now! - Wednesday, September 06, 2006</media:title>
+    <media:description type="plain">Headlines for September 6, 2006; Mexico Court Declares Calderon Winner of Disputed Election, Lopez Obrador Vows to Form Parallel Gov't; Father Recounts Burning Marine Van and Himself After Learning of Son's Death in Iraq; Robert Fisk on Lebanon: "The Ceasefire Can't Work"</media:description>
+    <media:rating scheme="urn:simple">nonadult</media:rating>
+    <media:player url="http://www.archive.org/stream/dn2006-0906_vid/dn2006-0906_256kb.mp4"/>
+    <gm:preview enabled="true" start="00:00:17.300" end="00:01:16.000"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/Calderon7.7.06.jpg" width="80" height="100" time="0:10:46"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/arredondo.jpg" width="80" height="100" time="0:27:13"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/Fisk8-5.jpg" width="80" height="100" time="0:53:25"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/amy-studio.jpeg" width="80" height="100" time="0:00:00"/>
+   </media:content>
+  </item>
+  <item>
+   <title>Democracy Now! - Tuesday, September 05, 2006</title>
+   <link>http://www.democracynow.org/index.pl?issue=20060905</link>
+   <description>Headlines for September 5, 2006; Rebuilding Lebanon: Residents Struggle to Cope with Destruction; Robert Fisk on His Interview with Former Iranian President Khatami, Why "The IDF Could Not Protect the People of Israel" and More</description>
+   <pubDate>Tue, 05 Sep 2006 10:00:00 -0400</pubDate>
+   <guid isPermaLink="false">dn2006-0905_vid</guid>
+   <enclosure url="http://www.archive.org/download/dn2006-0905_vid/dn2006-0905_256kb.mp4" length="125482850" type="video/mp4" />
+   <itunes:explicit>no</itunes:explicit>
+   <itunes:duration>59:00</itunes:duration>
+   <media:content url="http://www.archive.org/download/dn2006-0905_vid/dn2006-0905_256kb.mp4" fileSize="125482850" expression="full" lang="en" type="video/mp4" duration="3540" medium="video" bitrate="256" framerate="29.97" width="320" height="240">
+    <media:title type="plain">Democracy Now! - Tuesday, September 05, 2006</media:title>
+    <media:description type="plain">Headlines for September 5, 2006; Rebuilding Lebanon: Residents Struggle to Cope with Destruction; Robert Fisk on His Interview with Former Iranian President Khatami, Why "The IDF Could Not Protect the People of Israel" and More</media:description>
+    <media:rating scheme="urn:simple">nonadult</media:rating>
+    <media:player url="http://www.archive.org/stream/dn2006-0905_vid/dn2006-0905_256kb.mp4"/>
+    <gm:preview enabled="true" start="00:00:17.300" end="00:01:19.000"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/Lebanon8-5.jpg" width="80" height="100" time="0:13:51"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/Fisk8-5.jpg" width="80" height="100" time="0:26:30"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/amy-studio.jpeg" width="80" height="100" time="0:00:00"/>
+   </media:content>
+  </item>
+  <item>
+   <title>Democracy Now! - Monday, September 04, 2006</title>
+   <link>http://www.democracynow.org/index.pl?issue=20060904</link>
+   <description>We Shall Overcome: An Hour With Legendary Folk Singer &amp; Activist Pete Seeger</description>
+   <pubDate>Mon, 04 Sep 2006 10:00:00 -0400</pubDate>
+   <guid isPermaLink="false">dn2006-0904_vid</guid>
+   <enclosure url="http://www.archive.org/download/dn2006-0904_vid/dn2006-0904_256kb.mp4" length="123054228" type="video/mp4" />
+   <itunes:explicit>no</itunes:explicit>
+   <itunes:duration>59:00</itunes:duration>
+   <media:content url="http://www.archive.org/download/dn2006-0904_vid/dn2006-0904_256kb.mp4" fileSize="123054228" expression="full" lang="en" type="video/mp4" duration="3540" medium="video" bitrate="256" framerate="29.97" width="320" height="240">
+    <media:title type="plain">Democracy Now! - Monday, September 04, 2006</media:title>
+    <media:description type="plain">We Shall Overcome: An Hour With Legendary Folk Singer &amp; Activist Pete Seeger</media:description>
+    <media:rating scheme="urn:simple">nonadult</media:rating>
+    <media:player url="http://www.archive.org/stream/dn2006-0904_vid/dn2006-0904_256kb.mp4"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/amy-studio.jpeg" width="80" height="100" time="0:00:00"/>
+   </media:content>
+  </item>
+  <item>
+   <title>Democracy Now! - Friday, September 01, 2006</title>
+   <link>http://www.democracynow.org/index.pl?issue=20060901</link>
+   <description>Headlines for September 1, 2006; We Will Not Be Silent: Movement Grows to Challenge Racial Profiling at Airports; Jazz Legend Charlie Haden on His Life, His Music and His Politics</description>
+   <pubDate>Fri, 01 Sep 2006 10:00:00 -0400</pubDate>
+   <guid isPermaLink="false">dn2006-0901_vid</guid>
+   <enclosure url="http://www.archive.org/download/dn2006-0901_vid/dn2006-0901_256kb.mp4" length="124138410" type="video/mp4" />
+   <itunes:explicit>no</itunes:explicit>
+   <itunes:duration>59:00</itunes:duration>
+   <media:content url="http://www.archive.org/download/dn2006-0901_vid/dn2006-0901_256kb.mp4" fileSize="124138410" expression="full" lang="en" type="video/mp4" duration="3540" medium="video" bitrate="256" framerate="29.97" width="320" height="240">
+    <media:title type="plain">Democracy Now! - Friday, September 01, 2006</media:title>
+    <media:description type="plain">Headlines for September 1, 2006; We Will Not Be Silent: Movement Grows to Challenge Racial Profiling at Airports; Jazz Legend Charlie Haden on His Life, His Music and His Politics</media:description>
+    <media:rating scheme="urn:simple">nonadult</media:rating>
+    <media:player url="http://www.archive.org/stream/dn2006-0901_vid/dn2006-0901_256kb.mp4"/>
+    <gm:preview enabled="true" start="00:00:17.300" end="00:000:57.000"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/HadenC9-1.jpg" width="80" height="100" time="0:17:48"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/JarrarR9-1.jpg" width="80" height="100" time="0:08:56"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/amy-studio.jpeg" width="80" height="100" time="0:00:00"/>
+   </media:content>
+  </item>
+  <item>
+   <title>Democracy Now! - Thursday, August 31, 2006</title>
+   <link>http://www.democracynow.org/index.pl?issue=20060831</link>
+   <description>Headlines for August 31, 2006; Shocking Lancet Study: 8,000 Murders, 35,000 Rapes and Sexual Assaults in Haiti During U.S.-Backed Coup Regime After Aristide Ouster; Eyewitnesses Account: UN Forces Open Fire on Poor Haitian Neighborhood; Women Recount Gang Rape, Abuse at Hearing Against Haitian Death Squad Leader Emmanuel Constant; Public Outcry Forces Ohio to Delay Destruction of Presidential Ballots; "I Am Not Willing To Kill Or Be Killed For Something I Don't Believe In" - AWOL Soldier Refuses to Return to Iraq</description>
+   <pubDate>Thu, 31 Aug 2006 10:00:00 -0400</pubDate>
+   <guid isPermaLink="false">dn2006-0831_vid</guid>
+   <enclosure url="http://www.archive.org/download/dn2006-0831_vid/dn2006-0831_256kb.mp4" length="124561911" type="video/mp4" />
+   <itunes:explicit>no</itunes:explicit>
+   <itunes:duration>59:00</itunes:duration>
+   <media:content url="http://www.archive.org/download/dn2006-0831_vid/dn2006-0831_256kb.mp4" fileSize="124561911" expression="full" lang="en" type="video/mp4" duration="3540" medium="video" bitrate="256" framerate="29.97" width="320" height="240">
+    <media:title type="plain">Democracy Now! - Thursday, August 31, 2006</media:title>
+    <media:description type="plain">Headlines for August 31, 2006; Shocking Lancet Study: 8,000 Murders, 35,000 Rapes and Sexual Assaults in Haiti During U.S.-Backed Coup Regime After Aristide Ouster; Eyewitnesses Account: UN Forces Open Fire on Poor Haitian Neighborhood; Women Recount Gang Rape, Abuse at Hearing Against Haitian Death Squad Leader Emmanuel Constant; Public Outcry Forces Ohio to Delay Destruction of Presidential Ballots; "I Am Not Willing To Kill Or Be Killed For Something I Don't Believe In" - AWOL Soldier Refuses to Return to Iraq</media:description>
+    <media:rating scheme="urn:simple">nonadult</media:rating>
+    <media:player url="http://www.archive.org/stream/dn2006-0831_vid/dn2006-0831_256kb.mp4"/>
+    <gm:preview enabled="true" start="00:00:17.300" end="00:01:46.000"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/HaitiWoman.jpg" width="80" height="100" time="0:14:54"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/PeleHaiti.jpg" width="80" height="100" time="0:28:55"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/Toto.jpg" width="80" height="100" time="0:37:58"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/OhioRecount.jpg" width="80" height="100" time="0:47:55"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/wilkersn.jpg" width="80" height="100" time="0:53:14"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/amy-studio.jpeg" width="80" height="100" time="0:00:00"/>
+   </media:content>
+  </item>
+  <item>
+   <title>Democracy Now! - Wednesday, August 30, 2006</title>
+   <link>http://www.democracynow.org/index.pl?issue=20060830</link>
+   <description>Headlines for August 30, 2006; Congressmember Murtha: "I'm Disappointed" by Hillary Clinton's Refusal to Endorse Troop Withdrawal Plan; Congressmember Weiner Gets It Wrong On Palestinian Group He Tried To Bar From U.S.; Lebanon Considers Suing Israel for War Crimes; "We Don't Want War" - Leading Iranian Dissident and Former Political Prisoner Akbar Ganji</description>
+   <pubDate>Wed, 30 Aug 2006 10:00:00 -0400</pubDate>
+   <guid isPermaLink="false">dn2006-0830_vid</guid>
+   <enclosure url="http://www.archive.org/download/dn2006-0830_vid/dn2006-0830_256kb.mp4" length="125394063" type="video/mp4" />
+   <itunes:explicit>no</itunes:explicit>
+   <itunes:duration>59:00</itunes:duration>
+   <media:content url="http://www.archive.org/download/dn2006-0830_vid/dn2006-0830_256kb.mp4" fileSize="125394063" expression="full" lang="en" type="video/mp4" duration="3540" medium="video" bitrate="256" framerate="29.97" width="320" height="240">
+    <media:title type="plain">Democracy Now! - Wednesday, August 30, 2006</media:title>
+    <media:description type="plain">Headlines for August 30, 2006; Congressmember Murtha: "I'm Disappointed" by Hillary Clinton's Refusal to Endorse Troop Withdrawal Plan; Congressmember Weiner Gets It Wrong On Palestinian Group He Tried To Bar From U.S.; Lebanon Considers Suing Israel for War Crimes; "We Don't Want War" - Leading Iranian Dissident and Former Political Prisoner Akbar Ganji</media:description>
+    <media:rating scheme="urn:simple">nonadult</media:rating>
+    <media:player url="http://www.archive.org/stream/dn2006-0830_vid/dn2006-0830_256kb.mp4"/>
+    <gm:preview enabled="true" start="00:00:17.300" end="00:01:17.000"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/WeinerA8-30.jpg" width="80" height="100" time="0:13:05"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/Qana8-30.jpg" width="80" height="100" time="0:32:44"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/GanjiA8-30.jpg" width="80" height="100" time="0:43:27"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/MurthaJ8-30.jpg" width="80" height="100" time="0:09:10"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/amy-studio.jpeg" width="80" height="100" time="0:00:00"/>
+   </media:content>
+  </item>
+  <item>
+   <title>Democracy Now! - Tuesday, August 29, 2006</title>
+   <link>http://www.democracynow.org/index.pl?issue=20060829</link>
+   <description>Headlines for August 29, 2006; Hurricane Katrina, One Year Later: Democracy Now! Looks Back to the Days After the Disaster; Breach of Faith: Times-Picayune Editor Jed Horne on "Neoconservative" Ray Nagin and "Federal Oppression" in the South; One Year After Katrina, New Orleans Public Housing Projects Remain Closed; New Orleans Judge Slated to Release Prisoners Citing Breakdown in Criminal Justice System</description>
+   <pubDate>Tue, 29 Aug 2006 10:00:00 -0400</pubDate>
+   <guid isPermaLink="false">dn2006-0829_vid</guid>
+   <enclosure url="http://www.archive.org/download/dn2006-0829_vid/dn2006-0829_256kb.mp4" length="124806935" type="video/mp4" />
+   <itunes:explicit>no</itunes:explicit>
+   <itunes:duration>59:00</itunes:duration>
+   <media:content url="http://www.archive.org/download/dn2006-0829_vid/dn2006-0829_256kb.mp4" fileSize="124806935" expression="full" lang="en" type="video/mp4" duration="3540" medium="video" bitrate="256" framerate="29.97" width="320" height="240">
+    <media:title type="plain">Democracy Now! - Tuesday, August 29, 2006</media:title>
+    <media:description type="plain">Headlines for August 29, 2006; Hurricane Katrina, One Year Later: Democracy Now! Looks Back to the Days After the Disaster; Breach of Faith: Times-Picayune Editor Jed Horne on "Neoconservative" Ray Nagin and "Federal Oppression" in the South; One Year After Katrina, New Orleans Public Housing Projects Remain Closed; New Orleans Judge Slated to Release Prisoners Citing Breakdown in Criminal Justice System</media:description>
+    <media:rating scheme="urn:simple">nonadult</media:rating>
+    <media:player url="http://www.archive.org/stream/dn2006-0829_vid/dn2006-0829_256kb.mp4"/>
+    <gm:preview enabled="true" start="00:00:17.300" end="00:01:03.000"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/katrinacleanup.jpg" width="80" height="100" time="0:11:29"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/nagin.jpg" width="80" height="100" time="0:21:27"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/NOhousing.jpg" width="80" height="100" time="0:42:31"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/evidence.jpg" width="80" height="100" time="0:51:29"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/amy-studio.jpeg" width="80" height="100" time="0:00:00"/>
+   </media:content>
+  </item>
+  <item>
+   <title>Democracy Now! - Monday, August 28, 2006</title>
+   <link>http://www.democracynow.org/index.pl?issue=20060828</link>
+   <description>Headlines for August 28, 2006; Top Hurricane Expert Says Officials Threatened His Job Over Pre-Katrina Warnings; For Whom is New Orleans Being Rebuilt? City Demographics Radically Altered With Many Black Residents Still Unable to Return; Common Ground Collective Continues to Bring Thousands of Volunteers From Around the World to Gulf Coast For Post-Katrina Relief Efforts; Lebanese MP Ghassan Moukheiber on the Future of Lebanon Politics, Hezbollah and the Ongoing Israeli Occupation</description>
+   <pubDate>Mon, 28 Aug 2006 10:00:00 -0400</pubDate>
+   <guid isPermaLink="false">dn2006-0828_vid</guid>
+   <enclosure url="http://www.archive.org/download/dn2006-0828_vid/dn2006-0828_256kb.mp4" length="124737063" type="video/mp4" />
+   <itunes:explicit>no</itunes:explicit>
+   <itunes:duration>59:00</itunes:duration>
+   <media:content url="http://www.archive.org/download/dn2006-0828_vid/dn2006-0828_256kb.mp4" fileSize="124737063" expression="full" lang="en" type="video/mp4" duration="3540" medium="video" bitrate="256" framerate="29.97" width="320" height="240">
+    <media:title type="plain">Democracy Now! - Monday, August 28, 2006</media:title>
+    <media:description type="plain">Headlines for August 28, 2006; Top Hurricane Expert Says Officials Threatened His Job Over Pre-Katrina Warnings; For Whom is New Orleans Being Rebuilt? City Demographics Radically Altered With Many Black Residents Still Unable to Return; Common Ground Collective Continues to Bring Thousands of Volunteers From Around the World to Gulf Coast For Post-Katrina Relief Efforts; Lebanese MP Ghassan Moukheiber on the Future of Lebanon Politics, Hezbollah and the Ongoing Israeli Occupation</media:description>
+    <media:rating scheme="urn:simple">nonadult</media:rating>
+    <media:player url="http://www.archive.org/stream/dn2006-0828_vid/dn2006-0828_256kb.mp4"/>
+    <gm:preview enabled="true" start="00:00:17.300" end="00:01:20.000"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/hurricanekatrina02.jpg" width="80" height="100" time="0:12:58"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/PublicHousing8-28.jpg" width="80" height="100" time="0:24:46"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/CommonGround8-28.jpg" width="80" height="100" time="0:31:43"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/MoukheiberG8-28.jpg" width="80" height="100" time="0:52:51"/>
+    <media:thumbnail url="http://images.democracynow.org/images/story_images/amy-studio.jpeg" width="80" height="100" time="0:00:00"/>
+   </media:content>
+  </item>
+ </channel>
+</rss>

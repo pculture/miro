@@ -58,9 +58,7 @@ class UnicodeFeedTestCase(schedulertest.EventLoopTest):
         handle.close()
 
         myFeed = feed.Feed("file://"+self.filename)
-        
-        # a hack to get the feed to update without eventloop
-        myFeed.feedparser_callback(feedparser.parse(myFeed.initialHTML))
+        self.forceFeedParserCallback(myFeed)
         
         # The title should be "Chinese numbers " followed by the
         # Chinese characters for 0-9
@@ -76,6 +74,10 @@ class UnicodeFeedTestCase(schedulertest.EventLoopTest):
 
         # Again, description is the same as title, but surrounded by a <span>
         self.assertEqual(len(item.getDescription()), 23)
+
+    def forceFeedParserCallback(self, myFeed):
+        # a hack to get the feed to update without eventloop
+        myFeed.feedparser_callback(feedparser.parse(myFeed.initialHTML))
 
     # This is a latin1 feed that claims to be UTF-8
     def testInvalidLatin1Feed(self):
@@ -376,6 +378,14 @@ class UnicodeFeedTestCase(schedulertest.EventLoopTest):
         thumb = myItem.getThumbnailURL()
         if thumb is not None:
             self.assertEqual(str(thumb),thumb)
+
+    def testDemocracyNowBug(self):
+        url = resource.url("testdata/democracy-now-unicode-bug.xml")
+        myFeed = feed.Feed(url)
+        self.forceFeedParserCallback(myFeed)
+        for item in myFeed.items:
+            u'booya' in item.getTitle().lower()
+            print item.getTitle()
 
     def testGetText(self):
         # FIXME this only works on GTK platforms. See #3831
