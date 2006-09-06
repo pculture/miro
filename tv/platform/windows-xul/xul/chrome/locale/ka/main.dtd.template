@@ -9,7 +9,7 @@
 <!ENTITY main.menu.file.removevideo "Remove Video">
 <!ENTITY main.menu.file.savevideoas "Save Video As...">
 <!ENTITY main.menu.file.copyvideourl "Copy Video URL">
-<!ENTITY main.menu.file.quit "Quit">
+<!ENTITY main.menu.file.quit "გასვლა">
 
 <!ENTITY main.menu.edit "Edit">
 <!ENTITY main.menu.edit.copy "Copy">
@@ -37,6 +37,7 @@
 
 <!ENTITY main.menu.playback "Playback">
 <!ENTITY main.menu.playback.play "Play Video">
+<!ENTITY main.menu.playback.pause "Pause Video">
 <!ENTITY main.menu.playback.stop "Stop Video">
 <!ENTITY main.menu.playback.next "Next Video">
 <!ENTITY main.menu.playback.previous "Previous Video">

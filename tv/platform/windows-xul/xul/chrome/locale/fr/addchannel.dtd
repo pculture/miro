@@ -1,5 +1,5 @@
 <!ENTITY nbsp                " ">
 <!ENTITY rsaquo              "'">
 
-<!ENTITY addchannel.title    "Rajouter un canal">
-<!ENTITY addchannel.prompt   "Please enter the URL of the channel you'd like to add.">
+<!ENTITY addchannel.title    "Ajouter une chaîne">
+<!ENTITY addchannel.prompt   "Veuillez saisir l'adresse URL de la chaîne que vous souhaitez ajouter.">

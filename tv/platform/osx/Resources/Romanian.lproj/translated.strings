@@ -4,431 +4,973 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2006-08-03 15:42-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2006-09-06 12:08-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:107 */
+/* Flag: untranslated */
+"$log" = "$log";
+
+/* Flag: untranslated */
+"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>";
+
+/* Flag: untranslated */
+"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:";
+
+/* Flag: untranslated */
+"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions.";
+
+/* Flag: untranslated */
+"OK" = "OK";
+
+/* Flag: untranslated */
+"The fall of $shortAppName??" = "The fall of $shortAppName??";
+
+"About Democracy" = "Despre Democracy";
+
+/* Flag: untranslated */
+"Add a Channel..." = "Add a Channel..." /* = "Adauga un canal..." */;
+
+/* Flag: untranslated */
+"Add a Guide..." = "Add a Guide..." /* = "Adauga un ghid..." */;
+
+/* Flag: untranslated */
+"Bring All to Front" = "Bring All to Front";
+
+/* Flag: untranslated */
+"Channel" = "Channel";
+
+/* Flag: untranslated */
+"Check for Update" = "Check for Update";
+
+/* Flag: untranslated */
+"Clear Menu" = "Clear Menu";
+
+/* Flag: untranslated */
+"Copy" = "Copy";
+
+/* Flag: untranslated */
+"Copy Channel Link" = "Copy Channel Link" /* = "Copie legatura canalului" */;
+
+/* Flag: untranslated */
+"Copy Video Link" = "Copy Video Link" /* = "Copie legatura video-ului" */;
+
+/* Flag: untranslated */
+"Cut" = "Cut" /* = "Decupează" */;
+
+"Delete" = "Şterge";
+
+/* Flag: untranslated */
+"Democracy" = "Democracy" /* = "Democratic" */;
+
+/* Flag: untranslated */
+"Democracy Help" = "Democracy Help" /* = "Ajutor pentru Democratic" */;
+
+/* Flag: untranslated */
+"Donate to Democracy" = "Donate to Democracy" /* = "Donează pentru Democratic" */;
+
+"Edit" = "Editează";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7 */
+/* Flag: untranslated */
+"File" = "File";
+
+/* Flag: untranslated */
+"Full Screen" = "Full Screen";
+
+/* Flag: untranslated */
+"Half Screen" = "Half Screen";
+
+/* Flag: untranslated */
+"Help" = "Help";
+
+/* Flag: untranslated */
+"Hide Democracy" = "Hide Democracy";
+
+/* Flag: untranslated */
+"Hide Others" = "Hide Others";
+
+/* Flag: untranslated */
+"MainMenu" = "MainMenu";
+
+/* Flag: untranslated */
+"Minimize" = "Minimize";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11 */
+/* Flag: untranslated */
+"New Channel Folder..." = "New Channel Folder...";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10 */
+/* Flag: untranslated */
+"New Playlist Folder..." = "New Playlist Folder...";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:9 */
+/* Flag: untranslated */
+"New Playlist..." = "New Playlist...";
+
+"Open Recent" = "Deschide recent";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:8 */
+"Open..." = "Deschide...";
+
+"Paste" = "Lipeşte";
+
+/* Flag: untranslated */
+"Play Video" = "Play Video";
+
+/* Flag: untranslated */
+"Preferencesâ¦" = "Preferencesâ¦";
+
+/* Flag: untranslated */
+"Quit Democracy" = "Quit Democracy";
+
+/* Flag: untranslated */
+"Remove Channel..." = "Remove Channel..." /* = "Şterge canal..." */;
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:12 */
+"Rename..." = "Redenumeşte...";
+
+/* Flag: untranslated */
+"Save Video..." = "Save Video...";
+
+/* Flag: untranslated */
+"Select All" = "Select All";
+
+/* Flag: untranslated */
+"Services" = "Services";
+
+/* Flag: untranslated */
+"Show All" = "Show All";
+
+/* Flag: untranslated */
+"Stop Video" = "Stop Video";
+
+/* Flag: untranslated */
+"Tell a Friend" = "Tell a Friend" /* = "Spune-i unui prieten" */;
+
+/* Flag: untranslated */
+"Update All Channels" = "Update All Channels" /* = "Actualizeaza toate canalele" */;
+
+/* Flag: untranslated */
+"Update Channel" = "Update Channel" /* = "Actualizeaza canalul" */;
+
+"Video" = "Video";
+
+"Window" = "Fereastră";
+
+/* Flag: untranslated */
+"Zoom" = "Zoom" /* = "Mărire" */;
+
+/* Flag: untranslated */
+"%channel feed%" = "%channel feed%" /* = "%legatura canalului%" */;
+
+/* Flag: untranslated */
+"%channel title%" = "%channel title%" /* = "%titlul canalului%" */;
+
+/* Flag: untranslated */
+"%donation label%" = "%donation label%" /* = "%eticheta donaţie%" */;
+
+"00:00:00" = "00:00:00";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:11 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:4 */
+"Add Channel" = "Adaugă canal";
+
+/* Flag: untranslated */
+"Box" = "Box";
+
+/* Flag: untranslated */
+"FullScreen Controls" = "FullScreen Controls";
+
+/* Flag: untranslated */
+"VideoWindow" = "VideoWindow";
+
+/* File: ../../portable/dialogs.py:60 */
+"Cancel" = "Renunţă";
+
+/* Flag: untranslated */
+"Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n";
+
+/* Flag: untranslated */
+"Password:\n" = "Password:\n";
+
+/* Flag: untranslated */
+"Username and password required" = "Username and password required";
+
+/* Flag: untranslated */
+"Username:\n\n" = "Username:\n\n";
+
+/* Flag: untranslated */
+" limit upstream to" = " limit upstream to";
+
+/* Flag: untranslated */
+"(You must restart Democracy for this change to take effect)\n" = "(You must restart Democracy for this change to take effect)\n";
+
+/* Flag: untranslated */
+"(movies directory path goes here)" = "(movies directory path goes here)";
+
+/* Flag: untranslated */
+"1 day" = "1 day" /* = "o zi" */;
+
+/* Flag: untranslated */
+"1 month" = "1 month" /* = "o lună" */;
+
+/* Flag: untranslated */
+"10 days" = "10 days" /* = "10 zile" */;
+
+/* Flag: untranslated */
+"3 days" = "3 days" /* = "3 zile" */;
+
+/* Flag: untranslated */
+"3 hours" = "3 hours" /* = "3 ore" */;
+
+"4" = "4";
+
+"5" = "5";
+
+/* Flag: untranslated */
+"6 days" = "6 days" /* = "6 zile" */;
+
+/* Flag: untranslated */
+"By default, videos expire after:" = "By default, videos expire after:" /* = "Din start, clip-urile expiră după:" */;
+
+/* Flag: untranslated */
+"Change" = "Change" /* = "Schimbă" */;
+
+/* Flag: untranslated */
+"Check channels for new content:" = "Check channels for new content:";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:16 */
+"Don't start a download if it leaves less than" = "Nu porni o descărcare dacă rămâne mai puţin de";
+
+/* Flag: untranslated */
+"GB free." = "GB free.";
+
+/* Flag: untranslated */
+"KB/s when my computer is active." = "KB/s when my computer is active.";
+
+/* Flag: untranslated */
+"Never" = "Never";
+
+/* Flag: untranslated */
+"OtherViews" = "OtherViews";
+
+/* Flag: untranslated */
+"Run Democracy at startup" = "Run Democracy at startup";
+
+/* Flag: untranslated */
+"Store downloaded movies in:" = "Store downloaded movies in:";
+
+/* Flag: untranslated */
+"To avoid internet slowdowns," = "To avoid internet slowdowns,";
+
+/* Flag: untranslated */
+"every 30 minutes" = "every 30 minutes";
+
+/* Flag: untranslated */
+"every hour" = "every hour";
+
+"manually" = "manual";
+
+/* Flag: untranslated */
+"(parsed %d files - found %d videos)" = "(parsed %d files - found %d videos)";
+
+/* Flag: untranslated */
+"Back" = "Back" /* = "Înapoi" */;
+
+/* Flag: untranslated */
+"Browse" = "Browse" /* = "Răsfoieşte" */;
+
+/* Flag: untranslated */
+"Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?" = "Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?" /* = "Playerul Democratic poate gasi toate clipurile din calculatorul tau, ajutându-te sa-ţi organizezi colectia.↵\n↵\n↵\nVrei ca Playerul Democratic sa caute clipurile din calculatorul tău?" */;
+
+/* Flag: untranslated */
+"Next" = "Next" /* = "Urmatorul" */;
+
+/* File: ../../portable/dialogs.py:62 */
+"No" = "Nu";
+
+/* Flag: untranslated */
+"Restrict to my 'Movies' folder" = "Restrict to my 'Movies' folder" /* = "Limitează doar la directorul meu cu 'Clipuri'" */;
+
+/* Flag: untranslated */
+"Restrict to my full home folder" = "Restrict to my full home folder" /* = "Limitează doar la directorul meu acasă" */;
+
+/* Flag: untranslated */
+"Search custom location:" = "Search custom location:" /* = "Caută într-o locaţie aleasă:" */;
+
+/* Flag: untranslated */
+"Searching for Videos" = "Searching for Videos" /* = "Caută Clipuri" */;
+
+/* Flag: untranslated */
+"The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question." = "The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question.";
+
+/* Flag: untranslated */
+"We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?" = "We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?";
+
+/* Flag: untranslated */
+"Welcome to Internet TV!" = "Welcome to Internet TV!";
+
+/* Flag: untranslated */
+"Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n";
+
+/* File: ../../portable/dialogs.py:61 */
+"Yes" = "Da";
+
+/* Flag: untranslated */
+"You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Democracy is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Democracy Channel Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n" = "You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Democracy is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Democracy Channel Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n";
+
+/* Flag: untranslated */
+"%message%\n%message%" = "%message%\n%message%";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:139 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6 */
 "Username:" = "Nume utilizator:";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:118 */
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:150 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:7 */
 "Password:" = "Parolă:";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:133 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:4 */
-"Channel requires authentication" = "Canalul necesită autentificare";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:133 */
-/* Flag: python-format */
-"%s requires a username and password for \"%s\"." = "%s necesită un nume de utilizator şi o parolă pentru \"%s\".";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:146 */
-"Not a DTV-style channel" = "Nu este un canal de tipul DTV";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:147 */
-/* Flag: python-format */
-"But we'll try our best to grab the files.\n- It may take time to list the videos\n- Descriptions may look funny\n\nPlease contact the publishers of %s and ask if they have a DTV-style channel." = "Dar vom încerca tot ceea ce e posibil pentru a prelua fişierele\n- S-ar putea sa ia timp pentru a lista secvenţele video\n- Descrierile pot arata ciudat\n\nVă rugăm contactaţi editorii lui %s şi întrebaţi-i dacă au un canal de tipul DTV.";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:148 */
-"Continue" = "Continuare";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:158 */
-"DTV Version Alert" = "Alertă - versiunea DTV";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:159 */
-"A new version of DTV is available.\n\nWould you like to download it now?" = "O nouă versiune DTV este disponibilă.\n\nVrei să o descarc acum ?";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:166 */
-"DTV Version Check" = "Verificare versiune DTV";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:167 */
-"This version of DTV is up to date." = "Ai ultima versiune DTV.";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:172 */
-/* File: ../../portable/app.py:661 */
-/* Flag: python-format */
-"%s database save failed" = "Salvarea bazei de date %s a eşuat.";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:174 */
-/* Flag: python-format */
-"%s was unable to save its database: %s.\nRecent changes may be lost." = "%s nu a putut să-şi salveze baza de date: %s.\nSchimbările recente pot fi pierdute.";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:179 */
-"Remove Channel" = "Şterge canalul";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:180 */
-/* Flag: python-format */
-"Are you sure you want to <b>remove</b> the channel\n   '<b>%s</b>'?\n<b>This operation cannot be undone.</b>" = "Eşti sigur ca vrei să <b>ştergi</b> canalul\n   '<b>%s</b>'?\n<b>Această operaţie este definitivă.</b>";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:210 */
-"Are you sure you want to quit?" = "Eşti sigur că vrei să renunţi?";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:220 */
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:257 */
 "Unknown Runtime Error" = "Eroare de execuţie necunoscută";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:221 */
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:258 */
 /* Flag: python-format */
 "An unknown error has occurred %s." = "O eroare necunoscută a apărut %s.";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:75 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:92 */
 "_Save Video..." = "_Salvează secvenţa video";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:75 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:92 */
 "Save this video" = "Salvează acest fişier";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:76 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:93 */
 "_Play / Pause" = "_Porneşte / Pauză";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:77 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:94 */
 "_Fullscreen" = "_Tot ecranul";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:80 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:97 */
 "_Remove Channel" = "Şter_ge canalul";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:81 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:98 */
 "_Update Channel" = "_Actualizează canalul";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:82 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:99 */
 "Copy Channel _Link" = "Copiaza a_dresa canalului";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:85 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:102 */
+/* Flag: untranslated */
+"_Remove Channel Guide" = "_Remove Channel Guide";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:105 */
 "_Video" = "Secvenţa _video";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:86 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:106 */
 "_Open..." = "_Deschide";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:86 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:106 */
 "Open various files" = "Deschide diferite fişiere";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:87 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:107 */
+/* Flag: untranslated */
+"_New Playlist..." = "_New Playlist...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:107 */
+/* Flag: untranslated */
+"Create new playlist" = "Create new playlist";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:108 */
+/* Flag: untranslated */
+"_New Playlist Folder..." = "_New Playlist Folder..." /* = "_Un nou director pentru playlist..." */;
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:108 */
+/* Flag: untranslated */
+"Create new playlist folder" = "Create new playlist folder" /* = "Creează un nou director pentru playlist" */;
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:109 */
+/* Flag: untranslated */
+"_New Channel Folder..." = "_New Channel Folder..." /* = "_Un nou director pentru canal..." */;
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:109 */
+/* Flag: untranslated */
+"Create new channel folder" = "Create new channel folder" /* = "Creează un nou director pentru canal" */;
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:110 */
+/* Flag: untranslated */
+"_Rename..." = "_Rename..." /* = "_Redenumeşte..." */;
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:110 */
+/* Flag: untranslated */
+"Rename selected item " = "Rename selected item " /* = "Redenumeşte obiectul selectat " */;
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:111 */
 "P_references" = "_Preferinţe";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:88 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:112 */
 "_Quit" = "_Renunţă";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:88 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:112 */
 "Quit the Program" = "Închide programul";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:89 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:113 */
 "_Channel" = "_Canal";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:90 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:114 */
 "_Add Channel..." = "_Adauga canal...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:91 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:115 */
+/* Flag: untranslated */
+"_Add Channel Guide..." = "_Add Channel Guide..." /* = "_Adaugă un ghid pentru canal..." */;
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116 */
 "U_pdate All Channels" = "Actuali_zează toate canalele";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:92 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:117 */
 "_Help" = "A_jutor";
 
-/* File: ../../portable/compiled_templates/new.py:233 */
-/* File: ../../portable/compiled_templates/new.py:569 */
-/* File: ../../portable/compiled_templates/download.py:228 */
-/* File: ../../portable/compiled_templates/channel.py:235 */
-/* File: ../../portable/compiled_templates/channel.py:571 */
-/* File: ../../portable/compiled_templates/channel.py:907 */
-/* File: ../../portable/compiled_templates/channel.py:1243 */
-/* File: ../../portable/compiled_templates/channel.py:1579 */
-/* File: ../../portable/compiled_templates/channel.py:1915 */
-/* File: ../../portable/compiled_templates/library.py:228 */
-/* File: ../../portable/compiled_templates/download_item.py:205 */
-/* File: ../../portable/compiled_templates/search.py:211 */
-"Pending Auto Download" = "Aştept descărcarea automată";
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:28 */
+/* Flag: untranslated */
+"Error importing democracy modules:\n%s" = "Error importing democracy modules:\n%s" /* = "Eroare la incărcarea modulelor Democratic:↵\n%s" */;
 
-/* File: ../../portable/compiled_templates/new.py:253 */
-/* File: ../../portable/compiled_templates/new.py:589 */
-/* File: ../../portable/compiled_templates/download.py:248 */
-/* File: ../../portable/compiled_templates/channel.py:255 */
-/* File: ../../portable/compiled_templates/channel.py:591 */
-/* File: ../../portable/compiled_templates/channel.py:927 */
-/* File: ../../portable/compiled_templates/channel.py:1263 */
-/* File: ../../portable/compiled_templates/channel.py:1599 */
-/* File: ../../portable/compiled_templates/channel.py:1935 */
-/* File: ../../portable/compiled_templates/library.py:248 */
-/* File: ../../portable/compiled_templates/download_item.py:225 */
-/* File: ../../portable/compiled_templates/search.py:231 */
-"Pending Manual Download" = "Aştept descărcarea manuală";
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:32 */
+/* Flag: untranslated */
+"Starting up" = "Starting up" /* = "Porneşte" */;
 
-/* File: ../../portable/compiled_templates/new.py:277 */
-/* File: ../../portable/compiled_templates/new.py:357 */
-/* File: ../../portable/compiled_templates/new.py:613 */
-/* File: ../../portable/compiled_templates/new.py:693 */
-/* File: ../../portable/compiled_templates/new.py:787 */
-/* File: ../../portable/compiled_templates/download.py:272 */
-/* File: ../../portable/compiled_templates/download.py:352 */
-/* File: ../../portable/compiled_templates/channel.py:279 */
-/* File: ../../portable/compiled_templates/channel.py:359 */
-/* File: ../../portable/compiled_templates/channel.py:615 */
-/* File: ../../portable/compiled_templates/channel.py:695 */
-/* File: ../../portable/compiled_templates/channel.py:951 */
-/* File: ../../portable/compiled_templates/channel.py:1031 */
-/* File: ../../portable/compiled_templates/channel.py:1287 */
-/* File: ../../portable/compiled_templates/channel.py:1367 */
-/* File: ../../portable/compiled_templates/channel.py:1623 */
-/* File: ../../portable/compiled_templates/channel.py:1703 */
-/* File: ../../portable/compiled_templates/channel.py:1959 */
-/* File: ../../portable/compiled_templates/channel.py:2039 */
-/* File: ../../portable/compiled_templates/channel.py:2251 */
-/* File: ../../portable/compiled_templates/library.py:272 */
-/* File: ../../portable/compiled_templates/library.py:352 */
-/* File: ../../portable/compiled_templates/download_item.py:249 */
-/* File: ../../portable/compiled_templates/download_item.py:329 */
-/* File: ../../portable/compiled_templates/search.py:255 */
-/* File: ../../portable/compiled_templates/search.py:335 */
-"Unwatched" = "Nevizionat";
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:126 */
+/* Flag: untranslated */
+"Loading window" = "Loading window" /* = "Încărcare fereastră" */;
 
-/* File: ../../portable/compiled_templates/new.py:281 */
-/* File: ../../portable/compiled_templates/new.py:311 */
-/* File: ../../portable/compiled_templates/new.py:361 */
-/* File: ../../portable/compiled_templates/new.py:617 */
-/* File: ../../portable/compiled_templates/new.py:647 */
-/* File: ../../portable/compiled_templates/new.py:697 */
-/* File: ../../portable/compiled_templates/download.py:276 */
-/* File: ../../portable/compiled_templates/download.py:306 */
-/* File: ../../portable/compiled_templates/download.py:356 */
-/* File: ../../portable/compiled_templates/channel.py:283 */
-/* File: ../../portable/compiled_templates/channel.py:313 */
-/* File: ../../portable/compiled_templates/channel.py:363 */
-/* File: ../../portable/compiled_templates/channel.py:619 */
-/* File: ../../portable/compiled_templates/channel.py:649 */
-/* File: ../../portable/compiled_templates/channel.py:699 */
-/* File: ../../portable/compiled_templates/channel.py:955 */
-/* File: ../../portable/compiled_templates/channel.py:985 */
-/* File: ../../portable/compiled_templates/channel.py:1035 */
-/* File: ../../portable/compiled_templates/channel.py:1291 */
-/* File: ../../portable/compiled_templates/channel.py:1321 */
-/* File: ../../portable/compiled_templates/channel.py:1371 */
-/* File: ../../portable/compiled_templates/channel.py:1627 */
-/* File: ../../portable/compiled_templates/channel.py:1657 */
-/* File: ../../portable/compiled_templates/channel.py:1707 */
-/* File: ../../portable/compiled_templates/channel.py:1963 */
-/* File: ../../portable/compiled_templates/channel.py:1993 */
-/* File: ../../portable/compiled_templates/channel.py:2043 */
-/* File: ../../portable/compiled_templates/library.py:276 */
-/* File: ../../portable/compiled_templates/library.py:306 */
-/* File: ../../portable/compiled_templates/library.py:356 */
-/* File: ../../portable/compiled_templates/download_item.py:253 */
-/* File: ../../portable/compiled_templates/download_item.py:283 */
-/* File: ../../portable/compiled_templates/download_item.py:333 */
-/* File: ../../portable/compiled_templates/search.py:259 */
-/* File: ../../portable/compiled_templates/search.py:289 */
-/* File: ../../portable/compiled_templates/search.py:339 */
-"Save" = "Salvează";
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:127 */
+/* Flag: untranslated */
+"onStartup called twice" = "onStartup called twice";
 
-/* File: ../../portable/compiled_templates/new.py:305 */
-/* File: ../../portable/compiled_templates/new.py:641 */
-/* File: ../../portable/compiled_templates/download.py:300 */
-/* File: ../../portable/compiled_templates/channel.py:307 */
-/* File: ../../portable/compiled_templates/channel.py:643 */
-/* File: ../../portable/compiled_templates/channel.py:979 */
-/* File: ../../portable/compiled_templates/channel.py:1315 */
-/* File: ../../portable/compiled_templates/channel.py:1651 */
-/* File: ../../portable/compiled_templates/channel.py:1987 */
-/* File: ../../portable/compiled_templates/library.py:300 */
-/* File: ../../portable/compiled_templates/download_item.py:277 */
-/* File: ../../portable/compiled_templates/search.py:283 */
-"Expires" = "Expiră";
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:77 */
+/* Flag: untranslated */
+"Error Bombing Item" = "Error Bombing Item";
 
-/* File: ../../portable/compiled_templates/new.py:381 */
-/* File: ../../portable/compiled_templates/new.py:717 */
-/* File: ../../portable/compiled_templates/download.py:376 */
-/* File: ../../portable/compiled_templates/channel.py:383 */
-/* File: ../../portable/compiled_templates/channel.py:719 */
-/* File: ../../portable/compiled_templates/channel.py:1055 */
-/* File: ../../portable/compiled_templates/channel.py:1391 */
-/* File: ../../portable/compiled_templates/channel.py:1727 */
-/* File: ../../portable/compiled_templates/channel.py:2063 */
-/* File: ../../portable/compiled_templates/library.py:376 */
-/* File: ../../portable/compiled_templates/download_item.py:353 */
-/* File: ../../portable/compiled_templates/search.py:359 */
-"Download Error" = "Eroare la descărcare";
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:79 */
+/* Flag: untranslated */
+"Error Recommending Item" = "Error Recommending Item";
 
-/* File: ../../portable/compiled_templates/new.py:777 */
-/* File: ../../portable/compiled_templates/tablist.py:212 */
-/* File: ../../portable/compiled_templates/tablist.py:224 */
-/* File: ../../portable/compiled_templates/tablist.py:236 */
-/* File: ../../portable/compiled_templates/statictab.py:79 */
-/* File: ../../portable/compiled_templates/statictab.py:91 */
-/* File: ../../portable/compiled_templates/statictab.py:103 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:81 */
+/* Flag: untranslated */
+"Error Opening Website" = "Error Opening Website";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:85 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"There was an error opening %s.  Please try again in a few seconds" = "There was an error opening %s.  Please try again in a few seconds";
+
+/* File: ../../portable/compiled_templates/new.py:113 */
+/* File: ../../portable/tabs.py:26 */
 "New Videos" = "Secvenţe video noi";
 
-/* File: ../../portable/compiled_templates/new.py:799 */
+/* File: ../../portable/compiled_templates/new.py:123 */
+/* File: ../../portable/compiled_templates/channel.py:327 */
+/* File: ../../portable/compiled_templates/channel_content.py:210 */
+/* File: ../../portable/compiled_templates/channelfolder.py:287 */
+"Unwatched" = "Nevizionat";
+
+/* File: ../../portable/compiled_templates/new.py:135 */
 "Expiring" = "Expiră";
 
-/* File: ../../portable/compiled_templates/first_time_intro.py:34 */
+/* File: ../../portable/compiled_templates/first_time_intro.py:36 */
 "Democracy Internet TV: How to Get Started" = "Democracy Internet TV: Cum să începem";
 
-/* File: ../../portable/compiled_templates/first_time_intro.py:38 */
+/* File: ../../portable/compiled_templates/first_time_intro.py:40 */
 "GO BIG:" = "ÎN MARE:";
 
-/* File: ../../portable/compiled_templates/first_time_intro.py:40 */
+/* File: ../../portable/compiled_templates/first_time_intro.py:42 */
 "This is your fullscreen button. Click it and lean back." = "Acesta este butonul pentru tot ecranul. Apasă-l şi lasă-te pe spate.";
 
-/* File: ../../portable/compiled_templates/first_time_intro.py:44 */
+/* File: ../../portable/compiled_templates/first_time_intro.py:46 */
 "NEW STUFF:" = "CE MAI E NOU PRIN ZONĂ:";
 
-/* File: ../../portable/compiled_templates/first_time_intro.py:46 */
+/* File: ../../portable/compiled_templates/first_time_intro.py:48 */
 "Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch." = "Cercurile albastre înseamnă că avem secvenţe video noi în canal iar cele verzi că secvenţele video descărcate sunt gata pentru vizionare.";
 
-/* File: ../../portable/compiled_templates/first_time_intro.py:48 */
+/* File: ../../portable/compiled_templates/first_time_intro.py:50 */
 "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"eventURL('action:doneWithIntro');\">Go to Channel Guide >></a></strong>" = "<strong i18n:translate=\"\">Sari peste introducere: <a style=\"color: #090;\" href=\"#\" onclick=\"eventURL('action:doneWithIntro');\">Du-te la Ghidul canalului>></a></strong>";
 
-/* File: ../../portable/compiled_templates/first_time_intro.py:50 */
+/* File: ../../portable/compiled_templates/first_time_intro.py:52 */
 "<strong>Add Channels:</strong> The Channel Guide is your home base for internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the channels in the guide are free.</strong>" = "<strong>Adaugă canale:</strong> Ghidul canalului este locaţia de bază pentru canalele de internet TV. Apasă 'Adaugă' ca să te abonezi la un canal-- <strong>canalele din ghid sunt gratuite.</strong>";
 
-/* File: ../../portable/compiled_templates/first_time_intro.py:52 */
+/* File: ../../portable/compiled_templates/first_time_intro.py:54 */
 "<strong>Don't Wait:</strong> Democracy is different than watching webpage videos-- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later." = "<strong>Nu aştepta:</strong> Democracy este diferit faţă de o pagină web ce conţine secvenţe video-- editorii pot oferi secvenţe video mari la o calitate foarte bună. Aşa că nu aştepta secvenţele video: porneşte câteva descărcări şi verifică mai târziu.";
 
-/* File: ../../portable/compiled_templates/first_time_intro.py:54 */
+/* File: ../../portable/compiled_templates/first_time_intro.py:56 */
 "<strong>Leave it On:</strong> Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch." = "<strong>Lasă-l pornit:</strong> În mod regulat Democracy Player  verifică dacă au mai apărut secvenţe video noi în canale şi le descarcă în background. Lăsându-l pornit înseamnă că vei avea secvenţe video noi când eşti pregătit pentru vizionare.";
 
-/* File: ../../portable/compiled_templates/first_time_intro.py:56 */
+/* File: ../../portable/compiled_templates/first_time_intro.py:58 */
 "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "<strong>Nu vă îngrijoraţi de spaţiul de pe disc:</strong> Ca şi un TiVo, funcţionalităţile aplicaţiei Democracy Player au un sistem de 'expirare' care ajută la înlăturarea secvenţelor video mai vechi pentru a face loc celor noi. Puteţi ţine o secvenţă video permanent apăsând 'Salvează' şi puteţi specifica setările canalului pentru a salva secvenţele video automat.";
 
 /* File: ../../portable/compiled_templates/external_playback.py:47 */
 /* File: ../../portable/compiled_templates/external_playback_continue.py:46 */
 "Democracy - External Playback Template" = "Democracy - Şablonul extern de redare";
 
-/* File: ../../portable/compiled_templates/external_playback.py:62 */
+/* File: ../../portable/compiled_templates/external_playback.py:64 */
 "This file type (${format}) can't be played in the main Democracy window." = "Acest tip de fişier (${format}) nu poate fi rulat în fereastra principală a aplicaţiei Democracy.";
 
-/* File: ../../portable/compiled_templates/external_playback.py:66 */
+/* File: ../../portable/compiled_templates/external_playback.py:68 */
 "Play Externally" = "Rulează extern";
 
-/* File: ../../portable/compiled_templates/external_playback.py:75 */
+/* File: ../../portable/compiled_templates/external_playback.py:77 */
 "Skip Video ${countdown}" = "Sări peste secvenţa video ${countdown}";
 
-/* File: ../../portable/compiled_templates/download.py:406 */
+/* File: ../../portable/compiled_templates/download.py:105 */
+/* File: ../../portable/tabs.py:28 */
 "Active Downloads" = "Descarcări active";
 
-/* File: ../../portable/compiled_templates/feed_settings.py:48 */
-/* File: ../../portable/compiled_templates/channel.py:2200 */
+/* File: ../../portable/compiled_templates/download.py:119 */
+/* Flag: untranslated */
+"External Torrents <a style=\"text-decoration: underline; margin-left: 15px; font-weight: normal;\" href=\"#\" onclick=\"return eventURL('action:clearTorrents');\" i18n:translate=\"\" title=\"Clear Torrents\">Clear Torrents</a>" = "External Torrents <a style=\"text-decoration: underline; margin-left: 15px; font-weight: normal;\" href=\"#\" onclick=\"return eventURL('action:clearTorrents');\" i18n:translate=\"\" title=\"Clear Torrents\">Clear Torrents</a>";
+
+/* File: ../../portable/compiled_templates/feed_settings.py:50 */
+/* File: ../../portable/compiled_templates/channel.py:85 */
 "Auto Download" = "Descărcare automată";
 
-/* File: ../../portable/compiled_templates/feed_settings.py:56 */
-/* File: ../../portable/compiled_templates/channel.py:2210 */
+/* File: ../../portable/compiled_templates/feed_settings.py:58 */
+/* File: ../../portable/compiled_templates/channel.py:262 */
 "Recommend" = "Recomandă";
 
-/* File: ../../portable/compiled_templates/feed_settings.py:60 */
+/* File: ../../portable/compiled_templates/feed_settings.py:66 */
 "Back to Channel" = "Înapoi la canal";
 
-/* File: ../../portable/compiled_templates/feed_settings.py:62 */
+/* File: ../../portable/compiled_templates/feed_settings.py:68 */
 "Channel Settings" = "Setările canalului";
 
-/* File: ../../portable/compiled_templates/feed_settings.py:64 */
+/* File: ../../portable/compiled_templates/feed_settings.py:70 */
 "Videos expire after:" = "Secvenţa video expiră după:";
 
-/* File: ../../portable/compiled_templates/feed_settings.py:68 */
-/* File: ../../portable/compiled_templates/feed_settings.py:75 */
+/* File: ../../portable/compiled_templates/feed_settings.py:74 */
+/* File: ../../portable/compiled_templates/feed_settings.py:81 */
 "Default" = "Standard";
 
-/* File: ../../portable/compiled_templates/feed_settings.py:122 */
+/* File: ../../portable/compiled_templates/feed_settings.py:128 */
 "Auto download should:" = "Descărcarea auto ar trebui:";
 
-/* File: ../../portable/compiled_templates/feed_settings.py:155 */
+/* File: ../../portable/compiled_templates/feed_settings.py:161 */
 "If I have ${maxnew} ${maxnew2} videos waiting, don't auto download more." = "Daca am ${maxnew} ${maxnew2} secvenţe video ce aşteaptă, nu mai descarc automat.";
 
-/* File: ../../portable/compiled_templates/feed_settings.py:157 */
+/* File: ../../portable/compiled_templates/feed_settings.py:163 */
 "(Keeps channel from hogging disk space)" = "(Menţine canalul să nu ocupe prea mult spaţiu pe disc)";
 
-/* File: ../../portable/compiled_templates/feed_settings.py:159 */
+/* File: ../../portable/compiled_templates/feed_settings.py:165 */
 "Channel URL" = "URL-ul canalului";
 
-/* File: ../../portable/compiled_templates/channel.py:2202 */
+/* File: ../../portable/compiled_templates/channel.py:171 */
+/* File: ../../portable/compiled_templates/channel_content.py:97 */
+/* File: ../../portable/compiled_templates/channelfolder.py:165 */
+/* Flag: untranslated */
+"${count} Downloads in Progress" = "${count} Downloads in Progress";
+
+/* File: ../../portable/compiled_templates/channel.py:176 */
+/* File: ../../portable/compiled_templates/channel_content.py:102 */
+/* File: ../../portable/compiled_templates/channelfolder.py:170 */
+/* Flag: untranslated */
+"1 Download in Progress" = "1 Download in Progress";
+
+/* File: ../../portable/compiled_templates/channel.py:196 */
+/* File: ../../portable/compiled_templates/channel_content.py:122 */
+/* File: ../../portable/compiled_templates/channelfolder.py:190 */
+/* Flag: untranslated */
+"${len} Videos On This Channel" = "${len} Videos On This Channel";
+
+/* File: ../../portable/compiled_templates/channel.py:210 */
+/* File: ../../portable/compiled_templates/channel_content.py:136 */
+/* File: ../../portable/compiled_templates/channelfolder.py:204 */
+/* Flag: untranslated */
+"All ${len} Videos Match This Search" = "All ${len} Videos Match This Search";
+
+/* File: ../../portable/compiled_templates/channel.py:222 */
+/* File: ../../portable/compiled_templates/channel_content.py:148 */
+/* File: ../../portable/compiled_templates/channelfolder.py:216 */
+/* Flag: untranslated */
+"${len} Videos Match This Search" = "${len} Videos Match This Search" /* = "${len} Clipuri corespunzând cautării" */;
+
+/* File: ../../portable/compiled_templates/channel.py:254 */
 "Settings" = "Setări";
 
-/* File: ../../portable/compiled_templates/channel.py:2230 */
-"Videos on this Channel" = "Secvenţe video în acest canal";
+/* File: ../../portable/compiled_templates/channel.py:280 */
+/* Flag: untranslated */
+"Looking for videos at this URL" = "Looking for videos at this URL" /* = "Caută clipuri la această adresă" */;
 
-/* File: ../../portable/compiled_templates/channel.py:2263 */
+/* File: ../../portable/compiled_templates/channel.py:314 */
+/* File: ../../portable/compiled_templates/channel_content.py:197 */
+/* File: ../../portable/compiled_templates/channelfolder.py:274 */
+/* Flag: untranslated */
+"${count} Videos on this Channel" = "${count} Videos on this Channel" /* = "${count} Clipuri în acest canal" */;
+
+/* File: ../../portable/compiled_templates/channel.py:338 */
+/* File: ../../portable/compiled_templates/channel_content.py:221 */
+/* File: ../../portable/compiled_templates/channelfolder.py:298 */
 "Watched" = "Vizionat";
 
-/* File: ../../portable/compiled_templates/channel.py:2275 */
+/* File: ../../portable/compiled_templates/channel.py:349 */
+/* File: ../../portable/compiled_templates/channel_content.py:232 */
+/* File: ../../portable/compiled_templates/channelfolder.py:309 */
 "Saved" = "Salvat";
 
-/* File: ../../portable/compiled_templates/tablist.py:165 */
-/* File: ../../portable/compiled_templates/tablist.py:172 */
-/* File: ../../portable/compiled_templates/tablist.py:179 */
-/* File: ../../portable/compiled_templates/statictab.py:32 */
-/* File: ../../portable/compiled_templates/statictab.py:39 */
-/* File: ../../portable/compiled_templates/statictab.py:46 */
-"Channel Guide" = "Ghid canale";
+/* File: ../../portable/compiled_templates/multi_playlist.py:48 */
+/* Flag: untranslated */
+"${count} Playlists selected" = "${count} Playlists selected" /* = "${count} Playlist-uri selectate" */;
 
-/* File: ../../portable/compiled_templates/tablist.py:186 */
-/* File: ../../portable/compiled_templates/tablist.py:193 */
-/* File: ../../portable/compiled_templates/tablist.py:200 */
-/* File: ../../portable/compiled_templates/library.py:406 */
-/* File: ../../portable/compiled_templates/statictab.py:53 */
-/* File: ../../portable/compiled_templates/statictab.py:60 */
-/* File: ../../portable/compiled_templates/statictab.py:67 */
+/* File: ../../portable/compiled_templates/multi_playlist.py:50 */
+/* Flag: untranslated */
+"Delete selected playlists" = "Delete selected playlists" /* = "Şterge playlist-urile selectate" */;
+
+/* File: ../../portable/compiled_templates/library.py:76 */
+/* File: ../../portable/tabs.py:25 */
 "My Collection" = "Colecţia mea";
 
-/* File: ../../portable/compiled_templates/tablist.py:243 */
-/* File: ../../portable/compiled_templates/tablist.py:250 */
-/* File: ../../portable/compiled_templates/tablist.py:257 */
-/* File: ../../portable/compiled_templates/statictab.py:110 */
-/* File: ../../portable/compiled_templates/statictab.py:117 */
-/* File: ../../portable/compiled_templates/statictab.py:124 */
-"Search" = "Caută";
+/* File: ../../portable/compiled_templates/download_item.py:105 */
+/* Flag: untranslated */
+"SAVE" = "SAVE" /* = "SALVEAZĂ" */;
 
-/* File: ../../portable/compiled_templates/search.py:375 */
+/* File: ../../portable/compiled_templates/download_item.py:135 */
+/* Flag: untranslated */
+"REVEAL" = "REVEAL" /* = "DESCOPERĂ" */;
+
+/* File: ../../portable/compiled_templates/multi_channel.py:48 */
+/* Flag: untranslated */
+"${count} Channels selected" = "${count} Channels selected" /* = "${count} Canale selectate" */;
+
+/* File: ../../portable/compiled_templates/multi_channel.py:50 */
+/* Flag: untranslated */
+"Delete selected channels" = "Delete selected channels" /* = "Şterge canalele selectate" */;
+
+/* File: ../../portable/compiled_templates/search.py:47 */
 "Nothing to display.<br></br> Enter a query in the search field above." = "Nu este nimic de afişat.<br></br> Introdu un criteriu în câmpul de căutare de mai sus.";
 
-/* File: ../../portable/compiled_templates/search.py:380 */
+/* File: ../../portable/compiled_templates/search.py:52 */
 "Searching..." = "Caut...";
 
-/* File: ../../portable/compiled_templates/search.py:409 */
+/* File: ../../portable/compiled_templates/search.py:75 */
 "Video Search" = "Căutare secvenţe video";
 
-/* File: ../../portable/compiled_templates/unittest/translationtest.py:41 */
+/* File: ../../portable/compiled_templates/unittest/translationtest.py:43 */
 "Simple translation" = "Traducere simplă";
 
-/* File: ../../portable/compiled_templates/unittest/translationtest.py:55 */
+/* File: ../../portable/compiled_templates/unittest/translationtest.py:57 */
 "truck stop in a ${can}" = "opreşte camionul într-o ${can}";
 
-/* File: ../../portable/compiled_templates/unittest/translationtest.py:59 */
+/* File: ../../portable/compiled_templates/unittest/translationtest.py:61 */
 "This is a ${car} and this is a ${truck} <span>This text is <b style=\"color:red\">raw</b> text</span>" = "Aceasta este o ${maşină} şi acesta este un ${camion} <span> Acest text este test <b>neprelucrat</b></span>";
 
-/* File: ../../portable/compiled_templates/external_playback_continue.py:54 */
+/* File: ../../portable/compiled_templates/external_playback_continue.py:56 */
 "Continue To Next Video" = "Continuă cu următoarea secvenţă video";
 
-/* File: ../../portable/dl_daemon/download.py:849 */
-"Could not connect to server" = "Nu mă pot conecta la server";
+/* File: ../../portable/item.py:342 */
+/* File: ../../portable/item.py:1178 */
+/* Flag: untranslated */
+"Removing %s" = "Removing %s" /* = "Îndepartează %s" */;
 
-/* File: ../../portable/dl_daemon/download.py:851 */
+/* File: ../../portable/item.py:343 */
+/* Flag: untranslated */
+"Deleting this entry will delete all its videos." = "Deleting this entry will delete all its videos.";
+
+/* File: ../../portable/item.py:363 */
+/* Flag: untranslated */
 /* Flag: python-format */
-"Could not connect to server: %s" = "Nu mă pot conecta la server: %s";
+"%d days" = "%d days";
+
+/* File: ../../portable/item.py:365 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%d hrs" = "%d hrs";
+
+/* File: ../../portable/item.py:367 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%d min" = "%d min";
+
+/* File: ../../portable/item.py:368 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Expires: %s" = "Expires: %s";
+
+/* File: ../../portable/item.py:376 */
+"Pending Auto Download" = "Aştept descărcarea automată";
+
+/* File: ../../portable/item.py:381 */
+/* Flag: untranslated */
+"UNWATCHED" = "UNWATCHED";
+
+/* File: ../../portable/item.py:387 */
+/* Flag: untranslated */
+"NEW" = "NEW";
+
+/* File: ../../portable/item.py:1180 */
+/* Flag: untranslated */
+"Would you like to delete this directory and all of its videos or just remove its entry from My Collection?" = "Would you like to delete this directory and all of its videos or just remove its entry from My Collection?";
+
+/* File: ../../portable/item.py:1184 */
+/* Flag: untranslated */
+"Would you like to delete this file or just remove its entry from My Collection?" = "Would you like to delete this file or just remove its entry from My Collection?";
+
+/* File: ../../portable/httpclient.py:65 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%s closed connection" = "%s closed connection";
+
+/* File: ../../portable/httpclient.py:70 */
+/* Flag: untranslated */
+"%s timed out" = "%s timed out" /* = "%s expirat" */;
+
+/* File: ../../portable/storedatabase.py:691 */
+/* Flag: untranslated */
+"%s database save succeeded" = "%s database save succeeded" /* = "%s bază de date salvată cu succes" */;
+
+/* File: ../../portable/storedatabase.py:692 */
+/* Flag: untranslated */
+"The database has been successfully saved. It is now safe to quit without losing any data." = "The database has been successfully saved. It is now safe to quit without losing any data." /* = "Baza de date a fost salvată cu succes. Acum închiderea e în siguranţă." */;
+
+/* File: ../../portable/storedatabase.py:699 */
+/* Flag: python-format */
+"%s database save failed" = "Salvarea bazei de date %s a eşuat.";
+
+/* File: ../../portable/storedatabase.py:700 */
+/* Flag: untranslated */
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." /* = "%s nu a reuşit şă-şi salveze baza de date: Lipsă Spaţiu↵\nSugerăm ştergerea anumitor fişiere din calculator sau doar câteva clipuri din colectie.↵\nSchimbările recente s-ar putea pierde." */;
 
 /* File: ../../portable/dialogs.py:59 */
 "Ok" = "În regulă";
-
-/* File: ../../portable/dialogs.py:60 */
-"Cancel" = "Renunţă";
-
-/* File: ../../portable/dialogs.py:61 */
-"Yes" = "Da";
-
-/* File: ../../portable/dialogs.py:62 */
-"No" = "Nu";
 
 /* File: ../../portable/dialogs.py:63 */
 "Quit" = "Renunţă";
 
 /* File: ../../portable/dialogs.py:64 */
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:24 */
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:22 */
 "Migrate" = "Migrează";
 
 /* File: ../../portable/dialogs.py:65 */
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:16 */
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:15 */
 "Don't Migrate" = "Nu migra";
 
-/* File: ../../portable/app.py:664 */
-/* Flag: python-format */
-"%s was unable to save its database: %s.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost.\nQuit Anyway?" = "%s nu a putut să-şi salveze baza de date: %s.\\n\nSugerăm ştergerea fişierelor de pe discul plin sau ştergerea câtorva filme din colecţia ta.\nSchimbările recente pot fi pierdute.\nRenunţi oricum?";
+/* File: ../../portable/dialogs.py:66 */
+/* Flag: untranslated */
+"Download" = "Download" /* = "Descarcă" */;
 
-/* File: ../../portable/app.py:666 */
+/* File: ../../portable/dialogs.py:67 */
+/* Flag: untranslated */
+"Remove Entry" = "Remove Entry" /* = "Şterge intrare" */;
+
+/* File: ../../portable/dialogs.py:68 */
+/* Flag: untranslated */
+"Delete File" = "Delete File" /* = "Şterge Filă" */;
+
+/* File: ../../portable/dialogs.py:69 */
+/* Flag: untranslated */
+"Keep Videos" = "Keep Videos" /* = "Păstrează Clipurile" */;
+
+/* File: ../../portable/dialogs.py:70 */
+/* Flag: untranslated */
+"Delete Videos" = "Delete Videos" /* = "Şterge Clipurile" */;
+
+/* File: ../../portable/dialogs.py:71 */
+/* Flag: untranslated */
+"Create" = "Create" /* = "Creează" */;
+
+/* File: ../../portable/folder.py:100 */
+/* Flag: untranslated */
+"Rename Channel Folder" = "Rename Channel Folder";
+
+/* File: ../../portable/folder.py:102 */
+/* Flag: untranslated */
 /* Flag: python-format */
-"%s was unable to save its database: %s.\nRecent changes may be lost.\nQuit Anyway?" = "%s nu a reuşit să-şi salveze baza de date: %s.\nSchimbările recente pot fi pierdute.\nRenunţi oricum?";
+"Enter a new name for the channel folder %s" = "Enter a new name for the channel folder %s";
+
+/* File: ../../portable/folder.py:141 */
+/* Flag: untranslated */
+"Rename Playlist Folder" = "Rename Playlist Folder";
+
+/* File: ../../portable/folder.py:143 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Enter a new name for the playlist folder %s" = "Enter a new name for the playlist folder %s";
+
+/* File: ../../portable/folder.py:151 */
+/* Flag: untranslated */
+"Create Channel Folder" = "Create Channel Folder";
+
+/* File: ../../portable/folder.py:152 */
+/* Flag: untranslated */
+"Enter a name for the new channel folder" = "Enter a name for the new channel folder";
+
+/* File: ../../portable/folder.py:165 */
+/* Flag: untranslated */
+"Create Playlist Folder" = "Create Playlist Folder";
+
+/* File: ../../portable/folder.py:166 */
+/* Flag: untranslated */
+"Enter a name for the new playlist folder" = "Enter a name for the new playlist folder";
+
+/* File: ../../portable/singleclick.py:94 */
+/* Flag: untranslated */
+"Subscribing to multiple feeds" = "Subscribing to multiple feeds";
+
+/* File: ../../portable/singleclick.py:95 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"You are being subscribed to %d feeds." = "You are being subscribed to %d feeds.";
+
+/* File: ../../portable/singleclick.py:104 */
+/* Flag: untranslated */
+"Subscription error" = "Subscription error" /* = "Eroare la abonare" */;
+
+/* File: ../../portable/singleclick.py:114 */
+/* Flag: untranslated */
+"This Democracy channel file has an invalid format: %s. Please notify the publisher of this file." = "This Democracy channel file has an invalid format: %s. Please notify the publisher of this file." /* = "Acest fisier de canal Democratic are un format necorespunzător: %s. Vă rugăm să anunţaţi  editorul canalului despre acest fişier." */;
+
+/* File: ../../portable/singleclick.py:123 */
+/* Flag: untranslated */
+"This Democracy channel file has the wrong content type: %s. Please notify the publisher of this file." = "This Democracy channel file has the wrong content type: %s. Please notify the publisher of this file." /* = "Acest fisier de canal Democratic conţine un tip de conţinut necorespunzător: %s. Vă rugăm să anunţaţi  editorul canalului despre acest fişier." */;
+
+/* File: ../../portable/singleclick.py:128 */
+/* Flag: untranslated */
+"Could not download the Democracy channel file: %s." = "Could not download the Democracy channel file: %s." /* = "Nu pot descărca acest fisier de canal Democratic: %s." */;
+
+/* File: ../../portable/singleclick.py:154 */
+/* Flag: untranslated */
+"Invalid Torrent" = "Invalid Torrent" /* = "Formatul torrentului este necorespunzător" */;
+
+/* File: ../../portable/singleclick.py:155 */
+/* Flag: untranslated */
+"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "The torrent file %s appears to be corrupt and cannot be opened. [OK]" /* = "Fişierul de torrent %s pare a nu fi bun si nu poate fi deschis.  [OK]" */;
+
+/* File: ../../portable/tabs.py:27 */
+"Search" = "Caută";
+
+/* File: ../../portable/feed.py:702 */
+/* Flag: untranslated */
+"Error loading feed" = "Error loading feed";
+
+/* File: ../../portable/feed.py:703 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Couldn't load the feed at %s." = "Couldn't load the feed at %s.";
+
+/* File: ../../portable/feed.py:706 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"The error was: %s" = "The error was: %s";
+
+/* File: ../../portable/feed.py:819 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:4 */
+"Channel is not compatible with Democracy!" = "Canalul nu este compatibil cu Democracy!";
+
+/* File: ../../portable/feed.py:820 */
+/* Flag: untranslated */
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with Democracy.\n\nDo you want to try to load this channel anyway?" = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with Democracy.\n\nDo you want to try to load this channel anyway?";
+
+/* File: ../../portable/guide.py:238 */
+"Channel Guide" = "Ghid canale";
+
+/* File: ../../portable/app.py:655 */
+/* File: ../../portable/app.py:666 */
+/* File: ../../portable/app.py:691 */
+/* File: ../../portable/app.py:710 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Remove %s" = "Remove %s";
+
+/* File: ../../portable/app.py:656 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Are you sure you want to remove the guide %s?" = "Are you sure you want to remove the guide %s?";
+
+/* File: ../../portable/app.py:667 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Are you sure you want to remove %s" = "Are you sure you want to remove %s";
+
+/* File: ../../portable/app.py:670 */
+/* File: ../../portable/app.py:696 */
+/* File: ../../portable/app.py:715 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Remove %s channels" = "Remove %s channels";
+
+/* File: ../../portable/app.py:672 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Are you sure you want to remove these %s playlists" = "Are you sure you want to remove these %s playlists";
+
+/* File: ../../portable/app.py:692 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Are you sure you want to remove %s?  Any downloads in progress will be canceled.";
+
+/* File: ../../portable/app.py:697 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled.";
+
+/* File: ../../portable/app.py:711 */
+/* Flag: untranslated */
+"What would you like to do with the videos in this channel that you've downloaded?" = "What would you like to do with the videos in this channel that you've downloaded?";
+
+/* File: ../../portable/app.py:716 */
+/* Flag: untranslated */
+"What would you like to do with the videos in these channels that you've downloaded?" = "What would you like to do with the videos in these channels that you've downloaded?";
+
+/* File: ../../portable/app.py:747 */
+"Are you sure you want to quit?" = "Eşti sigur că vrei să renunţi?";
+
+/* File: ../../portable/app.py:1089 */
+/* Flag: untranslated */
+"Invalid Value" = "Invalid Value";
+
+/* File: ../../portable/app.py:1090 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%s is invalid.  You must enter a non-negative number." = "%s is invalid.  You must enter a non-negative number.";
+
+/* File: ../../portable/app.py:1307 */
+/* Flag: untranslated */
+" - Invalid URL" = " - Invalid URL";
+
+/* File: ../../portable/app.py:1308 */
+/* Flag: untranslated */
+"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "The address you entered is not a valid URL.\nPlease double check and try again.\n\n";
+
+/* File: ../../portable/app.py:1328 */
+"Democracy - Add Channel" = "Democracy - Adaugă canal";
+
+/* File: ../../portable/app.py:1328 */
+"Enter the URL of the channel to add" = "Introdu URL-ul canalului de adăugat";
+
+/* File: ../../portable/app.py:1349 */
+/* Flag: untranslated */
+"Democracy - Add Channel Guide" = "Democracy - Add Channel Guide";
+
+/* File: ../../portable/app.py:1349 */
+/* Flag: untranslated */
+"Enter the URL of the channel guide to add" = "Enter the URL of the channel guide to add";
+
+/* File: ../../portable/app.py:1608 */
+/* Flag: untranslated */
+"Custom Channels" = "Custom Channels";
+
+/* File: ../../portable/app.py:1608 */
+/* Flag: untranslated */
+"You are running a version of Democracy Player with a custom set of channels." = "You are running a version of Democracy Player with a custom set of channels.";
+
+/* File: ../../portable/playlist.py:151 */
+/* Flag: untranslated */
+"Rename Playlist" = "Rename Playlist";
+
+/* File: ../../portable/playlist.py:152 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Enter a new name for the playlist %s" = "Enter a new name for the playlist %s";
+
+/* File: ../../portable/playlist.py:165 */
+/* Flag: untranslated */
+"Create Playlist" = "Create Playlist";
+
+/* File: ../../portable/playlist.py:166 */
+/* Flag: untranslated */
+"Enter a name for the new playlist" = "Enter a name for the new playlist";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:1 */
 "1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 zi\n3 zile\n6 zile\n10 zile\n1 luna\nNiciodată";
@@ -445,10 +987,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:10 */
 "<b>Movies Directory</b>" = "<b>Directorul cu filme</b>";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:11 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:4 */
-"Add Channel" = "Adaugă canal";
-
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:12 */
 "By default, videos expire after" = "În mod standard secvenţele video expiră după";
 
@@ -456,45 +994,36 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Check Channels for new content" = "Verfic canalul daca are conţinut nou";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:14 */
-"Democracy - Add Channel" = "Democracy - Adaugă canal";
-
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:15 */
 "Democracy Player" = "Democracy Player";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:17 */
-"Don't start a download if it leaves less than" = "Nu porni o descărcare dacă rămâne mai puţin de";
-
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:18 */
-"Enter the URL of the channel to add" = "Introdu URL-ul canalului de adăugat";
-
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:19 */
 "Every 30 minutes\nEvery hour\nManually" = "Fiecare 30 minute\nFiecare oră\nManual";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:22 */
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:20 */
 "GB free" = "GB liberi";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:23 */
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:21 */
 "KB/s when my computer is active" = "KB/s când calculatorul meu este activ";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:25 */
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:23 */
 "Migrate existing movies?" = "Migrez filmele existente?";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:26 */
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:24 */
 "Preferences" = "Preferinţe";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:27 */
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:25 */
 "Select Movies Directory" = "Selectează directorul cu filme";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:28 */
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:26 */
 "Store downloaded movies in" = "Pastrează filmele descărcate în";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:29 */
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:27 */
 "To avoid slowdowns, limit upstream to" = "Pentru a evita descărcările lente, mareşte stream-ul la";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:30 */
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:28 */
 "Volume:" = "Volum:";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:31 */
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:29 */
 "You've selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "Ai selectat un director nou în care să descarci filmele. Ar trebui ca Democracy să mute fişierele descărcate deja în această nouă locaţie? (Filmele care se descarcă în prezent nu vor fi mutate până ce nu se termină de descărcat.)";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:1 */
@@ -521,14 +1050,14 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:5 */
 "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny." = "Dar noi vom face tot ceea ce e posibil ca să preluam fişierele. E posibil să necesite timp suplimentar pentru a afişa secvenţele video iar descrierile pot parea distractive.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:4 */
-"Channel is not compatible with Democracy!" = "Canalul nu este compatibil cu Democracy!";
-
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:7 */
 "Please contact the publishers of" = "Te rog contactează editorul lui";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:8 */
 "and ask if they can supply a feed in a format that will work with Democracy." = "şi întreabă dacă ei pot furniza o sursă într-un format care este suportat de Democracy.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:4 */
+"Channel requires authentication" = "Canalul necesită autentificare";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:5 */
 "Please enter the username and password given to you by this channel's publisher." = "Te rog specifică numele de utilizator şi parola ce ti-au fost furnizate de către editorul canalului.";
@@ -566,3 +1095,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:4 */
 "$longAppName" = "$longAppName";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:13 */
+/* Flag: untranslated */
+"Exit" = "Exit";

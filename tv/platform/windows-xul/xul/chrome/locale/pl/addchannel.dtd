@@ -1,5 +1,5 @@
 <!ENTITY nbsp                " ">
-<!ENTITY rsaquo              "'">
+<!ENTITY rsaquo              "\"">
 
 <!ENTITY addchannel.title    "Dodaj kanał">
-<!ENTITY addchannel.prompt   "Wpisz adres kanału do dodania.">
+<!ENTITY addchannel.prompt   "Podaj adres kanału do dodania.">
