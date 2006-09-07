@@ -3,6 +3,8 @@ const VLCRENDERER_CLASSID = Components.ID("{F9F01D99-9D3B-4A69-BD5F-285FFD360079
 
 var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
         getService(Components.interfaces.pcfIDTVPyBridge);
+var jsbridge = Components.classes["@participatoryculture.org/dtv/jsbridge;1"].
+        getService(Components.interfaces.pcfIDTVJSBridge);
 
 function writelog(str) {
     Components.classes['@mozilla.org/consoleservice;1']
@@ -12,11 +14,6 @@ function writelog(str) {
 
 function VLCRenderer() { 
   this.scheduleUpdates = false;
-}
-
-function twoDigits(data) {
-    if (data < 10) return "0" + data;
-    else return ""+data;
 }
 
 VLCRenderer.prototype = {
@@ -41,8 +38,11 @@ VLCRenderer.prototype = {
     if (len < 1) len = 1;
     if (elapsed < 0) elapsed = 0;
     if (elapsed > len) elapsed = len;
-    this.setSliderText(elapsed);
-    this.moveSlider(elapsed/len);
+    var progressSlider = this.document.getElementById("progress-slider");
+    if(!progressSlider.beingDragged) {
+      jsbridge.setSliderText(elapsed);
+      jsbridge.moveSlider(elapsed/len);
+    }
     var pos = this.vlc.get_position();
     if(this.startedPlaying && pos < 0) {
         // hit the end of the playlist
@@ -59,24 +59,6 @@ VLCRenderer.prototype = {
         this.timer.initWithCallback(callback, 500,
                   Components.interfaces.nsITimer.TYPE_ONE_SHOT);
       }
-  },
-
-  setSliderText: function(elapsed) {
-    var hours = Math.floor(elapsed/3600);
-    var mins = Math.floor((elapsed - hours*3600)/60);
-    var secs = elapsed - hours*3600 - mins*60;
-    var text = twoDigits(hours)+":"+twoDigits(mins)+":"+twoDigits(secs);
-    var sliderText = this.document.getElementById("progress-text");
-    sliderText.childNodes[0].nodeValue = text;
-  },
-
-  moveSlider: function(fractionDone) {
-    var progressSlider = this.document.getElementById("progress-slider");
-    if(progressSlider.beingDragged) return;
-    var left = 61;
-    var right = 204;
-    var newSliderPos = Math.floor(left + fractionDone*(right-left));
-    progressSlider.left = newSliderPos;
   },
 
   showPauseButton: function() {

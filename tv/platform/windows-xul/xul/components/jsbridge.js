@@ -10,6 +10,11 @@ function writelog(str) {
 	.logStringMessage(str);
 }
 
+function twoDigits(data) {
+    if (data < 10) return "0" + data;
+    else return ""+data;
+}
+
 function LoadFinishedListener(area)
 {
     this.area = area;
@@ -349,6 +354,23 @@ jsBridge.prototype = {
     if (res == Components.interfaces.nsIFilePicker.returnOK){
         pybridge.saveVideoFile(fp.file.path);
     }
+  },
+
+  setSliderText: function(elapsed) {
+    var hours = Math.floor(elapsed/3600);
+    var mins = Math.floor((elapsed - hours*3600)/60);
+    var secs = elapsed - hours*3600 - mins*60;
+    var text = twoDigits(hours)+":"+twoDigits(mins)+":"+twoDigits(secs);
+    var sliderText = this.document.getElementById("progress-text");
+    sliderText.childNodes[0].nodeValue = text;
+  },
+
+  moveSlider: function(fractionDone) {
+    var left = 61;
+    var right = 204;
+    var newSliderPos = Math.floor(left + fractionDone*(right-left));
+    var progressSlider = this.document.getElementById("progress-slider");
+    progressSlider.left = newSliderPos;
   },
 };
 
