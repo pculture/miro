@@ -106,7 +106,7 @@ class Daemon(ConnectionHandler):
         # any data.
 
     def onError(self, error):
-        """Call this when a error occurs.  It forces the
+        """Call this when an error occurs.  It forces the
         daemon to close its connection.
         """
         print "socket error in daemon, closing my socket"
