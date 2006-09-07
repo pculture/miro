@@ -1,0 +1,60 @@
+/*
+ IE 5, 5.5, 6 styles   
+ Site: The Channel Channel
+*/
+
+#wrapper {
+ height: 1%;
+}
+
+#content {
+ display: inline;
+ width: 502px;
+ wid\th: 453px;
+}
+
+#sidebar {
+ height: 373px;
+}
+
+#header h1 a, #nav a span {
+ cursor: hand;
+}
+
+.preview {
+ height: 1%;
+}
+
+.video-large p.bar {
+ right: 16px;
+}
+
+#sidebar .whats-this {
+ padding-bottom: 13px;
+}
+
+.preview .video a.play img {
+ behavior: url("./pngbehavior/pngbehavior.htc");
+ width: 40px;
+ height: 40px;
+}
+
+#nav a#featured span {
+ _background-image/**/: none;
+ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='./images/nav/featured-blue.png', sizingMethod='image');
+}
+
+#nav a#featured.current span, #nav a#featured:hover span {
+ _background-image/**/: none;
+ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='./images/nav/featured-black.png', sizingMethod='image');
+}
+
+#nav a#all span {
+ _background-image/**/: none;
+ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='./images/nav/all-blue.png', sizingMethod='image');
+}
+
+#nav a#all.current span, #nav a#all:hover span {
+ _background-image/**/: none;
+ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='./images/nav/all-black.png', sizingMethod='image');
+}

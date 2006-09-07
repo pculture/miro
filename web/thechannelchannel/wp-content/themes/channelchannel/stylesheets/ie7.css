@@ -1,0 +1,7 @@
+/*
+ IE 7 styles   
+ Site: The Channel Channel
+*/
+#header h1 a, #nav a span {
+ cursor: hand;
+}

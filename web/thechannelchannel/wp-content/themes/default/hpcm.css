@@ -1,0 +1,612 @@
+BODY {
+	font-family: arial, sans-serif;
+	color: 000;
+	font-size: 12px;
+}
+
+hr {
+display: none;
+}
+
+A {
+	color: #000;
+}
+
+
+
+h2 {
+margin: 0;
+padding: 0;
+text-align: left;
+font-size: 15px;
+color: #444;
+font-weight: bold;
+
+}
+
+div {
+margin: 0;
+padding: 0;
+}
+
+A:hover {
+	color: #444;
+}
+
+form {
+padding: 0;
+margin: 0;
+}
+
+.main {
+	position: relative;
+	margin: 0 auto;
+	text-align: left;	
+	width: 970px;
+	border: solid Green 0px;
+}
+
+.hp_header {
+	position: relative;
+	width: 970px;	
+	margin: 0;
+}
+
+.inner_head {
+	font-family: arial, helvetica, sans-serif;
+	font-size: 18px; 
+	font-size: bold;
+	text-align: center;
+	color: #f8951d;
+	background-color: black;
+	border: 1px solid #8c8c8c;
+	border-bottom: 0;
+	width: 160px;
+	margin: -4px 0 0 223px;
+	padding: 10px 0;
+}
+
+.help_question_mark {
+	border: solid 1px;
+	text-decoration: none;
+	padding: 0px 2px 0px 2px;
+	background-color: white;
+}
+
+A.help_question_mark {
+	color: black;
+}
+
+.error_content {
+	position: relative;
+	text-align: left;	
+	width: 970px;
+	background: #bcba9a;
+}
+
+.error {
+	width: 530px;
+	position: relative;
+	margin: 0 0 0 220px;
+	padding: 10px 20px;
+	background: url(/images/lf/inner_boxback.gif) top left repeat-y;
+}
+
+.bottom_nav {
+	color: #a9abad;
+	font-size: 11px;
+	line-height: 20px;
+	text-align: center;
+	padding-top: 10px;
+}
+a.bottom_nav {
+	color: #a9abad;
+	text-decoration: none;
+}
+
+a:hover.bottom_nav {
+	color: Gray;
+}
+
+#header
+{
+	width: 970px;
+	margin: 10px auto 10px auto;
+}
+
+#topnav
+{
+	height: 22px;
+	background: url(http://www.huffingtonpost.com/images/topnavcontagiousfestival.gif) 0 0;
+	margin: 4px auto 0 auto;
+	position: relative;
+}
+
+#topnav li
+{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	position: absolute;
+	top: 0;
+}
+
+#topnav li, #topnav a.toplevel {height: 22px; display: block;}
+#topnav a.toplevel { text-indent: -5000px; text-decoration: none;}
+#home {left: 65px; width: 92px;}
+#news {left: 155px; width: 127px;}
+#blog {left: 283px; width: 124px;}
+#festival {left: 407px; width: 227px;}
+#features {left: 633px; width: 128px;}
+#contact {left: 761px; width: 149px;}
+
+#home a.toplevel:hover { background: transparent url(http://www.huffingtonpost.com/images/topnavcontagiousfestival.gif) -65px -22px no-repeat; text-decoration: none !important;}
+#news a.toplevel:hover { background: transparent url(http://www.huffingtonpost.com/images/topnavcontagiousfestival.gif) -155px -22px no-repeat; text-decoration: none !important;}
+#blog a.toplevel:hover { background: transparent url(http://www.huffingtonpost.com/images/topnavcontagiousfestival.gif) -283px -22px no-repeat; text-decoration: none !important;}
+#festival a.toplevel:hover { background: transparent url(http://www.huffingtonpost.com/images/topnavcontagiousfestival.gif) -407px -22px no-repeat; text-decoration: none !important;}
+#features a.toplevel:hover { background: transparent url(http://www.huffingtonpost.com/images/topnavcontagiousfestival.gif) -633px -22px no-repeat; text-decoration: none !important;}
+#contact a.toplevel:hover { background: transparent url(http://www.huffingtonpost.com/images/topnavcontagiousfestival.gif) -761px -22px no-repeat; text-decoration: none !important;}
+		
+#topimg a img { margin: 0 auto; display: block; border: 0;}
+
+#topimg span
+{
+	font-family: verdana, helvetica, sans-serif;
+	margin: 50px 10px 0 0;
+	float: right;
+	color: #4d4d4d;
+}
+
+#topimg
+{
+	border-bottom: 10px solid #1c9385;
+	font-size: 10px;
+}
+
+#topnav li ul 
+{
+	position: absolute;
+	width: 130px;
+	background: #E8F5F3;
+	margin: 0 0 0 1px;
+	border-top: 2px solid white;
+	padding: 5px 0;
+	display: none;	
+}
+
+#topnav li ul li
+{
+	display: block;
+	position: relative;
+	float: none;
+}
+
+#topnav li ul li a
+{
+	margin: 5px 0 3px 5px;
+	font-size: 12px;
+	font-family: verdana, sans-serif;
+	font-weight: bold;
+	text-decoration: none;
+	color: #4d4d4d;
+}
+
+#topnav li:hover ul, #topnav li.sfhover ul
+{
+	display: block;
+}
+
+
+
+/* ---------------- SHOW US THE WAR -------------------- */
+
+
+ul {
+list-style-type: none;
+}
+
+li {
+list-style-type: none;
+}
+
+
+#page {
+	background-color: white;
+	margin: 0px auto;
+	padding: 0;
+	width: 970px;
+	}
+	
+		
+	
+#page_title {
+padding: 0px 0 10px 0;
+font-size: 16px;
+color: #999;
+
+}
+
+#page_title a, #page_title img {
+border: 0;
+}
+
+#header_forms {
+width: 280px;
+float: right;
+padding: 5px 0 0 0;
+height: 70px;
+overflow: hidden;
+line-height: 14px;
+}
+
+.subscribe_text {
+font-size: 12px; 
+color:#777;
+
+}
+
+#nav a {
+font-family: arial, sans-serif;
+font-size: 15px;
+color: #777;
+font-weight: normal;
+margin-right: 22px;
+display: block;
+float: left;
+text-decoration: none;
+}
+
+#nav a:hover {
+color: #333;
+}
+
+#nav {
+height: 16px;
+}
+
+.narrowcolumn {
+	float: left;
+	margin: 0px 0px 0 0;
+	width: 720px;
+	border-right: 1px dotted #1c9385;
+	border-top: 1px dotted #1c9385;
+	}
+
+
+#video_zone {
+	width: 370px;
+	float: left;
+	padding-right: 15px;
+	padding-bottom: 10px;
+}
+
+#exclusive_articles {
+	float: right;
+	width: 290px;
+	padding-bottom: 10px;
+}
+
+
+#sidebar {
+	float: right;
+	width: 230px;
+}
+
+.partners p {
+margin: 0;
+padding: 2px 0 2px 0;
+
+}
+
+.partners {
+padding-bottom: 10px;
+}
+
+
+
+
+#nav_wrap {
+padding: 13px;
+text-align: center;
+border-bottom: 1px dotted #1c9385;
+font-family: times, serif;
+font-size: 18px;
+font-weight: bold;
+color: #222;
+margin-bottom: 10px;
+}
+
+#rss_link
+{
+float: right;
+margin-top: -2px;
+width: 30px;
+}
+
+#rss_link a {
+border: 1px solid #888;
+display: block;
+padding: 3px;
+font-size: 10px;
+line-height: 10px;
+color: #888;
+font-family: arial, sans-serif;
+font-weight: normal;
+text-decoration: none;
+}
+
+#rss_link a:hover {
+color: red;
+}
+
+
+#inner_content {
+
+	padding: 0 20px 20px 0px;
+}
+
+#inner_content h2 {
+padding: 0 0 4px 0;
+margin: 0;
+font-size: 15px;
+color: #444;
+font-weight: bold;
+}
+
+
+.widecolumn {
+	padding: 10px 0 20px 0;
+	margin: 5px 0 0 150px;
+	width: 630px;
+	}
+	
+.post {
+	margin: 0 0 10px 0px;
+	text-align: justify;
+	}
+
+.widecolumn .post {
+	margin: 0;
+	}
+
+.narrowcolumn .postmetadata {
+	padding-top: 5px;
+	}
+
+.widecolumn .postmetadata {
+	margin: 30px 0;
+	}
+
+.widecolumn .smallattachment {
+	text-align: center;
+	float: left;
+	width: 128px;
+	margin: 5px 5px 5px 0px;
+}
+
+.widecolumn .attachment {
+	text-align: center;
+	margin: 5px 0px;
+}
+
+.postmetadata {
+	clear: left;
+}
+
+#footer {
+	clear: both;
+	}
+
+#footer p {
+	margin: 0;
+	padding: 20px 0;
+	text-align: center;
+	}
+
+
+
+
+.publication_name {
+font-size: 14px;
+color: #333;
+text-transform: uppercase;
+font-style: italic;
+padding: 10px 0 2px 0;
+}
+
+.publication_name p {
+margin: 0;
+padding: 0;
+}
+
+.news_link {
+font-size: 14px;
+font-weight: bold;
+}
+
+.news_link a {
+color: #1C9385;
+font-weight: normal;
+}
+
+.news_link p {
+display: inline;
+padding: 0; 
+margin: 0;
+}
+
+
+/* EXCLUSIVE ARTICLES */
+
+
+
+.exclusive_article {
+padding: 0 0 10px 0;
+}
+
+.exclusive_article h2 a {
+color: #CD312A;
+font-size: 14px;
+text-decoration: none;
+}
+
+.exclusive_article h2 a:hover {
+text-decoration: underline;
+
+}
+
+.exclusive_article h2 {
+margin: 0;
+padding: 0;
+}
+
+.article_excerpt p {
+padding: 0;
+margin: 0;
+}
+
+
+
+
+/* VIDEO POSTS */
+
+
+.post {
+font-size: 12px;
+}
+
+.post h2 {
+padding: 1px 0 1px 0;
+margin: 0;
+}
+
+.post h2 a {
+color: #CD312A;
+font-size: 14px;
+text-decoration: none;
+}
+
+.post h2 a:hover {
+text-decoration: underline;
+}
+
+.entry {
+padding: 0;
+margin: 0;
+}
+
+.entry p {
+padding: 0 0 5px 0;
+margin: 0;
+display: inline;
+}
+
+h2 .byline {
+color: #777;
+padding: 0 0 3px 0;
+font-style: italic;
+margin: 0;
+font-size: 12px;
+font-weight: normal;
+}
+
+.date {
+text-transform: uppercase;
+color: #333;
+font-weight: bold;
+}
+
+.thumbnail_hover {
+padding-top: 2px;
+padding-bottom: 5px;
+width: 147px;
+float: left;
+margin-right: 8px;
+text-align: center;
+line-height: 9px;
+}
+
+.article_excerpt p {
+display: inline;
+}
+
+.article_excerpt {
+margin-bottom: 5px;
+}
+
+.comments a {
+color: #666;
+font-weight: bold;
+text-decoration: none;
+
+}
+
+.comments a:hover {
+text-decoration: underline;
+}
+
+.thumbnail_hover img {
+width: 141px;
+height: 105px;
+border: 2px solid #CDE3D4;
+}
+
+.thumbnail_hover img:hover {
+border: 2px solid #1C9385;
+
+}
+
+.thumbnail_hover span {
+display: none;	
+}
+
+.thumbnail_hover ul, .thumbnail_hover li  {
+margin: 0;
+padding: 0;
+}
+
+.embedded_video {
+text-align: center;
+padding-bottom: 10px;
+}
+
+.embedded_video h2 {
+padding-bottom: 10px;
+}
+
+
+/* PHOTOS AND AUDIO */
+
+
+.photo_thumbnail_hover img {
+width: 100px;
+height: 75px;
+border: 1px solid #CDE3D4;
+}
+
+
+
+/* LOWER BOXES */
+
+.lower_boxes {
+border-top: 1px solid #999;
+padding: 10px 0 10px 0;
+}
+
+.box_left {
+padding: 0 12px 0 0px;
+margin: 8px 0 8px 0;
+width: 335px;
+float: left;
+}
+
+.box_right {
+padding: 0 12px 0 12px;
+margin: 8px 0 8px 0;
+width: 335px;
+float: right;
+border-left: 1px solid #BBB;
+}
+
+
+

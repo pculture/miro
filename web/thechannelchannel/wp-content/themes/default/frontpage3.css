@@ -1,0 +1,370 @@
+body {
+	margin:0;
+	padding:0;
+	font: normal 12px/15px arial, verdana, helvetica, sans-serif;
+}
+
+#frame
+{
+	width: 970px;
+	position: relative;
+	background: #BBB99B;
+	margin: 0 auto;
+	padding-bottom: 30px;
+}
+
+#body_wrap
+{
+	position: relative;
+	background: #BBB99B;
+	margin: 0 auto;
+}
+* html #body_wrap { border: 1px solid #BBB99B; }
+
+#content_left {
+	position: absolute;
+	left:25px;
+	top:0px;
+	width:190px;
+	}
+
+#content_center {
+	margin-left: 224px;
+	margin-right:334px;
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	margin-left: 226px;
+	margin-right:326px;
+	}
+html>body #content_center {
+	margin-left: 226px;
+	margin-right:326px;
+	}
+
+#content_right {
+	position: absolute;
+	right:20px;
+	top:0px;
+	width:300px;
+	}
+
+/* ---------- HEADER_CF ------------------------ */
+#header_cf
+{
+	background: url( ../images/index_head_back.gif ) top repeat-x;
+	color: white;
+	height: 172px;
+}
+
+#header_cf img { float: left; display: block; }
+#header_cf p#one { font: 11px/13px arial; color: #E2DFDF; margin: 0 25px 5px 325px; padding-top: 5px}
+#header_cf p#two { font: 11px/13px arial; color: #BBB; margin: 0 25px 0 325px; }
+
+h1
+{
+	margin: 0 25px 0 325px; 
+	padding-top: 20px;
+	text-transform: uppercase;
+	font-size: 16px;
+} 
+
+h1 b { color: #F57220 }
+
+#header_cf a {text-decoration: none; color: #E2DFDF;}
+#header_cf a:hover { color: #01578A; text-decoration: underline; }
+
+/* ---------- TOP GAINERS ------------------------ */
+div.top_gainers
+{
+	background: #F29C22;
+	border: 4px solid white;
+	padding: 5px;
+	margin: 0;
+}
+
+h2.top_gainers
+{
+	font: normal 17px arial;
+	color: white;
+	background: black;
+	width: 140px;
+	margin: 0;
+	padding: 5px;
+	border: 1px solid black;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.top_gainers table
+{
+	margin: 5px 0;
+	padding: 0;
+	font: normal 12px/16px arial;
+	color: black;
+}
+
+.top_gainers table td a
+{
+	font: bold 12px/16px arial;
+	color: white;
+	text-decoration: none;
+}
+
+/* ---------- PAST WINNERS ------------------------ */
+
+#past
+{
+	background: #00B1A8;
+	padding: 7px 18px;
+	border: 4px solid white;
+	margin: 15px 0;
+	color: white;
+}
+
+#past h2
+{ 
+	font: bold 17px/18px arial,helvetica,sans-serif;
+	color: white; 
+	margin: 0 0 5px 0;
+	text-align: center;
+}
+
+#past h3
+{ 
+	font: bold 12px/16px arial,helvetica,sans-serif;
+	color: black; 
+	margin: 15px 0 2px 0;
+	text-transform: uppercase;
+}
+
+#past a img
+{
+	border: 0;
+	float: left;
+}
+
+.past_entry_link 
+{
+	display: block;
+	margin-left: 110px;
+	text-decoration: none;
+	font-size: 12px;
+}
+
+.past_entry h4
+{
+	margin: 0 5px 0 110px;
+	color: black;
+	font-size: 12px;
+}
+
+#past .clear
+{
+	line-height: 10px;
+	height: 10px;
+}
+
+.view_archives
+{
+	font: bold 15px/18px arial, helvetica, sans-serif;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+}
+
+/* ---------- SUBMIT ------------------------ */
+
+#submit
+{
+	background: #00B1A8;
+	padding: 7px;
+	border: 4px solid white;
+	border-bottom: 0px;
+	margin: 15px 0 0 0;
+	color: white;
+}
+
+#submit h2
+{ 
+	font: bold 19px/18px arial,helvetica,sans-serif;
+	color: black; 
+	margin: 5px 0;
+	text-align: center;
+}
+#submit h2 b { font: bold 19px/18px arial,helvetica,sans-serif; color: white; }
+
+#submit_button
+{
+	display: block;
+	padding: 5px;
+	background: url( ../images/submit_bottom.gif ) top left no-repeat;
+	text-indent: -5000px
+}
+
+#submit_button a
+{
+	display: block;
+	height: 39px;
+}
+
+/* ---------- AOL PICKS ------------------------ */
+
+#aol_picks
+{
+	background: #000;
+	padding: 0px;
+	border: 4px solid white;
+	margin: 0;
+	color: white;
+}
+
+* html #aol_picks div { margin-left: 10px; }
+
+#aol_picks ul
+{
+	margin: 5px;
+	padding: 0;
+	list-style: none;
+}
+
+#aol_picks ul li
+{
+	margin: 0;
+	padding: 0;
+}
+
+#aol_picks ul li a { color: #50b0eb; text-decoration: none; }
+#aol_picks h3 { color: #a7a7a8;  margin: 5px}
+#aol_picks h4 { font: bold 12px; margin: 5px }
+#aol_picks h2
+{
+	text-indent:  -5000px;
+	line-height: 31px;
+	background: url( ../images/aol_picks.gif ) top left no-repeat;
+	margin: 0;
+}
+
+/* ---------- LEADER BOARD ------------------------ */
+
+#leader
+{
+	background: #4F4845 url(../images/leader_back.gif) top right repeat-y;
+	width: 418px;
+	padding: 0;
+	margin: 0;
+	color: white;
+}
+
+#leader thead th
+{
+	font: normal 9px arial;
+	text-transform: uppercase;
+	text-align: left;
+}
+
+#leader thead th#rank { padding: 0 8px 0 8px; }
+#leader tbody td, #leader tbody th { font: bold 12px arial; }
+#leader tbody.bottom td, #leader tbody.bottom th { font-weight: normal; color: #A8DBD1;}
+#leader tbody th { text-align: right; padding-right: 12px; }
+#leader tr.even { background: #1a1a1a; }
+#leader table { width: 404px; margin: 0 0 0 4px; padding-bottom: 20px;}
+#leader td { padding: 3px; margin: 0; }
+#leader td { margin: 0; }
+#leader table tbody td a { color: white; text-decoration: none; }
+#leader table tbody.bottom td a {  color: #A8DBD1; text-decoration: none; }
+
+#leader h3
+{
+	margin: 0 5px 5px 12px; 
+	color: white;
+	padding-top: 5px;
+}
+
+#content_center h2
+{
+	font: normal 17px arial;
+	color: #F57220;
+	background: black;
+	border: 1px solid #8c8c8c;
+	width: 150px;
+	margin: 0;
+	padding: 5px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+#content_center img { display: block; margin: 0; }
+
+
+/* ---------- JUDGES ------------------------ */
+
+#judges
+{
+	background: #B9B9B9;
+	border: 4px solid white;
+	padding: 5px;
+	margin: 10px 0;
+	color: black;
+}
+
+#judges h2
+{
+	font: normal 17px arial;
+	text-transform: uppercase;
+	margin: 10px 0 0 15px;
+}
+
+#judges h3 { margin: 0 0 15px 15px; }
+
+#judges img
+{
+	float: left;
+	margin: 2px 5px 5px 0;
+}
+
+#judges p
+{
+	padding-left: 70px;
+	margin-left: 6px;
+	font-size: 11px;
+	margin-top: 0
+}
+
+.judge_title
+{
+	color: white;
+	font: bold 12px arial;
+}
+
+
+/* ---------- SPECIAL THANKS ------------------------ */
+
+.thanks
+{
+	font: normal 11px arial, helvetica, sans-serif;
+	color: white;
+	margin-top: 5px; 
+}
+.thanks b { color: #525143; }
+.thanks a:hover { color: #01578A; }
+.thanks a { color: white; text-decoration: none; }
+
+#feedback
+{
+	display: block;
+	border: 2px solid white;
+	padding: 2px 0;
+	text-align: center;
+	margin-top: 10px;
+	text-decoration: none;
+}
+
+
+h3
+{
+	margin: 5px 0;
+	font: normal 11px/16px arial,helvetica,sans-serif;
+	color: black;
+}
+
+.clear { clear: both; line-height: 1px; height: 1px; }
