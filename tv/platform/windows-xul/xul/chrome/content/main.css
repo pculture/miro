@@ -137,9 +137,19 @@ splitter {
 	background: #333333;
 }	
 
-#resizer-left:hover, #resizer-right:hover {
+resizer {
+        background: black;
+}
+
+
+resizer:hover {
 	cursor: e-resize;	
 }	
+
+resizer.side-resizer {
+        min-width: 5px;
+        max-width: 5px;
+}
 
 #bottom-right {
         width: 20px;
