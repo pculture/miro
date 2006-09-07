@@ -1,0 +1,5 @@
+<!ENTITY nbsp                " ">
+<!ENTITY rsaquo              "'">
+
+<!ENTITY addchannel.title    "增加频道">
+<!ENTITY addchannel.prompt   "Please enter the URL of the channel you'd like to add.">

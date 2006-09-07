@@ -1,0 +1,8 @@
+<!ENTITY nbsp                " ">
+<!ENTITY rsaquo              "'">
+
+<!ENTITY canscrape.title     "Kanava ei ole yhteensopiva Democracyn kanssa.">
+<!ENTITY canscrape.body      "Mutta yritämme parhaamme mukaan ladata tiedostot. Videoiden listaamiseen saattaa kulua tavallista enemmän aikaa ja kuvaukset saattavat näyttää omituisilta.">
+
+<!ENTITY canscrape.prefix    "Ole hyvä ja ota yhteyttä julkaisijoihin:">
+<!ENTITY canscrape.suffix    "ja kysy voisivatko he tarjota syötteen tiedostomuodossa, joka toimii Democracyn kanssa.">
