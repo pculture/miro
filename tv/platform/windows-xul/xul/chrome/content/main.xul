@@ -124,7 +124,7 @@
 <!-- CONTENT AREA -->
 <hbox flex="1">
 
-<resizer dir="left" id="resizer-left" oncommand="return doResize(event);">
+<resizer dir="left" id="resizer-left" maxwidth="5" oncommand="return doResize(event);">
 <hbox flex="0" width="5" minwidth="5" style="background-color:#000000;"/>
 </resizer>
 
