@@ -28,7 +28,7 @@ class DummyMainFrame:
     def getDisplay(self, area):
         return self.displays.get(area)
 
-    def onSelectedTabChange(self, tabType, multiple, guideURL):
+    def onSelectedTabChange(self, tabType, multiple, guideURL, videoFilename):
         pass
 
 class DummyController:
