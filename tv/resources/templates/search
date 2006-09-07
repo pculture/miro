@@ -11,6 +11,7 @@
         <link href="resource:css/main.css" rel="stylesheet" type="text/css" />
         <t:include filename="dynamic.js" />
         <script type="text/javascript" src="resource:templates/search.js" />
+        <script type="text/javascript" src="resource:templates/osxdnd.js" />
 
     <t:execOnLoad><![CDATA[
 searchFeed = views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search')
