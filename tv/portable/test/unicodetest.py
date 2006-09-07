@@ -385,7 +385,6 @@ class UnicodeFeedTestCase(schedulertest.EventLoopTest):
         self.forceFeedParserCallback(myFeed)
         for item in myFeed.items:
             u'booya' in item.getTitle().lower()
-            print item.getTitle()
 
     def testGetText(self):
         # FIXME this only works on GTK platforms. See #3831
