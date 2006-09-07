@@ -230,6 +230,16 @@ function handleSelect(event) {
     return true;
 }
 
+function handleDblClick(event, viewName, id) {
+   if(event.target.tagName && event.target.tagName.toUpperCase() == 'A') {
+       // Either a link in the descrption, or a bomb/mailto/trash click
+       return true;
+   } else {
+       return eventURL('action:playViewNamed?viewName=' + viewName + 
+           '&firstItemId=' + id);
+   }
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 

@@ -33,7 +33,7 @@ else:
 	drageffectdownloadeditem="move"
 	selectID="***this.getID()***" selectViewName="@@@viewName@@@"
 	selectArea='itemlist' onclick="return handleSelect(event);" 
-        ondblclick="return eventURL('action:playViewNamed?viewName=@@@viewName@@@&amp;firstItemId=@@@this.getID()@@@');" >
+	ondblclick="return handleDblClick(event, '@@@viewName@@@', @@@this.getID()@@@);" >
     <div class="dnd-reorder-line" />
     <div class="main-video-hitbox">
         <a t:showIf="this.isDownloadable()"
