@@ -2,7 +2,6 @@ import gtk
 
 import threading
 from frontend_implementation.gtk_queue import queue
-import xlibhelper
 import gettext
 import locale
 import gtk.glade
@@ -28,8 +27,6 @@ class Application:
 
         queue.main_thread = threading.currentThread()
         platformutils.setMainThread()
-        if xlibhelper.XInitThreads() == 0:
-            print "WARNING: XInitThreads() failed!"
         gtk.threads_init()
         self.onStartup()
         gtk.main()

@@ -1,6 +1,11 @@
 #!/usr/bin/env python2.4
 # -*- mode: python -*-
 
+# This comes first.  Seriously.
+import democracy.xlibhelper as xlibhelper
+if xlibhelper.XInitThreads() == 0:
+    print "WARNING: XInitThreads() failed!"
+
 import os.path
 import sys
 import optparse
