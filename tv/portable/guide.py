@@ -65,6 +65,8 @@ class ChannelGuide(DDBObject):
         # None means this is the default channel guide.
         self.url = url
 
+        self.redirectedURL = None
+
         DDBObject.__init__(self)
         # Start loading the channel guide.
         self.startLoadsIfNecessary()
@@ -157,6 +159,7 @@ class ChannelGuide(DDBObject):
                 self.cachedGuideBody = match.group(1)
             else:
                 self.cachedGuideBody = html
+            self.redirectedURL = info['redirected-url']
 
             selection = app.controller.selection
             if wasLoading:
@@ -196,6 +199,9 @@ class ChannelGuide(DDBObject):
             return self.url
         else:
             return config.get(prefs.CHANNEL_GUIDE_URL)
+
+    def getRedirectedURL(self):
+        return self.redirectedURL
 
     def getDefault(self):
         return self.url is None

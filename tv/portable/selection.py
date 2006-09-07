@@ -436,7 +436,7 @@ class SelectionHandler(object):
         from frontend import UIStrings
         tabTypes = self.tabListSelection.getTypesDetailed()
         if tabTypes.issubset(set(['guidetab', 'addedguidetab'])):
-            guideURL = self.getSelectedTabs()[0].obj.getURL()
+            guideURL = self.getSelectedTabs()[0].obj.getRedirectedURL()
         else:
             guideURL = None
         multiple = len(self.tabListSelection.currentSelection) > 1
