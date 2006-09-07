@@ -786,6 +786,9 @@ class _FeedParserMixin:
     def _isBase64(self, attrsD, contentparams):
         if attrsD.get('mode', '') == 'base64':
             return 1
+        # We should never assume text is base64 --NN
+        else:
+            return 0
         if self.contentparams['type'].startswith('text/'):
             return 0
         if self.contentparams['type'].endswith('+xml'):
