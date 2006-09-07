@@ -1139,7 +1139,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
         # check if the url that came from a guide, but the user switched tabs
         # before it went through.
         for guide in views.guides:
-            if url.startswith(guide.getURL()):
+            if url.startswith(guide.getRedirectedURL()):
                 return
         delegate.openExternalURL(url)
 
@@ -1520,7 +1520,7 @@ class TemplateActionHandler:
 
             if mode == 'template':
                 if location == 'guide':
-                    baseURL = guide.getURL()
+                    baseURL = guide.getRedirectedURL()
                 else:
                     baseURL = None
                 self.switchTemplate(location, baseURL=baseURL,

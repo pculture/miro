@@ -236,6 +236,18 @@ def upgrade19(objectList):
             changed.add(o)
     return changed
 
+def upgrade20(objectList):
+    """Add redirectedURL to Guides"""
+
+    changed = set()
+    for o in objectList:
+        if o.classString == 'channel-guide':
+            o.savedData['redirectedURL'] = None
+            # set cachedGuideBody to None, to force us to update redirectedURL
+            o.savedData['cachedGuideBody'] = None
+            changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()
