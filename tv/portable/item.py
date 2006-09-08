@@ -1187,8 +1187,14 @@ folder will also be deleted.""")
         return "Item - %s" % self.getTitle()
 
 def reconnectDownloaders():
+    reconnected = set()
     for item in views.items:
         item.setupLinks()
+        reconnected.add(item.downloader)
+    for downloader in views.remoteDownloads:
+        if downloader not in reconnected:
+            print "removing orphaned downloader: ", downloader.url
+            downloader.remove()
 
 def getEntryForFile(filename):
     return FeedParserDict({'title':os.path.basename(filename),

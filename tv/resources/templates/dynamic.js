@@ -240,6 +240,12 @@ function handleDblClick(event, viewName, id) {
    }
 }
 
+function sendKeyToSearchBox(event) {
+  if(event.altKey || event.ctrlKey || event.metaKey) return true;
+  var searchBox = document.getElementById("search-box");
+  searchBox.focus();
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 

@@ -41,7 +41,7 @@ matchingExpiringItems.unlink()
 
 </head>
 
-<body>
+<body onkeydown="sendKeyToSearchBox(event);">
 
 <!-- TITLE BAR ************************************************************ -->
 <div id="main-titlebar">
@@ -51,7 +51,7 @@ matchingExpiringItems.unlink()
 	</div>
 	<div id="main-titlebar-tasks" class="big-search">
 		<div id="main-titlebar-tasks-search">
-		<input type="search" placeholder="Search Videos" class="main-titlebar-tasks-search"  onfocus="startEditSearch(this, null)" onblur="endEditSearch()" />
+		<input id="search-box" type="search" placeholder="Search Videos" class="main-titlebar-tasks-search"  onfocus="startEditSearch(this, null)" onblur="endEditSearch()" />
 		</div>
 	</div>
 </div>

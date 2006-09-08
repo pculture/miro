@@ -67,7 +67,8 @@ for feed in allFeeds:
 
 <body dragdesttype="channel"
 	dragdestdata="channelfolder-***folder.getID()***"
-	drageffectchannel="move">
+	drageffectchannel="move"
+	onkeydown="sendKeyToSearchBox(event);">
 <div id="main-titlebar">
     <img id="main-titlebar-avatar" src="resource:images/folder-icon.png" alt="" />
     <div id="main-titlebar-channelname">
@@ -77,7 +78,7 @@ for feed in allFeeds:
     </div>
     <div id="main-titlebar-tasks">
         <div id="main-titlebar-tasks-search">
-            <input type="search" placeholder="Search Folder" class="main-titlebar-tasks-search" onfocus="startEditSearch(this, showAllVideos)" onblur="endEditSearch()" />
+            <input id="search-box" type="search" placeholder="Search Folder" class="main-titlebar-tasks-search" onfocus="startEditSearch(this, showAllVideos)" onblur="endEditSearch()" />
         </div>
     </div>
 </div>

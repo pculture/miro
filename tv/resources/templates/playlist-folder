@@ -29,7 +29,8 @@ thisPlaylistView.unlink()
 </head>
 <body dragdesttype="playlist"
 	dragdestdata="playlistfolder-***playlist.getID()***"
-	drageffectplaylist="move">
+	drageffectplaylist="move"
+	onkeydown="sendKeyToSearchBox(event);">
 <div id="main-titlebar">
         <img id="main-titlebar-avatar" src="resource:images/folder-icon.png" alt="" />
 	<div id="main-titlebar-channelname">
@@ -39,7 +40,7 @@ thisPlaylistView.unlink()
         </div>
         <div id="main-titlebar-tasks">
                 <div id="main-titlebar-tasks-search">
-                    <input type="search" placeholder="Search Playlist" class="main-titlebar-tasks-search" onfocus="startEditSearch(this, null)" onblur="endEditSearch()" />
+                    <input id="search-box" type="search" placeholder="Search Playlist" class="main-titlebar-tasks-search" onfocus="startEditSearch(this, null)" onblur="endEditSearch()" />
                 </div>
         </div>
 </div>
