@@ -252,6 +252,7 @@ class FeedSchema(DDBObjectSchema):
         ('actualFeed', SchemaObject(FeedImpl)),
         ('iconCache', SchemaObject(IconCache, noneOk=True)),
         ('folder_id', SchemaInt(noneOk=True)),
+        ('searchTerm', SchemaString(noneOk=True)),
     ]
 
 class FeedImplSchema(ObjectSchema):
@@ -385,7 +386,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('redirectedURL', SchemaString(noneOk=True)),
     ]
 
-VERSION = 20
+VERSION = 21
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,

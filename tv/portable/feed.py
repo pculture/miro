@@ -93,12 +93,22 @@ def addFeedFromWebPage(url):
 
 # URL validitation and normalization
 def validateFeedURL(url):
-    return re.match(r"^(http|https)://[^/ ]+/[^ ]*$", url) is not None
+    if re.match(r"^(http|https)://[^/ ]+/[^ ]*$", url) is not None:
+        return True
+    if re.match(r"^dtv:searchTerm:(http|https)://[^/ ]+/[^ ]*\?.+$", url) is not None:
+        return True
+    return False
 
 def normalizeFeedURL(url):
     # Valid URL are returned as-is
     if validateFeedURL(url):
         return url
+
+    searchTerm = None
+    m = re.match(r"^dtv:searchTerm:(.*)\?([^?]+)$", url)
+    if m is not None:
+        searchTerm = m.group(2)
+        url = m.group(1)
 
     originalURL = url
     url = url.strip()
@@ -119,6 +129,9 @@ def normalizeFeedURL(url):
     match = re.match(r"^(http|https)://[^/]*$", url)
     if match is not None:
         url = url + "/"
+
+    if searchTerm is not None:
+        url = "dtv:searchTerm:%s?%s" % (url, searchTerm)
 
     if not validateFeedURL(url):
         print "DTV: unable to normalize URL %s" % originalURL
@@ -525,7 +538,10 @@ class FeedImpl:
     # Returns the URL of the feed
     def getURL(self):
         try:
-            return self.url
+            if self.ufeed.searchTerm is None:
+                return self.url
+            else:
+                return "dtv:searchTerm:%s?%s" % (url, self.ufeed.searchTerm)
         except:
             return ""
 
@@ -616,6 +632,7 @@ class Feed(DDBObject):
         self.informOnError = True
         self.folder_id = None
         self.blinking = False
+        self.searchTerm = None
         self.dd.addAfterCursor(self)
         self.generateFeed(True)
 
@@ -704,6 +721,17 @@ class Feed(DDBObject):
             newFeed = SearchDownloadsFeedImpl(self)
         elif (self.origURL == "dtv:manualFeed"):
             newFeed = ManualFeedImpl(self)
+        elif (self.origURL.startswith ("dtv:searchTerm:")):
+
+            url = self.origURL[len("dtv:searchTerm:"):]
+            (url, search) = url.rsplit("?", 1)
+#            url = urldecode(url)
+#            search = urldecode(search)
+            self.searchTerm = search
+            self.download = grabURL(url,
+                    lambda info:self._generateFeedCallback(info, removeOnError),
+                    lambda error:self._generateFeedErrback(error, removeOnError),
+                    defaultMimeType='application/rss+xml')
         else:
             self.download = grabURL(self.origURL,
                     lambda info:self._generateFeedCallback(info, removeOnError),
@@ -1112,6 +1140,7 @@ class RSSFeedImpl(FeedImpl):
     def updateUsingParsed(self, parsed):
         """Update the feed using parsed XML passed in"""
         self.parsed = parsed
+        searchTerm = self.ufeed.searchTerm
 
         try:
             self.title = self.parsed["feed"]["title"]
@@ -1149,12 +1178,16 @@ class RSSFeedImpl(FeedImpl):
                         try:
                             if _entry_equal (entry["enclosures"], item.getRSSEntry()["enclosures"]):
                                 item.update(entry)
+                                if searchTerm is not None and not filters.matchingItems(item, searchTerm):
+                                    item.remove()
                                 new = False
                         except:
                             pass
             if (new and entry.has_key('enclosures') and
                 self.hasVideoFeed(entry.enclosures)):
-                Item(entry, feed_id=self.ufeed.id)
+                item = Item(entry, feed_id=self.ufeed.id)
+                if searchTerm is not None and not filters.matchingItems(item, searchTerm):
+                    item.remove()
         try:
             updateFreq = self.parsed["feed"]["ttl"]
         except KeyError:
@@ -1357,6 +1390,9 @@ class ScraperFeedImpl(FeedImpl):
             i=Item(FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link,'thumbnail':FeedParserDict({'url':dict['thumbnail']})})]}),linkNumber = linkNumber, feed_id=self.ufeed.id)
         else:
             i=Item(FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link})]}),linkNumber = linkNumber, feed_id=self.ufeed.id)
+        if self.ufeed.searchTerm is not None and not filters.matchingItems(i, self.ufeed.searchTerm):
+            i.remove()
+            return
         updateUandA(self.ufeed)
 
     #FIXME: compound names for titles at each depth??

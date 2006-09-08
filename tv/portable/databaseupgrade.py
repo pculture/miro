@@ -248,6 +248,16 @@ def upgrade20(objectList):
             changed.add(o)
     return changed
 
+def upgrade21(objectList):
+    """Add searchTerm to Feeds"""
+
+    changed = set()
+    for o in objectList:
+        if o.classString == 'feed':
+            o.savedData['searchTerm'] = None
+            changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()
