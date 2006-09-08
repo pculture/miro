@@ -246,6 +246,19 @@ class TabSelectionArea(SelectionArea):
     ensure that we always have at least one tab selected.
     """
 
+    def selectItem(self, view, id):
+        SelectionArea.selectItem(self, view, id)
+        self.moveCursorToSelection()
+
+    def deselectItem(self, view, id):
+        SelectionArea.deselectItem(self, view, id)
+        self.moveCursorToSelection()
+
+    def moveCursorToSelection(self):
+        for id in self.currentSelection:
+            self.currentView.moveCursorToID(id)
+            break
+
     def toggleItemSelect(self, view, id):
         # Don't let a control select deselect the last selected item in the
         # tab list.

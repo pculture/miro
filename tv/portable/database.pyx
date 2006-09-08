@@ -486,6 +486,22 @@ class DynamicDatabase:
         self.cursor = None
 
     ##
+    # sets the current cursor position to point to a given object
+    def moveCursorToObject(self, obj):
+        self.confirmDBThread()
+        self.moveCursorToID(obj.id)
+
+    ##
+    # sets the current cursor position to point the object with a given id
+    def moveCursorToID(self, id):
+        self.confirmDBThread()
+        try:
+            self.cursor = self.objectLocs[id]
+        except KeyError:
+            msg = "No object with id %s in the database" % id
+            raise ObjectNotFoundError, msg
+
+    ##
     # returns a View of the data filtered through a boolean function
     # @param f boolean function to use as a filter
     def filter(self, f, sortFunc = None, resort = False):
