@@ -126,8 +126,13 @@ class Daemon(ConnectionHandler):
 
     def onCommand(self):
         if self.buffer.length >= self.size:
-            comm = cPickle.loads(self.buffer.read(self.size))
-            self.processCommand(comm)
+            try:
+                comm = cPickle.loads(self.buffer.read(self.size))
+            except:
+                print "WARNING: error unpickling command."
+                traceback.print_exc()
+            else:
+                self.processCommand(comm)
             self.changeState('ready')
 
     def processCommand(self, comm):
