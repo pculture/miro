@@ -496,7 +496,7 @@ class DynamicDatabase:
     def moveCursorToID(self, id):
         self.confirmDBThread()
         try:
-            self.cursor = self.objectLocs[id]
+            self.cursor = self.objectLocs[id].copy()
         except KeyError:
             msg = "No object with id %s in the database" % id
             raise ObjectNotFoundError, msg
