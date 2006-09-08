@@ -957,7 +957,7 @@ downloaded?""")
                     "Open Dropped file", args=(filename,))
             elif url.startswith("http:") or url.startswith("https:"):
                 url = feed.normalizeFeedURL(url)
-                if feed.validateFeedURL(url) and not _getFeed(url):
+                if feed.validateFeedURL(url) and not feed.getFeedByURL(url):
                     lastAddedFeed = feed.Feed(url)
 
         if lastAddedFeed:
@@ -1437,7 +1437,7 @@ class GUIActionHandler:
     def addFeed(self, url = None, showTemplate = None, selected = '1'):
         def doAdd (url):
             db.confirmDBThread()
-            myFeed = _getFeed (url)
+            myFeed = feed.getFeedByURL (url)
             if myFeed is None:
                 myFeed = feed.Feed(url)
     
@@ -1451,7 +1451,7 @@ class GUIActionHandler:
         url = feed.normalizeFeedURL(url)
         db.confirmDBThread()
         # Find the feed
-        myFeed = _getFeed (url)
+        myFeed = feed.getFeedByURL (url)
         if myFeed is None:
             print "selectFeed: no such feed: %s" % url
             return
@@ -1460,7 +1460,7 @@ class GUIActionHandler:
     def addGuide(self, url = None, selected = '1'):
         def doAdd(url):
             db.confirmDBThread()
-            myGuide = _getGuide (url)
+            myGuide = guide.getGuideByURL (url)
             if myGuide is None:
                 myGuide = guide.ChannelGuide(url)
     
@@ -1747,12 +1747,6 @@ def _getInitialChannelGuide():
         else:
             _defaultFeeds()
     return default_guide
-
-def _getFeed(url):
-    return views.feeds.getItemWithIndex(indexes.feedsByURL, url)
-
-def _getGuide(url):
-    return views.guides.getItemWithIndex(indexes.guidesByURL, url)
 
 # Race conditions:
 

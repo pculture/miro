@@ -32,7 +32,8 @@ else:
 	t:contextMenu="***contextMenu***"
 	drageffectdownloadeditem="move"
 	selectID="***this.getID()***" selectViewName="@@@viewName@@@"
-	selectArea='itemlist' onclick="return handleSelect(event);" 
+	selectArea='itemlist' 
+	onclick="return handleSelect(event);" 
 	ondblclick="return handleDblClick(event, '@@@viewName@@@', @@@this.getID()@@@);" >
     <div class="dnd-reorder-line" />
     <div class="main-video-hitbox">

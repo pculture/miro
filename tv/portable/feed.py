@@ -1889,3 +1889,7 @@ def expireItems():
             feed.expireItems()
     finally:
         eventloop.addTimeout(300, expireItems, "Expire Items")
+
+def getFeedByURL(url):
+    return views.feeds.getItemWithIndex(indexes.feedsByURL, url)
+

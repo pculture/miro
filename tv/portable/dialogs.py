@@ -70,6 +70,8 @@ BUTTON_DELETE_FILES = DialogButton(_("Delete Files"))
 BUTTON_KEEP_VIDEOS = DialogButton(_("Keep Videos"))
 BUTTON_DELETE_VIDEOS = DialogButton(_("Delete Videos"))
 BUTTON_CREATE = DialogButton(_("Create"))
+BUTTON_ADD = DialogButton(_("Add"))
+BUTTON_ADD_INTO_NEW_FOLDER = DialogButton(_("Add Into New Folder"))
 
 class Dialog(object):
     """Abstract base class for dialogs."""

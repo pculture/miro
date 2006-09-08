@@ -16,8 +16,10 @@ import os
 from util import getTorrentInfoHash
 import app
 import dialogs
+import download_utils
 import item
 import feed
+import folder
 import httpclient
 import views
 import platformutils
@@ -80,25 +82,61 @@ def addFeed(path):
 def addSubscriptions(path):
     urls = subscription.parseFile(path)
     if urls is not None:
-        addFeeds(urls)
+        if len(urls) > 1:
+            askForMultipleFeeds(urls)
+        else:
+            addFeeds(urls)
 
-def addFeeds(urls):
+def filterExistingFeedURLs(urls):
+    return [u for u in urls if feed.getFeedByURL(u) is None]
+
+def addFeeds(urls, newFolderName=None):
     if len(urls) > 0:
-        handler = app.GUIActionHandler()
-        lastURL = urls.pop(0)
-        for url in urls:
-            handler.addFeed(url, selected=None)
-        handler.addFeed(lastURL)
+        if newFolderName is not None:
+            newFolder = folder.ChannelFolder(newFolderName)
+        for url in filterExistingFeedURLs(urls):
+            f = feed.Feed(url)
+            if newFolderName is not None:
+                f.setFolder(newFolder)
+            lastFeed = f
+        if newFolderName is None:
+            for url in urls:
+                f = feed.getFeedByURL(url)
+                if f is lastFeed:
+                    app.controller.selection.selectTabByObject(f)
+                else:
+                    f.blink()
+        else:
+            app.controller.selection.selectTabByObject(newFolder)
 
 def askForMultipleFeeds(urls):
-    title = _("Subscribing to multiple feeds") 
-    description = _("You are being subscribed to %d feeds.") % len(urls)
-    d = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_OK,
-            dialogs.BUTTON_CANCEL)
+    title = _("Subscribing to multiple channels") 
+    description = _("Create %d channels?") % len(urls)
+    d = dialogs.ThreeChoiceDialog(title, description, dialogs.BUTTON_ADD,
+            dialogs.BUTTON_ADD_INTO_NEW_FOLDER, dialogs.BUTTON_CANCEL)
     def callback(d):
-        if d.choice == dialogs.BUTTON_OK:
+        if d.choice == dialogs.BUTTON_ADD:
             addFeeds(urls)
+        elif d.choice == dialogs.BUTTON_ADD_INTO_NEW_FOLDER:
+            askForNewFolderName(urls)
     d.run(callback)
+
+def askForNewFolderName(urls):
+    newURLCount = len(filterExistingFeedURLs(urls))
+    existingURLCount = len(urls) - newURLCount
+    title = _("Adding %d channels to a new folder") % newURLCount
+    description = _("Enter a name for the new channel folder")
+    if existingURLCount > 0:
+        description += "\n\n"
+        description += _("""\
+NOTE: You are already subscribed to %d of these channels.  These channels \
+will stay where they currently are.""" % existingURLCount)
+
+    def callback(d):
+        if d.choice == dialogs.BUTTON_CREATE:
+            addFeeds(urls, d.value)
+    dialogs.TextEntryDialog(title, description, dialogs.BUTTON_CREATE,
+            dialogs.BUTTON_CANCEL).run(callback)
 
 def complainAboutDemocracyURL(messageText):
     title = _("Subscription error")
@@ -160,7 +198,7 @@ def parseCommandLineArgs(args=None):
                 addedTorrents = True
             elif ext in ('.rss', '.rdf', '.atom', '.ato'):
                 addFeed(arg)
-            elif ext in ('.democracy', '.dem'):
+            elif ext in ('.democracy', '.dem', '.opml'):
                 addSubscriptions(arg)
             else:
                 addVideo(arg)

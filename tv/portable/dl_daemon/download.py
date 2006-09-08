@@ -11,6 +11,7 @@ import traceback
 from copy import copy
 
 from download_utils import cleanFilename, nextFreeFilename, shortenFilename
+from download_utils import filenameFromURL
 import eventloop
 import httpclient
 
@@ -251,7 +252,7 @@ class BGDownloader:
         self.url = url
         self.startTime = clock()
         self.endTime = self.startTime
-        self.shortFilename = self.filenameFromURL(url)
+        self.shortFilename = filenameFromURL(url)
         self.pickInitialFilename()
         self.state = "downloading"
         self.currentSize = 0
@@ -283,28 +284,6 @@ class BGDownloader:
         x = command.UpdateDownloadStatus(daemon.lastDaemon, self.getStatus())
         return x.send()
         
-    ##
-    # Returns a reasonable filename for saving the given url
-    def filenameFromURL(self, url):
-        try:
-            match = URIPattern.match(url)
-            if match is None:
-                # This code path will never be executed.
-                return cleanFilename(url)
-            filename = match.group(2)
-            query = match.group(4)
-            if not filename:
-                ret = query
-            elif not query:
-                ret = filename
-            else:
-                ret = "%s-%s" % (filename, query)
-            if ret is None:
-                ret = 'unknown'
-            return cleanFilename(ret)
-        except:
-            return 'unknown'
-
     ##
     def pickInitialFilename(self):
         """Pick a path to download to based on self.shortFilename.

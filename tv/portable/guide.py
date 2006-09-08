@@ -216,3 +216,5 @@ class ChannelGuide(DDBObject):
     def getIconURL(self):
         return resource.url("images/channelguide-icon-tablist.png")
 
+def getGuideByURL(url):
+    return views.guides.getItemWithIndex(indexes.guidesByURL, url)

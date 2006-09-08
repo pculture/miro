@@ -427,7 +427,8 @@ public:
                     if(NS_FAILED(rv)) return rv;
                     utf8Data = NS_ConvertUTF16toUTF8(data);
                     NS_EscapeURL(PromiseFlatCString(utf8Data).get(),
-                            utf8Data.Length(), esc_Query | esc_Forced,
+                            utf8Data.Length(), 
+                            esc_Query | esc_Forced | esc_AlwaysCopy,
                             escapedData);
                     url.Append(escapedData);
                     url.Append("%0A"); // "\n" 
