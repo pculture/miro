@@ -310,7 +310,7 @@ class FeedImpl:
                     next = item
                 elif item.getPubDateParsed() > next.getPubDateParsed():
                     next = item
-        if not next is None:
+        if next is not None:
             next.download(autodl = False)
 
     def startAutoDownload(self):
@@ -321,7 +321,7 @@ class FeedImpl:
                     next = item
                 elif item.getPubDateParsed() > next.getPubDateParsed():
                     next = item
-        if not next is None:
+        if next is not None:
             next.download(autodl = True)
 
     ##
@@ -1163,13 +1163,17 @@ class RSSFeedImpl(FeedImpl):
         
         if self.initialUpdate:
             self.initialUpdate = False
-            if len(self.items) > 0:
-                sortedItems = list(self.items)
-                sortedItems.sort(lambda x, y: cmp(x.getPubDateParsed(), y.getPubDateParsed()))
-                self.startfrom = sortedItems[-1].getPubDateParsed()
-                sortedItems[-1].signalChange(needsSave=False)
-            else:
-                self.startfrom = datetime.min
+            self.startfrom = datetime.min
+            itemsToSignal = []
+            for item in self.items:
+                itemTime = item.getPubDateParsed()
+                if itemTime > self.startfrom:
+                    self.startfrom = itemTime
+                    itemsToSignal = [item]
+                elif itemTime == self.startfrom:
+                    itemsToSignal.append (item)
+            for item in itemsToSignal:
+                item.signalChange(needsSave=False)
             self.ufeed.signalChange()
 
     def addScrapedThumbnail(self,entry):
