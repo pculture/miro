@@ -494,7 +494,7 @@ class Controller (frontend.Application):
             views.downloadingItems.addRemoveCallback(self.onDownloadingItemsCountChange)
 
             # Set up the search objects
-            self.setupGlobalFeed('dtv:search')
+            self.setupGlobalFeed('dtv:search', initiallyAutoDownloadable=False)
             self.setupGlobalFeed('dtv:searchDownloads')
 
             # Set up tab list

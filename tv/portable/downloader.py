@@ -151,6 +151,8 @@ class RemoteDownloader(DDBObject):
         flashscraper.tryScrapingURL(self.url, self._runDownloader)
 
     def _runDownloader(self, url, contentType = None):
+        if not self.idExists():
+            return # we got deleted while we were doing the flash scraping
         if contentType is not None:
             self.contentType = contentType
         if url is not None:
@@ -389,7 +391,7 @@ def cleanupIncompleteDownloads():
             filename = downloader.getFilename()
             if len(filename) > 0:
                 if not os.path.isabs(filename):
-                    filename = os.path.join(downloadDir, file)
+                    filename = os.path.join(downloadDir, filename)
                 filesInUse.add(filename)
 
     for file in os.listdir(downloadDir):
