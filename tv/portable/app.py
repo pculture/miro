@@ -494,7 +494,7 @@ class Controller (frontend.Application):
             views.downloadingItems.addRemoveCallback(self.onDownloadingItemsCountChange)
 
             # Set up the search objects
-            self.setupGlobalFeed('dtv:search')
+            self.setupGlobalFeed('dtv:search', initiallyAutoDownloadable=False)
             self.setupGlobalFeed('dtv:searchDownloads')
 
             # Set up tab list
@@ -1501,7 +1501,11 @@ class TemplateActionHandler:
         controller.frame.selectDisplay(template, controller.frame.mainDisplay)
 
     def doneWithIntro(self, id):
-        guide = views.guides.getObjectByID(int(id)).setSawIntro()
+        try:
+            guide = views.guides.getObjectByID(int(id)).setSawIntro()
+        except database.ObjectNotFoundError: 
+            # guide was deleted before we got this action URL
+            return
         self.goToGuide(id)
 
     def goToGuide(self, id):
@@ -1512,7 +1516,11 @@ class TemplateActionHandler:
             if id is None:
                 guide = getSingletonDDBObject(views.default_guide)
             else:
-                guide = views.guides.getObjectByID(int(id))
+                try:
+                    guide = views.guides.getObjectByID(int(id))
+                except database.ObjectNotFoundError: 
+                    # guide was deleted before we got this action URL
+                    return
 
             # Does the Guide want to implement itself as a redirection to
             # a URL?

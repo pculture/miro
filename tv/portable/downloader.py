@@ -151,6 +151,8 @@ class RemoteDownloader(DDBObject):
         flashscraper.tryScrapingURL(self.url, self._runDownloader)
 
     def _runDownloader(self, url, contentType = None):
+        if not self.idExists():
+            return # we got deleted while we were doing the flash scraping
         if contentType is not None:
             self.contentType = contentType
         if url is not None:
