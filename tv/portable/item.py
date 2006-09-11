@@ -901,16 +901,18 @@ folder will also be deleted.""")
             return self.pendingReason
         else:
             secs = 0
+        mins, secs = divmod(secs, 60)
+        hours, mins = divmod(mins, 60)
         if secs == -1:
-            return 'downloading...'
+            return _('downloading...')
         elif secs == 0:
-            return 'starting up...'
-        elif (secs < 120):
-            return '%1.0f secs left - ' % secs
-        elif (secs < 6000):
-            return '%1.0f mins left - ' % ceil(secs/60.0)
+            return _('starting up...')
+        elif hours > 0:
+            time = "%d:%02d:%02d" % (hours, mins, secs)
+            return _("%s left") % time
         else:
-            return '%1.1f hours left - ' % ceil(secs/3600.0)
+            time = "%d:%02d" % (mins, secs)
+            return _("%s left") % time
 
     ##
     # Returns the download rate

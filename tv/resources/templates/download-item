@@ -94,10 +94,13 @@ else:
                     </span>
                 </div>
             </div>
-            <span t:replace="this.downloadETA()" />
-            <span t:hideIf="this.downloadRate() == '0k/s'">
-                    <span t:replace="this.downloadRate()" />
-            </span>
+	    <div class="download-rate-and-eta">
+                <span class="download-rate"
+                    t:hideIf="this.downloadRate() == '0k/s'">
+                        <span t:replace="this.downloadRate()" />
+                </span>
+                <span t:replace="this.downloadETA()" />
+	    </div>
             <a class="main-progress-cancel" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" title="Cancel Download" />
         </div>
     </div>

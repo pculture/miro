@@ -385,7 +385,7 @@ class BGDownloader:
 
 
 class HTTPDownloader(BGDownloader):
-    UPDATE_CLIENT_INTERVAL = 3
+    UPDATE_CLIENT_INTERVAL = 1
     UPDATE_CLIENT_WINDOW = 6
     HALTED_THRESHOLD = 3 # how many secs until we consider a download halted
 
