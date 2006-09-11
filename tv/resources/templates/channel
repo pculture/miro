@@ -23,25 +23,11 @@ searchTerm = None
 
 allItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
 matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm), sortFunc=sorts.item)
+newItems = matchingItems.filter(filters.newItems, sortFunc=sorts.item)
 downloadingItems = matchingItems.filter(filters.downloadingItems,sortFunc=sorts.item)
+watchableItems = matchingItems.filter(filters.watchableItems,sortFunc=sorts.itemsUnwatchedFirst)
 
 thisFeedView = views.feeds.filter(lambda x: x is feed)
-
-matchingItems.createIndex(indexes.itemsByChannelCategory, sortFunc=sorts.item)
-def makeStateView(cat):
-    return matchingItems.filterWithIndex(indexes.itemsByChannelCategory, cat)
-
-newItems = makeStateView('new')
-unwatchedItems = makeStateView('newly-downloaded')
-expiringItems = makeStateView('expiring')
-savedItems = makeStateView('saved')
-
-if newItems.len() == unwatchedItems.len() == expiringItems.len() == savedItems.len() == 0:
-    mainChannelbarAvailableDisplay = mainMatchingDisplay = "block"
-    newVideosDisplay = showMoreVideosDisplay = "none"
-else:
-    mainChannelbarAvailableDisplay = mainMatchingDisplay = "none"
-    newVideosDisplay = showMoreVideosDisplay = "block"
 
 def updateSearchString(newSearch):
     global searchTerm
@@ -49,10 +35,10 @@ def updateSearchString(newSearch):
         searchTerm = None
     else:
         searchTerm = newSearch
-    allItems.recomputeFilter(matchingItems)
+    allItems.recomputeFilters()
 feed.updateIcons()
-
 isFolder = False
+
 ]]>
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[

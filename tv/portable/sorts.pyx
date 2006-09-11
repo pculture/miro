@@ -31,6 +31,17 @@ def item(x,y):
             # x and y are not children of the same item, so sort by the parent (which might be the self)
             return item(x.getParent(), y.getParent())
 
+def itemsUnwatchedFirst(x,y):
+    uwx = x.getState() == 'newly-downloaded'
+    uwy = y.getState() == 'newly-downloaded'
+    if uwx != uwy:
+        if uwx:
+            return -1
+        else:
+            return 1
+    else:
+        return item(x,y)
+
 # The sort function used to order tabs in the tab list: just use the
 # sort keys provided when mapToTab created the Tabs. These can be
 # lists, which are tested left-to-right in the way you'd

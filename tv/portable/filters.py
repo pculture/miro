@@ -22,6 +22,11 @@ def expiringItems(obj):
 def watchableItems(obj):
     return obj.isDownloaded() and not obj.isNonVideoFile()
 
+# This is "new" for the channel template, expect it to be
+# updated frequently in the next couple of weeks --NN 9/11/06
+def newItems(obj):
+    return not obj.getViewed()
+
 # Return True if a tab should be shown for obj in the frontend. The filter
 # used on the database to get the list of tabs.
 def mappableToTab(obj):
