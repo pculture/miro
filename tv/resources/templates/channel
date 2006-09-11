@@ -22,15 +22,15 @@ global searchTerm
 searchTerm = None
 
 allItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
-matchingItemsUnsorted = allItems.filter(lambda x: filters.matchingItems(x, searchTerm))
-matchingItems = matchingItemsUnsorted.sort(sorts.item)
-downloadingItems = matchingItems.filter(filters.downloadingItems)
+matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm), sortFunc=sorts.item)
+downloadingItems = matchingItems.filter(filters.downloadingItems,sortFunc=sorts.item)
+
 thisFeedView = views.feeds.filter(lambda x: x is feed)
 
-matchingItems.createIndex(indexes.itemsByChannelCategory)
+matchingItems.createIndex(indexes.itemsByChannelCategory, sortFunc=sorts.item)
 def makeStateView(cat):
-    view = matchingItems.filterWithIndex(indexes.itemsByChannelCategory, cat)
-    return view.sort(sorts.item)
+    return matchingItems.filterWithIndex(indexes.itemsByChannelCategory, cat)
+
 newItems = makeStateView('new')
 unwatchedItems = makeStateView('newly-downloaded')
 expiringItems = makeStateView('expiring')
@@ -49,14 +49,14 @@ def updateSearchString(newSearch):
         searchTerm = None
     else:
         searchTerm = newSearch
-    allItems.recomputeFilter(matchingItemsUnsorted)
+    allItems.recomputeFilter(matchingItems)
 feed.updateIcons()
-]]>
 
 isFolder = False
+]]>
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
-matchingItemsUnsorted.unlink()
+matchingItems.unlink()
 thisFeedView.unlink()
 if feed.idExists():
     feed.markAsViewed()
