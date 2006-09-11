@@ -61,16 +61,15 @@ else:
     revision = '%s - %s' % revision
 
 # Inject the revision number into app.config.template to get app.config.
-# NEEDS: Very sloppy. The new file is just dropped in the source tree
-# next to the old one.
 
-appConfigPath = os.path.join(root, 'resources', 'app.config')
-s = open("%s.template" % appConfigPath, "rt").read()
+appConfigTemplatePath = os.path.join(root, 'resources', 'app.config.template')
+appConfigPath = '/tmp/democracy.app.config'
+s = open(appConfigTemplatePath, "rt").read()
 s = string.Template(s).safe_substitute(APP_REVISION = revision, 
                                        APP_REVISION_URL = revisionURL, 
                                        APP_REVISION_NUM = revisionNum, 
                                        APP_PLATFORM = 'osx')
-f = open(appConfigPath, "wt")
+f = open(appConfigPath, 'wt')
 f.write(s)
 f.close()
 
@@ -100,7 +99,6 @@ resourceFiles = ['Resources/%s' % x for x in os.listdir('Resources')]
 
 py2app_options = dict(
     plist = infoPlist,
-    resources = '%s/resources' % root, 
     iconfile = '%s/platform/osx/Democracy.icns' % root,
     packages = ['dl_daemon']
 )
@@ -111,7 +109,7 @@ setup(
     options = dict(py2app = py2app_options),
     ext_modules = [
         Extension("idletime",["%s/platform/osx/idletime.c" % root]),
-	Extension("database",["%s/portable/database.pyx" % root]),
+        Extension("database",["%s/portable/database.pyx" % root]),
         Extension("sorts",["%s/portable/sorts.pyx" % root]),
         Extension("fasttypes",["%s/portable/fasttypes.cpp" % root],
                   extra_objects=[boostLib],
@@ -120,6 +118,13 @@ setup(
     cmdclass = dict(build_ext = build_ext)
 )
 
+# Setup some variables we'll need
+
+bundleRoot = 'Democracy.app/Contents'
+execRoot = os.path.join(bundleRoot, 'MacOS')
+rsrcRoot = os.path.join(bundleRoot, 'Resources')
+prsrcRoot = os.path.join(rsrcRoot, 'resources')
+
 # Create a hard link to the main executable with a different name for the 
 # downloader. This is to avoid having 'Democracy' shown twice in the Activity 
 # Monitor since the downloader is basically Democracy itself, relaunched with a 
@@ -127,14 +132,36 @@ setup(
 
 print "Creating Downloader hard link."
 
-srcRoot = 'Democracy.app/Contents/MacOS'
-srcPath = '%s/Democracy' % srcRoot
-linkName = 'Downloader'
-linkPath = '%s/%s' % (srcRoot, linkName)
+srcPath = os.path.join(execRoot, 'Democracy')
+linkPath = os.path.join(execRoot, 'Downloader')
 
 if os.path.exists(linkPath):
     os.remove(linkPath)
 os.link(srcPath, linkPath)
+
+# Copy our own portable resources, install the app.config file and remove 
+# useless data
+
+print "Copying portable resources to application bundle"
+
+if os.path.exists(prsrcRoot):
+    shutil.rmtree(prsrcRoot)
+os.mkdir(prsrcRoot)
+
+excludedRsrc = ['app.config.template', 'locale', 'testdata']
+for resource in glob(os.path.join(root, 'resources', '*')):
+    rsrcName = os.path.basename(resource)
+    if rsrcName not in excludedRsrc:
+        print "    %s" % rsrcName
+        if os.path.isdir(resource):
+            shutil.copytree(resource, os.path.join(prsrcRoot, rsrcName))
+        else:
+            shutil.copy(resource, prsrcRoot)
+
+# Install the final app.config file
+
+print "Copying config file to application bundle"
+shutil.move(appConfigPath, os.path.join(prsrcRoot, 'app.config'))
 
 # Copy the gettext MO files in a 'locale' folder inside the application bundle 
 # resources folder. Doing this manually at this stage instead of automatically 
@@ -144,7 +171,7 @@ os.link(srcPath, linkPath)
 print "Copying gettext MO files to application bundle."
 
 localeDir = os.path.join (root, 'resources', 'locale')
-shutil.rmtree('Democracy.app/Contents/Resources/locale', True);
+shutil.rmtree(os.path.join(rsrcRoot, 'locale'), True);
 
 for source in glob(os.path.join(localeDir, '*.mo')):
     lang = os.path.basename(source)[:-3]
