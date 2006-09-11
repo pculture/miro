@@ -430,7 +430,6 @@ class DisplayHostView (NibClassBuilder.AutoBaseClass):
             return
 
         # Figure out where to put the content area
-        # NEEDS: clean up outlet names/types in nib
         frame = self.bounds()
         mask = self.autoresizingMask()
 
