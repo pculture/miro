@@ -67,6 +67,7 @@ i18n:translate="">Back to Channel</a></h3>
 		<span style="display:inline; width:150px;" i18n:translate="">
 			Videos expire after:
 		</span>
+		<div t:updateForConfigChange="">
 		<select name="expireAfter" onChange="javascript:setExpiration();">
 			<option value="system" selected="1" 
 t:hideIf="feed.getExpirationType() != 'system'"><span i18n:translate="">Default</span> 
@@ -103,6 +104,7 @@ t:hideIf="feed.getExpirationType() != 'never'" i18n:translate="">Never</option>
 			<option value="never" t:hideIf="feed.getExpirationType() == 
 'never'" i18n:translate="">Never</option>
 		</select>
+		</div>
 	</div>
 	<div style="margin:0px 10px 20px 10px;">
 		<span style="width:150px;" i18n:translate="">
