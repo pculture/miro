@@ -7,7 +7,7 @@
 %define FULL_VERSION %{VERSION}%{?RELEASE_CANDIDATE:-%{RELEASE_CANDIDATE}}
 #define FULL_VERSION %{NIGHTLY}
 %define RELEASE 1
-%define mozversion 1.7.5
+%define mozversion 1.7.8
 
 Name:           Democracy
 Version:        %{VERSION}
