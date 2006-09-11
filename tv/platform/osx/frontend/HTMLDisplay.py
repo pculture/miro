@@ -111,7 +111,6 @@ class HTMLDisplay (app.Display):
         pass
 
     def callWhenReadyToDisplay(self, hook):
-        # NEEDS: lock?
         if self.readyToDisplay:
             hook()
         else:
