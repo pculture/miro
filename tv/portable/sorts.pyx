@@ -1,11 +1,5 @@
+# Since we have a sort named "item" we name the item module "itemmod"
 import item as itemmod
-
-def _compare(x, y):
-    if x < y:
-        return -1
-    if x > y:
-        return 1
-    return 0
 
 def item(x,y):
     if x.parent_id == y.parent_id:
@@ -37,30 +31,6 @@ def item(x,y):
             # x and y are not children of the same item, so sort by the parent (which might be the self)
             return item(x.getParent(), y.getParent())
 
-def alphabetical(x,y):
-    if x.getTitle() < y.getTitle():
-        return -1
-    elif x.getTitle() > y.getTitle():
-        return 1
-    elif x.getDescription() < y.getDescription():
-        return -1
-    elif x.getDescription() > y.getDescription():
-        return 1
-    else:
-        return 0
-
-def downloadStartedSort(x,y):
-    if x.getTitle() < y.getTitle():
-        return -1
-    elif x.getTitle() > y.getTitle():
-        return 1
-    elif x.getDescription() < y.getDescription():
-        return -1
-    elif x.getDescription() > y.getDescription():
-        return 1
-    else:
-        return 0
-
 # The sort function used to order tabs in the tab list: just use the
 # sort keys provided when mapToTab created the Tabs. These can be
 # lists, which are tested left-to-right in the way you'd
@@ -76,9 +46,3 @@ def tabs(x, y):
     elif x.sortKey > y.sortKey:
         return 1
     return 0
-
-def text(x, y):
-    return _compare(str(x), str(y))
-
-def number(x, y):
-    return _compare(float(x), float(y))

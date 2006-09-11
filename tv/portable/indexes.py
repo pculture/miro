@@ -53,10 +53,6 @@ def downloadsByCategory(x):
     else:
         return 'normal'
 
-tabIDIndex = lambda x: x.id
-
-tabObjIDIndex = lambda x: x.obj.getID()
-
 def playlistsByItemID(playlist):
     return playlist.item_ids
 
