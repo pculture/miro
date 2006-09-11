@@ -7,7 +7,7 @@
 %define FULL_VERSION %{VERSION}%{?RELEASE_CANDIDATE:-%{RELEASE_CANDIDATE}}
 #define FULL_VERSION %{NIGHTLY}
 %define RELEASE 1
-%define mozversion 1.7.12
+%define mozversion 37:1.7.12
 
 Name:           Democracy
 Version:        %{VERSION}
@@ -25,10 +25,10 @@ BuildArch:      i386 x86_64
 BuildRequires:  python-devel
 BuildRequires:  xine-lib-devel libfame Pyrex
 BuildRequires:  boost-devel
-BuildRequires:  mozilla-devel=%{mozversion}
+BuildRequires:  mozilla-devel = %{mozversion}
 Requires:   	python-abi = %(%{__python} -c "import sys ; print sys.version[:3]")
 Requires:	xine-lib gnome-python2-gtkmozembed libfame gnome-python2-gconf dbus-python
-Requires:       mozilla=%{mozversion}
+Requires:       mozilla = %{mozversion}
 
 %description
 Democracy Player
