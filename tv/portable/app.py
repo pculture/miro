@@ -1555,6 +1555,12 @@ class TemplateActionHandler:
     def toggleWatchableView(self):
         self.templateHandle.getTemplateVariable('toggleWatchableView')()
 
+    def toggleNewItemsView(self):
+        self.templateHandle.getTemplateVariable('toggleNewItemsView')()
+
+    def toggleAllItemsMode(self):
+        self.templateHandle.getTemplateVariable('toggleAllItemsMode')()
+
     def playViewNamed(self, viewName, firstItemId):
         # Find the database view that we're supposed to be
         # playing; take out items that aren't playable video

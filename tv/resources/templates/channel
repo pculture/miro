@@ -22,6 +22,9 @@ def showDownloadsFilter(x):
 def showWatchableFilter(x):
     return showWatchableItems
 
+def showNewFilter(x):
+    return showNewItems and (allItemsMode or filters.newItems(x))
+
 def updateSearchString(newSearch):
     global searchTerm
     if len(newSearch) == 0:
@@ -40,9 +43,20 @@ def toggleWatchableView():
     showWatchableItems = not showWatchableItems
     allWatchableItems.recomputeFilter(watchableItems)
 
+def toggleNewItemsView():
+    global showNewItems
+    showNewItems = not showNewItems
+    matchingItems.recomputeFilter(newItems)
+
+def toggleAllItemsMode():
+    print "Toggling all items"
+    global allItemsMode
+    allItemsMode = not allItemsMode
+    matchingItems.recomputeFilter(newItems)
+
 feed = views.feeds.getObjectByID(int(kargs['id']))
 
-global searchTerm, showDownloads, showWatchableItems
+global searchTerm, showDownloads, showWatchableItems, showNewItems, allItemsMode
 searchTerm = None
 
 # The main section
@@ -50,12 +64,12 @@ allItemsMode = False
 
 # Initial states of views in this template
 showDownloads = False
-showWatchableItems = False
-showAllItems = True
+showNewItems = True
+showWatchableItems = True
 
 allItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
 matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm), sortFunc=sorts.item)
-newItems = matchingItems.filter(lambda x:allItemsMode or filters.newItems(x), sortFunc=sorts.item)
+newItems = matchingItems.filter(showNewFilter, sortFunc=sorts.item)
 
 allDownloadingItems = matchingItems.filter(filters.downloadingItems,sortFunc=sorts.item)
 downloadingItems = allDownloadingItems.filter(showDownloadsFilter,sortFunc=sorts.item)
@@ -64,7 +78,11 @@ watchableItems = allWatchableItems.filter(showWatchableFilter,sortFunc=sorts.ite
 
 thisFeedView = views.feeds.filter(lambda x: x is feed)
 
-showAllItems = (len(watchableItems) == 0) and len(newItems) > 0
+showNewItems = (len(watchableItems) == 0) or len(newItems) > 0
+
+if len(newItems) == 0:
+    allItemsMode = True
+    matchingItems.recomputeFilter(newItems)
 
 feed.updateIcons()
 isFolder = False

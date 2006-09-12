@@ -29,7 +29,7 @@
 <!-- / DOWNLOADS -->
 
 <div id="main-channelbar-available" class="main-channelbar">
-<div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-matching');">#&nbsp;</a></div>
+<div class="main-channelbar-hitbox"><a href="javascript:eventURL('action:toggleNewItemsView');">#&nbsp;</a></div>
 <div t:updateForView="matchingItems">
   <div t:showIf="searchTerm is None">
     <div t:hideIf="isFolder">
@@ -61,26 +61,42 @@
   </div>
 </div>
 </div>
+
+<div t:updateForView="matchingItems">
+  <div t:hideIf="allItemsMode  or not showNewItems or newItems.len() == matchingItems.len()" style="display: block">
+    <div id="show-more-videos-label" style="display:inline">
+      <a href="javascript:eventURL('action:toggleAllItemsMode');" class="main-notification-nonew">
+       	<div class="main-notification">
+          <div t:hideIf="isFolder"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len() - newItems.len()" class="video-count"/> more videos on this channel &gt;&gt;</span></div>
+          <div t:showIf="isFolder"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()" class="video-count"/> videos in this channel folder &gt;&gt;</span></div>
+        </div>
+        <div class="main-notification-right">&nbsp;</div>
+        <br clear="left" />
+      </a>
+    </div>
+  </div>
+</div>
+
 <div id="main-matching">
-    <div t:repeatForView="matchingItems">
+    <div t:repeatForView="newItems">
         <span t:replaceMarkup="this.getItemXML(viewName, view)" />
     </div>
 </div>
 
 
 <!-- WATCHABLE ******************************************************** -->
-<span>
+<span t:hideIf="len(watchableItems) == 0" t:updateHideOnView="watchableItems">
     <div class="main-channelbar-hitbox" ><a href="javascript:eventURL('action:toggleWatchableView')">#&nbsp;</a></div>
-    <div  t:hideIf="not showWatchableItems" t:updateForView="allWatchableItems" class="main-channelbar">
+    <div class="main-channelbar">
             <h1 i18n:translate="">Downloaded</h1>
     </div>
-
+</span>
     <div id="main-unwatched">
         <span t:repeatForView="watchableItems">
            <span t:replaceMarkup="this.getItemXML(viewName, view)" />
         </span>
     </div>
-</span>
+
 <!-- / WATCHABLE -->
 </body>
 </html>
