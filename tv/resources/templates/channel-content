@@ -62,6 +62,13 @@
 </div>
 </div>
 
+<div id="main-matching">
+    <div t:repeatForView="newItems">
+        <span t:replaceMarkup="this.getItemXML(viewName, view)" />
+    </div>
+</div>
+
+
 <div t:updateForView="newItems">
   <div t:hideIf="allItemsMode  or not showNewItems or newItems.len() == matchingItems.len()" style="display: block">
     <div id="show-more-videos-label" style="display:inline">
@@ -76,13 +83,6 @@
     </div>
   </div>
 </div>
-
-<div id="main-matching">
-    <div t:repeatForView="newItems">
-        <span t:replaceMarkup="this.getItemXML(viewName, view)" />
-    </div>
-</div>
-
 
 <!-- WATCHABLE ******************************************************** -->
 <span t:hideIf="len(watchableItems) == 0" t:updateHideOnView="watchableItems">
