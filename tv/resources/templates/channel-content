@@ -69,9 +69,9 @@
 
 
 <!-- WATCHABLE ******************************************************** -->
-<span t:hideIf="watchableItems.len()==0" t:updateHideOnView="watchableItems">
-    <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-unwatched');">#&nbsp;</a></div>
-    <div id="main-channelbar" class="main-channelbar">
+<span>
+    <div class="main-channelbar-hitbox" ><a href="javascript:eventURL('action:toggleWatchableView')">#&nbsp;</a></div>
+    <div  t:hideIf="not showWatchableItems" t:updateForView="allWatchableItems" id="main-channelbar" class="main-channelbar">
             <h1 i18n:translate="">Downloaded</h1>
     </div>
 

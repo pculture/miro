@@ -1552,6 +1552,9 @@ class TemplateActionHandler:
     def toggleDownloadsView(self):
         self.templateHandle.getTemplateVariable('toggleDownloadsView')()
 
+    def toggleWatchableView(self):
+        self.templateHandle.getTemplateVariable('toggleWatchableView')()
+
     def playViewNamed(self, viewName, firstItemId):
         # Find the database view that we're supposed to be
         # playing; take out items that aren't playable video
