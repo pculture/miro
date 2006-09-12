@@ -24,6 +24,7 @@ matchingItems = matchingItemsUnsorted.sort(sorts.item)
 downloadingItems = matchingItems.filter(filters.downloadingItems)
 thisFolderView = views.channelFolders.filter(lambda x: x is folder)
 childrenView = views.feeds.filterWithIndex(indexes.byFolder, folder)
+watchableItems = matchingItems.filter(filters.watchableItems,sortFunc=sorts.itemsUnwatchedFirst)
 
 matchingItems.createIndex(indexes.itemsByChannelCategory)
 def makeStateView(cat):

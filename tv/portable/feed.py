@@ -633,6 +633,7 @@ class Feed(DDBObject):
         self.folder_id = None
         self.blinking = False
         self.searchTerm = None
+        self.userTitle = None
         self.dd.addAfterCursor(self)
         self.generateFeed(True)
 
@@ -674,6 +675,26 @@ class Feed(DDBObject):
 
     def isScraped(self):
         return isinstance(self.actualFeed, ScraperFeedImpl)
+
+    def getTitle(self):
+        if self.userTitle is None:
+            return self.actualFeed.getTitle()
+        else:
+            return self.userTitle
+
+    def setTitle(self, title):
+        self.confirmDBThread()
+        self.userTitle = title
+        self.signalChange()
+
+    def rename(self):
+        title = _("Rename Channel")
+        text = _("Enter a new name for the channel %s" % self.getTitle())
+        def callback(dialog):
+            if self.idExists() and dialog.choice == dialogs.BUTTON_OK:
+                self.setTitle(dialog.value)
+        dialogs.TextEntryDialog(title, text, dialogs.BUTTON_OK,
+            dialogs.BUTTON_CANCEL).run(callback)
 
     def update(self):
         self.confirmDBThread()

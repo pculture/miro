@@ -686,7 +686,7 @@ class Controller (frontend.Application):
         obj = selected[0].obj
         if typeCheckList is None:
             typeCheckList = (playlist.SavedPlaylist, folder.ChannelFolder,
-                folder.PlaylistFolder)
+                folder.PlaylistFolder, feed.Feed)
         if obj.__class__ in typeCheckList:
             obj.rename()
         else:

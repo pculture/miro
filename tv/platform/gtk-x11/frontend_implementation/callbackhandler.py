@@ -120,7 +120,7 @@ class CallbackHandler(object):
         actionGroups["ChannelsSelected"].add_actions ([
             ('UpdateChannels', None, _("_Update Channel"), None, None, self.on_update_channel_activate),
             ])
-        actionGroups["ChannelFolderSelected"].add_actions ([
+        actionGroups["ChannelLikeSelected"].add_actions ([
             ('RenameChannel', None, _("Re_name Channel"), None, None, self.on_rename_channel_activate),
             ])
         actionGroups["ChannelLikesSelected"].add_actions ([

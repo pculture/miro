@@ -253,6 +253,7 @@ class FeedSchema(DDBObjectSchema):
         ('iconCache', SchemaObject(IconCache, noneOk=True)),
         ('folder_id', SchemaInt(noneOk=True)),
         ('searchTerm', SchemaString(noneOk=True)),
+        ('userTitle', SchemaString(noneOk=True)),
     ]
 
 class FeedImplSchema(ObjectSchema):

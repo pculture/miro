@@ -206,7 +206,7 @@ class MainFrame:
         for actionGroup, setting in actionGroups.iteritems():
             self.actionGroups[actionGroup].set_sensitive(setting)
 
-        self.actionGroups["ChannelFolderSelected"]. get_action("RenameChannel"). set_property("label", strings["channel_rename"])
+        self.actionGroups["ChannelLikeSelected"]. get_action("RenameChannel"). set_property("label", strings["channel_rename"])
         self.actionGroups["ChannelLikesSelected"].get_action("RemoveChannels").set_property("label", strings["channel_remove"])
         self.actionGroups["ChannelsSelected"].get_action("UpdateChannels").set_property("label", strings["channel_update"])
         self.actionGroups["PlaylistLikeSelected"]. get_action("RenamePlaylist"). set_property("label", strings["playlist_rename"])
