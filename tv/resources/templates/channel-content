@@ -9,17 +9,18 @@
 </head>
 <body>
 <!-- DOWNLOADS ******************************************************** -->
-<span t:hideIf="downloadingItems.len()==0" t:updateHideOnView="downloadingItems">
-    <div class="main-channelbar-hitbox"><a href="javascript:toggleLayerWithTriangle('main-downloads', 'main-downloads-triangle');">#&nbsp;</a></div>
-    <div class="main-channelbar-download">
-        <span id="main-downloads-triangle" class="triangle">&nbsp;</span>
-        <h1 t:updateForView="downloadingItems">
-            <span t:hideIf="downloadingItems.len()==1"><span i18n:translate="">
-            <span t:replace="downloadingItems.len()" i18n:name="count"/> downloads in progress</span></span>
-<span t:hideIf="downloadingItems.len()!=1"><span i18n:translate="">1 Download in Progress</span></span>
+<span>
+    <div class="main-channelbar-hitbox"><a href="javascript:eventURL('action:toggleDownloadsView');">#&nbsp;</a></div>
+    <div class="main-channelbar-download" t:updateForView="allDownloadingItems">
+        <span id="main-downloads-triangle" class="triangle" t:hideIf="showDownloads">&nbsp;</span>
+        <span id="main-downloads-triangle" class="triangle down" t:hideIf="not showDownloads">&nbsp;</span>
+        <h1>
+            <span t:hideIf="allDownloadingItems.len()==1"><span i18n:translate="">
+            <span t:replace="allDownloadingItems.len()" i18n:name="count"/> downloads in progress</span></span>
+<span t:hideIf="allDownloadingItems.len()!=1"><span i18n:translate="">1 download in progress</span></span>
             </h1>
     </div>
-    <div id="main-downloads" style="display: none;">
+    <div>
         <span t:repeatForView="downloadingItems">
             <span t:replaceMarkup="this.getItemXML(viewName, view)" />
         </span>

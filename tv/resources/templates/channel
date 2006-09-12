@@ -16,18 +16,8 @@
     <script type="text/javascript" src="resource:templates/channel.js" />
 
     <t:execOnLoad><![CDATA[
-feed = views.feeds.getObjectByID(int(kargs['id']))
-
-global searchTerm
-searchTerm = None
-
-allItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
-matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm), sortFunc=sorts.item)
-newItems = matchingItems.filter(filters.newItems, sortFunc=sorts.item)
-downloadingItems = matchingItems.filter(filters.downloadingItems,sortFunc=sorts.item)
-watchableItems = matchingItems.filter(filters.watchableItems,sortFunc=sorts.itemsUnwatchedFirst)
-
-thisFeedView = views.feeds.filter(lambda x: x is feed)
+def showDownloadsFilter(x):
+    return showDownloads
 
 def updateSearchString(newSearch):
     global searchTerm
@@ -36,6 +26,36 @@ def updateSearchString(newSearch):
     else:
         searchTerm = newSearch
     allItems.recomputeFilters()
+
+def toggleDownloadsView():
+    global showDownloads
+    showDownloads = not showDownloads
+    allDownloadingItems.recomputeFilter(downloadingItems)
+
+feed = views.feeds.getObjectByID(int(kargs['id']))
+
+global searchTerm, showDownloads
+searchTerm = None
+
+# The main section
+allItemsMode = False
+
+showDownloads = True
+showWatchableItems = False
+showAllItems = True
+
+allItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
+matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm), sortFunc=sorts.item)
+newItems = matchingItems.filter(lambda x:allItemsMode or filters.newItems(x), sortFunc=sorts.item)
+
+allDownloadingItems = matchingItems.filter(filters.downloadingItems,sortFunc=sorts.item)
+downloadingItems = allDownloadingItems.filter(showDownloadsFilter,sortFunc=sorts.item)
+watchableItems = matchingItems.filter(filters.watchableItems,sortFunc=sorts.itemsUnwatchedFirst)
+
+thisFeedView = views.feeds.filter(lambda x: x is feed)
+
+showAllItems = (len(watchableItems) == 0) and len(newItems) > 0
+
 feed.updateIcons()
 isFolder = False
 

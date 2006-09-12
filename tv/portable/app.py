@@ -1549,6 +1549,9 @@ class TemplateActionHandler:
     def setSearchString(self, searchString):
         self.templateHandle.getTemplateVariable('updateSearchString')(unicode(searchString))
 
+    def toggleDownloadsView(self):
+        self.templateHandle.getTemplateVariable('toggleDownloadsView')()
+
     def playViewNamed(self, viewName, firstItemId):
         # Find the database view that we're supposed to be
         # playing; take out items that aren't playable video
