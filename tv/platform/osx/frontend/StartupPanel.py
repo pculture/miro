@@ -98,6 +98,7 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
     # -------------------------------------------------------------------------
 
     def prepareFindVideosPanel(self):
+        self.gathered = None
         self.backButton.setEnabled_(YES)
         self.validateButton.setEnabled_(YES)
         self.findVideosMatrix.setEnabled_(YES)
