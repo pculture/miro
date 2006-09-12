@@ -1,6 +1,43 @@
 <script type="text/javascript">
     <!-- // Protect from our XML parser, which doesn't know to protect <script>
 
+    var feedSettingsTimeout = null;
+
+    function showSettings()
+    {
+        var feedSettings = document.getElementById("feed-settings");
+        feedSettings.style.display = "block";
+        feedSettings.style.top = "-224px";
+        var startTop = -224;
+        var endTop = 0;
+        var steps = 5;
+        var stepSize = (endTop - startTop) / steps;
+        var currentStep = 0;
+        function iteration() {
+           currentStep += 1;
+           var top = Math.round(startTop + (currentStep * stepSize));
+           feedSettings.style.top = top + "px";
+           if(currentStep != steps) {
+                feedSettingsTimeout = setTimeout(iteration, 50);
+           } else {
+                feedSettingsTimeout = null;
+           }
+        }
+        feedSettingsTimeout = setTimeout(iteration, 50);
+        return false;
+    }
+
+    function hideSettings()
+    {
+        if(feedSettingsTimeout) {
+            clearTimeout(feedSettingsTimeout);
+	    feedSettingsTimeout = null;
+        }
+        var feedSettings = document.getElementById("feed-settings");
+	feedSettings.style.display = "none";
+	return false;
+    }
+
     function setAutoDownloadableFeed()
     {
         var url = 'action:setAutoDownloadableFeed';

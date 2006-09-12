@@ -241,7 +241,9 @@ function handleDblClick(event, viewName, id) {
 }
 
 function sendKeyToSearchBox(event) {
-  if(event.altKey || event.ctrlKey || event.metaKey) return true;
+  if(event.altKey || event.ctrlKey || event.metaKey ||
+      (event.target.tagName && event.target.tagName.toUpperCase() == 'INPUT'))
+      return true;
   var searchBox = document.getElementById("search-box");
   searchBox.focus();
 }

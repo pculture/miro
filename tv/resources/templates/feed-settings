@@ -17,56 +17,18 @@ feed = views.feeds.getObjectByID(int(kargs['id']))
 
 <body>
 
-<!-- TITLE BAR ************************************************************ -->
-<div id="main-titlebar">
-        <img id="main-titlebar-avatar" src="***feed.getThumbnail()***" alt="" style="background-color:#FFFFFF;" />
-	<div id="main-titlebar-channelname">
-		<h1 t:replaceMarkup="feed.getTitle()" />
-		<div id="main-titlebar-autodownload">
-			<form name="setAuto">
-			    <input type="hidden" name="feed" value="@@@feed.getID()@@@" />
-			    <span t:showIf="feed.isAutoDownloadable()">
-				<input type="checkbox" name="automatic" id="automatic" value="1" checked="checked" onClick="javascript:setAutoDownloadableFeed()" />
-			    </span>
-			    <span t:hideIf="feed.isAutoDownloadable()">
-				<input type="checkbox" name="automatic" id="automatic" value="1"                   onClick="javascript:setAutoDownloadableFeed()" />
-			    </span>
-			    <span class="auto_link" i18n:translate=""><label for="automatic">Auto Download</label></span>
-			</form>
-		</div>
-	</div>
-	<div id="main-titlebar-tasks">
-		<div id="main-titlebar-tasks-settings">
-                        <p><a href="#" onclick="return eventURL('template:feed-settings?id=@@@feed.getID()@@@');"><span i18n:translate="">Settings</span></a></p>
-		</div>
-		<div id="main-titlebar-tasks-recommend">
-		    <p><a onclick="document.location = 'mailto:?subject=@@@feed.getTitle()@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed.getTitle()@@@&quot;. If you don\'t have the Democracy Player, you can get it here:%0D%0A%0D%0Ahttp://www.getdemocracy.com/%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed.getURL()@@@" class="recommend_link'; return false;" i18n:translate="">Recommend</a></p>
-		</div>
-		<div id="main-titlebar-tasks-search">
-		    <input type="search" placeholder="Search Channel" class="main-titlebar-tasks-search" disabled="1" />
-		</div>
-	</div>
-</div>
-<!-- / TITLE BAR -->
-
-<div id="main-container">
+<img id="close-settings-icon" src="resource:images/feed-settings-close.png"
+	href="#" onclick="return hideSettings()" />
 
 <form action="javascript:eventURL('template:channel?id=@@@feed.getID()@@@')" method="GET" name="settings">
 	<input name="feed" type="hidden" value="@@@feed.getID()@@@" />
 	
-	<div class="main-content" style="text-align:center; margin-left:-40px;">
-		<h3><a href="javascript:eventURL('template:channel?id=@@@feed.getID()@@@');"
-i18n:translate="">Back to Channel</a></h3>
-	</div>
-
 	<div id="main-channelbar" class="main-channelbar">
 		<h1 i18n:translate="">Channel Settings</h1>
 	</div>
 
 	<div style="margin:20px 10px;">
-		<span style="display:inline; width:150px;" i18n:translate="">
-			Videos expire after:
-		</span>
+		<span i18n:translate=""> Videos expire after: </span>
 		<div t:updateForConfigChange="">
 		<select name="expireAfter" onChange="javascript:setExpiration();">
 			<option value="system" selected="1" 
@@ -139,8 +101,6 @@ class="selectable" />
     </div>
 
 </form>
-	
-</div>
 
 </body>
 </html>
