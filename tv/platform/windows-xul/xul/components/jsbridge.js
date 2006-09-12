@@ -22,13 +22,13 @@ function LoadFinishedListener(area)
 
 var actionGroupCommands = {
   'ChannelSelected': Array('copychannellink', 'recommendcurrentchannel'),
-  'ChannelFolderSelected': Array('renamechannel'),
+  'ChannelFolderSelected': Array(),
   'VideoSelected': Array('copyvideourl', 'savevideoas'),
   'VideosSelected': Array('removevideo'),
   'PlaylistLikeSelected': Array('renameplaylist'),
   'PlaylistLikesSelected': Array('removeplaylist'),
   'ChannelLikesSelected': Array(),
-  'ChannelLikeSelected': Array('removechannel', 'updatechannel'),
+  'ChannelLikeSelected': Array('renamechannel', 'removechannel', 'updatechannel'),
   'ChannelsSelected': Array(),
   'VideoPlayable': Array(),
 }

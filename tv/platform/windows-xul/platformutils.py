@@ -8,15 +8,16 @@ import config
 import prefs
 
 def samefile(path1, path2):
-    buf1 = ctypes.create_string_buffer(260) 
-    buf2 = ctypes.create_string_buffer(260) 
-    GetLongPathName = ctypes.windll.kernel32.GetLongPathNameA
-    rv1 = GetLongPathName(str(path1), buf1, 260)
-    rv2 = GetLongPathName(str(path2), buf2, 260)
-    if rv1 == 0 or rv1 > 260 or rv2 == 0 or rv2 > 260:
-        return False
+    return getLongPathName(path1) == getLongPathName(path2)
+
+def getLongPathName(path):
+    buf = ctypes.create_unicode_buffer(260) 
+    GetLongPathName = ctypes.windll.kernel32.GetLongPathNameW
+    rv = GetLongPathName(path, buf, 260)
+    if rv == 0 or rv > 260:
+        return path
     else:
-        return buf1.value == buf2.value
+        return buf.value
 
 def getAvailableBytesForMovies():
     # TODO: windows implementation

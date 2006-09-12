@@ -547,6 +547,7 @@ class LiveStorage:
         print "WARNING: exception while loading database"
         traceback.print_exc()
         self.closeInvalidDB()
+        self.dbenv.close()
         self.saveInvalidDB()
         self.openEmptyDB()
         self.saveDatabase()

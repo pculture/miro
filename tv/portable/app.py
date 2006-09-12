@@ -693,7 +693,7 @@ class Controller (frontend.Application):
             print "WARNING: Bad object type in renameCurrentTab() %s" % obj.__class__
 
     def renameCurrentChannel(self):
-        self.renameCurrentTab(typeCheckList=[folder.ChannelFolder])
+        self.renameCurrentTab(typeCheckList=[feed.Feed, folder.ChannelFolder])
 
     def renameCurrentPlaylist(self):
         self.renameCurrentTab(typeCheckList=[playlist.SavedPlaylist,

@@ -22,6 +22,7 @@ try:
     from frontend_implementation import HTMLDisplay
     from frontend_implementation.UIBackendDelegate import UIBackendDelegate
     from eventloop import asUrgent
+    from platformutils import getLongPathName
 except:
     errorOnImport = True
     # get a fallback error message in case we can't import util either
@@ -94,7 +95,7 @@ def getArgumentList(commandLine):
     # filter out the application.ini that gets included
     if len(args) > 0 and args[0].lower().endswith('application.ini'):
         args = args[1:]
-    return args
+    return [getLongPathName(path) for path in args]
 
 # Copied from resource.py; if you change this function here, change it
 # there too.
@@ -224,7 +225,7 @@ class PyBridge:
 
     @asUrgent
     def openFile(self, path):
-        singleclick.openFile(path)
+        singleclick.openFile(getLongPathName(path))
 
     @asUrgent
     def setVolume(self, volume):
