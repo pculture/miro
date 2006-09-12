@@ -1382,7 +1382,8 @@ class ModelActionHandler:
         # cut off all the other parameters
         description = obj.getDescription()
         if len(description) > 0:
-            paramString = "%s%sdescription=%s" % (paramString, glue,  xhtmltools.urlencode(description))
+            paramString = "%s%sdescription=%s" % (paramString, glue,
+                    xhtmltools.urlencode(description.encode('utf-8')))
         url = config.get(prefs.VIDEOBOMB_URL) + paramString
         self.backEndDelegate.openExternalURL(url)
 
