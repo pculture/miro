@@ -265,7 +265,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         eventloop.addIdle(lambda:app.controller.addAndSelectGuide(), "Add Guide")
 
     def renameChannelFolder_(self, sender):
-        eventloop.addIdle(app.controller.renameCurrentChannel, "Rename Channel Tab")
+        eventloop.addIdle(app.controller.renameCurrentTab, "Rename Channel Tab")
 
     def removeChannel_(self, sender):
         eventloop.addIdle(app.controller.removeCurrentFeed, "Remove channel")
@@ -348,7 +348,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
             result = True
         elif action == 'renameChannelFolder:':
             self.updateMenuItem(item, 'channel_rename')
-            result = self.actionGroups['ChannelFolderSelected']
+            result = self.actionGroups['ChannelLikeSelected']
         elif action == 'removeChannel:':
             self.updateMenuItem(item, 'channel_remove')
             result = self.actionGroups['ChannelLikeSelected'] or self.actionGroups['ChannelLikesSelected']
