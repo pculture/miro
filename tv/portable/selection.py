@@ -1,5 +1,7 @@
 """Handle selection."""
 
+from copy import copy
+
 import app
 import database
 import eventloop
@@ -71,8 +73,7 @@ class SelectionArea(object):
     def clearSelection(self):
         """Clears the current selection."""
 
-        for id in self.currentSelection:
-            obj = self.currentView.getObjectByID(id)
+        for obj in self.getObjects():
             obj.setSelected(False)
         self.currentSelection = set()
         if self.currentView is not None:
@@ -150,8 +151,7 @@ class SelectionArea(object):
         passing in newValue.
         """
 
-        for id in self.currentSelection:
-            obj = self.currentView.getObjectByID(id)
+        for obj in self.getObjects():
             obj.setActive(newValue)
 
     def onAdd(self, obj, id):
@@ -173,8 +173,7 @@ class SelectionArea(object):
         """
 
         types = set()
-        for id in self.currentSelection:
-            obj = self.currentView.getObjectByID(id)
+        for obj in self.getObjects():
             if isinstance(obj, item.Item):
                 if obj.isDownloaded():
                     newType = 'downloadeditem'
