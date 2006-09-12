@@ -242,13 +242,10 @@ class ManagedWebView (NSObject):
             platformutils.warnIfNotOnMainThread('ManagedWebView.webView_didFinishLoadForFrame_')
             # Execute any function calls we queued because the page load
             # hadn't completed
-            # NEEDS: there should be a lock here, preventing execAfterLoad
-            # from dropping something in the queue just after we have finished
-            # processing it
+            self.initialLoadFinished = True
             for func in self.execQueue:
                 func()
             self.execQueue = []
-            self.initialLoadFinished = True
 
             if self.onInitialLoadFinished:
                 self.onInitialLoadFinished()
@@ -329,29 +326,16 @@ class ManagedWebView (NSObject):
         elt = doc.getElementById_(id)
         return elt
 
-#     def printHTML(self):
-#         print
-#         print "--- Document HTML ---"
-#         print self.view.mainFrame().DOMDocument().body().outerHTML()
-#         print "--- End Document HTML ---"
-
-    def createElt(self, xml):
+    def createElts(self, xml):
         parent = self.view.mainFrame().DOMDocument().createElement_("div")
         if len(xml) == 0:
-            #FIXME: this is awfully ugly but it fixes the symptoms described
-            #in #1664. Next step is to fix the root cause.
-            parent.setInnerHTML_("<div style='height: 1px;'/>")
+            parent.setInnerHTML_("&nbsp;")
         else:
             parent.setInnerHTML_(xml)
-        #FIXME: This is a bit of a hack. Since, we only deal with
-        # multiple elements on initialFillIn, it should be fine for now
-        if parent.childNodes().length() > 1:
-            eltlist = []
-            for child in range(parent.childNodes().length()):
-                eltlist.append(parent.childNodes().item_(child))
-            return eltlist
-        else:
-            return parent.firstChild()
+        eltlist = []
+        for child in range(parent.childNodes().length()):
+            eltlist.append(parent.childNodes().item_(child))
+        return eltlist
         
     @deferUntilAfterLoad
     def addItemAtEnd(self, xml, id):
@@ -361,7 +345,9 @@ class ManagedWebView (NSObject):
         else:
             #print "add item %s at end of %s" % (elt.getAttribute_("id"), id)
             #print xml[0:79]
-            elt.insertBefore__(self.createElt(xml), None)
+            newElts = self.createElts(xml)
+            for newElt in newElts:
+                elt.insertBefore__(newElt, None)
 
     @deferUntilAfterLoad
     def addItemBefore(self, xml, id):
@@ -369,14 +355,10 @@ class ManagedWebView (NSObject):
         if not elt:
             print "warning: addItemBefore: missing element %s" % id
         else:
-            newelts = self.createElt(xml)
-            try:
-                for newelt in newelts:
-                    #print "add item %s before %s" % (newelt.getAttribute_("id"), id)
-                    elt.parentNode().insertBefore__(newelt, elt)
-            except:
-                #print "add item %s before %s" % (newelts, id)
-                elt.parentNode().insertBefore__(newelts, elt)
+            newElts = self.createElts(xml)
+            for newElt in newElts:
+                #print "add item %s before %s" % (newelt.getAttribute_("id"), id)
+                elt.parentNode().insertBefore__(newElt, elt)
 
     @deferUntilAfterLoad
     def removeItem(self, id):
