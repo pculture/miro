@@ -51,7 +51,7 @@ remoteDownloads.createIndex(indexes.downloadsByURL)
 items.createIndex(indexes.itemsByFeed, sortFunc=sorts.item)
 toplevelItems.createIndex(indexes.itemsByFeed)
 items.createIndex(indexes.itemsByParent)
-items.createIndex(indexes.itemsByChannelFolder)
+items.createIndex(indexes.itemsByChannelFolder, sortFunc=sorts.item)
 feeds.createIndex(indexes.feedsByURL)
 feeds.createIndex(indexes.byFolder)
 

@@ -12,9 +12,6 @@
     <t:include filename="dynamic.js" />
     <t:include filename="settings.js" />
     <script type="text/javascript" src="resource:templates/osxdnd.js" />
-    <script type="text/javascript" src="resource:templates/shide.js" />
-    <script type="text/javascript" src="resource:templates/channel.js" />
-
     <t:execOnLoad><![CDATA[
 def showDownloadsFilter(x):
     return showDownloads
