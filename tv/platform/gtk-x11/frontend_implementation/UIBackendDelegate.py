@@ -237,7 +237,8 @@ def init_clipboard ():
 class UIBackendDelegate:
 
     def performStartupTasks(self, terminationCallback):
-        terminationCallback(None)
+        import startup
+        startup.performStartupTasks(terminationCallback)
         
     def openExternalURL(self, url):
         # We could use Python's webbrowser.open() here, but
