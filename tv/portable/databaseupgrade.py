@@ -268,6 +268,25 @@ def upgrade22(objectList):
             changed.add(o)
     return changed
 
+def upgrade23(objectList):
+    """Remove container items from playlists."""
+
+    changed = set()
+    toFilter = set()
+    playlists = set()
+    for o in objectList:
+        if o.classString in ('playlist', 'playlist-folder'):
+            playlists.add(o)
+        elif (o.classString in ('item', 'file-item') and 
+                o.savedData['isContainerItem']):
+            toFilter.add(o.savedData['id'])
+    for p in playlists:
+        filtered = [id for id in p.savedData['item_ids'] if id not in toFilter]
+        if len(filtered) != len(p.savedData['item_ids']):
+            changed.add(p)
+            p.savedData['item_ids'] = filtered
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

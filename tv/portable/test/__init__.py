@@ -21,4 +21,5 @@ from test.parseurltest import *
 from test.utiltest import *
 from test.playlisttest import *
 from test.unicodetest import *
+from test.databaseupgradetest import *
 import test.bmachinetest

@@ -6,9 +6,20 @@ import guide
 
 # Returns items that match search
 def matchingItems(obj, searchString):
-    return (searchString is None or 
-            searchString.lower() in obj.getTitle().lower() or
-            searchString.lower() in obj.getDescription().lower())
+    if searchString is None:
+        return True
+    searchString = searchString.lower()
+    if searchString in obj.getTitle().lower():
+        return True
+    if searchString in obj.getDescription().lower():
+        return True
+    if not obj.isContainerItem:
+        parent = obj.getParent()
+        if searchString in parent.getTitle().lower():
+            return True
+        if searchString in parent.getDescription().lower():
+            return True
+    return False
 
 def downloadingItems(obj):
     return obj.getState() == 'downloading'

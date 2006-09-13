@@ -343,14 +343,19 @@ class Item(DDBObject):
     def feedExists(self):
         return self.feed_id and self.dd.idExists(self.feed_id)
 
+    def getChildren(self):
+        if self.isContainerItem:
+            return views.items.filterWithIndex(indexes.itemsByParent, self.id)
+        else:
+            raise ValueError("%s is not a container item" % self)
+
     ##
     # Moves this item to another feed.
     def setFeed(self, feed_id):
         self.feed_id = feed_id
         del self._feed
         if self.isContainerItem:
-            children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
-            for item in children:
+            for item in self.getChildren():
                 del item._feed
                 item.signalChange()
         self.signalChange()
@@ -362,8 +367,7 @@ class Item(DDBObject):
         self.deleteFile()
         self.expired = True
         if self.isContainerItem:
-            children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
-            for item in children:
+            for item in self.getChildren():
                 item.remove()
         self.isContainerItem = None
         self.seen = self.keep = self.pendingManualDL = False
@@ -477,8 +481,7 @@ folder will also be deleted.""")
             return None
         if self.isContainerItem and self.watchedTime == None:
             self.watchedTime = datetime.min
-            children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
-            for item in children:
+            for item in self.getChildren():
                 childTime = item.getWatchedTime()
                 if childTime is None:
                     self.watchedTime = None
@@ -509,9 +512,8 @@ folder will also be deleted.""")
         self.confirmDBThread()
         if self.isContainerItem:
             if self.childrenSeen is None:
-                children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
                 self.childrenSeen = True
-                for item in children:
+                for item in self.getChildren():
                     if not item.seen:
                         self.childrenSeen = False
                         break
@@ -686,7 +688,7 @@ folder will also be deleted.""")
         size = self.getSizeForDisplay()
 
         if self.isContainerItem:
-            children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
+            children = self.getChildren()
             size = "CONTAINS %d ITEMS - %s" % (len(children), size)
 
         if len(reldate) > 0:
@@ -1149,8 +1151,7 @@ folder will also be deleted.""")
 
     def migrateChildren (self, newdir):
         if self.isContainerItem:
-            children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
-            for item in children:
+            for item in self.getChildren():
                 item.migrate(newdir)
         
 
@@ -1162,8 +1163,7 @@ folder will also be deleted.""")
             self.iconCache.remove()
             self.iconCache = None
         if self.isContainerItem:
-            children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
-            for item in children:
+            for item in self.getChildren():
                 item.remove()
         DDBObject.remove(self)
 
@@ -1267,8 +1267,7 @@ class FileItem(Item):
         self.confirmDBThread()
         self.removeFromPlaylists()
         if self.isContainerItem:
-            children = views.items.filterWithIndex(indexes.itemsByParent, self.id)
-            for item in children:
+            for item in self.getChildren():
                 item.remove()
         if self.feed_id is None or not os.path.exists (self.filename):
             self.remove()

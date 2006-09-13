@@ -35,10 +35,11 @@ playlistTabOrder = tabOrders.filterWithIndex(indexes.tabOrderType, 'playlist')
 items = db.filterWithIndex(indexes.objectsByClass,item.Item)
 fileItems = db.filter(lambda x: isinstance(x, item.FileItem))
 toplevelItems = items.filter(lambda x: x.feed_id is not None)
-unwatchedItems = items.filter(filters.unwatchedItems)
-#expiringItems = items.filter(filters.expiringItems)
-watchableItems = items.filter(filters.watchableItems)
-newWatchableItems = items.filter(filters.newWatchableItems, sortFunc=sorts.itemsUnwatchedFirst)
+nonContainerItems = items.filter(lambda x: not x.isContainerItem)
+unwatchedItems = nonContainerItems.filter(filters.unwatchedItems)
+#expiringItems = nonContainerItems.filter(filters.expiringItems)
+watchableItems = nonContainerItems.filter(filters.watchableItems)
+newWatchableItems = nonContainerItems.filter(filters.newWatchableItems, sortFunc=sorts.itemsUnwatchedFirst)
 
 # NOTE: we can't use the objectsByClass index for fileItems, because it
 # agregates all Item subclasses into one group.

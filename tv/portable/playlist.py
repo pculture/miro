@@ -89,7 +89,12 @@ class PlaylistMixin:
         for id in draggedIDs:
             if not views.items.idExists(id):
                 raise KeyError("%s is not an item id" % id)
-            self.addID(id)
+            item = views.items.getObjectByID(id)
+            if not item.isContainerItem:
+                self.addID(id)
+            else:
+                for child in item.getChildren():
+                    self.addID(child.getID())
 
     def handleDNDReorder(self, anchorItem, draggedItems):
         """Handle drag-and-drop reordering of the playlist."""
