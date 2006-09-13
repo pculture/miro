@@ -214,7 +214,7 @@ class UIBackendDelegate:
         ourPath = NSBundle.mainBundle().bundlePath()
         ourEntry = None
         for entry in launchedApps:
-            if entry['Path'] == ourPath:
+            if entry.get('Path') == ourPath:
                 ourEntry = entry
                 break
 
