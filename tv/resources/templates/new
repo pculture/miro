@@ -14,13 +14,10 @@
 
     <t:execOnLoad><![CDATA[
 global searchFilter
+
 searchFilter = lambda x: filters.matchingItems(x, None)
 
-matchingUnwatchedItems = views.unwatchedItems.filter(lambda x:searchFilter(x))
-matchingExpiringItems = views.expiringItems.filter(lambda x:searchFilter(x))
-
-unwatchedItems = matchingUnwatchedItems.sort(sorts.item)
-expiringItems = matchingExpiringItems.sort(sorts.item)
+matchingItems = views.newWatchableItems.filter(lambda x:searchFilter(x),sortFunc=sorts.itemsUnwatchedFirst)
 
 def updateSearchString(newSearch):
     global searchFilter
@@ -28,14 +25,12 @@ def updateSearchString(newSearch):
         searchFilter = lambda x: filters.matchingItems(x, None)
     else:
         searchFilter = lambda x: filters.matchingItems(x, newSearch)
-    views.unwatchedItems.recomputeFilter(matchingUnwatchedItems)
-    views.expiringItems.recomputeFilter(matchingExpiringItems)
+    views.newWatchableItems.recomputeFilter(matchingItems)
 
 ]]>
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
-matchingUnwatchedItems.unlink()
-matchingExpiringItems.unlink()
+matchingItems.unlink()
 ]]>
     </t:execOnUnload>
 
@@ -58,39 +53,11 @@ matchingExpiringItems.unlink()
 <!-- / TITLE BAR -->
 
 <div id="main-container">
-
-    <!-- UNWATCHED ******************************************************** -->
-    <span t:hideIf="len(unwatchedItems) == 0" t:updateHideOnView="unwatchedItems">
-        <div class="main-channelbar">
-        <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-unwatched');">#&nbsp;</a></div>
-	<div>
-		<h1 i18n:translate="">Unwatched</h1>
-		</div>
-        </div>
-
-        <div id="main-unwatched">
-            <span t:repeatForView="unwatchedItems">
-                <span t:replaceMarkup="this.getItemXML(viewName, view)" />
-            </span>
-        </div>
-    </span>
-    <!-- / UNWATCHED -->
-
-    <!-- EXPIRING ********************************************************* -->
-    <span t:hideIf="len(expiringItems) == 0" t:updateHideOnView="expiringItems">
-        <div class="main-channelbar-hitbox"><a href="javascript:toggleLayer('main-expiring');">#&nbsp;</a></div>
-        <div id="main-channelbar" class="main-channelbar">
-        	<h1 i18n:translate="">Watched</h1>
-        </div>
-
-        <div id="main-expiring">
-            <span t:repeatForView="expiringItems">
-                <span t:replaceMarkup="this.getItemXML(viewName, view)" />
-            </span>
-        </div>
-    </span>
-    <!-- / EXPIRING -->
-	
+    <div id="main-unwatched">
+        <span t:repeatForView="matchingItems">
+           <span t:replaceMarkup="this.getItemXML(viewName, view)" />
+        </span>
+    </div>	
 </div>
 
 </body>

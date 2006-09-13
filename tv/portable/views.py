@@ -36,8 +36,8 @@ items = db.filterWithIndex(indexes.objectsByClass,item.Item)
 fileItems = db.filter(lambda x: isinstance(x, item.FileItem))
 toplevelItems = items.filter(lambda x: x.feed_id is not None)
 unwatchedItems = items.filter(filters.unwatchedItems)
-expiringItems = items.filter(filters.expiringItems)
-watchableItems = items.filter(filters.watchableItems)
+#expiringItems = items.filter(filters.expiringItems)
+newWatchableItems = items.filter(filters.newWatchableItems, sortFunc=sorts.itemsUnwatchedFirst)
 
 # NOTE: we can't use the objectsByClass index for fileItems, because it
 # agregates all Item subclasses into one group.

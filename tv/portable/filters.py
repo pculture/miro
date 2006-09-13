@@ -19,6 +19,9 @@ def unwatchedItems(obj):
 def expiringItems(obj):
     return obj.getState() == 'expiring' and not obj.isNonVideoFile()
 
+def newWatchableItems(obj):
+    return (obj.getState() in ('expiring','newly-downloaded')) and not obj.isNonVideoFile()
+
 def watchableItems(obj):
     return obj.isDownloaded() and not obj.isNonVideoFile()
 

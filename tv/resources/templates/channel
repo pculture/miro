@@ -129,7 +129,7 @@ if feed.idExists():
                     <p><a href="mailto:?subject=@@@feed.getTitle()@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed.getTitle()@@@&quot;. If you don't have the Democracy Player, you can get it here:%0D%0A%0D%0Ahttp://www.getdemocracy.com/%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed.getURL()@@@" class="recommend_link" i18n:translate="">Recommend</a></p>
                 </div>
                 <div id="main-titlebar-tasks-search">
-                    <input id="search-box" type="search" placeholder="Search Channel" class="main-titlebar-tasks-search" onfocus="startEditSearch(this, showAllVideos)" onblur="endEditSearch()" />
+                    <input id="search-box" type="search" placeholder="Search Channel" class="main-titlebar-tasks-search" onfocus="startEditSearch(this, null)" onblur="endEditSearch()" />
                 </div>
         </div>
 </div>
