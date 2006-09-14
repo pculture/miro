@@ -330,7 +330,11 @@ class UIBackendDelegate:
         for item in menuItems:
             if item.label:
                 gtkitem = gtk.MenuItem(item.label)
-                gtkitem.connect("activate", lambda foo, item=item: item.activate())
+                if item.callback is not None:
+                    gtkitem.connect("activate", 
+                            lambda foo, item=item: item.activate())
+                else:
+                    gtkitem.set_sensitive(False)
             else:
                 gtkitem = gtk.SeparatorMenuItem()
             menu.append(gtkitem)

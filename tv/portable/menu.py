@@ -8,7 +8,15 @@ def makeMenu(items):
     return [MenuItem(callback, label) for callback, label in items]
 
 class MenuItem:
-    """A single menu item in a context menu."""
+    """A single menu item in a context menu.
+
+    Normally frontends should display label as the text for this menu item,
+    and if it's clicked on call activate().  One second case is if label is
+    blank, in which case a separator should be show.  Another special case is
+    if callback is None, in which case the label should be shown, but it
+    shouldn't be clickable.  
+    
+    """
 
     def __init__(self, callback, label):
         self.label = label
