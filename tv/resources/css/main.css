@@ -174,7 +174,7 @@ img {
 }
 
 /* this goes in the main-container-scraping section */
-div.scraping-indicator {
+.scraping-indicator {
     margin: auto;
     width: 600px;
     height: 56px;
@@ -188,7 +188,7 @@ div.scraping-indicator {
 }
 
 /* this goes around the text of the scraping section */
-div.scraping-content {
+.scraping-content {
     position: absolute;
     left: 20px;
     bottom: 16px;
@@ -209,17 +209,29 @@ and "watchable" sections */
 .main-channelbar {
     background: url(../images/main-bar-bg.png) repeat-x left bottom;
     height: 22px;
+    display: block;
+    overflow: hidden;
+    color: #111;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: normal;
 }
 
 /* The yellow gradient for the "download" bar */
 .main-channelbar-download {
-    background: url(../images/main-bar-bg-download.png) repeat-x left bottom;
     height: 22px;
+    background: url(../images/main-bar-bg-download.png) repeat-x left bottom;
+    display: block;
+    overflow: hidden;
+    color: #111;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: normal;
 }
 
 /* The yellow triangle for the "download" bar */
 .triangle {
-    background: url(../images/black_yellow_triangle.png) no-repeat left top;
+    background: url(../images/triangle-right.png) no-repeat left top;
     display: block;
     float: left;
     width: 15px;
@@ -229,54 +241,16 @@ and "watchable" sections */
 }
 
 /* downward yellow triangle for dl bar */
-.triangle.down {
-    background: url(../images/black_yellow_triangle_down.png) no-repeat left top;
-}
-
-/* Downloads in progress */
-.main-channelbar-download h1 {
-    color: #111;
-    text-decoration: none;
-}
-
-/* Hack to get link around channel bars */
-.main-channelbar-hitbox {
-    position: relative;
-    margin: 0px 0px -22px 0px;
-    overflow: hidden;
-    height: 22px;
-    text-indent: -100%;
-}
-.main-channelbar-hitbox a {
-    padding: 5px 200% 5px 0px;
-}
-
-
-/* Seems to only affect the "Downloaded" section */
-.main-channelbar h1, .main-channelbar-download h1, .main-channelbar h2 {
-    display: inline;
-    padding: 0px;
-    font-size: 13px;
-    text-decoration: none;
-    line-height: 16px;
-    font-weight: normal;
-}
-.main-channelbar h1, .main-channelbar h2 {
-    font-size: 13px;
-    color: #111;
-}
-.main-channelbar h1, .main-channelbar-download h1 {
+.triangle-down {
+    background: url(../images/triangle-down.png) no-repeat left top;
+    display: block;
     float: left;
-    margin: 3px 0px 0px 5px;
+    width: 15px;
+    height: 16px;
+    margin-top: 5px;
+    margin-left: 5px;
 }
-.main-channelbar h2 {
-    margin: 3px 5px 0px 0px;
-    color: #111;
-}
-.main-channelbar a {
-    color: #FFFFFF;
-    text-decoration: none;  
-}
+
 
 /* Around "videos on this channel" */
 .video-count {

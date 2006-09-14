@@ -9,58 +9,47 @@
 </head>
 <body>
 <!-- DOWNLOADS ******************************************************** -->
-<span>
-    <div class="main-channelbar-hitbox"><a href="javascript:eventURL('action:toggleDownloadsView');">#&nbsp;</a></div>
-    <div class="main-channelbar-download" t:updateForView="allDownloadingItems">
-        <span id="main-downloads-triangle" class="triangle" t:hideIf="showDownloads">&nbsp;</span>
-        <span id="main-downloads-triangle" class="triangle down" t:hideIf="not showDownloads">&nbsp;</span>
-        <h1>
-            <span t:hideIf="allDownloadingItems.len()==1"><span i18n:translate="">
-            <span t:replace="allDownloadingItems.len()" i18n:name="count"/> downloads in progress</span></span>
-<span t:hideIf="allDownloadingItems.len()!=1"><span i18n:translate="">1 download in progress</span></span>
-            </h1>
-    </div>
+<a class="main-channelbar-download" href="javascript:eventURL('action:toggleDownloadsView');" t:updateForView="allDownloadingItems">
+  <span class="triangle" t:hideIf="showDownloads"/>
+  <span class="triangle-down" t:hideIf="not showDownloads"/>
+  <span t:hideIf="allDownloadingItems.len()==1"  i18n:translate="">
+      <span t:replace="allDownloadingItems.len()" i18n:name="count"/> downloads in progress</span>
+   <span t:hideIf="allDownloadingItems.len()!=1" i18n:translate="">1 download in progress</span>
+
+</a>
     <div>
         <span t:repeatForView="downloadingItems">
             <span t:replaceMarkup="this.getItemXML(viewName, view)" />
         </span>
     </div>
-</span>
+
 <!-- / DOWNLOADS -->
 
-<div id="main-channelbar-available" class="main-channelbar">
-<div class="main-channelbar-hitbox"><a href="javascript:eventURL('action:toggleNewItemsView');">#&nbsp;</a></div>
-<div t:updateForView="matchingItems">
+<a class="main-channelbar" href="javascript:eventURL('action:toggleNewItemsView');" t:updateForView="matchingItems">
+  <span class="triangle" t:hideIf="showNewItems"/>
+  <span class="triangle-down" t:hideIf="not showNewItems"/>
+
   <div t:showIf="searchTerm is None">
-    <div t:hideIf="isFolder">
-      <h1 i18n:translate="">
+    <div t:hideIf="isFolder" i18n:translate="">
           <span i18n:name="len" t:replace="allItems.len()" /> 
           videos on this channel
-      </h1>
     </div>
-    <div t:showIf="isFolder">
-      <h1 i18n:translate="">
+    <div t:showIf="isFolder" i18n:translate="">
           <span i18n:name="len" t:replace="allItems.len()" /> 
           videos in this channel folder
-      </h1>
     </div>
   </div>
   <div t:showIf="searchTerm is not None">
-    <div t:showIf="allItems.len() == matchingItems.len()">
-        <h1 i18n:translate="">
+    <div t:showIf="allItems.len() == matchingItems.len()" i18n:translate="">
             All <span i18n:name="len" t:replace="matchingItems.len()" /> 
             Videos Match This Search
-        </h1>
     </div>
-    <div t:hideIf="allItems.len() == matchingItems.len()">
-        <h1 i18n:translate="">
+    <div t:hideIf="allItems.len() == matchingItems.len()" i18n:translate="">
             <span i18n:name="len" t:replace="matchingItems.len()" /> 
             Videos Match This Search
-        </h1>
     </div>
   </div>
-</div>
-</div>
+</a>
 
 <div id="main-matching">
     <div t:repeatForView="newItems">
@@ -69,8 +58,7 @@
 </div>
 
 
-<div t:updateForView="newItems">
-  <div t:hideIf="allItemsMode  or not showNewItems or newItems.len() == matchingItems.len()" style="display: block">
+<div t:updateForView="newItems">  <div t:hideIf="allItemsMode  or not showNewItems or newItems.len() == matchingItems.len()" style="display: block">
     <div id="show-more-videos-label" style="display:inline">
       <a href="javascript:eventURL('action:toggleAllItemsMode');" class="main-notification-nonew">
        	<div class="main-notification">
@@ -85,17 +73,19 @@
 </div>
 
 <!-- WATCHABLE ******************************************************** -->
-<span t:hideIf="len(watchableItems) == 0" t:updateHideOnView="watchableItems">
-    <div class="main-channelbar-hitbox" ><a href="javascript:eventURL('action:toggleWatchableView')">#&nbsp;</a></div>
-    <div class="main-channelbar">
-            <h1 i18n:translate="">Downloaded</h1>
-    </div>
+<span t:updateForView="watchableItems">
+<a class="main-channelbar" href="javascript:eventURL('action:toggleWatchableView')" t:hideIf="len(allWatchableItems) == 0" >
+  <span class="triangle" t:hideIf="showWatchableItems"/>
+  <span class="triangle-down" t:hideIf="not showWatchableItems"/>
+  <span  i18n:translate="">Downloaded</span>
+</a>
 </span>
-    <div id="main-unwatched">
-        <span t:repeatForView="watchableItems">
-           <span t:replaceMarkup="this.getItemXML(viewName, view)" />
-        </span>
-    </div>
+
+<div id="main-unwatched">
+   <span t:repeatForView="watchableItems">
+      <span t:replaceMarkup="this.getItemXML(viewName, view)" />
+   </span>
+</div>
 
 <!-- / WATCHABLE -->
 </body>
