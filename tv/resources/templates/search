@@ -25,9 +25,9 @@ searchItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
 
     <body onkeydown="sendKeyToSearchBox(event);">
         <div id="main-titlebar">
-        	<div id="main-titlebar-avatar" class="noborder"><img src="resource:images/search-icon.png" /></div>
-        	<div id="main-titlebar-channelname">
-        		<h1 i18n:translate="">Video Search</h1>
+        	<div id="main-icon" class="noborder"><img src="resource:images/search-icon.png" /></div>
+        	<div id="main-titlebar-center">
+        		<h1 id="main-title" i18n:translate="">Video Search</h1>
         	</div>
 		<div id="main-titlebar-tasks" class="big-search">
                 <form name="search" onsubmit="return false;">

@@ -68,9 +68,9 @@ matchingPendingDLs.unlink()
 
 <!-- TITLE BAR ************************************************************ -->
 <div id="main-titlebar">
-	<div id="main-titlebar-avatar" class="noborder"><img src="resource:images/download-icon.png" /></div>
-	<div id="main-titlebar-channelname">
-		<h1 i18n:translate="">Active Downloads</h1>
+	<div id="main-icon" class="noborder"><img src="resource:images/download-icon.png" /></div>
+	<div id="main-titlebar-center">
+		<h1 id="main-title" i18n:translate="">Active Downloads</h1>
 	</div>
 	<div id="main-titlebar-tasks" class="big-search">
 		<div id="main-titlebar-tasks-search">

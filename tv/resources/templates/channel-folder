@@ -102,10 +102,10 @@ for feed in allFeeds:
 	drageffectchannel="move"
 	onkeydown="sendKeyToSearchBox(event);">
 <div id="main-titlebar">
-    <img id="main-titlebar-avatar" src="resource:images/folder-icon.png" alt="" />
-    <div id="main-titlebar-channelname">
+    <img id="main-icon" src="resource:images/folder-icon.png" alt="" />
+    <div id="main-titlebar-center">
         <div t:updateForView="thisFolderView">
-            <h1 t:replaceMarkup="folder.getTitle()" />
+            <h1 id="main-title" t:replaceMarkup="folder.getTitle()" />
         </div>
     </div>
     <div id="main-titlebar-tasks">

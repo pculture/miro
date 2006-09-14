@@ -74,8 +74,8 @@ img {
     z-index: 10;
 }
 
-/* The icon for the channel view */
-#main-titlebar-avatar {
+/* The icon for the channel view. Usually in the titlebar */
+#main-icon {
     position: absolute;
     left: 9px;
     top: 6px;
@@ -84,13 +84,13 @@ img {
     border: 2px solid #FFFFFF;
 }
 
-/* This wraps the name and the autodownload button */
-#main-titlebar-channelname {
+/* This wraps the center area of the title bar */
+#main-titlebar-center {
     padding-top: 10px;
 }
 
-/* This wraps just the name */
-#main-titlebar-channelname h1 {
+/* This wraps just the name of the view */
+#main-title {
     margin: 0px 140px 0px 80px;
     padding: 0px;
     height: 28px;
@@ -198,7 +198,7 @@ div.scraping-content {
 #main-container {
     position: absolute;
     padding-top: 0px;
-    top: 76px;
+    top: 77px;
     bottom: 0px;
     width: 100%;
     overflow: auto;

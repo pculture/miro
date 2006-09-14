@@ -103,10 +103,10 @@ if feed.idExists():
     
 <!-- TITLE BAR ************************************************************ -->
 <div id="main-titlebar">
-        <img id="main-titlebar-avatar" src="***feed.getThumbnail()***" alt="" style="background-color:#FFFFFF;" />
-	<div id="main-titlebar-channelname">
+        <img id="main-icon" src="***feed.getThumbnail()***" alt="" style="background-color:#FFFFFF;" />
+	<div id="main-titlebar-center">
 	    <div t:updateForView="thisFeedView">
-                <h1 t:replaceMarkup="feed.getTitle()" />
+                <h1 id="main-title" t:replaceMarkup="feed.getTitle()" />
                 <div id="main-titlebar-autodownload">
 		<form name="setAuto" >
 		    <input type="hidden" name="feed" value="@@@feed.getID()@@@" />
