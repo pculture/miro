@@ -85,6 +85,14 @@ jsBridge.prototype = {
     this.hideVideoControlsTimer = Components.classes["@mozilla.org/timer;1"].
           createInstance(Components.interfaces.nsITimer);
     this.videoFilename = null;
+
+    var self = this;
+    self.lastMouseDownX = self.lastMouseDownY = 0;
+    var saveMousedownPosition = function(event) { 
+        self.lastMouseDownX = event.screenX;
+        self.lastMouseDownY = event.screenY;
+    }
+    this.document.addEventListener('mousedown', saveMousedownPosition, true);
   },
 
   closeWindow: function() {
@@ -101,6 +109,27 @@ jsBridge.prototype = {
   copyTextToClipboard: function(text) {
     var gClipboardHelper = Components.classes["@mozilla.org/widget/clipboardhelper;1"].getService(Components.interfaces.nsIClipboardHelper);
     gClipboardHelper.copyString(text);
+  },
+
+  showContextMenu: function(menuItems) {
+    var popup = this.document.getElementById('contextPopup');
+    while (popup.firstChild) {
+      popup.removeChild(popup.firstChild);
+    }
+    menu = menuItems.split("\n");
+    for(var i = 0; i < menu.length; i++) {
+      if(menu[i]) {
+        var newItem = this.document.createElement('menuitem');
+        newItem.setAttribute("label", menu[i]);
+        newItem.setAttribute("oncommand", 
+           "pybridge.handleContextMenu(" + i + ");");
+      } else {
+        var newItem = this.document.createElement('menuseparator');
+      }
+      popup.appendChild(newItem);
+    }
+    popup.showPopup(this.document.documentElement, this.lastMouseDownX,
+        this.lastMouseDownY, "popup", null, null);
   },
 
   showChoiceDialog: function(id, title, description, defaultLabel, otherLabel) {

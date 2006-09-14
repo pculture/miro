@@ -257,6 +257,10 @@ class PyBridge:
         app.controller.copyCurrentFeedURL()
 
     @asUrgent
+    def handleContextMenu(self, index):
+        self.delegate.handleContextMenu(index)
+
+    @asUrgent
     def handleSimpleDialog(self, id, buttonIndex):
         self.delegate.handleDialog(id, buttonIndex)
 

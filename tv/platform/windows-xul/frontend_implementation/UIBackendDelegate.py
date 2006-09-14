@@ -37,9 +37,15 @@ def getPrefillText(dialog):
 
 class UIBackendDelegate:
     openDialogs = {}
+    currentMenuItems = None
 
     def performStartupTasks(self, terminationCallback):
         terminationCallback(None)
+
+    def showContextMenu(self, menuItems):
+        UIBackendDelegate.currentMenuItems = menuItems
+        menuString = '\n'.join([m.label for m in menuItems])
+        frontend.jsBridge.showContextMenu(menuString)
 
     def runDialog(self, dialog):
         id = nextDialogId()
@@ -64,6 +70,9 @@ class UIBackendDelegate:
         else:
             del self.openDialogs[id]
             dialog.runCallback(None)
+
+    def handleContextMenu(self, index):
+        self.currentMenuItems[index].activate()
 
     def handleDialog(self, dialogID, buttonIndex, *args, **kwargs):
         try:

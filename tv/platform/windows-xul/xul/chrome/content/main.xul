@@ -133,7 +133,7 @@
                  ondragover="return onDragOver(event, 'channelsDisplay');"
                  ondragexit="return onDragExit(event, 'channelsDisplay');"
                  ondragdrop="return onDragDrop(event, 'channelsDisplay');"
-                 onmousedown="return xulcontexthandler('channelsDisplay', event);" />
+                 />
 <!-- / CHANNEL BAR -->
 
   <!-- DIVIDER -->
@@ -144,13 +144,11 @@
              ondraggesture="return onDragGesture(event, 'mainDisplay');"
              ondragover="return onDragOver(event, 'mainDisplay');"
              ondragexit="return onDragExit(event, 'mainDisplay');"
-             ondragdrop="return onDragDrop(event, 'mainDisplay');"
-             onmousedown="return xulcontexthandler('mainDisplay', event);" />
+             ondragdrop="return onDragDrop(event, 'mainDisplay');" />
         <vbox id="video-box" flex="1" collapsed="true">
             <browser flex="1" id="mainDisplayVideo" 
                 src="chrome://dtv/content/video-display-vlc.html" 
-                type="content" 
-                onmousedown="return xulcontexthandler('mainDisplayVideo', event);" />
+                type="content" />
             <browser id="videoInfoDisplay" src="" type="content"
                     height="40px"/>
         </vbox>

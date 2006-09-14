@@ -15,6 +15,7 @@ interface pcfIDTVJSBridge : nsISupports
   void xulHideElement(in string area, in AString id);
   void xulShowElement(in string area, in AString id);
   void copyTextToClipboard(in AString text);
+  void showContextMenu(in AString menuItems);
   void showChoiceDialog(in unsigned long id, in AString title, 
         in AString description, in AString defaultLabel, 
         in AString otherLabel);

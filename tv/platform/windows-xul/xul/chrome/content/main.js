@@ -295,56 +295,6 @@ function searchUpForElementWithAttribute(element, attributeName) {
     return null;
 }
 
-// FIXME: Duplicated from dynamic.js
-function getContextClickMenu(element) {
-    var elt = searchUpForElementWithAttribute(element, 't:contextMenu');
-    if(elt) {
-      var ret = elt.getAttribute('t:contextMenu');
-      ret = ret.replace(/\\n/g,"\n");
-      ret = ret.replace(/\\\\/g,"\\");
-      return ret;
-    } else {
-      return "";
-    }
-}
-
-function xulcontexthandler(browserID, event) {
-  if(event.button != 2) return true;
-  var itemsAdded = 0;
-  var menu = getContextClickMenu(event.target);
-  var popup = document.getElementById('contextPopup');
-  if(menu == '') {
-    popup.hidePopup();
-    return false;
-  }
-  while (popup.firstChild) {
-    popup.removeChild(popup.firstChild);
-  }
-  menu = menu.split("\n");
-  while (menu.length > 0) {
-    var line = menu.shift().split('|');
-    if (line.length > 1) {
-      var newItem = document.createElement('menuitem');
-      newItem.setAttribute("label", line[1]);
-      newItem.setAttribute("oncommand", 
-      "pybridge.loadURLInBrowser('" + browserID + "', '" + line[0] + "');");
-      popup.appendChild(newItem);
-      itemsAdded++;
-    } else {
-      var newItem = document.createElement('menuseparator');
-      popup.appendChild(newItem);
-    }
-  }
-  if(itemsAdded == 0) {
-    popup.hidePopup();
-    return false;
-  } else {
-    popup.showPopup(document.documentElement, event.screenX, event.screenY, 
-                    "popup", null, null);
-    return true;
-  }
-}
-
 function doResize(event) {
  if (window.outerWidth < 800) {
     window.outerWidth=800;

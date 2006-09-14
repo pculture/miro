@@ -23,6 +23,7 @@ interface pcfIDTVPyBridge : nsISupports
   void showHelp();
   void addChannel();
   void copyChannelLink();
+  void handleContextMenu(in unsigned long index);
   void handleSimpleDialog(in unsigned long id, 
         in unsigned short buttonIndex);
   void handleHTTPAuthDialog(in unsigned long id, 
