@@ -108,10 +108,8 @@ for feed in allFeeds:
             <h1 id="main-title" t:replaceMarkup="folder.getTitle()" />
         </div>
     </div>
-    <div id="main-titlebar-tasks">
-        <div id="main-titlebar-tasks-search">
-            <input id="search-box" type="search" placeholder="Search Folder" class="main-titlebar-tasks-search" onfocus="startEditSearch(this, null)" onblur="endEditSearch()" />
-        </div>
+    <div id="main-titlebar-right">
+        <input id="search-box" type="search" placeholder="Search Folder" onfocus="startEditSearch(this, null)" onblur="endEditSearch()" />
     </div>
 </div>
 <div id="main-container">

@@ -82,6 +82,7 @@ img {
     width: 60px;
     height: 60px;
     border: 2px solid #FFFFFF;
+    background-color:#FFFFFF;
 }
 
 /* This wraps the center area of the title bar */
@@ -100,19 +101,21 @@ img {
     text-align: center;
 }
 
-/* Wraps the autodownload button form */
-#main-titlebar-autodownload {
+/* Appears below main-title. */
+#main-subtitle {
     position: absolute;
-    width: 138px;
     top: 44px;
     left: 50%;
-    margin: 0px 0px 0px -99px;
+    margin: 0px 0px 0px -90px;
     color: #FFFFFF;
+}
+/*  Wraps the autodownload button form */
+.main-subtitle-emph {
     text-transform: uppercase;
 }
 
 /* Wraps the stuff on the right hand side of the channel header */
-#main-titlebar-tasks {
+#main-titlebar-right {
     position: absolute;
     width: 130px;
     top: 8px;
@@ -120,42 +123,39 @@ img {
     margin: 0px 0px 0px -140px;
 }
 
-/* Wraps settings and Recommend */
-#main-titlebar-tasks p {
-    margin: 0px;
-    padding: 0px;
-    color: #FFFFFF;
-    text-transform: uppercase;
-}
-
-/* Wraps settings and Recommend */
-#main-titlebar-tasks p a {
-    color: #FFFFFF;
-    text-decoration: none;
-}
-#main-titlebar-tasks p a:hover {
-    color: #FFFFFF;
-    text-decoration: underline;
-}
 
 /* just around settings */
-#main-titlebar-tasks-settings {
+#main-titlebar-settings {
+    display: block;
     background: url(../images/main-icon-settings.png) no-repeat left top;
     height: 18px;
     margin: 0px 0px 1px 0px;
     padding: 0px 0px 0px 20px;
+    color: #FFFFFF;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+#main-titlebar-settings:hover {
+    text-decoration: underline;
 }
 
 /* Just around recommend */
-#main-titlebar-tasks-recommend {
+#main-titlebar-recommend {
+    display: block;
     background: url(../images/main-icon-mail-titlebar.png) no-repeat left 2px;
     height: 18px;
     margin: 0px 0px 1px 0px;
     padding: 0px 0px 0px 20px;
+    color: #FFFFFF;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+#main-titlebar-recommend:hover {
+    text-decoration: underline;
 }
 
-/* Used to mark the search box. It's id is #search-box, which is too clear */
-.main-titlebar-tasks-search {
+/* Used to mark the search box */
+#search-box {
     position: absolute;
     left: 0px;
     top: 40px;

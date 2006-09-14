@@ -21,16 +21,15 @@ searchItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
 ]]>
     </t:execOnLoad>
 
-    </head>
+</head>
 
-    <body onkeydown="sendKeyToSearchBox(event);">
-        <div id="main-titlebar">
-        	<div id="main-icon" class="noborder"><img src="resource:images/search-icon.png" /></div>
-        	<div id="main-titlebar-center">
-        		<h1 id="main-title" i18n:translate="">Video Search</h1>
-        	</div>
-		<div id="main-titlebar-tasks" class="big-search">
-                <form name="search" onsubmit="return false;">
+<body onkeydown="sendKeyToSearchBox(event);">
+  <div id="main-titlebar">
+    <div id="main-icon" class="noborder"><img src="resource:images/search-icon.png" /></div>
+    <div id="main-titlebar-center">
+      <h1 id="main-title" i18n:translate="">Video Search</h1>
+      <div id="main-subtitle">
+            <form name="search" onsubmit="return false;">
                     <select name="engines" onChange="updateLastSearchEngine()">
                         <option t:hideIf="not feed.lastEngine == 'yahoo'" value="yahoo" selected="selected">Yahoo! Video</option>
                         <option t:hideIf="feed.lastEngine == 'yahoo'" value="yahoo">Yahoo! Video</option>
@@ -41,10 +40,13 @@ searchItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
                         <option t:hideIf="not feed.lastEngine == 'blogdigger'" selected="selected" value="blogdigger">Blogdigger</option>
                         <option t:hideIf="feed.lastEngine == 'blogdigger'" value="blogdigger">Blogdigger</option>
                     </select>
-		    <input id="search-box" type="search" name="query" value="***feed.quoteLastQuery()***" placeholder="" class="main-titlebar-tasks-search" onKeyUp="fillSearch()" onKeyPress="validateSearch(event)" />
-                </form>
-        	</div>
+            </form>
         </div>
+     </div>
+     <div id="main-titlebar-right" >
+       <input id="search-box" type="search" name="query" value="***feed.quoteLastQuery()***" placeholder="" onKeyUp="fillSearch()" onKeyPress="validateSearch(event)" />
+     </div>
+  </div>
 
         <div id="main-container">
             <div t:updateForView="searchFeed">

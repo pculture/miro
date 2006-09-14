@@ -43,10 +43,8 @@ matchingItems.unlink()
 	<div id="main-titlebar-center">
 		<h1 id="main-title" i18n:translate="">New Videos</h1>
 	</div>
-	<div id="main-titlebar-tasks" class="big-search">
-		<div id="main-titlebar-tasks-search">
-		<input id="search-box" type="search" placeholder="Search Videos" class="main-titlebar-tasks-search"  onfocus="startEditSearch(this, null)" onblur="endEditSearch()" />
-		</div>
+	<div id="main-titlebar-right" class="big-search">
+          <input id="search-box" type="search" placeholder="Search Videos"  onfocus="startEditSearch(this, null)" onblur="endEditSearch()" />
 	</div>
 </div>
 <!-- / TITLE BAR -->

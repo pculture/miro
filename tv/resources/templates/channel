@@ -103,11 +103,11 @@ if feed.idExists():
     
 <!-- TITLE BAR ************************************************************ -->
 <div id="main-titlebar">
-        <img id="main-icon" src="***feed.getThumbnail()***" alt="" style="background-color:#FFFFFF;" />
+        <img id="main-icon" src="***feed.getThumbnail()***" alt=""/>
 	<div id="main-titlebar-center">
 	    <div t:updateForView="thisFeedView">
                 <h1 id="main-title" t:replaceMarkup="feed.getTitle()" />
-                <div id="main-titlebar-autodownload">
+                <div id="main-subtitle" class="main-subtitle-emph">
 		<form name="setAuto" >
 		    <input type="hidden" name="feed" value="@@@feed.getID()@@@" />
 		    <span t:showIf="feed.isAutoDownloadable()">
@@ -116,21 +116,20 @@ if feed.idExists():
 		    <span t:hideIf="feed.isAutoDownloadable()">
 			<input type="checkbox" name="automatic" id="automatic" value="1"                   onClick="javascript:setAutoDownloadableFeed()" />
 		    </span>
-		    <span class="auto_link" i18n:translate=""><label for="automatic">Auto Download</label></span>
+		    <span i18n:translate=""><label for="automatic">Auto Download</label></span>
 		</form>
                 </div>
 	    </div>
         </div>
-        <div id="main-titlebar-tasks">
-                <div id="main-titlebar-tasks-settings">
-                        <p><a href="#" onclick="return showSettings();"><span i18n:translate="">Settings</span></a></p>
-                </div>
-                <div id="main-titlebar-tasks-recommend">
-                    <p><a href="mailto:?subject=@@@feed.getTitle()@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed.getTitle()@@@&quot;. If you don't have the Democracy Player, you can get it here:%0D%0A%0D%0Ahttp://www.getdemocracy.com/%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed.getURL()@@@" class="recommend_link" i18n:translate="">Recommend</a></p>
-                </div>
-                <div id="main-titlebar-tasks-search">
-                    <input id="search-box" type="search" placeholder="Search Channel" class="main-titlebar-tasks-search" onfocus="startEditSearch(this, null)" onblur="endEditSearch()" />
-                </div>
+        <div id="main-titlebar-right">
+           <a id="main-titlebar-settings" href="#"
+                            onclick="return showSettings();" i18n:translate="">
+                  Settings
+           </a>
+           <a id="main-titlebar-recommend" href="mailto:?subject=@@@feed.getTitle()@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed.getTitle()@@@&quot;. If you don't have the Democracy Player, you can get it here:%0D%0A%0D%0Ahttp://www.getdemocracy.com/%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed.getURL()@@@" i18n:translate="">
+               Recommend
+          </a>
+          <input id="search-box" type="search" placeholder="Search Channel" onfocus="startEditSearch(this, null)" onblur="endEditSearch()" />
         </div>
 </div>
 <!-- / TITLE BAR -->
