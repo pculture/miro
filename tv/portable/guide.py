@@ -7,6 +7,8 @@ from copy import copy
 import re
 import app
 import config
+import indexes
+import menu
 import prefs
 import threading
 import urllib
@@ -124,6 +126,16 @@ class ChannelGuide(DDBObject):
         # We're on a platform that uses template inclusions and URL
         # interception.
         return ('template', 'guide')
+
+    def makeContextMenu(self, templateName):
+        menuItems = [
+            (lambda: app.delegate.copyTextToClipboard(self.getURL()),
+                _('Copy URL to clipboard'))
+        ]
+        if not self.getDefault():
+            i = (lambda: app.controller.removeGuide(self), _('Remove'))
+            menuItems.append(i)
+        return menu.makeMenu(menuItems)
 
     def getHTML(self):
         # In the future, may want to use

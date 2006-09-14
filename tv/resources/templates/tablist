@@ -35,18 +35,12 @@ playlistTabs = kargs['playlistTabOrder'].getView()
 	  selectArea='tablist' 
 	  onmousedown="return handleContextMenuSelect(event);" 
 	  onclick="return handleSelect(event);" >
-	  <span t:hideIf="this.obj.getDefault()" t:contextMenu="action:copyFeedURL?feed=@@@this.objID()@@@|Copy URL to clipboard\n\naction:remove?area=tablist&amp;id=@@@this.objID()@@@|Remove">
 	      <t:includeTemplate filename="guidetab" />
-	  </span>
-	  <span t:hideIf="not this.obj.getDefault()">
-	      <t:includeTemplate filename="guidetab" />
-	  </span>
 	</li>
 	<li t:repeatForView="staticTabs" 
 	  class="***this.getState()***"
 	  selectID="***this.objID()***" selectViewName="staticTabs"
 	  selectArea='tablist' 
-	  onmousedown="return handleContextMenuSelect(event);" 
 	  onclick="return handleSelect(event);" >
 	    <t:includeTemplate filename="statictab" />
 	</li>
@@ -67,14 +61,10 @@ playlistTabs = kargs['playlistTabOrder'].getView()
 	onmousedown="return handleContextMenuSelect(event);" 
 	onclick="return handleSelect(event)" >
 	  <span t:showIf="this.isFeed()">
-	    <span t:contextMenu="action:updateFeed?feed=@@@this.objID()@@@|Update Channel Now\naction:copyFeedURL?feed=@@@this.objID()@@@|Copy URL to clipboard\n\naction:remove?area=tablist&amp;id=@@@this.objID()@@@|Remove">
 	      <t:includeTemplate filename="feedtab" />
 	    </span>
-	  </span>
 	  <span t:showIf="this.isChannelFolder()">
-	    <span t:contextMenu="action:rename?id=@@@this.objID()@@@|Rename Channel Folder\n\naction:remove?area=tablist&amp;id=@@@this.objID()@@@|Remove">
 	      <t:includeTemplate filename="channelfoldertab" />
-	    </span>
 	  </span>
       </li>
     </ul>
@@ -96,14 +86,10 @@ playlistTabs = kargs['playlistTabOrder'].getView()
 	onmousedown="return handleContextMenuSelect(event);" 
 	onclick="return handleSelect(event);" >
 	  <span t:showIf="this.isPlaylist()">
-	    <span t:contextMenu="action:rename?id=@@@this.objID()@@@|Rename Playlist\n\naction:remove?area=tablist&amp;id=@@@this.objID()@@@|Remove">
 	      <t:includeTemplate filename="playlisttab" />
-	    </span>
 	  </span>
 	  <span t:showIf="this.isPlaylistFolder()">
-	    <span t:contextMenu="action:rename?id=@@@this.objID()@@@|Rename Playlist Folder\n\naction:remove?area=tablist&amp;id=@@@this.objID()@@@|Remove">
               <t:includeTemplate filename="playlistfoldertab" />
-	    </span>
 	  </span>
       </li>
     </ul>

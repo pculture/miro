@@ -10,13 +10,6 @@
     <t:execOnLoad><![CDATA[
 this = kargs['this']
 viewName = kargs['viewName']
-	
-if this.isDownloaded():
-    contextMenu = "action:addToNewPlaylist|Add to new playlist\naction:removeCurrentItems|Remove from ---REMOVELOCATION---"
-elif this.isDownloadable():
-    contextMenu = "action:downloadCurrentItems|Download"
-else:
-    contextMenu = "action:stopDownloadingCurrentItems|Cancel download"
 ]]></t:execOnLoad>
 </head>
 
@@ -29,7 +22,6 @@ else:
 	dragdesttype="---DRAGDESTTYPE---"
 	dragdestdata="playlistitem-***this.getID()***"
 	onmousedown="return handleContextMenuSelect(event);" 
-	t:contextMenu="***contextMenu***"
 	drageffectdownloadeditem="move"
 	selectID="***this.getID()***" selectViewName="@@@viewName@@@"
 	selectArea='itemlist' 

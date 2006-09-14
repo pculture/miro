@@ -26,6 +26,7 @@ import config
 import dialogs
 import eventloop
 import folder
+import menu
 import prefs
 import resource
 import util
@@ -686,6 +687,14 @@ class Feed(DDBObject):
         self.confirmDBThread()
         self.userTitle = title
         self.signalChange()
+
+    def makeContextMenu(self, templateName):
+        return menu.makeMenu([
+            (self.update, _('Update Channel Now')),
+            (lambda: app.delegate.copyTextToClipboard(self.getURL()),
+                _('Copy URL to clipboard')),
+            (lambda: app.controller.removeFeed(self), _('Remove')),
+        ])
 
     def rename(self):
         title = _("Rename Channel")

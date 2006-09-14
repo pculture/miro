@@ -699,6 +699,18 @@ class Controller (frontend.Application):
         self.renameCurrentTab(typeCheckList=[playlist.SavedPlaylist,
                 folder.PlaylistFolder])
 
+    def downloadCurrentItems(self):
+        selected = self.selection.getSelectedItems()
+        downloadable = [i for i in selected if i.isDownloadable() ]
+        for item in downloadable:
+            item.download()
+
+    def stopDownloadingCurrentItems(self):
+        selected = self.selection.getSelectedItems()
+        downloading = [i for i in selected if i.getState() == 'downloading']
+        for item in downloading:
+            item.expire()
+
     def updateCurrentFeed(self):
         for tab in self.selection.getSelectedTabs():
             if tab.isFeed():
@@ -721,6 +733,9 @@ class Controller (frontend.Application):
                 guide.remove()
         dialog.run(dialogCallback)
 
+    def removePlaylist(self, playlist):
+        return self.removePlaylists([playlist])
+
     def removePlaylists(self, playlists):
         if len(playlists) == 1:
             title = _('Remove %s') % playlists[0].getTitle()
@@ -739,6 +754,9 @@ class Controller (frontend.Application):
                     if playlist.idExists():
                         playlist.remove()
         dialog.run(dialogCallback)
+
+    def removeFeed(self, feed):
+        return self.removeFeeds([feed])
 
     def removeFeeds(self, feeds):
         for feed in feeds:
@@ -976,7 +994,6 @@ downloaded?""")
                 for tab in tabOrder.getView():
                     destObj = tab.obj
                     break
-                print "destOBJ is ", destObj
             else:
                 destObj = db.getObjectByID(int(destID))
             sourceArea, sourceID = sourceData.split("-")
@@ -1013,6 +1030,11 @@ downloaded?""")
         else:
             print "Can't handle drop. Dest type: %s Dest id: %s Type: %s" % \
                     (destType, destID, type)
+
+    def addToNewPlaylist(self):
+        selected = controller.selection.getSelectedItems()
+        childIDs = [i.getID() for i in selected if i.isDownloaded()]
+        playlist.createNewPlaylist(childIDs)
 
 ###############################################################################
 #### TemplateDisplay: a HTML-template-driven right-hand display panel      ####
@@ -1210,23 +1232,6 @@ class ModelActionHandler:
 
     def removeCurrentItems(self):
         controller.removeCurrentItems()
-
-    def downloadCurrentItems(self):
-        selected = controller.selection.getSelectedItems()
-        downloadable = [i for i in selected if i.isDownloadable() ]
-        for item in downloadable:
-            item.download()
-
-    def stopDownloadingCurrentItems(self):
-        selected = controller.selection.getSelectedItems()
-        downloading = [i for i in selected if i.getState() == 'downloading']
-        for item in downloading:
-            item.expire()
-
-    def addToNewPlaylist(self):
-        selected = controller.selection.getSelectedItems()
-        childIDs = [i.getID() for i in selected if i.isDownloaded()]
-        playlist.createNewPlaylist(childIDs)
 
     def mergeToFolder(self):
         tls = controller.selection.tabListSelection
@@ -1487,6 +1492,7 @@ class TemplateActionHandler:
     def __init__(self, display, templateHandle):
         self.display = display
         self.templateHandle = templateHandle
+        self.currentName = None
 
     def switchTemplate(self, name, baseURL=None, *args, **kargs):
         self.templateHandle.unlinkTemplate()
@@ -1500,6 +1506,7 @@ class TemplateActionHandler:
                 areaHint=controller.frame.mainDisplay, baseURL=baseURL,
                 *args, **kargs)
         controller.frame.selectDisplay(template, controller.frame.mainDisplay)
+        self.currentName = name
 
     def doneWithIntro(self, id):
         try:
@@ -1602,6 +1609,19 @@ class TemplateActionHandler:
         ctrl = (ctrlDown == '1')
         view = self.templateHandle.getTemplateVariable(viewName)
         controller.selection.selectItem(area, view, int(id), shift, ctrl)
+
+    def handleContextMenuSelect(self, id, area, viewName):
+        try:
+            obj = db.getObjectByID(int(id))
+        except:
+            print "WARNING: error parsing context menu request (%s)" % data
+            traceback.print_exc()
+        else:
+            view = self.templateHandle.getTemplateVariable(viewName)
+            if not controller.selection.isSelected(area, view, int(id)):
+                self.handleSelect(area, viewName, id, False, False)
+            menu = obj.makeContextMenu(self.currentName)
+            delegate.showContextMenu(menu)
 
     def __getSearchFeeds(self):
         searchFeed = controller.getGlobalFeed('dtv:search')

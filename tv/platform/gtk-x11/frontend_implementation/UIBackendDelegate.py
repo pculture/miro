@@ -325,6 +325,17 @@ class UIBackendDelegate:
             dialog.runCallback (None)
 
     @gtkAsyncMethod
+    def showContextMenu(self, menuItems):
+        menu = gtk.Menu()
+        for item in menuItems:
+            gtkitem = gtk.MenuItem(item.label)
+            gtkitem.connect("activate", lambda foo, item=item: item.activate())
+            menu.append(gtkitem)
+            gtkitem.show()
+        menu.show()
+        menu.popup(None, None, None, gtk.gdk.RIGHTBUTTON, 0)
+
+    @gtkAsyncMethod
     def copyTextToClipboard(self, text):
         global clipboard
         global primary

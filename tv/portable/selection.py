@@ -63,6 +63,9 @@ class SelectionArea(object):
         self.currentSelection.remove(id)
         obj.setSelected(False)
 
+    def isSelected(self, view, id):
+        return self.currentView == view and id in self.currentSelection
+
     def toggleItemSelect(self, view, id):
         self.switchView(view)
         if id in self.currentSelection:
@@ -325,6 +328,9 @@ class SelectionHandler(object):
             return self.itemListSelection
         else:
             raise ValueError("Unknown area: %s" % area)
+
+    def isSelected(self, area, view, id):
+        return self.getSelectionForArea(area).isSelected(view, id)
 
     def selectItem(self, area, view, id, shiftSelect, controlSelect, displayTabContent=True):
         selection = self.getSelectionForArea(area)

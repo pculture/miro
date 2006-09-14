@@ -25,6 +25,7 @@ import dialogs
 import eventloop
 import feed
 import filters
+import menu
 import prefs
 import resource
 import views
@@ -236,15 +237,12 @@ class Item(DDBObject):
             xml = self._itemXML
         if viewName == 'playlistView':
             dragDestType = 'downloadeditem'
-            removeLocation = 'playlist'
         else:
             dragDestType = ''
-            removeLocation = 'My Collection'
         for old, new in [
             (self._XMLViewName, viewName),
             ("---DRAGDESTTYPE---", dragDestType),
             ("---SELECTEDSTATE---", self.getSelectedState(view)),
-            ("---REMOVELOCATION---", removeLocation),
         ]:
                 xml = xml.replace(old, new)
         return xml
@@ -1086,6 +1084,23 @@ folder will also be deleted.""")
         # behavior when it parses dtv:paymentlink elements, or simply unescape
         # here...
         return '<span>' + unescape(ret) + '</span>'
+
+    def makeContextMenu(self, templateName):
+        c = app.controller # easier/shorter to type
+        if self.isDownloaded():
+            if templateName in ('playlist', 'playlist-folder'):
+                location = _('playlist')
+            else:
+                location = _('My Collection')
+            return menu.makeMenu([
+                (c.addToNewPlaylist, _('Add to new playlist')),
+                (c.removeCurrentItems, _('Remove from %s') % location),
+            ])
+        elif self.isDownloadable():
+            return menu.makeMenu([(c.downloadCurrentItems, _('Download'))])
+        else:
+            return menu.makeMenu([
+                (c.stopDownloadingCurrentItems, _('Cancel download'))])
 
     ##
     # Updates an item with new data

@@ -3,6 +3,7 @@ from gtcache import gettext as _
 import app
 import dialogs
 import indexes
+import menu
 import playlist
 import views
 from database import DDBObject
@@ -112,6 +113,12 @@ class ChannelFolder(FolderBase):
                 return True
         return False
 
+    def makeContextMenu(self, templateName):
+        return menu.makeMenu([
+            (self.rename, _('Rename Channel Folder')),
+            (lambda: app.controller.removeFeed(self), _('Remove')),
+        ])
+
     # Returns true iff unwatched should be shown 
     def showU(self):
         return self.numUnwatched() > 0
@@ -160,6 +167,12 @@ class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
         view = views.playlists.filterWithIndex(index, value)
         if view.len() == 0 and id in self.trackedItems:
             self.removeID(id)
+
+    def makeContextMenu(self, templateName):
+        return menu.makeMenu([
+            (self.rename, _('Rename Playlist Folder')),
+            (lambda: app.controller.removePlaylist(self), _('Remove')),
+        ])
 
     def renameTitle(self):
         return _("Rename Playlist Folder")

@@ -116,30 +116,6 @@ function URLdecode(str) {
 //// For calling by host templating code                                   ////
 ///////////////////////////////////////////////////////////////////////////////
 
-// For calling by host templating code: Returns items that should
-// appear in the context click menu in the format url|description with
-// one item on each line. Blank lines are separators
-function getContextClickMenu(element) {
-    while (1) {
-	if (element.nodeType == 1 && element.getAttribute('t:contextMenu')) {
-	    ret = element.getAttribute('t:contextMenu');
-	    ret = ret.replace(/\\n/g,"\n");
-	    ret = ret.replace(/\\\\/g,"\\");
-	    return ret;
-	}
-	if (element.parentNode)
-	    element = element.parentNode;
-	else
-	    return "";
-    }
-
-    // Satisfy Mozilla that the function always returns a
-    // value. Otherwise, we get an error if strict mode is enabled,
-    // ultimately preventing us from getting the state change event
-    // indicating that the load succeeded.
-    return "";
-}
-
 // For calling by host templating code: Set CSS styles on the item
 // with the given ID to make it disappear.
 function hideItem(id) {
@@ -207,12 +183,14 @@ function forceRedisplay(elt) {
     r.insertNode(frag);
 }
 
-// If we are going to popup a context menu, we should select the item that was
-// clicked
 function handleContextMenuSelect(event) {
-  if(event.button == 2 && getContextClickMenu(event.target) &&
-      event.currentTarget.className.indexOf("selected") == -1) {
-    handleSelect(event);
+  if(event.button == 2) {
+    var area = event.currentTarget.getAttribute("selectArea");
+    var id = event.currentTarget.getAttribute("selectID");
+    var viewName = event.currentTarget.getAttribute("selectViewName");
+    var url = 'action:handleContextMenuSelect?id=' + id + '&area=' + area +
+              '&viewName=' + viewName;
+    eventURL(url);
   }
   return true;
 }

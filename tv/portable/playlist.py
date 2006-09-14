@@ -6,6 +6,7 @@ import app
 import dialogs
 import database
 import filters
+import menu
 import item
 import views
 from databasehelper import makeSimpleGetSet, TrackedIDList
@@ -168,6 +169,12 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
             return 'playlist'
         else:
             return 'playlist:playlistfolder'
+
+    def makeContextMenu(self, templateName):
+        return menu.makeMenu([
+            (self.rename, _('Rename Playlist')),
+            (lambda: app.controller.removePlaylist(self), _('Remove')),
+        ])
 
     def rename(self):
         title = _("Rename Playlist")
