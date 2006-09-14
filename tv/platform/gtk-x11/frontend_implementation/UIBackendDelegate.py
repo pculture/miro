@@ -328,8 +328,11 @@ class UIBackendDelegate:
     def showContextMenu(self, menuItems):
         menu = gtk.Menu()
         for item in menuItems:
-            gtkitem = gtk.MenuItem(item.label)
-            gtkitem.connect("activate", lambda foo, item=item: item.activate())
+            if item.label:
+                gtkitem = gtk.MenuItem(item.label)
+                gtkitem.connect("activate", lambda foo, item=item: item.activate())
+            else:
+                gtkitem = gtk.SeparatorMenuItem()
             menu.append(gtkitem)
             gtkitem.show()
         menu.show()

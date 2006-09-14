@@ -130,7 +130,8 @@ class ChannelGuide(DDBObject):
     def makeContextMenu(self, templateName):
         menuItems = [
             (lambda: app.delegate.copyTextToClipboard(self.getURL()),
-                _('Copy URL to clipboard'))
+                _('Copy URL to clipboard')),
+            (None, ''),
         ]
         if not self.getDefault():
             i = (lambda: app.controller.removeGuide(self), _('Remove'))
