@@ -44,7 +44,13 @@ class UIBackendDelegate:
 
     def showContextMenu(self, menuItems):
         UIBackendDelegate.currentMenuItems = menuItems
-        menuString = '\n'.join([m.label for m in menuItems])
+        def getLabelString(menuItem):
+            if menuItem.callback is not None or menuItem.label == '':
+                return menuItem.label
+            else:
+                # hack to tell xul code that this item is disabled
+                return "_" + menuItem.label 
+        menuString = '\n'.join([getLabelString(m) for m in menuItems])
         frontend.jsBridge.showContextMenu(menuString)
 
     def runDialog(self, dialog):

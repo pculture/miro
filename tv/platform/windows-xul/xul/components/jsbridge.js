@@ -120,7 +120,12 @@ jsBridge.prototype = {
     for(var i = 0; i < menu.length; i++) {
       if(menu[i]) {
         var newItem = this.document.createElement('menuitem');
-        newItem.setAttribute("label", menu[i]);
+        if(menu[i].charAt(0) != '_') {
+          newItem.setAttribute("label", menu[i]);
+        } else {
+          newItem.setAttribute("label", menu[i].substr(1));
+          newItem.setAttribute("disabled", "true");
+        }
         newItem.setAttribute("oncommand", 
            "pybridge.handleContextMenu(" + i + ");");
       } else {
