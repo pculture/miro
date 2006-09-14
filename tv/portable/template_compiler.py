@@ -755,21 +755,8 @@ class MetaHandle:
             fileobj.write('%s%s = Handle(domHandler, locals(), onUnlink = _execOnUnload)%s%s' % (prefix, varname, ending, ending))
         else:
             fileobj.write('%s%s = Handle(domHandler, locals(), onUnlink = lambda:None)%s%s' % (prefix, varname, ending, ending))
+
         count = 0
-        for tv in self.trackedViews:
-            (anchorId, anchorType, templateFuncs, name) = tv
-            repFunc = "rep_%s_%s" % (count, varname)
-            fileobj.write('%sdef %s(this, viewName, view, tid):%s' % (prefix, repFunc,ending))
-            fileobj.write('%s    out = StringIO()%s' % (prefix, ending))
-            for count2 in range(len(templateFuncs)):
-                (func, args) = templateFuncs[count2]
-                fileobj.write(func('out','',prefix+'    ',args))
-            fileobj.write('%s    out.seek(0)%s' % (prefix, ending))
-            fileobj.write('%s    return out%s' % (prefix, ending))
-
-            fileobj.write('%s%s.addView(%s,%s,%s,%s, %s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),name,repFunc,repr(name),ending))
-            count += 1
-
         for ur in self.updateRegions:
             (anchorId, anchorType, templateFuncs, name) = ur
             upFunc = "up_%s_%s" % (count, varname)
@@ -796,6 +783,20 @@ class MetaHandle:
             fileobj.write('%s    return out%s' % (prefix, ending))
 
             fileobj.write('%s%s.addConfigUpdate(%s,%s,%s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),upFunc,ending))
+            count += 1
+
+        for tv in self.trackedViews:
+            (anchorId, anchorType, templateFuncs, name) = tv
+            repFunc = "rep_%s_%s" % (count, varname)
+            fileobj.write('%sdef %s(this, viewName, view, tid):%s' % (prefix, repFunc,ending))
+            fileobj.write('%s    out = StringIO()%s' % (prefix, ending))
+            for count2 in range(len(templateFuncs)):
+                (func, args) = templateFuncs[count2]
+                fileobj.write(func('out','',prefix+'    ',args))
+            fileobj.write('%s    out.seek(0)%s' % (prefix, ending))
+            fileobj.write('%s    return out%s' % (prefix, ending))
+
+            fileobj.write('%s%s.addView(%s,%s,%s,%s, %s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),name,repFunc,repr(name),ending))
             count += 1
             
         for action in self.triggerActionURLsOnLoad:
