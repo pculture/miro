@@ -470,7 +470,7 @@ class HTTPDownloader(BGDownloader):
         if not self.acceptDownloadSize(self.totalSize):
             self.handleError(_("Not enough disk space"),
                 _("%s MB required to store this video") % 
-                self.totalSize / (2 ** 20))
+                (self.totalSize / (2 ** 20)))
             return
         #Get the length of the file, then create it
         self.shortFilename = cleanFilename(info['filename'])
