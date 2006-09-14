@@ -204,7 +204,12 @@ div.scraping-content {
 }
 
 #main-container {
-    padding-top: 76px;
+    position: absolute;
+    padding-top: 0px;
+    top: 76px;
+    bottom: 0px;
+    width: 100%;
+    overflow: auto;
 }
 
 .main-channelbar {
