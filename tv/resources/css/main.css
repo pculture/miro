@@ -6,15 +6,17 @@ body {
     color: #333333;
 }
 
+/* Used in download item exactly as you'd expect */
 .draggable {
     -khtml-user-drag: element;
 }
-
-.clearer {
-    clear: both;
-    height: 0px;
+.noselect {
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    cursor: default;
 }
 
+/* basic HTML elements */
 p {
     font-size: 90%;
     margin: 5px 10px 7px 10px;
@@ -36,6 +38,11 @@ li {
     padding: 0px;
 }
 
+img {
+    border: 0px;
+}
+
+/* This is used to make the feed settings section float above the channel */
 #feed-settings {
 	position: absolute;
 	top: 0px;
@@ -47,6 +54,7 @@ li {
 	z-index: 100;
 }
 
+/* Used in feed-settings to position the feed-settings icon */
 #close-settings-icon {
 	position: absolute;
 	top: 25px;
@@ -54,6 +62,7 @@ li {
         cursor: pointer;
 }
 
+/* This is the title section of the channel view */
 #main-titlebar {
     background: url(../images/main-titlebar-bg.png) repeat-x left bottom;
     height: 77px;
@@ -65,6 +74,7 @@ li {
     z-index: 10;
 }
 
+/* The icon for the channel view */
 #main-titlebar-avatar {
     position: absolute;
     left: 9px;
@@ -74,14 +84,12 @@ li {
     border: 2px solid #FFFFFF;
 }
 
-#main-titlebar-avatar.noborder {
-    border: 0px;
-}
-
+/* This wraps the name and the autodownload button */
 #main-titlebar-channelname {
     padding-top: 10px;
 }
 
+/* This wraps just the name */
 #main-titlebar-channelname h1 {
     margin: 0px 140px 0px 80px;
     padding: 0px;
@@ -92,6 +100,7 @@ li {
     text-align: center;
 }
 
+/* Wraps the autodownload button form */
 #main-titlebar-autodownload {
     position: absolute;
     width: 138px;
@@ -102,6 +111,7 @@ li {
     text-transform: uppercase;
 }
 
+/* Wraps the stuff on the right hand side of the channel header */
 #main-titlebar-tasks {
     position: absolute;
     width: 130px;
@@ -110,6 +120,7 @@ li {
     margin: 0px 0px 0px -140px;
 }
 
+/* Wraps settings and Recommend */
 #main-titlebar-tasks p {
     margin: 0px;
     padding: 0px;
@@ -117,16 +128,17 @@ li {
     text-transform: uppercase;
 }
 
+/* Wraps settings and Recommend */
 #main-titlebar-tasks p a {
     color: #FFFFFF;
     text-decoration: none;
 }
-
 #main-titlebar-tasks p a:hover {
     color: #FFFFFF;
     text-decoration: underline;
 }
 
+/* just around settings */
 #main-titlebar-tasks-settings {
     background: url(../images/main-icon-settings.png) no-repeat left top;
     height: 18px;
@@ -134,6 +146,7 @@ li {
     padding: 0px 0px 0px 20px;
 }
 
+/* Just around recommend */
 #main-titlebar-tasks-recommend {
     background: url(../images/main-icon-mail-titlebar.png) no-repeat left 2px;
     height: 18px;
@@ -141,6 +154,7 @@ li {
     padding: 0px 0px 0px 20px;
 }
 
+/* Used to mark the search box. It's id is #search-box, which is too clear */
 .main-titlebar-tasks-search {
     position: absolute;
     left: 0px;
@@ -152,38 +166,14 @@ li {
     color: #1c5180;
 }
 
-#main-titlebar-tasks.big-search {
-    width:100%; 
-    text-align:center;
-}
-
-#main-titlebar-tasks.big-search .main-titlebar-tasks-search {
-    position: static;
-    margin: 35px 55px 0px 0px;
-    width: 200px;
-    font-size: 120%;
-}
-
-
-#main-titlebar-free-space {
-    position: absolute;
-    bottom: 41px;
-    right: 15px;
-    color: white;
-    font-size: 12px;
-}
-
-#main-titlebar-free-space p {
-	margin: 0px;
-}
-
+/* Used for scraping indicator on channel page */
 .main-container-scraping {
     text-align: center;
     margin: 15px 0px;
     padding: 0px;
 }
 
-
+/* this goes in the main-container-scraping section */
 div.scraping-indicator {
     margin: auto;
     width: 600px;
@@ -197,12 +187,14 @@ div.scraping-indicator {
     position:relative;
 }
 
+/* this goes around the text of the scraping section */
 div.scraping-content {
     position: absolute;
     left: 20px;
     bottom: 16px;
 }
 
+/* This holds everything below the channel bar*/
 #main-container {
     position: absolute;
     padding-top: 0px;
@@ -212,16 +204,20 @@ div.scraping-content {
     overflow: auto;
 }
 
+/* This is the blue grey gradient for the bars above the "available"
+and "watchable" sections */
 .main-channelbar {
     background: url(../images/main-bar-bg.png) repeat-x left bottom;
     height: 22px;
 }
 
+/* The yellow gradient for the "download" bar */
 .main-channelbar-download {
     background: url(../images/main-bar-bg-download.png) repeat-x left bottom;
     height: 22px;
 }
 
+/* The yellow triangle for the "download" bar */
 .triangle {
     background: url(../images/black_yellow_triangle.png) no-repeat left top;
     display: block;
@@ -232,15 +228,18 @@ div.scraping-content {
     margin-left: 5px;
 }
 
+/* downward yellow triangle for dl bar */
 .triangle.down {
     background: url(../images/black_yellow_triangle_down.png) no-repeat left top;
 }
 
+/* Downloads in progress */
 .main-channelbar-download h1 {
     color: #111;
     text-decoration: none;
 }
 
+/* Hack to get link around channel bars */
 .main-channelbar-hitbox {
     position: relative;
     margin: 0px 0px -22px 0px;
@@ -248,11 +247,12 @@ div.scraping-content {
     height: 22px;
     text-indent: -100%;
 }
-
 .main-channelbar-hitbox a {
     padding: 5px 200% 5px 0px;
 }
 
+
+/* Seems to only affect the "Downloaded" section */
 .main-channelbar h1, .main-channelbar-download h1, .main-channelbar h2 {
     display: inline;
     padding: 0px;
@@ -261,27 +261,24 @@ div.scraping-content {
     line-height: 16px;
     font-weight: normal;
 }
-
 .main-channelbar h1, .main-channelbar h2 {
     font-size: 13px;
     color: #111;
 }
-
 .main-channelbar h1, .main-channelbar-download h1 {
     float: left;
     margin: 3px 0px 0px 5px;
 }
-
 .main-channelbar h2 {
     margin: 3px 5px 0px 0px;
     color: #111;
 }
-
 .main-channelbar a {
     color: #FFFFFF;
     text-decoration: none;  
 }
 
+/* Around "videos on this channel" */
 .video-count {
     display: block;
     float: left;
@@ -289,6 +286,7 @@ div.scraping-content {
     margin-right: 4px;
 }
 
+/* Around the "N more videos" oval */
 .main-notification-nonew {
     width: 230px;
     height: 80px;
@@ -297,11 +295,13 @@ div.scraping-content {
     color: #ffffff;
 }
 
+/* unused? */
 .main-notification-nonew h3 {
     margin: 11px 0px 2px 5px;
     padding: 0px;
 }
 
+/* The N more videos oval */
 .main-notification {    
     float: left;
     height: 24px;
@@ -312,7 +312,6 @@ div.scraping-content {
     font-weight: bold;
     color: #ffffff;
 }
-
 .main-notification-right {  
     float: left;
     width: 20px;
@@ -322,6 +321,93 @@ div.scraping-content {
     overflow: hidden;
 }
 
+/* Used around the show more oval */
+#show-more-videos-label a {
+    text-decoration: none;
+}
+
+/* Used in playlist and playlist-folder */
+.playlist-end-drag-hitbox {
+    height: 10px;
+    width: 100%;
+}
+.playlist-end-drag-hitbox.drag-highlight {
+    border-top: 1px solid #0752d7;
+}
+
+/* used in search view */
+.search-message {
+    font-size: 28px;
+    color: #DDD;
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Around  the "empty folder" message */
+.channel-blank {
+    text-align: center;
+    padding: 30px;
+}
+.channel-message {
+    font-size: 28px;
+    color:      #999;
+    text-align: center;
+    margin-top: 50px;
+    font-weight: bold;
+}
+.channel-message.small {
+    font-size: 20px;
+    margin-top: 20px;
+    font-weight: normal;
+}
+.drag-highlight .channel-message {
+    color: #0752d7;
+}
+
+/* used in multi-channel */
+body.gray-background {
+    background-color: #f7f7f7;
+}
+.button-zone-two {
+margin: 0 auto 0 auto;
+text-align: center;
+width: 500px;
+}
+.button-zone-one {
+margin: 0 auto 0 auto;
+text-align: center;
+width: 270px;
+}
+.gray-button-wrap {
+margin-right: 10px;
+float: left;
+}
+.gray-button-bg {
+    background: url(../images/graybutton-mid.png) top left repeat-x;
+    margin: 0 8px;
+    height: 31px;
+    cursor: pointer;
+    margin: auto;
+	width: 240px;
+}
+.gray-button-left {
+    background: url(../images/graybutton-left.png) top left no-repeat;
+    width: 8px;
+    height: 31px;
+    float: left;
+}
+.gray-button-right {
+    background: url(../images/graybutton-right.png) top left no-repeat;
+    width: 8px;
+    height: 31px;
+    float: right;
+}
+.gray-button-content {
+    padding-top: 8px;
+}
+
+
+/* Everything below is used in download-item */
 .main-video {
     border-top: 1px solid #f0fcfe;
     border-bottom: 1px solid #d5ddea;
@@ -354,7 +440,6 @@ div.scraping-content {
 .main-video.selected-inactive {
     background: #ccc;
 }
-
 .main-video-tnail {
     position: absolute;
     left: 5px;
@@ -363,12 +448,6 @@ div.scraping-content {
     height: 75px;
     border: 1px solid #e6e6eA;
     z-index: 1;
-}
-
-.noselect {
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    cursor: default;
 }
 
 .main-video-desc {
@@ -605,15 +684,6 @@ div.scraping-content {
     text-decoration: underline; 
 }
 
-.playlist-end-drag-hitbox {
-    height: 10px;
-    width: 100%;
-}
-
-.playlist-end-drag-hitbox.drag-highlight {
-    border-top: 1px solid #0752d7;
-}
-
 .main-progress-bar-bg {
   width: 92px;
   height: 11px;
@@ -646,94 +716,4 @@ div.scraping-content {
     width: 11px;
     height: 13px;
     background: url(../images/main-cancel.png) top left no-repeat;
-}
-
-.search-message {
-    font-size: 28px;
-    color: #DDD;
-    text-align: center;
-    margin-top: 50px;
-}
-
-img {
-    border: 0px;
-}
-
-#show-more-videos-label a {
-    text-decoration: none;
-}
-
-.channel-blank {
-    text-align: center;
-    padding: 30px;
-}
-
-.channel-message {
-    font-size: 28px;
-    color:      #999;
-    text-align: center;
-    margin-top: 50px;
-    font-weight: bold;
-}
-
-.channel-message.small {
-    font-size: 20px;
-    margin-top: 20px;
-    font-weight: normal;
-}
-
-.drag-highlight .channel-message {
-    color: #0752d7;
-}
-
-body.gray-background {
-    background-color: #f7f7f7;
-}
-
-
-.button-zone-two {
-margin: 0 auto 0 auto;
-text-align: center;
-width: 500px;
-}
-
-.button-zone-one {
-margin: 0 auto 0 auto;
-text-align: center;
-width: 270px;
-}
-
-
-.gray-button-wrap {
-margin-right: 10px;
-float: left;
-}
-
-.gray-button-bg {
-    background: url(../images/graybutton-mid.png) top left repeat-x;
-    margin: 0 8px;
-    height: 31px;
-    cursor: pointer;
-    margin: auto;
-	width: 240px;
-}
-
-
-.gray-button-left {
-    background: url(../images/graybutton-left.png) top left no-repeat;
-    width: 8px;
-    height: 31px;
-    float: left;
-}
-
-.gray-button-right {
-    background: url(../images/graybutton-right.png) top left no-repeat;
-    width: 8px;
-    height: 31px;
-    float: right;
-}
-
-
-.gray-button-content {
-    padding-top: 8px;
 }
