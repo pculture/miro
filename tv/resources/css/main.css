@@ -255,19 +255,23 @@ and "watchable" sections */
 /* The N more videos oval */
 .main-notification {    
     float: left;
+    display: block;
     height: 24px;
     background: url(../images/main-notification-bg.png) no-repeat left top;
     padding: 3px 0px 0px 20px;
     margin: 15px 0px 12px 5px;
     font-size: 14px;
     font-weight: bold;
+    text-decoration: none;
     color: #ffffff;
 }
 .main-notification-right {  
     float: left;
+    display: block;
     width: 20px;
     height: 24px;
     margin: 15px 0px 12px 0px;
+    text-decoration: none;
     background: url(../images/main-notification-right.png) no-repeat right top;
     overflow: hidden;
 }

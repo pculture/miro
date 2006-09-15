@@ -58,17 +58,13 @@
 
 <!-- The infamous "N more videos" oval -->
 <div t:updateForView="matchingItems">  
-  <div t:hideIf="allItemsMode  or not showNewItems or newItems.len() == matchingItems.len()" style="display: block">
-    <span>
-      <a href="javascript:eventURL('action:toggleAllItemsMode');">
-       	<div class="main-notification">
-          <div t:hideIf="isFolder"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len() - newItems.len()" /> more videos on this channel &gt;&gt;</span></div>
-          <div t:showIf="isFolder"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()"/> videos in this channel folder &gt;&gt;</span></div>
-        </div>
-        <div class="main-notification-right">&nbsp;</div>
-        <br clear="left" />
-      </a>
-    </span>
+  <div t:hideIf="allItemsMode  or not showNewItems or newItems.len() == matchingItems.len()">
+      <a href="javascript:eventURL('action:toggleAllItemsMode');" class="main-notification">
+          <span t:hideIf="isFolder" i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len() - newItems.len()" /> more videos on this channel &gt;&gt;</span>
+          <span t:showIf="isFolder" i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()"/> videos in this channel folder &gt;&gt;</span>
+        </a>
+        <a href="javascript:eventURL('action:toggleAllItemsMode');" class="main-notification-right">&nbsp;</a>
+     <br clear="left" />
   </div>
 </div>
 
@@ -83,11 +79,9 @@
 </a>
 </span>
 
-<div>
-   <span t:repeatForView="watchableItems">
-      <span t:replaceMarkup="this.getItemXML(viewName, view)" />
-   </span>
-</div>
+<span t:repeatForView="watchableItems">
+   <span t:replaceMarkup="this.getItemXML(viewName, view)" />
+</span>
 
 <!-- / WATCHABLE -->
 </body>
