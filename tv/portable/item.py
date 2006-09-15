@@ -527,10 +527,29 @@ folder will also be deleted.""")
             self.seen = True
             if self.watchedTime is None:
                 self.watchedTime = datetime.now()
-            if self.parent_id:
-                parent = self.getParent()
-                parent.childrenSeen = None
-                parent.signalChange()
+            self.clearParentsChildrenSeen()
+            self.signalChange()
+
+    def clearParentsChildrenSeen(self):
+        if self.parent_id:
+            parent = self.getParent()
+            parent.childrenSeen = None
+            parent.signalChange()
+
+
+    def markItemUnseen(self):
+        self.confirmDBThread()
+        if self.isContainerItem:
+            self.childrenSeen = False
+            for item in self.getChildren():
+                item.seen = False
+                item.signalChange()
+        else:
+            if self.seen == False:
+                return
+            self.seen = False
+            self.watchedTime = None
+            self.clearParentsChildrenSeen()
             self.signalChange()
 
     def getRSSID(self):
@@ -1087,20 +1106,43 @@ folder will also be deleted.""")
 
     def makeContextMenu(self, templateName):
         c = app.controller # easier/shorter to type
-        if self.isDownloaded():
-            if templateName in ('playlist', 'playlist-folder'):
-                location = _('playlist')
+        watched = downloaded = downloading = available = 0
+        for i in app.controller.selection.getSelectedItems():
+            if i.getState() == 'downloading':
+                downloading += 1
+            elif i.isDownloaded():
+                downloaded += 1
+                if i.getSeen():
+                    watched += 1
             else:
-                location = _('My Collection')
-            return menu.makeMenu([
-                (c.addToNewPlaylist, _('Add to new playlist')),
-                (c.removeCurrentItems, _('Remove from %s') % location),
-            ])
-        elif self.isDownloadable():
-            return menu.makeMenu([(c.downloadCurrentItems, _('Download'))])
-        else:
-            return menu.makeMenu([
-                (c.stopDownloadingCurrentItems, _('Cancel download'))])
+                available += 1
+
+        items = []
+        if available > 0:
+            items.append((None, _('%d Available Items') % available))
+            items.append((app.controller.downloadCurrentItems, _('Download')))
+
+        if downloaded > 0:
+            if len(items) > 0:
+                items.append((None, ''))
+            items.append((None, _('%d Downloaded Items') % downloaded))
+            items.append((c.addToNewPlaylist, _('Add to new playlist')))
+            if templateName in ('playlist', 'playlist-folder'):
+                label = _('Remove From Playlist')
+            else:
+                label = _('Remove From My Collection')
+            items.append((c.removeCurrentItems, label))
+            if watched:
+                items.append((self.markItemUnseen, _('Mark as Unwatched')))
+
+        if downloading:
+            if len(items) > 0:
+                items.append((None, ''))
+            items.append((None, _('%d Downloading Items') % downloading))
+            items.append((app.controller.stopDownloadingCurrentItems, 
+                _('Cancel Download')))
+
+        return menu.makeMenu(items)
 
     ##
     # Updates an item with new data

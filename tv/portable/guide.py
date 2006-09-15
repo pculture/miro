@@ -131,8 +131,6 @@ class ChannelGuide(DDBObject):
         menuItems = [
             (lambda: app.delegate.copyTextToClipboard(self.getURL()),
                 _('Copy URL to clipboard')),
-            (None, ''),
-            (None, 'FOOBAR'),
         ]
         if not self.getDefault():
             i = (lambda: app.controller.removeGuide(self), _('Remove'))

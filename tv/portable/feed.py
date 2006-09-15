@@ -688,13 +688,21 @@ class Feed(DDBObject):
         self.userTitle = title
         self.signalChange()
 
+    def unsetTitle(self):
+        self.setTitle(None)
+
     def makeContextMenu(self, templateName):
-        return menu.makeMenu([
+        items = [
             (self.update, _('Update Channel Now')),
             (lambda: app.delegate.copyTextToClipboard(self.getURL()),
                 _('Copy URL to clipboard')),
-            (lambda: app.controller.removeFeed(self), _('Remove')),
-        ])
+            (self.rename, _('Rename Channel')),
+        ]
+
+        if self.userTitle:
+            items.append((self.unsetTitle, _('Revert Title to Default')))
+        items.append((lambda: app.controller.removeFeed(self), _('Remove')))
+        return menu.makeMenu(items)
 
     def rename(self):
         title = _("Rename Channel")
