@@ -1557,16 +1557,16 @@ class TemplateActionHandler:
         self.templateHandle.getTemplateVariable('updateSearchString')(unicode(searchString))
 
     def toggleDownloadsView(self):
-        self.templateHandle.getTemplateVariable('toggleDownloadsView')()
+        self.templateHandle.getTemplateVariable('toggleDownloadsView')(self.templateHandle)
 
     def toggleWatchableView(self):
-        self.templateHandle.getTemplateVariable('toggleWatchableView')()
+        self.templateHandle.getTemplateVariable('toggleWatchableView')(self.templateHandle)
 
     def toggleNewItemsView(self):
-        self.templateHandle.getTemplateVariable('toggleNewItemsView')()
+        self.templateHandle.getTemplateVariable('toggleNewItemsView')(self.templateHandle)
 
     def toggleAllItemsMode(self):
-        self.templateHandle.getTemplateVariable('toggleAllItemsMode')()
+        self.templateHandle.getTemplateVariable('toggleAllItemsMode')(self.templateHandle)
 
     def playViewNamed(self, viewName, firstItemId):
         # Find the database view that we're supposed to be

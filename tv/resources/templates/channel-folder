@@ -27,26 +27,30 @@ def updateSearchString(newSearch):
         searchTerm = newSearch
     allItems.recomputeFilters()
 
-def toggleDownloadsView():
+def toggleDownloadsView(handle):
     global showDownloads
     showDownloads = not showDownloads
     allDownloadingItems.recomputeFilter(downloadingItems)
+    handle.forceUpdate()
 
-def toggleWatchableView():
+def toggleWatchableView(handle):
     global showWatchableItems
     showWatchableItems = not showWatchableItems
     allWatchableItems.recomputeFilter(watchableItems)
+    handle.forceUpdate()
 
-def toggleNewItemsView():
+def toggleNewItemsView(handle):
     global showNewItems
     showNewItems = not showNewItems
     matchingItems.recomputeFilter(newItems)
+    handle.forceUpdate()
 
-def toggleAllItemsMode():
+def toggleAllItemsMode(handle):
     print "Toggling all items"
     global allItemsMode
     allItemsMode = not allItemsMode
     matchingItems.recomputeFilter(newItems)
+    handle.forceUpdate()
 
 folder = views.channelFolders.getObjectByID(int(kargs['id']))
 allFeeds = views.feeds.filterWithIndex(indexes.byFolder, folder)

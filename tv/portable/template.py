@@ -373,6 +373,13 @@ class Handle:
         ur = UpdateRegion(anchorId, anchorType, view, templateFunc, self, name)
         self.updateRegions.append(ur)
 
+    # This forces all "update for view" sections to update
+    def forceUpdate(self):
+        for ur in self.updateRegions:
+            ur.onChange()
+        for h in self.subHandles:
+            h.forceUpdate()
+
     def addConfigUpdate(self, anchorId, anchorType, templateFunc):
         ur = ConfigUpdateRegion(anchorId, anchorType, templateFunc, self)
         self.updateRegions.append(ur)
