@@ -1118,13 +1118,7 @@ folder will also be deleted.""")
                 available += 1
 
         items = []
-        if available > 0:
-            items.append((None, _('%d Available Items') % available))
-            items.append((app.controller.downloadCurrentItems, _('Download')))
-
         if downloaded > 0:
-            if len(items) > 0:
-                items.append((None, ''))
             items.append((None, _('%d Downloaded Items') % downloaded))
             items.append((c.addToNewPlaylist, _('Add to new playlist')))
             if templateName in ('playlist', 'playlist-folder'):
@@ -1134,6 +1128,12 @@ folder will also be deleted.""")
             items.append((c.removeCurrentItems, label))
             if watched:
                 items.append((self.markItemUnseen, _('Mark as Unwatched')))
+
+        if available > 0:
+            if len(items) > 0:
+                items.append((None, ''))
+            items.append((None, _('%d Available Items') % available))
+            items.append((app.controller.downloadCurrentItems, _('Download')))
 
         if downloading:
             if len(items) > 0:
