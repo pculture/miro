@@ -209,31 +209,8 @@ class ManagedWebView (NSObject):
     def eventURL(self,url):
         self.onLoadURL(str(url))
 
-    ##
-    # Create CTRL-click menu on the fly
     def webView_contextMenuItemsForElement_defaultMenuItems_(self,webView,contextMenu,defaultMenuItems):
-        menuItems = []
-        if self.initialLoadFinished:
-            exists = webView.windowScriptObject().evaluateWebScript_("typeof(getContextClickMenu)") == "function"
-            if exists:
-                x = webView.windowScriptObject().callWebScriptMethod_withArguments_("getContextClickMenu",[contextMenu['WebElementDOMNode']])
-                if len(x) > 0:
-                    # getContextClickMenu returns a string with one menu
-                    # item on each line in the format
-                    # "URL|description" Blank lines are separators
-                    for menuEntry in x.split("\n"):
-                        menuEntry = menuEntry.strip()
-                        if len(menuEntry) == 0:
-                            menuItems.append(NSMenuItem.separatorItem())
-                        else:
-                            (url, name) = menuEntry.split('|',1)
-                            menuItem = NSMenuItem.alloc()
-                            menuItem.initWithTitle_action_keyEquivalent_(name,self.processContextClick_,"")
-                            menuItem.setEnabled_(YES)
-                            menuItem.setRepresentedObject_(url)
-                            menuItem.setTarget_(self)
-                            menuItems.append(menuItem)
-        return menuItems
+        return nil
 
     # Generate callbacks when the initial HTML (passed in the constructor)
     # has been loaded
@@ -284,11 +261,6 @@ class ManagedWebView (NSObject):
             urlObject = NSURL.fileURLWithPath_(path)
             return NSURLRequest.requestWithURL_(urlObject)
         return request
-
-    ##
-    # Process a click on an item in a context menu
-    def processContextClick_(self,item):
-        self.execJS("document.location.href = \""+item.representedObject()+"\";")
 
     # Return the actual WebView that we're managing
     def getView(self):

@@ -4,7 +4,7 @@ import string
 import signal
 import threading
 
-from objc import YES, NO, nil
+from objc import YES, NO, nil, signature
 from AppKit import *
 from Foundation import *
 from PyObjCTools import NibClassBuilder, Conversion
@@ -60,6 +60,9 @@ class UIBackendDelegate:
     # This lock is used by the HTTPAuthDialog to serialize HTTP authentication 
     # requests and prevent multiple authentication dialogs to pop up at once.
     httpAuthLock = threading.Lock()
+
+    def __init__(self):
+        self.contextItemHandler = ContextItemHandler.alloc().init()
 
     def performStartupTasks(self, terminationCallback):
         NSApplication.sharedApplication().delegate().checkQuicktimeVersion(True)
@@ -233,6 +236,31 @@ class UIBackendDelegate:
         if url is None or not feed.validateFeedURL(url):
             url = ""
         return url
+    
+    @platformutils.onMainThread
+    def showContextMenu(self, items):
+        nsmenu = NSMenu.alloc().init()
+        nsmenu.setAutoenablesItems_(NO)
+        for item in items:
+            if item.label == '':
+                nsitem = NSMenuItem.separatorItem()
+            else:
+                nsitem = NSMenuItem.alloc()
+                nsitem.initWithTitle_action_keyEquivalent_(item.label, 'processContextItem:', '')
+                nsitem.setEnabled_(item.callback is not None)
+                nsitem.setRepresentedObject_(item)
+                nsitem.setTarget_(self.contextItemHandler)
+            nsmenu.addItem_(nsitem)
+        event = NSApplication.sharedApplication().currentEvent()
+        NSMenu.popUpContextMenu_withEvent_forView_(nsmenu, event, event.window().contentView())
+
+###############################################################################
+
+class ContextItemHandler (NSObject):
+    
+    @signature("v@:@")
+    def processContextItem_(self, item):
+        item.representedObject().activate()
 
 ###############################################################################
 
