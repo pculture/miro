@@ -252,29 +252,6 @@ and "watchable" sections */
 }
 
 
-/* Around "videos on this channel" */
-.video-count {
-    display: block;
-    float: left;
-    min-width: 14px;
-    margin-right: 4px;
-}
-
-/* Around the "N more videos" oval */
-.main-notification-nonew {
-    width: 230px;
-    height: 80px;
-    margin: 0px 0px 0px 5px;    
-    text-decoration: none;
-    color: #ffffff;
-}
-
-/* unused? */
-.main-notification-nonew h3 {
-    margin: 11px 0px 2px 5px;
-    padding: 0px;
-}
-
 /* The N more videos oval */
 .main-notification {    
     float: left;
@@ -295,10 +272,6 @@ and "watchable" sections */
     overflow: hidden;
 }
 
-/* Used around the show more oval */
-#show-more-videos-label a {
-    text-decoration: none;
-}
 
 /* Used in playlist and playlist-folder */
 .playlist-end-drag-hitbox {

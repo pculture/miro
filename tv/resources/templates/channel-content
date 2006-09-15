@@ -17,14 +17,14 @@
    <span t:hideIf="allDownloadingItems.len()!=1" i18n:translate="">1 download in progress</span>
 
 </a>
-    <div>
-        <span t:repeatForView="downloadingItems">
-            <span t:replaceMarkup="this.getItemXML(viewName, view)" />
-        </span>
-    </div>
+
+<span t:repeatForView="downloadingItems">
+  <span t:replaceMarkup="this.getItemXML(viewName, view)" />
+</span>
 
 <!-- / DOWNLOADS -->
 
+<!-- NEW ITEMS -->
 <a class="main-channelbar" href="javascript:eventURL('action:toggleNewItemsView');" t:updateForView="matchingItems">
   <span class="triangle" t:hideIf="showNewItems"/>
   <span class="triangle-down" t:hideIf="not showNewItems"/>
@@ -51,26 +51,28 @@
   </div>
 </a>
 
-<div id="main-matching">
-    <div t:repeatForView="newItems">
-        <span t:replaceMarkup="this.getItemXML(viewName, view)" />
-    </div>
-</div>
+<span t:repeatForView="newItems">
+   <span t:replaceMarkup="this.getItemXML(viewName, view)" />
+</span>
 
 
-<div t:updateForView="matchingItems">  <div t:hideIf="allItemsMode  or not showNewItems or newItems.len() == matchingItems.len()" style="display: block">
-    <div id="show-more-videos-label" style="display:inline">
-      <a href="javascript:eventURL('action:toggleAllItemsMode');" class="main-notification-nonew">
+<!-- The infamous "N more videos" oval -->
+<div t:updateForView="matchingItems">  
+  <div t:hideIf="allItemsMode  or not showNewItems or newItems.len() == matchingItems.len()" style="display: block">
+    <span>
+      <a href="javascript:eventURL('action:toggleAllItemsMode');">
        	<div class="main-notification">
-          <div t:hideIf="isFolder"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len() - newItems.len()" class="video-count"/> more videos on this channel &gt;&gt;</span></div>
-          <div t:showIf="isFolder"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()" class="video-count"/> videos in this channel folder &gt;&gt;</span></div>
+          <div t:hideIf="isFolder"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len() - newItems.len()" /> more videos on this channel &gt;&gt;</span></div>
+          <div t:showIf="isFolder"><span i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()"/> videos in this channel folder &gt;&gt;</span></div>
         </div>
         <div class="main-notification-right">&nbsp;</div>
         <br clear="left" />
       </a>
-    </div>
+    </span>
   </div>
 </div>
+
+<!-- / NEW ITEMS -->
 
 <!-- WATCHABLE ******************************************************** -->
 <span t:updateForView="allWatchableItems">
@@ -81,7 +83,7 @@
 </a>
 </span>
 
-<div id="main-unwatched">
+<div>
    <span t:repeatForView="watchableItems">
       <span t:replaceMarkup="this.getItemXML(viewName, view)" />
    </span>
