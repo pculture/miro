@@ -605,7 +605,8 @@ def updateUandAs():
     global updaterSet
     global updaterDC
     for feedimpl in updaterSet:
-        feedimpl.updateUandA()
+        if feedimpl.ufeed.idExists():
+            feedimpl.updateUandA()
     updaterSet = set()
     updaterDC = None
 
@@ -643,8 +644,10 @@ class Feed(DDBObject):
 
     def blink(self):
         self.setBlinking(True)
-        eventloop.addTimeout(0.5, lambda: self.setBlinking(False),
-                'unblink feed')
+        def timeout():
+            if self.idExists():
+                self.setBlinking(False)
+        eventloop.addTimeout(0.5, timeout, 'unblink feed')
 
     # Returns javascript to mark the feed as viewed
     # FIXME: Using setTimeout is a hack to get around JavaScript bugs

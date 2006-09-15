@@ -1711,7 +1711,8 @@ class PlaylistItemFromItem:
         return 42.42
 
     def onViewed(self):
-        self.item.markItemSeen()
+        if self.item.idExists():
+            self.item.markItemSeen()
 
     # Return the ID that is used by a template to indicate this item 
     def getID(self):
