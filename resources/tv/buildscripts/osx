@@ -1,18 +1,15 @@
 #!/bin/bash
 
-mkdir demotemp
-cd demotemp
-
 #If no tag is specified...
 if [ "x-$2" == "x-" ]; then
-	svn co https://svn.participatoryculture.org/svn/dtv/trunk/tv
+	svn co https://svn.participatoryculture.org/svn/dtv/trunk/ demotemp
  	tag=`date +%Y-%m-%d`
 else
 	#Check out code and build
-	svn co https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$2$3/tv
+	svn co https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$2$3/ demotemp
 	tag=$2$3
 fi
-	cd tv/platform/osx/
+	cd demotemp/tv/platform/osx/
 	./build.sh -make-dmg
 
 	#upload it if username was specified 
