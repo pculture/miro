@@ -127,7 +127,10 @@ class TrackedView:
         xmls = []
         for x in self.view:
             xmls.append(self.currentXML(x))
-        self.addHTMLAtEnd(''.join(xmls))
+        # Web Kit treats adding the empty string like adding "&nbsp;",
+        # so we don't add the HTML unless it's non-empty
+        if len(xmls) > 0:
+            self.addHTMLAtEnd(''.join(xmls))
         self.view.addChangeCallback(self.onChange)
         self.view.addAddCallback(self.onAdd)
         self.view.addRemoveCallback(self.onRemove)
