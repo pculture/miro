@@ -213,6 +213,7 @@ class AsyncSocket(object):
         self.disableReadTimeout = False
         self.readSomeData = False
         self.name = ""
+        self.lastClock = None
 
     def __str__(self):
         if self.name:
@@ -220,16 +221,16 @@ class AsyncSocket(object):
         else:
             return "Unknown %s" % (type(self).__name__,)
 
+    # The complication in the timeout code is because creating and
+    # cancelling a timeout costs some memory (timeout is in memory
+    # until it goes off, even if cancelled.)
     def startReadTimeout(self):
         if self.disableReadTimeout:
             return
+        self.lastClock = clock()
         if self.readTimeout is not None:
-            self.stopReadTimeout()
-        if self.readSomeData:
-            timeout = SOCKET_READ_TIMEOUT
-        else:
-            timeout = SOCKET_INITIAL_READ_TIMEOUT
-        self.readTimeout = eventloop.addTimeout(timeout, self.onReadTimeout,
+            return
+        self.readTimeout = eventloop.addTimeout(SOCKET_INITIAL_READ_TIMEOUT, self.onReadTimeout,
                 "AsyncSocket.onReadTimeout")
 
     def stopReadTimeout(self):
@@ -334,9 +335,18 @@ class AsyncSocket(object):
         self.stopReadTimeout()
 
     def onReadTimeout(self):
-        self.stopReadTimeout()
-        self.timedOut = True
-        self.handleEarlyClose('read')
+        if self.readSomeData:
+            timeout = SOCKET_READ_TIMEOUT
+        else:
+            timeout = SOCKET_INITIAL_READ_TIMEOUT
+
+        if clock() < self.lastClock + timeout:
+            self.readTimeout = eventloop.addTimeout(self.lastClock + timeout - clock(), self.onReadTimeout,
+                "AsyncSocket.onReadTimeout")
+        else:
+            self.readTimeout = None
+            self.timedOut = True
+            self.handleEarlyClose('read')
 
     def handleSocketError(self, code, msg, operation):
         if code in (errno.EWOULDBLOCK, errno.EINTR):
