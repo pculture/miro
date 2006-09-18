@@ -3,6 +3,7 @@ import os
 import signal
 import sys
 import time
+import gobject
 import gtk
 import threading
 import traceback
@@ -340,7 +341,8 @@ class UIBackendDelegate:
             menu.append(gtkitem)
             gtkitem.show()
         menu.show()
-        menu.popup(None, None, None, gtk.gdk.RIGHTBUTTON, 0)
+        gobject.timeout_add(100, lambda: menu.popup(None, None, None,
+            gtk.gdk.RIGHTBUTTON, 0))
 
     @gtkAsyncMethod
     def copyTextToClipboard(self, text):

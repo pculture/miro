@@ -1104,7 +1104,8 @@ folder will also be deleted.""")
     def makeContextMenu(self, templateName):
         c = app.controller # easier/shorter to type
         watched = downloaded = downloading = available = 0
-        for i in app.controller.selection.getSelectedItems():
+        selected = app.controller.selection.getSelectedItems()
+        for i in selected:
             if i.getState() == 'downloading':
                 downloading += 1
             elif i.isDownloaded():
@@ -1116,7 +1117,8 @@ folder will also be deleted.""")
 
         items = []
         if downloaded > 0:
-            items.append((None, _('%d Downloaded Items') % downloaded))
+            if len(selected) > 1:
+                items.append((None, _('%d Downloaded Items') % downloaded))
             items.append((c.addToNewPlaylist, _('Add to new playlist')))
             if templateName in ('playlist', 'playlist-folder'):
                 label = _('Remove From Playlist')
@@ -1129,13 +1131,15 @@ folder will also be deleted.""")
         if available > 0:
             if len(items) > 0:
                 items.append((None, ''))
-            items.append((None, _('%d Available Items') % available))
+            if len(selected) > 1:
+                items.append((None, _('%d Available Items') % available))
             items.append((app.controller.downloadCurrentItems, _('Download')))
 
         if downloading:
             if len(items) > 0:
                 items.append((None, ''))
-            items.append((None, _('%d Downloading Items') % downloading))
+            if len(selected) > 1:
+                items.append((None, _('%d Downloading Items') % downloading))
             items.append((app.controller.stopDownloadingCurrentItems, 
                 _('Cancel Download')))
 
