@@ -158,6 +158,15 @@ class NetworkBufferTest(DemocracyTestCase):
     def setUp(self):
         self.buffer = httpclient.NetworkBuffer()
 
+#    def testMemory(self):
+#        i = 0
+#        data = "c" * 1024
+#        buffer = httpclient.NetworkBuffer()
+#        while (i < 100000):
+#            buffer.addData(data)
+#            buffer.read(512)
+#            i = i + 1
+#
     def testReadLine(self):
         self.buffer.addData("HEL")
         self.assertEquals(self.buffer.readline(), None)

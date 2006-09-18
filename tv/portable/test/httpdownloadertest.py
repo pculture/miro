@@ -38,7 +38,7 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
             allConnections.extend(conns['free'])
         for c in allConnections:
             c.closeConnection()
-        httpclient.HTTPClient.connectionPool = httpclient.HTTPConnectionPool() 
+        httpclient.HTTPClient.connectionPool = httpclient.HTTPConnectionPool()
 
     def tearDown(self):
         download.nextFreeFilename = download_utils.nextFreeFilename
@@ -59,6 +59,14 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
             total += len(conns['active'])
         return total
 
+#    Really slow test that downloads a very large file.
+#    def testHuge(self):
+#        url = 'http://archive-c01.libsyn.com/aXdueJh2m32XeGh6l3efp5qtZXiX/podcasts/askaninja/AANQ21.m4v'
+#        self.downloader = TestingDownloader(url, "ID1")
+#        self.downloader.statusCallback = self.stopOnFinished
+#        self.runEventLoop(timeout=120)
+#        self.assertEquals(self.failed, None)
+#
     def testDownload(self):
         url = 'http://participatoryculture.org/democracytest/normalpage.txt'
         self.downloader = TestingDownloader(url, "ID1")
