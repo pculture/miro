@@ -224,6 +224,7 @@ function sendKeyToSearchBox(event) {
       return true;
   var searchBox = document.getElementById("search-box");
   searchBox.focus();
+  return true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
