@@ -1076,14 +1076,6 @@ class RSSFeedImpl(FeedImpl):
         except:
             return ""
 
-    def hasVideoFeed(self, enclosures):
-        hasOne = False
-        for enclosure in enclosures:
-            if isVideoEnclosure(enclosure):
-                hasOne = True
-                break
-        return hasOne
-
     def feedparser_finished (self):
         self.updateUandA(False)
         self.updating = False
@@ -1178,10 +1170,35 @@ class RSSFeedImpl(FeedImpl):
             self.modified = info['last-modified']
         self.call_feedparser (html)
 
+    def _handleNewEntryForItem(self, item, entry):
+        """Handle when we get a different entry for an item.
+
+        This happens when the feed sets the RSS GUID attribute, then changes
+        the entry for it.  Most of the time we will just update the item, but
+        if the user has already downloaded the item then we need to make sure
+        that we don't throw away the download.
+        """
+
+        videoEnc = getFirstVideoEnclosure(entry)
+        if videoEnc is not None:
+            entryURL = videoEnc.get('url')
+        else:
+            entryURL = None
+        if item.isDownloaded() and item.getURL() != entryURL:
+            item.removeRSSID()
+            self._handleNewEntry(entry)
+        else:
+            item.update(entry)
+
+    def _handleNewEntry(self, entry):
+        """Handle getting a new entry from a feed."""
+        item = Item(entry, feed_id=self.ufeed.id)
+        if not filters.matchingItems(item, self.ufeed.searchTerm):
+            item.remove()
+
     def updateUsingParsed(self, parsed):
         """Update the feed using parsed XML passed in"""
         self.parsed = parsed
-        searchTerm = self.ufeed.searchTerm
 
         try:
             self.title = self.parsed["feed"]["title"]
@@ -1209,7 +1226,7 @@ class RSSFeedImpl(FeedImpl):
                 if items_byid.has_key (id):
                     item = items_byid[id]
                     if not _entry_equal(entry, item.getRSSEntry()):
-                        item.update(entry)
+                        self._handleNewEntryForItem(item, entry)
                     new = False
             if new:
                 for item in items_nokey:
@@ -1218,17 +1235,13 @@ class RSSFeedImpl(FeedImpl):
                     else:
                         try:
                             if _entry_equal (entry["enclosures"], item.getRSSEntry()["enclosures"]):
-                                item.update(entry)
-                                if searchTerm is not None and not filters.matchingItems(item, searchTerm):
-                                    item.remove()
+                                self._handleNewEntryForItem(entry)
                                 new = False
                         except:
                             pass
             if (new and entry.has_key('enclosures') and
-                self.hasVideoFeed(entry.enclosures)):
-                item = Item(entry, feed_id=self.ufeed.id)
-                if searchTerm is not None and not filters.matchingItems(item, searchTerm):
-                    item.remove()
+                    getFirstVideoEnclosure(entry) != None):
+                self._handleNewEntry(entry)
         try:
             updateFreq = self.parsed["feed"]["ttl"]
         except KeyError:

@@ -274,16 +274,7 @@ class Item(DDBObject):
             return self._firstVidEnc
 
     def _calcFirstEnc(self):
-        try:
-            enclosures = self.entry.enclosures
-        except (KeyError, AttributeError):
-            self._firstVidEnc = None
-            return
-        for enclosure in enclosures:
-            if isVideoEnclosure(enclosure):
-                self._firstVidEnc = enclosure
-                return
-        self._firstVidEnc = None
+        self._firstVidEnc = getFirstVideoEnclosure(self.entry)
         
 
     ##
@@ -555,6 +546,12 @@ folder will also be deleted.""")
     def getRSSID(self):
         self.confirmDBThread()
         return self.entry["id"]
+
+    def removeRSSID(self):
+        self.confirmDBThread()
+        if 'id' in self.entry:
+            del self.entry['id']
+            self.signalChange()
 
     def setAutoDownloaded(self,autodl = True):
         self.confirmDBThread()
@@ -1472,6 +1469,20 @@ def isVideoEnclosure(enclosure):
     return (_hasVideoType(enclosure) or
             _hasVideoExtension(enclosure, 'url') or
             _hasVideoExtension(enclosure, 'href'))
+
+def getFirstVideoEnclosure(entry):
+    """Find the first video enclosure in a feedparser entry.  Returns the
+    enclosure, or None if no video enclosure is found.
+    """
+
+    try:
+        enclosures = entry.enclosures
+    except (KeyError, AttributeError):
+        return None
+    for enclosure in enclosures:
+        if isVideoEnclosure(enclosure):
+            return enclosure
+    return None
 
 def _hasVideoType(enclosure):
     return ('type' in enclosure and
