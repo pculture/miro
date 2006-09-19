@@ -412,3 +412,8 @@ def asUrgent(func):
     def queuer(*args, **kwargs):
         return addUrgentCall(func, "%s() (using asUrgent)" % func.__name__, args=args, kwargs=kwargs)
     return queuer
+
+def checkHeapSize():
+    print "Heap size: %d." % (len(_eventLoop.scheduler.heap),)
+    addTimeout(5, checkHeapSize, "Check Heap Size")
+#addTimeout(5, checkHeapSize, "Check Heap Size")
