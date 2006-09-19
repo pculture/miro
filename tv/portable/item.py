@@ -32,6 +32,7 @@ import views
 import random
 import indexes
 import util
+import adscraper
 
 # FIXME add support for onlyBody parameter for static templates so we
 #       don't need to strip the outer HTML
@@ -669,17 +670,32 @@ folder will also be deleted.""")
                 return ""
 
     ##
-    # Returns valid XHTML containing a description of the video
-    def getDescription(self):
+    # Returns the raw description of the video
+    def getRawDescription(self):
         self.confirmDBThread()
         try:
             enclosure = self.getFirstVideoEnclosure()
-            return xhtmlify('<span>'+unescape(enclosure["text"])+'</span>')
+            return enclosure["text"]
         except:
             try:
-                return xhtmlify('<span>'+unescape(self.entry.description)+'</span>')
+                return self.entry.description
             except:
                 return '<span />'
+
+    ##
+    # Returns valid XHTML containing a description of the video
+    def getDescription(self):
+        rawDescription = self.getRawDescription()
+        purifiedDescription = adscraper.purify(rawDescription)
+        unescapedDescription = unescape(purifiedDescription)
+        description = '<span>%s</span>' % unescapedDescription
+        return xhtmlify(description)
+
+    def getAd(self):
+        rawDescription = self.getRawDescription()
+        rawAd = adscraper.scrape(rawDescription)
+        ad = '<span>%s</span>' % unescape(rawAd)
+        return xhtmlify(ad)
 
     def looksLikeTorrent(self):
         """Returns true if we think this item is a torrent.  (For items that

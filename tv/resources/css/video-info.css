@@ -74,99 +74,12 @@ body {
 	text-decoration: none;
 }
 
-#videodetails-actions {
+#videodetails-ad {
 	position: absolute;
-	width: 140px;
+	width: 480px;
 	top: 8px;
 	right: 8px;
 	z-index: 0;
-}
-
-#videodetails-actions-buttons {
-	float: right;
-	height: 10px;
-	overflow: hidden;
-}
-
-#videodetails-actions-bomb {
-	width: 11px;
-	height: 10px;
-	overflow: hidden;
-	background: url(../images/videodetails-bomb.png) no-repeat left top;	
-	text-decoration: none;
-}
-
-#videodetails-actions-bomb:hover {
-	background: url(../images/videodetails-bomb.png) no-repeat 0px -10px;	
-	text-decoration: none;
-}
-
-#videodetails-actions-trash {
-	width: 11px;
-	height: 10px;
-	overflow: hidden;
-	background: url(../images/videodetails-trash.png) no-repeat left top;	
-	text-decoration: none;
-}
-
-#videodetails-actions-trash:hover {
-	background: url(../images/videodetails-trash.png) no-repeat 0px -10px;	
-	text-decoration: none;
-}
-
-#videodetails-actions-mail {
-	width: 14px;
-	height: 10px;
-	overflow: hidden;
-	margin: 0px 10px;
-	background: url(../images/videodetails-mail.png) no-repeat left top;	
-	text-decoration: none;
-}
-
-#videodetails-actions-mail:hover {
-	background: url(../images/videodetails-mail.png) no-repeat 0px -10px;	
-	text-decoration: none;
-}
-
-#videodetails-actions-expiry-container {
-	clear: right;
-	padding-top: 5px;
-}
-
-#videodetails-actions-expiry {
-	float: right;
-	background-color: #9C9C9C;
-}
-
-#videodetails-actions-expiry p {
-	color: #FFFFFF;
-	text-transform: uppercase;
-	font-size: 9px;
-	margin: 0px;
-	padding: 2px;
-}
-
-#videodetails-actions-save {
-	float: right;
-	background-color: #FFFFFF;
-	padding: 1px;
-}
-
-#videodetails-actions-save p {
-	text-transform: uppercase;
-	font-size: 9px;
-	margin: 0px;
-	padding: 1px;
-}
-
-#videodetails-actions-save p a {
-	color: #4A4A4A;
-	text-decoration: underline;	
-}
-
-#videodetails-actions-save p a:hover {
-	color: #999999;
-	text-decoration: underline;	
 }
 
 img {	
