@@ -451,8 +451,11 @@ class Controller (frontend.Application):
             print "DTV: Starting up Democracy Player"
             print "DTV: Version:  %s" % config.get(prefs.APP_VERSION)
             print "DTV: Revision: %s" % config.get(prefs.APP_REVISION)
+
+            util.print_mem_usage("Pre everything memory check")
             
             print "DTV: Loading preferences..."
+
             config.load()
             config.addChangeCallback(self.configDidChange)
             
@@ -477,15 +480,19 @@ class Controller (frontend.Application):
     def finishStartup(self, gatheredVideos=None):
         try:
             #Restoring
+            util.print_mem_usage("Pre-database memory check:")
             print "DTV: Restoring database..."
             #            try:
             database.defaultDatabase.liveStorage = storedatabase.LiveStorage()
             #            except Exception:
             #                util.failedExn("While restoring database")
+            util.print_mem_usage("Post-database memory check")
             print "DTV: Recomputing filters..."
             db.recomputeFilters()
 
             downloader.startupDownloader()
+
+            util.print_mem_usage("Post-downloader memory check")
 
             self.setupGlobalFeed('dtv:manualFeed', initiallyAutoDownloadable=False)
             views.unwatchedItems.addAddCallback(self.onUnwatchedItemsCountChange)
@@ -539,6 +546,8 @@ class Controller (frontend.Application):
             # Set up the playback controller
             self.playbackController = frontend.PlaybackController()
 
+            util.print_mem_usage("Pre-UI memory check")
+
             # Put up the main frame
             print "DTV: Displaying main frame..."
             self.frame = frontend.MainFrame(self)
@@ -548,6 +557,8 @@ class Controller (frontend.Application):
             self.videoDisplay.initRenderers()
             self.videoDisplay.playbackController = self.playbackController
             self.videoDisplay.setVolume(config.get(prefs.VOLUME_LEVEL))
+
+            util.print_mem_usage("Post-UI memory check")
 
             # create our selection handler
 
@@ -560,9 +571,12 @@ class Controller (frontend.Application):
                 if f is not None:
                     self.selection.selectTabByObject(f)
 
+            util.print_mem_usage("Post-selection memory check")
 
             # Reconnect items to downloaders.
             item.reconnectDownloaders()
+
+            util.print_mem_usage("Post-item reconnect memory check")
 
             eventloop.addTimeout (30, autoupdate.checkForUpdates, "Check for updates")
             feed.expireItems()
@@ -585,11 +599,15 @@ class Controller (frontend.Application):
                     except:
                         print "DTV: WARNING, error while adding file %s" % v
 
+            util.print_mem_usage("Pre single-click memory check")
+
             # Use an idle for parseCommandLineArgs because the frontend may
             # have put in idle calls to do set up video playback or similar
             # things.
             eventloop.addIdle(singleclick.parseCommandLineArgs, 
                     'parse command line')
+
+            util.print_mem_usage("Post single-click memory check")
 
             print "DTV: Starting event loop thread"
             eventloop.startup()            

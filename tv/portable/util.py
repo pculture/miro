@@ -371,3 +371,9 @@ def formatSizeForUser(bytes, zeroString=""):
         return _("%0.0fB") % bytes
     else:
         return zeroString
+
+def print_mem_usage(message):
+    pass
+# Uncomment for memory usage printouts on linux.
+#    print message
+#    os.system ("ps huwwwp %d" % (os.getpid(),))
