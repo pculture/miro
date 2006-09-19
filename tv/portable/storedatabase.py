@@ -516,24 +516,21 @@ class LiveStorage:
             self.openEmptyDB()
             if restore:
                 try:
-                    self.db.open ("database")
-                    self.version = int(self.db[VERSION_KEY])
-                except (bsddb.db.DBNoSuchFileError, KeyError):
-                    self.closeInvalidDB()
                     try:
-                        restoreDatabase()
-                    except:
-                        print "WARNING: ERROR RESTORING OLD DATABASE"
-                        traceback.print_exc()
-                    try:
+                        self.db.open ("database")
+                        self.version = int(self.db[VERSION_KEY])
+                    except (bsddb.db.DBNoSuchFileError, KeyError):
+                        self.closeInvalidDB()
+                        try:
+                            restoreDatabase()
+                        except:
+                            print "WARNING: ERROR RESTORING OLD DATABASE"
+                            traceback.print_exc()
                         self.saveDatabase()
-                    except:
-                        self.handleDatabaseLoadError()
-                else:
-                    try:
+                    else:
                         self.loadDatabase()
-                    except Exception, e:
-                        self.handleDatabaseLoadError()
+                except:
+                    self.handleDatabaseLoadError()
             else:
                 self.saveDatabase()
             eventloop.addIdle(self.checkpoint, "Remove Unused Database Logs")
