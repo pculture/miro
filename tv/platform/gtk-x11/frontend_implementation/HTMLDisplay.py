@@ -142,7 +142,8 @@ class HTMLDisplayImpl:
         self.execQueue = []
         self.display = display
 
-        if display.baseURL == app.controller.guideURL:
+        if (display.baseURL == app.controller.guideURL and
+                display.baseURL is not None):
             self.removeFile = False
             self.location = os.path.join(config.get(prefs.SUPPORT_DIRECTORY),
                     'democracy-channel-guide.html')
