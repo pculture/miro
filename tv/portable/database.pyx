@@ -194,6 +194,15 @@ class IndexMap:
     def getViews(self):
         return self.views.values()
 
+    def count_databases(self):
+        count = 0
+        size = 0
+        for db in self.views.itervalues():
+            new = db.count_databases()
+            count = count + new[0]
+            size = size + new[1]
+        return (count, size)
+
 class MultiIndexMap(IndexMap):
     """Maps index values to database views.
 
@@ -325,6 +334,27 @@ class DynamicDatabase:
                     self.cursor = it.copy()
                 self.objectLocs[id] = it
         #self.checkObjLocs()
+
+    def count_databases (self):
+        count = 1
+        size = len(self.objects)
+        for (db, func) in self.subFilters:
+            new = db.count_databases()
+            count = count + new[0]
+            size = size + new[1]
+        for (db, func) in self.subSorts:
+            new = db.count_databases()
+            count = count + new[0]
+            size = size + new[1]
+        for (db, func) in self.subMaps:
+            new = db.count_databases()
+            count = count + new[0]
+            size = size + new[1]
+        for index in self.indexes.itervalues():
+            new = index.count_databases()
+            count = count + new[0]
+            size = size + new[1]
+        return (count, size)
 
     # Checks to make the sure object location dictionary is accurate
     #
