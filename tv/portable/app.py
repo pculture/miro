@@ -23,6 +23,7 @@ import selection
 import template
 import singleclick
 import storedatabase
+import subscription
 import downloader
 import autoupdate
 import xhtmltools
@@ -1741,7 +1742,10 @@ def _getInitialChannelGuide():
         default_guide = guide.ChannelGuide()
         initialFeeds = resource.path("initial-feeds.democracy")
         if os.path.exists(initialFeeds):
-            singleclick.openFile (initialFeeds)
+            urls = subscription.parseFile(initialFeeds)
+            if urls is not None:
+                for url in urls:
+                    feed.Feed(url, initiallyAutoDownloadable=False)
             dialog = dialogs.MessageBoxDialog(_("Custom Channels"), _("You are running a version of Democracy Player with a custom set of channels."))
             dialog.run()
             controller.initial_feeds = True
