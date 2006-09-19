@@ -97,9 +97,10 @@ class RemoteDownloader(DDBObject):
         else:
             self.runDownloader()
 
-    def signalChange (self, needsSave=True):
-        for item in self.itemList:
-            item.signalChange(needsSave=False)
+    def signalChange (self, needsSave=True, needsSignalItem=True):
+        if needsSignalItem:
+            for item in self.itemList:
+                item.signalChange(needsSave=False)
         DDBObject.signalChange (self, needsSave=needsSave)
 
     def onContentType (self, info):
@@ -140,10 +141,11 @@ class RemoteDownloader(DDBObject):
             wasFinished = self.isFinished()
             self.status = data
             # Store the time the download finished
-            if self.isFinished() and not wasFinished:
+            finished = self.isFinished() and not wasFinished
+            self.signalChange(needsSignalItem=not finished)
+            if finished:
                 for item in self.itemList:
                     item.onDownloadFinished()
-            self.signalChange()
 
     ##
     # This is the actual download thread.

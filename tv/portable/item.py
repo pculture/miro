@@ -145,7 +145,7 @@ class Item(DDBObject):
         else:
             self.isContainerItem = False
             self.videoFilename = filename_root
-        self.signalChange()
+        self.signalChange(needsUpdateUandA=True)
         return True
 
     def removeFromPlaylists(self):
@@ -199,7 +199,7 @@ class Item(DDBObject):
     # Unfortunately, our database does not scale well with many views,
     # so we have this hack to make sure that unwatched and available
     # get updated when an item changes
-    def signalChange(self, needsSave=True, needsUpdateUandA=True, needsUpdateXML=True):
+    def signalChange(self, needsSave=True, needsUpdateUandA=False, needsUpdateXML=True):
         self.expiring = None
         if hasattr(self, "_state"):
             del self._state
@@ -342,6 +342,7 @@ class Item(DDBObject):
     ##
     # Moves this item to another feed.
     def setFeed(self, feed_id):
+        updateUandA(self.getFeed())
         self.feed_id = feed_id
         del self._feed
         if self.isContainerItem:
@@ -349,6 +350,7 @@ class Item(DDBObject):
                 del item._feed
                 item.signalChange()
         self.signalChange()
+        updateUandA(self.getFeed())
 
     def executeExpire(self):
         self.confirmDBThread()
@@ -478,7 +480,7 @@ folder will also be deleted.""")
                     return None
                 if childTime > self.watchedTime:
                     self.watchedTime = childTime
-            self.signalChange(needsUpdateUandA=False)
+            self.signalChange()
         return self.watchedTime
 
     def getExpiring(self):
@@ -520,14 +522,13 @@ folder will also be deleted.""")
             if self.watchedTime is None:
                 self.watchedTime = datetime.now()
             self.clearParentsChildrenSeen()
-            self.signalChange()
+            self.signalChange(needsUpdateUandA=True)
 
     def clearParentsChildrenSeen(self):
         if self.parent_id:
             parent = self.getParent()
             parent.childrenSeen = None
-            parent.signalChange()
-
+            parent.signalChange(needsUpdateUandA=True)
 
     def markItemUnseen(self):
         self.confirmDBThread()
@@ -536,6 +537,7 @@ folder will also be deleted.""")
             for item in self.getChildren():
                 item.seen = False
                 item.signalChange()
+            self.signalChange()
         else:
             if self.seen == False:
                 return
@@ -543,6 +545,7 @@ folder will also be deleted.""")
             self.watchedTime = None
             self.clearParentsChildrenSeen()
             self.signalChange()
+        updateUandA(self.getFeed())
 
     def getRSSID(self):
         self.confirmDBThread()
@@ -558,7 +561,7 @@ folder will also be deleted.""")
         self.confirmDBThread()
         if autodl != self.autoDownloaded:
             self.autoDownloaded = autodl
-            self.signalChange()
+            self.signalChange(needsUpdateUandA=True)
 
     def getPendingReason(self):
         self.confirmDBThread()
@@ -587,7 +590,7 @@ folder will also be deleted.""")
                 manualDownloadCount >= config.get(prefs.MAX_MANUAL_DOWNLOADS)):
             self.pendingManualDL = True
             self.pendingReason = "queued for download"
-            self.signalChange()
+            self.signalChange(needsUpdateUandA=True)
             return
         else:
             self.setAutoDownloaded(autodl)
@@ -599,7 +602,7 @@ folder will also be deleted.""")
             self.onDownloadFinished()
         else:
             self.downloader.start()
-        self.signalChange()
+        self.signalChange(needsUpdateUandA=True)
 
     def isPendingManualDownload(self):
         self.confirmDBThread()
@@ -747,7 +750,7 @@ folder will also be deleted.""")
         if self.downloader is not None:
             self.downloader.removeItem(self)
             self.downloader = None
-            self.signalChange()
+            self.signalChange(needsUpdateUandA=True)
 
     def getState(self):
         """Get the state of this item.  The state will be on of the following:
@@ -1182,13 +1185,13 @@ folder will also be deleted.""")
         self.confirmDBThread()
         self.downloadedTime = datetime.now()
         if not self.splitItem():
-            self.signalChange()
+            self.signalChange(needsUpdateUandA=True)
 
     def save(self):
         self.confirmDBThread()
         if self.keep != True:
             self.keep = True
-            self.signalChange()
+            self.signalChange(needsUpdateUandA=True)
 
     ##
     # gets the time the video was downloaded
@@ -1347,7 +1350,7 @@ class FileItem(Item):
             self.remove()
         else:
             self.deleted = True
-            self.signalChange()
+            self.signalChange(needsUpdateUandA=True)
 
     def expire(self):
         title = _("Removing %s") % (os.path.basename(self.filename))
