@@ -15,6 +15,8 @@ def scrape(data):
 # =============================================================================
 
 def _process(data, fkey, default):
+    if data is None:
+        return ''
     processed = None
     for funcs in FUNCS:
         process = funcs[fkey]
