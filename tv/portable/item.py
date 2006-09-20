@@ -75,6 +75,7 @@ class Item(DDBObject):
         self.creationTime = datetime.now()
         self.updateReleaseDate()
         self._initRestore()
+        self._lookForFinishedDownloader()
         DDBObject.__init__(self)
         self.splitItem()
         updateUandA(self.getFeed())
@@ -96,6 +97,12 @@ class Item(DDBObject):
         self.childrenSeen = None
         self.downloader = None
         self.expiring = None
+
+    def _lookForFinishedDownloader(self):
+        dler = downloader.lookupDownloader(self.getURL())
+        if dler and dler.isFinished():
+            self.downloader = dler
+            dler.addItem(self)
 
     getSelected, setSelected = makeSimpleGetSet('selected',
             changeNeedsSave=False)
@@ -1187,6 +1194,12 @@ folder will also be deleted.""")
         if not self.splitItem():
             self.signalChange(needsUpdateUandA=True)
 
+        for other in views.items:
+            if other.downloader is None and other.getURL() == self.getURL():
+                other.downloader = self.downloader
+                self.downloader.addItem(other)
+                other.signalChange(needsSave=False)
+
     def save(self):
         self.confirmDBThread()
         if self.keep != True:
@@ -1251,7 +1264,7 @@ folder will also be deleted.""")
         """
         
         if not isinstance (self, FileItem) and self.downloader is None:
-            self.downloader = downloader.getDownloader(self, create=False)
+            self.downloader = downloader.getExistingDownloader(self)
             if self.downloader is not None:
                 self.signalChange(needsSave=False, needsUpdateUandA=False)
         self.splitItem()

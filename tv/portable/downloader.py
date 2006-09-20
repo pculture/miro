@@ -428,15 +428,20 @@ def startupDownloader():
 def shutdownDownloader(callback = None):
     RemoteDownloader.dldaemon.shutdownDownloaderDaemon(callback=callback)
 
-def getDownloader(item, create=True):
-    url = item.getURL()
-    downloader = views.remoteDownloads.getItemWithIndex(indexes.downloadsByURL, 
-            url)
+def lookupDownloader(url):
+    return views.remoteDownloads.getItemWithIndex(indexes.downloadsByURL, url)
+
+def getExistingDownloader(item):
+    downloader = lookupDownloader(item.getURL())
     if downloader:
         downloader.addItem(item)
-        return downloader
-    if not create:
-        return None
+    return downloader
+
+def getDownloader(item):
+    existing = getExistingDownloader(item)
+    if existing:
+        return existing
+    url = item.getURL()
     if url.startswith('file://'):
         scheme, host, port, path = parseURL(url)
         if re.match(r'/[a-zA-Z]:', path): 
