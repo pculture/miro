@@ -9,7 +9,7 @@
 </head>
 <body>
 <!-- DOWNLOADS ******************************************************** -->
-<a class="main-channelbar-download" href="javascript:eventURL('action:toggleDownloadsView');" t:updateForView="allDownloadingItems">
+<a class="main-channelbar-download" href="#" onclick="return eventURL('action:toggleDownloadsView');" t:updateForView="allDownloadingItems">
   <span class="triangle" t:hideIf="showDownloads"/>
   <span class="triangle-down" t:hideIf="not showDownloads"/>
   <span t:hideIf="allDownloadingItems.len()==1"  i18n:translate="">
@@ -25,7 +25,7 @@
 <!-- / DOWNLOADS -->
 
 <!-- NEW ITEMS -->
-<a class="main-channelbar" href="javascript:eventURL('action:toggleNewItemsView');" t:updateForView="matchingItems">
+<a class="main-channelbar" href="#" onclick="return eventURL('action:toggleNewItemsView');" t:updateForView="matchingItems">
   <span class="triangle" t:hideIf="showNewItems"/>
   <span class="triangle-down" t:hideIf="not showNewItems"/>
 
@@ -59,11 +59,11 @@
 <!-- The infamous "N more videos" oval -->
 <div t:updateForView="matchingItems">  
   <div t:hideIf="allItemsMode  or not showNewItems or newItems.len() == matchingItems.len()">
-      <a href="javascript:eventURL('action:toggleAllItemsMode');" class="main-notification">
+      <a href="#" onclick="return eventURL('action:toggleAllItemsMode');" class="main-notification">
           <span t:hideIf="isFolder" i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len() - newItems.len()" /> more videos on this channel &gt;&gt;</span>
           <span t:showIf="isFolder" i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()"/> videos in this channel folder &gt;&gt;</span>
         </a>
-        <a href="javascript:eventURL('action:toggleAllItemsMode');" class="main-notification-right">&nbsp;</a>
+        <a href="#" onclick="return eventURL('action:toggleAllItemsMode');" class="main-notification-right">&nbsp;</a>
      <br clear="left" />
   </div>
 </div>
@@ -73,7 +73,7 @@
 
 <!-- WATCHABLE ******************************************************** -->
 <span t:updateForView="allWatchableItems">
-<a class="main-channelbar" href="javascript:eventURL('action:toggleWatchableView')" t:hideIf="len(allWatchableItems) == 0" >
+<a class="main-channelbar" href="#" onclick="return eventURL('action:toggleWatchableView')" t:hideIf="len(allWatchableItems) == 0" >
   <span class="triangle" t:hideIf="showWatchableItems"/>
   <span class="triangle-down" t:hideIf="not showWatchableItems"/>
   <span  i18n:translate="">Downloaded</span>
