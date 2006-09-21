@@ -18,6 +18,7 @@ import tabs
 
 import folder
 import autodler
+import databaseupgrade
 import resource
 import selection
 import template
@@ -444,6 +445,7 @@ class Controller (frontend.Application):
         self.inQuit = False
         self.guideURL = None
         self.initial_feeds = False # True if this is the first run and there's an initial-feeds.democracy file.
+        self.loadedDatabase = False
 
     ### Startup and shutdown ###
 
@@ -485,6 +487,7 @@ class Controller (frontend.Application):
             print "DTV: Restoring database..."
             #            try:
             database.defaultDatabase.liveStorage = storedatabase.LiveStorage()
+            self.loadedDatabase = True
             #            except Exception:
             #                util.failedExn("While restoring database")
             util.print_mem_usage("Post-database memory check")
@@ -612,6 +615,17 @@ class Controller (frontend.Application):
 
             print "DTV: Starting event loop thread"
             eventloop.startup()            
+        except databaseupgrade.DatabaseTooNewError:
+            title = _("Database too new")
+            description = _("""\
+You have a database that was saved with a newer version of Democracy. \
+You must download the latest version of Democracy and run that.""")
+            def callback(dialog):
+                eventloop.quit()
+                frontend.quit()
+            dialogs.MessageBoxDialog(title, description).run(callback)
+            print "DTV: Starting event loop thread"
+            eventloop.startup()
         except:
             util.failedExn("while finishing starting up")
             frontend.exit(1)
@@ -878,24 +892,24 @@ downloaded?""")
     def onShutdown(self):
         try:
             eventloop.join()        
+            if self.loadedDatabase:
+                print "DTV: Saving preferences..."
+                config.save()
 
-            print "DTV: Saving preferences..."
-            config.save()
+                print "DTV: Removing search feed"
+                TemplateActionHandler(None, None).resetSearch()
+                self.removeGlobalFeed('dtv:search')
 
-            print "DTV: Removing search feed"
-            TemplateActionHandler(None, None).resetSearch()
-            self.removeGlobalFeed('dtv:search')
+                print "DTV: Shutting down icon cache updates"
+                iconCacheUpdater.shutdown()
 
-            print "DTV: Shutting down icon cache updates"
-            iconCacheUpdater.shutdown()
+                print "DTV: Removing static tabs..."
+                views.allTabs.unlink() 
+                tabs.removeStaticTabs()
 
-            print "DTV: Removing static tabs..."
-            views.allTabs.unlink() 
-            tabs.removeStaticTabs()
-
-            if self.idlingNotifier is not None:
-                print "DTV: Shutting down IdleNotifier"
-                self.idlingNotifier.join()
+                if self.idlingNotifier is not None:
+                    print "DTV: Shutting down IdleNotifier"
+                    self.idlingNotifier.join()
 
             print "DTV: Done shutting down."
             print "Remaining threads are:"

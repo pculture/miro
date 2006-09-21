@@ -529,6 +529,8 @@ class LiveStorage:
                         self.saveDatabase()
                     else:
                         self.loadDatabase()
+                except databaseupgrade.DatabaseTooNewError:
+                    raise
                 except:
                     self.handleDatabaseLoadError()
             else:
