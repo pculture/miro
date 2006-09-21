@@ -150,6 +150,7 @@ class TrackedView:
                 adds = [self.currentXML(obj) for obj in self.toAdd]
                 addXml = "".join (adds)
                 self.doAdd(addXml)
+                print "len(xml) to be added:", len(addXml)
 
 #            Equivalent code:
 

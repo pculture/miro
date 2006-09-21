@@ -10,7 +10,7 @@ from gtcache import gettext as _
 from inspect import isfunction
 from new import instancemethod
 from urlparse import urlparse, urljoin
-from xhtmltools import unescape,xhtmlify,fixXMLHeader, fixHTMLHeader, urlencode
+from xhtmltools import unescape,xhtmlify,fixXMLHeader, fixHTMLHeader, urlencode, urldecode
 import os
 import string
 import re
@@ -32,6 +32,7 @@ import resource
 import util
 import views
 import indexes
+import searchengines
 from BitTornado.clock import clock
 
 whitespacePattern = re.compile(r"^[ \t\r\n]*$")
@@ -96,7 +97,8 @@ def addFeedFromWebPage(url):
 def validateFeedURL(url):
     if re.match(r"^(http|https)://[^/ ]+/[^ ]*$", url) is not None:
         return True
-    if re.match(r"^dtv:searchTerm:(http|https)://[^/ ]+/[^ ]*\?.+$", url) is not None:
+    match = re.match(r"^dtv:searchTerm:(.*)\?(.*)$", url)
+    if match is not None and validateFeedURL(urldecode(match.group(1))):
         return True
     return False
 
@@ -108,8 +110,8 @@ def normalizeFeedURL(url):
     searchTerm = None
     m = re.match(r"^dtv:searchTerm:(.*)\?([^?]+)$", url)
     if m is not None:
-        searchTerm = m.group(2)
-        url = m.group(1)
+        searchTerm = urldecode(m.group(2))
+        url = urldecode(m.group(1))
 
     originalURL = url
     url = url.strip()
@@ -132,7 +134,7 @@ def normalizeFeedURL(url):
         url = url + "/"
 
     if searchTerm is not None:
-        url = "dtv:searchTerm:%s?%s" % (url, searchTerm)
+        url = "dtv:searchTerm:%s?%s" % (urlencode(url), urlencode(searchTerm))
 
     if not validateFeedURL(url):
         print "DTV: unable to normalize URL %s" % originalURL
@@ -542,7 +544,15 @@ class FeedImpl:
             if self.ufeed.searchTerm is None:
                 return self.url
             else:
-                return "dtv:searchTerm:%s?%s" % (url, self.ufeed.searchTerm)
+                return "dtv:searchTerm:%s?%s" % (urlencode(self.url), urlencode(self.ufeed.searchTerm))
+        except:
+            return ""
+
+    ##
+    # Returns the URL of the feed
+    def getBaseURL(self):
+        try:
+            return self.url
         except:
             return ""
 
@@ -671,6 +681,10 @@ class Feed(DDBObject):
         self.confirmDBThread()
         return self.origURL
 
+    def getSearchTerm(self):
+        self.confirmDBThread()
+        return self.searchTerm
+
     def getError(self):
         return "Could not load feed"
 
@@ -682,7 +696,10 @@ class Feed(DDBObject):
 
     def getTitle(self):
         if self.userTitle is None:
-            return self.actualFeed.getTitle()
+            title = self.actualFeed.getTitle()
+            if self.searchTerm is not None:
+                title = "'%s' on %s" % (self.searchTerm, title)
+            return title
         else:
             return self.userTitle
 
@@ -766,8 +783,8 @@ class Feed(DDBObject):
 
             url = self.origURL[len("dtv:searchTerm:"):]
             (url, search) = url.rsplit("?", 1)
-#            url = urldecode(url)
-#            search = urldecode(search)
+            url = urldecode(url)
+            search = urldecode(search)
             self.searchTerm = search
             self.download = grabURL(url,
                     lambda info:self._generateFeedCallback(info, removeOnError),
@@ -1724,38 +1741,11 @@ class SearchFeedImpl (RSSFeedImpl):
                 item.setFeed(downloadsFeed.id)
         
     def lookup(self, engine, query):
-        url = self.getRequestURL(engine, query)
+        url = searchengines.getRequestURL(engine, query)
         self.reset(url, True)
         self.lastQuery = query
         self.update()
         self.ufeed.signalChange()
-
-    def getRequestURL(self, engine, query, filterAdultContents=True, limit=50):
-        if query == "LET'S TEST DTV'S CRASH REPORTER TODAY":
-            someVariable = intentionallyUndefinedVariableToTestCrashReporter
-        query = query.encode('utf-8')
-
-        if engine == 'yahoo':
-            url =  "http://api.search.yahoo.com/VideoSearchService/rss/videoSearch.xml"
-            url += "?appid=dtv_search"
-            url += "&adult_ok=%d" % int(not filterAdultContents)
-            url += "&results=%d" % limit
-            url += "&format=any"
-            url += "&query=%s" % urlencode(query)
-        elif engine == 'blogdigger':
-            url =  "http://blogdigger.com/media/rss.jsp"
-            url += "?q=%s" % urlencode(query)
-            url += "&media=video"
-            url += "&media=torrent"
-            url += "&sortby=date"
-        elif engine == 'google':
-            url = "http://video.google.com/videofeed?type=search"
-            url += "&q=%s" % urlencode(query+" is:free")
-            url += "&num=%d&output=rss" % limit
-        elif engine == 'youtube':
-            url = "http://www.youtube.com/rss/tag/"
-            url += "%s.rss" % urlencode(query)
-        return url
 
     def updateUsingParsed(self, parsed):
         self.searching = False

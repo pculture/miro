@@ -64,6 +64,7 @@ P_layback
     </menu>
     <menu action="Channels">
       <menuitem action="NewChannel"/>
+      <menuitem action="NewSearchChannel"/>
       <menuitem action="NewChannelFolder"/>
       <menuitem action="NewGuide"/>
       <separator/>

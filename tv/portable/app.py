@@ -31,6 +31,7 @@ import xhtmltools
 import guide
 import idlenotifier 
 import eventloop
+import searchengines
 
 import os
 import re
@@ -511,15 +512,18 @@ class Controller (frontend.Application):
             # Set up tab list
             tabs.reloadStaticTabs()
             try:
-                channelTabOrder = getSingletonDDBObject(views.channelTabOrder)
+                channelTabOrder = util.getSingletonDDBObject(views.channelTabOrder)
             except LookupError:
                 print "DTV: Creating channel tab order"
                 channelTabOrder = tabs.TabOrder('channel')
             try:
-                playlistTabOrder = getSingletonDDBObject(views.playlistTabOrder)
+                playlistTabOrder = util.getSingletonDDBObject(views.playlistTabOrder)
             except LookupError:
                 print "DTV: Creating playlist tab order"
                 playlistTabOrder = tabs.TabOrder('playlist')
+
+            # Set up search engines
+            searchengines.createEngines()
 
             channelGuide = _getInitialChannelGuide()
 
@@ -834,7 +838,7 @@ downloaded?""")
                 dialogs.BUTTON_CANCEL)
         def dialogCallback(dialog):
             if dialog.choice == dialogs.BUTTON_KEEP_VIDEOS:
-                manualFeed = getSingletonDDBObject(views.manualFeed)
+                manualFeed = util.getSingletonDDBObject(views.manualFeed)
                 for feed in feeds:
                     if feed.idExists():
                         feed.remove(moveItemsTo=manualFeed)
@@ -953,6 +957,12 @@ downloaded?""")
     def addAndSelectGuide(self, url = None):
         return GUIActionHandler().addGuide(url)
 
+    def addSearchFeed(self):
+        return GUIActionHandler().addSearchFeed()
+
+    def testSearchFeedDialog(self):
+        return GUIActionHandler().testSearchFeedDialog()
+
     ### Handling 'DTVAPI' events from the channel guide ###
 
     def addFeed(self, url = None):
@@ -1021,9 +1031,9 @@ downloaded?""")
                 destObj = None
             elif destID == 'START':
                 if destType == 'channel':
-                    tabOrder = getSingletonDDBObject(views.channelTabOrder)
+                    tabOrder = util.getSingletonDDBObject(views.channelTabOrder)
                 else:
-                    tabOrder = getSingletonDDBObject(views.playlistTabOrder)
+                    tabOrder = util.getSingletonDDBObject(views.playlistTabOrder)
                 for tab in tabOrder.getView():
                     destObj = tab.obj
                     break
@@ -1049,12 +1059,12 @@ downloaded?""")
         elif (destType in ('playlist', 'playlistfolder') and 
                 type in ('playlist', 'playlistfolder')):
             # Reording the playlist tabs
-            tabOrder = getSingletonDDBObject(views.playlistTabOrder)
+            tabOrder = util.getSingletonDDBObject(views.playlistTabOrder)
             tabOrder.handleDNDReorder(destObj, draggedIDs)
         elif (destType in ('channel', 'channelfolder') and
                 type in ('channel', 'channelfolder')):
             # Reordering the channel tabs
-            tabOrder = getSingletonDDBObject(views.channelTabOrder)
+            tabOrder = util.getSingletonDDBObject(views.channelTabOrder)
             tabOrder.handleDNDReorder(destObj, draggedIDs)
         elif destType == "playlistitem" and type == "downloadeditem":
             # Reording items in a playlist
@@ -1150,7 +1160,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
     # Returns true if the browser should handle the URL.
     def onURLLoad(self, url):
-        #print "DTV: got %s" % url
+        print "DTV: got %s" % url
         try:
             # Special-case non-'action:'-format URL
             if url.startswith ("template:"):
@@ -1446,6 +1456,25 @@ class GUIActionHandler:
     def openFile(self, path):
         singleclick.openFile(path)
 
+    def addSearchFeed(self):
+        def doAdd(dialog):
+            if dialog.choice == dialogs.BUTTON_CREATE_CHANNEL:
+                self.addFeed(dialog.getURL())
+        dialog = dialogs.SearchChannelDialog()
+        dialog.run(doAdd)
+        
+    def testSearchFeedDialog(self):
+        def finish(dialog):
+            pass
+        def thirdDialog(dialog):
+            dialog = dialogs.SearchChannelDialog("Should select URL http://testurl/", dialogs.SearchChannelDialog.URL, "http://testurl/")
+            dialog.run(finish)
+        def secondDialog(dialog):
+            dialog = dialogs.SearchChannelDialog("Should select YouTube engine", dialogs.SearchChannelDialog.ENGINE, "youtube")
+            dialog.run(thirdDialog)
+        dialog = dialogs.SearchChannelDialog("Should select third channel in list", dialogs.SearchChannelDialog.CHANNEL, -1)
+        dialog.run(secondDialog)
+        
     def addURL(self, title, message, callback, url = None):
         def createDialog(ltitle, lmessage, prefill = None):
             def prefillCallback():
@@ -1555,7 +1584,7 @@ class TemplateActionHandler:
         # openning the channel guide instead of the video
         if controller.frame.getDisplay(controller.frame.mainDisplay) is self.display:
             if id is None:
-                guide = getSingletonDDBObject(views.default_guide)
+                guide = util.getSingletonDDBObject(views.default_guide)
             else:
                 try:
                     guide = views.guides.getObjectByID(int(id))
@@ -1626,6 +1655,7 @@ class TemplateActionHandler:
             searchFeed.lastQuery = query
         
     def performSearch(self, engine, query):
+        print "Performing search"
         searchFeed, searchDownloadsFeed = self.__getSearchFeeds()
         if searchFeed is not None and searchDownloadsFeed is not None:
             searchFeed.preserveDownloads(searchDownloadsFeed)
@@ -1763,18 +1793,6 @@ def mapToPlaylistItem(obj):
 class TooManySingletonsError(Exception):
     pass
 
-def getSingletonDDBObject(view):
-    view.confirmDBThread()
-    viewLength = view.len()
-    if viewLength == 1:
-        view.resetCursor()
-        return view.next()
-    elif viewLength == 0:
-        raise LookupError("Can't find singleton in %s" % repr(view))
-    else:
-        msg = "%d objects in %s" % (viewLength, len(view))
-        raise TooManySingletonsError(msg)
-
 def _defaultFeeds():
     defaultFeedURLs = [
         'http://del.icio.us/rss/representordie/system:media:video', 
@@ -1847,4 +1865,4 @@ def changeMoviesDirectory(newDir, migrate):
             os.rmdir(oldDir)
         except:
             pass
-    getSingletonDDBObject(views.directoryFeed).update()
+    util.getSingletonDDBObject(views.directoryFeed).update()

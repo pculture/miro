@@ -12,6 +12,12 @@ import dialogs
 from gettext import gettext as _
 from gettext import ngettext
 import re
+import MainFrame
+import resource
+import feed
+import util
+import views
+import indexes
 
 import config
 import prefs
@@ -170,6 +176,71 @@ def BuildHTTPAuth(summary, message, prefillUser = None, prefillPassword = None):
     dialog.set_default_response (gtk.RESPONSE_OK)
     return dialog
 
+def BuildSearchChannelDialog(dialog):
+    widgetTree = MainFrame.WidgetTree(resource.path('democracy.glade'), 'dialog-search', 'democracyplayer')
+    gtkDialog = widgetTree['dialog-search']
+    gtkDialog.set_data("glade", widgetTree)
+    channel_id = -1
+    engine_name = dialog.defaultEngine
+#    mainWindow = self.mainFrame.widgetTree['main-window']
+#    gtkDialog.set_transient_for(mainWindow)
+
+    if dialog.style == dialog.CHANNEL:
+        widgetTree["radiobutton-search-channel"].set_active(True)
+        if dialog.location is not None:
+            channel_id = dialog.location
+    elif dialog.style == dialog.ENGINE:
+        widgetTree["radiobutton-search-engine"].set_active(True)
+        if dialog.location is not None:
+            engine_name = str(dialog.location)
+    elif dialog.style == dialog.URL:
+        widgetTree["radiobutton-search-url"].set_active(True)
+        if dialog.location:
+            widgetTree["entry-search-url"].set_text(dialog.location)
+
+    if dialog.term:
+        widgetTree["entry-search-term"].set_text(dialog.term)
+
+    def connect_sensitive (toggle, widget):
+        toggle = widgetTree[toggle]
+        widget = widgetTree[widget]
+        def toggled(*args):
+            widget.set_sensitive(toggle.get_active())
+        toggle.connect("toggled", toggled)
+        toggled()
+    connect_sensitive ("radiobutton-search-channel", "combobox-search-channel")
+    connect_sensitive ("radiobutton-search-engine", "combobox-search-engine")
+    connect_sensitive ("radiobutton-search-url", "entry-search-url")
+
+    store = gtk.ListStore(gobject.TYPE_INT, gobject.TYPE_STRING)
+    select_iter = None
+    for id, title in dialog.channels:
+        iter = store.append((id, title))
+        if select_iter is None or channel_id == id:
+            select_iter = iter
+    cell = gtk.CellRendererText()
+    combo = widgetTree["combobox-search-channel"]
+    combo.pack_start(cell, True)
+    combo.add_attribute(cell, 'text', 1)
+    combo.set_model (store)
+    combo.set_active_iter(select_iter)
+
+    store = gtk.ListStore(gobject.TYPE_STRING, gobject.TYPE_STRING)
+    select_iter = None
+    for name, title in dialog.engines:
+        iter = store.append((name, title))
+        if select_iter is None or engine_name == name:
+            select_iter = iter
+    cell = gtk.CellRendererText()
+    combo = widgetTree["combobox-search-engine"]
+    combo.pack_start(cell, True)
+    combo.add_attribute(cell, 'text', 1)
+    combo.set_model (store)
+    combo.set_active_iter(select_iter)
+
+    return gtkDialog
+
+
 once_dialogs = {}
 
 @gtkAsyncMethod
@@ -206,6 +277,12 @@ def ShowHTTPAuthDialogAsync(title, description, prefillUser, prefillPassword,
         callback):
     gtkDialog = BuildHTTPAuth (title, description, prefillUser,
             prefillPassword)
+    gtkDialog.connect("response", callback)
+    gtkDialog.show()
+
+@gtkAsyncMethod
+def ShowSearchChannelDialogAsync(dialog, callback):
+    gtkDialog = BuildSearchChannelDialog (dialog)
     gtkDialog.connect("response", callback)
     gtkDialog.show()
 
@@ -322,6 +399,38 @@ class UIBackendDelegate:
             ShowTextEntryDialogAsync (EscapeMessagePart(dialog.title), EscapeMessagePart(dialog.description), self.makeButtonTuple(dialog), default=0,
                                       prefillCallback=dialog.prefillCallback, fillWithClipboardURL=dialog.fillWithClipboardURL,
                                       callback = AsyncDialogResponse)
+        elif isinstance(dialog, dialogs.SearchChannelDialog):
+            def AsyncDialogResponse(gtkDialog, response):
+                retval = None
+                widgetTree = gtkDialog.get_data("glade")
+                dialog.term = widgetTree["entry-search-term"].get_text()
+                if widgetTree["radiobutton-search-channel"].get_active():
+                    dialog.style = dialog.CHANNEL
+                    iter = widgetTree["combobox-search-channel"].get_active_iter()
+                    if iter is None:
+                        dialog.location = None
+                    else:
+                        (dialog.location,) = widgetTree["combobox-search-channel"].get_model().get(iter, 0)
+                elif widgetTree["radiobutton-search-engine"].get_active():
+                    dialog.style = dialog.ENGINE
+                    iter = widgetTree["combobox-search-engine"].get_active_iter()
+                    if iter is None:
+                        dialog.location = None
+                    else:
+                        (dialog.location,) = widgetTree["combobox-search-engine"].get_model().get(iter, 0)
+                elif widgetTree["radiobutton-search-url"].get_active():
+                    dialog.style = dialog.URL
+                    dialog.location = widgetTree["entry-search-url"].get_text()
+
+                if (response == gtk.RESPONSE_OK):
+                    dialog.runCallback(dialogs.BUTTON_CREATE_CHANNEL)
+                elif (response == gtk.RESPONSE_CANCEL):
+                    dialog.runCallback(dialogs.BUTTON_CANCEL)
+                else:
+                    dialog.runCallback(None)
+                gtkDialog.destroy()
+
+            ShowSearchChannelDialogAsync(dialog, callback=AsyncDialogResponse)
         else:
             dialog.runCallback (None)
 

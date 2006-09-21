@@ -143,6 +143,7 @@ class CallbackHandler(object):
             ('NewPlaylistFolder', None, _('New Playlist _Folder...'), None, _('Create new playlist folder'), self.on_new_playlist_folder_activate),
             ('NewChannelFolder', None, _('New Channel _Folder...'), None, _('Create new channel folder'), self.on_new_channel_folder_activate),
             ('NewChannel', None, _("Add _Channel..."), None, None, self.on_add_channel_button_clicked),
+            ('NewSearchChannel', None, _("New Searc_h Channel..."), None, None, self.on_add_search_channel_button_clicked),
             ('NewGuide', None, _("New Channel _Guide..."), None, None, self.on_add_guide_button_clicked),
 
             ('EditPreferences', gtk.STOCK_PREFERENCES, _('P_references'), None, None, self.on_preference),
@@ -320,6 +321,9 @@ class CallbackHandler(object):
 
     def on_add_channel_button_clicked(self, event = None):
         eventloop.addIdle(lambda:app.controller.addAndSelectFeed(), "Add Channel")
+
+    def on_add_search_channel_button_clicked(self, event = None):
+        eventloop.addIdle(lambda:app.controller.addSearchFeed(), "Add SearchChannel")
 
     def on_add_guide_button_clicked(self, event = None):
         eventloop.addIdle(lambda:app.controller.addAndSelectGuide(), "Add Guide")

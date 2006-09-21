@@ -13,6 +13,7 @@ import playlist
 import feed
 import views
 import template
+import util
 
 def getID(obj):
     """Gets an ID to use for an object.  For tabs, this is the object ID that
@@ -397,8 +398,8 @@ class SelectionHandler(object):
                     return
 
     def selectTabByObject(self, obj):
-        channelTabOrder = app.getSingletonDDBObject(views.channelTabOrder)
-        playlistTabOrder = app.getSingletonDDBObject(views.playlistTabOrder)
+        channelTabOrder = util.getSingletonDDBObject(views.channelTabOrder)
+        playlistTabOrder = util.getSingletonDDBObject(views.playlistTabOrder)
         tabViews = [ 
             views.guideTabs, 
             views.staticTabs, 

@@ -57,3 +57,21 @@ def tabs(x, y):
     elif x.sortKey > y.sortKey:
         return 1
     return 0
+
+def searchEngines(x, y):
+    try:
+        if x.sortOrder < y.sortOrder:
+            return -1
+        elif x.sortOrder > y.sortOrder:
+            return 1
+    except:
+        pass    
+    if x.title < y.title:
+        return -1
+    elif x.title > y.title:
+        return 1
+    if x.name < y.name:
+        return -1
+    elif x.name > y.name:
+        return 1
+    return 0

@@ -70,6 +70,7 @@ BUTTON_DELETE_FILES = DialogButton(_("Delete Files"))
 BUTTON_KEEP_VIDEOS = DialogButton(_("Keep Videos"))
 BUTTON_DELETE_VIDEOS = DialogButton(_("Delete Videos"))
 BUTTON_CREATE = DialogButton(_("Create"))
+BUTTON_CREATE_CHANNEL = DialogButton(_("Create Channel"))
 BUTTON_ADD = DialogButton(_("Add"))
 BUTTON_ADD_INTO_NEW_FOLDER = DialogButton(_("Add Into New Folder"))
 
@@ -149,6 +150,83 @@ class HTTPAuthDialog(Dialog):
         self.username = username
         self.password = password
         super(HTTPAuthDialog, self).runCallback(choice)
+
+class SearchChannelDialog(Dialog):
+    """Ask for information to create a new search channel.  Frontends
+    should create a dialog with all sorts of fields.  Use the given
+    values for the initial values and replace the values if the user
+    selects anything.
+
+    The buttons are always BUTTON_CREATE_CHANNEL and BUTTON_CANCEL.
+    """
+    CHANNEL = 0
+    ENGINE = 1
+    URL = 2
+    def __init__(self, term=None, style=CHANNEL, location=None):
+        import views
+        import indexes
+        import util
+        from feed import RSSFeedImpl, ScraperFeedImpl
+        self.term = term
+        self.style = style
+        self.location = location
+
+        self.channels = []
+        for feed in views.feeds:
+            if isinstance (feed.actualFeed, RSSFeedImpl) or \
+                   isinstance (feed.actualFeed, ScraperFeedImpl):
+                self.channels.append((feed.id, feed.getTitle()))
+
+        self.engines = []
+        for engine in views.searchEngines:
+            self.engines.append((engine.name, engine.title))
+
+        # For testing
+        if style == self.CHANNEL and self.location == -1:
+            self.location = self.channels[2][0]
+
+        searchFeed = util.getSingletonDDBObject (views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search'))
+        self.defaultEngine = searchFeed.lastEngine
+        
+        super(SearchChannelDialog, self).__init__(_("New Search Channel"), _("A search channel contains items that match a search term."),
+                (BUTTON_CREATE_CHANNEL, BUTTON_CANCEL))
+
+    def getURL(self):
+        from xhtmltools import urlencode
+        import searchengines
+        from database import defaultDatabase
+
+        term = self.term
+        location = self.location
+        style = self.style
+        
+        if not term or not location:
+            return None
+
+        if style == self.CHANNEL:
+            # Pull data from channel and switch style.
+            channel = defaultDatabase.getObjectByID(location)
+            if channel:
+                style = self.URL
+                location = channel.getBaseURL()
+
+                searchTerm = channel.getSearchTerm()
+                if searchTerm is not None:
+                    term = searchTerm + " " + term
+
+        # Do this after possibly pulling data from channel.
+        if type (term) == unicode:
+            term = term.encode("utf8")
+        if type (location) == unicode:
+            location = location.encode("utf8")
+
+        if style == self.ENGINE:
+            return searchengines.getRequestURL (location, term)
+
+        if style == self.URL:
+            return "dtv:searchTerm:%s?%s" % (urlencode(location), urlencode(term))
+
+        return None
 
 class TextEntryDialog(Dialog):
     """Like the ChoiceDialog, but also contains a textbox for the user to

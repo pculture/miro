@@ -6,6 +6,7 @@ import guide
 import item
 import tabs
 import playlist
+import searchengines
 
 import indexes
 import filters
@@ -80,3 +81,5 @@ playlistFolders = db.filterWithIndex(indexes.objectsByClass, folder.PlaylistFold
 playlistFolders.createIndex(indexes.playlistsByItemID, multiValued=True)
 
 channelFolders = db.filterWithIndex(indexes.objectsByClass, folder.ChannelFolder)
+searchEngines = db.filterWithIndex(indexes.objectsByClass, searchengines.SearchEngine)
+searchEngines = searchEngines.sort(sorts.searchEngines)
