@@ -69,7 +69,6 @@
 </div>
 
 <!-- / NEW ITEMS -->
-<div />
 
 <!-- WATCHABLE ******************************************************** -->
 <span t:updateForView="allWatchableItems">
