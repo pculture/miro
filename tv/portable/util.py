@@ -105,6 +105,8 @@ def queryRevision(file):
         url = re.search("URL: (.*)", info).group(1)
         revision = re.search("Revision: (.*)", info).group(1)
         return (url, revision)
+    except KeyboardInterrupt:
+        raise
     except:
         # whatever
         return None
@@ -149,6 +151,8 @@ def failed(when, withExn = False, details = None):
         header += "Version:    %s\n" % config.get(prefs.APP_VERSION)
         header += "Serial:     %s\n" % config.get(prefs.APP_SERIAL)
         header += "Revision:   %s\n" % config.get(prefs.APP_REVISION)
+    except KeyboardInterrupt:
+        raise
     except:
         pass
     header += "Time:       %s\n" % time.asctime()
@@ -164,6 +168,8 @@ def failed(when, withExn = False, details = None):
     header += "Call stack\n----------\n"
     try:
         stack = getNiceStack()
+    except KeyboardInterrupt:
+        raise
     except:
         stack = traceback.extract_stack()
     header += ''.join(traceback.format_list(stack))
@@ -189,6 +195,8 @@ def failed(when, withExn = False, details = None):
             logContents = "%s\n---\n" % logName
             logContents += f.read()
             f.close()
+        except KeyboardInterrupt:
+            raise
         except:
             print "WARNING: Error reading logfile: %s" % logFile
             import traceback
@@ -274,6 +282,8 @@ def trapCall(when, function, *args, **kwargs):
     try:
         function(*args, **kwargs)
         return True
+    except KeyboardInterrupt:
+        raise
     except:
         failedExn(when)
         return False
@@ -294,6 +304,8 @@ def timeTrapCall(when, function, *args, **kwargs):
             when, end-start)
     try:
         total = cumulative[when]
+    except KeyboardInterrupt:
+        raise
     except:
         total = 0
     total += end - start
@@ -352,6 +364,8 @@ def gatherVideos(path, progressCallback):
                     raise
             if 'Democracy' in dirs:
                 dirs.remove('Democracy')
+    except KeyboardInterrupt:
+        raise
     except:
         pass
     return found
@@ -377,3 +391,15 @@ def print_mem_usage(message):
 # Uncomment for memory usage printouts on linux.
 #    print message
 #    os.system ("ps huwwwp %d" % (os.getpid(),))
+
+def getSingletonDDBObject(view):
+    view.confirmDBThread()
+    viewLength = view.len()
+    if viewLength == 1:
+        view.resetCursor()
+        return view.next()
+    elif viewLength == 0:
+        raise LookupError("Can't find singleton in %s" % repr(view))
+    else:
+        msg = "%d objects in %s" % (viewLength, len(view))
+        raise TooManySingletonsError(msg)
