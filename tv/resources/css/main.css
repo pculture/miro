@@ -401,6 +401,15 @@ float: left;
     z-index: 1;
 }
 
+.download-pending-icon {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    width: 15px;
+    height: 15px;
+    border: 0px;
+}
+
 .main-video-desc {
     margin-left: 115px;
     margin-right: 145px;
