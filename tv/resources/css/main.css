@@ -51,7 +51,7 @@ img {
 	height: 270px;
 	display: none;
 	background: url(../images/settings-shadow.png) repeat-x left bottom;
-	z-index: 100;
+	z-index: 9;
 	color: #000;
 	font-size: 13px;
 }

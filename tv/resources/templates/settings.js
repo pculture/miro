@@ -6,10 +6,12 @@
     function showSettings()
     {
         var feedSettings = document.getElementById("feed-settings");
+        var closeButton = document.getElementById("feed-settings-close-button");
         feedSettings.style.display = "block";
         feedSettings.style.top = "-224px";
-        var startTop = -224;
-        var endTop = 0;
+        closeButton.style.display = "none";
+        var startTop = -147;
+        var endTop = 77;
         var steps = 5;
         var stepSize = (endTop - startTop) / steps;
         var currentStep = 0;
@@ -21,6 +23,7 @@
                 feedSettingsTimeout = setTimeout(iteration, 50);
            } else {
                 feedSettingsTimeout = null;
+		closeButton.style.display = "block";
            }
         }
         feedSettingsTimeout = setTimeout(iteration, 50);

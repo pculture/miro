@@ -17,12 +17,6 @@ feed = views.feeds.getObjectByID(int(kargs['id']))
 
 <body>
 
-<!--
-<img id="close-settings-icon" src="resource:images/feed-settings-close.png"
-	href="#" onclick="return hideSettings()" />
--->
-
-
 <form action="javascript:eventURL('template:channel?id=@@@feed.getID()@@@')" method="GET" name="settings">
 	<input name="feed" type="hidden" value="@@@feed.getID()@@@" />
 	
@@ -94,22 +88,15 @@ i18n:translate="">get everything on this channel.</option>
 		<input i18n:name="maxnew2" name="maxNew" type="text" size="3" value="@@@feed.getMaxNew()@@@" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() == 'unlimited'"/>
 		videos are waiting unwatched.</span><div class="settings-small">Prevents this channel from using unlimited disk space.</div>
 <br />
-		    <div class="gray-button-wrap settings-button">
-            <div class="gray-button-bg" style="width: 150px;" onclick="return hideSettings()" >
+	    <div class="gray-button-wrap settings-button">
+		    <div id="feed-settings-close-button" class="gray-button-bg" style="width: 150px;" onclick="return hideSettings()" >
                 <div class="gray-button-left" />
                 <div class="gray-button-right" />
                 <div class="gray-button-content">Close Settings</div>
             </div>
-
-
-
-		</div>
-		
-		
-
-		  </div>         
-		
 	</div>
+ 	</div>         
+</div>
 
 
 </form>
