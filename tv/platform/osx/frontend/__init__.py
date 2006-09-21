@@ -16,7 +16,10 @@ def exit(returnCode):
     NSApplication.sharedApplication().stop_(nil)
 
 def quit():
-    app.delegate.ensureDownloadDaemonIsTerminated()
+    if app.controller.loadedDatabase:
+        app.delegate.ensureDownloadDaemonIsTerminated()
+    else:
+        NSApplication.sharedApplication().delegate().internalShutdown = True
     NSApplication.sharedApplication().terminate_(nil)
 
 ###############################################################################
