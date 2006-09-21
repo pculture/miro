@@ -44,6 +44,8 @@ class DelayedCall(object):
                     self.name, end-start)
             try:
                 total = cumulative[self.name]
+            except KeyboardInterrupt:
+                raise
             except:
                 total = 0
             total += end - start
@@ -142,6 +144,8 @@ class ThreadPool(object):
                 callback, errback, func, args, kwargs, = nextItem
             try:
                 result = func(*args, **kwargs)
+            except KeyboardInterrupt:
+                raise
             except Exception, e:
                 func = errback
                 name = 'Thread Pool Errback'

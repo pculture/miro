@@ -523,12 +523,16 @@ class LiveStorage:
                         self.closeInvalidDB()
                         try:
                             restoreDatabase()
+                        except KeyboardInterrupt:
+                            raise
                         except:
                             print "WARNING: ERROR RESTORING OLD DATABASE"
                             traceback.print_exc()
                         self.saveDatabase()
                     else:
                         self.loadDatabase()
+                except KeyboardInterrupt:
+                    raise
                 except databaseupgrade.DatabaseTooNewError:
                     raise
                 except:
@@ -564,6 +568,8 @@ class LiveStorage:
     def openEmptyDB(self):
         try:
             os.makedirs(self.dbPath)
+        except KeyboardInterrupt:
+            raise
         except:
             pass
         self.dbenv = bsddb.db.DBEnv()
@@ -576,6 +582,8 @@ class LiveStorage:
     def closeInvalidDB(self):
         try:
             self.db.close()
+        except KeyboardInterrupt:
+            raise
         except:
             pass
         self.db = None
@@ -593,6 +601,8 @@ class LiveStorage:
                 try:
                     savable = cPickle.loads(data)
                     savables.append(savable)
+                except KeyboardInterrupt:
+                    raise
                 except:
                     print data
                     raise
@@ -660,6 +670,8 @@ class LiveStorage:
                     savable = cPickle.loads(data)
                     object = savableToObject(savable)
                     objects.append(object)
+                except KeyboardInterrupt:
+                    raise
                 except:
                     print data
                     raise
@@ -723,6 +735,8 @@ class LiveStorage:
                 self.errorState = True
             try:
                 self.txn.abort()
+            except KeyboardInterrupt:
+                raise
             except:
                 # if we tried to do a commit and failed an abort doesn't work
                 pass
@@ -751,6 +765,8 @@ class LiveStorage:
             self.toRemove.add (object)
             try:
                 self.toUpdate.remove (object)
+            except KeyboardInterrupt:
+                raise
             except:
                 pass
             if self.dc is None:
@@ -767,6 +783,8 @@ class LiveStorage:
             for logfile in self.dbenv.log_archive(bsddb.db.DB_ARCH_ABS):
                 try:
                     os.remove(logfile)
+                except KeyboardInterrupt:
+                    raise
                 except:
                     pass
         except bsddb.db.DBNoSpaceError:
