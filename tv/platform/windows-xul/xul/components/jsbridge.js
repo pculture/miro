@@ -358,6 +358,9 @@ jsBridge.prototype = {
 
   setActionGroupEnabled: function(group, enabled) {
      var elements = actionGroupCommands[group];
+     if(group == 'VideoPlayable') {
+       this.setActive("bottom-buttons-play", enabled);
+     }
      for(var i = 0; i < elements.length; i++) {
        var elt = this.document.getElementById(elements[i]);
        if(!enabled) {

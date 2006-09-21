@@ -164,13 +164,6 @@ class MainController (NibClassBuilder.AutoBaseClass):
     def doSelectDisplay(self, display, area):
         if area is not None:
             area.setDisplay(display, self.frame)
-            if isinstance(display, app.TemplateDisplay) and area == self.mainHostView:
-                nc = NSNotificationCenter.defaultCenter()
-                view = display.getWatchable()
-                if view is not None:
-                    nc.postNotificationName_object_userInfo_('displayIsWatchable', display, {'view': view})
-                else:
-                    nc.postNotificationName_object_('displayIsNotWatchable', display)
 
     def getDisplaySizeHint(self, area):
         return area.frame()

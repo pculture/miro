@@ -91,8 +91,22 @@ class PlaybackControllerBase:
         if self.currentPlaylist is not None:
             eventloop.addIdle (self.currentPlaylist.reset, "Reset Playlist")
             self.currentPlaylist = None
+
+    def configureWithSelection(self):
+        itemSelection = controller.selection.itemListSelection
+        view = itemSelection.currentView
+        if itemSelection.currentView is None:
+            return
+        firstItemId = None
+        for item in view:
+            id = item.getID()
+            if itemSelection.isSelected(view, id) and item.isDownloaded():
+                self.configure(view, id)
+                break
     
     def enterPlayback(self):
+        if self.currentPlaylist is None:
+            self.configureWithSelection()
         if self.currentPlaylist is not None:
             startItem = self.currentPlaylist.cur()
             if startItem is not None:

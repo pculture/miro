@@ -240,10 +240,6 @@ class MainFrame:
         self.selectedDisplays[area] = newDisplay
         # show the video info display when we are showing a movie.
         if area == self.mainDisplay:
-            watchable = newDisplay.getWatchable()
-            if watchable:
-                app.controller.playbackController.configure(watchable)
-
             if isinstance(newDisplay, VideoDisplay):
                 self.windowChanger.changeState(self.windowChanger.VIDEO)
             else:
