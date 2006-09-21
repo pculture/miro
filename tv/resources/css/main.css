@@ -48,18 +48,62 @@ img {
 	top: 0px;
 	left: 0px;
 	width: 100%;
-	height: 300px;
+	height: 270px;
 	display: none;
-	background: #ccc;
+	background: url(../images/settings-shadow.png) repeat-x left bottom;
 	z-index: 100;
+	color: #000;
+	font-size: 13px;
 }
+
+
+#settings-inner {
+	padding: 18px;
+	background-color: #FFFFBB;
+	height: 230px;
+	margin-bottom: 4px;
+}
+
+#settings-inner h2 {
+	font-size: 15px;
+	margin: 0;
+	padding: 12px 0 20px 0;
+}
+
+#channel-url {
+	position: absolute;
+	right: 20px;
+	top: 10px;
+	color: #999;
+	font-size: 11px;
+}
+
+.settings-small {
+	font-size: 10px;
+	padding: 3px 0 0 23px;
+}
+
+.settings-button {
+text-align: center; 
+margin-left: 5px;
+position: absolute;
+bottom: 22px;
+left: 43px;
+}
+
+
+/* The block of drop downs and fields */
+#actual-settings {
+	padding: 0 0 0 25px;
+}
+
 
 /* Used in feed-settings to position the feed-settings icon */
 #close-settings-icon {
 	position: absolute;
-	top: 25px;
-	right: 5px;
-        cursor: pointer;
+	bottom: 25px;
+	right: 25px;
+    cursor: pointer;
 }
 
 /* This is the title section of the channel view */
@@ -356,7 +400,6 @@ float: left;
 .gray-button-content {
     padding-top: 8px;
 }
-
 
 /* Everything below is used in download-item */
 .main-video {

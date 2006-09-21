@@ -17,25 +17,30 @@ feed = views.feeds.getObjectByID(int(kargs['id']))
 
 <body>
 
+<!--
 <img id="close-settings-icon" src="resource:images/feed-settings-close.png"
 	href="#" onclick="return hideSettings()" />
+-->
+
 
 <form action="javascript:eventURL('template:channel?id=@@@feed.getID()@@@')" method="GET" name="settings">
 	<input name="feed" type="hidden" value="@@@feed.getID()@@@" />
 	
-	<div id="main-channelbar" class="main-channelbar">
-		<h1 i18n:translate="">Channel Settings</h1>
-	</div>
-
-	<div style="margin:20px 10px;">
-		<span i18n:translate=""> Videos expire after: </span>
-		<div t:updateForConfigChange="">
+	<div id="settings-inner">
+	<div id="channel-url"><span t:replace="feed.getURL()" 
+class="selectable" /></div>
+	<h2>Settings for <span t:replaceMarkup="feed.getTitle()" /></h2> 
+				
+		<div id="actual-settings">
+		
+		<span i18n:translate="">Videos expire after </span>
+		<span t:updateForConfigChange="">
 		<select name="expireAfter" onChange="javascript:setExpiration();">
 			<option value="system" selected="1" 
 t:hideIf="feed.getExpirationType() != 'system'"><span i18n:translate="">Default</span> 
 (<span t:replace="feed.getFormattedDefaultExpiration()" />)</option>
 			<option value="system" t:hideIf="feed.getExpirationType() == 
-'system'"><span i18n:translate="">Default</span> (<span i18n:name="expiration"
+'system'"><span i18n:translate="">default</span> (<span i18n:name="expiration"
 t:replace="feed.getFormattedDefaultExpiration()" />)</option>
 			<option value="3" selected="1" t:hideIf="feed.getExpirationTime() 
 != 3" i18n:translate="">3 hours</option>
@@ -66,39 +71,46 @@ t:hideIf="feed.getExpirationType() != 'never'" i18n:translate="">Never</option>
 			<option value="never" t:hideIf="feed.getExpirationType() == 
 'never'" i18n:translate="">Never</option>
 		</select>
-		</div>
-	</div>
-	<div style="margin:0px 10px 20px 10px;">
-		<span style="width:150px;" i18n:translate="">
-			Auto download should:
+		</span>
+<br /><br />
+		<span i18n:translate="">
+			When turned on, Auto Download should
 		</span>
 		<select name="autoDownloadGets" onChange="javascript:setAutoDownloadGets();">
 			<option t:hideIf="feed.getEverything" selected="1" value="False" 
-i18n:translate="" >Download new videos only</option>
+i18n:translate="" >only get new videos.</option>
 			<option t:hideIf="not feed.getEverything" value="False" 
-i18n:translate="">Download new videos only</option>
+i18n:translate="">only get new videos.</option>
 			<option t:hideIf="not feed.getEverything" value="True" 
-selected="1" i18n:translate="">Download all videos</option>
+selected="1" i18n:translate="">get everything on this channel.</option>
 			<option t:hideIf="feed.getEverything" value="True" 
-i18n:translate="">Download all videos</option>
+i18n:translate="">get everything on this channel.</option>
 		</select>
-	</div>
-
-	<div style="margin:0px 10px;">
+<br /><br />
 		<input type="checkbox" name="maxOutDownloads" onClick="javascript:setMaxNew();" checked="checked" t:hideIf="feed.getMaxNew() == 'unlimited'" />
 		<input type="checkbox" name="maxOutDownloads" onClick="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() != 'unlimited'"/>
-		<span i18n:translate="">If I have
-		<input i18n:name="maxnew" name="maxNew" type="text" size="4" value="0" disabled="1" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() != 'unlimited'"/>
-		<input i18n:name="maxnew2" name="maxNew" type="text" size="4" value="@@@feed.getMaxNew()@@@" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() == 'unlimited'"/>
-		videos waiting, don't auto download more.</span><br />
-		<span style="font-size:90%; color:#666666; margin-left: 25px" 
-i18n:translate="">(Keeps channel from hogging disk space)</span>
+		<span i18n:translate="">Don't Auto Download when more than 
+		<input i18n:name="maxnew" name="maxNew" type="text" size="3" value="3" disabled="1" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() != 'unlimited'"/>
+		<input i18n:name="maxnew2" name="maxNew" type="text" size="3" value="@@@feed.getMaxNew()@@@" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() == 'unlimited'"/>
+		videos are waiting unwatched.</span><div class="settings-small">Prevents this channel from using unlimited disk space.</div>
+<br />
+		    <div class="gray-button-wrap settings-button">
+            <div class="gray-button-bg" style="width: 150px;" onclick="return hideSettings()" >
+                <div class="gray-button-left" />
+                <div class="gray-button-right" />
+                <div class="gray-button-content">Close Settings</div>
+            </div>
+
+
+
+		</div>
+		
+		
+
+		  </div>         
+		
 	</div>
 
-    <div style="position: absolute; bottom:0%; margin:0px 10px 10px 10px;">
-        <span i18n:translate="">Channel URL</span>: <span t:replace="feed.getURL()" 
-class="selectable" />
-    </div>
 
 </form>
 
