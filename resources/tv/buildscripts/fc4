@@ -13,7 +13,7 @@ resources/tv/maketarball $2$3
 #Get the spec
 svn cat https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$2/resources/tv/Democracy.spec > Democracy.spec
 cp Democracy-$2$3.tar.gz /usr/src/redhat/SOURCES 
-cp Democracy-FC4.spec /usr/src/redhat/SPECS/Democracy.spec
+cp Democracy.spec /usr/src/redhat/SPECS/Democracy.spec
 
 #build the rpm
 sudo rpmbuild --ba /usr/src/redhat/SPECS/Democracy.spec 
@@ -26,7 +26,6 @@ cp /usr/src/redhat/RPMS/i386/Democracy-debuginfo-$2-1.i386.rpm $2$3/fc4/Democrac
 #copy Directory onto PCF2 user's home directory
 echo "Press enter to upload files..."
 read i
-
 scp -r $2$3 $1@pcf2.osuosl.org:.
 
 #File Cleanup
