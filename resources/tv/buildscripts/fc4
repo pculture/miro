@@ -24,6 +24,9 @@ cp /usr/src/redhat/RPMS/i386/Democracy-$2-1.i386.rpm $2$3/fc4/Democracy-$2-1.i38
 cp /usr/src/redhat/RPMS/i386/Democracy-debuginfo-$2-1.i386.rpm $2$3/fc4/Democracy-debuginfo-$2-1.i386.rpm 
 
 #copy Directory onto PCF2 user's home directory
+echo "Press enter to upload .dmg file..."
+read i
+
 scp -r $2$3 $1@pcf2.osuosl.org:.
 
 #File Cleanup
