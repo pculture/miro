@@ -589,9 +589,9 @@ class Controller (frontend.Application):
             self.selection.selectFirstGuide()
             if self.initial_feeds:
                 views.feedTabs.resetCursor()
-                f = views.feedTabs.getNext()
-                if f is not None:
-                    self.selection.selectTabByObject(f)
+                tab = views.feedTabs.getNext()
+                if tab is not None:
+                    self.selection.selectTabByObject(tab.obj)
 
             util.print_mem_usage("Post-selection memory check")
 
@@ -1174,7 +1174,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
     # Returns true if the browser should handle the URL.
     def onURLLoad(self, url):
-        print "DTV: got %s" % url
+        #print "DTV: got %s" % url
         try:
             # Special-case non-'action:'-format URL
             if url.startswith ("template:"):

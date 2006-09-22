@@ -163,7 +163,8 @@ nsresult changeItem(GtkMozEmbed *gtkembed, char *id, char *newXml)
     nsCOMPtr<nsIDOMNode> newNode;
     rv = CreateNode(domDocument, xmlConverted, newNode);
     if (NS_FAILED(rv)) return rv;
-    rv = parent->InsertBefore(newNode, nextSibling, getter_AddRefs(nodeOut));
+    nsCOMPtr<nsIDOMNode> nodeOut2;
+    rv = parent->InsertBefore(newNode, nextSibling, getter_AddRefs(nodeOut2));
     return rv;
 }
  

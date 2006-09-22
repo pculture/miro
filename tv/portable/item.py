@@ -1235,6 +1235,12 @@ folder will also be deleted.""")
     def isNonVideoFile(self):
         return self.isContainerItem != True and self.getVideoFilename() == ""
 
+    def isExternal(self):
+        """Returns True iff this item was not downloaded from a Democracy
+        channel.
+        """
+        return False
+
     def getRSSEntry(self):
         self.confirmDBThread()
         return self.entry
@@ -1353,6 +1359,9 @@ class FileItem(Item):
     def getViewed(self):
         return True
 
+    def isExternal(self):
+        return self.parent_id is None
+
     def executeExpire(self):
         self.confirmDBThread()
         self.removeFromPlaylists()
@@ -1361,11 +1370,16 @@ class FileItem(Item):
                 item.remove()
         if self.feed_id is None or not os.path.exists (self.filename):
             self.remove()
+            if self.parent_id is not None:
+                self.getParent().downloader.stop(False)
         else:
             self.deleted = True
             self.signalChange(needsUpdateUandA=True)
 
     def expire(self):
+        if not self.isExternal():
+            self.executeExpire()
+            return
         title = _("Removing %s") % (os.path.basename(self.filename))
         if self.isContainerItem:
             description = _("""\
@@ -1454,17 +1468,17 @@ def expireItems(items):
         return items[0].expire()
 
     hasContainers = False
-    hasFileItems = False
+    hasExternalItems = False
     for item in items:
         if item.isContainerItem:
             hasContainers = True
-        elif isinstance(item, FileItem):
-            hasFileItems = True
-        if hasContainers and hasFileItems:
+        elif item.isExternal():
+            hasExternalItems = True
+        if hasContainers and hasExternalItems:
             break
 
     title = _("Removing %s items") % len(items)
-    if hasFileItems:
+    if hasExternalItems:
         description = _("""One or more of these videos was not downloaded \
 from a channel.  Would you like to delete these items or just remove their \
 entries from My Collection?""")
@@ -1477,7 +1491,7 @@ entries from My Collection?""")
 One or more of these items is a folder.  When you remove or delete a folder, \
 any items inside that folder will also be removed or deleted.""")
 
-    if hasFileItems:
+    if hasExternalItems:
         d = dialogs.ThreeChoiceDialog(title, description,
                 dialogs.BUTTON_REMOVE_ENTRY, dialogs.BUTTON_DELETE_FILES,
                 dialogs.BUTTON_CANCEL)

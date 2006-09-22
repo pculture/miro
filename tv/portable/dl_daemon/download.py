@@ -660,6 +660,7 @@ class BTDisplay:
         self.dler = dler
         self.lastUpTotal = 0
         self.lastUpdated = 0
+        self.lastErrorTime = 0
 
     def finished(self):
         self.dler.updateClient()
@@ -676,17 +677,14 @@ class BTDisplay:
         self.dler.updateClient()
 
     def handleBitTorrentError(self, errorMessage):
-        if "problem connecting to the tracker" in errorMessage.lower():
-            shortReason = _("Can't connect")
-        else:
-            shortReason = _("Error")
-        self.dler.handleError(shortReason, errorMessage)
+        print "WARNING: BitTorrent error: %s" % errorMessage
             
     def display(self, statistics):
         update = False
         now = clock()
-        if statistics['errorTime'] != 0:
+        if statistics['errorTime'] > self.lastErrorTime:
             self.handleBitTorrentError(statistics['errorMessage'])
+            self.lastErrorTime = statistics['errorTime']
         if statistics.get('upTotal') != None:
             if self.lastUpTotal > statistics.get('upTotal'):
                 self.dler.uploaded += statistics.get('upTotal')
@@ -757,7 +755,8 @@ class BTDownloader(BGDownloader):
         try:
             self.torrent.shutdown()
         except:
-            print "DTV: Warning: Shutting down non-existent torrent"
+            print "DTV: Warning: Error shutting down torrent"
+            traceback.print_exc()
 
     def _startTorrent(self):
         # Get a number and convert it to base64, then make a peerid from that
@@ -805,6 +804,10 @@ class BTDownloader(BGDownloader):
         return {'downRate':downRate, 'timeEst':timeEst,
                 'fractionDone': fractionDone, 'upTotal': upTotal, 
                 'errorTime': errorTime, 'errorMessage': errorMessage}
+
+    def handleError(self, shortReason, reason):
+        BGDownloader.handleError(self, shortReason, reason)
+        self._shutdownTorrent()
 
     def moveToDirectory(self, directory):
         if self.state in ('uploading', 'downloading'):
