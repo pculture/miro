@@ -223,6 +223,7 @@ class RemoteDownloader(DDBObject):
                                                  self.dlid)
                 c.send()
             else:
+                self.status['state'] = 'downloading'
                 self.restart()
                 self.signalChange()
 

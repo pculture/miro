@@ -117,20 +117,52 @@ class Item(DDBObject):
         else:
             return 'selected'
 
-    def splitItem(self):
-        """returns True if it ran signalChange()"""
-        if self.isContainerItem is not None:
-            return False
-        if not isinstance (self, FileItem) and (self.downloader is None or not self.downloader.isFinished()):
-            return False
+    def findChildVideos(self):
+        """If this item points to a directory, return the set all video files
+        under that directory.
+        """
+
+        videos = set()
         filename_root = self.getFilename()
         if os.path.isdir(filename_root):
-            videos = set()
             for (dirpath, dirnames, filenames) in os.walk(filename_root):
                 for name in filenames:
                     filename = os.path.join (dirpath, name)
                     if isAllowedFilename(filename):
                         videos.add(filename)
+        return videos
+
+    def findNewChildren(self):
+        """If this feed is a container item, walk through its directory and
+        find any new children.  Returns True if it found childern and ran
+        signalChange().
+        """
+
+        if not self.isContainerItem:
+            return False
+        if self.getState() == 'downloading':
+            # don't try to find videos that we're in the middle of
+            # re-downloading
+            return False
+        videos = self.findChildVideos()
+        for child in self.getChildren():
+            videos.discard(child.getFilename())
+        for video in videos:
+            FileItem (video, parent_id=self.id)
+        if videos:
+            self.signalChange(needsUpdateUandA=True)
+            return True
+        return False
+
+    def splitItem(self):
+        """returns True if it ran signalChange()"""
+        if self.isContainerItem is not None:
+            return self.findNewChildren()
+        if not isinstance (self, FileItem) and (self.downloader is None or not self.downloader.isFinished()):
+            return False
+        filename_root = self.getFilename()
+        if os.path.isdir(filename_root):
+            videos = self.findChildVideos()
             if len(videos) > 1:
                 self.isContainerItem = True
                 for video in videos:
@@ -1241,6 +1273,13 @@ folder will also be deleted.""")
         """
         return False
 
+    def isPlayable(self):
+        """Returns True iff this item should have a play button."""
+        if not self.isContainerItem:
+            return self.isDownloaded() and self.getVideoFilename()
+        else:
+            return self.isDownloaded() and len(self.getChildren()) > 0
+
     def getRSSEntry(self):
         self.confirmDBThread()
         return self.entry
@@ -1368,11 +1407,18 @@ class FileItem(Item):
         if self.isContainerItem:
             for item in self.getChildren():
                 item.remove()
-        if self.feed_id is None or not os.path.exists (self.filename):
+        if self.feed_id is None: 
+            # child of a container item
             self.remove()
-            if self.parent_id is not None:
-                self.getParent().downloader.stop(False)
+            dler = self.getParent().downloader
+            if dler:
+                dler.stop(False)
+            self.deleteFiles()
+        elif not os.path.exists (self.filename): 
+            # external item whose file has been deleted outside of DP
+            self.remove()
         else:
+            # external item that the user deleted in DP
             self.deleted = True
             self.signalChange(needsUpdateUandA=True)
 
@@ -1411,7 +1457,8 @@ Collection?""")
             elif os.path.isdir(self.filename):
                 shutil.rmtree(self.filename)
         except:
-            pass
+            print "WARNING: error deleting files"
+            traceback.print_exc()
 
     def getDownloadedTime(self):
         self.confirmDBThread()

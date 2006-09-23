@@ -34,7 +34,8 @@ def newWatchableItems(obj):
     return (obj.getState() in ('expiring','newly-downloaded')) and not obj.isNonVideoFile()
 
 def watchableItems(obj):
-    return obj.isDownloaded() and not obj.isNonVideoFile()
+    return (obj.isDownloaded() and not obj.isNonVideoFile() and 
+            not obj.isContainerItem)
 
 # This is "new" for the channel template, expect it to be
 # updated frequently in the next couple of weeks --NN 9/11/06

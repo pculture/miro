@@ -253,10 +253,10 @@ class StorageWrapper:
             sh = sha(d1[:])
             d1.release()
             sp = sh.digest()
-            d2 = self.read_raw(i,self.lastlen,self._piecelen(i)-self.lastlen)
+            d2 = self.read_raw(i,0,self._piecelen(i))
             if d2 is None:
                 return None
-            sh.update(d2[:])
+            sh = sha(d2[:])
             d2.release()
             s = sh.digest()
             if s == self.hashes[i]:

@@ -1663,6 +1663,8 @@ class DirectoryFeedImpl(FeedImpl):
         for item in views.toplevelItems:
             if not item.feed_id is self.ufeed.id:
                 knownFiles.add(os.path.normcase(item.getFilename()))
+            if item.isContainerItem:
+                item.findNewChildren()
 
         knownFiles.add(os.path.normcase(os.path.join(moviesDir, "Incomplete Downloads")))
         # thumbs.db is a windows file that speeds up thumbnails.  We know it's
