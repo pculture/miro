@@ -227,6 +227,12 @@ function sendKeyToSearchBox(event) {
   return true;
 }
 
+function playNewVideos(event, id) {
+  eventURL('action:playNewVideos?id=' + id);
+  event.stopPropagation(); // don't want handleSelect to deal with this event
+  return false;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 

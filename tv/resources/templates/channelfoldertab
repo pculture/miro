@@ -37,6 +37,10 @@
  <div class="right-bubble green">
   <div class="number-count green" t:replace="this.obj.numUnwatched()" />
  </div>
+ <div href="#" class="new-video-play-button"
+      onclick="return playNewVideos(event, ***this.objID()***);" >
+     <img src="resource:images/play.png" />
+ </div>
 </div>
 <img id="channel-tnail-***this.objID()***" class="icon" src="resource:images/folder-icon-tablist.png" /><div class="name" t:replaceMarkup="this.obj.getTitle()" />
 </a>

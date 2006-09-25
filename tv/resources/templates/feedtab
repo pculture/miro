@@ -25,6 +25,10 @@
  <div class="right-bubble green">
   <div class="number-count green" t:replace="this.obj.numUnwatched()" />
  </div>
+ <div href="#" class="new-video-play-button"
+      onclick="return playNewVideos(event, ***this.objID()***);" >
+     <img src="resource:images/play.png" />
+ </div>
 </div>
 <div t:showIf="this.obj.isUpdating()" class="feed-loading-icon" />
 

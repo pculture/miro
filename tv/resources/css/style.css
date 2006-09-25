@@ -309,8 +309,8 @@ a.feeditem.normal .feed-loading-icon {
 	padding: 2px 0px 4px 0px;
 	font-weight: normal;
 	background: left top repeat-x;
+	min-width: 7px;
 }
-
 
 .left-bubble {
 	margin: 1px 0px 0px 5px;
@@ -363,6 +363,33 @@ a.feeditem.normal .feed-loading-icon {
 .number-count.orange {
 	background-image: url(../images/circle-orange-mid.png);
 }
+
+.new-video-play-button {
+	position: absolute;
+	left: 6px;
+	right: 6px;
+	top: 0px;
+	height: 19px;
+	text-align: center;
+	z-index: 5;
+}
+
+.new-video-play-button:hover {
+	background: left top repeat-x;
+	background-image: url(../images/circle-green-mid.png);
+}
+
+.new-video-play-button img {
+	display: none;
+	width: 11px;
+	height: 14px;
+	margin-top: 2px;
+}
+
+.new-video-play-button:hover img {
+	display: inline;
+}
+
 /* Reverse the color scheme for blue bubbles when they are selected */
 
 .selected a.feeditem .left-bubble.blue {

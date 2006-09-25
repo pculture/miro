@@ -24,6 +24,7 @@ import httpclient
 import views
 import platformutils
 import subscription
+import util
 
 _commandLineArgs = []
 commandLineVideoIds = None
@@ -40,12 +41,12 @@ def addVideo(path):
             print "Not adding duplicate video: %s" % path
             commandLineVideoIds.add(i.getID())
             return
-    manualFeed = app.getSingletonDDBObject(views.manualFeed)
+    manualFeed = util.getSingletonDDBObject(views.manualFeed)
     fileItem = item.FileItem(path, feed_id=manualFeed.getID())
     commandLineVideoIds.add(fileItem.getID())
 
 def addTorrent(path, torrentInfohash):
-    manualFeed = app.getSingletonDDBObject(views.manualFeed)
+    manualFeed = util.getSingletonDDBObject(views.manualFeed)
     manualFeed.confirmDBThread()
     for i in manualFeed.items:
         if (i.downloader is not None and

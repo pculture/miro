@@ -1644,13 +1644,43 @@ class TemplateActionHandler:
     def toggleAllItemsMode(self):
         self.templateHandle.getTemplateVariable('toggleAllItemsMode')(self.templateHandle)
 
+    def playView(self, view, firstItemId=None):
+        controller.playbackController.configure(view, firstItemId)
+        controller.playbackController.enterPlayback()
+
     def playViewNamed(self, viewName, firstItemId):
         # Find the database view that we're supposed to be
         # playing; take out items that aren't playable video
         # clips and put it in the format the frontend expects.
         view = self.templateHandle.getTemplateVariable(viewName)
-        controller.playbackController.configure(view, firstItemId)
-        controller.playbackController.enterPlayback()
+        self.playView(view, firstItemId)
+
+    def playNewVideos(self, id):
+        try:
+            obj = db.getObjectByID(int(id))
+        except ObjectNotFoundError:
+            return
+        controller.selection.selectTabByObject(obj, displayTabContent=False)
+        if isinstance(obj, feed.Feed):
+            feedView = views.items.filterWithIndex(indexes.itemsByFeed,
+                    obj.getID())
+            view = feedView.filter(filters.watchableItems,
+                    sortFunc=sorts.itemsUnwatchedFirst)
+            self.playView(view)
+            view.unlink()
+        elif isinstance(obj, folder.ChannelFolder):
+            folderView = views.items.filterWithIndex(
+                    indexes.itemsByChannelFolder, obj)
+            view = folderView.filter(filters.watchableItems,
+                    sortFunc=sorts.itemsUnwatchedFirst)
+            self.playView(view)
+            view.unlink()
+        elif isinstance(obj, tabs.StaticTab): # new videos tab
+            view = views.unwatchedItems
+            self.playView(view)
+        else:
+            raise TypeError("Can't get new videos for %s (type: %s)" % 
+                    (obj, type(obj)))
 
     def playItemExternally(self, itemID):
         controller.playbackController.playItemExternally(itemID)

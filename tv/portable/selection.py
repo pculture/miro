@@ -397,7 +397,7 @@ class SelectionHandler(object):
                             displayTabContent=displayTabContent)
                     return
 
-    def selectTabByObject(self, obj):
+    def selectTabByObject(self, obj, displayTabContent=True):
         channelTabOrder = util.getSingletonDDBObject(views.channelTabOrder)
         playlistTabOrder = util.getSingletonDDBObject(views.playlistTabOrder)
         tabViews = [ 
@@ -410,7 +410,8 @@ class SelectionHandler(object):
             for tab in view:
                 if tab.obj is obj:
                     self.selectItem('tablist', view, tab.objID(),
-                            shiftSelect=False, controlSelect=False)
+                            shiftSelect=False, controlSelect=False,
+                            displayTabContent=displayTabContent)
                     return
 
     def _chooseDisplayForCurrentTab(self):

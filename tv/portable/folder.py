@@ -5,6 +5,7 @@ import dialogs
 import indexes
 import menu
 import playlist
+import util
 import views
 from database import DDBObject
 from databasehelper import makeSimpleGetSet
@@ -103,7 +104,7 @@ class ChannelFolder(FolderBase):
         return _("Enter a new name for the channel folder %s" % 
                 self.getTitle())
     def getTabOrder(self):
-        return app.getSingletonDDBObject(views.channelTabOrder)
+        return util.getSingletonDDBObject(views.channelTabOrder)
     def getChildrenView(self):
         return views.feeds.filterWithIndex(indexes.byFolder, self)
 
@@ -180,7 +181,7 @@ class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
         return _("Enter a new name for the playlist folder %s" % 
                 self.getTitle())
     def getTabOrder(self):
-        return app.getSingletonDDBObject(views.playlistTabOrder)
+        return util.getSingletonDDBObject(views.playlistTabOrder)
     def getChildrenView(self):
         return views.playlists.filterWithIndex(indexes.byFolder, self)
 
