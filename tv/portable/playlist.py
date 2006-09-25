@@ -170,7 +170,7 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
         else:
             return 'playlist:playlistfolder'
 
-    def makeContextMenu(self, templateName):
+    def makeContextMenu(self, templateName, view):
         return menu.makeMenu([
             (self.rename, _('Rename Playlist')),
             (lambda: app.controller.removePlaylist(self), _('Remove')),

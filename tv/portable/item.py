@@ -1159,7 +1159,7 @@ folder will also be deleted.""")
         # here...
         return '<span>' + unescape(ret) + '</span>'
 
-    def makeContextMenu(self, templateName):
+    def makeContextMenu(self, templateName, view):
         c = app.controller # easier/shorter to type
         watched = downloaded = downloading = available = 0
         selected = app.controller.selection.getSelectedItems()
@@ -1175,6 +1175,11 @@ folder will also be deleted.""")
 
         items = []
         if downloaded > 0:
+            items.append((lambda: c.playView(view, self.getID()), 
+                _('Play')))
+            items.append((lambda: c.playView(view, self.getID(), True), 
+                _('Play Just This Video')))
+
             if len(selected) > 1:
                 items.append((None, _('%d Downloaded Items') % downloaded))
             items.append((c.addToNewPlaylist, _('Add to new playlist')))

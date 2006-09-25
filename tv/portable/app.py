@@ -83,9 +83,11 @@ class PlaybackControllerBase:
     
     def __init__(self):
         self.currentPlaylist = None
+        self.justPlayOne = False
 
-    def configure(self, view, firstItemId=None):
+    def configure(self, view, firstItemId=None, justPlayOne=False):
         self.currentPlaylist = Playlist(view, firstItemId)
+        self.justPlayOne = justPlayOne
     
     def reset(self):
         if self.currentPlaylist is not None:
@@ -188,7 +190,7 @@ class PlaybackControllerBase:
         elif (allowMovieReset and hasattr(currentDisplay, 'getCurrentTime') 
                 and currentDisplay.getCurrentTime() > 2.0):
             currentDisplay.goToBeginningOfMovie()
-        elif config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
+        elif config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE) or self.justPlayOne:
             self.stop()
         else:
             if direction == 1:
@@ -862,6 +864,10 @@ downloaded?""")
                     if feed.idExists():
                         feed.remove()
         dialog.run(dialogCallback)
+
+    def playView(self, view, firstItemId=None, justPlayOne=False):
+        self.playbackController.configure(view, firstItemId, justPlayOne)
+        self.playbackController.enterPlayback()
 
     def downloaderShutdown(self):
         print "DTV: Closing Database..."
@@ -1649,16 +1655,13 @@ class TemplateActionHandler:
     def toggleAllItemsMode(self):
         self.templateHandle.getTemplateVariable('toggleAllItemsMode')(self.templateHandle)
 
-    def playView(self, view, firstItemId=None):
-        controller.playbackController.configure(view, firstItemId)
-        controller.playbackController.enterPlayback()
-
     def playViewNamed(self, viewName, firstItemId):
-        # Find the database view that we're supposed to be
-        # playing; take out items that aren't playable video
-        # clips and put it in the format the frontend expects.
         view = self.templateHandle.getTemplateVariable(viewName)
-        self.playView(view, firstItemId)
+        controller.playView(view, firstItemId)
+
+    def playOneItem(self, viewName, itemID):
+        view = self.templateHandle.getTemplateVariable(viewName)
+        controller.playView(view, itemID, justPlayOne=True)
 
     def playNewVideos(self, id):
         try:
@@ -1671,18 +1674,18 @@ class TemplateActionHandler:
                     obj.getID())
             view = feedView.filter(filters.watchableItems,
                     sortFunc=sorts.itemsUnwatchedFirst)
-            self.playView(view)
+            controller.playView(view)
             view.unlink()
         elif isinstance(obj, folder.ChannelFolder):
             folderView = views.items.filterWithIndex(
                     indexes.itemsByChannelFolder, obj)
             view = folderView.filter(filters.watchableItems,
                     sortFunc=sorts.itemsUnwatchedFirst)
-            self.playView(view)
+            controller.playView(view)
             view.unlink()
         elif isinstance(obj, tabs.StaticTab): # new videos tab
             view = views.unwatchedItems
-            self.playView(view)
+            controller.playView(view)
         else:
             raise TypeError("Can't get new videos for %s (type: %s)" % 
                     (obj, type(obj)))
@@ -1732,7 +1735,7 @@ class TemplateActionHandler:
             view = self.templateHandle.getTemplateVariable(viewName)
             if not controller.selection.isSelected(area, view, int(id)):
                 self.handleSelect(area, viewName, id, False, False)
-            menu = obj.makeContextMenu(self.currentName)
+            menu = obj.makeContextMenu(self.currentName, view)
             delegate.showContextMenu(menu)
 
     def __getSearchFeeds(self):

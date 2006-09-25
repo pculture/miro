@@ -127,7 +127,7 @@ class ChannelGuide(DDBObject):
         # interception.
         return ('template', 'guide')
 
-    def makeContextMenu(self, templateName):
+    def makeContextMenu(self, templateName, view):
         menuItems = [
             (lambda: app.delegate.copyTextToClipboard(self.getURL()),
                 _('Copy URL to clipboard')),

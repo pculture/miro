@@ -711,7 +711,7 @@ class Feed(DDBObject):
     def unsetTitle(self):
         self.setTitle(None)
 
-    def makeContextMenu(self, templateName):
+    def makeContextMenu(self, templateName, view):
         items = [
             (self.update, _('Update Channel Now')),
             (lambda: app.delegate.copyTextToClipboard(self.getURL()),

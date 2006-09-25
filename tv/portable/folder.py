@@ -114,7 +114,7 @@ class ChannelFolder(FolderBase):
                 return True
         return False
 
-    def makeContextMenu(self, templateName):
+    def makeContextMenu(self, templateName, view):
         return menu.makeMenu([
             (self.rename, _('Rename Channel Folder')),
             (lambda: app.controller.removeFeed(self), _('Remove')),
@@ -169,7 +169,7 @@ class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
         if view.len() == 0 and id in self.trackedItems:
             self.removeID(id)
 
-    def makeContextMenu(self, templateName):
+    def makeContextMenu(self, templateName, view):
         return menu.makeMenu([
             (self.rename, _('Rename Playlist Folder')),
             (lambda: app.controller.removePlaylist(self), _('Remove')),
