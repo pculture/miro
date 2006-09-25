@@ -292,7 +292,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
     def handleWatchableDisplayNotification_(self, notification):
         self.enablePrimaryControls(YES)
-        self.enableSecondaryControls(NO)
+        self.enableSecondaryControls(self.videoDisplay.isPlaying)
 
     def handleNonWatchableDisplayNotification_(self, notification):
         self.enablePrimaryControls(NO)
