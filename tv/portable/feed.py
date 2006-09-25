@@ -802,28 +802,33 @@ class Feed(DDBObject):
 
             self.signalChange()
 
-    def _generateFeedErrback(self, error, removeOnError):
-        if not self.idExists():
-            return
+    def _handleFeedLoadingError(self, errorDescription):
         self.download = None
-        print "DTV: Warning couldn't load feed at %s (%s)" % \
-                (self.origURL, error)
         self.errorState = True
         self.loading = False
         self.signalChange()
         if self.informOnError:
             title = _('Error loading feed')
-            description = _("Couldn't load the feed at %s.") % self.url
-            if isinstance(error, NetworkError):
-                description += "\n\n"
-                description += error.getFriendlyDescription()
-            else:
-                print "WARNING: unknown error in _generateFeedErrback (%s)" \
-                        % error
-            dialogs.MessageBoxDialog(title, description).run()
+            description = _("Couldn't load the feed at %s (%s).") % (
+                    self.url, errorDescription)
+            description += "\n\n"
+            description += _("Would you like to keep the feed?")
+            d = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_KEEP,
+                    dialogs.BUTTON_DELETE)
+            def callback(dialog):
+                if dialog.choice == dialogs.BUTTON_DELETE and self.idExists():
+                    self.remove()
+            d.run(callback)
             self.informOnError = False
         delay = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)
         eventloop.addTimeout(delay, self.update, "update failed feed")
+
+    def _generateFeedErrback(self, error, removeOnError):
+        if not self.idExists():
+            return
+        print "DTV: Warning couldn't load feed at %s (%s)" % \
+                (self.origURL, error)
+        self._handleFeedLoadingError(error.getFriendlyDescription())
 
     def _generateFeedCallback(self, info, removeOnError):
         """This is called by grabURL to generate a feed based on
@@ -912,10 +917,7 @@ class Feed(DDBObject):
                     #print " It's pre-enclosure RSS"
                     self.askForScrape(info, xmldata, charset)
         else:
-            print "DTV doesn't know how to deal with", contentType, "feeds:", str(self)
-            self.finishGenerateFeed(None)
-            if removeOnError:
-                self.remove()
+            self._handleFeedLoadingError(_("Bad content-type"))
 
     def finishGenerateFeed(self, feedImpl):
         self.confirmDBThread()

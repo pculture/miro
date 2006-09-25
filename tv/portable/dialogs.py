@@ -73,6 +73,8 @@ BUTTON_CREATE = DialogButton(_("Create"))
 BUTTON_CREATE_CHANNEL = DialogButton(_("Create Channel"))
 BUTTON_ADD = DialogButton(_("Add"))
 BUTTON_ADD_INTO_NEW_FOLDER = DialogButton(_("Add Into New Folder"))
+BUTTON_KEEP = DialogButton(_("Keep"))
+BUTTON_DELETE = DialogButton(_("Delete"))
 
 class Dialog(object):
     """Abstract base class for dialogs."""
