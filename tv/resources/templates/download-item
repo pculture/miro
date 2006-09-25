@@ -44,7 +44,7 @@ viewName = kargs['viewName']
                 title="Download Pending for '***this.getTitle()***'"
                 src="resource:images/download-pending-dot.png" />
         </span>
-        <a t:showIf="this.isDownloaded() and this.getVideoFilename() != ''"
+        <a t:showIf="this.isPlayable()"
             class="play-icon" href="#" 
             title="Play '***this.getTitle()***'" 
             onclick="return eventURL('action:playViewNamed?viewName=@@@viewName@@@&amp;firstItemId=@@@this.getID()@@@');" />
