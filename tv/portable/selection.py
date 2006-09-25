@@ -50,6 +50,7 @@ class SelectionArea(object):
         self.currentView = view
         self.currentView.addRemoveCallback(self.onRemove)
         self.currentView.addAddCallback(self.onAdd)
+        self.currentView.addViewUnlinkCallback(self.onViewUnlinked)
 
     def selectItem(self, view, id):
         self.switchView(view)
@@ -163,6 +164,9 @@ class SelectionArea(object):
             # this happens when we remove/add the object to reorder it in a
             # playlist
             self.currentSelection.add(id)
+
+    def onViewUnlinked(self):
+        self.clearSelection()
 
     def getTypesDetailed(self):
         """Get the type of objects that are selected.  

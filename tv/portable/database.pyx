@@ -306,6 +306,7 @@ class DynamicDatabase:
         self.addCallbacks = set()
         self.removeCallbacks = set()
         self.viewChangeCallbacks = set()
+        self.viewUnlinkCallbacks = set()
         self.subFilters = []
         self.subSorts = []
         self.subMaps = []
@@ -601,6 +602,14 @@ class DynamicDatabase:
         self.viewChangeCallbacks.add(function)
 
     ##
+    # registers a function to call when the view is about to be unlinked
+    #
+    # @param function a function that takes in no parameters
+    def addViewUnlinkCallback(self, function):
+        self.confirmDBThread()
+        self.viewUnlinkCallbacks.add(function)
+
+    ##
     # registers a function to call when an item is removed from the view
     #
     # @param function a function that takes in one parameter: the
@@ -625,6 +634,9 @@ class DynamicDatabase:
         self.confirmDBThread()
         self.viewChangeCallbacks.remove(function)
 
+    def removeViewUnlinkCallback(self, function):
+        self.confirmDBThread()
+        self.viewUnlinkCallbacks.remove(function)
 
     ##
     # Adds an item to the object database, filtering changes to subViews
@@ -1059,6 +1071,8 @@ class DynamicDatabase:
     ##
     # Removes this view from the hierarchy of views
     def unlink(self):
+        for callback in self.viewUnlinkCallbacks:
+            callback()
         self.parent.removeView(self)
 
     ##

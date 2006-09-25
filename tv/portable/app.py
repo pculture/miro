@@ -1363,6 +1363,10 @@ class ModelActionHandler:
         except database.ObjectNotFoundError:
             print "DTV: Warning: tried to expire item that doesn't exist with id %d" % int(item)
 
+    def expirePlayingItem(self, item):
+        self.expireItem(item)
+        controller.playbackController.skip(1)
+
     def keepItem(self, item):
         obj = db.getObjectByID(int(item))
         obj.save()
