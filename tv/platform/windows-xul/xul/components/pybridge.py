@@ -214,6 +214,10 @@ class PyBridge:
         return config.get(prefs.EXPIRE_AFTER_X_DAYS)
     def setExpireAfter(self, value):
         return config.set(prefs.EXPIRE_AFTER_X_DAYS, value)
+    def getSinglePlayMode(self):
+        return config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE)
+    def setSinglePlayMode(self, value):
+        return config.set(prefs.SINGLE_VIDEO_PLAYBACK_MODE, value)
 
     @asUrgent
     def handleCommandLine(self, commandLine):

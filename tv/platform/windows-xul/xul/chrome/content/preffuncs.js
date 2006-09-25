@@ -13,6 +13,7 @@ function onload() {
   setHasMinDiskSpace(pybridge.getPreserveDiskSpace());
   setMinDiskSpace(pybridge.getPreserveDiskSpaceAmount());
   setExpire(pybridge.getExpireAfter());
+  setSinglePlayMode(pybridge.getSinglePlayMode());
 }
 
 /* Convert a floating point object into a string to show to the user.  We
@@ -137,3 +138,19 @@ function setExpire(days) {
 function expirationChange(days) {
    pybridge.setExpireAfter(parseInt(days));
 }
+
+function singlePlayModeChange() {
+  var radio = document.getElementById('single-play-mode-radio');
+  pybridge.setSinglePlayMode(radio.selected);
+}
+
+function setSinglePlayMode(value) {
+  if(value) {
+    var button = document.getElementById('single-play-mode-radio');
+  } else {
+    var button = document.getElementById('continuous-play-mode-radio');
+  }
+  document.getElementById('play-mode-radiogroup').selectedItem = button;
+}
+
+

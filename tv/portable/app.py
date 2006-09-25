@@ -181,23 +181,24 @@ class PlaybackControllerBase:
         self.exitPlayback(switchDisplay)
 
     def skip(self, direction, allowMovieReset=True):
-        nextItem = None
-        if self.currentPlaylist is not None:
+        frame = controller.frame
+        currentDisplay = frame.getDisplay(frame.mainDisplay)
+        if self.currentPlaylist is None:
+            self.stop()
+        elif (allowMovieReset and hasattr(currentDisplay, 'getCurrentTime') 
+                and currentDisplay.getCurrentTime() > 2.0):
+            currentDisplay.goToBeginningOfMovie()
+        elif config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
+            self.stop()
+        else:
             if direction == 1:
                 nextItem = self.currentPlaylist.getNext()
             else:
-                frame = controller.frame
-                currentDisplay = frame.getDisplay(frame.mainDisplay)
-                if allowMovieReset and hasattr(currentDisplay, 'getCurrentTime') and currentDisplay.getCurrentTime() > 2.0:
-                    currentDisplay.goToBeginningOfMovie()
-                    return self.currentPlaylist.cur()
-                else:
-                    nextItem = self.currentPlaylist.getPrev()
-        if nextItem is None:
-            self.stop()
-        else:
-            self.playItem(nextItem)
-        return nextItem
+                nextItem = self.currentPlaylist.getPrev()
+            if nextItem is None:
+                self.stop()
+            else:
+                self.playItem(nextItem)
 
     def onMovieFinished(self):
         return self.skip(1)

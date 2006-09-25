@@ -27,16 +27,26 @@
 	<!--CHANNELS-->
 	<groupbox orient="horizontal">
 		<caption label="Channels"/>
-		<hbox>
-			<description style="padding-top:4px;">Check Channels for new content</description>
-			<menulist id="checkevery">
-				<menupopup>
-					<menuitem label="Every 30 minutes" oncommand="checkEveryChange(30);" id="check30" value="30"/>
-					<menuitem label="Every hour" oncommand="checkEveryChange(60);" id="check60" value="60"/>
-					<menuitem label="Manually" oncommand="checkEveryChange(-1);" id="checknever" value="never"/>
-				</menupopup>
-			</menulist>
-		</hbox>
+                <hbox>
+                    <description style="padding-top:4px;">Check Channels for new content</description>
+                    <menulist id="checkevery">
+                            <menupopup>
+                                    <menuitem label="Every 30 minutes" oncommand="checkEveryChange(30);" id="check30" value="30"/>
+                                    <menuitem label="Every hour" oncommand="checkEveryChange(60);" id="check60" value="60"/>
+                                    <menuitem label="Manually" oncommand="checkEveryChange(-1);" id="checknever" value="never"/>
+                            </menupopup>
+                    </menulist>
+                </hbox>
+	</groupbox>
+	<groupbox orient="horizontal">
+		<caption label="Playback"/>
+                    <radiogroup id="play-mode-radiogroup"
+                            oncommand="singlePlayModeChange();" >
+                        <radio label="Play videos one after another." 
+                                id="continuous-play-mode-radio" />
+                        <radio label="Stop after each video."
+                                id="single-play-mode-radio" />
+                    </radiogroup>
 	</groupbox>
 	<!--/CHANNELS-->
 

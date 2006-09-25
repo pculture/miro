@@ -56,6 +56,8 @@ interface pcfIDTVPyBridge : nsISupports
   void setPreserveDiskSpaceAmount(in float value);
   short getExpireAfter();
   void setExpireAfter(in short value);
+  boolean getSinglePlayMode();
+  void setSinglePlayMode(in boolean value);
   void showCursor(in boolean display);
   void createNewPlaylist();
   void createNewPlaylistFolder();

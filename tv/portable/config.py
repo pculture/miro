@@ -91,6 +91,7 @@ def set(descriptor, value):
         print ("WARNING: config.set called with config descriptor: %s" %
             descriptor.key)
     __lock.acquire()
+    print "Setting %s to %s" % (descriptor.key, value)
     try:
         __checkValidity()
         if descriptor.key not in __data or __data[ descriptor.key ] != value:
