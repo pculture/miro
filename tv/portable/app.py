@@ -1863,6 +1863,7 @@ def _defaultFeeds():
         defaultFeedURLs.append('http://libsyn.com/podcasts/donmc/_static/scoipod.xml')
     for url in defaultFeedURLs:
         feed.Feed(url, initiallyAutoDownloadable=False)
+    playlist.SavedPlaylist(_("Example Playlist"))
 
 def _getInitialChannelGuide():
     default_guide = None
