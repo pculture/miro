@@ -1782,7 +1782,7 @@ class Playlist:
                 self.view.resetCursor()
                 self.view.getNext()
                 break
-            if str(cur.getID()) == firstItemId:
+            if cur.getID() == firstItemId:
                 # The cursor is now on the requested item.
                 break
 

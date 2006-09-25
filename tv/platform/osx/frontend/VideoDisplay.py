@@ -147,12 +147,12 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         nc.addObserver_selector_name_object_(
             self, 
             'handleWatchableDisplayNotification:', 
-            'displayIsWatchable', 
+            'notifyPlayable', 
             nil)
         nc.addObserver_selector_name_object_(
             self, 
             'handleNonWatchableDisplayNotification:', 
-            'displayIsNotWatchable', 
+            'notifyNotPlayable', 
             nil)
         self.systemActivityUpdaterTimer = nil
         self.reset()
@@ -207,7 +207,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('%s_blue' % prefix))
 
     def playPause_(self, sender):
-        app.controller.playbackController.playPause()
+        eventloop.addUrgentCall(lambda:app.controller.playbackController.playPause(), "Play Video")
 
     @platformutils.onMainThread
     def play(self):
@@ -233,9 +233,11 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.updatePlayPauseButton('play')
 
     def playFullScreen_(self, sender):
-        if not app.controller.videoDisplay.isPlaying:
-            app.controller.playbackController.playPause()
-        self.videoDisplay.goFullScreen()
+        def performInEventLoop():
+            if not app.controller.videoDisplay.isPlaying:
+                app.controller.playbackController.playPause()
+            self.videoDisplay.goFullScreen()
+        eventloop.addUrgentCall(lambda:performInEventLoop(), "Play Video Fullscreen")
 
     @platformutils.onMainThread
     def goFullScreen(self):
@@ -291,15 +293,10 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     def handleWatchableDisplayNotification_(self, notification):
         self.enablePrimaryControls(YES)
         self.enableSecondaryControls(NO)
-        info = notification.userInfo()
-        view = info['view']
-        app.controller.playbackController.configure(view)
 
     def handleNonWatchableDisplayNotification_(self, notification):
         self.enablePrimaryControls(NO)
-        display = notification.object()
-        if hasattr(display, 'templateName') and display.templateName.startswith('external-playback'):
-            self.enableSecondaryControls(YES, NO)
+        self.enableSecondaryControls(NO)
     
     def handleMovieNotification_(self, notification):
         renderer = self.videoDisplay.activeRenderer
@@ -434,7 +431,7 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
                 if event.characters().characterAtIndex_(0) == 0x1B:
                     app.controller.videoDisplay.exitFullScreen()
                 elif event.characters().characterAtIndex_(0) == 0x20:
-                    app.controller.playbackController.playPause()
+                    eventloop.addUrgentCall(lambda:app.controller.playbackController.playPause(), "Play/Pause")
             elif event.type() == NSMouseMoved:
                 if not self.palette.isVisible():
                     self.palette.reveal(self)

@@ -150,6 +150,13 @@ class MainController (NibClassBuilder.AutoBaseClass):
         app.controller.setGuideURL(guideURL)
         self.menuStrings = strings
         self.actionGroups = actionGroups
+        
+        if actionGroups['VideoPlayable']:
+            notification = 'notifyPlayable'
+        else:
+            notification = 'notifyNotPlayable'
+        nc = NSNotificationCenter.defaultCenter()
+        nc.postNotificationName_object_(notification, nil)
 
     def selectDisplay(self, display, area):
         if display is not None:
