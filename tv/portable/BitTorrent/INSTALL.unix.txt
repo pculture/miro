@@ -1,0 +1,21 @@
+install Python, version 2.2.1 or later - http://python.org/
+
+install wxPython - http://wxpython.org/
+
+(under debian, you can currently get the above using 
+apt-get install libwxgtk2.2-python 
+from testing and use python 2.1)
+
+untar and put a line in /etc/mailcap which is similar to the 
+following, only replace the path to 
+/usr/bin/btdownloadgui.py with the one it's actually in.
+
+application/x-bittorrent; /usr/bin/btdownloadgui.py %s; test=test -n "$DISPLAY"
+
+You may have to restart your web browser for it to start 
+using BitTorrent.
+
+If you're using a web browser which doesn't respect 
+/etc/mailcap you can go into the mimetype configuration for 
+your web browser and manually associate application/x-bittorrent 
+with btdownloadgui.py (with the appropriate path, of course.)

@@ -1,0 +1,10 @@
+# include anything in here that is not automatically picked up by distutils
+include BitTorrent/__init__.py
+
+# include all top level scripts
+include btdownloadlibrary.py
+include btdownloadheadless.py
+include btdownloadgui.py
+include btmakemetafile.py
+include bttrack.py
+include bttest.py

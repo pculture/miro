@@ -1,0 +1,29 @@
+The following people have all helped with BitTorrent in some way -
+
+Bill Bumgarner
+David Creswick
+Andrew Loewenstern
+Ross Cohen
+Jeremy Avnet
+Greg Broiles
+Barry Cohen
+Bram Cohen
+sayke
+Steve Jenson
+Myers Carpenter
+Francis Crick
+Petru Paler
+Jeff Darcy
+John Gilmore
+Yann Vernier
+Pat Mahoney
+Boris Zbarsky
+Eric Tiedemann
+Henry 'Pi' James
+Loring Holden
+Robert Stone
+Michael Janssen
+John Hoffman
+Uoti Urpala
+Kevin Drum
+Denis Ahrens

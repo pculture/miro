@@ -1,0 +1,21 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {generate = id; }; 
+            CLASS = Generate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                announce = id; 
+                fileField = id; 
+                gButton = id; 
+                gWindow = id; 
+                iconWell = id; 
+                progressMeter = id; 
+                subCheck = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

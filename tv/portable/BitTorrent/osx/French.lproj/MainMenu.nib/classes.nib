@@ -1,0 +1,27 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                cancelUrl = id; 
+                openAbout = id; 
+                openGenerator = id; 
+                openPrefs = id; 
+                openTrackerResponse = id; 
+                openURL = id; 
+                takeUrl = id; 
+            }; 
+            CLASS = BTAppController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                aboutWindow = NSWindow; 
+                generator = id; 
+                url = NSTextField; 
+                urlWindow = NSWindow; 
+                versField = NSTextField; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

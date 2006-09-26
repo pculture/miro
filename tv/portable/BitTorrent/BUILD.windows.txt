@@ -1,0 +1,23 @@
+install Python, version 2.0 or later - http://python.org/
+
+install wxPython - http://wxpython.org/
+
+install py2exe - http://starship.python.net/crew/theller/py2exe/
+
+install the nullsoft installer - http://www.nullsoft.com/free/nsis/
+
+the rest of these instructions can be abbreviated by just running build.bat
+
+in a shell, go to the root BitTorrent directory and run this command
+
+python winsetup.py py2exe
+
+now run nsis on bittorrent.nsi
+
+c:\progra~1\nsis\makensis.exe bittorrent.nsi
+
+This will create an installer called bittorrent.exe
+
+The installer is completely self-contained and will work on any 
+Windows machine, even without the above software having been 
+installed.

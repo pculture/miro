@@ -1,0 +1,48 @@
+Build Instructions For OSX
+
+1.  Install Python 2.2
+  - Make sure ProjectBuilder knows where to find libpython2.2a
+    Update the library's location in Groups&Files/BitTorrent/Frameworks/LinkedFrameworks
+    Update Targets/BitTorrent/BuildSettings/SearchPaths/Libraries
+  - IMPORTANT:  You can't use Python.framework    Use a regular python install (fink is ok!)
+  
+2.  Build BitTorrent
+  - click hammer icon
+  
+The freeze.py script copies the dependent python modules from your python distribution into the app wrapper.  I think this script will work independently of your particular python installation but I haven't tested it on any other systems.
+
+
+** The project configuration could be better.
+
+
+----------------
+HACKING GUIDE
+
+The thing that makes BT-OSX not so straightforward is on the Mac you don't create a whole new instance of the app for each download (DL).  That means each DL runs in it's own thread.  BT uses callbacks for display updates but in Cocoa you con't reliably draw from any thread but the main thread or your app will crash.  So what we do is use an NSConnection so messages sent from a DL thread to it's DL window are posted in the main thread on the next turn of the main event loop.  This complicates setting up the DL but once things are setup communication between the python threads and the DL window controller is a simple ObjC message send.  Basically, a pair of mach ports is created and the DL window is registered in the main thread's connection.  Then the ports are passed into the DL thread and the DL thread gets a proxy to the DL window.  When the DL thread messages it's window, NSConnection transparently packs up, sends over a Mach port, unpacks, and dispatches the message on the main event loop with the return value sent to the originating thread if necesary.
+
+components:
+
+ BTAppController.m - App delegate, loads the DLWindow nibs and starts DLs
+
+ DLWindowController.m - each DL window has one of these as it's delegate, it is messaged by the python callbacks to update the DL window
+
+ BTCallbacks.h - ObjC protocol for messages the DLWindowController - responds to; chooseFile, display, and finished callbacks..
+
+ callbacks.m - Python object written in C, it's methods are passed into BitTorrent as callbacks.  It encapsulates the connection to the DLWindowController and makes the ObjC calls to it.
+ 
+ 
+ here's how it goes:
+ 
+   main.m initializes the Python interpreter before starting the regular Appkit stuff
+   
+   when BTAppController starts a new DL, it loads the DLWindow nib and instantiates a DLWindowController.
+   
+   BTAppController then makes a pair of NSPorts and an NSConnection and registers the DLWindowController instance as the root object.
+   
+   BTAppController makes Python Event object for cancelling the download, then starts a new thread passing the ports and event flag
+
+   The new thread uses the ports to create an NSConnection to the DLWindowController, creates a Python proxy object (defined in callbacks.m,) that encapsulates the DLWindowController NSProxy then sets up the arguments for the BT download.
+
+  Now when BT calls back, the python callback functions message the DLWindowController via the NSConnection, with the messages being dispatched on the main event loop...
+
+

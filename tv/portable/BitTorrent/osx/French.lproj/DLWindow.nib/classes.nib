@@ -1,0 +1,26 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {cancelDl = id; takeMaxUploadRateFrom = id; takeMaxUploadsFrom = id; }; 
+            CLASS = DLWindowController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                dlRate = id; 
+                dlTotal = id; 
+                file = id; 
+                lastError = id; 
+                "max_upload_rate" = id; 
+                "max_uploads" = id; 
+                peerStat = id; 
+                percentCompleted = id; 
+                progressBar = id; 
+                timeRemaining = id; 
+                ulRate = id; 
+                ulTotal = id; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}
