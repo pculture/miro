@@ -44,6 +44,7 @@ httpclient.PIPELINING_ENABLED = False
 httpclient.SOCKET_READ_TIMEOUT = 300
 httpclient.SOCKET_INITIAL_READ_TIMEOUT = 30
 
+download.downloadUpdater.startUpdates()
 eventloop.startup()
 
 print "*** Daemon ready ***"

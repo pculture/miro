@@ -246,6 +246,51 @@ def restoreDownloader(downloader):
 
     _downloads[downloader['dlid']] = dl
 
+class DownloadStatusUpdater:
+    """Handles updating status for all in progress downloaders.
+
+    On OS X and gtk if the user is on the downloads page and has a bunch of
+    downloads going, this can be a fairly CPU intensive task.
+    DownloadStatusUpdaters mitigate this in 2 ways.
+
+    1) DownloadStatusUpdater objects batch all status updates into one big
+    update which takes much less CPU.  
+    
+    2) The update don't happen fairly infrequently (currently every 5 seconds).
+    
+    Becouse updates happen infrequently, DownloadStatusUpdaters should only be
+    used for progress updates, not events like downloads starting/finishing.
+    For those just call updateClient() since they are more urgent, and don't
+    happen often enough to cause CPU problems.
+    """
+
+    UPDATE_CLIENT_INTERVAL = 5
+
+    def __init__(self):
+        self.toUpdate = set()
+
+    def startUpdates(self):
+        eventloop.addTimeout(self.UPDATE_CLIENT_INTERVAL, self.doUpdate,
+                "Download status update")
+
+    def doUpdate(self):
+        try:
+            statuses = []
+            for downloader in self.toUpdate:
+                statuses.append(downloader.getStatus())
+            self.toUpdate = set()
+            if statuses:
+                command.BatchUpdateDownloadStatus(daemon.lastDaemon, 
+                        statuses).send()
+        finally:
+            eventloop.addTimeout(self.UPDATE_CLIENT_INTERVAL, self.doUpdate,
+                    "Download status update")
+
+    def queueUpdate(self, downloader):
+        self.toUpdate.add(downloader)
+
+downloadUpdater = DownloadStatusUpdater()
+
 class BGDownloader:
     def __init__(self, url, dlid):
         self.dlid = dlid
@@ -385,8 +430,7 @@ class BGDownloader:
 
 
 class HTTPDownloader(BGDownloader):
-    UPDATE_CLIENT_INTERVAL = 1
-    UPDATE_CLIENT_WINDOW = 6
+    UPDATE_CLIENT_WINDOW = 12
     HALTED_THRESHOLD = 3 # how many secs until we consider a download halted
 
     def __init__(self, url = None,dlid = None,restore = None):
@@ -397,10 +441,8 @@ class HTTPDownloader(BGDownloader):
         else:
             BGDownloader.__init__(self, url, dlid)
             self.restartOnError = False
-        self.lastUpdated = 0
         self.client = None
         self.filehandle = None
-        self.timeout = None
         if self.state == 'downloading':
             if restore is not None:
                 self.startDownload()
@@ -427,17 +469,6 @@ class HTTPDownloader(BGDownloader):
                 headerCallback, self.onBodyData, start=self.currentSize)
         self.resetBlockTimes()
         self.updateClient()
-        self.startTimeout()
-
-    def startTimeout(self):
-        self.cancelTimeout()
-        self.timeout = eventloop.addTimeout(self.UPDATE_CLIENT_INTERVAL,
-                lambda: self.updateRateAndETA(0), "update rate")
-
-    def cancelTimeout(self):
-        if self.timeout:
-            self.timeout.cancel()
-            self.timeout = None
 
     def cancelRequest(self):
         if self.client is not None:
@@ -535,7 +566,6 @@ class HTTPDownloader(BGDownloader):
         self.totalSize = totalSize
 
     def onDownloadError(self, error):
-        self.cancelTimeout()
         if self.restartOnError:
             self.restartOnError = False
             self.startNewDownload()
@@ -547,14 +577,13 @@ class HTTPDownloader(BGDownloader):
         if self.state != 'downloading':
             return
         self.updateRateAndETA(len(data))
+        downloadUpdater.queueUpdate(self)
         try:
             self.filehandle.write(data)
         except IOError, e:
             self.handleWriteError(e)
-        self.startTimeout()
 
     def onDownloadFinished(self, response):
-        self.cancelTimeout()
         self.client = None
         try:
             self.filehandle.close()
@@ -573,22 +602,18 @@ class HTTPDownloader(BGDownloader):
 
     def getStatus(self):
         data = BGDownloader.getStatus(self)
-        data['lastUpdated'] = self.lastUpdated
         data['dlerType'] = 'HTTP'
         return data
 
     ##
     # Update the download rate and eta based on recieving length bytes
-    def updateRateAndETA(self,length):
+    def updateRateAndETA(self, length):
         now = clock()
         self.currentSize = self.currentSize + length
-        if self.lastUpdated <= now - self.UPDATE_CLIENT_INTERVAL:
-            self.blockTimes.append((now,  self.currentSize))
-            while (len(self.blockTimes) > 0 and 
-                    now - self.blockTimes[0][0] > self.UPDATE_CLIENT_WINDOW):
-                self.blockTimes.pop(0)
-            self.lastUpdated = now
-            self.updateClient()
+        self.blockTimes.append((now,  self.currentSize))
+        if (len(self.blockTimes) > 0 and 
+                now - self.blockTimes[0][0] > self.UPDATE_CLIENT_WINDOW):
+            self.blockTimes.pop(0)
         
     ##
     # Checks the download file size to see if we can accept it based on the 
@@ -659,7 +684,6 @@ class BTDisplay:
     def __init__(self,dler):
         self.dler = dler
         self.lastUpTotal = 0
-        self.lastUpdated = 0
         self.lastErrorTime = 0
 
     def finished(self):
@@ -673,14 +697,12 @@ class BTDisplay:
             if self.dler.endTime - self.dler.startTime != 0:
                 self.dler.rate = self.dler.totalSize/(self.dler.endTime-self.dler.startTime)
             self.dler.currentSize =self.dler.totalSize
-        self.lastUpdated = clock()
         self.dler.updateClient()
 
     def handleBitTorrentError(self, errorMessage):
         print "WARNING: BitTorrent error: %s" % errorMessage
             
     def display(self, statistics):
-        update = False
         now = clock()
         if statistics['errorTime'] > self.lastErrorTime:
             self.handleBitTorrentError(statistics['errorMessage'])
@@ -704,14 +726,12 @@ class BTDisplay:
             self.dler.uploaded >= 1.5*self.dler.totalSize):
             self.dler.state = "finished"
             self.dler.torrent.shutdown()
-        if self.dler.state == "downloading" and statistics.get('fractionDone') == 1.0:
-            self.finished()
-        else:
-            if self.lastUpdated < now-3:
-                update = True
-                self.lastUpdated = now
-            if update:
+        if self.dler.state == "downloading":
+            if statistics.get('fractionDone') == 1.0:
+                self.finished()
                 self.dler.updateClient()
+            else:
+                downloadUpdater.queueUpdate(self.dler)
 
 class BTDownloader(BGDownloader):
     def bt_failure(text):

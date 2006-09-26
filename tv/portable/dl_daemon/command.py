@@ -73,6 +73,12 @@ class UpdateDownloadStatus(Command):
         from downloader import RemoteDownloader
         return RemoteDownloader.updateStatus(*self.args, **self.kws)
 
+class BatchUpdateDownloadStatus(Command):
+    def action(self):
+        from downloader import RemoteDownloader
+        for status in self.args[0]:
+            RemoteDownloader.updateStatus(status)
+
 class DownloaderErrorCommand(Command):
     def action(self):
         import util
