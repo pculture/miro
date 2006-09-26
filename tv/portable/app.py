@@ -203,7 +203,7 @@ class PlaybackControllerBase:
                 self.playItem(nextItem)
 
     def onMovieFinished(self):
-        return self.skip(1)
+        return self.skip(1, False)
 
 
 ###############################################################################
