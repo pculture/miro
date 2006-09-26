@@ -18,9 +18,9 @@
 
 </a>
 
-<span t:repeatForView="downloadingItems">
+<div t:repeatForView="downloadingItems">
   <span t:replaceMarkup="this.getItemXML(viewName, view)" />
-</span>
+</div>
 
 <!-- / DOWNLOADS -->
 
@@ -51,9 +51,9 @@
   </div>
 </a>
 
-<span t:repeatForView="newItems">
+<div t:repeatForView="newItems">
    <span t:replaceMarkup="this.getItemXML(viewName, view)" />
-</span>
+</div>
 
 
 <!-- The infamous "N more videos" oval -->
@@ -71,17 +71,17 @@
 <!-- / NEW ITEMS -->
 
 <!-- WATCHABLE ******************************************************** -->
-<span t:updateForView="allWatchableItems">
+<div t:updateForView="allWatchableItems">
 <a class="main-channelbar" href="#" onclick="return eventURL('action:toggleWatchableView')" t:hideIf="len(allWatchableItems) == 0" >
   <span class="triangle" t:hideIf="showWatchableItems"/>
   <span class="triangle-down" t:hideIf="not showWatchableItems"/>
   <span  i18n:translate="">Downloaded</span>
 </a>
-</span>
+</div>
 
-<span t:repeatForView="watchableItems">
+<div t:repeatForView="watchableItems">
    <span t:replaceMarkup="this.getItemXML(viewName, view)" />
-</span>
+</div>
 
 <!-- / WATCHABLE -->
 </body>
