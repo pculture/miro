@@ -21,6 +21,7 @@
 <!ENTITY main.menu.channel.add "Add Channel">
 <!ENTITY main.menu.channel.newchannel "New Channel">
 <!ENTITY main.menu.channel.newchannelfolder "New Channel Folder">
+<!ENTITY main.menu.channel.newsearchchannel "New Search Channel">
 <!ENTITY main.menu.channel.newchannelguide "New Channel Guide">
 <!ENTITY main.menu.channel.rename "Rename Channel...">
 <!ENTITY main.menu.channel.remove "Remove Channel...">
