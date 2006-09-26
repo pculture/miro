@@ -4,23 +4,12 @@
 # see LICENSE.txt for license information
 
 from BitTorrent.download import download
+from BitTorrent.fmt import fmtsize, fmttime
 from threading import Event
 from os.path import abspath
 from signal import signal, SIGWINCH
 from sys import argv, stdout
 from time import strftime, time
-
-def fmttime(n):
-    if n == -1:
-        return 'download not progressing (file not being uploaded by others?)'
-    if n == 0:
-        return 'download complete!'
-    n = int(n)
-    m, s = divmod(n, 60)
-    h, m = divmod(m, 60)
-    if h > 1000000:
-        return 'n/a'
-    return 'finishing in %d:%02d:%02d' % (h, m, s)
 
 def commaize(n): 
     s = str(n)
@@ -30,30 +19,11 @@ def commaize(n):
         commad = '%s,%s' % (s[-3:], commad)
     return commad
 
-def fmtsize(n, baseunit = 0, padded = 1):
-    unit = [' B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-    i = baseunit
-    while i + 1 < len(unit) and n >= 999:
-        i += 1
-        n = float(n) / (1 << 10)
-    size = ''
-    if padded:
-        if n < 10:
-            size = '  '
-        elif n < 100:
-            size = ' '
-    if i != 0:
-        size += '%.1f %s' % (n, unit[i])
-    else:
-        if padded:
-            size += '%.0f   %s' % (n, unit[i])
-        else: 
-            size += '%.0f %s' % (n, unit[i])
-    return size
-
 def winch_handler(signum, stackframe):
     global scrwin, scrpan, labelwin, labelpan, fieldw, fieldh, fieldwin, fieldpan
+    global winchanging
     # SIGWINCH. Remake the frames!
+    winchanging = 1
     ## Curses Trickery
     curses.endwin()
     # delete scrwin somehow?
@@ -68,9 +38,13 @@ def winch_handler(signum, stackframe):
     fieldwin = curses.newwin(fieldh, fieldw, fieldy, fieldx)
     fieldpan = curses.panel.new_panel(fieldwin)
     prepare_display()
+    winchanging = 0
 
 # This flag stops the torrent when set.
 mainkillflag = Event()
+# This flag is set when winch is happening, so that we don't anger the curses gods
+# by writing off the side of the screen
+winchanging = 0
 
 class CursesDisplayer:
     def __init__(self, mainerrlist):
@@ -115,6 +89,9 @@ class CursesDisplayer:
         if self.last_update_time + 0.1 > time() and dict.get('fractionDone') not in (0.0, 1.0) and not dict.has_key('activity'):
             return
         self.last_update_time = time()
+        global winchanging
+        if winchanging == 1: 
+          return
         global mainkillflag
         fractionDone = dict.get('fractionDone', None)
         timeEst = dict.get('timeEst', None)

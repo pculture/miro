@@ -29,7 +29,7 @@ ignore = ['core', 'CVS']
 def dummy(v):
     pass
 
-def make_meta_file(file, url, piece_len_exp, 
+def make_meta_file(file, url, piece_len_exp = 18, 
         flag = Event(), progress = dummy, progress_percent=1, comment = None, target = None):
     piece_length = 2 ** piece_len_exp
     a, b = split(file)

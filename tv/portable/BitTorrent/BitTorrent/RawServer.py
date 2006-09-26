@@ -129,6 +129,10 @@ class RawServer:
             handler = self.handler
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.setblocking(0)
+        try:
+            sock.setsockopt(socket.IPPROTO_IP, socket.IP_TOS, 32)
+        except:
+            pass
         sock.bind((self.bindaddr, 0))
         try:
             sock.connect_ex(dns)

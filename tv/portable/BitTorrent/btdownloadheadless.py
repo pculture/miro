@@ -55,6 +55,8 @@ class HeadlessDisplayer:
 
     def error(self, errormsg):
         self.errors.append(errormsg)
+        if len(self.errors) > 5: 
+            self.errors = self.errors[-5:]
         self.display({})
 
     def display(self, dict):
@@ -70,16 +72,16 @@ class HeadlessDisplayer:
         if dict.has_key('activity') and not self.done:
             self.timeEst = dict['activity']
         if dict.has_key('downRate'):
-            self.downRate = '%.2f kB/s' % (float(dict['downRate']) / (1 << 10))
+            self.downRate = '%.2f K/s' % (float(dict['downRate']) / (1 << 10))
         if dict.has_key('upRate'):
-            self.upRate = '%.2f kB/s' % (float(dict['upRate']) / (1 << 10))
+            self.upRate = '%.2f K/s' % (float(dict['upRate']) / (1 << 10))
         if dict.has_key('upTotal'):
-            self.upTotal = '%.1f MiB' % (dict['upTotal'])
+            self.upTotal = '%.1f M' % (dict['upTotal'])
         if dict.has_key('downTotal'):
-            self.downTotal = '%.1f MiB' % (dict['downTotal'])
+            self.downTotal = '%.1f M' % (dict['downTotal'])
         print '\n\n'
         for err in self.errors:
-            print 'ERROR:\n' + err + '\n'
+            print 'ERROR: ' + err + '\n'
         print 'saving:        ', self.file
         print 'percent done:  ', self.percentDone
         print 'time left:     ', self.timeEst
@@ -95,7 +97,7 @@ class HeadlessDisplayer:
         stdout.flush()
 
     def chooseFile(self, default, size, saveas, dir):
-        self.file = '%s (%.1f MB)' % (default, float(size) / (1 << 20))
+        self.file = '%s (%.1f M)' % (default, float(size) / (1 << 20))
         if saveas != '':
             default = saveas
         self.downloadTo = abspath(default)

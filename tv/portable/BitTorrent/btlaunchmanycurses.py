@@ -4,10 +4,10 @@
 # originally heavily borrowed code from btlaunchmany.py by Bram Cohen
 # and btdownloadcurses.py written by Henry 'Pi' James
 # now not so much.
-# fmttime and fmtsize stolen from btdownloadcurses. 
 # see LICENSE.txt for license information
 
 from BitTorrent.download import download
+from BitTorrent.fmt import fmttime, fmtsize
 from threading import Thread, Event, Lock
 from os import listdir
 from os.path import abspath, join, exists, getsize
@@ -16,38 +16,6 @@ from time import sleep
 from signal import signal, SIGWINCH 
 import traceback
 
-def fmttime(n):
-    if n == -1:
-        return 'download not progressing (no seeds?)'
-    if n == 0:
-        return 'download complete!'
-    n = int(n)
-    m, s = divmod(n, 60)
-    h, m = divmod(m, 60)
-    if h > 1000000:
-        return 'n/a'
-    return 'finishing in %d:%02d:%02d' % (h, m, s)
-
-def fmtsize(n, baseunit = 0, padded = 1):
-    unit = [' B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-    i = baseunit
-    while i + 1 < len(unit) and n >= 999:
-        i += 1
-        n = float(n) / (1 << 10)
-    size = ''
-    if padded:
-        if n < 10:
-            size = '  '
-        elif n < 100:
-            size = ' '
-    if i != 0:
-        size += '%.1f %s' % (n, unit[i])
-    else:
-        if padded:
-            size += '%.0f   %s' % (n, unit[i])
-        else:
-            size += '%.0f %s' % (n, unit[i])
-    return size
 
 def dummy(*args, **kwargs):
     pass
@@ -57,6 +25,7 @@ ext = '.torrent'
 status = 'btlaunchmany starting..'
 filecheck = Lock()
 mainquitflag = Event()
+winchanging = 0
 
 def cleanup_and_quit():
     status = 'Killing torrents..'
@@ -126,67 +95,76 @@ def dropdir_mainloop(d, params):
 
 def display_thread(displaykiller, mainquitflag):
     interval = 0.1
-    global threads, status
+    global threads, status, mainwinh
     while 1:
-        inchar = mainwin.getch();
-        if inchar == 12: # ^L
-            winch_handler()
-        elif inchar == ord('q'): # quit
-            mainquitflag.set() 
-        # display file info
-        if (displaykiller.isSet()): 
-            break
-        mainwin.erase()
-        winpos = 0
-        totalup = 0
-        totaldown = 0
-        totaluptotal = 0.0
-        totaldowntotal = 0.0
-        for file, threadinfo in threads.items(): 
-            uprate = threadinfo.get('uprate', 0)
-            downrate = threadinfo.get('downrate', 0)
-            uptxt = '%s/s' % fmtsize(uprate)
-            downtxt = '%s/s' % fmtsize(downrate)
-            uptotal = threadinfo.get('uptotal', 0.0)
-            downtotal = threadinfo.get('downtotal', 0.0)
-            uptotaltxt = fmtsize(uptotal, baseunit = 2)
-            downtotaltxt = fmtsize(downtotal, baseunit = 2)
-            filesize = threadinfo.get('filesize', 'N/A')
-            mainwin.addnstr(winpos, 0, threadinfo.get('savefile', file), mainwinw - 28, curses.A_BOLD)
-            mainwin.addnstr(winpos, mainwinw - 30, filesize, 8)
-            mainwin.addnstr(winpos, mainwinw - 21, downtxt, 10)
-            mainwin.addnstr(winpos, mainwinw - 10, uptxt, 10)
-            winpos = winpos + 1
-            mainwin.addnstr(winpos, 0, '^--- ', 5) 
-            if threadinfo.get('timeout', 0) > 0:
-                mainwin.addnstr(winpos, 6, 'Try %d: died, retrying in %d' % (threadinfo.get('try', 1), threadinfo.get('timeout')), mainwinw - 21)
-            else:
-                mainwin.addnstr(winpos, 6, threadinfo.get('status',''), mainwinw - 21)
-            mainwin.addnstr(winpos, mainwinw - 21, downtotaltxt, 8)
-            mainwin.addnstr(winpos, mainwinw - 10, uptotaltxt, 8)
-            winpos = winpos + 1
-            totalup += uprate
-            totaldown += downrate
-            totaluptotal += uptotal
-            totaldowntotal += downtotal
-        # display statusline
-        statuswin.erase() 
-        statuswin.addnstr(0, 0, status, mainwinw)
-        # display totals line
-        totaluptxt = '%s/s' % fmtsize(totalup)
-        totaldowntxt = '%s/s' % fmtsize(totaldown)
-        totaluptotaltxt = fmtsize(totaluptotal, baseunit = 2)
-        totaldowntotaltxt = fmtsize(totaldowntotal, baseunit = 2)
-        
-        totalwin.erase()
-        totalwin.addnstr(0, mainwinw - 29, 'Totals:', 7);
-        totalwin.addnstr(0, mainwinw - 21, totaldowntxt, 10)
-        totalwin.addnstr(0, mainwinw - 10, totaluptxt, 10)
-        totalwin.addnstr(1, mainwinw - 21, totaldowntotaltxt, 8)
-        totalwin.addnstr(1, mainwinw - 10, totaluptotaltxt, 8)
-        curses.panel.update_panels()
-        curses.doupdate()
-        sleep(interval)
+      if winchanging != 1: # writing now is okay.
+          inchar = mainwin.getch();
+          if inchar == 12: # ^L
+              winch_handler()
+          elif inchar == ord('q'): # quit
+              mainquitflag.set() 
+          # display file info
+          if (displaykiller.isSet()): 
+              break
+          mainwin.erase()
+          winpos = 0
+          totalup = 0
+          totaldown = 0
+          totaluptotal = 0.0
+          totaldowntotal = 0.0
+          tdis = threads.items()
+          tdis.sort()
+          missed = 0
+          for file, threadinfo in tdis: 
+              if (winpos + 3) >= mainwinh: 
+                missed = missed + 1
+                continue
+              uprate = threadinfo.get('uprate', 0)
+              downrate = threadinfo.get('downrate', 0)
+              uptxt = '%s/s' % fmtsize(uprate)
+              downtxt = '%s/s' % fmtsize(downrate)
+              uptotal = threadinfo.get('uptotal', 0.0)
+              downtotal = threadinfo.get('downtotal', 0.0)
+              uptotaltxt = fmtsize(uptotal, baseunit = 2)
+              downtotaltxt = fmtsize(downtotal, baseunit = 2)
+              filesize = threadinfo.get('filesize', 'N/A')
+              mainwin.addnstr(winpos, 0, threadinfo.get('savefile', file), mainwinw - 28, curses.A_BOLD)
+              mainwin.addnstr(winpos, mainwinw - 30, filesize, 8)
+              mainwin.addnstr(winpos, mainwinw - 21, downtxt, 10)
+              mainwin.addnstr(winpos, mainwinw - 10, uptxt, 10)
+              winpos = winpos + 1
+              mainwin.addnstr(winpos, 0, '^--- ', 5) 
+              if threadinfo.get('timeout', 0) > 0:
+                  mainwin.addnstr(winpos, 6, 'Try %d: died, retrying in %d' % (threadinfo.get('try', 1), threadinfo.get('timeout')), mainwinw - 21)
+              else:
+                  mainwin.addnstr(winpos, 6, threadinfo.get('status',''), mainwinw - 21)
+              mainwin.addnstr(winpos, mainwinw - 21, downtotaltxt, 8)
+              mainwin.addnstr(winpos, mainwinw - 10, uptotaltxt, 8)
+              winpos = winpos + 1
+              totalup += uprate
+              totaldown += downrate
+              totaluptotal += uptotal
+              totaldowntotal += downtotal
+          if missed > 0:
+            mainwin.addnstr(winpos, 0, '(%d more)' % missed, mainwinw) 
+          # display statusline
+          statuswin.erase() 
+          statuswin.addnstr(0, 0, status, mainwinw)
+          # display totals line
+          totaluptxt = '%s/s' % fmtsize(totalup)
+          totaldowntxt = '%s/s' % fmtsize(totaldown)
+          totaluptotaltxt = fmtsize(totaluptotal, baseunit = 2)
+          totaldowntotaltxt = fmtsize(totaldowntotal, baseunit = 2)
+          
+          totalwin.erase()
+          totalwin.addnstr(0, mainwinw - 29, 'Totals:', 7);
+          totalwin.addnstr(0, mainwinw - 21, totaldowntxt, 10)
+          totalwin.addnstr(0, mainwinw - 10, totaluptxt, 10)
+          totalwin.addnstr(1, mainwinw - 21, totaldowntotaltxt, 8)
+          totalwin.addnstr(1, mainwinw - 10, totaluptotaltxt, 8)
+          curses.panel.update_panels()
+          curses.doupdate()
+      sleep(interval)
 
 class StatusUpdater:
     def __init__(self, file, params, name):
@@ -239,6 +217,9 @@ class StatusUpdater:
         return saveas
     
     def display(self, dict = {}):
+        global winchanging
+        if winchanging == 1: # If we write now, we could write off the edge of the 
+          return             # screen and make curses mad :(
         fractionDone = dict.get('fractionDone', None)
         timeEst = dict.get('timeEst', None)
         activity = dict.get('activity', None) 
@@ -285,15 +266,19 @@ def prepare_display():
 def winch_handler(signum = SIGWINCH, stackframe = None): 
     global scrwin, mainwin, mainwinw, headerwin, totalwin, statuswin
     global scrpan, mainpan, headerpan, totalpan, statuspan
+    global winchanging
+    winchanging = 1
     # SIGWINCH. Remake the frames!
     ## Curses Trickery
     curses.endwin()
-    # delete scrwin somehow?
     scrwin.refresh()
     scrwin = curses.newwin(0, 0, 0, 0)
-    scrh, scrw = scrwin.getmaxyx()
-    scrpan = curses.panel.new_panel(scrwin)
-    ### Curses Setup
+    make_curses_window()
+    winchanging = 0
+
+def make_curses_window(): 
+    global scrwin, mainwin, mainwinw, headerwin, totalwin, statuswin
+    global scrpan, mainpan, headerpan, totalpan, statuspan, mainwinh
     scrh, scrw = scrwin.getmaxyx()
     scrpan = curses.panel.new_panel(scrwin)
     mainwinh = scrh - 5  # - 2 (bars) - 1 (debugwin) - 1 (borderwin) - 1 (totalwin)
@@ -315,9 +300,11 @@ def winch_handler(signum = SIGWINCH, stackframe = None):
     mainwin.scrollok(0)
     headerwin.scrollok(0)
     totalwin.scrollok(0)
-    statuswin.addstr(0, 0, 'window resize: %s x %s' % (scrw, scrh))
+    statuswin.addstr(0, 0, 'window size: %s x %s' % (scrw, scrh))
     statuswin.scrollok(0)
     prepare_display()
+
+
 
 if __name__ == '__main__':
     if (len(argv) < 2):
@@ -327,7 +314,7 @@ if __name__ == '__main__':
 """
         exit(-1)
     dietrace = 0
-    try: 
+    try:
         import curses
         import curses.panel
         scrwin = curses.initscr()
@@ -338,31 +325,7 @@ if __name__ == '__main__':
         exit(-1)
     try:
         signal(SIGWINCH, winch_handler)
-        ### Curses Setup
-        scrh, scrw = scrwin.getmaxyx()
-        scrpan = curses.panel.new_panel(scrwin)
-        mainwinh = scrh - 5  # - 2 (bars) - 1 (debugwin) - 1 (borderwin) - 1 (totalwin)
-        mainwinw = scrw - 4  # - 2 (bars) - 2 (spaces)
-        mainwiny = 2         # + 1 (bar) + 1 (titles)
-        mainwinx = 2         # + 1 (bar) + 1 (space)
-        # + 1 to all windows so we can write at mainwinw
-        mainwin = curses.newwin(mainwinh, mainwinw+1, mainwiny, mainwinx)
-        mainpan = curses.panel.new_panel(mainwin)
-
-        headerwin = curses.newwin(1, mainwinw+1, 1, mainwinx)
-        headerpan = curses.panel.new_panel(headerwin)
-
-        totalwin = curses.newwin(2, mainwinw+1, scrh-4, mainwinx)
-        totalpan = curses.panel.new_panel(totalwin)
-
-        statuswin = curses.newwin(1, mainwinw+1, scrh-2, mainwinx)
-        statuspan = curses.panel.new_panel(statuswin)
-        mainwin.scrollok(0)
-        headerwin.scrollok(0)
-        totalwin.scrollok(0)
-        statuswin.addstr(0, 0, 'btlaunchmany started')
-        statuswin.scrollok(0)
-        prepare_display()
+        make_curses_window()
         displaykiller = Event()
         displaythread = Thread(target = display_thread, name = 'display', args = [displaykiller, mainquitflag])
         displaythread.setDaemon(1)

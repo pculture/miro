@@ -8,46 +8,13 @@
 # see LICENSE.txt for license information
 
 from BitTorrent.download import download
+from BitTorrent.fmt import fmttime, fmtsize
 from threading import Thread, Event, Lock
 from os import listdir
 from os.path import abspath, join, exists, getsize
 from sys import argv, stdout, exit
 from time import sleep
 import traceback
-
-def fmttime(n):
-    if n == -1:
-        return '(no seeds?)'
-    if n == 0:
-        return 'complete'
-    n = int(n)
-    m, s = divmod(n, 60)
-    h, m = divmod(m, 60)
-    if h > 1000000:
-        return 'n/a'
-    return '%d:%02d:%02d' % (h, m, s)
-
-def fmtsize(n, baseunit = 0, padded = 1):
-    unit = [' B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-    i = baseunit
-    while i + 1 < len(unit) and n >= 999:
-        i += 1
-        n = float(n) / (1 << 10)
-    size = ''
-    if padded:
-        if n < 10:
-            size = '  '
-        elif n < 100:
-            size = ' '
-    if i != 0:
-        size += '%.1f %s' % (n, unit[i])
-    else:
-        if padded:
-            size += '%.0f   %s' % (n, unit[i])
-        else:
-            size += '%.0f %s' % (n, unit[i])
-    return size
-
 
 def dummy(*args, **kwargs):
     pass
@@ -124,7 +91,9 @@ def display_thread(displaykiller):
         totaldown = 0
         totaluptotal = 0.0
         totaldowntotal = 0.0
-        for file, threadinfo in threads.items(): 
+        tdis = threads.items()
+        tdis.sort()
+        for file, threadinfo in tdis: 
             uprate = threadinfo.get('uprate', 0)
             downrate = threadinfo.get('downrate', 0)
             uptxt = fmtsize(uprate, padded = 0)
@@ -140,7 +109,7 @@ def display_thread(displaykiller):
                 print '%s: try %d died, retry in %d' % (filename, trys, timeout)
             else:
                 status = threadinfo.get('status','')
-                print '%s: Spd: %s/%s Tot: %s/%s [%s]' % (filename, uptxt, downtxt, uptotaltxt, downtotaltxt, status)
+                print '%s: Spd: %s/s:%s/s Tot: %s:%s [%s]' % (filename, uptxt, downtxt, uptotaltxt, downtotaltxt, status)
             totalup += uprate
             totaldown += downrate
             totaluptotal += uptotal
@@ -150,7 +119,7 @@ def display_thread(displaykiller):
         totaldowntxt = fmtsize(totaldown, padded = 0)
         totaluptotaltxt = fmtsize(totaluptotal, baseunit = 2, padded = 0)
         totaldowntotaltxt = fmtsize(totaldowntotal, baseunit = 2, padded = 0)
-        print 'All: Spd: %s/%s Tot: %s/%s' % (totaluptxt, totaldowntxt, totaluptotaltxt, totaldowntotaltxt)
+        print 'All: Spd: %s/s:%s/s Tot: %s:%s' % (totaluptxt, totaldowntxt, totaluptotaltxt, totaldowntotaltxt)
         print
         stdout.flush()
         sleep(interval)
@@ -176,7 +145,7 @@ class StatusUpdater:
         self.done = 1
         self.myinfo['done'] = 1
         self.activity = 'complete'
-        self.display({'fractionDone' : 1})
+        self.display({'fractionDone' : 1, 'downRate' : 0})
 
     def err(self, msg): 
         self.myinfo['errors'].append(msg)
@@ -187,20 +156,21 @@ class StatusUpdater:
         self.display() 
 
     def choose(self, default, size, saveas, dir):
+        global filecheck
         self.myinfo['downfile'] = default
         self.myinfo['filesize'] = fmtsize(size)
         if saveas == '': 
             saveas = default
         # it asks me where I want to save it before checking the file.. 
-        self.myinfo['savefile'] = self.file[:-len(ext)]
         if exists(self.file[:-len(ext)]) and (getsize(self.file[:-len(ext)]) > 0):
             # file will get checked
             while (not filecheck.acquire(0) and not self.myinfo['kill'].isSet()):
                 self.myinfo['status'] = 'disk wait'
                 sleep(0.1)
             if not self.myinfo['kill'].isSet():
-                self.myinfo['checking'] = 1
                 self.checking = 1
+                self.myinfo['checking'] = 1
+        self.myinfo['savefile'] = self.file[:-len(ext)]
         return self.file[:-len(ext)]
     
     def display(self, dict = {}):
@@ -216,7 +186,7 @@ class StatusUpdater:
             else:
                 self.activity = activity
         elif timeEst is not None: 
-            self.activity = fmttime(timeEst)
+            self.activity = fmttime(timeEst, 1)
         if fractionDone is not None: 
             self.myinfo['status'] = '%s %.0f%%' % (self.activity, fractionDone * 100)
         else:

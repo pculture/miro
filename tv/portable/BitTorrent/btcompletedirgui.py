@@ -5,7 +5,7 @@
 
 from sys import argv, version
 
-from btcompletedir import completedir
+from BitTorrent.btcompletedir import completedir
 from threading import Event, Thread
 from os.path import join, split
 from sys import argv
@@ -40,11 +40,11 @@ class DownloadInfo:
 
         b = wxBoxSizer(wxHORIZONTAL)
         b.Add(self.dirCtl, 1, wxEXPAND)
-        b.Add(10, 10, 0, wxEXPAND)
+        b.Add((10, 10), 0, wxEXPAND)
         button = wxButton(panel, -1, 'add file')
         b.Add(button, 0, wxEXPAND)
         EVT_BUTTON(frame, button.GetId(), self.select)
-        b.Add(5, 5, 0, wxEXPAND)
+        b.Add((5, 5), 0, wxEXPAND)
         c = wxButton(panel, -1, 'add dir')
         b.Add(c, 0, wxEXPAND)
         EVT_BUTTON(frame, c.GetId(), self.selectdir)
@@ -66,7 +66,7 @@ class DownloadInfo:
         border = wxBoxSizer(wxVERTICAL)
         border.Add(gridSizer, 0, wxEXPAND | wxNORTH | wxEAST | wxWEST, 25)
         b2 = wxButton(panel, -1, 'make')
-        border.Add(10, 10, 1, wxEXPAND)
+        border.Add((10, 10), 1, wxEXPAND)
         border.Add(b2, 0, wxALIGN_CENTER | wxSOUTH, 20)
         EVT_BUTTON(frame, b2.GetId(), self.complete)
         panel.SetSizer(border)
@@ -119,7 +119,7 @@ class CompleteDir:
         gridSizer.Add(self.currentLabel, 0, wxEXPAND)
         self.gauge = wxGauge(panel, -1, range = 1000, style = wxGA_SMOOTH)
         gridSizer.Add(self.gauge, 0, wxEXPAND)
-        gridSizer.Add(10, 10, 1, wxEXPAND)
+        gridSizer.Add((10, 10), 1, wxEXPAND)
         self.button = wxButton(panel, -1, 'cancel')
         gridSizer.Add(self.button, 0, wxALIGN_CENTER)
         gridSizer.AddGrowableRow(2)

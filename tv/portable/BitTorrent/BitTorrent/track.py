@@ -258,7 +258,7 @@ class Tracker:
                             szt = sz * n   # Transferred for this torrent
                             tt = tt + szt
                             if self.allow_get == 1:
-                                linkname = '<a href="/file?info_hash=' + quote(name) + '">' + self.allowed[name]['name'] + '</a>'
+                                linkname = '<a href="/file?info_hash=' + b2a_hex(name) + '">' + self.allowed[name]['name'] + '</a>'
                             else:
                                 linkname = self.allowed[name]['name']
                             s.write('<tr><td><code>%s</code></td><td>%s</td><td align="right">%s</td><td align="right">%i</td><td align="right">%i</td><td align="right">%i</td><td align="right">%s</td></tr>\n' \
@@ -308,8 +308,8 @@ class Tracker:
                     fs[name]['name'] = self.allowed[name]['name']
             r = {'files': fs}
             return (200, 'OK', {'Content-Type': 'text/plain'}, bencode(r))
-        elif (path == 'file') and (self.allow_get == 1) and params.has_key('info_hash') and self.allowed.has_key(params['info_hash']):
-            hash = params['info_hash']
+        elif (path == 'file') and (self.allow_get == 1) and params.has_key('info_hash') and self.allowed.has_key(a2b_hex(params['info_hash'])):
+            hash = a2b_hex(params['info_hash'])
             fname = self.allowed[hash]['file']
             fpath = self.allowed[hash]['path']
             return (200, 'OK', {'Content-Type': 'application/x-bittorrent', 'Content-Disposition': 'attachment; filename=' + fname}, open(fpath, 'rb').read())

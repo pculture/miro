@@ -88,7 +88,7 @@ class Storage:
             h.seek(begin)
             h.write(s[total: total + end - begin])
             total += end - begin
-
+   
     def close(self):
         for h in self.handles.values():
             h.close()

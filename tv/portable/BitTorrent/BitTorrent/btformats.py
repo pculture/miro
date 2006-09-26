@@ -55,8 +55,9 @@ def check_message(message):
     if type(message) != DictType:
         raise ValueError
     check_info(message.get('info'))
-    if type(message.get('announce')) != StringType:
-        raise ValueError
+    announce = message.get('announce')
+    if type(announce) != StringType or len(announce) == 0:
+        raise ValueError, 'bad torrent file - announce is invalid'
 
 def check_peers(message):
     if type(message) != DictType:

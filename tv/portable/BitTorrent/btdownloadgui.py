@@ -3,14 +3,27 @@
 # Written by Bram Cohen and Myers Carpenter
 # see LICENSE.txt for license information
 
-from sys import argv
+from sys import argv, exit
 from BitTorrent import version
 from BitTorrent.download import download
-from btdownloadheadless import print_spew
+from BitTorrent.spewout import print_spew
 from threading import Event, Thread
 from os.path import join, split, exists
 from os import getcwd
-from wxPython.wx import *
+try:
+   from wxPython.wx import *
+   wxEVT_INVOKE = wxNewEventType()
+except:
+   print 'Could not load wxPython. In order to use this script,'
+   print 'you must have wxPython installed.  It is available in'
+   print 'the package libwxgtk2.4-python.'
+   print
+   print 'I am now going to attempt to run xmessage to alert'
+   print 'GUI users.'
+   from os import system
+   system("xmessage -file /usr/share/bittorrent/nowxmsg")
+   sys.exit(-1)
+
 from time import strftime, time
 from webbrowser import open_new
 from traceback import print_exc
@@ -105,7 +118,7 @@ class DownloadInfoFrame:
         
         colSizer.Add(gridSizer, 0, wxEXPAND)
         colSizer.Add(rategridSizer, 0, wxEXPAND)
-        colSizer.Add(50, 50, 0, wxEXPAND)
+        colSizer.Add((50, 50), 0, wxEXPAND)
         self.cancelButton = wxButton(panel, -1, 'Cancel')
         colSizer.Add(self.cancelButton, 0, wxALIGN_CENTER)
         colSizer.AddGrowableCol(0)
@@ -163,13 +176,15 @@ class DownloadInfoFrame:
             if timeEst is not None:
                 self.timeEstText.SetLabel(hours(timeEst))
             if downRate is not None:
-                self.downRateText.SetLabel('%.0f KiB/s' % (float(downRate) / (1 << 10)))
+                self.downRateText.SetLabel('%.0f K/s' % (float(downRate) / (1 << 10)))
             if upRate is not None:
-                self.upRateText.SetLabel('%.0f KiB/s' % (float(upRate) / (1 << 10)))
+                self.upRateText.SetLabel('%.0f K/s' % (float(upRate) / (1 << 10)))
             if downTotal is not None:
                 self.downTotalText.SetLabel('%.1f M' % (downTotal))
             if upTotal is not None:
                 self.upTotalText.SetLabel('%.1f M' % (upTotal))
+            self.frame.Refresh()
+            self.frame.Update()
             self.last_update_time = time()
         except:
             print_exc()
@@ -228,7 +243,7 @@ class DownloadInfoFrame:
                 return
             saveas = dl.GetPath()
         bucket[0] = saveas
-        self.fileNameText.SetLabel('%s (%.1f MB)' % (default, float(size) / (1 << 20)))
+        self.fileNameText.SetLabel('%s (%.1f M)' % (default, float(size) / (1 << 20)))
         self.timeEstText.SetLabel('Starting up...')
         self.fileDestText.SetLabel(saveas)
         self.filename = default
@@ -266,30 +281,6 @@ def run(params):
 
 def next(params, d, doneflag):
     try:
-        p = join(split(argv[0])[0], 'donated')
-        if not exists(p) and long(time()) % 3 == 0:
-            open_new('http://bitconjurer.org/BitTorrent/donate.html')
-            dlg = wxMessageDialog(d.frame, 'BitTorrent is Donation supported software. ' + 
-                'Please go to the donation page (which should be appearing for you now) and make a donation from there. ' + 
-                'Or you can click no and donate later.\n\nHave you made a donation yet?',
-                'Donate!', wxYES_NO | wxICON_INFORMATION | wxNO_DEFAULT)
-            if dlg.ShowModal() == wxID_YES:
-                dlg.Destroy()
-                dlg = wxMessageDialog(d.frame, 'Thanks for your donation! You will no longer be shown donation requests.\n\n' + 
-                    "If you haven't actually made a donation and are feeling guilty (as you should!) you can always get to " + 
-                    "the donation page by clicking the 'about' link in the upper-right corner of the main BitTorrent window and " + 
-                    'donating from there.', 'Thanks!', wxOK)
-                dlg.ShowModal()
-                dlg.Destroy()
-                try:
-                    open(p, 'wb').close()
-                except IOError, e:
-                    dlg = wxMessageDialog(d.frame, "Sorry, but I couldn't set the flag to not ask you for donations in the future - " + str(e),
-                        'Sorry!', wxOK | wxICON_ERROR)
-                    dlg.ShowModal()
-                    dlg.Destroy()
-            else:
-                dlg.Destroy()
         download(params, d.chooseFile, d.updateStatus, d.finished, d.error, doneflag, 100, d.newpath)
         if not d.fin:
             d.failed()
