@@ -62,8 +62,14 @@
 /* NSMenu : <title:OtherViews> (oid:80) */
 "OtherViews" = "OtherViews";
 
+/* NSButtonCell (Play videos one after another.) : <title:Play videos one after another.> (oid:103) */
+"Play videos one after another." = "Play videos one after another.";
+
 /* NSButton (Run Democracy at startup) : <title:Run Democracy at startup> (oid:47) */
 "Run Democracy at startup" = "Run Democracy at startup";
+
+/* NSButtonCell (Stop after each video.) : <title:Stop after each video.> (oid:104) */
+"Stop after each video." = "Stop after each video.";
 
 /* NSTextField (Store downloaded movies in:) : <title:Store downloaded movies in:> (oid:92) */
 "Store downloaded movies in:" = "Store downloaded movies in:";

@@ -27,20 +27,14 @@ class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
         return self
 
     def awakeFromNib(self):
+        self.items = dict()
+        self.allIdentifiers = list()
+        
         generalItem = self.makePreferenceItem("GeneralItem", "General", "general_pref", self.generalView)
         channelsItem = self.makePreferenceItem("ChannelsItem", "Channels", "channels_pref", self.channelsView)
         downloadsItem = self.makePreferenceItem("DownloadsItem", "Downloads", "downloads_pref", self.downloadsView)
         diskSpaceItem = self.makePreferenceItem("DiskSpaceItem", "Disk Space", "disk_space_pref", self.diskSpaceView)
-
-        self.items = {generalItem.itemIdentifier(): generalItem,
-                      channelsItem.itemIdentifier(): channelsItem,
-                      downloadsItem.itemIdentifier(): downloadsItem,
-                      diskSpaceItem.itemIdentifier(): diskSpaceItem}
-
-        self.allItems = (generalItem.itemIdentifier(),
-                         channelsItem.itemIdentifier(),
-                         downloadsItem.itemIdentifier(),
-                         diskSpaceItem.itemIdentifier())
+        playbackItem = self.makePreferenceItem("PlaybackItem", "Playback", "playback_pref", self.playbackView)
 
         initialItem = generalItem
 
@@ -54,10 +48,6 @@ class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
             self.window().setShowsToolbarButton_(NO)
         self.switchPreferenceView_(initialItem)
 
-    def windowWillClose_(self, notification):
-        self.window().endEditingFor_(nil)
-        config.save()
-
     def makePreferenceItem(self, identifier, label, imageName, view):
         item = PreferenceItem.alloc().initWithItemIdentifier_(identifier)
         item.setLabel_(label)
@@ -65,16 +55,25 @@ class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
         item.setTarget_(self)
         item.setAction_("switchPreferenceView:")
         item.setView_(view)
+        
+        identifier = item.itemIdentifier()
+        self.items[identifier] = item
+        self.allIdentifiers.append(identifier)
+        
         return item
 
+    def windowWillClose_(self, notification):
+        self.window().endEditingFor_(nil)
+        config.save()
+
     def toolbarAllowedItemIdentifiers_(self, toolbar):
-        return self.allItems
+        return self.allIdentifiers
 
     def toolbarDefaultItemIdentifiers_(self, toolbar):
-        return self.allItems
+        return self.allIdentifiers
 
     def toolbarSelectableItemIdentifiers_(self, toolbar):
-        return self.allItems
+        return self.allIdentifiers
 
     def toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_(self, toolbar, itemIdentifier, flag ):
         return self.items[ itemIdentifier ]
@@ -196,5 +195,17 @@ class DiskSpacePrefsController (NibClassBuilder.AutoBaseClass):
     def setExpirationDelay_(self, sender):
         delay = sender.selectedItem().tag()
         config.set(prefs.EXPIRE_AFTER_X_DAYS, delay / 24.0)
+
+###############################################################################
+
+class PlaybackPrefsController (NibClassBuilder.AutoBaseClass):
+
+    def awakeFromNib(self):
+        singleMode = config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE)
+        self.modesMatrix.selectCellWithTag_(int(singleMode))
+
+    def setPlaybackMode_(self, sender):
+        singleMode = bool(sender.selectedCell().tag())
+        config.set(prefs.SINGLE_VIDEO_PLAYBACK_MODE, singleMode)
 
 ###############################################################################

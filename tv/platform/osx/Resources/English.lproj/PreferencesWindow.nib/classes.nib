@@ -34,10 +34,23 @@
             SUPERCLASS = NSObject; 
         }, 
         {
+            ACTIONS = {setPlaybackMode = id; }; 
+            CLASS = PlaybackPrefsController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {modesMatrix = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
             ACTIONS = {switchPreferenceView = id; }; 
             CLASS = PreferencesWindowController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {channelsView = id; diskSpaceView = id; downloadsView = id; generalView = id; }; 
+            OUTLETS = {
+                channelsView = id; 
+                diskSpaceView = id; 
+                downloadsView = id; 
+                generalView = id; 
+                playbackView = id; 
+            }; 
             SUPERCLASS = NSWindowController; 
         }
     ); 
