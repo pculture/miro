@@ -31,6 +31,9 @@ interface pcfIDTVPyBridge : nsISupports
           in string password);
   void handleTextEntryDialog(in unsigned long id, 
         in unsigned short buttonIndex, in string text);
+  void handleSearchChannelDialog(in unsigned long id, 
+        in unsigned short buttonIndex, in string term,
+        in unsigned short style, in string location);
   void openURL(in AString url);
   void loadURLInBrowser(in string browserAreaId, in AString url);
   void skip(in short step);
@@ -61,6 +64,7 @@ interface pcfIDTVPyBridge : nsISupports
   void showCursor(in boolean display);
   void createNewPlaylist();
   void createNewPlaylistFolder();
+  void createNewSearchChannel();
   void createNewChannelFolder();
   void handleDrop(in string dropData, in string dropType, in string sourceData);
   void removeCurrentSelection();

@@ -56,6 +56,7 @@
 <menu id="channel-menu" label="&main.menu.channel;" accesskey="&main.menu.channel.access;" class="titlebar-toplevel">
     <menupopup id="channel-popup">
         <menuitem label="&main.menu.channel.add;" acceltext="&main.menu.channel.add.accel;" accesskey="&main.menu.channel.add.access;" command="addchannel"/>
+        <menuitem label="&main.menu.channel.newsearchchannel;" accesskey="H" command="newsearchchannel"/>
         <menuitem label="&main.menu.channel.newchannelfolder;" acceltext="&main.menu.channel.newchannelfolder.accel;" accesskey="&main.menu.channel.newchannelfolder.access;" command="newchannelfolder"/>
         <menuitem label="&main.menu.channel.newchannelguide;" accesskey="&main.menu.channel.newchannelguide.access;" command="newchannelguide"/>
         <menuseparator/>
@@ -205,6 +206,7 @@
 <command id="selectall" oncommand="pybridge.selectAllItems();" />
 
 <command id="addchannel" oncommand="pybridge.addChannel();" />
+<command id="newsearchchannel" oncommand="pybridge.createNewSearchChannel();" />
 <command id="newchannelfolder" oncommand="pybridge.createNewChannelFolder();" />
 <command id="newchannelguide" oncommand="pybridge.createNewChannelGuide();" />
 <command id="renamechannel" oncommand="pybridge.renameCurrentChannel();" />

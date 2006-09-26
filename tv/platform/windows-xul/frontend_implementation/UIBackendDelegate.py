@@ -73,6 +73,8 @@ class UIBackendDelegate:
             frontend.jsBridge.showTextEntryDialog(id, dialog.title,
                     dialog.description, dialog.buttons[0].text,
                     dialog.buttons[1].text, getPrefillText(dialog))
+        elif isinstance(dialog, dialogs.SearchChannelDialog):
+            frontend.jsBridge.showSearchChannelDialog(id)
         else:
             del self.openDialogs[id]
             dialog.runCallback(None)
@@ -89,6 +91,11 @@ class UIBackendDelegate:
             choice = dialog.buttons[buttonIndex]
         else:
             choice = None
+        if isinstance (dialog, dialogs.SearchChannelDialog):
+            dialog.term = kwargs['term']
+            dialog.style = kwargs['style']
+            dialog.location = kwargs['loc']
+            kwargs = {}
         dialog.runCallback(choice, *args, **kwargs)
 
     def openExternalURL(self, url):

@@ -182,6 +182,12 @@ jsBridge.prototype = {
             "dialog", "chrome,dependent,centerscreen,modal", params);
   },
 
+  showSearchChannelDialog: function(id) {
+    var params = { "id": id, "out" : -1};
+    this.window.openDialog("chrome://dtv/content/searchchannel.xul",
+            "dialog", "chrome,dependent,centerscreen,modal", params);
+  },
+
   setCollapsed: function(id, value) {
     var elt = this.document.getElementById(id);
     elt.setAttribute("collapsed", value);

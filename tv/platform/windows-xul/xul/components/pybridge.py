@@ -278,6 +278,10 @@ class PyBridge:
         self.delegate.handleDialog(id, buttonIndex, value=text)
 
     @asUrgent
+    def handleSearchChannelDialog(self, id, buttonIndex, term, style, loc):
+        self.delegate.handleDialog(id, buttonIndex, term=term, style=style, loc=loc)
+
+    @asUrgent
     def addChannel(self, url):
         app.controller.addAndSelectFeed(url)
 
@@ -337,6 +341,10 @@ class PyBridge:
     @asUrgent
     def createNewPlaylistFolder(self):
         folder.createNewPlaylistFolder()
+
+    @asUrgent
+    def createNewSearchChannel(self):
+        app.controller.addSearchFeed()
 
     @asUrgent
     def createNewChannelFolder(self):
