@@ -146,6 +146,11 @@ def getAvailableBytesForMovies():
     pool = Foundation.NSAutoreleasePool.alloc().init()
     fm = Foundation.NSFileManager.defaultManager()
     info = fm.fileSystemAttributesAtPath_(config.get(prefs.MOVIES_DIRECTORY))
-    available = info[Foundation.NSFileSystemFreeSize]
+    try:
+        available = info[Foundation.NSFileSystemFreeSize]
+    except:
+        # We could not retrieve the available disk size for some reason, default
+        # to something huge to allow downloads.
+        available = 1024 * 1024 * 1024 * 1024
     del pool
     return available
