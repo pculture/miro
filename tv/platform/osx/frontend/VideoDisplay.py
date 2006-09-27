@@ -420,6 +420,9 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
         self.setFrame_display_animate_(self.previousFrame, YES, YES)
         SetSystemUIMode(kUIModeNormal, 0)
         
+    def toggleFullScreen_(self, sender):
+        app.controller.videoDisplay.exitFullScreen()
+
     def sendEvent_(self, event):
         if self.isFullScreen:
             if event.type() == NSLeftMouseDown:

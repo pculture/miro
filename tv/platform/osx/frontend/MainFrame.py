@@ -310,7 +310,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
     def previousVideo_(self, sender):
         eventloop.addIdle(lambda:app.controller.playbackController.skip(-1, False), "Skip Video")
 
-    def playFullScreen_(self, sender):
+    def toggleFullScreen_(self, sender):
         self.videoDisplayController.playFullScreen_(sender)
 
     # Help menu #
@@ -379,7 +379,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
             return display is app.controller.videoDisplay
         elif action == 'previousVideo:':
             return display is app.controller.videoDisplay
-        elif action == 'playFullScreen:':
+        elif action == 'toggleFullScreen:':
             return display is app.controller.videoDisplay
         elif action == 'showHelp:':
             return True

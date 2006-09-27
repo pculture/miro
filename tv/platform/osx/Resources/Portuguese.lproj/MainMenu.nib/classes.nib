@@ -26,7 +26,6 @@
                 createPlaylistFolder = id; 
                 deleteSelected = id; 
                 nextVideo = id; 
-                playFullScreen = id; 
                 playPause = id; 
                 previousVideo = id; 
                 removeChannel = id; 
@@ -39,6 +38,7 @@
                 sendPlaylistToFriend = id; 
                 stopVideo = id; 
                 tellAFriend = id; 
+                toggleFullScreen = id; 
                 updateAllChannels = id; 
                 updateChannel = id; 
             }; 
