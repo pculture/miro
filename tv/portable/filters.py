@@ -3,22 +3,19 @@ import feed
 import folder
 import playlist
 import guide
+import search
 
 # Returns items that match search
 def matchingItems(obj, searchString):
     if searchString is None:
         return True
     searchString = searchString.lower()
-    if searchString in obj.getTitle().lower():
-        return True
-    if searchString in obj.getDescription().lower():
+    if search.match (searchString, [obj.getTitle().lower(), obj.getDescription().lower()]):
         return True
     if not obj.isContainerItem:
         parent = obj.getParent()
-        if searchString in parent.getTitle().lower():
-            return True
-        if searchString in parent.getDescription().lower():
-            return True
+        if parent != obj:
+            return matchingItems (parent, searchString)
     return False
 
 def downloadingItems(obj):
