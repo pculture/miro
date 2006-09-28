@@ -121,7 +121,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         result = NSTerminateNow
         if not self.internalShutdown:
             eventloop.addUrgentCall(lambda:self.shutdown_(nil), "Shutdowning")
-            result = NSTerminateCancel
+            result = NSTerminateLater
         return result
     
     def applicationWillTerminate_(self, notification):
