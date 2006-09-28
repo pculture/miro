@@ -287,6 +287,15 @@ def upgrade23(objectList):
             p.savedData['item_ids'] = filtered
     return changed
 
+def upgrade24(objectList):
+    """Upgrade metainfo back to BitTorrent format."""
+    for o in objectList:
+        if o.classString == 'remote-downloader':
+            if o.savedData['status'].has_key('metainfo'):
+                o.savedData['status']['metainfo'] = None
+                o.savedData['status']['infohash'] = None
+
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

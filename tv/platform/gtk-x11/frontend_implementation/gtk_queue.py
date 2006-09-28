@@ -25,7 +25,7 @@ import Queue
 import sys
 import traceback
 
-from BitTornado.clock import clock
+from clock import clock
 
 class ExceptionContainer:
     def __init__(self, exc_info):

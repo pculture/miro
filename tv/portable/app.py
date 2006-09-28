@@ -56,8 +56,7 @@ import fasttypes
 import urllib
 from gtcache import gettext as _
 from gtcache import ngettext
-
-from BitTornado.clock import clock
+from clock import clock
 
 # Global Controller singleton
 controller = None

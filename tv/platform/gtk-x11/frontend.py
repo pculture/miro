@@ -23,11 +23,12 @@ import prefs
 # DISPLAY isn't set
 try:
     import gtk
-    from frontend_implementation.gtk_queue import gtkAsyncMethod
     hasGTK = True
-except:
+except ImportError:
     print "DTV: Warning: could not import GTK (is DISPLAY set?)"
     hasGTK = False
+else:
+    from frontend_implementation.gtk_queue import gtkAsyncMethod
 
 if hasGTK:
     # Import MozillaBrowser ASAP.  On some systems the gtkmozembed

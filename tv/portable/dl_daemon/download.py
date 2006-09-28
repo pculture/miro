@@ -10,6 +10,7 @@ from threading import RLock, Event, Thread
 import traceback
 from copy import copy
 
+from clock import clock
 from download_utils import cleanFilename, nextFreeFilename, shortenFilename
 from download_utils import filenameFromURL
 import eventloop
@@ -17,18 +18,9 @@ import httpclient
 
 import config
 import prefs
-from BitTornado import mapbase64, createPeerID
-from BitTornado.RawServer import RawServer, autodetect_socket_style
-from BitTornado.RateLimiter import RateLimiter
-from BitTornado.ServerPortHandler import MultiHandler
-from BitTornado.natpunch import UPnP_test
-from BitTornado.bencode import bdecode, bencode
-from BitTornado.launchmanycore import SingleDownload
-from BitTornado.parseargs import defaultargs
-from BitTornado.clock import clock
 from sha import sha
 
-from dl_daemon import command, daemon
+from dl_daemon import command, daemon, bittorrent
 
 import platformutils
 
@@ -39,129 +31,6 @@ chatter = True
 
 # a hash of download ids to downloaders
 _downloads = {}
-
-# BitTornado defaults
-defaults = [
-    ('max_uploads', 7,
-        "the maximum number of uploads to allow at once."),
-    ('keepalive_interval', 120.0,
-        'number of seconds to pause between sending keepalives'),
-    ('download_slice_size', 2 ** 14,
-        "How many bytes to query for per request."),
-    ('upload_unit_size', 1460,
-        "when limiting upload rate, how many bytes to send at a time"),
-    ('request_backlog', 10,
-        "maximum number of requests to keep in a single pipe at once."),
-    ('max_message_length', 2 ** 23,
-        "maximum length prefix encoding you'll accept over the wire - larger values get the connection dropped."),
-    ('ip', '',
-        "ip to report you have to the tracker."),
-    ('minport', 10000, 'minimum port to listen on, counts up if unavailable'),
-    ('maxport', 60000, 'maximum port to listen on'),
-    ('random_port', 1, 'whether to choose randomly inside the port range ' +
-        'instead of counting up linearly'),
-    ('responsefile', '',
-        'file the server response was stored in, alternative to url'),
-    ('url', '',
-        'url to get file from, alternative to responsefile'),
-    ('selector_enabled', 1,
-        'whether to enable the file selector and fast resume function'),
-    ('expire_cache_data', 10,
-        'the number of days after which you wish to expire old cache data ' +
-        '(0 = disabled)'),
-    ('priority', '',
-        'a list of file priorities separated by commas, must be one per file, ' +
-        '0 = highest, 1 = normal, 2 = lowest, -1 = download disabled'),
-    ('saveas', '',
-        'local file name to save the file as, null indicates query user'),
-    ('timeout', 300.0,
-        'time to wait between closing sockets which nothing has been received on'),
-    ('timeout_check_interval', 60.0,
-        'time to wait between checking if any connections have timed out'),
-    ('max_slice_length', 2 ** 17,
-        "maximum length slice to send to peers, larger requests are ignored"),
-    ('max_rate_period', 20.0,
-        "maximum amount of time to guess the current rate estimate represents"),
-    ('bind', '', 
-        'comma-separated list of ips/hostnames to bind to locally'),
-#    ('ipv6_enabled', autodetect_ipv6(),
-    ('ipv6_enabled', 0,
-         'allow the client to connect to peers via IPv6'),
-    ('ipv6_binds_v4', autodetect_socket_style(),
-        'set if an IPv6 server socket will also field IPv4 connections'),
-    ('upnp_nat_access', 1,
-        'attempt to autoconfigure a UPnP router to forward a server port ' +
-        '(0 = disabled, 1 = mode 1 [fast], 2 = mode 2 [slow])'),
-    ('upload_rate_fudge', 5.0, 
-        'time equivalent of writing to kernel-level TCP buffer, for rate adjustment'),
-    ('tcp_ack_fudge', 0.03,
-        'how much TCP ACK download overhead to add to upload rate calculations ' +
-        '(0 = disabled)'),
-    ('display_interval', .5,
-        'time between updates of displayed information'),
-    ('rerequest_interval', 5 * 60,
-        'time to wait between requesting more peers'),
-    ('min_peers', 20, 
-        'minimum number of peers to not do rerequesting'),
-    ('http_timeout', 60, 
-        'number of seconds to wait before assuming that an http connection has timed out'),
-    ('max_initiate', 40,
-        'number of peers at which to stop initiating new connections'),
-    ('check_hashes', 1,
-        'whether to check hashes on disk'),
-    ('max_upload_rate', -1,
-        'maximum kB/s to upload at (0 = no limit, -1 = automatic)'),
-    ('max_download_rate', 0,
-        'maximum kB/s to download at (0 = no limit)'),
-    ('alloc_type', 'pre-allocate',
-        'allocation type (may be normal, background, pre-allocate or sparse)'),
-    ('alloc_rate', 2.0,
-        'rate (in MiB/s) to allocate space at using background allocation'),
-    ('buffer_reads', 1,
-        'whether to buffer disk reads'),
-    ('write_buffer_size', 4,
-        'the maximum amount of space to use for buffering disk writes ' +
-        '(in megabytes, 0 = disabled)'),
-    ('snub_time', 30.0,
-        "seconds to wait for data to come in over a connection before assuming it's semi-permanently choked"),
-    ('spew', 0,
-        "whether to display diagnostic info to stdout"),
-    ('rarest_first_cutoff', 2,
-        "number of downloads at which to switch from random to rarest first"),
-    ('rarest_first_priority_cutoff', 5,
-        'the number of peers which need to have a piece before other partials take priority over rarest first'),
-    ('min_uploads', 4,
-        "the number of uploads to fill out to with extra optimistic unchokes"),
-    ('max_files_open', 50,
-        'the maximum number of files to keep open at a time, 0 means no limit'),
-    ('round_robin_period', 30,
-        "the number of seconds between the client's switching upload targets"),
-    ('super_seeder', 0,
-        "whether to use special upload-efficiency-maximizing routines (only for dedicated seeds)"),
-    ('security', 1,
-        "whether to enable extra security features intended to prevent abuse"),
-    ('max_connections', 0,
-        "the absolute maximum number of peers to connect with (0 = no limit)"),
-    ('auto_kick', 1,
-        "whether to allow the client to automatically kick/ban peers that send bad data"),
-    ('double_check', 1,
-        "whether to double-check data being written to the disk for errors (may increase CPU load)"),
-    ('triple_check', 0,
-        "whether to thoroughly check data being written to the disk (may slow disk access)"),
-    ('lock_files', 1,
-        "whether to lock files the client is working with"),
-    ('lock_while_reading', 0,
-        "whether to lock access to files being read"),
-    ('auto_flush', 0,
-        "minutes between automatic flushes to disk (0 = disabled)"),
-    ]
-
-btconfig = defaultargs(defaults)
-
-#FIXME: check for free space and failed connection to tracker and fail
-#on those cases
-
-#FIXME: Trigger pending Manual Download in item when if we run out of disk space
 
 _lock = RLock()
 
@@ -229,7 +98,6 @@ def shutDown():
     print "Shutting down downloaders..."
     for dlid in _downloads:
         _downloads[dlid].shutdown()
-    shutdownBTDownloader()
 
 def restoreDownloader(downloader):
     downloader = copy(downloader)
@@ -672,158 +540,56 @@ class HTTPDownloader(BGDownloader):
         self.cancelRequest()
         self.updateClient()
 
-##
-# BitTorrent uses this class to display status information. We use
-# it to update Downloader information
-#
-# We use the rate and ETA provided by BitTorrent rather than
-# calculating our own.
-class BTDisplay:
-    ##
-    # Takes in the downloader class associated with this display
-    def __init__(self,dler):
-        self.dler = dler
-        self.lastUpTotal = 0
-        self.lastErrorTime = 0
-
-    def finished(self):
-        self.dler.updateClient()
-        state = self.dler.state
-        if not (state == "uploading" or
-                state == "finished"):
-            self.dler.moveToMoviesDirectory()
-            self.dler.state = "uploading"
-            self.dler.endTime = clock()
-            if self.dler.endTime - self.dler.startTime != 0:
-                self.dler.rate = self.dler.totalSize/(self.dler.endTime-self.dler.startTime)
-            self.dler.currentSize =self.dler.totalSize
-        self.dler.updateClient()
-
-    def handleBitTorrentError(self, errorMessage):
-        print "WARNING: BitTorrent error: %s" % errorMessage
-            
-    def display(self, statistics):
-        now = clock()
-        if statistics['errorTime'] > self.lastErrorTime:
-            self.handleBitTorrentError(statistics['errorMessage'])
-            self.lastErrorTime = statistics['errorTime']
-        if statistics.get('upTotal') != None:
-            if self.lastUpTotal > statistics.get('upTotal'):
-                self.dler.uploaded += statistics.get('upTotal')
-            else:
-                self.dler.uploaded += statistics.get('upTotal') - self.lastUpTotal
-            self.lastUpTotal = statistics.get('upTotal')
-        if self.dler.state != "paused":
-            self.dler.currentSize = int(self.dler.totalSize*statistics.get('fractionDone'))
-        if self.dler.state != "finished" and self.dler.state != "uploading":
-            self.dler.rate = statistics.get('downRate')
-        if self.dler.rate == None:
-            self.dler.rate = 0.0
-        self.dler.eta = statistics.get('timeEst')
-        if self.dler.eta == None:
-            self.dler.eta = 0
-        if (self.dler.state == "uploading" and
-            self.dler.uploaded >= 1.5*self.dler.totalSize):
-            self.dler.state = "finished"
-            self.dler.torrent.shutdown()
-        if self.dler.state == "downloading":
-            if statistics.get('fractionDone') == 1.0:
-                self.finished()
-                self.dler.updateClient()
-            else:
-                downloadUpdater.queueUpdate(self.dler)
-
 class BTDownloader(BGDownloader):
-    def bt_failure(text):
-        print "BitTornado error: %s" % text
-    def bt_exception(text):
-        print "BitTornado exception: %s" % text
-
-    doneflag = Event()
-    rawserver = RawServer(doneflag, btconfig['timeout_check_interval'],
-                          btconfig['timeout'],
-                          ipv6_enable = btconfig['ipv6_enabled'],
-                          failfunc = bt_failure, errorfunc = bt_exception)
-    upnp_type = UPnP_test(btconfig['upnp_nat_access'])
-    #Spawn the download thread
-    listen_port = rawserver.find_and_bind(
-        btconfig['minport'], btconfig['maxport'], btconfig['bind'],
-        ipv6_socket_style = btconfig['ipv6_binds_v4'],
-        upnp = upnp_type, randomizer = btconfig['random_port'])
-    ratelimiter = None
-#     ratelimiter = RateLimiter(rawserver.add_task,
-#                               btconfig['upload_unit_size'])
-#     ratelimiter.set_upload_rate(btconfig['max_upload_rate'])
-    handler = MultiHandler(rawserver, doneflag)
-    counter = 0
-
     def __init__(self, url = None, item = None, restore = None):
         if restore is not None:
             self.restoreState(restore)
         else:            
             self.metainfo = None
-            self.infohash = None
-            self.rate = 0
-            self.eta = 0
-            self.d = BTDisplay(self)
-            self.uploaded = 0
             self.torrent = None
+            self.rate = self.eta = 0
             BGDownloader.__init__(self,url,item)
             self.runDownloader()
 
     def _shutdownTorrent(self):
         try:
-            self.torrent.shutdown()
+            if self.torrent is not None:
+                self.torrent.shutdown()
         except:
             print "DTV: Warning: Error shutting down torrent"
             traceback.print_exc()
 
-    def _startTorrent(self):
-        # Get a number and convert it to base64, then make a peerid from that
-        c = BTDownloader.counter
-        BTDownloader.counter += 1
-        x = ''
-        for i in xrange(3):
-            x = mapbase64[c & 0x3F]+x
-            c >>= 6
-        peer_id = createPeerID(x)
-
-        self.torrent = SingleDownload(self, self.infohash, self.metainfo, btconfig, peer_id)
+    def _startTorrent(self, checkHashes=True):
+        self.torrent = bittorrent.TorrentDownload(self.metainfo,
+                self.filename, checkHashes)
+        self.torrent.set_status_callback(self.updateStatus)
         self.torrent.start()
-        self.rawserver.add_task(self.get_status,0)
-        self.rawserver.wakeup()
 
-    def _getTorrentStatus(self):
-        downRate = 0.0
-        timeEst = 0
-        fractionDone = 0.0
-        upTotal = 0
-        errorTime = 0
-        errorMessage = ""
-        
-        if not (self.torrent.is_dead() or self.torrent.waiting or
-                self.torrent.checking):
-            errorTime = self.torrent.status_errtime
-            try:
-                errorMessage = self.torrent.status_err[-1]
-            except IndexError:
-                pass
-            # BitTornado keeps status all over the place. Joy!
-            stats = self.torrent.statsfunc()
-            s = stats['stats']
-            upRate = stats['up']
-            if self.torrent.seed:
-                fractionDone = 1.0
-                upTotal = s.upTotal
-            else:
-                fractionDone = stats['frac']
-                downRate = stats['down']
-                timeEst = stats['time']
-                upTotal = s.upTotal
-                   
-        return {'downRate':downRate, 'timeEst':timeEst,
-                'fractionDone': fractionDone, 'upTotal': upTotal, 
-                'errorTime': errorTime, 'errorMessage': errorMessage}
+
+    def updateStatus(self, newStatus):
+        """
+        activity -- string specifying what's currently happening or None for
+                normal operations.  
+        upRate -- upload rate
+        downRate -- download rate in kb/s
+        upTotal -- total kb uploaded
+        downTotal -- total kb downloaded
+        fractionDone -- what portion of the download is completed.
+        timeEst -- estimated completion time, in seconds.
+        totalSize -- total size of the torrent in bytes
+        """
+
+        self.totalSize = newStatus['totalSize']
+        self.rate = newStatus['downRate']
+        self.eta = newStatus['timeEst']
+        self.currentSize = int(self.totalSize * newStatus['fractionDone'])
+        if self.state == "downloading" and newStatus['fractionDone'] == 1.0:
+            self.moveToMoviesDirectory()
+            self.state = "uploading"
+            self.endTime = clock()
+            self.updateClient()
+        else:
+            downloadUpdater.queueUpdate(self)
 
     def handleError(self, shortReason, reason):
         BGDownloader.handleError(self, shortReason, reason)
@@ -833,23 +599,20 @@ class BTDownloader(BGDownloader):
         if self.state in ('uploading', 'downloading'):
             self._shutdownTorrent()
             BGDownloader.moveToDirectory(self, directory)
-            self._startTorrent()
+            self._startTorrent(checkHashes=False)
         else:
             BGDownloader.moveToDirectory(self, directory)
 
     def restoreState(self, data):
         self.__dict__ = data
-        self.blockTimes = []
-        self.d = BTDisplay(self)
+        self.rate = self.eta = 0
         if self.state == 'downloading' or (
-            self.state not in ['paused','stopped'] and
-            self.uploaded < 1.5*self.totalSize):
-            self.restartDL ()
+            self.state == 'uploading' and self.uploaded < 1.5*self.totalSize):
+            self.runDownloader(done=True)
 
     def getStatus(self):
         data = BGDownloader.getStatus(self)
         data['metainfo'] = self.metainfo
-        data['infohash'] = self.infohash
         data['dlerType'] = 'BitTorrent'
         return data
 
@@ -862,12 +625,7 @@ class BTDownloader(BGDownloader):
     def pause(self):
         self.state = "paused"
         self.updateClient()
-        try:
-            self._shutdownTorrent()
-        except KeyError:
-            pass
-        except AttributeError:
-            pass
+        self._shutdownTorrent()
 
     def stop(self, delete):
         self.state = "stopped"
@@ -883,42 +641,15 @@ class BTDownloader(BGDownloader):
                 pass
 
     def start(self):
-        self.pause()
-        metainfo = self.metainfo
-        if metainfo is None:
-            msg = _("Could not read BitTorrent metadata")
-            self.handleGenericError(msg)
-            self.state = "failed"
-        else:
-            self.state = "downloading"
+        if self.state not in ('paused', 'stopped'):
+            return
+
+        self.state = "downloading"
         self.updateClient()
-        if metainfo is not None:
-            self._startTorrent()
+        self.getMetainfo()
 
     def shutdown(self):
-        try:
-            self._shutdownTorrent()
-        except KeyError:
-            pass
-        except AttributeError:
-            pass
-        self.updateClient()
-
-    def readMetainfo (self, metainfo):
-        # FIXME: BitTorrent did lots of checking here for
-        # invalid torrents. We should do the same
-        self.metainfo = bdecode(metainfo)
-        info = self.metainfo['info']
-        self.infohash = sha(bencode(info)).digest()
-        self.shortFilename = cleanFilename(self.metainfo['info']['name'])
-        
-        try:
-            totalSize = self.metainfo['info']['length']
-        except KeyError: # There are multiple files in this here torrent
-            totalSize = 0
-            for f in self.metainfo['info']['files']:
-                totalSize += f['length']
-        self.totalSize = totalSize
+        self._shutdownTorrent()
 
     def gotMetainfo(self):
         # FIXME: If the client is stopped before a BT download gets
@@ -929,15 +660,9 @@ class BTDownloader(BGDownloader):
         self.updateClient()
         self._startTorrent()
 
-    def handleMetainfo (self, metainfo):
-        try:
-            self.readMetainfo(metainfo)
-        except ValueError:
-            self.handleGenericError(_("Invalid BitTorrent metadata"))
-            self.state = "failed"
-            self.updateClient()
-        else:
-            self.gotMetainfo()
+    def handleMetainfo(self, metainfo):
+        self.metainfo = metainfo
+        self.gotMetainfo()
 
     def onDescriptionDownload(self, info):
         self.handleMetainfo (info['body'])
@@ -967,86 +692,3 @@ class BTDownloader(BGDownloader):
         self.restarting = done
         self.updateClient()
         self.getMetainfo()
-
-    def restartDL(self):
-        self.runDownloader(done = True)
-            
-    def get_status(self):
-        """run by the bittorrent server"""
-        #print str(self.getID()) + ": "+str(self.metainfo.infohash).encode('hex')
-        if not self.torrent.is_dead():
-            self.rawserver.add_task(self.get_status,
-                                    btconfig['display_interval'])
-        status = self._getTorrentStatus()
-        self.d.display(status)
-
-    # Functions below this point are BitTornado SingleDownload
-    # controller functions
-
-    # These provide a queue for scheduling hash checks
-    def hashchecksched(self, hash = None):
-        if hash:
-            try:
-                self.hashcheck_queue.append(hash)
-            except:
-                self.hashcheck_queue = [hash]
-        if not (hasattr(self,'hashcheck_current') and self.hashcheck_current):
-            self._hashcheck_start()
-    def _hashcheck_start(self):
-        self.hashcheck_current = self.hashcheck_queue.pop(0)
-        self.torrent.hashcheck_start(self.hashcheck_callback)
-    def hashcheck_callback(self):
-        self.torrent.hashcheck_callback()
-        if (hasattr(self,'hashcheck_queue') and self.hashcheck_queue):
-            self._hashcheck_start()
-        else:
-            self.hashcheck_current = None
-
-    def saveAs(self, hash, name, saveas, isdir):
-        if isdir and not os.path.isdir(self.filename):
-            try:
-                os.mkdir(self.filename)
-            except:
-                raise OSError("couldn't create directory for "+self.filename)
-        return self.filename
-
-    def was_stopped(self, hash):
-        pass
-        #print "DTV: Got 'was_stopped()' for %s" % self.shortFilename
-    def died(self, hash):
-        pass
-        #print "DTV: Got 'died' for %s" % self.shortFilename
-    def exchandler(self, error):
-        print "DTV: BitTornado error %s" % error
-
-##
-# Kill the main BitTornado thread
-#
-# This should be called before closing the app
-def shutdownBTDownloader():
-    BTDownloader.doneflag.set()
-    BTDownloader.rawserver.wakeup()
-    BTDownloader.dlthread.join()
-
-def updateBTConfig(key, value):
-    if key in [prefs.LIMIT_UPSTREAM.key, prefs.UPSTREAM_LIMIT_IN_KBS.key]:
-        if config.get(prefs.LIMIT_UPSTREAM):
-            btconfig['max_upload_rate'] = config.get(prefs.UPSTREAM_LIMIT_IN_KBS)
-        else:
-            btconfig['max_upload_rate'] = -1
-    if key == prefs.BT_MIN_PORT.key:
-        btconfig['minport'] = config.get(prefs.BT_MIN_PORT)
-    if key == prefs.BT_MAX_PORT.key:
-        btconfig['maxport'] = config.get(prefs.BT_MAX_PORT)
-
-def startBTDownloader():
-    if config.get(prefs.LIMIT_UPSTREAM):
-        btconfig['max_upload_rate'] = config.get(prefs.UPSTREAM_LIMIT_IN_KBS)
-    else:
-        btconfig['max_upload_rate'] = -1
-    btconfig['minport'] = config.get(prefs.BT_MIN_PORT)
-    btconfig['maxport'] = config.get(prefs.BT_MAX_PORT)
-    config.addChangeCallback (updateBTConfig)
-    BTDownloader.dlthread = Thread(target=BTDownloader.handler.listen_forever)
-    BTDownloader.dlthread.setName("bittornado downloader")
-    BTDownloader.dlthread.start()

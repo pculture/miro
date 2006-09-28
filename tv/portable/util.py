@@ -12,8 +12,8 @@ import subprocess
 
 import prefs
 
-from BitTornado.clock import clock
-from BitTornado.bencode import bdecode, bencode
+from clock import clock
+from BitTorrent.bencode import bdecode, bencode
 
 from gtcache import gettext as _
 

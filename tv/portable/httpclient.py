@@ -18,7 +18,7 @@ from urlparse import urlparse, urljoin
 from collections import deque
 from gtcache import gettext as _
 
-from BitTornado.clock import clock
+from clock import clock
 
 import httpauth
 import config

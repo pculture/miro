@@ -33,7 +33,7 @@ import util
 import views
 import indexes
 import searchengines
-from BitTornado.clock import clock
+from clock import clock
 
 whitespacePattern = re.compile(r"^[ \t\r\n]*$")
 

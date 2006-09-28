@@ -1,11 +1,10 @@
-from BitTornado.clock import clock
-
 import filters
 import views
 import config
 import prefs
 import eventloop
 import httpclient
+from clock import clock
 from datetime import datetime
 from fasttypes import SortedList
 

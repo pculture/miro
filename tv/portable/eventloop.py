@@ -16,7 +16,7 @@ import Queue
 import util
 import database
 
-from BitTornado.clock import clock
+from clock import clock
 
 import util
 

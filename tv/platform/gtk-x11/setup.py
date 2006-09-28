@@ -61,8 +61,7 @@ while True:
         raise RuntimeError("Couldn't find Democracy root directory")
     root_try = os.path.abspath(os.path.join(root_try, '..'))
 portable_dir = os.path.join(root_dir, 'portable')
-bittorrent_dir = os.path.join(portable_dir, 'BitTornado')
-bittorrent_dir2 = os.path.join(portable_dir, 'BitTornado','BT1')
+bittorrent_dir = os.path.join(portable_dir, 'BitTorrent')
 dl_daemon_dir = os.path.join(portable_dir, 'dl_daemon')
 test_dir = os.path.join(portable_dir, 'test')
 compiled_templates_dir = os.path.join(portable_dir, 'compiled_templates')
@@ -429,8 +428,7 @@ setup(name='democracy',
     ],
     packages = [
         'democracy.frontend_implementation',
-        'democracy.BitTornado',
-        'democracy.BitTornado.BT1',
+        'democracy.BitTorrent',
         'democracy.dl_daemon',
         'democracy.test',
         'democracy.compiled_templates',
@@ -439,8 +437,7 @@ setup(name='democracy',
     ],
     package_dir = {
         'democracy.frontend_implementation' : frontend_implementation_dir,
-        'democracy.BitTornado' : bittorrent_dir,
-        'democracy.BitTornado.BT1' : bittorrent_dir2,
+        'democracy.BitTorrent' : bittorrent_dir,
         'democracy.dl_daemon' : dl_daemon_dir,
         'democracy.test' : test_dir,
         'democracy.compiled_templates' : compiled_templates_dir,

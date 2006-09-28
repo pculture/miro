@@ -19,6 +19,20 @@ from random import randrange
 
 all = POLLIN | POLLOUT
 
+try:
+    socketpair = socket.socketpair
+except AttributeError:
+    def socketpair():
+        dummy_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        dummy_server.bind( ('127.0.0.1', 0) )
+        dummy_server.listen(1)
+        server_address = dummy_server.getsockname()
+        first = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        first.connect(server_address)
+        second, address = dummy_server.accept()
+        dummy_server.close()
+        return first, second
+
 class SingleSocket:
     def __init__(self, raw_server, sock, handler):
         self.raw_server = raw_server
@@ -94,6 +108,11 @@ class RawServer:
         self.funcs = []
         self.unscheduled_tasks = []
         self.add_task(self.scan_for_timeouts, timeout_check_interval)
+        self.wakeup_receiver, self.wakeup_sender = socketpair()
+        self.poll.register(self.wakeup_receiver, POLLIN)
+
+    def wakeup(self):
+        self.wakeup_sender.send("a")
 
     def add_task(self, func, delay):
         self.unscheduled_tasks.append((func, delay))
@@ -147,6 +166,12 @@ class RawServer:
         
     def handle_events(self, events):
         for sock, event in events:
+            if sock == self.wakeup_receiver.fileno():
+                # nothing to do here, simply accepting the event woke us from
+                # do_poll().  reading 1024 bytes should be enough to clear-
+                # wakeup_receiver's buffer.
+                self.wakeup_receiver.recv(1024)
+                continue
             if sock == self.server.fileno():
                 if event & (POLLHUP | POLLERR) != 0:
                     self.poll.unregister(self.server)

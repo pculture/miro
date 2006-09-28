@@ -1,3 +1,4 @@
+# Originally from BitTornado
 # Written by John Hoffman
 # see LICENSE.txt for license information
 

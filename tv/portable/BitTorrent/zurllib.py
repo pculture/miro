@@ -14,6 +14,8 @@ from gzip import GzipFile
 from StringIO import StringIO
 from __init__ import version
 import pprint
+import config
+import prefs
 
 
 DEBUG=0
@@ -25,7 +27,13 @@ class HTTPContentEncodingHandler(HTTPHandler):
         # add the Accept-Encoding header to the request
         # support gzip encoding (identity is assumed)
         req.add_header("Accept-Encoding","gzip")
-        req.add_header('User-Agent', 'BitTorrent/' + version)
+        # Added correct capitalization and Democracy info to string --NN
+        req.add_header('User-Agent', 'BitTorrent/%s %s/%s (%s)' % \
+                       (version,
+                        config.get(prefs.SHORT_APP_NAME),
+                        config.get(prefs.APP_VERSION),
+                        config.get(prefs.PROJECT_URL)))
+
         if DEBUG: 
             print "Sending:" 
             print req.headers

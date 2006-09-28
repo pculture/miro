@@ -43,7 +43,7 @@ import bsddb.db
 import dialogs
 from gtcache import gettext as _
 
-from BitTornado.clock import clock
+from clock import clock
 
 # FILEMAGIC should be the first portion of the database file.  After that the
 # file will contain pickle data
