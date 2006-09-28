@@ -25,7 +25,7 @@
         <description style="padding-top:4px;">&searchchannel.termlabel;</description>
         <textbox id="textbox-term"/>
     </hbox>
-    <radiogroup>
+    <radiogroup id="radio-style">
         <hbox>
             <description>&searchchannel.inthis;</description>
             <grid>

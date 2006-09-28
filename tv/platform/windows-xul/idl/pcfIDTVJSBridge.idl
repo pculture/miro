@@ -28,7 +28,10 @@ interface pcfIDTVJSBridge : nsISupports
   void showTextEntryDialog(in unsigned long id, in AString title, 
         in AString description, in AString defaultLabel, 
         in AString otherLabel, in AString prefillText);
-  void showSearchChannelDialog(in unsigned long id);
+  void showSearchChannelDialog(in unsigned long id, in nsISupports channels,
+ 	in nsISupports engines, in AString defaultTerm,
+	in unsigned short defaultStyle, in unsigned long defaultChannel,
+	in unsigned long defaultEngine, in AString defaultURL);
   void showBugReportDialog(in AString when, in AString report);
   void showVideoDisplay();
   void hideVideoDisplay();

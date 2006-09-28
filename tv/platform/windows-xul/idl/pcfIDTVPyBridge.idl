@@ -33,7 +33,7 @@ interface pcfIDTVPyBridge : nsISupports
         in unsigned short buttonIndex, in string text);
   void handleSearchChannelDialog(in unsigned long id, 
         in unsigned short buttonIndex, in string term,
-        in unsigned short style, in string location);
+        in unsigned short style, in string loc);
   void openURL(in AString url);
   void loadURLInBrowser(in string browserAreaId, in AString url);
   void skip(in short step);

@@ -4,7 +4,25 @@ var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
 var originalMoviesDir = null;
 
 function onload() {
-    updateUI()
+    var channels = window.arguments[0]['channels'].QueryInterface(Components.interfaces.nsICollection);
+    var count = channels.Count();
+    var widget = getWidget ("menulist-channel");
+    var i;
+    for (i = 0; i < count; i++) {
+        widget.appendItem (channels.GetElementAt (i).QueryInterface(Components.interfaces.nsISupportsString).data);
+    }
+    var engines = window.arguments[0]['engines'].QueryInterface(Components.interfaces.nsICollection);
+    count = engines.Count();
+    widget = getWidget ("menulist-searchengine");
+    for (i = 0; i < count; i++) {
+        widget.appendItem (engines.GetElementAt (i).QueryInterface(Components.interfaces.nsISupportsString).data);
+    }
+    getWidget("textbox-term").value = window.arguments[0]['defaultTerm'];
+    getWidget("menulist-channel").selectedIndex = window.arguments[0]['defaultChannel'];
+    getWidget("menulist-searchengine").selectedIndex = window.arguments[0]['defaultEngine'];
+    getWidget("textbox-url").value = window.arguments[0]['defaultURL'];
+    getWidget("radio-style").selectedIndex = window.arguments[0]['defaultStyle'];
+    updateUI();
 }
 
 function updateUI ()
@@ -28,12 +46,14 @@ function toggledEnable (toggle, widget)
 function onaccept ()
 {
     term = getWidget ("textbox-term").value;
+    var loc;
+    var style;
     if (getWidget("radio-channel").selected) {
 	style = 0;
-	location = getWidget("menulist-searchengine").value;
+	loc = getWidget("menulist-channel").selectedIndex;
     } else if (getWidget("radio-searchengine").selected) {
 	style = 1;
-	location = getWidget("menulist-searchengine").value;
+	loc = getWidget("menulist-searchengine").selectedIndex;
     } else if (getWidget("radio-url").selected) {
 	style = 2;
 	loc = getWidget("textbox-url").value;

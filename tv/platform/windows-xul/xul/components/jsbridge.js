@@ -182,8 +182,11 @@ jsBridge.prototype = {
             "dialog", "chrome,dependent,centerscreen,modal", params);
   },
 
-  showSearchChannelDialog: function(id) {
-    var params = { "id": id, "out" : -1};
+  showSearchChannelDialog: function(id, channels, engines, defaultTerm, defaultStyle, defaultChannel, defaultEngine, defaultURL) {
+    var params = { "id": id, "channels" : channels, "engines" : engines,
+		   "defaultTerm": defaultTerm, "defaultStyle": defaultStyle,
+		   "defaultChannel": defaultChannel, "defaultEngine": defaultEngine,
+		   "defaultURL": defaultURL, "Out" : -1};
     this.window.openDialog("chrome://dtv/content/searchchannel.xul",
             "dialog", "chrome,dependent,centerscreen,modal", params);
   },

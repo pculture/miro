@@ -35,6 +35,17 @@ def getPrefillText(dialog):
             return text
     return ''
 
+def _makeSupportsArrayFromSecondElement(data):
+    from xpcom import components
+    arrayAbs = components.classes["@mozilla.org/supports-array;1"].createInstance();
+    array = arrayAbs.queryInterface(components.interfaces.nsISupportsArray)
+    for datum in data:
+    	supportsStringAbs = components.classes["@mozilla.org/supports-string;1"].createInstance();
+    	supportsString = supportsStringAbs.queryInterface(components.interfaces.nsISupportsString)
+    	supportsString.data = datum[1]
+        array.AppendElement(supportsString)
+    return array
+
 class UIBackendDelegate:
     openDialogs = {}
     currentMenuItems = None
@@ -74,7 +85,35 @@ class UIBackendDelegate:
                     dialog.description, dialog.buttons[0].text,
                     dialog.buttons[1].text, getPrefillText(dialog))
         elif isinstance(dialog, dialogs.SearchChannelDialog):
-            frontend.jsBridge.showSearchChannelDialog(id)
+            engines = _makeSupportsArrayFromSecondElement(dialog.engines)
+            channels = _makeSupportsArrayFromSecondElement(dialog.channels)
+            defaultTerm = ""
+            defaultChannelId = dialog.channels[0][0]
+            defaultEngineName = dialog.defaultEngine
+            defaultURL = ""
+            if dialog.term:
+                defaultTerm = dialog.term
+            if dialog.style == dialog.CHANNEL:
+                if dialog.location is not None:
+                    defaultChannelId = dialog.location
+            elif dialog.style == dialog.ENGINE:
+                if dialog.location is not None:
+                    defaultEngineName = dialog.location
+            elif dialog.style == dialog.URL:
+                if dialog.location is not None:
+                    defaultURL = dialog.location
+            defaultChannel = 0
+            defaultEngine = 0
+            for i in xrange (len (dialog.channels)):
+                if dialog.channels[i][0] == defaultChannelId:
+                    defaultChannel = i
+                    break
+            for i in xrange (len (dialog.engines)):
+                if dialog.engines[i][0] == defaultEngineName:
+                    defaultEngine = i
+                    break
+            print ((defaultTerm, defaultChannel, defaultEngine, defaultURL))
+            frontend.jsBridge.showSearchChannelDialog(id, channels, engines, defaultTerm, dialog.style, defaultChannel, defaultEngine, defaultURL)
         else:
             del self.openDialogs[id]
             dialog.runCallback(None)
@@ -94,7 +133,13 @@ class UIBackendDelegate:
         if isinstance (dialog, dialogs.SearchChannelDialog):
             dialog.term = kwargs['term']
             dialog.style = kwargs['style']
-            dialog.location = kwargs['loc']
+            print kwargs
+            if dialog.style == dialog.CHANNEL:
+                dialog.location = dialog.channels[int(kwargs['loc'])][0]
+            elif dialog.style == dialog.ENGINE:
+                dialog.location = dialog.engines[int(kwargs['loc'])][0]
+            elif dialog.style == dialog.URL:
+                dialog.location = kwargs['loc']
             kwargs = {}
         dialog.runCallback(choice, *args, **kwargs)
 

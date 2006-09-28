@@ -175,8 +175,7 @@ class SearchChannelDialog(Dialog):
 
         self.channels = []
         for feed in views.feeds:
-            if isinstance (feed.actualFeed, RSSFeedImpl) or \
-                   isinstance (feed.actualFeed, ScraperFeedImpl):
+            if feed.actualFeed.__class__ in (RSSFeedImpl, ScraperFeedImpl):
                 self.channels.append((feed.id, feed.getTitle()))
 
         self.engines = []
