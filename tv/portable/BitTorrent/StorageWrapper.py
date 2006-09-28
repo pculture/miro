@@ -11,11 +11,15 @@ def dummy_status(fractionDone = None, activity = None):
 def dummy_data_flunked(size):
     pass
 
+def dummy_hash_skip_func(block):
+    return False
+
 class StorageWrapper:
     def __init__(self, storage, request_size, hashes, 
             piece_size, finished, failed, 
             statusfunc = dummy_status, flag = Event(), check_hashes = True,
-            data_flunked = dummy_data_flunked):
+            data_flunked = dummy_data_flunked,
+            hash_skip_func = dummy_hash_skip_func):
         self.storage = storage
         self.request_size = request_size
         self.hashes = hashes
@@ -61,7 +65,7 @@ class StorageWrapper:
         for i in xrange(len(hashes)):
             if not self._waspre(i):
                 self.holes.append(i)
-            elif not check_hashes:
+            elif not check_hashes or hash_skip_func(i):
                 markgot(i, i)
             else:
                 sh = sha(self.storage.read(piece_size * i, lastlen))

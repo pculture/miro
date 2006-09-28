@@ -548,24 +548,25 @@ class BTDownloader(BGDownloader):
             self.metainfo = None
             self.torrent = None
             self.rate = self.eta = 0
+            self.fastResumeData = None
             BGDownloader.__init__(self,url,item)
             self.runDownloader()
 
     def _shutdownTorrent(self):
         try:
             if self.torrent is not None:
-                self.torrent.shutdown()
+                self.fastResumeData = self.torrent.shutdown()
         except:
             print "DTV: Warning: Error shutting down torrent"
             traceback.print_exc()
 
-    def _startTorrent(self, checkHashes=True):
+    def _startTorrent(self):
         self.torrent = bittorrent.TorrentDownload(self.metainfo,
-                self.filename, checkHashes)
+                self.filename, self.fastResumeData)
         self.torrent.set_status_callback(self.updateStatus)
         self.torrent.start()
 
-
+    @eventloop.asIdle
     def updateStatus(self, newStatus):
         """
         activity -- string specifying what's currently happening or None for
@@ -592,19 +593,21 @@ class BTDownloader(BGDownloader):
             downloadUpdater.queueUpdate(self)
 
     def handleError(self, shortReason, reason):
-        BGDownloader.handleError(self, shortReason, reason)
         self._shutdownTorrent()
+        BGDownloader.handleError(self, shortReason, reason)
 
     def moveToDirectory(self, directory):
         if self.state in ('uploading', 'downloading'):
             self._shutdownTorrent()
             BGDownloader.moveToDirectory(self, directory)
-            self._startTorrent(checkHashes=False)
+            self._startTorrent()
         else:
             BGDownloader.moveToDirectory(self, directory)
 
     def restoreState(self, data):
         self.__dict__ = data
+        if 'fastResumeData' not in data:
+            self.fastResumeData = None
         self.rate = self.eta = 0
         if self.state == 'downloading' or (
             self.state == 'uploading' and self.uploaded < 1.5*self.totalSize):
@@ -613,6 +616,7 @@ class BTDownloader(BGDownloader):
     def getStatus(self):
         data = BGDownloader.getStatus(self)
         data['metainfo'] = self.metainfo
+        data['fastResumeData'] = self.fastResumeData
         data['dlerType'] = 'BitTorrent'
         return data
 
@@ -624,13 +628,13 @@ class BTDownloader(BGDownloader):
         
     def pause(self):
         self.state = "paused"
-        self.updateClient()
         self._shutdownTorrent()
+        self.updateClient()
 
     def stop(self, delete):
         self.state = "stopped"
-        self.updateClient()
         self._shutdownTorrent()
+        self.updateClient()
         if delete:
             try:
                 if os.path.isdir(self.filename):
@@ -650,6 +654,7 @@ class BTDownloader(BGDownloader):
 
     def shutdown(self):
         self._shutdownTorrent()
+        self.updateClient()
 
     def gotMetainfo(self):
         # FIXME: If the client is stopped before a BT download gets

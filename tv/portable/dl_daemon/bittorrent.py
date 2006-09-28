@@ -1,4 +1,5 @@
 """Glue code to handle BitTorrent stuff.  Most of this comes from download.py
+        print "skip %s %s" % (index, self.pieces_already_got[index])
 in the BitTorrent library.
 """
 
@@ -8,14 +9,16 @@ from sha import sha
 from os import path, makedirs
 from socket import error as socketerror
 from random import seed
-from threading import Thread, Event
+from threading import Thread, Event, Lock
 from time import time
+from Queue import Queue
 try:
     from os import getpid
 except ImportError:
     def getpid():
         return 1
 
+from BitTorrent.bitfield import Bitfield
 from BitTorrent.btformats import check_message
 from BitTorrent.Choker import Choker
 from BitTorrent.Storage import Storage
@@ -41,18 +44,22 @@ config = {}
 for key, default, description in defaults:
     config[key] = default
 config['report_hash_failures'] = True
+storage_lock = Lock()
 
 class TorrentDownload:
-    def __init__(self, torrent_data, download_to, check_hashes=True):
+    def __init__(self, torrent_data, download_to, fast_resume_data=None):
         """Create a new torrent.  torrent_data is the contents of a torrent
         file/url.  download_to is the file/directory to save the torrent to.
+        fast_resume_data is data used to quickly restart the torrent, it's
+        returned by the shutdown() method.
         """
 
         self.doneflag = Event()
         self.finflag = Event()
         self.torrent_data = torrent_data
         self.download_to = download_to
-        self.check_hashes = check_hashes
+        self.fast_resume_data = fast_resume_data
+        self.fast_resume_queue = Queue()
         self.rawserver = RawServer(self.doneflag,
                 config['timeout_check_interval'], config['timeout'],
                 errorfunc=self.on_error, maxconnects=config['max_allow_in'])
@@ -73,9 +80,17 @@ class TorrentDownload:
         self.thread.start()
 
     def shutdown(self):
-        """Stop downloading the torrent."""
+        """Stop downloading the torrent.
+
+        Returns a string that can be used as fast resume data.
+        """
+
         self.doneflag.set()
         self.rawserver.wakeup()
+        return self.fast_resume_queue.get()
+
+    def skip_hash_check(self, index):
+        return self.pieces_already_got[index]
 
     def set_status_callback(self, func):
         """Register a callback function.  func will be called whenever the
@@ -184,39 +199,45 @@ class TorrentDownload:
         seed(myid)
         pieces = [info['pieces'][x:x+20] for x in xrange(0, 
             len(info['pieces']), 20)]
+        self.pieces_already_got = Bitfield(len(pieces), self.fast_resume_data)
         def failed(reason):
             self.doneflag.set()
             if reason is not None:
                 self.on_error(reason)
         rawserver = self.rawserver
+        storage_lock.acquire()
         try:
             try:
-                storage = Storage(files, open, path.exists, path.getsize)
-            except IOError, e:
-                self.on_error('trouble accessing files - ' + str(e))
-                return
-            def finished(finflag = finflag, ann = ann, storage = storage):
-                finflag.set()
                 try:
-                    storage.set_readonly()
-                except (IOError, OSError), e:
-                    self.on_error('trouble setting readonly at end - ' + str(e))
-                if ann[0] is not None:
-                    ann[0](1)
-            rm = [None]
-            def data_flunked(amount, rm = rm, report_hash_failures = config['report_hash_failures']):
-                if rm[0] is not None:
-                    rm[0](amount)
-                if report_hash_failures:
-                    self.on_error('a piece failed hash check, re-downloading it')
-            storagewrapper = StorageWrapper(storage,
-                    config['download_slice_size'], pieces, 
-                    info['piece length'], finished, failed, self.on_status,
-                    self.doneflag, self.check_hashes, data_flunked)
-        except ValueError, e:
-            failed('bad data - ' + str(e))
-        except IOError, e:
-            failed('IOError - ' + str(e))
+                    storage = Storage(files, open, path.exists, path.getsize)
+                except IOError, e:
+                    self.on_error('trouble accessing files - ' + str(e))
+                    return
+                def finished(finflag = finflag, ann = ann, storage = storage):
+                    finflag.set()
+                    try:
+                        storage.set_readonly()
+                    except (IOError, OSError), e:
+                        self.on_error('trouble setting readonly at end - ' + str(e))
+                    if ann[0] is not None:
+                        ann[0](1)
+                rm = [None]
+                def data_flunked(amount, rm = rm, report_hash_failures = config['report_hash_failures']):
+                    if rm[0] is not None:
+                        rm[0](amount)
+                    if report_hash_failures:
+                        self.on_error('a piece failed hash check, re-downloading it')
+                storagewrapper = StorageWrapper(storage,
+                        config['download_slice_size'], pieces, 
+                        info['piece length'], finished, failed, self.on_status,
+                        self.doneflag, config['check_hashes'], data_flunked,
+                        self.skip_hash_check)
+            except ValueError, e:
+                failed('bad data - ' + str(e))
+            except IOError, e:
+                failed('IOError - ' + str(e))
+        finally:
+            storage_lock.release()
         if self.doneflag.isSet():
             return
 
@@ -280,5 +301,6 @@ class TorrentDownload:
         ann[0] = rerequest.announce
         rerequest.begin()
         rawserver.listen_forever(encoder)
+        self.fast_resume_queue.put(storagewrapper.get_have_list())
         storage.close()
         rerequest.announce(2)
