@@ -1532,6 +1532,8 @@ class ScraperFeedImpl(FeedImpl):
     #FIXME: go through and add error handling
     def update(self):
         self.ufeed.confirmDBThread()
+        if not self.ufeed.idExists():
+            return
         if self.updating:
             return
         else:

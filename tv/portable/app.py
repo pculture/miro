@@ -1785,7 +1785,7 @@ class Playlist:
                 self.view.resetCursor()
                 self.view.getNext()
                 break
-            if cur.getID() == int(firstItemId):
+            if firstItemId is None or cur.getID() == int(firstItemId):
                 # The cursor is now on the requested item.
                 break
 
