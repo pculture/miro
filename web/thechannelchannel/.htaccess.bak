@@ -1,4 +1,0 @@
-AuthType Basic
-AuthUserFile /home/showusthewar/test.showusthewar.com/.htpasswd
-AuthName "Show Us The War Test"
-require valid-user
