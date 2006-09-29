@@ -1236,6 +1236,8 @@ folder will also be deleted.""")
                 other.downloader = self.downloader
                 self.downloader.addItem(other)
                 other.signalChange(needsSave=False)
+        
+        app.delegate.notifyDownloadCompleted(self)
 
     def save(self):
         self.confirmDBThread()
