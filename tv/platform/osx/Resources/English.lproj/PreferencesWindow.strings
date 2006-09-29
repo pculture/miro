@@ -5,7 +5,7 @@
 " limit upstream to" = " limit upstream to";
 
 /* NSTextField ((You must restart Democracy for this change to take effect) ) : <title:(You must restart Democracy for this change to take effect)
-> (oid:100) */
+> (oid:127) */
 "(You must restart Democracy for this change to take effect)\n" = "(You must restart Democracy for this change to take effect)\n";
 
 /* NSTextField ((movies directory path goes here)) : <title:(movies directory path goes here)> (oid:94) */
@@ -35,7 +35,13 @@
 /* NSMenuItem : <title:6 days> (oid:84) */
 "6 days" = "6 days";
 
-/* NSBox (Box) : <title:Box> (oid:95) */
+/* NSTextField (99999) : <title:99999> (oid:115) */
+"99999" = "99999";
+
+/* NSTextField (BitTorrent ports:) : <title:BitTorrent ports:> (oid:111) */
+"BitTorrent ports:" = "BitTorrent ports:";
+
+/* NSBox (Box) : <title:Box> (oid:109) */
 "Box" = "Box";
 
 /* NSTextField (By default, videos expire after:) : <title:By default, videos expire after:> (oid:78) */
@@ -55,6 +61,12 @@
 
 /* NSTextField (KB/s when my computer is active.) : <title:KB/s when my computer is active.> (oid:38) */
 "KB/s when my computer is active." = "KB/s when my computer is active.";
+
+/* NSTextField (Maximum:) : <title:Maximum:> (oid:114) */
+"Maximum:" = "Maximum:";
+
+/* NSTextField (Minimum:) : <title:Minimum:> (oid:112) */
+"Minimum:" = "Minimum:";
 
 /* NSMenuItem : <title:Never> (oid:86) */
 "Never" = "Never";
