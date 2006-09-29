@@ -14,6 +14,13 @@ function onload() {
   setMinDiskSpace(pybridge.getPreserveDiskSpaceAmount());
   setExpire(pybridge.getExpireAfter());
   setSinglePlayMode(pybridge.getSinglePlayMode());
+  setBTMinPort(pybridge.getBTMinPort());
+  setBTMaxPort(pybridge.getBTMaxPort());
+}
+
+function ondialogaccept() {
+  checkMoviesDirChanged();
+  checkBTPorts();
 }
 
 /* Convert a floating point object into a string to show to the user.  We
@@ -153,4 +160,26 @@ function setSinglePlayMode(value) {
   document.getElementById('play-mode-radiogroup').selectedItem = button;
 }
 
+function setBTMinPort(value) {
+  document.getElementById('btminport').value = value;
+}
 
+function setBTMaxPort(value) {
+  document.getElementById('btmaxport').value = value;
+}
+
+function btMinPortChange() {
+  var value = document.getElementById('btminport').value;
+  pybridge.setBTMinPort(value);
+}
+
+function btMaxPortChange() {
+  var value = document.getElementById('btmaxport').value;
+  pybridge.setBTMaxPort(value);
+}
+
+function checkBTPorts() {
+  if(pybridge.getBTMaxPort() < pybridge.getBTMinPort()) {
+    pybridge.setBTMaxPort(pybridge.getBTMinPort());
+  }
+}

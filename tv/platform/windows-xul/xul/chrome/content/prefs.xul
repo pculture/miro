@@ -10,7 +10,7 @@
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	orient="vertical"
         onload="onload();"
-        ondialogaccept="checkMoviesDirChanged();"
+        ondialogaccept="ondialogaccept();"
         buttons="accept"
         class="preferences">
 <script src="chrome://dtv/content/main.js" />
@@ -67,13 +67,23 @@
 	<!--/MOVIES DIRECTORY-->
 
 	<!--DOWNLOADS-->
-	<groupbox orient="horizontal">
+	<groupbox orient="vertical">
 		<caption label="Downloads"/>
 		<hbox>
 			<checkbox id="limitupstream" checked="true" label="To avoid slowdowns, limit upstream to" value="1" oncommand="limitUpstreamChange()"/>
 			<textbox id="maxupstream" flex="0" value="300" style="max-width: 30px;" onchange="maxUpstreamChange()"/>
 			<description style="padding-top:5px;">KB/s when my computer is active.</description>
 		</hbox>				
+                <hbox align="end">
+                        <description>Bit Torrent uses ports between</description>
+                        <textbox id="btminport" flex="0" value="300" 
+                                size="5" onchange="btMinPortChange()" />
+                        <description>and</description>
+                        <textbox id="btmaxport" flex="0" value="300" 
+                                size="5" onchange="btMaxPortChange()" />
+                </hbox>
+                <description>(Changes won't go into effect until you restart
+                        Democracy Player.)</description>
 	</groupbox>
 	<!--/DOWNLOADS-->
 	

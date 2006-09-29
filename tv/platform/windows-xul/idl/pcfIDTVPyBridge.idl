@@ -61,6 +61,10 @@ interface pcfIDTVPyBridge : nsISupports
   void setExpireAfter(in short value);
   boolean getSinglePlayMode();
   void setSinglePlayMode(in boolean value);
+  short getBTMinPort();
+  void setBTMinPort(in short value);
+  short getBTMaxPort();
+  void setBTMaxPort(in short value);
   void showCursor(in boolean display);
   void createNewPlaylist();
   void createNewPlaylistFolder();

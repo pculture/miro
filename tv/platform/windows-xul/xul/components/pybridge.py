@@ -218,6 +218,14 @@ class PyBridge:
         return config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE)
     def setSinglePlayMode(self, value):
         return config.set(prefs.SINGLE_VIDEO_PLAYBACK_MODE, value)
+    def getBTMinPort(self):
+        return config.get(prefs.BT_MIN_PORT)
+    def setBTMinPort(self, value):
+        return config.set(prefs.BT_MIN_PORT, value)
+    def getBTMaxPort(self):
+        return config.get(prefs.BT_MAX_PORT)
+    def setBTMaxPort(self, value):
+        return config.set(prefs.BT_MAX_PORT, value)
 
     @asUrgent
     def handleCommandLine(self, commandLine):
