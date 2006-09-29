@@ -91,12 +91,13 @@ viewName = kargs['viewName']
                     </span>
                 </div>
             </div>
-	    <div class="download-rate-and-eta">
-                <span class="download-rate"
-                    t:hideIf="this.downloadRate() == '0k/s'">
-                        <span t:replace="this.downloadRate()" />
-                </span>
-                <span t:replace="this.downloadETA()" />
+	    <div t:showIf="this.downloadInProgress()" 
+		    class="download-rate-and-eta">
+	       <span class="download-rate" t:replace="this.downloadRate()" />
+               <span t:replace="this.downloadETA()" />
+	    </div>
+	    <div t:hideIf="this.downloadInProgress()">
+	       <span t:replace="this.getStartupActivity()" />
 	    </div>
             <a class="main-progress-cancel" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" title="Cancel Download" />
         </div>

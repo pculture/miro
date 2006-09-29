@@ -966,27 +966,34 @@ folder will also be deleted.""")
     def threeDigitPercentDone(self):
         return '%03d' % int(self.downloadProgress())
 
+    def downloadInProgress(self):
+        return self.downloader is not None and self.downloader.getETA() != 0
+
     ##
     # Returns string with estimate time until download completes
     def downloadETA(self):
         if self.downloader is not None:
             secs = self.downloader.getETA()
-        elif self.pendingManualDL:
-            return self.pendingReason
         else:
             secs = 0
         mins, secs = divmod(secs, 60)
         hours, mins = divmod(mins, 60)
         if secs == -1:
             return _('downloading...')
-        elif secs == 0:
-            return _('starting up...')
         elif hours > 0:
             time = "%d:%02d:%02d" % (hours, mins, secs)
             return _("%s left") % time
         else:
             time = "%d:%02d" % (mins, secs)
             return _("%s left") % time
+
+    def getStartupActivity(self):
+        if self.pendingManualDL:
+            return self.pendingReason
+        elif self.downloader:
+            return self.downloader.getStartupActivity()
+        else:
+            return _("starting up...")
 
     ##
     # Returns the download rate

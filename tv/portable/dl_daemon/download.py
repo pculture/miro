@@ -10,6 +10,7 @@ from threading import RLock, Event, Thread
 import traceback
 from copy import copy
 
+from BitTorrent.bencode import bdecode
 from clock import clock
 from download_utils import cleanFilename, nextFreeFilename, shortenFilename
 from download_utils import filenameFromURL
@@ -542,13 +543,14 @@ class HTTPDownloader(BGDownloader):
 
 class BTDownloader(BGDownloader):
     def __init__(self, url = None, item = None, restore = None):
+        self.metainfo = None
+        self.torrent = None
+        self.rate = self.eta = 0
+        self.activity = None
+        self.fastResumeData = None
         if restore is not None:
             self.restoreState(restore)
         else:            
-            self.metainfo = None
-            self.torrent = None
-            self.rate = self.eta = 0
-            self.fastResumeData = None
             BGDownloader.__init__(self,url,item)
             self.runDownloader()
 
@@ -583,6 +585,7 @@ class BTDownloader(BGDownloader):
         self.totalSize = newStatus['totalSize']
         self.rate = newStatus['downRate']
         self.eta = newStatus['timeEst']
+        self.activity = newStatus['activity']
         self.currentSize = int(self.totalSize * newStatus['fractionDone'])
         if self.state == "downloading" and newStatus['fractionDone'] == 1.0:
             self.moveToMoviesDirectory()
@@ -605,9 +608,7 @@ class BTDownloader(BGDownloader):
             BGDownloader.moveToDirectory(self, directory)
 
     def restoreState(self, data):
-        self.__dict__ = data
-        if 'fastResumeData' not in data:
-            self.fastResumeData = None
+        self.__dict__.update(data)
         self.rate = self.eta = 0
         if self.state == 'downloading' or (
             self.state == 'uploading' and self.uploaded < 1.5*self.totalSize):
@@ -617,6 +618,7 @@ class BTDownloader(BGDownloader):
         data = BGDownloader.getStatus(self)
         data['metainfo'] = self.metainfo
         data['fastResumeData'] = self.fastResumeData
+        data['activity'] = self.activity
         data['dlerType'] = 'BitTorrent'
         return data
 
@@ -661,6 +663,8 @@ class BTDownloader(BGDownloader):
         #        its metadata, we never run this. It's not a huge deal
         #        because it only affects the incomplete filename
         if not self.restarting:
+            metainfo = bdecode(self.metainfo)
+            self.shortFilename = cleanFilename(metainfo['info']['name'])
             self.pickInitialFilename()
         self.updateClient()
         self._startTorrent()

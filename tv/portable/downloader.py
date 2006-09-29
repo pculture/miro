@@ -305,6 +305,14 @@ URL was %s""" % self.url
         self.confirmDBThread()
         return self.status.get('eta', 0)
 
+    def getStartupActivity(self):
+        self.confirmDBThread()
+        activity = self.status.get('activity')
+        if activity is None:
+            return _("starting up")
+        else:
+            return activity
+
     ##
     # Returns the reason for the failure of this download
     # This should only be called when the download is in the failed state

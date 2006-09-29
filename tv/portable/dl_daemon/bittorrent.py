@@ -1,5 +1,4 @@
 """Glue code to handle BitTorrent stuff.  Most of this comes from download.py
-        print "skip %s %s" % (index, self.pieces_already_got[index])
 in the BitTorrent library.
 """
 
@@ -71,6 +70,7 @@ class TorrentDownload:
         self.time_est_func = lambda: 0
         self.last_up_total = self.last_down_total = 0.0
         self.last_activity = None
+        self.rawserver_started = False
 
     def start(self):
         """Start downloading the torrent."""
@@ -87,10 +87,34 @@ class TorrentDownload:
 
         self.doneflag.set()
         self.rawserver.wakeup()
-        return self.fast_resume_queue.get()
+        if self.rawserver_started:
+            return self.fast_resume_queue.get()
+        else:
+            return self.fast_resume_data
 
-    def skip_hash_check(self, index):
-        return self.pieces_already_got[index]
+    def parse_fast_resume_data(self, total_pieces):
+        already_got = None
+        mtimes = {}
+        if self.fast_resume_data is not None:
+            try:
+                fast_resume = bdecode(self.fast_resume_data)
+                already_got = fast_resume['already_got']
+                mtimes = fast_resume['mtimes']
+            except:
+                import traceback
+                print "WARNING: ERROR parsing fast resume data"
+                traceback.print_exc(1)
+                self.fast_resume_data = None
+        self.pieces_already_got = Bitfield(total_pieces, already_got)
+        self.fast_resume_mtimes = mtimes
+
+    def skip_hash_check(self, index, files):
+        if not self.pieces_already_got[index]:
+            return False
+        for f in files:
+            if path.getmtime(f) > self.fast_resume_mtimes.get(f, 0):
+                return False
+        return True
 
     def set_status_callback(self, func):
         """Register a callback function.  func will be called whenever the
@@ -199,7 +223,7 @@ class TorrentDownload:
         seed(myid)
         pieces = [info['pieces'][x:x+20] for x in xrange(0, 
             len(info['pieces']), 20)]
-        self.pieces_already_got = Bitfield(len(pieces), self.fast_resume_data)
+        self.parse_fast_resume_data(len(pieces))
         def failed(reason):
             self.doneflag.set()
             if reason is not None:
@@ -242,7 +266,10 @@ class TorrentDownload:
             return
 
         e = 'maxport less than minport - no ports to check'
-        for listen_port in xrange(config['minport'], config['maxport'] + 1):
+        minport = dtv_config.get(prefs.BT_MIN_PORT)
+        maxport = dtv_config.get(prefs.BT_MAX_PORT)
+
+        for listen_port in xrange(minport, maxport + 1):
             try:
                 rawserver.bind(listen_port, config['bind'])
                 break
@@ -300,7 +327,14 @@ class TorrentDownload:
         self.on_status({"activity" : 'connecting to peers'})
         ann[0] = rerequest.announce
         rerequest.begin()
-        rawserver.listen_forever(encoder)
-        self.fast_resume_queue.put(storagewrapper.get_have_list())
+        self.rawserver_started = True
+        try:
+            rawserver.listen_forever(encoder)
+        finally:
+            fast_resume_data = {
+                'already_got': storagewrapper.get_have_list(),
+                'mtimes': dict([(f, path.getmtime(f)) for f, size in files]),
+            }
+            self.fast_resume_queue.put(bencode(fast_resume_data))
         storage.close()
         rerequest.announce(2)

@@ -68,6 +68,9 @@ class Storage:
             p += 1
         return r
 
+    def files_in_range(self, pos, amount):
+        return [file for file, pos, end in self._intervals(pos, amount)]
+
     def read(self, pos, amount):
         r = []
         for file, pos, end in self._intervals(pos, amount):

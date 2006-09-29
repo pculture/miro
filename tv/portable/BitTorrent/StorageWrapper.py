@@ -63,9 +63,11 @@ class StorageWrapper:
             self.waschecked[piece] = check_hashes
         lastlen = self._piecelen(len(hashes) - 1)
         for i in xrange(len(hashes)):
+            files = self.storage.files_in_range(piece_size * i,
+                    self._piecelen(i))
             if not self._waspre(i):
                 self.holes.append(i)
-            elif not check_hashes or hash_skip_func(i):
+            elif not check_hashes or hash_skip_func(i, files):
                 markgot(i, i)
             else:
                 sh = sha(self.storage.read(piece_size * i, lastlen))
