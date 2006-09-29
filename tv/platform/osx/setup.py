@@ -89,23 +89,36 @@ updatePListEntry(infoPlist, u'CFBundleShortVersionString', conf)
 updatePListEntry(infoPlist, u'CFBundleVersion', conf)
 updatePListEntry(infoPlist, u'NSHumanReadableCopyright', conf)
 
-print "Building Democracy Player v%s (%s)" % (conf['appVersion'], conf['appRevision'])
-
 # Get a list of additional resource files to include
 
-resourceFiles = ['Resources/%s' % x for x in os.listdir('Resources')]
+excludedResources = ['.svn', '.DS_Store']
+resourceFiles = ['Resources/%s' % x for x in os.listdir('Resources') if x not in excludedResources]
+
+# Get path to the Growl framework
+
+frameworks = list()
+
+growlFramework = '%s/dtv-binary-kit/growl/Growl.framework/Growl' % os.path.dirname(root)
+if os.path.exists(growlFramework):
+    print "Growl framework found (%s)" % growlFramework
+    frameworks.append(growlFramework)
+else:
+    print "Growl framework not found. Please check out dtv-binary-kit from Subversion."
 
 # And launch the setup process...
+
+print "Building Democracy Player v%s (%s)" % (conf['appVersion'], conf['appRevision'])
 
 py2app_options = dict(
     plist = infoPlist,
     iconfile = '%s/platform/osx/Democracy.icns' % root,
+    resources = resourceFiles,
+    frameworks = frameworks,
     packages = ['dl_daemon']
 )
 
 setup(
     app = ['Democracy.py'],
-    data_files = resourceFiles,
     options = dict(py2app = py2app_options),
     ext_modules = [
         Extension("idletime",["%s/platform/osx/idletime.c" % root]),
@@ -123,8 +136,20 @@ setup(
 bundleRoot = 'Democracy.app/Contents'
 execRoot = os.path.join(bundleRoot, 'MacOS')
 rsrcRoot = os.path.join(bundleRoot, 'Resources')
+fmwkRoot = os.path.join(bundleRoot, 'Frameworks')
 prsrcRoot = os.path.join(rsrcRoot, 'resources')
 
+# Py2App seems to have a bug where alias builds would get incorrect symlinks to
+# frameworks, so create them manually.
+
+for fmwk in glob('%s/*.framework' % fmwkRoot):
+    if os.path.islink(fmwk):
+        dest = os.readlink(fmwk)
+        if not os.path.exists(dest):
+            print "Fixing incorrect symlink for %s" % os.path.basename(fmwk)
+            os.remove(fmwk)
+            os.symlink(os.path.dirname(dest), fmwk)
+    
 # Create a hard link to the main executable with a different name for the 
 # downloader. This is to avoid having 'Democracy' shown twice in the Activity 
 # Monitor since the downloader is basically Democracy itself, relaunched with a 
@@ -178,28 +203,6 @@ for source in glob(os.path.join(localeDir, '*.mo')):
     dest = 'Democracy.app/Contents/Resources/locale/%s/LC_MESSAGES/democracyplayer.mo' % lang
     os.makedirs(os.path.dirname(dest))
     shutil.copy2(source, dest)
-
-# As of Democracy 0.9.0, we want to be able to play FLV files so we bundle our
-# own copy of VLC (without the DVD CSS library) and use it explicitely from the 
-# frontend code.
-
-embeddedVLCPath = 'Democracy.app/Contents/'
-if os.path.exists(os.path.join(embeddedVLCPath, 'vlc')):
-    print 'Current application bundle already has an embedded VLC, skipping embedding phase.'
-else:
-    vlcArchivePath = '../../../dtv-binary-kit/vlc/mac/vlc-0.8.5.tar.gz'
-    if not os.path.exists(vlcArchivePath):
-        print "Can't find VLC in Democracy binary kit, skipping embedding phase."
-    else:
-        import tarfile
-        print "Copying VLC to application bundle."
-        tar = tarfile.open(vlcArchivePath, 'r:gz')
-        for tarInfo in tar:
-            if tarInfo.name.endswith('vlc_libdvdcss.dylib'):
-                print "Skipping DVD CSS library."
-            else:
-                print "Unpacking %s" % tarInfo.name
-                tar.extract(tarInfo, embeddedVLCPath)
 
 # And we're done...
 

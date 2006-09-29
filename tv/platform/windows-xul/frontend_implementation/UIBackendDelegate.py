@@ -171,6 +171,12 @@ class UIBackendDelegate:
     def revealFile (self, filename):
         os.startfile(os.path.dirname(filename))
 
+    def notifyDownloadCompleted(self, item):
+        pass
+
+    def notifyDownloadFailed(self, item):
+        pass
+
     def updateAvailableItemsCountFeedback(self, count):
         # Inform the user in a way or another that newly available items are
         # available

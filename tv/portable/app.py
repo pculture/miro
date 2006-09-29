@@ -520,6 +520,7 @@ class Controller (frontend.Application):
             views.unwatchedItems.addRemoveCallback(self.onUnwatchedItemsCountChange)
             views.downloadingItems.addAddCallback(self.onDownloadingItemsCountChange)
             views.downloadingItems.addRemoveCallback(self.onDownloadingItemsCountChange)
+            views.downloadingItems.addRemoveCallback(self.onDownloadingItemCompleted)
 
             # Set up the search objects
             self.setupGlobalFeed('dtv:search', initiallyAutoDownloadable=False)
@@ -1002,6 +1003,13 @@ downloaded?""")
     def onDownloadingItemsCountChange(self, obj, id):
         assert self.downloadTab is not None
         self.downloadTab.redraw()
+
+    def onDownloadingItemCompleted(self, obj, id):
+        global delegate
+        if obj.getState() == 'newly-downloaded':
+            delegate.notifyDownloadCompleted(obj)
+        else:
+            delegate.notifyDownloadFailed(obj)
 
     def updateAvailableItemsCountFeedback(self):
         global delegate

@@ -335,6 +335,12 @@ class UIBackendDelegate:
         else:
             os.spawnlp (os.P_NOWAIT, "nautilus", "nautilus", "file://" + filename)
 
+    def notifyDownloadCompleted(self, item):
+        pass
+
+    def notifyDownloadFailed(self, item):
+        pass
+
     def updateAvailableItemsCountFeedback(self, count):
         # Inform the user in a way or another that newly available items are
         # available

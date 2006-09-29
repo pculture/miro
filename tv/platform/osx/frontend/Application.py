@@ -23,6 +23,7 @@ import autoupdate
 import singleclick
 
 from Preferences import PreferencesWindowController
+import GrowlNotifier
 
 NibClassBuilder.extractClasses("MainMenu")
 
@@ -106,6 +107,9 @@ class AppController (NibClassBuilder.AutoBaseClass):
 
         # Startup
         app.controller.onStartup()
+
+        # Initialize the Growl notifier
+        GrowlNotifier.register()
     
     def applicationDidBecomeActive_(self, notification):
         if app.controller.frame is not None:

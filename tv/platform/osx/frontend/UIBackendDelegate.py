@@ -17,6 +17,7 @@ import dialogs
 import platformutils
 
 from StartupPanel import StartupPanelController
+import GrowlNotifier
 
 ###############################################################################
 
@@ -133,7 +134,13 @@ class UIBackendDelegate:
             badgedIcon.unlockFocus()
         appl = NSApplication.sharedApplication()
         platformutils.callOnMainThreadAndWaitUntilDone(appl.setApplicationIconImage_, badgedIcon)
-        
+    
+    def notifyDownloadCompleted(self, item):
+        GrowlNotifier.notifyDownloadComplete(item.getTitle())
+
+    def notifyDownloadFailed(self, item):
+        GrowlNotifier.notifyDownloadFailed(item.getTitle())
+    
     @platformutils.onMainThread
     def notifyUnkownErrorOccurence(self, when, log = ''):
         controller = ExceptionReporterController.alloc().initWithMoment_log_(when, log)
