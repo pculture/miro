@@ -1,8 +1,6 @@
 import sys
 import frontend
 import time
-import gettext
-import locale
 import resource
 import config
 import prefs
@@ -85,11 +83,6 @@ class Application:
         branch = ps.getBranch("general.useragent.")
         branch.setCharPref("locale", lang)
 
-        locale.setlocale(locale.LC_ALL, '')
-
-        gettext.bindtextdomain("democracyplayer", resource.path("locale"))
-        gettext.textdomain("democracyplayer")
-        gettext.bind_textdomain_codeset("democracyplayer","UTF-8")
         import psyco
         #psyco.log('\\dtv.psyco')
         psyco.profile(.03)

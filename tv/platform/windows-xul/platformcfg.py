@@ -7,6 +7,7 @@ import string
 import prefs
 import tempfile
 import ctypes
+import resource
 
 _specialFolderCSIDLs = {
     'AppData': 0x001a,

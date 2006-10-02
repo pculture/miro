@@ -5,7 +5,7 @@ import webbrowser
 import _winreg
 import traceback
 import ctypes
-from gettext import gettext as _
+from gtcache import gettext as _
 from urlparse import urlparse
 
 import prefs
