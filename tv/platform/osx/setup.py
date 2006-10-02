@@ -105,12 +105,12 @@ resourceFiles = [os.path.join('Resources', x) for x in os.listdir('Resources') i
 
 frameworks = list()
 
-growlFramework = os.path.join(os.path.dirname(root), 'dtv-binary-kit/growl/Growl.framework')
+growlFramework = os.path.join(os.path.dirname(root), 'dtv-binary-kit-mac/growl/Growl.framework')
 if os.path.exists(growlFramework):
     print "Growl framework found (%s)" % growlFramework
     frameworks.append(growlFramework)
 else:
-    print "Growl framework not found. Please check out dtv-binary-kit from Subversion."
+    print "Growl framework not found. Please check out dtv-binary-kit-mac from Subversion."
 
 # And launch the setup process...
 
@@ -235,7 +235,7 @@ if os.path.exists(cmpntRoot):
     print "    (all skipped, already bundled)"
 else:
     os.makedirs(cmpntRoot)
-    componentsRoot = os.path.join(os.path.dirname(root), 'dtv-binary-kit/qtcomponents')
+    componentsRoot = os.path.join(os.path.dirname(root), 'dtv-binary-kit-mac/qtcomponents')
     components = glob(os.path.join(componentsRoot, '**/*.component'))
     if len(components) == 0:
         print "    (all skipped, not found in binary kit)"
