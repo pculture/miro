@@ -241,6 +241,7 @@ class PyBridge:
 
     @asUrgent
     def setVolume(self, volume):
+        volume = float(volume)
         config.set(prefs.VOLUME_LEVEL, volume)
         app.controller.videoDisplay.setVolume(volume)
 
