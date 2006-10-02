@@ -8,6 +8,20 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <t:include filename="dynamic.js" />
     <t:execOnLoad><![CDATA[
+# Returns appropriate CSS class based on the item's state
+#
+# We have to define this here because Python differentiates between
+# statements and expressions, so we can't just do this in the
+# template. :(
+def CSSifyState(this):
+    state = this.getState()
+    if state == 'newly-downloaded':
+        return 'unwatched'
+    else:
+        return ''
+
+# Allows this template to be viewed when not included in another
+# template's view
 this = kargs['this']
 viewName = kargs['viewName']
 ]]></t:execOnLoad>
@@ -15,7 +29,7 @@ viewName = kargs['viewName']
 
 <body>
 
-<div class="main-video draggable ---SELECTEDSTATE---"
+<div class="***CSSifyState(this)*** main-video draggable ---SELECTEDSTATE---"
 	dragsourcetype="***this.getDragType()***" 
 	dragsourcedata="itemlist-***this.getID()***" 
 	dragicon="video-tnail-***viewName + str(this.getID())***" 
@@ -49,6 +63,7 @@ viewName = kargs['viewName']
             title="Play '***this.getTitle()***'" 
             onclick="return eventURL('action:playViewNamed?viewName=@@@viewName@@@&amp;firstItemId=@@@this.getID()@@@');" />
     </div>
+
     <img class="main-video-tnail" src="***this.getThumbnail()***" alt="" id="video-tnail-***viewName + str(this.getID())***" />
 
     <div class="main-video-details">
