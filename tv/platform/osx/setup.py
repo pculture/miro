@@ -171,11 +171,6 @@ if os.path.exists(linkPath):
     os.remove(linkPath)
 os.link(srcPath, linkPath)
 
-# Install the final app.config file
-
-print "Copying config file to application bundle"
-shutil.move(appConfigPath, os.path.join(prsrcRoot, 'app.config'))
-
 # Copy our own portable resources
 
 print "Copying portable resources to application bundle"
@@ -199,6 +194,11 @@ else:
                 copy = shutil.copy
             copy(resource, dest)
             print "    %s" % dest
+
+# Install the final app.config file
+
+print "Copying config file to application bundle"
+shutil.move(appConfigPath, os.path.join(prsrcRoot, 'app.config'))
 
 # Copy the gettext MO files in a 'locale' folder inside the application bundle 
 # resources folder. Doing this manually at this stage instead of automatically 
@@ -236,11 +236,15 @@ if os.path.exists(cmpntRoot):
 else:
     os.makedirs(cmpntRoot)
     componentsRoot = os.path.join(os.path.dirname(root), 'dtv-binary-kit/qtcomponents')
-    for component in glob(os.path.join(componentsRoot, '**/*.component')):
-        componentDest = os.path.join(cmpntRoot, os.path.basename(component))
-        componentName = os.path.basename(component)
-        shutil.copytree(component, componentDest)
-        print "    %s" % componentDest
+    components = glob(os.path.join(componentsRoot, '**/*.component'))
+    if len(components) == 0:
+        print "    (all skipped, not found in binary kit)"
+    else:
+        for component in components:
+            componentDest = os.path.join(cmpntRoot, os.path.basename(component))
+            componentName = os.path.basename(component)
+            shutil.copytree(component, componentDest)
+            print "    %s" % componentDest
 
 # Check that we haven't left some turds in the application bundle.
 
