@@ -1721,9 +1721,12 @@ class TemplateActionHandler:
             searchFeed.reset()
 
     def handleSelect(self, area, viewName, id, shiftDown, ctrlDown):
+        try:
+            view = self.templateHandle.getTemplateVariable(viewName)
+        except KeyError: # user switched templates before we got this
+            return
         shift = (shiftDown == '1')
         ctrl = (ctrlDown == '1')
-        view = self.templateHandle.getTemplateVariable(viewName)
         controller.selection.selectItem(area, view, int(id), shift, ctrl)
 
     def handleContextMenuSelect(self, id, area, viewName):
