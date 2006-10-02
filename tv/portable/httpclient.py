@@ -254,7 +254,11 @@ class AsyncSocket(object):
             if self.socket is None:
                 # the connection was closed while we were calling gethostbyname
                 return
-            rv = self.socket.connect_ex((address, port))
+            try:
+                rv = self.socket.connect_ex((address, port))
+            except socket.gaierror:
+                trapCall(self, errback, ConnectionError('gaierror'))
+                return
             if rv in (0, errno.EINPROGRESS, errno.EWOULDBLOCK):
                 eventloop.addWriteCallback(self.socket, onWriteReady)
             else:
