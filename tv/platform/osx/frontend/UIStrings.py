@@ -1,6 +1,6 @@
 "Menu strings"
 
-from gettext import gettext as _
+from gtcache import gettext as _
 
 REMOVE = _("_Remove...")
 REMOVE_PLAYLIST = _("_Remove Playlist...")

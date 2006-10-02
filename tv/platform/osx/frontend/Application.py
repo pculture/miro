@@ -2,7 +2,6 @@ import os
 import re
 import time
 import struct
-import gettext
 import urlparse
 
 from objc import YES, NO, nil, signature
@@ -43,10 +42,6 @@ class Application:
                 languages[i] = "C"
 
         os.environ["LANGUAGE"] = ':'.join(languages)
-        gettext_path = os.path.abspath(resource.path("../locale"))
-        gettext.bindtextdomain("democracyplayer", gettext_path)
-        gettext.textdomain("democracyplayer")
-        gettext.bind_textdomain_codeset("democracyplayer", "UTF-8")
 
         eventloop.setDelegate(self)
         AppHelper.runEventLoop()
