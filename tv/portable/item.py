@@ -1182,7 +1182,7 @@ folder will also be deleted.""")
             ]
             if self.getSeen():
                 items.append((self.markItemUnseen, _('Mark as Unwatched')))
-        elif item.getState() == 'downloading':
+        elif self.getState() == 'downloading':
             items = [(self.expire, _('Cancel Download'))]
         else:
             items = [(self.download, _('Download'))]
