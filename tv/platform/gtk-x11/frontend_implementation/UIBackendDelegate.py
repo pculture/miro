@@ -9,8 +9,8 @@ import threading
 import traceback
 import app
 import dialogs
-from gettext import gettext as _
-from gettext import ngettext
+from gtcache import gettext as _
+from gtcache import ngettext
 import re
 import MainFrame
 import resource

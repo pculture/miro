@@ -15,8 +15,6 @@ import prefs
 from clock import clock
 from BitTorrent.bencode import bdecode, bencode
 
-from gtcache import gettext as _
-
 # Should we print out warning messages.  Turn off in the unit tests.
 chatter = True
 
@@ -374,7 +372,7 @@ def formatSizeForUser(bytes, zeroString=""):
     """Format an int containing the number of bytes into a string suitable for
     printing out to the user.  zeroString is the string to use if bytes == 0.
     """
-
+    from gtcache import gettext as _
     if bytes > (1 << 30):
         return _("%1.1fGB") % (bytes / (1024.0 * 1024.0 * 1024.0))
     elif bytes > (1 << 20):

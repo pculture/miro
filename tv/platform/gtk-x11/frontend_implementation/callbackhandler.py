@@ -18,7 +18,7 @@ import dialogs
 import folder
 import playlist
 import platformutils
-from gettext import gettext as _
+from gtcache import gettext as _
  
 def AttachBoolean (widget, descriptor, sensitive_widget = None):
     def BoolChanged (widget):

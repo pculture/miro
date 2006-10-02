@@ -35,7 +35,6 @@ import sorts
 import indexes
 import filters
 import resource
-from gettext import gettext as _
 
 resourcePath = 'dist/%s/share/democracy/resources/' % PREFIX
 template_compiler.setResourcePath('file://' + os.path.abspath(resourcePath))

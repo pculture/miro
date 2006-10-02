@@ -19,6 +19,7 @@ import os
 import prefs
 import gconf
 import threading
+import resource
 
 client = gconf.client_get_default()
 gconf_lock = threading.RLock()
@@ -96,6 +97,9 @@ def get(descriptor):
 
     elif descriptor == prefs.NON_VIDEO_DIRECTORY:
         path = os.path.expanduser('~/Desktop')
+
+    elif descriptor == prefs.GETTEXT_PATHNAME:
+        path = resource.path("../../locale")
 
     elif descriptor == prefs.SUPPORT_DIRECTORY:
         path = os.path.expanduser('~/.democracy')

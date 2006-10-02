@@ -89,6 +89,9 @@ def get(descriptor):
     elif descriptor == prefs.NON_VIDEO_DIRECTORY:
         return _nonVideoDirectory
 
+    elif descriptor == prefs.GETTEXT_PATHNAME:
+        value = resource.path("locale")
+
     elif descriptor == prefs.SUPPORT_DIRECTORY:
         return _getSupportDirectory()
 

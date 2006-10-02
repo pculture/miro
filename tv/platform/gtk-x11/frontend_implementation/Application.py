@@ -2,8 +2,9 @@ import gtk
 
 import threading
 from frontend_implementation.gtk_queue import queue
-import gettext
-import locale
+import gtcache
+import config
+import prefs
 import gtk.glade
 import resource
 import platformutils
@@ -18,11 +19,7 @@ class Application:
         #print "Application init"
         pass
     def Run(self):
-        locale.setlocale(locale.LC_ALL, '')
-        gettext.bindtextdomain("democracyplayer", resource.path("../../locale"))
-        gettext.textdomain("democracyplayer")
-        gettext.bind_textdomain_codeset("democracyplayer","UTF-8")
-        gtk.glade.bindtextdomain("democracyplayer", resource.path("../../locale"))
+        gtk.glade.bindtextdomain("democracyplayer", config.get(prefs.GETTEXT_PATHNAME))
         gtk.glade.textdomain("democracyplayer")
 
         queue.main_thread = threading.currentThread()

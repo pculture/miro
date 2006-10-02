@@ -77,6 +77,8 @@ LOG_PATHNAME = \
     Pref(key='LogPathname',      default=None, platformSpecific=True)
 DOWNLOADER_LOG_PATHNAME = \
     Pref(key='DownloaderLogPathname', default=None, platformSpecific=True)
+GETTEXT_PATHNAME = \
+    Pref(key='GetTextPathname', default=None, platformSpecific=True)
 
 # These are normally read from resources/app.config.
 SHORT_APP_NAME = \

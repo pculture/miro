@@ -7,7 +7,7 @@ import gtk.glade
 import sets
 import gconf
 import platformutils
-from gettext import gettext as _
+from gtcache import gettext as _
 
 import resource
 from frontend import *

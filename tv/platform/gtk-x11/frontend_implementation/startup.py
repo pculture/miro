@@ -6,8 +6,8 @@ import os
 import shutil
 from threading import Thread
 import util
-from gettext import gettext as _
-from gettext import ngettext
+from gtcache import gettext as _
+from gtcache import ngettext
 
 class _Search:
     def __init__(self, widgetTree, path):
