@@ -1,6 +1,13 @@
+import time
+
 import random
 import socket
 import eventloop
+
+DAEMONIC_THREAD_TIMEOUT = 4
+# amount of time to wait for daemonic threads to quit.  Right now, the only
+# thing we use Daemonic threads for is to send HTTP requests to BitTorrent
+# trackers.
 
 class Command:
     def __init__(self, daemon, *args, **kws):
@@ -151,12 +158,20 @@ class ShutDownCommand(Command):
         print "Shutdown complete"
 
     def action(self):
+        starttime = time.time()
         from dl_daemon import download
         download.shutDown()
         import threading
         for thread in threading.enumerate():
             if thread != threading.currentThread() and not thread.isDaemon():
                 thread.join()
+        endtime = starttime + DAEMONIC_THREAD_TIMEOUT
+        for thread in threading.enumerate():
+            if thread != threading.currentThread():
+                timeout = endtime - time.time()
+                if timeout <= 0:
+                    break
+                thread.join(timeout)
         c = ShutDownResponseCommand(self.daemon)
         c.send(callback=self.response_sent)
         self.daemon.shutdown = True

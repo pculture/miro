@@ -77,8 +77,10 @@ class Rerequester:
                     self.errorfunc('Problem connecting to tracker - timeout exceeded')
                 self.last_failed = True
         self.sched(checkfail, self.timeout)
-        Thread(target = self.rerequest, args = [s, set], 
-            name = "BitTorrent -- rerequest").start()
+        t = Thread(target = self.rerequest, args = [s, set], 
+            name = "BitTorrent -- rerequest")
+        t.setDaemon(True)
+        t.start()
 
     def rerequest(self, url, set):
         try:
