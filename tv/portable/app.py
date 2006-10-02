@@ -10,6 +10,7 @@ import sorts
 import filters
 import maps
 
+import menu
 import util
 import feed
 import item
@@ -186,7 +187,8 @@ class PlaybackControllerBase:
         currentDisplay = frame.getDisplay(frame.mainDisplay)
         if self.currentPlaylist is None:
             self.stop()
-        elif (allowMovieReset and hasattr(currentDisplay, 'getCurrentTime') 
+        elif (allowMovieReset and direction == -1
+                and hasattr(currentDisplay, 'getCurrentTime') 
                 and currentDisplay.getCurrentTime() > 2.0):
             currentDisplay.goToBeginningOfMovie()
         elif config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE) or self.justPlayOne:
@@ -1734,8 +1736,10 @@ class TemplateActionHandler:
             view = self.templateHandle.getTemplateVariable(viewName)
             if not controller.selection.isSelected(area, view, int(id)):
                 self.handleSelect(area, viewName, id, False, False)
-            menu = obj.makeContextMenu(self.currentName, view)
-            delegate.showContextMenu(menu)
+            popup = menu.makeContextMenu(self.currentName, view,
+                    controller.selection.getSelectionForArea(area), int(id))
+            if popup:
+                delegate.showContextMenu(popup)
 
     def __getSearchFeeds(self):
         searchFeed = controller.getGlobalFeed('dtv:search')
