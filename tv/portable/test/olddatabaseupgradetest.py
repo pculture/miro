@@ -3,6 +3,8 @@ import shutil
 import tempfile
 import unittest
 
+import database
+import eventloop
 import olddatabaseupgrade
 import storedatabase
 import databaseupgrade
@@ -77,3 +79,30 @@ class TestConvert(DemocracyTestCase):
         shutil.copyfile(resource.path("testdata/olddatabase.bug.3163"),
                 self.tmpPath)
         self.checkConversion()
+
+    def testBug4039(self):
+        # Test that when databases fail sanity tests, we don't call
+        # onRestore() for the objects that failed.  olddatabase.bug.4039
+        # contains a database an item whose feed doesn't exist.
+        shutil.copyfile(resource.path("testdata/olddatabase.bug.4039"),
+                self.tmpPath)
+        db = database.DynamicDatabase()
+        storedatabase.skipOnRestore = False
+        storedatabase.restoreDatabase(db=db, pathname=self.tmpPath)
+        # if onRestore() was called, we would have the icon cache update
+        # scheduled as an idle callback
+        self.assertEquals(len(db.objects), 0)
+        self.assert_(eventloop._eventLoop.idleQueue.queue.empty())
+        self.assert_(eventloop._eventLoop.urgentQueue.queue.empty())
+
+    def testBug4039part2(self):
+        # On the other hand, for database that are normal, we should call 
+        # onRestore()
+        shutil.copyfile(resource.path("testdata/olddatabase.bug.4039.part2"),
+                self.tmpPath)
+        db = database.DynamicDatabase()
+        storedatabase.skipOnRestore = False
+        storedatabase.restoreDatabase(db=db, pathname=self.tmpPath)
+        self.assertEquals(len(db.objects), 2)
+        self.assert_(not eventloop._eventLoop.idleQueue.queue.empty() or
+            not eventloop._eventLoop.urgentQueue.queue.empty())

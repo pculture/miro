@@ -304,6 +304,11 @@ class HTTPDownloader(BGDownloader):
 
     def __init__(self, url = None,dlid = None,restore = None):
         if restore is not None:
+            if not isinstance(restore.get('totalSize', 0), int):
+                # Sometimes restoring old downloaders caused errors because
+                # their totalSize wasn't an int.  (see #3965)
+                restore = None
+        if restore is not None:
             self.__dict__ = copy(restore)
             self.blockTimes = []
             self.restartOnError = True

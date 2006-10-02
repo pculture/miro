@@ -6,7 +6,7 @@ import traceback
 from copy import copy
 from StringIO import StringIO
 
-from BitTornado.clock import clock
+from clock import clock
 import os
 
 from download_utils import cleanFilename

@@ -6,6 +6,8 @@ import os
 import tempfile
 import unittest
 
+import eventloop
+import iconcache
 import item
 import feed
 import databasesanity
@@ -46,8 +48,9 @@ class SanityCheckingTest(DemocracyTestCase):
     def testPhantomFeedChecking(self):
         f = feed.Feed("http://feed.uk")
         i = item.Item({}, feed_id=f.id)
+        i2 = item.FileItem('/foo/bar.txt', feed_id=f.id)
         self.checkObjectListFailsTest([i])
-        self.checkFixIfPossible([i], [])
+        self.checkFixIfPossible([i, i2], [])
         self.checkObjectListPassesTest([i, f])
         self.checkObjectListPassesTest([])
 

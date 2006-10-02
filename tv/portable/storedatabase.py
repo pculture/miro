@@ -31,9 +31,7 @@ import shutil
 
 import config
 import database
-import databasesanity
 import databaseupgrade
-import olddatabaseupgrade
 import prefs
 import util
 import schema as schema_mod
@@ -452,14 +450,21 @@ def getObjects(pathname, convertOnFail):
         else:
             return None # nope, there's no database to restore
 
+
+    global skipOnRestore
+    oldSkipOnRestore = skipOnRestore
+    skipOnRestore = True
     try:
         objects = restoreObjectList(pathname)
     except BadFileFormatError:
         if convertOnFail:
-            print "trying to convert database from old version"
+            if util.chatter:
+                print "trying to convert database from old version"
+            import olddatabaseupgrade
             olddatabaseupgrade.convertOldDatabase(pathname)
             objects = restoreObjectList(pathname)
-            print "*** Conversion Successfull ***"
+            if util.chatter:
+                print "*** Conversion Successfull ***"
         else:
             raise
     except ImportError, e:
@@ -477,12 +482,19 @@ def getObjects(pathname, convertOnFail):
         else:
             raise
 
+    import databasesanity
     try:
-        databasesanity.checkSanity(objects, quiet=True)
+        databasesanity.checkSanity(objects, quiet=True, 
+                reallyQuiet=(not util.chatter))
     except databasesanity.DatabaseInsaneError, e:
         util.failedExn("When restoring database", e)
         # if the database fails the sanity check, try to restore it anyway.
         # It's better than notheing
+    skipOnRestore = oldSkipOnRestore
+    if not skipOnRestore:
+        for object in objects:
+            if hasattr(object, 'onRestore'):
+                object.onRestore()
     return objects
 
 def restoreDatabase(db=None, pathname=None, convertOnFail=True):
