@@ -10,13 +10,20 @@ from distutils.core import setup
 from Pyrex.Distutils import build_ext
 from distutils.extension import Extension
 
+# Get command line parameters
+
+forceUpdate = False
+if '--force-update' in sys.argv:
+    sys.argv.remove('--force-update')
+    forceUpdate = True
+
 # Find the top of the source tree and set search path
 # GCC3.3 on OS X 10.3.9 doesn't like ".."'s in the path so we normalize it
 
 root = os.path.dirname(os.path.abspath(sys.argv[0]))
-root = os.path.join(root, '..', '..')
+root = os.path.join(root, '../..')
 root = os.path.normpath(root)
-sys.path[0:0]=['%s/portable' % root]
+sys.path[0:0]=[os.path.join(root, 'portable')]
 
 # Only now may we import things from our own tree
 
@@ -62,7 +69,7 @@ else:
 
 # Inject the revision number into app.config.template to get app.config.
 
-appConfigTemplatePath = os.path.join(root, 'resources', 'app.config.template')
+appConfigTemplatePath = os.path.join(root, 'resources/app.config.template')
 appConfigPath = '/tmp/democracy.app.config'
 s = open(appConfigTemplatePath, "rt").read()
 s = string.Template(s).safe_substitute(APP_REVISION = revision, 
@@ -92,13 +99,13 @@ updatePListEntry(infoPlist, u'NSHumanReadableCopyright', conf)
 # Get a list of additional resource files to include
 
 excludedResources = ['.svn', '.DS_Store']
-resourceFiles = ['Resources/%s' % x for x in os.listdir('Resources') if x not in excludedResources]
+resourceFiles = [os.path.join('Resources', x) for x in os.listdir('Resources') if x not in excludedResources]
 
 # Get path to the Growl framework
 
 frameworks = list()
 
-growlFramework = '%s/dtv-binary-kit/growl/Growl.framework/Growl' % os.path.dirname(root)
+growlFramework = os.path.join(os.path.dirname(root), 'dtv-binary-kit/growl/Growl.framework')
 if os.path.exists(growlFramework):
     print "Growl framework found (%s)" % growlFramework
     frameworks.append(growlFramework)
@@ -111,7 +118,7 @@ print "Building Democracy Player v%s (%s)" % (conf['appVersion'], conf['appRevis
 
 py2app_options = dict(
     plist = infoPlist,
-    iconfile = '%s/platform/osx/Democracy.icns' % root,
+    iconfile = os.path.join(root, 'platform/osx/Democracy.icns'),
     resources = resourceFiles,
     frameworks = frameworks,
     packages = ['dl_daemon']
@@ -121,10 +128,10 @@ setup(
     app = ['Democracy.py'],
     options = dict(py2app = py2app_options),
     ext_modules = [
-        Extension("idletime",["%s/platform/osx/idletime.c" % root]),
-        Extension("database",["%s/portable/database.pyx" % root]),
-        Extension("sorts",["%s/portable/sorts.pyx" % root]),
-        Extension("fasttypes",["%s/portable/fasttypes.cpp" % root],
+        Extension("idletime",  [os.path.join(root, 'platform/osx/idletime.c')]),
+        Extension("database",  [os.path.join(root, 'portable/database.pyx')]),
+        Extension("sorts",     [os.path.join(root, 'portable/sorts.pyx')]),
+        Extension("fasttypes", [os.path.join(root, 'portable/fasttypes.cpp')],
                   extra_objects=[boostLib],
                   include_dirs=[boostIncludeDir])
         ],
@@ -142,7 +149,7 @@ prsrcRoot = os.path.join(rsrcRoot, 'resources')
 # Py2App seems to have a bug where alias builds would get incorrect symlinks to
 # frameworks, so create them manually.
 
-for fmwk in glob('%s/*.framework' % fmwkRoot):
+for fmwk in glob(os.path.join(fmwkRoot, '*.framework')):
     if os.path.islink(fmwk):
         dest = os.readlink(fmwk)
         if not os.path.exists(dest):
@@ -164,29 +171,34 @@ if os.path.exists(linkPath):
     os.remove(linkPath)
 os.link(srcPath, linkPath)
 
-# Copy our own portable resources, install the app.config file and remove 
-# useless data
-
-print "Copying portable resources to application bundle"
-
-if os.path.exists(prsrcRoot):
-    shutil.rmtree(prsrcRoot)
-os.mkdir(prsrcRoot)
-
-excludedRsrc = ['app.config.template', 'locale', 'testdata']
-for resource in glob(os.path.join(root, 'resources', '*')):
-    rsrcName = os.path.basename(resource)
-    if rsrcName not in excludedRsrc:
-        print "    %s" % rsrcName
-        if os.path.isdir(resource):
-            shutil.copytree(resource, os.path.join(prsrcRoot, rsrcName))
-        else:
-            shutil.copy(resource, prsrcRoot)
-
 # Install the final app.config file
 
 print "Copying config file to application bundle"
 shutil.move(appConfigPath, os.path.join(prsrcRoot, 'app.config'))
+
+# Copy our own portable resources
+
+print "Copying portable resources to application bundle"
+
+if forceUpdate and os.path.exists(prsrcRoot):
+    shutil.rmtree(prsrcRoot, True)
+
+if os.path.exists(prsrcRoot):
+    print "    (all skipped, already bundled)"
+else:
+    os.mkdir(prsrcRoot)
+    excludedRsrc = ['app.config.template', 'locale', 'testdata']
+    for resource in glob(os.path.join(root, 'resources/*')):
+        rsrcName = os.path.basename(resource)
+        if rsrcName not in excludedRsrc:
+            if os.path.isdir(resource):
+                dest = os.path.join(prsrcRoot, rsrcName)
+                copy = shutil.copytree
+            else:
+                dest = os.path.join(prsrcRoot, rsrcName)
+                copy = shutil.copy
+            copy(resource, dest)
+            print "    %s" % dest
 
 # Copy the gettext MO files in a 'locale' folder inside the application bundle 
 # resources folder. Doing this manually at this stage instead of automatically 
@@ -195,14 +207,55 @@ shutil.move(appConfigPath, os.path.join(prsrcRoot, 'app.config'))
 
 print "Copying gettext MO files to application bundle."
 
-localeDir = os.path.join (root, 'resources', 'locale')
-shutil.rmtree(os.path.join(rsrcRoot, 'locale'), True);
+localeDir = os.path.join (root, 'resources/locale')
+lclDir = os.path.join(rsrcRoot, 'locale')
+if forceUpdate and os.path.exists(lclDir):
+    shutil.rmtree(lclDir, True);
 
-for source in glob(os.path.join(localeDir, '*.mo')):
-    lang = os.path.basename(source)[:-3]
-    dest = 'Democracy.app/Contents/Resources/locale/%s/LC_MESSAGES/democracyplayer.mo' % lang
-    os.makedirs(os.path.dirname(dest))
-    shutil.copy2(source, dest)
+if os.path.exists(lclDir):
+    print "    (all skipped, already bundled)"
+else:
+    for source in glob(os.path.join(localeDir, '*.mo')):
+        lang = os.path.basename(source)[:-3]
+        dest = os.path.join(lclDir, lang, 'LC_MESSAGES/democracyplayer.mo')
+        os.makedirs(os.path.dirname(dest))
+        shutil.copy2(source, dest)
+        print "    %s" % dest
+
+# Copy the Quicktime components which we will automatically install to allow
+# internal playback of a lot of formats and codecs.
+
+print "Copying installable Quicktime components."
+
+cmpntRoot = os.path.join(bundleRoot, 'Components')
+if forceUpdate and os.path.exists(cmpntRoot):
+    shutil.rmtree(cmpntRoot, True);
+
+if os.path.exists(cmpntRoot):
+    print "    (all skipped, already bundled)"
+else:
+    os.makedirs(cmpntRoot)
+    componentsRoot = os.path.join(os.path.dirname(root), 'dtv-binary-kit/qtcomponents')
+    for component in glob(os.path.join(componentsRoot, '**/*.component')):
+        componentDest = os.path.join(cmpntRoot, os.path.basename(component))
+        componentName = os.path.basename(component)
+        shutil.copytree(component, componentDest)
+        print "    %s" % componentDest
+
+# Check that we haven't left some turds in the application bundle.
+
+wipeList = list()
+for root, dirs, files in os.walk('Democracy.app'):
+    for excluded in ('.svn', 'unittest'):
+        if excluded in dirs:
+            dirs.remove(excluded)
+            wipeList.append(os.path.join(root, excluded))
+
+if len(wipeList) > 0:
+    print "Wiping out unwanted data from the application bundle."
+    for folder in wipeList:
+        print "    %s" % folder
+        shutil.rmtree(folder)
 
 # And we're done...
 

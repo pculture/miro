@@ -2,7 +2,7 @@
 imgDirName="img"
 imgName=Democracy-`date +"%F"`
 
-/usr/bin/env python2.4 setup.py py2app -O2 --dist-dir .
+/usr/bin/env python2.4 setup.py py2app -O2 --dist-dir . --force-update
 
 if [ "$1" == '-make-dmg' ] ; then
     echo "Building image..."
