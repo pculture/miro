@@ -2,18 +2,12 @@
 # Background process
 
 # Make all output flush immediately.
+# Don't add extra import statements here.  If there's a problem importting
+# something we want to see the error in the log.
 import sys
+import os
 import util
 util.inDownloader = True
-import os
-import threading
-
-from dl_daemon import daemon
-# This isn't used here, we just want to load it sooner.
-from dl_daemon import download
-import eventloop
-import httpclient
-
 logPath = os.environ.get('DEMOCRACY_DOWNLOADER_LOG')
 if logPath is not None:
     if os.environ.get('DEMOCRACY_DOWNLOADER_FIRST_LAUNCH') == '1':
@@ -31,6 +25,15 @@ if os.environ.get('DEMOCRACY_DOWNLOADER_FIRST_LAUNCH') != '1':
     print
 else:
     print "*** Launching Democracy Downloader Daemon ****"
+
+# Start of normal imports
+import threading
+
+from dl_daemon import daemon
+# This isn't used here, we just want to load it sooner.
+from dl_daemon import download
+import eventloop
+import httpclient
 
 port = int(os.environ['DEMOCRACY_DOWNLOADER_PORT'])
 server = daemon.DownloaderDaemon(port)
