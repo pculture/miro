@@ -173,7 +173,7 @@ class Item(DDBObject):
                 for video in videos:
                     self.videoFilename = video
             else:
-                if self.getFeed().getURL() != "dtv:directoryfeed":
+                if self.getFeedURL() != "dtv:directoryfeed":
                     target_dir = config.get(prefs.NON_VIDEO_DIRECTORY)
                     if not filename_root.startswith(target_dir):
                         if isinstance(self, FileItem):
@@ -369,6 +369,9 @@ class Item(DDBObject):
                 self._parent = self
             return self._parent
 
+    def getFeedURL(self):
+        return self.getFeed().getURL()
+
     def feedExists(self):
         return self.feed_id and self.dd.idExists(self.feed_id)
 
@@ -403,7 +406,10 @@ class Item(DDBObject):
         self.isContainerItem = None
         self.seen = self.keep = self.pendingManualDL = False
         self.watchedTime = None
-        self.signalChange(needsUpdateUandA = (UandA != self.getUandA()))
+        if self.getFeedURL() != "dtv:manualFeed":
+            self.signalChange(needsUpdateUandA = (UandA != self.getUandA()))
+        else:
+            self.remove()
 
     ##
     # Marks this item as expired
@@ -880,6 +886,10 @@ folder will also be deleted.""")
         return (self.getState() in ('newly-downloaded', 'expiring') and
                 self.getExpirationTime() is not None)
 
+    def showTrashButton(self):
+        return self.isDownloaded() or (self.getFeedURL() == 'dtv:manualFeed'
+                and self.getState() != 'downloading')
+
     def getFailureReason(self):
         self.confirmDBThread()
         if self.downloader is not None:
@@ -1319,6 +1329,13 @@ def reconnectDownloaders():
         if downloader not in reconnected:
             print "removing orphaned downloader: ", downloader.url
             downloader.remove()
+    manualFeed = util.getSingletonDDBObject(views.manualFeed)
+    manualItems = views.items.filterWithIndex(indexes.itemsByFeed,
+            manualFeed.getID())
+    for item in manualItems:
+        if item.downloader is None:
+            print "removing cancelled external torrent: ", item
+            item.remove()
 
 def getEntryForFile(filename):
     return FeedParserDict({'title':os.path.basename(filename),

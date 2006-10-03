@@ -688,7 +688,14 @@ class BTDownloader(BGDownloader):
         if self.metainfo is None:
             if self.url.startswith('file://'):
                 path = self.url[len('file://'):]
-                metainfoFile = open(path, 'rb')
+                try:
+                    metainfoFile = open(path, 'rb')
+                except IOError:
+                    self.handleError(_("Torrent file deleted"),
+                            _("The torrent file for this item was deleted "
+                                "outside of democracy."))
+
+                    return
                 try:
                     metainfo = metainfoFile.read()
                 finally:
