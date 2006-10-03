@@ -195,6 +195,7 @@ class ControllerDaemon(Daemon):
                    prefs.PROJECT_URL,
                    prefs.DOWNLOADER_LOG_PATHNAME,
                    prefs.LOG_PATHNAME,
+                   prefs.GETTEXT_PATHNAME,
                 ]
 
         for desc in remoteConfigItems:
