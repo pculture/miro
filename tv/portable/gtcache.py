@@ -26,12 +26,9 @@ def gettext(text):
         _gtcache[text] = out
         return out
     except TypeError:
-        # For some reason, uncommenting this causes the Downloader
-        # Daemon not to launch on Windows --NN
-
-        #print "DTV: WARNING: gettext not initialized for string \"%s\"" % text
-        #import traceback
-        #traceback.print_stack()
+        print "DTV: WARNING: gettext not initialized for string \"%s\"" % text
+        import traceback
+        traceback.print_stack()
         return text
 
 def ngettext(text1, text2, count):

@@ -23,7 +23,6 @@ from clock import clock
 import httpauth
 import config
 import prefs
-import dialogs
 from download_utils import cleanFilename, parseURL, defaultPort
 from xhtmltools import URLEncodeDict, multipartEncode
 import eventloop
@@ -63,12 +62,13 @@ class NetworkError(Exception):
                 self.getFriendlyDescription(), self.getLongDescription())
 
 class ConnectionError(NetworkError):
-    friendlyDescription = _("Can't connect")
     def __init__(self, errorMessage):
+        self.friendlyDescription = _("Can't connect")
         self.longDescription = _("Connection Error: %s") % errorMessage
 
 class SSLConnectionError(ConnectionError):
     def __init__(self):
+        self.friendlyDescription = _("Can't connect")
         self.longDescription = _("SSL connection error")
 
 class HTTPError(NetworkError):
