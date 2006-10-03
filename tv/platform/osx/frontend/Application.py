@@ -23,6 +23,7 @@ import singleclick
 
 from Preferences import PreferencesWindowController
 import GrowlNotifier
+import ComponentInstaller
 
 NibClassBuilder.extractClasses("MainMenu")
 
@@ -90,22 +91,30 @@ class AppController (NibClassBuilder.AutoBaseClass):
         
         self.pausedDownloaders = list()
         self.internalShutdown = False
+        self.emergencyShutdown = False
         
     def applicationDidFinishLaunching_(self, notification):
-        # The [NSURLRequest setAllowsAnyHTTPSCertificate:forHost:] selector is
-        # not documented anywhere, so I assume it is not public. It is however 
-        # a very clean and easy way to allow us to load our channel guide from
-        # https, so let's use it here anyway :)
-        components = urlparse.urlparse(config.get(prefs.CHANNEL_GUIDE_URL))
-        channelGuideHost = components[1]
-        NSURLRequest.setAllowsAnyHTTPSCertificate_forHost_(YES, channelGuideHost)
+        # Run the Quicktime Components Installer
+        willRestart = ComponentInstaller.run()
+        
+        if willRestart:
+            self.internalShutdown = True
+            self.emergencyShutdown = True
+        else:
+            # The [NSURLRequest setAllowsAnyHTTPSCertificate:forHost:] selector is
+            # not documented anywhere, so I assume it is not public. It is however 
+            # a very clean and easy way to allow us to load our channel guide from
+            # https, so let's use it here anyway :)
+            components = urlparse.urlparse(config.get(prefs.CHANNEL_GUIDE_URL))
+            channelGuideHost = components[1]
+            NSURLRequest.setAllowsAnyHTTPSCertificate_forHost_(YES, channelGuideHost)
 
-        # Startup
-        app.controller.onStartup()
+            # Startup
+            app.controller.onStartup()
 
-        # Initialize the Growl notifier
-        GrowlNotifier.register()
-    
+            # Initialize the Growl notifier
+            GrowlNotifier.register()
+            
     def applicationDidBecomeActive_(self, notification):
         if app.controller.frame is not None:
             # This should hopefully avoid weird things like #1722
@@ -127,11 +136,12 @@ class AppController (NibClassBuilder.AutoBaseClass):
         # Reset the application icon to its default state
         defaultAppIcon = NSImage.imageNamed_('NSApplicationIcon')
         NSApplication.sharedApplication().setApplicationIconImage_(defaultAppIcon)
-        # Ensure that the download daemon is not running anymore at this point
-        app.delegate.waitUntilDownloadDaemonExit()
-            
-        # Call shutdown on backend
-        app.controller.onShutdown()
+        
+        if not self.emergencyShutdown:
+            # Ensure that the download daemon is not running anymore at this point
+            app.delegate.waitUntilDownloadDaemonExit()    
+            # Call shutdown on backend
+            app.controller.onShutdown()
 
     def downloaderDaemonDidTerminate_(self, notification):
         task = notification.object()
