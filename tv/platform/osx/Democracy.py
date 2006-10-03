@@ -24,6 +24,8 @@ def activatePsyco():
 
 def launchDemocracy():
     # We can now import our stuff
+    import gtcache
+    gtcache.init()
     import app
     import prefs
     import config
