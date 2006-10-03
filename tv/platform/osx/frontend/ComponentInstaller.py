@@ -46,10 +46,8 @@ def run():
                 installableVersion = _getComponentVersion(installable)
                 if _installedIsOutdated(installedVersion, installableVersion):
                     upgradeList.append((installed, installable))
-    
+
         willRestart = _performInstallation(installList, upgradeList)
-#        if willRestart:
-#            _restartDemocracy()
 
     return willRestart
 
