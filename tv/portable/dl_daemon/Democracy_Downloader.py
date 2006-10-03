@@ -47,4 +47,9 @@ httpclient.SOCKET_INITIAL_READ_TIMEOUT = 30
 download.downloadUpdater.startUpdates()
 eventloop.startup()
 
+# Hack to init gettext after we can get config information
+#
+# See corresponding hack in gtcache.py
+import gtcache
+gtcache.init()
 print "*** Daemon ready ***"
