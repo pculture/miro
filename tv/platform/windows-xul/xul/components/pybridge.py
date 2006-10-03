@@ -8,6 +8,8 @@ import traceback
 import _winreg
 
 try:
+    import gtcache
+    gtcache.init()
     import app
     import autoupdate
     import eventloop
