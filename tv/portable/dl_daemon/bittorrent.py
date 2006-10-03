@@ -71,6 +71,8 @@ class TorrentDownload:
         self.last_up_total = self.last_down_total = 0.0
         self.last_activity = None
         self.rawserver_started = False
+        self.minport = dtv_config.get(prefs.BT_MIN_PORT)
+        self.maxport = dtv_config.get(prefs.BT_MAX_PORT)
 
     def start(self):
         """Start downloading the torrent."""
@@ -266,10 +268,8 @@ class TorrentDownload:
             return
 
         e = 'maxport less than minport - no ports to check'
-        minport = dtv_config.get(prefs.BT_MIN_PORT)
-        maxport = dtv_config.get(prefs.BT_MAX_PORT)
 
-        for listen_port in xrange(minport, maxport + 1):
+        for listen_port in xrange(self.minport, self.maxport + 1):
             try:
                 rawserver.bind(listen_port, config['bind'])
                 break

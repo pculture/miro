@@ -1600,28 +1600,25 @@ class ScraperFeedImpl(FeedImpl):
     # Given a string containing an HTML file, return a dictionary of
     # links to titles and thumbnails
     def scrapeHTMLLinks(self,html, baseurl,setTitle=False, charset = None):
-        try:
-            lg = HTMLLinkGrabber()
-            links = lg.getLinks(html, baseurl)
-            if setTitle and not lg.title is None:
-                self.ufeed.confirmDBThread()
-                try:
-                    self.title = toUni(lg.title, charset)
-                finally:
-                    self.ufeed.signalChange()
-                
-            linkDict = {}
-            for link in links:
-                if link[0].startswith('http://') or link[0].startswith('https://'):
-                    if not linkDict.has_key(toUni(link[0],charset)):
-                        linkDict[toUni(link[0],charset)] = {}
-                    if not link[1] is None:
-                        linkDict[toUni(link[0],charset)]['title'] = toUni(link[1],charset).strip()
-                    if not link[2] is None:
-                        linkDict[toUni(link[0],charset)]['thumbnail'] = toUni(link[2],charset)
-            return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')],linkDict)
-        except (LookupError,):
-            return ([],{})
+        lg = HTMLLinkGrabber()
+        links = lg.getLinks(html, baseurl)
+        if setTitle and not lg.title is None:
+            self.ufeed.confirmDBThread()
+            try:
+                self.title = toUni(lg.title, charset)
+            finally:
+                self.ufeed.signalChange()
+            
+        linkDict = {}
+        for link in links:
+            if link[0].startswith('http://') or link[0].startswith('https://'):
+                if not linkDict.has_key(toUni(link[0],charset)):
+                    linkDict[toUni(link[0],charset)] = {}
+                if not link[1] is None:
+                    linkDict[toUni(link[0],charset)]['title'] = toUni(link[1],charset).strip()
+                if not link[2] is None:
+                    linkDict[toUni(link[0],charset)]['thumbnail'] = toUni(link[2],charset)
+        return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')],linkDict)
         
     ##
     # Called by pickle during deserialization

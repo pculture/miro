@@ -128,7 +128,7 @@ def toUTF8Bytes(string, encoding=None):
     global _utf8cache
     try:
         return _utf8cache[(string, encoding)]
-    except:
+    except KeyError:
         result = None
         # If we got a Unicode string, half of our work is already done.
         if isinstance(string, types.UnicodeType):
@@ -138,9 +138,11 @@ def toUTF8Bytes(string, encoding=None):
         if result is None and encoding is not None:
             # If we knew the encoding of the string, try that.
             try:
-                result = string.decode(encoding,'replace').encode('utf-8')
-            except UnicodeDecodeError:
+                decoded = string.decode(encoding,'replace')
+            except (UnicodeDecodeError, ValueError, LookupError):
                 pass
+            else:
+                result = decoded.encode('utf-8')
         if result is None:
             # Encoding wasn't provided, or it was wrong. Interpret provided string
             # liberally as a fixed defaultEncoding (see above.)
