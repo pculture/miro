@@ -59,7 +59,7 @@ def performStartupTasks(terminationCallback):
         updateUI()
     widgetTree['button-startup-search-cancel'].connect("clicked", overall_cancel)
 
-    def onSearch():
+    def searchSelected():
         return widgetTree['radiobutton-search-yes'].get_active() and not status['searchSuccess']            
 
     def updateUI(*args):
@@ -86,8 +86,8 @@ def performStartupTasks(terminationCallback):
         elif step == 1:
             widgetTree['button-startup-back'].set_sensitive(True)
 
-            show_hide ('button-startup-forward', not onSearch())
-            show_hide ('button-startup-search', onSearch())
+            show_hide ('button-startup-forward', not searchSelected())
+            show_hide ('button-startup-search', searchSelected())
             show_hide ('button-startup-ok', False)
 
             if status['inSearch']:
@@ -122,7 +122,7 @@ def performStartupTasks(terminationCallback):
             step = step - 1
         elif response == gtk.RESPONSE_YES:
             if step == 1:
-                if onSearch():
+                if searchSelected():
                     if widgetTree['radiobutton-search-custom'].get_active():
                         path = widgetTree['filechooserbutton-search-custom'].get_filename()
                     else:
