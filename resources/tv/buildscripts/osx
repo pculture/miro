@@ -3,14 +3,34 @@
 #If no tag is specified...
 if [ "x-$2" == "x-" ]; then
 	tag=`date +%Y-%m-%d`
-	svn co https://svn.participatoryculture.org/svn/dtv/trunk/ democracy-$tag
+	trunk=https://svn.participatoryculture.org/svn/dtv/trunk/
 else
 	#Check out code and build
 	tag=$2$3
-	svn co https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$2$3/ democracy-$tag
+	trunk=https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$2$3/
 fi
-	cd democracy-$tag/tv/platform/osx/
+	mkdir Democracy-Player-$tag
+	cd Democracy-Player-$tag
+
+	#Check out code
+	svn co $trunk/tv
+	if [ $? != 0 ]; then
+		echo "svn co $trunk/tv failed"
+		exit 1
+	fi
+	svn co $trunk/dtv-binary-kit-mac 
+	if [ $? != 0 ]; then
+                echo "svn co $trunk/dtv-binary-kit-mac failed"
+                exit 1
+        fi
+
+	cd tv/platform/osx/
 	./build.sh -make-dmg
+	if [ $? != 0 ]; then
+                echo "./build.sh -make-dmg failed"
+                exit 1
+        fi
+
 
 	#upload it if username was specified 
 	if [ "x-$1" != "x-" ]; then
@@ -32,4 +52,4 @@ fi
 
 cd ..
 
-rm -rf democracy-$tag
+rm -rf Democracy-Player-$tag
