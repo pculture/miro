@@ -74,6 +74,28 @@ body {
 	text-decoration: none;
 }
 
+#videodetails {
+float: right;
+width: 70px;
+padding-top: 4px;
+margin-right: 5px;
+line-height: 13px;
+}
+
+#videodetails-actions a {
+text-align: right;
+color: #ddd;
+font-weight: bold;
+font-size: 9px;
+text-decoration: none;
+display: block;
+}
+
+#videodetails-actions a:hover {
+text-decoration: underline;
+}
+
+
 #videodetails-ad {
 	position: absolute;
 	width: 480px;

@@ -249,21 +249,22 @@ left: 43px;
 }
 
 /* This is the blue grey gradient for the bars above the "available"
-and "watchable" sections */
+and "downloaded" sections */
 .main-channelbar {
     background: url(../images/main-bar-bg.png) repeat-x left bottom;
-    height: 22px;
+    height: 19px;
     display: block;
     overflow: hidden;
     color: #111;
     text-decoration: none;
     font-size: 13px;
     font-weight: normal;
+    padding-top: 2px;
 }
 
 /* The yellow gradient for the "download" bar */
 .main-channelbar-download {
-    height: 22px;
+    height: 19px;
     background: url(../images/main-bar-bg-download.png) repeat-x left bottom;
     display: block;
     overflow: hidden;
@@ -271,27 +272,27 @@ and "watchable" sections */
     text-decoration: none;
     font-size: 13px;
     font-weight: normal;
+    padding-top: 2px;
 }
 
-/* The yellow triangle for the "download" bar */
+/* triangle for the bars */
 .triangle {
     background: url(../images/triangle-right.png) no-repeat left top;
     display: block;
     float: left;
     width: 15px;
     height: 16px;
-    margin-top: 5px;
+    margin-top: 3px;
     margin-left: 5px;
 }
 
-/* downward yellow triangle for dl bar */
 .triangle-down {
     background: url(../images/triangle-down.png) no-repeat left top;
     display: block;
     float: left;
     width: 15px;
     height: 16px;
-    margin-top: 5px;
+    margin-top: 3px;
     margin-left: 5px;
 }
 
@@ -412,10 +413,11 @@ float: left;
     left: 0px;
     top: 0px;
 }
-/* We have a different background for unwatched videos */
+
 .unwatched { 
-  background: url(../images/bgr_unwatched.png) repeat-x left top;
+  background: url(../images/main-video-bg-unwatched.png) no-repeat right top;
 }
+
 
 /* This is the line that appears when you reorder items. When
 an element is dragged, the drag-highlight class is added to it */

@@ -24,6 +24,13 @@ app.controller.videoInfoItem = None
 
 <div id="videodetails-container">
 
+
+<div id="videodetails-actions">
+        <a t:showIf="this.hasSharableURL()" href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" >BOMB</a>
+	<a t:showIf="this.showSaveButton" href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');">SAVE</a>
+	<a href="#" onclick="return eventURL('action:expirePlayingItem?item=@@@this.getID()@@@');">DELETE</a>
+		</div>
+
 	<div id="videodetails-channeltitle">
         <h1 t:replace="this.getTitle()" /> 
         <h2 t:replaceMarkup="this.getFeed().getTitle()" />
