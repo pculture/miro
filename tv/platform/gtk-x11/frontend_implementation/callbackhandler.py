@@ -34,21 +34,21 @@ def AttachBoolean (widget, descriptor, sensitive_widget = None):
 def AttachInteger (widget, descriptor):
     def IntegerChanged (widget):
         try:
-            config.set (descriptor, int(widget.get_text()))
+            config.set (descriptor, widget.get_value_as_int())
         except:
             pass
 
-    widget.set_text (str(config.get(descriptor)))
+    widget.set_value (config.get(descriptor))
     widget.connect ('changed', IntegerChanged)
 
 def AttachFloat (widget, descriptor):
     def FloatChanged (widget):
         try:
-            config.set (descriptor, float(widget.get_text()))
+            config.set (descriptor, widget.get_value())
         except:
             pass
 
-    widget.set_text (str(config.get(descriptor)))
+    widget.set_value (config.get(descriptor))
     widget.connect ('changed', FloatChanged)
 
 def AttachCombo (widget, descriptor, values):
@@ -348,10 +348,12 @@ class CallbackHandler(object):
         dialog = widgetTree['dialog-preferences']
         mainWindow = self.mainFrame.widgetTree['main-window']
         dialog.set_transient_for(mainWindow)
-        AttachBoolean (widgetTree['checkbutton-limit'], prefs.LIMIT_UPSTREAM, widgetTree['entry-limit'])
-        AttachBoolean (widgetTree['checkbutton-padding'], prefs.PRESERVE_DISK_SPACE, widgetTree['entry-padding'])
-        AttachInteger (widgetTree['entry-limit'], prefs.UPSTREAM_LIMIT_IN_KBS)
-        AttachFloat(widgetTree['entry-padding'], prefs.PRESERVE_X_GB_FREE)
+        AttachBoolean (widgetTree['checkbutton-limit'], prefs.LIMIT_UPSTREAM, widgetTree['spinbutton-limit'])
+        AttachBoolean (widgetTree['checkbutton-padding'], prefs.PRESERVE_DISK_SPACE, widgetTree['spinbutton-padding'])
+        AttachInteger (widgetTree['spinbutton-limit'], prefs.UPSTREAM_LIMIT_IN_KBS)
+        AttachInteger (widgetTree['spinbutton-bt-min-port'], prefs.BT_MIN_PORT)
+        AttachInteger (widgetTree['spinbutton-bt-max-port'], prefs.BT_MAX_PORT)
+        AttachFloat(widgetTree['spinbutton-padding'], prefs.PRESERVE_X_GB_FREE)
         AttachCombo (widgetTree['combobox-poll'], prefs.CHECK_CHANNELS_EVERY_X_MN, (30, 60, -1))
         AttachCombo (widgetTree['combobox-expiration'], prefs.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))
 
@@ -373,6 +375,9 @@ class CallbackHandler(object):
                     response == gtk.RESPONSE_YES)
 
             migrate_dialog.destroy()
+
+        if config.get(prefs.BT_MAX_PORT) < config.get(prefs.BT_MIN_PORT):
+            config.set(prefs.BT_MAX_PORT, config.get(prefs.BT_MIN_PORT))
         dialog.destroy()
         if config.get(prefs.PRESERVE_DISK_SPACE):
             new_disk = config.get(prefs.PRESERVE_X_GB_FREE)
