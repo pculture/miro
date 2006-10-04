@@ -26,18 +26,23 @@ app.controller.videoInfoItem = None
 
 
 <div id="videodetails-actions">
-        <a t:showIf="this.hasSharableURL()" href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" >BOMB</a>
-	<a t:showIf="this.showSaveButton" href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');">SAVE</a>
-	<a href="#" onclick="return eventURL('action:expirePlayingItem?item=@@@this.getID()@@@');">DELETE</a>
-		</div>
+	<a t:showIf="this.hasSharableURL()" href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" >
+		<span i18n:translate="">BOMB</span>
+	</a>
+	<br t:hideIf="this.hasSharableURL()" />
+	<a t:showIf="this.showSaveButton()" href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');">
+		<span i18n:translate="">SAVE</span>
+	</a>
+	<br t:hideIf="this.showSaveButton()" />
+	<a href="#" onclick="return eventURL('action:expirePlayingItem?item=@@@this.getID()@@@');">
+		<span i18n:translate="">DELETE</span>
+	</a>
+</div>
 
 	<div id="videodetails-channeltitle">
         <h1 t:replace="this.getTitle()" /> 
         <h2 t:replaceMarkup="this.getFeed().getTitle()" />
         <h3 t:replaceMarkup="this.getPaymentHTML()" />
-        <a t:showIf="this.hasSharableURL()" href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" >BOMB</a>
-	<a t:showIf="this.showSaveButton" href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');">SAVE</a>
-	<a href="#" onclick="return eventURL('action:expirePlayingItem?item=@@@this.getID()@@@');">DELETE</a>
 	</div>
 	
 	<div id="videodetails-ad">
