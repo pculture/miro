@@ -303,10 +303,9 @@ a.feeditem.normal .feed-loading-icon {
 
 .number-count {
 	font-size: 11px;
-	line-height: 13px;
 	color: #FFFFFF;
 	margin: 0px 8px 0px 8px;
-	padding: 2px 0px 4px 0px;
+	padding: 3px 0px 3px 0px;
 	font-weight: normal;
 	background: left top repeat-x;
 	min-width: 7px;

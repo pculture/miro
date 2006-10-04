@@ -431,7 +431,7 @@ float: left;
 .main-video {
     border-top: 1px solid #f0fcfe;
     border-bottom: 1px solid #d5ddea;
-    background: url(../images/main-video-bg.png) no-repeat right top;
+    background: url(../images/main-video-bg.png) repeat-x;
     height: 84px;
     width: 100%;
     position: relative;
@@ -459,11 +459,14 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 /* These change the background based on whether or not it's selected */
-.main-video.selected {
+.main-video.selected, .selected .main-video-stats, .selected .main-video-details {
+    background-color: none;
     background: url(../images/main-video-bg-selected.png) repeat-x left top;
     color: white;
 }
-.main-video.selected-inactive {
+
+.main-video.selected-inactive, .main-video-details.selected-inactive, .main-video-stats.selected-inactive {
+
     background: #ccc;
 }
 
@@ -553,18 +556,6 @@ an element is dragged, the drag-highlight class is added to it */
     color: white;
 }
 
-#main-video-desc-details {
-	font-size: 12px;
-	height:  14px;
-	overflow:  hidden;
-	padding-top:  1px;
-}
-
-#main-video-desc-details a:link, .main-video-desc-details a:active, .main-video-desc-details a:hover {
-    color: #333;
-    text-decoration: none;
-}
-
 .main-video-hitbox {
     position: absolute;
     top: 4px;
@@ -609,16 +600,32 @@ an element is dragged, the drag-highlight class is added to it */
 
 .main-video-stats {
     position: absolute;
-    right: 140px;
+    right: 155px;
     top: 0px;
     width: 85px;
-    height: 100%;	
-	padding: 5px;
-	color:  #666;
+    height: 74px;
+    padding: 5px;
+    color:  #666;
+    background: #e8ecf3;
+    font-size: 10px;
 }
 
 .main-video-stats a {
-	color:  #666;
+    color:  #666;
+}
+
+.main-video-stats a:hover {
+    color: #4181e0;
+}
+
+.selected .main-video-stats a, .selected .main-video-stats a:hover {
+    color: white;
+}
+
+.main-video-details-reveal-button {
+    position: absolute;
+    bottom: 4px;
+    left: 5px;
 }
 
 
@@ -626,8 +633,9 @@ an element is dragged, the drag-highlight class is added to it */
     position: absolute;
     right: 0px;
     top: 0px;
-    width: 135px;
+    width: 155px;
     height: 100%;
+    background: #e1e9f6;
 }
 
 .main-video-details-tasks {
@@ -661,48 +669,82 @@ an element is dragged, the drag-highlight class is added to it */
     background: url(../images/main-icon-trash.png) top left no-repeat;
 }
 
-.main-video-details-state {
-    position: absolute;
-    top: 50px;
-    left: 8px;
-    width: 120px;
-    height: 30px;
-    margin: 0px;
-    color: #000;
-    font-size: 10px;
-    padding-top: 2px;
-    overflow: hidden;
+.main-video-bottom {
+	font-size: 11px;
+	overflow:  hidden;
+	padding:  1px 0px;
+	position: relative;
 }
 
-.main-video-details-state.new, .main-video-details-state.newly-downloaded {
-    font-size: 11px;
+.video-state {
     font-weight: bold;
 }
 
-.main-video-details-state.new {
-    color: #486D9F;
+.video-state.new, .video-state.newly-downloaded {
+    color: white;
 }
 
-.main-video-details-state.newly-downloaded {
-    color: #090;
+.video-state.new { 
+    background: #486D9F;
 }
 
-.main-video-details-state.expiring {
+.video-state.newly-downloaded { /* AKA unwatched */
+    background: #090;
+}
+
+.circular-button-left {
+    background: left 1px no-repeat url(../images/circular-button-left.png);
+}
+
+.circular-button-right {
+    background: right 1px no-repeat url(../images/circular-button-right.png);
+}
+
+.circular-button {
+    background: left 1px repeat-x url(../images/circular-button-mid.png);
+    margin: 0px 8px;
+}
+
+.circular-button a:link {
+    font-size: 9px;
     font-weight: bold;
     color: #444;
-    font-size: 9px;
+    text-decoration: none;
+}
+
+.circular-button a:hover {
+    color: #000000;
+    text-decoration: underline;
+}
+
+.circular-button-left.save {
+    padding-right: 3px;
+}
+
+.details-small-buttons {
+    position: absolute;
+    width: 100%;
+    top: 65px;
+    text-align: center;
 }
 
 .main-video-details-download-info {
     position: absolute;
-    top: 50px;
+    top: 48px;
     left: 8px;
     width: 125px;
     height: 30px;
-    margin: 0px;
-    color: #000;
     font-size: 10px;
     overflow: hidden;
+}
+
+.main-video-details-download-info.expiring {
+    color: #444;
+    text-align: center;
+}
+
+.main-video-details-download-info.pending-auto {
+    text-align: center;
 }
 
 .download-rate-and-eta {
@@ -714,30 +756,8 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 
-.main-video.selected .main-video-details-download-info, .main-video.selected .main-video-details-state {
+.main-video.selected .main-video-details-download-info, .main-video.selected .video-state {
     color: white;
-}
-
-.main-video-details-save-button {
-    font-size: 12px;
-    width: 38px;
-    height: 17px;
-    background: url(../images/main-save-bg.png) no-repeat right top; 
-	display:  inline;
-}
-
-.main-video-details-save-button a {
-    font-size: 9px;
-    font-weight: bold;
-    color: #333;
-    padding-top: 3px;
-    padding-left: 6px;
-    text-decoration: none; 
-}
-
-.main-video-details-save-button a:hover {
-    color: #000000;
-    text-decoration: underline; 
 }
 
 .main-progress-bar-bg {

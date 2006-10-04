@@ -445,48 +445,31 @@ folder will also be deleted.""")
                 time = _("%d min") % (ceil(exp.seconds/60.0))
         return _('Expires: %s') % time
 
-    def _getStateCSSClassAndState(self):
-        """Does the work for both getStateCSSClass() and getStateString().
-        It's in one function to make sure that they stay in sync
-        """
-
-        if self.isContainerItem:
-            if self.getState() == 'expiring':
-                return 'expiring', self.getExpirationString()
-            return '', ''
-        if self.isPendingAutoDownload():
-            return 'pending-autdownload', _('Pending Auto Download')
-        elif self.isFailedDownload():
-            return 'failed-download', self.getFailureReason()
-        elif self.isDownloaded():
-            if self.getState() == 'newly-downloaded':
-                return 'newly-downloaded', _('UNWATCHED')
-            elif self.getState() == 'expiring':
-                return 'expiring', self.getExpirationString()
-            else:
-                return '', ''
-        elif not self.getViewed():
-            return 'new', _('NEW')
-        else:
-            return '', ''
-
     def getDragType(self):
         if self.isDownloaded():
             return 'downloadeditem'
         else:
             return 'item'
 
-    def getStateCSSClass(self):
-        """Get the CSS class to display our state string."""
-        return self._getStateCSSClassAndState()[0]
+    def getEmblemCSSClass(self):
+        if not self.getViewed():
+            return 'new'
+        elif self.getState() == 'newly-downloaded':
+            return 'newly-downloaded'
+        else:
+            return ''
 
-    def getStateString(self):
-        """Get a human-readable string to display to the user."""
-        return self._getStateCSSClassAndState()[1]
+    def getEmblemCSSString(self):
+        if not self.getViewed():
+            return 'NEW'
+        elif self.getState() == 'newly-downloaded':
+            return 'UNWATCHED'
+        else:
+            return ''
 
     def getUandA(self):
         """Get whether this item is new, or newly-downloaded, or neither."""
-        state = self.getStateCSSClass()
+        state = self.getEmblemCSSClass()
         if state == 'new':
             return (0, 1)
         elif state == 'newly-downloaded':
@@ -767,25 +750,18 @@ folder will also be deleted.""")
 
         if self.isContainerItem:
             children = self.getChildren()
-            size = "CONTAINS %d ITEMS - %s" % (len(children), size)
-
+            details.append('<span class="details-count">%s items</span>' % len(children))
         if len(reldate) > 0:
             details.append('<span class="details-date">%s</span>' % escape(reldate))
         if len(duration) > 0:
             details.append('<span class="details-duration">%s</span>' % escape(duration))
-        if len(format) > 0:
-            details.append('<span class="details-format">%s</span>' % escape(format))
         if len(size) > 0:
             details.append('<span class="details-size">%s</span>' % escape(size))
-
-        if self.parent_id is not None:
-            parent = "IN FOLDER '%s'" % self.getParent().getTitle()
-            details.append('<span class="details-parent">%s</span>' %
-                    escape(parent))
-
+        if len(format) > 0:
+            details.append('<span class="details-format">%s</span>' % escape(format))
         if self.looksLikeTorrent():
             details.append('<span class="details-torrent" il8n:translate="">TORRENT</span>')
-        out = ' - '.join(details)
+        out = '<BR>'.join(details)
         return out
 
     ##
