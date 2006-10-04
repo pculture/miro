@@ -45,7 +45,7 @@ def notifyDownloadFailed(title):
 class GrowlNotifier (NSObject):
     
     def registrationDictionaryForGrowl(self):
-        notifications = [DOWNLOAD_COMPLETE, DOWNLOAD_FAILED]
+        notifications = [DOWNLOAD_COMPLETE]
         info = {'ApplicationName': config.get(prefs.LONG_APP_NAME),
                 'AllNotifications': notifications, 
                 'DefaultNotifications': notifications}
