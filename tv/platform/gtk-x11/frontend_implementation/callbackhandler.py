@@ -30,6 +30,20 @@ def AttachBoolean (widget, descriptor, sensitive_widget = None):
     if (sensitive_widget != None):
         sensitive_widget.set_sensitive (widget.get_active())
     widget.connect ('toggled', BoolChanged)
+ 
+def AttachBooleanRadio (widget_true, widget_false, descriptor, sensitive_widget = None):
+    def BoolChanged (widget):
+         config.set (descriptor, widget.get_active())
+         if (sensitive_widget != None):
+             sensitive_widget.set_sensitive (widget.get_active())
+
+    if config.get(descriptor):
+        widget_true.set_active (True)
+    else:
+        widget_false.set_active (False)
+    if (sensitive_widget != None):
+        sensitive_widget.set_sensitive (widget_true.get_active())
+    widget_true.connect ('toggled', BoolChanged)
 
 def AttachInteger (widget, descriptor):
     def IntegerChanged (widget):
@@ -356,6 +370,7 @@ class CallbackHandler(object):
         AttachFloat(widgetTree['spinbutton-padding'], prefs.PRESERVE_X_GB_FREE)
         AttachCombo (widgetTree['combobox-poll'], prefs.CHECK_CHANNELS_EVERY_X_MN, (30, 60, -1))
         AttachCombo (widgetTree['combobox-expiration'], prefs.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))
+        AttachBooleanRadio (widgetTree['radiobutton-playback-one'], widgetTree['radiobutton-playback-all'], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
 
         try:
             os.makedirs (movie_dir)
