@@ -146,8 +146,9 @@ left: 43px;
     height: 28px;
     overflow: hidden;
     color: #FFFFFF;
-    font-size: 200%;
+    font-size: 190%;
     text-align: center;
+	font-weight: normal;
 }
 
 
@@ -185,7 +186,7 @@ left: 43px;
     background: url(../images/main-icon-settings.png) no-repeat left top;
     height: 20px;
     margin: 0px 0px 1px 0px;
-    padding: 0px 0px 0px 20px;
+    padding: 0px 0px 0px 21px;
     color: #FFFFFF;
     text-decoration: none;
     text-transform: uppercase;
@@ -200,7 +201,7 @@ left: 43px;
     background: url(../images/main-icon-mail-titlebar.png) no-repeat left 2px;
     height: 20px;
     margin: 0px 0px 1px 0px;
-    padding: 0px 0px 0px 20px;
+    padding: 0px 0px 0px 21px;
     color: #FFFFFF;
     text-decoration: none;
     text-transform: uppercase;
@@ -425,7 +426,7 @@ float: left;
     border-top: 1px solid #f0fcfe;
     border-bottom: 1px solid #d5ddea;
     background: url(../images/main-video-bg.png) no-repeat right top;
-    height: 83px;
+    height: 84px;
     width: 100%;
     position: relative;
     left: 0px;
@@ -433,7 +434,7 @@ float: left;
 }
 
 .unwatched { 
-  background: url(../images/main-video-bg-unwatched.png) no-repeat right top;
+/*  background: url(../images/main-video-bg-unwatched.png) no-repeat right top;  */
 }
 
 
@@ -464,8 +465,8 @@ an element is dragged, the drag-highlight class is added to it */
     position: absolute;
     left: 5px;
     top: 3px;
-    width: 100px;
-    height: 75px;
+    width: 101px;
+    height: 76px;
     border: 1px solid #e6e6eA;
     z-index: 1;
 }
@@ -481,7 +482,7 @@ an element is dragged, the drag-highlight class is added to it */
 
 .main-video-desc {
     margin-left: 115px;
-    margin-right: 145px;
+    margin-right: 255px;
     margin-top: 3px;
     height: 80px;
     overflow: hidden;
@@ -490,7 +491,7 @@ an element is dragged, the drag-highlight class is added to it */
 .main-video-desc h1 {
     margin: 0px;
     padding: 0px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: bold;
     color: #000000;
     text-decoration: none;
@@ -546,9 +547,16 @@ an element is dragged, the drag-highlight class is added to it */
     color: white;
 }
 
-.main-video-desc-details a:link, .main-video-desc-details a:active, .main-video-desc-details a:hover {
-    color: inherit;
-    text-decoration: underline;
+#main-video-desc-details {
+	font-size: 12px;
+	height:  14px;
+	overflow:  hidden;
+	padding-top:  1px;
+}
+
+#main-video-desc-details a:link, .main-video-desc-details a:active, .main-video-desc-details a:hover {
+    color: #333;
+    text-decoration: none;
 }
 
 .main-video-hitbox {
@@ -592,6 +600,21 @@ an element is dragged, the drag-highlight class is added to it */
     bottom: 4px;
     right: 4px;
 }
+
+.main-video-stats {
+    position: absolute;
+    right: 140px;
+    top: 0px;
+    width: 85px;
+    height: 100%;	
+	padding: 5px;
+	color:  #666;
+}
+
+.main-video-stats a {
+	color:  #666;
+}
+
 
 .main-video-details {
     position: absolute;
@@ -690,13 +713,11 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .main-video-details-save-button {
-    position: absolute;
     font-size: 12px;
-    top: 0px;
-    right: 0px;
     width: 38px;
     height: 17px;
     background: url(../images/main-save-bg.png) no-repeat right top; 
+	display:  inline;
 }
 
 .main-video-details-save-button a {

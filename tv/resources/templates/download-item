@@ -66,28 +66,43 @@ viewName = kargs['viewName']
 
     <img class="main-video-tnail" src="***this.getThumbnail()***" alt="" id="video-tnail-***viewName + str(this.getID())***" />
 
+
+
+	<div class="main-video-stats">
+
+		<span t:replaceMarkup="this.getDetails()" />
+		<span t:showIf="this.getState() in ('saved', 'expiring', 'newly-downloaded')"
+		    class="main-video-details-reveal-button">
+		    - 
+                    <span t:hideIf="this.isContainerItem">
+			    <a href="#" class="reveal-link" onclick="return eventURL('action:revealItem?item=@@@this.getID()@@@');" i18n:translate="">REVEAL FILE</a>
+		    </span>
+                    <span t:showIf="this.isContainerItem">
+			    <a href="#" class="reveal-link" onclick="return eventURL('action:revealItem?item=@@@this.getID()@@@');" i18n:translate="">REVEAL FOLDER</a>
+		    </span>
+		</span>
+
+
+	</div>
+
     <div class="main-video-details">
-        <div class="main-video-details-tasks">
+        
+
+	<div class="main-video-details-tasks">
             <a t:showIf="this.hasSharableURL()" href="#" 
                 class="main-video-details-task-mail" 
                 onclick="recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@'); return false;" />
             <a href="#" t:showIf="this.hasSharableURL()" 
                 class="main-video-details-task-bomb" 
                 onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" />
-            <a t:showIf="this.showTrashButton()" href="#" 
+           
+			<!-- TRASH 
+ 			<a t:showIf="this.showTrashButton()" href="#" 
                 class="main-video-details-task-delete" 
                 onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" />
-        </div>
-	<div t:hideIf="this.getState() == 'downloading'"
-		class="main-video-details-state @@@this.getStateCSSClass()@@@">
-		<div t:showIf="this.showSaveButton()"
-		    class="main-video-details-save-button">
-		    <a href="#" 
-		       onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');"
-		       i18n:translate="">SAVE</a>
-		</div>
-		<span t:replace="this.getStateString()" />
-	</div>
+        	-->
+			</div>
+
 	<div t:showIf="this.getState() == 'downloading'"
 		class="main-video-details-download-info">
 	    <div t:showIf="this.gotContentLength()">
@@ -122,18 +137,46 @@ viewName = kargs['viewName']
         <div class="main-video-desc-desc noselect">
             <p t:replaceMarkup="this.getDescription()" />
         </div>
-	<div class="main-video-desc-details noselect">
-		<span t:replaceMarkup="this.getDetails()" />
-		<span t:showIf="this.getState() in ('saved', 'expiring', 'newly-downloaded')"
-		    class="main-video-details-reveal-button">
-		    - 
-                    <span t:hideIf="this.isContainerItem">
-			    <a href="#" class="reveal-link" onclick="return eventURL('action:revealItem?item=@@@this.getID()@@@');" i18n:translate="">REVEAL FILE</a>
-		    </span>
-                    <span t:showIf="this.isContainerItem">
-			    <a href="#" class="reveal-link" onclick="return eventURL('action:revealItem?item=@@@this.getID()@@@');" i18n:translate="">REVEAL FOLDER</a>
-		    </span>
-		</span>
+
+
+	<div id="main-video-desc-details" class="noselect">
+
+
+<!-- SAVE BUTTON -->
+		<div t:hideIf="this.getState() == 'downloading'"
+			class="main-video-details-state @@@this.getStateCSSClass()@@@">
+			<div t:showIf="this.showSaveButton()"
+			    class="main-video-details-save-button">
+			    <a href="#" 
+			       onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');"
+			       i18n:translate="">SAVE</a>
+			</div>
+			<span t:replace="this.getStateString()" />
+		</div>
+
+
+		<!-- DUMMY UNWATCHED TEXT -->
+
+		<span style="background-color: #00bb00; color: white; font-weight: normal;">UNWATCHED</span>
+
+
+		<!-- DUMMY SAVE BUTTON -->
+		Expires in 5 days 
+		<div class="main-video-details-save-button">
+		    <a href="#" 
+		       onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');"
+		       i18n:translate="">KEEP</a>
+		</div>
+
+			<div class="main-video-details-save-button">
+			    <a href="#" 
+			       onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');"
+			       i18n:translate="">REMOVE</a>
+			</div>
+
+
+
+
 	</div>
     </div>
 </div>
