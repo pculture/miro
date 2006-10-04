@@ -979,8 +979,8 @@ downloaded?""")
     def addAndSelectGuide(self, url = None):
         return GUIActionHandler().addGuide(url)
 
-    def addSearchFeed(self):
-        return GUIActionHandler().addSearchFeed()
+    def addSearchFeed(self, term=None, style=dialogs.SearchChannelDialog.CHANNEL, location = None):
+        return GUIActionHandler().addSearchFeed(term, style, location)
 
     def testSearchFeedDialog(self):
         return GUIActionHandler().testSearchFeedDialog()
@@ -1482,11 +1482,11 @@ class GUIActionHandler:
     def openFile(self, path):
         singleclick.openFile(path)
 
-    def addSearchFeed(self):
+    def addSearchFeed(self, term=None, style = dialogs.SearchChannelDialog.CHANNEL, location = None):
         def doAdd(dialog):
             if dialog.choice == dialogs.BUTTON_CREATE_CHANNEL:
                 self.addFeed(dialog.getURL())
-        dialog = dialogs.SearchChannelDialog()
+        dialog = dialogs.SearchChannelDialog(term, style, location)
         dialog.run(doAdd)
         
     def testSearchFeedDialog(self):
