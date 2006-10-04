@@ -45,4 +45,8 @@ interface pcfIDTVJSBridge : nsISupports
   void saveVideo();
   void setSliderText(in PRInt32 elasped);
   void moveSlider(in float fractionDone);
+  void performStartupTasks(in AString homedir);
+  void updateSearchProgress (in AString message);
+  void searchFinished (in AString message);
+  void searchCancelled (in AString message);
 };

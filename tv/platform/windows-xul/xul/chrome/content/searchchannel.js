@@ -1,8 +1,6 @@
 var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
                 getService(Components.interfaces.pcfIDTVPyBridge);
 
-var originalMoviesDir = null;
-
 function onload() {
     var channels = window.arguments[0]['channels'].QueryInterface(Components.interfaces.nsICollection);
     var count = channels.Count();

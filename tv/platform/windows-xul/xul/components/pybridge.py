@@ -400,6 +400,10 @@ class PyBridge:
         app.controller.addAndSelectFeed()
 
     @asUrgent
+    def testStartup(self):
+        frontend.jsBridge.performStartupTasks(os.path.expanduser("~"))
+
+    @asUrgent
     def renameCurrentChannel(self):
         app.controller.renameCurrentChannel()
 
@@ -425,3 +429,11 @@ class PyBridge:
             return
         print "saving video %s to %s" % (frontend.currentVideoPath, path)
         shutil.copyfile(frontend.currentVideoPath, path)
+
+    def startupDoSearch(self, path):
+        print "startupDoSearch"
+        frontend.startup.doSearch(path)
+
+    def startupCancelSearch(self):
+        print "startupCancelSearch"
+        frontend.startup.cancelSearch()

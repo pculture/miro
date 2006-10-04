@@ -402,6 +402,25 @@ jsBridge.prototype = {
     }
   },
 
+  performStartupTasks: function(homedir) {
+    var params = { "homedir": homedir };
+    this.startup = this.window.openDialog("chrome://dtv/content/startup.xul",
+            "dialog", "chrome,dependent,centerscreen,modal", params);
+  },
+
+  updateSearchProgress: function (message) {
+    this.startup.updateSearchProgress (message);
+  },
+
+  searchFinished: function (message) {
+    writelog(message);
+    this.startup.searchFinished (message);
+  },
+
+  searchCancelled: function (message) {
+    this.startup.searchFinished (message);
+  },
+
   setSliderText: function(elapsed) {
     var hours = Math.floor(elapsed/3600);
     var mins = Math.floor((elapsed - hours*3600)/60);

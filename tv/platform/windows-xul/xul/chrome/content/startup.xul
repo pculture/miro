@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin" type="text/css"?>
+<?xml-stylesheet href="main.css" type="text/css"?>
+
+<!DOCTYPE window SYSTEM "chrome://dtv/locale/startup.dtd">
+
+<!-- add hidechrome="true" to eliminate title bar -->
+<wizard id="democracy-startup" title="&startup.title;"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+        onload="onload();"
+        class="startup">
+<!--        ondialogaccept="onaccept();"
+        ondialogcancel="oncancel();"-->
+    <script src="chrome://dtv/content/main.js" />
+    <script src="chrome://dtv/content/startup.js" />
+    <wizardpage id="page-welcome" onpageshow="updateUI();">
+    	<vbox>
+    	    <hbox>
+    		<img src="..."/>
+    		<description>
+    		    &startup.welcome;
+    		</description>
+    	    </hbox>
+    	    <description>
+    		&startup.description;
+    	    </description>
+    	    <hr/>
+    	    <description>
+    		&startup.autostart.description;
+    	    </description>
+    	    <description>
+    		&startup.autostart.question;
+    	    </description>
+    	    <radiogroup id="radiogroup-autostart">
+    		<radio id="radiogroup-autostart-yes" label="&startup.answer.yes;" selected="true"/>
+    		<radio id="radiogroup-autostart-no" label="&startup.answer.no;"/>
+    	    </radiogroup>
+    	</vbox>
+    </wizardpage>
+    <wizardpage id="page-search" onpageshow="updateUI();" onpageadvanced="return onsearch();">
+        <vbox>
+	    <description>
+	       &startup.search.description;
+	    </description>
+	    <description>
+	       &startup.search.question;
+	    </description>
+	    <radiogroup id="radiogroup-search">
+	        <radio id="radio-search-yes" label="&startup.answer.yes;" selected="true" oncommand="updateUI();"/>
+		<radio id="radio-search-no" label="&startup.answer.no;" oncommand="updateUI();"/>
+	    </radiogroup>
+	    <radiogroup id="radiogroup-search-location">
+	        <radio id="radio-search-location-restrict" label="&startup.search.restrict;" selected="true" oncommand="updateUI();"/>
+		<radio id="radio-search-location-custom" label="&startup.search.custom;" oncommand="updateUI();"/>
+	    </radiogroup>
+            <hbox>
+		<textbox id="textbox-search-directory" flex="1" value=""
+		        readonly="true" style="width: 300px;" />
+		<button id="button-search-directory" flex="0"
+		        label="Change"
+			oncommand="selectSearchDirectory();" />
+	    </hbox>
+	    <vbox id="vbox-startup-search" style="display: none;">
+	        <description value="&startup.search.searching;"/>
+		<progressmeter id="progressmeter-search-progress" mode="determined" value="0"/>
+	        <description id="description-search-progress" value=""/>
+		<button id="button-search-cancel" oncommand="onsearchcancel();"/>
+	    </vbox>
+	</vbox>
+    </wizardpage>
+    <wizardpage id="page-done" onpageshow="updateUI();">
+        <description>
+	    &startup.done;
+        </description>
+    </wizardpage>
+</wizard>
+
+
+

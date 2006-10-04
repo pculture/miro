@@ -83,4 +83,7 @@ interface pcfIDTVPyBridge : nsISupports
   void removeCurrentPlaylist();
   void openDonatePage();
   void saveVideoFile(in AString path);
+  void testStartup();
+  void startupDoSearch(in AString path);
+  void startupCancelSearch();
 };

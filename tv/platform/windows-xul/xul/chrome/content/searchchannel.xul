@@ -5,7 +5,7 @@
 <!DOCTYPE window SYSTEM "chrome://dtv/locale/searchchannel.dtd">
 
 <!-- add hidechrome="true" to eliminate title bar -->
-<dialog id="democracy-preferences" title="&searchchannel.title;"
+<dialog id="democracy-searchchannel" title="&searchchannel.title;"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 	xmlns:html="http://www.w3.org/1999/xhtml"
         onload="onload();"

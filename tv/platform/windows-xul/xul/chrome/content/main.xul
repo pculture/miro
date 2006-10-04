@@ -38,6 +38,8 @@
         <menuitem id="menuitem-video-save" label="&main.menu.file.savevideoas;" accesskey="&main.menu.file.savevideoas.access;" command="savevideoas" />
         <menuitem label="&main.menu.file.copyvideourl;" accesskey="&main.menu.file.copyvideourl.access;" command="copyvideourl" />
         <menuseparator />
+<!--        <menuitem label="Test Startup" command="teststartup" />
+        <menuseparator />-->
         <menuitem label="&main.menu.file.quit;" accesskey="&main.menu.file.quit.access;" command="quit" />
     </menupopup>
 </menu>
@@ -199,6 +201,8 @@
 <command id="removevideo" oncommand="pybridge.removeCurrentItems();" />
 <command id="savevideoas" oncommand="jsbridge.saveVideo();" />
 <command id="copyvideourl" oncommand="pybridge.copyCurrentItemURL();" />
+<command id="teststartup" oncommand="pybridge.testStartup();" />
+
 <command id="quit" oncommand="handleExit();" />
 
 <command id="copy" oncommand="clipboardCopy();" />

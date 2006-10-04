@@ -7,6 +7,7 @@ from frontend_implementation.UIBackendDelegate import UIBackendDelegate
 from frontend_implementation.MainFrame import MainFrame
 from frontend_implementation.VideoDisplay import VideoDisplay, PlaybackController
 import frontend_implementation.UIStrings as UIStrings
+import frontend_implementation.startup as startup
 
 # these get set in components.pybridge.onStartup
 jsBridge = None
