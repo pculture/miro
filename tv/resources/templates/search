@@ -33,7 +33,7 @@ searchEngines = views.searchEngines
         <h1 id="main-title" i18n:translate="">Video Search</h1>
         <div id="main-subtitle" style="margin-left: -110px;">
   	<t:staticReplaceMarkup t:replaceData="searchengines.getSearchEnginesHTML()"/>
-<input id="search-box" type="search" name="query" value="***feed.quoteLastQuery()***" placeholder="" onKeyUp="fillSearch()" onKeyPress="validateSearch(event)" /><input name="query" type="submit" value="GO" />      
+<input id="search-box" type="search" name="query" value="***feed.quoteLastQuery()***" placeholder="" onKeyUp="fillSearch()" onKeyPress="validateSearch(event)" /><input type="submit" value="GO" />      
   </div>
       </div>
        </form>
