@@ -31,14 +31,12 @@ searchEngines = views.searchEngines
       <div id="main-icon" class="noborder"><img src="resource:images/search-icon.png" /></div>
       <div id="main-titlebar-center">
         <h1 id="main-title" i18n:translate="">Video Search</h1>
-        <div id="main-subtitle">
+        <div id="main-subtitle" style="margin-left: -110px;">
   	<t:staticReplaceMarkup t:replaceData="searchengines.getSearchEnginesHTML()"/>
-        </div>
+<input id="search-box" type="search" name="query" value="***feed.quoteLastQuery()***" placeholder="" onKeyUp="fillSearch()" onKeyPress="validateSearch(event)" /><input name="query" type="submit" value="GO" />      
+  </div>
       </div>
-      <div id="main-titlebar-right" >
-        <input id="search-box" type="search" name="query" value="***feed.quoteLastQuery()***" placeholder="" onKeyUp="fillSearch()" onKeyPress="validateSearch(event)" />
-      </div>
-    </form>
+       </form>
   </div>
 
         <div id="main-container">

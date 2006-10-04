@@ -129,6 +129,11 @@ left: 43px;
     background-color:#FFFFFF;
 }
 
+#main-titlebar .noborder {
+	background: none;
+	border: none;
+}
+
 /* This wraps the center area of the title bar */
 #main-titlebar-center {
     padding-top: 10px;
@@ -145,6 +150,16 @@ left: 43px;
     text-align: center;
 }
 
+
+/* Appears in the top right of the title section. */
+#main-upper-right {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    margin: 0px 0px 0px 0px;
+    color: #FFFFFF;
+}
+
 /* Appears below main-title. */
 #main-subtitle {
     position: absolute;
@@ -153,15 +168,11 @@ left: 43px;
     margin: 0px 0px 0px -90px;
     color: #FFFFFF;
 }
-/*  Wraps the autodownload button form */
-.main-subtitle-emph {
-    text-transform: uppercase;
-}
 
 /* Wraps the stuff on the right hand side of the channel header */
 #main-titlebar-right {
     position: absolute;
-    width: 130px;
+    width: 150px;
     top: 8px;
     right: 0px;
     margin: 0px 0px 0px -140px;
@@ -172,7 +183,7 @@ left: 43px;
 #main-titlebar-settings {
     display: block;
     background: url(../images/main-icon-settings.png) no-repeat left top;
-    height: 18px;
+    height: 20px;
     margin: 0px 0px 1px 0px;
     padding: 0px 0px 0px 20px;
     color: #FFFFFF;
@@ -187,7 +198,7 @@ left: 43px;
 #main-titlebar-recommend {
     display: block;
     background: url(../images/main-icon-mail-titlebar.png) no-repeat left 2px;
-    height: 18px;
+    height: 20px;
     margin: 0px 0px 1px 0px;
     padding: 0px 0px 0px 20px;
     color: #FFFFFF;
@@ -198,11 +209,18 @@ left: 43px;
     text-decoration: underline;
 }
 
+/* Just around auto-download */
+#main-titlebar-auto {
+    display: block;
+    height: 20px;
+    margin: 0px 0px 1px 0px;
+    color: #FFFFFF;
+    text-transform: uppercase;
+}
+
+
 /* Used to mark the search box */
 #search-box {
-    position: absolute;
-    left: 0px;
-    top: 40px;
     width: 115px; 
     border: 1px solid #5392e3;
     padding: 2px;
