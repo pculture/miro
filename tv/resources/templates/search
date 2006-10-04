@@ -27,16 +27,16 @@ searchEngines = views.searchEngines
 
 <body onkeydown="sendKeyToSearchBox(event);">
   <div id="main-titlebar">
-    <form name="search" onsubmit="return false;">
       <div id="main-icon" class="noborder"><img src="resource:images/search-icon.png" /></div>
       <div id="main-titlebar-center">
         <h1 id="main-title" i18n:translate="">Video Search</h1>
-        <div id="main-subtitle" style="margin-left: -110px;">
-  	<t:staticReplaceMarkup t:replaceData="searchengines.getSearchEnginesHTML()"/>
-<input id="search-box" type="search" name="query" value="***feed.quoteLastQuery()***" placeholder="" onKeyUp="fillSearch()" onKeyPress="validateSearch(event)" /><input type="submit" value="GO" />      
-  </div>
+	<div id="main-subtitle">
+	     <form name="search" onsubmit="return false;">
+	     <t:staticReplaceMarkup t:replaceData="searchengines.getSearchEnginesHTML()"/>
+		<input id="search-box" type="search" name="query" value="***feed.quoteLastQuery()***" placeholder="" onKeyUp="fillSearch()" onKeyPress="validateSearch(event)" /><input type="submit" value="GO" />      
+	     </form>
+	 </div>
       </div>
-       </form>
   </div>
 
         <div id="main-container">

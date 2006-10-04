@@ -110,37 +110,29 @@ if feed.idExists():
 	<div id="main-titlebar-center">
 	    <div t:updateForView="thisFeedView">
                 <h1 id="main-title" t:replaceMarkup="feed.getTitle()" />
-                <div id="main-subtitle">
-		
-					<input id="search-box" type="search" placeholder="Search Channel" onfocus="startEditSearch(this, null)" onblur="endEditSearch()" />
-		
-		
-                </div>
 	    </div>
+            <div id="main-subtitle">
+                    <input id="search-box" type="search" placeholder="Search Channel" onfocus="startEditSearch(this, null)" onblur="endEditSearch()" />
+            </div>
         </div>
         <div id="main-titlebar-right">
-           
-			<a id="main-titlebar-recommend" href="mailto:?subject=@@@feed.getTitle()@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed.getTitle()@@@&quot;. If you don't have the Democracy Player, you can get it here:%0D%0A%0D%0Ahttp://www.getdemocracy.com/%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed.getURL()@@@" i18n:translate="">
-	               Recommend
-	        </a>
-			
-			<a id="main-titlebar-settings" href="#"
-                            onclick="return showSettings();" i18n:translate="">
-                  Settings
-           </a>
-           
-			<div id="main-titlebar-auto">
-				<form name="setAuto">
-		    		<input type="hidden" name="feed" value="@@@feed.getID()@@@" />
-		    		<span t:showIf="feed.isAutoDownloadable()">
-					<input type="checkbox" name="automatic" id="automatic" value="1" checked="checked" onclick="setAutoDownloadableFeed();" />
-		    		</span>
-		    		<span t:hideIf="feed.isAutoDownloadable()">
-					<input type="checkbox" name="automatic" id="automatic" value="1"                   onclick="setAutoDownloadableFeed();" />
-		    		</span>
-		    		<span i18n:translate=""><label for="automatic">Auto Download</label></span>
-				</form>          
-			</div>
+            <a id="main-titlebar-recommend" href="mailto:?subject=@@@feed.getTitle()@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed.getTitle()@@@&quot;. If you don't have the Democracy Player, you can get it here:%0D%0A%0D%0Ahttp://www.getdemocracy.com/%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed.getURL()@@@" i18n:translate="">Recommend</a>
+            <a id="main-titlebar-settings" href="#"
+                onclick="return showSettings();" i18n:translate="">Settings</a>
+        <div id="main-titlebar-auto">
+                <form name="setAuto">
+                <input type="hidden" name="feed" value="@@@feed.getID()@@@" />
+		<span id="auto-checkbox-container">
+                <span t:showIf="feed.isAutoDownloadable()">
+                        <input type="checkbox" name="automatic" id="automatic" value="1" checked="checked" onclick="setAutoDownloadableFeed();" />
+                </span>
+                <span t:hideIf="feed.isAutoDownloadable()">
+                        <input type="checkbox" name="automatic" id="automatic" value="1"                   onclick="setAutoDownloadableFeed();" />
+                </span>
+		</span>
+                <span id="auto-label" i18n:translate=""><label for="automatic">Auto Download</label></span>
+                </form>          
+        </div>
 		
         </div>
 </div>

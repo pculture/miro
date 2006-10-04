@@ -41,10 +41,10 @@ matchingItems.unlink()
 <div id="main-titlebar">
 	<div id="main-icon" class="noborder"><img src="resource:images/newvideos-icon.png" /></div>
 	<div id="main-titlebar-center">
-		<h1 id="main-title" i18n:translate="">New Videos</h1>
-	</div>
-	<div id="main-subtitle" class="big-search">
-          <input id="search-box" type="search" placeholder="Search"  onfocus="startEditSearch(this, null)" onblur="endEditSearch()" />
+            <h1 id="main-title" i18n:translate="">New Videos</h1>
+            <div id="main-subtitle" >
+              <input id="search-box" type="search" placeholder="Search"  onfocus="startEditSearch(this, null)" onblur="endEditSearch()" />
+            </div>
 	</div>
 </div>
 <!-- / TITLE BAR -->

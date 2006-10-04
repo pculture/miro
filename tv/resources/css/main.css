@@ -136,21 +136,23 @@ left: 43px;
 
 /* This wraps the center area of the title bar */
 #main-titlebar-center {
-    padding-top: 10px;
+    margin: 10px 150px 0px 150px;
+    text-align: center;
+    color: #FFFFFF;
 }
 
 /* This wraps just the name of the view */
 #main-title {
-    margin: 0px 140px 0px 80px;
     padding: 0px;
-    height: 28px;
+    margin: 0px;
     overflow: hidden;
-    color: #FFFFFF;
-    font-size: 190%;
-    text-align: center;
-	font-weight: normal;
+    font-size: 24px;
+    font-weight: normal;
 }
 
+#main-subtitle {
+    margin-top: 7px;
+}
 
 /* Appears in the top right of the title section. */
 #main-upper-right {
@@ -161,24 +163,13 @@ left: 43px;
     color: #FFFFFF;
 }
 
-/* Appears below main-title. */
-#main-subtitle {
-    position: absolute;
-    top: 44px;
-    left: 50%;
-    margin: 0px 0px 0px -90px;
-    color: #FFFFFF;
-}
-
 /* Wraps the stuff on the right hand side of the channel header */
 #main-titlebar-right {
     position: absolute;
     width: 150px;
     top: 8px;
     right: 0px;
-    margin: 0px 0px 0px -140px;
 }
-
 
 /* just around settings */
 #main-titlebar-settings {
@@ -200,8 +191,7 @@ left: 43px;
     display: block;
     background: url(../images/main-icon-mail-titlebar.png) no-repeat left 2px;
     height: 20px;
-    margin: 0px 0px 1px 0px;
-    padding: 0px 0px 0px 21px;
+    padding-left: 21px;
     color: #FFFFFF;
     text-decoration: none;
     text-transform: uppercase;
@@ -214,11 +204,27 @@ left: 43px;
 #main-titlebar-auto {
     display: block;
     height: 20px;
-    margin: 0px 0px 1px 0px;
     color: #FFFFFF;
+    padding: 0px;
+    margin: 0px;
     text-transform: uppercase;
 }
 
+#auto-checkbox-container {
+    position: absolute;
+    top: 40px
+    left: 40px;
+}
+
+#auto-checkbox-container input {
+	vertical-align: top;
+	padding: 0px;
+	margin: 0px;
+}
+
+#auto-label {
+    padding-left: 21px;
+}
 
 /* Used to mark the search box */
 #search-box {
