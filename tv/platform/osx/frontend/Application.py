@@ -143,6 +143,11 @@ class AppController (NibClassBuilder.AutoBaseClass):
             # Call shutdown on backend
             app.controller.onShutdown()
 
+    def applicationShouldHandleReopen_hasVisibleWindows_(self, appl, flag):
+        if not flag:
+            self.showMainWindow_(appl)
+        return NO
+
     def downloaderDaemonDidTerminate_(self, notification):
         task = notification.object()
         status = task.terminationStatus()
@@ -240,6 +245,9 @@ class AppController (NibClassBuilder.AutoBaseClass):
     def checkForUpdates_(self, sender):
         eventloop.addUrgentCall(lambda:autoupdate.checkForUpdates(True), "Checking for new version")
 
+    def showMainWindow_(self, sender):
+        app.controller.frame.controller.window().makeKeyAndOrderFront_(sender)
+
     def showPreferencesWindow_(self, sender):
         prefController = PreferencesWindowController.alloc().init()
         prefController.retain()
@@ -259,7 +267,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         app.controller.quit()
 
     def validateMenuItem_(self, item):
-        return item.action() in ('donate:', 'checkForUpdates:', 
+        return item.action() in ('donate:', 'checkForUpdates:', 'showMainWindow:',
                                  'showPreferencesWindow:', 'addGuide:', 
                                  'openFile:', 'shutdown:')
 

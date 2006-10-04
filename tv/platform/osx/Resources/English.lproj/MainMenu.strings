@@ -16,6 +16,9 @@
 /* NSMenuItem : <title:Clear Menu> (oid:126) */
 "Clear Menu" = "Clear Menu";
 
+/* NSMenuItem : <title:Close Window> (oid:355) */
+"Close Window" = "Close Window";
+
 /* NSMenuItem : <title:Copy> (oid:157) */
 "Copy" = "Copy";
 
@@ -57,6 +60,9 @@
 
 /* NSMenuItem : <title:Hide Others> (oid:145) */
 "Hide Others" = "Hide Others";
+
+/* NSMenuItem : <title:Main Window> (oid:352) */
+"Main Window" = "Main Window";
 
 /* NSMenu : <title:MainMenu> (oid:29) */
 "MainMenu" = "MainMenu";
