@@ -137,7 +137,7 @@ viewName = kargs['viewName']
             <div class="small-button-right">
             <div class="small-button">
                 <a href="#" 
-                   onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');"
+                   onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');"
                    i18n:translate="">REMOVE</a>
             </div>
             </div>

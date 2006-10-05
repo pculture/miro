@@ -31,7 +31,7 @@ function eventURL(url) {
     }
 
     return false;
-}    
+}
 
 // Open email client with email about selected video
 // All parameters come in URL encoded
@@ -196,6 +196,10 @@ function handleContextMenuSelect(event) {
 }
 
 function handleSelect(event) {
+   if(event.target.tagName && event.target.tagName.toUpperCase() == 'A') {
+       // Either a link in the descrption, or a bomb/mailto/trash click
+       return true;
+    }
     var id = event.currentTarget.getAttribute("selectID");
     var viewName = event.currentTarget.getAttribute("selectViewName");
     var area = event.currentTarget.getAttribute("selectArea");
