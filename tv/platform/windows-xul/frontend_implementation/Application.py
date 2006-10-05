@@ -4,63 +4,14 @@ import time
 import resource
 import config
 import prefs
-import _winreg
 import os
+from platformutils import _getLocale as getLocale
 
 from frontend_implementation import HTMLDisplay
 
 ###############################################################################
 #### Application object                                                    ####
 ###############################################################################
-langs = {
-0x401: "ar",
-0x416: "pt_BR",
-0x804: "zh_CN", # Chinese simplified
-0x404: "zh_TW", # Chinese traditional
-0x405: "cs",
-0x406: "da",
-0x413: "nl",
-0x409: "en",
-0x40b: "fi",
-0x40c: "fr",
-0x407: "de",
-0x408: "el",
-0x40d: "he",
-0x40e: "hu",
-0x410: "it",
-0x411: "jp",
-0x412: "ko",
-0x414: "nb",
-0x415: "pl",
-0x816: "pt",
-0x419: "ru",
-0xc0a: "es",
-0x41D: "sv",
-0x41f: "tr",
-}
-
-def getKey (keyName, subkey, typ):
-    try:
-        key = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, keyName)
-        (val, t) = _winreg.QueryValueEx(key, subkey)
-        if t == typ:
-            return val
-    except:
-        pass
-    return None
-
-def getLocale():
-    keyName = r"Software\Policies\Microsoft\Control Panel\Desktop"
-    subkey = "MultiUILanguageID"
-    val = getKey(keyName, subkey, _winreg.REG_DWORD)
-    if val is None:
-        keyName = r"Control Panel\Desktop"
-        val = getKey(keyName, subkey, _winreg.REG_DWORD)
-    if val is None:
-        return None
-    else:
-        return langs[val]
-
 class Application:
 
     def __init__(self):
@@ -71,7 +22,6 @@ class Application:
 
         lang = getLocale()
         if lang:
-            os.environ["LANGUAGE"] = lang
             if not os.path.exists(resource.path(r"..\chrome\locale\%s" % (lang,))):
                 lang = "en-US"
         else:
