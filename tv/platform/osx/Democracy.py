@@ -56,6 +56,7 @@ def launchDownloaderDaemon():
     daemonPrivatePath = os.path.join(daemonPath, 'private')
     sys.path[0:0] = [daemonPath, daemonPrivatePath]
     import Democracy_Downloader
+    Democracy_Downloader.launch()
 
 # =============================================================================
 
