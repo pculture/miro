@@ -10,7 +10,9 @@
     <t:include filename="dynamic.js" />
     <script type="text/javascript" src="resource:templates/osxdnd.js" />
     <t:execOnLoad><![CDATA[
-filters.resetNewItems()
+folder = views.channelFolders.getObjectByID(int(kargs['id']))
+filters.switchNewItemsChannel(folder)
+sorts.switchUnwatchedFirstChannel(folder)
 
 def showDownloadsFilter(x):
     return showDownloads
@@ -19,7 +21,10 @@ def showWatchableFilter(x):
     return showWatchableItems
 
 def showNewFilter(x):
-    return showNewItems and (allItemsMode or filters.newItems(x))
+    isNew = filters.newItems(x)
+    # need to make call newItems() so that the filter remembers if the item
+    # was flagged as new or not.
+    return showNewItems and (allItemsMode or isNew)
 
 def updateSearchString(newSearch):
     global searchTerm
@@ -54,7 +59,6 @@ def toggleAllItemsMode(handle):
     matchingItems.recomputeFilter(newItems)
     handle.forceUpdate()
 
-folder = views.channelFolders.getObjectByID(int(kargs['id']))
 allFeeds = views.feeds.filterWithIndex(indexes.byFolder, folder)
 
 global searchTerm, showDownloads, showWatchableItems, showNewItems, allItemsMode

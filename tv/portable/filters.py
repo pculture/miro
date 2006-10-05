@@ -35,8 +35,19 @@ def watchableItems(obj):
             not obj.isContainerItem)
 
 newMemory = {}
-def resetNewItems():
-    newMemory.clear()
+newMemoryFor = None
+def switchNewItemsChannel(newChannel):
+    """The newItems() filter normally remembers which items were unwatched.
+    This way items don't leave the new section while the user is viewing a
+    channel.  This method takes care of resetting the memory when the user
+    switches channels.  Call it before using the newItems() filter.
+    newChannel should be the channel/channel folder object that's being
+    displayed.
+    """
+    global newMemoryFor, newMemory
+    if newMemoryFor != newChannel:
+        newMemory.clear()
+        newMemoryFor = newChannel
 
 # This is "new" for the channel template
 def newItems(obj):

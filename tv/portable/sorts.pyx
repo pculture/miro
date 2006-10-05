@@ -31,9 +31,33 @@ def item(x,y):
             # x and y are not children of the same item, so sort by the parent (which might be the self)
             return item(x.getParent(), y.getParent())
 
+unwatchedMemory = {}
+unwatchedMemoryFor = None
+def switchUnwatchedFirstChannel(newChannel):
+    """The itemsUnwatchedFirst() sort normally remembers which items were
+    unwatched.  This way if an item becomes watched while the user is viewing
+    a channel, it doesn't jump around in the view.  This method takes care of
+    resetting the memory when the user switches channels.  Call it before
+    using the itemsUnwatchedFirst() sort.  newChannel should be the
+    channel/channel folder object that's being displayed.  Or None if the new
+    videos tab is being displayed.
+    """
+    global unwatchedMemoryFor, unwatchedMemory
+    if newChannel != unwatchedMemoryFor:
+        unwatchedMemory.clear()
+        unwatchedMemoryFor = newChannel
+
+def _getUnwatchedWithMemory(item):
+    try:
+        return unwatchedMemory[item.getID()]
+    except KeyError:
+        rv = item.getState() == 'newly-downloaded'
+        unwatchedMemory[item.getID()] = rv
+        return rv
+
 def itemsUnwatchedFirst(x,y):
-    uwx = x.getState() == 'newly-downloaded'
-    uwy = y.getState() == 'newly-downloaded'
+    uwx = _getUnwatchedWithMemory(x)
+    uwy = _getUnwatchedWithMemory(y)
     if uwx != uwy:
         if uwx:
             return -1

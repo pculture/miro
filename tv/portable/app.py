@@ -1673,11 +1673,13 @@ class TemplateActionHandler:
         if isinstance(obj, feed.Feed):
             feedView = views.items.filterWithIndex(indexes.itemsByFeed,
                     obj.getID())
+            sorts.switchUnwatchedFirstChannel(obj)
             view = feedView.filter(filters.watchableItems,
                     sortFunc=sorts.itemsUnwatchedFirst)
             controller.playView(view)
             view.unlink()
         elif isinstance(obj, folder.ChannelFolder):
+            sorts.switchUnwatchedFirstChannel(obj)
             folderView = views.items.filterWithIndex(
                     indexes.itemsByChannelFolder, obj)
             view = folderView.filter(filters.watchableItems,

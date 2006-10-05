@@ -12,6 +12,8 @@
     <script type="text/javascript" src="resource:templates/osxdnd.js" />
 
     <t:execOnLoad><![CDATA[
+sorts.switchUnwatchedFirstChannel(None)
+
 global searchFilter
 
 searchFilter = lambda x: filters.matchingItems(x, None)

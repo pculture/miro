@@ -462,18 +462,18 @@ folder will also be deleted.""")
             return 'item'
 
     def getEmblemCSSClass(self):
-        if not self.getViewed():
-            return 'new'
-        elif self.getState() == 'newly-downloaded':
+        if self.getState() == 'newly-downloaded':
             return 'newly-downloaded'
+        elif self.getState() == 'new':
+            return 'new'
         else:
             return ''
 
     def getEmblemCSSString(self):
-        if not self.getViewed():
-            return 'NEW'
-        elif self.getState() == 'newly-downloaded':
+        if self.getState() == 'newly-downloaded':
             return 'UNWATCHED'
+        elif self.getState() == 'new':
+            return 'NEW'
         else:
             return ''
 
