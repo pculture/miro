@@ -576,8 +576,8 @@ an element is dragged, the drag-highlight class is added to it */
 
 .main-video-hitbox {
     position: absolute;
-    top: 4px;
-    left: 6px;
+    top: 5px;
+    left: 7px;
     width: 100px;
     height: 75px;
     z-index: 2;
@@ -688,7 +688,7 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .main-video-bottom {
-	font-size: 11px;
+	font-size: 10px;
 	overflow:  hidden;
 	padding:  1px 0px;
 	position: relative;
@@ -696,18 +696,48 @@ an element is dragged, the drag-highlight class is added to it */
 
 .video-state {
     font-weight: bold;
-}
-
-.video-state.new, .video-state.newly-downloaded {
+    height: 15px;
+    float: left;
     color: white;
 }
 
-.video-state.new { 
-    background: #486D9F;
+.video-state-left {
+    background: left top no-repeat;
 }
 
-.video-state.newly-downloaded { /* AKA unwatched */
-    background: #090;
+.video-state-right {
+    background: right top no-repeat;
+}
+
+.video-state-mid {
+    margin: 0px 5px;
+    padding: 0px 4px;
+    text-align: center;
+    background: left top repeat-x;
+}
+
+.video-state.new .video-state-left {
+    background-image: url(../images/badge-blue-left.png);
+}
+
+.video-state.new .video-state-right {
+    background-image: url(../images/badge-blue-right.png);
+}
+
+.video-state.new .video-state-mid { 
+    background-image: url(../images/badge-blue-mid.png);
+}
+
+.video-state.newly-downloaded .video-state-left {
+    background-image: url(../images/badge-green-left.png);
+}
+
+.video-state.newly-downloaded .video-state-right {
+    background-image: url(../images/badge-green-right.png);
+}
+
+.video-state.newly-downloaded .video-state-mid { 
+    background-image: url(../images/badge-green-mid.png);
 }
 
 .channel-title {
@@ -724,9 +754,9 @@ an element is dragged, the drag-highlight class is added to it */
 
 .small-button {
     background: left top repeat-x url(../images/small-button-middle.png);
-    margin: 0px 3px;
+    margin: 0px 4px;
     padding: 0px 3px;
-    height: 19px;
+    height: 17px;
 }
 
 .small-button a:link {

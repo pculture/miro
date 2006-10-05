@@ -155,8 +155,17 @@ viewName = kargs['viewName']
         </div>
 
         <div class="main-video-bottom noselect">
-		<div class="channel-title">---CHANNELTITLE---</div>
-                <span class="video-state ***this.getEmblemCSSClass()***" t:replace="this.getEmblemCSSString()" />
+            <div class="channel-title">---CHANNELTITLE---</div>
+            <div t:hideIf="this.getEmblemCSSString() == ''" 
+                class="video-state ***this.getEmblemCSSClass()***">
+                <div class="video-state-left">
+                <div class="video-state-right">
+                <span class="video-state-mid">
+                        <span t:replace="this.getEmblemCSSString()" />
+                </span>
+                </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
