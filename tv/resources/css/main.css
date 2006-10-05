@@ -692,6 +692,10 @@ an element is dragged, the drag-highlight class is added to it */
     background: #090;
 }
 
+.channel-title {
+    float: right;
+}
+
 .circular-button-left {
     background: left 1px no-repeat url(../images/circular-button-left.png);
 }

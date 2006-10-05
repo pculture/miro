@@ -9,17 +9,20 @@
 </head>
 <body>
 <!-- DOWNLOADS ******************************************************** -->
-<a class="main-channelbar-download" href="#" onclick="return eventURL('action:toggleDownloadsView');" t:updateForView="allDownloadingItems">
+<div t:updateForView="allDownloadingItems">
+<div t:hideIf="allDownloadingItems.len() == 0">
+<a class="main-channelbar-download" href="#" onclick="return eventURL('action:toggleDownloadsView');">
   <span class="triangle" t:hideIf="showDownloads"/>
   <span class="triangle-down" t:hideIf="not showDownloads"/>
   <span t:hideIf="allDownloadingItems.len()==1"  i18n:translate="">
       <span t:replace="allDownloadingItems.len()" i18n:name="count"/> downloads in progress</span>
    <span t:hideIf="allDownloadingItems.len()!=1" i18n:translate="">1 download in progress</span>
-
 </a>
+</div>
+</div>
 
 <div t:repeatForView="downloadingItems">
-  <span t:replaceMarkup="this.getItemXML(viewName, view)" />
+    <span t:replaceMarkup="this.getItemXML(viewName, view, hideChannelTitle=not isFolder)" />
 </div>
 
 <!-- / DOWNLOADS -->
@@ -52,7 +55,7 @@
 </a>
 
 <div t:repeatForView="newItems">
-   <span t:replaceMarkup="this.getItemXML(viewName, view)" />
+   <span t:replaceMarkup="this.getItemXML(viewName, view, hideChannelTitle=not isFolder)" />
 </div>
 
 
@@ -80,7 +83,7 @@
 </div>
 
 <div t:repeatForView="watchableItems">
-   <span t:replaceMarkup="this.getItemXML(viewName, view)" />
+    <span t:replaceMarkup="this.getItemXML(viewName, view, hideChannelTitle=not isFolder)" />
 </div>
 
 <!-- / WATCHABLE -->

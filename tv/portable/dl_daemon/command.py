@@ -162,6 +162,7 @@ class ShutDownCommand(Command):
         from dl_daemon import download
         download.shutDown()
         import threading
+        eventloop.threadPoolQuit()
         for thread in threading.enumerate():
             if thread != threading.currentThread() and not thread.isDaemon():
                 thread.join()

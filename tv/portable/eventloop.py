@@ -388,8 +388,12 @@ def join():
     database.set_thread()
 
 def quit():
+    threadPoolQuit()
     _eventLoop.quitFlag = True
     _eventLoop.wakeup()
+
+def threadPoolQuit():
+    _eventLoop.threadPool.closeThreads()
 
 def asIdle(func):
     """Decorator to make a methods run as an idle function

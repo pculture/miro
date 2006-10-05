@@ -16,7 +16,7 @@ from database import DDBObject, defaultDatabase, ObjectNotFoundError
 from database import DatabaseConstraintError
 from databasehelper import makeSimpleGetSet
 from iconcache import IconCache
-from templatehelper import escape
+from templatehelper import escape,quoteattr
 import app
 import template
 import downloader
@@ -269,7 +269,8 @@ class Item(DDBObject):
     #  * The selected css class -- it's depends on whether the view that this
     #     item is in is the view that's selected.  This matters when an item
     #     is shown multiple times on a page, in different views.
-    def getItemXML(self, viewName, view):
+    #  * The channel name -- it's not displayed in the channel template.
+    def getItemXML(self, viewName, view, hideChannelTitle=False):
         try:
             xml = self._itemXML
         except AttributeError:
@@ -279,10 +280,19 @@ class Item(DDBObject):
             dragDestType = 'downloadeditem'
         else:
             dragDestType = ''
+        if hideChannelTitle:
+            channelTitle = ''
+        else:
+            implClass = self.getFeed().actualFeed.__class__
+            if implClass in (feed.RSSFeedImpl, feed.ScraperFeedImpl):
+                channelTitle = self.getFeed().getTitle()
+            else:
+                channelTitle = ''
         for old, new in [
             (self._XMLViewName, viewName),
             ("---DRAGDESTTYPE---", dragDestType),
             ("---SELECTEDSTATE---", self.getSelectedState(view)),
+            ("---CHANNELTITLE---", channelTitle),
         ]:
                 xml = xml.replace(old, new)
         return xml
@@ -747,6 +757,7 @@ folder will also be deleted.""")
         duration = self.getDuration()
         format = self.getFormat()
         size = self.getSizeForDisplay()
+        link = self.getLink()
 
         if self.isContainerItem:
             children = self.getChildren()
@@ -760,7 +771,9 @@ folder will also be deleted.""")
         if len(format) > 0:
             details.append('<span class="details-format">%s</span>' % escape(format))
         if self.looksLikeTorrent():
-            details.append('<span class="details-torrent" il8n:translate="">TORRENT</span>')
+            details.append('<span class="details-torrent">%s</span>' % _("TORRENT"))
+        if len(link) > 0:
+            details.append('<a class="details-link" href="%s">%s</span>' % (quoteattr(link), _("WEBSITE")))
         out = '<BR>'.join(details)
         return out
 

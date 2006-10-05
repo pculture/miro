@@ -34,10 +34,18 @@ def watchableItems(obj):
     return (obj.isDownloaded() and not obj.isNonVideoFile() and 
             not obj.isContainerItem)
 
-# This is "new" for the channel template, expect it to be
-# updated frequently in the next couple of weeks --NN 9/11/06
+newMemory = {}
+def resetNewItems():
+    newMemory.clear()
+
+# This is "new" for the channel template
 def newItems(obj):
-    return not obj.getViewed()
+    try:
+        rv = newMemory[obj.getID()]
+    except KeyError:
+        rv = (obj.getState() == 'new')
+        newMemory[obj.getID()] = rv
+    return rv
 
 # Return True if a tab should be shown for obj in the frontend. The filter
 # used on the database to get the list of tabs.

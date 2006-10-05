@@ -13,6 +13,8 @@
     <t:include filename="settings.js" />
     <script type="text/javascript" src="resource:templates/osxdnd.js" />
     <t:execOnLoad><![CDATA[
+filters.resetNewItems()
+
 def showDownloadsFilter(x):
     return showDownloads
 
@@ -86,7 +88,6 @@ if len(newItems) == 0:
 
 feed.updateIcons()
 isFolder = False
-
 ]]>
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
