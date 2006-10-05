@@ -7,6 +7,8 @@ import ctypes
 import config
 import prefs
 
+localeInitialized = False
+
 def samefile(path1, path2):
     return getLongPathName(path1) == getLongPathName(path2)
 
@@ -32,3 +34,8 @@ def getAvailableBytesForMovies():
         print "GetDiskFreeSpaceExW failed, returning bogus value!"
         return 100 * 1024 * 1024 * 1024
     return availableSpace.value
+
+def initializeLocale():
+    global localeInitialized
+
+    localeInitialized = True

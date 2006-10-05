@@ -4,6 +4,7 @@ import gettext as _gt
 import locale
 import config
 import prefs
+import platformutils
 import os
 
 _gtcache = None
@@ -11,7 +12,8 @@ _gtcache = None
 def init():
     global _gtcache
     _gtcache = {}
-
+    #if not platformutils.localeInitialized:
+    #    raise Exception, "locale not initialized"
     locale.setlocale(locale.LC_ALL, '')
 
     _gt.bindtextdomain("democracyplayer", config.get(prefs.GETTEXT_PATHNAME))

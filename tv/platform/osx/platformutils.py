@@ -10,6 +10,8 @@ import prefs
 # very easy.
 from os.path import samefile
 
+localeInitialized = False
+
 ###############################################################################
 #### THREADING UTILITIES                                                   ####
 ###############################################################################
@@ -154,3 +156,14 @@ def getAvailableBytesForMovies():
         available = 1024 * 1024 * 1024 * 1024
     del pool
     return available
+
+def initializeLocale():
+    global localeInitialized
+
+    languages = list(Foundation.NSUserDefaults.standardUserDefaults()["AppleLanguages"])
+    for i in xrange (len(languages)):
+        if languages[i] == "en":
+            languages[i] = "C"
+    os.environ["LANGUAGE"] = ':'.join(languages)
+    
+    localeInitialized = True

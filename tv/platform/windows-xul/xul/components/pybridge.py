@@ -8,6 +8,8 @@ import traceback
 import _winreg
 
 try:
+    import platformutils
+    platformutils.initializeLocale()
     import gtcache
     gtcache.init()
     import app

@@ -15,24 +15,26 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-###############################################################################
-#### Helper method used to get the free space on the disk where downloaded ####
-#### movies are stored                                                     ####
-###############################################################################
 import os
+import threading
 import config
 import prefs
-import threading
 
 # We need to define samefile for the portable code.  Lucky for us, this is
 # very easy.
 from os.path import samefile
+
+###############################################################################
+#### Helper method used to get the free space on the disk where downloaded ####
+#### movies are stored                                                     ####
+###############################################################################
 
 def getAvailableBytesForMovies():
     statinfo = os.statvfs (config.get(prefs.MOVIES_DIRECTORY))
     return statinfo.f_frsize * statinfo.f_bavail
 
 main_thread = None
+localeInitialized = True
 
 def setMainThread():
     global main_thread
@@ -43,3 +45,7 @@ def confirmMainThread():
     if main_thread is not None and main_thread != threading.currentThread():
         print "UI function called from thread %s" % (threading.currentThread(),)
         traceback.print_stack()
+
+# Gettext understands *NIX locales, so we don't have to do anything
+def initializeLocale():
+    pass

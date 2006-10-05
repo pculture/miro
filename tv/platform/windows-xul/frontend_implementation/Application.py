@@ -15,8 +15,8 @@ from frontend_implementation import HTMLDisplay
 langs = {
 0x401: "ar",
 0x416: "pt_BR",
-0x804: "Chinese (Simplified)",
-0x404: "Chinese (Traditional)",
+0x804: "zh_CN", # Chinese simplified
+0x404: "zh_TW", # Chinese traditional
 0x405: "cs",
 0x406: "da",
 0x413: "nl",

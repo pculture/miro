@@ -27,6 +27,9 @@ def launch():
     else:
 	print "*** Launching Democracy Downloader Daemon ****"
 
+    import platformutils
+    platformutils.initializeLocale()
+
     # Start of normal imports
     import threading
 

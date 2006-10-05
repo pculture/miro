@@ -45,6 +45,9 @@ parser.add_option('--sync', metavar='SYNC', help='Use X Syncronously', default=F
 (options, args) = parser.parse_args()
 
 def startapp():
+    import platformutils
+    platformutils.initializeLocale()
+
     import singleclick
     for i in xrange(len(args)):
         if args[i].startswith('file://'):

@@ -37,13 +37,6 @@ class Application:
         controller = appl.delegate()
 
     def Run(self):
-        languages = list(NSUserDefaults.standardUserDefaults()["AppleLanguages"])
-        for i in xrange (len(languages)):
-            if languages[i] == "en":
-                languages[i] = "C"
-
-        os.environ["LANGUAGE"] = ':'.join(languages)
-
         eventloop.setDelegate(self)
         AppHelper.runEventLoop()
 
