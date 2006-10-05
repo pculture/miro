@@ -32,6 +32,8 @@ Var STARTMENU_FOLDER
 
 !addincludedir ..\..\..\..\dtv-binary-kit\NSIS-Plugins\
 
+!define MUI_WELCOMEPAGE_TITLE_3LINES
+
 !include "MUI.nsh"
 !include "Sections.nsh"
 !include zipdll.nsh
@@ -42,7 +44,7 @@ Var STARTMENU_FOLDER
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; Welcome page
-!define MUI_WELCOMEPAGE_TITLE_3LINES
+!define MUI_COMPONENTSPAGE_NODESC
 !insertmacro MUI_PAGE_WELCOME
 
 ; License page
@@ -66,7 +68,7 @@ Var STARTMENU_FOLDER
 ; Finish page
 !define MUI_FINISHPAGE_RUN "$INSTDIR\${CONFIG_EXECUTABLE}"
 !define MUI_FINISHPAGE_LINK \
-  "Click here to visit the ${CONFIG_PUBLISHER} homepage."
+  "${CONFIG_PUBLISHER} homepage."
 !define MUI_FINISHPAGE_LINK_LOCATION "${CONFIG_PROJECT_URL}"
 !define MUI_FINISHPAGE_NOREBOOTSUPPORT
 !insertmacro MUI_PAGE_FINISH
