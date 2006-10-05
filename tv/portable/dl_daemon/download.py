@@ -12,7 +12,7 @@ from copy import copy
 
 from BitTorrent.bencode import bdecode
 from clock import clock
-from download_utils import cleanFilename, nextFreeFilename, shortenFilename
+from download_utils import cleanFilename, nextFreeFilename, shortenFilename, checkFilenameExtension
 from download_utils import filenameFromURL
 import eventloop
 import httpclient
@@ -379,6 +379,7 @@ class HTTPDownloader(BGDownloader):
             return
         #Get the length of the file, then create it
         self.shortFilename = cleanFilename(info['filename'])
+        self.shortFilename = checkFilenameExtension(self.shortFilename, info)
         self.pickInitialFilename()
         try:
             self.filehandle = file(self.filename,"w+b")

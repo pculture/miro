@@ -3,7 +3,11 @@ from urlparse import urlparse
 import os.path
 import re
 import urllib
+import mimetypes
 import util
+
+# The mimetypes module does not know about FLV, let's enlighten him.
+mimetypes.add_type('video/flv', '.flv')
 
 def fixFileURLS(url):
     """Fix file URLS that start with file:// instead of file:///.  Note: this
@@ -71,6 +75,16 @@ def cleanFilename(filename):
         return '_' 
     else:
         return stripped
+
+# If a filename doesn't have an extension, this tries to find a suitable one
+# based on the HTTP content-type info and add it if one is available.
+def checkFilenameExtension(filename, httpInfo):
+    _, ext = os.path.splitext(filename)
+    if ext == '' and 'content-type' in httpInfo:
+        guessedExt = mimetypes.guess_extension(httpInfo['content-type'])
+        if guessedExt is not None:
+            filename += guessedExt
+    return filename
 
 ##
 # Finds a filename that's unused and similar the the file we want
