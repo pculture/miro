@@ -122,26 +122,26 @@ viewName = kargs['viewName']
 		<span i18n:translate="">Pending Auto Download</span>
 	</div>
 	<div class="details-small-buttons">
-            <span t:showIf="this.showSaveButton()" 
-                    class="circular-button-left save">
-            <span class="circular-button-right">
-            <span class="circular-button">
+            <div t:showIf="this.showSaveButton()" 
+                    class="small-button-left save">
+            <div class="small-button-right">
+            <div class="small-button">
                 <a href="#" 
                    onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');"
                    i18n:translate="">KEEP</a>
-            </span>
-            </span>
-            </span>
-            <span t:showIf="this.showTrashButton()" 
-                    class="circular-button-left delete">
-            <span class="circular-button-right">
-            <span class="circular-button">
+            </div>
+            </div>
+            </div>
+            <div t:showIf="this.showTrashButton()" 
+                    class="small-button-left delete">
+            <div class="small-button-right">
+            <div class="small-button">
                 <a href="#" 
                    onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');"
                    i18n:translate="">REMOVE</a>
-            </span>
-            </span>
-            </span>
+            </div>
+            </div>
+            </div>
         </div>
     </div>
     <div class="main-video-desc noselect">

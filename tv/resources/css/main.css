@@ -145,8 +145,9 @@ left: 43px;
 #main-title {
     padding: 0px;
     margin: 0px;
-    overflow: hidden;
     font-size: 24px;
+    height: 24px;
+    overflow: hidden;
     font-weight: normal;
 }
 
@@ -696,39 +697,50 @@ an element is dragged, the drag-highlight class is added to it */
     float: right;
 }
 
-.circular-button-left {
-    background: left 1px no-repeat url(../images/circular-button-left.png);
+.small-button-left {
+    background: left top no-repeat url(../images/small-button-left.png);
 }
 
-.circular-button-right {
-    background: right 1px no-repeat url(../images/circular-button-right.png);
+.small-button-right {
+    background: right top no-repeat url(../images/small-button-right.png);
 }
 
-.circular-button {
-    background: left 1px repeat-x url(../images/circular-button-mid.png);
-    margin: 0px 8px;
+.small-button {
+    background: left top repeat-x url(../images/small-button-middle.png);
+    margin: 0px 3px;
+    padding: 0px 3px;
+    height: 19px;
 }
 
-.circular-button a:link {
+.small-button a:link {
     font-size: 9px;
     font-weight: bold;
     color: #444;
     text-decoration: none;
 }
 
-.circular-button a:hover {
+.small-button a:hover {
     color: #000000;
     text-decoration: underline;
 }
 
-.circular-button-left.save {
-    padding-right: 3px;
+.small-button-left.save {
+    position: absolute;
+    left: 10px;
+    width: 65px;
+}
+
+.small-button-left.delete {
+    position: absolute;
+    left: 80px;
+    width: 65px;
 }
 
 .details-small-buttons {
     position: absolute;
     width: 100%;
-    top: 65px;
+    top: 63px;
+    height: 19px;
     text-align: center;
 }
 

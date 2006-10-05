@@ -33,6 +33,7 @@ import time
 PIPELINING_ENABLED = True
 SOCKET_READ_TIMEOUT = 60
 SOCKET_INITIAL_READ_TIMEOUT = 30
+SOCKET_CONNECT_TIMEOUT = 15
 
 # This pattern matches all possible strings.  I promise.
 URIPattern = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
@@ -261,17 +262,25 @@ class AsyncSocket(object):
                 return
             if rv in (0, errno.EINPROGRESS, errno.EWOULDBLOCK):
                 eventloop.addWriteCallback(self.socket, onWriteReady)
+                self.socketConnectTimeout =  eventloop.addTimeout(
+                        SOCKET_CONNECT_TIMEOUT, onWriteTimeout,
+                        "socket connect timeout")
             else:
                 msg = errno.errorcode[rv]
                 trapCall(self, errback, ConnectionError(msg))
         def onWriteReady():
             eventloop.removeWriteCallback(self.socket)
+            self.socketConnectTimeout.cancel()
             rv = self.socket.getsockopt(socket.SOL_SOCKET, socket.SO_ERROR)
             if rv == 0:
                 trapCall(self, callback, self)
             else:
                 msg = errno.errorcode[rv]
                 trapCall(self, errback, ConnectionError(msg))
+            self.connectionErrback = None
+        def onWriteTimeout():
+            eventloop.removeWriteCallback(self.socket)
+            trapCall(self, errback, ConnectionTimeout(host))
             self.connectionErrback = None
         eventloop.callInThread(onAddressLookup, handleGetHostByNameException,
                 socket.gethostbyname, host)
