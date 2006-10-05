@@ -155,6 +155,13 @@ left: 43px;
     margin-top: 7px;
 }
 
+#main-save-search-button {
+    position: absolute;
+    top: 45px;
+    left: 450px;
+    color: white;
+}
+
 /* Appears in the top right of the title section. */
 #main-upper-right {
     position: absolute;
@@ -363,6 +370,16 @@ and "downloaded" sections */
     color: #DDD;
     text-align: center;
     margin-top: 50px;
+}
+
+.search-results-bar {
+    font-size: 20px;
+    background: #cef;
+    padding: 5px 10px;
+}
+
+.search-results-bar a {
+    font-size: 12px;
 }
 
 /* Around  the "empty folder" message */

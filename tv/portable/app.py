@@ -1488,6 +1488,12 @@ class GUIActionHandler:
                 self.addFeed(dialog.getURL())
         dialog = dialogs.SearchChannelDialog(term, style, location)
         dialog.run(doAdd)
+
+    def addChannelSearchFeed(self, term, id):
+        self.addSearchFeed(term, dialogs.SearchChannelDialog.CHANNEL, int(id))
+
+    def addEngineSearchFeed(self, term, name):
+        self.addSearchFeed(term, dialogs.SearchChannelDialog.ENGINE, name)
         
     def testSearchFeedDialog(self):
         def finish(dialog):

@@ -418,6 +418,7 @@ class Handle:
         view.addChangeCallback(lambda x,y:self._checkHide(id))
         view.addAddCallback(lambda x,y:self._checkHide(id))
         view.addRemoveCallback(lambda x,y:self._checkHide(id))
+        view.addViewChangeCallback(lambda:self._checkHide(id))
         self._checkHide(id)
 
     def addSubHandle(self, handle):

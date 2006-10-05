@@ -31,7 +31,7 @@ searchEngines = views.searchEngines
       <div id="main-titlebar-center">
         <h1 id="main-title" i18n:translate="">Video Search</h1>
 	<div id="main-subtitle">
-	     <form name="search" onsubmit="return false;">
+	     <form name="search" onsubmit="performSearch(); return false;">
 	     <t:staticReplaceMarkup t:replaceData="searchengines.getSearchEnginesHTML()"/>
 		<input id="search-box" type="search" name="query" value="***feed.quoteLastQuery()***" placeholder="" onKeyUp="fillSearch()" onKeyPress="validateSearch(event)" /><input type="submit" value="GO" />      
 	     </form>
@@ -41,12 +41,18 @@ searchEngines = views.searchEngines
 
         <div id="main-container">
             <div t:updateForView="searchFeed">
-                <div class="search-message" t:hideIf="feed.getStatus() != 'idle-empty'">
+                <div class="search-message" t:showIf="feed.getStatus() == 'idle-empty'">
                     <span i18n:translate="">Nothing to display.<br />
                     Enter a query in the search field above.</span>
                 </div>
-                <div class="search-message" t:hideIf="feed.getStatus() != 'searching'">
+                <div class="search-message" t:showIf="feed.getStatus() == 'searching'">
                     <span i18n:translate="">Searching...</span>
+                </div>
+                <div class="search-results-bar" t:showIf="feed.getStatus() == 'idle-with-results'">
+			<span i18n:translate="">Results for 
+				<span i18n:name="query" t:replace="feed.lastQuery" />
+			</span>
+                        <a href="#" onclick="return eventURL('action:addEngineSearchFeed?term=@@@feed.lastQuery@@@&amp;name=@@@feed.lastEngine@@@');">Save Search</a>
                 </div>
             </div>
             
