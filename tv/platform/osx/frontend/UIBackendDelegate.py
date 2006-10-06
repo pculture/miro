@@ -23,6 +23,7 @@ import GrowlNotifier
 
 NibClassBuilder.extractClasses("PasswordWindow")
 NibClassBuilder.extractClasses("TextEntryWindow")
+NibClassBuilder.extractClasses('SearchChannelWindow')
 NibClassBuilder.extractClasses("ExceptionReporterPanel")
 
 dlTask = None
@@ -87,8 +88,9 @@ class UIBackendDelegate:
             finally:
                 self.httpAuthLock.release()
         elif isinstance(dialog, dialogs.SearchChannelDialog):
-            # TODO: uh, implement this.
-            showWarningDialog('Not Implemented Error', 'The Search Channel dialog is not implemented yet.')
+            dlog = SearchChannelController.alloc().initWithDialog_(dialog)
+            dlog.run()
+            dialog.runCallback(dlog.result)
         else:
             buttons = map(lambda x:x.text, dialog.buttons)
             result = showWarningDialog(dialog.title, dialog.description, buttons)
@@ -376,3 +378,96 @@ class TextEntryController (NibClassBuilder.AutoBaseClass):
         NSApplication.sharedApplication().stopModal()
 
 ###############################################################################
+
+class SearchChannelController (NibClassBuilder.AutoBaseClass):
+    
+    def initWithDialog_(self, dialog):
+        self = super(SearchChannelController, self).initWithWindowNibName_owner_('SearchChannelWindow', self)
+        self.dialog = dialog
+        self.result = None
+
+        self.window().setTitle_(dialog.title)
+        self.labelField.setStringValue_(dialog.description)
+        self.searchTermField.setStringValue_(dialog.term or '')
+        self.targetMatrix.selectCellWithTag_(dialog.style)
+        self.changeTarget_(self.targetMatrix)
+
+        self.channelPopup.removeAllItems()
+        for cid, title in dialog.channels:
+            self.channelPopup.addItemWithTitle_(title)
+
+        self.enginePopup.removeAllItems()
+        for name, title in dialog.engines:
+            self.enginePopup.addItemWithTitle_(title)
+
+        if dialog.style == dialogs.SearchChannelDialog.CHANNEL:
+            channel = self.getChannelTitleForID(dialog.location)
+            self.channelPopup.selectItemWithTitle_(channel)
+        elif dialog.style == dialogs.SearchChannelDialog.ENGINE:
+            engine = self.getEngineTitleForName(dialog.location, dialog.defaultEngine)
+            self.enginePopup.selectItemWithTitle_(engine)
+
+        self.controlTextDidChange_(nil)
+
+        return self
+    
+    def getChannelTitleForID(self, cid):
+        for eid, etitle in self.dialog.channels:
+            if eid == cid:
+                return etitle
+        return self.dialog.channels[0][1]
+    
+    def getChannelIDForTitle(self, ctitle):
+        for eid, etitle in self.dialog.channels:
+            if etitle == ctitle:
+                return eid
+        return self.dialog.channels[0][0]
+    
+    def getEngineTitleForName(self, name, default):
+        for ename, etitle in self.dialog.engines:
+            if ename == name:
+                return etitle
+        return default
+    
+    def getEngineNameForTitle(self, title):
+        for ename, etitle in self.dialog.engines:
+            if etitle == title:
+                return ename
+        return self.dialog.engines[0][0]
+        
+    def run(self):
+        NSApplication.sharedApplication().runModalForWindow_(self.window())
+
+    def controlTextDidChange_(self, notification):
+        enable = (self.searchTermField.stringValue().strip() != '')
+        if self.targetMatrix.selectedCell().tag() == dialogs.SearchChannelDialog.URL:
+            enable = enable and (self.urlField.stringValue().strip() != '')
+        self.createButton.setEnabled_(enable)
+
+    def changeTarget_(self, sender):
+        target = sender.selectedCell().tag()
+        self.channelPopup.setEnabled_(target == dialogs.SearchChannelDialog.CHANNEL)
+        self.enginePopup.setEnabled_(target == dialogs.SearchChannelDialog.ENGINE)
+        self.urlField.setEnabled_(target == dialogs.SearchChannelDialog.URL)
+        self.controlTextDidChange_(nil)
+    
+    def cancel_(self, sender):
+        self.closeWithResult(self.dialog.buttons[1])
+
+    def create_(self, sender):
+        self.dialog.term = self.searchTermField.stringValue()
+        self.dialog.style = self.targetMatrix.selectedCell().tag()
+        if self.dialog.style == dialogs.SearchChannelDialog.CHANNEL:
+            channel = self.channelPopup.titleOfSelectedItem()
+            self.dialog.location = self.getChannelIDForTitle(channel)
+        elif self.dialog.style == dialogs.SearchChannelDialog.ENGINE:
+            engine = self.enginePopup.titleOfSelectedItem()
+            self.dialog.location = self.getEngineNameForTitle(engine)
+        elif self.dialog.style == dialogs.SearchChannelDialog.URL:
+            self.dialog.location = self.urlField.stringValue()
+        self.closeWithResult(self.dialog.buttons[0])
+
+    def closeWithResult(self, result):
+        self.result = result
+        self.window().close()
+        NSApplication.sharedApplication().stopModal()
