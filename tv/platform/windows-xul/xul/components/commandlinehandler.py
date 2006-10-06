@@ -17,24 +17,33 @@ class DemocracyCLH:
         wwatch = components.classes["@mozilla.org/embedcomp/window-watcher;1"]\
                 .getService(components.interfaces.nsIWindowWatcher)
         pybridgeCID = "@participatoryculture.org/dtv/pybridge;1"
-        pybridge = components.classes[pybridgeCID].getService()
+        pybridge = components.classes[pybridgeCID]. \
+                    getService(components.interfaces.pcfIDTVPyBridge)
         startupError = pybridge.getStartupError()
         if startupError:
             startupErrorURL = "chrome://dtv/content/startuperror.xul"
             wwatch.openWindow(None, startupErrorURL, "DemocracyPlayerError", 
                     "chrome,dialog=yes,all", None)
             return
+
+        pybridge.createProxyObjects()
+        pybridge.handleCommandLine(commandLine)
+
         existingWindow = wwatch.getWindowByName(windowName, None)
         if existingWindow is None:
             try:
                 pybridge.deleteVLCCache()
             except:
                 print "WARNING: error in deleteVLCCache()"
-            pybridge.handleCommandLine(commandLine)
-            wwatch.openWindow(None, chromeURL, windowName,
-                    "chrome,dialog=no,all", None)
-        else:
-            pybridge.handleCommandLine(commandLine)
+            if pybridge.getStartupTasksDone() or 1:
+                wwatch.openWindow(None, chromeURL, windowName,
+                        "chrome,dialog=no,all", None)
+            else:
+                jsbridgeCID = "@participatoryculture.org/dtv/jsbridge;1"
+                jsbridge = components.classes[jsbridgeCID]. \
+                        getService(components.interfaces.pcfIDTVJSBridge)
+                jsbridge.performStartupTasks()
+                return
 
 catman = components.classes["@mozilla.org/categorymanager;1"].getService()
 catman.queryInterface(components.interfaces.nsICategoryManager)

@@ -402,10 +402,12 @@ jsBridge.prototype = {
     }
   },
 
-  performStartupTasks: function(homedir) {
-    var params = { "homedir": homedir };
-    this.startup = this.window.openDialog("chrome://dtv/content/startup.xul",
-            "dialog", "chrome,dependent,centerscreen,modal", params);
+  performStartupTasks: function() {
+    var wwatch = Components.classes["@mozilla.org/embedcomp/window-watcher;1"]
+                .getService(Components.interfaces.nsIWindowWatcher);
+    var startupTasksURL = "chrome://dtv/content/startup.xul";
+    this.startup = wwatch.openWindow(null, startupTasksURL, 
+            "DemocracyPlayerStartup", "chrome,dialog=yes,all", null);
   },
 
   updateSearchProgress: function (message) {

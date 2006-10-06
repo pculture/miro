@@ -62,7 +62,7 @@ def makeService(clsid, iid):
     """Helper function to get an XPCOM service"""
     return components.classes[clsid].getService(iid)
 
-def initializeProxyObjects(window):
+def createProxyObjects():
     """Creates the jsbridge and vlcrenderer xpcom components, then wraps them in
     a proxy object, then stores them in the frontend module.  By making them
     proxy objects, we ensure that the calls to them get made in the xul event
@@ -78,18 +78,20 @@ def initializeProxyObjects(window):
 
     jsBridge = makeService("@participatoryculture.org/dtv/jsbridge;1",
             pcfIDTVJSBridge)
-    jsBridge.init(window)
     frontend.jsBridge = proxyManager.getProxyForObject(xulEventQueue,
             pcfIDTVJSBridge, jsBridge, nsIProxyObjectManager.INVOKE_ASYNC |
             nsIProxyObjectManager.FORCE_PROXY_CREATION)
 
     vlcRenderer = makeService("@participatoryculture.org/dtv/vlc-renderer;1",
             pcfIDTVVLCRenderer)
-    vlcRenderer.init(window)
     frontend.vlcRenderer = proxyManager.getProxyForObject(xulEventQueue,
             pcfIDTVVLCRenderer, vlcRenderer, 
             nsIProxyObjectManager.INVOKE_SYNC |
             nsIProxyObjectManager.FORCE_PROXY_CREATION)
+
+def initializeProxyObjects(window):
+    frontend.vlcRenderer.init(window)
+    frontend.jsBridge.init(window)
 
 def getArgumentList(commandLine):
     """Convert a nsICommandLine component to a list of arguments to pass
@@ -230,6 +232,10 @@ class PyBridge:
         return config.get(prefs.BT_MAX_PORT)
     def setBTMaxPort(self, value):
         return config.set(prefs.BT_MAX_PORT, value)
+    def getStartupTasksDone(self):
+        return config.get(prefs.STARTUP_TASKS_DONE)
+    def setStartupTasksDone(self, value):
+        return config.set(prefs.STARTUP_TASKS_DONE, value)
 
     @asUrgent
     def handleCommandLine(self, commandLine):
@@ -402,10 +408,6 @@ class PyBridge:
         app.controller.addAndSelectFeed()
 
     @asUrgent
-    def testStartup(self):
-        frontend.jsBridge.performStartupTasks(os.path.expanduser("~"))
-
-    @asUrgent
     def renameCurrentChannel(self):
         app.controller.renameCurrentChannel()
 
@@ -439,3 +441,9 @@ class PyBridge:
     def startupCancelSearch(self):
         print "startupCancelSearch"
         frontend.startup.cancelSearch()
+
+    def getSpecialFolder(self, name):
+        return platformcfg.getSpecialFolder(name)
+
+    def createProxyObjects(self):
+        createProxyObjects()

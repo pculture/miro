@@ -9,19 +9,15 @@
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 	xmlns:html="http://www.w3.org/1999/xhtml"
         onload="onload();"
+        onwizardfinish="return onwizardfinish();"
         class="startup">
-<!--        ondialogaccept="onaccept();"
-        ondialogcancel="oncancel();"-->
     <script src="chrome://dtv/content/main.js" />
     <script src="chrome://dtv/content/startup.js" />
     <wizardpage id="page-welcome" onpageshow="updateUI();">
     	<vbox>
-    	    <hbox>
-    		<img src="..."/>
-    		<description>
-    		    &startup.welcome;
-    		</description>
-    	    </hbox>
+            <description>
+                &startup.welcome;
+            </description>
     	    <description>
     		&startup.description;
     	    </description>
@@ -29,7 +25,7 @@
     	    <description>
     		&startup.autostart.description;
     	    </description>
-    	    <description>
+    	    <description class="header">
     		&startup.autostart.question;
     	    </description>
     	    <radiogroup id="radiogroup-autostart">

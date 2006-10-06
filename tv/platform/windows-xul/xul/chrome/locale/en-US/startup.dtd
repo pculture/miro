@@ -5,7 +5,7 @@
 <!ENTITY startup.welcome		"Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after theother, download torrents, recommend videos to friends, and lots more."> 
 <!ENTITY startup.description		"The next few screens will help you set up democracy player so that it works best for you.  Here's the first question.">
 <!ENTITY startup.autostart.description	"We recommend that you allow Democracy Player to launch when your computer startups up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.">
-<!ENTITY startup.autostart.question	"&lt;b&gt;Would you like to run Democracy when your computer starts up?&lt;/b&gt;">
+<!ENTITY startup.autostart.question	"Would you like to run Democracy when your computer starts up?">
 <!ENTITY startup.search.description	"Democracy Player can find all the videos on your computer to help you organize your collection.">
 <!ENTITY startup.search.question        "Would you like Democracy Player to look for video files on your computer?">
 <!ENTITY startup.search.restrict	"Restrict to all my personal files.">

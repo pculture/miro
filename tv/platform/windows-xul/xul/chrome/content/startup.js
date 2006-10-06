@@ -1,6 +1,12 @@
 var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
                 getService(Components.interfaces.pcfIDTVPyBridge);
 
+function writelog(str) {
+    Components.classes['@mozilla.org/consoleservice;1']
+	.getService(Components.interfaces.nsIConsoleService)	
+	.logStringMessage(str);
+}
+
 var initialButton;
 var inSearch = false;
 var searchSuccess = false;
@@ -10,12 +16,20 @@ var homedir;
 function onload() {
     wizard = getWidget("democracy-startup");
     initialButton = wizard.getButton("next").label;
-    homedir = window.arguments[0]['homedir'];
-    setSearchDir(homedir);
+    setSearchDir(pybridge.getSpecialFolder("My Documents"));
     
     wizard.getButton("cancel").disabled = true;
     wizard.getButton("cancel").style.display = "none";
     updateUI();
+}
+
+function onwizardfinish() {
+    pybridge.setStartupTasksDone(true);
+    var wwatch = Components.classes["@mozilla.org/embedcomp/window-watcher;1"]
+            .getService(Components.interfaces.nsIWindowWatcher);
+    var startupTasksURL = "chrome://dtv/content/startup.xul";
+    this.startup = wwatch.openWindow(null, "chrome://dtv/content/main.xul",
+            "DemocracyPlayer", "chrome,dialog=yes,all", null);
 }
 
 function searchPossible() {
@@ -26,6 +40,7 @@ function searchPossible() {
 
 function updateUI ()
 {
+    if(!wizard) return; // onload hasn't been called yet
     if (inSearch) {
 	wizard.canAdvance = false;
 	wizard.canRewind = false;
@@ -143,29 +158,6 @@ function doubleToggledEnable (toggle1, toggle2, widget)
     }
 }
 
-function onaccept ()
-{
-    term = getWidget ("textbox-term").value;
-    var loc;
-    var style;
-    if (getWidget("radio-channel").selected) {
-	style = 0;
-	loc = getWidget("menulist-channel").selectedIndex;
-    } else if (getWidget("radio-searchengine").selected) {
-	style = 1;
-	loc = getWidget("menulist-searchengine").selectedIndex;
-    } else if (getWidget("radio-url").selected) {
-	style = 2;
-	loc = getWidget("textbox-url").value;
-    }
-    pybridge.handleSearchChannelDialog(window.arguments[0]['id'], 0, term, style, loc)
-}
-
-function oncancel ()
-{
-    pybridge.handleSearchChannelDialog(window.arguments[0]['id'], 1, "", 0, "")
-}
-
 function setSearchDir(directory) {
     var searchDirBox = document.getElementById('textbox-search-directory');
     searchDirBox.abspath = directory;
@@ -189,4 +181,3 @@ function getWidget(widgetID)
 {
     return document.getElementById(widgetID);
 }
-
