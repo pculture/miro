@@ -86,6 +86,9 @@ class UIBackendDelegate:
                     dialog.runCallback(None)
             finally:
                 self.httpAuthLock.release()
+        elif isinstance(dialog, dialogs.SearchChannelDialog):
+            # TODO: uh, implement this.
+            showWarningDialog('Not Implemented Error', 'The Search Channel dialog is not implemented yet.')
         else:
             buttons = map(lambda x:x.text, dialog.buttons)
             result = showWarningDialog(dialog.title, dialog.description, buttons)

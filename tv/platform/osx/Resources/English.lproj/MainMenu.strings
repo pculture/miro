@@ -82,6 +82,9 @@
 /* NSMenuItem : <title:New Playlist...> (oid:306) */
 "New Playlist..." = "New Playlist...";
 
+/* NSMenuItem : <title:New Search Channel...> (oid:357) */
+"New Search Channel..." = "New Search Channel...";
+
 /* NSMenuItem : <title:Next Video> (oid:321) */
 "Next Video" = "Next Video";
 

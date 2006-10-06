@@ -258,6 +258,9 @@ class MainController (NibClassBuilder.AutoBaseClass):
         dlog = dialogs.TextEntryDialog(title, description, dialogs.BUTTON_OK, dialogs.BUTTON_CANCEL, prefillCallback)
         dlog.run(validationCallback)
 
+    def createSearchChannel_(self, sender):
+        eventloop.addIdle(lambda:app.controller.addSearchFeed(), "Add Search Feed")
+
     def createChannelFolder_(self, sender):
         folder.createNewChannelFolder()
 
@@ -341,6 +344,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
                       self.actionGroups['VideoSelected'] or
                       self.actionGroups['VideosSelected'])
         elif action == 'addChannel:':
+            result = True
+        elif action == 'createSearchChannel:':
             result = True
         elif action == 'createChannelFolder:':
             result = True
