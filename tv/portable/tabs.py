@@ -25,7 +25,7 @@ class StaticTab(database.DDBObject):
         'librarytab': _('My Collection'),
         'newtab': _('New Videos'),
         'searchtab': _('Search'),
-        'downloadtab': _('Active Downloads'),
+        'downloadtab': _('Downloading'),
     }
 
     tabIcons = {

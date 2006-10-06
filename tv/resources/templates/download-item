@@ -80,10 +80,14 @@ viewName = kargs['viewName']
         <div class="main-video-details-tasks">
             <a t:showIf="this.hasSharableURL()" href="#" 
                 class="main-video-details-task-mail" 
-                onclick="recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@'); return false;" />
+		onclick="recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@'); return false;" >
+		<span i18n:translate="">SHARE IT</span>
+	    </a>
             <a href="#" t:showIf="this.hasSharableURL()" 
                 class="main-video-details-task-bomb" 
-                onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" />
+		onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" >
+		<span i18n:translate="">STAR IT</span>
+	    </a>
         </div>
         <div t:showIf="this.getState() == 'downloading'"
                 class="main-video-details-download-info">

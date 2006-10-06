@@ -450,10 +450,10 @@ folder will also be deleted.""")
             if exp.days > 0:
                 time = _("%d days") % exp.days
             elif exp.seconds > 3600:
-                time = _("%d hrs") % (ceil(exp.seconds/3600.0))
+                time = _("%d hours") % (ceil(exp.seconds/3600.0))
             else:
-                time = _("%d min") % (ceil(exp.seconds/60.0))
-        return _('Expires: %s') % time
+                time = _("%d minutes") % (ceil(exp.seconds/60.0))
+        return _('Expires in %s') % time
 
     def getDragType(self):
         if self.isDownloaded():
@@ -754,7 +754,6 @@ folder will also be deleted.""")
     def getDetails(self):
         details = []
         reldate = self.getReleaseDate()
-        duration = self.getDuration()
         format = self.getFormat()
         size = self.getSizeForDisplay()
         link = self.getLink()
@@ -764,8 +763,6 @@ folder will also be deleted.""")
             details.append('<span class="details-count">%s items</span>' % len(children))
         if len(reldate) > 0:
             details.append('<span class="details-date">%s</span>' % escape(reldate))
-        if len(duration) > 0:
-            details.append('<span class="details-duration">%s</span>' % escape(duration))
         if len(size) > 0:
             details.append('<span class="details-size">%s</span>' % escape(size))
         if len(format) > 0:
@@ -773,7 +770,7 @@ folder will also be deleted.""")
         if self.looksLikeTorrent():
             details.append('<span class="details-torrent">%s</span>' % _("TORRENT"))
         if len(link) > 0:
-            details.append('<a class="details-link" href="%s">%s</span>' % (quoteattr(link), _("WEBSITE")))
+            details.append('<a class="details-link" href="%s">%s</span>' % (quoteattr(link), _("WEB PAGE")))
         out = '<BR>'.join(details)
         return out
 
@@ -953,7 +950,7 @@ folder will also be deleted.""")
     # to use a hardcoded constant, but the templating system doesn't 
     # really leave any other choice.
     def downloadProgressWidth(self):
-        fullWidth = 92  # width of resource:channelview-progressbar-bg.png - 2
+        fullWidth = 112  # width of resource:channelview-progressbar-bg.png
         progress = self.downloadProgress() / 100.0
         if progress == 0:
             return 0
@@ -981,10 +978,10 @@ folder will also be deleted.""")
             return _('downloading...')
         elif hours > 0:
             time = "%d:%02d:%02d" % (hours, mins, secs)
-            return _("%s left") % time
+            return _("%s remaining") % time
         else:
             time = "%d:%02d" % (mins, secs)
-            return _("%s left") % time
+            return _("%s remaining") % time
 
     def getStartupActivity(self):
         if self.pendingManualDL:
@@ -1060,6 +1057,9 @@ folder will also be deleted.""")
     # returns string with the format of the video
     KNOWN_MIME_TYPES = ('audio', 'video')
     KNOWN_MIME_SUBTYPES = ('mov', 'wmv', 'mp4', 'mp3', 'mpg', 'mpeg', 'avi', 'x-flv', 'x-msvideo')
+    MIME_SUBSITUTIONS = {
+        'QUICKTIME': 'MOV',
+    }
     def getFormat(self, emptyForUnknown=True):
         try:
             enclosure = self.entry['enclosures'][0]
@@ -1079,7 +1079,7 @@ folder will also be deleted.""")
                         format += ' AUDIO'
                     if format.startswith('X-'):
                         format = format[2:]
-                    return format
+                    return self.MIME_SUBSITUTIONS.get(format, format)
             else:
                 if extension in self.KNOWN_MIME_SUBTYPES:
                     return extension.upper()

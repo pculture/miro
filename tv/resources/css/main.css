@@ -146,7 +146,7 @@ left: 43px;
     padding: 0px;
     margin: 0px;
     font-size: 24px;
-    height: 24px;
+    height: 28px;
     overflow: hidden;
     font-weight: normal;
 }
@@ -625,7 +625,7 @@ an element is dragged, the drag-highlight class is added to it */
     background: #e8ecf3;
     font-size: 10px;
     text-align: right;
-	line-height: 13px;
+    line-height: 12px;
 }
 
 .main-video-stats a {
@@ -670,6 +670,15 @@ an element is dragged, the drag-highlight class is added to it */
     top: 0px;
     width: 72px;
     height: 25px;
+    padding-top: 5px;
+    text-align: center;
+    color: #444;
+    text-decoration: none;
+}
+
+.main-video-details-tasks a:hover {
+    color: #000000;
+    text-decoration: underline;
 }
 
 .main-video-details-task-mail { 
@@ -680,6 +689,10 @@ an element is dragged, the drag-highlight class is added to it */
 .main-video-details-task-bomb { 
     left: 78px;
     background: url(../images/main-icon-bomb.png) top left no-repeat;
+}
+
+.details-date {
+    font-weight: bold;
 }
 
 .main-video-bottom {
@@ -740,6 +753,10 @@ an element is dragged, the drag-highlight class is added to it */
     color: #666;
 }
 
+.selected .channel-title {
+    color: white;
+}
+
 .small-button-left {
     background: left top no-repeat url(../images/small-button-left.png);
 }
@@ -790,8 +807,8 @@ an element is dragged, the drag-highlight class is added to it */
 .main-video-details-download-info {
     position: absolute;
     top: 44px;
-    left: 8px;
-    width: 155px;
+    left: 13px;
+    right: 13px;
     height: 30px;
     font-size: 10px;
     overflow: hidden;
@@ -808,7 +825,7 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .download-rate-and-eta {
-    width: 90px;
+    width: 130px;
 }
 
 .download-rate {
@@ -821,7 +838,7 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .main-progress-bar-bg {
-  width: 92px;
+  width: 112px;
   height: 11px;
   margin: 1px 1px 2px 1px;
   background: url(../images/progress-bar-bg.png) no-repeat left top; 
@@ -833,7 +850,7 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .main-progress-throbber-bg {
-  width: 94px;
+  width: 114px;
   height: 13px;
   margin: 0px 0px 1px 0px;
   background: url(../images/progress-throbber-bg.png) no-repeat left top; 
@@ -848,7 +865,7 @@ an element is dragged, the drag-highlight class is added to it */
     display: block;
     position: absolute;
     top: 0px;
-    left: 98px;
+    left: 119px;
     width: 11px;
     height: 13px;
     background: url(../images/main-cancel.png) top left no-repeat;
