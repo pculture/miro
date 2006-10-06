@@ -509,7 +509,7 @@ an element is dragged, the drag-highlight class is added to it */
 
 .main-video-desc {
     margin-left: 115px;
-    margin-right: 263px;
+    margin-right: 260px;
     margin-top: 3px;
     height: 82px;
     overflow: hidden;
@@ -658,10 +658,10 @@ an element is dragged, the drag-highlight class is added to it */
 
 .main-video-details-tasks {
     position: absolute;
-    top: 7px;
+    top: 9px;
     left: 5px;
     height: 26px;
-    width: 155px;
+    width: 153px;
 }
 
 .main-video-details-tasks a {
