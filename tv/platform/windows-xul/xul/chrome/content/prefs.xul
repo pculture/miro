@@ -69,6 +69,8 @@
 	<!--DOWNLOADS-->
 	<groupbox orient="vertical">
 		<caption label="Downloads"/>
+                <description>(WARNING: Changes won't go into effect until you
+                        restart Democracy Player.)</description>
 		<hbox>
 			<checkbox id="limitupstream" checked="true" label="To avoid slowdowns, limit upstream to" value="1" oncommand="limitUpstreamChange()"/>
 			<textbox id="maxupstream" flex="0" value="300" style="max-width: 30px;" onchange="maxUpstreamChange()"/>
@@ -82,8 +84,6 @@
                         <textbox id="btmaxport" flex="0" value="300" 
                                 size="5" onchange="btMaxPortChange()" />
                 </hbox>
-                <description>(Changes won't go into effect until you restart
-                        Democracy Player.)</description>
 	</groupbox>
 	<!--/DOWNLOADS-->
 	
