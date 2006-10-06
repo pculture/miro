@@ -15,8 +15,8 @@
   <span class="triangle" t:hideIf="showDownloads"/>
   <span class="triangle-down" t:hideIf="not showDownloads"/>
   <span t:hideIf="allDownloadingItems.len()==1"  i18n:translate="">
-      <span t:replace="allDownloadingItems.len()" i18n:name="count"/> downloads in progress</span>
-   <span t:hideIf="allDownloadingItems.len()!=1" i18n:translate="">1 download in progress</span>
+      <span t:replace="allDownloadingItems.len()" i18n:name="count"/> Downloading</span>
+   <span t:hideIf="allDownloadingItems.len()!=1" i18n:translate="">1 Downloading</span>
 </a>
 </div>
 </div>
@@ -35,11 +35,11 @@
   <div t:showIf="searchTerm is None">
     <div t:hideIf="isFolder" i18n:translate="">
           <span i18n:name="len" t:replace="allItems.len()" /> 
-          videos on this channel
+          Videos Available
     </div>
     <div t:showIf="isFolder" i18n:translate="">
           <span i18n:name="len" t:replace="allItems.len()" /> 
-          videos in this channel folder
+          Videos Available
     </div>
   </div>
   <div t:showIf="searchTerm is not None">

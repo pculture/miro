@@ -337,7 +337,7 @@ and "downloaded" sections */
     height: 24px;
     background: url(../images/main-notification-bg.png) no-repeat left top;
     padding: 3px 0px 0px 20px;
-    margin: 15px 0px 12px 5px;
+    margin: 15px 0px 12px 35px;
     font-size: 14px;
     font-weight: bold;
     text-decoration: none;
@@ -509,7 +509,7 @@ an element is dragged, the drag-highlight class is added to it */
 
 .main-video-desc {
     margin-left: 115px;
-    margin-right: 255px;
+    margin-right: 263px;
     margin-top: 3px;
     height: 82px;
     overflow: hidden;
@@ -520,7 +520,7 @@ an element is dragged, the drag-highlight class is added to it */
     padding: 0px;
     font-size: 13px;
     font-weight: bold;
-    color: #000000;
+    color: #222;
     text-decoration: none;
     height: 17px;
     overflow: hidden;
@@ -534,6 +534,7 @@ an element is dragged, the drag-highlight class is added to it */
 .main-video-desc-desc {
     color: #222;
     height: 44px;
+    overflow: hidden;
 }
 
 .main-video.selected .main-video-desc h1, .main-video.selected .main-video-desc-desc {
@@ -615,14 +616,16 @@ an element is dragged, the drag-highlight class is added to it */
 
 .main-video-stats {
     position: absolute;
-    right: 155px;
+    right: 160px;
     top: 0px;
-    width: 85px;
+    width: 80px;
     height: 74px;
-    padding: 5px;
+    padding: 5px 10px 5px 4px;
     color:  #666;
     background: #e8ecf3;
     font-size: 10px;
+    text-align: right;
+	line-height: 13px;
 }
 
 .main-video-stats a {
@@ -639,8 +642,8 @@ an element is dragged, the drag-highlight class is added to it */
 
 .main-video-details-reveal-button {
     position: absolute;
-    bottom: 5px;
-    left: 5px;
+    bottom: 6px;
+    right: 10px;
 }
 
 
@@ -648,40 +651,35 @@ an element is dragged, the drag-highlight class is added to it */
     position: absolute;
     right: 0px;
     top: 0px;
-    width: 155px;
+    width: 160px;
     height: 100%;
     background: #e1e9f6;
 }
 
 .main-video-details-tasks {
     position: absolute;
-    top: 11px;
+    top: 7px;
     left: 5px;
     height: 26px;
-    width: 115px;
+    width: 155px;
 }
 
 .main-video-details-tasks a {
     display: block;
     position: absolute;
     top: 0px;
-    width: 36px;
-    height: 36px;
+    width: 72px;
+    height: 25px;
 }
 
 .main-video-details-task-mail { 
-    left: 2px;
+    left: 1px;
     background: url(../images/main-icon-mail.png) top left no-repeat;
 }
 
 .main-video-details-task-bomb { 
-    left: 42px;
+    left: 78px;
     background: url(../images/main-icon-bomb.png) top left no-repeat;
-}
-
-.main-video-details-task-delete {   
-    left: 82px;
-    background: url(../images/main-icon-trash.png) top left no-repeat;
 }
 
 .main-video-bottom {
@@ -739,6 +737,7 @@ an element is dragged, the drag-highlight class is added to it */
 
 .channel-title {
     float: right;
+    color: #666;
 }
 
 .small-button-left {
@@ -770,29 +769,29 @@ an element is dragged, the drag-highlight class is added to it */
 
 .small-button-left.save {
     position: absolute;
-    left: 10px;
+    left: 13px;
     width: 65px;
 }
 
 .small-button-left.delete {
     position: absolute;
-    left: 80px;
+    left: 84px;
     width: 65px;
 }
 
 .details-small-buttons {
     position: absolute;
     width: 100%;
-    top: 63px;
+    top: 59px;
     height: 19px;
     text-align: center;
 }
 
 .main-video-details-download-info {
     position: absolute;
-    top: 48px;
+    top: 44px;
     left: 8px;
-    width: 125px;
+    width: 155px;
     height: 30px;
     font-size: 10px;
     overflow: hidden;
@@ -801,6 +800,7 @@ an element is dragged, the drag-highlight class is added to it */
 .main-video-details-download-info.expiring {
     color: #444;
     text-align: center;
+    font-weight: bold;
 }
 
 .main-video-details-download-info.pending-auto {
