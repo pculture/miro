@@ -3,6 +3,8 @@ import traceback
 import gobject
 import eventloop
 
+from threading import Event
+
 import pygtk
 import gtk
 
@@ -10,6 +12,49 @@ import pygst
 pygst.require('0.10')
 import gst
 import gst.interfaces
+
+class Tester:
+    def __init__(self, filename):
+        self.playbin = gst.element_factory_make('playbin')
+        self.videosink = gst.element_factory_make("fakesink", "videosink")
+        self.playbin.set_property("video-sink", self.videosink)
+        self.audiosink = gst.element_factory_make("fakesink", "audiosink")
+        self.playbin.set_property("audio-sink", self.audiosink)
+
+        self.bus = self.playbin.get_bus()
+        self.bus.add_signal_watch()
+        self.watch_id = self.bus.connect("message", self.onBusMessage)
+        self.done = Event()
+        self.success = False
+
+        self.playbin.set_property("uri", "file://%s" % filename)
+        self.playbin.set_state(gst.STATE_PAUSED)
+
+    def result (self):
+        self.done.wait(5)
+        self.disconnect()
+        print self.success
+        return self.success
+
+    def onBusMessage(self, bus, message):
+        if message.src == self.playbin:
+            if message.type == gst.MESSAGE_STATE_CHANGED:
+                prev, new, pending = message.parse_state_changed()
+                if new == gst.STATE_PAUSED:
+                    self.success = True
+                    self.done.set()
+                    # Success
+            if message.type == gst.MESSAGE_ERROR:
+                self.success = False
+                self.done.set()
+
+    def disconnect (self):
+        self.bus.disconnect (self.watch_id)
+        self.playbin.set_state(gst.STATE_NULL)
+        del self.bus
+        del self.playbin
+        del self.audiosink
+        del self.videosink
 
 class Renderer(app.VideoRenderer):
     def __init__(self):
@@ -19,7 +64,6 @@ class Renderer(app.VideoRenderer):
         self.watch_id = self.bus.connect("message", self.onBusMessage)
         self.sink = gst.element_factory_make("ximagesink", "sink")
         self.playbin.set_property("video-sink", self.sink)
-        print "created new GstRenderer"
         
     def onBusMessage(self, bus, message):
         "recieves message posted on the GstBus"
@@ -27,7 +71,7 @@ class Renderer(app.VideoRenderer):
             err, debug = message.parse_error()
             print "onBusMessage: gstreamer error: %s" % err
         elif message.type == gst.MESSAGE_EOS:
-            print "onBusMessage: end of stream"
+#            print "onBusMessage: end of stream"
             eventloop.addIdle(lambda:app.controller.playbackController.skip(1),
                               "onBusMessage: skipping to next track")
         else:
@@ -49,7 +93,7 @@ class Renderer(app.VideoRenderer):
         self.gc.foreground = gtk.gdk.color_parse("black")
         
     def onUnrealize(self, widget):
-        print "onUnrealize"
+#        print "onUnrealize"
         self.sink = None
         
     def onExpose(self, widget, event):
@@ -65,7 +109,7 @@ class Renderer(app.VideoRenderer):
         
     def canPlayFile(self, filename):
         """whether or not this renderer can play this data"""
-        return True
+        return Tester(filename).result()
 
     def goFullscreen(self):
         """Handle when the video window goes fullscreen."""
@@ -79,7 +123,7 @@ class Renderer(app.VideoRenderer):
         """starts playing the specified file"""
         self.stop()
         self.playbin.set_property("uri", "file://%s" % filename)
-        print "selectFile: playing file %s" % filename
+#        print "selectFile: playing file %s" % filename
 
     def getProgress(self):
         print "getProgress: what does this do?"
@@ -105,7 +149,7 @@ class Renderer(app.VideoRenderer):
         if not result:
             print "playFromTime: seek failed"
         self.play()
-        print "playFromTime: starting playback from %s sec" % seconds
+#        print "playFromTime: starting playback from %s sec" % seconds
 
     def getDuration(self):
         try:
@@ -118,23 +162,23 @@ class Renderer(app.VideoRenderer):
         
     def reset(self):
         self.playbin.set_state(gst.STATE_NULL)
-        print "** RESET **"
+#        print "** RESET **"
 
     def setVolume(self, level):
-        print "setVolume: set volume to %s" % level
+#        print "setVolume: set volume to %s" % level
         self.playbin.set_property("volume", level * 4.0)
         
     def play(self):
         self.playbin.set_state(gst.STATE_PLAYING)
-        print "** PLAY **"
+#        print "** PLAY **"
         
     def pause(self):
         self.playbin.set_state(gst.STATE_PAUSED)
-        print "** PAUSE **"
+#        print "** PAUSE **"
         
     def stop(self):
         self.playbin.set_state(gst.STATE_NULL)
-        print "** STOP **"
+#        print "** STOP **"
         
     def getRate(self):
         return 256
