@@ -14,6 +14,7 @@ import feed
 import prefs
 import config
 import dialogs
+import eventloop
 import platformutils
 
 from StartupPanel import StartupPanelController
@@ -71,30 +72,36 @@ class UIBackendDelegate:
         startupController = StartupPanelController.alloc().init()
         startupController.run(terminationCallback)
 
+    @platformutils.onMainThread
     def runDialog(self, dialog):
         if isinstance(dialog, dialogs.TextEntryDialog):
             dlog = TextEntryController.alloc().initWithDialog_(dialog)
             dlog.run()
-            dialog.runCallback(dlog.result, dlog.value)
+            call = lambda:dialog.runCallback(dlog.result, dlog.value)
+            name = "TextEntryDialog"
         elif isinstance(dialog, dialogs.HTTPAuthDialog):
             self.httpAuthLock.acquire()
             try:
                 authDlog = PasswordController.alloc().initWithDialog_(dialog)
                 result = authDlog.getAnswer()
+                name = "HTTPAuthDialog"
                 if result is not None:
-                    dialog.runCallback(dialogs.BUTTON_OK, *result)
+                    call = lambda:dialog.runCallback(dialogs.BUTTON_OK, *result)
                 else:
-                    dialog.runCallback(None)
+                    call = lambda:dialog.runCallback(None)
             finally:
                 self.httpAuthLock.release()
         elif isinstance(dialog, dialogs.SearchChannelDialog):
             dlog = SearchChannelController.alloc().initWithDialog_(dialog)
             dlog.run()
-            dialog.runCallback(dlog.result)
+            call = lambda:dialog.runCallback(dlog.result)
+            name = "SearchChannelDialog"
         else:
             buttons = map(lambda x:x.text, dialog.buttons)
             result = showWarningDialog(dialog.title, dialog.description, buttons)
-            dialog.runCallback(dialog.buttons[result])
+            call = lambda:dialog.runCallback(dialog.buttons[result])
+            name = "Dialog"
+        eventloop.addUrgentCall(call, "Calling back from %s" % name)
 
     def openExternalURL(self, url):
         # We could use Python's webbrowser.open() here, but
