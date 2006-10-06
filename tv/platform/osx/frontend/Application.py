@@ -226,10 +226,9 @@ class AppController (NibClassBuilder.AutoBaseClass):
                 url = 'http://%s' % url
 
         if url.startswith('http'):
-            app.controller.addAndSelectFeed(url)
+            eventloop.addIdle(lambda:app.controller.addAndSelectFeed(url), "Open HTTP URL")
         elif url.startswith('democracy:'):
-            eventloop.addUrgentCall(lambda:singleclick.addDemocracyURL(url), 
-                        "Open Democracy URL")
+            eventloop.addIdle(lambda:singleclick.addDemocracyURL(url), "Open Democracy URL")
 
     def donate_(self, sender):
         donateURL = NSURL.URLWithString_(config.get(prefs.DONATE_URL))
