@@ -511,7 +511,7 @@ an element is dragged, the drag-highlight class is added to it */
     margin-left: 115px;
     margin-right: 255px;
     margin-top: 3px;
-    height: 80px;
+    height: 82px;
     overflow: hidden;
 }
 
@@ -527,10 +527,7 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .main-video-desc div {
-    margin: 0px;
-    padding: 0px;
     font-size: 11px;
-    overflow: hidden;
     line-height: 14px;
 }
 
@@ -642,7 +639,7 @@ an element is dragged, the drag-highlight class is added to it */
 
 .main-video-details-reveal-button {
     position: absolute;
-    bottom: 4px;
+    bottom: 5px;
     left: 5px;
 }
 
@@ -690,13 +687,13 @@ an element is dragged, the drag-highlight class is added to it */
 .main-video-bottom {
 	font-size: 10px;
 	overflow:  hidden;
-	padding:  1px 0px;
+	padding:  1px 0px 2px 0;
 	position: relative;
 }
 
 .video-state {
     font-weight: bold;
-    height: 15px;
+    height: 18px;
     float: left;
     color: white;
 }
@@ -711,7 +708,7 @@ an element is dragged, the drag-highlight class is added to it */
 
 .video-state-mid {
     margin: 0px 5px;
-    padding: 0px 4px;
+    padding: 0px 4px 3px 4px;
     text-align: center;
     background: left top repeat-x;
 }
