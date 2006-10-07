@@ -969,14 +969,14 @@ folder will also be deleted.""")
     # Returns string with estimate time until download completes
     def downloadETA(self):
         if self.downloader is not None:
-            secs = self.downloader.getETA()
+            totalSecs = self.downloader.getETA()
+            if totalSecs == -1:
+                return _('downloading...')
         else:
-            secs = 0
-        mins, secs = divmod(secs, 60)
+            totalSecs = 0
+        mins, secs = divmod(totalSecs, 60)
         hours, mins = divmod(mins, 60)
-        if secs == -1:
-            return _('downloading...')
-        elif hours > 0:
+        if hours > 0:
             time = "%d:%02d:%02d" % (hours, mins, secs)
             return _("%s remaining") % time
         else:

@@ -75,18 +75,19 @@ body {
 }
 
 #videodetails-actions {
+text-align: right;
 float: right;
 width: 70px;
 padding-top: 4px;
 margin-right: 5px;
 line-height: 13px;
-}
-
-#videodetails-actions a {
-text-align: right;
 color: #ddd;
 font-weight: bold;
 font-size: 9px;
+}
+
+#videodetails-actions a {
+color: #ddd;
 text-decoration: none;
 display: block;
 }

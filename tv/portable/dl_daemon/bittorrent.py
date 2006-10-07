@@ -73,6 +73,7 @@ class TorrentDownload:
         self.rawserver_started = False
         self.minport = dtv_config.get(prefs.BT_MIN_PORT)
         self.maxport = dtv_config.get(prefs.BT_MAX_PORT)
+        self.max_upload_rate = dtv_config.get(prefs.UPSTREAM_LIMIT_IN_KBS)
 
     def start(self):
         """Start downloading the torrent."""
@@ -303,7 +304,7 @@ class TorrentDownload:
             len(pieces), downmeasure, config['snub_time'], 
             ratemeasure.data_came_in)
         connecter = Connecter(make_upload, downloader, choker,
-            len(pieces), upmeasure, config['max_upload_rate'] * 1024, rawserver.add_task)
+            len(pieces), upmeasure, self.max_upload_rate * 1024, rawserver.add_task)
         infohash = sha(bencode(info)).digest()
         encoder = Encoder(connecter, rawserver, 
             myid, config['max_message_length'], rawserver.add_task, 

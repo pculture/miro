@@ -128,6 +128,8 @@ class ThreadPool(object):
         self.eventLoop = eventLoop
         self.queue = Queue.Queue()
         self.threads = []
+
+    def initThreads(self):
         for x in xrange(self.THREADS):
             t = threading.Thread(name='ThreadPool - %d' % x,
                     target=self.threadLoop)
@@ -164,8 +166,6 @@ class ThreadPool(object):
     def closeThreads(self):
         for x in xrange(self.THREADS):
             self.queue.put("QUIT")
-        for t in self.threads:
-            t.join()
 
 class EventLoop(object):
     def __init__(self):
@@ -364,6 +364,7 @@ lt = None
 profile_file = None
 
 def startup():
+    _eventLoop.threadPool.initThreads()
 
 
     def profile_startup():
