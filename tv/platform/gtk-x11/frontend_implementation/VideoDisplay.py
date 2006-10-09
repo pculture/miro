@@ -50,8 +50,8 @@ class VideoDisplay (app.VideoDisplayBase):
         gconf_lock.acquire()
         values = gconf.client_get_default().get("/apps/democracy/player/renderers")
         if values == None:
+#            self.add_renderer("gstrenderer")
             self.add_renderer("xinerenderer")
-            self.add_renderer("gstrenderer")
         else:
             for value in values.get_list():
                 self.add_renderer(value.get_string())
