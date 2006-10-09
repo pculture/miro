@@ -35,6 +35,7 @@ from BitTorrent.PiecePicker import PiecePicker
 from BitTorrent.bencode import bencode, bdecode
 from BitTorrent.download import defaults
 from BitTorrent import version
+from natpunch import UPnP_test, UPnP_open_port, UPnP_close_port
 
 import config as dtv_config
 import prefs
@@ -44,6 +45,7 @@ for key, default, description in defaults:
     config[key] = default
 config['report_hash_failures'] = True
 storage_lock = Lock()
+upnp_type = UPnP_test(1) # fast method
 
 class TorrentDownload:
     def __init__(self, torrent_data, download_to, fast_resume_data=None):
@@ -279,6 +281,12 @@ class TorrentDownload:
         else:
             self.on_error("Couldn't listen - " + str(e))
             return
+        if upnp_type:
+            upnp_active = UPnP_open_port(listen_port)
+            if not upnp_active:
+                print "WARNING: can't open port with UPnP"
+        else:
+            upnp_active = 0
 
         choker = Choker(config['max_uploads'], rawserver.add_task, finflag.isSet, 
             config['min_uploads'])
@@ -338,4 +346,6 @@ class TorrentDownload:
             }
             self.fast_resume_queue.put(bencode(fast_resume_data))
         storage.close()
+        if upnp_active:
+            UPnP_close_port(listen_port)
         rerequest.announce(2)
