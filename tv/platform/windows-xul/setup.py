@@ -157,6 +157,14 @@ ext_modules = [
 
 import template_compiler
 
+def fillTemplate(templatepath, outpath, **vars):
+    s = open(templatepath, 'rt').read()
+    s = string.Template(s).safe_substitute(**vars)
+    f = open(outpath, "wt")
+    f.write(s)
+    f.close()
+
+
 ###############################################################################
 
 # WHEN BUILDING A REDISTRIBUTABLE IMAGE:
@@ -226,6 +234,7 @@ class bdist_xul_dumb(Command):
 
     def run(self):
         self.makeAppConfig()
+        self.makeStubEXE()
         self.setTemplateVariable("pyxpcomIsEmbedded", "true")
         self.fillTemplates()                  
 
@@ -588,13 +597,29 @@ class bdist_xul_dumb(Command):
             revision = "%s - %s" % revision
 
         path = os.path.join(root, 'resources', 'app.config')
-        s = open("%s.template" % path, "rt").read()
-        s = string.Template(s).safe_substitute(APP_REVISION = revision, APP_PLATFORM = 'windows-xul')
-        f = open(path, "wt")
-        f.write(s)
-        f.close()
-
+        fillTemplate("%s.template" % path, path,
+            APP_REVISION = revision, APP_PLATFORM = 'windows-xul')
         self.templateVars = util.readSimpleConfigFile(path)
+
+    def makeStubEXE(self):
+         version = self.getTemplateVariable('appVersion')
+         versionComponents = version.split('-')[0].split('.')
+         while len(versionComponents) > 4:
+             versionComponents.append('0')
+         versionWithCommas = ','.join(versionComponents)
+         stubDir = os.path.join(root, '..', 'dtv-binary-kit', 'stub')
+         template = os.path.join(stubDir, 'Democracy.rc.template')
+         outfile = os.path.join(stubDir, 'Democracy.rc')
+         fillTemplate(template, outfile,
+                 VERSION_WITH_COMMAS=versionWithCommas, VERSION=version)
+         olddir = os.getcwd()
+         os.chdir(stubDir)
+         rv = os.system("rc Democracy.rc")
+         if rv == 0:
+             rv = os.system("cl Democracy.cpp /link /subsystem:windows /machine:x86 Democracy.RES")
+         os.chdir(olddir)
+         if rv != 0:
+            raise OSError("Making stub exe failed")
 
     def setTemplateVariable(self, key, value):
         assert self.templateVars, \
@@ -615,11 +640,7 @@ class bdist_xul_dumb(Command):
     def fillTemplate(self, filename):
         assert self.templateVars, \
             "Must call makeAppConfig before fillTemplate"
-        s = open("%s.template" % filename, "rt").read()
-        s = string.Template(s).safe_substitute(self.templateVars)
-        f = open(filename, "wt")
-        f.write(s)
-        f.close()
+        fillTemplate("%s.template" % filename, filename, **self.templateVars)
 
     def fillTemplates(self):
         xulBase = os.path.join(root, 'platform', platform, 'xul')
