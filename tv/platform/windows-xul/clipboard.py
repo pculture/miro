@@ -1,5 +1,6 @@
 """clipboard.py.  Used to access the clipboard from python."""
 
+from templatehelper import toUni
 from ctypes import windll, c_char_p
 CF_TEXT = 1
 
@@ -18,10 +19,8 @@ def getText():
                  GlobalLock.restype = c_char_p
                  text = GlobalLock(hClipMem)
                  GlobalUnlock(hClipMem)
-             else:
-                 print "GCD failed"
          finally:
              CloseClipboard()
-     else:
-         print "OPEN CLIP FAILED"
+     if text is not None:
+         text = toUni(text)
      return text
