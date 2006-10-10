@@ -1867,8 +1867,6 @@ def _defaultFeeds():
         'http://www.telemusicvision.com/videos/rss.php?i=1',
         'http://rocketboom.com/vlog/prodigem.xml',
         'http://www.channelfrederator.com/rss',
-        'http://revision3.com/diggnation/feed/small.mov',
-        'http://live.watchmactv.com/wp-rss2.php',
         'http://some-pig.net/videos/rss.php?i=2',
         'http://videobomb.com/rss/posts/list',
         'http://thechannelchannel.tv/featured.rss',
