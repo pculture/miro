@@ -500,8 +500,8 @@ an element is dragged, the drag-highlight class is added to it */
 
 .download-pending-icon {
     position: absolute;
-    bottom: 6px;
-    right: 6px;
+    bottom: 8px;
+    right: 9px;
     width: 15px;
     height: 15px;
     border: 0px;
@@ -588,24 +588,24 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .main-video-hitbox .download-icon {
-    background: url(../images/main-video-download.png) no-repeat 67px 43px;
+    background: url(../images/main-video-download.png) no-repeat 68px 44px;
 }
 
 
 .main-video-hitbox .play-icon {
-    background: url(../images/main-video-play.png) no-repeat 67px 43px;
+    background: url(../images/main-video-play.png) no-repeat 68px 44px;
 }
 
 
 .main-video-hitbox .inprogress-background {
-    background: url(../images/main-video-inprogress.png) no-repeat 67px 43px;
+    background: url(../images/main-video-inprogress.png) no-repeat 68px 44px;
 }
 
 .main-video-hitbox img.inprogress-arrows {
     display: block;
     position: absolute;
-    top: 45px;
-    left: 68px;
+    top: 48px;
+    left: 72px;
 }
 
 .main-video-stats {
@@ -664,10 +664,11 @@ an element is dragged, the drag-highlight class is added to it */
     top: 0px;
     width: 72px;
     height: 25px;
-    padding-top: 5px;
+    padding-top: 7px;
     text-align: center;
     color: #444;
     text-decoration: none;
+	font-size: 10px;
 }
 
 .main-video-details-tasks a:hover {
