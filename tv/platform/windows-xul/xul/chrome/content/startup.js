@@ -16,7 +16,8 @@ var homedir;
 function onload() {
     wizard = getWidget("democracy-startup");
     initialButton = wizard.getButton("next").label;
-    setSearchDir(pybridge.getSpecialFolder("My Documents"));
+    homedir = pybridge.getSpecialFolder("My Documents");
+    setSearchDir(homedir);
     
     wizard.getButton("cancel").disabled = true;
     wizard.getButton("cancel").style.display = "none";
@@ -24,6 +25,8 @@ function onload() {
 }
 
 function onwizardfinish() {
+    var autoStartYes = getWidget("radiogroup-autostart-yes");
+    pybridge.setRunAtStartup(autoStartYes.selected);
     pybridge.setStartupTasksDone(true);
     var wwatch = Components.classes["@mozilla.org/embedcomp/window-watcher;1"]
             .getService(Components.interfaces.nsIWindowWatcher);
@@ -64,7 +67,7 @@ function updateUI ()
 	    getWidget("radio-search-yes").disabled = true;
 	    getWidget("radio-search-no").disabled = true;
 	    getWidget("radio-search-location-restrict").disabled = true;
-	    getWidget("radio-search-location-custom").disabled = true;
+            getWidget("radio-search-location-custom").disabled = true;
 	    getWidget("textbox-search-directory").disabled = true;
 	    getWidget("button-search-directory").disabled = true;
 	    toggledEnable("radio-search-yes", "radio-search-location-custom");
@@ -93,17 +96,19 @@ function updateUI ()
 function onsearchcancel ()
 {
     pybridge.startupCancelSearch()
+    getWidget("vbox-startup-search").setAttribute('collapsed', 'true');
 }
 
 function onsearch ()
 {
     if (searchPossible()) {
 	var path;
-	if (getWidget("radio-search-location-custom").selected)
+	if (getWidget("radio-search-location-custom").selected) {
 	    path = getWidget("textbox-search-directory").abspath;
-	else
+	} else {
 	    path = homedir;
-	getWidget("vbox-startup-search").style.display="block";
+        }
+	getWidget("vbox-startup-search").removeAttribute('collapsed');
 	inSearch = true;
 	updateUI();
 	pybridge.startupDoSearch(path);
@@ -113,24 +118,32 @@ function onsearch ()
     }
 }
 
+function setSearchProgressMessage(message) {
+    var searchProgress = getWidget('description-search-progress');
+    while(searchProgress.firstChild) {
+        searchProgress.removeChild(searchProgress.firstChild);
+    }
+    searchProgress.appendChild(document.createTextNode(message));
+}
+
 function updateSearchProgress (message)
 {
-    getWidget('description-search-progress').value = message;
+    setSearchProgressMessage(message);
 }
 
 function searchFinished (message)
 {
     inSearch = false;
     searchSuccess = true;
-    getWidget('description-search-progress').value = message;
+    setSearchProgressMessage(message);
     updateUI();
 }
 
-function searchCancelled (message)
+function searchCancelled ()
 {
     inSearch = false;
     searchSuccess = false;
-    getWidget('description-search-progress').value = message;
+    setSearchProgressMessage('');
     updateUI();
 }
 

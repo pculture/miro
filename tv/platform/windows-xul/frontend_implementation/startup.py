@@ -30,7 +30,6 @@ class _Search:
         self.files = util.gatherVideos(self.path, self.progressCallback)
         if not self.cancelled.isSet():
             count = len(self.files)
-	    print "Search Finished"
             frontend.jsBridge.searchFinished(ngettext("%d video found", "%d videos found", count) % (count,))
 
     def getFiles (self):
@@ -49,7 +48,6 @@ def doSearch(path):
 
 def cancelSearch():
     search.cancel()
-    print "Search Cancelled"
     frontend.jsBridge.searchCancelled("")
 
 def finishStartup():

@@ -333,3 +333,11 @@ resizer.side-resizer {
   height: 26px;
   background: url(images/progress.png) no-repeat;
 }
+
+wizard.startup {
+  height: 400px;
+}
+
+.startup-indented {
+  margin-left: 30px;
+}

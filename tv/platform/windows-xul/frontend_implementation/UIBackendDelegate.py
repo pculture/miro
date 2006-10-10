@@ -112,7 +112,6 @@ class UIBackendDelegate:
                 if dialog.engines[i][0] == defaultEngineName:
                     defaultEngine = i
                     break
-            print ((defaultTerm, defaultChannel, defaultEngine, defaultURL))
             frontend.jsBridge.showSearchChannelDialog(id, channels, engines, defaultTerm, dialog.style, defaultChannel, defaultEngine, defaultURL)
         else:
             del self.openDialogs[id]
@@ -133,7 +132,6 @@ class UIBackendDelegate:
         if isinstance (dialog, dialogs.SearchChannelDialog):
             dialog.term = kwargs['term']
             dialog.style = kwargs['style']
-            print kwargs
             if dialog.style == dialog.CHANNEL:
                 dialog.location = dialog.channels[int(kwargs['loc'])][0]
             elif dialog.style == dialog.ENGINE:

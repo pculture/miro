@@ -420,7 +420,7 @@ jsBridge.prototype = {
   },
 
   searchCancelled: function (message) {
-    this.startup.searchFinished (message);
+    this.startup.searchCancelled (message);
   },
 
   setSliderText: function(elapsed) {

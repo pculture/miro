@@ -214,7 +214,6 @@ class PyBridge:
     def getPreserveDiskSpaceAmount(self):
         return config.get(prefs.PRESERVE_X_GB_FREE)
     def setPreserveDiskSpaceAmount(self, value):
-        print "Setting disk space amt to %s" % value
         return config.set(prefs.PRESERVE_X_GB_FREE, value)
     def getExpireAfter(self):
         return config.get(prefs.EXPIRE_AFTER_X_DAYS)
@@ -435,11 +434,9 @@ class PyBridge:
         shutil.copyfile(frontend.currentVideoPath, path)
 
     def startupDoSearch(self, path):
-        print "startupDoSearch"
         frontend.startup.doSearch(path)
 
     def startupCancelSearch(self):
-        print "startupCancelSearch"
         frontend.startup.cancelSearch()
 
     def getSpecialFolder(self, name):

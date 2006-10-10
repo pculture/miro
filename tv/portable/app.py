@@ -468,7 +468,7 @@ class Controller (frontend.Application):
 
     ### Startup and shutdown ###
 
-    def onStartup(self):
+    def onStartup(self, gatheredVideos=None):
         try:
             print "DTV: Starting up Democracy Player"
             print "DTV: Version:  %s" % config.get(prefs.APP_VERSION)
@@ -494,7 +494,7 @@ class Controller (frontend.Application):
                 config.set(prefs.STARTUP_TASKS_DONE, True)
                 config.save()
             else:
-                self.finishStartup()
+                self.finishStartup(gatheredVideos)
         except:
             util.failedExn("while starting up")
             frontend.exit(1)

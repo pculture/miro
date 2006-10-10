@@ -38,7 +38,10 @@ class Application:
         psyco.profile(.03)
 
         # Start the core.
-        self.onStartup()
+        if frontend.startup.search:
+            self.onStartup(frontend.startup.search.getFiles())
+        else:
+            self.onStartup()
         frontend.jsBridge.positionVolumeSlider(config.get(prefs.VOLUME_LEVEL))
 
     def onStartup(self):

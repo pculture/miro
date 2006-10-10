@@ -15,9 +15,6 @@
     <script src="chrome://dtv/content/startup.js" />
     <wizardpage id="page-welcome" onpageshow="updateUI();">
     	<vbox>
-            <description>
-                &startup.welcome;
-            </description>
     	    <description>
     		&startup.description;
     	    </description>
@@ -43,32 +40,39 @@
 	       &startup.search.question;
 	    </description>
 	    <radiogroup id="radiogroup-search">
-	        <radio id="radio-search-yes" label="&startup.answer.yes;" selected="true" oncommand="updateUI();"/>
 		<radio id="radio-search-no" label="&startup.answer.no;" oncommand="updateUI();"/>
+	        <radio id="radio-search-yes" label="&startup.answer.yes;" selected="true" oncommand="updateUI();"/>
 	    </radiogroup>
-	    <radiogroup id="radiogroup-search-location">
+	    <radiogroup class="startup-indented" id="radiogroup-search-location">
 	        <radio id="radio-search-location-restrict" label="&startup.search.restrict;" selected="true" oncommand="updateUI();"/>
 		<radio id="radio-search-location-custom" label="&startup.search.custom;" oncommand="updateUI();"/>
 	    </radiogroup>
-            <hbox>
+            <hbox class="startup-indented">
 		<textbox id="textbox-search-directory" flex="1" value=""
 		        readonly="true" style="width: 300px;" />
 		<button id="button-search-directory" flex="0"
-		        label="Change"
+		        label="&startup.change;"
 			oncommand="selectSearchDirectory();" />
 	    </hbox>
-	    <vbox id="vbox-startup-search" style="display: none;">
-	        <description value="&startup.search.searching;"/>
-		<progressmeter id="progressmeter-search-progress" mode="determined" value="0"/>
-	        <description id="description-search-progress" value=""/>
-		<button id="button-search-cancel" oncommand="onsearchcancel();"/>
+            <vbox id="vbox-startup-search" collapsed="true">
+                <description>&startup.search.searching;</description>
+                <progressmeter id="progressmeter-search-progress" mode="determined" value="0"/>
+                <description id="description-search-progress" />
+                <br/>
+                <hbox>
+                    <button flex="0" label="&startup.undo;" id="button-search-cancel" oncommand="onsearchcancel();"/>
+                    <spacer flex="1" />
+                </hbox>
 	    </vbox>
 	</vbox>
     </wizardpage>
     <wizardpage id="page-done" onpageshow="updateUI();">
-        <description>
-	    &startup.done;
-        </description>
+        <description>&startup.done1;</description>
+        <description>&startup.done2;</description>
+        <description>&startup.done3;</description>
+        <description>&startup.done4;</description>
+        <description>&startup.done5;</description>
+        <description>&startup.done6;</description>
     </wizardpage>
 </wizard>
 

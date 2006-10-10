@@ -1,29 +1,23 @@
 <!ENTITY nbsp				" ">
 <!ENTITY rsaquo				"'">
 
-<!ENTITY startup.title			"Startup.Title">
-<!ENTITY startup.welcome		"Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after theother, download torrents, recommend videos to friends, and lots more."> 
-<!ENTITY startup.description		"The next few screens will help you set up democracy player so that it works best for you.  Here's the first question.">
-<!ENTITY startup.autostart.description	"We recommend that you allow Democracy Player to launch when your computer startups up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Would you like to run Democracy when your computer starts up?">
+<!ENTITY startup.title			"Democracy First Time Setup">
+<!ENTITY startup.description		"The next few screens will help you set up Democracy Player so that it works best for you.">
+<!ENTITY startup.autostart.description	"We recommend that you have Democracy Player launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
+<!ENTITY startup.autostart.question	"Would you like to run Democracy on startup?">
 <!ENTITY startup.search.description	"Democracy Player can find all the videos on your computer to help you organize your collection.">
 <!ENTITY startup.search.question        "Would you like Democracy Player to look for video files on your computer?">
 <!ENTITY startup.search.restrict	"Restrict to all my personal files.">
 <!ENTITY startup.search.custom          "Search custom location:">
 <!ENTITY startup.search.searching	"Searching for Videos">
-<!ENTITY startup.done			"&lt;b&gt;You're done!&lt;/b&gt;
-
-Setup is complete -- now you can find some channels and start watching.
-
-&lt;b&gt;Don't Wait:&lt;/b&gt; Democracy is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.
-
-&lt;b&gt;Leave it On:&lt;/b&gt; Democracy Player regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.
-
-&lt;b&gt;Don't Worry About Disk Space:&lt;/b&gt; Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.
-
-&lt;b&gt;Go Big:&lt;/b&gt; The button to the right of the play button shows videos fullscreen.
-
-&lt;b&gt;Find Videos:&lt;/b&gt; The Democracy Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.change	                "Change">
+<!ENTITY startup.undo	                "Undo Search">
+<!ENTITY startup.done1			"You're done!">
+<!ENTITY startup.done2			"Now you can explore the Channel Guide
+and start watching.  A few tips to get started:">
+<!ENTITY startup.done3			"Leave it On: Democracy Player regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.">
+<!ENTITY startup.done4			"Don't Worry About Disk Space: Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
+<!ENTITY startup.done5			"Go Big: The button to the right of the play button shows videos fullscreen.">
+<!ENTITY startup.done6			"Find Videos: The Democracy Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.">
 <!ENTITY startup.answer.yes		"Yes">
 <!ENTITY startup.answer.no		"No">
-

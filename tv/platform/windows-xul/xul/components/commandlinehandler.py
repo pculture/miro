@@ -35,7 +35,7 @@ class DemocracyCLH:
                 pybridge.deleteVLCCache()
             except:
                 print "WARNING: error in deleteVLCCache()"
-            if pybridge.getStartupTasksDone() or 1:
+            if pybridge.getStartupTasksDone():
                 wwatch.openWindow(None, chromeURL, windowName,
                         "chrome,dialog=no,all", None)
             else:
