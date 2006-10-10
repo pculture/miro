@@ -378,9 +378,10 @@ and "downloaded" sections */
 
 .search-results-bar {
     font-size: 20px;
-    background: #369;
+    background: #ddd;
     padding: 5px 10px;
     height: 24px;
+    text-align: center;
 }
 
 #results-text {
@@ -619,7 +620,7 @@ an element is dragged, the drag-highlight class is added to it */
     top: 0px;
     width: 80px;
     height: 74px;
-    padding: 5px 10px 5px 4px;
+    padding: 5px 12px 5px 2px;
     color:  #444;
     background: #e8ecf3;
     font-size: 10px;
@@ -669,17 +670,33 @@ an element is dragged, the drag-highlight class is added to it */
     top: 0px;
     width: 72px;
     height: 25px;
-    padding-top: 7px;
+    padding-top: 4px;
     text-align: center;
-    color: #444;
+    color: #333;
     text-decoration: none;
-	font-size: 10px;
+
 }
 
-.main-video-details-tasks a:hover {
-    color: #000000;
-    text-decoration: underline;
+.main-video-details-tasks span {
+	font-size: 9px;
+    color: #333;
 }
+
+
+.main-video-details-task-mail img {
+	margin-top: 2px;
+}
+
+
+.main-video-details-task-bomb img {
+	margin-top: -2px;
+}
+
+
+.main-video-details-tasks img {
+	vertical-align: top;
+}
+
 
 .main-video-details-task-mail { 
     left: 1px;
@@ -824,7 +841,7 @@ an element is dragged, the drag-highlight class is added to it */
 
 .white-button-left.save-search-channel {
     position: absolute;
-    top: 45px;
+    top: 46px;
     right: 50%;
     margin-right: 70px;
 }
