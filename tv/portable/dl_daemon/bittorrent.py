@@ -48,14 +48,14 @@ config['report_hash_failures'] = True
 storage_lock = Lock()
 upnp_type = UPnP_test(1) # fast method
 
-downloaderCount = util.ThreadSafeCounter()
+downloader_count = util.ThreadSafeCounter()
 
 def calc_max_upload_rate():
     # FIXME: this code to limit the rate for multiple downloaders is fairly
     # dubious.  If some of the downloaders use less then their share of upload
     # bandwith, we should give it to others.
     total_rate = int(dtv_config.get(prefs.UPSTREAM_LIMIT_IN_KBS) * 1024)
-    downloaders = downloaderCount.getvalue()
+    downloaders = downloader_count.getvalue()
     if downloaders != 0:
         return total_rate / downloaders
     else:
@@ -92,7 +92,7 @@ class TorrentDownload:
 
     def start(self):
         """Start downloading the torrent."""
-        self.thread = Thread(target=self.downloadThread)
+        self.thread = Thread(target=self.download_thread)
         filename = path.basename(self.download_to)
         self.thread.setName("BitTorrent Downloader - %s" % filename)
         self.thread.start()
@@ -192,12 +192,12 @@ class TorrentDownload:
         self.total_size = length
         return self.download_to
 
-    def downloadThread(self):
-        downloaderCount.inc()
+    def download_thread(self):
+        downloader_count.inc()
         try:
             self.download()
         finally:
-            downloaderCount.dec()
+            downloader_count.dec()
 
     def download(self):
         # Basically coppied from from the download() function in
