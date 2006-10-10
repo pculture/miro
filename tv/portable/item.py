@@ -1322,7 +1322,7 @@ def reconnectDownloaders():
     manualItems = views.items.filterWithIndex(indexes.itemsByFeed,
             manualFeed.getID())
     for item in manualItems:
-        if item.downloader is None:
+        if item.downloader is None and item.__class__ == Item:
             print "removing cancelled external torrent: ", item
             item.remove()
 
