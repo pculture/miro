@@ -4,7 +4,7 @@ import random
 import socket
 import eventloop
 
-DAEMONIC_THREAD_TIMEOUT = 4
+DAEMONIC_THREAD_TIMEOUT = 2
 # amount of time to wait for daemonic threads to quit.  Right now, the only
 # thing we use Daemonic threads for is to send HTTP requests to BitTorrent
 # trackers.

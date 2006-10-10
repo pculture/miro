@@ -273,9 +273,16 @@ left: 43px;
     position: absolute;
     padding-top: 0px;
     top: 77px;
-    bottom: 0px;
     width: 100%;
+    /*
+    It would be nice to include these next two lines.  This would make the
+    scrollbars only affect the items in a channel, not it's header too.  The
+    problem is it causes the div to scroll to the top whenever we change an
+    item on ubuntu at least, possibly OS X too.
+
+    bottom: 0px;
     overflow: auto;
+    */
 }
 
 /* This is the blue grey gradient for the bars above the "available"
@@ -776,7 +783,7 @@ an element is dragged, the drag-highlight class is added to it */
     text-decoration: underline;
 }
 
-.small-button-left.save {
+.small-button-left.save, .saved-note {
     position: absolute;
     left: 8px;
     width: 70px;
