@@ -51,7 +51,7 @@ searchEngines = views.searchEngines
                 </div>
                 <div class="search-results-bar" t:showIf="feed.getStatus() == 'idle-with-results'">
 			<div id="results-text" i18n:translate="">Results for 
-				<span i18n:name="query" t:replace="feed.lastQuery" />
+				"<span i18n:name="query" t:replace="feed.lastQuery" />"
 			</div>
 			<div class="white-button-left save-search-searchpage">
 			<div class="white-button-right">

@@ -136,7 +136,7 @@ viewName = kargs['viewName']
             <div class="small-button">
                 <a href="#" 
                    onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');"
-                   i18n:translate="">KEEP</a>
+                   i18n:translate="">SAVE</a>
             </div>
             </div>
             </div>

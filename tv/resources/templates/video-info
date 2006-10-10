@@ -24,7 +24,7 @@ thisItemView.unlink()
 <div t:updateForView="thisItemView">
 <div id="videodetails-actions">
 	<a t:showIf="this.hasSharableURL()" href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" >
-		<span i18n:translate="">BOMB</span>
+		<span i18n:translate="">STAR</span>
 	</a>
 	<br t:hideIf="this.hasSharableURL()" />
 	<a t:showIf="this.showSaveButton()" href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');">

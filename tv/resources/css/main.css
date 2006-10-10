@@ -377,10 +377,11 @@ and "downloaded" sections */
 }
 
 .search-results-bar {
-    font-size: 20px;
-    background: #ddd;
+    font-size: 18px;
+    color: white;
+    background: #333;
     padding: 5px 10px;
-    height: 24px;
+    height: 22px;
     text-align: center;
 }
 
