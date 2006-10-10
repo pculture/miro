@@ -37,6 +37,7 @@ from BitTorrent.download import defaults
 from BitTorrent import version
 from natpunch import UPnP_test, UPnP_open_port, UPnP_close_port
 
+import util
 import config as dtv_config
 import prefs
 
@@ -46,6 +47,19 @@ for key, default, description in defaults:
 config['report_hash_failures'] = True
 storage_lock = Lock()
 upnp_type = UPnP_test(1) # fast method
+
+downloaderCount = util.ThreadSafeCounter()
+
+def calc_max_upload_rate():
+    # FIXME: this code to limit the rate for multiple downloaders is fairly
+    # dubious.  If some of the downloaders use less then their share of upload
+    # bandwith, we should give it to others.
+    total_rate = int(dtv_config.get(prefs.UPSTREAM_LIMIT_IN_KBS) * 1024)
+    downloaders = downloaderCount.getvalue()
+    if downloaders != 0:
+        return total_rate / downloaders
+    else:
+        return 0
 
 class TorrentDownload:
     def __init__(self, torrent_data, download_to, fast_resume_data=None):
@@ -75,11 +89,10 @@ class TorrentDownload:
         self.rawserver_started = False
         self.minport = dtv_config.get(prefs.BT_MIN_PORT)
         self.maxport = dtv_config.get(prefs.BT_MAX_PORT)
-        self.max_upload_rate = dtv_config.get(prefs.UPSTREAM_LIMIT_IN_KBS)
 
     def start(self):
         """Start downloading the torrent."""
-        self.thread = Thread(target=self.download)
+        self.thread = Thread(target=self.downloadThread)
         filename = path.basename(self.download_to)
         self.thread.setName("BitTorrent Downloader - %s" % filename)
         self.thread.start()
@@ -168,9 +181,23 @@ class TorrentDownload:
         self.last_activity = status['activity']
         self.status_callback(status)
 
+    def update_max_upload_rate(self):
+        current_rate = calc_max_upload_rate()
+        if current_rate != self.max_upload_rate:
+            self.connecter.change_max_upload_rate(current_rate)
+            self.max_upload_rate = current_rate
+        self.rawserver.add_task(self.update_max_upload_rate, 5)
+
     def filefunc(self, file, length, saveas, isdir):
         self.total_size = length
         return self.download_to
+
+    def downloadThread(self):
+        downloaderCount.inc()
+        try:
+            self.download()
+        finally:
+            downloaderCount.dec()
 
     def download(self):
         # Basically coppied from from the download() function in
@@ -311,8 +338,10 @@ class TorrentDownload:
             config['request_backlog'], config['max_rate_period'],
             len(pieces), downmeasure, config['snub_time'], 
             ratemeasure.data_came_in)
+        self.max_upload_rate = calc_max_upload_rate()
         connecter = Connecter(make_upload, downloader, choker,
-            len(pieces), upmeasure, self.max_upload_rate * 1024, rawserver.add_task)
+            len(pieces), upmeasure, self.max_upload_rate, rawserver.add_task)
+        self.connecter = connecter
         infohash = sha(bencode(info)).digest()
         encoder = Encoder(connecter, rawserver, 
             myid, config['max_message_length'], rawserver.add_task, 
@@ -336,6 +365,7 @@ class TorrentDownload:
         self.on_status({"activity" : 'connecting to peers'})
         ann[0] = rerequest.announce
         rerequest.begin()
+        self.rawserver.add_task(self.update_max_upload_rate, 5)
         self.rawserver_started = True
         try:
             rawserver.listen_forever(encoder)

@@ -401,3 +401,30 @@ def getSingletonDDBObject(view):
     else:
         msg = "%d objects in %s" % (viewLength, len(view))
         raise TooManySingletonsError(msg)
+
+class ThreadSafeCounter:
+    """Implements a counter that can be access by multiple threads."""
+    def __init__(self, initialValue=0):
+        self.value = initialValue
+        self.lock = threading.Lock()
+
+    def inc(self):
+        self.lock.acquire()
+        try:
+            self.value += 1
+        finally:
+            self.lock.release()
+
+    def dec(self):
+        self.lock.acquire()
+        try:
+            self.value -= 1
+        finally:
+            self.lock.release()
+
+    def getvalue(self):
+        self.lock.acquire()
+        try:
+            return self.value
+        finally:
+            self.lock.release()
