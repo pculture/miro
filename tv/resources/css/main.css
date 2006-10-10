@@ -762,14 +762,13 @@ an element is dragged, the drag-highlight class is added to it */
 
 .small-button {
     background: left top repeat-x url(../images/small-button-middle.png);
-    margin: 0px 4px;
+    margin: 0px 3px;
     padding: 0px 3px;
     height: 17px;
 }
 
 .small-button a:link {
     font-size: 9px;
-    font-weight: bold;
     color: #444;
     text-decoration: none;
 }
@@ -781,14 +780,14 @@ an element is dragged, the drag-highlight class is added to it */
 
 .small-button-left.save {
     position: absolute;
-    left: 13px;
-    width: 65px;
+    left: 8px;
+    width: 70px;
 }
 
 .small-button-left.delete {
     position: absolute;
-    left: 84px;
-    width: 65px;
+    left: 85px;
+    width: 70px;
 }
 
 .details-small-buttons {
