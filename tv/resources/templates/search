@@ -33,7 +33,8 @@ searchEngines = views.searchEngines
 	<div id="main-subtitle">
 	     <form name="search" onsubmit="performSearch(); return false;">
 	     <t:staticReplaceMarkup t:replaceData="searchengines.getSearchEnginesHTML()"/>
-		<input id="search-box" type="search" name="query" value="***feed.quoteLastQuery()***" placeholder="" onKeyUp="fillSearch()" onKeyPress="validateSearch(event)" /><input type="submit" value="GO" />      
+	     <input id="search-box" type="search" name="query" value="***feed.quoteLastQuery()***" placeholder="" onKeyUp="fillSearch()" onKeyPress="validateSearch(event)" />
+	     <input type="submit" value="GO" />      
 	     </form>
 	 </div>
       </div>
@@ -49,10 +50,16 @@ searchEngines = views.searchEngines
                     <span i18n:translate="">Searching...</span>
                 </div>
                 <div class="search-results-bar" t:showIf="feed.getStatus() == 'idle-with-results'">
-			<span i18n:translate="">Results for 
+			<div id="results-text" i18n:translate="">Results for 
 				<span i18n:name="query" t:replace="feed.lastQuery" />
-			</span>
+			</div>
+			<div class="white-button-left save-search-searchpage">
+			<div class="white-button-right">
+			<div class="white-button-middle">
                         <a href="#" onclick="return eventURL('action:addEngineSearchFeed?term=@@@feed.lastQuery@@@&amp;name=@@@feed.lastEngine@@@');">Save Search</a>
+			</div>
+			</div>
+			</div>
                 </div>
             </div>
             

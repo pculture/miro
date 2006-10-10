@@ -137,6 +137,7 @@ left: 43px;
 /* This wraps the center area of the title bar */
 #main-titlebar-center {
     margin: 10px 150px 0px 150px;
+    padding-right: 5px;
     text-align: center;
     color: #FFFFFF;
 }
@@ -155,11 +156,8 @@ left: 43px;
     margin-top: 7px;
 }
 
-#main-save-search-button {
-    position: absolute;
-    top: 45px;
-    left: 450px;
-    color: white;
+#main-subtitle input, #main-subtitle select {
+    font-size: 11px;
 }
 
 /* Appears in the top right of the title section. */
@@ -239,7 +237,6 @@ left: 43px;
     width: 115px; 
     border: 1px solid #5392e3;
     padding: 2px;
-    font-size: 11px;
     color: #1c5180;
 }
 
@@ -374,12 +371,13 @@ and "downloaded" sections */
 
 .search-results-bar {
     font-size: 20px;
-    background: #cef;
+    background: #369;
     padding: 5px 10px;
+    height: 24px;
 }
 
-.search-results-bar a {
-    font-size: 12px;
+#results-text {
+    float: left;
 }
 
 /* Around  the "empty folder" message */
@@ -788,6 +786,40 @@ an element is dragged, the drag-highlight class is added to it */
     position: absolute;
     left: 85px;
     width: 70px;
+}
+
+.white-button-left {
+    background: top left no-repeat url(../images/white-button-left.png);
+}
+
+.white-button-right {
+    background: top right no-repeat url(../images/white-button-right.png);
+}
+
+.white-button-middle {
+    height: 20px;
+    margin: 0px 16px;
+    background: top left repeat-x url(../images/white-button-middle.png);
+    padding-top: 3px;
+    font-size: 11px;
+}
+
+.white-button-middle a:link {
+    color: white;
+    text-decoration: none;
+}
+
+.white-button-left.save-search-searchpage {
+    float: left;
+    margin-left: 8px;
+    margin-top: 2px;
+}
+
+.white-button-left.save-search-channel {
+    position: absolute;
+    top: 45px;
+    right: 50%;
+    margin-right: 70px;
 }
 
 .details-small-buttons {
