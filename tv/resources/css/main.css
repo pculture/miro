@@ -494,14 +494,14 @@ an element is dragged, the drag-highlight class is added to it */
     top: 3px;
     width: 101px;
     height: 76px;
-    border: 1px solid #e6e6eA;
+    border: 1px solid #e3e3eC;
     z-index: 1;
 }
 
 .download-pending-icon {
     position: absolute;
-    bottom: 8px;
-    right: 9px;
+    bottom: 10px;
+    right: 12px;
     width: 15px;
     height: 15px;
     border: 0px;
@@ -588,24 +588,24 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .main-video-hitbox .download-icon {
-    background: url(../images/main-video-download.png) no-repeat 68px 44px;
+    background: url(../images/main-video-download.png) no-repeat 66px 42px;
 }
 
 
 .main-video-hitbox .play-icon {
-    background: url(../images/main-video-play.png) no-repeat 68px 44px;
+    background: url(../images/main-video-play.png) no-repeat 66px 42px;
 }
 
 
 .main-video-hitbox .inprogress-background {
-    background: url(../images/main-video-inprogress.png) no-repeat 68px 44px;
+    background: url(../images/main-video-inprogress.png) no-repeat 66px 42px;
 }
 
 .main-video-hitbox img.inprogress-arrows {
     display: block;
     position: absolute;
-    top: 48px;
-    left: 72px;
+    top: 47px;
+    left: 71px;
 }
 
 .main-video-stats {
@@ -615,7 +615,7 @@ an element is dragged, the drag-highlight class is added to it */
     width: 80px;
     height: 74px;
     padding: 5px 10px 5px 4px;
-    color:  #666;
+    color:  #444;
     background: #e8ecf3;
     font-size: 10px;
     text-align: right;
@@ -623,7 +623,7 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .main-video-stats a {
-    color:  #666;
+    color:  #444;
 }
 
 .main-video-stats a:hover {

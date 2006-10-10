@@ -88,7 +88,7 @@ font-size: 9px;
 
 #videodetails-actions a {
 color: #ddd;
-text-decoration: none;
+/* text-decoration: none; */
 display: block;
 }
 
