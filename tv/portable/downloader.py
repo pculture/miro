@@ -136,8 +136,13 @@ class RemoteDownloader(DDBObject):
         self = _getDownloader (dlid=data['dlid'])
         # print data
         if self is not None:
-            if self.status == data:
-                return
+            try:
+                if self.status == data:
+                    return
+            except Exception, e:
+                # This is a known bug with the way we used to save fast resume
+                # data
+                print "WARNING exception when compariring status: %s" % e
             wasFinished = self.isFinished()
             self.status = data
             # Store the time the download finished
