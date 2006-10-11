@@ -5,23 +5,42 @@ if [ "x-$2" == "x-" ]; then
 	tag=`date +%Y-%m-%d`
 	trunk=https://svn.participatoryculture.org/svn/dtv/trunk/
 else
-	#Check out code and build
+	#Specify tag
 	tag=$2$3
 	trunk=https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$2$3/
 fi
 	mkdir Democracy-Player-$tag
+	if [ $? != 0 ]; then
+               update=1
+	       echo "directory already exists, updating"
+	else
+		update=0
+        fi
+
 	cd Democracy-Player-$tag
 
 	#Check out code
-	svn co $trunk/tv
-	if [ $? != 0 ]; then
-		echo "svn co $trunk/tv failed"
-		exit 1
-	fi
-	svn co $trunk/dtv-binary-kit-mac 
-	if [ $? != 0 ]; then
-                echo "svn co $trunk/dtv-binary-kit-mac failed"
-                exit 1
+	if [ $update != 0 ]; then
+                cd tv/
+		svn up
+		cd ../dtv-binary-kit-mac/
+		svn up
+		cd ..
+	else 
+		svn co $trunk/tv
+	
+	        if [ $? != 0 ]; then
+                	echo "svn co $trunk/tv failed"
+        	        exit 1
+	        fi
+
+	        svn co $trunk/dtv-binary-kit-mac
+
+	        if [ $? != 0 ]; then
+                	echo "svn co $trunk/dtv-binary-kit-mac failed"
+        	        exit 1
+	        fi
+
         fi
 
 	cd tv/platform/osx/
@@ -46,10 +65,4 @@ fi
 		cp Democracy-$tag.dmg /Users/$USER/Desktop/
 	fi
 
-	cd ..
-	cd ..
-	cd ..
-
-cd ..
-
-rm -rf Democracy-Player-$tag
+exit 0
