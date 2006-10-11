@@ -670,7 +670,8 @@ class BTDownloader(BGDownloader):
         #        because it only affects the incomplete filename
         if not self.restarting:
             metainfo = bdecode(self.metainfo)
-            self.shortFilename = cleanFilename(metainfo['info']['name'])
+            name = metainfo['info']['name'].decode('utf-8', 'replace')
+            self.shortFilename = cleanFilename(name)
             self.pickInitialFilename()
         self.updateClient()
         self._startTorrent()
