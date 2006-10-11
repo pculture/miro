@@ -130,7 +130,8 @@ class TorrentDownload:
         if not self.pieces_already_got[index]:
             return False
         for f in files:
-            if path.getmtime(f) > self.fast_resume_mtimes.get(f, 0):
+            mtimes_key = f.encode('utf-8')
+            if path.getmtime(f) > self.fast_resume_mtimes.get(mtimes_key, 0):
                 return False
         return True
 
@@ -372,7 +373,8 @@ class TorrentDownload:
         finally:
             fast_resume_data = {
                 'already_got': storagewrapper.get_have_list(),
-                'mtimes': dict([(f, path.getmtime(f)) for f, size in files]),
+                'mtimes': dict([(f.encode('utf-8'), path.getmtime(f)) for \
+                        f, size in files]),
             }
             self.fast_resume_queue.put(bencode(fast_resume_data))
         storage.close()
