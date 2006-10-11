@@ -1758,6 +1758,16 @@ class SearchFeedImpl (RSSFeedImpl):
         if self.url is not None and self.url != '':
             RSSFeedImpl.update(self)
 
+    def feedparser_errback(self, e):
+        if self.searching:
+            self.searching = False
+        RSSFeedImpl.feedparser_errback(self, e)
+
+    def _updateErrback(self, error):
+        if self.searching:
+            self.searching = False
+        RSSFeedImpl._updateErrback(self, error)
+
 class SearchDownloadsFeedImpl(FeedImpl):
     def __init__(self, ufeed):
         FeedImpl.__init__(self, url='dtv:searchDownloads', ufeed=ufeed, 
