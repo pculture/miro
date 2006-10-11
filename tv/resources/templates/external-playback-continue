@@ -14,8 +14,10 @@
     <t:include filename="external.js" />
     <t:execOnLoad><![CDATA[
 this = app.controller.videoInfoItem
+thisItemView = views.items.filter(lambda x: x.getID() == this.getID())
 ]]></t:execOnLoad>
     <t:execOnUnload><![CDATA[
+thisItemView.unlink()
 app.controller.videoInfoItem = None
 ]]></t:execOnUnload>
 

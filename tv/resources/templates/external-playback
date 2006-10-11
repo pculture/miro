@@ -15,11 +15,13 @@
 
     <t:execOnLoad><![CDATA[
 this = app.controller.videoInfoItem
+thisItemView = views.items.filter(lambda x: x.getID() == this.getID())
 app.controller.videoInfoItem = None
 import os.path
 filename = os.path.basename(this.getFilename())
 ]]></t:execOnLoad>
     <t:execOnUnload><![CDATA[
+thisItemView.unlink()
 import os.path
 ]]></t:execOnUnload>
 
