@@ -70,12 +70,15 @@ function updateUI ()
             getWidget("radio-search-location-custom").disabled = true;
 	    getWidget("textbox-search-directory").disabled = true;
 	    getWidget("button-search-directory").disabled = true;
-	    toggledEnable("radio-search-yes", "radio-search-location-custom");
-	    doubleToggledEnable("radio-search-yes", "radio-search-location-custom", "textbox-search-directory");
-	    doubleToggledEnable("radio-search-yes", "radio-search-location-custom", "button-search-directory");
 	    getWidget("description-search-progress").disabled = false;
 	    getWidget("progressmeter-search-progress").disabled = false;
-	    getWidget("button-search-cancel").disabled = false;
+            var searchCancel = getWidget("button-search-cancel");
+            searchCancel.disabled = false;
+            if(inSearch) {
+               searchCancel.label = searchCancel.getAttribute("cancel-label");
+            } else {
+               searchCancel.label = searchCancel.getAttribute("undo-label");
+            }
 	} else {
 	    getWidget("radio-search-yes").disabled = false;
 	    getWidget("radio-search-no").disabled = false;

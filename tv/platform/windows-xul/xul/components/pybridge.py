@@ -434,6 +434,8 @@ class PyBridge:
         shutil.copyfile(frontend.currentVideoPath, path)
 
     def startupDoSearch(self, path):
+        if path.endswith(":"):
+            path = path + "\\" # convert C: to C:\
         frontend.startup.doSearch(path)
 
     def startupCancelSearch(self):
