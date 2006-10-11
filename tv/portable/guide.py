@@ -55,7 +55,9 @@ class ChannelGuide(DDBObject):
         # Delayed callback for eventloop.
         self.dc = None
         # True if user has seen the tutorial, or this is a non default guide.
-        self.sawIntro = url != None
+        # We don't want to display the Intro anymore.
+        self.sawIntro = True
+#        self.sawIntro = url != None
         # If None, we have never successfully loaded the guide. Otherwise,
         # the <body> part of the front channel guide page from the last time
         # we loaded it, whenever that was (perhaps in a previous session.)
