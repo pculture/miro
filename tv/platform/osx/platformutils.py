@@ -165,6 +165,8 @@ def initializeLocale():
     for i in xrange (len(languages)):
         if languages[i] == "en":
             languages[i] = "C"
+
+    print languages
     os.environ["LANGUAGE"] = ':'.join(languages)
     
     localeInitialized = True
