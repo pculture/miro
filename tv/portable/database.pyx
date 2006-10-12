@@ -11,7 +11,6 @@ from shutil import copyfile
 from copy import copy
 import traceback
 from fasttypes import LinkedList, SortedList
-from databasehelper import pysort2dbsort
 import sys
 import types
 import threading
@@ -320,7 +319,7 @@ class DynamicDatabase:
         # lock. However, inside of an __init__, we can be sure that no
         # other objects can see this object
         if sortFunc is not None:
-            self.objects = SortedList(pysort2dbsort(sortFunc))
+            self.objects = SortedList(sortFunc)
             self.resort = resort
         else:
             self.objects = LinkedList()
@@ -855,18 +854,18 @@ class DynamicDatabase:
                 doResort = False
             elif it == self.objects.firstIter():
                 # changed the first item in the list
-                nextmapped = self.objects[after][1]
-                doResort = (self.sortFunc(tempmapped, nextmapped) > 0)
+                nexttemp = self.objects[after]
+                doResort = not self.sortFunc(temp, nexttemp)
             elif after == self.objects.lastIter():
                 # changed the last item in the list
-                prevmapped = self.objects[before][1]
-                doResort = (self.sortFunc(tempmapped, prevmapped) < 0)
+                prevtemp = self.objects[before]
+                doResort = self.sortFunc(temp, prevtemp)
             else:
                 # changed an item in the middle
-                nextmapped = self.objects[after][1]
-                prevmapped = self.objects[before][1]
-                doResort = ((self.sortFunc(tempmapped, prevmapped) < 0) or
-                        (self.sortFunc(tempmapped, nextmapped) > 0))
+                nexttemp = self.objects[after]
+                prevtemp = self.objects[before]
+                doResort = (self.sortFunc(temp, prevtemp) or
+                            (not self.sortFunc(temp, nexttemp)))
             if doResort:
                 # Item Moved -- trigger remove and add callbacks
                 self._removeIter(it)
@@ -982,7 +981,7 @@ class DynamicDatabase:
                     curObj = None
                 newCursor = None
                 newLocs = {}
-                temp = SortedList(pysort2dbsort(f))
+                temp = SortedList(f)
                 for obj in view.objects:
                     it = temp.append(obj)
                     newLocs[obj[0].id] = it

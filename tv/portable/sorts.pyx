@@ -1,32 +1,43 @@
 # Since we have a sort named "item" we name the item module "itemmod"
 import item as itemmod
 
+# These functions should be STL style sort functions that returns true
+# for x<y and false otherwise.
+
+# For now, these functions expect x and y to be pairs. The first item
+# in the pair is the unmapped version of the object, the second is the
+# mapped version. In practice, you'll only want to use the second item.
+
 def item(x,y):
+    x = x[1]
+    y = y[1]
     if x.parent_id == y.parent_id:
-        out = cmp(y.releaseDateObj, x.releaseDateObj)
-        if out != 0: return out
-        # If we're going to sort file items and non-file items
-        # differently, then one must precede the other or it won't be
-        # a valid sort.
-        if x.__class__ is itemmod.FileItem:
-            if y.__class__ is itemmod.FileItem:
-                return cmp(x.getTitle(), y.getTitle())
-            else:
-                return 1
+        if y.releaseDateObj != x.releaseDateObj:
+            return x.releaseDateObj < y.releaseDateObj
         else:
-            if y.__class__ is not itemmod.FileItem:
-                out = cmp (y.linkNumber, x.linkNumber)
-                if out != 0: return out
-                return cmp(y.id, x.id)
+            # If we're going to sort file items and non-file items
+            # differently, then one must precede the other or it won't be
+            # a valid sort.
+            if x.__class__ is itemmod.FileItem:
+                if y.__class__ is itemmod.FileItem:
+                    return x.getTitle() < y.getTitle()
+                else:
+                    return False
             else:
-                return -1
+                if y.__class__ is not itemmod.FileItem:
+                    if y.linkNumber == x.linkNumber:
+                        return y.id < x.id
+                    else:
+                        return y.linkNumber < x.linkNumber
+                else:
+                    return True
     else:
         if x.parent_id == y.id:
             # y is x's parent
-            return 1
+            return False
         elif y.parent_id == x.id:
             # x is y's parent
-            return -1
+            return True
         else:
             # x and y are not children of the same item, so sort by the parent (which might be the self)
             return item(x.getParent(), y.getParent())
@@ -56,13 +67,10 @@ def _getUnwatchedWithMemory(item):
         return rv
 
 def itemsUnwatchedFirst(x,y):
-    uwx = _getUnwatchedWithMemory(x)
-    uwy = _getUnwatchedWithMemory(y)
+    uwx = _getUnwatchedWithMemory(x[1])
+    uwy = _getUnwatchedWithMemory(y[1])
     if uwx != uwy:
-        if uwx:
-            return -1
-        else:
-            return 1
+        return uwx
     else:
         return item(x,y)
 
@@ -76,26 +84,14 @@ def itemsUnwatchedFirst(x,y):
 # second position. This way all of the feeds are together, and the
 # static tabs can be positioned around them.
 def tabs(x, y):
-    if x.sortKey < y.sortKey:
-        return -1
-    elif x.sortKey > y.sortKey:
-        return 1
-    return 0
+    return x[1].sortKey < y[1].sortKey
 
 def searchEngines(x, y):
     try:
-        if x.sortOrder < y.sortOrder:
-            return -1
-        elif x.sortOrder > y.sortOrder:
-            return 1
+        return x[1].sortOrder < y[1].sortOrder
     except:
-        pass    
-    if x.title < y.title:
-        return -1
-    elif x.title > y.title:
-        return 1
-    if x.name < y.name:
-        return -1
-    elif x.name > y.name:
-        return 1
-    return 0
+        pass
+    if x[1].title == y[1].title:
+        return x[1].name < y[1].name
+    else:
+        return x[1].title < y[1].title
