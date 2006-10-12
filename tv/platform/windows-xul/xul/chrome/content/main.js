@@ -114,9 +114,11 @@ function doSeek() {
 }
 
 function videoProgressOut(event) {
+  var slider = document.getElementById("progress-slider");
   if(event.target.id == 'bottom-progress' && 
         event.relatedTarget.id != "progress-text" &&
-        event.relatedTarget.id != "progress-slider") {
+        event.relatedTarget.id != "progress-slider" &&
+        slider.beingDragged) {
     doSeek();
   }
 }
@@ -134,7 +136,6 @@ function videoProgressMove(event) {
 }
 
 function videoProgressUp(event) {
-  jsdump("up");
   var slider = document.getElementById("progress-slider");
   if (slider.beingDragged) {
     doSeek();
