@@ -270,8 +270,19 @@ class UIBackendDelegate:
                 nsitem.setRepresentedObject_(item)
                 nsitem.setTarget_(self.contextItemHandler)
             nsmenu.addItem_(nsitem)
-        event = NSApplication.sharedApplication().currentEvent()
-        NSMenu.popUpContextMenu_withEvent_forView_(nsmenu, event, event.window().contentView())
+        window = NSApplication.sharedApplication().mainWindow()
+        view = window.contentView()
+        event = NSEvent.mouseEventWithType_location_modifierFlags_timestamp_windowNumber_context_eventNumber_clickCount_pressure_(
+                        NSRightMouseDown,
+                        window.mouseLocationOutsideOfEventStream(),
+                        0,
+                        1,
+                        window.windowNumber(),
+                        NSGraphicsContext.currentContext(),
+                        1,
+                        1,
+                        0.0)
+        NSMenu.popUpContextMenu_withEvent_forView_(nsmenu, event, view)
 
 ###############################################################################
 
