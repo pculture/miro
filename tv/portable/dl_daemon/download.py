@@ -669,8 +669,14 @@ class BTDownloader(BGDownloader):
         #        its metadata, we never run this. It's not a huge deal
         #        because it only affects the incomplete filename
         if not self.restarting:
-            metainfo = bdecode(self.metainfo)
-            name = metainfo['info']['name'].decode('utf-8', 'replace')
+            try:
+                metainfo = bdecode(self.metainfo)
+                name = metainfo['info']['name']
+            except (ValueError, KeyError):
+                self.handleError(_("Corrupt Torrent"),
+                        _("The torrent file at %s was not valid") % self.url)
+                return
+            name = name.decode('utf-8', 'replace')
             self.shortFilename = cleanFilename(name)
             self.pickInitialFilename()
         self.updateClient()
