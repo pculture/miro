@@ -1675,21 +1675,25 @@ class TemplateActionHandler:
             obj = db.getObjectByID(int(id))
         except ObjectNotFoundError:
             return
+
+        def myUnwatchedItems(obj):
+            return (obj.getState() == 'newly-downloaded' and
+                    not obj.isNonVideoFile() and
+                    not obj.isContainerItem)
+
         controller.selection.selectTabByObject(obj, displayTabContent=False)
         if isinstance(obj, feed.Feed):
             feedView = views.items.filterWithIndex(indexes.itemsByFeed,
                     obj.getID())
-            sorts.switchUnwatchedFirstChannel(obj)
-            view = feedView.filter(filters.watchableItems,
-                    sortFunc=sorts.itemsUnwatchedFirst)
+            view = feedView.filter(myUnwatchedItems,
+                                   sortFunc=sorts.item)
             controller.playView(view)
             view.unlink()
         elif isinstance(obj, folder.ChannelFolder):
-            sorts.switchUnwatchedFirstChannel(obj)
             folderView = views.items.filterWithIndex(
                     indexes.itemsByChannelFolder, obj)
-            view = folderView.filter(filters.watchableItems,
-                    sortFunc=sorts.itemsUnwatchedFirst)
+            view = folderView.filter(myUnwatchedItems,
+                                     sortFunc=sorts.item)
             controller.playView(view)
             view.unlink()
         elif isinstance(obj, tabs.StaticTab): # new videos tab
