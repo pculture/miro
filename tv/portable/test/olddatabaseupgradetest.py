@@ -9,7 +9,7 @@ import olddatabaseupgrade
 import storedatabase
 import databaseupgrade
 import databasesanity
-import resource
+import resources
 
 from test.framework import DemocracyTestCase
 
@@ -39,15 +39,15 @@ class TestConvert(DemocracyTestCase):
                 reallyQuiet=True)
 
     def testConvert82(self):
-        shutil.copyfile(resource.path("testdata/olddatabase-0.8.2"), 
+        shutil.copyfile(resources.path("testdata/olddatabase-0.8.2"), 
                 self.tmpPath)
         self.checkConversion()
-        shutil.copyfile(resource.path("testdata/olddatabase-0.8.2-2"), 
+        shutil.copyfile(resources.path("testdata/olddatabase-0.8.2-2"), 
                 self.tmpPath)
         self.checkConversion()
 
     def testConvert81(self):
-        shutil.copyfile(resource.path("testdata/olddatabase-0.8.1"), 
+        shutil.copyfile(resources.path("testdata/olddatabase-0.8.1"), 
                 self.tmpPath)
         self.checkConversion()
 
@@ -56,27 +56,27 @@ class TestConvert(DemocracyTestCase):
         # fairly hackish way to simulate old databases like the one reported
         # in 2003 and 2515.  The testBug2515 test is much more comprehensive,
         # but I figure we may as well leave this one in.
-        shutil.copyfile(resource.path("testdata/olddatabase.bug.2003"),
+        shutil.copyfile(resources.path("testdata/olddatabase.bug.2003"),
                 self.tmpPath)
         self.checkConversion()
 
     def testBug2515(self):
         # Real life database that has the phantom feed with downloaders bug.
         # This one came from david moore, and was attached to #2515
-        shutil.copyfile(resource.path("testdata/olddatabase.bug.2515"),
+        shutil.copyfile(resources.path("testdata/olddatabase.bug.2515"),
                 self.tmpPath)
         self.checkConversion()
 
     def testBug2685(self):
         # Database created by ben to simulate bug #2685
-        shutil.copyfile(resource.path("testdata/olddatabase.bug.2685"),
+        shutil.copyfile(resources.path("testdata/olddatabase.bug.2685"),
                 self.tmpPath)
         self.checkConversion()
 
     def testBug3163(self):
         # Database created by ben to simulate bug #3163 (channel guide doesn't
         # have an id attribute).
-        shutil.copyfile(resource.path("testdata/olddatabase.bug.3163"),
+        shutil.copyfile(resources.path("testdata/olddatabase.bug.3163"),
                 self.tmpPath)
         self.checkConversion()
 
@@ -84,7 +84,7 @@ class TestConvert(DemocracyTestCase):
         # Test that when databases fail sanity tests, we don't call
         # onRestore() for the objects that failed.  olddatabase.bug.4039
         # contains a database an item whose feed doesn't exist.
-        shutil.copyfile(resource.path("testdata/olddatabase.bug.4039"),
+        shutil.copyfile(resources.path("testdata/olddatabase.bug.4039"),
                 self.tmpPath)
         db = database.DynamicDatabase()
         storedatabase.skipOnRestore = False
@@ -98,7 +98,7 @@ class TestConvert(DemocracyTestCase):
     def testBug4039part2(self):
         # On the other hand, for database that are normal, we should call 
         # onRestore()
-        shutil.copyfile(resource.path("testdata/olddatabase.bug.4039.part2"),
+        shutil.copyfile(resources.path("testdata/olddatabase.bug.4039.part2"),
                 self.tmpPath)
         db = database.DynamicDatabase()
         storedatabase.skipOnRestore = False

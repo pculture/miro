@@ -9,7 +9,7 @@ import gconf
 import platformutils
 from gtcache import gettext as _
 
-import resource
+import resources
 from frontend import *
 from frontend_implementation import UIBackendDelegate
 from frontend_implementation.gtk_queue import gtkAsyncMethod, gtkSyncMethod
@@ -115,7 +115,7 @@ class MainFrame:
     def _gtkInit(self):
         # Create the widget tree, and remember important widgets
         platformutils.confirmMainThread()
-        self.widgetTree = WidgetTree(resource.path('democracy.glade'), 'main-window', 'democracyplayer')
+        self.widgetTree = WidgetTree(resources.path('democracy.glade'), 'main-window', 'democracyplayer')
         self.displayBoxes = {
             self.mainDisplay : self.widgetTree['main-box'],
             self.channelsDisplay : self.widgetTree['channels-box'],
@@ -124,7 +124,7 @@ class MainFrame:
 
         UIBackendDelegate.dialogParent = self.widgetTree['main-window']
 
-        self.widgetTree['main-window'].set_icon_from_file (resource.sharePath('pixmaps/democracyplayer-128x128.png'))
+        self.widgetTree['main-window'].set_icon_from_file (resources.sharePath('pixmaps/democracyplayer-128x128.png'))
 
         # create the buttonsDown attribute to the video time scale.  It will
         # track which mouse buttons are currently pressed.  This is usefull
@@ -151,7 +151,7 @@ class MainFrame:
             self.uiManager.insert_action_group (actionGroup, i)
             i = i + 1
 
-        self.uiManager.add_ui_from_file(resource.path('Democracy.xml'))
+        self.uiManager.add_ui_from_file(resources.path('Democracy.xml'))
 
         self.widgetTree['menubar-box'].add (self.uiManager.get_widget('/menubar'))
         self.widgetTree['main-window'].add_accel_group(self.uiManager.get_accel_group())

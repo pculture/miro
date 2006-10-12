@@ -34,7 +34,6 @@ import app
 import sorts
 import indexes
 import filters
-import resource
 
 resourcePath = 'dist/%s/share/democracy/resources/' % PREFIX
 template_compiler.setResourcePath('file://' + os.path.abspath(resourcePath))

@@ -13,7 +13,7 @@ from gtcache import gettext as _
 from gtcache import ngettext
 import re
 import MainFrame
-import resource
+import resources
 import feed
 import util
 import views
@@ -177,7 +177,7 @@ def BuildHTTPAuth(summary, message, prefillUser = None, prefillPassword = None):
     return dialog
 
 def BuildSearchChannelDialog(dialog):
-    widgetTree = MainFrame.WidgetTree(resource.path('democracy.glade'), 'dialog-search', 'democracyplayer')
+    widgetTree = MainFrame.WidgetTree(resources.path('democracy.glade'), 'dialog-search', 'democracyplayer')
     gtkDialog = widgetTree['dialog-search']
     gtkDialog.set_data("glade", widgetTree)
     channel_id = -1

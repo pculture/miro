@@ -1,6 +1,6 @@
 import unittest
 import feedparser
-import resource
+import resources
 
 from test.framework import DemocracyTestCase
 
@@ -30,7 +30,7 @@ class FeedParserDictTest(DemocracyTestCase):
 
 class FeedParserTest (DemocracyTestCase):
     def test_ooze(self):
-        feedparser.parse(resource.path("testdata/ooze.rss"))
+        feedparser.parse(resources.path("testdata/ooze.rss"))
 
 if __name__ == "__main__":
     unittest.main()

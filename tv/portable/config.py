@@ -4,7 +4,7 @@ import traceback
 
 import util
 import prefs
-import resource
+import resources
 import eventloop
 import platformcfg
 
@@ -35,7 +35,7 @@ def load():
             # call config.get() or config.set() from platformcfg.load()
             # unless you know exactly what you are doing, and maybe not
             # even then.
-            __appConfig = util.readSimpleConfigFile(resource.path('app.config'))
+            __appConfig = util.readSimpleConfigFile(resources.path('app.config'))
 
             # Load the preferences
             __data = platformcfg.load()

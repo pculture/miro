@@ -60,26 +60,10 @@ def getModulePath(name):
     return mpath
 
 def launchDownloaderDaemon():
-    # Our own resource module is shadowing the standard one !! Let's clean up
-    # the module search paths array.
-    savedSysPath = list(sys.path)
-    found = False
-    while not found:
-        mpath = getModulePath('resource')
-        if 'osx' in mpath:
-            sys.path.remove(os.path.dirname(mpath))
-        else:
-            found = True
-
-    # We should now be able to import the standard 'resource' module and use it
-    # to increase the maximum file descriptor count (to the max).
+    # Increase the maximum file descriptor count (to the max)
     import resource
+    print "DTV: Increasing file descriptor count limit in Downloader."
     resource.setrlimit(resource.RLIMIT_NOFILE, (-1,-1))
-
-    # Clean up and restore the search path
-    del resource
-    del sys.modules['resource']
-    sys.path = savedSysPath
 
     # Insert the downloader private module path
     daemonPath = getModulePath('dl_daemon')

@@ -11,8 +11,8 @@ from itertools import chain
 
 if os.environ.has_key('DEMOCRACY_RECOMPILE_TEMPLATES'):
     import template_compiler
-    import resource
-    template_compiler.setResourcePath(resource.path(''))
+    import resources
+    template_compiler.setResourcePath(resources.path(''))
 
 
 ###############################################################################
@@ -478,7 +478,7 @@ def fillAttr(_value, _localVars):
         else:
             match = resourcePattern.match(_value)
             if match:
-                return resource.url(match.group(1))
+                return resources.url(match.group(1))
             else:
                 return _value
 

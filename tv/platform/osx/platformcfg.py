@@ -7,7 +7,7 @@ import objc
 import util
 import prefs
 import config
-import resource
+import resources
 
 MOVIES_DIRECTORY_PARENT = os.path.expanduser('~/Movies')
 SUPPORT_DIRECTORY_PARENT = os.path.expanduser('~/Library/Application Support')
@@ -62,7 +62,7 @@ def get(descriptor):
         value = os.path.expanduser('~/Desktop')
 
     elif descriptor == prefs.GETTEXT_PATHNAME:
-        value = os.path.abspath(resource.path("../locale"))
+        value = os.path.abspath(resources.path("../locale"))
 
     elif descriptor == config.SUPPORT_DIRECTORY:
         path = os.path.join(SUPPORT_DIRECTORY_PARENT, config.get(prefs.SHORT_APP_NAME))

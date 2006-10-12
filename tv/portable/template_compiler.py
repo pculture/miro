@@ -272,7 +272,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         fileobj.write('import sorts\n')
         fileobj.write('import indexes\n')
         fileobj.write('import filters\n')
-        fileobj.write('import resource\n')
+        fileobj.write('import resources\n')
         fileobj.write('import gtcache\n')
         fileobj.write('_ = gtcache.gettext\n')
         fileobj.write('def fillTemplate(domHandler, dtvPlatform, eventCookie, bodyTagExtra, *args, **kargs):\n')
@@ -645,7 +645,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                 self.addText(' %s="' % attr)
                 match = resourcePattern.match(value)
                 if match:
-                    self.addInstruction(genRepeatEval,'resource.url(%s)'%repr(match.group(1)))
+                    self.addInstruction(genRepeatEval,'resources.url(%s)'%repr(match.group(1)))
                 else:
                     self.addText(quoteattr(value))
                 self.addText('"')

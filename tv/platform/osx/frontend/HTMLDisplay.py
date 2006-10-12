@@ -8,7 +8,7 @@ from Foundation import *
 import app
 import prefs
 import config
-import resource
+import resources
 import platformutils
 
 ###############################################################################
@@ -257,7 +257,7 @@ class ManagedWebView (NSObject):
         url = "%s" % request.URL() # Make sure it's a Python string
         match = re.compile("resource:(.*)$").match(url)
         if match:
-            path = resource.path(match.group(1))
+            path = resources.path(match.group(1))
             urlObject = NSURL.fileURLWithPath_(path)
             return NSURLRequest.requestWithURL_(urlObject)
         return request

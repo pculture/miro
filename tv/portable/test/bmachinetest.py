@@ -6,7 +6,6 @@ from copy import copy
 
 import httpclient
 import eventloop
-import resource
 
 from test.framework import DownloaderTestCase
 

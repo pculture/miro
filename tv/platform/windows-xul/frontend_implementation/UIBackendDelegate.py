@@ -1,6 +1,6 @@
 import os
 import subprocess
-import resource
+import resources
 import webbrowser
 import _winreg
 import traceback
@@ -200,7 +200,7 @@ class UIBackendDelegate:
             else:
                 raise
         if (value):
-            filename = os.path.join(resource.resourceRoot(),"..","Democracy.exe")
+            filename = os.path.join(resources.resourceRoot(),"..","Democracy.exe")
             filename = os.path.normpath(filename)
             _winreg.SetValueEx(folder, "Democracy Player", 0,_winreg.REG_SZ, filename)
         else:
@@ -236,7 +236,7 @@ class UIBackendDelegate:
         # console.  One slightly awkward thing is that the current process
         # might not have a valid stdin/stdout/stderr, so we create a pipe to
         # it that we never actually use.
-        downloaderPath = os.path.join(resource.resourceRoot(), "..",
+        downloaderPath = os.path.join(resources.resourceRoot(), "..",
                 "Democracy_Downloader.exe")
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW

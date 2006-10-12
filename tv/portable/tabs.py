@@ -5,7 +5,7 @@ import views
 import eventloop
 import feed
 import folder
-import resource
+import resources
 import guide
 import playlist
 import sorts
@@ -45,7 +45,7 @@ class StaticTab(database.DDBObject):
         return self.tabTitles[self.tabTemplateBase]
 
     def getIconURL(self):
-        return resource.url("images/%s" % self.tabIcons[self.tabTemplateBase])
+        return resources.url("images/%s" % self.tabIcons[self.tabTemplateBase])
 
     def getNumberColor(self):
         if self.tabTemplateBase == 'downloadtab':
@@ -298,7 +298,7 @@ def reloadStaticTabs():
 
     # Load them anew from the resource file.
     # NEEDS: maybe better error reporting?
-    document = parse(resource.path('statictabs.xml'))
+    document = parse(resources.path('statictabs.xml'))
     for n in document.getElementsByTagName('statictab'):
         tabTemplateBase = n.getAttribute('tabtemplatebase')
         contentsTemplate = n.getAttribute('contentstemplate')

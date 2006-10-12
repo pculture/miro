@@ -27,7 +27,7 @@ import feed
 import filters
 import menu
 import prefs
-import resource
+import resources
 import views
 import random
 import indexes
@@ -693,11 +693,11 @@ folder will also be deleted.""")
         self.confirmDBThread()
         if self.iconCache.isValid():
             basename = os.path.basename(self.iconCache.getFilename())
-            return resource.iconCacheUrl(basename)
+            return resources.iconCacheUrl(basename)
         elif self.isContainerItem:
-            return resource.url("images/container-icon.png")
+            return resources.url("images/container-icon.png")
         else:
-            return resource.url("images/thumb.png")
+            return resources.url("images/thumb.png")
     ##
     # returns the title of the item
     def getTitle(self):

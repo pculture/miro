@@ -19,7 +19,7 @@ import os
 import prefs
 import gconf
 import threading
-import resource
+import resources
 
 client = gconf.client_get_default()
 gconf_lock = threading.RLock()
@@ -99,7 +99,7 @@ def get(descriptor):
         path = os.path.expanduser('~/Desktop')
 
     elif descriptor == prefs.GETTEXT_PATHNAME:
-        path = resource.path("../../locale")
+        path = resources.path("../../locale")
 
     elif descriptor == prefs.SUPPORT_DIRECTORY:
         path = os.path.expanduser('~/.democracy')

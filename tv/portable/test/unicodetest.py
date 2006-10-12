@@ -12,7 +12,7 @@ import schedulertest
 import os
 import gtcache
 import gettext
-import resource
+import resources
 import template
 
 from test.framework import DemocracyTestCase
@@ -380,7 +380,7 @@ class UnicodeFeedTestCase(schedulertest.EventLoopTest):
             self.assertEqual(str(thumb),thumb)
 
     def testDemocracyNowBug(self):
-        url = resource.url("testdata/democracy-now-unicode-bug.xml")
+        url = resources.url("testdata/democracy-now-unicode-bug.xml")
         myFeed = feed.Feed(url)
         self.forceFeedParserCallback(myFeed)
         for item in myFeed.items:
@@ -396,7 +396,7 @@ class UnicodeFeedTestCase(schedulertest.EventLoopTest):
         os.environ["LANGUAGE"] = "fr"
         gtcache._gtcache = {}
 
-        gettext.bindtextdomain("democracyplayer",resource.path("../../locale"))
+        gettext.bindtextdomain("democracyplayer",resources.path("../../locale"))
         gettext.textdomain("democracyplayer")
         gettext.bind_textdomain_codeset("democracyplayer","UTF-8")
         self.assertEqual(gtcache.gettext("Settings"),u"Réglages")
@@ -417,7 +417,7 @@ class UnicodeFeedTestCase(schedulertest.EventLoopTest):
         os.environ["LANGUAGE"] = "fr"
         gtcache._gtcache = {}
 
-        gettext.bindtextdomain("democracyplayer",resource.path("../../locale"))
+        gettext.bindtextdomain("democracyplayer",resources.path("../../locale"))
         gettext.textdomain("democracyplayer")
         gettext.bind_textdomain_codeset("democracyplayer","UTF-8")
 

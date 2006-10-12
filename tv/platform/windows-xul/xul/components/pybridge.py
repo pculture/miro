@@ -103,7 +103,7 @@ def getArgumentList(commandLine):
         args = args[1:]
     return [getLongPathName(path) for path in args]
 
-# Copied from resource.py; if you change this function here, change it
+# Copied from resources.py; if you change this function here, change it
 # there too.
 def appRoot():
     klass = components.classes["@mozilla.org/file/directory_service;1"]

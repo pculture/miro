@@ -16,7 +16,6 @@ import views
 import prefs
 import config
 import dialogs
-import resource
 import eventloop
 import autoupdate
 import singleclick

@@ -7,7 +7,7 @@ import string
 import prefs
 import tempfile
 import ctypes
-import resource
+import resources
 
 _specialFolderCSIDLs = {
     'AppData': 0x001a,
@@ -91,7 +91,7 @@ def get(descriptor):
         return _nonVideoDirectory
 
     elif descriptor == prefs.GETTEXT_PATHNAME:
-        value = resource.path("locale")
+        value = resources.path("locale")
 
     elif descriptor == prefs.SUPPORT_DIRECTORY:
         return _getSupportDirectory()

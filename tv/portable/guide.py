@@ -1,4 +1,4 @@
-import resource
+import resources
 from database import DDBObject
 from template import fillStaticTemplate
 from httpclient import grabURL
@@ -228,7 +228,7 @@ class ChannelGuide(DDBObject):
             return self.getURL()
 
     def getIconURL(self):
-        return resource.url("images/channelguide-icon-tablist.png")
+        return resources.url("images/channelguide-icon-tablist.png")
 
 def getGuideByURL(url):
     return views.guides.getItemWithIndex(indexes.guidesByURL, url)

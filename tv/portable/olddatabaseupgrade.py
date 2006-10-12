@@ -47,8 +47,8 @@ import storedatabase
 # and 2 an upgrade path that does something.
 
 def defaultFeedIconURL():
-    import resource
-    return resource.url("images/feedicon.png")
+    import resources
+    return resources.url("images/feedicon.png")
 
 #Dummy class for removing bogus FileItem instances
 class DropItLikeItsHot(object):

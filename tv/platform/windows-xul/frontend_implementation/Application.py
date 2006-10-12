@@ -1,7 +1,7 @@
 import sys
 import frontend
 import time
-import resource
+import resources
 import config
 import prefs
 import os
@@ -22,7 +22,7 @@ class Application:
 
         lang = getLocale()
         if lang:
-            if not os.path.exists(resource.path(r"..\chrome\locale\%s" % (lang,))):
+            if not os.path.exists(resources.path(r"..\chrome\locale\%s" % (lang,))):
                 lang = "en-US"
         else:
             lang = "en-US"

@@ -1,5 +1,5 @@
 import unittest
-import resource
+import resources
 import os
 import re
 import time
@@ -54,7 +54,7 @@ class ChangeDelayedDOMTracker(DOMTracker):
 
 class SimpleTest(DemocracyTestCase):
     def setUp(self):
-        handle = file(resource.path("templates/unittest/simple"),"r")
+        handle = file(resources.path("templates/unittest/simple"),"r")
         self.text = handle.read()
         handle.close()
         self.text = HTMLPattern.match(self.text).group(1)
@@ -66,7 +66,7 @@ class SimpleTest(DemocracyTestCase):
 
 class TranslationTest(DemocracyTestCase):
     def setUp(self):
-        handle = file(resource.path("testdata/translation-result"),"r")
+        handle = file(resources.path("testdata/translation-result"),"r")
         self.text = handle.read()
         handle.close()
         self.text = HTMLPattern.match(self.text).group(1)
@@ -84,7 +84,7 @@ class TranslationTest(DemocracyTestCase):
 
 class ReplaceTest(DemocracyTestCase):
     def setUp(self):
-        handle = file(resource.path("testdata/replace-result"),"r")
+        handle = file(resources.path("testdata/replace-result"),"r")
         self.text = handle.read()
         handle.close()
         self.text = HTMLPattern.match(self.text).group(1)
@@ -97,7 +97,7 @@ class ReplaceTest(DemocracyTestCase):
 class HideTest(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)
-        handle = file(resource.path("testdata/hide-result"),"r")
+        handle = file(resources.path("testdata/hide-result"),"r")
         self.text = handle.read()
         handle.close()
         self.text = HTMLPattern.match(self.text).group(1)

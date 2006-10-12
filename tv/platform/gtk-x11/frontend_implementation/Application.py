@@ -6,7 +6,6 @@ import gtcache
 import config
 import prefs
 import gtk.glade
-import resource
 import platformutils
 
 ###############################################################################

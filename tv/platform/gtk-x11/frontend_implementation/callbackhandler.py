@@ -9,7 +9,7 @@ import shutil
 import frontend
 import config
 import prefs
-import resource
+import resources
 import MainFrame
 import singleclick
 import eventloop
@@ -358,7 +358,7 @@ class CallbackHandler(object):
             old_disk = config.get(prefs.PRESERVE_X_GB_FREE)
         else:
             old_disk = 0
-        widgetTree = MainFrame.WidgetTree(resource.path('democracy.glade'), 'dialog-preferences', 'democracyplayer')
+        widgetTree = MainFrame.WidgetTree(resources.path('democracy.glade'), 'dialog-preferences', 'democracyplayer')
         dialog = widgetTree['dialog-preferences']
         mainWindow = self.mainFrame.widgetTree['main-window']
         dialog.set_transient_for(mainWindow)
@@ -383,7 +383,7 @@ class CallbackHandler(object):
         new_movie_dir = widgetTree['filechooserbutton-movies-directory'].get_filename()
         if (movie_dir != new_movie_dir):
             print "NEW: %r" % new_movie_dir
-            migrate_widgetTree = MainFrame.WidgetTree(resource.path('democracy.glade'), 'dialog-migrate', 'democracyplater')
+            migrate_widgetTree = MainFrame.WidgetTree(resources.path('democracy.glade'), 'dialog-migrate', 'democracyplater')
             migrate_dialog = migrate_widgetTree['dialog-migrate']
             response = migrate_dialog.run()
             app.changeMoviesDirectory(new_movie_dir, 

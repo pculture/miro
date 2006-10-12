@@ -28,7 +28,7 @@ import eventloop
 import folder
 import menu
 import prefs
-import resource
+import resources
 import util
 import views
 import indexes
@@ -38,10 +38,10 @@ from clock import clock
 whitespacePattern = re.compile(r"^[ \t\r\n]*$")
 
 def defaultFeedIconURL():
-    return resource.url("images/feedicon.png")
+    return resources.url("images/feedicon.png")
 
 def defaultFeedIconURLTablist():
-    return resource.url("images/feedicon-tablist.png")
+    return resources.url("images/feedicon-tablist.png")
 
 # Notes on character set encoding of feeds:
 #
@@ -985,7 +985,7 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
         self.confirmDBThread()
         if self.iconCache.isValid():
             basename = os.path.basename(self.iconCache.getFilename())
-            return resource.iconCacheUrl(basename)
+            return resources.iconCacheUrl(basename)
         else:
             return defaultFeedIconURL()
 
@@ -993,7 +993,7 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
         self.confirmDBThread()
         if self.iconCache.isValid():
             basename = os.path.basename(self.iconCache.getFilename())
-            return resource.iconCacheUrl(basename)
+            return resources.iconCacheUrl(basename)
         else:
             return defaultFeedIconURLTablist()
 

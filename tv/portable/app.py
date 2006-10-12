@@ -20,7 +20,7 @@ import tabs
 import folder
 import autodler
 import databaseupgrade
-import resource
+import resources
 import selection
 import template
 import singleclick
@@ -1892,7 +1892,7 @@ def _getInitialChannelGuide():
     if default_guide is None:
         print "DTV: Spawning Channel Guide..."
         default_guide = guide.ChannelGuide()
-        initialFeeds = resource.path("initial-feeds.democracy")
+        initialFeeds = resources.path("initial-feeds.democracy")
         if os.path.exists(initialFeeds):
             urls = subscription.parseFile(initialFeeds)
             if urls is not None:
