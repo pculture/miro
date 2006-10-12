@@ -106,7 +106,10 @@ class TorrentDownload:
         self.doneflag.set()
         self.rawserver.wakeup()
         if self.rawserver_started:
-            return self.fast_resume_queue.get()
+            try:
+                return self.fast_resume_queue.get(timeout=10)
+            except Queue.Empty:
+                return None
         else:
             return self.fast_resume_data
 
@@ -371,12 +374,16 @@ class TorrentDownload:
         try:
             rawserver.listen_forever(encoder)
         finally:
-            fast_resume_data = {
-                'already_got': storagewrapper.get_have_list(),
-                'mtimes': dict([(f.encode('utf-8'), path.getmtime(f)) for \
-                        f, size in files]),
-            }
-            self.fast_resume_queue.put(bencode(fast_resume_data))
+            try:
+                fast_resume_data = {
+                    'already_got': storagewrapper.get_have_list(),
+                    'mtimes': dict([(f.encode('utf-8'), path.getmtime(f)) for \
+                            f, size in files]),
+                }
+                self.fast_resume_queue.put(bencode(fast_resume_data))
+            except:
+                self.fast_resume_queue.put(None)
+                raise
         storage.close()
         if upnp_active:
             UPnP_close_port(listen_port)

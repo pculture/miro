@@ -83,7 +83,7 @@
 
 <menu id="playback-menu" label="&main.menu.playback;" accesskey="&main.menu.playback.access;" class="titlebar-toplevel">
     <menupopup id="video-popup">
-        <menuitem id="menuitem-play" label="&main.menu.playback.play;" acceltext="&main.menu.playback.play.accel;" accesskey="&main.menu.playback.play.access;" command="playpausevideo" />
+        <menuitem id="menuitem-play" label="&main.menu.playback.play;" pause-label="&main.menu.playback.pause;" play-label="&main.menu.playback.play;" acceltext="&main.menu.playback.play.accel;" accesskey="&main.menu.playback.play.access;" command="playpausevideo" />
         <menuitem label="&main.menu.playback.stop;" acceltext="&main.menu.playback.stop.accel;" accesskey="&main.menu.playback.stop.access;" command="stopvideo" />
         <menuseparator/>
         <menuitem label="&main.menu.playback.next;" acceltext="&main.menu.playback.next.accel;" accesskey="&main.menu.playback.next.access;" command="nextvideo" />

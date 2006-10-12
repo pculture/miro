@@ -65,14 +65,14 @@ VLCRenderer.prototype = {
     var playButton = this.document.getElementById("bottom-buttons-play");
     playButton.className = "bottom-buttons-pause";
     var playMenuItem = this.document.getElementById('menuitem-play');
-    playMenuItem.label = "&main.menu.playback.pause;" 
+    playMenuItem.label = playMenuItem.getAttribute("pause-label");
   },
 
   showPlayButton: function() {
     var playButton = this.document.getElementById("bottom-buttons-play");
     playButton.className = "bottom-buttons-play";
     var playMenuItem = this.document.getElementById('menuitem-play');
-    playMenuItem.label = "&main.menu.playback.play;" 
+    playMenuItem.label = playMenuItem.getAttribute("play-label");
   },
 
   reset: function() {
