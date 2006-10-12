@@ -52,11 +52,41 @@ def launchDemocracy():
 
 # =============================================================================
 
-def launchDownloaderDaemon():
+def getModulePath(name):
     import imp
-    mfile, daemonPath, mdesc = imp.find_module('dl_daemon')
+    mfile, mpath, mdesc = imp.find_module(name)
+    if mfile is not None:
+        mfile.close()
+    return mpath
+
+def launchDownloaderDaemon():
+    # Our own resource module is shadowing the standard one !! Let's clean up
+    # the module search paths array.
+    savedSysPath = list(sys.path)
+    found = False
+    while not found:
+        mpath = getModulePath('resource')
+        if 'osx' in mpath:
+            sys.path.remove(os.path.dirname(mpath))
+        else:
+            found = True
+
+    # We should now be able to import the standard 'resource' module and use it
+    # to increase the maximum file descriptor count (to the max).
+    import resource
+    resource.setrlimit(resource.RLIMIT_NOFILE, (-1,-1))
+
+    # Clean up and restore the search path
+    del resource
+    del sys.modules['resource']
+    sys.path = savedSysPath
+
+    # Insert the downloader private module path
+    daemonPath = getModulePath('dl_daemon')
     daemonPrivatePath = os.path.join(daemonPath, 'private')
     sys.path[0:0] = [daemonPath, daemonPrivatePath]
+    
+    # And launch
     import Democracy_Downloader
     Democracy_Downloader.launch()
 
