@@ -721,22 +721,28 @@ folder will also be deleted.""")
             try:
                 return self.entry.description
             except:
-                return '<span />'
+                return ''
 
     ##
     # Returns valid XHTML containing a description of the video
     def getDescription(self):
         rawDescription = self.getRawDescription()
-        purifiedDescription = adscraper.purify(rawDescription)
-        unescapedDescription = unescape(purifiedDescription)
-        description = '<span>%s</span>' % unescapedDescription
-        return xhtmlify(description)
+        try:
+            purifiedDescription = adscraper.purify(rawDescription)
+            return xhtmlify ('<span>%s</span>' % (unescape(purifiedDescription),))
+        except:
+            try:
+                return xhtmlify ('<span>%s</span>' % (unescape(rawDescription),))
+            except:
+                return '<span />'
 
     def getAd(self):
         rawDescription = self.getRawDescription()
-        rawAd = adscraper.scrape(rawDescription)
-        ad = '<span>%s</span>' % unescape(rawAd)
-        return xhtmlify(ad)
+        try:
+            rawAd = adscraper.scrape(rawDescription)
+            return xhtmlify ('<span>%s</span>' % (unescape(rawAd),))
+        except:
+            return '<span />'
 
     def looksLikeTorrent(self):
         """Returns true if we think this item is a torrent.  (For items that
