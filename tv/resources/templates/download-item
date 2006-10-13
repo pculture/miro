@@ -125,7 +125,7 @@ viewName = kargs['viewName']
 		class="main-video-details-download-info pending-auto">
 		<span i18n:translate="">Pending Auto Download</span>
 	</div>
-	<div t:showIf="this.isFailedDownload()"
+	<div t:showIf="this.isFailedDownload() and not this.isPendingManualDownload()"
 		class="main-video-details-download-info failed-download">
 		<span t:replace="this.getFailureReason()" />
 	</div>

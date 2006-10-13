@@ -2,10 +2,9 @@ import os
 import glob
 import tempfile
 
-from objc import nil
-from Foundation import NSUserDefaults, NSBundle, NSTask, NSFileManager, NSFileHandle
-
 import platformcfg
+
+from Foundation import NSUserDefaults, NSBundle, NSTask
 from UIBackendDelegate import showWarningDialog
 
 ###############################################################################
@@ -98,7 +97,7 @@ def _performInstallation(installList, upgradeList):
     
     proceedAndRestart = (dlogResult == 0)
     if proceedAndRestart:
-        script = 'echo -- Quicktime Components Installation/Upgrade -- \n'
+        script = ''
         for install in installList:
             script += _getInstallCommands(install)
         for upgrade in upgradeList:
@@ -135,27 +134,19 @@ def _buildMessage(installCount, upgradeCount):
 def _getInstallCommands(sourcePath, destinationPath=None):
     if destinationPath is None:
         destinationPath = _getPreferredInstallPath(sourcePath)
-    commands =  'echo Installing %s \n' % os.path.basename(sourcePath)
-    commands += 'cp -v -R "%s" "%s" \n' % (sourcePath, destinationPath)
-    return commands
+    return 'cp -r "%s" "%s" \n' % (sourcePath, destinationPath)
 
 def _getUpgradeCommands(upgradeInfo):
-    commands =  'echo Upgrading %s \n' % upgradeInfo[0]
-    commands += 'mv -v "%s" "%s" \n' % (upgradeInfo[0], PATH_TO_TRASH)
-    commands += _getInstallCommands(upgradeInfo[1], os.path.dirname(upgradeInfo[0]))
-    return commands
+    command = 'mv "%s" "%s" \n' % (upgradeInfo[0], PATH_TO_TRASH)
+    command += _getInstallCommands(upgradeInfo[1], os.path.dirname(upgradeInfo[0]))
+    return command
 
 def _getRestartCommands():
     commands =  '\n'
-    commands += 'echo Sleeping 1s... \n'
     commands += 'sleep 1 \n'
-    commands += 'echo Quitting Democracy... \n'
     commands += 'osascript -e "tell application \\\"Democracy\\\" to quit" \n'
-    commands += 'echo Sleeping 4s... \n'
     commands += 'sleep 4 \n'
-    commands += 'echo Relaunching Democracy... \n'
     commands += 'open %s \n' % NSBundle.mainBundle().bundlePath()
-    commands += 'echo Finished. \n'
     return commands
 
 def _getPreferredInstallPath(sourcePath):
@@ -174,21 +165,12 @@ def _getPreferredInstallPath(sourcePath):
         
     return installPath
 
-def _getLogFileHandle():
-    path = os.path.join(platformcfg.SUPPORT_DIRECTORY_PARENT, 'Democracy', 'dtv-qt-comp-inst-log')
-    NSFileManager.defaultManager().createFileAtPath_contents_attributes_(path, nil, nil)
-    return NSFileHandle.fileHandleForWritingAtPath_(path)
-
 def _runScript(script):
     path = _makeTempScript(script)
     wrapper = 'osascript -e "do shell script \\\"/bin/sh %s\\\" with administrator privileges"\n' % path
     wrapper += 'rm %s\n' % path
     path = _makeTempScript(wrapper)
-    task = NSTask.alloc().init()
-    task.setLaunchPath_('/bin/sh')
-    task.setArguments_([path])
-    task.setStandardOutput_(_getLogFileHandle())
-    task.launch()
+    NSTask.launchedTaskWithLaunchPath_arguments_('/bin/sh', [path])
 
 def _makeTempScript(script):
     handle, path = tempfile.mkstemp()
