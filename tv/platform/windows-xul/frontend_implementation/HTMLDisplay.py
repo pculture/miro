@@ -124,13 +124,24 @@ class HTMLDisplay (app.Display):
             frontend.jsBridge.xulRemoveElement(self.area, id)
     
     @deferUntilLoad
-    def changeItem(self, id, xml, changedAttrs, newInnerHTML):
-        frontend.jsBridge.xulChangeElement(self.area, id, xml)
+    def changeItem(self, *args):
+        self._doChangeItem(*args)
 
     @deferUntilLoad
-    def changeItems(self, args):
-        for id, xml, changedAttrs, newInnerHTML in args:
+    def changeItems(self, listOfArgs):
+        for args in listOfArgs:
+            self._doChangeItem(*args)
+
+    def _doChangeItem(self, id, xml, changedAttrs, newInnerHTML):
+        if newInnerHTML is not None:
             frontend.jsBridge.xulChangeElement(self.area, id, xml)
+        else:
+            for name, value in changedAttrs.items():
+                if value is not None:
+                    frontend.jsBridge.xulChangeAttribute(self.area, id, name,
+                            value)
+                else:
+                    frontend.jsBridge.xulRemoveAttribute(self.area, id, name)
 
     @deferUntilLoad
     def hideItem(self, id):

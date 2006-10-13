@@ -354,6 +354,16 @@ jsBridge.prototype = {
     elt.parentNode.removeChild(elt);
     next.parentNode.insertBefore(this.createNode(document, xml), next);
   },
+  xulChangeAttribute: function(area, id, name, value) {
+    var document = this.getDocument(area);
+    var elt = document.getElementById(id);
+    elt.setAttribute(name, value);
+  },
+  xulRemoveAttribute: function(area, id, name) {
+    var document = this.getDocument(area);
+    var elt = document.getElementById(id);
+    elt.removeAttribute(name);
+  },
   xulHideElement: function(area, id) {
     var document = this.getDocument(area);
     var elt = document.getElementById(id);
