@@ -48,7 +48,7 @@ import datetime
 import threading
 import platform
 import dialogs
-from iconcache import iconCacheUpdater
+import iconcache
 
 # Something needs to import this outside of Pyrex. Might as well be app
 import templatehelper
@@ -635,6 +635,10 @@ class Controller (frontend.Application):
 
             util.print_mem_usage("Post single-click memory check")
 
+            start = clock()
+            iconcache.clearOrphans()
+            print "Icon clear: %.3f" % (clock() - start,)
+
             print "DTV: Starting event loop thread"
             eventloop.startup()            
         except databaseupgrade.DatabaseTooNewError:
@@ -927,7 +931,7 @@ downloaded?""")
                 self.removeGlobalFeed('dtv:search')
 
                 print "DTV: Shutting down icon cache updates"
-                iconCacheUpdater.shutdown()
+                iconcache.iconCacheUpdater.shutdown()
 
                 print "DTV: Removing static tabs..."
                 views.allTabs.unlink() 

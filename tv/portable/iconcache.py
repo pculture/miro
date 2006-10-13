@@ -8,8 +8,30 @@ from download_utils import nextFreeFilename, shortenFilename
 import config
 import prefs
 import time
+import views
 
 RUNNING_MAX = 3
+
+def clearOrphans():
+    knownIcons = set()
+    for item in views.items:
+        if item.iconCache and item.iconCache.filename:
+            knownIcons.add(os.path.normcase(item.iconCache.filename))
+    for feed in views.feeds:
+        if feed.iconCache and feed.iconCache.filename:
+            knownIcons.add(os.path.normcase(feed.iconCache.filename))
+    cachedir = config.get(prefs.ICON_CACHE_DIRECTORY)
+    if os.path.isdir(cachedir):
+        existingFiles = [os.path.normcase(os.path.join(cachedir, f)) 
+                for f in os.listdir(cachedir)]
+        for file in existingFiles:
+            if (os.path.exists(file) and os.path.basename(file)[0] != '.' and 
+                    not file in knownIcons):
+                try:
+                    os.remove (file)
+                except OSError:
+                    pass
+    
 
 class IconCacheUpdater:
     def __init__ (self):
