@@ -283,7 +283,7 @@ class AsyncSocket(object):
             trapCall(self, errback, ConnectionTimeout(host))
             self.connectionErrback = None
         eventloop.callInThread(onAddressLookup, handleGetHostByNameException,
-                socket.gethostbyname, host)
+                socket.gethostbyname, "getHostByName - %s" % host, host)
 
     def acceptConnection(self, host, port, callback, errback):
         def finishAccept():
@@ -430,7 +430,8 @@ class AsyncSSLStream(AsyncSocket):
         def onSocketOpen(self):
             self.socket.setblocking(1)
             eventloop.callInThread(onSSLOpen, handleSSLError, socket.ssl,
-                    self.socket)
+                                   "AsyncSSL onSocketOpen()",
+                                   self.socket)
         def onSSLOpen(ssl):
             if self.socket is None:
                 # the connection was closed while we were calling socket.ssl

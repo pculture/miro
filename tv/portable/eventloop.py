@@ -143,25 +143,25 @@ class ThreadPool(object):
             if nextItem == "QUIT":
                 break
             else:
-                callback, errback, func, args, kwargs, = nextItem
+                callback, errback, func, name, args, kwargs, = nextItem
             try:
                 result = func(*args, **kwargs)
             except KeyboardInterrupt:
                 raise
             except Exception, e:
                 func = errback
-                name = 'Thread Pool Errback'
+                name = 'Thread Pool Errback (%s)' % name
                 args = (e,)
             else:
                 func = callback
-                name = 'Thread Pool Callback'
+                name = 'Thread Pool Callback (%s)' % name
                 args = (result,)
             if not self.eventLoop.quitFlag:
                 self.eventLoop.idleQueue.addIdle(func, name, args=args)
                 self.eventLoop.wakeup()
 
-    def queueCall(self, callback, errback, function, *args, **kwargs):
-        self.queue.put((callback, errback, function, args, kwargs))
+    def queueCall(self, callback, errback, function, name, *args, **kwargs):
+        self.queue.put((callback, errback, function, name, args, kwargs))
 
     def closeThreads(self):
         for x in xrange(self.THREADS):
@@ -208,8 +208,8 @@ class EventLoop(object):
     def wakeup(self):
         self.wakeSender.send("b")
 
-    def callInThread(self, callback, errback, function, *args, **kwargs):
-        self.threadPool.queueCall(callback, errback, function, *args, **kwargs)
+    def callInThread(self, callback, errback, function, name, *args, **kwargs):
+        self.threadPool.queueCall(callback, errback, function, name, *args, **kwargs)
 
     def _beginLoop(self):
         if self.delegate is not None and hasattr(self.delegate, "beginLoop"):
@@ -352,12 +352,11 @@ def addUrgentCall(function, name, args=None, kwargs=None):
     _eventLoop.wakeup()
     return dc
 
-def callInThread(callback, errback, function, *args, **kwargs):
-    """Get the numerical IP address for a IPv4 host, on success callback will
-    be called with the adrress, on failure errback will be called with the
-    exception.
+def callInThread(callback, errback, function, name, *args, **kwargs):
+    """Schedule a function to be called in a separate thread. Do not
+    put code that accesses the database or the UI here!
     """
-    _eventLoop.callInThread(callback, errback, function, *args, **kwargs)
+    _eventLoop.callInThread(callback, errback, function, name, *args, **kwargs)
 
 lt = None
 

@@ -1134,7 +1134,7 @@ class RSSFeedImpl(FeedImpl):
                 raise
             self.feedparser_finished()
         else:
-            eventloop.callInThread (self.feedparser_callback, self.feedparser_errback, feedparser.parse, html)
+            eventloop.callInThread (self.feedparser_callback, self.feedparser_errback, feedparser.parse, "Feedparser callback - %s" % self.url, html)
 
     ##
     # Updates a feed
