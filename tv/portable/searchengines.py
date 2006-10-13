@@ -55,7 +55,9 @@ def createEngines():
                   "&media=torrent"
                   "&sortby=date",
                   3)
-
+    SearchEngine ("revver", u"Revver",
+                  "http://api.revver.com/rss/0.1/search/%s",
+                  4)
 
 def getRequestURL(engineName, query, filterAdultContents=True, limit=50):
     if query == "LET'S TEST DTV'S CRASH REPORTER TODAY":
