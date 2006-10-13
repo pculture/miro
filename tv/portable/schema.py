@@ -230,6 +230,7 @@ class ItemSchema(DDBObjectSchema):
         ('isContainerItem', SchemaBool(noneOk=True)),
         ('videoFilename', SchemaString()),
         ('releaseDateObj', SchemaDateTime()),
+        ('eligibleForAutoDownload', SchemaBool(noneOk=True)),
     ]
 
 class FileItemSchema(ItemSchema):
@@ -265,7 +266,6 @@ class FeedImplSchema(ObjectSchema):
         ('title', SchemaString()),
         ('created', SchemaDateTime()),
         ('autoDownloadable', SchemaBool()),
-        ('startfrom', SchemaDateTime()),
         ('getEverything', SchemaBool()),
         ('maxNew', SchemaInt()),
         ('fallBehind', SchemaInt()),
@@ -387,7 +387,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('redirectedURL', SchemaString(noneOk=True)),
     ]
 
-VERSION = 24
+VERSION = 25
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,

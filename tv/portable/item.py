@@ -65,6 +65,7 @@ class Item(DDBObject):
         self.expired = False
         self.keep = False
         self.videoFilename = ""
+        self.eligibleForAutoDownload = True
 
         self.iconCache = IconCache(self)
         
@@ -656,8 +657,7 @@ folder will also be deleted.""")
         ufeed = self.getFeed()
         if ufeed.getEverything:
             return True
-        pubDate = self.getPubDateParsed()
-        return pubDate >= ufeed.startfrom and pubDate != datetime.max
+        return self.eligibleForAutoDownload
 
     def isPendingAutoDownload(self):
         return (self.getFeed().isAutoDownloadable() and

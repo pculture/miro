@@ -295,6 +295,30 @@ def upgrade24(objectList):
                 o.savedData['status']['metainfo'] = None
                 o.savedData['status']['infohash'] = None
 
+def upgrade25(objectList):
+    """Remove container items from playlists."""
+
+    from datetime import datetime
+
+    changed = set()
+    startfroms = {}
+    for o in objectList:
+        if o.classString == 'feed':
+            startfroms[o.savedData['id']] = o.savedData['startfrom']
+    for o in objectList:
+        if o.classString == 'item':
+            pubDate = o.savedData['releaseDateObj']
+            feed_id = o.savedData['feed_id']
+            if feed_id is not None and startfroms.has_key(feed_id):
+                o.savedData['eligibleForAutoDownload'] = pubDate >= startfroms[feed_id] and pubDate != datetime.max
+            else:
+                o.savedData['eligibleForAutoDownload'] = True
+            changed.add(o)
+        if o.classString == 'file-item':
+            o.savedData['eligibleForAutoDownload'] = True
+            changed.add(o)
+    return changed
+
 
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """

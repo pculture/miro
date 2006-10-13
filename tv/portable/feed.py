@@ -173,7 +173,6 @@ class FeedImpl:
             self.title = title
         self.created = datetime.now()
         self.autoDownloadable = ufeed.initiallyAutoDownloadable
-        self.startfrom = datetime.max
         self.getEverything = False
         self.maxNew = -1
         self.fallBehind = -1
@@ -378,9 +377,10 @@ class FeedImpl:
                 auto.add(item)
         self.autoDownloadable = (automatic == "1")
         if self.autoDownloadable:
-            self.startfrom = datetime.now()
-        else:
-            self.startfrom = datetime.max
+            for item in self.items:
+                if item.eligibleForAutoDownload:
+                    item.eligibleForAutoDownload = False
+                    item.signalChange()
         for item in self.items:
             if item.isEligibleForAutoDownload() or item in auto:
                 item.signalChange(needsSave=False)
@@ -1269,17 +1269,19 @@ class RSSFeedImpl(FeedImpl):
         
         if self.initialUpdate:
             self.initialUpdate = False
-            self.startfrom = datetime.min
-            itemsToSignal = []
+            startfrom = None
+            itemToUpdate = None
             for item in self.items:
                 itemTime = item.getPubDateParsed()
-                if itemTime > self.startfrom:
-                    self.startfrom = itemTime
-                    itemsToSignal = [item]
-                elif itemTime == self.startfrom:
-                    itemsToSignal.append (item)
-            for item in itemsToSignal:
-                item.signalChange(needsSave=False)
+                if startfrom is None or itemTime > startfrom:
+                    startfrom = itemTime
+                    itemToUpdate = item
+            for item in self.items:
+                if item == itemToUpdate:
+                    item.eligibleForAutoDownload = True
+                else:
+                    item.eligibleForAutoDownload = False
+                item.signalChange()
             self.ufeed.signalChange()
 
     def addScrapedThumbnail(self,entry):
