@@ -136,12 +136,12 @@ def _getInstallCommands(sourcePath, destinationPath=None):
     if destinationPath is None:
         destinationPath = _getPreferredInstallPath(sourcePath)
     commands =  'echo Installing %s \n' % os.path.basename(sourcePath)
-    commands += 'cp -r "%s" "%s" \n' % (sourcePath, destinationPath)
+    commands += 'cp -v -R "%s" "%s" \n' % (sourcePath, destinationPath)
     return commands
 
 def _getUpgradeCommands(upgradeInfo):
     commands =  'echo Upgrading %s \n' % upgradeInfo[0]
-    commands += 'mv "%s" "%s" \n' % (upgradeInfo[0], PATH_TO_TRASH)
+    commands += 'mv -v "%s" "%s" \n' % (upgradeInfo[0], PATH_TO_TRASH)
     commands += _getInstallCommands(upgradeInfo[1], os.path.dirname(upgradeInfo[0]))
     return commands
 
