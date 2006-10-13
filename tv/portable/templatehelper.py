@@ -18,7 +18,7 @@ from xml.sax.handler import ContentHandler
 HTMLPattern = re.compile("^.*<body.*?>(.*)</body\s*>", re.S)
 attrPattern = re.compile("^(.*?)@@@(.*?)@@@(.*)$")
 resourcePattern = re.compile("^resource:(.*)$")
-rawAttrPattern = re.compile("^(.*)\*\*\*(.*?)\*\*\*(.*)$")
+rawAttrPattern = re.compile("^(.*?)\*\*\*(.*?)\*\*\*(.*)$")
 
 _unicache = {}
 _escapecache = {}

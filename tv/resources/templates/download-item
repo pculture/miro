@@ -7,23 +7,10 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <t:include filename="dynamic.js" />
-    <t:execOnLoad><![CDATA[
-# Returns appropriate CSS class based on the item's state
-#
-# We have to define this here because Python differentiates between
-# statements and expressions, so we can't just do this in the
-# template. :(
-def CSSifyState(this):
-    state = this.getState()
-    if state == 'newly-downloaded':
-        return 'unwatched'
-    else:
-        return ''
-]]></t:execOnLoad>
 </head>
 
 <body>
-<div class="***CSSifyState(this)*** main-video draggable ***this.getSelectedState(view)***"
+<div class="main-video draggable ***this.getSelectedState(view)***"
         dragsourcetype="***this.getDragType()***" 
         dragsourcedata="itemlist-***this.getID()***" 
         dragicon="video-tnail-***viewName + str(this.getID())***" 

@@ -464,10 +464,6 @@ float: left;
     top: 0px;
 }
 
-.unwatched { 
-/*  background: url(../images/main-video-bg-unwatched.png) no-repeat right top;  */
-}
-
 
 /* This is the line that appears when you reorder items. When
 an element is dragged, the drag-highlight class is added to it */
