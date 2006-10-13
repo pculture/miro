@@ -232,3 +232,46 @@ class TestSubscription (DemocracyTestCase):
         self.assert_(urls[2] == SAMPLE_RSS_SUBSCRIPTION_URL_2)
         self.assert_(urls[3] == SAMPLE_ATOM_SUBSCRIPTION_URL_2)
 
+class TestFindSubscribeLinks (DemocracyTestCase):
+    def testDifferstHost(self):
+        url = 'http://youtoob.com'
+        self.assertEquals(subscription.findSubscribeLinks(url), [])
+
+    def testNoLinks(self):
+        url = 'http://subscribe.getdemocracy.com/'
+        self.assertEquals(subscription.findSubscribeLinks(url), [])
+
+    def testLinkInPath(self):
+        url = 'http://subscribe.getdemocracy.com/http%3A//www.myblog.com/rss'
+        self.assertEquals(subscription.findSubscribeLinks(url), 
+                ['http://www.myblog.com/rss'])
+
+    def testLinkInQuery(self):
+        url = ('http://subscribe.getdemocracy.com/'
+             '?url1=http%3A//www.myblog.com/rss')
+        self.assertEquals(subscription.findSubscribeLinks(url), 
+                ['http://www.myblog.com/rss'])
+
+    def testMultipleLinksInQuery(self):
+        url = ('http://subscribe.getdemocracy.com/'
+             '?url1=http%3A//www.myblog.com/rss'
+             '&url2=http%3A//www.yourblog.com/atom'
+             '&url3=http%3A//www.herblog.com/scoobydoo')
+
+        self.assertEquals(set(subscription.findSubscribeLinks(url)),
+                set(['http://www.myblog.com/rss', 
+                    'http://www.yourblog.com/atom',
+                    'http://www.herblog.com/scoobydoo' ]))
+
+    def testQueryGarbage(self):
+        url = ('http://subscribe.getdemocracy.com/'
+             '?url1=http%3A//www.myblog.com/rss'
+             '&url2=http%3A//www.yourblog.com/atom'
+             '&url3=http%3A//www.herblog.com/scoobydoo'
+             '&foo=bar'
+             '&extra=garbage')
+
+        self.assertEquals(set(subscription.findSubscribeLinks(url)),
+                    set(['http://www.myblog.com/rss',
+                         'http://www.yourblog.com/atom',
+                         'http://www.herblog.com/scoobydoo']))

@@ -40,7 +40,9 @@ def item(x,y):
             return True
         else:
             # x and y are not children of the same item, so sort by the parent (which might be the self)
-            return item(x.getParent(), y.getParent())
+            xParent = x.getParent()
+            yParent = y.getParent()
+            return item((xParent, xParent), (yParent, yParent))
 
 unwatchedMemory = {}
 unwatchedMemoryFor = None

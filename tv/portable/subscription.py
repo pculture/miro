@@ -1,6 +1,8 @@
+import cgi
 import re
 import util
 import urllib2
+import urlparse
 import xml.dom.minidom
 
 """
@@ -40,6 +42,25 @@ def parseContent(content):
             print "WARNING: Error parsing OPML content..."
             traceback.print_exc()
         return None
+
+def findSubscribeLinks(url):
+    """Given a URL, test if it's trying to subscribe the user using
+    subscribe.getdemocracy.com.  Returns the list of parsed URLs.
+    """
+    try:
+        scheme, host, path, params, query, frag = urlparse.urlparse(url)
+    except:
+        return []
+    if host != 'subscribe.getdemocracy.com':
+        return []
+    if path == '/':
+        urls = []
+        for key, value in cgi.parse_qs(query).items():
+            if re.match(r'url\d+$', key):
+                urls.append(value[0])
+        return urls
+    else:
+        return [urllib2.unquote(path[1:])]
 
 # =========================================================================
 

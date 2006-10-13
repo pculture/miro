@@ -1228,6 +1228,16 @@ class TemplateDisplay(frontend.HTMLDisplay):
         for guide in views.guides:
             if url.startswith(guide.getRedirectedURL()):
                 return
+
+        # check for subscribe.getdemocracy.com links
+        subscribeLinks = subscription.findSubscribeLinks(url)
+        if subscribeLinks:
+            for url in subscribeLinks:
+                f = feed.getFeedByURL(url)
+                if f is None:
+                    f = feed.Feed(url)
+                f.blink()
+            return
         delegate.openExternalURL(url)
 
     @eventloop.asUrgent
