@@ -11,6 +11,7 @@
 #include <nsIDOMElement.h>
 #include <nsIDOMElementCSSInlineStyle.h>
 #include <nsIDOMMouseEvent.h>
+#include <nsIDOMNSHTMLElement.h>
 #include <nsIDOMNSRange.h>
 #include <nsIDOMNodeList.h>
 #include <nsIDOMRange.h>
@@ -165,6 +166,37 @@ nsresult changeItem(GtkMozEmbed *gtkembed, char *id, char *newXml)
     if (NS_FAILED(rv)) return rv;
     nsCOMPtr<nsIDOMNode> nodeOut2;
     rv = parent->InsertBefore(newNode, nextSibling, getter_AddRefs(nodeOut2));
+    return rv;
+}
+
+nsresult removeAttribute(GtkMozEmbed *gtkembed, char *id, char *name)
+{
+    nsresult rv;
+    nsString idConverted = NS_ConvertUTF8toUTF16(nsDependentCString(id));
+    nsString nameConverted = NS_ConvertUTF8toUTF16(nsDependentCString(name));
+    nsCOMPtr<nsIDOMDocument> domDocument;
+    GetDocument(gtkembed, domDocument);
+    // Get the node to change
+    nsCOMPtr<nsIDOMElement> elt;
+    rv = domDocument->GetElementById(idConverted, getter_AddRefs(elt));
+    if (NS_FAILED(rv)) return rv;
+    rv = elt->RemoveAttribute(nameConverted);
+    return rv;
+}
+
+nsresult changeAttribute(GtkMozEmbed *gtkembed, char *id, char *name, char *value)
+{
+    nsresult rv;
+    nsString idConverted = NS_ConvertUTF8toUTF16(nsDependentCString(id));
+    nsString nameConverted = NS_ConvertUTF8toUTF16(nsDependentCString(name));
+    nsString valueConverted = NS_ConvertUTF8toUTF16(nsDependentCString(value));
+    nsCOMPtr<nsIDOMDocument> domDocument;
+    GetDocument(gtkembed, domDocument);
+    // Get the node to change
+    nsCOMPtr<nsIDOMElement> elt;
+    rv = domDocument->GetElementById(idConverted, getter_AddRefs(elt));
+    if (NS_FAILED(rv)) return rv;
+    rv = elt->SetAttribute(nameConverted, valueConverted);
     return rv;
 }
  

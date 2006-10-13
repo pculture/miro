@@ -162,7 +162,9 @@ if feed.idExists():
       at this URL</div>
     </div>
     </div>
-    <t:includeTemplate filename="channel-content" />
+    <div class="hide-channel-title">
+        <t:includeTemplate filename="channel-content" />
+    </div>
 </div>
 <!-- / CHANNEL ITEMS LIST -->
 

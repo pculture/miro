@@ -51,11 +51,7 @@ matchingItems.unlink()
 <div id="main-container">
 
 	<!-- VIDEOS ************************************************** -->
-	<div>
-    	<span t:repeatForView="libraryItems">
-                <span t:replaceMarkup="this.getItemXML(viewName, view)" />
-	</span>
-	</div>
+	<div t:repeatForView="libraryItems" t:repeatTemplate='download-item' />
 	<!-- / VIDEOS -->
 	
 </div>

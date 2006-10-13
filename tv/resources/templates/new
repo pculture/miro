@@ -53,9 +53,7 @@ matchingItems.unlink()
 
 <div id="main-container">
     <div id="main-unwatched">
-        <span t:repeatForView="matchingItems">
-           <span t:replaceMarkup="this.getItemXML(viewName, view)" />
-        </span>
+	<div t:repeatForView="matchingItems" t:repeatTemplate='download-item' />
     </div>	
 </div>
 

@@ -19,21 +19,15 @@ def CSSifyState(this):
         return 'unwatched'
     else:
         return ''
-
-# Allows this template to be viewed when not included in another
-# template's view
-this = kargs['this']
-viewName = kargs['viewName']
 ]]></t:execOnLoad>
 </head>
 
 <body>
-
-<div class="***CSSifyState(this)*** main-video draggable ---SELECTEDSTATE---"
+<div class="***CSSifyState(this)*** main-video draggable ***this.getSelectedState(view)***"
         dragsourcetype="***this.getDragType()***" 
         dragsourcedata="itemlist-***this.getID()***" 
         dragicon="video-tnail-***viewName + str(this.getID())***" 
-        dragdesttype="---DRAGDESTTYPE---"
+        dragdesttype="***viewName == 'playlistView' and 'downloadeditem' or ''***"
         dragdestdata="playlistitem-***this.getID()***"
         onmousedown="return handleContextMenuSelect(event);" 
         drageffectdownloadeditem="move"
@@ -41,142 +35,7 @@ viewName = kargs['viewName']
         selectArea='itemlist' 
         onclick="return handleSelect(event);" 
         ondblclick="return handleDblClick(event, '@@@viewName@@@', @@@this.getID()@@@);" >
-    <div class="dnd-reorder-line" />
-    <div class="main-video-hitbox">
-        <a t:showIf="this.isDownloadable()"
-            class="download-icon" href="#"
-            title="Download '***this.getTitle()***'"
-            onclick="return eventURL('action:startDownload?item=@@@this.getID()@@@');"  />
-        <span t:showIf="this.getState() == 'downloading'"
-                class="inprogress-background" >
-            <img t:hideIf="this.isPendingManualDownload()"
-                class="inprogress-arrows"
-                title="Downloading '***this.getTitle()***'"
-                src="resource:images/main-video-inprogress-arrows.gif" />
-            <img t:showIf="this.isPendingManualDownload()"
-                class="download-pending-icon"
-                title="Download Pending for '***this.getTitle()***'"
-                src="resource:images/download-pending-dot.png" />
-        </span>
-        <a t:showIf="this.isPlayable()"
-            class="play-icon" href="#"
-            title="Play '***this.getTitle()***'"
-            onclick="return eventURL('action:playViewNamed?viewName=@@@viewName@@@&amp;firstItemId=@@@this.getID()@@@');" />
-    </div>
-
-    <img class="main-video-tnail" src="***this.getThumbnail()***" alt="" id="video-tnail-***viewName + str(this.getID())***" />
-        <div class="main-video-stats">
-                <span t:replaceMarkup="this.getDetails()" />
-                <div t:showIf="this.getState() in ('saved', 'expiring', 'newly-downloaded')" class="main-video-details-reveal-button">
-                    <span t:hideIf="this.isContainerItem">
-                        <a href="#" class="reveal-link" onclick="return eventURL('action:revealItem?item=@@@this.getID()@@@');" i18n:translate="">SHOW FILE</a>
-                    </span>
-                    <span t:showIf="this.isContainerItem">
-                        <a href="#" class="reveal-link" onclick="return eventURL('action:revealItem?item=@@@this.getID()@@@');" i18n:translate="">SHOW FOLDER</a>
-                    </span>
-                </div>
-        </div>
-    <div class="main-video-details">
-        <div class="main-video-details-tasks">
-            <a t:showIf="this.hasSharableURL()" href="#" 
-                class="main-video-details-task-mail" 
-		onclick="recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@'); return false;" >
-		<img src="resource:images/mini-mail.png" /> <span i18n:translate="">SHARE IT</span>
-	    </a>
-            <a href="#" t:showIf="this.hasSharableURL()" 
-                class="main-video-details-task-bomb" 
-		onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" >
-		<img src="resource:images/mini-star.png" /> <span i18n:translate="">STAR IT</span>
-	    </a>
-        </div>
-        <div t:showIf="this.getState() == 'downloading'"
-                class="main-video-details-download-info">
-            <div t:showIf="this.gotContentLength()">
-                <div class="main-progress-bar-bg">
-                    <div class="main-progress-bar" 
-                        style="width: ***this.downloadProgressWidth()***px;" />
-                </div>
-            </div>
-            <div t:hideIf="this.gotContentLength()">
-                <div class="progress-throbber-bg">
-                    <span t:showIf="this.downloadRate() != '0k/s'">
-                        <img src="resource:images/progress-throbber.gif" />
-                    </span>
-                    <span t:showIf="this.downloadRate() == '0k/s'">
-                        <img src="resource:images/progress-throbber-gray.png" />
-                    </span>
-                </div>
-            </div>
-            <div t:showIf="this.downloadInProgress()" 
-                    class="download-rate-and-eta">
-               <span class="download-rate" t:replace="this.downloadRate()" />
-               <span t:replace="this.downloadETA()" />
-            </div>
-            <div t:hideIf="this.downloadInProgress()">
-               <span t:replace="this.getStartupActivity()" />
-            </div>
-            <a class="main-progress-cancel" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" title="Cancel Download" />
-        </div>
-	<div t:showIf="this.getExpiring()" 
-		class="main-video-details-download-info expiring">
-		<span t:replace="this.getExpirationString()" />
-	</div>
-	<div t:showIf="this.isPendingAutoDownload()"
-		class="main-video-details-download-info pending-auto">
-		<span i18n:translate="">Pending Auto Download</span>
-	</div>
-	<div t:showIf="this.isFailedDownload() and not this.isPendingManualDownload()"
-		class="main-video-details-download-info failed-download">
-		<span t:replace="this.getFailureReason()" />
-	</div>
-	<div class="details-small-buttons">
-            <div t:showIf="this.showSaveButton()" 
-                    class="small-button-left save">
-            <div class="small-button-right">
-            <div class="small-button">
-                <a href="#" 
-                   onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');"
-                   i18n:translate="">SAVE</a>
-            </div>
-            </div>
-            </div>
-	    <div t:showIf="this.getState() == 'saved'" class="saved-note">
-		    SAVED
-	    </div>
-            <div t:showIf="this.showTrashButton()" 
-                    class="small-button-left delete">
-            <div class="small-button-right">
-            <div class="small-button">
-                <a href="#" 
-                   onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');"
-                   i18n:translate="">DELETE</a>
-            </div>
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="main-video-desc noselect">
-        <h1 t:replace="this.getTitle()" class="noselect"/>
-        <div class="main-video-desc-desc noselect">
-            <p t:replaceMarkup="this.getDescription()" />
-        </div>
-
-        <div class="main-video-bottom noselect">
-            <div class="channel-title">---CHANNELTITLE---</div>
-            <div t:hideIf="this.getEmblemCSSString() == ''" 
-                class="video-state ***this.getEmblemCSSClass()***">
-                <div class="video-state-left">
-                <div class="video-state-right">
-                <span class="video-state-mid">
-                        <span t:replace="this.getEmblemCSSString()" />
-                </span>
-                </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div t:replaceMarkup="this.getItemXML(viewName)" />
 </div>
-
-
 </body>
 </html>

@@ -64,9 +64,7 @@ searchEngines = views.searchEngines
             </div>
             
             <div id="search-results">
-                <span t:repeatForView="searchItems">
-                    <span t:replaceMarkup="this.getItemXML(viewName, view)" />
-                </span>
+               <div t:repeatForView="searchItems" t:repeatTemplate="download-item" />
             </div>
         </div>
     </body>

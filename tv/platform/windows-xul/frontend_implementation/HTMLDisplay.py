@@ -124,12 +124,12 @@ class HTMLDisplay (app.Display):
             frontend.jsBridge.xulRemoveElement(self.area, id)
     
     @deferUntilLoad
-    def changeItem(self, id, xml):
+    def changeItem(self, id, xml, changedAttrs, newInnerHTML):
         frontend.jsBridge.xulChangeElement(self.area, id, xml)
 
     @deferUntilLoad
-    def changeItems(self, pairs):
-        for id, xml in pairs:
+    def changeItems(self, args):
+        for id, xml, changedAttrs, newInnerHTML in args:
             frontend.jsBridge.xulChangeElement(self.area, id, xml)
 
     @deferUntilLoad

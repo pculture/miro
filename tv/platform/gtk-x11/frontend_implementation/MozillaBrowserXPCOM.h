@@ -10,6 +10,8 @@ extern "C" {
 nsresult addItemBefore(GtkMozEmbed *gtkembed, char *newXml, char *id);
 nsresult addItemAtEnd(GtkMozEmbed *gtkembed, char *newXml, char *id);
 nsresult changeItem(GtkMozEmbed *gtkembed, char *id, char *newXml);
+nsresult changeAttribute(GtkMozEmbed *gtkembed, char *id, char *name, char *value);
+nsresult removeAttribute(GtkMozEmbed *gtkembed, char *id, char *name);
 nsresult removeItem(GtkMozEmbed *gtkembed, char *id);
 nsresult showItem(GtkMozEmbed *gtkembed, char *id);
 nsresult hideItem(GtkMozEmbed *gtkembed, char *id);

@@ -89,21 +89,15 @@ matchingPendingDLs.unlink()
 <div id="main-container">
 
 	<!-- VIDEOS ************************************************** -->
-	<span t:repeatForView="normalDownloads">
-                <span t:replaceMarkup="this.getItemXML(viewName, view)" />
-	</span>
-	<span t:repeatForView="pendingDownloads">
-                <span t:replaceMarkup="this.getItemXML(viewName, view)" />
-	</span>
+	<div t:repeatForView="normalDownloads" t:repeatTemplate='download-item' />
+	<div t:repeatForView="pendingDownloads" t:repeatTemplate='download-item' />
 	<!-- / VIDEOS -->
 	<div t:hideIf="externalDownloads.len() == 0" 
 		t:updateHideOnView="externalDownloads" class="main-channelbar">
 		<span style="margin-left: 12px"> External Torrents</span>
 		<a i18n:translate="" href="#" onclick="return eventURL('action:clearTorrents');" style="text-decoration: underline; margin-left: 15px; font-weight: normal;" title="Clear Completed Torrents">Clear Completed Torrents</a>
         </div>
-	<span t:repeatForView="externalDownloads">
-            <span t:replaceMarkup="this.getItemXML(viewName, view)" />
-	</span>
+	<div t:repeatForView="externalDownloads" t:repeatTemplate='download-item' />
 </div>
 
 </body>

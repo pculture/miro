@@ -5,7 +5,7 @@
 import os
 import config
 import eventloop
-from templatehelper import quoteattr, escape, attrPattern, rawAttrPattern, resourcePattern, generateId
+from templatehelper import quoteattr, escape, attrPattern, rawAttrPattern, resourcePattern, generateId, breakXML
 from xhtmltools import urlencode, toUTF8Bytes
 from itertools import chain
 
@@ -98,6 +98,29 @@ class TemplateError(Exception):
 #### template runtime code                                                 ####
 ###############################################################################
 
+def calcNewInnerHTML(oldInnerHTML, newInnerHTML):
+    """Calculate the newInnerHTML argument to pass to HTMLArea.changeItem.
+    """
+    if oldInnerHTML != newInnerHTML:
+        return newInnerHTML
+    else:
+        return None
+
+def calcAttributeChanges(oldAttrs, newAttrs):
+    """Calculate the difference between two attribute dicts.  Returns a dict
+    with entries for each key that has changed.  Keys that have been removed
+    will have None values.
+    """
+
+    changes = dict(newAttrs)
+    for key, value in oldAttrs.items():
+        try:
+            if changes[key] == value:
+                del changes[key] # attribute stayed the same
+        except KeyError:
+            changes[key] = None # attribute was removed
+    return changes
+
 # Class used internally by Handle to track a t:repeatForSet clause.
 class TrackedView:
     def __init__(self, anchorId, anchorType, view, templateFunc, parent, name):
@@ -116,6 +139,8 @@ class TrackedView:
         self.toAdd = []
         self.addBefore = None
         self.idle_queued = False
+        self.currentAttrs = {}
+        self.currentInnerHTMLs = {}
 
     #
     # This is called after the HTML has been rendered to fill in the
@@ -142,7 +167,24 @@ class TrackedView:
         self.view.removeRemoveCallback(self.onRemove)
 
     def currentXML(self, item):
-        return self.templateFunc(item.object, self.name, self.origView, item.tid).read()
+        xml = self.templateFunc(item.object, self.name, self.origView, item.tid).read()
+        name, attrs, innerHTML = breakXML(xml)
+        self.currentAttrs[item.tid] = attrs
+        self.currentInnerHTMLs[item.tid] = innerHTML
+        return xml
+
+    def calcAttributeChanges(self, oldAttrs, tid):
+        return calcAttributeChanges(oldAttrs, self.currentAttrs[tid])
+
+    def calcChanges(self, obj):
+        tid = obj.tid
+        oldAttrs = self.currentAttrs[tid]
+        oldInnerHTML = self.currentInnerHTMLs[tid]
+        xml = self.currentXML(obj)
+        attrDiff = calcAttributeChanges(oldAttrs, self.currentAttrs[tid])
+        newInnerHTML = calcNewInnerHTML(oldInnerHTML,
+                self.currentInnerHTMLs[tid])
+        return (xml, attrDiff, newInnerHTML)
 
     def callback (self):
         if self.parent.domHandler:
@@ -151,14 +193,12 @@ class TrackedView:
                 addXml = "".join (adds)
                 self.doAdd(addXml)
 
-#            Equivalent code:
-
-#            changes = []
-#            for id in self.toChange:
-#                obj = self.toChange[id]
-#                changes.append( (obj.tid, self.currentXML(obj)) )
-                
-            changes = [(self.toChange[id].tid, self.currentXML(self.toChange[id])) for id in self.toChange]
+            changes = []
+            for id in self.toChange:
+                obj = self.toChange[id]
+                xml, attrDiff, newInnerHTML = self.calcChanges(obj)
+                if attrDiff or newInnerHTML:
+                    changes.append((obj.tid, xml, attrDiff, newInnerHTML))
             if len(changes) > 0:
                 self.parent.domHandler.changeItems(changes)
 
@@ -240,7 +280,7 @@ class TrackedView:
 
 class UpdateRegionBase:
     """Base class for UpdateRegion and ConfigUpdateRegion.  Subclasses must
-    define currentXML, which returns a string representing the up-to-date XML
+    define renderXML, which returns a string representing the up-to-date XML
     for this region.  Also, hookupCallbacks() which hooks up any callbacks
     needed.  Subclasses can use onChange() as the handler for any callbacks.
     """
@@ -255,6 +295,8 @@ class UpdateRegionBase:
         self.parent = parent
         self.tid = generateId()
         self.idle_queued = False
+        self.currentAttrs = None
+        self.currentInnerHTML = None
 
     #
     # This is called after the HTML has been rendered to fill in the
@@ -264,15 +306,27 @@ class UpdateRegionBase:
             self.parent.domHandler.addItemBefore(self.currentXML(), self.anchorId)
         self.hookupCallbacks()
 
+    def currentXML(self):
+        xml = self.renderXML()
+        name, attrs, innerHTML = breakXML(xml)
+        self.currentAttrs = attrs
+        self.currentInnerHTML = innerHTML
+        return xml
+
     def onChange(self, *args, **kwargs):
         if not self.idle_queued:
             queueDOMChange(self.doChange, "Update UI")
             self.idle_queued = True
 
     def doChange(self):
+        oldAttrs = self.currentAttrs
+        oldInnerHTML = self.currentInnerHTML
         xmlString = self.currentXML()
-        if self.parent.domHandler:
-            self.parent.domHandler.changeItem(self.tid, xmlString)
+        attrDiff = calcAttributeChanges(oldAttrs, self.currentAttrs)
+        newInnerHTML = calcNewInnerHTML(oldInnerHTML, self.currentInnerHTML)
+        if self.parent.domHandler and (attrDiff or newInnerHTML):
+            self.parent.domHandler.changeItem(self.tid, xmlString, attrDiff,
+                    newInnerHTML)
         self.idle_queued = False
 
 class UpdateRegion(UpdateRegionBase):
@@ -281,7 +335,7 @@ class UpdateRegion(UpdateRegionBase):
         self.view = view
         self.name = name
 
-    def currentXML(self):
+    def renderXML(self):
         return self.templateFunc(self.name, self.view, self.tid).read()
 
     def hookupCallbacks(self):
@@ -303,7 +357,7 @@ class ConfigUpdateRegion(UpdateRegionBase):
     def onUnlink(self):
         config.removeChangeCallback(self.onChange)
 
-    def currentXML(self):
+    def renderXML(self):
         return self.templateFunc(self.tid).read()
 
 # Object representing a set of registrations for Javascript callbacks when

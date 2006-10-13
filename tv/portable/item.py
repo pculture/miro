@@ -271,39 +271,20 @@ class Item(DDBObject):
     #     item is in is the view that's selected.  This matters when an item
     #     is shown multiple times on a page, in different views.
     #  * The channel name -- it's not displayed in the channel template.
-    def getItemXML(self, viewName, view, hideChannelTitle=False):
+    def getItemXML(self, viewName):
         try:
             xml = self._itemXML
         except AttributeError:
-            self._calcItemXML(view)
+            self._calcItemXML()
             xml = self._itemXML
-        if viewName == 'playlistView':
-            dragDestType = 'downloadeditem'
-        else:
-            dragDestType = ''
-        if hideChannelTitle:
-            channelTitle = ''
-        else:
-            implClass = self.getFeed().actualFeed.__class__
-            if implClass in (feed.RSSFeedImpl, feed.ScraperFeedImpl):
-                channelTitle = self.getFeed().getTitle()
-            else:
-                channelTitle = ''
-        for old, new in [
-            (self._XMLViewName, viewName),
-            ("---DRAGDESTTYPE---", dragDestType),
-            ("---SELECTEDSTATE---", self.getSelectedState(view)),
-            ("---CHANNELTITLE---", channelTitle),
-        ]:
-                xml = xml.replace(old, new)
-        return xml
+        return xml.replace(self._XMLViewName, viewName)
 
     # Regenerates an expired item XML from the download-item template
     # _XMLViewName is a random string we use for the name of the view
     # _itemXML is the rendered XML
-    def _calcItemXML(self, view):
+    def _calcItemXML(self):
         self._XMLViewName = "view%dview" % random.randint(9999999,99999999)
-        self._itemXML = HTMLPattern.match(template.fillStaticTemplate('download-item','unknown','noCookie', '', this=self, viewName = self._XMLViewName)).group(1)
+        self._itemXML = HTMLPattern.match(template.fillStaticTemplate('download-item-inner','unknown','noCookie', '', this=self, viewName = self._XMLViewName)).group(1)
 
     #
     # Returns True iff this item has never been viewed in the interface
@@ -709,6 +690,13 @@ folder will also be deleted.""")
                 return enclosure["url"]
             except:
                 return ""
+
+    def getChannelTitle(self):
+        implClass = self.getFeed().actualFeed.__class__
+        if implClass in (feed.RSSFeedImpl, feed.ScraperFeedImpl):
+            return self.getFeed().getTitle()
+        else:
+            return ''
 
     ##
     # Returns the raw description of the video

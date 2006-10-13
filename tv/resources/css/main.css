@@ -775,6 +775,10 @@ an element is dragged, the drag-highlight class is added to it */
     color: white;
 }
 
+.hide-channel-title .channel-title {
+    display: none;
+}
+
 .small-button-left {
     background: left top no-repeat url(../images/small-button-left.png);
 }

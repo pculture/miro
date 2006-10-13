@@ -149,9 +149,9 @@ def setResourcePath(path):
 #
 # Compile the template given in inFile to python code in outFile
 #
-def compileTemplate(inFile, top = True, onlyBody = False):
+def compileTemplate(inFile, *args, **kwargs):
     handle = MetaHandle()
-    tcc = TemplateContentCompiler(handle, inFile, onlyBody = onlyBody)
+    tcc = TemplateContentCompiler(handle, inFile, *args, **kwargs)
     p = sax.make_parser()
     p.setFeature(sax.handler.feature_external_ges, False)
     p.setContentHandler(tcc)
@@ -246,10 +246,12 @@ class TemplateError(Exception):
 ##
 # SAX version of templating code
 class TemplateContentCompiler(sax.handler.ContentHandler):
-    def __init__(self, handle, name, debug = False, onlyBody = False):
+    def __init__(self, handle, name, debug = False, onlyBody = False,
+            addIdToTopLevelElement=False):
         self.handle = handle
         self.debug = debug
         self.onlyBody = onlyBody
+        self.addIdToTopLevelElement = addIdToTopLevelElement
         self.name = name
 
     def getOperationList(self):
@@ -300,6 +302,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.elementStack = []
         self.inInclude = False
         self.inRepeatView = False
+        self.inRepeatWithTemplate = False
         self.inUpdateView = False
         self.inConfigUpdate = False
         self.inReplace = False
@@ -311,6 +314,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.hiding = False
         self.hideDepth = []
         self.depth = 0
+        self.bodyDepth = None
         self.repeatName = ''
         self.started = not self.onlyBody
         self.outputLists = [[]]
@@ -330,6 +334,8 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
 
     def startElement(self,name, attrs):
         self.depth = self.depth + 1
+        if name == 'body':
+            self.bodyDepth = self.depth
 
         if (len(self.translateDepth) > 0 and
                                    self.depth == self.translateDepth[-1]+1):
@@ -355,7 +361,16 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             pass
         elif 't:repeatForView' in attrs.keys():
             self.startRepeat(attrs['t:repeatForView'])
-            self.addElementStart(name, attrs, addId=True)
+            if not 't:repeatTemplate' in attrs.keys():
+                self.addElementStart(name, attrs, addId=True)
+                self.inRepeatWithTemplate = False
+            else:
+                name = attrs['t:repeatTemplate']
+                self.addFillTemplate(name, addIdToTopLevelElement=True)
+                # if t:repeatTemplate is set, there shouldn't be any children
+                # of this element.  Create a new outputList to check this.
+                self.outputLists.append([]) 
+                self.inRepeatWithTemplate = True
         elif 't:updateForView' in attrs.keys():
             self.startUpdate(attrs['t:updateForView'])
             self.addElementStart(name, attrs, addId=True)
@@ -464,8 +479,15 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             self.addText('</%s>'%name)
             self.inReplace = False
         elif self.inRepeatView and self.depth == self.repeatDepth:
-            self.addText('</%s>'%name)
-            self.endText()
+            if self.inRepeatWithTemplate:
+                self.endText()
+                nestedOutputs = self.outputLists.pop()
+                if nestedOutputs:
+                    m = "Elements with t:repeatTemplate, can't have children"
+                    raise ValueError(m)
+            else:
+                self.addText('</%s>'%name)
+                self.endText()
             repeatList = self.endRepeat()
             repeatId = generateId()
             self.addText('<span id="%s"/>'%quoteattr(repeatId))
@@ -534,9 +556,9 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         f.close()
         self.addText(html)
 
-    def addFillTemplate(self, name):
+    def addFillTemplate(self, name, *args, **kwargs):
         print "  compiling '%s' subtemplate" % name
-        (tcc, handle) = compileTemplate(name, False, True)
+        (tcc, handle) = compileTemplate(name, onlyBody=True, *args, **kwargs)
         self.handle.addSubHandle(handle)
         self.addInstructions(tcc.getOperationList())
 
@@ -596,6 +618,9 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.outputText.append( text)
 
     def addElementStart(self, name, attrs, addId=False):
+        if (self.bodyDepth is not None and self.depth == self.bodyDepth + 1
+                and self.addIdToTopLevelElement):
+            addId = True
         self.addText('<%s'%name)
         for key in attrs.keys():
             if (not (key.startswith('t:') or key.startswith('i18n:')) or

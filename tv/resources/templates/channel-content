@@ -21,9 +21,7 @@
 </div>
 </div>
 
-<div t:repeatForView="downloadingItems">
-    <span t:replaceMarkup="this.getItemXML(viewName, view, hideChannelTitle=not isFolder)" />
-</div>
+   <div t:repeatForView="downloadingItems" t:repeatTemplate="download-item" />
 
 <!-- / DOWNLOADS -->
 
@@ -54,10 +52,7 @@
   </div>
 </a>
 
-<div t:repeatForView="newItems">
-   <span t:replaceMarkup="this.getItemXML(viewName, view, hideChannelTitle=not isFolder)" />
-</div>
-
+   <div t:repeatForView="newItems" t:repeatTemplate="download-item" />
 
 <!-- The infamous "N more videos" oval -->
 <div t:updateForView="matchingItems">  
@@ -82,9 +77,7 @@
 </a>
 </div>
 
-<div t:repeatForView="watchableItems">
-    <span t:replaceMarkup="this.getItemXML(viewName, view, hideChannelTitle=not isFolder)" />
-</div>
+   <div t:repeatForView="watchableItems" t:repeatTemplate="download-item" />
 
 <!-- / WATCHABLE -->
 </body>

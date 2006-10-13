@@ -39,9 +39,7 @@ thisPlaylistView.unlink()
         </div>
 </div>
 <div id="main-container">
-    <span t:repeatForView="playlistView">
-        <span t:replaceMarkup="this.getItemXML(viewName, view)" />
-    </span>
+    <div t:repeatForView="playlistView" t:repeatTemplate='download-item' />
     <div class="playlist-end-drag-hitbox"
 	dragdesttype="downloadeditem"
 	dragdestdata="playlistitem-END"

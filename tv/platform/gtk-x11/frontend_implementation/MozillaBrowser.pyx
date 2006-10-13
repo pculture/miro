@@ -35,6 +35,8 @@ cdef extern from "MozillaBrowserXPCOM.h":
     nsresult addItemBefore(GtkMozEmbed *gtkembed, char *newXml, char *id)
     nsresult addItemAtEnd(GtkMozEmbed *gtkembed, char *newXml, char *id)
     nsresult changeItem(GtkMozEmbed *gtkembed, char *id, char *newXml)
+    nsresult changeAttribute(GtkMozEmbed *gtkembed, char *id, char *name, char *value)
+    nsresult removeAttribute(GtkMozEmbed *gtkembed, char *id, char *name)
     nsresult removeItem(GtkMozEmbed *gtkembed, char *id)
     nsresult showItem(GtkMozEmbed *gtkembed, char *id)
     nsresult hideItem(GtkMozEmbed *gtkembed, char *id)
@@ -94,6 +96,16 @@ cdef class MozillaBrowser:
         result = changeItem(self.cWidget, id, xml)
         if result != NS_OK:
             raise DOMError("error occured in changeItem")
+
+    def removeAttribute(self, id, name):
+        result = removeAttribute(self.cWidget, id, name)
+        if result != NS_OK:
+            raise DOMError("error occured in removeAttribute")
+
+    def changeAttribute(self, id, name, value):
+        result = changeAttribute(self.cWidget, id, name, value)
+        if result != NS_OK:
+            raise DOMError("error occured in changeAttribute")
 
     def removeItem(self, id):
         result = removeItem(self.cWidget, id)

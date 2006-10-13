@@ -229,15 +229,25 @@ class HTMLDisplayImpl:
                     pass
 
     @deferUntilAfterLoad
-    def changeItem(self, id, xml):
+    def changeItem(self, id, xml, changedAttributes, changedInnerHTML):
         if not self.widgetDestroyed:
+            self._doChangeItem(id, xml, changedAttributes, changedInnerHTML)
+
+    def _doChangeItem(self, id, xml, changedAttributes, changedInnerHTML):
+        if changedInnerHTML is not None:
             self.mb.changeItem(id, xml)
+        elif changedAttributes:
+            for name, value in changedAttributes.items():
+                if value is not None:
+                    self.mb.changeAttribute(id, name, value)
+                else:
+                    self.mb.removeAttribute(id, name)
 
     @deferUntilAfterLoad
-    def changeItems(self, pairs):
+    def changeItems(self, listOfArgs):
         if not self.widgetDestroyed:
-            for id, xml in pairs:
-                self.mb.changeItem(id, xml)
+            for args in listOfArgs:
+                self._doChangeItem(*args)
 
     @deferUntilAfterLoad
     def hideItem(self, id):
