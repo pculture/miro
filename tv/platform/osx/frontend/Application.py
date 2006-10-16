@@ -138,7 +138,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
     def applicationShouldHandleReopen_hasVisibleWindows_(self, appl, flag):
         if not flag:
             self.showMainWindow_(appl)
-        if app.controller is not None:
+        if app.controller is not None and app.controller.frame is not None:
             mainWindow = app.controller.frame.controller.window()
             if mainWindow.isMiniaturized():
                 mainWindow.deminiaturize_(appl)            
@@ -244,7 +244,8 @@ class AppController (NibClassBuilder.AutoBaseClass):
         eventloop.addUrgentCall(lambda:autoupdate.checkForUpdates(True), "Checking for new version")
 
     def showMainWindow_(self, sender):
-        app.controller.frame.controller.window().makeKeyAndOrderFront_(sender)
+        if app.controller is not None and app.controller.frame is not None:
+            app.controller.frame.controller.window().makeKeyAndOrderFront_(sender)
 
     def showPreferencesWindow_(self, sender):
         prefController = PreferencesWindowController.alloc().init()
