@@ -148,9 +148,12 @@ class AppController (NibClassBuilder.AutoBaseClass):
         status = task.terminationStatus()
         print "DTV: Downloader daemon has been terminated (status: %d)" % status
 
-    def application_openFiles_(self, app, filenames):
-        eventloop.addUrgentCall(lambda:singleclick.parseCommandLineArgs(filenames), "Open local file(s)")
-        app.replyToOpenOrPrint_(NSApplicationDelegateReplySuccess)
+    def application_openFiles_(self, nsapp, filenames):
+        if app.controller.finishedStartup:
+            eventloop.addIdle(lambda:singleclick.parseCommandLineArgs(filenames), "Open local file(s)")
+        else:
+            singleclick.setCommandLineArgs(filenames)
+        nsapp.replyToOpenOrPrint_(NSApplicationDelegateReplySuccess)
 
     def addTorrent(self, path):
         try:

@@ -465,6 +465,7 @@ class Controller (frontend.Application):
         self.guideURL = None
         self.initial_feeds = False # True if this is the first run and there's an initial-feeds.democracy file.
         self.loadedDatabase = False
+        self.finishedStartup = False
 
     ### Startup and shutdown ###
 
@@ -641,6 +642,9 @@ class Controller (frontend.Application):
 
             print "DTV: Starting event loop thread"
             eventloop.startup()            
+
+            print "DTV: Finished startup sequence"
+            self.finishedStartup = True
         except databaseupgrade.DatabaseTooNewError:
             title = _("Database too new")
             description = _("""\
