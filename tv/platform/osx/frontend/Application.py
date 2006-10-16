@@ -138,9 +138,10 @@ class AppController (NibClassBuilder.AutoBaseClass):
     def applicationShouldHandleReopen_hasVisibleWindows_(self, appl, flag):
         if not flag:
             self.showMainWindow_(appl)
-        mainWindow = app.controller.frame.controller.window()
-        if mainWindow.isMiniaturized():
-            mainWindow.deminiaturize_(appl)            
+        if app.controller is not None:
+            mainWindow = app.controller.frame.controller.window()
+            if mainWindow.isMiniaturized():
+                mainWindow.deminiaturize_(appl)            
         return NO
 
     def downloaderDaemonDidTerminate_(self, notification):
