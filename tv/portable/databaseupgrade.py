@@ -304,24 +304,30 @@ def upgrade25(objectList):
     startfroms = {}
     for o in objectList:
         if o.classString == 'feed':
-            try:
-                startfroms[o.savedData['id']] = o.savedData['startfrom']
-            except:
-                pass
+            startfroms[o.savedData['id']] = o.savedData['actualFeed'].savedData['startfrom']
     for o in objectList:
         if o.classString == 'item':
             pubDate = o.savedData['releaseDateObj']
             feed_id = o.savedData['feed_id']
             if feed_id is not None and startfroms.has_key(feed_id):
-                o.savedData['eligibleForAutoDownload'] = pubDate >= startfroms[feed_id] and pubDate != datetime.max
+                o.savedData['eligibleForAutoDownload'] = pubDate != datetime.max and pubDate >= startfroms[feed_id]
             else:
-                o.savedData['eligibleForAutoDownload'] = True
+                o.savedData['eligibleForAutoDownload'] = False
             changed.add(o)
         if o.classString == 'file-item':
             o.savedData['eligibleForAutoDownload'] = True
             changed.add(o)
     return changed
 
+def upgrade26(objectList):
+    changed = set()
+    for o in objectList:
+        if o.classString == 'feed':
+            feedImpl = o.savedData['actualFeed']
+            for field in ('autoDownloadable', 'getEverything', 'maxNew', 'fallBehind', 'expire', 'expireTime'):
+                o.savedData[field] = feedImpl.savedData[field]
+            changed.add(o)
+    return changed
 
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """

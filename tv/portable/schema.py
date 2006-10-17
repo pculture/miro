@@ -230,7 +230,7 @@ class ItemSchema(DDBObjectSchema):
         ('isContainerItem', SchemaBool(noneOk=True)),
         ('videoFilename', SchemaString()),
         ('releaseDateObj', SchemaDateTime()),
-        ('eligibleForAutoDownload', SchemaBool(noneOk=True)),
+        ('eligibleForAutoDownload', SchemaBool()),
     ]
 
 class FileItemSchema(ItemSchema):
@@ -248,13 +248,18 @@ class FeedSchema(DDBObjectSchema):
     fields = DDBObjectSchema.fields + [
         ('origURL', SchemaString()),
         ('errorState', SchemaBool()),
-        ('initiallyAutoDownloadable', SchemaBool()),
         ('loading', SchemaBool()),
         ('actualFeed', SchemaObject(FeedImpl)),
         ('iconCache', SchemaObject(IconCache, noneOk=True)),
         ('folder_id', SchemaInt(noneOk=True)),
         ('searchTerm', SchemaString(noneOk=True)),
         ('userTitle', SchemaString(noneOk=True)),
+        ('autoDownloadable', SchemaBool()),
+        ('getEverything', SchemaBool()),
+        ('maxNew', SchemaInt()),
+        ('fallBehind', SchemaInt()),
+        ('expire', SchemaString()),
+        ('expireTime', SchemaTimeDelta(noneOk=True)),
     ]
 
 class FeedImplSchema(ObjectSchema):
@@ -265,16 +270,10 @@ class FeedImplSchema(ObjectSchema):
         ('ufeed', SchemaObject(Feed)),
         ('title', SchemaString()),
         ('created', SchemaDateTime()),
-        ('autoDownloadable', SchemaBool()),
-        ('getEverything', SchemaBool()),
-        ('maxNew', SchemaInt()),
-        ('fallBehind', SchemaInt()),
-        ('expire', SchemaString()),
         ('visible', SchemaBool()),
         ('lastViewed', SchemaDateTime()),
         ('thumbURL', SchemaString(noneOk=True)),
         ('updateFreq', SchemaInt()),
-        ('expireTime', SchemaTimeDelta(noneOk=True)),
         ('initialUpdate', SchemaBool()),
     ]
 
@@ -387,7 +386,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('redirectedURL', SchemaString(noneOk=True)),
     ]
 
-VERSION = 25
+VERSION = 26
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,

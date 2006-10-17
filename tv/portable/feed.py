@@ -172,18 +172,12 @@ class FeedImpl:
         else:
             self.title = title
         self.created = datetime.now()
-        self.autoDownloadable = ufeed.initiallyAutoDownloadable
-        self.getEverything = False
-        self.maxNew = -1
-        self.fallBehind = -1
-        self.expire = "system"
         self.visible = visible
         self.updating = False
         self.lastViewed = datetime.min
         self.thumbURL = defaultFeedIconURL()
         self.initialUpdate = True
         self.updateFreq = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)*60
-        self.expireTime = None
 
     def calc_item_list(self):
         self.items = views.toplevelItems.filterWithIndex(indexes.itemsByFeed, self.ufeed.id)
@@ -372,67 +366,6 @@ class FeedImpl:
             item.signalChange(needsSave=False)
 
     ##
-    # Switch the auto-downloadable state
-    def setAutoDownloadable(self, automatic):
-        self.ufeed.confirmDBThread()
-        auto = set()
-        for item in self.items:
-            if item.isEligibleForAutoDownload():
-                auto.add(item)
-        self.autoDownloadable = (automatic == "1")
-        if self.autoDownloadable:
-            for item in self.items:
-                if item.eligibleForAutoDownload:
-                    item.eligibleForAutoDownload = False
-                    item.signalChange()
-        for item in self.items:
-            if item.isEligibleForAutoDownload() or item in auto:
-                item.signalChange(needsSave=False)
-        self.ufeed.signalChange()
-
-    ##
-    # Sets the 'getEverything' attribute, True or False
-    def setGetEverything(self, everything):
-        self.ufeed.confirmDBThread()
-        wereAuto = set()
-        for item in self.items:
-            if item.isEligibleForAutoDownload():
-                wereAuto.add(item)
-        self.getEverything = everything
-        self.ufeed.signalChange()
-        self.signalAutoItems(wereAuto)
-
-    ##
-    # Sets the expiration attributes. Valid types are 'system', 'feed' and 'never'
-    # Expiration time is in hour(s).
-    def setExpiration(self, type, time):
-        self.ufeed.confirmDBThread()
-        self.expire = type
-        self.expireTime = timedelta(hours=time)
-
-        if self.expire == "never":
-            for item in self.items:
-                if item.isDownloaded():
-                    item.save()
-
-        self.ufeed.signalChange()
-        for item in self.items:
-            item.signalChange(needsSave=False)
-
-    ##
-    # Sets the maxNew attributes. -1 means unlimited.
-    def setMaxNew(self, maxNew):
-        self.ufeed.confirmDBThread()
-        oldMaxNew = self.maxNew
-        self.maxNew = maxNew
-        self.ufeed.signalChange()
-#        for item in self.items:
-#            item.signalChange(needsSave=False)
-        if self.maxNew >= oldMaxNew or self.maxNew < 0:
-            import autodler
-            autodler.autoDownloader.startDownloads()
-
-    ##
     # Return the 'system' expiration delay, in days (can be < 1.0)
     def getDefaultExpiration(self):
         return float(config.get(prefs.EXPIRE_AFTER_X_DAYS))
@@ -458,25 +391,25 @@ class FeedImpl:
     # Returns "feed," "system," or "never"
     def getExpirationType(self):
         self.ufeed.confirmDBThread()
-        return self.expire
+        return self.ufeed.expire
 
     ##
     # Returns"unlimited" or the maximum number of items this feed can fall behind
     def getMaxFallBehind(self):
         self.ufeed.confirmDBThread()
-        if self.fallBehind < 0:
+        if self.ufeed.fallBehind < 0:
             return "unlimited"
         else:
-            return self.fallBehind
+            return self.ufeed.fallBehind
 
     ##
     # Returns "unlimited" or the maximum number of items this feed wants
     def getMaxNew(self):
         self.ufeed.confirmDBThread()
-        if self.maxNew < 0:
+        if self.ufeed.maxNew < 0:
             return "unlimited"
         else:
-            return self.maxNew
+            return self.ufeed.maxNew
 
     ##
     # Returns the total absolute expiration time in hours.
@@ -485,12 +418,12 @@ class FeedImpl:
         delta = None
         self.ufeed.confirmDBThread()
         expireAfterSetting = config.get(prefs.EXPIRE_AFTER_X_DAYS)
-        if (self.expireTime is None or self.expire == 'never' or 
-            (self.expire == 'system' and expireAfterSetting <= 0)):
+        if (self.ufeed.expireTime is None or self.ufeed.expire == 'never' or 
+            (self.ufeed.expire == 'system' and expireAfterSetting <= 0)):
             return 0
         else:
-            return (self.expireTime.days * 24 + 
-                    self.expireTime.seconds / 3600)
+            return (self.ufeed.expireTime.days * 24 + 
+                    self.ufeed.expireTime.seconds / 3600)
 
     ##
     # Returns the number of days until a video expires
@@ -498,7 +431,7 @@ class FeedImpl:
         ret = 0
         self.ufeed.confirmDBThread()
         try:
-            return self.expireTime.days
+            return self.ufeed.expireTime.days
         except:
             return timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS)).days
 
@@ -508,20 +441,20 @@ class FeedImpl:
         ret = 0
         self.ufeed.confirmDBThread()
         try:
-            return int(self.expireTime.seconds/3600)
+            return int(self.ufeed.expireTime.seconds/3600)
         except:
             return int(timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS)).seconds/3600)
 
     def getExpires (self):
         expireAfterSetting = config.get(prefs.EXPIRE_AFTER_X_DAYS)
-        return (self.expireTime is None or self.expire == 'never' or 
-                (self.expire == 'system' and expireAfterSetting <= 0))
+        return (self.ufeed.expireTime is None or self.ufeed.expire == 'never' or 
+                (self.ufeed.expire == 'system' and expireAfterSetting <= 0))
 
     ##
     # Returns true iff item is autodownloadable
     def isAutoDownloadable(self):
         self.ufeed.confirmDBThread()
-        return self.autoDownloadable
+        return self.ufeed.autoDownloadable
 
     def autoDownloadStatus(self):
         status = self.isAutoDownloadable()
@@ -638,9 +571,16 @@ def updateUandA(feed):
 class Feed(DDBObject):
     def __init__(self,url, initiallyAutoDownloadable=True):
         DDBObject.__init__(self, add=False)
+
+        self.autoDownloadable = initiallyAutoDownloadable
+        self.getEverything = False
+        self.maxNew = -1
+        self.expire = "system"
+        self.expireTime = None
+        self.fallBehind = -1
+
         self.origURL = url
         self.errorState = False
-        self.initiallyAutoDownloadable = initiallyAutoDownloadable
         self.loading = True
         self.actualFeed = FeedImpl(url,self)
         self.download = None
@@ -714,6 +654,67 @@ class Feed(DDBObject):
 
     def unsetTitle(self):
         self.setTitle(None)
+
+    ##
+    # Switch the auto-downloadable state
+    def setAutoDownloadable(self, automatic):
+        self.confirmDBThread()
+        auto = set()
+        for item in self.items:
+            if item.isEligibleForAutoDownload():
+                auto.add(item)
+        self.autoDownloadable = (automatic == "1")
+        if self.autoDownloadable:
+            for item in self.items:
+                if item.eligibleForAutoDownload:
+                    item.eligibleForAutoDownload = False
+                    item.signalChange()
+        for item in self.items:
+            if item.isEligibleForAutoDownload() or item in auto:
+                item.signalChange(needsSave=False)
+        self.signalChange()
+
+    ##
+    # Sets the 'getEverything' attribute, True or False
+    def setGetEverything(self, everything):
+        self.confirmDBThread()
+        wereAuto = set()
+        for item in self.items:
+            if item.isEligibleForAutoDownload():
+                wereAuto.add(item)
+        self.getEverything = everything
+        self.signalChange()
+        self.signalAutoItems(wereAuto)
+
+    ##
+    # Sets the expiration attributes. Valid types are 'system', 'feed' and 'never'
+    # Expiration time is in hour(s).
+    def setExpiration(self, type, time):
+        self.confirmDBThread()
+        self.expire = type
+        self.expireTime = timedelta(hours=time)
+
+        if self.expire == "never":
+            for item in self.items:
+                if item.isDownloaded():
+                    item.save()
+
+        self.signalChange()
+        for item in self.items:
+            item.signalChange(needsSave=False)
+
+    ##
+    # Sets the maxNew attributes. -1 means unlimited.
+    def setMaxNew(self, maxNew):
+        self.confirmDBThread()
+        oldMaxNew = self.maxNew
+        self.maxNew = maxNew
+        self.signalChange()
+#        for item in self.items:
+#            item.signalChange(needsSave=False)
+        if self.maxNew >= oldMaxNew or self.maxNew < 0:
+            import autodler
+            autodler.autoDownloader.startDownloads()
 
     def makeContextMenu(self, templateName, view):
         items = [
@@ -1719,6 +1720,7 @@ class SearchFeedImpl (RSSFeedImpl):
         self.searching = False
         self.lastEngine = 'yahoo'
         self.lastQuery = ''
+        self.ufeed.autoDownloadable = False
         self.ufeed.signalChange()
 
     def quoteLastQuery(self):
@@ -1790,7 +1792,7 @@ class ManualFeedImpl(FeedImpl):
     def __init__(self, ufeed):
         FeedImpl.__init__(self, url='dtv:manualFeed', ufeed=ufeed, 
                 title=None, visible=False)
-        self.expire = 'never'
+        self.ufeed.expire = 'never'
         self.setUpdateFrequency(-1)
 
 ##
