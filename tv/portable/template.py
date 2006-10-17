@@ -214,7 +214,7 @@ class TrackedView:
 
     def addCallback(self):
         if not self.idle_queued:
-            queueDOMChange(self.callback, "Update UI")
+            queueDOMChange(self.callback, "TrackedView DOM Change (%s)" % self.name)
             self.idle_queued = True
 
     def onChange(self,obj,id):
@@ -315,7 +315,7 @@ class UpdateRegionBase:
 
     def onChange(self, *args, **kwargs):
         if not self.idle_queued:
-            queueDOMChange(self.doChange, "Update UI")
+            queueDOMChange(self.doChange, "UpdateRegion DOM Change (%s)" % self.name)
             self.idle_queued = True
 
     def doChange(self):
@@ -351,6 +351,9 @@ class UpdateRegion(UpdateRegionBase):
         self.view.removeViewChangeCallback(self.onChange)
 
 class ConfigUpdateRegion(UpdateRegionBase):
+    def __init__(self, anchorId, anchorType, templateFunc, parent):
+        UpdateRegionBase.__init__(self, anchorId, anchorType, templateFunc, parent)
+        self.name = "ConfigUpdateRegion"
     def hookupCallbacks(self):
         config.addChangeCallback(self.onChange)
 
