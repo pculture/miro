@@ -1710,10 +1710,12 @@ class SearchFeedImpl (RSSFeedImpl):
     
     def __init__(self, ufeed):
         RSSFeedImpl.__init__(self, url='', ufeed=ufeed, title='dtv:search', visible=False)
+        self.initialUpdate = True
         self.setUpdateFrequency(-1)
         self.searching = False
         self.lastEngine = 'yahoo'
         self.lastQuery = ''
+        self.signalChange()
 
     def quoteLastQuery(self):
         return escape(self.lastQuery)

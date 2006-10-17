@@ -304,7 +304,10 @@ def upgrade25(objectList):
     startfroms = {}
     for o in objectList:
         if o.classString == 'feed':
-            startfroms[o.savedData['id']] = o.savedData['startfrom']
+            try:
+                startfroms[o.savedData['id']] = o.savedData['startfrom']
+            except:
+                pass
     for o in objectList:
         if o.classString == 'item':
             pubDate = o.savedData['releaseDateObj']
