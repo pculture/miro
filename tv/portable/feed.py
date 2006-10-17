@@ -1719,7 +1719,7 @@ class SearchFeedImpl (RSSFeedImpl):
         self.searching = False
         self.lastEngine = 'yahoo'
         self.lastQuery = ''
-        self.signalChange()
+        self.ufeed.signalChange()
 
     def quoteLastQuery(self):
         return escape(self.lastQuery)

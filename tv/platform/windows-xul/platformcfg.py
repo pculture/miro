@@ -27,11 +27,16 @@ def getSpecialFolder(name):
 
     """
 
-    buf = ctypes.create_unicode_buffer(260) 
+    buf = ctypes.create_unicode_buffer(260)
+    buf2 = ctypes.create_unicode_buffer(1024) 
     SHGetSpecialFolderPath = ctypes.windll.shell32.SHGetSpecialFolderPathW
+    GetShortPathName = ctypes.windll.kernel32.GetShortPathNameW
     csidl = _specialFolderCSIDLs[name]
     if SHGetSpecialFolderPath(None, buf, csidl, False):
-        return buf.value
+        if GetShortPathName(buf, buf2, 1024):
+            return buf2.value
+        else:
+            return buf.value
     else:
         return None
 
