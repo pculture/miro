@@ -931,7 +931,7 @@ class Feed(DDBObject):
             self.errorState = False
         else:
             self.errorState = True
-        self.signalChange()
+        self.ufeed.signalChange()
 
     def askForScrape(self, info, initialHTML, charset):
         title = _("Channel is not compatible with Democracy!")
