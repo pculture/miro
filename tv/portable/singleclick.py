@@ -93,6 +93,7 @@ def filterExistingFeedURLs(urls):
 
 def addFeeds(urls, newFolderName=None):
     if len(urls) > 0:
+        lastFeed = None
         if newFolderName is not None:
             newFolder = folder.ChannelFolder(newFolderName)
         for url in filterExistingFeedURLs(urls):
@@ -101,12 +102,18 @@ def addFeeds(urls, newFolderName=None):
                 f.setFolder(newFolder)
             lastFeed = f
         if newFolderName is None:
-            for url in urls:
-                f = feed.getFeedByURL(url)
-                if f is lastFeed:
-                    app.controller.selection.selectTabByObject(f)
-                else:
-                    f.blink()
+            if lastFeed:
+                for url in urls:
+                    f = feed.getFeedByURL(url)
+                    if f is lastFeed:
+                        app.controller.selection.selectTabByObject(f)
+                    else:
+                        f.blink()
+            else:
+                for i in xrange (len(urls) - 1):
+                    feed.getFeedByURL(urls[i]).blink()
+                f = feed.getFeedByURL(urls[-1])
+                app.controller.selection.selectTabByObject(f)
         else:
             app.controller.selection.selectTabByObject(newFolder)
 

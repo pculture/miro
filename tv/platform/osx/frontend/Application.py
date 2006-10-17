@@ -139,6 +139,10 @@ class AppController (NibClassBuilder.AutoBaseClass):
     def applicationShouldHandleReopen_hasVisibleWindows_(self, appl, flag):
         if not flag:
             self.showMainWindow_(appl)
+        if app.controller is not None and app.controller.frame is not None:
+            mainWindow = app.controller.frame.controller.window()
+            if mainWindow.isMiniaturized():
+                mainWindow.deminiaturize_(appl)            
         return NO
 
     def downloaderDaemonDidTerminate_(self, notification):
@@ -146,9 +150,12 @@ class AppController (NibClassBuilder.AutoBaseClass):
         status = task.terminationStatus()
         print "DTV: Downloader daemon has been terminated (status: %d)" % status
 
-    def application_openFiles_(self, app, filenames):
-        eventloop.addUrgentCall(lambda:singleclick.parseCommandLineArgs(filenames), "Open local file(s)")
-        app.replyToOpenOrPrint_(NSApplicationDelegateReplySuccess)
+    def application_openFiles_(self, nsapp, filenames):
+        if app.controller.finishedStartup:
+            eventloop.addIdle(lambda:singleclick.parseCommandLineArgs(filenames), "Open local file(s)")
+        else:
+            singleclick.setCommandLineArgs(filenames)
+        nsapp.replyToOpenOrPrint_(NSApplicationDelegateReplySuccess)
 
     def addTorrent(self, path):
         try:
@@ -238,7 +245,8 @@ class AppController (NibClassBuilder.AutoBaseClass):
         eventloop.addUrgentCall(lambda:autoupdate.checkForUpdates(True), "Checking for new version")
 
     def showMainWindow_(self, sender):
-        app.controller.frame.controller.window().makeKeyAndOrderFront_(sender)
+        if app.controller is not None and app.controller.frame is not None:
+            app.controller.frame.controller.window().makeKeyAndOrderFront_(sender)
 
     def showPreferencesWindow_(self, sender):
         prefController = PreferencesWindowController.alloc().init()
