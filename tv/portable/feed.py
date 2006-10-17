@@ -292,7 +292,11 @@ class FeedImpl:
     # Sets the last time the feed was viewed to now
     def markAsViewed(self):
         self.lastViewed = datetime.now() 
+        for item in self.items:
+            if item.getState() == "new":
+                item.signalChange(needsSave=False)
         self.updateUandA(False)
+
         self.ufeed.signalChange()
 
     ##
