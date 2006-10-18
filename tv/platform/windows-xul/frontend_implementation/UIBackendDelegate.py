@@ -132,12 +132,16 @@ class UIBackendDelegate:
         if isinstance (dialog, dialogs.SearchChannelDialog):
             dialog.term = kwargs['term']
             dialog.style = kwargs['style']
-            if dialog.style == dialog.CHANNEL:
-                dialog.location = dialog.channels[int(kwargs['loc'])][0]
-            elif dialog.style == dialog.ENGINE:
-                dialog.location = dialog.engines[int(kwargs['loc'])][0]
-            elif dialog.style == dialog.URL:
-                dialog.location = kwargs['loc']
+            if choice == dialogs.BUTTON_CREATE_CHANNEL:
+                try:
+                    if dialog.style == dialog.CHANNEL:
+                        dialog.location = dialog.channels[int(kwargs['loc'])][0]
+                    elif dialog.style == dialog.ENGINE:
+                        dialog.location = dialog.engines[int(kwargs['loc'])][0]
+                    elif dialog.style == dialog.URL:
+                        dialog.location = kwargs['loc']
+                except:
+                    choice = dialogs.BUTTON_CANCEL
             kwargs = {}
         dialog.runCallback(choice, *args, **kwargs)
 
