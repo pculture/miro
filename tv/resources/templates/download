@@ -99,7 +99,7 @@ matchingPendingDLs.unlink()
 	<div t:hideIf="externalDownloads.len() == 0" 
 		t:updateHideOnView="externalDownloads" class="main-channelbar">
 		<span style="margin-left: 12px"> External Torrents</span>
-		<a i18n:translate="" href="#" onclick="return eventURL('action:clearTorrents');" style="text-decoration: underline; margin-left: 15px; font-weight: normal;" title="Clear Completed Torrents">Clear Completed Torrents</a>
+		<a i18n:translate="" href="#" onclick="return eventURL('action:clearTorrents');" class="clear-completed-link" title="Clear Completed Torrents">Clear Completed Torrents</a>
         </div>
 	<span t:repeatForView="externalDownloads">
             <span t:replaceMarkup="this.getItemXML(viewName, view)" />
