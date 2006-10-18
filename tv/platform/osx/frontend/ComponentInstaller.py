@@ -19,8 +19,8 @@ CORE_AUDIO_COMPONENTS_LOCATIONS.append(os.path.expanduser('~/Library/Components'
 QUICKTIME_COMPONENT_BUNDLE_TYPE = 'thngeat '
 
 QUICKTIME_COMPONENTS_LOCATIONS = list()
-QUICKTIME_COMPONENTS_LOCATIONS.append('/Library/Quicktime')
-QUICKTIME_COMPONENTS_LOCATIONS.append(os.path.expanduser('~/Library/Quicktime'))
+QUICKTIME_COMPONENTS_LOCATIONS.append('/Library/QuickTime')
+QUICKTIME_COMPONENTS_LOCATIONS.append(os.path.expanduser('~/Library/QuickTime'))
 
 ALL_LOCATIONS = CORE_AUDIO_COMPONENTS_LOCATIONS + QUICKTIME_COMPONENTS_LOCATIONS
 
@@ -31,7 +31,7 @@ PATH_TO_TRASH = os.path.expanduser('~/.Trash')
 def run():
     willRestart = False
     if _shouldRun():    
-        print 'DTV: running Quicktime Components Installer.'
+        print 'DTV: running QuickTime Components Installer.'
         _didRun()
 
         installList = list()
@@ -93,12 +93,12 @@ def _performInstallation(installList, upgradeList):
         print '     nothing to install or upgrade.'
         return False
 
-    dlogTitle = 'Quicktime Components Installation'
+    dlogTitle = 'QuickTime Components Installation'
     dlogResult = showWarningDialog(dlogTitle, message, ['Yes', 'No'])
     
     proceedAndRestart = (dlogResult == 0)
     if proceedAndRestart:
-        script = 'echo -- Quicktime Components Installation/Upgrade -- \n'
+        script = 'echo -- QuickTime Components Installation/Upgrade -- \n'
         for install in installList:
             script += _getInstallCommands(install)
         for upgrade in upgradeList:
@@ -118,12 +118,12 @@ def _buildMessage(installCount, upgradeCount):
 
     message = 'Democracy can now '
     if installCount > 0 and upgradeCount == 0:
-        message += 'install %d Quicktime component%s.' % (installCount, installPlural)
+        message += 'install %d QuickTime component%s.' % (installCount, installPlural)
     elif installCount == 0 and upgradeCount > 0:
-        message += 'upgrade %d outdated Quicktime component%s ' % (upgradeCount, upgradePlural)
+        message += 'upgrade %d outdated QuickTime component%s ' % (upgradeCount, upgradePlural)
         message += '(old component%s will be moved to the Trash).' % (upgradePlural,)
     elif installCount > 0 and upgradeCount > 0:
-        message += 'install %d Quicktime component%s ' % (installCount, installPlural)
+        message += 'install %d QuickTime component%s ' % (installCount, installPlural)
         message += 'and upgrade %d outdated one%s ' % (upgradeCount, upgradePlural)
         message += '(old component%s will be moved to the Trash).' % (upgradePlural,)
     
