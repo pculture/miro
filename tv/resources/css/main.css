@@ -312,6 +312,15 @@ and "downloaded" sections */
     padding-top: 2px;
 }
 
+.clear-completed-link {
+	text-decoration: underline; 
+	margin-left: 15px; 
+	font-weight: normal;
+	color: #fff;
+	font-size: 11px;
+	margin-top: -1px;
+}
+
 /* triangle for the bars */
 .triangle {
     background: url(../images/triangle-right.png) no-repeat left top;
@@ -806,6 +815,13 @@ an element is dragged, the drag-highlight class is added to it */
     left: 8px;
     width: 70px;
 }
+
+ .saved-note {
+	margin-top: 3px;
+    font-size: 9px;
+    color: #666;
+}
+
 
 .small-button-left.delete {
     position: absolute;
