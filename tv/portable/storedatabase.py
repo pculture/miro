@@ -630,7 +630,7 @@ class LiveStorage:
                 savables_set.add(o)
             for o in changed:
                 if o in savables_set:
-                    data = cPickle.dumps(o)
+                    data = cPickle.dumps(o,cPickle.HIGHEST_PROTOCOL)
                     self.db.put (str(o.savedData['id']), data, txn=txn)
                 else:
                     try:
@@ -663,7 +663,7 @@ class LiveStorage:
             cursor.delete()
         cursor.close()
         for o in savables:
-            data = cPickle.dumps(o)
+            data = cPickle.dumps(o,cPickle.HIGHEST_PROTOCOL)
             self.db.put (str(o.savedData['id']), data, txn=txn)
 
     def loadDatabase(self):
@@ -767,7 +767,7 @@ class LiveStorage:
             savable = objectToSavable (object)
             if savable:
                 key = str(object.id)
-                data = cPickle.dumps(savable)
+                data = cPickle.dumps(savable,cPickle.HIGHEST_PROTOCOL)
                 self.db.put (key, data, txn=self.txn)
 
     def remove (self, object):
