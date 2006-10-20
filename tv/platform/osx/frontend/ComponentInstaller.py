@@ -29,28 +29,29 @@ PATH_TO_TRASH = os.path.expanduser('~/.Trash')
 ###############################################################################
 
 def run():
-    willRestart = False
+    installList = list()
+    upgradeList = list()
+    installedComponents = list()
+    installableComponents = _gatherInstallableComponents()
+
+    for installable in installableComponents:
+        installed = _checkInstalledComponent(installable)
+        if installed is None:
+            installList.append(installable)
+        else:
+            installedComponents.append(installed)
+            installedVersion = _getComponentVersion(installed)
+            installableVersion = _getComponentVersion(installable)
+            if _installedIsOutdated(installedVersion, installableVersion):
+                upgradeList.append((installed, installable))
+    _runCompatibilityCheck(installedComponents, installList)
+
     if _shouldRun():    
-        print 'DTV: running QuickTime Components Installer.'
+        print 'DTV: Running QuickTime Components Installer.'
         _didRun()
-
-        installList = list()
-        upgradeList = list()
-
-        installableComponents = _gatherInstallableComponents()
-        for installable in installableComponents:
-            installed = _checkInstalledComponent(installable)
-            if installed is None:
-                installList.append(installable)
-            else:
-                installedVersion = _getComponentVersion(installed)
-                installableVersion = _getComponentVersion(installable)
-                if _installedIsOutdated(installedVersion, installableVersion):
-                    upgradeList.append((installed, installable))
-
-        willRestart = _performInstallation(installList, upgradeList)
-
-    return willRestart
+        return _performInstallation(installList, upgradeList)
+        
+    return False
 
 ###############################################################################
 
@@ -83,6 +84,41 @@ def _getComponentVersion(path):
 
 def _installedIsOutdated(installedVersion, installableVersion):
     return (installedVersion < installableVersion)
+
+def _runCompatibilityCheck(installed, toInstall):
+    versionInfo = os.uname()
+    versionInfo = versionInfo[2].split('.')
+    majorBuildVersion = int(versionInfo[0])
+    if majorBuildVersion <= 7:
+        print 'DTV: Running Quicktime Components compatibility check for OS X 10.3'
+        
+        # First check for an already installed Perian component
+        installedPerian = None
+        for inst in installed:
+            if os.path.basename(inst) == 'Perian.component':
+                installedPerian = inst
+                break            
+        if installedPerian is not None:
+            title = 'Quicktime Component Incompatibility'
+            message = 'The Perian Quicktime Component is installed but is incompatible with Mac OS X 10.3 and is therefore likely to cause crashes. Do you want Democracy to clean it up for you ?'
+            result = showWarningDialog(title, message, ['Yes', 'No'])
+            remove = (result == 0)
+            if remove:
+                script =  'echo -- Quicktime Components Cleanup --'
+                script += _getMoveToTrashCommands(installedPerian)
+                _runScript(script, wait=True)
+        
+        # If the installation step is going to be performed, remove Perian from 
+        # the list of components to install
+        if _shouldRun():
+            unsupportedPerian = None
+            for inst in toInstall:
+                if os.path.basename(inst) == 'Perian.component':
+                    unsupportedPerian = inst
+                    break
+            if unsupportedPerian is not None:
+                print "DTV: Removing Perian from the list of installable components."
+                toInstall.remove(unsupportedPerian)
 
 def _performInstallation(installList, upgradeList):
     installCount = len(installList)
@@ -140,9 +176,13 @@ def _getInstallCommands(sourcePath, destinationPath=None):
     return commands
 
 def _getUpgradeCommands(upgradeInfo):
-    commands =  'echo Upgrading %s \n' % upgradeInfo[0]
-    commands += 'mv -v "%s" "%s" \n' % (upgradeInfo[0], PATH_TO_TRASH)
+    commands =  _getMoveToTrashCommands(upgradeInfo[0])
     commands += _getInstallCommands(upgradeInfo[1], os.path.dirname(upgradeInfo[0]))
+    return commands
+
+def _getMoveToTrashCommands(path):
+    commands =  'echo Moving %s to the trash \n' % path
+    commands += 'mv -v "%s" "%s" \n' % (path, PATH_TO_TRASH)
     return commands
 
 def _getRestartCommands():
@@ -179,7 +219,7 @@ def _getLogFileHandle():
     NSFileManager.defaultManager().createFileAtPath_contents_attributes_(path, nil, nil)
     return NSFileHandle.fileHandleForWritingAtPath_(path)
 
-def _runScript(script):
+def _runScript(script, wait=False):
     path = _makeTempScript(script)
     wrapper = 'osascript -e "do shell script \\\"/bin/sh %s\\\" with administrator privileges"\n' % path
     wrapper += 'rm %s\n' % path
@@ -189,6 +229,8 @@ def _runScript(script):
     task.setArguments_([path])
     task.setStandardOutput_(_getLogFileHandle())
     task.launch()
+    if wait:
+        task.waitUntilExit()
 
 def _makeTempScript(script):
     handle, path = tempfile.mkstemp()
