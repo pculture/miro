@@ -1260,15 +1260,18 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
     @eventloop.asUrgent
     def dispatchAction(self, action, **kwargs):
+        called = False
         start = clock()
         for handler in self.actionHandlers:
             if hasattr(handler, action):
                 getattr(handler, action)(**kwargs)
-                return
+                called = True
+                break
         end = clock()
         if end - start > 0.5:
             print "WARNING: dispatch action %s too slow (%.3f secs)" % (action, end - start)
-        print "Ignored bad action URL: action=%s" % action
+        if not called:
+            print "Ignored bad action URL: action=%s" % action
 
     @eventloop.asUrgent
     def onDeselected(self, frame):
