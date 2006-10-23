@@ -32,11 +32,9 @@
             LANGUAGE = ObjC; 
             OUTLETS = {
                 channelsHostView = id; 
-                collectionHostView = id; 
                 mainHostView = id; 
+                searchField = id; 
                 splitView = id; 
-                switcherMatrix = id; 
-                tabView = id; 
                 videoDisplayController = id; 
                 videoInfoHostView = id; 
             }; 
@@ -86,6 +84,12 @@
                 volumeSlider = id; 
             }; 
             SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {search = id; }; 
+            CLASS = VideoSearchField; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSSearchField; 
         }, 
         {
             ACTIONS = {exitFullScreen = id; }; 

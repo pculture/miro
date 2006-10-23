@@ -8,11 +8,14 @@ from PyObjCTools import NibClassBuilder
 import app
 import feed
 import prefs
+import views
 import config
 import folder
 import dialogs
 import playlist
+import resources
 import eventloop
+import searchengines
 import platformutils
 
 NibClassBuilder.extractClasses("MainWindow")
@@ -141,7 +144,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         bgTexture.unlockFocus()
         
         self.window().setBackgroundColor_(NSColor.colorWithPatternImage_(bgTexture))
-        
+    
     ### Switching displays ###
 
     @platformutils.onMainThread
@@ -705,5 +708,105 @@ class MetalSliderCell (NSSliderCell):
         else:
             self.knob.dissolveToPoint_fraction_(location, 0.5)
         self.controlView().unlockFocus()
+
+###############################################################################
+
+class VideoSearchField (NibClassBuilder.AutoBaseClass):
+
+    def awakeFromNib(self):
+        self.setCell_(VideoSearchFieldCell.alloc().initWithCell_(self.cell()))
+        self.setTarget_(self)
+        self.setAction_('search:')
+        self.searchMenuTemplate().performActionForItemAtIndex_(0)
+        
+    def search_(self, sender):
+        engine = self.selectedEngine()
+        query = str(self.stringValue())
+        if query is not '':
+            eventloop.addIdle(lambda:app.controller.performSearch(engine, query), 'Performing chrome search')
+
+    def selectedEngine(self):
+        return self.cell().currentItem.representedObject().name
+        
+###############################################################################
+
+class VideoSearchFieldCell (NSSearchFieldCell):
+    
+    def initWithCell_(self, cell):
+        self = super(VideoSearchFieldCell, self).initTextCell_('')
+        self.setBezeled_(cell.isBezeled())
+        self.setBezelStyle_(cell.bezelStyle())
+        self.setEnabled_(cell.isEnabled())
+        self.setPlaceholderString_(cell.placeholderString())
+        self.setEditable_(cell.isEditable())
+        self.setSearchButtonCell_(cell.searchButtonCell())
+        self.setCancelButtonCell_(cell.cancelButtonCell())
+        self.setSearchMenuTemplate_(self.makeSearchMenuTemplate())
+        self.setSendsWholeSearchString_(YES)
+        self.currentItem = nil
+        return self
+    
+    def makeSearchMenuTemplate(self):
+        menu = NSMenu.alloc().init()
+        for engine in reversed(views.searchEngines):
+            nsitem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_(engine.title, 'selectEngine:', '')
+            nsitem.setTarget_(self)
+            nsitem.setImage_(_getEngineIcon(engine))
+            nsitem.setRepresentedObject_(engine)
+            menu.insertItem_atIndex_(nsitem, 0)
+        return menu
+
+    def selectEngine_(self, sender):
+        if self.currentItem is not nil:
+            self.currentItem.setState_(NSOffState)
+        self.currentItem = sender
+        sender.setState_(NSOnState)
+        engine = sender.representedObject()
+        self.searchButtonCell().setImage_(_getSearchIcon(engine))
+    
+    def searchButtonRectForBounds_(self, bounds):
+        return NSRect(NSPoint(8.0, 3.0), NSSize(25.0, 16.0))
+        
+    def searchTextRectForBounds_(self, bounds):
+        cancelButtonBounds = super(VideoSearchFieldCell, self).cancelButtonRectForBounds_(bounds)
+        searchButtonBounds = self.searchButtonRectForBounds_(bounds)
+        x = searchButtonBounds.origin.x + searchButtonBounds.size.width + 2
+        width = bounds.size.width - x - cancelButtonBounds.size.width
+        return ((x, 3.0), (width, 16.0))
+
+###############################################################################
+
+def _getEngineIcon(engine):
+    engineIconPath = resources.path('images/search_icon_%s.png' % engine.name)
+    return NSImage.alloc().initByReferencingFile_(engineIconPath)
+
+searchIcons = dict()
+def _getSearchIcon(engine):
+    if engine.name not in searchIcons:
+        searchIcons[engine.name] = _makeSearchIcon(engine)
+    return searchIcons[engine.name]        
+
+def _makeSearchIcon(engine):
+    popupRectangle = NSImage.imageNamed_('search_popup_rectangle')
+    popupRectangleSize = popupRectangle.size()
+
+    engineIconPath = resources.path('images/search_icon_%s.png' % engine.name)
+    engineIcon = NSImage.alloc().initByReferencingFile_(engineIconPath)
+    engineIconSize = engineIcon.size()
+
+    searchIconSize = (engineIconSize.width + popupRectangleSize.width + 2, engineIconSize.height)
+    searchIcon = NSImage.alloc().initWithSize_(searchIconSize)
+    
+    searchIcon.lockFocus()
+    try:
+        engineIcon.compositeToPoint_operation_((0,0), NSCompositeSourceOver)
+        popupRectangleX = engineIconSize.width + 2
+        popupRectangleY = (engineIconSize.height - popupRectangleSize.height) / 2
+        popupRectangle.compositeToPoint_operation_((popupRectangleX, popupRectangleY), NSCompositeSourceOver)
+    finally:
+        searchIcon.unlockFocus()
+
+    return searchIcon
+    
 
 ###############################################################################

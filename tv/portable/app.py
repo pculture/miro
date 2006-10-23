@@ -1018,6 +1018,16 @@ downloaded?""")
         count = views.unwatchedItems.len()
         delegate.updateAvailableItemsCountFeedback(count)
 
+    ### Chrome search:
+    ### Switch to the search tab and perform a search using the specified engine.
+
+    def performSearch(self, engine, query):        
+        handler = TemplateActionHandler(None, None)
+        handler.updateLastSearchEngine(engine)
+        handler.updateLastSearchQuery(query)
+        self.selection.selectTabByTemplateBase('searchtab')
+        handler.performSearch(engine, query)
+
     ### ----
 
     def setUpstreamLimit(self, setLimit):
@@ -1738,7 +1748,6 @@ class TemplateActionHandler:
             searchFeed.lastQuery = query
         
     def performSearch(self, engine, query):
-        print "Performing search"
         searchFeed, searchDownloadsFeed = self.__getSearchFeeds()
         if searchFeed is not None and searchDownloadsFeed is not None:
             searchFeed.preserveDownloads(searchDownloadsFeed)
