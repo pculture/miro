@@ -76,7 +76,7 @@ def addFeedFromFile(file):
     d = feedparser.parse(file)
     if d.feed.has_key('links'):
         for link in d.feed['links']:
-            if link['rel'] == 'start':
+            if link['rel'] == 'start' or link['rel'] == 'self':
                 Feed(link['href'])
                 return
     if d.feed.has_key('link'):
