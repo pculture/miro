@@ -171,7 +171,10 @@ fasttypes_ext = \
     )
 
 #### MozillaBrowser Extension ####
-packages = getCommandOutput("pkg-config --list-all")
+try:
+    packages = getCommandOutput("pkg-config --list-all")
+except RuntimeError, error:
+    sys.exit("Package config error:\n%s" % (error,))
 if re.search("^xulrunner-xpcom", packages, re.MULTILINE):
     xpcom = 'xulrunner-xpcom'
     gtkmozembed = 'xulrunner-gtkmozembed'
@@ -182,7 +185,7 @@ elif re.search("^firefox-xpcom", packages, re.MULTILINE):
     xpcom = 'firefox-xpcom'
     gtkmozembed = 'firefox-gtkmozembed'
 else:
-    raise RuntimeError("Can't find xulrunner-xpcom, mozilla-xpcom or firefox-xpcom")
+    sys.exit("Can't find xulrunner-xpcom, mozilla-xpcom or firefox-xpcom")
 mozilla_browser_options = parsePkgConfig("pkg-config" , 
         "gtk+-2.0 glib-2.0 pygtk-2.0 %s %s" % (gtkmozembed, xpcom))
 mozilla_lib_path = parsePkgConfig('pkg-config', 
