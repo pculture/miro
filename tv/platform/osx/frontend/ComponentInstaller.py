@@ -100,7 +100,7 @@ def _runCompatibilityCheck(installed, toInstall):
                 break            
         if installedPerian is not None:
             title = 'Quicktime Component Incompatibility'
-            message = 'The Perian Quicktime Component is installed but is incompatible with Mac OS X 10.3 and is therefore likely to cause crashes. Do you want Democracy to clean it up for you ?'
+            message = 'The Perian Quicktime Component is installed but is incompatible with Mac OS X 10.3 and is therefore likely to cause crashes. Do you want Democracy to remove it for you ?'
             result = showWarningDialog(title, message, ['Yes', 'No'])
             remove = (result == 0)
             if remove:
