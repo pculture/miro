@@ -162,8 +162,6 @@ config.addChangeCallback(configDidChange)
 # Actual implementation of a basic feed.
 class FeedImpl:
     def __init__(self, url, ufeed, title = None, visible = True):
-        self.available = 0
-        self.unwatched = 0
         self.url = url
         self.ufeed = ufeed
         self.calc_item_list()
@@ -181,6 +179,15 @@ class FeedImpl:
 
     def calc_item_list(self):
         self.items = views.toplevelItems.filterWithIndex(indexes.itemsByFeed, self.ufeed.id)
+        self.availableItems = self.items.filter(lambda x: x.getState() == 'new')
+        self.unwatchedItems = self.items.filter(lambda x: x.getState() == 'newly-downloaded')
+        self.availableItems.addAddCallback(lambda x,y:DDBObject.signalChange(self.ufeed))
+        self.availableItems.addRemoveCallback(lambda x,y:DDBObject.signalChange(self.ufeed))
+        self.unwatchedItems.addAddCallback(lambda x,y:DDBObject.signalChange(self.ufeed))
+        self.unwatchedItems.addRemoveCallback(lambda x,y:DDBObject.signalChange(self.ufeed))
+        
+    def signalChange(self):
+        self.ufeed.signalChange()
 
     def getBaseHref(self):
         """Get a URL to use in the <base> tag for this channel.  This is used
@@ -238,37 +245,13 @@ class FeedImpl:
         except:
             print "%s has no ufeed" % self
 
-    # Updates the state of unwatched and available items to meet
-    # Returns true iff signalChange() is called
-    def updateUandA(self, signal = True):
-        self.ufeed.confirmDBThread()
-        newU = 0
-        newA = 0
-
-        for item in self.items:
-            # FIXME: I think it's bad style to use the CSS class here.  The
-            # problem is that what we want isn't getState() or
-            # getChannelCategory(), since we don't want to count new items
-            # that are also going to be auto-downloaded.  Maybe make a
-            # method called getDisplayState or something?.
-            (u, a) = item.getUandA()
-            newA += a
-            newU += u
-        if newU != self.unwatched or newA != self.available:
-            self.unwatched = newU
-            self.available = newA
-            if signal:
-                self.ufeed.signalChange(needsSave=False)
-            if self.ufeed.folder_id:
-                self.ufeed.getFolder().signalChange(needsSave=False)
-            
     # Returns string with number of unwatched videos in feed
     def numUnwatched(self):
-        return self.unwatched
+        return len(self.unwatchedItems)
 
     # Returns string with number of available videos in feed
     def numAvailable(self):
-        return self.available
+        return len(self.availableItems)
 
     # Returns true iff both unwatched and available numbers should be shown
     def showBothUAndA(self):
@@ -276,11 +259,11 @@ class FeedImpl:
 
     # Returns true iff unwatched should be shown 
     def showU(self):
-        return self.unwatched > 0
+        return len(self.unwatchedItems) > 0
 
     # Returns true iff available should be shown
     def showA(self):
-        return self.available > 0 and not self.isAutoDownloadable()
+        return len(self.availableItems) > 0 and not self.isAutoDownloadable()
 
     ##
     # Sets the last time the feed was viewed to now
@@ -289,7 +272,6 @@ class FeedImpl:
         for item in self.items:
             if item.getState() == "new":
                 item.signalChange(needsSave=False)
-        self.updateUandA(False)
 
         self.ufeed.signalChange()
 
@@ -533,8 +515,6 @@ class FeedImpl:
 
     def onRestore(self):
         self.updating = False
-        self.available = 0
-        self.unwatched = 0
         self.calc_item_list()
 
     def onRemove(self):
@@ -544,25 +524,6 @@ class FeedImpl:
 
     def __str__(self):
         return "FeedImpl - %s" % self.getTitle()
-
-
-updaterDC = None
-updaterSet = set()
-def updateUandAs():
-    global updaterSet
-    global updaterDC
-    for feedimpl in updaterSet:
-        if feedimpl.ufeed.idExists():
-            feedimpl.updateUandA()
-    updaterSet = set()
-    updaterDC = None
-
-def updateUandA(feed):
-    global updaterSet
-    global updaterDC
-    updaterSet.add (feed.actualFeed)
-    if updaterDC is None:
-        updaterDC = eventloop.addIdle(updateUandAs, "Update unwatched counts")
 
 ##
 # This class is a magic class that can become any type of feed it wants
@@ -767,8 +728,7 @@ class Feed(DDBObject):
             self.folder_id = None
         self.signalChange()
         for item in self.items:
-            item.signalChange(needsSave=False, needsUpdateUandA=False,
-                    needsUpdateXML=False)
+            item.signalChange(needsSave=False, needsUpdateXML=False)
         if newFolder:
             newFolder.signalChange(needsSave=False)
         if oldFolder:
@@ -1101,7 +1061,6 @@ class RSSFeedImpl(FeedImpl):
             return ""
 
     def feedparser_finished (self):
-        self.updateUandA(False)
         self.updating = False
         self.ufeed.signalChange(needsSave=False)
         self.scheduleUpdateEvents(-1)
@@ -1473,7 +1432,6 @@ class ScraperFeedImpl(FeedImpl):
         if self.ufeed.searchTerm is not None and not filters.matchingItems(i, self.ufeed.searchTerm):
             i.remove()
             return
-        updateUandA(self.ufeed)
 
     #FIXME: compound names for titles at each depth??
     def processLinks(self,links, depth = 0,linkNumber = 0):

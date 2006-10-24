@@ -39,11 +39,6 @@ import adscraper
 import re
 HTMLPattern = re.compile("^.*<body.*?>(.*)</body\s*>", re.S)
 
-def updateUandA (feed):
-    # Not toplevel to avoid a dependency loop at load time.
-    import feed as feed_mod
-    feed_mod.updateUandA (feed)
-
 _charset = locale.getpreferredencoding()
 
 class Item(DDBObject):
@@ -79,7 +74,6 @@ class Item(DDBObject):
         self._lookForFinishedDownloader()
         DDBObject.__init__(self)
         self.splitItem()
-        updateUandA(self.getFeed())
 
     ##
     # Called by pickle during serialization
@@ -151,7 +145,7 @@ class Item(DDBObject):
         for video in videos:
             FileItem (video, parent_id=self.id)
         if videos:
-            self.signalChange(needsUpdateUandA=True)
+            self.signalChange()
             return True
         return False
 
@@ -185,7 +179,7 @@ class Item(DDBObject):
         else:
             self.isContainerItem = False
             self.videoFilename = filename_root
-        self.signalChange(needsUpdateUandA=True)
+        self.signalChange()
         return True
 
     def removeFromPlaylists(self):
@@ -236,27 +230,22 @@ class Item(DDBObject):
         if self.parent_id is not None and self.feed_id is not None:
             raise DatabaseConstraintError ("feed_id and parent_id both not None")
 
-    # Unfortunately, our database does not scale well with many views,
-    # so we have this hack to make sure that unwatched and available
-    # get updated when an item changes
-    def signalChange(self, needsSave=True, needsUpdateUandA=False, needsUpdateXML=True):
+    def signalChange(self, needsSave=True, needsUpdateXML=True):
         self.expiring = None
-        if hasattr(self, "_state"):
+        try:
             del self._state
-        if hasattr(self, "_size"):
+        except:
+            pass
+        try:
             del self._size
-        DDBObject.signalChange(self, needsSave=needsSave)
+        except:
+            pass
         if needsUpdateXML:
             try:
                 del self._itemXML
             except:
                 pass
-        if needsUpdateUandA:
-            try:
-                # If the feed has been deleted, getFeed will throw an exception
-                updateUandA(self.getFeed())
-            except:
-                pass
+        DDBObject.signalChange(self, needsSave=needsSave)
 
     # Returns the rendered download-item template, hopefully from the cache
     #
@@ -376,7 +365,6 @@ class Item(DDBObject):
     ##
     # Moves this item to another feed.
     def setFeed(self, feed_id):
-        updateUandA(self.getFeed())
         self.feed_id = feed_id
         del self._feed
         if self.isContainerItem:
@@ -384,7 +372,6 @@ class Item(DDBObject):
                 del item._feed
                 item.signalChange()
         self.signalChange()
-        updateUandA(self.getFeed())
 
     def executeExpire(self):
         self.confirmDBThread()
@@ -399,7 +386,7 @@ class Item(DDBObject):
         self.seen = self.keep = self.pendingManualDL = False
         self.watchedTime = None
         if self.getFeedURL() != "dtv:manualFeed":
-            self.signalChange(needsUpdateUandA = (UandA != self.getUandA()))
+            self.signalChange()
         else:
             self.remove()
 
@@ -461,7 +448,7 @@ folder will also be deleted.""")
 
     def getUandA(self):
         """Get whether this item is new, or newly-downloaded, or neither."""
-        state = self.getEmblemCSSClass()
+        state = self.getState()
         if state == 'new':
             return (0, 1)
         elif state == 'newly-downloaded':
@@ -542,13 +529,13 @@ folder will also be deleted.""")
             if self.watchedTime is None:
                 self.watchedTime = datetime.now()
             self.clearParentsChildrenSeen()
-            self.signalChange(needsUpdateUandA=True)
+            self.signalChange()
 
     def clearParentsChildrenSeen(self):
         if self.parent_id:
             parent = self.getParent()
             parent.childrenSeen = None
-            parent.signalChange(needsUpdateUandA=True)
+            parent.signalChange()
 
     def markItemUnseen(self):
         self.confirmDBThread()
@@ -565,7 +552,6 @@ folder will also be deleted.""")
             self.watchedTime = None
             self.clearParentsChildrenSeen()
             self.signalChange()
-        updateUandA(self.getFeed())
 
     def getRSSID(self):
         self.confirmDBThread()
@@ -581,7 +567,7 @@ folder will also be deleted.""")
         self.confirmDBThread()
         if autodl != self.autoDownloaded:
             self.autoDownloaded = autodl
-            self.signalChange(needsUpdateUandA=True)
+            self.signalChange()
 
     def getPendingReason(self):
         self.confirmDBThread()
@@ -610,7 +596,7 @@ folder will also be deleted.""")
                 manualDownloadCount >= config.get(prefs.MAX_MANUAL_DOWNLOADS)):
             self.pendingManualDL = True
             self.pendingReason = "queued for download"
-            self.signalChange(needsUpdateUandA=True)
+            self.signalChange()
             return
         else:
             self.setAutoDownloaded(autodl)
@@ -622,7 +608,7 @@ folder will also be deleted.""")
             self.onDownloadFinished()
         else:
             self.downloader.start()
-        self.signalChange(needsUpdateUandA=True)
+        self.signalChange()
 
     def isPendingManualDownload(self):
         self.confirmDBThread()
@@ -775,7 +761,7 @@ folder will also be deleted.""")
         if self.downloader is not None:
             self.downloader.removeItem(self)
             self.downloader = None
-            self.signalChange(needsUpdateUandA=True)
+            self.signalChange()
 
     def getState(self):
         """Get the state of this item.  The state will be on of the following:
@@ -1194,7 +1180,7 @@ folder will also be deleted.""")
             self.updateReleaseDate()
             self._calcFirstEnc()
         finally:
-            self.signalChange(needsUpdateUandA = (UandA != self.getUandA()))
+            self.signalChange()
 
     def onDownloadFinished(self):
         """Called when the download for this item finishes."""
@@ -1202,7 +1188,7 @@ folder will also be deleted.""")
         self.confirmDBThread()
         self.downloadedTime = datetime.now()
         if not self.splitItem():
-            self.signalChange(needsUpdateUandA=True)
+            self.signalChange()
 
         for other in views.items:
             if other.downloader is None and other.getURL() == self.getURL():
@@ -1216,7 +1202,7 @@ folder will also be deleted.""")
         self.confirmDBThread()
         if self.keep != True:
             self.keep = True
-            self.signalChange(needsUpdateUandA=True)
+            self.signalChange()
 
     ##
     # gets the time the video was downloaded
@@ -1291,11 +1277,8 @@ folder will also be deleted.""")
         if not isinstance (self, FileItem) and self.downloader is None:
             self.downloader = downloader.getExistingDownloader(self)
             if self.downloader is not None:
-                self.signalChange(needsSave=False, needsUpdateUandA=False)
+                self.signalChange(needsSave=False)
         self.splitItem()
-        # Do this here instead of onRestore in case the feed hasn't
-        # been loaded yet.
-        updateUandA(self.getFeed())
         # This must come after reconnecting the downloader
         if self.isContainerItem is not None and not os.path.exists(self.getFilename()):
             self.executeExpire()
@@ -1407,7 +1390,7 @@ class FileItem(Item):
         else:
             # external item that the user deleted in DP
             self.deleted = True
-            self.signalChange(needsUpdateUandA=True)
+            self.signalChange()
 
     def expire(self):
         if not self.isExternal():
