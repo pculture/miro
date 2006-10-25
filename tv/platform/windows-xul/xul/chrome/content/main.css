@@ -197,13 +197,10 @@ resizer.side-resizer {
 	color: #FFFFFF;
 }
 
-#bottom-left-addchannel {
+#bottom-left-search {
 	margin: 17px 10px 0px 15px;
 }
 
-#bottom-left-preferences {
-	margin: 17px 0px 0px 0px;
-}
 
 #bottom-center {
 
@@ -340,4 +337,10 @@ wizard.startup {
 
 .startup-indented {
   margin-left: 30px;
+}
+
+.searchbar-dropmarker-image {
+  -moz-margin-start: 12px;
+  margin-top: 8px;
+  list-style-image: url(images/search-arrow.gif);
 }

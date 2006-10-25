@@ -136,6 +136,11 @@ jsBridge.prototype = {
     popup.showPopup(this.document.documentElement, this.lastMouseDownX,
         this.lastMouseDownY, "popup", null, null);
   },
+  showSearchMenu: function() {
+    var popup = this.document.getElementById('searchMenu');
+    var icon = this.document.getElementById('search-textbox');
+    popup.showPopup(icon, -1, -1, "popup", "bottomleft", "topleft");
+  },
 
   showChoiceDialog: function(id, title, description, defaultLabel, otherLabel) {
     var params = { "id": id, "title": title, "description" : description, 
