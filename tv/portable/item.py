@@ -396,8 +396,8 @@ class Item(DDBObject):
         if self.isContainerItem:
             title = _("Deleting %s") % (os.path.basename(self.getTitle()))
             description = _("""\
-This item is a folder.  When you delete a folder, any items inside that \
-folder will also be deleted.""")
+This item is a folder.  When you remove a folder, any items inside that \
+folder will be deleted.""")
             d = dialogs.ChoiceDialog(title, description,
                                      dialogs.BUTTON_DELETE_FILES,
                                      dialogs.BUTTON_CANCEL)
