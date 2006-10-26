@@ -164,18 +164,11 @@
 <hbox flex="0" height="64" id="bottom" class="bottom" align="center">
 <hbox flex="0" container="1" width="245" height="64" minheight="64" id="bottom-left">
 <hbox flex="0" maxheight="29" id="bottom-left-search" >
-      <textbox type="autocomplete" flex="1" id="search-textbox">
+      <textbox type="autocomplete" flex="1" id="search-textbox" onkeydown="onSearchKeyDown(event);">
         <stack onclick="jsbridge.showSearchMenu();">
           <hbox>
-          <image src="images/search_icon_google.png" />
-        <popupset><popup id="searchMenu">
-           <menuitem label="Google" image="chrome://dtv/content/images/search_icon_google.png" class="menuitem-iconic"/>
-           <menuitem label="Yahoo" image="chrome://dtv/content/images/search_icon_yahoo.png" class="menuitem-iconic"/>
-           <menuitem label="You Tube" image="chrome://dtv/content/images/search_icon_youtube.png" class="menuitem-iconic"/>
-           <menuitem label="Revver" image="chrome://dtv/content/images/search_icon_revver.png" class="menuitem-iconic"/>
-           <menuitem label="Blog Digger" image="chrome://dtv/content/images/search_icon_blogdigger.png" class="menuitem-iconic"/>
-</popup></popupset>
-
+          <image id="search-icon" />
+          <popupset><popup id="searchMenu"></popup></popupset>
           </hbox>
           <image class="searchbar-dropmarker-image" />
         </stack>

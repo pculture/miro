@@ -167,8 +167,15 @@ function onLoad() {
     var videoBrowser = document.getElementById("mainDisplayVideo");
     vlc = videoBrowser.contentDocument.getElementById("video1");
 
+    setSearchEngine(pybridge.getLastEngine());
+
     setupHandlers();
     jsdump("onload done");
+}
+
+function setSearchEngine(engine) {
+    var searchIcon = document.getElementById("search-icon");
+    searchIcon.setAttribute("src",'images/search_icon_' + engine + '.png');
 }
 
 // SeekButton is used for both the rewind/previous and fast forward/next
@@ -378,5 +385,17 @@ function onKeyDown(event) {
     } else if(charPressed == 'f') {
       onFullscreenActivate();
     }
+  }
+}
+
+/* This is where the search on chrome events come to hang out */
+function onSearchKeyDown(event) {
+  if(event.keyCode == 13) {
+    /* hack to get engine from the UI */
+    var searchIcon = document.getElementById("search-icon");
+    var iconURL = searchIcon.getAttribute("src")
+    var name = iconURL.substring(19, iconURL.length - 4);
+
+    pybridge.performSearch(name, event.target.value);
   }
 }

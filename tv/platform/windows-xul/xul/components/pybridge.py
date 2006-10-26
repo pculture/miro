@@ -27,6 +27,8 @@ try:
     from frontend_implementation.UIBackendDelegate import UIBackendDelegate
     from eventloop import asUrgent
     from platformutils import getLongPathName
+    import searchengines
+    import views
 except:
     errorOnImport = True
     # get a fallback error message in case we can't import util either
@@ -331,6 +333,26 @@ class PyBridge:
             print "No HTMLDisplay for %s in loadURLInBrowser: "% browserId
         else:
             display.onURLLoad(url)
+
+    @asUrgent
+    def performSearch(self, engine, query):
+        app.controller.performSearch(engine, query)
+
+    def getLastEngine(self):
+        return searchengines.getLastEngine()
+
+    # Returns a list of search engine titles and names
+    # Should we just keep a map of engines to names?
+    def getSearchEngineNames(self):
+        out = []
+        for engine in views.searchEngines:
+            out.append(engine.name)
+        return out
+    def getSearchEngineTitles(self):
+        out = []
+        for engine in views.searchEngines:
+            out.append(engine.title)
+        return out
 
     def showCursor(self, display):
         # ShowCursor has an amazing API.  From Microsoft:

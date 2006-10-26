@@ -138,8 +138,22 @@ jsBridge.prototype = {
   },
   showSearchMenu: function() {
     var popup = this.document.getElementById('searchMenu');
-    var icon = this.document.getElementById('search-textbox');
-    popup.showPopup(icon, -1, -1, "popup", "bottomleft", "topleft");
+    while (popup.firstChild) {
+      popup.removeChild(popup.firstChild);
+    }
+    var engines = pybridge.getSearchEngineNames();
+    var engineTitles = pybridge.getSearchEngineTitles();
+    for (var i = 0; i < engines.length; i++) {
+        var newItem = this.document.createElement('menuitem');
+        newItem.setAttribute("label", engineTitles[i]);
+        newItem.setAttribute("image", "chrome://dtv/content/images/search_icon_" + engines[i] + ".png");
+        newItem.setAttribute("class", "menuitem-iconic");
+        newItem.setAttribute("oncommand", 
+           "setSearchEngine('" + engines[i] + "');");
+        popup.appendChild(newItem);
+    }
+    var textbox = this.document.getElementById('search-textbox');
+    popup.showPopup(textbox, -1, -1, "popup", "bottomleft", "topleft");
   },
 
   showChoiceDialog: function(id, title, description, defaultLabel, otherLabel) {

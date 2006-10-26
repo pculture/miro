@@ -83,4 +83,7 @@ def getSearchEnginesHTML ():
         enginesHTML += u'</option>'
     enginesHTML += u'</select>'
     return enginesHTML.encode("utf8")
-\
+
+def getLastEngine():
+    searchFeed = util.getSingletonDDBObject (views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search'))
+    return searchFeed.lastEngine
