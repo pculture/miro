@@ -1025,8 +1025,8 @@ downloaded?""")
         handler = TemplateActionHandler(None, None)
         handler.updateLastSearchEngine(engine)
         handler.updateLastSearchQuery(query)
-        self.selection.selectTabByTemplateBase('searchtab')
         handler.performSearch(engine, query)
+        self.selection.selectTabByTemplateBase('searchtab')
 
     ### ----
 
@@ -1518,7 +1518,10 @@ class GUIActionHandler:
             if dialog.choice == dialogs.BUTTON_CREATE_CHANNEL:
                 self.addFeed(dialog.getURL())
         dialog = dialogs.SearchChannelDialog(term, style, location)
-        dialog.run(doAdd)
+        if location == None:
+            dialog.run(doAdd)
+        else:
+            self.addFeed(dialog.getURL())
 
     def addChannelSearchFeed(self, term, id):
         self.addSearchFeed(term, dialogs.SearchChannelDialog.CHANNEL, int(id))
