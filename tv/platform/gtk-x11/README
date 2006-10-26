@@ -78,9 +78,6 @@ To build:
 Ubuntu:
 -------
 
-To run:
-    TODO do something
-
-To build:
-    TODO do something
-
+To build and run:
+   sudo apt-get install python-pyrex libboost-python-dev python-gtk2-dev python-gnome2-extras-dev mozilla-dev libxine-dev
+   ./run.sh
