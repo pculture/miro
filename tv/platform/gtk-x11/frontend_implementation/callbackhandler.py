@@ -352,6 +352,7 @@ class CallbackHandler(object):
         folder.createNewChannelFolder()
 
     def on_preference(self, event = None):
+        import autodler
         # get our add channel dialog
         movie_dir = config.get(prefs.MOVIES_DIRECTORY)
         if config.get(prefs.PRESERVE_DISK_SPACE):
@@ -367,6 +368,7 @@ class CallbackHandler(object):
         AttachInteger (widgetTree['spinbutton-limit'], prefs.UPSTREAM_LIMIT_IN_KBS)
         AttachInteger (widgetTree['spinbutton-bt-min-port'], prefs.BT_MIN_PORT)
         AttachInteger (widgetTree['spinbutton-bt-max-port'], prefs.BT_MAX_PORT)
+        AttachInteger (widgetTree['spinbutton-max-manual'], prefs.MAX_MANUAL_DOWNLOADS)
         AttachFloat(widgetTree['spinbutton-padding'], prefs.PRESERVE_X_GB_FREE)
         AttachCombo (widgetTree['combobox-poll'], prefs.CHECK_CHANNELS_EVERY_X_MN, (30, 60, -1))
         AttachCombo (widgetTree['combobox-expiration'], prefs.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))
@@ -380,6 +382,7 @@ class CallbackHandler(object):
         chooser.set_filename (movie_dir + "/")
         # run the dialog
         response = dialog.run()
+        autodler.updatePrefs()
         new_movie_dir = widgetTree['filechooserbutton-movies-directory'].get_filename()
         if (movie_dir != new_movie_dir):
             print "NEW: %r" % new_movie_dir

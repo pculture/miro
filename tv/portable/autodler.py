@@ -64,6 +64,15 @@ class Downloader:
             self.newItems.addAddCallback(self.newOnAdd)
             self.newItems.addRemoveCallback(self.newOnRemove)
 
+    def updateMAX(self):
+        if self.is_auto:
+            newmax = config.get(prefs.DOWNLOADS_TARGET)
+        else:
+            newmax = config.get(prefs.MAX_MANUAL_DOWNLOADS)
+        if newmax != self.MAX:
+            self.MAX = newmax
+            self.startDownloads()
+
     def startDownloadsIdle(self):
         last_count = 0
         while self.running_count < self.MAX and self.pending_count > 0 and self.pending_count != last_count:
@@ -134,3 +143,7 @@ def startDownloader():
     global autoDownloader
     manualDownloader = Downloader(False)
     autoDownloader = Downloader(True)
+
+def updatePrefs():
+    manualDownloader.updateMAX()
+    autoDownloader.updateMAX()
