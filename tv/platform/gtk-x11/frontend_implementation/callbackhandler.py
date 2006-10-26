@@ -18,6 +18,7 @@ import dialogs
 import folder
 import playlist
 import platformutils
+import startup
 from gtcache import gettext as _
  
 def AttachBoolean (widget, descriptor, sensitive_widget = None):
@@ -365,6 +366,7 @@ class CallbackHandler(object):
         dialog.set_transient_for(mainWindow)
         AttachBoolean (widgetTree['checkbutton-limit'], prefs.LIMIT_UPSTREAM, widgetTree['spinbutton-limit'])
         AttachBoolean (widgetTree['checkbutton-padding'], prefs.PRESERVE_DISK_SPACE, widgetTree['spinbutton-padding'])
+        AttachBoolean (widgetTree['checkbutton-autorun'], prefs.RUN_DTV_AT_STARTUP)
         AttachInteger (widgetTree['spinbutton-limit'], prefs.UPSTREAM_LIMIT_IN_KBS)
         AttachInteger (widgetTree['spinbutton-bt-min-port'], prefs.BT_MIN_PORT)
         AttachInteger (widgetTree['spinbutton-bt-max-port'], prefs.BT_MAX_PORT)
@@ -393,10 +395,10 @@ class CallbackHandler(object):
                     response == gtk.RESPONSE_YES)
 
             migrate_dialog.destroy()
-
+        dialog.destroy()
         if config.get(prefs.BT_MAX_PORT) < config.get(prefs.BT_MIN_PORT):
             config.set(prefs.BT_MAX_PORT, config.get(prefs.BT_MIN_PORT))
-        dialog.destroy()
+        startup.updateAutostart()
         if config.get(prefs.PRESERVE_DISK_SPACE):
             new_disk = config.get(prefs.PRESERVE_X_GB_FREE)
         else:

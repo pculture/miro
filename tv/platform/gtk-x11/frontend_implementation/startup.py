@@ -6,6 +6,8 @@ import os
 import shutil
 from threading import Thread
 import util
+import config
+import prefs
 from gtcache import gettext as _
 from gtcache import ngettext
 
@@ -162,21 +164,35 @@ def performStartupTasks(terminationCallback):
             gtk_queue.queue.call_nowait(lambda : terminationCallback(None))
             return
     gtk_queue.queue.call_nowait(lambda : terminationCallback(status['files']))
-    if widgetTree['radiobutton-startup-autostart-yes'].get_active():
-        config_home = os.environ.get ('XDG_CONFIG_HOME',
-                                      '~/.config')
-        config_home = os.path.expanduser (config_home)
-        autostart_dir = os.path.join (config_home, "autostart")
-        destination = os.path.join (autostart_dir, "democracyplayer.desktop")
+    config.set(prefs.RUN_DTV_AT_STARTUP, widgetTree['radiobutton-startup-autostart-yes'].get_active())
+    updateAutostart()
+    try:
+        dialog.destroy()
+    except:
+        pass
+
+def updateAutostart():
+    config_home = os.environ.get ('XDG_CONFIG_HOME',
+                                  '~/.config')
+    config_home = os.path.expanduser (config_home)
+    autostart_dir = os.path.join (config_home, "autostart")
+    destination = os.path.join (autostart_dir, "democracyplayer.desktop")
+    if config.get(prefs.RUN_DTV_AT_STARTUP):
+        if os.path.exists(destination):
+            return
         try:
             os.makedirs(autostart_dir)
         except:
             pass
         try:
-            shutil.copy (resources.sharePath('applications/democracyplayer.desktop'), autostart_dir)
+            shutil.copy (resources.sharePath('applications/democracyplayer.desktop'), destination)
         except:
             pass
-    try:
-        dialog.destroy()
-    except:
-        pass
+    else:
+        if not os.path.exists(destination):
+            return
+        try:
+            os.remove (destination)
+            os.removedirs(autostart_dir)
+        except:
+            pass
