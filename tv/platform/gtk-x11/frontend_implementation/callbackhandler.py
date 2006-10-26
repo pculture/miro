@@ -406,5 +406,12 @@ class CallbackHandler(object):
         print "Donate unimplemented"
 
     def on_delete(self, event = None):
-            eventloop.addUrgentCall(app.controller.removeCurrentSelection, 
-                    "remove current selection")
+        eventloop.addUrgentCall(app.controller.removeCurrentSelection, 
+                "remove current selection")
+
+    def on_button_chrome_search_go_clicked (self, event=None):
+        widgetTree = self.mainFrame.widgetTree
+        term = widgetTree["entry-chrome-search-term"].get_text()
+        iter = widgetTree["combobox-chrome-search-engine"].get_active_iter()
+        (engine,) = widgetTree["combobox-chrome-search-engine"].get_model().get(iter, 0)
+        eventloop.addIdle (lambda:app.controller.performSearch (engine, term), "Search for %s on %s" % (term, engine))

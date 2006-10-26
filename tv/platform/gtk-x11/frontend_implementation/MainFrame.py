@@ -109,10 +109,18 @@ class MainFrame:
         self.isFullscreen = False
         self.aboutWidget = None
         self.currentVideoFilename = None
-        self._gtkInit()
+
+        import views, util, indexes
+        engines = []
+        for engine in views.searchEngines:
+            engines.append((engine.name, engine.title))
+        searchFeed = util.getSingletonDDBObject (views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search'))
+        default_engine = searchFeed.lastEngine
+
+        self._gtkInit(engines, default_engine)
 
     @gtkAsyncMethod
-    def _gtkInit(self):
+    def _gtkInit(self, engines, default_engine):
         # Create the widget tree, and remember important widgets
         platformutils.confirmMainThread()
         self.widgetTree = WidgetTree(resources.path('democracy.glade'), 'main-window', 'democracyplayer')
@@ -157,6 +165,19 @@ class MainFrame:
         self.widgetTree['main-window'].add_accel_group(self.uiManager.get_accel_group())
 
         self.widgetTree['volume-scale'].set_value (config.get(prefs.VOLUME_LEVEL))
+
+        store = gtk.ListStore(gobject.TYPE_STRING, gobject.TYPE_STRING)
+        select_iter = None
+        for name, title in engines:
+            iter = store.append((name, title))
+            if select_iter is None or default_engine == name:
+                select_iter = iter
+        cell = gtk.CellRendererText()
+        combo = self.widgetTree["combobox-chrome-search-engine"]
+        combo.pack_start(cell, True)
+        combo.add_attribute(cell, 'text', 1)
+        combo.set_model (store)
+        combo.set_active_iter(select_iter)
 
         self.windowChanger = MainWindowChanger(self.widgetTree, self,
                 MainWindowChanger.BROWSING)
