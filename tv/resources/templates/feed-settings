@@ -23,7 +23,7 @@ feed = views.feeds.getObjectByID(int(kargs['id']))
 	<div id="settings-inner">
 	<div id="channel-url"><span t:replace="feed.getURL()" 
 class="selectable" /></div>
-	<h2>Settings for <span t:replaceMarkup="feed.getTitle()" /></h2> 
+	<h2 i18n:translate="">Settings for <span i18name="title" t:replaceMarkup="feed.getTitle()" /></h2> 
 				
 		<div id="actual-settings">
 		
@@ -86,13 +86,13 @@ i18n:translate="">get everything on this channel.</option>
 		<span i18n:translate="">Don't Auto Download when more than 
 		<input i18n:name="maxnew" name="maxNew" type="text" size="3" value="3" disabled="1" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() != 'unlimited'"/>
 		<input i18n:name="maxnew2" name="maxNew" type="text" size="3" value="@@@feed.getMaxNew()@@@" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() == 'unlimited'"/>
-		videos are waiting unwatched.</span><div class="settings-small">Prevents this channel from using unlimited disk space.</div>
+		videos are waiting unwatched.</span><div i18n:translate="" class="settings-small">Prevents this channel from using unlimited disk space.</div>
 <br />
 	    <div class="gray-button-wrap settings-button">
 		    <div id="feed-settings-close-button" class="gray-button-bg" style="width: 150px;" onclick="return hideSettings()" >
                 <div class="gray-button-left" />
                 <div class="gray-button-right" />
-                <div class="gray-button-content">Close Settings</div>
+                <div i18:translate="" class="gray-button-content">Close Settings</div>
             </div>
 	</div>
  	</div>         
