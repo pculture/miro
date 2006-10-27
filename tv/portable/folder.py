@@ -141,7 +141,7 @@ class ChannelFolder(FolderBase):
         available = 0
         for child in self.getChildrenView():
             if child.showA():
-                available += child.available
+                available += child.numAvailable()
         return available
     
 class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
