@@ -310,6 +310,8 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.inExecOnUnload = False
         self.inExecOnLoad = False
         self.repeatDepth = 0
+        self.hotspotDepth = -1
+        self.hotspotTagName = ''
         self.replaceDepth = 0
         self.hiding = False
         self.hideDepth = []
@@ -446,6 +448,8 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             self.handle.addTriggerActionURLOnLoad(attrs['url'])
         elif name == 't:triggerActionOnUnload':
             self.handle.addTriggerActionURLOnUnload(attrs['url'])
+        elif 't:hotspot' in attrs.keys():
+            self.addHotspot(name, attrs['t:hotspot'])
         else:
             self.addElementStart(name, attrs)
 
@@ -510,6 +514,9 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                                      self.depth == self.translateDepth[-1]):
             self.addTranslation()
             self.addText('</%s>'%name)
+        elif self.depth == self.hotspotDepth:
+            self.addText("</%s><!-- HOT SPOT END -->" % self.hotspotTagName)
+            self.hotspotDepth = -1
         elif name == 't:execOnUnload':
             self.inExecOnUnload = False
             self.handle.addExecOnUnload(self.code)
@@ -647,33 +654,42 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.addInstruction(genUpdateHideOnView,(viewName, ifValue, attrs, nodeId))
 
     def addAttr(self, attr, value):
+        self.addText(' %s="' % attr)
+        self.addDynamicText(value)
+        self.addText('"')
+
+    def addDynamicText(self, value):
         match = attrPattern.match(value)
         if match:
-            self.addText(' %s="' % attr)
             while match:
                 self.addText(quoteattr(match.group(1)))
                 self.addInstruction(genQuoteAttr,match.group(2))
                 value = match.group(3)
                 match = attrPattern.match(value)
-            self.addText('%s"' % quoteattr(value))
+            self.addText('%s' % quoteattr(value))
         else:
             match = rawAttrPattern.match(value)
             if match:
-                self.addText(' %s="' % attr)
                 while match:
                     self.addText(quoteattr(match.group(1)))
                     self.addInstruction(genRawAttr,match.group(2))
                     value = match.group(3)
                     match = rawAttrPattern.match(value)
-                self.addText('%s"' % quoteattr(value))
+                self.addText('%s' % quoteattr(value))
             else:
-                self.addText(' %s="' % attr)
                 match = resourcePattern.match(value)
                 if match:
                     self.addInstruction(genRepeatEval,'resources.url(%s)'%repr(match.group(1)))
                 else:
                     self.addText(quoteattr(value))
-                self.addText('"')
+
+    def addHotspot(self, name, id):
+        self.hotspotDepth = self.depth
+        self.hotspotTagName = name
+        self.addText("<!-- HOT SPOT ")
+        self.addDynamicText(id)
+        self.addText(" -->")
+        self.addElementStart(name, {'id': id})
 
     def addEval(self,replace):
         self.addInstruction(genRepeatEval,replace)

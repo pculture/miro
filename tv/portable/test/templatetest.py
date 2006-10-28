@@ -11,6 +11,7 @@ import app
 import maps
 
 from template import *
+import templateoptimize
 from time import time
 import database
 import gettext
@@ -305,3 +306,95 @@ class TemplatePerformance(DemocracyTestCase):
         tch.read()
         handle.initialFillIn()
         handle.unlinkTemplate()
+
+class OptimizedAttributeChangeTest(DemocracyTestCase):
+    def setUp(self):
+        self.changer = templateoptimize.XMLChangeOptimizer()
+
+    def checkChange(self, id, newXML, attributesDiff, htmlChanged):
+        changes = self.changer.calcChanges('abc123', newXML)
+        self.assertEquals(len(changes), 1)
+        self.assertEquals(changes[0][0], id)
+        self.assertEquals(changes[0][1], newXML)
+        self.assertEquals(changes[0][2], attributesDiff)
+        self.assertEquals(changes[0][3] is not None, htmlChanged)
+
+    def testBigChange(self):
+        first = '<div class="item" id="abc123">foo</div>'
+        second = '<div class="item" id="abc123">bar</div>'
+        self.changer.setInitialXML('abc123', first)
+        self.checkChange('abc123', second, {}, True)
+
+    def testNoChange(self):
+        first = '<div class="item" id="abc123">foo</div>'
+        self.changer.setInitialXML('abc123', first)
+        changes = self.changer.calcChanges('abc123', first)
+        self.assertEquals(len(changes), 0)
+
+    def testAttributeChange(self):
+        first = '<div class="item" id="abc123">foo</div>'
+        second = '<div class="item highlighed" id="abc123">foo</div>'
+        self.changer.setInitialXML('abc123', first)
+        self.checkChange('abc123', second, {'class': 'item highlighed'},
+                False)
+
+    def testMultipleChanges(self):
+        first = '<div class="item" id="abc123">foo</div>'
+        second = '<div class="item highlighed" id="abc123">foo</div>'
+        third = '<div class="item highlighed" id="abc123">bar</div>'
+        fourth = '<div class="item" id="abc123">bar</div>'
+        self.changer.setInitialXML('abc123', first)
+        self.checkChange('abc123', second, {'class': 'item highlighed'},
+                False)
+        self.checkChange('abc123', third, {}, True)
+        self.checkChange('abc123', fourth, {'class': 'item'}, False)
+
+    def testChangeWithoutInitalHTML(self):
+        first = '<div class="item" id="abc123">foo</div>'
+        self.assertRaises(KeyError, self.changer.calcChanges, 'abc123', first)
+
+class HotspotOptimizedTest(DemocracyTestCase):
+    def setUp(self):
+        self.changer = templateoptimize.XMLChangeOptimizer()
+
+    def makeHotspotArea(self, outertext, innertext):
+        return """\
+<div id="outer">
+   <p>%s</p>
+   <!-- HOT SPOT inner --><span id="inner">%s</span><!-- HOT SPOT END -->
+</div>""" % (outertext, innertext)
+
+    def makeMultiHotspotArea(self, outertext, innertext, innertext2):
+        return """\
+<div id="outer">
+   <p>%s</p>
+   <!-- HOT SPOT inner --><span id="inner">%s</span><!-- HOT SPOT END -->
+   <!-- HOT SPOT inner-2 --><span id="inner-2">%s</span><!-- HOT SPOT END -->
+</div>""" % (outertext, innertext, innertext2)
+
+    def checkChange(self, newXML, *shouldChangeIDs):
+        changes = self.changer.calcChanges('outer', newXML)
+        actuallyChanged = [c[0] for c in changes]
+        self.assertEquals(set(shouldChangeIDs), set(actuallyChanged))
+
+    def testHotspotChange(self):
+        first = self.makeHotspotArea('booya', 'booyaka')
+        second = self.makeHotspotArea('booya', 'booyaka booyaka')
+        self.changer.setInitialXML('outer', first)
+        self.checkChange(second, 'inner')
+
+    def testOutsideHotspotChange(self):
+        first = self.makeHotspotArea('foo', 'booyaka')
+        second = self.makeHotspotArea('bar', 'booyaka booyaka')
+        self.changer.setInitialXML('outer', first)
+        self.checkChange(second, 'outer')
+
+    def testMultipleHotspots(self):
+        first = self.makeMultiHotspotArea('foo', 'apples', 'bananas')
+        second = self.makeMultiHotspotArea('foo', 'apples', 'pears')
+        third = self.makeMultiHotspotArea('foo', 'kiwi', 'starfruit')
+        fourth = self.makeMultiHotspotArea('bar', 'kiwi', 'starfruit')
+        self.changer.setInitialXML('outer', first)
+        self.checkChange(second, 'inner-2')
+        self.checkChange(third, 'inner', 'inner-2')
+        self.checkChange(fourth, 'outer')

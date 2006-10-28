@@ -64,6 +64,7 @@ viewName = kargs['viewName']
             <img src="resource:images/mini-star.png" /> <span i18n:translate="">STAR IT</span>
         </a>
     </div>
+    <div t:hotspot="download-progress-***viewName***-***this.getID()***">
     <div t:showIf="this.getState() == 'downloading'"
             class="main-video-details-download-info">
         <div t:showIf="this.gotContentLength()">
@@ -91,6 +92,7 @@ viewName = kargs['viewName']
            <span t:replace="this.getStartupActivity()" />
         </div>
         <a class="main-progress-cancel" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" title="Cancel Download" />
+    </div>
     </div>
     <div t:showIf="this.getExpiring()" 
             class="main-video-details-download-info expiring">

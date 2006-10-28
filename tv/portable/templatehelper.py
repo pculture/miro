@@ -11,9 +11,8 @@ import re
 import traceback
 import random
 import types
+from itertools import izip
 from xhtmltools import toUTF8Bytes, urlencode
-from xml.sax.expatreader import ExpatParser
-from xml.sax.handler import ContentHandler
 
 HTMLPattern = re.compile("^.*<body.*?>(.*)</body\s*>", re.S)
 attrPattern = re.compile("^(.*?)@@@(.*?)@@@(.*)$")
@@ -52,40 +51,7 @@ def toUni(orig, encoding = None):
             _unicache[orig] = unicode(orig,'utf-8')
         return _unicache[orig]
 
-class SingleElementHandler(ContentHandler):
-    def __init__(self):
-        self.started = False
-        ContentHandler.__init__(self)
-    def startElement(self, name, attrs):
-        self.name = name
-        self.attrs = attrs
-        self.started = True
-    def reset(self):
-        self.started = False
-
-
-def breakXML(xml):
-    """Take xml data and break it down into the outermost tag, and the
-    inner xml.  
-    Returns the tuple (<outermost-tag-name>, <outermost-tag-attrs>, <inner
-    xml>)
-    """
-
-    parser = ExpatParser()
-    handler = SingleElementHandler()
-    parser.setContentHandler(handler)
-    pos = 0
-    while not handler.started:
-        end_candidate = xml.find(">", pos)
-        if end_candidate < 0:
-            raise ValueError("Can't find start tag in %s" % xml)
-        parser.feed(xml[pos:end_candidate+1])
-        pos = end_candidate+1
-    end_tag_pos = xml.rfind("</")
-    innerXML = xml[pos:end_tag_pos]
-    return handler.name, handler.attrs, innerXML
 
 # Generate an arbitrary string to use as an ID attribute.
 def generateId():
     return "tmplcomp%08d" % random.randint(0,99999999)
-

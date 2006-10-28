@@ -5,7 +5,8 @@
 import os
 import config
 import eventloop
-from templatehelper import quoteattr, escape, attrPattern, rawAttrPattern, resourcePattern, generateId, breakXML
+from templatehelper import quoteattr, escape, attrPattern, rawAttrPattern, resourcePattern, generateId
+from templateoptimize import HTMLChangeOptimizer
 from xhtmltools import urlencode, toUTF8Bytes
 from itertools import chain
 
@@ -98,29 +99,6 @@ class TemplateError(Exception):
 #### template runtime code                                                 ####
 ###############################################################################
 
-def calcNewInnerHTML(oldInnerHTML, newInnerHTML):
-    """Calculate the newInnerHTML argument to pass to HTMLArea.changeItem.
-    """
-    if oldInnerHTML != newInnerHTML:
-        return newInnerHTML
-    else:
-        return None
-
-def calcAttributeChanges(oldAttrs, newAttrs):
-    """Calculate the difference between two attribute dicts.  Returns a dict
-    with entries for each key that has changed.  Keys that have been removed
-    will have None values.
-    """
-
-    changes = dict(newAttrs)
-    for key, value in oldAttrs.items():
-        try:
-            if changes[key] == value:
-                del changes[key] # attribute stayed the same
-        except KeyError:
-            changes[key] = None # attribute was removed
-    return changes
-
 # Class used internally by Handle to track a t:repeatForSet clause.
 class TrackedView:
     def __init__(self, anchorId, anchorType, view, templateFunc, parent, name):
@@ -133,6 +111,7 @@ class TrackedView:
         self.view = view.map(IDAssignmentInView(id(self)).mapper)
         self.templateFunc = templateFunc
         self.parent = parent
+        self.htmlChanger = parent.htmlChanger
         self.name = name
         self.toChange = {}
         self.toRemove = []
@@ -151,7 +130,7 @@ class TrackedView:
         #start = time.clock()
         xmls = []
         for x in self.view:
-            xmls.append(self.currentXML(x))
+            xmls.append(self.initialXML(x))
         # Web Kit treats adding the empty string like adding "&nbsp;",
         # so we don't add the HTML unless it's non-empty
         if len(xmls) > 0:
@@ -166,39 +145,27 @@ class TrackedView:
         self.view.removeAddCallback(self.onAdd)
         self.view.removeRemoveCallback(self.onRemove)
 
-    def currentXML(self, item):
-        xml = self.templateFunc(item.object, self.name, self.origView, item.tid).read()
-        name, attrs, innerHTML = breakXML(xml)
-        self.currentAttrs[item.tid] = attrs
-        self.currentInnerHTMLs[item.tid] = innerHTML
+    def initialXML(self, item):
+        xml = self.currentXML(item)
+        self.htmlChanger.setInitialHTML(item.tid, xml)
         return xml
 
-    def calcAttributeChanges(self, oldAttrs, tid):
-        return calcAttributeChanges(oldAttrs, self.currentAttrs[tid])
-
-    def calcChanges(self, obj):
-        tid = obj.tid
-        oldAttrs = self.currentAttrs[tid]
-        oldInnerHTML = self.currentInnerHTMLs[tid]
-        xml = self.currentXML(obj)
-        attrDiff = calcAttributeChanges(oldAttrs, self.currentAttrs[tid])
-        newInnerHTML = calcNewInnerHTML(oldInnerHTML,
-                self.currentInnerHTMLs[tid])
-        return (xml, attrDiff, newInnerHTML)
+    def currentXML(self, item):
+        xml = self.templateFunc(item.object, self.name, self.origView, item.tid).read()
+        return xml
 
     def callback (self):
         if self.parent.domHandler:
             if len (self.toAdd) > 0:
-                adds = [self.currentXML(obj) for obj in self.toAdd]
+                adds = [self.initialXML(obj) for obj in self.toAdd]
                 addXml = "".join (adds)
                 self.doAdd(addXml)
 
             changes = []
             for id in self.toChange:
                 obj = self.toChange[id]
-                xml, attrDiff, newInnerHTML = self.calcChanges(obj)
-                if attrDiff or newInnerHTML:
-                    changes.append((obj.tid, xml, attrDiff, newInnerHTML))
+                xml = self.currentXML(obj)
+                changes.extend(self.htmlChanger.calcChanges(obj.tid, xml))
             if len(changes) > 0:
                 self.parent.domHandler.changeItems(changes)
 
@@ -293,6 +260,7 @@ class UpdateRegionBase:
 
         self.templateFunc = templateFunc
         self.parent = parent
+        self.htmlChanger = self.parent.htmlChanger
         self.tid = generateId()
         self.idle_queued = False
         self.currentAttrs = None
@@ -303,14 +271,12 @@ class UpdateRegionBase:
     # data for each view and register callbacks to keep it updated
     def initialFillIn(self):
         if self.parent.domHandler:
-            self.parent.domHandler.addItemBefore(self.currentXML(), self.anchorId)
+            self.parent.domHandler.addItemBefore(self.initialXML(), self.anchorId)
         self.hookupCallbacks()
 
-    def currentXML(self):
+    def initialXML(self):
         xml = self.renderXML()
-        name, attrs, innerHTML = breakXML(xml)
-        self.currentAttrs = attrs
-        self.currentInnerHTML = innerHTML
+        self.htmlChanger.setInitialHTML(self.tid, xml)
         return xml
 
     def onChange(self, *args, **kwargs):
@@ -319,14 +285,10 @@ class UpdateRegionBase:
             self.idle_queued = True
 
     def doChange(self):
-        oldAttrs = self.currentAttrs
-        oldInnerHTML = self.currentInnerHTML
-        xmlString = self.currentXML()
-        attrDiff = calcAttributeChanges(oldAttrs, self.currentAttrs)
-        newInnerHTML = calcNewInnerHTML(oldInnerHTML, self.currentInnerHTML)
-        if self.parent.domHandler and (attrDiff or newInnerHTML):
-            self.parent.domHandler.changeItem(self.tid, xmlString, attrDiff,
-                    newInnerHTML)
+        xml = self.renderXML()
+        changes = self.parent.htmlChanger.calcChanges(self.tid, xml)
+        if changes and self.parent.domHandler:
+            self.parent.domHandler.changeItems(changes)
         self.idle_queued = False
 
 class UpdateRegion(UpdateRegionBase):
@@ -384,6 +346,7 @@ class Handle:
         self.triggerActionURLsOnLoad = []
         self.triggerActionURLsOnUnload = []
         self.onUnlink = onUnlink
+        self.htmlChanger = HTMLChangeOptimizer()
         
     def addTriggerActionURLOnLoad(self,url):
         self.triggerActionURLsOnLoad.append(str(url))
