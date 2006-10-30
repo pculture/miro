@@ -7,6 +7,7 @@ import app
 import prefs
 import config
 import dialogs
+import autodler
 import eventloop
 
 NibClassBuilder.extractClasses("PreferencesWindow")
@@ -133,6 +134,7 @@ class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
         self.limitUpstreamCheckBox.setState_(limit and NSOnState or NSOffState)
         self.limitValueField.setEnabled_(limit)
         self.limitValueField.setIntValue_(config.get(prefs.UPSTREAM_LIMIT_IN_KBS))
+        self.maxDownloadsField.setIntValue_(config.get(prefs.MAX_MANUAL_DOWNLOADS))
         btMinPort = config.get(prefs.BT_MIN_PORT)
         self.btMinPortField.setIntValue_(btMinPort)
         btMaxPort = config.get(prefs.BT_MAX_PORT)
@@ -172,7 +174,12 @@ class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
                     app.changeMoviesDirectory(newMoviesDirectory, migrate)
                 dlog = dialogs.ChoiceDialog(summary, message, dialogs.BUTTON_YES, dialogs.BUTTON_NO)
                 dlog.run(migrationCallback)
-                
+    
+    def setMaxDownloads_(self, sender):
+        maxDownloads = self.maxDownloadsField.intValue()
+        config.set(prefs.MAX_MANUAL_DOWNLOADS, maxDownloads)
+        autodler.updatePrefs()
+
     def setBTMinPort_(self, sender):
         self.validateBTPortValues()
     

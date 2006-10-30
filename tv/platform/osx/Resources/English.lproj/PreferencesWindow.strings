@@ -1,7 +1,7 @@
 /* NSWindow () : <title:> (oid:5) */
 "" = "";
 
-/* NSTextField ( limit upstream to) : <title: limit upstream to> (oid:32) */
+/* NSButton ( limit upstream to) : <title: limit upstream to> (oid:30) */
 " limit upstream to" = " limit upstream to";
 
 /* NSTextField ((You must restart Democracy for this change to take effect) ) : <title:(You must restart Democracy for this change to take effect)
@@ -26,7 +26,7 @@
 /* NSMenuItem : <title:3 hours> (oid:82) */
 "3 hours" = "3 hours";
 
-/* NSTextField (4) : <title:4> (oid:50) */
+/* NSTextField (4) : <title:4> (oid:130) */
 "4" = "4";
 
 /* NSTextField (1) : <title:5> (oid:48) */
@@ -55,6 +55,9 @@
 
 /* NSButton (Don't start a download if it leaves less than) : <title:Don't start a download if it leaves less than> (oid:74) */
 "Don't start a download if it leaves less than" = "Don't start a download if it leaves less than";
+
+/* NSTextField (Download at most) : <title:Download at most> (oid:129) */
+"Download at most" = "Download at most";
 
 /* NSTextField (GB free.) : <title:GB free.> (oid:45) */
 "GB free." = "GB free.";
@@ -86,8 +89,8 @@
 /* NSTextField (Store downloaded movies in:) : <title:Store downloaded movies in:> (oid:92) */
 "Store downloaded movies in:" = "Store downloaded movies in:";
 
-/* NSButton (To avoid internet slowdowns,) : <title:To avoid internet slowdowns,> (oid:30) */
-"To avoid internet slowdowns," = "To avoid internet slowdowns,";
+/* NSTextField (To avoid internet slowdowns:) : <title:To avoid internet slowdowns:> (oid:128) */
+"To avoid internet slowdowns:" = "To avoid internet slowdowns:";
 
 /* NSMenuItem : <title:every 30 minutes> (oid:27) */
 "every 30 minutes" = "every 30 minutes";
@@ -97,4 +100,7 @@
 
 /* NSMenuItem : <title:manually> (oid:28) */
 "manually" = "manually";
+
+/* NSTextField (videos at once.) : <title:videos at once.> (oid:132) */
+"videos at once." = "videos at once.";
 

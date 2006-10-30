@@ -24,6 +24,7 @@
                 limitUpstream = id; 
                 setBTMaxPort = id; 
                 setBTMinPort = id; 
+                setMaxDownloads = id; 
                 setUpstreamLimit = id; 
             }; 
             CLASS = DownloadsPrefsController; 
@@ -33,6 +34,7 @@
                 btMinPortField = id; 
                 limitUpstreamCheckBox = id; 
                 limitValueField = id; 
+                maxDownloadsField = id; 
                 moviesDirectoryField = id; 
             }; 
             SUPERCLASS = NSObject; 
