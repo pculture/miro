@@ -33,7 +33,7 @@ searchEngines = views.searchEngines
 	<div id="main-subtitle">
 	     <form name="search" onsubmit="performSearch(); return false;">
 	     <t:staticReplaceMarkup t:replaceData="searchengines.getSearchEnginesHTML()"/>
-	     <input id="search-box" type="search" name="query" value="***feed.quoteLastQuery()***" placeholder="" onKeyUp="fillSearch()" onKeyPress="validateSearch(event)" />
+	     <input id="search-box" type="search" name="query" value="***feed.quoteLastQuery()***" onKeyUp="fillSearch()" onKeyPress="validateSearch(event)" />
 	     <input type="submit" value="GO" />      
 	     </form>
 	 </div>

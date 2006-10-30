@@ -34,7 +34,7 @@ thisPlaylistView.unlink()
                 <h1 id="main-title" t:replaceMarkup="playlist.getTitle()" />
 	    </div>
             <div id="main-subtitle">
-                    <input id="search-box" type="search" placeholder="Search Channel" onfocus="startEditSearch(this, null)" onblur="endEditSearch()" />
+                <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Search Playlist')***"/>
             </div>
         </div>
 </div>

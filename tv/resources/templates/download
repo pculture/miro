@@ -72,7 +72,7 @@ matchingPendingDLs.unlink()
 	<div id="main-titlebar-center">
             <h1 id="main-title" i18n:translate="">Downloading</h1>
             <div id="main-subtitle">
-                <input id="search-box" type="search" placeholder="***_('Search')***" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Search')***"/>
+                <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Search')***"/>
             </div>
 	</div>
 	<div t:updateForConfigChange="">
