@@ -109,6 +109,7 @@ if feed.idExists():
 </div>
     
 <!-- TITLE BAR ************************************************************ -->
+
 <div id="main-titlebar">
         <img id="main-icon" src="***feed.getThumbnail()***" alt=""/>
 	<div id="main-titlebar-center">
@@ -116,7 +117,7 @@ if feed.idExists():
                 <h1 id="main-title" t:replaceMarkup="feed.getTitle()" />
 	    </div>
             <div id="main-subtitle">
-                    <input id="search-box" type="search" placeholder="Search Channel" onfocus="startEditSearch(this, null)" onblur="endEditSearch()" />
+                <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Search Channel')***"/>
             </div>
             <div t:updateForView="matchingItems">
             <div t:hideIf="searchTerm is None">

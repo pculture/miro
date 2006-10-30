@@ -75,6 +75,14 @@ var editSearchOldValue = '';
 var editSearchTimer = null;
 var editSearchCallback = null;
 
+function onSearchFocus(obj){
+  if (!obj.searching){
+	obj.value="";
+	obj.searching = '1';
+  }
+  startEditSearch(obj, null);
+}
+
 function startEditSearch(obj, callback) {
   editSearchOldValue = obj.value;
 
