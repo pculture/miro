@@ -121,16 +121,14 @@ def _runCompatibilityCheck(installed, toInstall):
                 toInstall.remove(unsupportedPerian)
 
 def _performInstallation(installList, upgradeList):
-    installCount = len(installList)
-    upgradeCount = len(upgradeList)
-    if installCount > 0 or upgradeCount > 0:
-        message = _buildMessage(installCount, upgradeCount)
+    if len(installList) > 0 or len(upgradeList) > 0:
+        message = _buildMessage(installList, upgradeList)
     else:
         print '     nothing to install or upgrade.'
         return False
 
     dlogTitle = 'QuickTime Components Installation'
-    dlogResult = showWarningDialog(dlogTitle, message, ['Yes', 'No'])
+    dlogResult = showWarningDialog(dlogTitle, message, ['Install', 'Continue without installing'])
     
     proceedAndRestart = (dlogResult == 0)
     if proceedAndRestart:
@@ -144,27 +142,17 @@ def _performInstallation(installList, upgradeList):
 
     return proceedAndRestart
 
-def _buildMessage(installCount, upgradeCount):
-    installPlural = ''
-    if installCount > 1:
-        installPlural = 's'
-    upgradePlural = ''
-    if upgradePlural > 1:
-        upgradePlural = 's'
-
-    message = 'Democracy can now '
-    if installCount > 0 and upgradeCount == 0:
-        message += 'install %d QuickTime component%s.' % (installCount, installPlural)
-    elif installCount == 0 and upgradeCount > 0:
-        message += 'upgrade %d outdated QuickTime component%s ' % (upgradeCount, upgradePlural)
-        message += '(old component%s will be moved to the Trash).' % (upgradePlural,)
-    elif installCount > 0 and upgradeCount > 0:
-        message += 'install %d QuickTime component%s ' % (installCount, installPlural)
-        message += 'and upgrade %d outdated one%s ' % (upgradeCount, upgradePlural)
-        message += '(old component%s will be moved to the Trash).' % (upgradePlural,)
+def _buildMessage(installList, upgradeList):
+    plugins = [os.path.splitext(os.path.basename(f))[0] for f in installList + upgradeList]
+    plugins = ', '.join(plugins)
+    total = len(installList) + len(upgradeList)
     
-    message += '\n\nDemocracy will automatically restart itself after this. '
-    message += 'Would you like to proceed ?'
+    message = 'Democracy can now install or update '
+    if total == 1:
+        message += '1 plugin (%s) ' % plugins
+    else:        
+        message += '%d plugins (%s) ' % (total, plugins)
+    message += 'which will allow you to watch lots of additional video formats, including Flash, Divx, and AVI.'
     
     return message
 
