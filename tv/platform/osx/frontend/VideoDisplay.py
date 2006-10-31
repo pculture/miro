@@ -362,8 +362,7 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
         return self
 
     def setup(self, renderer, item):
-        if self.contentView() != renderer.view:
-            platformutils.callOnMainThreadAndWaitUntilDone(self.setContentView_, renderer.view)
+        self.installRendererView_(renderer.view)
         self.palette.setup(item, renderer)
         if self.isFullScreen:
             platformutils.callOnMainThreadAfterDelay(0.5, self.palette.reveal, self)
@@ -371,6 +370,12 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
     def teardown(self):
         platformutils.warnIfNotOnMainThread('VideoWindow.teardown')
         self.setContentView_(nil)
+
+    @platformutils.onMainThreadWaitingUntilDone
+    def installRendererView_(self, view):
+        if self.contentView() is not nil:
+            self.contentView().removeFromSuperviewWithoutNeedingDisplay()
+        self.setContentView_(view)
 
     def canBecomeMainWindow(self):
         return self.isFullScreen
