@@ -12,11 +12,6 @@ import platformutils
 
 class QuicktimeRenderer (app.VideoRenderer):
 
-    FLIP4MAC_EXT = ('.wmv', '.avi', '.asf')
-    XIPH_EXT = ('.ogg', '.anx', '.spx')
-    KNOWN_UNSUPPORTED_EXT = ('.ram', '.rm', '.rpm', '.rv', '.ra')
-    NON_NATIVE_EXT = FLIP4MAC_EXT + XIPH_EXT + KNOWN_UNSUPPORTED_EXT
-    
     CORRECT_QTMEDIA_TYPES = (QTMediaTypeVideo, QTMediaTypeMPEG, QTMediaTypeMovie, QTMediaTypeFlash)
 
     def __init__(self, delegate):
@@ -72,27 +67,12 @@ class QuicktimeRenderer (app.VideoRenderer):
                     mediaType = media.attributeForKey_(QTMediaTypeAttribute)
                     mediaDuration = media.attributeForKey_(QTMediaDurationAttribute).QTTimeValue().timeValue
                     if mediaType in self.CORRECT_QTMEDIA_TYPES and mediaDuration > 0:
-                        # We have one, see if the file is something we support
-                        (unused, ext) = os.path.splitext(str(filename).lower())
-                        if ext in self.FLIP4MAC_EXT and self.hasFlip4MacComponent():
-                            canPlay = True
-                            break
-                        elif ext in self.XIPH_EXT and self.hasXiphComponent():
-                            canPlay = True
-                            break
-                        elif ext not in self.NON_NATIVE_EXT:
-                            canPlay = True
-                            break
+                        canPlay = True
+                        break
         else:
             self.cachedMovie = nil
 
         return canPlay
-
-    def hasFlip4MacComponent(self):
-        return len(glob.glob('/Library/Quicktime/Flip4Mac*')) > 0
-
-    def hasXiphComponent(self):
-        return len(glob.glob('/Library/QuickTime/Ogg*')) > 0
 
     @platformutils.onMainThreadWaitingUntilDone
     def selectFile(self, filename):
