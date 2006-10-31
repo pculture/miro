@@ -2,7 +2,8 @@ import os
 import glob
 import tempfile
 
-from objc import nil
+from objc import nil, YES
+from AppKit import NSApplication
 from Foundation import NSUserDefaults, NSBundle, NSTask, NSFileManager, NSFileHandle
 
 import platformcfg
@@ -126,6 +127,10 @@ def _performInstallation(installList, upgradeList):
     else:
         print '     nothing to install or upgrade.'
         return False
+
+    appl = NSApplication.sharedApplication()
+    if not appl.isActive():
+        appl.activateIgnoringOtherApps_(YES)
 
     dlogTitle = 'QuickTime Components Installation'
     dlogResult = showWarningDialog(dlogTitle, message, ['Install', 'Continue without installing'])
