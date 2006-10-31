@@ -113,39 +113,43 @@ class UIBackendDelegate:
         NSWorkspace.sharedWorkspace().selectFile_inFileViewerRootedAtPath_(filename, nil)
 
     def updateAvailableItemsCountFeedback(self, count):
-        appIcon = NSImage.imageNamed_('NSApplicationIcon')
-        badgedIcon = NSImage.alloc().initWithSize_(appIcon.size())
-        badgedIcon.lockFocus()
         try:
-            appIcon.compositeToPoint_operation_((0,0), NSCompositeSourceOver)
-            if count > 0:
-                digits = len(str(count))
-                badge = nil
-                if digits <= 2:
-                    badge = NSImage.imageNamed_('dock_badge_1_2.png')
-                elif digits <= 5:
-                    badge = NSImage.imageNamed_('dock_badge_%d.png' % digits)
-                else:
-                    print "DTV: Wow, that's a whole lot of new items!"
-                if badge is not nil:
-                    appIconSize = appIcon.size()
-                    badgeSize = badge.size()
-                    badgeLoc = (appIconSize.width - badgeSize.width, appIconSize.height - badgeSize.height)
-                    badge.compositeToPoint_operation_(badgeLoc, NSCompositeSourceOver)
-                    badgeLabel = NSString.stringWithString_(u'%d' % count)
-                    badgeLabelFont = NSFont.boldSystemFontOfSize_(24)
-                    badgeLabelColor = NSColor.whiteColor()
-                    badgeParagraphStyle = NSMutableParagraphStyle.alloc().init()
-                    badgeParagraphStyle.setAlignment_(NSCenterTextAlignment)
-                    badgeLabelAttributes = {NSFontAttributeName: badgeLabelFont, 
-                                            NSForegroundColorAttributeName: badgeLabelColor,
-                                            NSParagraphStyleAttributeName: badgeParagraphStyle}
-                    badgeLabelLoc = (badgeLoc[0], badgeLoc[1]-10)
-                    badgeLabel.drawInRect_withAttributes_((badgeLabelLoc, badgeSize), badgeLabelAttributes)
-        finally:
-            badgedIcon.unlockFocus()
-        appl = NSApplication.sharedApplication()
-        platformutils.callOnMainThreadAndWaitUntilDone(appl.setApplicationIconImage_, badgedIcon)
+            appIcon = NSImage.imageNamed_('NSApplicationIcon')
+            badgedIcon = NSImage.alloc().initWithSize_(appIcon.size())
+            badgedIcon.lockFocus()
+        except:
+            pass
+        else:
+            try:
+                appIcon.compositeToPoint_operation_((0,0), NSCompositeSourceOver)
+                if count > 0:
+                    digits = len(str(count))
+                    badge = nil
+                    if digits <= 2:
+                        badge = NSImage.imageNamed_('dock_badge_1_2.png')
+                    elif digits <= 5:
+                        badge = NSImage.imageNamed_('dock_badge_%d.png' % digits)
+                    else:
+                        print "DTV: Wow, that's a whole lot of new items!"
+                    if badge is not nil:
+                        appIconSize = appIcon.size()
+                        badgeSize = badge.size()
+                        badgeLoc = (appIconSize.width - badgeSize.width, appIconSize.height - badgeSize.height)
+                        badge.compositeToPoint_operation_(badgeLoc, NSCompositeSourceOver)
+                        badgeLabel = NSString.stringWithString_(u'%d' % count)
+                        badgeLabelFont = NSFont.boldSystemFontOfSize_(24)
+                        badgeLabelColor = NSColor.whiteColor()
+                        badgeParagraphStyle = NSMutableParagraphStyle.alloc().init()
+                        badgeParagraphStyle.setAlignment_(NSCenterTextAlignment)
+                        badgeLabelAttributes = {NSFontAttributeName: badgeLabelFont, 
+                                                NSForegroundColorAttributeName: badgeLabelColor,
+                                                NSParagraphStyleAttributeName: badgeParagraphStyle}
+                        badgeLabelLoc = (badgeLoc[0], badgeLoc[1]-10)
+                        badgeLabel.drawInRect_withAttributes_((badgeLabelLoc, badgeSize), badgeLabelAttributes)
+            finally:
+                badgedIcon.unlockFocus()
+            appl = NSApplication.sharedApplication()
+            platformutils.callOnMainThreadAndWaitUntilDone(appl.setApplicationIconImage_, badgedIcon)
     
     def notifyDownloadCompleted(self, item):
         GrowlNotifier.notifyDownloadComplete(item.getTitle())
