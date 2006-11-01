@@ -69,3 +69,12 @@ def setupMozillaEnvironment():
         set_profile_path = gtkmozembed.gtk_moz_embed_set_profile_path
         
     set_profile_path(config.get(prefs.SUPPORT_DIRECTORY), 'mozilla')
+    if hasattr(gtkmozembed, 'set_comp_path'):
+        set_comp_path = gtkmozembed.set_comp_path
+    elif hasattr(gtkmozembed, 'set_path'):
+        set_comp_path = gtkmozembed.set_path
+    else:
+        set_comp_path = None
+
+    if set_comp_path:
+        set_comp_path(config.get(prefs.MOZILLA_LIB_PATH))

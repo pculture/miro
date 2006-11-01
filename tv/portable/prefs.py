@@ -82,18 +82,20 @@ GETTEXT_PATHNAME = \
 
 # These are normally read from resources/app.config.
 SHORT_APP_NAME = \
-    Pref(key='shortAppName', default=None, platformSpecific=False)
+    Pref(key='shortAppName',      default=None, platformSpecific=False)
 LONG_APP_NAME = \
-    Pref(key='longAppName',  default=None, platformSpecific=False)
+    Pref(key='longAppName',       default=None, platformSpecific=False)
 PROJECT_URL = \
-    Pref(key='projectURL',   default=None, platformSpecific=False)
+    Pref(key='projectURL',        default=None, platformSpecific=False)
 PUBLISHER = \
-    Pref(key='publisher',    default=None, platformSpecific=False)
+    Pref(key='publisher',         default=None, platformSpecific=False)
 APP_VERSION = \
-    Pref(key='appVersion',   default=None, platformSpecific=False)
+    Pref(key='appVersion',        default=None, platformSpecific=False)
 APP_REVISION = \
-    Pref(key='appRevision',  default=None, platformSpecific=False)
+    Pref(key='appRevision',       default=None, platformSpecific=False)
 APP_PLATFORM = \
-    Pref(key='appPlatform',  default=None, platformSpecific=False)
+    Pref(key='appPlatform',       default=None, platformSpecific=False)
 APP_SERIAL = \
-    Pref(key='appSerial-unknown',    default="0", platformSpecific=False)
+    Pref(key='appSerial-unknown', default="0",  platformSpecific=False)
+MOZILLA_LIB_PATH = \
+    Pref(key='mozillaLibPath',    default=None, platformSpecific=False)

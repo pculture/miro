@@ -290,7 +290,8 @@ class install_data (distutils.command.install_data.install_data):
         expand_file_contents(dest, APP_REVISION=revision,
                              APP_REVISION_NUM=revisionnum,
                              APP_REVISION_URL=revisionurl,
-                             APP_PLATFORM='gtk-x11')
+                             APP_PLATFORM='gtk-x11',
+                             MOZILLA_LIB_PATH=mozilla_lib_path[0])
         self.outfiles.append(dest)
 
         locale_dir = os.path.join (resource_dir, "locale")

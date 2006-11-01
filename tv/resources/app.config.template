@@ -12,3 +12,4 @@ appPlatform = $APP_PLATFORM
 appSerial-gtk-x11 = 20061019000
 appSerial-osx = 20061019000
 appSerial-windows-xul = 20061019000
+mozillaLibPath = $MOZILLA_LIB_PATH
