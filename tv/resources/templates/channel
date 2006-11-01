@@ -132,7 +132,7 @@ if feed.idExists():
             </div>
         </div>
         <div id="main-titlebar-right">
-            <a id="main-titlebar-recommend" href="mailto:?subject=@@@feed.getTitle()@@@&amp;body=%0D%0A%0D%0AYou should check out the Internet TV channel &quot;@@@feed.getTitle()@@@&quot;. If you don't have the Democracy Player, you can get it here:%0D%0A%0D%0Ahttp://www.getdemocracy.com/%0D%0A%0D%0AAnd then subscribe to this channel:%0D%0A%0D%0A@@@feed.getURL()@@@" i18n:translate="">Recommend</a>
+            <a id="main-titlebar-recommend" href="#" onclick="return recommendChannel('@@@feed.getTitle()@@@', '@@@feed.getURL()@@@');" i18n:translate="">Recommend</a>
             <a id="main-titlebar-settings" href="#"
                 onclick="return showSettings();" i18n:translate="">Settings</a>
         <div id="main-titlebar-auto">

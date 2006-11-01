@@ -10,6 +10,15 @@ function getDTVPlatform() {
     return elt.getAttribute('dtvPlatform');
 }
 
+function loadURL(url) {
+    try {
+        document.location.href = url;
+    } catch (e) {
+        // This may happen if the backend decides to handle the url load
+        // itself.
+    }
+}
+
 // For calling from page Javascript: Cause a URL to be loaded. The
 // assumption is that the application will notice, abort the load, and
 // take some action based on the URL.
@@ -18,12 +27,7 @@ function eventURL(url) {
 	// Generic strategy: trigger a load, and hope the application
 	// catches it and cancels it without creating a race
 	// condition.
-        try {
-            document.location.href = url;
-        } catch (e) {
-            // This may happen if the backend decides to handle the url load
-            // itself.
-        }
+        loadURL(url)
     } else {
 	// OS X WebKit (KHTML) strategy: pass in an Objective C object
 	// through the window object and call a method on it.
@@ -33,17 +37,15 @@ function eventURL(url) {
     return false;
 }
 
-// Open email client with email about selected video
-// All parameters come in URL encoded
-function recommendItem(title, url, feedURL) {
-    var mailURL = 'http://www.videobomb.com/index/democracyemail?url=' + 
-                url + '&title=' + title;
-    try {
-        document.location.href = mailURL;
-    } catch (e) {
-        // The backend will handle the URL load and this sometimes leads to an
-        // exception here.
-    }
+function recommendItem(title, url) {
+    loadURL('http://www.videobomb.com/index/democracyemail?url=' + 
+            url + '&title=' + title);
+    return false;
+}
+
+function recommendChannel(title, url) {
+    loadURL('http://www.videobomb.com/democracy_channel/email_friend' +
+        '?url=' + url + '&title=' + title);
     return false;
 }
 

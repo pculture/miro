@@ -55,7 +55,7 @@ viewName = kargs['viewName']
     <div class="main-video-details-tasks">
         <a t:showIf="this.hasSharableURL()" href="#" 
             class="main-video-details-task-mail" 
-            onclick="recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@'); return false;" >
+            onclick="return recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@');" >
             <img src="resource:images/mini-mail.png" /> <span i18n:translate="">SHARE IT</span>
         </a>
         <a href="#" t:showIf="this.hasSharableURL()" 
