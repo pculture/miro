@@ -233,7 +233,7 @@ class BGDownloader:
         newfilename = nextFreeFilename(newfilename)
         try:
             shutil.move(self.filename, newfilename)
-        except (IOError, OSError, shutil.ERROR), e:
+        except (IOError, OSError, shutil.Error), e:
             print "WARNING: Error moving %s to %s (%s)" % (self.filename,
                                                            newfilename, e)
         else:
