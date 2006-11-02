@@ -377,7 +377,7 @@ class Item(DDBObject):
         self.confirmDBThread()
         self.removeFromPlaylists()
         UandA = self.getUandA()
-        self.deleteFile()
+        self.deleteFiles()
         self.expired = True
         if self.isContainerItem:
             for item in self.getChildren():
@@ -756,7 +756,7 @@ folder will be deleted.""")
 
     ##
     # Stops downloading the item
-    def deleteFile(self):
+    def deleteFiles(self):
         self.confirmDBThread()
         if self.downloader is not None:
             self.downloader.removeItem(self)
@@ -1519,7 +1519,7 @@ any items inside that folder will also be removed or deleted.""")
     def callback(dialog):
         if dialog.choice == dialogs.BUTTON_DELETE_FILES:
             for item in items:
-                if item.idExists():
+                if item.idExists() and isinstance (item, FileItem):
                     item.deleteFiles()
         if dialog.choice in (dialogs.BUTTON_OK, dialogs.BUTTON_REMOVE_ENTRY,
                 dialogs.BUTTON_DELETE_FILES):
