@@ -232,9 +232,24 @@ function handleDblClick(event, viewName, id) {
    }
 }
 
+function getKeyFromEvent(evt) {
+  var key = 0;
+  if (window.event)  {
+    key = evt.keyCode;
+  } else if (evt.which) {
+  	key = evt.which;
+  }
+
+  return key;
+}
+
 function sendKeyToSearchBox(event) {
   if(event.altKey || event.ctrlKey || event.metaKey ||
       (event.target.tagName && event.target.tagName.toUpperCase() == 'INPUT'))
+      return true;
+  var key = getKeyFromEvent(event);
+  if ((key == 33) || (key == 34) || (key == 35) || (key == 36) || 
+      (key == 37) || (key == 38) || (key == 39) || (key == 40))
       return true;
   var searchBox = document.getElementById("search-box");
   searchBox.focus();

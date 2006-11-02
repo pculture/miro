@@ -35,16 +35,7 @@ function fillSearch()
 
 function validateSearch(e)
 {
-   	if (window.event) 
-   	{
-   		key = e.keyCode;
-   	}
-   	else if (e.which) 
-   	{
-   		key = e.which;
-   	}
-
-    if (key == 13)
+    if (getKeyFromEvent(e) == 13)
     {
         performSearch();
     }
