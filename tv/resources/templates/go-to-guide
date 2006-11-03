@@ -25,7 +25,7 @@ setTimeout(goToGuide, 1000);
 
 <body class="channel-guide-body">
 	<div id="channel-guide-loading-image">
-		&nbsp;
+		<span id="channel-guide-loading-text" i18n:translate="">Loading Channel Guide</span>
 	</div>
 </body>
 </html>
