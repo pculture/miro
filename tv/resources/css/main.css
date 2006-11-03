@@ -795,17 +795,18 @@ an element is dragged, the drag-highlight class is added to it */
 .small-button {
     background: left top repeat-x url(../images/small-button-middle.png);
     margin: 0px 3px;
-    padding: 0px 3px;
+    padding: 3px 3px;
     height: 17px;
 }
 
-.small-button a:link {
+a.small-button-left {
+    display: block;
     font-size: 9px;
     color: #444;
     text-decoration: none;
 }
 
-.small-button a:hover {
+a.small-button-left:hover {
     color: #000000;
     text-decoration: underline;
 }

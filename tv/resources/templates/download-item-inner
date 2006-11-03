@@ -107,28 +107,26 @@ viewName = kargs['viewName']
             <span t:replace="this.getFailureReason()" />
     </div>
     <div class="details-small-buttons">
-        <div t:showIf="this.showSaveButton()" 
-                class="small-button-left save">
-        <div class="small-button-right">
-        <div class="small-button">
-            <a href="#" 
-               onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');"
-               i18n:translate="">SAVE</a>
-        </div>
-        </div>
+        <div t:showIf="this.showSaveButton()">
+        <a class="small-button-left save" href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');">
+                <div class="small-button-right">
+                <div class="small-button" i18n:translate="">
+                        SAVE
+                </div>
+                </div>
+        </a>
         </div>
         <div t:showIf="this.getState() == 'saved'" class="saved-note">
                 SAVED
         </div>
-        <div t:showIf="this.showTrashButton()" 
-                class="small-button-left delete">
-        <div class="small-button-right">
-        <div class="small-button">
-            <a href="#" 
-               onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');"
-               i18n:translate="">DELETE</a>
-        </div>
-        </div>
+        <div t:showIf="this.showTrashButton()">
+        <a class="small-button-left delete" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');">
+                <div class="small-button-right">
+                <div class="small-button" i18n:translate="">
+                        DELETE
+                </div>
+                </div>
+        </a>
         </div>
     </div>
 </div>
