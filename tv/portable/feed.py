@@ -1624,6 +1624,8 @@ class DirectoryFeedImpl(FeedImpl):
     def update(self):
         self.ufeed.confirmDBThread()
         moviesDir = config.get(prefs.MOVIES_DIRECTORY)
+        dirs = [moviesDir] + config.getList(prefs.MY_COLLECTION_DIRS)
+        print dirs
         # Files known about by real feeds
         knownFiles = set()
         for item in views.toplevelItems:
@@ -1644,15 +1646,16 @@ class DirectoryFeedImpl(FeedImpl):
 
         myFiles = set(x.getFilename() for x in self.items)
 
-        #Adds any files we don't know about
-        #Files on the filesystem
-        if os.path.isdir(moviesDir):
-            existingFiles = [os.path.normcase(os.path.join(moviesDir, f)) 
-                    for f in os.listdir(moviesDir)]
-            for file in existingFiles:
-                if (os.path.exists(file) and os.path.basename(file)[0] != '.' and 
-                        not file in knownFiles and not file in myFiles):
-                    FileItem(file, feed_id = self.ufeed.id)
+        for dir in dirs:
+            #Adds any files we don't know about
+            #Files on the filesystem
+            if os.path.isdir(dir):
+                existingFiles = [os.path.normcase(os.path.join(dir, f)) 
+                        for f in os.listdir(dir)]
+                for file in existingFiles:
+                    if (os.path.exists(file) and os.path.basename(file)[0] != '.' and 
+                            not file in knownFiles and not file in myFiles):
+                        FileItem(file, feed_id = self.ufeed.id)
 
         for item in self.items:
             if not os.path.exists(item.getFilename()):
@@ -1776,35 +1779,30 @@ class HTMLLinkGrabber(HTMLParser):
             try:
                 linkURL = match.group(3).encode('ascii')
             except UnicodeError:
-#                i = len (linkURL)
-#                while (i >= 0):
-#                    if 127 < linkURL[i] <= 255:
-#                        linkURL[i:i+1] = "%%%02x" % (ord(linkURL[i]))
-#                    else if linkURL[i] > 255:
-#                        print "WARNING: scraped URL is non-ascii (%s)-- discarding" \
-#                              % match.group(3)
-#                        break
-#                    i = i - 1
-                if util.chatter:
-                    print "WARNING: scraped URL is non-ascii (%s)-- discarding (baseURL=%s)" \
-                            % (match.group(3), self.baseurl)
-            else:
-                link = urljoin(baseurl, linkURL)
-                desc = match.group(4)
-                imgMatch = HTMLLinkGrabber.imgPattern.match(desc)
-                if imgMatch:
-                    try:
-                        thumb = urljoin(baseurl,
-                                imgMatch.group(1).encode('ascii'))
-                    except UnicodeError:
-                        if util.chatter:
-                            print ("WARNING: scraped thumbnail url is non-ascii "
-                            "(%s) -- discarding"  % imgMatch.group(1))
-                        thumb = None
-                else:
+                linkURL = match.group(3)
+                print "%s is non-ascii, trying anyway: (baseURL: %s)" % (linkURL.decode("latin1"), self.baseurl)
+                i = len (linkURL) - 1
+                while (i >= 0):
+                    if 127 < ord(linkURL[i]) <= 255:
+                        linkURL = linkURL[:i] + "%%%02x" % (ord(linkURL[i])) + linkURL[i+1:]
+                    i = i - 1
+
+            link = urljoin(baseurl, linkURL)
+            desc = match.group(4)
+            imgMatch = HTMLLinkGrabber.imgPattern.match(desc)
+            if imgMatch:
+                try:
+                    thumb = urljoin(baseurl,
+                            imgMatch.group(1).encode('ascii'))
+                except UnicodeError:
+                    if util.chatter:
+                        print ("WARNING: scraped thumbnail url is non-ascii "
+                        "(%s) -- discarding"  % imgMatch.group(1))
                     thumb = None
-                desc =  HTMLLinkGrabber.tagPattern.sub(' ',desc)
-                self.links.append((link, desc, thumb))
+            else:
+                thumb = None
+            desc =  HTMLLinkGrabber.tagPattern.sub(' ',desc)
+            self.links.append((link, desc, thumb))
             match = HTMLLinkGrabber.linkPattern.search(match.group(5))
         return self.links
 

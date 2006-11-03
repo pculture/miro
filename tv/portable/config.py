@@ -7,6 +7,7 @@ import prefs
 import resources
 import eventloop
 import platformcfg
+import urllib
 
 __appConfig = None
 __data = None
@@ -78,6 +79,9 @@ def get(descriptor):
     finally:
         __lock.release()
 
+def getList(descriptor):
+    return [urllib.unquote(i) for i in get(descriptor).split(",") if i]
+
 def getAppConfig():
     __lock.acquire()
     try:
@@ -99,6 +103,9 @@ def set(descriptor, value):
             __notifyListeners(descriptor.key, value)
     finally:
         __lock.release()
+
+def setList(descriptor, value):
+    set(descriptor, [quote(i) for i in value].join (','))
 
 def __checkValidity():
     if __appConfig == None:
