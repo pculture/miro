@@ -721,13 +721,22 @@ class VideoSearchField (NibClassBuilder.AutoBaseClass):
         self.setCell_(VideoSearchFieldCell.alloc().initWithCell_(self.cell()))
         self.setTarget_(self)
         self.setAction_('search:')
-        self.searchMenuTemplate().performActionForItemAtIndex_(0)
+        self.initFromLastEngine()
         
     def search_(self, sender):
         engine = self.selectedEngine()
         query = str(self.stringValue())
         if query is not '':
             eventloop.addIdle(lambda:app.controller.performSearch(engine, query), 'Performing chrome search')
+
+    def initFromLastEngine(self):
+        self.setStringValue_(searchengines.getLastQuery())
+        lastEngine = searchengines.getLastEngine()
+        for engine in views.searchEngines:
+            if engine.name == lastEngine:
+                index = self.searchMenuTemplate().indexOfItemWithRepresentedObject_(engine)
+                self.searchMenuTemplate().performActionForItemAtIndex_(index)
+                return
 
     def selectedEngine(self):
         return self.cell().currentItem.representedObject().name

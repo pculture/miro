@@ -85,5 +85,10 @@ def getSearchEnginesHTML ():
     return enginesHTML.encode("utf8")
 
 def getLastEngine():
-    searchFeed = util.getSingletonDDBObject (views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search'))
-    return searchFeed.lastEngine
+    return _getSearchFeed().lastEngine
+
+def getLastQuery():
+    return _getSearchFeed().lastQuery
+
+def _getSearchFeed():
+    return util.getSingletonDDBObject (views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search'))

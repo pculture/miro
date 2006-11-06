@@ -1718,6 +1718,7 @@ class SearchFeedImpl (RSSFeedImpl):
         url = searchengines.getRequestURL(engine, query)
         self.reset(url, True)
         self.lastQuery = query
+        self.lastEngine = engine
         self.update()
         self.ufeed.signalChange()
 
