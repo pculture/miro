@@ -232,12 +232,7 @@ class SortTestCase(DemocracyTestCase):
         self.higher = self.x
         self.sorted = self.everything.sort(self.sortFunc)
     def sortFunc(self,x,y):
-        if x is y:
-            return 0
-        elif x == self.higher:
-            return 1
-        else:
-            return -1
+        return x[1] != self.higher
     def testUnique(self):
         self.assertNotEqual(self.x,self.y)
     def testUniqueID(self):
@@ -488,14 +483,9 @@ class FilterSortMapTestCase(DemocracyTestCase):
     def filterFunc(self, x):
         return self.myfiltFunc(x)
     def sortFunc(self, x, y):
-        x = x.getID()
-        y = y.getID()
-        if x < y:
-            return -1
-        elif x > y:
-            return 1
-        else:
-            return 0
+        x = x[1].getID()
+        y = y[1].getID()
+        return x < y
     def call(self,obj, id):
         self.callbacks += 1
     def test(self):
@@ -651,12 +641,7 @@ class CursorTestCase(DemocracyTestCase):
 	self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
 	self.objs = self.everything.filter(lambda x: True).map(self.mapToObject).sort(self.sortOldID)
     def sortOldID(self,x,y):
-	if x.oldID > y.oldID:
-	    return 1
-	elif x.oldID < y.oldID:
-	    return -1
-	else:
-	    return 0
+        return x[1].oldID < y[1].oldID
     def mapToObject(self, obj):
 	temp = database.DDBObject(add = False)
 	temp.oldID = obj.getID()
@@ -689,12 +674,7 @@ class RecomputeMapTestCase(DemocracyTestCase):
 	self.objs = self.everything.filter(lambda x: True).map(self.mapToObject).sort(self.sortOldID).map(self.mapToObject)
 	self.changeCalls = 0
     def sortOldID(self,x,y):
-	if x.oldID > y.oldID:
-	    return 1
-	elif x.oldID < y.oldID:
-	    return -1
-	else:
-	    return 0
+	return x[1].oldID < y[1].oldID
     def mapToObject(self, obj):
 	temp = database.DDBObject(add = False)
 	temp.oldID = obj.getID()
@@ -784,12 +764,7 @@ class IDBaseTraversal(DemocracyTestCase):
 	self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
         self.sorted = self.everything.sort(self.sortID)
     def sortID(self,x,y):
-	if x.getID() > y.getID():
-	    return 1
-	elif x.getID() < y.getID():
-	    return -1
-	else:
-	    return 0
+	return x[1].getID() < y[1].getID()
     def test(self):
         self.assertEqual(self.origObjs[0],
                          self.sorted.getObjectByID(self.origObjs[0].getID()))
@@ -858,16 +833,11 @@ class IndexFilterTest(IndexFilterTestBase):
     def mod100(self, x):
         return (x.getID() + self.shift) % 100
     def sortIndexFunc(self, x, y):
-        return cmp(x.myValue, y.myValue)
+        return x[1].myValue < y[1].myValue
     def sortFunc(self, x, y):
-        x = x.getID()
-        y = y.getID()
-        if x < y:
-            return -1
-        elif x > y:
-            return 1
-        else:
-            return 0
+        x = x[1].getID()
+        y = y[1].getID()
+        return x < y
     def testBasicIndexFilter(self):
         for x in range(0,100):
             database.DDBObject()
@@ -1044,6 +1014,41 @@ class IndexFilterTest(IndexFilterTestBase):
                 self.assert_(last.myValue < obj.myValue)
             last = obj
 
+    def testChangeIndexValue(self):
+        for x in range(0,100):
+            database.DDBObject()
+        self.everything.createIndex(self.mod10, sortFunc=self.sortFunc)
+        filtered = self.everything.filterWithIndex(self.mod10,0)
+        filtered.addAddCallback(self.addCallback)
+        filtered.addRemoveCallback(self.removeCallback)
+        filtered.addChangeCallback(self.changeCallback)
+
+        filtered.changeIndexValue(self.mod10, 1)
+        self.assertEqual(filtered.len(),10)
+        self.assertEqual(self.addCallbacks,10)
+        self.assertEqual(self.removeCallbacks,10)
+        self.assertEqual(self.changeCallbacks,0)
+
+        filtered.resetCursor()
+        filtered3 = self.everything.filterWithIndex(self.mod10,0)
+        filtered2 = self.everything.filterWithIndex(self.mod10,1)
+        for obj in filtered2:
+            self.assertEqual(filtered.getNext().id, obj.id)
+            self.assertNotEqual(filtered3.getNext().id, obj.id)
+
+        self.everything.removeView(filtered)
+        filtered.changeIndexValue(self.mod10, 0)
+        filtered.resetCursor()
+        filtered2.resetCursor()
+        filtered3.resetCursor()
+        for obj in filtered3:
+            self.assertEqual(filtered.getNext().id, obj.id)
+            self.assertNotEqual(filtered2.getNext().id, obj.id)
+        self.assertEqual(filtered.len(),10)
+        self.assertEqual(self.addCallbacks,10)
+        self.assertEqual(self.removeCallbacks,10)
+        self.assertEqual(self.changeCallbacks,0)
+        
 class MultiIndexed(database.DDBObject):
     def __init__(self, indexValues):
         self.indexValues = indexValues
@@ -1141,7 +1146,7 @@ class ReSortTestCase(DemocracyTestCase):
         self.sorted.addChangeCallback(self.changeCall)
 
     def sortFunc(self, x, y):
-        return cmp(x.value,y.value)
+        return x[1].value < y[1].value
 
     def addCall(self, obj, id):
         # We have a convention of setting the cursor after the object
@@ -1185,7 +1190,7 @@ class SortingFilterTestCase(DemocracyTestCase):
 
     def sortFunc(self, x, y):
         self.sortCalls += 1
-        return cmp(x.value,y.value)
+        return x[1].value < y[1].value
 
     def testSort(self):
         sortView = self.everything.sort(self.sortFunc)
