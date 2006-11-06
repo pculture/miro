@@ -14,44 +14,47 @@ class XHTMLifier(HTMLParser):
             self.output = '<html><head></head><body>'
         else:
             self.output = ''
-	self.stack = []
-	self.feed(data)
-	self.close()
-	while len(self.stack) > 0:
-	    temp = self.stack.pop()
-	    self.output += '</'+temp+'>'
+        self.stack = []
+        self.feed(data)
+        try:
+            self.close()
+        except:
+            print 'DTV: unexpected error while parsing html data.'
+        while len(self.stack) > 0:
+            temp = self.stack.pop()
+            self.output += '</'+temp+'>'
         if addTopTags:
             self.output += '</body></html>'
-	return self.output
+        return self.output
     def handle_starttag(self, tag, attrs):
-	if tag.lower() == 'br':
-	    self.output += '<br/>'
-	else:
-	    self.output += '<'+tag
-	    for attr in attrs:
-		if attr[1] == None:
-		    self.output += ' '+attr[0]+'='+xml.sax.saxutils.quoteattr(attr[0])
-		else:
-		    self.output += ' '+attr[0]+'='+xml.sax.saxutils.quoteattr(attr[1])
-	    self.output += '>'
-	    self.stack.append(tag)
+        if tag.lower() == 'br':
+            self.output += '<br/>'
+        else:
+            self.output += '<'+tag
+            for attr in attrs:
+                if attr[1] == None:
+                    self.output += ' '+attr[0]+'='+xml.sax.saxutils.quoteattr(attr[0])
+                else:
+                    self.output += ' '+attr[0]+'='+xml.sax.saxutils.quoteattr(attr[1])
+            self.output += '>'
+            self.stack.append(tag)
     def handle_endtag(self, tag):
-	if tag.lower() != 'br' and len(self.stack) > 1:
-	    temp = self.stack.pop()
-	    self.output += '</'+temp+'>'
-	    while temp != tag and len(self.stack) > 1:
-		temp = self.stack.pop()
-		self.output += '</'+temp+'>'	    
+        if tag.lower() != 'br' and len(self.stack) > 1:
+            temp = self.stack.pop()
+            self.output += '</'+temp+'>'
+            while temp != tag and len(self.stack) > 1:
+                temp = self.stack.pop()
+                self.output += '</'+temp+'>'
     def handle_startendtag(self, tag, attrs):
-	self.output += '<'+tag+'/>'
+        self.output += '<'+tag+'/>'
     def handle_data(self, data):
-	data = data.replace('&','&amp;')
-	data = data.replace('<','&lt;')
-	self.output += data
+        data = data.replace('&','&amp;')
+        data = data.replace('<','&lt;')
+        self.output += data
     def handle_charref(self, name):
-	self.output += '&#'+name+';'
+        self.output += '&#'+name+';'
     def handle_entityref(self, name):
-	self.output += '&'+name+';'
+        self.output += '&'+name+';'
 
 ##
 # Parses HTML entities in data
