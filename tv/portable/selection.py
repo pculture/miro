@@ -549,7 +549,8 @@ class SelectionHandler(object):
                 for id in tls.currentSelection:
                     if id == mainDisplay.kargs['id']:
                         mainDisplay.reInit([], {'id': id})
-                
+                        return
+
         newDisplay = self._chooseDisplayForCurrentTab()
 
         # Don't redisplay the current tab if it's being displayed.  It messes
