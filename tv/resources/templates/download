@@ -57,9 +57,9 @@ def updateSearchString(newSearch):
 ]]>
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
-matchingNormalDLs.unlink()
+allNormalDownloads.unlink()
 allExternalDownloads.unlink()
-matchingPendingDLs.unlink()
+allPendingDownloads.unlink()
 ]]>
     </t:execOnUnload>
 </head>

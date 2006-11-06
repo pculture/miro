@@ -24,6 +24,11 @@ class DatabaseConstraintError(Exception):
     """
     pass
 
+class DatabaseConsistencyError(Exception):
+    """Raised when the database encounters an internal consistency issue.
+    """
+    pass
+
 ##
 # Raised when an attempt is made to restore a database newer than the
 # one we support
@@ -309,15 +314,15 @@ class DynamicDatabase:
         self.subFilters = []
         self.subSorts = []
         self.subMaps = []
+        self.clones = [] # clones are children who are identical to
+                         # their parents. Currently, only indexed
+                         # views have clones now.
         self.cursorStack = []
         self.objectLocs = {}
         self.indexes = {}
         self.liveStorage = None
         self.sortFunc = sortFunc
 
-        # Normally, any access to fasttypes should be surrounded by a
-        # lock. However, inside of an __init__, we can be sure that no
-        # other objects can see this object
         if sortFunc is not None:
             self.objects = SortedList(sortFunc)
             self.resort = resort
@@ -339,6 +344,10 @@ class DynamicDatabase:
         count = 1
         size = len(self.objects)
         for (db, func) in self.subFilters:
+            new = db.count_databases()
+            count = count + new[0]
+            size = size + new[1]
+        for (db) in self.clones:
             new = db.count_databases()
             count = count + new[0]
             size = size + new[1]
@@ -545,6 +554,21 @@ class DynamicDatabase:
         return new
 
     ##
+    # returns a View of the database identical to this one. Equivalent
+    # to filter(lambda x:True).
+    #
+    # Private use only
+    def clone(self):
+        self.confirmDBThread()
+        try:
+            curID = self.objects[self.cursor][0].id
+        except:
+            curID = None
+        new = DynamicDatabase(self.objects,False,cursorID = curID, parent = self, sortFunc = self.sortFunc, resort = self.resort)
+        self.clones.append([new])
+        return new
+
+    ##
     # returns a View of the data mapped according to the given function
     #
     # @param f function to use as a map
@@ -716,6 +740,8 @@ class DynamicDatabase:
 #                 print
 #                 print e
 #                 print "--------------"
+        for [view] in self.clones:
+            view.addBeforeCursor(newobject,value)
         for indexFunc, indexMap in self.indexes.iteritems():
             indexMap.addObject(newobject, value)
 
@@ -819,6 +845,8 @@ class DynamicDatabase:
             view.removeObj(tempobj)
         for [view, f] in self.subFilters:
             view.removeObj(tempobj)
+        for [view] in self.clones:
+            view.removeObj(tempobj)
         for (indexFunc, indexMap) in self.indexes.iteritems():
             indexMap.removeObject(tempobj)
         #self.checkObjLocs()
@@ -908,7 +936,6 @@ class DynamicDatabase:
         for [view, f] in self.subSorts:
             view.changeObj(tempobj, needsSave=needsSave)
         for [view, f] in self.subFilters:
-            view.confirmDBThread()
             #view.checkObjLocs()
             if f(tempmapped):
                 if view.objectLocs.has_key(tempid):
@@ -918,6 +945,9 @@ class DynamicDatabase:
             else:
                 if view.objectLocs.has_key(tempid):
                     view.removeObj(tempobj)
+        for [view] in self.clones:
+            #view.checkObjLocs()
+            view.changeObj(tempobj, needsSave=needsSave)
         for indexFunc, indexMap in self.indexes.iteritems():
             indexMap.changeObject(tempobj, tempmapped)
 
@@ -1020,20 +1050,6 @@ class DynamicDatabase:
     # Used to sort objects
     def getVal(self, obj):
         return obj[1]
-
-    ##
-    # This is called to remove all elements matching a particular filter
-    def removeMatching(self,f):
-        print "DTV: WARNING: removeMatching is deprecated"
-        if not self.rootDB:
-            raise NotRootDBError, "removeMatching() cannot be called from subviews"
-        self.confirmDBThread()
-        self.saveCursor()
-        self.resetCursor()
-        for obj in self:
-            if f(obj):
-                obj.remove()
-        self.restoreCursor()
     
     ##
     # Restores this database
@@ -1084,6 +1100,10 @@ class DynamicDatabase:
             if self.subFilters[count][0] is oldView:
                 self.subFilters[count:count+1] =  []
                 return
+        for count in range(0,len(self.clones)):
+            if self.clones[count][0] is oldView:
+                self.clones[count:count+1] =  []
+                return
         for count in range(0,len(self.subSorts)):
             if self.subSorts[count][0] is oldView:
                 self.subSorts[count:count+1] =  []
@@ -1096,15 +1116,11 @@ class DynamicDatabase:
             # Clear out subfilters and callbacks on this view
             for view in indexMap.getViews():
                 if view is oldView:
-                    view.subFilters = []
-                    view.subMaps = []
-                    view.subSorts = []
-                    view.indexes = {}
-                    view.addCallbacks = set()
-                    view.removeCallbacks = set()
-                    view.changeCallbacks = set()
-                    view.viewChangeCallbacks = set()
-                    return
+                    raise DatabaseConsistencyError, "Indexed views should never be directly returned"
+                for count in range(0,len(view.clones)):
+                    if view.clones[count][0] is oldView:
+                        view.clones[count:count+1] = []
+                        return
 
     ##
     # returns the object with the given id
@@ -1162,7 +1178,32 @@ class DynamicDatabase:
 
     def filterWithIndex(self, indexFunc, value):
         # Throw an exception if there's no filter for this func
-        return self.indexes[indexFunc].getViewForValue(value)
+        return self.indexes[indexFunc].getViewForValue(value).clone()
+
+    # Changes the index associated with the current view. This should
+    # only be called on views created by filterWithIndex. Useful for
+    # cases where indexed views need to change on the fly.
+    def changeIndexValue(self, indexFunc, value):
+        for (obj, mapped) in self.objects:
+            self.remove(self.objectLocs[obj.id])
+
+        # Remove references to the cloned view
+        self.parent.removeView(self)
+
+        # Self should always be a clone of an indexed view
+        # Find the new index view
+        newView = self.parent.parent.indexes[indexFunc].getViewForValue(value)
+        self.parent = newView
+        newView.clones.append([self])
+
+        if self.resort:
+            self.objects = SortedList(self.sortFunc)
+        else:
+            self.objects = LinkedList()
+        self.objectLocs = {}
+        
+        for temp in newView.objects:
+            self.addBeforeCursor(temp[0], temp[1])
 
     def getItemWithIndex(self, indexFunc, value, default=None):
         """Get a single item using an index.

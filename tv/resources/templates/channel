@@ -13,9 +13,17 @@
     <t:include filename="settings.js" />
     <script type="text/javascript" src="resource:templates/osxdnd.js" />
     <t:execOnLoad><![CDATA[
+
+global feed, searchTerm, showDownloads, showWatchableItems, showNewItems, allItemsMode, allItems
 feed = views.feeds.getObjectByID(int(kargs['id']))
 filters.switchNewItemsChannel(feed)
 sorts.switchUnwatchedFirstChannel(feed)
+
+def reInit(*args, **kargs):
+    global feed, allItems
+    print "reinitting %d" % int(kargs['id'])
+    feed = views.feeds.getObjectByID(int(kargs['id']))
+    allItems.changeIndexValue(indexes.itemsByFeed, int(kargs['id']))
 
 def showDownloadsFilter(x):
     return showDownloads
@@ -61,7 +69,6 @@ def toggleAllItemsMode(handle):
     matchingItems.recomputeFilter(newItems)
     handle.forceUpdate()
 
-global searchTerm, showDownloads, showWatchableItems, showNewItems, allItemsMode
 searchTerm = None
 
 # The main section
@@ -96,6 +103,7 @@ isFolder = False
     <t:execOnUnload><![CDATA[
 matchingItems.unlink()
 thisFeedView.unlink()
+allItems.unlink()
 if feed.idExists():
     feed.markAsViewed()
 ]]>

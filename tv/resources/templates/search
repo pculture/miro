@@ -22,6 +22,11 @@ searchItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
 searchEngines = views.searchEngines
 ]]>
     </t:execOnLoad>
+    <t:execOnUnLoad><![CDATA[
+searchFeed.unlink()
+searchItems.unlink()
+]]>
+</t:execOnUnLoad>
 
 </head>
 

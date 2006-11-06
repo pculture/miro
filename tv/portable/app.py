@@ -1164,6 +1164,15 @@ class TemplateDisplay(frontend.HTMLDisplay):
     def __str__(self):
         return "Template <%s> args=%s kargs=%s" % (self.templateName, self.args, self.kargs)
 
+    def reInit(self, *args, **kargs):
+        self.args = args
+        self.kargs = kargs
+        try:
+            self.templateHandle.templateVars['reInit'](*args, **kargs)
+        except:
+            pass
+        self.templateHandle.forceUpdate()
+        
     def runActionURLs(self, triggers):
         newPage = False
         for url in triggers:

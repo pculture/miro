@@ -539,12 +539,22 @@ class SelectionHandler(object):
                 guideURL, videoFileName)
 
     def displayCurrentTabContent(self):
+        frame = app.controller.frame
+        mainDisplay = frame.getDisplay(frame.mainDisplay)
+
+        # Hack to avoid re-displaying channel template
+        if (mainDisplay and mainDisplay.templateName == 'channel'):
+            tls = self.tabListSelection
+            if len(tls.currentSelection) == 1:
+                for id in tls.currentSelection:
+                    if id == mainDisplay.kargs['id']:
+                        mainDisplay.reInit([], {'id': id})
+                
         newDisplay = self._chooseDisplayForCurrentTab()
+
         # Don't redisplay the current tab if it's being displayed.  It messes
         # up our database callbacks.  The one exception is the guide tab,
         # where redisplaying it will reopen the home page.
-        frame = app.controller.frame
-        mainDisplay = frame.getDisplay(frame.mainDisplay) 
         if (self.lastDisplay and newDisplay == self.lastDisplay and
                 self.lastDisplay is mainDisplay and
                 newDisplay.templateName != 'guide'):
