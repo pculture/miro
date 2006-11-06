@@ -1036,7 +1036,11 @@ class IndexFilterTest(IndexFilterTestBase):
             self.assertEqual(filtered.getNext().id, obj.id)
             self.assertNotEqual(filtered3.getNext().id, obj.id)
 
-        self.everything.removeView(filtered)
+        for x in range(0,100):
+            database.DDBObject()
+        self.assertEqual(filtered.len(),20)
+        self.assertEqual(self.addCallbacks,20)
+
         filtered.changeIndexValue(self.mod10, 0)
         filtered.resetCursor()
         filtered2.resetCursor()
@@ -1044,9 +1048,15 @@ class IndexFilterTest(IndexFilterTestBase):
         for obj in filtered3:
             self.assertEqual(filtered.getNext().id, obj.id)
             self.assertNotEqual(filtered2.getNext().id, obj.id)
-        self.assertEqual(filtered.len(),10)
-        self.assertEqual(self.addCallbacks,10)
-        self.assertEqual(self.removeCallbacks,10)
+        self.assertEqual(filtered.len(),20)
+        self.assertEqual(self.addCallbacks,40)
+        self.assertEqual(self.removeCallbacks,30)
+        self.assertEqual(self.changeCallbacks,0)
+        self.everything.removeView(filtered)
+        for x in range(0,100):
+            database.DDBObject()
+        self.assertEqual(self.addCallbacks,40)
+        self.assertEqual(self.removeCallbacks,30)
         self.assertEqual(self.changeCallbacks,0)
         
 class MultiIndexed(database.DDBObject):
