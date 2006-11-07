@@ -543,7 +543,7 @@ class SelectionHandler(object):
         mainDisplay = frame.getDisplay(frame.mainDisplay)
 
         # Hack to avoid re-displaying channel template
-        if (mainDisplay and mainDisplay.templateName == 'channel'):
+        if (mainDisplay and hasattr(mainDisplay, 'templateName') and mainDisplay.templateName == 'channel'):
             tls = self.tabListSelection
             if len(tls.currentSelection) == 1:
                 for id in tls.currentSelection:
