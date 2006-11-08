@@ -386,6 +386,7 @@ function onKeyDown(event) {
       onFullscreenActivate();
     }
   }
+  return false;
 }
 
 /* This is where the search on chrome events come to hang out */

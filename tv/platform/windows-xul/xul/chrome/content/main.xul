@@ -125,7 +125,7 @@
 <!-- CONTENT AREA -->
 <hbox flex="1">
 
-<resizer dir="left" class="side-resizer" oncommand="return doResize(event);" />
+<resizer id="resizer-left" dir="left" class="side-resizer" oncommand="return doResize(event);" />
 
 <!-- CHANNEL BAR -->
   <browser id="channelsDisplay" src="" type="content"
@@ -155,7 +155,7 @@
         </vbox>
                 
 
-<resizer dir="right" class="side-resizer" oncommand="return doResize(event);" />
+<resizer id="resizer-right" dir="right" class="side-resizer" oncommand="return doResize(event);" />
 
 </hbox>
 <!-- / CONTENT AREA -->
