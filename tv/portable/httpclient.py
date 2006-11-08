@@ -197,6 +197,8 @@ class AsyncSocket(object):
     module.
     """
 
+    MEMORY_ERROR_LIMIT = 5
+
     def __init__(self, closeCallback=None):
         """Create an AsyncSocket.  If closeCallback is given, it will be
         called if we detect that the socket has been closed durring a
@@ -215,6 +217,7 @@ class AsyncSocket(object):
         self.readSomeData = False
         self.name = ""
         self.lastClock = None
+        self.memoryErrors = 0
 
     def __str__(self):
         if self.name:
@@ -400,7 +403,18 @@ class AsyncSocket(object):
             data = self.socket.recv(self.readSize)
         except socket.error, (code, msg):
             self.handleSocketError(code, msg, "read")
+        except MemoryError:
+            # This happens because of a windows bug in the socket code (see
+            # #4373).  Let's hope that things clear themselves up next time we
+            # read.
+            self.memoryErrors += 1
+            if self.memoryErrors > self.MEMORY_ERROR_LIMIT:
+                print "ERROR: Too many MemoryErrors on %s" % self
+                self.handleEarlyClose('read')
+            else:
+                print "WARNING: Memory error while reading from %s" % self
         else:
+            self.memoryErrors = 0
             self.handleReadData(data)
 
     def handleReadData(self, data):

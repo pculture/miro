@@ -329,6 +329,11 @@ def upgrade26(objectList):
             changed.add(o)
     return changed
 
+def upgrade27(objectList):
+    """We dropped the sawIntro field from ChannelGuide.  No need to change
+    anything for this."""
+    return set()
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

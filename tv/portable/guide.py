@@ -54,10 +54,6 @@ class ChannelGuide(DDBObject):
     def __init__(self, url=None):
         # Delayed callback for eventloop.
         self.dc = None
-        # True if user has seen the tutorial, or this is a non default guide.
-        # We don't want to display the Intro anymore.
-        self.sawIntro = True
-#        self.sawIntro = url != None
         # If None, we have never successfully loaded the guide. Otherwise,
         # the <body> part of the front channel guide page from the last time
         # we loaded it, whenever that was (perhaps in a previous session.)
@@ -100,10 +96,6 @@ class ChannelGuide(DDBObject):
             # Uses precaching. Set up an initial update, plus hourly reloads..
             self.startUpdates()
 
-    def setSawIntro(self):
-        self.sawIntro = True
-        self.signalChange()
-
     def startUpdates(self):
         if not self.dc:
             self.dc = eventloop.addIdle (self.update, "Channel Guide Update")
@@ -113,9 +105,6 @@ class ChannelGuide(DDBObject):
     # If scheme is 'template', value is the template that should be loaded in
     # the frame.
     def getLocation(self):
-        if not self.sawIntro:
-            return ('template', 'first-time-intro')
-
         import frontend
         apiurl = frontend.getDTVAPIURL()
         if apiurl:

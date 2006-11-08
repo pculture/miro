@@ -1645,14 +1645,6 @@ class TemplateActionHandler:
         controller.frame.selectDisplay(template, controller.frame.mainDisplay)
         self.currentName = name
 
-    def doneWithIntro(self, id):
-        try:
-            guide = views.guides.getObjectByID(int(id)).setSawIntro()
-        except database.ObjectNotFoundError: 
-            # guide was deleted before we got this action URL
-            return
-        self.goToGuide(id)
-
     def goToGuide(self, id):
         # Only switch to the guide if the template display is already
         # selected This prevents doubling clicking on a movie from
