@@ -284,7 +284,11 @@ class MainFrame:
             def delete_event_cb(widget, event):
                 widget.hide()
                 return True
+            def response_cb(widget, id):
+                widget.hide()
+                return True
             self.aboutWidget.connect ("delete_event", delete_event_cb)
+            self.aboutWidget.connect ("response", response_cb)
             self.aboutWidget.set_transient_for (self.widgetTree['main-window'])
         self.aboutWidget.present()
 
