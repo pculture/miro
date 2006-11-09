@@ -697,7 +697,7 @@ class Feed(DDBObject):
             if self.idExists() and dialog.choice == dialogs.BUTTON_OK:
                 self.setTitle(dialog.value)
         dialogs.TextEntryDialog(title, text, dialogs.BUTTON_OK,
-            dialogs.BUTTON_CANCEL, prefillCallback=lambda :self.getTitle()).run(callback)
+            dialogs.BUTTON_CANCEL, prefillCallback=lambda:self.getTitle()).run(callback)
 
     def update(self):
         self.confirmDBThread()
