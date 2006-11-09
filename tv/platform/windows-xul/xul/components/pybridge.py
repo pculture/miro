@@ -209,6 +209,13 @@ class PyBridge:
         return config.get(prefs.UPSTREAM_LIMIT_IN_KBS)
     def setLimitUpstreamAmount(self, value):
         return config.set(prefs.UPSTREAM_LIMIT_IN_KBS, value)
+    def getMaxManual(self):
+        return config.get(prefs.MAX_MANUAL_DOWNLOADS)
+    def setMaxManual(self, value):
+        return config.set(prefs.MAX_MANUAL_DOWNLOADS, value)
+    def updatePrefs(self):
+        import autodler
+        autodler.updatePrefs()
     def getPreserveDiskSpace(self):
         return config.get(prefs.PRESERVE_DISK_SPACE)
     def setPreserveDiskSpace(self, value):

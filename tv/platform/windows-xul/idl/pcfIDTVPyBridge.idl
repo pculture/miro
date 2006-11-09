@@ -56,6 +56,9 @@ interface pcfIDTVPyBridge : nsISupports
   void setLimitUpstream(in boolean value);
   short getLimitUpstreamAmount();
   void setLimitUpstreamAmount(in short value);
+  short getMaxManual();
+  void setMaxManual(in short value);
+  void updatePrefs();
   boolean getPreserveDiskSpace();
   void setPreserveDiskSpace(in boolean value);
   float getPreserveDiskSpaceAmount();

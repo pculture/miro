@@ -68,22 +68,12 @@
 
 	<!--DOWNLOADS-->
 	<groupbox orient="vertical">
-		<caption label="Downloads"/>
-                <description>(WARNING: Changes won't go into effect until you
-                        restart Democracy Player.)</description>
+	        <caption label="Downloads"/>
 		<hbox>
-			<checkbox id="limitupstream" checked="true" label="To avoid slowdowns, limit upstream to" value="1" oncommand="limitUpstreamChange()"/>
-			<textbox id="maxupstream" flex="0" value="300" style="max-width: 30px;" onchange="maxUpstreamChange()"/>
-			<description style="padding-top:5px;">KB/s when my computer is active.</description>
-		</hbox>				
-                <hbox align="end">
-                        <description>Bit Torrent uses ports between</description>
-                        <textbox id="btminport" flex="0" value="300" 
-                                size="5" onchange="btMinPortChange()" />
-                        <description>and</description>
-                        <textbox id="btmaxport" flex="0" value="300" 
-                                size="5" onchange="btMaxPortChange()" />
-                </hbox>
+			<description>Download at most</description>
+			<textbox id="maxmanual" flex="0" value="300" style="max-width: 30px;" onchange="maxManualChange()"/>
+			<description>videos at once.</description>
+		</hbox>
 	</groupbox>
 	<!--/DOWNLOADS-->
 	
@@ -111,6 +101,30 @@
 		</hbox>
 	</groupbox>
 	<!--/DISK SPACE-->
+
+	<!--BITTORRENT-->
+	<groupbox orient="vertical">
+	        <caption label="BitTorrent"/>
+                <description>(WARNING: Changes won't go into effect until you
+                        restart Democracy Player.)</description>
+		<hbox>
+			<checkbox id="limitupstream" checked="true" label="To avoid slowdowns, limit upstream to" value="1" oncommand="limitUpstreamChange()"/>
+			<textbox id="maxupstream" flex="0" value="300" style="max-width: 30px;" onchange="maxUpstreamChange()"/>
+			<description style="padding-top:5px;">KB/s when my computer is active.</description>
+		</hbox>				
+                <hbox align="end">
+                        <description>Bit Torrent uses ports between</description>
+                        <textbox id="btminport" flex="0" value="300" 
+                                size="5" onchange="btMinPortChange()" />
+                        <description>and</description>
+                        <textbox id="btmaxport" flex="0" value="300" 
+                                size="5" onchange="btMaxPortChange()" />
+                </hbox>
+	</groupbox>
+	<!--/BITTORRENT-->
 </vbox>
 
 </dialog>
+
+
+

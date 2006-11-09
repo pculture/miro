@@ -10,6 +10,7 @@ function onload() {
   originalMoviesDir = pybridge.getMoviesDirectory();
   setLimitUpstream(pybridge.getLimitUpstream());
   setMaxUpstream(pybridge.getLimitUpstreamAmount());
+  setMaxManual(pybridge.getMaxManual());
   setHasMinDiskSpace(pybridge.getPreserveDiskSpace());
   setMinDiskSpace(pybridge.getPreserveDiskSpaceAmount());
   setExpire(pybridge.getExpireAfter());
@@ -21,6 +22,7 @@ function onload() {
 function ondialogaccept() {
   checkMoviesDirChanged();
   checkBTPorts();
+  pybridge.updatePrefs()
 }
 
 /* Convert a floating point object into a string to show to the user.  We
@@ -107,6 +109,18 @@ function maxUpstreamChange() {
   if ((value == 0) || (isNaN(value))) value = 1;
   textbox.value=value;
   pybridge.setLimitUpstreamAmount(value);
+}
+
+function setMaxManual(max) {
+    document.getElementById("maxmanual").value = max;
+}
+
+function maxManualChange() {
+  var textbox = document.getElementById("maxmanual");
+  var value = parseInt(textbox.value);
+  if ((value == 0) || (isNaN(value))) value = 1;
+  textbox.value=value;
+  pybridge.setMaxManual(value);
 }
 
 function setMinDiskSpace(min) {
