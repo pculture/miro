@@ -47,7 +47,7 @@ VLCRenderer.prototype = {
     if(this.startedPlaying && pos < 0) {
         // hit the end of the playlist
         this.scheduleUpdates = false;
-        pybridge.skip(1);
+        pybridge.onMovieFinished();
     } else if(pos >=0) {
       this.startedPlaying = true;
     }

@@ -31,7 +31,7 @@ class Renderer(app.VideoRenderer):
         self.widget = widget
 
     def onEos(self):
-        eventloop.addIdle(lambda:app.controller.playbackController.skip(1), "onEos: Skip to next track")
+        eventloop.addIdle(app.controller.playbackController.onMovieFinished, "onEos: Skip to next track")
 
     def onRealize(self, widget):
         # flush gdk output to ensure that our window is created

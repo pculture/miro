@@ -326,6 +326,10 @@ class PyBridge:
         app.controller.playbackController.skip(-1, allowMovieReset=False)
 
     @asUrgent
+    def onMovieFinished(self):
+        app.controller.playbackController.onMovieFinished()
+
+    @asUrgent
     def loadURLInBrowser(self, browserId, url):
         try:
             display = app.controller.frame.selectedDisplays[browserId]

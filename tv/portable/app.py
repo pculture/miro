@@ -84,6 +84,7 @@ class PlaybackControllerBase:
     def __init__(self):
         self.currentPlaylist = None
         self.justPlayOne = False
+        self.currentItem = None
 
     def configure(self, view, firstItemId=None, justPlayOne=False):
         self.currentPlaylist = Playlist(view, firstItemId)
@@ -129,6 +130,9 @@ class PlaybackControllerBase:
 
     def playItem(self, anItem):
         try:
+            if self.currentItem:
+                self.currentItem.onViewedCancel()
+            self.currentItem = None
             while not os.path.exists(anItem.getVideoFilename()):
                 print "DTV: movie file '%s' is missing, skipping to next" % \
                         anItem.getVideoFilename()
@@ -137,6 +141,7 @@ class PlaybackControllerBase:
                     self.stop()
                     return
 
+            self.currentItem = anItem
             if anItem is not None:
                 videoDisplay = controller.videoDisplay
                 videoRenderer = videoDisplay.getRendererForItem(anItem)
@@ -175,7 +180,10 @@ class PlaybackControllerBase:
         frame = controller.frame
         frame.selectDisplay(newDisplay, frame.mainDisplay)
 
-    def stop(self, switchDisplay=True):
+    def stop(self, switchDisplay=True, markAsViewed=False):
+        if self.currentItem:
+            self.currentItem.onViewedCancel()
+        self.currentItem = None
         frame = controller.frame
         videoDisplay = controller.videoDisplay
         if frame.getDisplay(frame.mainDisplay) == videoDisplay:
@@ -204,6 +212,7 @@ class PlaybackControllerBase:
                 self.playItem(nextItem)
 
     def onMovieFinished(self):
+        self.currentItem = None
         return self.skip(1, False)
 
 
@@ -1231,6 +1240,24 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 path = url[len("file://"):]
                 return os.path.exists(path)
 
+            if url.startswith('feed://'):
+                url = "http://" + url[len("feed://"):]
+                f = feed.getFeedByURL(url)
+                if f is None:
+                    f = feed.Feed(url)
+                f.blink()
+                return True
+
+            # check for subscribe.getdemocracy.com links
+            subscribeLinks = subscription.findSubscribeLinks(url)
+            if subscribeLinks:
+                for url in subscribeLinks:
+                    f = feed.getFeedByURL(url)
+                    if f is None:
+                        f = feed.Feed(url)
+                    f.blink()
+                return True
+
             # If we get here, this isn't a DTV URL. We should open it
             # in an external browser.
             if (url.startswith('http://') or url.startswith('https://') or
@@ -1859,13 +1886,14 @@ class Playlist:
 
     def itemMarkedAsViewed(self, anItem):
         if anItem is not None:
-            eventloop.addIdle(lambda:anItem.onViewed(), "Mark item viewed")
+            eventloop.addIdle(anItem.onViewed, "Mark item viewed")
         return anItem
 
 class PlaylistItemFromItem:
 
     def __init__(self, anItem):
         self.item = anItem
+        self.dcOnViewed = None
 
     def getTitle(self):
         return self.item.getTitle()
@@ -1877,9 +1905,20 @@ class PlaylistItemFromItem:
         # NEEDS
         return 42.42
 
-    def onViewed(self):
+    def onViewedExecute(self):
         if self.item.idExists():
             self.item.markItemSeen()
+        self.dcOnViewed = None
+
+    def onViewed(self):
+        if self.dcOnViewed or self.item.getSeen():
+            return
+        self.dcOnViewed = eventloop.addTimeout(5, self.onViewedExecute, "Mark item viewed")
+
+    def onViewedCancel(self):
+        if self.dcOnViewed:
+            self.dcOnViewed.cancel()
+            self.dcOnViewed = None
 
     # Return the ID that is used by a template to indicate this item 
     def getID(self):
