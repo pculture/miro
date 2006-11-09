@@ -61,7 +61,7 @@ searchItems.unlink()
 			<div class="white-button-left save-search-searchpage">
 			<div class="white-button-right">
 			<div class="white-button-middle">
-                        <a href="#" onclick="return eventURL('action:addEngineSearchFeed?term=@@@feed.lastQuery@@@&amp;name=@@@feed.lastEngine@@@');">Save This Search</a>
+                        <a href="#" onclick="return eventURL('action:addEngineSearchFeed?term=@@@feed.lastQuery@@@&amp;name=@@@feed.lastEngine@@@');">Add This Search as a Channel</a>
 			</div>
 			</div>
 			</div>
