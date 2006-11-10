@@ -55,12 +55,12 @@
 		<caption label="Movies Directory"/>
 		<hbox>
                         <description style="padding-top:5px;">
-                                Store downloaded movies in
+                                Store downloaded videos in this folder:
                         </description>
 			<textbox id="movies-directory" flex="0" value=""
                                 readonly="true" style="width: 300px;" />
                         <button id="movies-directory-button" flex="0"
-                                label="Change"
+                                label="Change..."
                                 oncommand="selectMoviesDirectory();" />
 		</hbox>				
 	</groupbox>
