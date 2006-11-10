@@ -47,8 +47,8 @@
 /* NSTextField (By default, videos expire after:) : <title:By default, videos expire after:> (oid:78) */
 "By default, videos expire after:" = "By default, videos expire after:";
 
-/* NSButton (Change) : <title:Change> (oid:93) */
-"Change" = "Change";
+/* NSButton (Change...) : <title:Change...> (oid:93) */
+"Change..." = "Change...";
 
 /* NSTextField (Check channels for new content:) : <title:Check channels for new content:> (oid:24) */
 "Check channels for new content:" = "Check channels for new content:";
@@ -83,11 +83,11 @@
 /* NSButton (Run Democracy at startup) : <title:Run Democracy at startup> (oid:47) */
 "Run Democracy at startup" = "Run Democracy at startup";
 
+/* NSTextField (Save downloaded videos in this folder:) : <title:Save downloaded videos in this folder:> (oid:92) */
+"Save downloaded videos in this folder:" = "Save downloaded videos in this folder:";
+
 /* NSButtonCell (Stop after each video.) : <title:Stop after each video.> (oid:104) */
 "Stop after each video." = "Stop after each video.";
-
-/* NSTextField (Store downloaded movies in:) : <title:Store downloaded movies in:> (oid:92) */
-"Store downloaded movies in:" = "Store downloaded movies in:";
 
 /* NSTextField (To avoid internet slowdowns:) : <title:To avoid internet slowdowns:> (oid:128) */
 "To avoid internet slowdowns:" = "To avoid internet slowdowns:";
