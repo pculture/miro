@@ -1490,7 +1490,7 @@ class ModelActionHandler:
     def videoBombExternally(self, item):
         obj = db.getObjectByID(int(item))
         paramList = {}
-        paramList["title"] = obj.getTitle()
+        paramList["title"] = obj.getTitle().encode('utf-8')
         paramList["info_url"] = obj.getLink()
         paramList["hookup_url"] = obj.getPaymentLink()
         try:
