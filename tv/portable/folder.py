@@ -129,7 +129,7 @@ class ChannelFolder(FolderBase):
         unwatched = 0
         for child in self.getChildrenView():
             if child.showU():
-                unwatched += child.unwatched
+                unwatched += child.numUnwatched()
         return unwatched
 
     # Returns true iff unwatched should be shown 
