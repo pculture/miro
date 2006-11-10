@@ -390,6 +390,9 @@ def print_mem_usage(message):
 #    print message
 #    os.system ("ps huwwwp %d" % (os.getpid(),))
 
+class TooManySingletonsError(Exception):
+    pass
+
 def getSingletonDDBObject(view):
     view.confirmDBThread()
     viewLength = view.len()
