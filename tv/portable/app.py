@@ -1933,9 +1933,6 @@ def mappableToPlaylistItem(obj):
 def mapToPlaylistItem(obj):
     return PlaylistItemFromItem(obj)
 
-class TooManySingletonsError(Exception):
-    pass
-
 def _defaultFeeds():
     defaultFeedURLs = [
         'http://del.icio.us/rss/representordie/system:media:video', 
