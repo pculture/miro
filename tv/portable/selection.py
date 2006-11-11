@@ -547,11 +547,15 @@ class SelectionHandler(object):
             tls = self.tabListSelection
             if len(tls.currentSelection) == 1:
                 for id in tls.currentSelection:
-                    self.itemListSelection.clearSelection()
-                    self.updateMenus()
                     tab = tls.currentView.getObjectByID(id)
-                    mainDisplay.reInit([], {'id': tab.obj.getID()})
-                    return
+                    if tab.contentsTemplate == 'channel':
+                        newId = int(tab.obj.getID())
+                        #print "swapping templates %d %d" % (mainDisplay.kargs['id'], newId)
+                                                        
+                        self.itemListSelection.clearSelection()
+                        self.updateMenus()
+                        mainDisplay.reInit(id = newId)
+                        return
         newDisplay = self._chooseDisplayForCurrentTab()
 
         # Don't redisplay the current tab if it's being displayed.  It messes

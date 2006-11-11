@@ -19,11 +19,13 @@ feed = views.feeds.getObjectByID(int(kargs['id']))
 filters.switchNewItemsChannel(feed)
 sorts.switchUnwatchedFirstChannel(feed)
 
-def reInit(*args, **kargs):
+def _reInit(*args, **kargs):
     global feed, allItems
-    print "reinitting %d" % int(kargs['id'])
+    #print "reinitting %s" % repr(kargs)
     feed = views.feeds.getObjectByID(int(kargs['id']))
     allItems.changeIndexValue(indexes.itemsByFeed, int(kargs['id']))
+
+reInit = lambda *args, **kargs: _reInit(*args, **kargs)
 
 def showDownloadsFilter(x):
     return showDownloads
