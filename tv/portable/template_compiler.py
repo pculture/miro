@@ -277,7 +277,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         fileobj.write('import resources\n')
         fileobj.write('import gtcache\n')
         fileobj.write('_ = gtcache.gettext\n')
-        fileobj.write('def fillTemplate(domHandler, dtvPlatform, eventCookie, bodyTagExtra, *args, **kargs):\n')
+        fileobj.write('def fillTemplate(templateState, domHandler, dtvPlatform, eventCookie, bodyTagExtra, *args, **kargs):\n')
         self.handle.render(fileobj)
         fileobj.write('\n\n    out = StringIO()\n')
         

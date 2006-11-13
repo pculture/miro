@@ -168,7 +168,7 @@ class PlaybackControllerBase:
     def playItemExternally(self, itemID):
         anItem = mapToPlaylistItem(db.getObjectByID(int(itemID)))
         controller.videoInfoItem = anItem
-        newDisplay = TemplateDisplay('external-playback-continue')
+        newDisplay = TemplateDisplay('external-playback-continue','default')
         frame = controller.frame
         frame.selectDisplay(newDisplay, frame.mainDisplay)
         return anItem
@@ -176,7 +176,7 @@ class PlaybackControllerBase:
     def scheduleExternalPlayback(self, anItem):
         controller.videoDisplay.stopOnDeselect = False
         controller.videoInfoItem = anItem
-        newDisplay = TemplateDisplay('external-playback')
+        newDisplay = TemplateDisplay('external-playback','default')
         frame = controller.frame
         frame.selectDisplay(newDisplay, frame.mainDisplay)
 
@@ -306,7 +306,7 @@ class VideoDisplayBase (Display):
     def selectItem(self, anItem, renderer):
         self.stopOnDeselect = True
         controller.videoInfoItem = anItem
-        template = TemplateDisplay('video-info')
+        template = TemplateDisplay('video-info','default')
         area = controller.frame.videoInfoDisplay
         controller.frame.selectDisplay(template, area)
         
@@ -617,7 +617,7 @@ class Controller (frontend.Application):
             eventloop.addTimeout (30, autoupdate.checkForUpdates, "Check for updates")
             feed.expireItems()
 
-            self.tabDisplay = TemplateDisplay('tablist',
+            self.tabDisplay = TemplateDisplay('tablist','default',
                     playlistTabOrder=playlistTabOrder,
                     channelTabOrder=channelTabOrder)
             self.frame.selectDisplay(self.tabDisplay, self.frame.channelsDisplay)
@@ -1134,13 +1134,15 @@ downloaded?""")
 
 class TemplateDisplay(frontend.HTMLDisplay):
 
-    def __init__(self, templateName, frameHint=None, areaHint=None, 
+    def __init__(self, templateName, templateState, frameHint=None, areaHint=None, 
             baseURL=None, *args, **kargs):
-        "'templateName' is the name of the inital template file. 'data' is keys for the template."
+        "'templateName' is the name of the inital template file. 'data' is keys for the template. 'templateState' is a string with the state of the template"
 
         #print "Processing %s" % templateName
         self.templateName = templateName
-        (tch, self.templateHandle) = template.fillTemplate(templateName, self,
+        self.templateState = templateState
+        (tch, self.templateHandle) = template.fillTemplate(templateName,
+                templateState, self,
                 self.getDTVPlatformName(), self.getEventCookie(),
                 self.getBodyTagExtra(), *args, **kargs)
         self.args = args
@@ -1658,7 +1660,7 @@ class TemplateActionHandler:
         self.templateHandle = templateHandle
         self.currentName = None
 
-    def switchTemplate(self, name, baseURL=None, *args, **kargs):
+    def switchTemplate(self, name, state='default', baseURL=None, *args, **kargs):
         self.templateHandle.unlinkTemplate()
         # Switch to new template. It get the same variable
         # dictionary as we have.
@@ -1666,7 +1668,7 @@ class TemplateActionHandler:
         # that these links always affect the right-hand 'content'
         # area, even if they are loaded from the left-hand 'tab'
         # area. Actually this whole invocation is pretty hacky.
-        template = TemplateDisplay(name, frameHint=controller.frame,
+        template = TemplateDisplay(name, state, frameHint=controller.frame,
                 areaHint=controller.frame.mainDisplay, baseURL=baseURL,
                 *args, **kargs)
         controller.frame.selectDisplay(template, controller.frame.mainDisplay)

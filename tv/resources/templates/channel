@@ -13,7 +13,7 @@
     <t:include filename="settings.js" />
     <script type="text/javascript" src="resource:templates/osxdnd.js" />
     <t:execOnLoad><![CDATA[
-
+#print templateState
 global feed, searchTerm, showDownloads, showWatchableItems, showNewItems, allItemsMode, allItems
 feed = views.feeds.getObjectByID(int(kargs['id']))
 filters.switchNewItemsChannel(feed)
@@ -21,6 +21,9 @@ sorts.switchUnwatchedFirstChannel(feed)
 
 def _reInit(*args, **kargs):
     global feed, allItems
+    if feed.idExists():
+        feed.markAsViewed()
+
     #print "reinitting %s" % repr(kargs)
     feed = views.feeds.getObjectByID(int(kargs['id']))
     allItems.changeIndexValue(indexes.itemsByFeed, int(kargs['id']))
@@ -115,13 +118,17 @@ if feed.idExists():
 
 <body onkeydown="sendKeyToSearchBox(event);">
 <div id="feed-settings">
+  <div t:updateForView="thisFeedView">
     <t:includeTemplate filename="feed-settings" />
+  </div>
 </div>
     
 <!-- TITLE BAR ************************************************************ -->
 
 <div id="main-titlebar">
-        <img id="main-icon" src="***feed.getThumbnail()***" alt=""/>
+        <div t:updateForView="thisFeedView">
+          <img id="main-icon" src="***feed.getThumbnail()***" alt=""/>
+        </div>
 	<div id="main-titlebar-center">
 	    <div t:updateForView="thisFeedView">
                 <h1 id="main-title" t:replaceMarkup="feed.getTitle()" />
@@ -146,6 +153,7 @@ if feed.idExists():
             <a id="main-titlebar-settings" href="#"
                 onclick="return showSettings();" i18n:translate="">Settings</a>
         <div id="main-titlebar-auto">
+           <div t:updateForView="thisFeedView">
                 <form name="setAuto">
                 <input type="hidden" name="feed" value="@@@feed.getID()@@@" />
 		<span id="auto-checkbox-container">
@@ -158,6 +166,7 @@ if feed.idExists():
 		</span>
                 <span id="auto-label" i18n:translate=""><label for="automatic">Auto Download</label></span>
                 </form>          
+           </div>
         </div>
 		
         </div>

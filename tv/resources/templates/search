@@ -14,6 +14,7 @@
         <script type="text/javascript" src="resource:templates/osxdnd.js" />
 
     <t:execOnLoad><![CDATA[
+#print templateState
 import searchengines
 searchFeed = views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search')
 feed = searchFeed[0]

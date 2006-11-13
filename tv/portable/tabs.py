@@ -35,10 +35,11 @@ class StaticTab(database.DDBObject):
         'downloadtab': 'download-icon-tab.png',
     }
 
-    def __init__(self, tabTemplateBase, contentsTemplate, order):
+    def __init__(self, tabTemplateBase, contentsTemplate, state, order):
         self.tabTemplateBase = tabTemplateBase
         self.contentsTemplate = contentsTemplate
         self.order = order
+        self.templateState = state
         database.DDBObject.__init__(self)
 
     def getTitle(self):
@@ -70,9 +71,10 @@ class StaticTab(database.DDBObject):
 class Tab:
     idCounter = 0
 
-    def __init__(self, tabTemplateBase, contentsTemplate, sortKey, obj):
+    def __init__(self, tabTemplateBase, contentsTemplate, templateState, sortKey, obj):
         self.tabTemplateBase = tabTemplateBase
         self.contentsTemplate = contentsTemplate
+        self.templateState = templateState
         self.sortKey = sortKey
         self.display = None
         self.id = "tab%d" % Tab.idCounter
@@ -302,5 +304,6 @@ def reloadStaticTabs():
     for n in document.getElementsByTagName('statictab'):
         tabTemplateBase = n.getAttribute('tabtemplatebase')
         contentsTemplate = n.getAttribute('contentstemplate')
+        state = n.getAttribute('state')
         order = int(n.getAttribute('order'))
-        StaticTab(tabTemplateBase, contentsTemplate, order)
+        StaticTab(tabTemplateBase, contentsTemplate, state, order)

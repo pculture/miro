@@ -427,7 +427,8 @@ class SelectionHandler(object):
         elif len(tls.currentSelection) == 1:
             for id in tls.currentSelection:
                 tab = tls.currentView.getObjectByID(id)
-                return app.TemplateDisplay(tab.contentsTemplate, 
+                return app.TemplateDisplay(tab.contentsTemplate,
+                                           tab.templateState,
                         frameHint=frame, areaHint=frame.mainDisplay, 
                         id=tab.obj.getID())
         else:
