@@ -58,6 +58,9 @@ def createEngines():
     SearchEngine ("revver", u"Revver",
                   "http://api.revver.com/rss/0.1/search/%s",
                   4)
+    SearchEngine ("dailymotion", u"DailyMotion",
+                  "http://www.dailymotion.com/rss/search/%s",
+                  5)
 
 def getRequestURL(engineName, query, filterAdultContents=True, limit=50):
     if query == "LET'S TEST DTV'S CRASH REPORTER TODAY":
