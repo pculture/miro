@@ -8,7 +8,7 @@
 <!ENTITY startup.search.description	"Democracy Player can find all the videos on your computer to help you organize your collection.">
 <!ENTITY startup.search.question        "Would you like Democracy Player to look for video files on your computer?">
 <!ENTITY startup.search.restrict	"Restrict to all my personal files.">
-<!ENTITY startup.search.custom          "Search custom location:">
+<!ENTITY startup.search.custom          "Search custom folder:">
 <!ENTITY startup.search.searching	"Searching for Videos">
 <!ENTITY startup.change	                "Change">
 <!ENTITY startup.cancel	                "Cancel Search">
