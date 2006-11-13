@@ -31,8 +31,8 @@ Would you like Democracy Player to look for video files on your computer?> (oid:
 /* NSButtonCell (Search my entire Home folder.) : <title:Search my entire Home folder.> (oid:74) */
 "Search my entire Home folder." = "Search my entire Home folder.";
 
-/* NSButtonCell (Search this location:) : <title:Search this location:> (oid:75) */
-"Search this location:" = "Search this location:";
+/* NSButtonCell (Search this folder:) : <title:Search this folder:> (oid:75) */
+"Search this folder:" = "Search this folder:";
 
 /* NSTextField (Searching for Videos) : <title:Searching for Videos> (oid:57) */
 "Searching for Videos" = "Searching for Videos";
