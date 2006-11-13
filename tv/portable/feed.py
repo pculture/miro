@@ -1679,7 +1679,7 @@ class SearchFeedImpl (RSSFeedImpl):
         self.initialUpdate = True
         self.setUpdateFrequency(-1)
         self.searching = False
-        self.lastEngine = 'yahoo'
+        self.lastEngine = 'youtube'
         self.lastQuery = ''
         self.ufeed.autoDownloadable = False
         self.ufeed.signalChange()

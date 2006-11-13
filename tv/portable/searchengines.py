@@ -28,6 +28,10 @@ def deleteEngines():
 
 def createEngines():
     deleteEngines()
+    SearchEngine ("youtube", u"YouTube",
+                  "http://www.youtube.com/rss/tag/"
+                  "%s.rss",
+                  0)
     SearchEngine ("yahoo",  u"Yahoo! Video",
                   "http://api.search.yahoo.com/VideoSearchService/rss/videoSearch.xml"
                   "?appid=dtv_search"
@@ -35,7 +39,7 @@ def createEngines():
                   "&results=%l"
                   "&format=any"
                   "&query=%s",
-                  0)
+                  1)
     SearchEngine ("google",  u"Google Video",
                   "http://video.google.com/videofeed?type=search"
                   "&q=%s"
@@ -43,10 +47,6 @@ def createEngines():
                   "&num=%l"
                   "&format=any"
                   "&output=rss",
-                  1)
-    SearchEngine ("youtube", u"YouTube",
-                  "http://www.youtube.com/rss/tag/"
-                  "%s.rss",
                   2)
     SearchEngine ("blogdigger", u"Blogdigger",
                   "http://blogdigger.com/media/rss.jsp"
