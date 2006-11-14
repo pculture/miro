@@ -671,15 +671,23 @@ You must download the latest version of Democracy and run that.""")
 
     def setupGlobalFeed(self, url, *args, **kwargs):
         feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
-        hasFeed = feedView.len() > 0
-        feedView.unlink()
-        if not hasFeed:
-            print "DTV: Spawning global feed %s" % url
-            d = feed.Feed(url, *args, **kwargs)
+        try:
+            if feedView.len() == 0:
+                print "DTV: Spawning global feed %s" % url
+                d = feed.Feed(url, *args, **kwargs)
+            elif feedView.len() > 1:
+                allFeeds = [f for f in feedView]
+                for extra in allFeeds[1:]:
+                    extra.remove()
+                util.failed("Too many db objects for %s" % url)
+        finally:
+            feedView.unlink()
 
     def getGlobalFeed(self, url):
         feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
-        return feedView[0]
+        rv = feedView[0]
+        feedView.unlink()
+        return rv
 
     def removeGlobalFeed(self, url):
         feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
