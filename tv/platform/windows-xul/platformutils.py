@@ -7,6 +7,7 @@ import ctypes
 import _winreg
 import config
 import prefs
+import os
 
 localeInitialized = False
 
@@ -47,7 +48,7 @@ _langs = {
 0x405: "cs",
 0x406: "da",
 0x413: "nl",
-0x409: "en",
+#0x409: "en",  # This is the default. Don't bother with gettext in that case
 0x40b: "fi",
 0x40c: "fr",
 0x407: "de",
@@ -66,27 +67,12 @@ _langs = {
 0x41f: "tr",
 }
 
-def _getKey (keyName, subkey, typ):
-    try:
-        key = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, keyName)
-        (val, t) = _winreg.QueryValueEx(key, subkey)
-        if t == typ:
-            return val
-    except:
-        pass
-    return None
-
 def _getLocale():
-    keyName = r"Software\Policies\Microsoft\Control Panel\Desktop"
-    subkey = "MultiUILanguageID"
-    val = _getKey(keyName, subkey, _winreg.REG_DWORD)
-    if val is None:
-        keyName = r"Control Panel\Desktop"
-        val = _getKey(keyName, subkey, _winreg.REG_DWORD)
-    if val is None:
+    code = ctypes.windll.kernel32.GetUserDefaultUILanguage()
+    try:
+        return _langs[code]
+    except:  # Hmmmmm, we don't know the language for this code
         return None
-    else:
-        return langs[val]
 
 def initializeLocale():
     global localeInitialized
