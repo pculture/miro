@@ -13,7 +13,9 @@ def item(x,y):
     y = y[1]
     if x.parent_id == y.parent_id:
         if y.releaseDateObj != x.releaseDateObj:
-            return x.releaseDateObj < y.releaseDateObj
+            # The sort here is > because we want newer items to show
+            # up earlier in the list.
+            return x.releaseDateObj > y.releaseDateObj
         else:
             # If we're going to sort file items and non-file items
             # differently, then one must precede the other or it won't be
@@ -39,7 +41,7 @@ def item(x,y):
             # x is y's parent
             return True
         else:
-            # x and y are not children of the same item, so sort by the parent (which might be the self)
+            # x and y are not children of the same item, so sort by the parent (which might be the self for one of them.)
             xParent = x.getParent()
             yParent = y.getParent()
             return item((xParent, xParent), (yParent, yParent))
