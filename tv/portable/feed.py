@@ -1830,7 +1830,7 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler):
         tag = name[1]
         if self.firstTag:
             self.firstTag = False
-            if tag != 'rss':
+            if tag not in ['rss','feed']:
                 raise xml.sax.SAXNotRecognizedException, "Not an RSS file"
         if tag.lower() == 'enclosure' or tag.lower() == 'content':
             self.enclosureCount += 1
