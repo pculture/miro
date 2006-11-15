@@ -451,7 +451,7 @@ class SelectionHandler(object):
                             selectedChildren -= 1
                 else:
                     selectedChildren += 1
-            return app.TemplateDisplay(templateName, frameHint=frame,
+            return app.TemplateDisplay(templateName,'default', frameHint=frame,
                     areaHint=frame.mainDisplay,
                     selectedFolders=selectedFolders,
                     selectedChildren=selectedChildren,
