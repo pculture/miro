@@ -43,6 +43,7 @@ def addVideo(path):
             return
     manualFeed = util.getSingletonDDBObject(views.manualFeed)
     fileItem = item.FileItem(path, feed_id=manualFeed.getID())
+    fileItem.markItemSeen()
     commandLineVideoIds.add(fileItem.getID())
 
 def addTorrent(path, torrentInfohash):
