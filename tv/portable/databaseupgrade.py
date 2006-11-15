@@ -334,6 +334,40 @@ def upgrade27(objectList):
     anything for this."""
     return set()
 
+def upgrade28(objectList):
+    import feed
+    objectList.sort(key=lambda o:o.savedData['id'])
+    changed = set()
+    items = set()
+    removed = set()
+
+    for i in xrange (len(objectList) - 1, -1, -1):
+        o = objectList [i]
+        if o.classString == 'item':
+            entry = o.savedData['entry']
+            videoEnc = feed.getFirstVideoEnclosure(entry)
+            if videoEnc is not None:
+                entryURL = videoEnc.get('url')
+            else:
+                entryURL = None
+            title = entry.get("title")
+            feed_id = o.savedData['feed_id']
+            if title is not None or entryURL is not None:
+                if (feed_id, entryURL, title) in items:
+                    removed.add (o.savedData['id'])
+                    changed.add(o)
+                    del objectList[i]
+                else:
+                    items.add((feed_id, entryURL, title))
+
+    for i in xrange (len(objectList) - 1, -1, -1):
+        o = objectList [i]
+        if o.classString == 'file-item':
+            if o.savedData['parent_id'] in removed:
+                changed.add(o)
+                del objectList[i]
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

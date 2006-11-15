@@ -1195,12 +1195,22 @@ class RSSFeedImpl(FeedImpl):
             self.thumbURL = self.parsed.feed.image.url
             self.ufeed.iconCache.requestUpdate(is_vital=True)
         items_byid = {}
+        items_byURLTitle = {}
         items_nokey = []
         for item in self.items:
             try:
                 items_byid[item.getRSSID()] = item
             except KeyError:
                 items_nokey.append (item)
+            entry = item.getRSSEntry()
+            videoEnc = getFirstVideoEnclosure(entry)
+            if videoEnc is not None:
+                entryURL = videoEnc.get('url')
+            else:
+                entryURL = None
+            title = entry.get("title")
+            if title is not None or entryURL is not None:
+                items_byURLTitle[(entryURL, title)] = item
         for entry in self.parsed.entries:
             entry = self.addScrapedThumbnail(entry)
             new = True
@@ -1212,13 +1222,26 @@ class RSSFeedImpl(FeedImpl):
                         self._handleNewEntryForItem(item, entry)
                     new = False
             if new:
+                videoEnc = getFirstVideoEnclosure(entry)
+                if videoEnc is not None:
+                    entryURL = videoEnc.get('url')
+                else:
+                    entryURL = None
+                title = entry.get("title")
+                if title is not None or entryURL is not None:
+                    if items_byURLTitle.has_key ((entryURL, title)):
+                        item = items_byURLTitle[(entryURL, title)]
+                        if not _entry_equal(entry, item.getRSSEntry()):
+                            self._handleNewEntryForItem(item, entry)
+                        new = False
+            if new:
                 for item in items_nokey:
                     if _entry_equal(entry, item.getRSSEntry()):
                         new = False
                     else:
                         try:
                             if _entry_equal (entry["enclosures"], item.getRSSEntry()["enclosures"]):
-                                self._handleNewEntryForItem(entry)
+                                self._handleNewEntryForItem(item, entry)
                                 new = False
                         except:
                             pass
