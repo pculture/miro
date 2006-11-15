@@ -358,11 +358,14 @@ function handleExit() {
 }
 
 function onKeyDown(event) {
+  // Don't mess with keys in input boxes.
+  if(event.target.tagName &&
+    event.target.tagName.toLowerCase() == 'input') return true;
+
   if(event.altKey && event.keyCode == 13) { // Alt Enter
      onFullscreenActivate();
   }
   else if(event.keyCode == 8 || event.keyCode == 46) {  // Delete/Backspace
-     if(event.target.tagName.toLowerCase() == 'input') return;
      pybridge.removeCurrentSelection();
   } else if(event.keyCode == 32) { // Space
     pybridge.playPause();
