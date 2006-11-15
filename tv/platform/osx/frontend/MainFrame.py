@@ -754,6 +754,7 @@ class VideoSearchFieldCell (NSSearchFieldCell):
         self.setEditable_(cell.isEditable())
         self.setSearchButtonCell_(cell.searchButtonCell())
         self.setCancelButtonCell_(cell.cancelButtonCell())
+        self.cancelButtonCell().setTarget_(self)
         self.setSearchMenuTemplate_(self.makeSearchMenuTemplate())
         self.setSendsWholeSearchString_(YES)
         self.currentItem = nil
