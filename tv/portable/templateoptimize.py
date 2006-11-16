@@ -43,6 +43,7 @@ class BrokenUpElement:
         self.name = self.handler.name
         self.attrs = self.handler.attrs
         self.handler.reset()
+        self.parser.reset()
 
     def feedInFirstElement(self, html):
         pos = 0
