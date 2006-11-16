@@ -1520,6 +1520,7 @@ class ModelActionHandler:
        
         # This should be first, since it's most important.
         url = obj.getURL()
+        url.encode('utf-8', 'replace')
         if (not url.startswith('file:')):
             paramString = "?url=%s" % xhtmltools.urlencode(url)
             glue = '&'
