@@ -9,6 +9,7 @@ import config
 import prefs
 import time
 import views
+import random
 
 RUNNING_MAX = 3
 
@@ -179,7 +180,16 @@ class IconCache:
                 return
 
             if (self.filename == None):
-                self.filename = os.path.join(cachedir, info["filename"])
+                # Add a random unique id
+                parts = info["filename"].split('.')
+                uid = "%08d" % (random.randint(0,99999999),)
+                if len(parts) == 1:
+                    self.filename = "%s.%s" % (name, uid)
+                else:
+                    parts[-1:-1] = [uid]
+                    self.filename = '.'.join(parts)
+
+                self.filename = os.path.join(cachedir, self.filename)
                 self.filename = shortenFilename (self.filename)
                 self.filename = nextFreeFilename (self.filename)
                 needsSave = True
