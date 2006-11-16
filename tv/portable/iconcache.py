@@ -184,10 +184,10 @@ class IconCache:
                 parts = info["filename"].split('.')
                 uid = "%08d" % (random.randint(0,99999999),)
                 if len(parts) == 1:
-                    self.filename = "%s.%s" % (name, uid)
+                    parts.append(uid)
                 else:
                     parts[-1:-1] = [uid]
-                    self.filename = '.'.join(parts)
+                self.filename = '.'.join(parts)
 
                 self.filename = os.path.join(cachedir, self.filename)
                 self.filename = shortenFilename (self.filename)
