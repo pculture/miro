@@ -11,21 +11,21 @@ def launch():
     util.inDownloader = True
     logPath = os.environ.get('DEMOCRACY_DOWNLOADER_LOG')
     if logPath is not None:
-	if os.environ.get('DEMOCRACY_DOWNLOADER_FIRST_LAUNCH') == '1':
-	    logMode = 'w'
-	else:
-	    logMode = 'a'
-	log = open(logPath, logMode)
-	sys.stdout = sys.stderr = log
+        if os.environ.get('DEMOCRACY_DOWNLOADER_FIRST_LAUNCH') == '1':
+            logMode = 'w'
+        else:
+            logMode = 'a'
+        log = open(logPath, logMode)
+        sys.stdout = sys.stderr = log
 
     sys.stdout = util.AutoflushingStream(sys.stdout)
     sys.stderr = util.AutoflushingStream(sys.stderr)
     if os.environ.get('DEMOCRACY_DOWNLOADER_FIRST_LAUNCH') != '1':
-	print
-	print "*** Starting new downloader log ***"
-	print
+        print
+        print "*** Starting new downloader log ***"
+        print
     else:
-	print "*** Launching Democracy Downloader Daemon ****"
+        print "*** Launching Democracy Downloader Daemon ****"
 
     import platformutils
     platformutils.initializeLocale()

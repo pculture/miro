@@ -4,9 +4,6 @@ import os
 from objc import NO
 import Foundation
 
-import config
-import prefs
-
 # We need to define samefile for the portable code.  Lucky for us, this is
 # very easy.
 from os.path import samefile
@@ -146,6 +143,9 @@ class CallerObject (Foundation.NSObject):
 ###############################################################################
 
 def getAvailableBytesForMovies():
+    import config
+    import prefs
+
     pool = Foundation.NSAutoreleasePool.alloc().init()
     fm = Foundation.NSFileManager.defaultManager()
     info = fm.fileSystemAttributesAtPath_(config.get(prefs.MOVIES_DIRECTORY))
@@ -161,12 +161,13 @@ def getAvailableBytesForMovies():
 def initializeLocale():
     global localeInitialized
 
+    pool = Foundation.NSAutoreleasePool.alloc().init()
     languages = list(Foundation.NSUserDefaults.standardUserDefaults()["AppleLanguages"])
-    for i in xrange (len(languages)):
-        if languages[i] == "en":
-            languages[i] = "C"
+    if 'en' in languages:
+        languages[languages.index('en')] = u'C'
 
     print languages
     os.environ["LANGUAGE"] = ':'.join(languages)
     
     localeInitialized = True
+    del pool
