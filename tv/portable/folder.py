@@ -68,10 +68,10 @@ class FolderBase(DDBObject):
         dialogs.TextEntryDialog(self.renameTitle(), self.renameText(), 
                 dialogs.BUTTON_OK, dialogs.BUTTON_CANCEL).run(callback)
 
-    def remove(self):
+    def remove(self, moveItemsTo=None):
         children = [child for child in self.getChildrenView()]
         for child in children:
-            child.remove()
+            child.remove(moveItemsTo)
         DDBObject.remove(self)
 
     # getFolder and setFolder are here so that channels/playlists and folders
