@@ -9,12 +9,13 @@ import random
 ##
 # very simple parser to convert HTML to XHTML
 class XHTMLifier(HTMLParser):
-    def convert(self,data, addTopTags=False):
+    def convert(self,data, addTopTags=False, filterFontTags=False):
         if addTopTags:
             self.output = '<html><head></head><body>'
         else:
             self.output = ''
         self.stack = []
+        self.filterFontTags = filterFontTags
         self.feed(data)
         try:
             self.close()
@@ -30,21 +31,23 @@ class XHTMLifier(HTMLParser):
         if tag.lower() == 'br':
             self.output += '<br/>'
         else:
-            self.output += '<'+tag
-            for attr in attrs:
-                if attr[1] == None:
-                    self.output += ' '+attr[0]+'='+xml.sax.saxutils.quoteattr(attr[0])
-                else:
-                    self.output += ' '+attr[0]+'='+xml.sax.saxutils.quoteattr(attr[1])
-            self.output += '>'
+            if not (tag.lower() == 'font' and self.filterFontTags):
+                self.output += '<'+tag
+                for attr in attrs:
+                    if attr[1] == None:
+                        self.output += ' '+attr[0]+'='+xml.sax.saxutils.quoteattr(attr[0])
+                    else:
+                        self.output += ' '+attr[0]+'='+xml.sax.saxutils.quoteattr(attr[1])
+                self.output += '>'
             self.stack.append(tag)
     def handle_endtag(self, tag):
         if tag.lower() != 'br' and len(self.stack) > 1:
             temp = self.stack.pop()
-            self.output += '</'+temp+'>'
-            while temp != tag and len(self.stack) > 1:
-                temp = self.stack.pop()
+            if not (tag.lower() == 'font' and self.filterFontTags):
                 self.output += '</'+temp+'>'
+                while temp != tag and len(self.stack) > 1:
+                    temp = self.stack.pop()
+                    self.output += '</'+temp+'>'
     def handle_startendtag(self, tag, attrs):
         self.output += '<'+tag+'/>'
     def handle_data(self, data):
@@ -73,9 +76,9 @@ def urldecode(data):
 
 ##
 # Returns XHTMLified version of HTML document
-def xhtmlify(data,addTopTags = False):
+def xhtmlify(data,addTopTags=False, filterFontTags=False):
     x = XHTMLifier()
-    return x.convert(data, addTopTags)
+    return x.convert(data, addTopTags, filterFontTags)
 
 xmlheaderRE = re.compile("^\<\?xml\s*(.*?)\s*\?\>(.*)", re.S)
 ##

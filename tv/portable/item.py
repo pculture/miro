@@ -703,7 +703,7 @@ folder will be deleted.""")
         rawDescription = self.getRawDescription()
         try:
             purifiedDescription = adscraper.purify(rawDescription)
-            return xhtmlify ('<span>%s</span>' % (unescape(purifiedDescription),))
+            return xhtmlify ('<span>%s</span>' % (unescape(purifiedDescription),), filterFontTags=True)
         except:
             try:
                 return xhtmlify ('<span>%s</span>' % (unescape(rawDescription),))
