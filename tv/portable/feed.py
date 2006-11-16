@@ -1448,6 +1448,7 @@ class ScraperFeedImpl(FeedImpl):
         for item in self.items:
             if item.getURL() == link:
                 return
+        title = feedparser.sanitizeHTML (title, "utf-8")
         if dict.has_key('thumbnail') > 0:
             i=Item(FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link,'thumbnail':FeedParserDict({'url':dict['thumbnail']})})]}),linkNumber = linkNumber, feed_id=self.ufeed.id)
         else:
