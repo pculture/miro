@@ -30,8 +30,16 @@ class DelayedCall(object):
         self.kwargs = kwargs
         self.canceled = False
 
+    def _unlink(self):
+        """Removes the references that this object has to the outside world,
+        this eases the GC's work in finding cycles and fixes some memory leaks
+        on windows.
+        """
+        self.function = self.args = self.kwargs = None
+
     def cancel(self):
         self.canceled = True
+        self._unlink()
 
     def dispatch(self):
         if not self.canceled:
@@ -42,6 +50,7 @@ class DelayedCall(object):
             if end-start > 0.5:
                 print "WARNING: %s too slow (%.3f secs)" % (
                     self.name, end-start)
+            print "DC: ", self.name
             try:
                 total = cumulative[self.name]
             except KeyboardInterrupt:
@@ -54,6 +63,7 @@ class DelayedCall(object):
                 print "WARNING: %s cumulative is too slow (%.3f secs)" % (
                     self.name, total)
                 cumulative[self.name] = 0
+        self._unlink()
 
 class Scheduler(object):
     def __init__(self):
