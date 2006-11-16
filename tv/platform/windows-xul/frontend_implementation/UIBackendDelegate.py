@@ -40,9 +40,9 @@ def _makeSupportsArrayFromSecondElement(data):
     arrayAbs = components.classes["@mozilla.org/supports-array;1"].createInstance();
     array = arrayAbs.queryInterface(components.interfaces.nsISupportsArray)
     for datum in data:
-    	supportsStringAbs = components.classes["@mozilla.org/supports-string;1"].createInstance();
-    	supportsString = supportsStringAbs.queryInterface(components.interfaces.nsISupportsString)
-    	supportsString.data = datum[1]
+        supportsStringAbs = components.classes["@mozilla.org/supports-string;1"].createInstance();
+        supportsString = supportsStringAbs.queryInterface(components.interfaces.nsISupportsString)
+        supportsString.data = datum[1]
         array.AppendElement(supportsString)
     return array
 

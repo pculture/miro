@@ -638,25 +638,25 @@ class CursorTestCase(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
-	self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
-	self.objs = self.everything.filter(lambda x: True).map(self.mapToObject).sort(self.sortOldID)
+        self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
+        self.objs = self.everything.filter(lambda x: True).map(self.mapToObject).sort(self.sortOldID)
     def sortOldID(self,x,y):
         return x[1].oldID < y[1].oldID
     def mapToObject(self, obj):
-	temp = database.DDBObject(add = False)
-	temp.oldID = obj.getID()
-	return temp
+        temp = database.DDBObject(add = False)
+        temp.oldID = obj.getID()
+        return temp
     def test(self):
-	self.assertEqual(self.objs.len(),3)
-	self.assertEqual(self.objs.cur(),None)
-	self.objs.getNext()
-	self.objs.getNext()
-	self.objs.getNext()
-	self.assertEqual(self.objs.cur(),self.objs[2])
+        self.assertEqual(self.objs.len(),3)
+        self.assertEqual(self.objs.cur(),None)
+        self.objs.getNext()
+        self.objs.getNext()
+        self.objs.getNext()
+        self.assertEqual(self.objs.cur(),self.objs[2])
         self.origObjs[2].remove()
-	self.assertEqual(self.objs.cur(),self.objs[1])
-	self.objs.getPrev()
-	self.assertEqual(self.objs.cur(),self.objs[0])
+        self.assertEqual(self.objs.cur(),self.objs[1])
+        self.objs.getPrev()
+        self.assertEqual(self.objs.cur(),self.objs[0])
     def testStack(self):
         obj = self.everything.getNext()
         self.assertEqual(self.everything.cur(), obj)
@@ -670,35 +670,35 @@ class RecomputeMapTestCase(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
-	self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
-	self.objs = self.everything.filter(lambda x: True).map(self.mapToObject).sort(self.sortOldID).map(self.mapToObject)
-	self.changeCalls = 0
+        self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
+        self.objs = self.everything.filter(lambda x: True).map(self.mapToObject).sort(self.sortOldID).map(self.mapToObject)
+        self.changeCalls = 0
     def sortOldID(self,x,y):
-	return x[1].oldID < y[1].oldID
+        return x[1].oldID < y[1].oldID
     def mapToObject(self, obj):
-	temp = database.DDBObject(add = False)
-	temp.oldID = obj.getID()
-	return temp
+        temp = database.DDBObject(add = False)
+        temp.oldID = obj.getID()
+        return temp
     def changeCall(self,item,id):
-	self.changeCalls +=1
+        self.changeCalls +=1
     def test(self):
-	self.objs.addChangeCallback(self.changeCall)
-	self.everything.recomputeFilters()
-	self.everything.recomputeFilters()
-	temp = self.everything.getNext()
-	temp.signalChange()
-	self.assertEqual(self.changeCalls,1)
+        self.objs.addChangeCallback(self.changeCall)
+        self.everything.recomputeFilters()
+        self.everything.recomputeFilters()
+        temp = self.everything.getNext()
+        temp.signalChange()
+        self.assertEqual(self.changeCalls,1)
 
 class FilterUpdateOnChange(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
-	self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
+        self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
         self.origObjs[0].good = True
         self.origObjs[1].good = False
         self.origObjs[2].good = False
-	self.objs = self.everything.filter(lambda x: x.good)
-	self.changeCalls = 0
+        self.objs = self.everything.filter(lambda x: x.good)
+        self.changeCalls = 0
     def testLoss(self):
         self.assertEqual(self.objs.len(),1)
         self.origObjs[0].good = False
@@ -715,16 +715,16 @@ class MapUpdateOnChange(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
-	self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
+        self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
         self.origObjs[0].good = True
         self.origObjs[1].good = False
         self.origObjs[2].good = False
-	self.objs = self.everything.map(self.mapToObject).filter(lambda x: x.good)
-	self.changeCalls = 0
+        self.objs = self.everything.map(self.mapToObject).filter(lambda x: x.good)
+        self.changeCalls = 0
     def mapToObject(self, obj):
-	temp = database.DDBObject(add = False)
-	temp.good = obj.good
-	return temp
+        temp = database.DDBObject(add = False)
+        temp.good = obj.good
+        return temp
     def testLoss(self):
         self.assertEqual(self.objs.len(),1)
         self.origObjs[0].good = False
@@ -740,12 +740,12 @@ class SortUpdateOnChange(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
-	self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
+        self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
         self.origObjs[0].good = True
         self.origObjs[1].good = False
         self.origObjs[2].good = False
-	self.objs = self.everything.sort(lambda x, y: 0).sort(lambda x, y: 0).filter(lambda x: x.good)
-	self.changeCalls = 0
+        self.objs = self.everything.sort(lambda x, y: 0).sort(lambda x, y: 0).filter(lambda x: x.good)
+        self.changeCalls = 0
     def testLoss(self):
         self.assertEqual(self.objs.len(),1)
         self.origObjs[0].good = False
@@ -761,10 +761,10 @@ class IDBaseTraversal(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)
         self.everything = database.defaultDatabase
-	self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
+        self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
         self.sorted = self.everything.sort(self.sortID)
     def sortID(self,x,y):
-	return x[1].getID() < y[1].getID()
+        return x[1].getID() < y[1].getID()
     def test(self):
         self.assertEqual(self.origObjs[0],
                          self.sorted.getObjectByID(self.origObjs[0].getID()))
@@ -805,8 +805,8 @@ class IDBaseTraversal(DemocracyTestCase):
 #     def testAddRemove(self):
 #         self.add100()
 #         thread = Thread(target = self.add100)
-# 	thread.setDaemon(False)
-# 	thread.start()
+#         thread.setDaemon(False)
+#         thread.start()
 #         self.remove100()
 #         thread.join()
 

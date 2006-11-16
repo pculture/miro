@@ -40,8 +40,8 @@ class MainFrame:
     def selectDisplay(self, newDisplay, area):
         """Install the provided 'newDisplay' in the requested area"""
 
-	# Generate a deselection message for the previously selected
-	# display in this area, if any
+        # Generate a deselection message for the previously selected
+        # display in this area, if any
         if area in self.selectedDisplays:
             oldDisplay = self.selectedDisplays[area]
             if oldDisplay:
@@ -49,11 +49,11 @@ class MainFrame:
                 oldDisplay.onDeselected(self)
                 oldDisplay.removedFromArea()
 
-	# Generate a selection message for the new display, if any
+        # Generate a selection message for the new display, if any
         self.selectedDisplays[area] = newDisplay
-	if newDisplay:
-	    newDisplay.onSelected_private(self)
-	    newDisplay.onSelected(self)
+        if newDisplay:
+            newDisplay.onSelected_private(self)
+            newDisplay.onSelected(self)
             newDisplay.setArea(area)
         if area == self.mainDisplay:
             if isinstance(newDisplay, VideoDisplay):
@@ -75,7 +75,7 @@ class MainFrame:
     # Internal use: return an estimate of the size of a given display area
     # as a (width, height) pair, or None if no information's available.
     def getDisplaySizeHint(self, area):
-	return None
+        return None
 
     def unlink(self):
         pass

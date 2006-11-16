@@ -652,11 +652,11 @@ class bdist_xul_dumb(Command):
         for lang in glob (os.path.join (xulBase, 'chrome', 'locale', '*')):
             if len(lang) >= 4 and lang[-4:] in ("_svn", ".svn"):
                 continue
-    	    # NEEDS: generalize to do the whole tree, so as to handle all
-    	    # templates
-    	    self.fillTemplate(os.path.join(lang, 'main.dtd'))        
-    	    self.fillTemplate(os.path.join(lang, 'about.dtd'))        
-    	    self.fillTemplate(os.path.join(lang, 'bugreport.dtd'))        
+                # NEEDS: generalize to do the whole tree, so as to handle all
+                # templates
+                self.fillTemplate(os.path.join(lang, 'main.dtd'))        
+                self.fillTemplate(os.path.join(lang, 'about.dtd'))        
+                self.fillTemplate(os.path.join(lang, 'bugreport.dtd'))        
 
 class runxul(bdist_xul_dumb):
     def run(self):
@@ -726,36 +726,36 @@ class bdist_xul (bdist_xul_dumb):
 
         self.zipfile = zip.ZipFile(os.path.join (self.dist_dir, "Democracy-Contents-%s.zip" % (self.getTemplateVariable('appVersion'),)), 'w', zip.ZIP_DEFLATED)
         self.addFile (nsisVars['CONFIG_EXECUTABLE'])
-	self.addFile (nsisVars['CONFIG_ICON'])
-	self.addFile ("Democracy_Downloader.exe")
-	self.addFile ("application.ini")
-	self.addFile ("msvcp71.dll")
-	self.addFile ("msvcr71.dll")
-	self.addFile ("python24.dll")
-	self.addFile ("boost_python-vc71-mt-1_33.dll")
+        self.addFile (nsisVars['CONFIG_ICON'])
+        self.addFile ("Democracy_Downloader.exe")
+        self.addFile ("application.ini")
+        self.addFile ("msvcp71.dll")
+        self.addFile ("msvcr71.dll")
+        self.addFile ("python24.dll")
+        self.addFile ("boost_python-vc71-mt-1_33.dll")
 
-	self.addDirectory ("chrome")
-	self.addDirectory ("components")
-	self.addDirectory ("defaults")
-	self.addDirectory ("resources")
-	self.addDirectory ("vlc-plugins")
-	self.addDirectory ("xulrunner")
+        self.addDirectory ("chrome")
+        self.addDirectory ("components")
+        self.addDirectory ("defaults")
+        self.addDirectory ("resources")
+        self.addDirectory ("vlc-plugins")
+        self.addDirectory ("xulrunner")
 
-	self.zipfile.close()
+        self.zipfile.close()
 
     def addFile(self, filename):
-	length = len(self.dist_dir)
-	if filename[:length] == (self.dist_dir):
-	    filename = filename[length:]
-	    while len(filename) > 0 and (filename[0] == '/' or filename[0] == '\\'):
-	        filename = filename[1:]
-	print "Compressing %s" % (filename,)
-	self.zipfile.write (os.path.join (self.dist_dir, filename), filename)
+        length = len(self.dist_dir)
+        if filename[:length] == (self.dist_dir):
+            filename = filename[length:]
+            while len(filename) > 0 and (filename[0] == '/' or filename[0] == '\\'):
+                filename = filename[1:]
+        print "Compressing %s" % (filename,)
+        self.zipfile.write (os.path.join (self.dist_dir, filename), filename)
 
     def addDirectory (self, dirname):
-	for root, dirs, files in os.walk (os.path.join (self.dist_dir, dirname)):
-	    for name in files:
-		self.addFile (os.path.join (root, name))
+        for root, dirs, files in os.walk (os.path.join (self.dist_dir, dirname)):
+            for name in files:
+                self.addFile (os.path.join (root, name))
 
 def copyTreeExceptSvn(src, dest, filterOut=None):
     """Copy the contents of the given source directory into the given

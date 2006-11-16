@@ -19,42 +19,42 @@ from sys import stdin
 # a POT file
 class GettextParser(ContentHandler):
     def startDocument(self):
-	self.output = ''
-	self.tagStack = []
-	self.attrStack = []
-	self.transStack = []
+        self.output = ''
+        self.tagStack = []
+        self.attrStack = []
+        self.transStack = []
 
     def inTranslate(self):
-	ret = False
-	try:
-	    ret = 'i18n:translate' in self.attrStack[-1].keys()
-	except:
-	    pass
-	return ret
+        ret = False
+        try:
+            ret = 'i18n:translate' in self.attrStack[-1].keys()
+        except:
+            pass
+        return ret
 
     def endDocument(self):
-	print self.output
+        print self.output
 
     def startElement(self,name,attrs):
-	if self.inTranslate():
-	    self.transStack[-1] += '${'+attrs['i18n:name']+'}'
-	if 'i18n:translate' in attrs.keys():
-	    self.transStack.append("")
-	self.tagStack.append(name)
-	self.attrStack.append(attrs)
+        if self.inTranslate():
+            self.transStack[-1] += '${'+attrs['i18n:name']+'}'
+        if 'i18n:translate' in attrs.keys():
+            self.transStack.append("")
+        self.tagStack.append(name)
+        self.attrStack.append(attrs)
 
     def endElement(self,name):
-	if self.inTranslate():
-	    self.output += "msgid \""
-	    self.output += self.transStack[-1].strip().replace("\r\n"," ").replace("\r"," ").replace("\n"," ")
-	    self.output += "\"\nmsgstr \"\"\n\n"
-	    self.transStack.pop()
-	self.tagStack.pop()
-	self.attrStack.pop()
+        if self.inTranslate():
+            self.output += "msgid \""
+            self.output += self.transStack[-1].strip().replace("\r\n"," ").replace("\r"," ").replace("\n"," ")
+            self.output += "\"\nmsgstr \"\"\n\n"
+            self.transStack.pop()
+        self.tagStack.pop()
+        self.attrStack.pop()
 
     def characters(self, data):
-	if self.inTranslate():
-	    self.transStack[-1] += data.replace('"','\\"')
+        if self.inTranslate():
+            self.transStack[-1] += data.replace('"','\\"')
 
 if __name__ == "__main__":
     parser = make_parser()

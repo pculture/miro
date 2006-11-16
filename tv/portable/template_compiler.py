@@ -634,7 +634,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                     key == 't:contextMenu'):
                 self.addAttr(key,attrs[key])
         if name.lower() == 'body':
-	    self.addInstruction(genInsertBodyTagExtra, None)
+            self.addInstruction(genInsertBodyTagExtra, None)
         if addId:
             self.addIdAndClose()
         else:

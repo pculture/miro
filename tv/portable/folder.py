@@ -14,9 +14,9 @@ class FolderBase(DDBObject):
     """Base class for ChannelFolder and Playlist folder classes."""
 
     def __init__(self, title):
-	self.title = title
+        self.title = title
         self.expanded = True
-	DDBObject.__init__(self)
+        DDBObject.__init__(self)
 
     getTitle, setTitle = makeSimpleGetSet('title')
 
