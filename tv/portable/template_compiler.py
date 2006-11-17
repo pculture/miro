@@ -194,6 +194,8 @@ def compileAllTemplates(root):
     source = resource.path('templates')
     sourceTime = modifiedTime(source)
     dest = resource.path(os.path.join('..','portable','compiled_templates'))
+    if not os.path.isdir(dest):
+        os.makedirs(dest)
     destTime = modifiedTime(dest)
     compilerTime = os.stat(resource.path(os.path.join(
                             '..','portable','template_compiler.py'))).st_mtime
@@ -202,6 +204,8 @@ def compileAllTemplates(root):
 
 def compileTemplates(tpath = None):
     outdir = resource.path(os.path.join('..','portable','compiled_templates'))
+    if not os.path.isdir(outdir):
+        os.makedirs(outdir)
     indir = resource.path('templates')
     if tpath is not None:
         print "Compiling %s" % tpath
