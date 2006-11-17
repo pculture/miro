@@ -128,6 +128,10 @@ class PlaybackControllerBase:
         else:
             self.enterPlayback()
 
+    def removeItem(self, item):
+        if item.idExists():
+            item.executeExpire()
+
     def playItem(self, anItem):
         try:
             if self.currentItem:
@@ -136,6 +140,7 @@ class PlaybackControllerBase:
             while not os.path.exists(anItem.getVideoFilename()):
                 print "DTV: movie file '%s' is missing, skipping to next" % \
                         anItem.getVideoFilename()
+                eventloop.addIdle(self.removeItem, "Remove deleted item", args=(anItem.item,))
                 anItem = self.currentPlaylist.getNext()
                 if anItem is None:
                     self.stop()
