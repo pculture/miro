@@ -50,7 +50,6 @@ class DelayedCall(object):
             if end-start > 0.5:
                 print "WARNING: %s too slow (%.3f secs)" % (
                     self.name, end-start)
-            print "DC: ", self.name
             try:
                 total = cumulative[self.name]
             except KeyboardInterrupt:
