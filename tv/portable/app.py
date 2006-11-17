@@ -584,6 +584,16 @@ class Controller (frontend.Application):
 
             util.print_mem_usage("Pre-UI memory check")
 
+            # HACK: The "Represent Or Die" default channel uses its URL as a
+            # title, which sucks (per #4710). Rename it.
+            try:
+                rodURL = 'http://del.icio.us/rss/representordie/system:media:video'
+                view = views.feeds.filterWithIndex(indexes.feedsByURL, rodURL)
+                rodFeed = util.getSingletonDDBObject(view)
+                rodFeed.setTitle('Represent or Die')
+            except:
+                pass
+
             # Put up the main frame
             print "DTV: Displaying main frame..."
             self.frame = frontend.MainFrame(self)
