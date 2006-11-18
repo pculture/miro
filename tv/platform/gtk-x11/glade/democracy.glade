@@ -2252,7 +2252,7 @@ Never</property>
 			<widget class="GtkRadioButton" id="radiobutton-search-custom">
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">Search _custom location:</property>
+			  <property name="label" translatable="yes">Search _custom folder:</property>
 			  <property name="use_underline">True</property>
 			  <property name="relief">GTK_RELIEF_NORMAL</property>
 			  <property name="focus_on_click">True</property>
