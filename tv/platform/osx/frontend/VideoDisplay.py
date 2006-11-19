@@ -118,6 +118,8 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         VideoDisplayController._instance = self
         self.forwardButton.setCell_(SkipSeekButtonCell.cellFromButtonCell_direction_delay_(self.forwardButton.cell(), 1, 0.5))
         self.backwardButton.setCell_(SkipSeekButtonCell.cellFromButtonCell_direction_delay_(self.backwardButton.cell(), -1, 0.5))
+        self.muteButton.setEnabled_(YES)
+        self.volumeSlider.setEnabled_(YES)
         nc = NSNotificationCenter.defaultCenter()
         nc.addObserver_selector_name_object_(
             self, 
@@ -167,8 +169,6 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     def enablePrimaryControls(self, enabled):
         self.playPauseButton.setEnabled_(enabled)
         self.fullscreenButton.setEnabled_(enabled)
-        self.muteButton.setEnabled_(enabled)
-        self.volumeSlider.setEnabled_(enabled and self.muteButton.state() is NSOnState)
 
     def enableSecondaryControls(self, enabled, allowFastSeeking=YES):
         self.backwardButton.setEnabled_(enabled)
