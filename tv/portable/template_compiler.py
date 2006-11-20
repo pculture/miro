@@ -810,10 +810,12 @@ class MetaHandle:
                 fileobj.write('%s    %s%s' % (prefix, line, ending))
         fileobj.write('%s# End user code%s%s' % (prefix, ending, ending))
 
+        fileobj.write('%slocalvars = locals()%s' % (prefix, ending))
+        fileobj.write('%slocalvars.update(globals())%s' % (prefix, ending))
         if self.execOnUnload is not None:
-            fileobj.write('%s%s = Handle(domHandler, locals(), onUnlink = _execOnUnload)%s%s' % (prefix, varname, ending, ending))
+            fileobj.write('%s%s = Handle(domHandler, localvars, onUnlink = _execOnUnload)%s%s' % (prefix, varname, ending, ending))
         else:
-            fileobj.write('%s%s = Handle(domHandler, locals(), onUnlink = lambda:None)%s%s' % (prefix, varname, ending, ending))
+            fileobj.write('%s%s = Handle(domHandler, localvars, onUnlink = lambda:None)%s%s' % (prefix, varname, ending, ending))
 
         count = 0
         for ur in self.updateRegions:
