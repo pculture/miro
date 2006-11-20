@@ -358,14 +358,37 @@ function handleExit() {
 }
 
 function onKeyDown(event) {
-  // Don't mess with keys in input boxes.
-  if(event.target.tagName &&
-    event.target.tagName.toLowerCase() == 'input') return true;
-
   if(event.altKey && event.keyCode == 13) { // Alt Enter
      onFullscreenActivate();
+     return false
   }
-  else if(event.keyCode == 8 || event.keyCode == 46) {  // Delete/Backspace
+  if(event.ctrlKey) {
+    var charPressed = String.fromCharCode(event.keyCode).toLowerCase();
+    if(charPressed == 'o') {
+      openFile();
+      return false;
+    } else if(charPressed == 'p') {
+      if(event.shiftKey) pybridge.createNewPlaylistFolder();
+      else pybridge.createNewPlaylist();
+      return false;
+    } else if(charPressed == 'n') {
+      if(event.shiftKey) pybridge.createNewChannelFolder();
+      else pybridge.addChannel();
+      return false;
+    } else if(charPressed == 'd') {
+      pybridge.stop();
+      return false;
+    } else if(charPressed == 'f') {
+      onFullscreenActivate();
+      return false;
+    }
+  }
+  // Don't mess with keys in input boxes.
+  if(event.target.tagName) {
+    var lowerTagName = event.target.tagName.toLowerCase();
+    if(lowerTagName == 'input' || lowerTagName == 'textbox') return true;
+  }
+  if(event.keyCode == 8 || event.keyCode == 46) {  // Delete/Backspace
      pybridge.removeCurrentSelection();
   } else if(event.keyCode == 32) { // Space
     pybridge.playPause();
@@ -373,22 +396,7 @@ function onKeyDown(event) {
     pybridge.skip(1);
   } else if(event.keyCode == 37) { // Left Arrow
     pybridge.skip(-1);
-  } else if(event.ctrlKey) {
-    var charPressed = String.fromCharCode(event.keyCode).toLowerCase();
-    if(charPressed=='o') {
-      openFile();
-    } else if(charPressed == 'p') {
-      if(event.shiftKey) pybridge.createNewPlaylistFolder();
-      else pybridge.createNewPlaylist();
-    } else if(charPressed == 'n') {
-      if(event.shiftKey) pybridge.createNewChannelFolder();
-      else pybridge.addChannel();
-    } else if(charPressed == 'd') {
-      pybridge.stop();
-    } else if(charPressed == 'f') {
-      onFullscreenActivate();
-    }
-  }
+  } 
   return false;
 }
 
