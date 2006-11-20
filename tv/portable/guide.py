@@ -65,6 +65,9 @@ class ChannelGuide(DDBObject):
         # None means this is the default channel guide.
         if url is None:
             url = config.get(prefs.CHANNEL_GUIDE_URL)
+            self.default = True
+        else:
+            self.default = False
         self.url = url
 
         self.redirectedURL = url
@@ -211,7 +214,10 @@ class ChannelGuide(DDBObject):
         return self.redirectedURL
 
     def getDefault(self):
-        return self.url is None
+        try:
+            return (self.url is None) or self.default
+        except: # An old version of the guide
+            return self.url is None
 
     # For the tabs
     def getTitle(self):
