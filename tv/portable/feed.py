@@ -1714,6 +1714,9 @@ class SearchFeedImpl (RSSFeedImpl):
     def getURL(self):
         return 'dtv:search'
 
+    def getTitle(self):
+        return _('Search')
+
     def getStatus(self):
         status = 'idle-empty'
         if self.searching:
@@ -1770,6 +1773,9 @@ class SearchDownloadsFeedImpl(FeedImpl):
                 title=None, visible=False)
         self.setUpdateFrequency(-1)
 
+    def getTitle(self):
+        return _('Search')
+
 class ManualFeedImpl(FeedImpl):
     """Videos/Torrents that have been added using by the user opening them
     with democracy.
@@ -1780,6 +1786,9 @@ class ManualFeedImpl(FeedImpl):
                 title=None, visible=False)
         self.ufeed.expire = 'never'
         self.setUpdateFrequency(-1)
+
+    def getTitle(self):
+        return _('Local File')
 
 ##
 # Parse HTML document and grab all of the links and their title
