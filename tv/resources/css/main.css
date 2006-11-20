@@ -773,8 +773,10 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .channel-title {
-    float: right;
+    overflow: hidden;
+    margin-left: 5px;
     color: #666;
+    text-align: right;
 }
 
 .selected .channel-title {
