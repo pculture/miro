@@ -147,6 +147,7 @@ def failed(when, withExn = False, details = None):
         header += "Publisher:  %s\n" % config.get(prefs.PUBLISHER)
         header += "Platform:   %s\n" % config.get(prefs.APP_PLATFORM)
         header += "Python:     %s\n" % sys.version
+        header += "Py Path:    %s\n" % repr(sys.path)
         header += "Version:    %s\n" % config.get(prefs.APP_VERSION)
         header += "Serial:     %s\n" % config.get(prefs.APP_SERIAL)
         header += "Revision:   %s\n" % config.get(prefs.APP_REVISION)
