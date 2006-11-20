@@ -23,20 +23,29 @@ thisItemView.unlink()
 <div id="videodetails-container">
 <div t:updateForView="thisItemView">
 <div id="videodetails-actions">
-	<a t:showIf="this.hasSharableURL()" href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" >
+     <div  t:showIf="this.hasSharableURL()">
+        <a href="#" 
+            onclick="return recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@');" >
+		<span i18n:translate="">SHARE</span>
+        </a> - 
+	<a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" >
 		<span i18n:translate="">STAR</span>
 	</a>
-	<br t:hideIf="this.hasSharableURL()" />
-	<a t:showIf="this.showSaveButton()" href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');">
+     </div>
+     <div t:showIf="this.getExpiring()">
+         <span t:replace="this.getExpirationString()" />
+     </div>
+     <div>
+        <span t:showIf="this.showSaveButton()">
+	  <a href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');">
 		<span i18n:translate="">SAVE</span>
-	</a>
-	<div t:showIf="this.getState() == 'saved'">
-		<span i18n:translate="">SAVED</span>
-	</div>
-	<br t:hideIf="this.showSaveButton() or this.getState() == 'saved'" />
+  	  </a> 
+          -
+	</span>
 	<a href="#" onclick="return eventURL('action:expirePlayingItem?item=@@@this.getID()@@@');">
 		<span i18n:translate="">DELETE</span>
 	</a>
+      </div>
 </div>
 </div>
 	<div id="videodetails-channeltitle">

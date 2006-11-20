@@ -77,7 +77,7 @@ body {
 #videodetails-actions {
 text-align: right;
 float: right;
-width: 70px;
+width: 90px;
 padding-top: 4px;
 margin-right: 5px;
 line-height: 13px;
@@ -89,7 +89,6 @@ font-size: 9px;
 #videodetails-actions a {
 color: #ddd;
 /* text-decoration: none; */
-display: block;
 }
 
 #videodetails-actions a:hover {
