@@ -401,6 +401,7 @@ and "downloaded" sections */
 /* Around  the "empty folder" message */
 .channel-blank {
     text-align: center;
+    margin-top: 50px;
     padding: 30px;
 }
 .channel-message {
