@@ -132,10 +132,10 @@ if feed.idExists():
 	<div id="main-titlebar-center">
 	    <div t:updateForView="thisFeedView">
                 <h1 id="main-title" t:replaceMarkup="feed.getTitle()" />
+                <div id="main-subtitle" >
+                  <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Search Channel')***"/>
+                </div>
 	    </div>
-            <div id="main-subtitle">
-                <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Search Channel')***"/>
-            </div>
             <div t:updateForView="matchingItems">
             <div t:hideIf="searchTerm is None">
                 <div class="white-button-left save-search-channel">
