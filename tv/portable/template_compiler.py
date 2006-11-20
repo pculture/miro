@@ -120,14 +120,14 @@ import stat
 # - id tags are inserted in appropriate places
 # - An empty span is always created after a repeatForView, so we can't
 #   use it inside of a table
+# - Currently, we're using the translate and name attributes found on
+#   this page to mark text for translation
+#   http://www.zope.org/DevHome/Wikis/DevSite/Projects/ComponentArchitecture/ZPTInternationalizationSupport
 
 # To Do:
 # - Take a lock around the entire database while template is being filled
 # - Improve error handling (currently some random exception is thrown if
 #   the template is poorly structured)
-# - Currently, we're using the translate and name attributes found on
-#   this page to mark text for translation, but they're unhandled.
-#   http://www.zope.org/DevHome/Wikis/DevSite/Projects/ComponentArchitecture/ZPTInternationalizationSupport
 #
 #    Eventually, we may add support for more attributes
 
@@ -257,6 +257,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.onlyBody = onlyBody
         self.addIdToTopLevelElement = addIdToTopLevelElement
         self.name = name
+        self.isDynamic = False
 
     def getOperationList(self):
         return self.outputLists[0]
@@ -570,6 +571,10 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
     def addFillTemplate(self, name, *args, **kwargs):
         print "  compiling '%s' subtemplate" % name
         (tcc, handle) = compileTemplate(name, onlyBody=True, *args, **kwargs)
+        if tcc.isDynamic:
+            self.isDynamic = True
+            if self.inUpdateView or self.inConfigUpdate or self.inRepeatView:
+                raise TemplateError, "Nested Dynamic tags"
         self.handle.addSubHandle(handle)
         self.addInstructions(tcc.getOperationList())
 
@@ -579,22 +584,31 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         self.addText('">')
 
     def startRepeat(self, name):
+        if self.inUpdateView or self.inConfigUpdate or self.inRepeatView:
+            raise TemplateError, "Nested Dynamic tags"
         self.endText()
         self.inRepeatView = True
+        self.isDynamic = True
         self.repeatDepth = self.depth
         self.repeatName = name
         self.outputLists.append([])
 
     def startUpdate(self, name):
+        if self.inUpdateView or self.inConfigUpdate or self.inRepeatView:
+            raise TemplateError, "Nested Dynamic tags"
         self.endText()
         self.inUpdateView = True
+        self.isDynamic = True
         self.repeatDepth = self.depth
         self.repeatName = name
         self.outputLists.append([])
 
     def startConfigUpdate(self):
+        if self.inUpdateView or self.inConfigUpdate or self.inRepeatView:
+            raise TemplateError, "Nested Dynamic tags"
         self.endText()
         self.inConfigUpdate = True
+        self.isDynamic = True
         self.repeatDepth = self.depth
         self.outputLists.append([])
 

@@ -28,7 +28,6 @@ class="selectable" /></div>
 		<div id="actual-settings">
 		
 		<span i18n:translate="">Videos expire after </span>
-		<span t:updateForConfigChange="">
 		<select name="expireAfter" onChange="javascript:setExpiration();">
 			<option value="system" selected="1" 
 t:hideIf="feed.getExpirationType() != 'system'"><span i18n:translate="">Default</span> 
@@ -65,7 +64,6 @@ t:hideIf="feed.getExpirationType() != 'never'" i18n:translate="">Never</option>
 			<option value="never" t:hideIf="feed.getExpirationType() == 
 'never'" i18n:translate="">Never</option>
 		</select>
-		</span>
 <br /><br />
 		<span i18n:translate="">
 			When turned on, Auto Download should
