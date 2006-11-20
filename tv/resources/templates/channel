@@ -14,19 +14,34 @@
     <script type="text/javascript" src="resource:templates/osxdnd.js" />
     <t:execOnLoad><![CDATA[
 #print templateState
-global feed, searchTerm, showDownloads, showWatchableItems, showNewItems, allItemsMode, allItems
+global feed, searchTerm, showDownloads, showWatchableItems, showNewItems, allItemsMode, allItems, watchableItems, matchingItems, newItems
 feed = views.feeds.getObjectByID(int(kargs['id']))
 filters.switchNewItemsChannel(feed)
 sorts.switchUnwatchedFirstChannel(feed)
 
 def _reInit(*args, **kargs):
-    global feed, allItems
+    global feed, allItems, showDownloads, showWatchableItems, showNewItems, allItemsMode, watchableItems, matchingItems, newItems
+
+    # Initial states of views in this template
+    allItemsMode = False
+    showDownloads = False
+    showNewItems = True
+    showWatchableItems = True
+
     if feed.idExists():
         feed.markAsViewed()
 
     #print "reinitting %s" % repr(kargs)
     feed = views.feeds.getObjectByID(int(kargs['id']))
     allItems.changeIndexValue(indexes.itemsByFeed, int(kargs['id']))
+
+    showNewItems = (len(watchableItems) == 0) or len(newItems) > 0
+
+    if len(newItems) == 0:
+        allItemsMode = True
+        matchingItems.recomputeFilter(newItems)
+
+    feed.updateIcons()
 
 reInit = lambda *args, **kargs: _reInit(*args, **kargs)
 
