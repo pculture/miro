@@ -341,28 +341,28 @@ def upgrade28(objectList):
     items = set()
     removed = set()
 
-def isVideoEnclosure(enclosure):
-    """
-    Pass an enclosure dictionary to this method and it will return a boolean
-    saying if the enclosure is a video or not.
-    """
-    return (_hasVideoType(enclosure) or
-            _hasVideoExtension(enclosure, 'url') or
-            _hasVideoExtension(enclosure, 'href'))
-
-def getFirstVideoEnclosure(entry):
-    """Find the first video enclosure in a feedparser entry.  Returns the
-    enclosure, or None if no video enclosure is found.
-    """
-
-    try:
-        enclosures = entry.enclosures
-    except (KeyError, AttributeError):
+    def isVideoEnclosure(enclosure):
+        """
+        Pass an enclosure dictionary to this method and it will return a boolean
+        saying if the enclosure is a video or not.
+        """
+        return (_hasVideoType(enclosure) or
+                _hasVideoExtension(enclosure, 'url') or
+                _hasVideoExtension(enclosure, 'href'))
+    
+    def getFirstVideoEnclosure(entry):
+        """Find the first video enclosure in a feedparser entry.  Returns the
+        enclosure, or None if no video enclosure is found.
+        """
+    
+        try:
+            enclosures = entry.enclosures
+        except (KeyError, AttributeError):
+            return None
+        for enclosure in enclosures:
+            if isVideoEnclosure(enclosure):
+                return enclosure
         return None
-    for enclosure in enclosures:
-        if isVideoEnclosure(enclosure):
-            return enclosure
-    return None
 
     def _hasVideoType(enclosure):
         return ('type' in enclosure and
