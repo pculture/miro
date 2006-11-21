@@ -15,7 +15,6 @@ class QuicktimeRenderer (app.VideoRenderer):
     CORRECT_QTMEDIA_TYPES = (QTMediaTypeVideo, QTMediaTypeMPEG, QTMediaTypeMovie, QTMediaTypeFlash)
 
     def __init__(self, delegate):
-        platformutils.warnIfNotOnMainThread('QuicktimeRenderer.__init__')
         app.VideoRenderer.__init__(self)
         self.view = nil
         self.movie = nil

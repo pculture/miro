@@ -350,7 +350,6 @@ class VideoAreaView (NibClassBuilder.AutoBaseClass):
 class VideoWindow (NibClassBuilder.AutoBaseClass):
     
     def initWithContentRect_styleMask_backing_defer_(self, rect, style, backing, defer):
-        platformutils.warnIfNotOnMainThread('VideoWindow.initWithContentRect_styleMask_backing_defer_')
         self = super(VideoWindow, self).initWithContentRect_styleMask_backing_defer_(
             rect,
             NSBorderlessWindowMask,
@@ -499,7 +498,6 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
     HOLD_TIME = 2
     
     def initWithContentRect_styleMask_backing_defer_(self, rect, style, backing, defer):
-        platformutils.warnIfNotOnMainThread('FullScreenPalette.initWithContentRect_styleMask_backing_defer_')
         self = super(FullScreenPalette, self).initWithContentRect_styleMask_backing_defer_(
             rect,
             NSBorderlessWindowMask,
