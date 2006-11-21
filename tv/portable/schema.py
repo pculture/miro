@@ -383,10 +383,9 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('cachedGuideBody', SchemaString(noneOk=True)),
         ('url', SchemaString(noneOk=True)),
         ('redirectedURL', SchemaString(noneOk=True)),
-        ('default', SchemaBool()),
     ]
 
-VERSION = 29
+VERSION = 30
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,

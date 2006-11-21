@@ -341,11 +341,65 @@ def upgrade28(objectList):
     items = set()
     removed = set()
 
+def isVideoEnclosure(enclosure):
+    """
+    Pass an enclosure dictionary to this method and it will return a boolean
+    saying if the enclosure is a video or not.
+    """
+    return (_hasVideoType(enclosure) or
+            _hasVideoExtension(enclosure, 'url') or
+            _hasVideoExtension(enclosure, 'href'))
+
+def getFirstVideoEnclosure(entry):
+    """Find the first video enclosure in a feedparser entry.  Returns the
+    enclosure, or None if no video enclosure is found.
+    """
+
+    try:
+        enclosures = entry.enclosures
+    except (KeyError, AttributeError):
+        return None
+    for enclosure in enclosures:
+        if isVideoEnclosure(enclosure):
+            return enclosure
+    return None
+
+    def _hasVideoType(enclosure):
+        return ('type' in enclosure and
+                (enclosure['type'].startswith('video/') or
+                 enclosure['type'].startswith('audio/') or
+                 enclosure['type'] == "application/ogg" or
+                 enclosure['type'] == "application/x-annodex" or
+                 enclosure['type'] == "application/x-bittorrent" or
+                 enclosure['type'] == "application/x-shockwave-flash"))
+    
+    def _hasVideoExtension(enclosure, key):
+        return (key in enclosure and isAllowedFilename(enclosure[key]))
+    
+    def isAllowedFilename(filename):
+        return (isVideoFilename(filename) or
+                isAudioFilename(filename) or
+                isTorrentFilename(filename))
+    
+    def isVideoFilename(filename):
+        return ((len(filename) > 4 and
+                 filename[-4:].lower() in ['.mov', '.wmv', '.mp4', '.m4v',
+                                           '.ogg', '.anx', '.mpg', '.avi', 
+                                           '.flv']) or
+                (len(filename) > 5 and
+                 filename[-5:].lower() == '.mpeg'))
+    
+    def isAudioFilename(filename):
+        return len(filename) > 4 and filename[-4:].lower() in ['.mp3', '.m4a']
+    
+    def isTorrentFilename(filename):
+        return filename.endswith('.torrent')
+    
     for i in xrange (len(objectList) - 1, -1, -1):
         o = objectList [i]
         if o.classString == 'item':
             entry = o.savedData['entry']
-            videoEnc = feed.getFirstVideoEnclosure(entry)
+            videoEnc = getFirstVideoEnclosure(entry)
             if videoEnc is not None:
                 entryURL = videoEnc.get('url')
             else:
@@ -373,6 +427,16 @@ def upgrade29(objectList):
     for o in objectList:
         if o.classString == 'guide':
             o.savedData['default'] = (o.savedData['url'] is None)
+            changed.add(o)
+    return changed
+
+def upgrade30(objectList):
+    changed = set()
+    for o in objectList:
+        if o.classString == 'guide':
+            if o.savedData['default']:
+                o.savedData['url'] = None
+                changed.add(o)
     return changed
 
 #def upgradeX (objectList):
