@@ -63,14 +63,12 @@ class ChannelGuide(DDBObject):
         self.loadedThisSession = False
 
         # None means this is the default channel guide.
-        if url is None:
-            url = config.get(prefs.CHANNEL_GUIDE_URL)
-            self.default = True
-        else:
-            self.default = False
         self.url = url
 
-        self.redirectedURL = url
+        if url is None:
+            self.redirectedURL = config.get(prefs.CHANNEL_GUIDE_URL)
+        else:
+            self.redirectedURL = url
 
         DDBObject.__init__(self)
         # Start loading the channel guide.
@@ -203,8 +201,6 @@ class ChannelGuide(DDBObject):
         DDBObject.remove(self)
 
     def getURL(self):
-        # We shouldn't need this anymore, but I'm leaving it incase
-        # old guides without URLs are still in people's databases
         if self.url is not None:
             return self.url
         else:
@@ -214,10 +210,7 @@ class ChannelGuide(DDBObject):
         return self.redirectedURL
 
     def getDefault(self):
-        try:
-            return (self.url is None) or self.default
-        except: # An old version of the guide
-            return self.url is None
+        return self.url is None
 
     # For the tabs
     def getTitle(self):
