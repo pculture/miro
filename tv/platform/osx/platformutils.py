@@ -163,8 +163,11 @@ def initializeLocale():
 
     pool = Foundation.NSAutoreleasePool.alloc().init()
     languages = list(Foundation.NSUserDefaults.standardUserDefaults()["AppleLanguages"])
-    if 'en' in languages:
-        languages[languages.index('en')] = u'C'
+    try:
+        pos = languages.index('en')
+        languages = languages[:pos]
+    except:
+        pass
 
     print languages
     os.environ["LANGUAGE"] = ':'.join(languages)
