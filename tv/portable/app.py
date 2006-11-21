@@ -1822,7 +1822,6 @@ class TemplateActionHandler:
         try:
             obj = db.getObjectByID(int(id))
         except:
-            print "WARNING: error parsing context menu request (%s)" % data
             traceback.print_exc()
         else:
             view = self.templateHandle.getTemplateVariable(viewName)
