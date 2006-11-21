@@ -167,8 +167,6 @@ function onLoad() {
     var videoBrowser = document.getElementById("mainDisplayVideo");
     vlc = videoBrowser.contentDocument.getElementById("video1");
 
-    setSearchEngine(pybridge.getLastEngine());
-
     setupHandlers();
     jsdump("onload done");
 }

@@ -1,6 +1,7 @@
 #include "nsISupports.idl"
 
 interface nsIDOMWindow;
+interface nsIVariant;
 
 [scriptable, uuid(7E70142F-ABC9-4d6e-BDB8-EDC747FCD2A3)]
 interface pcfIDTVJSBridge : nsISupports
@@ -52,4 +53,6 @@ interface pcfIDTVJSBridge : nsISupports
   void updateSearchProgress (in AString message);
   void searchFinished (in AString message);
   void searchCancelled (in AString message);
+  void setSearchEngine (in AString engine);
+  void setSearchEngineInfo(in nsIVariant names, in nsIVariant titles);
 };

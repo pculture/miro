@@ -148,6 +148,7 @@ class PyBridge:
 
         initializeProxyObjects(window)
         app.main()
+        self.initializeSearchEngines()
 
     def onShutdown(self):
         frontend.vlcRenderer.stop()
@@ -349,9 +350,6 @@ class PyBridge:
     def performSearch(self, engine, query):
         app.controller.performSearch(engine, query)
 
-    def getLastEngine(self):
-        return searchengines.getLastEngine()
-
     # Returns a list of search engine titles and names
     # Should we just keep a map of engines to names?
     def getSearchEngineNames(self):
@@ -479,3 +477,15 @@ class PyBridge:
 
     def createProxyObjects(self):
         createProxyObjects()
+
+    @asUrgent
+    def initializeSearchEngines(self):
+        # Send the search engine info to jsbridge.  This is a little tricky
+        # because we need to access views.searchEngines from the main thread.
+        names = []
+        titles = []
+        for engine in views.searchEngines:
+            names.append(engine.name)
+            titles.append(engine.title)
+        frontend.jsBridge.setSearchEngineInfo(names, titles)
+        frontend.jsBridge.setSearchEngine(searchengines.getLastEngine())
