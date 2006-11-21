@@ -210,6 +210,11 @@ class ManagedWebView (NSObject):
         self.onLoadURL(str(url))
 
     def webView_contextMenuItemsForElement_defaultMenuItems_(self,webView,contextMenu,defaultMenuItems):
+        event = NSApp().currentEvent()
+        if event.type() == NSLeftMouseDown and (event.modifierFlags() & NSControlKeyMask):
+            fake = NSEvent.mouseEventWithType_location_modifierFlags_timestamp_windowNumber_context_eventNumber_clickCount_pressure_(
+                           NSRightMouseDown, event.locationInWindow(), 0, 0, event.windowNumber(), nil, 0, 1, 0)
+            NSApp().postEvent_atStart_(fake, YES)
         return nil
 
     # Generate callbacks when the initial HTML (passed in the constructor)
