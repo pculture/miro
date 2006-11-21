@@ -883,7 +883,7 @@ class DynamicDatabase:
             elif it == self.objects.firstIter():
                 # changed the first item in the list
                 nexttemp = self.objects[after]
-                doResort = not self.sortFunc(temp, nexttemp)
+                doResort = self.sortFunc(nexttemp, temp)
             elif after == self.objects.lastIter():
                 # changed the last item in the list
                 prevtemp = self.objects[before]
@@ -893,7 +893,7 @@ class DynamicDatabase:
                 nexttemp = self.objects[after]
                 prevtemp = self.objects[before]
                 doResort = (self.sortFunc(temp, prevtemp) or
-                            (not self.sortFunc(temp, nexttemp)))
+                            (self.sortFunc(nexttemp, temp)))
             if doResort:
                 # Item Moved -- trigger remove and add callbacks
                 self._removeIter(it)
