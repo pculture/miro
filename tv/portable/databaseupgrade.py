@@ -368,6 +368,13 @@ def upgrade28(objectList):
                 del objectList[i]
     return changed
 
+def upgrade29(objectList):
+    changed = set()
+    for o in objectList:
+        if o.classString == 'guide':
+            o.savedData['default'] = (o.savedData['url'] is None)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

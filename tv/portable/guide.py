@@ -214,10 +214,7 @@ class ChannelGuide(DDBObject):
         return self.redirectedURL
 
     def getDefault(self):
-        try:
-            return (self.url is None) or self.default
-        except: # An old version of the guide
-            return self.url is None
+        return self.default
 
     # For the tabs
     def getTitle(self):
