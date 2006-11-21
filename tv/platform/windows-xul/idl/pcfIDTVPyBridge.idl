@@ -3,7 +3,6 @@
 interface nsIDOMWindow;
 interface nsIDOMDocument;
 interface nsICommandLine;
-interface nsIVariant;
 
 [scriptable, uuid(8ABB2E1D-6624-4457-A4BD-EBFA6156D426)]
 interface pcfIDTVPyBridge : nsISupports
@@ -94,9 +93,6 @@ interface pcfIDTVPyBridge : nsISupports
   void startupDoSearch(in AString path);
   void startupCancelSearch();
   AString getSpecialFolder(in AString name);
-  string getLastEngine();
-  nsIVariant getSearchEngineNames();
-  nsIVariant getSearchEngineTitles();
 
   void createProxyObjects();
 };

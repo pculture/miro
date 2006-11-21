@@ -85,6 +85,7 @@ jsBridge.prototype = {
     this.hideVideoControlsTimer = Components.classes["@mozilla.org/timer;1"].
           createInstance(Components.interfaces.nsITimer);
     this.videoFilename = null;
+    this.searchEngineTitles = this.searchEngineNames = null;
 
     var self = this;
     self.lastMouseDownX = self.lastMouseDownY = 0;
@@ -137,19 +138,19 @@ jsBridge.prototype = {
         this.lastMouseDownY, "popup", null, null);
   },
   showSearchMenu: function() {
+    if(!this.searchEngineNames || !this.searchEngineTitles) return;
+
     var popup = this.document.getElementById('searchMenu');
     while (popup.firstChild) {
       popup.removeChild(popup.firstChild);
     }
-    var engines = pybridge.getSearchEngineNames();
-    var engineTitles = pybridge.getSearchEngineTitles();
-    for (var i = 0; i < engines.length; i++) {
+    for (var i = 0; i < this.searchEngineNames.length; i++) {
         var newItem = this.document.createElement('menuitem');
-        newItem.setAttribute("label", engineTitles[i]);
-        newItem.setAttribute("image", "chrome://dtv/content/images/search_icon_" + engines[i] + ".png");
+        newItem.setAttribute("label", this.searchEngineTitles[i]);
+        newItem.setAttribute("image", "chrome://dtv/content/images/search_icon_" + this.searchEngineNames[i] + ".png");
         newItem.setAttribute("class", "menuitem-iconic");
         newItem.setAttribute("oncommand", 
-           "setSearchEngine('" + engines[i] + "');");
+           "jsbridge.setSearchEngine('" + this.searchEngineNames[i] + "');");
         popup.appendChild(newItem);
     }
     var textbox = this.document.getElementById('search-textbox');
@@ -467,6 +468,16 @@ jsBridge.prototype = {
     var newSliderPos = Math.floor(left + fractionDone*(right-left));
     var progressSlider = this.document.getElementById("progress-slider");
     progressSlider.left = newSliderPos;
+  },
+
+  setSearchEngineInfo: function(names, titles) {
+    this.searchEngineNames = names;
+    this.searchEngineTitles = titles;
+  },
+
+  setSearchEngine: function(engine) {
+    var searchIcon = this.document.getElementById("search-icon");
+    searchIcon.setAttribute("src",'images/search_icon_' + engine + '.png');
   },
 };
 
