@@ -852,7 +852,7 @@ folder will be deleted.""")
         return self.getState() in ('newly-downloaded', 'expiring') and not self.keep
 
     def showSaved(self):
-        return self.getState() in ('saved') or self.keep
+        return self.getState() in ('saved') or (self.getState() in ('newly-downloaded', 'expiring') and self.keep)
 
     def showTrashButton(self):
         return self.isDownloaded() or (self.getFeedURL() == 'dtv:manualFeed'
