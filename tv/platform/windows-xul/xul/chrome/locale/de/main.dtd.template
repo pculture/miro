@@ -1,5 +1,5 @@
 <!ENTITY nbsp " ">	
-<!ENTITY rsaquo "\"">	
+<!ENTITY rsaquo "&quot;">	
 		
 <!ENTITY main.title "$langerProgName">	
 		

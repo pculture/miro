@@ -1,5 +1,5 @@
 <!ENTITY nbsp                " ">
-<!ENTITY rsaquo              "\"">
+<!ENTITY rsaquo              "&quot;">
 
 <!ENTITY bugreport.title     "Sie haben einen Programmfehler gefunden!">
 <!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the

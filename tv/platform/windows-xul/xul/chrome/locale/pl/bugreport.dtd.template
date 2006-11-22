@@ -1,5 +1,5 @@
 <!ENTITY nbsp                " ">
-<!ENTITY rsaquo              "\"">
+<!ENTITY rsaquo              "&quot;">
 
 <!ENTITY bugreport.title     "Znalazłeś błąd w Democracy!">
 <!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the

@@ -715,6 +715,40 @@ an element is dragged, the drag-highlight class is added to it */
     background: url(../images/main-icon-bomb.png) top left no-repeat;
 }
 
+
+
+.main-video-details-tasks-small { 
+	display: block;
+    background: url(../images/video-details-tasks-small.png) top left no-repeat;
+	color: #444;
+	text-decoration: none;
+	font-size: 9px;
+	padding: 3px 0 3px 0;
+}
+
+
+.main-video-details-tasks-small.delete {
+    position: absolute;
+    left: 85px;
+    width: 70px;
+}
+
+
+.main-video-details-tasks-small.save, .saved-note {
+    position: absolute;
+    left: 8px;
+    width: 70px;
+}
+
+ .saved-note {
+	margin-top: 3px;
+    font-size: 9px;
+    color: #666;
+}
+
+
+
+
 .details-date {
     font-weight: bold;
 }
@@ -773,10 +807,8 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .channel-title {
-    overflow: hidden;
-    margin-left: 5px;
+    float: right;
     color: #666;
-    text-align: right;
 }
 
 .selected .channel-title {
@@ -814,24 +846,7 @@ a.small-button-left:hover {
     text-decoration: underline;
 }
 
-.small-button-left.save, .saved-note {
-    position: absolute;
-    left: 8px;
-    width: 70px;
-}
 
- .saved-note {
-	margin-top: 3px;
-    font-size: 9px;
-    color: #666;
-}
-
-
-.small-button-left.delete {
-    position: absolute;
-    left: 85px;
-    width: 70px;
-}
 
 .white-button-left {
     background: top left no-repeat url(../images/white-button-left.png);

@@ -1,5 +1,5 @@
 <!ENTITY nbsp                " ">
-<!ENTITY rsaquo              "\"">
+<!ENTITY rsaquo              "&quot;">
 
 <!ENTITY canscrape.title     "Kanalo nekongrua kun Democracy!">
 <!ENTITY canscrape.body      "Sed ni penos por ricevi la dosierojn. Eble la listado de la videoj daŭros iom da tempo kaj la priskriboj eble rigardos gajaj.">

@@ -1,5 +1,5 @@
 <!ENTITY nbsp                " ">
-<!ENTITY rsaquo              "\"">
+<!ENTITY rsaquo              "&quot;">
 
 <!ENTITY canscrape.title     "Ten kanał nie jest kompatybilny z Democracy!">
 <!ENTITY canscrape.body      "Spróbujemy sciągnąć pliki. Wyświetlanie listy filmów może zająć więcej czasu, a opisy mogą wyglądać dziwnie.">

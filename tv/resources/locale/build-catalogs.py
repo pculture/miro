@@ -10,6 +10,7 @@ for pofile in glob.glob ("*.po"):
 for dtd in glob.glob ("../../platform/windows-xul/xul/chrome/locale/en-US/*.dtd") + glob.glob ("../../platform/windows-xul/xul/chrome/locale/en-US/*.dtd.template"):
     dtd = os.path.basename (dtd)
     os.system ("(cd ../../platform/windows-xul/xul/chrome/locale/; intltool-merge --quoted-style -m ../../../../../resources/locale/ en-US/%s %s)" % (dtd, dtd))
+    os.system ("(cd ../../platform/windows-xul/xul/chrome/locale/; perl -pi -e 's/\\\\\\\"/&quot;/g' */%s)" % (dtd,))
 
 
 # Let's use xgettext for this since it supports string tables.
