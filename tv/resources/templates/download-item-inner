@@ -108,24 +108,16 @@ viewName = kargs['viewName']
     </div>
     <div class="details-small-buttons">
         <div t:showIf="this.showSaveButton()">
-        <a class="small-button-left save" href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');">
-                <div class="small-button-right">
-                <div class="small-button" i18n:translate="">
-                        SAVE
-                </div>
-                </div>
+        <a class="main-video-details-tasks-small save" href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');">
+                <span i18n:translate="">SAVE</span>
         </a>
         </div>
         <div t:showIf="this.showSaved()" class="saved-note">
                 SAVED
         </div>
         <div t:showIf="this.showTrashButton()">
-        <a class="small-button-left delete" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');">
-                <div class="small-button-right">
-                <div class="small-button" i18n:translate="">
-                        DELETE
-                </div>
-                </div>
+        <a class="main-video-details-tasks-small delete" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');">
+       <span i18n:translate="">DELETE</span>
         </a>
         </div>
     </div>
