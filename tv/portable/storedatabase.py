@@ -558,6 +558,59 @@ class LiveStorage:
         except bsddb.db.DBNoSpaceError:
             frontend.exit(28)
 
+    def dumpDatabase(self, db):
+        from download_utils import nextFreeFilename
+        output = open (nextFreeFilename (os.path.join (config.get(prefs.SUPPORT_DIRECTORY), "database-dump.xml")), 'w')
+        global indentation
+        indentation = 0
+        def indent():
+            output.write('    ' * indentation)
+        def output_object(o):
+            global indentation
+            indent()
+            if o in memory:
+                if o.savedData.has_key ('id'):
+                    output.write('<%s id="%s"/>\n' % (o.classString, o.savedData['id']))
+                else:
+                    output.write('<%s/>\n' % (o.classString,))
+                return
+            memory.add(o)
+            if o.savedData.has_key ('id'):
+                output.write('<%s id="%s">\n' % (o.classString, o.savedData['id']))
+            else:
+                output.write('<%s>\n' % (o.classString,))
+            indentation = indentation + 1
+            for key in o.savedData:
+                if key == 'id':
+                    continue
+                indent()
+                output.write('<%s>' % (key,))
+                value = o.savedData[key]
+                if isinstance (value, SavableObject):
+                    output.write ('\n')
+                    indentation = indentation + 1
+                    output_object(value)
+                    indentation = indentation - 1
+                    indent()
+                else:
+                    output.write (str(value))
+                output.write ('</%s>\n' % (key,))
+            indentation = indentation - 1
+            indent()
+            output.write ('</%s>\n' % (o.classString,))
+        output.write ('<?xml version="1.0"?>\n')
+        output.write ('<database schema="%d">\n' % (schema_mod.VERSION,))
+        indentation = indentation + 1
+        for o in db:
+            global memory
+            memory = set()
+            o = objectToSavable (o)
+            if o is not None:
+                output_object (o)
+        indentation = indentation - 1
+        output.write ('</database>\n')
+        output.close()
+
     def handleDatabaseLoadError(self):
         print "WARNING: exception while loading database"
         traceback.print_exc()
