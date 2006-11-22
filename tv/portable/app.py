@@ -391,10 +391,7 @@ class VideoDisplayBase (Display):
 ###############################################################################
 
 class VideoRenderer:
-    
-    DISPLAY_TIME_FORMAT  = "%H:%M:%S"
-    DEFAULT_DISPLAY_TIME = time.strftime(DISPLAY_TIME_FORMAT, time.gmtime(0))
-    
+        
     def __init__(self):
         self.interactivelySeeking = False
     
@@ -406,7 +403,15 @@ class VideoRenderer:
     
     def getDisplayTime(self):
         seconds = self.getCurrentTime()
-        return time.strftime(self.DISPLAY_TIME_FORMAT, time.gmtime(seconds))
+        return util.formatTimeForUser(seconds)
+        
+    def getDisplayDuration(self):
+        seconds = self.getDuration()
+        return util.formatTimeForUser(seconds)
+
+    def getDisplayRemainingTime(self):
+        seconds = abs(self.getCurrentTime() - self.getDuration())
+        return util.formatTimeForUser(seconds, -1)
 
     def getProgress(self):
         duration = self.getDuration()

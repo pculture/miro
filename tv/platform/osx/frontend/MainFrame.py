@@ -514,6 +514,12 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         self.renderer = None
         self.updateTimer = nil
         self.wasPlaying = False
+        self.displayRemaining = False
+        self.remainingIndicatorAttributes = {
+            NSFontAttributeName:            self.timeIndicator.font(), 
+            NSForegroundColorAttributeName: self.timeIndicator.textColor()}
+        
+        self.refresh_(nil)
 
     @platformutils.onMainThread
     def setup(self, renderer):
@@ -532,14 +538,24 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         self.setup(None)
 
     def refresh_(self, timer):
-        if self.renderer is not None:
+        if self.renderer is None:
+            self.progressSlider.setShowCursor_(False)
+            self.progressSlider.setFloatValue_(0.0)
+            self.timeIndicator.setStringValue_('')
+            self.updateRemainingTimeIndicator('')
+        else:
             self.progressSlider.setShowCursor_(True)
             self.progressSlider.setFloatValue_(self.renderer.getProgress())
             self.timeIndicator.setStringValue_(self.renderer.getDisplayTime())
-        else:
-            self.progressSlider.setShowCursor_(False)
-            self.progressSlider.setFloatValue_(0.0)
-            self.timeIndicator.setStringValue_(app.VideoRenderer.DEFAULT_DISPLAY_TIME)
+            if self.displayRemaining:
+                remaning = self.renderer.getDisplayRemainingTime()
+            else:
+                remaning = self.renderer.getDisplayDuration()
+            self.updateRemainingTimeIndicator(remaning)
+    
+    def updateRemainingTimeIndicator(self, content):
+        title = NSAttributedString.alloc().initWithString_attributes_(content, self.remainingIndicatorAttributes)
+        self.remainingTimeIndicator.setAttributedTitle_(title)
 
     def drawRect_(self, rect):
         self.backgroundLeft.compositeToPoint_operation_( (0,0), NSCompositeSourceOver )
@@ -554,6 +570,10 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
             x = self.backgroundLeftWidth + (i * self.backgroundCenterWidth)
             self.backgroundCenter.compositeToPoint_operation_( (x, 0), NSCompositeSourceOver )
         NSGraphicsContext.currentContext().restoreGraphicsState()
+
+    def toggleRemainingTimeIndicator_(self, sender):
+        self.displayRemaining = not self.displayRemaining
+        self.refresh_(nil)
 
     def progressSliderWasClicked(self, slider):
         if app.controller.videoDisplay.isPlaying:

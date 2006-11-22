@@ -7,6 +7,9 @@
 /* NSTextField (%donation label%) : <title:%donation label%> (oid:256) */
 "%donation label%" = "%donation label%";
 
+/* NSButton (-00:00:00) : <title:-00:00:00> (oid:311) */
+"-00:00:00" = "-00:00:00";
+
 /* NSTextField (00:00:00) : <title:00:00:00> (oid:280) */
 "00:00:00" = "00:00:00";
 

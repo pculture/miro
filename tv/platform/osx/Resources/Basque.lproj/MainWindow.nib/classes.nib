@@ -42,9 +42,10 @@
         }, 
         {CLASS = MetalSlider; LANGUAGE = ObjC; SUPERCLASS = NSSlider; }, 
         {
+            ACTIONS = {toggleRemainingTimeIndicator = id; }; 
             CLASS = ProgressDisplayView; 
             LANGUAGE = ObjC; 
-            OUTLETS = {progressSlider = id; timeIndicator = id; }; 
+            OUTLETS = {progressSlider = id; remainingTimeIndicator = id; timeIndicator = id; }; 
             SUPERCLASS = NSView; 
         }, 
         {CLASS = ProgressSlider; LANGUAGE = ObjC; SUPERCLASS = Slider; }, 

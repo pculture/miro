@@ -393,6 +393,17 @@ def formatSizeForUser(bytes, zeroString=""):
     else:
         return zeroString
 
+def formatTimeForUser(seconds, sign=1):
+    """Format a duration in seconds into a string suitable for display, using
+    the minimum amount of digits. Negative durations used for remaining times
+    display a '-' sign.
+    """
+    _, _, _, h, m, s, _, _, _ = time.gmtime(seconds)
+    if int(seconds) in range(0, 3600):
+        return "%d:%02u" % (m*sign, s)
+    else:
+        return "%d:%02u:%02u" % (h*sign, m, s)
+
 def print_mem_usage(message):
     pass
 # Uncomment for memory usage printouts on linux.
