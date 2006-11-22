@@ -116,7 +116,7 @@ viewName = kargs['viewName']
                 </div>
         </a>
         </div>
-        <div t:showIf="this.getState() == 'saved'" class="saved-note">
+        <div t:showIf="this.showSaved()" class="saved-note">
                 SAVED
         </div>
         <div t:showIf="this.showTrashButton()">
