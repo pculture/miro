@@ -948,7 +948,7 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
 
     def getThumbnail(self):
         self.confirmDBThread()
-        if self.iconCache.isValid():
+        if self.iconCache and self.iconCache.isValid():
             basename = os.path.basename(self.iconCache.getFilename())
             return resources.iconCacheUrl(basename)
         else:

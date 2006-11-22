@@ -65,13 +65,17 @@ def createEngines():
 def getRequestURL(engineName, query, filterAdultContents=True, limit=50):
     if query == "LET'S TEST DTV'S CRASH REPORTER TODAY":
         someVariable = intentionallyUndefinedVariableToTestCrashReporter
+    if query == "LET'S DEBUG DTV: DUMP DATABASE":
+        import database
+        database.defaultDatabase.liveStorage.dumpDatabase (database.defaultDatabase)
+        return ""
     if type(query) == unicode:
         query = query.encode('utf-8')
 
     for engine in views.searchEngines:
         if engine.name == engineName:
             return engine.getRequestURL(query, filterAdultContents, limit)
-    return None
+    return ""
 
 
 def getSearchEnginesHTML ():

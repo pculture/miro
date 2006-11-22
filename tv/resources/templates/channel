@@ -15,25 +15,26 @@
     <t:execOnLoad><![CDATA[
 #print templateState
 global feed, searchTerm, showDownloads, showWatchableItems, showNewItems, allItemsMode, allItems, watchableItems, matchingItems, newItems
-feed = views.feeds.getObjectByID(int(kargs['id']))
-filters.switchNewItemsChannel(feed)
-sorts.switchUnwatchedFirstChannel(feed)
 
-def _reInit(*args, **kargs):
-    global feed, allItems, showDownloads, showWatchableItems, showNewItems, allItemsMode, watchableItems, matchingItems, newItems
+def _setFeed(kargs):
+    global feed, allItemsMode, showDownloads, showNewItems, showWatchableItems, searchTerm
 
-    # Initial states of views in this template
+    searchTerm = None
+
+    # The main section
     allItemsMode = False
+    
+    # Initial states of views in this template
     showDownloads = False
     showNewItems = True
     showWatchableItems = True
 
-    if feed.idExists():
-        feed.markAsViewed()
-
-    #print "reinitting %s" % repr(kargs)
     feed = views.feeds.getObjectByID(int(kargs['id']))
-    allItems.changeIndexValue(indexes.itemsByFeed, int(kargs['id']))
+    filters.switchNewItemsChannel(feed)
+    sorts.switchUnwatchedFirstChannel(feed)
+
+def _updateView ():
+    global showNewItems, allItemsMode
 
     showNewItems = (len(watchableItems) == 0) or len(newItems) > 0
 
@@ -42,6 +43,20 @@ def _reInit(*args, **kargs):
         matchingItems.recomputeFilter(newItems)
 
     feed.updateIcons()
+
+def _reInit(*args, **kargs):
+    global feed, allItems, showDownloads, showWatchableItems, showNewItems, allItemsMode, watchableItems, matchingItems, newItems
+
+    if feed.idExists():
+        feed.markAsViewed()
+
+    #print "reinitting %s" % repr(kargs)
+    _setFeed(kargs)
+
+    allItems.changeIndexValue(indexes.itemsByFeed, int(kargs['id']))
+    views.feeds.recomputeFilter(thisFeedView)
+
+    _updateView()
 
 reInit = lambda *args, **kargs: _reInit(*args, **kargs)
 
@@ -89,15 +104,7 @@ def toggleAllItemsMode(handle):
     matchingItems.recomputeFilter(newItems)
     handle.forceUpdate()
 
-searchTerm = None
-
-# The main section
-allItemsMode = False
-
-# Initial states of views in this template
-showDownloads = False
-showNewItems = True
-showWatchableItems = True
+_setFeed(kargs)
 
 allItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
 matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm), sortFunc=sorts.item)
@@ -110,13 +117,8 @@ watchableItems = allWatchableItems.filter(showWatchableFilter,sortFunc=sorts.ite
 
 thisFeedView = views.feeds.filter(lambda x: x is feed)
 
-showNewItems = (len(watchableItems) == 0) or len(newItems) > 0
+_updateView()
 
-if len(newItems) == 0:
-    allItemsMode = True
-    matchingItems.recomputeFilter(newItems)
-
-feed.updateIcons()
 isFolder = False
 ]]>
     </t:execOnLoad>

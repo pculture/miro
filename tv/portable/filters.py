@@ -54,7 +54,7 @@ def newItems(obj):
     try:
         rv = newMemory[obj.getID()]
     except KeyError:
-        rv = (obj.getState() == 'new')
+        rv = not obj.getViewed()
         newMemory[obj.getID()] = rv
     return rv
 
