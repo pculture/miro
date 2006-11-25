@@ -777,6 +777,7 @@ class VideoSearchFieldCell (NSSearchFieldCell):
         self.cancelButtonCell().setTarget_(self)
         self.setSearchMenuTemplate_(self.makeSearchMenuTemplate())
         self.setSendsWholeSearchString_(YES)
+        self.setScrollable_(YES)
         self.currentItem = nil
         return self
     
