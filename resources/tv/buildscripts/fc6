@@ -3,7 +3,7 @@
 #Make directory structure for easy upload
 mkdir $2$3
 mkdir $2$3/src
-mkdir $2$3/fc5
+mkdir $2$3/fc6
 
 #Make tarball and copy it into directory
 svn co https://svn.participatoryculture.org/svn/dtv/trunk/resources/
@@ -11,7 +11,7 @@ resources/tv/maketarball $2$3
 cp Democracy-$2$3.tar.gz $2$3/src/
 
 #Get the spec
-svn cat https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$2/resources/tv/Democracy-FC5.spec > Democracy.spec
+svn cat https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$2/resources/tv/Democracy.spec > Democracy.spec
 sudo cp Democracy-$2$3.tar.gz /usr/src/redhat/SOURCES 
 sudo cp Democracy.spec /usr/src/redhat/SPECS 
 
@@ -19,9 +19,9 @@ sudo cp Democracy.spec /usr/src/redhat/SPECS
 sudo rpmbuild --ba /usr/src/redhat/SPECS/Democracy.spec 
 
 #Copy the RPMs into the directory
-cp /usr/src/redhat/SRPMS/Democracy-$2-1.src.rpm $2$3/fc5/Democracy-$2-1.src.rpm
-cp /usr/src/redhat/RPMS/i386/Democracy-$2-1.i386.rpm $2$3/fc5/Democracy-$2-1.i386.rpm
-cp /usr/src/redhat/RPMS/i386/Democracy-debuginfo-$2-1.i386.rpm $2$3/fc5/Democracy-debuginfo-$2-1.i386.rpm 
+cp /usr/src/redhat/SRPMS/Democracy-$2-1.src.rpm $2$3/fc6/Democracy-$2-1.src.rpm
+cp /usr/src/redhat/RPMS/i386/Democracy-$2-1.i386.rpm $2$3/fc6/Democracy-$2-1.i386.rpm
+cp /usr/src/redhat/RPMS/i386/Democracy-debuginfo-$2-1.i386.rpm $2$3/fc6/Democracy-debuginfo-$2-1.i386.rpm 
 
 #copy Directory onto PCF2 user's home directory
 echo "Press enter to upload files..."
