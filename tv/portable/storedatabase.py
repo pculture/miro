@@ -520,12 +520,16 @@ class LiveStorage:
             self.toUpdate = set()
             self.toRemove = set()
             self.errorState = False
+            self.dbenv = None
             if dbPath is not None:
                 self.dbPath = dbPath
             else:
                 self.dbPath = config.get(prefs.BSDDB_PATHNAME)
             start = clock()
-            self.openEmptyDB()
+            try:
+                self.openEmptyDB()
+            except:
+                self.handleDatabaseLoadError()
             if restore:
                 try:
                     try:
@@ -615,7 +619,8 @@ class LiveStorage:
         print "WARNING: exception while loading database"
         traceback.print_exc()
         self.closeInvalidDB()
-        self.dbenv.close()
+        if self.dbenv is not None:
+            self.dbenv.close()
         self.saveInvalidDB()
         self.openEmptyDB()
         self.saveDatabase()
