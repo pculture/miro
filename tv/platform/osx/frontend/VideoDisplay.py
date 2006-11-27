@@ -39,7 +39,16 @@ class PlaybackController (app.PlaybackControllerBase):
     def playItemExternally(self, itemID):
         item = app.PlaybackControllerBase.playItemExternally(self, itemID)
         moviePath = item.getVideoFilename()
-        ok = NSWorkspace.sharedWorkspace().openFile_withApplication_andDeactivate_(moviePath, nil, YES)
+
+        ws = NSWorkspace.sharedWorkspace()
+        ok, externalApp, movieType = ws.getInfoForFile_application_type_(moviePath)
+        if ok:
+            if externalApp == NSBundle.mainBundle().bundlePath():
+                print 'DTV: WARNING, trying to play movie externally with Democracy.'
+                ok = False
+            else:
+                ok = ws.openFile_withApplication_andDeactivate_(moviePath, nil, YES)
+
         if not ok:
             print "DTV: movie %s could not be externally opened" % moviePath
 
