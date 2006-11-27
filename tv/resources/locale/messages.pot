@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-27 00:11-0400\n"
+"POT-Creation-Date: 2006-11-27 01:48-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -304,6 +304,10 @@ msgstr "%channel title%"
 msgid "%donation label%"
 msgstr "%donation label%"
 
+# NSButton (-00:00:00) : <title:-00:00:00> (oid:311)
+msgid "-00:00:00"
+msgstr "-00:00:00"
+
 # NSTextField (00:00:00) : <title:00:00:00> (oid:280)
 msgid "00:00:00"
 msgstr "00:00:00"
@@ -320,7 +324,8 @@ msgid "FullScreen Controls"
 msgstr "FullScreen Controls"
 
 # VideoSearchField (0) : <title:Search> (oid:289)
-#: ../../portable/tabs.py:27
+#: ../../portable/tabs.py:27 ../../portable/feed.py:1718
+#: ../../portable/feed.py:1777
 msgid "Search"
 msgstr "Search"
 
@@ -364,7 +369,7 @@ msgstr ""
 "Username:\n"
 "\n"
 
-# NSTextField ( limit upstream to) : <title: limit upstream to> (oid:32)
+# NSButton ( limit upstream to) : <title: limit upstream to> (oid:30)
 msgid " limit upstream to"
 msgstr " limit upstream to"
 
@@ -397,7 +402,7 @@ msgstr "3 days"
 msgid "3 hours"
 msgstr "3 hours"
 
-# NSTextField (4) : <title:4> (oid:50)
+# NSTextField (4) : <title:4> (oid:130)
 msgid "4"
 msgstr "4"
 
@@ -421,10 +426,9 @@ msgstr "BitTorrent ports:"
 msgid "By default, videos expire after:"
 msgstr "By default, videos expire after:"
 
-# NSButton (Change) : <title:Change> (oid:93)
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:13
-msgid "Change"
-msgstr "Change"
+# NSButton (Change...) : <title:Change...> (oid:93)
+msgid "Change..."
+msgstr "Change..."
 
 # NSTextField (Check channels for new content:) : <title:Check channels for new content:> (oid:24)
 msgid "Check channels for new content:"
@@ -434,6 +438,11 @@ msgstr "Check channels for new content:"
 #: ../../platform/gtk-x11/glade/democracy.glade.h:41
 msgid "Don't start a download if it leaves less than"
 msgstr "Don't start a download if it leaves less than"
+
+# NSTextField (Download at most) : <title:Download at most> (oid:129)
+#: ../../platform/gtk-x11/glade/democracy.glade.h:42
+msgid "Download at most"
+msgstr "Download at most"
 
 # NSTextField (GB free.) : <title:GB free.> (oid:45)
 msgid "GB free."
@@ -469,18 +478,18 @@ msgstr "Play videos one after another."
 msgid "Run Democracy at startup"
 msgstr "Run Democracy at startup"
 
+# NSTextField (Save downloaded videos in this folder:) : <title:Save downloaded videos in this folder:> (oid:92)
+msgid "Save downloaded videos in this folder:"
+msgstr "Save downloaded videos in this folder:"
+
 # NSButtonCell (Stop after each video.) : <title:Stop after each video.> (oid:104)
-#: ../../platform/gtk-x11/glade/democracy.glade.h:60
+#: ../../platform/gtk-x11/glade/democracy.glade.h:61
 msgid "Stop after each video."
 msgstr "Stop after each video."
 
-# NSTextField (Store downloaded movies in:) : <title:Store downloaded movies in:> (oid:92)
-msgid "Store downloaded movies in:"
-msgstr "Store downloaded movies in:"
-
-# NSButton (To avoid internet slowdowns,) : <title:To avoid internet slowdowns,> (oid:30)
-msgid "To avoid internet slowdowns,"
-msgstr "To avoid internet slowdowns,"
+# NSTextField (To avoid internet slowdowns:) : <title:To avoid internet slowdowns:> (oid:128)
+msgid "To avoid internet slowdowns:"
+msgstr "To avoid internet slowdowns:"
 
 # NSMenuItem : <title:every 30 minutes> (oid:27)
 msgid "every 30 minutes"
@@ -493,6 +502,11 @@ msgstr "every hour"
 # NSMenuItem : <title:manually> (oid:28)
 msgid "manually"
 msgstr "manually"
+
+# NSTextField (videos at once.) : <title:videos at once.> (oid:132)
+#: ../../platform/gtk-x11/glade/democracy.glade.h:75
+msgid "videos at once."
+msgstr "videos at once."
 
 # NSTextField ($label$) : <title:$label$> (oid:7)
 msgid "$label$"
@@ -582,9 +596,9 @@ msgstr "Only search my Movies folder."
 msgid "Search my entire Home folder."
 msgstr "Search my entire Home folder."
 
-# NSButtonCell (Search this location:) : <title:Search this location:> (oid:75)
-msgid "Search this location:"
-msgstr "Search this location:"
+# NSButtonCell (Search this folder:) : <title:Search this folder:> (oid:75)
+msgid "Search this folder:"
+msgstr "Search this folder:"
 
 # NSTextField (Searching for Videos) : <title:Searching for Videos> (oid:57)
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12
@@ -712,34 +726,6 @@ msgid ""
 msgstr ""
 "%message%\n"
 "%message%"
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:152
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6
-msgid "Username:"
-msgstr ""
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:163
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:7
-msgid "Password:"
-msgstr ""
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:350
-msgid "Unknown Runtime Error"
-msgstr ""
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:351
-#, python-format
-msgid "An unknown error has occurred %s."
-msgstr ""
-
-#: ../../platform/gtk-x11/frontend_implementation/startup.py:59
-#: ../../platform/gtk-x11/frontend_implementation/startup.py:157
-#: ../../platform/windows-xul/frontend_implementation/startup.py:33
-#, python-format
-msgid "%d video found"
-msgid_plural "%d videos found"
-msgstr[0] ""
-msgstr[1] ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
 msgid "Save Video _As..."
@@ -894,6 +880,25 @@ msgstr ""
 msgid "Delete selection"
 msgstr ""
 
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:152
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6
+msgid "Username:"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:163
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:7
+msgid "Password:"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:350
+msgid "Unknown Runtime Error"
+msgstr ""
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:351
+#, python-format
+msgid "An unknown error has occurred %s."
+msgstr ""
+
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:5
 #: ../../platform/osx/frontend/UIStrings.py:5
 msgid "_Remove..."
@@ -999,24 +1004,14 @@ msgstr ""
 msgid "_Update Channels..."
 msgstr ""
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:34
+#: ../../platform/gtk-x11/frontend_implementation/startup.py:59
+#: ../../platform/gtk-x11/frontend_implementation/startup.py:157
+#: ../../platform/windows-xul/frontend_implementation/startup.py:33
 #, python-format
-msgid ""
-"Error importing democracy modules:\n"
-"%s"
-msgstr ""
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:38
-msgid "Starting up"
-msgstr ""
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:134
-msgid "Loading window"
-msgstr ""
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:135
-msgid "onStartup called twice"
-msgstr ""
+msgid "%d video found"
+msgid_plural "%d videos found"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:161
 msgid "Error Bombing Item"
@@ -1115,7 +1110,301 @@ msgstr ""
 msgid "Update Channels..."
 msgstr ""
 
-#: ../../portable/compiled_templates/new.py:103 ../../portable/tabs.py:26
+#: ../../platform/windows-xul/xul/components/pybridge.py:36
+#, python-format
+msgid ""
+"Error importing democracy modules:\n"
+"%s"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:40
+msgid "Starting up"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:136
+msgid "Loading window"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:137
+msgid "onStartup called twice"
+msgstr ""
+
+#: ../../portable/playlist.py:175 ../../portable/playlist.py:180
+msgid "Rename Playlist"
+msgstr ""
+
+#: ../../portable/playlist.py:176 ../../portable/folder.py:120
+#: ../../portable/folder.py:175 ../../portable/guide.py:130
+#: ../../portable/menu.py:48 ../../portable/menu.py:53
+#: ../../portable/feed.py:690
+msgid "Remove"
+msgstr ""
+
+#: ../../portable/playlist.py:181
+#, python-format
+msgid "Enter a new name for the playlist %s"
+msgstr ""
+
+#: ../../portable/playlist.py:194
+msgid "Create Playlist"
+msgstr ""
+
+#: ../../portable/playlist.py:195
+msgid "Enter a name for the new playlist"
+msgstr ""
+
+#: ../../portable/compiled_templates/search.py:39
+msgid "Nothing to display.<br></br> Enter a query in the search field above."
+msgstr ""
+
+#: ../../portable/compiled_templates/search.py:44
+msgid "Searching..."
+msgstr ""
+
+#: ../../portable/compiled_templates/search.py:56
+msgid "Results for \"${query}\""
+msgstr ""
+
+#: ../../portable/compiled_templates/search.py:95
+msgid "Video Search"
+msgstr ""
+
+#: ../../portable/compiled_templates/playlist.py:56
+msgid "Empty Playlist"
+msgstr ""
+
+#: ../../portable/compiled_templates/playlist.py:58
+msgid "Drag downloaded videos to this playlist to add them."
+msgstr ""
+
+#: ../../portable/compiled_templates/playlist_folder.py:59
+msgid "Empty Playlist Folder"
+msgstr ""
+
+#: ../../portable/compiled_templates/playlist_folder.py:71
+msgid ""
+"This folder contains ${count} playlists, but the playlists do not contain "
+"any items."
+msgstr ""
+
+#: ../../portable/compiled_templates/playlist_folder.py:76
+msgid "Drag playlists to this folder to add them."
+msgstr ""
+
+#: ../../portable/compiled_templates/multi_playlist.py:57
+msgid ""
+"${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
+"playlists)"
+msgstr ""
+
+#: ../../portable/compiled_templates/multi_playlist.py:69
+msgid "${count} Playlists Selected"
+msgstr ""
+
+#: ../../portable/compiled_templates/external_playback_continue.py:47
+#: ../../portable/compiled_templates/video_info.py:40
+#: ../../portable/compiled_templates/external_playback.py:50
+msgid "STAR"
+msgstr ""
+
+#: ../../portable/compiled_templates/external_playback_continue.py:57
+#: ../../portable/compiled_templates/video_info.py:50
+#: ../../portable/compiled_templates/external_playback.py:60
+#: ../../portable/compiled_templates/download_item.py:201
+msgid "SAVE"
+msgstr ""
+
+#: ../../portable/compiled_templates/external_playback_continue.py:62
+#: ../../portable/compiled_templates/video_info.py:55
+#: ../../portable/compiled_templates/external_playback.py:65
+msgid "SAVED"
+msgstr ""
+
+#: ../../portable/compiled_templates/external_playback_continue.py:70
+#: ../../portable/compiled_templates/video_info.py:63
+#: ../../portable/compiled_templates/external_playback.py:73
+#: ../../portable/compiled_templates/download_item.py:211
+msgid "DELETE"
+msgstr ""
+
+#: ../../portable/compiled_templates/external_playback_continue.py:85
+#: ../../portable/compiled_templates/external_playback.py:88
+msgid "Democracy - External Playback Template"
+msgstr ""
+
+#: ../../portable/compiled_templates/external_playback_continue.py:95
+msgid "Continue To Next Video"
+msgstr ""
+
+#: ../../portable/compiled_templates/channelfolder.py:166
+msgid "${count} Downloads in Progress"
+msgstr ""
+
+#: ../../portable/compiled_templates/channelfolder.py:171
+msgid "1 Download in Progress"
+msgstr ""
+
+#: ../../portable/compiled_templates/channelfolder.py:191
+msgid "${len} Videos On This Channel"
+msgstr ""
+
+#: ../../portable/compiled_templates/channelfolder.py:205
+msgid "All ${len} Videos Match This Search"
+msgstr ""
+
+#: ../../portable/compiled_templates/channelfolder.py:217
+msgid "${len} Videos Match This Search"
+msgstr ""
+
+#: ../../portable/compiled_templates/channelfolder.py:277
+msgid "${count} Videos on this Channel"
+msgstr ""
+
+#: ../../portable/compiled_templates/channelfolder.py:290
+msgid "Unwatched"
+msgstr ""
+
+#: ../../portable/compiled_templates/channelfolder.py:301
+msgid "Watched"
+msgstr ""
+
+#: ../../portable/compiled_templates/channelfolder.py:312
+msgid "Saved"
+msgstr ""
+
+#: ../../portable/compiled_templates/feed_settings.py:32
+#: ../../portable/compiled_templates/channel.py:152
+msgid "Default"
+msgstr ""
+
+#: ../../portable/compiled_templates/feed_settings.py:39
+#: ../../portable/compiled_templates/channel.py:159
+msgid "default"
+msgstr ""
+
+#: ../../portable/compiled_templates/feed_settings.py:110
+#: ../../portable/compiled_templates/channel.py:379
+msgid "Videos expire after"
+msgstr ""
+
+#: ../../portable/compiled_templates/feed_settings.py:113
+#: ../../portable/compiled_templates/channel.py:382
+msgid "When turned on, Auto Download should"
+msgstr ""
+
+#: ../../portable/compiled_templates/feed_settings.py:146
+#: ../../portable/compiled_templates/channel.py:415
+msgid ""
+"Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
+"unwatched."
+msgstr ""
+
+#: ../../portable/compiled_templates/channel.py:316
+#: ../../portable/compiled_templates/channel_content.py:122
+#: ../../portable/compiled_templates/channel_folder.py:252
+msgid "Downloaded"
+msgstr ""
+
+#: ../../portable/compiled_templates/channel.py:428
+msgid "Recommend"
+msgstr ""
+
+#: ../../portable/compiled_templates/channel.py:430
+#: ../../portable/compiled_templates/unittest/simpleunicode.py:34
+#: ../../portable/test/unicodetest.py:402
+msgid "Settings"
+msgstr ""
+
+#: ../../portable/compiled_templates/channel.py:440
+msgid "<label for=\"automatic\">Auto Download</label>"
+msgstr ""
+
+#: ../../portable/compiled_templates/channel.py:458
+msgid "Looking for videos at this URL"
+msgstr ""
+
+#: ../../portable/compiled_templates/external_playback.py:111
+msgid ""
+"Democracy can't play this file. You may be able to open it with a different "
+"program.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></"
+"Br><strong>File type:</strong> ${format}"
+msgstr ""
+
+#: ../../portable/compiled_templates/external_playback.py:115
+msgid "REVEAL FILE"
+msgstr ""
+
+#: ../../portable/compiled_templates/external_playback.py:119
+msgid "Play Externally"
+msgstr ""
+
+#: ../../portable/compiled_templates/external_playback.py:128
+msgid "Skip >> ${countdown}"
+msgstr ""
+
+#: ../../portable/compiled_templates/download_item.py:114
+msgid "SHOW FILE"
+msgstr ""
+
+#: ../../portable/compiled_templates/download_item.py:121
+msgid "SHOW FOLDER"
+msgstr ""
+
+#: ../../portable/compiled_templates/download_item.py:135
+msgid "SHARE IT"
+msgstr ""
+
+#: ../../portable/compiled_templates/download_item.py:144
+msgid "STAR IT"
+msgstr ""
+
+#: ../../portable/compiled_templates/download_item.py:189
+msgid "Pending Auto Download"
+msgstr ""
+
+#: ../../portable/compiled_templates/unittest/translationtest.py:43
+msgid "Simple translation"
+msgstr ""
+
+#: ../../portable/compiled_templates/unittest/translationtest.py:57
+msgid "truck stop in a ${can}"
+msgstr ""
+
+#: ../../portable/compiled_templates/unittest/translationtest.py:61
+msgid ""
+"This is a ${car} and this is a ${truck} <span>This text is <b style=\"color:"
+"red\">raw</b> text</span>"
+msgstr ""
+
+#: ../../portable/compiled_templates/download.py:91
+msgid "${size} disk space free"
+msgstr ""
+
+#: ../../portable/compiled_templates/download.py:101
+msgid "${size} available for downloads"
+msgstr ""
+
+#: ../../portable/compiled_templates/download.py:153 ../../portable/tabs.py:28
+msgid "Downloading"
+msgstr ""
+
+#: ../../portable/compiled_templates/download.py:168
+msgid "Clear Completed Torrents"
+msgstr ""
+
+#: ../../portable/compiled_templates/channel_folder.py:138
+msgid "Empty Channel Folder"
+msgstr ""
+
+#: ../../portable/compiled_templates/channel_folder.py:140
+msgid "Drag channels to this folder to add them."
+msgstr ""
+
+#: ../../portable/compiled_templates/library.py:73 ../../portable/tabs.py:25
+msgid "My Collection"
+msgstr ""
+
+#: ../../portable/compiled_templates/new.py:75 ../../portable/tabs.py:26
 msgid "New Videos"
 msgstr ""
 
@@ -1176,145 +1465,6 @@ msgid ""
 "'save' and you can set a channel's settings to save videos automatically."
 msgstr ""
 
-#: ../../portable/compiled_templates/external_playback.py:50
-#: ../../portable/compiled_templates/video_info.py:40
-#: ../../portable/compiled_templates/external_playback_continue.py:47
-msgid "STAR"
-msgstr ""
-
-#: ../../portable/compiled_templates/external_playback.py:60
-#: ../../portable/compiled_templates/video_info.py:50
-#: ../../portable/compiled_templates/download_item_inner.py:171
-#: ../../portable/compiled_templates/external_playback_continue.py:57
-msgid "SAVE"
-msgstr ""
-
-#: ../../portable/compiled_templates/external_playback.py:65
-#: ../../portable/compiled_templates/video_info.py:55
-#: ../../portable/compiled_templates/external_playback_continue.py:62
-msgid "SAVED"
-msgstr ""
-
-#: ../../portable/compiled_templates/external_playback.py:73
-#: ../../portable/compiled_templates/video_info.py:63
-#: ../../portable/compiled_templates/download_item_inner.py:181
-#: ../../portable/compiled_templates/external_playback_continue.py:70
-msgid "DELETE"
-msgstr ""
-
-#: ../../portable/compiled_templates/external_playback.py:88
-#: ../../portable/compiled_templates/external_playback_continue.py:85
-msgid "Democracy - External Playback Template"
-msgstr ""
-
-#: ../../portable/compiled_templates/external_playback.py:111
-msgid ""
-"Democracy can't play this file. You may be able to open it with a different "
-"program.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></"
-"Br><strong>File type:</strong> ${format}"
-msgstr ""
-
-#: ../../portable/compiled_templates/external_playback.py:115
-msgid "REVEAL FILE"
-msgstr ""
-
-#: ../../portable/compiled_templates/external_playback.py:119
-msgid "Play Externally"
-msgstr ""
-
-#: ../../portable/compiled_templates/external_playback.py:128
-msgid "Skip >> ${countdown}"
-msgstr ""
-
-#: ../../portable/compiled_templates/download.py:91
-msgid "${size} disk space free"
-msgstr ""
-
-#: ../../portable/compiled_templates/download.py:101
-msgid "${size} available for downloads"
-msgstr ""
-
-#: ../../portable/compiled_templates/download.py:237 ../../portable/tabs.py:28
-msgid "Downloading"
-msgstr ""
-
-#: ../../portable/compiled_templates/download.py:252
-msgid "Clear Completed Torrents"
-msgstr ""
-
-#: ../../portable/compiled_templates/channel_folder.py:138
-msgid "Empty Channel Folder"
-msgstr ""
-
-#: ../../portable/compiled_templates/channel_folder.py:140
-msgid "Drag channels to this folder to add them."
-msgstr ""
-
-#: ../../portable/compiled_templates/channel_folder.py:252
-#: ../../portable/compiled_templates/channel.py:316
-#: ../../portable/compiled_templates/channel_content.py:122
-msgid "Downloaded"
-msgstr ""
-
-#: ../../portable/compiled_templates/feed_settings.py:32
-#: ../../portable/compiled_templates/channel.py:152
-msgid "Default"
-msgstr ""
-
-#: ../../portable/compiled_templates/feed_settings.py:39
-#: ../../portable/compiled_templates/channel.py:159
-msgid "default"
-msgstr ""
-
-#: ../../portable/compiled_templates/feed_settings.py:110
-#: ../../portable/compiled_templates/channel.py:463
-msgid "Videos expire after"
-msgstr ""
-
-#: ../../portable/compiled_templates/feed_settings.py:113
-#: ../../portable/compiled_templates/channel.py:466
-msgid "When turned on, Auto Download should"
-msgstr ""
-
-#: ../../portable/compiled_templates/feed_settings.py:146
-#: ../../portable/compiled_templates/channel.py:499
-msgid ""
-"Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
-"unwatched."
-msgstr ""
-
-#: ../../portable/compiled_templates/channel.py:512
-msgid "Recommend"
-msgstr ""
-
-#: ../../portable/compiled_templates/channel.py:514
-#: ../../portable/compiled_templates/unittest/simpleunicode.py:34
-#: ../../portable/test/unicodetest.py:402
-msgid "Settings"
-msgstr ""
-
-#: ../../portable/compiled_templates/channel.py:524
-msgid "<label for=\"automatic\">Auto Download</label>"
-msgstr ""
-
-#: ../../portable/compiled_templates/channel.py:542
-msgid "Looking for videos at this URL"
-msgstr ""
-
-#: ../../portable/compiled_templates/multi_playlist.py:57
-msgid ""
-"${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
-"playlists)"
-msgstr ""
-
-#: ../../portable/compiled_templates/multi_playlist.py:69
-msgid "${count} Playlists Selected"
-msgstr ""
-
-#: ../../portable/compiled_templates/library.py:101 ../../portable/tabs.py:25
-msgid "My Collection"
-msgstr ""
-
 #: ../../portable/compiled_templates/multi_channel.py:57
 msgid ""
 "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
@@ -1325,235 +1475,63 @@ msgstr ""
 msgid "${count} Channels Selected"
 msgstr ""
 
-#: ../../portable/compiled_templates/playlist_folder.py:59
-msgid "Empty Playlist Folder"
+#: ../../portable/dl_daemon/download.py:298
+msgid "Error"
 msgstr ""
 
-#: ../../portable/compiled_templates/playlist_folder.py:71
-msgid ""
-"This folder contains ${count} playlists, but the playlists do not contain "
-"any items."
-msgstr ""
-
-#: ../../portable/compiled_templates/playlist_folder.py:76
-msgid "Drag playlists to this folder to add them."
-msgstr ""
-
-#: ../../portable/compiled_templates/search.py:39
-msgid "Nothing to display.<br></br> Enter a query in the search field above."
-msgstr ""
-
-#: ../../portable/compiled_templates/search.py:44
-msgid "Searching..."
-msgstr ""
-
-#: ../../portable/compiled_templates/search.py:56
-msgid "Results for \"${query}\""
-msgstr ""
-
-#: ../../portable/compiled_templates/search.py:123
-msgid "Video Search"
-msgstr ""
-
-#: ../../portable/compiled_templates/download_item_inner.py:84
-msgid "SHOW FILE"
-msgstr ""
-
-#: ../../portable/compiled_templates/download_item_inner.py:91
-msgid "SHOW FOLDER"
-msgstr ""
-
-#: ../../portable/compiled_templates/download_item_inner.py:105
-msgid "SHARE IT"
-msgstr ""
-
-#: ../../portable/compiled_templates/download_item_inner.py:114
-msgid "STAR IT"
-msgstr ""
-
-#: ../../portable/compiled_templates/download_item_inner.py:159
-msgid "Pending Auto Download"
-msgstr ""
-
-#: ../../portable/compiled_templates/unittest/translationtest.py:43
-msgid "Simple translation"
-msgstr ""
-
-#: ../../portable/compiled_templates/unittest/translationtest.py:57
-msgid "truck stop in a ${can}"
-msgstr ""
-
-#: ../../portable/compiled_templates/unittest/translationtest.py:61
-msgid ""
-"This is a ${car} and this is a ${truck} <span>This text is <b style=\"color:"
-"red\">raw</b> text</span>"
-msgstr ""
-
-#: ../../portable/compiled_templates/channelfolder.py:166
-msgid "${count} Downloads in Progress"
-msgstr ""
-
-#: ../../portable/compiled_templates/channelfolder.py:171
-msgid "1 Download in Progress"
-msgstr ""
-
-#: ../../portable/compiled_templates/channelfolder.py:191
-msgid "${len} Videos On This Channel"
-msgstr ""
-
-#: ../../portable/compiled_templates/channelfolder.py:205
-msgid "All ${len} Videos Match This Search"
-msgstr ""
-
-#: ../../portable/compiled_templates/channelfolder.py:217
-msgid "${len} Videos Match This Search"
-msgstr ""
-
-#: ../../portable/compiled_templates/channelfolder.py:274
-msgid "${count} Videos on this Channel"
-msgstr ""
-
-#: ../../portable/compiled_templates/channelfolder.py:290
-msgid "Unwatched"
-msgstr ""
-
-#: ../../portable/compiled_templates/channelfolder.py:301
-msgid "Watched"
-msgstr ""
-
-#: ../../portable/compiled_templates/channelfolder.py:312
-msgid "Saved"
-msgstr ""
-
-#: ../../portable/compiled_templates/external_playback_continue.py:95
-msgid "Continue To Next Video"
-msgstr ""
-
-#: ../../portable/compiled_templates/playlist.py:56
-msgid "Empty Playlist"
-msgstr ""
-
-#: ../../portable/compiled_templates/playlist.py:58
-msgid "Drag downloaded videos to this playlist to add them."
-msgstr ""
-
-#: ../../portable/item.py:397
+#: ../../portable/dl_daemon/download.py:357
 #, python-format
-msgid "Deleting %s"
+msgid "Could not write to %s"
 msgstr ""
 
-#: ../../portable/item.py:398
-msgid ""
-"This item is a folder.  When you remove a folder, any items inside that "
-"folder will be deleted."
+#: ../../portable/dl_daemon/download.py:376
+msgid "Not enough disk space"
 msgstr ""
 
-#: ../../portable/item.py:420
+#: ../../portable/dl_daemon/download.py:377
 #, python-format
-msgid "%d days"
+msgid "%s MB required to store this video"
 msgstr ""
 
-#: ../../portable/item.py:422
+#: ../../portable/dl_daemon/download.py:676
+msgid "Corrupt Torrent"
+msgstr ""
+
+#: ../../portable/dl_daemon/download.py:677
 #, python-format
-msgid "%d hours"
+msgid "The torrent file at %s was not valid"
 msgstr ""
 
-#: ../../portable/item.py:424
+#: ../../portable/dl_daemon/download.py:702
+msgid "Torrent file deleted"
+msgstr ""
+
+#: ../../portable/dl_daemon/download.py:703
+msgid "The torrent file for this item was deleted "
+msgstr ""
+
+#: ../../portable/dl_daemon/download.py:704
+msgid "outside of democracy."
+msgstr ""
+
+#: ../../portable/util.py:386
 #, python-format
-msgid "%d minutes"
+msgid "%1.1fGB"
 msgstr ""
 
-#: ../../portable/item.py:425
+#: ../../portable/util.py:388
 #, python-format
-msgid "Expires in %s"
+msgid "%1.1fMB"
 msgstr ""
 
-#: ../../portable/item.py:751
-msgid "TORRENT"
-msgstr ""
-
-#: ../../portable/item.py:753
-msgid "WEB PAGE"
-msgstr ""
-
-#: ../../portable/item.py:954
-msgid "downloading..."
-msgstr ""
-
-#: ../../portable/item.py:961 ../../portable/item.py:964
+#: ../../portable/util.py:390
 #, python-format
-msgid "%s remaining"
+msgid "%1.1fKB"
 msgstr ""
 
-#: ../../portable/item.py:972
-msgid "starting up..."
-msgstr ""
-
-#: ../../portable/item.py:1152 ../../portable/menu.py:78
-msgid "Remove From Playlist"
-msgstr ""
-
-#: ../../portable/item.py:1154 ../../portable/menu.py:80
-msgid "Remove From My Collection"
-msgstr ""
-
-#: ../../portable/item.py:1156 ../../portable/menu.py:75
-msgid "Play"
-msgstr ""
-
-#: ../../portable/item.py:1158
-msgid "Play Just This Video"
-msgstr ""
-
-#: ../../portable/item.py:1159 ../../portable/menu.py:76
-msgid "Add to new playlist"
-msgstr ""
-
-#: ../../portable/item.py:1163 ../../portable/menu.py:86
-msgid "Mark as Unwatched"
-msgstr ""
-
-#: ../../portable/item.py:1165 ../../portable/menu.py:99
-msgid "Cancel Download"
-msgstr ""
-
-#: ../../portable/item.py:1167 ../../portable/dialogs.py:66
-#: ../../portable/menu.py:92
-msgid "Download"
-msgstr ""
-
-#: ../../portable/item.py:1399
+#: ../../portable/util.py:392
 #, python-format
-msgid "Removing %s"
-msgstr ""
-
-#: ../../portable/item.py:1401
-msgid ""
-"Would you like to delete this folder and all of its videos or just remove "
-"its entry from My Collection?"
-msgstr ""
-
-#: ../../portable/item.py:1406
-msgid ""
-"Would you like to delete this file or just remove its entry from My "
-"Collection?"
-msgstr ""
-
-#: ../../portable/item.py:1497
-#, python-format
-msgid "Removing %s items"
-msgstr ""
-
-#: ../../portable/item.py:1499
-msgid ""
-"One or more of these videos was not downloaded from a channel.  Would you "
-"like to delete these items or just remove their entries from My Collection?"
-msgstr ""
-
-#: ../../portable/item.py:1507
-msgid ""
-"One or more of these items is a folder.  When you remove or delete a folder, "
-"any items inside that folder will also be removed or deleted."
+msgid "%0.0fB"
 msgstr ""
 
 #: ../../portable/httpclient.py:52
@@ -1646,100 +1624,41 @@ msgstr ""
 msgid "%s is not a valid URL"
 msgstr ""
 
-#: ../../portable/httpclient.py:310
+#: ../../portable/httpclient.py:313
 msgid "Connection closed"
 msgstr ""
 
-#: ../../portable/httpclient.py:675
+#: ../../portable/httpclient.py:689
 msgid "Unknown"
 msgstr ""
 
-#: ../../portable/httpclient.py:676
+#: ../../portable/httpclient.py:690
 msgid "Internal Error: Not ready to send"
 msgstr ""
 
-#: ../../portable/util.py:377
-#, python-format
-msgid "%1.1fGB"
-msgstr ""
-
-#: ../../portable/util.py:379
-#, python-format
-msgid "%1.1fMB"
-msgstr ""
-
-#: ../../portable/util.py:381
-#, python-format
-msgid "%1.1fKB"
-msgstr ""
-
-#: ../../portable/util.py:383
-#, python-format
-msgid "%0.0fB"
-msgstr ""
-
-#: ../../portable/storedatabase.py:736
+#: ../../portable/storedatabase.py:789
 #, python-format
 msgid "%s database save succeeded"
 msgstr ""
 
-#: ../../portable/storedatabase.py:737
+#: ../../portable/storedatabase.py:790
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 
-#: ../../portable/storedatabase.py:744
+#: ../../portable/storedatabase.py:797
 #, python-format
 msgid "%s database save failed"
 msgstr ""
 
-#: ../../portable/storedatabase.py:745
+#: ../../portable/storedatabase.py:798
 #, python-format
 msgid ""
 "%s was unable to save its database: Disk Full.\n"
 "We suggest deleting files from the full disk or simply deleting some movies "
 "from your collection.\n"
 "Recent changes may be lost."
-msgstr ""
-
-#: ../../portable/dl_daemon/download.py:298
-msgid "Error"
-msgstr ""
-
-#: ../../portable/dl_daemon/download.py:357
-#, python-format
-msgid "Could not write to %s"
-msgstr ""
-
-#: ../../portable/dl_daemon/download.py:376
-msgid "Not enough disk space"
-msgstr ""
-
-#: ../../portable/dl_daemon/download.py:377
-#, python-format
-msgid "%s MB required to store this video"
-msgstr ""
-
-#: ../../portable/dl_daemon/download.py:676
-msgid "Corrupt Torrent"
-msgstr ""
-
-#: ../../portable/dl_daemon/download.py:677
-#, python-format
-msgid "The torrent file at %s was not valid"
-msgstr ""
-
-#: ../../portable/dl_daemon/download.py:702
-msgid "Torrent file deleted"
-msgstr ""
-
-#: ../../portable/dl_daemon/download.py:703
-msgid "The torrent file for this item was deleted "
-msgstr ""
-
-#: ../../portable/dl_daemon/download.py:704
-msgid "outside of democracy."
 msgstr ""
 
 #: ../../portable/dialogs.py:59
@@ -1759,6 +1678,11 @@ msgstr ""
 #: ../../portable/dialogs.py:65
 #: ../../platform/gtk-x11/glade/democracy.glade.h:40
 msgid "Don't Migrate"
+msgstr ""
+
+#: ../../portable/dialogs.py:66 ../../portable/item.py:1169
+#: ../../portable/menu.py:92
+msgid "Download"
 msgstr ""
 
 #: ../../portable/dialogs.py:67
@@ -1810,40 +1734,6 @@ msgstr ""
 msgid "A search channel contains items that match a search term."
 msgstr ""
 
-#: ../../portable/downloader.py:174
-msgid "Flash URL Scraping Error"
-msgstr ""
-
-#: ../../portable/downloader.py:317
-msgid "starting up"
-msgstr ""
-
-#: ../../portable/menu.py:48 ../../portable/menu.py:53
-#: ../../portable/folder.py:120 ../../portable/folder.py:175
-#: ../../portable/feed.py:690 ../../portable/guide.py:138
-#: ../../portable/playlist.py:176
-msgid "Remove"
-msgstr ""
-
-#: ../../portable/menu.py:52
-msgid "Update Channels Now"
-msgstr ""
-
-#: ../../portable/menu.py:73
-#, python-format
-msgid "%d Downloaded Items"
-msgstr ""
-
-#: ../../portable/menu.py:91
-#, python-format
-msgid "%d Available Items"
-msgstr ""
-
-#: ../../portable/menu.py:97
-#, python-format
-msgid "%d Downloading Items"
-msgstr ""
-
 #: ../../portable/folder.py:102 ../../portable/folder.py:119
 msgid "Rename Channel Folder"
 msgstr ""
@@ -1866,7 +1756,7 @@ msgstr ""
 msgid "Create Channel Folder"
 msgstr ""
 
-#: ../../portable/folder.py:190 ../../portable/singleclick.py:136
+#: ../../portable/folder.py:190 ../../portable/singleclick.py:137
 msgid "Enter a name for the new channel folder"
 msgstr ""
 
@@ -1878,65 +1768,280 @@ msgstr ""
 msgid "Enter a name for the new playlist folder"
 msgstr ""
 
-#: ../../portable/singleclick.py:121
-msgid "Subscribing to multiple channels"
-msgstr ""
-
-#: ../../portable/singleclick.py:122
+#: ../../portable/item.py:397
 #, python-format
-msgid "Create %d channels?"
+msgid "Deleting %s"
 msgstr ""
 
-#: ../../portable/singleclick.py:135
+#: ../../portable/item.py:398
+msgid ""
+"This item is a folder.  When you remove a folder, any items inside that "
+"folder will be deleted."
+msgstr ""
+
+#: ../../portable/item.py:420
 #, python-format
-msgid "Adding %d channels to a new folder"
+msgid "%d days"
 msgstr ""
 
-#: ../../portable/singleclick.py:139
+#: ../../portable/item.py:422
+#, python-format
+msgid "%d hours"
+msgstr ""
+
+#: ../../portable/item.py:424
+#, python-format
+msgid "%d minutes"
+msgstr ""
+
+#: ../../portable/item.py:425
+#, python-format
+msgid "Expires in %s"
+msgstr ""
+
+#: ../../portable/item.py:751
+msgid "TORRENT"
+msgstr ""
+
+#: ../../portable/item.py:753
+msgid "WEB PAGE"
+msgstr ""
+
+#: ../../portable/item.py:956
+msgid "downloading..."
+msgstr ""
+
+#: ../../portable/item.py:963 ../../portable/item.py:966
+#, python-format
+msgid "%s remaining"
+msgstr ""
+
+#: ../../portable/item.py:974
+msgid "starting up..."
+msgstr ""
+
+#: ../../portable/item.py:1154 ../../portable/menu.py:78
+msgid "Remove From Playlist"
+msgstr ""
+
+#: ../../portable/item.py:1156 ../../portable/menu.py:80
+msgid "Remove From My Collection"
+msgstr ""
+
+#: ../../portable/item.py:1158 ../../portable/menu.py:75
+msgid "Play"
+msgstr ""
+
+#: ../../portable/item.py:1160
+msgid "Play Just This Video"
+msgstr ""
+
+#: ../../portable/item.py:1161 ../../portable/menu.py:76
+msgid "Add to new playlist"
+msgstr ""
+
+#: ../../portable/item.py:1165 ../../portable/menu.py:86
+msgid "Mark as Unwatched"
+msgstr ""
+
+#: ../../portable/item.py:1167 ../../portable/menu.py:99
+msgid "Cancel Download"
+msgstr ""
+
+#: ../../portable/item.py:1401
+#, python-format
+msgid "Removing %s"
+msgstr ""
+
+#: ../../portable/item.py:1403
+msgid ""
+"Would you like to delete this folder and all of its videos or just remove "
+"its entry from My Collection?"
+msgstr ""
+
+#: ../../portable/item.py:1408
+msgid ""
+"Would you like to delete this file or just remove its entry from My "
+"Collection?"
+msgstr ""
+
+#: ../../portable/item.py:1499
+#, python-format
+msgid "Removing %s items"
+msgstr ""
+
+#: ../../portable/item.py:1501
+msgid ""
+"One or more of these videos was not downloaded from a channel.  Would you "
+"like to delete these items or just remove their entries from My Collection?"
+msgstr ""
+
+#: ../../portable/item.py:1509
+msgid ""
+"One or more of these items is a folder.  When you remove or delete a folder, "
+"any items inside that folder will also be removed or deleted."
+msgstr ""
+
+#: ../../portable/app.py:668
+msgid "Database too new"
+msgstr ""
+
+#: ../../portable/app.py:669
+msgid ""
+"You have a database that was saved with a newer version of Democracy. You "
+"must download the latest version of Democracy and run that."
+msgstr ""
+
+#: ../../portable/app.py:817 ../../portable/app.py:831
+#: ../../portable/app.py:860 ../../portable/app.py:880
+#, python-format
+msgid "Remove %s"
+msgstr ""
+
+#: ../../portable/app.py:818
+#, python-format
+msgid "Are you sure you want to remove the guide %s?"
+msgstr ""
+
+#: ../../portable/app.py:832
+#, python-format
+msgid "Are you sure you want to remove %s"
+msgstr ""
+
+#: ../../portable/app.py:835 ../../portable/app.py:865
+#: ../../portable/app.py:885
+#, python-format
+msgid "Remove %s channels"
+msgstr ""
+
+#: ../../portable/app.py:837
+#, python-format
+msgid "Are you sure you want to remove these %s playlists"
+msgstr ""
+
+#: ../../portable/app.py:861
 #, python-format
 msgid ""
-"NOTE: You are already subscribed to %d of these channels.  These channels "
-"will stay where they currently are."
+"Are you sure you want to remove %s?  Any downloads in progress will be "
+"canceled."
 msgstr ""
 
-#: ../../portable/singleclick.py:150
-msgid "Subscription error"
-msgstr ""
-
-#: ../../portable/singleclick.py:160
+#: ../../portable/app.py:866
 #, python-format
 msgid ""
-"This Democracy channel file has an invalid format: %s. Please notify the "
-"publisher of this file."
+"Are you sure you want to remove these %s channels?  Any downloads in "
+"progress will be canceled."
 msgstr ""
 
-#: ../../portable/singleclick.py:169
-#, python-format
+#: ../../portable/app.py:881
 msgid ""
-"This Democracy channel file has the wrong content type: %s. Please notify "
-"the publisher of this file."
+"What would you like to do with the videos in this channel that you've "
+"downloaded?"
 msgstr ""
 
-#: ../../portable/singleclick.py:174
+#: ../../portable/app.py:886
+msgid ""
+"What would you like to do with the videos in these channels that you've "
+"downloaded?"
+msgstr ""
+
+#: ../../portable/app.py:923
+msgid "Are you sure you want to quit?"
+msgstr ""
+
+#: ../../portable/app.py:924
 #, python-format
-msgid "Could not download the Democracy channel file: %s."
+msgid "You have %d download still in progress."
+msgid_plural "You have %d downloads still in progress."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/app.py:1367
+msgid "Invalid Value"
 msgstr ""
 
-#: ../../portable/singleclick.py:200
-msgid "Invalid Torrent"
-msgstr ""
-
-#: ../../portable/singleclick.py:201
+#: ../../portable/app.py:1368
 #, python-format
-msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
+msgid "%s is invalid.  You must enter a non-negative number."
+msgstr ""
+
+#: ../../portable/app.py:1616
+msgid " - Invalid URL"
+msgstr ""
+
+#: ../../portable/app.py:1617
+msgid ""
+"The address you entered is not a valid URL.\n"
+"Please double check and try again.\n"
+"\n"
+msgstr ""
+
+#: ../../portable/app.py:1639
+msgid "Democracy - Add Channel"
+msgstr ""
+
+#: ../../portable/app.py:1639
+msgid "Enter the URL of the channel to add"
+msgstr ""
+
+#: ../../portable/app.py:1660
+msgid "Democracy - Add Channel Guide"
+msgstr ""
+
+#: ../../portable/app.py:1660
+msgid "Enter the URL of the channel guide to add"
+msgstr ""
+
+#: ../../portable/app.py:1977
+msgid "Example Playlist"
+msgstr ""
+
+#: ../../portable/app.py:1996
+msgid "Custom Channels"
+msgstr ""
+
+#: ../../portable/app.py:1996
+msgid ""
+"You are running a version of Democracy Player with a custom set of channels."
+msgstr ""
+
+#: ../../portable/guide.py:127 ../../portable/feed.py:684
+msgid "Copy URL to clipboard"
+msgstr ""
+
+#: ../../portable/guide.py:218
+msgid "Channel Guide"
+msgstr ""
+
+#: ../../portable/menu.py:52
+msgid "Update Channels Now"
+msgstr ""
+
+#: ../../portable/menu.py:73
+#, python-format
+msgid "%d Downloaded Items"
+msgstr ""
+
+#: ../../portable/menu.py:91
+#, python-format
+msgid "%d Available Items"
+msgstr ""
+
+#: ../../portable/menu.py:97
+#, python-format
+msgid "%d Downloading Items"
+msgstr ""
+
+#: ../../portable/downloader.py:174
+msgid "Flash URL Scraping Error"
+msgstr ""
+
+#: ../../portable/downloader.py:317
+msgid "starting up"
 msgstr ""
 
 #: ../../portable/feed.py:682
 msgid "Update Channel Now"
-msgstr ""
-
-#: ../../portable/feed.py:684 ../../portable/guide.py:135
-msgid "Copy URL to clipboard"
 msgstr ""
 
 #: ../../portable/feed.py:685 ../../portable/feed.py:694
@@ -1984,148 +2089,61 @@ msgid ""
 "Do you want to try to load this channel anyway?"
 msgstr ""
 
-#: ../../portable/guide.py:226
-msgid "Channel Guide"
+#: ../../portable/feed.py:1791
+msgid "Local File"
 msgstr ""
 
-#: ../../portable/app.py:649
-msgid "Database too new"
+#: ../../portable/singleclick.py:122
+msgid "Subscribing to multiple channels"
 msgstr ""
 
-#: ../../portable/app.py:650
-msgid ""
-"You have a database that was saved with a newer version of Democracy. You "
-"must download the latest version of Democracy and run that."
-msgstr ""
-
-#: ../../portable/app.py:790 ../../portable/app.py:804
-#: ../../portable/app.py:833 ../../portable/app.py:853
+#: ../../portable/singleclick.py:123
 #, python-format
-msgid "Remove %s"
+msgid "Create %d channels?"
 msgstr ""
 
-#: ../../portable/app.py:791
+#: ../../portable/singleclick.py:136
 #, python-format
-msgid "Are you sure you want to remove the guide %s?"
+msgid "Adding %d channels to a new folder"
 msgstr ""
 
-#: ../../portable/app.py:805
-#, python-format
-msgid "Are you sure you want to remove %s"
-msgstr ""
-
-#: ../../portable/app.py:808 ../../portable/app.py:838
-#: ../../portable/app.py:858
-#, python-format
-msgid "Remove %s channels"
-msgstr ""
-
-#: ../../portable/app.py:810
-#, python-format
-msgid "Are you sure you want to remove these %s playlists"
-msgstr ""
-
-#: ../../portable/app.py:834
+#: ../../portable/singleclick.py:140
 #, python-format
 msgid ""
-"Are you sure you want to remove %s?  Any downloads in progress will be "
-"canceled."
+"NOTE: You are already subscribed to %d of these channels.  These channels "
+"will stay where they currently are."
 msgstr ""
 
-#: ../../portable/app.py:839
+#: ../../portable/singleclick.py:151
+msgid "Subscription error"
+msgstr ""
+
+#: ../../portable/singleclick.py:161
 #, python-format
 msgid ""
-"Are you sure you want to remove these %s channels?  Any downloads in "
-"progress will be canceled."
+"This Democracy channel file has an invalid format: %s. Please notify the "
+"publisher of this file."
 msgstr ""
 
-#: ../../portable/app.py:854
-msgid ""
-"What would you like to do with the videos in this channel that you've "
-"downloaded?"
-msgstr ""
-
-#: ../../portable/app.py:859
-msgid ""
-"What would you like to do with the videos in these channels that you've "
-"downloaded?"
-msgstr ""
-
-#: ../../portable/app.py:896
-msgid "Are you sure you want to quit?"
-msgstr ""
-
-#: ../../portable/app.py:897
+#: ../../portable/singleclick.py:170
 #, python-format
-msgid "You have %d download still in progress."
-msgid_plural "You have %d downloads still in progress."
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/app.py:1311
-msgid "Invalid Value"
-msgstr ""
-
-#: ../../portable/app.py:1312
-#, python-format
-msgid "%s is invalid.  You must enter a non-negative number."
-msgstr ""
-
-#: ../../portable/app.py:1559
-msgid " - Invalid URL"
-msgstr ""
-
-#: ../../portable/app.py:1560
 msgid ""
-"The address you entered is not a valid URL.\n"
-"Please double check and try again.\n"
-"\n"
+"This Democracy channel file has the wrong content type: %s. Please notify "
+"the publisher of this file."
 msgstr ""
 
-#: ../../portable/app.py:1582
-msgid "Democracy - Add Channel"
-msgstr ""
-
-#: ../../portable/app.py:1582
-msgid "Enter the URL of the channel to add"
-msgstr ""
-
-#: ../../portable/app.py:1603
-msgid "Democracy - Add Channel Guide"
-msgstr ""
-
-#: ../../portable/app.py:1603
-msgid "Enter the URL of the channel guide to add"
-msgstr ""
-
-#: ../../portable/app.py:1915
-msgid "Example Playlist"
-msgstr ""
-
-#: ../../portable/app.py:1934
-msgid "Custom Channels"
-msgstr ""
-
-#: ../../portable/app.py:1934
-msgid ""
-"You are running a version of Democracy Player with a custom set of channels."
-msgstr ""
-
-#: ../../portable/playlist.py:175 ../../portable/playlist.py:180
-msgid "Rename Playlist"
-msgstr ""
-
-#: ../../portable/playlist.py:181
+#: ../../portable/singleclick.py:175
 #, python-format
-msgid "Enter a new name for the playlist %s"
+msgid "Could not download the Democracy channel file: %s."
 msgstr ""
 
-#: ../../portable/playlist.py:194
-msgid "Create Playlist"
+#: ../../portable/singleclick.py:201
+msgid "Invalid Torrent"
 msgstr ""
 
-#: ../../portable/playlist.py:195
-msgid "Enter a name for the new playlist"
+#: ../../portable/singleclick.py:202
+#, python-format
+msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:1
@@ -2245,10 +2263,6 @@ msgid ""
 "organize your collection."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:42
-msgid "Download at most"
-msgstr ""
-
 #: ../../platform/gtk-x11/glade/democracy.glade.h:43
 msgid ""
 "Every 30 minutes\n"
@@ -2291,7 +2305,7 @@ msgid "Search _Engine:"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:57
-msgid "Search _custom location:"
+msgid "Search _custom folder:"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:58
@@ -2302,8 +2316,8 @@ msgstr ""
 msgid "Select custom search directory"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:61
-msgid "Store downloaded movies in"
+#: ../../platform/gtk-x11/glade/democracy.glade.h:60
+msgid "Show movies in these directories in My Collection"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:62
@@ -2343,23 +2357,27 @@ msgid ""
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:69
-msgid "_Search"
+msgid "_Add Directory"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:70
-msgid "_Search For:"
+msgid "_Search"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:71
-msgid "_URL"
+msgid "_Search For:"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:72
-msgid "and"
+msgid "_Store downloaded videos in this folder:"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:73
-msgid "videos at once."
+msgid "_URL"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:74
+msgid "and"
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:1
@@ -2448,6 +2466,10 @@ msgstr ""
 msgid "Cancel Search"
 msgstr ""
 
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:13
+msgid "Change"
+msgstr ""
+
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:4
 msgid "Democracy First Time Setup"
 msgstr ""
@@ -2498,7 +2520,7 @@ msgid "Restrict to all my personal files."
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:11
-msgid "Search custom location:"
+msgid "Search custom folder:"
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:26
