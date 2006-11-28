@@ -17,9 +17,11 @@ import sorts
 db.createIndex(indexes.objectsByClass)
 
 allTabs = db.filter(filters.mappableToTab).map(maps.mapToTab)
-allTabs.createIndex(indexes.tabType, sortFunc=sorts.tabs)
-guideTabs = allTabs.filterWithIndex(indexes.tabType, 'guide')
-staticTabs = allTabs.filterWithIndex(indexes.tabType, 'statictab')
+allTabs.createIndex(indexes.tabType)
+guideTabs = allTabs.filterWithIndex(indexes.tabType, 'guide') \
+        .sort(sorts.guideTabs)
+staticTabs = allTabs.filterWithIndex(indexes.tabType, 'statictab') \
+        .sort(sorts.staticTabs)
 
 # no need to sort channel/playlist tabs...  These get ordered by the TabOrder
 # class.

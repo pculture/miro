@@ -8,21 +8,17 @@ import guide
 def mapToTab(obj):
     if isinstance(obj, guide.ChannelGuide):
         # Guides come first and default guide comes before the others.  The rest are currently sorted by URL.
-        return tabs.Tab('guidetab', 'go-to-guide', 'default', [1, not obj.getDefault(), obj.getURL()], obj)
+        return tabs.Tab('guidetab', 'go-to-guide', 'default', obj)
     elif isinstance(obj, tabs.StaticTab):
-        return tabs.Tab(obj.tabTemplateBase, obj.contentsTemplate, obj.templateState, [obj.order], obj)
+        return tabs.Tab(obj.tabTemplateBase, obj.contentsTemplate, obj.templateState, obj)
     elif isinstance(obj, feed.Feed):
-        sortKey = obj.getTitle().lower()
-        return tabs.Tab('feedtab', 'channel',  'default', [100, sortKey], obj)
+        return tabs.Tab('feedtab', 'channel',  'default', obj)
     elif isinstance(obj, folder.ChannelFolder):
-        sortKey = obj.getTitle().lower()
-        return tabs.Tab('channelfoldertab', 'channel-folder', 'default', [100,sortKey],obj)
+        return tabs.Tab('channelfoldertab', 'channel-folder', 'default', obj)
     elif isinstance(obj, folder.PlaylistFolder):
-        sortKey = obj.getTitle().lower()
-        return tabs.Tab('playlistfoldertab','playlist-folder', 'default', [900,sortKey],obj)
+        return tabs.Tab('playlistfoldertab','playlist-folder', 'default', obj)
     elif isinstance(obj, playlist.SavedPlaylist):
-        sortKey = obj.getTitle().lower()
-        return tabs.Tab('playlisttab','playlist', 'default',[900,sortKey],obj)
+        return tabs.Tab('playlisttab','playlist', 'default', obj)
     else:
         raise StandardError
     

@@ -71,11 +71,10 @@ class StaticTab(database.DDBObject):
 class Tab:
     idCounter = 0
 
-    def __init__(self, tabTemplateBase, contentsTemplate, templateState, sortKey, obj):
+    def __init__(self, tabTemplateBase, contentsTemplate, templateState, obj):
         self.tabTemplateBase = tabTemplateBase
         self.contentsTemplate = contentsTemplate
         self.templateState = templateState
-        self.sortKey = sortKey
         self.display = None
         self.id = "tab%d" % Tab.idCounter
         Tab.idCounter += 1
@@ -222,10 +221,10 @@ class TabOrder(database.DDBObject):
         self.type = type
         self.tab_ids = []
         self._initRestore()
-        sortedTabs = self.tabView.sort(sorts.tabs)
-        for tab in sortedTabs:
+        decorated = [(t.obj.getTitle().lower(), t) for t in self.tabView]
+        decorated.sort()
+        for sortkey, tab in decorated:
             self.trackedTabs.appendID(tab.getID())
-        sortedTabs.unlink()
         database.DDBObject.__init__(self)
 
     def onRestore(self):

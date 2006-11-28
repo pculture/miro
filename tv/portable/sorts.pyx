@@ -78,17 +78,15 @@ def itemsUnwatchedFirst(x,y):
     else:
         return item(x,y)
 
-# The sort function used to order tabs in the tab list: just use the
-# sort keys provided when mapToTab created the Tabs. These can be
-# lists, which are tested left-to-right in the way you'd
-# expect. Generally, the way this is used is that static tabs are
-# assigned a numeric priority, and get a single-element list with that
-# number as their sort key; feeds get a list with '100' in the first
-# position, and a value that determines the order of the feeds in the
-# second position. This way all of the feeds are together, and the
-# static tabs can be positioned around them.
-def tabs(x, y):
-    return x[1].sortKey < y[1].sortKey
+def guideTabs(x, y):
+    xguide = x[1].obj
+    yguide = y[1].obj
+    if xguide.getDefault() and not yguide.getDefault():
+        return True
+    return xguide.getURL() < yguide.getURL()
+
+def staticTabs(x, y):
+    return x[1].obj.order < y[1].obj.order
 
 def searchEngines(x, y):
     try:
