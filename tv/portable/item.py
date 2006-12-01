@@ -1214,6 +1214,7 @@ folder will be deleted.""")
 
         self.confirmDBThread()
         self.downloadedTime = datetime.now()
+        self.iconCache.requestUpdate(is_vital=True)
         if not self.splitItem():
             self.signalChange()
 

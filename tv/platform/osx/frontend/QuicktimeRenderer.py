@@ -3,6 +3,7 @@ import glob
 
 from objc import YES, NO, nil
 from QTKit import *
+from AppKit import *
 from Foundation import *
 
 import app
@@ -148,5 +149,37 @@ class QuicktimeRenderer (app.VideoRenderer):
     def setVolume(self, level):
         if self.movie is not nil:
             self.movie.setVolume_(level)
+
+###############################################################################
+
+@platformutils.onMainThreadWithReturn
+def extractIconDataAtPosition(filename, position):
+    url = NSURL.fileURLWithPath_(filename)
+    (qtmovie, error) = QTMovie.alloc().initWithURL_error_(url)
+    if qtmovie is None:
+        return None
+
+    qttime = qtmovie.duration()
+    qttime.timeValue *= position
+    image = qtmovie.frameImageAtTime_(qttime)
+    if image is None:
+        return None
+
+    jpegData = None
+    try:
+        tiffData = image.TIFFRepresentation()
+        imageRep = NSBitmapImageRep.imageRepWithData_(tiffData)
+        properties = {NSImageCompressionFactor: 0.8}
+        jpegData = imageRep.representationUsingType_properties_(NSJPEGFileType, properties)
+        jpegData = str(jpegData.bytes())
+    except:
+        pass
+
+    return jpegData
+
+###############################################################################
+
+import iconcache
+iconcache.registerIconExtractor(extractIconDataAtPosition)
 
 ###############################################################################
