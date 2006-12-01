@@ -801,6 +801,12 @@ You must download the latest version of Democracy and run that.""")
         for item in downloading:
             item.expire()
 
+    def pauseDownloadingCurrentItems(self):
+        selected = self.selection.getSelectedItems()
+        downloading = [i for i in selected if i.getState() == 'downloading']
+        for item in downloading:
+            item.pause()
+
     def updateCurrentFeed(self):
         for tab in self.selection.getSelectedTabs():
             if tab.isFeed():
@@ -1478,6 +1484,14 @@ class ModelActionHandler:
             if i.downloader is not None:
                 i.downloader.setDeleteFiles(False)
             i.remove()
+
+    def pauseAll (self):
+        for item in views.downloadingItems:
+            item.pause()
+
+    def resumeAll (self):
+        for item in views.pausedItems:
+            item.download()
 
     def toggleExpand(self, id):
         obj = db.getObjectByID(int(id))

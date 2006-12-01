@@ -97,5 +97,7 @@ def makeMultiItemContextMenu(templateName, view, selectedItems, clickedID):
         items.append((None, _('%d Downloading Items') % downloading))
         items.append((app.controller.stopDownloadingCurrentItems, 
             _('Cancel Download')))
+        items.append((app.controller.pauseDownloadingCurrentItems, 
+            _('Pause Download')))
 
     return makeMenu(items)

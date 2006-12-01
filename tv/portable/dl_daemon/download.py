@@ -16,12 +16,14 @@ from download_utils import cleanFilename, nextFreeFilename, shortenFilename, che
 from download_utils import filenameFromURL
 import eventloop
 import httpclient
+import datetime
 
 import config
 import prefs
 from sha import sha
 
 from dl_daemon import command, daemon, bittorrent
+from datetime import timedelta
 
 import platformutils
 
@@ -160,6 +162,17 @@ class DownloadStatusUpdater:
 
 downloadUpdater = DownloadStatusUpdater()
 
+RETRY_TIMES = (
+    60,
+    5 * 60,
+    10 * 60,
+    30 * 60,
+    60 * 60,
+    2 * 60 * 60,
+    6 * 60 * 60,
+    24 * 60 * 60
+    )
+
 class BGDownloader:
     def __init__(self, url, dlid):
         self.dlid = dlid
@@ -173,6 +186,8 @@ class BGDownloader:
         self.totalSize = -1
         self.blockTimes = []
         self.shortReasonFailed = self.reasonFailed = "No Error"
+        self.retryTime = None
+        self.retryCount = -1
 
     def getURL(self):
         return self.url
@@ -192,7 +207,9 @@ class BGDownloader:
             'shortFilename': self.shortFilename,
             'reasonFailed': self.reasonFailed,
             'shortReasonFailed': self.shortReasonFailed,
-            'dlerType': None }
+            'dlerType': None,
+            'retryTime': self.retryTime,
+            'retryCount': self.retryCount}
 
     def updateClient(self):
         x = command.UpdateDownloadStatus(daemon.lastDaemon, self.getStatus())
@@ -280,6 +297,21 @@ class BGDownloader:
                     rate = 0
         return rate
 
+    def retryDownload(self):
+        self.retryDC = None
+        self.start()
+
+    def handleTemporaryError(self, shortReason, reason):
+        self.state = "offline"
+        self.reasonFailed = reason
+        self.shortReasonFailed = shortReason
+        self.retryCount = self.retryCount + 1
+        if self.retryCount >= len (RETRY_TIMES):
+            self.retryCount = len (RETRY_TIMES) - 1
+        self.retryDC = eventloop.addTimeout (RETRY_TIMES[self.retryCount], self.retryDownload, "Logarithmic retry")
+        self.retryTime = datetime.datetime.now() + datetime.timedelta(seconds = RETRY_TIMES[self.retryCount])
+        self.updateClient()
+
     def handleError(self, shortReason, reason):
         self.state = "failed"
         self.reasonFailed = reason
@@ -288,8 +320,13 @@ class BGDownloader:
 
     def handleNetworkError(self, error):
         if isinstance(error, httpclient.NetworkError):
-            self.handleError(error.getFriendlyDescription(),
-                    error.getLongDescription())
+            if isinstance (error, httpclient.MalformedURL) or \
+               isinstance (error, httpclient.UnexpectedStatusCode):
+                self.handleError(error.getFriendlyDescription(),
+                                 error.getLongDescription())
+            else:
+                self.handleTemporaryError(error.getFriendlyDescription(),
+                                          error.getLongDescription())
         else:
             print "WARNING: grabURL errback not called with NetworkError"
             self.handleError(str(error), str(error))
@@ -303,13 +340,14 @@ class HTTPDownloader(BGDownloader):
     HALTED_THRESHOLD = 3 # how many secs until we consider a download halted
 
     def __init__(self, url = None,dlid = None,restore = None):
+        self.retryDC = None
         if restore is not None:
             if not isinstance(restore.get('totalSize', 0), int):
                 # Sometimes restoring old downloaders caused errors because
                 # their totalSize wasn't an int.  (see #3965)
                 restore = None
         if restore is not None:
-            self.__dict__ = copy(restore)
+            self.__dict__.update(restore)
             self.blockTimes = []
             self.restartOnError = True
         else:
@@ -318,10 +356,9 @@ class HTTPDownloader(BGDownloader):
         self.client = None
         self.filehandle = None
         if self.state == 'downloading':
-            if restore is not None:
-                self.startDownload()
-            else:
-                self.startNewDownload()
+            self.startDownload()
+        elif self.state == 'offline':
+            self.start()
         else:
             self.updateClient()
 
@@ -334,6 +371,9 @@ class HTTPDownloader(BGDownloader):
         self.startDownload()
 
     def startDownload(self):
+        if self.retryDC:
+            self.retryDC.cancel()
+            self.retryDC = None
         if self.currentSize == 0:
             headerCallback = self.onHeaders
         else:
@@ -352,6 +392,16 @@ class HTTPDownloader(BGDownloader):
     def handleError(self, shortReason, reason):
         BGDownloader.handleError(self, shortReason, reason)
         self.cancelRequest()
+        try:
+            remove (self.filename)
+        except:
+            pass
+        self.currentSize = 0
+        self.totalSize = -1
+
+    def handleTemporaryError(self, shortReason, reason):
+        BGDownloader.handleTemporaryError(self, shortReason, reason)
+        self.cancelRequest()
 
     def handleWriteError(self, error):
         self.handleGenericError(_("Could not write to %s") % self.filename)
@@ -361,7 +411,7 @@ class HTTPDownloader(BGDownloader):
             except:
                 pass
         try:
-            os.remove(self.filename)
+            remove(self.filename)
         except:
             pass
 
@@ -377,6 +427,8 @@ class HTTPDownloader(BGDownloader):
                 _("%s MB required to store this video") % 
                 (self.totalSize / (2 ** 20)))
             return
+        #We have a success
+        self.retryCount = -1
         #Get the length of the file, then create it
         self.shortFilename = cleanFilename(info['filename'])
         self.shortFilename = checkFilenameExtension(self.shortFilename, info)
@@ -419,6 +471,8 @@ class HTTPDownloader(BGDownloader):
                 self.filehandle.seek(self.currentSize)
             except IOError, e:
                 self.handleWriteError(e)
+            #We have a success
+            self.retryCount = -1
         self.updateClient()
 
     def parseContentRange(self, contentRange):
@@ -443,7 +497,7 @@ class HTTPDownloader(BGDownloader):
     def onDownloadError(self, error):
         if self.restartOnError:
             self.restartOnError = False
-            self.startNewDownload()
+            self.startDownload()
         else:
             self.client = None
             self.handleNetworkError(error)
@@ -539,7 +593,7 @@ class HTTPDownloader(BGDownloader):
     ##
     # Continues a paused or stopped download thread
     def start(self):
-        if self.state == 'paused' or self.state == 'stopped':
+        if self.state in ('paused', 'stopped', 'offline'):
             self.state = "downloading"
             self.startDownload()
 
@@ -554,6 +608,7 @@ class BTDownloader(BGDownloader):
         self.rate = self.eta = 0
         self.activity = None
         self.fastResumeData = None
+        self.retryDC = None
         if restore is not None:
             self.restoreState(restore)
         else:            
@@ -605,6 +660,10 @@ class BTDownloader(BGDownloader):
         self._shutdownTorrent()
         BGDownloader.handleError(self, shortReason, reason)
 
+    def handleTemporaryError(self, shortReason, reason):
+        self._shutdownTorrent()
+        BGDownloader.handleTemporaryError(self, shortReason, reason)
+
     def moveToDirectory(self, directory):
         if self.state in ('uploading', 'downloading'):
             self._shutdownTorrent()
@@ -619,6 +678,8 @@ class BTDownloader(BGDownloader):
         if self.state == 'downloading' or (
             self.state == 'uploading' and self.uploaded < 1.5*self.totalSize):
             self.runDownloader(done=True)
+        elif self.state == 'offline':
+            self.start()
 
     def getStatus(self):
         data = BGDownloader.getStatus(self)
@@ -653,10 +714,13 @@ class BTDownloader(BGDownloader):
                 pass
 
     def start(self):
-        if self.state not in ('paused', 'stopped'):
+        if self.state not in ('paused', 'stopped', 'offline'):
             return
 
         self.state = "downloading"
+        if self.retryDC:
+            self.retryDC.cancel()
+            self.retryDC = None
         self.updateClient()
         self.getMetainfo()
 

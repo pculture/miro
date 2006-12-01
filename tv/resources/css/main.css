@@ -604,6 +604,10 @@ an element is dragged, the drag-highlight class is added to it */
     background: url(../images/main-video-download.png) no-repeat 66px 42px;
 }
 
+.main-video-hitbox .paused-icon {
+    background: url(../images/main-video-paused.png) no-repeat 66px 42px;
+}
+
 
 .main-video-hitbox .play-icon {
     background: url(../images/main-video-play.png) no-repeat 66px 42px;

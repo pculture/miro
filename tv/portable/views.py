@@ -71,6 +71,7 @@ items.createIndex(indexes.itemsByState)
 newlyDownloadedItems = items.filterWithIndex(indexes.itemsByState,
         'newly-downloaded')
 downloadingItems = items.filterWithIndex(indexes.itemsByState, 'downloading')
+pausedItems = items.filterWithIndex(indexes.itemsByState, 'paused')
 downloadingItems.createIndex(indexes.downloadsByCategory)
 manualDownloads = items.filter(filters.manualDownloads)
 autoDownloads = items.filter(filters.autoDownloads)

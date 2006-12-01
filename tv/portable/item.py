@@ -409,20 +409,39 @@ folder will be deleted.""")
             self.executeExpire()
 
 
+    def getString(self, when):
+        """Get the expiration time a string to display to the user."""
+        offset = when - datetime.now()
+        if offset.days > 0:
+            result = _("%d days") % offset.days
+        elif offset.seconds > 3600:
+            result = _("%d hours") % (ceil(offset.seconds/3600.0))
+        else:
+            result = _("%d minutes") % (ceil(offset.seconds/60.0))
+        return result
+
     def getExpirationString(self):
         """Get the expiration time a string to display to the user."""
         expireTime = self.getExpirationTime()
         if expireTime is None:
             return ""
         else:
-            exp = expireTime - datetime.now()
-            if exp.days > 0:
-                time = _("%d days") % exp.days
-            elif exp.seconds > 3600:
-                time = _("%d hours") % (ceil(exp.seconds/3600.0))
+            return _('Expires in %s') % self.getString (expireTime)
+
+    def getPausedString(self):
+        """Get the expiration time a string to display to the user."""
+        retryTime = None
+        if self.downloader:
+            if self.downloader.getState() == 'offline':
+                retryTime = self.downloader.status['retryTime']
+                if retryTime is None:
+                    return ""
+                else:
+                    return _('Will retry in %s') % self.getString (retryTime)
             else:
-                time = _("%d minutes") % (ceil(exp.seconds/60.0))
-        return _('Expires in %s') % time
+                return _('Paused')
+        else:
+            return ""
 
     def getDragType(self):
         if self.isDownloaded():
@@ -610,6 +629,10 @@ folder will be deleted.""")
             self.downloader.start()
         self.signalChange()
 
+    def pause(self):
+        if self.downloader:
+            self.downloader.pause()
+
     def isPendingManualDownload(self):
         self.confirmDBThread()
         return self.pendingManualDL
@@ -789,7 +812,7 @@ folder will be deleted.""")
         # should be able to restart or cancel them (put them into the stopped
         # state).
         if (self.downloader is None  or 
-                self.downloader.getState() in ('failed', 'stopped', 'paused')):
+                self.downloader.getState() in ('failed', 'stopped')):
             if self.pendingManualDL:
                 self._state = 'downloading'
             elif self.expired:
@@ -798,6 +821,8 @@ folder will be deleted.""")
                 self._state = 'new'
             else:
                 self._state = 'not-downloaded'
+        elif self.downloader.getState() in ('offline', 'paused'):
+            self._state = 'paused'
         elif not self.downloader.isFinished():
             self._state = 'downloading'
         elif not self.getSeen():
@@ -1164,7 +1189,7 @@ folder will be deleted.""")
             if self.getSeen():
                 items.append((self.markItemUnseen, _('Mark as Unwatched')))
         elif self.getState() == 'downloading':
-            items = [(self.expire, _('Cancel Download'))]
+            items = [(self.expire, _('Cancel Download')), (self.pause, _('Pause Download'))]
         else:
             items = [(self.download, _('Download'))]
         return menu.makeMenu(items)

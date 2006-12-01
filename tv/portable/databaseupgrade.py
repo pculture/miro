@@ -439,6 +439,15 @@ def upgrade30(objectList):
                 changed.add(o)
     return changed
 
+def upgrade31(objectList):
+    changed = set()
+    for o in objectList:
+        if o.classString == 'remote-downloader':
+            o.savedData['status']['retryTime'] = None
+            o.savedData['status']['retryCount'] = -1
+            changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

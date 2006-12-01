@@ -222,7 +222,7 @@ class RemoteDownloader(DDBObject):
             else:
                 self.runDownloader()
             self.signalChange()
-        elif self.getState() in ('stopped', 'paused'):
+        elif self.getState() in ('stopped', 'paused', 'offline'):
             if _downloads.has_key(self.dlid):
                 c = command.StartDownloadCommand(RemoteDownloader.dldaemon,
                                                  self.dlid)
@@ -379,10 +379,12 @@ URL was %s""" % self.url
         self.status['eta'] = 0
 
     def restartIfNeeded(self):
-        if self.getState() in ('downloading','uploading'):
+        if self.getState() in ('downloading','uploading','offline'):
             self.restart()
 
     def restart(self):
+        import traceback
+        traceback.print_stack()
         if len(self.status) == 0 or self.status.get('dlerType') is None:
             if self.contentType == "":
                 self.getContentType()
@@ -403,7 +405,7 @@ def cleanupIncompleteDownloads():
     filesInUse = set()
     views.remoteDownloads.confirmDBThread()
     for downloader in views.remoteDownloads:
-        if downloader.getState() in ('downloading', 'paused'):
+        if downloader.getState() in ('downloading', 'paused', 'offline'):
             filename = downloader.getFilename()
             if len(filename) > 0:
                 if not os.path.isabs(filename):
