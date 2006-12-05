@@ -31,6 +31,7 @@ class Downloader:
     def __init__ (self, is_auto):
         self.dc = None
         self.inDownloads = False
+        self.paused = False
         self.running_count = 0
         self.pending_count = 0
         self.feed_pending_count = {}
@@ -74,6 +75,8 @@ class Downloader:
             self.startDownloads()
 
     def startDownloadsIdle(self):
+        if self.paused:
+            return
         last_count = 0
         while self.running_count < self.MAX and self.pending_count > 0 and self.pending_count != last_count:
             last_count = self.pending_count
@@ -97,7 +100,7 @@ class Downloader:
         self.dc = None
 
     def startDownloads(self):
-        if self.dc:
+        if self.dc or self.paused:
             return
         self.dc = eventloop.addIdle(self.startDownloadsIdle, "Start Downloads")
 
@@ -134,6 +137,17 @@ class Downloader:
         self.feed_new_count[feed] = self.feed_new_count.get(feed, 0) - 1
         self.startDownloads()
 
+    def pause(self):
+        if self.dc:
+            self.dc.cancel()
+            self.dc = None
+        self.paused = True
+
+    def resume(self):
+        if self.paused:
+            self.paused = False
+            eventloop.addTimeout (5, self.startDownloads, "delayed start downloads")
+
 
 manualDownloader = None
 autoDownloader = None
@@ -143,6 +157,14 @@ def startDownloader():
     global autoDownloader
     manualDownloader = Downloader(False)
     autoDownloader = Downloader(True)
+
+def pauseDownloader():
+    manualDownloader.pause()
+    autoDownloader.pause()
+
+def resumeDownloader():
+    manualDownloader.resume()
+    autoDownloader.resume()
 
 def updatePrefs():
     manualDownloader.updateMAX()

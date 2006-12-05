@@ -383,8 +383,6 @@ URL was %s""" % self.url
             self.restart()
 
     def restart(self):
-        import traceback
-        traceback.print_stack()
         if len(self.status) == 0 or self.status.get('dlerType') is None:
             if self.contentType == "":
                 self.getContentType()

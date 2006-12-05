@@ -1486,12 +1486,14 @@ class ModelActionHandler:
             i.remove()
 
     def pauseAll (self):
+        autodler.pauseDownloader()
         for item in views.downloadingItems:
             item.pause()
 
     def resumeAll (self):
         for item in views.pausedItems:
-            item.download()
+            item.download(item.getAutoDownloaded())
+        autodler.resumeDownloader()
 
     def toggleExpand(self, id):
         obj = db.getObjectByID(int(id))

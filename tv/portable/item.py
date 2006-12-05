@@ -33,6 +33,7 @@ import random
 import indexes
 import util
 import adscraper
+import autodler
 
 # FIXME add support for onlyBody parameter for static templates so we
 #       don't need to strip the outer HTML
@@ -607,6 +608,7 @@ folder will be deleted.""")
     ##
     # Starts downloading the item
     def download(self,autodl=False):
+        autodler.resumeDownloader()
         self.confirmDBThread()
         manualDownloadCount = views.manualDownloads.len()
         self.expired = self.keep = self.seen = False
@@ -822,7 +824,10 @@ folder will be deleted.""")
             else:
                 self._state = 'not-downloaded'
         elif self.downloader.getState() in ('offline', 'paused'):
-            self._state = 'paused'
+            if self.pendingManualDL:
+                self._state = 'downloading'
+            else:
+                self._state = 'paused'
         elif not self.downloader.isFinished():
             self._state = 'downloading'
         elif not self.getSeen():
