@@ -1,5 +1,6 @@
 from threading import Event, Lock
 import prefs
+import platformcfg
 
 _data = {}
 _dataLock = Lock()
@@ -38,6 +39,11 @@ def get(descriptor):
     _ready.wait()
     _dataLock.acquire()
     try:
-        return _data[descriptor.key]
+        if descriptor.key in _data:
+            return _data[descriptor.key]
+        elif descriptor.platformSpecific:
+            return platformcfg.get(descriptor)
+        else:
+            return descriptor.default
     finally:
         _dataLock.release()

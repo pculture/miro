@@ -48,7 +48,7 @@ def save(data):
         defaults.synchronize()
 
 def get(descriptor):
-    value = None
+    value = descriptor.default
 
     if descriptor == config.MOVIES_DIRECTORY:
         path = os.path.join(MOVIES_DIRECTORY_PARENT, config.get(prefs.SHORT_APP_NAME))

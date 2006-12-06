@@ -1121,6 +1121,10 @@ class HTTPConnectionPool(object):
         if scheme not in ['http', 'https'] or host == '' or path == '':
             errback (MalformedURL(url))
             return
+        if config.get(prefs.HTTP_PROXY_ACTIVE): # using proxy
+            path = url
+            host = config.get(prefs.HTTP_PROXY_HOST)
+            port = config.get(prefs.HTTP_PROXY_PORT)
         req = {
             'callback' : callback,
             'errback': errback,

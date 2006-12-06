@@ -134,4 +134,5 @@ def get(descriptor):
             except:
                 return False
         return False
-    return None
+    else:
+        return descriptor.default

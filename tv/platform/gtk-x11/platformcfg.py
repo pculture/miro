@@ -24,26 +24,29 @@ import resources
 client = gconf.client_get_default()
 gconf_lock = threading.RLock()
 
+def _get_gconf(fullkey, default = None):
+    gconf_lock.acquire()
+    try:
+        value = client.get (fullkey)
+        if (value != None):
+            if (value.type == gconf.VALUE_STRING):
+                return value.get_string()
+            if (value.type == gconf.VALUE_INT):
+                return value.get_int()
+            if (value.type == gconf.VALUE_BOOL):
+                return value.get_bool()
+            if (value.type == gconf.VALUE_FLOAT):
+                return value.get_float()
+        return default
+    finally:
+        gconf_lock.release()
+
 class gconfDict:
     def get(self, key, default = None):
-        gconf_lock.acquire()
-        try:
-            if (type(key) != str):
-                raise TypeError()
-            fullkey = '/apps/democracy/player/' + key
-            value = client.get (fullkey)
-            if (value != None):
-                if (value.type == gconf.VALUE_STRING):
-                    return value.get_string()
-                if (value.type == gconf.VALUE_INT):
-                    return value.get_int()
-                if (value.type == gconf.VALUE_BOOL):
-                    return value.get_bool()
-                if (value.type == gconf.VALUE_FLOAT):
-                    return value.get_float()
-            return default
-        finally:
-            gconf_lock.release()
+        if (type(key) != str):
+            raise TypeError()
+        fullkey = '/apps/democracy/player/' + key
+        return _get_gconf(fullkey, default)
 
     def __contains__(self, key):
         gconf_lock.acquire()
@@ -86,41 +89,56 @@ def save(data):
     pass
 
 def get(descriptor):
-    path = None
+    value = descriptor.default
 
     if descriptor == prefs.MOVIES_DIRECTORY:
-        path = os.path.expanduser('~/Movies/Democracy')
+        value = os.path.expanduser('~/Movies/Democracy')
         try:
-            os.makedirs (path)
+            os.makedirs (value)
         except:
             pass
 
     elif descriptor == prefs.NON_VIDEO_DIRECTORY:
-        path = os.path.expanduser('~/Desktop')
+        value = os.path.expanduser('~/Desktop')
 
     elif descriptor == prefs.GETTEXT_PATHNAME:
-        path = resources.path("../../locale")
+        value = resources.path("../../locale")
 
     elif descriptor == prefs.SUPPORT_DIRECTORY:
-        path = os.path.expanduser('~/.democracy')
+        value = os.path.expanduser('~/.democracy')
 
     elif descriptor == prefs.ICON_CACHE_DIRECTORY:
-        path = os.path.expanduser('~/.democracy/icon-cache')
+        value = os.path.expanduser('~/.democracy/icon-cache')
     
     elif descriptor == prefs.DB_PATHNAME:
-        path = get(prefs.SUPPORT_DIRECTORY)
-        path = os.path.join(path, 'tvdump')
+        value = get(prefs.SUPPORT_DIRECTORY)
+        value = os.path.join(value, 'tvdump')
 
     elif descriptor == prefs.BSDDB_PATHNAME:
-        path = get(prefs.SUPPORT_DIRECTORY)
-        path = os.path.join(path, 'database')
+        value = get(prefs.SUPPORT_DIRECTORY)
+        value = os.path.join(value, 'database')
 
     elif descriptor == prefs.LOG_PATHNAME:
-        path = get(prefs.SUPPORT_DIRECTORY)
-        path = os.path.join(path, 'log')
+        value = get(prefs.SUPPORT_DIRECTORY)
+        value = os.path.join(value, 'log')
     
     elif descriptor == prefs.DOWNLOADER_LOG_PATHNAME:
-        path = get(prefs.SUPPORT_DIRECTORY)
-        return os.path.join(path, 'dtv-downloader-log')
+        value = get(prefs.SUPPORT_DIRECTORY)
+        return os.path.join(value, 'dtv-downloader-log')
 
-    return path
+    elif descriptor == prefs.HTTP_PROXY_ACTIVE:
+        mode = _get_gconf ("/system/proxy/mode")
+        host = _get_gconf ("/system/http_proxy/host", "")
+        port = _get_gconf ("/system/http_proxy/host", 0)
+        return mode == "manual" and host and port
+
+    elif descriptor == prefs.HTTP_PROXY_HOST:
+        return _get_gconf ("/system/http_proxy/host")
+
+    elif descriptor == prefs.HTTP_PROXY_PORT:
+        return _get_gconf ("/system/http_proxy/port")
+
+    elif descriptor == prefs.HTTP_PROXY_IGNORE_HOSTS:
+        return _get_gconf ("/system/http_proxy/ignore_hosts")
+
+    return value
