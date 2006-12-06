@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<div class="main-video draggable ***this.getSelectedState(view)***"
+<div class="main-video draggable ***this.getSelectedState(view)*** ***this.getMoreInfoState()***"
         dragsourcetype="***this.getDragType()***" 
         dragsourcedata="itemlist-***this.getID()***" 
         dragicon="video-tnail-***viewName + str(this.getID())***" 

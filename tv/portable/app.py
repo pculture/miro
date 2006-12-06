@@ -1472,6 +1472,10 @@ class ModelActionHandler:
         obj = db.getObjectByID(int(item))
         obj.save()
 
+    def toggleMoreItemInfo(self, item):
+        obj = db.getObjectByID(int(item))
+        obj.toggleShowMoreInfo()
+
     def revealItem(self, item):
         obj = db.getObjectByID(int(item))
         filename = obj.getFilename()

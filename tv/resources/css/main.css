@@ -474,6 +474,9 @@ float: left;
     top: 0px;
 }
 
+.main-video.more-info {
+    height: 180px;
+}
 
 /* This is the line that appears when you reorder items. When
 an element is dragged, the drag-highlight class is added to it */
@@ -511,6 +514,11 @@ an element is dragged, the drag-highlight class is added to it */
     z-index: 1;
 }
 
+.more-info .main-video-tnail {
+    width: 226px;
+    height: 170px;
+}
+
 .download-pending-icon {
     position: absolute;
     bottom: 10px;
@@ -521,11 +529,23 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .main-video-desc {
+    position: relative;
     margin-left: 115px;
     margin-right: 260px;
     margin-top: 3px;
     height: 82px;
     overflow: hidden;
+}
+
+.more-info .main-video-desc {
+    margin-left: 240px;
+    height: 178px;
+}
+
+.main-video-desc .more-info-link-button {
+    position: absolute;
+    top: 0px;
+    right: 0px;
 }
 
 .main-video-desc h1 {
@@ -548,6 +568,10 @@ an element is dragged, the drag-highlight class is added to it */
     color: #222;
     height: 44px;
     overflow: hidden;
+}
+
+.more-info .main-video-desc-desc {
+    height: 100%;
 }
 
 .main-video.selected .main-video-desc h1, .main-video.selected .main-video-desc-desc {
@@ -594,28 +618,52 @@ an element is dragged, the drag-highlight class is added to it */
     z-index: 2;
 }
 
-.main-video-hitbox a, .main-video-hitbox span{
+.more-info .main-video-hitbox {
+    width: 224px;
+    height: 168px;
+}
+
+.main-video-hitbox a, .main-video-hitbox span {
     display: block;
     width: 100px;
     height: 75px;
+}
+
+.more-info .main-video-hitbox a, .more-info .main-video-hitbox span {
+    width: 225px;
+    height: 169px;
 }
 
 .main-video-hitbox .download-icon {
     background: url(../images/main-video-download.png) no-repeat 66px 42px;
 }
 
+.more-info .main-video-hitbox .download-icon {
+    background: url(../images/main-video-download.png) no-repeat 191px 136px;
+}
+
 .main-video-hitbox .paused-icon {
     background: url(../images/main-video-paused.png) no-repeat 66px 42px;
 }
 
+.more-info .main-video-hitbox .paused-icon {
+    background: url(../images/main-video-paused.png) no-repeat 191px 136px;
+}
 
 .main-video-hitbox .play-icon {
     background: url(../images/main-video-play.png) no-repeat 66px 42px;
 }
 
+.more-info .main-video-hitbox .play-icon {
+    background: url(../images/main-video-play.png) no-repeat 191px 136px;
+}
 
 .main-video-hitbox .inprogress-background {
     background: url(../images/main-video-inprogress.png) no-repeat 66px 42px;
+}
+
+.more-info .main-video-hitbox .inprogress-background {
+    background: url(../images/main-video-inprogress.png) no-repeat 191px 136px;
 }
 
 .main-video-hitbox img.inprogress-arrows {
@@ -623,6 +671,11 @@ an element is dragged, the drag-highlight class is added to it */
     position: absolute;
     top: 47px;
     left: 71px;
+}
+
+.more-info .main-video-hitbox img.inprogress-arrows {
+    top: 141px;
+    left: 196px;
 }
 
 .main-video-stats {
@@ -637,6 +690,10 @@ an element is dragged, the drag-highlight class is added to it */
     font-size: 10px;
     text-align: right;
     line-height: 12px;
+}
+
+.more-info .main-video-stats {
+    height: 170px;
 }
 
 .main-video-stats a {
@@ -656,7 +713,6 @@ an element is dragged, the drag-highlight class is added to it */
     bottom: 6px;
     right: 10px;
 }
-
 
 .main-video-details {
     position: absolute;
@@ -750,18 +806,18 @@ an element is dragged, the drag-highlight class is added to it */
     color: #666;
 }
 
-
-
-
 .details-date {
     font-weight: bold;
 }
 
 .main-video-bottom {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    margin-right: 260px;
 	font-size: 10px;
-	overflow:  hidden;
-	padding:  1px 0px 2px 0;
-	position: relative;
+	overflow: hidden;
+	padding: 1px 0px 2px 0px;
 }
 
 .video-state {
@@ -892,6 +948,11 @@ a.small-button-left:hover {
     top: 59px;
     height: 19px;
     text-align: center;
+}
+
+.more-download-info {
+    position: absolute;
+    top: 80px;
 }
 
 .main-video-details-download-info {

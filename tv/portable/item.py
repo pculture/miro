@@ -93,6 +93,7 @@ class Item(DDBObject):
         self.childrenSeen = None
         self.downloader = None
         self.expiring = None
+        self.showMoreInfo = False
 
     def _lookForFinishedDownloader(self):
         dler = downloader.lookupDownloader(self.getURL())
@@ -112,6 +113,15 @@ class Item(DDBObject):
             return 'selected-inactive'
         else:
             return 'selected'
+
+    def toggleShowMoreInfo(self):
+        self.showMoreInfo = not self.showMoreInfo
+        self.signalChange(needsSave=False, needsUpdateXML=True);
+
+    def getMoreInfoState(self):
+        if self.showMoreInfo:
+            return 'more-info'
+        return ''
 
     def findChildVideos(self):
         """If this item points to a directory, return the set all video files
