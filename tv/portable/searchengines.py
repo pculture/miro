@@ -61,6 +61,9 @@ def createEngines():
     SearchEngine ("dailymotion", u"DailyMotion",
                   "http://www.dailymotion.com/rss/search/%s",
                   5)
+    SearchEngine ("bliptv", u"blip.tv",
+                  "http://blip.tv/?1=1&search=%s;s=posts&skin=rss",
+                  6)
 
 def getRequestURL(engineName, query, filterAdultContents=True, limit=50):
     if query == "LET'S TEST DTV'S CRASH REPORTER TODAY":
