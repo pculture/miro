@@ -1122,9 +1122,18 @@ class HTTPConnectionPool(object):
             errback (MalformedURL(url))
             return
         if config.get(prefs.HTTP_PROXY_ACTIVE): # using proxy
-            path = url
-            host = config.get(prefs.HTTP_PROXY_HOST)
-            port = config.get(prefs.HTTP_PROXY_PORT)
+            proxy_host = config.get(prefs.HTTP_PROXY_HOST)
+            proxy_port = config.get(prefs.HTTP_PROXY_PORT)
+            if proxy_host and proxy_port:
+                path = url
+                host = proxy_host
+                port = proxy_port
+                if config.get(prefs.HTTP_PROXY_AUTHORIZATION_ACTIVE):
+                    username = config.get(prefs.HTTP_PROXY_AUTHORIZATION_USERNAME)
+                    password = config.get(prefs.HTTP_PROXY_AUTHORIZATION_PASSWORD)
+                    authString = username+':'+password
+                    authString = b64encode(authString)
+                    headers['ProxyAuthorization'] = "Basic " + authString
         req = {
             'callback' : callback,
             'errback': errback,

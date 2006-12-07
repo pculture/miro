@@ -88,6 +88,12 @@ HTTP_PROXY_PORT = \
     Pref(key='HttpProxyPort',   default=80, platformSpecific=True)
 HTTP_PROXY_IGNORE_HOSTS = \
     Pref(key='HttpProxyIgnoreHosts', default=[], platformSpecific=True)
+HTTP_PROXY_AUTHORIZATION_ACTIVE = \
+    Pref(key='HttpProxyAuthorizationActive', default=False, platformSpecific=True)
+HTTP_PROXY_AUTHORIZATION_USERNAME = \
+    Pref(key='HttpProxyAuthorizationUsername',   default="", platformSpecific=True)
+HTTP_PROXY_AUTHORIZATION_PASSWORD = \
+    Pref(key='HttpProxyAuthorizationPassword',   default="", platformSpecific=True)
 
 # These are normally read from resources/app.config.
 SHORT_APP_NAME = \
