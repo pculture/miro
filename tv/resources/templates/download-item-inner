@@ -77,6 +77,7 @@ viewName = kargs['viewName']
                 <div class="donation-link"><a href="">DONATION LINK</a></div>
                 <div class="transcript-link"><a href="">READ THE TRANSCRIPT</a></div>
                 <div class="other-metadata">OTHER MEDIA RSS INFO HERE</div>
+                <div class="item-link"><span t:replace="this.getURL()"/></div>
                 <div t:replace="this.getFilename()" />
             </p>
             <div t:hideIf="this.getEmblemCSSString() == ''" 
