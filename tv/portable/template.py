@@ -363,12 +363,14 @@ class Handle:
         return self.templateVars[name]
 
     def addUpdateHideOnView(self, id, view, hideFunc, previous):
-        self.trackedHides[id] = (view, hideFunc, previous)
+        def checkFunc (*args):
+            self._checkHide(id)
+        self.trackedHides[id] = (view, hideFunc, checkFunc, previous)
 
     def _checkHide(self, id):
-        (view, hideFunc, previous) = self.trackedHides[id]
+        (view, hideFunc, checkFunc, previous) = self.trackedHides[id]
         if hideFunc() != previous:
-            self.trackedHides[id] = (view, hideFunc, not previous)
+            self.trackedHides[id] = (view, hideFunc, checkFunc, not previous)
             if previous: # If we were hidden, show
                 self.domHandler.showItem(id)
             else:        # If we were showing it, hide it
@@ -418,6 +420,10 @@ class Handle:
             o.onUnlink()
         self.trackedViews = []
         self.updateRegions = []
+        for id in self.trackedHides.keys():
+            (view, hideFunc, checkFunc, previous) = self.trackedHides[id]
+            self.removeHideChecks(view, checkFunc)
+        self.trackedHides = {}
         for handle in self.subHandles:
             handle.unlinkTemplate()
         self.onUnlink()
@@ -430,15 +436,21 @@ class Handle:
         for handle in self.subHandles:
             handle.initialFillIn()
         for id in self.trackedHides.keys():
-            (view, hideFunc, previous) = self.trackedHides[id]
-            self.addHideChecks(view, id)
+            (view, hideFunc, checkFunc, previous) = self.trackedHides[id]
+            self.addHideChecks(view, checkFunc)
 
-    def addHideChecks(self, view, id):
-        view.addChangeCallback(lambda x,y:self._checkHide(id))
-        view.addAddCallback(lambda x,y:self._checkHide(id))
-        view.addRemoveCallback(lambda x,y:self._checkHide(id))
-        view.addViewChangeCallback(lambda:self._checkHide(id))
-        self._checkHide(id)
+    def addHideChecks(self, view, checkFunc):
+        view.addChangeCallback(checkFunc)
+        view.addAddCallback(checkFunc)
+        view.addRemoveCallback(checkFunc)
+        view.addViewChangeCallback(checkFunc)
+        checkFunc()
+
+    def removeHideChecks(self, view, id):
+        view.removeChangeCallback(checkFunc)
+        view.removeAddCallback(checkFunc)
+        view.removeRemoveCallback(checkFunc)
+        view.removeViewChangeCallback(checkFunc)
 
     def addSubHandle(self, handle):
         self.subHandles.append(handle)
