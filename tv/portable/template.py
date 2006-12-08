@@ -446,7 +446,7 @@ class Handle:
         view.addViewChangeCallback(checkFunc)
         checkFunc()
 
-    def removeHideChecks(self, view, id):
+    def removeHideChecks(self, view, checkFunc):
         view.removeChangeCallback(checkFunc)
         view.removeAddCallback(checkFunc)
         view.removeRemoveCallback(checkFunc)
