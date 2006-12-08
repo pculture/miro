@@ -363,8 +363,7 @@ class Handle:
         return self.templateVars[name]
 
     def addUpdateHideOnView(self, id, view, hideFunc, previous):
-        def checkFunc (*args):
-            self._checkHide(id)
+        checkFunc = lambda *args: self._checkHide(id)
         self.trackedHides[id] = (view, hideFunc, checkFunc, previous)
 
     def _checkHide(self, id):
