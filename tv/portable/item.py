@@ -635,6 +635,7 @@ folder will be deleted.""")
 
         if self.downloader is None:
             self.downloader = downloader.getDownloader(self)
+        self.downloader.setChannelName (self.getChannelTitle())
         if self.downloader.isFinished():
             self.onDownloadFinished()
         else:

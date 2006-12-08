@@ -327,6 +327,7 @@ class RemoteDownloaderSchema(DDBObjectSchema):
         ('origURL', SchemaString()),
         ('dlid', SchemaString()),
         ('contentType', SchemaString(noneOk=True)),
+        ('channelName', SchemaString(noneOk=True)),
         ('status', SchemaSimpleContainer()),
     ]
 
@@ -385,7 +386,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('redirectedURL', SchemaString(noneOk=True)),
     ]
 
-VERSION = 31
+VERSION = 32
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,

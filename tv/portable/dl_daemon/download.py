@@ -44,8 +44,9 @@ def createDownloader(url, contentType, dlid):
         return HTTPDownloader(url, dlid)
 
 # Creates a new downloader object. Returns id on success, None on failure
-def startNewDownload(url, dlid, contentType):
+def startNewDownload(url, dlid, contentType, channelName):
     dl = createDownloader(url, contentType, dlid)
+    dl.channelName = channelName
     _downloads[dlid] = dl
 
 def pauseDownload(dlid):
@@ -209,7 +210,8 @@ class BGDownloader:
             'shortReasonFailed': self.shortReasonFailed,
             'dlerType': None,
             'retryTime': self.retryTime,
-            'retryCount': self.retryCount}
+            'retryCount': self.retryCount,
+            'channelName': self.channelName}
 
     def updateClient(self):
         x = command.UpdateDownloadStatus(daemon.lastDaemon, self.getStatus())
@@ -243,6 +245,13 @@ class BGDownloader:
         self.moveToDirectory(config.get(prefs.MOVIES_DIRECTORY))
 
     def moveToDirectory (self, directory):
+        if self.channelName:
+            channelDir = self.channelName.translate({'/' : '-', '\\' : '-', ':' : '-'})
+            directory = os.path.join (directory, channelDir)
+            try:
+                os.makedirs(directory)
+            except:
+                pass
         newfilename = os.path.join(directory, self.shortFilename)
         newfilename = shortenFilename(newfilename)
         if newfilename == self.filename:
@@ -341,6 +350,7 @@ class HTTPDownloader(BGDownloader):
 
     def __init__(self, url = None,dlid = None,restore = None):
         self.retryDC = None
+        self.channelName = None
         if restore is not None:
             if not isinstance(restore.get('totalSize', 0), int):
                 # Sometimes restoring old downloaders caused errors because
@@ -609,6 +619,7 @@ class BTDownloader(BGDownloader):
         self.activity = None
         self.fastResumeData = None
         self.retryDC = None
+        self.channelName = None
         if restore is not None:
             self.restoreState(restore)
         else:            

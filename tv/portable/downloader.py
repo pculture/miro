@@ -86,6 +86,7 @@ class RemoteDownloader(DDBObject):
                 contentType = enclosureContentType
         self.contentType = ""
         self.deleteFiles = True
+        self.channelName = None
         DDBObject.__init__(self)
         if contentType is None:
             self.contentType = ""
@@ -165,7 +166,7 @@ class RemoteDownloader(DDBObject):
         if url is not None:
             self.url = url
             c = command.StartNewDownloadCommand(RemoteDownloader.dldaemon,
-                                                self.url, self.dlid, self.contentType)
+                                                self.url, self.dlid, self.contentType, self.channelName)
             c.send()
             _downloads[self.dlid] = self
         else:
@@ -273,6 +274,10 @@ URL was %s""" % self.url
 
     def setDeleteFiles(self, deleteFiles):
         self.deleteFiles = deleteFiles
+
+    def setChannelName(self, channelName):
+        if self.channelName is None:
+            self.channelName = channelName
 
     ##
     # Removes downloader from the database and deletes the file.
