@@ -26,6 +26,7 @@ from dl_daemon import command, daemon, bittorrent
 from datetime import timedelta
 
 import platformutils
+import string
 
 # This pattern matches all possible strings.  I promise.
 URIPattern = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
@@ -246,7 +247,9 @@ class BGDownloader:
 
     def moveToDirectory (self, directory):
         if self.channelName:
-            channelDir = self.channelName.translate({'/' : '-', '\\' : '-', ':' : '-'})
+            channelDir = self.channelName.translate({ ord('/')  : u'-',
+                                                      ord('\\') : u'-',
+                                                      ord(':')  : u'-' })
             directory = os.path.join (directory, channelDir)
             try:
                 os.makedirs(directory)
