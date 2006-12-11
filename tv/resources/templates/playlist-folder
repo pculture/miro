@@ -37,10 +37,18 @@ thisPlaylistView.unlink()
 	    <div t:updateForView="thisPlaylistView">
                 <h1 id="main-title" t:replaceMarkup="playlist.getTitle()" />
 	    </div>
-            <div id="main-subtitle">
-                <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Search Playlist')***"/>
-            </div>
-        </div>
+    </div>
+</div>
+<div id="sort-bar">
+    <div id="search-box">
+        <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Search Playlist')***"/>
+    </div>
+    <div id="sort-buttons">    
+        <span>Sort:</span>
+        <a class="" href="#">Name</a>
+        <a class="active-sort" href="#">Date<img src="resource:images/sort-down.png" /></a>
+        <a class="" href="#">Size</a>
+    </div>
 </div>
 <div id="main-container">
     <div t:repeatForView="playlistView" t:repeatTemplate='download-item' />

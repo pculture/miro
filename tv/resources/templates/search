@@ -46,6 +46,15 @@ searchItems.unlink()
       </div>
   </div>
 
+  <div id="sort-bar">
+      <div id="sort-buttons">    
+          <span>Sort:</span>
+          <a class="" href="name">Name</a>
+          <a class="active-sort" href="name">Date<img src="resource:images/sort-down.png" /></a>
+          <a class="" href="name">Size</a>
+      </div>
+  </div>
+
         <div id="main-container">
             <div t:updateForView="searchFeed">
                 <div class="search-message" t:showIf="feed.getStatus() == 'idle-empty'">

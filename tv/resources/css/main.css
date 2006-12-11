@@ -84,11 +84,11 @@ img {
 }
 
 .settings-button {
-text-align: center; 
-margin-left: 5px;
-position: absolute;
-bottom: 22px;
-left: 43px;
+    text-align: center; 
+    margin-left: 5px;
+    position: absolute;
+    bottom: 22px;
+    left: 43px;
 }
 
 
@@ -108,7 +108,7 @@ left: 43px;
 
 /* This is the title section of the channel view */
 #main-titlebar {
-    background: url(../images/main-titlebar-bg.png) repeat-x left bottom;
+    background: url(../images/main-titlebar-bg.png) repeat-x left top;
     height: 77px;
     width: 100%;
     min-width: 600px;
@@ -116,6 +116,17 @@ left: 43px;
     position: fixed;
     top: 0px;
     z-index: 10;
+}
+
+/* Used to mark the search box */
+#search-box {
+    color: #1c5180;
+}
+
+#main-titlebar #search-box {
+    width: 115px; 
+    border: 1px solid #5392e3;
+    padding: 2px;
 }
 
 /* The icon for the channel view. Usually in the titlebar */
@@ -232,14 +243,6 @@ left: 43px;
     padding-left: 21px;
 }
 
-/* Used to mark the search box */
-#search-box {
-    width: 115px; 
-    border: 1px solid #5392e3;
-    padding: 2px;
-    color: #1c5180;
-}
-
 /* Used for scraping indicator on channel page */
 .main-container-scraping {
     text-align: center;
@@ -272,7 +275,7 @@ left: 43px;
 #main-container {
     position: absolute;
     padding-top: 0px;
-    top: 77px;
+    top: 105px;
     width: 100%;
     /*
     It would be nice to include these next two lines.  This would make the
@@ -460,6 +463,52 @@ float: left;
 }
 .gray-button-content {
     padding-top: 8px;
+}
+
+/* The sort bar */
+
+#sort-bar {
+    background: #4A629a url(../images/sort-bar-back.png) top left repeat-x;
+    height: 19px;
+    width: 100%;
+    min-width: 600px;
+    padding: 5px 0 5px 0;
+    position: fixed;
+    top: 76px;
+    z-index: 10;
+}
+
+#sort-buttons {
+    padding: 0 100px 0 0;
+    float: right;
+}
+
+#sort-bar #search-box {
+    margin: 0px 0px 0px 10px;
+    float: left;
+}
+
+#sort-buttons span,  #sort-buttons a {
+    float: left;
+    margin-right: 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    padding: 2px 9px 2px 8px;
+}
+
+#sort-buttons a {
+    font-weight: bold;
+}
+
+#sort-buttons img {
+    border: none;
+    vertical-align: 0px;	
+    padding-left: 9px
+}
+
+.active-sort {
+    background: url(../images/sort-active-back.png) top left no-repeat;
 }
 
 /* Everything below is used in download-item */
