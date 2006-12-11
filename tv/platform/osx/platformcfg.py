@@ -50,7 +50,7 @@ def save(data):
 def get(descriptor):
     value = descriptor.default
 
-    if descriptor == config.MOVIES_DIRECTORY:
+    if descriptor == prefs.MOVIES_DIRECTORY:
         path = os.path.join(MOVIES_DIRECTORY_PARENT, config.get(prefs.SHORT_APP_NAME))
         try:
             os.makedirs(os.path.join(path,'Incomplete Downloads'))
@@ -58,13 +58,13 @@ def get(descriptor):
             pass
         value = path
 
-    elif descriptor == config.NON_VIDEO_DIRECTORY:
+    elif descriptor == prefs.NON_VIDEO_DIRECTORY:
         value = os.path.expanduser('~/Desktop')
 
     elif descriptor == prefs.GETTEXT_PATHNAME:
         value = os.path.abspath(resources.path("../locale"))
 
-    elif descriptor == config.SUPPORT_DIRECTORY:
+    elif descriptor == prefs.SUPPORT_DIRECTORY:
         path = os.path.join(SUPPORT_DIRECTORY_PARENT, config.get(prefs.SHORT_APP_NAME))
         os.environ['APPDATA'] = path # This is for the Bittorent module
         try:
@@ -73,19 +73,19 @@ def get(descriptor):
             pass
         value = path
 
-    elif descriptor == config.ICON_CACHE_DIRECTORY:
+    elif descriptor == prefs.ICON_CACHE_DIRECTORY:
         value = _makeSupportFilePath('icon-cache')
     
-    elif descriptor == config.DB_PATHNAME:
+    elif descriptor == prefs.DB_PATHNAME:
         value = _makeSupportFilePath('tvdump')
 
     elif descriptor == prefs.BSDDB_PATHNAME:
         value = _makeSupportFilePath('database')
 
-    elif descriptor == config.LOG_PATHNAME:
+    elif descriptor == prefs.LOG_PATHNAME:
         value = _makeSupportFilePath('dtv-log')
 
-    elif descriptor == config.DOWNLOADER_LOG_PATHNAME:
+    elif descriptor == prefs.DOWNLOADER_LOG_PATHNAME:
         value = _makeSupportFilePath('dtv-downloader-log')
     
     return value
