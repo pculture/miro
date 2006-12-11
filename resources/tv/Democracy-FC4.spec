@@ -1,6 +1,6 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
-%define VERSION 0.9.0
+%define VERSION 0.9.2.2
 #define RELEASE_CANDIDATE rc1
 #define NIGHTLY 2006-07-20
 #define RELEASE_CANDIDATE 2006_07_20
@@ -18,7 +18,6 @@ Group:          Applications/Multimedia
 License:        GPL
 URL:            http://www.getdemocracy.com/
 Source0:        ftp://ftp.osuosl.org/pub/pculture.org/democracy/src/Democracy-%{FULL_VERSION}.tar.gz
-#Patch1:         Democracy-mozilla-config.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      i386 x86_64
