@@ -48,6 +48,8 @@ externalDownloads = matchingExternalDLs.sort(sorts.item)
 pendingDownloads = matchingPendingDLs.sort(sorts.item)
 pausedDownloads = matchingPausedDLs.sort(sorts.item)
 
+sortedView = allNormalDownloads
+
 def updateSearchString(newSearch):
     global searchFilter
     if len(newSearch) == 0:
@@ -91,30 +93,8 @@ matchingPausedDLs.unlink()
 <!-- / TITLE BAR -->
 
 <!-- SORT BAR ************************************************************* -->
-<div id="sort-bar">
-    <div id="search-box">
-        <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Search Channel')***"/>
-    </div>
-    <div id="sort-buttons">    
-        <span>Sort:</span>
-        <a class="" href="name">Name</a>
-        <a class="active-sort" href="name">Date<img src="resource:images/sort-down.png" /></a>
-        <a class="" href="name">Size</a>
-    </div>
-</div>
-<!-- / SORT BAR -->
-
-<!-- SORT BAR ************************************************************* -->
-<div id="sort-bar">
-    <div id="search-box">
-        <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Search')***"/>
-    </div>
-    <div id="sort-buttons">    
-        <span>Sort:</span>
-        <a class="" href="#">Name</a>
-        <a class="active-sort" href="#">Date<img src="resource:images/sort-down.png" /></a>
-        <a class="" href="#">Size</a>
-    </div>
+<div t:updateForView="sortedView">
+<t:includeTemplate filename="sort-bar" />
 </div>
 <!-- / SORT BAR -->
 

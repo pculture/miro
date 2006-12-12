@@ -19,6 +19,7 @@ global searchFilter
 searchFilter = lambda x: filters.matchingItems(x, None)
 
 matchingItems = views.newWatchableItems.filter(lambda x:searchFilter(x),sortFunc=sorts.itemsUnwatchedFirst)
+sortedView = matchingItems
 
 def updateSearchString(newSearch):
     global searchFilter
@@ -49,16 +50,8 @@ matchingItems.unlink()
 <!-- / TITLE BAR -->
 
 <!-- SORT BAR ************************************************************* -->
-<div id="sort-bar">
-    <div id="search-box">
-        <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Search')***"/>
-    </div>
-    <div id="sort-buttons">    
-        <span>Sort:</span>
-        <a class="" href="#">Name</a>
-        <a class="active-sort" href="#">Date<img src="resource:images/sort-down.png" /></a>
-        <a class="" href="#">Size</a>
-    </div>
+<div t:updateForView="sortedView">
+<t:includeTemplate filename="sort-bar" />
 </div>
 <!-- / SORT BAR -->
 

@@ -116,6 +116,7 @@ allWatchableItems = matchingItems.filter(filters.watchableItems,sortFunc=sorts.i
 watchableItems = allWatchableItems.filter(showWatchableFilter,sortFunc=sorts.itemsUnwatchedFirst)
 
 thisFeedView = views.feeds.filter(lambda x: x is feed)
+sortedView = allItems
 
 _updateView()
 
@@ -148,12 +149,7 @@ if feed.idExists():
         </div>
 	<div id="main-titlebar-center">
 	    <div t:updateForView="thisFeedView">
-                <h1 id="main-title" t:replaceMarkup="feed.getTitle()" />
-                <!--
-                <div id="main-subtitle" >
-                  <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Search Channel')***"/>
-                </div>
-                -->
+            <h1 id="main-title" t:replaceMarkup="feed.getTitle()" />
 	    </div>
             <div t:updateForView="matchingItems">
             <div t:hideIf="searchTerm is None">
@@ -193,17 +189,9 @@ if feed.idExists():
 <!-- / TITLE BAR -->
 
 <!-- SORT BAR ************************************************************* -->
-<div id="sort-bar">
-    <div id="search-box">
-        <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Search Channel')***"/>
-    </div>
-    <div id="sort-buttons">    
-        <span>Sort:</span>
-        <a class="" href="#">Name</a>
-        <a class="active-sort" href="#">Date<img src="resource:images/sort-down.png" /></a>
-        <a class="" href="#">Size</a>
-    </div>
-</div>
+ <div t:updateForView="sortedView">
+ <t:includeTemplate filename="sort-bar" />
+ </div>
 <!-- / SORT BAR -->
 
 <!-- CHANNEL CONTAINER **************************************************** -->

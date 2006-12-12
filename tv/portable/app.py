@@ -1834,6 +1834,16 @@ class TemplateActionHandler:
             searchFeed.preserveDownloads(searchDownloadsFeed)
             searchFeed.reset()
 
+    def sortBy(self, by):
+        if self.templateHandle.sortBy == by:
+            if self.templateHandle.sortDirection == 'ascending':
+                self.templateHandle.sortDirection = 'descending'
+            else:
+                self.templateHandle.sortDirection = 'ascending'
+        else:
+            self.templateHandle.sortBy = by
+        self.templateHandle.forceUpdate()
+
     def handleSelect(self, area, viewName, id, shiftDown, ctrlDown):
         try:
             view = self.templateHandle.getTemplateVariable(viewName)
