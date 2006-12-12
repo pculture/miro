@@ -49,7 +49,7 @@ class BooleanSearch:
             positive = False
         substring = quotekiller.sub("", substring)
         substring = slashkiller.sub(lambda x: x.group(0)[1], substring)
-        print substring
+        #print substring
         return [positive, substring]
 
     def match (self, comparisons):
