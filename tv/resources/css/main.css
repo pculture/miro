@@ -548,6 +548,10 @@ an element is dragged, the drag-highlight class is added to it */
     color: white;
 }
 
+.main-video.more-info.selected, .more-info.selected .main-video-stats, .more-info.selected .main-video-details {
+    background: url(../images/main-video-bg-selected-big.png) repeat-x left top;
+}
+
 .main-video.selected-inactive, .main-video-details.selected-inactive, .main-video-stats.selected-inactive {
 
     background: #ccc;
@@ -1002,6 +1006,12 @@ a.small-button-left:hover {
 .more-download-info {
     position: absolute;
     top: 80px;
+    width: 160px;
+    font-size: 10px;
+}
+
+.more-download-info .dload-info {
+    float: right;
 }
 
 .main-video-details-download-info {

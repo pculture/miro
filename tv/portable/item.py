@@ -790,6 +790,55 @@ folder will be deleted.""")
         out = '<BR>'.join(details)
         return out
 
+    ## 
+    # Returns formatted XHTM with download info
+    def getDownloadDetails(self):
+        details = []
+        
+        details.append('<p>')
+        if self.looksLikeTorrent():
+            details.append('<strong>Torrent Stats</strong>')
+            
+            seeders = self.downloader.status.get('seeders', 0)
+            if seeders == 0:
+                seeders = '-'
+            details.append('Seeders<span class="dload-info">%s</span>' % seeders)
+            
+            leechers = self.downloader.status.get('leechers', 0)
+            if leechers == 0:
+                leechers = '-'
+            details.append('Leechers<span class="dload-info">%s</span>' % leechers)
+            
+            downRate = self.downloader.status.get('rate', 0)
+            if downRate == 0:
+                downRate = '-'
+            else:
+                downRate = "%.3f" % downRate
+            details.append('Down. Rate<span class="dload-info">%s</span>' % downRate)
+
+            totalDown = self.downloader.status.get('currentSize', 0)
+            if totalDown == 0:
+                totalDown = '-'
+            details.append('Total Down.<span class="dload-info">%s</span>' % totalDown)
+
+            upRate = self.downloader.status.get('upRate', 0)
+            if upRate == 0:
+                upRate = '-'
+            else:
+                upRate = "%.3f" % downRate
+            details.append('Up. Rate<span class="dload-info">%s</span>' % upRate)
+            
+            totalUp = self.downloader.status.get('uploaded', 0)
+            if totalUp == 0:
+                totalUp = '-'
+            details.append('Total Up.<span class="dload-info">%s</span>' % totalUp)
+        else:
+            downloaded = self.downloader.status.get('currentSize', 0)
+            total = util.formatSizeForUser(downloaded, '-')
+            details.append('Total Down.<span class="dload-info">%s</span>' % total)
+        details .append('</p>')
+        return '<br />'.join(details)
+
     ##
     # Stops downloading the item
     def deleteFiles(self):

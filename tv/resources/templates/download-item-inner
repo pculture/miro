@@ -60,12 +60,10 @@ viewName = kargs['viewName']
         <h1 t:replace="this.getTitle()" class="noselect"/>
 
         <div class="more-info-link-button">
-            <div t:hideIf="this.showMoreInfo">
-                <a href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');" i18n:translate="">MORE INFO</a>
-            </div>
-            <div t:showIf="this.showMoreInfo">
-                <a href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');" i18n:translate="">LESS INFO</a>
-            </div>
+            <a href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');">
+                <span t:hideIf="this.showMoreInfo" i18n:translate="">MORE INFO</span>
+                <span t:showIf="this.showMoreInfo" i18n:translate="">LESS INFO</span>
+            </a>
         </div>
 
         <div class="main-video-desc-desc noselect">
@@ -74,11 +72,10 @@ viewName = kargs['viewName']
 
         <div class="main-video-bottom noselect">
             <p t:showIf="this.showMoreInfo">
-                <div class="donation-link"><a href="">DONATION LINK</a></div>
-                <div class="transcript-link"><a href="">READ THE TRANSCRIPT</a></div>
-                <div class="other-metadata">OTHER MEDIA RSS INFO HERE</div>
-                <div class="item-link"><span t:replace="this.getURL()"/></div>
-                <div t:replace="this.getFilename()" />
+<!--                <div class="donation-link" t:hideIf=""><a href="">DONATION LINK</a></div> -->
+<!--                <div class="transcript-link"><a href="">READ THE TRANSCRIPT</a></div> -->
+                <div class="item-link"><a href="***this.getURL()***">DIRECT LINK</a></div>
+                <div class="item-path" t:hideIf="this.isDownloadable()">PATH: <span t:replace="this.getFilename()" /></div>
             </p>
             <div t:hideIf="this.getEmblemCSSString() == ''" 
                 class="video-state ***this.getEmblemCSSClass()***">
@@ -173,20 +170,7 @@ viewName = kargs['viewName']
             </div>
         </div>
         <div t:showIf="this.showMoreInfo and this.getState() == 'downloading'" class="more-download-info">
-            <div t:showIf="this.looksLikeTorrent()">
-                <p>
-                    <strong>Torrent Stats</strong><br/>
-                    Seeders: <span t:replace="this.downloader.status.get('seeders', 0)" /><br/>
-                    Leechers: <span t:replace="this.downloader.status.get('leechers', 0)" /><br/>
-                    Download Rate: <span t:replace="this.downloader.status.get('rate', 0)" /><br/>
-                    Total Downloaded: <span t:replace="this.downloader.status.get('currentSize', 0)" /><br/>
-                    Upload Rate: <span t:replace="this.downloader.status.get('upRate', 0)" /><br/>
-                    Total Uploaded: <span t:replace="this.downloader.status.get('uploaded', 0)" /><br/>
-                </p>
-            </div>
-            <div t:hideIf="this.looksLikeTorrent()">
-                <p>Total Downloaded: <span t:replace="this.downloader.status.get('currentSize', 0)" /></p>
-            </div>
+            <div t:replaceMarkup="this.getDownloadDetails()" />
         </div>
     </div>
 </body>
