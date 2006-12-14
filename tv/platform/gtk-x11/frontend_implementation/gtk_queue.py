@@ -113,7 +113,7 @@ class MainloopQueue:
         except Queue.Empty:
             self.idle_running = 0
             self.idle_running_lock.release()
-            gtk.threads_leave()
+            gtk.gdk.threads_leave()
             return 0
         else:
             self.idle_running_lock.release()
