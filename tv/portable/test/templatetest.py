@@ -309,7 +309,7 @@ class TemplatePerformance(DemocracyTestCase):
 
 class OptimizedAttributeChangeTest(DemocracyTestCase):
     def setUp(self):
-        self.changer = templateoptimize.XMLChangeOptimizer()
+        self.changer = templateoptimize.HTMLChangeOptimizer()
 
     def checkChange(self, id, newXML, attributesDiff, htmlChanged):
         changes = self.changer.calcChanges('abc123', newXML)
@@ -322,19 +322,19 @@ class OptimizedAttributeChangeTest(DemocracyTestCase):
     def testBigChange(self):
         first = '<div class="item" id="abc123">foo</div>'
         second = '<div class="item" id="abc123">bar</div>'
-        self.changer.setInitialXML('abc123', first)
+        self.changer.setInitialHTML('abc123', first)
         self.checkChange('abc123', second, {}, True)
 
     def testNoChange(self):
         first = '<div class="item" id="abc123">foo</div>'
-        self.changer.setInitialXML('abc123', first)
+        self.changer.setInitialHTML('abc123', first)
         changes = self.changer.calcChanges('abc123', first)
         self.assertEquals(len(changes), 0)
 
     def testAttributeChange(self):
         first = '<div class="item" id="abc123">foo</div>'
         second = '<div class="item highlighed" id="abc123">foo</div>'
-        self.changer.setInitialXML('abc123', first)
+        self.changer.setInitialHTML('abc123', first)
         self.checkChange('abc123', second, {'class': 'item highlighed'},
                 False)
 
@@ -343,7 +343,7 @@ class OptimizedAttributeChangeTest(DemocracyTestCase):
         second = '<div class="item highlighed" id="abc123">foo</div>'
         third = '<div class="item highlighed" id="abc123">bar</div>'
         fourth = '<div class="item" id="abc123">bar</div>'
-        self.changer.setInitialXML('abc123', first)
+        self.changer.setInitialHTML('abc123', first)
         self.checkChange('abc123', second, {'class': 'item highlighed'},
                 False)
         self.checkChange('abc123', third, {}, True)
@@ -355,7 +355,7 @@ class OptimizedAttributeChangeTest(DemocracyTestCase):
 
 class HotspotOptimizedTest(DemocracyTestCase):
     def setUp(self):
-        self.changer = templateoptimize.XMLChangeOptimizer()
+        self.changer = templateoptimize.HTMLChangeOptimizer()
 
     def makeHotspotArea(self, outertext, innertext):
         return """\
@@ -380,13 +380,13 @@ class HotspotOptimizedTest(DemocracyTestCase):
     def testHotspotChange(self):
         first = self.makeHotspotArea('booya', 'booyaka')
         second = self.makeHotspotArea('booya', 'booyaka booyaka')
-        self.changer.setInitialXML('outer', first)
+        self.changer.setInitialHTML('outer', first)
         self.checkChange(second, 'inner')
 
     def testOutsideHotspotChange(self):
         first = self.makeHotspotArea('foo', 'booyaka')
         second = self.makeHotspotArea('bar', 'booyaka booyaka')
-        self.changer.setInitialXML('outer', first)
+        self.changer.setInitialHTML('outer', first)
         self.checkChange(second, 'outer')
 
     def testMultipleHotspots(self):
@@ -394,7 +394,7 @@ class HotspotOptimizedTest(DemocracyTestCase):
         second = self.makeMultiHotspotArea('foo', 'apples', 'pears')
         third = self.makeMultiHotspotArea('foo', 'kiwi', 'starfruit')
         fourth = self.makeMultiHotspotArea('bar', 'kiwi', 'starfruit')
-        self.changer.setInitialXML('outer', first)
+        self.changer.setInitialHTML('outer', first)
         self.checkChange(second, 'inner-2')
         self.checkChange(third, 'inner', 'inner-2')
         self.checkChange(fourth, 'outer')
