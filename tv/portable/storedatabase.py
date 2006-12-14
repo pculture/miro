@@ -39,6 +39,7 @@ import eventloop
 import app
 import bsddb.db
 import dialogs
+import logging
 from gtcache import gettext as _
 
 from clock import clock
@@ -458,20 +459,18 @@ def getObjects(pathname, convertOnFail):
         objects = restoreObjectList(pathname)
     except BadFileFormatError:
         if convertOnFail:
-            if util.chatter:
-                print "trying to convert database from old version"
+            logging.info ("trying to convert database from old version")
             import olddatabaseupgrade
             olddatabaseupgrade.convertOldDatabase(pathname)
             objects = restoreObjectList(pathname)
-            if util.chatter:
-                print "*** Conversion Successfull ***"
+            logging.info ("*** Conversion Successfull ***")
         else:
             raise
     except ImportError, e:
         if e.args == ("No module named storedatabase\r",):
             # this looks like an error caused by reading a file saved in text
             # mode on windows, let's try converting it.
-            print "WARNING: trying to convert text-mode database"
+            logging.info ("trying to convert text-mode database")
             f = open(pathname, 'rt')
             data = f.read()
             f.close()
@@ -538,8 +537,7 @@ class LiveStorage:
                         except KeyboardInterrupt:
                             raise
                         except:
-                            print "WARNING: ERROR RESTORING OLD DATABASE"
-                            traceback.print_exc()
+                            logging.exception ("Error restoring old database")
                         self.saveDatabase()
                     else:
                         self.loadDatabase()
@@ -554,7 +552,7 @@ class LiveStorage:
             eventloop.addIdle(self.checkpoint, "Remove Unused Database Logs")
             end = clock()
             if end - start > 0.05 and util.chatter:
-                print "Database load slow: %.3f" % (end - start,)
+                logging.timing ("Database load slow: %.3f", end - start)
         except bsddb.db.DBNoSpaceError:
             frontend.exit(28)
 
@@ -612,8 +610,7 @@ class LiveStorage:
         output.close()
 
     def handleDatabaseLoadError(self):
-        print "WARNING: exception while loading database"
-        traceback.print_exc()
+        logging.exception ("exception while loading database")
         self.closeInvalidDB()
         self.dbenv.close()
         self.saveInvalidDB()
@@ -654,7 +651,7 @@ class LiveStorage:
         self.db = None
 
     def upgradeDatabase(self):
-        print "Upgrading database..."
+        logging.info ("Upgrading database...")
         savables = []
         cursor = self.db.cursor()
         while True:
@@ -669,7 +666,7 @@ class LiveStorage:
                 except KeyboardInterrupt:
                     raise
                 except:
-                    print data
+                    logging.info (data)
                     raise
         cursor.close()
         changed = databaseupgrade.upgrade(savables, self.version)
@@ -707,7 +704,7 @@ class LiveStorage:
         SavableObjects that will be in the new database.  WARNING: This method
         will probably take a long time.
         """
-        print "Rewriting database"
+        logging.info ("Rewriting database")
         cursor = self.db.cursor(txn=txn)
         while True:
             next = cursor.next()
@@ -738,7 +735,7 @@ class LiveStorage:
                 except KeyboardInterrupt:
                     raise
                 except:
-                    print data
+                    logging.info (data)
                     raise
         cursor.close()
         db = database.defaultDatabase

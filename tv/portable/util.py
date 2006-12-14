@@ -9,6 +9,7 @@ import socket
 import threading
 import traceback
 import subprocess
+import logging
 
 import prefs
 
@@ -66,15 +67,15 @@ def readSimpleConfigFile(path):
         # Otherwise it'd better be a configuration setting
         match = re.match(r"^([^ ]+) *= *([^\r\n]*)[\r\n]*$", line)
         if not match:
-            print "WARNING: %s: ignored bad configuration directive '%s'" % \
-                (path, line)
+            logging.warning ("%s: ignored bad configuration directive '%s'",
+                             path, line)
             continue
         
         key = match.group(1)
         value = match.group(2)
         if key in ret:
-            print "WARNING: %s: ignored duplicate directive '%s'" % \
-                (path, line)
+            logging.warning ("%s: ignored duplicate directive '%s'",
+                             path, line)
             continue
 
         ret[key] = value
@@ -138,7 +139,7 @@ def failedExn(when, **kwargs):
 # to. If 'detail' is true, it will be included in the report and the
 # the console/log, but not presented in the dialog box flavor text.
 def failed(when, withExn = False, details = None):
-    print "failed() called; generating crash report."
+    logging.info ("failed() called; generating crash report.")
 
     header = ""
     try:
@@ -198,9 +199,6 @@ def failed(when, withExn = False, details = None):
         except KeyboardInterrupt:
             raise
         except:
-            print "WARNING: Error reading logfile: %s" % logFile
-            import traceback
-            traceback.print_exc()
             logContents = ''
         return logContents
 
@@ -224,9 +222,9 @@ def failed(when, withExn = False, details = None):
     # instead of the report from the dialog box. (Note that we don't
     # do this until we've already read the log into the dialog
     # message.)
-    print "----- CRASH REPORT (DANGER CAN HAPPEN) -----"
-    print header
-    print "----- END OF CRASH REPORT -----"
+    logging.info ("----- CRASH REPORT (DANGER CAN HAPPEN) -----")
+    logging.info (header)
+    logging.info ("----- END OF CRASH REPORT -----")
 
     if not inDownloader:
         try:
@@ -234,8 +232,7 @@ def failed(when, withExn = False, details = None):
             app.delegate. \
                 notifyUnkownErrorOccurence(when, log = report)
         except Exception, e:
-            print "Execption when reporting errror.."
-            traceback.print_exc()
+            logging.exception ("Execption when reporting errror..")
     else:
         from dl_daemon import command, daemon
         c = command.DownloaderErrorCommand(daemon.lastDaemon, report)
@@ -254,9 +251,9 @@ class AutoflushingStream:
         self.stream.write(data)
         self.stream.flush()
     def __getattr__(self, name):
-        return self.stream.__getattr__(name)
+        return getattr(self.stream, name)
     def __setattr__(self, name, value):
-        return self.stream.__setattr__(name, value)
+        return setattr(self.stream, name, value)
 
 def makeDummySocketPair():
     """Create a pair of sockets connected to each other on the local
@@ -305,7 +302,7 @@ def timeTrapCall(when, function, *args, **kwargs):
     if cancel:
         return retval
     if end-start > 0.5:
-        print "WARNING: %s too slow (%.3f secs)" % (
+        logging.timing ("WARNING: %s too slow (%.3f secs)",
             when, end-start)
     if TRACK_CUMULATIVE:
         try:
@@ -318,7 +315,7 @@ def timeTrapCall(when, function, *args, **kwargs):
         cumulative[when] = total
         return retval
         if total > 5.0:
-            print "WARNING: %s cumulative is too slow (%.3f secs)" % (
+            logging.timing ("%s cumulative is too slow (%.3f secs)",
                 when, total)
             cumulative[when] = 0
     cancel = True
@@ -451,3 +448,7 @@ class ThreadSafeCounter:
             return self.value
         finally:
             self.lock.release()
+
+def setupLogging():
+    logging.addLevelName(25, "TIMING")
+    logging.timing = lambda msg, *args, **kargs: logging.log(25, msg, *args, **kargs)

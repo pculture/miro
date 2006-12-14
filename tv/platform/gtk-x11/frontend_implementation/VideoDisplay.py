@@ -6,6 +6,7 @@ import gtk.gdk
 import gnomevfs
 import gconf
 import sys
+import logging
 from gtk_queue import gtkAsyncMethod, gtkSyncMethod
 from platformcfg import gconf_lock
 
@@ -41,9 +42,9 @@ class VideoDisplay (app.VideoDisplayBase):
             renderer = module.Renderer()
             renderer.setWidget(self.widget)
             self.renderers.append(renderer)
-            print "loaded renderer '%s'" % modname
+            logging.info ("loaded renderer '%s'", modname)
         except:
-            print "initRenderers: couldn't load %s: %s" % (modname, sys.exc_info()[1])
+            logging.info ("initRenderers: couldn't load %s: %s", modname, sys.exc_info()[1])
 
     @gtkAsyncMethod
     def initRenderers(self):

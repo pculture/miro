@@ -17,6 +17,7 @@ from download_utils import filenameFromURL
 import eventloop
 import httpclient
 import datetime
+import logging
 
 import config
 import prefs
@@ -100,7 +101,7 @@ def getDownloadStatus(dlids = None):
     return statuses
 
 def shutDown():
-    print "Shutting down downloaders..."
+    logging.info ("Shutting down downloaders...")
     for dlid in _downloads:
         _downloads[dlid].shutdown()
 
@@ -242,7 +243,7 @@ class BGDownloader:
         the movies directory.
         """
         if chatter:
-            print "moving to movies directory filename is ", self.filename
+            logging.info ("moving to movies directory filename is %s", self.filename)
         self.moveToDirectory(config.get(prefs.MOVIES_DIRECTORY))
 
     def moveToDirectory (self, directory):
@@ -263,12 +264,11 @@ class BGDownloader:
         try:
             shutil.move(self.filename, newfilename)
         except (IOError, OSError, shutil.Error), e:
-            print "WARNING: Error moving %s to %s (%s)" % (self.filename,
-                                                           newfilename, e)
+            logging.info ("WARNING: Error moving %s to %s (%s)", self.filename,
+                          newfilename, e)
         else:
             self.filename = newfilename
-            if chatter:
-                print "new file name is ", self.filename
+            logging.info ("new file name is %s", self.filename)
 
     ##
     # Returns a float with the estimated number of seconds left
@@ -340,7 +340,7 @@ class BGDownloader:
                 self.handleTemporaryError(error.getFriendlyDescription(),
                                           error.getLongDescription())
         else:
-            print "WARNING: grabURL errback not called with NetworkError"
+            logging.info ("WARNING: grabURL errback not called with NetworkError")
             self.handleError(str(error), str(error))
 
     def handleGenericError(self, longDescription):
@@ -472,10 +472,9 @@ class HTTPDownloader(BGDownloader):
         try:
             self.parseContentRange(info['content-range'])
         except ValueError:
-            if chatter:
-                print "WARNING, bad content-range: %r" % info['content-range']
-                print "currentSize: %d totalSize: %d" % (self.currentSize,
-                        self.totalSize)
+            logging.info ("WARNING, bad content-range: %r", info['content-range'])
+            logging.info ("currentSize: %d totalSize: %d", self.currentSize,
+                          self.totalSize)
             self.cancelRequest()
             self.startNewDownload()
         else:
@@ -635,8 +634,7 @@ class BTDownloader(BGDownloader):
             if self.torrent is not None:
                 self.fastResumeData = self.torrent.shutdown()
         except:
-            print "DTV: Warning: Error shutting down torrent"
-            traceback.print_exc()
+            logging.exception ("DTV: Warning: Error shutting down torrent")
 
     def _startTorrent(self):
         self.torrent = bittorrent.TorrentDownload(self.metainfo,

@@ -3,6 +3,7 @@ import time
 import random
 import socket
 import eventloop
+import logging
 
 DAEMONIC_THREAD_TIMEOUT = 2
 # amount of time to wait for daemonic threads to quit.  Right now, the only
@@ -33,7 +34,7 @@ class Command:
         return self.ret
 
     def action(self):
-        print "WARNING: no action defined for command %s" % self.id
+        logging.warning ("no action defined for command %s", self.id)
         #for overrriding
 
     def __getstate__(self):
@@ -155,7 +156,7 @@ class ShutDownCommand(Command):
     def response_sent(self):
         import eventloop
         eventloop.quit()
-        print "Shutdown complete"
+        logging.info ("Shutdown complete")
 
     def action(self):
         starttime = time.time()

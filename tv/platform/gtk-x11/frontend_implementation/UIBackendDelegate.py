@@ -18,6 +18,7 @@ import feed
 import util
 import views
 import indexes
+import logging
 
 import config
 import prefs
@@ -479,8 +480,7 @@ class UIBackendDelegate:
                         return
                 os.kill(oldpid, signal.SIGKILL)
             except:
-                print "error killing download daemon"
-                traceback.print_exc()
+                logging.exception ("error killing download daemon")
 
     def launchDownloadDaemon(self, oldpid, env):
         # Use UNIX style kill

@@ -33,6 +33,7 @@ import util
 import views
 import indexes
 import searchengines
+import logging
 from clock import clock
 
 whitespacePattern = re.compile(r"^[ \t\r\n]*$")
@@ -90,7 +91,7 @@ def addFeedFromWebPage(url):
         if url:
             Feed(url)
     def errback(error):
-        print "WARNING: unhandled error in addFeedFromWebPage: ", error
+        logging.warning ("unhandled error in addFeedFromWebPage: %s", error)
     grabURL(url, callback, errback)
 
 # URL validitation and normalization
@@ -137,7 +138,7 @@ def normalizeFeedURL(url):
         url = "dtv:searchTerm:%s?%s" % (urlencode(url), urlencode(searchTerm))
 
     if not validateFeedURL(url):
-        print "DTV: unable to normalize URL %s" % originalURL
+        logging.info ("unable to normalize URL %s", originalURL)
         return originalURL
     else:
         return url
@@ -243,7 +244,7 @@ class FeedImpl:
         try:
             return self.ufeed.getID()
         except:
-            print "%s has no ufeed" % self
+            logging.info ("%s has no ufeed", self)
 
     # Returns string with number of unwatched videos in feed
     def numUnwatched(self):
@@ -760,7 +761,7 @@ class Feed(DDBObject):
                     lambda info:self._generateFeedCallback(info, removeOnError),
                     lambda error:self._generateFeedErrback(error, removeOnError),
                     defaultMimeType='application/rss+xml')
-            #print "added async callback to create feed %s" % self.origURL
+            logging.debug ("added async callback to create feed %s", self.origURL)
         if newFeed:
             self.actualFeed = newFeed
             self.loading = False
@@ -791,8 +792,8 @@ class Feed(DDBObject):
     def _generateFeedErrback(self, error, removeOnError):
         if not self.idExists():
             return
-        print "DTV: Warning couldn't load feed at %s (%s)" % \
-                (self.origURL, error)
+        logging.info ("Warning couldn't load feed at %s (%s)",
+                      self.origURL, error)
         self._handleFeedLoadingError(error.getFriendlyDescription())
 
     def _generateFeedCallback(self, info, removeOnError):
@@ -863,8 +864,7 @@ class Feed(DDBObject):
             try:
                 parser.parse(StringIO(xmldata))
             except UnicodeDecodeError:
-                print "Unicode issue parsing... %s" % xmldata[0:300]
-                traceback.print_exc()
+                logging.exception ("Unicode issue parsing... %s", xmldata[0:300])
                 self.finishGenerateFeed(None)
                 if removeOnError:
                     self.remove()
@@ -1068,7 +1068,7 @@ class RSSFeedImpl(FeedImpl):
     def feedparser_errback (self, e):
         if not self.ufeed.idExists():
             return
-        print "Error updating feed: %s: %s" % (self.url, e)
+        logging.info ("Error updating feed: %s: %s", self.url, e)
         self.updating = False
         self.ufeed.signalChange()
         self.scheduleUpdateEvents(-1)
@@ -1082,7 +1082,7 @@ class RSSFeedImpl(FeedImpl):
         self.feedparser_finished()
         end = clock()
         if end - start > 0.1:
-            print "WARNING: feed update for: %s too slow (%.3f secs)" % (self.url, end - start)
+            logging.timing ("feed update for: %s too slow (%.3f secs)", self.url, end - start)
 
     def call_feedparser (self, html):
         self.ufeed.confirmDBThread()
@@ -1092,7 +1092,7 @@ class RSSFeedImpl(FeedImpl):
                 parsed = feedparser.parse(html)
                 self.updateUsingParsed(parsed)
             except:
-                print "Error updating feed: %s" % (self.url,)
+                logging.warning ("Error updating feed: %s", self.url)
                 self.updating = False
                 self.ufeed.signalChange(needsSave=False)
                 raise
@@ -1130,7 +1130,7 @@ class RSSFeedImpl(FeedImpl):
     def _updateErrback(self, error):
         if not self.ufeed.idExists():
             return
-        print "WARNING: error in Feed.update for %s -- %s" % (self.ufeed, error)
+        logging.info ("WARNING: error in Feed.update for %s -- %s", self.ufeed, error)
         self.scheduleUpdateEvents(-1)
         self.updating = False
         self.ufeed.signalChange(needsSave=False)
@@ -1403,7 +1403,7 @@ class ScraperFeedImpl(FeedImpl):
             if not self.ufeed.idExists():
                 return
             self.downloads.discard(download)
-            print "WARNING unhandled error for ScraperFeedImpl.getHTML: ", error
+            logging.info ("WARNING unhandled error for ScraperFeedImpl.getHTML: %s", error)
             self.checkDone()
         download = grabURL(url, callback, errback, etag=etag,
                 modified=modified,defaultMimeType='text/html',)
@@ -1514,7 +1514,7 @@ class ScraperFeedImpl(FeedImpl):
 
     def onRemove(self):
         for download in self.downloads:
-            print "cancling download: ", download.url
+            logging.info ("cancling download: %s", download.url)
             download.cancel()
         self.downloads = set()
 
@@ -1649,7 +1649,7 @@ class DirectoryFeedImpl(FeedImpl):
         self.ufeed.confirmDBThread()
         moviesDir = config.get(prefs.MOVIES_DIRECTORY)
         dirs = [moviesDir] + config.getList(prefs.MY_COLLECTION_DIRS)
-        print dirs
+        logging.info (str(dirs))
         # Files known about by real feeds
         knownFiles = set()
         for item in views.toplevelItems:
@@ -1814,7 +1814,7 @@ class HTMLLinkGrabber(HTMLParser):
                 linkURL = match.group(3).encode('ascii')
             except UnicodeError:
                 linkURL = match.group(3)
-                print "%s is non-ascii, trying anyway: (baseURL: %s)" % (linkURL.decode("latin1"), self.baseurl)
+                logging.info ("%s is non-ascii, trying anyway: (baseURL: %s)", linkURL.decode("latin1"), self.baseurl)
                 i = len (linkURL) - 1
                 while (i >= 0):
                     if 127 < ord(linkURL[i]) <= 255:
@@ -1830,8 +1830,8 @@ class HTMLLinkGrabber(HTMLParser):
                             imgMatch.group(1).encode('ascii'))
                 except UnicodeError:
                     if util.chatter:
-                        print ("WARNING: scraped thumbnail url is non-ascii "
-                        "(%s) -- discarding"  % imgMatch.group(1))
+                        logging.info ("WARNING: scraped thumbnail url is non-ascii "
+                        "(%s) -- discarding", imgMatch.group(1))
                     thumb = None
             else:
                 thumb = None
@@ -1889,7 +1889,7 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler):
                     html = fixHTMLHeader(html,self.charset)
                 self.links[:0] = lg.getLinks(html,self.baseurl)
             except HTMLParseError: # Don't bother with bad HTML
-                print "DTV: bad HTML in description for %s" % self.baseurl
+                logging.info ("bad HTML in description for %s", self.baseurl)
             self.inDescription = False
         elif tag.lower() == 'link':
             self.links.append((self.theLink,None,None))
@@ -1918,11 +1918,11 @@ class HTMLFeedURLParser(HTMLParser):
         try:
             self.feed(data)
         except HTMLParseError:
-            print "DTV: error parsing "+str(baseurl)
+            logging.info ("error parsing %s", baseurl)
         try:
             self.close()
         except HTMLParseError:
-            print "DTV: error closing "+str(baseurl)
+            logging.info ("error closing %s", baseurl)
         return self.link
 
     def handle_starttag(self, tag, attrs):

@@ -120,7 +120,7 @@ def get(descriptor):
 
     elif descriptor == prefs.LOG_PATHNAME:
         value = get(prefs.SUPPORT_DIRECTORY)
-        value = os.path.join(value, 'log')
+        value = os.path.join(value, 'dtv-log')
     
     elif descriptor == prefs.DOWNLOADER_LOG_PATHNAME:
         value = get(prefs.SUPPORT_DIRECTORY)

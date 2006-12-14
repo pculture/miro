@@ -10,6 +10,7 @@ import config
 import prefs
 import eventloop
 import util
+import logging
 from httpclient import ConnectionHandler
 
 SIZE_OF_INT = calcsize("I")
@@ -109,7 +110,7 @@ class Daemon(ConnectionHandler):
         """Call this when an error occurs.  It forces the
         daemon to close its connection.
         """
-        print "socket error in daemon, closing my socket"
+        logging.warning ("socket error in daemon, closing my socket")
         self.closeConnection()
         raise error
 
@@ -129,8 +130,7 @@ class Daemon(ConnectionHandler):
             try:
                 comm = cPickle.loads(self.buffer.read(self.size))
             except:
-                print "WARNING: error unpickling command."
-                traceback.print_exc()
+                logging.exception ("WARNING: error unpickling command.")
             else:
                 self.processCommand(comm)
             self.changeState('ready')
@@ -162,7 +162,7 @@ class DownloaderDaemon(Daemon):
             return
         self.shutdown = True
         eventloop.quit()
-        print "downloader: connection closed -- quitting"
+        logging.warning ("downloader: connection closed -- quitting")
         from dl_daemon import download
         download.shutDown()
         import threading
@@ -211,14 +211,14 @@ class ControllerDaemon(Daemon):
             
     def handleClose(self, type):
         if not self.shutdown:
-            print "DTV: WARNING Downloader Daemon died"
+            logging.warning ("Downloader Daemon died")
             # FIXME: replace with code to recover here, but for now,
             # stop sending.
             self.shutdown = True
             config.removeChangeCallback (self.updateConfig)
 
     def shutdown_timeout_cb(self):
-        print "WARNING: killing download daemon"
+        logging.warning ("killing download daemon")
         import app
         delegate = app.delegate
         delegate.killDownloadDaemon(readPid())

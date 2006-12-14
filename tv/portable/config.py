@@ -8,6 +8,7 @@ import resources
 import eventloop
 import platformcfg
 import urllib
+import logging
 
 __appConfig = None
 __data = None
@@ -60,9 +61,9 @@ def save():
 
 def get(descriptor):
     if 'ISAFAKE' in descriptor.__dict__:
-        print ("WARNING: config.get called with config descriptor: %s" %
-            descriptor.key)
-        print "%s:%s" % traceback.extract_stack()[-2][:2]
+        logging.warning ("config.get called with config descriptor: %s",
+                         descriptor.key)
+        logging.warning ("%s:%s", traceback.extract_stack()[-2][0], traceback.extract_stack()[-2][1])
 
     __lock.acquire()
     try:
@@ -92,10 +93,10 @@ def getAppConfig():
     
 def set(descriptor, value):
     if 'ISAFAKE' in descriptor.__dict__:
-        print ("WARNING: config.set called with config descriptor: %s" %
-            descriptor.key)
+        logging.warning ("config.set called with config descriptor: %s",
+                         descriptor.key)
     __lock.acquire()
-    print "Setting %s to %s" % (descriptor.key, value)
+    logging.info ("Setting %s to %s", descriptor.key, value)
     try:
         __checkValidity()
         if descriptor.key not in __data or __data[ descriptor.key ] != value:

@@ -15,6 +15,7 @@ import heapq
 import Queue
 import util
 import database
+import logging
 
 from clock import clock
 
@@ -48,8 +49,8 @@ class DelayedCall(object):
             util.trapCall(when, self.function, *self.args, **self.kwargs)
             end = clock()
             if end-start > 0.5:
-                print "WARNING: %s too slow (%.3f secs)" % (
-                    self.name, end-start)
+                logging.timing ("%s too slow (%.3f secs)",
+                                self.name, end-start)
             try:
                 total = cumulative[self.name]
             except KeyboardInterrupt:
@@ -59,8 +60,8 @@ class DelayedCall(object):
             total += end - start
             cumulative[self.name] = total
             if total > 5.0:
-                print "WARNING: %s cumulative is too slow (%.3f secs)" % (
-                    self.name, total)
+                logging.timing ("%s cumulative is too slow (%.3f secs)",
+                                self.name, total)
                 cumulative[self.name] = 0
         self._unlink()
 
@@ -241,7 +242,7 @@ class EventLoop(object):
                                                          timeout)
             except select.error, (err, detail):
                 if err == errno.EINTR:
-                    print "DTV: eventloop: Warning: %s" % detail
+                    logging.warning ("eventloop: %s", detail)
                 else:
                     raise
             if self.quitFlag:
@@ -431,6 +432,6 @@ def asUrgent(func):
     return queuer
 
 def checkHeapSize():
-    print "Heap size: %d." % (len(_eventLoop.scheduler.heap),)
+    logging.info ("Heap size: %d.", len(_eventLoop.scheduler.heap))
     addTimeout(5, checkHeapSize, "Check Heap Size")
 #addTimeout(5, checkHeapSize, "Check Heap Size")

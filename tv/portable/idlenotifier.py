@@ -15,6 +15,7 @@ import time
 
 import eventloop
 import idletime
+import logging
 
 DEFAULT_PERIODICITY = 5             # Check every X seconds
 DEFAULT_IDLE_THRESHOLD = 60 * 5     # Notify after X seconds of idling
@@ -37,14 +38,14 @@ class IdleNotifier:
         self.lastTimeout = None
 
     def start(self):
-        print "DTV: idle notifier running"
+        logging.info ("idle notifier running")
         self.lastTimeout = eventloop.addTimeout(self.periodicity,self.run,"Idle notifier")
 
     def run(self):
         try:
             seconds = int(idletime.get())
         except:
-            print "WARNING: idletime module returned an invalid value..."
+            logging.warning ("idletime module returned an invalid value...")
             seconds = 0.0
 
         if self.idling:
@@ -62,7 +63,7 @@ class IdleNotifier:
     
     def _whenNotIdling(self, seconds):
         if seconds >= self.idleThreshold:
-            print "DTV: system has been idling since %d seconds" % seconds
+            logging.info ("system has been idling since %d seconds", seconds)
             self.idling = True
             self.wasIdling = True
             if self.delegate is not None and hasattr(self.delegate, 'systemHasBeenIdlingSince'):
@@ -72,7 +73,7 @@ class IdleNotifier:
         if seconds < self.idleThreshold:
             self.idling = False
             if self.wasIdling:
-                print "DTV: system is active again since %d seconds" % seconds
+                logging.info ("system is active again since %d seconds", seconds)
                 if self.delegate is not None and hasattr(self.delegate, 'systemIsActiveAgain'):
                     self.delegate.systemIsActiveAgain()
                     self.wasIdling = False

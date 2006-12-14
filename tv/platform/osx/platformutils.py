@@ -1,5 +1,7 @@
 import threading
 import os
+import logging
+import sys
 
 from objc import NO
 import Foundation
@@ -174,3 +176,8 @@ def initializeLocale():
     
     localeInitialized = True
     del pool
+
+def setupLogging (inDownloader=False):
+    logging.basicConfig(level=logging.INFO,
+                        format='%(asctime)s %(levelname)-8s %(message)s',
+                        stream = sys.stdout)

@@ -19,6 +19,8 @@ import os
 import threading
 import config
 import prefs
+import logging
+import sys
 
 # We need to define samefile for the portable code.  Lucky for us, this is
 # very easy.
@@ -49,3 +51,21 @@ def confirmMainThread():
 # Gettext understands *NIX locales, so we don't have to do anything
 def initializeLocale():
     pass
+
+def setupLogging (inDownloader=False):
+    if inDownloader:
+        logging.basicConfig(level=logging.INFO,
+                            format='%(levelname)-8s %(message)s',
+                            stream=sys.stdout)
+    else:
+        logging.basicConfig(level=logging.DEBUG,
+                            format='%(asctime)s %(levelname)-8s %(message)s',
+                            filename=config.get(prefs.LOG_PATHNAME),
+                            filemode="w")
+        console = logging.StreamHandler (sys.stdout)
+        console.setLevel(logging.INFO)
+    
+        formatter = logging.Formatter('%(levelname)-8s %(message)s')
+        console.setFormatter(formatter)
+
+        logging.getLogger('').addHandler(console)

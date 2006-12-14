@@ -14,6 +14,7 @@ import threading
 import urllib
 import eventloop
 import views
+import logging
 from gtcache import gettext as _
 
 HTMLPattern = re.compile("^.*(<head.*?>.*</body\s*>)", re.S)
@@ -183,8 +184,8 @@ class ChannelGuide(DDBObject):
             self.dc = eventloop.addTimeout(3600, self.update, "Channel Guide Update")
 
     def processUpdateErrback(self, error):
-        print "WARNING: HTTP error while downloading the channel guide (%s)" \
-                % error
+        logging.info ("HTTP error while downloading the channel guide (%s)",
+                      error)
         self.dc = eventloop.addTimeout(3600, self.update, 
                 "Channel Guide Update")
 
@@ -193,7 +194,7 @@ class ChannelGuide(DDBObject):
         # be loaded from a plain old template. It's less elegant than
         # making another kind of feed object, but it makes it easier
         # for non-programmers to work with
-        print "DTV: updating the Guide"
+        logging.info ("updating the Guide")
         self.dc = grabURL(self.getURL(), self.processUpdate, self.processUpdateErrback)
 
     def remove(self):

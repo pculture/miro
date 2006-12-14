@@ -8,6 +8,7 @@ def launch():
     import sys
     import os
     import util
+    import logging
     util.inDownloader = True
     logPath = os.environ.get('DEMOCRACY_DOWNLOADER_LOG')
     if logPath is not None:
@@ -20,15 +21,17 @@ def launch():
 
     sys.stdout = util.AutoflushingStream(sys.stdout)
     sys.stderr = util.AutoflushingStream(sys.stderr)
-    if os.environ.get('DEMOCRACY_DOWNLOADER_FIRST_LAUNCH') != '1':
-        print
-        print "*** Starting new downloader log ***"
-        print
-    else:
-        print "*** Launching Democracy Downloader Daemon ****"
 
     import platformutils
+    platformutils.setupLogging(inDownloader=True)
+    util.setupLogging()
     platformutils.initializeLocale()
+
+    if os.environ.get('DEMOCRACY_DOWNLOADER_FIRST_LAUNCH') != '1':
+        logging.info ("*** Starting new downloader log ***")
+    else:
+        logging.info ("*** Launching Democracy Downloader Daemon ****")
+
 
     # Start of normal imports
     import threading
@@ -60,7 +63,7 @@ def launch():
     # See corresponding hack in gtcache.py
     import gtcache
     gtcache.init()
-    print "*** Daemon ready ***"
+    logging.info ("*** Daemon ready ***")
 
 if __name__ == "__main__":
     launch()

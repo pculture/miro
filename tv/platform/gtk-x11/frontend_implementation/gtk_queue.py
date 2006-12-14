@@ -24,6 +24,7 @@ import gtk
 import Queue
 import sys
 import traceback
+import logging
 
 from clock import clock
 
@@ -99,7 +100,7 @@ class MainloopQueue:
         retval = return_data.get_retval()
         end = clock()
         if end - start > 1:
-            print "gtkSyncMethod: %s took too long: %.3f" % (callback, end - start)
+            logging.timing ("gtkSyncMethod: %s took too long: %.3f", callback, end - start)
         if isinstance(retval, ExceptionContainer):
             retval.reraise()
         else:
@@ -122,10 +123,9 @@ class MainloopQueue:
                 callback (*args, **kwargs)
                 end = clock()
                 if end - start > 1:
-                    print "gtkAsyncMethod: %s took too long: %.3f" % (callback, end - start)
+                    logging.timing ("gtkAsyncMethod: %s took too long: %.3f", callback, end - start)
             except:
-                print "Exception in a gtkAsyncMethod:"
-                traceback.print_exc()
+                logging.exception ("Exception in a gtkAsyncMethod:")
             gtk.gdk.threads_leave()
             return 1
 

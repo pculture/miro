@@ -8,6 +8,8 @@ import _winreg
 import config
 import prefs
 import os
+import logging
+import sys
 
 localeInitialized = False
 
@@ -80,3 +82,8 @@ def initializeLocale():
     if lang:
         os.environ["LANGUAGE"] = lang
     localeInitialized = True
+
+def setupLogging (inDownloader=False):
+    logging.basicConfig(level=logging.INFO,
+                        format='%(asctime)s %(levelname)-8s %(message)s',
+                        stream = sys.stdout)

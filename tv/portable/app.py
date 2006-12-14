@@ -49,6 +49,8 @@ import threading
 import platform
 import dialogs
 import iconcache
+import platformutils
+import logging
 
 # Something needs to import this outside of Pyrex. Might as well be app
 import templatehelper
@@ -68,11 +70,15 @@ delegate = None
 # Run the application. Call this, not start(), on platforms where we
 # are responsible for the event loop.
 def main():
+    platformutils.setupLogging()
+    util.setupLogging()
     Controller().Run()
 
 # Start up the application and return. Call this, not main(), on
 # platform where we are not responsible for the event loop.
 def start():
+    platformutils.setupLogging()
+    util.setupLogging()
     Controller().runNonblocking()
 
 ###############################################################################
@@ -138,8 +144,8 @@ class PlaybackControllerBase:
                 self.currentItem.onViewedCancel()
             self.currentItem = None
             while not os.path.exists(anItem.getVideoFilename()):
-                print "DTV: movie file '%s' is missing, skipping to next" % \
-                        anItem.getVideoFilename()
+                logging.info ("movie file '%s' is missing, skipping to next",
+                              anItem.getVideoFilename())
                 eventloop.addIdle(self.removeItem, "Remove deleted item", args=(anItem.item,))
                 anItem = self.currentPlaylist.getNext()
                 if anItem is None:
@@ -490,13 +496,13 @@ class Controller (frontend.Application):
 
     def onStartup(self, gatheredVideos=None):
         try:
-            print "DTV: Starting up Democracy Player"
-            print "DTV: Version:  %s" % config.get(prefs.APP_VERSION)
-            print "DTV: Revision: %s" % config.get(prefs.APP_REVISION)
+            logging.info ("Starting up Democracy Player")
+            logging.info ("Version:  %s", config.get(prefs.APP_VERSION))
+            logging.info ("Revision: %s", config.get(prefs.APP_REVISION))
 
             util.print_mem_usage("Pre everything memory check")
             
-            print "DTV: Loading preferences..."
+            logging.info ("Loading preferences...")
 
             config.load()
             config.addChangeCallback(self.configDidChange)
@@ -509,7 +515,7 @@ class Controller (frontend.Application):
             dialogs.setDelegate(delegate)
             
             if not config.get(prefs.STARTUP_TASKS_DONE):
-                print "DTV: Showing startup dialog..."
+                logging.info ("Showing startup dialog...")
                 delegate.performStartupTasks(self.finishStartup)
                 config.set(prefs.STARTUP_TASKS_DONE, True)
                 config.save()
@@ -523,14 +529,14 @@ class Controller (frontend.Application):
         try:
             #Restoring
             util.print_mem_usage("Pre-database memory check:")
-            print "DTV: Restoring database..."
+            logging.info ("Restoring database...")
             #            try:
             database.defaultDatabase.liveStorage = storedatabase.LiveStorage()
             self.loadedDatabase = True
             #            except Exception:
             #                util.failedExn("While restoring database")
             util.print_mem_usage("Post-database memory check")
-            print "DTV: Recomputing filters..."
+            logging.info ("Recomputing filters...")
             db.recomputeFilters()
 
             downloader.startupDownloader()
@@ -552,12 +558,12 @@ class Controller (frontend.Application):
             try:
                 channelTabOrder = util.getSingletonDDBObject(views.channelTabOrder)
             except LookupError:
-                print "DTV: Creating channel tab order"
+                logging.info ("Creating channel tab order")
                 channelTabOrder = tabs.TabOrder('channel')
             try:
                 playlistTabOrder = util.getSingletonDDBObject(views.playlistTabOrder)
             except LookupError:
-                print "DTV: Creating playlist tab order"
+                logging.info ("Creating playlist tab order")
                 playlistTabOrder = tabs.TabOrder('playlist')
 
             # Set up search engines
@@ -578,12 +584,12 @@ class Controller (frontend.Application):
             self.setupGlobalFeed('dtv:directoryfeed')
 
             # Start the automatic downloader daemon
-            print "DTV: Spawning auto downloader..."
+            logging.info ("Spawning auto downloader...")
             autodler.startDownloader()
 
             # Start the idle notifier daemon
             if config.get(prefs.LIMIT_UPSTREAM) is True:
-                print "DTV: Spawning idle notifier"
+                logging.info ("Spawning idle notifier")
                 self.idlingNotifier = idlenotifier.IdleNotifier(self)
                 self.idlingNotifier.start()
             else:
@@ -595,7 +601,7 @@ class Controller (frontend.Application):
             util.print_mem_usage("Pre-UI memory check")
 
             # Put up the main frame
-            print "DTV: Displaying main frame..."
+            logging.info ("Displaying main frame...")
             self.frame = frontend.MainFrame(self)
 
             # Set up the video display
@@ -643,7 +649,7 @@ class Controller (frontend.Application):
                     try:
                         singleclick.addVideo(v)
                     except:
-                        print "DTV: WARNING, error while adding file %s" % v
+                        logging.info ("error while adding file %s", v)
 
             util.print_mem_usage("Pre single-click memory check")
 
@@ -657,12 +663,12 @@ class Controller (frontend.Application):
 
             start = clock()
             iconcache.clearOrphans()
-            print "Icon clear: %.3f" % (clock() - start,)
+            logging.timing ("Icon clear: %.3f", clock() - start)
 
-            print "DTV: Starting event loop thread"
+            logging.info ("Starting event loop thread")
             eventloop.startup()            
 
-            print "DTV: Finished startup sequence"
+            logging.info ("Finished startup sequence")
             self.finishedStartup = True
         except databaseupgrade.DatabaseTooNewError:
             title = _("Database too new")
@@ -673,7 +679,7 @@ You must download the latest version of Democracy and run that.""")
                 eventloop.quit()
                 frontend.quit()
             dialogs.MessageBoxDialog(title, description).run(callback)
-            print "DTV: Starting event loop thread"
+            logging.info ("Starting event loop thread")
             eventloop.startup()
         except:
             util.failedExn("while finishing starting up")
@@ -683,7 +689,7 @@ You must download the latest version of Democracy and run that.""")
         feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
         try:
             if feedView.len() == 0:
-                print "DTV: Spawning global feed %s" % url
+                logging.info ("Spawning global feed %s", url)
                 d = feed.Feed(url, *args, **kwargs)
             elif feedView.len() > 1:
                 allFeeds = [f for f in feedView]
@@ -705,7 +711,7 @@ You must download the latest version of Democracy and run that.""")
         feed = feedView.getNext()
         feedView.unlink()
         if feed is not None:
-            print "DTV: Removing global feed %s" % url
+            logging.info ("Removing global feed %s", url)
             feed.remove()
 
     def copyCurrentFeedURL(self):
@@ -780,7 +786,7 @@ You must download the latest version of Democracy and run that.""")
         if obj.__class__ in typeCheckList:
             obj.rename()
         else:
-            print "WARNING: Bad object type in renameCurrentTab() %s" % obj.__class__
+            logging.warning ("Bad object type in renameCurrentTab() %s", obj.__class__)
 
     def renameCurrentChannel(self):
         self.renameCurrentTab(typeCheckList=[feed.Feed, folder.ChannelFolder])
@@ -818,7 +824,7 @@ You must download the latest version of Democracy and run that.""")
 
     def removeGuide(self, guide):
         if guide.getDefault():
-            print "WARNING: attempt to remove default guide"
+            logging.warning ("attempt to remove default guide")
             return
         title = _('Remove %s') % guide.getTitle()
         description = _("Are you sure you want to remove the guide %s?") % (guide.getTitle(),)
@@ -912,11 +918,11 @@ downloaded?""")
         self.playbackController.enterPlayback()
 
     def downloaderShutdown(self):
-        print "DTV: Closing Database..."
+        logging.info ("Closing Database...")
         database.defaultDatabase.liveStorage.close()
-        print "DTV: Shutting down event loop"
+        logging.info ("Shutting down event loop")
         eventloop.quit()
-        print "DTV: Shutting down frontend"
+        logging.info ("Shutting down frontend")
         frontend.quit()
 
     @eventloop.asUrgent
@@ -943,7 +949,7 @@ downloaded?""")
             self.quitStage2()
 
     def quitStage2(self):
-        print "DTV: Shutting down Downloader..."
+        logging.info ("Shutting down Downloader...")
         downloader.shutdownDownloader(self.downloaderShutdown)
 
     def setGuideURL(self, guideURL):
@@ -960,28 +966,28 @@ downloaded?""")
         try:
             eventloop.join()        
             if self.loadedDatabase:
-                print "DTV: Saving preferences..."
+                logging.info ("Saving preferences...")
                 config.save()
 
-                print "DTV: Removing search feed"
+                logging.info ("Removing search feed")
                 TemplateActionHandler(None, None).resetSearch()
                 self.removeGlobalFeed('dtv:search')
 
-                print "DTV: Shutting down icon cache updates"
+                logging.info ("Shutting down icon cache updates")
                 iconcache.iconCacheUpdater.shutdown()
 
-                print "DTV: Removing static tabs..."
+                logging.info ("Removing static tabs...")
                 views.allTabs.unlink() 
                 tabs.removeStaticTabs()
 
                 if self.idlingNotifier is not None:
-                    print "DTV: Shutting down IdleNotifier"
+                    logging.info ("Shutting down IdleNotifier")
                     self.idlingNotifier.join()
 
-            print "DTV: Done shutting down."
-            print "Remaining threads are:"
+            logging.info ("Done shutting down.")
+            logging.info ("Remaining threads are:")
             for thread in threading.enumerate():
-                print thread
+                logging.info ("%s", thread)
 
         except:
             util.failedExn("while shutting down")
@@ -1116,9 +1122,8 @@ downloaded?""")
             sourceID = int(sourceID)
             draggedIDs = self.selection.calcSelection(sourceArea, sourceID)
         except:
-            print "WARNING: error parsing drop (%r, %r, %r)" % \
-                    (dropData, type, sourceData)
-            traceback.print_exc()
+            logging.exception ("error parsing drop (%r, %r, %r)",
+                               dropData, type, sourceData)
             return
 
         if destType == 'playlist' and type == 'downloadeditem':
@@ -1144,8 +1149,8 @@ downloaded?""")
             playlist = self.selection.getSelectedTabs()[0].obj
             playlist.handleDNDReorder(destObj, draggedIDs)
         else:
-            print "Can't handle drop. Dest type: %s Dest id: %s Type: %s" % \
-                    (destType, destID, type)
+            logging.info ("Can't handle drop. Dest type: %s Dest id: %s Type: %s",
+                          destType, destID, type)
 
     def addToNewPlaylist(self):
         selected = controller.selection.getSelectedItems()
@@ -1162,7 +1167,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
             baseURL=None, *args, **kargs):
         "'templateName' is the name of the inital template file. 'data' is keys for the template. 'templateState' is a string with the state of the template"
 
-        #print "Processing %s" % templateName
+        logging.debug ("Processing %s", templateName)
         self.templateName = templateName
         self.templateState = templateState
         (tch, self.templateHandle) = template.fillTemplate(templateName,
@@ -1244,7 +1249,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
     # Returns true if the browser should handle the URL.
     def onURLLoad(self, url):
-        #print "DTV: got %s" % url
+        logging.debug ("got %s", url)
         try:
             # Special-case non-'action:'-format URL
             if url.startswith ("template:"):
@@ -1331,9 +1336,9 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 break
         end = clock()
         if end - start > 0.5:
-            print "WARNING: dispatch action %s too slow (%.3f secs)" % (action, end - start)
+            logging.timing ("dispatch action %s too slow (%.3f secs)", action, end - start)
         if not called:
-            print "Ignored bad action URL: action=%s" % action
+            logging.warning ("Ignored bad action URL: action=%s", action)
 
     @eventloop.asUrgent
     def onDeselected(self, frame):
@@ -1400,8 +1405,8 @@ class ModelActionHandler:
         elif selectionType == 'playlisttab':
             folder.createNewPlaylistFolder(childIDs)
         else:
-            print "WARNING: bad selection type %s in mergeToFolder" % \
-                selectionType
+            logging.warning ("bad selection type %s in mergeToFolder",
+                             selectionType)
 
     def remove(self, area, id):
         selectedIDs = controller.selection.calcSelection(area, int(id))
@@ -1420,19 +1425,19 @@ class ModelActionHandler:
             pl = controller.selection.getSelectedTabs()[0].obj
             pl.handleRemove(destObj, selectedIDs)
         else:
-            print ("Warning: Can't handle type %s in remove()" % objType)
+            logging.warning ("Can't handle type %s in remove()", objType)
 
     def rename(self, id):
         try:
             obj = db.getObjectByID(int(id))
         except:
-            print "Warning: tried to rename object that doesn't exist with id %d" % int(feed)
+            logging.warning ("tried to rename object that doesn't exist with id %d", int(feed))
             return
         if obj.__class__ in (playlist.SavedPlaylist, folder.ChannelFolder,
                 folder.PlaylistFolder):
             obj.rename()
         else:
-            print "WARNING: Unknown object type in remove() %s" % type(obj)
+            logging.warning ("Unknown object type in remove() %s", type(obj))
 
     def updateFeed(self, feed):
         obj = db.getObjectByID(int(feed))
@@ -1462,7 +1467,7 @@ class ModelActionHandler:
             obj = db.getObjectByID(int(item))
             obj.expire()
         except database.ObjectNotFoundError:
-            print "DTV: Warning: tried to expire item that doesn't exist with id %d" % int(item)
+            logging.warning ("tried to expire item that doesn't exist with id %d", int(item))
 
     def expirePlayingItem(self, item):
         self.expireItem(item)
@@ -1664,7 +1669,7 @@ class GUIActionHandler:
         # Find the feed
         myFeed = feed.getFeedByURL (url)
         if myFeed is None:
-            print "selectFeed: no such feed: %s" % url
+            logging.warning ("selectFeed: no such feed: %s", url)
             return
         controller.selection.selectTabByObject(myFeed)
         
@@ -1742,13 +1747,13 @@ class TemplateActionHandler:
                 controller.frame.selectURL(location, \
                                            controller.frame.mainDisplay)
             else:
-                raise StandardError("DTV: Invalid guide load mode '%s'" % mode)
+                raise StandardError("Invalid guide load mode '%s'" % mode)
 
     def setViewFilter(self, viewName, fieldKey, functionKey, parameter, invert):
-        print "Warning! setViewFilter deprecated"
+        logging.warning ("setViewFilter deprecated")
 
     def setViewSort(self, viewName, fieldKey, functionKey, reverse="false"):
-        print "Warning! setViewSort deprecated"
+        logging.warning ("setViewSort deprecated")
 
     def setSearchString(self, searchString):
         self.templateHandle.getTemplateVariable('updateSearchString')(unicode(searchString))
@@ -2015,7 +2020,7 @@ def _getInitialChannelGuide():
         else:
             guideObj.remove()
     if default_guide is None:
-        print "DTV: Spawning Channel Guide..."
+        logging.info ("Spawning Channel Guide...")
         default_guide = guide.ChannelGuide()
         initialFeeds = resources.path("initial-feeds.democracy")
         if os.path.exists(initialFeeds):
@@ -2042,7 +2047,7 @@ def changeMoviesDirectory(newDir, migrate):
     if migrate:
         views.remoteDownloads.confirmDBThread()
         for download in views.remoteDownloads:
-            print "migrating", download.getFilename()
+            logging.info ("migrating %s", download.getFilename())
             download.migrate(newDir)
         for item in views.fileItems:
             # Only migrate top level items.
