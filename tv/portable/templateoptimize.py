@@ -121,8 +121,10 @@ class OptimizedElement:
 
 class HTMLChangeOptimizer:
     """Class that handles changing xml in an efficient way.  It currently
-    optimizes 2 cases:
+    optimizes a few cases:
 
+      * If the html stays the same, we don't send anything to the frontend
+        code.
       * If only the attributes of dom element change, then we only changes
         those attributes instead of updating the entire region (assuming the
         platform code supports this).
