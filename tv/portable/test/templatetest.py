@@ -19,6 +19,9 @@ import compiled_templates
 
 from test.framework import DemocracyTestCase
 
+# FIXME: Add tests for DOM Handles without changeItems or deprecate
+#        the old changeItem API
+
 ranOnUnload = 0
 
 HTMLPattern = re.compile("^.*<body.*?>(.*)</body\s*>", re.S)
@@ -153,21 +156,30 @@ class ViewTest(DemocracyTestCase):
         self.assertEqual(self.domHandle.callList[0]['id'],id)
         match = self.itemPattern.findall(self.domHandle.callList[0]['xml'])
         self.assertEqual(len(match),1)
+
+        # This should do nothing, since the HTML didn't change
+        self.x.signalChange()
+        handle.updateRegions[0].doChange()
+        self.assertEqual(len(self.domHandle.callList),1)
+        
+        # Now, we get a callback
+        self.x.html = '<span>changes object</span>'
         self.x.signalChange()
         handle.updateRegions[0].doChange()
         self.assertEqual(len(self.domHandle.callList),2)
-        self.assertEqual(self.domHandle.callList[1]['name'],'changeItem')
-        self.assertEqual(self.domHandle.callList[1]['id'],match[0])
+
+        self.assertEqual(self.domHandle.callList[1]['name'],'changeItems')
+        self.assertEqual(self.domHandle.callList[1]['pairs'][0][0],match[0])
         temp = HTMLObject('<span>object</span>')
         handle.updateRegions[0].doChange()
         self.assertEqual(len(self.domHandle.callList),3)
-        self.assertEqual(self.domHandle.callList[2]['name'],'changeItem')
-        self.assertEqual(self.domHandle.callList[2]['id'],match[0])
+        self.assertEqual(self.domHandle.callList[2]['name'],'changeItems')
+        self.assertEqual(self.domHandle.callList[2]['pairs'][0][0],match[0])
         temp.remove()
         handle.updateRegions[0].doChange()
         self.assertEqual(len(self.domHandle.callList),4)
-        self.assertEqual(self.domHandle.callList[3]['name'],'changeItem')
-        self.assertEqual(self.domHandle.callList[3]['id'],match[0])
+        self.assertEqual(self.domHandle.callList[3]['name'],'changeItems')
+        self.assertEqual(self.domHandle.callList[3]['pairs'][0][0],match[0])
         self.assertEqual(ranOnUnload, 0)
         handle.unlinkTemplate()
         self.assertEqual(ranOnUnload, 1)
@@ -215,13 +227,25 @@ class ViewTest(DemocracyTestCase):
         match.extend(items2)
         self.assertEqual(len(match),4)
 
+        # This does nothing to the templates, since the HTML doesn't change
         self.x.signalChange()
         handle.trackedViews[0].callback()
         handle.trackedViews[1].callback()
+        self.assertEqual(len(self.domHandle.callList),2)
+
+        # Now, those calls are made
+        self.x.html = '<span>changed object</span>'
+        self.x.signalChange()
+        handle.trackedViews[0].callback()
+        handle.trackedViews[1].callback()
+        self.assertEqual(len(self.domHandle.callList),4)
+        
         self.x.remove()
         handle.trackedViews[0].callback()
         handle.trackedViews[1].callback()
         self.assertEqual(len(self.domHandle.callList),6)
+        self.assertEqual(self.domHandle.callList[0]['name'],'addItemBefore')
+        self.assertEqual(self.domHandle.callList[1]['name'],'addItemBefore')
         self.assertEqual(self.domHandle.callList[2]['name'],'changeItems')
         self.assertEqual(self.domHandle.callList[3]['name'],'changeItems')
         self.assertEqual(self.domHandle.callList[4]['name'],'removeItems')
