@@ -23,7 +23,7 @@ class Application:
 
         queue.main_thread = threading.currentThread()
         platformutils.setMainThread()
-        gtk.threads_init()
+        gtk.gdk.threads_init()
         self.onStartup()
         gtk.main()
         self.onShutdown()

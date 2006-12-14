@@ -106,7 +106,7 @@ class MainloopQueue:
             return retval
 
     def _idle(self):
-        gtk.threads_enter()
+        gtk.gdk.threads_enter()
         self.idle_running_lock.acquire()
         try:
             (callback, args, kwargs) = self.queue.get_nowait()
@@ -126,7 +126,7 @@ class MainloopQueue:
             except:
                 print "Exception in a gtkAsyncMethod:"
                 traceback.print_exc()
-            gtk.threads_leave()
+            gtk.gdk.threads_leave()
             return 1
 
 queue = MainloopQueue()
