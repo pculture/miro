@@ -1171,9 +1171,9 @@ class TemplateDisplay(frontend.HTMLDisplay):
         self.templateName = templateName
         self.templateState = templateState
         (tch, self.templateHandle) = template.fillTemplate(templateName,
-                templateState, self,
-                self.getDTVPlatformName(), self.getEventCookie(),
-                self.getBodyTagExtra(), *args, **kargs)
+                self, self.getDTVPlatformName(), self.getEventCookie(),
+                self.getBodyTagExtra(), templateState = templateState,
+                                                           *args, **kargs)
         self.args = args
         self.kargs = kargs
         html = tch.read()

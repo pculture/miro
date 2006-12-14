@@ -395,7 +395,7 @@ class CallbackViewTestCase(DemocracyTestCase):
         self.x.change()
         self.assertEqual(self.callcount,1)
 
-class SaveViewTestCase(DemocracyTestCase):
+class SaveRestoreTestCase(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)
         self.tempdb = os.path.join(tempfile.gettempdir(), 'democracy-temp-db')
@@ -409,6 +409,8 @@ class SaveViewTestCase(DemocracyTestCase):
     def tearDown(self):
         shutil.rmtree(self.tempdb)
         DemocracyTestCase.tearDown(self)
+
+class BasicSaveTestCase(SaveRestoreTestCase):
     def testSaveRestore(self):
         self.everything.liveStorage.saveDatabase()
         self.z = database.DDBObject()
