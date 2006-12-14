@@ -1,0 +1,29 @@
+Contained in this directory is the debian directory that we use to build the
+debian packages.  Here's how to use it:
+
+1) install the debhelper and cdbs packages:
+sudo apt-get install debhelper cdbs
+
+2) Get the source tarball, untar it into "democracyplayer-VERSION" (for
+example democracyplayer-0.9.2.2)
+
+3) Add a new entry to debian/changelog, use the previous entries as your
+template.
+
+Make sure you change the version number.  The version number is the version
+number from above + "1ubuntupcf".  If you make 2 ubuntu packages for the same
+release, name the second one "2ubuntupcf".
+
+Make sure your date string is in RFC-2822 format.  Use "date -R".
+
+4) copy the debian directory into the directory you just untarred.
+
+5) cd to the same directory and run:
+
+dpkg-buildpackage -us -uc -rfakeroot
+
+6) If everything goes well, you should have your .debs.  If something goes
+wrong, then you'll need to fix other files in the debian directory, probably
+debian/control.  That's beyond the scope of this README though.
+
+7) Once your build works, check in the updated debian directory to svn.

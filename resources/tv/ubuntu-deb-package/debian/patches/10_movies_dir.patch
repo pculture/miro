@@ -1,0 +1,19 @@
+--- platform/gtk-x11/platformcfg.py.orig	2006-08-29 15:40:20.000000000 +0200
++++ platform/gtk-x11/platformcfg.py	2006-08-29 15:42:22.000000000 +0200
+@@ -88,14 +88,14 @@
+     path = None
+ 
+     if descriptor == prefs.MOVIES_DIRECTORY:
+-        path = os.path.expanduser('~/Movies/Democracy')
++        path = os.path.expanduser('~/.democracy/Movies')
+         try:
+             os.makedirs (path)
+         except:
+             pass
+ 
+     elif descriptor == prefs.NON_VIDEO_DIRECTORY:
+-        path = os.path.expanduser('~/Desktop')
++        path = os.path.expanduser('~/.democracy/Nonvideo')
+ 
+     elif descriptor == prefs.SUPPORT_DIRECTORY:
+         path = os.path.expanduser('~/.democracy')

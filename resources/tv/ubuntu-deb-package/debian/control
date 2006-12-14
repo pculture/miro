@@ -1,0 +1,24 @@
+Source: democracyplayer
+Section: net
+Priority: optional
+Maintainer: Uwe Hermann <uwe@debian.org>
+Build-Depends: cdbs, debhelper, python2.4, python-pyrex, libboost-python-dev, python-gtk2-dev, python-gnome2-extras-dev (>= 2.14.0-2), python2.4-dbus, mozilla-dev, libxine-dev
+Standards-Version: 3.7.2
+
+Package: democracyplayer
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, python-gtk2, python-gnome2, python-gnome2-extras (>= 2.14.0-2), python-glade2, democracyplayer-data (>= 0.9.1-1), mozilla-dev, mozilla-psm
+Suggests: ttf-bitstream-vera
+Conflicts: j2re1.4
+Description: GTK+ based RSS video aggregator
+ Democracy Player is a platform for Internet television and video.
+ It allows you to download and watch videos from RSS feeds (including
+ podcasts, video blogs, and BitTorrent feeds).
+
+Package: democracyplayer-data
+Architecture: all
+Description: GTK+ based RSS video aggregator data files
+ Democracy Player is a platform for Internet television and video.
+ It allows you to download and watch videos from RSS feeds (including
+ podcasts, video blogs, and BitTorrent feeds).
+

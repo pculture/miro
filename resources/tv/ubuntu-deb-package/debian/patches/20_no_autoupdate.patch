@@ -1,0 +1,20 @@
+--- portable/app.py.orig	2006-07-21 12:55:36.000000000 +0200
++++ portable/app.py	2006-07-21 12:54:58.000000000 +0200
+@@ -467,7 +467,7 @@
+             
+             feed.setDelegate(delegate)
+             feed.setSortFunc(sorts.item)
+-            autoupdate.setDelegate(delegate)
++            # autoupdate.setDelegate(delegate)
+             database.setDelegate(delegate)
+             dialogs.setDelegate(delegate)
+ 
+@@ -554,7 +554,7 @@
+             self.videoDisplay.playbackController = self.playbackController
+             self.videoDisplay.setVolume(config.get(prefs.VOLUME_LEVEL))
+ 
+-            eventloop.addTimeout (30, autoupdate.checkForUpdates, "Check for updates")
++            # eventloop.addTimeout (30, autoupdate.checkForUpdates, "Check for updates")
+             feed.expireItems()
+ 
+             # Set up tab list (on left); this will automatically set up the
