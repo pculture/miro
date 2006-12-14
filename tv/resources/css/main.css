@@ -870,7 +870,11 @@ an element is dragged, the drag-highlight class is added to it */
     margin-right: 260px;
 	font-size: 10px;
 	overflow: hidden;
-	padding: 1px 0px 2px 0px;
+	padding: 1px 0px 3px 0px;
+}
+
+.direct-links {
+    padding-bottom: 2px;
 }
 
 .video-state {

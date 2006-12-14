@@ -60,10 +60,8 @@ viewName = kargs['viewName']
         <h1 t:replace="this.getTitle()" class="noselect"/>
 
         <div class="more-info-link-button">
-            <a href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');">
-                <span t:hideIf="this.showMoreInfo" i18n:translate="">MORE INFO</span>
-                <span t:showIf="this.showMoreInfo" i18n:translate="">LESS INFO</span>
-            </a>
+            <a t:hideIf="this.showMoreInfo" href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');">MORE INFO</a>
+            <a t:showIf="this.showMoreInfo" href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');">LESS INFO</a>
         </div>
 
         <div class="main-video-desc-desc noselect">
@@ -71,12 +69,12 @@ viewName = kargs['viewName']
         </div>
 
         <div class="main-video-bottom noselect">
-            <p t:showIf="this.showMoreInfo">
-<!--                <div class="donation-link" t:hideIf=""><a href="">DONATION LINK</a></div> -->
-<!--                <div class="transcript-link"><a href="">READ THE TRANSCRIPT</a></div> -->
+            <div t:showIf="this.showMoreInfo" class="direct-links">
+<!--            <div class="donation-link" t:hideIf=""><a href="">DONATION LINK</a></div> -->
+<!--            <div class="transcript-link"><a href="">READ THE TRANSCRIPT</a></div> -->
                 <div class="item-link"><a href="***this.getURL()***">DIRECT LINK</a></div>
                 <div class="item-path" t:hideIf="this.isDownloadable()">PATH: <span t:replace="this.getFilename()" /></div>
-            </p>
+            </div>
             <div t:hideIf="this.getEmblemCSSString() == ''" 
                 class="video-state ***this.getEmblemCSSClass()***">
                 <div class="video-state-left">

@@ -619,6 +619,7 @@ class BTDownloader(BGDownloader):
         self.metainfo = None
         self.torrent = None
         self.rate = self.eta = 0
+        self.upRate = self.uploaded = 0
         self.activity = None
         self.fastResumeData = None
         self.retryDC = None
@@ -659,6 +660,8 @@ class BTDownloader(BGDownloader):
 
         self.totalSize = newStatus['totalSize']
         self.rate = newStatus['downRate']
+        self.upRate = newStatus['upRate']
+        self.uploaded = newStatus['upTotal']
         self.eta = newStatus['timeEst']
         self.activity = newStatus['activity']
         self.currentSize = int(self.totalSize * newStatus['fractionDone'])
@@ -689,6 +692,7 @@ class BTDownloader(BGDownloader):
     def restoreState(self, data):
         self.__dict__.update(data)
         self.rate = self.eta = 0
+        self.upRate = self.uploaded = 0
         if self.state == 'downloading' or (
             self.state == 'uploading' and self.uploaded < 1.5*self.totalSize):
             self.runDownloader(done=True)
@@ -697,6 +701,8 @@ class BTDownloader(BGDownloader):
 
     def getStatus(self):
         data = BGDownloader.getStatus(self)
+        data['upRate'] = self.upRate
+        data['uploaded'] = self.uploaded
         data['metainfo'] = self.metainfo
         data['fastResumeData'] = self.fastResumeData
         data['activity'] = self.activity
