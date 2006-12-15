@@ -39,6 +39,9 @@ def launchDemocracy():
         def write(self, *args):
             for s in self.streams:
                 s.write(*args)
+            self.flush()
+        def flush(self):
+            for s in self.streams:
                 s.flush()
 
     logFile = config.get(prefs.LOG_PATHNAME)
