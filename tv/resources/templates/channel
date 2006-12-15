@@ -116,7 +116,6 @@ allWatchableItems = matchingItems.filter(filters.watchableItems,sortFunc=sorts.i
 watchableItems = allWatchableItems.filter(showWatchableFilter,sortFunc=sorts.itemsUnwatchedFirst)
 
 thisFeedView = views.feeds.filter(lambda x: x is feed)
-sortedView = allItems
 
 _updateView()
 
@@ -189,7 +188,7 @@ if feed.idExists():
 <!-- / TITLE BAR -->
 
 <!-- SORT BAR ************************************************************* -->
- <div t:updateForView="sortedView">
+ <div t:updateForView="matchingItems">
  <t:includeTemplate filename="sort-bar" />
  </div>
 <!-- / SORT BAR -->

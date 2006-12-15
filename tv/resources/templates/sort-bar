@@ -9,21 +9,62 @@
 </head>
 <body>
 
+<t:execOnLoad>
+<![CDATA[
+global sortBy, sortDirection
+sortBy = 'date'
+sortDirection = 'ascending'
+
+def setSortBy(by):
+    global sortBy, sortDirection
+    if sortBy == by:
+        if sortDirection == 'ascending':
+            sortDirection = 'descending'
+        else:
+            sortDirection = 'ascending'
+    else:
+        sortBy = by
+
+def getActiveStateForSortBy(by):
+    global sortBy
+    if sortBy == by:
+        return 'active'
+    return ''
+
+def getImageForSortBy(by):
+    global sortDirection
+    if sortDirection == 'ascending':
+        return 'resource:images/sort-up.png'
+    return 'resource:images/sort-down.png'
+]]>
+</t:execOnLoad>
+
 <div id="sort-bar">
     <div id="search-box" t:hideIf="'feed' in localvars and feed.getURL() == 'dtv:search'">
         <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Search')***"/>
     </div>
-    <div id="sort-buttons">    
-        <span>Sort:</span>
-        <a class="***handle.getCSSClassForSortBy('name')***" href="#" onclick="return eventURL('action:sortBy?by=name')">
-            Name<img t:showIf="handle.sortBy == 'name'" src="***handle.getImageForSortBy('name')***" />
+    <div id="sort-buttons">
+        <span>Sort by:</span>
+        
+        <a href="#" class="sort-button ***getActiveStateForSortBy('name')***" onclick="return eventURL('action:sortBy?by=name');">
+            <div class="left"><div class="right"><div class="mid">
+                Name<img src="***getImageForSortBy('name')***"/>
+            </div></div></div>
         </a>
-        <a class="***handle.getCSSClassForSortBy('date')***" href="#" onclick="return eventURL('action:sortBy?by=date')">
-            Date<img t:showIf="handle.sortBy == 'date'" src="***handle.getImageForSortBy('date')***" />
+
+        <a href="#" class="sort-button ***getActiveStateForSortBy('date')***" onclick="return eventURL('action:sortBy?by=date');">
+            <div class="left"><div class="right"><div class="mid">
+                Date<img src="***getImageForSortBy('date')***"/>
+            </div></div></div>
         </a>
-        <a class="***handle.getCSSClassForSortBy('size')***" href="#" onclick="return eventURL('action:sortBy?by=size')">
-            Size<img t:showIf="handle.sortBy == 'size'" src="***handle.getImageForSortBy('size')***" />
+
+        <a href="#" class="sort-button ***getActiveStateForSortBy('size')***" onclick="return eventURL('action:sortBy?by=size');">
+            <div class="left"><div class="right"><div class="mid">
+                Size<img src="***getImageForSortBy('size')***"/>
+            </div></div></div>
         </a>
+
+        &nbsp; <!-- This is for WebKit, so the right part of the last button show up correctly -->
     </div>
 </div>
 

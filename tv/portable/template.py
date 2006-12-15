@@ -346,8 +346,6 @@ class Handle:
         self.triggerActionURLsOnUnload = []
         self.onUnlink = onUnlink
         self.htmlChanger = HTMLChangeOptimizer()
-        self.sortBy = 'date'
-        self.sortDirection = 'descending'
         
     def addTriggerActionURLOnLoad(self,url):
         self.triggerActionURLsOnLoad.append(str(url))
@@ -455,19 +453,6 @@ class Handle:
 
     def addSubHandle(self, handle):
         self.subHandles.append(handle)
-
-    def getCSSClassForSortBy(self, by):
-        if self.sortBy == by:
-            return 'active-sort'
-        return ''
-
-    def getImageForSortBy(self, by):
-        if self.sortBy == by:
-            if self.sortDirection == 'ascending':
-                return 'resource:images/sort-down.png'
-            else:
-                return 'resource:images/sort-up.png'
-        return ''
 
 # Random utility functions 
 def returnFalse(x):

@@ -14,7 +14,6 @@
 
 playlist = views.db.getObjectByID(int(kargs['id']))
 playlistView = playlist.getView()
-sortedView = playlistView
 playlist.setSearch(None)
 thisPlaylistView = views.playlistFolders.filter(lambda x: x is playlist)
 childrenView = views.playlists.filterWithIndex(indexes.byFolder, playlist)
@@ -41,7 +40,7 @@ thisPlaylistView.unlink()
     </div>
 </div>
 
-<div t:updateForView="sortedView">
+<div t:updateForView="playlistView">
 <t:includeTemplate filename="sort-bar" />
 </div>
 

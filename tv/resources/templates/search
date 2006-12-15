@@ -20,7 +20,6 @@ searchFeed = views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search')
 feed = searchFeed[0]
 
 searchItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
-sortedView = searchItems
 searchEngines = views.searchEngines
 ]]>
     </t:execOnLoad>
@@ -47,7 +46,7 @@ searchItems.unlink()
       </div>
   </div>
 
-  <div t:updateForView="sortedView">
+  <div t:updateForView="searchItems">
   <t:includeTemplate filename="sort-bar" />
   </div>
 

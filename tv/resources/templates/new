@@ -19,7 +19,6 @@ global searchFilter
 searchFilter = lambda x: filters.matchingItems(x, None)
 
 matchingItems = views.newWatchableItems.filter(lambda x:searchFilter(x),sortFunc=sorts.itemsUnwatchedFirst)
-sortedView = matchingItems
 
 def updateSearchString(newSearch):
     global searchFilter
@@ -50,7 +49,7 @@ matchingItems.unlink()
 <!-- / TITLE BAR -->
 
 <!-- SORT BAR ************************************************************* -->
-<div t:updateForView="sortedView">
+<div t:updateForView="matchingItems">
 <t:includeTemplate filename="sort-bar" />
 </div>
 <!-- / SORT BAR -->

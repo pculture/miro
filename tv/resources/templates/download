@@ -48,8 +48,6 @@ externalDownloads = matchingExternalDLs.sort(sorts.item)
 pendingDownloads = matchingPendingDLs.sort(sorts.item)
 pausedDownloads = matchingPausedDLs.sort(sorts.item)
 
-sortedView = allNormalDownloads
-
 def updateSearchString(newSearch):
     global searchFilter
     if len(newSearch) == 0:
@@ -93,7 +91,7 @@ matchingPausedDLs.unlink()
 <!-- / TITLE BAR -->
 
 <!-- SORT BAR ************************************************************* -->
-<div t:updateForView="sortedView">
+<div t:updateForView="normalDownloads">
 <t:includeTemplate filename="sort-bar" />
 </div>
 <!-- / SORT BAR -->

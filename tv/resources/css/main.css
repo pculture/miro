@@ -478,37 +478,61 @@ float: left;
     z-index: 10;
 }
 
-#sort-buttons {
-    padding: 0 100px 0 0;
-    float: right;
-}
-
 #sort-bar #search-box {
     margin: 0px 0px 0px 10px;
     float: left;
 }
 
-#sort-buttons span,  #sort-buttons a {
-    float: left;
-    margin-right: 20px;
-    color: white;
-    text-decoration: none;
+#sort-buttons {
+    float: right;
+    margin-top: 2px;
+    padding-right: 100px;
     font-size: 13px;
-    padding: 2px 9px 2px 8px;
-}
-
-#sort-buttons a {
+    color: white;
     font-weight: bold;
 }
 
-#sort-buttons img {
-    border: none;
-    vertical-align: 0px;	
-    padding-left: 9px
+#sort-buttons a.sort-button {
+    text-decoration: none;
+    color: inherit;
+    margin-left: 2px;
 }
 
-.active-sort {
-    background: url(../images/sort-active-back.png) top left no-repeat;
+#sort-buttons a.sort-button div {
+    display: inline;
+    padding-top: 2px;
+}
+
+#sort-buttons .sort-button .left, .sort-button .mid, .sort-button .right {
+    padding-bottom: 4px;
+}
+
+#sort-buttons .sort-button .mid {
+    margin-left: 6px;
+    margin-right: 6px;
+    padding-left: 6px;
+}
+
+#sort-buttons .sort-button.active .left {
+    background: url(../images/sort-active-back-left.png) top left no-repeat;
+}
+
+#sort-buttons .sort-button.active .mid {
+    background: url(../images/sort-active-back-mid.png) top left repeat-x;
+}
+
+#sort-buttons .sort-button.active .right {
+    background: url(../images/sort-active-back-right.png) top right no-repeat;
+}
+
+#sort-buttons a.sort-button img {
+    border: none;
+    padding-left: 6px;
+    visibility: hidden;
+}
+
+#sort-buttons a.sort-button.active img {
+    visibility: visible;
 }
 
 /* Everything below is used in download-item */

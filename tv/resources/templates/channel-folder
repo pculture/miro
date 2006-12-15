@@ -117,10 +117,10 @@ for feed in allFeeds:
         <div t:updateForView="thisFolderView">
             <h1 id="main-title" t:replaceMarkup="folder.getTitle()" />
         </div>
-	<div id="main-subtitle">
-                <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Search Channel')***"/>
-	</div>
     </div>
+</div>
+<div t:updateForView="matchingItems">
+<t:includeTemplate filename="sort-bar" />
 </div>
 <div id="main-container">
     <t:includeTemplate filename="channel-content" />
