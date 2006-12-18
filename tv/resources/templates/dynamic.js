@@ -122,6 +122,19 @@ function URLdecode(str) {
   return decodeURIComponent(str)
 }
 
+var currentSelectBoxMenu = null;
+function showSelectBoxMenu(id) {
+    document.getElementById(id).style.display = 'block';
+    currentSelectBoxMenu = id;
+    document.addEventListener('click', hideSelectBoxMenu, true)
+}
+
+function hideSelectBoxMenu() {
+    document.getElementById(currentSelectBoxMenu).style.display = '';
+    currentSelectBoxMenu = null;
+    document.removeEventListener('click', hideSelectBoxMenu, true)
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 //// For calling by host templating code                                   ////
 ///////////////////////////////////////////////////////////////////////////////

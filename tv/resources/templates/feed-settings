@@ -65,20 +65,6 @@ t:hideIf="feed.getExpirationType() != 'never'" i18n:translate="">Never</option>
 'never'" i18n:translate="">Never</option>
 		</select>
 <br /><br />
-		<span i18n:translate="">
-			When turned on, Auto Download should
-		</span>
-		<select name="autoDownloadGets" onChange="javascript:setAutoDownloadGets();">
-			<option t:hideIf="feed.getEverything" selected="1" value="False" 
-i18n:translate="" >only get new videos.</option>
-			<option t:hideIf="not feed.getEverything" value="False" 
-i18n:translate="">only get new videos.</option>
-			<option t:hideIf="not feed.getEverything" value="True" 
-selected="1" i18n:translate="">get everything on this channel.</option>
-			<option t:hideIf="feed.getEverything" value="True" 
-i18n:translate="">get everything on this channel.</option>
-		</select>
-<br /><br />
 		<input type="checkbox" name="maxOutDownloads" onClick="javascript:setMaxNew();" checked="checked" t:hideIf="feed.getMaxNew() == 'unlimited'" />
 		<input type="checkbox" name="maxOutDownloads" onClick="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() != 'unlimited'"/>
 		<span i18n:translate="">Don't Auto Download when more than 

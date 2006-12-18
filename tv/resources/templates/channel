@@ -165,20 +165,27 @@ if feed.idExists():
             <a id="main-titlebar-settings" href="#"
                 onclick="return showSettings();" i18n:translate="">Settings</a>
         <div id="main-titlebar-auto">
-           <div t:updateForView="thisFeedView">
-                <form name="setAuto">
-                <input type="hidden" name="feed" value="@@@feed.getID()@@@" />
-		<span id="auto-checkbox-container">
-                <span t:showIf="feed.isAutoDownloadable()">
-                        <input type="checkbox" name="automatic" id="automatic" value="1" checked="checked" onclick="setAutoDownloadableFeed();" />
-                </span>
-                <span t:hideIf="feed.isAutoDownloadable()">
-                        <input type="checkbox" name="automatic" id="automatic" value="1"                   onclick="setAutoDownloadableFeed();" />
-                </span>
-		</span>
-                <span id="auto-label" i18n:translate=""><label for="automatic">Auto Download</label></span>
-                </form>          
-           </div>
+        <!--
+                All - Get All videos
+                New - Get only new videos
+        Off - Don't auto-download videos
+        !-->
+            <div class="auto-download" t:updateForView="thisFeedView">
+                <div class="select-box-left" onclick="showSelectBoxMenu('auto-download-menu');">
+                <div class="select-box-right">
+                <div class="select-box-mid">
+                    <span t:replace="feed.getAutoDownloadMode()" />
+                </div>
+                </div>
+                </div>
+                <span id="auto-label" i18n:translate="">AUTO DOWNLOAD</span>
+                <br clear="all" />
+                <ul id="auto-download-menu" class="select-box-menu">
+                    <li onclick="return eventURL('action:setAutoDownloadMode?mode=all&amp;feed=@@@feed.getID()@@@');" ><a href="#">All - Get all videos</a></li>
+                    <li onclick="return eventURL('action:setAutoDownloadMode?mode=new&amp;feed=@@@feed.getID()@@@');" ><a href="#">New - Get only new videos</a></li>
+                    <li onclick="return eventURL('action:setAutoDownloadMode?mode=off&amp;feed=@@@feed.getID()@@@');" ><a href="#">Off - Don't auto-download videos</a></li>
+                </ul>
+            </div>
         </div>
 		
         </div>

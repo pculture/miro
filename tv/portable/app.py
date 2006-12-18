@@ -1358,13 +1358,9 @@ class ModelActionHandler:
     def __init__(self, backEndDelegate):
         self.backEndDelegate = backEndDelegate
     
-    def setAutoDownloadableFeed(self, feed, automatic):
+    def setAutoDownloadMode(self, feed, mode):
         obj = db.getObjectByID(int(feed))
-        obj.setAutoDownloadable(automatic)
-
-    def setGetEverything(self, feed, everything):
-        obj = db.getObjectByID(int(feed))
-        obj.setGetEverything(everything == 'True')
+        obj.setAutoDownloadMode(mode)
 
     def setExpiration(self, feed, type, time):
         obj = db.getObjectByID(int(feed))

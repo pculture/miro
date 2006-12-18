@@ -337,12 +337,9 @@ class FeedImpl:
 
     def signalAutoItems (self, wereAuto):
         for item in self.items:
-            if item in wereAuto:
-                if not item.isEligibleForAutoDownload():
-                    item.signalChange(needsSave=False)
-            else:
-                if item.isEligibleForAutoDownload():
-                    item.signalChange(needsSave=False)
+            wasAuto = (item in wereAuto)
+            if wasAuto != item.isPendingAutoDownload():
+                item.signalChange(needsSave=False)
 
     def signalItems (self):
         for item in self.items:
@@ -617,33 +614,60 @@ class Feed(DDBObject):
     def unsetTitle(self):
         self.setTitle(None)
 
+    def getAutoDownloadMode(self):
+        self.confirmDBThread()
+        if self.autoDownloadable:
+            if self.getEverything:
+                return 'all'
+            else:
+                return 'new'
+        else:
+            return 'off'
+
+    def setAutoDownloadMode(self, mode):
+        if mode == 'all':
+            self.setGetEverything(True)
+            self.setAutoDownloadable(True)
+        elif mode == 'new':
+            self.setGetEverything(False)
+            self.setAutoDownloadable(True)
+        elif mode == 'off':
+            self.setAutoDownloadable(False)
+        else:
+            raise ValueError("Bad auto-download mode: %s" % mode)
+
+    def getCurrentAutoDownloadableItems(self):
+        auto = set()
+        for item in self.items:
+            if item.isPendingAutoDownload():
+                auto.add(item)
+        return auto
+
     ##
     # Switch the auto-downloadable state
     def setAutoDownloadable(self, automatic):
         self.confirmDBThread()
-        auto = set()
-        for item in self.items:
-            if item.isEligibleForAutoDownload():
-                auto.add(item)
-        self.autoDownloadable = (automatic == "1")
+        if self.autoDownloadable == automatic:
+            return
+        auto = self.getCurrentAutoDownloadableItems()
+        self.autoDownloadable = automatic
         if self.autoDownloadable:
+            # When turning on auto-download, existing items shouldn't be
+            # considered "new"
             for item in self.items:
                 if item.eligibleForAutoDownload:
                     item.eligibleForAutoDownload = False
                     item.signalChange()
-        for item in self.items:
-            if item.isEligibleForAutoDownload() or item in auto:
-                item.signalChange(needsSave=False)
         self.signalChange()
+        self.signalAutoItems(auto)
 
     ##
     # Sets the 'getEverything' attribute, True or False
     def setGetEverything(self, everything):
         self.confirmDBThread()
-        wereAuto = set()
-        for item in self.items:
-            if item.isEligibleForAutoDownload():
-                wereAuto.add(item)
+        if self.getEverything == everything:
+            return
+        wereAuto = self.getCurrentAutoDownloadableItems()
         self.getEverything = everything
         self.signalChange()
         self.signalAutoItems(wereAuto)
