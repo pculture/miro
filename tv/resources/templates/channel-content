@@ -11,13 +11,21 @@
 <!-- DOWNLOADS ******************************************************** -->
 <div t:updateForView="allDownloadingItems">
 <div t:hideIf="allDownloadingItems.len() == 0">
-<a class="main-channelbar-download" href="#" onclick="return eventURL('action:toggleDownloadsView');">
+<div class="main-channelbar-download" onclick="return eventURL('action:toggleDownloadsView');">
   <span class="triangle" t:hideIf="showDownloads"/>
   <span class="triangle-down" t:hideIf="not showDownloads"/>
+  <a class="download-bar-action" href="#"
+          onclick="eventURL('action:cancelDownloads'); event.stopPropagation();">Cancel all</a>
+  <a class="download-bar-action" href="#"
+          t:hideIf="allItemsPaused(allDownloadingItems)"
+          onclick="eventURL('action:pauseDownloads'); event.stopPropagation();">Pause all</a>
+  <a class="download-bar-action" href="#"
+          t:hideIf="allItemsDownloading(allDownloadingItems)"
+          onclick="eventURL('action:resumeDownloads'); event.stopPropagation();">Resume all</a>
   <span t:hideIf="allDownloadingItems.len()==1"  i18n:translate="">
       <span t:replace="allDownloadingItems.len()" i18n:name="count"/> Downloading</span>
    <span t:hideIf="allDownloadingItems.len()!=1" i18n:translate="">1 Downloading</span>
-</a>
+</div>
 </div>
 </div>
 

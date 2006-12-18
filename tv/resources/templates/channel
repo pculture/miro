@@ -108,12 +108,22 @@ allItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
 matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm), sortFunc=sorts.item)
 newItems = matchingItems.filter(showNewFilter, sortFunc=sorts.item)
 
-allDownloadingItems = matchingItems.filter(filters.downloadingItems,sortFunc=sorts.item)
+allDownloadingItems = matchingItems.filter(filters.downloadingOrPausedItems,sortFunc=sorts.item)
 downloadingItems = allDownloadingItems.filter(showDownloadsFilter,sortFunc=sorts.item)
 allWatchableItems = matchingItems.filter(filters.watchableItems,sortFunc=sorts.itemsUnwatchedFirst)
 watchableItems = allWatchableItems.filter(showWatchableFilter,sortFunc=sorts.itemsUnwatchedFirst)
 
 thisFeedView = views.feeds.filter(lambda x: x is feed)
+
+def allItemsHaveState(view, state):
+    for item in view:
+        if item.getState() != state:
+            return False
+    return True
+def allItemsPaused(view):
+    return allItemsHaveState(view, 'paused')
+def allItemsDownloading(view):
+    return allItemsHaveState(view, 'downloading')
 
 _updateView()
 

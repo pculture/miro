@@ -646,6 +646,9 @@ folder will be deleted.""")
         if self.downloader:
             self.downloader.pause()
 
+    def resume(self):
+        self.download(self.getAutoDownloaded())
+
     def isPendingManualDownload(self):
         self.confirmDBThread()
         return self.pendingManualDL

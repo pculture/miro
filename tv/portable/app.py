@@ -1249,7 +1249,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
     # Returns true if the browser should handle the URL.
     def onURLLoad(self, url):
-        logging.debug ("got %s", url)
+        logging.info ("got %s", url)
         try:
             # Special-case non-'action:'-format URL
             if url.startswith ("template:"):
@@ -1497,7 +1497,7 @@ class ModelActionHandler:
 
     def resumeAll (self):
         for item in views.pausedItems:
-            item.download(item.getAutoDownloaded())
+            item.resume()
         autodler.resumeDownloader()
 
     def toggleExpand(self, id):
@@ -1765,6 +1765,21 @@ class TemplateActionHandler:
 
     def toggleAllItemsMode(self):
         self.templateHandle.getTemplateVariable('toggleAllItemsMode')(self.templateHandle)
+
+    def pauseDownloads(self):
+        view = self.templateHandle.getTemplateVariable('allDownloadingItems')
+        for item in view:
+            item.pause()
+
+    def resumeDownloads(self):
+        view = self.templateHandle.getTemplateVariable('allDownloadingItems')
+        for item in view:
+            item.resume()
+
+    def cancelDownloads(self):
+        view = self.templateHandle.getTemplateVariable('allDownloadingItems')
+        for item in view:
+            item.expire()
 
     def playViewNamed(self, viewName, firstItemId):
         view = self.templateHandle.getTemplateVariable(viewName)

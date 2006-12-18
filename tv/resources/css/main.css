@@ -339,13 +339,25 @@ and "downloaded" sections */
 .main-channelbar-download {
     height: 19px;
     background: url(../images/main-bar-bg-download.png) repeat-x left bottom;
-    display: block;
     overflow: hidden;
     color: #111;
     text-decoration: none;
     font-size: 13px;
     font-weight: normal;
     padding-top: 2px;
+    cursor: pointer;
+}
+
+a.download-bar-action {
+    float: right;
+    text-decoration: none;
+    font-size: 10px;
+    color: black;
+    margin: 2px 0px 0px 3px;
+}
+
+a.download-bar-action:hover {
+    text-decoration: underline;
 }
 
 .clear-completed-link {

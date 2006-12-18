@@ -21,6 +21,9 @@ def matchingItems(obj, searchString):
 def downloadingItems(obj):
     return obj.getState() == 'downloading'
 
+def downloadingOrPausedItems(obj):
+    return obj.getState() in ('downloading', 'paused')
+
 def unwatchedItems(obj):
     return obj.getState() == 'newly-downloaded' and not obj.isNonVideoFile()
 

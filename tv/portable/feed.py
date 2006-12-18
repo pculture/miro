@@ -562,13 +562,6 @@ class Feed(DDBObject):
                 self.setBlinking(False)
         eventloop.addTimeout(0.5, timeout, 'unblink feed')
 
-    # Returns javascript to mark the feed as viewed
-    # FIXME: Using setTimeout is a hack to get around JavaScript bugs
-    #        Without the timeout, the view is never completely updated
-    def getMarkViewedJS(self):
-        return ("function markViewed() {eventURL('action:markFeedViewed?url=%s');} setTimeout(markViewed, 5000);" % 
-                urlencode(self.getURL()))
-
     # Returns the ID of this feed. Deprecated.
     def getFeedID(self):
         return self.getID()
