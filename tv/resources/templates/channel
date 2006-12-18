@@ -44,7 +44,7 @@ def _updateView ():
 
     feed.updateIcons()
 
-def _reInit(*args, **kargs):
+def reInit(*args, **kargs):
     global feed, allItems, showDownloads, showWatchableItems, showNewItems, allItemsMode, watchableItems, matchingItems, newItems
 
     if feed.idExists():
@@ -57,8 +57,6 @@ def _reInit(*args, **kargs):
     views.feeds.recomputeFilter(thisFeedView)
 
     _updateView()
-
-reInit = lambda *args, **kargs: _reInit(*args, **kargs)
 
 def showDownloadsFilter(x):
     return showDownloads
