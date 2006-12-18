@@ -70,7 +70,7 @@ def mappableToTab(obj):
                 folder.PlaylistFolder, guide.ChannelGuide))
 
 def autoDownloads(item):
-    return item.getAutoDownloaded() and item.getState() == 'downloading'
+    return item.getAutoDownloaded() and downloadingOrPausedItems(item)
 
 def manualDownloads(item):
     return not item.getAutoDownloaded() and not item.isPendingManualDownload() and item.getState() == 'downloading'
