@@ -9,6 +9,7 @@ from templatehelper import quoteattr, escape, attrPattern, rawAttrPattern, resou
 from templateoptimize import HTMLChangeOptimizer
 from xhtmltools import urlencode, toUTF8Bytes
 from itertools import chain
+import logging
 
 if os.environ.has_key('DEMOCRACY_RECOMPILE_TEMPLATES'):
     import template_compiler
@@ -346,6 +347,7 @@ class Handle:
         self.triggerActionURLsOnUnload = []
         self.onUnlink = onUnlink
         self.htmlChanger = HTMLChangeOptimizer()
+        self.filled = False
         
     def addTriggerActionURLOnLoad(self,url):
         self.triggerActionURLsOnLoad.append(str(url))
@@ -365,6 +367,8 @@ class Handle:
     def addUpdateHideOnView(self, id, view, hideFunc, previous):
         checkFunc = lambda *args: self._checkHide(id)
         self.trackedHides[id] = (view, hideFunc, checkFunc, previous)
+        if self.filled:
+            self.addHideChecks(view, checkFunc)
 
     def _checkHide(self, id):
         (view, hideFunc, checkFunc, previous) = self.trackedHides[id]
@@ -419,9 +423,10 @@ class Handle:
             o.onUnlink()
         self.trackedViews = []
         self.updateRegions = []
-        for id in self.trackedHides.keys():
-            (view, hideFunc, checkFunc, previous) = self.trackedHides[id]
-            self.removeHideChecks(view, checkFunc)
+        if self.filled:
+            for id in self.trackedHides.keys():
+                (view, hideFunc, checkFunc, previous) = self.trackedHides[id]
+                self.removeHideChecks(view, checkFunc)
         self.trackedHides = {}
         for handle in self.subHandles:
             handle.unlinkTemplate()
@@ -437,8 +442,10 @@ class Handle:
         for id in self.trackedHides.keys():
             (view, hideFunc, checkFunc, previous) = self.trackedHides[id]
             self.addHideChecks(view, checkFunc)
+        self.filled = True
 
     def addHideChecks(self, view, checkFunc):
+        logging.debug ("Add hide checks: function %s on view %s", checkFunc, view)
         view.addChangeCallback(checkFunc)
         view.addAddCallback(checkFunc)
         view.addRemoveCallback(checkFunc)
@@ -446,6 +453,7 @@ class Handle:
         checkFunc()
 
     def removeHideChecks(self, view, checkFunc):
+        logging.debug ("Remove hide checks: function %s on view %s", checkFunc, view)
         view.removeChangeCallback(checkFunc)
         view.removeAddCallback(checkFunc)
         view.removeRemoveCallback(checkFunc)
