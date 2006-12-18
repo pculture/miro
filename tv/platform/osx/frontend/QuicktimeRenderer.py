@@ -161,13 +161,34 @@ def extractIconDataAtPosition(filename, position):
 
     qttime = qtmovie.duration()
     qttime.timeValue *= position
-    image = qtmovie.frameImageAtTime_(qttime)
-    if image is None:
+    frame = qtmovie.frameImageAtTime_(qttime)
+    if frame is None:
         return None
 
+    frameSize = frame.size()
+    frameRatio = frameSize.width / frameSize.height
+    iconSize = NSSize(226.0, 170.0)
+    iconRatio = iconSize.width / iconSize.height
+
+    if frameRatio > iconRatio:
+        size = NSSize(iconSize.width, iconSize.width / frameRatio)
+        pos = NSPoint(0, (iconSize.height - size.height) / 2.0)
+    else:
+        size = NSSize(iconSize.height * frameRatio, iconSize.height)
+        pos = NSPoint((iconSize.width - size.width) / 2.0, 0)
+    
+    icon = NSImage.alloc().initWithSize_(iconSize)
+    try:
+        icon.lockFocus()
+        NSColor.blackColor().set()
+        NSRectFill(((0,0), iconSize))
+        frame.drawInRect_fromRect_operation_fraction_((pos, size), ((0,0), frameSize), NSCompositeSourceOver, 1.0)
+    finally:
+        icon.unlockFocus()
+    
     jpegData = None
     try:
-        tiffData = image.TIFFRepresentation()
+        tiffData = icon.TIFFRepresentation()
         imageRep = NSBitmapImageRep.imageRepWithData_(tiffData)
         properties = {NSImageCompressionFactor: 0.8}
         jpegData = imageRep.representationUsingType_properties_(NSJPEGFileType, properties)
