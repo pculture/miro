@@ -1137,6 +1137,8 @@ folder will be deleted.""")
         'QUICKTIME': 'MOV',
     }
     def getFormat(self, emptyForUnknown=True):
+        if self.looksLikeTorrent():
+            return '.torrent'
         try:
             enclosure = self.entry['enclosures'][0]
             try:
@@ -1145,7 +1147,7 @@ folder will be deleted.""")
                 extension == ''
             # Hack for mp3s, "mpeg audio" isn't clear enough
             if extension.lower() == 'mp3':
-                return 'MP3'
+                return '.mp3'
             if enclosure.has_key('type') and len(enclosure['type']) > 0:
                 mtype, subtype = enclosure['type'].split('/')
                 mtype = mtype.lower()
@@ -1155,10 +1157,10 @@ folder will be deleted.""")
                         format += ' AUDIO'
                     if format.startswith('X-'):
                         format = format[2:]
-                    return self.MIME_SUBSITUTIONS.get(format, format)
+                    return '.%s' % self.MIME_SUBSITUTIONS.get(format, format).lowercase()
             else:
                 if extension in self.KNOWN_MIME_SUBTYPES:
-                    return extension.upper()
+                    return '.%s' % extension
         except:
             pass
         if emptyForUnknown:
