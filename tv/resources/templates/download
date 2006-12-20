@@ -75,26 +75,30 @@ matchingPausedDLs.unlink()
 <div id="main-titlebar">
 	<div id="main-icon" class="noborder"><img src="resource:images/download-icon.png" /></div>
 	<div id="main-titlebar-center">
-        <h1 id="main-title" i18n:translate="">Downloading</h1>
+            <h1 id="main-title" i18n:translate="">Downloading</h1>
+            <div id="main-subtitle">
+                <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Search')***"/>
+            </div>
 	</div>
 	<div t:updateForConfigChange="">
+
+
 	<div id="main-upper-right">
-		<div t:hideIf="getFreeSpace() == getAvailableSpace()">
-			<p i18n:translate=""><span i18n:name="size" t:replace="getFreeSpace()" /> disk space free</p>
+
+
+		<div id="downloads-global-actions">
+		<div><p t:hideIf="views.downloadingItems.len() == 0" t:updateHideOnView="views.downloadingItems"><a i18n:translate="" href="#" onclick="return eventURL('action:pauseAll');" title="Pause All"><img src="resource:images/pause-all-downloads.png" /><br />Pause All</a></p>&nbsp;</div>
+		<div><p t:hideIf="views.pausedItems.len() == 0" t:updateHideOnView="views.pausedItems"><a i18n:translate="" href="#" onclick="return eventURL('action:resumeAll');" title="Resume All"><img src="resource:images/resume-all-downloads.png" /><br />Resume All</a></p>&nbsp;</div>
 		</div>
-		<p i18n:translate=""><span i18n:name="size" t:replace="getAvailableSpace()" /> available for downloads</p>
-		<p t:hideIf="views.downloadingItems.len() == 0" t:updateHideOnView="views.downloadingItems"><a i18n:translate="" href="#" onclick="return eventURL('action:pauseAll');" title="Pause All">Pause All</a></p>
-		<p t:hideIf="views.pausedItems.len() == 0" t:updateHideOnView="views.pausedItems"><a i18n:translate="" href="#" onclick="return eventURL('action:resumeAll');" title="Resume All">Resume All</a></p>
+<br style="clear: both;" /> 
+
+		<span t:hideIf="getFreeSpace() == getAvailableSpace()">
+			<p style="display: inline; margin-right: 0; clear: both;" i18n:translate=""><span i18n:name="size" t:replace="getFreeSpace()" /> free on disk -</p></span><p style="display: inline; margin: 0;" i18n:translate="">&nbsp;<span i18n:name="size" t:replace="getAvailableSpace()" /> free for downloads</p>
+		
 	</div>
 	</div>
 </div>
 <!-- / TITLE BAR -->
-
-<!-- SORT BAR ************************************************************* -->
-<div t:updateForView="normalDownloads">
-<t:includeTemplate filename="sort-bar" />
-</div>
-<!-- / SORT BAR -->
 
 <div id="main-container">
 

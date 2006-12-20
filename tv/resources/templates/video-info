@@ -26,20 +26,14 @@ thisItemView.unlink()
      <div  t:showIf="this.hasSharableURL()">
         <a href="#" 
             onclick="return recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@');" >
-		<span i18n:translate="">SHARE</span>
-        </a> - 
-	<a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" >
-		<span i18n:translate="">STAR</span>
-	</a>
+		<span i18n:translate="">SHARE</span></a>&nbsp;-&nbsp;<a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" ><span i18n:translate="">STAR</span></a>
      </div>
-     <div t:showIf="this.getExpiring()">
-         <span t:replace="this.getExpirationString()" />
+     <div>
+         <span t:showIf="this.getExpiring()" t:replace="this.getExpirationString()" />&nbsp;
      </div>
      <div>
         <span t:showIf="this.showSaveButton()">
-	  <a href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');">
-		<span i18n:translate="">SAVE</span>
-  	  </a> 
+	  <a href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');"><span i18n:translate="">KEEP</span></a> 
           -
 	</span>
 	<a href="#" onclick="return eventURL('action:expirePlayingItem?item=@@@this.getID()@@@');">

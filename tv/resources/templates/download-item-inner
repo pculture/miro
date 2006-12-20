@@ -44,66 +44,83 @@ viewName = kargs['viewName']
     </div>
 
     <img class="main-video-tnail" src="***this.getThumbnail()***" alt="" id="video-tnail-***viewName + str(this.getID())***" />
-    <div class="main-video-stats">
-            <span t:replaceMarkup="this.getDetails()" />        
-            <div t:showIf="this.getState() in ('saved', 'expiring', 'newly-downloaded')" class="main-video-details-reveal-button">
-                <span t:hideIf="this.isContainerItem">
-                    <a href="#" class="reveal-link" onclick="return eventURL('action:revealItem?item=@@@this.getID()@@@');" i18n:translate="">SHOW FILE</a>
-                </span>
-                <span t:showIf="this.isContainerItem">
-                    <a href="#" class="reveal-link" onclick="return eventURL('action:revealItem?item=@@@this.getID()@@@');" i18n:translate="">SHOW FOLDER</a>
-                </span>
-            </div>
-    </div>
 
     <div class="main-video-desc noselect">
         <h1 t:replace="this.getTitle()" class="noselect"/>
 
-        <div class="more-info-link-button">
-            <a t:hideIf="this.showMoreInfo" href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');">MORE INFO</a>
-            <a t:showIf="this.showMoreInfo" href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');">LESS INFO</a>
-        </div>
-
         <div class="main-video-desc-desc noselect">
-            <p t:replaceMarkup="this.getDescription()" />            
+            <span t:replaceMarkup="this.getDescription()" />    
         </div>
 
         <div class="main-video-bottom noselect">
-            <div t:showIf="this.showMoreInfo" class="direct-links">
-<!--            <div class="donation-link" t:hideIf=""><a href="">DONATION LINK</a></div> -->
-<!--            <div class="transcript-link"><a href="">READ THE TRANSCRIPT</a></div> -->
-                <div class="item-link"><a href="***this.getURL()***">DIRECT LINK</a></div>
-                <div class="item-path" t:hideIf="this.isDownloadable()">PATH: <span t:replace="this.getFilename()" /></div>
-            </div>
-            <div t:hideIf="this.getEmblemCSSString() == ''" 
+
+      	<div t:hideIf="this.getEmblemCSSString() == ''" 
                 class="video-state ***this.getEmblemCSSClass()***">
                 <div class="video-state-left">
                 <div class="video-state-right">
-                <span class="video-state-mid">
-                        <span t:replace="this.getEmblemCSSString()" />
+        	        <span class="video-state-mid">
+                	        <span t:replace="this.getEmblemCSSString()" />
+            	    </span>
+                </div>
+                </div>
+        </div>
+
+		<div class="date-channel-title-wrap">
+		    <span t:showIf="this.getReleaseDate() != ''"><span t:replace="this.getReleaseDate()" /> - </span>
+		    <span t:showIf="this.getURL() != this.getLink() and this.getLink() != ''"><a href="***this.getLink()***">Web Page</a> - </span>
+		    <div class="channel-title"><span t:replace="this.getChannelTitle()" /></div>
+		</div>
+
+		<br style="clear: both;" />
+
+            <p t:showIf="this.showMoreInfo" class="item-links">
+                <span><a t:showIf="this.getPaymentLink() != ''" href="***this.getPaymentLink()***" class="donation-link">DONATION LINK</a><br/></span>
+                <!-- <span class="transcript-link"><a href="">READ THE TRANSCRIPT</a><br/></span> -->
+                <span t:hideIf="this.getURL().startswith('file:')"><a href="***this.getURL()***" class="item-link">DIRECT LINK</a><br/></span>
+                <span t:showIf="this.getState() in ('saved', 'expiring', 'newly-downloaded')">
+                    <span t:hideIf="this.isContainerItem">
+                        <a href="#" class="reveal-link" onclick="return eventURL('action:revealItem?item=@@@this.getID()@@@');" i18n:translate="">SHOW FILE</a> (<span t:replace="this.getFilename()" />)
+                    </span>
+                    <span t:showIf="this.isContainerItem">
+                        <a href="#" class="reveal-link" onclick="return eventURL('action:revealItem?item=@@@this.getID()@@@');" i18n:translate="">SHOW FOLDER</a>
+                    </span>
                 </span>
-                </div>
-                </div>
-            </div>
-            <div class="channel-title">
-                <span t:replace="this.getChannelTitle()" />
-            </div>
+            </p>
+            
         </div>            
     </div>
     
     <div class="main-video-details">
-        <div class="main-video-details-tasks">
+    
+    	<div class="video-stats">
+		<strong t:replace="this.getDuration()" />&nbsp;&nbsp;&nbsp;&nbsp;<span t:replace="this.getSizeForDisplay()" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span t:replace="this.getFormat()" /><div class="more-info-link-button">
+            <div t:hideIf="this.showMoreInfo">
+                <a href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');" i18n:translate="">More Info <img src="resource:images/more-info-button.png" /></a>
+            </div>
+            <div t:showIf="this.showMoreInfo">
+                <a href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');" i18n:translate="">Close Info <img src="resource:images/more-info-button-close.png" /></a>
+            </div>
+    </div>
+
+            <!--            <span t:replaceMarkup="this.getDetails()" />   -->    
+
+    	</div>
+		        
+        	<div class="main-video-details-tasks">
             <a t:showIf="this.hasSharableURL()" href="#" 
                 class="main-video-details-task-mail" 
                 onclick="return recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@');" >
-                <img src="resource:images/mini-mail.png" /> <span i18n:translate="">SHARE IT</span>
+ <span i18n:translate="">SHARE</span>
             </a>
-            <a href="#" t:showIf="this.hasSharableURL()" 
+<!--            <a href="#" t:showIf="this.hasSharableURL()" 
                 class="main-video-details-task-bomb" 
                 onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" >
                 <img src="resource:images/mini-star.png" /> <span i18n:translate="">STAR IT</span>
             </a>
+-->
+
         </div>
+        
         <div t:hotspot="download-progress-***viewName***-***this.getID()***">
         <div t:showIf="this.getState() in ('downloading','paused')"
                 class="main-video-details-download-info">
@@ -138,6 +155,8 @@ viewName = kargs['viewName']
                     <span t:replace="this.getPausedString()" />
             </div>
             <a class="main-progress-cancel" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" title="Cancel Download" />
+            <a class="main-progress-pause" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" title="Pause Download" />
+
         </div>
         </div>
         <div t:showIf="this.getExpiring()" 
@@ -155,12 +174,10 @@ viewName = kargs['viewName']
         <div class="details-small-buttons">
             <div t:showIf="this.showSaveButton()">
             <a class="main-video-details-tasks-small save" href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');">
-                    <span i18n:translate="">SAVE</span>
+                    <span i18n:translate="">KEEP</span>
             </a>
             </div>
-            <div t:showIf="this.showSaved()" class="saved-note">
-                    SAVED
-            </div>
+            <div t:showIf="this.showSaved()" class="saved-note">SAVED</div>
             <div t:showIf="this.showTrashButton()">
             <a class="main-video-details-tasks-small delete" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');">
            <span i18n:translate="">DELETE</span>

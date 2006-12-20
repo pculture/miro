@@ -44,43 +44,43 @@ img {
 
 /* This is used to make the feed settings section float above the channel */
 #feed-settings {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	width: 100%;
-	height: 270px;
-	display: none;
-	background: url(../images/settings-shadow.png) repeat-x left bottom;
-	z-index: 9;
-	color: #000;
-	font-size: 13px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 270px;
+    display: none;
+    background: url(../images/settings-shadow.png) repeat-x left bottom;
+    z-index: 9;
+    color: #000;
+    font-size: 13px;
 }
 
 
 #settings-inner {
-	padding: 18px;
-	background-color: #FFFFBB;
-	height: 230px;
-	margin-bottom: 4px;
+    padding: 18px;
+    background-color: #FFFFBB;
+    height: 230px;
+    margin-bottom: 4px;
 }
 
 #settings-inner h2 {
-	font-size: 15px;
-	margin: 0;
-	padding: 12px 0 20px 0;
+    font-size: 15px;
+    margin: 0;
+    padding: 12px 0 20px 0;
 }
 
 #channel-url {
-	position: absolute;
-	right: 20px;
-	top: 10px;
-	color: #999;
-	font-size: 11px;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    color: #999;
+    font-size: 11px;
 }
 
 .settings-small {
-	font-size: 10px;
-	padding: 3px 0 0 23px;
+    font-size: 10px;
+    padding: 3px 0 0 23px;
 }
 
 .settings-button {
@@ -94,39 +94,28 @@ img {
 
 /* The block of drop downs and fields */
 #actual-settings {
-	padding: 0 0 0 25px;
+    padding: 0 0 0 25px;
 }
 
 
 /* Used in feed-settings to position the feed-settings icon */
 #close-settings-icon {
-	position: absolute;
-	bottom: 25px;
-	right: 25px;
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
     cursor: pointer;
 }
 
 /* This is the title section of the channel view */
 #main-titlebar {
-    background: url(../images/main-titlebar-bg.png) repeat-x left top;
-    height: 76px;
+    background: url(../images/main-titlebar-bg.png) repeat-x left bottom;
+    height: 77px;
     width: 100%;
     min-width: 600px;
     margin: 0px 0px 1px;
     position: fixed;
     top: 0px;
     z-index: 10;
-}
-
-/* Used to mark the search box */
-#search-box {
-    color: #1c5180;
-}
-
-#main-titlebar #search-box {
-    width: 115px; 
-    border: 1px solid #5392e3;
-    padding: 2px;
 }
 
 /* The icon for the channel view. Usually in the titlebar */
@@ -141,13 +130,13 @@ img {
 }
 
 #main-titlebar .noborder {
-	background: none;
-	border: none;
+    background: none;
+    border: none;
 }
 
 /* This wraps the center area of the title bar */
 #main-titlebar-center {
-    margin: 10px 150px 0px 150px;
+    margin: 10px 220px 0px 220px;
     padding-right: 5px;
     text-align: center;
     color: #FFFFFF;
@@ -157,7 +146,7 @@ img {
 #main-title {
     padding: 0px;
     margin: 0px;
-    font-size: 24px;
+    font-size: 21px;
     height: 28px;
     overflow: hidden;
     font-weight: normal;
@@ -174,11 +163,30 @@ img {
 /* Appears in the top right of the title section. */
 #main-upper-right {
     position: absolute;
-    top: 10px;
+    top: 5px;
     right: 10px;
     margin: 0px 0px 0px 0px;
     color: #FFFFFF;
 }
+
+#downloads-global-actions {
+    text-align: center;
+}
+
+#downloads-global-actions div {
+    display: block;
+    float: left;
+    width: 100px;
+    height: 45px;
+    overflow: hidden;
+}
+
+
+#downloads-global-actions a {
+    color: white;
+    text-decoration: none;
+}
+
 
 /* Wraps the stuff on the right hand side of the channel header */
 #main-titlebar-right {
@@ -186,6 +194,54 @@ img {
     width: 150px;
     top: 8px;
     right: 0px;
+}
+
+.select-box-right {
+    background: right top no-repeat url(../images/select-box-right.png);
+}
+
+.select-box-left {
+    background: left top no-repeat url(../images/select-box-left.png);
+    float: left;
+    cursor: pointer;
+    margin: 0px;
+}
+
+.select-box-mid {
+    background: left top repeat-x url(../images/select-box-mid.png);
+    margin: 0px 19px 0px 4px;
+    padding: 3px 2px;
+    height: 19px;
+    color: #000;
+}
+
+.select-box-menu {
+    border: 1px solid black;
+    background: #ccd;
+    margin: 0px;
+    position: relative;
+    top: -7px;
+    display: none;
+}
+
+.auto-download .select-box-menu {
+    width: 200px;
+    left: -155px;
+}
+
+.select-box-menu li {
+    list-style: none;
+    text-transform: none;
+    margin: 0px;
+}
+
+.select-box-menu li:hover {
+    background: #eee;
+}
+
+.select-box-menu a {
+    text-decoration: none;
+    color: #000;
 }
 
 /* just around settings */
@@ -220,60 +276,38 @@ img {
 /* Just around auto-download */
 #main-titlebar-auto {
     display: block;
+    height: 20px;
     color: #FFFFFF;
     padding: 0px;
     margin: 0px;
-    font-size: 11px;
+    text-transform: uppercase;
 }
 
-.select-box-left {
-    background: left top no-repeat url(../images/select-box-left.png);
-    float: left;
-    cursor: pointer;
+#auto-checkbox-container {
+    position: absolute;
+    top: 40px
+    left: 40px;
+}
+
+#auto-checkbox-container input {
+    vertical-align: top;
+    padding: 0px;
     margin: 0px;
 }
 
-.select-box-right {
-    background: right top no-repeat url(../images/select-box-right.png);
+#auto-label {
+    padding-left: 21px;
 }
 
-.select-box-mid {
-    background: left top repeat-x url(../images/select-box-mid.png);
-    margin: 0px 19px 0px 4px;
-    padding: 3px 2px;
-    height: 19px;
-    color: #000;
+/* Used to mark the search box */
+#search-box {
+    color: #1c5180;
 }
 
-.select-box-menu {
-    border: 1px solid black;
-    background: #ccd;
-    margin: 0px;
-    position: relative;
-    top: -7px;
-    display: none;
-}
-
-.auto-download .select-box-menu {
-    width: 200px;
-    left: -155px;
-}
-
-.select-box-menu li {
-    list-style: none;
-    text-transform: none;
-    margin: 0px;
+#main-titlebar #search-box {
+    width: 115px; 
+    border: 1px solid #5392e3;
     padding: 2px;
-    cursor: pointer;
-}
-
-.select-box-menu li:hover {
-    background: #eee;
-}
-
-.select-box-menu a {
-    text-decoration: none;
-    color: #000;
 }
 
 /* Used for scraping indicator on channel page */
@@ -321,6 +355,76 @@ img {
     */
 }
 
+/* The sort bar */
+
+#sort-bar {
+    background: #4A629a url(../images/sort-bar-back.png) top left repeat-x;
+    height: 19px;
+    width: 100%;
+    min-width: 600px;
+    padding: 5px 0 5px 0;
+    position: fixed;
+    top: 76px;
+    z-index: 10;
+}
+
+#sort-bar #search-box {
+    margin: 0px 0px 0px 10px;
+    float: left;
+}
+
+#sort-buttons {
+    float: right;
+    margin-top: 2px;
+    padding-right: 100px;
+    font-size: 13px;
+    color: white;
+    font-weight: bold;
+}
+
+#sort-buttons a.sort-button {
+    text-decoration: none;
+    color: inherit;
+    margin-left: 2px;
+}
+
+#sort-buttons a.sort-button div {
+    display: inline;
+    padding-top: 2px;
+}
+
+#sort-buttons .sort-button .left, .sort-button .mid, .sort-button .right {
+    padding-bottom: 4px;
+}
+
+#sort-buttons .sort-button .mid {
+    margin-left: 6px;
+    margin-right: 6px;
+    padding-left: 6px;
+}
+
+#sort-buttons .sort-button.active .left {
+    background: url(../images/sort-active-back-left.png) top left no-repeat;
+}
+
+#sort-buttons .sort-button.active .mid {
+    background: url(../images/sort-active-back-mid.png) top left repeat-x;
+}
+
+#sort-buttons .sort-button.active .right {
+    background: url(../images/sort-active-back-right.png) top right no-repeat;
+}
+
+#sort-buttons a.sort-button img {
+    border: none;
+    padding-left: 6px;
+    visibility: hidden;
+}
+
+#sort-buttons a.sort-button.active img {
+    visibility: visible;
+}
+
 /* This is the blue grey gradient for the bars above the "available"
 and "downloaded" sections */
 .main-channelbar {
@@ -339,34 +443,22 @@ and "downloaded" sections */
 .main-channelbar-download {
     height: 19px;
     background: url(../images/main-bar-bg-download.png) repeat-x left bottom;
+    display: block;
     overflow: hidden;
     color: #111;
     text-decoration: none;
     font-size: 13px;
     font-weight: normal;
     padding-top: 2px;
-    cursor: pointer;
-}
-
-a.download-bar-action {
-    float: right;
-    text-decoration: none;
-    font-size: 10px;
-    color: black;
-    margin: 2px 0px 0px 3px;
-}
-
-a.download-bar-action:hover {
-    text-decoration: underline;
 }
 
 .clear-completed-link {
-	text-decoration: underline; 
-	margin-left: 15px; 
-	font-weight: normal;
-	color: #fff;
-	font-size: 11px;
-	margin-top: -1px;
+    text-decoration: underline; 
+    margin-left: 15px; 
+    font-weight: normal;
+    color: #fff;
+    font-size: 11px;
+    margin-top: -1px;
 }
 
 /* triangle for the bars */
@@ -492,7 +584,7 @@ float: left;
     height: 31px;
     cursor: pointer;
     margin: auto;
-	width: 240px;
+    width: 240px;
 }
 .gray-button-left {
     background: url(../images/graybutton-left.png) top left no-repeat;
@@ -510,75 +602,6 @@ float: left;
     padding-top: 8px;
 }
 
-/* The sort bar */
-
-#sort-bar {
-    background: #4A629a url(../images/sort-bar-back.png) top left repeat-x;
-    height: 19px;
-    width: 100%;
-    min-width: 600px;
-    padding: 5px 0 5px 0;
-    position: fixed;
-    top: 76px;
-}
-
-#sort-bar #search-box {
-    margin: 0px 0px 0px 10px;
-    float: left;
-}
-
-#sort-buttons {
-    float: right;
-    margin-top: 2px;
-    padding-right: 100px;
-    font-size: 13px;
-    color: white;
-    font-weight: bold;
-}
-
-#sort-buttons a.sort-button {
-    text-decoration: none;
-    color: inherit;
-    margin-left: 2px;
-}
-
-#sort-buttons a.sort-button div {
-    display: inline;
-    padding-top: 2px;
-}
-
-#sort-buttons .sort-button .left, .sort-button .mid, .sort-button .right {
-    padding-bottom: 4px;
-}
-
-#sort-buttons .sort-button .mid {
-    margin-left: 6px;
-    margin-right: 6px;
-    padding-left: 6px;
-}
-
-#sort-buttons .sort-button.active .left {
-    background: url(../images/sort-active-back-left.png) top left no-repeat;
-}
-
-#sort-buttons .sort-button.active .mid {
-    background: url(../images/sort-active-back-mid.png) top left repeat-x;
-}
-
-#sort-buttons .sort-button.active .right {
-    background: url(../images/sort-active-back-right.png) top right no-repeat;
-}
-
-#sort-buttons a.sort-button img {
-    border: none;
-    padding-left: 6px;
-    visibility: hidden;
-}
-
-#sort-buttons a.sort-button.active img {
-    visibility: visible;
-}
-
 /* Everything below is used in download-item */
 .main-video {
     border-top: 1px solid #f0fcfe;
@@ -592,7 +615,8 @@ float: left;
 }
 
 .main-video.more-info {
-    height: 180px;
+    height: auto;
+
 }
 
 /* This is the line that appears when you reorder items. When
@@ -611,13 +635,14 @@ an element is dragged, the drag-highlight class is added to it */
 
 /* These change the background based on whether or not it's selected */
 .main-video.selected, .selected .main-video-stats, .selected .main-video-details {
-    background-color: none;
+    background-color: #77A6EB;
     background: url(../images/main-video-bg-selected.png) repeat-x left top;
-    color: white;
+    color: black; 
 }
 
-.main-video.more-info.selected, .more-info.selected .main-video-stats, .more-info.selected .main-video-details {
-    background: url(../images/main-video-bg-selected-big.png) repeat-x left top;
+.main-video.selected {
+    border-top: 1px solid #d5ddff;
+    border-bottom: 1px solid #8fc1f7;
 }
 
 .main-video.selected-inactive, .main-video-details.selected-inactive, .main-video-stats.selected-inactive {
@@ -631,9 +656,17 @@ an element is dragged, the drag-highlight class is added to it */
     top: 3px;
     width: 101px;
     height: 76px;
-    border: 1px solid #e3e3eC;
+    border: 1px solid #fff;
     z-index: 1;
 }
+
+.selected .main-video-tnail {
+    border: 2px solid #0067DF;
+    position: absolute;
+    left: 4px;
+    top: 2px;
+}
+
 
 .more-info .main-video-tnail {
     width: 226px;
@@ -652,22 +685,20 @@ an element is dragged, the drag-highlight class is added to it */
 .main-video-desc {
     position: relative;
     margin-left: 115px;
-    margin-right: 260px;
+    margin-right: 270px;
     margin-top: 3px;
-    height: 82px;
+    height: 84px;
     overflow: hidden;
 }
 
 .more-info .main-video-desc {
     margin-left: 240px;
-    height: 178px;
+
+    height: auto;
+    min-height: 175px;
+    max-height: 400px;    
 }
 
-.main-video-desc .more-info-link-button {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-}
 
 .main-video-desc h1 {
     margin: 0px;
@@ -693,10 +724,11 @@ an element is dragged, the drag-highlight class is added to it */
 
 .more-info .main-video-desc-desc {
     height: 100%;
+    min-height: 44px;
 }
 
 .main-video.selected .main-video-desc h1, .main-video.selected .main-video-desc-desc {
-    color: white;
+    color: black; 
 }
 
 .main-video-desc p {
@@ -727,7 +759,7 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .main-video.selected .main-video-desc a:link {
-    color: white;
+     color: black; 
 }
 
 .main-video-hitbox {
@@ -772,11 +804,11 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .main-video-hitbox .play-icon {
-    background: url(../images/main-video-play.png) no-repeat 66px 42px;
+    background: url(../images/main-video-play.png) no-repeat 73px 51px;
 }
 
 .more-info .main-video-hitbox .play-icon {
-    background: url(../images/main-video-play.png) no-repeat 191px 136px;
+    background: url(../images/main-video-play.png) no-repeat 198px 145px;
 }
 
 .main-video-hitbox .inprogress-background {
@@ -794,24 +826,42 @@ an element is dragged, the drag-highlight class is added to it */
     left: 71px;
 }
 
+.item-links {
+    position: absolute;
+    bottom: 4px;
+}
+
 .more-info .main-video-hitbox img.inprogress-arrows {
     top: 141px;
     left: 196px;
 }
 
-.main-video-stats {
+
+.details-small-buttons {
     position: absolute;
-    right: 160px;
-    top: 0px;
-    width: 80px;
-    height: 74px;
-    padding: 5px 12px 5px 2px;
-    color:  #444;
-    background: #e8ecf3;
-    font-size: 10px;
-    text-align: right;
-    line-height: 12px;
+    top: 60px;
+    left: 139px;
+    height: 17px;
+    text-align: center;
 }
+
+.more-info-link-button {
+    position: absolute;
+    top: 6px;
+    right: 5px;
+}
+
+.more-info-link-button a {
+    text-decoration: none;
+    color: #3263A0;
+    font-size: 11px;
+    line-height: 16px;
+} 
+
+.more-info-link-button a img {
+    vertical-align: -4px;
+}
+
 
 .more-info .main-video-stats {
     height: 170px;
@@ -826,103 +876,92 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .selected .main-video-stats a, .selected .main-video-stats a:hover {
-    color: white;
+    color: black;
 }
 
 .main-video-details-reveal-button {
     position: absolute;
     bottom: 6px;
     right: 10px;
+    font-size: 11px;
 }
 
 .main-video-details {
     position: absolute;
     right: 0px;
     top: 0px;
-    width: 160px;
+    width: 250px;
     height: 100%;
-    background: #e1e9f6;
+    padding: 0px 0 0 8px;
+    border-left: 1px solid #e1e9f6;
 }
 
+.video-stats {
+    padding-top: 6px;
+    color:  #222;
+    font-size: 10px;
+    line-height: 15px;
+    height: 16px;
+    overflow: hidden;
+}
+
+
 .main-video-details-tasks {
-    position: absolute;
-    top: 9px;
-    left: 5px;
     height: 26px;
     width: 153px;
+       margin-bottom: 5px;
+       margin-top: 15px;
+    margin-left: -1px;
 }
 
 .main-video-details-tasks a {
     display: block;
-    position: absolute;
-    top: 0px;
-    width: 72px;
-    height: 25px;
-    padding-top: 4px;
-    text-align: center;
+    height: 18px;
+    padding-top: 1px;
     color: #333;
     text-decoration: none;
-
+    text-align: left;
+    padding-left: 10px;
 }
 
 .main-video-details-tasks span {
-	font-size: 9px;
-    color: #333;
+    font-size: 10px;
+    color: #222;
 }
-
-
-.main-video-details-task-mail img {
-	margin-top: 2px;
-}
-
-
-.main-video-details-task-bomb img {
-	margin-top: -2px;
-}
-
-
-.main-video-details-tasks img {
-	vertical-align: top;
-}
-
 
 .main-video-details-task-mail { 
-    left: 1px;
-    background: url(../images/main-icon-mail.png) top left no-repeat;
+    background: url(../images/main-video-share.png) top left no-repeat;
 }
 
 .main-video-details-task-bomb { 
-    left: 78px;
     background: url(../images/main-icon-bomb.png) top left no-repeat;
 }
 
-
-
 .main-video-details-tasks-small { 
-	display: block;
+    display: block;
     background: url(../images/video-details-tasks-small.png) top left no-repeat;
-	color: #444;
-	text-decoration: none;
-	font-size: 9px;
-	padding: 3px 0 3px 0;
+    color: #333;
+    text-decoration: none;
+    font-size: 9px;
+    padding: 3px 0 3px 0;
 }
 
 
 .main-video-details-tasks-small.delete {
     position: absolute;
-    left: 85px;
-    width: 70px;
+    left: 59px;
+    width: 54px;
 }
 
 
 .main-video-details-tasks-small.save, .saved-note {
     position: absolute;
-    left: 8px;
-    width: 70px;
+    left: 0px;
+    width: 54px;
 }
 
  .saved-note {
-	margin-top: 3px;
+    margin-top: 3px;
     font-size: 9px;
     color: #666;
 }
@@ -932,32 +971,29 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .main-video-bottom {
-    position: absolute;
-    bottom: 0px;
     width: 100%;
-    margin-right: 260px;
-	font-size: 10px;
-	overflow: hidden;
-	padding: 1px 0px 3px 0px;
-}
-
-.direct-links {
-    padding-bottom: 2px;
+    margin-right: 310px;
+    font-size: 10px;
+    overflow: hidden;
+    padding: 1px 0px 2px 0px;
 }
 
 .video-state {
     font-weight: bold;
     height: 18px;
-    float: left;
     color: white;
+    margin: 0 0 5px 0;
+    float: left;
 }
 
 .video-state-left {
     background: left top no-repeat;
+    height: 18px;
 }
 
 .video-state-right {
     background: right top no-repeat;
+    height: 18px;
 }
 
 .video-state-mid {
@@ -991,13 +1027,27 @@ an element is dragged, the drag-highlight class is added to it */
     background-image: url(../images/badge-green-mid.png);
 }
 
-.channel-title {
+
+.date-channel-title-wrap {
     float: right;
     color: #666;
+    width: 60%;    
+    height: 16px;
+    overflow: hidden;
+    text-align: right;
+    padding-right: 0px;
+}
+
+.selected .date-channel-title-wrap {
+    color: black;
+}
+
+.channel-title {
+    display: inline;
 }
 
 .selected .channel-title {
-    color: white;
+    color: black; 
 }
 
 .hide-channel-title .channel-title {
@@ -1030,8 +1080,6 @@ a.small-button-left:hover {
     color: #000000;
     text-decoration: underline;
 }
-
-
 
 .white-button-left {
     background: top left no-repeat url(../images/white-button-left.png);
@@ -1067,18 +1115,11 @@ a.small-button-left:hover {
     margin-right: 70px;
 }
 
-.details-small-buttons {
-    position: absolute;
-    width: 100%;
-    top: 59px;
-    height: 19px;
-    text-align: center;
-}
 
 .more-download-info {
     position: absolute;
     top: 80px;
-    width: 160px;
+    width: 240px;
     font-size: 10px;
 }
 
@@ -1088,18 +1129,23 @@ a.small-button-left:hover {
 
 .main-video-details-download-info {
     position: absolute;
-    top: 44px;
-    left: 13px;
-    right: 13px;
-    height: 30px;
+    top: 37px;
+    left: 92px;
+    right: 0px;
+    height: 50px;
     font-size: 10px;
     overflow: hidden;
 }
 
 .main-video-details-download-info.expiring {
-    color: #444;
+    color: #333;
+    position: absolute;
+    top: 43px;
+    left: 145px;
+    width: 100px;
     text-align: center;
-    font-weight: bold;
+    height: 14px;
+    overflow: hidden;
 }
 
 .main-video-details-download-info.pending-auto {
@@ -1108,6 +1154,7 @@ a.small-button-left:hover {
 
 .download-rate-and-eta {
     width: 130px;
+    padding-top: 2px;
 }
 
 .download-rate {
@@ -1115,25 +1162,25 @@ a.small-button-left:hover {
 }
 
 
-.main-video.selected .main-video-details-download-info, .main-video.selected .video-state {
-    color: white;
+.main-video.selected .main-video-details-download-info {
+    color: black;
 }
 
 .main-progress-bar-bg {
-  width: 112px;
-  height: 11px;
+  width: 120px;
+  height: 15px;
   margin: 1px 1px 2px 1px;
   background: url(../images/progress-bar-bg.png) no-repeat left top; 
 }
 
 .main-progress-bar {
-  height: 11px;
+  height: 15px;
   background: url(../images/progress-bar.png) no-repeat left top; 
 }
 
 .main-progress-throbber-bg {
-  width: 114px;
-  height: 13px;
+  width: 120px;
+  height: 15px;
   margin: 0px 0px 1px 0px;
   background: url(../images/progress-throbber-bg.png) no-repeat left top; 
 }
@@ -1147,8 +1194,27 @@ a.small-button-left:hover {
     display: block;
     position: absolute;
     top: 0px;
-    left: 119px;
-    width: 11px;
-    height: 13px;
-    background: url(../images/main-cancel.png) top left no-repeat;
+    left: 144px;
+    width: 17px;
+    height: 17px;
+    background: url(../images/video-download-cancel.png) top left no-repeat;
+}
+
+.main-progress-pause {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 124px;
+    width: 17px;
+    height: 17px;
+    background: url(../images/video-download-pause.png) top left no-repeat;
+}
+
+.main-progress-resume {
+    display: block;
+    position: absolute;
+    left: 124px;
+    width: 17px;
+    height: 17px;
+    background: url(../images/video-download-resume.png) top left no-repeat;
 }
