@@ -154,9 +154,9 @@ viewName = kargs['viewName']
                     class="paused">
                     <span t:replace="this.getPausedString()" />
             </div>
+            <a t:hideIf="this.getState() == 'paused'" class="main-progress-pause" href="#" onclick="return eventURL('action:pauseDownload?item=@@@this.getID()@@@');" title="Pause Download" />
+            <a t:showIf="this.getState() == 'paused'" class="main-progress-resume" href="#" onclick="return eventURL('action:resumeDownload?item=@@@this.getID()@@@');" title="Pause Download" />
             <a class="main-progress-cancel" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" title="Cancel Download" />
-            <a class="main-progress-pause" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" title="Pause Download" />
-
         </div>
         </div>
         <div t:showIf="this.getExpiring()" 

@@ -1490,6 +1490,14 @@ class ModelActionHandler:
                 i.downloader.setDeleteFiles(False)
             i.remove()
 
+    def pauseDownload(self, item):
+        obj = db.getObjectByID(int(item))
+        obj.pause()
+        
+    def resumeDownload(self, item):
+        obj = db.getObjectByID(int(item))
+        obj.resume()
+
     def pauseAll (self):
         autodler.pauseDownloader()
         for item in views.downloadingItems:

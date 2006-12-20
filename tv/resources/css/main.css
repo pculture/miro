@@ -1200,21 +1200,18 @@ a.small-button-left:hover {
     background: url(../images/video-download-cancel.png) top left no-repeat;
 }
 
-.main-progress-pause {
+.main-progress-pause, .main-progress-resume {
     display: block;
     position: absolute;
     top: 0px;
     left: 124px;
     width: 17px;
     height: 17px;
+}
+.main-progress-pause {
     background: url(../images/video-download-pause.png) top left no-repeat;
 }
 
 .main-progress-resume {
-    display: block;
-    position: absolute;
-    left: 124px;
-    width: 17px;
-    height: 17px;
     background: url(../images/video-download-resume.png) top left no-repeat;
 }
