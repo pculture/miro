@@ -2,9 +2,12 @@
     <!-- // Protect from our XML parser, which doesn't know to protect <script>
 
     var feedSettingsTimeout = null;
+    var settingsMode = 'closed';
 
     function showSettings()
     {
+	if(settingsMode == 'open') return hideSettings();
+	if(settingsMode == 'animating') return;
         var feedSettings = document.getElementById("feed-settings");
         var closeButton = document.getElementById("feed-settings-close-button");
         feedSettings.style.display = "block";
@@ -24,9 +27,11 @@
            } else {
                 feedSettingsTimeout = null;
 		closeButton.style.display = "block";
+		settingsMode = 'open';
            }
         }
         feedSettingsTimeout = setTimeout(iteration, 50);
+	settingsMode = 'animating';
         return false;
     }
 
@@ -38,6 +43,7 @@
         }
         var feedSettings = document.getElementById("feed-settings");
 	feedSettings.style.display = "none";
+	settingsMode = 'closed';
 	return false;
     }
 

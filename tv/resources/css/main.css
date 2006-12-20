@@ -51,7 +51,7 @@ img {
     height: 270px;
     display: none;
     background: url(../images/settings-shadow.png) repeat-x left bottom;
-    z-index: 9;
+    z-index: 1; /* Needs to be float above the main page */
     color: #000;
     font-size: 13px;
 }
@@ -115,7 +115,11 @@ img {
     margin: 0px 0px 1px;
     position: fixed;
     top: 0px;
-    z-index: 10;
+    z-index: 3; 
+    /* This should be above feed-settings, so that feed-settings doesn't cover
+     * it up durring the opening animation.  It also needs to be above
+     * sort-bar, so the auto-download select menu is above sort-bar.
+     */
 }
 
 /* The icon for the channel view. Usually in the titlebar */
@@ -205,6 +209,8 @@ img {
     float: left;
     cursor: pointer;
     margin: 0px;
+    -khtml-user-select: none;
+    -moz-user-select: none;
 }
 
 .select-box-mid {
@@ -365,7 +371,10 @@ img {
     padding: 5px 0 5px 0;
     position: fixed;
     top: 76px;
-    z-index: 10;
+    z-index: 2;
+    /* This should be above feed-settings, so that feed-settings doesn't cover
+     * it up durring the opening animation.
+     */
 }
 
 #sort-bar #search-box {
@@ -443,13 +452,25 @@ and "downloaded" sections */
 .main-channelbar-download {
     height: 19px;
     background: url(../images/main-bar-bg-download.png) repeat-x left bottom;
-    display: block;
     overflow: hidden;
     color: #111;
     text-decoration: none;
     font-size: 13px;
     font-weight: normal;
     padding-top: 2px;
+    cursor: pointer;
+}
+
+a.download-bar-action {
+    float: right;
+    text-decoration: none;
+    font-size: 10px;
+    color: black;
+    margin: 2px 0px 0px 3px;
+}
+
+a.download-bar-action:hover {
+    text-decoration: underline;
 }
 
 .clear-completed-link {
@@ -657,7 +678,6 @@ an element is dragged, the drag-highlight class is added to it */
     width: 101px;
     height: 76px;
     border: 1px solid #fff;
-    z-index: 1;
 }
 
 .selected .main-video-tnail {
@@ -768,7 +788,6 @@ an element is dragged, the drag-highlight class is added to it */
     left: 7px;
     width: 100px;
     height: 75px;
-    z-index: 2;
 }
 
 .more-info .main-video-hitbox {

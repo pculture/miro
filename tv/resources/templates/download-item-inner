@@ -17,6 +17,8 @@ viewName = kargs['viewName']
 
 <body>
     <div class="dnd-reorder-line" />
+    <img class="main-video-tnail" src="***this.getThumbnail()***" alt="" id="video-tnail-***viewName + str(this.getID())***" />
+
     <div class="main-video-hitbox">
         <a t:showIf="this.isDownloadable()"
             class="download-icon" href="#"
@@ -42,8 +44,6 @@ viewName = kargs['viewName']
             title="Play '***this.getTitle()***'"
             onclick="return eventURL('action:playViewNamed?viewName=@@@viewName@@@&amp;firstItemId=@@@this.getID()@@@');" />
     </div>
-
-    <img class="main-video-tnail" src="***this.getThumbnail()***" alt="" id="video-tnail-***viewName + str(this.getID())***" />
 
     <div class="main-video-desc noselect">
         <h1 t:replace="this.getTitle()" class="noselect"/>

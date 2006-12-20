@@ -37,6 +37,14 @@ function eventURL(url) {
     return false;
 }
 
+// Calls eventURL, then calls event.stopPropagation() and
+// event.preventDefault() so that the event chain is stopped.
+function eventURLAndStop(url, event) {
+  eventURL(url);
+  event.stopPropagation();
+  event.preventDefault();
+}
+
 function recommendItem(title, url) {
     loadURL('http://www.videobomb.com/index/democracyemail?url=' + 
             url + '&title=' + title);
@@ -129,7 +137,7 @@ function showSelectBoxMenu(id) {
     document.addEventListener('click', hideSelectBoxMenu, true)
 }
 
-function hideSelectBoxMenu() {
+function hideSelectBoxMenu(event) {
     document.getElementById(currentSelectBoxMenu).style.display = '';
     currentSelectBoxMenu = null;
     document.removeEventListener('click', hideSelectBoxMenu, true)

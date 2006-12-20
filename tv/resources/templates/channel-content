@@ -15,13 +15,13 @@
   <span class="triangle" t:hideIf="showDownloads"/>
   <span class="triangle-down" t:hideIf="not showDownloads"/>
   <a class="download-bar-action" href="#"
-          onclick="eventURL('action:cancelDownloads'); event.stopPropagation();">Cancel all</a>
+          onclick="eventURLAndStop('action:cancelDownloads', event);">Cancel all</a>
   <a class="download-bar-action" href="#"
           t:hideIf="allItemsPaused(allDownloadingItems)"
-          onclick="eventURL('action:pauseDownloads'); event.stopPropagation();">Pause all</a>
+          onclick="eventURLAndStop('action:pauseDownloads', event);">Pause all</a>
   <a class="download-bar-action" href="#"
           t:hideIf="allItemsDownloading(allDownloadingItems)"
-          onclick="eventURL('action:resumeDownloads'); event.stopPropagation();">Resume all</a>
+          onclick="eventURLAndStop('action:resumeDownloads', event);">Resume all</a>
   <span t:hideIf="allDownloadingItems.len()==1"  i18n:translate="">
       <span t:replace="allDownloadingItems.len()" i18n:name="count"/> Downloading</span>
    <span t:hideIf="allDownloadingItems.len()!=1" i18n:translate="">1 Downloading</span>
