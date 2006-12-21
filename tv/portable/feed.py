@@ -335,12 +335,6 @@ class FeedImpl:
         self.ufeed.confirmDBThread()
         return self.visible
 
-    def signalAutoItems (self, wereAuto):
-        for item in self.items:
-            wasAuto = (item in wereAuto)
-            if wasAuto != item.isPendingAutoDownload():
-                item.signalChange(needsSave=False)
-
     def signalItems (self):
         for item in self.items:
             item.signalChange(needsSave=False)
@@ -642,8 +636,8 @@ class Feed(DDBObject):
         self.confirmDBThread()
         if self.autoDownloadable == automatic:
             return
-        auto = self.getCurrentAutoDownloadableItems()
         self.autoDownloadable = automatic
+
         if self.autoDownloadable:
             # When turning on auto-download, existing items shouldn't be
             # considered "new"
@@ -651,19 +645,45 @@ class Feed(DDBObject):
                 if item.eligibleForAutoDownload:
                     item.eligibleForAutoDownload = False
                     item.signalChange()
+
+        for item in self.items:
+            if item.isEligibleForAutoDownload():
+                item.signalChange(needsSave=False)
+
         self.signalChange()
-        self.signalAutoItems(auto)
 
     ##
     # Sets the 'getEverything' attribute, True or False
     def setGetEverything(self, everything):
         self.confirmDBThread()
-        if self.getEverything == everything:
+        if everything == self.getEverything:
             return
-        wereAuto = self.getCurrentAutoDownloadableItems()
+        if not self.autoDownloadable:
+            self.getEverything = everything
+            self.signalChange()
+            return
+
+        updates = set()
+        if everything:
+            for item in self.items:
+                if not item.isEligibleForAutoDownload():
+                    updates.add(item)
+        else:
+            for item in self.items:
+                if item.isEligibleForAutoDownload():
+                    updates.add(item)
+
         self.getEverything = everything
         self.signalChange()
-        self.signalAutoItems(wereAuto)
+
+        if everything:
+            for item in updates:
+                if item.isEligibleForAutoDownload():
+                    item.signalChange(needsSave=False)
+        else:
+            for item in updates:
+                if not item.isEligibleForAutoDownload():
+                    item.signalChange(needsSave=False)
 
     ##
     # Sets the expiration attributes. Valid types are 'system', 'feed' and 'never'
