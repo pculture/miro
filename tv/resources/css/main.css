@@ -174,7 +174,7 @@ img {
 }
 
 #downloads-global-actions {
-    text-align: center;
+	text-align: center;
 }
 
 #downloads-global-actions div {
@@ -185,12 +185,19 @@ img {
     overflow: hidden;
 }
 
-
 #downloads-global-actions a {
-    color: white;
-    text-decoration: none;
+	color: white;
+	text-decoration: none;
 }
 
+#downloads-free-space span {
+	margin: 0;
+}
+
+#downloads-free-disk span {
+	margin-right: 0;
+	clear: both;
+}
 
 /* Wraps the stuff on the right hand side of the channel header */
 #main-titlebar-right {

@@ -87,13 +87,15 @@ matchingPausedDLs.unlink()
 
 
 		<div id="downloads-global-actions">
-		<div><p t:hideIf="views.downloadingItems.len() == 0" t:updateHideOnView="views.downloadingItems"><a i18n:translate="" href="#" onclick="return eventURL('action:pauseAll');" title="Pause All"><img src="resource:images/pause-all-downloads.png" /><br />Pause All</a></p>&nbsp;</div>
-		<div><p t:hideIf="views.pausedItems.len() == 0" t:updateHideOnView="views.pausedItems"><a i18n:translate="" href="#" onclick="return eventURL('action:resumeAll');" title="Resume All"><img src="resource:images/resume-all-downloads.png" /><br />Resume All</a></p>&nbsp;</div>
+			<div><p t:hideIf="views.downloadingItems.len() == 0" t:updateHideOnView="views.downloadingItems"><a href="#" onclick="return eventURL('action:pauseAll');" title="Pause All"><img src="resource:images/pause-all-downloads.png" /><br /><span i18n:translate="">Pause All</span></a></p>&nbsp;</div>
+			<div><p t:hideIf="views.pausedItems.len() == 0" t:updateHideOnView="views.pausedItems"><a href="#" onclick="return eventURL('action:resumeAll');" title="Resume All"><img src="resource:images/resume-all-downloads.png" /><br /><span i18n:translate="">Resume All</span></a></p>&nbsp;</div>
 		</div>
 <br style="clear: both;" /> 
 
 		<span t:hideIf="getFreeSpace() == getAvailableSpace()">
-			<p style="display: inline; margin-right: 0; clear: both;" i18n:translate=""><span i18n:name="size" t:replace="getFreeSpace()" /> free on disk -</p></span><p style="display: inline; margin: 0;" i18n:translate="">&nbsp;<span i18n:name="size" t:replace="getAvailableSpace()" /> free for downloads</p>
+			<span id="downloads-free-disk" i18n:translate=""><span i18n:name="size" t:replace="getFreeSpace()" /> free on disk - </span>
+		</span>
+		<span id="downloads-free-space" i18n:translate=""><span i18n:name="size" t:replace="getAvailableSpace()" /> free for downloads</span>
 		
 	</div>
 	</div>
