@@ -668,6 +668,34 @@ class runxul(bdist_xul_dumb):
                 "-console"])
         os.chdir(oldDir)
 
+class clean(Command):
+    user_options = []
+    def initialize_options(self):
+        return None
+    def finalize_options(self):
+        return None
+    def run(self):
+        print "Removing old build directory..."
+        try:
+            shutil.rmtree('build')
+        except:
+            pass
+        print "Removing old dist directory..."
+        try:
+            shutil.rmtree('dist')
+        except:
+            pass
+        print "Removing old compiled templates..."
+        try:
+            for filename in os.listdir(os.path.join("..","..","portable","compiled_templates")):
+                filename = os.path.join("..","..","portable","compiled_templates",filename)
+                if os.path.isdir(filename):
+                    shutil.rmtree(filename)
+                else:
+                    os.remove(filename)
+        except:
+            pass
+
 ###############################################################################
 
 ###############################################################################
@@ -793,5 +821,6 @@ if __name__ == "__main__":
             'runxul': runxul,
             'bdist_xul_dumb': bdist_xul_dumb,
             'bdist_xul': bdist_xul,
+            'clean': clean,
             }
     )
