@@ -20,7 +20,7 @@ UPSTREAM_LIMIT_IN_KBS       = Pref( key='upstreamLimitInKBS',    default=12,    
 PRESERVE_DISK_SPACE         = Pref( key='preserveDiskSpace',     default=False, platformSpecific=False )
 PRESERVE_X_GB_FREE          = Pref( key='preserveXGBFree',       default=1,     platformSpecific=False )
 EXPIRE_AFTER_X_DAYS         = Pref( key='expireAfterXDays',      default=6,     platformSpecific=False )
-DOWNLOADS_TARGET            = Pref( key='DownloadsTarget',       default=4,     platformSpecific=False )
+DOWNLOADS_TARGET            = Pref( key='DownloadsTarget',       default=8,     platformSpecific=False )
 TORRENT_DOWNLOADS_TARGET    = Pref( key='TorrentDownloadsTarget',default=3,     platformSpecific=False )
 MAX_MANUAL_DOWNLOADS        = Pref( key='MaxManualDownloads',    default=10,    platformSpecific=False )
 VOLUME_LEVEL                = Pref( key='VolumeLevel',           default=1.0,   platformSpecific=False )
