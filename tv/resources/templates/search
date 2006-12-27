@@ -21,6 +21,11 @@ feed = searchFeed[0]
 
 searchItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
 searchEngines = views.searchEngines
+
+def setSortBy(by, handle):
+    sorts.setSortBy(by)
+    searchItems.recomputeFilters()
+    handle.forceUpdate()
 ]]>
     </t:execOnLoad>
     <t:execOnUnLoad><![CDATA[

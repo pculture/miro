@@ -1859,8 +1859,7 @@ class TemplateActionHandler:
             searchFeed.reset()
 
     def sortBy(self, by):
-        self.templateHandle.getTemplateVariable('setSortBy')(by)
-        self.templateHandle.forceUpdate()
+        self.templateHandle.getTemplateVariable('setSortBy')(by, self.templateHandle)
 
     def handleSelect(self, area, viewName, id, shiftDown, ctrlDown):
         try:

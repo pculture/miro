@@ -102,14 +102,19 @@ def toggleAllItemsMode(handle):
     matchingItems.recomputeFilter(newItems)
     handle.forceUpdate()
 
+def setSortBy(by, handle):
+    sorts.setSortBy(by)
+    allItems.recomputeFilters()
+    handle.forceUpdate()
+
 _setFeed(kargs)
 
 allItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
-matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm), sortFunc=sorts.item)
-newItems = matchingItems.filter(showNewFilter, sortFunc=sorts.item)
+matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm), sortFunc=sorts.itemBy)
+newItems = matchingItems.filter(showNewFilter, sortFunc=sorts.itemBy)
 
-allDownloadingItems = matchingItems.filter(filters.downloadingOrPausedItems,sortFunc=sorts.item)
-downloadingItems = allDownloadingItems.filter(showDownloadsFilter,sortFunc=sorts.item)
+allDownloadingItems = matchingItems.filter(filters.downloadingOrPausedItems,sortFunc=sorts.itemBy)
+downloadingItems = allDownloadingItems.filter(showDownloadsFilter,sortFunc=sorts.itemBy)
 allWatchableItems = matchingItems.filter(filters.watchableItems,sortFunc=sorts.itemsUnwatchedFirst)
 watchableItems = allWatchableItems.filter(showWatchableFilter,sortFunc=sorts.itemsUnwatchedFirst)
 

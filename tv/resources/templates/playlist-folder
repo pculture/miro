@@ -20,6 +20,11 @@ childrenView = views.playlists.filterWithIndex(indexes.byFolder, playlist)
 
 def updateSearchString(newSearch):
     playlist.setSearch(newSearch)
+
+def setSortBy(by, handle):
+    sorts.setSortBy(by)
+    views.playlistFolders.recomputeFilters()
+    handle.forceUpdate()
 ]]>
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[

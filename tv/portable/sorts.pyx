@@ -46,6 +46,41 @@ def item(x,y):
             yParent = y.getParent()
             return item((xParent, xParent), (yParent, yParent))
 
+sortBy = 'date'                 # Possible values: 'date', 'size', 'name'
+sortDirection = 'ascending'     # Possible values: 'ascending', 'descending'
+
+def setSortBy(by):
+    global sortBy, sortDirection
+    if sortBy == by:
+        if sortDirection == 'ascending':
+            sortDirection = 'descending'
+        else:
+            sortDirection = 'ascending'
+    else:
+        sortBy = by
+
+def itemBy(x, y):
+    global sortBy, sortDirection
+    result = False
+    if sortBy == 'date':
+        result = itemByDate(x, y)
+    elif sortBy == 'size':
+        result = itemBySize(x, y)
+    elif sortBy == 'name':
+        result = itemByName(x, y)
+    if sortDirection == 'descending':
+        result = not result
+    return result
+
+def itemByDate(x, y):
+    return x[1].releaseDateObj > y[1].releaseDateObj
+
+def itemByName(x, y):
+    return x[1].getTitle() > y[1].getTitle()
+
+def itemBySize(x, y):
+    return x[1].getSize() > y[1].getSize()
+
 unwatchedMemory = {}
 unwatchedMemoryFor = None
 def switchUnwatchedFirstChannel(newChannel):
@@ -76,7 +111,7 @@ def itemsUnwatchedFirst(x,y):
     if uwx != uwy:
         return uwx
     else:
-        return item(x,y)
+        return itemBy(x,y)
 
 def guideTabs(x, y):
     xguide = x[1].obj

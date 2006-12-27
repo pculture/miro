@@ -19,6 +19,11 @@ playlist.setSearch(None)
 
 def updateSearchString(newSearch):
     playlist.setSearch(newSearch)
+
+def setSortBy(by, handle):
+    sorts.setSortBy(by)
+    views.playlists.recomputeFilters()
+    handle.forceUpdate()
 ]]>
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[

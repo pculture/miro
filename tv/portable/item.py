@@ -960,35 +960,33 @@ folder will be deleted.""")
             return ""
     
     ##
-    # Returns the size of the item to be displayed. If the item has a
-    # corresponding downloaded enclosure we use the pysical size of the file,
-    # otherwise we use the RSS enclosure tag values.
+    # Returns the size of the item to be displayed.
     def getSizeForDisplay(self):
         if not hasattr(self, "_size"):
-            fname = self.getFilename()
-            try:
-                if os.path.isdir(fname):
-                    size = 0
-                    for (dirpath, dirnames, filenames) in os.walk(fname):
-                        for name in filenames:
-                            size += os.path.getsize(os.path.join(dirpath, name))
-                        size += os.path.getsize(dirpath)
-                else:
-                    size = os.path.getsize(fname)
-                self._size = util.formatSizeForUser(size)
-            except:
-                self._size = self.getEnclosuresSize()
-        return self._size
+            self._size = self.getSize()
+        return util.formatSizeForUser(self._size)
     
     ##
-    # Returns the total size of all enclosures in bytes
-    def getEnclosuresSize(self):
-        size = 0
-        try:
-            size = int(self.getFirstVideoEnclosure()['length'])
-        except:
-            pass
-        return util.formatSizeForUser(size)
+    # Returns the size of the item. If the item has a corresponding downloaded 
+    # enclosure we use the pysical size of the file, otherwise we use the RSS 
+    # enclosure tag values.
+    def getSize(self):
+        fname = self.getFilename()
+        if os.path.exists(fname):
+            if os.path.isdir(fname):
+                size = 0
+                for (dirpath, dirnames, filenames) in os.walk(fname):
+                    for name in filenames:
+                        size += os.path.getsize(os.path.join(dirpath, name))
+                    size += os.path.getsize(dirpath)
+                return size
+            else:
+                return os.path.getsize(fname)
+        else:
+            try:
+                return int(self.getFirstVideoEnclosure()['length'])
+            except:
+                return 0
 
     ##
     # returns status of the download in plain text

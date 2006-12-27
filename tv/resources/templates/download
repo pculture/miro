@@ -43,10 +43,10 @@ matchingExternalDLs = allExternalDownloads.filter(lambda x:searchFilter(x))
 matchingPendingDLs = allPendingDownloads.filter(lambda x:searchFilter(x))
 matchingPausedDLs = allPausedDownloads.filter(lambda x:searchFilter(x))
 
-normalDownloads = matchingNormalDLs.sort(sorts.item)
-externalDownloads = matchingExternalDLs.sort(sorts.item)
-pendingDownloads = matchingPendingDLs.sort(sorts.item)
-pausedDownloads = matchingPausedDLs.sort(sorts.item)
+normalDownloads = matchingNormalDLs.sort(sorts.itemBy)
+externalDownloads = matchingExternalDLs.sort(sorts.itemBy)
+pendingDownloads = matchingPendingDLs.sort(sorts.itemBy)
+pausedDownloads = matchingPausedDLs.sort(sorts.itemBy)
 
 def updateSearchString(newSearch):
     global searchFilter
@@ -58,6 +58,14 @@ def updateSearchString(newSearch):
     allExternalDownloads.recomputeFilter(matchingExternalDLs)
     allPendingDownloads.recomputeFilter(matchingPendingDLs)
     allPausedDownloads.recomputeFilter(matchingPausedDLs)
+
+def setSortBy(by, handle):
+    sorts.setSortBy(by)
+    allNormalDownloads.recomputeFilter(matchingNormalDLs)
+    allExternalDownloads.recomputeFilter(matchingExternalDLs)
+    allPendingDownloads.recomputeFilter(matchingPendingDLs)
+    allPausedDownloads.recomputeFilter(matchingPausedDLs)
+    handle.forceUpdate()
 ]]>
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
@@ -76,9 +84,6 @@ matchingPausedDLs.unlink()
 	<div id="main-icon" class="noborder"><img src="resource:images/download-icon.png" /></div>
 	<div id="main-titlebar-center">
             <h1 id="main-title" i18n:translate="">Downloading</h1>
-            <div id="main-subtitle">
-                <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Search')***"/>
-            </div>
 	</div>
 	<div t:updateForConfigChange="">
 
@@ -101,6 +106,12 @@ matchingPausedDLs.unlink()
 	</div>
 </div>
 <!-- / TITLE BAR -->
+
+<!-- SORT BAR ************************************************************* --> 
+<div t:updateForView="normalDownloads"> 
+<t:includeTemplate filename="sort-bar" /> 
+</div> 
+<!-- / SORT BAR -->
 
 <div id="main-container">
 

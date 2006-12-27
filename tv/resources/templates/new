@@ -28,6 +28,10 @@ def updateSearchString(newSearch):
         searchFilter = lambda x: filters.matchingItems(x, newSearch)
     views.newWatchableItems.recomputeFilter(matchingItems)
 
+def setSortBy(by, handle):
+    sorts.setSortBy(by)
+    views.watchableItems.recomputeFilter(matchingItems)
+    handle.forceUpdate()
 ]]>
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[

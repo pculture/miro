@@ -16,7 +16,7 @@ global searchFilter
 searchFilter = lambda x: filters.matchingItems(x, None)
 
 matchingItems = views.watchableItems.filter(lambda x:searchFilter(x))
-libraryItems = matchingItems.sort(sorts.item)
+libraryItems = matchingItems.sort(sorts.itemBy)
 
 def updateSearchString(newSearch):
     global searchFilter
@@ -25,6 +25,11 @@ def updateSearchString(newSearch):
     else:
         searchFilter = lambda x: filters.matchingItems(x, newSearch)
     views.watchableItems.recomputeFilter(matchingItems)
+
+def setSortBy(by, handle):
+    sorts.setSortBy(by)
+    views.watchableItems.recomputeFilter(matchingItems)
+    handle.forceUpdate()
 
 ]]>
     </t:execOnLoad>
