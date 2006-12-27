@@ -9,6 +9,13 @@ import prefs
 import config
 import resources
 
+sysconfPath = objc.pathForFramework('/System/Library/Frameworks/SystemConfiguration.framework')
+sysconfBundle = NSBundle.bundleWithPath_(sysconfPath)
+objc.loadBundleFunctions(sysconfBundle, globals(), ((u'SCDynamicStoreCopyProxies', '@@'), ))
+
+_proxiesInfo = SCDynamicStoreCopyProxies(None)
+
+
 MOVIES_DIRECTORY_PARENT = os.path.expanduser('~/Movies')
 SUPPORT_DIRECTORY_PARENT = os.path.expanduser('~/Library/Application Support')
 
@@ -87,6 +94,18 @@ def get(descriptor):
 
     elif descriptor == prefs.DOWNLOADER_LOG_PATHNAME:
         value = _makeSupportFilePath('dtv-downloader-log')
+
+    elif descriptor == prefs.HTTP_PROXY_ACTIVE:
+        value = 'HTTPEnable' in _proxiesInfo and _proxiesInfo['HTTPEnable'] == 1
+        
+    elif descriptor == prefs.HTTP_PROXY_HOST:
+        value = _proxiesInfo['HTTPProxy']
+        
+    elif descriptor == prefs.HTTP_PROXY_PORT:
+        value = _proxiesInfo['HTTPPort']
+        
+    elif descriptor == prefs.HTTP_PROXY_IGNORE_HOSTS:
+        value = _proxiesInfo['ExceptionsList']
     
     return value
 
