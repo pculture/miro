@@ -34,6 +34,7 @@ import indexes
 import util
 import adscraper
 import autodler
+import moviedata
 
 # FIXME add support for onlyBody parameter for static templates so we
 #       don't need to strip the outer HTML
@@ -62,6 +63,7 @@ class Item(DDBObject):
         self.keep = False
         self.videoFilename = ""
         self.eligibleForAutoDownload = True
+        self.duration = None
 
         self.iconCache = IconCache(self)
         
@@ -94,6 +96,7 @@ class Item(DDBObject):
         self.downloader = None
         self.expiring = None
         self.showMoreInfo = False
+        self.updating_movie_info = False
 
     def _lookForFinishedDownloader(self):
         dler = downloader.lookupDownloader(self.getURL())
@@ -1113,8 +1116,8 @@ folder will be deleted.""")
     # returns string with the play length of the video
     def getDuration(self, emptyIfZero=True):
         secs = 0
-        if self.downloader and self.downloader.duration not in (-1, None):
-            secs = self.downloader.duration / 1000
+        if self.duration not in (-1, None):
+            secs = self.duration / 1000
         if secs == 0:
             if emptyIfZero:
                 return ""
@@ -1286,6 +1289,7 @@ folder will be deleted.""")
         self.iconCache.requestUpdate(is_vital=True)
         if not self.splitItem():
             self.signalChange()
+        moviedata.movieDataUpdater.requestUpdate (self)
 
         for other in views.items:
             if other.downloader is None and other.getURL() == self.getURL():
@@ -1380,9 +1384,8 @@ folder will be deleted.""")
         if self.isContainerItem is not None and not os.path.exists(self.getFilename()):
             self.executeExpire()
             return
-        if self.downloader is not None and self.downloader.duration == None and self.downloader.isFinished():
-            import moviedata
-            moviedata.movieDataUpdater.requestUpdate (self.downloader)
+        if self.duration == None:
+            moviedata.movieDataUpdater.requestUpdate (self)
 
     def __str__(self):
         return "Item - %s" % self.getTitle()
@@ -1421,6 +1424,7 @@ class FileItem(Item):
         else:
             self.shortFilename = os.path.basename(self.filename)
         Item.__init__(self, getEntryForFile(filename), feed_id=feed_id, parent_id=parent_id)
+        moviedata.movieDataUpdater.requestUpdate (self)
 
     def getState(self):
         if self.deleted:

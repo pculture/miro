@@ -231,6 +231,7 @@ class ItemSchema(DDBObjectSchema):
         ('videoFilename', SchemaString()),
         ('releaseDateObj', SchemaDateTime()),
         ('eligibleForAutoDownload', SchemaBool()),
+        ('duration', SchemaInt(noneOk=True)),
     ]
 
 class FileItemSchema(ItemSchema):
@@ -329,7 +330,6 @@ class RemoteDownloaderSchema(DDBObjectSchema):
         ('contentType', SchemaString(noneOk=True)),
         ('channelName', SchemaString(noneOk=True)),
         ('status', SchemaSimpleContainer()),
-        ('duration', SchemaInt(noneOk=True))
     ]
 
 class HTTPAuthPasswordSchema(DDBObjectSchema):
@@ -387,7 +387,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('redirectedURL', SchemaString(noneOk=True)),
     ]
 
-VERSION = 33
+VERSION = 34
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,
