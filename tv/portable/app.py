@@ -298,6 +298,17 @@ class VideoDisplayBase (Display):
 
     def initRenderers(self):
         pass
+
+    def fileDuration (self, filename, callback):
+        frontend.inMainThread (lambda:self.mainThreadFileDuration (filename, callback))
+
+    def mainThreadFileDuration (self, filename, callback):
+        for renderer in self.renderers:
+            duration = renderer.fileDuration(filename)
+            if duration != -1:
+                callback (duration)
+                return
+        callback (-1)
         
     def getRendererForItem(self, anItem):
         for renderer in self.renderers:
@@ -308,9 +319,9 @@ class VideoDisplayBase (Display):
     def canPlayItem(self, anItem):
         return self.getRendererForItem(anItem) is not None
     
-    def canPlayFile(self, file):
+    def canPlayFile(self, filename):
         for renderer in self.renderers:
-            if renderer.canPlayFile(file):
+            if renderer.canPlayFile(filename):
                 return True
         return False
     
@@ -406,6 +417,9 @@ class VideoRenderer:
     
     def canPlayFile(self, filename):
         return False
+
+    def fileDuration(self, filename):
+        return None
     
     def getDisplayTime(self):
         seconds = self.getCurrentTime()

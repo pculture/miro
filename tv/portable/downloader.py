@@ -74,6 +74,8 @@ class RemoteDownloader(DDBObject):
     def __init__(self, url, item, contentType = None):
         self.origURL = self.url = url
         self.itemList = [item]
+        self.duration = None
+        self.updating_movie_info = False
         self.dlid = generateDownloadID()
         self.status = {}
         if contentType is None:
@@ -143,13 +145,16 @@ class RemoteDownloader(DDBObject):
             except Exception, e:
                 # This is a known bug with the way we used to save fast resume
                 # data
-                print "WARNING exception when compariring status: %s" % e
+                print "WARNING exception when comparing status: %s" % e
+
             wasFinished = self.isFinished()
             self.status = data
             # Store the time the download finished
             finished = self.isFinished() and not wasFinished
             self.signalChange(needsSignalItem=not finished)
             if finished:
+                import moviedata
+                moviedata.movieDataUpdater.requestUpdate (self)
                 for item in self.itemList:
                     item.onDownloadFinished()
 
@@ -376,6 +381,7 @@ URL was %s""" % self.url
 
     def onRestore(self):
         self.deleteFiles = True
+        self.updating_movie_info = False
         self.itemList = []
         if self.dlid == 'noid':
             # this won't happen nowadays, but it can for old databases

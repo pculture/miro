@@ -212,7 +212,6 @@ class Item(DDBObject):
             except:
                 self.releaseDateObj = datetime.min
 
-
     def checkConstraints(self):
         if self.feed_id is not None:
             try:
@@ -1114,18 +1113,19 @@ folder will be deleted.""")
     # returns string with the play length of the video
     def getDuration(self, emptyIfZero=True):
         secs = 0
-        #FIXME get this from VideoInfo
+        if self.downloader and self.downloader.duration not in (-1, None):
+            secs = self.downloader.duration / 1000
         if secs == 0:
             if emptyIfZero:
                 return ""
             else:
                 return "n/a"
         if (secs < 120):
-            return '%1.0f secs' % secs
+            return '%d secs' % (secs,)
         elif (secs < 6000):
-            return '%1.0f mins' % ceil(secs/60.0)
+            return '%d mins, %d secs' % (secs/60, secs % 60)
         else:
-            return '%1.1f hours' % ceil(secs/3600.0)
+            return '%d hours, %d mins' % (secs/3600, (secs / 60) % 60)
 
     ##
     # returns string with the format of the video
@@ -1379,6 +1379,10 @@ folder will be deleted.""")
         # This must come after reconnecting the downloader
         if self.isContainerItem is not None and not os.path.exists(self.getFilename()):
             self.executeExpire()
+            return
+        if self.downloader is not None and self.downloader.duration == None and self.downloader.isFinished():
+            import moviedata
+            moviedata.movieDataUpdater.requestUpdate (self.downloader)
 
     def __str__(self):
         return "Item - %s" % self.getTitle()

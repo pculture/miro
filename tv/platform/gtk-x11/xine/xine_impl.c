@@ -183,6 +183,21 @@ int xineCanPlayFile(_Xine* xine, const char* filename)
     return rv;
 }
 
+int xineFileDuration(_Xine* xine, const char* filename)
+{
+    int rv;
+    int duration;
+    rv = xine_open(xine->tester.stream, filename);
+    if(rv) {
+        int dummy, dummy2;
+	rv = xine_get_pos_length(xine->tester.stream, &dummy, &dummy2, &duration);
+	xine_close(xine->tester.stream);
+    }
+    if (!rv)
+        return -1;
+    return duration;
+}
+
 void xinePlayFile(_Xine* xine, const char* filename)
 {
     if(!xine->attached) return;

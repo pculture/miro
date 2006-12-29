@@ -45,6 +45,7 @@ def setMainThread():
 def confirmMainThread():
     global main_thread
     if main_thread is not None and main_thread != threading.currentThread():
+        import traceback
         print "UI function called from thread %s" % (threading.currentThread(),)
         traceback.print_stack()
 

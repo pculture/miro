@@ -4,6 +4,7 @@ import gtk
 import traceback
 import gobject
 import eventloop
+import platformutils
 
 def waitForAttach(func):
     """Many xine calls can't be made until we attach the object to a X window.
@@ -59,7 +60,11 @@ class Renderer(app.VideoRenderer):
                 event.area.height)
 
     def canPlayFile(self, filename):
+        platformutils.confirmMainThread()
         return self.xine.canPlayFile(filename)
+
+    def fileDuration(self, filename):
+        return self.xine.fileDuration(filename)
 
     def goFullscreen(self):
         """Handle when the video window goes fullscreen."""
