@@ -98,6 +98,14 @@ class QuicktimeRenderer (app.VideoRenderer):
             self.cachedMovie = qtmovie
         return qtmovie
 
+    def fileDuration(self, filename):
+        (qtmovie, error) = QTMovie.movieWithFile_error_(filename)
+        if qtmovie is None:
+            return -1
+        duration = movieDuration(qtmovie) * 1000
+        del qtmovie
+        return int(duration)
+
     @platformutils.onMainThread
     def play(self):
         self.view.play_(self)
@@ -117,10 +125,7 @@ class QuicktimeRenderer (app.VideoRenderer):
             self.movie.gotoBeginning()
 
     def getDuration(self):
-        if self.movie is nil:
-            return 0
-        qttime = self.movie.duration()
-        return qttime.timeValue / float(qttime.timeScale)
+        return movieDuration(self.movie)
 
     def getCurrentTime(self):
         if self.movie is nil:
@@ -149,6 +154,14 @@ class QuicktimeRenderer (app.VideoRenderer):
     def setVolume(self, level):
         if self.movie is not nil:
             self.movie.setVolume_(level)
+
+###############################################################################
+
+def movieDuration(qtmovie):
+    if qtmovie is nil:
+        return 0
+    qttime = qtmovie.duration()
+    return qttime.timeValue / float(qttime.timeScale)
 
 ###############################################################################
 

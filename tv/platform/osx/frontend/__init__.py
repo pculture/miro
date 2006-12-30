@@ -9,6 +9,7 @@ from objc import nil
 from AppKit import NSApplication
 
 import app
+import platformutils
 
 ###############################################################################
 
@@ -23,3 +24,10 @@ def quit():
     NSApplication.sharedApplication().terminate_(nil)
 
 ###############################################################################
+
+def inMainThread(function, args=None, kwargs=None):
+    if args is None:
+        args = ()
+    if kwargs is None:
+        kwargs = {}
+    platformutils.callOnMainThread(function, *args, **kwargs)
