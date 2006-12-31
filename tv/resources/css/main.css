@@ -1,5 +1,5 @@
 body {
-    background: #FFFFFF;
+    background: #f4f4f9;
     margin: 0px;
     font-size: 12px;
     font-family: "Lucida Grande", "Tahoma", "Bitstream Vera Sans", Arial, sans-serif;
@@ -48,7 +48,7 @@ img {
     top: 0px;
     left: 0px;
     width: 100%;
-    height: 270px;
+    height: 281px;
     display: none;
     background: url(../images/settings-shadow.png) repeat-x left bottom;
     z-index: 1; /* Needs to be float above the main page */
@@ -58,9 +58,9 @@ img {
 
 
 #settings-inner {
-    padding: 18px;
+    padding: 60px 18px 18px 18px;
     background-color: #FFFFBB;
-    height: 230px;
+    height: 200px;
     margin-bottom: 4px;
 }
 
@@ -73,7 +73,7 @@ img {
 #channel-url {
     position: absolute;
     right: 20px;
-    top: 10px;
+    top: 50px;
     color: #999;
     font-size: 11px;
 }
@@ -108,8 +108,8 @@ img {
 
 /* This is the title section of the channel view */
 #main-titlebar {
-    background: url(../images/main-titlebar-bg.png) repeat-x left bottom;
-    height: 77px;
+    background: url(../images/main-titlebar-bg.png) repeat-x left top;
+    height: 90px;
     width: 100%;
     min-width: 600px;
     margin: 0px 0px 1px;
@@ -125,11 +125,11 @@ img {
 /* The icon for the channel view. Usually in the titlebar */
 #main-icon {
     position: absolute;
-    left: 9px;
+    left: 10px;
     top: 6px;
-    width: 60px;
-    height: 60px;
-    border: 2px solid #FFFFFF;
+    width: 76px;
+    height: 76px;
+    border: 1px solid #FFFFFF;
     background-color:#FFFFFF;
 }
 
@@ -140,25 +140,49 @@ img {
 
 /* This wraps the center area of the title bar */
 #main-titlebar-center {
-    margin: 10px 220px 0px 220px;
+    margin: 5px 200px 0px 98px;
     padding-right: 5px;
-    text-align: center;
+    text-align: left;
     color: #FFFFFF;
+	overflow: hidden;
 }
+
+/* This wraps the right side middle links area of the title bar */
+#main-titlebar-middle {
+    position: absolute;
+    width: 140px;
+    top: 8px;
+   right: 190px;
+}
+
+/* Wraps the stuff on the right hand side of the channel header */
+#main-titlebar-right {
+    position: absolute;
+    width: 180px;
+    top: 12px;
+    right: 0px;
+}
+
 
 /* This wraps just the name of the view */
 #main-title {
-    padding: 0px;
+    padding: 0px 0 1px 0;
     margin: 0px;
-    font-size: 21px;
-    height: 28px;
+    font-size: 28px;
+    height: 32px;
     overflow: hidden;
     font-weight: normal;
+	letter-spacing: -0.5px;
 }
 
-#main-subtitle {
-    margin-top: 7px;
+.sub-main-title {
+    margin-top: 3px;
 }
+
+.sub-main-title a {
+	color: white;
+}
+
 
 #main-subtitle input, #main-subtitle select {
     font-size: 11px;
@@ -174,7 +198,7 @@ img {
 }
 
 #downloads-global-actions {
-	text-align: center;
+    text-align: center;
 }
 
 #downloads-global-actions div {
@@ -185,71 +209,66 @@ img {
     overflow: hidden;
 }
 
+
 #downloads-global-actions a {
-	color: white;
-	text-decoration: none;
+    color: white;
+    text-decoration: none;
 }
 
-#downloads-free-space span {
-	margin: 0;
-}
 
-#downloads-free-disk span {
-	margin-right: 0;
-	clear: both;
-}
-
-/* Wraps the stuff on the right hand side of the channel header */
-#main-titlebar-right {
-    position: absolute;
-    width: 150px;
-    top: 8px;
-    right: 0px;
-}
 
 .select-box-right {
-    background: right top no-repeat url(../images/select-box-right.png);
+    background: right top no-repeat url(../images/auto-select-box-right.png);
 }
 
 .select-box-left {
-    background: left top no-repeat url(../images/select-box-left.png);
+    background: left top no-repeat url(../images/auto-select-box-left.png);
     float: left;
     cursor: pointer;
-    margin: 0px;
     -khtml-user-select: none;
     -moz-user-select: none;
 }
 
 .select-box-mid {
-    background: left top repeat-x url(../images/select-box-mid.png);
-    margin: 0px 19px 0px 4px;
-    padding: 3px 2px;
+    background: left top repeat-x url(../images/auto-select-box-mid.png);
+    margin: 0px 16px 0px 6px;
+    padding: 1px 7px 1px 3px;
     height: 19px;
-    color: #000;
+    color: #333;
+    font-size: 11px;
 }
 
 .select-box-menu {
-    border: 1px solid black;
-    background: #ccd;
+    border: 1px solid #AAA;
+    background: #f6f6f6;
     margin: 0px;
     position: relative;
-    top: -7px;
+    top: -45px;
     display: none;
 }
 
+
+.auto-download {
+}
+
 .auto-download .select-box-menu {
-    width: 200px;
-    left: -155px;
+    width: 250px;
+    left: -80px;
+	top: -30px;
+	padding: 6px 0 6px 0;
 }
 
 .select-box-menu li {
     list-style: none;
     text-transform: none;
     margin: 0px;
+	padding: 2px 9px 2px 12px;
+	font-size: 12px;
 }
 
-.select-box-menu li:hover {
-    background: #eee;
+.select-box-menu li:hover, .select-box-menu li:hover a {
+    background: #2673c9;
+    color: white;
 }
 
 .select-box-menu a {
@@ -260,14 +279,19 @@ img {
 /* just around settings */
 #main-titlebar-settings {
     display: block;
-    background: url(../images/main-icon-settings.png) no-repeat left top;
     height: 20px;
-    margin: 0px 0px 1px 0px;
-    padding: 0px 0px 0px 21px;
+    margin: 8px 0px 1px 0px;
     color: #FFFFFF;
-    text-decoration: none;
+	text-decoration: underline;
     text-transform: uppercase;
+    font-size: 11px;
 }
+
+#main-titlebar-settings img {
+	vertical-align: -2px;
+	text-decoration: none;
+}
+
 #main-titlebar-settings:hover {
     text-decoration: underline;
 }
@@ -275,12 +299,10 @@ img {
 /* Just around recommend */
 #main-titlebar-recommend {
     display: block;
-    background: url(../images/main-icon-mail-titlebar.png) no-repeat left 2px;
     height: 20px;
-    padding-left: 21px;
     color: #FFFFFF;
-    text-decoration: none;
     text-transform: uppercase;
+    font-size: 11px;
 }
 #main-titlebar-recommend:hover {
     text-decoration: underline;
@@ -294,6 +316,7 @@ img {
     padding: 0px;
     margin: 0px;
     text-transform: uppercase;
+    font-size: 11px;
 }
 
 #auto-checkbox-container {
@@ -309,12 +332,14 @@ img {
 }
 
 #auto-label {
-    padding-left: 21px;
+	float: left;
+	padding-right: 6px;
+	padding-top: 1px;
 }
 
 /* Used to mark the search box */
 #search-box {
-    color: #1c5180;
+    color: #333;
 }
 
 #main-titlebar #search-box {
@@ -355,7 +380,7 @@ img {
 #main-container {
     position: absolute;
     padding-top: 0px;
-    top: 105px;
+    top: 117px;
     width: 100%;
     /*
     It would be nice to include these next two lines.  This would make the
@@ -371,13 +396,13 @@ img {
 /* The sort bar */
 
 #sort-bar {
-    background: #4A629a url(../images/sort-bar-back.png) top left repeat-x;
+    background: #fff url(../images/sort-bar-back.png) top left repeat-x;
     height: 19px;
     width: 100%;
     min-width: 600px;
     padding: 5px 0 5px 0;
     position: fixed;
-    top: 76px;
+    top: 90px;
     z-index: 2;
     /* This should be above feed-settings, so that feed-settings doesn't cover
      * it up durring the opening animation.
@@ -385,17 +410,16 @@ img {
 }
 
 #sort-bar #search-box {
-    margin: 0px 0px 0px 10px;
+    margin: 0px 0px 0px 4px;
     float: left;
 }
 
 #sort-buttons {
     float: right;
     margin-top: 2px;
-    padding-right: 100px;
-    font-size: 13px;
-    color: white;
-    font-weight: bold;
+    padding-right: 8px;
+    font-size: 11px;
+    color: #113;
 }
 
 #sort-buttons a.sort-button {
@@ -414,10 +438,10 @@ img {
 }
 
 #sort-buttons .sort-button .mid {
-    margin-left: 6px;
-    margin-right: 6px;
-    padding-left: 6px;
+    margin-left: 3px;
 }
+
+/*
 
 #sort-buttons .sort-button.active .left {
     background: url(../images/sort-active-back-left.png) top left no-repeat;
@@ -431,9 +455,12 @@ img {
     background: url(../images/sort-active-back-right.png) top right no-repeat;
 }
 
+*/
+
 #sort-buttons a.sort-button img {
     border: none;
-    padding-left: 6px;
+    padding-left: 3px;
+	vertical-align: -1px;
     visibility: hidden;
 }
 
@@ -444,15 +471,22 @@ img {
 /* This is the blue grey gradient for the bars above the "available"
 and "downloaded" sections */
 .main-channelbar {
-    background: url(../images/main-bar-bg.png) repeat-x left bottom;
-    height: 19px;
+/*    background: url(../images/main-bar-bg.png) repeat-x top left; */
+	background-color: #B9CDFF;
+    border-top: 1px solid white;
+    height: 26px;
     display: block;
     overflow: hidden;
     color: #111;
     text-decoration: none;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: normal;
-    padding-top: 2px;
+    padding-top: 6px;
+}
+
+.main-channelbar:hover {
+    background-color: #A6BAEA;
+
 }
 
 /* The yellow gradient for the "download" bar */
@@ -470,10 +504,9 @@ and "downloaded" sections */
 
 a.download-bar-action {
     float: right;
-    text-decoration: none;
     font-size: 10px;
-    color: black;
-    margin: 2px 0px 0px 3px;
+    color: #333;
+    margin: 2px 12px 0px 0px;
 }
 
 a.download-bar-action:hover {
@@ -496,8 +529,9 @@ a.download-bar-action:hover {
     float: left;
     width: 15px;
     height: 16px;
-    margin-top: 3px;
-    margin-left: 5px;
+    margin-top: 4px;
+    margin-left: 8px;
+	margin-right: 1px;
 }
 
 .triangle-down {
@@ -506,8 +540,10 @@ a.download-bar-action:hover {
     float: left;
     width: 15px;
     height: 16px;
-    margin-top: 3px;
-    margin-left: 5px;
+    margin-top: 4px;
+    margin-left: 8px;
+	margin-right: 1px;
+
 }
 
 
@@ -772,7 +808,7 @@ an element is dragged, the drag-highlight class is added to it */
 
 
 .main-video-desc a:link, .main-video-desc a:active, .main-content a:link, .main-content a:active {
-    color: #215ccf;
+    color: #333;
     text-decoration: underline;
 }
 
@@ -956,7 +992,7 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .main-video-details-task-mail { 
-    background: url(../images/main-video-share.png) top left no-repeat;
+    background: url(../images/drop-down-button.png) top left no-repeat;
 }
 
 .main-video-details-task-bomb { 
@@ -1062,6 +1098,10 @@ an element is dragged, the drag-highlight class is added to it */
     overflow: hidden;
     text-align: right;
     padding-right: 0px;
+}
+
+.date-channel-title-wrap a {
+	color: #777;
 }
 
 .selected .date-channel-title-wrap {

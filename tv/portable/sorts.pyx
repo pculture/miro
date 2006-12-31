@@ -68,6 +68,8 @@ def itemBy(x, y):
         result = itemBySize(x, y)
     elif sortBy == 'name':
         result = itemByName(x, y)
+    elif sortBy == 'duration':
+        result = itemByDuration(x, y)
     if sortDirection == 'descending':
         result = not result
     return result
@@ -80,6 +82,9 @@ def itemByName(x, y):
 
 def itemBySize(x, y):
     return x[1].getSize() > y[1].getSize()
+
+def itemByDuration(x, y):
+    return x[1].duration > y[1].duration
 
 unwatchedMemory = {}
 unwatchedMemoryFor = None

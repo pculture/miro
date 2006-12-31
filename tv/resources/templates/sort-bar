@@ -25,10 +25,11 @@ def getImageForSortBy(by):
 
 <div id="sort-bar">
     <div id="search-box" t:hideIf="'feed' in localvars and feed.getURL() == 'dtv:search'">
-        <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Search')***"/>
+        <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Find in this channel')***"/>
     </div>
+    
     <div id="sort-buttons">
-        <span>Sort by:</span>
+        <span>Sort:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
         
         <a href="#" class="sort-button ***getActiveStateForSortBy('name')***" onclick="return eventURL('action:sortBy?by=name');">
             <div class="left"><div class="right"><div class="mid">
@@ -38,13 +39,20 @@ def getImageForSortBy(by):
 
         <a href="#" class="sort-button ***getActiveStateForSortBy('date')***" onclick="return eventURL('action:sortBy?by=date');">
             <div class="left"><div class="right"><div class="mid">
-                Date<img src="***getImageForSortBy('date')***"/>
+                &nbsp;&nbsp;&nbsp;&nbsp;Date<img src="***getImageForSortBy('date')***"/>
             </div></div></div>
         </a>
 
+        <a href="#" class="sort-button ***getActiveStateForSortBy('duration')***" onclick="return eventURL('action:sortBy?by=duration');">
+            <div class="left"><div class="right"><div class="mid">
+                &nbsp;&nbsp;&nbsp;&nbsp;Length<img src="***getImageForSortBy('duration')***"/>
+            </div></div></div>
+        </a>
+
+
         <a href="#" class="sort-button ***getActiveStateForSortBy('size')***" onclick="return eventURL('action:sortBy?by=size');">
             <div class="left"><div class="right"><div class="mid">
-                Size<img src="***getImageForSortBy('size')***"/>
+                &nbsp;&nbsp;&nbsp;&nbsp;Size<img src="***getImageForSortBy('size')***"/>
             </div></div></div>
         </a>
 

@@ -15,13 +15,13 @@
   <span class="triangle" t:hideIf="showDownloads"/>
   <span class="triangle-down" t:hideIf="not showDownloads"/>
   <a class="download-bar-action" href="#"
-          onclick="eventURLAndStop('action:cancelDownloads', event);">Cancel all</a>
+          onclick="eventURLAndStop('action:cancelDownloads', event);">Cancel All</a>
   <a class="download-bar-action" href="#"
           t:hideIf="allItemsPaused(allDownloadingItems)"
-          onclick="eventURLAndStop('action:pauseDownloads', event);">Pause all</a>
+          onclick="eventURLAndStop('action:pauseDownloads', event);">Pause All</a>
   <a class="download-bar-action" href="#"
           t:hideIf="allItemsDownloading(allDownloadingItems)"
-          onclick="eventURLAndStop('action:resumeDownloads', event);">Resume all</a>
+          onclick="eventURLAndStop('action:resumeDownloads', event);">Resume All</a>
   <span t:hideIf="allDownloadingItems.len()==1"  i18n:translate="">
       <span t:replace="allDownloadingItems.len()" i18n:name="count"/> Downloading</span>
    <span t:hideIf="allDownloadingItems.len()!=1" i18n:translate="">1 Downloading</span>
@@ -41,21 +41,21 @@
   <div t:showIf="searchTerm is None">
     <div t:hideIf="isFolder" i18n:translate="">
           <span i18n:name="len" t:replace="allItems.len()" /> 
-          Videos Available
+          Published
     </div>
     <div t:showIf="isFolder" i18n:translate="">
           <span i18n:name="len" t:replace="allItems.len()" /> 
-          Videos Available
+          Published
     </div>
   </div>
   <div t:showIf="searchTerm is not None">
     <div t:showIf="allItems.len() == matchingItems.len()" i18n:translate="">
             All <span i18n:name="len" t:replace="matchingItems.len()" /> 
-            Videos Match This Search
+            Match This Search
     </div>
     <div t:hideIf="allItems.len() == matchingItems.len()" i18n:translate="">
             <span i18n:name="len" t:replace="matchingItems.len()" /> 
-            Videos Match This Search
+            Match This Search
     </div>
   </div>
 </a>
@@ -66,8 +66,8 @@
 <div t:updateForView="matchingItems">  
   <div t:hideIf="allItemsMode  or not showNewItems or newItems.len() == matchingItems.len()">
       <a href="#" onclick="return eventURL('action:toggleAllItemsMode');" class="main-notification">
-          <span t:hideIf="isFolder" i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len() - newItems.len()" /> more videos on this channel &gt;&gt;</span>
-          <span t:showIf="isFolder" i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()"/> videos in this channel folder &gt;&gt;</span>
+          <span t:hideIf="isFolder" i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len() - newItems.len()" /> more on this channel &gt;&gt;</span>
+          <span t:showIf="isFolder" i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()"/> items in this channel folder &gt;&gt;</span>
         </a>
         <a href="#" onclick="return eventURL('action:toggleAllItemsMode');" class="main-notification-right">&nbsp;</a>
      <br clear="left" />
@@ -81,7 +81,7 @@
 <a class="main-channelbar" href="#" onclick="return eventURL('action:toggleWatchableView')" t:hideIf="len(allWatchableItems) == 0" >
   <span class="triangle" t:hideIf="showWatchableItems"/>
   <span class="triangle-down" t:hideIf="not showWatchableItems"/>
-  <span  i18n:translate="">Downloaded</span>
+  <span  i18n:translate=""># Downloaded</span>
 </a>
 </div>
 
