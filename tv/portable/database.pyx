@@ -115,9 +115,13 @@ class IndexMap:
     to efficently locate objects after their mapped value changes.
     """
 
-    def __init__(self, indexFunc, parentDB, sortFunc = None):
+    def __init__(self, indexFunc, parentDB, sortFunc = None, resort = False):
         self.indexFunc = indexFunc
         self.sortFunc = sortFunc
+        if self.sortFunc is None:
+            self.resort = False
+        else:
+            self.resort = resort
         self.parentDB = parentDB
         self.views = {} # maps index values -> view
         self.mappings = {} # maps object id -> index value
@@ -181,7 +185,7 @@ class IndexMap:
         try:
             view = self.views[indexValue]
         except KeyError:
-            view = DynamicDatabase([], False, parent=self.parentDB, sortFunc = self.sortFunc, resort = True)
+            view = DynamicDatabase([], False, parent=self.parentDB, sortFunc = self.sortFunc, resort = self.resort)
             self.views[indexValue] = view
         return view
 
@@ -273,7 +277,7 @@ class MultiIndexMap(IndexMap):
         try:
             view = self.views[indexValue]
         except KeyError:
-            view = DynamicDatabase([], False, parent=self.parentDB, sortFunc = self.sortFunc, resort = True)
+            view = DynamicDatabase([], False, parent=self.parentDB, sortFunc = self.sortFunc, resort = self.resort)
             self.views[indexValue] = view
         return view
 
@@ -1002,9 +1006,6 @@ class DynamicDatabase:
         self.confirmDBThread()
         for [view, f] in self.subSorts:
             if all or view is sort:
-                #FIXME this probably doesn't even work
-                #      right. We should remove every item,
-                #      then re-add them
                 try:
                     curObj = view.objects[view.cursor]
                 except:
@@ -1166,12 +1167,12 @@ class DynamicDatabase:
         except:
             return None
 
-    def createIndex(self, indexFunc, sortFunc = None, multiValued=False):
+    def createIndex(self, indexFunc, sortFunc = None, multiValued=False, resort = False):
         self.confirmDBThread()
         if not multiValued:
-            indexMap = IndexMap(indexFunc, self, sortFunc = sortFunc)
+            indexMap = IndexMap(indexFunc, self, sortFunc = sortFunc, resort = resort)
         else:
-            indexMap = MultiIndexMap(indexFunc, self)
+            indexMap = MultiIndexMap(indexFunc, self, sortFunc = sortFunc, resort = resort)
         for obj, value in self.objects:
             indexMap.addObject(obj, value)
         self.indexes[indexFunc] = indexMap

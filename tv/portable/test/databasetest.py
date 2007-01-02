@@ -970,7 +970,7 @@ class IndexFilterTest(IndexFilterTestBase):
             def __init__(self, myValue):
                 self.myValue = myValue
                 database.DDBObject.__init__(self)
-        self.everything.createIndex(self.mod10,self.sortIndexFunc)
+        self.everything.createIndex(self.mod10,self.sortIndexFunc, resort = True)
         self.objects = []
         for x in range(100):
             self.objects.append(IndexedObject(x))
@@ -1019,7 +1019,7 @@ class IndexFilterTest(IndexFilterTestBase):
     def testChangeIndexValue(self):
         for x in range(0,100):
             database.DDBObject()
-        self.everything.createIndex(self.mod10, sortFunc=self.sortFunc)
+        self.everything.createIndex(self.mod10, sortFunc=self.sortFunc, resort = True)
         filtered = self.everything.filterWithIndex(self.mod10,0)
         filtered.addAddCallback(self.addCallback)
         filtered.addRemoveCallback(self.removeCallback)
@@ -1293,43 +1293,88 @@ class SortingFilterTestCase(DemocracyTestCase):
         self.assert_(abs(ratio1-ratio2)/ratio1 < 0.01)
 
     def testExplicitResort(self):
+        def indexFunc(x):
+            return True
+        def indexFunc2(x):
+            return True
+        def multiIndexFunc(x):
+            return [True]
+        def multiIndexFunc2(x):
+            return [True]
+        
         sortView = self.everything.sort(self.sortFunc, resort = True)
         for x in range(2000):
             a = SortableObject(x)
             self.objs.append(a)
         initialSorts = self.sortCalls
         self.sortCalls = 0
-        filtView = sortView.filter(lambda x:True,sortFunc=self.sortFunc,
+        
+        sortingFiltView = sortView.filter(lambda x:True,sortFunc=self.sortFunc,
                                    resort=True)
-        filterSorts = self.sortCalls
-        self.sortCalls = 0
+        unsortingFiltView = sortView.filter(lambda x:True,sortFunc=self.sortFunc,
+                                            resort=False)
+        
+        sortView.createIndex(indexFunc,sortFunc=self.sortFunc, resort = True)
+        sortingIndexView = sortView.filterWithIndex(indexFunc, True)
 
-        self.assertEqual(sortView.len(),filtView.len())
-        sortView.resetCursor()
-        filtView.resetCursor()
-        last = None
-        for obj in sortView:
-            self.assertEqual(obj,filtView.getNext())
-            if last != None:
-                self.assert_(obj.value >= last.value)
-            last = obj
+        sortView.createIndex(indexFunc2,sortFunc=self.sortFunc, resort = False)
+        unsortingIndexView = sortView.filterWithIndex(indexFunc2, True)
+
+        sortView.createIndex(multiIndexFunc,sortFunc=self.sortFunc, resort = True,
+                             multiValued = True)
+        sortingMultiIndexView = sortView.filterWithIndex(multiIndexFunc, True)
+        
+        sortView.createIndex(multiIndexFunc2,sortFunc=self.sortFunc, resort = False,
+                             multiValued = True)
+        unsortingMultiIndexView = sortView.filterWithIndex(multiIndexFunc2, True)
+
+        allMyViews = [sortingFiltView, unsortingFiltView,
+                      sortingIndexView, unsortingIndexView,
+                      sortingMultiIndexView, unsortingMultiIndexView]
+        
+        allSortingViews = [sortingFiltView, sortingIndexView, sortingMultiIndexView]
+
+        allUnSortingViews = [unsortingFiltView, unsortingIndexView,
+                             unsortingMultiIndexView]
+
+        for view in allMyViews:
+            self.assertEqual(sortView.len(),view.len())
+            view.resetCursor()
+
+            last = None
+            sortView.resetCursor()
+            for obj in sortView:
+                self.assertEqual(obj,view.getNext())
+                if last != None:
+                    self.assert_(obj.value >= last.value)
+                last = obj
 
         self.objs[-1].value = -10
         self.objs[-2].value = -1
         self.everything.recomputeSort(sortView)
         self.assert_(self.sortCalls > 0)
 
-        sortView.resetCursor()
-        filtView.resetCursor()
-        last = None
-        for obj in sortView:
-            self.assertEqual(obj,filtView.getNext())
-            if last != None:
-                self.assert_(obj.value >= last.value)
-            last = obj
-        
+        for view in allUnSortingViews:
+            self.assertEqual(sortView.len(),view.len())
+            view.resetCursor()
+            sortView.resetCursor()
+            for obj in sortView:
+                self.assertNotEqual(obj,view.getNext())
+
+        for view in allSortingViews:
+            self.assertEqual(sortView.len(),view.len())
+            view.resetCursor()
+            last = None
+            sortView.resetCursor()
+            for obj in sortView:
+                self.assertEqual(obj,view.getNext())
+                if last != None:
+                    self.assert_(obj.value >= last.value)
+                last = obj
+
         sortView.unlink()
-        filtView.unlink()
+        for view in allMyViews:
+            view.unlink()
 
 class UnlinkViewTestCase(DemocracyTestCase):
     def setUp(self):
