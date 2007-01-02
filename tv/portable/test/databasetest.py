@@ -1292,8 +1292,45 @@ class SortingFilterTestCase(DemocracyTestCase):
         # Make sure the ratios are within 1% of each other
         self.assert_(abs(ratio1-ratio2)/ratio1 < 0.01)
 
+    def testExplicitResort(self):
+        sortView = self.everything.sort(self.sortFunc, resort = True)
+        for x in range(2000):
+            a = SortableObject(x)
+            self.objs.append(a)
+        initialSorts = self.sortCalls
+        self.sortCalls = 0
+        filtView = sortView.filter(lambda x:True,sortFunc=self.sortFunc,
+                                   resort=True)
+        filterSorts = self.sortCalls
+        self.sortCalls = 0
 
-#FIXME: Add test for explicitly recomputing sorts
+        self.assertEqual(sortView.len(),filtView.len())
+        sortView.resetCursor()
+        filtView.resetCursor()
+        last = None
+        for obj in sortView:
+            self.assertEqual(obj,filtView.getNext())
+            if last != None:
+                self.assert_(obj.value >= last.value)
+            last = obj
+
+        self.objs[-1].value = -10
+        self.objs[-2].value = -1
+        self.everything.recomputeSort(sortView)
+        self.assert_(self.sortCalls > 0)
+
+        sortView.resetCursor()
+        filtView.resetCursor()
+        last = None
+        for obj in sortView:
+            self.assertEqual(obj,filtView.getNext())
+            if last != None:
+                self.assert_(obj.value >= last.value)
+            last = obj
+        
+        sortView.unlink()
+        filtView.unlink()
+
 #FIXME: Add test for unlink()
 
 if __name__ == "__main__":
