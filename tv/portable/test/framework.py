@@ -31,10 +31,15 @@ class DummyMainFrame:
     def onSelectedTabChange(self, tabType, multiple, guideURL, videoFilename):
         pass
 
+class DummyVideoDisplay:
+    def fileDuration (self, filename, callback):
+        pass
+
 class DummyController:
     def __init__(self):
         self.selection = selection.SelectionHandler()
         self.frame = DummyMainFrame()
+        self.videoDisplay = DummyVideoDisplay()
 
 class DemocracyTestCase(unittest.TestCase):
     def setUp(self):
