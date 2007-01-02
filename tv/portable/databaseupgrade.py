@@ -6,6 +6,7 @@ olddatabaseupgrade.py)
 
 import schema
 import util
+import types
 
 class DatabaseTooNewError(Exception):
     """Error that we raise when we see a database that is newer than the
@@ -470,6 +471,17 @@ def upgrade34(objectList):
         if o.classString in ('item', 'file-item'):
             o.savedData['duration'] = None
             changed.add(o)
+    return changed
+
+def upgrade35(objectList):
+    changed = set()
+    for o in objectList:
+        if o.classString in ('item', 'file-item'):
+            if hasattr(o.savedData,'entry'):
+                entry = o.savedData['entry']
+                if entry.has_key('title') and type(entry.title) != types.UnicodeType:
+                    entry.title = entry.title.decode('utf-8', 'replace')
+                    changed.add(o)
     return changed
 
 #def upgradeX (objectList):
