@@ -1331,7 +1331,54 @@ class SortingFilterTestCase(DemocracyTestCase):
         sortView.unlink()
         filtView.unlink()
 
-#FIXME: Add test for unlink()
+class UnlinkViewTestCase(DemocracyTestCase):
+    def setUp(self):
+        self.sortCalls = 0
+        DemocracyTestCase.setUp(self)
+        self.everything = database.defaultDatabase
+        self.x = database.DDBObject()
+        self.y = database.DDBObject()
+        self.parent = self.everything.filter(lambda q: True)
+        self.filtered = self.parent.filter(lambda q: True)
+        self.sorted = self.parent.sort(self.sortFunc)
+        self.mapped = self.parent.map(lambda x: x)
+        self.index = self.parent.createIndex(self.indexFunc)
+        self.indexed = self.parent.filterWithIndex(self.indexFunc, True)
+
+    def indexFunc(self, x):
+        return True
+
+    def sortFunc(self, x, y):
+        self.sortCalls += 1
+        return str(x[1]) < str(y[1])
+
+    def testUnlink(self):
+        self.assertEqual(len(self.filtered), len(self.parent))
+        self.assertEqual(len(self.sorted), len(self.parent))
+        self.assertEqual(len(self.mapped), len(self.parent))
+        self.assertEqual(len(self.indexed), len(self.parent))
+        numSort = self.sortCalls
+        
+        self.filtered.unlink()
+        self.sorted.unlink()
+        self.mapped.unlink()
+        self.indexed.unlink()
+        self.x.remove()
+
+        self.assertNotEqual(len(self.filtered), len(self.parent))
+        self.assertNotEqual(len(self.sorted), len(self.parent))
+        self.assertNotEqual(len(self.mapped), len(self.parent))
+        self.assertNotEqual(len(self.indexed), len(self.parent))
+        self.assertEqual(numSort, self.sortCalls)
+
+        self.x = database.DDBObject()
+        self.z = database.DDBObject()
+
+        self.assertNotEqual(len(self.filtered), len(self.parent))
+        self.assertNotEqual(len(self.sorted), len(self.parent))
+        self.assertNotEqual(len(self.mapped), len(self.parent))
+        self.assertNotEqual(len(self.indexed), len(self.parent))
+        self.assertEqual(numSort, self.sortCalls)
 
 if __name__ == "__main__":
     unittest.main()
