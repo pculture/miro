@@ -176,7 +176,12 @@ class ThreadPool(object):
     def closeThreads(self):
         for x in xrange(self.THREADS):
             self.queue.put("QUIT")
-
+        for x in xrange(self.THREADS):
+            try:
+                self.threads[x].join()
+            except:
+                pass
+            
 class EventLoop(object):
     def __init__(self):
         self.scheduler = Scheduler()

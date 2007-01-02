@@ -72,9 +72,14 @@ class EventLoopTest(DemocracyTestCase):
         DemocracyTestCase.setUp(self)
         self.hadToStopEventLoop = False
 
+        # Maybe we should get rid of references to _eventLoop and fix the
+        # API to allow running the eventloop in the current thread... --NN
+        eventloop._eventLoop.threadPool.initThreads()
+
     def stopEventLoop(self):
         self.hadToStopEventLoop = True
         eventloop.quit()
+        eventloop.threadPoolQuit()
 
     def runPendingIdles(self):
         idleQueue = eventloop._eventLoop.idleQueue
@@ -89,6 +94,7 @@ class EventLoopTest(DemocracyTestCase):
                 "Stop test event loop")
         eventloop._eventLoop.quitFlag = False
         eventloop._eventLoop.loop()
+        eventloop.threadPoolQuit()
         if self.hadToStopEventLoop and not timeoutNormal:
             raise HadToStopEventLoop()
         else:
