@@ -80,6 +80,20 @@ def stopDownload(dlid, delete):
         return True
     return download.stop(delete)
 
+def stopUpload(dlid):
+    try:
+        _lock.acquire()
+        try:
+            download = _downloads[dlid]
+            if download.state != "uploading":
+                return
+            del _downloads[dlid]
+        finally:
+            _lock.release()
+    except: # There is no download with this id
+        return
+    return download.stopUpload()
+
 def migrateDownload(dlid, directory):
     try:
         download = _downloads[dlid]
@@ -602,6 +616,10 @@ class HTTPDownloader(BGDownloader):
         self.state = "stopped"
         self.updateClient()
 
+    def stopUpload(self):
+        # HTTP downloads never upload.
+        pass
+
     ##
     # Continues a paused or stopped download thread
     def start(self):
@@ -730,6 +748,11 @@ class BTDownloader(BGDownloader):
                     remove(self.filename)
             except:
                 pass
+
+    def stopUpload(self):
+        self.state = "finished"
+        self._shutdownTorrent()
+        self.updateClient()
 
     def start(self):
         if self.state not in ('paused', 'stopped', 'offline'):

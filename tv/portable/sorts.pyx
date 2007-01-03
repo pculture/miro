@@ -46,6 +46,11 @@ def item(x,y):
             yParent = y.getParent()
             return item((xParent, xParent), (yParent, yParent))
 
+def downloadersByEndTime (x, y):
+    xtime = x[1].status.get("endTime", 0)
+    ytime = y[1].status.get("endTime", 0)
+    return xtime < ytime
+
 sortBy = 'date'                 # Possible values: 'date', 'size', 'name'
 sortDirection = 'ascending'     # Possible values: 'ascending', 'descending'
 

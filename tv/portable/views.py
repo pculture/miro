@@ -53,6 +53,7 @@ staticTabsObjects = db.filterWithIndex(indexes.objectsByClass,tabs.StaticTab)
 
 remoteDownloads.createIndex(indexes.downloadsByDLID)
 remoteDownloads.createIndex(indexes.downloadsByURL)
+remoteUploads = remoteDownloads.filter (filters.uploadingDownloaders, sortFunc=sorts.downloadersByEndTime)
 items.createIndex(indexes.itemsByFeed, sortFunc=sorts.item)
 toplevelItems.createIndex(indexes.itemsByFeed)
 items.createIndex(indexes.itemsByParent)

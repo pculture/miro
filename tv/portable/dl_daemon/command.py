@@ -129,6 +129,11 @@ class StopDownloadCommand(Command):
         from dl_daemon import download
         return download.stopDownload(*self.args, **self.kws)
 
+class StopUploadCommand(Command):
+    def action(self):
+        from dl_daemon import download
+        return download.stopUpload(*self.args, **self.kws)
+
 class GetDownloadStatusCommand(Command):
     def action(self):
         from dl_daemon import download

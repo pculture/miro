@@ -264,7 +264,7 @@ URL was %s""" % self.url
                 newfilename = nextFreeFilename(newfilename)
                 try:
                     shutil.move(filename, newfilename)
-                except IOError, error:
+                except (IOError, OSError), error:
                     print "WARNING: Error moving %s to %s (%s)" % (self.status['filename'],
                             newfilename, error)
                 else:
@@ -400,6 +400,17 @@ URL was %s""" % self.url
                                                  self.status)
             c.send()
 
+    def stopUpload(self):
+        if self.getState() != "uploading":
+            return
+        if _downloads.has_key(self.dlid):
+            c = command.StopUploadCommand(RemoteDownloader.dldaemon,
+                                          self.dlid)
+            c.send()
+            del _downloads[self.dlid]
+        self.status["state"] = "finished"
+        self.signalChange()
+
 def cleanupIncompleteDownloads():
     downloadDir = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
             'Incomplete Downloads')
@@ -432,6 +443,15 @@ def restartDownloads():
     for downloader in views.remoteDownloads:
         downloader.restartIfNeeded()
 
+def killUploaders(*args):
+    while (views.remoteUploads.len() > 3):
+        views.remoteUploads[0].stopUpload()
+
+def limitUploaders():
+    views.remoteUploads.addAddCallback(killUploaders)
+    killUploaders()
+        
+
 def startupDownloader():
     """Initialize the downloaders.
 
@@ -443,6 +463,7 @@ def startupDownloader():
 
     cleanupIncompleteDownloads()
     RemoteDownloader.initializeDaemon()
+    limitUploaders()
     restartDownloads()
 
 def shutdownDownloader(callback = None):

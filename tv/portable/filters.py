@@ -37,6 +37,9 @@ def watchableItems(obj):
     return (obj.isDownloaded() and not obj.isNonVideoFile() and 
             not obj.isContainerItem)
 
+def uploadingDownloaders(obj):
+    return obj.getState() == 'uploading'
+
 newMemory = {}
 newMemoryFor = None
 def switchNewItemsChannel(newChannel):
