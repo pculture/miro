@@ -140,8 +140,8 @@ class ThreadPool(object):
         self.threads = []
 
     def initThreads(self):
-        for x in xrange(self.THREADS):
-            t = threading.Thread(name='ThreadPool - %d' % x,
+        while len(self.threads) < ThreadPool.THREADS:
+            t = threading.Thread(name='ThreadPool - %d' % len(self.threads),
                     target=self.threadLoop)
             t.setDaemon(True)
             t.start()
@@ -174,11 +174,12 @@ class ThreadPool(object):
         self.queue.put((callback, errback, function, name, args, kwargs))
 
     def closeThreads(self):
-        for x in xrange(self.THREADS):
+        for x in xrange(len(self.threads)):
             self.queue.put("QUIT")
-        for x in xrange(self.THREADS):
+        while len(self.threads) > 0:
+            x = self.threads.pop()
             try:
-                self.threads[x].join()
+                x.join()
             except:
                 pass
             
@@ -378,8 +379,7 @@ lt = None
 profile_file = None
 
 def startup():
-    _eventLoop.threadPool.initThreads()
-
+    threadPoolInit()
 
     def profile_startup():
         import profile
@@ -407,8 +407,14 @@ def quit():
     _eventLoop.quitFlag = True
     _eventLoop.wakeup()
 
+def resetEventLoop():
+    _eventLoop = EventLoop()
+
 def threadPoolQuit():
     _eventLoop.threadPool.closeThreads()
+
+def threadPoolInit():
+    _eventLoop.threadPool.initThreads()
 
 def asIdle(func):
     """Decorator to make a methods run as an idle function
