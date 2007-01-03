@@ -6,7 +6,6 @@ import os
 import tempfile
 import unittest
 
-import eventloop
 import iconcache
 import item
 import feed

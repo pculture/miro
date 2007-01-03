@@ -7,8 +7,7 @@ import database
 import feedparser
 import app
 import dialogs
-import eventloop
-import schedulertest
+import framework
 import os
 import gtcache
 import gettext
@@ -28,7 +27,7 @@ class UnicodeTestDelegate:
         # a bit of a hack to avoid using eventloop
         dialog.callback(dialog)
 
-class UnicodeFeedTestCase(schedulertest.EventLoopTest):
+class UnicodeFeedTestCase(framework.EventLoopTest):
     def setUp(self):
         super(UnicodeFeedTestCase, self).setUp()
 
