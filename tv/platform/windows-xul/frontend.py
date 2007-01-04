@@ -25,6 +25,14 @@ from ctypes.wintypes import windll
 def exit(returnCode):
     windll.kernel32.ExitProcess(returnCode)
 
+def inMainThread(function, args=None, kwargs=None):
+    # TODO: IMPLEMENT THIS CORRECTLY (Currently calling on the same thread)
+    if args is None:
+        args = ()
+    if kwargs is None:
+        kwargs = {}
+    return function(*args, **kwargs)
+    
 # NEEDS: preferences
 #        config.set(prefs.RUN_DTV_AT_STARTUP, <bool>)
 #        config.set(prefs.CHECK_CHANNELS_EVERY_X_MN, minutes)
