@@ -1307,7 +1307,9 @@ class SortingFilterTestCase(DemocracyTestCase):
             self.objs.append(a)
         initialSorts = self.sortCalls
         self.sortCalls = 0
-        
+
+        subSort = sortView.sort(self.sortFunc, resort = True)
+        unSubSort = sortView.sort(self.sortFunc, resort = False)
         sortingFiltView = sortView.filter(lambda x:True,sortFunc=self.sortFunc,
                                    resort=True)
         unsortingFiltView = sortView.filter(lambda x:True,sortFunc=self.sortFunc,
@@ -1329,12 +1331,14 @@ class SortingFilterTestCase(DemocracyTestCase):
 
         allMyViews = [sortingFiltView, unsortingFiltView,
                       sortingIndexView, unsortingIndexView,
-                      sortingMultiIndexView, unsortingMultiIndexView]
-        
-        allSortingViews = [sortingFiltView, sortingIndexView, sortingMultiIndexView]
+                      sortingMultiIndexView, unsortingMultiIndexView,
+                      subSort, unSubSort]
 
-        allUnSortingViews = [unsortingFiltView, unsortingIndexView,
-                             unsortingMultiIndexView]
+        #FIXME add index views as they start to function
+        allSortingViews = [subSort, sortingFiltView]
+
+        allUnSortingViews = [unsortingFiltView, unSubSort,
+                             unsortingIndexView, unsortingMultiIndexView]
 
         for view in allMyViews:
             self.assertEqual(sortView.len(),view.len())

@@ -961,7 +961,6 @@ class DynamicDatabase:
         # Go through each one of the filter subviews
         for [view, f] in self.subFilters:
             if all or view is filter:
-                view.confirmDBThread()
                 self.saveCursor()
                 self.resetCursor()
                 view.saveCursor()
@@ -1001,38 +1000,62 @@ class DynamicDatabase:
                     for callback in view.viewChangeCallbacks:
                         callback()
 
+    def _recomputeSingleSort(self, view, f):
+        try:
+            curObj = view.objects[view.cursor]
+        except:
+            curObj = None
+        newCursor = None
+        newLocs = {}
+        temp = SortedList(f)
+        for obj in view.objects:
+            it = temp.append(obj)
+            newLocs[obj[0].id] = it
+            if obj is curObj:
+                newCursor = it.copy()
+        newStack = []
+        for it in view.cursorStack:
+            if it is None:
+                newStack.append(None)
+            elif it == view.objects.lastIter():
+                newStack.append(view.objects.lastIter().copy())
+            else:
+                newStack.append(newLocs[view.objects[it][0].id])
+        view.objects = temp
+        view.cursor = newCursor
+        view.objectLocs = newLocs
+        view.cursorStack = newStack
+
+        # Only recompute sorts that asked to be resorted
+        for [subView, f] in view.subSorts:
+            if subView.resort:
+                view.recomputeSort(subView)
+            else:
+                subView.recomputeFilters()
+
+        # Recompute all filters, resorting where necessary
+        for [subView, f] in view.subFilters:
+            if subView.resort:
+                view._recomputeSingleSort(subView, subView.sortFunc)
+            view.recomputeFilter(subView)
+
+        # Recompute everything below maps
+        for [subView, f] in self.subMaps:
+            subView.recomputeFilters()
+
+        # Recompute indexes
+        # FIXME -- make this deal with resorting
+        view.recomputeIndex(None,all=True)
+
+        for callback in view.viewChangeCallbacks:
+            callback()
+
     #Recompute a single subSort
     def recomputeSort(self,sort, all = False):
         self.confirmDBThread()
         for [view, f] in self.subSorts:
             if all or view is sort:
-                try:
-                    curObj = view.objects[view.cursor]
-                except:
-                    curObj = None
-                newCursor = None
-                newLocs = {}
-                temp = SortedList(f)
-                for obj in view.objects:
-                    it = temp.append(obj)
-                    newLocs[obj[0].id] = it
-                    if obj is curObj:
-                        newCursor = it.copy()
-                newStack = []
-                for it in view.cursorStack:
-                    if it is None:
-                        newStack.append(None)
-                    elif it == view.objects.lastIter():
-                        newStack.append(view.objects.lastIter().copy())
-                    else:
-                        newStack.append(newLocs[view.objects[it][0].id])
-                view.objects = temp
-                view.cursor = newCursor
-                view.objectLocs = newLocs
-                view.cursorStack = newStack
-                view.recomputeFilters()
-                for callback in view.viewChangeCallbacks:
-                    callback()
+                self._recomputeSingleSort(view,f)
         #self.checkObjLocs()
 
     ##
