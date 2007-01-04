@@ -13,15 +13,12 @@ from download_utils import cleanFilename
 import download_utils
 import database
 import dialogs
-import eventloop
 import httpclient
 import util
-from test import framework
-from test.schedulertest import EventLoopTest
-from test.framework import DemocracyTestCase
+from framework import EventLoopTest, DemocracyTestCase, HadToStopEventLoop
 
 class TestingConnectionHandler(httpclient.ConnectionHandler):
-    def __init__(self):
+    def __init__(self, test):
         super(TestingConnectionHandler, self).__init__()
         self.states['foo'] = self.handleFoo
         self.states['bar'] = self.handleBar
@@ -30,18 +27,19 @@ class TestingConnectionHandler(httpclient.ConnectionHandler):
         self.barData = ''
         self.gotHandleClose = False
         self.closeType = None
+        self.test = test
     def handleFoo(self):
         data = self.buffer.read()
         self.fooData += data
-        eventloop.quit()
+        self.test.stopEventLoop(False)
     def handleBar(self):
         data = self.buffer.read()
         self.barData += data
-        eventloop.quit()
+        self.test.stopEventLoop(False)
     def handleClose(self, type):
         self.gotHandleClose = True
         self.closeType = type
-        eventloop.quit()
+        self.test.stopEventLoop(False)
 
 class TestingHTTPConnection(httpclient.HTTPConnection):
     """HTTPConnection that doesn't actually connect to the network."""
@@ -219,12 +217,12 @@ class AsyncSocketTest(EventLoopTest):
             1/0
         self.data = data
         self.callbackCalled = True
-        eventloop.quit()
+        self.stopEventLoop(False)
 
     def errback(self, error):
         self.data = error
         self.errbackCalled = True
-        eventloop.quit()
+        self.stopEventLoop(False)
 
 class WeirdCloseConnectionTest(AsyncSocketTest):
     def testCloseDuringOpenConnection(self):
@@ -269,15 +267,15 @@ class WeirdCloseConnectionTest(AsyncSocketTest):
 
 class ConnectionHandlerTest(EventLoopTest):
     def setUp(self):
-        super(ConnectionHandlerTest, self).setUp()
+        EventLoopTest.setUp(self)
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server.bind( ('127.0.0.1', 0) )
         server.listen(1)
         address = server.getsockname()
 
-        self.connectionHandler = TestingConnectionHandler()
+        self.connectionHandler = TestingConnectionHandler(self)
         def stopEventLoop(conn):
-            eventloop.quit()
+            self.stopEventLoop(False)
         self.connectionHandler.openConnection(address[0], address[1],
                 stopEventLoop, stopEventLoop)
         self.runEventLoop()
@@ -295,10 +293,10 @@ class ConnectionHandlerTest(EventLoopTest):
                 readIn = ''
             self.received.addData(readIn)
             if self.received.length == len(data):
-                eventloop.quit()
+                self.stopEventLoop(False)
             else:
-                eventloop.addTimeout(0.1, readData, 'test')
-        eventloop.addTimeout(0.1, readData, 'test')
+                self.addTimeout(0.1, readData, 'test')
+        self.addTimeout(0.1, readData, 'test')
         self.runEventLoop()
         self.assert_(self.received.read() == data)
 
@@ -682,7 +680,7 @@ HELLO: WORLD\r\n"""
 
         # Hmmmm.... it looks like the behavior changed, so cancel no
         # longer triggers an errback. I guess this is okay. --NN
-        self.assertRaises(framework.HadToStopEventLoop, lambda:self.runEventLoop(timeout=1))
+        self.assertRaises(HadToStopEventLoop, lambda:self.runEventLoop(timeout=1))
         #self.assert_(self.errbackCalled)
 
     def testConnectionFailure(self):
@@ -700,7 +698,7 @@ HELLO: WORLD\r\n"""
         url = 'http://jigsaw.w3.org/HTTP/'
         req = httpclient.HTTPConnection()
         def stopEventLoop(conn):
-            eventloop.quit()
+            self.stopEventLoop(False)
         req.openConnection('www.google.com', 80, stopEventLoop, stopEventLoop)
         self.runEventLoop()
         req.sendRequest(middleCallback, self.errback, method='GET', path='/')
@@ -920,7 +918,7 @@ Below this line, is 1000 repeated lines of 0-9.
             self.headerResponse = copy(response)
             self.callbackCalledInHeaderCallback = self.callbackCalled
             self.errbackCalledInHeaderCallback = self.errbackCalled
-            eventloop.quit()
+            self.stopEventLoop(False)
         url = 'http://participatoryculture.org/democracytest/normalpage.txt'
         httpclient.grabURL(url, self.callback, self.errback,
                 headerCallback=headerCallback)
@@ -933,7 +931,7 @@ Below this line, is 1000 repeated lines of 0-9.
     def testHeaderCallbackCancel(self):
         def headerCallback(response):
             reqId.cancel()
-            eventloop.quit()
+            self.stopEventLoop(False)
         url = 'http://www.getdemocracy.com/images/layout/linux-screen.jpg'
         reqId = httpclient.grabURL(url, self.callback, self.errback,
                 headerCallback=headerCallback)
@@ -951,7 +949,7 @@ Below this line, is 1000 repeated lines of 0-9.
     def testBodyDataCallbackCancel(self):
         def bodyDataCallback(response):
             reqId.cancel()
-            eventloop.quit()
+            self.stopEventLoop(False)
         url = 'http://www.getdemocracy.com/images/linux-screen.jpg'
         reqId = httpclient.grabURL(url, self.callback, self.errback,
                 bodyDataCallback=bodyDataCallback)
@@ -1006,7 +1004,7 @@ Below this line, is 1000 repeated lines of 0-9.
         def bodyDataCallback(data):
             self.gotData += data
             if self.gotData == 'I AM A NORMAL PAGE\n':
-                eventloop.quit()
+                self.stopEventLoop(False)
 
         httpclient.grabURL(url, self.callback, self.errback,
                 bodyDataCallback=bodyDataCallback)
@@ -1079,7 +1077,7 @@ class HTTPConnectionPoolTest(EventLoopTest):
         # simulate this
         self.pool = httpclient.HTTPConnectionPool()
         def stopEventLoop(error):
-            eventloop.quit()
+            self.stopEventLoop(False)
         self.pool.addRequest(stopEventLoop, stopEventLoop,
                 None, None, None, "http://3:-1/", "GET", {})
         self.runEventLoop()
@@ -1230,7 +1228,7 @@ class HTTPSConnectionTest(HTTPClientTestBase):
             conn.sendRequest(self.callback, self.errback, 
                     method="GET", path='/wave/')
         def handleError(error):
-            eventloop.quit()
+            self.stopEventLoop(False)
         conn.openConnection("www.gibill.va.gov", 443, handleOpen, handleError)
         self.runEventLoop()
         self.assert_(self.callbackCalled)
@@ -1435,9 +1433,9 @@ class SocketCallbackTest(EventLoopTest):
         def goodCallback():
             self.goodCallbackCalled = True
         def callback():
-            eventloop.addWriteCallback(s2, badCallback)
-        eventloop.addWriteCallback(s1, callback)
-        eventloop.addWriteCallback(s2, goodCallback)
+            self.addWriteCallback(s2, badCallback)
+        self.addWriteCallback(s1, callback)
+        self.addWriteCallback(s2, goodCallback)
         self.assert_(self.goodCallbackCalled)
         self.assert_(not self.badCallbackCalled)
 
@@ -1452,13 +1450,13 @@ class SocketCallbackTest(EventLoopTest):
         def callback():
             self.count += 1
             if self.count == 1:
-                eventloop.removeWriteCallback(s1)
-                eventloop.addWriteCallback(s1, callback)
-                eventloop.removeWriteCallback(s2)
-                eventloop.addWriteCallback(s2, callback)
-        eventloop.addWriteCallback(s1, callback)
-        eventloop.addWriteCallback(s2, callback)
-        eventloop.addIdle(lambda: eventloop.quit(), 'stop event loop')
+                self.removeWriteCallback(s1)
+                self.addWriteCallback(s1, callback)
+                self.removeWriteCallback(s2)
+                self.addWriteCallback(s2, callback)
+        self.addWriteCallback(s1, callback)
+        self.addWriteCallback(s2, callback)
+        self.addIdle(lambda: self.stopEventLoop(False), 'stop event loop')
         self.runEventLoop()
         self.assertEquals(self.count, 1)
 

@@ -11,6 +11,19 @@ import storedatabase
 import subscription
 import selection
 
+# Generally, all test cases should extend DemocracyTestCase or
+# EventLoopTest.  DemocracyTestCase cleans up any database changes you
+# might have made, and EventLoopTest provides an API for accessing the
+# eventloop in addition to managing the thread pool and cleaning up
+# any events you may have scheduled.
+# 
+# Our general strategy here is to "revirginize" the environment after
+# each test, rather than trying to reset applicable pieces of the
+# environment before each test. This way, when writing new tests you
+# don't have to anticipate what another test may have changed, you
+# just have to make sure you clean up what you changed. Usually, that
+# is handled transparently through one of these test cases
+
 class HadToStopEventLoop(Exception):
     pass
 
@@ -45,9 +58,6 @@ class DemocracyTestCase(unittest.TestCase):
     def setUp(self):
         # reset the event loop
         util.chatter = False
-        database.resetDefaultDatabase()
-        eventloop._eventLoop.threadPool.closeThreads()
-        eventloop._eventLoop = eventloop.EventLoop() 
         self.oldUtilDotFailed = util.failed
         self.failedCalled = False
         self.utilDotFailedOkay = False
@@ -68,23 +78,21 @@ class DemocracyTestCase(unittest.TestCase):
 
     def tearDown(self):
         util.chatter = True
-        # this prevents weird errors when we quit
-        eventloop._eventLoop.threadPool.closeThreads()
 
+        # Remove any leftover database
+        database.resetDefaultDatabase()
+
+        # Remove anything that may have been accidentally queued up
+        eventloop._eventLoop = eventloop.EventLoop()
 
 class EventLoopTest(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)
         self.hadToStopEventLoop = False
 
-        # Maybe we should get rid of references to _eventLoop and fix the
-        # API to allow running the eventloop in the current thread... --NN
-        eventloop._eventLoop.threadPool.initThreads()
-
-    def stopEventLoop(self):
-        self.hadToStopEventLoop = True
+    def stopEventLoop(self, abnormal = True):
+        self.hadToStopEventLoop = abnormal
         eventloop.quit()
-        eventloop.threadPoolQuit()
 
     def runPendingIdles(self):
         idleQueue = eventloop._eventLoop.idleQueue
@@ -94,16 +102,35 @@ class EventLoopTest(DemocracyTestCase):
             idleQueue.processNextIdle()
 
     def runEventLoop(self, timeout=10, timeoutNormal=False):
-        self.hadToStopEventLoop = False
-        timeout = eventloop.addTimeout(timeout, self.stopEventLoop, 
-                "Stop test event loop")
-        eventloop._eventLoop.quitFlag = False
-        eventloop._eventLoop.loop()
-        eventloop.threadPoolQuit()
-        if self.hadToStopEventLoop and not timeoutNormal:
-            raise HadToStopEventLoop()
-        else:
-            timeout.cancel()
+        eventloop.threadPoolInit()
+        try:
+            self.hadToStopEventLoop = False
+            timeout = eventloop.addTimeout(timeout, self.stopEventLoop, 
+                                           "Stop test event loop")
+            eventloop._eventLoop.quitFlag = False
+            eventloop._eventLoop.loop()
+            if self.hadToStopEventLoop and not timeoutNormal:
+                raise HadToStopEventLoop()
+            else:
+                timeout.cancel()
+        finally:
+            eventloop.threadPoolQuit()
+
+    def addTimeout(self,delay, function, name, args=None, kwargs=None):
+        eventloop.addTimeout(delay, function, name, args, kwargs)
+
+    def addWriteCallback(self, socket, callback):
+        eventloop.addWriteCallback(socket, callback)
+
+    def removeWriteCallback(self, socket):
+        eventloop.removeWriteCallback(socket)
+
+    def addIdle(self, function, name, args=None, kwargs=None):
+        eventloop.addIdle(function, name, args=None, kwargs=None)
+
+    def hasIdles(self):
+        return not (eventloop._eventLoop.idleQueue.queue.empty() and
+                    eventloop._eventLoop.urgentQueue.queue.empty())
 
     def processIdles(self):
         eventloop._eventLoop.idleQueue.processIdles()
@@ -117,7 +144,7 @@ class DownloaderTestCase(EventLoopTest):
         downloader.startupDownloader()
 
     def tearDown(self):
-        DemocracyTestCase.tearDown(self)
         downloader.shutdownDownloader(eventloop.quit)
         self.runEventLoop()
         app.delegate = None
+        EventLoopTest.tearDown(self)

@@ -11,7 +11,6 @@ import shutil
 import time
 import tempfile
 import storedatabase
-import fasttypes
 from threading import Thread
 
 from test.framework import DemocracyTestCase

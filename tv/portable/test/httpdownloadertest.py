@@ -2,7 +2,6 @@ import os
 import tempfile
 
 import download_utils
-import eventloop
 import httpclient
 from test import schedulertest
 from dl_daemon import download
@@ -13,7 +12,8 @@ def testingNextFreeFilename(filename):
 class TestingDownloader(download.HTTPDownloader):
     UPDATE_CLIENT_INTERVAL = 0 # every data block does an updateClient
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, test, *args, **kwargs):
+        self.test = test
         if 'restore' in kwargs:
             kwargs['restore']['statusCallback'] = lambda: 0
             kwargs['restore']['lastStatus'] = None
@@ -24,7 +24,7 @@ class TestingDownloader(download.HTTPDownloader):
 
     def updateClient(self):
         self.lastStatus = self.getStatus()
-        eventloop.addIdle(self.statusCallback, "status callback")
+        self.test.addIdle(self.statusCallback, "status callback")
 
 class HTTPDownloaderTest(schedulertest.EventLoopTest):
     def setUp(self):
@@ -47,7 +47,7 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
 
     def stopOnFinished(self):
         if self.downloader.state == "finished":
-            eventloop.quit()
+            self.stopEventLoop(False)
 
     def getDownloadedData(self):
         return open(self.downloader.filename, 'rb').read()
@@ -69,7 +69,7 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
 #
     def testDownload(self):
         url = 'http://participatoryculture.org/democracytest/normalpage.txt'
-        self.downloader = TestingDownloader(url, "ID1")
+        self.downloader = TestingDownloader(self, url, "ID1")
         self.downloader.statusCallback = self.stopOnFinished
         self.runEventLoop()
         self.assertEquals(self.getDownloadedData(), "I AM A NORMAL PAGE\n")
@@ -77,12 +77,12 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
     def testStop(self):
         # nice large download so that we have time to interrupt it
         url = 'http://www.getdemocracy.com/images/linux-screen.jpg'
-        self.downloader = TestingDownloader(url, "ID1")
+        self.downloader = TestingDownloader(self, url, "ID1")
         def stopOnData():
             if (self.downloader.state == 'downloading' and 
                     self.downloader.currentSize > 0):
                 self.downloader.stop(False)
-                eventloop.quit()
+                self.stopEventLoop(False)
         self.downloader.statusCallback = stopOnData
         self.runEventLoop()
         self.assertEquals(self.downloader.state, 'stopped')
@@ -91,7 +91,7 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
         self.assertEquals(self.countConnections(), 0)
         def restart():
             self.downloader.start()
-        eventloop.addTimeout(0.5, restart, 'restarter')
+        self.addTimeout(0.5, restart, 'restarter')
         self.downloader.statusCallback = self.stopOnFinished
         self.runEventLoop()
         self.assertEquals(self.downloader.currentSize, 45572)
@@ -99,12 +99,12 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
 
     def testPause(self):
         url = 'http://www.getdemocracy.com/images/linux-screen.jpg'
-        self.downloader = TestingDownloader(url, "ID1")
+        self.downloader = TestingDownloader(self, url, "ID1")
         def pauseOnData():
             if (self.downloader.state == 'downloading' and 
                     self.downloader.currentSize > 0):
                 self.downloader.pause()
-                eventloop.quit()
+                self.stopEventLoop(False)
         self.downloader.statusCallback = pauseOnData
         self.runEventLoop()
         self.assertEquals(self.downloader.state, 'paused')
@@ -113,7 +113,7 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
         self.assertEquals(self.countConnections(), 0)
         def restart():
             self.downloader.start()
-        eventloop.addTimeout(0.5, restart, 'restarter')
+        self.addTimeout(0.5, restart, 'restarter')
         self.downloader.statusCallback = self.stopOnFinished
         self.runEventLoop()
         self.assertEquals(self.downloader.currentSize, 45572)
@@ -121,12 +121,12 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
 
     def testRestore(self):
         url = 'http://www.getdemocracy.com/images/linux-screen.jpg'
-        self.downloader = TestingDownloader(url, "ID1")
+        self.downloader = TestingDownloader(self, url, "ID1")
         def pauseInMiddle():
             if (self.downloader.state == 'downloading' and 
                     self.downloader.currentSize > 1000):
                 self.downloader.pause()
-                eventloop.quit()
+                self.stopEventLoop(False)
         self.downloader.statusCallback = pauseInMiddle
         self.runEventLoop()
         self.assertEquals(self.downloader.state, 'paused')
@@ -134,7 +134,7 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
         restore = self.downloader.lastStatus.copy()
         restore['state'] = 'downloading'
         download._downloads = {}
-        self.downloader2 = TestingDownloader(restore=restore)
+        self.downloader2 = TestingDownloader(self, restore=restore)
         restoreSize = restore['currentSize']
         self.restarted = False
         def statusCallback():
@@ -142,9 +142,9 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
             if self.downloader2.currentSize < restoreSize:
                 print "%d < %d" % (self.downloader2.currentSize, restoreSize)
                 self.restarted = True
-                eventloop.quit()
+                self.stopEventLoop(False)
             elif self.downloader2.state == 'finished':
-                eventloop.quit()
+                self.stopEventLoop(False)
         self.downloader2.statusCallback = statusCallback
         self.runEventLoop()
         self.assert_(not self.restarted)

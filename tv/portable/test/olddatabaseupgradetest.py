@@ -4,21 +4,20 @@ import tempfile
 import unittest
 
 import database
-import eventloop
 import olddatabaseupgrade
 import storedatabase
 import databaseupgrade
 import databasesanity
 import resources
 
-from test.framework import DemocracyTestCase
+from test.framework import EventLoopTest
 
-class TestConvert(DemocracyTestCase):
+class TestConvert(EventLoopTest):
     def setUp(self):
         storedatabase.skipOnRestore = True
         self.utilDotFailedOkay = True
         self.tmpPath = tempfile.mktemp()
-        DemocracyTestCase.setUp(self)
+        EventLoopTest.setUp(self)
 
     def tearDown(self):
         storedatabase.skipOnRestore = False
@@ -26,7 +25,7 @@ class TestConvert(DemocracyTestCase):
             os.unlink(self.tmpPath)
         except:
             pass
-        DemocracyTestCase.tearDown(self)
+        EventLoopTest.tearDown(self)
 
     def checkConversion(self):
         olddatabaseupgrade.convertOldDatabase(self.tmpPath)
@@ -92,8 +91,7 @@ class TestConvert(DemocracyTestCase):
         # if onRestore() was called, we would have the icon cache update
         # scheduled as an idle callback
         self.assertEquals(len(db.objects), 0)
-        self.assert_(eventloop._eventLoop.idleQueue.queue.empty())
-        self.assert_(eventloop._eventLoop.urgentQueue.queue.empty())
+        self.assert_(not self.hasIdles())
 
     def testBug4039part2(self):
         # On the other hand, for database that are normal, we should call 
@@ -104,5 +102,4 @@ class TestConvert(DemocracyTestCase):
         storedatabase.skipOnRestore = False
         storedatabase.restoreDatabase(db=db, pathname=self.tmpPath)
         self.assertEquals(len(db.objects), 2)
-        self.assert_(not eventloop._eventLoop.idleQueue.queue.empty() or
-            not eventloop._eventLoop.urgentQueue.queue.empty())
+        self.assert_(self.hasIdles())
