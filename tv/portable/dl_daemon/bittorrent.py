@@ -145,10 +145,10 @@ class TorrentDownload:
 
         activity -- string specifying what's currently happening or None for
                 normal operations.  
-        upRate -- upload rate
-        downRate -- download rate in kb/s
-        upTotal -- total kb uploaded
-        downTotal -- total kb downloaded
+        upRate -- upload rate in B/s
+        downRate -- download rate in B/s
+        upTotal -- total MB uploaded (this run)
+        downTotal -- total MB downloaded (this run)
         fractionDone -- what portion of the download is completed.
         timeEst -- estimated completion time, in seconds.
         totalSize -- total size of the torrent in bytes

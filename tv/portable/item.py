@@ -795,6 +795,9 @@ folder will be deleted.""")
         out = '<BR>'.join(details)
         return out
 
+    def isTransferring(self):
+        return self.downloader and self.downloader.getState() in ('uploading', 'downloading')
+
     ## 
     # Returns formatted XHTM with download info
     def getDownloadDetails(self):
@@ -819,24 +822,28 @@ folder will be deleted.""")
             if downRate == 0:
                 downRate = '-'
             else:
-                downRate = "%.3f" % downRate
+                downRate = "%.3f KB/s" % (downRate / 1024.0,)
             details.append('Down. Rate<span class="dload-info">%s</span>' % downRate)
 
             totalDown = status.get('currentSize', 0)
             if totalDown == 0:
                 totalDown = '-'
+            else:
+                totalDown = "%.3f MB" % (totalDown / 1024.0 / 1024.0,)
             details.append('Total Down.<span class="dload-info">%s</span>' % totalDown)
 
             upRate = status.get('upRate', 0)
             if upRate == 0:
                 upRate = '-'
             else:
-                upRate = "%.3f" % downRate
+                upRate = "%.3f KB/s" % (upRate / 1024.0,)
             details.append('Up. Rate<span class="dload-info">%s</span>' % upRate)
             
             totalUp = status.get('uploaded', 0)
             if totalUp == 0:
                 totalUp = '-'
+            else:
+                totalUp = "%.3f MB" % (totalUp,)
             details.append('Total Up.<span class="dload-info">%s</span>' % totalUp)
         else:
             downloaded = status.get('currentSize', 0)

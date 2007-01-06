@@ -184,7 +184,7 @@ viewName = kargs['viewName']
             </a>
             </div>
         </div>
-        <div t:showIf="this.showMoreInfo and this.getState() == 'downloading'" class="more-download-info">
+        <div t:showIf="this.showMoreInfo and this.isTransferring()" class="more-download-info">
             <div t:replaceMarkup="this.getDownloadDetails()" />
         </div>
     </div>

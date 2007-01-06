@@ -641,9 +641,10 @@ class BTDownloader(BGDownloader):
         self.fastResumeData = None
         self.retryDC = None
         self.channelName = None
+        self.uploadedStart = 0
         if restore is not None:
             self.restoreState(restore)
-        else:            
+        else:
             BGDownloader.__init__(self,url,item)
             self.runDownloader()
 
@@ -665,10 +666,10 @@ class BTDownloader(BGDownloader):
         """
         activity -- string specifying what's currently happening or None for
                 normal operations.  
-        upRate -- upload rate
-        downRate -- download rate in kb/s
-        upTotal -- total kb uploaded
-        downTotal -- total kb downloaded
+        upRate -- upload rate in B/s
+        downRate -- download rate in B/s
+        upTotal -- total MB uploaded
+        downTotal -- total MB downloaded
         fractionDone -- what portion of the download is completed.
         timeEst -- estimated completion time, in seconds.
         totalSize -- total size of the torrent in bytes
@@ -677,7 +678,7 @@ class BTDownloader(BGDownloader):
         self.totalSize = newStatus['totalSize']
         self.rate = newStatus['downRate']
         self.upRate = newStatus['upRate']
-        self.uploaded = newStatus['upTotal']
+        self.uploaded = newStatus['upTotal'] + self.uploadedStart
         self.eta = newStatus['timeEst']
         self.activity = newStatus['activity']
         self.currentSize = int(self.totalSize * newStatus['fractionDone'])
@@ -708,7 +709,8 @@ class BTDownloader(BGDownloader):
     def restoreState(self, data):
         self.__dict__.update(data)
         self.rate = self.eta = 0
-        self.upRate = self.uploaded = 0
+        self.upRate = 0
+        self.uploadedStart = self.uploaded
         if self.state == 'downloading' or (
             self.state == 'uploading' and self.uploaded < 1.5*self.totalSize):
             self.runDownloader(done=True)
