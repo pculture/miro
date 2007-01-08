@@ -7,6 +7,7 @@ import objc
 import util
 import prefs
 import config
+import keychain
 import resources
 
 sysconfPath = objc.pathForFramework('/System/Library/Frameworks/SystemConfiguration.framework')
@@ -106,6 +107,14 @@ def get(descriptor):
         
     elif descriptor == prefs.HTTP_PROXY_IGNORE_HOSTS:
         value = _proxiesInfo['ExceptionsList']
+    
+    elif descriptor == prefs.HTTP_PROXY_AUTHORIZATION_USERNAME:
+        authInfo = keychain.getAuthInfo(_proxiesInfo['HTTPProxy'])
+        value = authInfo['username']
+    
+    elif descriptor == prefs.HTTP_PROXY_AUTHORIZATION_PASSWORD:
+        authInfo = keychain.getAuthInfo(_proxiesInfo['HTTPProxy'])
+        value = authInfo['password']
     
     return value
 

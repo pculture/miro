@@ -129,6 +129,7 @@ setup(
     options = dict(py2app = py2app_options),
     ext_modules = [
         Extension("idletime",  [os.path.join(root, 'platform/osx/idletime.c')]),
+        Extension("keychain",  [os.path.join(root, 'platform/osx/keychain.c')], extra_link_args=['-framework', 'Security']),
         Extension("database",  [os.path.join(root, 'portable/database.pyx')]),
         Extension("sorts",     [os.path.join(root, 'portable/sorts.pyx')]),
         Extension("fasttypes", [os.path.join(root, 'portable/fasttypes.cpp')],
