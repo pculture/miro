@@ -7,7 +7,6 @@ import app
 import prefs
 import config
 import dialogs
-import autodler
 import eventloop
 
 NibClassBuilder.extractClasses("PreferencesWindow")
@@ -178,7 +177,6 @@ class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
     def setMaxDownloads_(self, sender):
         maxDownloads = self.maxDownloadsField.intValue()
         config.set(prefs.MAX_MANUAL_DOWNLOADS, maxDownloads)
-        autodler.updatePrefs()
 
     def setBTMinPort_(self, sender):
         self.validateBTPortValues()

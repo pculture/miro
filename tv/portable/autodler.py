@@ -166,6 +166,10 @@ def resumeDownloader():
     manualDownloader.resume()
     autoDownloader.resume()
 
-def updatePrefs():
-    manualDownloader.updateMAX()
-    autoDownloader.updateMAX()
+def _updatePrefs(key, value):
+    if key == prefs.DOWNLOADS_TARGET.key:
+        autoDownloader.updateMAX()
+    elif key == prefs.MAX_MANUAL_DOWNLOADS.key:
+        manualDownloader.updateMAX()
+
+config.addChangeCallback (_updatePrefs)

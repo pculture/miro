@@ -384,7 +384,6 @@ class CallbackHandler(object):
         chooser.set_filename (movie_dir + "/")
         # run the dialog
         response = dialog.run()
-        autodler.updatePrefs()
         new_movie_dir = widgetTree['filechooserbutton-movies-directory'].get_filename()
         if (movie_dir != new_movie_dir):
             print "NEW: %r" % new_movie_dir
