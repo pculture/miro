@@ -421,6 +421,9 @@ folder will be deleted.""")
         else:
             self.executeExpire()
 
+    def stopUpload (self):
+        if self.downloader:
+            self.downloader.stopUpload()
 
     def getString(self, when):
         """Get the expiration time a string to display to the user."""

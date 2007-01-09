@@ -59,6 +59,10 @@ class VideoDisplay (app.VideoDisplayBase):
                 self.add_renderer(value.get_string())
         gconf_lock.release()
         self.renderersReady.set()
+
+    @gtkAsyncMethod
+    def fileDuration (self, filename, callback):
+        app.VideoDisplayBase.fileDuration (self, filename, callback)
             
     def getRendererForItem(self, anItem):
         self.renderersReady.wait()

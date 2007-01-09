@@ -300,9 +300,6 @@ class VideoDisplayBase (Display):
         pass
 
     def fileDuration (self, filename, callback):
-        frontend.inMainThread (lambda:self.mainThreadFileDuration (filename, callback))
-
-    def mainThreadFileDuration (self, filename, callback):
         for renderer in self.renderers:
             duration = renderer.fileDuration(filename)
             if duration != -1:
@@ -1486,6 +1483,10 @@ class ModelActionHandler:
     def keepItem(self, item):
         obj = db.getObjectByID(int(item))
         obj.save()
+
+    def stopUploadItem(self, item):
+        obj = db.getObjectByID(int(item))
+        obj.stopUpload()
 
     def toggleMoreItemInfo(self, item):
         obj = db.getObjectByID(int(item))
