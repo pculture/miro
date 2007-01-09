@@ -1022,6 +1022,13 @@ an element is dragged, the drag-highlight class is added to it */
     width: 54px;
 }
 
+.main-video-details-tasks-small.stop-upload {
+    position: absolute;
+    left: -59px;
+    width: 54px;
+    display: none;
+}
+
  .saved-note {
     margin-top: 3px;
     font-size: 9px;

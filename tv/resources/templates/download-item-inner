@@ -172,6 +172,11 @@ viewName = kargs['viewName']
                 <span t:replace="this.getFailureReason()" />
         </div>
         <div class="details-small-buttons">
+	    <div t:showIf="this.downloader and this.downloader.getState() == 'uploading'">
+		    <a class="main-video-details-tasks-small stop-upload" href="#" onclick="return eventURL('action:stopUploadItem?item=@@@this.getID()@@@');">
+			    <span i18n:translate="">STOP UPLOAD</span>
+		    </a>
+	    </div>
             <div t:showIf="this.showSaveButton()">
             <a class="main-video-details-tasks-small save" href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');">
                     <span i18n:translate="">KEEP</span>

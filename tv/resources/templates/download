@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
 <link href="resource:css/main.css" rel="stylesheet" type="text/css" />
+<link href="resource:css/download.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="resource:templates/osxdnd.js" />
 <t:include filename="dynamic.js" />
 <t:include filename="settings.js" />
@@ -15,6 +16,7 @@ import config
 import prefs
 import platformutils
 import util
+import downloader
 
 def getFreeSpace():
     bytes = platformutils.getAvailableBytesForMovies()
@@ -26,6 +28,9 @@ def getAvailableSpace():
         preserved = config.get(prefs.PRESERVE_X_GB_FREE) * 1024 * 1024 * 1024
         bytes -= preserved
     return util.formatSizeForUser(bytes, "0B")
+
+def getUpRate():
+    return "%.3f" % (downloader.totalUpRate / 1024.0,)
 
 
 global searchFilter
@@ -108,6 +113,9 @@ matchingPausedDLs.unlink()
 			<span id="downloads-free-disk" i18n:translate=""><span i18n:name="size" t:replace="getFreeSpace()" /> free on disk - </span>
 		</span>
 		<span id="downloads-free-space" i18n:translate=""><span i18n:name="size" t:replace="getAvailableSpace()" /> free for downloads</span>
+		<span t:hideIf="getUpRate() &lt; 1.0" t:updateHideOnView="views.remoteDownloads">
+			<span id="total-up-rate" i18n:translate=""> - <span i18n:name="size" t:replace="getUpRate()" /> KB/s total upload</span>
+		</span>
 		
 	</div>
 	</div>
