@@ -32,6 +32,7 @@ _Xine* xineCreate(xine_event_listener_cb_t event_callback,
     xine->frameInfo.height = 0;
     xine->event_callback = event_callback;
     xine->event_callback_data = event_callback_data;
+    xine->viz = NULL;
 
     /* Create a second xine instance.  This one will be only used for testing
      * if we can play a file
@@ -137,6 +138,15 @@ void xineAttach(_Xine* xine, const char* displayName, Drawable d)
     xine_port_send_gui_data(xine->videoPort, XINE_GUI_SEND_VIDEOWIN_VISIBLE, 
             (void *) 1);
 
+    {
+      int i;
+      const char *const *plugins;
+      printf ("Audio Viz\n");
+      plugins = xine_list_post_plugins (xine->xine); /*, XINE_POST_TYPE_AUDIO_VISUALIZATION);*/
+      for (i = 0; plugins[i]; i++) {
+	printf ("%s\n", plugins[i]);
+      }
+    }
     xine->attached = 1;
 }
 
@@ -145,13 +155,13 @@ void xineDetach(_Xine* xine)
     if(!xine->attached) return;
     // This was a XINE_GUI_SEND_SELECT_VISUAL, but that was crashing
     // See ticket #3649
-     xine_port_send_gui_data(xine->videoPort,
-                             XINE_GUI_SEND_WILL_DESTROY_DRAWABLE, NULL);
+    xine_port_send_gui_data(xine->videoPort,
+			    XINE_GUI_SEND_WILL_DESTROY_DRAWABLE, NULL);
     xine_close(xine->stream);
     xine_event_dispose_queue(xine->eventQueue);
     xine_dispose(xine->stream);
-    xine_close_audio_driver(xine->xine, xine->audioPort);  
-    xine_close_video_driver(xine->xine, xine->videoPort);  
+    xine_close_audio_driver(xine->xine, xine->audioPort);
+    xine_close_video_driver(xine->xine, xine->videoPort);
     XCloseDisplay(xine->display);
 
     xine->attached = 0;
@@ -198,14 +208,57 @@ int xineFileDuration(_Xine* xine, const char* filename)
     return duration;
 }
 
+void _xineSwitchToViz(_Xine* xine)
+{
+  const char *const *inputs;
+  xine_post_out_t *source;
+  xine_post_in_t *sink;
+  xine_audio_port_t *audios[] = { xine->audioPort, NULL };
+  xine_video_port_t *videos[] = { xine->videoPort, NULL };
+
+  if (xine->viz)
+    return;
+
+  xine->viz = xine_post_init (xine->xine, "oscope", 1, audios, videos);
+  if (xine->viz) {
+    inputs = xine_post_list_inputs(xine->viz);
+    source = xine_get_audio_source (xine->stream);
+    sink = xine_post_input(xine->viz, inputs[0]);
+    xine_post_wire (source, sink);
+  }
+}
+
+void _xineSwitchToNormal(_Xine* xine)
+{
+  xine_post_out_t *source;
+
+  if (!xine->viz)
+    return;
+
+  source = xine_get_video_source (xine->stream);
+  xine_post_wire_video_port(source, xine->videoPort);
+
+  source = xine_get_audio_source (xine->stream);
+  xine_post_wire_audio_port(source, xine->audioPort);
+
+  xine_post_dispose (xine->xine, xine->viz);
+  xine->viz = NULL;
+}
+
 void xinePlayFile(_Xine* xine, const char* filename)
 {
     if(!xine->attached) return;
     xine_close(xine->stream);
-    if (!xine_open(xine->stream, filename) || 
-        !xine_play(xine->stream, 0, 0)) {
+    if (!xine_open(xine->stream, filename))
         printf("Unable to open file '%s'\n", filename);
+    if (xine_get_stream_info (xine->stream, XINE_STREAM_INFO_HAS_VIDEO)) {
+      _xineSwitchToNormal(xine);
+    } else {
+      _xineSwitchToViz(xine);
     }
+    if (!xine_play(xine->stream, 0, 0))
+      printf ("Unable to play file '%s'\n", filename);
+
 }
 
 void xineSeek(_Xine* xine, int position)

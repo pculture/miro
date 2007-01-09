@@ -32,6 +32,7 @@ typedef struct {
     xine_stream_t* stream;
     xine_video_port_t* videoPort;
     xine_audio_port_t* audioPort;
+    xine_post_t* viz;
     xine_event_queue_t* eventQueue;
     xine_event_listener_cb_t event_callback;
     void* event_callback_data;
