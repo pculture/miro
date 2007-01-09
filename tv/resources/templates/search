@@ -51,10 +51,6 @@ searchItems.unlink()
       </div>
   </div>
 
-  <div t:updateForView="searchItems">
-  <t:includeTemplate filename="sort-bar" />
-  </div>
-
         <div id="main-container">
             <div t:updateForView="searchFeed">
                 <div class="search-message" t:showIf="feed.getStatus() == 'idle-empty'">
@@ -78,6 +74,12 @@ searchItems.unlink()
                 </div>
             </div>
             
+            <span t:updateForView="searchItems">
+                <div t:hideIf="searchItems.len() == 0">
+                    <t:includeTemplate filename="sort-bar" />
+                </div>
+            </span>
+
             <div id="search-results">
                <div t:repeatForView="searchItems" t:repeatTemplate="download-item" />
             </div>

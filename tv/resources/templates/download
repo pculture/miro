@@ -129,13 +129,15 @@ matchingPausedDLs.unlink()
 </div>
 <!-- / TITLE BAR -->
 
-<!-- SORT BAR ************************************************************* --> 
-<div t:updateForView="normalDownloads"> 
-<t:includeTemplate filename="sort-bar" /> 
-</div> 
-<!-- / SORT BAR -->
-
 <div id="main-container">
+
+    <!-- SORT BAR ************************************************************* --> 
+    <span t:updateForView="allNormalDownloads"> 
+        <div t:hideIf="allNormalDownloads.len() == 0">
+            <t:includeTemplate filename="sort-bar" /> 
+        </div>
+    </span> 
+    <!-- / SORT BAR -->
 
 	<!-- VIDEOS ************************************************** -->
 	<div t:repeatForView="normalDownloads" t:repeatTemplate='download-item' />

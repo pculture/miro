@@ -41,28 +41,29 @@ thisPlaylistView.unlink()
     </div>
 </div>
 
-<div t:updateForView="playlistView">
-<t:includeTemplate filename="sort-bar" />
-</div>
-
 <div id="main-container">
+    <span t:updateForView="playlistView">
+        <div t:hideIf="playlistView.len() == 0">
+            <t:includeTemplate filename="sort-bar" />
+        </div>
+    </span>
     <div t:repeatForView="playlistView" t:repeatTemplate='download-item' />
     <div class="playlist-end-drag-hitbox"
-	dragdesttype="downloadeditem"
-	dragdestdata="playlistitem-END"
-	drageffectdownloadeditem="move" />
-</div>
-<div t:updateForView="playlistView">
-<div t:showIf="playlistView.len() == 0">
-   <div class="channel-blank">
-    <div class="channel-message" i18n:translate="">
-        Empty Playlist
+	     dragdesttype="downloadeditem"
+	     dragdestdata="playlistitem-END"
+	     drageffectdownloadeditem="move" />
     </div>
-    <div class="channel-message small" i18n:translate="">
-        Drag downloaded videos to this playlist to add them.
+    <div t:updateForView="playlistView">
+        <div t:showIf="playlistView.len() == 0">
+            <div class="channel-blank">
+                <div class="channel-message" i18n:translate="">
+                    Empty Playlist
+                </div>
+                <div class="channel-message small" i18n:translate="">
+                    Drag downloaded videos to this playlist to add them.
+                </div>
+            </div>
+        </div>
     </div>
-    </div>
-</div>
-</div>
 </body>
 </html>

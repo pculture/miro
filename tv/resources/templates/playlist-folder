@@ -50,6 +50,11 @@ thisPlaylistView.unlink()
 </div>
 
 <div id="main-container">
+    <span t:updateForView="playlistView">
+        <div t:hideIf="playlistView.len() == 0">
+            <t:includeTemplate filename="sort-bar" />
+        </div>
+    </span>
     <div t:repeatForView="playlistView" t:repeatTemplate='download-item' />
     <div class="playlist-end-drag-hitbox"
 	dragdesttype="downloadeditem"

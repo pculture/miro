@@ -58,13 +58,12 @@ matchingItems.unlink()
 </div>
 <!-- / TITLE BAR -->
 
-<!-- SORT BAR ************************************************************* -->
-<div t:updateForView="matchingItems">
-<t:includeTemplate filename="sort-bar" />
-</div>
-<!-- / SORT BAR -->
-
 <div id="main-container">
+    <span t:updateForView="matchingItems">
+        <div t:hideIf="matchingItems.len() == 0">
+            <t:includeTemplate filename="sort-bar" />
+        </div>
+    </span>
     <div id="main-unwatched">
 	<div t:repeatForView="matchingItems" t:repeatTemplate='download-item' />
     </div>	
