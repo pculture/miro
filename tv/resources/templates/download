@@ -17,6 +17,7 @@ import prefs
 import platformutils
 import util
 import downloader
+from gtcache import gettext as _
 
 def getFreeSpace():
     bytes = platformutils.getAvailableBytesForMovies()
@@ -30,7 +31,10 @@ def getAvailableSpace():
     return util.formatSizeForUser(bytes, "0B")
 
 def getUpRate():
-    return "%.3f" % (downloader.totalUpRate / 1024.0,)
+    if downloader.totalUpRate > 1:
+        return _(" - %0.3f KB/s total upload") % (downloader.totalUpRate / 1024.0,)
+    else:
+        return ""
 
 
 global searchFilter
@@ -97,11 +101,7 @@ matchingPausedDLs.unlink()
 	<div id="main-titlebar-center">
             <h1 id="main-title" i18n:translate="">Downloading</h1>
 	</div>
-	<div t:updateForConfigChange="">
-
-
 	<div id="main-upper-right">
-
 
 		<div id="downloads-global-actions">
 			<div><p t:hideIf="views.downloadingItems.len() == 0" t:updateHideOnView="views.downloadingItems"><a href="#" onclick="return eventURL('action:pauseAll');" title="Pause All"><img src="resource:images/pause-all-downloads.png" /><br /><span i18n:translate="">Pause All</span></a></p>&nbsp;</div>
@@ -109,15 +109,15 @@ matchingPausedDLs.unlink()
 		</div>
 <br style="clear: both;" /> 
 
-		<span t:hideIf="getFreeSpace() == getAvailableSpace()">
+		<span t:updateForConfigChange="">
+		    <span t:hideIf="getFreeSpace() == getAvailableSpace()">
 			<span id="downloads-free-disk" i18n:translate=""><span i18n:name="size" t:replace="getFreeSpace()" /> free on disk - </span>
+		    </span>
+		    <span id="downloads-free-space" i18n:translate=""><span i18n:name="size" t:replace="getAvailableSpace()" /> free for downloads</span>
 		</span>
-		<span id="downloads-free-space" i18n:translate=""><span i18n:name="size" t:replace="getAvailableSpace()" /> free for downloads</span>
-		<span t:hideIf="getUpRate() &lt; 1.0" t:updateHideOnView="views.remoteDownloads">
-			<span id="total-up-rate" i18n:translate=""> - <span i18n:name="size" t:replace="getUpRate()" /> KB/s total upload</span>
+		<span t:updateForView="views.remoteDownloads">
+			<span id="total-up-rate"><span t:replace="getUpRate()"/></span>
 		</span>
-		
-	</div>
 	</div>
 </div>
 <!-- / TITLE BAR -->
