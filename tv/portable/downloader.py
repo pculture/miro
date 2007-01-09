@@ -58,6 +58,7 @@ class HTTPAuthPassword(DDBObject):
         self.confirmDBThread()
         return self.authScheme
 
+totalUpRate = 0
 
 def _getDownloader (dlid):
     return views.remoteDownloads.getItemWithIndex(indexes.downloadsByDLID, dlid)
@@ -145,10 +146,13 @@ class RemoteDownloader(DDBObject):
                 # data
                 print "WARNING exception when comparing status: %s" % e
 
+            oldUpRate = self.status.get("upRate", 0)
             wasFinished = self.isFinished()
             self.status = data
             # Store the time the download finished
             finished = self.isFinished() and not wasFinished
+            global totalUpRate
+            totalUpRate = totalUpRate + self.status.get ("upRate", 0) - oldUpRate
             self.signalChange(needsSignalItem=not finished)
             if finished:
                 for item in self.itemList:
@@ -382,6 +386,7 @@ URL was %s""" % self.url
             # this won't happen nowadays, but it can for old databases
             self.dlid = generateDownloadID()
         self.status['rate'] = 0
+        self.status['upRate'] = 0
         self.status['eta'] = 0
 
     def restartIfNeeded(self):
@@ -444,11 +449,17 @@ def restartDownloads():
         downloader.restartIfNeeded()
 
 def killUploaders(*args):
-    while (views.remoteUploads.len() > 3):
+    torrent_limit = config.get(prefs.UPSTREAM_TORRENT_LIMIT)
+    while (views.remoteUploads.len() > torrent_limit):
         views.remoteUploads[0].stopUpload()
+
+def configChangeUploaders(key, value):
+    if key == prefs.UPSTREAM_TORRENT_LIMIT.key:
+        killUploaders()
 
 def limitUploaders():
     views.remoteUploads.addAddCallback(killUploaders)
+    config.addChangeCallback(configChangeUploaders)
     killUploaders()
         
 

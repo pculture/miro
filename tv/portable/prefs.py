@@ -15,8 +15,9 @@ LEFT_VIEW_SIZE              = Pref( key='leftViewSize',          default=None,  
 RIGHT_VIEW_SIZE             = Pref( key='rightViewSize',         default=None,  platformSpecific=False )
 RUN_DTV_AT_STARTUP          = Pref( key='runAtStartup',          default=False, platformSpecific=False )
 CHECK_CHANNELS_EVERY_X_MN   = Pref( key='checkChannelsEveryXMn', default=60,    platformSpecific=False )
-LIMIT_UPSTREAM              = Pref( key='limitUpstream',         default=False,  platformSpecific=False )
-UPSTREAM_LIMIT_IN_KBS       = Pref( key='upstreamLimitInKBS',    default=12,     platformSpecific=False )
+LIMIT_UPSTREAM              = Pref( key='limitUpstream',         default=False, platformSpecific=False )
+UPSTREAM_LIMIT_IN_KBS       = Pref( key='upstreamLimitInKBS',    default=12,    platformSpecific=False )
+UPSTREAM_TORRENT_LIMIT      = Pref( key='upstreamTorrentLimit',  default=10,    platformSpecific=False )
 PRESERVE_DISK_SPACE         = Pref( key='preserveDiskSpace',     default=False, platformSpecific=False )
 PRESERVE_X_GB_FREE          = Pref( key='preserveXGBFree',       default=1,     platformSpecific=False )
 EXPIRE_AFTER_X_DAYS         = Pref( key='expireAfterXDays',      default=6,     platformSpecific=False )
@@ -28,7 +29,7 @@ BT_MIN_PORT                 = Pref( key='BitTorrentMinPort',     default=8500,  
 BT_MAX_PORT                 = Pref( key='BitTorrentMaxPort',     default=8600,  platformSpecific=False )
 UPLOAD_RATIO                = Pref( key='uploadRatio',           default=2.0,   platformSpecific=False )
 STARTUP_TASKS_DONE          = Pref( key='startupTasksDone',      default=False, platformSpecific=False )
-SINGLE_VIDEO_PLAYBACK_MODE  = Pref( key='singleVideoPlaybackMode', default=False, platformSpecific=False )
+SINGLE_VIDEO_PLAYBACK_MODE  = Pref( key='singleVideoPlaybackMode',default=False,platformSpecific=False )
 MY_COLLECTION_DIRS          = Pref( key="CollectionDirs",        default="",    platformSpecific=False )
 
 # These have a hardcoded default which can be overridden by setting an
