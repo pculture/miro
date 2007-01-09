@@ -475,7 +475,7 @@ class FeedImpl:
     ##
     # Returns a link to a webpage associated with the feed
     def getLink(self):
-        return ""
+        return self.ufeed.getBaseHref()
 
     ##
     # Returns the URL of the library associated with the feed

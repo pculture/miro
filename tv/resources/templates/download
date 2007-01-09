@@ -21,21 +21,20 @@ from gtcache import gettext as _
 
 def getFreeSpace():
     bytes = platformutils.getAvailableBytesForMovies()
-    return util.formatSizeForUser(bytes, "0B")
+    return util.formatSizeForUser(bytes, "0B", False)
 
 def getAvailableSpace():
     bytes = platformutils.getAvailableBytesForMovies()
     if config.get(prefs.PRESERVE_DISK_SPACE):
         preserved = config.get(prefs.PRESERVE_X_GB_FREE) * 1024 * 1024 * 1024
         bytes -= preserved
-    return util.formatSizeForUser(bytes, "0B")
+    return util.formatSizeForUser(bytes, "0B", False)
 
 def getUpRate():
     if downloader.totalUpRate > 1:
         return _(" - %0.3f KB/s total upload") % (downloader.totalUpRate / 1024.0,)
     else:
         return ""
-
 
 global searchFilter
 searchFilter = lambda x: filters.matchingItems(x, None)
@@ -101,23 +100,31 @@ matchingPausedDLs.unlink()
 	<div id="main-titlebar-center">
             <h1 id="main-title" i18n:translate="">Downloading</h1>
 	</div>
+	<div id="search-box" class="static-search" t:hideIf="'feed' in localvars and feed.getURL() == 'dtv:search'">
+        <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Find')***"/>
+    </div>
+
 	<div id="main-upper-right">
 
 		<div id="downloads-global-actions">
 			<div><p t:hideIf="views.downloadingItems.len() == 0" t:updateHideOnView="views.downloadingItems"><a href="#" onclick="return eventURL('action:pauseAll');" title="Pause All"><img src="resource:images/pause-all-downloads.png" /><br /><span i18n:translate="">Pause All</span></a></p>&nbsp;</div>
 			<div><p t:hideIf="views.pausedItems.len() == 0" t:updateHideOnView="views.pausedItems"><a href="#" onclick="return eventURL('action:resumeAll');" title="Resume All"><img src="resource:images/resume-all-downloads.png" /><br /><span i18n:translate="">Resume All</span></a></p>&nbsp;</div>
 		</div>
-<br style="clear: both;" /> 
+        <br style="clear: both;" /> 
 
-		<span t:updateForConfigChange="">
-		    <span t:hideIf="getFreeSpace() == getAvailableSpace()">
-			<span id="downloads-free-disk" i18n:translate=""><span i18n:name="size" t:replace="getFreeSpace()" /> free on disk - </span>
-		    </span>
-		    <span id="downloads-free-space" i18n:translate=""><span i18n:name="size" t:replace="getAvailableSpace()" /> free for downloads</span>
-		</span>
-		<span t:updateForView="views.remoteDownloads">
-			<span id="total-up-rate"><span t:replace="getUpRate()"/></span>
-		</span>
+        <div id="downloads-free-space">
+            <span t:updateForConfigChange="">
+        		<span t:hideIf="getFreeSpace() == getAvailableSpace()">
+        			<span id="downloads-free-disk" i18n:translate=""><span i18n:name="size" t:replace="getFreeSpace()" /> free on disk</span>
+        		</span>
+        		<br />
+        		<span id="downloads-free-space" i18n:translate=""><span i18n:name="size" t:replace="getAvailableSpace()" /> free for downloads</span>
+        	</span>
+            <span t:updateForView="views.remoteDownloads">
+            	<span id="total-up-rate"><span t:replace="getUpRate()"/></span>
+            </span>
+        </div>
+		
 	</div>
 </div>
 <!-- / TITLE BAR -->

@@ -6,12 +6,14 @@
       eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <t:include filename="dynamic.js" />
+
 </head>
 <body>
 <!-- DOWNLOADS ******************************************************** -->
 <div t:updateForView="allDownloadingItems">
 <div t:hideIf="allDownloadingItems.len() == 0">
-<div class="main-channelbar-download" onclick="return eventURL('action:toggleDownloadsView');">
+<div class="main-channelbar downloading-channelbar" onclick="return eventURL('action:toggleDownloadsView');">
   <span class="triangle" t:hideIf="showDownloads"/>
   <span class="triangle-down" t:hideIf="not showDownloads"/>
   <a class="download-bar-action" href="#"
@@ -34,18 +36,20 @@
 <!-- / DOWNLOADS -->
 
 <!-- NEW ITEMS -->
-<a class="main-channelbar" href="#" onclick="return eventURL('action:toggleNewItemsView');" t:updateForView="matchingItems">
+
+<div class="available-channelbar-wrap">
+<a class="main-channelbar available-channelbar" href="#" onclick="return eventURL('action:toggleNewItemsView');" t:updateForView="matchingItems">
   <span class="triangle" t:hideIf="showNewItems"/>
   <span class="triangle-down" t:hideIf="not showNewItems"/>
 
   <div t:showIf="searchTerm is None">
     <div t:hideIf="isFolder" i18n:translate="">
           <span i18n:name="len" t:replace="allItems.len()" /> 
-          Published
+          Available on this Channel
     </div>
     <div t:showIf="isFolder" i18n:translate="">
           <span i18n:name="len" t:replace="allItems.len()" /> 
-          Published
+          Available on this Channel
     </div>
   </div>
   <div t:showIf="searchTerm is not None">
@@ -60,11 +64,39 @@
   </div>
 </a>
 
+<div id="main-titlebar-auto">
+            <div class="auto-download" t:updateForView="thisFeedView">
+                <span id="auto-label" i18n:translate="">AUTO DOWNLOAD</span>
+                <div class="select-box-left" onclick="showSelectBoxMenu('auto-download-menu');">
+                <div class="select-box-right">
+                <div class="select-box-mid">
+                    <span t:replace="feed.getAutoDownloadMode()" />
+                </div>
+                </div>
+                </div>
+                
+                <br clear="all" />
+                <ul id="auto-download-menu" class="select-box-menu">
+                    <li onclick="return eventURL('action:setAutoDownloadMode?mode=all&amp;feed=@@@feed.getID()@@@');" ><a href="#"><strong>ALL</strong> - Get all videos</a></li>
+                    <li onclick="return eventURL('action:setAutoDownloadMode?mode=new&amp;feed=@@@feed.getID()@@@');" ><a href="#"><strong>NEW</strong> - Get only new videos</a></li>
+                    <li onclick="return eventURL('action:setAutoDownloadMode?mode=off&amp;feed=@@@feed.getID()@@@');" ><a href="#"><strong>OFF</strong> - Don't auto-download videos</a></li>
+                </ul>
+            </div>
+        </div>
+</div>
+
+<span t:updateForView="matchingItems">
+    <div class="available-sort" t:showIf="showNewItems">
+        <t:includeTemplate filename="sort-bar" />
+    </div>
+</span>
+
+
    <div t:repeatForView="newItems" t:repeatTemplate="download-item" />
 
 <!-- The infamous "N more videos" oval -->
 <div t:updateForView="matchingItems">  
-  <div t:hideIf="allItemsMode  or not showNewItems or newItems.len() == matchingItems.len()">
+  <div t:hideIf="allItemsMode or not showNewItems or newItems.len() == matchingItems.len()">
       <a href="#" onclick="return eventURL('action:toggleAllItemsMode');" class="main-notification">
           <span t:hideIf="isFolder" i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len() - newItems.len()" /> more on this channel &gt;&gt;</span>
           <span t:showIf="isFolder" i18n:translate=""><span i18n:name="count" t:replace="matchingItems.len()"/> items in this channel folder &gt;&gt;</span>
@@ -78,12 +110,18 @@
 
 <!-- WATCHABLE ******************************************************** -->
 <div t:updateForView="allWatchableItems">
-<a class="main-channelbar" href="#" onclick="return eventURL('action:toggleWatchableView')" t:hideIf="len(allWatchableItems) == 0" >
-  <span class="triangle" t:hideIf="showWatchableItems"/>
-  <span class="triangle-down" t:hideIf="not showWatchableItems"/>
-  <span  i18n:translate=""># Downloaded</span>
-</a>
+    <a class="main-channelbar downloaded-channelbar" href="#" onclick="return eventURL('action:toggleWatchableView')" t:hideIf="len(allWatchableItems) == 0" >
+        <span class="triangle" t:hideIf="showWatchableItems"/>
+        <span class="triangle-down" t:hideIf="not showWatchableItems"/>
+        <span  i18n:translate=""><span i18n:name="len" t:replace="allWatchableItems.len()" /> Downloaded</span>
+    </a>
 </div>
+
+<span t:updateForView="allWatchableItems">
+    <div t:showIf="showWatchableItems">
+        <t:includeTemplate filename="sort-bar" />
+    </div>
+</span>
 
    <div t:repeatForView="watchableItems" t:repeatTemplate="download-item" />
 

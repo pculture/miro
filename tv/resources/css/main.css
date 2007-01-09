@@ -51,14 +51,14 @@ img {
     height: 281px;
     display: none;
     background: url(../images/settings-shadow.png) repeat-x left bottom;
-    z-index: 1; /* Needs to be float above the main page */
+    z-index: 5; /* Needs to be float above the main page */
     color: #000;
     font-size: 13px;
 }
 
 
 #settings-inner {
-    padding: 60px 18px 18px 18px;
+    padding: 30px 18px 18px 18px;
     background-color: #FFFFBB;
     height: 200px;
     margin-bottom: 4px;
@@ -125,7 +125,7 @@ img {
 /* The icon for the channel view. Usually in the titlebar */
 #main-icon {
     position: absolute;
-    left: 10px;
+    left: 9px;
     top: 6px;
     width: 76px;
     height: 76px;
@@ -136,11 +136,12 @@ img {
 #main-titlebar .noborder {
     background: none;
     border: none;
+	margin: 8px 0 0 8px;    
 }
 
 /* This wraps the center area of the title bar */
 #main-titlebar-center {
-    margin: 5px 200px 0px 98px;
+    margin: 5px 0px 0px 98px;
     padding-right: 5px;
     text-align: left;
     color: #FFFFFF;
@@ -157,10 +158,15 @@ img {
 
 /* Wraps the stuff on the right hand side of the channel header */
 #main-titlebar-right {
+
+/*
     position: absolute;
-    width: 180px;
-    top: 12px;
+    width: 222px;
+    top: 11px;
     right: 0px;
+
+*/
+
 }
 
 
@@ -168,7 +174,7 @@ img {
 #main-title {
     padding: 0px 0 1px 0;
     margin: 0px;
-    font-size: 28px;
+    font-size: 26px;
     height: 32px;
     overflow: hidden;
     font-weight: normal;
@@ -176,7 +182,8 @@ img {
 }
 
 .sub-main-title {
-    margin-top: 3px;
+    margin-top: 0px;
+	font-size: 11px;
 }
 
 .sub-main-title a {
@@ -188,16 +195,21 @@ img {
     font-size: 11px;
 }
 
+
+
+
 /* Appears in the top right of the title section. */
 #main-upper-right {
     position: absolute;
-    top: 5px;
-    right: 10px;
+    top: 4px;
+    right: 5px;
     margin: 0px 0px 0px 0px;
     color: #FFFFFF;
+	font-size: 10px;
 }
 
 #downloads-global-actions {
+	margin-top: 20px;
     text-align: center;
 }
 
@@ -213,8 +225,18 @@ img {
 #downloads-global-actions a {
     color: white;
     text-decoration: none;
+    font-size: 10px;
+
 }
 
+
+#downloads-free-space {
+	position: absolute;
+	top: 20px;
+	right: 220px;
+	width: 150px;
+	line-height: 15px;
+}
 
 
 .select-box-right {
@@ -247,15 +269,15 @@ img {
     display: none;
 }
 
-
 .auto-download {
 }
 
 .auto-download .select-box-menu {
     width: 250px;
-    left: -80px;
+    left: 0px;
 	top: -30px;
 	padding: 6px 0 6px 0;
+	z-index: 99;
 }
 
 .select-box-menu li {
@@ -280,21 +302,13 @@ img {
 #main-titlebar-settings {
     display: block;
     height: 20px;
-    margin: 8px 0px 1px 0px;
+    margin: 0px 0px 5px 0px;
     color: #FFFFFF;
 	text-decoration: underline;
     text-transform: uppercase;
     font-size: 11px;
 }
 
-#main-titlebar-settings img {
-	vertical-align: -2px;
-	text-decoration: none;
-}
-
-#main-titlebar-settings:hover {
-    text-decoration: underline;
-}
 
 /* Just around recommend */
 #main-titlebar-recommend {
@@ -310,13 +324,17 @@ img {
 
 /* Just around auto-download */
 #main-titlebar-auto {
-    display: block;
+    position: absolute;
+	top: 5px;
+	right: 5px;
+	display: block;
     height: 20px;
     color: #FFFFFF;
     padding: 0px;
-    margin: 0px;
+    margin: 0px 0 2px 0px;
     text-transform: uppercase;
     font-size: 11px;
+	z-index: 2;
 }
 
 #auto-checkbox-container {
@@ -338,14 +356,25 @@ img {
 }
 
 /* Used to mark the search box */
+
 #search-box {
     color: #333;
+    width: 121px; 
+    padding: 2px;
+	margin-left: -1px;
+	margin-top: 0px;
 }
 
-#main-titlebar #search-box {
-    width: 115px; 
-    border: 1px solid #5392e3;
-    padding: 2px;
+#main-titlebar-right #search-box {
+	position: absolute;
+	top: 31px;
+	left: 50px;
+}
+
+.static-search {
+	position: absolute;
+	top: 50px;
+	left: 100px;
 }
 
 /* Used for scraping indicator on channel page */
@@ -380,7 +409,7 @@ img {
 #main-container {
     position: absolute;
     padding-top: 0px;
-    top: 117px;
+    top: 90px;
     width: 100%;
     /*
     It would be nice to include these next two lines.  This would make the
@@ -393,74 +422,127 @@ img {
     */
 }
 
-/* The sort bar */
 
-#sort-bar {
-    background: #fff url(../images/sort-bar-back.png) top left repeat-x;
-    height: 19px;
-    width: 100%;
-    min-width: 600px;
-    padding: 5px 0 5px 0;
-    position: fixed;
-    top: 90px;
-    z-index: 2;
-    /* This should be above feed-settings, so that feed-settings doesn't cover
-     * it up durring the opening animation.
-     */
-}
 
-#sort-bar #search-box {
-    margin: 0px 0px 0px 4px;
-    float: left;
-}
+/* SORT BUTTONS AND VIDEO STATS -- THEY ARE GROUPED TOGETHER IN THE CSS SINCE THEY NEED TO LINE UP WITH EACH OTHER */
+
 
 #sort-buttons {
-    float: right;
-    margin-top: 2px;
-    padding-right: 8px;
     font-size: 11px;
     color: #113;
+	background-color: #4dc44b;	
+	position: relative;
+	height: 19px;
 }
 
-#sort-buttons a.sort-button {
+
+.available-sort #sort-buttons {
+	background-color: #5faeff;	
+}
+
+
+
+.video-stats {
+    color:  #222;
+    font-size: 10px;
+    line-height: 15px;
+    height: 23px;
+    overflow: hidden;
+    border-bottom: 1px solid #e1e9f6;
+	width: 100%;
+	position: relative;
+}
+
+#sort-buttons a {
+	color: white;
+	text-decoration: none;
+}
+
+.sort-name {
+	position: absolute;
+	top: 2px;
+	left: 122px;
+}
+
+.sort-length {
+	position: absolute;
+	top: 2px;
+	right: 275px;
+	width: 40px;
+}
+
+.stat-length {
+	position: absolute;
+	top: 5px;
+	right: 275px;
+	font-weight: bold;
+	width: 40px;
+}
+
+
+.sort-date {
+	position: absolute;
+	top: 2px;
+	right: 188px;
+	width: 70px;
+}
+
+.stat-date {
+	position: absolute;
+	top: 5px;
+	right: 188px;
+	width: 70px;
+}
+
+
+.sort-size {
+	position: absolute;
+	top: 2px;
+	right: 142px;
+	width: 40px;
+}
+
+.stat-size {
+	position: absolute;
+	top: 5px;
+	right: 142px;
+	width: 40px;
+}
+
+
+.web-page-link {
+	position: absolute;
+	top: 5px;
+	right: 79px;
+}
+
+.web-page-link a {
+	color: #222;
+}
+
+
+.details-link {
+    position: absolute;
+    top: 4px;
+    right: 5px;
+}
+
+.details-link a {
     text-decoration: none;
-    color: inherit;
-    margin-left: 2px;
+    color: #3263A0;
+    font-size: 11px;
+    line-height: 16px;
+} 
+
+.details-link a img {
+    vertical-align: -4px;
 }
 
-#sort-buttons a.sort-button div {
-    display: inline;
-    padding-top: 2px;
-}
-
-#sort-buttons .sort-button .left, .sort-button .mid, .sort-button .right {
-    padding-bottom: 4px;
-}
-
-#sort-buttons .sort-button .mid {
-    margin-left: 3px;
-}
-
-/*
-
-#sort-buttons .sort-button.active .left {
-    background: url(../images/sort-active-back-left.png) top left no-repeat;
-}
-
-#sort-buttons .sort-button.active .mid {
-    background: url(../images/sort-active-back-mid.png) top left repeat-x;
-}
-
-#sort-buttons .sort-button.active .right {
-    background: url(../images/sort-active-back-right.png) top right no-repeat;
-}
-
-*/
 
 #sort-buttons a.sort-button img {
     border: none;
     padding-left: 3px;
-	vertical-align: -1px;
+	vertical-align: 0px;
     visibility: hidden;
 }
 
@@ -468,44 +550,62 @@ img {
     visibility: visible;
 }
 
-/* This is the blue grey gradient for the bars above the "available"
-and "downloaded" sections */
+
+
+
+/* The section dividers */
+
 .main-channelbar {
-/*    background: url(../images/main-bar-bg.png) repeat-x top left; */
 	background-color: #B9CDFF;
     border-top: 1px solid white;
-    height: 26px;
+    height: 22px;
     display: block;
     overflow: hidden;
     color: #111;
     text-decoration: none;
     font-size: 15px;
     font-weight: normal;
-    padding-top: 6px;
+    padding-top: 4px;
+    color: #fff;
+    position: relative;
 }
 
-.main-channelbar:hover {
-    background-color: #A6BAEA;
 
+.available-channelbar-wrap {
+	position: relative;
 }
 
-/* The yellow gradient for the "download" bar */
-.main-channelbar-download {
-    height: 19px;
-    background: url(../images/main-bar-bg-download.png) repeat-x left bottom;
-    overflow: hidden;
-    color: #111;
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: normal;
-    padding-top: 2px;
-    cursor: pointer;
+.available-channelbar {
+	background-color: #2f8efe;
 }
+
+.available-channelbar:hover {
+	background-color: #5faeff;
+}
+
+.downloaded-channelbar {
+	background-color: #15ae12;
+}
+
+.downloaded-channelbar:hover {
+	background-color: #4dc44b;	
+}
+
+
+.downloading-channelbar {
+	background-color: #DF6c0d;
+}
+
+.downloading-channelbar:hover {
+	background-color: #FF8c2d;
+}
+
+
 
 a.download-bar-action {
     float: right;
     font-size: 10px;
-    color: #333;
+    color: #fff;
     margin: 2px 12px 0px 0px;
 }
 
@@ -592,7 +692,7 @@ a.download-bar-action:hover {
 .search-results-bar {
     font-size: 18px;
     color: white;
-    background: #333;
+    background: #056de1;
     padding: 5px 10px;
     height: 22px;
     text-align: center;
@@ -671,7 +771,7 @@ float: left;
     border-top: 1px solid #f0fcfe;
     border-bottom: 1px solid #d5ddea;
     background: url(../images/main-video-bg.png) repeat-x;
-    height: 84px;
+    height: 90px;
     width: 100%;
     position: relative;
     left: 0px;
@@ -718,8 +818,8 @@ an element is dragged, the drag-highlight class is added to it */
     position: absolute;
     left: 5px;
     top: 3px;
-    width: 101px;
-    height: 76px;
+    width: 108px;
+    height: 81px;
     border: 1px solid #fff;
 }
 
@@ -747,16 +847,15 @@ an element is dragged, the drag-highlight class is added to it */
 
 .main-video-desc {
     position: relative;
-    margin-left: 115px;
-    margin-right: 270px;
-    margin-top: 3px;
+    margin-left: 122px;
+    margin-right: 333px;
+    margin-top: 5px;
     height: 84px;
     overflow: hidden;
 }
 
 .more-info .main-video-desc {
     margin-left: 240px;
-
     height: auto;
     min-height: 175px;
     max-height: 400px;    
@@ -770,24 +869,24 @@ an element is dragged, the drag-highlight class is added to it */
     font-weight: bold;
     color: #222;
     text-decoration: none;
-    height: 17px;
+    height: 18px;
     overflow: hidden;
 }
 
 .main-video-desc div {
     font-size: 11px;
-    line-height: 14px;
+    line-height: 15px;
 }
 
 .main-video-desc-desc {
     color: #222;
-    height: 44px;
+    height: 63px;
     overflow: hidden;
 }
 
 .more-info .main-video-desc-desc {
     height: 100%;
-    min-height: 44px;
+    min-height: 63px;
 }
 
 .main-video.selected .main-video-desc h1, .main-video.selected .main-video-desc-desc {
@@ -866,7 +965,7 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .main-video-hitbox .play-icon {
-    background: url(../images/main-video-play.png) no-repeat 73px 51px;
+    background: url(../images/main-video-play.png) no-repeat 80px 56px;
 }
 
 .more-info .main-video-hitbox .play-icon {
@@ -899,31 +998,6 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 
-.details-small-buttons {
-    position: absolute;
-    top: 60px;
-    left: 139px;
-    height: 17px;
-    text-align: center;
-}
-
-.more-info-link-button {
-    position: absolute;
-    top: 6px;
-    right: 5px;
-}
-
-.more-info-link-button a {
-    text-decoration: none;
-    color: #3263A0;
-    font-size: 11px;
-    line-height: 16px;
-} 
-
-.more-info-link-button a img {
-    vertical-align: -4px;
-}
-
 
 .more-info .main-video-stats {
     height: 170px;
@@ -952,51 +1026,94 @@ an element is dragged, the drag-highlight class is added to it */
     position: absolute;
     right: 0px;
     top: 0px;
-    width: 250px;
+    width: 315px;
     height: 100%;
     padding: 0px 0 0 8px;
     border-left: 1px solid #e1e9f6;
 }
 
-.video-stats {
-    padding-top: 6px;
-    color:  #222;
-    font-size: 10px;
-    line-height: 15px;
-    height: 16px;
-    overflow: hidden;
-}
-
-
 .main-video-details-tasks {
     height: 26px;
     width: 153px;
-       margin-bottom: 5px;
-       margin-top: 15px;
-    margin-left: -1px;
+	position: absolute;
+	top: 47px;
+	left: 10px;
 }
 
-.main-video-details-tasks a {
-    display: block;
-    height: 18px;
-    padding-top: 1px;
+
+.share-box-right {
+    background: right top no-repeat url(../images/share-right.png);
+}
+
+.share-box-left {
+    background: left top no-repeat url(../images/auto-select-box-left.png);
+    float: left;
+    cursor: pointer;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+}
+
+.share-box-mid {
+    background: left top repeat-x url(../images/auto-select-box-mid.png);
+    margin: 0px 19px 0px 6px;
+    padding: 1px 6px 1px 3px;
+    height: 19px;
     color: #333;
+    font-size: 11px;
+}
+
+.share-box-menu {
+    border: 1px solid #AAA;
+    background: #f6f6f6;
+    margin: 0px;
+    position: relative;
+    top: -45px;
+    display: none;
+    z-index: 10;
+}
+
+.share-box-menu img {
+	vertical-align: -3px;
+	margin-right: 3px;
+}
+
+.share-box-menu {
+    width: 166px;
+    left: -1px;
+	top: -6px;
+	padding: 3px 0 3px 0;
+}
+
+.share-box-menu li {
+    list-style: none;
+    text-transform: none;
+    margin: 0px;
+	padding: 3px 9px 3px 12px;
+	font-size: 12px;
+}
+
+.share-box-menu li:hover, .share-box-menu li:hover a {
+    background: #2673c9;
+    color: white;
+}
+
+.share-box-menu a {
     text-decoration: none;
-    text-align: left;
-    padding-left: 10px;
+    color: #000;
 }
 
-.main-video-details-tasks span {
-    font-size: 10px;
-    color: #222;
-}
 
-.main-video-details-task-mail { 
-    background: url(../images/drop-down-button.png) top left no-repeat;
-}
 
-.main-video-details-task-bomb { 
-    background: url(../images/main-icon-bomb.png) top left no-repeat;
+
+
+
+
+.details-small-buttons {
+    position: absolute;
+    top: 37px;
+    right: 8px;
+    height: 50px;
+    text-align: center;
 }
 
 .main-video-details-tasks-small { 
@@ -1011,14 +1128,16 @@ an element is dragged, the drag-highlight class is added to it */
 
 .main-video-details-tasks-small.delete {
     position: absolute;
-    left: 59px;
+	top: 24px;
+    right: 0px;
     width: 54px;
 }
 
 
 .main-video-details-tasks-small.save, .saved-note {
     position: absolute;
-    left: 0px;
+	top: 0px;
+    right: 0px;
     width: 54px;
 }
 
@@ -1029,7 +1148,7 @@ an element is dragged, the drag-highlight class is added to it */
     display: none;
 }
 
- .saved-note {
+.saved-note {
     margin-top: 3px;
     font-size: 9px;
     color: #666;
@@ -1052,7 +1171,10 @@ an element is dragged, the drag-highlight class is added to it */
     height: 18px;
     color: white;
     margin: 0 0 5px 0;
-    float: left;
+	position: absolute;
+	top: 49px;
+	right: 76px;
+	font-size: 11px;
 }
 
 .video-state-left {
@@ -1164,7 +1286,7 @@ a.small-button-left:hover {
 
 .white-button-middle {
     height: 20px;
-    margin: 0px 16px;
+    margin: 0px 13px;
     background: top left repeat-x url(../images/white-button-middle.png);
     padding-top: 3px;
     font-size: 11px;
@@ -1183,9 +1305,9 @@ a.small-button-left:hover {
 
 .white-button-left.save-search-channel {
     position: absolute;
-    top: 46px;
-    right: 50%;
-    margin-right: 70px;
+    top: 63px;
+    left: 220px;
+    margin-right: 0px;
 }
 
 
@@ -1202,8 +1324,8 @@ a.small-button-left:hover {
 
 .main-video-details-download-info {
     position: absolute;
-    top: 37px;
-    left: 92px;
+    top: 41px;
+    left: 141px;
     right: 0px;
     height: 50px;
     font-size: 10px;
@@ -1213,8 +1335,8 @@ a.small-button-left:hover {
 .main-video-details-download-info.expiring {
     color: #333;
     position: absolute;
-    top: 43px;
-    left: 145px;
+    top: 49px;
+    left: 140px;
     width: 100px;
     text-align: center;
     height: 14px;
@@ -1222,12 +1344,21 @@ a.small-button-left:hover {
 }
 
 .main-video-details-download-info.pending-auto {
-    text-align: center;
+    width: 130px;
+    padding-top: 4px;
+	padding-left: 5px;
 }
 
-.download-rate-and-eta {
+.main-video-details-download-info.failed-download {
     width: 130px;
-    padding-top: 2px;
+    padding-top: 4px;
+	padding-left: 5px;
+}
+
+.downloading, .paused {
+    width: 130px;
+    padding-top: 4px;
+	padding-left: 5px;
 }
 
 .download-rate {

@@ -54,20 +54,9 @@ viewName = kargs['viewName']
 
         <div class="main-video-bottom noselect">
 
-      	<div t:hideIf="this.getEmblemCSSString() == ''" 
-                class="video-state ***this.getEmblemCSSClass()***">
-                <div class="video-state-left">
-                <div class="video-state-right">
-        	        <span class="video-state-mid">
-                	        <span t:replace="this.getEmblemCSSString()" />
-            	    </span>
-                </div>
-                </div>
-        </div>
 
 		<div class="date-channel-title-wrap">
-		    <span t:showIf="this.getReleaseDate() != ''"><span t:replace="this.getReleaseDate()" />&nbsp;&nbsp;&nbsp;&nbsp;</span>
-		    <span t:showIf="this.getURL() != this.getLink() and this.getLink() != ''"><a href="***this.getLink()***">Web Page</a>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		    
 		    <div class="channel-title"><span t:replace="this.getChannelTitle()" /></div>
 		</div>
 
@@ -93,12 +82,34 @@ viewName = kargs['viewName']
     <div class="main-video-details">
     
     	<div class="video-stats">
-		<strong t:replace="this.getDuration()" />&nbsp;&nbsp;&nbsp;&nbsp;<span t:replace="this.getSizeForDisplay()" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span t:replace="this.getFormat()" /><div class="more-info-link-button">
+			
+			<div class="stat-length">
+			<span t:replace="this.getDuration()" />
+			</div>
+			
+			<div class="stat-date">
+			<span t:showIf="this.getReleaseDate() != ''"><span t:replace="this.getReleaseDate()" /></span>
+			</div>
+
+		    <div class="stat-size">
+		    <span t:showIf="this.getURL() != this.getLink() and this.getLink() != ''"><span t:replace="this.getSizeForDisplay()" /></span>
+			</div>
+		
+		    <div class="stat-type">
+		    <span t:replace="this.getFormat()" />
+		    </div>
+		    
+		    <div class="web-page-link">
+		    <a href="***this.getLink()***">Web Page</a>
+		    </div>
+		    
+		    <div class="details-link">
             <div t:hideIf="this.showMoreInfo">
-                <a href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');" i18n:translate="">More Info <img src="resource:images/more-info-button.png" /></a>
+                <a href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');" i18n:translate="">Details <img src="resource:images/more-info-button.png" /></a>
             </div>
+
             <div t:showIf="this.showMoreInfo">
-                <a href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');" i18n:translate="">Close Info <img src="resource:images/more-info-button-close.png" /></a>
+                <a href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');" i18n:translate="">Close <img src="resource:images/more-info-button-close.png" /></a>
             </div>
     </div>
 
@@ -107,17 +118,31 @@ viewName = kargs['viewName']
     	</div>
 		        
         	<div class="main-video-details-tasks">
-            <a t:showIf="this.hasSharableURL()" href="#" 
+            
+<!-- need to call event.stopPropagation() to prevent us from selecting the div -->            
+<div class="share-box-left" onclick="showSelectBoxMenu('share-menu-@@@this.getID()@@@'); event.stopPropagation();">
+            <div class="share-box-right">
+                <div class="share-box-mid">
+					SHARE
+                </div>
+                </div>
+                </div>               
+                 <br clear="all" />
+                <ul id="share-menu-@@@this.getID()@@@" class="share-box-menu">
+                    <li><img src="resource:images/email-a-friend.gif" alt="delicious icon" /> <a t:showIf="this.hasSharableURL()" href="#" 
                 class="main-video-details-task-mail" 
                 onclick="return recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@');" >
- <span i18n:translate="">SHARE</span>
-            </a>
-<!--            <a href="#" t:showIf="this.hasSharableURL()" 
+ <span i18n:translate="">Email to a friend</span>
+            </a></li>
+                    <li><img src="resource:images/videobomb.gif" alt="delicious icon" />             <a href="#" t:showIf="this.hasSharableURL()" 
                 class="main-video-details-task-bomb" 
-                onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" >
-                <img src="resource:images/mini-star.png" /> <span i18n:translate="">STAR IT</span>
-            </a>
--->
+                onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" > <span i18n:translate="">Post to Video Bomb</span>
+            </a></li>
+                    <li><img src="resource:images/delicious.gif" alt="delicious icon" /> Post to del.icio.us</li>
+					<li><img src="resource:images/digg.gif" alt="delicious icon" /> Post to digg</li>
+					<li><img src="resource:images/reddit.gif" alt="delicious icon" /> Post to Reddit</li>
+                </ul>
+
 
         </div>
         
@@ -159,6 +184,9 @@ viewName = kargs['viewName']
             <a class="main-progress-cancel" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" title="Cancel Download" />
         </div>
         </div>
+        
+        <div class="download-status-strings">
+        
         <div t:showIf="this.getExpiring()" 
                 class="main-video-details-download-info expiring">
                 <span t:replace="this.getExpirationString()" />
@@ -170,13 +198,34 @@ viewName = kargs['viewName']
         <div t:showIf="this.isFailedDownload() and not this.isPendingManualDownload()"
                 class="main-video-details-download-info failed-download">
                 <span t:replace="this.getFailureReason()" />
+                
+        </div>        
+        
+                
         </div>
+        
+        
+        
+      	<div t:hideIf="this.getEmblemCSSString() == ''" 
+                class="video-state ***this.getEmblemCSSClass()***">
+                <div class="video-state-left">
+                <div class="video-state-right">
+        	        <span class="video-state-mid">
+                	        <span t:replace="this.getEmblemCSSString()" />
+            	    </span>
+                </div>
+                </div>
+        </div>
+        
+        
+        
+        
         <div class="details-small-buttons">
-	    <div t:showIf="this.downloader and this.downloader.getState() == 'uploading'">
-		    <a class="main-video-details-tasks-small stop-upload" href="#" onclick="return eventURL('action:stopUploadItem?item=@@@this.getID()@@@');">
-			    <span i18n:translate="">STOP UPLOAD</span>
-		    </a>
-	    </div>
+           <div t:showIf="this.downloader and this.downloader.getState() == 'uploading'">
+               <a class="main-video-details-tasks-small stop-upload" href="#" onclick="return eventURL('action:stopUploadItem?item=@@@this.getID()@@@');">
+           	    <span i18n:translate="">STOP UPLOAD</span>
+               </a>
+           </div>
             <div t:showIf="this.showSaveButton()">
             <a class="main-video-details-tasks-small save" href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');">
                     <span i18n:translate="">KEEP</span>

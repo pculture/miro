@@ -1133,12 +1133,7 @@ folder will be deleted.""")
                 return ""
             else:
                 return "n/a"
-        if (secs < 120):
-            return '%d secs' % (secs,)
-        elif (secs < 6000):
-            return '%d mins, %d secs' % (secs/60, secs % 60)
-        else:
-            return '%d hours, %d mins' % (secs/3600, (secs / 60) % 60)
+        return "%02d:%02d" % (secs/60, secs % 60)
 
     ##
     # returns string with the format of the video

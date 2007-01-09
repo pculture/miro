@@ -374,21 +374,39 @@ def gatherVideos(path, progressCallback):
         pass
     return found
 
-def formatSizeForUser(bytes, zeroString=""):
+def formatSizeForUser(bytes, zeroString="", withDecimals=True):
     """Format an int containing the number of bytes into a string suitable for
     printing out to the user.  zeroString is the string to use if bytes == 0.
     """
     from gtcache import gettext as _
     if bytes > (1 << 30):
-        return _("%1.1fGB") % (bytes / (1024.0 * 1024.0 * 1024.0))
+        value = (bytes / (1024.0 * 1024.0 * 1024.0))
+        if withDecimals:
+            format = _("%1.1fGB")
+        else:
+            format = _("%dGB")
     elif bytes > (1 << 20):
-        return _("%1.1fMB") % (bytes / (1024.0 * 1024.0))
+        value = (bytes / (1024.0 * 1024.0))
+        if withDecimals:
+            format = _("%1.1fMB")
+        else:
+            format = _("%dMB")
     elif bytes > (1 << 10):
-        return _("%1.1fKB") % (bytes / 1024.0)
+        value = (bytes / 1024.0)
+        if withDecimals:
+            format = _("%1.1fKB")
+        else:
+            format = _("%dKB")
     elif bytes > 1:
-        return _("%0.0fB") % bytes
+        value = bytes
+        if withDecimals:
+            format = _("%1.1fB")
+        else:
+            format = _("%dB")
     else:
         return zeroString
+
+    return format % value
 
 def formatTimeForUser(seconds, sign=1):
     """Format a duration in seconds into a string suitable for display, using

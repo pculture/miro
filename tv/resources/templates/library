@@ -47,6 +47,12 @@ matchingItems.unlink()
 	<div id="main-titlebar-center">
         <h1 id="main-title" i18n:translate="">My Collection</h1>
 	</div>
+	
+	<div id="search-box" class="static-search" t:hideIf="'feed' in localvars and feed.getURL() == 'dtv:search'">
+        <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Find')***"/>
+    </div>
+
+	
 </div>
 <!-- / TITLE BAR -->
 
