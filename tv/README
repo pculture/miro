@@ -15,8 +15,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-LIES! LIES! LIES!
-
 This is the source for Democracy Player, the client-side component of
 the Democracy platform for Internet TV. It is targeted at average,
 unsophisticated Internet users with broadband connections. It can be
