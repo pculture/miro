@@ -27,7 +27,7 @@ def notifyDownloadComplete(title):
         DOWNLOAD_COMPLETE,
         objc.nil,
         0,
-        objc.YES,
+        objc.NO,
         objc.nil)
 
 def notifyDownloadFailed(title):
@@ -37,7 +37,7 @@ def notifyDownloadFailed(title):
         DOWNLOAD_FAILED,
         objc.nil,
         0,
-        objc.YES,
+        objc.NO,
         objc.nil)
 
 ###############################################################################
