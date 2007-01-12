@@ -393,7 +393,11 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
 
     def enterFullScreen(self, screen):
         platformutils.warnIfNotOnMainThread('VideoWindow.enterFullScreen')
-        SetSystemUIMode(kUIModeAllHidden, 0)
+        screens = NSScreen.screens()
+        if len(screens) > 0:
+            screenWithMenuBar = screens[0]
+            if screen == screenWithMenuBar:
+                SetSystemUIMode(kUIModeAllHidden, 0)
         NSCursor.setHiddenUntilMouseMoves_(YES)
         self.isFullScreen = YES
         self.previousFrame = self.frame()
