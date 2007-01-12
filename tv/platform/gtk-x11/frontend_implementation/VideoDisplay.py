@@ -89,7 +89,10 @@ class VideoDisplay (app.VideoDisplayBase):
     def play(self, startTime=0):
         if not self.activeRenderer:
             return
-        self.activeRenderer.playFromTime(startTime)
+        if startTime == -1:
+            self.activeRenderer.play()
+        else:
+            self.activeRenderer.playFromTime(startTime)
         self.startVideoTimeUpdate()
         self.isPlaying = True
         app.controller.frame.windowChanger.updatePlayPauseButton()

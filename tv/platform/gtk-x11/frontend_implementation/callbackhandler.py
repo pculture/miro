@@ -183,8 +183,7 @@ class CallbackHandler(object):
         if videoDisplay.isPlaying:
             videoDisplay.pause()
         else:
-            videoTimeScale = self.mainFrame.widgetTree['video-time-scale']
-            videoDisplay.play(videoTimeScale.get_value())
+            videoDisplay.play(-1)
         self.mainFrame.windowChanger.updatePlayPauseButton()
 
     def on_previous_button_clicked(self, event):
