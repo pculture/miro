@@ -117,32 +117,49 @@ viewName = kargs['viewName']
 
     	</div>
 		        
-        	<div class="main-video-details-tasks">
+        <div class="main-video-details-tasks">
             
-<!-- need to call event.stopPropagation() to prevent us from selecting the div -->            
-<div class="share-box-left" onclick="showSelectBoxMenu('share-menu-@@@this.getID()@@@'); event.stopPropagation();">
-            <div class="share-box-right">
-                <div class="share-box-mid">
-					SHARE
+            <!-- need to call event.stopPropagation() to prevent us from selecting the div -->            
+            <div t:showIf="this.hasSharableURL()" class="share-box-left" onclick="showSelectBoxMenu('share-menu-@@@this.getID()@@@'); event.stopPropagation();">
+                <div class="share-box-right">
+                    <div class="share-box-mid">
+    					SHARE
+                    </div>
                 </div>
-                </div>
-                </div>               
-                 <br clear="all" />
-                <ul id="share-menu-@@@this.getID()@@@" class="share-box-menu">
-                    <li><img src="resource:images/email-a-friend.gif" alt="delicious icon" /> <a t:showIf="this.hasSharableURL()" href="#" 
-                class="main-video-details-task-mail" 
-                onclick="return recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@');" >
- <span i18n:translate="">Email to a friend</span>
-            </a></li>
-                    <li><img src="resource:images/videobomb.gif" alt="delicious icon" />             <a href="#" t:showIf="this.hasSharableURL()" 
-                class="main-video-details-task-bomb" 
-                onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" > <span i18n:translate="">Post to Video Bomb</span>
-            </a></li>
-                    <li><img src="resource:images/delicious.gif" alt="delicious icon" /> Post to del.icio.us</li>
-					<li><img src="resource:images/digg.gif" alt="delicious icon" /> Post to digg</li>
-					<li><img src="resource:images/reddit.gif" alt="delicious icon" /> Post to Reddit</li>
-                </ul>
-
+            </div>               
+            <br clear="all" />
+            <ul id="share-menu-@@@this.getID()@@@" class="share-box-menu">
+                <li>
+                    <img src="resource:images/email-a-friend.gif" alt="email-a-friend icon" />
+                    <a href="#" class="main-video-details-task-mail" onclick="return recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@');">
+                        <span i18n:translate=""> Email to a friend</span>
+                    </a>
+                </li>
+                <li>
+                    <img src="resource:images/videobomb.gif" alt="videobomb icon" />
+                    <a href="#" class="main-video-details-task-bomb" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" >
+                        <span i18n:translate=""> Post to Video Bomb</span>
+                    </a>
+                </li>
+                <li>
+                    <img src="resource:images/delicious.gif" alt="delicious icon" />
+                    <a href="#" class="main-video-details-delicious" onclick="return eventURL('http://del.icio.us/post?v=4&amp;noui&amp;jump=close&amp;url=@@@this.getURL()@@@&amp;title=@@@this.getTitle()@@@');" >
+                        <span i18n:translate=""> Post to del.icio.us</span>
+                    </a>
+                </li>
+                <li>
+                    <img src="resource:images/digg.gif" alt="digg icon" />
+                    <a href="#" class="main-video-details-digg" onclick="return eventURL('http://www.digg.com/submit?phase=2&amp;url=@@@this.getURL()@@@');" >
+                        <span i18n:translate=""> Post to digg</span>
+                    </a>
+                </li>
+                <li>
+                    <img src="resource:images/reddit.gif" alt="reddit icon" />
+                    <a href="#" class="main-video-details-reddit" onclick="return eventURL('http://reddit.com/submit?url=@@@this.getURL()@@@&amp;title=@@@this.getTitle()@@@');">
+                        <span i18n:translate=""> Post to Reddit</span>
+                    </a>
+                </li>
+            </ul>
 
         </div>
         
