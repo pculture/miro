@@ -26,7 +26,7 @@ class XHTMLifier(HTMLParser):
             self.output += '</'+temp+'>'
         if addTopTags:
             self.output += '</body></html>'
-        return self.output
+        return self.output.encode('utf-8')
     def handle_starttag(self, tag, attrs):
         if tag.lower() == 'br':
             self.output += '<br/>'

@@ -279,7 +279,7 @@ class Item(DDBObject):
         except AttributeError:
             self._calcItemXML()
             xml = self._itemXML
-        return xml.replace(self._XMLViewName, viewName)
+        return xml.replace(self._XMLViewName, viewName.encode('utf-8'))
 
     # Regenerates an expired item XML from the download-item template
     # _XMLViewName is a random string we use for the name of the view
