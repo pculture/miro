@@ -84,6 +84,6 @@ def initializeLocale():
     localeInitialized = True
 
 def setupLogging (inDownloader=False):
-    logging.basicConfig(level=logging.INFO,
+    logging.basicConfig(level=logging.DEBUG,
                         format='%(asctime)s %(levelname)-8s %(message)s',
                         stream = sys.stdout)
