@@ -5,6 +5,8 @@ import traceback
 import gobject
 import eventloop
 import platformutils
+import config
+import prefs
 
 def waitForAttach(func):
     """Many xine calls can't be made until we attach the object to a X window.
@@ -91,6 +93,8 @@ class Renderer(app.VideoRenderer):
 
     @waitForAttach
     def selectFile(self, filename):
+        viz = config.get(prefs.XINE_VIZ);
+        self.xine.setViz(viz);
         self.xine.playFile(filename)
         def exposeWorkaround():
             try:

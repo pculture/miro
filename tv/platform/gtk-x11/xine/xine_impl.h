@@ -32,6 +32,8 @@ typedef struct {
     xine_stream_t* stream;
     xine_video_port_t* videoPort;
     xine_audio_port_t* audioPort;
+    const char *const* viz_available;
+    const char *viz_name;
     xine_post_t* viz;
     xine_event_queue_t* eventQueue;
     xine_event_listener_cb_t event_callback;
@@ -75,6 +77,9 @@ int xineGetPlaying(_Xine* xine);
 
 /* Set the playback state of xine. */
 void xineSetPlaying(_Xine* xine, int isPlaying);
+
+/* Set the viz plugin */
+void xineSetViz (_Xine* xine, const char *viz);
 
 /* Set the playback volume of xine (0, 100). */
 void xineSetVolume(_Xine* xine, int volume);

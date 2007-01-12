@@ -42,6 +42,7 @@ cdef extern from "xine_impl.h":
     int xineFileDuration(_Xine* xine, char* filename)
     void xinePlayFile(_Xine* xine, char* filename)
     void xineSetPlaying(_Xine* xine, int isPlaying)
+    void xineSetViz(_Xine* xine, char *viz)
     void xineSetVolume(_Xine* xine, int volume)
     int xineGetVolume(_Xine* xine)
     void xineGotExposeEvent(_Xine* xine, int x, int y, int width, int height)
@@ -79,11 +80,13 @@ cdef class Xine:
         xineSetPlaying(self.xine, 1)
     def pause(self):
         xineSetPlaying(self.xine, 0)
-    def getVolume(self):
-        return xineGetVolume(self.xine)
+    def setViz(self, viz):
+        xineSetViz(self.xine, viz)
     def setVolume(self, volume):
         volume = min(max(volume, 0), 100)
         xineSetVolume(self.xine, volume)
+    def getVolume(self):
+        return xineGetVolume(self.xine)
     def gotExposeEvent(self, int x, int y, int width, int height):
         xineGotExposeEvent(self.xine, x, y, width, height)
     def seek(self, int position):

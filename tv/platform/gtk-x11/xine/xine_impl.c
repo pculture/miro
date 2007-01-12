@@ -15,10 +15,30 @@
 #include <string.h>
 #include "xine_impl.h"
 
+const char *viz_available (_Xine* xine, const char *viz)
+{
+  int j;
+  for (j = 0; xine->viz_available[j]; j++) {
+    if (!strcmp(viz, xine->viz_available[j])) {
+      return xine->viz_available[j];
+    }
+  }
+  return NULL;
+}
+
+const char *const pref_viz[] = {
+  "goom",
+  "oscope",
+  "fftscope",
+  "fftgraph",
+  NULL
+};
+
 _Xine* xineCreate(xine_event_listener_cb_t event_callback, 
         void* event_callback_data)
 {
     _Xine* xine;
+    int i;
 
     xine = (_Xine*)malloc(sizeof(_Xine));
     if(xine == NULL) return NULL;
@@ -32,6 +52,18 @@ _Xine* xineCreate(xine_event_listener_cb_t event_callback,
     xine->frameInfo.height = 0;
     xine->event_callback = event_callback;
     xine->event_callback_data = event_callback_data;
+    xine->viz_available = xine_list_post_plugins_typed (xine->xine, XINE_POST_TYPE_AUDIO_VISUALIZATION);
+    xine->viz_name = NULL;
+    for (i = 0; pref_viz[i]; i++) {
+      const char *viz = viz_available(xine, pref_viz[i]);
+      if (viz) {
+	xine->viz_name = viz;
+	break;
+      }
+    }
+    if (!xine->viz_name) {
+      xine->viz_name = xine->viz_available [0];
+    }
     xine->viz = NULL;
 
     /* Create a second xine instance.  This one will be only used for testing
@@ -92,6 +124,43 @@ static void frameOutputCallback(void *data, int video_width,
     *dest_pixel_aspect = xine->screenPixelAspect;
 }
 
+void _xineSwitchToViz(_Xine* xine)
+{
+  const char *const *inputs;
+  xine_post_out_t *source;
+  xine_post_in_t *sink;
+  xine_audio_port_t *audios[] = { xine->audioPort, NULL };
+  xine_video_port_t *videos[] = { xine->videoPort, NULL };
+
+  if (xine->viz || !xine->viz_name)
+    return;
+
+  xine->viz = xine_post_init (xine->xine, xine->viz_name, 1, audios, videos);
+  if (xine->viz) {
+    inputs = xine_post_list_inputs(xine->viz);
+    source = xine_get_audio_source (xine->stream);
+    sink = xine_post_input(xine->viz, inputs[0]);
+    xine_post_wire (source, sink);
+  }
+}
+
+void _xineSwitchToNormal(_Xine* xine)
+{
+  xine_post_out_t *source;
+
+  if (!xine->viz)
+    return;
+
+  source = xine_get_video_source (xine->stream);
+  xine_post_wire_video_port(source, xine->videoPort);
+
+  source = xine_get_audio_source (xine->stream);
+  xine_post_wire_audio_port(source, xine->audioPort);
+
+  xine_post_dispose (xine->xine, xine->viz);
+  xine->viz = NULL;
+}
+
 void xineAttach(_Xine* xine, const char* displayName, Drawable d)
 {
     x11_visual_t vis;
@@ -138,16 +207,8 @@ void xineAttach(_Xine* xine, const char* displayName, Drawable d)
     xine_port_send_gui_data(xine->videoPort, XINE_GUI_SEND_VIDEOWIN_VISIBLE, 
             (void *) 1);
 
-    {
-      int i;
-      const char *const *plugins;
-      printf ("Audio Viz\n");
-      plugins = xine_list_post_plugins (xine->xine); /*, XINE_POST_TYPE_AUDIO_VISUALIZATION);*/
-      for (i = 0; plugins[i]; i++) {
-	printf ("%s\n", plugins[i]);
-      }
-    }
     xine->attached = 1;
+    _xineSwitchToNormal (xine);
 }
 
 void xineDetach(_Xine* xine)
@@ -208,43 +269,6 @@ int xineFileDuration(_Xine* xine, const char* filename)
     return duration;
 }
 
-void _xineSwitchToViz(_Xine* xine)
-{
-  const char *const *inputs;
-  xine_post_out_t *source;
-  xine_post_in_t *sink;
-  xine_audio_port_t *audios[] = { xine->audioPort, NULL };
-  xine_video_port_t *videos[] = { xine->videoPort, NULL };
-
-  if (xine->viz)
-    return;
-
-  xine->viz = xine_post_init (xine->xine, "oscope", 1, audios, videos);
-  if (xine->viz) {
-    inputs = xine_post_list_inputs(xine->viz);
-    source = xine_get_audio_source (xine->stream);
-    sink = xine_post_input(xine->viz, inputs[0]);
-    xine_post_wire (source, sink);
-  }
-}
-
-void _xineSwitchToNormal(_Xine* xine)
-{
-  xine_post_out_t *source;
-
-  if (!xine->viz)
-    return;
-
-  source = xine_get_video_source (xine->stream);
-  xine_post_wire_video_port(source, xine->videoPort);
-
-  source = xine_get_audio_source (xine->stream);
-  xine_post_wire_audio_port(source, xine->audioPort);
-
-  xine_post_dispose (xine->xine, xine->viz);
-  xine->viz = NULL;
-}
-
 void xinePlayFile(_Xine* xine, const char* filename)
 {
     if(!xine->attached) return;
@@ -275,6 +299,13 @@ void xineSetPlaying(_Xine* xine, int isPlaying)
     } else {
         xine_set_param(xine->stream, XINE_PARAM_SPEED, XINE_SPEED_PAUSE);
     }
+}
+
+void xineSetViz (_Xine* xine, const char *viz)
+{
+  viz = viz_available (xine, viz);
+  if (viz)
+    xine->viz_name = viz;
 }
 
 void xineSetVolume(_Xine* xine, int volume)

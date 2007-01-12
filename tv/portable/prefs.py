@@ -32,6 +32,9 @@ STARTUP_TASKS_DONE          = Pref( key='startupTasksDone',      default=False, 
 SINGLE_VIDEO_PLAYBACK_MODE  = Pref( key='singleVideoPlaybackMode',default=False,platformSpecific=False )
 MY_COLLECTION_DIRS          = Pref( key="CollectionDirs",        default="",    platformSpecific=False )
 
+# Only used on particular platforms.
+XINE_VIZ                    = Pref( key="xineViz",               default="goom",platformSpecific=False )
+
 # These have a hardcoded default which can be overridden by setting an
 # environment variable.
 
