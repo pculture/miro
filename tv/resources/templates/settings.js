@@ -14,7 +14,7 @@
         feedSettings.style.top = "-224px";
         closeButton.style.display = "none";
         var startTop = -147;
-        var endTop = 77;
+        var endTop = 91;
         var steps = 5;
         var stepSize = (endTop - startTop) / steps;
         var currentStep = 0;

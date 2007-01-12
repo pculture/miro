@@ -60,7 +60,7 @@ img {
 #settings-inner {
     padding: 30px 18px 18px 18px;
     background-color: #FFFFBB;
-    height: 200px;
+    height: 228px;
     margin-bottom: 4px;
 }
 
@@ -115,7 +115,7 @@ img {
     margin: 0px 0px 1px;
     position: fixed;
     top: 0px;
-    z-index: 3; 
+    z-index: 6; 
     /* This should be above feed-settings, so that feed-settings doesn't cover
      * it up durring the opening animation.  It also needs to be above
      * sort-bar, so the auto-download select menu is above sort-bar.
