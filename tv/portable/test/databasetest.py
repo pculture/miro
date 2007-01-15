@@ -1334,8 +1334,8 @@ class SortingFilterTestCase(DemocracyTestCase):
                       sortingMultiIndexView, unsortingMultiIndexView,
                       subSort, unSubSort]
 
-        #FIXME add index views as they start to function
-        allSortingViews = [subSort, sortingFiltView]
+        allSortingViews = [subSort, sortingFiltView, sortingIndexView,
+                           sortingMultiIndexView]
 
         allUnSortingViews = [unsortingFiltView, unSubSort,
                              unsortingIndexView, unsortingMultiIndexView]

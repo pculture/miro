@@ -1040,12 +1040,21 @@ class DynamicDatabase:
             view.recomputeFilter(subView)
 
         # Recompute everything below maps
-        for [subView, f] in self.subMaps:
+        for [subView, f] in view.subMaps:
             subView.recomputeFilters()
 
         # Recompute indexes
-        # FIXME -- make this deal with resorting
+        for f, index in view.indexes.iteritems():
+            if index.resort:
+                for key, subView in index.views.iteritems():
+                    view._recomputeSingleSort(subView, subView.sortFunc)
         view.recomputeIndex(None,all=True)
+
+        for [subView] in view.clones:
+            if subView.resort:
+                view._recomputeSingleSort(subView, subView.sortFunc)
+            view.recomputeFilter(subView)
+            
 
         for callback in view.viewChangeCallbacks:
             callback()
