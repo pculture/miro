@@ -136,7 +136,7 @@ img {
 #main-titlebar .noborder {
     background: none;
     border: none;
-	margin: 8px 0 0 8px;    
+    margin: 8px 0 0 8px;    
 }
 
 /* This wraps the center area of the title bar */
@@ -145,7 +145,7 @@ img {
     padding-right: 5px;
     text-align: left;
     color: #FFFFFF;
-	overflow: hidden;
+    overflow: hidden;
 }
 
 /* This wraps the right side middle links area of the title bar */
@@ -153,22 +153,8 @@ img {
     position: absolute;
     width: 140px;
     top: 8px;
-   right: 190px;
+    right: 190px;
 }
-
-/* Wraps the stuff on the right hand side of the channel header */
-#main-titlebar-right {
-
-/*
-    position: absolute;
-    width: 222px;
-    top: 11px;
-    right: 0px;
-
-*/
-
-}
-
 
 /* This wraps just the name of the view */
 #main-title {
@@ -178,25 +164,21 @@ img {
     height: 32px;
     overflow: hidden;
     font-weight: normal;
-	letter-spacing: -0.5px;
+    letter-spacing: -0.5px;
 }
 
 .sub-main-title {
     margin-top: 0px;
-	font-size: 11px;
+    font-size: 11px;
 }
 
 .sub-main-title a {
-	color: white;
+    color: white;
 }
-
 
 #main-subtitle input, #main-subtitle select {
     font-size: 11px;
 }
-
-
-
 
 /* Appears in the top right of the title section. */
 #main-upper-right {
@@ -205,11 +187,11 @@ img {
     right: 5px;
     margin: 0px 0px 0px 0px;
     color: #FFFFFF;
-	font-size: 10px;
+    font-size: 10px;
 }
 
 #downloads-global-actions {
-	margin-top: 20px;
+    margin-top: 20px;
     text-align: center;
 }
 
@@ -231,13 +213,12 @@ img {
 
 
 #downloads-free-space {
-	position: absolute;
-	top: 20px;
-	right: 220px;
-	width: 150px;
-	line-height: 15px;
+    position: absolute;
+    top: 20px;
+    right: 220px;
+    width: 150px;
+    line-height: 15px;
 }
-
 
 .select-box-right {
     background: right top no-repeat url(../images/auto-select-box-right.png);
@@ -275,17 +256,17 @@ img {
 .auto-download .select-box-menu {
     width: 250px;
     left: 0px;
-	top: -30px;
-	padding: 6px 0 6px 0;
-	z-index: 99;
+    top: -30px;
+    padding: 6px 0 6px 0;
+    z-index: 99;
 }
 
 .select-box-menu li {
     list-style: none;
     text-transform: none;
     margin: 0px;
-	padding: 2px 9px 2px 12px;
-	font-size: 12px;
+    padding: 2px 9px 2px 12px;
+    font-size: 12px;
 }
 
 .select-box-menu li:hover, .select-box-menu li:hover a {
@@ -304,11 +285,10 @@ img {
     height: 20px;
     margin: 0px 0px 5px 0px;
     color: #FFFFFF;
-	text-decoration: underline;
+    text-decoration: underline;
     text-transform: uppercase;
     font-size: 11px;
 }
-
 
 /* Just around recommend */
 #main-titlebar-recommend {
@@ -325,16 +305,16 @@ img {
 /* Just around auto-download */
 #main-titlebar-auto {
     position: absolute;
-	top: 5px;
-	right: 5px;
-	display: block;
+    top: 5px;
+    right: 5px;
+    display: block;
     height: 20px;
     color: #FFFFFF;
     padding: 0px;
     margin: 0px 0 2px 0px;
     text-transform: uppercase;
     font-size: 11px;
-	z-index: 2;
+    z-index: 2;
 }
 
 #auto-checkbox-container {
@@ -350,13 +330,12 @@ img {
 }
 
 #auto-label {
-	float: left;
-	padding-right: 6px;
-	padding-top: 1px;
+    float: left;
+    padding-right: 6px;
+    padding-top: 1px;
 }
 
 /* Used to mark the search box */
-
 #search-box {
     color: #333;
     width: 121px; 
@@ -366,15 +345,15 @@ img {
 }
 
 #main-titlebar-right #search-box {
-	position: absolute;
-	top: 31px;
-	left: 50px;
+    position: absolute;
+    top: 31px;
+    left: 50px;
 }
 
 .static-search {
-	position: absolute;
-	top: 50px;
-	left: 100px;
+    position: absolute;
+    top: 50px;
+    left: 100px;
 }
 
 /* Used for scraping indicator on channel page */
@@ -419,25 +398,22 @@ img {
 
     bottom: 0px;
     overflow: auto;
-    */
+     */
 }
 
 
-
 /* SORT BUTTONS AND VIDEO STATS -- THEY ARE GROUPED TOGETHER IN THE CSS SINCE THEY NEED TO LINE UP WITH EACH OTHER */
-
-
 #sort-buttons {
     font-size: 11px;
     color: #113;
-	background-color: #4dc44b;	
-	position: relative;
-	height: 19px;
+    background-color: #4dc44b;	
+    position: relative;
+    height: 19px;
 }
 
 
 .available-sort #sort-buttons {
-	background-color: #5faeff;	
+    background-color: #5faeff;	
 }
 
 
@@ -449,71 +425,69 @@ img {
     height: 23px;
     overflow: hidden;
     border-bottom: 1px solid #e1e9f6;
-	width: 100%;
-	position: relative;
+    width: 100%;
+    position: relative;
 }
 
 #sort-buttons a {
-	color: white;
-	text-decoration: none;
+    color: white;
+    text-decoration: none;
 }
 
 .sort-name {
-	position: absolute;
-	top: 2px;
-	left: 122px;
+    position: absolute;
+    top: 2px;
+    left: 122px;
 }
 
 .sort-length {
-	position: absolute;
-	top: 2px;
-	right: 275px;
-	width: 40px;
-}
-
-.sort-date {
-	position: absolute;
-	top: 2px;
-	right: 188px;
-	width: 70px;
-}
-
-.sort-size {
-	position: absolute;
-	top: 2px;
-	right: 142px;
-	width: 40px;
+    position: absolute;
+    top: 2px;
+    right: 275px;
+    width: 40px;
 }
 
 .stat-length {
-	position: absolute;
-	top: 5px;
-	right: 275px;
-	font-weight: bold;
-	width: 40px;
+    position: absolute;
+    top: 5px;
+    right: 275px;
+    font-weight: bold;
+    width: 40px;
 }
 
+.sort-date {
+    position: absolute;
+    top: 2px;
+    right: 188px;
+    width: 70px;
+}
 
 .stat-date {
-	position: absolute;
-	top: 5px;
-	right: 188px;
-	width: 70px;
+    position: absolute;
+    top: 5px;
+    right: 188px;
+    width: 70px;
 }
 
+.sort-size {
+    position: absolute;
+    top: 2px;
+    right: 142px;
+    width: 40px;
+}
 
 .stat-size {
-	position: absolute;
-	top: 5px;
-	right: 142px;
-	width: 40px;
+    position: absolute;
+    top: 5px;
+    right: 142px;
+    width: 40px;
 }
 
 .stat-torrent {
-	position: absolute;
-	top: 5px;
-	right: 79px;
-	width: 40px;
+    position: absolute;
+    top: 5px;
+    right: 79px;
+    width: 40px;
 }
 
 .details-link {
@@ -537,16 +511,13 @@ img {
 #sort-buttons a.sort-button img {
     border: none;
     padding-left: 3px;
-	vertical-align: 0px;
+    vertical-align: 0px;
     visibility: hidden;
 }
 
 #sort-buttons a.sort-button.active img {
     visibility: visible;
 }
-
-
-
 
 /* The section dividers */
 
@@ -567,32 +538,32 @@ img {
 
 
 .available-channelbar-wrap {
-	position: relative;
+    position: relative;
 }
 
 .available-channelbar {
-	background-color: #2f8efe;
+    background-color: #2f8efe;
 }
 
 .available-channelbar:hover {
-	background-color: #5faeff;
+    background-color: #5faeff;
 }
 
 .downloaded-channelbar {
-	background-color: #15ae12;
+    background-color: #15ae12;
 }
 
 .downloaded-channelbar:hover {
-	background-color: #4dc44b;	
+    background-color: #4dc44b;	
 }
 
 
 .downloading-channelbar {
-	background-color: #DF6c0d;
+    background-color: #DF6c0d;
 }
 
 .downloading-channelbar:hover {
-	background-color: #FF8c2d;
+    background-color: #FF8c2d;
 }
 
 a.download-bar-action {
@@ -710,18 +681,18 @@ body.gray-background {
     background-color: #f7f7f7;
 }
 .button-zone-two {
-margin: 0 auto 0 auto;
-text-align: center;
-width: 500px;
+    margin: 0 auto 0 auto;
+    text-align: center;
+    width: 500px;
 }
 .button-zone-one {
-margin: 0 auto 0 auto;
-text-align: center;
-width: 270px;
+    margin: 0 auto 0 auto;
+    text-align: center;
+    width: 270px;
 }
 .gray-button-wrap {
-margin-right: 10px;
-float: left;
+    margin-right: 10px;
+    float: left;
 }
 .gray-button-bg {
     background: url(../images/graybutton-mid.png) top left repeat-x;
@@ -766,13 +737,13 @@ float: left;
 
 /* This is the line that appears when you reorder items. When
 an element is dragged, the drag-highlight class is added to it */
-.main-video .dnd-reorder-line {
-    position: absolute;
-    top: -1px;
-    height: 2px;
-    width: 100%;
-    background: #0752d7;
-    display: none;
+    .main-video .dnd-reorder-line {
+        position: absolute;
+        top: -1px;
+        height: 2px;
+        width: 100%;
+        background: #0752d7;
+        display: none;
 }
 .main-video.drag-highlight .dnd-reorder-line {
     display: block;
@@ -902,7 +873,7 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .main-video.selected .main-video-desc a:link {
-     color: black; 
+    color: black; 
 }
 
 .main-video-hitbox {
@@ -1016,9 +987,9 @@ an element is dragged, the drag-highlight class is added to it */
 .main-video-details-tasks {
     height: 26px;
     width: 153px;
-	position: absolute;
-	top: 47px;
-	left: 10px;
+    position: absolute;
+    top: 47px;
+    left: 10px;
 }
 
 
@@ -1054,23 +1025,23 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .share-box-menu img {
-	vertical-align: -3px;
-	margin-right: 3px;
+    vertical-align: -3px;
+    margin-right: 3px;
 }
 
 .share-box-menu {
     width: 166px;
     left: -1px;
-	top: -6px;
-	padding: 3px 0 3px 0;
+    top: -6px;
+    padding: 3px 0 3px 0;
 }
 
 .share-box-menu li {
     list-style: none;
     text-transform: none;
     margin: 0px;
-	padding: 3px 9px 3px 12px;
-	font-size: 12px;
+    padding: 3px 9px 3px 12px;
+    font-size: 12px;
 }
 
 .share-box-menu li:hover, .share-box-menu li:hover a {
@@ -1109,7 +1080,7 @@ an element is dragged, the drag-highlight class is added to it */
 
 .main-video-details-tasks-small.delete {
     position: absolute;
-	top: 24px;
+    top: 24px;
     right: 0px;
     width: 54px;
 }
@@ -1117,7 +1088,7 @@ an element is dragged, the drag-highlight class is added to it */
 
 .main-video-details-tasks-small.save, .saved-note {
     position: absolute;
-	top: 0px;
+    top: 0px;
     right: 0px;
     width: 54px;
 }
@@ -1152,10 +1123,10 @@ an element is dragged, the drag-highlight class is added to it */
     height: 18px;
     color: white;
     margin: 0 0 5px 0;
-	position: absolute;
-	top: 49px;
-	right: 76px;
-	font-size: 11px;
+    position: absolute;
+    top: 49px;
+    right: 76px;
+    font-size: 11px;
 }
 
 .video-state-left {
@@ -1211,7 +1182,7 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .date-channel-title-wrap a {
-	color: #777;
+    color: #777;
 }
 
 .selected .date-channel-title-wrap {
@@ -1328,7 +1299,7 @@ a.small-button-left:hover {
 .main-video-details-download-info.pending-auto {
     width: 130px;
     padding-top: 4px;
-	padding-left: 5px;
+    padding-left: 5px;
 }
 
 .main-video-details-download-info.failed-download {
@@ -1340,7 +1311,7 @@ a.small-button-left:hover {
 .downloading, .paused {
     width: 130px;
     padding-top: 4px;
-	padding-left: 5px;
+    padding-left: 5px;
 }
 
 .download-rate {
@@ -1353,27 +1324,27 @@ a.small-button-left:hover {
 }
 
 .main-progress-bar-bg {
-  width: 120px;
-  height: 15px;
-  margin: 1px 1px 2px 1px;
-  background: url(../images/progress-bar-bg.png) no-repeat left top; 
+    width: 120px;
+    height: 15px;
+    margin: 1px 1px 2px 1px;
+    background: url(../images/progress-bar-bg.png) no-repeat left top; 
 }
 
 .main-progress-bar {
-  height: 15px;
-  background: url(../images/progress-bar.png) no-repeat left top; 
+    height: 15px;
+    background: url(../images/progress-bar.png) no-repeat left top; 
 }
 
 .main-progress-throbber-bg {
-  width: 120px;
-  height: 15px;
-  margin: 0px 0px 1px 0px;
-  background: url(../images/progress-throbber-bg.png) no-repeat left top; 
+    width: 120px;
+    height: 15px;
+    margin: 0px 0px 1px 0px;
+    background: url(../images/progress-throbber-bg.png) no-repeat left top; 
 }
 
 .main-progress-throbber-bg img {
-  margin: 1px;
-  border: 0px;
+    margin: 1px;
+    border: 0px;
 }
 
 .main-progress-cancel {
