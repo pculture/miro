@@ -37,8 +37,8 @@ def watchableItems(obj):
     return (obj.isDownloaded() and not obj.isNonVideoFile() and 
             not obj.isContainerItem)
 
-def uploadingDownloaders(obj):
-    return obj.getState() == 'uploading'
+def autoUploadingDownloaders(obj):
+    return obj.getState() == 'uploading' and not obj.manualUpload
 
 newMemory = {}
 newMemoryFor = None

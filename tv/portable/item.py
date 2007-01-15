@@ -425,6 +425,10 @@ folder will be deleted.""")
         if self.downloader:
             self.downloader.stopUpload()
 
+    def startUpload (self):
+        if self.downloader:
+            self.downloader.startUpload()
+
     def getString(self, when):
         """Get the expiration time a string to display to the user."""
         offset = when - datetime.now()
@@ -1265,6 +1269,8 @@ folder will be deleted.""")
             ]
             if self.getSeen():
                 items.append((self.markItemUnseen, _('Mark as Unwatched')))
+            if self.downloader and self.downloader.getState() == 'finished' and self.downloader.getType() == 'bittorrent':
+                items.append((self.startUpload, _('Restart Upload')))
         elif self.getState() == 'downloading':
             items = [(self.expire, _('Cancel Download')), (self.pause, _('Pause Download'))]
         else:

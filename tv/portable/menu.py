@@ -57,11 +57,13 @@ def makeContextMenu(templateName, view, selection, clickedID):
 
 def makeMultiItemContextMenu(templateName, view, selectedItems, clickedID):
     c = app.controller # easier/shorter to type
-    watched = downloaded = downloading = available = 0
+    watched = downloaded = downloading = available = uploadable = 0
     for i in selectedItems:
         if i.getState() == 'downloading':
             downloading += 1
         elif i.isDownloaded():
+            if i.downloader and i.downloader.getState() == 'finished' and i.downloader.getType() == 'bittorrent':
+                uploadable += 1
             downloaded += 1
             if i.getSeen():
                 watched += 1
@@ -99,5 +101,8 @@ def makeMultiItemContextMenu(templateName, view, selectedItems, clickedID):
             _('Cancel Download')))
         items.append((app.controller.pauseDownloadingCurrentItems, 
             _('Pause Download')))
+
+    if uploadable > 0:
+        items.append((c.startUploads, _('Restart Upload')))
 
     return makeMenu(items)

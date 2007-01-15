@@ -711,8 +711,7 @@ class BTDownloader(BGDownloader):
         self.rate = self.eta = 0
         self.upRate = 0
         self.uploadedStart = self.uploaded
-        if self.state == 'downloading' or (
-            self.state == 'uploading' and self.uploaded < 1.5*self.totalSize):
+        if self.state in ('downloading', 'uploading'):
             self.runDownloader(done=True)
         elif self.state == 'offline':
             self.start()

@@ -88,6 +88,7 @@ class RemoteDownloader(DDBObject):
         self.contentType = ""
         self.deleteFiles = True
         self.channelName = None
+        self.manualUpload = False
         DDBObject.__init__(self)
         if contentType is None:
             self.contentType = ""
@@ -146,13 +147,22 @@ class RemoteDownloader(DDBObject):
                 # data
                 print "WARNING exception when comparing status: %s" % e
 
-            oldUpRate = self.status.get("upRate", 0)
+            if self.getState() in ('uploading', 'downloading'):
+                oldUpRate = self.status.get("upRate", 0)
+            else:
+                oldUpRate = 0
             wasFinished = self.isFinished()
             self.status = data
             # Store the time the download finished
             finished = self.isFinished() and not wasFinished
             global totalUpRate
-            totalUpRate = totalUpRate + self.status.get ("upRate", 0) - oldUpRate
+            if self.getState() in ('uploading', 'downloading'):
+                newUpRate = self.status.get("upRate", 0)
+            else:
+                newUpRate = 0
+            totalUpRate = totalUpRate + newUpRate - oldUpRate
+            if self.getState() == 'uploading' and not self.manualUpload and self.getUploadRatio() > 1.5:
+                self.stopUpload()
             self.signalChange(needsSignalItem=not finished)
             if finished:
                 for item in self.itemList:
@@ -389,9 +399,17 @@ URL was %s""" % self.url
         self.status['upRate'] = 0
         self.status['eta'] = 0
 
+    def getUploadRatio(self):
+        return self.status.get('uploaded', 0) * 1024 * 1024 / self.getCurrentSize()
+    
     def restartIfNeeded(self):
-        if self.getState() in ('downloading','uploading','offline'):
+        if self.getState() in ('downloading','offline'):
             self.restart()
+        if self.getState() in ('uploading'):
+            if self.manualUpload or self.getUploadRatio() < 1.5:
+                self.restart()
+            else:
+                self.stopUpload()
 
     def restart(self):
         if len(self.status) == 0 or self.status.get('dlerType') is None:
@@ -404,6 +422,18 @@ URL was %s""" % self.url
             c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, 
                                                  self.status)
             c.send()
+
+    def startUpload(self):
+        if self.getState() != 'finished' or self.getType() != 'bittorrent':
+            return
+        if _downloads.has_key(self.dlid):
+            c = command.StartDownloadCommand(RemoteDownloader.dldaemon,
+                                             self.dlid)
+            c.send()
+        else:
+            self.status['state'] = 'uploading'
+            self.restart()
+            self.signalChange()
 
     def stopUpload(self):
         if self.getState() != "uploading":
@@ -450,15 +480,15 @@ def restartDownloads():
 
 def killUploaders(*args):
     torrent_limit = config.get(prefs.UPSTREAM_TORRENT_LIMIT)
-    while (views.remoteUploads.len() > torrent_limit):
-        views.remoteUploads[0].stopUpload()
+    while (views.autoUploads.len() > torrent_limit):
+        views.autoUploads[0].stopUpload()
 
 def configChangeUploaders(key, value):
     if key == prefs.UPSTREAM_TORRENT_LIMIT.key:
         killUploaders()
 
 def limitUploaders():
-    views.remoteUploads.addAddCallback(killUploaders)
+    views.autoUploads.addAddCallback(killUploaders)
     config.addChangeCallback(configChangeUploaders)
     killUploaders()
         

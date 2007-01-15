@@ -32,7 +32,7 @@ def getAvailableSpace():
 
 def getUpRate():
     if downloader.totalUpRate > 1:
-        return _(" - %0.3f KB/s total upload") % (downloader.totalUpRate / 1024.0,)
+        return _(" - %0.1f KB/s total upload") % (downloader.totalUpRate / 1024.0,)
     else:
         return ""
 

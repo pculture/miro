@@ -1168,6 +1168,11 @@ downloaded?""")
         childIDs = [i.getID() for i in selected if i.isDownloaded()]
         playlist.createNewPlaylist(childIDs)
 
+    def startUploads(self):
+        selected = controller.selection.getSelectedItems()
+        for i in selected:
+            i.startUpload()
+
 ###############################################################################
 #### TemplateDisplay: a HTML-template-driven right-hand display panel      ####
 ###############################################################################
