@@ -14,8 +14,8 @@
 <div t:updateForView="allDownloadingItems">
 <div t:hideIf="allDownloadingItems.len() == 0">
 <div class="main-channelbar downloading-channelbar" onclick="return eventURL('action:toggleDownloadsView');">
-  <span class="triangle" t:hideIf="showDownloads"/>
-  <span class="triangle-down" t:hideIf="not showDownloads"/>
+  <div class="triangle" t:hideIf="showDownloads"/>
+  <div class="triangle down" t:hideIf="not showDownloads"/>
   <a class="download-bar-action" href="#"
           onclick="eventURLAndStop('action:cancelDownloads', event);">Cancel All</a>
   <a class="download-bar-action" href="#"
@@ -39,8 +39,8 @@
 
 <div class="available-channelbar-wrap">
 <a class="main-channelbar available-channelbar" href="#" onclick="return eventURL('action:toggleNewItemsView');" t:updateForView="matchingItems">
-  <span class="triangle" t:hideIf="showNewItems"/>
-  <span class="triangle-down" t:hideIf="not showNewItems"/>
+  <div class="triangle" t:hideIf="showNewItems"/>
+  <div class="triangle down" t:hideIf="not showNewItems"/>
 
   <div t:showIf="searchTerm is None">
     <div t:hideIf="isFolder" i18n:translate="">
@@ -111,14 +111,14 @@
 <!-- WATCHABLE ******************************************************** -->
 <div t:updateForView="allWatchableItems">
     <a class="main-channelbar downloaded-channelbar" href="#" onclick="return eventURL('action:toggleWatchableView')" t:hideIf="len(allWatchableItems) == 0" >
-        <span class="triangle" t:hideIf="showWatchableItems"/>
-        <span class="triangle-down" t:hideIf="not showWatchableItems"/>
+        <div class="triangle" t:hideIf="showWatchableItems"/>
+        <div class="triangle down" t:hideIf="not showWatchableItems"/>
         <span  i18n:translate=""><span i18n:name="len" t:replace="allWatchableItems.len()" /> Downloaded</span>
     </a>
 </div>
 
 <span t:updateForView="allWatchableItems">
-    <div t:showIf="showWatchableItems">
+    <div t:showIf="watchableItems.len() > 0">
         <t:includeTemplate filename="sort-bar" />
     </div>
 </span>

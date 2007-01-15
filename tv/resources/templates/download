@@ -152,7 +152,7 @@ matchingPausedDLs.unlink()
 	<div t:repeatForView="externalDownloads" t:repeatTemplate='download-item' />
 	<div t:hideIf="uploads.len() == 0" 
 		t:updateHideOnView="uploads" class="main-channelbar">
-		<span style="margin-left: 12px"> Uploading Torrents</span>
+		<span style="margin-left: 12px"> Seeding Torrents</span>
         </div>
 	<div t:repeatForView="uploads" t:repeatTemplate='download-item' />
 </div>

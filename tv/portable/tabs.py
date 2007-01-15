@@ -24,7 +24,7 @@ class StaticTab(database.DDBObject):
     tabTitles = {
         'librarytab': _('My Collection'),
         'newtab': _('New Videos'),
-        'searchtab': _('Search'),
+        'searchtab': _('Video Search'),
         'downloadtab': _('Downloading'),
     }
 

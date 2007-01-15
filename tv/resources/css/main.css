@@ -361,8 +361,8 @@ img {
     color: #333;
     width: 121px; 
     padding: 2px;
-	margin-left: -1px;
-	margin-top: 0px;
+    margin-left: -1px;
+    margin-top: 0px;
 }
 
 #main-titlebar-right #search-box {
@@ -551,7 +551,7 @@ img {
 /* The section dividers */
 
 .main-channelbar {
-	background-color: #B9CDFF;
+    background-color: #B9CDFF;
     border-top: 1px solid white;
     height: 22px;
     display: block;
@@ -562,7 +562,7 @@ img {
     font-weight: normal;
     padding-top: 4px;
     color: #fff;
-    position: relative;
+    cursor: pointer;
 }
 
 
@@ -595,8 +595,6 @@ img {
 	background-color: #FF8c2d;
 }
 
-
-
 a.download-bar-action {
     float: right;
     font-size: 10px;
@@ -620,27 +618,15 @@ a.download-bar-action:hover {
 /* triangle for the bars */
 .triangle {
     background: url(../images/triangle-right.png) no-repeat left top;
-    display: block;
     float: left;
     width: 15px;
     height: 16px;
-    margin-top: 4px;
-    margin-left: 8px;
-	margin-right: 1px;
+    margin: 4px 1px 0px 8px;
 }
 
-.triangle-down {
+.triangle.down {
     background: url(../images/triangle-down.png) no-repeat left top;
-    display: block;
-    float: left;
-    width: 15px;
-    height: 16px;
-    margin-top: 4px;
-    margin-left: 8px;
-	margin-right: 1px;
-
 }
-
 
 /* The N more videos oval */
 .main-notification {    
