@@ -471,6 +471,20 @@ img {
 	width: 40px;
 }
 
+.sort-date {
+	position: absolute;
+	top: 2px;
+	right: 188px;
+	width: 70px;
+}
+
+.sort-size {
+	position: absolute;
+	top: 2px;
+	right: 142px;
+	width: 40px;
+}
+
 .stat-length {
 	position: absolute;
 	top: 5px;
@@ -480,13 +494,6 @@ img {
 }
 
 
-.sort-date {
-	position: absolute;
-	top: 2px;
-	right: 188px;
-	width: 70px;
-}
-
 .stat-date {
 	position: absolute;
 	top: 5px;
@@ -495,13 +502,6 @@ img {
 }
 
 
-.sort-size {
-	position: absolute;
-	top: 2px;
-	right: 142px;
-	width: 40px;
-}
-
 .stat-size {
 	position: absolute;
 	top: 5px;
@@ -509,17 +509,12 @@ img {
 	width: 40px;
 }
 
-
-.web-page-link {
+.stat-torrent {
 	position: absolute;
 	top: 5px;
 	right: 79px;
+	width: 40px;
 }
-
-.web-page-link a {
-	color: #222;
-}
-
 
 .details-link {
     position: absolute;
@@ -1324,12 +1319,13 @@ a.small-button-left:hover {
 
 .main-video-details-download-info {
     position: absolute;
-    top: 41px;
-    left: 141px;
-    right: 0px;
-    height: 50px;
+    bottom: 2px;
+    right: 77px;
+    height: 20px;
+    width: 260px;
     font-size: 10px;
     overflow: hidden;
+    text-align: right;
 }
 
 .main-video-details-download-info.expiring {
@@ -1352,7 +1348,7 @@ a.small-button-left:hover {
 .main-video-details-download-info.failed-download {
     width: 130px;
     padding-top: 4px;
-	padding-left: 5px;
+    padding-left: 5px;
 }
 
 .downloading, .paused {
