@@ -187,11 +187,7 @@ if feed.idExists():
             </div>
             </div>
         </div>
-
-
-
         <div id="main-titlebar-right">
-
                 <div id="search-box" t:hideIf="'feed' in localvars and feed.getURL() == 'dtv:search'">
         <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Find in channel')***"/>
     </div>

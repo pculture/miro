@@ -205,21 +205,39 @@ viewName = kargs['viewName']
                 </div>
             </div>
             <div class="details-small-buttons">
-                <div t:showIf="this.downloader and this.downloader.getState() == 'uploading'">
-                    <a class="main-video-details-tasks-small stop-upload" href="#" onclick="return eventURL('action:stopUploadItem?item=@@@this.getID()@@@');">
-                        <span i18n:translate="">STOP UPLOAD</span>
-                    </a>
-                </div>
                 <div t:showIf="this.showSaveButton()">
-                    <a class="main-video-details-tasks-small save" href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');">
+                    <div class="round-button-left save">
+                    <div class="round-button-right">
+                    <div class="round-button-content">
+                    <a href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');">
                         <span i18n:translate="">KEEP</span>
                     </a>
+                    </div>
+                    </div>
+                    </div>
                 </div>
                 <div t:showIf="this.showSaved()" class="saved-note">SAVED</div>
                 <div t:showIf="this.showTrashButton()">
-                    <a class="main-video-details-tasks-small delete" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');">
+                    <div class="round-button-left delete">
+                    <div class="round-button-right">
+                    <div class="round-button-content">
+                    <a href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');">
                         <span i18n:translate="">DELETE</span>
                     </a>
+                    </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div t:showIf="this.downloader and this.downloader.getState() == 'uploading'">
+                <div class="round-button-left stop-seeding">
+                <div class="round-button-right">
+                <div class="round-button-content">
+                 <a href="#" onclick="return eventURL('action:stopUploadItem?item=@@@this.getID()@@@');">
+                    <span i18n:translate="">STOP SEEDING</span>
+                </a>
+                </div>
+                </div>
                 </div>
             </div>
             <div t:showIf="this.showMoreInfo and this.isTransferring()" class="more-download-info">

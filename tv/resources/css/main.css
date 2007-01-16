@@ -347,6 +347,7 @@ img {
     padding: 2px;
     margin-left: -1px;
     margin-top: 0px;
+    font-size: 12px;
 }
 
 #main-titlebar-right #search-box {
@@ -1040,12 +1041,6 @@ an element is dragged, the drag-highlight class is added to it */
     color: #000;
 }
 
-
-
-
-
-
-
 .details-small-buttons {
     position: absolute;
     top: 37px;
@@ -1054,35 +1049,46 @@ an element is dragged, the drag-highlight class is added to it */
     text-align: center;
 }
 
-.main-video-details-tasks-small { 
-    display: block;
-    background: url(../images/video-details-tasks-small.png) top left no-repeat;
-    color: #333;
-    text-decoration: none;
-    font-size: 9px;
-    padding: 3px 0 3px 0;
+.round-button-left {
+    background: url(../images/round-button-left.png) top left no-repeat;
+    padding-left: 7px;
 }
 
+.round-button-right {
+    background: url(../images/round-button-right.png) top right no-repeat;
+    padding-right: 7px;
+}
 
-.main-video-details-tasks-small.delete {
+.round-button-content {
+    background: url(../images/round-button-mid.png) top left repeat-x;
+    height: 11px;
+    padding: 3px 0px;
+    font-size: 9px;
+}
+
+.round-button-content a {
+    text-decoration: none;
+    color: #333;
+}
+
+.round-button-left.delete {
     position: absolute;
     top: 24px;
     right: 0px;
     width: 54px;
 }
 
-
-.main-video-details-tasks-small.save, .saved-note {
+.round-button-left.save, .saved-note {
     position: absolute;
     top: 0px;
     right: 0px;
     width: 54px;
 }
 
-.main-video-details-tasks-small.stop-upload {
+.round-button-left.stop-seeding {
     position: absolute;
-    left: -59px;
-    width: 54px;
+    top: 67px;
+    right: 76px;
     display: none;
 }
 
