@@ -28,13 +28,13 @@ form {
 }
 
 ul {    
-    list-style-position: inside;
-    margin: 0px 0px 0px 5px;
+    list-style: none;
+    margin: 0px;
     padding: 0px;   
 }
 
 li {
-    margin: 0px 0px 15px 0px;
+    margin: 0px;
     padding: 0px;
 }
 
@@ -149,6 +149,20 @@ img {
     overflow: hidden;
 }
 
+/* The right side of the title bar (visit website, settings, etc). */
+.main-titlebar-right {
+    float: right;
+    margin: 8px 16px;
+}
+
+.main-titlebar-right a {
+    color: white;
+}
+
+.main-titlebar-right li {
+     margin-bottom: 7px;
+}
+
 /* This wraps the right side middle links area of the title bar */
 #main-titlebar-middle {
     position: absolute;
@@ -166,15 +180,6 @@ img {
     overflow: hidden;
     font-weight: normal;
     letter-spacing: -0.5px;
-}
-
-.sub-main-title {
-    margin-top: 0px;
-    font-size: 11px;
-}
-
-.sub-main-title a {
-    color: white;
 }
 
 #main-subtitle input, #main-subtitle select {

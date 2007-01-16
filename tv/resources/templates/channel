@@ -1,5 +1,4 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml"
       eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 
@@ -159,18 +158,23 @@ if feed.idExists():
         <div t:updateForView="thisFeedView">
           <img id="main-icon" src="***feed.getThumbnail()***" alt=""/>
         </div>
-	<div id="main-titlebar-center">
-	    <div t:updateForView="thisFeedView">
-            <h1 id="main-title" t:replaceMarkup="feed.getTitle()" />            
-	    </div>
-	    
-	    <div class="sub-main-title">
-	        <span t:hideIf="feed.getLink() == ''"><a href="***feed.getLink()***">visit website</a>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-	        <a href="#" onclick="return recommendChannel('@@@feed.getTitle()@@@', '@@@feed.getURL()@@@');" i18n:translate="">send to friend</a>&nbsp;&nbsp;&nbsp;&nbsp;
-	        <a href="#" onclick="return showSettings();" i18n:translate="">settings</a>
-	    </div>
-	    
-	    
+        <div class="main-titlebar-right">
+            <ul>
+                <li t:hideIf="feed.getLink() == ''">
+                    <a href="***feed.getLink()***">visit website</a>
+                </li>
+                <li>
+                    <a href="#" onclick="return recommendChannel('@@@feed.getTitle()@@@', '@@@feed.getURL()@@@');" i18n:translate="">send to friend</a>
+                </li>
+                <li>
+                    <a href="#" onclick="return showSettings();" i18n:translate="">settings</a>
+                </li>
+            </ul>
+        </div>
+        <div id="main-titlebar-center">
+            <div t:updateForView="thisFeedView">
+            <h1 id="main-title" t:replaceMarkup="feed.getTitle()" />
+            </div>
             <div t:updateForView="matchingItems">
             <div t:hideIf="searchTerm is None">
                 <div class="white-button-left save-search-channel">
@@ -188,10 +192,10 @@ if feed.idExists():
 
         <div id="main-titlebar-right">
 
-		<div id="search-box" t:hideIf="'feed' in localvars and feed.getURL() == 'dtv:search'">
+                <div id="search-box" t:hideIf="'feed' in localvars and feed.getURL() == 'dtv:search'">
         <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Find in channel')***"/>
     </div>
-		
+                
         </div>
 </div>
 <!-- / TITLE BAR -->
