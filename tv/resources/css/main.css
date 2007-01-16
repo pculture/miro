@@ -257,9 +257,8 @@ img {
 .auto-download .select-box-menu {
     width: 250px;
     left: 0px;
-    top: -30px;
+    top: -25px;
     padding: 6px 0 6px 0;
-    z-index: 99;
 }
 
 .select-box-menu li {
