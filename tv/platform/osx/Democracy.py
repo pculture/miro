@@ -1,5 +1,6 @@
 import os
 import sys
+import logging
 import Foundation
 
 # =============================================================================
@@ -65,7 +66,7 @@ def getModulePath(name):
 def launchDownloaderDaemon():
     # Increase the maximum file descriptor count (to the max)
     import resource
-    print "DTV: Increasing file descriptor count limit in Downloader."
+    logging.info('Increasing file descriptor count limit in Downloader.')
     resource.setrlimit(resource.RLIMIT_NOFILE, (-1,-1))
 
     # Insert the downloader private module path

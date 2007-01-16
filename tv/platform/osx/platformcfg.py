@@ -3,6 +3,7 @@ from PyObjCTools import Conversion
 
 import os
 import objc
+import logging
 
 import util
 import prefs
@@ -168,29 +169,29 @@ def migrateToDemocracy():
     oldPrefs = '%s.plist' % os.path.join(prefsPath, oldDomain)
     
     if os.path.exists(oldPrefs):
-        print "DTV: Migrating preferences to %s" % newDomain
+        logging.info("Migrating preferences to %s" % newDomain)
         os.rename(oldPrefs, newPrefs)
         
     # Migrate Movies and Support folders
 
     if os.path.exists(oldMoviesFolder):
         if not os.path.exists(newMoviesFolder):
-            print "DTV: Migrating movies folder to %s" % newMoviesFolder
+            logging.info("Migrating movies folder to %s" % newMoviesFolder)
             os.rename(oldMoviesFolder, newMoviesFolder)
         else:
-            print "DTV: WARNING! Both DTV and Democracy movies folder exist."
+            logging.warn("Both DTV and Democracy movies folder exist.")
 
     if os.path.exists(oldSupportFolder):
         if not os.path.exists(newSupportFolder):
-            print "DTV: Migrating support folder to %s" % newSupportFolder
+            logging.info("Migrating support folder to %s" % newSupportFolder)
             os.rename(oldSupportFolder, newSupportFolder)
         else:
-            print "DTV: WARNING! Both DTV and Democracy support folder exist."
+            logging.warn("Both DTV and Democracy support folder exist.")
 
 def ensureMigratedMoviePath(pathname):
     if pathname.startswith(oldMoviesFolder):
         pathname = pathname.replace(oldMoviesFolder, newMoviesFolder)
-        print "DTV: Migrating movie to %s" % pathname
+        logging.info("Migrating movie to %s" % pathname)
     return pathname
 
 if not util.inDownloader:
