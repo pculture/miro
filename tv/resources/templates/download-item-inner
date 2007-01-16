@@ -55,7 +55,7 @@ viewName = kargs['viewName']
                 <div class="date-channel-title-wrap">
                     <div class="channel-title"><span t:replace="this.getChannelTitle()" /></div>
                 </div>
-                <br style="clear: both;" />
+                <br class="clear" />
                 <p t:showIf="this.showMoreInfo" class="item-links">
                     <span><a t:showIf="this.getPaymentLink() != ''" href="***this.getPaymentLink()***" class="donation-link">DONATION LINK</a><br/><br/></span>
                     <span t:hideIf="this.getURL().startswith('file:')"><a href="***this.getURL()***" class="item-link">DIRECT LINK TO FILE</a><br/><br/></span>
@@ -108,7 +108,7 @@ viewName = kargs['viewName']
                         </div>
                     </div>
                 </div>
-                <br clear="all" />
+                <br class="clear" />
                 <ul id="share-menu-@@@this.getID()@@@" class="share-box-menu">
                     <li>
                         <img src="resource:images/email-a-friend.gif" alt="email-a-friend icon" />

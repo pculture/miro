@@ -42,6 +42,10 @@ img {
     border: 0px;
 }
 
+.clear {
+    clear: both;
+}
+
 /* This is used to make the feed settings section float above the channel */
 #feed-settings {
     position: absolute;
@@ -99,11 +103,8 @@ img {
 
 
 /* Used in feed-settings to position the feed-settings icon */
-#close-settings-icon {
-    position: absolute;
-    bottom: 25px;
-    right: 25px;
-    cursor: pointer;
+#feed-settings-close-button {
+    width: 150px
 }
 
 /* This is the title section of the channel view */
@@ -534,6 +535,10 @@ img {
     padding-top: 4px;
     color: #fff;
     cursor: pointer;
+}
+
+.main-channelbar.no-arrow {
+    padding-left: 12px;
 }
 
 

@@ -73,7 +73,7 @@ t:hideIf="feed.getExpirationType() != 'never'" i18n:translate="">Never</option>
 		videos are waiting unwatched.</span><div i18n:translate="" class="settings-small">Prevents this channel from using unlimited disk space.</div>
 
 	    <div class="gray-button-wrap settings-button">
-		    <div id="feed-settings-close-button" class="gray-button-bg" style="width: 150px;" onclick="return hideSettings()" >
+		    <div id="feed-settings-close-button" class="gray-button-bg" onclick="return hideSettings()" >
                 <div class="gray-button-left" />
                 <div class="gray-button-right" />
                 <div i18:translate="" class="gray-button-content">Done</div>
