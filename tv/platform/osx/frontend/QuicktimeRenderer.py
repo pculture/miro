@@ -1,5 +1,6 @@
 import os
 import glob
+import logging
 
 from objc import YES, NO, nil
 from QTKit import *
@@ -7,6 +8,7 @@ from AppKit import *
 from Foundation import *
 
 import app
+import qtcomp
 import platformutils
 
 ###############################################################################
@@ -21,6 +23,29 @@ class QuicktimeRenderer (app.VideoRenderer):
         self.movie = nil
         self.delegate = delegate
         self.cachedMovie = nil
+        self.registerComponents()
+
+    def registerComponents(self):
+        bundlePath = NSBundle.mainBundle().bundlePath()
+        componentsDirectoryPath = os.path.join(bundlePath, 'Contents', 'Components')
+        components = glob.glob(os.path.join(componentsDirectoryPath, '*.component'))
+        for component in components:
+            cmpName = os.path.basename(component)
+            if self.checkComponentCompatibility(cmpName):
+                ok = qtcomp.register(component)
+                if ok:
+                    logging.info('Successfully registered embedded Quicktime component: %s' % cmpName)
+                else:
+                    logging.warn('Error while registering embedded Quicktime component: %s' % cmpName)
+
+    def checkComponentCompatibility(self, name):
+        if "Perian" in name:
+            versionInfo = os.uname()
+            versionInfo = versionInfo[2].split('.')
+            majorBuildVersion = int(versionInfo[0])
+            if majorBuildVersion <= 7:
+                return False
+        return True
 
     def registerMovieObserver(self, movie):
         platformutils.warnIfNotOnMainThread('QuicktimeRenderer.registerMovieObserver')

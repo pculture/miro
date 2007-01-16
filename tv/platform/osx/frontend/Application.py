@@ -2,6 +2,7 @@ import os
 import re
 import time
 import struct
+import logging
 import urlparse
 
 from objc import YES, NO, nil, signature
@@ -22,7 +23,6 @@ import singleclick
 
 from Preferences import PreferencesWindowController
 import GrowlNotifier
-import ComponentInstaller
 
 NibClassBuilder.extractClasses("MainMenu")
 
@@ -86,26 +86,19 @@ class AppController (NibClassBuilder.AutoBaseClass):
         self.emergencyShutdown = False
         
     def applicationDidFinishLaunching_(self, notification):
-        # Run the Quicktime Components Installer
-        willRestart = ComponentInstaller.run()
-        
-        if willRestart:
-            self.internalShutdown = True
-            self.emergencyShutdown = True
-        else:
-            # The [NSURLRequest setAllowsAnyHTTPSCertificate:forHost:] selector is
-            # not documented anywhere, so I assume it is not public. It is however 
-            # a very clean and easy way to allow us to load our channel guide from
-            # https, so let's use it here anyway :)
-            components = urlparse.urlparse(config.get(prefs.CHANNEL_GUIDE_URL))
-            channelGuideHost = components[1]
-            NSURLRequest.setAllowsAnyHTTPSCertificate_forHost_(YES, channelGuideHost)
+        # The [NSURLRequest setAllowsAnyHTTPSCertificate:forHost:] selector is
+        # not documented anywhere, so I assume it is not public. It is however 
+        # a very clean and easy way to allow us to load our channel guide from
+        # https, so let's use it here anyway :)
+        components = urlparse.urlparse(config.get(prefs.CHANNEL_GUIDE_URL))
+        channelGuideHost = components[1]
+        NSURLRequest.setAllowsAnyHTTPSCertificate_forHost_(YES, channelGuideHost)
 
-            # Startup
-            app.controller.onStartup()
+        # Startup
+        app.controller.onStartup()
 
-            # Initialize the Growl notifier
-            GrowlNotifier.register()
+        # Initialize the Growl notifier
+        GrowlNotifier.register()
             
     def applicationDidBecomeActive_(self, notification):
         if app.controller.frame is not None:
@@ -147,7 +140,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
     def downloaderDaemonDidTerminate_(self, notification):
         task = notification.object()
         status = task.terminationStatus()
-        print "DTV: Downloader daemon has been terminated (status: %d)" % status
+        logging.info("Downloader daemon has been terminated (status: %d)" % status)
 
     def application_openFiles_(self, nsapp, filenames):
         if app.controller.finishedStartup:
@@ -174,7 +167,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
                     self.pausedDownloaders.append(dl)
             dlCount = len(self.pausedDownloaders)
             if dlCount > 0:
-                print "DTV: System is going to sleep, suspending %d download(s)." % dlCount
+                logging.info("System is going to sleep, suspending %d download(s)." % dlCount)
                 for dl in self.pausedDownloaders:
                     dl.pause(block=True)
         dc = eventloop.addUrgentCall(lambda:pauseRunningDownloaders(), "Suspending downloaders for sleep")
@@ -187,7 +180,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         def restartPausedDownloaders(self=self):
             dlCount = len(self.pausedDownloaders)
             if dlCount > 0:
-                print "DTV: System is awake from sleep, resuming %s download(s)." % dlCount
+                logging.info("System is awake from sleep, resuming %s download(s)." % dlCount)
                 try:
                     for dl in self.pausedDownloaders:
                         dl.start()
