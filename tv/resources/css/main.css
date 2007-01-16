@@ -732,7 +732,6 @@ body.gray-background {
 
 .main-video.more-info {
     height: auto;
-
 }
 
 /* This is the line that appears when you reorder items. When
@@ -786,15 +785,6 @@ an element is dragged, the drag-highlight class is added to it */
 .more-info .main-video-tnail {
     width: 226px;
     height: 170px;
-}
-
-.download-pending-icon {
-    position: absolute;
-    bottom: 10px;
-    right: 12px;
-    width: 15px;
-    height: 15px;
-    border: 0px;
 }
 
 .main-video-desc {
@@ -878,78 +868,65 @@ an element is dragged, the drag-highlight class is added to it */
 
 .main-video-hitbox {
     position: absolute;
-    top: 5px;
-    left: 7px;
-    width: 100px;
-    height: 75px;
+    left: 6px;
+    top: 4px;
+    width: 108px;
+    height: 81px;
 }
 
 .more-info .main-video-hitbox {
-    width: 224px;
-    height: 168px;
+    width: 226px;
+    height: 170px;
 }
 
 .main-video-hitbox a, .main-video-hitbox span {
     display: block;
-    width: 100px;
-    height: 75px;
+    width: 100%;
+    height: 100%;
 }
 
-.more-info .main-video-hitbox a, .more-info .main-video-hitbox span {
-    width: 225px;
-    height: 169px;
+.main-video-hitbox .icon {
+    background: no-repeat bottom right;
 }
 
-.main-video-hitbox .download-icon {
-    background: url(../images/main-video-download.png) no-repeat 66px 42px;
+.main-video-hitbox .download {
+    background-image: url(../images/main-video-download.png);
 }
 
-.more-info .main-video-hitbox .download-icon {
-    background: url(../images/main-video-download.png) no-repeat 191px 136px;
+.main-video-hitbox .paused-circle {
+    background-image: url(../images/main-video-paused.png);
 }
 
-.main-video-hitbox .paused-icon {
-    background: url(../images/main-video-paused.png) no-repeat 66px 42px;
-}
-
-.more-info .main-video-hitbox .paused-icon {
-    background: url(../images/main-video-paused.png) no-repeat 191px 136px;
-}
-
-.main-video-hitbox .play-icon {
-    background: url(../images/main-video-play.png) no-repeat 80px 56px;
-}
-
-.more-info .main-video-hitbox .play-icon {
-    background: url(../images/main-video-play.png) no-repeat 198px 145px;
+.main-video-hitbox .play {
+    background-image: url(../images/main-video-play.png);
 }
 
 .main-video-hitbox .inprogress-background {
-    background: url(../images/main-video-inprogress.png) no-repeat 66px 42px;
+    background-image: url(../images/main-video-inprogress.png);
 }
 
-.more-info .main-video-hitbox .inprogress-background {
-    background: url(../images/main-video-inprogress.png) no-repeat 191px 136px;
-}
-
-.main-video-hitbox img.inprogress-arrows {
+.main-video-hitbox .download-pending-icon {
     display: block;
     position: absolute;
-    top: 47px;
-    left: 71px;
+    bottom: 7px;
+    right: 7px;
+    width: 15px;
+    height: 15px;
+}
+
+.main-video-hitbox .inprogress-arrows {
+    display: block;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 19px;
+    height: 19px;
 }
 
 .item-links {
     position: absolute;
     bottom: 4px;
 }
-
-.more-info .main-video-hitbox img.inprogress-arrows {
-    top: 141px;
-    left: 196px;
-}
-
-
 
 .more-info .main-video-stats {
     height: 170px;
@@ -1276,13 +1253,12 @@ a.small-button-left:hover {
 
 .main-video-details-download-info {
     position: absolute;
-    bottom: 2px;
-    right: 77px;
-    height: 20px;
-    width: 260px;
+    top: 41px;
+    left: 141px;
+    right: 0px;
+    height: 50px;
     font-size: 10px;
     overflow: hidden;
-    text-align: right;
 }
 
 .main-video-details-download-info.expiring {
@@ -1303,9 +1279,10 @@ a.small-button-left:hover {
 }
 
 .main-video-details-download-info.failed-download {
-    width: 130px;
-    padding-top: 4px;
-    padding-left: 5px;
+    text-align: right;
+    top: 65px;
+    right: 77px;
+    left: 80px;
 }
 
 .downloading, .paused {

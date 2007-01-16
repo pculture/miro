@@ -118,7 +118,7 @@
 </div>
 
 <span t:updateForView="allWatchableItems">
-    <div t:showIf="watchableItems.len() > 0">
+    <div t:showIf="showWatchableItems">
         <t:includeTemplate filename="sort-bar" />
     </div>
 </span>
