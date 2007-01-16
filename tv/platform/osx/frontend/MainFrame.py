@@ -1,4 +1,5 @@
 import math
+import logging
 
 from objc import YES, NO, nil
 from AppKit import *
@@ -95,7 +96,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         if screen is not None:
             visibleFrame = screen.visibleFrame()
             if not NSContainsRect(visibleFrame, windowFrame):
-                print "DTV: Fitting window to screen size"
+                logging.debug("Fitting window to screen size")
                 windowFrame = visibleFrame
         self.window().setFrame_display_(windowFrame, NO)
 

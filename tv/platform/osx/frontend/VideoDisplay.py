@@ -1,4 +1,5 @@
 import time
+import logging
 
 from objc import YES, NO, nil
 from AppKit import *
@@ -50,7 +51,7 @@ class PlaybackController (app.PlaybackControllerBase):
                 ok = ws.openFile_withApplication_andDeactivate_(moviePath, nil, YES)
 
         if not ok:
-            print "DTV: movie %s could not be externally opened" % moviePath
+            logging.warn("movie %s could not be externally opened" % moviePath)
 
 ###############################################################################
 
@@ -165,10 +166,10 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
     def preventSystemSleep(self, prevent):
         if prevent and self.systemActivityUpdaterTimer is nil:
-            print "DTV: Launching system activity updater timer"
+            logging.debug("Launching system activity updater timer")
             self.systemActivityUpdaterTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(30, self, 'updateSystemActivity:', nil, YES)
         elif self.systemActivityUpdaterTimer is not nil:
-            print "DTV: Stopping system activity updater timer"
+            logging.debug("Stopping system activity updater timer")
             self.systemActivityUpdaterTimer.invalidate()
             self.systemActivityUpdaterTimer = nil
 

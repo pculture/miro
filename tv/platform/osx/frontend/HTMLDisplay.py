@@ -1,4 +1,5 @@
 import re
+import logging
 
 from objc import YES, NO, nil
 from AppKit import *
@@ -133,7 +134,7 @@ class HTMLDisplay (app.Display):
     
     @platformutils.onMainThreadWaitingUntilDone
     def cancel(self):
-        print "DTV: Canceling load of WebView %s" % self.web.getView()
+        logging.debug("DTV: Canceling load of WebView %s" % self.web.getView())
         self.web.getView().stopLoading_(nil)
         self.readyToDisplay = False
         self.readyToDisplayHook = None

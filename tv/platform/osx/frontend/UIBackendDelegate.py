@@ -2,6 +2,7 @@ import os
 import time
 import string
 import signal
+import logging
 import threading
 
 from objc import YES, NO, nil, signature
@@ -130,7 +131,7 @@ class UIBackendDelegate:
                     elif digits <= 5:
                         badge = NSImage.imageNamed_('dock_badge_%d.png' % digits)
                     else:
-                        print "DTV: Wow, that's a whole lot of new items!"
+                        logging.warn("Wow, that's a whole lot of new items!")
                     if badge is not nil:
                         appIconSize = appIcon.size()
                         badgeSize = badge.size()
@@ -175,7 +176,7 @@ class UIBackendDelegate:
         # amount of time beyond which we force quit the daemon.
         global dlTask
         if dlTask is not None and dlTask.isRunning():
-            print "DTV: Waiting for the downloader daemon to terminate..."
+            logging.info('Waiting for the downloader daemon to terminate...')
             timeout = 5.0
             sleepTime = 0.2
             loopCount = int(timeout / sleepTime)
@@ -187,7 +188,7 @@ class UIBackendDelegate:
             else:
                 # If the daemon is still alive at this point, it's likely to be
                 # in a bad state, so nuke it.
-                print "DTV: Timeout expired - Killing downloader daemon!"
+                logging.info("DTV: Timeout expired - Killing downloader daemon!")
                 dlTask.terminate()
         dlTask.waitUntilExit()
         dlTask = None
@@ -227,7 +228,7 @@ class UIBackendDelegate:
         nc = NSNotificationCenter.defaultCenter()
         nc.addObserver_selector_name_object_(controller, 'downloaderDaemonDidTerminate:', NSTaskDidTerminateNotification, dlTask)
 
-        print "DTV: Launching Download Daemon"
+        logging.info('Launching Download Daemon')
         dlTask.launch()
         
     def makeDemocracyRunAtStartup(self, run):
