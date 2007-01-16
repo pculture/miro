@@ -149,7 +149,7 @@ matchingPausedDLs.unlink()
 		<a i18n:translate="" href="#" onclick="return eventURL('action:clearTorrents');" class="clear-completed-link" title="Clear Completed Torrents">Clear Completed Torrents</a>
         </div>
 	<div t:repeatForView="externalDownloads" t:repeatTemplate='download-item' />
-	<div t:hideIf="uploads.len() == 0 and 0" t:updateHideOnView="uploads" class="main-channelbar no-arrow">
+	<div t:hideIf="uploads.len() == 0" t:updateHideOnView="uploads" class="main-channelbar no-arrow">
 		<span i18n:translate="">Seeding Torrents</span>
         </div>
 	<div t:repeatForView="uploads" t:repeatTemplate='download-item' />
