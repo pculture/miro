@@ -11,6 +11,7 @@ interface pcfIDTVVLCRenderer : nsISupports
     void selectURL(in string url);
     void play();
     void pause();
+    void pauseForDrag();
     void stop();
     void goToBeginningOfMovie();
     float getCurrentTime();

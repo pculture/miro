@@ -6,6 +6,8 @@ var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
                 getService(Components.interfaces.pcfIDTVPyBridge);
 var jsbridge = Components.classes["@participatoryculture.org/dtv/jsbridge;1"].
                 getService(Components.interfaces.pcfIDTVJSBridge);
+var vlcrenderer = Components.classes["@participatoryculture.org/dtv/vlc-renderer;1"].
+                getService(Components.interfaces.pcfIDTVVLCRenderer);
 
 function quitObserver()
 {
@@ -98,18 +100,18 @@ function videoProgressDown(event) {
   var slider = document.getElementById("progress-slider");
   slider.beingDragged = true;
   slider.left = translateToProgressX(event);
-  videoWasPlaying = vlc.isplaying();
-  if(videoWasPlaying) vlc.pause();
+  videoWasPlaying = vlc.playlist.isPlaying;
+  if(videoWasPlaying) vlcrenderer.pauseForDrag();
 }
 
 function doSeek() {
   var slider = document.getElementById("progress-slider");
   var x = slider.left;
   var fractionDone = (x - PROGRESS_SLIDER_LEFT) / PROGRESS_SLIDER_WIDTH;
-  var totalTime = vlc.get_length();
+  var totalTime = vlc.input.length;
   var seekTime = Math.round(totalTime * fractionDone);
-  vlc.seek(seekTime, 0);
-  if(videoWasPlaying) vlc.play();
+  vlc.input.time = seekTime;
+  if(videoWasPlaying) vlcrenderer.play();
   slider.beingDragged = false;
 }
 
@@ -129,7 +131,7 @@ function videoProgressMove(event) {
     var x = translateToProgressX(event);
     slider.left = x;
     var fractionDone = (x - PROGRESS_SLIDER_LEFT) / PROGRESS_SLIDER_WIDTH;
-    var totalTime = vlc.get_length();
+    var totalTime = vlc.input.length;
     var seekTime = Math.round(totalTime * fractionDone);
     jsbridge.setSliderText(seekTime);
   }
@@ -189,7 +191,7 @@ function setupSeekButton(direction, buttonId) {
     // we want to seek at 3X speed in our current direction (-1 for back, 1
     // for forward).  We also need to take into account that we've played back
     // 0.5 seconds worth of video before the timeout.
-    vlc.seek(seekAmount, true);
+    vlc.input.time = vlc.input.time + seekAmount * 1000;
     didSeek = true;
     timeoutId = setTimeout(handleTimeout, 500);
   }
@@ -245,14 +247,14 @@ function setupHandlers() {
 
 function onClose()
 {
-   vlc.stop();
+   vlc.playlist.stop();
    pybridge.quit();
    closeApp();
 }
 
 function onUnload() {
     jsdump("onUnload running.");
-    vlc.stop();
+    vlc.playlist.stop();
     // Make sure the app exits (even if there is still another window
     // open such as the Javascript console, for example)
     pybridge.quit();
@@ -351,7 +353,7 @@ function openFile() {
 }
 
 function handleExit() {
-    vlc.stop();
+    vlc.playlist.stop();
     pybridge.quit();
 }
 

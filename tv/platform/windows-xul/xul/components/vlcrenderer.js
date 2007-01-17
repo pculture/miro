@@ -30,35 +30,51 @@ VLCRenderer.prototype = {
     this.vlc = videoBrowser.contentDocument.getElementById("video1");
     this.timer = Components.classes["@mozilla.org/timer;1"].
           createInstance(Components.interfaces.nsITimer);
+    this.active = false;
+    this.startedPlaying = false;
   },
 
   updateVideoControls: function() {
-    var elapsed = this.vlc.get_time();
-    var len = this.vlc.get_length();
-    if (len < 1) len = 1;
-    if (elapsed < 0) elapsed = 0;
-    if (elapsed > len) elapsed = len;
-    var progressSlider = this.document.getElementById("progress-slider");
-    if(!progressSlider.beingDragged) {
-      jsbridge.setSliderText(elapsed);
-      jsbridge.moveSlider(elapsed/len);
-    }
-    var pos = this.vlc.get_position();
-    if(this.startedPlaying && pos < 0) {
-        // hit the end of the playlist
-        this.scheduleUpdates = false;
-        pybridge.onMovieFinished();
-    } else if(pos >=0) {
-      this.startedPlaying = true;
-    }
-    if(this.scheduleUpdates) {
-        var callback = {
-          notify: function(timer) { this.parent.updateVideoControls()}
-        };
-        callback.parent = this;
-        this.timer.initWithCallback(callback, 500,
-                  Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+    try {
+      var elapsed = 0;
+      var len = 1;
+      if (this.active) {
+  	if(this.vlc.playlist.isPlaying) {
+  	    this.startedPlaying = true;
+  	    elapsed = this.vlc.input.time;
+  	    len = this.vlc.input.length;
+  	    if (len < 1) len = 1;
+  	    if (elapsed < 0) elapsed = 0;
+  	    if (elapsed > len) elapsed = len;
+  	} else if (this.startedPlaying) {
+  	    // hit the end of the playlist
+            this.active = false;
+  	    this.scheduleUpdates = false;
+  	    pybridge.onMovieFinished();
+  	}
+  
+  	var progressSlider = this.document.getElementById("progress-slider");
+  	if(!progressSlider.beingDragged) {
+  	    jsbridge.setSliderText(elapsed);
+  	    jsbridge.moveSlider(elapsed/len);
+  	}
       }
+      if(this.scheduleUpdates) {
+  	  var callback = {
+  	    notify: function(timer) { this.parent.updateVideoControls()}
+  	  };
+  	  callback.parent = this;
+  	  this.timer.initWithCallback(callback, 500,
+  		    Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+  	}
+    } catch (e) {
+      if (this.startedPlaying) {
+	// probably hit the end of the playlist in the middle of this function
+        this.scheduleUpdates = false;
+        this.active = false;
+	pybridge.onMovieFinished();
+      }
+    }
   },
 
   showPauseButton: function() {
@@ -97,15 +113,16 @@ VLCRenderer.prototype = {
     // the playlist. This is the only way I could figure out to
     // actually clear it... -NN  
     this.stop();
-    this.vlc.clear_playlist();
-    this.vlc.add_item(url);
-    this.vlc.play();
-    this.vlc.next();
+    this.vlc.playlist.clear();
+    this.vlc.playlist.add(url);
+    this.vlc.playlist.next();
+    this.vlc.playlist.play();
   },
 
   play: function() {
-    if(!this.vlc.isplaying()) this.vlc.play();
+    if(!this.vlc.playlist.isPlaying) this.vlc.playlist.play();
     this.scheduleUpdates = true;
+    this.active = true;
     this.startedPlaying = false;
     this.updateVideoControls();
     this.showPauseButton();
@@ -113,36 +130,44 @@ VLCRenderer.prototype = {
 
   pause: function() {
     this.scheduleUpdates = false;
-    this.vlc.pause();
+    this.active = false;
+    if (this.vlc.playlist.isPlaying) this.vlc.playlist.togglePause();
     this.showPlayButton();
+  },
+
+  pauseForDrag: function() {
+    this.scheduleUpdates = false;
+    this.active = false;
+    if (this.vlc.playlist.isPlaying) this.vlc.playlist.togglePause();
   },
 
   stop: function() {
     this.scheduleUpdates = false;
-    this.vlc.stop();
+    this.active = false;
+    this.vlc.playlist.stop();
     this.showPlayButton();
   },
 
   goToBeginningOfMovie: function() {
-    this.vlc.seek(0, 0);
+    this.vlc.input.time = 0;
   },
 
   getDuration: function() {
-    rv = this.vlc.get_length();
+    rv = this.vlc.input.length;
     return rv;
   },
 
   getCurrentTime: function() {
-    rv = this.vlc.get_time();
+    rv = this.vlc.time;
     return rv;
   },
 
   setVolume: function(level) {
-    this.vlc.set_volume(level*200);
+    this.vlc.audio.volume = level*200;
   },
 
   goFullscreen: function() {
-    this.vlc.fullscreen();
+    this.vlc.video.fullscreen = true;
   },
 };
 

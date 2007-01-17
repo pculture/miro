@@ -454,6 +454,7 @@ jsBridge.prototype = {
   },
 
   setSliderText: function(elapsed) {
+    elapsed = Math.floor(elapsed / 1000);
     var hours = Math.floor(elapsed/3600);
     var mins = Math.floor((elapsed - hours*3600)/60);
     var secs = elapsed - hours*3600 - mins*60;
