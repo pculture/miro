@@ -217,13 +217,11 @@ img {
 
 }
 
-
-#downloads-free-space {
+#download-info {
     position: absolute;
     top: 20px;
     right: 220px;
     width: 150px;
-    line-height: 15px;
 }
 
 .select-box-right {
@@ -340,26 +338,16 @@ img {
     padding-top: 1px;
 }
 
-/* Used to mark the search box */
+#search-box-container {
+    position: absolute;
+    bottom: 5px;
+    left: 98px;
+}
+
 #search-box {
     color: #333;
-    width: 121px; 
-    padding: 2px;
-    margin-left: -1px;
-    margin-top: 0px;
     font-size: 12px;
-}
-
-#main-titlebar-right #search-box {
-    position: absolute;
-    top: 31px;
-    left: 50px;
-}
-
-.static-search {
-    position: absolute;
-    top: 50px;
-    left: 100px;
+    width: 121px;
 }
 
 /* Used for scraping indicator on channel page */
@@ -544,6 +532,7 @@ img {
 
 .main-channelbar.no-arrow {
     padding-left: 12px;
+    cursor: default;
 }
 
 
@@ -1249,8 +1238,8 @@ a.small-button-left:hover {
 
 .white-button-left.save-search-channel {
     position: absolute;
-    top: 63px;
-    left: 220px;
+    top: 65px;
+    left: 230px;
     margin-right: 0px;
 }
 

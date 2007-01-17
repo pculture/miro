@@ -100,10 +100,9 @@ matchingPausedDLs.unlink()
 	<div id="main-titlebar-center">
             <h1 id="main-title" i18n:translate="">Downloading</h1>
 	</div>
-	<div id="search-box" class="static-search" t:hideIf="'feed' in localvars and feed.getURL() == 'dtv:search'">
-        <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Find')***"/>
-    </div>
-
+        <div id="search-box-container">
+            <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Find')***"/>
+        </div>
 	<div id="main-upper-right">
 
 		<div id="downloads-global-actions">
@@ -112,24 +111,33 @@ matchingPausedDLs.unlink()
 		</div>
         <br class="clear" /> 
 
-        <div id="downloads-free-space">
-            <span t:updateForConfigChange="">
-        		<span t:hideIf="getFreeSpace() == getAvailableSpace()">
-        			<span id="downloads-free-disk" i18n:translate=""><span i18n:name="size" t:replace="getFreeSpace()" /> free on disk</span>
-        		</span>
-        		<br />
-        		<span id="downloads-free-space" i18n:translate=""><span i18n:name="size" t:replace="getAvailableSpace()" /> free for downloads</span>
-        	</span>
-            <span t:updateForView="views.remoteDownloads">
-            	<span id="total-up-rate"><span t:replace="getUpRate()"/></span>
-            </span>
+        <div id="download-info">
+            <ul>
+                <li>
+                    <span i18n:translate=""><span i18n:name="size" t:replace="getFreeSpace()" /> free on disk</span>
+                </li>
+                <li>
+                    <span t:updateForConfigChange="">
+                        <span t:hideIf="getFreeSpace() == getAvailableSpace()">
+                            <span i18n:translate=""><span i18n:name="size" t:replace="getAvailableSpace()" /> free for downloads</span>
+                        </span>
+                    </span>
+                </li>
+                <li>
+                    <span t:updateForView="views.remoteDownloads">
+                        <span t:replace="getUpRate()"/>
+                    </span>
+                </li>
+            </ul>
         </div>
-		
-	</div>
+        </div>
 </div>
 <!-- / TITLE BAR -->
 
 <div id="main-container">
+        <div t:hideIf="allNormalDownloads.len() == 0" t:updateHideOnView="allNormalDownloads" class="main-channelbar no-arrow">
+                <span i18n:translate="">Channel Downloads</span>
+        </div>
 
     <!-- SORT BAR ************************************************************* --> 
     <span t:updateForView="allNormalDownloads"> 
