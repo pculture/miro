@@ -123,6 +123,7 @@ class QuicktimeRenderer (app.VideoRenderer):
             self.cachedMovie = qtmovie
         return qtmovie
 
+    @platformutils.onMainThreadWithReturn
     def fileDuration(self, filename):
         (qtmovie, error) = QTMovie.movieWithFile_error_(filename)
         if qtmovie is None:
