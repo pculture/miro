@@ -179,7 +179,7 @@ img {
 }
 
 .main-titlebar-right li {
-     margin-bottom: 14px;
+     margin-bottom: 10px;
 }
 
 /* Just around auto-download */
@@ -1054,7 +1054,7 @@ an element is dragged, the drag-highlight class is added to it */
 
 .round-button-left.black {
     background-image: url(../images/black-button-left.png);
-    width: 110px;
+    width: 100px;
     padding-left: 13px;
 }
 
