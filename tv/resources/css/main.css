@@ -170,7 +170,7 @@ img {
 /* The right side of the titlebar (visit website, settings, etc). */
 .main-titlebar-right {
     position: absolute;
-    top: 8px;
+    top: 12px;
     right: 16px;
 }
 
@@ -179,7 +179,7 @@ img {
 }
 
 .main-titlebar-right li {
-     margin-bottom: 7px;
+     margin-bottom: 14px;
 }
 
 /* Just around auto-download */
@@ -1006,7 +1006,6 @@ an element is dragged, the drag-highlight class is added to it */
     top: 37px;
     right: 8px;
     height: 50px;
-    text-align: center;
 }
 
 .round-button-left {
@@ -1024,6 +1023,7 @@ an element is dragged, the drag-highlight class is added to it */
     height: 11px;
     padding: 3px 0px;
     font-size: 9px;
+    text-align: center;
 }
 
 .round-button-content a {
@@ -1051,6 +1051,26 @@ an element is dragged, the drag-highlight class is added to it */
     right: 76px;
     display: none;
 }
+
+.round-button-left.black {
+    background-image: url(../images/black-button-left.png);
+    width: 110px;
+    padding-left: 13px;
+}
+
+.round-button-right.black {
+    background-image: url(../images/black-button-right.png);
+    padding-right: 13px;
+}
+
+.round-button-content.black {
+    background-image: url(../images/black-button-mid.png);
+}
+
+.round-button-content.black a {
+    color: #fff;
+}
+
 
 .saved-note {
     margin-top: 3px;

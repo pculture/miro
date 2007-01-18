@@ -161,13 +161,31 @@ if feed.idExists():
         <div class="main-titlebar-right">
             <ul>
                 <li t:hideIf="feed.getLink() == ''">
-                    <a href="***feed.getLink()***">visit website</a>
+                    <div class="round-button-left black">
+                    <div class="round-button-right black">
+                    <div class="round-button-content black">
+                    <a href="***feed.getLink()***">VISIT WEBSITE</a>
+                    </div>
+                    </div>
+                    </div>
                 </li>
                 <li>
-                    <a href="#" onclick="return recommendChannel('@@@feed.getTitle()@@@', '@@@feed.getURL()@@@');" i18n:translate="">send to friend</a>
+                    <div class="round-button-left black">
+                    <div class="round-button-right black">
+                    <div class="round-button-content black">
+                    <a href="#" onclick="return recommendChannel('@@@feed.getTitle()@@@', '@@@feed.getURL()@@@');" i18n:translate="">SEND TO FRIEND</a>
+                    </div>
+                    </div>
+                    </div>
                 </li>
                 <li>
-                    <a href="#" onclick="return showSettings();" i18n:translate="">settings</a>
+                    <div class="round-button-left black">
+                    <div class="round-button-right black">
+                    <div class="round-button-content black">
+                    <a href="#" onclick="return showSettings();" i18n:translate="">SETTINGS</a>
+                    </div>
+                    </div>
+                    </div>
                 </li>
             </ul>
         </div>
