@@ -103,19 +103,18 @@ def toggleAllItemsMode(handle):
 
 def setSortBy(by, handle):
     sorts.setSortBy(by)
-    allItems.recomputeFilters()
-    handle.forceUpdate()
+    allItems.recomputeSort(matchingItems)
 
 _setFeed(kargs)
 
 allItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
-matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm), sortFunc=sorts.itemBy)
-newItems = matchingItems.filter(showNewFilter, sortFunc=sorts.itemBy)
+matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm), sortFunc=sorts.itemBy, resort=True)
+newItems = matchingItems.filter(showNewFilter, sortFunc=sorts.itemBy, resort=True)
 
-allDownloadingItems = matchingItems.filter(filters.downloadingOrPausedItems,sortFunc=sorts.itemBy)
-downloadingItems = allDownloadingItems.filter(showDownloadsFilter,sortFunc=sorts.itemBy)
-allWatchableItems = matchingItems.filter(filters.watchableItems,sortFunc=sorts.itemsUnwatchedFirst)
-watchableItems = allWatchableItems.filter(showWatchableFilter,sortFunc=sorts.itemsUnwatchedFirst)
+allDownloadingItems = matchingItems.filter(filters.downloadingOrPausedItems,sortFunc=sorts.itemBy, resort=True)
+downloadingItems = allDownloadingItems.filter(showDownloadsFilter,sortFunc=sorts.itemBy, resort=True)
+allWatchableItems = matchingItems.filter(filters.watchableItems,sortFunc=sorts.itemsUnwatchedFirst, resort=True)
+watchableItems = allWatchableItems.filter(showWatchableFilter,sortFunc=sorts.itemsUnwatchedFirst, resort=True)
 
 thisFeedView = views.feeds.filter(lambda x: x is feed)
 
