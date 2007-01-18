@@ -95,12 +95,10 @@ img {
     left: 43px;
 }
 
-
 /* The block of drop downs and fields */
 #actual-settings {
     padding: 0 0 0 25px;
 }
-
 
 /* Used in feed-settings to position the feed-settings icon */
 #feed-settings-close-button {
@@ -117,6 +115,7 @@ img {
     position: fixed;
     top: 0px;
     z-index: 6; 
+    color: #fff;
     /* This should be above feed-settings, so that feed-settings doesn't cover
      * it up durring the opening animation.  It also needs to be above
      * sort-bar, so the auto-download select menu is above sort-bar.
@@ -140,64 +139,88 @@ img {
     margin: 8px 0 0 8px;    
 }
 
-/* This wraps the center area of the title bar */
-#main-titlebar-center {
-    margin: 5px 0px 0px 98px;
-    padding-right: 5px;
-    text-align: left;
-    color: #FFFFFF;
+/* This wraps just the name of the view */
+#main-title {
+    position: absolute;
+    left: 98px;
+    right: 120px;
+    top: 6px;
+    height: 32px;
+    margin: 0px;
+    padding: 0px;
     overflow: hidden;
+    font-size: 26px;
+    font-weight: normal;
+    letter-spacing: -0.5px;
 }
 
-/* The right side of the title bar (visit website, settings, etc). */
+/* Search box */
+#search-box-container {
+    position: absolute;
+    bottom: 5px;
+    left: 98px;
+}
+
+#search-box {
+    color: #333;
+    font-size: 12px;
+    width: 121px;
+}
+
+/* The right side of the titlebar (visit website, settings, etc). */
 .main-titlebar-right {
-    float: right;
-    margin: 8px 16px;
+    position: absolute;
+    top: 8px;
+    right: 16px;
 }
 
 .main-titlebar-right a {
-    color: white;
+    color: #fff;
 }
 
 .main-titlebar-right li {
      margin-bottom: 7px;
 }
 
-/* This wraps the right side middle links area of the title bar */
-#main-titlebar-middle {
+/* Just around auto-download */
+#main-titlebar-auto {
     position: absolute;
-    width: 140px;
-    top: 8px;
-    right: 190px;
-}
-
-/* This wraps just the name of the view */
-#main-title {
-    padding: 0px 0 1px 0;
-    margin: 0px;
-    font-size: 26px;
-    height: 32px;
-    overflow: hidden;
-    font-weight: normal;
-    letter-spacing: -0.5px;
-}
-
-#main-subtitle input, #main-subtitle select {
-    font-size: 11px;
-}
-
-/* Appears in the top right of the title section. */
-#main-upper-right {
-    position: absolute;
-    top: 4px;
+    top: 5px;
     right: 5px;
-    margin: 0px 0px 0px 0px;
+    display: block;
+    height: 20px;
     color: #FFFFFF;
-    font-size: 10px;
+    padding: 0px;
+    margin: 0px 0 2px 0px;
+    text-transform: uppercase;
+    font-size: 11px;
+    z-index: 2;
 }
 
+#auto-checkbox-container {
+    position: absolute;
+    top: 40px
+    left: 40px;
+}
+
+#auto-checkbox-container input {
+    vertical-align: top;
+    padding: 0px;
+    margin: 0px;
+}
+
+#auto-label {
+    float: left;
+    padding-right: 6px;
+    padding-top: 1px;
+}
+
+/* Download page titlebar components */
 #downloads-global-actions {
-    margin-top: 20px;
+    font-size: 10px;
+    position: absolute;
+    top: 24px;
+    right: 5px;
     text-align: center;
 }
 
@@ -211,7 +234,7 @@ img {
 
 
 #downloads-global-actions a {
-    color: white;
+    color: #fff;
     text-decoration: none;
     font-size: 10px;
 
@@ -219,10 +242,25 @@ img {
 
 #download-info {
     position: absolute;
-    top: 20px;
-    right: 220px;
+    top: 24px;
+    right: 225px;
     width: 150px;
 }
+
+/* Search page components */
+#engine-search {
+    position: absolute;
+    left: 98px;
+    top: 40px;
+    text-align: left;
+    overflow: hidden;
+}
+
+#engine-search input, #engine-search select {
+    font-size: 11px;
+}
+
+/* CSS for our popup select boxes */
 
 .select-box-right {
     background: right top no-repeat url(../images/auto-select-box-right.png);
@@ -282,73 +320,6 @@ img {
     color: #000;
 }
 
-/* just around settings */
-#main-titlebar-settings {
-    display: block;
-    height: 20px;
-    margin: 0px 0px 5px 0px;
-    color: #FFFFFF;
-    text-decoration: underline;
-    text-transform: uppercase;
-    font-size: 11px;
-}
-
-/* Just around recommend */
-#main-titlebar-recommend {
-    display: block;
-    height: 20px;
-    color: #FFFFFF;
-    text-transform: uppercase;
-    font-size: 11px;
-}
-#main-titlebar-recommend:hover {
-    text-decoration: underline;
-}
-
-/* Just around auto-download */
-#main-titlebar-auto {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    display: block;
-    height: 20px;
-    color: #FFFFFF;
-    padding: 0px;
-    margin: 0px 0 2px 0px;
-    text-transform: uppercase;
-    font-size: 11px;
-    z-index: 2;
-}
-
-#auto-checkbox-container {
-    position: absolute;
-    top: 40px
-    left: 40px;
-}
-
-#auto-checkbox-container input {
-    vertical-align: top;
-    padding: 0px;
-    margin: 0px;
-}
-
-#auto-label {
-    float: left;
-    padding-right: 6px;
-    padding-top: 1px;
-}
-
-#search-box-container {
-    position: absolute;
-    bottom: 5px;
-    left: 98px;
-}
-
-#search-box {
-    color: #333;
-    font-size: 12px;
-    width: 121px;
-}
 
 /* Used for scraping indicator on channel page */
 .main-container-scraping {

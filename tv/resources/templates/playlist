@@ -33,11 +33,9 @@ thisPlaylistView.unlink()
 </head>
 <body onkeydown="sendKeyToSearchBox(event);">
 <div id="main-titlebar">
-        <img id="main-icon" src="resource:images/playlist-icon.png" alt="" />
-	<div id="main-titlebar-center">
-	    <div t:updateForView="thisPlaylistView">
-                <h1 id="main-title" t:replaceMarkup="playlist.getTitle()" />
-	    </div>
+    <img id="main-icon" src="resource:images/playlist-icon.png" alt="" />
+    <div t:updateForView="thisPlaylistView">
+        <h1 id="main-title" t:replaceMarkup="playlist.getTitle()" />
     </div>
 </div>
 
