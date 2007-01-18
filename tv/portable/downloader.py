@@ -400,7 +400,10 @@ URL was %s""" % self.url
         self.status['eta'] = 0
 
     def getUploadRatio(self):
-        return self.status.get('uploaded', 0) * 1024 * 1024 / self.getCurrentSize()
+        size = self.getCurrentSize()
+        if size == 0:
+            return 0
+        return self.status.get('uploaded', 0) * 1024 * 1024 / size
     
     def restartIfNeeded(self):
         if self.getState() in ('downloading','offline'):
