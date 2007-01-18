@@ -1198,10 +1198,18 @@ class SortingFilterTestCase(DemocracyTestCase):
         self.everything = database.defaultDatabase
         self.sortCalls = 0
         self.objs = []
+        self.reversed = False
 
     def sortFunc(self, x, y):
         self.sortCalls += 1
         return x[1].value < y[1].value
+
+    def sortFuncReversable(self, x, y):
+        self.sortCalls += 1
+        retval = x[1].value < y[1].value
+        if self.reversed:
+            retval = not retval
+        return retval
 
     def testSort(self):
         sortView = self.everything.sort(self.sortFunc)
@@ -1290,6 +1298,21 @@ class SortingFilterTestCase(DemocracyTestCase):
 
         # Make sure the ratios are within 1% of each other
         self.assert_(abs(ratio1-ratio2)/ratio1 < 0.01)
+
+    def testResortFilter(self):
+        filtView = self.everything.filter(lambda *args: True, resort=True, sortFunc=self.sortFuncReversable)
+        self.reversed = False
+        for i in range (20):
+            a = SortableObject(i)
+            self.objs.append(a)
+        for i in range (20):
+            self.assertEqual(filtView[i].value, i)
+        self.reversed = True
+        for i in range (20):
+            self.assertEqual(filtView[i].value, i)
+        self.everything.recomputeSort(filtView)
+        for i in range (20):
+            self.assertEqual(filtView[i].value, 19 - i)
 
     def testExplicitResort(self):
         def indexFunc(x):

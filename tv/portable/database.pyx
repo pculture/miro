@@ -1065,6 +1065,10 @@ class DynamicDatabase:
         for [view, f] in self.subSorts:
             if all or view is sort:
                 self._recomputeSingleSort(view,f)
+        if sort is not None and all == False:
+            for [view, f] in self.subFilters:
+                if view is sort:
+                    self._recomputeSingleSort(view,view.sortFunc)
         #self.checkObjLocs()
 
     ##
