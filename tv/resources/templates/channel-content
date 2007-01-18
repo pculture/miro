@@ -117,13 +117,12 @@
     </a>
 </div>
 
-<span t:updateForView="allWatchableItems">
-    <div t:showIf="showWatchableItems">
+<div t:updateForView="watchableItems">
+    <div t:showIf="len(watchableItems) > 0">
         <t:includeTemplate filename="sort-bar" />
     </div>
-</span>
-
-   <div t:repeatForView="watchableItems" t:repeatTemplate="download-item" />
+</div>
+<div t:repeatForView="watchableItems" t:repeatTemplate="download-item" />
 
 <!-- / WATCHABLE -->
 </body>
