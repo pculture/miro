@@ -45,11 +45,11 @@
   <div t:showIf="searchTerm is None">
     <div t:hideIf="isFolder" i18n:translate="">
           <span i18n:name="len" t:replace="allItems.len()" /> 
-          Available on this Channel
+          Items on this Channel
     </div>
     <div t:showIf="isFolder" i18n:translate="">
           <span i18n:name="len" t:replace="allItems.len()" /> 
-          Available on this Channel
+          Items on this Channel
     </div>
   </div>
   <div t:showIf="searchTerm is not None">
