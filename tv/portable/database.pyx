@@ -314,6 +314,7 @@ class DynamicDatabase:
         self.addCallbacks = set()
         self.removeCallbacks = set()
         self.viewChangeCallbacks = set()
+        self.resortCallbacks = set()
         self.viewUnlinkCallbacks = set()
         self.subFilters = []
         self.subSorts = []
@@ -621,12 +622,30 @@ class DynamicDatabase:
         self.addCallbacks.add(function)
 
     ##
+    # registers a function to call when an item is removed from the view
+    #
+    # @param function a function that takes in one parameter: the
+    # object to be deleted
+    def addRemoveCallback(self, function):
+        self.confirmDBThread()
+        self.removeCallbacks.add(function)
+
+    ##
     # registers a function to call when the view is updated, even if no items change.
     #
     # @param function a function that takes in no parameters
     def addViewChangeCallback(self, function):
         self.confirmDBThread()
         self.viewChangeCallbacks.add(function)
+
+    ##
+    # registers a function to call when the view is resorted
+    #
+    # @param function a function that takes in one parameter: the
+    # index of the new object
+    def addResortCallback(self, function):
+        self.confirmDBThread()
+        self.resortCallbacks.add(function)
 
     ##
     # registers a function to call when the view is about to be unlinked
@@ -636,14 +655,6 @@ class DynamicDatabase:
         self.confirmDBThread()
         self.viewUnlinkCallbacks.add(function)
 
-    ##
-    # registers a function to call when an item is removed from the view
-    #
-    # @param function a function that takes in one parameter: the
-    # object to be deleted
-    def addRemoveCallback(self, function):
-        self.confirmDBThread()
-        self.removeCallbacks.add(function)
 
     def removeChangeCallback(self, function):
         self.confirmDBThread()
@@ -660,6 +671,10 @@ class DynamicDatabase:
     def removeViewChangeCallback(self, function):
         self.confirmDBThread()
         self.viewChangeCallbacks.remove(function)
+
+    def removeResortCallback(self, function):
+        self.confirmDBThread()
+        self.resortCallbacks.remove(function)
 
     def removeViewUnlinkCallback(self, function):
         self.confirmDBThread()
@@ -1021,10 +1036,16 @@ class DynamicDatabase:
                 newStack.append(view.objects.lastIter().copy())
             else:
                 newStack.append(newLocs[view.objects[it][0].id])
+        changed = view.objects != temp
+
         view.objects = temp
         view.cursor = newCursor
         view.objectLocs = newLocs
         view.cursorStack = newStack
+
+        if changed:
+            for callback in view.resortCallbacks:
+                callback()
 
         # Only recompute sorts that asked to be resorted
         for [subView, f] in view.subSorts:
