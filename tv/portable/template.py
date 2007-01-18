@@ -107,8 +107,7 @@ class TrackedView:
         self.anchorId = anchorId
         self.anchorType = anchorType
 
-        self.origView = view
-        self.view = view.map(IDAssignmentInView(id(self)).mapper)
+        self.view = view
         self.templateFunc = templateFunc
         self.parent = parent
         self.htmlChanger = parent.htmlChanger
@@ -121,11 +120,19 @@ class TrackedView:
         self.currentAttrs = {}
         self.currentInnerHTMLs = {}
 
+    def tid(self, obj):
+        return "objid-%s-%d" % (id(self), id(obj))
+
     #
     # This is called after the HTML has been rendered to fill in the
     # data for each view and register callbacks to keep it updated
     def initialFillIn(self):
         self.view.confirmDBThread()
+        self.toChange = {}
+        self.toRemove = []
+        self.toAdd = []
+        self.addBefore = None
+
         #print "Filling in %d items" % self.view.len()
         #start = time.clock()
         xmls = []
@@ -134,24 +141,26 @@ class TrackedView:
         # Web Kit treats adding the empty string like adding "&nbsp;",
         # so we don't add the HTML unless it's non-empty
         if len(xmls) > 0:
-            self.addHTMLAtEnd(''.join(xmls))
+            self.doAdd(''.join(xmls))
         self.view.addChangeCallback(self.onChange)
         self.view.addAddCallback(self.onAdd)
+        self.view.addResortCallback(self.onResort)
         self.view.addRemoveCallback(self.onRemove)
         #print "done (%f)" % (time.clock()-start)
 
     def onUnlink(self):
         self.view.removeChangeCallback(self.onChange)
         self.view.removeAddCallback(self.onAdd)
+        self.view.removeResortCallback(self.onResort)
         self.view.removeRemoveCallback(self.onRemove)
 
     def initialXML(self, item):
         xml = self.currentXML(item)
-        self.htmlChanger.setInitialHTML(item.tid, xml)
+        self.htmlChanger.setInitialHTML(self.tid(item), xml)
         return xml
 
     def currentXML(self, item):
-        xml = self.templateFunc(item.object, self.name, self.origView, item.tid).read()
+        xml = self.templateFunc(item, self.name, self.view, self.tid(item)).read()
         return xml
 
     def callback (self):
@@ -165,11 +174,11 @@ class TrackedView:
             for id in self.toChange:
                 obj = self.toChange[id]
                 xml = self.currentXML(obj)
-                changes.extend(self.htmlChanger.calcChanges(obj.tid, xml))
+                changes.extend(self.htmlChanger.calcChanges(self.tid(obj), xml))
             if len(changes) > 0:
                 self.parent.domHandler.changeItems(changes)
 
-            tids = [obj.tid for obj in self.toRemove]
+            tids = [self.tid(obj) for obj in self.toRemove]
             if len(tids) > 0:
                 self.parent.domHandler.removeItems(tids)
             
@@ -184,6 +193,26 @@ class TrackedView:
             queueDOMChange(self.callback, "TrackedView DOM Change (%s)" % self.name)
             self.idle_queued = True
 
+    def onResort (self):
+            
+        self.toChange = {}
+        self.toRemove = []
+        self.toAdd = []
+        self.addBefore = None
+
+        tids = [self.tid(obj) for obj in self.view]
+        if len(tids) > 0:
+            self.parent.domHandler.removeItems(tids)
+
+        xmls = []
+        for x in self.view:
+            xmls.append(self.initialXML(x))
+        # Web Kit treats adding the empty string like adding "&nbsp;",
+        # so we don't add the HTML unless it's non-empty
+        if len(xmls) > 0:
+            self.doAdd(''.join(xmls))
+            
+
     def onChange(self,obj,id):
         if obj in self.toAdd:
             return
@@ -196,11 +225,11 @@ class TrackedView:
         if self.parent.domHandler:
             next = self.view.getNextID(id) 
             if next is not None:
-                nextTid = self.view.getObjectByID(next).tid 
+                nextTid = self.tid (self.view.getObjectByID(next))
             else:
                 nextTid = None
             for i in range(len(self.toAdd)):
-                if self.toAdd[i].tid == nextTid:
+                if self.tid(self.toAdd[i]) == nextTid:
                     self.toAdd.insert(i, obj)
                     self.addCallback()
                     return
@@ -235,12 +264,6 @@ class TrackedView:
             del self.toChange[id]
         self.toRemove.append(obj)
         self.addCallback()
-
-    # Add the HTML for the item at newIndex in the view to the
-    # display. It should only be called by initialFillIn()
-    def addHTMLAtEnd(self, xml):
-        if self.parent.domHandler:
-            self.parent.domHandler.addItemBefore(xml, self.anchorId)
 
 # UpdateRegion and ConfigUpdateRegion are used internally by Handle to track
 # the t:updateForView and t:updateForConfigChange clauses.
@@ -304,12 +327,14 @@ class UpdateRegion(UpdateRegionBase):
         self.view.addChangeCallback(self.onChange)
         self.view.addAddCallback(self.onChange)
         self.view.addRemoveCallback(self.onChange)
+        self.view.addResortCallback(self.onChange)
         self.view.addViewChangeCallback(self.onChange)
 
     def onUnlink(self):
         self.view.removeChangeCallback(self.onChange)
         self.view.removeAddCallback(self.onChange)
         self.view.removeRemoveCallback(self.onChange)
+        self.view.removeResortCallback(self.onChange)
         self.view.removeViewChangeCallback(self.onChange)
 
 class ConfigUpdateRegion(UpdateRegionBase):
@@ -449,6 +474,7 @@ class Handle:
         view.addChangeCallback(checkFunc)
         view.addAddCallback(checkFunc)
         view.addRemoveCallback(checkFunc)
+        view.addResortCallback(checkFunc)
         view.addViewChangeCallback(checkFunc)
         checkFunc()
 
@@ -457,6 +483,7 @@ class Handle:
         view.removeChangeCallback(checkFunc)
         view.removeAddCallback(checkFunc)
         view.removeRemoveCallback(checkFunc)
+        view.removeResortCallback(checkFunc)
         view.removeViewChangeCallback(checkFunc)
 
     def addSubHandle(self, handle):
@@ -474,21 +501,6 @@ def identityFunc(x):
 
 def nullSort(x,y):
     return 0
-
-# View mapping function used to assign ID attributes to records so
-# that we can find them in the page after we generate them if we need
-# to update them.
-class IDAssignment:
-    def __init__(self, x, parentViewName):
-        self.object = x
-        self.tid = "objid-%s-%d" % (parentViewName, id(self.object))
-        
-class IDAssignmentInView:
-    def __init__(self, name=""):
-        self.viewName = name
-    def mapper(self, obj):
-        return IDAssignment(obj, self.viewName)
-
 
 # Returns a quoted, filled version of attribute text
 def quoteAndFillAttr(value, localVars):
