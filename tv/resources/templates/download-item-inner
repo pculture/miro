@@ -90,11 +90,11 @@ viewName = kargs['viewName']
                 </div>
                 <div class="details-link">
                     <div t:hideIf="this.showMoreInfo">
-                        <a href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');" i18n:translate="">Details <img src="resource:images/more-info-button.png" /></a>
+                        <a href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');"><span i18n:translate="">Details</span> <img src="resource:images/more-info-button.png" alt="" /></a>
                     </div>
 
                     <div t:showIf="this.showMoreInfo">
-                        <a href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');" i18n:translate="">Close <img src="resource:images/more-info-button-close.png" /></a>
+                        <a href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');"><span i18n:translate="">Close</span> <img src="resource:images/more-info-button-close.png" alt="" /></a>
                     </div>
                 </div>
             </div>
