@@ -63,6 +63,7 @@ def setSortBy(by):
             sortDirection = 'ascending'
     else:
         sortBy = by
+        sortDirection = 'ascending'
 
 def itemBy(x, y):
     global sortBy, sortDirection
