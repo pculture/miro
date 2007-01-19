@@ -56,6 +56,12 @@ def launchDemocracy():
 
 # =============================================================================
 
+class DownloaderEventLoopDelegate (object):
+    def beginLoop(self, loop):
+        loop.pool = Foundation.NSAutoreleasePool.alloc().init()
+    def endLoop(self, loop):
+        del loop.pool
+
 def getModulePath(name):
     import imp
     mfile, mpath, mdesc = imp.find_module(name)
@@ -73,6 +79,10 @@ def launchDownloaderDaemon():
     daemonPath = getModulePath('dl_daemon')
     daemonPrivatePath = os.path.join(daemonPath, 'private')
     sys.path[0:0] = [daemonPath, daemonPrivatePath]
+    
+    # Make sure we don't leak from the downloader eventloop
+    import eventloop
+    eventloop.setDelegate(DownloaderEventLoopDelegate())
     
     # And launch
     import Democracy_Downloader
