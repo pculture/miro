@@ -398,6 +398,7 @@ class Item(DDBObject):
         self.isContainerItem = None
         self.seen = self.keep = self.pendingManualDL = False
         self.watchedTime = None
+        self.duration = None
         if self.getFeedURL() != "dtv:manualFeed":
             self.signalChange()
         else:
