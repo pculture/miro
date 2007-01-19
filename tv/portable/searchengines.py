@@ -50,7 +50,7 @@ def createEngines():
                   2)
     SearchEngine ("blogdigger", u"Blogdigger",
                   "http://blogdigger.com/media/rss.jsp"
-                  "&q=%s"
+                  "?q=%s"
                   "&media=video"
                   "&media=torrent"
                   "&sortby=date",
