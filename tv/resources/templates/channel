@@ -190,7 +190,7 @@ if feed.idExists():
         </div>
 
         <div t:updateForView="thisFeedView">
-            <h1 id="main-title" t:replaceMarkup="feed.getTitle()" />
+            <h1 id="main-title" t:replace="feed.getTitle()" />
         </div>
 
         <div id="search-box-container" t:hideIf="'feed' in localvars and feed.getURL() == 'dtv:search'">

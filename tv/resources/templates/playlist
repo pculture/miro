@@ -35,7 +35,7 @@ thisPlaylistView.unlink()
 <div id="main-titlebar">
     <img id="main-icon" src="resource:images/playlist-icon.png" alt="" />
     <div t:updateForView="thisPlaylistView">
-        <h1 id="main-title" t:replaceMarkup="playlist.getTitle()" />
+        <h1 id="main-title" t:replace="playlist.getTitle()" />
     </div>
 </div>
 
