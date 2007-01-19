@@ -1046,6 +1046,7 @@ an element is dragged, the drag-highlight class is added to it */
     width: 54px;
 }
 
+/* See also download.css */
 .round-button-left.stop-seeding {
     position: absolute;
     top: 67px;
