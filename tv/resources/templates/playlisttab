@@ -23,7 +23,7 @@
 	dragsourcetype="***this.getDragSourceType()***"
 	dragsourcedata="tablist-***this.objID()***"
 	dragicon="playlist-tnail-***this.objID()***">
-<img id="playlist-tnail-***this.objID()***" class="icon" src="resource:images/playlist-icon-tablist.png" /><div class="name" t:replaceMarkup="this.obj.getTitle()" />
+<img id="playlist-tnail-***this.objID()***" class="icon" src="resource:images/playlist-icon-tablist.png" /><div class="name" t:replace="this.obj.getTitle()" />
 </a>
 </div>
 </div>
