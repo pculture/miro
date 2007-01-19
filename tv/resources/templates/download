@@ -31,8 +31,18 @@ def getAvailableSpace():
     return util.formatSizeForUser(bytes, "0B", False)
 
 def getUpRate():
-    if downloader.totalUpRate > 1:
-        return _(" - %0.1f KB/s total upload") % (downloader.totalUpRate / 1024.0,)
+    return _("%0.1f KB/s total upload") % (downloader.totalUpRate / 1024.0,)
+
+def getDownRate():
+    return _("%0.1f KB/s total download") % (downloader.totalDownRate / 1024.0,)
+
+def getRates():
+    if downloader.totalUpRate > 1 and downloader.totalDownRate > 1:
+        return "%s - %s" % (getDownRate(), getUpRate())
+    elif downloader.totalUpRate > 1:
+        return getUpRate()
+    elif downloader.totalDownRate > 1:
+        return getDownRate()
     else:
         return ""
 
@@ -120,7 +130,7 @@ matchingPausedDLs.unlink()
                 </li>
                 <li>
                     <span t:updateForView="views.remoteDownloads">
-                        <span t:replace="getUpRate()"/>
+                        <span t:replace="getRates()"/>
                     </span>
                 </li>
             </ul>

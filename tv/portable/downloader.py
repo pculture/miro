@@ -59,6 +59,7 @@ class HTTPAuthPassword(DDBObject):
         return self.authScheme
 
 totalUpRate = 0
+totalDownRate = 0
 
 def _getDownloader (dlid):
     return views.remoteDownloads.getItemWithIndex(indexes.downloadsByDLID, dlid)
@@ -134,6 +135,14 @@ class RemoteDownloader(DDBObject):
     def initializeDaemon(cls):
         RemoteDownloader.dldaemon = daemon.ControllerDaemon()
 
+    def _getRates(self):
+        state = self.getState()
+        if state == 'downloading':
+            return (self.status.get('rate', 0), self.status.get('upRate', 0))
+        if state == 'uploading':
+            return (0, self.status.get('upRate', 0))
+        return (0, 0)
+
     @classmethod
     def updateStatus(cls, data):
         self = _getDownloader (dlid=data['dlid'])
@@ -147,22 +156,24 @@ class RemoteDownloader(DDBObject):
                 # data
                 print "WARNING exception when comparing status: %s" % e
 
-            if self.getState() in ('uploading', 'downloading'):
-                oldUpRate = self.status.get("upRate", 0)
-            else:
-                oldUpRate = 0
             wasFinished = self.isFinished()
+            global totalDownRate
+            global totalUpRate
+            rates = self._getRates()
+            totalDownRate -= rates[0]
+            totalUpRate -= rates[1]
+
             self.status = data
+
             # Store the time the download finished
             finished = self.isFinished() and not wasFinished
-            global totalUpRate
-            if self.getState() in ('uploading', 'downloading'):
-                newUpRate = self.status.get("upRate", 0)
-            else:
-                newUpRate = 0
-            totalUpRate = totalUpRate + newUpRate - oldUpRate
+            rates = self._getRates()
+            totalDownRate += rates[0]
+            totalUpRate += rates[1]
+
             if self.getState() == 'uploading' and not self.manualUpload and self.getUploadRatio() > 1.5:
                 self.stopUpload()
+
             self.signalChange(needsSignalItem=not finished)
             if finished:
                 for item in self.itemList:
