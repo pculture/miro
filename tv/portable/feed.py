@@ -1715,9 +1715,41 @@ class DirectoryFeedImpl(FeedImpl):
                 existingFiles = [os.path.normcase(os.path.join(dir, f)) 
                         for f in os.listdir(dir)]
                 for file in existingFiles:
-                    if (os.path.exists(file) and os.path.basename(file)[0] != '.' and 
-                            not file in knownFiles and not file in myFiles):
-                        FileItem(file, feed_id = self.ufeed.id)
+                    if (os.path.exists(file) and os.path.basename(file)[0] != '.'):
+                        if not file in knownFiles and not file in myFiles:
+                            if not os.path.isdir(file):
+                                FileItem(file, feed_id=self.ufeed.id)
+                            else:
+                                found = 0
+                                not_found = []
+                                contents = [os.path.normcase(os.path.join(file, f)) 
+                                            for f in os.listdir(file)]
+                                for subfile in contents:
+                                    if subfile in knownFiles or subfile in myFiles:
+                                        found = found + 1
+                                    else:
+                                        not_found.append(subfile)
+                                # If every subfile or subdirectory is
+                                # already in the database (including
+                                # the case where the directory is
+                                # empty) do nothing.
+                                if len(not_found) > 0:
+                                    # If there were any files found,
+                                    # this is probably a channel
+                                    # directory that someone added
+                                    # some thing to.  There are few
+                                    # other cases where a directory
+                                    # would have some things shown.
+                                    if found != 0:
+                                        for subfile in not_found:
+                                            FileItem (subfile, feed_id=self.ufeed.id)
+                                            
+                                    # But if not, it's probably a
+                                    # directory added wholesale.
+                                    
+                                    else:
+                                        FileItem (file, feed_id=self.ufeed.id)
+                                
 
         for item in self.items:
             if not os.path.exists(item.getFilename()):

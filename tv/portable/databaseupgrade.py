@@ -492,6 +492,37 @@ def upgrade36(objectList):
             changed.add(o)
     return changed
 
+def upgrade37(objectList):
+    changed = set()
+    removed = set()
+    id = 0
+    for o in objectList:
+        if o.classString == 'feed':
+            feedImpl = o.savedData['actualFeed']
+            if feedImpl.classString == 'directory-feed-impl':
+                id = o.savedData['id']
+                break
+
+    print id
+
+    if id == 0:
+        return changed
+
+    for i in xrange (len(objectList) - 1, -1, -1):
+        o = objectList [i]
+        if o.classString == 'file-item' and o.savedData['feed_id'] == id:
+            removed.add (o.savedData['id'])
+            changed.add(o)
+            del objectList[i]
+
+    for i in xrange (len(objectList) - 1, -1, -1):
+        o = objectList [i]
+        if o.classString == 'file-item':
+            if o.savedData['parent_id'] in removed:
+                changed.add(o)
+                del objectList[i]
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()
