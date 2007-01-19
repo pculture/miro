@@ -6,8 +6,8 @@
 
     function showSettings()
     {
-	if(settingsMode == 'open') return hideSettings();
-	if(settingsMode == 'animating') return;
+        if(settingsMode == 'open') return hideSettings();
+        if(settingsMode == 'animating') return;
         var feedSettings = document.getElementById("feed-settings");
         var closeButton = document.getElementById("feed-settings-close-button");
         feedSettings.style.display = "block";
@@ -26,12 +26,12 @@
                 feedSettingsTimeout = setTimeout(iteration, 50);
            } else {
                 feedSettingsTimeout = null;
-		closeButton.style.display = "block";
-		settingsMode = 'open';
+                closeButton.style.display = "block";
+                settingsMode = 'open';
            }
         }
         feedSettingsTimeout = setTimeout(iteration, 50);
-	settingsMode = 'animating';
+        settingsMode = 'animating';
         return false;
     }
 
@@ -39,34 +39,12 @@
     {
         if(feedSettingsTimeout) {
             clearTimeout(feedSettingsTimeout);
-	    feedSettingsTimeout = null;
+            feedSettingsTimeout = null;
         }
         var feedSettings = document.getElementById("feed-settings");
-	feedSettings.style.display = "none";
-	settingsMode = 'closed';
-	return false;
-    }
-
-    function setAutoDownloadableFeed()
-    {
-        var url = 'action:setAutoDownloadableFeed';
-        url += '?feed=' + document.forms['setAuto']['feed'].value;
-        if (document.forms['setAuto'].automatic.checked)
-            url += '&automatic=1';
-        else
-            url += '&automatic=0';
-        eventURL(url);
-    }
-
-    function setAutoDownloadGets()
-    {
-        var url = "action:setGetEverything";
-        var idx = document.forms['settings']['autoDownloadGets'].selectedIndex;
-        
-        url += '?feed=' + document.forms['setAuto']['feed'].value;
-        url += "&everything=" + document.forms['settings']['autoDownloadGets'].options[idx].value;
-
-        eventURL(url);
+        feedSettings.style.display = "none";
+        settingsMode = 'closed';
+        return false;
     }
 
     function setExpiration()
@@ -75,7 +53,7 @@
         var idx = document.forms['settings']['expireAfter'].selectedIndex;
         var value = document.forms['settings']['expireAfter'].options[idx].value;
 
-        url += '?feed=' + document.forms['setAuto']['feed'].value;
+        url += '?feed=' + document.forms['settings']['feed'].value;
         if (value == 'system' || value == 'never')
         {
             url += "&type=" + value + "&time=0";
@@ -92,7 +70,7 @@
     {
         var url = "action:setMaxNew";
 
-        url += '?feed=' + document.forms['setAuto']['feed'].value;
+        url += '?feed=' + document.forms['settings']['feed'].value;
         if (document.forms['settings']['maxOutDownloads'].checked)
         {
             var maxNew = document.forms['settings']['maxNew'];
