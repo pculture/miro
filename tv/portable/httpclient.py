@@ -1051,6 +1051,8 @@ class HTTPConnectionPool(object):
     and port.
     """
 
+    HTTP_CONN = HTTPConnection
+    HTTPS_CONN = HTTPSConnection
     MAX_CONNECTIONS_PER_SERVER = 2 
     CONNECTION_TIMEOUT = 300
     MAX_CONNECTIONS = 30
@@ -1194,15 +1196,19 @@ class HTTPConnectionPool(object):
             req['errback'](error)
 
         if req['scheme'] == 'http':
-            conn = HTTPConnection(self._onConnectionClosed,
+            conn = self.HTTP_CONN(self._onConnectionClosed,
                     self._onConnectionReady) 
         elif req['scheme'] == 'https':
-            conn = HTTPSConnection(self._onConnectionClosed,
+            conn = self.HTTPS_CONN(self._onConnectionClosed,
                     self._onConnectionReady) 
         else:
             raise AssertionError ("Code shouldn't reach here.")
-        conn.openConnection(req['host'], req['port'],
-                openConnectionCallback, openConnectionErrback)
+
+        # This needs to be in an idle so that the connection is added
+        # to the "active" list before the open callback happens --NN
+        eventloop.addIdle(lambda : conn.openConnection(req['host'],req['port'],
+                         openConnectionCallback, openConnectionErrback),
+                          "Open connection %s" % str(self))
         return conn
 
     def _dropAFreeConnection(self):
@@ -1675,7 +1681,7 @@ class HTTPClient(object):
 def grabURL(url, callback, errback, headerCallback=None,
         bodyDataCallback=None, method="GET", start=0, etag=None,
         modified=None, cookies = {}, postVariables = None, postFiles = None,
-        defaultMimeType='application/octet-stream'):
+        defaultMimeType='application/octet-stream', clientClass = HTTPClient):
     if url.startswith("file://"):
         callback({"body":file(url[7:]).read(),
                       "updated-url":url,
@@ -1683,7 +1689,7 @@ def grabURL(url, callback, errback, headerCallback=None,
                       "content-type": defaultMimeType,
                    })
     else:
-        client = HTTPClient(url, callback, errback, headerCallback,
+        client = clientClass(url, callback, errback, headerCallback,
             bodyDataCallback, method, start, etag, modified, cookies, postVariables, postFiles)
         client.startRequest()
         return client
