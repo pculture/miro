@@ -308,6 +308,11 @@ URL was %s""" % self.url
     ##
     # Removes downloader from the database and deletes the file.
     def remove(self):
+        global totalDownRate
+        global totalUpRate
+        rates = self._getRates()
+        totalDownRate -= rates[0]
+        totalUpRate -= rates[1]
         self.stop(self.deleteFiles)
         DDBObject.remove(self)
 
