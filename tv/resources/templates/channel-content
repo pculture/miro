@@ -65,24 +65,26 @@
 </a>
 
 <div id="main-titlebar-auto">
+    <div t:hideIf="isFolder">
             <div class="auto-download" t:updateForView="thisFeedView">
                 <span id="auto-label" i18n:translate="">AUTO DOWNLOAD</span>
                 <div class="select-box-left" onclick="showSelectBoxMenu('auto-download-menu');">
                 <div class="select-box-right">
-                <div class="select-box-mid">
+                <div class="select-box-mid" t:hideIf="feed is None">
                     <span t:replace="feed.getAutoDownloadMode()" />
                 </div>
                 </div>
                 </div>
                 
                 <br clear="all" />
-                <ul id="auto-download-menu" class="select-box-menu">
+                <ul id="auto-download-menu" class="select-box-menu" t:hideIf="feed is None">
                     <li onclick="return eventURL('action:setAutoDownloadMode?mode=all&amp;feed=@@@feed.getID()@@@');" ><a href="#"><strong>ALL</strong> - Get all videos</a></li>
                     <li onclick="return eventURL('action:setAutoDownloadMode?mode=new&amp;feed=@@@feed.getID()@@@');" ><a href="#"><strong>NEW</strong> - Get only new videos</a></li>
                     <li onclick="return eventURL('action:setAutoDownloadMode?mode=off&amp;feed=@@@feed.getID()@@@');" ><a href="#"><strong>OFF</strong> - Don't auto-download videos</a></li>
                 </ul>
             </div>
         </div>
+    </div>
 </div>
 
 <span t:updateForView="matchingItems">

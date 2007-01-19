@@ -85,6 +85,10 @@ watchableItems = allWatchableItems.filter(showWatchableFilter,sortFunc=sorts.ite
 thisFolderView = views.channelFolders.filter(lambda x: x is folder)
 childrenView = views.feeds.filterWithIndex(indexes.byFolder, folder)
 
+# Make the channel-content template happy
+thisFeedView = thisFolderView
+feed = None
+
 def allItemsHaveState(view, state):
     for item in view:
         if item.getState() != state:
