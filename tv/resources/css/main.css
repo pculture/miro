@@ -48,7 +48,7 @@ img {
 
 /* This is used to make the feed settings section float above the channel */
 #feed-settings {
-    position: absolute;
+    position: fixed;
     top: 0px;
     left: 0px;
     width: 100%;
@@ -1016,6 +1016,7 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .round-button-left {
+    display: block;
     background: url(../images/round-button-left.png) top left no-repeat;
     padding-left: 7px;
 }
@@ -1033,7 +1034,7 @@ an element is dragged, the drag-highlight class is added to it */
     text-align: center;
 }
 
-.round-button-content a {
+a.round-button-left {
     text-decoration: none;
     color: #333;
 }
@@ -1075,7 +1076,7 @@ an element is dragged, the drag-highlight class is added to it */
     background-image: url(../images/black-button-mid.png);
 }
 
-.round-button-content.black a {
+a.round-button-left.black {
     color: #fff;
 }
 

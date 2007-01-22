@@ -141,39 +141,33 @@
             </div>
             <div class="details-small-buttons">
                 <div t:showIf="this.showSaveButton()">
-                    <div class="round-button-left save">
+                    <a href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');" class="round-button-left save">
                     <div class="round-button-right">
                     <div class="round-button-content">
-                    <a href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');">
                         <span i18n:translate="">KEEP</span>
+                    </div>
+                    </div>
                     </a>
-                    </div>
-                    </div>
-                    </div>
                 </div>
                 <div t:showIf="this.showSaved()" class="saved-note">SAVED</div>
                 <div t:showIf="this.showTrashButton()">
-                    <div class="round-button-left delete">
+                    <a href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" class="round-button-left delete">
                     <div class="round-button-right">
                     <div class="round-button-content">
-                    <a href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');">
                         <span i18n:translate="">DELETE</span>
+                    </div>
+                    </div>
                     </a>
-                    </div>
-                    </div>
-                    </div>
                 </div>
             </div>
             <div t:showIf="this.downloader and this.downloader.getState() == 'uploading'">
-                <div class="round-button-left stop-seeding">
+                 <a href="#" onclick="return eventURL('action:stopUploadItem?item=@@@this.getID()@@@');" class="round-button-left stop-seeding">
                 <div class="round-button-right">
                 <div class="round-button-content">
-                 <a href="#" onclick="return eventURL('action:stopUploadItem?item=@@@this.getID()@@@');">
                     <span i18n:translate="">STOP SEEDING</span>
+                </div>
+                </div>
                 </a>
-                </div>
-                </div>
-                </div>
             </div>
         </div>
 
