@@ -374,18 +374,18 @@ def gatherVideos(path, progressCallback):
         pass
     return found
 
-def formatSizeForUser(bytes, zeroString="", withDecimals=True):
+def formatSizeForUser(bytes, zeroString="", withDecimals=True, kbOnly=False):
     """Format an int containing the number of bytes into a string suitable for
     printing out to the user.  zeroString is the string to use if bytes == 0.
     """
     from gtcache import gettext as _
-    if bytes > (1 << 30):
+    if bytes > (1 << 30) and not kbOnly:
         value = (bytes / (1024.0 * 1024.0 * 1024.0))
         if withDecimals:
             format = _("%1.1fGB")
         else:
             format = _("%dGB")
-    elif bytes > (1 << 20):
+    elif bytes > (1 << 20) and not kbOnly:
         value = (bytes / (1024.0 * 1024.0))
         if withDecimals:
             format = _("%1.1fMB")
@@ -418,6 +418,13 @@ def formatTimeForUser(seconds, sign=1):
         return "%d:%02u" % (m*sign, s)
     else:
         return "%d:%02u:%02u" % (h*sign, m, s)
+
+def makeAnchor(label, href):
+    return '<a href="%s">%s</a>' % (href, label)
+
+def makeEventURL(label, eventURL):
+    return '<a href="#" onclick="return eventURL(\'action:%s\');">%s</a>' % \
+            (eventURL, label)
 
 def print_mem_usage(message):
     pass

@@ -728,7 +728,8 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 /* These change the background based on whether or not it's selected */
-.main-video.selected, .selected .main-video-stats, .selected .main-video-details {
+.main-video.selected 
+{
     background-color: #77A6EB;
     background: url(../images/main-video-bg-selected.png) repeat-x left top;
     color: black; 
@@ -769,7 +770,7 @@ an element is dragged, the drag-highlight class is added to it */
 .main-video-desc {
     position: relative;
     margin-left: 122px;
-    margin-right: 333px;
+    margin-right: 18px;
     margin-top: 5px;
     height: 84px;
     overflow: hidden;
@@ -779,9 +780,7 @@ an element is dragged, the drag-highlight class is added to it */
     margin-left: 240px;
     height: auto;
     min-height: 175px;
-    max-height: 400px;    
 }
-
 
 .main-video-desc h1 {
     margin: 0px;
@@ -931,21 +930,18 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .main-video-details {
-    position: absolute;
-    right: 0px;
-    top: 0px;
+    position: relative;
+    float: right;
     width: 315px;
     height: 100%;
     padding: 0px 0 0 8px;
     border-left: 1px solid #e1e9f6;
 }
 
-.main-video-details-tasks {
-    height: 26px;
-    width: 153px;
-    position: absolute;
-    top: 47px;
-    left: 10px;
+.main-video-details-main {
+    position: relative;
+    margin-top: 2px;
+    height: 60px;
 }
 
 
@@ -1012,7 +1008,7 @@ an element is dragged, the drag-highlight class is added to it */
 
 .details-small-buttons {
     position: absolute;
-    top: 37px;
+    top: 9px;
     right: 8px;
     height: 50px;
 }
@@ -1057,7 +1053,7 @@ an element is dragged, the drag-highlight class is added to it */
 /* See also download.css */
 .round-button-left.stop-seeding {
     position: absolute;
-    top: 67px;
+    top: 43px;
     right: 76px;
     display: none;
 }
@@ -1106,7 +1102,7 @@ an element is dragged, the drag-highlight class is added to it */
     color: white;
     margin: 0 0 5px 0;
     position: absolute;
-    top: 49px;
+    top: 26px;
     right: 76px;
     font-size: 11px;
 }
@@ -1245,52 +1241,56 @@ a.small-button-left:hover {
 }
 
 
-.more-download-info {
-    position: absolute;
-    top: 80px;
-    width: 240px;
+.more-info-details {
     font-size: 10px;
+    margin-bottom: 4px;
 }
 
-.more-download-info .dload-info {
-    float: right;
+.more-info-details a {
+    color: #333;
+}
+
+.more-info-details table {
+    width: 100%;
+}
+
+.more-info-details .label {
+    width: 80px;
+    margin-right: 10px;
+}
+
+.download-status-strings {
+    font-size: 10px;
 }
 
 .main-video-details-download-info {
     position: absolute;
-    top: 41px;
+    top: 16px;
     left: 141px;
     right: 0px;
     height: 50px;
-    font-size: 10px;
     overflow: hidden;
 }
 
-.main-video-details-download-info.expiring {
-    color: #333;
+.main-video-details-expiring {
     position: absolute;
-    top: 49px;
-    left: 140px;
+    top: 24px;
+    right: 80px;
     width: 100px;
-    text-align: center;
-    height: 14px;
+    text-align: right;
+    color: #333;
+}
+
+.main-video-details-pending-auto, .main-video-details-failed-download {
+    position: absolute;
+    top: 44px;
+    right: 80px;
+    width: 200px;
+    text-align: right;
     overflow: hidden;
 }
 
-.main-video-details-download-info.pending-auto {
-    width: 130px;
-    padding-top: 4px;
-    padding-left: 5px;
-}
-
-.main-video-details-download-info.failed-download {
-    text-align: right;
-    top: 65px;
-    right: 77px;
-    left: 80px;
-}
-
-.downloading, .paused {
+.video-state.downloading, .video-state.paused {
     width: 130px;
     padding-top: 4px;
     padding-left: 5px;
@@ -1299,7 +1299,6 @@ a.small-button-left:hover {
 .download-rate {
     float: right;
 }
-
 
 .main-video.selected .main-video-details-download-info {
     color: black;

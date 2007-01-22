@@ -808,59 +808,81 @@ folder will be deleted.""")
     def isTransferring(self):
         return self.downloader and self.downloader.getState() in ('uploading', 'downloading')
 
-    ## 
-    # Returns formatted XHTM with download info
     def getDownloadDetails(self):
-        details = []
         status = self.downloader.status
-        
-        details.append('<p>')
+        return [
+            (_('Total Down:'), formatSizeForDetails(
+                status.get('currentSize', 0))),
+        ]
+
+    def getTorrentDetails(self):
+        status = self.downloader.status
+        return [
+            (_('Seeders:'), status.get('seeders', 0)),
+            (_('Leachers:'), status.get('leachers', 0)),
+            (_('Down Rate:'), formatRateForDetails(status.get('rate', 0))),
+            (_('Down Total:'), formatSizeForDetails(
+                status.get('currentSize', 0))),
+            (_('Up Rate:'), formatRateForDetails(status.get('upRate', 0))),
+            (_('Up Total:'), formatSizeForDetails(status.get('uploaded', 0))),
+        ]
+
+    def getItemDetails(self):
+        rv = [
+            (_('Web page:'), util.makeAnchor(_('permalink'), self.getLink())),
+            (_('File link:'), util.makeAnchor(_('direct link to file'), 
+                self.getURL())),
+            (_('File type:'), self.getFormat())
+        ]
+        if self.isDownloaded():
+            basename = os.path.basename(self.getFilename())
+            linkEventURL = 'revealItem?item=%d' % self.getID()
+            if self.isContainerItem:
+                label = _("REVEAL LOCAL FOLDER")
+            else:
+                label = _("REVEAL LOCAL FILE")
+            link = util.makeEventURL(label, linkEventURL)
+            rv.append((_('Filename:'), "%s %s" % (basename, link)))
+        return rv
+
+
+    def getTorrentDetailsFinished(self):
+        status = self.downloader.status
+        return [
+            (_('Down Total'), formatSizeForDetails(
+                status.get('currentSize', 0))),
+            (_('Up Total'), formatSizeForDetails(status.get('uploaded', 0))),
+        ]
+
+    def makeMoreInfoTable(self, title, moreInfoData):
+        lines = []
+        lines.append('<h3>%s</h3>' % title)
+        lines.append('<table cellpadding="0" cellspacing="0">')
+        for label, text in moreInfoData:
+            lines.append('<tr><td class="label">%s</td>'
+                    '<td class="value">%s</td></tr>' % (label, text))
+        lines.append('</table>')
+        return '\n'.join(lines)
+
+    ## 
+    # Returns formatted XHTML with download info
+    def getMoreInfo(self):
+        details = [
+            self.makeMoreInfoTable(_('Item Details'), self.getItemDetails()),
+        ]
+        # helper function to keep things from getting too verbose below
+        def addTable(label, data):
+            details.append(self.makeMoreInfoTable(label, data))
         if self.looksLikeTorrent():
-            details.append('<strong>Torrent Stats</strong>')
-            
-            seeders = status.get('seeders', 0)
-            if seeders == 0:
-                seeders = '-'
-            details.append('Seeders<span class="dload-info">%s</span>' % seeders)
-            
-            leechers = status.get('leechers', 0)
-            if leechers == 0:
-                leechers = '-'
-            details.append('Leechers<span class="dload-info">%s</span>' % leechers)
-            
-            downRate = status.get('rate', 0)
-            if downRate == 0:
-                downRate = '-'
-            else:
-                downRate = "%.3f KB/s" % (downRate / 1024.0,)
-            details.append('Down. Rate<span class="dload-info">%s</span>' % downRate)
+            if self.isTransferring():
+                addTable(_('Torrent Details'), self.getTorrentDetails())
+            elif self.isFinished():
+                addTable('Torrent Details <i>not connected</i>',
+                        self.getTorrentDetailsFinished())
+        elif self.getState() == 'downloading':
+            addTable(_('Download Details'), self.getDownloadDetails())
+        return '\n'.join(details)
 
-            totalDown = status.get('currentSize', 0)
-            if totalDown == 0:
-                totalDown = '-'
-            else:
-                totalDown = "%.3f MB" % (totalDown / 1024.0 / 1024.0,)
-            details.append('Total Down.<span class="dload-info">%s</span>' % totalDown)
-
-            upRate = status.get('upRate', 0)
-            if upRate == 0:
-                upRate = '-'
-            else:
-                upRate = "%.3f KB/s" % (upRate / 1024.0,)
-            details.append('Up. Rate<span class="dload-info">%s</span>' % upRate)
-            
-            totalUp = status.get('uploaded', 0)
-            if totalUp == 0:
-                totalUp = '-'
-            else:
-                totalUp = "%.3f MB" % (totalUp,)
-            details.append('Total Up.<span class="dload-info">%s</span>' % totalUp)
-        else:
-            downloaded = status.get('currentSize', 0)
-            total = util.formatSizeForUser(downloaded, '-')
-            details.append('Total Down.<span class="dload-info">%s</span>' % total)
-        details .append('</p>')
-        return '<br />'.join(details)
 
     ##
     # Stops downloading the item
@@ -1702,3 +1724,15 @@ def isAudioFilename(filename):
 
 def isTorrentFilename(filename):
     return filename.endswith('.torrent')
+
+def formatRateForDetails(bytes):
+    """Format a download/upload rate for the more-details view."""
+    sizeFmt = util.formatSizeForUser(bytes, zeroString="-")
+    if bytes > 0:
+        return sizeFmt + "/s"
+    else:
+        return sizeFmt
+
+def formatSizeForDetails(bytes):
+    """Format a disk size for the more-details view."""
+    return util.formatSizeForUser(bytes, zeroString="-", kbOnly=True)
