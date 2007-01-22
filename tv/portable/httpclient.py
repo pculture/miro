@@ -1017,7 +1017,11 @@ class HTTPConnection(ConnectionHandler):
         if (self.readyCallback and self.canSendRequest() and not
                 self.sentReadyCallback):
             self.sentReadyCallback = True
-            self.readyCallback(self)
+
+            # This needs to be in an idle so that the connection is added
+            # to the "active" list before the open callback happens --NN
+            eventloop.addIdle(lambda : self.readyCallback(self),
+                              "Ready Callback %s" % str(self))
         
     def handleClose(self, type):
         oldState = self.state
@@ -1730,7 +1734,7 @@ class HTTPHeaderGrabber(HTTPClient):
             self.callback(self.prepareResponse(headers))
             self.cancel()
 
-def grabHeaders (url, callback, errback):
-    client = HTTPHeaderGrabber(url, callback, errback)
+def grabHeaders (url, callback, errback,  clientClass = HTTPHeaderGrabber):
+    client = clientClass(url, callback, errback)
     client.startRequest()
     return client
