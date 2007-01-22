@@ -139,7 +139,7 @@ matchingPausedDLs.unlink()
 <!-- / TITLE BAR -->
 
 <div id="main-container">
-        <div t:hideIf="allNormalDownloads.len() == 0" t:updateHideOnView="allNormalDownloads" class="main-channelbar no-arrow">
+        <div t:hideIf="allNormalDownloads.len() == 0" t:updateHideOnView="allNormalDownloads" class="main-channelbar download no-arrow">
                 <span i18n:translate="">Channel Downloads</span>
         </div>
 
@@ -156,12 +156,12 @@ matchingPausedDLs.unlink()
 	<div t:repeatForView="pendingDownloads" t:repeatTemplate='download-item' />
 	<div t:repeatForView="pausedDownloads" t:repeatTemplate='download-item' />
 	<!-- / VIDEOS -->
-	<div t:hideIf="externalDownloads.len() == 0" t:updateHideOnView="externalDownloads" class="main-channelbar no-arrow">
+	<div t:hideIf="externalDownloads.len() == 0" t:updateHideOnView="externalDownloads" class="main-channelbar download no-arrow">
 	<span i18n:translate="">External Torrents</span>
 		<a i18n:translate="" href="#" onclick="return eventURL('action:clearTorrents');" class="clear-completed-link" title="Clear Completed Torrents">Clear Completed Torrents</a>
         </div>
 	<div t:repeatForView="externalDownloads" t:repeatTemplate='download-item' />
-	<div t:hideIf="uploads.len() == 0" t:updateHideOnView="uploads" class="main-channelbar no-arrow">
+	<div t:hideIf="uploads.len() == 0" t:updateHideOnView="uploads" class="main-channelbar download no-arrow">
 		<span i18n:translate="">Seeding Torrents</span>
         </div>
 	<div t:repeatForView="uploads" t:repeatTemplate='download-item' />

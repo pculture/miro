@@ -537,6 +537,10 @@ img {
         background-color: #FF8c2d;
 }
 
+.main-channelbar.download {
+        background-image: url("../images/download-channelbar-bg.png");
+}
+
 a.download-bar-action {
     float: right;
     font-size: 10px;
