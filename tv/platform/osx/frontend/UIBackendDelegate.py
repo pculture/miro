@@ -16,6 +16,7 @@ import prefs
 import config
 import dialogs
 import eventloop
+import platformcfg
 import platformutils
 
 from StartupPanel import StartupPanelController
@@ -23,10 +24,10 @@ import GrowlNotifier
 
 ###############################################################################
 
-NibClassBuilder.extractClasses("PasswordWindow")
-NibClassBuilder.extractClasses("TextEntryWindow")
-NibClassBuilder.extractClasses('SearchChannelWindow')
-NibClassBuilder.extractClasses("ExceptionReporterPanel")
+NibClassBuilder.extractClasses(u"PasswordWindow")
+NibClassBuilder.extractClasses(u"TextEntryWindow")
+NibClassBuilder.extractClasses(u'SearchChannelWindow')
+NibClassBuilder.extractClasses(u"ExceptionReporterPanel")
 
 dlTask = None
 
@@ -47,11 +48,11 @@ def showCriticalDialog(summary, message, buttons=None):
 def showDialog(summary, message, buttons, style):
     alert = NSAlert.alloc().init()
     alert.setAlertStyle_(style)
-    alert.setMessageText_(summary)
-    alert.setInformativeText_(message)
+    alert.setMessageText_(unicode(summary))
+    alert.setInformativeText_(unicode(message))
     if buttons is not None:
         for title in buttons:
-            alert.addButtonWithTitle_(title)
+            alert.addButtonWithTitle_(unicode(title))
     result = platformutils.callOnMainThreadAndWaitReturnValue(alert.runModal)
     result -= NSAlertFirstButtonReturn
     del alert
@@ -115,7 +116,7 @@ class UIBackendDelegate:
 
     def updateAvailableItemsCountFeedback(self, count):
         try:
-            appIcon = NSImage.imageNamed_('NSApplicationIcon')
+            appIcon = NSImage.imageNamed_(u'NSApplicationIcon')
             badgedIcon = NSImage.alloc().initWithSize_(appIcon.size())
             badgedIcon.lockFocus()
         except:
@@ -127,9 +128,9 @@ class UIBackendDelegate:
                     digits = len(str(count))
                     badge = nil
                     if digits <= 2:
-                        badge = NSImage.imageNamed_('dock_badge_1_2.png')
+                        badge = NSImage.imageNamed_(u'dock_badge_1_2.png')
                     elif digits <= 5:
-                        badge = NSImage.imageNamed_('dock_badge_%d.png' % digits)
+                        badge = NSImage.imageNamed_(u'dock_badge_%d.png' % digits)
                     else:
                         logging.warn("Wow, that's a whole lot of new items!")
                     if badge is not nil:
@@ -221,7 +222,7 @@ class UIBackendDelegate:
         global dlTask
         dlTask = NSTask.alloc().init()
         dlTask.setLaunchPath_(exe)
-        dlTask.setArguments_(['download_daemon'])
+        dlTask.setArguments_([u'download_daemon'])
         dlTask.setEnvironment_(env)
         
         controller = NSApplication.sharedApplication().delegate()
@@ -238,7 +239,7 @@ class UIBackendDelegate:
         if 'AutoLaunchedApplicationDictionary' not in lwdomain:
             lwdomain['AutoLaunchedApplicationDictionary'] = list()
         launchedApps = lwdomain['AutoLaunchedApplicationDictionary']
-        ourPath = NSBundle.mainBundle().bundlePath()
+        ourPath = platformcfg.getBundlePath()
         ourEntry = None
         for entry in launchedApps:
             if entry.get('Path') == ourPath:
@@ -302,7 +303,7 @@ class ContextItemHandler (NSObject):
 class ExceptionReporterController (NibClassBuilder.AutoBaseClass):
     
     def initWithMoment_log_(self, when, log):
-        self = super(ExceptionReporterController, self).initWithWindowNibName_owner_("ExceptionReporterPanel", self)
+        self = super(ExceptionReporterController, self).initWithWindowNibName_owner_(u"ExceptionReporterPanel", self)
         self.info = config.getAppConfig()
         self.info['when'] = when
         self.info['log'] = log
@@ -337,10 +338,10 @@ class ExceptionReporterController (NibClassBuilder.AutoBaseClass):
 class PasswordController (NibClassBuilder.AutoBaseClass):
 
     def initWithDialog_(self, dialog):
-        NSBundle.loadNibNamed_owner_("PasswordWindow", self)
+        NSBundle.loadNibNamed_owner_(u"PasswordWindow", self)
         self.window.setTitle_(dialog.title)
-        self.usernameField.setStringValue_(dialog.prefillUser or "")
-        self.passwordField.setStringValue_(dialog.prefillPassword or "")
+        self.usernameField.setStringValue_(dialog.prefillUser or u"")
+        self.passwordField.setStringValue_(dialog.prefillPassword or u"")
         self.textArea.setStringValue_(dialog.description)
         self.result = None
         return self
@@ -370,12 +371,12 @@ class PasswordController (NibClassBuilder.AutoBaseClass):
 class TextEntryController (NibClassBuilder.AutoBaseClass):
     
     def initWithDialog_(self, dialog):
-        self = super(TextEntryController, self).initWithWindowNibName_owner_("TextEntryWindow", self)
+        self = super(TextEntryController, self).initWithWindowNibName_owner_(u"TextEntryWindow", self)
         self.dialog = dialog
-        self.window().setTitle_(dialog.title)
+        self.window().setTitle_(unicode(dialog.title))
         self.messageField.setStringValue_(dialog.description)
-        self.entryField.setStringValue_("")
-        self.mainButton.setTitle_(dialog.buttons[0].text)
+        self.entryField.setStringValue_(u"")
+        self.mainButton.setTitle_(unicode(dialog.buttons[0].text))
         self.secondaryButton.setTitle_(dialog.buttons[1].text)
         self.result = None
         self.value = None
@@ -405,13 +406,13 @@ class TextEntryController (NibClassBuilder.AutoBaseClass):
 class SearchChannelController (NibClassBuilder.AutoBaseClass):
     
     def initWithDialog_(self, dialog):
-        self = super(SearchChannelController, self).initWithWindowNibName_owner_('SearchChannelWindow', self)
+        self = super(SearchChannelController, self).initWithWindowNibName_owner_(u'SearchChannelWindow', self)
         self.dialog = dialog
         self.result = None
 
         self.window().setTitle_(dialog.title)
         self.labelField.setStringValue_(dialog.description)
-        self.searchTermField.setStringValue_(dialog.term or '')
+        self.searchTermField.setStringValue_(dialog.term or u'')
         self.targetMatrix.selectCellWithTag_(dialog.style)
         self.changeTarget_(self.targetMatrix)
 

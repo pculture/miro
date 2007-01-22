@@ -697,7 +697,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             else:
                 match = resourcePattern.match(value)
                 if match:
-                    self.addInstruction(genRepeatEval,'resources.url(%s)'%repr(match.group(1)))
+                    self.addInstruction(genRawAttr,'resources.url(%s)'%repr(match.group(1)))
                 else:
                     self.addText(quoteattr(value))
 

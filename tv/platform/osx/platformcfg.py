@@ -129,22 +129,13 @@ def _makeSupportFilePath(filename):
 ###############################################################################
 
 def getBundleIdentifier():
-    if os.environ.has_key('BUNDLEIDENTIFIER'):
-        return os.environ['BUNDLEIDENTIFIER']
-    else:
-        return NSBundle.mainBundle().bundleIdentifier()
+    return unicode(NSBundle.mainBundle().bundleIdentifier())
 
 def getBundlePath():
-    if os.environ.has_key('BUNDLEPATH'):
-        return os.environ['BUNDLEPATH']
-    else:
-        return NSBundle.mainBundle().bundlePath()
+    return unicode(NSBundle.mainBundle().bundlePath())
 
 def getBundleResourcePath():
-    if os.environ.has_key('RESOURCEPATH'):
-        return os.environ['RESOURCEPATH']
-    else:
-        return NSBundle.mainBundle().resourcePath()
+    return unicode(NSBundle.mainBundle().resourcePath())
 
 ###############################################################################
 #### Migrate to Democracy                                                  ####

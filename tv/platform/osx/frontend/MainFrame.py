@@ -19,7 +19,7 @@ import eventloop
 import searchengines
 import platformutils
 
-NibClassBuilder.extractClasses("MainWindow")
+NibClassBuilder.extractClasses(u"MainWindow")
 
 ###############################################################################
 
@@ -61,7 +61,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         self.appl = appl
         self.menuStrings = dict()
         self.actionGroups = dict()
-        NSBundle.loadNibNamed_owner_("MainWindow", self)
+        NSBundle.loadNibNamed_owner_(u"MainWindow", self)
 
         nc = NSNotificationCenter.defaultCenter()
         nc.addObserver_selector_name_object_(
@@ -156,9 +156,9 @@ class MainController (NibClassBuilder.AutoBaseClass):
         self.actionGroups = actionGroups
         
         if actionGroups['VideoPlayable']:
-            notification = 'notifyPlayable'
+            notification = u'notifyPlayable'
         else:
-            notification = 'notifyNotPlayable'
+            notification = u'notifyNotPlayable'
         nc = NSNotificationCenter.defaultCenter()
         nc.postNotificationName_object_(notification, nil)
 
@@ -483,9 +483,9 @@ class NullDisplay (app.Display):
 class DTVSplitView (NibClassBuilder.AutoBaseClass):
     
     def awakeFromNib(self):
-        self.background = NSImage.imageNamed_('splitview_divider_background')
+        self.background = NSImage.imageNamed_(u'splitview_divider_background')
         self.backgroundRect = ((0,0), self.background.size())
-        self.dimple = NSImage.imageNamed_('splitview_divider_dimple')
+        self.dimple = NSImage.imageNamed_(u'splitview_divider_dimple')
         
     def dividerThickness(self):
         return 10.0
@@ -506,11 +506,11 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         self.progressSlider.sliderWasClicked = self.progressSliderWasClicked
         self.progressSlider.sliderWasDragged = self.progressSliderWasDragged
         self.progressSlider.sliderWasReleased = self.progressSliderWasReleased
-        self.backgroundLeft = NSImage.imageNamed_( "display_left" )
+        self.backgroundLeft = NSImage.imageNamed_(u"display_left" )
         self.backgroundLeftWidth = self.backgroundLeft.size().width
-        self.backgroundRight = NSImage.imageNamed_( "display_right" )
+        self.backgroundRight = NSImage.imageNamed_(u"display_right" )
         self.backgroundRightWidth = self.backgroundRight.size().width
-        self.backgroundCenter = NSImage.imageNamed_( "display_center" )
+        self.backgroundCenter = NSImage.imageNamed_(u"display_center" )
         self.backgroundCenterWidth = self.backgroundCenter.size().width
         self.renderer = None
         self.updateTimer = nil
@@ -547,7 +547,7 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
         else:
             self.progressSlider.setShowCursor_(True)
             self.progressSlider.setFloatValue_(self.renderer.getProgress())
-            self.timeIndicator.setStringValue_(self.renderer.getDisplayTime())
+            self.timeIndicator.setStringValue_(unicode(self.renderer.getDisplayTime()))
             if self.displayRemaining:
                 remaning = self.renderer.getDisplayRemainingTime()
             else:
@@ -555,7 +555,7 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
             self.updateRemainingTimeIndicator(remaning)
     
     def updateRemainingTimeIndicator(self, content):
-        title = NSAttributedString.alloc().initWithString_attributes_(content, self.remainingIndicatorAttributes)
+        title = NSAttributedString.alloc().initWithString_attributes_(unicode(content), self.remainingIndicatorAttributes)
         self.remainingTimeIndicator.setAttributedTitle_(title)
 
     def drawRect_(self, rect):
@@ -715,7 +715,7 @@ class MetalSliderCell (NSSliderCell):
 
     def init(self):
         self = super(MetalSliderCell, self).init()
-        self.knob = NSImage.imageNamed_('volume_knob')
+        self.knob = NSImage.imageNamed_(u'volume_knob')
         self.knobSize = self.knob.size()
         return self
 
@@ -751,7 +751,7 @@ class VideoSearchField (NibClassBuilder.AutoBaseClass):
             eventloop.addIdle(lambda:app.controller.performSearch(engine, query), 'Performing chrome search')
 
     def initFromLastEngine(self):
-        self.setStringValue_(searchengines.getLastQuery())
+        self.setStringValue_(unicode(searchengines.getLastQuery()))
         lastEngine = searchengines.getLastEngine()
         for engine in views.searchEngines:
             if engine.name == lastEngine:
@@ -823,7 +823,7 @@ def _getSearchIcon(engine):
     return searchIcons[engine.name]        
 
 def _makeSearchIcon(engine):
-    popupRectangle = NSImage.imageNamed_('search_popup_rectangle')
+    popupRectangle = NSImage.imageNamed_(u'search_popup_rectangle')
     popupRectangleSize = popupRectangle.size()
 
     engineIconPath = resources.path('images/search_icon_%s.png' % engine.name)

@@ -24,7 +24,7 @@ import singleclick
 from Preferences import PreferencesWindowController
 import GrowlNotifier
 
-NibClassBuilder.extractClasses("MainMenu")
+NibClassBuilder.extractClasses(u"MainMenu")
 
 ###############################################################################
 
@@ -32,7 +32,7 @@ class Application:
 
     def __init__(self):
         appl = NSApplication.sharedApplication()
-        NSBundle.loadNibNamed_owner_("MainMenu", appl)
+        NSBundle.loadNibNamed_owner_(u"MainMenu", appl)
         controller = appl.delegate()
 
     def Run(self):
@@ -72,9 +72,9 @@ class AppController (NibClassBuilder.AutoBaseClass):
             struct.unpack(">i", "GURL")[0])
 
         nc = NSNotificationCenter.defaultCenter()
-        nc.addObserver_selector_name_object_(self, 'videoWillPlay:', 'videoWillPlay',  nil)
-        nc.addObserver_selector_name_object_(self, 'videoWillStop:', 'videoWillPause', nil)
-        nc.addObserver_selector_name_object_(self, 'videoWillStop:', 'videoWillStop',  nil)
+        nc.addObserver_selector_name_object_(self, 'videoWillPlay:', u'videoWillPlay',  nil)
+        nc.addObserver_selector_name_object_(self, 'videoWillStop:', u'videoWillPause', nil)
+        nc.addObserver_selector_name_object_(self, 'videoWillStop:', u'videoWillStop',  nil)
         
         ws = NSWorkspace.sharedWorkspace()
         wsnc = ws.notificationCenter()
@@ -92,7 +92,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         # https, so let's use it here anyway :)
         components = urlparse.urlparse(config.get(prefs.CHANNEL_GUIDE_URL))
         channelGuideHost = components[1]
-        NSURLRequest.setAllowsAnyHTTPSCertificate_forHost_(YES, channelGuideHost)
+        NSURLRequest.setAllowsAnyHTTPSCertificate_forHost_(YES, unicode(channelGuideHost))
 
         # Startup
         app.controller.onStartup()
@@ -119,7 +119,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
     
     def applicationWillTerminate_(self, notification):
         # Reset the application icon to its default state
-        defaultAppIcon = NSImage.imageNamed_('NSApplicationIcon')
+        defaultAppIcon = NSImage.imageNamed_(u'NSApplicationIcon')
         NSApplication.sharedApplication().setApplicationIconImage_(defaultAppIcon)
         
         if not self.emergencyShutdown:
@@ -189,10 +189,10 @@ class AppController (NibClassBuilder.AutoBaseClass):
         eventloop.addUrgentCall(lambda:restartPausedDownloaders(), "Resuming downloaders after sleep")
 
     def videoWillPlay_(self, notification):
-        self.playPauseMenuItem.setTitle_('Pause Video')
+        self.playPauseMenuItem.setTitle_(u'Pause Video')
 
     def videoWillStop_(self, notification):
-        self.playPauseMenuItem.setTitle_('Play Video')
+        self.playPauseMenuItem.setTitle_(u'Play Video')
 
     def checkQuicktimeVersion(self, showError):
         supported = gestalt('qtim') >= 0x07000000
@@ -202,7 +202,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
             message = u'To run %s you need the most recent version of Quicktime, which is a free update.' % (config.get(prefs.LONG_APP_NAME), )
             def callback(dialog):
                 if dialog.choice == dialogs.BUTTON_DOWNLOAD:
-                    url = NSURL.URLWithString_('http://www.apple.com/quicktime/download')
+                    url = NSURL.URLWithString_(u'http://www.apple.com/quicktime/download')
                     NSWorkspace.sharedWorkspace().openURL_(url)
                 else:
                     self.shutdown_(nil)              

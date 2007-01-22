@@ -9,6 +9,7 @@ from Foundation import *
 
 import app
 import qtcomp
+import platformcfg
 import platformutils
 
 ###############################################################################
@@ -26,13 +27,13 @@ class QuicktimeRenderer (app.VideoRenderer):
         self.registerComponents()
 
     def registerComponents(self):
-        bundlePath = NSBundle.mainBundle().bundlePath()
+        bundlePath = platformcfg.getBundlePath()
         componentsDirectoryPath = os.path.join(bundlePath, 'Contents', 'Components')
         components = glob.glob(os.path.join(componentsDirectoryPath, '*.component'))
         for component in components:
             cmpName = os.path.basename(component)
             if self.checkComponentCompatibility(cmpName):
-                ok = qtcomp.register(component)
+                ok = qtcomp.register(component.encode('utf-8'))
                 if ok:
                     logging.info('Successfully registered embedded Quicktime component: %s' % cmpName)
                 else:
@@ -115,7 +116,7 @@ class QuicktimeRenderer (app.VideoRenderer):
             self.registerMovieObserver(qtmovie)
 
     def getMovieFromFile(self, filename):
-        url = NSURL.fileURLWithPath_(filename)
+        url = NSURL.fileURLWithPath_(unicode(filename))
         if self.cachedMovie is not nil and self.cachedMovie.attributeForKey_(QTMovieURLAttribute) == url:
             qtmovie = self.cachedMovie
         else:
@@ -193,7 +194,7 @@ def movieDuration(qtmovie):
 
 @platformutils.onMainThreadWithReturn
 def extractIconDataAtPosition(filename, position):
-    url = NSURL.fileURLWithPath_(filename)
+    url = NSURL.fileURLWithPath_(unicode(filename))
     (qtmovie, error) = QTMovie.alloc().initWithURL_error_(url)
     if qtmovie is None:
         return None

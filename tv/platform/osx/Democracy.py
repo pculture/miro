@@ -90,6 +90,11 @@ def launchDownloaderDaemon():
 
 # =============================================================================
 
+# Uncomment the following two lines to check for non unicode string trying to
+# cross the PyObjC bridge...
+#import objc
+#objc.setStrBridgeEnabled(False)
+
 # If the bundle is an alias bundle, we need to tweak the search path
 bundle = Foundation.NSBundle.mainBundle()
 bundleInfo = bundle.infoDictionary()

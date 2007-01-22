@@ -8,6 +8,7 @@ from PyObjCTools import NibClassBuilder
 
 import app
 import eventloop
+import platformcfg
 import platformutils
 
 from QuicktimeRenderer import QuicktimeRenderer
@@ -44,7 +45,7 @@ class PlaybackController (app.PlaybackControllerBase):
         ws = NSWorkspace.sharedWorkspace()
         ok, externalApp, movieType = ws.getInfoForFile_application_type_(moviePath)
         if ok:
-            if externalApp == NSBundle.mainBundle().bundlePath():
+            if externalApp == platformcfg.getBundlePath():
                 print 'DTV: WARNING, trying to play movie externally with Democracy.'
                 ok = False
             else:
@@ -134,12 +135,12 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         nc.addObserver_selector_name_object_(
             self, 
             'handleWatchableDisplayNotification:', 
-            'notifyPlayable', 
+            u'notifyPlayable', 
             nil)
         nc.addObserver_selector_name_object_(
             self, 
             'handleNonWatchableDisplayNotification:', 
-            'notifyNotPlayable', 
+            u'notifyNotPlayable', 
             nil)
         self.systemActivityUpdaterTimer = nil
         self.reset()
@@ -188,8 +189,8 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
         self.forwardButton.cell().setAllowsFastSeeking(allowFastSeeking)
 
     def updatePlayPauseButton(self, prefix):
-        self.playPauseButton.setImage_(NSImage.imageNamed_('%s' % prefix))
-        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('%s_blue' % prefix))
+        self.playPauseButton.setImage_(NSImage.imageNamed_(u'%s' % prefix))
+        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_(u'%s_blue' % prefix))
 
     def playPause_(self, sender):
         eventloop.addUrgentCall(lambda:app.controller.playbackController.playPause(), "Play Video")
@@ -197,7 +198,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     @platformutils.onMainThread
     def play(self):
         nc = NSNotificationCenter.defaultCenter()
-        nc.postNotificationName_object_('videoWillPlay', nil)
+        nc.postNotificationName_object_(u'videoWillPlay', nil)
         self.enablePrimaryControls(YES)
         self.enableSecondaryControls(YES)
         self.updatePlayPauseButton('pause')
@@ -205,7 +206,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     @platformutils.onMainThread
     def pause(self):
         nc = NSNotificationCenter.defaultCenter()
-        nc.postNotificationName_object_('videoWillPause', nil)
+        nc.postNotificationName_object_(u'videoWillPause', nil)
         self.updatePlayPauseButton('play')
 
     def stop_(self, sender):
@@ -214,7 +215,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     @platformutils.onMainThread
     def stop(self):
         nc = NSNotificationCenter.defaultCenter()
-        nc.postNotificationName_object_('videoWillStop', nil)
+        nc.postNotificationName_object_(u'videoWillStop', nil)
         self.updatePlayPauseButton('play')
 
     def playFullScreen_(self, sender):
@@ -518,8 +519,8 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
             backing,
             defer )
         nc = NSNotificationCenter.defaultCenter()
-        nc.addObserver_selector_name_object_(self, 'videoWillPlay:', 'videoWillPlay', nil)
-        nc.addObserver_selector_name_object_(self, 'videoWillPause:', 'videoWillPause', nil)
+        nc.addObserver_selector_name_object_(self, 'videoWillPlay:', u'videoWillPlay', nil)
+        nc.addObserver_selector_name_object_(self, 'videoWillPause:', u'videoWillPause', nil)
         self.setBackgroundColor_(NSColor.clearColor())
         self.setAlphaValue_(1.0)
         self.setOpaque_(NO)
@@ -535,14 +536,14 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         self.seekForwardButton.cell().setAllowsSkipping(False)
         self.seekBackwardButton.setCell_(SkipSeekButtonCell.cellFromButtonCell_direction_delay_(self.seekBackwardButton.cell(), -1, 0.0))
         self.seekBackwardButton.cell().setAllowsSkipping(False)
-        self.progressSlider.track = NSImage.imageNamed_('fs-progress-background')
-        self.progressSlider.cursor = NSImage.imageNamed_('fs-progress-slider')
+        self.progressSlider.track = NSImage.imageNamed_(u'fs-progress-background')
+        self.progressSlider.cursor = NSImage.imageNamed_(u'fs-progress-slider')
         self.progressSlider.sliderWasClicked = self.progressSliderWasClicked
         self.progressSlider.sliderWasDragged = self.progressSliderWasDragged
         self.progressSlider.sliderWasReleased = self.progressSliderWasReleased
         self.progressSlider.setShowCursor_(True)
-        self.volumeSlider.track = NSImage.imageNamed_('fs-volume-background')
-        self.volumeSlider.cursor = NSImage.imageNamed_('fs-volume-slider')
+        self.volumeSlider.track = NSImage.imageNamed_(u'fs-volume-background')
+        self.volumeSlider.cursor = NSImage.imageNamed_(u'fs-volume-slider')
         self.volumeSlider.sliderWasDragged = self.volumeSliderWasDragged
         self.volumeSlider.setShowCursor_(True)
 
@@ -553,8 +554,8 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         return NO
 
     def setup(self, item, renderer):
-        self.titleLabel.setStringValue_(item.getTitle())
-        self.feedLabel.setStringValue_(item.getFeed().getTitle())
+        self.titleLabel.setStringValue_(unicode(item.getTitle()))
+        self.feedLabel.setStringValue_(unicode(item.getFeed().getTitle()))
         self.donationLabel.setStringValue_(u'')
         self.renderer = renderer
         self.update_(nil)
@@ -609,7 +610,7 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         pass
         
     def update_(self, timer):
-        self.timeIndicator.setStringValue_(self.renderer.getDisplayTime())
+        self.timeIndicator.setStringValue_(unicode(self.renderer.getDisplayTime()))
         self.progressSlider.setFloatValue_(self.renderer.getProgress())
             
     def progressSliderWasClicked(self, slider):
@@ -635,12 +636,12 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
         self.resetAutoConceal()
 
     def videoWillPlay_(self, notification):
-        self.playPauseButton.setImage_(NSImage.imageNamed_('fs-button-pause'))
-        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('fs-button-pause-alt'))
+        self.playPauseButton.setImage_(NSImage.imageNamed_(u'fs-button-pause'))
+        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_(u'fs-button-pause-alt'))
 
     def videoWillPause_(self, notification):
-        self.playPauseButton.setImage_(NSImage.imageNamed_('fs-button-play'))
-        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_('fs-button-play-alt'))
+        self.playPauseButton.setImage_(NSImage.imageNamed_(u'fs-button-play'))
+        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_(u'fs-button-play-alt'))
 
     def remove(self):
         platformutils.warnIfNotOnMainThread('FullScreenPalette.remove')
@@ -653,9 +654,9 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
 class FullScreenPaletteView (NibClassBuilder.AutoBaseClass):
 
     def awakeFromNib(self):
-        self.background = NSImage.imageNamed_('fs-background')
+        self.background = NSImage.imageNamed_(u'fs-background')
         self.backgroundRect = NSRect((0,0), self.background.size())
-        self.topLine = NSImage.imageNamed_('fs-topline')
+        self.topLine = NSImage.imageNamed_(u'fs-topline')
         self.topLineRect = NSRect((0,0), self.topLine.size())
 
     def drawRect_(self, rect):
@@ -672,7 +673,7 @@ class FullScreenPaletteView (NibClassBuilder.AutoBaseClass):
 class FullScreenControlsView (NibClassBuilder.AutoBaseClass):
     
     def awakeFromNib(self):
-        self.background = NSImage.imageNamed_('fs-controls-background')
+        self.background = NSImage.imageNamed_(u'fs-controls-background')
         self.backgroundRect = NSRect((0,0), self.background.size())
 
     def drawRect_(self, rect):

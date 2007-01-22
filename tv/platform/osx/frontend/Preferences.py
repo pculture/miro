@@ -9,7 +9,7 @@ import config
 import dialogs
 import eventloop
 
-NibClassBuilder.extractClasses("PreferencesWindow")
+NibClassBuilder.extractClasses(u"PreferencesWindow")
 
 ###############################################################################
 
@@ -30,15 +30,15 @@ class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
         self.items = dict()
         self.allIdentifiers = list()
         
-        generalItem = self.makePreferenceItem("GeneralItem", "General", "general_pref", self.generalView)
-        channelsItem = self.makePreferenceItem("ChannelsItem", "Channels", "channels_pref", self.channelsView)
-        downloadsItem = self.makePreferenceItem("DownloadsItem", "Downloads", "downloads_pref", self.downloadsView)
-        diskSpaceItem = self.makePreferenceItem("DiskSpaceItem", "Disk Space", "disk_space_pref", self.diskSpaceView)
-        playbackItem = self.makePreferenceItem("PlaybackItem", "Playback", "playback_pref", self.playbackView)
+        generalItem = self.makePreferenceItem(u"GeneralItem", u"General", u"general_pref", self.generalView)
+        channelsItem = self.makePreferenceItem(u"ChannelsItem", u"Channels", u"channels_pref", self.channelsView)
+        downloadsItem = self.makePreferenceItem(u"DownloadsItem", u"Downloads", u"downloads_pref", self.downloadsView)
+        diskSpaceItem = self.makePreferenceItem(u"DiskSpaceItem", u"Disk Space", u"disk_space_pref", self.diskSpaceView)
+        playbackItem = self.makePreferenceItem(u"PlaybackItem", u"Playback", u"playback_pref", self.playbackView)
 
         initialItem = generalItem
 
-        toolbar = NSToolbar.alloc().initWithIdentifier_("Preferences")
+        toolbar = NSToolbar.alloc().initWithIdentifier_(u"Preferences")
         toolbar.setDelegate_(self)
         toolbar.setAllowsUserCustomization_(NO)
         toolbar.setSelectedItemIdentifier_(initialItem.itemIdentifier())
@@ -128,7 +128,7 @@ class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
     
     def awakeFromNib(self):
         moviesDirPath = config.get(prefs.MOVIES_DIRECTORY)
-        self.moviesDirectoryField.setStringValue_(moviesDirPath)
+        self.moviesDirectoryField.setStringValue_(unicode(moviesDirPath))
         limit = config.get(prefs.LIMIT_UPSTREAM)
         self.limitUpstreamCheckBox.setState_(limit and NSOnState or NSOffState)
         self.limitValueField.setEnabled_(limit)

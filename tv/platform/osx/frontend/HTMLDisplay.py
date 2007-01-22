@@ -11,6 +11,7 @@ import prefs
 import config
 import resources
 import platformutils
+import templatehelper
 
 ###############################################################################
 # These are used by the channel guide. This platform uses the
@@ -155,7 +156,7 @@ class ManagedWebHTMLView (WebHTMLView):
 
 class ManagedWebView (NSObject):
 
-    WebView.registerViewClass_representationClass_forMIMEType_(ManagedWebHTMLView, WebHTMLRepresentation, 'text/html')
+    WebView.registerViewClass_representationClass_forMIMEType_(ManagedWebHTMLView, WebHTMLRepresentation, u'text/html')
 
     def init(self, initialHTML, existingView=nil, onInitialLoadFinished=None, onLoadURL=None, sizeHint=None, baseURL=None):
         self.onInitialLoadFinished = onInitialLoadFinished
@@ -177,7 +178,7 @@ class ManagedWebView (NSObject):
                 # is hopefully rendered to the correct dimensions, instead
                 # of having to be corrected after being displayed.
                 self.view.setFrame_(sizeHint)
-            self.view.setCustomUserAgent_("%s/%s (%s)" % \
+            self.view.setCustomUserAgent_(u"%s/%s (%s)" % \
                                           (config.get(prefs.SHORT_APP_NAME),
                                            config.get(prefs.APP_VERSION),
                                            config.get(prefs.PROJECT_URL),))
@@ -194,9 +195,9 @@ class ManagedWebView (NSObject):
         html = NSString.stringWithString_(unicode(initialHTML))
         data = html.dataUsingEncoding_(NSUTF8StringEncoding)
         if baseURL is not None:
-            baseURL = NSURL.URLWithString_(baseURL)
+            baseURL = NSURL.URLWithString_(unicode(baseURL))
 
-        self.view.mainFrame().loadData_MIMEType_textEncodingName_baseURL_(data, 'text/html', 'utf-8', baseURL)        
+        self.view.mainFrame().loadData_MIMEType_textEncodingName_baseURL_(data, u'text/html', u'utf-8', baseURL)        
 
     def isKeyExcludedFromWebScript_(self,key):
         return YES
@@ -234,13 +235,13 @@ class ManagedWebView (NSObject):
                 self.onInitialLoadFinished()
 
             scriptObj = self.view.windowScriptObject()
-            scriptObj.setValue_forKey_(self,'frontend')
+            scriptObj.setValue_forKey_(self, u'frontend')
 
     # Intercept navigation actions and give program a chance to respond
     def webView_decidePolicyForNavigationAction_request_frame_decisionListener_(self, webview, action, request, frame, listener):
         platformutils.warnIfNotOnMainThread('ManagedWebView.webView_decidePolicyForNavigationAction_request_frame_decisionListener_')
         method = request.HTTPMethod()
-        url = request.URL()
+        url = str(request.URL())
         body = request.HTTPBody()
         type = action['WebActionNavigationTypeKey']
         #print "policy %d for url %s" % (type, url)
@@ -250,7 +251,7 @@ class ManagedWebView (NSObject):
         if type == WebNavigationTypeLinkClicked or type == WebNavigationTypeFormSubmitted or type == WebNavigationTypeOther:
             # Make sure we have a real, bona fide Python string, not an
             # NSString. Unfortunately, == can tell the difference.
-            if (not self.onLoadURL) or self.onLoadURL('%s' % url):
+            if (not self.onLoadURL) or self.onLoadURL(url):
                 listener.use()
             else:
                 listener.ignore()
@@ -260,12 +261,12 @@ class ManagedWebView (NSObject):
     # Redirect resource: links to files in resource bundle
     def webView_resource_willSendRequest_redirectResponse_fromDataSource_(self, webview, resourceCookie, request, redirectResponse, dataSource):
         platformutils.warnIfNotOnMainThread('ManagedWebView.webView_resource_willSendRequest_redirectResponse_fromDataSource_')
-        url = "%s" % request.URL() # Make sure it's a Python string
-        match = re.compile("resource:(.*)$").match(url)
-        if match:
-            path = resources.path(match.group(1))
-            urlObject = NSURL.fileURLWithPath_(path)
-            return NSURLRequest.requestWithURL_(urlObject)
+        url = request.URL().absoluteString()
+        match = templatehelper.resourcePattern.match(url)
+        if match is not None:
+            url = resources.url(match.group(1))
+            urlObject = NSURL.URLWithString_(url)
+            return NSURLRequest.requestWithURL_cachePolicy_timeoutInterval_(urlObject, NSURLRequestReloadIgnoringCacheData, 60)
         return request
 
     # Return the actual WebView that we're managing
@@ -301,11 +302,11 @@ class ManagedWebView (NSObject):
 
     def findElt(self, id):
         doc = self.view.mainFrame().DOMDocument()
-        elt = doc.getElementById_(id)
+        elt = doc.getElementById_(unicode(id))
         return elt
 
     def createElts(self, xml):
-        parent = self.view.mainFrame().DOMDocument().createElement_("div")
+        parent = self.view.mainFrame().DOMDocument().createElement_(u"div")
         if len(xml) == 0:
             parent.setInnerHTML_("&nbsp;")
         else:

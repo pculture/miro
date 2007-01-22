@@ -6,8 +6,8 @@ import config
 
 ###############################################################################
 
-DOWNLOAD_COMPLETE = 'Download Complete'
-DOWNLOAD_FAILED = 'Download Failed'
+DOWNLOAD_COMPLETE = u'Download Complete'
+DOWNLOAD_FAILED = u'Download Failed'
 
 ###############################################################################
 
@@ -22,8 +22,8 @@ def register():
 
 def notifyDownloadComplete(title):
     GrowlApplicationBridge.notifyWithTitle_description_notificationName_iconData_priority_isSticky_clickContext_(
-        'Download Completed',
-        'Download of video \'%s\' is finished.' % title,
+        u'Download Completed',
+        u'Download of video \'%s\' is finished.' % title,
         DOWNLOAD_COMPLETE,
         objc.nil,
         0,
@@ -32,8 +32,8 @@ def notifyDownloadComplete(title):
 
 def notifyDownloadFailed(title):
     GrowlApplicationBridge.notifyWithTitle_description_notificationName_iconData_priority_isSticky_clickContext_(
-        'Download Failed',
-        'Download of video \'%s\' has failed.' % title,
+        u'Download Failed',
+        u'Download of video \'%s\' has failed.' % title,
         DOWNLOAD_FAILED,
         objc.nil,
         0,
@@ -46,9 +46,9 @@ class GrowlNotifier (NSObject):
     
     def registrationDictionaryForGrowl(self):
         notifications = [DOWNLOAD_COMPLETE]
-        info = {'ApplicationName': config.get(prefs.LONG_APP_NAME),
-                'AllNotifications': notifications, 
-                'DefaultNotifications': notifications}
+        info = {u'ApplicationName': unicode(config.get(prefs.LONG_APP_NAME)),
+                u'AllNotifications': notifications, 
+                u'DefaultNotifications': notifications}
         return info
         
 ###############################################################################

@@ -13,14 +13,14 @@ import config
 import eventloop
 import platformutils
 
-NibClassBuilder.extractClasses("StartupPanel")
+NibClassBuilder.extractClasses(u"StartupPanel")
 
 ###############################################################################
 
 class StartupPanelController (NibClassBuilder.AutoBaseClass):
     
     def init(self):
-        self = super(StartupPanelController, self).initWithWindowNibName_("StartupPanel")
+        self = super(StartupPanelController, self).initWithWindowNibName_(u"StartupPanel")
         self.gathered = None
         self.panels = {
             'run-at-startup':
@@ -85,7 +85,7 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
     def prepareRunAtStartupPanel(self):
         self.backButton.setEnabled_(NO)
         self.validateButton.setEnabled_(YES)
-        self.validateButton.setTitle_('Next')
+        self.validateButton.setTitle_(u'Next')
         tag = int(config.get(prefs.RUN_DTV_AT_STARTUP))
         self.runAtStartupMatrix.selectCellWithTag_(tag)
 
@@ -109,9 +109,9 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
         find = (sender.selectedCell().tag() == 1)
         self.findRestrictionsMatrix.setEnabled_(find)
         if find:
-            self.validateButton.setTitle_('Search!')
+            self.validateButton.setTitle_(u'Search!')
         else:
-            self.validateButton.setTitle_('Next')
+            self.validateButton.setTitle_(u'Next')
 
     def setFindRestriction_(self, sender):
         tag = sender.selectedCell().tag()
@@ -187,7 +187,7 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
     def prepareLastPanel(self):
         self.backButton.setEnabled_(YES)
         self.validateButton.setEnabled_(YES)
-        self.validateButton.setTitle_('Finish')
+        self.validateButton.setTitle_(u'Finish')
 
 ###############################################################################
 
