@@ -24,9 +24,7 @@ thisItemView.unlink()
 <div t:updateForView="thisItemView">
 <div id="videodetails-actions">
      <div  t:showIf="this.hasSharableURL()">
-        <a href="#" 
-            onclick="return recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@');" >
-		<span i18n:translate="">SHARE</span></a>&nbsp;-&nbsp;<a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" ><span i18n:translate="">STAR</span></a>
+        <a href="#" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" ><span i18n:translate="">STAR</span></a>
      </div>
      <div>
          <span t:showIf="this.getExpiring()" t:replace="this.getExpirationString()" />&nbsp;
