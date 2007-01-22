@@ -56,7 +56,7 @@ matchingItems.unlink()
 <div id="main-container">
     <span t:updateForView="matchingItems">
         <div t:hideIf="matchingItems.len() == 0">
-            <t:includeTemplate filename="sort-bar" />
+            <t:includeTemplate filename="static-tab-sort-bar" />
         </div>
     </span>
     <div id="main-unwatched">

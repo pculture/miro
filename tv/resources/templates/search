@@ -76,7 +76,7 @@ searchItems.unlink()
             
             <span t:updateForView="searchItems">
                 <div t:hideIf="searchItems.len() == 0">
-                    <t:includeTemplate filename="sort-bar" />
+                    <t:includeTemplate filename="static-tab-sort-bar" />
                 </div>
             </span>
 

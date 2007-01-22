@@ -374,6 +374,10 @@ img {
     height: 19px;
 }
 
+.static-tab-sort #sort-buttons {
+    background-color: #333;
+}
+
 
 .available-sort #sort-buttons {
     background-color: #5faeff;	

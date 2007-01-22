@@ -56,7 +56,7 @@ matchingItems.unlink()
     <!-- SORT BAR ************************************************************* -->
     <span t:updateForView="matchingItems">
         <div t:hideIf="libraryItems.len() == 0">
-            <t:includeTemplate filename="sort-bar" />
+            <t:includeTemplate filename="static-tab-sort-bar" />
         </div>
     </span>
     <!-- / SORT BAR -->

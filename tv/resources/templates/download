@@ -146,7 +146,7 @@ matchingPausedDLs.unlink()
     <!-- SORT BAR ************************************************************* --> 
     <span t:updateForView="allNormalDownloads"> 
         <div t:hideIf="allNormalDownloads.len() == 0">
-            <t:includeTemplate filename="sort-bar" /> 
+            <t:includeTemplate filename="static-tab-sort-bar" /> 
         </div>
     </span> 
     <!-- / SORT BAR -->
