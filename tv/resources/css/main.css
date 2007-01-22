@@ -896,7 +896,7 @@ an element is dragged, the drag-highlight class is added to it */
 .main-video-hitbox .inprogress-arrows {
     display: block;
     position: absolute;
-    bottom: 5px;
+    bottom: 3px;
     right: 5px;
     width: 19px;
     height: 19px;

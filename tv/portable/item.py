@@ -713,7 +713,9 @@ folder will be deleted.""")
         elif self.isContainerItem:
             return resources.url("images/container-icon.png")
         else:
-            return resources.url("images/thumb.png")
+            if self.showMoreInfo:
+                return resources.url("images/thumb-more-info.png")
+            else: return resources.url("images/thumb.png")
     ##
     # returns the title of the item
     def getTitle(self):

@@ -170,6 +170,7 @@ class PlaybackControllerBase:
             self.stop()
 
     def playItemInternally(self, anItem, videoDisplay, videoRenderer):
+        logging.info("Playing item with renderer: %s" % videoRenderer)
         frame = controller.frame
         if frame.getDisplay(frame.mainDisplay) is not videoDisplay:
             frame.selectDisplay(videoDisplay, frame.mainDisplay)
