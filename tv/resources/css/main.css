@@ -804,9 +804,11 @@ an element is dragged, the drag-highlight class is added to it */
     overflow: hidden;
 }
 
-.more-info .main-video-desc-desc {
-    height: 100%;
-    min-height: 63px;
+.main-video-desc-donate {
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    bottom: 5px;
 }
 
 .main-video.selected .main-video-desc h1, .main-video.selected .main-video-desc-desc {
