@@ -1785,7 +1785,7 @@ class SearchFeedImpl (RSSFeedImpl):
         return 'dtv:search'
 
     def getTitle(self):
-        return _('Search')
+        return _(u'Search')
 
     def getStatus(self):
         status = 'idle-empty'
@@ -1844,7 +1844,7 @@ class SearchDownloadsFeedImpl(FeedImpl):
         self.setUpdateFrequency(-1)
 
     def getTitle(self):
-        return _('Search')
+        return _(u'Search')
 
 class ManualFeedImpl(FeedImpl):
     """Videos/Torrents that have been added using by the user opening them
@@ -1858,7 +1858,7 @@ class ManualFeedImpl(FeedImpl):
         self.setUpdateFrequency(-1)
 
     def getTitle(self):
-        return _('Local File')
+        return _(u'Local File')
 
 ##
 # Parse HTML document and grab all of the links and their title

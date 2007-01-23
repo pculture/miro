@@ -17,6 +17,7 @@ import prefs
 import random
 import views
 import flashscraper
+from templatehelper import toUni
 
 # a hash of download ids that the server knows about.
 _downloads = {}
@@ -309,9 +310,11 @@ URL was %s""" % self.url
 
     def setChannelName(self, channelName):
         if self.channelName is None:
-            channelName = channelName.translate({ ord('/')  : u'-',
-                                                  ord('\\') : u'-',
-                                                  ord(':')  : u'-' })
+            if channelName:
+                channelName = toUni (channelName)
+                channelName = channelName.translate({ ord('/')  : u'-',
+                                                      ord('\\') : u'-',
+                                                      ord(':')  : u'-' })
             self.channelName = channelName
 
     ##
