@@ -454,6 +454,7 @@ URL was %s""" % self.url
     def startUpload(self):
         if self.getState() != 'finished' or self.getType() != 'bittorrent':
             return
+        self.manualUpload = True
         if _downloads.has_key(self.dlid):
             c = command.StartDownloadCommand(RemoteDownloader.dldaemon,
                                              self.dlid)
