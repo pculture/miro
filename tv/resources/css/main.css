@@ -804,14 +804,56 @@ an element is dragged, the drag-highlight class is added to it */
     overflow: hidden;
 }
 
-.main-video-desc-donate {
+.more-info .main-video-desc-desc {
+    height: auto;
+}
+
+.main-video-bottom { 
     position: absolute;
     left: 0px;
     width: 100%;
     bottom: 5px;
+    /* 
+     * Make the main-video-bottom cover the description.  This is sort of a
+     * hack -- it works because more-info is not set, so main-video-bottom
+     * will only be 1 line 
+     */
+    background: url(../images/main-video-bg.png) repeat-x;
+    background-position: 0px -70px;
+    height: 15px;
 }
 
-.main-video.selected .main-video-desc h1, .main-video.selected .main-video-desc-desc {
+.selected .main-video-bottom { 
+    background-image: url(../images/main-video-bg-selected.png);
+}
+
+.more-info .main-video-bottom {
+    position: static;
+    margin-top: 3px;
+    background: none;
+}
+
+.donate-html {
+    display: none;
+}
+
+.more-info .donate-html {
+    margin-top: 5px;
+    display: block;
+}
+
+.channel-title {
+    text-align: right;
+    color: #666;
+    height: 13px;
+    overflow: hidden;
+}
+
+.hide-channel-title .channel-title {
+    display: none;
+}
+
+.main-video.selected .main-video-desc h1, .main-video.selected .main-video-desc-desc, .main-video.selected .channel-title {
     color: black; 
 }
 
@@ -1091,14 +1133,6 @@ a.round-button-left.black {
     font-weight: bold;
 }
 
-.main-video-bottom {
-    width: 100%;
-    margin-right: 310px;
-    font-size: 10px;
-    overflow: hidden;
-    padding: 1px 0px 2px 0px;
-}
-
 .video-state {
     font-weight: bold;
     height: 18px;
@@ -1151,36 +1185,6 @@ a.round-button-left.black {
     background-image: url(../images/badge-green-mid.png);
 }
 
-
-.date-channel-title-wrap {
-    float: right;
-    color: #666;
-    width: 60%;    
-    height: 16px;
-    overflow: hidden;
-    text-align: right;
-    padding-right: 0px;
-}
-
-.date-channel-title-wrap a {
-    color: #777;
-}
-
-.selected .date-channel-title-wrap {
-    color: black;
-}
-
-.channel-title {
-    display: inline;
-}
-
-.selected .channel-title {
-    color: black; 
-}
-
-.hide-channel-title .channel-title {
-    display: none;
-}
 
 .small-button-left {
     background: left top no-repeat url(../images/small-button-left.png);

@@ -13,14 +13,13 @@
         <div class="main-video-desc-desc noselect">
             <span t:replaceMarkup="this.getDescription()" />
         </div>
-        <div t:showIf="this.showMoreInfo" 
-            class="main-video-desc-donate noselect">
-            <span t:replaceMarkup="this.getPaymentHTML()" />
-        </div>
-        <div class="main-video-bottom noselect">
-            <div class="date-channel-title-wrap">
-                <div class="channel-title"><span t:replace="this.getChannelTitle()" /></div>
-            </div>
+        <div class="main-video-bottom">
+                <div class="channel-title">
+                        <span t:replace="this.getChannelTitle()" />
+                </div>
+                <div class="donate-html noselect">
+                    <span t:replaceMarkup="this.getPaymentHTML()" />
+                </div>
         </div>
     </div>
 </body>
