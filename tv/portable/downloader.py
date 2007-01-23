@@ -281,6 +281,12 @@ WARNING: can't migrate download because we don't have a filename!
 URL was %s""" % self.url
                 return
             if os.path.exists(filename):
+                if self.status['channelName']:
+                    directory = os.path.join (directory, self.status['channelName'])
+                try:
+                    os.makedirs(directory)
+                except:
+                    pass
                 newfilename = os.path.join(directory,
                         shortFilename)
                 newfilename = shortenFilename(newfilename)
@@ -303,6 +309,9 @@ URL was %s""" % self.url
 
     def setChannelName(self, channelName):
         if self.channelName is None:
+            channelName = channelName.translate({ ord('/')  : u'-',
+                                                  ord('\\') : u'-',
+                                                  ord(':')  : u'-' })
             self.channelName = channelName
 
     ##

@@ -523,6 +523,20 @@ def upgrade37(objectList):
                 del objectList[i]
     return changed
 
+def upgrade38(objectList):
+    changed = set()
+    for o in objectList:
+        if o.classString == 'remote-downloader':
+            try:
+                if o.savedData['status']['channelName']:
+                    o.savedData['status']['channelName'] = o.savedData['status']['channelName'].translate({ ord('/')  : u'-',
+                                                                                                            ord('\\') : u'-',
+                                                                                                            ord(':')  : u'-' })
+                    changed.add(o)
+            except:
+                pass
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

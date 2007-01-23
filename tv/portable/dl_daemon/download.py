@@ -262,10 +262,7 @@ class BGDownloader:
 
     def moveToDirectory (self, directory):
         if self.channelName:
-            channelDir = self.channelName.translate({ ord('/')  : u'-',
-                                                      ord('\\') : u'-',
-                                                      ord(':')  : u'-' })
-            directory = os.path.join (directory, channelDir)
+            directory = os.path.join (directory, self.channelName)
             try:
                 os.makedirs(directory)
             except:
@@ -280,6 +277,9 @@ class BGDownloader:
         except (IOError, OSError, shutil.Error), e:
             logging.info ("WARNING: Error moving %s to %s (%s)", self.filename,
                           newfilename, e)
+        except TypeError, e:
+            logging.warning ("Error moving %s (%s) to %s (%s) (%s)", self.filename, type(self.filename),
+                             newfilename, type(newfilename), e)
         else:
             self.filename = newfilename
             logging.info ("new file name is %s", self.filename)
