@@ -9,6 +9,10 @@ import tempfile
 import ctypes
 import resources
 
+import proxyfind
+
+proxy_info = proxyfind.get_proxy_info()
+
 _specialFolderCSIDLs = {
     'AppData': 0x001a,
     "My Music": 0x000d,
@@ -134,5 +138,20 @@ def get(descriptor):
             except:
                 return False
         return False
+
+    elif descriptor == prefs.HTTP_PROXY_ACTIVE:
+        return proxy_info.host is not None
+    elif descriptor == prefs.HTTP_PROXY_HOST:
+        return proxy_info.host
+    elif descriptor == prefs.HTTP_PROXY_PORT:
+        return proxy_info.port
+    elif descriptor == prefs.HTTP_PROXY_IGNORE_HOSTS:
+        return poxy_info.ignore_hosts
+    # Proxy authorization isn't suppored on windows, so the following keps are
+    # ignored:
+    # 
+    # HTTP_PROXY_AUTHORIZATION_ACTIVE
+    # HTTP_PROXY_AUTHORIZATION_USERNAME
+    # HTTP_PROXY_AUTHORIZATION_PASSWORD
     else:
         return descriptor.default
