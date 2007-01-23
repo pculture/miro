@@ -56,7 +56,7 @@ allExternalDownloads = views.items.filter(lambda x: x.getFeed().url == 'dtv:manu
 # Specifically don't include anything in external downloads in uploads.
 allUploads = views.items.filter(lambda x: x.downloader and x.downloader.getState() == 'uploading' and not (x.getFeed().url == 'dtv:manualFeed' and x.isNonVideoFile()))
 allPendingDownloads = makeDownloadCategoryView('pending')
-allPausedDownloads = views.pausedItems
+allPausedDownloads = views.pausedItems.filter (lambda x: not (x.getFeed().url == 'dtv:manualFeed' and x.isNonVideoFile()))
 
 matchingNormalDLs = allNormalDownloads.filter(lambda x:searchFilter(x))
 matchingExternalDLs = allExternalDownloads.filter(lambda x:searchFilter(x))
@@ -97,7 +97,7 @@ allNormalDownloads.unlink()
 allExternalDownloads.unlink()
 allUploads.unlink()
 allPendingDownloads.unlink()
-matchingPausedDLs.unlink()
+allPausedDownloads.unlink()
 ]]>
     </t:execOnUnload>
 </head>
