@@ -1423,7 +1423,8 @@ folder will be deleted.""")
         if self.duration == None:
             moviedata.movieDataUpdater.requestUpdate (self)
         if self.isDownloaded() and self.downloader:
-            print "%s's downloader is in state: %s" % (self, self.downloader.getState())
+            this = str(self).encode('ascii', 'replace')
+            print "%s's downloader is in state: %s" % (this, self.downloader.getState())
 
     def __str__(self):
         return "Item - %s" % self.getTitle()
