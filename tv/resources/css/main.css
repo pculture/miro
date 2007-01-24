@@ -775,10 +775,12 @@ an element is dragged, the drag-highlight class is added to it */
 .main-video-desc {
     position: relative;
     margin-left: 122px;
-    margin-right: 18px;
+    padding-right: 19px;
     padding-top: 5px;
     height: 84px;
     overflow: hidden;
+    border-right: 1px solid #e1e9f6;
+    margin-right: -1px; /* Make the border overlap with main-video-details */
 }
 
 .more-info .main-video-desc {
@@ -962,6 +964,10 @@ an element is dragged, the drag-highlight class is added to it */
     height: 90px;
     padding: 0px 0 0 8px;
     border-left: 1px solid #e1e9f6;
+}
+
+.more-info .main-video-details {
+    height: auto;
 }
 
 .main-video-details-main {
@@ -1225,12 +1231,22 @@ a.small-button-left:hover {
     margin-bottom: 4px;
 }
 
+.more-info-details h3 {
+    font-size: 10px;
+    margin: 0px;
+}
+
 .more-info-details a {
     color: #333;
 }
 
 .more-info-details table {
     width: 100%;
+    margin: 0px;
+}
+
+.more-info-details td {
+    vertical-align: top;
 }
 
 .more-info-details .label {

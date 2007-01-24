@@ -854,13 +854,14 @@ folder will be deleted.""")
         ]
         if self.isDownloaded():
             basename = os.path.basename(self.getFilename())
+            basename = util.clampText(basename, 40)
             linkEventURL = 'revealItem?item=%d' % self.getID()
             if self.isContainerItem:
                 label = _("REVEAL LOCAL FOLDER")
             else:
                 label = _("REVEAL LOCAL FILE")
             link = util.makeEventURL(label, linkEventURL)
-            rv.append((_('Filename:'), "%s %s" % (basename, link)))
+            rv.append((_('Filename:'), "%s<BR />%s" % (basename, link)))
         return rv
 
 

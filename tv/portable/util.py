@@ -424,6 +424,12 @@ def makeEventURL(label, eventURL):
     return '<a href="#" onclick="return eventURL(\'action:%s\');">%s</a>' % \
             (eventURL, label)
 
+def clampText(text, maxLength):
+    if len(text) > maxLength:
+        return text[:maxLength-3] + '...'
+    else:
+        return text
+
 def print_mem_usage(message):
     pass
 # Uncomment for memory usage printouts on linux.

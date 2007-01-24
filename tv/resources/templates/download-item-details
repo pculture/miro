@@ -171,9 +171,9 @@
                 </a>
             </div>
         </div>
-    </div>
-    <div t:showIf="this.showMoreInfo" class="more-info-details">
-        <div t:replaceMarkup="this.getMoreInfo()" />
+        <div t:showIf="this.showMoreInfo" class="more-info-details">
+            <div t:replaceMarkup="this.getMoreInfo()" />
+        </div>
     </div>
 </body>
 </html>
