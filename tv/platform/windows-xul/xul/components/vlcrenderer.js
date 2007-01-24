@@ -115,8 +115,8 @@ VLCRenderer.prototype = {
     this.stop();
     this.vlc.playlist.clear();
     this.vlc.playlist.add(url);
-    this.vlc.playlist.next();
     this.vlc.playlist.play();
+    this.vlc.playlist.next();
   },
 
   play: function() {
