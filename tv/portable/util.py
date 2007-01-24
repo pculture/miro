@@ -67,15 +67,13 @@ def readSimpleConfigFile(path):
         # Otherwise it'd better be a configuration setting
         match = re.match(r"^([^ ]+) *= *([^\r\n]*)[\r\n]*$", line)
         if not match:
-            logging.warning ("%s: ignored bad configuration directive '%s'",
-                             path, line)
+            print "WARNING: %s: ignored bad configuration directive '%s'" % (path, line)
             continue
         
         key = match.group(1)
         value = match.group(2)
         if key in ret:
-            logging.warning ("%s: ignored duplicate directive '%s'",
-                             path, line)
+            print "WARNING: %s: ignored duplicate directive '%s'" % (path, line)
             continue
 
         ret[key] = value
