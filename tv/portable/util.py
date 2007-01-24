@@ -100,7 +100,9 @@ def queryRevision(file):
         info = p.stdout.read()
         p.stdout.close()
         url = re.search("URL: (.*)", info).group(1)
+        url = url.strip()
         revision = re.search("Revision: (.*)", info).group(1)
+        revision = revision.strip()
         return (url, revision)
     except KeyboardInterrupt:
         raise
