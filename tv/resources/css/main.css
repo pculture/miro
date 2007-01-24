@@ -198,6 +198,10 @@ img {
     z-index: 2;
 }
 
+#auto-download-menu {
+    font-weight: normal;
+}
+
 #auto-checkbox-container {
     position: absolute;
     top: 40px;
