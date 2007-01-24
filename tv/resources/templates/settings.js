@@ -1,46 +1,19 @@
 <script type="text/javascript">
     <!-- // Protect from our XML parser, which doesn't know to protect <script>
 
-    var feedSettingsTimeout = null;
     var settingsMode = 'closed';
 
     function showSettings()
     {
         if(settingsMode == 'open') return hideSettings();
-        if(settingsMode == 'animating') return;
         var feedSettings = document.getElementById("feed-settings");
-        var closeButton = document.getElementById("feed-settings-close-button");
         feedSettings.style.display = "block";
-        feedSettings.style.top = "-224px";
-        closeButton.style.display = "none";
-        var startTop = -147;
-        var endTop = 91;
-        var steps = 5;
-        var stepSize = (endTop - startTop) / steps;
-        var currentStep = 0;
-        function iteration() {
-           currentStep += 1;
-           var top = Math.round(startTop + (currentStep * stepSize));
-           feedSettings.style.top = top + "px";
-           if(currentStep != steps) {
-                feedSettingsTimeout = setTimeout(iteration, 50);
-           } else {
-                feedSettingsTimeout = null;
-                closeButton.style.display = "block";
-                settingsMode = 'open';
-           }
-        }
-        feedSettingsTimeout = setTimeout(iteration, 50);
-        settingsMode = 'animating';
+        settingsMode = 'open';
         return false;
     }
 
     function hideSettings()
     {
-        if(feedSettingsTimeout) {
-            clearTimeout(feedSettingsTimeout);
-            feedSettingsTimeout = null;
-        }
         var feedSettings = document.getElementById("feed-settings");
         feedSettings.style.display = "none";
         settingsMode = 'closed';

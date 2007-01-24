@@ -49,10 +49,9 @@ img {
 /* This is used to make the feed settings section float above the channel */
 #feed-settings {
     position: fixed;
-    top: 0px;
+    top: 91px;
     left: 0px;
     width: 100%;
-    height: 238px;
     display: none;
     background: url(../images/settings-shadow.png) repeat-x left bottom;
     z-index: 5; /* Needs to be float above the main page */
