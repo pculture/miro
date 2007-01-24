@@ -38,14 +38,16 @@
 
         <div class="main-video-details-main">
             <div class="details-buttons-right">
-                <div t:showIf="this.showSaveButton()">
-                    <a href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');" class="round-button-left save">
-                    <div class="round-button-right">
-                    <div class="round-button-content">
-                        <span i18n:translate="">KEEP</span>
+                <div class="save-button-container">
+                    <div t:showIf="this.showSaveButton()">
+                        <a href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');" class="round-button-left save">
+                        <div class="round-button-right">
+                        <div class="round-button-content">
+                            <span i18n:translate="">KEEP</span>
+                        </div>
+                        </div>
+                        </a>
                     </div>
-                    </div>
-                    </a>
                 </div>
                 <div t:showIf="this.showSaved()" class="saved-note">SAVED</div>
                 <div t:showIf="this.showTrashButton()">

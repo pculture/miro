@@ -853,6 +853,7 @@ an element is dragged, the drag-highlight class is added to it */
     color: #666;
     height: 13px;
     overflow: hidden;
+    margin-right: 5px;
 }
 
 .hide-channel-title .channel-title {
@@ -1043,6 +1044,11 @@ an element is dragged, the drag-highlight class is added to it */
     margin-right: 8px;
 }
 
+.save-button-container {
+    margin: 13px 0px;
+    height: 17px;
+}
+
 .round-button-left {
     display: block;
     background: url(../images/round-button-left.png) top left no-repeat;
@@ -1068,7 +1074,6 @@ a.round-button-left {
 }
 
 .round-button-left.delete, .round-button-left.save {
-    margin-top: 13px;
     width: 54px;
 }
 
