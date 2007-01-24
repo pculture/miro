@@ -10,7 +10,7 @@ def matchingItems(obj, searchString):
     if searchString is None:
         return True
     searchString = searchString.lower()
-    if search.match (searchString, [obj.getTitle().lower(), obj.getDescription().lower()]):
+    if search.match (searchString, [obj.getTitle().lower(), obj.getRawDescription().lower()]):
         return True
     if not obj.isContainerItem:
         parent = obj.getParent()
