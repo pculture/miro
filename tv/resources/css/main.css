@@ -170,7 +170,7 @@ img {
 /* The right side of the titlebar (visit website, settings, etc). */
 .main-titlebar-right {
     position: absolute;
-    top: 12px;
+    top: 9px;
     right: 16px;
 }
 
