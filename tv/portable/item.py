@@ -52,6 +52,7 @@ class Item(DDBObject):
         self.feed_id = feed_id
         self.parent_id = parent_id
         self.isContainerItem = None
+        self.isVideo = False
         self.seen = False
         self.autoDownloaded = False
         self.pendingManualDL = False
@@ -147,6 +148,7 @@ class Item(DDBObject):
         signalChange().
         """
 
+        filename_root = self.getFilename()
         if not self.isContainerItem:
             return False
         if self.getState() == 'downloading':
@@ -157,7 +159,11 @@ class Item(DDBObject):
         for child in self.getChildren():
             videos.discard(child.getFilename())
         for video in videos:
-            FileItem (video, parent_id=self.id)
+            assert video.startswith(filename_root)
+            offsetPath = video[len(filename_root):]
+            if offsetPath[0] == '/':
+                offsetPath = offsetPath[1:]
+            FileItem (video, parent_id=self.id, offsetPath=offsetPath)
         if videos:
             self.signalChange()
             return True
@@ -176,11 +182,18 @@ class Item(DDBObject):
                 self.isContainerItem = True
                 for video in videos:
                     assert video.startswith(filename_root)
-                    FileItem (video, parent_id=self.id)
+                    offsetPath = video[len(filename_root):]
+                    if offsetPath[0] == '/':
+                        offsetPath = offsetPath[1:]
+                    FileItem (video, parent_id=self.id, offsetPath=offsetPath)
             elif len(videos) == 1:
                 self.isContainerItem = False
                 for video in videos:
-                    self.videoFilename = video
+                    assert video.startswith(filename_root)
+                    self.videoFilename = video[len(filename_root):]
+                    if self.videoFilename[0] == '/':
+                        self.videoFilename = self.videoFilename[1:]
+                    self.isVideo = True
             else:
                 if self.getFeedURL() != "dtv:directoryfeed":
                     target_dir = config.get(prefs.NON_VIDEO_DIRECTORY)
@@ -192,7 +205,8 @@ class Item(DDBObject):
                 self.isContainerItem = False
         else:
             self.isContainerItem = False
-            self.videoFilename = filename_root
+            self.videoFilename = ""
+            self.isVideo = True
         self.signalChange()
         return True
 
@@ -396,6 +410,8 @@ class Item(DDBObject):
             for item in self.getChildren():
                 item.remove()
         self.isContainerItem = None
+        self.isVideo = False
+        self.videoFilename = ""
         self.seen = self.keep = self.pendingManualDL = False
         self.watchedTime = None
         self.duration = None
@@ -824,7 +840,7 @@ folder will be deleted.""")
             (_('Down Total:'), formatSizeForDetails(
                 status.get('currentSize', 0))),
             (_('Up Rate:'), formatRateForDetails(status.get('upRate', 0))),
-            (_('Up Total:'), formatSizeForDetails(status.get('uploaded', 0))),
+            (_('Up Total:'), formatSizeForDetails(status.get('uploaded', 0) * 1024 * 1024)),
         ]
 
     def getItemDetails(self):
@@ -851,7 +867,7 @@ folder will be deleted.""")
         return [
             (_('Down Total'), formatSizeForDetails(
                 status.get('currentSize', 0))),
-            (_('Up Total'), formatSizeForDetails(status.get('uploaded', 0))),
+            (_('Up Total'), formatSizeForDetails(status.get('uploaded', 0) * 1024 * 1024)),
         ]
 
     def makeMoreInfoTable(self, title, moreInfoData):
@@ -876,7 +892,7 @@ folder will be deleted.""")
         if self.looksLikeTorrent():
             if self.isTransferring():
                 addTable(_('Torrent Details'), self.getTorrentDetails())
-            elif self.isFinished():
+            elif self.downloader and self.downloader.isFinished():
                 addTable('Torrent Details <i>not connected</i>',
                         self.getTorrentDetailsFinished())
         elif self.getState() == 'downloading':
@@ -1365,10 +1381,14 @@ folder will be deleted.""")
     # NOTE: this will always return the absolute path to the file.
     def getVideoFilename(self):
         self.confirmDBThread()
-        return self.videoFilename
+        if self.videoFilename:
+            return os.path.join (self.getFilename(), self.videoFilename)
+        else:
+            return self.getFilename()
 
     def isNonVideoFile(self):
-        return self.isContainerItem != True and self.getVideoFilename() == ""
+        # isContainerItem can be False or None.
+        return self.isContainerItem != True and not self.isVideo
 
     def isExternal(self):
         """Returns True iff this item was not downloaded from a Democracy
@@ -1422,9 +1442,6 @@ folder will be deleted.""")
             return
         if self.duration == None:
             moviedata.movieDataUpdater.requestUpdate (self)
-        if self.isDownloaded() and self.downloader:
-            this = str(self).encode('ascii', 'replace')
-            print "%s's downloader is in state: %s" % (this, self.downloader.getState())
 
     def __str__(self):
         return "Item - %s" % self.getTitle()
@@ -1454,14 +1471,12 @@ def getEntryForFile(filename):
 # An Item that exists as a local file
 class FileItem(Item):
 
-    def __init__(self,filename, feed_id=None, parent_id=None, shortFilename=None):
+    def __init__(self,filename, feed_id=None, parent_id=None, offsetPath=None):
         filename = os.path.abspath(filename)
         self.filename = filename
         self.deleted = False
-        if shortFilename:
-            self.shortFilename = shortFilename
-        else:
-            self.shortFilename = os.path.basename(self.filename)
+        self.offsetPath = offsetPath
+        self.shortFilename = os.path.basename(self.filename)
         Item.__init__(self, getEntryForFile(filename), feed_id=feed_id, parent_id=parent_id)
         moviedata.movieDataUpdater.requestUpdate (self)
 
@@ -1589,6 +1604,10 @@ Collection?""")
 
     def migrate(self, newDir):
         self.confirmDBThread()
+        if self.parent_id:
+            parent = self.getParent()
+            self.filename = os.path.join (parent.getFilename(), self.offsetPath)
+            return
         if self.shortFilename is None:
             print """\
 WARNING: can't migrate download because we don't have a shortFilename!
@@ -1736,4 +1755,4 @@ def formatRateForDetails(bytes):
 
 def formatSizeForDetails(bytes):
     """Format a disk size for the more-details view."""
-    return util.formatSizeForUser(bytes, zeroString="-", kbOnly=True)
+    return util.formatSizeForUser(bytes, zeroString="-")

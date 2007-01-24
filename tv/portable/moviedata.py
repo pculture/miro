@@ -13,7 +13,7 @@ class MovieDataUpdater:
     def requestUpdate (self, item):
         if self.inShutdown:
             return
-        if not item.getFilename():
+        if not item.getVideoFilename():
             return
         if item.downloader and not item.downloader.isFinished():
             return
@@ -41,7 +41,7 @@ class MovieDataUpdater:
         if item.updating_movie_info:
             return
         item.updating_movie_info = True
-        app.controller.videoDisplay.fileDuration (item.getFilename(), lambda duration: self.updateFinished (item, duration))
+        app.controller.videoDisplay.fileDuration (item.getVideoFilename(), lambda duration: self.updateFinished (item, duration))
         self.runningCount += 1
 
     @asIdle

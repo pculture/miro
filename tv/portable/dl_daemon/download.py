@@ -103,6 +103,7 @@ def migrateDownload(dlid, directory):
         if download.state in ("finished", "uploading"):
             download.moveToDirectory(directory)
             download.updateClient()
+            print download.filename
 
 def getDownloadStatus(dlids = None):
     statuses = {}

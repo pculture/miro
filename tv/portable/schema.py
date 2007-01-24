@@ -229,6 +229,7 @@ class ItemSchema(DDBObjectSchema):
         ('watchedTime', SchemaDateTime(noneOk=True)),
         ('isContainerItem', SchemaBool(noneOk=True)),
         ('videoFilename', SchemaString()),
+        ('isVideo', SchemaBool()),
         ('releaseDateObj', SchemaDateTime()),
         ('eligibleForAutoDownload', SchemaBool()),
         ('duration', SchemaInt(noneOk=True)),
@@ -241,6 +242,7 @@ class FileItemSchema(ItemSchema):
         ('filename', SchemaString()),
         ('deleted', SchemaBool()),
         ('shortFilename', SchemaString(noneOk=True)),
+        ('offsetPath', SchemaString(noneOk=True)),
     ]
 
 class FeedSchema(DDBObjectSchema):
@@ -388,7 +390,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('redirectedURL', SchemaString(noneOk=True)),
     ]
 
-VERSION = 38
+VERSION = 39
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,

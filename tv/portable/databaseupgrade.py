@@ -503,8 +503,6 @@ def upgrade37(objectList):
                 id = o.savedData['id']
                 break
 
-    print id
-
     if id == 0:
         return changed
 
@@ -535,6 +533,24 @@ def upgrade38(objectList):
                     changed.add(o)
             except:
                 pass
+    return changed
+
+def upgrade39(objectList):
+    changed = set()
+    removed = set()
+    id = 0
+    for i in xrange (len(objectList) - 1, -1, -1):
+        o = objectList [i]
+        if o.classString in ('item', 'file-item'):
+            changed.add(o)
+            if o.savedData['parent_id']:
+                del objectList[i]
+            else:
+                o.savedData['isVideo'] = False
+                o.savedData['videoFilename'] = ""
+                o.savedData['isContainerItem'] = None
+                if o.classString == 'file-item':
+                    o.savedData['offsetPath'] = None
     return changed
 
 #def upgradeX (objectList):
