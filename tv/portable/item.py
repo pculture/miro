@@ -752,7 +752,7 @@ folder will be deleted.""")
             return ''
 
     ##
-    # Returns the raw description of the video
+    # Returns the raw description of the video (unicode)
     def getRawDescription(self):
         self.confirmDBThread()
         try:
@@ -762,10 +762,10 @@ folder will be deleted.""")
             try:
                 return self.entry.description
             except:
-                return ''
+                return u''
 
     ##
-    # Returns valid XHTML containing a description of the video
+    # Returns valid XHTML containing a description of the video (str)
     def getDescription(self):
         rawDescription = self.getRawDescription()
         try:
@@ -777,6 +777,8 @@ folder will be deleted.""")
             except:
                 return '<span />'
 
+    ##
+    # Returns valid XHTML containing the ad (str)
     def getAd(self):
         rawDescription = self.getRawDescription()
         try:
