@@ -37,6 +37,28 @@
         </div>
 
         <div class="main-video-details-main">
+            <div class="details-buttons-right">
+                <div t:showIf="this.showSaveButton()">
+                    <a href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');" class="round-button-left save">
+                    <div class="round-button-right">
+                    <div class="round-button-content">
+                        <span i18n:translate="">KEEP</span>
+                    </div>
+                    </div>
+                    </a>
+                </div>
+                <div t:showIf="this.showSaved()" class="saved-note">SAVED</div>
+                <div t:showIf="this.showTrashButton()">
+                    <a href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" class="round-button-left delete">
+                    <div class="round-button-right">
+                    <div class="round-button-content">
+                        <span i18n:translate="">DELETE</span>
+                    </div>
+                    </div>
+                    </a>
+                </div>
+            </div>
+
             <!-- need to call event.stopPropagation() to prevent us from selecting the div -->
             <div t:showIf="this.hasSharableURL()" class="share-box-left" onclick="showSelectBoxMenu('share-menu-@@@this.getID()@@@'); event.stopPropagation();">
                 <div class="share-box-right">
@@ -139,27 +161,6 @@
                     </div>
                 </div>
             </div>
-            <div class="details-small-buttons">
-                <div t:showIf="this.showSaveButton()">
-                    <a href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');" class="round-button-left save">
-                    <div class="round-button-right">
-                    <div class="round-button-content">
-                        <span i18n:translate="">KEEP</span>
-                    </div>
-                    </div>
-                    </a>
-                </div>
-                <div t:showIf="this.showSaved()" class="saved-note">SAVED</div>
-                <div t:showIf="this.showTrashButton()">
-                    <a href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" class="round-button-left delete">
-                    <div class="round-button-right">
-                    <div class="round-button-content">
-                        <span i18n:translate="">DELETE</span>
-                    </div>
-                    </div>
-                    </a>
-                </div>
-            </div>
             <div t:showIf="this.downloader and this.downloader.getState() == 'uploading'">
                  <a href="#" onclick="return eventURL('action:stopUploadItem?item=@@@this.getID()@@@');" class="round-button-left stop-seeding">
                 <div class="round-button-right">
@@ -170,10 +171,9 @@
                 </a>
             </div>
         </div>
-
-        <div t:showIf="this.showMoreInfo" class="more-info-details">
-            <div t:replaceMarkup="this.getMoreInfo()" />
-        </div>
+    </div>
+    <div t:showIf="this.showMoreInfo" class="more-info-details">
+        <div t:replaceMarkup="this.getMoreInfo()" />
     </div>
 </body>
 </html>

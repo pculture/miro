@@ -10,33 +10,30 @@
 <body>
 <t:execOnLoad>
 <![CDATA[
-def getActiveStateForSortBy(by):
+def getSortButtonState(by):
     if sorts.sortBy == by:
-        return 'active'
+        if sorts.sortDirection == 'ascending':
+            return 'ascending'
+        else:
+            return 'descending'
     return ''
-
-def getImageForSortBy(by):
-    if sorts.sortDirection == 'ascending':
-        return 'resource:images/sort-up.png'
-    return 'resource:images/sort-down.png'
 ]]>
 </t:execOnLoad>
 <div id="sort-bar">
     <div id="sort-buttons">
-        <a href="#" class="sort-name sort-button ***getActiveStateForSortBy('name')***" onclick="return eventURL('action:sortBy?by=name');">
-            Name<img src="***getImageForSortBy('name')***"/>
+        <a href="#" class="sort-name sort-button ***getSortButtonState('name')***" onclick="return eventURL('action:sortBy?by=name');">
+            Name<img class="up-arrow" src="resource:images/sort-up.png" /><img class="down-arrow" src="resource:images/sort-down.png" />
         </a>
 
-        <a href="#" class="sort-date sort-button ***getActiveStateForSortBy('date')***" onclick="return eventURL('action:sortBy?by=date');">
-            Date<img src="***getImageForSortBy('date')***"/>
+        <a href="#" class="sort-date sort-button ***getSortButtonState('date')***" onclick="return eventURL('action:sortBy?by=date');">
+            Date<img class="up-arrow" src="resource:images/sort-up.png" /><img class="down-arrow" src="resource:images/sort-down.png" />
         </a>
 
-        <a href="#" class="sort-length sort-button ***getActiveStateForSortBy('duration')***" onclick="return eventURL('action:sortBy?by=duration');">
-            Length<img src="***getImageForSortBy('duration')***"/>
+        <a href="#" class="sort-length sort-button ***getSortButtonState('duration')***" onclick="return eventURL('action:sortBy?by=duration');">
+            Length<img class="up-arrow" src="resource:images/sort-up.png" /><img class="down-arrow" src="resource:images/sort-down.png" />
         </a>
-
-        <a href="#" class="sort-size sort-button ***getActiveStateForSortBy('size')***" onclick="return eventURL('action:sortBy?by=size');">
-            Size<img src="***getImageForSortBy('size')***"/>
+        <a href="#" class="sort-size sort-button ***getSortButtonState('size')***" onclick="return eventURL('action:sortBy?by=size');">
+            Size<img class="up-arrow" src="resource:images/sort-up.png" /><img class="down-arrow" src="resource:images/sort-down.png" />
         </a>
     </div>
 </div>
