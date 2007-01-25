@@ -64,7 +64,7 @@
             </div>
 
             <!-- need to call event.stopPropagation() to prevent us from selecting the div -->
-            <div t:showIf="this.hasSharableURL()" class="share-box-left" onclick="showSelectBoxMenu('share-menu-@@@this.getID()@@@'); event.stopPropagation();">
+            <div t:showIf="this.hasSharableURL()" class="share-box-left" onclick="showSelectBoxMenu('share-menu-@@@viewName@@@-@@@this.getID()@@@'); event.stopPropagation();">
                 <div class="share-box-right">
                     <div class="share-box-mid">
                         SHARE
@@ -72,7 +72,7 @@
                 </div>
             </div>
             <br class="clear" />
-            <ul id="share-menu-@@@this.getID()@@@" class="share-box-menu">
+            <ul id="share-menu-@@@viewName@@@-@@@this.getID()@@@" class="share-box-menu">
                 <li>
                     <img src="resource:images/email-a-friend.gif" alt="email-a-friend icon" />
                     <a href="#" class="main-video-details-task-mail" onclick="return recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@');">
