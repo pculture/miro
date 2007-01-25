@@ -2022,26 +2022,40 @@ def mapToPlaylistItem(obj):
     return PlaylistItemFromItem(obj)
 
 def _defaultFeeds():
-    defaultFeedURLs = [
-        'http://www.videobomb.com/rss/posts/front',
-        'http://www.mediarights.org/bm/rss.php?i=1',
-        'http://www.telemusicvision.com/videos/rss.php?i=1',
-        'http://rocketboom.com/vlog/prodigem.xml',
-        'http://www.channelfrederator.com/rss',
-        'http://some-pig.net/videos/rss.php?i=2',
-        'http://videobomb.com/rss/posts/list',
-        'http://thechannelchannel.tv/featured.rss',
-    ]
-    if len(platform.mac_ver()[0]) > 0:
-        defaultFeedURLs.append('http://libsyn.com/podcasts/donmc/_static/scoipod.xml')
+    defaultFeedURLs = [ ('News and Tech',
+                         ['http://jetset.blip.tv/?skin=rss',
+                          'http://revision3.com/diggnation/feed/quicktime-large',
+                          'http://www.podshow.com/feeds/hd.xml',
+                          'http://podcast.msnbc.com/audio/podcast/MSNBC-NN-NETCAST-M4V.xml']),
+                        
+                        ('Entertainment',
+                         ['http://feeds.feedburner.com/freshtopia',
+                          'http://feeds.feedburner.com/thechannelchannel/featured']),
 
-    # HACK: The "Represent Or Die" default channel uses its URL as a
-    # title, which sucks (per #4710). Rename it.
-    rod = feed.Feed('http://del.icio.us/rss/representordie/system:media:video', initiallyAutoDownloadable=False)
-    rod.setTitle ('ROD')
+                        ('High-Def',
+                         ['http://www.telemusicvision.com/videos/rss.php?i=1',
+                          'http://revision3.com/pixelperfect/feed/quicktime-high-definition',
+                          'http://www.movedigital.com/rss/rocketboom/main.xml'])
+                        ]
+    if platform.system() == "MacOS":
+        defaultFeedURLs.append(
+            ('Mac',
+             ['http://feeds.feedburner.com/peters-screencast',
+              'http://macbreak.libsyn.com/rss',
+              'http://www.podshow.com/feeds/appleclipscomputer.xml',
+              'http://libsyn.com/podcasts/donmc/_static/scoipod.xml']))
 
-    for url in defaultFeedURLs:
-        feed.Feed(url, initiallyAutoDownloadable=False)
+    if platform.system() == "Windows":
+        defaultFeedURLs[1][1][:0] = ['http://feeds.feedburner.com/Terravideos']
+    else:
+        defaultFeedURLs[1][1][:0] = ['http://www.zefrank.com/theshow/index.xml',
+                                  'http://feeds.feedburner.com/AskANinja']
+
+    for defaultFolder in defaultFeedURLs:
+        c_folder = folder.ChannelFolder(defaultFolder[0])
+        for url in defaultFolder[1]:
+            d_feed = feed.Feed(url, initiallyAutoDownloadable=False)
+            d_feed.setFolder(c_folder)
     playlist.SavedPlaylist(_("Example Playlist"))
 
 def _getInitialChannelGuide():
