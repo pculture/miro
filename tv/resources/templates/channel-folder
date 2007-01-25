@@ -59,6 +59,10 @@ def toggleAllItemsMode(handle):
     matchingItems.recomputeFilter(newItems)
     handle.forceUpdate()
 
+def setSortBy(by, handle):
+    sorts.setSortBy(by)
+    allItems.recomputeSort(matchingItems)
+
 allFeeds = views.feeds.filterWithIndex(indexes.byFolder, folder)
 
 global searchTerm, showDownloads, showWatchableItems, showNewItems, allItemsMode
