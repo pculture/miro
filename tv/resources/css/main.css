@@ -156,7 +156,7 @@ img {
 /* Search box */
 #search-box-container {
     position: absolute;
-    bottom: 5px;
+    bottom: 8px;
     left: 98px;
 }
 
@@ -375,6 +375,8 @@ img {
     background-color: #4dc44b;	
     position: relative;
     height: 19px;
+    padding-top: 5px;
+    padding-left: 122px;
 }
 
 .static-tab-sort #sort-buttons {
@@ -386,7 +388,7 @@ img {
     background-color: #5faeff;	
 }
 
-.video-stats {
+.main-video-details-top {
     color:  #222;
     font-size: 10px;
     height: 15px;
@@ -394,82 +396,53 @@ img {
     overflow: hidden;
     border-bottom: 1px solid #e1e9f6;
     width: 100%;
-    position: relative;
 }
 
-#sort-buttons a {
+.video-stats div {
+    float: left;
+    padding-top: 3px;
+    height: 15px;
+}
+
+a.sort-button {
     color: white;
     text-decoration: none;
+    display: block;
+    float: left;
 }
 
-.sort-name {
-    position: absolute;
-    top: 2px;
-    left: 122px;
+.sort-buttons-right {
+    width: 315px;
+    float: right;
 }
 
-.sort-length {
-    position: absolute;
-    top: 2px;
-    right: 260px;
-    width: 55px;
+.length {
+    width: 65px;
 }
 
-.stat-length {
-    position: absolute;
-    top: 3px;
-    right: 275px;
-    font-weight: bold;
-    width: 40px;
+.date {
+    width: 80px;
 }
 
-.sort-date {
-    position: absolute;
-    top: 2px;
-    right: 188px;
-    width: 70px;
+.size {
+    width: 50px;
 }
 
-.stat-date {
-    position: absolute;
-    top: 3px;
-    right: 188px;
-    width: 70px;
-}
 
-.sort-size {
-    position: absolute;
-    top: 2px;
-    right: 142px;
-    width: 40px;
-}
-
-.stat-size {
-    position: absolute;
-    top: 3px;
-    right: 142px;
-    width: 40px;
-}
-
-.stat-torrent {
-    position: absolute;
-    top: 3px;
-    right: 79px;
-    width: 40px;
+.torrent {
+    width: 60px;
 }
 
 
 .details-link {
-    position: absolute;
-    top: 2px;
-    right: 5px;
+    padding-top: 1px;
+    float: right;
 }
 
 .details-link a {
     text-decoration: none;
     color: #3263A0;
     font-size: 10px;
-    line-height: 16px;
 } 
 
 .details-link a img {
@@ -477,18 +450,18 @@ img {
 }
 
 
-#sort-buttons a.sort-button img {
+a.sort-button img {
     border: none;
     padding-left: 3px;
     vertical-align: 0px;
     display: none;
 }
 
-#sort-buttons a.sort-button.ascending img.up-arrow {
+a.sort-button.ascending img.up-arrow {
     display: inline;
 }
 
-#sort-buttons a.sort-button.descending img.down-arrow {
+a.sort-button.descending img.down-arrow {
     display: inline;
 }
 

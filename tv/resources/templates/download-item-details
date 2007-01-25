@@ -9,22 +9,7 @@
 </head>
 <body>
     <div class="main-video-details">
-        <div class="video-stats">
-            <div class="stat-length">
-                <span t:replace="this.getDuration()" />
-            </div>
-            <div class="stat-date">
-                <span t:showIf="this.getReleaseDate() != ''"><span t:replace="this.getReleaseDate()" /></span>
-            </div>
-
-            <div class="stat-size">
-                <span t:showIf="this.getURL() != this.getLink() and this.getLink() != ''"><span t:replace="this.getSizeForDisplay()" /></span>
-            </div>
-            <div class="stat-torrent">
-                <span t:showIf="this.looksLikeTorrent()">
-                    <span i18n:translate="">.torrent</span>
-                </span>
-            </div>
+        <div class="main-video-details-top">
             <div class="details-link">
                 <div t:hideIf="this.showMoreInfo">
                     <a href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');"><span i18n:translate="">Details</span> <img src="resource:images/more-info-button.png" alt="" /></a>
@@ -34,6 +19,23 @@
                     <a href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');"><span i18n:translate="">Close</span> <img src="resource:images/more-info-button-close.png" alt="" /></a>
                 </div>
             </div>
+            <div class="video-stats">
+                <div class="length">
+                    <span t:replace="this.getDuration()" />
+                </div>
+                <div class="date">
+                    <span t:showIf="this.getReleaseDate() != ''"><span t:replace="this.getReleaseDate()" /></span>
+                </div>
+
+                <div class="size">
+                    <span t:showIf="this.getURL() != this.getLink() and this.getLink() != ''"><span t:replace="this.getSizeForDisplay()" /></span>
+                </div>
+                <div class="torrent">
+                    <span t:showIf="this.looksLikeTorrent()">
+                        <span i18n:translate="">.torrent</span>
+                    </span>
+                </div>
+           </div>
         </div>
 
         <div class="main-video-details-main">
