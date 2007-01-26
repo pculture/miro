@@ -119,17 +119,17 @@ allPausedDownloads.unlink()
                         </span>
                     </span>
                 </li>
-                <li t:showIf="downloader.totalDownRate > 1" t:updateHideOnView="views.remoteDownloads">
-                    <span t:updateForView="views.remoteDownloads">
-                        <span t:replace="getDownRate()"/>
-                    </span>
-                </li>
-                <li t:showIf="downloader.totalUpRate > 1" t:updateHideOnView="views.remoteDownloads">
-                    <span t:updateForView="views.remoteDownloads">
-                        <span t:replace="getUpRate()"/>
-                    </span>
-                </li>
             </ul>
+            <div t:updateForView="views.remoteDownloads">
+                <ul class="download-rates">
+                    <li t:showIf="downloader.totalDownRate > 1">
+                        <span t:replace="getDownRate()"/>
+                    </li>
+                    <li t:showIf="downloader.totalUpRate > 1">
+                        <span t:replace="getUpRate()"/>
+                    </li>
+                </ul>
+            </div>
         </div>
 </div>
 <!-- / TITLE BAR -->
