@@ -31,6 +31,7 @@ def _setFeed(kargs):
     feed = views.feeds.getObjectByID(int(kargs['id']))
     filters.switchNewItemsChannel(feed)
     sorts.switchUnwatchedFirstChannel(feed)
+    sorts.resetSortBy()
 
 def _updateView ():
     global showNewItems, allItemsMode

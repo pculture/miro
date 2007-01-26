@@ -12,6 +12,7 @@
     <t:include filename="dynamic.js" />
     <t:execOnLoad><![CDATA[
 
+sorts.resetSortBy()
 playlist = views.db.getObjectByID(int(kargs['id']))
 playlistView = playlist.getView()
 playlist.setSearch(None)

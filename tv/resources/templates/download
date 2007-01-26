@@ -46,6 +46,7 @@ def getRates():
     else:
         return ""
 
+sorts.resetSortBy()
 global searchFilter
 searchFilter = lambda x: filters.matchingItems(x, None)
 

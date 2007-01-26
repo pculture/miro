@@ -10,6 +10,8 @@
     <t:include filename="dynamic.js" />
     <script type="text/javascript" src="resource:templates/osxdnd.js" />
     <t:execOnLoad><![CDATA[
+
+sorts.resetSortBy()
 folder = views.channelFolders.getObjectByID(int(kargs['id']))
 filters.switchNewItemsChannel(folder)
 sorts.switchUnwatchedFirstChannel(folder)

@@ -52,7 +52,7 @@ def downloadersByEndTime (x, y):
     return xtime < ytime
 
 sortBy = 'date'                 # Possible values: 'date', 'size', 'name'
-sortDirection = 'ascending'     # Possible values: 'ascending', 'descending'
+sortDirection = 'descending'     # Possible values: 'ascending', 'descending'
 
 def setSortBy(by):
     global sortBy, sortDirection
@@ -63,7 +63,12 @@ def setSortBy(by):
             sortDirection = 'ascending'
     else:
         sortBy = by
-        sortDirection = 'ascending'
+        sortDirection = 'decending'
+
+def resetSortBy():
+    global sortBy, sortDirection
+    sortBy = 'date'
+    sortDirection = 'descending'
 
 def itemBy(x, y):
     global sortBy, sortDirection
@@ -81,16 +86,16 @@ def itemBy(x, y):
     return result
 
 def itemByDate(x, y):
-    return x[1].releaseDateObj > y[1].releaseDateObj
+    return x[1].releaseDateObj < y[1].releaseDateObj
 
 def itemByName(x, y):
-    return x[1].getTitle() > y[1].getTitle()
+    return x[1].getTitle() < y[1].getTitle()
 
 def itemBySize(x, y):
-    return x[1].getSize() > y[1].getSize()
+    return x[1].getSize() < y[1].getSize()
 
 def itemByDuration(x, y):
-    return x[1].duration > y[1].duration
+    return x[1].duration < y[1].duration
 
 unwatchedMemory = {}
 unwatchedMemoryFor = None

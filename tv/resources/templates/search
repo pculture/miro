@@ -19,6 +19,7 @@ import searchengines
 searchFeed = views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search')
 feed = searchFeed[0]
 
+sorts.resetSortBy()
 searchItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
 searchEngines = views.searchEngines
 
