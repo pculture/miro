@@ -9,6 +9,7 @@ import filters
 import menu
 import item
 import views
+import sorts
 from databasehelper import makeSimpleGetSet, TrackedIDList
 
 class PlaylistMixin:
@@ -17,7 +18,7 @@ class PlaylistMixin:
     """
 
     def setupTrackedItemView(self):
-        self.trackedItems = TrackedIDList(views.items, self.item_ids)
+        self.trackedItems = TrackedIDList(views.items, self.item_ids, sorts.itemBy)
         views.items.addRemoveCallback(self.onItemRemoved)
 
     def onItemRemoved(self, obj, id):
@@ -107,6 +108,9 @@ class PlaylistMixin:
         else:
             self.trackedItems.moveIDList(draggedItems, None)
         self.signalChange()
+        
+    def recomputeSort(self):
+        self.trackedItems.recomputeSort()
 
 class SavedPlaylist(database.DDBObject, PlaylistMixin):
     """An ordered list of videos that the user has saved.

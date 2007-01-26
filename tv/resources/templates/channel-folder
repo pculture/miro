@@ -78,13 +78,13 @@ showWatchableItems = True
 
 
 allItems = views.items.filterWithIndex(indexes.itemsByChannelFolder, folder)
-matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm), sortFunc=sorts.item)
-newItems = matchingItems.filter(showNewFilter, sortFunc=sorts.item)
+matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm), sortFunc=sorts.itemBy, resort=True)
+newItems = matchingItems.filter(showNewFilter, sortFunc=sorts.itemBy, resort=True)
 
-allDownloadingItems = matchingItems.filter(filters.downloadingOrPausedItems,sortFunc=sorts.item)
-downloadingItems = allDownloadingItems.filter(showDownloadsFilter,sortFunc=sorts.item)
-allWatchableItems = matchingItems.filter(filters.watchableItems,sortFunc=sorts.itemsUnwatchedFirst)
-watchableItems = allWatchableItems.filter(showWatchableFilter,sortFunc=sorts.itemsUnwatchedFirst)
+allDownloadingItems = matchingItems.filter(filters.downloadingOrPausedItems,sortFunc=sorts.itemBy, resort=True)
+downloadingItems = allDownloadingItems.filter(showDownloadsFilter,sortFunc=sorts.itemBy, resort=True)
+allWatchableItems = matchingItems.filter(filters.watchableItems,sortFunc=sorts.itemsUnwatchedFirst, resort=True)
+watchableItems = allWatchableItems.filter(showWatchableFilter,sortFunc=sorts.itemsUnwatchedFirst, resort=True)
 
 thisFolderView = views.channelFolders.filter(lambda x: x is folder)
 childrenView = views.feeds.filterWithIndex(indexes.byFolder, folder)

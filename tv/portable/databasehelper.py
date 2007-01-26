@@ -37,13 +37,15 @@ class TrackedIDList(object):
     view -- Database view that tracks the list of ids
     """
 
-    def __init__(self, db, idList):
+    def __init__(self, db, idList, sortFunc=None):
         """Construct an TrackedIDList.  
 
         This object will keep a reference to idList.  When insertID, appendID,
         removeID, or moveID are called idList will be modified to
         reflect the change.
         """
+        if sortFunc == None:
+            sortFunc = self.sort
 
         self.trackedIDs = set()
         self.positions = {}
@@ -55,8 +57,11 @@ class TrackedIDList(object):
             self.trackedIDs.add(id)
         self.extraFilterFunc = lambda x: True
         self.filter1 = db.filter(self.filter)
-        self.filter2 = self.filter1.filter(self.extraFilter)
-        self.view = self.filter2.sort(self.sort, resort=True)
+        self.filter2 = self.filter1.filter(self.extraFilter)        
+        self.view = self.filter2.sort(sortFunc, resort=True)
+
+    def recomputeSort(self):
+        self.filter2.recomputeSort(self.view)
 
     def sort(self, a, b):
         return self.positions[a[1].getID()] < self.positions[b[1].getID()]
