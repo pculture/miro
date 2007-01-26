@@ -31,20 +31,10 @@ def getAvailableSpace():
     return util.formatSizeForUser(bytes, "0B", False)
 
 def getUpRate():
-    return _("%0.1f KB/s total upload") % (downloader.totalUpRate / 1024.0,)
+    return _("%0.1f KB/s uploading") % (downloader.totalUpRate / 1024.0,)
 
 def getDownRate():
-    return _("%0.1f KB/s total download") % (downloader.totalDownRate / 1024.0,)
-
-def getRates():
-    if downloader.totalUpRate > 1 and downloader.totalDownRate > 1:
-        return "%s - %s" % (getDownRate(), getUpRate())
-    elif downloader.totalUpRate > 1:
-        return getUpRate()
-    elif downloader.totalDownRate > 1:
-        return getDownRate()
-    else:
-        return ""
+    return _("%0.1f KB/s downloading") % (downloader.totalDownRate / 1024.0,)
 
 sorts.resetSortBy()
 global searchFilter
@@ -129,9 +119,14 @@ allPausedDownloads.unlink()
                         </span>
                     </span>
                 </li>
-                <li>
+                <li t:showIf="downloader.totalDownRate > 1" t:updateHideOnView="views.remoteDownloads">
                     <span t:updateForView="views.remoteDownloads">
-                        <span t:replace="getRates()"/>
+                        <span t:replace="getDownRate()"/>
+                    </span>
+                </li>
+                <li t:showIf="downloader.totalUpRate > 1" t:updateHideOnView="views.remoteDownloads">
+                    <span t:updateForView="views.remoteDownloads">
+                        <span t:replace="getUpRate()"/>
                     </span>
                 </li>
             </ul>

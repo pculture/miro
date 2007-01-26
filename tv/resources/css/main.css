@@ -248,7 +248,7 @@ img {
     position: absolute;
     top: 24px;
     right: 225px;
-    width: 150px;
+    font-size: 11px;
 }
 
 /* Search page components */
