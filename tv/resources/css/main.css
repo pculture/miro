@@ -374,8 +374,8 @@ img {
     color: #113;
     background-color: #4dc44b;	
     position: relative;
-    height: 19px;
-    padding-top: 5px;
+    height: 17px;
+    padding-top: 4px;
     padding-left: 122px;
 }
 
@@ -1079,9 +1079,10 @@ a.round-button-left.black {
 
 
 .saved-note {
-    margin-top: 3px;
+    margin-top: 7px;
     font-size: 9px;
     color: #666;
+    text-align: center;
 }
 
 .details-date {

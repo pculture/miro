@@ -50,8 +50,8 @@
                         </div>
                         </a>
                     </div>
+                    <div t:showIf="this.showSaved()" class="saved-note">SAVED</div>
                 </div>
-                <div t:showIf="this.showSaved()" class="saved-note">SAVED</div>
                 <div t:showIf="this.showTrashButton()">
                     <a href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" class="round-button-left delete">
                     <div class="round-button-right">
