@@ -791,15 +791,16 @@ an element is dragged, the drag-highlight class is added to it */
     position: absolute;
     left: 0px;
     width: 100%;
-    bottom: 5px;
+    bottom: 0px;
     /* 
-     * Make the main-video-bottom cover the description.  This is sort of a
+     * Make the main-video-bottom cover the description.  We need to set the
+     * background to do this, otherwise both will show.  This is sort of a
      * hack -- it works because more-info is not set, so main-video-bottom
      * will only be 1 line 
      */
     background: url(../images/main-video-bg.png) repeat-x;
     background-position: 0px -70px;
-    height: 15px;
+    height: 20px;
 }
 
 .selected .main-video-bottom { 
