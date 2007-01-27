@@ -411,8 +411,6 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             self.translateDict.append({})
             self.translateName.append('')
             
-        elif name == 't:includeTemplate':
-            self.addFillTemplate(attrs['filename'])
         elif name == 't:include':
             self.addInclude(attrs['filename'])
 
