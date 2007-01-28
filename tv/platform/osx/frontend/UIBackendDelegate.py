@@ -189,7 +189,7 @@ class UIBackendDelegate:
             else:
                 # If the daemon is still alive at this point, it's likely to be
                 # in a bad state, so nuke it.
-                logging.info("DTV: Timeout expired - Killing downloader daemon!")
+                logging.info("Timeout expired - Killing downloader daemon!")
                 dlTask.terminate()
         dlTask.waitUntilExit()
         dlTask = None

@@ -21,6 +21,8 @@ import eventloop
 import autoupdate
 import singleclick
 
+from gtcache import gettext as _
+
 from Preferences import PreferencesWindowController
 import GrowlNotifier
 
@@ -189,17 +191,17 @@ class AppController (NibClassBuilder.AutoBaseClass):
         eventloop.addUrgentCall(lambda:restartPausedDownloaders(), "Resuming downloaders after sleep")
 
     def videoWillPlay_(self, notification):
-        self.playPauseMenuItem.setTitle_(u'Pause Video')
+        self.playPauseMenuItem.setTitle_(_(u'Pause Video'))
 
     def videoWillStop_(self, notification):
-        self.playPauseMenuItem.setTitle_(u'Play Video')
+        self.playPauseMenuItem.setTitle_(_(u'Play Video'))
 
     def checkQuicktimeVersion(self, showError):
         supported = gestalt('qtim') >= 0x07000000
         
         if not supported and showError:
-            summary = u'Unsupported version of Quicktime'
-            message = u'To run %s you need the most recent version of Quicktime, which is a free update.' % (config.get(prefs.LONG_APP_NAME), )
+            summary = _(u'Unsupported version of Quicktime')
+            message = _(u'To run %s you need the most recent version of Quicktime, which is a free update.') % (config.get(prefs.LONG_APP_NAME), )
             def callback(dialog):
                 if dialog.choice == dialogs.BUTTON_DOWNLOAD:
                     url = NSURL.URLWithString_(u'http://www.apple.com/quicktime/download')

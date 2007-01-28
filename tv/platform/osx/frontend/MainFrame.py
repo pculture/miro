@@ -19,6 +19,8 @@ import eventloop
 import searchengines
 import platformutils
 
+from gtcache import gettext as _
+
 NibClassBuilder.extractClasses(u"MainWindow")
 
 ###############################################################################
@@ -260,8 +262,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
             if dialog.choice == dialogs.BUTTON_OK:
                 url = dialog.value
                 eventloop.addUrgentCall(lambda:app.controller.addAndSelectFeed(url), "Add Feed")
-        title = "Subscribe to Channel"
-        description = "Enter the URL of the channel you would like to subscribe to."
+        title = _(u"Subscribe to Channel")
+        description = _(u"Enter the URL of the channel you would like to subscribe to.")
         prefillCallback = app.delegate.getURLFromClipboard
         dlog = dialogs.TextEntryDialog(title, description, dialogs.BUTTON_OK, dialogs.BUTTON_CANCEL, prefillCallback)
         dlog.run(validationCallback)

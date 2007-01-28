@@ -4,6 +4,8 @@ import Foundation
 import prefs
 import config
 
+from gtcache import gettext as _
+
 ###############################################################################
 
 DOWNLOAD_COMPLETE = u'Download Complete'
@@ -22,8 +24,8 @@ def register():
 
 def notifyDownloadComplete(title):
     GrowlApplicationBridge.notifyWithTitle_description_notificationName_iconData_priority_isSticky_clickContext_(
-        u'Download Completed',
-        u'Download of video \'%s\' is finished.' % title,
+        _(u'Download Completed'),
+        _(u'Download of video \'%s\' is finished.') % title,
         DOWNLOAD_COMPLETE,
         objc.nil,
         0,
@@ -32,8 +34,8 @@ def notifyDownloadComplete(title):
 
 def notifyDownloadFailed(title):
     GrowlApplicationBridge.notifyWithTitle_description_notificationName_iconData_priority_isSticky_clickContext_(
-        u'Download Failed',
-        u'Download of video \'%s\' has failed.' % title,
+        _(u'Download Failed'),
+        _(u'Download of video \'%s\' has failed.') % title,
         DOWNLOAD_FAILED,
         objc.nil,
         0,

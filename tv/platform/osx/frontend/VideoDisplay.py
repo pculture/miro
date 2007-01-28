@@ -46,7 +46,7 @@ class PlaybackController (app.PlaybackControllerBase):
         ok, externalApp, movieType = ws.getInfoForFile_application_type_(moviePath)
         if ok:
             if externalApp == platformcfg.getBundlePath():
-                print 'DTV: WARNING, trying to play movie externally with Democracy.'
+                print 'WARNING, trying to play movie externally with Democracy.'
                 ok = False
             else:
                 ok = ws.openFile_withApplication_andDeactivate_(moviePath, nil, YES)

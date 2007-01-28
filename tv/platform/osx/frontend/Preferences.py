@@ -9,6 +9,8 @@ import config
 import dialogs
 import eventloop
 
+from gtcache import gettext as _
+
 NibClassBuilder.extractClasses(u"PreferencesWindow")
 
 ###############################################################################
@@ -30,11 +32,11 @@ class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
         self.items = dict()
         self.allIdentifiers = list()
         
-        generalItem = self.makePreferenceItem(u"GeneralItem", u"General", u"general_pref", self.generalView)
-        channelsItem = self.makePreferenceItem(u"ChannelsItem", u"Channels", u"channels_pref", self.channelsView)
-        downloadsItem = self.makePreferenceItem(u"DownloadsItem", u"Downloads", u"downloads_pref", self.downloadsView)
-        diskSpaceItem = self.makePreferenceItem(u"DiskSpaceItem", u"Disk Space", u"disk_space_pref", self.diskSpaceView)
-        playbackItem = self.makePreferenceItem(u"PlaybackItem", u"Playback", u"playback_pref", self.playbackView)
+        generalItem = self.makePreferenceItem(u"GeneralItem", _(u"General"), u"general_pref", self.generalView)
+        channelsItem = self.makePreferenceItem(u"ChannelsItem", _(u"Channels"), u"channels_pref", self.channelsView)
+        downloadsItem = self.makePreferenceItem(u"DownloadsItem", _(u"Downloads"), u"downloads_pref", self.downloadsView)
+        diskSpaceItem = self.makePreferenceItem(u"DiskSpaceItem", _(u"Disk Space"), u"disk_space_pref", self.diskSpaceView)
+        playbackItem = self.makePreferenceItem(u"PlaybackItem", _(u"Playback"), u"playback_pref", self.playbackView)
 
         initialItem = generalItem
 
@@ -155,9 +157,9 @@ class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
         panel.setCanChooseDirectories_(YES)
         panel.setCanCreateDirectories_(YES)
         panel.setAllowsMultipleSelection_(NO)
-        panel.setTitle_('Movies Directory')
-        panel.setMessage_('Select a Directory to store Democracy downloads in.')
-        panel.setPrompt_('Select')
+        panel.setTitle_(_(u'Movies Directory'))
+        panel.setMessage_(_(u'Select a Directory to store Democracy downloads in.'))
+        panel.setPrompt_(_(u'Select'))
         
         oldMoviesDirectory = self.moviesDirectoryField.stringValue()
         result = panel.runModalForDirectory_file_(oldMoviesDirectory, nil)
@@ -166,8 +168,8 @@ class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
             newMoviesDirectory = panel.directory()
             if newMoviesDirectory != oldMoviesDirectory:
                 self.moviesDirectoryField.setStringValue_(newMoviesDirectory)
-                summary = u'Migrate existing movies?'
-                message = u'You\'ve selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish).'
+                summary = _(u'Migrate existing movies?')
+                message = _(u'You\'ve selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish).')
                 def migrationCallback(dialog):
                     migrate = (dialog.choice == dialogs.BUTTON_YES)
                     app.changeMoviesDirectory(newMoviesDirectory, migrate)
