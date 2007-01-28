@@ -666,7 +666,7 @@ class LiveStorage:
                 except KeyboardInterrupt:
                     raise
                 except:
-                    logging.info (data)
+                    logging.info ('Error loading data in upgradeDatabase')
                     raise
         cursor.close()
         changed = databaseupgrade.upgrade(savables, self.version)
@@ -735,7 +735,7 @@ class LiveStorage:
                 except KeyboardInterrupt:
                     raise
                 except:
-                    logging.info (data)
+                    logging.info ("Error loading data in loadDatabase")
                     raise
         cursor.close()
         db = database.defaultDatabase
