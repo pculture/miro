@@ -309,22 +309,22 @@ img {
 
 .select-box-menu li {
     list-style: none;
+}
+
+.select-box-menu a {
+    text-decoration: none;
+    color: #000;
+    display: block;
     text-transform: none;
     margin: 0px;
     padding: 2px 9px 2px 12px;
     font-size: 12px;
 }
 
-.select-box-menu li:hover, .select-box-menu li:hover a {
+.select-box-menu a:hover {
     background: #2673c9;
     color: white;
 }
-
-.select-box-menu a {
-    text-decoration: none;
-    color: #000;
-}
-
 
 /* Used for scraping indicator on channel page */
 .main-container-scraping {
@@ -953,67 +953,21 @@ an element is dragged, the drag-highlight class is added to it */
     height: 75px;
 }
 
-.share-box-right {
-    background: right top no-repeat url(../images/share-right.png);
-}
-
-.share-box-left {
-    background: left top no-repeat url(../images/auto-select-box-left.png);
+.share-box {
     position: absolute;
-    top: 28px;
+    top: 26px;
     left: 2px;
-    cursor: pointer;
-    -khtml-user-select: none;
-    -moz-user-select: none;
 }
 
-.share-box-mid {
-    background: left top repeat-x url(../images/auto-select-box-mid.png);
-    margin: 0px 19px 0px 6px;
-    padding: 1px 6px 1px 3px;
-    height: 19px;
-    color: #333;
-    font-size: 11px;
-}
-
-.share-box-menu {
-    border: 1px solid #AAA;
-    background: #f6f6f6;
-    margin: 0px;
-    position: relative;
-    top: -45px;
-    display: none;
+.share-menu {
+    position: absolute;
+    top: 46px;
     z-index: 10;
 }
 
-.share-box-menu img {
+.share-menu img {
     vertical-align: -3px;
     margin-right: 3px;
-}
-
-.share-box-menu {
-    width: 166px;
-    left: -1px;
-    top: -6px;
-    padding: 3px 0 3px 0;
-}
-
-.share-box-menu li {
-    list-style: none;
-    text-transform: none;
-    margin: 0px;
-    padding: 3px 9px 3px 12px;
-    font-size: 12px;
-}
-
-.share-box-menu li:hover, .share-box-menu li:hover a {
-    background: #2673c9;
-    color: white;
-}
-
-.share-box-menu a {
-    text-decoration: none;
-    color: #000;
 }
 
 
