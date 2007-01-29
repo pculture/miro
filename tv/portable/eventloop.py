@@ -236,7 +236,9 @@ class EventLoop(object):
             self.delegate.endLoop(self)
 
     def loop(self):
+        global loop_ready
         database.set_thread()
+        loop_ready.set()
         while not self.quitFlag:
             self._beginLoop()
             self.clearRemovedCallbacks()
@@ -378,6 +380,8 @@ lt = None
 
 profile_file = None
 
+loop_ready = threading.Event()
+
 def startup():
     threadPoolInit()
 
@@ -388,13 +392,14 @@ def startup():
         profile.runctx ('_eventLoop.loop()', globals(), locals(), profile_file + ".event_loop")
 
     global lt
+    global loop_ready
     if profile_file:
         lt = threading.Thread(target=profile_startup, name="Event Loop")
     else:
         lt = threading.Thread(target=_eventLoop.loop, name="Event Loop")
     lt.setDaemon(False)
     lt.start()
-        
+    loop_ready.wait()
         
 
 def join():

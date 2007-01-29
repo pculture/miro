@@ -29,6 +29,11 @@ class DatabaseConsistencyError(Exception):
     """
     pass
 
+class DatabaseThreadError(Exception):
+    """Raised when the database encounters an internal consistency issue.
+    """
+    pass
+
 ##
 # Raised when an attempt is made to restore a database newer than the
 # one we support
@@ -61,9 +66,12 @@ def set_thread ():
     
 def confirmDBThread():
     global event_thread
-    if event_thread is not None and event_thread != threading.currentThread():
-        print "database function called from thread %s" % (threading.currentThread(),)
-        traceback.print_stack()
+    if event_thread is None or event_thread != threading.currentThread():
+        if event_thread is None:
+            errorString = "Database event thread not set"
+        else:
+            errorString = "Database called from %s" % threading.currentThread()
+        raise DatabaseThreadError, errorString
 
 def setDelegate(newDelegate):
     global delegate

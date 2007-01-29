@@ -501,8 +501,8 @@ class Controller (frontend.Application):
         self.inQuit = False
         self.guideURL = None
         self.initial_feeds = False # True if this is the first run and there's an initial-feeds.democracy file.
-        self.loadedDatabase = False
         self.finishedStartup = False
+        self.databaseIsSetup = threading.Event()
 
     ### Startup and shutdown ###
 
@@ -532,19 +532,22 @@ class Controller (frontend.Application):
                 config.set(prefs.STARTUP_TASKS_DONE, True)
                 config.save()
             else:
-                self.finishStartup(gatheredVideos)
+                logging.info ("Starting event loop thread")
+                eventloop.startup()            
+                eventloop.addIdle(lambda : self.finishStartup(gatheredVideos), "finish startup")
+                self.databaseIsSetup.wait()
         except:
             util.failedExn("while starting up")
             frontend.exit(1)
 
     def finishStartup(self, gatheredVideos=None):
         try:
+            views.initialize()
             #Restoring
             util.print_mem_usage("Pre-database memory check:")
             logging.info ("Restoring database...")
             #            try:
             database.defaultDatabase.liveStorage = storedatabase.LiveStorage()
-            self.loadedDatabase = True
             #            except Exception:
             #                util.failedExn("While restoring database")
             util.print_mem_usage("Post-database memory check")
@@ -616,6 +619,7 @@ class Controller (frontend.Application):
             logging.info ("Displaying main frame...")
             self.frame = frontend.MainFrame(self)
 
+            logging.info ("Creating video display...")
             # Set up the video display
             self.videoDisplay = frontend.VideoDisplay()
             self.videoDisplay.initRenderers()
@@ -628,7 +632,8 @@ class Controller (frontend.Application):
 
             self.selection = selection.SelectionHandler()
 
-            self.selection.selectFirstGuide()
+            eventloop.addIdle(self.selection.selectFirstGuide, "Selecting first guide")
+
             if self.initial_feeds:
                 views.feedTabs.resetCursor()
                 tab = views.feedTabs.getNext()
@@ -677,11 +682,9 @@ class Controller (frontend.Application):
             iconcache.clearOrphans()
             logging.timing ("Icon clear: %.3f", clock() - start)
 
-            logging.info ("Starting event loop thread")
-            eventloop.startup()            
-
             logging.info ("Finished startup sequence")
             self.finishedStartup = True
+            self.databaseIsSetup.set()
         except databaseupgrade.DatabaseTooNewError:
             title = _("Database too new")
             description = _("""\
@@ -976,25 +979,25 @@ downloaded?""")
 
     def onShutdown(self):
         try:
+            self.databaseIsSetup.wait()
             eventloop.join()        
-            if self.loadedDatabase:
-                logging.info ("Saving preferences...")
-                config.save()
+            logging.info ("Saving preferences...")
+            config.save()
 
-                logging.info ("Removing search feed")
-                TemplateActionHandler(None, None).resetSearch()
-                self.removeGlobalFeed('dtv:search')
+            logging.info ("Removing search feed")
+            TemplateActionHandler(None, None).resetSearch()
+            self.removeGlobalFeed('dtv:search')
 
-                logging.info ("Shutting down icon cache updates")
-                iconcache.iconCacheUpdater.shutdown()
+            logging.info ("Shutting down icon cache updates")
+            iconcache.iconCacheUpdater.shutdown()
 
-                logging.info ("Removing static tabs...")
-                views.allTabs.unlink() 
-                tabs.removeStaticTabs()
+            logging.info ("Removing static tabs...")
+            views.allTabs.unlink() 
+            tabs.removeStaticTabs()
 
-                if self.idlingNotifier is not None:
-                    logging.info ("Shutting down IdleNotifier")
-                    self.idlingNotifier.join()
+            if self.idlingNotifier is not None:
+                logging.info ("Shutting down IdleNotifier")
+                self.idlingNotifier.join()
 
             logging.info ("Done shutting down.")
             logging.info ("Remaining threads are:")

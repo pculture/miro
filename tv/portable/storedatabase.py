@@ -513,6 +513,7 @@ class LiveStorage:
     TRANSACTION_NAME = "Save database"
 
     def __init__(self, dbPath=None, restore=True):
+        database.confirmDBThread()
         try:
             self.txn = None
             self.dc = None
@@ -610,6 +611,7 @@ class LiveStorage:
         output.close()
 
     def handleDatabaseLoadError(self):
+        database.confirmDBThread()
         logging.exception ("exception while loading database")
         self.closeInvalidDB()
         self.dbenv.close()
@@ -628,6 +630,7 @@ class LiveStorage:
         os.rename(self.dbPath, os.path.join(dir, saveName))
 
     def openEmptyDB(self):
+        database.confirmDBThread()
         try:
             os.makedirs(self.dbPath)
         except KeyboardInterrupt:
@@ -642,6 +645,7 @@ class LiveStorage:
         self.closed = False
 
     def closeInvalidDB(self):
+        database.confirmDBThread()
         try:
             self.db.close()
         except KeyboardInterrupt:
@@ -651,6 +655,7 @@ class LiveStorage:
         self.db = None
 
     def upgradeDatabase(self):
+        database.confirmDBThread()
         logging.info ("Upgrading database...")
         savables = []
         cursor = self.db.cursor()
@@ -704,6 +709,7 @@ class LiveStorage:
         SavableObjects that will be in the new database.  WARNING: This method
         will probably take a long time.
         """
+        database.confirmDBThread()
         logging.info ("Rewriting database")
         cursor = self.db.cursor(txn=txn)
         while True:
@@ -717,6 +723,7 @@ class LiveStorage:
             self.db.put (str(o.savedData['id']), data, txn=txn)
 
     def loadDatabase(self):
+        database.confirmDBThread()
         upgrade = (self.version != schema_mod.VERSION)
         if upgrade:
             return self.upgradeDatabase()
@@ -742,6 +749,7 @@ class LiveStorage:
         db.restoreFromObjectList(objects)
 
     def saveDatabase(self):
+        database.confirmDBThread()
         db = database.defaultDatabase
         self.txn = self.dbenv.txn_begin()
         self.db = bsddb.db.DB(self.dbenv)
@@ -755,15 +763,18 @@ class LiveStorage:
         self.db.sync()
 
     def sync(self):
+        database.confirmDBThread()
         self.db.sync()
 
     def close(self):
+        database.confirmDBThread()
         self.runUpdate()
         self.closed = True
         self.db.close()
         self.dbenv.close()
 
     def runUpdate(self):
+        database.confirmDBThread()
         try:
             self.txn = self.dbenv.txn_begin()
             for object in self.toRemove:
@@ -807,6 +818,7 @@ class LiveStorage:
             
 
     def update (self, object):
+        database.confirmDBThread()
         if self.closed:
             return
         if self.txn is None:
@@ -821,6 +833,7 @@ class LiveStorage:
                 self.db.put (key, data, txn=self.txn)
 
     def remove (self, object):
+        database.confirmDBThread()
         if self.closed:
             return
         if self.txn is None:
@@ -837,6 +850,7 @@ class LiveStorage:
             self.db.delete (str(object.id), txn=self.txn)
 
     def checkpoint (self):
+        database.confirmDBThread()
         try:
             if self.closed:
                 return
