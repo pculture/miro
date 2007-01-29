@@ -532,10 +532,8 @@ class Controller (frontend.Application):
                 config.set(prefs.STARTUP_TASKS_DONE, True)
                 config.save()
             else:
-                logging.info ("Starting event loop thread")
-                eventloop.startup()            
-                eventloop.addIdle(lambda : self.finishStartup(gatheredVideos), "finish startup")
-                self.databaseIsSetup.wait()
+                database.set_thread()
+                self.finishStartup(gatheredVideos)
         except:
             util.failedExn("while starting up")
             frontend.exit(1)
@@ -632,7 +630,7 @@ class Controller (frontend.Application):
 
             self.selection = selection.SelectionHandler()
 
-            eventloop.addIdle(self.selection.selectFirstGuide, "Selecting first guide")
+            self.selection.selectFirstGuide()
 
             if self.initial_feeds:
                 views.feedTabs.resetCursor()
@@ -682,8 +680,12 @@ class Controller (frontend.Application):
             iconcache.clearOrphans()
             logging.timing ("Icon clear: %.3f", clock() - start)
 
+            logging.info ("Starting event loop thread")
+            eventloop.startup()            
+
             logging.info ("Finished startup sequence")
             self.finishedStartup = True
+
             self.databaseIsSetup.set()
         except databaseupgrade.DatabaseTooNewError:
             title = _("Database too new")
