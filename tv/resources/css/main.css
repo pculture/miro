@@ -49,7 +49,7 @@ img {
 /* This is used to make the feed settings section float above the channel */
 #feed-settings {
     position: fixed;
-    top: 91px;
+    top: 90px;
     left: 0px;
     width: 100%;
     display: none;
@@ -110,7 +110,7 @@ img {
     height: 93px;
     width: 100%;
     min-width: 600px;
-    margin: 0px 0px 1px;
+    margin: 0px 0px 1px 0px;
     position: fixed;
     top: 0px;
     z-index: 6; 
