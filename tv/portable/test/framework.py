@@ -56,6 +56,7 @@ class DummyController:
 
 class DemocracyTestCase(unittest.TestCase):
     def setUp(self):
+        database.set_thread()
         # reset the event loop
         util.chatter = False
         self.oldUtilDotFailed = util.failed

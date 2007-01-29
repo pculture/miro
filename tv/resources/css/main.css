@@ -373,7 +373,7 @@ img {
 
 
 /* SORT BUTTONS AND VIDEO STATS -- THEY ARE GROUPED TOGETHER IN THE CSS SINCE THEY NEED TO LINE UP WITH EACH OTHER */
-#sort-buttons {
+.sort-buttons {
     font-size: 11px;
     color: #113;
     background-color: #4dc44b;	
@@ -383,12 +383,12 @@ img {
     padding-left: 122px;
 }
 
-.static-tab-sort #sort-buttons {
+.static-tab-sort .sort-buttons {
     background-color: #333;
 }
 
 
-.available-sort #sort-buttons {
+.available-sort .sort-buttons {
     background-color: #5faeff;	
 }
 

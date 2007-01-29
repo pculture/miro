@@ -51,39 +51,53 @@ def downloadersByEndTime (x, y):
     ytime = y[1].status.get("endTime", 0)
     return xtime < ytime
 
-sortBy = 'date'                 # Possible values: 'date', 'size', 'name'
-sortDirection = 'descending'     # Possible values: 'ascending', 'descending'
+class ItemSort:
+    """Object that sorts item lists.  There is one of these for every section
+    that contains a list of items (i.e. there are several for most templates).
 
-def setSortBy(by):
-    global sortBy, sortDirection
-    if sortBy == by:
-        if sortDirection == 'ascending':
-            sortDirection = 'descending'
+    Member attributes:
+        sortBy -- Possible values: 'date', 'size', 'name'
+        sortDirection -- Possible values: 'ascending', 'descending'
+    """
+
+    existingSorts = {}
+
+    def __init__(self):
+        self.sortBy = 'date'
+        self.sortDirection = 'descending'
+
+    def setSortBy(self, by):
+        if self.sortBy == by:
+            if self.sortDirection == 'ascending':
+                self.sortDirection = 'descending'
+            else:
+                self.sortDirection = 'ascending'
         else:
-            sortDirection = 'ascending'
-    else:
-        sortBy = by
-        sortDirection = 'decending'
+            self.sortBy = by
+            self.sortDirection = 'descending'
 
-def resetSortBy():
-    global sortBy, sortDirection
-    sortBy = 'date'
-    sortDirection = 'descending'
+    def sort(self, x, y):
+        """Pass this to view.sort()"""
 
-def itemBy(x, y):
-    global sortBy, sortDirection
-    result = False
-    if sortBy == 'date':
-        result = itemByDate(x, y)
-    elif sortBy == 'size':
-        result = itemBySize(x, y)
-    elif sortBy == 'name':
-        result = itemByName(x, y)
-    elif sortBy == 'duration':
-        result = itemByDuration(x, y)
-    if sortDirection == 'descending':
-        result = not result
-    return result
+        if self.sortBy == 'date':
+            result = itemByDate(x, y)
+        elif self.sortBy == 'size':
+            result = itemBySize(x, y)
+        elif self.sortBy == 'name':
+            result = itemByName(x, y)
+        elif self.sortBy == 'duration':
+            result = itemByDuration(x, y)
+        if self.sortDirection == 'descending':
+            result = not result
+        return result
+
+    def getSortButtonState(self, by):
+        if self.sortBy == by:
+            if self.sortDirection == 'ascending':
+                return 'ascending'
+            else:
+                return 'descending'
+        return ''
 
 def itemByDate(x, y):
     return x[1].releaseDateObj < y[1].releaseDateObj
@@ -121,13 +135,25 @@ def _getUnwatchedWithMemory(item):
         unwatchedMemory[item.getID()] = rv
         return rv
 
-def itemsUnwatchedFirst(x,y):
-    uwx = _getUnwatchedWithMemory(x[1])
-    uwy = _getUnwatchedWithMemory(y[1])
-    if uwx != uwy:
-        return uwx
-    else:
-        return itemBy(x,y)
+class ItemSortUnwatchedFirst(ItemSort):
+    def sort(self, x, y):
+        uwx = _getUnwatchedWithMemory(x[1])
+        uwy = _getUnwatchedWithMemory(y[1])
+        if uwx != uwy:
+            return uwx
+        else:
+            return ItemSort.sort(self, x, y)
+
+# Create sort objects for each item list in the static tabs.  We need to
+# remember the sort criteria and direction for each one separately.
+
+itemSortNew = ItemSortUnwatchedFirst()
+itemSortLibrary = ItemSort()
+itemSortSearch = ItemSort()
+itemSortDownloads = ItemSort()
+itemSortUploads = ItemSort()
+itemSortPendingDownloads = ItemSort()
+itemSortPausedDownloads = ItemSort()
 
 def guideTabs(x, y):
     xguide = x[1].obj

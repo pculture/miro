@@ -1884,8 +1884,8 @@ class TemplateActionHandler:
             searchFeed.preserveDownloads(searchDownloadsFeed)
             searchFeed.reset()
 
-    def sortBy(self, by):
-        self.templateHandle.getTemplateVariable('setSortBy')(by, self.templateHandle)
+    def sortBy(self, by, section):
+        self.templateHandle.getTemplateVariable('setSortBy')(by, section, self.templateHandle)
 
     def handleSelect(self, area, viewName, id, shiftDown, ctrlDown):
         try:

@@ -12,7 +12,6 @@
     <t:include filename="dynamic.js" />
     <t:execOnLoad><![CDATA[
 
-sorts.resetSortBy()
 playlist = views.db.getObjectByID(int(kargs['id']))
 playlistView = playlist.getView()
 playlist.setSearch(None)
@@ -22,9 +21,10 @@ childrenView = views.playlists.filterWithIndex(indexes.byFolder, playlist)
 def updateSearchString(newSearch):
     playlist.setSearch(newSearch)
 
-def setSortBy(by, handle):
-    sorts.setSortBy(by)
+def setSortBy(by, which, handle):
+    playlist.itemSort.setSortBy(by)
     playlist.recomputeSort()
+    handle.forceUpdate()
 ]]>
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
@@ -43,16 +43,14 @@ thisPlaylistView.unlink()
     </div>
 </div>
 
-<div t:updateForView="playlistView">
-<t:includeTemplate filename="sort-bar" />
-</div>
-
 <div id="main-container">
-    <span t:updateForView="playlistView">
+    <div t:updateForView="playlistView">
         <div t:hideIf="playlistView.len() == 0">
-            <t:includeTemplate filename="sort-bar" />
+            <t:executeTemplate filename="sort-bar" 
+                itemSort="playlist.itemSort"
+                section="'main'" />
         </div>
-    </span>
+    </div>
     <div t:repeatForView="playlistView" t:repeatTemplate='download-item' />
     <div class="playlist-end-drag-hitbox"
 	dragdesttype="downloadeditem"

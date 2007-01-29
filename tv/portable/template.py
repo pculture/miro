@@ -11,6 +11,11 @@ from xhtmltools import urlencode, toUTF8Bytes
 from itertools import chain
 import logging
 
+# FIXME add support for onlyBody parameter for static templates so we
+#       don't need to strip the outer HTML
+import re
+HTMLPattern = re.compile("^.*<body.*?>(.*)</body\s*>", re.S)
+
 if os.environ.has_key('DEMOCRACY_RECOMPILE_TEMPLATES'):
     import template_compiler
     import resources
@@ -47,12 +52,13 @@ def fillTemplate(filename, domHandler, platform, eventCookie, bodyTagExtra="", t
 # As fillTemplate, but no Javascript calls are made, and no template
 # handle is returned, only the HTML or XML as a string. Effectively,
 # you get a static snapshot of the page at the time the call is made.
-def fillStaticTemplate(filename, platform, eventCookie, bodyTagExtra="", *args, **kargs):
-    # FIXME add support for "onlyBody" parameter. See item.py for an
-    # example of how we're working around not having that.
+def fillStaticTemplate(filename, platform='', eventCookie='noCookie', bodyTagExtra="", onlyBody=False, *args, **kargs):
     (tch, handle) = fillTemplate(filename, None, platform, eventCookie, bodyTagExtra, *args, **kargs)
     handle.unlinkTemplate()
-    return tch.read()
+    rv = tch.read()
+    if onlyBody: # FIXME we should support "onlyBody" in fillTemplate
+        rv = HTMLPattern.match(rv).group(1)
+    return rv
 
 def queueDOMChange(func, name):
     """Queue function that does a bunch of DOM updates to a display.

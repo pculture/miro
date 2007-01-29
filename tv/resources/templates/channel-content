@@ -38,61 +38,64 @@
 <!-- NEW ITEMS -->
 
 <div class="available-channelbar-wrap">
-<a class="main-channelbar available-channelbar" href="#" onclick="return eventURL('action:toggleNewItemsView');" t:updateForView="matchingItems">
-  <div class="triangle" t:hideIf="showNewItems"/>
-  <div class="triangle down" t:hideIf="not showNewItems"/>
+    <a class="main-channelbar available-channelbar" href="#" onclick="return eventURL('action:toggleNewItemsView');" t:updateForView="matchingItems">
+      <div class="triangle" t:hideIf="showNewItems"/>
+      <div class="triangle down" t:hideIf="not showNewItems"/>
 
-  <div t:showIf="searchTerm is None">
-    <div t:hideIf="isFolder" i18n:translate="">
-          <span i18n:name="len" t:replace="allItems.len()" /> 
-          Items on this Channel
-    </div>
-    <div t:showIf="isFolder" i18n:translate="">
-          <span i18n:name="len" t:replace="allItems.len()" /> 
-          Items on this Channel
-    </div>
-  </div>
-  <div t:showIf="searchTerm is not None">
-    <div t:showIf="allItems.len() == matchingItems.len()" i18n:translate="">
-            All <span i18n:name="len" t:replace="matchingItems.len()" /> 
-            Match This Search
-    </div>
-    <div t:hideIf="allItems.len() == matchingItems.len()" i18n:translate="">
-            <span i18n:name="len" t:replace="matchingItems.len()" /> 
-            Match This Search
-    </div>
-  </div>
-</a>
+      <div t:showIf="searchTerm is None">
+        <div t:hideIf="isFolder" i18n:translate="">
+              <span i18n:name="len" t:replace="allItems.len()" /> 
+              Items on this Channel
+        </div>
+        <div t:showIf="isFolder" i18n:translate="">
+              <span i18n:name="len" t:replace="allItems.len()" /> 
+              Items on this Channel
+        </div>
+      </div>
+      <div t:showIf="searchTerm is not None">
+        <div t:showIf="allItems.len() == matchingItems.len()" i18n:translate="">
+                All <span i18n:name="len" t:replace="matchingItems.len()" /> 
+                Match This Search
+        </div>
+        <div t:hideIf="allItems.len() == matchingItems.len()" i18n:translate="">
+                <span i18n:name="len" t:replace="matchingItems.len()" /> 
+                Match This Search
+        </div>
+      </div>
+    </a>
 
-<div id="main-titlebar-auto">
-    <div t:hideIf="isFolder">
-            <div class="auto-download" t:updateForView="thisFeedView">
-                <span id="auto-label" i18n:translate="">AUTO DOWNLOAD</span>
-                <div class="select-box-left" onclick="showSelectBoxMenu('auto-download-menu');">
-                <div class="select-box-right">
-                <div class="select-box-mid" t:hideIf="feed is None">
-                    <span t:replace="feed.getAutoDownloadMode()" />
+    <div id="main-titlebar-auto">
+        <div t:updateForView="thisFeedView">
+            <div t:hideIf="isFolder">
+                <div class="auto-download">
+                    <span id="auto-label" i18n:translate="">AUTO DOWNLOAD</span>
+                    <div class="select-box-left" onclick="showSelectBoxMenu('auto-download-menu');">
+                    <div class="select-box-right">
+                    <div class="select-box-mid" t:hideIf="feed is None">
+                        <span t:replace="feed.getAutoDownloadMode()" />
+                    </div>
+                    </div>
+                    </div>
+                    
+                    <br clear="all" />
+                    <ul id="auto-download-menu" class="select-box-menu" t:hideIf="feed is None">
+                        <li onclick="return eventURL('action:setAutoDownloadMode?mode=all&amp;feed=@@@feed.getID()@@@');" ><a href="#"><strong>ALL</strong> - Get all videos</a></li>
+                        <li onclick="return eventURL('action:setAutoDownloadMode?mode=new&amp;feed=@@@feed.getID()@@@');" ><a href="#"><strong>NEW</strong> - Get only new videos</a></li>
+                        <li onclick="return eventURL('action:setAutoDownloadMode?mode=off&amp;feed=@@@feed.getID()@@@');" ><a href="#"><strong>OFF</strong> - Don't auto-download videos</a></li>
+                    </ul>
                 </div>
-                </div>
-                </div>
-                
-                <br clear="all" />
-                <ul id="auto-download-menu" class="select-box-menu" t:hideIf="feed is None">
-                    <li onclick="return eventURL('action:setAutoDownloadMode?mode=all&amp;feed=@@@feed.getID()@@@');" ><a href="#"><strong>ALL</strong> - Get all videos</a></li>
-                    <li onclick="return eventURL('action:setAutoDownloadMode?mode=new&amp;feed=@@@feed.getID()@@@');" ><a href="#"><strong>NEW</strong> - Get only new videos</a></li>
-                    <li onclick="return eventURL('action:setAutoDownloadMode?mode=off&amp;feed=@@@feed.getID()@@@');" ><a href="#"><strong>OFF</strong> - Don't auto-download videos</a></li>
-                </ul>
             </div>
         </div>
     </div>
 </div>
 
-<span t:updateForView="matchingItems">
+<div t:updateForView="matchingItems">
     <div class="available-sort" t:showIf="showNewItems">
-        <t:includeTemplate filename="sort-bar" />
+        <t:executeTemplate filename="sort-bar" 
+            itemSort="itemSort"
+            section="'main'" />
     </div>
-</span>
-
+</div>
 
    <div t:repeatForView="newItems" t:repeatTemplate="download-item" />
 
@@ -121,7 +124,9 @@
 
 <div t:updateForView="watchableItems">
     <div t:showIf="len(watchableItems) > 0">
-        <t:includeTemplate filename="sort-bar" />
+        <t:executeTemplate filename="sort-bar" 
+            itemSort="itemSortWatchable"
+            section="'watchable'" />
     </div>
 </div>
 <div t:repeatForView="watchableItems" t:repeatTemplate="download-item" />

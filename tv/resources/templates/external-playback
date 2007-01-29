@@ -42,7 +42,7 @@ import os.path
     </div>
     
     <div id="embedded-video-info">
-        <span id="video_info_area"><t:includeTemplate filename="video-info" /></span>
+        <div id="video_info_area"><t:includeTemplate filename="video-info" /></div>
     </div>
 </body>
 

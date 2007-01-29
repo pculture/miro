@@ -13,13 +13,13 @@
 
     <t:execOnLoad><![CDATA[
 sorts.switchUnwatchedFirstChannel(None)
-sorts.resetSortBy()
 
 global searchFilter
 
 searchFilter = lambda x: filters.matchingItems(x, None)
 
-matchingItems = views.newWatchableItems.filter(lambda x:searchFilter(x),sortFunc=sorts.itemsUnwatchedFirst)
+matchingItems = views.newWatchableItems.filter(lambda x:searchFilter(x))
+matchingItemsSorted = matchingItems.sort(sorts.itemSortNew.sort, resort=True)
 
 def updateSearchString(newSearch):
     global searchFilter
@@ -29,9 +29,9 @@ def updateSearchString(newSearch):
         searchFilter = lambda x: filters.matchingItems(x, newSearch)
     views.newWatchableItems.recomputeFilter(matchingItems)
 
-def setSortBy(by, handle):
-    sorts.setSortBy(by)
-    views.watchableItems.recomputeFilter(matchingItems)
+def setSortBy(by, section, handle):
+    sorts.itemSortNew.setSortBy(by)
+    matchingItems.recomputeSort(matchingItemsSorted)
     handle.forceUpdate()
 ]]>
     </t:execOnLoad>
@@ -55,13 +55,15 @@ matchingItems.unlink()
 <!-- / TITLE BAR -->
 
 <div id="main-container">
-    <span t:updateForView="matchingItems">
-        <div t:hideIf="matchingItems.len() == 0">
-            <t:includeTemplate filename="static-tab-sort-bar" />
+    <div t:updateForView="matchingItemsSorted">
+        <div t:hideIf="matchingItemsSorted.len() == 0">
+            <t:executeTemplate filename="static-tab-sort-bar" 
+                itemSort="sorts.itemSortNew"
+                section="'main'" />
         </div>
-    </span>
+    </div>
     <div id="main-unwatched">
-	<div t:repeatForView="matchingItems" t:repeatTemplate='download-item' />
+	<div t:repeatForView="matchingItemsSorted" t:repeatTemplate='download-item' />
     </div>	
 </div>
 

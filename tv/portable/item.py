@@ -36,11 +36,6 @@ import adscraper
 import autodler
 import moviedata
 
-# FIXME add support for onlyBody parameter for static templates so we
-#       don't need to strip the outer HTML
-import re
-HTMLPattern = re.compile("^.*<body.*?>(.*)</body\s*>", re.S)
-
 _charset = locale.getpreferredencoding()
 
 class Item(DDBObject):
@@ -300,7 +295,7 @@ class Item(DDBObject):
     # _itemXML is the rendered XML
     def _calcItemXML(self):
         self._XMLViewName = "view%dview" % random.randint(9999999,99999999)
-        self._itemXML = HTMLPattern.match(template.fillStaticTemplate('download-item-inner','noCookie', '', this=self, viewName = self._XMLViewName,templateState='unknown')).group(1)
+        self._itemXML = template.fillStaticTemplate('download-item-inner', onlyBody=True, this=self, viewName = self._XMLViewName,templateState='unknown')
 
     #
     # Returns True iff this item has never been viewed in the interface

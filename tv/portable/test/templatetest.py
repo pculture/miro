@@ -67,6 +67,12 @@ class SimpleTest(DemocracyTestCase):
         text = tch.read()
         text = HTMLPattern.match(text).group(1)
         self.assertEqual(text,self.text)
+    def testExecuteTemplate(self):
+        (tch, handle) = fillTemplate("unittest/execute-template",DOMTracker(),'gtk-x11-MozillaBrowser','platform')
+        text = tch.read()
+        text = HTMLPattern.match(text).group(1)
+        testRE = re.compile(r'^\s+<span>foo</span>\s+<span>BAR</span>\s+$')
+        self.assert_(testRE.match(text))
 
 class TranslationTest(DemocracyTestCase):
     def setUp(self):

@@ -13,12 +13,11 @@
     <script type="text/javascript" src="resource:templates/osxdnd.js" />
     <t:execOnLoad><![CDATA[
 
-sorts.resetSortBy()
 global searchFilter
 searchFilter = lambda x: filters.matchingItems(x, None)
 
 matchingItems = views.watchableItems.filter(lambda x:searchFilter(x))
-libraryItems = matchingItems.sort(sorts.itemBy)
+libraryItems = matchingItems.sort(sorts.itemSortLibrary.sort)
 
 def updateSearchString(newSearch):
     global searchFilter
@@ -28,9 +27,9 @@ def updateSearchString(newSearch):
         searchFilter = lambda x: filters.matchingItems(x, newSearch)
     views.watchableItems.recomputeFilter(matchingItems)
 
-def setSortBy(by, handle):
-    sorts.setSortBy(by)
-    views.watchableItems.recomputeFilter(matchingItems)
+def setSortBy(by, section, handle):
+    sorts.itemSortLibrary.setSortBy(by)
+    matchingItems.recomputeSort(libraryItems)
     handle.forceUpdate()
 
 ]]>
@@ -56,11 +55,13 @@ matchingItems.unlink()
 <div id="main-container">
 
     <!-- SORT BAR ************************************************************* -->
-    <span t:updateForView="matchingItems">
+    <div t:updateForView="libraryItems">
         <div t:hideIf="libraryItems.len() == 0">
-            <t:includeTemplate filename="static-tab-sort-bar" />
+            <t:executeTemplate filename="static-tab-sort-bar" 
+                    itemSort="sorts.itemSortLibrary"
+                    section="'main'" />
         </div>
-    </span>
+    </div>
     <!-- / SORT BAR -->
     <div id="main-unwatched">
 	<!-- VIDEOS ************************************************** -->

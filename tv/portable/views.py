@@ -51,7 +51,7 @@ def initialize():
     unwatchedItems = nonContainerItems.filter(filters.unwatchedItems)
     #expiringItems = nonContainerItems.filter(filters.expiringItems)
     watchableItems = nonContainerItems.filter(filters.watchableItems)
-    newWatchableItems = nonContainerItems.filter(filters.newWatchableItems, sortFunc=sorts.itemsUnwatchedFirst)
+    newWatchableItems = nonContainerItems.filter(filters.newWatchableItems)
 
     # NOTE: we can't use the objectsByClass index for fileItems, because it
     # agregates all Item subclasses into one group.

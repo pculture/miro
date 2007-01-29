@@ -33,6 +33,7 @@ import util
 import views
 import indexes
 import searchengines
+import sorts
 import logging
 from clock import clock
 
@@ -536,15 +537,20 @@ class Feed(DDBObject):
         self.errorState = False
         self.loading = True
         self.actualFeed = FeedImpl(url,self)
-        self.download = None
         self.iconCache = IconCache(self, is_vital = True)
         self.informOnError = True
         self.folder_id = None
-        self.blinking = False
         self.searchTerm = None
         self.userTitle = None
+        self._initRestore()
         self.dd.addAfterCursor(self)
         self.generateFeed(True)
+
+    def _initRestore(self):
+        self.download = None
+        self.blinking = False
+        self.itemSort = sorts.ItemSort()
+        self.itemSortWatchable = sorts.ItemSortUnwatchedFirst()
 
     isBlinking, setBlinking = makeSimpleGetSet('blinking',
             changeNeedsSave=False)
@@ -1027,8 +1033,7 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
             self.iconCache.dbItem = self
             self.iconCache.requestUpdate(True)
         self.informOnError = False
-        self.download = None
-        self.blinking = False
+        self._initRestore()
         if self.actualFeed.__class__ == FeedImpl:
             # Our initial FeedImpl was never updated, call generateFeed again
             self.loading = True

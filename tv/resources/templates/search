@@ -19,13 +19,13 @@ import searchengines
 searchFeed = views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search')
 feed = searchFeed[0]
 
-sorts.resetSortBy()
 searchItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
+searchItemsSorted = searchItems.sort(sorts.itemSortSearch.sort)
 searchEngines = views.searchEngines
 
-def setSortBy(by, handle):
-    sorts.setSortBy(by)
-    searchItems.recomputeFilters()
+def setSortBy(by, section, handle):
+    sorts.itemSortSearch.setSortBy(by)
+    searchItems.recomputeSort(searchItemsSorted)
     handle.forceUpdate()
 ]]>
     </t:execOnLoad>
@@ -75,14 +75,16 @@ searchItems.unlink()
                 </div>
             </div>
             
-            <span t:updateForView="searchItems">
-                <div t:hideIf="searchItems.len() == 0">
-                    <t:includeTemplate filename="static-tab-sort-bar" />
+	    <div t:updateForView="searchItemsSorted">
+                <div t:hideIf="searchItemsSorted.len() == 0">
+                    <t:executeTemplate filename="static-tab-sort-bar" 
+                        itemSort="sorts.itemSortSearch"
+                        section="'main'" />
                 </div>
-            </span>
+            </div>
 
             <div id="search-results">
-               <div t:repeatForView="searchItems" t:repeatTemplate="download-item" />
+               <div t:repeatForView="searchItemsSorted" t:repeatTemplate="download-item" />
             </div>
         </div>
     </body>

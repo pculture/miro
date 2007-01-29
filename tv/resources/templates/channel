@@ -31,7 +31,6 @@ def _setFeed(kargs):
     feed = views.feeds.getObjectByID(int(kargs['id']))
     filters.switchNewItemsChannel(feed)
     sorts.switchUnwatchedFirstChannel(feed)
-    sorts.resetSortBy()
 
 def _updateView ():
     global showNewItems, allItemsMode
@@ -102,22 +101,29 @@ def toggleAllItemsMode(handle):
     matchingItems.recomputeFilter(newItems)
     handle.forceUpdate()
 
-def setSortBy(by, handle):
-    sorts.setSortBy(by)
-    allItems.recomputeSort(matchingItems)
+def setSortBy(by, which, handle):
+    if which == 'main':
+      feed.itemSort.setSortBy(by)
+      matchingItems.recomputeSort(newItems)
+    else:
+      feed.itemSortWatchable.setSortBy(by)
+      allWatchableItems.recomputeSort(watchableItems)
+    handle.forceUpdate()
 
 _setFeed(kargs)
 
 allItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
-matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm), sortFunc=sorts.itemBy, resort=True)
-newItems = matchingItems.filter(showNewFilter, sortFunc=sorts.itemBy, resort=True)
+matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm))
+newItems = matchingItems.filter(showNewFilter, sortFunc=feed.itemSort.sort, resort=True)
 
-allDownloadingItems = matchingItems.filter(filters.downloadingOrPausedItems,sortFunc=sorts.itemBy, resort=True)
-downloadingItems = allDownloadingItems.filter(showDownloadsFilter,sortFunc=sorts.itemBy, resort=True)
-allWatchableItems = matchingItems.filter(filters.watchableItems,sortFunc=sorts.itemsUnwatchedFirst, resort=True)
-watchableItems = allWatchableItems.filter(showWatchableFilter,sortFunc=sorts.itemsUnwatchedFirst, resort=True)
+allDownloadingItems = matchingItems.filter(filters.downloadingOrPausedItems)
+downloadingItems = allDownloadingItems.filter(showDownloadsFilter)
+allWatchableItems = matchingItems.filter(filters.watchableItems)
+watchableItems = allWatchableItems.filter(showWatchableFilter,sortFunc=feed.itemSortWatchable.sort)
 
 thisFeedView = views.feeds.filter(lambda x: x is feed)
+itemSort = feed.itemSort
+itemSortWatchable = feed.itemSortWatchable
 
 def allItemsHaveState(view, state):
     for item in view:

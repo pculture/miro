@@ -5,6 +5,7 @@ import dialogs
 import indexes
 import menu
 import playlist
+import sorts
 import util
 import views
 from database import DDBObject
@@ -98,6 +99,17 @@ class FolderBase(DDBObject):
         raise NotImplementedError()
 
 class ChannelFolder(FolderBase):
+    def __init__(self, title):
+        FolderBase.__init__(self, title)
+        self._initRestore()
+
+    def onRestore(self):
+        self._initRestore()
+
+    def _initRestore(self):
+        self.itemSort = sorts.ItemSort()
+        self.itemSortWatchable = sorts.ItemSortUnwatchedFirst()
+
     def renameTitle(self):
         return _("Rename Channel Folder")
     def renameText(self):

@@ -2,18 +2,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:t="http://www.participatorypolitics.org/"
-      xmlns:i18n="http://www.participatoryculture.org/i18n"
       eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <t:execOnLoad><![CDATA[
-itemSort = kargs['itemSort']
-section = kargs['section']
-    ]]></t:execOnLoad>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<t:execOnLoad><![CDATA[
+bar = "BAR"
+]]></t:execOnLoad>
 </head>
 <body>
-<div class="static-tab-sort">
-    <t:includeTemplate filename="sort-bar" /> 
-</div>
+<t:executeTemplate filename="unittest/replace-with-variable" var="'foo'" />
+<t:executeTemplate filename="unittest/replace-with-variable" var="bar" />
 </body>
 </html>

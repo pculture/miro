@@ -102,6 +102,14 @@ def genUpdateHideOnView(varname, tid, prefix, args):
 def genInsertBodyTagExtra(varname, tid, prefix, args):
     return '%s%s.write(" " + bodyTagExtra)\n' % (prefix, varname)
 
+def genExecuteTemplate(varname, tid, prefix, args):
+    filename, methodArgs = args
+    methodCall = "fillStaticTemplate(%r, onlyBody=True" % filename
+    for name, value in methodArgs.items():
+        methodCall += ', %s=%s' % (name, value)
+    methodCall += ')'
+    return '%s%s.write(%s)\n' % (prefix, varname, methodCall)
+
 from xml import sax
 from xhtmltools import toUTF8Bytes
 from cStringIO import StringIO
@@ -269,7 +277,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
 
     def render(self, fileobj):
         fileobj.write('# This is a generated file. Do not edit.\n')
-        fileobj.write('from template import Handle, fillAttr, quoteAndFillAttr\n')
+        fileobj.write('from template import Handle, fillAttr, quoteAndFillAttr, fillStaticTemplate\n')
         fileobj.write('from cStringIO import StringIO\n')
         fileobj.write('from xhtmltools import urlencode, toUTF8Bytes\n')
         fileobj.write('from templatehelper import quoteattr, escape\n')
@@ -447,6 +455,10 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             self.inStaticReplace = True
         elif name == 't:includeTemplate':
             self.addFillTemplate(attrs['filename'])
+        elif name == 't:executeTemplate':
+            args = dict(attrs.items())
+            filename = args.pop('filename')
+            self.addInstruction(genExecuteTemplate, (filename, args))
         elif name == 't:triggerActionOnLoad':
             self.handle.addTriggerActionURLOnLoad(attrs['url'])
         elif name == 't:triggerActionOnUnload':
@@ -474,6 +486,8 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         elif name == 't:sort':
             pass
         elif name == 't:includeTemplate':
+            pass
+        elif name == 't:executeTemplate':
             pass
         elif name == 't:triggerActionOnUnload':
             pass
