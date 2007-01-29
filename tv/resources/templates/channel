@@ -13,7 +13,7 @@
     <script type="text/javascript" src="resource:templates/osxdnd.js" />
     <t:execOnLoad><![CDATA[
 #print templateState
-global feed, searchTerm, showDownloads, showWatchableItems, showNewItems, allItemsMode, allItems, watchableItems, matchingItems, newItems
+global feed, searchTerm, showDownloads, showWatchableItems, showNewItems, allItemsMode, allItems, watchableItems, matchingItems, newItems, itemSort, itemSortWatchable
 
 def _setFeed(kargs):
     global feed, allItemsMode, showDownloads, showNewItems, showWatchableItems, searchTerm
@@ -44,13 +44,17 @@ def _updateView ():
     feed.updateIcons()
 
 def reInit(*args, **kargs):
-    global feed, allItems, showDownloads, showWatchableItems, showNewItems, allItemsMode, watchableItems, matchingItems, newItems
+    global feed, allItems, showDownloads, showWatchableItems, showNewItems, allItemsMode, watchableItems, matchingItems, newItems, itemSort, itemSortWatchable
 
     if feed.idExists():
         feed.markAsViewed()
 
     #print "reinitting %s" % repr(kargs)
     _setFeed(kargs)
+    itemSort = feed.itemSort
+    itemSortWatchable = feed.itemSortWatchable
+    newItems.sortFunc = feed.itemSort.sort
+    watchableItems.sortFunc = feed.itemSortWatchable.sort
 
     allItems.changeIndexValue(indexes.itemsByFeed, int(kargs['id']))
     views.feeds.recomputeFilter(thisFeedView)
