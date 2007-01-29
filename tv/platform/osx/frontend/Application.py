@@ -38,8 +38,25 @@ class Application:
         controller = appl.delegate()
 
     def Run(self):
-        eventloop.setDelegate(self)
-        AppHelper.runEventLoop()
+        if self.checkOtherDemocracyInstances():
+            eventloop.setDelegate(self)
+            AppHelper.runEventLoop()
+        else:
+            logging.warning('Another instance of Democracy is already running! Quitting now.')
+
+    def checkOtherDemocracyInstances(self):
+        ourBundleIdentifier = NSBundle.mainBundle().bundleIdentifier()
+        applications = NSWorkspace.sharedWorkspace().launchedApplications()
+        democracies = [appl for appl in applications if appl['NSApplicationBundleIdentifier'] == ourBundleIdentifier]
+        alone = len(democracies) == 1
+
+        if not alone:
+            ourBundlePath = NSBundle.mainBundle().bundlePath()
+            otherDemocracy = [dem['NSApplicationPath'] for dem in democracies if dem['NSApplicationPath'] != ourBundlePath]
+            if len(otherDemocracy) == 1:
+                NSWorkspace.sharedWorkspace().launchApplication_(otherDemocracy[0])
+
+        return alone
 
     def onStartup(self):
         # For overriding
