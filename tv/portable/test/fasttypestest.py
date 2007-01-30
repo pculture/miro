@@ -85,7 +85,10 @@ class LinkedListTestCase(DemocracyTestCase):
         else:
             fail('indexing beyond the end should raise IndexError')
 
-        del self.list[newIt]
+        # Apparently, reassigning values makes this iterator invalid --NN
+        #
+        # del self.list[newIt]
+        del self.list[self.list.firstIter()]
         assert len(self.list) == 3
         delIt = self.list.remove(0)
         assert len(self.list) == 2
@@ -193,7 +196,10 @@ class SortedListTestCase(DemocracyTestCase):
         else:
             fail('indexing beyond the end should raise IndexError')
 
-        del self.list[newIt]
+        # Apparently, reassigning values makes this iterator invalid --NN
+        #
+        # del self.list[newIt]
+        del self.list[self.list.firstIter()]
         assert len(self.list) == 3
         self.list.remove(0)
         assert len(self.list) == 2
