@@ -11,16 +11,39 @@ import shutil
 import os
 import re
 import os.path
+import datetime
 
 orig_dir = os.getcwd()
 repository_url = "https://svn.participatoryculture.org/svn/dtv/trunk/"
-
 def die(error = "An error occured", code = 1):
     try:
         print "ERROR: %s" % error
         os.chdir(orig_dir)
-    finally:
-        sys.exit(code)
+    except:
+        pass
+    sys.exit(code)
+
+# Eventually, this build script will work for all supported platforms
+if os.name == 'nt':
+    platform = "windows-xul"
+    repositories = ["tv","dtv-binary-kit"]
+    build_command = "bdist_xul"
+    installer_filename = "Democracy-[0-9.]+\.exe"
+    remote_copy_command = "C:\\cygwin\\bin\\scp.exe"
+    is_cygwin_command = True
+    remote_machine = "pcf2.osuosl.org:/data/pculture/nightlies/"
+    installer_extension = "exe"
+elif os.name == 'mac':
+    platform = "osx"
+    repositories = ["tv","dtv-binary-kit-mac"]
+    build_command = "py2app -O2 --dist-dir dist/ --force-update"
+    installer_filename = "Democracy-[0-9\-]+\.dmg"
+    remote_copy_command = "scp"
+    is_cygwin_command = False
+    remote_machine = "pcf2.osuosl.org:/data/pculture/nightlies/"
+    installer_extension = "dmg"
+else:
+    die("Unrecognized platform")
 
 def chdir_or_die(path):
     try:
@@ -57,13 +80,17 @@ def find_installer_name():
             return filename
     return None
 
-# Eventually, this build script will work for all supported platforms
-#
-# For now, I'm hardcoding these variables
-platform = "windows-xul"
-repositories = ["tv","dtv-binary-kit"]
-build_command = "bdist_xul"
-installer_filename = "Democracy-[0-9.]+\.exe"
+def remove_old_copies():
+   pass 
+
+def cygwinify(path):
+    if not is_cygwin_command:
+        return path
+    else:
+        path = os.path.abspath(path).lower().replace("\\","/")
+        drive = path[0]
+        return "/cygdrive/%s%s" % (drive, path[2:])
+        
 
 # Find the build directory
 if len(sys.argv) <= 1:
@@ -86,7 +113,7 @@ if not os.path.isdir(build_dir):
 
 chdir_or_die(build_dir)
 
-for repository in repositories:
+for  repository in repositories:
     checkout_and_update(repository, build_dir)
 
 chdir_or_die(platform_build_dir)
@@ -112,5 +139,18 @@ try:
                     os.path.join(root_dir, installer))
 except:
     die("Can't copy the installer!")
-
+ 
 chdir_or_die(orig_dir)
+
+dest_installer = "Democracy-%4d-%02d-%02d-nightly.%s" % (
+                   datetime.date.today().year,
+                   datetime.date.today().month,
+                   datetime.date.today().day,
+                   installer_extension)
+
+try:
+    if os.system("%s %s %s%s" %
+               (remote_copy_command, cygwinify(os.path.join(root_dir,installer)),remote_machine, dest_installer)):
+        die("Problem uploading build")
+except:
+    die("Could not run upload command")
