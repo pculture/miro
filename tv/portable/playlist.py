@@ -18,10 +18,7 @@ class PlaylistMixin:
     """
 
     def setupTrackedItemView(self):
-        self.itemSort = sorts.ItemSort()
-        self.trackedItems = TrackedIDList(views.items, self.item_ids,
-                sortFunc=self.itemSort.sort)
-        # should we add a sortFunc above?
+        self.trackedItems = TrackedIDList(views.items, self.item_ids)
         views.items.addRemoveCallback(self.onItemRemoved)
 
     def onItemRemoved(self, obj, id):
