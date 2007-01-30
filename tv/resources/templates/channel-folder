@@ -90,7 +90,7 @@ matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm))
 newItems = matchingItems.filter(showNewFilter, sortFunc=folder.itemSort.sort, resort=True)
 
 allDownloadingItems = matchingItems.filter(filters.downloadingOrPausedItems)
-downloadingItems = allDownloadingItems.filter(showDownloadsFilter,sortFunc=folder.itemSortDownloading.sort)
+downloadingItems = allDownloadingItems.filter(showDownloadsFilter,sortFunc=folder.itemSortDownloading.sort,resort=True)
 allWatchableItems = matchingItems.filter(filters.watchableItems)
 watchableItems = allWatchableItems.filter(showWatchableFilter,sortFunc=folder.itemSortWatchable.sort, resort=True)
 

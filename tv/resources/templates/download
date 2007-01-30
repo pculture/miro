@@ -48,11 +48,11 @@ allUploads = views.items.filter(lambda x: x.downloader and x.downloader.getState
 allPendingDownloads = makeDownloadCategoryView('pending')
 allPausedDownloads = views.pausedItems.filter (lambda x: not (x.getFeed().url == 'dtv:manualFeed' and x.isNonVideoFile()))
 
-matchingNormalDLs = allNormalDownloads.filter(lambda x:searchFilter(x),sortFunc=sorts.itemSortDownloads.sort)
+matchingNormalDLs = allNormalDownloads.filter(lambda x:searchFilter(x),sortFunc=sorts.itemSortDownloads.sort,resort=True)
 matchingExternalDLs = allExternalDownloads.filter(lambda x:searchFilter(x))
-matchingULs = allUploads.filter(lambda x:searchFilter(x),sortFunc=sorts.itemSortSeedingTorrents.sort)
-matchingPendingDLs = allPendingDownloads.filter(lambda x:searchFilter(x),sortFunc=sorts.itemSortDownloads.sort)
-matchingPausedDLs = allPausedDownloads.filter(lambda x:searchFilter(x),sortFunc=sorts.itemSortDownloads.sort)
+matchingULs = allUploads.filter(lambda x:searchFilter(x),sortFunc=sorts.itemSortSeedingTorrents.sort,resort=True)
+matchingPendingDLs = allPendingDownloads.filter(lambda x:searchFilter(x),sortFunc=sorts.itemSortDownloads.sort,resort=True)
+matchingPausedDLs = allPausedDownloads.filter(lambda x:searchFilter(x),sortFunc=sorts.itemSortDownloads.sort,resort=True)
 
 def updateSearchString(newSearch):
     global searchFilter

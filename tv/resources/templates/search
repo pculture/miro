@@ -20,7 +20,7 @@ searchFeed = views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search')
 feed = searchFeed[0]
 
 searchItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
-searchItemsSorted = searchItems.sort(sorts.itemSortSearch.sort)
+searchItemsSorted = searchItems.sort(sorts.itemSortSearch.sort, resort=True)
 searchEngines = views.searchEngines
 
 def setSortBy(by, section, handle):

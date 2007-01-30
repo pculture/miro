@@ -126,9 +126,9 @@ matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm))
 newItems = matchingItems.filter(showNewFilter, sortFunc=feed.itemSort.sort, resort=True)
 
 allDownloadingItems = matchingItems.filter(filters.downloadingOrPausedItems)
-downloadingItems = allDownloadingItems.filter(showDownloadsFilter,sortFunc=feed.itemSortDownloading.sort)
+downloadingItems = allDownloadingItems.filter(showDownloadsFilter,sortFunc=feed.itemSortDownloading.sort,resort=True)
 allWatchableItems = matchingItems.filter(filters.watchableItems)
-watchableItems = allWatchableItems.filter(showWatchableFilter,sortFunc=feed.itemSortWatchable.sort)
+watchableItems = allWatchableItems.filter(showWatchableFilter,sortFunc=feed.itemSortWatchable.sort,resort=True)
 
 thisFeedView = views.feeds.filter(lambda x: x is feed)
 itemSort = feed.itemSort
