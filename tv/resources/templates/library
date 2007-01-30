@@ -16,8 +16,7 @@
 global searchFilter
 searchFilter = lambda x: filters.matchingItems(x, None)
 
-matchingItems = views.watchableItems.filter(lambda x:searchFilter(x))
-libraryItems = matchingItems.sort(sorts.itemSortLibrary.sort)
+matchingItems = views.watchableItems.filter(lambda x:searchFilter(x),sortFunc=sorts.itemSortLibrary.sort)
 
 def updateSearchString(newSearch):
     global searchFilter
@@ -29,7 +28,7 @@ def updateSearchString(newSearch):
 
 def setSortBy(by, section, handle):
     sorts.itemSortLibrary.setSortBy(by)
-    matchingItems.recomputeSort(libraryItems)
+    views.watchableItems.recomputeSort(matchingItems)
     handle.forceUpdate()
 
 ]]>
@@ -55,8 +54,8 @@ matchingItems.unlink()
 <div id="main-container">
 
     <!-- SORT BAR ************************************************************* -->
-    <div t:updateForView="libraryItems">
-        <div t:hideIf="libraryItems.len() == 0">
+    <div t:updateForView="matchingItems">
+        <div t:hideIf="matchingItems.len() == 0">
             <t:executeTemplate filename="static-tab-sort-bar" 
                     itemSort="sorts.itemSortLibrary"
                     section="'main'" />
@@ -65,7 +64,7 @@ matchingItems.unlink()
     <!-- / SORT BAR -->
     <div id="main-unwatched">
 	<!-- VIDEOS ************************************************** -->
-	<div t:repeatForView="libraryItems" t:repeatTemplate='download-item' />
+	<div t:repeatForView="matchingItems" t:repeatTemplate='download-item' />
 	<!-- / VIDEOS -->
     </div>
 	

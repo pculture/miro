@@ -48,15 +48,11 @@ allUploads = views.items.filter(lambda x: x.downloader and x.downloader.getState
 allPendingDownloads = makeDownloadCategoryView('pending')
 allPausedDownloads = views.pausedItems.filter (lambda x: not (x.getFeed().url == 'dtv:manualFeed' and x.isNonVideoFile()))
 
-matchingNormalDLs = allNormalDownloads.filter(lambda x:searchFilter(x))
-matchingExternalDLs = allExternalDownloads.filter(lambda x:searchFilter(x),sortFunc=sorts.itemSortExternalTorrents.sort)
+matchingNormalDLs = allNormalDownloads.filter(lambda x:searchFilter(x),sortFunc=sorts.itemSortDownloads.sort)
+matchingExternalDLs = allExternalDownloads.filter(lambda x:searchFilter(x))
 matchingULs = allUploads.filter(lambda x:searchFilter(x),sortFunc=sorts.itemSortSeedingTorrents.sort)
-matchingPendingDLs = allPendingDownloads.filter(lambda x:searchFilter(x))
-matchingPausedDLs = allPausedDownloads.filter(lambda x:searchFilter(x))
-
-normalDownloads = matchingNormalDLs.sort(sorts.itemSortDownloads.sort)
-pendingDownloads = matchingPendingDLs.sort(sorts.itemSortDownloads.sort)
-pausedDownloads = matchingPausedDLs.sort(sorts.itemSortDownloads.sort)
+matchingPendingDLs = allPendingDownloads.filter(lambda x:searchFilter(x),sortFunc=sorts.itemSortDownloads.sort)
+matchingPausedDLs = allPausedDownloads.filter(lambda x:searchFilter(x),sortFunc=sorts.itemSortDownloads.sort)
 
 def updateSearchString(newSearch):
     global searchFilter
@@ -73,12 +69,9 @@ def updateSearchString(newSearch):
 def setSortBy(by, which, handle):
     if which == 'main':
         sorts.itemSortDownloads.setSortBy(by)
-        matchingNormalDLs.recomputeSort(normalDownloads)
-        matchingPendingDLs.recomputeSort(pendingDownloads)
-        matchingPausedDLs.recomputeSort(pausedDownloads)
-    elif which == 'external-torrents':
-        sorts.itemSortExternalTorrents.setSortBy(by)
-        allExternalDownloads.recomputeSort(matchingExternalDLs)
+        allNormalDownloads.recomputeSort(matchingNormalDLs)
+        allPendingDownloads.recomputeSort(matchingPendingDLs)
+        allPausedDownloads.recomputeSort(matchingPausedDLs)
     else:
         sorts.itemSortSeedingTorrents.setSortBy(by)
         allUploads.recomputeSort(matchingULs)
@@ -143,7 +136,7 @@ allPausedDownloads.unlink()
 
     <!-- SORT BAR ************************************************************* --> 
     <div t:updateForView="views.downloadingItems"> 
-        <div t:hideIf="normalDownloads.len() + pendingDownloads.len() + pausedDownloads.len() == 0">
+        <div t:hideIf="matchingNormalDLs.len() + matchingPendingDLs.len() + matchingPausedDLs.len() == 0">
             <t:executeTemplate filename="static-tab-sort-bar" 
                     itemSort="sorts.itemSortDownloads"
                     section="'main'" />
@@ -152,15 +145,12 @@ allPausedDownloads.unlink()
     <!-- / SORT BAR -->
 
 	<!-- VIDEOS ************************************************** -->
-    <div t:repeatForView="normalDownloads" t:repeatTemplate='download-item' />
-    <div t:repeatForView="pendingDownloads" t:repeatTemplate='download-item' />
-    <div t:repeatForView="pausedDownloads" t:repeatTemplate='download-item' />
+    <div t:repeatForView="matchingNormalDLs" t:repeatTemplate='download-item' />
+    <div t:repeatForView="matchingPendingDLs" t:repeatTemplate='download-item' />
+    <div t:repeatForView="matchingPausedDLs" t:repeatTemplate='download-item' />
 	<!-- / VIDEOS -->
     <div t:updateForView="matchingExternalDLs">
         <div t:hideIf="matchingExternalDLs.len() == 0">
-            <t:executeTemplate filename="static-tab-sort-bar" 
-                    itemSort="sorts.itemSortExternalTorrents"
-                    section="'external-torrents'" />
             <div class="main-channelbar downloading-channelbar no-arrow">
                 <span i18n:translate="">External Torrents</span>
                 <a i18n:translate="" href="#" onclick="return eventURL('action:clearTorrents');" class="clear-completed-link" title="Clear Completed Torrents">Clear Completed Torrents</a>
