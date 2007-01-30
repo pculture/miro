@@ -1,0 +1,55 @@
+# Democracy Player - an RSS based video player application
+# Copyright (C) 2005-2006 Participatory Culture Foundation
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+This is the source for Democracy Player, the client-side component of
+the Democracy platform for Internet TV. It is targeted at average,
+unsophisticated Internet users with broadband connections. It can be
+built for Mac OS X, Microsoft Windows, or X Windows-based platforms
+such as Linux, with a native look and feel on each platform, and there
+is a clean separation between the portable backend and the
+platform-specific frontend in the event that new ports are desired in
+the future. It is written primarily in Python and is distributed under
+the terms of the GNU General Public License; see license.txt.
+
+Prebuilt versions are available from:
+http://www.getdemocracy.com/downloads/
+
+The latest source can be retrieved via Subversion from:
+https://svn.participatoryculture.org/svn/dtv/trunk/tv
+
+The project bug tracker, the developer documentation wiki, and links
+to subscription information for and archives of the development
+mailing lists are located at:
+https://develop.participatoryculture.org/
+
+The public face of the Democracy platform is:
+http://www.getdemocracy.com/
+
+Participatory Culture Foundation, the non-profit that sponsors
+Democracy development and promotes the platform, has a site at:
+http://participatoryculture.org/
+
+To build for...              See...
+  Mac OS X (Cocoa widgets)   platform/osx/README
+  X Windows (GTK widgets)    platform/gtk-x11/README
+  MS Windows (Mozilla XUL)   platform/windows-xul/README
+
+There is also a fourth port, which also targets MS Windows but embeds
+Mozilla in a window made with native Windows widgets instead of using
+Mozilla's XUL widgets. This port is incomplete and long-abandoned, but
+will remain in 'platform/windows.old' for a while longer for easy
+reference.
