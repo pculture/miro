@@ -5,6 +5,7 @@ import eventloop
 import frontend
 import app
 import downloader
+import views
 import util
 import databaseupgrade
 import storedatabase
@@ -57,6 +58,7 @@ class DummyController:
 class DemocracyTestCase(unittest.TestCase):
     def setUp(self):
         database.set_thread()
+        views.initialize()
         # reset the event loop
         util.chatter = False
         self.oldUtilDotFailed = util.failed
