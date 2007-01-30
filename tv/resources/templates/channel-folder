@@ -64,6 +64,9 @@ def setSortBy(by, which, handle):
     if which == 'main':
       folder.itemSort.setSortBy(by)
       matchingItems.recomputeSort(newItems)
+    elif which == 'downloading':
+      feed.itemSortDownloading.setSortBy(by)
+      allDownloadingItems.recomputeSort(downloadingItems)
     else:
       folder.itemSortWatchable.setSortBy(by)
       allWatchableItems.recomputeSort(watchableItems)
@@ -87,7 +90,7 @@ matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm))
 newItems = matchingItems.filter(showNewFilter, sortFunc=folder.itemSort.sort, resort=True)
 
 allDownloadingItems = matchingItems.filter(filters.downloadingOrPausedItems)
-downloadingItems = allDownloadingItems.filter(showDownloadsFilter)
+downloadingItems = allDownloadingItems.filter(showDownloadsFilter,sortFunc=folder.itemSortDownloading.sort)
 allWatchableItems = matchingItems.filter(filters.watchableItems)
 watchableItems = allWatchableItems.filter(showWatchableFilter,sortFunc=folder.itemSortWatchable.sort, resort=True)
 
@@ -98,6 +101,7 @@ childrenView = views.feeds.filterWithIndex(indexes.byFolder, folder)
 thisFeedView = thisFolderView
 feed = None
 itemSort = folder.itemSort
+itemSortDownloading = folder.itemSortDownloading
 itemSortWatchable = folder.itemSortWatchable
 
 def allItemsHaveState(view, state):

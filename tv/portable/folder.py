@@ -108,6 +108,7 @@ class ChannelFolder(FolderBase):
 
     def _initRestore(self):
         self.itemSort = sorts.ItemSort()
+        self.itemSortDownloading = sorts.ItemSort()
         self.itemSortWatchable = sorts.ItemSortUnwatchedFirst()
 
     def renameTitle(self):

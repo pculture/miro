@@ -13,7 +13,7 @@
     <script type="text/javascript" src="resource:templates/osxdnd.js" />
     <t:execOnLoad><![CDATA[
 #print templateState
-global feed, searchTerm, showDownloads, showWatchableItems, showNewItems, allItemsMode, allItems, watchableItems, matchingItems, newItems, itemSort, itemSortWatchable
+global feed, searchTerm, showDownloads, showWatchableItems, showNewItems, allItemsMode, allItems, watchableItems, matchingItems, newItems, itemSort, itemSortWatchable, itemSortDownloading
 
 def _setFeed(kargs):
     global feed, allItemsMode, showDownloads, showNewItems, showWatchableItems, searchTerm
@@ -44,7 +44,7 @@ def _updateView ():
     feed.updateIcons()
 
 def reInit(*args, **kargs):
-    global feed, allItems, showDownloads, showWatchableItems, showNewItems, allItemsMode, watchableItems, matchingItems, newItems, itemSort, itemSortWatchable
+    global feed, allItems, showDownloads, showWatchableItems, showNewItems, allItemsMode, watchableItems, matchingItems, newItems, itemSort, itemSortWatchable, itemSortDownloading
 
     if feed.idExists():
         feed.markAsViewed()
@@ -52,8 +52,10 @@ def reInit(*args, **kargs):
     #print "reinitting %s" % repr(kargs)
     _setFeed(kargs)
     itemSort = feed.itemSort
+    itemSortDownloading = feed.itemSortDownloading
     itemSortWatchable = feed.itemSortWatchable
     newItems.sortFunc = feed.itemSort.sort
+    downloadingItems.sortFunc = feed.itemSortDownloading.sort
     watchableItems.sortFunc = feed.itemSortWatchable.sort
 
     allItems.changeIndexValue(indexes.itemsByFeed, int(kargs['id']))
@@ -109,6 +111,9 @@ def setSortBy(by, which, handle):
     if which == 'main':
       feed.itemSort.setSortBy(by)
       matchingItems.recomputeSort(newItems)
+    elif which == 'downloading':
+      feed.itemSortDownloading.setSortBy(by)
+      allDownloadingItems.recomputeSort(downloadingItems)
     else:
       feed.itemSortWatchable.setSortBy(by)
       allWatchableItems.recomputeSort(watchableItems)
@@ -121,13 +126,14 @@ matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm))
 newItems = matchingItems.filter(showNewFilter, sortFunc=feed.itemSort.sort, resort=True)
 
 allDownloadingItems = matchingItems.filter(filters.downloadingOrPausedItems)
-downloadingItems = allDownloadingItems.filter(showDownloadsFilter)
+downloadingItems = allDownloadingItems.filter(showDownloadsFilter,sortFunc=feed.itemSortDownloading.sort)
 allWatchableItems = matchingItems.filter(filters.watchableItems)
 watchableItems = allWatchableItems.filter(showWatchableFilter,sortFunc=feed.itemSortWatchable.sort)
 
 thisFeedView = views.feeds.filter(lambda x: x is feed)
 itemSort = feed.itemSort
 itemSortWatchable = feed.itemSortWatchable
+itemSortDownloading = feed.itemSortDownloading
 
 def allItemsHaveState(view, state):
     for item in view:
