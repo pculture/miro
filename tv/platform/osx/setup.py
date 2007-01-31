@@ -151,12 +151,12 @@ class clean(Command):
 
 class mypy2app(py2app):
     def run(self):
-        global root, bundleRoot, rsrcRoot
+        global root
         template_compiler.compileAllTemplates(root)
         py2app.run(self)
         # Setup some variables we'll need
 
-        bundleRoot = 'Democracy.app/Contents'
+        bundleRoot = os.path.join(self.dist_dir, 'Democracy.app/Contents')
         execRoot = os.path.join(bundleRoot, 'MacOS')
         rsrcRoot = os.path.join(bundleRoot, 'Resources')
         fmwkRoot = os.path.join(bundleRoot, 'Frameworks')
