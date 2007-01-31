@@ -37,9 +37,9 @@ if os.name == 'nt':
 elif os.name == 'posix' and os.uname()[0] == 'Darwin':
     platform = "osx"
     repositories = ["tv","dtv-binary-kit-mac"]
-    build_command = "py2app -O2 --dist-dir dist/ --force-update"
+    build_command = "py2app -O2 --dist-dir dist/ --force-update --make-dmg"
     installer_filename = "Democracy-[0-9\-]+\.dmg"
-    remote_copy_command = "scp"
+    remote_copy_command = "scp -P22"
     is_cygwin_command = False
     remote_machine = "pcf2.osuosl.org:/data/pculture/nightlies/"
     installer_extension = "dmg"
