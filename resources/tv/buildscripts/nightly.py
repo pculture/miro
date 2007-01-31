@@ -144,9 +144,9 @@ dest_installer = "Democracy-%4d-%02d-%02d-nightly.%s" % (
                    datetime.date.today().day,
                    installer_extension)
 
-try:
-    if os.system("%s %s %s%s" %
-               (remote_copy_command, cygwinify(os.path.join(root_dir,installer)),remote_machine, dest_installer)):
-        die("Problem uploading build")
-except:
-    die("Could not run upload command")
+upload_cmd = ("%s %s %s%s" %
+              (remote_copy_command,
+               cygwinify(os.path.join(root_dir,installer)),
+               remote_machine, dest_installer))
+if os.system(upload_cmd):
+    die("Problem uploading build (%s)" % upload_cmd)
