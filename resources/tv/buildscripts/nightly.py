@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.4
 #
 # Nightly build script for Democracy Player Windows port
 # Copyright (c) 2006 Participatory Culture Foundation
@@ -33,7 +33,8 @@ if os.name == 'nt':
     is_cygwin_command = True
     remote_machine = "pcf2.osuosl.org:/data/pculture/nightlies/"
     installer_extension = "exe"
-elif os.name == 'mac':
+    python = "python"
+elif os.name == 'posix' and os.uname()[0] == 'Darwin':
     platform = "osx"
     repositories = ["tv","dtv-binary-kit-mac"]
     build_command = "py2app -O2 --dist-dir dist/ --force-update"
@@ -42,6 +43,7 @@ elif os.name == 'mac':
     is_cygwin_command = False
     remote_machine = "pcf2.osuosl.org:/data/pculture/nightlies/"
     installer_extension = "dmg"
+    python = "/usr/local/bin/python2.4"
 else:
     die("Unrecognized platform")
 
@@ -118,17 +120,11 @@ for  repository in repositories:
 
 chdir_or_die(platform_build_dir)
 
-try:
-    if (os.system("python setup.py clean")):
-        die("Clean failed")
-except:
-    die("Cannot clean build directory")
+if (os.system("%s setup.py clean" % python)):
+    die("Clean failed")
 
-try:
-    if (os.system("python setup.py %s" % build_command)):
-        die("Build failed")
-except:
-    die("Cannot run build")
+if (os.system("%s setup.py %s" % (python, build_command))):
+    die("Build failed")
 
 installer = find_installer_name()
 if installer is None:
