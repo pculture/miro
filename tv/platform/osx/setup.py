@@ -4,6 +4,7 @@ import string
 import py2app
 import shutil
 import plistlib
+import datetime
 
 from glob import glob
 from distutils.core import setup
@@ -18,6 +19,16 @@ forceUpdate = False
 if '--force-update' in sys.argv:
     sys.argv.remove('--force-update')
     forceUpdate = True
+
+if "--make-dmg" in sys.argv:
+    # Change this to change the name of the .dmg file we create
+    imgName = "Democracy-%4d-%02d-%02d.dmg" % (
+        datetime.date.today().year,
+        datetime.date.today().month,
+        datetime.date.today().day)
+    sys.argv.remove('--make-dmg')
+else:
+    imgName = None
 
 # Find the top of the source tree and set search path
 # GCC3.3 on OS X 10.3.9 doesn't like ".."'s in the path so we normalize it
@@ -151,8 +162,13 @@ class clean(Command):
 
 class mypy2app(py2app):
     def run(self):
-        global root
+        global root, imgName, conf
+        print "------------------------------------------------"
+        
+        print "Building Democracy Player v%s (%s)" % (conf['appVersion'], conf['appRevision'])
+
         template_compiler.compileAllTemplates(root)
+
         py2app.run(self)
         # Setup some variables we'll need
 
@@ -267,7 +283,8 @@ class mypy2app(py2app):
         # Check that we haven't left some turds in the application bundle.
         
         wipeList = list()
-        for root, dirs, files in os.walk('Democracy.app'):
+        for root, dirs, files in os.walk(os.path.join(self.dist_dir,
+                                                      'Democracy.app')):
             for excluded in ('.svn', 'unittest'):
                 if excluded in dirs:
                     dirs.remove(excluded)
@@ -278,12 +295,52 @@ class mypy2app(py2app):
             for folder in wipeList:
                 print "    %s" % folder
                 shutil.rmtree(folder)
-        
-        # And we're done...
-        
-        print "------------------------------------------------"
-        
-        print "Building Democracy Player v%s (%s)" % (conf['appVersion'], conf['appRevision'])
+
+        if imgName is not None:
+            print "Building image..."
+
+            imgDirName = os.path.join(self.dist_dir, "img")
+            imgPath = os.path.join(self.dist_dir, imgName)
+
+            try:
+                shutil.rmtree(imgDirName)
+            except:
+                pass
+            try:
+                os.remove(imgPath)
+            except:
+                pass
+
+            os.mkdir(imgDirName)
+            os.mkdir(os.path.join(imgDirName,".background"))
+
+            os.rename(os.path.join(self.dist_dir,"Democracy.app"),
+                      os.path.join(imgDirName, "Democracy.app"))
+            shutil.copyfile("Resources-DMG/DS_Store",
+                            os.path.join(imgDirName,".DS_Store"))
+            shutil.copyfile("Resources-DMG/background.tiff",
+                            os.path.join(imgDirName,".background",
+                                         "background.tiff"))
+
+            os.system("/Developer/Tools/SetFile -a V \"%s\"" %
+                      os.path.join(imgDirName,".DS_Store"))
+            
+            # Create the DMG from the image folder
+
+            print "Creating DMG file... "
+
+            os.system("hdiutil create -srcfolder \"%s\" -volname Democracy -format UDZO \"%s\"" %
+                      (imgDirName,
+                       os.path.join(self.dist_dir, "Democracy.tmp.dmg")))
+
+            os.system("hdiutil convert -format UDZO -imagekey zlib-level=9 -o \"%s\" \"%s\"" %
+                      (imgPath,
+                       os.path.join(self.dist_dir, "Democracy.tmp.dmg")))
+                      
+            os.remove(os.path.join(self.dist_dir,"Democracy.tmp.dmg"))
+
+            print "Completed"
+            os.system("ls -la \"%s\"" % imgPath)
 
 py2app_options = dict(
     plist = infoPlist,
