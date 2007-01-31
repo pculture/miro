@@ -79,6 +79,11 @@ class ItemSort:
     def sort(self, x, y):
         """Pass this to view.sort()"""
 
+        if self.sortDirection == 'descending':
+            t = x
+            x = y
+            y = t
+
         if self.sortBy == 'date':
             result = itemByDate(x, y)
         elif self.sortBy == 'size':
@@ -87,8 +92,6 @@ class ItemSort:
             result = itemByName(x, y)
         elif self.sortBy == 'duration':
             result = itemByDuration(x, y)
-        if self.sortDirection == 'descending':
-            result = not result
         return result
 
     def getSortButtonState(self, by):
