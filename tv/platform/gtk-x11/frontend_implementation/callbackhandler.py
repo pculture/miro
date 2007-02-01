@@ -21,7 +21,7 @@ import platformutils
 import startup
 from gtcache import gettext as _
  
-def AttachBoolean (widget, descriptor, sensitive_widget = None):
+def AttachBoolean (dialog, widget, descriptor, sensitive_widget = None):
     def BoolChanged (widget):
          config.set (descriptor, widget.get_active())
          if (sensitive_widget != None):
@@ -32,7 +32,7 @@ def AttachBoolean (widget, descriptor, sensitive_widget = None):
         sensitive_widget.set_sensitive (widget.get_active())
     widget.connect ('toggled', BoolChanged)
  
-def AttachBooleanRadio (widget_true, widget_false, descriptor, sensitive_widget = None):
+def AttachBooleanRadio (dialog, widget_true, widget_false, descriptor, sensitive_widget = None):
     def BoolChanged (widget):
          config.set (descriptor, widget.get_active())
          if (sensitive_widget != None):
@@ -41,32 +41,34 @@ def AttachBooleanRadio (widget_true, widget_false, descriptor, sensitive_widget 
     if config.get(descriptor):
         widget_true.set_active (True)
     else:
-        widget_false.set_active (False)
+        widget_false.set_active (True)
     if (sensitive_widget != None):
         sensitive_widget.set_sensitive (widget_true.get_active())
     widget_true.connect ('toggled', BoolChanged)
 
-def AttachInteger (widget, descriptor):
+def AttachInteger (dialog, widget, descriptor):
     def IntegerChanged (widget):
         try:
             config.set (descriptor, widget.get_value_as_int())
         except:
             pass
 
+    dialog.integerWidgets.append ((descriptor, widget))
     widget.set_value (config.get(descriptor))
-    widget.connect ('changed', IntegerChanged)
+    widget.connect ('value_changed', IntegerChanged)
 
-def AttachFloat (widget, descriptor):
+def AttachFloat (dialog, widget, descriptor):
     def FloatChanged (widget):
         try:
             config.set (descriptor, widget.get_value())
         except:
             pass
 
+    dialog.floatWidgets.append ((descriptor, widget))
     widget.set_value (config.get(descriptor))
-    widget.connect ('changed', FloatChanged)
+    widget.connect ('value_changed', FloatChanged)
 
-def AttachCombo (widget, descriptor, values):
+def AttachCombo (dialog, widget, descriptor, values):
     def ComboChanged (widget):
         config.set (descriptor, values[widget.get_active()])
     value = config.get (descriptor)
@@ -355,25 +357,24 @@ class CallbackHandler(object):
         import autodler
         # get our add channel dialog
         movie_dir = config.get(prefs.MOVIES_DIRECTORY)
-        if config.get(prefs.PRESERVE_DISK_SPACE):
-            old_disk = config.get(prefs.PRESERVE_X_GB_FREE)
-        else:
-            old_disk = 0
         widgetTree = MainFrame.WidgetTree(resources.path('democracy.glade'), 'dialog-preferences', 'democracyplayer')
         dialog = widgetTree['dialog-preferences']
+        dialog.integerWidgets = []
+        dialog.floatWidgets = []
         mainWindow = self.mainFrame.widgetTree['main-window']
         dialog.set_transient_for(mainWindow)
-        AttachBoolean (widgetTree['checkbutton-limit'], prefs.LIMIT_UPSTREAM, widgetTree['spinbutton-limit'])
-        AttachBoolean (widgetTree['checkbutton-padding'], prefs.PRESERVE_DISK_SPACE, widgetTree['spinbutton-padding'])
-        AttachBoolean (widgetTree['checkbutton-autorun'], prefs.RUN_DTV_AT_STARTUP)
-        AttachInteger (widgetTree['spinbutton-limit'], prefs.UPSTREAM_LIMIT_IN_KBS)
-        AttachInteger (widgetTree['spinbutton-bt-min-port'], prefs.BT_MIN_PORT)
-        AttachInteger (widgetTree['spinbutton-bt-max-port'], prefs.BT_MAX_PORT)
-        AttachInteger (widgetTree['spinbutton-max-manual'], prefs.MAX_MANUAL_DOWNLOADS)
-        AttachFloat(widgetTree['spinbutton-padding'], prefs.PRESERVE_X_GB_FREE)
-        AttachCombo (widgetTree['combobox-poll'], prefs.CHECK_CHANNELS_EVERY_X_MN, (30, 60, -1))
-        AttachCombo (widgetTree['combobox-expiration'], prefs.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))
-        AttachBooleanRadio (widgetTree['radiobutton-playback-one'], widgetTree['radiobutton-playback-all'], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
+        AttachBoolean (dialog, widgetTree['checkbutton-limit'], prefs.LIMIT_UPSTREAM, widgetTree['spinbutton-limit'])
+        AttachBoolean (dialog, widgetTree['checkbutton-padding'], prefs.PRESERVE_DISK_SPACE, widgetTree['spinbutton-padding'])
+        AttachBoolean (dialog, widgetTree['checkbutton-autorun'], prefs.RUN_DTV_AT_STARTUP)
+        AttachInteger (dialog, widgetTree['spinbutton-limit'], prefs.UPSTREAM_LIMIT_IN_KBS)
+        AttachInteger (dialog, widgetTree['spinbutton-bt-min-port'], prefs.BT_MIN_PORT)
+        AttachInteger (dialog, widgetTree['spinbutton-bt-max-port'], prefs.BT_MAX_PORT)
+        AttachInteger (dialog, widgetTree['spinbutton-max-manual'], prefs.MAX_MANUAL_DOWNLOADS)
+        AttachInteger (dialog, widgetTree['spinbutton-max-uploads'], prefs.UPSTREAM_TORRENT_LIMIT)
+        AttachFloat   (dialog, widgetTree['spinbutton-padding'], prefs.PRESERVE_X_GB_FREE)
+        AttachCombo   (dialog, widgetTree['combobox-poll'], prefs.CHECK_CHANNELS_EVERY_X_MN, (30, 60, -1))
+        AttachCombo   (dialog, widgetTree['combobox-expiration'], prefs.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))
+        AttachBooleanRadio (dialog, widgetTree['radiobutton-playback-one'], widgetTree['radiobutton-playback-all'], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
 
         try:
             os.makedirs (movie_dir)
@@ -383,6 +384,19 @@ class CallbackHandler(object):
         chooser.set_filename (movie_dir + "/")
         # run the dialog
         response = dialog.run()
+        for descriptor, widget in dialog.integerWidgets:
+            widget.update()
+            try:
+                config.set (descriptor, widget.get_value_as_int())
+            except:
+                pass
+        for descriptor, widget in dialog.floatWidgets:
+            widget.update()
+            try:
+                config.set (descriptor, widget.get_value())
+            except:
+                pass
+
         new_movie_dir = widgetTree['filechooserbutton-movies-directory'].get_filename()
         if (movie_dir != new_movie_dir):
             print "NEW: %r" % new_movie_dir
