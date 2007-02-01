@@ -157,6 +157,7 @@ class MainWindowChanger(object):
         else:
             raise TypeError("invalid state: %r" % newState)
         self.updatePlayPauseButton()
+        self.mainFrame.onVideoLoadedChange (self.currentState == self.VIDEO)
 
     def enablePointerTracking(self):
         platformutils.confirmMainThread()
