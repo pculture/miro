@@ -263,8 +263,12 @@ class IconCache:
             iconCacheUpdater.updateFinished ()
             return
 
-        # But if we don't have it, let's extract it from the movie file.
-        if url is None and hasattr(self.dbItem, 'getFilename') and self.dbItem.getFilename() != '':
+        # But if we don't have it, let's extract it from the movie file if we  
+        # can get a valid filename and if the item is currently not being  
+        # downloaded (otherwise we could get some pretty bad random crashes). 
+        hasFileName = (hasattr(self.dbItem, 'getFilename') and self.dbItem.getFilename() != '') 
+        isDownloading = (hasattr(self.dbItem, 'getState') and self.dbItem.getState() == 'downloading') 
+        if url is None and hasFileName and not isDownloading:
             self.extractIconFromMovieFile()
             return
         
