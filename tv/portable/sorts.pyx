@@ -80,9 +80,7 @@ class ItemSort:
         """Pass this to view.sort()"""
 
         if self.sortDirection == 'descending':
-            t = x
-            x = y
-            y = t
+            x, y = y, x
 
         if self.sortBy == 'date':
             result = itemByDate(x, y)
