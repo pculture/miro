@@ -1166,11 +1166,17 @@ folder will be deleted.""")
         return self.releaseDateObj
 
     ##
-    # returns string with the play length of the video
-    def getDuration(self, emptyIfZero=True):
+    # returns the length of the video in seconds
+    def getDurationValue(self):
         secs = 0
         if self.duration not in (-1, None):
             secs = self.duration / 1000
+        return secs
+
+    ##
+    # returns string with the play length of the video
+    def getDuration(self, emptyIfZero=True):
+        secs = self.getDurationValue()
         if secs == 0:
             if emptyIfZero:
                 return ""
