@@ -205,18 +205,14 @@ class TrackedView:
         self.toAdd = []
         self.addBefore = None
 
-        removeTids = [self.tid(obj) for obj in self.view]
-
-        xmls = []
-        for x in self.view:
-            xmls.append(self.initialXML(x))
-        newXML = ''.join(xmls)
+        newXML = ''.join(self.initialXML(x) for x in self.view)
 
         if self.anchorType == 'containerDiv':
             newXML = '<div id="%s">%s</div>' % (self.anchorId, newXML)
             self.parent.domHandler.changeItem(self.anchorId, newXML, {},
                     "foo")
         else:
+            removeTids = [self.tid(obj) for obj in self.view]
             if len(removeTids) > 0:
                 self.parent.domHandler.removeItems(removeTids)
             # Web Kit treats adding the empty string like adding "&nbsp;",
