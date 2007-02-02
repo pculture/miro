@@ -526,13 +526,14 @@ class Controller (frontend.Application):
             database.setDelegate(delegate)
             dialogs.setDelegate(delegate)
             
+            database.set_thread()
+
             if not config.get(prefs.STARTUP_TASKS_DONE):
                 logging.info ("Showing startup dialog...")
                 delegate.performStartupTasks(self.finishStartup)
                 config.set(prefs.STARTUP_TASKS_DONE, True)
                 config.save()
             else:
-                database.set_thread()
                 self.finishStartup(gatheredVideos)
         except:
             util.failedExn("while starting up")
