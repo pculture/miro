@@ -62,7 +62,7 @@ matchingItems.unlink()
         </div>
     </div>
     <div id="main-unwatched">
-	<div t:repeatForView="matchingItems" t:repeatTemplate='download-item' />
+        <div t:repeatForView="matchingItems" t:repeatTemplate='download-item' t:containerDiv="true" />
     </div>	
 </div>
 

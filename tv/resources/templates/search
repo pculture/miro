@@ -84,7 +84,7 @@ searchItems.unlink()
             </div>
 
             <div id="search-results">
-               <div t:repeatForView="searchItemsSorted" t:repeatTemplate="download-item" />
+                <div t:repeatForView="searchItemsSorted" t:repeatTemplate="download-item" t:containerDiv="true" />
             </div>
         </div>
     </body>

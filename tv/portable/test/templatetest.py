@@ -42,8 +42,10 @@ class DOMTracker:
         self.callList.append({'name':'removeItem','id':id})
     def removeItems(self, ids):
         self.callList.append({'name':'removeItems','ids':ids})
-    def changeItem(self, id, xml):
-        self.callList.append({'name':'changeItem','xml':xml,'id':id})
+    def changeItem(self, id, xml, changedAttributes, changedInnerHTML):
+        self.callList.append({'name':'changeItem','xml':xml,'id':id,
+            'changedAttributes': changedAttributes, 
+            'changedInnerHTML': changedInnerHTML })
     def changeItems(self, pairs):
         self.callList.append({'name':'changeItems','pairs':pairs})
     def hideItem(self, id):
@@ -119,6 +121,7 @@ class HideTest(DemocracyTestCase):
 
 class ViewTest(DemocracyTestCase):
     pattern = re.compile("^\n<h1>view test template</h1>\n<span id=\"([^\"]+)\"/>\n", re.S)
+    containerPattern = re.compile("^\n<h1>view test template</h1>\n<div id=\"([^\"]+)\"></div>\n", re.S)
     doublePattern = re.compile("^\n<h1>view test template</h1>\n<span id=\"([^\"]+)\"/>\n<span id=\"([^\"]+)\"/>\n", re.S)
     updatePattern = re.compile("^\n<h1>update test template</h1>\n<span id=\"([^\"]+)\"/>\n", re.S)
     hidePattern = re.compile("^\n<h1>update hide test template</h1>\n<div class=\"foo\" id=\"([^\"]+)\"", re.S)
@@ -149,6 +152,27 @@ class ViewTest(DemocracyTestCase):
         self.assertEqual(ranOnUnload, 0)
         handle.unlinkTemplate()
         self.assertEqual(ranOnUnload, 1)
+
+    def testContainerDiv(self):
+        (tch, handle) = fillTemplate("unittest/view-container-div",self.domHandle,'gtk-x11-MozillaBrowser','platform')
+        text = tch.read()
+        text = HTMLPattern.match(text).group(1)
+        self.assert_(self.containerPattern.match(text)) #span for template inserted
+        id = self.containerPattern.match(text).group(1)
+        handle.initialFillIn()
+        self.assertEqual(len(self.domHandle.callList),1)
+        self.assertEqual(self.domHandle.callList[0]['name'],'addItemAtEnd')
+        self.assertEqual(self.domHandle.callList[0]['id'],id)
+        initialXML = self.domHandle.callList[0]['xml']
+        match = self.itemPattern.findall(initialXML)
+        self.assertEqual(len(match),2)
+        self.assertNotEqual(match[0], match[1])
+        handle.trackedViews[0].onResort()
+        self.assertEqual(len(self.domHandle.callList),2)
+        self.assertEqual(self.domHandle.callList[1]['name'],'changeItem')
+        self.assertEqual(self.domHandle.callList[1]['id'],id)
+        self.assertEqual(self.domHandle.callList[1]['xml'],
+                '<div id="%s">%s</div>' % (id, initialXML))
 
     def testUpdate(self):
         (tch, handle) = fillTemplate("unittest/update",self.domHandle,'gtk-x11-MozillaBrowser','platform')

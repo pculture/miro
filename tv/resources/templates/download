@@ -145,9 +145,9 @@ allPausedDownloads.unlink()
     <!-- / SORT BAR -->
 
 	<!-- VIDEOS ************************************************** -->
-    <div t:repeatForView="matchingNormalDLs" t:repeatTemplate='download-item' />
-    <div t:repeatForView="matchingPendingDLs" t:repeatTemplate='download-item' />
-    <div t:repeatForView="matchingPausedDLs" t:repeatTemplate='download-item' />
+    <div t:repeatForView="matchingNormalDLs" t:repeatTemplate='download-item' t:containerDiv="true" />
+    <div t:repeatForView="matchingPendingDLs" t:repeatTemplate='download-item' t:containerDiv="true" />
+    <div t:repeatForView="matchingPausedDLs" t:repeatTemplate='download-item' t:containerDiv="true" />
 	<!-- / VIDEOS -->
     <div t:updateForView="matchingExternalDLs">
         <div t:hideIf="matchingExternalDLs.len() == 0">
@@ -157,7 +157,7 @@ allPausedDownloads.unlink()
             </div>
         </div>
     </div> 
-    <div t:repeatForView="matchingExternalDLs" t:repeatTemplate='download-item' />
+    <div t:repeatForView="matchingExternalDLs" t:repeatTemplate='download-item' t:containerDiv="true" />
 
     <div t:updateForView="matchingULs">
         <div t:hideIf="matchingULs.len() == 0">
@@ -169,7 +169,7 @@ allPausedDownloads.unlink()
             </div>
         </div>
     </div>
-    <div t:repeatForView="matchingULs" t:repeatTemplate='download-item' />
+    <div t:repeatForView="matchingULs" t:repeatTemplate='download-item' t:containerDiv="true" />
 </div>
 
 </body>

@@ -35,7 +35,7 @@ thisPlaylistView.unlink()
 </div>
 
 <div id="main-container">
-    <div t:repeatForView="playlistView" t:repeatTemplate='download-item' />
+    <div t:repeatForView="playlistView" t:repeatTemplate='download-item' t:containerDiv="true" />
     <div class="playlist-end-drag-hitbox"
 	     dragdesttype="downloadeditem"
 	     dragdestdata="playlistitem-END"
