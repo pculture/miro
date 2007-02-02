@@ -60,8 +60,6 @@ class ItemSort:
         sortDirection -- Possible values: 'ascending', 'descending'
     """
 
-    existingSorts = {}
-
     def __init__(self):
         self.sortBy = 'date'
         self.sortDirection = 'descending'
@@ -81,16 +79,17 @@ class ItemSort:
 
         if self.sortDirection == 'descending':
             x, y = y, x
-
+        
         if self.sortBy == 'date':
-            result = itemByDate(x, y)
+            return x[1].getReleaseDateObj() < y[1].getReleaseDateObj()
         elif self.sortBy == 'size':
-            result = itemBySize(x, y)
+            return x[1].getSize() < y[1].getSize()
         elif self.sortBy == 'name':
-            result = itemByName(x, y)
+            return x[1].getTitle() < y[1].getTitle()
         elif self.sortBy == 'duration':
-            result = itemByDuration(x, y)
-        return result
+            return x[1].getDurationValue() < y[1].getDurationValue()
+
+        return False
 
     def getSortButtonState(self, by):
         if self.sortBy == by:
@@ -99,18 +98,6 @@ class ItemSort:
             else:
                 return 'descending'
         return ''
-
-def itemByDate(x, y):
-    return x[1].releaseDateObj < y[1].releaseDateObj
-
-def itemByName(x, y):
-    return x[1].getTitle() < y[1].getTitle()
-
-def itemBySize(x, y):
-    return x[1].getSize() < y[1].getSize()
-
-def itemByDuration(x, y):
-    return x[1].duration < y[1].duration
 
 unwatchedMemory = {}
 unwatchedMemoryFor = None
