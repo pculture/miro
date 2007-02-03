@@ -236,6 +236,8 @@ class UIBackendDelegate:
         defaults = NSUserDefaults.standardUserDefaults()
         lwdomain = defaults.persistentDomainForName_('loginwindow')
         lwdomain = Conversion.pythonCollectionFromPropertyList(lwdomain)
+        if lwdomain is None:
+            lwdomain = dict()
         if 'AutoLaunchedApplicationDictionary' not in lwdomain:
             lwdomain['AutoLaunchedApplicationDictionary'] = list()
         launchedApps = lwdomain['AutoLaunchedApplicationDictionary']
