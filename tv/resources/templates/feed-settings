@@ -23,7 +23,7 @@ feed = views.feeds.getObjectByID(int(kargs['id']))
 	<div id="settings-inner">
 	<div id="channel-url"><span t:replace="feed.getURL()" 
 class="selectable" /></div>
-	<h2 i18n:translate="">Settings for <span i18n:name="title" t:replaceMarkup="feed.getTitle()" /></h2> 
+	<h2 i18n:translate="">Settings for <span i18n:name="title" t:replace="feed.getTitle()" /></h2> 
 				
 		<div id="actual-settings">
 		
