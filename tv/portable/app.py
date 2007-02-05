@@ -1270,6 +1270,13 @@ class TemplateDisplay(frontend.HTMLDisplay):
             raise ValueError("Badly formed eventURL: %s" % url)
 
 
+    def addSubscribeLinks (self, subscribeLinks):
+        for url in subscribeLinks:
+            f = feed.getFeedByURL(url)
+            if f is None:
+                f = feed.Feed(url)
+            f.blink()
+
     # Returns true if the browser should handle the URL.
     def onURLLoad(self, url):
         logging.info ("got %s", url)
@@ -1300,17 +1307,13 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 if f is None:
                     f = feed.Feed(url)
                 f.blink()
-                return True
+                return False
 
             # check for subscribe.getdemocracy.com links
             subscribeLinks = subscription.findSubscribeLinks(url)
             if subscribeLinks:
-                for url in subscribeLinks:
-                    f = feed.getFeedByURL(url)
-                    if f is None:
-                        f = feed.Feed(url)
-                    f.blink()
-                return True
+                eventloop.addIdle (lambda: self.addSubscribeLinks(subscribeLinks), "Add subscribe links")
+                return False
 
             # If we get here, this isn't a DTV URL. We should open it
             # in an external browser.
@@ -1340,11 +1343,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
         # check for subscribe.getdemocracy.com links
         subscribeLinks = subscription.findSubscribeLinks(url)
         if subscribeLinks:
-            for url in subscribeLinks:
-                f = feed.getFeedByURL(url)
-                if f is None:
-                    f = feed.Feed(url)
-                f.blink()
+            self.addSubscribeLinks(subscribeLinks)
             return
         delegate.openExternalURL(url)
 
