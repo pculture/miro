@@ -200,24 +200,25 @@ class TrackedView:
             self.idle_queued = True
 
     def onResort (self):
-            
         self.toChange = {}
         self.toRemove = []
         self.toAdd = []
         self.addBefore = None
 
-        tids = [self.tid(obj) for obj in self.view]
-        if len(tids) > 0:
-            self.parent.domHandler.removeItems(tids)
+        newXML = ''.join(self.initialXML(x) for x in self.view)
 
-        xmls = []
-        for x in self.view:
-            xmls.append(self.initialXML(x))
-        # Web Kit treats adding the empty string like adding "&nbsp;",
-        # so we don't add the HTML unless it's non-empty
-        if len(xmls) > 0:
-            self.doAdd(''.join(xmls))
-            
+        if self.anchorType == 'containerDiv':
+            newXML = '<div id="%s">%s</div>' % (self.anchorId, newXML)
+            self.parent.domHandler.changeItem(self.anchorId, newXML, {},
+                    "foo")
+        else:
+            removeTids = [self.tid(obj) for obj in self.view]
+            if len(removeTids) > 0:
+                self.parent.domHandler.removeItems(removeTids)
+            # Web Kit treats adding the empty string like adding "&nbsp;",
+            # so we don't add the HTML unless it's non-empty
+            if newXML:
+                self.doAdd(newXML)
 
     def onChange(self,obj,id):
         if obj in self.toAdd:
@@ -255,7 +256,7 @@ class TrackedView:
         if self.addBefore:
             self.parent.domHandler.addItemBefore(xml, self.addBefore)
         else:
-            if self.anchorType == 'parentNode':
+            if self.anchorType in ('parentNode', 'containerDiv'):
                 self.parent.domHandler.addItemAtEnd(xml, self.anchorId)
             if self.anchorType == 'nextSibling':
                 self.parent.domHandler.addItemBefore(xml, self.anchorId)
@@ -421,6 +422,9 @@ class Handle:
         # following the place the template should be expanded. If it is
         # 'parentNode', the template should be expanded so as to be the final
         # child in the node whose id attribute matches 'anchorId'.
+        # 'containerDiv' is like parentNode, except it's contained in an
+        # auto-generated <div> element.  This allows for efficient changes
+        # when the view is re-sorted.
         #
         # We take a private copy of 'node', so don't worry about modifying
         # it subsequent to calling this method.

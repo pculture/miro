@@ -64,7 +64,7 @@ matchingItems.unlink()
     <!-- / SORT BAR -->
     <div id="main-unwatched">
 	<!-- VIDEOS ************************************************** -->
-	<div t:repeatForView="matchingItems" t:repeatTemplate='download-item' />
+        <div t:repeatForView="matchingItems" t:repeatTemplate='download-item' t:containerDiv="true" />
 	<!-- / VIDEOS -->
     </div>
 	

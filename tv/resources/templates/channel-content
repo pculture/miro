@@ -38,7 +38,7 @@
                 section="'downloading'" />
         </div>
     </div>
-   <div t:repeatForView="downloadingItems" t:repeatTemplate="download-item" />
+    <div t:repeatForView="downloadingItems" t:repeatTemplate="download-item" t:containerDiv="true" />
 
 <!-- / DOWNLOADS -->
 
@@ -104,7 +104,7 @@
     </div>
 </div>
 
-   <div t:repeatForView="newItems" t:repeatTemplate="download-item" />
+<div t:repeatForView="newItems" t:repeatTemplate="download-item" t:containerDiv="true" />
 
 <!-- The infamous "N more videos" oval -->
 <div t:updateForView="matchingItems">  
@@ -136,7 +136,7 @@
             section="'watchable'" />
     </div>
 </div>
-<div t:repeatForView="watchableItems" t:repeatTemplate="download-item" />
+<div t:repeatForView="watchableItems" t:repeatTemplate="download-item" t:containerDiv="true" />
 
 <!-- / WATCHABLE -->
 </body>

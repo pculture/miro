@@ -375,6 +375,12 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         elif not self.started:
             pass
         elif 't:repeatForView' in attrs.keys():
+            if 't:containerDiv' in attrs.keys():
+                self.inRepeatWithContainerDiv = True
+                self.repeatContainerId = generateId()
+                self.addElementStart('div', {'id': self.repeatContainerId})
+            else:
+                self.inRepeatWithContainerDiv = False
             self.startRepeat(attrs['t:repeatForView'])
             if not 't:repeatTemplate' in attrs.keys():
                 self.addElementStart(name, attrs, addId=True)
@@ -510,9 +516,13 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                 self.addText('</%s>'%name)
                 self.endText()
             repeatList = self.endRepeat()
-            repeatId = generateId()
-            self.addText('<span id="%s"/>'%quoteattr(repeatId))
-            self.handle.addView(repeatId, 'nextSibling', repeatList, self.repeatName)
+            if self.inRepeatWithContainerDiv:
+                self.endElement('div')
+                self.handle.addView(self.repeatContainerId, 'containerDiv', repeatList, self.repeatName)
+            else:
+                repeatId = generateId()
+                self.addText('<span id="%s"/>'%quoteattr(repeatId))
+                self.handle.addView(repeatId, 'nextSibling', repeatList, self.repeatName)
         elif self.inUpdateView and self.depth == self.repeatDepth:
             self.addText('</%s>'%name)
             self.endText()
@@ -789,6 +799,9 @@ class MetaHandle:
         # following the place the template should be expanded. If it is
         # 'parentNode', the template should be expanded so as to be the final
         # child in the node whose id attribute matches 'anchorId'.
+        # 'containerDiv' is like parentNode, except it's contained in an
+        # auto-generated <div> element.  This allows for efficient changes
+        # when the view is re-sorted.
         #
         # We take a private copy of 'node', so don't worry about modifying
         # it subsequent to calling this method.
