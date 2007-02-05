@@ -109,6 +109,8 @@ class MainFrame:
         self.isFullscreen = False
         self.aboutWidget = None
         self.currentVideoFilename = None
+        self.playable = False
+        self.videoLoaded = False
 
         import views, util, indexes
         engines = []
@@ -217,6 +219,10 @@ class MainFrame:
         platformutils.confirmMainThread()
         maximized = (event.new_window_state & gtk.gdk.WINDOW_STATE_MAXIMIZED) != 0
         setBool ("maximized", maximized)
+
+    def onVideoLoadedChange (self, videoLoaded):
+        self.videoLoaded = videoLoaded
+        self.actionGroups['VideoPlayable'].set_sensitive(self.playable or self.videoLoaded)
         
     @gtkAsyncMethod
     def onSelectedTabChange(self, strings, actionGroups, guideURL,
@@ -226,6 +232,10 @@ class MainFrame:
 
         for actionGroup, setting in actionGroups.iteritems():
             self.actionGroups[actionGroup].set_sensitive(setting)
+
+        self.playable = actionGroups['VideoPlayable']
+        self.actionGroups['VideoPlayable'].set_sensitive(self.playable or self.videoLoaded)
+
 
         self.actionGroups["ChannelLikeSelected"]. get_action("RenameChannel"). set_property("label", strings["channel_rename"])
         self.actionGroups["ChannelLikesSelected"].get_action("RemoveChannels").set_property("label", strings["channel_remove"])
