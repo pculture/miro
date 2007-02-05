@@ -804,7 +804,8 @@ an element is dragged, the drag-highlight class is added to it */
      */
     background: url(../images/main-video-bg.png) repeat-x;
     background-position: 0px -70px;
-    height: 20px;
+    font-size: 12px;
+    padding: 4px 0px;
 }
 
 .selected .main-video-bottom { 
