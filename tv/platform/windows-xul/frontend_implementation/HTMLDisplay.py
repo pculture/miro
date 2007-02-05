@@ -132,11 +132,11 @@ class HTMLDisplay (app.Display):
         for args in listOfArgs:
             self._doChangeItem(*args)
 
-    def _doChangeItem(self, id, xml, changedAttrs, newInnerHTML):
-        if newInnerHTML is not None:
+    def _doChangeItem(self, id, xml, changeHint):
+        if changeHint is None or changeHint.changedInnerHTML is not None:
             frontend.jsBridge.xulChangeElement(self.area, id, xml)
         else:
-            for name, value in changedAttrs.items():
+            for name, value in changeHint.changedAttributes.items():
                 if value is not None:
                     frontend.jsBridge.xulChangeAttribute(self.area, id, name,
                             value)

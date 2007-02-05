@@ -370,8 +370,11 @@ class OptimizedAttributeChangeTest(DemocracyTestCase):
         self.assertEquals(len(changes), 1)
         self.assertEquals(changes[0][0], id)
         self.assertEquals(changes[0][1], newXML)
-        self.assertEquals(changes[0][2], attributesDiff)
-        self.assertEquals(changes[0][3] is not None, htmlChanged)
+        self.assertEquals(changes[0][2].changedAttributes, attributesDiff)
+        if htmlChanged:
+            self.assert_(changes[0][2].changedInnerHTML is not None)
+        else:
+            self.assert_(changes[0][2].changedInnerHTML is None)
 
     def testBigChange(self):
         first = '<div class="item" id="abc123">foo</div>'

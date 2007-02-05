@@ -85,14 +85,14 @@ class HTMLDisplay (app.Display):
     def removeItems(self, ids):
         return self.web.removeItems(ids)
 
-    def changeItem(self, id, xml, changedAttrs, newInnerHTML):
+    def changeItem(self, id, xml, changeHint):
         xml = xml.decode('utf-8')
-        return self.web.changeItem(id, xml, changedAttrs, newInnerHTML)
+        return self.web.changeItem(id, xml, changeHint)
 
     def changeItems(self, args):
         newArgs = []
-        for id, xml, changedAttrs, newInnerHTML in args:
-            newArgs.append((id, xml.decode('utf-8'), changedAttrs, newInnerHTML))
+        for id, xml, changeHint in args:
+            newArgs.append((id, xml.decode('utf-8'), changeHint))
         return self.web.changeItems(newArgs)
 
     def hideItem(self, id):
@@ -357,15 +357,15 @@ class ManagedWebView (NSObject):
             elt.parentNode().removeChild_(elt)
 
     @deferUntilAfterLoad
-    def changeItem(self, id, xml, changedAttrs, newInnerHTML):
-        self._changeElement(id, xml, changedAttrs, newInnerHTML)
+    def changeItem(self, id, xml, changeHint):
+        self._changeElement(id, xml, changeHint)
 
     @deferUntilAfterLoad
     def changeItems(self, args):
-        for id, xml, changedAttrs, newInnerHTML in args:
-            self._changeElement(id, xml, changedAttrs, newInnerHTML)
+        for id, xml, changeHint in args:
+            self._changeElement(id, xml, changeHint)
 
-    def _changeElement(self, id, xml, changedAttrs, newInnerHTML):
+    def _changeElement(self, id, xml, changeHint):
         elt = self.findElt(id)
         if not elt:
             print "warning: changeItem: missing element %s" % id

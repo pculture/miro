@@ -209,8 +209,7 @@ class TrackedView:
 
         if self.anchorType == 'containerDiv':
             newXML = '<div id="%s">%s</div>' % (self.anchorId, newXML)
-            self.parent.domHandler.changeItem(self.anchorId, newXML, {},
-                    "foo")
+            self.parent.domHandler.changeItem(self.anchorId, newXML, None)
         else:
             removeTids = [self.tid(obj) for obj in self.view]
             if len(removeTids) > 0:

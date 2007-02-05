@@ -4,6 +4,23 @@ from xml.sax.handler import ContentHandler
 
 hotspotMarkerPattern = re.compile("<!-- HOT SPOT ([^ ]*) -->")
 
+class ChangeItemHint:
+    """Contains hints the frontend can use to optimize
+    HTMLDisplay.changeItem().  Member attributes:
+
+
+    changedInnerHTML -- The inner HTML of the element being changed.  If
+        nothing changed inside the element this will be None.
+    changedAttributes -- A dict containing the changes to the DOM element
+        attributes.  Each attribute that changed will have an entry.  The key
+        is the attribute name.  If the attribute was removed, the value will
+        be None.
+    """
+
+    def __init__(self, changedAttributes, changedInnerHTML):
+        self.changedAttributes = changedAttributes
+        self.changedInnerHTML = changedInnerHTML
+
 class SingleElementHandler(ContentHandler):
     """XML Content handler that just reads in the first elements tagname and
     attributes.
@@ -17,7 +34,6 @@ class SingleElementHandler(ContentHandler):
         self.started = True
     def reset(self):
         self.started = False
-
 
 class BrokenUpElement:
     """Breaks up an HTML element into it's outermost tag and inner html.
@@ -63,7 +79,8 @@ class BrokenUpElement:
         attrDiff = self.calcAttributeChanges(older.attrs, self.attrs)
         newInnerHTML = self.calcNewInnerHTML(older.innerHTML, self.innerHTML)
         if attrDiff or newInnerHTML:
-            return [(self.id, self.html, attrDiff, newInnerHTML)]
+            hint = ChangeItemHint(attrDiff, newInnerHTML)
+            return [(self.id, self.html, hint)]
         else:
             return []
 
@@ -125,9 +142,9 @@ class HTMLChangeOptimizer:
 
       * If the html stays the same, we don't send anything to the frontend
         code.
-      * If only the attributes of dom element change, then we only changes
-        those attributes instead of updating the entire region (assuming the
-        platform code supports this).
+      * We calculate a ChangeItemHint for each element that changes.  Smart
+        frontends can use this to optimize the changeItem() call, especially
+        when only the change is repeated element's attributes.
       * Child elements can be marked "hotspots" meaning they are more likely 
         change than other parts.  We only update the hotspot elements when we
         detect that other html hasn't changed.

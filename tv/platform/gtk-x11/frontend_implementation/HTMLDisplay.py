@@ -229,15 +229,15 @@ class HTMLDisplayImpl:
                     pass
 
     @deferUntilAfterLoad
-    def changeItem(self, id, xml, changedAttributes, changedInnerHTML):
+    def changeItem(self, id, xml, changeHint):
         if not self.widgetDestroyed:
-            self._doChangeItem(id, xml, changedAttributes, changedInnerHTML)
+            self._doChangeItem(id, xml, changeHint)
 
-    def _doChangeItem(self, id, xml, changedAttributes, changedInnerHTML):
-        if changedInnerHTML is not None:
+    def _doChangeItem(self, id, xml, changeHint):
+        if changeHint is None or changeHint.changedInnerHTML is not None:
             self.mb.changeItem(id, xml)
-        elif changedAttributes:
-            for name, value in changedAttributes.items():
+        elif changeHint.changedAttributes:
+            for name, value in changeHint.changedAttributes.items():
                 if value is not None:
                     self.mb.changeAttribute(id, name, value)
                 else:
