@@ -17,53 +17,44 @@ from frontend_implementation.VideoDisplay import VideoDisplay
 from frontend_implementation.HTMLDisplay import HTMLDisplay
 from frontend_implementation.callbackhandler import CallbackHandler
 from frontend_implementation.mainwindowchanger import MainWindowChanger
+from frontend_implementation import trayicon
 from platformcfg import gconf_lock
 import config
 import prefs
 
-def getInt(key):
+def _getPref(key, getter_name):
     gconf_lock.acquire()
     try:
         client = gconf.client_get_default()
-        fullkey = '/apps/democracy/player/window/' + key
-        value = client.get (fullkey)
-        if (value != None):
-            return value.get_int()
+        fullkey = '/apps/democracy/player/' + key
+        value = client.get(fullkey)
+        if value is not None:
+            getter = getattr(value, getter_name)
+            return getter()
         else:
             return None
     finally:
         gconf_lock.release()
 
-def setInt(key, value):
+def _setPref(key, setter_name, value):
     gconf_lock.acquire()
     try:
         client = gconf.client_get_default()
-        fullkey = '/apps/democracy/player/window/' + key
-        value = client.set_int (fullkey, value)
+        fullkey = '/apps/democracy/player/' + key
+        setter = getattr(client, setter_name)
+        setter(fullkey, value)
     finally:
         gconf_lock.release()
 
-def getBool(key):
-    gconf_lock.acquire()
-    try:
-        client = gconf.client_get_default()
-        fullkey = '/apps/democracy/player/window/' + key
-        value = client.get (fullkey)
-        if (value != None):
-            return value.get_bool()
-        else:
-            return None
-    finally:
-        gconf_lock.release()
+def getInt(key): return _getPref('window/' + key, 'get_int')
+def getBool(key): return _getPref('window/' + key, 'get_bool')
+def getPlayerInt(key): return _getPref(key, 'get_int')
+def getPlayerBool(key): return _getPref(key, 'get_bool')
 
-def setBool(key, value):
-    gconf_lock.acquire()
-    try:
-        client = gconf.client_get_default()
-        fullkey = '/apps/democracy/player/window/' + key
-        value = client.set_bool (fullkey, value)
-    finally:
-        gconf_lock.release()
+def setInt(key, value): return _setPref('window/' + key, 'set_int', value)
+def setBool(key, value): return _setPref('window/' + key, 'set_bool', value)
+def setPlayerInt(key, value): return _setPref(key, 'set_int', value)
+def setPlayerBool(key, value): return _setPref(key, 'set_bool', value)
 
 class WidgetTree(gtk.glade.XML):
     """Small helper class.  It's exactly like the gtk.glade.XML interface,
@@ -199,6 +190,10 @@ class MainFrame:
                 self.widgetTree['main-window'].maximize()
             else:
                 self.widgetTree['main-window'].unmaximize()
+
+        if getPlayerBool("showTrayicon") and trayicon.trayicon_is_supported:
+            self.trayicon = trayicon.Trayicon(resources.sharePath("pixmaps/democracyplayer-24x20.png"), self)
+            self.trayicon.set_visible(True)
 
         self.widgetTree['main-window'].connect ("configure-event", self.configureEvent)
         self.widgetTree['main-window'].connect ("window-state-event", self.stateEvent)
