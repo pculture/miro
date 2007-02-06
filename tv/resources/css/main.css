@@ -247,7 +247,7 @@ img {
 #download-info {
     position: absolute;
     top: 14px;
-    right: 225px;
+    right: 195px;
     font-size: 11px;
 }
 
@@ -390,6 +390,10 @@ img {
 
 .available-sort .sort-buttons {
     background-color: #5faeff;	
+}
+
+.downloading-sort .sort-buttons {
+    background-color: #FF8c2d;
 }
 
 .main-video-details-top {
@@ -684,7 +688,7 @@ body.gray-background {
 .main-video {
     border-top: 1px solid #f0fcfe;
     border-bottom: 1px solid #d5ddea;
-    background: url(../images/main-video-bg.png) repeat-x;
+    background: url(../images/main-video-bg.png) repeat-x #e5edf5;
     height: 90px;
     width: 100%;
     position: relative;
@@ -960,6 +964,14 @@ an element is dragged, the drag-highlight class is added to it */
     left: 2px;
 }
 
+.share-box .select-box-right {
+    background-image: url(../images/share-right.png); 
+}
+
+.share-box .select-box-mid {
+    margin-right: 21px;
+}
+
 .share-menu {
     position: absolute;
     top: 46px;
@@ -1217,10 +1229,10 @@ a.small-button-left:hover {
 
 .main-video-details-pending-auto, .main-video-details-failed-download {
     position: absolute;
-    top: 44px;
-    right: 80px;
+    top: 48px;
+    right: 20px;
     width: 200px;
-    text-align: right;
+    text-align: center;
     overflow: hidden;
 }
 
