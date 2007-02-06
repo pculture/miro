@@ -282,7 +282,7 @@ WARNING: can't migrate download because we don't have a filename!
 URL was %s""" % self.url
                 return
             if os.path.exists(filename):
-                if self.status['channelName']:
+                if self.status.get('channelName'):
                     directory = os.path.join (directory, self.status['channelName'])
                 try:
                     os.makedirs(directory)
