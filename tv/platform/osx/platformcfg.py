@@ -15,8 +15,6 @@ sysconfPath = objc.pathForFramework('/System/Library/Frameworks/SystemConfigurat
 sysconfBundle = NSBundle.bundleWithPath_(sysconfPath)
 objc.loadBundleFunctions(sysconfBundle, globals(), ((u'SCDynamicStoreCopyProxies', '@@'), ))
 
-_proxiesInfo = SCDynamicStoreCopyProxies(None)
-
 
 MOVIES_DIRECTORY_PARENT = os.path.expanduser('~/Movies')
 SUPPORT_DIRECTORY_PARENT = os.path.expanduser('~/Library/Application Support')
@@ -57,21 +55,19 @@ def save(data):
         defaults.synchronize()
 
 def get(descriptor):
-    value = descriptor.default
-
     if descriptor == prefs.MOVIES_DIRECTORY:
         path = os.path.join(MOVIES_DIRECTORY_PARENT, config.get(prefs.SHORT_APP_NAME))
         try:
             os.makedirs(os.path.join(path,'Incomplete Downloads'))
         except:
             pass
-        value = path
+        return path
 
     elif descriptor == prefs.NON_VIDEO_DIRECTORY:
-        value = os.path.expanduser('~/Desktop')
+        return os.path.expanduser('~/Desktop')
 
     elif descriptor == prefs.GETTEXT_PATHNAME:
-        value = os.path.abspath(resources.path("../locale"))
+        return os.path.abspath(resources.path("../locale"))
 
     elif descriptor == prefs.SUPPORT_DIRECTORY:
         path = os.path.join(SUPPORT_DIRECTORY_PARENT, config.get(prefs.SHORT_APP_NAME))
@@ -80,49 +76,62 @@ def get(descriptor):
             os.makedirs(path)
         except:
             pass
-        value = path
+        return path
 
     elif descriptor == prefs.ICON_CACHE_DIRECTORY:
-        value = _makeSupportFilePath('icon-cache')
+        return _makeSupportFilePath('icon-cache')
     
     elif descriptor == prefs.DB_PATHNAME:
-        value = _makeSupportFilePath('tvdump')
+        return _makeSupportFilePath('tvdump')
 
     elif descriptor == prefs.BSDDB_PATHNAME:
-        value = _makeSupportFilePath('database')
+        return _makeSupportFilePath('database')
 
     elif descriptor == prefs.LOG_PATHNAME:
-        value = _makeSupportFilePath('dtv-log')
+        return _makeSupportFilePath('dtv-log')
 
     elif descriptor == prefs.DOWNLOADER_LOG_PATHNAME:
-        value = _makeSupportFilePath('dtv-downloader-log')
+        return _makeSupportFilePath('dtv-downloader-log')
 
     elif descriptor == prefs.HTTP_PROXY_ACTIVE:
-        value = 'HTTPEnable' in _proxiesInfo and _proxiesInfo['HTTPEnable'] == 1
+        return _getProxyInfo('HTTPEnable', 0) == 1
         
     elif descriptor == prefs.HTTP_PROXY_HOST:
-        value = _proxiesInfo['HTTPProxy']
+        return _getProxyInfo('HTTPProxy')
         
     elif descriptor == prefs.HTTP_PROXY_PORT:
-        value = _proxiesInfo['HTTPPort']
+        return _getProxyInfo('HTTPPort', 0)
         
     elif descriptor == prefs.HTTP_PROXY_IGNORE_HOSTS:
-        value = _proxiesInfo['ExceptionsList']
+        return _getProxyInfo('ExceptionsList', list())
     
     elif descriptor == prefs.HTTP_PROXY_AUTHORIZATION_USERNAME:
-        authInfo = keychain.getAuthInfo(_proxiesInfo['HTTPProxy'])
-        value = authInfo['username']
+        return _getProxyAuthInfo('username')
     
     elif descriptor == prefs.HTTP_PROXY_AUTHORIZATION_PASSWORD:
-        authInfo = keychain.getAuthInfo(_proxiesInfo['HTTPProxy'])
-        value = authInfo['password']
+        return _getProxyAuthInfo('password')
     
-    return value
+    return descriptor.default
 
 def _makeSupportFilePath(filename):
     path = get(prefs.SUPPORT_DIRECTORY)
     path = os.path.join(path, filename)
     return path
+
+def _getProxyInfo(key, default=None):
+    info = SCDynamicStoreCopyProxies(None)
+    if info is None or key not in info:
+        return default
+    return info[key]
+
+def _getProxyAuthInfo(key, default=None):
+    proxy = _getProxyInfo('HTTPProxy')
+    if proxy is None:
+        return default
+    authInfo = keychain.getAuthInfo(proxy)
+    if authInfo is None or key not in authInfo:
+        return default
+    return authInfo[key]
 
 ###############################################################################
 #### Bundle information accessors                                          ####
