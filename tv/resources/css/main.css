@@ -688,7 +688,7 @@ body.gray-background {
 .main-video {
     border-top: 1px solid #f0fcfe;
     border-bottom: 1px solid #d5ddea;
-    background: url(../images/main-video-bg.png) repeat-x;
+    background: url(../images/main-video-bg.png) repeat-x #e5edf5;
     height: 90px;
     width: 100%;
     position: relative;
