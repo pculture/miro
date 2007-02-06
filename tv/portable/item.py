@@ -895,7 +895,7 @@ folder will be deleted.""")
                         self.getTorrentDetailsFinished())
         elif self.getState() == 'downloading' and not self.pendingManualDL:
             addTable(_('Download Details'), self.getDownloadDetails())
-        return '\n'.join(details)
+        return '\n'.join(details).encode('utf-8')
 
 
     ##
