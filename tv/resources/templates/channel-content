@@ -31,7 +31,7 @@
 </div>
 </div>
 
-    <div t:updateForView="downloadingItems">
+    <div class="downloading-sort" t:updateForView="downloadingItems">
         <div t:hideIf="downloadingItems.len() == 0">
             <t:executeTemplate filename="sort-bar" 
                 itemSort="itemSortDownloading"

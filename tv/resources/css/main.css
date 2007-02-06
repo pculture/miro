@@ -392,6 +392,10 @@ img {
     background-color: #5faeff;	
 }
 
+.downloading-sort .sort-buttons {
+    background-color: #FF8c2d;
+}
+
 .main-video-details-top {
     color:  #222;
     font-size: 10px;
