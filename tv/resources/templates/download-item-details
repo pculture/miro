@@ -146,7 +146,7 @@
                     class="main-video-details-expiring">
                     <span t:replace="this.getExpirationString()" />
                 </div>
-                <div t:showIf="this.isPendingAutoDownload()"
+                <div t:showIf="this.isPendingAutoDownload() or not this.isFailedDownload()"
                     class="main-video-details-pending-auto">
                     <span i18n:translate="">Pending Auto Download</span>
                 </div>

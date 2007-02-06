@@ -938,10 +938,12 @@ folder will be deleted.""")
                 self._state = 'downloading'
             elif self.expired:
                 self._state = 'expired'
-            elif not self.getViewed():
-                self._state = 'new'
-            else:
+            elif (self.getViewed() or
+                    (self.downloader and
+                        self.downloader.getState() in ('failed', 'stopped'))):
                 self._state = 'not-downloaded'
+            else:
+                self._state = 'new'
         elif self.downloader.getState() in ('offline', 'paused'):
             if self.pendingManualDL:
                 self._state = 'downloading'

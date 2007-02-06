@@ -1229,10 +1229,10 @@ a.small-button-left:hover {
 
 .main-video-details-pending-auto, .main-video-details-failed-download {
     position: absolute;
-    top: 44px;
-    right: 80px;
+    top: 48px;
+    right: 20px;
     width: 200px;
-    text-align: right;
+    text-align: center;
     overflow: hidden;
 }
 
