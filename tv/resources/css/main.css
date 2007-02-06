@@ -964,6 +964,14 @@ an element is dragged, the drag-highlight class is added to it */
     left: 2px;
 }
 
+.share-box .select-box-right {
+    background-image: url(../images/share-right.png); 
+}
+
+.share-box .select-box-mid {
+    margin-right: 21px;
+}
+
 .share-menu {
     position: absolute;
     top: 46px;
