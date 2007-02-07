@@ -643,6 +643,7 @@ class BTDownloader(BGDownloader):
         self.retryDC = None
         self.channelName = None
         self.uploadedStart = 0
+        self.restarting = False
         if restore is not None:
             self.restoreState(restore)
         else:
