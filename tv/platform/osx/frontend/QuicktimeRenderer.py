@@ -158,7 +158,7 @@ class QuicktimeRenderer (app.VideoRenderer):
         if self.movie is nil:
             return 0
         qttime = self.movie.currentTime()
-        return qttime.timeValue / float(qttime.timeScale)
+        return _qttime2secs(qttime)
 
     def setCurrentTime(self, time):
         platformutils.warnIfNotOnMainThread('QuicktimeRenderer.setCurrentTime')
@@ -184,11 +184,16 @@ class QuicktimeRenderer (app.VideoRenderer):
 
 ###############################################################################
 
+def _qttime2secs(qttime):
+    if qttime.timeScale == 0:
+        return 0.0
+    return qttime.timeValue / float(qttime.timeScale)
+
 def movieDuration(qtmovie):
     if qtmovie is nil:
         return 0
     qttime = qtmovie.duration()
-    return qttime.timeValue / float(qttime.timeScale)
+    return _qttime2secs(qttime)
 
 ###############################################################################
 
