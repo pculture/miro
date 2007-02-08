@@ -8,17 +8,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2006-08-16 13:07-0400\n"
-"PO-Revision-Date: 2006-07-02 18:46+0000\n"
-"Last-Translator: elpelso <steven.pelsmaekers@ping.be>\n"
+"POT-Creation-Date: 2006-11-27 01:48-0500\n"
+"PO-Revision-Date: 2007-02-03 00:45+0000\n"
+"Last-Translator: Lars <lars@planet.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Rosetta-Export-Date: 2007-02-07 06:32+0000\n"
 
 msgid "$log"
-msgstr ""
+msgstr "$log"
 
 msgid ""
 "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
@@ -26,6 +27,10 @@ msgid ""
 "doing, paste in the log message from the box above, and answer a few "
 "questions, and we'll get right to work.</font>"
 msgstr ""
+"<font face=\"Lucida Grande\" size=\"-1\">Onze bugtracker kan je vinden op <a "
+"href=\"$bugTrackerURL\">$bugTrackerURL</a>. Vertel ons wat je aan het doen "
+"was, plak bovenstaand logbericht in het veld hierboven, beantwoord enkele "
+"vragen en we gaan direct aan het werk.</font>"
 
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
@@ -33,6 +38,10 @@ msgid ""
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
+"Trouwens, als je even hebt, wil je dan een crash-rapport aan ons bug-"
+"tracking-systeem doorgeven? Wat we minimaal nodig hebben is een beschrijving "
+"van wat je aan het doen was -- zo nauwkeurig mogelijk -- plus de fraai "
+"geformuleerde nonsens die hieronder staat:"
 
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
@@ -40,182 +49,218 @@ msgid ""
 "$shortAppName. That'll teach it, and it'll also reduce your chance of losing "
 "your preferences or channel subscriptions."
 msgstr ""
+"Helaas! $longAppName is het slacthoffer geworden van interne verwarring of "
+"dwarsigheid $when. Onze excuses. Sluit en herstart $shortAppName. Dat zal "
+"hem leren en bovendien wordt zo de kans verkleind op het verlies van je "
+"voorkeuren of abonnementen op kanalen."
 
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 msgid "The fall of $shortAppName??"
-msgstr ""
+msgstr "De ondergang van $shortAppName??"
 
 msgid "About Democracy"
-msgstr ""
+msgstr "Over Democracy"
 
-msgid "Add a Channel..."
-msgstr ""
-
-msgid "Add a Guide..."
-msgstr ""
+msgid "Add Channel..."
+msgstr "Kanaal toevoegen..."
 
 msgid "Bring All to Front"
-msgstr ""
+msgstr "Breng Alles naar voren"
 
-msgid "Channel"
-msgstr ""
+msgid "Channels"
+msgstr "Kanalen"
 
-msgid "Check for Update"
-msgstr ""
+msgid "Check for New Version"
+msgstr "Controleer op nieuwe versie"
 
 msgid "Clear Menu"
-msgstr ""
+msgstr "Menu leegmaken"
 
+msgid "Close Window"
+msgstr "Venster sluiten"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:15
 msgid "Copy"
-msgstr ""
+msgstr "Kopieer"
 
-msgid "Copy Channel Link"
-msgstr ""
-
-msgid "Copy Video Link"
-msgstr ""
-
-msgid "Cut"
-msgstr ""
-
-msgid "Delete"
-msgstr ""
-
-msgid "Democracy"
-msgstr ""
-
-msgid "Democracy Help"
-msgstr ""
-
-msgid "Donate to Democracy"
-msgstr ""
-
-msgid "Edit"
-msgstr ""
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7
-msgid "File"
-msgstr ""
-
-msgid "Full Screen"
-msgstr ""
-
-msgid "Half Screen"
-msgstr ""
-
-msgid "Help"
-msgstr ""
-
-msgid "Hide Democracy"
-msgstr ""
-
-msgid "Hide Others"
-msgstr ""
-
-msgid "MainMenu"
-msgstr ""
-
-msgid "Minimize"
-msgstr ""
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:28
+msgid "Copy Channel URL"
+msgstr "Kanaal URL kopiëren"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11
+msgid "Copy Video URL"
+msgstr "Video URL kopiëren"
+
+msgid "Cut"
+msgstr "Knippen"
+
+#: ../../portable/dialogs.py:77
+msgid "Delete"
+msgstr "Wissen"
+
+msgid "Democracy"
+msgstr "Democracy"
+
+msgid "Democracy Help"
+msgstr "Democracy Help"
+
+msgid "Donate"
+msgstr "Doneer"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:14
+msgid "Edit"
+msgstr "Bewerken"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:6
+msgid "File"
+msgstr "Bestand"
+
+msgid "Full Screen"
+msgstr "Volledig scherm"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:47
+msgid "Help"
+msgstr "Help"
+
+msgid "Hide Democracy"
+msgstr "Democracy verbergen"
+
+msgid "Hide Others"
+msgstr "Anderen verbergen"
+
+msgid "Main Window"
+msgstr "Hoofdvenster"
+
+msgid "MainMenu"
+msgstr "Hoofdmenu"
+
+msgid "Minimize"
+msgstr "Minimaliseren"
+
 msgid "New Channel Folder..."
-msgstr ""
+msgstr "Nieuwe kanaalmap..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10
+msgid "New Channel Guide..."
+msgstr "Nieuwe kanaalgids..."
+
 msgid "New Playlist Folder..."
-msgstr ""
+msgstr "Nieuwe speellijstmap..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:9
 msgid "New Playlist..."
-msgstr ""
+msgstr "Nieuwe speellijst..."
+
+msgid "New Search Channel..."
+msgstr "Nieuws zoekkanaal..."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43
+msgid "Next Video"
+msgstr "Volgende video"
 
 msgid "Open Recent"
-msgstr ""
+msgstr "Open recent"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:8
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7
 msgid "Open..."
-msgstr ""
+msgstr "Openen..."
 
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:16
 msgid "Paste"
-msgstr ""
+msgstr "Plakken..."
 
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:40
 msgid "Play Video"
-msgstr ""
+msgstr "Speel video"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39
+msgid "Playback"
+msgstr "Afspelen"
+
+msgid "Playlists"
+msgstr "Playlists"
 
 msgid "Preferencesâ¦"
-msgstr ""
+msgstr "Voorkeuren"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:44
+msgid "Previous Video"
+msgstr "Vorige video"
 
 msgid "Quit Democracy"
-msgstr ""
+msgstr "Democracy afsluiten"
 
-msgid "Remove Channel..."
-msgstr ""
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:5
+msgid "Remove..."
+msgstr "Verwijderen..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:12
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:18
 msgid "Rename..."
-msgstr ""
+msgstr "Hernoemen..."
 
-msgid "Save Video..."
-msgstr ""
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10
+msgid "Save Video As..."
+msgstr "Video opslaan als..."
 
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:17
 msgid "Select All"
-msgstr ""
+msgstr "Alles selecteren"
+
+msgid "Send This Channel to a Friend"
+msgstr "Stuur dit kanaal naar een vriend"
 
 msgid "Services"
-msgstr ""
+msgstr "Diensten"
 
 msgid "Show All"
-msgstr ""
+msgstr "Alles tonen"
 
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:42
 msgid "Stop Video"
-msgstr ""
+msgstr "Stop video"
 
-msgid "Tell a Friend"
-msgstr ""
-
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:30
 msgid "Update All Channels"
-msgstr ""
+msgstr "Alle kanalen vernieuwen"
 
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:29
 msgid "Update Channel"
-msgstr ""
-
-msgid "Video"
-msgstr ""
+msgstr "Kanaal vernieuwen"
 
 msgid "Window"
-msgstr ""
+msgstr "Venster"
 
 msgid "Zoom"
-msgstr ""
+msgstr "Zoom"
 
 msgid "%channel feed%"
-msgstr ""
+msgstr "%kanaal feed%"
 
 msgid "%channel title%"
-msgstr ""
+msgstr "%kanaal titel%"
 
 msgid "%donation label%"
-msgstr ""
+msgstr "%donatie label%"
+
+msgid "-00:00:00"
+msgstr "-00:00:00"
 
 msgid "00:00:00"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/democracy.glade.h:11
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:4
-msgid "Add Channel"
-msgstr "Kanaal Toevoegen"
+msgstr "00:00:00"
 
 msgid "Box"
-msgstr ""
+msgstr "Kader"
 
 msgid "FullScreen Controls"
-msgstr ""
+msgstr "VolledigScherm bediening"
+
+#: ../../portable/tabs.py:27 ../../portable/feed.py:1718
+#: ../../portable/feed.py:1777
+msgid "Search"
+msgstr "Zoeken"
 
 msgid "VideoWindow"
-msgstr ""
+msgstr "VideoVenster"
 
 #: ../../portable/dialogs.py:60
 msgid "Cancel"
@@ -227,100 +272,164 @@ msgid ""
 msgstr ""
 
 msgid "Password:\n"
-msgstr ""
+msgstr "Wachtwoord:\n"
 
 msgid "Username and password required"
-msgstr ""
+msgstr "Gebruikersnaam en wachtwoord vereist"
 
 msgid ""
 "Username:\n"
 "\n"
 msgstr ""
+"Gebruikersnaam:\n"
+"\n"
 
 msgid " limit upstream to"
-msgstr ""
+msgstr " upstream beperken tot"
 
 msgid "(You must restart Democracy for this change to take effect)\n"
 msgstr ""
+"(U moet Democracy opnieuw opstarten voordat de verandering wordt "
+"doorgevoerd)\n"
 
 msgid "(movies directory path goes here)"
-msgstr ""
+msgstr "(hier hoort het pad naar de map met video's)"
 
 msgid "1 day"
-msgstr ""
+msgstr "1 dag"
 
 msgid "1 month"
-msgstr ""
+msgstr "1 maand"
 
 msgid "10 days"
-msgstr ""
+msgstr "10 dagen"
 
 msgid "3 days"
-msgstr ""
+msgstr "3 dagen"
 
 msgid "3 hours"
-msgstr ""
+msgstr "3 uur"
 
 msgid "4"
-msgstr ""
+msgstr "4"
 
 msgid "5"
-msgstr ""
+msgstr "5"
 
 msgid "6 days"
-msgstr ""
+msgstr "6 dagen"
+
+msgid "99999"
+msgstr "99999"
+
+msgid "BitTorrent ports:"
+msgstr "BitTorent-poorten:"
 
 msgid "By default, videos expire after:"
-msgstr ""
+msgstr "Standaard verlopen video's na:"
 
-msgid "Change"
-msgstr ""
+msgid "Change..."
+msgstr "Wijzigen..."
 
 msgid "Check channels for new content:"
-msgstr ""
+msgstr "Controleer kanalen op nieuwe inhoud:"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:16
+#: ../../platform/gtk-x11/glade/democracy.glade.h:41
 msgid "Don't start a download if it leaves less than"
-msgstr "Begin een download niet als er minder overblijft dan"
+msgstr "Download niet starten wanneer minder overblijft dan"
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:42
+msgid "Download at most"
+msgstr "Download hooguit"
 
 msgid "GB free."
-msgstr ""
+msgstr "NL gratis"
 
 msgid "KB/s when my computer is active."
-msgstr ""
+msgstr "KB/s als mijn computer actief is."
+
+msgid "Maximum:"
+msgstr "Maximum:"
+
+msgid "Minimum:"
+msgstr "Minimum:"
 
 msgid "Never"
-msgstr ""
+msgstr "Nooit"
 
 msgid "OtherViews"
-msgstr ""
+msgstr "OtherViews"
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:53
+msgid "Play videos one after another."
+msgstr "Video's na elkaar afspelen."
 
 msgid "Run Democracy at startup"
-msgstr ""
+msgstr "Demcocray bij het opstarten lanceren"
 
-msgid "Store downloaded movies in:"
-msgstr ""
+msgid "Save downloaded videos in this folder:"
+msgstr "Gedownloade video's in deze map opslaan:"
 
-msgid "To avoid internet slowdowns,"
-msgstr ""
+#: ../../platform/gtk-x11/glade/democracy.glade.h:61
+msgid "Stop after each video."
+msgstr "Na elke video stoppen."
+
+msgid "To avoid internet slowdowns:"
+msgstr "Om traag internet te voorkomen:"
 
 msgid "every 30 minutes"
-msgstr ""
+msgstr "elke 30 minuten"
 
 msgid "every hour"
-msgstr ""
+msgstr "elk uur"
 
 msgid "manually"
-msgstr ""
+msgstr "handmatig"
 
+#: ../../platform/gtk-x11/glade/democracy.glade.h:75
+msgid "videos at once."
+msgstr "video's in een keer."
+
+msgid "$label$"
+msgstr "$label$"
+
+msgid "$title$"
+msgstr "$title$"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:20
+msgid "Channel"
+msgstr "Kanaal"
+
+#: ../../portable/dialogs.py:72
+msgid "Create"
+msgstr "Maken"
+
+msgid "In this:"
+msgstr "Hierin:"
+
+msgid "Item1"
+msgstr "Item1"
+
+msgid "Search Engine"
+msgstr "Zoekmachine"
+
+msgid "Search for:"
+msgstr "Zoeken naar:"
+
+msgid "URL"
+msgstr "URL"
+
+#: ../../platform/gtk-x11/frontend_implementation/startup.py:31
+#: ../../platform/windows-xul/frontend_implementation/startup.py:25
+#, python-format
 msgid "(parsed %d files - found %d videos)"
-msgstr ""
+msgstr "(%d bestanden bekeken - %d video's gevonden)"
 
 msgid "Back"
-msgstr ""
+msgstr "Terug"
 
 msgid "Browse"
-msgstr ""
+msgstr "Bladeren"
 
 msgid ""
 "Democracy Player can find all the videos on your computer to help you "
@@ -329,30 +438,39 @@ msgid ""
 "\n"
 "Would you like Democracy Player to look for video files on your computer?"
 msgstr ""
+"Democracy Player kan alle video's op je computer opzoeken zodat je je "
+"collectie kan ordenen.\n"
+"\n"
+"\n"
+"Wil je dat Democracy Player alle video bestanden op je pc opzoekt?"
 
 msgid "Next"
-msgstr ""
+msgstr "Volgende"
 
 #: ../../portable/dialogs.py:62
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:28
 msgid "No"
 msgstr "Nee"
 
-msgid "Restrict to my 'Movies' folder"
-msgstr ""
+msgid "Only search my Movies folder."
+msgstr "Alleen zoeken in mijn videomap."
 
-msgid "Restrict to my full home folder"
-msgstr ""
+msgid "Search my entire Home folder."
+msgstr "Mijn complete Home-map doorzoeken."
 
-msgid "Search custom location:"
-msgstr ""
+msgid "Search this folder:"
+msgstr "Deze map doorzoeken:"
 
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12
 msgid "Searching for Videos"
-msgstr ""
+msgstr "Op zoek naar video's"
 
 msgid ""
 "The next few screens will help you set up Democracy Player so that it works "
 "best for you. Here's the first question."
 msgstr ""
+"De volgende schermen zullen je helpen Democracy Player zo in te richten als "
+"je prettig vindt. Hier is de eerste vraag."
 
 msgid ""
 "We recommend that you allow Democracy Player to launch when your computer "
@@ -362,9 +480,17 @@ msgid ""
 "\n"
 "Would you like to run Democracy when your computer starts up?"
 msgstr ""
+"We raden je aan toestemming te geven om Democracy Player te lanceren wanneer "
+"je je computer start. Zo kunnen video's die niet gedownload zijn, compleet "
+"gemaakt worden en zullen nieuwe video's klaar staan in je kanalen zodra je "
+"ze wilt bekijken.\n"
+"\n"
+"\n"
+"Wil je Democracy starten wanneer je je computer start?"
 
+#: ../../platform/gtk-x11/glade/democracy.glade.h:66
 msgid "Welcome to Internet TV!"
-msgstr ""
+msgstr "Welkom bij internettelevisie!"
 
 msgid ""
 "Welcome to Internet TV. There's a lot you can do with Democracy Player: "
@@ -373,8 +499,14 @@ msgid ""
 "lots more.\n"
 "\n"
 msgstr ""
+"Welkom bij inernettelevisie. Je kunt veel doen met Democracy Player: "
+"automatisch video's downloaden van je favoriete kanalen, nieuwe video's een "
+"voor een bekijken, torrents downloaden, video's aanbevelen aan vrienden en "
+"nog veel meer.\n"
+"\n"
 
 #: ../../portable/dialogs.py:61
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:27
 msgid "Yes"
 msgstr "Ja"
 
@@ -401,444 +533,685 @@ msgid ""
 "Find Videos: The Democracy Channel Guide has hundreds of internet TV "
 "channels, all of them are free. Just click 'ADD' to watch a channel.\n"
 msgstr ""
+"Je bent klaar.\n"
+"\n"
+"Setup is compleet -- nu kun je kanalen gaan zoeken en beginnen te kijken.\n"
+"\n"
+"Wacht niet: Democracy is anders dan video's op webpagina's bekijken  -- "
+"uitgevers kunnen grote video's in hoge kwaliteit aanbieden. Dus ga niet "
+"zitten wachten op video's: start wat downloads en kom later terug.\n"
+"\n"
+"Laat hem aanstaan: Democracy Player controleert regelmatig kanalen op nieuwe "
+"video's en downloadt die in de achtergrond. Door hem aan te laten, zul je "
+"nieuwe video's hebben zodra je tijd hebt om ze te bekijken.\n"
+"\n"
+"Maak je geen zorgen over schijfruimte: net als een TiVo, heeft Democracy "
+"Player een 'verloop'systeem dat helpt bij het opruimen van oudere video's om "
+"plaats te maken voor nieuwe. Je kunt altijd een video eindeloos bewaren door "
+"op 'opslaan' te klikken en je kunt een kanaal zo instellen dat video's "
+"automatisch gesaved worden.\n"
+"\n"
+"Ga voor groot: met de knop rechts naast de afspeelknop kun je video's op "
+"volledig scherm bekijken.\n"
+"\n"
+"Vind video's: de Democracy kanaalgids bevat honderden online tv-kanalen, "
+"allemaal gratis. Klik gewoon op 'Toevoegen' om een kanaal te bekijken.\n"
 
 msgid ""
 "%message%\n"
 "%message%"
 msgstr ""
+"%bericht%\n"
+"%bericht%"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:139
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
+msgid "Save Video _As..."
+msgstr "Video opslaan _als..."
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
+msgid "Save this video"
+msgstr "Deze video opslaan."
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:117
+msgid "_Copy Video URL"
+msgstr "Video URL _kopiëren"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:120
+msgid "_Remove Video"
+msgstr "Video ve_rwijderen"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:123
+msgid "_Fullscreen"
+msgstr "Volledig _scherm"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:124
+msgid "_Stop Video"
+msgstr "S_top Video"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:125
+msgid "_Next Video"
+msgstr "Volge_nde video"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:126
+msgid "_Previous Video"
+msgstr "V_orige video"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:129
+msgid "_Play / Pause"
+msgstr "S_peel / Pauzeer"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:132
+msgid "Copy Channel _Link"
+msgstr "Kopieer _kanaallink"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:133
+msgid "_Send this channel to a friend"
+msgstr "_Stuur dit kanaal naar een vriend"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:136
+msgid "_Update Channel"
+msgstr "V_ernieuw kanaal"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:139
+msgid "Re_name Channel"
+msgstr "_Hernoem kanaal"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:142
+msgid "_Remove Channel"
+msgstr "_Verwijder Kanaal"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:145
+msgid "Re_name Playlist"
+msgstr "He_rnoem playlist"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:148
+msgid "_Remove Playlist"
+msgstr "Ver_wijder playlist"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:151
+msgid "_Video"
+msgstr "_Video"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:152
+msgid "_Channels"
+msgstr "_Kanalen"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:153
+msgid "_Playlists"
+msgstr "_Playlists"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:154
+msgid "P_layback"
+msgstr "_Afspelen"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:155
+msgid "_Open..."
+msgstr "_Openen..."
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:155
+msgid "Open various files"
+msgstr "Open verschillende bestanden"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:157
+msgid "New _Playlist..."
+msgstr "_Nieuwe playlist"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:157
+msgid "Create new playlist"
+msgstr "Nieuwe playlist maken"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:158
+msgid "New Playlist _Folder..."
+msgstr "Nieuwe playlist_map"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:158
+msgid "Create new playlist folder"
+msgstr "Nieuwe playlistmap maken"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159
+msgid "New Channel _Folder..."
+msgstr "Nieuwe _kanaalmap"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159
+msgid "Create new channel folder"
+msgstr "Nieuwe kanaalmap maken"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:160
+msgid "Add _Channel..."
+msgstr "Voeg kanaal _toe..."
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:161
+msgid "New Searc_h Channel..."
+msgstr "Nieuw _zoekkanaal..."
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:162
+msgid "New Channel _Guide..."
+msgstr "Nieuwe kanaal_gids..."
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:164
+msgid "P_references"
+msgstr "Voo_rkeuren"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:165
+msgid "_Quit"
+msgstr "_Afsluiten"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:165
+msgid "Quit the Program"
+msgstr "Het programma afsluiten"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:166
+msgid "U_pdate All Channels"
+msgstr "A_lle kanalen vernieuwen"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:167
+msgid "_Help"
+msgstr "_Help"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:169
+msgid "_Donate"
+msgstr "_Doneer"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:171
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:172
+msgid "Delete selection"
+msgstr "Verwijder selectie"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:152
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6
 msgid "Username:"
 msgstr "Gebruikersnaam:"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:150
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:163
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:7
 msgid "Password:"
 msgstr "Wachtwoord:"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:257
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:350
 msgid "Unknown Runtime Error"
 msgstr "Onbekende runtime error"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:258
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:351
 #, python-format
 msgid "An unknown error has occurred %s."
 msgstr "Een onbekende fout is opgetreden bij %s."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:92
-msgid "_Save Video..."
-msgstr "_Sla Video op..."
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:5
+#: ../../platform/osx/frontend/UIStrings.py:5
+msgid "_Remove..."
+msgstr "Verwij_der..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:92
-msgid "Save this video"
-msgstr "Sla deze video op."
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:6
+#: ../../platform/osx/frontend/UIStrings.py:6
+msgid "_Remove Playlist..."
+msgstr "Verwijder p_laylist..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:93
-msgid "_Play / Pause"
-msgstr "_Speel / Pauzeer"
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:7
+#: ../../platform/osx/frontend/UIStrings.py:7
+msgid "_Remove Playlists..."
+msgstr "Ve_rwijder playlists..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:94
-msgid "_Fullscreen"
-msgstr "_Schermvullend"
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:8
+#: ../../platform/osx/frontend/UIStrings.py:8
+msgid "_Remove Playlist Folder..."
+msgstr "Ve_rwijder playlistmap..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:97
-msgid "_Remove Channel"
-msgstr "_Verwijder Kanaal"
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:9
+#: ../../platform/osx/frontend/UIStrings.py:9
+msgid "_Remove Playlist Folders..."
+msgstr "Ve_rwijder playlistmappen..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:98
-msgid "_Update Channel"
-msgstr "_Hernieuw Kanaal"
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:10
+#: ../../platform/osx/frontend/UIStrings.py:10
+msgid "_Remove Channel..."
+msgstr "Ve_rwijder kanaal..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:99
-msgid "Copy Channel _Link"
-msgstr "Kopiëer Kanaal _Link"
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:11
+#: ../../platform/osx/frontend/UIStrings.py:11
+msgid "_Remove Channels..."
+msgstr "Ve_rwijder kanalaen..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:102
-msgid "_Remove Channel Guide"
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:12
+#: ../../platform/osx/frontend/UIStrings.py:12
+msgid "_Remove Channel Folder..."
+msgstr "Ve_rwijder kanaalmap..."
+
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:13
+#: ../../platform/osx/frontend/UIStrings.py:13
+msgid "_Remove Channel Folders..."
+msgstr "Ve_rwijder kanaalmappen..."
+
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:14
+#: ../../platform/osx/frontend/UIStrings.py:14
+msgid "_Remove Channel Guide..."
+msgstr "Ve_rwijder kanaalgids..."
+
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:15
+#: ../../platform/osx/frontend/UIStrings.py:15
+msgid "_Remove Channel Guides..."
+msgstr "Ve_rwijder kanaalgidsen..."
+
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:16
+#: ../../platform/osx/frontend/UIStrings.py:16
+msgid "_Remove Video..."
+msgstr "Ve_rwijder video..."
+
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:17
+#: ../../platform/osx/frontend/UIStrings.py:17
+msgid "_Remove Videos..."
+msgstr "Ve_rwijder video's..."
+
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:18
+#: ../../platform/osx/frontend/UIStrings.py:18
+msgid "Re_name..."
+msgstr "_Hernoem..."
+
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:19
+#: ../../platform/osx/frontend/UIStrings.py:19
+msgid "Re_name Playlist..."
+msgstr "_Hernoem playlist..."
+
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:20
+#: ../../platform/osx/frontend/UIStrings.py:20
+msgid "Re_name Playlist Folder..."
+msgstr "_Hernoem playlistmap..."
+
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:21
+#: ../../platform/osx/frontend/UIStrings.py:21
+msgid "Re_name Channel..."
+msgstr "_Hernoem kanaal..."
+
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:22
+#: ../../platform/osx/frontend/UIStrings.py:22
+msgid "Re_name Channel Folder..."
+msgstr "_Hernoem kanaalmap..."
+
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:23
+#: ../../platform/osx/frontend/UIStrings.py:23
+msgid "Re_name Channel Guide..."
+msgstr "_Hernoem kanaalgids..."
+
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:24
+#: ../../platform/osx/frontend/UIStrings.py:24
+msgid "_Update Channel..."
+msgstr "_Vernieuw kanaal..."
+
+#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:25
+#: ../../platform/osx/frontend/UIStrings.py:25
+msgid "_Update Channels..."
+msgstr "_Vernieuw kanalen..."
+
+#: ../../platform/gtk-x11/frontend_implementation/startup.py:59
+#: ../../platform/gtk-x11/frontend_implementation/startup.py:157
+#: ../../platform/windows-xul/frontend_implementation/startup.py:33
+#, python-format
+msgid "%d video found"
+msgid_plural "%d videos found"
+msgstr[0] "%d video gevonden"
+msgstr[1] "%d video's gevonden"
+
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:161
+msgid "Error Bombing Item"
+msgstr "Fout bij VideoBomben van item"
+
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:163
+msgid "Error Recommending Item"
+msgstr "Fout bij aanbevelen item"
+
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:165
+msgid "Error Opening Website"
+msgstr "Fout bij openen website"
+
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:169
+#, python-format
+msgid "There was an error opening %s.  Please try again in a few seconds"
 msgstr ""
+"Een fout trad op bij het openen van %s. Probeer het over enkele seconden nog "
+"eens."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:105
-msgid "_Video"
-msgstr "_Video"
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:6
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:37
+msgid "Remove Playlist..."
+msgstr "Verwijder playlist..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:106
-msgid "_Open..."
-msgstr "_Open..."
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:7
+msgid "Remove Playlists..."
+msgstr "Verwijder playlists..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:106
-msgid "Open various files"
-msgstr "Open verschillende bestanden"
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:8
+msgid "Remove Playlist Folder..."
+msgstr "Verwijder playlistmap..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:107
-msgid "_New Playlist..."
-msgstr ""
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:9
+msgid "Remove Playlist Folders..."
+msgstr "Verwijder playlistmappen..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:107
-msgid "Create new playlist"
-msgstr ""
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:10
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:27
+msgid "Remove Channel..."
+msgstr "Verwijder kanaal"
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:108
-msgid "_New Playlist Folder..."
-msgstr ""
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:11
+msgid "Remove Channels..."
+msgstr "Verwijder kanalen..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:108
-msgid "Create new playlist folder"
-msgstr ""
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:12
+msgid "Remove Channel Folder..."
+msgstr "Verwijder kanaalmap..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:109
-msgid "_New Channel Folder..."
-msgstr ""
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:13
+msgid "Remove Channel Folders..."
+msgstr "Verwijder kanaalmappen..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:109
-msgid "Create new channel folder"
-msgstr ""
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:14
+msgid "Remove Channel Guide..."
+msgstr "Verwijder kanaalgids..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:110
-msgid "_Rename..."
-msgstr ""
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:15
+msgid "Remove Channel Guides..."
+msgstr "Verwijder kanaalgidsen..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:110
-msgid "Rename selected item "
-msgstr ""
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:16
+msgid "Remove Video..."
+msgstr "Verwijder video..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:111
-msgid "P_references"
-msgstr "Voo_rkeuren"
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:17
+msgid "Remove Videos..."
+msgstr "Verwijder video's..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:112
-msgid "_Quit"
-msgstr "_Afsluiten"
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:19
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:36
+msgid "Rename Playlist..."
+msgstr "Hernoem playlist..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:112
-msgid "Quit the Program"
-msgstr "Het programma afsluiten"
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:20
+msgid "Rename Playlist Folder..."
+msgstr "Hernoem playlistmap..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:113
-msgid "_Channel"
-msgstr "_Kanaal"
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:21
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:26
+msgid "Rename Channel..."
+msgstr "Hernoem kanaal..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:114
-msgid "_Add Channel..."
-msgstr "_Kanaal Toevoegen..."
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:22
+msgid "Rename Channel Folder..."
+msgstr "Hernoem kanaalmap..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:115
-msgid "_Add Channel Guide..."
-msgstr ""
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:23
+msgid "Rename Channel Guide..."
+msgstr "Hernoem kanaalgids..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
-msgid "U_pdate All Channels"
-msgstr "A_lle kanalen vernieuwen"
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:24
+msgid "Update Channel..."
+msgstr "Vernieuw kanaal..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:117
-msgid "_Help"
-msgstr "_Help"
+#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:25
+msgid "Update Channels..."
+msgstr "Vernieuw kanalen..."
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:28
+#: ../../platform/windows-xul/xul/components/pybridge.py:36
 #, python-format
 msgid ""
 "Error importing democracy modules:\n"
 "%s"
 msgstr ""
+"Fout bij importeren van democracy modules:\n"
+"%s"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:32
+#: ../../platform/windows-xul/xul/components/pybridge.py:40
 msgid "Starting up"
-msgstr ""
+msgstr "Start op"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:126
+#: ../../platform/windows-xul/xul/components/pybridge.py:136
 msgid "Loading window"
-msgstr ""
+msgstr "Laad venster"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:127
+#: ../../platform/windows-xul/xul/components/pybridge.py:137
 msgid "onStartup called twice"
-msgstr ""
+msgstr "onStartup tweemaal aangeroepen"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:77
-msgid "Error Bombing Item"
-msgstr ""
+#: ../../portable/playlist.py:175 ../../portable/playlist.py:180
+msgid "Rename Playlist"
+msgstr "Hernoem playlist"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:79
-msgid "Error Recommending Item"
-msgstr ""
+#: ../../portable/playlist.py:176 ../../portable/folder.py:120
+#: ../../portable/folder.py:175 ../../portable/guide.py:130
+#: ../../portable/menu.py:48 ../../portable/menu.py:53
+#: ../../portable/feed.py:690
+msgid "Remove"
+msgstr "Verwijderen"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:81
-msgid "Error Opening Website"
-msgstr ""
-
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:85
+#: ../../portable/playlist.py:181
 #, python-format
-msgid "There was an error opening %s.  Please try again in a few seconds"
-msgstr ""
+msgid "Enter a new name for the playlist %s"
+msgstr "Voer een naam in voor de playlist %s"
 
-#: ../../portable/compiled_templates/new.py:113 ../../portable/tabs.py:26
-msgid "New Videos"
-msgstr "Nieuwe Videos"
+#: ../../portable/playlist.py:194
+msgid "Create Playlist"
+msgstr "Maak playlist"
 
-#: ../../portable/compiled_templates/new.py:123
-#: ../../portable/compiled_templates/channel.py:327
-#: ../../portable/compiled_templates/channel_content.py:210
-#: ../../portable/compiled_templates/channelfolder.py:287
-msgid "Unwatched"
-msgstr "Onbekeken"
+#: ../../portable/playlist.py:195
+msgid "Enter a name for the new playlist"
+msgstr "Voer een naam in voor de nieuwe playlist"
 
-#: ../../portable/compiled_templates/new.py:135
-msgid "Expiring"
-msgstr "Vervalt op"
-
-#: ../../portable/compiled_templates/first_time_intro.py:36
-msgid "Democracy Internet TV: How to Get Started"
-msgstr "Democracy Internet TV : Hoe beginnen"
-
-#: ../../portable/compiled_templates/first_time_intro.py:40
-msgid "GO BIG:"
-msgstr "GA GROOTS:"
-
-#: ../../portable/compiled_templates/first_time_intro.py:42
-msgid "This is your fullscreen button. Click it and lean back."
-msgstr ""
-"Dit is de knop om schermvullend te gaan.  Klik er op and leun achterover."
-
-#: ../../portable/compiled_templates/first_time_intro.py:46
-msgid "NEW STUFF:"
-msgstr "NIEUWE ZAKEN:"
-
-#: ../../portable/compiled_templates/first_time_intro.py:48
-msgid ""
-"Blue circles mean the channel has new videos available, green circles mean "
-"you have downloaded videos ready to watch."
-msgstr ""
-"Een blauwe cirkel betekent dat een kanaal nieuwe video's beschikbaar heeft, "
-"een groene cirkel betekent dat je al video's hebt, klaar om te kijken."
-
-#: ../../portable/compiled_templates/first_time_intro.py:50
-msgid ""
-"<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
-"onclick=\"eventURL('action:doneWithIntro');\">Go to Channel Guide "
-">></a></strong>"
-msgstr ""
-"<strong i18n:translate=\"\">INTRO OVERSLAAN: <a style=\"color: #090;\" "
-"href=\"#\" onclick=\"eventURL('action:doneWithIntro');\">Ga Naar Kanaalgids "
-">></a></strong>"
-
-#: ../../portable/compiled_templates/first_time_intro.py:52
-msgid ""
-"<strong>Add Channels:</strong> The Channel Guide is your home base for "
-"internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
-"channels in the guide are free.</strong>"
-msgstr ""
-"<strong>Kanelen Toevoegen:</strong> De kanalengids is je beginpunt voor "
-"internet TV kanalen. Klik op 'TOEVOEGEN' om je op een kanaal te abonneren-- "
-"<strong>de kanalen in de gids zijn gratis.</strong>"
-
-#: ../../portable/compiled_templates/first_time_intro.py:54
-msgid ""
-"<strong>Don't Wait:</strong> Democracy is different than watching webpage "
-"videos-- publishers can offer big, high quality videos. So don't sit around "
-"waiting for videos: start some downloads and check back later."
-msgstr ""
-"<strong>Niet Wachten:</strong> Democracy is anders dan video's op een "
-"webpagina bekijken-- uitgevers kunnen grote video's van hoge kwaliteit "
-"aanbieden. Dus ga niet zitten wachten op video's: begin met downloaden en "
-"kom later nog eens terug."
-
-#: ../../portable/compiled_templates/first_time_intro.py:56
-msgid ""
-"<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
-"new videos and downloads in the background. Leaving it running means you'll "
-"have new videos when you're ready to watch."
-msgstr ""
-"<strong>Niet aflsuiten:</strong> Democracy Player kijkt regelmatig of er "
-"nieuwe video's op een kanaal zijn verschenen en download deze in de "
-"achtergrond. Door Democracy niet af te sluiten heb je nieuwe videos op het "
-"momet dat jij er naar wilt kijken."
-
-#: ../../portable/compiled_templates/first_time_intro.py:58
-msgid ""
-"<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
-"features an 'expiration' system that helps clean out older videos to make "
-"room for new videos. You can always keep a video permanently by clicking "
-"'save' and you can set a channel's settings to save videos automatically."
-msgstr ""
-"<strong>Maak je geen zorgen over de beschikbare ruimte:</strong> Net als "
-"TiVo heeft Democracy Player een 'verloop' systeem dat er voor zorgt dat oude "
-"video's worden verwijdert om plaats te maken voor nieuwe. Je  kunt videos "
-"permanent opslaan door op 'opslaan' te klikken. Je kunt voor een kanaal ook "
-"instellen dat de video's automatisch bewaard worden."
-
-#: ../../portable/compiled_templates/external_playback.py:47
-#: ../../portable/compiled_templates/external_playback_continue.py:46
-msgid "Democracy - External Playback Template"
-msgstr "Democracy - Extern Afspelen-sjabloon"
-
-#: ../../portable/compiled_templates/external_playback.py:64
-msgid ""
-"This file type (${format}) can't be played in the main Democracy window."
-msgstr ""
-"Dit bestandstype (${format}) kan niet worden afgespeeld in het Democracy "
-"hoofdscherm."
-
-#: ../../portable/compiled_templates/external_playback.py:68
-msgid "Play Externally"
-msgstr "Extern Afspelen"
-
-#: ../../portable/compiled_templates/external_playback.py:77
-msgid "Skip Video ${countdown}"
-msgstr "Sla Video ${countdown} Over"
-
-#: ../../portable/compiled_templates/download.py:105 ../../portable/tabs.py:28
-msgid "Active Downloads"
-msgstr "Actieve Downloads"
-
-#: ../../portable/compiled_templates/download.py:119
-msgid ""
-"External Torrents <a style=\"text-decoration: underline; margin-left: 15px; "
-"font-weight: normal;\" href=\"#\" onclick=\"return "
-"eventURL('action:clearTorrents');\" i18n:translate=\"\" title=\"Clear "
-"Torrents\">Clear Torrents</a>"
-msgstr ""
-
-#: ../../portable/compiled_templates/feed_settings.py:50
-#: ../../portable/compiled_templates/channel.py:85
-msgid "Auto Download"
-msgstr "Download Automatisch"
-
-#: ../../portable/compiled_templates/feed_settings.py:58
-#: ../../portable/compiled_templates/channel.py:262
-msgid "Recommend"
-msgstr "Aanraden"
-
-#: ../../portable/compiled_templates/feed_settings.py:66
-msgid "Back to Channel"
-msgstr "Terug naar Kanaal"
-
-#: ../../portable/compiled_templates/feed_settings.py:68
-msgid "Channel Settings"
-msgstr "Kanaalinstellingen"
-
-#: ../../portable/compiled_templates/feed_settings.py:70
-msgid "Videos expire after:"
-msgstr "Video wordt verwijdert na:"
-
-#: ../../portable/compiled_templates/feed_settings.py:74
-#: ../../portable/compiled_templates/feed_settings.py:81
-msgid "Default"
-msgstr "Standaard"
-
-#: ../../portable/compiled_templates/feed_settings.py:128
-msgid "Auto download should:"
-msgstr "Automatisch downloaden moet:"
-
-#: ../../portable/compiled_templates/feed_settings.py:161
-msgid ""
-"If I have ${maxnew} ${maxnew2} videos waiting, don't auto download more."
-msgstr ""
-"Als er ${maxnew} ${maxnew2} videos wachten, download er dan niet nog meer."
-
-#: ../../portable/compiled_templates/feed_settings.py:163
-msgid "(Keeps channel from hogging disk space)"
-msgstr "(Zorgt dat kanalen niet teveel schijfruimte innemen)"
-
-#: ../../portable/compiled_templates/feed_settings.py:165
-msgid "Channel URL"
-msgstr "Kanaal URL"
-
-#: ../../portable/compiled_templates/channel.py:171
-#: ../../portable/compiled_templates/channel_content.py:97
-#: ../../portable/compiled_templates/channelfolder.py:165
-msgid "${count} Downloads in Progress"
-msgstr ""
-
-#: ../../portable/compiled_templates/channel.py:176
-#: ../../portable/compiled_templates/channel_content.py:102
-#: ../../portable/compiled_templates/channelfolder.py:170
-msgid "1 Download in Progress"
-msgstr ""
-
-#: ../../portable/compiled_templates/channel.py:196
-#: ../../portable/compiled_templates/channel_content.py:122
-#: ../../portable/compiled_templates/channelfolder.py:190
-msgid "${len} Videos On This Channel"
-msgstr ""
-
-#: ../../portable/compiled_templates/channel.py:210
-#: ../../portable/compiled_templates/channel_content.py:136
-#: ../../portable/compiled_templates/channelfolder.py:204
-msgid "All ${len} Videos Match This Search"
-msgstr ""
-
-#: ../../portable/compiled_templates/channel.py:222
-#: ../../portable/compiled_templates/channel_content.py:148
-#: ../../portable/compiled_templates/channelfolder.py:216
-msgid "${len} Videos Match This Search"
-msgstr ""
-
-#: ../../portable/compiled_templates/channel.py:254
-msgid "Settings"
-msgstr "Instellingen"
-
-#: ../../portable/compiled_templates/channel.py:280
-msgid "Looking for videos at this URL"
-msgstr ""
-
-#: ../../portable/compiled_templates/channel.py:314
-#: ../../portable/compiled_templates/channel_content.py:197
-#: ../../portable/compiled_templates/channelfolder.py:274
-msgid "${count} Videos on this Channel"
-msgstr ""
-
-#: ../../portable/compiled_templates/channel.py:338
-#: ../../portable/compiled_templates/channel_content.py:221
-#: ../../portable/compiled_templates/channelfolder.py:298
-msgid "Watched"
-msgstr "Bekeken"
-
-#: ../../portable/compiled_templates/channel.py:349
-#: ../../portable/compiled_templates/channel_content.py:232
-#: ../../portable/compiled_templates/channelfolder.py:309
-msgid "Saved"
-msgstr "Opgeslagen"
-
-#: ../../portable/compiled_templates/multi_playlist.py:48
-msgid "${count} Playlists selected"
-msgstr ""
-
-#: ../../portable/compiled_templates/multi_playlist.py:50
-msgid "Delete selected playlists"
-msgstr ""
-
-#: ../../portable/compiled_templates/library.py:76 ../../portable/tabs.py:25
-msgid "My Collection"
-msgstr "Mijn Collectie"
-
-#: ../../portable/compiled_templates/download_item.py:105
-msgid "SAVE"
-msgstr ""
-
-#: ../../portable/compiled_templates/download_item.py:135
-msgid "REVEAL"
-msgstr ""
-
-#: ../../portable/compiled_templates/multi_channel.py:48
-msgid "${count} Channels selected"
-msgstr ""
-
-#: ../../portable/compiled_templates/multi_channel.py:50
-msgid "Delete selected channels"
-msgstr ""
-
-#: ../../portable/compiled_templates/search.py:47
+#: ../../portable/compiled_templates/search.py:39
 msgid "Nothing to display.<br></br> Enter a query in the search field above."
 msgstr ""
-"Niets weer te geven.<br></br> Voer in het zoek veld hierboven een "
+"Niets weer te geven.<br></br> Voer in het zoekveld hierboven een "
 "zoekopdracht in."
 
-#: ../../portable/compiled_templates/search.py:52
+#: ../../portable/compiled_templates/search.py:44
 msgid "Searching..."
 msgstr "Zoeken..."
 
-#: ../../portable/compiled_templates/search.py:75
+#: ../../portable/compiled_templates/search.py:56
+msgid "Results for \"${query}\""
+msgstr "Resultaten voor \"${query}\""
+
+#: ../../portable/compiled_templates/search.py:95
 msgid "Video Search"
-msgstr "Video Zoeken"
+msgstr "Video zoeken"
+
+#: ../../portable/compiled_templates/playlist.py:56
+msgid "Empty Playlist"
+msgstr "Lege playlist"
+
+#: ../../portable/compiled_templates/playlist.py:58
+msgid "Drag downloaded videos to this playlist to add them."
+msgstr "Sleep gedownloade video's naar deze playlist om ze toe te voegen."
+
+#: ../../portable/compiled_templates/playlist_folder.py:59
+msgid "Empty Playlist Folder"
+msgstr "Leeg playlistmap"
+
+#: ../../portable/compiled_templates/playlist_folder.py:71
+msgid ""
+"This folder contains ${count} playlists, but the playlists do not contain "
+"any items."
+msgstr ""
+"Deze map bevat ${count} playlists, maar de playlists bevatten geen items."
+
+#: ../../portable/compiled_templates/playlist_folder.py:76
+msgid "Drag playlists to this folder to add them."
+msgstr "Sleep playlists naar deze map om ze toe te voegen."
+
+#: ../../portable/compiled_templates/multi_playlist.py:57
+msgid ""
+"${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
+"playlists)"
+msgstr ""
+"${count} playlistmappen geselecteerd<br></br>(bevat ${containedcount} "
+"playlists)"
+
+#: ../../portable/compiled_templates/multi_playlist.py:69
+msgid "${count} Playlists Selected"
+msgstr "${count} playlists geselecteerd"
+
+#: ../../portable/compiled_templates/external_playback_continue.py:47
+#: ../../portable/compiled_templates/video_info.py:40
+#: ../../portable/compiled_templates/external_playback.py:50
+msgid "STAR"
+msgstr "STER"
+
+#: ../../portable/compiled_templates/external_playback_continue.py:57
+#: ../../portable/compiled_templates/video_info.py:50
+#: ../../portable/compiled_templates/external_playback.py:60
+#: ../../portable/compiled_templates/download_item.py:201
+msgid "SAVE"
+msgstr "OPSLAAN"
+
+#: ../../portable/compiled_templates/external_playback_continue.py:62
+#: ../../portable/compiled_templates/video_info.py:55
+#: ../../portable/compiled_templates/external_playback.py:65
+msgid "SAVED"
+msgstr "OPGESLAGEN"
+
+#: ../../portable/compiled_templates/external_playback_continue.py:70
+#: ../../portable/compiled_templates/video_info.py:63
+#: ../../portable/compiled_templates/external_playback.py:73
+#: ../../portable/compiled_templates/download_item.py:211
+msgid "DELETE"
+msgstr "VERWIJDEREN"
+
+#: ../../portable/compiled_templates/external_playback_continue.py:85
+#: ../../portable/compiled_templates/external_playback.py:88
+msgid "Democracy - External Playback Template"
+msgstr "Democracy - sjabloon voor extern afspelen"
+
+#: ../../portable/compiled_templates/external_playback_continue.py:95
+msgid "Continue To Next Video"
+msgstr "Ga naar volgende video"
+
+#: ../../portable/compiled_templates/channelfolder.py:166
+msgid "${count} Downloads in Progress"
+msgstr "${count} downloads bezig"
+
+#: ../../portable/compiled_templates/channelfolder.py:171
+msgid "1 Download in Progress"
+msgstr "1 download bezig"
+
+#: ../../portable/compiled_templates/channelfolder.py:191
+msgid "${len} Videos On This Channel"
+msgstr "${len} video's in dit kanaal"
+
+#: ../../portable/compiled_templates/channelfolder.py:205
+msgid "All ${len} Videos Match This Search"
+msgstr "Alle ${len} video's voldoen aan deze zoekopdracht"
+
+#: ../../portable/compiled_templates/channelfolder.py:217
+msgid "${len} Videos Match This Search"
+msgstr "${len} video's voldoen aan deze zoekopdracht"
+
+#: ../../portable/compiled_templates/channelfolder.py:277
+msgid "${count} Videos on this Channel"
+msgstr "${count} video's in dit kanaal"
+
+#: ../../portable/compiled_templates/channelfolder.py:290
+msgid "Unwatched"
+msgstr "Niet bekeken"
+
+#: ../../portable/compiled_templates/channelfolder.py:301
+msgid "Watched"
+msgstr "Bekeken"
+
+#: ../../portable/compiled_templates/channelfolder.py:312
+msgid "Saved"
+msgstr "Opgeslagen"
+
+#: ../../portable/compiled_templates/feed_settings.py:32
+#: ../../portable/compiled_templates/channel.py:152
+msgid "Default"
+msgstr "Standaard"
+
+#: ../../portable/compiled_templates/feed_settings.py:39
+#: ../../portable/compiled_templates/channel.py:159
+msgid "default"
+msgstr "standaard"
+
+#: ../../portable/compiled_templates/feed_settings.py:110
+#: ../../portable/compiled_templates/channel.py:379
+msgid "Videos expire after"
+msgstr "Video's verlopen na"
+
+#: ../../portable/compiled_templates/feed_settings.py:113
+#: ../../portable/compiled_templates/channel.py:382
+msgid "When turned on, Auto Download should"
+msgstr "Indien ingeschakeld, moet auto-downlad"
+
+#: ../../portable/compiled_templates/feed_settings.py:146
+#: ../../portable/compiled_templates/channel.py:415
+msgid ""
+"Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
+"unwatched."
+msgstr ""
+"Niet autoamtisch downloaden wanneer meer dan ${maxnew} ${maxnew2} video's "
+"onbekeken klaarstaan."
+
+#: ../../portable/compiled_templates/channel.py:316
+#: ../../portable/compiled_templates/channel_content.py:122
+#: ../../portable/compiled_templates/channel_folder.py:252
+msgid "Downloaded"
+msgstr "Gedownload"
+
+#: ../../portable/compiled_templates/channel.py:428
+msgid "Recommend"
+msgstr "Aanraden"
+
+#: ../../portable/compiled_templates/channel.py:430
+#: ../../portable/compiled_templates/unittest/simpleunicode.py:34
+#: ../../portable/test/unicodetest.py:402
+msgid "Settings"
+msgstr "Instellingen"
+
+#: ../../portable/compiled_templates/channel.py:440
+msgid "<label for=\"automatic\">Auto Download</label>"
+msgstr "<label for=\"automatic\">Automatisch downloaden</label>"
+
+#: ../../portable/compiled_templates/channel.py:458
+msgid "Looking for videos at this URL"
+msgstr "Zoeken naar video's op deze URL"
+
+#: ../../portable/compiled_templates/external_playback.py:111
+msgid ""
+"Democracy can't play this file. You may be able to open it with a different "
+"program.<br></br><br></br><strong>Filename:</strong> "
+"${filename}<Br></Br><strong>File type:</strong> ${format}"
+msgstr ""
+"Democracy kan dit bestand niet afspelen. Mogelijk kun je het openen met een "
+"ander programma.<br></br><br></br><strong>Bestandsnaam:</strong> "
+"${filename}<Br></Br><strong>Type bestand:</strong> ${format}"
+
+#: ../../portable/compiled_templates/external_playback.py:115
+msgid "REVEAL FILE"
+msgstr "TOON BESTAND"
+
+#: ../../portable/compiled_templates/external_playback.py:119
+msgid "Play Externally"
+msgstr "Extern afspelen"
+
+#: ../../portable/compiled_templates/external_playback.py:128
+msgid "Skip >> ${countdown}"
+msgstr "Overslaan >> ${countdown}"
+
+#: ../../portable/compiled_templates/download_item.py:114
+msgid "SHOW FILE"
+msgstr "TOON BESTAND"
+
+#: ../../portable/compiled_templates/download_item.py:121
+msgid "SHOW FOLDER"
+msgstr "TOON MAP"
+
+#: ../../portable/compiled_templates/download_item.py:135
+msgid "SHARE IT"
+msgstr "DEEL"
+
+#: ../../portable/compiled_templates/download_item.py:144
+msgid "STAR IT"
+msgstr "GEEF STER"
+
+#: ../../portable/compiled_templates/download_item.py:189
+msgid "Pending Auto Download"
+msgstr "Wachtend op automatische download"
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:43
 msgid "Simple translation"
@@ -856,90 +1229,307 @@ msgstr ""
 "Dit is een ${car} en dit is een ${truck} <span>Deze tekst is <b "
 "style=\"color:red\">ruwe</b> tekst</span>"
 
-#: ../../portable/compiled_templates/external_playback_continue.py:56
-msgid "Continue To Next Video"
-msgstr "Ga Verder Met Volgende Video"
+#: ../../portable/compiled_templates/download.py:91
+msgid "${size} disk space free"
+msgstr "${size} vrije schijfruimte"
 
-#: ../../portable/item.py:342 ../../portable/item.py:1178
-#, python-format
-msgid "Removing %s"
+#: ../../portable/compiled_templates/download.py:101
+msgid "${size} available for downloads"
+msgstr "${size} beschikbaar voor downloads"
+
+#: ../../portable/compiled_templates/download.py:153 ../../portable/tabs.py:28
+msgid "Downloading"
+msgstr "Aan het downloaden"
+
+#: ../../portable/compiled_templates/download.py:168
+msgid "Clear Completed Torrents"
+msgstr "Complete torrents verwijderen"
+
+#: ../../portable/compiled_templates/channel_folder.py:138
+msgid "Empty Channel Folder"
+msgstr "Kanaalmap leegmaken"
+
+#: ../../portable/compiled_templates/channel_folder.py:140
+msgid "Drag channels to this folder to add them."
+msgstr "Kanalen naar deze map slepen om ze toe te voegen"
+
+#: ../../portable/compiled_templates/library.py:73 ../../portable/tabs.py:25
+msgid "My Collection"
+msgstr "Mijn collectie"
+
+#: ../../portable/compiled_templates/new.py:75 ../../portable/tabs.py:26
+msgid "New Videos"
+msgstr "Nieuwe video's"
+
+#: ../../portable/compiled_templates/first_time_intro.py:38
+msgid "Democracy Internet TV: How to Get Started"
+msgstr "Democracy Internet TV : Hoe beginnen"
+
+#: ../../portable/compiled_templates/first_time_intro.py:42
+msgid "GO BIG:"
+msgstr "GA GROOT:"
+
+#: ../../portable/compiled_templates/first_time_intro.py:44
+msgid "This is your fullscreen button. Click it and lean back."
 msgstr ""
+"Dit is de knop om schermvullend te gaan. Klik er op en leun achterover."
 
-#: ../../portable/item.py:343
-msgid "Deleting this entry will delete all its videos."
-msgstr ""
+#: ../../portable/compiled_templates/first_time_intro.py:48
+msgid "NEW STUFF:"
+msgstr "NIEUWE ITEMS:"
 
-#: ../../portable/item.py:363
-#, python-format
-msgid "%d days"
-msgstr ""
-
-#: ../../portable/item.py:365
-#, python-format
-msgid "%d hrs"
-msgstr ""
-
-#: ../../portable/item.py:367
-#, python-format
-msgid "%d min"
-msgstr ""
-
-#: ../../portable/item.py:368
-#, python-format
-msgid "Expires: %s"
-msgstr ""
-
-#: ../../portable/item.py:376
-msgid "Pending Auto Download"
-msgstr "Wacht Op Automatisch Inladen"
-
-#: ../../portable/item.py:381
-msgid "UNWATCHED"
-msgstr ""
-
-#: ../../portable/item.py:387
-msgid "NEW"
-msgstr ""
-
-#: ../../portable/item.py:1180
+#: ../../portable/compiled_templates/first_time_intro.py:50
 msgid ""
-"Would you like to delete this directory and all of its videos or just remove "
-"its entry from My Collection?"
+"Blue circles mean the channel has new videos available, green circles mean "
+"you have downloaded videos ready to watch."
 msgstr ""
+"Blauwe cirkels geven aan dat een kanaal nieuwe video's bevat, groene cirkels "
+"geven aan dat je video's gedownload hebt, klaar om te bekijken."
 
-#: ../../portable/item.py:1184
+#: ../../portable/compiled_templates/first_time_intro.py:52
 msgid ""
-"Would you like to delete this file or just remove its entry from My "
-"Collection?"
+"<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
+"onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>"
 msgstr ""
+"<strong i18n:translate=\"\">SLA INTRO OVER: <a style=\"color: #090;\" "
+"href=\"#\" onclick=\"doneWithIntro();\">Ga naar kanaalgids>></a></strong>"
 
-#: ../../portable/httpclient.py:65
+#: ../../portable/compiled_templates/first_time_intro.py:54
+msgid ""
+"<strong>Add Channels:</strong> The Channel Guide is your home base for "
+"internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
+"channels in the guide are free.</strong>"
+msgstr ""
+"<strong>Kanelen toevoegen:</strong> De kanaalgids is je beginpunt voor "
+"online tv-kanalen. Klik op 'TOEVOEGEN' om je op een kanaal te abonneren-- "
+"<strong>de kanalen in de gids zijn gratis.</strong>"
+
+#: ../../portable/compiled_templates/first_time_intro.py:56
+msgid ""
+"<strong>Don't Wait:</strong> Democracy is different than watching webpage "
+"videos-- publishers can offer big, high quality videos. So don't sit around "
+"waiting for videos: start some downloads and check back later."
+msgstr ""
+"<strong>Niet wachten:</strong> Democracy is anders dan video's op een "
+"webpagina bekijken -- uitgevers kunnen grote video's van hoge kwaliteit "
+"aanbieden. Ga dus niet zitten wachten op video's: begin met downloaden en "
+"kom later nog eens terug."
+
+#: ../../portable/compiled_templates/first_time_intro.py:58
+msgid ""
+"<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
+"new videos and downloads in the background. Leaving it running means you'll "
+"have new videos when you're ready to watch."
+msgstr ""
+"<strong>Niet afsluiten:</strong> Democracy Player controleert kanalen "
+"regelmatig op nieuwe video's en downloadt deze in de achtergrond. Door "
+"Democracy niet af te sluiten staan je nieuwe videos klaar wanneer jij er "
+"naar wilt kijken."
+
+#: ../../portable/compiled_templates/first_time_intro.py:60
+msgid ""
+"<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
+"features an 'expiration' system that helps clean out older videos to make "
+"room for new videos. You can always keep a video permanently by clicking "
+"'save' and you can set a channel's settings to save videos automatically."
+msgstr ""
+"<strong>Maak je geen zorgen over schijfruimte:</strong> Net als TiVo heeft "
+"Democracy Player een 'verloop'systeem dat er voor zorgt dat oude video's "
+"worden verwijderd om plaats te maken voor nieuwe. Je kunt video's permanent "
+"opslaan door op 'opslaan' te klikken. Je kunt een kanaal ook zo instellen "
+"dat videos automatisch opgeslagen worden."
+
+#: ../../portable/compiled_templates/multi_channel.py:57
+msgid ""
+"${count} Channel Folders Selected<br></br>(contains ${containedcount} "
+"channels)"
+msgstr ""
+"${count} Kanaalmappen geselecteerd<br></br>(bevat ${containedcount} kanalen)"
+
+#: ../../portable/compiled_templates/multi_channel.py:69
+msgid "${count} Channels Selected"
+msgstr "${count} kanalen geselecteerd"
+
+#: ../../portable/dl_daemon/download.py:298
+msgid "Error"
+msgstr "Fout"
+
+#: ../../portable/dl_daemon/download.py:357
+#, python-format
+msgid "Could not write to %s"
+msgstr "Kon niet schrijven naar %s"
+
+#: ../../portable/dl_daemon/download.py:376
+msgid "Not enough disk space"
+msgstr "Niet genoeg schijfruimte"
+
+#: ../../portable/dl_daemon/download.py:377
+#, python-format
+msgid "%s MB required to store this video"
+msgstr "%s MB nodig om video op te slaan"
+
+#: ../../portable/dl_daemon/download.py:676
+msgid "Corrupt Torrent"
+msgstr "Corrupte torrent"
+
+#: ../../portable/dl_daemon/download.py:677
+#, python-format
+msgid "The torrent file at %s was not valid"
+msgstr "Het torrent-bestand op %s was niet geldig"
+
+#: ../../portable/dl_daemon/download.py:702
+msgid "Torrent file deleted"
+msgstr "Torrent-bestand verwijderd"
+
+#: ../../portable/dl_daemon/download.py:703
+msgid "The torrent file for this item was deleted "
+msgstr "Het torrent-bestand voor dit item is verwijderd "
+
+#: ../../portable/dl_daemon/download.py:704
+msgid "outside of democracy."
+msgstr "buiten Democracy om."
+
+#: ../../portable/util.py:386
+#, python-format
+msgid "%1.1fGB"
+msgstr "%1.1fGB"
+
+#: ../../portable/util.py:388
+#, python-format
+msgid "%1.1fMB"
+msgstr "%1.1fMB"
+
+#: ../../portable/util.py:390
+#, python-format
+msgid "%1.1fKB"
+msgstr "%1.1fKB"
+
+#: ../../portable/util.py:392
+#, python-format
+msgid "%0.0fB"
+msgstr "%0.0fB"
+
+#: ../../portable/httpclient.py:52
+#, python-format
+msgid "Error: %s"
+msgstr "Fout: %s"
+
+#: ../../portable/httpclient.py:67 ../../portable/httpclient.py:72
+msgid "Can't connect"
+msgstr "Kan geen verbinding maken"
+
+#: ../../portable/httpclient.py:68
+#, python-format
+msgid "Connection Error: %s"
+msgstr "Verbindingsfout: %s"
+
+#: ../../portable/httpclient.py:73
+msgid "SSL connection error"
+msgstr "SSL verbindingsfout"
+
+#: ../../portable/httpclient.py:77
+msgid "HTTP error"
+msgstr "HTTP-fout"
+
+#: ../../portable/httpclient.py:80
+#, python-format
+msgid "Bad Status Line: %s"
+msgstr "Slechte statusregel: %s"
+
+#: ../../portable/httpclient.py:83
+#, python-format
+msgid "Bad Header Line: %s"
+msgstr "Slechte headerregel: %s"
+
+#: ../../portable/httpclient.py:86
+#, fuzzy
+msgid "Bad Chunk size: %s"
+msgstr "Slechte Chunk grootte: %s"
+
+#: ../../portable/httpclient.py:89
+#, python-format
+msgid "Expected CRLF got: %r"
+msgstr "Verwachtte CRLF maar kreeg: %r"
+
+#: ../../portable/httpclient.py:92
 #, python-format
 msgid "%s closed connection"
-msgstr ""
+msgstr "%s heeft de verbinding verbroken"
 
-#: ../../portable/httpclient.py:70
+#: ../../portable/httpclient.py:97 ../../portable/downloader.py:173
+msgid "File not found"
+msgstr "Bestand niet gevonden"
+
+#: ../../portable/httpclient.py:98
+msgid "Got 404 status code"
+msgstr "Statuscode 404 gekregen"
+
+#: ../../portable/httpclient.py:100
 #, python-format
-msgid "%s timed out"
-msgstr ""
+msgid "Bad Status Code: %s"
+msgstr "Slechte statuscode: %s"
 
-#: ../../portable/storedatabase.py:691
+#: ../../portable/httpclient.py:104
+msgid "Authorization failed"
+msgstr "Authorisatie mislukt"
+
+#: ../../portable/httpclient.py:109
+msgid "Internal Error"
+msgstr "Interne fout"
+
+#: ../../portable/httpclient.py:110
+msgid "Pipeline request never started"
+msgstr "Pipeline verzoek nooit begonnen"
+
+#: ../../portable/httpclient.py:114
+msgid "Timeout"
+msgstr "Time-out"
+
+#: ../../portable/httpclient.py:115
+#, python-format
+msgid "Connection to %s timed out"
+msgstr "Time-out bij verbinding met %s"
+
+#: ../../portable/httpclient.py:119
+msgid "Invalid URL"
+msgstr "Ongeldige URL"
+
+#: ../../portable/httpclient.py:120
+#, python-format
+msgid "%s is not a valid URL"
+msgstr "%s is geen geldige URL"
+
+#: ../../portable/httpclient.py:313
+msgid "Connection closed"
+msgstr "Verbinding verbroken"
+
+#: ../../portable/httpclient.py:689
+msgid "Unknown"
+msgstr "Onbekend"
+
+#: ../../portable/httpclient.py:690
+msgid "Internal Error: Not ready to send"
+msgstr "Interne fout: niet gereed om te verzenden"
+
+#: ../../portable/storedatabase.py:789
 #, python-format
 msgid "%s database save succeeded"
-msgstr ""
+msgstr "%s saven database geslaagd"
 
-#: ../../portable/storedatabase.py:692
+#: ../../portable/storedatabase.py:790
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
+"De database is succesvol opgeslagen. Het programma kan nu veilig, zonder "
+"gegevensverlies worden afgesloten."
 
-#: ../../portable/storedatabase.py:699
+#: ../../portable/storedatabase.py:797
 #, python-format
 msgid "%s database save failed"
 msgstr "%s database kon niet opgeslagen worden"
 
-#: ../../portable/storedatabase.py:700
+#: ../../portable/storedatabase.py:798
 #, python-format
 msgid ""
 "%s was unable to save its database: Disk Full.\n"
@@ -947,148 +1537,445 @@ msgid ""
 "from your collection.\n"
 "Recent changes may be lost."
 msgstr ""
+"%s kon de database niet opslaan: schijf vol.\n"
+"Verwijder bestanden van de volle schijf of verwijder enkele video's uit je "
+"collectie. \n"
+"Recente wijzigingen gaan mogelijk verloren."
 
 #: ../../portable/dialogs.py:59
 msgid "Ok"
 msgstr "Ok"
 
 #: ../../portable/dialogs.py:63
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:12
 msgid "Quit"
 msgstr "Afsluiten"
 
 #: ../../portable/dialogs.py:64
-#: ../../platform/gtk-x11/glade/democracy.glade.h:22
+#: ../../platform/gtk-x11/glade/democracy.glade.h:50
 msgid "Migrate"
 msgstr "Verhuizen"
 
 #: ../../portable/dialogs.py:65
-#: ../../platform/gtk-x11/glade/democracy.glade.h:15
+#: ../../platform/gtk-x11/glade/democracy.glade.h:40
 msgid "Don't Migrate"
 msgstr "Niet Verhuizen"
 
-#: ../../portable/dialogs.py:66
+#: ../../portable/dialogs.py:66 ../../portable/item.py:1169
+#: ../../portable/menu.py:92
 msgid "Download"
-msgstr ""
+msgstr "Downloaden"
 
 #: ../../portable/dialogs.py:67
 msgid "Remove Entry"
-msgstr ""
+msgstr "Item verwijderen"
 
 #: ../../portable/dialogs.py:68
 msgid "Delete File"
-msgstr ""
+msgstr "Bestand verwijderen"
 
 #: ../../portable/dialogs.py:69
-msgid "Keep Videos"
-msgstr ""
+msgid "Delete Files"
+msgstr "Bestanden verwijderen"
 
 #: ../../portable/dialogs.py:70
-msgid "Delete Videos"
-msgstr ""
+msgid "Keep Videos"
+msgstr "Video's bewaren"
 
 #: ../../portable/dialogs.py:71
-msgid "Create"
-msgstr ""
+msgid "Delete Videos"
+msgstr "Video's verwijderen"
 
-#: ../../portable/folder.py:100
+#: ../../portable/dialogs.py:73
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:12
+msgid "Create Channel"
+msgstr "Kanaal maken"
+
+#: ../../portable/dialogs.py:74
+msgid "Add"
+msgstr "Toevoegen"
+
+#: ../../portable/dialogs.py:75
+msgid "Add Into New Folder"
+msgstr "Toevoegen in nieuwe map"
+
+#: ../../portable/dialogs.py:76
+msgid "Keep"
+msgstr "Bewaren"
+
+#: ../../portable/dialogs.py:192
+#: ../../platform/gtk-x11/glade/democracy.glade.h:52
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:7
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:24
+msgid "New Search Channel"
+msgstr "Nieuw zoekkanaal"
+
+#: ../../portable/dialogs.py:192
+#: ../../platform/gtk-x11/glade/democracy.glade.h:31
+msgid "A search channel contains items that match a search term."
+msgstr "Een zoekkanaal bevat items die overeenkomen met een zoekterm."
+
+#: ../../portable/folder.py:102 ../../portable/folder.py:119
 msgid "Rename Channel Folder"
-msgstr ""
+msgstr "Kanaalmap hernoemen"
 
-#: ../../portable/folder.py:102
+#: ../../portable/folder.py:104
 #, python-format
 msgid "Enter a new name for the channel folder %s"
-msgstr ""
+msgstr "Geef een nieuwe naam op voor de kanaalmap %s"
 
-#: ../../portable/folder.py:141
+#: ../../portable/folder.py:174 ../../portable/folder.py:179
 msgid "Rename Playlist Folder"
-msgstr ""
+msgstr "Hernoem playlistmap"
 
-#: ../../portable/folder.py:143
+#: ../../portable/folder.py:181
 #, python-format
 msgid "Enter a new name for the playlist folder %s"
-msgstr ""
+msgstr "Geef een nieuwe naam op voor de playlistmap %s"
 
-#: ../../portable/folder.py:151
+#: ../../portable/folder.py:189
 msgid "Create Channel Folder"
-msgstr ""
+msgstr "Nieuwe kanaalmap maken"
 
-#: ../../portable/folder.py:152
+#: ../../portable/folder.py:190 ../../portable/singleclick.py:137
 msgid "Enter a name for the new channel folder"
-msgstr ""
+msgstr "Geef een naam op voor de nieuwe kanaalmap"
 
-#: ../../portable/folder.py:165
+#: ../../portable/folder.py:203
 msgid "Create Playlist Folder"
-msgstr ""
+msgstr "Playlistmap maken"
 
-#: ../../portable/folder.py:166
+#: ../../portable/folder.py:204
 msgid "Enter a name for the new playlist folder"
-msgstr ""
+msgstr "Geef een naam op voor de nieuwe playlistmap"
 
-#: ../../portable/singleclick.py:94
-msgid "Subscribing to multiple feeds"
-msgstr ""
-
-#: ../../portable/singleclick.py:95
+#: ../../portable/item.py:397
 #, python-format
-msgid "You are being subscribed to %d feeds."
-msgstr ""
+msgid "Deleting %s"
+msgstr "Bezig met verwijderen %s"
 
-#: ../../portable/singleclick.py:104
-msgid "Subscription error"
+#: ../../portable/item.py:398
+msgid ""
+"This item is a folder.  When you remove a folder, any items inside that "
+"folder will be deleted."
 msgstr ""
+"Dit item is een map. Verwijder je een map, dan worden items in deze map ook "
+"verwijderd."
 
-#: ../../portable/singleclick.py:114
+#: ../../portable/item.py:420
+#, python-format
+msgid "%d days"
+msgstr "%d dagen"
+
+#: ../../portable/item.py:422
+#, python-format
+msgid "%d hours"
+msgstr "%d uren"
+
+#: ../../portable/item.py:424
+#, python-format
+msgid "%d minutes"
+msgstr "%d minuten"
+
+#: ../../portable/item.py:425
+#, python-format
+msgid "Expires in %s"
+msgstr "Verloopt over %s"
+
+#: ../../portable/item.py:751
+msgid "TORRENT"
+msgstr "TORRENT"
+
+#: ../../portable/item.py:753
+msgid "WEB PAGE"
+msgstr "WEBPAGINA"
+
+#: ../../portable/item.py:956
+msgid "downloading..."
+msgstr "aan het downloaden..."
+
+#: ../../portable/item.py:963 ../../portable/item.py:966
+#, python-format
+msgid "%s remaining"
+msgstr "%s resterend"
+
+#: ../../portable/item.py:974
+msgid "starting up..."
+msgstr "aan het starten..."
+
+#: ../../portable/item.py:1154 ../../portable/menu.py:78
+msgid "Remove From Playlist"
+msgstr "Van playlist verwijderen"
+
+#: ../../portable/item.py:1156 ../../portable/menu.py:80
+msgid "Remove From My Collection"
+msgstr "Uit mijn collectie verwijderen"
+
+#: ../../portable/item.py:1158 ../../portable/menu.py:75
+msgid "Play"
+msgstr "Afspelen"
+
+#: ../../portable/item.py:1160
+msgid "Play Just This Video"
+msgstr "Uitsluitend deze video afspelen"
+
+#: ../../portable/item.py:1161 ../../portable/menu.py:76
+msgid "Add to new playlist"
+msgstr "Toevoegen aan nieuwe playlist"
+
+#: ../../portable/item.py:1165 ../../portable/menu.py:86
+msgid "Mark as Unwatched"
+msgstr "Als niet bekeken markeren"
+
+#: ../../portable/item.py:1167 ../../portable/menu.py:99
+msgid "Cancel Download"
+msgstr "Download annuleren"
+
+#: ../../portable/item.py:1401
+#, python-format
+msgid "Removing %s"
+msgstr "%s wordt verwijderd"
+
+#: ../../portable/item.py:1403
+msgid ""
+"Would you like to delete this folder and all of its videos or just remove "
+"its entry from My Collection?"
+msgstr ""
+"Wil je deze map en alle video's daarin verwijderen of wil je hem alleen uit "
+"Mijn collectie halen?"
+
+#: ../../portable/item.py:1408
+msgid ""
+"Would you like to delete this file or just remove its entry from My "
+"Collection?"
+msgstr "Wil je dit bestand verwijderen of alleen uit Mijn collectie halen?"
+
+#: ../../portable/item.py:1499
+#, python-format
+msgid "Removing %s items"
+msgstr "Bezig %s items te verwijderen"
+
+#: ../../portable/item.py:1501
+msgid ""
+"One or more of these videos was not downloaded from a channel.  Would you "
+"like to delete these items or just remove their entries from My Collection?"
+msgstr ""
+"Een of meer van deze video's zijn nog niet vanuit het kanaal gedownload. Wil "
+"je de items verwijderen of alleen uit Mijn collectie halen?"
+
+#: ../../portable/item.py:1509
+msgid ""
+"One or more of these items is a folder.  When you remove or delete a folder, "
+"any items inside that folder will also be removed or deleted."
+msgstr ""
+"Een of meer van deze items is een map. Verplaats of verwijder je deze map, "
+"dan worden items in de map ook verplaatst of verwijderd."
+
+#: ../../portable/app.py:668
+msgid "Database too new"
+msgstr "Database te nieuw"
+
+#: ../../portable/app.py:669
+msgid ""
+"You have a database that was saved with a newer version of Democracy. You "
+"must download the latest version of Democracy and run that."
+msgstr ""
+"Je hebt een database die met een nieuwere versie van Democracy opgeslagen "
+"is. Download de laatste versie van Democracy en gebruik die versie."
+
+#: ../../portable/app.py:817 ../../portable/app.py:831
+#: ../../portable/app.py:860 ../../portable/app.py:880
+#, python-format
+msgid "Remove %s"
+msgstr "Verwijder %s"
+
+#: ../../portable/app.py:818
+#, python-format
+msgid "Are you sure you want to remove the guide %s?"
+msgstr "Weet je zeker dat je de gids %s wilt verwijderen?"
+
+#: ../../portable/app.py:832
+#, python-format
+msgid "Are you sure you want to remove %s"
+msgstr "Weet je zeker dat je %s wilt verwijderen"
+
+#: ../../portable/app.py:835 ../../portable/app.py:865
+#: ../../portable/app.py:885
+#, python-format
+msgid "Remove %s channels"
+msgstr "Verwijder %s kanalen"
+
+#: ../../portable/app.py:837
+#, python-format
+msgid "Are you sure you want to remove these %s playlists"
+msgstr "Weet je zeker dat je deze %s playlists wilt verwijderen"
+
+#: ../../portable/app.py:861
 #, python-format
 msgid ""
-"This Democracy channel file has an invalid format: %s. Please notify the "
-"publisher of this file."
+"Are you sure you want to remove %s?  Any downloads in progress will be "
+"canceled."
 msgstr ""
+"Weet je zeker dat je %s wilt verwijderen? Lopende downloads zullen "
+"geannuleerd worden."
 
-#: ../../portable/singleclick.py:123
+#: ../../portable/app.py:866
 #, python-format
 msgid ""
-"This Democracy channel file has the wrong content type: %s. Please notify "
-"the publisher of this file."
+"Are you sure you want to remove these %s channels?  Any downloads in "
+"progress will be canceled."
 msgstr ""
+"Weet je zeker dat je deze %s kanalen wil verwijderen? Downloads die nog "
+"bezig zijn zullen worden geannuleerd."
 
-#: ../../portable/singleclick.py:128
+#: ../../portable/app.py:881
+msgid ""
+"What would you like to do with the videos in this channel that you've "
+"downloaded?"
+msgstr "Wat wil je doen met de video's die je in dit kanaal hebt gedownload?"
+
+#: ../../portable/app.py:886
+msgid ""
+"What would you like to do with the videos in these channels that you've "
+"downloaded?"
+msgstr ""
+"Wat wil je doen met de video's die je in deze kanalen hebt gedownload?"
+
+#: ../../portable/app.py:923
+msgid "Are you sure you want to quit?"
+msgstr "Weet U zeker dat U wenst te stoppen?"
+
+#: ../../portable/app.py:924
 #, python-format
-msgid "Could not download the Democracy channel file: %s."
-msgstr ""
+msgid "You have %d download still in progress."
+msgid_plural "You have %d downloads still in progress."
+msgstr[0] "U bent nog %d bestand aan het inladen."
+msgstr[1] "U bent nog %d bestanden aan het inladen."
 
-#: ../../portable/singleclick.py:154
-msgid "Invalid Torrent"
-msgstr ""
+#: ../../portable/app.py:1367
+msgid "Invalid Value"
+msgstr "Ongeldige Waarde"
 
-#: ../../portable/singleclick.py:155
+#: ../../portable/app.py:1368
 #, python-format
-msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
+msgid "%s is invalid.  You must enter a non-negative number."
 msgstr ""
 
-#: ../../portable/tabs.py:27
-msgid "Search"
-msgstr "Zoeken"
+#: ../../portable/app.py:1616
+msgid " - Invalid URL"
+msgstr ""
 
-#: ../../portable/feed.py:702
+#: ../../portable/app.py:1617
+msgid ""
+"The address you entered is not a valid URL.\n"
+"Please double check and try again.\n"
+"\n"
+msgstr ""
+
+#: ../../portable/app.py:1639
+msgid "Democracy - Add Channel"
+msgstr "Democracy - Kanaal Toevoegen"
+
+#: ../../portable/app.py:1639
+msgid "Enter the URL of the channel to add"
+msgstr "Voer de URL van het toe te voegen kanaal in"
+
+#: ../../portable/app.py:1660
+msgid "Democracy - Add Channel Guide"
+msgstr ""
+
+#: ../../portable/app.py:1660
+msgid "Enter the URL of the channel guide to add"
+msgstr ""
+
+#: ../../portable/app.py:1977
+msgid "Example Playlist"
+msgstr ""
+
+#: ../../portable/app.py:1996
+msgid "Custom Channels"
+msgstr ""
+
+#: ../../portable/app.py:1996
+msgid ""
+"You are running a version of Democracy Player with a custom set of channels."
+msgstr ""
+
+#: ../../portable/guide.py:127 ../../portable/feed.py:684
+msgid "Copy URL to clipboard"
+msgstr ""
+
+#: ../../portable/guide.py:218
+msgid "Channel Guide"
+msgstr "Kanalengids"
+
+#: ../../portable/menu.py:52
+msgid "Update Channels Now"
+msgstr "Werk kanalen nu bij"
+
+#: ../../portable/menu.py:73
+#, python-format
+msgid "%d Downloaded Items"
+msgstr "%d gedownload items"
+
+#: ../../portable/menu.py:91
+#, python-format
+msgid "%d Available Items"
+msgstr "%d beschikbare items"
+
+#: ../../portable/menu.py:97
+#, python-format
+msgid "%d Downloading Items"
+msgstr "%d downloads bezig"
+
+#: ../../portable/downloader.py:174
+msgid "Flash URL Scraping Error"
+msgstr "Flash URL oppikfout"
+
+#: ../../portable/downloader.py:317
+msgid "starting up"
+msgstr "aan het opstarten..."
+
+#: ../../portable/feed.py:682
+msgid "Update Channel Now"
+msgstr "Werk kanaal nu bij"
+
+#: ../../portable/feed.py:685 ../../portable/feed.py:694
+msgid "Rename Channel"
+msgstr "Hernoem kanaal"
+
+#: ../../portable/feed.py:689
+msgid "Revert Title to Default"
+msgstr "Stel titel terug naar standaard"
+
+#: ../../portable/feed.py:695
+#, python-format
+msgid "Enter a new name for the channel %s"
+msgstr "Geef de nieuwe naam voor het kanaal %s"
+
+#: ../../portable/feed.py:776
 msgid "Error loading feed"
 msgstr ""
 
-#: ../../portable/feed.py:703
+#: ../../portable/feed.py:777
 #, python-format
-msgid "Couldn't load the feed at %s."
+msgid "Couldn't load the feed at %s (%s)."
 msgstr ""
 
-#: ../../portable/feed.py:706
-#, python-format
-msgid "The error was: %s"
+#: ../../portable/feed.py:780
+msgid "Would you like to keep the feed?"
 msgstr ""
 
-#: ../../portable/feed.py:819
+#: ../../portable/feed.py:885
+msgid "Bad content-type"
+msgstr ""
+
+#: ../../portable/feed.py:898
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:4
 msgid "Channel is not compatible with Democracy!"
 msgstr "Kanaal werkt niet met Democracy!"
 
-#: ../../portable/feed.py:820
+#: ../../portable/feed.py:899
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
 "videos, and descriptions may look funny.  Please contact the publishers of "
@@ -1098,137 +1985,73 @@ msgid ""
 "Do you want to try to load this channel anyway?"
 msgstr ""
 
-#: ../../portable/guide.py:238
-msgid "Channel Guide"
-msgstr "Kanalengids"
-
-#: ../../portable/app.py:655 ../../portable/app.py:666
-#: ../../portable/app.py:691 ../../portable/app.py:710
-#, python-format
-msgid "Remove %s"
+#: ../../portable/feed.py:1791
+msgid "Local File"
 msgstr ""
 
-#: ../../portable/app.py:656
-#, python-format
-msgid "Are you sure you want to remove the guide %s?"
+#: ../../portable/singleclick.py:122
+msgid "Subscribing to multiple channels"
 msgstr ""
 
-#: ../../portable/app.py:667
+#: ../../portable/singleclick.py:123
 #, python-format
-msgid "Are you sure you want to remove %s"
+msgid "Create %d channels?"
 msgstr ""
 
-#: ../../portable/app.py:670 ../../portable/app.py:696
-#: ../../portable/app.py:715
+#: ../../portable/singleclick.py:136
 #, python-format
-msgid "Remove %s channels"
+msgid "Adding %d channels to a new folder"
 msgstr ""
 
-#: ../../portable/app.py:672
-#, python-format
-msgid "Are you sure you want to remove these %s playlists"
-msgstr ""
-
-#: ../../portable/app.py:692
+#: ../../portable/singleclick.py:140
 #, python-format
 msgid ""
-"Are you sure you want to remove %s?  Any downloads in progress will be "
-"canceled."
+"NOTE: You are already subscribed to %d of these channels.  These channels "
+"will stay where they currently are."
 msgstr ""
 
-#: ../../portable/app.py:697
+#: ../../portable/singleclick.py:151
+msgid "Subscription error"
+msgstr "Abonnement fout"
+
+#: ../../portable/singleclick.py:161
 #, python-format
 msgid ""
-"Are you sure you want to remove these %s channels?  Any downloads in "
-"progress will be canceled."
+"This Democracy channel file has an invalid format: %s. Please notify the "
+"publisher of this file."
 msgstr ""
+"Dit Democracy kanaal heeft een ongeldige indeling: %s. Waarschuw alsjeblieft "
+"de uitgever van dit bestand."
 
-#: ../../portable/app.py:711
-msgid ""
-"What would you like to do with the videos in this channel that you've "
-"downloaded?"
-msgstr ""
-
-#: ../../portable/app.py:716
-msgid ""
-"What would you like to do with the videos in these channels that you've "
-"downloaded?"
-msgstr ""
-
-#: ../../portable/app.py:747
-msgid "Are you sure you want to quit?"
-msgstr "Weet U zeker dat U wenst te stoppen?"
-
-#: ../../portable/app.py:748
+#: ../../portable/singleclick.py:170
 #, python-format
-msgid "You have %d download still in progress."
-msgid_plural "You have %d downloads still in progress."
-msgstr[0] "U bent nog %d bestand aan het inladen."
-msgstr[1] "U bent nog %d bestanden aan het inladen."
-
-#: ../../portable/app.py:1089
-msgid "Invalid Value"
-msgstr ""
-
-#: ../../portable/app.py:1090
-#, python-format
-msgid "%s is invalid.  You must enter a non-negative number."
-msgstr ""
-
-#: ../../portable/app.py:1307
-msgid " - Invalid URL"
-msgstr ""
-
-#: ../../portable/app.py:1308
 msgid ""
-"The address you entered is not a valid URL.\n"
-"Please double check and try again.\n"
-"\n"
+"This Democracy channel file has the wrong content type: %s. Please notify "
+"the publisher of this file."
 msgstr ""
+"Dit Democracy kanaal heeft het verkeerd inhouds-type: %s. Waarschuw "
+"alsjeblieft de uitgever van dit bestand."
 
-#: ../../portable/app.py:1328
-msgid "Democracy - Add Channel"
-msgstr "Democracy - Kanaal Toevoegen"
-
-#: ../../portable/app.py:1328
-msgid "Enter the URL of the channel to add"
-msgstr "Voer de URL van het toe te voegen kanaal in"
-
-#: ../../portable/app.py:1349
-msgid "Democracy - Add Channel Guide"
-msgstr ""
-
-#: ../../portable/app.py:1349
-msgid "Enter the URL of the channel guide to add"
-msgstr ""
-
-#: ../../portable/app.py:1608
-msgid "Custom Channels"
-msgstr ""
-
-#: ../../portable/app.py:1608
-msgid ""
-"You are running a version of Democracy Player with a custom set of channels."
-msgstr ""
-
-#: ../../portable/playlist.py:151
-msgid "Rename Playlist"
-msgstr ""
-
-#: ../../portable/playlist.py:152
+#: ../../portable/singleclick.py:175
 #, python-format
-msgid "Enter a new name for the playlist %s"
-msgstr ""
+msgid "Could not download the Democracy channel file: %s."
+msgstr "Kon het Democracy kanaal: %s niet downloaden."
 
-#: ../../portable/playlist.py:165
-msgid "Create Playlist"
-msgstr ""
+#: ../../portable/singleclick.py:201
+msgid "Invalid Torrent"
+msgstr "Ongeldige Torrent"
 
-#: ../../portable/playlist.py:166
-msgid "Enter a name for the new playlist"
-msgstr ""
+#: ../../portable/singleclick.py:202
+#, fuzzy
+msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
+msgstr "Het torrent-bestand %s is vernield en kan niet geopend worden."
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:1
+msgid "(Changes won't go into effect until you restart Democracy Player.)"
+msgstr ""
+"(Wijzigingen worden pas actief als de Democracy speler opnieuw gestart is.)"
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:2
 msgid ""
 "1 day\n"
 "3 days\n"
@@ -1244,35 +2067,110 @@ msgstr ""
 "1 maand↵\n"
 "Nooit↵"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:7
+#: ../../platform/gtk-x11/glade/democracy.glade.h:8
+msgid "<b>BitTorrent</b>"
+msgstr "<b>BitTorrent</b>"
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:9
 msgid "<b>Channels</b>"
 msgstr "<b>Kanalen</b>"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:8
+#: ../../platform/gtk-x11/glade/democracy.glade.h:10
 msgid "<b>Disk Space</b>"
 msgstr "<b>Schijfruimte</b>"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:9
+#: ../../platform/gtk-x11/glade/democracy.glade.h:11
 msgid "<b>Downloads</b>"
 msgstr "<b>Downloads</b>"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:10
+#: ../../platform/gtk-x11/glade/democracy.glade.h:12
+msgid "<b>General</b>"
+msgstr "<b>Algemeen</b>"
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:13
 msgid "<b>Movies Directory</b>"
 msgstr "<b>Films Map</b>"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:12
+#: ../../platform/gtk-x11/glade/democracy.glade.h:14
+msgid "<b>Playback</b>"
+msgstr "<b>Afspelen</b>"
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:15
+msgid "<b>Searching for Videos</b>"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:16
+msgid ""
+"<b>Would you like Democracy Player to look for video files on your "
+"computer?</b>"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:17
+msgid "<b>Would you like to run Democracy when your computer starts up?</b>"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:18
+msgid ""
+"<b>You're done!</b>\n"
+"\n"
+"Setup is complete -- now you can find some channels and start watching.\n"
+"\n"
+"<b>Don't Wait:</b> Democracy is different than watching webpage videos -- "
+"publishers can offer big, high quality videos.  So don't sit around waiting "
+"for videos: start some downloads and check back later.\n"
+"\n"
+"<b>Leave it On:</b> Democracy Player regularly checks channels for new "
+"videos and downloads in the background.  Leaving it running means you'll "
+"have new videos when you're ready to watch.\n"
+"\n"
+"<b>Don't Worry About Disk Space:</b> Like a TiVo, Democracy Player features "
+"an 'expiration' system that helps clean out older videos to make room for "
+"new videos.  You can always keep a video permanently by clicking 'save' and "
+"you can set a channel's settings to save videos automatically.\n"
+"\n"
+"<b>Go Big:</b> The button to the right of the play button shows videos "
+"fullscreen.\n"
+"\n"
+"<b>Find Videos:</b> The Democracy Channel Guide has hundreds of internet TV "
+"channels, all of them are free.  Just click 'ADD' to watch a channel."
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:32
+msgid "Automatically run Democracy Player when I log in"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:33
+msgid "Bit Torrent uses ports between"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:34
 msgid "By default, videos expire after"
 msgstr "Video's vervallen standaard na"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:13
+#: ../../platform/gtk-x11/glade/democracy.glade.h:35
+msgid "C_hannel:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:36
+msgid "C_reate Channel"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:37
 msgid "Check Channels for new content"
 msgstr "Controleer Kanalen op nieuwe inhoud"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:14
+#: ../../platform/gtk-x11/glade/democracy.glade.h:38
 msgid "Democracy Player"
 msgstr "Democracy Speler"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:17
+#: ../../platform/gtk-x11/glade/democracy.glade.h:39
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:8
+msgid ""
+"Democracy Player can find all the videos on your computer to help you "
+"organize your collection."
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:43
 msgid ""
 "Every 30 minutes\n"
 "Every hour\n"
@@ -1282,39 +2180,99 @@ msgstr ""
 "Elk uur↵\n"
 "Handmatig"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:20
+#: ../../platform/gtk-x11/glade/democracy.glade.h:46
 msgid "GB free"
 msgstr "GB vrij"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:21
+#: ../../platform/gtk-x11/glade/democracy.glade.h:47
+msgid "Go"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:48
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:8
+msgid "In This:"
+msgstr "In deze:"
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:49
 msgid "KB/s when my computer is active"
 msgstr "KB/s als mijn computer actief is"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:23
+#: ../../platform/gtk-x11/glade/democracy.glade.h:51
 msgid "Migrate existing movies?"
 msgstr "Bestaande films verhuizen?"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:24
+#: ../../platform/gtk-x11/glade/democracy.glade.h:54
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:18
 msgid "Preferences"
 msgstr "Instellingen"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:25
+#: ../../platform/gtk-x11/glade/democracy.glade.h:55
+msgid "Restrict to my full _home folder"
+msgstr "Beperk tot mijn volledige _home map"
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:56
+#, fuzzy
+msgid "Search _Engine:"
+msgstr "Zoek _machine"
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:57
+#, fuzzy
+msgid "Search _custom folder:"
+msgstr "Zoek _eigen map:"
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:58
 msgid "Select Movies Directory"
 msgstr "Selecteer Films Map"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:26
-msgid "Store downloaded movies in"
-msgstr "Bewaar gedownloade films in"
+#: ../../platform/gtk-x11/glade/democracy.glade.h:59
+msgid "Select custom search directory"
+msgstr "Kies een eigen zoek catalogus"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:27
+#: ../../platform/gtk-x11/glade/democracy.glade.h:60
+msgid "Show movies in these directories in My Collection"
+msgstr "Toon filmpjes in deze mappen in Mijn collectie"
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:62
+msgid ""
+"The next few screens will help you set up democracy player so that it works "
+"best for you.  Here's the first question."
+msgstr ""
+"De volgende schermen helpen je met het instellen van de democracy speler "
+"zodat die goed werkt voor jou. Hier is de eerste vraag."
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:63
 msgid "To avoid slowdowns, limit upstream to"
 msgstr "Om vertragingen te voorkomen, beperk de uitvoersnelheid tot"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:28
+#: ../../platform/gtk-x11/glade/democracy.glade.h:64
 msgid "Volume:"
 msgstr "Volume:"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:29
+#: ../../platform/gtk-x11/glade/democracy.glade.h:65
+#, fuzzy
+msgid ""
+"We recommend that you allow Democracy Player to launch when your computer "
+"starts up.  This way, videos that haven't finished downloading can finish "
+"and new videos on your channels will be ready when you want to watch."
+msgstr ""
+"We raden aan om de Democracy in te laden als je computer start.  Zo kunnen "
+"video's die aan het downloaden waren afgemaakt worden, en zijn nieuwe "
+"video's in je kanalen klaar om te bekijken als je dat wilt."
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:67
+#, fuzzy
+msgid ""
+"Welcome to Internet TV.  There's a lot you can do with Democracy Player: "
+"automatically download videos from your favorite channels, watch new videos "
+"one after the other, download torrents, recommend videos to friends, and "
+"lots more."
+msgstr ""
+"Welkom bij Internet TV. Je kan veel doen met de democracy speler: "
+"automatisch video's downloaden bij je favoriete kanalen, nieuwe video's na "
+"elkaar bekijken, torrents downloaden, video's aanraden bij vrienden en nog "
+"veel meer."
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:68
 msgid ""
 "You've selected a new folder to download movies to.  Should Democracy "
 "migrate your existing downloads there?  (Currently dowloading movies will "
@@ -1324,9 +2282,36 @@ msgstr ""
 "je opgeslagen bestanden daarheen verplaatsen? (Films die nog ingeladen "
 "worden zullen pas verplaatst worden als ze klaar zijn.)"
 
+#: ../../platform/gtk-x11/glade/democracy.glade.h:69
+#, fuzzy
+msgid "_Add Directory"
+msgstr "_Voeg map toe"
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:70
+msgid "_Search"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:71
+msgid "_Search For:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:72
+msgid "_Store downloaded videos in this folder:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:73
+msgid "_URL"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:74
+msgid "and"
+msgstr ""
+
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:1
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:1
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:1
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:1
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:1
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:1
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1
@@ -1337,12 +2322,19 @@ msgstr " "
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:2
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:2
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:2
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:2
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:2
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:2
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:2
 msgid "'"
 msgstr "'"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:4
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:21
+msgid "Add Channel"
+msgstr "Kanaal Toevoegen"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:5
 msgid "Please enter the URL of the channel you'd like to add."
@@ -1378,6 +2370,139 @@ msgid ""
 "publisher."
 msgstr "Geef aub de gebruikersnaam en het wachtwoord in voor dit kanaal."
 
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:4
+msgid "A search channel contains"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:5
+msgid "items that match a search term."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:9
+msgid "Channel:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:10
+msgid "Search Engine:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:6
+msgid "Search For:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:11
+msgid "URL:"
+msgstr "URL:"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:14
+msgid "Cancel Search"
+msgstr "Stop met zoeken"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:13
+msgid "Change"
+msgstr "Verander"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:4
+#, fuzzy
+msgid "Democracy First Time Setup"
+msgstr "Democracy initiële instellingen"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:20
+msgid ""
+"Democracy Player regularly checks channels for new videos and downloads in "
+"the background.  Leaving it running means you'll have new videos when you're "
+"ready to watch."
+msgstr ""
+"De Democracy speler kijkt regelmatig kanalen na of er nieuwe video's zijn, "
+"en download deze in de achtergrond. Als je Democracy geladen laat betekent "
+"dat er altijd nieuwe video's klaar staan om te bekijken."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:21
+msgid "Don't Worry About Disk Space:"
+msgstr "Maak je geen zorgen over schijfruimte:"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:25
+#, fuzzy
+msgid "Find Videos:"
+msgstr "Zoek video"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:23
+#, fuzzy
+msgid "Go Big:"
+msgstr "Denk groot:"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:19
+msgid "Leave it On:"
+msgstr "Laat het aanstaan"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:22
+msgid ""
+"Like a TiVo, Democracy Player features an 'expiration' system that helps "
+"clean out older videos to make room for new videos.  You can always keep a "
+"video permanently by clicking 'save' and you can set a channel's settings to "
+"save videos automatically."
+msgstr ""
+"Net als TiVo heeft de Democracy speler een 'veroudering' systeem wat helpt "
+"om oude videp'sop te ruimen om plaats te maken voor nieuwe. Je kunt altijd "
+"een video permanent bewaren door op 'bewaar'te klikken, en je kan ook bij "
+"een kanaal instellen dat het alle video's bewaard."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:17
+msgid ""
+"Now you can explore the Channel Guide\n"
+"and start watching.  A few tips to get started:"
+msgstr ""
+"Je kan nu de Kanaal gids bestuderen\n"
+"en gaan kijken.  Een paar tips om mee te beginnen:"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:15
+msgid "Reset Search"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:10
+msgid "Restrict to all my personal files."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:11
+msgid "Search custom folder:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:26
+msgid ""
+"The Democracy Channel Guide has hundreds of internet TV channels, all of "
+"them are free.  Just click 'ADD' to watch a channel."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:24
+msgid "The button to the right of the play button shows videos fullscreen."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:5
+msgid ""
+"The next few screens will help you set up Democracy Player so that it works "
+"best for you."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:6
+msgid ""
+"We recommend that you have Democracy Player launch when your computer starts "
+"up.  This way, videos in progress can finish downloading and new videos can "
+"be downloaded in the background, ready when you want to watch."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:9
+msgid ""
+"Would you like Democracy Player to look for video files on your computer?"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:7
+msgid "Would you like to run Democracy on startup?"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:16
+msgid "You're done!"
+msgstr ""
+
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:4
 msgid "Question"
 msgstr "Vraag"
@@ -1391,7 +2516,7 @@ msgstr ""
 "$publisher."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:4
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:5
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:48
 msgid "About $longAppName"
 msgstr "Over $longAppName"
 
@@ -1435,6 +2560,166 @@ msgstr "Je hebt een bug in Democracy gevonden!"
 msgid "$longAppName"
 msgstr "$longAppName"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:13
-msgid "Exit"
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:90
+msgid "A"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:105
+msgid "Alt+Enter"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:74
+msgid "C"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:8
+msgid "Check Version"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:96
+msgid "Ctrl+A"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:94
+msgid "Ctrl+C"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:102
+msgid "Ctrl+D"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:97
+msgid "Ctrl+N"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:93
+msgid "Ctrl+O"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:99
+msgid "Ctrl+P"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:98
+msgid "Ctrl+Shift+N"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:100
+msgid "Ctrl+Shitf+P"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:95
+msgid "Ctrl+V"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:91
+msgid "D"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:49
+msgid "Donate to the Democracy project"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:59
+msgid "E"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:87
+msgid "F"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:45
+msgid "Fullscreen"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:68
+msgid "G"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:89
+msgid "H"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:82
+msgid "L"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:104
+msgid "Left"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:85
+msgid "N"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:22
+msgid "New Channel"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:23
+msgid "New Channel Folder"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:25
+msgid "New Channel Guide"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:34
+msgid "New Playlist"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:35
+msgid "New Playlist Folder"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:52
+msgid "O"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:83
+msgid "P"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:41
+msgid "Pause Video"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:33
+msgid "Playlist"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:57
+msgid "Q"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:86
+msgid "R"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:9
+msgid "Remove Video"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:103
+msgid "Right"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:84
+msgid "S"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:31
+msgid "Send This Channel to a Friend..."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:101
+msgid "Space"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:71
+msgid "U"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:53
+msgid "V"
 msgstr ""

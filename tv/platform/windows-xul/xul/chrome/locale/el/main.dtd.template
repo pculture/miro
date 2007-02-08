@@ -3,21 +3,21 @@
 		
 <!ENTITY main.title "$longAppName">	
 		
-<!ENTITY main.menu.file "File">	
-<!ENTITY main.menu.file.open "Open...">	
+<!ENTITY main.menu.file "Αρχείο">	
+<!ENTITY main.menu.file.open "Άνοιγμα">	
 <!ENTITY main.menu.file.checkversion "Check Version">
 <!ENTITY main.menu.file.removevideo "Remove Video">
-<!ENTITY main.menu.file.savevideoas "Save Video As...">
-<!ENTITY main.menu.file.copyvideourl "Copy Video URL">
+<!ENTITY main.menu.file.savevideoas "Αποθήκευση βίντεο ως...">
+<!ENTITY main.menu.file.copyvideourl "Αντιγραφή διεύθυνσης βίντεο">
 <!ENTITY main.menu.file.quit "Quit">
 
-<!ENTITY main.menu.edit "Edit">
-<!ENTITY main.menu.edit.copy "Copy">
-<!ENTITY main.menu.edit.paste "Paste">
-<!ENTITY main.menu.edit.selectall "Select All">
+<!ENTITY main.menu.edit "Διόρθωση">
+<!ENTITY main.menu.edit.copy "Αντιγραφή">
+<!ENTITY main.menu.edit.paste "Επικόλληση">
+<!ENTITY main.menu.edit.selectall "Επιλογή όλων">
 <!ENTITY main.menu.edit.preferences "Επιλογές">
 
-<!ENTITY main.menu.channel "Channel">
+<!ENTITY main.menu.channel "Κανάλι">
 <!ENTITY main.menu.channel.add "Προσθήκη καναλιού">
 <!ENTITY main.menu.channel.newchannel "New Channel">
 <!ENTITY main.menu.channel.newchannelfolder "New Channel Folder">
@@ -25,26 +25,26 @@
 <!ENTITY main.menu.channel.newchannelguide "New Channel Guide">
 <!ENTITY main.menu.channel.rename "Rename Channel...">
 <!ENTITY main.menu.channel.remove "Remove Channel...">
-<!ENTITY main.menu.channel.copyurl "Copy Channel URL">
-<!ENTITY main.menu.channel.update "Update Channel">
-<!ENTITY main.menu.channel.updateall "Update All Channels">
+<!ENTITY main.menu.channel.copyurl "Αντιγράφη διεύθυνσης καναλιού">
+<!ENTITY main.menu.channel.update "Ενημέρωση καναλιού">
+<!ENTITY main.menu.channel.updateall "Ενημέρωση όλων των καναλιών">
 <!ENTITY main.menu.channel.tellafriend "Send This Channel to a Friend...">
 
 <!ENTITY main.menu.playlist "Playlist">
 <!ENTITY main.menu.playlist.newplaylist "New Playlist">
 <!ENTITY main.menu.playlist.newplaylistfolder "New Playlist Folder">
 <!ENTITY main.menu.playlist.rename "Rename Playlist...">
-<!ENTITY main.menu.playlist.remove "Remove Playlist...">
+<!ENTITY main.menu.playlist.remove "Απομάκρυνση λίστας...">
 
-<!ENTITY main.menu.playback "Playback">
-<!ENTITY main.menu.playback.play "Play Video">
+<!ENTITY main.menu.playback "Αναπαραγωγή">
+<!ENTITY main.menu.playback.play "Αναπαραγωγή βίντεο">
 <!ENTITY main.menu.playback.pause "Pause Video">
-<!ENTITY main.menu.playback.stop "Stop Video">
-<!ENTITY main.menu.playback.next "Next Video">
-<!ENTITY main.menu.playback.previous "Previous Video">
+<!ENTITY main.menu.playback.stop "Τερματισμός βίντεο">
+<!ENTITY main.menu.playback.next "Επόμενο βίντεο">
+<!ENTITY main.menu.playback.previous "Προηγούμενο βίντεο">
 <!ENTITY main.menu.playback.fullscreen "Fullscreen">
 
-<!ENTITY main.menu.help "Help">
+<!ENTITY main.menu.help "Βοήθεια">
 <!ENTITY main.menu.help.about "About $longAppName">	
 <!ENTITY main.menu.help.donate "Donate to the Democracy project">
 

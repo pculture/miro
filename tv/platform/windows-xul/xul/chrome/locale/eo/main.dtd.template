@@ -4,15 +4,15 @@
 <!ENTITY main.title "$longAppName">	
 		
 <!ENTITY main.menu.file "File">	
-<!ENTITY main.menu.file.open "Open...">	
+<!ENTITY main.menu.file.open "Ovru">	
 <!ENTITY main.menu.file.checkversion "Check Version">
 <!ENTITY main.menu.file.removevideo "Remove Video">
 <!ENTITY main.menu.file.savevideoas "Save Video As...">
 <!ENTITY main.menu.file.copyvideourl "Copy Video URL">
 <!ENTITY main.menu.file.quit "Eligi">
 
-<!ENTITY main.menu.edit "Edit">
-<!ENTITY main.menu.edit.copy "Copy">
+<!ENTITY main.menu.edit "Redakti">
+<!ENTITY main.menu.edit.copy "Kopiu">
 <!ENTITY main.menu.edit.paste "Paste">
 <!ENTITY main.menu.edit.selectall "Select All">
 <!ENTITY main.menu.edit.preferences "Agordo">
@@ -44,7 +44,7 @@
 <!ENTITY main.menu.playback.previous "Previous Video">
 <!ENTITY main.menu.playback.fullscreen "Fullscreen">
 
-<!ENTITY main.menu.help "Help">
+<!ENTITY main.menu.help "Helpo">
 <!ENTITY main.menu.help.about "Pri $longAppName">	
 <!ENTITY main.menu.help.donate "Donate to the Democracy project">
 

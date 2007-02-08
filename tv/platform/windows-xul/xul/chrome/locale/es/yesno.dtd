@@ -1,4 +1,4 @@
-<!ENTITY nbsp                "\n ">
+<!ENTITY nbsp                " ">
 <!ENTITY rsaquo              "'">
 
 <!ENTITY yesno.title         "Pregunta">

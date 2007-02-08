@@ -1,0 +1,28 @@
+<!ENTITY nbsp				" ">
+<!ENTITY rsaquo				"'">
+
+<!ENTITY startup.title			"Förstagångskonfiguration av Democracy">
+<!ENTITY startup.description		"De nästa skärmarna hjälper dig att konfigurera Democracy Player så att den fungerar på bästa sätt för dig.">
+<!ENTITY startup.autostart.description	"Vi rekommenderar att du startar Democracy Player när din dator startar.  På det här sättet kan filmer hämtas klart och nya filmer kan hämtas i bakgrunden, färdiga när du vill se dem.">
+<!ENTITY startup.autostart.question	"Vill du köra Democracy vid uppstart?">
+<!ENTITY startup.search.description	"Democracy Player kan hitta all filmer på din dator för att hjälpa dig att organisera din samling.">
+<!ENTITY startup.search.question        "Vill du att Democracy Player ska leta efter filmer på din dator?">
+<!ENTITY startup.search.restrict	"Begränsa till alla mina personliga filer.">
+<!ENTITY startup.search.custom          "Sök i anpassad mapp:">
+<!ENTITY startup.search.searching	"Söker efter filmer">
+<!ENTITY startup.change	                "Ändra">
+<!ENTITY startup.cancel	                "Avbryt sökning">
+<!ENTITY startup.undo	                "Nollställ sökning">
+<!ENTITY startup.done1			"Nu är du färdig!">
+<!ENTITY startup.done2			"Now you can explore the Channel Guide
+and start watching.  A few tips to get started:">
+<!ENTITY startup.done3.heading		"Lämna den på:">
+<!ENTITY startup.done3.text		"Democracy Player kontrollerar kanaler med jämna mellanrum efter nya filmer och hämtningar i bakgrunden. Lämna kvar den körande betyder att du har nya filmer när du är klar att se dem.">
+<!ENTITY startup.done4.heading		"Tänk inte på diskutrymme:">
+<!ENTITY startup.done4.text		"Precis som TiVo har Democracy Player en funktion för att &quot;föråldra&quot; data som hjälper till att rensa ut äldre filmer för att skapa plats för nya filmer. Du kan alltid behålla en film genom att klicka på &quot;Spara&quot; och du kan ställa in en inställningar för en kanal till att spara filmer automatiskt.">
+<!ENTITY startup.done5.heading		"Slå på stort:">
+<!ENTITY startup.done5.text		"Knappen till höger om uppspelningsknappen visa filmer i helskärm.">
+<!ENTITY startup.done6.heading		"Sök filmer:">
+<!ENTITY startup.done6.text		"Democracys kanalguide innehåller hundratals tv-kanaler på Internet, alla är gratis.  Klicka helt enkelt på &quot;LÄGG TILL&quot; för att se på en kanal.">
+<!ENTITY startup.answer.yes		"Ja">
+<!ENTITY startup.answer.no		"Nej">

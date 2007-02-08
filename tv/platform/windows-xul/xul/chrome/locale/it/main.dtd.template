@@ -3,12 +3,12 @@
 		
 <!ENTITY main.title "$longAppName">	
 		
-<!ENTITY main.menu.file "Archivio">	
+<!ENTITY main.menu.file "File">	
 <!ENTITY main.menu.file.open "Apri...">	
 <!ENTITY main.menu.file.checkversion "Check Version">
 <!ENTITY main.menu.file.removevideo "Remove Video">
-<!ENTITY main.menu.file.savevideoas "Save Video As...">
-<!ENTITY main.menu.file.copyvideourl "Copy Video URL">
+<!ENTITY main.menu.file.savevideoas "Salva video come...">
+<!ENTITY main.menu.file.copyvideourl "Copia l'indirizzo del video">
 <!ENTITY main.menu.file.quit "Esci">
 
 <!ENTITY main.menu.edit "Modifica">
@@ -25,7 +25,7 @@
 <!ENTITY main.menu.channel.newchannelguide "New Channel Guide">
 <!ENTITY main.menu.channel.rename "Rename Channel...">
 <!ENTITY main.menu.channel.remove "Rimuovi canale...">
-<!ENTITY main.menu.channel.copyurl "Copy Channel URL">
+<!ENTITY main.menu.channel.copyurl "Copia l'indirizzo (URL) del canale">
 <!ENTITY main.menu.channel.update "Aggiorna canale">
 <!ENTITY main.menu.channel.updateall "Aggiorna tutti i canali">
 <!ENTITY main.menu.channel.tellafriend "Send This Channel to a Friend...">
@@ -40,8 +40,8 @@
 <!ENTITY main.menu.playback.play "Riproduci video">
 <!ENTITY main.menu.playback.pause "Pause Video">
 <!ENTITY main.menu.playback.stop "Ferma il video">
-<!ENTITY main.menu.playback.next "Next Video">
-<!ENTITY main.menu.playback.previous "Previous Video">
+<!ENTITY main.menu.playback.next "Prossimo video">
+<!ENTITY main.menu.playback.previous "Video precedente">
 <!ENTITY main.menu.playback.fullscreen "Fullscreen">
 
 <!ENTITY main.menu.help "Aiuto">

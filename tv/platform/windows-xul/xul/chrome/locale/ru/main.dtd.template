@@ -3,32 +3,32 @@
 		
 <!ENTITY main.title "$longAppName">	
 		
-<!ENTITY main.menu.file "File">	
-<!ENTITY main.menu.file.open "Open...">	
-<!ENTITY main.menu.file.checkversion "Check Version">
-<!ENTITY main.menu.file.removevideo "Remove Video">
-<!ENTITY main.menu.file.savevideoas "Save Video As...">
-<!ENTITY main.menu.file.copyvideourl "Copy Video URL">
-<!ENTITY main.menu.file.quit "Quit">
+<!ENTITY main.menu.file "Файл">	
+<!ENTITY main.menu.file.open "Открыть...">	
+<!ENTITY main.menu.file.checkversion "Проверить версию">
+<!ENTITY main.menu.file.removevideo "Удалить Видео">
+<!ENTITY main.menu.file.savevideoas "Сохранить Видео Как...">
+<!ENTITY main.menu.file.copyvideourl "Скопировать адрес видео-файла">
+<!ENTITY main.menu.file.quit "Выйти">
 
-<!ENTITY main.menu.edit "Edit">
-<!ENTITY main.menu.edit.copy "Copy">
-<!ENTITY main.menu.edit.paste "Paste">
-<!ENTITY main.menu.edit.selectall "Select All">
+<!ENTITY main.menu.edit "Редактировать">
+<!ENTITY main.menu.edit.copy "Копировать">
+<!ENTITY main.menu.edit.paste "Вставить">
+<!ENTITY main.menu.edit.selectall "Выбрать Все">
 <!ENTITY main.menu.edit.preferences "Preferences">
 
-<!ENTITY main.menu.channel "Channel">
-<!ENTITY main.menu.channel.add "Add Channel">
+<!ENTITY main.menu.channel "Канал">
+<!ENTITY main.menu.channel.add "Добавить канал">
 <!ENTITY main.menu.channel.newchannel "New Channel">
 <!ENTITY main.menu.channel.newchannelfolder "New Channel Folder">
 <!ENTITY main.menu.channel.newsearchchannel "New Search Channel">
 <!ENTITY main.menu.channel.newchannelguide "New Channel Guide">
 <!ENTITY main.menu.channel.rename "Rename Channel...">
 <!ENTITY main.menu.channel.remove "Remove Channel...">
-<!ENTITY main.menu.channel.copyurl "Copy Channel URL">
-<!ENTITY main.menu.channel.update "Update Channel">
-<!ENTITY main.menu.channel.updateall "Update All Channels">
-<!ENTITY main.menu.channel.tellafriend "Send This Channel to a Friend...">
+<!ENTITY main.menu.channel.copyurl "Скопировать адрес канала">
+<!ENTITY main.menu.channel.update "Обновить Канал">
+<!ENTITY main.menu.channel.updateall "Обновить Все Каналы">
+<!ENTITY main.menu.channel.tellafriend "Послать Канал Другу...">
 
 <!ENTITY main.menu.playlist "Playlist">
 <!ENTITY main.menu.playlist.newplaylist "New Playlist">
@@ -36,17 +36,17 @@
 <!ENTITY main.menu.playlist.rename "Rename Playlist...">
 <!ENTITY main.menu.playlist.remove "Remove Playlist...">
 
-<!ENTITY main.menu.playback "Playback">
-<!ENTITY main.menu.playback.play "Play Video">
+<!ENTITY main.menu.playback "Воспроизведение">
+<!ENTITY main.menu.playback.play "Воспроизвести видео">
 <!ENTITY main.menu.playback.pause "Pause Video">
-<!ENTITY main.menu.playback.stop "Stop Video">
-<!ENTITY main.menu.playback.next "Next Video">
-<!ENTITY main.menu.playback.previous "Previous Video">
-<!ENTITY main.menu.playback.fullscreen "Fullscreen">
+<!ENTITY main.menu.playback.stop "Остановить Видео">
+<!ENTITY main.menu.playback.next "Следующее Видео">
+<!ENTITY main.menu.playback.previous "Предыдущее видео">
+<!ENTITY main.menu.playback.fullscreen "Полный экран">
 
-<!ENTITY main.menu.help "Help">
-<!ENTITY main.menu.help.about "About $longAppName">	
-<!ENTITY main.menu.help.donate "Donate to the Democracy project">
+<!ENTITY main.menu.help "Помощь">
+<!ENTITY main.menu.help.about "О $longAppName">	
+<!ENTITY main.menu.help.donate "Спонсировать Democracy">
 
 <!ENTITY main.menu.file.access "F">
 <!ENTITY main.menu.file.open.access "O">
@@ -98,7 +98,7 @@
 <!ENTITY main.menu.channel.newchannelfolder.accel "Ctrl+Shift+N">
 <!ENTITY main.menu.playlist.newplaylist.accel "Ctrl+P">
 <!ENTITY main.menu.playlist.newplaylistfolder.accel "Ctrl+Shitf+P">
-<!ENTITY main.menu.playback.play.accel "Space">
+<!ENTITY main.menu.playback.play.accel "Пробел">
 <!ENTITY main.menu.playback.stop.accel "Ctrl+D">
 <!ENTITY main.menu.playback.next.accel "Right">
 <!ENTITY main.menu.playback.previous.accel "Left">

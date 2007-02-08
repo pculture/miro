@@ -4,7 +4,7 @@
 <!ENTITY main.title "$longAppName">	
 		
 <!ENTITY main.menu.file "File">	
-<!ENTITY main.menu.file.open "Open...">	
+<!ENTITY main.menu.file.open "Opna...">	
 <!ENTITY main.menu.file.checkversion "Check Version">
 <!ENTITY main.menu.file.removevideo "Remove Video">
 <!ENTITY main.menu.file.savevideoas "Save Video As...">
@@ -12,8 +12,8 @@
 <!ENTITY main.menu.file.quit "Quit">
 
 <!ENTITY main.menu.edit "Edit">
-<!ENTITY main.menu.edit.copy "Copy">
-<!ENTITY main.menu.edit.paste "Paste">
+<!ENTITY main.menu.edit.copy "Afrita">
+<!ENTITY main.menu.edit.paste "Líma">
 <!ENTITY main.menu.edit.selectall "Select All">
 <!ENTITY main.menu.edit.preferences "Preferences">
 
@@ -44,7 +44,7 @@
 <!ENTITY main.menu.playback.previous "Previous Video">
 <!ENTITY main.menu.playback.fullscreen "Fullscreen">
 
-<!ENTITY main.menu.help "Help">
+<!ENTITY main.menu.help "Hjálp">
 <!ENTITY main.menu.help.about "About $longAppName">	
 <!ENTITY main.menu.help.donate "Donate to the Democracy project">
 

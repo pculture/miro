@@ -3,31 +3,31 @@
 		
 <!ENTITY main.title "$longAppName">	
 		
-<!ENTITY main.menu.file "File">	
-<!ENTITY main.menu.file.open "Open...">	
+<!ENTITY main.menu.file "Arquivo">	
+<!ENTITY main.menu.file.open "Abrir...">	
 <!ENTITY main.menu.file.checkversion "Check Version">
 <!ENTITY main.menu.file.removevideo "Remove Video">
 <!ENTITY main.menu.file.savevideoas "Save Video As...">
 <!ENTITY main.menu.file.copyvideourl "Copy Video URL">
 <!ENTITY main.menu.file.quit "Sair">
 
-<!ENTITY main.menu.edit "Edit">
-<!ENTITY main.menu.edit.copy "Copy">
-<!ENTITY main.menu.edit.paste "Paste">
-<!ENTITY main.menu.edit.selectall "Select All">
+<!ENTITY main.menu.edit "Editar">
+<!ENTITY main.menu.edit.copy "Copiar">
+<!ENTITY main.menu.edit.paste "Pegar...">
+<!ENTITY main.menu.edit.selectall "Seleccionar Todo">
 <!ENTITY main.menu.edit.preferences "Preferences">
 
-<!ENTITY main.menu.channel "Channel">
+<!ENTITY main.menu.channel "Canle">
 <!ENTITY main.menu.channel.add "Engadir Canle">
 <!ENTITY main.menu.channel.newchannel "New Channel">
 <!ENTITY main.menu.channel.newchannelfolder "New Channel Folder">
 <!ENTITY main.menu.channel.newsearchchannel "New Search Channel">
 <!ENTITY main.menu.channel.newchannelguide "New Channel Guide">
 <!ENTITY main.menu.channel.rename "Rename Channel...">
-<!ENTITY main.menu.channel.remove "Remove Channel...">
+<!ENTITY main.menu.channel.remove "Borrar Canle...">
 <!ENTITY main.menu.channel.copyurl "Copy Channel URL">
-<!ENTITY main.menu.channel.update "Update Channel">
-<!ENTITY main.menu.channel.updateall "Update All Channels">
+<!ENTITY main.menu.channel.update "Actualizar Canle">
+<!ENTITY main.menu.channel.updateall "Actualizar Todas as Canles">
 <!ENTITY main.menu.channel.tellafriend "Send This Channel to a Friend...">
 
 <!ENTITY main.menu.playlist "Playlist">
@@ -39,12 +39,12 @@
 <!ENTITY main.menu.playback "Playback">
 <!ENTITY main.menu.playback.play "Play Video">
 <!ENTITY main.menu.playback.pause "Pause Video">
-<!ENTITY main.menu.playback.stop "Stop Video">
+<!ENTITY main.menu.playback.stop "Parar video">
 <!ENTITY main.menu.playback.next "Next Video">
 <!ENTITY main.menu.playback.previous "Previous Video">
 <!ENTITY main.menu.playback.fullscreen "Fullscreen">
 
-<!ENTITY main.menu.help "Help">
+<!ENTITY main.menu.help "Axuda">
 <!ENTITY main.menu.help.about "Sobre $longAppName">	
 <!ENTITY main.menu.help.donate "Donate to the Democracy project">
 

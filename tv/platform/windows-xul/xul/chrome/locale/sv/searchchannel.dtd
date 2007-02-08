@@ -3,10 +3,10 @@
 
 <!ENTITY searchchannel.description	"A search channel contains
 items that match a search term.">
-<!ENTITY searchchannel.termlabel 	"Search For:">
-<!ENTITY searchchannel.title            "New Search Channel">
-<!ENTITY searchchannel.inthis "In This:">
-<!ENTITY searchchannel.channel "Channel:">
-<!ENTITY searchchannel.searchengine "Search Engine:">
+<!ENTITY searchchannel.termlabel 	"Sök efter:">
+<!ENTITY searchchannel.title            "Ny sökkanal">
+<!ENTITY searchchannel.inthis "I denna:">
+<!ENTITY searchchannel.channel "Kanal:">
+<!ENTITY searchchannel.searchengine "Sökmotor:">
 <!ENTITY searchchannel.url "URL:">
-<!ENTITY searchchannel.createchannel "Create Channel">
+<!ENTITY searchchannel.createchannel "Skapa Kanal">

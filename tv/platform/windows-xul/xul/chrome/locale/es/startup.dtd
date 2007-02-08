@@ -1,0 +1,28 @@
+<!ENTITY nbsp				" ">
+<!ENTITY rsaquo				"'">
+
+<!ENTITY startup.title			"Primera ocasión de ajuste de Democracy">
+<!ENTITY startup.description		"Las siguientes pantallas te ayudarán a ajustar Democracy Player de manera que trabaje de la mejor manera para ti.">
+<!ENTITY startup.autostart.description	"Recomendamos que permita a Democracy Player comenzar a la vez que su ordenador comienza. De esta manera los vídeos que no han terminado de descargar pueden hacerlo y los vídeos nuevos estarán listos en sus canales cuando quieras verlos.">
+<!ENTITY startup.autostart.question	"¿Quiere activar democracy al comienzo de la sesión?">
+<!ENTITY startup.search.description	"Democracy Player puede encontrar todos los vídeos en tu ordenador para ayudarte a organizar tu colección.">
+<!ENTITY startup.search.question        "¿Quiere que Democracy Player busque archivos de vídeo un su ordenador?">
+<!ENTITY startup.search.restrict	"Restringir a todos mis archivos personales.">
+<!ENTITY startup.search.custom          "Buscar en la carpeta perasonalizada:">
+<!ENTITY startup.search.searching	"Searching for Videos">
+<!ENTITY startup.change	                "Change">
+<!ENTITY startup.cancel	                "Cancelar búsqueda">
+<!ENTITY startup.undo	                "Reajustar búsqueda">
+<!ENTITY startup.done1			"¡Estás list@!">
+<!ENTITY startup.done2			"Now you can explore the Channel Guide
+and start watching.  A few tips to get started:">
+<!ENTITY startup.done3.heading		"Mantenla encendida:">
+<!ENTITY startup.done3.text		"Democracy Player revisa regularmente los canales buscando nuevos vídeos y los descarga en el trasfondo. Mantenerla corriendo significa que tendrás nuevos vídeos disponibles cuando estés list@ para verlos.">
+<!ENTITY startup.done4.heading		"No te preocupes por el espacio en disco:">
+<!ENTITY startup.done4.text		"Como en TiVo, en Democracy Player destaca un sistema de 'expiración' que ayuda a desechar viejos vídeos, abriendo espacio para los nuevos. Siempre puedes conservar un vídeo permanentemente marcando 'guardar' y puedes ajustar por canales para que guarden los vídeos automáticamente.">
+<!ENTITY startup.done5.heading		"Piensa en grande:">
+<!ENTITY startup.done5.text		"El botón a la derecha del botón Play muestra los vídeos a pantalla completa.">
+<!ENTITY startup.done6.heading		"Encuentra vídeos:">
+<!ENTITY startup.done6.text		"El Canal Guía de Democracy tiene cientos de canales de TV de Internet, todos gratuitos. Solo marque 'AÑADIR' para ver un canal.">
+<!ENTITY startup.answer.yes		"Sí">
+<!ENTITY startup.answer.no		"No">
