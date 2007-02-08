@@ -3,45 +3,45 @@
 		
 <!ENTITY main.title "$longAppName">	
 		
-<!ENTITY main.menu.file "File">	
-<!ENTITY main.menu.file.open "Open...">	
+<!ENTITY main.menu.file "Bestand">	
+<!ENTITY main.menu.file.open "Openen...">	
 <!ENTITY main.menu.file.checkversion "Check Version">
 <!ENTITY main.menu.file.removevideo "Remove Video">
-<!ENTITY main.menu.file.savevideoas "Save Video As...">
-<!ENTITY main.menu.file.copyvideourl "Copy Video URL">
+<!ENTITY main.menu.file.savevideoas "Video opslaan als...">
+<!ENTITY main.menu.file.copyvideourl "Video URL kopiëren">
 <!ENTITY main.menu.file.quit "Afsluiten">
 
-<!ENTITY main.menu.edit "Edit">
-<!ENTITY main.menu.edit.copy "Copy">
-<!ENTITY main.menu.edit.paste "Paste">
-<!ENTITY main.menu.edit.selectall "Select All">
+<!ENTITY main.menu.edit "Bewerken">
+<!ENTITY main.menu.edit.copy "Kopieer">
+<!ENTITY main.menu.edit.paste "Plakken...">
+<!ENTITY main.menu.edit.selectall "Alles selecteren">
 <!ENTITY main.menu.edit.preferences "Instellingen">
 
-<!ENTITY main.menu.channel "Channel">
+<!ENTITY main.menu.channel "Kanaal">
 <!ENTITY main.menu.channel.add "Kanaal Toevoegen">
 <!ENTITY main.menu.channel.newchannel "New Channel">
 <!ENTITY main.menu.channel.newchannelfolder "New Channel Folder">
-<!ENTITY main.menu.channel.newsearchchannel "New Search Channel">
+<!ENTITY main.menu.channel.newsearchchannel "Nieuw zoekkanaal">
 <!ENTITY main.menu.channel.newchannelguide "New Channel Guide">
-<!ENTITY main.menu.channel.rename "Rename Channel...">
-<!ENTITY main.menu.channel.remove "Remove Channel...">
-<!ENTITY main.menu.channel.copyurl "Copy Channel URL">
-<!ENTITY main.menu.channel.update "Update Channel">
-<!ENTITY main.menu.channel.updateall "Update All Channels">
+<!ENTITY main.menu.channel.rename "Hernoem kanaal...">
+<!ENTITY main.menu.channel.remove "Verwijder kanaal">
+<!ENTITY main.menu.channel.copyurl "Kanaal URL kopiëren">
+<!ENTITY main.menu.channel.update "Kanaal vernieuwen">
+<!ENTITY main.menu.channel.updateall "Alle kanalen vernieuwen">
 <!ENTITY main.menu.channel.tellafriend "Send This Channel to a Friend...">
 
 <!ENTITY main.menu.playlist "Playlist">
 <!ENTITY main.menu.playlist.newplaylist "New Playlist">
 <!ENTITY main.menu.playlist.newplaylistfolder "New Playlist Folder">
-<!ENTITY main.menu.playlist.rename "Rename Playlist...">
-<!ENTITY main.menu.playlist.remove "Remove Playlist...">
+<!ENTITY main.menu.playlist.rename "Hernoem playlist...">
+<!ENTITY main.menu.playlist.remove "Verwijder playlist...">
 
-<!ENTITY main.menu.playback "Playback">
-<!ENTITY main.menu.playback.play "Play Video">
+<!ENTITY main.menu.playback "Afspelen">
+<!ENTITY main.menu.playback.play "Speel video">
 <!ENTITY main.menu.playback.pause "Pause Video">
-<!ENTITY main.menu.playback.stop "Stop Video">
-<!ENTITY main.menu.playback.next "Next Video">
-<!ENTITY main.menu.playback.previous "Previous Video">
+<!ENTITY main.menu.playback.stop "Stop video">
+<!ENTITY main.menu.playback.next "Volgende video">
+<!ENTITY main.menu.playback.previous "Vorige video">
 <!ENTITY main.menu.playback.fullscreen "Fullscreen">
 
 <!ENTITY main.menu.help "Help">

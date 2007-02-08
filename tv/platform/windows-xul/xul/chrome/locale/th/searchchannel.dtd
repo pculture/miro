@@ -1,0 +1,12 @@
+<!ENTITY nbsp				" ">
+<!ENTITY rsaquo				"'">
+
+<!ENTITY searchchannel.description	"A search channel contains
+items that match a search term.">
+<!ENTITY searchchannel.termlabel 	"หาคำว่า:">
+<!ENTITY searchchannel.title            "เพิ่มช่องค้นหา">
+<!ENTITY searchchannel.inthis "ใน:">
+<!ENTITY searchchannel.channel "ช่อง:">
+<!ENTITY searchchannel.searchengine "Search Engine:">
+<!ENTITY searchchannel.url "URL:">
+<!ENTITY searchchannel.createchannel "สร้างช่อง">

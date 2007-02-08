@@ -1,5 +1,5 @@
 <!ENTITY nbsp                " ">
-<!ENTITY rsaquo              "'">
+<!ENTITY rsaquo              "&quot;">
 
 <!ENTITY bugreport.title     "Encontrou um erro no Democracy!">
 <!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
@@ -7,4 +7,4 @@ information into our bug tracker and tell us what you were doing when the
 problem occurred.">
 <!ENTITY bugreport.openbugtracker "Abrir o processo de perseguição de erros">
 <!ENTITY bugreport.copytoclipboard "Copiar o registo para a área de deslocação">
-<!ENTITY bugreport.pleaserestart "Em seguida, por favor reinicie o Democracy Player (ou poderá obter erros relacionados). Lamentos pelo inconveniente. O Democracy Player está ainda em fase beta mas com a sua ajuda nós iremos corrigir rapidamente os problemas!">
+<!ENTITY bugreport.pleaserestart "Em seguida, por favor reinicie o Democracy Player (ou poderá obter erros relacionados). Lamentos pelo inconveniente. O Democracy Player está ainda em fase beta mas com a sua ajuda iremos corrigir rapidamente os problemas!">

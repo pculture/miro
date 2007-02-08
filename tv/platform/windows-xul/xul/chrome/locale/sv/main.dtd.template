@@ -3,50 +3,50 @@
 		
 <!ENTITY main.title "$longAppName">	
 		
-<!ENTITY main.menu.file "File">	
-<!ENTITY main.menu.file.open "Open...">	
-<!ENTITY main.menu.file.checkversion "Check Version">
-<!ENTITY main.menu.file.removevideo "Remove Video">
-<!ENTITY main.menu.file.savevideoas "Save Video As...">
-<!ENTITY main.menu.file.copyvideourl "Copy Video URL">
-<!ENTITY main.menu.file.quit "Quit">
+<!ENTITY main.menu.file "Arkiv">	
+<!ENTITY main.menu.file.open "Öppna...">	
+<!ENTITY main.menu.file.checkversion "Kontrollera version">
+<!ENTITY main.menu.file.removevideo "Ta bort film">
+<!ENTITY main.menu.file.savevideoas "Spara film som...">
+<!ENTITY main.menu.file.copyvideourl "Kopiera filmens URL">
+<!ENTITY main.menu.file.quit "Avsluta">
 
-<!ENTITY main.menu.edit "Edit">
-<!ENTITY main.menu.edit.copy "Copy">
-<!ENTITY main.menu.edit.paste "Paste">
-<!ENTITY main.menu.edit.selectall "Select All">
-<!ENTITY main.menu.edit.preferences "Preferences">
+<!ENTITY main.menu.edit "Redigera">
+<!ENTITY main.menu.edit.copy "Kopiera">
+<!ENTITY main.menu.edit.paste "Klistra in">
+<!ENTITY main.menu.edit.selectall "Markera alla">
+<!ENTITY main.menu.edit.preferences "Inställningar">
 
-<!ENTITY main.menu.channel "Channel">
-<!ENTITY main.menu.channel.add "Add Channel">
-<!ENTITY main.menu.channel.newchannel "New Channel">
-<!ENTITY main.menu.channel.newchannelfolder "New Channel Folder">
-<!ENTITY main.menu.channel.newsearchchannel "New Search Channel">
-<!ENTITY main.menu.channel.newchannelguide "New Channel Guide">
-<!ENTITY main.menu.channel.rename "Rename Channel...">
-<!ENTITY main.menu.channel.remove "Remove Channel...">
-<!ENTITY main.menu.channel.copyurl "Copy Channel URL">
-<!ENTITY main.menu.channel.update "Update Channel">
-<!ENTITY main.menu.channel.updateall "Update All Channels">
-<!ENTITY main.menu.channel.tellafriend "Send This Channel to a Friend...">
+<!ENTITY main.menu.channel "Kanal">
+<!ENTITY main.menu.channel.add "Lägg till kanal">
+<!ENTITY main.menu.channel.newchannel "Ny kanal">
+<!ENTITY main.menu.channel.newchannelfolder "Ny kanalmapp">
+<!ENTITY main.menu.channel.newsearchchannel "Ny sökkanal">
+<!ENTITY main.menu.channel.newchannelguide "Ny kanal-guide">
+<!ENTITY main.menu.channel.rename "Byt namn på kanal...">
+<!ENTITY main.menu.channel.remove "Ta bort kanal...">
+<!ENTITY main.menu.channel.copyurl "Kopiera kanalens URL">
+<!ENTITY main.menu.channel.update "Uppdatera kanal">
+<!ENTITY main.menu.channel.updateall "Uppdatera alla kanaler">
+<!ENTITY main.menu.channel.tellafriend "Skicka den här kanalen till en vän...">
 
-<!ENTITY main.menu.playlist "Playlist">
-<!ENTITY main.menu.playlist.newplaylist "New Playlist">
-<!ENTITY main.menu.playlist.newplaylistfolder "New Playlist Folder">
-<!ENTITY main.menu.playlist.rename "Rename Playlist...">
-<!ENTITY main.menu.playlist.remove "Remove Playlist...">
+<!ENTITY main.menu.playlist "Spellista">
+<!ENTITY main.menu.playlist.newplaylist "Ny spellista">
+<!ENTITY main.menu.playlist.newplaylistfolder "Ny spellistemapp">
+<!ENTITY main.menu.playlist.rename "Byt namn på spellista...">
+<!ENTITY main.menu.playlist.remove "Ta bort spellista...">
 
-<!ENTITY main.menu.playback "Playback">
-<!ENTITY main.menu.playback.play "Play Video">
-<!ENTITY main.menu.playback.pause "Pause Video">
-<!ENTITY main.menu.playback.stop "Stop Video">
-<!ENTITY main.menu.playback.next "Next Video">
-<!ENTITY main.menu.playback.previous "Previous Video">
-<!ENTITY main.menu.playback.fullscreen "Fullscreen">
+<!ENTITY main.menu.playback "Uppspelning">
+<!ENTITY main.menu.playback.play "Spela upp film">
+<!ENTITY main.menu.playback.pause "Pausa film">
+<!ENTITY main.menu.playback.stop "Stoppa film">
+<!ENTITY main.menu.playback.next "Nästa film">
+<!ENTITY main.menu.playback.previous "Föregående film">
+<!ENTITY main.menu.playback.fullscreen "Helskärm">
 
-<!ENTITY main.menu.help "Help">
-<!ENTITY main.menu.help.about "About $longAppName">	
-<!ENTITY main.menu.help.donate "Donate to the Democracy project">
+<!ENTITY main.menu.help "Hjälp">
+<!ENTITY main.menu.help.about "Om $longAppName">	
+<!ENTITY main.menu.help.donate "Donera till Democracy-projektet">
 
 <!ENTITY main.menu.file.access "F">
 <!ENTITY main.menu.file.open.access "O">
@@ -95,11 +95,11 @@
 <!ENTITY main.menu.edit.paste.accel "Ctrl+V">
 <!ENTITY main.menu.edit.selectall.accel "Ctrl+A">
 <!ENTITY main.menu.channel.add.accel "Ctrl+N">
-<!ENTITY main.menu.channel.newchannelfolder.accel "Ctrl+Shift+N">
+<!ENTITY main.menu.channel.newchannelfolder.accel "Ctrl+Skift+N">
 <!ENTITY main.menu.playlist.newplaylist.accel "Ctrl+P">
-<!ENTITY main.menu.playlist.newplaylistfolder.accel "Ctrl+Shitf+P">
-<!ENTITY main.menu.playback.play.accel "Space">
+<!ENTITY main.menu.playlist.newplaylistfolder.accel "Ctrl+Skift+P">
+<!ENTITY main.menu.playback.play.accel "Blanksteg">
 <!ENTITY main.menu.playback.stop.accel "Ctrl+D">
-<!ENTITY main.menu.playback.next.accel "Right">
-<!ENTITY main.menu.playback.previous.accel "Left">
+<!ENTITY main.menu.playback.next.accel "Höger">
+<!ENTITY main.menu.playback.previous.accel "Vänster">
 <!ENTITY main.menu.playback.fullscreen.accel "Alt+Enter">

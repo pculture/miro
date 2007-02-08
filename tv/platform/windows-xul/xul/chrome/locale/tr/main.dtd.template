@@ -3,50 +3,50 @@
 		
 <!ENTITY main.title "$longAppName">	
 		
-<!ENTITY main.menu.file "File">	
-<!ENTITY main.menu.file.open "Open...">	
-<!ENTITY main.menu.file.checkversion "Check Version">
-<!ENTITY main.menu.file.removevideo "Remove Video">
-<!ENTITY main.menu.file.savevideoas "Save Video As...">
-<!ENTITY main.menu.file.copyvideourl "Copy Video URL">
-<!ENTITY main.menu.file.quit "Quit">
+<!ENTITY main.menu.file "Dosya">	
+<!ENTITY main.menu.file.open "Aç">	
+<!ENTITY main.menu.file.checkversion "Versiyonu Kontrol Et">
+<!ENTITY main.menu.file.removevideo "Videoyu Kaldır">
+<!ENTITY main.menu.file.savevideoas "Videoyu Farklı Kaydet...">
+<!ENTITY main.menu.file.copyvideourl "Video Adresini Kopyala">
+<!ENTITY main.menu.file.quit "Çık">
 
-<!ENTITY main.menu.edit "Edit">
-<!ENTITY main.menu.edit.copy "Copy">
-<!ENTITY main.menu.edit.paste "Paste">
-<!ENTITY main.menu.edit.selectall "Select All">
-<!ENTITY main.menu.edit.preferences "Preferences">
+<!ENTITY main.menu.edit "Düzenle">
+<!ENTITY main.menu.edit.copy "Kopyala">
+<!ENTITY main.menu.edit.paste "Yapıştır">
+<!ENTITY main.menu.edit.selectall "Hepsini Seç">
+<!ENTITY main.menu.edit.preferences "Seçenekler">
 
-<!ENTITY main.menu.channel "Channel">
-<!ENTITY main.menu.channel.add "Add Channel">
-<!ENTITY main.menu.channel.newchannel "New Channel">
-<!ENTITY main.menu.channel.newchannelfolder "New Channel Folder">
-<!ENTITY main.menu.channel.newsearchchannel "New Search Channel">
-<!ENTITY main.menu.channel.newchannelguide "New Channel Guide">
-<!ENTITY main.menu.channel.rename "Rename Channel...">
-<!ENTITY main.menu.channel.remove "Remove Channel...">
-<!ENTITY main.menu.channel.copyurl "Copy Channel URL">
-<!ENTITY main.menu.channel.update "Update Channel">
-<!ENTITY main.menu.channel.updateall "Update All Channels">
-<!ENTITY main.menu.channel.tellafriend "Send This Channel to a Friend...">
+<!ENTITY main.menu.channel "Kanal">
+<!ENTITY main.menu.channel.add "Kanal Ekle">
+<!ENTITY main.menu.channel.newchannel "Yeni Kanal">
+<!ENTITY main.menu.channel.newchannelfolder "Yeni Kanal Dizini">
+<!ENTITY main.menu.channel.newsearchchannel "Yeni Arama Kanalı">
+<!ENTITY main.menu.channel.newchannelguide "Yeni Kanal Rehberi">
+<!ENTITY main.menu.channel.rename "Kanalı Yeniden Adlandır...">
+<!ENTITY main.menu.channel.remove "Kanalı Kaldır...">
+<!ENTITY main.menu.channel.copyurl "Kanal Adresini Kopyala">
+<!ENTITY main.menu.channel.update "Kanalı Güncelle">
+<!ENTITY main.menu.channel.updateall "Tüm Kanalları Güncelle">
+<!ENTITY main.menu.channel.tellafriend "Bu Kanalı BirArkadaşına Gönder...">
 
-<!ENTITY main.menu.playlist "Playlist">
-<!ENTITY main.menu.playlist.newplaylist "New Playlist">
-<!ENTITY main.menu.playlist.newplaylistfolder "New Playlist Folder">
-<!ENTITY main.menu.playlist.rename "Rename Playlist...">
-<!ENTITY main.menu.playlist.remove "Remove Playlist...">
+<!ENTITY main.menu.playlist "Çalma Listesi">
+<!ENTITY main.menu.playlist.newplaylist "Yeni Çalma Listesi">
+<!ENTITY main.menu.playlist.newplaylistfolder "Yeni Çalma Listesi Dizini">
+<!ENTITY main.menu.playlist.rename "Çalma Listesini Yeniden Adlandır...">
+<!ENTITY main.menu.playlist.remove "Çalma Listesini Kaldır...">
 
-<!ENTITY main.menu.playback "Playback">
-<!ENTITY main.menu.playback.play "Play Video">
-<!ENTITY main.menu.playback.pause "Pause Video">
-<!ENTITY main.menu.playback.stop "Stop Video">
-<!ENTITY main.menu.playback.next "Next Video">
-<!ENTITY main.menu.playback.previous "Previous Video">
-<!ENTITY main.menu.playback.fullscreen "Fullscreen">
+<!ENTITY main.menu.playback "Gerisar">
+<!ENTITY main.menu.playback.play "Vİdeo Oynat">
+<!ENTITY main.menu.playback.pause "Videoyu Duraklat">
+<!ENTITY main.menu.playback.stop "Görüntüyü Durdur">
+<!ENTITY main.menu.playback.next "Sonraki Video">
+<!ENTITY main.menu.playback.previous "Önceki Video">
+<!ENTITY main.menu.playback.fullscreen "Tam ekran">
 
-<!ENTITY main.menu.help "Help">
-<!ENTITY main.menu.help.about "About $longAppName">	
-<!ENTITY main.menu.help.donate "Donate to the Democracy project">
+<!ENTITY main.menu.help "Yardım">
+<!ENTITY main.menu.help.about "Hakkında $longAppName">	
+<!ENTITY main.menu.help.donate "Democracy Projesine bağış yapın">
 
 <!ENTITY main.menu.file.access "F">
 <!ENTITY main.menu.file.open.access "O">
@@ -95,11 +95,12 @@
 <!ENTITY main.menu.edit.paste.accel "Ctrl+V">
 <!ENTITY main.menu.edit.selectall.accel "Ctrl+A">
 <!ENTITY main.menu.channel.add.accel "Ctrl+N">
-<!ENTITY main.menu.channel.newchannelfolder.accel "Ctrl+Shift+N">
+<!ENTITY main.menu.channel.newchannelfolder.accel "Ctrl+Shift+N
+Ctrl+Shift+N">
 <!ENTITY main.menu.playlist.newplaylist.accel "Ctrl+P">
 <!ENTITY main.menu.playlist.newplaylistfolder.accel "Ctrl+Shitf+P">
-<!ENTITY main.menu.playback.play.accel "Space">
+<!ENTITY main.menu.playback.play.accel "Boşluk">
 <!ENTITY main.menu.playback.stop.accel "Ctrl+D">
-<!ENTITY main.menu.playback.next.accel "Right">
-<!ENTITY main.menu.playback.previous.accel "Left">
+<!ENTITY main.menu.playback.next.accel "Sağ">
+<!ENTITY main.menu.playback.previous.accel "Sol">
 <!ENTITY main.menu.playback.fullscreen.accel "Alt+Enter">

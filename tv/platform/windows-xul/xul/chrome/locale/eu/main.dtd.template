@@ -3,50 +3,50 @@
 		
 <!ENTITY main.title "$longAppName">	
 		
-<!ENTITY main.menu.file "File">	
-<!ENTITY main.menu.file.open "Open...">	
+<!ENTITY main.menu.file "Fitxategi">	
+<!ENTITY main.menu.file.open "Ireki...">	
 <!ENTITY main.menu.file.checkversion "Check Version">
-<!ENTITY main.menu.file.removevideo "Remove Video">
-<!ENTITY main.menu.file.savevideoas "Save Video As...">
-<!ENTITY main.menu.file.copyvideourl "Copy Video URL">
+<!ENTITY main.menu.file.removevideo "Ezabatu bideoa">
+<!ENTITY main.menu.file.savevideoas "Honela Gorde Bideoa...">
+<!ENTITY main.menu.file.copyvideourl "Kopiatu Bideoaren URLa">
 <!ENTITY main.menu.file.quit "Irten">
 
-<!ENTITY main.menu.edit "Edit">
-<!ENTITY main.menu.edit.copy "Copy">
-<!ENTITY main.menu.edit.paste "Paste">
-<!ENTITY main.menu.edit.selectall "Select All">
+<!ENTITY main.menu.edit "Editatu">
+<!ENTITY main.menu.edit.copy "Kopiatu">
+<!ENTITY main.menu.edit.paste "Itsatsi">
+<!ENTITY main.menu.edit.selectall "Dena hautatu">
 <!ENTITY main.menu.edit.preferences "Xehetasunak">
 
-<!ENTITY main.menu.channel "Channel">
+<!ENTITY main.menu.channel "Kanala">
 <!ENTITY main.menu.channel.add "Kanala Gehitu">
 <!ENTITY main.menu.channel.newchannel "New Channel">
 <!ENTITY main.menu.channel.newchannelfolder "New Channel Folder">
 <!ENTITY main.menu.channel.newsearchchannel "New Search Channel">
 <!ENTITY main.menu.channel.newchannelguide "New Channel Guide">
-<!ENTITY main.menu.channel.rename "Rename Channel...">
-<!ENTITY main.menu.channel.remove "Remove Channel...">
-<!ENTITY main.menu.channel.copyurl "Copy Channel URL">
-<!ENTITY main.menu.channel.update "Update Channel">
-<!ENTITY main.menu.channel.updateall "Update All Channels">
+<!ENTITY main.menu.channel.rename "Kanala Berrizendatu...">
+<!ENTITY main.menu.channel.remove "Ezabatu kanala...">
+<!ENTITY main.menu.channel.copyurl "Kopiatu Kanalaren URLa">
+<!ENTITY main.menu.channel.update "Kanala Eguneratu">
+<!ENTITY main.menu.channel.updateall "Kanal Guztiak Eguneratu">
 <!ENTITY main.menu.channel.tellafriend "Send This Channel to a Friend...">
 
 <!ENTITY main.menu.playlist "Playlist">
 <!ENTITY main.menu.playlist.newplaylist "New Playlist">
 <!ENTITY main.menu.playlist.newplaylistfolder "New Playlist Folder">
-<!ENTITY main.menu.playlist.rename "Rename Playlist...">
-<!ENTITY main.menu.playlist.remove "Remove Playlist...">
+<!ENTITY main.menu.playlist.rename "Erreprodukzio-zerrenda Berrizendatu...">
+<!ENTITY main.menu.playlist.remove "Ezabatu Zerrenda...">
 
-<!ENTITY main.menu.playback "Playback">
-<!ENTITY main.menu.playback.play "Play Video">
-<!ENTITY main.menu.playback.pause "Pause Video">
-<!ENTITY main.menu.playback.stop "Stop Video">
-<!ENTITY main.menu.playback.next "Next Video">
-<!ENTITY main.menu.playback.previous "Previous Video">
+<!ENTITY main.menu.playback "Erreproduzitu">
+<!ENTITY main.menu.playback.play "Bideoa erreproduzitu">
+<!ENTITY main.menu.playback.pause "Pausatu bideoa">
+<!ENTITY main.menu.playback.stop "Bideoa Gelditu">
+<!ENTITY main.menu.playback.next "Hurrengo Bideoa">
+<!ENTITY main.menu.playback.previous "Aurreko Bideoa">
 <!ENTITY main.menu.playback.fullscreen "Fullscreen">
 
-<!ENTITY main.menu.help "Help">
+<!ENTITY main.menu.help "Laguntza">
 <!ENTITY main.menu.help.about "$longAppName-ri buruz">	
-<!ENTITY main.menu.help.donate "Donate to the Democracy project">
+<!ENTITY main.menu.help.donate "Eman dirua Democracy proiektuarentzat">
 
 <!ENTITY main.menu.file.access "F">
 <!ENTITY main.menu.file.open.access "O">
@@ -90,16 +90,16 @@
 <!ENTITY main.menu.help.about.access "A">
 <!ENTITY main.menu.help.donate.access "D">
 
-<!ENTITY main.menu.file.open.accel "Ctrl+O">
+<!ENTITY main.menu.file.open.accel "Ctrl-O">
 <!ENTITY main.menu.edit.copy.accel "Ctrl+C">
 <!ENTITY main.menu.edit.paste.accel "Ctrl+V">
 <!ENTITY main.menu.edit.selectall.accel "Ctrl+A">
-<!ENTITY main.menu.channel.add.accel "Ctrl+N">
-<!ENTITY main.menu.channel.newchannelfolder.accel "Ctrl+Shift+N">
-<!ENTITY main.menu.playlist.newplaylist.accel "Ctrl+P">
-<!ENTITY main.menu.playlist.newplaylistfolder.accel "Ctrl+Shitf+P">
-<!ENTITY main.menu.playback.play.accel "Space">
-<!ENTITY main.menu.playback.stop.accel "Ctrl+D">
+<!ENTITY main.menu.channel.add.accel "Ctrl-N">
+<!ENTITY main.menu.channel.newchannelfolder.accel "Ctrl-Shift+N">
+<!ENTITY main.menu.playlist.newplaylist.accel "Ctrl-P">
+<!ENTITY main.menu.playlist.newplaylistfolder.accel "Ctrl-Shift+P">
+<!ENTITY main.menu.playback.play.accel "Espazioa">
+<!ENTITY main.menu.playback.stop.accel "Ctrl-D">
 <!ENTITY main.menu.playback.next.accel "Right">
 <!ENTITY main.menu.playback.previous.accel "Left">
 <!ENTITY main.menu.playback.fullscreen.accel "Alt+Enter">

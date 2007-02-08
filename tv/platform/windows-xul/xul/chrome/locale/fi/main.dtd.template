@@ -7,8 +7,8 @@
 <!ENTITY main.menu.file.open "Avaa...">	
 <!ENTITY main.menu.file.checkversion "Check Version">
 <!ENTITY main.menu.file.removevideo "Remove Video">
-<!ENTITY main.menu.file.savevideoas "Save Video As...">
-<!ENTITY main.menu.file.copyvideourl "Copy Video URL">
+<!ENTITY main.menu.file.savevideoas "Tallenna video nimellä...">
+<!ENTITY main.menu.file.copyvideourl "Kopioi videon osoite">
 <!ENTITY main.menu.file.quit "Lopeta">
 
 <!ENTITY main.menu.edit "Muokkaa">
@@ -21,11 +21,11 @@
 <!ENTITY main.menu.channel.add "Lisää kanava">
 <!ENTITY main.menu.channel.newchannel "New Channel">
 <!ENTITY main.menu.channel.newchannelfolder "New Channel Folder">
-<!ENTITY main.menu.channel.newsearchchannel "New Search Channel">
+<!ENTITY main.menu.channel.newsearchchannel "Uusi hakukanava">
 <!ENTITY main.menu.channel.newchannelguide "New Channel Guide">
-<!ENTITY main.menu.channel.rename "Rename Channel...">
+<!ENTITY main.menu.channel.rename "Uudelleennimeä kanava...">
 <!ENTITY main.menu.channel.remove "Poista kanava...">
-<!ENTITY main.menu.channel.copyurl "Copy Channel URL">
+<!ENTITY main.menu.channel.copyurl "Kopio kanavan osoite">
 <!ENTITY main.menu.channel.update "Päivitä kanava">
 <!ENTITY main.menu.channel.updateall "Päivitä kaikki kanavat">
 <!ENTITY main.menu.channel.tellafriend "Send This Channel to a Friend...">
@@ -33,15 +33,15 @@
 <!ENTITY main.menu.playlist "Playlist">
 <!ENTITY main.menu.playlist.newplaylist "New Playlist">
 <!ENTITY main.menu.playlist.newplaylistfolder "New Playlist Folder">
-<!ENTITY main.menu.playlist.rename "Rename Playlist...">
-<!ENTITY main.menu.playlist.remove "Remove Playlist...">
+<!ENTITY main.menu.playlist.rename "Uudelleennimeä soittolista...">
+<!ENTITY main.menu.playlist.remove "Poista soittolista...">
 
-<!ENTITY main.menu.playback "Playback">
+<!ENTITY main.menu.playback "Toisto">
 <!ENTITY main.menu.playback.play "Toista video">
 <!ENTITY main.menu.playback.pause "Pause Video">
 <!ENTITY main.menu.playback.stop "Pysäytä video">
-<!ENTITY main.menu.playback.next "Next Video">
-<!ENTITY main.menu.playback.previous "Previous Video">
+<!ENTITY main.menu.playback.next "Seuraava video">
+<!ENTITY main.menu.playback.previous "Edellinen video">
 <!ENTITY main.menu.playback.fullscreen "Fullscreen">
 
 <!ENTITY main.menu.help "Ohje">

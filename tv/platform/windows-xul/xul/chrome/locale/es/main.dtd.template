@@ -1,52 +1,52 @@
-<!ENTITY nbsp "\n ">	
+<!ENTITY nbsp " ">	
 <!ENTITY rsaquo "'">	
 		
 <!ENTITY main.title "$longAppName">	
 		
 <!ENTITY main.menu.file "Archivo">	
 <!ENTITY main.menu.file.open "Abrir...">	
-<!ENTITY main.menu.file.checkversion "Check Version">
-<!ENTITY main.menu.file.removevideo "Remove Video">
-<!ENTITY main.menu.file.savevideoas "Save Video As...">
-<!ENTITY main.menu.file.copyvideourl "Copy Video URL">
+<!ENTITY main.menu.file.checkversion "Comprobar la versión">
+<!ENTITY main.menu.file.removevideo "Remover Video">
+<!ENTITY main.menu.file.savevideoas "Guardar vídeo como...">
+<!ENTITY main.menu.file.copyvideourl "Copiar dirección del vídeo">
 <!ENTITY main.menu.file.quit "Salir">
 
 <!ENTITY main.menu.edit "Editar">
-<!ENTITY main.menu.edit.copy "Copiar">
+<!ENTITY main.menu.edit.copy "Copia">
 <!ENTITY main.menu.edit.paste "Pegar">
-<!ENTITY main.menu.edit.selectall "Seleccionar Todo">
+<!ENTITY main.menu.edit.selectall "Seleccionar todo">
 <!ENTITY main.menu.edit.preferences "Preferencias">
 
 <!ENTITY main.menu.channel "Canal">
-<!ENTITY main.menu.channel.add "Agregar un Canal">
-<!ENTITY main.menu.channel.newchannel "New Channel">
-<!ENTITY main.menu.channel.newchannelfolder "New Channel Folder">
-<!ENTITY main.menu.channel.newsearchchannel "New Search Channel">
-<!ENTITY main.menu.channel.newchannelguide "New Channel Guide">
-<!ENTITY main.menu.channel.rename "Rename Channel...">
-<!ENTITY main.menu.channel.remove "Remove Channel...">
-<!ENTITY main.menu.channel.copyurl "Copy Channel URL">
-<!ENTITY main.menu.channel.update "Actualizar Canal">
-<!ENTITY main.menu.channel.updateall "Actualizar todos los Canales">
-<!ENTITY main.menu.channel.tellafriend "Send This Channel to a Friend...">
+<!ENTITY main.menu.channel.add "Añadir Canal">
+<!ENTITY main.menu.channel.newchannel "Nuevo Canal">
+<!ENTITY main.menu.channel.newchannelfolder "Carpeta del Nuevo Canal">
+<!ENTITY main.menu.channel.newsearchchannel "Nuevo canal de búsqueda">
+<!ENTITY main.menu.channel.newchannelguide "Guia del Nuevo Canal">
+<!ENTITY main.menu.channel.rename "Renombrar Canal...">
+<!ENTITY main.menu.channel.remove "Eliminar Canal...">
+<!ENTITY main.menu.channel.copyurl "Copiar dirección del canal">
+<!ENTITY main.menu.channel.update "Actualizar canal">
+<!ENTITY main.menu.channel.updateall "Actualizar todos los canales">
+<!ENTITY main.menu.channel.tellafriend "Enviar este canal a un amigo...">
 
 <!ENTITY main.menu.playlist "Playlist">
 <!ENTITY main.menu.playlist.newplaylist "New Playlist">
 <!ENTITY main.menu.playlist.newplaylistfolder "New Playlist Folder">
-<!ENTITY main.menu.playlist.rename "Rename Playlist...">
-<!ENTITY main.menu.playlist.remove "Remove Playlist...">
+<!ENTITY main.menu.playlist.rename "Renombrar Lista de Reproducción...">
+<!ENTITY main.menu.playlist.remove "Eliminar Lista de Reproducción...">
 
-<!ENTITY main.menu.playback "Playback">
-<!ENTITY main.menu.playback.play "Reproducir Vídeo">
+<!ENTITY main.menu.playback "Reproducción">
+<!ENTITY main.menu.playback.play "Reproducir vídeo">
 <!ENTITY main.menu.playback.pause "Pause Video">
-<!ENTITY main.menu.playback.stop "Stop Video">
-<!ENTITY main.menu.playback.next "Next Video">
-<!ENTITY main.menu.playback.previous "Previous Video">
-<!ENTITY main.menu.playback.fullscreen "Fullscreen">
+<!ENTITY main.menu.playback.stop "Detener vídeo">
+<!ENTITY main.menu.playback.next "Siguiente vídeo">
+<!ENTITY main.menu.playback.previous "Anterior vídeo">
+<!ENTITY main.menu.playback.fullscreen "Pantalla completa">
 
 <!ENTITY main.menu.help "Ayuda">
 <!ENTITY main.menu.help.about "Sobre $longAppName">	
-<!ENTITY main.menu.help.donate "Donate to the Democracy project">
+<!ENTITY main.menu.help.donate "Dona al proyecto Democracy">
 
 <!ENTITY main.menu.file.access "F">
 <!ENTITY main.menu.file.open.access "O">
@@ -98,8 +98,8 @@
 <!ENTITY main.menu.channel.newchannelfolder.accel "Ctrl+Shift+N">
 <!ENTITY main.menu.playlist.newplaylist.accel "Ctrl+P">
 <!ENTITY main.menu.playlist.newplaylistfolder.accel "Ctrl+Shitf+P">
-<!ENTITY main.menu.playback.play.accel "Space">
+<!ENTITY main.menu.playback.play.accel "Espacio">
 <!ENTITY main.menu.playback.stop.accel "Ctrl+D">
-<!ENTITY main.menu.playback.next.accel "Right">
-<!ENTITY main.menu.playback.previous.accel "Left">
+<!ENTITY main.menu.playback.next.accel "Derecha">
+<!ENTITY main.menu.playback.previous.accel "Izquierda">
 <!ENTITY main.menu.playback.fullscreen.accel "Alt+Enter">

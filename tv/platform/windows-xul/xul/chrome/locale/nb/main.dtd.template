@@ -3,48 +3,48 @@
 		
 <!ENTITY main.title "$longAppName">	
 		
-<!ENTITY main.menu.file "File">	
-<!ENTITY main.menu.file.open "Open...">	
+<!ENTITY main.menu.file "Fil">	
+<!ENTITY main.menu.file.open "Åpne...">	
 <!ENTITY main.menu.file.checkversion "Check Version">
 <!ENTITY main.menu.file.removevideo "Remove Video">
-<!ENTITY main.menu.file.savevideoas "Save Video As...">
-<!ENTITY main.menu.file.copyvideourl "Copy Video URL">
+<!ENTITY main.menu.file.savevideoas "Lagre film som...">
+<!ENTITY main.menu.file.copyvideourl "Kopier video-URL">
 <!ENTITY main.menu.file.quit "Avslutt">
 
-<!ENTITY main.menu.edit "Edit">
-<!ENTITY main.menu.edit.copy "Copy">
-<!ENTITY main.menu.edit.paste "Paste">
-<!ENTITY main.menu.edit.selectall "Select All">
+<!ENTITY main.menu.edit "Rediger">
+<!ENTITY main.menu.edit.copy "Kopier">
+<!ENTITY main.menu.edit.paste "Lim inn">
+<!ENTITY main.menu.edit.selectall "Velg alle">
 <!ENTITY main.menu.edit.preferences "Innstillinger">
 
-<!ENTITY main.menu.channel "Channel">
+<!ENTITY main.menu.channel "Kanal">
 <!ENTITY main.menu.channel.add "Legg til kanal">
 <!ENTITY main.menu.channel.newchannel "New Channel">
 <!ENTITY main.menu.channel.newchannelfolder "New Channel Folder">
-<!ENTITY main.menu.channel.newsearchchannel "New Search Channel">
+<!ENTITY main.menu.channel.newsearchchannel "Ny søkekanal">
 <!ENTITY main.menu.channel.newchannelguide "New Channel Guide">
-<!ENTITY main.menu.channel.rename "Rename Channel...">
-<!ENTITY main.menu.channel.remove "Remove Channel...">
-<!ENTITY main.menu.channel.copyurl "Copy Channel URL">
-<!ENTITY main.menu.channel.update "Update Channel">
-<!ENTITY main.menu.channel.updateall "Update All Channels">
+<!ENTITY main.menu.channel.rename "Gi nytt navn til kanal...">
+<!ENTITY main.menu.channel.remove "Fjern kanal...">
+<!ENTITY main.menu.channel.copyurl "Kopi kanal-URL">
+<!ENTITY main.menu.channel.update "Oppdater kanal">
+<!ENTITY main.menu.channel.updateall "Oppdater alle kanaler">
 <!ENTITY main.menu.channel.tellafriend "Send This Channel to a Friend...">
 
 <!ENTITY main.menu.playlist "Playlist">
 <!ENTITY main.menu.playlist.newplaylist "New Playlist">
 <!ENTITY main.menu.playlist.newplaylistfolder "New Playlist Folder">
-<!ENTITY main.menu.playlist.rename "Rename Playlist...">
-<!ENTITY main.menu.playlist.remove "Remove Playlist...">
+<!ENTITY main.menu.playlist.rename "Gi nytt navn til spilleliste...">
+<!ENTITY main.menu.playlist.remove "Fjern spilleliste...">
 
-<!ENTITY main.menu.playback "Playback">
-<!ENTITY main.menu.playback.play "Play Video">
+<!ENTITY main.menu.playback "Avspilling">
+<!ENTITY main.menu.playback.play "Spill av film">
 <!ENTITY main.menu.playback.pause "Pause Video">
-<!ENTITY main.menu.playback.stop "Stop Video">
-<!ENTITY main.menu.playback.next "Next Video">
-<!ENTITY main.menu.playback.previous "Previous Video">
+<!ENTITY main.menu.playback.stop "Stopp film">
+<!ENTITY main.menu.playback.next "Neste film">
+<!ENTITY main.menu.playback.previous "Forrige film">
 <!ENTITY main.menu.playback.fullscreen "Fullscreen">
 
-<!ENTITY main.menu.help "Help">
+<!ENTITY main.menu.help "Hjelp">
 <!ENTITY main.menu.help.about "Om $longAppName">	
 <!ENTITY main.menu.help.donate "Donate to the Democracy project">
 

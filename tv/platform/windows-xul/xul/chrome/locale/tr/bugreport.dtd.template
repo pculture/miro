@@ -1,10 +1,10 @@
 <!ENTITY nbsp                " ">
 <!ENTITY rsaquo              "'">
 
-<!ENTITY bugreport.title     "You found a bug in Democracy!">
+<!ENTITY bugreport.title     "Democracy'de hata mı buldunuz!">
 <!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
 information into our bug tracker and tell us what you were doing when the
 problem occurred.">
-<!ENTITY bugreport.openbugtracker "Open up the bug tracker">
-<!ENTITY bugreport.copytoclipboard "Copy log to clipboard">
-<!ENTITY bugreport.pleaserestart "Then, please restart Democracy Player (or you may keep getting related errors). Sorry for the inconvenience. Democracy Player is still in beta, but with your help we're fixing problems fast!">
+<!ENTITY bugreport.openbugtracker "Hata takip sistemini aç">
+<!ENTITY bugreport.copytoclipboard "Günlüğü  panoya kopyala">
+<!ENTITY bugreport.pleaserestart "Sonra, Democracy Player'ı baştan başlatın (ya da hatayla ilişkili sorunlar devam edebilir). Zahmet verdiğimiz için üzgünüz. Democracy Player hala beta sürümünde, ama sizin de yardımlarınızla sorunları çabuk çözüyoruz.">
