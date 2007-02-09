@@ -231,6 +231,13 @@ class RemoteDownloader(DDBObject):
                         os.remove (filename)
                     elif os.path.isdir(filename):
                         shutil.rmtree (filename)
+
+                    parent = os.path.join(filename, os.path.pardir)
+                    parent = os.path.normpath(parent)
+                    if (not os.path.samefile(parent,
+                            config.get(config.MOVIES_DIRECTORY)) and
+                            len(os.listdir(parent)) == 0):
+                        os.rmdir(parent)
                 except:
                     pass
             self.status["state"] = "stopped"
@@ -315,6 +322,7 @@ URL was %s""" % self.url
                 channelName = channelName.translate({ ord('/')  : u'-',
                                                       ord('\\') : u'-',
                                                       ord(':')  : u'-' })
+                channelName = channelName.encode("ascii", "replace")
             self.channelName = channelName
 
     ##
