@@ -211,6 +211,9 @@ def extractIconDataAtPosition(filename, position):
         return None
 
     frameSize = frame.size()
+    if frameSize.width == 0 or frameSize.height == 0:
+        return None
+
     frameRatio = frameSize.width / frameSize.height
     iconSize = NSSize(226.0, 170.0)
     iconRatio = iconSize.width / iconSize.height
