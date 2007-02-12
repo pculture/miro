@@ -1,19 +1,19 @@
---- platform/gtk-x11/platformcfg.py.orig	2006-08-29 15:40:20.000000000 +0200
-+++ platform/gtk-x11/platformcfg.py	2006-08-29 15:42:22.000000000 +0200
-@@ -88,14 +88,14 @@
-     path = None
+--- platform/gtk-x11/platformcfg.py.orig	2007-02-03 21:43:13.000000000 +0100
++++ platform/gtk-x11/platformcfg.py	2007-02-03 21:44:00.000000000 +0100
+@@ -92,14 +92,14 @@
+     value = descriptor.default
  
      if descriptor == prefs.MOVIES_DIRECTORY:
--        path = os.path.expanduser('~/Movies/Democracy')
-+        path = os.path.expanduser('~/.democracy/Movies')
+-        value = os.path.expanduser('~/Movies/Democracy')
++        value = os.path.expanduser('~/.democracy/Movies')
          try:
-             os.makedirs (path)
+             os.makedirs (value)
          except:
              pass
  
      elif descriptor == prefs.NON_VIDEO_DIRECTORY:
--        path = os.path.expanduser('~/Desktop')
-+        path = os.path.expanduser('~/.democracy/Nonvideo')
+-        value = os.path.expanduser('~/Desktop')
++        value = os.path.expanduser('~/.democracy/Nonvideo')
  
-     elif descriptor == prefs.SUPPORT_DIRECTORY:
-         path = os.path.expanduser('~/.democracy')
+     elif descriptor == prefs.GETTEXT_PATHNAME:
+         value = resources.path("../../locale")
