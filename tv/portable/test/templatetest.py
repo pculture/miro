@@ -42,10 +42,9 @@ class DOMTracker:
         self.callList.append({'name':'removeItem','id':id})
     def removeItems(self, ids):
         self.callList.append({'name':'removeItems','ids':ids})
-    def changeItem(self, id, xml, changedAttributes, changedInnerHTML):
+    def changeItem(self, id, xml, changeHint):
         self.callList.append({'name':'changeItem','xml':xml,'id':id,
-            'changedAttributes': changedAttributes, 
-            'changedInnerHTML': changedInnerHTML })
+            'changeHint': changeHint })
     def changeItems(self, pairs):
         self.callList.append({'name':'changeItems','pairs':pairs})
     def hideItem(self, id):
