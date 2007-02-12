@@ -1,20 +1,20 @@
---- portable/app.py.orig	2006-07-21 12:55:36.000000000 +0200
-+++ portable/app.py	2006-07-21 12:54:58.000000000 +0200
-@@ -467,7 +467,7 @@
-             
+--- portable/app.py.orig	2007-02-03 21:45:43.000000000 +0100
++++ portable/app.py	2007-02-03 21:46:07.000000000 +0100
+@@ -522,7 +522,7 @@
+             global delegate
              feed.setDelegate(delegate)
              feed.setSortFunc(sorts.item)
 -            autoupdate.setDelegate(delegate)
 +            # autoupdate.setDelegate(delegate)
              database.setDelegate(delegate)
              dialogs.setDelegate(delegate)
+             
+@@ -645,7 +645,7 @@
  
-@@ -554,7 +554,7 @@
-             self.videoDisplay.playbackController = self.playbackController
-             self.videoDisplay.setVolume(config.get(prefs.VOLUME_LEVEL))
+             util.print_mem_usage("Post-item reconnect memory check")
  
 -            eventloop.addTimeout (30, autoupdate.checkForUpdates, "Check for updates")
 +            # eventloop.addTimeout (30, autoupdate.checkForUpdates, "Check for updates")
              feed.expireItems()
  
-             # Set up tab list (on left); this will automatically set up the
+             self.tabDisplay = TemplateDisplay('tablist','default',
