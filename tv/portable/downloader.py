@@ -217,7 +217,7 @@ class RemoteDownloader(DDBObject):
     # Stops the download and removes the partially downloaded
     # file.
     def stop(self, delete):
-        if ((self.getState() in ['downloading','uploading'])):
+        if ((self.getState() in ['downloading','uploading', 'paused'])):
             if _downloads.has_key(self.dlid):
                 c = command.StopDownloadCommand(RemoteDownloader.dldaemon,
                                                 self.dlid, delete)
@@ -225,16 +225,35 @@ class RemoteDownloader(DDBObject):
                 del _downloads[self.dlid]
         else:
             if delete:
-                try:
-                    filename = self.status['filename']
-                    if os.path.isfile(filename):
-                        os.remove (filename)
-                    elif os.path.isdir(filename):
-                        shutil.rmtree (filename)
-                except:
-                    pass
+                self.delete()
             self.status["state"] = "stopped"
             self.signalChange()
+
+    def delete(self):
+        try:
+            filename = self.status['filename']
+        except KeyError:
+            return
+        try:
+            if os.path.isfile(filename):
+                os.remove (filename)
+            elif os.path.isdir(filename):
+                shutil.rmtree (filename)
+        except:
+            logging.warn("Error deleting downloaded file: %s\n%s" % 
+                    (filename, traceback.format_exc()))
+
+        parent = os.path.join(filename, os.path.pardir)
+        parent = os.path.normpath(parent)
+        moviesDir = config.get(config.MOVIES_DIRECTORY)
+        if (os.path.exists(parent) and
+            not os.path.samefile(parent, moviesDir) and
+            len(os.listdir(parent)) == 0):
+            try:
+                os.rmdir(parent)
+            except:
+                logging.warn("Error deleting empty download directory: %s\n%s" %
+                        (parent, traceback.format_exc()))
 
     ##
     # Continues a paused, stopped, or failed download thread
@@ -315,6 +334,7 @@ URL was %s""" % self.url
                 channelName = channelName.translate({ ord('/')  : u'-',
                                                       ord('\\') : u'-',
                                                       ord(':')  : u'-' })
+                channelName = channelName.encode("ascii", "replace")
             self.channelName = channelName
 
     ##

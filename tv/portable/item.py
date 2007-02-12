@@ -1007,7 +1007,7 @@ folder will be deleted.""")
 
     def showTrashButton(self):
         return self.isDownloaded() or (self.getFeedURL() == 'dtv:manualFeed'
-                and self.getState() != 'downloading')
+                and self.getState() not in ('downloading', 'paused'))
 
     def getFailureReason(self):
         self.confirmDBThread()

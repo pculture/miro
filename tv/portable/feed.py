@@ -988,10 +988,6 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
         if self.iconCache is not None:
             self.iconCache.remove()
             self.iconCache = None
-        if moveItemsTo is None:
-            moviesDir = os.path.join(config.get(prefs.MOVIES_DIRECTORY), self.getTitle()) 
-            if os.path.exists(moviesDir): 
-                shutil.rmtree(moviesDir)
         DDBObject.remove(self)
         self.actualFeed.onRemove()
 
