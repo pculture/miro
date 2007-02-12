@@ -715,8 +715,7 @@ an element is dragged, the drag-highlight class is added to it */
 /* These change the background based on whether or not it's selected */
 .main-video.selected 
 {
-    background-color: #77A6EB;
-    background: url(../images/main-video-bg-selected.png) repeat-x left top;
+    background: #5E8BDE url(../images/main-video-bg-selected.png) repeat-x left top;
     color: black; 
 }
 
