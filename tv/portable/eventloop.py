@@ -405,7 +405,6 @@ def startup():
 def join():
     global lt
     lt.join()
-    database.set_thread()
 
 def quit():
     threadPoolQuit()

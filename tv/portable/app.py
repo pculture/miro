@@ -526,8 +526,6 @@ class Controller (frontend.Application):
             database.setDelegate(delegate)
             dialogs.setDelegate(delegate)
             
-            database.set_thread()
-
             if not config.get(prefs.STARTUP_TASKS_DONE):
                 logging.info ("Showing startup dialog...")
                 delegate.performStartupTasks(self.finishStartup)
@@ -535,11 +533,16 @@ class Controller (frontend.Application):
                 config.save()
             else:
                 self.finishStartup(gatheredVideos)
+            logging.info ("Starting event loop thread")
+            eventloop.startup()
+            #self.databaseIsSetup.wait()
         except:
             util.failedExn("while starting up")
             frontend.exit(1)
 
     def finishStartup(self, gatheredVideos=None):
+        eventloop.addIdle(lambda :self._finishStartup(gatheredVideos), "Finishing startup")
+    def _finishStartup(self, gatheredVideos=None):
         try:
             views.initialize()
             #Restoring
@@ -624,11 +627,10 @@ class Controller (frontend.Application):
             self.videoDisplay.initRenderers()
             self.videoDisplay.playbackController = self.playbackController
             self.videoDisplay.setVolume(config.get(prefs.VOLUME_LEVEL))
-
             util.print_mem_usage("Post-UI memory check")
 
             # create our selection handler
-
+            
             self.selection = selection.SelectionHandler()
 
             self.selection.selectFirstGuide()
@@ -680,9 +682,6 @@ class Controller (frontend.Application):
             start = clock()
             iconcache.clearOrphans()
             logging.timing ("Icon clear: %.3f", clock() - start)
-
-            logging.info ("Starting event loop thread")
-            eventloop.startup()            
 
             logging.info ("Finished startup sequence")
             self.finishedStartup = True
@@ -987,16 +986,16 @@ downloaded?""")
             logging.info ("Saving preferences...")
             config.save()
 
-            logging.info ("Removing search feed")
-            TemplateActionHandler(None, None).resetSearch()
-            self.removeGlobalFeed('dtv:search')
+#             logging.info ("Removing search feed")
+#             TemplateActionHandler(None, None).resetSearch()
+#             self.removeGlobalFeed('dtv:search')
 
             logging.info ("Shutting down icon cache updates")
             iconcache.iconCacheUpdater.shutdown()
 
-            logging.info ("Removing static tabs...")
-            views.allTabs.unlink() 
-            tabs.removeStaticTabs()
+#             logging.info ("Removing static tabs...")
+#             views.allTabs.unlink() 
+#             tabs.removeStaticTabs()
 
             if self.idlingNotifier is not None:
                 logging.info ("Shutting down IdleNotifier")
