@@ -116,6 +116,10 @@ def get(descriptor):
         path = get(prefs.SUPPORT_DIRECTORY)
         return os.path.join(path, 'database')
 
+    elif descriptor == prefs.SQLITE_PATHNAME:
+        path = get(prefs.SUPPORT_DIRECTORY)
+        return os.path.join(path, 'sqlitedb')
+
     elif descriptor == prefs.LOG_PATHNAME:
         return os.path.join(tempfile.gettempdir(), 'dtv-log')
 

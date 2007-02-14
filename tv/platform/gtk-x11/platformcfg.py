@@ -118,6 +118,10 @@ def get(descriptor):
         value = get(prefs.SUPPORT_DIRECTORY)
         value = os.path.join(value, 'database')
 
+    elif descriptor == prefs.SQLITE_PATHNAME:
+        value = get(prefs.SUPPORT_DIRECTORY)
+        value = os.path.join(value, 'sqlitedb')
+
     elif descriptor == prefs.LOG_PATHNAME:
         value = get(prefs.SUPPORT_DIRECTORY)
         value = os.path.join(value, 'dtv-log')

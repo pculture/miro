@@ -87,6 +87,9 @@ def get(descriptor):
     elif descriptor == prefs.BSDDB_PATHNAME:
         return _makeSupportFilePath('database')
 
+    elif descriptor == prefs.SQLITE_PATHNAME:
+        return _makeSupportFilePath('sqlitedb')
+
     elif descriptor == prefs.LOG_PATHNAME:
         return _makeSupportFilePath('dtv-log')
 

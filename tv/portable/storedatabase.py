@@ -40,6 +40,8 @@ import app
 import bsddb.db
 import dialogs
 import logging
+from pysqlite2 import dbapi2 as sql
+
 from gtcache import gettext as _
 
 from clock import clock
@@ -508,7 +510,7 @@ def restoreDatabase(db=None, pathname=None, convertOnFail=True):
 
 VERSION_KEY = "Democracy Version"
 
-class LiveStorage:
+class LiveStorageBDB:
     TRANSACTION_TIMEOUT = 10
     TRANSACTION_NAME = "Save database"
 
@@ -550,7 +552,10 @@ class LiveStorage:
                     self.handleDatabaseLoadError()
             else:
                 self.saveDatabase()
-            eventloop.addIdle(self.checkpoint, "Remove Unused Database Logs")
+            # Since this is only used for upgrading, I'm commenting
+            # this out --NN
+            #
+            # eventloop.addIdle(self.checkpoint, "Remove Unused Database Logs")
             end = clock()
             if end - start > 0.05 and util.chatter:
                 logging.timing ("Database load slow: %.3f", end - start)
@@ -865,4 +870,338 @@ class LiveStorage:
                     pass
         except bsddb.db.DBNoSpaceError:
             pass
+        eventloop.addTimeout(60, self.checkpoint, "Remove Unused Database Logs")
+class LiveStorage:
+    TRANSACTION_TIMEOUT = 10
+    TRANSACTION_NAME = "Save database"
+
+    def __init__(self, dbPath=None, restore=True):
+        database.confirmDBThread()
+        try:
+            self.toUpdate = set()
+            self.toRemove = set()
+            self.errorState = False
+            self.closed = True
+            self.updating = False
+            self.dc = None
+            if dbPath is not None:
+                self.dbPath = dbPath
+            else:
+                self.dbPath = config.get(prefs.SQLITE_PATHNAME)
+            start = clock()
+            if restore:
+                try:
+                    logging.info("Connecting to %s" % self.dbPath)
+                    try:
+                        os.makedirs(os.path.normpath(os.path.join(self.dbPath,os.path.pardir)))
+                    except:
+                        pass
+                    if os.access(self.dbPath, os.F_OK):
+                        # The database already exists
+                        self.conn = sql.connect(self.dbPath, isolation_level=None)
+                        self.closed = False
+                        self.cursor = self.conn.cursor()
+                        self.cursor.execute("SELECT serialized_value FROM dtv_variables WHERE name=:name",{'name':VERSION_KEY})
+                        self.version = self.cursor.fetchone()
+                        if self.version:
+                            self.version = cPickle.dumps(self.version[0],cPickle.HIGHEST_PROTOCOL)
+                        self.loadDatabase()
+                    else:
+                        # Create a new database
+                        self.conn = sql.connect(self.dbPath, isolation_level=None)
+                        self.closed = False
+                        self.cursor = self.conn.cursor()
+                        self.cursor.execute("""CREATE TABLE IF NOT EXISTS dtv_objects(
+                        id INTEGER PRIMARY KEY NOT NULL,
+                        serialized_object BLOB NOT NULL UNIQUE
+);""")
+                        self.cursor.execute("""CREATE TABLE IF NOT EXISTS dtv_variables(
+                        name TEXT PRIMARY KEY NOT NULL,
+                        serialized_value BLOB NOT NULL
+);""")
+                        self.version = None
+                        if (os.access(config.get(prefs.BSDDB_PATHNAME), os.F_OK) or
+                            os.access(config.get(prefs.DB_PATHNAME), os.F_OK)):
+
+                            logging.info("Upgrading from previous version of database")
+                            LiveStorageBDB()
+                            self.saveDatabase()
+                except KeyboardInterrupt:
+                    raise
+                except databaseupgrade.DatabaseTooNewError:
+                    raise
+                except:
+                    raise
+                    self.handleDatabaseLoadError()
+            else:
+                self.saveDatabase()
+            eventloop.addIdle(self.checkpoint, "Remove Unused Database Logs")
+            end = clock()
+            if end - start > 0.05 and util.chatter:
+                logging.timing ("Database load slow: %.3f", end - start)
+        except sql.DatabaseError, e:
+            logging.error(e)
+            raise
+
+    def dumpDatabase(self, db):
+        from download_utils import nextFreeFilename
+        output = open (nextFreeFilename (os.path.join (config.get(prefs.SUPPORT_DIRECTORY), "database-dump.xml")), 'w')
+        global indentation
+        indentation = 0
+        def indent():
+            output.write('    ' * indentation)
+        def output_object(o):
+            global indentation
+            indent()
+            if o in memory:
+                if o.savedData.has_key ('id'):
+                    output.write('<%s id="%s"/>\n' % (o.classString, o.savedData['id']))
+                else:
+                    output.write('<%s/>\n' % (o.classString,))
+                return
+            memory.add(o)
+            if o.savedData.has_key ('id'):
+                output.write('<%s id="%s">\n' % (o.classString, o.savedData['id']))
+            else:
+                output.write('<%s>\n' % (o.classString,))
+            indentation = indentation + 1
+            for key in o.savedData:
+                if key == 'id':
+                    continue
+                indent()
+                output.write('<%s>' % (key,))
+                value = o.savedData[key]
+                if isinstance (value, SavableObject):
+                    output.write ('\n')
+                    indentation = indentation + 1
+                    output_object(value)
+                    indentation = indentation - 1
+                    indent()
+                else:
+                    output.write (str(value))
+                output.write ('</%s>\n' % (key,))
+            indentation = indentation - 1
+            indent()
+            output.write ('</%s>\n' % (o.classString,))
+        output.write ('<?xml version="1.0"?>\n')
+        output.write ('<database schema="%d">\n' % (schema_mod.VERSION,))
+        indentation = indentation + 1
+        for o in db:
+            global memory
+            memory = set()
+            o = objectToSavable (o)
+            if o is not None:
+                output_object (o)
+        indentation = indentation - 1
+        output.write ('</database>\n')
+        output.close()
+
+    def handleDatabaseLoadError(self):
+        database.confirmDBThread()
+        logging.exception ("exception while loading database")
+        self.closeInvalidDB()
+        self.saveInvalidDB()
+        self.saveDatabase()
+
+    def saveInvalidDB(self):
+        dir = os.path.dirname(self.dbPath)
+        saveName = "corrupt_database"
+        i = 0
+        while os.path.exists(os.path.join(dir, saveName)):
+            i += 1
+            saveName = "corrupt_database.%d" % i
+
+        os.rename(self.dbPath, os.path.join(dir, saveName))
+
+    def closeInvalidDB(self):
+        database.confirmDBThread()
+        self.conn.close()
+        self.conn = None
+
+    def upgradeDatabase(self):
+        database.confirmDBThread()
+        self.updating = True
+        self.cursor.execute("BEGIN TRANSACTION")
+        try:
+
+            savables = []
+            self.cursor.execute("SELECT id, serialized_object FROM dtv_objects")
+            while True:
+                next = cursor.next()
+                if next is None:
+                    break
+                key, data = next
+                try:
+                    savable = cPickle.loads(str(data))
+                    savables.append(savable)
+                except KeyboardInterrupt:
+                    raise
+                except:
+                    logging.info ('Error loading data in upgradeDatabase')
+                    raise
+            cursor.close()
+            changed = databaseupgrade.upgrade(savables, self.version)
+        
+            if changed is None:
+                self.rewriteDatabase(savables)
+            else:
+                savables_set = set()
+                for o in savables:
+                    savables_set.add(o)
+                for o in changed:
+                    if o in savables_set:
+                        data = cPickle.dumps(o,cPickle.HIGHEST_PROTOCOL)
+                        self.cursor.execute("REPLACE INTO dtv_objects (id, serialized_object) VALUES (?,?)",(int(o.savedData['id']), buffer(data)))
+                    else:
+                        self.cursor.execute("DELETE FROM dtv_objects WHERE id=?",int(o.savedData['id']))
+            self.version = schema_mod.VERSION
+            self.cursor.execute("REPLACE INTO dtv_variables (name, serialized_value) VALUES (?,?)",(VERSION_KEY, buffer(cPickle.dumps(self.version,cPickle.HIGHEST_PROTOCOL))))
+            # End transaction?
+
+            objects = savablesToObjects (savables)
+            db = database.defaultDatabase
+            db.restoreFromObjectList(objects)
+        finally:
+            self.updating = False
+            self.cursor.execute("COMMIT")
+
+    def rewriteDatabase(self, savables):
+        """Delete, then rewrite the entire database.  savables is a list of
+        SavableObjects that will be in the new database.  WARNING: This method
+        will probably take a long time.
+        """
+        database.confirmDBThread()
+        logging.info ("Rewriting database")
+        self.cursor.execute("BEGIN TRANSACTION")
+        try:
+            cursor.execute("DELETE FROM dtv_objects")
+            for o in savables:
+                data = cPickle.dumps(o,cPickle.HIGHEST_PROTOCOL)
+                self.cursor.execute("REPLACE INTO dtv_objects (id, serialized_object) VALUES (?,?)",(int(o.savedData['id']), buffer(data)))
+        finally:
+            cursor.execute("COMMIT")
+
+    def loadDatabase(self):
+        database.confirmDBThread()
+        upgrade = (self.version != schema_mod.VERSION)
+        #if upgrade:
+        #    return self.upgradeDatabase()
+        objects = []
+        self.cursor.execute("SELECT id, serialized_object FROM dtv_objects")
+        while True:
+            next = self.cursor.fetchone()
+            if next is None:
+                break
+            key, data = next
+            try:
+                savable = cPickle.loads(str(data))
+                object = savableToObject(savable)
+                objects.append(object)
+            except KeyboardInterrupt:
+                raise
+            except:
+                logging.info ("Error loading data in loadDatabase")
+                raise
+        self.cursor.close()
+        db = database.defaultDatabase
+        db.restoreFromObjectList(objects)
+
+    def saveDatabase(self):
+        database.confirmDBThread()
+        db = database.defaultDatabase
+        self.updating = True
+        self.cursor.execute("BEGIN TRANSACTION")
+        try:
+            for o in db.objects:
+                self.update(o[0])
+            self.version = schema_mod.VERSION
+            self.cursor.execute("REPLACE INTO dtv_variables (name, serialized_value) VALUES (?,?)",(VERSION_KEY, buffer(cPickle.dumps(self.version,cPickle.HIGHEST_PROTOCOL))))
+        finally:
+            self.updating = False
+            self.cursor.execute("COMMIT")
+
+    def sync(self):
+        database.confirmDBThread()
+
+    def close(self):
+        database.confirmDBThread()
+        self.runUpdate()
+        self.closed = True
+        self.conn.close()
+
+    def runUpdate(self):
+        database.confirmDBThread()
+        try:
+            self.updating = True
+            self.cursor.execute("BEGIN TRANSACTION")
+            try:
+                for object in self.toRemove:
+                    # If an object was created and removed between saves, it
+                    # won't be in the database to be removed, so catch the
+                    # exception
+                    try:
+                        self.remove (object)
+                    except sql.DatabaseError:
+                        pass
+                for object in self.toUpdate:
+                    self.update (object)
+            finally:
+                self.updating = False
+                self.cursor.execute("COMMIT")
+            self.toUpdate = set()
+            self.toRemove = set()
+            if self.errorState:
+                title = _("%s database save succeeded") % (config.get(prefs.SHORT_APP_NAME), )
+                description = _("The database has been successfully saved. "
+                               "It is now safe to quit without losing any "
+                               "data.")
+                dialogs.MessageBoxDialog(title, description).run()
+                self.errorState = False
+        except sql.DatabaseError, e:
+            print e
+            if not self.errorState:
+                title = _("%s database save failed") % (config.get(prefs.SHORT_APP_NAME), )
+                description = _("%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost.") % (config.get(prefs.LONG_APP_NAME)) 
+                dialogs.MessageBoxDialog(title, description).run()
+                self.errorState = True
+                self.updating=False
+        self.updating=False
+        self.dc = eventloop.addTimeout(self.TRANSACTION_TIMEOUT, self.runUpdate, self.TRANSACTION_NAME)
+            
+
+    def update (self, object):
+        database.confirmDBThread()
+        if self.closed:
+            return
+        if not self.updating:
+            self.toUpdate.add (object)
+            if self.dc is None:
+                self.dc = eventloop.addTimeout(self.TRANSACTION_TIMEOUT, self.runUpdate, self.TRANSACTION_NAME)
+        else:
+            savable = objectToSavable (object)
+            if savable:
+                key = int(object.id)
+                data = cPickle.dumps(savable,cPickle.HIGHEST_PROTOCOL)
+                self.cursor.execute("REPLACE INTO dtv_objects (id, serialized_object) VALUES (?,?)",(int(key), buffer(data)))
+
+    def remove (self, object):
+        database.confirmDBThread()
+        if self.closed:
+            return
+        if not self.updating:
+            self.toRemove.add (object)
+            try:
+                self.toUpdate.remove (object)
+            except KeyboardInterrupt:
+                raise
+            except:
+                pass
+            if self.dc is None:
+                self.dc = eventloop.addTimeout(self.TRANSACTION_TIMEOUT, self.runUpdate, self.TRANSACTION_NAME)
+        else:
+            self.cursor.execute("DELETE FROM dtv_objects WHERE id=?", int(object.id))
+
+    def checkpoint (self):
+        database.confirmDBThread()
+        # I don't think we have to do anything here for SQLite
         eventloop.addTimeout(60, self.checkpoint, "Remove Unused Database Logs")

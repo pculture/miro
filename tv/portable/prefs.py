@@ -78,6 +78,8 @@ DB_PATHNAME = \
     Pref(key='DBPathname',       default=None, platformSpecific=True)
 BSDDB_PATHNAME = \
     Pref(key='BSDDBPathname',    default=None, platformSpecific=True)
+SQLITE_PATHNAME = \
+    Pref(key='SQLLitePathname',    default=None, platformSpecific=True)
 LOG_PATHNAME = \
     Pref(key='LogPathname',      default=None, platformSpecific=True)
 DOWNLOADER_LOG_PATHNAME = \
