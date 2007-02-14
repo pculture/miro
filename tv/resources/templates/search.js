@@ -37,8 +37,8 @@ function validateSearch(e)
 {
     if (getKeyFromEvent(e) == 13)
     {
-        performSearch();
+        return performSearch();
     }
 
-    return false;
+    return true;
 }
