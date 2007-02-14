@@ -21,6 +21,7 @@ from frontend_implementation import trayicon
 from platformcfg import gconf_lock
 import config
 import prefs
+import logging
 
 def _getPref(key, getter_name):
     gconf_lock.acquire()
@@ -266,10 +267,13 @@ class MainFrame:
         self.selectedDisplays[area] = newDisplay
         # show the video info display when we are showing a movie.
         if area == self.mainDisplay:
-            if isinstance(newDisplay, VideoDisplay):
-                self.windowChanger.changeState(self.windowChanger.VIDEO)
-            else:
-                self.windowChanger.changeState(self.windowChanger.BROWSING)
+            try:
+                if isinstance(newDisplay, VideoDisplay):
+                    self.windowChanger.changeState(self.windowChanger.VIDEO)
+                else:
+                    self.windowChanger.changeState(self.windowChanger.BROWSING)
+            except AttributeError:
+                logging.warn("Display selected before window changer created")
             if isinstance(newDisplay, HTMLDisplay):
                 newDisplay.getWidget(area).child.grab_focus()
 

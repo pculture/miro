@@ -4,6 +4,7 @@ import gtk
 import app
 import gobject
 import platformutils
+import logging
 
 class MainWindowChanger(object):
     """Change which widgets are visible in the main window based on its
@@ -98,66 +99,69 @@ class MainWindowChanger(object):
     def updateState (self):
         # Handle fullscreen
         platformutils.confirmMainThread()
-        fullscreen = (self.isFullScreen and self.currentState == self.VIDEO)
-        activeRenderer = app.controller.videoDisplay.activeRenderer
-        if fullscreen and (not self.wasFullScreen):
-            self.widgetTree['main-window'].fullscreen()
-            if activeRenderer != None:
-                activeRenderer.goFullscreen()
-            self.wasFullScreen = True
-        if (not fullscreen) and self.wasFullScreen:
-            self.widgetTree['main-window'].unfullscreen()
-            if activeRenderer != None:
-                activeRenderer.exitFullscreen()
-            self.wasFullScreen = False
-        self.updateFullScreenButton()
+        try:
+            fullscreen = (self.isFullScreen and self.currentState == self.VIDEO)
+            activeRenderer = app.controller.videoDisplay.activeRenderer
+            if fullscreen and (not self.wasFullScreen):
+                self.widgetTree['main-window'].fullscreen()
+                if activeRenderer != None:
+                    activeRenderer.goFullscreen()
+                self.wasFullScreen = True
+            if (not fullscreen) and self.wasFullScreen:
+                self.widgetTree['main-window'].unfullscreen()
+                if activeRenderer != None:
+                    activeRenderer.exitFullscreen()
+                self.wasFullScreen = False
+            self.updateFullScreenButton()
 
-        # Hide cursor
-        if fullscreen and self.currentState == self.VIDEO and self.pointerIdle:
             # Hide cursor
-            self.widgetTree["main-box"].window.set_cursor (self.empty_cursor)
-        else:
-            # Show cursor
-            self.widgetTree["main-box"].window.set_cursor (None)
-
-        # Handle UI visibility and sensitivity
-        if self.currentState == self.BROWSING:
-            self.widgetTree['channels-box'].show()
-            self.widgetTree['video-info-box'].hide()
-            self.widgetTree['video-control-box'].show()
-            self.widgetTree['menubar-box'].show()
-            self.setVideoWidgetsSensitive(False)
-        elif self.currentState == self.PLAYLIST:
-            self.widgetTree['channels-box'].show()
-            self.widgetTree['video-info-box'].hide()
-            self.widgetTree['video-control-box'].show()
-            self.widgetTree['menubar-box'].show()
-            self.setVideoWidgetsSensitive(False)
-            self.widgetTree['play-pause-button'].set_sensitive(True)
-        elif self.currentState == self.VIDEO:
-            if self.isFullScreen:
-                if self.pointerIdle:
-                    self.widgetTree['channels-box'].hide()
-                    self.widgetTree['video-info-box'].hide()
-                    self.widgetTree['video-control-box'].hide()
-                    self.widgetTree['menubar-box'].hide()
-                    self.setVideoWidgetsSensitive(True)
-                else:
-                    self.widgetTree['channels-box'].hide()
-                    self.widgetTree['video-info-box'].show()
-                    self.widgetTree['video-control-box'].show()
-                    self.widgetTree['menubar-box'].hide()
-                    self.setVideoWidgetsSensitive(True)
+            if fullscreen and self.currentState == self.VIDEO and self.pointerIdle:
+                # Hide cursor
+                self.widgetTree["main-box"].window.set_cursor (self.empty_cursor)
             else:
+                # Show cursor
+                self.widgetTree["main-box"].window.set_cursor (None)
+
+            # Handle UI visibility and sensitivity
+            if self.currentState == self.BROWSING:
                 self.widgetTree['channels-box'].show()
-                self.widgetTree['video-info-box'].show()
+                self.widgetTree['video-info-box'].hide()
                 self.widgetTree['video-control-box'].show()
                 self.widgetTree['menubar-box'].show()
-                self.setVideoWidgetsSensitive(True)
-        else:
-            raise TypeError("invalid state: %r" % newState)
-        self.updatePlayPauseButton()
-        self.mainFrame.onVideoLoadedChange (self.currentState == self.VIDEO)
+                self.setVideoWidgetsSensitive(False)
+            elif self.currentState == self.PLAYLIST:
+                self.widgetTree['channels-box'].show()
+                self.widgetTree['video-info-box'].hide()
+                self.widgetTree['video-control-box'].show()
+                self.widgetTree['menubar-box'].show()
+                self.setVideoWidgetsSensitive(False)
+                self.widgetTree['play-pause-button'].set_sensitive(True)
+            elif self.currentState == self.VIDEO:
+                if self.isFullScreen:
+                    if self.pointerIdle:
+                        self.widgetTree['channels-box'].hide()
+                        self.widgetTree['video-info-box'].hide()
+                        self.widgetTree['video-control-box'].hide()
+                        self.widgetTree['menubar-box'].hide()
+                        self.setVideoWidgetsSensitive(True)
+                    else:
+                        self.widgetTree['channels-box'].hide()
+                        self.widgetTree['video-info-box'].show()
+                        self.widgetTree['video-control-box'].show()
+                        self.widgetTree['menubar-box'].hide()
+                        self.setVideoWidgetsSensitive(True)
+                else:
+                    self.widgetTree['channels-box'].show()
+                    self.widgetTree['video-info-box'].show()
+                    self.widgetTree['video-control-box'].show()
+                    self.widgetTree['menubar-box'].show()
+                    self.setVideoWidgetsSensitive(True)
+            else:
+                raise TypeError("invalid state: %r" % newState)
+            self.updatePlayPauseButton()
+            self.mainFrame.onVideoLoadedChange (self.currentState == self.VIDEO)
+        except AttributeError:
+            logging.warn("Display updated before video display was created")
 
     def enablePointerTracking(self):
         platformutils.confirmMainThread()

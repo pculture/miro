@@ -19,6 +19,7 @@ import folder
 import playlist
 import platformutils
 import startup
+import logging
 from gtcache import gettext as _
  
 def AttachBoolean (dialog, widget, descriptor, sensitive_widget = None):
@@ -232,7 +233,10 @@ class CallbackHandler(object):
         return "%s / %s" % (formatTime(seconds), formatTime(videoLength))
 
     def on_volume_scale_value_changed(self, scale):
-        self.mainApp.videoDisplay.setVolume(scale.get_value())
+        try:
+            self.mainApp.videoDisplay.setVolume(scale.get_value())
+        except AttributeError:
+            logging.warn("Volume changed before videoDisplay created")
 
     def on_open_video_activate(self, event = None):
         chooser = gtk.FileChooserDialog("Open Files...",
