@@ -43,9 +43,9 @@ searchItems.unlink()
       <h1 id="main-title" i18n:translate="">Video Search</h1>
       <div t:updateForView="searchFeed">
       <div id="engine-search">
-         <form name="search" onsubmit="performSearch(); return false;">
+         <form name="search" onsubmit="return performSearch();">
          <t:staticReplaceMarkup t:replaceData="searchengines.getSearchEnginesHTML()"/>
-         <input id="search-box" type="search" name="query" value="***feed.quoteLastQuery()***" onKeyUp="fillSearch()" onKeyPress="validateSearch(event)" />
+         <input id="search-box" type="search" name="query" value="***feed.quoteLastQuery()***" onKeyUp="return fillSearch();" onKeyPress="return validateSearch(event);" />
          <input type="submit" value="GO" />      
          </form>
       </div>
