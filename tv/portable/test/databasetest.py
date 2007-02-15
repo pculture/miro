@@ -398,22 +398,28 @@ class SaveRestoreTestCase(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)
         self.tempdb = os.path.join(tempfile.gettempdir(), 'democracy-temp-db')
-        if not os.path.exists(self.tempdb):
-            os.makedirs(self.tempdb)
         self.everything = database.defaultDatabase
         self.everything.liveStorage = storedatabase.LiveStorage(self.tempdb,
                 restore=False)
         self.x = database.DDBObject()
         self.y = database.DDBObject()
     def tearDown(self):
-        shutil.rmtree(self.tempdb)
+        self.everything.liveStorage.close()
+        self.everything.liveStorage = None
+        try:
+            shutil.rmtree(self.tempdb)
+        except:
+            pass
         DemocracyTestCase.tearDown(self)
 
 class BasicSaveTestCase(SaveRestoreTestCase):
     def testSaveRestore(self):
+        self.assertEqual(self.everything.len(),2)
         self.everything.liveStorage.saveDatabase()
+        self.everything.liveStorage.close()
         self.z = database.DDBObject()
         self.zz = database.DDBObject()
+        self.assertEqual(self.everything.len(),4)
         last = self.zz.getID()
         self.x.remove()
         self.everything.liveStorage = storedatabase.LiveStorage(self.tempdb)

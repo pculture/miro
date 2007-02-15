@@ -331,9 +331,6 @@ class LiveStorageTest(DemocracyTestCase):
         storedatabase.skipUpgrade = True
         self.savePath = os.path.join(tempfile.gettempdir(),
                 'democracy-temp-db')
-
-        if not os.path.exists(self.savePath):
-            os.makedirs(self.savePath)
         self.database = database.defaultDatabase
         self.database.liveStorage = storedatabase.LiveStorage(self.savePath,
                 restore=False)
@@ -343,9 +340,15 @@ class LiveStorageTest(DemocracyTestCase):
     def tearDown(self):
         storedatabase.skipUpgrade = False
         try:
+            self.database.liveStorage.close()
+            self.database.liveStorage = None
+        except:
+            pass
+        try:
             shutil.rmtree(self.savePath);
         except:
             pass
+        DemocracyTestCase.tearDown(self)
 
 
 class TestConstraintChecking(LiveStorageTest):
