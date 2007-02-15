@@ -1,0 +1,6 @@
+<searchengine>
+   <id>bliptv</id>
+   <displayname>blip.tv</displayname>
+   <url>http://blip.tv/?1=1&amp;search=%s;s=posts&amp;skin=rss</url>
+   <sort>6</sort>
+</searchengine>

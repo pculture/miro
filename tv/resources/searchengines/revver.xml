@@ -1,0 +1,6 @@
+<searchengine>
+   <id>revver</id>
+   <displayname>Revver</displayname>
+   <url>http://api.revver.com/rss/0.1/search/%s</url>
+   <sort>4</sort>
+</searchengine>

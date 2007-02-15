@@ -247,7 +247,7 @@ files.append(os.path.join(platform_dir, 'glade', 'democracy.glade'))
 files.append(os.path.join(platform_dir, 'ui', 'Democracy.xml'))
 data_files.append(('/usr/share/democracy/resources/', files))
 # handle the sub directories.
-for dir in ('templates', 'css', 'images', 'testdata', os.path.join('templates','unittest')):
+for dir in ('templates', 'css', 'images', 'testdata', os.path.join('templates','unittest'), 'searchengines'):
     source_dir = os.path.join(resource_dir, dir)
     dest_dir = os.path.join('/usr/share/democracy/resources/', dir)
     data_files.append((dest_dir, listfiles(source_dir)))

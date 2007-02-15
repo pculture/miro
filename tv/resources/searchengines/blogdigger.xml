@@ -1,0 +1,6 @@
+<searchengine>
+   <id>blogdigger</id>
+   <displayname>Blogdigger</displayname>
+   <url>http://blogdigger.com/media/rss.jsp?q=%s&amp;media=video&amp;media=torrent&amp;sortby=date</url>
+   <sort>3</sort>
+</searchengine>
