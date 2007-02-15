@@ -94,6 +94,13 @@ jsBridge.prototype = {
         self.lastMouseDownY = event.screenY;
     }
     this.document.addEventListener('mousedown', saveMousedownPosition, true);
+
+ if (this.window.outerWidth < 800) {
+    this.window.outerWidth=800;
+  }
+ if (this.window.outerHeight < 500) {
+    this.window.outerHeight=500;
+  }
   },
 
   closeWindow: function() {
