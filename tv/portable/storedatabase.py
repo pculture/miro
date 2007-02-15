@@ -889,36 +889,17 @@ class LiveStorage:
             else:
                 self.dbPath = config.get(prefs.SQLITE_PATHNAME)
             start = clock()
+            SQLiteDBExists = os.access(self.dbPath, os.F_OK)
+            self.openDatabase()
             if restore:
                 try:
-                    logging.info("Connecting to %s" % self.dbPath)
-                    try:
-                        os.makedirs(os.path.normpath(os.path.join(self.dbPath,os.path.pardir)))
-                    except:
-                        pass
-                    if os.access(self.dbPath, os.F_OK):
-                        # The database already exists
-                        self.conn = sql.connect(self.dbPath, isolation_level=None)
-                        self.closed = False
-                        self.cursor = self.conn.cursor()
+                    if SQLiteDBExists:
                         self.cursor.execute("SELECT serialized_value FROM dtv_variables WHERE name=:name",{'name':VERSION_KEY})
                         self.version = self.cursor.fetchone()
                         if self.version:
                             self.version = cPickle.dumps(self.version[0],cPickle.HIGHEST_PROTOCOL)
                         self.loadDatabase()
                     else:
-                        # Create a new database
-                        self.conn = sql.connect(self.dbPath, isolation_level=None)
-                        self.closed = False
-                        self.cursor = self.conn.cursor()
-                        self.cursor.execute("""CREATE TABLE IF NOT EXISTS dtv_objects(
-                        id INTEGER PRIMARY KEY NOT NULL,
-                        serialized_object BLOB NOT NULL UNIQUE
-);""")
-                        self.cursor.execute("""CREATE TABLE IF NOT EXISTS dtv_variables(
-                        name TEXT PRIMARY KEY NOT NULL,
-                        serialized_value BLOB NOT NULL
-);""")
                         self.version = None
                         if (os.access(config.get(prefs.BSDDB_PATHNAME), os.F_OK) or
                             os.access(config.get(prefs.DB_PATHNAME), os.F_OK)):
@@ -942,6 +923,26 @@ class LiveStorage:
         except sql.DatabaseError, e:
             logging.error(e)
             raise
+
+    def openDatabase(self):
+        logging.info("Connecting to %s" % self.dbPath)
+        try:
+            os.makedirs(os.path.normpath(os.path.join(self.dbPath,os.path.pardir)))
+        except:
+            pass
+        self.conn = sql.connect(self.dbPath, isolation_level=None)
+        self.closed = False
+        self.cursor = self.conn.cursor()
+
+        # In the future, we may need a way to upgrade this
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS dtv_objects(
+        id INTEGER PRIMARY KEY NOT NULL,
+        serialized_object BLOB NOT NULL UNIQUE
+);""")
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS dtv_variables(
+        name TEXT PRIMARY KEY NOT NULL,
+        serialized_value BLOB NOT NULL
+);""")
 
     def dumpDatabase(self, db):
         from download_utils import nextFreeFilename
@@ -1112,6 +1113,7 @@ class LiveStorage:
         self.updating = True
         self.cursor.execute("BEGIN TRANSACTION")
         try:
+            self.cursor.execute("DELETE FROM dtv_objects WHERE 1=1")
             for o in db.objects:
                 self.update(o[0])
             self.version = schema_mod.VERSION
