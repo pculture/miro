@@ -28,7 +28,7 @@ if os.name == 'nt':
     platform = "windows-xul"
     repositories = ["tv","dtv-binary-kit"]
     build_command = "bdist_xul"
-    installer_filename = "Democracy-[0-9.]+(-rc[0-9]+)?\.exe"
+    installer_filename = "Democracy-[0-9.]+(-[a-z0-9]+)?\.exe"
     remote_copy_command = "C:\\cygwin\\bin\\scp.exe"
     is_cygwin_command = True
     remote_machine = "pcf2.osuosl.org:/data/pculture/nightlies/"
