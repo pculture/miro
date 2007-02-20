@@ -245,7 +245,7 @@ class RemoteDownloader(DDBObject):
 
         parent = os.path.join(filename, os.path.pardir)
         parent = os.path.normpath(parent)
-        moviesDir = config.get(config.MOVIES_DIRECTORY)
+        moviesDir = config.get(prefs.MOVIES_DIRECTORY)
         if (os.path.exists(parent) and
             not os.path.samefile(parent, moviesDir) and
             len(os.listdir(parent)) == 0):

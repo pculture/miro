@@ -60,11 +60,6 @@ def save():
         __lock.release()
 
 def get(descriptor):
-    if 'ISAFAKE' in descriptor.__dict__:
-        logging.warning ("config.get called with config descriptor: %s",
-                         descriptor.key)
-        logging.warning ("%s:%s", traceback.extract_stack()[-2][0], traceback.extract_stack()[-2][1])
-
     __lock.acquire()
     try:
         __checkValidity()
@@ -92,9 +87,6 @@ def getAppConfig():
         __lock.release()
     
 def set(descriptor, value):
-    if 'ISAFAKE' in descriptor.__dict__:
-        logging.warning ("config.set called with config descriptor: %s",
-                         descriptor.key)
     __lock.acquire()
     logging.info ("Setting %s to %s", descriptor.key, value)
     try:
@@ -121,11 +113,3 @@ def ensureMigratedMoviePath(pathname):
     if hasattr(platformcfg, 'ensureMigratedMoviePath'):
         pathname = platformcfg.ensureMigratedMoviePath(pathname)
     return pathname
-
-# We should remove this hack once we change all config.get to use prefs
-import copy
-for name, object in prefs.__dict__.items():
-    if isinstance(object, prefs.Pref):
-        fakePref = copy.copy(object)
-        fakePref.ISAFAKE = True
-        globals()[name] = fakePref
