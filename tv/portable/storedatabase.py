@@ -906,7 +906,7 @@ class LiveStorage:
 
                             logging.info("Upgrading from previous version of database")
                             LiveStorageBDB()
-                            self.saveDatabase()
+                        self.saveDatabase()
                 except KeyboardInterrupt:
                     raise
                 except databaseupgrade.DatabaseTooNewError:
