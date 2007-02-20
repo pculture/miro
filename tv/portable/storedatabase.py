@@ -897,7 +897,7 @@ class LiveStorage:
                         self.cursor.execute("SELECT serialized_value FROM dtv_variables WHERE name=:name",{'name':VERSION_KEY})
                         self.version = self.cursor.fetchone()
                         if self.version:
-                            self.version = cPickle.dumps(self.version[0],cPickle.HIGHEST_PROTOCOL)
+                            self.version = cPickle.loads(str(self.version[0]))
                         self.loadDatabase()
                     else:
                         self.version = None
@@ -1027,10 +1027,7 @@ class LiveStorage:
 
             savables = []
             self.cursor.execute("SELECT id, serialized_object FROM dtv_objects")
-            while True:
-                next = cursor.next()
-                if next is None:
-                    break
+            for next in self.cursor:
                 key, data = next
                 try:
                     savable = cPickle.loads(str(data))
@@ -1040,7 +1037,6 @@ class LiveStorage:
                 except:
                     logging.info ('Error loading data in upgradeDatabase')
                     raise
-            cursor.close()
             changed = databaseupgrade.upgrade(savables, self.version)
         
             if changed is None:
@@ -1057,7 +1053,6 @@ class LiveStorage:
                         self.cursor.execute("DELETE FROM dtv_objects WHERE id=?",int(o.savedData['id']))
             self.version = schema_mod.VERSION
             self.cursor.execute("REPLACE INTO dtv_variables (name, serialized_value) VALUES (?,?)",(VERSION_KEY, buffer(cPickle.dumps(self.version,cPickle.HIGHEST_PROTOCOL))))
-            # End transaction?
 
             objects = savablesToObjects (savables)
             db = database.defaultDatabase
@@ -1085,8 +1080,8 @@ class LiveStorage:
     def loadDatabase(self):
         database.confirmDBThread()
         upgrade = (self.version != schema_mod.VERSION)
-        #if upgrade:
-        #    return self.upgradeDatabase()
+        if upgrade:
+            return self.upgradeDatabase()
         objects = []
         self.cursor.execute("SELECT id, serialized_object FROM dtv_objects")
         while True:
