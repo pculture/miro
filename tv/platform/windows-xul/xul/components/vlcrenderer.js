@@ -112,15 +112,23 @@ VLCRenderer.prototype = {
     // It appears that clear_playlist() always leaves one item in
     // the playlist. This is the only way I could figure out to
     // actually clear it... -NN  
-    this.stop();
-    this.vlc.playlist.clear();
-    this.vlc.playlist.add(url);
-    this.vlc.playlist.play();
-    this.vlc.playlist.next();
+      var item;
+      if (this.vlc.playlist.items.count > 0) {
+          this.stop();
+          this.vlc.playlist.items.clear();
+      }
+      item = this.vlc.playlist.add(url)
+      if (this.vlc.playlist.items.count > 0) {
+          this.vlc.playlist.playItem(item);
+      }
   },
 
   play: function() {
-    if(!this.vlc.playlist.isPlaying) this.vlc.playlist.play();
+    if(!this.vlc.playlist.isPlaying) {
+        if (this.vlc.playlist.items.count > 0) {
+            this.vlc.playlist.play();
+        }
+    }
     this.scheduleUpdates = true;
     this.active = true;
     this.startedPlaying = false;
@@ -131,20 +139,30 @@ VLCRenderer.prototype = {
   pause: function() {
     this.scheduleUpdates = false;
     this.active = false;
-    if (this.vlc.playlist.isPlaying) this.vlc.playlist.togglePause();
+    if (this.vlc.playlist.isPlaying) {
+        if (this.vlc.playlist.items.count > 0) {
+            this.vlc.playlist.togglePause();
+        }
+    }
     this.showPlayButton();
   },
 
   pauseForDrag: function() {
     this.scheduleUpdates = false;
     this.active = false;
-    if (this.vlc.playlist.isPlaying) this.vlc.playlist.togglePause();
+    if (this.vlc.playlist.isPlaying) {
+        if (this.vlc.playlist.items.count > 0) {
+            this.vlc.playlist.togglePause();
+        }
+    }
   },
 
   stop: function() {
     this.scheduleUpdates = false;
     this.active = false;
-    this.vlc.playlist.stop();
+    if (this.vlc.playlist.items.count > 0) {
+        this.vlc.playlist.stop();
+    }
     this.showPlayButton();
   },
 
