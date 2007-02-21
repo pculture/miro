@@ -122,18 +122,22 @@ VLCRenderer.prototype = {
           this.vlc.playlist.playItem(item);
       }
   },
-
+  
   play: function() {
-    if(!this.vlc.playlist.isPlaying) {
-        if (this.vlc.playlist.items.count > 0) {
-            this.vlc.playlist.play();
-        }
-    }
-    this.scheduleUpdates = true;
-    this.active = true;
-    this.startedPlaying = false;
-    this.updateVideoControls();
-    this.showPauseButton();
+      if (this.vlc.playlist.items.count > 0) {
+	  if(!this.vlc.playlist.isPlaying) {
+	      this.vlc.playlist.play();
+	  } 
+	  this.scheduleUpdates = true;
+	  this.active = true;
+	  this.startedPlaying = false;
+	  this.updateVideoControls();
+	  this.showPauseButton();
+      } else {
+	  this.active = false;
+	  this.scheduleUpdates = false;
+	  pybridge.onMovieFinished();
+      }
   },
 
   pause: function() {
