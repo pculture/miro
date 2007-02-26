@@ -198,7 +198,8 @@ class ChannelGuide(DDBObject):
         self.dc = grabURL(self.getURL(), self.processUpdate, self.processUpdateErrback)
 
     def remove(self):
-        self.dc.cancel()
+        if self.dc:
+            self.dc.cancel()
         DDBObject.remove(self)
 
     def getURL(self):
