@@ -10,6 +10,7 @@
  *
  **************************************************************************/
 
+#include "Python.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -213,19 +214,27 @@ void xineAttach(_Xine* xine, const char* displayName, Drawable d)
 
 void xineDetach(_Xine* xine)
 {
+    xine_event_queue_t* eventQueue;
+
     if(!xine->attached) return;
+
     // This was a XINE_GUI_SEND_SELECT_VISUAL, but that was crashing
     // See ticket #3649
     xine_port_send_gui_data(xine->videoPort,
 			    XINE_GUI_SEND_WILL_DESTROY_DRAWABLE, NULL);
     xine_close(xine->stream);
-    xine_event_dispose_queue(xine->eventQueue);
     xine_dispose(xine->stream);
     xine_close_audio_driver(xine->xine, xine->audioPort);
     xine_close_video_driver(xine->xine, xine->videoPort);
     XCloseDisplay(xine->display);
-
     xine->attached = 0;
+
+    /* Save this so that no one accesses xine twice at once. */
+    eventQueue = xine->eventQueue;
+    /* Allow threads, since xine_event_dispose_queue joins on the queue thread. */
+    Py_BEGIN_ALLOW_THREADS    
+    xine_event_dispose_queue(eventQueue);
+    Py_END_ALLOW_THREADS    
 }
 
 void xineSetArea(_Xine* xine, int xpos, int ypos, int width, int height)
@@ -269,7 +278,7 @@ int xineFileDuration(_Xine* xine, const char* filename)
     return duration;
 }
 
-void xinePlayFile(_Xine* xine, const char* filename)
+void xineSelectFile(_Xine* xine, const char* filename)
 {
     if(!xine->attached) return;
     xine_close(xine->stream);
@@ -280,9 +289,6 @@ void xinePlayFile(_Xine* xine, const char* filename)
     } else {
       _xineSwitchToViz(xine);
     }
-    if (!xine_play(xine->stream, 0, 0))
-      printf ("Unable to play file '%s'\n", filename);
-
 }
 
 void xineSeek(_Xine* xine, int position)

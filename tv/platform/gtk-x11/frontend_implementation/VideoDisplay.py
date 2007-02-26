@@ -40,7 +40,11 @@ class VideoDisplay (app.VideoDisplayBase):
             pkg = __import__('frontend_implementation.' + modname)
             module = getattr(pkg, modname)
             renderer = module.Renderer()
-            renderer.setWidget(self.widget)
+            widget = gtk.DrawingArea()
+            widget.set_double_buffered(False)
+            widget.add_events(gtk.gdk.POINTER_MOTION_MASK)
+            widget.show()
+            renderer.setWidget(widget)
             self.renderers.append(renderer)
             logging.info ("loaded renderer '%s'", modname)
         except:
@@ -58,6 +62,7 @@ class VideoDisplay (app.VideoDisplayBase):
         else:
             for value in values.get_list():
                 self.add_renderer(value.get_string())
+        self.widget.add (self.renderers[0].widget)
         gconf_lock.release()
         self.renderersReady.set()
 
@@ -71,9 +76,7 @@ class VideoDisplay (app.VideoDisplayBase):
 
     @gtkAsyncMethod
     def _gtkInit(self):
-        self.widget = gtk.DrawingArea()
-        self.widget.set_double_buffered(False)
-        self.widget.add_events(gtk.gdk.POINTER_MOTION_MASK)
+        self.widget = gtk.Alignment(xscale = 1.0, yscale = 1.0)
         self.widget.show()
 
     def startVideoTimeUpdate(self):
@@ -87,6 +90,17 @@ class VideoDisplay (app.VideoDisplayBase):
             self.videoUpdateTimeout = None
 
     @gtkAsyncMethod
+    def setChildWidget (self, widget):
+        if self.widget.child != widget:
+            if self.widget.child:
+                self.widget.remove (self.widget.child)
+            self.widget.add (widget)
+            
+    def setActiveRenderer (self, renderer):
+        app.VideoDisplayBase.setActiveRenderer(self, renderer)
+        self.setChildWidget (renderer.widget)
+
+    @gtkAsyncMethod
     def play(self, startTime=0):
         if not self.activeRenderer:
             return
@@ -97,6 +111,9 @@ class VideoDisplay (app.VideoDisplayBase):
         self.startVideoTimeUpdate()
         self.isPlaying = True
         app.controller.frame.windowChanger.updatePlayPauseButton()
+
+    def playFromTime(self, startTime):
+        self.play (startTime)
 
     def goToBeginningOfMovie(self):
         self.play(0)

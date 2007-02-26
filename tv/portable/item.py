@@ -60,6 +60,7 @@ class Item(DDBObject):
         self.videoFilename = ""
         self.eligibleForAutoDownload = True
         self.duration = None
+        self.resumeTime = 0
 
         self.iconCache = IconCache(self)
         
@@ -620,6 +621,12 @@ folder will be deleted.""")
             self.autoDownloaded = autodl
             self.signalChange()
 
+    @eventloop.asIdle
+    def setResumeTime(self, position):
+        if self.resumeTime != position:
+            self.resumeTime = position
+            self.signalChange()
+
     def getPendingReason(self):
         self.confirmDBThread()
         return self.pendingReason
@@ -843,7 +850,7 @@ folder will be deleted.""")
     def getItemDetails(self):
         rv = [
             (_('Web page:'), util.makeAnchor(_('permalink'), self.getLink())),
-            (_('File link:'), util.makeAnchor(_('direct link to file'), 
+            (_('File link:'), util.makeAnchor(_('direct link to file'),
                 self.getURL())),
             (_('File type:'), self.getFormat())
         ]

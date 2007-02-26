@@ -91,6 +91,7 @@ class PlaybackControllerBase:
         self.currentPlaylist = None
         self.justPlayOne = False
         self.currentItem = None
+        self.updateVideoTimeDC = None
 
     def configure(self, view, firstItemId=None, justPlayOne=False):
         self.currentPlaylist = Playlist(view, firstItemId)
@@ -175,7 +176,11 @@ class PlaybackControllerBase:
         if frame.getDisplay(frame.mainDisplay) is not videoDisplay:
             frame.selectDisplay(videoDisplay, frame.mainDisplay)
         videoDisplay.selectItem(anItem, videoRenderer)
-        videoDisplay.play()
+        if anItem.resumeTime > 10:
+            videoDisplay.playFromTime(anItem.resumeTime)
+        else:
+            videoDisplay.play()
+        self.startUpdateVideoTime()
 
     def playItemExternally(self, itemID):
         anItem = mapToPlaylistItem(db.getObjectByID(int(itemID)))
@@ -192,7 +197,26 @@ class PlaybackControllerBase:
         frame = controller.frame
         frame.selectDisplay(newDisplay, frame.mainDisplay)
 
+    def startUpdateVideoTime(self):
+        if not self.updateVideoTimeDC:
+            self.updateVideoTimeDC = eventloop.addTimeout(.5, self.updateVideoTime, "Update Video Time")
+
+    def stopUpdateVideoTime(self):
+        if self.updateVideoTimeDC:
+            self.updateVideoTimeDC.cancel()
+            self.updateVideoTimeDC = None
+
+    def updateVideoTime(self, repeat=True):
+        time = controller.videoDisplay.getCurrentTime()
+        if time != None and self.currentItem:
+            self.currentItem.setResumeTime (time)
+        if repeat:
+            self.updateVideoTimeDC = eventloop.addTimeout(.5, self.updateVideoTime, "Update Video Time")
+
     def stop(self, switchDisplay=True, markAsViewed=False):
+        if self.updateVideoTimeDC:
+            self.updateVideoTime(repeat=False)
+            self.stopUpdateVideoTime()
         if self.currentItem:
             self.currentItem.onViewedCancel()
         self.currentItem = None
@@ -221,9 +245,15 @@ class PlaybackControllerBase:
             if nextItem is None:
                 self.stop()
             else:
+                if self.updateVideoTimeDC:
+                    self.updateVideoTime(repeat=False)
+                    self.stopUpdateVideoTime()
                 self.playItem(nextItem)
 
     def onMovieFinished(self):
+        self.stopUpdateVideoTime()
+        if self.currentItem:
+            self.currentItem.setResumeTime(0)
         self.currentItem = None
         return self.skip(1, False)
 
@@ -329,10 +359,13 @@ class VideoDisplayBase (Display):
         template = TemplateDisplay('video-info','default')
         area = controller.frame.videoInfoDisplay
         controller.frame.selectDisplay(template, area)
-        
-        self.activeRenderer = renderer
+
+        self.setActiveRenderer(renderer)
         self.activeRenderer.selectItem(anItem)
         self.activeRenderer.setVolume(self.getVolume())
+
+    def setActiveRenderer (self, renderer):
+        self.activeRenderer = renderer
 
     def reset(self):
         self.isPlaying = False
@@ -350,6 +383,11 @@ class VideoDisplayBase (Display):
             self.pause()
         else:
             self.play()
+
+    def playFromTime(self, startTime):
+        if self.activeRenderer is not None:
+            self.activeRenderer.playFromTime(startTime)
+        self.isPlaying = True
 
     def play(self):
         if self.activeRenderer is not None:
@@ -379,7 +417,12 @@ class VideoDisplayBase (Display):
     def getCurrentTime(self):
         if self.activeRenderer is not None:
             return self.activeRenderer.getCurrentTime()
-        return 0
+        return None
+
+    def getDuration(self):
+        if self.activeRenderer is not None:
+            return self.activeRenderer.getDuration()
+        return None
 
     def setVolume(self, level):
         self.volume = level
@@ -433,7 +476,7 @@ class VideoRenderer:
 
     def getProgress(self):
         duration = self.getDuration()
-        if duration == 0:
+        if duration == 0 or duration == None:
             return 0.0
         return self.getCurrentTime() / duration
 
@@ -463,6 +506,12 @@ class VideoRenderer:
                 
     def goToBeginningOfMovie(self):
         pass
+
+    def getCurrentTime(self):
+        return None
+        
+    def playFromTime(self):
+        self.play()
         
     def play(self):
         pass

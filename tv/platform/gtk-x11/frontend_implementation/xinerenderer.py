@@ -4,7 +4,6 @@ import gtk
 import traceback
 import gobject
 import eventloop
-import platformutils
 import config
 import prefs
 
@@ -62,7 +61,6 @@ class Renderer(app.VideoRenderer):
                 event.area.height)
 
     def canPlayFile(self, filename):
-        platformutils.confirmMainThread()
         return self.xine.canPlayFile(filename)
 
     def fileDuration(self, filename):
@@ -95,7 +93,7 @@ class Renderer(app.VideoRenderer):
     def selectFile(self, filename):
         viz = config.get(prefs.XINE_VIZ);
         self.xine.setViz(viz);
-        self.xine.playFile(filename)
+        self.xine.selectFile(filename)
         def exposeWorkaround():
             try:
                 _, _, width, height, _ = self.widget.window.get_geometry()
@@ -117,10 +115,13 @@ class Renderer(app.VideoRenderer):
             pos, length = self.xine.getPositionAndLength()
             return pos / 1000
         except:
-            return 0
+            return None
+
+    def playFromTime(self, seconds):
+        self.seek (seconds)
 
     @waitForAttach
-    def playFromTime(self, seconds):
+    def seek(self, seconds):
         self.xine.seek(int(seconds * 1000))
 
     def getDuration(self):
@@ -128,7 +129,7 @@ class Renderer(app.VideoRenderer):
             pos, length = self.xine.getPositionAndLength()
             return length / 1000
         except:
-            return 1
+            return None
 
     @waitForAttach
     def reset(self):

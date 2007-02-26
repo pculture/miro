@@ -216,7 +216,7 @@ class CallbackHandler(object):
         videoDisplay = self.mainApp.videoDisplay
         renderer = videoDisplay.activeRenderer
         if videoDisplay.isPlaying and renderer and videoTimeScale.buttonsDown:
-            renderer.playFromTime(videoTimeScale.get_value())
+            renderer.seek(videoTimeScale.get_value())
         return True
 
     def on_video_time_scale_format_value(self, scale, seconds):

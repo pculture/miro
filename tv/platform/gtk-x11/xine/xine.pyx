@@ -40,7 +40,7 @@ cdef extern from "xine_impl.h":
     void xineDetach(_Xine* xine)
     int xineCanPlayFile(_Xine* xine, char* filename)
     int xineFileDuration(_Xine* xine, char* filename)
-    void xinePlayFile(_Xine* xine, char* filename)
+    void xineSelectFile(_Xine* xine, char* filename)
     void xineSetPlaying(_Xine* xine, int isPlaying)
     void xineSetViz(_Xine* xine, char *viz)
     void xineSetVolume(_Xine* xine, int volume)
@@ -73,9 +73,9 @@ cdef class Xine:
         return xineCanPlayFile(self.xine, filename) and True or False
     def fileDuration(self, char* filename):
         return xineFileDuration(self.xine, filename)
-    def playFile(self, char* filename):
+    def selectFile(self, char* filename):
         print "Beginning playback %s" % (filename,)
-        xinePlayFile(self.xine, filename)
+        xineSelectFile(self.xine, filename)
     def play(self):
         xineSetPlaying(self.xine, 1)
     def pause(self):

@@ -315,6 +315,7 @@ class MainFrame:
                 currentTime = renderer.getCurrentTime()
             except:
                 currentTime = 0
+            # None is less than both 0 and 1, so these will handle None.
             if videoLength < 1:
                 videoLength = 1
             if currentTime < 0:
@@ -322,7 +323,7 @@ class MainFrame:
             if currentTime > videoLength:
                 currentTime = videoLength
             videoTimeScale.set_range(0, videoLength)
-            videoTimeScale.set_value(renderer.getCurrentTime())
+            videoTimeScale.set_value(currentTime)
         return True
 
     @gtkAsyncMethod

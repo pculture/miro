@@ -553,6 +553,14 @@ def upgrade39(objectList):
                     o.savedData['offsetPath'] = None
     return changed
 
+def upgrade40(objectList):
+    changed = set()
+    for o in objectList:
+        if o.classString in ('item', 'file-item'):
+            o.savedData['resumeTime'] = 0
+            changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()
