@@ -24,9 +24,10 @@ class MovieDataUpdater:
 
     @asIdle
     def updateFinished (self, item, duration):
-        item.duration = duration
-        item.updating_movie_info = False
-        item.signalChange()
+        if item.idExists():
+            item.duration = duration
+            item.updating_movie_info = False
+            item.signalChange()
 
         self.runningCount -= 1
 
