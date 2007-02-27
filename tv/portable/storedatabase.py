@@ -1068,14 +1068,16 @@ class LiveStorage:
         """
         database.confirmDBThread()
         logging.info ("Rewriting database")
-        self.cursor.execute("BEGIN TRANSACTION")
+        if not self.updating:
+            self.cursor.execute("BEGIN TRANSACTION")
         try:
-            cursor.execute("DELETE FROM dtv_objects")
+            self.cursor.execute("DELETE FROM dtv_objects")
             for o in savables:
                 data = cPickle.dumps(o,cPickle.HIGHEST_PROTOCOL)
                 self.cursor.execute("REPLACE INTO dtv_objects (id, serialized_object) VALUES (?,?)",(int(o.savedData['id']), buffer(data)))
         finally:
-            cursor.execute("COMMIT")
+            if not self.updating:
+                self.cursor.execute("COMMIT")
 
     def loadDatabase(self):
         database.confirmDBThread()
