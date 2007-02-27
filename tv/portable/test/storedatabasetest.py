@@ -372,28 +372,44 @@ class TestConstraintChecking(LiveStorageTest):
 class TestHighLevelFunctions(LiveStorageTest):
     def setUp(self):
         LiveStorageTest.setUp(self)
-        f = feed.Feed("http://feed.uk")
-        i = item.Item({}, feed_id=f.id)
-        i2 = item.Item({}, feed_id=f.id)
-        self.objects = [f, i, i2]
+        self.f = feed.Feed("http://feed.uk")
+        i = item.Item({}, feed_id=self.f.id)
+        i2 = item.Item({}, feed_id=self.f.id)
+        self.objects = [self.f, i, i2]
 
     def checkDatabaseIsTheSame(self):
+        self.assertEquals(len(self.objects), len(self.database.objects))
+
         # We can't directly compare objects, since that would compare their
         # ids.  As a sanity test, compare that we have the same classes coming
         # out and we did going in.
         i = 0
         for newObject, copy in self.database.objects:
             self.assertEquals(type(newObject), type(self.objects[i]))
+            self.assertEquals(newObject.id, self.objects[i].id)
+            i += 1
 
     def saveDatabase(self):
         self.database.liveStorage.saveDatabase()
 
     def restoreDatabase(self):
+        database.defaultDatabase = database.DynamicDatabase()
+        self.database=database.defaultDatabase
         self.database.liveStorage = storedatabase.LiveStorage(self.savePath,
-                restore=False)
+                restore=True)
 
     def testSaveThenRestore(self):
         self.saveDatabase()
+        self.restoreDatabase()
+        self.checkDatabaseIsTheSame()
+
+    def testUpdateThenRestore(self):
+        i3 = item.Item({}, feed_id=self.f.id)
+        self.saveDatabase()
+        i3.remove()
+        i3 = item.Item({}, feed_id=self.f.id)
+        self.objects.append(i3)
+        self.database.liveStorage.runUpdate()
         self.restoreDatabase()
         self.checkDatabaseIsTheSame()
 
