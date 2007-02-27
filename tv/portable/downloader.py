@@ -16,6 +16,7 @@ import indexes
 import prefs
 import random
 import views
+import platformutils
 import flashscraper
 from templatehelper import toUni
 
@@ -247,7 +248,7 @@ class RemoteDownloader(DDBObject):
         parent = os.path.normpath(parent)
         moviesDir = config.get(prefs.MOVIES_DIRECTORY)
         if (os.path.exists(parent) and
-            not os.path.samefile(parent, moviesDir) and
+            not platformutils.samefile(parent, moviesDir) and
             len(os.listdir(parent)) == 0):
             try:
                 os.rmdir(parent)
