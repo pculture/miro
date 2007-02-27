@@ -1138,7 +1138,8 @@ class LiveStorage:
                     # exception
                     try:
                         self.remove (object)
-                    except sql.DatabaseError:
+                    except sql.DatabaseError, e:
+                        #logging.error("SQL ERROR %s" % e)
                         pass
                 for object in self.toUpdate:
                     self.update (object)
@@ -1196,7 +1197,7 @@ class LiveStorage:
             if self.dc is None:
                 self.dc = eventloop.addTimeout(self.TRANSACTION_TIMEOUT, self.runUpdate, self.TRANSACTION_NAME)
         else:
-            self.cursor.execute("DELETE FROM dtv_objects WHERE id=?", int(object.id))
+            self.cursor.execute("DELETE FROM dtv_objects WHERE id=?", (int(object.id),))
 
     def checkpoint (self):
         database.confirmDBThread()
