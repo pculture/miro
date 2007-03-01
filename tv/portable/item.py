@@ -623,6 +623,7 @@ folder will be deleted.""")
 
     @eventloop.asIdle
     def setResumeTime(self, position):
+        position = int(position)
         if self.resumeTime != position:
             self.resumeTime = position
             self.signalChange()
@@ -1750,7 +1751,7 @@ def isVideoFilename(filename):
                                        '.ogg', '.anx', '.mpg', '.avi', 
                                        '.flv']) or
             (len(filename) > 5 and
-             filename[-5:].lower() == '.mpeg'))
+             filename[-5:].lower() in ['.mpeg', '.divx']))
 
 def isAudioFilename(filename):
     return len(filename) > 4 and filename[-4:].lower() in ['.mp3', '.m4a']

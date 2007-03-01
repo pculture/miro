@@ -510,8 +510,9 @@ class VideoRenderer:
     def getCurrentTime(self):
         return None
         
-    def playFromTime(self):
+    def playFromTime(self, position):
         self.play()
+        self.setCurrentTime(position)
         
     def play(self):
         pass

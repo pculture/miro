@@ -117,11 +117,15 @@ VLCRenderer.prototype = {
           this.stop();
           this.vlc.playlist.items.clear();
       }
-      item = this.vlc.playlist.add(url)
+      item = this.vlc.playlist.add(url);
       if (this.vlc.playlist.items.count > 0) {
           this.vlc.playlist.playItem(item);
-      }
+      } 
   },
+
+  setCurrentTime: function(time) {
+      this.vlc.input.time = time * 1000;
+    },
   
   play: function() {
       if (this.vlc.playlist.items.count > 0) {
@@ -180,8 +184,9 @@ VLCRenderer.prototype = {
   },
 
   getCurrentTime: function() {
-    rv = this.vlc.time;
-    return rv;
+      var rv;
+      rv = this.vlc.input.time;
+      return rv / 1000.0;
   },
 
   setVolume: function(level) {

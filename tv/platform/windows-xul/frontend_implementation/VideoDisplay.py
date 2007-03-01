@@ -98,7 +98,10 @@ class VLCRenderer (app.VideoRenderer):
     def getDuration(self): 
         return frontend.vlcRenderer.getDuration()
     def getCurrentTime(self): 
-        return frontend.vlcRenderer.getCurrentTime()
+        try:
+            return frontend.vlcRenderer.getCurrentTime()
+        except:
+            return None
     def setCurrentTime(self, time): 
         return frontend.vlcRenderer.setCurrentTime(time)
     def getRate(self): 
