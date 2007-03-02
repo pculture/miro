@@ -905,7 +905,10 @@ class LiveStorage:
                             os.access(config.get(prefs.DB_PATHNAME), os.F_OK)):
 
                             logging.info("Upgrading from previous version of database")
-                            LiveStorageBDB()
+                            try:
+                                LiveStorageBDB()
+                            except:
+                                logging.warning("Upgrading from previous version of database failed")
                         self.saveDatabase()
                 except KeyboardInterrupt:
                     raise
