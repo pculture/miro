@@ -77,6 +77,11 @@ VLCRenderer.prototype = {
     }
   },
 
+  resetVideoControls: function () {
+     jsbridge.setSliderText(0);
+     jsbridge.moveSlider(0);
+  },
+
   showPauseButton: function() {
     var playButton = this.document.getElementById("bottom-buttons-play");
     playButton.className = "bottom-buttons-pause";
@@ -97,6 +102,7 @@ VLCRenderer.prototype = {
     // this.stop();
     // this.vlc.clear_playlist();
     this.showPlayButton();
+    this.resetVideoControls();
   },
 
   canPlayURL: function(url) {
@@ -172,6 +178,7 @@ VLCRenderer.prototype = {
         this.vlc.playlist.stop();
     }
     this.showPlayButton();
+    this.resetVideoControls();
   },
 
   goToBeginningOfMovie: function() {
