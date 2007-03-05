@@ -80,6 +80,46 @@ def AttachCombo (dialog, widget, descriptor, values):
             break
     widget.connect ('changed', ComboChanged)
 
+def SetupDirList (widgetTree):
+    def SelectionChanged (selection):
+        if selection.get_selected()[1]:
+            widgetTree["button-collection-dirs-remove"].set_sensitive (True)
+        else:
+            widgetTree["button-collection-dirs-remove"].set_sensitive (False)
+    def SaveDirList():
+        model = widgetTree["treeview-collection-dirs"].get_model()
+        config.setList (prefs.MY_COLLECTION_DIRS, [dir for (dir,) in model])
+
+    def RemoveClicked (widget):
+        model, iter = selection.get_selected()
+        if iter:
+            model.remove(iter)
+        SaveDirList()
+            
+    def AddClicked (widget):
+        dialog = gtk.FileChooserDialog("View this folder in \"My Collection\"",
+                                       widgetTree["dialog-preferences"],
+                                       gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
+                                       (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, 
+                                        gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
+        response = dialog.run()
+        if response == gtk.RESPONSE_ACCEPT:
+            model = widgetTree["treeview-collection-dirs"].get_model()
+            model.set (model.append(None), 0, dialog.get_filename())
+            SaveDirList()
+        dialog.destroy()
+        
+    selection = widgetTree["treeview-collection-dirs"].get_selection()
+    selection.connect ("changed", SelectionChanged)
+    SelectionChanged(selection)
+
+    button = widgetTree["button-collection-dirs-remove"]
+    button.connect ("clicked", RemoveClicked)
+
+    button = widgetTree["button-collection-dirs-add"]
+    button.connect ("clicked", AddClicked)
+
+
 class CallbackHandler(object):
     """Class to handle menu item activation, button presses, etc.  The method
     names for this class correspond to the event handler that they implement.
@@ -379,6 +419,20 @@ class CallbackHandler(object):
         AttachCombo   (dialog, widgetTree['combobox-expiration'], prefs.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))
         AttachBooleanRadio (dialog, widgetTree['radiobutton-playback-one'], widgetTree['radiobutton-playback-all'], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
         AttachBoolean (dialog, widgetTree['checkbutton-resumemode'], prefs.RESUME_VIDEOS_MODE)
+
+        treeview = widgetTree['treeview-collection-dirs']
+        listmodel = gtk.TreeStore(gobject.TYPE_STRING)
+        for dir in config.getList(prefs.MY_COLLECTION_DIRS):
+            listmodel.set (listmodel.append(None), 0, dir)
+        treeview.set_model(listmodel)
+        
+        renderer = gtk.CellRendererText()
+        column = gtk.TreeViewColumn()
+        column.pack_start(renderer)
+        column.add_attribute (renderer, "text", 0)
+        treeview.append_column(column)
+
+        SetupDirList (widgetTree)
 
         try:
             os.makedirs (movie_dir)

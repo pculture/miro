@@ -847,6 +847,7 @@ Manually</property>
 
 		  <child>
 		    <widget class="GtkLabel" id="label41">
+		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">Show movies in these directories in My Collection</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">False</property>
@@ -883,6 +884,7 @@ Manually</property>
 
 		      <child>
 			<widget class="GtkHBox" id="hbox19">
+			  <property name="visible">True</property>
 			  <property name="homogeneous">False</property>
 			  <property name="spacing">6</property>
 
@@ -899,10 +901,10 @@ Manually</property>
 				<widget class="GtkTreeView" id="treeview-collection-dirs">
 				  <property name="visible">True</property>
 				  <property name="can_focus">True</property>
-				  <property name="headers_visible">True</property>
+				  <property name="headers_visible">False</property>
 				  <property name="rules_hint">True</property>
 				  <property name="reorderable">False</property>
-				  <property name="enable_search">True</property>
+				  <property name="enable_search">False</property>
 				  <property name="fixed_height_mode">False</property>
 				  <property name="hover_selection">False</property>
 				  <property name="hover_expand">False</property>

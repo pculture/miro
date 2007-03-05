@@ -98,7 +98,7 @@ def set(descriptor, value):
         __lock.release()
 
 def setList(descriptor, value):
-    set(descriptor, [quote(i) for i in value].join (','))
+    set(descriptor, ','.join ([urllib.quote(i) for i in value]))
 
 def __checkValidity():
     if __appConfig == None:
