@@ -378,6 +378,7 @@ class CallbackHandler(object):
         AttachCombo   (dialog, widgetTree['combobox-poll'], prefs.CHECK_CHANNELS_EVERY_X_MN, (30, 60, -1))
         AttachCombo   (dialog, widgetTree['combobox-expiration'], prefs.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))
         AttachBooleanRadio (dialog, widgetTree['radiobutton-playback-one'], widgetTree['radiobutton-playback-all'], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
+        AttachBoolean (dialog, widgetTree['checkbutton-resumemode'], prefs.RESUME_VIDEOS_MODE)
 
         try:
             os.makedirs (movie_dir)

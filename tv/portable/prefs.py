@@ -30,6 +30,7 @@ BT_MAX_PORT                 = Pref( key='BitTorrentMaxPort',     default=8600,  
 UPLOAD_RATIO                = Pref( key='uploadRatio',           default=2.0,   platformSpecific=False )
 STARTUP_TASKS_DONE          = Pref( key='startupTasksDone',      default=False, platformSpecific=False )
 SINGLE_VIDEO_PLAYBACK_MODE  = Pref( key='singleVideoPlaybackMode',default=False,platformSpecific=False )
+RESUME_VIDEOS_MODE          = Pref( key='resumeVideosMode',      default=True,  platformSpecific=False )
 MY_COLLECTION_DIRS          = Pref( key="CollectionDirs",        default="",    platformSpecific=False )
 
 # Only used on particular platforms.

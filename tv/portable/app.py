@@ -176,7 +176,7 @@ class PlaybackControllerBase:
         if frame.getDisplay(frame.mainDisplay) is not videoDisplay:
             frame.selectDisplay(videoDisplay, frame.mainDisplay)
         videoDisplay.selectItem(anItem, videoRenderer)
-        if anItem.resumeTime > 10:
+        if config.get(prefs.RESUME_VIDEOS_MODE) and anItem.resumeTime > 10:
             videoDisplay.playFromTime(anItem.resumeTime)
         else:
             videoDisplay.play()
