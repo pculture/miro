@@ -57,7 +57,8 @@ def _scrapeGoogleVideoURL(url, callback):
     try:
         components = urlparse.urlsplit(url)
         params = cgi.parse_qs(components[3])
-        url = unquote_plus(params['videoUrl'][0])
+        docId = params['docId'][0]
+        url = "http://video.google.com/videofile/%s.flv?docid=%s&itag=5" % (docId, docId)
         callback(url)
     except:
         print "DTV: WARNING, unable to scrape Google Video URL: %s" % url
