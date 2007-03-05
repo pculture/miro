@@ -40,6 +40,7 @@
 	</groupbox>
 	<groupbox orient="horizontal">
 		<caption label="Playback"/>
+		    <checkbox id="resumeVideos" checked="true" label="Remember video position." value="1" oncommand="resumeVideosModeChange();"/>
                     <radiogroup id="play-mode-radiogroup"
                             oncommand="singlePlayModeChange();" >
                         <radio label="Play videos one after another." 

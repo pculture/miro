@@ -72,6 +72,8 @@ interface pcfIDTVPyBridge : nsISupports
   void setBTMaxPort(in short value);
   boolean getStartupTasksDone();
   void setStartupTasksDone(in boolean value);
+  boolean getResumeVideosMode();
+  void setResumeVideosMode(in boolean value);
   void showCursor(in boolean display);
   void createNewPlaylist();
   void createNewPlaylistFolder();

@@ -232,6 +232,10 @@ class PyBridge:
         return config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE)
     def setSinglePlayMode(self, value):
         return config.set(prefs.SINGLE_VIDEO_PLAYBACK_MODE, value)
+    def getResumeVideosMode(self):
+        return config.get(prefs.RESUME_VIDEOS_MODE)
+    def setResumeVideosMode(self, value):
+        return config.set(prefs.RESUME_VIDEOS_MODE, value)
     def getBTMinPort(self):
         return config.get(prefs.BT_MIN_PORT)
     def setBTMinPort(self, value):

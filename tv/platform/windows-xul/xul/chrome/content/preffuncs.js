@@ -14,6 +14,7 @@ function onload() {
   setHasMinDiskSpace(pybridge.getPreserveDiskSpace());
   setMinDiskSpace(pybridge.getPreserveDiskSpaceAmount());
   setExpire(pybridge.getExpireAfter());
+  setResumeVideosMode(pybridge.getResumeVideosMode());
   setSinglePlayMode(pybridge.getSinglePlayMode());
   setBTMinPort(pybridge.getBTMinPort());
   setBTMaxPort(pybridge.getBTMaxPort());
@@ -172,6 +173,16 @@ function setSinglePlayMode(value) {
     var button = document.getElementById('continuous-play-mode-radio');
   }
   document.getElementById('play-mode-radiogroup').selectedItem = button;
+}
+
+function resumeVideosModeChange() {
+  var checkbox = document.getElementById('resumeVideos');
+  pybridge.setResumeVideosMode(checkbox.checked);
+}
+
+function setResumeVideosMode(value) {
+  var checkbox = document.getElementById('resumeVideos');
+  checkbox.checked = value
 }
 
 function setBTMinPort(value) {
