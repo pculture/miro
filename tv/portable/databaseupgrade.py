@@ -565,7 +565,7 @@ def upgrade41(objectList):
     from util import unicodify
     # This is where John Lennon's ghost sings "Binary Fields Forever"
     binaryFields = ['filename','videoFilename', 'shortFilename',
-                        'offsetPath','initialHTML']
+                        'offsetPath','initialHTML','status','channelName']
     changed = set()
     for o in objectList:
         o.savedData = unicodify(o.savedData)
@@ -587,7 +587,20 @@ def upgrade41(objectList):
                                o.savedData['iconCache'].savedData['filename'].encode('ascii','replace')
 
             else:
-                if type(o.savedData[field]) == unicode:
+                if field == 'status':
+                    for subfield in o.savedData['status']:
+                        if type(o.savedData[field][subfield]) in [unicode,str]:
+                            if subfield not in ['channelName','shortFilename',
+                                             'filename','metainfo']:
+                            
+                                o.savedData[field][subfield] = \
+                             o.savedData[field][subfield].decode('ascii',
+                                                                 'replace')
+                            else:
+                                o.savedData[field][subfield] = \
+                             o.savedData[field][subfield].encode('ascii',
+                                                                 'replace')
+                elif type(o.savedData[field]) == unicode:
                     o.savedData[field] = o.savedData[field].encode('ascii','replace')
         if o.classString == 'channel-guide':
             del o.savedData['cachedGuideBody']
