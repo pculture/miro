@@ -10,6 +10,7 @@ import prefs
 import os
 import logging
 import sys
+import urllib
 from util import returnsUnicode, returnsBinary, checkU, checkB
 
 localeInitialized = False
@@ -120,7 +121,7 @@ def unicodeToFilename(filename, path = None):
 
     # Keep this a little shorter than the max length, so we can run
     # nextFilename
-    MAX_LEN = os.statvfs(path)[statvfs.F_NAMEMAX]-5
+    MAX_LEN = 200
     
     filename.replace('/','_').replace("\000","_").replace("\\","_").replace(":","_").replace("*","_").replace("?","_").replace("\"","_").replace("<","_").replace(">","_").replace("|","_")
 
