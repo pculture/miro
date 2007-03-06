@@ -62,7 +62,6 @@ class HTMLDisplay (app.Display):
     def execJS(self, js):
         """Execute the given Javascript code (provided as a string) in the
         context of this HTML document."""
-        js = js.decode('utf-8')
         try:
             self.web.execJS(js)
         except AttributeError:
@@ -72,11 +71,9 @@ class HTMLDisplay (app.Display):
     # DOM hooks used by the dynamic template code -- do they need a 
     # try..except wrapper like the above?
     def addItemAtEnd(self, xml, id):
-        xml = xml.decode('utf-8')
         return self.web.addItemAtEnd(xml, id)
 
     def addItemBefore(self, xml, id):
-        xml = xml.decode('utf-8')
         return self.web.addItemBefore(xml, id)
 
     def removeItem(self, id):
@@ -86,13 +83,12 @@ class HTMLDisplay (app.Display):
         return self.web.removeItems(ids)
 
     def changeItem(self, id, xml, changeHint):
-        xml = xml.decode('utf-8')
         return self.web.changeItem(id, xml, changeHint)
 
     def changeItems(self, args):
         newArgs = []
         for id, xml, changeHint in args:
-            newArgs.append((id, xml.decode('utf-8'), changeHint))
+            newArgs.append((id, xml, changeHint))
         return self.web.changeItems(newArgs)
 
     def hideItem(self, id):

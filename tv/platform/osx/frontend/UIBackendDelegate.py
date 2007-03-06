@@ -79,7 +79,7 @@ class UIBackendDelegate:
         if isinstance(dialog, dialogs.TextEntryDialog):
             dlog = TextEntryController.alloc().initWithDialog_(dialog)
             dlog.run()
-            call = lambda:dialog.runCallback(dlog.result, dlog.value)
+            call = lambda:dialog.runCallback(dlog.result, unicode(dlog.value))
             name = "TextEntryDialog"
         elif isinstance(dialog, dialogs.HTTPAuthDialog):
             self.httpAuthLock.acquire()
@@ -260,7 +260,7 @@ class UIBackendDelegate:
         
     def getURLFromClipboard(self):
         url = NSPasteboard.generalPasteboard().stringForType_(NSStringPboardType)
-        if url is None or not feed.validateFeedURL(url):
+        if url is None or not feed.validateFeedURL(unicode(url)):
             url = ""
         return url
     
