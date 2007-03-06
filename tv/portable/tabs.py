@@ -9,6 +9,7 @@ import resources
 import guide
 import playlist
 import sorts
+from util import checkU
 from databasehelper import TrackedIDList
 
 from xml.dom.minidom import parse
@@ -217,7 +218,7 @@ class TabOrder(database.DDBObject):
         """Construct a TabOrder.  type should be either "channel", or
         "playlist".
         """
-
+        checkU(type)
         self.type = type
         self.tab_ids = []
         self._initRestore()
@@ -231,9 +232,9 @@ class TabOrder(database.DDBObject):
         self._initRestore()
 
     def _initRestore(self):
-        if self.type == 'channel':
+        if self.type == u'channel':
             self.tabView = views.feedTabs
-        elif self.type == 'playlist':
+        elif self.type == u'playlist':
             self.tabView = views.playlistTabs
         else:
             raise ValueError("Bad type for TabOrder")

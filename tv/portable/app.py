@@ -626,12 +626,12 @@ class Controller (frontend.Application):
                 channelTabOrder = util.getSingletonDDBObject(views.channelTabOrder)
             except LookupError:
                 logging.info ("Creating channel tab order")
-                channelTabOrder = tabs.TabOrder('channel')
+                channelTabOrder = tabs.TabOrder(u'channel')
             try:
                 playlistTabOrder = util.getSingletonDDBObject(views.playlistTabOrder)
             except LookupError:
                 logging.info ("Creating playlist tab order")
-                playlistTabOrder = tabs.TabOrder('playlist')
+                playlistTabOrder = tabs.TabOrder(u'playlist')
 
             # Set up search engines
             searchengines.createEngines()

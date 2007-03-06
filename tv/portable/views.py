@@ -40,8 +40,8 @@ def initialize():
 
     tabOrders = db.filterWithIndex(indexes.objectsByClass, tabs.TabOrder)
     tabOrders.createIndex(indexes.tabOrderType)
-    channelTabOrder = tabOrders.filterWithIndex(indexes.tabOrderType, 'channel')
-    playlistTabOrder = tabOrders.filterWithIndex(indexes.tabOrderType, 'playlist')
+    channelTabOrder = tabOrders.filterWithIndex(indexes.tabOrderType, u'channel')
+    playlistTabOrder = tabOrders.filterWithIndex(indexes.tabOrderType, u'playlist')
 
     # items includes fileItems.
     items = db.filterWithIndex(indexes.objectsByClass,item.Item)
