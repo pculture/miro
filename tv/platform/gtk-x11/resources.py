@@ -46,11 +46,11 @@ def sharePath(relative_path):
 
 # As path(), but return a file: URL instead.
 def url(relative_path):
-    return 'file://%s' % path(relative_path)
+    return u'file://%s' % path(relative_path)
 
 def iconCacheUrl(relative_path):
     """Like url, but for icon cache files.  These probably don't live in the
     resources directory because we need write access to them.
     """
     iconCacheDir = config.get(prefs.ICON_CACHE_DIRECTORY)
-    return "file://%s" % os.path.join(iconCacheDir, relative_path)
+    return u"file://%s" % os.path.join(iconCacheDir, relative_path)

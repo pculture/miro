@@ -1,9 +1,8 @@
-
 import views
 import indexes
 import re
 import template
-import util
+from util import getSingletonDDBObject, checkU, returnsUnicode
 from database import DDBObject
 from xhtmltools import urlencode
 from templatehelper import quoteattr, escape
@@ -16,6 +15,9 @@ import logging
 
 class SearchEngine(DDBObject):
     def __init__(self, name, title, url, sortOrder=0):
+        checkU(name)
+        checkU(title)
+        checkU(url)
         self.name = name
         self.title = title
         self.url = url
@@ -23,9 +25,9 @@ class SearchEngine(DDBObject):
         DDBObject.__init__(self)
 
     def getRequestURL (self, query, filterAdultContents, limit):
-        requestURL = self.url.replace("%s", urlencode(query))
-        requestURL = requestURL.replace("%a", str(int(not filterAdultContents)))
-        requestURL = requestURL.replace("%l", str(int(limit)))
+        requestURL = self.url.replace(u"%s", urlencode(query))
+        requestURL = requestURL.replace(u"%a", str(int(not filterAdultContents)))
+        requestURL = requestURL.replace(u"%l", str(int(limit)))
         return requestURL
 
 def deleteEngines():
@@ -92,7 +94,8 @@ def loadSearchEngine (file):
         SearchEngine (id, displayname, url, sort)
     except:
         warn(file, "Exception parsing file")
-        return
+        raise
+        #return
 
 def createEngines():
     deleteEngines()
@@ -101,24 +104,22 @@ def createEngines():
     for file in searchEngines.itervalues():
         loadSearchEngine (file)
 
+@returnsUnicode
 def getRequestURL(engineName, query, filterAdultContents=True, limit=50):
-    if query == "LET'S TEST DTV'S CRASH REPORTER TODAY":
+    if query == u"LET'S TEST DTV'S CRASH REPORTER TODAY":
         someVariable = intentionallyUndefinedVariableToTestCrashReporter
-    if query == "LET'S DEBUG DTV: DUMP DATABASE":
+    if query == u"LET'S DEBUG DTV: DUMP DATABASE":
         import database
         database.defaultDatabase.liveStorage.dumpDatabase (database.defaultDatabase)
-        return ""
-    if type(query) == unicode:
-        query = query.encode('utf-8')
-
+        return u""
     for engine in views.searchEngines:
         if engine.name == engineName:
             return engine.getRequestURL(query, filterAdultContents, limit)
-    return ""
+    return u""
 
-
+@returnsUnicode
 def getSearchEnginesHTML ():
-    searchFeed = util.getSingletonDDBObject (views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search'))
+    searchFeed = getSingletonDDBObject (views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search'))
     enginesHTML = u'<select name="engines" onChange="updateLastSearchEngine()">\n'
     for engine in views.searchEngines:
         enginesHTML += u'<option value="%s"' % (quoteattr(engine.name),)
@@ -128,7 +129,7 @@ def getSearchEnginesHTML ():
         enginesHTML += escape(engine.title)
         enginesHTML += u'</option>'
     enginesHTML += u'</select>'
-    return enginesHTML.encode("utf8")
+    return enginesHTML
 
 def getLastEngine():
     return _getSearchFeed().lastEngine
@@ -137,4 +138,4 @@ def getLastQuery():
     return _getSearchFeed().lastQuery
 
 def _getSearchFeed():
-    return util.getSingletonDDBObject (views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search'))
+    return getSingletonDDBObject (views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search'))

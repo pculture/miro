@@ -1,4 +1,5 @@
 import os
+import util
 
 class Pref:
     def __init__(self, **kwds):
@@ -34,25 +35,25 @@ RESUME_VIDEOS_MODE          = Pref( key='resumeVideosMode',      default=True,  
 MY_COLLECTION_DIRS          = Pref( key="CollectionDirs",        default="",    platformSpecific=False )
 
 # Only used on particular platforms.
-XINE_VIZ                    = Pref( key="xineViz",               default="goom",platformSpecific=False )
+XINE_VIZ                    = Pref( key="xineViz",               default=u"goom",platformSpecific=False )
 
 # These have a hardcoded default which can be overridden by setting an
 # environment variable.
 
 if 'DTV_CHANNELGUIDE_URL' in os.environ:
-    effectiveChannelGuide = os.environ['DTV_CHANNELGUIDE_URL']
+    effectiveChannelGuide = util.unicodify(os.environ['DTV_CHANNELGUIDE_URL'])
 else:
-    effectiveChannelGuide = 'https://channelguide.participatoryculture.org/'
+    effectiveChannelGuide = u'https://channelguide.participatoryculture.org/'
 
 if 'DTV_VIDEOBOMB_URL' in os.environ:
-    effectiveVideobomb = os.environ['DTV_VIDEOBOMB_URL']
+    effectiveVideobomb = util.unicodify(os.environ['DTV_VIDEOBOMB_URL'])
 else:
-    effectiveVideobomb = 'http://www.videobomb.com/api/submit_or_bomb'
+    effectiveVideobomb = u'http://www.videobomb.com/api/submit_or_bomb'
 
 if 'DTV_AUTOUPDATE_URL' in os.environ:
-    effectiveAutoupdate = os.environ['DTV_AUTOUPDATE_URL']
+    effectiveAutoupdate = util.unicodify(os.environ['DTV_AUTOUPDATE_URL'])
 else:
-    effectiveAutoupdate = 'http://www.participatoryculture.org/democracy-version.xml'
+    effectiveAutoupdate = u'http://www.participatoryculture.org/democracy-version.xml'
 
 CHANNEL_GUIDE_URL = Pref(key='ChannelGuideURL', default=effectiveChannelGuide,
                          platformSpecific=False)
@@ -60,9 +61,9 @@ VIDEOBOMB_URL     = Pref(key='VideobombURL',    default=effectiveVideobomb,
                          platformSpecific=False)
 AUTOUPDATE_URL    = Pref(key='AutoupdateURL',   default=effectiveAutoupdate,
                          platformSpecific=False)
-DONATE_URL        = Pref(key='DonateURL', default="http://www.getdemocracy.com/donate/",
+DONATE_URL        = Pref(key='DonateURL', default=u"http://www.getdemocracy.com/donate/",
                          platformSpecific=False)
-HELP_URL          = Pref(key='HelpURL', default="http://www.getdemocracy.com/help/",
+HELP_URL          = Pref(key='HelpURL', default=u"http://www.getdemocracy.com/help/",
                          platformSpecific=False)
 
 # These are computed by special platform code.
@@ -90,7 +91,7 @@ GETTEXT_PATHNAME = \
 HTTP_PROXY_ACTIVE = \
     Pref(key='HttpProxyActive', default=False, platformSpecific=True)
 HTTP_PROXY_HOST = \
-    Pref(key='HttpProxyHost',   default="", platformSpecific=True)
+    Pref(key='HttpProxyHost',   default=u"", platformSpecific=True)
 HTTP_PROXY_PORT = \
     Pref(key='HttpProxyPort',   default=80, platformSpecific=True)
 HTTP_PROXY_IGNORE_HOSTS = \
@@ -98,9 +99,9 @@ HTTP_PROXY_IGNORE_HOSTS = \
 HTTP_PROXY_AUTHORIZATION_ACTIVE = \
     Pref(key='HttpProxyAuthorizationActive', default=False, platformSpecific=True)
 HTTP_PROXY_AUTHORIZATION_USERNAME = \
-    Pref(key='HttpProxyAuthorizationUsername',   default="", platformSpecific=True)
+    Pref(key='HttpProxyAuthorizationUsername',   default=u"", platformSpecific=True)
 HTTP_PROXY_AUTHORIZATION_PASSWORD = \
-    Pref(key='HttpProxyAuthorizationPassword',   default="", platformSpecific=True)
+    Pref(key='HttpProxyAuthorizationPassword',   default=u"", platformSpecific=True)
 
 # These are normally read from resources/app.config.
 SHORT_APP_NAME = \
@@ -118,6 +119,6 @@ APP_REVISION = \
 APP_PLATFORM = \
     Pref(key='appPlatform',       default=None, platformSpecific=False)
 APP_SERIAL = \
-    Pref(key='appSerial-unknown', default="0",  platformSpecific=False)
+    Pref(key='appSerial-unknown', default=u"0",  platformSpecific=False)
 MOZILLA_LIB_PATH = \
     Pref(key='mozillaLibPath',    default=None, platformSpecific=False)

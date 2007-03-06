@@ -11,6 +11,7 @@ from MozillaBrowser import MozillaBrowser
 from frontend_implementation.gtk_queue import gtkAsyncMethod
 from util import quoteJS
 import platformutils
+from util import checkU
 
 import os
 import re
@@ -45,7 +46,7 @@ class HTMLDisplay(app.Display):
     def __init__(self, html, frameHint=None, areaHint=None, baseURL=None):
         global count
         app.Display.__init__(self)
-
+        checkU(html)
         self.html = html
         self.count = count
         count = count + 1
@@ -152,7 +153,7 @@ class HTMLDisplayImpl:
             self.removeFile = True
             (handle, self.location) = tempfile.mkstemp('.html')
             handle = os.fdopen(handle,"w")
-        handle.write(display.html)
+        handle.write(display.html.encode('utf-8'))
         handle.close()
 
         # Translate path into URL.

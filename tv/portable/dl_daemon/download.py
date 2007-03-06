@@ -12,7 +12,7 @@ from copy import copy
 
 from BitTorrent.bencode import bdecode
 from clock import clock
-from download_utils import cleanFilename, nextFreeFilename, shortenFilename, checkFilenameExtension
+from download_utils import cleanFilename, nextFreeFilename, checkFilenameExtension
 from download_utils import filenameFromURL
 import eventloop
 import httpclient
@@ -25,6 +25,7 @@ from sha import sha
 
 from dl_daemon import command, daemon, bittorrent
 from datetime import timedelta
+from util import checkB, checkU
 
 import platformutils
 import string
@@ -40,13 +41,19 @@ _downloads = {}
 _lock = RLock()
 
 def createDownloader(url, contentType, dlid):
-    if contentType == 'application/x-bittorrent':
+    checkU(url)
+    checkU(contentType)
+    if contentType == u'application/x-bittorrent':
         return BTDownloader(url, dlid)
     else:
         return HTTPDownloader(url, dlid)
 
 # Creates a new downloader object. Returns id on success, None on failure
 def startNewDownload(url, dlid, contentType, channelName):
+    checkU(url)
+    checkU(contentType)
+    if channelName:
+        checkB(channelName)
     dl = createDownloader(url, contentType, dlid)
     dl.channelName = channelName
     _downloads[dlid] = dl
@@ -62,7 +69,7 @@ def startDownload(dlid):
     try:
         download = _downloads[dlid]
     except KeyError:  # There is no download with this id
-        err= "in startDownload(): no downloader with id %s" % dlid
+        err= u"in startDownload(): no downloader with id %s" % dlid
         c = command.DownloaderErrorCommand(daemon.lastDaemon, err)
         c.send()
         return True
@@ -85,7 +92,7 @@ def stopUpload(dlid):
         _lock.acquire()
         try:
             download = _downloads[dlid]
-            if download.state != "uploading":
+            if download.state != u"uploading":
                 return
             del _downloads[dlid]
         finally:
@@ -95,12 +102,13 @@ def stopUpload(dlid):
     return download.stopUpload()
 
 def migrateDownload(dlid, directory):
+    checkB(directory)
     try:
         download = _downloads[dlid]
     except: # There is no download with this id
         pass
     else:
-        if download.state in ("finished", "uploading"):
+        if download.state in (u"finished", u"uploading"):
             download.moveToDirectory(directory)
             download.updateClient()
             print download.filename
@@ -123,12 +131,12 @@ def shutDown():
 def restoreDownloader(downloader):
     downloader = copy(downloader)
     dlerType = downloader.get('dlerType')
-    if dlerType == 'HTTP':
+    if dlerType == u'HTTP':
         dl = HTTPDownloader(restore = downloader)
-    elif dlerType == 'BitTorrent':
+    elif dlerType == u'BitTorrent':
         dl = BTDownloader(restore = downloader)
     else:
-        err = "in restoreDownloader(): unknown dlerType: %s" % dlerType
+        err = u"in restoreDownloader(): unknown dlerType: %s" % dlerType
         c = command.DownloaderErrorCommand(daemon.lastDaemon, err)
         c.send()
         return
@@ -199,11 +207,11 @@ class BGDownloader:
         self.endTime = self.startTime
         self.shortFilename = filenameFromURL(url)
         self.pickInitialFilename()
-        self.state = "downloading"
+        self.state = u"downloading"
         self.currentSize = 0
         self.totalSize = -1
         self.blockTimes = []
-        self.shortReasonFailed = self.reasonFailed = "No Error"
+        self.shortReasonFailed = self.reasonFailed = u"No Error"
         self.retryTime = None
         self.retryCount = -1
 
@@ -250,7 +258,6 @@ class BGDownloader:
         except:
             pass
         baseFilename = os.path.join(downloadDir, self.shortFilename+".part")
-        baseFilename = shortenFilename(baseFilename)
         self.filename = nextFreeFilename(baseFilename)
 
     def moveToMoviesDirectory(self):
@@ -262,6 +269,7 @@ class BGDownloader:
         self.moveToDirectory(config.get(prefs.MOVIES_DIRECTORY))
 
     def moveToDirectory (self, directory):
+        checkB(directory)
         if self.channelName:
             directory = os.path.join (directory, self.channelName)
             try:
@@ -269,7 +277,6 @@ class BGDownloader:
             except:
                 pass
         newfilename = os.path.join(directory, self.shortFilename)
-        newfilename = shortenFilename(newfilename)
         if newfilename == self.filename:
             return
         newfilename = nextFreeFilename(newfilename)
@@ -329,7 +336,7 @@ class BGDownloader:
         self.start()
 
     def handleTemporaryError(self, shortReason, reason):
-        self.state = "offline"
+        self.state = u"offline"
         self.reasonFailed = reason
         self.shortReasonFailed = shortReason
         self.retryCount = self.retryCount + 1
@@ -340,7 +347,7 @@ class BGDownloader:
         self.updateClient()
 
     def handleError(self, shortReason, reason):
-        self.state = "failed"
+        self.state = u"failed"
         self.reasonFailed = reason
         self.shortReasonFailed = shortReason
         self.updateClient()

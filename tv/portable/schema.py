@@ -18,6 +18,7 @@ Go to the bottom of this file for the current database schema.
 import cPickle
 import datetime
 import time
+import logging
 from types import NoneType
 from fasttypes import LinkedList
 
@@ -88,7 +89,22 @@ class SchemaFloat(SchemaSimpleItem):
 class SchemaString(SchemaSimpleItem):
     def validate(self, data):
         super(SchemaSimpleItem, self).validate(data)
-        self.validateTypes(data, [str, unicode])
+        self.validateType(data, unicode)
+
+class SchemaBinary(SchemaSimpleItem):
+    def validate(self, data):
+        super(SchemaSimpleItem, self).validate(data)
+        self.validateType(data, str)
+
+class SchemaURL(SchemaSimpleItem):
+    def validate(self, data):
+        super(SchemaSimpleItem, self).validate(data)
+        self.validateType(data, unicode)
+        if data:
+            try:
+                data.encode('ascii')
+            except UnicodeEncodeError:
+                ValidationError(u"URL (%s) is not ASCII" % data)
 
 class SchemaInt(SchemaSimpleItem):
     def validate(self, data):
@@ -148,15 +164,33 @@ class SchemaSimpleContainer(SchemaSimpleItem):
                     toValidate.append(item)
             elif isinstance(data, dict):
                 for key, value in data.items():
-                    toValidate.append(key)
+                    self.validateTypes(key, [bool, int, long, float, unicode,
+                        str, NoneType, datetime.datetime, time.struct_time])
                     toValidate.append(value)
             else:
-                self.validateTypes(data, [bool, int, long, float, str, unicode,
+                self.validateTypes(data, [bool, int, long, float, unicode,
                         NoneType, datetime.datetime, time.struct_time])
             try:
                 data = toValidate.pop()
             except:
                 data = None
+
+class SchemaStatusContainer(SchemaSimpleContainer):
+    """Allows nested dicts, lists and tuples, however the only thing they can
+    store are simple objects.  This currently includes bools, ints, longs,
+    floats, strings, unicode, None, datetime and struct_time objects.
+    """
+
+    def validate(self, data):
+        self.validateType(data, dict)
+        for key, value in data.items():
+            self.validateTypes(key, [bool, int, long, float, unicode,
+                    str, NoneType, datetime.datetime, time.struct_time])
+            if key not in ['channelName','shortFilename','filename','metainfo']:
+                self.validateTypes(value, [bool, int, long, float, unicode,
+                        NoneType, datetime.datetime, time.struct_time])
+            else:
+                self.validateType(value, str)
 
 class SchemaObject(SchemaItem):
     def __init__(self, klass, noneOk=False):
@@ -205,8 +239,8 @@ class IconCacheSchema (ObjectSchema):
     fields = [
         ('etag', SchemaString(noneOk=True)),
         ('modified', SchemaString(noneOk=True)),
-        ('filename', SchemaString(noneOk=True)),
-        ('url', SchemaString(noneOk=True)),
+        ('filename', SchemaBinary(noneOk=True)),
+        ('url', SchemaURL(noneOk=True)),
         ]
 
 class ItemSchema(DDBObjectSchema):
@@ -228,7 +262,7 @@ class ItemSchema(DDBObjectSchema):
         ('downloadedTime', SchemaDateTime(noneOk=True)),
         ('watchedTime', SchemaDateTime(noneOk=True)),
         ('isContainerItem', SchemaBool(noneOk=True)),
-        ('videoFilename', SchemaString()),
+        ('videoFilename', SchemaBinary()),
         ('isVideo', SchemaBool()),
         ('releaseDateObj', SchemaDateTime()),
         ('eligibleForAutoDownload', SchemaBool()),
@@ -240,17 +274,17 @@ class FileItemSchema(ItemSchema):
     klass = FileItem
     classString = 'file-item'
     fields = ItemSchema.fields + [
-        ('filename', SchemaString()),
+        ('filename', SchemaBinary()),
         ('deleted', SchemaBool()),
-        ('shortFilename', SchemaString(noneOk=True)),
-        ('offsetPath', SchemaString(noneOk=True)),
+        ('shortFilename', SchemaBinary(noneOk=True)),
+        ('offsetPath', SchemaBinary(noneOk=True)),
     ]
 
 class FeedSchema(DDBObjectSchema):
     klass = Feed
     classString = 'feed'
     fields = DDBObjectSchema.fields + [
-        ('origURL', SchemaString()),
+        ('origURL', SchemaURL()),
         ('errorState', SchemaBool()),
         ('loading', SchemaBool()),
         ('actualFeed', SchemaObject(FeedImpl)),
@@ -270,13 +304,13 @@ class FeedImplSchema(ObjectSchema):
     klass = FeedImpl
     classString = 'field-impl'
     fields = [
-        ('url', SchemaString()),
+        ('url', SchemaURL()),
         ('ufeed', SchemaObject(Feed)),
         ('title', SchemaString()),
         ('created', SchemaDateTime()),
         ('visible', SchemaBool()),
         ('lastViewed', SchemaDateTime()),
-        ('thumbURL', SchemaString(noneOk=True)),
+        ('thumbURL', SchemaURL(noneOk=True)),
         ('updateFreq', SchemaInt()),
         ('initialUpdate', SchemaBool()),
     ]
@@ -285,7 +319,7 @@ class RSSFeedImplSchema(FeedImplSchema):
     klass = RSSFeedImpl
     classString = 'rss-feed-impl'
     fields = FeedImplSchema.fields + [
-        ('initialHTML', SchemaString(noneOk=True)),
+        ('initialHTML', SchemaBinary(noneOk=True)),
         ('etag', SchemaString(noneOk=True)),
         ('modified', SchemaString(noneOk=True)),
     ]
@@ -294,7 +328,7 @@ class ScraperFeedImplSchema(FeedImplSchema):
     klass = ScraperFeedImpl
     classString = 'scraper-feed-impl'
     fields = FeedImplSchema.fields + [
-        ('initialHTML', SchemaString(noneOk=True)),
+        ('initialHTML', SchemaBinary(noneOk=True)),
         ('initialCharset', SchemaString(noneOk=True)),
         ('linkHistory', SchemaSimpleContainer()),
     ]
@@ -327,12 +361,12 @@ class RemoteDownloaderSchema(DDBObjectSchema):
     klass = RemoteDownloader
     classString = 'remote-downloader'
     fields = DDBObjectSchema.fields + [
-        ('url', SchemaString()),
-        ('origURL', SchemaString()),
+        ('url', SchemaURL()),
+        ('origURL', SchemaURL()),
         ('dlid', SchemaString()),
         ('contentType', SchemaString(noneOk=True)),
-        ('channelName', SchemaString(noneOk=True)),
-        ('status', SchemaSimpleContainer()),
+        ('channelName', SchemaBinary(noneOk=True)),
+        ('status', SchemaStatusContainer()),
         ('manualUpload', SchemaBool()),
     ]
 
@@ -386,12 +420,11 @@ class ChannelGuideSchema(DDBObjectSchema):
     klass = ChannelGuide
     classString = 'channel-guide'
     fields = DDBObjectSchema.fields + [
-        ('cachedGuideBody', SchemaString(noneOk=True)),
-        ('url', SchemaString(noneOk=True)),
-        ('redirectedURL', SchemaString(noneOk=True)),
+        ('url', SchemaURL(noneOk=True)),
+        ('redirectedURL', SchemaURL(noneOk=True)),
     ]
 
-VERSION = 40
+VERSION = 41
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,

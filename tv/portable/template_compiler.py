@@ -3,6 +3,8 @@
 # "Compiles" Democracy templates to Python code
 #
 
+from util import checkU
+
 ###############################################################################
 #### Functions used in repeating templates                                 ####
 ###############################################################################
@@ -13,56 +15,61 @@
 
 # Simply returns text
 def genRepeatText(varname, tid, prefix, text):
-    return '%s%s.write(%s)\n' % (prefix,varname, repr(toUTF8Bytes(text)))
+    checkU(text)
+    return u'%s%s.write(%s)\n' % (prefix,varname, repr(text))
 
 # Returns translated version of text
 def genRepeatTranslate(varname, tid, prefix, args):
     (text, funcDict) = args
+    checkU(text)
     # Convert to ascii, strip leading and trailing whitespace and
     # convert interior whitespace to spaces
-    text = ' '.join(str(text).strip().split())
+    text = u' '.join(str(text).strip().split())
 
     if len(funcDict) == 0:
-        return '%s%s.write(toUTF8Bytes(_(%s)))\n' % (prefix, varname, repr(text))
+        return u'%s%s.write(_(%s))\n' % (prefix, varname, repr(text))
     else:
         dictName = generateId()
-        out = '%s%s = {}\n' % (prefix, dictName)
+        out = u'%s%s = {}\n' % (prefix, dictName)
         for name in funcDict:
             temp = generateId()
-            out = '%s%s%s = StringIO()\n' % (out, prefix, temp)
+            out = u'%s%s%s = StringIO()\n' % (out, prefix, temp)
             for (func, fargs) in funcDict[name]:
-                out = '%s%s' % (out, func(temp, tid, prefix, fargs))
-            out = '%s%s%s.seek(0)\n' % (out, prefix, temp)
-            out = '%s%s%s[%s] = %s.read()\n' % (out, prefix, dictName, repr(str(name)), temp)
+                val = func(temp, tid, prefix, fargs)
+                checkU(val)
+                out = u'%s%s' % (out, val)
+            out = u'%s%s%s.seek(0)\n' % (out, prefix, temp)
+            out = u'%s%s%s[%s] = %s.read()\n' % (out, prefix, dictName, repr(str(name)), temp)
 
-        out = '%s%s%s.write(Template(toUTF8Bytes(_(%s))).substitute(%s))\n' % (
+        out = u'%s%s%s.write(Template(_(%s)).substitute(%s))\n' % (
             out, prefix, varname, repr(text), dictName)
         return out
 # Returns text if function does not evaluate to true
 def genRepeatTextHide(varname, tid, prefix, args):
     (ifValue, text) = args
-    out = '%sif not (%s):\n'%(prefix, ifValue)
-    out = '%s%s    %s.write(%s)\n' % (out, prefix, varname, repr(toUTF8Bytes(text)))
+    checkU(text)
+    out = u'%sif not (%s):\n'%(prefix, ifValue)
+    out = u'%s%s    %s.write(%s)\n' % (out, prefix, varname, repr(text))
     return out
         
 def genQuoteAttr(varname, tid, prefix, value):
-    return '%s%s.write(quoteattr(urlencode(toUTF8Bytes(%s))))\n'%(
+    return u'%s%s.write(quoteattr(urlencode(%s)))\n'%(
         prefix, varname, value)
 
 def genRawAttr(varname, tid, prefix, value):
-    return '%s%s.write(quoteattr(toUTF8Bytes(%s)))\n'%(prefix, varname, value)
+    return u'%s%s.write(quoteattr(%s))\n'%(prefix, varname, value)
 
 # Adds a tid attribute to a tag and closes it
 def genRepeatTID(varname, tid, prefix, args):
-    return '%s%s.write(quoteattr(tid))\n' % (prefix, varname)
+    return u'%s%s.write(quoteattr(tid))\n' % (prefix, varname)
 
 # Evaluates key with data
 def genRepeatEvalEscape(varname, tid, prefix, replace):
-    return '%s%s.write(escape(toUTF8Bytes(%s)))\n' % (prefix, varname, replace)
+    return u'%s%s.write(escape(%s))\n' % (prefix, varname, replace)
 
 # Evaluates key with data
 def genRepeatEval(varname, tid, prefix, replace):
-    return '%s%s.write(%s)\n' % (prefix, varname, replace)
+    return u'%s%s.write(%s)\n' % (prefix, varname, replace)
 
 # Returns include iff function does not evaluate to true
 def genRepeatIncludeHide(varname, tid, prefix, args):
@@ -70,49 +77,51 @@ def genRepeatIncludeHide(varname, tid, prefix, args):
     f = open(resource.path('templates/%s'%name),'r')
     text = f.read()
     f.close()
-    out = '%sif not (%s):\n'%(prefix, ifValue)
-    out = '%s%s    %s.write(%s)\n' % (out, prefix, varname, repr(toUTF8Bytes(text)))
+    out = u'%sif not (%s):\n'%(prefix, ifValue)
+    out = u'%s%s    %s.write(%s)\n' % (out, prefix, varname, repr(text.decode('utf-8')))
     return out
 
 def genHideSection(varname, tid, prefix, args):
     (ifValue, funcList) = args
-    out = '%sif not (%s):\n'%(prefix, ifValue)
+    out = u'%sif not (%s):\n'%(prefix, ifValue)
     for (func, newargs) in funcList:
-        out = '%s%s' % (out, func(varname,tid,prefix+'    ',newargs))
+        val = func(varname,tid,prefix+'    ',newargs)
+        checkU(val)
+        out = u'%s%s' % (out, val)
     return out
 
 def genQuoteAndFillAttr(varname, tid, prefix, value):
-    return '%s%s.write(quoteAndFillAttr(%s,locals()))\n'%(prefix,varname,repr(value))
+    checkU(value)
+    return u'%s%s.write(quoteAndFillAttr(%s,locals()))\n'%(prefix,varname,repr(value))
     
 def genUpdateHideOnView(varname, tid, prefix, args):
     (viewName, ifValue, attrs, nodeId) = args
 
-    out = '%s_hideFunc = lambda : %s\n' % (prefix, ifValue)
-    out = '%s%s_dynHide = _hideFunc()\n' % (out, prefix)
-    out = '%s%sif _dynHide:\n' % (out, prefix)
-    out = '%s%s    %s.write(" style=\\\"display:none\\\">")\n' % (
+    out = u'%s_hideFunc = lambda : %s\n' % (prefix, ifValue)
+    out = u'%s%s_dynHide = _hideFunc()\n' % (out, prefix)
+    out = u'%s%sif _dynHide:\n' % (out, prefix)
+    out = u'%s%s    %s.write(u" style=\\\"display:none\\\">")\n' % (
         out, prefix, varname)
-    out = '%s%selse:\n%s    %s.write(">")\n' % (
+    out = u'%s%selse:\n%s    %s.write(u">")\n' % (
         out, prefix, prefix, varname)
 
-    out = '%s%shandle.addUpdateHideOnView(%s,%s,_hideFunc,_dynHide)\n' % (
+    out = u'%s%shandle.addUpdateHideOnView(%s,%s,_hideFunc,_dynHide)\n' % (
         out, prefix, repr(nodeId), viewName)
     return out
 
 def genInsertBodyTagExtra(varname, tid, prefix, args):
-    return '%s%s.write(" " + bodyTagExtra)\n' % (prefix, varname)
+    return u'%s%s.write(u" " + bodyTagExtra)\n' % (prefix, varname)
 
 def genExecuteTemplate(varname, tid, prefix, args):
     filename, methodArgs = args
-    methodCall = "fillStaticTemplate(%r, onlyBody=True" % filename
+    methodCall = u"fillStaticTemplate(%r, onlyBody=True" % filename
     for name, value in methodArgs.items():
-        methodCall += ', %s=%s' % (name, value)
-    methodCall += ')'
-    return '%s%s.write(%s)\n' % (prefix, varname, methodCall)
+        methodCall += u', %s=%s' % (name, value)
+    methodCall += u')'
+    return u'%s%s.write(%s)\n' % (prefix, varname, methodCall)
 
 from xml import sax
-from xhtmltools import toUTF8Bytes
-from cStringIO import StringIO
+from StringIO import StringIO # Oh! Why can't cStringIO support unicode?
 from templatehelper import quoteattr, escape, HTMLPattern, attrPattern, resourcePattern, rawAttrPattern, generateId
 import re
 import os
@@ -237,7 +246,7 @@ def compileTemplates(tpath = None):
         print "Compiling '%s' template to %s" % (sourceFile, outFile)
         (tcc, handle) = compileTemplate(sourceFile)
         f = open(outFile,"wb")
-        f.write(tcc.getOutput())
+        f.write(tcc.getOutput().encode('utf-8'))
         f.close()
         manifest.write("import %s\n" % template.replace('/','.').replace('\\','.').replace('-','_'))
     for folder in folders:
@@ -276,33 +285,33 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         return fo.getvalue()
 
     def render(self, fileobj):
-        fileobj.write('# This is a generated file. Do not edit.\n')
-        fileobj.write('from template import Handle, fillAttr, quoteAndFillAttr, fillStaticTemplate\n')
-        fileobj.write('from cStringIO import StringIO\n')
-        fileobj.write('from xhtmltools import urlencode, toUTF8Bytes\n')
-        fileobj.write('from templatehelper import quoteattr, escape\n')
-        fileobj.write('from string import Template\n')
-        fileobj.write('import app\n')
-        fileobj.write('import views\n')
-        fileobj.write('import sorts\n')
-        fileobj.write('import indexes\n')
-        fileobj.write('import filters\n')
-        fileobj.write('import resources\n')
-        fileobj.write('import gtcache\n')
-        fileobj.write('_ = gtcache.gettext\n')
-        fileobj.write('def fillTemplate(domHandler, dtvPlatform, eventCookie, bodyTagExtra, *args, **kargs):\n')
+        fileobj.write(u'# This is a generated file. Do not edit.\n')
+        fileobj.write(u'from template import Handle, fillAttr, quoteAndFillAttr, fillStaticTemplate\n')
+        fileobj.write(u'from StringIO import StringIO\n')
+        fileobj.write(u'from xhtmltools import urlencode\n')
+        fileobj.write(u'from templatehelper import quoteattr, escape\n')
+        fileobj.write(u'from string import Template\n')
+        fileobj.write(u'import app\n')
+        fileobj.write(u'import views\n')
+        fileobj.write(u'import sorts\n')
+        fileobj.write(u'import indexes\n')
+        fileobj.write(u'import filters\n')
+        fileobj.write(u'import resources\n')
+        fileobj.write(u'import gtcache\n')
+        fileobj.write(u'_ = gtcache.gettext\n')
+        fileobj.write(u'def fillTemplate(domHandler, dtvPlatform, eventCookie, bodyTagExtra, *args, **kargs):\n')
         self.handle.render(fileobj)
-        fileobj.write('\n\n    out = StringIO()\n')
+        fileobj.write(u'\n\n    out = StringIO()\n')
         
         if not self.onlyBody:
-            fileobj.write('    out.write("<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\"?>\\n<!DOCTYPE html PUBLIC \\\"-//W3C//DTD XHTML 1.0 Strict//EN\\\" \\\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\\\">\\n")\n')
+            fileobj.write(u'    out.write("<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\"?>\\n<!DOCTYPE html PUBLIC \\\"-//W3C//DTD XHTML 1.0 Strict//EN\\\" \\\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\\\">\\n")\n')
             
         for count in range(len(self.outputLists[0])):
             (func, args) = self.outputLists[0][count]
-            fileobj.write(func('out','','    ',args))
+            fileobj.write(func(u'out',u'',u'    ',args))
 
-        fileobj.write('    out.seek(0)\n')        
-        fileobj.write('\n\n    return (out, handle)\n')
+        fileobj.write(u'    out.seek(0)\n')        
+        fileobj.write(u'\n\n    return (out, handle)\n')
 
     def returnIf(self,bool,value):
         if bool:
@@ -360,15 +369,15 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                 self.rawDepth = self.depth
             else:
                 self.translateName[-1] = attrs['i18n:name']
-                self.translateText[-1] += '${%s}' % self.translateName[-1]
+                self.translateText[-1] += u'${%s}' % self.translateName[-1]
                 self.endText()
                 self.outputLists.append([])
 
         if self.inRaw:
-            self.translateText[-1] += "<%s" % name
+            self.translateText[-1] += u"<%s" % name
             for attr in attrs.keys():
-                self.translateText[-1] += ' %s="%s"' % (attr, quoteattr(attrs[attr]))
-            self.translateText[-1] += '>'
+                self.translateText[-1] += u' %s="%s"' % (attr, quoteattr(attrs[attr]))
+            self.translateText[-1] += u'>'
         elif self.onlyBody and not self.started:
             if name == 'body':
                 self.started = True
@@ -409,7 +418,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                 self.addElementStart(name, attrs)
                 #FIXME: support i18n tags within a t:hideIf
         elif 't:showIf' in attrs.keys():
-            ifValue = "not (%s)" % attrs['t:showIf']
+            ifValue = u"not (%s)" % attrs['t:showIf']
             if attrs.has_key('t:updateHideOnView'):
                 if self.inRepeatView or self.inUpdateView:
                     print "Warning: t:updateHideOnView is unsupported inside a repeat view"
@@ -450,7 +459,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             f = open(resource.path('templates/%s'%attrs['filename']),'r')
             html = f.read()
             f.close()
-            self.addText(html)
+            self.addText(html.decode('utf-8'))
         elif name == 't:staticReplaceMarkup':
             replace = attrs['t:replaceData']
             self.addEval(replace)
@@ -478,7 +487,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         if not self.started:
             pass
         elif self.inRaw:
-            self.translateText[-1] += '</%s>' % name
+            self.translateText[-1] += u'</%s>' % name
         elif self.onlyBody and name == 'body':
             self.started = False
         elif name == 't:include':
@@ -500,10 +509,10 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         elif name == 't:triggerActionOnLoad':
             pass
         elif self.hiding and self.depth == self.hideDepth[-1]:
-            self.addText('</%s>'%name)
+            self.addText(u'</%s>'%name)
             self.endHiding()
         elif self.inReplace and self.depth == self.replaceDepth:
-            self.addText('</%s>'%name)
+            self.addText(u'</%s>'%name)
             self.inReplace = False
         elif self.inRepeatView and self.depth == self.repeatDepth:
             if self.inRepeatWithTemplate:
@@ -513,7 +522,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                     m = "Elements with t:repeatTemplate, can't have children"
                     raise ValueError(m)
             else:
-                self.addText('</%s>'%name)
+                self.addText(u'</%s>'%name)
                 self.endText()
             repeatList = self.endRepeat()
             if self.inRepeatWithContainerDiv:
@@ -521,28 +530,28 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                 self.handle.addView(self.repeatContainerId, 'containerDiv', repeatList, self.repeatName)
             else:
                 repeatId = generateId()
-                self.addText('<span id="%s"/>'%quoteattr(repeatId))
+                self.addText(u'<span id="%s"/>'%quoteattr(repeatId))
                 self.handle.addView(repeatId, 'nextSibling', repeatList, self.repeatName)
         elif self.inUpdateView and self.depth == self.repeatDepth:
-            self.addText('</%s>'%name)
+            self.addText(u'</%s>'%name)
             self.endText()
             repeatList = self.endUpdate()
             repeatId = generateId()
-            self.addText('<span id="%s"/>'%quoteattr(repeatId))
+            self.addText(u'<span id="%s"/>'%quoteattr(repeatId))
             self.handle.addUpdate(repeatId, 'nextSibling', repeatList, self.repeatName)
         elif self.inConfigUpdate and self.depth == self.repeatDepth:
-            self.addText('</%s>'%name)
+            self.addText(u'</%s>'%name)
             self.endText()
             repeatList = self.endConfigUpdate()
             repeatId = generateId()
-            self.addText('<span id="%s"/>'%quoteattr(repeatId))
+            self.addText(u'<span id="%s"/>'%quoteattr(repeatId))
             self.handle.addConfigUpdate(repeatId, 'nextSibling', repeatList)
         elif (len(self.translateDepth) > 0 and
                                      self.depth == self.translateDepth[-1]):
             self.addTranslation()
-            self.addText('</%s>'%name)
+            self.addText(u'</%s>'%name)
         elif self.depth == self.hotspotDepth:
-            self.addText("</%s><!-- HOT SPOT END -->" % self.hotspotTagName)
+            self.addText(u"</%s><!-- HOT SPOT END -->" % self.hotspotTagName)
             self.hotspotDepth = -1
         elif name == 't:execOnUnload':
             self.inExecOnUnload = False
@@ -551,7 +560,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             self.inExecOnLoad = False
             self.handle.addExecOnLoad(self.code)
         else:
-            self.addText('</%s>'%name)
+            self.addText(u'</%s>'%name)
         if (len(self.translateDepth) > 0 and
                                    self.depth == self.translateDepth[-1]+1):
             if self.inRaw:
@@ -577,7 +586,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
             self.addTextEscape(data)
 
     def skippedEntity(self, name):
-        self.addText("&%s;" % name)
+        self.addText(u"&%s;" % name)
 
     def addTranslation(self):
         self.translateDepth.pop()
@@ -668,7 +677,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         if (self.bodyDepth is not None and self.depth == self.bodyDepth + 1
                 and self.addIdToTopLevelElement):
             addId = True
-        self.addText('<%s'%name)
+        self.addText(u'<%s'%name)
         for key in attrs.keys():
             if (not (key.startswith('t:') or key.startswith('i18n:')) or
                     key == 't:contextMenu'):
@@ -678,23 +687,23 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         if addId:
             self.addIdAndClose()
         else:
-            self.addText('>')
+            self.addText(u'>')
 
     def addTextEscape(self, text):
         self.outputText.append( escape(text))
 
     def addUpdateHideOnView(self, viewName, name, ifValue, attrs):
         nodeId = generateId()
-        self.addText("<%s" % name)
+        self.addText(u"<%s" % name)
         for key in attrs.keys():
             if not key in ['t:hideIf','t:updateHideOnView','style']:
-                self.addText(" %s=" % key)
+                self.addText(u" %s=" % key)
                 self.addInstruction(genQuoteAndFillAttr, attrs[key])
-        self.addText(' id="%s"' % quoteattr(nodeId))
+        self.addText(u' id="%s"' % quoteattr(nodeId))
         self.addInstruction(genUpdateHideOnView,(viewName, ifValue, attrs, nodeId))
 
     def addAttr(self, attr, value):
-        self.addText(' %s="' % attr)
+        self.addText(u' %s="' % attr)
         self.addDynamicText(value)
         self.addText('"')
 
@@ -706,7 +715,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                 self.addInstruction(genQuoteAttr,match.group(2))
                 value = match.group(3)
                 match = attrPattern.match(value)
-            self.addText('%s' % quoteattr(value))
+            self.addText(u'%s' % quoteattr(value))
         else:
             match = rawAttrPattern.match(value)
             if match:
@@ -715,20 +724,20 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
                     self.addInstruction(genRawAttr,match.group(2))
                     value = match.group(3)
                     match = rawAttrPattern.match(value)
-                self.addText('%s' % quoteattr(value))
+                self.addText(u'%s' % quoteattr(value))
             else:
                 match = resourcePattern.match(value)
                 if match:
-                    self.addInstruction(genRawAttr,'resources.url(%s)'%repr(match.group(1)))
+                    self.addInstruction(genRawAttr,u'resources.url(%s)'%repr(match.group(1)))
                 else:
                     self.addText(quoteattr(value))
 
     def addHotspot(self, name, id):
         self.hotspotDepth = self.depth
         self.hotspotTagName = name
-        self.addText("<!-- HOT SPOT ")
+        self.addText(u"<!-- HOT SPOT ")
         self.addDynamicText(id)
-        self.addText(" -->")
+        self.addText(u" -->")
         self.addElementStart(name, {'id': id})
 
     def addEval(self,replace):
@@ -739,7 +748,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
 
     def endText(self):
         if len(self.outputText) > 0:
-            self.addInstruction(genRepeatText,''.join(self.outputText))
+            self.addInstruction(genRepeatText,u''.join(self.outputText))
         self.outputText = []
 
     def addInstruction(self, instruction, args):
@@ -820,83 +829,83 @@ class MetaHandle:
         self.subHandles.append(handle)
 
     def render(self, fileobj, varname = 'handle'):
-        prefix = '    '
-        ending = "\n"
+        prefix = u'    '
+        ending = u"\n"
         
-        fileobj.write('%s# Start of handle%s%s' % (prefix, ending, ending))
+        fileobj.write(u'%s# Start of handle%s%s' % (prefix, ending, ending))
 
-        fileobj.write('%s# Start user code%s' % (prefix, ending))
+        fileobj.write(u'%s# Start user code%s' % (prefix, ending))
         if self.execOnLoad is not None:
             for line in self.execOnLoad.splitlines():
-                fileobj.write('%s%s%s' % (prefix, line, ending))
+                fileobj.write(u'%s%s%s' % (prefix, line, ending))
         if self.execOnUnload is not None:
-            fileobj.write('%s%sdef _execOnUnload():%s' % (ending, prefix, ending))
+            fileobj.write(u'%s%sdef _execOnUnload():%s' % (ending, prefix, ending))
             for line in self.execOnUnload.splitlines():
-                fileobj.write('%s    %s%s' % (prefix, line, ending))
-        fileobj.write('%s# End user code%s%s' % (prefix, ending, ending))
+                fileobj.write(u'%s    %s%s' % (prefix, line, ending))
+        fileobj.write(u'%s# End user code%s%s' % (prefix, ending, ending))
 
-        fileobj.write('%slocalvars = locals()%s' % (prefix, ending))
-        fileobj.write('%slocalvars.update(globals())%s' % (prefix, ending))
+        fileobj.write(u'%slocalvars = locals()%s' % (prefix, ending))
+        fileobj.write(u'%slocalvars.update(globals())%s' % (prefix, ending))
         if self.execOnUnload is not None:
-            fileobj.write('%s%s = Handle(domHandler, localvars, onUnlink = _execOnUnload)%s%s' % (prefix, varname, ending, ending))
+            fileobj.write(u'%s%s = Handle(domHandler, localvars, onUnlink = _execOnUnload)%s%s' % (prefix, varname, ending, ending))
         else:
-            fileobj.write('%s%s = Handle(domHandler, localvars, onUnlink = lambda:None)%s%s' % (prefix, varname, ending, ending))
+            fileobj.write(u'%s%s = Handle(domHandler, localvars, onUnlink = lambda:None)%s%s' % (prefix, varname, ending, ending))
 
         count = 0
         for ur in self.updateRegions:
             (anchorId, anchorType, templateFuncs, name) = ur
-            upFunc = "up_%s_%s" % (count, varname)
-            fileobj.write('%sdef %s(viewName, view, tid):%s' % (prefix, upFunc,ending))
-            fileobj.write('%s    out = StringIO()%s' % (prefix, ending))
+            upFunc = u"up_%s_%s" % (count, varname)
+            fileobj.write(u'%sdef %s(viewName, view, tid):%s' % (prefix, upFunc,ending))
+            fileobj.write(u'%s    out = StringIO()%s' % (prefix, ending))
             for count2 in range(len(templateFuncs)):
                 (func, args) = templateFuncs[count2]
-                fileobj.write(func('out','',prefix+'    ',args))
-            fileobj.write('%s    out.seek(0)%s' % (prefix, ending))
-            fileobj.write('%s    return out%s' % (prefix, ending))
+                fileobj.write(func(u'out',u'',prefix+u'    ',args))
+            fileobj.write(u'%s    out.seek(0)%s' % (prefix, ending))
+            fileobj.write(u'%s    return out%s' % (prefix, ending))
 
-            fileobj.write('%s%s.addUpdate(%s,%s,%s,%s, %s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),name,upFunc,repr(name),ending))
+            fileobj.write(u'%s%s.addUpdate(%s,%s,%s,%s, %s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),name,upFunc,repr(name),ending))
             count += 1
 
         for ur in self.configUpdateRegions:
             (anchorId, anchorType, templateFuncs) = ur
-            upFunc = "config_up_%s_%s" % (count, varname)
-            fileobj.write('%sdef %s(tid):%s' % (prefix, upFunc, ending))
-            fileobj.write('%s    out = StringIO()%s' % (prefix, ending))
+            upFunc = u"config_up_%s_%s" % (count, varname)
+            fileobj.write(u'%sdef %s(tid):%s' % (prefix, upFunc, ending))
+            fileobj.write(u'%s    out = StringIO()%s' % (prefix, ending))
             for count2 in range(len(templateFuncs)):
                 (func, args) = templateFuncs[count2]
                 fileobj.write(func('out','',prefix+'    ',args))
-            fileobj.write('%s    out.seek(0)%s' % (prefix, ending))
-            fileobj.write('%s    return out%s' % (prefix, ending))
+            fileobj.write(u'%s    out.seek(0)%s' % (prefix, ending))
+            fileobj.write(u'%s    return out%s' % (prefix, ending))
 
-            fileobj.write('%s%s.addConfigUpdate(%s,%s,%s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),upFunc,ending))
+            fileobj.write(u'%s%s.addConfigUpdate(%s,%s,%s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),upFunc,ending))
             count += 1
 
         for tv in self.trackedViews:
             (anchorId, anchorType, templateFuncs, name) = tv
-            repFunc = "rep_%s_%s" % (count, varname)
-            fileobj.write('%sdef %s(this, viewName, view, tid):%s' % (prefix, repFunc,ending))
-            fileobj.write('%s    out = StringIO()%s' % (prefix, ending))
+            repFunc = u"rep_%s_%s" % (count, varname)
+            fileobj.write(u'%sdef %s(this, viewName, view, tid):%s' % (prefix, repFunc,ending))
+            fileobj.write(u'%s    out = StringIO()%s' % (prefix, ending))
             for count2 in range(len(templateFuncs)):
                 (func, args) = templateFuncs[count2]
                 fileobj.write(func('out','',prefix+'    ',args))
-            fileobj.write('%s    out.seek(0)%s' % (prefix, ending))
-            fileobj.write('%s    return out%s' % (prefix, ending))
+            fileobj.write(u'%s    out.seek(0)%s' % (prefix, ending))
+            fileobj.write(u'%s    return out%s' % (prefix, ending))
 
-            fileobj.write('%s%s.addView(%s,%s,%s,%s, %s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),name,repFunc,repr(name),ending))
+            fileobj.write(u'%s%s.addView(%s,%s,%s,%s, %s)%s' % (prefix, varname, repr(anchorId),repr(anchorType),name,repFunc,repr(name),ending))
             count += 1
             
         for action in self.triggerActionURLsOnLoad:
-            fileobj.write('%s%s.addTriggerActionURLOnLoad(fillAttr(%s,locals()))%s' %
+            fileobj.write(u'%s%s.addTriggerActionURLOnLoad(fillAttr(%s,locals()))%s' %
                           (prefix, varname, repr(action), ending))
 
         for action in self.triggerActionURLsOnUnload:
-            fileobj.write('%s%s.addTriggerActionURLOnUnload(fillAttr(%s,locals()))%s' %
+            fileobj.write(u'%s%s.addTriggerActionURLOnUnload(fillAttr(%s,locals()))%s' %
                           (prefix, varname, repr(action), ending))
 
         for subHandle in range(len(self.subHandles)):
-            newVarName = '%s_%d' % (varname, subHandle)
+            newVarName = u'%s_%d' % (varname, subHandle)
             self.subHandles[subHandle].render(fileobj, newVarName)
-            fileobj.write('%s%s.addSubHandle(%s)%s'%
+            fileobj.write(u'%s%s.addSubHandle(%s)%s'%
                           (prefix,varname,newVarName,ending))
             
 
@@ -904,4 +913,4 @@ def fillIfNotNone(obj):
     if obj is None:
         return repr(None)
     else:
-        return "fillAttr(%s,locals())" % repr(obj)
+        return u"fillAttr(%s,locals())" % repr(obj)

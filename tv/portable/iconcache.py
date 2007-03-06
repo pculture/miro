@@ -4,7 +4,9 @@ import threading
 import httpclient
 from fasttypes import LinkedList
 from eventloop import asIdle, addIdle, addTimeout
-from download_utils import nextFreeFilename, shortenFilename
+from download_utils import nextFreeFilename
+from util import unicodify
+from platformutils import unicodeToFilename, makeURLSafe
 import config
 import prefs
 import time
@@ -171,7 +173,6 @@ class IconCache:
                 else:
                     tmp_filename = os.path.join(cachedir, info["filename"]) + ".part"
 
-                tmp_filename = shortenFilename (tmp_filename)
                 tmp_filename = nextFreeFilename (tmp_filename)
                 output = file (tmp_filename, 'wb')
                 output.write(info["body"])
@@ -185,16 +186,15 @@ class IconCache:
 
             if (self.filename == None):
                 # Add a random unique id
-                parts = info["filename"].split('.')
-                uid = "%08d" % (random.randint(0,99999999),)
+                parts = unicodify(info["filename"]).split('.')
+                uid = u"%08d" % (random.randint(0,99999999),)
                 if len(parts) == 1:
                     parts.append(uid)
                 else:
                     parts[-1:-1] = [uid]
-                self.filename = '.'.join(parts)
-
+                self.filename = u'.'.join(parts)
+                self.filename = unicodeToFilename(self.filename, cachedir)
                 self.filename = os.path.join(cachedir, self.filename)
-                self.filename = shortenFilename (self.filename)
                 self.filename = nextFreeFilename (self.filename)
                 needsSave = True
             try:
@@ -208,12 +208,12 @@ class IconCache:
                 needsSave = True
         
             if (info.has_key ("etag")):
-                etag = info["etag"]
+                etag = unicodify(info["etag"])
             else:
                 etag = None
 
             if (info.has_key ("modified")):
-                modified = info["modified"]
+                modified = unicodify(info["modified"])
             else:
                 modified = None
 
@@ -259,15 +259,15 @@ class IconCache:
         self.updating = True
 
         # No need to extract the icon again if we already have it.
-        if url is not None and (url.startswith("/") or url.startswith("file://")):
+        if url is not None and (url.startswith(u"/") or url.startswith(u"file://")):
             iconCacheUpdater.updateFinished ()
             return
 
         # But if we don't have it, let's extract it from the movie file if we 
         # can get a valid filename and if the item is currently not being 
         # downloaded (otherwise we could get some pretty bad random crashes).
-        hasFileName = (hasattr(self.dbItem, 'getFilename') and self.dbItem.getFilename() != '')
-        isDownloading = (hasattr(self.dbItem, 'getState') and self.dbItem.getState() == 'downloading')
+        hasFileName = (hasattr(self.dbItem, u'getFilename') and self.dbItem.getFilename() != u'')
+        isDownloading = (hasattr(self.dbItem, u'getState') and self.dbItem.getState() == u'downloading')
         if url is None and hasFileName and not isDownloading:
             self.extractIconFromMovieFile()
             return
@@ -309,7 +309,7 @@ class IconCache:
         info['filename'] = iconFilename
         
         self.updateIconCache(None, info)
-        self.url = 'file://%s' % self.filename
+        self.url = u'file://%s' % makeURLSafe(self.filename)
 
     def requestUpdate (self, is_vital = False):
         if hasattr (self, "updating") and hasattr (self, "dbItem"):
@@ -331,9 +331,9 @@ class IconCache:
 
     def getFilename(self):
         self.dbItem.confirmDBThread()
-        if self.url and self.url.startswith ("file://"):
-            return self.url[len("file://"):]
-        elif self.url and self.url.startswith ("/"):
+        if self.url and self.url.startswith (u"file://"):
+            return self.url[len(u"file://"):]
+        elif self.url and self.url.startswith (u"/"):
             return self.url
         else:
             return self.filename

@@ -561,6 +561,55 @@ def upgrade40(objectList):
             changed.add(o)
     return changed
 
+def upgrade41(objectList):
+    from util import unicodify
+    # This is where John Lennon's ghost sings "Binary Fields Forever"
+    binaryFields = ['filename','videoFilename', 'shortFilename',
+                        'offsetPath','initialHTML']
+    changed = set()
+    for o in objectList:
+        o.savedData = unicodify(o.savedData)
+        for field in o.savedData:
+            if field not in binaryFields:
+                o.savedData[field] = unicodify(o.savedData[field])
+
+                # These get skipped because they're a level lower
+                if field == 'actualFeed':
+                    o.savedData[field].__dict__ = \
+                         unicodify(o.savedData[field].__dict__)
+                elif field == 'iconCache':
+                    for icfield in ['etag','modified','url']:
+                        o.savedData['iconCache'].savedData[icfield] = \
+                          unicodify(o.savedData['iconCache'].savedData[icfield])
+                        if (type(o.savedData['iconCache'].savedData['filename'])
+                               == unicode):
+                            o.savedData['iconCache'].savedData['filename'] =\
+                               o.savedData['iconCache'].savedData['filename'].encode('ascii','replace')
+
+            else:
+                if type(o.savedData[field]) == unicode:
+                    o.savedData[field] = o.savedData[field].encode('ascii','replace')
+        if o.classString == 'channel-guide':
+            del o.savedData['cachedGuideBody']
+        changed.add(o)
+    return changed
+
+#         if o.classString == 'item':
+#             objChanged = False
+#             for field in ('pendingReason','videoFilename'):
+#                 if (o.savedData[field] is not None and
+#                     type(o.savedData[field]) != types.UnicodeType):
+#                     objChanged = True
+#                     o.savedData[field] = unicodify(o.savedData[field])
+#         elif o.classString == 'file-item':
+#             objChanged = False
+#             for field in ('pendingReason','videoFilename','filename','shortFilename','offsetPath'):
+#                 if (o.savedData[field] is not None and
+#                     type(o.savedData[field]) != types.UnicodeType):
+#                     objChanged = True
+#                     o.savedData[field] = unicodify(o.savedData[field])
+#         o.savedData['entry'] = unicodify
+            
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

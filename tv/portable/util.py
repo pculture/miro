@@ -10,6 +10,7 @@ import threading
 import traceback
 import subprocess
 import logging
+from types import UnicodeType, StringType
 
 import prefs
 
@@ -483,3 +484,70 @@ class ThreadSafeCounter:
 def setupLogging():
     logging.addLevelName(25, "TIMING")
     logging.timing = lambda msg, *args, **kargs: logging.log(25, msg, *args, **kargs)
+
+
+# Returned when input to a template function isn't unicode
+class DemocracyUnicodeError(StandardError):
+    pass
+
+# Raise an exception if input isn't unicode
+def checkU(text):
+    if type(text) != UnicodeType:
+        raise DemocracyUnicodeError, (u"text \"%s\" is not a unicode string" %
+                                     text)
+
+# Decorator that raised an exception if the function doesn't return unicode
+def returnsUnicode(func):
+    def checkFunc(*args, **kwargs):
+        result = func(*args,**kwargs)
+        if result is not None:
+            checkU(result)
+        return result
+    return checkFunc
+
+# Raise an exception if input isn't a binary string
+def checkB(text):
+    if type(text) != StringType:
+        raise DemocracyUnicodeError, (u"text \"%s\" is not a binary string" %
+                                     text)
+
+# Decorator that raised an exception if the function doesn't return unicode
+def returnsBinary(func):
+    def checkFunc(*args, **kwargs):
+        result = func(*args,**kwargs)
+        if result is not None:
+            checkB(result)
+        return result
+    return checkFunc
+
+# Raise an exception if input isn't a filename type
+def checkURL(text):
+    if type(text) != UnicodeType:
+        raise DemocracyUnicodeError, (u"url \"%s\" is not unicode" %
+                                     text)
+    try:
+        text.encode('ascii')
+    except:
+        raise DemocracyUnicodeError, (u"url \"%s\" contains extended characters" %
+                                     text)
+
+# Decorator that raised an exception if the function doesn't return a filename
+def returnsURL(func):
+    def checkFunc(*args, **kwargs):
+        result = func(*args,**kwargs)
+        if result is not None:
+            checkURL(result)
+        return result
+    return checkFunc
+
+# Turns all strings in data structure to unicode
+def unicodify(d):
+    if isinstance(d, dict):
+        for key in d:
+            d[key] = unicodify(d[key])
+    elif isinstance(d, list):
+        for key in range(len(d)):
+            d[key] = unicodify(d[key])
+    elif type(d) == StringType:
+        d = d.decode('ascii','replace')
+    return d

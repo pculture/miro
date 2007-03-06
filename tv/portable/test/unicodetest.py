@@ -1,8 +1,11 @@
 import unittest
 from tempfile import mkstemp
 from time import sleep
+import time
+import types
 
 import feed
+import item
 import database
 import feedparser
 import app
@@ -13,6 +16,8 @@ import gtcache
 import gettext
 import resources
 import template
+from template_compiler import TemplateUnicodeError
+import template_compiler
 
 from test.framework import DemocracyTestCase
 
@@ -31,48 +36,60 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     def setUp(self):
         super(UnicodeFeedTestCase, self).setUp()
 
+    def isProperFeedParserDict(self, parsed, name="top"):
+        if isinstance(parsed, types.DictionaryType):
+            for (key, value) in parsed.items():
+                self.isProperFeedParserDict(value, key)
+        elif (isinstance(parsed, types.ListType) or
+              isinstance(parsed, types.TupleType)):
+            for value in parsed:
+                self.isProperFeedParserDict(value, name)
+        elif isinstance(parsed, types.StringType):
+            self.assert_(name in ["base","type","encoding","version","href","rel"])
+        elif isinstance(parsed, time.struct_time):
+            self.assert_(name in ["updated_parsed"])
+        elif isinstance(parsed, types.IntType):
+            self.assert_(name in ["bozo"])
+        else:
+            self.assert_((isinstance(parsed,types.UnicodeType) or
+                          isinstance(parsed,types.NoneType)))
+
+    # Returns true iff value is a python unicode string containing
+    # only ascii characters
+    def isASCIIUnicode(self, value):
+        return ((type(value) == types.UnicodeType) and
+                (value == value.encode('ascii')))
+
     def testValidUTF8Feed(self):
         [handle, self.filename] = mkstemp(".xml")
         handle =file(self.filename,"wb")
-        handle.write("""<?xml version="1.0"?>
-<rss version="2.0">
-   <channel>
-      <title>Chinese Numbers ○一二三四五六七八九</title>
-      <description>Chinese Numbers ○一二三四五六七八九</description>
-      <language>zh-zh</language>
-      <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>
-      <generator>Weblog Editor 2.0</generator>
-      <managingEditor>editor@example.com</managingEditor>
-      <webMaster>webmaster@example.com</webMaster>
-      <item>
+        handle.write(u'<?xml version="1.0"?>\n<rss version="2.0">\n   <channel>\n <title>Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</title>\n      <description>Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</description>\n      <language>zh-zh</language>\n     <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>\n      <generator>Weblog Editor 2.0</generator>\n      <managingEditor>editor@example.com</managingEditor>\n      <webMaster>webmaster@example.com</webMaster>\n      <item>\n\n         <title>\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</title>\n     <link>http://participatoryculture.org/boguslink</link>\n         <description>\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</description>\n        <enclosure url="file://crap" length="0" type="video/mpeg"/>\n         <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>\n      </item>\n   </channel>\n</rss>'.encode('utf-8'))
 
-         <title>○一二三四五六七八九</title>
-         <link>http://participatoryculture.org/boguslink</link>
-         <description>○一二三四五六七八九</description>
-         <enclosure url="file://crap" length="0" type="video/mpeg"/>
-         <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>
-      </item>
-   </channel>
-</rss>""")
         handle.close()
 
-        myFeed = feed.Feed("file://"+self.filename)
+        myFeed = feed.Feed(u"file://"+self.filename)
         self.forceFeedParserCallback(myFeed)
-        
-        # The title should be "Chinese numbers " followed by the
-        # Chinese characters for 0-9
-        self.assertEqual(len(myFeed.getTitle()), 26)
+
+        self.isProperFeedParserDict(myFeed.parsed)
+
+        # We need to explicitly check that the type is unicode because
+        # Python automatically converts bytes strings to unicode strings
+        # using the current system character set
+        self.assertEqual(type(myFeed.getTitle()), types.UnicodeType)
+        self.assertEqual(u"Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d",myFeed.getTitle())
 
         # The description is the same, but surrounded by a <span>
-        self.assertEqual(len(myFeed.getDescription()), 39)
-        
-        items = database.defaultDatabase.filter(lambda x:x.__class__.__name__ == 'Item')
-        self.assertEqual(items.len(),1)
-        item = items[0]
-        self.assertEqual(len(item.getTitle()), 10)
+        self.assertEqual(type(myFeed.getDescription()), types.UnicodeType)
+        self.assertEqual(u"<span>Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</span>",myFeed.getDescription())
 
-        # Again, description is the same as title, but surrounded by a <span>
-        self.assertEqual(len(item.getDescription()), 23)
+        items = database.defaultDatabase.filter(lambda x:x.__class__ == item.Item)
+        self.assertEqual(items.len(),1)
+        i = items[0]
+        self.assertEqual(type(i.getTitle()), types.UnicodeType)
+        self.assertEqual(u"\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d",i.getTitle())
+
+        self.assertEqual(type(i.getDescription()), types.UnicodeType)
+        self.assertEqual(u"<span>\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</span>",i.getDescription())
 
     def forceFeedParserCallback(self, myFeed):
         # a hack to get the feed to update without eventloop
@@ -82,25 +99,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     def testInvalidLatin1Feed(self):
         [handle, self.filename] = mkstemp(".xml")
         handle =file(self.filename,"wb")
-        handle.write("""<?xml version="1.0"?>
-<rss version="2.0">
-   <channel>
-      <title>H�ppy Birthday</title>
-      <description>H�ppy Birthday</description>
-      <language>zh-zh</language>
-      <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>
-      <generator>Weblog Editor 2.0</generator>
-      <managingEditor>editor@example.com</managingEditor>
-      <webMaster>webmaster@example.com</webMaster>
-      <item>
-         <title>H�ppy Birthday</title>
-         <link>http://participatoryculture.org/boguslink</link>
-         <description>H�ppy Birthday</description>
-         <enclosure url="file://crap" length="0" type="video/mpeg"/>
-         <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>
-      </item>
-   </channel>
-</rss>""")
+        handle.write('<?xml version="1.0"?>\n<rss version="2.0">\n   <channel>\n      <title>H\xe4ppy Birthday</title>\n      <description>H\xe4ppy Birthday</description>\n <language>zh-zh</language>\n      <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>\n      <generator>Weblog Editor 2.0</generator>\n      <managingEditor>editor@example.com</managingEditor>\n      <webMaster>webmaster@example.com</webMaster>\n      <item>\n         <title>H\xe4ppy Birthday</title>\n         <link>http://participatoryculture.org/boguslink</link>\n         <description>H\xe4ppy Birthday</description>\n         <enclosure url="file://crap" length="0" type="video/mpeg"/>\n         <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>\n      </item>\n   </channel>\n</rss>')
         handle.close()
 
         dialogs.delegate = UnicodeTestDelegate()
@@ -115,16 +114,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     def testLatin1HTML(self):
         [handle, self.filename] = mkstemp(".html")
         handle =file(self.filename,"wb")
-        handle.write("""<?xml version="1.0" encoding="iso-8859-1"?>
-<html>
-   <head>
-       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-      <title>H�ppy Birthday</title>
-   </head>
-   <body>
-   <a href="http://www.wccatv.com/files/video/hbml.mov">H�ppy Birthday</a>
-   </body>
-</html>""")
+        handle.write('<?xml version="1.0" encoding="iso-8859-1"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n  <title>H\xe4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov">H\xe4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
 
         dialogs.delegate = UnicodeTestDelegate()
@@ -137,22 +127,13 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.assertEqual(len(myFeed.items),1)
         myItem = myFeed.items[0]
         self.assertEqual(len(myItem.getTitle()),14)
-        self.assertEqual(myItem.getTitle(), u"H�ppy Birthday")
+        self.assertEqual(myItem.getTitle(), u"H\xe4ppy Birthday")
 
     # This is latin1 HTML that claims to be UTF-8
     def testInvalidLatin1HTML(self):
         [handle, self.filename] = mkstemp(".html")
         handle =file(self.filename,"wb")
-        handle.write("""<?xml version="1.0" encoding="utf-8"?>
-<html>
-   <head>
-       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-      <title>H�ppy Birthday</title>
-   </head>
-   <body>
-   <a href="http://www.wccatv.com/files/video/hbml.mov">H�ppy Birthday</a>
-   </body>
-</html>""")
+        handle.write('<?xml version="1.0" encoding="utf-8"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n      <title>H\xe4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov">H\xe4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
 
         dialogs.delegate = UnicodeTestDelegate()
@@ -165,22 +146,13 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.assertEqual(len(myFeed.items),1)
         myItem = myFeed.items[0]
         self.assertEqual(len(myItem.getTitle()),14)
-        self.assertEqual(myItem.getTitle(), u"H�ppy Birthday")
+        self.assertEqual(myItem.getTitle(), u"H\xe4ppy Birthday")
 
     # This is utf-8 HTML that claims to be utf-8
     def testUTF8HTML(self):
         [handle, self.filename] = mkstemp(".html")
         handle =file(self.filename,"wb")
-        handle.write("""<?xml version="1.0" encoding="utf-8"?>
-<html>
-   <head>
-       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-      <title>Häppy Birthday</title>
-   </head>
-   <body>
-   <a href="http://www.wccatv.com/files/video/hbml.mov">Häppy Birthday</a>
-   </body>
-</html>""")
+        handle.write('<?xml version="1.0" encoding="utf-8"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n      <title>H\xc3\xa4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov">H\xc3\xa4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
 
         dialogs.delegate = UnicodeTestDelegate()
@@ -193,21 +165,12 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.assertEqual(len(myFeed.items),1)
         myItem = myFeed.items[0]
         self.assertEqual(len(myItem.getTitle()),14)
-        self.assertEqual(myItem.getTitle(), u"H�ppy Birthday")
+        self.assertEqual(myItem.getTitle(), u"H\xe4ppy Birthday")
 
     def testUTF8HTMLLinks(self):
         [handle, self.filename] = mkstemp(".html")
         handle =file(self.filename,"wb")
-        handle.write("""<?xml version="1.0" encoding="utf-8"?>
-<html>
-   <head>
-       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-      <title>Häppy Birthday</title>
-   </head>
-   <body>
-   <a href="http://www.wccatv.com/files/video/Häppy.mov">Häppy Birthday</a>
-   </body>
-</html>""")
+        handle.write('<?xml version="1.0" encoding="utf-8"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n      <title>H\xc3\xa4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/H\xc3\xa4ppy.mov">H\xc3\xa4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
 
         dialogs.delegate = UnicodeTestDelegate()
@@ -227,16 +190,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     def testLatin1HTMLLinks(self):
         [handle, self.filename] = mkstemp(".html")
         handle =file(self.filename,"wb")
-        handle.write("""<?xml version="1.0" encoding="iso-8859-1"?>
-<html>
-   <head>
-       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-      <title>H�ppy Birthday</title>
-   </head>
-   <body>
-   <a href="http://www.wccatv.com/files/video/H�ppy.mov">H�ppy Birthday</a>
-   </body>
-</html>""")
+        handle.write('<?xml version="1.0" encoding="iso-8859-1"?>\n<html>\n   <head>\n <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n   <title>H\xe4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/H\xe4ppy.mov">H\xe4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
 
         dialogs.delegate = UnicodeTestDelegate()
@@ -256,16 +210,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     def testInvalidLatin1HTMLLinks(self):
         [handle, self.filename] = mkstemp(".html")
         handle =file(self.filename,"wb")
-        handle.write("""<?xml version="1.0" encoding="iso-8859-1"?>
-<html>
-   <head>
-       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-      <title>Häppy Birthday</title>
-   </head>
-   <body>
-   <a href="http://www.wccatv.com/files/video/Häppy.mov">Häppy Birthday</a>
-   </body>
-</html>""")
+        handle.write('<?xml version="1.0" encoding="iso-8859-1"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n      <title>H\xc3\xa4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/H\xc3\xa4ppy.mov">H\xc3\xa4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
 
         dialogs.delegate = UnicodeTestDelegate()
@@ -285,16 +230,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     def testUTF8HTMLThumbs(self):
         [handle, self.filename] = mkstemp(".html")
         handle =file(self.filename,"wb")
-        handle.write("""<?xml version="1.0" encoding="utf-8"?>
-<html>
-   <head>
-       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-      <title>Häppy Birthday</title>
-   </head>
-   <body>
-   <a href="http://www.wccatv.com/files/video/hbml.mov"><img src="http://www.wccatv.com/files/video/Häppy.png"/>Häppy Birthday</a>
-   </body>
-</html>""")
+        handle.write('<?xml version="1.0" encoding="utf-8"?>\n<html>\n   <head>\n <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n      <title>H\xc3\xa4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov"><img src="http://www.wccatv.com/files/video/H\xc3\xa4ppy.png"/>H\xc3\xa4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
 
         dialogs.delegate = UnicodeTestDelegate()
@@ -317,16 +253,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     def testLatin1HTMLThumbs(self):
         [handle, self.filename] = mkstemp(".html")
         handle =file(self.filename,"wb")
-        handle.write("""<?xml version="1.0" encoding="iso-8859-1"?>
-<html>
-   <head>
-       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-      <title>H�ppy Birthday</title>
-   </head>
-   <body>
-   <a href="http://www.wccatv.com/files/video/hbml.mov"><img src="http://www.wccatv.com/files/video/H�ppy.png"/>H�ppy Birthday</a>
-   </body>
-</html>""")
+        handle.write('<?xml version="1.0" encoding="iso-8859-1"?>\n<html>\n   <head>\n  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n    <title>H\xe4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov"><img src="http://www.wccatv.com/files/video/H\xe4ppy.png"/>H\xe4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
 
         dialogs.delegate = UnicodeTestDelegate()
@@ -349,16 +276,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     def testInvalidLatin1HTMLThumbs(self):
         [handle, self.filename] = mkstemp(".html")
         handle =file(self.filename,"wb")
-        handle.write("""<?xml version="1.0" encoding="iso-8859-1"?>
-<html>
-   <head>
-       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-      <title>Häppy Birthday</title>
-   </head>
-   <body>
-   <a href="http://www.wccatv.com/files/video/hbml.mov"><img src="http://www.wccatv.com/files/video/Häppy.png"/>Häppy Birthday</a>
-   </body>
-</html>""")
+        handle.write('<?xml version="1.0" encoding="iso-8859-1"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n <title>H\xc3\xa4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov"><img src="http://www.wccatv.com/files/video/H\xc3\xa4ppy.png"/>H\xc3\xa4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
 
         dialogs.delegate = UnicodeTestDelegate()
@@ -398,7 +316,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         gettext.bindtextdomain("democracyplayer",resources.path("../../locale"))
         gettext.textdomain("democracyplayer")
         gettext.bind_textdomain_codeset("democracyplayer","UTF-8")
-        self.assertEqual(gtcache.gettext("Settings"),u"R�glages")
+        self.assertEqual(gtcache.gettext("Settings"),u'R\xe9glages')
         if oldLang is None:
             del os.environ["LANGUAGE"]
         else:
@@ -421,12 +339,63 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         gettext.bind_textdomain_codeset("democracyplayer","UTF-8")
 
         out = template.fillStaticTemplate("unittest/simpleunicode", "gtk-x11", "noCookie")
-        self.assert_(out.find("<h1>Häppy Birthday</h1>") != -1)
-        self.assert_(out.find("<p>Réglages</p>") != -1)
-        out = out.decode('utf-8')
-        self.assert_(out.find(u"<h1>H�ppy Birthday</h1>") != -1)
-        self.assert_(out.find(u"<p>R�glages</p>") != -1)
+        self.assert_(type(out)==types.UnicodeType)
+        # We shouldn't find utf-8 versions of this text
+        self.assert_(out.find(u'<h1>H\xc3\xa4ppy Birthday</h1>') == -1)
+        self.assert_(out.find(u'<p>R\xc3\xa9glages</p>') == -1)
+
+        # We should find the unicode string
+        self.assert_(out.find(u"<h1>H\xe4ppy Birthday</h1>") != -1)
+        self.assert_(out.find(u"<p>R\xe9glages</p>") != -1)
         if oldLang is None:
             del os.environ["LANGUAGE"]
         else:
             os.environ["LANGUAGE"] = oldLang
+
+class TemplateCompilerTest(framework.DemocracyTestCase):
+    def testNonUnicode(self):
+        # genRepeatText
+        self.assertRaises(TemplateUnicodeError,
+                          lambda : template_compiler.genRepeatText("out","123","    ","boo"))
+        self.assertRaises(TemplateUnicodeError,
+                          lambda : template_compiler.genRepeatText("out","123","    ","Chinese Numbers \x25cb\x4e00\x4e8c\x4e09\x56db\x4e94\x516d\x4e03\x516b\x4e5d"))
+        self.assertEqual(u"    out.write(u'Chinese Numbers \\u25cb\\u4e00\\u4e8c\\u4e09\\u56db\\u4e94\\u516d\\u4e03\\u516b\\u4e5d')\n",
+                         template_compiler.genRepeatText("out","123","    ",u"Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d"))
+
+
+        # genRepeatTranslate
+        self.assertRaises(TemplateUnicodeError,
+                          lambda : template_compiler.genRepeatTranslate("out","123","    ",("boo",{})))
+        self.assertRaises(TemplateUnicodeError,
+                          lambda : template_compiler.genRepeatTranslate("out","123","    ",("Chinese Numbers \x25cb\x4e00\x4e8c\x4e09\x56db\x4e94\x516d\x4e03\x516b\x4e5d",{})))
+
+
+        # genRepeatTextHide
+        self.assertRaises(TemplateUnicodeError,
+                          lambda : template_compiler.genRepeatTextHide("out","123","    ",(False,"boo")))
+        self.assertRaises(TemplateUnicodeError,
+                          lambda : template_compiler.genRepeatTextHide("out","123","    ",(False, "Chinese Numbers \x25cb\x4e00\x4e8c\x4e09\x56db\x4e94\x516d\x4e03\x516b\x4e5d")))
+        self.assertRaises(TemplateUnicodeError,
+                          lambda : template_compiler.genRepeatTextHide("out","123","    ",(True,"boo")))
+        self.assertRaises(TemplateUnicodeError,
+                          lambda : template_compiler.genRepeatTextHide("out","123","    ",(True, "Chinese Numbers \x25cb\x4e00\x4e8c\x4e09\x56db\x4e94\x516d\x4e03\x516b\x4e5d")))
+
+        self.assertEqual(u"    if not (True):\n        out.write(u'Chinese Numbers \\u25cb\\u4e00\\u4e8c\\u4e09\\u56db\\u4e94\\u516d\\u4e03\\u516b\\u4e5d')\n",
+                         template_compiler.genRepeatTextHide("out","123","    ",(True, u"Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d")))
+
+        # genHideSection
+        self.assertRaises(TemplateUnicodeError,
+                          lambda : template_compiler.genHideSection("out","123","    ",(False,[(lambda a,b,c,d: "boo","ignored")])))
+        self.assertRaises(TemplateUnicodeError,
+                          lambda : template_compiler.genHideSection("out","123","    ",(False,[(lambda a,b,c,d: "Chinese Numbers \x25cb\x4e00\x4e8c\x4e09\x56db\x4e94\x516d\x4e03\x516b\x4e5d","ignored")])))
+        self.assertEqual(u'    if not (False):\nChinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d',
+                          template_compiler.genHideSection("out","123","    ",(False,[(lambda a,b,c,d: u"Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d","ignored")])))
+
+        # genQuoteAndFillAttr
+        self.assertRaises(TemplateUnicodeError,
+                          lambda:template_compiler.genQuoteAndFillAttr("out","123","    ","boo"))
+        self.assertRaises(TemplateUnicodeError,
+                          lambda:template_compiler.genQuoteAndFillAttr("out","123","    ","Chinese Numbers \x25cb\x4e00\x4e8c\x4e09\x56db\x4e94\x516d\x4e03\x516b\x4e5d"))
+        self.assertEqual(u"    out.write(quoteAndFillAttr(u'Chinese Numbers \\u25cb\\u4e00\\u4e8c\\u4e09\\u56db\\u4e94\\u516d\\u4e03\\u516b\\u4e5d',locals()))\n",
+                         template_compiler.genQuoteAndFillAttr("out","123","    ",u"Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d"))
+

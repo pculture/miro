@@ -4,6 +4,7 @@ from template import fillStaticTemplate
 from httpclient import grabURL
 from xhtmltools import urlencode
 from copy import copy
+from util import returnsUnicode, unicodify
 import re
 import app
 import config
@@ -53,6 +54,7 @@ HTMLPattern = re.compile("^.*(<head.*?>.*</body\s*>)", re.S)
 
 class ChannelGuide(DDBObject):
     def __init__(self, url=None):
+        checkU(url)
         # Delayed callback for eventloop.
         self.dc = None
         # If None, we have never successfully loaded the guide. Otherwise,
@@ -82,6 +84,7 @@ class ChannelGuide(DDBObject):
     # Called by pickle during deserialization
     def onRestore(self):
         self.loadedThisSession = False
+        self.cachedGuideBody = False
         self.dc = None
 
         # Try to get a fresh version.
@@ -115,12 +118,12 @@ class ChannelGuide(DDBObject):
             # We're on a platform that uses direct loads and DTVAPI.
             apiurl = urllib.quote_plus(apiurl)
             apicookie = urllib.quote_plus(frontend.getDTVAPICookie())
-            url = "%s?dtvapiURL=%s&dtvapiCookie=%s" % (self.getURL(), apiurl, apicookie)
-            return ('url', url)
+            url = u"%s?dtvapiURL=%s&dtvapiCookie=%s" % (self.getURL(), apiurl, apicookie)
+            return (u'url', url)
 
         # We're on a platform that uses template inclusions and URL
         # interception.
-        return ('template', 'guide')
+        return (u'template', u'guide')
 
     def makeContextMenu(self, templateName, view):
         menuItems = [
@@ -150,7 +153,7 @@ class ChannelGuide(DDBObject):
 
             #print "DTV: No guide available! Sending apology instead."
             self.startUpdates()
-            return fillStaticTemplate("go-to-guide", id=self.getID(), templateState='default')
+            return fillStaticTemplate(u"go-to-guide", id=self.getID(), templateState='default')
         else:
             return self.cachedGuideBody
 
@@ -166,7 +169,7 @@ class ChannelGuide(DDBObject):
                 self.cachedGuideBody = match.group(1)
             else:
                 self.cachedGuideBody = html
-            self.redirectedURL = info['redirected-url']
+            self.redirectedURL = unicodify(info['redirected-url'])
 
             selection = app.controller.selection
             if wasLoading:
@@ -215,12 +218,14 @@ class ChannelGuide(DDBObject):
         return self.url is None
 
     # For the tabs
+    @returnsUnicode
     def getTitle(self):
         if self.getDefault():
             return _('Channel Guide')
         else:
             return self.getURL()
 
+    @returnsUnicode
     def getIconURL(self):
         return resources.url("images/channelguide-icon-tablist.png")
 

@@ -7,7 +7,8 @@ import config
 import eventloop
 from templatehelper import quoteattr, escape, attrPattern, rawAttrPattern, resourcePattern, generateId
 from templateoptimize import HTMLChangeOptimizer
-from xhtmltools import urlencode, toUTF8Bytes
+from xhtmltools import urlencode
+from template_compiler import checkU
 from itertools import chain
 import logging
 
@@ -20,7 +21,6 @@ if os.environ.has_key('DEMOCRACY_RECOMPILE_TEMPLATES'):
     import template_compiler
     import resources
     template_compiler.setResourcePath(resources.path(''))
-
 
 ###############################################################################
 #### Public interface                                                      ####
@@ -513,6 +513,7 @@ def nullSort(x,y):
 
 # Returns a quoted, filled version of attribute text
 def quoteAndFillAttr(value, localVars):
+    checkU(value)
     return ''.join(('"',quoteattr(fillAttr(value, localVars)),'"'))
 
 # Returns a filled version of attribute text
@@ -523,15 +524,16 @@ def quoteAndFillAttr(value, localVars):
 
 # FIXME: we should parse the attribute values ahead of time
 def fillAttr(_value, _localVars):
+    checkU(_value)
     match = attrPattern.match(_value)
     if match:
         result = eval(match.group(2), globals(), _localVars)
-        return ''.join((match.group(1), urlencode(toUTF8Bytes(result)), match.group(3)))
+        return ''.join((match.group(1), urlencode(result), match.group(3)))
     else:
         match = rawAttrPattern.match(_value)
         if match:
             result = eval(match.group(2), globals(), _localVars)
-            return ''.join((match.group(1), toUTF8Bytes(result), match.group(3)))
+            return ''.join((match.group(1), result, match.group(3)))
         else:
             match = resourcePattern.match(_value)
             if match:

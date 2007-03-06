@@ -155,7 +155,7 @@ cdef class MozillaBrowser:
 
     def openUriCallback(self, uri):
         URICallBack = self.getURICallBack()
-        if URICallBack is not None and not URICallBack(uri):
+        if URICallBack is not None and not URICallBack(uri.decode('utf-8','replace')):
             return True
         else:
             return False

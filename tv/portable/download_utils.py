@@ -5,6 +5,8 @@ import re
 import urllib
 import mimetypes
 import util
+from util import checkB, checkU
+from platformutils import unicodeToFilename
 
 # The mimetypes module does not know about FLV, let's enlighten him.
 mimetypes.add_type('video/flv', '.flv')
@@ -65,20 +67,10 @@ def parseURL(url):
         fullPath += '?%s' % query
     return scheme, host, port, fullPath
 
-# Returns a filename minus nasty characters
-def cleanFilename(filename):
-    if not os.path.supports_unicode_filenames:
-        filename = filename.encode('ascii', 'ignore')
-    stripped = filename.replace("\\","").replace("/","").replace(":","").replace("*","").replace("?","").replace("\"","").replace("<","").replace(">","").replace("|","")
-    if stripped == '':
-        # What can we do here?  This seems as good as anything.
-        return '_' 
-    else:
-        return stripped
-
 # If a filename doesn't have an extension, this tries to find a suitable one
 # based on the HTTP content-type info and add it if one is available.
 def checkFilenameExtension(filename, httpInfo):
+    checkB(filename)
     _, ext = os.path.splitext(filename)
     if ext == '' and 'content-type' in httpInfo:
         guessedExt = mimetypes.guess_extension(httpInfo['content-type'])
@@ -90,6 +82,7 @@ def checkFilenameExtension(filename, httpInfo):
 # Finds a filename that's unused and similar the the file we want
 # to download
 def nextFreeFilename(name):
+    checkB(name)
     if not access(name,F_OK):
         return name
     parts = name.split('.')
@@ -108,27 +101,15 @@ def nextFreeFilename(name):
             newname = '.'.join(parts)
     return newname
 
-def shortenFilename(name):
-    if len(name) < 200:
-        return name
-    (path, basename) = os.path.split(name)
-    split = basename.rsplit(".", 1)
-    if len(split[0]) > 100:
-        split[0] = split[0][:100]
-    if len(split) > 1 and len(split[1]) > 100:
-        split[1] = split[1][:100]
-    basename = ".".join(split)
-    name = os.path.join (path, basename)
-    return name
-
 ##
 # Returns a reasonable filename for saving the given url
 def filenameFromURL(url):
+    checkU(url)
     try:
         match = URIPattern.match(url)
         if match is None:
             # This code path will never be executed.
-            return cleanFilename(url)
+            return unicodeToFilename(url)
         filename = match.group(2)
         query = match.group(4)
         if not filename:
@@ -136,9 +117,17 @@ def filenameFromURL(url):
         elif not query:
             ret = filename
         else:
-            ret = "%s-%s" % (filename, query)
+            ret = u"%s-%s" % (filename, query)
         if ret is None:
-            ret = 'unknown'
-        return cleanFilename(ret)
+            ret = u'unknown'
+        return unicodeToFilename(ret)
     except:
         return 'unknown'
+
+# Given either a filename or a unicode "filename" return a valid clean
+# version of it
+def cleanFilename(filename):
+    if type(filename) == str:
+        return unicodeToFilename(filename.decode('ascii','replace'))
+    else:
+        return unicodeToFilename(filename)

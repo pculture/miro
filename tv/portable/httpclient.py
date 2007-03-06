@@ -1374,7 +1374,7 @@ class HTTPClient(object):
                 if authHeader is not None:
                     self.headers["Authorization"] = authHeader
                 self.reallyStartRequest()
-            httpauth.findHTTPAuth(callback, host, path)
+            httpauth.findHTTPAuth(callback, host.decode('ascii','replace'), path.decode('ascii','replace'))
         else:
             self.reallyStartRequest()
 

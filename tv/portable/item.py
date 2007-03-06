@@ -4,6 +4,7 @@ from gtcache import gettext as _
 from math import ceil
 from xhtmltools import unescape,xhtmlify
 from xml.sax.saxutils import unescape
+from util import checkU, returnsUnicode, checkB, returnsBinary
 import locale
 import os
 import shutil
@@ -17,6 +18,7 @@ from database import DatabaseConstraintError
 from databasehelper import makeSimpleGetSet
 from iconcache import IconCache
 from templatehelper import escape,quoteattr
+import types
 import app
 import template
 import downloader
@@ -35,6 +37,8 @@ import util
 import adscraper
 import autodler
 import moviedata
+import logging
+import platformutils
 
 _charset = locale.getpreferredencoding()
 
@@ -53,7 +57,7 @@ class Item(DDBObject):
         self.pendingManualDL = False
         self.downloadedTime = None
         self.watchedTime = None
-        self.pendingReason = ""
+        self.pendingReason = u""
         self.entry = entry
         self.expired = False
         self.keep = False
@@ -101,27 +105,29 @@ class Item(DDBObject):
             self.downloader = dler
             dler.addItem(self)
 
-    getSelected, setSelected = makeSimpleGetSet('selected',
+    getSelected, setSelected = makeSimpleGetSet(u'selected',
             changeNeedsSave=False)
-    getActive, setActive = makeSimpleGetSet('active', changeNeedsSave=False)
+    getActive, setActive = makeSimpleGetSet(u'active', changeNeedsSave=False)
 
+    @returnsUnicode
     def getSelectedState(self, view):
         currentView = app.controller.selection.itemListSelection.currentView
         if not self.selected or view != currentView:
-            return 'normal'
+            return u'normal'
         elif not self.active:
-            return 'selected-inactive'
+            return u'selected-inactive'
         else:
-            return 'selected'
+            return u'selected'
 
     def toggleShowMoreInfo(self):
         self.showMoreInfo = not self.showMoreInfo
         self.signalChange(needsSave=False, needsUpdateXML=True);
 
+    @returnsUnicode
     def getMoreInfoState(self):
         if self.showMoreInfo:
-            return 'more-info'
-        return ''
+            return u'more-info'
+        return u''
 
     def findChildVideos(self):
         """If this item points to a directory, return the set all video files
@@ -191,7 +197,7 @@ class Item(DDBObject):
                         self.videoFilename = self.videoFilename[1:]
                     self.isVideo = True
             else:
-                if self.getFeedURL() != "dtv:directoryfeed":
+                if self.getFeedURL() != u"dtv:directoryfeed":
                     target_dir = config.get(prefs.NON_VIDEO_DIRECTORY)
                     if not filename_root.startswith(target_dir):
                         if isinstance(self, FileItem):
@@ -289,7 +295,7 @@ class Item(DDBObject):
         except AttributeError:
             self._calcItemXML()
             xml = self._itemXML
-        return xml.replace(self._XMLViewName, viewName.encode('utf-8'))
+        return xml.replace(self._XMLViewName, viewName)
 
     # Regenerates an expired item XML from the download-item template
     # _XMLViewName is a random string we use for the name of the view
@@ -297,6 +303,7 @@ class Item(DDBObject):
     def _calcItemXML(self):
         self._XMLViewName = "view%dview" % random.randint(9999999,99999999)
         self._itemXML = template.fillStaticTemplate('download-item-inner', onlyBody=True, this=self, viewName = self._XMLViewName,templateState='unknown')
+        checkU(self._itemXML)
 
     #
     # Returns True iff this item has never been viewed in the interface
@@ -323,6 +330,7 @@ class Item(DDBObject):
 
     ##
     # Returns mime-type of the first video enclosure in the item
+    @returnsUnicode
     def getFirstVideoEnclosureType(self):
         enclosure = self.getFirstVideoEnclosure()
         if enclosure and enclosure.has_key('type'):
@@ -332,13 +340,14 @@ class Item(DDBObject):
 
     ##
     # Returns the URL associated with the first enclosure in the item
+    @returnsUnicode
     def getURL(self):
         self.confirmDBThread()
         videoEnclosure = self.getFirstVideoEnclosure()
         if videoEnclosure is not None and 'url' in videoEnclosure:
-            return videoEnclosure['url']
+            return videoEnclosure['url'].decode('ascii','replace')
         else:
-            return ''
+            return u''
 
     def hasSharableURL(self):
         """Does this item have a URL that the user can share with others?
@@ -346,7 +355,7 @@ class Item(DDBObject):
         This returns True when the item has a non-file URL.
         """
         url = self.getURL()
-        return url != '' and not url.startswith("file:")
+        return url != u'' and not url.startswith(u"file:")
 
     ##
     # Returns the feed this item came from
@@ -373,6 +382,7 @@ class Item(DDBObject):
                 self._parent = self
             return self._parent
 
+    @returnsUnicode
     def getFeedURL(self):
         return self.getFeed().getURL()
 
@@ -442,6 +452,7 @@ folder will be deleted.""")
         if self.downloader:
             self.downloader.startUpload()
 
+    @returnsUnicode
     def getString(self, when):
         """Get the expiration time a string to display to the user."""
         offset = when - datetime.now()
@@ -453,19 +464,21 @@ folder will be deleted.""")
             result = _("%d minutes") % (ceil(offset.seconds/60.0))
         return result
 
+    @returnsUnicode
     def getExpirationString(self):
         """Get the expiration time a string to display to the user."""
         expireTime = self.getExpirationTime()
         if expireTime is None:
-            return ""
+            return u""
         else:
             return _('Expires in %s') % self.getString (expireTime)
 
+    @returnsUnicode
     def getPausedString(self):
         """Get the expiration time a string to display to the user."""
         retryTime = None
         if self.downloader:
-            if self.downloader.getState() == 'offline':
+            if self.downloader.getState() == u'offline':
                 retryTime = self.downloader.status['retryTime']
                 if retryTime is None:
                     return ""
@@ -474,36 +487,39 @@ folder will be deleted.""")
             else:
                 return _('Paused')
         else:
-            return ""
+            return u""
 
+    @returnsUnicode
     def getDragType(self):
         if self.isDownloaded():
-            return 'downloadeditem'
+            return u'downloadeditem'
         else:
-            return 'item'
+            return u'item'
 
+    @returnsUnicode
     def getEmblemCSSClass(self):
-        if self.getState() == 'newly-downloaded':
-            return 'newly-downloaded'
-        elif self.getState() == 'new':
-            return 'new'
+        if self.getState() == u'newly-downloaded':
+            return u'newly-downloaded'
+        elif self.getState() == u'new':
+            return u'new'
         else:
-            return ''
+            return u''
 
+    @returnsUnicode
     def getEmblemCSSString(self):
-        if self.getState() == 'newly-downloaded':
-            return 'UNWATCHED'
-        elif self.getState() == 'new':
-            return 'NEW'
+        if self.getState() == u'newly-downloaded':
+            return u'UNWATCHED'
+        elif self.getState() == u'new':
+            return u'NEW'
         else:
-            return ''
+            return u''
 
     def getUandA(self):
         """Get whether this item is new, or newly-downloaded, or neither."""
         state = self.getState()
-        if state == 'new':
+        if state == u'new':
             return (0, 1)
-        elif state == 'newly-downloaded':
+        elif state == u'newly-downloaded':
             return (1, 0)
         else:
             return (0, 0)
@@ -517,13 +533,13 @@ folder will be deleted.""")
         if self.getWatchedTime() is None or not self.isDownloaded():
             return None
         ufeed = self.getFeed()
-        if ufeed.expire == 'never' or (ufeed.expire == 'system'
+        if ufeed.expire == u'never' or (ufeed.expire == u'system'
                 and config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
             return None
         else:
-            if ufeed.expire == "feed":
+            if ufeed.expire == u"feed":
                 expireTime = ufeed.expireTime
-            elif ufeed.expire == "system":
+            elif ufeed.expire == u"system":
                 expireTime = timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS))
             return self.getWatchedTime() + expireTime
 
@@ -548,8 +564,8 @@ folder will be deleted.""")
                 self.expiring = False
             else:
                 ufeed = self.getFeed()
-                if (self.keep or ufeed.expire == 'never' or 
-                        (ufeed.expire == 'system' and
+                if (self.keep or ufeed.expire == u'never' or 
+                        (ufeed.expire == u'system' and
                             config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0)):
                     self.expiring = False
                 else:
@@ -605,6 +621,7 @@ folder will be deleted.""")
             self.clearParentsChildrenSeen()
             self.signalChange()
 
+    @returnsUnicode
     def getRSSID(self):
         self.confirmDBThread()
         return self.entry["id"]
@@ -628,6 +645,7 @@ folder will be deleted.""")
             self.resumeTime = position
             self.signalChange()
 
+    @returnsUnicode
     def getPendingReason(self):
         self.confirmDBThread()
         return self.pendingReason
@@ -655,7 +673,10 @@ folder will be deleted.""")
         if ((not autodl) and 
                 manualDownloadCount >= config.get(prefs.MAX_MANUAL_DOWNLOADS)):
             self.pendingManualDL = True
-            self.pendingReason = "queued for download"
+            self.pendingReason = u"queued for download" # FIXME:
+                                                        # Should this
+                                                        # be
+                                                        # translated --NN
             self.signalChange()
             return
         else:
@@ -664,7 +685,7 @@ folder will be deleted.""")
 
         if self.downloader is None:
             self.downloader = downloader.getDownloader(self)
-        self.downloader.setChannelName (self.getChannelTitle())
+        self.downloader.setChannelName (platformutils.unicodeToFilename(self.getChannelTitle()))
         if self.downloader.isFinished():
             self.onDownloadFinished()
         else:
@@ -684,10 +705,10 @@ folder will be deleted.""")
 
     def isEligibleForAutoDownload(self):
         self.confirmDBThread()
-        if self.getState() not in ('new', 'not-downloaded'):
+        if self.getState() not in (u'new', u'not-downloaded'):
             return False
-        if self.downloader and self.downloader.getState() in ('failed',
-                'stopped', 'paused'):
+        if self.downloader and self.downloader.getState() in (u'failed',
+                u'stopped', u'paused'):
             return False
         ufeed = self.getFeed()
         if ufeed.getEverything:
@@ -699,63 +720,68 @@ folder will be deleted.""")
                 self.isEligibleForAutoDownload())
 
     def isFailedDownload(self):
-        return self.downloader and self.downloader.getState() == 'failed'
+        return self.downloader and self.downloader.getState() == u'failed'
 
     ##
     # Returns a link to the thumbnail of the video
+    @returnsUnicode
     def getThumbnailURL(self):
         self.confirmDBThread()
         # Try to get the thumbnail specific to the video enclosure
         videoEnclosure = self.getFirstVideoEnclosure()
         if videoEnclosure is not None:
             try:
-                return videoEnclosure["thumbnail"]["url"]
+                return videoEnclosure["thumbnail"]["url"].decode("ascii","replace")
             except:
                 pass 
         # Try to get any enclosure thumbnail
         for enclosure in self.entry.enclosures:
             try:
-                return enclosure["thumbnail"]["url"]
+                return enclosure["thumbnail"]["url"].decode('ascii','replace')
             except KeyError:
                 pass
         # Try to get the thumbnail for our entry
         try:
-            return self.entry["thumbnail"]["url"]
+            return self.entry["thumbnail"]["url"].decode('ascii','replace')
         except:
             return None
 
+    @returnsUnicode
     def getThumbnail (self):
         self.confirmDBThread()
         if self.iconCache.isValid():
             basename = os.path.basename(self.iconCache.getFilename())
             return resources.iconCacheUrl(basename)
         elif self.isContainerItem:
-            return resources.url("images/container-icon.png")
+            return resources.url(u"images/container-icon.png")
         else:
             if self.showMoreInfo:
-                return resources.url("images/thumb-more-info.png")
-            else: return resources.url("images/thumb.png")
+                return resources.url(u"images/thumb-more-info.png")
+            else: return resources.url(u"images/thumb.png")
     ##
     # returns the title of the item
+    @returnsUnicode
     def getTitle(self):
         try:
             return self.entry.title
         except:
             try:
                 enclosure = self.getFirstVideoEnclosure()
-                return enclosure["url"]
+                return enclosure["url"].decode('ascii','replace')
             except:
-                return ""
+                return u""
 
+    @returnsUnicode
     def getChannelTitle(self):
         implClass = self.getFeed().actualFeed.__class__
         if implClass in (feed.RSSFeedImpl, feed.ScraperFeedImpl):
             return self.getFeed().getTitle()
         else:
-            return ''
+            return u''
 
     ##
     # Returns the raw description of the video (unicode)
+    @returnsUnicode
     def getRawDescription(self):
         self.confirmDBThread()
         try:
@@ -769,16 +795,17 @@ folder will be deleted.""")
 
     ##
     # Returns valid XHTML containing a description of the video (str)
+    @returnsUnicode
     def getDescription(self):
         rawDescription = self.getRawDescription()
         try:
             purifiedDescription = adscraper.purify(rawDescription)
-            return xhtmlify ('<span>%s</span>' % (unescape(purifiedDescription),), filterFontTags=True)
+            return xhtmlify (u'<span>%s</span>' % (unescape(purifiedDescription),), filterFontTags=True)
         except:
             try:
-                return xhtmlify ('<span>%s</span>' % (unescape(rawDescription),))
+                return xhtmlify (u'<span>%s</span>' % (unescape(rawDescription),))
             except:
-                return '<span />'
+                return u'<span />'
 
     ##
     # Returns valid XHTML containing the ad (str)
@@ -786,9 +813,9 @@ folder will be deleted.""")
         rawDescription = self.getRawDescription()
         try:
             rawAd = adscraper.scrape(rawDescription)
-            return xhtmlify ('<span>%s</span>' % (unescape(rawAd),))
+            return xhtmlify (u'<span>%s</span>' % (unescape(rawAd),))
         except:
-            return '<span />'
+            return u'<span />'
 
     def looksLikeTorrent(self):
         """Returns true if we think this item is a torrent.  (For items that
@@ -797,12 +824,13 @@ folder will be deleted.""")
         """
 
         if self.downloader is not None:
-            return self.downloader.getType() == 'bittorrent'
+            return self.downloader.getType() == u'bittorrent'
         else:
-            return self.getURL().endswith('.torrent')
+            return self.getURL().endswith(u'.torrent')
 
     ##
     # Returns formatted XHTML with release date, duration, format, and size
+    @returnsUnicode
     def getDetails(self):
         details = []
         reldate = self.getReleaseDate()
@@ -812,22 +840,22 @@ folder will be deleted.""")
 
         if self.isContainerItem:
             children = self.getChildren()
-            details.append('<span class="details-count">%s items</span>' % len(children))
+            details.append(u'<span class="details-count">%s items</span>' % len(children))
         if len(reldate) > 0:
-            details.append('<span class="details-date">%s</span>' % escape(reldate))
+            details.append(u'<span class="details-date">%s</span>' % escape(reldate))
         if len(size) > 0:
-            details.append('<span class="details-size">%s</span>' % escape(size))
+            details.append(u'<span class="details-size">%s</span>' % escape(size))
         if len(format) > 0:
-            details.append('<span class="details-format">%s</span>' % escape(format))
+            details.append(u'<span class="details-format">%s</span>' % escape(format))
         if self.looksLikeTorrent():
-            details.append('<span class="details-torrent">%s</span>' % _("TORRENT"))
+            details.append(u'<span class="details-torrent">%s</span>' % _("TORRENT"))
         if len(link) > 0 and link != self.getURL():
-            details.append('<a class="details-link" href="%s">%s</span>' % (quoteattr(link), _("WEB PAGE")))
-        out = '<BR>'.join(details)
+            details.append(u'<a class="details-link" href="%s">%s</span>' % (quoteattr(link), _("WEB PAGE")))
+        out = u'<BR>'.join(details)
         return out
 
     def isTransferring(self):
-        return self.downloader and self.downloader.getState() in ('uploading', 'downloading')
+        return self.downloader and self.downloader.getState() in (u'uploading', u'downloading')
 
     def getDownloadDetails(self):
         status = self.downloader.status
@@ -858,13 +886,13 @@ folder will be deleted.""")
         if self.isDownloaded():
             basename = os.path.basename(self.getFilename())
             basename = util.clampText(basename, 40)
-            linkEventURL = 'revealItem?item=%d' % self.getID()
+            linkEventURL = u'revealItem?item=%d' % self.getID()
             if self.isContainerItem:
                 label = _("REVEAL LOCAL FOLDER")
             else:
                 label = _("REVEAL LOCAL FILE")
             link = util.makeEventURL(label, linkEventURL)
-            rv.append((_('Filename:'), "%s<BR />%s" % (basename, link)))
+            rv.append((_('Filename:'), u"%s<BR />%s" % (basename, link)))
         return rv
 
 
@@ -878,16 +906,17 @@ folder will be deleted.""")
 
     def makeMoreInfoTable(self, title, moreInfoData):
         lines = []
-        lines.append('<h3>%s</h3>' % title)
-        lines.append('<table cellpadding="0" cellspacing="0">')
+        lines.append(u'<h3>%s</h3>' % title)
+        lines.append(u'<table cellpadding="0" cellspacing="0">')
         for label, text in moreInfoData:
-            lines.append('<tr><td class="label">%s</td>'
-                    '<td class="value">%s</td></tr>' % (label, text))
-        lines.append('</table>')
-        return '\n'.join(lines)
+            lines.append(u'<tr><td class="label">%s</td>'
+                    u'<td class="value">%s</td></tr>' % (label, text))
+        lines.append(u'</table>')
+        return u'\n'.join(lines)
 
     ## 
     # Returns formatted XHTML with download info
+    @returnsUnicode
     def getMoreInfo(self):
         details = [
             self.makeMoreInfoTable(_('Item Details'), self.getItemDetails()),
@@ -899,11 +928,11 @@ folder will be deleted.""")
             if self.isTransferring():
                 addTable(_('Torrent Details'), self.getTorrentDetails())
             elif self.downloader and self.downloader.isFinished():
-                addTable('Torrent Details <i>not connected</i>',
+                addTable(u'Torrent Details <i>not connected</i>',
                         self.getTorrentDetailsFinished())
-        elif self.getState() == 'downloading' and not self.pendingManualDL:
+        elif self.getState() == u'downloading' and not self.pendingManualDL:
             addTable(_('Download Details'), self.getDownloadDetails())
-        return '\n'.join(details).encode('utf-8')
+        return u'\n'.join(details)
 
 
     ##
@@ -935,37 +964,39 @@ folder will be deleted.""")
             return self._state
 
     # Recalculate the state of an item after a change
+    @returnsUnicode
     def _calcState(self):
         self.confirmDBThread()
         # FIXME, 'failed', and 'paused' should get download icons.  The user
         # should be able to restart or cancel them (put them into the stopped
         # state).
         if (self.downloader is None  or 
-                self.downloader.getState() in ('failed', 'stopped')):
+                self.downloader.getState() in (u'failed', u'stopped')):
             if self.pendingManualDL:
-                self._state = 'downloading'
+                self._state = u'downloading'
             elif self.expired:
-                self._state = 'expired'
+                self._state = u'expired'
             elif (self.getViewed() or
                     (self.downloader and
-                        self.downloader.getState() in ('failed', 'stopped'))):
-                self._state = 'not-downloaded'
+                        self.downloader.getState() in (u'failed', u'stopped'))):
+                self._state = u'not-downloaded'
             else:
-                self._state = 'new'
-        elif self.downloader.getState() in ('offline', 'paused'):
+                self._state = u'new'
+        elif self.downloader.getState() in (u'offline', u'paused'):
             if self.pendingManualDL:
-                self._state = 'downloading'
+                self._state = u'downloading'
             else:
-                self._state = 'paused'
+                self._state = u'paused'
         elif not self.downloader.isFinished():
-            self._state = 'downloading'
+            self._state = u'downloading'
         elif not self.getSeen():
-            self._state = 'newly-downloaded'
+            self._state = u'newly-downloaded'
         elif self.getExpiring():
-            self._state = 'expiring'
+            self._state = u'expiring'
         else:
-            self._state = 'saved'
+            self._state = u'saved'
 
+    @returnsUnicode    
     def getChannelCategory(self):
         """Get the category to use for the channel template.  
         
@@ -987,42 +1018,43 @@ folder will be deleted.""")
         self.confirmDBThread()
         if self.downloader is None or not self.downloader.isFinished():
             if not self.getViewed():
-                return 'new'
+                return u'new'
             if self.expired:
-                return 'expired'
+                return u'expired'
             else:
-                return 'not-downloaded'
+                return u'not-downloaded'
         elif not self.getSeen():
             if not self.getViewed():
-                return 'new'
-            return 'newly-downloaded'
+                return u'new'
+            return u'newly-downloaded'
         elif self.getExpiring():
-            return 'expiring'
+            return u'expiring'
         else:
-            return 'saved'
+            return u'saved'
 
     def isDownloadable(self):
-        return self.getState() in ('new', 'not-downloaded', 'expired')
+        return self.getState() in (u'new', u'not-downloaded', u'expired')
 
     def isDownloaded(self):
-        return self.getState() in ("newly-downloaded", "expiring", "saved")
+        return self.getState() in (u"newly-downloaded", u"expiring", u"saved")
 
     def showSaveButton(self):
-        return self.getState() in ('newly-downloaded', 'expiring') and not self.keep
+        return self.getState() in (u'newly-downloaded', u'expiring') and not self.keep
 
     def showSaved(self):
-        return self.getState() in ('saved',) or (self.getState() in ('newly-downloaded', 'expiring') and self.keep)
+        return self.getState() in (u'saved',) or (self.getState() in (u'newly-downloaded', u'expiring') and self.keep)
 
     def showTrashButton(self):
-        return self.isDownloaded() or (self.getFeedURL() == 'dtv:manualFeed'
-                and self.getState() not in ('downloading', 'paused'))
+        return self.isDownloaded() or (self.getFeedURL() == u'dtv:manualFeed'
+                and self.getState() not in (u'downloading', u'paused'))
 
+    @returnsUnicode
     def getFailureReason(self):
         self.confirmDBThread()
         if self.downloader is not None:
             return self.downloader.getShortReasonFailed()
         else:
-            return ""
+            return u""
     
     ##
     # Returns the size of the item to be displayed.
@@ -1055,6 +1087,7 @@ folder will be deleted.""")
 
     ##
     # returns status of the download in plain text
+    @returnsUnicode
     def getCurrentSize(self):
         if self.downloader is not None:
             size = self.downloader.getCurrentSize()
@@ -1098,14 +1131,16 @@ folder will be deleted.""")
     ##
     # Returns string containing three digit percent finished
     # "000" through "100".
+    @returnsUnicode
     def threeDigitPercentDone(self):
-        return '%03d' % int(self.downloadProgress())
+        return u'%03d' % int(self.downloadProgress())
 
     def downloadInProgress(self):
         return self.downloader is not None and self.downloader.getETA() != 0
 
     ##
     # Returns string with estimate time until download completes
+    @returnsUnicode
     def downloadETA(self):
         if self.downloader is not None:
             totalSecs = self.downloader.getETA()
@@ -1116,12 +1151,13 @@ folder will be deleted.""")
         mins, secs = divmod(totalSecs, 60)
         hours, mins = divmod(mins, 60)
         if hours > 0:
-            time = "%d:%02d:%02d" % (hours, mins, secs)
+            time = u"%d:%02d:%02d" % (hours, mins, secs)
             return _("%s remaining") % time
         else:
-            time = "%d:%02d" % (mins, secs)
+            time = u"%d:%02d" % (mins, secs)
             return _("%s remaining") % time
 
+    @returnsUnicode
     def getStartupActivity(self):
         if self.pendingManualDL:
             return self.pendingReason
@@ -1132,9 +1168,10 @@ folder will be deleted.""")
 
     ##
     # Returns the download rate
+    @returnsUnicode
     def downloadRate(self):
         rate = 0
-        unit = "k/s"
+        unit = u"k/s"
         if self.downloader is not None:
             rate = self.downloader.getRate()
         else:
@@ -1142,20 +1179,21 @@ folder will be deleted.""")
         rate /= 1024
         if rate > 1024:
             rate /= 1024
-            unit = "m/s"
+            unit = u"m/s"
         if rate > 1024:
             rate /= 1024
-            unit = "g/s"
+            unit = u"g/s"
             
-        return "%d%s" % (rate, unit)
+        return u"%d%s" % (rate, unit)
 
     ##
     # Returns the published date of the item
+    @returnsUnicode
     def getPubDate(self):
         try:
             return self.releaseDateObj.strftime("%b %d %Y").decode(_charset)
         except: 
-            return ""
+            return u""
     
     ##
     # Returns the published date of the item as a datetime object
@@ -1164,11 +1202,12 @@ folder will be deleted.""")
 
     ##
     # returns the date this video was released or when it was published
+    @returnsUnicode
     def getReleaseDate(self):
         try:
-            return self.releaseDateObj.strftime("%b %d %Y").decode(_charset)
+            return self.releaseDateObj.strftime(u"%b %d %Y").decode(_charset)
         except:
-            return ""
+            return u""
 
     ##
     # returns the date this video was released or when it was published
@@ -1185,65 +1224,69 @@ folder will be deleted.""")
 
     ##
     # returns string with the play length of the video
+    @returnsUnicode
     def getDuration(self, emptyIfZero=True):
         secs = self.getDurationValue()
         if secs == 0:
             if emptyIfZero:
-                return ""
+                return u""
             else:
                 return "n/a"
-        return "%02d:%02d" % (secs/60, secs % 60)
+        return u"%02d:%02d" % (secs/60, secs % 60)
 
     ##
     # returns string with the format of the video
-    KNOWN_MIME_TYPES = ('audio', 'video')
-    KNOWN_MIME_SUBTYPES = ('mov', 'wmv', 'mp4', 'mp3', 'mpg', 'mpeg', 'avi', 'x-flv', 'x-msvideo')
+    KNOWN_MIME_TYPES = (u'audio', u'video')
+    KNOWN_MIME_SUBTYPES = (u'mov', u'wmv', u'mp4', u'mp3', u'mpg', u'mpeg', u'avi', u'x-flv', u'x-msvideo')
     MIME_SUBSITUTIONS = {
-        'QUICKTIME': 'MOV',
+        u'QUICKTIME': u'MOV',
     }
+    @returnsUnicode
     def getFormat(self, emptyForUnknown=True):
         if self.looksLikeTorrent():
-            return '.torrent'
+            return u'.torrent'
         try:
             enclosure = self.entry['enclosures'][0]
             try:
-                extension = enclosure['url'].split('.')[-1].lower()
+                extension = enclosure['url'].split('.')[-1].lower().decode('ascii','replace')
             except:
-                extension == ''
+                extension == u''
             # Hack for mp3s, "mpeg audio" isn't clear enough
-            if extension.lower() == 'mp3':
-                return '.mp3'
+            if extension.lower() == u'mp3':
+                return u'.mp3'
             if enclosure.has_key('type') and len(enclosure['type']) > 0:
-                mtype, subtype = enclosure['type'].split('/')
+                mtype, subtype = enclosure['type'].decode('ascii','replace').split('/')
                 mtype = mtype.lower()
                 if mtype in self.KNOWN_MIME_TYPES:
                     format = subtype.split(';')[0].upper()
-                    if mtype == 'audio':
-                        format += ' AUDIO'
-                    if format.startswith('X-'):
+                    if mtype == u'audio':
+                        format += u' AUDIO'
+                    if format.startswith(u'X-'):
                         format = format[2:]
-                    return '.%s' % self.MIME_SUBSITUTIONS.get(format, format).lowercase()
+                    return u'.%s' % self.MIME_SUBSITUTIONS.get(format, format).lowercase()
             else:
                 if extension in self.KNOWN_MIME_SUBTYPES:
-                    return '.%s' % extension
+                    return u'.%s' % extension
         except:
             pass
         if emptyForUnknown:
-            return ""
+            return u""
         else:
-            return "unknown"
+            return u"unknown"
 
     ##
     # return keyword tags associated with the video separated by commas
+    @returnsUnicode
     def getTags(self):
         self.confirmDBThread()
         try:
-            return self.entry.categories.join(", ")
+            return self.entry.categories.join(u", ")
         except:
-            return ""
+            return u""
 
     ##
     # return the license associated with the video
+    @returnsUnicode
     def getLicence(self):
         self.confirmDBThread()
         try:
@@ -1252,10 +1295,11 @@ folder will be deleted.""")
             try:
                 return self.getFeed().getLicense()
             except:
-                return ""
+                return u""
 
     ##
     # return the people associated with the video, separated by commas
+    @returnsUnicode
     def getPeople(self):
         ret = []
         self.confirmDBThread()
@@ -1268,32 +1312,33 @@ folder will be deleted.""")
                     ret.append(person)
         except:
             pass
-        return ', '.join(ret)
+        return u', '.join(ret)
 
     ##
     # returns the URL of the webpage associated with the item
     def getLink(self):
         self.confirmDBThread()
         try:
-            return self.entry.link
+            return self.entry.link.decode('ascii','replace')
         except:
-            return ""
+            return u""
 
     ##
     # returns the URL of the payment page associated with the item
     def getPaymentLink(self):
         self.confirmDBThread()
         try:
-            return self.getFirstVideoEnclosure().payment_url
+            return self.getFirstVideoEnclosure().payment_url.decode('ascii','replace')
         except:
             try:
-                return self.entry.payment_url
+                return self.entry.payment_url.decode('ascii','replace')
             except:
-                return ""
+                return u""
 
     ##
     # returns a snippet of HTML containing a link to the payment page
     # HTML has already been sanitized by feedparser
+    @returnsUnicode
     def getPaymentHTML(self):
         self.confirmDBThread()
         try:
@@ -1302,11 +1347,11 @@ folder will be deleted.""")
             try:
                 ret = self.entry.payment_html
             except:
-                ret = ""
+                ret = u""
         # feedparser returns escaped CDATA so we either have to change its
         # behavior when it parses dtv:paymentlink elements, or simply unescape
         # here...
-        return '<span>' + unescape(ret) + '</span>'
+        return u'<span>' + unescape(ret) + u'</span>'
 
     def makeContextMenu(self, templateName, view):
         c = app.controller # easier/shorter to type
@@ -1383,6 +1428,7 @@ folder will be deleted.""")
     ##
     # Returns the filename of the first downloaded video or the empty string
     # NOTE: this will always return the absolute path to the file.
+    @returnsBinary
     def getFilename(self):
         self.confirmDBThread()
         try:
@@ -1393,6 +1439,7 @@ folder will be deleted.""")
     ##
     # Returns the filename of the first downloaded video or the empty string
     # NOTE: this will always return the absolute path to the file.
+    @returnsBinary
     def getVideoFilename(self):
         self.confirmDBThread()
         if self.videoFilename:
@@ -1478,14 +1525,15 @@ def reconnectDownloaders():
             item.remove()
 
 def getEntryForFile(filename):
-    return FeedParserDict({'title':os.path.basename(filename),
-            'enclosures':[{'url': 'file://%s' % filename}]})
+    return FeedParserDict({'title':platformutils.filenameToUnicode(os.path.basename(filename)),
+            'enclosures':[{'url': u'file://%s' % platformutils.makeURLSafe(filename)}]})
 
 ##
 # An Item that exists as a local file
 class FileItem(Item):
 
     def __init__(self,filename, feed_id=None, parent_id=None, offsetPath=None):
+        checkB(filename)
         filename = os.path.abspath(filename)
         self.filename = filename
         self.deleted = False
@@ -1494,13 +1542,14 @@ class FileItem(Item):
         Item.__init__(self, getEntryForFile(filename), feed_id=feed_id, parent_id=parent_id)
         moviedata.movieDataUpdater.requestUpdate (self)
 
+    @returnsUnicode
     def getState(self):
         if self.deleted:
-            return "expired"
+            return u"expired"
         elif self.getSeen():
-            return "saved"
+            return u"saved"
         else:
-            return "newly-downloaded"
+            return u"newly-downloaded"
 
     def getChannelCategory(self):
         """Get the category to use for the channel template.  
@@ -1523,14 +1572,14 @@ class FileItem(Item):
 
         self.confirmDBThread()
         if self.deleted:
-            return 'expired'
+            return u'expired'
         elif not self.getSeen():
-            return 'newly-downloaded'
+            return u'newly-downloaded'
         else:
             if self.parent_id and self.getParent().getExpiring():
-                return 'expiring'
+                return u'expiring'
             else:
-                return 'saved'
+                return u'saved'
 
     def getExpiring(self):
         return False
@@ -1610,6 +1659,7 @@ Collection?""")
         except:
             return datetime.min
 
+    @returnsBinary
     def getFilename(self):
         try:
             return self.filename
@@ -1677,11 +1727,11 @@ def expireItems(items):
 from a channel.  Would you like to delete these items or just remove their \
 entries from My Collection?""")
     else:
-        description = "Are you sure you want to delete all %s videos?" % \
+        description = u"Are you sure you want to delete all %s videos?" % \
                 len(items)
 
     if hasContainers:
-        description += "\n\n" + _("""\
+        description += u"\n\n" + _("""\
 One or more of these items is a folder.  When you remove or delete a folder, \
 any items inside that folder will also be removed or deleted.""")
 
@@ -1730,12 +1780,12 @@ def getFirstVideoEnclosure(entry):
 
 def _hasVideoType(enclosure):
     return ('type' in enclosure and
-            (enclosure['type'].startswith('video/') or
-             enclosure['type'].startswith('audio/') or
-             enclosure['type'] == "application/ogg" or
-             enclosure['type'] == "application/x-annodex" or
-             enclosure['type'] == "application/x-bittorrent" or
-             enclosure['type'] == "application/x-shockwave-flash"))
+            (enclosure['type'].startswith(u'video/') or
+             enclosure['type'].startswith(u'audio/') or
+             enclosure['type'] == u"application/ogg" or
+             enclosure['type'] == u"application/x-annodex" or
+             enclosure['type'] == u"application/x-bittorrent" or
+             enclosure['type'] == u"application/x-shockwave-flash"))
 
 def _hasVideoExtension(enclosure, key):
     return (key in enclosure and isAllowedFilename(enclosure[key]))
@@ -1747,26 +1797,28 @@ def isAllowedFilename(filename):
 
 def isVideoFilename(filename):
     return ((len(filename) > 4 and
-             filename[-4:].lower() in ['.mov', '.wmv', '.mp4', '.m4v',
-                                       '.ogg', '.anx', '.mpg', '.avi', 
-                                       '.flv']) or
+             filename[-4:].lower() in [u'.mov', u'.wmv', u'.mp4', u'.m4v',
+                                       u'.ogg', u'.anx', u'.mpg', u'.avi', 
+                                       u'.flv']) or
             (len(filename) > 5 and
              filename[-5:].lower() in ['.mpeg', '.divx']))
 
 def isAudioFilename(filename):
-    return len(filename) > 4 and filename[-4:].lower() in ['.mp3', '.m4a']
+    return len(filename) > 4 and filename[-4:].lower() in [u'.mp3', u'.m4a']
 
 def isTorrentFilename(filename):
-    return filename.endswith('.torrent')
+    return filename.endswith(u'.torrent')
 
+@returnsUnicode
 def formatRateForDetails(bytes):
     """Format a download/upload rate for the more-details view."""
-    sizeFmt = util.formatSizeForUser(bytes, zeroString="-")
+    sizeFmt = util.formatSizeForUser(bytes, zeroString=u"-")
     if bytes > 0:
-        return sizeFmt + "/s"
+        return sizeFmt + u"/s"
     else:
         return sizeFmt
 
+@returnsUnicode
 def formatSizeForDetails(bytes):
     """Format a disk size for the more-details view."""
-    return util.formatSizeForUser(bytes, zeroString="-")
+    return util.formatSizeForUser(bytes, zeroString=u"-")

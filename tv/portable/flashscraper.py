@@ -4,10 +4,12 @@ import urlparse
 import cgi
 from xml.dom import minidom
 from urllib import unquote_plus
+from util import checkU, returnsUnicode
 
 # =============================================================================
 
 def tryScrapingURL(url, callback):
+    checkU(url)
     scrape =_getScrapeFunctionFor(url)
     if scrape is not None:
         scrape(url,lambda x:_actualURLCallback(url,callback,x))
@@ -19,20 +21,23 @@ def tryScrapingURL(url, callback):
 
 # The callback is wrapped in this for flv videos
 def _actualURLCallback(url, callback, newURL):
+    if newURL:
+        checkU(newURL)
     #print "Changed:"
     #print url
     #print "   to"
     #print newURL
-    callback(newURL, contentType = "video/x-flv")
-
+    callback(newURL, contentType = u"video/x-flv")
 
 def _getScrapeFunctionFor(url):
+    checkU(url)
     for scrapeInfo in scraperInfoMap:
         if re.compile(scrapeInfo['pattern']).match(url) is not None:
             return scrapeInfo['func']
     return None
 
 def _scrapeYouTubeURL(url, callback):
+    checkU(url)
     httpclient.grabHeaders(url, lambda x:_youTubeCallback(x,callback),
                            lambda x:_youTubeErrback(x,callback))
 
@@ -43,7 +48,7 @@ def _youTubeCallback(info, callback):
         params = cgi.parse_qs(components[3])
         videoID = params['video_id'][0]
         t = params['t'][0]
-        url = "http://youtube.com/get_video.php?video_id=%s&t=%s" % (videoID, t)
+        url = u"http://youtube.com/get_video.php?video_id=%s&t=%s" % (videoID, t)
         callback(url)
     except:
         print "DTV: WARNING, unable to scrape You Tube Video URL: %s" % url
@@ -58,7 +63,7 @@ def _scrapeGoogleVideoURL(url, callback):
         components = urlparse.urlsplit(url)
         params = cgi.parse_qs(components[3])
         docId = params['docId'][0]
-        url = "http://video.google.com/videofile/%s.flv?docid=%s&itag=5" % (docId, docId)
+        url = u"http://video.google.com/videofile/%s.flv?docid=%s&itag=5" % (docId, docId)
         callback(url)
     except:
         print "DTV: WARNING, unable to scrape Google Video URL: %s" % url
@@ -68,7 +73,7 @@ def _scrapeLuLuVideoURL(url, callback):
     try:
         components = urlparse.urlsplit(url)
         params = cgi.parse_qs(components[3])
-        url = unquote_plus(params['file'][0])
+        url = unquote_plus(params['file'][0]).decode('ascii','replace')
         callback(url)
     except:
         print "DTV: WARNING, unable to scrape LuLu.tv Video URL: %s" % url
@@ -81,7 +86,7 @@ def _scrapeVMixVideoURL(url, callback):
         t = params['type'][0]
         ID = params['id'][0]
         l = params['l'][0]
-        url = "http://sdstage01.vmix.com/videos.php?type=%s&id=%s&l=%s" % (t,ID,l)
+        url = u"http://sdstage01.vmix.com/videos.php?type=%s&id=%s&l=%s" % (t,ID,l)
         httpclient.grabURL(url, lambda x:_scrapeVMixCallback(x,callback),
                            lambda x:_scrapeVMixErrback(x,callback))
 
@@ -92,7 +97,7 @@ def _scrapeVMixVideoURL(url, callback):
 def _scrapeVMixCallback(info, callback):
     try:
         doc = minidom.parseString(info['body'])
-        url = doc.getElementsByTagName('file').item(0).firstChild.data
+        url = doc.getElementsByTagName('file').item(0).firstChild.data.decode('ascii','replace')
         callback(url)
     except:
         print "DTV: WARNING, unsable to scrape XML for VMix Video URL %s" % info['redirected-url']
@@ -111,7 +116,7 @@ def _scrapeDailyMotionCallback(info, callback):
     try:
         components = urlparse.urlsplit(url)
         params = cgi.parse_qs(components[3])
-        url = unquote_plus(params['url'][0])
+        url = unquote_plus(params['url'][0]).decode('ascii','replace')
         callback(url)
     except:
         print "DTV: WARNING, unable to scrape Daily Motion URL: %s" % url
@@ -126,7 +131,7 @@ def _scrapeVSocialVideoURL(url, callback):
         components = urlparse.urlsplit(url)
         params = cgi.parse_qs(components[3])
         v = params['v'][0]
-        url = 'http://static.vsocial.com/varmedia/vsocial/flv/%s_out.flv' % v
+        url = u'http://static.vsocial.com/varmedia/vsocial/flv/%s_out.flv' % v
         callback(url)
     except:
         print "DTV: WARNING, unable to scrape VSocial URL: %s" % url
@@ -138,7 +143,7 @@ def _scrapeVeohTVVideoURL(url, callback):
         params = cgi.parse_qs(components[3])
         t = params['type'][0]
         permalinkId= params['permalinkId'][0]
-        url = 'http://www.veoh.com/movieList.html?type=%s&permalinkId=%s&numResults=45' % (t, permalinkId)
+        url = u'http://www.veoh.com/movieList.html?type=%s&permalinkId=%s&numResults=45' % (t, permalinkId)
         httpclient.grabURL(url, lambda x: _scrapeVeohTVCallback(x, callback),
                            lambda x:_scrapeVeohTVErrback(x, callback))
     except:
@@ -152,7 +157,7 @@ def _scrapeVeohTVCallback(info, callback):
         fileHash = params['previewHashLow'][0]
         if fileHash[-1] == ",":
             fileHash=fileHash[:-1]
-        url = 'http://ll-previews.veoh.com/previews/get.jsp?fileHash=%s' % fileHash
+        url = u'http://ll-previews.veoh.com/previews/get.jsp?fileHash=%s' % fileHash
         callback(url)
     except:
         print "DTV: WARNING, unable to scrape Veoh URL data: %s" % url
@@ -171,7 +176,7 @@ def _scrapeBreakCallback(info, callback):
     try:
         components = urlparse.urlsplit(url)
         params = cgi.parse_qs(components[3])
-        url = unquote_plus(params['sVidLoc'][0])
+        url = unquote_plus(params['sVidLoc'][0]).decode('ascii','replace')
         callback(url)
     except:
         print "DTV: WARNING, unable to scrape Break URL: %s" % url

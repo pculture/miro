@@ -11,7 +11,7 @@ import random
 class XHTMLifier(HTMLParser):
     def convert(self,data, addTopTags=False, filterFontTags=False):
         if addTopTags:
-            self.output = '<html><head></head><body>'
+            self.output = u'<html><head></head><body>'
         else:
             self.output = ''
         self.stack = []
@@ -23,41 +23,41 @@ class XHTMLifier(HTMLParser):
             print 'DTV: unexpected error while parsing html data.'
         while len(self.stack) > 0:
             temp = self.stack.pop()
-            self.output += '</'+temp+'>'
+            self.output += u'</'+temp+'>'
         if addTopTags:
-            self.output += '</body></html>'
-        return self.output.encode('utf-8')
+            self.output += u'</body></html>'
+        return self.output
     def handle_starttag(self, tag, attrs):
         if tag.lower() == 'br':
-            self.output += '<br/>'
+            self.output += u'<br/>'
         else:
             if not (tag.lower() == 'font' and self.filterFontTags):
-                self.output += '<'+tag
+                self.output += u'<'+tag
                 for attr in attrs:
                     if attr[1] == None:
-                        self.output += ' '+attr[0]+'='+xml.sax.saxutils.quoteattr(attr[0])
+                        self.output += u' '+attr[0]+u'='+xml.sax.saxutils.quoteattr(attr[0])
                     else:
-                        self.output += ' '+attr[0]+'='+xml.sax.saxutils.quoteattr(attr[1])
-                self.output += '>'
+                        self.output += u' '+attr[0]+u'='+xml.sax.saxutils.quoteattr(attr[1])
+                self.output += u'>'
             self.stack.append(tag)
     def handle_endtag(self, tag):
         if tag.lower() != 'br' and len(self.stack) > 1:
             temp = self.stack.pop()
             if not (tag.lower() == 'font' and self.filterFontTags):
-                self.output += '</'+temp+'>'
+                self.output += u'</'+temp+u'>'
                 while temp != tag and len(self.stack) > 1:
                     temp = self.stack.pop()
-                    self.output += '</'+temp+'>'
+                    self.output += u'</'+temp+u'>'
     def handle_startendtag(self, tag, attrs):
-        self.output += '<'+tag+'/>'
+        self.output += u'<'+tag+u'/>'
     def handle_data(self, data):
-        data = data.replace('&','&amp;')
-        data = data.replace('<','&lt;')
+        data = data.replace(u'&',u'&amp;')
+        data = data.replace(u'<',u'&lt;')
         self.output += data
     def handle_charref(self, name):
-        self.output += '&#'+name+';'
+        self.output += u'&#'+name+';'
     def handle_entityref(self, name):
-        self.output += '&'+name+';'
+        self.output += u'&'+name+';'
 
 ##
 # Parses HTML entities in data
@@ -67,7 +67,8 @@ def unescape(data):
 #
 # encodes string for use in a URL
 def urlencode(data):
-    return quote(data)
+    data = unicode(data)
+    return unicode(quote(data.encode('utf-8','replace')))
 
 #
 # gets a string from a URL
@@ -99,7 +100,7 @@ def fixXMLHeader(data,charset):
             return '<?xml %s encoding="%s"?>%s' % (xmlDecl,charset,theRest)
 
 
-HTMLHeaderRE = re.compile("^(.*)\<\s*head\s*(.*?)\s*\>(.*?)\</\s*head\s*\>(.*)",re.I | re.S)
+HTMLHeaderRE = re.compile(u"^(.*)\<\s*head\s*(.*?)\s*\>(.*?)\</\s*head\s*\>(.*)",re.I | re.S)
 
 ##
 # Adds a <meta http-equiv="Content-Type" content="text/html;
@@ -120,42 +121,6 @@ def fixHTMLHeader(data,charset):
         else:
             #print " adding %s Content-Type to HTML" % charset
             return header.expand('\\1<head \\2><meta http-equiv="Content-Type" content="text/html; charset=')+charset+header.expand('">\\3</head>\\4')
-
-# Takes a string and do whatever needs to be done to make it into a
-# UTF-8 string. If a Unicode string is given, it is just encoded in
-# UTF-8. Otherwise, if an encoding hint is given, first try to decode
-# the string as if it were in that encoding; if that fails (or the
-# hint isn't given), liberally (if necessary lossily) interpret it as
-# defaultEncoding, as declared on the next line:
-defaultEncoding = "iso-8859-1" # aka Latin-1
-_utf8cache = {}
-
-def toUTF8Bytes(string, encoding=None):
-    global _utf8cache
-    try:
-        return _utf8cache[(string, encoding)]
-    except KeyError:
-        result = None
-        # If we got a Unicode string, half of our work is already done.
-        if isinstance(string, types.UnicodeType):
-            result = string.encode('utf-8')
-        elif not isinstance(string, types.StringType):
-            string = str(string)
-        if result is None and encoding is not None:
-            # If we knew the encoding of the string, try that.
-            try:
-                decoded = string.decode(encoding,'replace')
-            except (UnicodeDecodeError, ValueError, LookupError):
-                pass
-            else:
-                result = decoded.encode('utf-8')
-        if result is None:
-            # Encoding wasn't provided, or it was wrong. Interpret provided string
-            # liberally as a fixed defaultEncoding (see above.)
-            result = string.decode(defaultEncoding, 'replace').encode('utf-8')
-
-        _utf8cache[(string, encoding)] = result
-        return _utf8cache[(string, encoding)]
 
 # Converts a Python dictionary to data suitable for a POST or GET submission
 def URLEncodeDict(orig):

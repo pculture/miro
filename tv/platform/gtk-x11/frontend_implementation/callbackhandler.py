@@ -489,4 +489,4 @@ class CallbackHandler(object):
         term = widgetTree["entry-chrome-search-term"].get_text()
         iter = widgetTree["combobox-chrome-search-engine"].get_active_iter()
         (engine,) = widgetTree["combobox-chrome-search-engine"].get_model().get(iter, 0)
-        eventloop.addIdle (lambda:app.controller.performSearch (engine, term), "Search for %s on %s" % (term, engine))
+        eventloop.addIdle (lambda:app.controller.performSearch (engine.decode('utf-8','replace'), term.decode('utf-8','replace')), "Search for %s on %s" % (term.decode('utf-8','replace'), engine.decode('utf-8','replace')))

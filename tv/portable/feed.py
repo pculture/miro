@@ -29,7 +29,7 @@ import folder
 import menu
 import prefs
 import resources
-import util
+from util import returnsUnicode, unicodify, chatter, checkU, checkB
 import views
 import indexes
 import searchengines
@@ -40,11 +40,13 @@ from clock import clock
 
 whitespacePattern = re.compile(r"^[ \t\r\n]*$")
 
+@returnsUnicode
 def defaultFeedIconURL():
-    return resources.url("images/feedicon.png")
+    return resources.url(u"images/feedicon.png")
 
+@returnsUnicode
 def defaultFeedIconURLTablist():
-    return resources.url("images/feedicon-tablist.png")
+    return resources.url(u"images/feedicon-tablist.png")
 
 # Notes on character set encoding of feeds:
 #
@@ -76,6 +78,7 @@ def setSortFunc(newFunc):
 #
 # Adds a new feed using USM
 def addFeedFromFile(file):
+    checkB(file)
     d = feedparser.parse(file)
     if d.feed.has_key('links'):
         for link in d.feed['links']:
@@ -88,6 +91,7 @@ def addFeedFromFile(file):
 #
 # Adds a new feed based on a link tag in a web page
 def addFeedFromWebPage(url):
+    checkU(url)
     def callback(info):
         url = HTMLFeedURLParser().getLink(info['updated-url'],info['body'])
         if url:
@@ -98,6 +102,7 @@ def addFeedFromWebPage(url):
 
 # URL validitation and normalization
 def validateFeedURL(url):
+    checkU(url)
     if re.match(r"^(http|https)://[^/ ]+/[^ ]*$", url) is not None:
         return True
     match = re.match(r"^dtv:searchTerm:(.*)\?(.*)$", url)
@@ -106,6 +111,7 @@ def validateFeedURL(url):
     return False
 
 def normalizeFeedURL(url):
+    checkU(url)
     # Valid URL are returned as-is
     if validateFeedURL(url):
         return url
@@ -165,6 +171,9 @@ config.addChangeCallback(configDidChange)
 # Actual implementation of a basic feed.
 class FeedImpl:
     def __init__(self, url, ufeed, title = None, visible = True):
+        checkU(url)
+        if title:
+            checkU(title)
         self.url = url
         self.ufeed = ufeed
         self.calc_item_list()
@@ -192,6 +201,7 @@ class FeedImpl:
     def signalChange(self):
         self.ufeed.signalChange()
 
+    @returnsUnicode
     def getBaseHref(self):
         """Get a URL to use in the <base> tag for this channel.  This is used
         for relative links in this channel's items.
@@ -348,23 +358,25 @@ class FeedImpl:
 
     ##
     # Returns the 'system' expiration delay as a formatted string
+    @returnsUnicode
     def getFormattedDefaultExpiration(self):
         expiration = self.getDefaultExpiration()
-        formattedExpiration = ''
+        formattedExpiration = u''
         if expiration < 0:
-            formattedExpiration = 'never'
+            formattedExpiration = _('never')
         elif expiration < 1.0:
-            formattedExpiration = '%d hours' % int(expiration * 24.0)
+            formattedExpiration = _('%d hours') % int(expiration * 24.0)
         elif expiration == 1:
-            formattedExpiration = '%d day' % int(expiration)
+            formattedExpiration = _('%d day') % int(expiration)
         elif expiration > 1 and expiration < 30:
-            formattedExpiration = '%d days' % int(expiration)
+            formattedExpiration = _('%d days') % int(expiration)
         elif expiration >= 30:
-            formattedExpiration = '%d months' % int(expiration / 30)
+            formattedExpiration = _('%d months') % int(expiration / 30)
         return formattedExpiration
 
     ##
     # Returns "feed," "system," or "never"
+    @returnsUnicode
     def getExpirationType(self):
         self.ufeed.confirmDBThread()
         return self.ufeed.expire
@@ -374,7 +386,7 @@ class FeedImpl:
     def getMaxFallBehind(self):
         self.ufeed.confirmDBThread()
         if self.ufeed.fallBehind < 0:
-            return "unlimited"
+            return u"unlimited"
         else:
             return self.ufeed.fallBehind
 
@@ -383,7 +395,7 @@ class FeedImpl:
     def getMaxNew(self):
         self.ufeed.confirmDBThread()
         if self.ufeed.maxNew < 0:
-            return "unlimited"
+            return u"unlimited"
         else:
             return self.ufeed.maxNew
 
@@ -435,12 +447,13 @@ class FeedImpl:
     def autoDownloadStatus(self):
         status = self.isAutoDownloadable()
         if status:
-            return "ON"
+            return u"ON"
         else:
-            return "OFF"
+            return u"OFF"
 
     ##
     # Returns the title of the feed
+    @returnsUnicode
     def getTitle(self):
         try:
             title = self.title
@@ -448,51 +461,58 @@ class FeedImpl:
                 title = self.url
             return title
         except:
-            return ""
+            return u""
 
     ##
     # Returns the URL of the feed
+    @returnsUnicode
     def getURL(self):
         try:
             if self.ufeed.searchTerm is None:
                 return self.url
             else:
-                return "dtv:searchTerm:%s?%s" % (urlencode(self.url), urlencode(self.ufeed.searchTerm))
+                return u"dtv:searchTerm:%s?%s" % (urlencode(self.url), urlencode(self.ufeed.searchTerm))
         except:
-            return ""
+            return u""
 
     ##
     # Returns the URL of the feed
+    @returnsUnicode
     def getBaseURL(self):
         try:
             return self.url
         except:
-            return ""
+            return u""
 
     ##
     # Returns the description of the feed
+    @returnsUnicode
     def getDescription(self):
-        return "<span />"
+        return u"<span />"
 
     ##
     # Returns a link to a webpage associated with the feed
+    @returnsUnicode
     def getLink(self):
         return self.ufeed.getBaseHref()
 
     ##
     # Returns the URL of the library associated with the feed
+    @returnsUnicode
     def getLibraryLink(self):
-        return ""
+        return u""
 
     ##
     # Returns the URL of a thumbnail associated with the feed
+    @returnsUnicode
     def getThumbnailURL(self):
         return self.thumbURL
 
     ##
     # Returns URL of license assocaited with the feed
+    @returnsUnicode
     def getLicense(self):
-        return ""
+        return u""
 
     ##
     # Returns the number of new items with the feed
@@ -501,13 +521,13 @@ class FeedImpl:
         count = 0
         for item in self.items:
             try:
-                if item.getState() == 'newly-downloaded':
+                if item.getState() == u'newly-downloaded':
                     count += 1
             except:
                 pass
         return count
 
-    def onRestore(self):
+    def onRestore(self):        
         self.updating = False
         self.calc_item_list()
 
@@ -526,11 +546,11 @@ class FeedImpl:
 class Feed(DDBObject):
     def __init__(self,url, initiallyAutoDownloadable=True):
         DDBObject.__init__(self, add=False)
-
+        checkU(url)
         self.autoDownloadable = initiallyAutoDownloadable
         self.getEverything = False
         self.maxNew = -1
-        self.expire = "system"
+        self.expire = u"system"
         self.expireTime = None
         self.fallBehind = -1
 
@@ -575,16 +595,19 @@ class Feed(DDBObject):
         self.confirmDBThread()
         return self.errorState
 
+    @returnsUnicode
     def getOriginalURL(self):
         self.confirmDBThread()
         return self.origURL
 
+    @returnsUnicode
     def getSearchTerm(self):
         self.confirmDBThread()
         return self.searchTerm
 
+    @returnsUnicode
     def getError(self):
-        return "Could not load feed"
+        return u"Could not load feed"
 
     def isUpdating(self):
         return self.loading or (self.actualFeed and self.actualFeed.updating)
@@ -592,11 +615,12 @@ class Feed(DDBObject):
     def isScraped(self):
         return isinstance(self.actualFeed, ScraperFeedImpl)
 
+    @returnsUnicode
     def getTitle(self):
         if self.userTitle is None:
             title = self.actualFeed.getTitle()
             if self.searchTerm is not None:
-                title = "'%s' on %s" % (self.searchTerm, title)
+                title = u"'%s' on %s" % (self.searchTerm, title)
             return title
         else:
             return self.userTitle
@@ -609,24 +633,25 @@ class Feed(DDBObject):
     def unsetTitle(self):
         self.setTitle(None)
 
+    @returnsUnicode
     def getAutoDownloadMode(self):
         self.confirmDBThread()
         if self.autoDownloadable:
             if self.getEverything:
-                return 'all'
+                return u'all'
             else:
-                return 'new'
+                return u'new'
         else:
-            return 'off'
+            return u'off'
 
     def setAutoDownloadMode(self, mode):
-        if mode == 'all':
+        if mode == u'all':
             self.setGetEverything(True)
             self.setAutoDownloadable(True)
-        elif mode == 'new':
+        elif mode == u'new':
             self.setGetEverything(False)
             self.setAutoDownloadable(True)
-        elif mode == 'off':
+        elif mode == u'off':
             self.setAutoDownloadable(False)
         else:
             raise ValueError("Bad auto-download mode: %s" % mode)
@@ -782,17 +807,17 @@ class Feed(DDBObject):
 
     def generateFeed(self, removeOnError=False):
         newFeed = None
-        if (self.origURL == "dtv:directoryfeed"):
+        if (self.origURL == u"dtv:directoryfeed"):
             newFeed = DirectoryFeedImpl(self)
-        elif (self.origURL == "dtv:search"):
+        elif (self.origURL == u"dtv:search"):
             newFeed = SearchFeedImpl(self)
-        elif (self.origURL == "dtv:searchDownloads"):
+        elif (self.origURL == u"dtv:searchDownloads"):
             newFeed = SearchDownloadsFeedImpl(self)
-        elif (self.origURL == "dtv:manualFeed"):
+        elif (self.origURL == u"dtv:manualFeed"):
             newFeed = ManualFeedImpl(self)
-        elif (self.origURL.startswith ("dtv:searchTerm:")):
+        elif (self.origURL.startswith (u"dtv:searchTerm:")):
 
-            url = self.origURL[len("dtv:searchTerm:"):]
+            url = self.origURL[len(u"dtv:searchTerm:"):]
             (url, search) = url.rsplit("?", 1)
             url = urldecode(url)
             search = urldecode(search)
@@ -800,12 +825,12 @@ class Feed(DDBObject):
             self.download = grabURL(url,
                     lambda info:self._generateFeedCallback(info, removeOnError),
                     lambda error:self._generateFeedErrback(error, removeOnError),
-                    defaultMimeType='application/rss+xml')
+                    defaultMimeType=u'application/rss+xml')
         else:
             self.download = grabURL(self.origURL,
                     lambda info:self._generateFeedCallback(info, removeOnError),
                     lambda error:self._generateFeedErrback(error, removeOnError),
-                    defaultMimeType='application/rss+xml')
+                    defaultMimeType=u'application/rss+xml')
             logging.debug ("added async callback to create feed %s", self.origURL)
         if newFeed:
             self.actualFeed = newFeed
@@ -847,34 +872,39 @@ class Feed(DDBObject):
         """
         # FIXME: This probably should be split up a bit. The logic is
         #        a bit daunting
+
+
+        # Note that all of the raw XML and HTML in this function is in
+        # byte string format
+
         if not self.idExists():
             return
         self.download = None
-        modified = info.get('last-modified')
-        etag = info.get('etag')
-        contentType = info.get('content-type', 'text/html')
+        modified = unicodify(info.get('last-modified'))
+        etag = unicodify(info.get('etag'))
+        contentType = unicodify(info.get('content-type', u'text/html'))
 
         #Definitely an HTML feed
-        if (contentType.startswith('text/html') or 
-            contentType.startswith('application/xhtml+xml')):
+        if (contentType.startswith(u'text/html') or 
+            contentType.startswith(u'application/xhtml+xml')):
             #print "Scraping HTML"
             html = info['body']
             if info.has_key('charset'):
                 html = fixHTMLHeader(html,info['charset'])
-                charset = info['charset']
+                charset = unicodify(info['charset'])
             else:
                 charset = None
             self.askForScrape(info, html, charset)
         #It's some sort of feed we don't know how to scrape
-        elif (contentType.startswith('application/rdf+xml') or
-              contentType.startswith('application/atom+xml')):
+        elif (contentType.startswith(u'application/rdf+xml') or
+              contentType.startswith(u'application/atom+xml')):
             #print "ATOM or RDF"
             html = info['body']
             if info.has_key('charset'):
                 xmldata = fixXMLHeader(html,info['charset'])
             else:
                 xmldata = html
-            self.finishGenerateFeed(RSSFeedImpl(info['updated-url'],
+            self.finishGenerateFeed(RSSFeedImpl(unicodify(info['updated-url']),
                 initialHTML=xmldata,etag=etag,modified=modified, ufeed=self))
             # If it's not HTML, we can't be sure what it is.
             #
@@ -884,13 +914,13 @@ class Feed(DDBObject):
             # application/rss+xml links are definitely feeds. However, they
             # might be pre-enclosure RSS, so we still have to download them
             # and parse them before we can deal with them correctly.
-        elif (contentType.startswith('application/rss+xml') or
-              contentType.startswith('application/podcast+xml') or
-              contentType.startswith('text/xml') or 
-              contentType.startswith('application/xml') or
-              (contentType.startswith('text/plain') and
-               (info['updated-url'].endswith('.xml') or
-                info['updated-url'].endswith('.rss')))):
+        elif (contentType.startswith(u'application/rss+xml') or
+              contentType.startswith(u'application/podcast+xml') or
+              contentType.startswith(u'text/xml') or 
+              contentType.startswith(u'application/xml') or
+              (contentType.startswith(u'text/plain') and
+               (unicodify(info['updated-url']).endswith(u'.xml') or
+                unicodify(info['updated-url']).endswith(u'.rss')))):
             #print " It's doesn't look like HTML..."
             html = info["body"]
             if info.has_key('charset'):
@@ -900,11 +930,12 @@ class Feed(DDBObject):
             else:
                 xmldata = html
                 charset = None
+            # FIXME html and xmldata can be non-unicode at this point
             parser = xml.sax.make_parser()
             parser.setFeature(xml.sax.handler.feature_namespaces, 1)
             try: parser.setFeature(xml.sax.handler.feature_external_ges, 0)
             except: pass
-            handler = RSSLinkGrabber(info['redirected-url'],charset)
+            handler = RSSLinkGrabber(unicodify(info['redirected-url']),charset)
             parser.setContentHandler(handler)
             try:
                 parser.parse(StringIO(xmldata))
@@ -920,7 +951,8 @@ class Feed(DDBObject):
             else:
                 if handler.enclosureCount > 0 or handler.itemCount == 0:
                     #print " It's RSS with enclosures"
-                    self.finishGenerateFeed(RSSFeedImpl(info['updated-url'],
+                    self.finishGenerateFeed(RSSFeedImpl(
+                        unicodify(info['updated-url']),
                         initialHTML=xmldata, etag=etag, modified=modified,
                         ufeed=self))
                 else:
@@ -991,6 +1023,7 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
         DDBObject.remove(self)
         self.actualFeed.onRemove()
 
+    @returnsUnicode
     def getThumbnail(self):
         self.confirmDBThread()
         if self.iconCache and self.iconCache.isValid():
@@ -999,6 +1032,7 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
         else:
             return defaultFeedIconURL()
 
+    @returnsUnicode
     def getTablistThumbnail(self):
         self.confirmDBThread()
         if self.iconCache.isValid():
@@ -1021,12 +1055,13 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
         for feed in views.feeds:
             feed.iconCache.requestUpdate(True)
 
+    @returnsUnicode
     def getDragDestType(self):
         self.confirmDBThread()
         if self.folder_id is not None:
-            return 'channel'
+            return u'channel'
         else:
-            return 'channel:channelfolder'
+            return u'channel:channelfolder'
 
     def onRestore(self):
         if (self.iconCache == None):
@@ -1071,6 +1106,7 @@ class RSSFeedImpl(FeedImpl):
         self.download = None
         self.scheduleUpdateEvents(0)
 
+    @returnsUnicode
     def getBaseHref(self):
         try:
             return escape(self.parsed.link)
@@ -1079,30 +1115,33 @@ class RSSFeedImpl(FeedImpl):
 
     ##
     # Returns the description of the feed
+    @returnsUnicode
     def getDescription(self):
         self.ufeed.confirmDBThread()
         try:
-            return xhtmlify('<span>'+unescape(self.parsed.feed.description)+'</span>')
+            return xhtmlify(u'<span>'+unescape(self.parsed.feed.description)+u'</span>')
         except:
-            return "<span />"
+            return u"<span />"
 
     ##
     # Returns a link to a webpage associated with the feed
+    @returnsUnicode
     def getLink(self):
         self.ufeed.confirmDBThread()
         try:
             return self.parsed.link
         except:
-            return ""
+            return u""
 
     ##
     # Returns the URL of the library associated with the feed
+    @returnsUnicode
     def getLibraryLink(self):
         self.ufeed.confirmDBThread()
         try:
             return self.parsed.libraryLink
         except:
-            return ""
+            return u""
 
     def feedparser_finished (self):
         self.updating = False
@@ -1169,7 +1208,7 @@ class RSSFeedImpl(FeedImpl):
             except:
                 modified = None
             self.download = grabURL(self.url, self._updateCallback,
-                    self._updateErrback, etag=etag,modified=modified,defaultMimeType='application/rss+xml',)
+                    self._updateErrback, etag=etag,modified=modified,defaultMimeType=u'application/rss+xml',)
 
     def _updateErrback(self, error):
         if not self.ufeed.idExists():
@@ -1190,11 +1229,13 @@ class RSSFeedImpl(FeedImpl):
         html = info['body']
         if info.has_key('charset'):
             html = fixXMLHeader(html,info['charset'])
-        self.url = info['updated-url']
+
+        # FIXME HTML can be non-unicode here --NN        
+        self.url = unicodify(info['updated-url'])
         if info.has_key('etag'):
-            self.etag = info['etag']
+            self.etag = unicodify(info['etag'])
         if info.has_key('last-modified'):
-            self.modified = info['last-modified']
+            self.modified = unicodify(info['last-modified'])
         self.call_feedparser (html)
 
     def _handleNewEntryForItem(self, item, entry):
@@ -1225,6 +1266,7 @@ class RSSFeedImpl(FeedImpl):
 
     def updateUsingParsed(self, parsed):
         """Update the feed using parsed XML passed in"""
+        parsed.__dict__ = unicodify(parsed.__dict__)
         self.parsed = parsed
 
         try:
@@ -1333,11 +1375,12 @@ class RSSFeedImpl(FeedImpl):
 
     ##
     # Returns the URL of the license associated with the feed
+    @returnsUnicode
     def getLicense(self):
         try:
             ret = self.parsed.license
         except:
-            ret = ""
+            ret = u""
         return ret
 
     def onRemove(self):
@@ -1411,6 +1454,7 @@ class ScraperFeedImpl(FeedImpl):
         self.setUpdateFrequency(360)
         self.scheduleUpdateEvents(0)
 
+    @returnsUnicode
     def getMimeType(self,link):
         raise StandardError, "ScraperFeedImpl.getMimeType not implemented"
 
@@ -1672,9 +1716,8 @@ class ScraperFeedImpl(FeedImpl):
 # will continue to remember movies in the old folder.
 #
 class DirectoryFeedImpl(FeedImpl):
-
     def __init__(self,ufeed):
-        FeedImpl.__init__(self,url = "dtv:directoryfeed",ufeed=ufeed,title = "Feedless Videos",visible = False)
+        FeedImpl.__init__(self,url = u"dtv:directoryfeed",ufeed=ufeed,title = u"Feedless Videos",visible = False)
 
         self.setUpdateFrequency(5)
         self.scheduleUpdateEvents(0)
@@ -1776,33 +1819,37 @@ class DirectoryFeedImpl(FeedImpl):
 class SearchFeedImpl (RSSFeedImpl):
     
     def __init__(self, ufeed):
-        RSSFeedImpl.__init__(self, url='', ufeed=ufeed, title='dtv:search', visible=False)
+        RSSFeedImpl.__init__(self, url=u'', ufeed=ufeed, title=u'dtv:search', visible=False)
         self.initialUpdate = True
         self.setUpdateFrequency(-1)
         self.searching = False
-        self.lastEngine = 'youtube'
-        self.lastQuery = ''
+        self.lastEngine = u'youtube'
+        self.lastQuery = u''
         self.ufeed.autoDownloadable = False
         self.ufeed.signalChange()
 
+    @returnsUnicode
     def quoteLastQuery(self):
         return escape(self.lastQuery)
 
+    @returnsUnicode
     def getURL(self):
-        return 'dtv:search'
+        return u'dtv:search'
 
+    @returnsUnicode
     def getTitle(self):
         return _(u'Search')
 
+    @returnsUnicode
     def getStatus(self):
-        status = 'idle-empty'
+        status = u'idle-empty'
         if self.searching:
-            status =  'searching'
+            status =  u'searching'
         elif len(self.items) > 0:
-            status =  'idle-with-results'
+            status =  u'idle-with-results'
         return status
 
-    def reset(self, url='', searchState=False):
+    def reset(self, url=u'', searchState=False):
         self.ufeed.confirmDBThread()
         try:
             for item in self.items:
@@ -1819,6 +1866,8 @@ class SearchFeedImpl (RSSFeedImpl):
                 item.setFeed(downloadsFeed.id)
         
     def lookup(self, engine, query):
+        checkU(engine)
+        checkU(query)
         url = searchengines.getRequestURL(engine, query)
         self.reset(url, True)
         self.lastQuery = query
@@ -1831,7 +1880,7 @@ class SearchFeedImpl (RSSFeedImpl):
         RSSFeedImpl.updateUsingParsed(self, parsed)
 
     def update(self):
-        if self.url is not None and self.url != '':
+        if self.url is not None and self.url != u'':
             RSSFeedImpl.update(self)
 
     def feedparser_errback(self, e):
@@ -1850,6 +1899,7 @@ class SearchDownloadsFeedImpl(FeedImpl):
                 title=None, visible=False)
         self.setUpdateFrequency(-1)
 
+    @returnsUnicode
     def getTitle(self):
         return _(u'Search')
 
@@ -1859,11 +1909,12 @@ class ManualFeedImpl(FeedImpl):
     """
 
     def __init__(self, ufeed):
-        FeedImpl.__init__(self, url='dtv:manualFeed', ufeed=ufeed, 
+        FeedImpl.__init__(self, url=u'dtv:manualFeed', ufeed=ufeed, 
                 title=None, visible=False)
-        self.ufeed.expire = 'never'
+        self.ufeed.expire = u'never'
         self.setUpdateFrequency(-1)
 
+    @returnsUnicode
     def getTitle(self):
         return _(u'Local File')
 
@@ -1906,7 +1957,7 @@ class HTMLLinkGrabber(HTMLParser):
                     thumb = urljoin(baseurl,
                             imgMatch.group(1).encode('ascii'))
                 except UnicodeError:
-                    if util.chatter:
+                    if chatter:
                         logging.info ("WARNING: scraped thumbnail url is non-ascii "
                         "(%s) -- discarding", imgMatch.group(1))
                     thumb = None
@@ -2026,4 +2077,3 @@ def expireItems():
 
 def getFeedByURL(url):
     return views.feeds.getItemWithIndex(indexes.feedsByURL, url)
-

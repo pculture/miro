@@ -59,12 +59,12 @@ def _handleNewUpdate(url):
         global delegate
         if dialog.choice == dialogs.BUTTON_DOWNLOAD:
             delegate.openExternalURL(url)
-    summary = "%s Version Alert" % (config.get(prefs.SHORT_APP_NAME), )
-    message = "A new version of %s is available. Would you like to download it now?" % (config.get(prefs.LONG_APP_NAME), )
+    summary = _("%s Version Alert") % (config.get(prefs.SHORT_APP_NAME), )
+    message = _("A new version of %s is available. Would you like to download it now?") % (config.get(prefs.LONG_APP_NAME), )
     dlog = dialogs.ChoiceDialog(summary, message, dialogs.BUTTON_DOWNLOAD, dialogs.BUTTON_CANCEL)
     dlog.run(callback)
     
 def _handleUpToDate():
-    title = '%s Version Check' % (config.get(prefs.SHORT_APP_NAME), )
-    message = '%s is up to date.' % (config.get(prefs.LONG_APP_NAME), )
+    title = _('%s Version Check') % (config.get(prefs.SHORT_APP_NAME), )
+    message = _('%s is up to date.') % (config.get(prefs.LONG_APP_NAME), )
     dialogs.MessageBoxDialog(title, message).run()

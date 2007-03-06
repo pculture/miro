@@ -1127,7 +1127,9 @@ downloaded?""")
     ### Chrome search:
     ### Switch to the search tab and perform a search using the specified engine.
 
-    def performSearch(self, engine, query):        
+    def performSearch(self, engine, query):
+        util.checkU(engine)
+        util.checkU(query)
         handler = TemplateActionHandler(None, None)
         handler.updateLastSearchEngine(engine)
         handler.updateLastSearchQuery(query)
@@ -1154,15 +1156,15 @@ downloaded?""")
 
         lastAddedFeed = None
         data = urllib.unquote(data)
-        for url in data.split("\n"):
+        for url in data.split(u"\n"):
             url = url.strip()
-            if url == "":
+            if url == u"":
                 continue
-            if url.startswith("file://"):
-                filename = url[len('file://'):]
+            if url.startswith(u"file://"):
+                filename = url[len(u'file://'):]
                 eventloop.addIdle (singleclick.openFile,
                     "Open Dropped file", args=(filename,))
-            elif url.startswith("http:") or url.startswith("https:"):
+            elif url.startswith(u"http:") or url.startswith(u"https:"):
                 url = feed.normalizeFeedURL(url)
                 if feed.validateFeedURL(url) and not feed.getFeedByURL(url):
                     lastAddedFeed = feed.Feed(url)
@@ -1313,7 +1315,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 value = argLists[key]
                 if len(value) != 1:
                     raise template.TemplateError, "Multiple values of '%s' argument passed to '%s' action" % (key, action)
-                args[str(key)] = value[0]
+                args[key.encode('ascii','replace')] = value[0]
             return path, args
         else:
             raise ValueError("Badly formed eventURL: %s" % url)
@@ -1328,16 +1330,17 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
     # Returns true if the browser should handle the URL.
     def onURLLoad(self, url):
+        util.checkU(url)
         logging.info ("got %s", url)
         try:
             # Special-case non-'action:'-format URL
-            if url.startswith ("template:"):
+            if url.startswith (u"template:"):
                 name, args = self.parseEventURL(url)
                 self.dispatchAction('switchTemplate', name=name, **args)
                 return False
 
             # Standard 'action:' URL
-            if url.startswith ("action:"):
+            if url.startswith (u"action:"):
                 action, args = self.parseEventURL(url)
                 self.dispatchAction(action, **args)
                 return False
@@ -1346,12 +1349,12 @@ class TemplateDisplay(frontend.HTMLDisplay):
             if (controller.guideURL is not None and
                     url.startswith(controller.guideURL)):
                 return True
-            if url.startswith('file://'):
-                path = url[len("file://"):]
+            if url.startswith(u'file://'):
+                path = url[len(u"file://"):]
                 return os.path.exists(path)
 
-            if url.startswith('feed://'):
-                url = "http://" + url[len("feed://"):]
+            if url.startswith(u'feed://'):
+                url = u"http://" + url[len(u"feed://"):]
                 f = feed.getFeedByURL(url)
                 if f is None:
                     f = feed.Feed(url)
@@ -1366,8 +1369,8 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
             # If we get here, this isn't a DTV URL. We should open it
             # in an external browser.
-            if (url.startswith('http://') or url.startswith('https://') or
-                url.startswith('ftp://') or url.startswith('mailto:')):
+            if (url.startswith(u'http://') or url.startswith(u'https://') or
+                url.startswith(u'ftp://') or url.startswith(u'mailto:')):
                 self.handleCandidateExternalURL(url)
                 return False
 
@@ -1559,7 +1562,7 @@ class ModelActionHandler:
         obj.save()
 
     def clearTorrents (self):
-        items = views.items.filter(lambda x: x.getFeed().url == 'dtv:manualFeed' and x.isNonVideoFile() and not x.getState() == "downloading")
+        items = views.items.filter(lambda x: x.getFeed().url == u'dtv:manualFeed' and x.isNonVideoFile() and not x.getState() == u"downloading")
         for i in items:
             if i.downloader is not None:
                 i.downloader.setDeleteFiles(False)
@@ -1619,7 +1622,7 @@ class ModelActionHandler:
         paramList["hookup_url"] = obj.getPaymentLink()
         try:
             rss_url = obj.getFeed().getURL()
-            if (not rss_url.startswith('dtv:')):
+            if (not rss_url.startswith(u'dtv:')):
                 paramList["rss_url"] = rss_url
         except:
             pass
@@ -1703,6 +1706,9 @@ class GUIActionHandler:
         dialog.run(secondDialog)
         
     def addURL(self, title, message, callback, url = None):
+        util.checkU(url)
+        util.checkU(title)
+        util.checkU(message)
         def createDialog(ltitle, lmessage, prefill = None):
             def prefillCallback():
                 if prefill:
@@ -1730,6 +1736,8 @@ class GUIActionHandler:
     # NEEDS: name should change to addAndSelectFeed; then we should create
     # a non-GUI addFeed to match removeFeed. (requires template updates)
     def addFeed(self, url = None, showTemplate = None, selected = '1'):
+        if url:
+            util.checkU(url)
         def doAdd (url):
             db.confirmDBThread()
             myFeed = feed.getFeedByURL (url)
@@ -1879,7 +1887,7 @@ class TemplateActionHandler:
             return
 
         def myUnwatchedItems(obj):
-            return (obj.getState() == 'newly-downloaded' and
+            return (obj.getState() == u'newly-downloaded' and
                     not obj.isNonVideoFile() and
                     not obj.isContainerItem)
 
@@ -1922,6 +1930,8 @@ class TemplateActionHandler:
             searchFeed.lastQuery = query
         
     def performSearch(self, engine, query):
+        util.checkU(engine)
+        util.checkU(query)
         searchFeed, searchDownloadsFeed = self.__getSearchFeeds()
         if searchFeed is not None and searchDownloadsFeed is not None:
             searchFeed.preserveDownloads(searchDownloadsFeed)
@@ -2076,34 +2086,31 @@ def mapToPlaylistItem(obj):
     return PlaylistItemFromItem(obj)
 
 def _defaultFeeds():
-    defaultFeedURLs = [ ('News and Tech',
-                         ['http://jetset.blip.tv/?skin=rss',
-                          'http://revision3.com/diggnation/feed/quicktime-large',
-                          'http://www.podshow.com/feeds/hd.xml',
-                          'http://podcast.msnbc.com/audio/podcast/MSNBC-NN-NETCAST-M4V.xml']),
+    defaultFeedURLs = [ (_('News and Tech'),
+                         [u'http://jetset.blip.tv/?skin=rss',
+                          u'http://revision3.com/diggnation/feed/quicktime-large',
+                          u'http://www.podshow.com/feeds/hd.xml',
+                          u'http://podcast.msnbc.com/audio/podcast/MSNBC-NN-NETCAST-M4V.xml']),
                         
-                        ('Entertainment',
-                         ['http://feeds.feedburner.com/freshtopia',
-                          'http://feeds.feedburner.com/thechannelchannel/featured']),
+                        (_('Entertainment'),
+                         [u'http://feeds.feedburner.com/Terravideos',
+                          u'http://feeds.feedburner.com/freshtopia',
+                          u'http://feeds.feedburner.com/thechannelchannel/featured',
+                          u'http://www.zefrank.com/theshow/index.xml',
+                          u'http://feeds.feedburner.com/AskANinja']),
 
-                        ('High-Def',
-                         ['http://www.telemusicvision.com/videos/rss.php?i=1',
-                          'http://revision3.com/pixelperfect/feed/quicktime-high-definition',
-                          'http://www.movedigital.com/rss/rocketboom/main.xml'])
+                        (_('High-Def'),
+                         [u'http://www.telemusicvision.com/videos/rss.php?i=1',
+                          u'http://revision3.com/pixelperfect/feed/quicktime-high-definition',
+                          u'http://www.movedigital.com/rss/rocketboom/main.xml'])
                         ]
     if platform.system() == "MacOS":
         defaultFeedURLs.append(
-            ('Mac',
-             ['http://feeds.feedburner.com/peters-screencast',
-              'http://macbreak.libsyn.com/rss',
-              'http://www.podshow.com/feeds/appleclipscomputer.xml',
-              'http://libsyn.com/podcasts/donmc/_static/scoipod.xml']))
-
-    if platform.system() == "Windows":
-        defaultFeedURLs[1][1][:0] = ['http://feeds.feedburner.com/Terravideos']
-    else:
-        defaultFeedURLs[1][1][:0] = ['http://www.zefrank.com/theshow/index.xml',
-                                  'http://feeds.feedburner.com/AskANinja']
+            (_('Mac'),
+             [u'http://feeds.feedburner.com/peters-screencast',
+              u'http://macbreak.libsyn.com/rss',
+              u'http://www.podshow.com/feeds/appleclipscomputer.xml',
+              u'http://libsyn.com/podcasts/donmc/_static/scoipod.xml']))
 
     for defaultFolder in defaultFeedURLs:
         c_folder = folder.ChannelFolder(defaultFolder[0])
