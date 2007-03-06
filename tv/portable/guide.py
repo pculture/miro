@@ -4,7 +4,7 @@ from template import fillStaticTemplate
 from httpclient import grabURL
 from xhtmltools import urlencode
 from copy import copy
-from util import returnsUnicode, unicodify
+from util import returnsUnicode, unicodify, checkU
 import re
 import app
 import config

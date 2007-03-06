@@ -46,7 +46,7 @@ class HTMLDisplay (app.Display):
         # just convert that back to unicode as necessary. See #3708
         html = html.decode('utf-8')
 
-        self.web = ManagedWebView.alloc().init(html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(x), frameHint and areaHint and frameHint.getDisplaySizeHint(areaHint) or None, baseURL)
+        self.web = ManagedWebView.alloc().init(html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(unicode(x)), frameHint and areaHint and frameHint.getDisplaySizeHint(areaHint) or None, baseURL)
         app.Display.__init__(self)
 
     def getEventCookie(self):
@@ -209,7 +209,7 @@ class ManagedWebView (NSObject):
             return YES
 
     def eventURL(self,url):
-        self.onLoadURL(str(url))
+        self.onLoadURL(unicode(url))
 
     def webView_contextMenuItemsForElement_defaultMenuItems_(self,webView,contextMenu,defaultMenuItems):
         event = NSApp().currentEvent()
@@ -241,7 +241,7 @@ class ManagedWebView (NSObject):
     def webView_decidePolicyForNavigationAction_request_frame_decisionListener_(self, webview, action, request, frame, listener):
         platformutils.warnIfNotOnMainThread('ManagedWebView.webView_decidePolicyForNavigationAction_request_frame_decisionListener_')
         method = request.HTTPMethod()
-        url = str(request.URL())
+        url = unicode(request.URL())
         body = request.HTTPBody()
         type = action['WebActionNavigationTypeKey']
         #print "policy %d for url %s" % (type, url)

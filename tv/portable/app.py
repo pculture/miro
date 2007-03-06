@@ -610,15 +610,15 @@ class Controller (frontend.Application):
 
             util.print_mem_usage("Post-downloader memory check")
 
-            self.setupGlobalFeed('dtv:manualFeed', initiallyAutoDownloadable=False)
+            self.setupGlobalFeed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
             views.unwatchedItems.addAddCallback(self.onUnwatchedItemsCountChange)
             views.unwatchedItems.addRemoveCallback(self.onUnwatchedItemsCountChange)
             views.downloadingItems.addAddCallback(self.onDownloadingItemsCountChange)
             views.downloadingItems.addRemoveCallback(self.onDownloadingItemsCountChange)
 
             # Set up the search objects
-            self.setupGlobalFeed('dtv:search', initiallyAutoDownloadable=False)
-            self.setupGlobalFeed('dtv:searchDownloads')
+            self.setupGlobalFeed(u'dtv:search', initiallyAutoDownloadable=False)
+            self.setupGlobalFeed(u'dtv:searchDownloads')
 
             # Set up tab list
             tabs.reloadStaticTabs()
@@ -648,7 +648,7 @@ class Controller (frontend.Application):
                     self.downloadTab = tab
 
             # If we're missing the file system videos feed, create it
-            self.setupGlobalFeed('dtv:directoryfeed')
+            self.setupGlobalFeed(u'dtv:directoryfeed')
 
             # Start the automatic downloader daemon
             logging.info ("Spawning auto downloader...")

@@ -492,7 +492,7 @@ class DemocracyUnicodeError(StandardError):
 
 # Raise an exception if input isn't unicode
 def checkU(text):
-    if type(text) != UnicodeType:
+    if text is not None and type(text) != UnicodeType:
         raise DemocracyUnicodeError, (u"text \"%s\" is not a unicode string" %
                                      text)
 

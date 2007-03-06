@@ -1895,7 +1895,7 @@ class SearchFeedImpl (RSSFeedImpl):
 
 class SearchDownloadsFeedImpl(FeedImpl):
     def __init__(self, ufeed):
-        FeedImpl.__init__(self, url='dtv:searchDownloads', ufeed=ufeed, 
+        FeedImpl.__init__(self, url=u'dtv:searchDownloads', ufeed=ufeed, 
                 title=None, visible=False)
         self.setUpdateFrequency(-1)
 
