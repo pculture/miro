@@ -13,6 +13,8 @@ from distutils.extension import Extension
 from distutils.cmd import Command
 from py2app.build_app import py2app
 
+import tarfile
+
 # Get command line parameters
 
 forceUpdate = False
@@ -113,17 +115,6 @@ updatePListEntry(infoPlist, u'NSHumanReadableCopyright', conf)
 excludedResources = ['.svn', '.DS_Store']
 resourceFiles = [os.path.join('Resources', x) for x in os.listdir('Resources') if x not in excludedResources]
 
-# Get path to the Growl framework
-
-frameworks = list()
-
-growlFramework = os.path.join(os.path.dirname(root), 'dtv-binary-kit-mac/growl/Growl.framework')
-if os.path.exists(growlFramework):
-    print "Growl framework found (%s)" % growlFramework
-    frameworks.append(growlFramework)
-else:
-    print "Growl framework not found. Please check out dtv-binary-kit-mac from Subversion."
-
 # And launch the setup process...
 
 class clean(Command):
@@ -161,6 +152,14 @@ class clean(Command):
             pass
 
 class mypy2app(py2app):
+        
+    def untar(self, path, destination):
+        tar = tarfile.open(path, 'r:gz')
+        for member in tar.getmembers():
+            print "    %s" % os.path.join(destination, member.name)
+            tar.extract(member, destination)
+        tar.close
+
     def run(self):
         global root, imgName, conf
         print "------------------------------------------------"
@@ -170,24 +169,15 @@ class mypy2app(py2app):
         template_compiler.compileAllTemplates(root)
 
         py2app.run(self)
+
         # Setup some variables we'll need
 
         bundleRoot = os.path.join(self.dist_dir, 'Democracy.app/Contents')
         execRoot = os.path.join(bundleRoot, 'MacOS')
         rsrcRoot = os.path.join(bundleRoot, 'Resources')
         fmwkRoot = os.path.join(bundleRoot, 'Frameworks')
+        cmpntRoot = os.path.join(bundleRoot, 'Components')
         prsrcRoot = os.path.join(rsrcRoot, 'resources')
-
-        # Py2App seems to have a bug where alias builds would get
-        # incorrect symlinks to frameworks, so create them manually.
-
-        for fmwk in glob(os.path.join(fmwkRoot, '*.framework')):
-            if os.path.islink(fmwk):
-                dest = os.readlink(fmwk)
-                if not os.path.exists(dest):
-                    print "Fixing incorrect symlink for %s" % os.path.basename(fmwk)
-                    os.remove(fmwk)
-                    os.symlink(os.path.dirname(dest), fmwk)
 
         # Create a hard link to the main executable with a different
         # name for the downloader. This is to avoid having 'Democracy'
@@ -203,6 +193,54 @@ class mypy2app(py2app):
         if os.path.exists(linkPath):
             os.remove(linkPath)
         os.link(srcPath, linkPath)
+
+        # Install the Growl framework
+        
+        print "Copying Growl framework to application bundle"
+
+        bundledGrowl = os.path.join(fmwkRoot, 'Growl.framework')
+        if forceUpdate and os.path.exists(bundledGrowl):
+            shutil.rmtree(bundledGrowl, True)
+        
+        if os.path.exists(bundledGrowl):
+            print "    (skipped, already bundled)"
+        else:
+            growl = glob(os.path.join(os.path.dirname(root), 'dtv-binary-kit-mac/growl/growl.*.tar.gz'))
+            if len(growl) == 0:
+                print "    (skipped, not found in binary kit)"
+            else:
+                path = growl[0]
+                self.untar(path, fmwkRoot)
+
+        # Py2App seems to have a bug where alias builds would get
+        # incorrect symlinks to frameworks, so create them manually.
+
+        for fmwk in glob(os.path.join(fmwkRoot, '*.framework')):
+            if os.path.islink(fmwk):
+                dest = os.readlink(fmwk)
+                if not os.path.exists(dest):
+                    print "Fixing incorrect symlink for %s" % os.path.basename(fmwk)
+                    os.remove(fmwk)
+                    os.symlink(os.path.dirname(dest), fmwk)
+
+        # Copy the Quicktime components
+
+        print "Copying Quicktime components to application bundle"
+
+        if forceUpdate and os.path.exists(cmpntRoot):
+            shutil.rmtree(cmpntRoot, True);
+
+        if os.path.exists(cmpntRoot):
+            print "    (all skipped, already bundled)"
+        else:
+            os.makedirs(cmpntRoot)
+            componentsRoot = os.path.join(os.path.dirname(root), 'dtv-binary-kit-mac/qtcomponents')
+            components = glob(os.path.join(componentsRoot, '*.tar.gz'))
+            if len(components) == 0:
+                print "    (all skipped, not found in binary kit)"
+            else:
+                for component in components:
+                    self.untar(component, cmpntRoot)
 
         # Copy our own portable resources
 
@@ -239,7 +277,7 @@ class mypy2app(py2app):
         # options allows to avoid having an intermediate unversioned
         # 'locale' folder.
 
-        print "Copying gettext MO files to application bundle."
+        print "Copying gettext MO files to application bundle"
 
         localeDir = os.path.join (root, 'resources/locale')
         lclDir = os.path.join(rsrcRoot, 'locale')
@@ -255,36 +293,11 @@ class mypy2app(py2app):
                 os.makedirs(os.path.dirname(dest))
                 shutil.copy2(source, dest)
                 print "    %s" % dest
-
-        # Copy the Quicktime components which we will automatically
-        # install to allow internal playback of a lot of formats and
-        # codecs.
-        print "Copying installable Quicktime components."
-
-        cmpntRoot = os.path.join(bundleRoot, 'Components')
-        if forceUpdate and os.path.exists(cmpntRoot):
-            shutil.rmtree(cmpntRoot, True);
-
-        if os.path.exists(cmpntRoot):
-            print "    (all skipped, already bundled)"
-        else:
-            os.makedirs(cmpntRoot)
-            componentsRoot = os.path.join(os.path.dirname(root), 'dtv-binary-kit-mac/qtcomponents')
-            components = glob(os.path.join(componentsRoot, '**/*.component'))
-            if len(components) == 0:
-                print "    (all skipped, not found in binary kit)"
-            else:
-                for component in components:
-                    componentDest = os.path.join(cmpntRoot, os.path.basename(component))
-                    componentName = os.path.basename(component)
-                    shutil.copytree(component, componentDest)
-                    print "    %s" % componentDest
         
         # Check that we haven't left some turds in the application bundle.
         
         wipeList = list()
-        for root, dirs, files in os.walk(os.path.join(self.dist_dir,
-                                                      'Democracy.app')):
+        for root, dirs, files in os.walk(os.path.join(self.dist_dir, 'Democracy.app')):
             for excluded in ('.svn', 'unittest'):
                 if excluded in dirs:
                     dirs.remove(excluded)
@@ -346,7 +359,7 @@ py2app_options = dict(
     plist = infoPlist,
     iconfile = os.path.join(root, 'platform/osx/Democracy.icns'),
     resources = resourceFiles,
-    frameworks = frameworks,
+#    frameworks = frameworks,
     packages = ['dl_daemon']
 )
 
