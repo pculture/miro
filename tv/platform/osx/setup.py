@@ -153,12 +153,27 @@ class clean(Command):
 
 class mypy2app(py2app):
         
-    def untar(self, path, destination):
-        tar = tarfile.open(path, 'r:gz')
-        for member in tar.getmembers():
-            print "    %s" % os.path.join(destination, member.name)
-            tar.extract(member, destination)
-        tar.close
+    def embed_binaries(self, source, target):
+        print "Copying %s to application bundle" % source
+
+        if forceUpdate and os.path.exists(target):
+            shutil.rmtree(target, True)
+        
+        if os.path.exists(target):
+            print "    (all skipped, already bundled)"
+        else:
+            os.makedirs(target)
+            rootpath = os.path.join(os.path.dirname(root), 'dtv-binary-kit-mac/%s' % source)
+            binaries = glob(os.path.join(rootpath, '*.tar.gz'))
+            if len(binaries) == 0:
+                print "    (all skipped, not found in binary kit)"
+            else:
+                for binary in binaries:
+                    tar = tarfile.open(binary, 'r:gz')
+                    for member in tar.getmembers():
+                        print "    %s" % os.path.join(target, member.name)
+                        tar.extract(member, target)
+                    tar.close
 
     def run(self):
         global root, imgName, conf
@@ -194,53 +209,10 @@ class mypy2app(py2app):
             os.remove(linkPath)
         os.link(srcPath, linkPath)
 
-        # Install the Growl framework
+        # Install frameworks and components
         
-        print "Copying Growl framework to application bundle"
-
-        bundledGrowl = os.path.join(fmwkRoot, 'Growl.framework')
-        if forceUpdate and os.path.exists(bundledGrowl):
-            shutil.rmtree(bundledGrowl, True)
-        
-        if os.path.exists(bundledGrowl):
-            print "    (skipped, already bundled)"
-        else:
-            growl = glob(os.path.join(os.path.dirname(root), 'dtv-binary-kit-mac/growl/growl.*.tar.gz'))
-            if len(growl) == 0:
-                print "    (skipped, not found in binary kit)"
-            else:
-                path = growl[0]
-                self.untar(path, fmwkRoot)
-
-        # Py2App seems to have a bug where alias builds would get
-        # incorrect symlinks to frameworks, so create them manually.
-
-        for fmwk in glob(os.path.join(fmwkRoot, '*.framework')):
-            if os.path.islink(fmwk):
-                dest = os.readlink(fmwk)
-                if not os.path.exists(dest):
-                    print "Fixing incorrect symlink for %s" % os.path.basename(fmwk)
-                    os.remove(fmwk)
-                    os.symlink(os.path.dirname(dest), fmwk)
-
-        # Copy the Quicktime components
-
-        print "Copying Quicktime components to application bundle"
-
-        if forceUpdate and os.path.exists(cmpntRoot):
-            shutil.rmtree(cmpntRoot, True);
-
-        if os.path.exists(cmpntRoot):
-            print "    (all skipped, already bundled)"
-        else:
-            os.makedirs(cmpntRoot)
-            componentsRoot = os.path.join(os.path.dirname(root), 'dtv-binary-kit-mac/qtcomponents')
-            components = glob(os.path.join(componentsRoot, '*.tar.gz'))
-            if len(components) == 0:
-                print "    (all skipped, not found in binary kit)"
-            else:
-                for component in components:
-                    self.untar(component, cmpntRoot)
+        self.embed_binaries('frameworks', fmwkRoot)
+        self.embed_binaries('qtcomponents', cmpntRoot)
 
         # Copy our own portable resources
 
