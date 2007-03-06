@@ -2104,7 +2104,7 @@ def _defaultFeeds():
                           u'http://revision3.com/pixelperfect/feed/quicktime-high-definition',
                           u'http://www.movedigital.com/rss/rocketboom/main.xml'])
                         ]
-    if platform.system() == "MacOS":
+    if platform.system() == "Darwin":
         defaultFeedURLs.append(
             (_('Mac'),
              [u'http://feeds.feedburner.com/peters-screencast',
