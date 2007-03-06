@@ -2117,7 +2117,7 @@ def _defaultFeeds():
         for url in defaultFolder[1]:
             d_feed = feed.Feed(url, initiallyAutoDownloadable=False)
             d_feed.setFolder(c_folder)
-    playlist.SavedPlaylist(_("Example Playlist"))
+    playlist.SavedPlaylist(_(u"Example Playlist"))
 
 def _getInitialChannelGuide():
     default_guide = None
