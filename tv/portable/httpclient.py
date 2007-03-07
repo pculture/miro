@@ -1557,7 +1557,7 @@ class HTTPClient(object):
                             try:
                                 expires = time.mktime(time.strptime(
                                               getAttrPair(attr)[1],
-                                              '%a, %d-%b-%Y %H:%M:%S %Z'))
+                                              '%a, %d-%b-%y %H:%M:%S %Z'))
                             except:
                                 print "DTV: Warning: Can't process cookie expiration: %s" % getAttrPair(attr)[1]
                                 expires = 0

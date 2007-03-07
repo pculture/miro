@@ -304,13 +304,13 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         fileobj.write(u'\n\n    out = StringIO()\n')
         
         if not self.onlyBody:
-            fileobj.write(u'    out.write("<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\"?>\\n<!DOCTYPE html PUBLIC \\\"-//W3C//DTD XHTML 1.0 Strict//EN\\\" \\\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\\\">\\n")\n')
+            fileobj.write(u'    out.write(u"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\"?>\\n<!DOCTYPE html PUBLIC \\\"-//W3C//DTD XHTML 1.0 Strict//EN\\\" \\\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\\\">\\n")\n')
             
         for count in range(len(self.outputLists[0])):
             (func, args) = self.outputLists[0][count]
             fileobj.write(func(u'out',u'',u'    ',args))
 
-        fileobj.write(u'    out.seek(0)\n')        
+        fileobj.write(u'    out.seek(0)\n')
         fileobj.write(u'\n\n    return (out, handle)\n')
 
     def returnIf(self,bool,value):
