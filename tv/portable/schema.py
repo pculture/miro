@@ -21,6 +21,7 @@ import time
 import logging
 from types import NoneType
 from fasttypes import LinkedList
+from platformutils import FilenameType
 
 class ValidationError(Exception):
     """Error thrown when we try to save invalid data."""
@@ -95,6 +96,11 @@ class SchemaBinary(SchemaSimpleItem):
     def validate(self, data):
         super(SchemaSimpleItem, self).validate(data)
         self.validateType(data, str)
+
+class SchemaFilename(SchemaSimpleItem):
+    def validate(self, data):
+        super(SchemaSimpleItem, self).validate(data)
+        self.validateType(data, FilenameType)
 
 class SchemaURL(SchemaSimpleItem):
     def validate(self, data):
@@ -182,11 +188,16 @@ class SchemaStatusContainer(SchemaSimpleContainer):
     """
 
     def validate(self, data):
+        from platformutils import FilenameType
+        if FilenameType == unicode:
+            binaryFields = ['metainfo']
+        else:
+            binaryFields = ['channelName','shortFilename','filename','metainfo']
         self.validateType(data, dict)
         for key, value in data.items():
             self.validateTypes(key, [bool, int, long, float, unicode,
                     str, NoneType, datetime.datetime, time.struct_time])
-            if key not in ['channelName','shortFilename','filename','metainfo']:
+            if key not in binaryFields:
                 self.validateTypes(value, [bool, int, long, float, unicode,
                         NoneType, datetime.datetime, time.struct_time])
             else:
@@ -239,7 +250,7 @@ class IconCacheSchema (ObjectSchema):
     fields = [
         ('etag', SchemaString(noneOk=True)),
         ('modified', SchemaString(noneOk=True)),
-        ('filename', SchemaBinary(noneOk=True)),
+        ('filename', SchemaFilename(noneOk=True)),
         ('url', SchemaURL(noneOk=True)),
         ]
 
@@ -262,7 +273,7 @@ class ItemSchema(DDBObjectSchema):
         ('downloadedTime', SchemaDateTime(noneOk=True)),
         ('watchedTime', SchemaDateTime(noneOk=True)),
         ('isContainerItem', SchemaBool(noneOk=True)),
-        ('videoFilename', SchemaBinary()),
+        ('videoFilename', SchemaFilename()),
         ('isVideo', SchemaBool()),
         ('releaseDateObj', SchemaDateTime()),
         ('eligibleForAutoDownload', SchemaBool()),
@@ -274,10 +285,10 @@ class FileItemSchema(ItemSchema):
     klass = FileItem
     classString = 'file-item'
     fields = ItemSchema.fields + [
-        ('filename', SchemaBinary()),
+        ('filename', SchemaFilename()),
         ('deleted', SchemaBool()),
-        ('shortFilename', SchemaBinary(noneOk=True)),
-        ('offsetPath', SchemaBinary(noneOk=True)),
+        ('shortFilename', SchemaFilename(noneOk=True)),
+        ('offsetPath', SchemaFilename(noneOk=True)),
     ]
 
 class FeedSchema(DDBObjectSchema):
@@ -365,7 +376,7 @@ class RemoteDownloaderSchema(DDBObjectSchema):
         ('origURL', SchemaURL()),
         ('dlid', SchemaString()),
         ('contentType', SchemaString(noneOk=True)),
-        ('channelName', SchemaBinary(noneOk=True)),
+        ('channelName', SchemaFilename(noneOk=True)),
         ('status', SchemaStatusContainer()),
         ('manualUpload', SchemaBool()),
     ]

@@ -5,7 +5,7 @@ import re
 import urllib
 import mimetypes
 import util
-from util import checkB, checkU
+from util import checkF, checkU, returnsFilename
 from platformutils import unicodeToFilename
 
 # The mimetypes module does not know about FLV, let's enlighten him.
@@ -70,7 +70,7 @@ def parseURL(url):
 # If a filename doesn't have an extension, this tries to find a suitable one
 # based on the HTTP content-type info and add it if one is available.
 def checkFilenameExtension(filename, httpInfo):
-    checkB(filename)
+    checkF(filename)
     _, ext = os.path.splitext(filename)
     if ext == '' and 'content-type' in httpInfo:
         guessedExt = mimetypes.guess_extension(httpInfo['content-type'])
@@ -81,8 +81,9 @@ def checkFilenameExtension(filename, httpInfo):
 ##
 # Finds a filename that's unused and similar the the file we want
 # to download
+@returnsFilename
 def nextFreeFilename(name):
-    checkB(name)
+    checkF(name)
     if not access(name,F_OK):
         return name
     parts = name.split('.')
@@ -103,6 +104,7 @@ def nextFreeFilename(name):
 
 ##
 # Returns a reasonable filename for saving the given url
+@returnsFilename
 def filenameFromURL(url):
     checkU(url)
     try:
@@ -122,10 +124,11 @@ def filenameFromURL(url):
             ret = u'unknown'
         return unicodeToFilename(ret)
     except:
-        return 'unknown'
+        return unicodeToFilename(u'unknown')
 
 # Given either a filename or a unicode "filename" return a valid clean
 # version of it
+@returnsFilename
 def cleanFilename(filename):
     if type(filename) == str:
         return unicodeToFilename(filename.decode('ascii','replace'))

@@ -29,7 +29,7 @@ import folder
 import menu
 import prefs
 import resources
-from util import returnsUnicode, unicodify, chatter, checkU, checkB
+from util import returnsUnicode, unicodify, chatter, checkU, checkF
 import views
 import indexes
 import searchengines
@@ -78,7 +78,7 @@ def setSortFunc(newFunc):
 #
 # Adds a new feed using USM
 def addFeedFromFile(file):
-    checkB(file)
+    checkF(file)
     d = feedparser.parse(file)
     if d.feed.has_key('links'):
         for link in d.feed['links']:

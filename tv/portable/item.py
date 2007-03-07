@@ -4,7 +4,8 @@ from gtcache import gettext as _
 from math import ceil
 from xhtmltools import unescape,xhtmlify
 from xml.sax.saxutils import unescape
-from util import checkU, returnsUnicode, checkB, returnsBinary
+from util import checkU, returnsUnicode, checkF, returnsFilename
+from platformutils import FilenameType
 import locale
 import os
 import shutil
@@ -61,7 +62,7 @@ class Item(DDBObject):
         self.entry = entry
         self.expired = False
         self.keep = False
-        self.videoFilename = ""
+        self.videoFilename = FilenameType("")
         self.eligibleForAutoDownload = True
         self.duration = None
         self.resumeTime = 0
@@ -207,7 +208,7 @@ class Item(DDBObject):
                 self.isContainerItem = False
         else:
             self.isContainerItem = False
-            self.videoFilename = ""
+            self.videoFilename = FilenameType("")
             self.isVideo = True
         self.signalChange()
         return True
@@ -417,7 +418,7 @@ class Item(DDBObject):
                 item.remove()
         self.isContainerItem = None
         self.isVideo = False
-        self.videoFilename = ""
+        self.videoFilename = FilenameType("")
         self.seen = self.keep = self.pendingManualDL = False
         self.watchedTime = None
         self.duration = None
@@ -1428,18 +1429,18 @@ folder will be deleted.""")
     ##
     # Returns the filename of the first downloaded video or the empty string
     # NOTE: this will always return the absolute path to the file.
-    @returnsBinary
+    @returnsFilename
     def getFilename(self):
         self.confirmDBThread()
         try:
             return self.downloader.getFilename()
         except:
-            return ""
+            return FilenameType("")
 
     ##
     # Returns the filename of the first downloaded video or the empty string
     # NOTE: this will always return the absolute path to the file.
-    @returnsBinary
+    @returnsFilename
     def getVideoFilename(self):
         self.confirmDBThread()
         if self.videoFilename:
@@ -1533,7 +1534,7 @@ def getEntryForFile(filename):
 class FileItem(Item):
 
     def __init__(self,filename, feed_id=None, parent_id=None, offsetPath=None):
-        checkB(filename)
+        checkF(filename)
         filename = os.path.abspath(filename)
         self.filename = filename
         self.deleted = False
@@ -1659,12 +1660,12 @@ Collection?""")
         except:
             return datetime.min
 
-    @returnsBinary
+    @returnsFilename
     def getFilename(self):
         try:
             return self.filename
         except:
-            return ""
+            return FilenameType("")
 
     def migrate(self, newDir):
         self.confirmDBThread()

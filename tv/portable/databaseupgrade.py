@@ -563,9 +563,20 @@ def upgrade40(objectList):
 
 def upgrade41(objectList):
     from util import unicodify
+    from platformutils import FilenameType
     # This is where John Lennon's ghost sings "Binary Fields Forever"
-    binaryFields = ['filename','videoFilename', 'shortFilename',
+    if FilenameType == str:
+        binaryFields = ['filename','videoFilename', 'shortFilename',
                         'offsetPath','initialHTML','status','channelName']
+        icStrings = ['etag','modified','url']
+        icBinary = ['filename']
+        statusBinary = ['channelName','shortFilename','filename','metainfo']
+    else:
+        binaryFields = ['initialHTML','status']
+        icStrings = ['etag','modified','url','filename']
+        icBinary = []
+        statusBinary = ['metainfo']
+        
     changed = set()
     for o in objectList:
         o.savedData = unicodify(o.savedData)
@@ -578,27 +589,27 @@ def upgrade41(objectList):
                     o.savedData[field].__dict__ = \
                          unicodify(o.savedData[field].__dict__)
                 elif field == 'iconCache':
-                    for icfield in ['etag','modified','url']:
+                    for icfield in icStrings:
                         o.savedData['iconCache'].savedData[icfield] = \
                           unicodify(o.savedData['iconCache'].savedData[icfield])
-                        if (type(o.savedData['iconCache'].savedData['filename'])
+                    for icfield in icBinary:
+                        if (type(o.savedData['iconCache'].savedData[icfield])
                                == unicode):
-                            o.savedData['iconCache'].savedData['filename'] =\
-                               o.savedData['iconCache'].savedData['filename'].encode('ascii','replace')
+                            o.savedData['iconCache'].savedData[icfield] =\
+                               o.savedData['iconCache'].savedData[icfield].encode('ascii','replace')
 
             else:
                 if field == 'status':
                     for subfield in o.savedData['status']:
-                        if type(o.savedData[field][subfield]) in [unicode,str]:
-                            if subfield not in ['channelName','shortFilename',
-                                             'filename','metainfo']:
-                            
-                                o.savedData[field][subfield] = \
-                             o.savedData[field][subfield].decode('ascii',
-                                                                 'replace')
-                            else:
+                        if (type(o.savedData[field][subfield]) == unicode
+                            and subfield in statusBinary):
                                 o.savedData[field][subfield] = \
                              o.savedData[field][subfield].encode('ascii',
+                                                                 'replace')
+                        elif (type(o.savedData[field][subfield]) == str
+                            and subfield not in statusBinary):
+                                o.savedData[field][subfield] = \
+                             o.savedData[field][subfield].decode('ascii',
                                                                  'replace')
                 elif type(o.savedData[field]) == unicode:
                     o.savedData[field] = o.savedData[field].encode('ascii','replace')

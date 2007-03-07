@@ -507,7 +507,7 @@ def returnsUnicode(func):
 
 # Raise an exception if input isn't a binary string
 def checkB(text):
-    if type(text) != StringType:
+    if text is not None and type(text) != StringType:
         raise DemocracyUnicodeError, (u"text \"%s\" is not a binary string" %
                                      text)
 
@@ -520,7 +520,7 @@ def returnsBinary(func):
         return result
     return checkFunc
 
-# Raise an exception if input isn't a filename type
+# Raise an exception if input isn't a URL type
 def checkURL(text):
     if type(text) != UnicodeType:
         raise DemocracyUnicodeError, (u"url \"%s\" is not unicode" %
@@ -537,6 +537,21 @@ def returnsURL(func):
         result = func(*args,**kwargs)
         if result is not None:
             checkURL(result)
+        return result
+    return checkFunc
+
+# Returns exception if input isn't a filename type
+def checkF(text):
+    from platformutils import FilenameType
+    if text is not None and type(text) != FilenameType:
+        raise DemocracyUnicodeError, (u"text \"%s\" is not a valid filename type" %
+                                     text)
+# Decorator that raised an exception if the function doesn't return a filename
+def returnsFilename(func):
+    def checkFunc(*args, **kwargs):
+        result = func(*args,**kwargs)
+        if result is not None:
+            checkF(result)
         return result
     return checkFunc
 

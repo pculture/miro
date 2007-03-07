@@ -14,6 +14,7 @@ import urllib
 from util import returnsUnicode, returnsBinary, checkU, checkB
 
 localeInitialized = False
+FilenameType = unicode
 
 def samefile(path1, path2):
     return getLongPathName(path1) == getLongPathName(path2)
@@ -95,7 +96,7 @@ def setupLogging (inDownloader=False):
 #
 # This is not guaranteed to give the same results every time it is run,
 # not is it garanteed to reverse the results of filenameToUnicode
-@returnsBinary
+@returnsUnicode
 def unicodeToFilename(filename, path = None):
     @returnsUnicode
     def shortenFilename(filename):
@@ -115,7 +116,7 @@ def unicodeToFilename(filename, path = None):
 
     checkU(filename)
     if path:
-        checkB(path)
+        checkU(path)
     else:
         path = os.getcwd()
 
@@ -125,10 +126,9 @@ def unicodeToFilename(filename, path = None):
     
     filename.replace('/','_').replace("\000","_").replace("\\","_").replace(":","_").replace("*","_").replace("?","_").replace("\"","_").replace("<","_").replace(">","_").replace("|","_")
 
-    newFilename = filename.encode('ascii','replace')
+    newFilename = filename
     while len(newFilename) > MAX_LEN:
-        filename = shortenFilename(filename)
-        newFilename = filename.encode('ascii','replace')
+        newFilename = shortenFilename(filename)
 
     return newFilename
 
@@ -139,17 +139,13 @@ def unicodeToFilename(filename, path = None):
 @returnsUnicode
 def filenameToUnicode(filename, path = None):
     if path:
-        checkB(path)
-    checkB(filename)
-    return filename.decode('ascii','replace')
+        checkU(path)
+    checkU(filename)
+    return filename
 
 # Takes in a byte string or a unicode string and does the right thing
 # to make a URL
 @returnsUnicode
 def makeURLSafe(string):
-    if type(string) == str:
-        # quote the byte string
-        return urllib.quote(string).decode('ascii')
-    else:
-        return urllib.quote(string.encode('ascii','replace')).decode('ascii')
-    
+    checkU(string)
+    return urllib.quote(string.encode('utf_16')).decode('ascii')

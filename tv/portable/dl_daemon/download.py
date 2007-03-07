@@ -25,7 +25,7 @@ from sha import sha
 
 from dl_daemon import command, daemon, bittorrent
 from datetime import timedelta
-from util import checkB, checkU
+from util import checkF, checkU
 
 import platformutils
 import string
@@ -53,7 +53,7 @@ def startNewDownload(url, dlid, contentType, channelName):
     checkU(url)
     checkU(contentType)
     if channelName:
-        checkB(channelName)
+        checkF(channelName)
     dl = createDownloader(url, contentType, dlid)
     dl.channelName = channelName
     _downloads[dlid] = dl
@@ -102,7 +102,7 @@ def stopUpload(dlid):
     return download.stopUpload()
 
 def migrateDownload(dlid, directory):
-    checkB(directory)
+    checkF(directory)
     try:
         download = _downloads[dlid]
     except: # There is no download with this id
@@ -269,7 +269,7 @@ class BGDownloader:
         self.moveToDirectory(config.get(prefs.MOVIES_DIRECTORY))
 
     def moveToDirectory (self, directory):
-        checkB(directory)
+        checkF(directory)
         if self.channelName:
             directory = os.path.join (directory, self.channelName)
             try:

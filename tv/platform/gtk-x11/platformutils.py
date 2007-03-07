@@ -26,6 +26,8 @@ import urllib
 import sys
 from util import returnsUnicode, returnsBinary, checkU, checkB
 
+FilenameType = str
+
 # We need to define samefile for the portable code.  Lucky for us, this is
 # very easy.
 from os.path import samefile

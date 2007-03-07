@@ -8,7 +8,8 @@ import shutil
 from database import DDBObject, defaultDatabase
 from dl_daemon import daemon, command
 from download_utils import nextFreeFilename, parseURL
-from util import getTorrentInfoHash, returnsUnicode, checkU, returnsBinary, unicodify, checkB
+from util import getTorrentInfoHash, returnsUnicode, checkU, returnsFilename, unicodify, checkF
+from platformutils import FilenameType
 import app
 import config
 import httpclient
@@ -359,7 +360,7 @@ URL was %s""" % self.url
     def setChannelName(self, channelName):
         if self.channelName is None:
             if channelName:
-                checkB(channelName)
+                checkF(channelName)
             self.channelName = channelName
 
     ##
@@ -463,10 +464,10 @@ URL was %s""" % self.url
     ##
     # Returns the filename that we're downloading to. Should not be
     # called until state is "finished."
-    @returnsBinary
+    @returnsFilename
     def getFilename(self):
         self.confirmDBThread()
-        return self.status.get('filename', '')
+        return self.status.get('filename', FilenameType(''))
 
     def onRestore(self):
         self.deleteFiles = True
