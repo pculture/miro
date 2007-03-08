@@ -1,8 +1,0 @@
-<!ENTITY nbsp                " ">
-<!ENTITY rsaquo              "'">
-
-<!ENTITY canscrape.title     "Kanalen er ikke kompatibel med Democracy!">
-<!ENTITY canscrape.body      "Men vi vil gjøre vårt beste for å hente filene. Det tar kanskje lengre tid å liste videoene, og beskrivelsene kan se rare ut.">
-
-<!ENTITY canscrape.prefix    "Vennligst kontakt utgiveren av">
-<!ENTITY canscrape.suffix    "og spør om de kan tilby en kanal i et format som vil virke med Democracy.">
