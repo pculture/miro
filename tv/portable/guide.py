@@ -159,7 +159,7 @@ class ChannelGuide(DDBObject):
 
     def processUpdate(self, info):
         try:
-            html = info["body"]
+            html = info["body"].decode('utf-8')
 
             # Put the HTML into the cache
             match = HTMLPattern.match(html)

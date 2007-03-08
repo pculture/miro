@@ -30,8 +30,6 @@ def getDTVAPIURL():
 class HTMLDisplay (app.Display):
     "HTML browser that can be shown in a MainFrame's right-hand pane."
 
-#    sharedWebView = None
-
     # We don't need to override onSelected, onDeselected
 
     def __init__(self, html, existingView=None, frameHint=None, areaHint=None, baseURL=None):
@@ -41,11 +39,6 @@ class HTMLDisplay (app.Display):
         display is installed."""
         self.readyToDisplayHook = None
         self.readyToDisplay = False
-
-        # The template system currently generates UTF-8. For now, we
-        # just convert that back to unicode as necessary. See #3708
-        html = html.decode('utf-8')
-
         self.web = ManagedWebView.alloc().init(html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(unicode(x)), frameHint and areaHint and frameHint.getDisplaySizeHint(areaHint) or None, baseURL)
         app.Display.__init__(self)
 
