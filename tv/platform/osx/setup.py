@@ -115,14 +115,45 @@ updatePListEntry(infoPlist, u'NSHumanReadableCopyright', conf)
 excludedResources = ['.svn', '.DS_Store']
 resourceFiles = [os.path.join('Resources', x) for x in os.listdir('Resources') if x not in excludedResources]
 
+# Prepare the frameworks we're going to use
+
+def extract_binaries(source, target):
+    if forceUpdate and os.path.exists(target):
+        shutil.rmtree(target, True)
+    
+    if os.path.exists(target):
+        print "    (all skipped, already there)"
+    else:
+        os.makedirs(target)
+        rootpath = os.path.join(os.path.dirname(root), 'dtv-binary-kit-mac/%s' % source)
+        binaries = glob(os.path.join(rootpath, '*.tar.gz'))
+        if len(binaries) == 0:
+            print "    (all skipped, not found in binary kit)"
+        else:
+            for binary in binaries:
+                tar = tarfile.open(binary, 'r:gz')
+                try:
+                    for member in tar.getmembers():
+                        tar.extract(member, target)
+                finally:
+                    tar.close()
+
+print 'Extracting frameworks to build directory...'
+frameworks_path = os.path.join(root, 'platform/osx/build/frameworks')
+extract_binaries('frameworks', frameworks_path)
+frameworks = glob(os.path.join(frameworks_path, '*.framework'))
+
 # And launch the setup process...
 
 class clean(Command):
     user_options = []
+
     def initialize_options(self):
         return None
+
     def finalize_options(self):
         return None
+
     def run(self):
         print "Removing old build directory..."
         try:
@@ -153,28 +184,6 @@ class clean(Command):
 
 class mypy2app(py2app):
         
-    def embed_binaries(self, source, target):
-        print "Copying %s to application bundle" % source
-
-        if forceUpdate and os.path.exists(target):
-            shutil.rmtree(target, True)
-        
-        if os.path.exists(target):
-            print "    (all skipped, already bundled)"
-        else:
-            os.makedirs(target)
-            rootpath = os.path.join(os.path.dirname(root), 'dtv-binary-kit-mac/%s' % source)
-            binaries = glob(os.path.join(rootpath, '*.tar.gz'))
-            if len(binaries) == 0:
-                print "    (all skipped, not found in binary kit)"
-            else:
-                for binary in binaries:
-                    tar = tarfile.open(binary, 'r:gz')
-                    for member in tar.getmembers():
-                        print "    %s" % os.path.join(target, member.name)
-                        tar.extract(member, target)
-                    tar.close
-
     def run(self):
         global root, imgName, conf
         print "------------------------------------------------"
@@ -194,6 +203,17 @@ class mypy2app(py2app):
         cmpntRoot = os.path.join(bundleRoot, 'Components')
         prsrcRoot = os.path.join(rsrcRoot, 'resources')
 
+        # Py2App seems to have a bug where alias builds would get 
+        # incorrect symlinks to frameworks, so create them manually. 
+
+        for fmwk in glob(os.path.join(fmwkRoot, '*.framework')): 
+            if os.path.islink(fmwk): 
+                dest = os.readlink(fmwk) 
+                if not os.path.exists(dest): 
+                    print "Fixing incorrect symlink for %s" % os.path.basename(fmwk) 
+                    os.remove(fmwk) 
+                    os.symlink(os.path.dirname(dest), fmwk)
+
         # Create a hard link to the main executable with a different
         # name for the downloader. This is to avoid having 'Democracy'
         # shown twice in the Activity Monitor since the downloader is
@@ -209,10 +229,10 @@ class mypy2app(py2app):
             os.remove(linkPath)
         os.link(srcPath, linkPath)
 
-        # Install frameworks and components
+        # Embed the Quicktime components
         
-        self.embed_binaries('frameworks', fmwkRoot)
-        self.embed_binaries('qtcomponents', cmpntRoot)
+        print 'Copying Quicktime components to application bundle'
+        extract_binaries('qtcomponents', cmpntRoot)
 
         # Copy our own portable resources
 
@@ -327,11 +347,12 @@ class mypy2app(py2app):
             print "Completed"
             os.system("ls -la \"%s\"" % imgPath)
 
+
 py2app_options = dict(
     plist = infoPlist,
     iconfile = os.path.join(root, 'platform/osx/Democracy.icns'),
     resources = resourceFiles,
-#    frameworks = frameworks,
+    frameworks = frameworks,
     packages = ['dl_daemon']
 )
 
@@ -344,12 +365,10 @@ setup(
         Extension("qtcomp",    [os.path.join(root, 'platform/osx/modules/qtcomp.c')], extra_link_args=['-framework', 'CoreFoundation', '-framework', 'Quicktime']),
         Extension("database",  [os.path.join(root, 'portable/database.pyx')]),
         Extension("sorts",     [os.path.join(root, 'portable/sorts.pyx')]),
-        Extension("fasttypes", [os.path.join(root, 'portable/fasttypes.cpp')],
-                  extra_objects=[boostLib],
-                  include_dirs=[boostIncludeDir])
-        ],
+        Extension("fasttypes", [os.path.join(root, 'portable/fasttypes.cpp')], extra_objects=[boostLib], include_dirs=[boostIncludeDir])
+    ],
     cmdclass = {'build_ext': build_ext,
-	        'clean': clean,
-                'py2app': mypy2app}
+                'clean': clean,
+                'py2app': mypy2app }
 )
 
